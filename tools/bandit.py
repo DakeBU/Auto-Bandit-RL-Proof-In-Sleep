@@ -1,0 +1,956 @@
+#!/usr/bin/env python3
+"""Local workflow helper for Auto-Bandit-RL-Proof-In-Sleep.
+
+The helper is deliberately plain-file and dependency-free.  It is the stable
+command surface for agents; it is not itself an AI agent.
+"""
+
+from __future__ import annotations
+
+import argparse
+import csv
+import datetime as _dt
+import json
+import os
+import re
+import shlex
+import shutil
+import subprocess
+import sys
+import time
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[1]
+STATE_DIR = ROOT / ".abrl"
+STATE_FILE = STATE_DIR / "state.json"
+MANIFEST = ROOT / "MANIFEST.md"
+TRIAL_LOG = ROOT / "runs" / "trials.jsonl"
+TRIAL_SUMMARY = ROOT / "runs" / "trials_summary.csv"
+BLUEPRINT_DIR = ROOT / "proof-blueprints"
+RETRIEVAL_INDEX_DIR = ROOT / "research-wiki" / "retrieval-index"
+PROBLEM_EXPORT_DIR = ROOT / "paper-notes" / "problem-exports"
+AGENT_PROFILE_DIR = ROOT / "agent-profiles"
+
+AGENT_ROLES = ("upper", "middle", "lower", "reviewer")
+TRIAL_KINDS = ("plan", "attempt", "build", "review", "proposal", "compression", "handoff", "export")
+TRIAL_STATUSES = ("queued", "running", "blocked", "failed", "compiled", "accepted", "rejected")
+
+WORK_DIRS = [
+    "tasks",
+    "task-inbox",
+    "conversion-windows",
+    "paper-notes",
+    "paper-notes/problem-exports",
+    "agent-briefs",
+    "proof-attempts",
+    "proof-blueprints",
+    "proof-obligations",
+    "verifier-feedback",
+    "candidate-populations",
+    "open-problem-proposals",
+    "reviews",
+    "reports",
+    "runs",
+    "runs/logs",
+    "runs/context-packs",
+    "runs/pro-prompts",
+    "run-presets",
+    "agent-profiles",
+    "research-wiki/papers",
+    "research-wiki/ideas",
+    "research-wiki/claims",
+    "research-wiki/cited-results",
+    "research-wiki/proof-techniques",
+    "research-wiki/open-problems",
+    "research-wiki/retrieval-index",
+    "research-wiki/lml",
+    "templates",
+]
+
+LML_SEED_COMMIT = "19dc3ab132c2a7539f5944503d1114eac4c5bb74"
+LML_SEED_DATE = "2026-06-24"
+
+LML_CARDS = [
+    {
+        "id": "LML-BANDIT-REGRET-GAP",
+        "source": "LeanMachineLearning/LML",
+        "declaration": "Bandits.regret_eq_sum_gap",
+        "module": "LeanMachineLearning.Online.Bandit.Regret",
+        "role": "Regret decomposition into a sum of action gaps.",
+        "status": "theorem-card",
+    },
+    {
+        "id": "LML-BANDIT-REGRET-PULLCOUNT",
+        "source": "LeanMachineLearning/LML",
+        "declaration": "Bandits.regret_eq_sum_pullCount_mul_gap",
+        "module": "LeanMachineLearning.Online.Bandit.Regret",
+        "role": "Regret decomposition through arm pull counts.",
+        "status": "theorem-card",
+    },
+    {
+        "id": "LML-ETC-REGRET",
+        "source": "LeanMachineLearning/LML",
+        "declaration": "Bandits.ETC.regret_le",
+        "module": "LeanMachineLearning.Online.Bandit.Algorithms.ETC",
+        "role": "Explore-Then-Commit expected regret bound.",
+        "status": "theorem-card",
+    },
+    {
+        "id": "LML-UCB-REGRET",
+        "source": "LeanMachineLearning/LML",
+        "declaration": "Bandits.UCB.regret_le",
+        "module": "LeanMachineLearning.Online.Bandit.Algorithms.UCB",
+        "role": "UCB logarithmic pull-count regret route.",
+        "status": "theorem-card",
+    },
+    {
+        "id": "LML-TS-POSTERIOR-ACTION",
+        "source": "LeanMachineLearning/LML",
+        "declaration": "Bandits.TS.hasCondDistrib_action",
+        "module": "LeanMachineLearning.Online.Bandit.Algorithms.TS",
+        "role": "Thompson sampling action distribution equals posterior best-action distribution.",
+        "status": "theorem-card",
+    },
+    {
+        "id": "LML-TS-BAYES-REGRET",
+        "source": "LeanMachineLearning/LML",
+        "declaration": "Bandits.integral_regret_le",
+        "module": "LeanMachineLearning.Online.Bandit.Algorithms.Regret.BayesRegretTS",
+        "role": "Bayesian regret upper bound for Thompson sampling.",
+        "status": "theorem-card",
+    },
+]
+
+
+def now_iso() -> str:
+    return _dt.datetime.now(_dt.timezone.utc).replace(microsecond=0).isoformat()
+
+
+def stamp() -> str:
+    return _dt.datetime.now().strftime("%Y%m%d-%H%M%S")
+
+
+def rel(path: Path) -> str:
+    try:
+        return path.relative_to(ROOT).as_posix()
+    except ValueError:
+        return path.as_posix()
+
+
+def read_text(path: Path) -> str:
+    return path.read_text(encoding="utf-8")
+
+
+def write_text(path: Path, text: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(text, encoding="utf-8")
+    print(f"wrote {rel(path)}")
+
+
+def write_new(path: Path, text: str) -> None:
+    if path.exists():
+        raise SystemExit(f"refusing to overwrite existing file: {rel(path)}")
+    write_text(path, text)
+
+
+def write_if_missing(path: Path, text: str) -> bool:
+    if path.exists():
+        return False
+    write_text(path, text)
+    return True
+
+
+def append_line(path: Path, line: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a", encoding="utf-8") as handle:
+        handle.write(line + "\n")
+
+
+def append_jsonl(path: Path, record: dict) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a", encoding="utf-8") as handle:
+        handle.write(json.dumps(record, sort_keys=True, ensure_ascii=False) + "\n")
+
+
+def load_jsonl(path: Path) -> list[dict]:
+    if not path.exists():
+        return []
+    rows: list[dict] = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        rows.append(json.loads(line))
+    return rows
+
+
+def run(cmd: list[str]) -> int:
+    print("$ " + " ".join(shlex.quote(part) for part in cmd))
+    return subprocess.run(cmd, cwd=ROOT).returncode
+
+
+def run_capture(cmd: list[str]) -> tuple[int, str]:
+    completed = subprocess.run(
+        cmd,
+        cwd=ROOT,
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+    )
+    return completed.returncode, completed.stdout
+
+
+def task_file(task_id: str) -> Path:
+    return ROOT / "tasks" / f"{task_id}.md"
+
+
+def task_exists(task_id: str) -> bool:
+    return task_file(task_id).exists()
+
+
+def add_manifest(command: str, path: Path, kind: str, note: str) -> None:
+    if not MANIFEST.exists():
+        write_text(MANIFEST, "# Manifest\n\nAppend-only artifact ledger.\n")
+    append_line(MANIFEST, f"- `{now_iso()}` `{command}` `{kind}` `{rel(path)}` - {note}")
+
+
+def latest_run_dir() -> Path | None:
+    runs = [p for p in (ROOT / "runs").glob("*") if p.is_dir()]
+    if not runs:
+        return None
+    return sorted(runs, key=lambda p: p.name)[-1]
+
+
+def resolve_run_id(value: str) -> Path:
+    if value in {"", "latest"}:
+        found = latest_run_dir()
+        if found is None:
+            raise SystemExit("no run directories exist")
+        return found
+    path = ROOT / "runs" / value
+    if not path.exists():
+        raise SystemExit(f"run directory not found: {rel(path)}")
+    return path
+
+
+def read_optional(path: Path, limit: int = 8000) -> str:
+    if not path.exists():
+        return ""
+    text = path.read_text(encoding="utf-8")
+    return text[-limit:]
+
+
+def prompt_header(task_id: str, cycle: int, role: str) -> str:
+    return f"""# ABRL Harness Prompt
+
+Task id: `{task_id}`
+Cycle: `{cycle}`
+Role: `{role}`
+Harness: `hierarchical`
+
+Acceptance rule: a mathematical result is accepted only after the relevant Lean
+declaration compiles under `lake build && lake build Tests`, or after the
+obligation is explicitly recorded as blocked with a cited result and next leaf.
+
+"""
+
+
+def task_template(task_id: str, kind: str, title: str, target_lean: str) -> str:
+    return f"""# {title}
+
+Task id: `{task_id}`
+Kind: `{kind}`
+Status: `planned`
+Harness: `hierarchical`
+
+## Goal
+
+State the bandit/RL theorem, definition, or literature-port target.
+
+## Source
+
+- Paper or repository:
+- Theorem/lemma/section:
+- Existing Lean declaration:
+
+## Lean Target
+
+```lean
+-- target declaration names here
+```
+
+Target file: `{target_lean}`
+
+## Proof Obligations
+
+- [ ] Natural-language statement is mapped to Lean symbols.
+- [ ] Required model assumptions are explicit.
+- [ ] Probability, measurability, concentration, and stopping-time contracts are recorded.
+- [ ] Reusable theorem cards are identified before proof search.
+- [ ] `lake build && lake build Tests` passes.
+
+## Trial Logging
+
+```bash
+python3 tools/bandit.py trial-log --task {task_id} --role lower --kind attempt --status running --notes "..."
+python3 tools/bandit.py trial-summary
+```
+"""
+
+
+def conversion_window_template(task_id: str, title: str) -> str:
+    return f"""# Conversion Window: {title}
+
+Task id: `{task_id}`
+
+## Natural-Language Statement
+
+Write the theorem, proof fragment, or paper equation in precise prose.
+
+## Lean Mapping
+
+| Source symbol | Meaning | Lean declaration | Type / role | Status |
+| --- | --- | --- | --- | --- |
+| `A_t` | action at time `t` | | action process | unmapped |
+
+## Assumption Ledger
+
+| Assumption | Lean status | Source | Blocking? |
+| --- | --- | --- | --- |
+| finite action set | typed | task packet | no |
+| sub-Gaussian rewards | obligation | cited result | yes |
+
+## Proof-DAG
+
+| Node | Interface | Dependencies | Owner | Lean declaration | Human proof map | Gate | Status |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| root | target theorem | TBD | upper | | this file | `lake build && lake build Tests` | planned |
+
+## Gaps
+
+- [ ] Missing definition:
+- [ ] Missing lemma:
+- [ ] Missing cited-result entry:
+"""
+
+
+def proof_obligations_template(task_id: str, title: str) -> str:
+    return f"""# Proof Obligations: {title}
+
+Task id: `{task_id}`
+
+| Node | Target | Dependencies | Owner | Lean declaration | Gate | Status |
+| --- | --- | --- | --- | --- | --- | --- |
+| `{task_id}-ROOT` | root theorem or definition | conversion window | upper | TBD | `lake build && lake build Tests` | planned |
+
+## Reviewer Notes
+
+- Keep failed attempts in `proof-attempts/{task_id}/`.
+- Do not promote simulator checks, prose sketches, or theorem cards to certified memory.
+- If an LML theorem is used, cite the upstream declaration and record whether it is imported, ported, or only a theorem card.
+"""
+
+
+def make_prompt_deck(run_dir: Path, task_id: str, cycle: int, lower_count: int) -> list[Path]:
+    task_text = read_optional(task_file(task_id), 12000)
+    conversion_text = read_optional(ROOT / "conversion-windows" / f"{task_id}.md", 12000)
+    obligations_text = read_optional(ROOT / "proof-obligations" / f"{task_id}.md", 12000)
+    memory_text = read_optional(RETRIEVAL_INDEX_DIR / f"{task_id}.json", 12000)
+    context = f"""# Context
+
+Task file exists: `{task_exists(task_id)}`
+Lean gate: `lake build && lake build Tests`
+
+## Task
+
+{task_text or "_No task file found._"}
+
+## Conversion Window
+
+{conversion_text or "_No conversion window found._"}
+
+## Proof Obligations
+
+{obligations_text or "_No proof obligation ledger found._"}
+
+## Retrieval Memory
+
+```json
+{memory_text or "{}"}
+```
+"""
+    write_text(run_dir / "00_context.md", context)
+    write_text(run_dir / "dialogue.md", f"# Dialogue\n\nRun: `{run_dir.name}`\nTask: `{task_id}`\n")
+    write_text(run_dir / "todo.md", "- [ ] Upper selects proof frontier.\n- [ ] Middle updates conversion window and memory.\n- [ ] Lower attempts one leaf.\n- [ ] Reviewer runs gate and records status.\n")
+
+    prompts: list[Path] = []
+    upper = prompt_header(task_id, cycle, "upper") + """You are the theorem director.
+
+Produce:
+1. the exact theorem frontier for this cycle;
+2. the theorem cards or cited results that may be used;
+3. one or two active proof-DAG leaves;
+4. any rejected routes that must be written to memory.
+
+Do not ask lower agents to prove a theorem whose assumptions or source mapping
+are not in the conversion window.
+"""
+    write_text(run_dir / "10_upper_director.md", upper)
+    prompts.append(run_dir / "10_upper_director.md")
+
+    middle = prompt_header(task_id, cycle, "middle") + """You are the formalization and memory manager.
+
+Synchronize task, conversion window, proof obligations, theorem-card memory,
+and Lean declarations.  Produce lower-agent packets with exact file scope,
+target declaration, dependencies, and gate.
+"""
+    write_text(run_dir / "20_middle_formalizer.md", middle)
+    prompts.append(run_dir / "20_middle_formalizer.md")
+
+    for i in range(1, lower_count + 1):
+        lower_kind = ["proof architect", "Lean worker", "retrieval/search worker"][(i - 1) % 3]
+        body = prompt_header(task_id, cycle, f"lower-{i}") + f"""You are a lower {lower_kind}.
+
+Work on exactly one assigned leaf.  If the leaf is under-specified, write the
+missing assumption or source mapping into the appropriate memory file instead
+of changing the theorem.  If you edit Lean, run `lake build && lake build Tests`.
+"""
+        path = run_dir / f"3{i}_lower_{i}.md"
+        write_text(path, body)
+        prompts.append(path)
+
+    reviewer = prompt_header(task_id, cycle, "reviewer") + """You are the reviewer/build gate.
+
+Check target fidelity, hidden assumptions, stale leaves, and Lean status.  Run
+or request `python3 tools/bandit.py check`.  Record whether new work is:
+compiled, blocked, rejected, stale, or only theorem-card memory.
+"""
+    write_text(run_dir / "40_reviewer.md", reviewer)
+    prompts.append(run_dir / "40_reviewer.md")
+
+    write_text(run_dir / "90_handoff.md", "# Handoff\n\nPending cycle closeout.\n")
+    return prompts
+
+
+def format_agent_command(template: str, prompt: Path, run_dir: Path, task_id: str, cycle: int) -> str:
+    return template.format(
+        root=shlex.quote(str(ROOT)),
+        prompt=shlex.quote(str(prompt)),
+        run=shlex.quote(str(run_dir)),
+        task=shlex.quote(task_id),
+        cycle=str(cycle),
+    )
+
+
+def execute_prompt(template: str, prompt: Path, run_dir: Path, task_id: str, cycle: int) -> int:
+    command = format_agent_command(template, prompt, run_dir, task_id, cycle)
+    print("$ " + command)
+    start = time.perf_counter()
+    completed = subprocess.run(command, shell=True, cwd=ROOT)
+    elapsed = time.perf_counter() - start
+    append_jsonl(TRIAL_LOG, {
+        "time": now_iso(),
+        "task": task_id,
+        "role": "agent",
+        "kind": "attempt",
+        "status": "compiled" if completed.returncode == 0 else "failed",
+        "notes": f"executed {rel(prompt)} in {elapsed:.1f}s",
+        "run_id": run_dir.name,
+        "prompt": rel(prompt),
+        "exit_code": completed.returncode,
+    })
+    return completed.returncode
+
+
+def resolve_agent_profile_path(value: str) -> Path:
+    path = Path(value)
+    if path.exists():
+        return path
+    named = AGENT_PROFILE_DIR / value
+    if named.exists():
+        return named
+    if not value.endswith(".json"):
+        named_json = AGENT_PROFILE_DIR / f"{value}.json"
+        if named_json.exists():
+            return named_json
+    raise SystemExit(f"agent profile not found: {value}")
+
+
+def load_agent_profile(value: str) -> dict[str, str]:
+    if not value:
+        return {}
+    path = resolve_agent_profile_path(value)
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(data, dict):
+        raise SystemExit(f"agent profile must be a JSON object: {rel(path)}")
+    profile: dict[str, str] = {}
+    for key, command in data.items():
+        if not isinstance(key, str) or not isinstance(command, str):
+            raise SystemExit(f"agent profile entries must be string keys and values: {rel(path)}")
+        profile[key] = command
+    return profile
+
+
+def role_for_prompt(prompt: Path) -> str:
+    name = prompt.name
+    if name.startswith("10_"):
+        return "upper"
+    if name.startswith("20_"):
+        return "middle"
+    if name.startswith("3"):
+        return "lower"
+    if name.startswith("40_"):
+        return "reviewer"
+    return "agent"
+
+
+def command_for_prompt(prompt: Path, fallback: str, profile: dict[str, str]) -> str:
+    role = role_for_prompt(prompt)
+    if role in profile:
+        return profile[role]
+    if "default" in profile:
+        return profile["default"]
+    if fallback:
+        return fallback
+    raise SystemExit(f"no agent command for {rel(prompt)}; role={role}")
+
+
+def cmd_init(_args: argparse.Namespace) -> int:
+    for name in WORK_DIRS:
+        (ROOT / name).mkdir(parents=True, exist_ok=True)
+    STATE_DIR.mkdir(parents=True, exist_ok=True)
+    write_if_missing(STATE_FILE, json.dumps({"created": now_iso(), "harness": "hierarchical"}, indent=2) + "\n")
+    write_if_missing(MANIFEST, "# Manifest\n\nAppend-only artifact ledger.\n")
+    for name in WORK_DIRS:
+        write_if_missing(ROOT / name / "README.md", f"# {name}\n\nManaged by `tools/bandit.py`.\n")
+    write_if_missing(AGENT_PROFILE_DIR / "local-echo.example.json", json.dumps({
+        "upper": "sed -n '1,220p' {prompt}",
+        "middle": "sed -n '1,220p' {prompt}",
+        "lower": "sed -n '1,220p' {prompt}",
+        "reviewer": "sed -n '1,220p' {prompt}",
+    }, indent=2) + "\n")
+    add_manifest("bandit.py init", STATE_FILE, "state", "initialized work directories")
+    return 0
+
+
+def cmd_new_task(args: argparse.Namespace) -> int:
+    path = task_file(args.id)
+    write_new(path, task_template(args.id, args.kind, args.title, args.target_lean))
+    write_if_missing(ROOT / "conversion-windows" / f"{args.id}.md", conversion_window_template(args.id, args.title))
+    write_if_missing(ROOT / "proof-obligations" / f"{args.id}.md", proof_obligations_template(args.id, args.title))
+    add_manifest("bandit.py new-task", path, "task", args.title)
+    return 0
+
+
+def cmd_conversion_window(args: argparse.Namespace) -> int:
+    path = ROOT / "conversion-windows" / f"{args.id}.md"
+    write_new(path, conversion_window_template(args.id, args.title))
+    add_manifest("bandit.py conversion-window", path, "conversion-window", args.title)
+    return 0
+
+
+def cmd_agent_brief(args: argparse.Namespace) -> int:
+    task_text = read_optional(task_file(args.id), 12000)
+    text = f"""# Agent Brief: {args.id}
+
+Role: `{args.role}`
+
+## Task Context
+
+{task_text or "_No task file found._"}
+
+## Instructions
+
+- Work within the hierarchical harness.
+- Keep theorem cards separate from compiled Lean certificates.
+- Log attempts with `python3 tools/bandit.py trial-log`.
+"""
+    path = ROOT / "agent-briefs" / f"{args.id}-{args.role}.md"
+    write_new(path, text)
+    add_manifest("bandit.py agent-brief", path, "agent-brief", args.role)
+    return 0
+
+
+def cmd_trial_log(args: argparse.Namespace) -> int:
+    if args.role not in AGENT_ROLES:
+        raise SystemExit(f"--role must be one of {AGENT_ROLES}")
+    if args.kind not in TRIAL_KINDS:
+        raise SystemExit(f"--kind must be one of {TRIAL_KINDS}")
+    if args.status not in TRIAL_STATUSES:
+        raise SystemExit(f"--status must be one of {TRIAL_STATUSES}")
+    record = {
+        "time": now_iso(),
+        "task": args.task,
+        "role": args.role,
+        "kind": args.kind,
+        "status": args.status,
+        "notes": args.notes,
+        "lean": args.lean,
+        "source": args.source,
+        "run_id": args.run_id,
+    }
+    append_jsonl(TRIAL_LOG, record)
+    print(json.dumps(record, indent=2, ensure_ascii=False))
+    return 0
+
+
+def cmd_trial_summary(_args: argparse.Namespace) -> int:
+    rows = load_jsonl(TRIAL_LOG)
+    fields = ["time", "task", "role", "kind", "status", "lean", "source", "run_id", "notes"]
+    TRIAL_SUMMARY.parent.mkdir(parents=True, exist_ok=True)
+    with TRIAL_SUMMARY.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fields)
+        writer.writeheader()
+        for row in rows:
+            writer.writerow({field: row.get(field, "") for field in fields})
+    print(f"wrote {rel(TRIAL_SUMMARY)} with {len(rows)} rows")
+    return 0
+
+
+def cmd_agent_note(args: argparse.Namespace) -> int:
+    run_dir = resolve_run_id(args.run_id)
+    message = args.message
+    if args.file:
+        message = read_text(Path(args.file))
+    if not message:
+        raise SystemExit("agent-note requires --message or --file")
+    append_line(run_dir / "dialogue.md", f"\n## {args.role} - {now_iso()}\n\n{message}\n")
+    print(f"appended note to {rel(run_dir / 'dialogue.md')}")
+    return 0
+
+
+def cmd_reference_index(_args: argparse.Namespace) -> int:
+    path = RETRIEVAL_INDEX_DIR / "lml_bandit_cards.json"
+    write_text(path, json.dumps({
+        "source": "https://github.com/LeanMachineLearning/LML",
+        "seed_commit": LML_SEED_COMMIT,
+        "seed_date": LML_SEED_DATE,
+        "cards": LML_CARDS,
+    }, indent=2) + "\n")
+    add_manifest("bandit.py reference-index", path, "retrieval-index", "refreshed LML theorem cards")
+    return 0
+
+
+def cmd_list_literature(_args: argparse.Namespace) -> int:
+    for card in LML_CARDS:
+        print(f"{card['id']}: {card['declaration']} ({card['module']})")
+    return 0
+
+
+def cmd_blueprint_refresh(args: argparse.Namespace) -> int:
+    if not task_exists(args.id):
+        raise SystemExit(f"task file not found: {rel(task_file(args.id))}")
+    task_text = read_optional(task_file(args.id), 14000)
+    conversion_text = read_optional(ROOT / "conversion-windows" / f"{args.id}.md", 14000)
+    obligations_text = read_optional(ROOT / "proof-obligations" / f"{args.id}.md", 14000)
+    trials = [row for row in load_jsonl(TRIAL_LOG) if row.get("task") == args.id][-20:]
+    text = f"""# Proof Blueprint: {args.id}
+
+Generated: `{now_iso()}`
+
+## Source Task
+
+{task_text}
+
+## Conversion Window Snapshot
+
+{conversion_text or "_No conversion window found._"}
+
+## Obligation Snapshot
+
+{obligations_text or "_No proof obligation ledger found._"}
+
+## Relevant LML Theorem Cards
+
+```json
+{json.dumps(LML_CARDS, indent=2)}
+```
+
+## Recent Trials
+
+```json
+{json.dumps(trials, indent=2, ensure_ascii=False)}
+```
+
+## Reviewer Gate
+
+```bash
+python3 tools/bandit.py check
+```
+"""
+    path = BLUEPRINT_DIR / f"{args.id}.md"
+    write_text(path, text)
+    add_manifest("bandit.py blueprint-refresh", path, "proof-blueprint", args.id)
+    return 0
+
+
+def cmd_memory_refresh(args: argparse.Namespace) -> int:
+    trials = [row for row in load_jsonl(TRIAL_LOG) if row.get("task") == args.id][-50:]
+    index = {
+        "task": args.id,
+        "generated": now_iso(),
+        "harness": "hierarchical",
+        "lml_seed_commit": LML_SEED_COMMIT,
+        "lml_seed_date": LML_SEED_DATE,
+        "lml_cards": LML_CARDS,
+        "recent_trials": trials,
+        "open_memory_files": [
+            f"research-wiki/lml/{args.id}.md",
+            f"proof-attempts/{args.id}/",
+            f"proof-obligations/{args.id}.md",
+            f"conversion-windows/{args.id}.md",
+        ],
+    }
+    path = RETRIEVAL_INDEX_DIR / f"{args.id}.json"
+    write_text(path, json.dumps(index, indent=2, ensure_ascii=False) + "\n")
+    if args.run_id:
+        run_dir = resolve_run_id(args.run_id)
+        digest = f"""# Memory Digest
+
+Task: `{args.id}`
+Generated: `{now_iso()}`
+
+Recent trials: `{len(trials)}`
+Retrieval index: `{rel(path)}`
+
+Next agents should read the task, conversion window, proof obligations, and
+LML theorem-card index before editing Lean.
+"""
+        write_text(run_dir / "memory_digest.md", digest)
+    add_manifest("bandit.py memory-refresh", path, "retrieval-index", args.id)
+    return 0
+
+
+def cmd_export_proof(args: argparse.Namespace) -> int:
+    out_dir = PROBLEM_EXPORT_DIR / args.id
+    tex = f"""% Auto-generated proof export skeleton for {args.id}
+\\section{{{args.title}}}
+
+\\paragraph{{Status.}}
+This note is a synchronized natural-language export for task \\texttt{{{args.id}}}.
+Only Lean declarations that pass \\texttt{{lake build \\&\\& lake build Tests}} should be
+stated as proved.
+
+\\paragraph{{Lean declarations.}}
+Add theorem names here.
+
+\\paragraph{{Proof map.}}
+Translate the compiled Lean proof into paper-readable mathematics here.
+"""
+    md = f"""# Proof Export: {args.title}
+
+Task id: `{args.id}`
+
+Status: synchronized skeleton.
+
+## Lean Declarations
+
+- TBD
+
+## Natural-Language Proof
+
+Write the paper-readable proof after Lean closure.
+"""
+    write_text(out_dir / "latest.tex", tex)
+    write_text(out_dir / "latest.md", md)
+    add_manifest("bandit.py export-proof", out_dir / "latest.tex", "proof-export", args.id)
+    return 0
+
+
+def cmd_run_cycle(args: argparse.Namespace) -> int:
+    run_dir = ROOT / "runs" / f"{stamp()}-{args.id}-cycle{args.cycle:02d}"
+    run_dir.mkdir(parents=True, exist_ok=False)
+    prompts = make_prompt_deck(run_dir, args.id, args.cycle, args.lower_count)
+    append_jsonl(TRIAL_LOG, {
+        "time": now_iso(),
+        "task": args.id,
+        "role": "upper",
+        "kind": "plan",
+        "status": "queued",
+        "notes": f"created hierarchical prompt deck with {args.lower_count} lower prompts",
+        "run_id": run_dir.name,
+    })
+    if args.execute:
+        profile = load_agent_profile(args.agent_profile)
+        if not args.agent_cmd and not profile:
+            raise SystemExit("--execute requires --agent-cmd or --agent-profile")
+        code = 0
+        for prompt in prompts:
+            command = command_for_prompt(prompt, args.agent_cmd, profile)
+            code = execute_prompt(command, prompt, run_dir, args.id, args.cycle)
+            if code != 0 and args.stop_on_error:
+                break
+        return code
+    print(f"created run deck: {rel(run_dir)}")
+    return 0
+
+
+def cmd_sleep_run(args: argparse.Namespace) -> int:
+    code = 0
+    for cycle in range(1, args.cycles + 1):
+        ns = argparse.Namespace(
+            id=args.id,
+            cycle=cycle,
+            lower_count=args.lower_count,
+            execute=args.execute,
+            agent_cmd=args.agent_cmd,
+            agent_profile=args.agent_profile,
+            stop_on_error=args.stop_on_error,
+        )
+        code = cmd_run_cycle(ns)
+        if code != 0 and args.stop_on_error:
+            return code
+        if args.check_each_cycle:
+            code = cmd_check(argparse.Namespace())
+            if code != 0 and args.stop_on_error:
+                return code
+        cmd_memory_refresh(argparse.Namespace(id=args.id, run_id="latest"))
+    return code
+
+
+def cmd_check(_args: argparse.Namespace) -> int:
+    code = run(["lake", "build"])
+    if code != 0:
+        return code
+    code = run(["lake", "build", "Tests"])
+    if code != 0:
+        return code
+    pattern = r"\b(sorry|admit|axiom|postulate)\b"
+    if shutil.which("rg"):
+        code, out = run_capture(["rg", "-n", pattern, "BanditRLProof", "Tests"])
+        if code == 0:
+            print(out)
+            print("forbidden placeholder scan failed")
+            return 1
+        if code not in (0, 1):
+            print(out)
+            return code
+    else:
+        for root in ["BanditRLProof", "Tests"]:
+            for path in (ROOT / root).rglob("*.lean"):
+                text = path.read_text(encoding="utf-8")
+                if re.search(pattern, text):
+                    print(f"forbidden placeholder in {rel(path)}")
+                    return 1
+    print("check passed")
+    return 0
+
+
+def cmd_next_task(_args: argparse.Namespace) -> int:
+    tasks = sorted((ROOT / "tasks").glob("*.md"))
+    if not tasks:
+        print("no tasks")
+        return 0
+    for path in tasks:
+        text = path.read_text(encoding="utf-8", errors="ignore")
+        status = "unknown"
+        match = re.search(r"Status:\s*`([^`]+)`", text)
+        if match:
+            status = match.group(1)
+        print(f"{path.stem}: {status} ({rel(path)})")
+    return 0
+
+
+def build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(description="ABRL local harness helper")
+    sub = parser.add_subparsers(dest="cmd", required=True)
+
+    p = sub.add_parser("init", help="initialize work directories")
+    p.set_defaults(func=cmd_init)
+
+    p = sub.add_parser("new-task", help="create task, conversion window, and proof ledger")
+    p.add_argument("id")
+    p.add_argument("--kind", default="theoremFormalization")
+    p.add_argument("--title", required=True)
+    p.add_argument("--target-lean", default="BanditRLProof/OpenProblems.lean")
+    p.set_defaults(func=cmd_new_task)
+
+    p = sub.add_parser("conversion-window", help="create a conversion window")
+    p.add_argument("id")
+    p.add_argument("--title", required=True)
+    p.set_defaults(func=cmd_conversion_window)
+
+    p = sub.add_parser("agent-brief", help="create an agent brief")
+    p.add_argument("id")
+    p.add_argument("--role", choices=AGENT_ROLES, default="lower")
+    p.set_defaults(func=cmd_agent_brief)
+
+    p = sub.add_parser("trial-log", help="append a trial record")
+    p.add_argument("--task", required=True)
+    p.add_argument("--role", required=True)
+    p.add_argument("--kind", required=True)
+    p.add_argument("--status", required=True)
+    p.add_argument("--notes", default="")
+    p.add_argument("--lean", default="")
+    p.add_argument("--source", default="")
+    p.add_argument("--run-id", default="")
+    p.set_defaults(func=cmd_trial_log)
+
+    p = sub.add_parser("trial-summary", help="rewrite trial summary CSV")
+    p.set_defaults(func=cmd_trial_summary)
+
+    p = sub.add_parser("agent-note", help="append a role note to run dialogue")
+    p.add_argument("run_id")
+    p.add_argument("--role", choices=AGENT_ROLES, default="middle")
+    p.add_argument("--message", default="")
+    p.add_argument("--file", default="")
+    p.set_defaults(func=cmd_agent_note)
+
+    p = sub.add_parser("reference-index", help="refresh LML theorem-card index")
+    p.set_defaults(func=cmd_reference_index)
+
+    p = sub.add_parser("list-literature", help="list built-in theorem cards")
+    p.set_defaults(func=cmd_list_literature)
+
+    p = sub.add_parser("blueprint-refresh", help="refresh proof blueprint snapshot")
+    p.add_argument("id")
+    p.set_defaults(func=cmd_blueprint_refresh)
+
+    p = sub.add_parser("memory-refresh", help="refresh retrieval memory")
+    p.add_argument("id")
+    p.add_argument("--run-id", default="")
+    p.set_defaults(func=cmd_memory_refresh)
+
+    p = sub.add_parser("export-proof", help="create Markdown and LaTeX proof export skeletons")
+    p.add_argument("id")
+    p.add_argument("--title", required=True)
+    p.set_defaults(func=cmd_export_proof)
+
+    p = sub.add_parser("run-cycle", help="create or execute one hierarchical prompt deck")
+    p.add_argument("id")
+    p.add_argument("--cycle", type=int, default=1)
+    p.add_argument("--lower-count", type=int, default=3)
+    p.add_argument("--execute", action="store_true")
+    p.add_argument("--agent-cmd", default="")
+    p.add_argument("--agent-profile", default="")
+    p.add_argument("--stop-on-error", action="store_true")
+    p.set_defaults(func=cmd_run_cycle)
+
+    p = sub.add_parser("sleep-run", help="create or execute repeated hierarchical cycles")
+    p.add_argument("id")
+    p.add_argument("--cycles", type=int, default=1)
+    p.add_argument("--lower-count", type=int, default=3)
+    p.add_argument("--execute", action="store_true")
+    p.add_argument("--agent-cmd", default="")
+    p.add_argument("--agent-profile", default="")
+    p.add_argument("--check-each-cycle", action="store_true")
+    p.add_argument("--stop-on-error", action="store_true")
+    p.set_defaults(func=cmd_sleep_run)
+
+    p = sub.add_parser("check", help="run Lean build gate and placeholder scan")
+    p.set_defaults(func=cmd_check)
+
+    p = sub.add_parser("next-task", help="list known tasks")
+    p.set_defaults(func=cmd_next_task)
+
+    return parser
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = build_parser()
+    args = parser.parse_args(argv)
+    return args.func(args)
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

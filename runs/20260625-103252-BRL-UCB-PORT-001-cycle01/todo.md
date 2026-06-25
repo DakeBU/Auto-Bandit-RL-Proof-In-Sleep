@@ -1,0 +1,4 @@
+- [ ] Upper selects proof frontier.
+- [ ] Middle updates conversion window and memory.
+- [ ] Lower attempts one leaf.
+- [ ] Reviewer runs gate and records status.
