@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="430" viewBox="0 0 1280 430" role="img" aria-labelledby="title desc">
+  <title id="title">ABRL contract pipeline</title>
+  <desc id="desc">A pipeline from literature theorem or new idea to theorem cards, proof DAG, Lean certificate, natural language export, and reusable memory.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f8fafc"/>
+      <stop offset="0.52" stop-color="#eef6f5"/>
+      <stop offset="1" stop-color="#fff7ed"/>
+    </linearGradient>
+    <linearGradient id="cardA" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f766e"/>
+      <stop offset="1" stop-color="#115e59"/>
+    </linearGradient>
+    <linearGradient id="cardB" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2563eb"/>
+      <stop offset="1" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <linearGradient id="cardC" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#475569"/>
+      <stop offset="1" stop-color="#334155"/>
+    </linearGradient>
+    <linearGradient id="cardD" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#d97706"/>
+      <stop offset="1" stop-color="#b45309"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-30%" width="140%" height="170%">
+      <feDropShadow dx="0" dy="14" stdDeviation="12" flood-color="#0f172a" flood-opacity="0.16"/>
+    </filter>
+    <marker id="arrow" markerWidth="14" markerHeight="14" refX="10" refY="7" orient="auto">
+      <path d="M 0 0 L 14 7 L 0 14 z" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <rect width="1280" height="430" rx="28" fill="url(#bg)"/>
+  <rect x="34" y="32" width="1212" height="366" rx="24" fill="#ffffff" opacity="0.72" stroke="#dbe4ec"/>
+
+  <text x="70" y="76" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="30" font-weight="800" fill="#0f172a">ABRL proof contract</text>
+  <text x="70" y="108" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="15" fill="#475569">Every accepted claim must pass through theorem-card memory, proof-DAG work, and the Lean gate before publication.</text>
+
+  <g filter="url(#shadow)">
+    <rect x="70" y="156" width="178" height="120" rx="18" fill="url(#cardA)"/>
+    <rect x="290" y="156" width="178" height="120" rx="18" fill="url(#cardB)"/>
+    <rect x="510" y="156" width="178" height="120" rx="18" fill="url(#cardC)"/>
+    <rect x="730" y="156" width="178" height="120" rx="18" fill="url(#cardB)"/>
+    <rect x="950" y="156" width="178" height="120" rx="18" fill="url(#cardD)"/>
+  </g>
+
+  <g font-family="Inter, ui-sans-serif, system-ui, sans-serif" fill="#ffffff">
+    <text x="96" y="196" font-size="19" font-weight="800">Literature or</text>
+    <text x="96" y="220" font-size="19" font-weight="800">new proof idea</text>
+    <text x="96" y="248" font-size="13" opacity="0.88">papers, LML, RL topics</text>
+
+    <text x="316" y="196" font-size="19" font-weight="800">Theorem cards</text>
+    <text x="316" y="220" font-size="19" font-weight="800">and assumptions</text>
+    <text x="316" y="248" font-size="13" opacity="0.88">source, status, blockers</text>
+
+    <text x="536" y="196" font-size="19" font-weight="800">Proof-DAG</text>
+    <text x="536" y="220" font-size="19" font-weight="800">active leaves</text>
+    <text x="536" y="248" font-size="13" opacity="0.88">one local target at a time</text>
+
+    <text x="756" y="196" font-size="19" font-weight="800">Lean gate</text>
+    <text x="756" y="220" font-size="19" font-weight="800">certificate</text>
+    <text x="756" y="248" font-size="13" opacity="0.88">lake build and Tests</text>
+
+    <text x="976" y="196" font-size="19" font-weight="800">Markdown and</text>
+    <text x="976" y="220" font-size="19" font-weight="800">LaTeX export</text>
+    <text x="976" y="248" font-size="13" opacity="0.88">paper-readable proof</text>
+  </g>
+
+  <g stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)">
+    <path d="M 252 216 L 282 216"/>
+    <path d="M 472 216 L 502 216"/>
+    <path d="M 692 216 L 722 216"/>
+    <path d="M 912 216 L 942 216"/>
+  </g>
+
+  <path d="M 1038 290 C 940 358, 362 358, 164 292" fill="none" stroke="#0f766e" stroke-width="3" stroke-dasharray="9 8" marker-end="url(#arrow)"/>
+  <text x="454" y="345" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="700" fill="#0f766e">certified theorem, rejected route, and blocker memory feed the next task</text>
+
+  <g font-family="Inter, ui-sans-serif, system-ui, sans-serif">
+    <rect x="70" y="305" width="196" height="34" rx="17" fill="#ecfeff" stroke="#67e8f9"/>
+    <text x="92" y="327" font-size="13" font-weight="700" fill="#155e75">Insight is not a proof</text>
+    <rect x="950" y="305" width="230" height="34" rx="17" fill="#fffbeb" stroke="#fbbf24"/>
+    <text x="972" y="327" font-size="13" font-weight="700" fill="#92400e">Export only after Lean closure</text>
+  </g>
+</svg>

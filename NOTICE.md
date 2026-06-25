@@ -11,6 +11,9 @@ lean-stat-learning-theory source code.
   https://github.com/DakeBU/Quantum-Computing-Block-Encoding, MIT License.
 - Auto-claude-code-research-in-sleep (ARIS),
   https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep, MIT License.
+- Learning Beyond Gradients,
+  https://github.com/Trinkle23897/learning-beyond-gradients.
+- EoH, https://github.com/FeiLiu36/EoH, MIT License.
 - LeanMachineLearning/LML,
   https://github.com/LeanMachineLearning/LML, Apache-2.0 License.
 - LeanMarathon, https://github.com/YuanheZ/LeanMarathon.

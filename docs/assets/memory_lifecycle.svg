@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="500" viewBox="0 0 1280 500" role="img" aria-labelledby="title desc">
+  <title id="title">ABRL memory lifecycle</title>
+  <desc id="desc">The memory lifecycle separates theorem cards, proof obligations, failed attempts, compiled declarations, and proof exports.</desc>
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff7ed"/>
+      <stop offset="0.5" stop-color="#f8fafc"/>
+      <stop offset="1" stop-color="#ecfeff"/>
+    </linearGradient>
+    <filter id="shadow3" x="-20%" y="-25%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#0f172a" flood-opacity="0.13"/>
+    </filter>
+    <marker id="arrow3" markerWidth="14" markerHeight="14" refX="10" refY="7" orient="auto">
+      <path d="M 0 0 L 14 7 L 0 14 z" fill="#475569"/>
+    </marker>
+  </defs>
+
+  <rect width="1280" height="500" rx="28" fill="url(#bg3)"/>
+  <text x="70" y="70" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="32" font-weight="800" fill="#0f172a">Memory lifecycle</text>
+  <text x="70" y="102" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="15" fill="#475569">ABRL keeps unfinished proof technology useful without confusing it with certified Lean results.</text>
+
+  <g filter="url(#shadow3)" font-family="Inter, ui-sans-serif, system-ui, sans-serif">
+    <rect x="95" y="165" width="210" height="92" rx="18" fill="#ffffff" stroke="#fdba74"/>
+    <text x="125" y="200" font-size="18" font-weight="800" fill="#9a3412">Theorem cards</text>
+    <text x="125" y="226" font-size="13" fill="#7c2d12">LML, papers, prior proofs</text>
+
+    <rect x="390" y="92" width="220" height="92" rx="18" fill="#ffffff" stroke="#93c5fd"/>
+    <text x="420" y="127" font-size="18" font-weight="800" fill="#1d4ed8">Conversion windows</text>
+    <text x="420" y="153" font-size="13" fill="#1e3a8a">symbols and assumptions</text>
+
+    <rect x="390" y="300" width="220" height="92" rx="18" fill="#ffffff" stroke="#c4b5fd"/>
+    <text x="420" y="335" font-size="18" font-weight="800" fill="#5b21b6">Proof attempts</text>
+    <text x="420" y="361" font-size="13" fill="#4c1d95">errors, fragments, blockers</text>
+
+    <rect x="700" y="165" width="230" height="92" rx="18" fill="#ffffff" stroke="#86efac"/>
+    <text x="730" y="200" font-size="18" font-weight="800" fill="#166534">Compiled Lean</text>
+    <text x="730" y="226" font-size="13" fill="#14532d">local certificate only</text>
+
+    <rect x="1015" y="165" width="190" height="92" rx="18" fill="#ffffff" stroke="#fcd34d"/>
+    <text x="1045" y="200" font-size="18" font-weight="800" fill="#92400e">Proof export</text>
+    <text x="1045" y="226" font-size="13" fill="#78350f">Markdown and LaTeX</text>
+  </g>
+
+  <g stroke="#475569" stroke-width="3" fill="none" marker-end="url(#arrow3)">
+    <path d="M 306 211 C 338 178, 350 147, 382 138"/>
+    <path d="M 306 220 C 348 270, 350 327, 382 344"/>
+    <path d="M 612 138 C 660 138, 672 193, 692 204"/>
+    <path d="M 612 344 C 662 335, 672 246, 692 224"/>
+    <path d="M 932 211 L 1007 211"/>
+  </g>
+
+  <path d="M 1110 274 C 1042 436, 270 444, 200 275" fill="none" stroke="#0f766e" stroke-width="3" stroke-dasharray="10 8" marker-end="url(#arrow3)"/>
+  <text x="462" y="438" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="700" fill="#0f766e">exports and failures both update retrieval memory</text>
+
+  <g font-family="Inter, ui-sans-serif, system-ui, sans-serif">
+    <rect x="450" y="212" width="322" height="34" rx="17" fill="#fef2f2" stroke="#fca5a5"/>
+    <text x="474" y="234" font-size="13" font-weight="800" fill="#991b1b">Theorem card status never equals local proof status</text>
+  </g>
+</svg>

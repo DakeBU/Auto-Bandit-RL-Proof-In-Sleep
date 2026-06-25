@@ -22,6 +22,15 @@ filesystem locations.
 - [Auto-claude-code-research-in-sleep](https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep),
   MIT License.  Similar pattern studied for plain-file research workflow,
   local skills, task packets, reviews, and run logs.
+- [Learning Beyond Gradients](https://github.com/Trinkle23897/learning-beyond-gradients).
+  Similar pattern studied for persistent trial memory, layered feedback,
+  append-only experiment traces, and iterative system improvement.  ABRL adapts
+  this as trial JSONL, summary CSV, failed-route memory, and reviewer-guided
+  proof-system maintenance.
+- [EoH](https://github.com/FeiLiu36/EoH), MIT License.  Similar pattern
+  studied for evolutionary search over structured candidate solutions.  ABRL
+  adapts the idea only for future theorem-route and proof-DAG candidate
+  populations under a fixed Lean-checkable target.
 - [LeanMarathon](https://github.com/YuanheZ/LeanMarathon).  Similar pattern
   studied for target review, proof-blueprint snapshots, dynamic proof leaves,
   worker/refiner roles, and deterministic gates.

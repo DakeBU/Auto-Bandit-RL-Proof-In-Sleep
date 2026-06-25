@@ -45,10 +45,14 @@ Natural-language sketches, theorem cards, simulator checks, and external
 answers can guide the search.  They do not become achieved results until the
 relevant Lean declarations compile.
 
+![ABRL contract pipeline](docs/assets/abrl_contract_pipeline.svg)
+
 ## Harness Profile
 
 ABRL intentionally starts with the first ABEIS-style harness profile: one
 Hierarchical Harness.  There is no website in this repository.
+
+![ABRL hierarchical harness](docs/assets/hierarchical_harness.svg)
 
 | Layer | Responsibility | Main artifacts |
 | --- | --- | --- |
@@ -63,20 +67,10 @@ same task packet and proof-obligation ledger.
 
 ## Core Workflow
 
-```mermaid
-flowchart LR
-  A["paper theorem or new idea"] --> B["upper fixes theorem target"]
-  B --> C["middle maps assumptions and Lean names"]
-  C --> D["retrieval worker finds theorem cards"]
-  C --> E["proof architect builds proof-DAG"]
-  E --> F["Lean worker proves one active leaf"]
-  D --> F
-  F --> G["reviewer runs Lean gate"]
-  G --> H{"compiled?"}
-  H -- yes --> I["certified memory and proof export"]
-  H -- no --> J["blocked/rejected route memory"]
-  J --> C
-```
+The core loop is intentionally conservative: retrieve existing theorem cards,
+write a narrow proof-DAG leaf, run Lean, then compress the result into memory.
+The harness should improve by accumulating reusable proof blocks, not by
+letting agents silently change theorem targets.
 
 ## Quick Start
 
@@ -145,6 +139,8 @@ Only compiled local declarations enter certified memory.  Theorem cards from
 upstream libraries stay marked as theorem cards until imported or ported and
 build-tested in this repository.
 
+![ABRL memory lifecycle](docs/assets/memory_lifecycle.svg)
+
 ## LML Integration
 
 [LeanMachineLearning/LML][lml] is the primary external Lean reference for this
@@ -183,6 +179,8 @@ and RL proof libraries.
 | --- | --- | --- |
 | [ABEIS][abeis] | Hierarchical harness, Lean gate, conversion windows, proof obligations, proof export. | Default upper/middle/lower/reviewer workflow and acceptance rule. |
 | [ARIS][aris] | Plain-file autonomous research workflow, skills, reviews, run logs. | Inspectable task packets, research wiki, prompt decks, and local CLI. |
+| [Learning Beyond Gradients][lbg] | Iterative system improvement through layered feedback and persistent trial memory. | Trial JSONL, summary CSV, failed-route memory, and upper/middle/lower/reviewer maintenance loops. |
+| [EoH][eoh] | Evolutionary search over structured candidate solutions. | Future theorem-route and proof-DAG candidate populations under a fixed Lean-checkable target. |
 | [LeanMachineLearning/LML][lml] | Lean formalization of bandit algorithms and regret bounds. | Theorem-card memory and future import/port target. |
 | [LeanMarathon][leanmarathon] | Proof blueprint, target review, dynamic leaves, deterministic gates. | Proof-blueprint snapshots and one-leaf lower-agent packets. |
 | [lean-stat-learning-theory][lean-slt] | Concentration and empirical-process formalization at ML-theory scale. | Proof-engineering reference for concentration and learning-theory lemmas. |
@@ -203,6 +201,8 @@ More detail is in [`docs/attribution.md`](docs/attribution.md) and
 
 [abeis]: https://github.com/DakeBU/Quantum-Computing-Block-Encoding
 [aris]: https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep
+[lbg]: https://github.com/Trinkle23897/learning-beyond-gradients
+[eoh]: https://github.com/FeiLiu36/EoH
 [lml]: https://github.com/LeanMachineLearning/LML
 [leanmarathon]: https://github.com/YuanheZ/LeanMarathon
 [lean-slt]: https://github.com/YuanheZ/lean-stat-learning-theory
