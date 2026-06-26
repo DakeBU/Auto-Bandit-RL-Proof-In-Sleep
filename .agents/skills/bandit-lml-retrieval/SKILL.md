@@ -15,6 +15,8 @@ Read:
 
 - `research-wiki/lml/theorem-cards.md`;
 - `research-wiki/retrieval-index/lml_bandit_cards.json`;
+- `research-wiki/mathlib/theorem-cards.md`;
+- `research-wiki/scenarios/bandit-scenario-atlas.md`;
 - the task conversion window.
 
 If a local LML checkout is available, agents may inspect it through an
@@ -40,6 +42,21 @@ The default is `card-only`.
 - `Bandits.UCB.regret_le`
 - `Bandits.TS.hasCondDistrib_action`
 - `Bandits.integral_regret_le`
+
+## Companion Search
+
+For each LML theorem card, search companion Mathlib cards before creating
+local glue:
+
+```bash
+python3 tools/bandit.py reference-index
+python3 tools/bandit.py search-memory regret
+python3 tools/bandit.py search-memory Finset.sum
+python3 tools/bandit.py search-memory integrable
+```
+
+Record whether each supporting leaf is already in Mathlib, is an ABRL
+`mathlib-candidate`, or is only theorem-card memory.
 
 ## Reviewer Rule
 

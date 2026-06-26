@@ -19,6 +19,12 @@ def exploreArm (spec : Spec K) (t : Nat) : Fin K :=
 @[simp] theorem exploreArm_val (spec : Spec K) (t : Nat) :
     (exploreArm spec t).val = t % K := rfl
 
+theorem exploreArm_eq_of_mod_eq (spec : Spec K) {s t : Nat}
+    (h : s % K = t % K) :
+    exploreArm spec s = exploreArm spec t := by
+  apply Fin.ext
+  exact h
+
 /-- Commit-phase selector.  A concrete theorem should replace this by argmax. -/
 structure CommitOracle (K : Nat) where
   choose : (Fin K → Rat) → Fin K

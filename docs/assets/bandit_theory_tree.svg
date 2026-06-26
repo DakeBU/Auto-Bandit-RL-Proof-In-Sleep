@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="960" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+  <title id="title">ABRL bandit theory tree</title>
+  <desc id="desc">A broad dependency tree for reproducing bandit and RL theory in Lean, connecting textbooks, Mathlib cards, algorithm branches, modern scenarios, and proof export.</desc>
+  <defs>
+    <filter id="shadow" x="-20%" y="-25%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#0f172a" flood-opacity="0.14"/>
+    </filter>
+    <marker id="arrow" markerWidth="13" markerHeight="13" refX="10" refY="6.5" orient="auto">
+      <path d="M 0 0 L 13 6.5 L 0 13 z" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <rect width="1600" height="960" rx="24" fill="#f8fafc"/>
+  <rect x="0" y="0" width="1600" height="132" fill="#ffffff"/>
+  <text x="54" y="78" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="44" font-weight="900" fill="#111827">ABRL bandit/RL theory tree</text>
+  <path d="M 0 130 L 565 130" stroke="#d97706" stroke-width="4"/>
+  <text x="54" y="112" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="18" fill="#475569">Textbook roots, Mathlib reusable leaves, algorithm wrappers, modern scenarios, and proof export.</text>
+
+  <g font-family="Inter, ui-sans-serif, system-ui, sans-serif" filter="url(#shadow)">
+    <rect x="70" y="174" width="330" height="176" rx="22" fill="#eff6ff" stroke="#2563eb" stroke-width="4"/>
+    <text x="104" y="216" font-size="24" font-weight="900" fill="#1e40af">Textbook roots</text>
+    <text x="104" y="252" font-size="16" font-weight="800" fill="#0f172a">Bubeck-Cesa-Bianchi 2012</text>
+    <text x="104" y="282" font-size="16" font-weight="800" fill="#0f172a">Lattimore-Szepesvari 2020</text>
+    <text x="104" y="312" font-size="16" font-weight="800" fill="#0f172a">Slivkins 2019/2024</text>
+
+    <rect x="460" y="174" width="350" height="176" rx="22" fill="#ecfeff" stroke="#0891b2" stroke-width="4"/>
+    <text x="494" y="216" font-size="24" font-weight="900" fill="#0e7490">Mathlib retrieval cards</text>
+    <text x="494" y="252" font-size="15" fill="#0f172a">Finset/Fintype, order, log/sqrt</text>
+    <text x="494" y="282" font-size="15" fill="#0f172a">measure, kernels, independence</text>
+    <text x="494" y="312" font-size="15" fill="#0f172a">asymptotics, convex/linear algebra</text>
+
+    <rect x="870" y="174" width="300" height="176" rx="22" fill="#fff7ed" stroke="#f59e0b" stroke-width="4"/>
+    <text x="904" y="216" font-size="24" font-weight="900" fill="#92400e">LML theorem cards</text>
+    <text x="904" y="252" font-size="15" fill="#0f172a">regret gap and pull count</text>
+    <text x="904" y="282" font-size="15" fill="#0f172a">ETC and UCB regret</text>
+    <text x="904" y="312" font-size="15" fill="#0f172a">TS posterior and Bayes regret</text>
+
+    <rect x="1230" y="174" width="300" height="176" rx="22" fill="#f0fdf4" stroke="#16a34a" stroke-width="4"/>
+    <text x="1264" y="216" font-size="24" font-weight="900" fill="#166534">Scenario atlas</text>
+    <text x="1264" y="252" font-size="15" fill="#0f172a">stochastic, adversarial, contextual</text>
+    <text x="1264" y="282" font-size="15" fill="#0f172a">linear, pure exploration, combinatorial</text>
+    <text x="1264" y="312" font-size="15" fill="#0f172a">nonstationary, safe, federated, LLM</text>
+  </g>
+
+  <g font-family="Inter, ui-sans-serif, system-ui, sans-serif" filter="url(#shadow)">
+    <rect x="105" y="442" width="300" height="84" rx="16" fill="#ffffff" stroke="#2563eb" stroke-width="3"/>
+    <text x="134" y="476" font-size="20" font-weight="900" fill="#0f172a">Definitions</text>
+    <text x="134" y="503" font-size="13" fill="#475569">arms, traces, rewards, policies, kernels</text>
+
+    <rect x="455" y="442" width="300" height="84" rx="16" fill="#ffffff" stroke="#0891b2" stroke-width="3"/>
+    <text x="484" y="476" font-size="20" font-weight="900" fill="#0f172a">Reusable leaf lemmas</text>
+    <text x="484" y="503" font-size="13" fill="#475569">finite sums, regularity, algebra, asymptotics</text>
+
+    <rect x="805" y="442" width="300" height="84" rx="16" fill="#ffffff" stroke="#f59e0b" stroke-width="3"/>
+    <text x="834" y="476" font-size="20" font-weight="900" fill="#0f172a">Concentration/posterior</text>
+    <text x="834" y="503" font-size="13" fill="#475569">Hoeffding, MGF, martingales, posterior laws</text>
+
+    <rect x="1155" y="442" width="300" height="84" rx="16" fill="#ffffff" stroke="#16a34a" stroke-width="3"/>
+    <text x="1184" y="476" font-size="20" font-weight="900" fill="#0f172a">Algorithm wrappers</text>
+    <text x="1184" y="503" font-size="13" fill="#475569">ETC, UCB, TS, EXP3, OFUL, BwK, UCB-VI</text>
+  </g>
+
+  <g font-family="Inter, ui-sans-serif, system-ui, sans-serif" filter="url(#shadow)">
+    <rect x="90" y="622" width="220" height="82" rx="15" fill="#f8fafc" stroke="#64748b" stroke-width="2"/>
+    <text x="118" y="656" font-size="18" font-weight="900" fill="#0f172a">Finite stochastic</text>
+    <text x="118" y="682" font-size="12" fill="#475569">ETC, UCB, KL-UCB, TS</text>
+
+    <rect x="340" y="622" width="220" height="82" rx="15" fill="#f8fafc" stroke="#64748b" stroke-width="2"/>
+    <text x="368" y="656" font-size="18" font-weight="900" fill="#0f172a">Adversarial</text>
+    <text x="368" y="682" font-size="12" fill="#475569">EXP3, FTRL, OMD</text>
+
+    <rect x="590" y="622" width="220" height="82" rx="15" fill="#f8fafc" stroke="#64748b" stroke-width="2"/>
+    <text x="618" y="656" font-size="18" font-weight="900" fill="#0f172a">Contextual/linear</text>
+    <text x="618" y="682" font-size="12" fill="#475569">EXP4, LinUCB, OFUL</text>
+
+    <rect x="840" y="622" width="220" height="82" rx="15" fill="#f8fafc" stroke="#64748b" stroke-width="2"/>
+    <text x="868" y="656" font-size="18" font-weight="900" fill="#0f172a">Pure exploration</text>
+    <text x="868" y="682" font-size="12" fill="#475569">BAI, stopping, lower bounds</text>
+
+    <rect x="1090" y="622" width="220" height="82" rx="15" fill="#f8fafc" stroke="#64748b" stroke-width="2"/>
+    <text x="1118" y="656" font-size="18" font-weight="900" fill="#0f172a">Structured feedback</text>
+    <text x="1118" y="682" font-size="12" fill="#475569">combinatorial, dueling, graph</text>
+
+    <rect x="1340" y="622" width="220" height="82" rx="15" fill="#f8fafc" stroke="#64748b" stroke-width="2"/>
+    <text x="1368" y="656" font-size="18" font-weight="900" fill="#0f172a">Modern constraints</text>
+    <text x="1368" y="682" font-size="12" fill="#475569">safe, private, federated, LLM</text>
+  </g>
+
+  <g font-family="Inter, ui-sans-serif, system-ui, sans-serif" filter="url(#shadow)">
+    <rect x="170" y="802" width="1260" height="86" rx="20" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="208" y="838" font-size="20" font-weight="900" fill="#0f172a">Acceptance rule:</text>
+    <text x="372" y="838" font-size="18" fill="#334155">only compiled Lean declarations become certified memory.</text>
+    <text x="208" y="866" font-size="18" fill="#334155">Textbook, LML, Mathlib, and scenario cards guide retrieval until a task imports, ports, or proves the leaf.</text>
+  </g>
+
+  <g stroke="#64748b" stroke-width="4" fill="none" marker-end="url(#arrow)">
+    <path d="M 235 350 C 240 390, 248 416, 255 434"/>
+    <path d="M 635 350 C 628 390, 614 416, 606 434"/>
+    <path d="M 1020 350 C 1004 392, 978 416, 962 434"/>
+    <path d="M 1380 350 C 1362 392, 1328 416, 1310 434"/>
+    <path d="M 405 484 L 447 484"/>
+    <path d="M 755 484 L 797 484"/>
+    <path d="M 1105 484 L 1147 484"/>
+    <path d="M 255 526 C 228 570, 208 594, 200 614"/>
+    <path d="M 605 526 C 516 570, 466 594, 450 614"/>
+    <path d="M 955 526 C 812 570, 716 594, 700 614"/>
+    <path d="M 1305 526 C 1128 570, 970 594, 950 614"/>
+    <path d="M 1305 526 C 1252 570, 1212 594, 1200 614"/>
+    <path d="M 1305 526 C 1372 570, 1436 594, 1450 614"/>
+    <path d="M 200 704 C 350 758, 518 785, 710 800"/>
+    <path d="M 1450 704 C 1290 758, 1088 785, 890 800"/>
+  </g>
+</svg>

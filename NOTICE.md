@@ -20,6 +20,12 @@ lean-stat-learning-theory source code.
 - lean-stat-learning-theory,
   https://github.com/YuanheZ/lean-stat-learning-theory.
 - Mathlib, https://github.com/leanprover-community/mathlib4.
+- Bubeck and Cesa-Bianchi, Regret Analysis of Stochastic and Nonstochastic
+  Multi-armed Bandit Problems, https://arxiv.org/abs/1204.5721.
+- Lattimore and Szepesvári, Bandit Algorithms,
+  https://tor-lattimore.com/downloads/book/book.pdf.
+- Slivkins, Introduction to Multi-Armed Bandits,
+  https://arxiv.org/abs/1904.07272.
 
 When ABRL later imports, ports, or vendors any external source file, the
 corresponding license and source-level notice must be updated before merging

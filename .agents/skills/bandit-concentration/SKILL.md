@@ -20,6 +20,10 @@ Every concentration step must record:
 - exact tail event;
 - theorem source or local Lean declaration;
 - whether the bound is one-sided, two-sided, uniform-in-time, or union-bounded.
+- local APIs/imports and intended proof route;
+- hidden regularity contracts such as measurability, integrability,
+  boundedness, adaptedness, finite support, and summability;
+- Mathlib status for the concentration leaf.
 
 ## Common Routes
 
@@ -36,3 +40,7 @@ Every concentration step must record:
 Do not let a lower agent hide a concentration theorem inside prose.  If the
 tail bound is not locally proved or imported, it must be a cited result or a
 proof obligation.
+
+Repeated failure on a concentration leaf should trigger a statement audit:
+check the tail event, independence or filtration assumption, variance proxy,
+range bound, and missing regularity before changing the proof route.

@@ -2,6 +2,9 @@
 
 Task id: `TASK_ID`
 
+Source card:
+Scenario card:
+
 ## Natural-Language Statement
 
 Write the theorem or proof fragment in precise prose.
@@ -18,15 +21,23 @@ Write the theorem or proof fragment in precise prose.
 | --- | --- | --- | --- |
 | finite arms | typed | task | no |
 
+## Local API And Proof Route
+
+| Leaf | Existing APIs/imports | Mathlib/LML cards | Intended route | Pivot rule |
+| --- | --- | --- | --- | --- |
+| root | TBD | TBD | theorem-card route plus local wrappers | pivot only after reviewer records a mathematical reason |
+
 ## Proof-DAG
 
-| Node | Interface | Dependencies | Owner | Lean declaration | Gate | Status |
-| --- | --- | --- | --- | --- | --- | --- |
-| root | target theorem | TBD | upper | | `lake build && lake build Tests` | planned |
+| Node | Interface | Dependencies | Owner | Lean declaration | Retrieval cards | Regularity contracts | Mathlib status | Gate | Status |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| root | target theorem | TBD | upper | | TBD | TBD | `project-local` | `lake build && lake build Tests` | planned |
 
 ## Gaps
 
 - [ ] Missing definition:
 - [ ] Missing theorem card:
 - [ ] Missing concentration lemma:
+- [ ] Missing regularity contract:
+- [ ] Mathlib candidate to upstream:
 - [ ] Missing proof export:

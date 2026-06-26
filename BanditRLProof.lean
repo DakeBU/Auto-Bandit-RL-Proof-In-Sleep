@@ -1,5 +1,6 @@
 import BanditRLProof.Core
 import BanditRLProof.Regret
+import BanditRLProof.LeafLemmas
 import BanditRLProof.Algorithms.ETC
 import BanditRLProof.Algorithms.UCB
 import BanditRLProof.Algorithms.Thompson

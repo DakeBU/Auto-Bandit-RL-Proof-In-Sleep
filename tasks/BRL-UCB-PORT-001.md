@@ -17,6 +17,9 @@ import route, or a precise blocked ledger.
 - Upstream declaration: `Bandits.UCB.regret_le`
 - Upstream module: `LeanMachineLearning.Online.Bandit.Algorithms.UCB`
 - Local surface: `BanditRLProof/Algorithms/UCB.lean`
+- Textbook/source cards: `TXT-BUBECK-CESABIANCHI-2012`, `TXT-LATTIMORE-SZEPESVARI-2020`
+- Scenario card: `SCN-STOCHASTIC-FINITE`
+- Mathlib cards: `MLIB-FINSET-SUMS`, `MLIB-ORDER-ALGEBRA`, `MLIB-REAL-LOG-SQRT`, `MLIB-PROBABILITY-INDEPENDENCE`
 
 ## Lean Target
 
@@ -33,6 +36,15 @@ import route, or a precise blocked ledger.
 - [ ] Record sub-Gaussian tail dependencies.
 - [ ] Record expected pull-count bound dependencies.
 - [ ] Keep proof export clear that LML is theorem-card status until local closure.
+
+## Mathlib-Ready Leaf Contract
+
+Current leaf classes are recorded in
+`proof-obligations/BRL-UCB-PORT-001.md`.  Generic order, algebra, positivity,
+summability, and concentration infrastructure should be prepared as Mathlib
+candidates.  UCB-specific wrappers should remain thin and should point to
+those reusable leaves.  Do not change the proof route without a reviewer-visible
+statement, hypothesis, or counterexample audit.
 
 ## Build Gate
 

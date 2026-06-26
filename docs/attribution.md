@@ -35,6 +35,10 @@ filesystem locations.
   studied for target review, proof-blueprint snapshots, dynamic proof leaves,
   worker/refiner roles, and deterministic gates.
 
+ABRL's public diagrams adapt the same broad visual pattern of harness,
+dependency, and module-layout graphs while replacing the content with
+bandit/RL-specific Mathlib-ready proof leaves and memory contracts.
+
 ## Lean And Learning-Theory References
 
 - [lean-stat-learning-theory](https://github.com/YuanheZ/lean-stat-learning-theory).
@@ -43,6 +47,22 @@ filesystem locations.
 - [Mathlib](https://github.com/leanprover-community/mathlib4).  ABRL expects
   future probability, measure-theory, asymptotic, and concentration work to
   connect to Mathlib or to libraries built on Mathlib.
+- [The Mathlib Community](https://mathlib-initiative.org/).  ABRL treats
+  general proof-DAG leaf lemmas as future Mathlib contribution candidates
+  whenever possible.
+
+## Bandit Textbook And Survey References
+
+- [Bubeck and Cesa-Bianchi, Regret Analysis of Stochastic and Nonstochastic
+  Multi-armed Bandit Problems](https://arxiv.org/abs/1204.5721).  ABRL uses it
+  as a classic source card for stochastic/adversarial regret routes and lower
+  bound structure.
+- [Lattimore and Szepesvári, Bandit Algorithms](https://tor-lattimore.com/downloads/book/book.pdf).
+  ABRL uses it as the main textbook spine for finite stochastic, adversarial,
+  contextual, linear, lower-bound, and concentration branches.
+- [Slivkins, Introduction to Multi-Armed Bandits](https://arxiv.org/abs/1904.07272).
+  ABRL uses it as a broad scenario source for IID, Bayesian, contextual,
+  Lipschitz, adversarial, knapsack, and agent-oriented bandit routes.
 
 ## Attribution Boundary
 

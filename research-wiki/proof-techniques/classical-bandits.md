@@ -1,5 +1,9 @@
 # Classical Bandit Proof Techniques
 
+Source cards live in `research-wiki/textbooks/bandit-classics.md`; reusable
+Mathlib routes live in `research-wiki/mathlib/theorem-cards.md`; the broad
+proof tree lives in `research-wiki/theory-tree/bandit-theory-tree.md`.
+
 ## Regret Decomposition
 
 Typical stochastic finite-arm regret proofs factor through:
@@ -14,6 +18,9 @@ ABRL local status:
   pseudo-regret surface.
 - LML theorem card `Bandits.regret_eq_sum_pullCount_mul_gap` records the
   Mathlib/LML version.
+- Mathlib retrieval cards `MLIB-FINSET-SUMS`, `MLIB-FINTYPE-FIN`, and
+  `MLIB-ORDER-ALGEBRA` should be searched before adding generic finite-sum or
+  gap algebra lemmas.
 
 ## Explore-Then-Commit
 

@@ -65,6 +65,11 @@ WORK_DIRS = [
     "research-wiki/open-problems",
     "research-wiki/retrieval-index",
     "research-wiki/lml",
+    "research-wiki/mathlib",
+    "research-wiki/mathlib-candidates",
+    "research-wiki/textbooks",
+    "research-wiki/scenarios",
+    "research-wiki/theory-tree",
     "templates",
 ]
 
@@ -119,6 +124,283 @@ LML_CARDS = [
         "module": "LeanMachineLearning.Online.Bandit.Algorithms.Regret.BayesRegretTS",
         "role": "Bayesian regret upper bound for Thompson sampling.",
         "status": "theorem-card",
+    },
+]
+
+MATHLIB_CARDS = [
+    {
+        "id": "MLIB-FINSET-SUMS",
+        "source": "Mathlib",
+        "module": "Mathlib.Data.Finset.Basic; Mathlib.Algebra.BigOperators.Fin",
+        "docs": "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Finset/Basic.html",
+        "query_terms": ["Finset.sum", "Finset.range", "sum_filter", "sum_congr", "card_filter"],
+        "role": "Finite sums, indicator partitions, pull-count decompositions, and arm/time reindexing.",
+        "status": "import-candidate",
+    },
+    {
+        "id": "MLIB-FINTYPE-FIN",
+        "source": "Mathlib",
+        "module": "Mathlib.Data.Fintype.Basic; Mathlib.Data.Fin.Basic",
+        "docs": "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Fintype/Basic.html",
+        "query_terms": ["Fintype.card", "Fin", "Finite", "Nonempty", "Fin.cast"],
+        "role": "Finite action spaces, nonempty arm sets, finite policies, and index coercions.",
+        "status": "import-candidate",
+    },
+    {
+        "id": "MLIB-ORDER-ALGEBRA",
+        "source": "Mathlib",
+        "module": "Mathlib.Algebra.Order.Field.Basic; Mathlib.Data.Real.Basic",
+        "docs": "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Algebra/Order/Field/Basic.html",
+        "query_terms": ["linarith", "nlinarith", "div_le_iff", "mul_le_mul", "Nat.cast_pos"],
+        "role": "Gap nonnegativity, confidence-width algebra, positivity, and denominator side conditions.",
+        "status": "import-candidate",
+    },
+    {
+        "id": "MLIB-REAL-LOG-SQRT",
+        "source": "Mathlib",
+        "module": "Mathlib.Analysis.SpecialFunctions.Log.Basic; Mathlib.Data.Real.Sqrt",
+        "docs": "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Analysis/SpecialFunctions/Log/Basic.html",
+        "query_terms": ["Real.log", "Real.sqrt", "sq_sqrt", "log_nonneg", "sqrt_le_sqrt"],
+        "role": "UCB radii, logarithmic regret simplification, and square-root confidence bounds.",
+        "status": "import-candidate",
+    },
+    {
+        "id": "MLIB-MEASURE-INTEGRAL",
+        "source": "Mathlib",
+        "module": "Mathlib.MeasureTheory.Integral.Bochner.Basic",
+        "docs": "https://leanprover-community.github.io/mathlib4_docs/Mathlib/MeasureTheory/Integral/Bochner/Basic.html",
+        "query_terms": ["Integrable", "lintegral", "integral", "AEStronglyMeasurable", "AEMeasurable"],
+        "role": "Expected regret, Bayesian regret, integrability contracts, and expectation linearity routes.",
+        "status": "import-candidate",
+    },
+    {
+        "id": "MLIB-PROBABILITY-INDEPENDENCE",
+        "source": "Mathlib",
+        "module": "Mathlib.Probability.Independence.Basic",
+        "docs": "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Probability/Independence/Basic.html",
+        "query_terms": ["IndepFun", "iIndepFun", "IndepSet", "IdentDistrib", "iid"],
+        "role": "IID rewards, product event decompositions, Hoeffding-style assumptions, and theorem contracts.",
+        "status": "import-candidate",
+    },
+    {
+        "id": "MLIB-CONDITIONAL-EXPECTATION",
+        "source": "Mathlib",
+        "module": "Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic",
+        "docs": "https://leanprover-community.github.io/mathlib4_docs/Mathlib/MeasureTheory/Function/ConditionalExpectation/Basic.html",
+        "query_terms": ["condexp", "filtration", "adapted", "martingale", "stoppingTime"],
+        "role": "Adaptive rewards, Thompson posterior identities, martingale concentration, and RL filtrations.",
+        "status": "import-candidate",
+    },
+    {
+        "id": "MLIB-PROBABILITY-KERNEL",
+        "source": "Mathlib",
+        "module": "Mathlib.Probability.Kernel.Basic",
+        "docs": "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Probability/Kernel/Basic.html",
+        "query_terms": ["Kernel", "MarkovKernel", "bind", "comp", "prod"],
+        "role": "Reward kernels, posterior kernels, finite-horizon MDP surfaces, and policy-induced laws.",
+        "status": "import-candidate",
+    },
+    {
+        "id": "MLIB-ASYMPTOTICS",
+        "source": "Mathlib",
+        "module": "Mathlib.Analysis.Asymptotics.Asymptotics",
+        "docs": "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Analysis/Asymptotics/Asymptotics.html",
+        "query_terms": ["Asymptotics.IsBigO", "IsTheta", "Eventually", "Filter.atTop"],
+        "role": "Asymptotic optimality, logarithmic regret, minimax rates, and exported theorem statements.",
+        "status": "import-candidate",
+    },
+    {
+        "id": "MLIB-CONVEX-LINALG",
+        "source": "Mathlib",
+        "module": "Mathlib.Analysis.Convex.Basic; Mathlib.LinearAlgebra.Matrix",
+        "docs": "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Analysis/Convex/Basic.html",
+        "query_terms": ["Convex", "Matrix", "inner", "norm", "IsBounded", "projection"],
+        "role": "Linear bandits, confidence ellipsoids, least-squares design, and convex action sets.",
+        "status": "import-candidate",
+    },
+]
+
+BANDIT_TEXTBOOK_CARDS = [
+    {
+        "id": "TXT-BUBECK-CESABIANCHI-2012",
+        "title": "Regret Analysis of Stochastic and Nonstochastic Multi-armed Bandit Problems",
+        "authors": "Sébastien Bubeck; Nicolò Cesa-Bianchi",
+        "source": "https://arxiv.org/abs/1204.5721",
+        "branches": ["iid finite-arm", "adversarial finite-arm", "contextual bandits", "lower bounds"],
+        "proof_roots": ["regret decomposition", "UCB", "EXP3", "minimax lower bounds"],
+        "memory_status": "survey-card",
+    },
+    {
+        "id": "TXT-LATTIMORE-SZEPESVARI-2020",
+        "title": "Bandit Algorithms",
+        "authors": "Tor Lattimore; Csaba Szepesvári",
+        "source": "https://tor-lattimore.com/downloads/book/book.pdf",
+        "branches": [
+            "probability and concentration",
+            "finite stochastic arms",
+            "adversarial finite arms",
+            "lower bounds",
+            "contextual and linear bandits",
+            "adversarial linear bandits",
+        ],
+        "proof_roots": ["ETC", "UCB", "MOSS", "KL-UCB", "EXP3", "linear UCB", "least-squares confidence"],
+        "memory_status": "textbook-card",
+    },
+    {
+        "id": "TXT-SLIVKINS-2019-2024",
+        "title": "Introduction to Multi-Armed Bandits",
+        "authors": "Aleksandrs Slivkins",
+        "source": "https://arxiv.org/abs/1904.07272",
+        "branches": [
+            "IID rewards",
+            "Bayesian priors",
+            "Lipschitz rewards",
+            "adversarial rewards",
+            "contextual bandits",
+            "bandits with knapsacks",
+            "bandits and agents",
+        ],
+        "proof_roots": ["Bayesian regret", "similarity/metric bandits", "BwK", "incentive-compatible exploration"],
+        "memory_status": "textbook-card",
+    },
+]
+
+BANDIT_SCENARIO_CARDS = [
+    {
+        "id": "SCN-STOCHASTIC-FINITE",
+        "name": "finite stochastic bandits",
+        "core_algorithms": ["ETC", "UCB", "MOSS", "KL-UCB", "Thompson sampling"],
+        "leaf_families": ["pull-count algebra", "gap decomposition", "sub-Gaussian tails", "Bernoulli KL"],
+        "mathlib_needs": ["MLIB-FINSET-SUMS", "MLIB-ORDER-ALGEBRA", "MLIB-PROBABILITY-INDEPENDENCE"],
+        "status": "seeded",
+    },
+    {
+        "id": "SCN-ADVERSARIAL-FINITE",
+        "name": "adversarial finite-arm bandits",
+        "core_algorithms": ["EXP3", "EXP3-IX", "FTRL/OMD variants"],
+        "leaf_families": ["importance-weighted estimators", "exponential weights", "potential inequalities"],
+        "mathlib_needs": ["MLIB-FINSET-SUMS", "MLIB-REAL-LOG-SQRT", "MLIB-ORDER-ALGEBRA"],
+        "status": "planned",
+    },
+    {
+        "id": "SCN-CONTEXTUAL",
+        "name": "contextual bandits",
+        "core_algorithms": ["EXP4", "LinUCB", "Thompson contextual variants"],
+        "leaf_families": ["policy classes", "expert advice", "context measurability", "regret against policies"],
+        "mathlib_needs": ["MLIB-MEASURE-INTEGRAL", "MLIB-PROBABILITY-KERNEL", "MLIB-FINSET-SUMS"],
+        "status": "planned",
+    },
+    {
+        "id": "SCN-LINEAR-GLM",
+        "name": "linear and generalized-linear bandits",
+        "core_algorithms": ["LinUCB", "OFUL", "linear Thompson sampling", "GLM-UCB"],
+        "leaf_families": ["least squares", "self-normalized martingales", "ellipsoid confidence", "determinant algebra"],
+        "mathlib_needs": ["MLIB-CONVEX-LINALG", "MLIB-CONDITIONAL-EXPECTATION", "MLIB-REAL-LOG-SQRT"],
+        "status": "planned",
+    },
+    {
+        "id": "SCN-PURE-EXPLORATION",
+        "name": "pure exploration and best-arm identification",
+        "core_algorithms": ["successive elimination", "LUCB", "Track-and-Stop"],
+        "leaf_families": ["stopping rules", "fixed-confidence events", "sample complexity", "change-of-measure"],
+        "mathlib_needs": ["MLIB-CONDITIONAL-EXPECTATION", "MLIB-MEASURE-INTEGRAL", "MLIB-ASYMPTOTICS"],
+        "status": "planned",
+    },
+    {
+        "id": "SCN-COMBINATORIAL",
+        "name": "combinatorial and semi-bandit feedback",
+        "core_algorithms": ["Combinatorial UCB", "semi-bandit Thompson", "matroid/knapsack variants"],
+        "leaf_families": ["set-valued actions", "component rewards", "oracle contracts", "semi-bandit decomposition"],
+        "mathlib_needs": ["MLIB-FINSET-SUMS", "MLIB-CONVEX-LINALG", "MLIB-ORDER-ALGEBRA"],
+        "status": "planned",
+    },
+    {
+        "id": "SCN-NONSTATIONARY",
+        "name": "nonstationary, rotting, and drifting bandits",
+        "core_algorithms": ["sliding-window UCB", "discounted UCB", "change-point UCB"],
+        "leaf_families": ["dynamic regret", "variation budgets", "windowed concentration", "change detection"],
+        "mathlib_needs": ["MLIB-FINSET-SUMS", "MLIB-PROBABILITY-INDEPENDENCE", "MLIB-ASYMPTOTICS"],
+        "status": "planned",
+    },
+    {
+        "id": "SCN-CONSTRAINTS",
+        "name": "safe, conservative, fair, private, and constrained bandits",
+        "core_algorithms": ["conservative UCB", "safe-UCB", "fair contextual bandits", "private UCB"],
+        "leaf_families": ["baseline regret", "constraint budgets", "privacy noise", "fairness invariants"],
+        "mathlib_needs": ["MLIB-MEASURE-INTEGRAL", "MLIB-ORDER-ALGEBRA", "MLIB-PROBABILITY-INDEPENDENCE"],
+        "status": "planned",
+    },
+    {
+        "id": "SCN-FEDERATED-DISTRIBUTED",
+        "name": "federated and distributed bandits",
+        "core_algorithms": ["Fed-UCB", "personalized federated bandits", "Byzantine-robust UCB"],
+        "leaf_families": ["client aggregation", "heterogeneity", "communication rounds", "robust mean estimates"],
+        "mathlib_needs": ["MLIB-FINSET-SUMS", "MLIB-MEASURE-INTEGRAL", "MLIB-PROBABILITY-INDEPENDENCE"],
+        "status": "planned",
+    },
+    {
+        "id": "SCN-RL-MDP",
+        "name": "finite-horizon RL and MDP regret",
+        "core_algorithms": ["UCB-VI", "posterior sampling RL", "optimism under uncertainty", "Bellman backups"],
+        "leaf_families": ["finite kernels", "policies", "Bellman recursion", "occupancy measures", "episode regret"],
+        "mathlib_needs": ["MLIB-PROBABILITY-KERNEL", "MLIB-CONDITIONAL-EXPECTATION", "MLIB-MEASURE-INTEGRAL"],
+        "status": "planned",
+    },
+    {
+        "id": "SCN-LLM-REC-SYS",
+        "name": "LLM, recommender, and neural bandits",
+        "core_algorithms": ["neural contextual bandits", "bandit prompt optimization", "LLM-assisted priors"],
+        "leaf_families": ["offline-to-online priors", "context embeddings", "model-selection regret", "adaptive response generation"],
+        "mathlib_needs": ["MLIB-MEASURE-INTEGRAL", "MLIB-PROBABILITY-KERNEL", "MLIB-CONVEX-LINALG"],
+        "status": "watchlist",
+    },
+]
+
+LOCAL_LEAF_CARDS = [
+    {
+        "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
+        "module": "BanditRLProof.LeafLemmas",
+        "status": "leanCompiled",
+        "declarations": [
+            "pullCount_one",
+            "pullCount_succ_of_eq",
+            "pullCount_succ_of_ne",
+            "pullCount_le_succ",
+            "pullCount_succ_le_succ",
+            "pullCount_mono",
+            "pullCount_le_time",
+            "pullCount_eq_zero_of_forall_ne",
+            "pullCount_eq_time_of_forall_eq",
+            "pullCount_pos_of_eq_before",
+            "pullCount_const_self",
+            "pullCount_const_of_ne",
+            "sumRewards_succ_of_eq",
+            "sumRewards_succ_of_ne",
+            "sumRewards_eq_zero_of_forall_ne",
+            "sumRewards_const_of_ne",
+            "FiniteBanditModel.bestMean_eq_mean_bestArm",
+            "FiniteBanditModel.gap_of_ne_bestArm",
+            "pseudoRegret_one",
+            "pseudoRegret_succ_of_bestArm",
+            "pseudoRegret_succ_of_gap_zero",
+            "pseudoRegret_eq_zero_of_forall_bestArm",
+            "pseudoRegret_eq_zero_of_forall_gap_zero",
+            "pseudoRegret_const_bestArm",
+            "pseudoRegret_const_of_gap_zero",
+        ],
+        "role": "Compiled dependency-light bridge leaves for pull counts, reward sums, gaps, and pseudo-regret.",
+        "mathlib_routes": ["MLIB-FINSET-SUMS", "MLIB-FINTYPE-FIN", "MLIB-ORDER-ALGEBRA"],
+    },
+    {
+        "id": "LOCAL-LEAF-ALGORITHM-WRAPPERS",
+        "module": "BanditRLProof.Algorithms.ETC; BanditRLProof.Algorithms.UCB",
+        "status": "leanCompiled",
+        "declarations": [
+            "ETC.exploreArm_eq_of_mod_eq",
+            "UCB.score_eq_empiricalMean",
+        ],
+        "role": "Compiled dependency-light wrapper leaves for current ETC and UCB surfaces.",
+        "mathlib_routes": ["MLIB-FINTYPE-FIN", "MLIB-ORDER-ALGEBRA"],
     },
 ]
 
@@ -252,6 +534,24 @@ Acceptance rule: a mathematical result is accepted only after the relevant Lean
 declaration compiles under `lake build && lake build Tests`, or after the
 obligation is explicitly recorded as blocked with a cited result and next leaf.
 
+Mathlib-ready leaf rule:
+
+- Decompose aggressively.  A lower Lean target should be a small lemma that
+  fits in one agent context window.
+- Specify more than the theorem.  Record local APIs, imports, statement shape,
+  and intended proof route before tactic work.
+- Treat persistent failure as mathematical signal.  Recheck the statement,
+  missing assumptions, and possible counterexamples before continuing.
+- Promote hidden regularity to reusable contracts: integrability, continuity,
+  nonemptiness, measurability, boundedness, and finiteness are named lemmas or
+  cited obligations.
+- Do not frequently change proof strategy.  Repair the current route unless
+  reviewer/middle records a reason to pivot.
+- Design leaf lemmas as future Mathlib contributions whenever they are general
+  enough; ABRL-specific wrappers should be thin.
+- Before creating a new general lemma, search `python3 tools/bandit.py
+  search-memory <term>` and the Mathlib retrieval cards for existing APIs.
+
 """
 
 
@@ -272,6 +572,8 @@ State the bandit/RL theorem, definition, or literature-port target.
 - Paper or repository:
 - Theorem/lemma/section:
 - Existing Lean declaration:
+- Textbook/source card:
+- Scenario card:
 
 ## Lean Target
 
@@ -287,7 +589,22 @@ Target file: `{target_lean}`
 - [ ] Required model assumptions are explicit.
 - [ ] Probability, measurability, concentration, and stopping-time contracts are recorded.
 - [ ] Reusable theorem cards are identified before proof search.
+- [ ] Each active leaf has local APIs, intended proof route, and regularity contracts.
+- [ ] General leaves are classified as `mathlib-candidate`, `project-local`, or `theorem-card-only`.
 - [ ] `lake build && lake build Tests` passes.
+
+## Mathlib-Ready Leaf Contract
+
+| Leaf | Local APIs/imports | Intended proof route | Regularity contracts | Mathlib status |
+| --- | --- | --- | --- | --- |
+| root | TBD | TBD | TBD | project-local |
+
+## Retrieval Cards
+
+- LML cards:
+- Mathlib cards:
+- Textbook cards:
+- Scenario cards:
 
 ## Trial Logging
 
@@ -302,6 +619,9 @@ def conversion_window_template(task_id: str, title: str) -> str:
     return f"""# Conversion Window: {title}
 
 Task id: `{task_id}`
+
+Source card:
+Scenario card:
 
 ## Natural-Language Statement
 
@@ -320,16 +640,24 @@ Write the theorem, proof fragment, or paper equation in precise prose.
 | finite action set | typed | task packet | no |
 | sub-Gaussian rewards | obligation | cited result | yes |
 
+## Local API And Proof Route
+
+| Leaf | Existing APIs/imports | Mathlib/LML cards | Intended route | Pivot rule |
+| --- | --- | --- | --- | --- |
+| root | TBD | TBD | theorem-card route plus local wrappers | pivot only after reviewer records a mathematical reason |
+
 ## Proof-DAG
 
-| Node | Interface | Dependencies | Owner | Lean declaration | Human proof map | Gate | Status |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| root | target theorem | TBD | upper | | this file | `lake build && lake build Tests` | planned |
+| Node | Interface | Dependencies | Owner | Lean declaration | Human proof map | Retrieval cards | Regularity contracts | Mathlib status | Gate | Status |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| root | target theorem | TBD | upper | | this file | TBD | TBD | project-local | `lake build && lake build Tests` | planned |
 
 ## Gaps
 
 - [ ] Missing definition:
 - [ ] Missing lemma:
+- [ ] Missing regularity contract:
+- [ ] Mathlib candidate to upstream:
 - [ ] Missing cited-result entry:
 """
 
@@ -339,15 +667,35 @@ def proof_obligations_template(task_id: str, title: str) -> str:
 
 Task id: `{task_id}`
 
-| Node | Target | Dependencies | Owner | Lean declaration | Gate | Status |
-| --- | --- | --- | --- | --- | --- | --- |
-| `{task_id}-ROOT` | root theorem or definition | conversion window | upper | TBD | `lake build && lake build Tests` | planned |
+Source card:
+Scenario card:
+
+| Node | Target | Dependencies | Local APIs/imports | Retrieval cards | Intended proof route | Regularity contracts | Mathlib status | Owner | Lean declaration | Gate | Status |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `{task_id}-ROOT` | root theorem or definition | conversion window | TBD | TBD | TBD | TBD | project-local | upper | TBD | `lake build && lake build Tests` | planned |
+
+## Failure Classification
+
+Use exactly one:
+
+- source translation gap;
+- local Lean lemma gap;
+- theorem-card dependency;
+- external cited result;
+- semantic interface gap;
+- missing regularity contract;
+- likely false statement or counterexample;
+- invalid route;
+- stale dynamic leaf;
+- connected blocker.
 
 ## Reviewer Notes
 
 - Keep failed attempts in `proof-attempts/{task_id}/`.
 - Do not promote simulator checks, prose sketches, or theorem cards to certified memory.
 - If an LML theorem is used, cite the upstream declaration and record whether it is imported, ported, or only a theorem card.
+- Do not frequently change proof strategy; record the mathematical reason before pivoting.
+- Mark general leaf lemmas as Mathlib candidates when they should become reusable upstream infrastructure.
 """
 
 
@@ -356,6 +704,10 @@ def make_prompt_deck(run_dir: Path, task_id: str, cycle: int, lower_count: int) 
     conversion_text = read_optional(ROOT / "conversion-windows" / f"{task_id}.md", 12000)
     obligations_text = read_optional(ROOT / "proof-obligations" / f"{task_id}.md", 12000)
     memory_text = read_optional(RETRIEVAL_INDEX_DIR / f"{task_id}.json", 12000)
+    mathlib_text = read_optional(RETRIEVAL_INDEX_DIR / "mathlib_bandit_cards.json", 10000)
+    textbook_text = read_optional(RETRIEVAL_INDEX_DIR / "bandit_textbook_cards.json", 8000)
+    scenario_text = read_optional(RETRIEVAL_INDEX_DIR / "bandit_scenario_cards.json", 10000)
+    local_leaf_text = read_optional(RETRIEVAL_INDEX_DIR / "local_leaf_cards.json", 6000)
     context = f"""# Context
 
 Task file exists: `{task_exists(task_id)}`
@@ -378,6 +730,30 @@ Lean gate: `lake build && lake build Tests`
 ```json
 {memory_text or "{}"}
 ```
+
+## Mathlib Retrieval Cards
+
+```json
+{mathlib_text or "{}"}
+```
+
+## Bandit Textbook Cards
+
+```json
+{textbook_text or "{}"}
+```
+
+## Bandit Scenario Cards
+
+```json
+{scenario_text or "{}"}
+```
+
+## Local Compiled Leaf Cards
+
+```json
+{local_leaf_text or "{}"}
+```
 """
     write_text(run_dir / "00_context.md", context)
     write_text(run_dir / "dialogue.md", f"# Dialogue\n\nRun: `{run_dir.name}`\nTask: `{task_id}`\n")
@@ -389,8 +765,10 @@ Lean gate: `lake build && lake build Tests`
 Produce:
 1. the exact theorem frontier for this cycle;
 2. the theorem cards or cited results that may be used;
-3. one or two active proof-DAG leaves;
-4. any rejected routes that must be written to memory.
+3. one or two active proof-DAG leaves with local APIs, intended route,
+   regularity contracts, and Mathlib status;
+4. any rejected routes or persistent-failure signals that must be written to
+   memory.
 
 Do not ask lower agents to prove a theorem whose assumptions or source mapping
 are not in the conversion window.
@@ -402,7 +780,8 @@ are not in the conversion window.
 
 Synchronize task, conversion window, proof obligations, theorem-card memory,
 and Lean declarations.  Produce lower-agent packets with exact file scope,
-target declaration, dependencies, and gate.
+target declaration, dependencies, local APIs/imports, intended proof route,
+regularity contracts, Mathlib status, and gate.
 """
     write_text(run_dir / "20_middle_formalizer.md", middle)
     prompts.append(run_dir / "20_middle_formalizer.md")
@@ -413,7 +792,9 @@ target declaration, dependencies, and gate.
 
 Work on exactly one assigned leaf.  If the leaf is under-specified, write the
 missing assumption or source mapping into the appropriate memory file instead
-of changing the theorem.  If you edit Lean, run `lake build && lake build Tests`.
+of changing the theorem.  Do not frequently change the proof route; persistent
+failure is a signal to audit the statement or hypotheses.  If you edit Lean,
+run `lake build && lake build Tests`.
 """
         path = run_dir / f"3{i}_lower_{i}.md"
         write_text(path, body)
@@ -424,6 +805,8 @@ of changing the theorem.  If you edit Lean, run `lake build && lake build Tests`
 Check target fidelity, hidden assumptions, stale leaves, and Lean status.  Run
 or request `python3 tools/bandit.py check`.  Record whether new work is:
 compiled, blocked, rejected, stale, or only theorem-card memory.
+Verify that Mathlib-candidate leaves are small, general, and recorded in
+`research-wiki/mathlib-candidates/` when appropriate.
 """
     write_text(run_dir / "40_reviewer.md", reviewer)
     prompts.append(run_dir / "40_reviewer.md")
@@ -619,7 +1002,8 @@ def cmd_agent_note(args: argparse.Namespace) -> int:
     return 0
 
 
-def cmd_reference_index(_args: argparse.Namespace) -> int:
+def write_reference_indexes() -> list[Path]:
+    paths: list[Path] = []
     path = RETRIEVAL_INDEX_DIR / "lml_bandit_cards.json"
     write_text(path, json.dumps({
         "source": "https://github.com/LeanMachineLearning/LML",
@@ -627,13 +1011,83 @@ def cmd_reference_index(_args: argparse.Namespace) -> int:
         "seed_date": LML_SEED_DATE,
         "cards": LML_CARDS,
     }, indent=2) + "\n")
-    add_manifest("bandit.py reference-index", path, "retrieval-index", "refreshed LML theorem cards")
+    paths.append(path)
+    path = RETRIEVAL_INDEX_DIR / "mathlib_bandit_cards.json"
+    write_text(path, json.dumps({
+        "source": "https://github.com/leanprover-community/mathlib4",
+        "docs": "https://leanprover-community.github.io/mathlib4_docs/",
+        "cards": MATHLIB_CARDS,
+    }, indent=2) + "\n")
+    paths.append(path)
+    path = RETRIEVAL_INDEX_DIR / "bandit_textbook_cards.json"
+    write_text(path, json.dumps({
+        "generated": now_iso(),
+        "cards": BANDIT_TEXTBOOK_CARDS,
+    }, indent=2) + "\n")
+    paths.append(path)
+    path = RETRIEVAL_INDEX_DIR / "bandit_scenario_cards.json"
+    write_text(path, json.dumps({
+        "generated": now_iso(),
+        "cards": BANDIT_SCENARIO_CARDS,
+    }, indent=2) + "\n")
+    paths.append(path)
+    path = RETRIEVAL_INDEX_DIR / "local_leaf_cards.json"
+    write_text(path, json.dumps({
+        "generated": now_iso(),
+        "cards": LOCAL_LEAF_CARDS,
+    }, indent=2) + "\n")
+    paths.append(path)
+    return paths
+
+
+def cmd_reference_index(_args: argparse.Namespace) -> int:
+    paths = write_reference_indexes()
+    for path in paths:
+        add_manifest("bandit.py reference-index", path, "retrieval-index", f"refreshed {path.name}")
     return 0
 
 
 def cmd_list_literature(_args: argparse.Namespace) -> int:
     for card in LML_CARDS:
         print(f"{card['id']}: {card['declaration']} ({card['module']})")
+    return 0
+
+
+def cmd_list_mathlib(_args: argparse.Namespace) -> int:
+    for card in MATHLIB_CARDS:
+        terms = ", ".join(card["query_terms"][:4])
+        print(f"{card['id']}: {card['module']} :: {terms}")
+    return 0
+
+
+def cmd_list_scenarios(_args: argparse.Namespace) -> int:
+    for card in BANDIT_SCENARIO_CARDS:
+        algos = ", ".join(card["core_algorithms"][:4])
+        print(f"{card['id']}: {card['name']} [{card['status']}] :: {algos}")
+    return 0
+
+
+def cmd_search_memory(args: argparse.Namespace) -> int:
+    haystacks = {
+        "lml": LML_CARDS,
+        "mathlib": MATHLIB_CARDS,
+        "textbook": BANDIT_TEXTBOOK_CARDS,
+        "scenario": BANDIT_SCENARIO_CARDS,
+        "local": LOCAL_LEAF_CARDS,
+    }
+    needle = args.query.lower()
+    hits: list[tuple[str, dict]] = []
+    for group, cards in haystacks.items():
+        for card in cards:
+            blob = json.dumps(card, sort_keys=True).lower()
+            if needle in blob:
+                hits.append((group, card))
+    for group, card in hits:
+        name = card.get("id", "")
+        module = card.get("module") or card.get("title") or card.get("name") or card.get("declaration", "")
+        print(f"{group}: {name}: {module}")
+    if not hits:
+        print("no hits")
     return 0
 
 
@@ -666,6 +1120,30 @@ Generated: `{now_iso()}`
 {json.dumps(LML_CARDS, indent=2)}
 ```
 
+## Relevant Mathlib Retrieval Cards
+
+```json
+{json.dumps(MATHLIB_CARDS, indent=2)}
+```
+
+## Bandit Textbook Cards
+
+```json
+{json.dumps(BANDIT_TEXTBOOK_CARDS, indent=2)}
+```
+
+## Bandit Scenario Cards
+
+```json
+{json.dumps(BANDIT_SCENARIO_CARDS, indent=2)}
+```
+
+## Local Compiled Leaf Cards
+
+```json
+{json.dumps(LOCAL_LEAF_CARDS, indent=2)}
+```
+
 ## Recent Trials
 
 ```json
@@ -693,9 +1171,19 @@ def cmd_memory_refresh(args: argparse.Namespace) -> int:
         "lml_seed_commit": LML_SEED_COMMIT,
         "lml_seed_date": LML_SEED_DATE,
         "lml_cards": LML_CARDS,
+        "mathlib_cards": MATHLIB_CARDS,
+        "textbook_cards": BANDIT_TEXTBOOK_CARDS,
+        "scenario_cards": BANDIT_SCENARIO_CARDS,
+        "local_leaf_cards": LOCAL_LEAF_CARDS,
         "recent_trials": trials,
         "open_memory_files": [
             f"research-wiki/lml/{args.id}.md",
+            "research-wiki/mathlib/theorem-cards.md",
+            "research-wiki/textbooks/bandit-classics.md",
+            "research-wiki/scenarios/bandit-scenario-atlas.md",
+            "research-wiki/theory-tree/bandit-theory-tree.md",
+            "research-wiki/mathlib-candidates/",
+            "research-wiki/mathlib-candidates/finite-bookkeeping-leaves.md",
             f"proof-attempts/{args.id}/",
             f"proof-obligations/{args.id}.md",
             f"conversion-windows/{args.id}.md",
@@ -714,7 +1202,7 @@ Recent trials: `{len(trials)}`
 Retrieval index: `{rel(path)}`
 
 Next agents should read the task, conversion window, proof obligations, and
-LML theorem-card index before editing Lean.
+LML/Mathlib/textbook/scenario theorem-card indexes before editing Lean.
 """
         write_text(run_dir / "memory_digest.md", digest)
     add_manifest("bandit.py memory-refresh", path, "retrieval-index", args.id)
@@ -896,11 +1384,21 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--file", default="")
     p.set_defaults(func=cmd_agent_note)
 
-    p = sub.add_parser("reference-index", help="refresh LML theorem-card index")
+    p = sub.add_parser("reference-index", help="refresh LML, Mathlib, textbook, and scenario indexes")
     p.set_defaults(func=cmd_reference_index)
 
     p = sub.add_parser("list-literature", help="list built-in theorem cards")
     p.set_defaults(func=cmd_list_literature)
+
+    p = sub.add_parser("list-mathlib", help="list Mathlib retrieval cards")
+    p.set_defaults(func=cmd_list_mathlib)
+
+    p = sub.add_parser("list-scenarios", help="list bandit scenario cards")
+    p.set_defaults(func=cmd_list_scenarios)
+
+    p = sub.add_parser("search-memory", help="search built-in theorem, Mathlib, textbook, and scenario cards")
+    p.add_argument("query")
+    p.set_defaults(func=cmd_search_memory)
 
     p = sub.add_parser("blueprint-refresh", help="refresh proof blueprint snapshot")
     p.add_argument("id")

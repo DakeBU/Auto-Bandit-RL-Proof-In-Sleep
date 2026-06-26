@@ -16,6 +16,9 @@ finite-action surfaces and LML theorem cards.
 - Upstream declaration: `Bandits.ETC.regret_le`
 - Upstream module: `LeanMachineLearning.Online.Bandit.Algorithms.ETC`
 - Local surface: `BanditRLProof/Algorithms/ETC.lean`
+- Textbook/source card: `TXT-LATTIMORE-SZEPESVARI-2020`
+- Scenario card: `SCN-STOCHASTIC-FINITE`
+- Mathlib cards: `MLIB-FINTYPE-FIN`, `MLIB-FINSET-SUMS`, `MLIB-PROBABILITY-INDEPENDENCE`
 
 ## Lean Target
 
@@ -32,6 +35,14 @@ finite-action surfaces and LML theorem cards.
 - [ ] Record wrong-commit probability concentration theorem.
 - [ ] Derive pull-count bound after commit.
 - [ ] Connect to regret decomposition.
+
+## Mathlib-Ready Leaf Contract
+
+Current leaf classes are recorded in
+`proof-obligations/BRL-ETC-PORT-001.md`.  Generic finite-cycle arithmetic and
+regularity lemmas should be treated as Mathlib candidates; ETC-specific
+algorithm wrappers stay project-local.  Do not change the proof route without
+recording the missing assumption, counterexample, or source mismatch.
 
 ## Build Gate
 

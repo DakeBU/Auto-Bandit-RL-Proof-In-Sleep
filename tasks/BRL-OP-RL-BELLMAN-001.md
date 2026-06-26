@@ -15,6 +15,9 @@ function, Bellman recursion, occupancy, and regret.
 
 - Literature source: standard finite-horizon MDP/RL notation.
 - Local surface: `BanditRLProof/OpenProblems.lean`
+- Textbook/source card: `TXT-SLIVKINS-2019-2024`
+- Scenario card: `SCN-RL-MDP`
+- Mathlib cards: `MLIB-PROBABILITY-KERNEL`, `MLIB-MEASURE-INTEGRAL`, `MLIB-CONDITIONAL-EXPECTATION`
 
 ## Lean Target
 
@@ -30,6 +33,14 @@ function, Bellman recursion, occupancy, and regret.
 - [ ] Define policy and trajectory surface.
 - [ ] Define value and Bellman recursion.
 - [ ] Define regret relative to an optimal policy.
+
+## Mathlib-Ready Leaf Contract
+
+Finite-set, kernel, expectation, measurability, and Bellman recursion support
+lemmas should be split into leaf-sized statements.  General probability or
+dynamic-programming infrastructure should be marked as Mathlib candidates; the
+finite-horizon RL interface itself stays project-local until the dependency
+layer is selected.
 
 ## Build Gate
 

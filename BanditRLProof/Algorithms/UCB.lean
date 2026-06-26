@@ -26,6 +26,10 @@ The Mathlib/LML migration will refine this to
 def score (_spec : Spec K) (state : IndexState K) (arm : Fin K) : Rat :=
   state.empiricalMean arm
 
+@[simp] theorem score_eq_empiricalMean (spec : Spec K) (state : IndexState K)
+    (arm : Fin K) :
+    score spec state arm = state.empiricalMean arm := rfl
+
 /-- The proof-DAG leaves usually needed for UCB regret formalization. -/
 def obligationNames : List String :=
   [ "initial_round_robin_count_positive"

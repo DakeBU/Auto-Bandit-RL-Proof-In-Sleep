@@ -1,0 +1,241 @@
+{
+  "generated": "2026-06-26T16:53:23+00:00",
+  "cards": [
+    {
+      "id": "SCN-STOCHASTIC-FINITE",
+      "name": "finite stochastic bandits",
+      "core_algorithms": [
+        "ETC",
+        "UCB",
+        "MOSS",
+        "KL-UCB",
+        "Thompson sampling"
+      ],
+      "leaf_families": [
+        "pull-count algebra",
+        "gap decomposition",
+        "sub-Gaussian tails",
+        "Bernoulli KL"
+      ],
+      "mathlib_needs": [
+        "MLIB-FINSET-SUMS",
+        "MLIB-ORDER-ALGEBRA",
+        "MLIB-PROBABILITY-INDEPENDENCE"
+      ],
+      "status": "seeded"
+    },
+    {
+      "id": "SCN-ADVERSARIAL-FINITE",
+      "name": "adversarial finite-arm bandits",
+      "core_algorithms": [
+        "EXP3",
+        "EXP3-IX",
+        "FTRL/OMD variants"
+      ],
+      "leaf_families": [
+        "importance-weighted estimators",
+        "exponential weights",
+        "potential inequalities"
+      ],
+      "mathlib_needs": [
+        "MLIB-FINSET-SUMS",
+        "MLIB-REAL-LOG-SQRT",
+        "MLIB-ORDER-ALGEBRA"
+      ],
+      "status": "planned"
+    },
+    {
+      "id": "SCN-CONTEXTUAL",
+      "name": "contextual bandits",
+      "core_algorithms": [
+        "EXP4",
+        "LinUCB",
+        "Thompson contextual variants"
+      ],
+      "leaf_families": [
+        "policy classes",
+        "expert advice",
+        "context measurability",
+        "regret against policies"
+      ],
+      "mathlib_needs": [
+        "MLIB-MEASURE-INTEGRAL",
+        "MLIB-PROBABILITY-KERNEL",
+        "MLIB-FINSET-SUMS"
+      ],
+      "status": "planned"
+    },
+    {
+      "id": "SCN-LINEAR-GLM",
+      "name": "linear and generalized-linear bandits",
+      "core_algorithms": [
+        "LinUCB",
+        "OFUL",
+        "linear Thompson sampling",
+        "GLM-UCB"
+      ],
+      "leaf_families": [
+        "least squares",
+        "self-normalized martingales",
+        "ellipsoid confidence",
+        "determinant algebra"
+      ],
+      "mathlib_needs": [
+        "MLIB-CONVEX-LINALG",
+        "MLIB-CONDITIONAL-EXPECTATION",
+        "MLIB-REAL-LOG-SQRT"
+      ],
+      "status": "planned"
+    },
+    {
+      "id": "SCN-PURE-EXPLORATION",
+      "name": "pure exploration and best-arm identification",
+      "core_algorithms": [
+        "successive elimination",
+        "LUCB",
+        "Track-and-Stop"
+      ],
+      "leaf_families": [
+        "stopping rules",
+        "fixed-confidence events",
+        "sample complexity",
+        "change-of-measure"
+      ],
+      "mathlib_needs": [
+        "MLIB-CONDITIONAL-EXPECTATION",
+        "MLIB-MEASURE-INTEGRAL",
+        "MLIB-ASYMPTOTICS"
+      ],
+      "status": "planned"
+    },
+    {
+      "id": "SCN-COMBINATORIAL",
+      "name": "combinatorial and semi-bandit feedback",
+      "core_algorithms": [
+        "Combinatorial UCB",
+        "semi-bandit Thompson",
+        "matroid/knapsack variants"
+      ],
+      "leaf_families": [
+        "set-valued actions",
+        "component rewards",
+        "oracle contracts",
+        "semi-bandit decomposition"
+      ],
+      "mathlib_needs": [
+        "MLIB-FINSET-SUMS",
+        "MLIB-CONVEX-LINALG",
+        "MLIB-ORDER-ALGEBRA"
+      ],
+      "status": "planned"
+    },
+    {
+      "id": "SCN-NONSTATIONARY",
+      "name": "nonstationary, rotting, and drifting bandits",
+      "core_algorithms": [
+        "sliding-window UCB",
+        "discounted UCB",
+        "change-point UCB"
+      ],
+      "leaf_families": [
+        "dynamic regret",
+        "variation budgets",
+        "windowed concentration",
+        "change detection"
+      ],
+      "mathlib_needs": [
+        "MLIB-FINSET-SUMS",
+        "MLIB-PROBABILITY-INDEPENDENCE",
+        "MLIB-ASYMPTOTICS"
+      ],
+      "status": "planned"
+    },
+    {
+      "id": "SCN-CONSTRAINTS",
+      "name": "safe, conservative, fair, private, and constrained bandits",
+      "core_algorithms": [
+        "conservative UCB",
+        "safe-UCB",
+        "fair contextual bandits",
+        "private UCB"
+      ],
+      "leaf_families": [
+        "baseline regret",
+        "constraint budgets",
+        "privacy noise",
+        "fairness invariants"
+      ],
+      "mathlib_needs": [
+        "MLIB-MEASURE-INTEGRAL",
+        "MLIB-ORDER-ALGEBRA",
+        "MLIB-PROBABILITY-INDEPENDENCE"
+      ],
+      "status": "planned"
+    },
+    {
+      "id": "SCN-FEDERATED-DISTRIBUTED",
+      "name": "federated and distributed bandits",
+      "core_algorithms": [
+        "Fed-UCB",
+        "personalized federated bandits",
+        "Byzantine-robust UCB"
+      ],
+      "leaf_families": [
+        "client aggregation",
+        "heterogeneity",
+        "communication rounds",
+        "robust mean estimates"
+      ],
+      "mathlib_needs": [
+        "MLIB-FINSET-SUMS",
+        "MLIB-MEASURE-INTEGRAL",
+        "MLIB-PROBABILITY-INDEPENDENCE"
+      ],
+      "status": "planned"
+    },
+    {
+      "id": "SCN-RL-MDP",
+      "name": "finite-horizon RL and MDP regret",
+      "core_algorithms": [
+        "UCB-VI",
+        "posterior sampling RL",
+        "optimism under uncertainty",
+        "Bellman backups"
+      ],
+      "leaf_families": [
+        "finite kernels",
+        "policies",
+        "Bellman recursion",
+        "occupancy measures",
+        "episode regret"
+      ],
+      "mathlib_needs": [
+        "MLIB-PROBABILITY-KERNEL",
+        "MLIB-CONDITIONAL-EXPECTATION",
+        "MLIB-MEASURE-INTEGRAL"
+      ],
+      "status": "planned"
+    },
+    {
+      "id": "SCN-LLM-REC-SYS",
+      "name": "LLM, recommender, and neural bandits",
+      "core_algorithms": [
+        "neural contextual bandits",
+        "bandit prompt optimization",
+        "LLM-assisted priors"
+      ],
+      "leaf_families": [
+        "offline-to-online priors",
+        "context embeddings",
+        "model-selection regret",
+        "adaptive response generation"
+      ],
+      "mathlib_needs": [
+        "MLIB-MEASURE-INTEGRAL",
+        "MLIB-PROBABILITY-KERNEL",
+        "MLIB-CONVEX-LINALG"
+      ],
+      "status": "watchlist"
+    }
+  ]
+}

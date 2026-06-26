@@ -72,6 +72,66 @@ write a narrow proof-DAG leaf, run Lean, then compress the result into memory.
 The harness should improve by accumulating reusable proof blocks, not by
 letting agents silently change theorem targets.
 
+ABRL follows a Mathlib-ready leaf policy.  Every proof-DAG leaf should be
+decomposed into small lemmas that fit within one agent context window and are
+stated at the most reusable level possible.  If a leaf lemma is general
+mathematics rather than ABRL-specific glue, its intended destination is
+[Mathlib][mathlib-initiative].  The task packet must specify local APIs,
+imports, hypotheses, and the intended proof route before lower agents start
+tactic work.  Persistent failure is treated as mathematical signal: recheck
+the statement, hidden assumptions, and counterexamples before spending more
+tokens.  Hidden regularity conditions such as integrability, continuity,
+measurability, nonemptiness, boundedness, and finiteness become reusable
+contracts instead of ad hoc proof clutter.
+
+## Lean Lemma Leaf Network
+
+ABRL keeps the current proof standard visible as diagrams, not only as prose.
+The leaf-node rule is that every lower-agent target is either a small
+Mathlib-ready lemma, a thin project-local wrapper, or a theorem-card/cited
+result whose import or port plan is explicit.
+
+![ABRL Mathlib-ready lemma leaf framework](docs/assets/lemma_leaf_framework.svg)
+
+The dependency graph separates reusable mathematical infrastructure from
+bandit-specific wrappers and final regret theorems.  A lower agent should work
+on one box-sized leaf and preserve the stated route unless middle or reviewer
+records a mathematical reason to pivot.
+
+![ABRL lemma dependency graph](docs/assets/lemma_dependency_graph.svg)
+
+The public Lean module layout mirrors the same contract: core finite
+bookkeeping stays dependency-light, while probability, concentration,
+posterior, RL, and asymptotic layers are staged as explicit future imports or
+proof-obligation surfaces.
+
+![ABRL Lean module layout](docs/assets/lean_module_layout.svg)
+
+See [`docs/lemma_leaf_network.md`](docs/lemma_leaf_network.md) and
+[`docs/mathlib_upstream_policy.md`](docs/mathlib_upstream_policy.md) for the
+operational checklist.
+
+ABRL also maintains a wider bandit/RL theory tree.  It connects classic
+textbook roots, Mathlib retrieval cards, LML theorem cards, current scenario
+cards, and final proof-export targets.
+
+![ABRL bandit theory tree](docs/assets/bandit_theory_tree.svg)
+
+The compact search path is:
+
+```bash
+python3 tools/bandit.py reference-index
+python3 tools/bandit.py search-memory UCB
+python3 tools/bandit.py search-memory integrable
+python3 tools/bandit.py search-memory contextual
+```
+
+See [`docs/mathlib_search_protocol.md`](docs/mathlib_search_protocol.md),
+[`research-wiki/mathlib/theorem-cards.md`](research-wiki/mathlib/theorem-cards.md),
+[`research-wiki/textbooks/bandit-classics.md`](research-wiki/textbooks/bandit-classics.md),
+[`research-wiki/scenarios/bandit-scenario-atlas.md`](research-wiki/scenarios/bandit-scenario-atlas.md),
+and [`research-wiki/theory-tree/bandit-theory-tree.md`](research-wiki/theory-tree/bandit-theory-tree.md).
+
 ## Quick Start
 
 ```bash
@@ -79,6 +139,8 @@ cd Auto-Bandit-RL-Proof-In-Sleep
 
 python3 tools/bandit.py check
 python3 tools/bandit.py list-literature
+python3 tools/bandit.py list-mathlib
+python3 tools/bandit.py list-scenarios
 python3 tools/bandit.py next-task
 python3 tools/bandit.py reference-index
 ```
@@ -104,6 +166,12 @@ lake build && lake build Tests
 `python3 tools/bandit.py check` runs that gate and scans local Lean files for
 placeholders such as `sorry`, `admit`, `axiom`, and `postulate`.
 
+## Daily GitHub Push
+
+Use [`docs/daily_push.md`](docs/daily_push.md) for the day-to-day command
+sequence to push to `DakeBU/Auto-Bandit-RL-Proof-In-Sleep` while typing a
+fine-grained `github_pat` interactively in the console.
+
 ## Lean Library Shape
 
 The current Lean package is dependency-light and compiles without Mathlib:
@@ -112,6 +180,7 @@ The current Lean package is dependency-light and compiles without Mathlib:
 | --- | --- |
 | `BanditRLProof/Core.lean` | finite action traces, pull counts, reward sums, finite mean models |
 | `BanditRLProof/Regret.lean` | pseudo-regret surface and theorem-card records |
+| `BanditRLProof/LeafLemmas.lean` | compiled dependency-light leaf lemmas for pull counts, reward sums, gaps, and pseudo-regret |
 | `BanditRLProof/Algorithms/ETC.lean` | Explore-Then-Commit proof-DAG surfaces |
 | `BanditRLProof/Algorithms/UCB.lean` | UCB index proof-DAG surfaces |
 | `BanditRLProof/Algorithms/Thompson.lean` | Thompson sampling and Bayesian regret surfaces |
@@ -130,9 +199,14 @@ ABRL treats unfinished proof technology as a first-class artifact.  Important
 memory files include:
 
 - `research-wiki/lml/theorem-cards.md`: LML declarations and proof-route cards.
+- `research-wiki/mathlib/theorem-cards.md`: Mathlib module/search cards for reusable leaf lemmas.
+- `research-wiki/textbooks/bandit-classics.md`: classic textbook and survey source cards.
+- `research-wiki/scenarios/bandit-scenario-atlas.md`: current bandit/RL scenario taxonomy.
+- `research-wiki/theory-tree/bandit-theory-tree.md`: broad proof-tree map from source to leaf to theorem.
 - `research-wiki/proof-techniques/classical-bandits.md`: regret and concentration proof patterns.
 - `research-wiki/proof-techniques/lean-patterns.md`: Lean formalization patterns for finite actions, kernels, and sums.
 - `research-wiki/open-problems/bandit-proof-backlog.md`: unproved or partially mapped proof technology.
+- `research-wiki/mathlib-candidates/`: reusable leaf lemmas to prepare for upstream Mathlib contribution.
 - `conversion-windows/` and `proof-obligations/`: task-local Lean/prose correspondence and active proof-DAG leaves.
 
 Only compiled local declarations enter certified memory.  Theorem cards from
@@ -207,3 +281,4 @@ More detail is in [`docs/attribution.md`](docs/attribution.md) and
 [leanmarathon]: https://github.com/YuanheZ/LeanMarathon
 [lean-slt]: https://github.com/YuanheZ/lean-stat-learning-theory
 [mathlib]: https://github.com/leanprover-community/mathlib4
+[mathlib-initiative]: https://mathlib-initiative.org/
