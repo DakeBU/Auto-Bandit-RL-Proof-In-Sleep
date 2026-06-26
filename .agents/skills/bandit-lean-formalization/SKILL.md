@@ -21,10 +21,13 @@ Use this skill when editing `BanditRLProof/` or `Tests/`.
 8. If repeated attempts fail, treat that as signal to audit the statement,
    missing assumptions, or counterexamples.
 9. Before creating a general-purpose lemma, run `python3 tools/bandit.py
-   search-memory <term>` and check `research-wiki/mathlib/theorem-cards.md`.
+   search-memory <term>`, run `python3 tools/bandit.py list-lean-decls <term>`,
+   and check `research-wiki/mathlib/theorem-cards.md`.
 10. If a general leaf belongs in Mathlib, mark it `mathlib-candidate` and keep
    ABRL-specific wrappers thin.
-11. If a proof needs Mathlib or LML, stop and record the dependency route
+11. If a leaf comes from a paper theorem, record the paper card id before
+   tactic work.
+12. If a proof needs Mathlib or LML, stop and record the dependency route
    before changing `lakefile.lean`.
 
 ## Current Lean Layer

@@ -10,6 +10,7 @@ Refresh the compact JSON index with:
 python3 tools/bandit.py reference-index
 python3 tools/bandit.py list-mathlib
 python3 tools/bandit.py search-memory Finset.sum
+python3 tools/bandit.py list-lean-decls pullCount
 ```
 
 ## Cards
@@ -20,12 +21,15 @@ python3 tools/bandit.py search-memory Finset.sum
 | `MLIB-FINTYPE-FIN` | `Mathlib.Data.Fintype.Basic`, `Mathlib.Data.Fin.Basic` | `Fintype.card`, `Fin`, `Finite`, `Nonempty`, `Fin.cast` | finite arms, nonempty action sets, finite policies |
 | `MLIB-ORDER-ALGEBRA` | `Mathlib.Algebra.Order.Field.Basic`, `Mathlib.Data.Real.Basic` | `div_le_iff`, `mul_le_mul`, `Nat.cast_pos`, `linarith`, `nlinarith` | gap positivity, UCB radius algebra, denominator side conditions |
 | `MLIB-REAL-LOG-SQRT` | `Mathlib.Analysis.SpecialFunctions.Log.Basic`, `Mathlib.Data.Real.Sqrt` | `Real.log`, `Real.sqrt`, `sq_sqrt`, `log_nonneg`, `sqrt_le_sqrt` | UCB confidence widths and logarithmic regret |
+| `MLIB-EXP-LOG-INEQUALITIES` | `Mathlib.Analysis.SpecialFunctions.Log.Basic` | `Real.exp`, `Real.log`, `exp_le_exp`, `log_le_iff_le_exp`, `rpow` | exponential weights, Chernoff routes, KL-UCB algebra |
 | `MLIB-MEASURE-INTEGRAL` | `Mathlib.MeasureTheory.Integral.Bochner.Basic` | `Integrable`, `integral`, `lintegral`, `AEStronglyMeasurable`, `AEMeasurable` | expectations, Bayesian regret, integrability contracts |
 | `MLIB-PROBABILITY-INDEPENDENCE` | `Mathlib.Probability.Independence.Basic` | `IndepFun`, `iIndepFun`, `IndepSet`, `IdentDistrib` | IID rewards, product events, concentration theorem assumptions |
 | `MLIB-CONDITIONAL-EXPECTATION` | `Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic` | `condexp`, `filtration`, `adapted`, `martingale`, `stoppingTime` | adaptive rewards, posterior identities, martingale concentration |
+| `MLIB-MARTINGALE-STOCHASTIC` | `Mathlib.Probability.Martingale.Basic`, `Mathlib.Probability.Notation` | `Martingale`, `Submartingale`, `Supermartingale`, `filtration`, `stoppingTime` | self-normalized processes, delayed feedback, finite-horizon RL regret |
 | `MLIB-PROBABILITY-KERNEL` | `Mathlib.Probability.Kernel.Basic` | `Kernel`, `bind`, `comp`, `prod` | reward kernels, posterior kernels, finite-horizon MDP policies |
 | `MLIB-ASYMPTOTICS` | `Mathlib.Analysis.Asymptotics.Asymptotics` | `Asymptotics.IsBigO`, `IsTheta`, `Eventually`, `Filter.atTop` | logarithmic regret, minimax rates, asymptotic theorem exports |
 | `MLIB-CONVEX-LINALG` | `Mathlib.Analysis.Convex.Basic`, `Mathlib.LinearAlgebra.Matrix` | `Convex`, `Matrix`, `inner`, `norm`, `IsBounded` | linear bandits, confidence ellipsoids, least-squares design |
+| `MLIB-METRIC-TOPOLOGY` | `Mathlib.Topology.MetricSpace.Basic` | `Metric.ball`, `Metric.closedBall`, `LipschitzWith`, `TotallyBounded`, `diam` | Lipschitz/continuum bandits, covering arguments, metric action spaces |
 
 ## Retrieval Rule
 

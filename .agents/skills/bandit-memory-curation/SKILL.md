@@ -14,6 +14,8 @@ Use this skill after any nontrivial proof attempt or literature lookup.
 python3 tools/bandit.py memory-refresh <task-id>
 python3 tools/bandit.py reference-index
 python3 tools/bandit.py search-memory <query>
+python3 tools/bandit.py list-papers
+python3 tools/bandit.py list-lean-decls <query>
 python3 tools/bandit.py trial-summary
 ```
 
@@ -29,7 +31,8 @@ python3 tools/bandit.py trial-summary
 - hidden regularity contracts promoted to reusable obligations;
 - Mathlib candidate leaves and their upstream-readiness status;
 - Mathlib retrieval cards searched before creating general lemmas;
-- textbook and scenario cards used to place the theorem in the theory tree;
+- compiled local Lean declarations searched before opening a new leaf;
+- textbook, paper, and scenario cards used to place the theorem in the theory tree;
 - persistent failure diagnoses, including missing assumptions or possible
   counterexamples.
 
@@ -40,6 +43,7 @@ python3 tools/bandit.py trial-summary
 | `research-wiki/lml/` | upstream LML theorem cards |
 | `research-wiki/mathlib/` | Mathlib retrieval cards for reusable leaves |
 | `research-wiki/textbooks/` | classic textbook and survey source cards |
+| `research-wiki/papers/` | algorithm and frontier-scenario paper cards |
 | `research-wiki/scenarios/` | bandit/RL scenario taxonomy |
 | `research-wiki/theory-tree/` | source-to-leaf proof tree |
 | `research-wiki/cited-results/` | external theorem contracts |

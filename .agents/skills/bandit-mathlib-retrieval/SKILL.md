@@ -15,7 +15,9 @@ asymptotics, convexity, or linear algebra.
 ```bash
 python3 tools/bandit.py reference-index
 python3 tools/bandit.py list-mathlib
+python3 tools/bandit.py list-papers
 python3 tools/bandit.py search-memory <query>
+python3 tools/bandit.py list-lean-decls <query>
 ```
 
 ## Required Files
@@ -24,6 +26,7 @@ Read:
 
 - `research-wiki/mathlib/theorem-cards.md`;
 - `research-wiki/mathlib-candidates/README.md`;
+- `research-wiki/papers/bandit-frontier-cards.md` when the leaf comes from a paper route;
 - the task conversion window;
 - the task proof-obligation ledger.
 
@@ -32,8 +35,10 @@ Read:
 Before lower Lean work, record:
 
 - Mathlib card id;
+- textbook or paper source card id;
 - candidate imports/modules;
 - search terms already tried;
+- compiled local declarations already found;
 - expected local API bridge;
 - intended proof route;
 - hidden regularity contracts;

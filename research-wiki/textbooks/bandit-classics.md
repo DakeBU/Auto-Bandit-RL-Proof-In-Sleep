@@ -11,6 +11,20 @@ are source-routing cards, not local proof certificates.
 | `TXT-LATTIMORE-SZEPESVARI-2020` | [Lattimore and Szepesvári, 2020](https://tor-lattimore.com/downloads/book/book.pdf) | Main textbook spine for concentration, finite stochastic bandits, adversarial bandits, lower bounds, contextual and linear bandits. | ETC, UCB, MOSS, KL-UCB, EXP3, LinUCB/OFUL |
 | `TXT-SLIVKINS-2019-2024` | [Slivkins, 2019](https://arxiv.org/abs/1904.07272) | Broad teaching-oriented tree covering IID rewards, Bayesian priors, Lipschitz/contextual/adversarial bandits, knapsacks, and agents. | Bayesian regret, similarity bandits, BwK, incentive-compatible exploration |
 
+## Paper Bridge Layer
+
+Textbooks provide the main spine; individual algorithm and frontier routes use
+paper cards in [`research-wiki/papers/bandit-frontier-cards.md`](../papers/bandit-frontier-cards.md).
+The bridge layer currently covers:
+
+- UCB1, EXP3, KL-UCB, Thompson sampling, LinUCB/OFUL, and UCB-VI;
+- bandits with knapsacks and resource constraints;
+- dueling/preference, safe, private, fair, federated, and neural/federated
+  contextual bandits.
+
+Run `python3 tools/bandit.py list-papers` or `python3 tools/bandit.py
+search-memory <topic>` before creating a new theorem route.
+
 ## Reproduction Order
 
 1. Finite stochastic arms: definitions, pull counts, regret decomposition,
@@ -25,8 +39,9 @@ are source-routing cards, not local proof certificates.
    routes, contextual measurability.
 6. Linear/structured layer: least squares, confidence ellipsoids, self-normalized
    concentration, OFUL/LinUCB.
-7. Modern extensions: pure exploration, nonstationary, combinatorial, knapsack,
-   dueling/preference, safe/fair/private, federated, and LLM/recommender bandits.
+7. Modern extensions: pure exploration, nonstationary, combinatorial, resource
+   constrained/knapsack, dueling/preference, heavy-tailed/robust, delayed,
+   safe/fair/private, federated, and LLM/recommender bandits.
 
 ## Textbook Leaf Contract
 

@@ -8,9 +8,11 @@ make Mathlib-usable leaves easy to find, import, port, or upstream.
 ```bash
 python3 tools/bandit.py reference-index
 python3 tools/bandit.py list-mathlib
+python3 tools/bandit.py list-papers
 python3 tools/bandit.py search-memory Finset.sum
 python3 tools/bandit.py search-memory integrable
 python3 tools/bandit.py search-memory contextual
+python3 tools/bandit.py list-lean-decls pullCount
 ```
 
 Then read:
@@ -23,11 +25,13 @@ Then read:
 ## Search Order
 
 1. Search ABRL memory with `search-memory`.
-2. Search the Mathlib docs with the card's module and query terms.
-3. Search local Lean code and existing theorem cards.
-4. If the result exists upstream, record the import route.
-5. If it is general but missing, record a `mathlib-candidate`.
-6. If it is ABRL-specific, keep the wrapper project-local and thin.
+2. Confirm the textbook or paper source card for the scenario.
+3. Search the local Lean declaration index with `list-lean-decls`.
+4. Search the Mathlib docs with the card's module and query terms.
+5. Search local Lean code and existing theorem cards.
+6. If the result exists upstream, record the import route.
+7. If it is general but missing, record a `mathlib-candidate`.
+8. If it is ABRL-specific, keep the wrapper project-local and thin.
 
 ## Required Leaf Fields
 

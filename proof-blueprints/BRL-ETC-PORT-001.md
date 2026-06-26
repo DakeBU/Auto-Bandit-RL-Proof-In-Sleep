@@ -1,56 +1,54 @@
-# Proof Blueprint: BRL-UCB-PORT-001
+# Proof Blueprint: BRL-ETC-PORT-001
 
 Generated: `2026-06-26T17:35:29+00:00`
 
 ## Source Task
 
-# Port the UCB regret proof route
+# Port the Explore-Then-Commit regret proof route
 
-Task id: `BRL-UCB-PORT-001`
+Task id: `BRL-ETC-PORT-001`
 Kind: `literaturePort`
 Status: `planned`
 Harness: `hierarchical`
 
 ## Goal
 
-Build a local ABRL route for the finite stochastic UCB regret theorem, starting
-from theorem cards and ending in either a compiled local theorem, a documented
-import route, or a precise blocked ledger.
+Formalize or stage the Explore-Then-Commit regret proof route using ABRL's
+finite-action surfaces and LML theorem cards.
 
 ## Source
 
 - Repository: [LeanMachineLearning/LML](https://github.com/LeanMachineLearning/LML)
-- Upstream declaration: `Bandits.UCB.regret_le`
-- Upstream module: `LeanMachineLearning.Online.Bandit.Algorithms.UCB`
-- Local surface: `BanditRLProof/Algorithms/UCB.lean`
-- Textbook/source cards: `TXT-BUBECK-CESABIANCHI-2012`, `TXT-LATTIMORE-SZEPESVARI-2020`
+- Upstream declaration: `Bandits.ETC.regret_le`
+- Upstream module: `LeanMachineLearning.Online.Bandit.Algorithms.ETC`
+- Local surface: `BanditRLProof/Algorithms/ETC.lean`
+- Textbook/source card: `TXT-LATTIMORE-SZEPESVARI-2020`
 - Scenario card: `SCN-STOCHASTIC-FINITE`
-- Mathlib cards: `MLIB-FINSET-SUMS`, `MLIB-ORDER-ALGEBRA`, `MLIB-REAL-LOG-SQRT`, `MLIB-PROBABILITY-INDEPENDENCE`
+- Mathlib cards: `MLIB-FINTYPE-FIN`, `MLIB-FINSET-SUMS`, `MLIB-PROBABILITY-INDEPENDENCE`
 
 ## Lean Target
 
 ```lean
 -- staged targets:
--- BanditRLProof.UCB.obligationNames
--- future local theorem compatible with Bandits.UCB.regret_le
+-- BanditRLProof.ETC.obligationNames
+-- future local theorem compatible with Bandits.ETC.regret_le
 ```
 
 ## Proof Obligations
 
-- [ ] Decide `card-only`, `port`, or `dependency` route.
-- [ ] Map UCB index, width, empirical mean, and pull-count definitions.
-- [ ] Record sub-Gaussian tail dependencies.
-- [ ] Record expected pull-count bound dependencies.
-- [ ] Keep proof export clear that LML is theorem-card status until local closure.
+- [ ] Prove or import round-robin exploration counts.
+- [ ] Map empirical mean argmax commit.
+- [ ] Record wrong-commit probability concentration theorem.
+- [ ] Derive pull-count bound after commit.
+- [ ] Connect to regret decomposition.
 
 ## Mathlib-Ready Leaf Contract
 
 Current leaf classes are recorded in
-`proof-obligations/BRL-UCB-PORT-001.md`.  Generic order, algebra, positivity,
-summability, and concentration infrastructure should be prepared as Mathlib
-candidates.  UCB-specific wrappers should remain thin and should point to
-those reusable leaves.  Do not change the proof route without a reviewer-visible
-statement, hypothesis, or counterexample audit.
+`proof-obligations/BRL-ETC-PORT-001.md`.  Generic finite-cycle arithmetic and
+regularity lemmas should be treated as Mathlib candidates; ETC-specific
+algorithm wrappers stay project-local.  Do not change the proof route without
+recording the missing assumption, counterexample, or source mismatch.
 
 ## Build Gate
 
@@ -61,86 +59,61 @@ python3 tools/bandit.py check
 
 ## Conversion Window Snapshot
 
-# Conversion Window: UCB regret theorem-card route
+# Conversion Window: Explore-Then-Commit regret route
 
-Task id: `BRL-UCB-PORT-001`
+Task id: `BRL-ETC-PORT-001`
 
-Source card: `TXT-BUBECK-CESABIANCHI-2012`, `TXT-LATTIMORE-SZEPESVARI-2020`
+Source card: `TXT-LATTIMORE-SZEPESVARI-2020`
 Scenario card: `SCN-STOCHASTIC-FINITE`
 
 ## Natural-Language Statement
 
-For a finite stochastic bandit with sub-Gaussian rewards, UCB chooses the arm
-with maximal empirical mean plus a confidence width.  The expected regret is
-bounded by a logarithmic pull-count term for suboptimal arms plus summable bad
-event terms.
+Explore-Then-Commit pulls each arm a fixed number of times, commits to the arm
+with the largest empirical mean, and pays regret through exploration plus the
+probability of committing to a suboptimal arm.
 
 ## Lean Mapping
 
 | Source symbol | Meaning | Lean declaration | Type / role | Status |
 | --- | --- | --- | --- | --- |
-| `K` | number of arms | `K : Nat` | finite action count | typed |
-| `A_t` | action at time `t` | `action : Nat -> Fin K` | action trace | local surface |
-| `N_{t,a}` | pull count | `pullCount action a t` | count | compiled |
-| `Delta_a` | arm gap | `FiniteBanditModel.gap` | rational gap surface | compiled |
-| UCB width | confidence radius | `BanditRLProof.UCB.score` placeholder | index surface | typed contract |
-| `Bandits.UCB.regret_le` | upstream theorem | LML theorem card | regret bound | theorem-card |
-
-## Assumption Ledger
-
-| Assumption | Lean status | Source | Blocking? |
-| --- | --- | --- | --- |
-| finite arms | compiled surface | ABRL core | no |
-| reward means | compiled rational surface | ABRL core | no |
-| sub-Gaussian rewards | theorem-card/obligation | LML/Mathlib route | yes |
-| measurable action process | theorem-card/obligation | LML route | yes |
-| expected pull-count bound | theorem-card/obligation | LML route | yes |
+| round-robin exploration | arm `t % K` | `ETC.exploreArm` | finite action selector | compiled |
+| `m` | exploration pulls per arm | `ETC.Spec.explorationPulls` | parameter | compiled |
+| commit argmax | selected empirical best arm | `ETC.CommitOracle.choose` | contract | typed |
+| `Bandits.ETC.regret_le` | upstream theorem | LML theorem card | regret bound | theorem-card |
 
 ## Local API And Proof Route
 
 | Leaf | Existing APIs/imports | Retrieval cards | Intended route | Pivot rule |
 | --- | --- | --- | --- | --- |
-| `UCB-INIT` | pull count recursion, finite arms | `MLIB-FINTYPE-FIN`, `MLIB-FINSET-SUMS` | prove positive counts after initialization | pivot only after positivity statement audit |
-| `UCB-INDEX` | UCB score surface, future log/sqrt API | `MLIB-REAL-LOG-SQRT`, `MLIB-ORDER-ALGEBRA` | selected arm maximizes empirical mean plus width | pivot only after confidence-radius API audit |
-| `UCB-GOOD` | index inequality, gap algebra | `MLIB-ORDER-ALGEBRA` | good event implies suboptimal arm pull-count bound | pivot only after checking gap/denominator hypotheses |
-| `UCB-TAILS` | concentration theorem cards | `MLIB-PROBABILITY-INDEPENDENCE`, `MLIB-MEASURE-INTEGRAL` | one-sided tails plus union/summability | pivot only after sub-Gaussian and measurability contract audit |
-| `UCB-REGRET` | regret decomposition, pull-count bound | `LML-UCB-REGRET`, `LML-BANDIT-REGRET-PULLCOUNT` | sum gap times expected pulls plus bad events | pivot only after source theorem mismatch is recorded |
+| `ETC-COUNT` | pull count recursion, `ETC.exploreArm` | `MLIB-FINSET-SUMS`, `MLIB-ORDER-ALGEBRA` | induction plus finite-cycle arithmetic | pivot only after modulo/count statement audit |
+| `ETC-WRONG` | concentration theorem cards | `MLIB-PROBABILITY-INDEPENDENCE`, `MLIB-MEASURE-INTEGRAL` | pairwise empirical-mean tail event union | pivot only after checking sub-Gaussian and measurability contracts |
+| `ETC-REGRET` | regret decomposition cards | `LML-ETC-REGRET`, `LML-BANDIT-REGRET-PULLCOUNT` | exploration term plus wrong-commit term | pivot only after source theorem mismatch is recorded |
 
 ## Proof-DAG
 
 | Node | Interface | Dependencies | Owner | Lean declaration | Regularity contracts | Mathlib status | Gate | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `UCB-INIT` | initial exploration gives positive counts | finite arms | lower Lean | TBD | finite actions, positive arm count, positive horizon | project-local with generic Nat leaves | build | planned |
-| `UCB-INDEX` | selected arm maximizes UCB index | UCB definition | lower architect | TBD | positive counts, positive log argument, order/algebra facts | mathlib-candidate for generic order/algebra leaves | build | planned |
-| `UCB-GOOD` | good event implies pull count bound | index algebra | lower Lean | TBD | positive gap, denominator positivity, bounded width | mathlib-candidate for generic inequality leaves | build | planned |
-| `UCB-TAILS` | upper/lower tail bounds | concentration cards | lower retrieval | cited result | measurability, integrability, sub-Gaussian MGF, summability | theorem-card-only until imported or ported | memory | obligation |
-| `UCB-REGRET` | regret bound from pull counts | regret decomposition | lower Lean | future theorem | all contracts above | project-local | build | blocked |
-
-## Route Decision
-
-Current route: `card-only` until a task explicitly aligns Mathlib/LML
-dependencies or ports the needed concentration and probability lemmas.
+| `ETC-COUNT` | each arm has `m` exploration pulls | round-robin arithmetic | lower Lean | TBD | finite arms, positive arm count | mathlib-candidate for generic arithmetic leaves | build | planned |
+| `ETC-COMMIT` | commit arm maximizes empirical mean | argmax contract | lower architect | TBD | nonempty finite candidates, denominator positivity | project-local wrapper | build | planned |
+| `ETC-WRONG` | wrong commit probability | sub-Gaussian tail | retrieval | cited result | measurability, integrability, sub-Gaussian independence | theorem-card-only | memory | obligation |
+| `ETC-PULL` | pull count after commit | `ETC-COMMIT`, `ETC-WRONG` | lower Lean | TBD | finite horizon, committed arm exists | project-local | build | planned |
+| `ETC-REGRET` | regret bound | pull-count decomposition | lower Lean | future theorem | all contracts above | project-local | build | blocked |
 
 
 ## Obligation Snapshot
 
-# Proof Obligations: BRL-UCB-PORT-001
+# Proof Obligations: BRL-ETC-PORT-001
 
-Source card: `TXT-BUBECK-CESABIANCHI-2012`, `TXT-LATTIMORE-SZEPESVARI-2020`
+Source card: `TXT-LATTIMORE-SZEPESVARI-2020`
 Scenario card: `SCN-STOCHASTIC-FINITE`
 
 | Node | Target | Dependencies | Local APIs/imports | Retrieval cards | Intended proof route | Regularity contracts | Mathlib status | Owner | Lean declaration | Gate | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `UCB-ROUTE` | choose card-only, port, or dependency route | task packet | LML theorem cards, ABRL core | `LML-UCB-REGRET`, `TXT-LATTIMORE-SZEPESVARI-2020` | keep route fixed until reviewer records pivot reason | theorem-card status, toolchain alignment | project-local decision | upper | no Lean declaration | memory | planned |
-| `UCB-CORE` | verify ABRL finite trace and pseudo-regret surfaces | `BanditRLProof.Core`, `Regret`, `LeafLemmas` | pull counts, segment counts, reward sums, gap surface | `LOCAL-LEAF-FINITE-BOOKKEEPING`, `MLIB-FINSET-SUMS`, `MLIB-FINTYPE-FIN`, `LML-BANDIT-REGRET-PULLCOUNT` | compiled dependency-light bookkeeping | finite arms, horizon, rational mean model | project-local wrappers with generic arithmetic candidates | reviewer | `pullCount_le_time`, `pullCount_add_le`, `pullCount_add_eq_of_forall_ne_between`, `pseudoRegret_add_eq_of_forall_gap_zero_between` | `python3 tools/bandit.py check` | compiled |
-| `UCB-INDEX` | replace placeholder score with UCB width when dependency layer is selected | route decision | UCB score surface, logarithm/confidence API | `LOCAL-LEAF-ALGORITHM-WRAPPERS`, `MLIB-REAL-LOG-SQRT`, `MLIB-ORDER-ALGEBRA` | define width, prove selected arm maximizes index | positive counts, positive horizon, order/algebra facts | mathlib-candidate for generic order/algebra leaves | lower Lean | `UCB.score_eq_empiricalMean` | build | blocked |
-| `UCB-CONC` | record or prove sub-Gaussian tail lemmas | concentration cards | LML/Mathlib concentration route | `MLIB-PROBABILITY-INDEPENDENCE`, `MLIB-MEASURE-INTEGRAL`, `MLIB-CONDITIONAL-EXPECTATION` | one-sided and union-bounded tail event control | measurability, integrability, sub-Gaussian MGF, summability | theorem-card-only until imported or ported | lower retrieval | TBD | memory/build | obligation |
-| `UCB-FINAL` | local theorem compatible with `Bandits.UCB.regret_le` | all above | regret decomposition, pull-count bound, concentration cards | `LML-UCB-REGRET`, `MLIB-ASYMPTOTICS` | good-event pull-count bound plus bad-event summation | all upstream contracts above | project-local final theorem | lower Lean | TBD | build | blocked |
-
-## Current Reviewer Note
-
-The upstream LML theorem is a theorem card only.  Do not export it as an ABRL
-local proof until the route is imported or ported.
+| `ETC-CORE` | verify exploration-arm finite selector | ABRL core | `BanditRLProof.Algorithms.ETC` | `LOCAL-LEAF-ALGORITHM-WRAPPERS`, `MLIB-FINTYPE-FIN` | finite selector value proof | finite action count, nonzero exploration horizon | project-local | reviewer | `ETC.exploreArm_val`, `ETC.exploreArm_eq_of_mod_eq` | check | compiled |
+| `ETC-COUNT` | prove round-robin pull-count arithmetic | `ETC.exploreArm` | pull count recursion, Nat modulo lemmas | `LOCAL-LEAF-FINITE-BOOKKEEPING`, `MLIB-FINSET-SUMS`, `MLIB-ORDER-ALGEBRA` | induction on time plus finite-cycle arithmetic | finite actions, positive arm count | mathlib-candidate for generic arithmetic leaves | lower Lean | `pullCount_succ_of_eq`, `pullCount_succ_of_ne`, `pullCount_add_eq_of_forall_ne_between`, `pullCount_add_eq_add_of_forall_eq_between` | build | planned |
+| `ETC-COMMIT` | define empirical-mean argmax commit | finite history | finite argmax contract, reward sums | `MLIB-FINTYPE-FIN`, `MLIB-FINSET-SUMS` | expose commit oracle before probability proof | finite arms, nonempty candidate set, denominator positivity | project-local wrapper | middle/lower | TBD | build | planned |
+| `ETC-CONC` | wrong-commit probability bound | sub-Gaussian cards | concentration theorem cards | `MLIB-PROBABILITY-INDEPENDENCE`, `MLIB-MEASURE-INTEGRAL` | reduce wrong commit to pairwise empirical-mean tail events | measurability, integrability, independence/sub-Gaussian contract | theorem-card-only until imported or ported | retrieval | TBD | memory/build | obligation |
+| `ETC-FINAL` | local theorem compatible with `Bandits.ETC.regret_le` | all above | regret decomposition, pull-count ledger | `LML-ETC-REGRET`, `LML-BANDIT-REGRET-PULLCOUNT` | exploration regret plus wrong-commit regret | all upstream contracts above | project-local | lower Lean | TBD | build | blocked |
 
 
 ## Relevant LML Theorem Cards
@@ -1830,70 +1803,7 @@ local proof until the route is imported or ported.
 ## Recent Trials
 
 ```json
-[
-  {
-    "kind": "plan",
-    "notes": "created hierarchical prompt deck with 3 lower prompts",
-    "role": "upper",
-    "run_id": "20260625-103120-BRL-UCB-PORT-001-cycle01",
-    "status": "queued",
-    "task": "BRL-UCB-PORT-001",
-    "time": "2026-06-25T01:31:20+00:00"
-  },
-  {
-    "kind": "plan",
-    "notes": "created hierarchical prompt deck with 1 lower prompts",
-    "role": "upper",
-    "run_id": "20260625-103252-BRL-UCB-PORT-001-cycle01",
-    "status": "queued",
-    "task": "BRL-UCB-PORT-001",
-    "time": "2026-06-25T01:32:52+00:00"
-  },
-  {
-    "exit_code": 0,
-    "kind": "attempt",
-    "notes": "executed runs/20260625-103252-BRL-UCB-PORT-001-cycle01/10_upper_director.md in 0.0s",
-    "prompt": "runs/20260625-103252-BRL-UCB-PORT-001-cycle01/10_upper_director.md",
-    "role": "agent",
-    "run_id": "20260625-103252-BRL-UCB-PORT-001-cycle01",
-    "status": "compiled",
-    "task": "BRL-UCB-PORT-001",
-    "time": "2026-06-25T01:32:52+00:00"
-  },
-  {
-    "exit_code": 0,
-    "kind": "attempt",
-    "notes": "executed runs/20260625-103252-BRL-UCB-PORT-001-cycle01/20_middle_formalizer.md in 0.0s",
-    "prompt": "runs/20260625-103252-BRL-UCB-PORT-001-cycle01/20_middle_formalizer.md",
-    "role": "agent",
-    "run_id": "20260625-103252-BRL-UCB-PORT-001-cycle01",
-    "status": "compiled",
-    "task": "BRL-UCB-PORT-001",
-    "time": "2026-06-25T01:32:52+00:00"
-  },
-  {
-    "exit_code": 0,
-    "kind": "attempt",
-    "notes": "executed runs/20260625-103252-BRL-UCB-PORT-001-cycle01/31_lower_1.md in 0.0s",
-    "prompt": "runs/20260625-103252-BRL-UCB-PORT-001-cycle01/31_lower_1.md",
-    "role": "agent",
-    "run_id": "20260625-103252-BRL-UCB-PORT-001-cycle01",
-    "status": "compiled",
-    "task": "BRL-UCB-PORT-001",
-    "time": "2026-06-25T01:32:52+00:00"
-  },
-  {
-    "exit_code": 0,
-    "kind": "attempt",
-    "notes": "executed runs/20260625-103252-BRL-UCB-PORT-001-cycle01/40_reviewer.md in 0.0s",
-    "prompt": "runs/20260625-103252-BRL-UCB-PORT-001-cycle01/40_reviewer.md",
-    "role": "agent",
-    "run_id": "20260625-103252-BRL-UCB-PORT-001-cycle01",
-    "status": "compiled",
-    "task": "BRL-UCB-PORT-001",
-    "time": "2026-06-25T01:32:52+00:00"
-  }
-]
+[]
 ```
 
 ## Reviewer Gate

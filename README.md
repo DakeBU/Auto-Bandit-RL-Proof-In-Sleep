@@ -112,8 +112,8 @@ See [`docs/lemma_leaf_network.md`](docs/lemma_leaf_network.md) and
 operational checklist.
 
 ABRL also maintains a wider bandit/RL theory tree.  It connects classic
-textbook roots, Mathlib retrieval cards, LML theorem cards, current scenario
-cards, and final proof-export targets.
+textbook roots, paper source cards, Mathlib retrieval cards, LML theorem
+cards, current scenario cards, and final proof-export targets.
 
 ![ABRL bandit theory tree](docs/assets/bandit_theory_tree.svg)
 
@@ -124,6 +124,8 @@ python3 tools/bandit.py reference-index
 python3 tools/bandit.py search-memory UCB
 python3 tools/bandit.py search-memory integrable
 python3 tools/bandit.py search-memory contextual
+python3 tools/bandit.py search-memory KL-UCB
+python3 tools/bandit.py list-lean-decls pseudoRegret
 ```
 
 See [`docs/mathlib_search_protocol.md`](docs/mathlib_search_protocol.md),
@@ -140,7 +142,9 @@ cd Auto-Bandit-RL-Proof-In-Sleep
 python3 tools/bandit.py check
 python3 tools/bandit.py list-literature
 python3 tools/bandit.py list-mathlib
+python3 tools/bandit.py list-papers
 python3 tools/bandit.py list-scenarios
+python3 tools/bandit.py list-lean-decls pullCount
 python3 tools/bandit.py next-task
 python3 tools/bandit.py reference-index
 ```
@@ -201,6 +205,7 @@ memory files include:
 - `research-wiki/lml/theorem-cards.md`: LML declarations and proof-route cards.
 - `research-wiki/mathlib/theorem-cards.md`: Mathlib module/search cards for reusable leaf lemmas.
 - `research-wiki/textbooks/bandit-classics.md`: classic textbook and survey source cards.
+- `research-wiki/papers/bandit-frontier-cards.md`: algorithm and modern-scenario paper cards.
 - `research-wiki/scenarios/bandit-scenario-atlas.md`: current bandit/RL scenario taxonomy.
 - `research-wiki/theory-tree/bandit-theory-tree.md`: broad proof-tree map from source to leaf to theorem.
 - `research-wiki/proof-techniques/classical-bandits.md`: regret and concentration proof patterns.

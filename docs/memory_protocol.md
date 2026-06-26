@@ -10,6 +10,7 @@ forgetting failed assumptions, or overstating theorem-card status.
 | theorem card | `research-wiki/lml/` | upstream result, not local proof |
 | Mathlib retrieval card | `research-wiki/mathlib/` | import/search route for reusable Lean leaves |
 | textbook card | `research-wiki/textbooks/` | source route for classical proof reproduction |
+| paper card | `research-wiki/papers/` | algorithm or frontier-scenario source route |
 | scenario card | `research-wiki/scenarios/` | bandit/RL setting taxonomy and frontier placement |
 | theory tree | `research-wiki/theory-tree/` | source-to-leaf proof architecture |
 | cited result | `research-wiki/cited-results/` | exact source and statement used |
@@ -39,6 +40,8 @@ python3 tools/bandit.py blueprint-refresh TASK_ID
 python3 tools/bandit.py memory-refresh TASK_ID
 python3 tools/bandit.py reference-index
 python3 tools/bandit.py search-memory QUERY
+python3 tools/bandit.py list-papers
+python3 tools/bandit.py list-lean-decls QUERY
 ```
 
 After any failed proof attempt, write a concise file under
@@ -65,6 +68,9 @@ route, current proof stability note, and whether repeated failure suggests a
 missing assumption or counterexample.  Do not leave a candidate as only a
 natural-language wish list.
 
-For new theorem targets, include a textbook/source card and a scenario card.
+For new theorem targets, include a textbook or paper source card and a scenario
+card.
 For each general leaf, include the Mathlib retrieval card searched before the
 leaf was classified as imported, ported, project-local, or upstream candidate.
+For each local leaf, include the compiled Lean declaration found by
+`list-lean-decls` or explain why no local declaration exists.

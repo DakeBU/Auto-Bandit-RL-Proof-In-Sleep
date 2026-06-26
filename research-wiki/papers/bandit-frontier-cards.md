@@ -1,0 +1,52 @@
+# Bandit Paper And Survey Cards
+
+ABRL uses paper cards when a scenario needs a sharper source than the broad
+textbook spine.  These cards are retrieval routes, not certified local Lean
+results.  A card becomes certified only after the required declarations compile
+inside this repository.
+
+Refresh/search the compact index with:
+
+```bash
+python3 tools/bandit.py reference-index
+python3 tools/bandit.py list-papers
+python3 tools/bandit.py search-memory KL-UCB
+python3 tools/bandit.py search-memory federated
+```
+
+## Classical Algorithm Cards
+
+| Card | Source | Scenarios | First Lean leaf families |
+| --- | --- | --- | --- |
+| `PPR-AUER-CBF-2002-UCB1` | [Auer, Cesa-Bianchi, and Fischer, 2002](https://doi.org/10.1023/A:1013689704352) | finite stochastic | pull-count threshold, good-event split, tail summability |
+| `PPR-AUER-CFS-2002-EXP3` | [Auer, Cesa-Bianchi, Freund, and Schapire, 2002](https://doi.org/10.1137/S0097539701398375) | adversarial finite | importance-weighted loss, exponential potential, learning-rate optimization |
+| `PPR-GARIVIER-CAPPE-2011-KLUCB` | [Garivier and Cappé, 2011](https://arxiv.org/abs/1102.2490) | finite stochastic | Bernoulli KL, confidence inversion, bounded reward event |
+| `PPR-AGRAWAL-GOYAL-2011-TS` | [Agrawal and Goyal, 2011](https://arxiv.org/abs/1111.1797) | stochastic, Bayesian posterior | posterior action identity, probability matching, Bayesian regret |
+| `PPR-ABBASI-YADKORI-2011-SELF-NORMALIZED` | [Abbasi-Yadkori, Pál, and Szepesvári, 2011](https://arxiv.org/abs/1102.2670) | linear/GLM | Gram matrix monotonicity, self-normalized martingale, elliptical potential |
+| `PPR-LI-CHU-LANGFORD-SCHAPIRE-2010-LINUCB` | [Li, Chu, Langford, and Schapire, 2010](https://doi.org/10.1145/1772690.1772758) | contextual, linear, recommender | context-history interface, feature-vector reward, argmax policy |
+| `PPR-AZAR-OSBAND-MUNOS-2017-UCBVI` | [Azar, Osband, and Munos, 2017](https://arxiv.org/abs/1703.05449) | finite-horizon RL/MDP | finite kernels, Bellman recursion, episode regret telescope |
+
+## Frontier Scenario Cards
+
+| Card | Source | Scenarios | First Lean leaf families |
+| --- | --- | --- | --- |
+| `PPR-BADANIDIYURU-KLEINBERG-SLIVKINS-2013-BWK` | [Badanidiyuru, Kleinberg, and Slivkins, 2013](https://arxiv.org/abs/1305.2545) | resource-constrained, knapsack | resource traces, budget stopping time, primal-dual comparison |
+| `PPR-IJCAI-2018-DUELING-SURVEY` | [Sui, Zoghi, Hofmann, and Yue, 2018](https://doi.org/10.24963/ijcai.2018/776) | dueling/preference | pairwise preference matrix, winner notions, comparison regret |
+| `PPR-AAAI-2020-SAFE-LINEAR-STOCHASTIC` | [Khezeli and Bitar, 2020](https://doi.org/10.1609/aaai.v34i06.6581) | safe/constrained | baseline feasibility, safe-set monotonicity, constraint regret |
+| `PPR-AAAI-2016-DP-MAB` | [Tossou and Dimitrakakis, 2016](https://doi.org/10.1609/aaai.v30i1.10212) | private bandits | privacy noise, composition, private confidence radius |
+| `PPR-FAT-2018-MERITOCRATIC-FAIRNESS` | [Joseph, Kearns, Morgenstern, Neel, and Roth, 2018](https://doi.org/10.1145/3278721.3278764) | fair/contextual | fairness invariant, dominance relation, policy constraint |
+| `PPR-AAAI-2021-FEDERATED-MAB` | [Shi and Shen, 2021](https://doi.org/10.1609/aaai.v35i11.17156) | federated/distributed | client-indexed traces, aggregation invariant, communication count |
+| `PPR-FEDERATED-NEURAL-BANDITS-2022` | [Federated Neural Bandits, 2022](https://arxiv.org/abs/2205.14309) | federated, neural/recommender | client embedding contract, nonlinear confidence surrogate, federated update trace |
+
+## Use Rule
+
+Every paper card used in a task must be paired with:
+
+- a scenario card;
+- a textbook root when one exists;
+- Mathlib retrieval cards for general mathematical leaves;
+- local Lean declarations found with `list-lean-decls`, when available;
+- a proof-obligation row for each missing leaf.
+
+If a source route stalls, record the mathematical failure signal before
+changing the statement or proof strategy.

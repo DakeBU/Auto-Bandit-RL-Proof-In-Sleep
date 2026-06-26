@@ -19,11 +19,15 @@ should search, import, or upstream.
 | `pullCount_succ_le_succ` | one-step count growth bound | `MLIB-ORDER-ALGEBRA` | bridge to count Lipschitz-in-time facts |
 | `pullCount_mono` | monotonicity over arbitrary time order | `MLIB-ORDER-ALGEBRA`, `MLIB-FINSET-SUMS` | bridge to monotone filtered-cardinality facts |
 | `pullCount_le_time` | count is bounded by elapsed time | `MLIB-FINSET-SUMS`, `MLIB-ORDER-ALGEBRA` | bridge to cardinality/subset bound |
+| `pullCount_add_le` | count over a future segment grows by at most segment length | `MLIB-FINSET-SUMS`, `MLIB-ORDER-ALGEBRA` | bridge to filtered-cardinality interval bound |
+| `pullCount_le_add` | count is monotone from a prefix into a longer prefix | `MLIB-FINSET-SUMS`, `MLIB-ORDER-ALGEBRA` | bridge to filtered-cardinality monotonicity |
 | `pullCount_eq_zero_of_forall_ne` | no matching action gives zero count | `MLIB-FINSET-SUMS` | bridge to empty filtered set/cardinality zero |
 | `pullCount_eq_time_of_forall_eq` | all actions match gives count equal to time | `MLIB-FINSET-SUMS` | bridge to full filtered range/cardinality |
 | `pullCount_pos_of_eq_before` | one observed match implies positive count | `MLIB-FINSET-SUMS`, `MLIB-ORDER-ALGEBRA` | bridge to nonempty filtered range/cardinality positive |
 | `pullCount_const_self` | constant action trace has count equal to time for its arm | `MLIB-FINSET-SUMS` | bridge to full filtered range/cardinality |
 | `pullCount_const_of_ne` | constant action trace gives zero count for other arms | `MLIB-FINSET-SUMS` | bridge to empty filtered range/cardinality |
+| `pullCount_add_eq_of_forall_ne_between` | a segment without the arm leaves its count unchanged | `MLIB-FINSET-SUMS` | bridge to filtered interval with empty match set |
+| `pullCount_add_eq_add_of_forall_eq_between` | a segment entirely using the arm increases count by segment length | `MLIB-FINSET-SUMS` | bridge to filtered interval with full match set |
 | `sumRewards_succ_of_eq` | selected reward is added | `MLIB-FINSET-SUMS`, `MLIB-MEASURE-INTEGRAL` | bridge to finite-sum reward decomposition |
 | `sumRewards_succ_of_ne` | nonselected reward sum is stable | `MLIB-FINSET-SUMS` | bridge to filtered sum update lemmas |
 | `sumRewards_eq_zero_of_forall_ne` | no selected arm gives zero reward sum | `MLIB-FINSET-SUMS` | bridge to empty filtered-sum theorem |
@@ -36,12 +40,15 @@ should search, import, or upstream.
 | `pseudoRegret_eq_zero_of_forall_gap_zero` | all zero-gap actions have zero pseudo-regret | `MLIB-FINSET-SUMS`, `MLIB-ORDER-ALGEBRA` | bridge to tie-aware regret route |
 | `pseudoRegret_const_bestArm` | constant best-arm policy has zero pseudo-regret | `MLIB-FINSET-SUMS`, `MLIB-ORDER-ALGEBRA` | useful baseline sanity theorem |
 | `pseudoRegret_const_of_gap_zero` | constant zero-gap policy has zero pseudo-regret | `MLIB-FINSET-SUMS`, `MLIB-ORDER-ALGEBRA` | tie-aware baseline sanity theorem |
+| `pseudoRegret_add_eq_of_forall_bestArm_between` | a best-arm segment leaves pseudo-regret unchanged | `MLIB-FINSET-SUMS`, `MLIB-ORDER-ALGEBRA` | bridge to ETC commit and baseline segments |
+| `pseudoRegret_add_eq_of_forall_gap_zero_between` | a zero-gap segment leaves pseudo-regret unchanged | `MLIB-FINSET-SUMS`, `MLIB-ORDER-ALGEBRA` | tie-aware segment bridge |
 
 ## Next Upstream Candidates
 
 - finite filtered-count update;
 - finite indicator-sum update;
 - monotonicity and one-step growth of filtered counts;
+- interval filtered-count bounds and empty/full interval updates;
 - bridge between recursive counts and `Finset.range` sums;
 - filtered reward-sum update under additive zero law.
 

@@ -165,6 +165,15 @@ MATHLIB_CARDS = [
         "status": "import-candidate",
     },
     {
+        "id": "MLIB-EXP-LOG-INEQUALITIES",
+        "source": "Mathlib",
+        "module": "Mathlib.Analysis.SpecialFunctions.Log.Basic",
+        "docs": "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Analysis/SpecialFunctions/Log/Basic.html",
+        "query_terms": ["Real.exp", "Real.log", "exp_le_exp", "log_le_iff_le_exp", "rpow"],
+        "role": "Exponential-weight potentials, Chernoff routes, KL-UCB algebra, and learning-rate optimization.",
+        "status": "import-candidate",
+    },
+    {
         "id": "MLIB-MEASURE-INTEGRAL",
         "source": "Mathlib",
         "module": "Mathlib.MeasureTheory.Integral.Bochner.Basic",
@@ -192,6 +201,15 @@ MATHLIB_CARDS = [
         "status": "import-candidate",
     },
     {
+        "id": "MLIB-MARTINGALE-STOCHASTIC",
+        "source": "Mathlib",
+        "module": "Mathlib.Probability.Martingale.Basic; Mathlib.Probability.Notation",
+        "docs": "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Probability/Martingale/Basic.html",
+        "query_terms": ["Martingale", "Submartingale", "Supermartingale", "filtration", "stoppingTime"],
+        "role": "Self-normalized processes, optional-stopping surfaces, delayed feedback, and finite-horizon RL regret.",
+        "status": "import-candidate",
+    },
+    {
         "id": "MLIB-PROBABILITY-KERNEL",
         "source": "Mathlib",
         "module": "Mathlib.Probability.Kernel.Basic",
@@ -216,6 +234,15 @@ MATHLIB_CARDS = [
         "docs": "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Analysis/Convex/Basic.html",
         "query_terms": ["Convex", "Matrix", "inner", "norm", "IsBounded", "projection"],
         "role": "Linear bandits, confidence ellipsoids, least-squares design, and convex action sets.",
+        "status": "import-candidate",
+    },
+    {
+        "id": "MLIB-METRIC-TOPOLOGY",
+        "source": "Mathlib",
+        "module": "Mathlib.Topology.MetricSpace.Basic",
+        "docs": "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Topology/MetricSpace/Basic.html",
+        "query_terms": ["Metric.ball", "Metric.closedBall", "LipschitzWith", "TotallyBounded", "diam"],
+        "role": "Lipschitz/continuum bandits, covering arguments, nearest-neighbor policies, and metric action spaces.",
         "status": "import-candidate",
     },
 ]
@@ -265,6 +292,149 @@ BANDIT_TEXTBOOK_CARDS = [
     },
 ]
 
+BANDIT_PAPER_CARDS = [
+    {
+        "id": "PPR-AUER-CBF-2002-UCB1",
+        "title": "Finite-time Analysis of the Multiarmed Bandit Problem",
+        "authors": "Peter Auer; Nicolò Cesa-Bianchi; Paul Fischer",
+        "source": "https://doi.org/10.1023/A:1013689704352",
+        "scenarios": ["SCN-STOCHASTIC-FINITE"],
+        "proof_roots": ["UCB1", "finite-time logarithmic regret", "gap-dependent regret"],
+        "lean_leaf_families": ["pull-count threshold", "good event split", "tail summability"],
+        "memory_status": "paper-card",
+    },
+    {
+        "id": "PPR-AUER-CFS-2002-EXP3",
+        "title": "The Nonstochastic Multiarmed Bandit Problem",
+        "authors": "Peter Auer; Nicolò Cesa-Bianchi; Yoav Freund; Robert E. Schapire",
+        "source": "https://doi.org/10.1137/S0097539701398375",
+        "scenarios": ["SCN-ADVERSARIAL-FINITE"],
+        "proof_roots": ["EXP3", "exponential weights", "importance-weighted loss"],
+        "lean_leaf_families": ["potential inequality", "unbiased estimator", "learning-rate optimization"],
+        "memory_status": "paper-card",
+    },
+    {
+        "id": "PPR-GARIVIER-CAPPE-2011-KLUCB",
+        "title": "The KL-UCB Algorithm for Bounded Stochastic Bandits and Beyond",
+        "authors": "Aurélien Garivier; Olivier Cappé",
+        "source": "https://arxiv.org/abs/1102.2490",
+        "scenarios": ["SCN-STOCHASTIC-FINITE"],
+        "proof_roots": ["KL-UCB", "bounded stochastic bandits", "Bernoulli KL routes"],
+        "lean_leaf_families": ["KL monotonicity", "confidence inversion", "bounded reward event"],
+        "memory_status": "paper-card",
+    },
+    {
+        "id": "PPR-AGRAWAL-GOYAL-2011-TS",
+        "title": "Analysis of Thompson Sampling for the Multi-armed Bandit Problem",
+        "authors": "Shipra Agrawal; Navin Goyal",
+        "source": "https://arxiv.org/abs/1111.1797",
+        "scenarios": ["SCN-STOCHASTIC-FINITE", "SCN-BAYESIAN-POSTERIOR"],
+        "proof_roots": ["Thompson sampling", "posterior samples", "Bayesian regret"],
+        "lean_leaf_families": ["posterior action identity", "Beta-Bernoulli update", "probability matching"],
+        "memory_status": "paper-card",
+    },
+    {
+        "id": "PPR-ABBASI-YADKORI-2011-SELF-NORMALIZED",
+        "title": "Online Least Squares Estimation with Self-Normalized Processes: An Application to Bandit Problems",
+        "authors": "Yasin Abbasi-Yadkori; Dávid Pál; Csaba Szepesvári",
+        "source": "https://arxiv.org/abs/1102.2670",
+        "scenarios": ["SCN-LINEAR-GLM"],
+        "proof_roots": ["self-normalized concentration", "linear least squares", "OFUL confidence"],
+        "lean_leaf_families": ["Gram matrix monotonicity", "elliptical potential", "martingale vector bound"],
+        "memory_status": "paper-card",
+    },
+    {
+        "id": "PPR-LI-CHU-LANGFORD-SCHAPIRE-2010-LINUCB",
+        "title": "A Contextual-Bandit Approach to Personalized News Article Recommendation",
+        "authors": "Lihong Li; Wei Chu; John Langford; Robert E. Schapire",
+        "source": "https://doi.org/10.1145/1772690.1772758",
+        "scenarios": ["SCN-CONTEXTUAL", "SCN-LINEAR-GLM", "SCN-LLM-REC-SYS"],
+        "proof_roots": ["LinUCB", "offline evaluation", "contextual reward model"],
+        "lean_leaf_families": ["feature-vector reward", "argmax policy", "context-history interface"],
+        "memory_status": "paper-card",
+    },
+    {
+        "id": "PPR-AZAR-OSBAND-MUNOS-2017-UCBVI",
+        "title": "Minimax Regret Bounds for Reinforcement Learning",
+        "authors": "Mohammad Gheshlaghi Azar; Ian Osband; Rémi Munos",
+        "source": "https://arxiv.org/abs/1703.05449",
+        "scenarios": ["SCN-RL-MDP"],
+        "proof_roots": ["UCB-VI", "finite-horizon MDP regret", "Bellman optimism"],
+        "lean_leaf_families": ["finite kernels", "Bellman recursion", "episode regret telescope"],
+        "memory_status": "paper-card",
+    },
+    {
+        "id": "PPR-BADANIDIYURU-KLEINBERG-SLIVKINS-2013-BWK",
+        "title": "Bandits with Knapsacks",
+        "authors": "Ashwinkumar Badanidiyuru; Robert Kleinberg; Aleksandrs Slivkins",
+        "source": "https://arxiv.org/abs/1305.2545",
+        "scenarios": ["SCN-RESOURCE-CONSTRAINED"],
+        "proof_roots": ["bandits with knapsacks", "primal-dual resource allocation", "budgeted regret"],
+        "lean_leaf_families": ["resource consumption trace", "budget stopping time", "Lagrangian comparison"],
+        "memory_status": "paper-card",
+    },
+    {
+        "id": "PPR-IJCAI-2018-DUELING-SURVEY",
+        "title": "Advancements in Dueling Bandits",
+        "authors": "Yanan Sui; Masrour Zoghi; Katja Hofmann; Yisong Yue",
+        "source": "https://doi.org/10.24963/ijcai.2018/776",
+        "scenarios": ["SCN-DUELING-PREFERENCE"],
+        "proof_roots": ["dueling bandits", "preference matrices", "Condorcet/Borda regret"],
+        "lean_leaf_families": ["pairwise action relation", "preference probability", "winner notion"],
+        "memory_status": "survey-card",
+    },
+    {
+        "id": "PPR-AAAI-2020-SAFE-LINEAR-STOCHASTIC",
+        "title": "Safe Linear Stochastic Bandits",
+        "authors": "Kia Khezeli; Eilyan Bitar",
+        "source": "https://doi.org/10.1609/aaai.v34i06.6581",
+        "scenarios": ["SCN-CONSTRAINTS"],
+        "proof_roots": ["safe linear bandits", "constraint confidence", "safe action set"],
+        "lean_leaf_families": ["baseline feasibility", "safe-set monotonicity", "constraint regret"],
+        "memory_status": "paper-card",
+    },
+    {
+        "id": "PPR-AAAI-2016-DP-MAB",
+        "title": "Algorithms for Differentially Private Multi-Armed Bandits",
+        "authors": "Aristide Tossou; Christos Dimitrakakis",
+        "source": "https://doi.org/10.1609/aaai.v30i1.10212",
+        "scenarios": ["SCN-CONSTRAINTS"],
+        "proof_roots": ["differential privacy", "private UCB", "privacy-regret tradeoff"],
+        "lean_leaf_families": ["noise distribution contract", "privacy composition", "private confidence radius"],
+        "memory_status": "paper-card",
+    },
+    {
+        "id": "PPR-FAT-2018-MERITOCRATIC-FAIRNESS",
+        "title": "Meritocratic Fairness for Infinite and Contextual Bandits",
+        "authors": "Matthew Joseph; Michael Kearns; Jamie Morgenstern; Seth Neel; Aaron Roth",
+        "source": "https://doi.org/10.1145/3278721.3278764",
+        "scenarios": ["SCN-CONSTRAINTS", "SCN-CONTEXTUAL"],
+        "proof_roots": ["fair contextual bandits", "meritocratic fairness", "infinite arms"],
+        "lean_leaf_families": ["fairness invariant", "action dominance relation", "contextual policy constraint"],
+        "memory_status": "paper-card",
+    },
+    {
+        "id": "PPR-AAAI-2021-FEDERATED-MAB",
+        "title": "Federated Multi-Armed Bandits",
+        "authors": "Chengshuai Shi; Cong Shen",
+        "source": "https://doi.org/10.1609/aaai.v35i11.17156",
+        "scenarios": ["SCN-FEDERATED-DISTRIBUTED"],
+        "proof_roots": ["federated MAB", "client aggregation", "communication-efficient regret"],
+        "lean_leaf_families": ["client-indexed traces", "aggregation invariant", "communication round count"],
+        "memory_status": "paper-card",
+    },
+    {
+        "id": "PPR-FEDERATED-NEURAL-BANDITS-2022",
+        "title": "Federated Neural Bandits",
+        "authors": "Federated neural bandit authors",
+        "source": "https://arxiv.org/abs/2205.14309",
+        "scenarios": ["SCN-FEDERATED-DISTRIBUTED", "SCN-LLM-REC-SYS"],
+        "proof_roots": ["federated neural bandits", "nonlinear contextual bandits", "distributed representation learning"],
+        "lean_leaf_families": ["client embedding contract", "nonlinear confidence surrogate", "federated update trace"],
+        "memory_status": "paper-card",
+    },
+]
+
 BANDIT_SCENARIO_CARDS = [
     {
         "id": "SCN-STOCHASTIC-FINITE",
@@ -272,14 +442,31 @@ BANDIT_SCENARIO_CARDS = [
         "core_algorithms": ["ETC", "UCB", "MOSS", "KL-UCB", "Thompson sampling"],
         "leaf_families": ["pull-count algebra", "gap decomposition", "sub-Gaussian tails", "Bernoulli KL"],
         "mathlib_needs": ["MLIB-FINSET-SUMS", "MLIB-ORDER-ALGEBRA", "MLIB-PROBABILITY-INDEPENDENCE"],
+        "source_cards": [
+            "TXT-BUBECK-CESABIANCHI-2012",
+            "TXT-LATTIMORE-SZEPESVARI-2020",
+            "PPR-AUER-CBF-2002-UCB1",
+            "PPR-GARIVIER-CAPPE-2011-KLUCB",
+            "PPR-AGRAWAL-GOYAL-2011-TS",
+        ],
         "status": "seeded",
+    },
+    {
+        "id": "SCN-BAYESIAN-POSTERIOR",
+        "name": "Bayesian and posterior-sampling bandits",
+        "core_algorithms": ["Thompson sampling", "Bayes-UCB", "posterior sampling with priors"],
+        "leaf_families": ["posterior kernels", "Bayesian regret", "probability matching", "prior/posterior update contracts"],
+        "mathlib_needs": ["MLIB-PROBABILITY-KERNEL", "MLIB-CONDITIONAL-EXPECTATION", "MLIB-MEASURE-INTEGRAL"],
+        "source_cards": ["TXT-SLIVKINS-2019-2024", "PPR-AGRAWAL-GOYAL-2011-TS"],
+        "status": "planned",
     },
     {
         "id": "SCN-ADVERSARIAL-FINITE",
         "name": "adversarial finite-arm bandits",
         "core_algorithms": ["EXP3", "EXP3-IX", "FTRL/OMD variants"],
         "leaf_families": ["importance-weighted estimators", "exponential weights", "potential inequalities"],
-        "mathlib_needs": ["MLIB-FINSET-SUMS", "MLIB-REAL-LOG-SQRT", "MLIB-ORDER-ALGEBRA"],
+        "mathlib_needs": ["MLIB-FINSET-SUMS", "MLIB-EXP-LOG-INEQUALITIES", "MLIB-ORDER-ALGEBRA"],
+        "source_cards": ["TXT-BUBECK-CESABIANCHI-2012", "TXT-LATTIMORE-SZEPESVARI-2020", "PPR-AUER-CFS-2002-EXP3"],
         "status": "planned",
     },
     {
@@ -288,6 +475,7 @@ BANDIT_SCENARIO_CARDS = [
         "core_algorithms": ["EXP4", "LinUCB", "Thompson contextual variants"],
         "leaf_families": ["policy classes", "expert advice", "context measurability", "regret against policies"],
         "mathlib_needs": ["MLIB-MEASURE-INTEGRAL", "MLIB-PROBABILITY-KERNEL", "MLIB-FINSET-SUMS"],
+        "source_cards": ["TXT-LATTIMORE-SZEPESVARI-2020", "PPR-LI-CHU-LANGFORD-SCHAPIRE-2010-LINUCB", "PPR-FAT-2018-MERITOCRATIC-FAIRNESS"],
         "status": "planned",
     },
     {
@@ -295,7 +483,17 @@ BANDIT_SCENARIO_CARDS = [
         "name": "linear and generalized-linear bandits",
         "core_algorithms": ["LinUCB", "OFUL", "linear Thompson sampling", "GLM-UCB"],
         "leaf_families": ["least squares", "self-normalized martingales", "ellipsoid confidence", "determinant algebra"],
-        "mathlib_needs": ["MLIB-CONVEX-LINALG", "MLIB-CONDITIONAL-EXPECTATION", "MLIB-REAL-LOG-SQRT"],
+        "mathlib_needs": ["MLIB-CONVEX-LINALG", "MLIB-MARTINGALE-STOCHASTIC", "MLIB-REAL-LOG-SQRT"],
+        "source_cards": ["TXT-LATTIMORE-SZEPESVARI-2020", "PPR-ABBASI-YADKORI-2011-SELF-NORMALIZED", "PPR-LI-CHU-LANGFORD-SCHAPIRE-2010-LINUCB"],
+        "status": "planned",
+    },
+    {
+        "id": "SCN-LIPSCHITZ-METRIC",
+        "name": "Lipschitz, continuum, and metric bandits",
+        "core_algorithms": ["zooming", "hierarchical optimistic optimization", "nearest-neighbor UCB"],
+        "leaf_families": ["metric balls", "covering numbers", "Lipschitz reward contracts", "near-optimality dimension"],
+        "mathlib_needs": ["MLIB-METRIC-TOPOLOGY", "MLIB-FINSET-SUMS", "MLIB-ASYMPTOTICS"],
+        "source_cards": ["TXT-SLIVKINS-2019-2024"],
         "status": "planned",
     },
     {
@@ -304,6 +502,7 @@ BANDIT_SCENARIO_CARDS = [
         "core_algorithms": ["successive elimination", "LUCB", "Track-and-Stop"],
         "leaf_families": ["stopping rules", "fixed-confidence events", "sample complexity", "change-of-measure"],
         "mathlib_needs": ["MLIB-CONDITIONAL-EXPECTATION", "MLIB-MEASURE-INTEGRAL", "MLIB-ASYMPTOTICS"],
+        "source_cards": ["TXT-LATTIMORE-SZEPESVARI-2020", "TXT-SLIVKINS-2019-2024"],
         "status": "planned",
     },
     {
@@ -312,6 +511,25 @@ BANDIT_SCENARIO_CARDS = [
         "core_algorithms": ["Combinatorial UCB", "semi-bandit Thompson", "matroid/knapsack variants"],
         "leaf_families": ["set-valued actions", "component rewards", "oracle contracts", "semi-bandit decomposition"],
         "mathlib_needs": ["MLIB-FINSET-SUMS", "MLIB-CONVEX-LINALG", "MLIB-ORDER-ALGEBRA"],
+        "source_cards": ["TXT-LATTIMORE-SZEPESVARI-2020"],
+        "status": "planned",
+    },
+    {
+        "id": "SCN-RESOURCE-CONSTRAINED",
+        "name": "resource-constrained bandits and bandits with knapsacks",
+        "core_algorithms": ["BwK", "primal-dual UCB", "budgeted Thompson sampling"],
+        "leaf_families": ["resource-consumption traces", "budget stopping times", "primal-dual comparison", "constraint regret"],
+        "mathlib_needs": ["MLIB-FINSET-SUMS", "MLIB-ORDER-ALGEBRA", "MLIB-MEASURE-INTEGRAL"],
+        "source_cards": ["TXT-SLIVKINS-2019-2024", "PPR-BADANIDIYURU-KLEINBERG-SLIVKINS-2013-BWK"],
+        "status": "planned",
+    },
+    {
+        "id": "SCN-DUELING-PREFERENCE",
+        "name": "dueling, preference, and ranking bandits",
+        "core_algorithms": ["RUCB variants", "Borda/Condorcet algorithms", "preference-based elimination"],
+        "leaf_families": ["pairwise preference matrices", "winner notions", "comparison regret", "partial-monitoring bridge"],
+        "mathlib_needs": ["MLIB-FINSET-SUMS", "MLIB-ORDER-ALGEBRA", "MLIB-PROBABILITY-INDEPENDENCE"],
+        "source_cards": ["PPR-IJCAI-2018-DUELING-SURVEY"],
         "status": "planned",
     },
     {
@@ -320,6 +538,25 @@ BANDIT_SCENARIO_CARDS = [
         "core_algorithms": ["sliding-window UCB", "discounted UCB", "change-point UCB"],
         "leaf_families": ["dynamic regret", "variation budgets", "windowed concentration", "change detection"],
         "mathlib_needs": ["MLIB-FINSET-SUMS", "MLIB-PROBABILITY-INDEPENDENCE", "MLIB-ASYMPTOTICS"],
+        "source_cards": ["TXT-SLIVKINS-2019-2024"],
+        "status": "planned",
+    },
+    {
+        "id": "SCN-HEAVY-TAILED-ROBUST",
+        "name": "heavy-tailed, corrupted, and robust bandits",
+        "core_algorithms": ["median-of-means UCB", "trimmed-mean UCB", "corruption-robust contextual bandits"],
+        "leaf_families": ["robust mean estimator", "moment assumptions", "truncation event", "corruption budget"],
+        "mathlib_needs": ["MLIB-MEASURE-INTEGRAL", "MLIB-ORDER-ALGEBRA", "MLIB-ASYMPTOTICS"],
+        "source_cards": ["TXT-LATTIMORE-SZEPESVARI-2020"],
+        "status": "watchlist",
+    },
+    {
+        "id": "SCN-DELAYED-BATCHED",
+        "name": "delayed-feedback, batched, and asynchronous bandits",
+        "core_algorithms": ["delayed EXP3", "batched UCB", "asynchronous Thompson sampling"],
+        "leaf_families": ["delay queues", "pending feedback", "batch regret", "asynchronous filtration"],
+        "mathlib_needs": ["MLIB-FINSET-SUMS", "MLIB-MARTINGALE-STOCHASTIC", "MLIB-CONDITIONAL-EXPECTATION"],
+        "source_cards": ["TXT-BUBECK-CESABIANCHI-2012"],
         "status": "planned",
     },
     {
@@ -328,6 +565,11 @@ BANDIT_SCENARIO_CARDS = [
         "core_algorithms": ["conservative UCB", "safe-UCB", "fair contextual bandits", "private UCB"],
         "leaf_families": ["baseline regret", "constraint budgets", "privacy noise", "fairness invariants"],
         "mathlib_needs": ["MLIB-MEASURE-INTEGRAL", "MLIB-ORDER-ALGEBRA", "MLIB-PROBABILITY-INDEPENDENCE"],
+        "source_cards": [
+            "PPR-AAAI-2020-SAFE-LINEAR-STOCHASTIC",
+            "PPR-AAAI-2016-DP-MAB",
+            "PPR-FAT-2018-MERITOCRATIC-FAIRNESS",
+        ],
         "status": "planned",
     },
     {
@@ -336,6 +578,7 @@ BANDIT_SCENARIO_CARDS = [
         "core_algorithms": ["Fed-UCB", "personalized federated bandits", "Byzantine-robust UCB"],
         "leaf_families": ["client aggregation", "heterogeneity", "communication rounds", "robust mean estimates"],
         "mathlib_needs": ["MLIB-FINSET-SUMS", "MLIB-MEASURE-INTEGRAL", "MLIB-PROBABILITY-INDEPENDENCE"],
+        "source_cards": ["PPR-AAAI-2021-FEDERATED-MAB", "PPR-FEDERATED-NEURAL-BANDITS-2022"],
         "status": "planned",
     },
     {
@@ -344,6 +587,7 @@ BANDIT_SCENARIO_CARDS = [
         "core_algorithms": ["UCB-VI", "posterior sampling RL", "optimism under uncertainty", "Bellman backups"],
         "leaf_families": ["finite kernels", "policies", "Bellman recursion", "occupancy measures", "episode regret"],
         "mathlib_needs": ["MLIB-PROBABILITY-KERNEL", "MLIB-CONDITIONAL-EXPECTATION", "MLIB-MEASURE-INTEGRAL"],
+        "source_cards": ["TXT-SLIVKINS-2019-2024", "PPR-AZAR-OSBAND-MUNOS-2017-UCBVI"],
         "status": "planned",
     },
     {
@@ -352,6 +596,7 @@ BANDIT_SCENARIO_CARDS = [
         "core_algorithms": ["neural contextual bandits", "bandit prompt optimization", "LLM-assisted priors"],
         "leaf_families": ["offline-to-online priors", "context embeddings", "model-selection regret", "adaptive response generation"],
         "mathlib_needs": ["MLIB-MEASURE-INTEGRAL", "MLIB-PROBABILITY-KERNEL", "MLIB-CONVEX-LINALG"],
+        "source_cards": ["PPR-LI-CHU-LANGFORD-SCHAPIRE-2010-LINUCB", "PPR-FEDERATED-NEURAL-BANDITS-2022"],
         "status": "watchlist",
     },
 ]
@@ -369,11 +614,15 @@ LOCAL_LEAF_CARDS = [
             "pullCount_succ_le_succ",
             "pullCount_mono",
             "pullCount_le_time",
+            "pullCount_add_le",
+            "pullCount_le_add",
             "pullCount_eq_zero_of_forall_ne",
             "pullCount_eq_time_of_forall_eq",
             "pullCount_pos_of_eq_before",
             "pullCount_const_self",
             "pullCount_const_of_ne",
+            "pullCount_add_eq_of_forall_ne_between",
+            "pullCount_add_eq_add_of_forall_eq_between",
             "sumRewards_succ_of_eq",
             "sumRewards_succ_of_ne",
             "sumRewards_eq_zero_of_forall_ne",
@@ -387,8 +636,10 @@ LOCAL_LEAF_CARDS = [
             "pseudoRegret_eq_zero_of_forall_gap_zero",
             "pseudoRegret_const_bestArm",
             "pseudoRegret_const_of_gap_zero",
+            "pseudoRegret_add_eq_of_forall_bestArm_between",
+            "pseudoRegret_add_eq_of_forall_gap_zero_between",
         ],
-        "role": "Compiled dependency-light bridge leaves for pull counts, reward sums, gaps, and pseudo-regret.",
+        "role": "Compiled dependency-light bridge leaves for pull counts, segment counts, reward sums, gaps, and pseudo-regret.",
         "mathlib_routes": ["MLIB-FINSET-SUMS", "MLIB-FINTYPE-FIN", "MLIB-ORDER-ALGEBRA"],
     },
     {
@@ -464,6 +715,53 @@ def load_jsonl(path: Path) -> list[dict]:
             continue
         rows.append(json.loads(line))
     return rows
+
+
+def scan_lean_declarations(include_tests: bool = False) -> list[dict[str, str | int]]:
+    """Create a compact local declaration index from Lean source files."""
+    roots = [ROOT / "BanditRLProof"]
+    if include_tests:
+        roots.append(ROOT / "Tests")
+    decls: list[dict[str, str | int]] = []
+    decl_re = re.compile(
+        r"^\s*(?:@\[[^\]]+\]\s*)*(?:noncomputable\s+)?(?:partial\s+)?"
+        r"(abbrev|def|theorem|structure|inductive)\s+([A-Za-z0-9_'.]+)"
+    )
+    namespace_re = re.compile(r"^\s*namespace\s+([A-Za-z0-9_.]+)")
+    end_re = re.compile(r"^\s*end(?:\s+([A-Za-z0-9_.]+))?\s*$")
+    for root in roots:
+        if not root.exists():
+            continue
+        for path in sorted(root.rglob("*.lean")):
+            namespace_stack: list[str] = []
+            for lineno, line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+                ns_match = namespace_re.match(line)
+                if ns_match:
+                    namespace_stack.extend(ns_match.group(1).split("."))
+                    continue
+                end_match = end_re.match(line)
+                if end_match:
+                    name = end_match.group(1)
+                    if name and namespace_stack:
+                        parts = name.split(".")
+                        if namespace_stack[-len(parts):] == parts:
+                            del namespace_stack[-len(parts):]
+                    elif not name and namespace_stack:
+                        namespace_stack.pop()
+                    continue
+                decl_match = decl_re.match(line)
+                if not decl_match:
+                    continue
+                kind, name = decl_match.groups()
+                full_name = name if "." in name else ".".join(namespace_stack + [name])
+                decls.append({
+                    "kind": kind,
+                    "name": name,
+                    "full_name": full_name,
+                    "file": rel(path),
+                    "line": lineno,
+                })
+    return decls
 
 
 def run(cmd: list[str]) -> int:
@@ -550,7 +848,8 @@ Mathlib-ready leaf rule:
 - Design leaf lemmas as future Mathlib contributions whenever they are general
   enough; ABRL-specific wrappers should be thin.
 - Before creating a new general lemma, search `python3 tools/bandit.py
-  search-memory <term>` and the Mathlib retrieval cards for existing APIs.
+  search-memory <term>`, `python3 tools/bandit.py list-lean-decls <term>`,
+  and the Mathlib retrieval cards for existing APIs.
 
 """
 
@@ -706,8 +1005,10 @@ def make_prompt_deck(run_dir: Path, task_id: str, cycle: int, lower_count: int) 
     memory_text = read_optional(RETRIEVAL_INDEX_DIR / f"{task_id}.json", 12000)
     mathlib_text = read_optional(RETRIEVAL_INDEX_DIR / "mathlib_bandit_cards.json", 10000)
     textbook_text = read_optional(RETRIEVAL_INDEX_DIR / "bandit_textbook_cards.json", 8000)
+    paper_text = read_optional(RETRIEVAL_INDEX_DIR / "bandit_paper_cards.json", 10000)
     scenario_text = read_optional(RETRIEVAL_INDEX_DIR / "bandit_scenario_cards.json", 10000)
     local_leaf_text = read_optional(RETRIEVAL_INDEX_DIR / "local_leaf_cards.json", 6000)
+    local_decl_text = read_optional(RETRIEVAL_INDEX_DIR / "local_lean_declarations.json", 10000)
     context = f"""# Context
 
 Task file exists: `{task_exists(task_id)}`
@@ -743,6 +1044,12 @@ Lean gate: `lake build && lake build Tests`
 {textbook_text or "{}"}
 ```
 
+## Bandit Paper Cards
+
+```json
+{paper_text or "{}"}
+```
+
 ## Bandit Scenario Cards
 
 ```json
@@ -753,6 +1060,12 @@ Lean gate: `lake build && lake build Tests`
 
 ```json
 {local_leaf_text or "{}"}
+```
+
+## Local Lean Declaration Index
+
+```json
+{local_decl_text or "{}"}
 ```
 """
     write_text(run_dir / "00_context.md", context)
@@ -1025,6 +1338,12 @@ def write_reference_indexes() -> list[Path]:
         "cards": BANDIT_TEXTBOOK_CARDS,
     }, indent=2) + "\n")
     paths.append(path)
+    path = RETRIEVAL_INDEX_DIR / "bandit_paper_cards.json"
+    write_text(path, json.dumps({
+        "generated": now_iso(),
+        "cards": BANDIT_PAPER_CARDS,
+    }, indent=2) + "\n")
+    paths.append(path)
     path = RETRIEVAL_INDEX_DIR / "bandit_scenario_cards.json"
     write_text(path, json.dumps({
         "generated": now_iso(),
@@ -1035,6 +1354,12 @@ def write_reference_indexes() -> list[Path]:
     write_text(path, json.dumps({
         "generated": now_iso(),
         "cards": LOCAL_LEAF_CARDS,
+    }, indent=2) + "\n")
+    paths.append(path)
+    path = RETRIEVAL_INDEX_DIR / "local_lean_declarations.json"
+    write_text(path, json.dumps({
+        "generated": now_iso(),
+        "declarations": scan_lean_declarations(),
     }, indent=2) + "\n")
     paths.append(path)
     return paths
@@ -1049,7 +1374,18 @@ def cmd_reference_index(_args: argparse.Namespace) -> int:
 
 def cmd_list_literature(_args: argparse.Namespace) -> int:
     for card in LML_CARDS:
-        print(f"{card['id']}: {card['declaration']} ({card['module']})")
+        print(f"lml: {card['id']}: {card['declaration']} ({card['module']})")
+    for card in BANDIT_TEXTBOOK_CARDS:
+        print(f"textbook: {card['id']}: {card['title']}")
+    for card in BANDIT_PAPER_CARDS:
+        print(f"paper: {card['id']}: {card['title']}")
+    return 0
+
+
+def cmd_list_papers(_args: argparse.Namespace) -> int:
+    for card in BANDIT_PAPER_CARDS:
+        scenarios = ", ".join(card["scenarios"])
+        print(f"{card['id']}: {card['title']} :: {scenarios}")
     return 0
 
 
@@ -1067,13 +1403,26 @@ def cmd_list_scenarios(_args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_list_lean_decls(args: argparse.Namespace) -> int:
+    decls = scan_lean_declarations(include_tests=args.include_tests)
+    query = args.query.lower()
+    for decl in decls:
+        blob = json.dumps(decl, sort_keys=True).lower()
+        if query and query not in blob:
+            continue
+        print(f"{decl['full_name']} [{decl['kind']}] {decl['file']}:{decl['line']}")
+    return 0
+
+
 def cmd_search_memory(args: argparse.Namespace) -> int:
     haystacks = {
         "lml": LML_CARDS,
         "mathlib": MATHLIB_CARDS,
         "textbook": BANDIT_TEXTBOOK_CARDS,
+        "paper": BANDIT_PAPER_CARDS,
         "scenario": BANDIT_SCENARIO_CARDS,
         "local": LOCAL_LEAF_CARDS,
+        "lean": scan_lean_declarations(),
     }
     needle = args.query.lower()
     hits: list[tuple[str, dict]] = []
@@ -1083,6 +1432,9 @@ def cmd_search_memory(args: argparse.Namespace) -> int:
             if needle in blob:
                 hits.append((group, card))
     for group, card in hits:
+        if group == "lean":
+            print(f"lean: {card['full_name']} [{card['kind']}] {card['file']}:{card['line']}")
+            continue
         name = card.get("id", "")
         module = card.get("module") or card.get("title") or card.get("name") or card.get("declaration", "")
         print(f"{group}: {name}: {module}")
@@ -1132,6 +1484,12 @@ Generated: `{now_iso()}`
 {json.dumps(BANDIT_TEXTBOOK_CARDS, indent=2)}
 ```
 
+## Bandit Paper Cards
+
+```json
+{json.dumps(BANDIT_PAPER_CARDS, indent=2)}
+```
+
 ## Bandit Scenario Cards
 
 ```json
@@ -1142,6 +1500,12 @@ Generated: `{now_iso()}`
 
 ```json
 {json.dumps(LOCAL_LEAF_CARDS, indent=2)}
+```
+
+## Local Lean Declaration Index
+
+```json
+{json.dumps(scan_lean_declarations(), indent=2)}
 ```
 
 ## Recent Trials
@@ -1173,17 +1537,21 @@ def cmd_memory_refresh(args: argparse.Namespace) -> int:
         "lml_cards": LML_CARDS,
         "mathlib_cards": MATHLIB_CARDS,
         "textbook_cards": BANDIT_TEXTBOOK_CARDS,
+        "paper_cards": BANDIT_PAPER_CARDS,
         "scenario_cards": BANDIT_SCENARIO_CARDS,
         "local_leaf_cards": LOCAL_LEAF_CARDS,
+        "local_lean_declarations": scan_lean_declarations(),
         "recent_trials": trials,
         "open_memory_files": [
             f"research-wiki/lml/{args.id}.md",
             "research-wiki/mathlib/theorem-cards.md",
             "research-wiki/textbooks/bandit-classics.md",
+            "research-wiki/papers/bandit-frontier-cards.md",
             "research-wiki/scenarios/bandit-scenario-atlas.md",
             "research-wiki/theory-tree/bandit-theory-tree.md",
             "research-wiki/mathlib-candidates/",
             "research-wiki/mathlib-candidates/finite-bookkeeping-leaves.md",
+            "research-wiki/retrieval-index/local_lean_declarations.json",
             f"proof-attempts/{args.id}/",
             f"proof-obligations/{args.id}.md",
             f"conversion-windows/{args.id}.md",
@@ -1384,11 +1752,14 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--file", default="")
     p.set_defaults(func=cmd_agent_note)
 
-    p = sub.add_parser("reference-index", help="refresh LML, Mathlib, textbook, and scenario indexes")
+    p = sub.add_parser("reference-index", help="refresh LML, Mathlib, textbook, paper, scenario, and local Lean indexes")
     p.set_defaults(func=cmd_reference_index)
 
     p = sub.add_parser("list-literature", help="list built-in theorem cards")
     p.set_defaults(func=cmd_list_literature)
+
+    p = sub.add_parser("list-papers", help="list bandit paper and survey cards")
+    p.set_defaults(func=cmd_list_papers)
 
     p = sub.add_parser("list-mathlib", help="list Mathlib retrieval cards")
     p.set_defaults(func=cmd_list_mathlib)
@@ -1396,7 +1767,12 @@ def build_parser() -> argparse.ArgumentParser:
     p = sub.add_parser("list-scenarios", help="list bandit scenario cards")
     p.set_defaults(func=cmd_list_scenarios)
 
-    p = sub.add_parser("search-memory", help="search built-in theorem, Mathlib, textbook, and scenario cards")
+    p = sub.add_parser("list-lean-decls", help="list local Lean declarations")
+    p.add_argument("query", nargs="?", default="")
+    p.add_argument("--include-tests", action="store_true")
+    p.set_defaults(func=cmd_list_lean_decls)
+
+    p = sub.add_parser("search-memory", help="search theorem, Mathlib, textbook, paper, scenario, local leaf, and Lean declaration cards")
     p.add_argument("query")
     p.set_defaults(func=cmd_search_memory)
 

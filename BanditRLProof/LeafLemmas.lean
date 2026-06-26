@@ -55,6 +55,19 @@ theorem pullCount_le_time :
       · simp [h]
         exact Nat.le_trans ih (Nat.le_succ t)
 
+theorem pullCount_add_le (n : Nat) :
+    pullCount action a (t + n) ≤ pullCount action a t + n := by
+  induction n with
+  | zero => simp
+  | succ n ih =>
+      rw [Nat.add_succ]
+      exact Nat.le_trans (pullCount_succ_le_succ action a (t + n))
+        (Nat.add_le_add_right ih 1)
+
+theorem pullCount_le_add :
+    pullCount action a t ≤ pullCount action a (t + n) := by
+  exact pullCount_mono action a (Nat.le_add_right t n)
+
 theorem pullCount_eq_zero_of_forall_ne
     (h : ∀ s, s < t → action s ≠ a) :
     pullCount action a t = 0 := by
@@ -96,6 +109,31 @@ theorem pullCount_const_of_ne (b : Action) (h : b ≠ a) (t : Nat) :
   apply pullCount_eq_zero_of_forall_ne
   intro _s _hs
   exact h
+
+theorem pullCount_add_eq_of_forall_ne_between (n : Nat)
+    (h : ∀ s, t ≤ s → s < t + n → action s ≠ a) :
+    pullCount action a (t + n) = pullCount action a t := by
+  induction n with
+  | zero => simp
+  | succ n ih =>
+      rw [Nat.add_succ]
+      rw [pullCount_succ_of_ne action a (t + n)
+        (h (t + n) (Nat.le_add_right t n) (Nat.lt_succ_self (t + n)))]
+      exact ih (fun s hts hsn =>
+        h s hts (Nat.lt_trans hsn (Nat.lt_succ_self (t + n))))
+
+theorem pullCount_add_eq_add_of_forall_eq_between (n : Nat)
+    (h : ∀ s, t ≤ s → s < t + n → action s = a) :
+    pullCount action a (t + n) = pullCount action a t + n := by
+  induction n with
+  | zero => simp
+  | succ n ih =>
+      rw [Nat.add_succ]
+      rw [pullCount_succ_of_eq action a (t + n)
+        (h (t + n) (Nat.le_add_right t n) (Nat.lt_succ_self (t + n)))]
+      rw [ih (fun s hts hsn =>
+        h s hts (Nat.lt_trans hsn (Nat.lt_succ_self (t + n))))]
+      rw [Nat.add_assoc]
 
 end PullCount
 
@@ -196,6 +234,30 @@ theorem pseudoRegret_const_of_gap_zero (arm : Fin K) (h : model.gap arm = 0) :
   apply pseudoRegret_eq_zero_of_forall_gap_zero
   intro _s _hs
   exact h
+
+theorem pseudoRegret_add_eq_of_forall_bestArm_between (n : Nat)
+    (h : ∀ s, t ≤ s → s < t + n → action s = model.bestArm) :
+    pseudoRegret model action (t + n) = pseudoRegret model action t := by
+  induction n with
+  | zero => simp
+  | succ n ih =>
+      rw [Nat.add_succ]
+      rw [pseudoRegret_succ_of_bestArm model action (t + n)
+        (h (t + n) (Nat.le_add_right t n) (Nat.lt_succ_self (t + n)))]
+      exact ih (fun s hts hsn =>
+        h s hts (Nat.lt_trans hsn (Nat.lt_succ_self (t + n))))
+
+theorem pseudoRegret_add_eq_of_forall_gap_zero_between (n : Nat)
+    (h : ∀ s, t ≤ s → s < t + n → model.gap (action s) = 0) :
+    pseudoRegret model action (t + n) = pseudoRegret model action t := by
+  induction n with
+  | zero => simp
+  | succ n ih =>
+      rw [Nat.add_succ]
+      rw [pseudoRegret_succ_of_gap_zero model action (t + n)
+        (h (t + n) (Nat.le_add_right t n) (Nat.lt_succ_self (t + n)))]
+      exact ih (fun s hts hsn =>
+        h s hts (Nat.lt_trans hsn (Nat.lt_succ_self (t + n))))
 
 end Regret
 

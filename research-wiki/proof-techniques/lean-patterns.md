@@ -10,6 +10,23 @@ Use recursive definitions when possible:
 
 This avoids needing Mathlib finite sums for early executable tests.
 
+## Segment Induction Pattern
+
+For arguments over a horizon slice `[t, t+n)`, prefer the compiled segment
+leaves before opening a new induction:
+
+- `pullCount_add_le`;
+- `pullCount_le_add`;
+- `pullCount_add_eq_of_forall_ne_between`;
+- `pullCount_add_eq_add_of_forall_eq_between`;
+- `pseudoRegret_add_eq_of_forall_bestArm_between`;
+- `pseudoRegret_add_eq_of_forall_gap_zero_between`.
+
+These leaves are useful for ETC exploration/commit intervals, UCB good-event
+segments, and tie-aware zero-regret baselines.  Future Mathlib-backed work
+should restate their generic content as filtered-cardinality or finite-sum
+facts over intervals.
+
 ## Theorem-Card Layer
 
 When a theorem needs probability or measure theory, record the upstream

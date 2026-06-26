@@ -39,6 +39,7 @@ Before creating such a leaf, search the retrieval memory:
 python3 tools/bandit.py reference-index
 python3 tools/bandit.py list-mathlib
 python3 tools/bandit.py search-memory QUERY
+python3 tools/bandit.py list-lean-decls QUERY
 ```
 
 Record the Mathlib card id, candidate imports, and search terms tried in the
@@ -50,6 +51,7 @@ leaves:
 ```bash
 python3 tools/bandit.py search-memory pullCount
 python3 tools/bandit.py search-memory pseudoRegret
+python3 tools/bandit.py list-lean-decls pullCount
 ```
 
 The current local bridge module is `BanditRLProof.LeafLemmas`.

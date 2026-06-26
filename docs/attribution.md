@@ -64,6 +64,36 @@ bandit/RL-specific Mathlib-ready proof leaves and memory contracts.
   ABRL uses it as a broad scenario source for IID, Bayesian, contextual,
   Lipschitz, adversarial, knapsack, and agent-oriented bandit routes.
 
+## Bandit Paper Card References
+
+- [Auer, Cesa-Bianchi, and Fischer, Finite-time Analysis of the Multiarmed
+  Bandit Problem](https://doi.org/10.1023/A:1013689704352).
+- [Auer, Cesa-Bianchi, Freund, and Schapire, The Nonstochastic Multiarmed
+  Bandit Problem](https://doi.org/10.1137/S0097539701398375).
+- [Garivier and Cappé, The KL-UCB Algorithm for Bounded Stochastic Bandits and
+  Beyond](https://arxiv.org/abs/1102.2490).
+- [Agrawal and Goyal, Analysis of Thompson Sampling for the Multi-armed Bandit
+  Problem](https://arxiv.org/abs/1111.1797).
+- [Abbasi-Yadkori, Pál, and Szepesvári, Online Least Squares Estimation with
+  Self-Normalized Processes](https://arxiv.org/abs/1102.2670).
+- [Li, Chu, Langford, and Schapire, A Contextual-Bandit Approach to
+  Personalized News Article Recommendation](https://doi.org/10.1145/1772690.1772758).
+- [Azar, Osband, and Munos, Minimax Regret Bounds for Reinforcement
+  Learning](https://arxiv.org/abs/1703.05449).
+- [Badanidiyuru, Kleinberg, and Slivkins, Bandits with
+  Knapsacks](https://arxiv.org/abs/1305.2545).
+- [Sui, Zoghi, Hofmann, and Yue, Advancements in Dueling
+  Bandits](https://doi.org/10.24963/ijcai.2018/776).
+- [Khezeli and Bitar, Safe Linear Stochastic
+  Bandits](https://doi.org/10.1609/aaai.v34i06.6581).
+- [Tossou and Dimitrakakis, Algorithms for Differentially Private
+  Multi-Armed Bandits](https://doi.org/10.1609/aaai.v30i1.10212).
+- [Joseph, Kearns, Morgenstern, Neel, and Roth, Meritocratic Fairness for
+  Infinite and Contextual Bandits](https://doi.org/10.1145/3278721.3278764).
+- [Shi and Shen, Federated Multi-Armed
+  Bandits](https://doi.org/10.1609/aaai.v35i11.17156).
+- [Federated Neural Bandits](https://arxiv.org/abs/2205.14309).
+
 ## Attribution Boundary
 
 ABRL currently contains original code and theorem-card summaries.  A theorem

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="960" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
   <title id="title">ABRL bandit theory tree</title>
-  <desc id="desc">A broad dependency tree for reproducing bandit and RL theory in Lean, connecting textbooks, Mathlib cards, algorithm branches, modern scenarios, and proof export.</desc>
+  <desc id="desc">A broad dependency tree for reproducing bandit and RL theory in Lean, connecting textbooks, paper cards, Mathlib cards, algorithm branches, modern scenarios, and proof export.</desc>
   <defs>
     <filter id="shadow" x="-20%" y="-25%" width="140%" height="160%">
       <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#0f172a" flood-opacity="0.14"/>
@@ -14,14 +14,14 @@
   <rect x="0" y="0" width="1600" height="132" fill="#ffffff"/>
   <text x="54" y="78" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="44" font-weight="900" fill="#111827">ABRL bandit/RL theory tree</text>
   <path d="M 0 130 L 565 130" stroke="#d97706" stroke-width="4"/>
-  <text x="54" y="112" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="18" fill="#475569">Textbook roots, Mathlib reusable leaves, algorithm wrappers, modern scenarios, and proof export.</text>
+  <text x="54" y="112" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="18" fill="#475569">Textbook and paper roots, Mathlib reusable leaves, algorithm wrappers, modern scenarios, and proof export.</text>
 
   <g font-family="Inter, ui-sans-serif, system-ui, sans-serif" filter="url(#shadow)">
     <rect x="70" y="174" width="330" height="176" rx="22" fill="#eff6ff" stroke="#2563eb" stroke-width="4"/>
-    <text x="104" y="216" font-size="24" font-weight="900" fill="#1e40af">Textbook roots</text>
-    <text x="104" y="252" font-size="16" font-weight="800" fill="#0f172a">Bubeck-Cesa-Bianchi 2012</text>
-    <text x="104" y="282" font-size="16" font-weight="800" fill="#0f172a">Lattimore-Szepesvari 2020</text>
-    <text x="104" y="312" font-size="16" font-weight="800" fill="#0f172a">Slivkins 2019/2024</text>
+    <text x="104" y="216" font-size="24" font-weight="900" fill="#1e40af">Textbook + paper roots</text>
+    <text x="104" y="252" font-size="15" font-weight="800" fill="#0f172a">BCB 2012, LS 2020, Slivkins</text>
+    <text x="104" y="282" font-size="15" font-weight="800" fill="#0f172a">UCB1, EXP3, KL-UCB, TS</text>
+    <text x="104" y="312" font-size="15" font-weight="800" fill="#0f172a">OFUL, UCB-VI, BwK, federated</text>
 
     <rect x="460" y="174" width="350" height="176" rx="22" fill="#ecfeff" stroke="#0891b2" stroke-width="4"/>
     <text x="494" y="216" font-size="24" font-weight="900" fill="#0e7490">Mathlib retrieval cards</text>
@@ -37,9 +37,9 @@
 
     <rect x="1230" y="174" width="300" height="176" rx="22" fill="#f0fdf4" stroke="#16a34a" stroke-width="4"/>
     <text x="1264" y="216" font-size="24" font-weight="900" fill="#166534">Scenario atlas</text>
-    <text x="1264" y="252" font-size="15" fill="#0f172a">stochastic, adversarial, contextual</text>
-    <text x="1264" y="282" font-size="15" fill="#0f172a">linear, pure exploration, combinatorial</text>
-    <text x="1264" y="312" font-size="15" fill="#0f172a">nonstationary, safe, federated, LLM</text>
+    <text x="1264" y="252" font-size="15" fill="#0f172a">stochastic, Bayesian, adversarial</text>
+    <text x="1264" y="282" font-size="15" fill="#0f172a">contextual, linear, metric, BwK</text>
+    <text x="1264" y="312" font-size="15" fill="#0f172a">dueling, robust, delayed, RL, LLM</text>
   </g>
 
   <g font-family="Inter, ui-sans-serif, system-ui, sans-serif" filter="url(#shadow)">
@@ -79,18 +79,18 @@
 
     <rect x="1090" y="622" width="220" height="82" rx="15" fill="#f8fafc" stroke="#64748b" stroke-width="2"/>
     <text x="1118" y="656" font-size="18" font-weight="900" fill="#0f172a">Structured feedback</text>
-    <text x="1118" y="682" font-size="12" fill="#475569">combinatorial, dueling, graph</text>
+    <text x="1118" y="682" font-size="12" fill="#475569">combinatorial, BwK, dueling</text>
 
     <rect x="1340" y="622" width="220" height="82" rx="15" fill="#f8fafc" stroke="#64748b" stroke-width="2"/>
     <text x="1368" y="656" font-size="18" font-weight="900" fill="#0f172a">Modern constraints</text>
-    <text x="1368" y="682" font-size="12" fill="#475569">safe, private, federated, LLM</text>
+    <text x="1368" y="682" font-size="12" fill="#475569">robust, delayed, safe, federated</text>
   </g>
 
   <g font-family="Inter, ui-sans-serif, system-ui, sans-serif" filter="url(#shadow)">
     <rect x="170" y="802" width="1260" height="86" rx="20" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
     <text x="208" y="838" font-size="20" font-weight="900" fill="#0f172a">Acceptance rule:</text>
     <text x="372" y="838" font-size="18" fill="#334155">only compiled Lean declarations become certified memory.</text>
-    <text x="208" y="866" font-size="18" fill="#334155">Textbook, LML, Mathlib, and scenario cards guide retrieval until a task imports, ports, or proves the leaf.</text>
+    <text x="208" y="866" font-size="18" fill="#334155">Textbook, paper, LML, Mathlib, and scenario cards guide retrieval until a task imports, ports, or proves the leaf.</text>
   </g>
 
   <g stroke="#64748b" stroke-width="4" fill="none" marker-end="url(#arrow)">

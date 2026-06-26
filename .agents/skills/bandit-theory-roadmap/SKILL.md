@@ -1,6 +1,6 @@
 ---
 name: bandit-theory-roadmap
-description: Select and organize bandit/RL proof targets from textbook cards, scenario cards, and the ABRL theory tree.
+description: Select and organize bandit/RL proof targets from textbook cards, paper cards, scenario cards, and the ABRL theory tree.
 argument-hint: "[scenario or theorem]"
 ---
 
@@ -13,6 +13,7 @@ or mapping a paper theorem into ABRL memory.
 
 ```bash
 python3 tools/bandit.py reference-index
+python3 tools/bandit.py list-papers
 python3 tools/bandit.py list-scenarios
 python3 tools/bandit.py search-memory <scenario-or-algorithm>
 ```
@@ -22,6 +23,7 @@ python3 tools/bandit.py search-memory <scenario-or-algorithm>
 Read:
 
 - `research-wiki/textbooks/bandit-classics.md`;
+- `research-wiki/papers/bandit-frontier-cards.md`;
 - `research-wiki/scenarios/bandit-scenario-atlas.md`;
 - `research-wiki/theory-tree/bandit-theory-tree.md`;
 - `research-wiki/mathlib/theorem-cards.md`;

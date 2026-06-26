@@ -39,6 +39,14 @@ example (t : Nat) :
     pullCount alternatingAction 0 t ≤ t :=
   pullCount_le_time alternatingAction 0 t
 
+example (t n : Nat) :
+    pullCount alternatingAction 0 (t + n) ≤ pullCount alternatingAction 0 t + n :=
+  pullCount_add_le alternatingAction 0 t n
+
+example (t n : Nat) :
+    pullCount alternatingAction 0 t ≤ pullCount alternatingAction 0 (t + n) :=
+  pullCount_le_add (action := alternatingAction) (a := 0) (t := t) (n := n)
+
 example : pullCount constantZeroAction 1 4 = 0 := by
   apply pullCount_eq_zero_of_forall_ne
   intro s _hs
@@ -54,6 +62,20 @@ example : pullCount (fun _ : Nat => 2) 2 7 = 7 := by
 
 example : pullCount (fun _ : Nat => 2) 1 7 = 0 := by
   exact pullCount_const_of_ne (a := 1) 2 (by decide) 7
+
+example :
+    pullCount (fun _ : Nat => 0) 1 (2 + 5) =
+      pullCount (fun _ : Nat => 0) 1 2 := by
+  apply pullCount_add_eq_of_forall_ne_between
+  intro _s _hlo _hhi
+  decide
+
+example :
+    pullCount (fun _ : Nat => 0) 0 (2 + 5) =
+      pullCount (fun _ : Nat => 0) 0 2 + 5 := by
+  apply pullCount_add_eq_add_of_forall_eq_between
+  intro _s _hlo _hhi
+  rfl
 
 example : 0 < pullCount alternatingAction 0 5 := by
   exact pullCount_pos_of_eq_before alternatingAction 0
@@ -115,5 +137,19 @@ example (t : Nat) :
 example (t : Nat) :
     pseudoRegret twoArmModel (fun _ => twoArmModel.bestArm) t = 0 := by
   exact pseudoRegret_const_bestArm twoArmModel t
+
+example :
+    pseudoRegret twoArmModel (fun _ => twoArmModel.bestArm) (2 + 5) =
+      pseudoRegret twoArmModel (fun _ => twoArmModel.bestArm) 2 := by
+  apply pseudoRegret_add_eq_of_forall_bestArm_between
+  intro _s _hlo _hhi
+  rfl
+
+example :
+    pseudoRegret twoArmModel (fun _ => twoArmModel.bestArm) (2 + 5) =
+      pseudoRegret twoArmModel (fun _ => twoArmModel.bestArm) 2 := by
+  apply pseudoRegret_add_eq_of_forall_gap_zero_between
+  intro _s _hlo _hhi
+  simp
 
 end BanditRLProof
