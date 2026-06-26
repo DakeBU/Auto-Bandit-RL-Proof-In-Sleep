@@ -126,6 +126,7 @@ python3 tools/bandit.py search-memory integrable
 python3 tools/bandit.py search-memory contextual
 python3 tools/bandit.py search-memory KL-UCB
 python3 tools/bandit.py list-lean-decls pseudoRegret
+python3 tools/bandit.py list-lean-decls between --statement
 ```
 
 See [`docs/mathlib_search_protocol.md`](docs/mathlib_search_protocol.md),

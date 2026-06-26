@@ -77,3 +77,14 @@ here during local harness runs.
 - `2026-06-26T17:35:29+00:00` `bandit.py memory-refresh` `retrieval-index` `research-wiki/retrieval-index/BRL-UCB-PORT-001.json` - BRL-UCB-PORT-001
 - `2026-06-26T17:35:29+00:00` `bandit.py memory-refresh` `retrieval-index` `research-wiki/retrieval-index/BRL-ETC-PORT-001.json` - BRL-ETC-PORT-001
 - `2026-06-26T17:35:29+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/BRL-ETC-PORT-001.md` - BRL-ETC-PORT-001
+- `2026-06-26T17:44:23+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/BRL-ETC-PORT-001.md` - BRL-ETC-PORT-001
+- `2026-06-26T17:44:23+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-06-26T17:44:23+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-06-26T17:44:23+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-06-26T17:44:23+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-06-26T17:44:23+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-06-26T17:44:23+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-06-26T17:44:23+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-06-26T17:44:23+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/BRL-UCB-PORT-001.md` - BRL-UCB-PORT-001
+- `2026-06-26T17:44:23+00:00` `bandit.py memory-refresh` `retrieval-index` `research-wiki/retrieval-index/BRL-UCB-PORT-001.json` - BRL-UCB-PORT-001
+- `2026-06-26T17:44:23+00:00` `bandit.py memory-refresh` `retrieval-index` `research-wiki/retrieval-index/BRL-ETC-PORT-001.json` - BRL-ETC-PORT-001

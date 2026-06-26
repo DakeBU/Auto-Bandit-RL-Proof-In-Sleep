@@ -69,6 +69,7 @@ The first dependency-light compiled leaf library is
 - `sumRewards_succ_of_ne`;
 - `sumRewards_eq_zero_of_forall_ne`;
 - `sumRewards_const_of_ne`;
+- `sumRewards_add_eq_of_forall_ne_between`;
 - `FiniteBanditModel.bestMean_eq_mean_bestArm`;
 - `FiniteBanditModel.gap_of_ne_bestArm`;
 - `pseudoRegret_one`;

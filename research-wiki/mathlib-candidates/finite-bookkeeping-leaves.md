@@ -32,6 +32,7 @@ should search, import, or upstream.
 | `sumRewards_succ_of_ne` | nonselected reward sum is stable | `MLIB-FINSET-SUMS` | bridge to filtered sum update lemmas |
 | `sumRewards_eq_zero_of_forall_ne` | no selected arm gives zero reward sum | `MLIB-FINSET-SUMS` | bridge to empty filtered-sum theorem |
 | `sumRewards_const_of_ne` | constant other arm gives zero reward sum | `MLIB-FINSET-SUMS` | bridge to filtered-sum theorem over constant trace |
+| `sumRewards_add_eq_of_forall_ne_between` | a segment without the arm leaves reward sum unchanged | `MLIB-FINSET-SUMS` | bridge to empty filtered interval sum theorem |
 | `FiniteBanditModel.gap_of_ne_bestArm` | explicit nonbest gap surface | `MLIB-ORDER-ALGEBRA` | later add nonnegativity after best-arm optimality route |
 | `pseudoRegret_one` | first-step pseudo-regret expansion | `MLIB-FINSET-SUMS` | bridge to finite-sum regret definition |
 | `pseudoRegret_succ_of_bestArm` | best-arm pull adds no pseudo-regret | `MLIB-ORDER-ALGEBRA` | useful in ETC/UCB local wrappers |
@@ -50,7 +51,8 @@ should search, import, or upstream.
 - monotonicity and one-step growth of filtered counts;
 - interval filtered-count bounds and empty/full interval updates;
 - bridge between recursive counts and `Finset.range` sums;
-- filtered reward-sum update under additive zero law.
+- filtered reward-sum update under additive zero law;
+- empty filtered interval reward-sum theorem.
 
 Each candidate must be restated without ABRL-specific names before it is marked
 as a genuine Mathlib upstream proposal.

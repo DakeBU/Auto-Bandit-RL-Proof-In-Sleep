@@ -22,7 +22,9 @@ Use this skill when editing `BanditRLProof/` or `Tests/`.
    missing assumptions, or counterexamples.
 9. Before creating a general-purpose lemma, run `python3 tools/bandit.py
    search-memory <term>`, run `python3 tools/bandit.py list-lean-decls <term>`,
-   and check `research-wiki/mathlib/theorem-cards.md`.
+   use `python3 tools/bandit.py list-lean-decls <term> --statement` when the
+   exact local statement matters, and check
+   `research-wiki/mathlib/theorem-cards.md`.
 10. If a general leaf belongs in Mathlib, mark it `mathlib-candidate` and keep
    ABRL-specific wrappers thin.
 11. If a leaf comes from a paper theorem, record the paper card id before

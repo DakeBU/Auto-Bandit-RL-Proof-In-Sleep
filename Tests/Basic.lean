@@ -87,6 +87,14 @@ example : sumRewards (fun _ : Nat => 2) natReward 1 6 = 0 := by
   exact sumRewards_const_of_ne (a := 1) (reward := natReward)
     (fun x => Nat.add_zero x) 2 (by decide) 6
 
+example :
+    sumRewards (fun _ : Nat => 2) natReward 1 (2 + 5) =
+      sumRewards (fun _ : Nat => 2) natReward 1 2 := by
+  apply sumRewards_add_eq_of_forall_ne_between
+  · exact fun x => Nat.add_zero x
+  · intro _s _hlo _hhi
+    decide
+
 def etcSpec : ETC.Spec 2 where
   hK := by decide
   explorationPulls := 3

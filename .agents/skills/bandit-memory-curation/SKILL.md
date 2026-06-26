@@ -16,6 +16,7 @@ python3 tools/bandit.py reference-index
 python3 tools/bandit.py search-memory <query>
 python3 tools/bandit.py list-papers
 python3 tools/bandit.py list-lean-decls <query>
+python3 tools/bandit.py list-lean-decls <query> --statement
 python3 tools/bandit.py trial-summary
 ```
 

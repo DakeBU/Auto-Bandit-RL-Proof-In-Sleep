@@ -42,6 +42,7 @@ python3 tools/bandit.py reference-index
 python3 tools/bandit.py search-memory QUERY
 python3 tools/bandit.py list-papers
 python3 tools/bandit.py list-lean-decls QUERY
+python3 tools/bandit.py list-lean-decls QUERY --statement
 ```
 
 After any failed proof attempt, write a concise file under

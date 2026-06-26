@@ -13,6 +13,7 @@ python3 tools/bandit.py search-memory Finset.sum
 python3 tools/bandit.py search-memory integrable
 python3 tools/bandit.py search-memory contextual
 python3 tools/bandit.py list-lean-decls pullCount
+python3 tools/bandit.py list-lean-decls between --statement
 ```
 
 Then read:

@@ -24,6 +24,7 @@ Search them from the CLI:
 python3 tools/bandit.py search-memory QUERY
 python3 tools/bandit.py list-papers
 python3 tools/bandit.py list-lean-decls QUERY
+python3 tools/bandit.py list-lean-decls QUERY --statement
 ```
 
 Task-local memory produced by `memory-refresh` embeds the current global cards

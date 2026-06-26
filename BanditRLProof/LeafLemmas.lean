@@ -172,6 +172,18 @@ theorem sumRewards_const_of_ne (hzero : ∀ x : Reward, x + 0 = x)
   · intro _s _hs
     exact h
 
+theorem sumRewards_add_eq_of_forall_ne_between (hzero : ∀ x : Reward, x + 0 = x)
+    (n : Nat) (h : ∀ s, t ≤ s → s < t + n → action s ≠ a) :
+    sumRewards action reward a (t + n) = sumRewards action reward a t := by
+  induction n with
+  | zero => simp
+  | succ n ih =>
+      rw [Nat.add_succ]
+      rw [sumRewards_succ_of_ne action reward a (t + n) hzero
+        (h (t + n) (Nat.le_add_right t n) (Nat.lt_succ_self (t + n)))]
+      exact ih (fun s hts hsn =>
+        h s hts (Nat.lt_trans hsn (Nat.lt_succ_self (t + n))))
+
 end SumRewards
 
 namespace FiniteBanditModel

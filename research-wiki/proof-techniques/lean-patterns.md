@@ -19,6 +19,7 @@ leaves before opening a new induction:
 - `pullCount_le_add`;
 - `pullCount_add_eq_of_forall_ne_between`;
 - `pullCount_add_eq_add_of_forall_eq_between`;
+- `sumRewards_add_eq_of_forall_ne_between`;
 - `pseudoRegret_add_eq_of_forall_bestArm_between`;
 - `pseudoRegret_add_eq_of_forall_gap_zero_between`.
 

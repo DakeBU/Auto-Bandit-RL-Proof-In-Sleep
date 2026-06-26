@@ -18,6 +18,7 @@ python3 tools/bandit.py list-mathlib
 python3 tools/bandit.py list-papers
 python3 tools/bandit.py search-memory <query>
 python3 tools/bandit.py list-lean-decls <query>
+python3 tools/bandit.py list-lean-decls <query> --statement
 ```
 
 ## Required Files

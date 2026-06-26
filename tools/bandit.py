@@ -627,6 +627,7 @@ LOCAL_LEAF_CARDS = [
             "sumRewards_succ_of_ne",
             "sumRewards_eq_zero_of_forall_ne",
             "sumRewards_const_of_ne",
+            "sumRewards_add_eq_of_forall_ne_between",
             "FiniteBanditModel.bestMean_eq_mean_bestArm",
             "FiniteBanditModel.gap_of_ne_bestArm",
             "pseudoRegret_one",
@@ -717,6 +718,22 @@ def load_jsonl(path: Path) -> list[dict]:
     return rows
 
 
+def compact_lean_statement(lines: list[str], start_index: int, max_lines: int = 8) -> str:
+    """Return a compact declaration header for search/display."""
+    parts: list[str] = []
+    for raw in lines[start_index:start_index + max_lines]:
+        stripped = raw.strip()
+        if not stripped:
+            continue
+        parts.append(re.sub(r"\s+", " ", stripped))
+        if ":=" in stripped or stripped == "where" or stripped.endswith(" where"):
+            break
+    statement = " ".join(parts)
+    if " := " in statement:
+        statement = statement.split(" := ", 1)[0]
+    return statement[:700]
+
+
 def scan_lean_declarations(include_tests: bool = False) -> list[dict[str, str | int]]:
     """Create a compact local declaration index from Lean source files."""
     roots = [ROOT / "BanditRLProof"]
@@ -734,7 +751,8 @@ def scan_lean_declarations(include_tests: bool = False) -> list[dict[str, str | 
             continue
         for path in sorted(root.rglob("*.lean")):
             namespace_stack: list[str] = []
-            for lineno, line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+            lines = path.read_text(encoding="utf-8").splitlines()
+            for lineno, line in enumerate(lines, start=1):
                 ns_match = namespace_re.match(line)
                 if ns_match:
                     namespace_stack.extend(ns_match.group(1).split("."))
@@ -760,6 +778,7 @@ def scan_lean_declarations(include_tests: bool = False) -> list[dict[str, str | 
                     "full_name": full_name,
                     "file": rel(path),
                     "line": lineno,
+                    "statement": compact_lean_statement(lines, lineno - 1),
                 })
     return decls
 
@@ -1411,6 +1430,8 @@ def cmd_list_lean_decls(args: argparse.Namespace) -> int:
         if query and query not in blob:
             continue
         print(f"{decl['full_name']} [{decl['kind']}] {decl['file']}:{decl['line']}")
+        if args.statement and decl.get("statement"):
+            print(f"  {decl['statement']}")
     return 0
 
 
@@ -1434,6 +1455,8 @@ def cmd_search_memory(args: argparse.Namespace) -> int:
     for group, card in hits:
         if group == "lean":
             print(f"lean: {card['full_name']} [{card['kind']}] {card['file']}:{card['line']}")
+            if card.get("statement"):
+                print(f"  {card['statement']}")
             continue
         name = card.get("id", "")
         module = card.get("module") or card.get("title") or card.get("name") or card.get("declaration", "")
@@ -1770,6 +1793,7 @@ def build_parser() -> argparse.ArgumentParser:
     p = sub.add_parser("list-lean-decls", help="list local Lean declarations")
     p.add_argument("query", nargs="?", default="")
     p.add_argument("--include-tests", action="store_true")
+    p.add_argument("--statement", action="store_true", help="print compact declaration statements")
     p.set_defaults(func=cmd_list_lean_decls)
 
     p = sub.add_parser("search-memory", help="search theorem, Mathlib, textbook, paper, scenario, local leaf, and Lean declaration cards")
