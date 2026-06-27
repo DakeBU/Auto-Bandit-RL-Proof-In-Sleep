@@ -9,6 +9,7 @@ make Mathlib-usable leaves easy to find, import, port, or upstream.
 python3 tools/bandit.py reference-index
 python3 tools/bandit.py list-mathlib
 python3 tools/bandit.py list-papers
+python3 tools/bandit.py list-weapons
 python3 tools/bandit.py search-memory Finset.sum
 python3 tools/bandit.py search-memory integrable
 python3 tools/bandit.py search-memory contextual
@@ -27,12 +28,14 @@ Then read:
 
 1. Search ABRL memory with `search-memory`.
 2. Confirm the textbook or paper source card for the scenario.
-3. Search the local Lean declaration index with `list-lean-decls`.
-4. Search the Mathlib docs with the card's module and query terms.
-5. Search local Lean code and existing theorem cards.
-6. If the result exists upstream, record the import route.
-7. If it is general but missing, record a `mathlib-candidate`.
-8. If it is ABRL-specific, keep the wrapper project-local and thin.
+3. If a technique name appears, search `list-weapons`, then decompose the
+   weapon into concrete theorem cards and leaves.
+4. Search the local Lean declaration index with `list-lean-decls`.
+5. Search the Mathlib docs with the card's module and query terms.
+6. Search local Lean code and existing theorem cards.
+7. If the result exists upstream, record the import route.
+8. If it is general but missing, record a `mathlib-candidate`.
+9. If it is ABRL-specific, keep the wrapper project-local and thin.
 
 ## Required Leaf Fields
 

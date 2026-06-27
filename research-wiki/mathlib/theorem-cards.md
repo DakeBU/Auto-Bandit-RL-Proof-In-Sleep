@@ -29,6 +29,10 @@ python3 tools/bandit.py list-lean-decls pullCount
 | `MLIB-PROBABILITY-KERNEL` | `Mathlib.Probability.Kernel.Basic` | `Kernel`, `bind`, `comp`, `prod` | reward kernels, posterior kernels, finite-horizon MDP policies |
 | `MLIB-ASYMPTOTICS` | `Mathlib.Analysis.Asymptotics.Asymptotics` | `Asymptotics.IsBigO`, `IsTheta`, `Eventually`, `Filter.atTop` | logarithmic regret, minimax rates, asymptotic theorem exports |
 | `MLIB-CONVEX-LINALG` | `Mathlib.Analysis.Convex.Basic`, `Mathlib.LinearAlgebra.Matrix` | `Convex`, `Matrix`, `inner`, `norm`, `IsBounded` | linear bandits, confidence ellipsoids, least-squares design |
+| `MLIB-PROBABILITY-SUBGAUSSIAN` | `Mathlib.Probability.Moments.SubGaussian` | `measure_sum_ge_le_of_iIndepFun`, `HasSubgaussianMGF`, `measure_sum_ge_le_of_HasCondSubgaussianMGF` | Hoeffding-style tails, sub-Gaussian reward sums, UCB/ETC concentration |
+| `MLIB-PROBABILITY-MGF` | `Mathlib.Probability.Moments.Basic`, `Mathlib.Probability.Moments.Tilted` | `mgf`, `cgf`, `IndepFun.mgf_add`, `IndepFun.cgf_add` | Chernoff routes, exponential weights, MGF algebra |
+| `MLIB-PROBABILITY-VARIANCE` | `Mathlib.Probability.Moments.Variance` | `variance`, `chebyshev`, `IndepFun.variance_add`, `MemLp` | variance tails, robust/heavy-tailed baselines, second-moment contracts |
+| `MLIB-REAL-RPOW-TSALLIS` | `Mathlib.Analysis.SpecialFunctions.Pow.Real`, `Mathlib.Analysis.SpecialFunctions.Pow.NNReal` | `Real.rpow`, `NNReal.rpow`, `rpow_le_rpow`, `rpow_pos_of_pos` | Tsallis entropy regularizers, FTRL/OMD power potentials |
 | `MLIB-METRIC-TOPOLOGY` | `Mathlib.Topology.MetricSpace.Basic` | `Metric.ball`, `Metric.closedBall`, `LipschitzWith`, `TotallyBounded`, `diam` | Lipschitz/continuum bandits, covering arguments, metric action spaces |
 
 ## Retrieval Rule

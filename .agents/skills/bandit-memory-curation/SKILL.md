@@ -15,6 +15,7 @@ python3 tools/bandit.py memory-refresh <task-id>
 python3 tools/bandit.py reference-index
 python3 tools/bandit.py search-memory <query>
 python3 tools/bandit.py list-papers
+python3 tools/bandit.py list-weapons
 python3 tools/bandit.py list-lean-decls <query>
 python3 tools/bandit.py list-lean-decls <query> --statement
 python3 tools/bandit.py trial-summary
@@ -34,6 +35,7 @@ python3 tools/bandit.py trial-summary
 - Mathlib retrieval cards searched before creating general lemmas;
 - compiled local Lean declarations searched before opening a new leaf;
 - textbook, paper, and scenario cards used to place the theorem in the theory tree;
+- proof weapon ids considered, explicitly marked as inspiration-only;
 - persistent failure diagnoses, including missing assumptions or possible
   counterexamples.
 
@@ -46,6 +48,7 @@ python3 tools/bandit.py trial-summary
 | `research-wiki/textbooks/` | classic textbook and survey source cards |
 | `research-wiki/papers/` | algorithm and frontier-scenario paper cards |
 | `research-wiki/scenarios/` | bandit/RL scenario taxonomy |
+| `research-wiki/proof-weapons/` | route inspiration cards for upper planning |
 | `research-wiki/theory-tree/` | source-to-leaf proof tree |
 | `research-wiki/cited-results/` | external theorem contracts |
 | `research-wiki/proof-techniques/` | reusable proof patterns |

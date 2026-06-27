@@ -70,6 +70,12 @@ bandit/RL-specific Mathlib-ready proof leaves and memory contracts.
   Bandit Problem](https://doi.org/10.1023/A:1013689704352).
 - [Auer, Cesa-Bianchi, Freund, and Schapire, The Nonstochastic Multiarmed
   Bandit Problem](https://doi.org/10.1137/S0097539701398375).
+- [Zimmert and Seldin, Tsallis-INF](https://arxiv.org/abs/1807.07623).
+- [Masoudian and Seldin, Improved Analysis of the Tsallis-INF
+  Algorithm](https://arxiv.org/abs/2103.12487).
+- [Kato and Ito, LC-Tsallis-INF](https://arxiv.org/abs/2403.03219).
+- [Tsuchiya and Ito, adaptive learning rate FTRL for
+  best-of-both-worlds](https://arxiv.org/abs/2405.20028).
 - [Garivier and Cappé, The KL-UCB Algorithm for Bounded Stochastic Bandits and
   Beyond](https://arxiv.org/abs/1102.2490).
 - [Agrawal and Goyal, Analysis of Thompson Sampling for the Multi-armed Bandit

@@ -43,6 +43,8 @@ Bandit/RL theorem target
 | Asymptotics | `MLIB-ASYMPTOTICS` | minimax rates, logarithmic regret exports |
 | Linear/convex algebra | `MLIB-CONVEX-LINALG` | linear bandits, OFUL, convex action sets |
 | Metric topology | `MLIB-METRIC-TOPOLOGY` | Lipschitz/continuum bandits, covering arguments, zooming-style routes |
+| Tail inequalities | `MLIB-PROBABILITY-SUBGAUSSIAN`, `MLIB-PROBABILITY-MGF`, `MLIB-PROBABILITY-VARIANCE` | UCB/ETC tails, Chernoff routes, robust/heavy-tailed baselines |
+| Tsallis/FTRL power algebra | `MLIB-REAL-RPOW-TSALLIS`, `MLIB-CONVEX-LINALG`, `MLIB-FINSET-SUMS` | Tsallis-INF, best-of-both-worlds, adaptive FTRL |
 
 ## Compiled Local Leaves
 
@@ -100,6 +102,7 @@ selected.
 | KL-UCB | Bernoulli KL, confidence inversion, bounded stochastic reward contracts | `PPR-GARIVIER-CAPPE-2011-KLUCB`, `TXT-LATTIMORE-SZEPESVARI-2020` |
 | Thompson sampling | posterior action identity, Bayesian regret decomposition, clipped confidence bridge | `TXT-SLIVKINS-2019-2024`, `PPR-AGRAWAL-GOYAL-2011-TS`, LML `Bandits.TS.hasCondDistrib_action`, LML `Bandits.integral_regret_le` |
 | EXP3/adversarial | importance-weighted loss, exponential weights potential, learning-rate optimization | `TXT-BUBECK-CESABIANCHI-2012`, `TXT-LATTIMORE-SZEPESVARI-2020`, `PPR-AUER-CFS-2002-EXP3` |
+| Tsallis-INF/FTRL | simplex probabilities, Tsallis regularizer, stability/penalty split, self-bounding conversion | `PPR-ZIMMERT-SELDIN-2018-TSALLIS-INF`, `PPR-MASOUDIAN-SELDIN-2021-TSALLIS-INF`, `PPR-KATO-ITO-2024-LC-TSALLIS-INF`, `PPR-ADAPTIVE-LR-FTRL-2024` |
 | Linear/OFUL | least-squares estimator, confidence ellipsoid, elliptical potential, optimism | `TXT-LATTIMORE-SZEPESVARI-2020`, `PPR-ABBASI-YADKORI-2011-SELF-NORMALIZED`, `PPR-LI-CHU-LANGFORD-SCHAPIRE-2010-LINUCB` |
 | Pure exploration | confidence event, stopping rule, sample complexity, lower-bound change-of-measure | `TXT-LATTIMORE-SZEPESVARI-2020`, `TXT-SLIVKINS-2019-2024` |
 | BwK/resource constraints | budget stopping time, resource consumption, primal-dual comparison | `TXT-SLIVKINS-2019-2024`, `PPR-BADANIDIYURU-KLEINBERG-SLIVKINS-2013-BWK` |
@@ -111,10 +114,11 @@ selected.
 ## Scenario Frontier
 
 The active scenario atlas now includes finite stochastic, Bayesian posterior,
-adversarial, contextual, linear/GLM, Lipschitz/metric, pure exploration,
-combinatorial, resource-constrained, dueling/preference, nonstationary,
-heavy-tailed/robust, delayed/batched, safe/fair/private, federated/distributed,
-finite-horizon RL/MDP, and neural/LLM recommender bandits.
+adversarial, best-of-both-worlds/adaptive, contextual, linear/GLM,
+Lipschitz/metric, pure exploration, combinatorial, resource-constrained,
+dueling/preference, nonstationary, heavy-tailed/robust, delayed/batched,
+safe/fair/private, federated/distributed, finite-horizon RL/MDP, and
+neural/LLM recommender bandits.
 
 Watchlist scenarios may still be theorem-card-only.  They should not be used as
 Lean proof targets until a source card, local API, and Mathlib retrieval route

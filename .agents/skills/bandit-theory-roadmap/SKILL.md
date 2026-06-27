@@ -15,6 +15,7 @@ or mapping a paper theorem into ABRL memory.
 python3 tools/bandit.py reference-index
 python3 tools/bandit.py list-papers
 python3 tools/bandit.py list-scenarios
+python3 tools/bandit.py list-weapons
 python3 tools/bandit.py search-memory <scenario-or-algorithm>
 ```
 
@@ -25,6 +26,7 @@ Read:
 - `research-wiki/textbooks/bandit-classics.md`;
 - `research-wiki/papers/bandit-frontier-cards.md`;
 - `research-wiki/scenarios/bandit-scenario-atlas.md`;
+- `research-wiki/proof-weapons/bandit-proof-weapons.md`;
 - `research-wiki/theory-tree/bandit-theory-tree.md`;
 - `research-wiki/mathlib/theorem-cards.md`;
 - task-local conversion windows and proof obligations.
@@ -36,6 +38,7 @@ A new target should name:
 - source card: textbook, paper, LML, or Mathlib;
 - scenario card;
 - proof branch;
+- proof weapon ids considered, if any, marked as inspiration only;
 - first three leaf lemmas;
 - Mathlib retrieval cards for each general leaf;
 - hidden regularity contracts;

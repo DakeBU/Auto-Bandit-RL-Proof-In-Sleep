@@ -84,6 +84,25 @@ tokens.  Hidden regularity conditions such as integrability, continuity,
 measurability, nonemptiness, boundedness, and finiteness become reusable
 contracts instead of ad hoc proof clutter.
 
+The current completion status is intentionally transparent.  ABRL has a useful
+harness, retrieval memory, proof weapon layer, and compiled finite-bookkeeping
+leaves, but it does not yet contain the full Mathlib-backed measure,
+probability, concentration, functional-inequality, and algorithm theorem
+library needed to reproduce the current textbook scope end-to-end.  See
+[`docs/completion_gap_audit.md`](docs/completion_gap_audit.md) for the current
+audit and
+[`research-wiki/theory-tree/mathlib-foundation-leaf-map.md`](research-wiki/theory-tree/mathlib-foundation-leaf-map.md)
+for the fine-grained leaf map from Mathlib foundations to bandit/RL theorems.
+
+For adaptive proof construction, ABRL separates proof weapons from proof
+dependencies.  Upper agents may use proof weapons such as UCB optimism,
+Tsallis-INF/FTRL, posterior sampling, or tail inequalities to generate route
+ideas; middle must then decompose the idea into source cards, Mathlib/LML/local
+declarations, regularity contracts, and one-leaf lower packets.  Lower agents
+may use only compiled local declarations or imported/ported theorem cards as
+proof material.  See
+[`docs/adaptive_harness_design.md`](docs/adaptive_harness_design.md).
+
 ## Lean Lemma Leaf Network
 
 ABRL keeps the current proof standard visible as diagrams, not only as prose.
@@ -125,6 +144,8 @@ python3 tools/bandit.py search-memory UCB
 python3 tools/bandit.py search-memory integrable
 python3 tools/bandit.py search-memory contextual
 python3 tools/bandit.py search-memory KL-UCB
+python3 tools/bandit.py search-memory Tsallis
+python3 tools/bandit.py list-weapons
 python3 tools/bandit.py list-lean-decls pseudoRegret
 python3 tools/bandit.py list-lean-decls between --statement
 ```
@@ -133,7 +154,9 @@ See [`docs/mathlib_search_protocol.md`](docs/mathlib_search_protocol.md),
 [`research-wiki/mathlib/theorem-cards.md`](research-wiki/mathlib/theorem-cards.md),
 [`research-wiki/textbooks/bandit-classics.md`](research-wiki/textbooks/bandit-classics.md),
 [`research-wiki/scenarios/bandit-scenario-atlas.md`](research-wiki/scenarios/bandit-scenario-atlas.md),
-and [`research-wiki/theory-tree/bandit-theory-tree.md`](research-wiki/theory-tree/bandit-theory-tree.md).
+[`research-wiki/theory-tree/bandit-theory-tree.md`](research-wiki/theory-tree/bandit-theory-tree.md),
+and
+[`research-wiki/theory-tree/mathlib-foundation-leaf-map.md`](research-wiki/theory-tree/mathlib-foundation-leaf-map.md).
 
 ## Quick Start
 
@@ -145,6 +168,7 @@ python3 tools/bandit.py list-literature
 python3 tools/bandit.py list-mathlib
 python3 tools/bandit.py list-papers
 python3 tools/bandit.py list-scenarios
+python3 tools/bandit.py list-weapons
 python3 tools/bandit.py list-lean-decls pullCount
 python3 tools/bandit.py next-task
 python3 tools/bandit.py reference-index
@@ -209,6 +233,8 @@ memory files include:
 - `research-wiki/papers/bandit-frontier-cards.md`: algorithm and modern-scenario paper cards.
 - `research-wiki/scenarios/bandit-scenario-atlas.md`: current bandit/RL scenario taxonomy.
 - `research-wiki/theory-tree/bandit-theory-tree.md`: broad proof-tree map from source to leaf to theorem.
+- `research-wiki/theory-tree/mathlib-foundation-leaf-map.md`: fine-grained Mathlib foundation and algorithm leaf map.
+- `research-wiki/proof-weapons/bandit-proof-weapons.md`: route inspiration cards for upper planning only.
 - `research-wiki/proof-techniques/classical-bandits.md`: regret and concentration proof patterns.
 - `research-wiki/proof-techniques/lean-patterns.md`: Lean formalization patterns for finite actions, kernels, and sums.
 - `research-wiki/open-problems/bandit-proof-backlog.md`: unproved or partially mapped proof technology.

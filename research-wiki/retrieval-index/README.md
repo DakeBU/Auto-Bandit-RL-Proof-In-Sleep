@@ -15,6 +15,7 @@ Generated files:
 - `bandit_textbook_cards.json`;
 - `bandit_paper_cards.json`;
 - `bandit_scenario_cards.json`.
+- `proof_weapon_cards.json`.
 - `local_leaf_cards.json`.
 - `local_lean_declarations.json`.
 
@@ -23,6 +24,7 @@ Search them from the CLI:
 ```bash
 python3 tools/bandit.py search-memory QUERY
 python3 tools/bandit.py list-papers
+python3 tools/bandit.py list-weapons
 python3 tools/bandit.py list-lean-decls QUERY
 python3 tools/bandit.py list-lean-decls QUERY --statement
 ```

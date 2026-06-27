@@ -20,6 +20,10 @@ python3 tools/bandit.py search-memory federated
 | --- | --- | --- | --- |
 | `PPR-AUER-CBF-2002-UCB1` | [Auer, Cesa-Bianchi, and Fischer, 2002](https://doi.org/10.1023/A:1013689704352) | finite stochastic | pull-count threshold, good-event split, tail summability |
 | `PPR-AUER-CFS-2002-EXP3` | [Auer, Cesa-Bianchi, Freund, and Schapire, 2002](https://doi.org/10.1137/S0097539701398375) | adversarial finite | importance-weighted loss, exponential potential, learning-rate optimization |
+| `PPR-ZIMMERT-SELDIN-2018-TSALLIS-INF` | [Zimmert and Seldin, 2018](https://arxiv.org/abs/1807.07623) | best-of-both-worlds, stochastic/adversarial | Tsallis regularizer, FTRL optimality, self-bounding regret |
+| `PPR-MASOUDIAN-SELDIN-2021-TSALLIS-INF` | [Masoudian and Seldin, 2021](https://arxiv.org/abs/2103.12487) | constrained adversarial, corrupted stochastic | stability/penalty split, gap-dependent conversion, power-weight algebra |
+| `PPR-KATO-ITO-2024-LC-TSALLIS-INF` | [Kato and Ito, 2024](https://arxiv.org/abs/2403.03219) | linear contextual best-of-both-worlds | linear loss estimates, Tsallis regularization, contextual confidence bridge |
+| `PPR-ADAPTIVE-LR-FTRL-2024` | [Tsuchiya and Ito, 2024](https://arxiv.org/abs/2405.20028) | adaptive FTRL, best-of-both-worlds | adaptive learning rate, stability/penalty split, self-bounding conversion |
 | `PPR-GARIVIER-CAPPE-2011-KLUCB` | [Garivier and Cappé, 2011](https://arxiv.org/abs/1102.2490) | finite stochastic | Bernoulli KL, confidence inversion, bounded reward event |
 | `PPR-AGRAWAL-GOYAL-2011-TS` | [Agrawal and Goyal, 2011](https://arxiv.org/abs/1111.1797) | stochastic, Bayesian posterior | posterior action identity, probability matching, Bayesian regret |
 | `PPR-ABBASI-YADKORI-2011-SELF-NORMALIZED` | [Abbasi-Yadkori, Pál, and Szepesvári, 2011](https://arxiv.org/abs/1102.2670) | linear/GLM | Gram matrix monotonicity, self-normalized martingale, elliptical potential |

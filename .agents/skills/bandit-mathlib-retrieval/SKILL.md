@@ -16,6 +16,7 @@ asymptotics, convexity, or linear algebra.
 python3 tools/bandit.py reference-index
 python3 tools/bandit.py list-mathlib
 python3 tools/bandit.py list-papers
+python3 tools/bandit.py list-weapons
 python3 tools/bandit.py search-memory <query>
 python3 tools/bandit.py list-lean-decls <query>
 python3 tools/bandit.py list-lean-decls <query> --statement
@@ -28,6 +29,7 @@ Read:
 - `research-wiki/mathlib/theorem-cards.md`;
 - `research-wiki/mathlib-candidates/README.md`;
 - `research-wiki/papers/bandit-frontier-cards.md` when the leaf comes from a paper route;
+- `research-wiki/proof-weapons/bandit-proof-weapons.md` when a technique name is only route inspiration;
 - the task conversion window;
 - the task proof-obligation ledger.
 
@@ -37,6 +39,7 @@ Before lower Lean work, record:
 
 - Mathlib card id;
 - textbook or paper source card id;
+- proof weapon id only if it was used to choose the route, never as a theorem dependency;
 - candidate imports/modules;
 - search terms already tried;
 - compiled local declarations already found;

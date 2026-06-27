@@ -18,6 +18,8 @@ over:
 - Mathlib cards in `research-wiki/mathlib/`;
 - textbook and scenario cards in `research-wiki/textbooks/` and
   `research-wiki/scenarios/`;
+- proof weapon cards in `research-wiki/proof-weapons/`, used only as route
+  inspiration;
 - proof tree memory in `research-wiki/theory-tree/`;
 - assumption mapping in `conversion-windows/`;
 - active proof leaves in `proof-obligations/`;
@@ -38,6 +40,8 @@ Stage 1 target stabilization:
 - classify LML or paper results as theorem cards, cited results, imports, or
   local compiled declarations;
 - attach the target to a textbook card and a scenario card;
+- record any proof weapon only as planning context, then decompose it into
+  concrete theorem cards and leaves;
 - search Mathlib retrieval cards for each reusable leaf before creating a new
   Mathlib candidate;
 - reviewer checks target fidelity before broad lower proof work.
@@ -64,5 +68,6 @@ Stage 2 proof-DAG discharge:
 - Are hidden regularity hypotheses promoted to reusable theorem contracts?
 - Are general leaf lemmas prepared as Mathlib candidates?
 - Is any theorem card being treated as a local proof?
+- Is any proof weapon being treated as a theorem card or proof term?
 - Did any lower agent change proof route without a recorded reason?
 - Did the lower agent update memory after failure?

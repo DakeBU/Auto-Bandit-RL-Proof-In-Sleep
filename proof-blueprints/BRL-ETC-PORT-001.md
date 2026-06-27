@@ -1,6 +1,6 @@
 # Proof Blueprint: BRL-ETC-PORT-001
 
-Generated: `2026-06-26T17:44:23+00:00`
+Generated: `2026-06-27T04:58:26+00:00`
 
 ## Source Task
 
@@ -114,6 +114,416 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `ETC-COMMIT` | define empirical-mean argmax commit | finite history | finite argmax contract, reward sums | `LOCAL-LEAF-FINITE-BOOKKEEPING`, `MLIB-FINTYPE-FIN`, `MLIB-FINSET-SUMS` | expose commit oracle before probability proof | finite arms, nonempty candidate set, denominator positivity | project-local wrapper | middle/lower | `sumRewards_add_eq_of_forall_ne_between` | build | planned |
 | `ETC-CONC` | wrong-commit probability bound | sub-Gaussian cards | concentration theorem cards | `MLIB-PROBABILITY-INDEPENDENCE`, `MLIB-MEASURE-INTEGRAL` | reduce wrong commit to pairwise empirical-mean tail events | measurability, integrability, independence/sub-Gaussian contract | theorem-card-only until imported or ported | retrieval | TBD | memory/build | obligation |
 | `ETC-FINAL` | local theorem compatible with `Bandits.ETC.regret_le` | all above | regret decomposition, pull-count ledger | `LML-ETC-REGRET`, `LML-BANDIT-REGRET-PULLCOUNT` | exploration regret plus wrong-commit regret | all upstream contracts above | project-local | lower Lean | TBD | build | blocked |
+
+
+## Completion Gap Audit
+
+# Completion Gap Audit
+
+This audit answers a blunt question: how far is ABRL from fully reproducing the
+classic bandit textbook proof weapons and the Mathlib-level foundations they
+depend on?
+
+Short answer: ABRL is still early.  The harness, memory indexes, source cards,
+proof weapons, and a dependency-light finite bookkeeping layer exist.  The
+Mathlib-heavy measure/probability/concentration/optimization layers are mostly
+retrieval cards and proof obligations, not compiled local theorem ports.
+
+## Current Evidence
+
+Current local evidence:
+
+| Artifact | Count | Meaning |
+| --- | ---: | --- |
+| LML theorem cards | 6 | external Lean theorem-card routes, not local proofs |
+| Mathlib retrieval cards | 17 | import/search routes for reusable leaves |
+| textbook cards | 3 | Bubeck-Cesa-Bianchi, Lattimore-Szepesvari, Slivkins |
+| paper cards | 18 | algorithm/frontier source routes |
+| scenario cards | 18 | current bandit/RL taxonomy |
+| proof weapon cards | 8 | upper-agent route inspiration only |
+| compiled local finite-bookkeeping leaves | 32 | local dependency-light leaves |
+| compiled local algorithm-wrapper leaves | 2 | thin ETC/UCB wrappers |
+| scanned local Lean declarations | 80 | definitions, structures, and theorems in `BanditRLProof/` |
+
+The compiled local layer currently covers:
+
+- finite action traces;
+- pull counts and segment counts;
+- reward sums and one segment-stability lemma;
+- rational finite-arm mean models;
+- pseudo-regret zero/segment leaves;
+- thin ETC and UCB wrapper lemmas.
+
+The compiled local layer does not yet cover:
+
+- measure spaces, kernels, filtrations, conditional expectations;
+- integrability and measurability theorem contracts;
+- sub-Gaussian, Hoeffding, Chernoff, variance, or martingale tail proofs;
+- regret decomposition into pull counts over a Mathlib finite sum;
+- imported or ported LML UCB/ETC/Thompson theorems;
+- EXP3, KL-UCB, Tsallis-INF/FTRL, OFUL/LinUCB, BwK, pure exploration, RL/MDP
+  final theorem surfaces;
+- full Markdown/LaTeX exports for closed textbook theorems.
+
+## Distance By Layer
+
+The table below is an engineering audit, not a mathematical impossibility
+claim.  `compiled` means the local Lean gate proves it now.  `carded` means the
+source or retrieval route exists.  `missing` means the route still needs leaf
+statements, imports, or local proofs.
+
+| Layer | Current status | What remains |
+| --- | --- | --- |
+| Harness and memory workflow | mostly compiled/tooling | add richer population operations and reviewer audits |
+| Source/paper/scenario map | broad card coverage | keep current with new papers and check every source route |
+| Proof weapons | carded | must be decomposed per task; not proof certificates |
+| Finite bookkeeping | partially compiled | bridge recursive definitions to Mathlib `Finset` sums |
+| Regret decomposition | theorem-card plus local pseudo-regret | prove/import pull-count decomposition and expectation form |
+| Measure/probability foundation | retrieval-card only | import Mathlib, define local APIs, prove regularity contracts |
+| Kernels/posteriors | retrieval-card only | posterior kernels, conditional distributions, Bayesian regret |
+| Concentration/tails | retrieval-card only | sub-Gaussian, Hoeffding, conditional tails, finite union bounds |
+| UCB/ETC textbook routes | wrappers plus theorem cards | concentration, width algebra, pull-count theorem, final regret |
+| Thompson sampling | theorem cards only | posterior identity route, integrability, Bayes-regret decomposition |
+| EXP3/adversarial | paper/weapon cards only | estimator, exponential potential, FTRL/OMD leaves |
+| Tsallis-INF/FTRL | paper/weapon cards only | simplex, Tsallis regularizer, power algebra, stability/penalty split |
+| Linear/OFUL/LinUCB | paper/weapon cards only | Gram matrix, confidence ellipsoid, self-normalized tail |
+| RL/MDP | scenario/paper cards only | finite kernels, Bellman recursion, occupancy measures, episode regret |
+| Proof export | skeleton exists | exports must be generated from compiled theorem declarations |
+
+## Textbook-Scope Completion Estimate
+
+For the three current textbook/survey roots, ABRL has a broad map but not a
+full proof library.
+
+| Source root | Current coverage | Remaining proof strata |
+| --- | --- | --- |
+| Bubeck-Cesa-Bianchi 2012 | stochastic/adversarial routes and paper cards | UCB/EXP3 tails, lower bounds, minimax routes, final theorem exports |
+| Lattimore-Szepesvari 2020 | main scenario tree and Mathlib routes | probability foundation, concentration chapters, ETC/UCB/MOSS/KL-UCB/linear proofs |
+| Slivkins 2019/2024 | scenario atlas, Bayesian, Lipschitz, BwK, agents | Bayesian/posterior formalization, Lipschitz/metric trees, BwK and incentive proofs |
+
+Pragmatic estimate: for the desired textbook-scale proof weapon library, the
+current compiled Lean is under one tenth of the needed proof surface.  It is
+useful because it sets stable harness rules and proves the first finite
+bookkeeping leaves, but the major Mathlib-backed layers still need to be
+imported, adapted, or proved.
+
+## Required Next Milestones
+
+1. Add a Mathlib-backed probability layer.
+2. Convert retrieval cards for sub-Gaussian tails into exact imported theorem
+   packets and local wrappers.
+3. Prove the Mathlib finite-sum bridge for recursive `pullCount`, `sumRewards`,
+   and `pseudoRegret`.
+4. Close one narrow textbook theorem end-to-end, likely a small UCB/ETC
+   bookkeeping or concentration-dependent theorem.
+5. Export that theorem to Markdown and LaTeX from compiled declarations.
+6. Only then expand to TS, EXP3, Tsallis-INF/FTRL, OFUL, BwK, and RL/MDP final
+   theorem branches.
+
+## Non-Negotiable Leaf Discipline
+
+Every new leaf must satisfy the local contract:
+
+- decompose aggressively;
+- target a lemma that fits within one lower-agent context window;
+- specify more than the theorem: local APIs, imports, assumptions, intended
+  proof route;
+- treat persistent failure as mathematical signal;
+- promote hidden regularity into reusable theorem contracts;
+- do not frequently change the proof route without a reviewer-visible reason.
+
+The point of the audit is not to lower ambition.  It is to prevent agents from
+mistaking a broad tree for completed Lean mathematics.
+
+
+## Adaptive Harness Design
+
+# Adaptive Harness Design
+
+ABRL has two target workflows:
+
+1. complete user-specified proof technology and paper LaTeX proofs;
+2. explore new bandit/RL theorem targets and construct a complete Lean proof
+   plan, then close leaves one by one.
+
+This design keeps proof weapons as planning inspiration while keeping compiled
+Lean and imported theorem cards as the only reusable proof material.
+
+## End-To-End Loop
+
+```text
+user theorem / paper proof / new topic
+-> upper route population
+-> middle source and memory grounding
+-> proof-DAG decomposition
+-> lower leaf packet
+-> choose Lean-direct or NL-prover-assisted route
+-> Lean proof attempt
+-> reviewer gate
+-> memory compression
+-> Markdown and LaTeX export after compilation
+```
+
+## Role Responsibilities
+
+| Role | Main decisions | Output |
+| --- | --- | --- |
+| Upper | choose theorem frontier; generate several possible route ideas; decide which proof weapon is only inspiration | route population, selected frontier, rejected route notes |
+| Middle | ground route in source cards, Mathlib/LML/local declarations, hidden regularity, and proof-obligation leaves | conversion window, proof-obligation ledger, retrieval index |
+| Lower retrieval | find reusable Mathlib/LML/local theorem cards before proof work | retrieval packet with declarations and imports |
+| Lower natural-language prover | propose proof sketch for a single leaf when math structure is unclear | sketch, assumptions, possible counterexample, proof route |
+| Lower Lean worker | prove exactly one leaf or write a precise blocker | compiled declaration or failed-attempt record |
+| Reviewer | reject route drift, hidden assumptions, stale proof weapons, and uncompiled theorem claims | accepted/rejected status, memory update requirements |
+
+## Route Population
+
+Upper keeps a population of candidate routes under `candidate-populations/`.
+Each candidate route should contain:
+
+- target theorem;
+- source cards;
+- scenario card;
+- proof weapon ids considered, marked inspiration-only;
+- direct reuse cards: Mathlib, LML, local declarations;
+- first proof-DAG leaves;
+- hidden regularity contracts;
+- expected blocker;
+- reason for selection or rejection.
+
+The population is not an evolutionary free-for-all.  Every candidate remains
+under the same Lean-checkable target unless reviewer records a mathematical
+reason to pivot.
+
+## Middle Decomposition Rule
+
+Middle must turn route ideas into leaf packets before lower work.  A valid leaf
+packet contains:
+
+| Field | Required content |
+| --- | --- |
+| Exact statement | Lean-facing theorem shape, not just prose |
+| Local APIs | definitions, namespaces, existing declarations |
+| Intended route | induction/import/tactic outline |
+| Regularity contracts | measurability, integrability, continuity, nonempty, boundedness, positivity, summability, adaptedness |
+| Retrieval evidence | `search-memory`, `list-lean-decls --statement`, Mathlib/LML cards |
+| Mathlib status | imported, port candidate, Mathlib candidate, project-local, theorem-card-only |
+| Failure policy | what repeated failure means and what to audit |
+
+If this packet cannot be written, the task is still upper/middle work and
+should not be sent to a lower Lean worker.
+
+## Lean-Direct Versus Natural-Language Prover
+
+Middle chooses the lower route per leaf:
+
+| Leaf situation | Preferred route |
+| --- | --- |
+| local API and proof route are obvious | Lean-direct lower worker |
+| exact theorem exists in Mathlib/LML | lower retrieval worker, then thin wrapper |
+| proof shape is mathematical but not yet Lean-shaped | natural-language prover first, then Lean worker |
+| repeated Lean failure with same goal | statement/hypothesis/counterexample audit |
+| route needs a broad proof weapon | upper/middle decomposes weapon into concrete leaves first |
+
+Natural-language proof is useful only if it sharpens the Lean statement,
+assumptions, or proof route.  It is not accepted memory until translated into
+compiled Lean or an explicit cited theorem card.
+
+## Memory Card Types
+
+| Card type | Purpose | May be used as proof dependency? |
+| --- | --- | --- |
+| Local Lean declaration | compiled result in this repository | yes |
+| Mathlib retrieval card | import/search route to upstream theorem/API | yes only after imported or wrapped |
+| LML theorem card | upstream Lean theorem route | yes only after imported/ported; otherwise theorem-card |
+| Textbook card | broad proof source | no |
+| Paper card | specific algorithm/source route | no |
+| Scenario card | taxonomy and placement | no |
+| Proof weapon card | route inspiration for upper planning | no |
+| Mathlib candidate card | future upstream lemma proposal | no until compiled/imported |
+| Cited result card | external theorem contract | no local proof; can be cited in prose with status |
+| Failed-attempt card | mathematical signal and reusable debugging | no |
+
+## Lean And LaTeX Synchronization
+
+ABRL exports only after Lean closure:
+
+```bash
+python3 tools/bandit.py export-proof TASK_ID --title "Theorem title"
+```
+
+The export must:
+
+- name compiled Lean declarations;
+- state no stronger result than Lean proves;
+- cite theorem cards and proof weapons only by status;
+- include regularity assumptions explicitly;
+- record any missing theorem-card dependency as not locally proved.
+
+For a paper proof completion task, middle maintains a conversion window:
+
+```text
+paper theorem line
+-> assumptions and notation
+-> Lean definition/declaration
+-> proof-DAG leaves
+-> compiled theorem
+-> Markdown/LaTeX paragraph
+```
+
+## Built-In Experience Rules
+
+The harness encodes the following proof-engineering lessons:
+
+- Decompose aggressively.
+- Target small lemmas that fit one lower-agent context window.
+- Specify more than the theorem: local APIs and intended proof route.
+- Treat persistent failure as mathematical signal.
+- Promote hidden regularity into reusable theorem contracts.
+- Do not frequently change the proof route without a recorded reason.
+
+Reviewer should reject any cycle that violates these rules even if the text
+looks plausible.
+
+## Current Limitation
+
+This design is in place as plain-file harness structure and CLI retrieval
+support.  It is not yet a complete automatic prover.  The missing work is the
+large body of Mathlib-backed leaves listed in
+`research-wiki/theory-tree/mathlib-foundation-leaf-map.md` and the completion
+gap audit in `docs/completion_gap_audit.md`.
+
+
+## Mathlib Foundation Leaf Map
+
+# Mathlib Foundation To Bandit Leaf Map
+
+This file is the fine-grained leaf map that lower agents should consult before
+opening a Mathlib-heavy proof.  It starts below bandit algorithms: measure
+theory, measurability, integrability, kernels, conditioning, concentration,
+functional inequalities, and optimization primitives.
+
+Status vocabulary:
+
+- `compiled-local`: local ABRL declaration builds now;
+- `import-route`: likely Mathlib route identified, not yet imported locally;
+- `theorem-card`: external theorem route recorded, not local proof;
+- `missing-leaf`: needs a small statement and proof/import decision;
+- `weapon-only`: proof idea only, not a theorem dependency.
+
+## Foundation Spine
+
+```text
+finite index and sums
+-> measurable spaces and finite kernels
+-> random variables and reward traces
+-> integrability / measurability contracts
+-> independence / filtration / conditional expectation
+-> concentration or posterior identities
+-> algorithm-specific control lemma
+-> regret/sample-complexity theorem
+-> Markdown and LaTeX export
+```
+
+## Measure And Measurability Leaves
+
+| Leaf id | Intended statement shape | Current status | Retrieval cards | Regularity contract |
+| --- | --- | --- | --- | --- |
+| `MEAS-FIN-ACTION` | finite arm type has measurable space and all arm maps are measurable | missing-leaf | `MLIB-FINTYPE-FIN`, `MLIB-MEASURE-INTEGRAL` | finite action space |
+| `MEAS-HISTORY` | finite histories/actions/rewards form measurable product objects | missing-leaf | `MLIB-MEASURE-INTEGRAL`, `MLIB-PROBABILITY-KERNEL` | measurable action/reward spaces |
+| `MEAS-POLICY` | policy map from history/context to arm is measurable | missing-leaf | `MLIB-MEASURE-INTEGRAL`, `MLIB-PROBABILITY-KERNEL` | measurable history and policy |
+| `MEAS-REWARD` | reward random variable for selected arm is measurable | missing-leaf | `MLIB-MEASURE-INTEGRAL` | selected action and reward kernel measurable |
+| `MEAS-REGRET` | pseudo/expected regret summand is measurable | missing-leaf | `MLIB-MEASURE-INTEGRAL`, `MLIB-FINSET-SUMS` | measurable means, actions, rewards |
+
+## Integrability And Expectation Leaves
+
+| Leaf id | Intended statement shape | Current status | Retrieval cards | Regularity contract |
+| --- | --- | --- | --- | --- |
+| `INT-REWARD-BOUNDED` | bounded reward implies integrable reward | import-route | `MLIB-MEASURE-INTEGRAL`, `MLIB-ORDER-ALGEBRA` | bounded reward, measurable reward |
+| `INT-FINITE-SUM` | finite sum of integrable regret terms is integrable | import-route | `MLIB-MEASURE-INTEGRAL`, `MLIB-FINSET-SUMS` | each term integrable |
+| `EXP-FINITE-SUM` | expectation distributes over finite regret sum | import-route | `MLIB-MEASURE-INTEGRAL`, `MLIB-FINSET-SUMS` | integrability of each summand |
+| `EXP-INDICATOR-PULL` | expected pull count as sum of event probabilities | missing-leaf | `MLIB-MEASURE-INTEGRAL`, `MLIB-FINSET-SUMS` | indicator measurability |
+| `EXP-REGRET-PULLCOUNT` | expected regret equals gaps times expected pull counts | theorem-card | `LML-BANDIT-REGRET-PULLCOUNT`, `MLIB-MEASURE-INTEGRAL` | finite arms, integrable regret |
+
+## Kernels, Posteriors, And Conditioning
+
+| Leaf id | Intended statement shape | Current status | Retrieval cards | Regularity contract |
+| --- | --- | --- | --- | --- |
+| `KERNEL-REWARD` | reward distribution is a Markov kernel indexed by arm/context | import-route | `MLIB-PROBABILITY-KERNEL` | measurable index space |
+| `KERNEL-POLICY-BIND` | policy and reward kernels compose into a trajectory law | missing-leaf | `MLIB-PROBABILITY-KERNEL` | measurable policy/kernel |
+| `COND-EXPECT-REWARD` | conditional expectation of centered reward is zero/sub-Gaussian | missing-leaf | `MLIB-CONDITIONAL-EXPECTATION`, `MLIB-PROBABILITY-SUBGAUSSIAN` | filtration, adapted reward |
+| `POSTERIOR-KERNEL` | posterior over environments is a kernel given history | missing-leaf | `MLIB-PROBABILITY-KERNEL`, `MLIB-CONDITIONAL-EXPECTATION` | prior, likelihood, history sigma-algebra |
+| `TS-PROB-MATCH` | Thompson action law equals posterior best-arm law | theorem-card | `LML-TS-POSTERIOR-ACTION` | posterior kernel, best-arm measurability |
+
+## Independence, Filtration, And Martingale Leaves
+
+| Leaf id | Intended statement shape | Current status | Retrieval cards | Regularity contract |
+| --- | --- | --- | --- | --- |
+| `IID-REWARD-FAMILY` | rewards for fixed arms/time form independent or conditionally independent family | import-route | `MLIB-PROBABILITY-INDEPENDENCE` | indexed reward variables |
+| `FILTRATION-HISTORY` | history sigma-algebras form a filtration | missing-leaf | `MLIB-CONDITIONAL-EXPECTATION`, `MLIB-MARTINGALE-STOCHASTIC` | monotone history information |
+| `ADAPTED-ACTION` | action at time `t` is adapted to past history | missing-leaf | `MLIB-CONDITIONAL-EXPECTATION` | policy is predictable |
+| `MART-DIFF-REWARD` | centered reward process is martingale difference | missing-leaf | `MLIB-MARTINGALE-STOCHASTIC` | conditional mean zero, integrable reward |
+| `STOPPING-TIME-BUDGET` | budget exhaustion time is a stopping time | missing-leaf | `MLIB-MARTINGALE-STOCHASTIC`, `MLIB-PROBABILITY-KERNEL` | adapted resource trace |
+
+## Concentration And Tail Leaves
+
+| Leaf id | Intended statement shape | Current status | Retrieval cards | Regularity contract |
+| --- | --- | --- | --- | --- |
+| `TAIL-SUBGAUSS-SUM` | sum of independent centered sub-Gaussian variables has exponential tail | import-route | `MLIB-PROBABILITY-SUBGAUSSIAN`, `MLIB-PROBABILITY-INDEPENDENCE` | sub-Gaussian MGF, independence |
+| `TAIL-COND-SUBGAUSS` | adapted conditionally sub-Gaussian sum tail | import-route | `MLIB-PROBABILITY-SUBGAUSSIAN`, `MLIB-CONDITIONAL-EXPECTATION` | filtration, conditional MGF |
+| `TAIL-HOEFFDING-BOUNDED` | bounded centered rewards satisfy Hoeffding tail | import-route | `MLIB-PROBABILITY-SUBGAUSSIAN` | reward in interval, centered mean |
+| `TAIL-UNION-FINITE` | finite union of bad tail events is bounded by sum of probabilities | import-route | `MLIB-MEASURE-INTEGRAL`, `MLIB-FINSET-SUMS` | finite event family |
+| `TAIL-SUMMABILITY-UCB` | UCB bad-event probabilities have finite horizon summation bound | missing-leaf | `MLIB-FINSET-SUMS`, `MLIB-REAL-LOG-SQRT`, `MLIB-ASYMPTOTICS` | positive horizon, log side conditions |
+| `TAIL-VARIANCE-ROBUST` | finite-variance/Chebyshev or robust mean tail route | import-route | `MLIB-PROBABILITY-VARIANCE` | finite second moment |
+
+## Functional Inequality And Optimization Leaves
+
+| Leaf id | Intended statement shape | Current status | Retrieval cards | Regularity contract |
+| --- | --- | --- | --- | --- |
+| `FTRL-ONE-STEP` | FTRL/OMD one-step inequality for a regularizer | missing-leaf | `MLIB-CONVEX-LINALG`, `MLIB-FINSET-SUMS` | convex domain, regularizer, finite action simplex |
+| `EXP3-POTENTIAL` | exponential weights potential telescopes | missing-leaf | `MLIB-EXP-LOG-INEQUALITIES`, `MLIB-FINSET-SUMS` | nonnegative weights, learning rate positive |
+| `TSALLIS-REGULARIZER` | Tsallis entropy regularizer is well-defined on simplex | missing-leaf | `MLIB-REAL-RPOW-TSALLIS`, `MLIB-CONVEX-LINALG` | nonnegative probabilities, sum one |
+| `TSALLIS-STABILITY` | Tsallis-INF stability term bound | weapon-only | `WEAPON-TSALLIS-INF-FTRL`, `MLIB-REAL-RPOW-TSALLIS` | simplex, unbiased loss estimate |
+| `SELF-BOUNDING-CONVERSION` | self-bounding condition converts adversarial regret to stochastic/gap-dependent bound | weapon-only | `WEAPON-TSALLIS-INF-FTRL` | problem-dependent lower bound, gaps |
+| `OFUL-ELLIPTICAL-POTENTIAL` | elliptical potential / determinant growth bound | missing-leaf | `MLIB-CONVEX-LINALG`, `MLIB-MARTINGALE-STOCHASTIC` | positive semidefinite Gram matrices |
+
+## Finite Bookkeeping Bridges
+
+| Leaf id | Intended statement shape | Current status | Retrieval cards | Regularity contract |
+| --- | --- | --- | --- | --- |
+| `PULLCOUNT-RECURSIVE` | recursive pull count update lemmas | compiled-local | `LOCAL-LEAF-FINITE-BOOKKEEPING` | decidable arm equality |
+| `PULLCOUNT-FINSET` | recursive `pullCount` equals filtered `Finset.range` cardinality | missing-leaf | `MLIB-FINSET-SUMS`, `MLIB-FINTYPE-FIN` | finite time horizon |
+| `SUMREWARDS-FINSET` | recursive reward sum equals filtered `Finset.range` sum | missing-leaf | `MLIB-FINSET-SUMS` | additive zero law, selected reward |
+| `PSEUDOREGRET-FINSET` | recursive pseudo-regret equals finite sum of gaps | missing-leaf | `MLIB-FINSET-SUMS`, `MLIB-ORDER-ALGEBRA` | finite horizon |
+| `REGRET-PULLCOUNT` | finite regret sum reindexed by arm pull counts | theorem-card | `LML-BANDIT-REGRET-PULLCOUNT`, `MLIB-FINSET-SUMS` | finite arms |
+
+## Algorithm Control Leaves
+
+| Branch | Immediate leaves still needed before final theorem |
+| --- | --- |
+| ETC | exact round-robin counts, empirical mean denominator positivity, wrong-commit event, sub-Gaussian pairwise tail |
+| UCB | positive initial counts, index width algebra, suboptimal-pull implication, bad-event union, expected pull-count bound |
+| Thompson sampling | posterior action identity import/port, posterior confidence event, Bayes-regret integrability |
+| EXP3 | importance-weighted estimator, potential telescope, learning-rate optimization |
+| KL-UCB | Bernoulli KL API, monotonicity/inversion, change-of-measure, confidence set |
+| Tsallis-INF/FTRL | simplex API, Tsallis regularizer, FTRL optimality, stability/penalty split, self-bounding conversion |
+| OFUL/LinUCB | Gram matrix API, confidence ellipsoid, self-normalized concentration, elliptical potential |
+| BwK | resource trace, budget stopping time, primal-dual comparison |
+| RL/MDP | finite kernel, Bellman recursion, occupancy measure, optimism, episode regret telescope |
+
+## Agent Rule
+
+Do not pass a row label directly to a lower Lean worker.  Middle must turn it
+into:
+
+1. exact Lean statement;
+2. local APIs/imports;
+3. intended proof route;
+4. hidden regularity contracts;
+5. Mathlib/LML/local declarations searched;
+6. fallback if the route fails repeatedly.
+
+This is the minimum granularity needed for one leaf to fit inside a lower-agent
+context window.
 
 
 ## Relevant LML Theorem Cards
@@ -369,6 +779,64 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
     ],
     "role": "Lipschitz/continuum bandits, covering arguments, nearest-neighbor policies, and metric action spaces.",
     "status": "import-candidate"
+  },
+  {
+    "id": "MLIB-PROBABILITY-SUBGAUSSIAN",
+    "source": "Mathlib",
+    "module": "Mathlib.Probability.Moments.SubGaussian",
+    "docs": "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Probability/Moments/SubGaussian.html",
+    "query_terms": [
+      "measure_sum_ge_le_of_iIndepFun",
+      "hasSubgaussianMGF_of_mem_Icc_of_integral_eq_zero",
+      "measure_sum_ge_le_of_HasCondSubgaussianMGF",
+      "HasSubgaussianMGF"
+    ],
+    "role": "Hoeffding-style tails, Azuma-Hoeffding routes, sub-Gaussian reward sums, and UCB/ETC concentration leaves.",
+    "status": "import-candidate"
+  },
+  {
+    "id": "MLIB-PROBABILITY-MGF",
+    "source": "Mathlib",
+    "module": "Mathlib.Probability.Moments.Basic; Mathlib.Probability.Moments.Tilted",
+    "docs": "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Probability/Moments/Basic.html",
+    "query_terms": [
+      "mgf",
+      "cgf",
+      "IndepFun.mgf_add",
+      "IndepFun.cgf_add",
+      "tilted"
+    ],
+    "role": "Moment-generating and cumulant-generating function algebra for Chernoff, exponential weights, and concentration routes.",
+    "status": "import-candidate"
+  },
+  {
+    "id": "MLIB-PROBABILITY-VARIANCE",
+    "source": "Mathlib",
+    "module": "Mathlib.Probability.Moments.Variance",
+    "docs": "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Probability/Moments/Variance.html",
+    "query_terms": [
+      "variance",
+      "chebyshev",
+      "IndepFun.variance_add",
+      "MemLp"
+    ],
+    "role": "Variance bookkeeping, Chebyshev-style tails, robust/heavy-tailed baselines, and second-moment contracts.",
+    "status": "import-candidate"
+  },
+  {
+    "id": "MLIB-REAL-RPOW-TSALLIS",
+    "source": "Mathlib",
+    "module": "Mathlib.Analysis.SpecialFunctions.Pow.Real; Mathlib.Analysis.SpecialFunctions.Pow.NNReal",
+    "docs": "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Analysis/SpecialFunctions/Pow/Real.html",
+    "query_terms": [
+      "Real.rpow",
+      "NNReal.rpow",
+      "rpow",
+      "rpow_le_rpow",
+      "rpow_pos_of_pos"
+    ],
+    "role": "Tsallis entropy regularizers, power potentials, FTRL/OMD penalty algebra, and nonnegative-probability weights.",
+    "status": "import-candidate"
   }
 ]
 ```
@@ -486,6 +954,95 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
       "potential inequality",
       "unbiased estimator",
       "learning-rate optimization"
+    ],
+    "memory_status": "paper-card"
+  },
+  {
+    "id": "PPR-ZIMMERT-SELDIN-2018-TSALLIS-INF",
+    "title": "Tsallis-INF: An Optimal Algorithm for Stochastic and Adversarial Bandits",
+    "authors": "Julian Zimmert; Yevgeny Seldin",
+    "source": "https://arxiv.org/abs/1807.07623",
+    "scenarios": [
+      "SCN-BOBW-ADAPTIVE",
+      "SCN-ADVERSARIAL-FINITE",
+      "SCN-STOCHASTIC-FINITE"
+    ],
+    "proof_roots": [
+      "Tsallis-INF",
+      "Tsallis entropy regularizer",
+      "best-of-both-worlds regret"
+    ],
+    "lean_leaf_families": [
+      "FTRL optimality",
+      "Tsallis potential algebra",
+      "importance-weighted loss",
+      "self-bounding regret"
+    ],
+    "memory_status": "paper-card"
+  },
+  {
+    "id": "PPR-MASOUDIAN-SELDIN-2021-TSALLIS-INF",
+    "title": "Improved Analysis of the Tsallis-INF Algorithm in Stochastically Constrained Adversarial Bandits and Stochastic Bandits with Adversarial Corruptions",
+    "authors": "Saeed Masoudian; Yevgeny Seldin",
+    "source": "https://arxiv.org/abs/2103.12487",
+    "scenarios": [
+      "SCN-BOBW-ADAPTIVE",
+      "SCN-ADVERSARIAL-FINITE",
+      "SCN-STOCHASTIC-FINITE"
+    ],
+    "proof_roots": [
+      "Tsallis-INF analysis",
+      "stochastic/adversarial interpolation",
+      "gap-dependent bounds"
+    ],
+    "lean_leaf_families": [
+      "stability term",
+      "penalty term",
+      "self-bounding conversion",
+      "power-weight algebra"
+    ],
+    "memory_status": "paper-card"
+  },
+  {
+    "id": "PPR-KATO-ITO-2024-LC-TSALLIS-INF",
+    "title": "LC-Tsallis-INF: Generalized Best-of-Both-Worlds Linear Contextual Bandits",
+    "authors": "Masahiro Kato; Shinji Ito",
+    "source": "https://arxiv.org/abs/2403.03219",
+    "scenarios": [
+      "SCN-BOBW-ADAPTIVE",
+      "SCN-LINEAR-GLM",
+      "SCN-CONTEXTUAL"
+    ],
+    "proof_roots": [
+      "Linear contextual Tsallis-INF",
+      "hybrid stochastic/adversarial regret",
+      "high-probability bounds"
+    ],
+    "lean_leaf_families": [
+      "linear loss estimates",
+      "Tsallis regularization",
+      "confidence-plus-FTRL bridge"
+    ],
+    "memory_status": "paper-card"
+  },
+  {
+    "id": "PPR-ADAPTIVE-LR-FTRL-2024",
+    "title": "A Simple and Adaptive Learning Rate for FTRL in Online Learning with Minimax Regret of Theta(T^(2/3)) and its Application to Best-of-Both-Worlds",
+    "authors": "Taira Tsuchiya; Shinji Ito",
+    "source": "https://arxiv.org/abs/2405.20028",
+    "scenarios": [
+      "SCN-BOBW-ADAPTIVE",
+      "SCN-ADVERSARIAL-FINITE"
+    ],
+    "proof_roots": [
+      "adaptive learning rates",
+      "FTRL stability",
+      "best-of-both-worlds"
+    ],
+    "lean_leaf_families": [
+      "learning-rate schedule",
+      "stability/penalty split",
+      "self-bounding conversion"
     ],
     "memory_status": "paper-card"
   },
@@ -818,6 +1375,35 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
       "TXT-BUBECK-CESABIANCHI-2012",
       "TXT-LATTIMORE-SZEPESVARI-2020",
       "PPR-AUER-CFS-2002-EXP3"
+    ],
+    "status": "planned"
+  },
+  {
+    "id": "SCN-BOBW-ADAPTIVE",
+    "name": "best-of-both-worlds and adaptive adversarial bandits",
+    "core_algorithms": [
+      "Tsallis-INF",
+      "LC-Tsallis-INF",
+      "adaptive-learning-rate FTRL",
+      "self-bounding FTRL"
+    ],
+    "leaf_families": [
+      "Tsallis entropy regularization",
+      "self-bounding regret conversion",
+      "stability/penalty split",
+      "adaptive learning-rate schedule"
+    ],
+    "mathlib_needs": [
+      "MLIB-FINSET-SUMS",
+      "MLIB-REAL-RPOW-TSALLIS",
+      "MLIB-CONVEX-LINALG",
+      "MLIB-EXP-LOG-INEQUALITIES"
+    ],
+    "source_cards": [
+      "PPR-ZIMMERT-SELDIN-2018-TSALLIS-INF",
+      "PPR-MASOUDIAN-SELDIN-2021-TSALLIS-INF",
+      "PPR-KATO-ITO-2024-LC-TSALLIS-INF",
+      "PPR-ADAPTIVE-LR-FTRL-2024"
     ],
     "status": "planned"
   },
@@ -1171,6 +1757,191 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
       "PPR-FEDERATED-NEURAL-BANDITS-2022"
     ],
     "status": "watchlist"
+  }
+]
+```
+
+## Proof Weapon Cards
+
+These cards are planning inspiration only.  They do not certify any theorem.
+
+```json
+[
+  {
+    "id": "WEAPON-UCB-OPTIMISM",
+    "name": "optimism under uncertainty",
+    "kind": "proof-inspiration",
+    "upper_planning_use": "Generate candidate routes for index-based stochastic bandit and finite-horizon RL regret proofs.",
+    "lower_agent_rule": "Do not cite optimism as a theorem; instantiate local index definitions, confidence events, and compiled pull-count/regret leaves.",
+    "source_cards": [
+      "PPR-AUER-CBF-2002-UCB1",
+      "PPR-AZAR-OSBAND-MUNOS-2017-UCBVI",
+      "TXT-LATTIMORE-SZEPESVARI-2020"
+    ],
+    "direct_reuse_cards": [
+      "LML-UCB-REGRET",
+      "MLIB-REAL-LOG-SQRT",
+      "MLIB-PROBABILITY-SUBGAUSSIAN",
+      "LOCAL-LEAF-FINITE-BOOKKEEPING"
+    ],
+    "blocked_leaves": [
+      "confidence event API",
+      "positive pull count before index use",
+      "tail summability"
+    ]
+  },
+  {
+    "id": "WEAPON-TAIL-INEQUALITIES",
+    "name": "sub-Gaussian, Hoeffding, Chernoff, and variance tails",
+    "kind": "proof-inspiration",
+    "upper_planning_use": "Select the weakest tail route matching reward assumptions: bounded, sub-Gaussian, conditional sub-Gaussian, or finite-variance.",
+    "lower_agent_rule": "Use Mathlib/LML declarations or task-local cited results; do not reprove a tail inequality inside an algorithm file.",
+    "source_cards": [
+      "TXT-LATTIMORE-SZEPESVARI-2020",
+      "TXT-BUBECK-CESABIANCHI-2012"
+    ],
+    "direct_reuse_cards": [
+      "MLIB-PROBABILITY-SUBGAUSSIAN",
+      "MLIB-PROBABILITY-MGF",
+      "MLIB-PROBABILITY-VARIANCE",
+      "MLIB-PROBABILITY-INDEPENDENCE"
+    ],
+    "blocked_leaves": [
+      "measurability/integrability contract",
+      "independence or filtration contract",
+      "tail-event union bound"
+    ]
+  },
+  {
+    "id": "WEAPON-TSALLIS-INF-FTRL",
+    "name": "Tsallis entropy FTRL and best-of-both-worlds bandits",
+    "kind": "proof-inspiration",
+    "upper_planning_use": "Propose routes for stochastic/adversarial interpolation, self-bounding regret, and adaptive learning-rate FTRL tasks.",
+    "lower_agent_rule": "Do not treat the weapon as a reusable theorem; first formalize Tsallis regularizer, simplex constraints, FTRL optimality, and stability/penalty leaves.",
+    "source_cards": [
+      "PPR-ZIMMERT-SELDIN-2018-TSALLIS-INF",
+      "PPR-MASOUDIAN-SELDIN-2021-TSALLIS-INF",
+      "PPR-KATO-ITO-2024-LC-TSALLIS-INF",
+      "PPR-ADAPTIVE-LR-FTRL-2024"
+    ],
+    "direct_reuse_cards": [
+      "MLIB-REAL-RPOW-TSALLIS",
+      "MLIB-CONVEX-LINALG",
+      "MLIB-FINSET-SUMS",
+      "MLIB-EXP-LOG-INEQUALITIES"
+    ],
+    "blocked_leaves": [
+      "simplex probability vector API",
+      "Tsallis entropy algebra",
+      "FTRL one-step optimality",
+      "stability/penalty decomposition"
+    ]
+  },
+  {
+    "id": "WEAPON-EXP3-POTENTIAL",
+    "name": "exponential weights potential",
+    "kind": "proof-inspiration",
+    "upper_planning_use": "Plan adversarial finite-arm regret proofs using importance-weighted losses and potential telescoping.",
+    "lower_agent_rule": "Use exact exponential/log inequalities from Mathlib and expose estimator unbiasedness as separate leaves.",
+    "source_cards": [
+      "PPR-AUER-CFS-2002-EXP3",
+      "TXT-BUBECK-CESABIANCHI-2012"
+    ],
+    "direct_reuse_cards": [
+      "MLIB-EXP-LOG-INEQUALITIES",
+      "MLIB-FINSET-SUMS",
+      "MLIB-MEASURE-INTEGRAL"
+    ],
+    "blocked_leaves": [
+      "importance-weighted estimator API",
+      "potential telescope",
+      "learning-rate algebra"
+    ]
+  },
+  {
+    "id": "WEAPON-SELF-NORMALIZED-OFUL",
+    "name": "self-normalized concentration for OFUL/LinUCB",
+    "kind": "proof-inspiration",
+    "upper_planning_use": "Route linear/GLM bandit proofs through Gram matrix monotonicity, confidence ellipsoids, and elliptical potential.",
+    "lower_agent_rule": "Separate linear algebra leaves from stochastic-process leaves; do not hide determinant or norm side conditions.",
+    "source_cards": [
+      "PPR-ABBASI-YADKORI-2011-SELF-NORMALIZED",
+      "PPR-LI-CHU-LANGFORD-SCHAPIRE-2010-LINUCB"
+    ],
+    "direct_reuse_cards": [
+      "MLIB-CONVEX-LINALG",
+      "MLIB-MARTINGALE-STOCHASTIC",
+      "MLIB-REAL-LOG-SQRT"
+    ],
+    "blocked_leaves": [
+      "Gram matrix API",
+      "elliptical potential",
+      "martingale self-normalized tail"
+    ]
+  },
+  {
+    "id": "WEAPON-POSTERIOR-SAMPLING",
+    "name": "posterior sampling and probability matching",
+    "kind": "proof-inspiration",
+    "upper_planning_use": "Plan Thompson-sampling and Bayesian regret proofs around posterior action identities and Bayes-risk decompositions.",
+    "lower_agent_rule": "Use LML posterior theorem cards when available; otherwise formalize kernels and conditional distributions before regret algebra.",
+    "source_cards": [
+      "PPR-AGRAWAL-GOYAL-2011-TS",
+      "TXT-SLIVKINS-2019-2024"
+    ],
+    "direct_reuse_cards": [
+      "LML-TS-POSTERIOR-ACTION",
+      "LML-TS-BAYES-REGRET",
+      "MLIB-PROBABILITY-KERNEL",
+      "MLIB-CONDITIONAL-EXPECTATION"
+    ],
+    "blocked_leaves": [
+      "posterior kernel",
+      "conditional distribution identity",
+      "Bayesian regret integrability"
+    ]
+  },
+  {
+    "id": "WEAPON-KL-CHANGE-OF-MEASURE",
+    "name": "KL change-of-measure and information lower bounds",
+    "kind": "proof-inspiration",
+    "upper_planning_use": "Generate lower-bound and KL-UCB confidence-inversion routes for Bernoulli or bounded reward models.",
+    "lower_agent_rule": "Record KL definitions, convexity, and absolute-continuity assumptions explicitly before any theorem reuse.",
+    "source_cards": [
+      "PPR-GARIVIER-CAPPE-2011-KLUCB",
+      "TXT-LATTIMORE-SZEPESVARI-2020"
+    ],
+    "direct_reuse_cards": [
+      "MLIB-EXP-LOG-INEQUALITIES",
+      "MLIB-MEASURE-INTEGRAL",
+      "MLIB-ORDER-ALGEBRA"
+    ],
+    "blocked_leaves": [
+      "Bernoulli KL API",
+      "change-of-measure lemma",
+      "confidence-set inversion"
+    ]
+  },
+  {
+    "id": "WEAPON-PRIMAL-DUAL-BWK",
+    "name": "primal-dual resource accounting for bandits with knapsacks",
+    "kind": "proof-inspiration",
+    "upper_planning_use": "Plan resource-constrained bandit proofs through budget traces, stopping times, and Lagrangian comparisons.",
+    "lower_agent_rule": "Expose budget feasibility and stopping-time assumptions as reusable contracts before final regret proof work.",
+    "source_cards": [
+      "PPR-BADANIDIYURU-KLEINBERG-SLIVKINS-2013-BWK",
+      "TXT-SLIVKINS-2019-2024"
+    ],
+    "direct_reuse_cards": [
+      "MLIB-FINSET-SUMS",
+      "MLIB-ORDER-ALGEBRA",
+      "MLIB-MEASURE-INTEGRAL"
+    ],
+    "blocked_leaves": [
+      "resource consumption trace",
+      "budget stopping time",
+      "dual feasibility"
+    ]
   }
 ]
 ```

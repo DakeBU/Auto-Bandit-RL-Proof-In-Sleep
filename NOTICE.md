@@ -30,6 +30,14 @@ lean-stat-learning-theory source code.
   Bandit Problem, https://doi.org/10.1023/A:1013689704352.
 - Auer, Cesa-Bianchi, Freund, and Schapire, The Nonstochastic Multiarmed
   Bandit Problem, https://doi.org/10.1137/S0097539701398375.
+- Zimmert and Seldin, Tsallis-INF,
+  https://arxiv.org/abs/1807.07623.
+- Masoudian and Seldin, improved Tsallis-INF analysis,
+  https://arxiv.org/abs/2103.12487.
+- Kato and Ito, LC-Tsallis-INF,
+  https://arxiv.org/abs/2403.03219.
+- Tsuchiya and Ito, adaptive learning rate FTRL for best-of-both-worlds,
+  https://arxiv.org/abs/2405.20028.
 - Garivier and Cappé, KL-UCB, https://arxiv.org/abs/1102.2490.
 - Agrawal and Goyal, Thompson sampling analysis,
   https://arxiv.org/abs/1111.1797.

@@ -32,6 +32,11 @@ Classify each leaf as:
 
 For `mathlib-candidate` leaves, keep assumptions explicit and reusable.  Avoid
 bandit-specific names unless the theorem is genuinely about bandits.
+Each new general leaf should either match an entry in
+`research-wiki/theory-tree/mathlib-foundation-leaf-map.md` or add a new entry
+there before proof work starts.  The row label is not enough: the task packet
+must still give the exact Lean-facing statement, local APIs/imports, intended
+route, regularity contracts, and failure policy.
 
 Before creating such a leaf, search the retrieval memory:
 

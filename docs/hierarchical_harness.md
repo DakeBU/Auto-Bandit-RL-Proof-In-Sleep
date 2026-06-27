@@ -14,6 +14,11 @@ harness.  It is adapted to bandit/RL proof work rather than circuit synthesis.
 | Lower retrieval worker | theorem-card and cited-result packet | local path citation, unverified claim promoted |
 | Reviewer | build gate, target-fidelity audit, status classification | uncompiled proof, hidden assumption, missing memory |
 
+Middle decides whether a leaf should go directly to a Lean worker or first to a
+natural-language prover.  The natural-language route is useful only when it
+sharpens a statement, exposes a missing assumption, or provides a proof route
+that can then become a Lean packet.  It is not certified memory.
+
 ## Cycle Contract
 
 Each cycle should produce:
@@ -39,6 +44,15 @@ Upper and middle agents should also attach each theorem target to the broad
 theory tree in `research-wiki/theory-tree/bandit-theory-tree.md`, with a
 textbook/source card, a scenario card, LML cards when available, and Mathlib
 retrieval cards for reusable leaves.
+
+The fine-grained foundation map is
+`research-wiki/theory-tree/mathlib-foundation-leaf-map.md`.  If a proof route
+touches measure theory, kernels, conditioning, concentration, FTRL, Tsallis
+entropy, or self-normalized inequalities, middle should decompose it against
+that map before lower proof work.
+
+The adaptive workflow and memory-card boundaries are documented in
+`docs/adaptive_harness_design.md`.
 
 Use:
 

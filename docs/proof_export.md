@@ -21,10 +21,16 @@ paper-notes/problem-exports/<task-id>/latest.md
 - Name every Lean declaration used.
 - State definitions before theorem statements.
 - Do not claim a theorem is proved if it is only a theorem card.
+- Do not turn proof weapons into proof steps.  They may explain route
+  selection, but the exported proof must point to compiled Lean declarations,
+  imported theorem cards, or explicit cited-result status.
 - Record unproved concentration, measurability, or stopping-time facts as
   obligations.
 - Keep the theorem statement no stronger than the compiled Lean statement.
 - Update `proof-obligations/` if the export reveals a missing lemma.
+- For paper-proof completion tasks, keep the conversion window synchronized
+  line by line: paper notation, Lean statement, leaf declarations, compiled
+  theorem, then Markdown/LaTeX paragraph.
 
 ## Typical Sections
 

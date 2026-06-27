@@ -8,6 +8,7 @@
 | `BRL-OP-CONTEXTUAL-001` | contextual bandit | finite contextual bandit regret interface | planned | define context/action/reward model |
 | `BRL-OP-RL-BELLMAN-001` | finite-horizon RL | Bellman/value/regret interface | typed contract | define finite MDP surface |
 | `BRL-OP-CONCENTRATION-001` | concentration | reusable Hoeffding/sub-Gaussian cards | planned | cited-result table |
+| `BRL-OP-TSALLIS-FTRL-001` | best-of-both-worlds bandit | Tsallis-INF/FTRL formalization route | planned | simplex and Tsallis regularizer API |
 
 ## Rule
 

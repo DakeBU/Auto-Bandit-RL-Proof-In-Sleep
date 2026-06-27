@@ -62,6 +62,7 @@ WORK_DIRS = [
     "research-wiki/claims",
     "research-wiki/cited-results",
     "research-wiki/proof-techniques",
+    "research-wiki/proof-weapons",
     "research-wiki/open-problems",
     "research-wiki/retrieval-index",
     "research-wiki/lml",
@@ -245,6 +246,47 @@ MATHLIB_CARDS = [
         "role": "Lipschitz/continuum bandits, covering arguments, nearest-neighbor policies, and metric action spaces.",
         "status": "import-candidate",
     },
+    {
+        "id": "MLIB-PROBABILITY-SUBGAUSSIAN",
+        "source": "Mathlib",
+        "module": "Mathlib.Probability.Moments.SubGaussian",
+        "docs": "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Probability/Moments/SubGaussian.html",
+        "query_terms": [
+            "measure_sum_ge_le_of_iIndepFun",
+            "hasSubgaussianMGF_of_mem_Icc_of_integral_eq_zero",
+            "measure_sum_ge_le_of_HasCondSubgaussianMGF",
+            "HasSubgaussianMGF",
+        ],
+        "role": "Hoeffding-style tails, Azuma-Hoeffding routes, sub-Gaussian reward sums, and UCB/ETC concentration leaves.",
+        "status": "import-candidate",
+    },
+    {
+        "id": "MLIB-PROBABILITY-MGF",
+        "source": "Mathlib",
+        "module": "Mathlib.Probability.Moments.Basic; Mathlib.Probability.Moments.Tilted",
+        "docs": "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Probability/Moments/Basic.html",
+        "query_terms": ["mgf", "cgf", "IndepFun.mgf_add", "IndepFun.cgf_add", "tilted"],
+        "role": "Moment-generating and cumulant-generating function algebra for Chernoff, exponential weights, and concentration routes.",
+        "status": "import-candidate",
+    },
+    {
+        "id": "MLIB-PROBABILITY-VARIANCE",
+        "source": "Mathlib",
+        "module": "Mathlib.Probability.Moments.Variance",
+        "docs": "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Probability/Moments/Variance.html",
+        "query_terms": ["variance", "chebyshev", "IndepFun.variance_add", "MemLp"],
+        "role": "Variance bookkeeping, Chebyshev-style tails, robust/heavy-tailed baselines, and second-moment contracts.",
+        "status": "import-candidate",
+    },
+    {
+        "id": "MLIB-REAL-RPOW-TSALLIS",
+        "source": "Mathlib",
+        "module": "Mathlib.Analysis.SpecialFunctions.Pow.Real; Mathlib.Analysis.SpecialFunctions.Pow.NNReal",
+        "docs": "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Analysis/SpecialFunctions/Pow/Real.html",
+        "query_terms": ["Real.rpow", "NNReal.rpow", "rpow", "rpow_le_rpow", "rpow_pos_of_pos"],
+        "role": "Tsallis entropy regularizers, power potentials, FTRL/OMD penalty algebra, and nonnegative-probability weights.",
+        "status": "import-candidate",
+    },
 ]
 
 BANDIT_TEXTBOOK_CARDS = [
@@ -311,6 +353,46 @@ BANDIT_PAPER_CARDS = [
         "scenarios": ["SCN-ADVERSARIAL-FINITE"],
         "proof_roots": ["EXP3", "exponential weights", "importance-weighted loss"],
         "lean_leaf_families": ["potential inequality", "unbiased estimator", "learning-rate optimization"],
+        "memory_status": "paper-card",
+    },
+    {
+        "id": "PPR-ZIMMERT-SELDIN-2018-TSALLIS-INF",
+        "title": "Tsallis-INF: An Optimal Algorithm for Stochastic and Adversarial Bandits",
+        "authors": "Julian Zimmert; Yevgeny Seldin",
+        "source": "https://arxiv.org/abs/1807.07623",
+        "scenarios": ["SCN-BOBW-ADAPTIVE", "SCN-ADVERSARIAL-FINITE", "SCN-STOCHASTIC-FINITE"],
+        "proof_roots": ["Tsallis-INF", "Tsallis entropy regularizer", "best-of-both-worlds regret"],
+        "lean_leaf_families": ["FTRL optimality", "Tsallis potential algebra", "importance-weighted loss", "self-bounding regret"],
+        "memory_status": "paper-card",
+    },
+    {
+        "id": "PPR-MASOUDIAN-SELDIN-2021-TSALLIS-INF",
+        "title": "Improved Analysis of the Tsallis-INF Algorithm in Stochastically Constrained Adversarial Bandits and Stochastic Bandits with Adversarial Corruptions",
+        "authors": "Saeed Masoudian; Yevgeny Seldin",
+        "source": "https://arxiv.org/abs/2103.12487",
+        "scenarios": ["SCN-BOBW-ADAPTIVE", "SCN-ADVERSARIAL-FINITE", "SCN-STOCHASTIC-FINITE"],
+        "proof_roots": ["Tsallis-INF analysis", "stochastic/adversarial interpolation", "gap-dependent bounds"],
+        "lean_leaf_families": ["stability term", "penalty term", "self-bounding conversion", "power-weight algebra"],
+        "memory_status": "paper-card",
+    },
+    {
+        "id": "PPR-KATO-ITO-2024-LC-TSALLIS-INF",
+        "title": "LC-Tsallis-INF: Generalized Best-of-Both-Worlds Linear Contextual Bandits",
+        "authors": "Masahiro Kato; Shinji Ito",
+        "source": "https://arxiv.org/abs/2403.03219",
+        "scenarios": ["SCN-BOBW-ADAPTIVE", "SCN-LINEAR-GLM", "SCN-CONTEXTUAL"],
+        "proof_roots": ["Linear contextual Tsallis-INF", "hybrid stochastic/adversarial regret", "high-probability bounds"],
+        "lean_leaf_families": ["linear loss estimates", "Tsallis regularization", "confidence-plus-FTRL bridge"],
+        "memory_status": "paper-card",
+    },
+    {
+        "id": "PPR-ADAPTIVE-LR-FTRL-2024",
+        "title": "A Simple and Adaptive Learning Rate for FTRL in Online Learning with Minimax Regret of Theta(T^(2/3)) and its Application to Best-of-Both-Worlds",
+        "authors": "Taira Tsuchiya; Shinji Ito",
+        "source": "https://arxiv.org/abs/2405.20028",
+        "scenarios": ["SCN-BOBW-ADAPTIVE", "SCN-ADVERSARIAL-FINITE"],
+        "proof_roots": ["adaptive learning rates", "FTRL stability", "best-of-both-worlds"],
+        "lean_leaf_families": ["learning-rate schedule", "stability/penalty split", "self-bounding conversion"],
         "memory_status": "paper-card",
     },
     {
@@ -470,6 +552,20 @@ BANDIT_SCENARIO_CARDS = [
         "status": "planned",
     },
     {
+        "id": "SCN-BOBW-ADAPTIVE",
+        "name": "best-of-both-worlds and adaptive adversarial bandits",
+        "core_algorithms": ["Tsallis-INF", "LC-Tsallis-INF", "adaptive-learning-rate FTRL", "self-bounding FTRL"],
+        "leaf_families": ["Tsallis entropy regularization", "self-bounding regret conversion", "stability/penalty split", "adaptive learning-rate schedule"],
+        "mathlib_needs": ["MLIB-FINSET-SUMS", "MLIB-REAL-RPOW-TSALLIS", "MLIB-CONVEX-LINALG", "MLIB-EXP-LOG-INEQUALITIES"],
+        "source_cards": [
+            "PPR-ZIMMERT-SELDIN-2018-TSALLIS-INF",
+            "PPR-MASOUDIAN-SELDIN-2021-TSALLIS-INF",
+            "PPR-KATO-ITO-2024-LC-TSALLIS-INF",
+            "PPR-ADAPTIVE-LR-FTRL-2024",
+        ],
+        "status": "planned",
+    },
+    {
         "id": "SCN-CONTEXTUAL",
         "name": "contextual bandits",
         "core_algorithms": ["EXP4", "LinUCB", "Thompson contextual variants"],
@@ -598,6 +694,94 @@ BANDIT_SCENARIO_CARDS = [
         "mathlib_needs": ["MLIB-MEASURE-INTEGRAL", "MLIB-PROBABILITY-KERNEL", "MLIB-CONVEX-LINALG"],
         "source_cards": ["PPR-LI-CHU-LANGFORD-SCHAPIRE-2010-LINUCB", "PPR-FEDERATED-NEURAL-BANDITS-2022"],
         "status": "watchlist",
+    },
+]
+
+PROOF_WEAPON_CARDS = [
+    {
+        "id": "WEAPON-UCB-OPTIMISM",
+        "name": "optimism under uncertainty",
+        "kind": "proof-inspiration",
+        "upper_planning_use": "Generate candidate routes for index-based stochastic bandit and finite-horizon RL regret proofs.",
+        "lower_agent_rule": "Do not cite optimism as a theorem; instantiate local index definitions, confidence events, and compiled pull-count/regret leaves.",
+        "source_cards": ["PPR-AUER-CBF-2002-UCB1", "PPR-AZAR-OSBAND-MUNOS-2017-UCBVI", "TXT-LATTIMORE-SZEPESVARI-2020"],
+        "direct_reuse_cards": ["LML-UCB-REGRET", "MLIB-REAL-LOG-SQRT", "MLIB-PROBABILITY-SUBGAUSSIAN", "LOCAL-LEAF-FINITE-BOOKKEEPING"],
+        "blocked_leaves": ["confidence event API", "positive pull count before index use", "tail summability"],
+    },
+    {
+        "id": "WEAPON-TAIL-INEQUALITIES",
+        "name": "sub-Gaussian, Hoeffding, Chernoff, and variance tails",
+        "kind": "proof-inspiration",
+        "upper_planning_use": "Select the weakest tail route matching reward assumptions: bounded, sub-Gaussian, conditional sub-Gaussian, or finite-variance.",
+        "lower_agent_rule": "Use Mathlib/LML declarations or task-local cited results; do not reprove a tail inequality inside an algorithm file.",
+        "source_cards": ["TXT-LATTIMORE-SZEPESVARI-2020", "TXT-BUBECK-CESABIANCHI-2012"],
+        "direct_reuse_cards": ["MLIB-PROBABILITY-SUBGAUSSIAN", "MLIB-PROBABILITY-MGF", "MLIB-PROBABILITY-VARIANCE", "MLIB-PROBABILITY-INDEPENDENCE"],
+        "blocked_leaves": ["measurability/integrability contract", "independence or filtration contract", "tail-event union bound"],
+    },
+    {
+        "id": "WEAPON-TSALLIS-INF-FTRL",
+        "name": "Tsallis entropy FTRL and best-of-both-worlds bandits",
+        "kind": "proof-inspiration",
+        "upper_planning_use": "Propose routes for stochastic/adversarial interpolation, self-bounding regret, and adaptive learning-rate FTRL tasks.",
+        "lower_agent_rule": "Do not treat the weapon as a reusable theorem; first formalize Tsallis regularizer, simplex constraints, FTRL optimality, and stability/penalty leaves.",
+        "source_cards": [
+            "PPR-ZIMMERT-SELDIN-2018-TSALLIS-INF",
+            "PPR-MASOUDIAN-SELDIN-2021-TSALLIS-INF",
+            "PPR-KATO-ITO-2024-LC-TSALLIS-INF",
+            "PPR-ADAPTIVE-LR-FTRL-2024",
+        ],
+        "direct_reuse_cards": ["MLIB-REAL-RPOW-TSALLIS", "MLIB-CONVEX-LINALG", "MLIB-FINSET-SUMS", "MLIB-EXP-LOG-INEQUALITIES"],
+        "blocked_leaves": ["simplex probability vector API", "Tsallis entropy algebra", "FTRL one-step optimality", "stability/penalty decomposition"],
+    },
+    {
+        "id": "WEAPON-EXP3-POTENTIAL",
+        "name": "exponential weights potential",
+        "kind": "proof-inspiration",
+        "upper_planning_use": "Plan adversarial finite-arm regret proofs using importance-weighted losses and potential telescoping.",
+        "lower_agent_rule": "Use exact exponential/log inequalities from Mathlib and expose estimator unbiasedness as separate leaves.",
+        "source_cards": ["PPR-AUER-CFS-2002-EXP3", "TXT-BUBECK-CESABIANCHI-2012"],
+        "direct_reuse_cards": ["MLIB-EXP-LOG-INEQUALITIES", "MLIB-FINSET-SUMS", "MLIB-MEASURE-INTEGRAL"],
+        "blocked_leaves": ["importance-weighted estimator API", "potential telescope", "learning-rate algebra"],
+    },
+    {
+        "id": "WEAPON-SELF-NORMALIZED-OFUL",
+        "name": "self-normalized concentration for OFUL/LinUCB",
+        "kind": "proof-inspiration",
+        "upper_planning_use": "Route linear/GLM bandit proofs through Gram matrix monotonicity, confidence ellipsoids, and elliptical potential.",
+        "lower_agent_rule": "Separate linear algebra leaves from stochastic-process leaves; do not hide determinant or norm side conditions.",
+        "source_cards": ["PPR-ABBASI-YADKORI-2011-SELF-NORMALIZED", "PPR-LI-CHU-LANGFORD-SCHAPIRE-2010-LINUCB"],
+        "direct_reuse_cards": ["MLIB-CONVEX-LINALG", "MLIB-MARTINGALE-STOCHASTIC", "MLIB-REAL-LOG-SQRT"],
+        "blocked_leaves": ["Gram matrix API", "elliptical potential", "martingale self-normalized tail"],
+    },
+    {
+        "id": "WEAPON-POSTERIOR-SAMPLING",
+        "name": "posterior sampling and probability matching",
+        "kind": "proof-inspiration",
+        "upper_planning_use": "Plan Thompson-sampling and Bayesian regret proofs around posterior action identities and Bayes-risk decompositions.",
+        "lower_agent_rule": "Use LML posterior theorem cards when available; otherwise formalize kernels and conditional distributions before regret algebra.",
+        "source_cards": ["PPR-AGRAWAL-GOYAL-2011-TS", "TXT-SLIVKINS-2019-2024"],
+        "direct_reuse_cards": ["LML-TS-POSTERIOR-ACTION", "LML-TS-BAYES-REGRET", "MLIB-PROBABILITY-KERNEL", "MLIB-CONDITIONAL-EXPECTATION"],
+        "blocked_leaves": ["posterior kernel", "conditional distribution identity", "Bayesian regret integrability"],
+    },
+    {
+        "id": "WEAPON-KL-CHANGE-OF-MEASURE",
+        "name": "KL change-of-measure and information lower bounds",
+        "kind": "proof-inspiration",
+        "upper_planning_use": "Generate lower-bound and KL-UCB confidence-inversion routes for Bernoulli or bounded reward models.",
+        "lower_agent_rule": "Record KL definitions, convexity, and absolute-continuity assumptions explicitly before any theorem reuse.",
+        "source_cards": ["PPR-GARIVIER-CAPPE-2011-KLUCB", "TXT-LATTIMORE-SZEPESVARI-2020"],
+        "direct_reuse_cards": ["MLIB-EXP-LOG-INEQUALITIES", "MLIB-MEASURE-INTEGRAL", "MLIB-ORDER-ALGEBRA"],
+        "blocked_leaves": ["Bernoulli KL API", "change-of-measure lemma", "confidence-set inversion"],
+    },
+    {
+        "id": "WEAPON-PRIMAL-DUAL-BWK",
+        "name": "primal-dual resource accounting for bandits with knapsacks",
+        "kind": "proof-inspiration",
+        "upper_planning_use": "Plan resource-constrained bandit proofs through budget traces, stopping times, and Lagrangian comparisons.",
+        "lower_agent_rule": "Expose budget feasibility and stopping-time assumptions as reusable contracts before final regret proof work.",
+        "source_cards": ["PPR-BADANIDIYURU-KLEINBERG-SLIVKINS-2013-BWK", "TXT-SLIVKINS-2019-2024"],
+        "direct_reuse_cards": ["MLIB-FINSET-SUMS", "MLIB-ORDER-ALGEBRA", "MLIB-MEASURE-INTEGRAL"],
+        "blocked_leaves": ["resource consumption trace", "budget stopping time", "dual feasibility"],
     },
 ]
 
@@ -1022,10 +1206,14 @@ def make_prompt_deck(run_dir: Path, task_id: str, cycle: int, lower_count: int) 
     conversion_text = read_optional(ROOT / "conversion-windows" / f"{task_id}.md", 12000)
     obligations_text = read_optional(ROOT / "proof-obligations" / f"{task_id}.md", 12000)
     memory_text = read_optional(RETRIEVAL_INDEX_DIR / f"{task_id}.json", 12000)
+    completion_text = read_optional(ROOT / "docs" / "completion_gap_audit.md", 14000)
+    adaptive_text = read_optional(ROOT / "docs" / "adaptive_harness_design.md", 14000)
+    foundation_leaf_text = read_optional(ROOT / "research-wiki" / "theory-tree" / "mathlib-foundation-leaf-map.md", 16000)
     mathlib_text = read_optional(RETRIEVAL_INDEX_DIR / "mathlib_bandit_cards.json", 10000)
     textbook_text = read_optional(RETRIEVAL_INDEX_DIR / "bandit_textbook_cards.json", 8000)
     paper_text = read_optional(RETRIEVAL_INDEX_DIR / "bandit_paper_cards.json", 10000)
     scenario_text = read_optional(RETRIEVAL_INDEX_DIR / "bandit_scenario_cards.json", 10000)
+    weapon_text = read_optional(RETRIEVAL_INDEX_DIR / "proof_weapon_cards.json", 10000)
     local_leaf_text = read_optional(RETRIEVAL_INDEX_DIR / "local_leaf_cards.json", 6000)
     local_decl_text = read_optional(RETRIEVAL_INDEX_DIR / "local_lean_declarations.json", 10000)
     context = f"""# Context
@@ -1044,6 +1232,18 @@ Lean gate: `lake build && lake build Tests`
 ## Proof Obligations
 
 {obligations_text or "_No proof obligation ledger found._"}
+
+## Completion Gap Audit
+
+{completion_text or "_No completion gap audit found._"}
+
+## Adaptive Harness Design
+
+{adaptive_text or "_No adaptive harness design found._"}
+
+## Mathlib Foundation Leaf Map
+
+{foundation_leaf_text or "_No foundation leaf map found._"}
 
 ## Retrieval Memory
 
@@ -1075,6 +1275,15 @@ Lean gate: `lake build && lake build Tests`
 {scenario_text or "{}"}
 ```
 
+## Proof Weapon Cards
+
+These cards are upper-layer route inspiration only.  They are not Lean proof
+certificates.
+
+```json
+{weapon_text or "{}"}
+```
+
 ## Local Compiled Leaf Cards
 
 ```json
@@ -1102,6 +1311,10 @@ Produce:
 4. any rejected routes or persistent-failure signals that must be written to
    memory.
 
+Use proof weapons only as route inspiration.  Ground the selected route in
+Mathlib/LML/local declarations or explicit proof obligations before assigning
+lower work.
+
 Do not ask lower agents to prove a theorem whose assumptions or source mapping
 are not in the conversion window.
 """
@@ -1114,6 +1327,10 @@ Synchronize task, conversion window, proof obligations, theorem-card memory,
 and Lean declarations.  Produce lower-agent packets with exact file scope,
 target declaration, dependencies, local APIs/imports, intended proof route,
 regularity contracts, Mathlib status, and gate.
+
+For each new leaf, decide whether the next worker should be Lean-direct,
+retrieval-first, or natural-language-prover-assisted.  Natural-language proof
+is useful only when it sharpens the Lean statement, assumptions, or route.
 """
     write_text(run_dir / "20_middle_formalizer.md", middle)
     prompts.append(run_dir / "20_middle_formalizer.md")
@@ -1126,7 +1343,9 @@ Work on exactly one assigned leaf.  If the leaf is under-specified, write the
 missing assumption or source mapping into the appropriate memory file instead
 of changing the theorem.  Do not frequently change the proof route; persistent
 failure is a signal to audit the statement or hypotheses.  If you edit Lean,
-run `lake build && lake build Tests`.
+run `lake build && lake build Tests`.  General measure, probability, order,
+finite-sum, concentration, or convexity leaves should be written as
+Mathlib-ready lemmas unless they are truly ABRL-specific wrappers.
 """
         path = run_dir / f"3{i}_lower_{i}.md"
         write_text(path, body)
@@ -1369,6 +1588,12 @@ def write_reference_indexes() -> list[Path]:
         "cards": BANDIT_SCENARIO_CARDS,
     }, indent=2) + "\n")
     paths.append(path)
+    path = RETRIEVAL_INDEX_DIR / "proof_weapon_cards.json"
+    write_text(path, json.dumps({
+        "generated": now_iso(),
+        "cards": PROOF_WEAPON_CARDS,
+    }, indent=2) + "\n")
+    paths.append(path)
     path = RETRIEVAL_INDEX_DIR / "local_leaf_cards.json"
     write_text(path, json.dumps({
         "generated": now_iso(),
@@ -1422,6 +1647,13 @@ def cmd_list_scenarios(_args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_list_weapons(_args: argparse.Namespace) -> int:
+    for card in PROOF_WEAPON_CARDS:
+        reuse = ", ".join(card["direct_reuse_cards"][:4])
+        print(f"{card['id']}: {card['name']} :: inspiration-only :: {reuse}")
+    return 0
+
+
 def cmd_list_lean_decls(args: argparse.Namespace) -> int:
     decls = scan_lean_declarations(include_tests=args.include_tests)
     query = args.query.lower()
@@ -1442,6 +1674,7 @@ def cmd_search_memory(args: argparse.Namespace) -> int:
         "textbook": BANDIT_TEXTBOOK_CARDS,
         "paper": BANDIT_PAPER_CARDS,
         "scenario": BANDIT_SCENARIO_CARDS,
+        "weapon": PROOF_WEAPON_CARDS,
         "local": LOCAL_LEAF_CARDS,
         "lean": scan_lean_declarations(),
     }
@@ -1472,6 +1705,9 @@ def cmd_blueprint_refresh(args: argparse.Namespace) -> int:
     task_text = read_optional(task_file(args.id), 14000)
     conversion_text = read_optional(ROOT / "conversion-windows" / f"{args.id}.md", 14000)
     obligations_text = read_optional(ROOT / "proof-obligations" / f"{args.id}.md", 14000)
+    completion_text = read_optional(ROOT / "docs" / "completion_gap_audit.md", 18000)
+    adaptive_text = read_optional(ROOT / "docs" / "adaptive_harness_design.md", 18000)
+    foundation_leaf_text = read_optional(ROOT / "research-wiki" / "theory-tree" / "mathlib-foundation-leaf-map.md", 22000)
     trials = [row for row in load_jsonl(TRIAL_LOG) if row.get("task") == args.id][-20:]
     text = f"""# Proof Blueprint: {args.id}
 
@@ -1488,6 +1724,18 @@ Generated: `{now_iso()}`
 ## Obligation Snapshot
 
 {obligations_text or "_No proof obligation ledger found._"}
+
+## Completion Gap Audit
+
+{completion_text or "_No completion gap audit found._"}
+
+## Adaptive Harness Design
+
+{adaptive_text or "_No adaptive harness design found._"}
+
+## Mathlib Foundation Leaf Map
+
+{foundation_leaf_text or "_No foundation leaf map found._"}
 
 ## Relevant LML Theorem Cards
 
@@ -1517,6 +1765,14 @@ Generated: `{now_iso()}`
 
 ```json
 {json.dumps(BANDIT_SCENARIO_CARDS, indent=2)}
+```
+
+## Proof Weapon Cards
+
+These cards are planning inspiration only.  They do not certify any theorem.
+
+```json
+{json.dumps(PROOF_WEAPON_CARDS, indent=2)}
 ```
 
 ## Local Compiled Leaf Cards
@@ -1562,6 +1818,7 @@ def cmd_memory_refresh(args: argparse.Namespace) -> int:
         "textbook_cards": BANDIT_TEXTBOOK_CARDS,
         "paper_cards": BANDIT_PAPER_CARDS,
         "scenario_cards": BANDIT_SCENARIO_CARDS,
+        "proof_weapon_cards": PROOF_WEAPON_CARDS,
         "local_leaf_cards": LOCAL_LEAF_CARDS,
         "local_lean_declarations": scan_lean_declarations(),
         "recent_trials": trials,
@@ -1571,9 +1828,14 @@ def cmd_memory_refresh(args: argparse.Namespace) -> int:
             "research-wiki/textbooks/bandit-classics.md",
             "research-wiki/papers/bandit-frontier-cards.md",
             "research-wiki/scenarios/bandit-scenario-atlas.md",
+            "research-wiki/proof-weapons/bandit-proof-weapons.md",
             "research-wiki/theory-tree/bandit-theory-tree.md",
+            "research-wiki/theory-tree/mathlib-foundation-leaf-map.md",
             "research-wiki/mathlib-candidates/",
             "research-wiki/mathlib-candidates/finite-bookkeeping-leaves.md",
+            "docs/completion_gap_audit.md",
+            "docs/adaptive_harness_design.md",
+            "docs/proof_export.md",
             "research-wiki/retrieval-index/local_lean_declarations.json",
             f"proof-attempts/{args.id}/",
             f"proof-obligations/{args.id}.md",
@@ -1775,7 +2037,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--file", default="")
     p.set_defaults(func=cmd_agent_note)
 
-    p = sub.add_parser("reference-index", help="refresh LML, Mathlib, textbook, paper, scenario, and local Lean indexes")
+    p = sub.add_parser("reference-index", help="refresh LML, Mathlib, textbook, paper, scenario, weapon, and local Lean indexes")
     p.set_defaults(func=cmd_reference_index)
 
     p = sub.add_parser("list-literature", help="list built-in theorem cards")
@@ -1790,13 +2052,16 @@ def build_parser() -> argparse.ArgumentParser:
     p = sub.add_parser("list-scenarios", help="list bandit scenario cards")
     p.set_defaults(func=cmd_list_scenarios)
 
+    p = sub.add_parser("list-weapons", help="list proof weapon inspiration cards")
+    p.set_defaults(func=cmd_list_weapons)
+
     p = sub.add_parser("list-lean-decls", help="list local Lean declarations")
     p.add_argument("query", nargs="?", default="")
     p.add_argument("--include-tests", action="store_true")
     p.add_argument("--statement", action="store_true", help="print compact declaration statements")
     p.set_defaults(func=cmd_list_lean_decls)
 
-    p = sub.add_parser("search-memory", help="search theorem, Mathlib, textbook, paper, scenario, local leaf, and Lean declaration cards")
+    p = sub.add_parser("search-memory", help="search theorem, Mathlib, textbook, paper, scenario, weapon, local leaf, and Lean declaration cards")
     p.add_argument("query")
     p.set_defaults(func=cmd_search_memory)
 

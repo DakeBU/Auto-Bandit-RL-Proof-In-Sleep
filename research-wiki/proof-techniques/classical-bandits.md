@@ -4,6 +4,12 @@ Source cards live in `research-wiki/textbooks/bandit-classics.md`; reusable
 Mathlib routes live in `research-wiki/mathlib/theorem-cards.md`; the broad
 proof tree lives in `research-wiki/theory-tree/bandit-theory-tree.md`.
 
+Proof techniques are route inspiration.  They should help upper agents explore
+several possible proof plans, but lower agents must receive concrete Lean
+statements, local APIs, Mathlib/LML retrieval cards, and proof-obligation
+leaves.  A technique name such as `UCB`, `Tsallis`, or `Hoeffding` is never a
+proof certificate.
+
 ## Regret Decomposition
 
 Typical stochastic finite-arm regret proofs factor through:
@@ -55,6 +61,25 @@ Blocking technologies:
 - tail-event measurability;
 - finite sum/integral exchange;
 - harmonic or summability bound for bad events.
+
+## Tsallis-INF And Best-Of-Both-Worlds FTRL
+
+Proof route inspiration:
+
+1. Define the probability simplex and a Tsallis entropy regularizer.
+2. State the FTRL/OMD one-step optimality inequality.
+3. Split regret into stability and penalty terms.
+4. Use self-bounding or corruption assumptions to convert adversarial regret
+   into stochastic/gap-dependent bounds.
+5. Discharge power-weight, simplex, and learning-rate algebra separately.
+
+Blocking technologies:
+
+- simplex and nonnegative weight API;
+- `Real.rpow`/`NNReal.rpow` algebra for Tsallis powers;
+- convexity/regularizer side conditions;
+- stability/penalty decomposition;
+- self-bounding regret conversion.
 
 ## Thompson Sampling
 
