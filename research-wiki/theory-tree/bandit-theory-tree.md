@@ -23,9 +23,9 @@ Bandit/RL theorem target
 | Branch | Leaf nodes | Current status |
 | --- | --- | --- |
 | Finite actions | `Fin K`, nonempty action set, finite policies, arm casts | dependency-light local core plus Mathlib card `MLIB-FINTYPE-FIN` |
-| Time traces | action traces, reward traces, histories, filtrations | local finite traces; filtrations are theorem-card/proof-obligation |
-| Pull counts | recursive count, monotonicity, split by arm/time, indicator sum bridge | compiled leaves in `BanditRLProof.LeafLemmas`; finite-sum bridge is Mathlib candidate |
-| Regret | pseudo-regret, gap decomposition, Bayesian regret, dynamic regret | compiled pseudo-regret leaves plus LML theorem cards |
+| Time traces | action traces, reward traces, histories, filtrations | local finite traces plus measurable action-event and indicator canaries; filtrations are theorem-card/proof-obligation |
+| Pull counts | recursive count, monotonicity, split by arm/time, finite-action partition, indicator sum bridge | compiled leaves in `BanditRLProof.LeafLemmas` plus `pullCount_eq_finset_filter_card` and `finset_sum_pullCount_eq_time` |
+| Regret | pseudo-regret, gap decomposition, Bayesian regret, dynamic regret | compiled pseudo-regret leaves plus deterministic `REGRET-PULLCOUNT`; Bayesian/expected regret remains theorem-card |
 | Reward models | rational mean surface, sub-Gaussian rewards, Bernoulli rewards, kernels | local rational surface; probability layer staged |
 | Resource models | budgets, consumption traces, stopping by budget | theorem-card via `SCN-RESOURCE-CONSTRAINED` and BwK paper card |
 | Preference models | pairwise preference matrices, winner notions, ranking regret | theorem-card via `SCN-DUELING-PREFERENCE` |
@@ -73,6 +73,7 @@ The first dependency-light compiled leaf library is
 - `sumRewards_const_of_ne`;
 - `sumRewards_add_eq_of_forall_ne_between`;
 - `FiniteBanditModel.bestMean_eq_mean_bestArm`;
+- `FiniteBanditModel.gap_bestArm`;
 - `FiniteBanditModel.gap_of_ne_bestArm`;
 - `pseudoRegret_one`;
 - `pseudoRegret_succ_of_bestArm`;
@@ -87,7 +88,77 @@ The first dependency-light compiled leaf library is
 The first compiled algorithm-wrapper leaves are:
 
 - `ETC.exploreArm_eq_of_mod_eq`;
+- `ETC.exploreArm_eq_iff_mod_eq_val`;
+- `ETC.exploreArm_add_K`;
 - `UCB.score_eq_empiricalMean`.
+
+The first compiled ETC trace-boundary leaves are:
+
+- `ETC.actionWithCommit`;
+- `ETC.actionWithCommit_eq_exploreArm_of_lt`.
+- `ETC.actionWithCommit_eq_commitArm_of_ge`.
+- `ETC.actionWithCommit_eq_bestArm_of_commitArm_eq_bestArm_of_explorationPulls_mul_K_le`.
+- `ETC.pullCount_actionWithCommit_eq_pullCount_exploreArm_of_le`.
+- `ETC.pullCount_actionWithCommit_explorationPulls_mul_K_eq`.
+- `ETC.pullCount_actionWithCommit_succ_eq_add_if_commitArm_of_ge`.
+- `ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq`.
+- `ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq_of_ne`.
+- `ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq_commitArm`.
+- `ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_le_sum_gap_mul_explorationPulls`.
+- `ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_suffix_count_budget`.
+- `ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_explorationPulls_add_suffix`.
+- `ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_eq_add_suffix_gap`.
+- `ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_eq_of_commitArm_eq_bestArm`.
+- `ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_explorationPulls_of_commitArm_eq_bestArm`.
+- `ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_explorationPulls_add_suffix_gap`.
+
+The first compiled Mathlib-backed finite wrappers are:
+
+- `pullCount_eq_finset_filter_card`;
+- `sumRewards_eq_finset_filter_sum`;
+- `pseudoRegret_eq_finset_sum`.
+
+The first compiled deterministic regret consumer is:
+
+- `pseudoRegret_eq_finset_sum_gap_mul_pullCount`.
+- `pseudoRegret_le_finset_sum_gap_mul_count_bound`.
+- `pseudoRegret_le_finset_sum_gap_mul_nat_count_bound`.
+- `pseudoRegret_le_sum_gap_mul_uniform_nat_count_bound`.
+
+The first compiled deterministic finite-action count partition is:
+
+- `finset_sum_pullCount_eq_time`.
+
+The first compiled finite-bandit model invariant is:
+
+- `FiniteBanditModel.gap_bestArm`.
+- `FiniteBanditModel.mean_le_bestArm_mean`.
+- `FiniteBanditModel.gap_nonneg`.
+
+The first compiled scalar and probability-facing measurable/integral canaries
+are:
+
+- `ENNReal.ofReal_finset_sum_mul_natCast_of_nonneg`.
+- `ENNReal.ofReal_pseudoRegret_eq_univ_sum_model_gap_ofReal_mul_natCast_pullCount_of_nonneg`.
+- `measurableSet_actionTrace_eval_eq`.
+- `measurable_actionTrace_eval_eq_indicator_const`.
+- `measurable_actionTrace_eval_eq_indicator_reward`.
+- `measurable_finset_sum_indicator_reward`.
+- `measurable_sumRewards`.
+- `measurable_pseudoRegret`.
+- `measurable_pullCount`.
+- `measurable_natCast_pullCount`.
+- `lintegral_actionTrace_eval_eq_indicator_one`.
+- `lintegral_finset_sum_actionTrace_eval_eq_indicator_one`.
+- `lintegral_natCast_pullCount_eq_sum_measure_actionTrace_eval_eq`.
+- `lintegral_finset_sum_gap_mul_natCast_pullCount_eq`.
+- `lintegral_natCast_pullCount_le_time`.
+- `lintegral_finset_sum_gap_mul_natCast_pullCount_le_sum_gap_mul_time`.
+- `lintegral_univ_sum_gap_mul_natCast_pullCount_le_sum_gap_mul_time`.
+- `lintegral_univ_sum_model_gap_ofReal_mul_natCast_pullCount_le_sum_model_gap_ofReal_mul_time`.
+- `lintegral_ofReal_pseudoRegret_le_sum_model_gap_ofReal_mul_time_of_nonneg`.
+- `lintegral_ofReal_pseudoRegret_le_sum_model_gap_ofReal_mul_time_of_rat_gap_nonneg`.
+- `lintegral_ofReal_pseudoRegret_le_sum_model_gap_ofReal_mul_time`.
 
 Future Mathlib-backed tasks should use these as local bridge lemmas, then
 replace or generalize them with Mathlib APIs when the dependency layer is
@@ -97,7 +168,7 @@ selected.
 
 | Branch | Immediate proof leaves | Source cards |
 | --- | --- | --- |
-| ETC | round-robin count, commit argmax, wrong-commit probability, pull-count after commit | `TXT-LATTIMORE-SZEPESVARI-2020`, LML `Bandits.ETC.regret_le` |
+| ETC | phase-splitting helper, deterministic ETC-only regret extension, commit argmax, wrong-commit probability, pull-count after commit | `TXT-LATTIMORE-SZEPESVARI-2020`, LML `Bandits.ETC.regret_le` |
 | UCB | positive initial counts, index maximization, good-event pull bound, tail union, regret sum | `TXT-BUBECK-CESABIANCHI-2012`, `TXT-LATTIMORE-SZEPESVARI-2020`, `PPR-AUER-CBF-2002-UCB1`, LML `Bandits.UCB.regret_le` |
 | KL-UCB | Bernoulli KL, confidence inversion, bounded stochastic reward contracts | `PPR-GARIVIER-CAPPE-2011-KLUCB`, `TXT-LATTIMORE-SZEPESVARI-2020` |
 | Thompson sampling | posterior action identity, Bayesian regret decomposition, clipped confidence bridge | `TXT-SLIVKINS-2019-2024`, `PPR-AGRAWAL-GOYAL-2011-TS`, LML `Bandits.TS.hasCondDistrib_action`, LML `Bandits.integral_regret_le` |

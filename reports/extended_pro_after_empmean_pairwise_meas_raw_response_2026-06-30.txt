@@ -1,0 +1,191 @@
+Pick: Candidate A
+
+The next leaf should be the finite existential wrong-mean event measurability theorem. It is directly aligned with the current probability bridge and closes the measurable-set side of the existing wrong-commit event.
+
+1. Exact Lean-facing statement
+lean
+theorem ETC.measurableSet_exists_ne_bestArm_empMean_ge_bestArm
+    {Omega : Type u} {K : Nat}
+    [MeasurableSpace Omega]
+    (model : FiniteBanditModel K)
+    (empMean : Omega -> Fin K -> Rat)
+    (hmeas_empMean :
+      forall a : Fin K, Measurable (fun omega : Omega => empMean omega a)) :
+    MeasurableSet {omega : Omega |
+      exists a : Fin K, (a = model.bestArm -> False) /\
+        empMean omega a >= empMean omega model.bestArm}
+
+I would not weaken to Candidate B. The non-best predicate is already part of the backlog target and should be discharged now while the local pairwise wrapper is fresh.
+
+2. Local APIs/imports
+
+The current imports should be sufficient:
+
+lean
+import Mathlib.MeasureTheory.Constructions.BorelSpace.Order
+import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
+import Mathlib.MeasureTheory.MeasurableSpace.Basic
+import Mathlib.MeasureTheory.MeasurableSpace.Instances
+import BanditRLProof.Core
+
+Relevant APIs/declarations:
+
+lean
+Finset.univ : Finset (Fin K)
+
+Finset.measurableSet_biUnion
+
+ETC.measurableSet_empMean_ge_empMean
+
+Likely no new import is needed if Finset.measurableSet_biUnion is already found under the current import closure.
+
+3. Intended proof route
+
+Use finite union over Finset.univ. For each arm a, prove measurability of:
+
+lean
+{omega : Omega | (a = model.bestArm -> False) /\
+  empMean omega a >= empMean omega model.bestArm}
+
+by case-splitting on a = model.bestArm.
+
+Recommended proof skeleton:
+
+lean
+theorem ETC.measurableSet_exists_ne_bestArm_empMean_ge_bestArm
+    {Omega : Type u} {K : Nat}
+    [MeasurableSpace Omega]
+    (model : FiniteBanditModel K)
+    (empMean : Omega -> Fin K -> Rat)
+    (hmeas_empMean :
+      forall a : Fin K, Measurable (fun omega : Omega => empMean omega a)) :
+    MeasurableSet {omega : Omega |
+      exists a : Fin K, (a = model.bestArm -> False) /\
+        empMean omega a >= empMean omega model.bestArm} := by
+  classical
+  change MeasurableSet
+    (⋃ a in (Finset.univ : Finset (Fin K)),
+      {omega : Omega | (a = model.bestArm -> False) /\
+        empMean omega a >= empMean omega model.bestArm})
+  refine Finset.measurableSet_biUnion _ ?_
+  intro a ha
+  by_cases h : a = model.bestArm
+  · simp [h]
+  · simpa [h] using
+      ETC.measurableSet_empMean_ge_empMean
+        empMean hmeas_empMean a model.bestArm
+
+If the exact change does not elaborate, replace it with an explicit extensional bridge:
+
+lean
+  have hset :
+      {omega : Omega |
+        exists a : Fin K, (a = model.bestArm -> False) /\
+          empMean omega a >= empMean omega model.bestArm}
+      =
+      (⋃ a in (Finset.univ : Finset (Fin K)),
+        {omega : Omega | (a = model.bestArm -> False) /\
+          empMean omega a >= empMean omega model.bestArm}) := by
+    ext omega
+    simp
+
+Then:
+
+lean
+  rw [hset]
+  refine Finset.measurableSet_biUnion _ ?_
+
+This version is more robust if Lean does not accept the direct change.
+
+4. Regularity contracts
+
+This leaf needs only:
+
+lean
+[MeasurableSpace Omega]
+
+and armwise measurability:
+
+lean
+hmeas_empMean :
+  forall a : Fin K, Measurable (fun omega : Omega => empMean omega a)
+
+It does not need:
+
+lean
+[MeasureTheory.IsProbabilityMeasure mu]
+[MeasurableSpace (Fin K)]
+[MeasurableSingletonClass (Fin K)]
+Measurable commitArm
+
+It also does not introduce concentration assumptions, stochastic-process assumptions, filtrations, independence, sub-Gaussianity, or probability-specific contracts.
+
+5. Retrieval evidence
+
+Local evidence supports Candidate A:
+
+lean
+Finset.measurableSet_biUnion
+
+is available from:
+
+lean
+Mathlib.MeasureTheory.MeasurableSpace.Defs
+
+The project already has the pairwise event wrapper:
+
+lean
+ETC.measurableSet_empMean_ge_empMean
+
+which gives the measurable comparison event:
+
+lean
+MeasurableSet {omega : Omega | empMean omega a >= empMean omega b}
+
+Using Finset.univ : Finset (Fin K) is also consistent with existing project style for finite arm enumeration.
+
+6. Status classification
+
+Project-local.
+
+This is not an imported theorem and not a good Mathlib candidate in its current form because it depends on the project-specific FiniteBanditModel and model.bestArm.
+
+It is also not theorem-card-only: the proof is a small finite-union measurability wrapper over an already compiled pairwise event.
+
+7. Failure policy
+
+If the direct change fails, use the explicit hset equality with ext omega; simp.
+
+If Finset.measurableSet_biUnion has a slightly different elaboration shape, try one of these forms:
+
+lean
+  exact Finset.measurableSet_biUnion _ (fun a ha => ...)
+
+or:
+
+lean
+  refine Finset.measurableSet_biUnion (Finset.univ : Finset (Fin K)) ?_
+
+If simp [h] does not close the best-arm case, replace it with an explicit empty-set proof:
+
+lean
+  · have hempty :
+        {omega : Omega | (a = model.bestArm -> False) /\
+          empMean omega a >= empMean omega model.bestArm}
+        = ∅ := by
+        ext omega
+        simp [h]
+    rw [hempty]
+    exact measurableSet_empty
+
+If the non-best case simpa [h] does not close, use explicit intersection:
+
+lean
+  · have hpair :
+        MeasurableSet {omega : Omega |
+          empMean omega a >= empMean omega model.bestArm} :=
+        ETC.measurableSet_empMean_ge_empMean
+          empMean hmeas_empMean a model.bestArm
+    simpa [h] using hpair
+
+Do not fall back to Candidate B unless Lean exposes an unexpected issue with rewriting the propositional guard. The mathematically correct next target remains Candidate A.

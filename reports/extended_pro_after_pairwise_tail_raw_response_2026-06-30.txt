@@ -1,0 +1,95 @@
+Batch review
+
+The completed ETC.prob_commitArm_ne_bestArm_le_sum_pairwise_tail batch was
+reasonable. It added a clean abstract consumer for future pairwise
+concentration lemmas without committing to Hoeffding, sub-Gaussianity,
+filtrations, or empirical-mean construction.
+
+No critical documentation/check step appears missing. The listed checks cover
+the relevant local build, test canary, declaration lookup, reference index,
+review status, global gate, and unfinished ledger. The only optional note is to
+record explicitly that the current consumer sums over all arms, including the
+best arm, so the next leaf tightens that interface.
+
+Pick: Candidate A, but use the if-zeroed univ-sum shape.
+
+Do not start the filtered Finset.filter version first. The lower-risk leaf is
+the analytically equivalent non-best wrapper:
+
+```lean
+(Finset.univ : Finset (Fin K)).sum
+  (fun a => if a = model.bestArm then 0 else tail a)
+```
+
+This avoids filter algebra while still making the best-arm contribution zero.
+A true filtered-sum theorem can be a follow-on leaf using Finset.sum_filter.
+
+Exact Lean-facing statement:
+
+```lean
+theorem ETC.prob_commitArm_ne_bestArm_le_sum_nonbest_pairwise_tail
+    {Omega : Type u} {K : Nat}
+    [MeasurableSpace Omega]
+    (mu : Measure Omega)
+    (model : FiniteBanditModel K)
+    (commitArm : Omega -> Fin K)
+    (empMean : Omega -> Fin K -> Rat)
+    (tail : Fin K -> ENNReal)
+    (hcommit_argmax :
+      forall omega : Omega, forall a : Fin K,
+        empMean omega a <= empMean omega (commitArm omega))
+    (hpair_tail :
+      forall a : Fin K, (a = model.bestArm -> False) ->
+        mu {omega : Omega |
+          empMean omega a >= empMean omega model.bestArm} <= tail a) :
+    mu {omega : Omega | commitArm omega = model.bestArm -> False} <=
+    (Finset.univ : Finset (Fin K)).sum
+      (fun a : Fin K => if a = model.bestArm then 0 else tail a)
+```
+
+Local APIs/imports:
+- Put it in `BanditRLProof/Algorithms/ETCMeasurability.lean`.
+- No new import should be needed.
+- Use `ETC.prob_commitArm_ne_bestArm_le_sum_wrong_mean_events`.
+- Use `Finset.sum_le_sum`, `MeasureTheory.measure_mono` or `mu.mono`,
+  `le_trans`, and `simp`.
+
+Intended proof route:
+1. Start from the compiled guarded-event sum wrapper.
+2. Use `Finset.sum_le_sum`.
+3. For `a = model.bestArm`, prove the guarded event is empty and close against
+   the zero branch.
+4. For `a != model.bestArm`, erase the guard by measure monotonicity and apply
+   `hpair_tail`.
+
+Regularity contracts:
+Required only: `[MeasurableSpace Omega]`, `mu : Measure Omega`,
+`model : FiniteBanditModel K`, `commitArm : Omega -> Fin K`,
+`empMean : Omega -> Fin K -> Rat`, `tail : Fin K -> ENNReal`,
+`hcommit_argmax`, and `hpair_tail`.
+
+Not required: probability measure, measurable `commitArm`, `hmeas_empMean`,
+event measurability, filtration, independence, sub-Gaussianity, Hoeffding, or
+empirical-mean construction.
+
+Retrieval evidence:
+- Local compiled declaration:
+  `ETC.prob_commitArm_ne_bestArm_le_sum_wrong_mean_events`
+- Mathlib/API facts:
+  `Finset.sum_le_sum`, `MeasureTheory.measure_mono`, `le_trans`, `simp`
+- The earlier finite-union theorem already encapsulates
+  `MeasureTheory.measure_biUnion_finset_le`; do not reopen it.
+
+Status:
+Project-local. It is not imported, not a Mathlib candidate, and not
+theorem-card-only.
+
+Failure policy:
+- If `simp [h]` does not close the best-arm branch, prove the guarded set is
+  empty explicitly by extensionality.
+- If `MeasureTheory.measure_mono` is unresolved, use the unqualified version or
+  `mu.mono`.
+- If Lean has trouble inferring summand functions, introduce a local
+  `Guard : Fin K -> Set Omega`.
+- Do not start empirical-mean construction, concentration route discovery, or
+  the filtered `Finset.filter` version in the same batch.

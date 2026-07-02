@@ -1,0 +1,78 @@
+Pick
+
+Candidate A: empirical-mean construction / denominator positivity.
+
+The next leaf should be a deterministic Nat positivity lemma for the ETC
+exploration count, not a full empirical-mean definition and not a
+concentration theorem-card. This preserves the current proof-engineering
+discipline: build the denominator contract before choosing Rat, Real, or
+ENNReal.ofReal.
+
+Candidate B is premature. The pairwise concentration card will need a stable
+empirical-mean object, a sampling model, independence/sub-Gaussian contracts,
+and a gap threshold. None of that should be fixed before the denominator/count
+layer is pinned.
+
+Exact Lean-facing statement:
+
+```lean
+theorem ETC.pullCount_actionWithCommit_explorationPulls_mul_K_pos
+    {K : Nat}
+    (spec : ETC.Spec K)
+    (commitArm : Fin K)
+    (a : Fin K)
+    (hexplorationPulls_pos : 0 < spec.explorationPulls) :
+    0 < pullCount (ETC.actionWithCommit spec commitArm) a
+      (spec.explorationPulls * K)
+```
+
+If placed inside namespace `ETC`, use the unqualified theorem name.
+
+Local APIs/imports:
+- Use `ETC.pullCount_actionWithCommit_explorationPulls_mul_K_eq`.
+- Place the theorem in the deterministic ETC trace/count file, not the
+  probability/measurability file.
+- No probability imports or new Mathlib imports should be necessary.
+
+Intended proof route:
+1. Rewrite the pull count with
+   `ETC.pullCount_actionWithCommit_explorationPulls_mul_K_eq`.
+2. The goal becomes `0 < spec.explorationPulls`.
+3. Close with `hexplorationPulls_pos`.
+
+Regularity contracts:
+Add exactly one mathematical contract:
+
+```lean
+(hexplorationPulls_pos : 0 < spec.explorationPulls)
+```
+
+Do not make this a field of `ETC.Spec` yet.  Do not add measurable spaces,
+measures, probability assumptions, `Rat`, `Real`, `ENNReal`, empirical means,
+casts, concentration assumptions, or `0 < K`.
+
+Retrieval evidence:
+- Local declaration: `ETC.pullCount_actionWithCommit_explorationPulls_mul_K_eq`.
+- Mathlib/core evidence: ordinary Nat positivity and future nonzero reasoning
+  such as `Nat.ne_zero_of_lt`.
+- No LML or concentration theorem is needed.
+
+Status:
+Project-local. It is not imported, not a port candidate, not a Mathlib
+candidate, and not theorem-card-only.
+
+Failure policy:
+- If the proof fails, only repair local elaboration.
+- Check the exact local statement with
+  `python3 tools/bandit.py list-lean-decls ETC.pullCount_actionWithCommit_explorationPulls_mul_K_eq --statement`.
+- If the equality theorem argument order differs, introduce a named `hcount`
+  and rewrite explicitly.
+- If the actionWithCommit equality is missing, fall back to the narrower
+  `ETC.pullCount_exploreArm_explorationPulls_mul_K_pos` leaf.
+- Stop after the positivity theorem compiles.
+
+Assessment:
+The filtered-sum pairwise-tail consumer was reasonable and the listed checks
+were sufficient.  Add a fresh review-status/progress note with boundary
+`ETC-PROB-WRONG-COMMIT-LE-FILTERED-SUM-PAIRWISE-TAIL` so the boundary ledger is
+synchronized.

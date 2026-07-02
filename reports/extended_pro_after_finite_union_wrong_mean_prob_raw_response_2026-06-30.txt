@@ -1,0 +1,192 @@
+Pick: Candidate A — final elementary event assembly
+
+This is the right next leaf. It is the last purely elementary probability-wrapper step before the proof DAG must branch into either empirical-mean construction or pairwise tail assumptions.
+
+Do not start Candidate B or Candidate C in the same batch.
+
+Exact Lean-facing statement
+lean
+theorem ETC.prob_commitArm_ne_bestArm_le_sum_wrong_mean_events
+    {Omega : Type u} {K : Nat}
+    [MeasurableSpace Omega]
+    (mu : Measure Omega)
+    (model : FiniteBanditModel K)
+    (commitArm : Omega -> Fin K)
+    (empMean : Omega -> Fin K -> Rat)
+    (hcommit_argmax :
+      forall omega : Omega, forall a : Fin K,
+        empMean omega a <= empMean omega (commitArm omega)) :
+    mu {omega : Omega | commitArm omega = model.bestArm -> False} <=
+    (Finset.univ : Finset (Fin K)).sum
+      (fun a : Fin K =>
+        mu {omega : Omega | (a = model.bestArm -> False) /\
+          empMean omega a >= empMean omega model.bestArm})
+Local APIs/imports
+
+No new import should be needed if this theorem is added after the already compiled leaves in:
+
+lean
+BanditRLProof/Algorithms/ETCMeasurability.lean
+
+Existing imports should suffice:
+
+lean
+import Mathlib.MeasureTheory.Constructions.BorelSpace.Order
+import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
+import Mathlib.MeasureTheory.MeasurableSpace.Basic
+import Mathlib.MeasureTheory.MeasurableSpace.Instances
+import BanditRLProof.Core
+
+If placed in a separate file, import the current wrapper file instead:
+
+lean
+import BanditRLProof.Algorithms.ETCMeasurability
+
+Main APIs/declarations:
+
+lean
+le_trans
+
+ETC.prob_commitArm_ne_bestArm_le_wrong_mean_events_of_subset
+ETC.prob_exists_ne_bestArm_empMean_ge_bestArm_le_sum
+
+No Finset or measure-union API needs to be reopened in this proof; those are already hidden inside the previous wrapper.
+
+Intended proof route
+
+Compose the two compiled inequalities:
+
+Wrong-commit event is bounded by the existential wrong-mean event:
+
+lean
+ETC.prob_commitArm_ne_bestArm_le_wrong_mean_events_of_subset
+
+Existential wrong-mean event is bounded by the finite sum over guarded pairwise events:
+
+lean
+ETC.prob_exists_ne_bestArm_empMean_ge_bestArm_le_sum
+
+Recommended proof:
+
+lean
+theorem ETC.prob_commitArm_ne_bestArm_le_sum_wrong_mean_events
+    {Omega : Type u} {K : Nat}
+    [MeasurableSpace Omega]
+    (mu : Measure Omega)
+    (model : FiniteBanditModel K)
+    (commitArm : Omega -> Fin K)
+    (empMean : Omega -> Fin K -> Rat)
+    (hcommit_argmax :
+      forall omega : Omega, forall a : Fin K,
+        empMean omega a <= empMean omega (commitArm omega)) :
+    mu {omega : Omega | commitArm omega = model.bestArm -> False} <=
+    (Finset.univ : Finset (Fin K)).sum
+      (fun a : Fin K =>
+        mu {omega : Omega | (a = model.bestArm -> False) /\
+          empMean omega a >= empMean omega model.bestArm}) := by
+  exact le_trans
+    (ETC.prob_commitArm_ne_bestArm_le_wrong_mean_events_of_subset
+      mu model commitArm empMean hcommit_argmax)
+    (ETC.prob_exists_ne_bestArm_empMean_ge_bestArm_le_sum
+      mu model empMean)
+
+If elaboration is brittle, use calc:
+
+lean
+  calc
+    mu {omega : Omega | commitArm omega = model.bestArm -> False}
+        <=
+        mu {omega : Omega |
+          exists a : Fin K, (a = model.bestArm -> False) /\
+            empMean omega a >= empMean omega model.bestArm} :=
+          ETC.prob_commitArm_ne_bestArm_le_wrong_mean_events_of_subset
+            mu model commitArm empMean hcommit_argmax
+    _ <=
+        (Finset.univ : Finset (Fin K)).sum
+          (fun a : Fin K =>
+            mu {omega : Omega | (a = model.bestArm -> False) /\
+              empMean omega a >= empMean omega model.bestArm}) :=
+          ETC.prob_exists_ne_bestArm_empMean_ge_bestArm_le_sum
+            mu model empMean
+
+The calc version is more readable and usually easier to debug.
+
+Regularity contracts
+
+Required:
+
+lean
+[MeasurableSpace Omega]
+(mu : Measure Omega)
+(model : FiniteBanditModel K)
+(commitArm : Omega -> Fin K)
+(empMean : Omega -> Fin K -> Rat)
+(hcommit_argmax :
+  forall omega : Omega, forall a : Fin K,
+    empMean omega a <= empMean omega (commitArm omega))
+
+Not required:
+
+lean
+[MeasureTheory.IsProbabilityMeasure mu]
+Measurable commitArm
+hmeas_empMean
+[MeasurableSpace (Fin K)]
+[MeasurableSingletonClass (Fin K)]
+
+This theorem is purely an inequality assembly. It does not require event measurability because both previous measure wrappers were already stated without needing it.
+
+Retrieval evidence from Mathlib/LML/local declarations
+
+Local compiled declarations used directly:
+
+lean
+ETC.prob_commitArm_ne_bestArm_le_wrong_mean_events_of_subset
+lean
+ETC.prob_exists_ne_bestArm_empMean_ge_bestArm_le_sum
+
+Mathlib/API dependency:
+
+lean
+le_trans
+
+The previous theorem already absorbed the use of:
+
+lean
+MeasureTheory.measure_biUnion_finset_le
+
+so this leaf should not need another call to measure-union machinery.
+
+Status classification
+
+Project-local.
+
+The proof is a direct composition of imported/order-theoretic machinery and local ETC-specific wrappers. It is not a Mathlib candidate because the statement depends on:
+
+lean
+FiniteBanditModel K
+model.bestArm
+commitArm
+empMean
+
+It is not theorem-card-only. It should compile as a small local Lean proof.
+
+Failure policy
+
+If positional arguments fail, switch to named arguments only if the compiled declarations expose names stably. First try the calc proof above.
+
+If the declaration namespace causes resolution issues, inspect with:
+
+Bash
+python3 tools\bandit.py list-lean-decls prob_commitArm_ne_bestArm_le_wrong_mean_events_of_subset --statement
+python3 tools\bandit.py list-lean-decls prob_exists_ne_bestArm_empMean_ge_bestArm_le_sum --statement
+
+Then call the exact fully qualified names reported by the tool.
+
+If le_trans fails because Lean does not infer the middle term, use the calc proof. The calc block pins the middle event explicitly and should avoid metavariable ambiguity.
+
+Do not start these in the same batch:
+
+Candidate B: empirical-mean construction / denominator positivity. This opens a new deterministic API surface around reward sums, division, and ETC exploration structure.
+
+Candidate C: pairwise tail wrapper. This should wait until the elementary assembly leaf is compiled, because it will introduce an abstract tail contract and likely an ENNReal-valued bound design.

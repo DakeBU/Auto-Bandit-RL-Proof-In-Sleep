@@ -85,14 +85,31 @@ measurability, nonemptiness, boundedness, and finiteness become reusable
 contracts instead of ad hoc proof clutter.
 
 The current completion status is intentionally transparent.  ABRL has a useful
-harness, retrieval memory, proof weapon layer, and compiled finite-bookkeeping
-leaves, but it does not yet contain the full Mathlib-backed measure,
+harness, retrieval memory, proof weapon layer, compiled finite-bookkeeping
+leaves, deterministic regret/count adapters, ETC round-robin count scaffolds,
+the basic fixed-commit ETC phase boundary, and the first phase-prefix
+pull-count, post-commit suffix count, and regret transfers, but it does not yet contain the full Mathlib-backed measure,
 probability, concentration, functional-inequality, and algorithm theorem
 library needed to reproduce the current textbook scope end-to-end.  See
 [`docs/completion_gap_audit.md`](docs/completion_gap_audit.md) for the current
 audit and
 [`research-wiki/theory-tree/mathlib-foundation-leaf-map.md`](research-wiki/theory-tree/mathlib-foundation-leaf-map.md)
 for the fine-grained leaf map from Mathlib foundations to bandit/RL theorems.
+At the current ETC post-oracle probability review boundary, print the Extended
+Pro prompt with `python3 tools/bandit.py extended-pro-prompt` and check whether
+a reviewer response has been recorded with
+`python3 tools/bandit.py review-status --require-response`.
+Use `python3 tools/bandit.py extended-pro-response-template` to print the
+response artifact template before pasting a manual Extended Pro result.
+If the raw answer is saved to a file, record it with
+`python3 tools/bandit.py extended-pro-record-response --raw PATH --output PATH`.
+Use `python3 tools/bandit.py extended-pro-handoff` to print the full manual
+submission packet.
+For automation, `python3 tools/bandit.py review-status --json` reports the
+same gate state in machine-readable form; template or incomplete response files
+do not satisfy `--require-response`.
+Use `--require-review-response` on `run-cycle` or `sleep-run` when an automatic
+run must stop before this reviewer boundary is cleared.
 
 For adaptive proof construction, ABRL separates proof weapons from proof
 dependencies.  Upper agents may use proof weapons such as UCB optimism,
@@ -120,9 +137,9 @@ records a mathematical reason to pivot.
 ![ABRL lemma dependency graph](docs/assets/lemma_dependency_graph.svg)
 
 The public Lean module layout mirrors the same contract: core finite
-bookkeeping stays dependency-light, while probability, concentration,
-posterior, RL, and asymptotic layers are staged as explicit future imports or
-proof-obligation surfaces.
+bookkeeping stays dependency-light, a thin Mathlib wrapper layer handles
+explicit interop leaves, and probability, concentration, posterior, RL, and
+asymptotic layers are staged as future proof-obligation surfaces.
 
 ![ABRL Lean module layout](docs/assets/lean_module_layout.svg)
 
@@ -164,6 +181,7 @@ and
 cd Auto-Bandit-RL-Proof-In-Sleep
 
 python3 tools/bandit.py check
+python3 tools/bandit.py unfinished
 python3 tools/bandit.py list-literature
 python3 tools/bandit.py list-mathlib
 python3 tools/bandit.py list-papers
@@ -195,6 +213,15 @@ lake build && lake build Tests
 `python3 tools/bandit.py check` runs that gate and scans local Lean files for
 placeholders such as `sorry`, `admit`, `axiom`, and `postulate`.
 
+For unfinished proof work, start from:
+
+```bash
+python3 tools/bandit.py unfinished
+```
+
+Then follow
+[`docs/collaborator_unfinished_work_guide.md`](docs/collaborator_unfinished_work_guide.md).
+
 ## Daily GitHub Push
 
 Use [`docs/daily_push.md`](docs/daily_push.md) for the day-to-day command
@@ -203,14 +230,40 @@ fine-grained `github_pat` interactively in the console.
 
 ## Lean Library Shape
 
-The current Lean package is dependency-light and compiles without Mathlib:
+The current Lean package pins Mathlib through Lake, while the core definitions
+and dependency-light leaves remain separated from Mathlib-specific wrappers:
 
 | Path | Purpose |
 | --- | --- |
 | `BanditRLProof/Core.lean` | finite action traces, pull counts, reward sums, finite mean models |
+| `BanditRLProof/FiniteBanditModelInvariants.lean` | compiled best-arm dominance and model-gap nonnegativity invariants for the local `FiniteBanditModel` selector |
+| `BanditRLProof/ScalarENNReal.lean` | scalar `ENNReal.ofReal` faithfulness leaves for nonnegative finite sums |
+| `BanditRLProof/ScalarPseudoRegret.lean` | pointwise scalar/model bridge from Rat pseudo-regret to the `ENNReal.ofReal` weighted pull-count expression under explicit gap nonnegativity |
 | `BanditRLProof/Regret.lean` | pseudo-regret surface and theorem-card records |
 | `BanditRLProof/LeafLemmas.lean` | compiled dependency-light leaf lemmas for pull counts, reward sums, gaps, and pseudo-regret |
+| `BanditRLProof/MathlibWrappers.lean` | compiled Mathlib wrapper leaves for pull counts, selected reward sums, and pseudo-regret over `Finset.range` |
+| `BanditRLProof/PullCountDecomposition.lean` | compiled finite-action count partition theorem for pull counts |
+| `BanditRLProof/RegretDecomposition.lean` | compiled deterministic regret decomposition into arm-indexed `gap * pullCount` sums |
+| `BanditRLProof/RegretCountBounds.lean` | compiled deterministic scaffolds converting Rat/Nat/uniform Nat pull-count bounds into pseudo-regret bounds |
+| `BanditRLProof/MeasureFoundation.lean` | first measurable action-event, pull-indicator, and selected-reward indicator canaries for the probability-facing layer |
+| `BanditRLProof/MeasurableSums.lean` | compiled finite-sum measurability bridge for selected-reward indicator contributions |
+| `BanditRLProof/MeasurableLocalQuantities.lean` | compiled measurability bridge for local recursive reward accumulators such as `sumRewards` |
+| `BanditRLProof/MeasurableRegret.lean` | compiled pseudo-regret random-variable measurability bridge before expectation |
+| `BanditRLProof/MeasurablePullCount.lean` | compiled pull-count random-variable measurability bridge before expected pull-count identities |
+| `BanditRLProof/MeasurablePullCountCast.lean` | compiled scalar-casted pull-count measurability bridge before expected pull-count identities |
+| `BanditRLProof/ExpectationFoundation.lean` | compiled `ENNReal` lower-integral action-event indicator canary |
+| `BanditRLProof/ExpectationSums.lean` | compiled `ENNReal` lower-integral finite-sum bridge for action-event indicators |
+| `BanditRLProof/ExpectationPullCount.lean` | compiled `ENNReal` lower-integral pull-count identity |
+| `BanditRLProof/ExpectationWeightedPullCount.lean` | compiled `ENNReal` lower-integral weighted pull-count bridge |
+| `BanditRLProof/ExpectationPullCountBounds.lean` | compiled probability-measure pull-count budget bound in `ENNReal` |
+| `BanditRLProof/ExpectationWeightedPullCountBounds.lean` | compiled probability-measure weighted pull-count budget bound in `ENNReal` |
+| `BanditRLProof/ExpectationFiniteBanditBounds.lean` | compiled `Fin K`/`Finset.univ` specialization of the weighted probability budget bound |
+| `BanditRLProof/ExpectationFiniteBanditModelBounds.lean` | compiled `ENNReal.ofReal` surrogate bound for `FiniteBanditModel.gap : Fin K -> Rat` |
+| `BanditRLProof/ExpectationPseudoRegretOfRealBounds.lean` | compiled lower-integral bound for `ENNReal.ofReal` pseudo-regret under explicit gap nonnegativity |
+| `BanditRLProof/ExpectationPseudoRegretRatBounds.lean` | Rat-level and model-derived gap nonnegativity adapters for the `ENNReal.ofReal` pseudo-regret lower-integral bound |
 | `BanditRLProof/Algorithms/ETC.lean` | Explore-Then-Commit proof-DAG surfaces |
+| `BanditRLProof/Algorithms/ETCTrace.lean` | compiled fixed-commit ETC phase-switching trace boundary for exploration and commit phases |
+| `BanditRLProof/Algorithms/ETCTraceCountLemmas.lean` | compiled exploration-prefix and exploration-horizon pull-count transfers for the fixed-commit ETC trace |
 | `BanditRLProof/Algorithms/UCB.lean` | UCB index proof-DAG surfaces |
 | `BanditRLProof/Algorithms/Thompson.lean` | Thompson sampling and Bayesian regret surfaces |
 | `BanditRLProof/Literature.lean` | upstream theorem-card registry |
@@ -239,6 +292,8 @@ memory files include:
 - `research-wiki/proof-techniques/lean-patterns.md`: Lean formalization patterns for finite actions, kernels, and sums.
 - `research-wiki/open-problems/bandit-proof-backlog.md`: unproved or partially mapped proof technology.
 - `research-wiki/mathlib-candidates/`: reusable leaf lemmas to prepare for upstream Mathlib contribution.
+- `docs/collaborator_unfinished_work_guide.md`: contributor entry point for
+  selecting one unfinished leaf and closing it without broad theorem drift.
 - `conversion-windows/` and `proof-obligations/`: task-local Lean/prose correspondence and active proof-DAG leaves.
 
 Only compiled local declarations enter certified memory.  Theorem cards from

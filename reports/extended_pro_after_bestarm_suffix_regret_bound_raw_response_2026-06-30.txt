@@ -1,0 +1,205 @@
+Pick
+
+Pick Candidate A: Best-Arm Commit Phase Trace Lemma.
+
+The fixed-commit deterministic regret layer is fairly saturated, but this trace lemma is still a small useful bridge before leaving deterministic ETC. It will later connect a successful/ideal commit event to the actual action trace:
+
+lean
+ETC.actionWithCommit spec commitArm t = model.bestArm
+
+after the exploration horizon.
+
+Candidate B is pure Finset/Rat algebra and likely more brittle. Candidate C is almost true conceptually, but this one small trace lemma is low-cost and useful enough to compile first.
+
+Leaf
+ETC-ACTION-WITH-COMMIT-BESTARM-COMMIT-PHASE
+Exact Lean-facing statement
+
+Add to:
+
+BanditRLProof/Algorithms/ETCTrace.lean
+
+after:
+
+lean
+ETC.actionWithCommit_eq_commitArm_of_ge
+lean
+namespace BanditRLProof
+
+namespace ETC
+
+theorem actionWithCommit_eq_bestArm_of_commitArm_eq_bestArm_of_explorationPulls_mul_K_le
+    {K : Nat}
+    (spec : ETC.Spec K) (model : FiniteBanditModel K)
+    (commitArm : Fin K) (t : Nat)
+    (hcommit : commitArm = model.bestArm)
+    (ht : spec.explorationPulls * K <= t) :
+    ETC.actionWithCommit spec commitArm t = model.bestArm := by
+  rw [ETC.actionWithCommit_eq_commitArm_of_ge
+    (spec := spec)
+    (commitArm := commitArm)
+    (t := t)
+    ht]
+  exact hcommit
+
+end ETC
+
+end BanditRLProof
+
+If the final equality orientation is brittle, use:
+
+lean
+  rw [ETC.actionWithCommit_eq_commitArm_of_ge
+    (spec := spec)
+    (commitArm := commitArm)
+    (t := t)
+    ht]
+  rw [hcommit]
+Imports and local APIs
+
+No new imports should be needed beyond the current ETCTrace.lean imports:
+
+lean
+import BanditRLProof.Core
+import BanditRLProof.Algorithms.ETC
+
+The theorem uses exactly:
+
+lean
+ETC.actionWithCommit_eq_commitArm_of_ge
+
+It should not import or use:
+
+lean
+ETCRegretLemmas
+ETCTraceCountLemmas
+RegretCountBounds
+pseudoRegret
+pullCount
+MeasureTheory
+ENNReal
+concentration files
+Intended proof route
+
+Use the compiled commit-phase trace theorem:
+
+lean
+ETC.actionWithCommit_eq_commitArm_of_ge
+
+to rewrite:
+
+lean
+ETC.actionWithCommit spec commitArm t
+
+to:
+
+lean
+commitArm
+
+Rewrite with:
+
+lean
+hcommit : commitArm = model.bestArm
+
+No induction, no count reasoning, no regret reasoning.
+
+Regularity contracts
+
+Require only:
+
+lean
+{K : Nat}
+(spec : ETC.Spec K)
+(model : FiniteBanditModel K)
+(commitArm : Fin K)
+(t : Nat)
+(hcommit : commitArm = model.bestArm)
+(ht : spec.explorationPulls * K <= t)
+
+Do not add:
+
+lean
+0 < K
+Measure
+MeasurableSpace
+IsProbabilityMeasure
+ENNReal
+Real
+Integrable
+Filtration
+SubGaussian
+Empirical mean assumptions
+Concentration assumptions
+
+spec.hK : 0 < K is already inside ETC.Spec K.
+
+Retrieval evidence
+
+Local declaration consumed:
+
+lean
+ETC.actionWithCommit_eq_commitArm_of_ge
+
+Local objects referenced:
+
+lean
+ETC.actionWithCommit
+FiniteBanditModel.bestArm
+
+No Mathlib-specific theorem is needed beyond ordinary rw.
+
+Classification
+
+Classify it as:
+
+ETC-ACTION-WITH-COMMIT-BESTARM-COMMIT-PHASE:
+  project-local compiled ETC deterministic trace-boundary leaf
+
+It is not:
+
+imported
+port candidate
+Mathlib candidate
+theorem-card-only
+probability/concentration leaf
+empirical-mean leaf
+final ETC theorem
+Failure policy
+
+If this leaf fails:
+
+Confirm it is placed after:
+
+lean
+ETC.actionWithCommit_eq_commitArm_of_ge
+
+If namespace resolution is brittle, fully qualify:
+
+lean
+BanditRLProof.ETC.actionWithCommit_eq_commitArm_of_ge
+
+If the equality orientation causes trouble, replace exact hcommit with:
+
+lean
+simpa [hcommit]
+
+or:
+
+lean
+subst commitArm
+simp [ETC.actionWithCommit_eq_commitArm_of_ge spec model.bestArm ht]
+
+Do not import regret/count/probability/concentration files into ETCTrace.lean.
+
+Do not prove Candidate B in the same batch.
+
+Do not move to empirical means, commit argmax, probability, concentration, filtration, conditional expectation, or final ETC theorem work in this batch.
+
+Mark complete only after:
+
+Bash
+python3 tools/bandit.py check
+
+passes.
+
+After this, pause again. The deterministic fixed-commit layer will be close to saturated; the next review should decide whether to stop deterministic ETC scaffolding or start the first explicit theorem-card-to-Lean design for commit correctness/concentration.

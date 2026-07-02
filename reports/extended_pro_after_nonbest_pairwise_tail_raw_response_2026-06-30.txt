@@ -1,0 +1,84 @@
+Pick
+
+Candidate A: true filtered-sum normalization.
+
+This is the right next leaf. The if-zeroed theorem already proves the
+substantive probability bound; the remaining step is a finite-sum presentation
+normalization. It is still project-local, small, and purely algebraic over
+Finset, not concentration or empirical-mean construction.
+
+The completed if-zeroed nonbest pairwise-tail consumer was a reasonable step:
+it avoided spending a batch on Finset.filter plumbing while closing the
+probability consumer shape. Now that the bound is compiled, normalizing the
+RHS is safe and useful.
+
+Exact Lean-facing statement:
+
+```lean
+theorem ETC.prob_commitArm_ne_bestArm_le_filtered_sum_pairwise_tail
+    {Omega : Type u} {K : Nat}
+    [MeasurableSpace Omega]
+    (mu : Measure Omega)
+    (model : FiniteBanditModel K)
+    (commitArm : Omega -> Fin K)
+    (empMean : Omega -> Fin K -> Rat)
+    (tail : Fin K -> ENNReal)
+    (hcommit_argmax :
+      forall omega : Omega, forall a : Fin K,
+        empMean omega a <= empMean omega (commitArm omega))
+    (hpair_tail :
+      forall a : Fin K, (a = model.bestArm -> False) ->
+        mu {omega : Omega |
+          empMean omega a >= empMean omega model.bestArm} <= tail a) :
+    mu {omega : Omega | commitArm omega = model.bestArm -> False} <=
+    ((Finset.univ : Finset (Fin K)).filter
+      (fun a : Fin K => a = model.bestArm -> False)).sum tail
+```
+
+Local APIs/imports:
+- Use `ETC.prob_commitArm_ne_bestArm_le_sum_nonbest_pairwise_tail`.
+- Use `Finset.sum_filter` and `Finset.sum_congr`.
+- No new import is likely needed in `ETCMeasurability.lean`; if the
+  big-operator lemmas are not exposed, add
+  `import Mathlib.Algebra.BigOperators.Group.Finset`.
+
+Proof route:
+1. Invoke the compiled if-zeroed theorem to get `hbound`.
+2. Prove the RHS equality between
+   `Finset.univ.sum (fun a => if a = model.bestArm then 0 else tail a)`
+   and
+   `((Finset.univ : Finset (Fin K)).filter
+     (fun a => a = model.bestArm -> False)).sum tail`.
+3. Use `Finset.sum_filter`, `Finset.sum_congr`, and a `by_cases` split on
+   `a = model.bestArm`.
+4. Rewrite `hbound` by the equality.
+
+Regularity contracts:
+Do not add `hmeas_commit`, `hmeas_empMean`, event measurability,
+`[MeasurableSpace (Fin K)]`, `[MeasurableSingletonClass (Fin K)]`,
+`[MeasureTheory.IsProbabilityMeasure mu]`, `FiniteMeasure mu`, or `K > 0`.
+Do not introduce empirical-mean definitions, denominator positivity,
+concentration assumptions, or a new tail formula.  The only extra proof-local
+device should be `classical`.
+
+Retrieval evidence:
+- The compiled local theorem
+  `ETC.prob_commitArm_ne_bestArm_le_sum_nonbest_pairwise_tail` already has the
+  same left-hand side, assumptions, and if-zeroed RHS.
+- `Finset.sum_filter` is the Mathlib bridge from a filtered finite sum to an
+  if/indicator finite sum.
+- No LML or concentration theorem is needed.
+
+Status:
+Project-local.  This is not theorem-card-only.
+
+Failure policy:
+- Repair only finite-sum normalization if the proof fails.
+- If `rw [Finset.sum_filter]` rewrites in the wrong direction, reverse the
+  equality or use `symm`.
+- If `simp [h]` does not simplify the implication predicate, make the
+  non-best proof explicit.
+- If `Finset.sum_filter` is not found, add the narrow big-operators Finset
+  import.
+- Stop after this theorem compiles. Do not proceed to denominator positivity or
+  concentration in the same batch.

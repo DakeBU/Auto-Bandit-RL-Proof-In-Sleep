@@ -135,6 +135,25 @@ theorem pullCount_add_eq_add_of_forall_eq_between (n : Nat)
         h s hts (Nat.lt_trans hsn (Nat.lt_succ_self (t + n))))]
       rw [Nat.add_assoc]
 
+/--
+The recursive pull count equals the number of matching actions in the
+half-open time prefix `0, ..., t - 1`.
+
+This is intentionally a dependency-light `List.range` bridge.  The Mathlib
+`Finset.range` cardinality wrapper is a separate downstream leaf.
+-/
+theorem pullCount_eq_list_filter_length :
+    pullCount action a t =
+      ((List.range t).filter (fun s : Nat => decide (action s = a))).length := by
+  induction t with
+  | zero =>
+      simp [pullCount]
+  | succ t ih =>
+      rw [pullCount_succ, ih]
+      by_cases h : action t = a
+      · simp [List.range_succ, h]
+      · simp [List.range_succ, h]
+
 end PullCount
 
 section SumRewards
@@ -183,6 +202,45 @@ theorem sumRewards_add_eq_of_forall_ne_between (hzero : ∀ x : Reward, x + 0 = 
         (h (t + n) (Nat.le_add_right t n) (Nat.lt_succ_self (t + n)))]
       exact ih (fun s hts hsn =>
         h s hts (Nat.lt_trans hsn (Nat.lt_succ_self (t + n))))
+
+/--
+The recursive reward sum equals a left fold over the half-open time prefix.
+
+This bridge deliberately keeps the false-branch `+ 0` steps in the fold, so it
+does not require additive laws beyond the weak assumptions used by `sumRewards`.
+-/
+theorem sumRewards_eq_list_range_foldl :
+    sumRewards action reward a t =
+      (List.range t).foldl
+        (fun acc s => acc + if action s = a then reward s else 0)
+        0 := by
+  induction t with
+  | zero =>
+      simp [sumRewards]
+  | succ t ih =>
+      simp [sumRewards, List.range_succ, List.foldl_append, ih]
+
+/--
+The reward sum can also drop nonmatching time steps from the list fold when
+the accumulator has a right-zero law.
+
+This is still dependency-light: it uses `List.range` and `List.filter`, not a
+Mathlib `Finset` sum.
+-/
+theorem sumRewards_eq_list_range_filter_foldl
+    (hzero : ∀ x : Reward, x + 0 = x) :
+    sumRewards action reward a t =
+      ((List.range t).filter (fun s : Nat => decide (action s = a))).foldl
+        (fun acc s => acc + reward s)
+        0 := by
+  induction t with
+  | zero =>
+      simp [sumRewards]
+  | succ t ih =>
+      rw [sumRewards_succ, ih]
+      by_cases h : action t = a
+      · simp [List.range_succ, List.foldl_append, h]
+      · simp [List.range_succ, h, hzero]
 
 end SumRewards
 
@@ -270,6 +328,23 @@ theorem pseudoRegret_add_eq_of_forall_gap_zero_between (n : Nat)
         (h (t + n) (Nat.le_add_right t n) (Nat.lt_succ_self (t + n)))]
       exact ih (fun s hts hsn =>
         h s hts (Nat.lt_trans hsn (Nat.lt_succ_self (t + n))))
+
+/--
+The recursive pseudo-regret equals a left fold over the half-open time prefix.
+
+This is the dependency-light `List.range` bridge for the Rat-valued regret
+accumulator.  It matches the recursive bracketing directly.
+-/
+theorem pseudoRegret_eq_list_range_foldl :
+    pseudoRegret model action t =
+      (List.range t).foldl
+        (fun acc s => acc + model.gap (action s))
+        0 := by
+  induction t with
+  | zero =>
+      simp [pseudoRegret]
+  | succ t ih =>
+      simp [pseudoRegret_succ, List.range_succ, List.foldl_append, ih]
 
 end Regret
 

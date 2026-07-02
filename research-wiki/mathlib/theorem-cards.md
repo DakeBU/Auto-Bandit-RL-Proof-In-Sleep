@@ -17,12 +17,12 @@ python3 tools/bandit.py list-lean-decls pullCount
 
 | Card | Mathlib modules | Search terms | Bandit/RL use |
 | --- | --- | --- | --- |
-| `MLIB-FINSET-SUMS` | `Mathlib.Data.Finset.Basic`, `Mathlib.Algebra.BigOperators.Fin` | `Finset.sum`, `Finset.range`, `sum_filter`, `sum_congr`, `card_filter` | pull-count decomposition, finite action sums, indicator partitions |
+| `MLIB-FINSET-SUMS` | `Mathlib.Data.Finset.Basic`, `Mathlib.Data.Finset.Card`, `Mathlib.Algebra.BigOperators.Group.Finset.Basic`, `Mathlib.Algebra.Field.Rat` | `Finset.sum`, `Finset.range`, `Finset.card`, `Finset.sum_range_succ`, `Finset.filter_insert`, `sum_filter`, `sum_congr`, `card_filter` | pull-count decomposition, finite action sums, indicator partitions |
 | `MLIB-FINTYPE-FIN` | `Mathlib.Data.Fintype.Basic`, `Mathlib.Data.Fin.Basic` | `Fintype.card`, `Fin`, `Finite`, `Nonempty`, `Fin.cast` | finite arms, nonempty action sets, finite policies |
 | `MLIB-ORDER-ALGEBRA` | `Mathlib.Algebra.Order.Field.Basic`, `Mathlib.Data.Real.Basic` | `div_le_iff`, `mul_le_mul`, `Nat.cast_pos`, `linarith`, `nlinarith` | gap positivity, UCB radius algebra, denominator side conditions |
 | `MLIB-REAL-LOG-SQRT` | `Mathlib.Analysis.SpecialFunctions.Log.Basic`, `Mathlib.Data.Real.Sqrt` | `Real.log`, `Real.sqrt`, `sq_sqrt`, `log_nonneg`, `sqrt_le_sqrt` | UCB confidence widths and logarithmic regret |
 | `MLIB-EXP-LOG-INEQUALITIES` | `Mathlib.Analysis.SpecialFunctions.Log.Basic` | `Real.exp`, `Real.log`, `exp_le_exp`, `log_le_iff_le_exp`, `rpow` | exponential weights, Chernoff routes, KL-UCB algebra |
-| `MLIB-MEASURE-INTEGRAL` | `Mathlib.MeasureTheory.Integral.Bochner.Basic` | `Integrable`, `integral`, `lintegral`, `AEStronglyMeasurable`, `AEMeasurable` | expectations, Bayesian regret, integrability contracts |
+| `MLIB-MEASURE-INTEGRAL` | `Mathlib.MeasureTheory.MeasurableSpace.Basic`; `Mathlib.MeasureTheory.Integral.Bochner.Basic` | `Measurable`, `MeasurableSet`, `MeasurableSingletonClass`, `MeasurableSet.singleton`, `Measurable.indicator`, `Integrable`, `integral`, `lintegral`, `AEStronglyMeasurable`, `AEMeasurable` | measurable action-event and indicator canaries, expectations, Bayesian regret, integrability contracts |
 | `MLIB-PROBABILITY-INDEPENDENCE` | `Mathlib.Probability.Independence.Basic` | `IndepFun`, `iIndepFun`, `IndepSet`, `IdentDistrib` | IID rewards, product events, concentration theorem assumptions |
 | `MLIB-CONDITIONAL-EXPECTATION` | `Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic` | `condexp`, `filtration`, `adapted`, `martingale`, `stoppingTime` | adaptive rewards, posterior identities, martingale concentration |
 | `MLIB-MARTINGALE-STOCHASTIC` | `Mathlib.Probability.Martingale.Basic`, `Mathlib.Probability.Notation` | `Martingale`, `Submartingale`, `Supermartingale`, `filtration`, `stoppingTime` | self-normalized processes, delayed feedback, finite-horizon RL regret |

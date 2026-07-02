@@ -52,5 +52,6 @@ After a run:
 python3 tools/bandit.py trial-summary
 python3 tools/bandit.py memory-refresh TASK_ID --run-id latest
 python3 tools/bandit.py blueprint-refresh TASK_ID
+python3 tools/bandit.py unfinished
 python3 tools/bandit.py check
 ```

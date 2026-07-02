@@ -1,0 +1,74 @@
+Extended Pro response after boundary ETC-PROB-WRONG-COMMIT-LE-SUM-WRONG-MEAN-EVENTS.
+
+Prompt file:
+reports/extended_pro_after_wrong_commit_sum_assembly_candidate_prompt_2026-06-30.md
+
+Browser handoff:
+The in-app browser was attempted first, but the long prompt paste timed out.
+Chrome was used as the fallback for the same ChatGPT thread:
+https://chatgpt.com/c/6a42db09-187c-83ee-b2d4-23336db2e341
+
+Decision:
+Pick Candidate A: the abstract unguarded pairwise-tail wrapper.
+
+Reason:
+It is the cleanest next local leaf after
+ETC.prob_commitArm_ne_bestArm_le_sum_wrong_mean_events. It introduces the
+future concentration-theorem interface while proving no Hoeffding,
+sub-Gaussian, filtration, independence, or empirical-mean theorem. Candidate C
+is a later sharpening, and Candidate B should wait because denominator and
+empirical-mean construction decisions are a separate design boundary.
+
+Exact Lean-facing statement:
+
+theorem ETC.prob_commitArm_ne_bestArm_le_sum_pairwise_tail
+    {Omega : Type u} {K : Nat}
+    [MeasurableSpace Omega]
+    (mu : Measure Omega)
+    (model : FiniteBanditModel K)
+    (commitArm : Omega -> Fin K)
+    (empMean : Omega -> Fin K -> Rat)
+    (tail : Fin K -> ENNReal)
+    (hcommit_argmax :
+      forall omega : Omega, forall a : Fin K,
+        empMean omega a <= empMean omega (commitArm omega))
+    (hpair_tail :
+      forall a : Fin K, (a = model.bestArm -> False) ->
+        mu {omega : Omega |
+          empMean omega a >= empMean omega model.bestArm} <= tail a) :
+    mu {omega : Omega | commitArm omega = model.bestArm -> False} <=
+    (Finset.univ : Finset (Fin K)).sum tail
+
+Local APIs/imports:
+- Put it in BanditRLProof/Algorithms/ETCMeasurability.lean.
+- Existing imports should suffice; if ENNReal is unresolved, add a Mathlib
+  ENNReal import.
+- Use the local theorem
+  ETC.prob_commitArm_ne_bestArm_le_sum_wrong_mean_events.
+- Use Finset.sum_le_sum, le_trans, measure monotonicity, and simp.
+
+Intended proof route:
+1. Apply ETC.prob_commitArm_ne_bestArm_le_sum_wrong_mean_events to bound the
+   wrong-commit event by the finite sum of guarded pairwise wrong-mean event
+   measures.
+2. Use Finset.sum_le_sum.
+3. For a = model.bestArm, prove the guarded event is empty.
+4. For a != model.bestArm, use measure monotonicity to forget the guard and
+   then apply hpair_tail.
+
+Regularity contracts:
+The theorem should assume only an arbitrary measure, the commit-arm empirical
+argmax property, and abstract pairwise tail assumptions for non-best arms. Do
+not require probability measure instances, measurability of commitArm,
+measurability of empMean, event measurability, filtrations, independence,
+sub-Gaussian assumptions, or Hoeffding.
+
+Status:
+Project-local. This is not theorem-card-only and not an import route.
+
+Failure policy:
+- If simp does not close the best-arm empty-event branch, prove the set equals
+  empty explicitly by extensionality.
+- If the subset coercion does not infer automatically in the non-best branch,
+  introduce an explicit hsubset and use mu.mono hsubset.
+- Do not begin Candidate B or Candidate C in the same batch.

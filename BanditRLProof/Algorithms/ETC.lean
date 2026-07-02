@@ -25,6 +25,20 @@ theorem exploreArm_eq_of_mod_eq (spec : Spec K) {s t : Nat}
   apply Fin.ext
   exact h
 
+theorem exploreArm_eq_iff_mod_eq_val (spec : Spec K) (t : Nat) (a : Fin K) :
+    exploreArm spec t = a ↔ t % K = a.val := by
+  constructor
+  · intro h
+    simpa [exploreArm_val] using congrArg Fin.val h
+  · intro h
+    apply Fin.ext
+    simpa [exploreArm_val] using h
+
+theorem exploreArm_add_K (spec : Spec K) (t : Nat) :
+    exploreArm spec (t + K) = exploreArm spec t := by
+  apply exploreArm_eq_of_mod_eq
+  simp
+
 /-- Commit-phase selector.  A concrete theorem should replace this by argmax. -/
 structure CommitOracle (K : Nat) where
   choose : (Fin K → Rat) → Fin K

@@ -1,6 +1,6 @@
 {
   "task": "BRL-UCB-PORT-001",
-  "generated": "2026-06-27T04:58:26+00:00",
+  "generated": "2026-06-29T15:32:12+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -58,11 +58,15 @@
     {
       "id": "MLIB-FINSET-SUMS",
       "source": "Mathlib",
-      "module": "Mathlib.Data.Finset.Basic; Mathlib.Algebra.BigOperators.Fin",
+      "module": "Mathlib.Data.Finset.Basic; Mathlib.Data.Finset.Card; Mathlib.Algebra.BigOperators.Group.Finset.Basic; Mathlib.Algebra.Field.Rat",
       "docs": "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Finset/Basic.html",
       "query_terms": [
         "Finset.sum",
         "Finset.range",
+        "Finset.card",
+        "Finset.sum_range_succ",
+        "Finset.range_add_one",
+        "Finset.filter_insert",
         "sum_filter",
         "sum_congr",
         "card_filter"
@@ -133,16 +137,21 @@
     {
       "id": "MLIB-MEASURE-INTEGRAL",
       "source": "Mathlib",
-      "module": "Mathlib.MeasureTheory.Integral.Bochner.Basic",
-      "docs": "https://leanprover-community.github.io/mathlib4_docs/Mathlib/MeasureTheory/Integral/Bochner/Basic.html",
+      "module": "Mathlib.MeasureTheory.MeasurableSpace.Basic; Mathlib.MeasureTheory.Integral.Bochner.Basic",
+      "docs": "https://leanprover-community.github.io/mathlib4_docs/Mathlib/MeasureTheory/MeasurableSpace/Basic.html",
       "query_terms": [
+        "Measurable",
+        "MeasurableSet",
+        "MeasurableSingletonClass",
+        "MeasurableSet.singleton",
+        "Measurable.indicator",
         "Integrable",
         "lintegral",
         "integral",
         "AEStronglyMeasurable",
         "AEMeasurable"
       ],
-      "role": "Expected regret, Bayesian regret, integrability contracts, and expectation linearity routes.",
+      "role": "Measurable-space canaries, expected regret, Bayesian regret, integrability contracts, and expectation linearity routes.",
       "status": "import-candidate"
     },
     {
@@ -1414,11 +1423,14 @@
         "pullCount_const_of_ne",
         "pullCount_add_eq_of_forall_ne_between",
         "pullCount_add_eq_add_of_forall_eq_between",
+        "pullCount_eq_list_filter_length",
         "sumRewards_succ_of_eq",
         "sumRewards_succ_of_ne",
         "sumRewards_eq_zero_of_forall_ne",
         "sumRewards_const_of_ne",
         "sumRewards_add_eq_of_forall_ne_between",
+        "sumRewards_eq_list_range_foldl",
+        "sumRewards_eq_list_range_filter_foldl",
         "FiniteBanditModel.bestMean_eq_mean_bestArm",
         "FiniteBanditModel.gap_of_ne_bestArm",
         "pseudoRegret_one",
@@ -1429,7 +1441,8 @@
         "pseudoRegret_const_bestArm",
         "pseudoRegret_const_of_gap_zero",
         "pseudoRegret_add_eq_of_forall_bestArm_between",
-        "pseudoRegret_add_eq_of_forall_gap_zero_between"
+        "pseudoRegret_add_eq_of_forall_gap_zero_between",
+        "pseudoRegret_eq_list_range_foldl"
       ],
       "role": "Compiled dependency-light bridge leaves for pull counts, segment counts, reward sums, gaps, and pseudo-regret.",
       "mathlib_routes": [
@@ -1439,16 +1452,432 @@
       ]
     },
     {
+      "id": "LOCAL-LEAF-FINITE-BANDIT-MODEL-INVARIANTS",
+      "leaf_ids": [
+        "FINITE-BANDIT-BESTARM-DOMINATES",
+        "FINITE-BANDIT-GAP-NONNEG"
+      ],
+      "module": "BanditRLProof.FiniteBanditModelInvariants",
+      "status": "leanCompiled",
+      "declarations": [
+        "FiniteBanditModel.mean_le_bestArm_mean",
+        "FiniteBanditModel.gap_nonneg"
+      ],
+      "role": "Compiled best-arm dominance and model-gap nonnegativity invariants for the local FiniteBanditModel selector.",
+      "mathlib_routes": [
+        "MLIB-FINTYPE-FIN",
+        "MLIB-ORDER-ALGEBRA"
+      ]
+    },
+    {
       "id": "LOCAL-LEAF-ALGORITHM-WRAPPERS",
+      "leaf_ids": [
+        "ETC-EXPLOREARM-EQ-IFF-MOD",
+        "ETC-EXPLOREARM-ADD-K"
+      ],
       "module": "BanditRLProof.Algorithms.ETC; BanditRLProof.Algorithms.UCB",
       "status": "leanCompiled",
       "declarations": [
         "ETC.exploreArm_eq_of_mod_eq",
+        "ETC.exploreArm_eq_iff_mod_eq_val",
+        "ETC.exploreArm_add_K",
         "UCB.score_eq_empiricalMean"
       ],
-      "role": "Compiled dependency-light wrapper leaves for current ETC and UCB surfaces.",
+      "role": "Compiled dependency-light wrapper leaves for current ETC and UCB surfaces, including ETC modular round-robin helpers.",
       "mathlib_routes": [
         "MLIB-FINTYPE-FIN",
+        "MLIB-ORDER-ALGEBRA"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-ETC-TRACE",
+      "leaf_ids": [
+        "ETC-ACTION-WITH-COMMIT-EXPLORE-PHASE",
+        "ETC-ACTION-WITH-COMMIT-COMMIT-PHASE"
+      ],
+      "module": "BanditRLProof.Algorithms.ETCTrace",
+      "status": "leanCompiled",
+      "declarations": [
+        "ETC.actionWithCommit",
+        "ETC.actionWithCommit_eq_exploreArm_of_lt",
+        "ETC.actionWithCommit_eq_commitArm_of_ge"
+      ],
+      "role": "Compiled project-local ETC phase-switching trace boundary: a commit-arm-parametric trace agrees with round-robin exploration during the configured exploration prefix and with the commit arm after that horizon.",
+      "mathlib_routes": [
+        "MLIB-FINTYPE-FIN"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-ETC-TRACE-COUNT",
+      "leaf_ids": [
+        "ETC-ACTION-WITH-COMMIT-EXPLORE-PREFIX-PULLCOUNT",
+        "ETC-ACTION-WITH-COMMIT-EXPLORATION-HORIZON-COUNT",
+        "ETC-ACTION-WITH-COMMIT-POST-COMMIT-SUCC-COUNT",
+        "ETC-ACTION-WITH-COMMIT-SUFFIX-COUNT",
+        "ETC-ACTION-WITH-COMMIT-NONCOMMIT-SUFFIX-COUNT",
+        "ETC-ACTION-WITH-COMMIT-COMMITARM-SUFFIX-COUNT"
+      ],
+      "module": "BanditRLProof.Algorithms.ETCTraceCountLemmas",
+      "status": "leanCompiled",
+      "declarations": [
+        "ETC.pullCount_actionWithCommit_eq_pullCount_exploreArm_of_le",
+        "ETC.pullCount_actionWithCommit_explorationPulls_mul_K_eq",
+        "ETC.pullCount_actionWithCommit_succ_eq_add_if_commitArm_of_ge",
+        "ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq",
+        "ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq_of_ne",
+        "ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq_commitArm"
+      ],
+      "role": "Compiled project-local ETC trace/count transfer and update layer: actionWithCommit matches exploreArm on exploration prefixes, yields the configured exploration-horizon count, has a one-step post-commit recurrence, has a closed-form post-exploration suffix count, and exposes commit-arm plus non-commit-arm suffix corollaries.",
+      "mathlib_routes": [
+        "MLIB-FINTYPE-FIN"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-ETC-COUNT-LEMMAS",
+      "leaf_ids": [
+        "ETC-ROUND-ROBIN-FIRST-CYCLE-COUNT",
+        "ETC-ROUND-ROBIN-ADD-K-COUNT",
+        "ETC-ROUND-ROBIN-MUL-K-COUNT",
+        "ETC-ROUND-ROBIN-EXPLORATION-PULLS-COUNT"
+      ],
+      "module": "BanditRLProof.Algorithms.ETCCountLemmas",
+      "status": "leanCompiled",
+      "declarations": [
+        "ETC.pullCount_exploreArm_K_eq_one",
+        "ETC.pullCount_exploreArm_add_K_eq_add_one",
+        "ETC.pullCount_exploreArm_mul_K_eq",
+        "ETC.pullCount_exploreArm_explorationPulls_mul_K_eq"
+      ],
+      "role": "Compiled project-local deterministic ETC count scaffolds: first-cycle counts, full-cycle extension recurrence, m-cycle counts, and the configured exploration-horizon count adapter.",
+      "mathlib_routes": [
+        "MLIB-FINSET-SUMS",
+        "MLIB-FINTYPE-FIN"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-ETC-REGRET-LEMMAS",
+      "leaf_ids": [
+        "ETC-EXPLORATION-REGRET-BOUND",
+        "ETC-ACTION-WITH-COMMIT-EXPLORATION-HORIZON-REGRET-BOUND"
+      ],
+      "module": "BanditRLProof.Algorithms.ETCRegretLemmas",
+      "status": "leanCompiled",
+      "declarations": [
+        "ETC.pseudoRegret_exploreArm_explorationPulls_mul_K_le_sum_gap_mul_explorationPulls",
+        "ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_le_sum_gap_mul_explorationPulls"
+      ],
+      "role": "Compiled project-local deterministic ETC regret scaffolds bounding the pure round-robin exploration prefix and fixed-commit trace exploration horizon by the sum of gaps times the configured exploration pulls.",
+      "mathlib_routes": [
+        "MLIB-FINSET-SUMS",
+        "MLIB-FINTYPE-FIN",
+        "MLIB-ORDER-ALGEBRA"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-MATHLIB-FINSET-WRAPPERS",
+      "module": "BanditRLProof.MathlibWrappers",
+      "status": "leanCompiled",
+      "declarations": [
+        "pullCount_eq_finset_filter_card",
+        "sumRewards_eq_finset_filter_sum",
+        "pseudoRegret_eq_finset_sum"
+      ],
+      "role": "Compiled Mathlib-backed wrappers connecting recursive pull counts, selected reward sums, and pseudo-regret to Finset.range cardinality/sums.",
+      "mathlib_routes": [
+        "MLIB-FINSET-SUMS",
+        "MLIB-FINTYPE-FIN",
+        "MLIB-ORDER-ALGEBRA"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-REGRET-DECOMPOSITION",
+      "module": "BanditRLProof.RegretDecomposition",
+      "status": "leanCompiled",
+      "declarations": [
+        "pseudoRegret_eq_finset_sum_gap_mul_pullCount"
+      ],
+      "role": "Compiled deterministic regret decomposition from time-indexed pseudo-regret to arm-indexed gap times pull-count sum.",
+      "mathlib_routes": [
+        "MLIB-FINSET-SUMS",
+        "MLIB-FINTYPE-FIN",
+        "MLIB-ORDER-ALGEBRA"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-REGRET-COUNT-BOUNDS",
+      "leaf_ids": [
+        "REGRET-COUNT-BOUND",
+        "REGRET-NAT-COUNT-BOUND",
+        "REGRET-UNIFORM-NAT-COUNT-BOUND"
+      ],
+      "module": "BanditRLProof.RegretCountBounds",
+      "status": "leanCompiled",
+      "declarations": [
+        "pseudoRegret_le_finset_sum_gap_mul_count_bound",
+        "pseudoRegret_le_finset_sum_gap_mul_nat_count_bound",
+        "pseudoRegret_le_sum_gap_mul_uniform_nat_count_bound"
+      ],
+      "role": "Compiled deterministic scaffolds converting Rat-valued, Nat-valued, and uniform Nat pull-count bounds into gap-weighted pseudo-regret bounds.",
+      "mathlib_routes": [
+        "MLIB-FINSET-SUMS",
+        "MLIB-FINTYPE-FIN",
+        "MLIB-ORDER-ALGEBRA"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-PULLCOUNT-DECOMPOSITION",
+      "module": "BanditRLProof.PullCountDecomposition",
+      "status": "leanCompiled",
+      "declarations": [
+        "finset_sum_pullCount_eq_time"
+      ],
+      "role": "Compiled deterministic count partition identity: finite action pull counts sum to the time horizon.",
+      "mathlib_routes": [
+        "MLIB-FINSET-SUMS",
+        "MLIB-FINTYPE-FIN"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-MEASURE-FOUNDATION",
+      "module": "BanditRLProof.MeasureFoundation",
+      "status": "leanCompiled",
+      "declarations": [
+        "measurableSet_actionTrace_eval_eq",
+        "measurable_actionTrace_eval_eq_indicator_const",
+        "measurable_actionTrace_eval_eq_indicator_reward"
+      ],
+      "role": "Compiled measurable action-event, pull-indicator, and selected-reward indicator canaries for action and reward traces.",
+      "mathlib_routes": [
+        "MLIB-MEASURE-INTEGRAL"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-MEASURABLE-SUMS",
+      "module": "BanditRLProof.MeasurableSums",
+      "status": "leanCompiled",
+      "declarations": [
+        "measurable_finset_sum_indicator_reward"
+      ],
+      "role": "Compiled finite-sum measurability bridge for selected-reward indicator contributions.",
+      "mathlib_routes": [
+        "MLIB-MEASURE-INTEGRAL",
+        "MLIB-FINSET-SUMS"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-MEASURABLE-LOCAL-QUANTITIES",
+      "module": "BanditRLProof.MeasurableLocalQuantities",
+      "status": "leanCompiled",
+      "declarations": [
+        "measurable_sumRewards"
+      ],
+      "role": "Compiled measurability bridge from selected-reward finite sums to the local recursive sumRewards quantity.",
+      "mathlib_routes": [
+        "MLIB-MEASURE-INTEGRAL",
+        "MLIB-FINSET-SUMS"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-MEASURABLE-REGRET",
+      "module": "BanditRLProof.MeasurableRegret",
+      "status": "leanCompiled",
+      "declarations": [
+        "measurable_pseudoRegret"
+      ],
+      "role": "Compiled pseudo-regret random-variable measurability bridge before expectation or probability measures.",
+      "mathlib_routes": [
+        "MLIB-MEASURE-INTEGRAL",
+        "MLIB-FINSET-SUMS"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-MEASURABLE-PULLCOUNT",
+      "module": "BanditRLProof.MeasurablePullCount",
+      "status": "leanCompiled",
+      "declarations": [
+        "measurable_pullCount"
+      ],
+      "role": "Compiled pull-count random-variable measurability bridge before expected pull-count identities.",
+      "mathlib_routes": [
+        "MLIB-MEASURE-INTEGRAL"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-MEASURABLE-PULLCOUNT-CAST",
+      "module": "BanditRLProof.MeasurablePullCountCast",
+      "status": "leanCompiled",
+      "declarations": [
+        "measurable_natCast_pullCount"
+      ],
+      "role": "Compiled scalar-casted pull-count measurability bridge before expected pull-count identities.",
+      "mathlib_routes": [
+        "MLIB-MEASURE-INTEGRAL"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-EXPECTATION-FOUNDATION",
+      "module": "BanditRLProof.ExpectationFoundation",
+      "status": "leanCompiled",
+      "declarations": [
+        "lintegral_actionTrace_eval_eq_indicator_one"
+      ],
+      "role": "Compiled ENNReal lower-integral identity for action-equality pull-event indicators.",
+      "mathlib_routes": [
+        "MLIB-MEASURE-INTEGRAL"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-EXPECTATION-SUMS",
+      "module": "BanditRLProof.ExpectationSums",
+      "status": "leanCompiled",
+      "declarations": [
+        "lintegral_finset_sum_actionTrace_eval_eq_indicator_one"
+      ],
+      "role": "Compiled ENNReal lower-integral finite-sum bridge for action-equality pull-event indicators.",
+      "mathlib_routes": [
+        "MLIB-MEASURE-INTEGRAL",
+        "MLIB-FINSET-SUMS"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-EXPECTATION-PULLCOUNT",
+      "module": "BanditRLProof.ExpectationPullCount",
+      "status": "leanCompiled",
+      "declarations": [
+        "lintegral_natCast_pullCount_eq_sum_measure_actionTrace_eval_eq"
+      ],
+      "role": "Compiled ENNReal lower-integral identity for scalar-casted pull counts.",
+      "mathlib_routes": [
+        "MLIB-MEASURE-INTEGRAL",
+        "MLIB-FINSET-SUMS"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-EXPECTATION-WEIGHTED-PULLCOUNT",
+      "module": "BanditRLProof.ExpectationWeightedPullCount",
+      "status": "leanCompiled",
+      "declarations": [
+        "lintegral_finset_sum_gap_mul_natCast_pullCount_eq"
+      ],
+      "role": "Compiled ENNReal lower-integral weighted pull-count bridge before Bochner expectation or algorithm-specific regret.",
+      "mathlib_routes": [
+        "MLIB-MEASURE-INTEGRAL",
+        "MLIB-FINSET-SUMS"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-EXPECTATION-PULLCOUNT-BOUNDS",
+      "module": "BanditRLProof.ExpectationPullCountBounds",
+      "status": "leanCompiled",
+      "declarations": [
+        "lintegral_natCast_pullCount_le_time"
+      ],
+      "role": "Compiled ENNReal/probability pull-count budget bound under a probability measure.",
+      "mathlib_routes": [
+        "MLIB-MEASURE-INTEGRAL",
+        "MLIB-FINSET-SUMS"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-EXPECTATION-WEIGHTED-PULLCOUNT-BOUNDS",
+      "module": "BanditRLProof.ExpectationWeightedPullCountBounds",
+      "status": "leanCompiled",
+      "declarations": [
+        "lintegral_finset_sum_gap_mul_natCast_pullCount_le_sum_gap_mul_time"
+      ],
+      "role": "Compiled ENNReal/probability weighted pull-count budget bound under a probability measure.",
+      "mathlib_routes": [
+        "MLIB-MEASURE-INTEGRAL",
+        "MLIB-FINSET-SUMS"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-EXPECTATION-FINITE-BANDIT-BOUNDS",
+      "module": "BanditRLProof.ExpectationFiniteBanditBounds",
+      "status": "leanCompiled",
+      "declarations": [
+        "lintegral_univ_sum_gap_mul_natCast_pullCount_le_sum_gap_mul_time"
+      ],
+      "role": "Compiled Fin K / Finset.univ specialization of the ENNReal/probability weighted pull-count budget bound.",
+      "mathlib_routes": [
+        "MLIB-MEASURE-INTEGRAL",
+        "MLIB-FINSET-SUMS",
+        "MLIB-FINTYPE-FIN"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-EXPECTATION-FINITE-BANDIT-MODEL-BOUNDS",
+      "module": "BanditRLProof.ExpectationFiniteBanditModelBounds",
+      "status": "leanCompiled",
+      "declarations": [
+        "lintegral_univ_sum_model_gap_ofReal_mul_natCast_pullCount_le_sum_model_gap_ofReal_mul_time"
+      ],
+      "role": "Compiled ENNReal.ofReal surrogate bound for FiniteBanditModel Rat gaps over finite-arm weighted pull counts.",
+      "mathlib_routes": [
+        "MLIB-MEASURE-INTEGRAL",
+        "MLIB-FINSET-SUMS",
+        "MLIB-FINTYPE-FIN",
+        "MLIB-ORDER-ALGEBRA"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-EXPECTATION-PSEUDOREGRET-OFREAL-BOUNDS",
+      "module": "BanditRLProof.ExpectationPseudoRegretOfRealBounds",
+      "status": "leanCompiled",
+      "declarations": [
+        "lintegral_ofReal_pseudoRegret_le_sum_model_gap_ofReal_mul_time_of_nonneg"
+      ],
+      "role": "Compiled ENNReal.ofReal lower-integral pseudo-regret bound under explicit model-gap nonnegativity.",
+      "mathlib_routes": [
+        "MLIB-MEASURE-INTEGRAL",
+        "MLIB-FINSET-SUMS",
+        "MLIB-FINTYPE-FIN",
+        "MLIB-ORDER-ALGEBRA"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-EXPECTATION-PSEUDOREGRET-RAT-BOUNDS",
+      "leaf_ids": [
+        "EXP-OFREAL-PSEUDOREGRET-BOUND-OF-RAT-GAP-NONNEG",
+        "EXP-OFREAL-PSEUDOREGRET-BOUND-MODEL-GAP"
+      ],
+      "module": "BanditRLProof.ExpectationPseudoRegretRatBounds",
+      "status": "leanCompiled",
+      "declarations": [
+        "lintegral_ofReal_pseudoRegret_le_sum_model_gap_ofReal_mul_time_of_rat_gap_nonneg",
+        "lintegral_ofReal_pseudoRegret_le_sum_model_gap_ofReal_mul_time"
+      ],
+      "role": "Compiled Rat-level and model-derived gap nonnegativity adapters for the ENNReal.ofReal lower-integral pseudo-regret bound.",
+      "mathlib_routes": [
+        "MLIB-MEASURE-INTEGRAL",
+        "MLIB-FINSET-SUMS",
+        "MLIB-FINTYPE-FIN",
+        "MLIB-ORDER-ALGEBRA"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-SCALAR-ENNREAL",
+      "module": "BanditRLProof.ScalarENNReal",
+      "status": "leanCompiled",
+      "declarations": [
+        "ENNReal.ofReal_finset_sum_mul_natCast_of_nonneg"
+      ],
+      "role": "Compiled scalar faithfulness leaf moving ENNReal.ofReal through nonnegative finite weighted Nat-count sums.",
+      "mathlib_routes": [
+        "MLIB-FINSET-SUMS",
+        "MLIB-ORDER-ALGEBRA"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-SCALAR-PSEUDOREGRET",
+      "module": "BanditRLProof.ScalarPseudoRegret",
+      "status": "leanCompiled",
+      "declarations": [
+        "ENNReal.ofReal_pseudoRegret_eq_univ_sum_model_gap_ofReal_mul_natCast_pullCount_of_nonneg"
+      ],
+      "role": "Compiled scalar/model faithfulness bridge from Rat-valued pseudoRegret to the ENNReal.ofReal weighted pull-count expression under explicit gap nonnegativity.",
+      "mathlib_routes": [
+        "MLIB-FINSET-SUMS",
         "MLIB-ORDER-ALGEBRA"
       ]
     }
@@ -1487,11 +1916,27 @@
       "statement": "theorem exploreArm_eq_of_mod_eq (spec : Spec K) {s t : Nat} (h : s % K = t % K) : exploreArm spec s = exploreArm spec t"
     },
     {
+      "kind": "theorem",
+      "name": "exploreArm_eq_iff_mod_eq_val",
+      "full_name": "BanditRLProof.ETC.exploreArm_eq_iff_mod_eq_val",
+      "file": "BanditRLProof/Algorithms/ETC.lean",
+      "line": 28,
+      "statement": "theorem exploreArm_eq_iff_mod_eq_val (spec : Spec K) (t : Nat) (a : Fin K) : exploreArm spec t = a ↔ t % K = a.val"
+    },
+    {
+      "kind": "theorem",
+      "name": "exploreArm_add_K",
+      "full_name": "BanditRLProof.ETC.exploreArm_add_K",
+      "file": "BanditRLProof/Algorithms/ETC.lean",
+      "line": 37,
+      "statement": "theorem exploreArm_add_K (spec : Spec K) (t : Nat) : exploreArm spec (t + K) = exploreArm spec t"
+    },
+    {
       "kind": "structure",
       "name": "CommitOracle",
       "full_name": "BanditRLProof.ETC.CommitOracle",
       "file": "BanditRLProof/Algorithms/ETC.lean",
-      "line": 29,
+      "line": 43,
       "statement": "structure CommitOracle (K : Nat) where"
     },
     {
@@ -1499,8 +1944,128 @@
       "name": "obligationNames",
       "full_name": "BanditRLProof.ETC.obligationNames",
       "file": "BanditRLProof/Algorithms/ETC.lean",
-      "line": 34,
+      "line": 48,
       "statement": "def obligationNames : List String :="
+    },
+    {
+      "kind": "theorem",
+      "name": "ETC.pullCount_exploreArm_K_eq_one",
+      "full_name": "ETC.pullCount_exploreArm_K_eq_one",
+      "file": "BanditRLProof/Algorithms/ETCCountLemmas.lean",
+      "line": 22,
+      "statement": "theorem ETC.pullCount_exploreArm_K_eq_one {K : Nat} (spec : ETC.Spec K) (a : Fin K) : pullCount (ETC.exploreArm spec) a K = 1"
+    },
+    {
+      "kind": "theorem",
+      "name": "ETC.pullCount_exploreArm_add_K_eq_add_one",
+      "full_name": "ETC.pullCount_exploreArm_add_K_eq_add_one",
+      "file": "BanditRLProof/Algorithms/ETCCountLemmas.lean",
+      "line": 58,
+      "statement": "theorem ETC.pullCount_exploreArm_add_K_eq_add_one {K : Nat} (spec : ETC.Spec K) (a : Fin K) (t : Nat) : pullCount (ETC.exploreArm spec) a (t + K) = pullCount (ETC.exploreArm spec) a t + 1"
+    },
+    {
+      "kind": "theorem",
+      "name": "ETC.pullCount_exploreArm_mul_K_eq",
+      "full_name": "ETC.pullCount_exploreArm_mul_K_eq",
+      "file": "BanditRLProof/Algorithms/ETCCountLemmas.lean",
+      "line": 86,
+      "statement": "theorem ETC.pullCount_exploreArm_mul_K_eq {K : Nat} (spec : ETC.Spec K) (a : Fin K) (m : Nat) : pullCount (ETC.exploreArm spec) a (m * K) = m"
+    },
+    {
+      "kind": "theorem",
+      "name": "ETC.pullCount_exploreArm_explorationPulls_mul_K_eq",
+      "full_name": "ETC.pullCount_exploreArm_explorationPulls_mul_K_eq",
+      "file": "BanditRLProof/Algorithms/ETCCountLemmas.lean",
+      "line": 105,
+      "statement": "theorem ETC.pullCount_exploreArm_explorationPulls_mul_K_eq {K : Nat} (spec : ETC.Spec K) (a : Fin K) : pullCount (ETC.exploreArm spec) a (spec.explorationPulls * K) = spec.explorationPulls"
+    },
+    {
+      "kind": "theorem",
+      "name": "ETC.pseudoRegret_exploreArm_explorationPulls_mul_K_le_sum_gap_mul_explorationPulls",
+      "full_name": "ETC.pseudoRegret_exploreArm_explorationPulls_mul_K_le_sum_gap_mul_explorationPulls",
+      "file": "BanditRLProof/Algorithms/ETCRegretLemmas.lean",
+      "line": 22,
+      "statement": "theorem ETC.pseudoRegret_exploreArm_explorationPulls_mul_K_le_sum_gap_mul_explorationPulls {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) : pseudoRegret model (ETC.exploreArm spec) (spec.explorationPulls * K) <= ((Finset.univ : Finset (Fin K)).sum (fun a : Fin K => model.gap a)) * (((spec.explorationPulls : Nat) : Rat))"
+    },
+    {
+      "kind": "theorem",
+      "name": "ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_le_sum_gap_mul_explorationPulls",
+      "full_name": "ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_le_sum_gap_mul_explorationPulls",
+      "file": "BanditRLProof/Algorithms/ETCRegretLemmas.lean",
+      "line": 48,
+      "statement": "theorem ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_le_sum_gap_mul_explorationPulls {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) : pseudoRegret model (ETC.actionWithCommit spec commitArm) (spec.explorationPulls * K) <= ((Finset.univ : Finset (Fin K)).sum (fun a : Fin K => model.gap a)) * (((spec.explorationPulls : Nat) : Rat))"
+    },
+    {
+      "kind": "def",
+      "name": "actionWithCommit",
+      "full_name": "BanditRLProof.ETC.actionWithCommit",
+      "file": "BanditRLProof/Algorithms/ETCTrace.lean",
+      "line": 17,
+      "statement": "def actionWithCommit {K : Nat} (spec : ETC.Spec K) (commitArm : Fin K) : ActionTrace (Fin K) :="
+    },
+    {
+      "kind": "theorem",
+      "name": "actionWithCommit_eq_exploreArm_of_lt",
+      "full_name": "BanditRLProof.ETC.actionWithCommit_eq_exploreArm_of_lt",
+      "file": "BanditRLProof/Algorithms/ETCTrace.lean",
+      "line": 32,
+      "statement": "@[simp] theorem actionWithCommit_eq_exploreArm_of_lt {K : Nat} (spec : ETC.Spec K) (commitArm : Fin K) {t : Nat} (h : t < spec.explorationPulls * K) : ETC.actionWithCommit spec commitArm t = ETC.exploreArm spec t"
+    },
+    {
+      "kind": "theorem",
+      "name": "actionWithCommit_eq_commitArm_of_ge",
+      "full_name": "BanditRLProof.ETC.actionWithCommit_eq_commitArm_of_ge",
+      "file": "BanditRLProof/Algorithms/ETCTrace.lean",
+      "line": 45,
+      "statement": "@[simp] theorem actionWithCommit_eq_commitArm_of_ge {K : Nat} (spec : ETC.Spec K) (commitArm : Fin K) {t : Nat} (h : spec.explorationPulls * K <= t) : ETC.actionWithCommit spec commitArm t = commitArm"
+    },
+    {
+      "kind": "theorem",
+      "name": "ETC.pullCount_actionWithCommit_eq_pullCount_exploreArm_of_le",
+      "full_name": "ETC.pullCount_actionWithCommit_eq_pullCount_exploreArm_of_le",
+      "file": "BanditRLProof/Algorithms/ETCTraceCountLemmas.lean",
+      "line": 23,
+      "statement": "theorem ETC.pullCount_actionWithCommit_eq_pullCount_exploreArm_of_le {K : Nat} (spec : ETC.Spec K) (commitArm a : Fin K) (n : Nat) (hn : n <= spec.explorationPulls * K) : pullCount (ETC.actionWithCommit spec commitArm) a n = pullCount (ETC.exploreArm spec) a n"
+    },
+    {
+      "kind": "theorem",
+      "name": "ETC.pullCount_actionWithCommit_explorationPulls_mul_K_eq",
+      "full_name": "ETC.pullCount_actionWithCommit_explorationPulls_mul_K_eq",
+      "file": "BanditRLProof/Algorithms/ETCTraceCountLemmas.lean",
+      "line": 53,
+      "statement": "theorem ETC.pullCount_actionWithCommit_explorationPulls_mul_K_eq {K : Nat} (spec : ETC.Spec K) (commitArm a : Fin K) : pullCount (ETC.actionWithCommit spec commitArm) a (spec.explorationPulls * K) = spec.explorationPulls"
+    },
+    {
+      "kind": "theorem",
+      "name": "ETC.pullCount_actionWithCommit_succ_eq_add_if_commitArm_of_ge",
+      "full_name": "ETC.pullCount_actionWithCommit_succ_eq_add_if_commitArm_of_ge",
+      "file": "BanditRLProof/Algorithms/ETCTraceCountLemmas.lean",
+      "line": 76,
+      "statement": "theorem ETC.pullCount_actionWithCommit_succ_eq_add_if_commitArm_of_ge {K : Nat} (spec : ETC.Spec K) (commitArm a : Fin K) {t : Nat} (ht : spec.explorationPulls * K <= t) : pullCount (ETC.actionWithCommit spec commitArm) a (Nat.succ t) = pullCount (ETC.actionWithCommit spec commitArm) a t + if commitArm = a then 1 else 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq",
+      "full_name": "ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq",
+      "file": "BanditRLProof/Algorithms/ETCTraceCountLemmas.lean",
+      "line": 96,
+      "statement": "theorem ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq {K : Nat} (spec : ETC.Spec K) (commitArm a : Fin K) (r : Nat) : pullCount (ETC.actionWithCommit spec commitArm) a (spec.explorationPulls * K + r) = spec.explorationPulls + (if commitArm = a then r else 0)"
+    },
+    {
+      "kind": "theorem",
+      "name": "ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq_of_ne",
+      "full_name": "ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq_of_ne",
+      "file": "BanditRLProof/Algorithms/ETCTraceCountLemmas.lean",
+      "line": 134,
+      "statement": "theorem ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq_of_ne {K : Nat} (spec : ETC.Spec K) {commitArm a : Fin K} (hne : commitArm ≠ a) (r : Nat) : pullCount (ETC.actionWithCommit spec commitArm) a (spec.explorationPulls * K + r) = spec.explorationPulls"
+    },
+    {
+      "kind": "theorem",
+      "name": "ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq_commitArm",
+      "full_name": "ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq_commitArm",
+      "file": "BanditRLProof/Algorithms/ETCTraceCountLemmas.lean",
+      "line": 151,
+      "statement": "theorem ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq_commitArm {K : Nat} (spec : ETC.Spec K) (commitArm : Fin K) (r : Nat) : pullCount (ETC.actionWithCommit spec commitArm) commitArm (spec.explorationPulls * K + r) = spec.explorationPulls + r"
     },
     {
       "kind": "structure",
@@ -1752,6 +2317,110 @@
     },
     {
       "kind": "theorem",
+      "name": "lintegral_univ_sum_gap_mul_natCast_pullCount_le_sum_gap_mul_time",
+      "full_name": "BanditRLProof.lintegral_univ_sum_gap_mul_natCast_pullCount_le_sum_gap_mul_time",
+      "file": "BanditRLProof/ExpectationFiniteBanditBounds.lean",
+      "line": 26,
+      "statement": "theorem lintegral_univ_sum_gap_mul_natCast_pullCount_le_sum_gap_mul_time {Omega : Type u} {K : Nat} [MeasurableSpace Omega] [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)] (mu : Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (action : Omega -> ActionTrace (Fin K)) (haction : forall t : Nat, Measurable (fun omega : Omega => action omega t))"
+    },
+    {
+      "kind": "theorem",
+      "name": "lintegral_univ_sum_model_gap_ofReal_mul_natCast_pullCount_le_sum_model_gap_ofReal_mul_time",
+      "full_name": "BanditRLProof.lintegral_univ_sum_model_gap_ofReal_mul_natCast_pullCount_le_sum_model_gap_ofReal_mul_time",
+      "file": "BanditRLProof/ExpectationFiniteBanditModelBounds.lean",
+      "line": 30,
+      "statement": "theorem lintegral_univ_sum_model_gap_ofReal_mul_natCast_pullCount_le_sum_model_gap_ofReal_mul_time {Omega : Type u} {K : Nat} [MeasurableSpace Omega] [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)] (mu : Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (model : FiniteBanditModel K) (action : Omega -> ActionTrace (Fin K)) (haction : forall t : Nat,"
+    },
+    {
+      "kind": "theorem",
+      "name": "lintegral_actionTrace_eval_eq_indicator_one",
+      "full_name": "BanditRLProof.lintegral_actionTrace_eval_eq_indicator_one",
+      "file": "BanditRLProof/ExpectationFoundation.lean",
+      "line": 28,
+      "statement": "theorem lintegral_actionTrace_eval_eq_indicator_one {Omega : Type u} {Action : Type v} [MeasurableSpace Omega] [MeasurableSpace Action] [MeasurableSingletonClass Action] (mu : Measure Omega) (action : Omega -> ActionTrace Action) (haction : forall t : Nat, Measurable (fun omega : Omega => action omega t))"
+    },
+    {
+      "kind": "theorem",
+      "name": "lintegral_ofReal_pseudoRegret_le_sum_model_gap_ofReal_mul_time_of_nonneg",
+      "full_name": "BanditRLProof.lintegral_ofReal_pseudoRegret_le_sum_model_gap_ofReal_mul_time_of_nonneg",
+      "file": "BanditRLProof/ExpectationPseudoRegretOfRealBounds.lean",
+      "line": 30,
+      "statement": "theorem lintegral_ofReal_pseudoRegret_le_sum_model_gap_ofReal_mul_time_of_nonneg {Omega : Type u} {K : Nat} [MeasurableSpace Omega] [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)] (mu : Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (model : FiniteBanditModel K) (action : Omega -> ActionTrace (Fin K)) (haction : forall t : Nat,"
+    },
+    {
+      "kind": "theorem",
+      "name": "lintegral_ofReal_pseudoRegret_le_sum_model_gap_ofReal_mul_time_of_rat_gap_nonneg",
+      "full_name": "BanditRLProof.lintegral_ofReal_pseudoRegret_le_sum_model_gap_ofReal_mul_time_of_rat_gap_nonneg",
+      "file": "BanditRLProof/ExpectationPseudoRegretRatBounds.lean",
+      "line": 27,
+      "statement": "theorem lintegral_ofReal_pseudoRegret_le_sum_model_gap_ofReal_mul_time_of_rat_gap_nonneg {Omega : Type u} {K : Nat} [MeasurableSpace Omega] [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)] (mu : Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (model : FiniteBanditModel K) (action : Omega -> ActionTrace (Fin K)) (haction : forall t : Nat,"
+    },
+    {
+      "kind": "theorem",
+      "name": "lintegral_ofReal_pseudoRegret_le_sum_model_gap_ofReal_mul_time",
+      "full_name": "BanditRLProof.lintegral_ofReal_pseudoRegret_le_sum_model_gap_ofReal_mul_time",
+      "file": "BanditRLProof/ExpectationPseudoRegretRatBounds.lean",
+      "line": 69,
+      "statement": "theorem lintegral_ofReal_pseudoRegret_le_sum_model_gap_ofReal_mul_time {Omega : Type u} {K : Nat} [MeasurableSpace Omega] [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)] (mu : Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (model : FiniteBanditModel K) (action : Omega -> ActionTrace (Fin K)) (haction : forall t : Nat,"
+    },
+    {
+      "kind": "theorem",
+      "name": "lintegral_natCast_pullCount_eq_sum_measure_actionTrace_eval_eq",
+      "full_name": "BanditRLProof.lintegral_natCast_pullCount_eq_sum_measure_actionTrace_eval_eq",
+      "file": "BanditRLProof/ExpectationPullCount.lean",
+      "line": 46,
+      "statement": "theorem lintegral_natCast_pullCount_eq_sum_measure_actionTrace_eval_eq {Omega : Type u} {Action : Type v} [MeasurableSpace Omega] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (mu : Measure Omega) (action : Omega -> ActionTrace Action) (haction : forall t : Nat, Measurable (fun omega : Omega => action omega t))"
+    },
+    {
+      "kind": "theorem",
+      "name": "lintegral_natCast_pullCount_le_time",
+      "full_name": "BanditRLProof.lintegral_natCast_pullCount_le_time",
+      "file": "BanditRLProof/ExpectationPullCountBounds.lean",
+      "line": 28,
+      "statement": "theorem lintegral_natCast_pullCount_le_time {Omega : Type u} {Action : Type v} [MeasurableSpace Omega] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (mu : Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (action : Omega -> ActionTrace Action) (haction : forall t : Nat, Measurable (fun omega : Omega => action omega t))"
+    },
+    {
+      "kind": "theorem",
+      "name": "lintegral_finset_sum_actionTrace_eval_eq_indicator_one",
+      "full_name": "BanditRLProof.lintegral_finset_sum_actionTrace_eval_eq_indicator_one",
+      "file": "BanditRLProof/ExpectationSums.lean",
+      "line": 26,
+      "statement": "theorem lintegral_finset_sum_actionTrace_eval_eq_indicator_one {Omega : Type u} {Action : Type v} [MeasurableSpace Omega] [MeasurableSpace Action] [MeasurableSingletonClass Action] (mu : Measure Omega) (action : Omega -> ActionTrace Action) (haction : forall t : Nat, Measurable (fun omega : Omega => action omega t))"
+    },
+    {
+      "kind": "theorem",
+      "name": "lintegral_finset_sum_gap_mul_natCast_pullCount_eq",
+      "full_name": "BanditRLProof.lintegral_finset_sum_gap_mul_natCast_pullCount_eq",
+      "file": "BanditRLProof/ExpectationWeightedPullCount.lean",
+      "line": 30,
+      "statement": "theorem lintegral_finset_sum_gap_mul_natCast_pullCount_eq {Omega : Type u} {Action : Type v} [MeasurableSpace Omega] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (mu : Measure Omega) (action : Omega -> ActionTrace Action) (haction : forall t : Nat, Measurable (fun omega : Omega => action omega t))"
+    },
+    {
+      "kind": "theorem",
+      "name": "lintegral_finset_sum_gap_mul_natCast_pullCount_le_sum_gap_mul_time",
+      "full_name": "BanditRLProof.lintegral_finset_sum_gap_mul_natCast_pullCount_le_sum_gap_mul_time",
+      "file": "BanditRLProof/ExpectationWeightedPullCountBounds.lean",
+      "line": 29,
+      "statement": "theorem lintegral_finset_sum_gap_mul_natCast_pullCount_le_sum_gap_mul_time {Omega : Type u} {Action : Type v} [MeasurableSpace Omega] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (mu : Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (action : Omega -> ActionTrace Action) (haction : forall t : Nat, Measurable (fun omega : Omega => action omega t))"
+    },
+    {
+      "kind": "theorem",
+      "name": "mean_le_bestArm_mean",
+      "full_name": "BanditRLProof.FiniteBanditModel.mean_le_bestArm_mean",
+      "file": "BanditRLProof/FiniteBanditModelInvariants.lean",
+      "line": 65,
+      "statement": "theorem mean_le_bestArm_mean {K : Nat} (model : FiniteBanditModel K) (a : Fin K) : model.mean a <= model.mean model.bestArm"
+    },
+    {
+      "kind": "theorem",
+      "name": "gap_nonneg",
+      "full_name": "BanditRLProof.FiniteBanditModel.gap_nonneg",
+      "file": "BanditRLProof/FiniteBanditModelInvariants.lean",
+      "line": 83,
+      "statement": "theorem gap_nonneg {K : Nat} (model : FiniteBanditModel K) (a : Fin K) : (0 : Rat) <= model.gap a"
+    },
+    {
+      "kind": "theorem",
       "name": "pullCount_one",
       "full_name": "BanditRLProof.pullCount_one",
       "file": "BanditRLProof/LeafLemmas.lean",
@@ -1880,10 +2549,18 @@
     },
     {
       "kind": "theorem",
+      "name": "pullCount_eq_list_filter_length",
+      "full_name": "BanditRLProof.pullCount_eq_list_filter_length",
+      "file": "BanditRLProof/LeafLemmas.lean",
+      "line": 145,
+      "statement": "theorem pullCount_eq_list_filter_length : pullCount action a t = ((List.range t).filter (fun s : Nat => decide (action s = a))).length"
+    },
+    {
+      "kind": "theorem",
       "name": "sumRewards_succ_of_eq",
       "full_name": "BanditRLProof.sumRewards_succ_of_eq",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 147,
+      "line": 166,
       "statement": "theorem sumRewards_succ_of_eq (h : action t = a) : sumRewards action reward a (t + 1) = sumRewards action reward a t + reward t"
     },
     {
@@ -1891,7 +2568,7 @@
       "name": "sumRewards_succ_of_ne",
       "full_name": "BanditRLProof.sumRewards_succ_of_ne",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 152,
+      "line": 171,
       "statement": "theorem sumRewards_succ_of_ne (hzero : ∀ x : Reward, x + 0 = x) (h : action t ≠ a) : sumRewards action reward a (t + 1) = sumRewards action reward a t"
     },
     {
@@ -1899,7 +2576,7 @@
       "name": "sumRewards_eq_zero_of_forall_ne",
       "full_name": "BanditRLProof.sumRewards_eq_zero_of_forall_ne",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 158,
+      "line": 177,
       "statement": "theorem sumRewards_eq_zero_of_forall_ne (hzero : ∀ x : Reward, x + 0 = x) (h : ∀ s, s < t → action s ≠ a) : sumRewards action reward a t = 0"
     },
     {
@@ -1907,7 +2584,7 @@
       "name": "sumRewards_const_of_ne",
       "full_name": "BanditRLProof.sumRewards_const_of_ne",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 167,
+      "line": 186,
       "statement": "theorem sumRewards_const_of_ne (hzero : ∀ x : Reward, x + 0 = x) (b : Action) (h : b ≠ a) (t : Nat) : sumRewards (fun _ => b) reward a t = 0"
     },
     {
@@ -1915,15 +2592,31 @@
       "name": "sumRewards_add_eq_of_forall_ne_between",
       "full_name": "BanditRLProof.sumRewards_add_eq_of_forall_ne_between",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 175,
+      "line": 194,
       "statement": "theorem sumRewards_add_eq_of_forall_ne_between (hzero : ∀ x : Reward, x + 0 = x) (n : Nat) (h : ∀ s, t ≤ s → s < t + n → action s ≠ a) : sumRewards action reward a (t + n) = sumRewards action reward a t"
+    },
+    {
+      "kind": "theorem",
+      "name": "sumRewards_eq_list_range_foldl",
+      "full_name": "BanditRLProof.sumRewards_eq_list_range_foldl",
+      "file": "BanditRLProof/LeafLemmas.lean",
+      "line": 212,
+      "statement": "theorem sumRewards_eq_list_range_foldl : sumRewards action reward a t = (List.range t).foldl (fun acc s => acc + if action s = a then reward s else 0) 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "sumRewards_eq_list_range_filter_foldl",
+      "full_name": "BanditRLProof.sumRewards_eq_list_range_filter_foldl",
+      "file": "BanditRLProof/LeafLemmas.lean",
+      "line": 230,
+      "statement": "theorem sumRewards_eq_list_range_filter_foldl (hzero : ∀ x : Reward, x + 0 = x) : sumRewards action reward a t = ((List.range t).filter (fun s : Nat => decide (action s = a))).foldl (fun acc s => acc + reward s) 0"
     },
     {
       "kind": "theorem",
       "name": "bestMean_eq_mean_bestArm",
       "full_name": "BanditRLProof.FiniteBanditModel.bestMean_eq_mean_bestArm",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 191,
+      "line": 249,
       "statement": "@[simp] theorem bestMean_eq_mean_bestArm (model : FiniteBanditModel K) : model.bestMean = model.mean model.bestArm"
     },
     {
@@ -1931,7 +2624,7 @@
       "name": "gap_of_ne_bestArm",
       "full_name": "BanditRLProof.FiniteBanditModel.gap_of_ne_bestArm",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 194,
+      "line": 252,
       "statement": "theorem gap_of_ne_bestArm (model : FiniteBanditModel K) (arm : Fin K) (h : arm ≠ model.bestArm) : model.gap arm = model.bestMean - model.mean arm"
     },
     {
@@ -1939,7 +2632,7 @@
       "name": "pseudoRegret_one",
       "full_name": "BanditRLProof.pseudoRegret_one",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 205,
+      "line": 263,
       "statement": "@[simp] theorem pseudoRegret_one : pseudoRegret model action 1 = model.gap (action 0)"
     },
     {
@@ -1947,7 +2640,7 @@
       "name": "pseudoRegret_succ_of_bestArm",
       "full_name": "BanditRLProof.pseudoRegret_succ_of_bestArm",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 210,
+      "line": 268,
       "statement": "theorem pseudoRegret_succ_of_bestArm (h : action t = model.bestArm) : pseudoRegret model action (t + 1) = pseudoRegret model action t"
     },
     {
@@ -1955,7 +2648,7 @@
       "name": "pseudoRegret_succ_of_gap_zero",
       "full_name": "BanditRLProof.pseudoRegret_succ_of_gap_zero",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 215,
+      "line": 273,
       "statement": "theorem pseudoRegret_succ_of_gap_zero (h : model.gap (action t) = 0) : pseudoRegret model action (t + 1) = pseudoRegret model action t"
     },
     {
@@ -1963,7 +2656,7 @@
       "name": "pseudoRegret_eq_zero_of_forall_bestArm",
       "full_name": "BanditRLProof.pseudoRegret_eq_zero_of_forall_bestArm",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 220,
+      "line": 278,
       "statement": "theorem pseudoRegret_eq_zero_of_forall_bestArm (h : ∀ s, s < t → action s = model.bestArm) : pseudoRegret model action t = 0"
     },
     {
@@ -1971,7 +2664,7 @@
       "name": "pseudoRegret_eq_zero_of_forall_gap_zero",
       "full_name": "BanditRLProof.pseudoRegret_eq_zero_of_forall_gap_zero",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 229,
+      "line": 287,
       "statement": "theorem pseudoRegret_eq_zero_of_forall_gap_zero (h : ∀ s, s < t → model.gap (action s) = 0) : pseudoRegret model action t = 0"
     },
     {
@@ -1979,7 +2672,7 @@
       "name": "pseudoRegret_const_bestArm",
       "full_name": "BanditRLProof.pseudoRegret_const_bestArm",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 238,
+      "line": 296,
       "statement": "@[simp] theorem pseudoRegret_const_bestArm : pseudoRegret model (fun _ => model.bestArm) t = 0"
     },
     {
@@ -1987,7 +2680,7 @@
       "name": "pseudoRegret_const_of_gap_zero",
       "full_name": "BanditRLProof.pseudoRegret_const_of_gap_zero",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 244,
+      "line": 302,
       "statement": "theorem pseudoRegret_const_of_gap_zero (arm : Fin K) (h : model.gap arm = 0) : pseudoRegret model (fun _ => arm) t = 0"
     },
     {
@@ -1995,7 +2688,7 @@
       "name": "pseudoRegret_add_eq_of_forall_bestArm_between",
       "full_name": "BanditRLProof.pseudoRegret_add_eq_of_forall_bestArm_between",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 250,
+      "line": 308,
       "statement": "theorem pseudoRegret_add_eq_of_forall_bestArm_between (n : Nat) (h : ∀ s, t ≤ s → s < t + n → action s = model.bestArm) : pseudoRegret model action (t + n) = pseudoRegret model action t"
     },
     {
@@ -2003,8 +2696,16 @@
       "name": "pseudoRegret_add_eq_of_forall_gap_zero_between",
       "full_name": "BanditRLProof.pseudoRegret_add_eq_of_forall_gap_zero_between",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 262,
+      "line": 320,
       "statement": "theorem pseudoRegret_add_eq_of_forall_gap_zero_between (n : Nat) (h : ∀ s, t ≤ s → s < t + n → model.gap (action s) = 0) : pseudoRegret model action (t + n) = pseudoRegret model action t"
+    },
+    {
+      "kind": "theorem",
+      "name": "pseudoRegret_eq_list_range_foldl",
+      "full_name": "BanditRLProof.pseudoRegret_eq_list_range_foldl",
+      "file": "BanditRLProof/LeafLemmas.lean",
+      "line": 338,
+      "statement": "theorem pseudoRegret_eq_list_range_foldl : pseudoRegret model action t = (List.range t).foldl (fun acc s => acc + model.gap (action s)) 0"
     },
     {
       "kind": "structure",
@@ -2031,6 +2732,94 @@
       "statement": "def lmlBanditDeclarationCards : List RegretBoundCard :="
     },
     {
+      "kind": "theorem",
+      "name": "pullCount_eq_finset_filter_card",
+      "full_name": "BanditRLProof.pullCount_eq_finset_filter_card",
+      "file": "BanditRLProof/MathlibWrappers.lean",
+      "line": 28,
+      "statement": "theorem pullCount_eq_finset_filter_card : pullCount action a t = ((Finset.range t).filter (fun s : Nat => action s = a)).card"
+    },
+    {
+      "kind": "theorem",
+      "name": "sumRewards_eq_finset_filter_sum",
+      "full_name": "BanditRLProof.sumRewards_eq_finset_filter_sum",
+      "file": "BanditRLProof/MathlibWrappers.lean",
+      "line": 62,
+      "statement": "theorem sumRewards_eq_finset_filter_sum : sumRewards action reward a t = ((Finset.range t).filter (fun s : Nat => action s = a)).sum (fun s : Nat => reward s)"
+    },
+    {
+      "kind": "theorem",
+      "name": "pseudoRegret_eq_finset_sum",
+      "full_name": "BanditRLProof.pseudoRegret_eq_finset_sum",
+      "file": "BanditRLProof/MathlibWrappers.lean",
+      "line": 93,
+      "statement": "theorem pseudoRegret_eq_finset_sum : pseudoRegret model action t = (Finset.range t).sum (fun s : Nat => model.gap (action s))"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_sumRewards",
+      "full_name": "BanditRLProof.measurable_sumRewards",
+      "file": "BanditRLProof/MeasurableLocalQuantities.lean",
+      "line": 60,
+      "statement": "theorem measurable_sumRewards {Omega : Type u} {Action : Type v} {Reward : Type v} [MeasurableSpace Omega] [MeasurableSpace Action] [MeasurableSingletonClass Action] [MeasurableSpace Reward] [AddCommMonoid Reward] [MeasurableAdd₂ Reward] [DecidableEq Action] (action : Omega -> ActionTrace Action) (reward : Omega -> RewardTrace Reward)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_pullCount",
+      "full_name": "BanditRLProof.measurable_pullCount",
+      "file": "BanditRLProof/MeasurablePullCount.lean",
+      "line": 23,
+      "statement": "theorem measurable_pullCount {Omega : Type u} {Action : Type v} [MeasurableSpace Omega] [MeasurableSpace Action] [MeasurableSingletonClass Action] [MeasurableSpace Nat] [MeasurableAdd₂ Nat] [DecidableEq Action] (action : Omega -> ActionTrace Action) (haction : forall t : Nat,"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_natCast_pullCount",
+      "full_name": "BanditRLProof.measurable_natCast_pullCount",
+      "file": "BanditRLProof/MeasurablePullCountCast.lean",
+      "line": 23,
+      "statement": "theorem measurable_natCast_pullCount {Omega : Type u} {Action : Type v} {Beta : Type w} [MeasurableSpace Omega] [MeasurableSpace Action] [MeasurableSingletonClass Action] [MeasurableSpace Beta] [AddCommMonoidWithOne Beta] [MeasurableAdd₂ Beta] [DecidableEq Action] (action : Omega -> ActionTrace Action) (haction : forall t : Nat,"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_pseudoRegret",
+      "full_name": "BanditRLProof.measurable_pseudoRegret",
+      "file": "BanditRLProof/MeasurableRegret.lean",
+      "line": 24,
+      "statement": "theorem measurable_pseudoRegret {Omega : Type u} [MeasurableSpace Omega] [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)] [MeasurableSpace Rat] [MeasurableAdd₂ Rat] (model : FiniteBanditModel K) (action : Omega -> ActionTrace (Fin K)) (haction : forall t : Nat,"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_finset_sum_indicator_reward",
+      "full_name": "BanditRLProof.measurable_finset_sum_indicator_reward",
+      "file": "BanditRLProof/MeasurableSums.lean",
+      "line": 24,
+      "statement": "theorem measurable_finset_sum_indicator_reward {Omega : Type u} {Action : Type v} {Reward : Type w} [MeasurableSpace Omega] [MeasurableSpace Action] [MeasurableSingletonClass Action] [MeasurableSpace Reward] [AddCommMonoid Reward] [MeasurableAdd₂ Reward] (action : Omega -> ActionTrace Action) (reward : Omega -> RewardTrace Reward) (haction : forall t : Nat, Measurable (fun omega : Omega => action omega t))"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurableSet_actionTrace_eval_eq",
+      "full_name": "BanditRLProof.measurableSet_actionTrace_eval_eq",
+      "file": "BanditRLProof/MeasureFoundation.lean",
+      "line": 25,
+      "statement": "theorem measurableSet_actionTrace_eval_eq {Omega : Type u} {Action : Type v} [MeasurableSpace Omega] [MeasurableSpace Action] [MeasurableSingletonClass Action] (action : Omega -> ActionTrace Action) (hmeas : forall t : Nat, Measurable (fun omega : Omega => action omega t)) (a : Action) (t : Nat) : MeasurableSet {omega : Omega | action omega t = a}"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_actionTrace_eval_eq_indicator_const",
+      "full_name": "BanditRLProof.measurable_actionTrace_eval_eq_indicator_const",
+      "file": "BanditRLProof/MeasureFoundation.lean",
+      "line": 43,
+      "statement": "theorem measurable_actionTrace_eval_eq_indicator_const {Omega : Type u} {Action : Type v} {Beta : Type w} [MeasurableSpace Omega] [MeasurableSpace Action] [MeasurableSingletonClass Action] [MeasurableSpace Beta] [Zero Beta] (action : Omega -> ActionTrace Action) (hmeas : forall t : Nat, Measurable (fun omega : Omega => action omega t)) (a : Action) (t : Nat) (c : Beta) :"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_actionTrace_eval_eq_indicator_reward",
+      "full_name": "BanditRLProof.measurable_actionTrace_eval_eq_indicator_reward",
+      "file": "BanditRLProof/MeasureFoundation.lean",
+      "line": 64,
+      "statement": "theorem measurable_actionTrace_eval_eq_indicator_reward {Omega : Type u} {Action : Type v} {Reward : Type w} [MeasurableSpace Omega] [MeasurableSpace Action] [MeasurableSingletonClass Action] [MeasurableSpace Reward] [Zero Reward] (action : Omega -> ActionTrace Action) (reward : Omega -> RewardTrace Reward) (haction : forall t : Nat, Measurable (fun omega : Omega => action omega t))"
+    },
+    {
       "kind": "inductive",
       "name": "ProblemArea",
       "full_name": "BanditRLProof.ProblemArea",
@@ -2053,6 +2842,14 @@
       "file": "BanditRLProof/OpenProblems.lean",
       "line": 28,
       "statement": "def seedOpenProblems : List OpenProblem :="
+    },
+    {
+      "kind": "theorem",
+      "name": "finset_sum_pullCount_eq_time",
+      "full_name": "BanditRLProof.finset_sum_pullCount_eq_time",
+      "file": "BanditRLProof/PullCountDecomposition.lean",
+      "line": 25,
+      "statement": "theorem finset_sum_pullCount_eq_time : (Finset.univ : Finset Action).sum (fun a : Action => pullCount action a t) = t"
     },
     {
       "kind": "def",
@@ -2093,6 +2890,54 @@
       "file": "BanditRLProof/Regret.lean",
       "line": 41,
       "statement": "structure RegretObligation where"
+    },
+    {
+      "kind": "theorem",
+      "name": "pseudoRegret_le_finset_sum_gap_mul_count_bound",
+      "full_name": "BanditRLProof.pseudoRegret_le_finset_sum_gap_mul_count_bound",
+      "file": "BanditRLProof/RegretCountBounds.lean",
+      "line": 26,
+      "statement": "theorem pseudoRegret_le_finset_sum_gap_mul_count_bound {K : Nat} (model : FiniteBanditModel K) (action : ActionTrace (Fin K)) (n : Nat) (B : Fin K -> Rat) (hB : forall a : Fin K, ((pullCount action a n : Nat) : Rat) <= B a) :"
+    },
+    {
+      "kind": "theorem",
+      "name": "pseudoRegret_le_finset_sum_gap_mul_nat_count_bound",
+      "full_name": "BanditRLProof.pseudoRegret_le_finset_sum_gap_mul_nat_count_bound",
+      "file": "BanditRLProof/RegretCountBounds.lean",
+      "line": 52,
+      "statement": "theorem pseudoRegret_le_finset_sum_gap_mul_nat_count_bound {K : Nat} (model : FiniteBanditModel K) (action : ActionTrace (Fin K)) (n : Nat) (B : Fin K -> Nat) (hB : forall a : Fin K, pullCount action a n <= B a) :"
+    },
+    {
+      "kind": "theorem",
+      "name": "pseudoRegret_le_sum_gap_mul_uniform_nat_count_bound",
+      "full_name": "BanditRLProof.pseudoRegret_le_sum_gap_mul_uniform_nat_count_bound",
+      "file": "BanditRLProof/RegretCountBounds.lean",
+      "line": 80,
+      "statement": "theorem pseudoRegret_le_sum_gap_mul_uniform_nat_count_bound {K : Nat} (model : FiniteBanditModel K) (action : ActionTrace (Fin K)) (n B : Nat) (hB : forall a : Fin K, pullCount action a n <= B) : pseudoRegret model action n <="
+    },
+    {
+      "kind": "theorem",
+      "name": "pseudoRegret_eq_finset_sum_gap_mul_pullCount",
+      "full_name": "BanditRLProof.pseudoRegret_eq_finset_sum_gap_mul_pullCount",
+      "file": "BanditRLProof/RegretDecomposition.lean",
+      "line": 27,
+      "statement": "theorem pseudoRegret_eq_finset_sum_gap_mul_pullCount : pseudoRegret model action t = (Finset.univ : Finset (Fin K)).sum (fun a : Fin K => model.gap a * (pullCount action a t : Rat))"
+    },
+    {
+      "kind": "theorem",
+      "name": "ofReal_finset_sum_mul_natCast_of_nonneg",
+      "full_name": "BanditRLProof.ENNReal.ofReal_finset_sum_mul_natCast_of_nonneg",
+      "file": "BanditRLProof/ScalarENNReal.lean",
+      "line": 27,
+      "statement": "theorem ofReal_finset_sum_mul_natCast_of_nonneg {ι : Type u} (s : Finset ι) (gap : ι -> Real) (count : ι -> Nat) (hgap : forall i : ι, i ∈ s -> 0 <= gap i) : ENNReal.ofReal (s.sum (fun i : ι => gap i * ((count i : Nat) : Real))) = s.sum"
+    },
+    {
+      "kind": "theorem",
+      "name": "ofReal_pseudoRegret_eq_univ_sum_model_gap_ofReal_mul_natCast_pullCount_of_nonneg",
+      "full_name": "BanditRLProof.ENNReal.ofReal_pseudoRegret_eq_univ_sum_model_gap_ofReal_mul_natCast_pullCount_of_nonneg",
+      "file": "BanditRLProof/ScalarPseudoRegret.lean",
+      "line": 41,
+      "statement": "theorem ofReal_pseudoRegret_eq_univ_sum_model_gap_ofReal_mul_natCast_pullCount_of_nonneg {K : Nat} (model : FiniteBanditModel K) (action : ActionTrace (Fin K)) (hgap : forall a : Fin K, 0 <= (((model.gap a : Rat) : Real))) (n : Nat) : ENNReal.ofReal (((pseudoRegret model action n : Rat) : Real))"
     }
   ],
   "recent_trials": [
