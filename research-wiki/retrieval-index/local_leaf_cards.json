@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-03T11:08:18+00:00",
+  "generated": "2026-07-03T11:16:01+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -1792,18 +1792,23 @@
       "leaf_ids": [
         "COND-EXPECT-REWARD",
         "FILTRATION-HISTORY",
-        "KERNEL-POLICY-BIND"
+        "KERNEL-POLICY-BIND",
+        "INT-REWARD-BOUNDED",
+        "MEAS-REWARD"
       ],
       "module": "BanditRLProof.ConditionalExpectationReward",
       "status": "leanCompiled",
       "declarations": [
-        "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_projected"
+        "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_projected",
+        "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_projected_rawRangeMeasurableMeanRangeBounded"
       ],
-      "role": "Compiled project-local trace-history projection specialization for the generated-history pair-law consumer: pairHistory is now the concrete finite prefix fun j => (action omega j, reward omega j), while pairContext and pairState are reward-projection wrappers around the original reward-history context/state. This removes explicit pair-history compatibility hypotheses and leaves the generated-history condExpKernel pushforward identity for the concrete next action/reward pair as the remaining structural input.",
+      "role": "Compiled project-local trace-history projection specialization for the generated-history pair-law consumer: pairHistory is now the concrete finite prefix fun j => (action omega j, reward omega j), while pairContext and pairState are reward-projection wrappers around the original reward-history context/state. A source-free raw-reward/selected-mean range wrapper now derives centered-reward integrability automatically for this concrete trace-pair route. This removes explicit pair-history compatibility hypotheses and leaves the generated-history condExpKernel pushforward identity for the concrete next action/reward pair as the remaining structural input.",
       "mathlib_routes": [
         "MLIB-CONDITIONAL-EXPECTATION",
         "LOCAL-LEAF-COND-EXPECT-REWARD-PAIR-MAP-HISTORYFILTRATION-HOOKUP",
-        "LOCAL-LEAF-POLICY-REWARD-ACTION-REWARD-PARTIAL-TRAJECTORY"
+        "LOCAL-LEAF-POLICY-REWARD-ACTION-REWARD-PARTIAL-TRAJECTORY",
+        "INT-REWARD-BOUNDED",
+        "MEAS-REWARD"
       ]
     },
     {

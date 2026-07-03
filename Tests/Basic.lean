@@ -4142,6 +4142,96 @@ example {Omega Context State Action : Type}
     (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
     (hcontext : forall n : Nat, Measurable (context n))
     (hstate : forall n : Nat, Measurable (state n))
+    (hpairContext :
+      forall n : Nat,
+        Measurable
+          (fun history : (j : Finset.Iic n) -> Prod Action Rat =>
+            context n (fun j : Finset.Iic n => (history j).2)))
+    (hpairState :
+      forall n : Nat,
+        Measurable
+          (fun history : (j : Finset.Iic n) -> Prod Action Rat =>
+            state n (fun j : Finset.Iic n => (history j).2)))
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (action : Omega -> ActionTrace Action)
+    (reward : Omega -> RewardTrace Rat)
+    (haction : forall t : Nat,
+      @Measurable Omega Action mOmega inferInstance
+        (fun omega : Omega => action omega t))
+    (hreward : forall t : Nat,
+      @Measurable Omega Rat mOmega inferInstance
+        (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (i : Nat)
+    (h_kernel_pair_map_eq :
+      Filter.Eventually
+        (fun omega : Omega =>
+          @MeasureTheory.Measure.map Omega (Prod Action Rat) mOmega
+            inferInstance
+            (fun y : Omega => (action y (i + 1), reward y (i + 1)))
+            (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+              ((History.historyFiltrationSucc action reward haction hreward) i)
+              omega) =
+          RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy
+            (fun n history =>
+              context n (fun j : Finset.Iic n => (history j).2))
+            (fun n history =>
+              state n (fun j : Finset.Iic n => (history j).2))
+            hpairContext hpairState i
+            (fun j : Finset.Iic i =>
+              (action omega j.1, reward omega j.1)))
+        (MeasureTheory.ae
+          (mu.trim
+            ((History.historyFiltrationSucc action reward haction hreward).le
+              i)))) :
+    Filter.EventuallyEq (MeasureTheory.ae mu)
+      (@MeasureTheory.condExp Omega Real
+        ((History.historyFiltrationSucc action reward haction hreward) i)
+        mOmega _ _ _ mu
+        (fun omega : Omega =>
+          (((reward omega (i + 1) -
+            mean
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+                Rat) : Real))))
+      (fun _omega : Omega => (0 : Real)) := by
+  exact
+    ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_projected_rawRangeMeasurableMeanRangeBounded
+      (mOmega := mOmega)
+      mu action rewardKernel policy context state hcontext hstate hpairContext
+      hpairState mean varianceProxy hmean hkernel reward haction hreward
+      rewardLo rewardHi meanLo meanHi hraw hmean_range i
+      h_kernel_pair_map_eq
+
+example {Omega Context State Action : Type}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    (mu : MeasureTheory.Measure Omega)
+    [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel :
+      RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
     (mean : Context -> Action -> Rat)
     (varianceProxy : Context -> Action -> NNReal)
     (law :
