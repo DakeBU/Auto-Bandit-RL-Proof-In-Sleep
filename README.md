@@ -18,6 +18,11 @@ A hierarchical multi-agent harness for building Lean-checked bandit and reinforc
 
 ## News
 
+* **July 3, 2026.** Added the structured Lean route roadmap, route-specific
+  PNG diagrams, and collaborator ABRIS screen-run command surface.  Start with
+  `python3 tools/bandit.py list-routes`,
+  `python3 tools/bandit.py route-plan ROUTE-UCB1-FINITE-STOCHASTIC`, and
+  `python3 tools/bandit.py screen-plan BRL-UCB-PORT-001 --route ROUTE-UCB1-FINITE-STOCHASTIC`.
 * **June 25, 2026.** Initial ABRL harness skeleton is live: a Lean package,
   default hierarchical multi-agent workflow, LML theorem-card memory, proof
   obligations, agent skills, and Markdown/LaTeX proof-export protocol.
@@ -127,6 +132,25 @@ The leaf-node rule is that every lower-agent target is either a small
 Mathlib-ready lemma, a thin project-local wrapper, or a theorem-card/cited
 result whose import or port plan is explicit.
 
+The full Lean route atlas is split into PNG diagrams so no single figure has
+to carry the entire proof tree.  The machine-readable source is
+`research-wiki/theory-tree/lean-route-roadmap.json`.
+
+![ABRL Lean tree global route map](docs/assets/lean_tree_global.png)
+
+![ETC formalization route](docs/assets/lean_tree_etc.png)
+
+![UCB formalization route](docs/assets/lean_tree_ucb.png)
+
+![Tsallis-INF and FTRL route](docs/assets/lean_tree_tsallis_ftrl.png)
+
+![Contextual and RL watchlist route map](docs/assets/lean_tree_contextual_rl_watchlist.png)
+
+See [`docs/full_lean_tree_roadmap.md`](docs/full_lean_tree_roadmap.md) for the
+complete route explanation and
+[`docs/collaborator_abris_runbook.md`](docs/collaborator_abris_runbook.md) for
+the screen/Codex run procedure.
+
 ![ABRL Mathlib-ready lemma leaf framework](docs/assets/lemma_leaf_framework.svg)
 
 The dependency graph separates reusable mathematical infrastructure from
@@ -190,6 +214,9 @@ python3 tools/bandit.py list-weapons
 python3 tools/bandit.py list-lean-decls pullCount
 python3 tools/bandit.py next-task
 python3 tools/bandit.py reference-index
+python3 tools/bandit.py list-routes
+python3 tools/bandit.py route-plan ROUTE-UCB1-FINITE-STOCHASTIC --with-commands
+python3 tools/bandit.py screen-plan BRL-UCB-PORT-001 --route ROUTE-UCB1-FINITE-STOCHASTIC
 ```
 
 Create a task:

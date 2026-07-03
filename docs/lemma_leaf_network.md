@@ -3,6 +3,36 @@
 ABRL uses three public diagrams to keep the proof architecture inspectable.
 They are working diagrams for agents, not presentation-only assets.
 
+The current full route atlas is split into PNG diagrams so each theorem family
+can be inspected without crowding.
+
+![ABRL Lean tree global route map](assets/lean_tree_global.png)
+
+ETC is the most developed local route, ending currently at lower-integral
+regret assembly.
+
+![ETC formalization route](assets/lean_tree_etc.png)
+
+UCB has summability/tail consumers but still needs the index and logarithmic
+pull-count proof.
+
+![UCB formalization route](assets/lean_tree_ucb.png)
+
+The finite-simplex and Tsallis/FTRL regularizer surfaces exist; stability,
+self-bounding, and learning-rate optimization remain future leaves.
+
+![Tsallis-INF and FTRL route](assets/lean_tree_tsallis_ftrl.png)
+
+The wider contextual, Bayesian, RL, resource, preference, and modern routes
+share kernels, filtrations, posterior laws, and finite bookkeeping before final
+theorem work.
+
+![Contextual and RL watchlist route map](assets/lean_tree_contextual_rl_watchlist.png)
+
+The machine-readable source for these diagrams is
+`research-wiki/theory-tree/lean-route-roadmap.json`; regenerate the PNG assets
+with `python3 tools/bandit.py render-roadmap-assets`.
+
 ## Framework
 
 ![ABRL Mathlib-ready lemma leaf framework](assets/lemma_leaf_framework.svg)

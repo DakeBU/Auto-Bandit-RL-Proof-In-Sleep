@@ -195,6 +195,13 @@ Watchlist scenarios may still be theorem-card-only.  They should not be used as
 Lean proof targets until a source card, local API, and Mathlib retrieval route
 are recorded.
 
+The machine-readable route atlas is `lean-route-roadmap.json`.  It is the
+handoff contract between upper planning agents and lower Lean agents: each
+route records the compiled local core, missing Mathlib-grade leaves, intended
+proof route, regularity contracts, reviewer gates, and export target.  Human
+readers should use the PNG route diagrams in `docs/assets/` and the detailed
+roadmap in `docs/full_lean_tree_roadmap.md`; agents should load the JSON.
+
 ## Expansion Policy
 
 When adding a theorem:
@@ -206,7 +213,8 @@ When adding a theorem:
 5. make hidden regularity explicit;
 6. write one proof-obligation row per lower-agent leaf;
 7. keep failed attempts in memory with the mathematical diagnosis;
-8. export the compiled theorem to Markdown and LaTeX only after Lean closure.
+8. render or update the route diagram when the dependency shape changes;
+9. export the compiled theorem to Markdown and LaTeX only after Lean closure.
 
 The tree is intentionally larger than the current Lean package.  Branches
 without compiled local declarations remain theorem-card, cited-result, or

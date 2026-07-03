@@ -23,6 +23,7 @@ python3 tools/bandit.py search-memory federated
 | `PPR-ZIMMERT-SELDIN-2018-TSALLIS-INF` | [Zimmert and Seldin, 2018](https://arxiv.org/abs/1807.07623) | best-of-both-worlds, stochastic/adversarial | Tsallis regularizer, FTRL optimality, self-bounding regret |
 | `PPR-MASOUDIAN-SELDIN-2021-TSALLIS-INF` | [Masoudian and Seldin, 2021](https://arxiv.org/abs/2103.12487) | constrained adversarial, corrupted stochastic | stability/penalty split, gap-dependent conversion, power-weight algebra |
 | `PPR-KATO-ITO-2024-LC-TSALLIS-INF` | [Kato and Ito, 2024](https://arxiv.org/abs/2403.03219) | linear contextual best-of-both-worlds | linear loss estimates, Tsallis regularization, contextual confidence bridge |
+| `PPR-KUROKI-RUMI-TSUCHIYA-VITALE-CESABIANCHI-2023-BOBW-LCB` | [Kuroki, Rumi, Tsuchiya, Vitale, and Cesa-Bianchi, 2023](https://arxiv.org/abs/2312.15433) | linear contextual best-of-both-worlds | context distribution contract, linear loss estimator, FTRL stability |
 | `PPR-ADAPTIVE-LR-FTRL-2024` | [Tsuchiya and Ito, 2024](https://arxiv.org/abs/2405.20028) | adaptive FTRL, best-of-both-worlds | adaptive learning rate, stability/penalty split, self-bounding conversion |
 | `PPR-GARIVIER-CAPPE-2011-KLUCB` | [Garivier and Cappé, 2011](https://arxiv.org/abs/1102.2490) | finite stochastic | Bernoulli KL, confidence inversion, bounded reward event |
 | `PPR-AGRAWAL-GOYAL-2011-TS` | [Agrawal and Goyal, 2011](https://arxiv.org/abs/1111.1797) | stochastic, Bayesian posterior | posterior action identity, probability matching, Bayesian regret |
@@ -41,6 +42,8 @@ python3 tools/bandit.py search-memory federated
 | `PPR-FAT-2018-MERITOCRATIC-FAIRNESS` | [Joseph, Kearns, Morgenstern, Neel, and Roth, 2018](https://doi.org/10.1145/3278721.3278764) | fair/contextual | fairness invariant, dominance relation, policy constraint |
 | `PPR-AAAI-2021-FEDERATED-MAB` | [Shi and Shen, 2021](https://doi.org/10.1609/aaai.v35i11.17156) | federated/distributed | client-indexed traces, aggregation invariant, communication count |
 | `PPR-FEDERATED-NEURAL-BANDITS-2022` | [Federated Neural Bandits, 2022](https://arxiv.org/abs/2205.14309) | federated, neural/recommender | client embedding contract, nonlinear confidence surrogate, federated update trace |
+| `PPR-EMNLP-2024-LLM-PRIOR-BANDITS` | [Jump Starting Bandits with LLM-Generated Prior Knowledge, 2024](https://arxiv.org/abs/2406.19317) | LLM priors, contextual | prior-quality contract, logged-data positivity, warm-start comparison |
+| `PPR-BOUNEFFOUF-FERAUD-2025-MAB-LLM` | [Bouneffouf and Feraud, 2025](https://arxiv.org/abs/2505.13355) | LLM/recommender/model-selection bandits | model-selection action space, prompt-policy context contract, feedback bridge |
 
 ## Use Rule
 

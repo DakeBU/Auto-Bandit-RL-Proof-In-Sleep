@@ -36,6 +36,7 @@ BLUEPRINT_DIR = ROOT / "proof-blueprints"
 RETRIEVAL_INDEX_DIR = ROOT / "research-wiki" / "retrieval-index"
 PROBLEM_EXPORT_DIR = ROOT / "paper-notes" / "problem-exports"
 AGENT_PROFILE_DIR = ROOT / "agent-profiles"
+LEAN_ROUTE_ROADMAP = ROOT / "research-wiki" / "theory-tree" / "lean-route-roadmap.json"
 DEFAULT_EXTENDED_PRO_PROMPT = (
     ROOT
     / "reports"
@@ -477,6 +478,16 @@ BANDIT_PAPER_CARDS = [
         "memory_status": "paper-card",
     },
     {
+        "id": "PPR-KUROKI-RUMI-TSUCHIYA-VITALE-CESABIANCHI-2023-BOBW-LCB",
+        "title": "Best-of-Both-Worlds Algorithms for Linear Contextual Bandits",
+        "authors": "Yuko Kuroki; Alberto Rumi; Taira Tsuchiya; Fabio Vitale; Nicolò Cesa-Bianchi",
+        "source": "https://arxiv.org/abs/2312.15433",
+        "scenarios": ["SCN-BOBW-ADAPTIVE", "SCN-CONTEXTUAL", "SCN-LINEAR-GLM"],
+        "proof_roots": ["best-of-both-worlds linear contextual bandits", "FTRL", "stochastic/adversarial interpolation"],
+        "lean_leaf_families": ["context distribution contract", "linear loss estimator", "FTRL stability", "polylog stochastic regret route"],
+        "memory_status": "paper-card",
+    },
+    {
         "id": "PPR-ADAPTIVE-LR-FTRL-2024",
         "title": "A Simple and Adaptive Learning Rate for FTRL in Online Learning with Minimax Regret of Theta(T^(2/3)) and its Application to Best-of-Both-Worlds",
         "authors": "Taira Tsuchiya; Shinji Ito",
@@ -606,6 +617,26 @@ BANDIT_PAPER_CARDS = [
         "lean_leaf_families": ["client embedding contract", "nonlinear confidence surrogate", "federated update trace"],
         "memory_status": "paper-card",
     },
+    {
+        "id": "PPR-EMNLP-2024-LLM-PRIOR-BANDITS",
+        "title": "Jump Starting Bandits with LLM-Generated Prior Knowledge",
+        "authors": "Contextual bandit and LLM-generated prior knowledge authors",
+        "source": "https://arxiv.org/abs/2406.19317",
+        "scenarios": ["SCN-LLM-REC-SYS", "SCN-CONTEXTUAL"],
+        "proof_roots": ["LLM-generated priors", "contextual bandits", "offline-to-online warm start"],
+        "lean_leaf_families": ["prior-quality contract", "logged-data positivity", "contextual regret warm-start comparison"],
+        "memory_status": "paper-card",
+    },
+    {
+        "id": "PPR-BOUNEFFOUF-FERAUD-2025-MAB-LLM",
+        "title": "Multi-Armed Bandits Meet Large Language Models",
+        "authors": "Djallel Bouneffouf; Raphael Feraud",
+        "source": "https://arxiv.org/abs/2505.13355",
+        "scenarios": ["SCN-LLM-REC-SYS", "SCN-CONTEXTUAL"],
+        "proof_roots": ["bandit-enhanced LLM systems", "LLM-enhanced bandit frameworks", "adaptive model/prompt selection"],
+        "lean_leaf_families": ["model-selection action space", "prompt-policy context contract", "human-feedback/logged-feedback bridge"],
+        "memory_status": "survey-card",
+    },
 ]
 
 BANDIT_SCENARIO_CARDS = [
@@ -652,6 +683,7 @@ BANDIT_SCENARIO_CARDS = [
             "PPR-ZIMMERT-SELDIN-2018-TSALLIS-INF",
             "PPR-MASOUDIAN-SELDIN-2021-TSALLIS-INF",
             "PPR-KATO-ITO-2024-LC-TSALLIS-INF",
+            "PPR-KUROKI-RUMI-TSUCHIYA-VITALE-CESABIANCHI-2023-BOBW-LCB",
             "PPR-ADAPTIVE-LR-FTRL-2024",
         ],
         "status": "planned",
@@ -783,7 +815,12 @@ BANDIT_SCENARIO_CARDS = [
         "core_algorithms": ["neural contextual bandits", "bandit prompt optimization", "LLM-assisted priors"],
         "leaf_families": ["offline-to-online priors", "context embeddings", "model-selection regret", "adaptive response generation"],
         "mathlib_needs": ["MLIB-MEASURE-INTEGRAL", "MLIB-PROBABILITY-KERNEL", "MLIB-CONVEX-LINALG"],
-        "source_cards": ["PPR-LI-CHU-LANGFORD-SCHAPIRE-2010-LINUCB", "PPR-FEDERATED-NEURAL-BANDITS-2022"],
+        "source_cards": [
+            "PPR-LI-CHU-LANGFORD-SCHAPIRE-2010-LINUCB",
+            "PPR-FEDERATED-NEURAL-BANDITS-2022",
+            "PPR-EMNLP-2024-LLM-PRIOR-BANDITS",
+            "PPR-BOUNEFFOUF-FERAUD-2025-MAB-LLM",
+        ],
         "status": "watchlist",
     },
 ]
@@ -4366,7 +4403,7 @@ def scan_lean_declarations(include_tests: bool = False) -> list[dict[str, str | 
 
 
 def run(cmd: list[str]) -> int:
-    print("$ " + " ".join(shlex.quote(part) for part in cmd))
+    print("$ " + " ".join(shlex.quote(part) for part in cmd), flush=True)
     return subprocess.run(cmd, cwd=ROOT).returncode
 
 
@@ -5066,6 +5103,7 @@ def cmd_list_lean_decls(args: argparse.Namespace) -> int:
 
 
 def cmd_search_memory(args: argparse.Namespace) -> int:
+    roadmap = load_lean_route_roadmap() if LEAN_ROUTE_ROADMAP.exists() else {}
     haystacks = {
         "lml": LML_CARDS,
         "mathlib": MATHLIB_CARDS,
@@ -5074,6 +5112,8 @@ def cmd_search_memory(args: argparse.Namespace) -> int:
         "scenario": BANDIT_SCENARIO_CARDS,
         "weapon": PROOF_WEAPON_CARDS,
         "local": LOCAL_LEAF_CARDS,
+        "spine": roadmap.get("shared_spines", []),
+        "route": roadmap.get("routes", []),
         "lean": scan_lean_declarations(),
     }
     needle = args.query.lower()
@@ -5097,6 +5137,129 @@ def cmd_search_memory(args: argparse.Namespace) -> int:
     return 0
 
 
+def load_lean_route_roadmap() -> dict:
+    if not LEAN_ROUTE_ROADMAP.exists():
+        raise SystemExit(f"route roadmap not found: {rel(LEAN_ROUTE_ROADMAP)}")
+    return json.loads(read_text(LEAN_ROUTE_ROADMAP))
+
+
+def roadmap_routes() -> list[dict]:
+    roadmap = load_lean_route_roadmap()
+    return list(roadmap.get("routes", []))
+
+
+def find_route(route_id: str) -> dict:
+    route_id_norm = route_id.lower()
+    for route in roadmap_routes():
+        if route.get("id", "").lower() == route_id_norm:
+            return route
+    available = ", ".join(route.get("id", "") for route in roadmap_routes())
+    raise SystemExit(f"unknown route id: {route_id}\navailable routes: {available}")
+
+
+def cmd_list_routes(args: argparse.Namespace) -> int:
+    routes = roadmap_routes()
+    for route in routes:
+        if args.priority and route.get("priority") != args.priority:
+            continue
+        scenarios = ", ".join(route.get("scenario_cards", []))
+        print(f"{route.get('id')}: {route.get('title')} [{route.get('priority')}] :: {scenarios}")
+    return 0
+
+
+def cmd_route_plan(args: argparse.Namespace) -> int:
+    route = find_route(args.id)
+    if args.json:
+        print(json.dumps(route, indent=2, ensure_ascii=False))
+        return 0
+    print(f"# {route['id']}: {route['title']}")
+    print(f"priority: {route.get('priority', '')}")
+    print()
+    print("scenario cards:")
+    for item in route.get("scenario_cards", []):
+        print(f"- {item}")
+    print()
+    print("source cards:")
+    for item in route.get("source_cards", []):
+        print(f"- {item}")
+    print()
+    print("proof weapons, inspiration only:")
+    for item in route.get("proof_weapons", []):
+        print(f"- {item}")
+    print()
+    print("compiled local core:")
+    for item in route.get("compiled_local_core", []):
+        print(f"- {item}")
+    print()
+    print("next Mathlib-ready leaves:")
+    for item in route.get("next_mathlib_ready_leaves", []):
+        print(f"- {item}")
+    print()
+    print("layered route:")
+    for layer in route.get("layers", []):
+        print(f"- {layer.get('name')}:")
+        for node in layer.get("nodes", []):
+            print(f"  - {node}")
+    print()
+    print(f"reviewer gate: {route.get('reviewer_gate', '')}")
+    if args.with_commands:
+        print()
+        print("useful commands:")
+        print(f"- python3 tools/bandit.py search-memory {shlex.quote(route['id'])}")
+        print(f"- python3 tools/bandit.py route-plan {shlex.quote(route['id'])} --json")
+        print("- python3 tools/bandit.py list-lean-decls --statement")
+        print("- python3 tools/bandit.py unfinished")
+        print("- python3 tools/bandit.py check")
+    return 0
+
+
+def cmd_screen_plan(args: argparse.Namespace) -> int:
+    route = find_route(args.route) if args.route else None
+    task = args.task
+    lower_count = args.lower_count
+    cycles = args.cycles
+    profile = args.agent_profile
+    print("# ABRL screen/codex run plan")
+    print()
+    if route:
+        print(f"route: {route['id']} - {route['title']}")
+        print(f"reviewer gate: {route.get('reviewer_gate', '')}")
+        print()
+    print("preflight:")
+    print("python3 tools/bandit.py check")
+    print("python3 tools/bandit.py unfinished")
+    if route:
+        print(f"python3 tools/bandit.py route-plan {shlex.quote(route['id'])} --with-commands")
+    print()
+    print("screen command:")
+    print(f"screen -S abrl-{task}")
+    print()
+    print("inside screen:")
+    print(f"python3 tools/bandit.py blueprint-refresh {shlex.quote(task)}")
+    print(f"python3 tools/bandit.py memory-refresh {shlex.quote(task)}")
+    print(
+        "python3 tools/bandit.py sleep-run "
+        f"{shlex.quote(task)} --cycles {cycles} --lower-count {lower_count} "
+        "--execute "
+        f"--agent-profile {shlex.quote(profile)} "
+        "--check-each-cycle --stop-on-error"
+    )
+    print(f"python3 tools/bandit.py memory-refresh {shlex.quote(task)} --run-id latest")
+    print(f"python3 tools/bandit.py blueprint-refresh {shlex.quote(task)}")
+    print("python3 tools/bandit.py check")
+    print()
+    print("reviewer checklist:")
+    for item in load_lean_route_roadmap().get("screen_loop", {}).get("reviewer_must_check", []):
+        print(f"- {item}")
+    print()
+    print("lower-agent rule: do not start from the whole route; middle must issue one exact Lean leaf packet.")
+    return 0
+
+
+def cmd_render_roadmap_assets(_args: argparse.Namespace) -> int:
+    return run(["python3", "tools/render_lean_tree_assets.py"])
+
+
 def cmd_blueprint_refresh(args: argparse.Namespace) -> int:
     if not task_exists(args.id):
         raise SystemExit(f"task file not found: {rel(task_file(args.id))}")
@@ -5106,6 +5269,7 @@ def cmd_blueprint_refresh(args: argparse.Namespace) -> int:
     completion_text = read_optional(ROOT / "docs" / "completion_gap_audit.md", 18000)
     adaptive_text = read_optional(ROOT / "docs" / "adaptive_harness_design.md", 18000)
     foundation_leaf_text = read_optional(ROOT / "research-wiki" / "theory-tree" / "mathlib-foundation-leaf-map.md", 22000)
+    route_roadmap_text = read_optional(LEAN_ROUTE_ROADMAP, 22000)
     trials = [row for row in load_jsonl(TRIAL_LOG) if row.get("task") == args.id][-20:]
     text = f"""# Proof Blueprint: {args.id}
 
@@ -5134,6 +5298,12 @@ Generated: `{now_iso()}`
 ## Mathlib Foundation Leaf Map
 
 {foundation_leaf_text or "_No foundation leaf map found._"}
+
+## Structured Lean Route Roadmap
+
+```json
+{route_roadmap_text or "{}"}
+```
 
 ## Relevant LML Theorem Cards
 
@@ -5217,6 +5387,7 @@ def cmd_memory_refresh(args: argparse.Namespace) -> int:
         "paper_cards": BANDIT_PAPER_CARDS,
         "scenario_cards": BANDIT_SCENARIO_CARDS,
         "proof_weapon_cards": PROOF_WEAPON_CARDS,
+        "lean_route_roadmap": load_lean_route_roadmap() if LEAN_ROUTE_ROADMAP.exists() else {},
         "local_leaf_cards": LOCAL_LEAF_CARDS,
         "local_lean_declarations": scan_lean_declarations(),
         "recent_trials": trials,
@@ -5229,6 +5400,7 @@ def cmd_memory_refresh(args: argparse.Namespace) -> int:
             "research-wiki/proof-weapons/bandit-proof-weapons.md",
             "research-wiki/theory-tree/bandit-theory-tree.md",
             "research-wiki/theory-tree/mathlib-foundation-leaf-map.md",
+            "research-wiki/theory-tree/lean-route-roadmap.json",
             "research-wiki/mathlib-candidates/",
             "research-wiki/mathlib-candidates/finite-bookkeeping-leaves.md",
             "docs/completion_gap_audit.md",
@@ -6032,9 +6204,30 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--statement", action="store_true", help="print compact declaration statements")
     p.set_defaults(func=cmd_list_lean_decls)
 
-    p = sub.add_parser("search-memory", help="search theorem, Mathlib, textbook, paper, scenario, weapon, local leaf, and Lean declaration cards")
+    p = sub.add_parser("search-memory", help="search theorem, Mathlib, textbook, paper, scenario, weapon, route, spine, local leaf, and Lean declaration cards")
     p.add_argument("query")
     p.set_defaults(func=cmd_search_memory)
+
+    p = sub.add_parser("list-routes", help="list structured theorem-route roadmaps")
+    p.add_argument("--priority", default="", help="optional priority filter such as active, active-next, planned, or watchlist")
+    p.set_defaults(func=cmd_list_routes)
+
+    p = sub.add_parser("route-plan", help="print one structured theorem-route plan")
+    p.add_argument("id")
+    p.add_argument("--json", action="store_true", help="print the raw route JSON")
+    p.add_argument("--with-commands", action="store_true", help="include useful follow-up commands")
+    p.set_defaults(func=cmd_route_plan)
+
+    p = sub.add_parser("screen-plan", help="print a screen/codex execution plan for a task and optional route")
+    p.add_argument("task")
+    p.add_argument("--route", default="")
+    p.add_argument("--cycles", type=int, default=2)
+    p.add_argument("--lower-count", type=int, default=4)
+    p.add_argument("--agent-profile", default="codex-parallel.example.json")
+    p.set_defaults(func=cmd_screen_plan)
+
+    p = sub.add_parser("render-roadmap-assets", help="render structured Lean route roadmap PNG diagrams")
+    p.set_defaults(func=cmd_render_roadmap_assets)
 
     p = sub.add_parser("blueprint-refresh", help="refresh proof blueprint snapshot")
     p.add_argument("id")

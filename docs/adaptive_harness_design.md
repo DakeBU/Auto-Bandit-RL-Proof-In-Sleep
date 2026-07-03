@@ -54,6 +54,19 @@ The population is not an evolutionary free-for-all.  Every candidate remains
 under the same Lean-checkable target unless reviewer records a mathematical
 reason to pivot.
 
+The canonical route atlas lives in
+`research-wiki/theory-tree/lean-route-roadmap.json`.  Agents should inspect it
+with:
+
+```bash
+python3 tools/bandit.py list-routes
+python3 tools/bandit.py route-plan ROUTE-UCB1-FINITE-STOCHASTIC --with-commands
+```
+
+Route entries are upper/middle planning objects.  They are not lower-agent
+proof packets until middle has selected one exact leaf and written the local
+APIs, contracts, and proof route.
+
 ## Middle Decomposition Rule
 
 Middle must turn route ideas into leaf packets before lower work.  A valid leaf

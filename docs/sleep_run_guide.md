@@ -14,6 +14,17 @@ agent.
 
 ## Executed Run
 
+For a route-aware screen packet, print the command plan first:
+
+```bash
+python3 tools/bandit.py screen-plan BRL-UCB-PORT-001 \
+  --route ROUTE-UCB1-FINITE-STOCHASTIC \
+  --cycles 2 \
+  --lower-count 4
+```
+
+Then run the printed commands in a `screen` session.
+
 ```bash
 python3 tools/bandit.py sleep-run TASK_ID \
   --cycles 2 \

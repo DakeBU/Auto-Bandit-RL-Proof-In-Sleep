@@ -81,6 +81,15 @@ class ReviewStatusCliTests(unittest.TestCase):
         self.assertEqual(legacy_prompt_proc.returncode, 0, legacy_prompt_proc.stderr)
         self.assertIn("Extended Pro Review Prompt", legacy_prompt_proc.stdout)
 
+    def test_search_memory_finds_route_roadmap_cards(self) -> None:
+        route_proc = self.run_bandit("search-memory", "ROUTE-UCB1-FINITE-STOCHASTIC")
+        self.assertEqual(route_proc.returncode, 0, route_proc.stderr)
+        self.assertIn("route: ROUTE-UCB1-FINITE-STOCHASTIC", route_proc.stdout)
+
+        spine_proc = self.run_bandit("search-memory", "SPINE-CONCENTRATION")
+        self.assertEqual(spine_proc.returncode, 0, spine_proc.stderr)
+        self.assertIn("spine: SPINE-CONCENTRATION", spine_proc.stdout)
+
     def test_run_cycle_review_gate_stops_when_response_missing(self) -> None:
         status_proc = self.run_bandit("review-status", "--json")
         payload = json.loads(status_proc.stdout)
