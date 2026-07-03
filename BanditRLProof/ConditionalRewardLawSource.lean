@@ -8647,5 +8647,95 @@ theorem centeredReward_succ_condExp_eq_zero_of_reward_map_eq_actual_action_defin
       (hmean_range := hmean_range)
       h_kernel_extend_map_eq i
 
+/--
+Consume a definitional actual-action reward-coordinate source plus the
+practical raw/mean range regularity package to obtain ordinary succ-indexed
+conditional mean-zero.
+
+This is the source-level wrapper for the direct reward-coordinate selected
+measure law consumer: callers provide `GeneratedActionDefinitionalActualRewardMapSource`
+instead of separately threading its state measurability and reward-map field.
+-/
+theorem centeredReward_succ_condExp_eq_zero_of_generatedActionDefinitionalActualRewardMapSource_definitionalRawRangeMeasurableMeanRangeBounded
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (source :
+      GeneratedActionDefinitionalActualRewardMapSource mu rewardKernel policy
+        context state defaultAction reward hreward)
+    (i : Nat) :
+    Filter.EventuallyEq (ae mu)
+      (@condExp Omega Real
+        ((History.historyFiltrationSucc
+          (generatedActionFromRewardHistory policy state defaultAction reward)
+          reward
+          (generatedActionFromRewardHistory_measurable
+            (policy := policy) (state := state)
+            (defaultAction := defaultAction) (reward := reward)
+            hreward source.hstate)
+          hreward) i)
+        mOmega _ _ _ mu
+        (fun omega : Omega =>
+          (((reward omega (i + 1) -
+            mean
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+              Rat) : Real))))
+      (fun _omega : Omega => (0 : Real)) := by
+  exact
+    centeredReward_succ_condExp_eq_zero_of_reward_map_eq_actual_action_definitionalRawRangeMeasurableMeanRangeBounded
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (mean := mean)
+      (varianceProxy := varianceProxy)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (rewardLo := rewardLo)
+      (rewardHi := rewardHi)
+      (meanLo := meanLo)
+      (meanHi := meanHi)
+      (hcontext := hcontext)
+      (hstate := source.hstate)
+      (hmean := hmean)
+      (hkernel := hkernel)
+      (hraw := hraw)
+      (hmean_range := hmean_range)
+      (h_reward_map_eq_actual_action := source.reward_map_eq_actual_action)
+      i
+
 end ConditionalExpectationReward
 end BanditRLProof
