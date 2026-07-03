@@ -2617,6 +2617,8 @@ LOCAL_LEAF_CARDS = [
             "KERNEL-POLICY-BIND",
             "MEAS-HISTORY",
             "KERNEL-REWARD",
+            "INT-REWARD-BOUNDED",
+            "MEAS-REWARD",
         ],
         "module": "BanditRLProof.ConditionalExpectationReward",
         "status": "leanCompiled",
@@ -2624,14 +2626,17 @@ LOCAL_LEAF_CARDS = [
             "ConditionalExpectationReward.reward_condExpKernel_map_eq_selected_actual_action_of_actionRewardHistoryStepKernelFamily_pair_map_eq",
             "ConditionalExpectationReward.reward_condExpKernel_map_eq_selected_actual_action_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
             "ConditionalExpectationReward.reward_condExpKernel_map_eq_selected_actual_action_of_generatedActionTraceSucc_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
+            "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionTraceSucc_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_rawRangeMeasurableMeanRangeBounded",
         ],
-        "role": "Compiled project-local reward-coordinate adapter for the next-pair history-step route: an explicit conditional next (Action x Reward) pushforward law into RewardKernel.actionRewardHistoryStepKernelFamily is projected through Prod.snd and RewardKernel.actionRewardHistoryStepKernelFamily_reward_map to recover the actual-action selected reward law. The finite-pair-history specialization aligns pairContext/pairState with reward-history context/state by History.pairHistoryRewardProjection, and the generated-action wrapper derives the successor action equality from Policy.generatedActionTraceSucc. This still assumes the next-pair condExpKernel law and does not construct the ambient trajectory identification or final adaptive theorem.",
+        "role": "Compiled project-local reward-coordinate adapter and generated-action raw-range mean-zero surface for the next-pair history-step route: an explicit conditional next (Action x Reward) pushforward law into RewardKernel.actionRewardHistoryStepKernelFamily is projected through Prod.snd and RewardKernel.actionRewardHistoryStepKernelFamily_reward_map to recover the actual-action selected reward law. The finite-pair-history specialization aligns pairContext/pairState with reward-history context/state by History.pairHistoryRewardProjection, the generated-action wrapper derives the successor action equality from Policy.generatedActionTraceSucc, and the raw-reward/selected-mean range wrapper records the common generated-action calling convention for succ-indexed conditional mean-zero. This still assumes the next-pair condExpKernel law and does not construct the ambient trajectory identification or final adaptive theorem.",
         "mathlib_routes": [
             "MLIB-CONDITIONAL-EXPECTATION",
             "Mathlib.MeasureTheory.Measure.Map",
             "LOCAL-LEAF-KERNEL-REWARD-MAP-LAW-TRANSFER",
             "LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-FROM-PAIRMAP",
             "LOCAL-LEAF-COND-EXPECT-REWARD-ACTION-FREEZE-GENERATED-TRACE-SOURCE",
+            "INT-REWARD-BOUNDED",
+            "MEAS-REWARD",
         ],
     },
     {
@@ -5900,7 +5905,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- COND-EXPECT-REWARD-RANDOM-PAIR-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE is compiled locally as a source-conversion leaf: a definitional raw-reward-range/measurable-mean-range bounded generated random-pair source now projects its packaged definitional map source into the weaker definitional actual-action reward-coordinate source; it still assumes the definitional raw-range/measurable-mean-range source fields and random pair law.")
     print("- COND-EXPECT-REWARD-RANDOM-PAIR-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE is compiled locally as a source-conversion leaf: a definitional raw-reward-range/measurable-mean-range bounded generated random-pair source now projects through the definitional actual-map source into the explicit generated actual-action reward-coordinate source using generatedActionFromRewardHistory; it still assumes the definitional raw-range/measurable-mean-range source fields and random pair law.")
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-REWARD-MAP is compiled locally as the extension-map reward-coordinate adapter and raw-range mean-zero consumer: it lifts the frozen-prefix extension-map partialTraj law to the full finite-pair trace law, projects it to the actual-action selected reward law, and derives succ-indexed conditional mean-zero from raw-reward/selected-mean range bounds; it still assumes the extension-map law and ambient trajectory-to-condExpKernel identification.")
-    print("- COND-EXPECT-REWARD-NEXTPAIR-HISTORYSTEP-REWARD-MAP is compiled locally as the direct history-step next-pair reward-coordinate adapter: it projects an explicit RewardKernel.actionRewardHistoryStepKernelFamily pair law through Prod.snd and rewrites the policy action to the actual successor action; it still assumes the next-pair condExpKernel law and ambient trajectory-to-condExpKernel identification.")
+    print("- COND-EXPECT-REWARD-NEXTPAIR-HISTORYSTEP-REWARD-MAP is compiled locally as the direct history-step next-pair reward-coordinate adapter and generated-action raw-range mean-zero surface: it projects an explicit RewardKernel.actionRewardHistoryStepKernelFamily pair law through Prod.snd, rewrites the policy action to the actual successor action, and exposes a generated-action raw/mean range wrapper for succ-indexed conditional mean-zero; it still assumes the next-pair condExpKernel law and ambient trajectory-to-condExpKernel identification.")
     print("- Review responses recorded include the historical Extended Pro artifacts and the current local dual-agent review artifacts under reports/.")
     print("- ETC-WRONG-COMMIT-PROBABILITY-DESIGN is recorded as theorem-card-only / missing-leaf design, not a local proof.")
     print("- Do not prove the generic constant-arm suffix lemma, simplify the RHS, or start broad Hoeffding/martingale/final ETC theorem work in the same batch.")

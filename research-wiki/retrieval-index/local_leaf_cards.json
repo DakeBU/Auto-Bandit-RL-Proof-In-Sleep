@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-03T11:46:05+00:00",
+  "generated": "2026-07-03T12:01:25+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -1983,22 +1983,27 @@
         "COND-EXPECT-REWARD",
         "KERNEL-POLICY-BIND",
         "MEAS-HISTORY",
-        "KERNEL-REWARD"
+        "KERNEL-REWARD",
+        "INT-REWARD-BOUNDED",
+        "MEAS-REWARD"
       ],
       "module": "BanditRLProof.ConditionalExpectationReward",
       "status": "leanCompiled",
       "declarations": [
         "ConditionalExpectationReward.reward_condExpKernel_map_eq_selected_actual_action_of_actionRewardHistoryStepKernelFamily_pair_map_eq",
         "ConditionalExpectationReward.reward_condExpKernel_map_eq_selected_actual_action_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
-        "ConditionalExpectationReward.reward_condExpKernel_map_eq_selected_actual_action_of_generatedActionTraceSucc_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace"
+        "ConditionalExpectationReward.reward_condExpKernel_map_eq_selected_actual_action_of_generatedActionTraceSucc_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
+        "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionTraceSucc_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_rawRangeMeasurableMeanRangeBounded"
       ],
-      "role": "Compiled project-local reward-coordinate adapter for the next-pair history-step route: an explicit conditional next (Action x Reward) pushforward law into RewardKernel.actionRewardHistoryStepKernelFamily is projected through Prod.snd and RewardKernel.actionRewardHistoryStepKernelFamily_reward_map to recover the actual-action selected reward law. The finite-pair-history specialization aligns pairContext/pairState with reward-history context/state by History.pairHistoryRewardProjection, and the generated-action wrapper derives the successor action equality from Policy.generatedActionTraceSucc. This still assumes the next-pair condExpKernel law and does not construct the ambient trajectory identification or final adaptive theorem.",
+      "role": "Compiled project-local reward-coordinate adapter and generated-action raw-range mean-zero surface for the next-pair history-step route: an explicit conditional next (Action x Reward) pushforward law into RewardKernel.actionRewardHistoryStepKernelFamily is projected through Prod.snd and RewardKernel.actionRewardHistoryStepKernelFamily_reward_map to recover the actual-action selected reward law. The finite-pair-history specialization aligns pairContext/pairState with reward-history context/state by History.pairHistoryRewardProjection, the generated-action wrapper derives the successor action equality from Policy.generatedActionTraceSucc, and the raw-reward/selected-mean range wrapper records the common generated-action calling convention for succ-indexed conditional mean-zero. This still assumes the next-pair condExpKernel law and does not construct the ambient trajectory identification or final adaptive theorem.",
       "mathlib_routes": [
         "MLIB-CONDITIONAL-EXPECTATION",
         "Mathlib.MeasureTheory.Measure.Map",
         "LOCAL-LEAF-KERNEL-REWARD-MAP-LAW-TRANSFER",
         "LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-FROM-PAIRMAP",
-        "LOCAL-LEAF-COND-EXPECT-REWARD-ACTION-FREEZE-GENERATED-TRACE-SOURCE"
+        "LOCAL-LEAF-COND-EXPECT-REWARD-ACTION-FREEZE-GENERATED-TRACE-SOURCE",
+        "INT-REWARD-BOUNDED",
+        "MEAS-REWARD"
       ]
     },
     {
