@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-03T10:25:53+00:00",
+  "generated": "2026-07-03T10:34:28+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -1816,7 +1816,9 @@
       "leaf_ids": [
         "COND-EXPECT-REWARD",
         "MEAS-HISTORY",
-        "KERNEL-POLICY-BIND"
+        "KERNEL-POLICY-BIND",
+        "INT-REWARD-BOUNDED",
+        "MEAS-REWARD"
       ],
       "module": "BanditRLProof.ConditionalExpectationReward",
       "status": "leanCompiled",
@@ -1826,14 +1828,17 @@
         "History.finitePairHistoryOfTrace_apply",
         "History.pairHistoryRewardProjection_finitePairHistoryOfTrace",
         "History.measurable_finitePairHistoryOfTrace",
-        "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace"
+        "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
+        "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_rawRangeMeasurableMeanRangeBounded"
       ],
-      "role": "Compiled project-local named finite pair-trace hookup for the generated-history concrete pair-law consumer: History now exposes the Finset.Iic-indexed action/reward pair-coordinate trace prefix and its measurability/projection equality, and ConditionalExpectationReward states the remaining condExpKernel pair-law hypothesis using History.finitePairHistoryOfTrace. This aligns the consumer with RewardKernel.actionRewardPartialTrajectoryKernel's pair-coordinate prefix shape; the actual condExpKernel pair-law identity remains open.",
+      "role": "Compiled project-local named finite pair-trace hookup for the generated-history concrete pair-law consumer: History now exposes the Finset.Iic-indexed action/reward pair-coordinate trace prefix and its measurability/projection equality, and ConditionalExpectationReward states the remaining condExpKernel pair-law hypothesis using History.finitePairHistoryOfTrace. A source-free raw-reward/selected-mean range wrapper now derives centered-reward integrability automatically before consuming that direct history-step next-pair law. This aligns the consumer with RewardKernel.actionRewardPartialTrajectoryKernel's pair-coordinate prefix shape; the actual condExpKernel pair-law identity remains open.",
       "mathlib_routes": [
         "MLIB-CONDITIONAL-EXPECTATION",
         "LOCAL-LEAF-FINITE-HISTORY-PRODUCT-MEASURABILITY",
         "LOCAL-LEAF-COND-EXPECT-REWARD-PAIR-MAP-PROJECTION-MEAS-HOOKUP",
-        "LOCAL-LEAF-POLICY-REWARD-ACTION-REWARD-PARTIAL-TRAJECTORY"
+        "LOCAL-LEAF-POLICY-REWARD-ACTION-REWARD-PARTIAL-TRAJECTORY",
+        "INT-REWARD-BOUNDED",
+        "MEAS-REWARD"
       ]
     },
     {
