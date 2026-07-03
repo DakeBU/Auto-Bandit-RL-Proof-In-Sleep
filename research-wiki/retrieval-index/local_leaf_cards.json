@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-03T09:07:24+00:00",
+  "generated": "2026-07-03T09:18:15+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -2138,9 +2138,10 @@
       "declarations": [
         "ConditionalExpectationReward.GeneratedActionActualRewardMapSource",
         "ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionActualRewardMapSource",
-        "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionActualRewardMapSource"
+        "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionActualRewardMapSource",
+        "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionActualRewardMapSource_rawRangeMeasurableMeanRangeBounded"
       ],
-      "role": "Compiled generated-policy actual reward-coordinate map source contract for the COND-EXPECT-REWARD route: it packages shifted generated-action equality plus the per-step conditional law of only the next reward coordinate under the actual next action, then reuses the existing actual reward-map route to expose full finite-pair-trace partialTraj law and succ-indexed conditional mean-zero under integrability. This is weaker than the random next-pair source and still assumes the actual reward-coordinate law, ambient trajectory-to-condExpKernel identification, integrability, and final adaptive theorem.",
+      "role": "Compiled generated-policy actual reward-coordinate map source contract for the COND-EXPECT-REWARD route: it packages shifted generated-action equality plus the per-step conditional law of only the next reward coordinate under the actual next action, then reuses the existing actual reward-map route to expose full finite-pair-trace partialTraj law and succ-indexed conditional mean-zero under integrability; it now also directly consumes the same source plus raw reward and selected-mean range regularity into succ-indexed conditional mean-zero without a separate integrability hypothesis. This is weaker than the random next-pair source and still assumes the actual reward-coordinate law, ambient trajectory-to-condExpKernel identification, raw/mean range regularity or integrability, and final adaptive theorem.",
       "mathlib_routes": [
         "MLIB-CONDITIONAL-EXPECTATION",
         "LOCAL-LEAF-COND-EXPECT-REWARD-NEXTPAIR-GENERATED-ACTION-ACTUAL-REWARD-HOOKUP",
@@ -3086,6 +3087,7 @@
       "declarations": [
         "ConditionalExpectationReward.GeneratedActionRandomPairRawRangeMeasurableMeanRangeBoundedSource",
         "ConditionalExpectationReward.rawReward_succ_bound_of_reward_range_bound",
+        "ConditionalExpectationReward.centeredReward_succ_integrable_of_rawRangeMeasurableMeanRangeBounded",
         "ConditionalExpectationReward.generatedActionRandomPairRawBoundMeasurableMeanRangeBoundedSource_of_rawRangeMeasurableMeanRangeBoundedSource",
         "ConditionalExpectationReward.centeredReward_succ_aemeasurable_of_generatedActionRandomPairRawRangeMeasurableMeanRangeBoundedSource",
         "ConditionalExpectationReward.centeredReward_succ_bound_of_generatedActionRandomPairRawRangeMeasurableMeanRangeBoundedSource",
@@ -3093,7 +3095,7 @@
         "ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairRawRangeMeasurableMeanRangeBoundedSource",
         "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairRawRangeMeasurableMeanRangeBoundedSource"
       ],
-      "role": "Compiled raw-reward-range/measurable-mean-range generated-policy source contract for the COND-EXPECT-REWARD route: it removes the raw-reward a.e. bound field from the raw-bound/measurable-mean-range source by deriving raw reward interval evidence from a deterministic pointwise range bound on the reward trace, then reuses the raw-bound/measurable-mean-range source to expose centered a.e. measurability, centered bounds, integrability, full finite-pair-trace partialTraj law, and succ-indexed conditional mean-zero. This still assumes the random pair law source, mean measurability, deterministic raw reward and mean range bounds, ambient trajectory-to-condExpKernel identification, and final adaptive theorem.",
+      "role": "Compiled raw-reward-range/measurable-mean-range generated-policy source contract for the COND-EXPECT-REWARD route: it removes the raw-reward a.e. bound field from the raw-bound/measurable-mean-range source by deriving raw reward interval evidence from a deterministic pointwise range bound on the reward trace, exposes a source-free regularity helper turning raw reward and selected-mean range evidence into centered-reward integrability, then reuses the raw-bound/measurable-mean-range source to expose centered a.e. measurability, centered bounds, integrability, full finite-pair-trace partialTraj law, and succ-indexed conditional mean-zero. This still assumes the random pair law source, mean measurability, deterministic raw reward and mean range bounds, ambient trajectory-to-condExpKernel identification, and final adaptive theorem.",
       "mathlib_routes": [
         "MLIB-MEASURE-INTEGRAL",
         "MLIB-CONDITIONAL-EXPECTATION",
