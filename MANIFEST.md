@@ -2384,3 +2384,5 @@ here during local harness runs.
 - `2026-07-03T08:26:57+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
 - `2026-07-03T08:37:21+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
 - `2026-07-03T08:37:21+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-07-03T08:46:41+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-07-03T08:46:41+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
