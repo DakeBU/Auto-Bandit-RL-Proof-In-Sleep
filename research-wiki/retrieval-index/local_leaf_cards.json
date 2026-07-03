@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-03T09:18:15+00:00",
+  "generated": "2026-07-03T09:25:22+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -2109,11 +2109,12 @@
         "ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc_reward_map_eq_actual_action",
         "ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc_pair_map_eq_actual_action",
         "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionTraceSucc_reward_map_eq_actual_action",
+        "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionTraceSucc_reward_map_eq_actual_action_rawRangeMeasurableMeanRangeBounded",
         "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionTraceSucc_pair_map_eq_actual_action",
         "ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc_random_pair_map_eq_actual_action",
         "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionTraceSucc_random_pair_map_eq_actual_action"
       ],
-      "role": "Compiled generated-action plus actual/random-pair reward-law hookup for the COND-EXPECT-REWARD route: if the conditional law is stated as an actual-action pair-product law, Prod.snd marginalization gives the actual-action reward-coordinate law and a reusable adapter exposes the resulting full finite-pair-trace partialTraj law; if it is stated for the fully random next pair, the generated action trace first freezes the action coordinate with Measure.map_congr and a second reusable adapter exposes the same full-trace law. The route then rewrites the selected action to the policy action, combines it with the split-law builder to produce the full next-pair condExpKernel law, pushes that through the extension-map partialTraj builder, and provides succ-indexed conditional mean-zero consumers under integrability. This still assumes the pair/reward law source and does not prove the full ambient trajectory-to-condExpKernel identification.",
+      "role": "Compiled generated-action plus actual/random-pair reward-law hookup for the COND-EXPECT-REWARD route: if the conditional law is stated as an actual-action pair-product law, Prod.snd marginalization gives the actual-action reward-coordinate law and a reusable adapter exposes the resulting full finite-pair-trace partialTraj law; if it is stated for the fully random next pair, the generated action trace first freezes the action coordinate with Measure.map_congr and a second reusable adapter exposes the same full-trace law. The route then rewrites the selected action to the policy action, combines it with the split-law builder to produce the full next-pair condExpKernel law, pushes that through the extension-map partialTraj builder, and provides succ-indexed conditional mean-zero consumers under integrability; it now also consumes the explicit generated-action equality plus reward-coordinate law and raw/mean range regularity directly into mean-zero without first packaging a source or passing a separate integrability hypothesis. This still assumes the pair/reward law source and does not prove the full ambient trajectory-to-condExpKernel identification.",
       "mathlib_routes": [
         "MLIB-CONDITIONAL-EXPECTATION",
         "LOCAL-LEAF-COND-EXPECT-REWARD-NEXTPAIR-SPLIT-LAW-BUILDER",
