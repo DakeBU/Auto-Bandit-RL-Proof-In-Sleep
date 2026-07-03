@@ -2450,6 +2450,8 @@ LOCAL_LEAF_CARDS = [
             "COND-EXPECT-REWARD",
             "MEAS-HISTORY",
             "KERNEL-POLICY-BIND",
+            "INT-REWARD-BOUNDED",
+            "MEAS-REWARD",
         ],
         "module": "BanditRLProof.ConditionalExpectationReward",
         "status": "leanCompiled",
@@ -2457,12 +2459,15 @@ LOCAL_LEAF_CARDS = [
             "History.pairHistoryRewardProjection",
             "History.measurable_pairHistoryRewardProjection",
             "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_projected_of_context_state_measurable",
+            "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_projected_of_context_state_measurable_rawRangeMeasurableMeanRangeBounded",
         ],
-        "role": "Compiled project-local projection-measurability hookup for the generated-history concrete pair-law consumer: History now exposes the measurable reward projection from finite action/reward pair histories, and ConditionalExpectationReward uses it to derive reward-projection pairContext/pairState measurability from the original reward-history context/state measurability. The remaining structural input is still the concrete generated-history condExpKernel action/reward pair-law pushforward equality.",
+        "role": "Compiled project-local projection-measurability hookup for the generated-history concrete pair-law consumer: History now exposes the measurable reward projection from finite action/reward pair histories, and ConditionalExpectationReward uses it to derive reward-projection pairContext/pairState measurability from the original reward-history context/state measurability. A source-free raw-reward/selected-mean range wrapper now derives centered-reward integrability automatically for this projection-measurable route. The remaining structural input is still the concrete generated-history condExpKernel action/reward pair-law pushforward equality.",
         "mathlib_routes": [
             "MLIB-CONDITIONAL-EXPECTATION",
             "LOCAL-LEAF-FINITE-HISTORY-PRODUCT-MEASURABILITY",
             "LOCAL-LEAF-COND-EXPECT-REWARD-PAIR-MAP-HISTORYTRACE-PROJECTION-HOOKUP",
+            "INT-REWARD-BOUNDED",
+            "MEAS-REWARD",
         ],
     },
     {
@@ -5696,7 +5701,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- COND-EXPECT-REWARD-PAIR-MAP-CONSUMER is compiled locally as the next action/reward pair-law consumer: a condExpKernel pushforward identity to RewardKernel.actionRewardHistoryStepKernelFamily now marginalizes through Prod.snd into the reward-coordinate map-law consumer, with a raw/mean range wrapper deriving centered-reward integrability automatically; the actual partialTraj-to-condExpKernel pair-law identification remains open.")
     print("- COND-EXPECT-REWARD-PAIR-MAP-HISTORYFILTRATION-HOOKUP is compiled locally as the generated History.historyFiltrationSucc specialization of the pair-law consumer; next-coordinate and prefix measurability are supplied by local history-filtration APIs, and a raw-reward/selected-mean range wrapper now derives centered-reward integrability automatically; the actual condExpKernel pair-law identity remains open.")
     print("- COND-EXPECT-REWARD-PAIR-MAP-HISTORYTRACE-PROJECTION-HOOKUP is compiled locally as the concrete finite trace-pair history and reward-projection context/state specialization of the generated-history pair-law consumer, with a raw-reward/selected-mean range wrapper deriving centered-reward integrability automatically; the actual condExpKernel pair-law identity remains open.")
-    print("- COND-EXPECT-REWARD-PAIR-MAP-PROJECTION-MEAS-HOOKUP is compiled locally as the measurable reward-projection hookup for pair histories, deriving projected pairContext/pairState measurability from reward-history context/state measurability; the actual condExpKernel pair-law identity remains open.")
+    print("- COND-EXPECT-REWARD-PAIR-MAP-PROJECTION-MEAS-HOOKUP is compiled locally as the measurable reward-projection hookup for pair histories, deriving projected pairContext/pairState measurability from reward-history context/state measurability and now deriving centered-reward integrability from raw-reward/selected-mean range bounds; the actual condExpKernel pair-law identity remains open.")
     print("- COND-EXPECT-REWARD-PAIR-MAP-FINITEPAIRTRACE-HOOKUP is compiled locally as the named History.finitePairHistoryOfTrace specialization of the generated-history pair-law consumer; the actual condExpKernel pair-law identity remains open.")
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-CONSUMER is compiled locally as the partialTraj finite-pair-trace consumer: an explicit generated-history condExpKernel law for the extended pair trace projects through the partialTraj next-coordinate marginal into a reusable next-pair map-law adapter, then into the centered-reward consumer; a raw-reward/selected-mean range wrapper now derives centered-reward integrability automatically before consuming the same full finite-pair partialTraj law; the actual condExpKernel/partialTraj law remains open.")
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-CONSUMER is compiled locally as the extension-map partialTraj consumer: Measure.map_congr turns the generated successor decomposition into a pushforward identity, a reusable adapter lifts an extension-map law back to the full finite-pair-trace partialTraj law, and a raw-reward/selected-mean range wrapper derives centered-reward integrability automatically before consuming the narrower extension-map law; the actual condExpKernel/partialTraj law remains open.")

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-03T11:16:01+00:00",
+  "generated": "2026-07-03T11:22:50+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -1816,20 +1816,25 @@
       "leaf_ids": [
         "COND-EXPECT-REWARD",
         "MEAS-HISTORY",
-        "KERNEL-POLICY-BIND"
+        "KERNEL-POLICY-BIND",
+        "INT-REWARD-BOUNDED",
+        "MEAS-REWARD"
       ],
       "module": "BanditRLProof.ConditionalExpectationReward",
       "status": "leanCompiled",
       "declarations": [
         "History.pairHistoryRewardProjection",
         "History.measurable_pairHistoryRewardProjection",
-        "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_projected_of_context_state_measurable"
+        "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_projected_of_context_state_measurable",
+        "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_projected_of_context_state_measurable_rawRangeMeasurableMeanRangeBounded"
       ],
-      "role": "Compiled project-local projection-measurability hookup for the generated-history concrete pair-law consumer: History now exposes the measurable reward projection from finite action/reward pair histories, and ConditionalExpectationReward uses it to derive reward-projection pairContext/pairState measurability from the original reward-history context/state measurability. The remaining structural input is still the concrete generated-history condExpKernel action/reward pair-law pushforward equality.",
+      "role": "Compiled project-local projection-measurability hookup for the generated-history concrete pair-law consumer: History now exposes the measurable reward projection from finite action/reward pair histories, and ConditionalExpectationReward uses it to derive reward-projection pairContext/pairState measurability from the original reward-history context/state measurability. A source-free raw-reward/selected-mean range wrapper now derives centered-reward integrability automatically for this projection-measurable route. The remaining structural input is still the concrete generated-history condExpKernel action/reward pair-law pushforward equality.",
       "mathlib_routes": [
         "MLIB-CONDITIONAL-EXPECTATION",
         "LOCAL-LEAF-FINITE-HISTORY-PRODUCT-MEASURABILITY",
-        "LOCAL-LEAF-COND-EXPECT-REWARD-PAIR-MAP-HISTORYTRACE-PROJECTION-HOOKUP"
+        "LOCAL-LEAF-COND-EXPECT-REWARD-PAIR-MAP-HISTORYTRACE-PROJECTION-HOOKUP",
+        "INT-REWARD-BOUNDED",
+        "MEAS-REWARD"
       ]
     },
     {
