@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-03T10:09:16+00:00",
+  "generated": "2026-07-03T10:18:26+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -1841,19 +1841,24 @@
       "leaf_ids": [
         "COND-EXPECT-REWARD",
         "KERNEL-POLICY-BIND",
-        "MEAS-HISTORY"
+        "MEAS-HISTORY",
+        "INT-REWARD-BOUNDED",
+        "MEAS-REWARD"
       ],
       "module": "BanditRLProof.ConditionalExpectationReward",
       "status": "leanCompiled",
       "declarations": [
         "ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_map_eq_of_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
-        "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace"
+        "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
+        "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_rawRangeMeasurableMeanRangeBounded"
       ],
-      "role": "Compiled project-local consumer that turns an explicit generated-history condExpKernel law for the extended finite action/reward pair trace into the existing next-pair map-law consumer via RewardKernel.actionRewardPartialTrajectoryKernel_succ_next_map_apply. The projection theorem is now exposed as a reusable law adapter, and the centered-reward consumer uses the same route to align COND-EXPECT-REWARD with the Mathlib partialTraj finite-prefix surface. This still assumes the actual condExpKernel/partialTraj law.",
+      "role": "Compiled project-local consumer that turns an explicit generated-history condExpKernel law for the extended finite action/reward pair trace into the existing next-pair map-law consumer via RewardKernel.actionRewardPartialTrajectoryKernel_succ_next_map_apply. The projection theorem is exposed as a reusable law adapter, the centered-reward consumer aligns COND-EXPECT-REWARD with the Mathlib partialTraj finite-prefix surface, and a raw-reward/selected-mean range wrapper now derives centered-reward integrability automatically before consuming the full finite-pair partialTraj law. This still assumes the actual condExpKernel/partialTraj law.",
       "mathlib_routes": [
         "MLIB-CONDITIONAL-EXPECTATION",
         "LOCAL-LEAF-POLICY-REWARD-PARTIALTRAJ-SUCC-NEXT-MAP",
-        "LOCAL-LEAF-COND-EXPECT-REWARD-PAIR-MAP-FINITEPAIRTRACE-HOOKUP"
+        "LOCAL-LEAF-COND-EXPECT-REWARD-PAIR-MAP-FINITEPAIRTRACE-HOOKUP",
+        "INT-REWARD-BOUNDED",
+        "MEAS-REWARD"
       ]
     },
     {

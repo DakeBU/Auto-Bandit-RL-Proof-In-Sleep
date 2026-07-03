@@ -2475,18 +2475,23 @@ LOCAL_LEAF_CARDS = [
             "COND-EXPECT-REWARD",
             "KERNEL-POLICY-BIND",
             "MEAS-HISTORY",
+            "INT-REWARD-BOUNDED",
+            "MEAS-REWARD",
         ],
         "module": "BanditRLProof.ConditionalExpectationReward",
         "status": "leanCompiled",
         "declarations": [
             "ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_map_eq_of_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
             "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
+            "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_rawRangeMeasurableMeanRangeBounded",
         ],
-        "role": "Compiled project-local consumer that turns an explicit generated-history condExpKernel law for the extended finite action/reward pair trace into the existing next-pair map-law consumer via RewardKernel.actionRewardPartialTrajectoryKernel_succ_next_map_apply. The projection theorem is now exposed as a reusable law adapter, and the centered-reward consumer uses the same route to align COND-EXPECT-REWARD with the Mathlib partialTraj finite-prefix surface. This still assumes the actual condExpKernel/partialTraj law.",
+        "role": "Compiled project-local consumer that turns an explicit generated-history condExpKernel law for the extended finite action/reward pair trace into the existing next-pair map-law consumer via RewardKernel.actionRewardPartialTrajectoryKernel_succ_next_map_apply. The projection theorem is exposed as a reusable law adapter, the centered-reward consumer aligns COND-EXPECT-REWARD with the Mathlib partialTraj finite-prefix surface, and a raw-reward/selected-mean range wrapper now derives centered-reward integrability automatically before consuming the full finite-pair partialTraj law. This still assumes the actual condExpKernel/partialTraj law.",
         "mathlib_routes": [
             "MLIB-CONDITIONAL-EXPECTATION",
             "LOCAL-LEAF-POLICY-REWARD-PARTIALTRAJ-SUCC-NEXT-MAP",
             "LOCAL-LEAF-COND-EXPECT-REWARD-PAIR-MAP-FINITEPAIRTRACE-HOOKUP",
+            "INT-REWARD-BOUNDED",
+            "MEAS-REWARD",
         ],
     },
     {
@@ -5662,7 +5667,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- COND-EXPECT-REWARD-PAIR-MAP-HISTORYTRACE-PROJECTION-HOOKUP is compiled locally as the concrete finite trace-pair history and reward-projection context/state specialization of the generated-history pair-law consumer; the actual condExpKernel pair-law identity remains open.")
     print("- COND-EXPECT-REWARD-PAIR-MAP-PROJECTION-MEAS-HOOKUP is compiled locally as the measurable reward-projection hookup for pair histories, deriving projected pairContext/pairState measurability from reward-history context/state measurability; the actual condExpKernel pair-law identity remains open.")
     print("- COND-EXPECT-REWARD-PAIR-MAP-FINITEPAIRTRACE-HOOKUP is compiled locally as the named History.finitePairHistoryOfTrace specialization of the generated-history pair-law consumer; the actual condExpKernel pair-law identity remains open.")
-    print("- COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-CONSUMER is compiled locally as the partialTraj finite-pair-trace consumer: an explicit generated-history condExpKernel law for the extended pair trace projects through the partialTraj next-coordinate marginal into a reusable next-pair map-law adapter, then into the centered-reward consumer; the actual condExpKernel/partialTraj law remains open.")
+    print("- COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-CONSUMER is compiled locally as the partialTraj finite-pair-trace consumer: an explicit generated-history condExpKernel law for the extended pair trace projects through the partialTraj next-coordinate marginal into a reusable next-pair map-law adapter, then into the centered-reward consumer; a raw-reward/selected-mean range wrapper now derives centered-reward integrability automatically before consuming the same full finite-pair partialTraj law; the actual condExpKernel/partialTraj law remains open.")
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-CONSUMER is compiled locally as the extension-map partialTraj consumer: Measure.map_congr turns the generated successor decomposition into a pushforward identity, and a reusable adapter lifts an extension-map law back to the full finite-pair-trace partialTraj law; the actual condExpKernel/partialTraj law remains open.")
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-FROM-PAIRMAP is compiled locally as the law builder from a next-pair condExpKernel pushforward identity to the extension-map partialTraj identity; the next-pair law itself remains open.")
     print("- COND-EXPECT-REWARD-NEXTPAIR-SPLIT-LAW-BUILDER is compiled locally as the split-law builder from conditional action a.e. equality plus reward-coordinate map law to the full next-pair condExpKernel law; predictability and reward-law sources remain open.")
