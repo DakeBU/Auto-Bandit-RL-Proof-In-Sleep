@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-03T08:11:11+00:00",
+  "generated": "2026-07-03T08:26:57+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -2074,11 +2074,27 @@
       "statement": "structure GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
+      "kind": "def",
+      "name": "generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_actionRewardPartialTrajectoryKernel_map_eq",
+      "full_name": "BanditRLProof.ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_actionRewardPartialTrajectoryKernel_map_eq",
+      "file": "BanditRLProof/ConditionalRewardLawSource.lean",
+      "line": 1674,
+      "statement": "def generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_actionRewardPartialTrajectoryKernel_map_eq {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
+    },
+    {
+      "kind": "def",
+      "name": "generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_actionRewardPartialTrajectoryKernel_extend_map_eq",
+      "full_name": "BanditRLProof.ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_actionRewardPartialTrajectoryKernel_extend_map_eq",
+      "file": "BanditRLProof/ConditionalRewardLawSource.lean",
+      "line": 1788,
+      "statement": "def generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_actionRewardPartialTrajectoryKernel_extend_map_eq {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
+    },
+    {
       "kind": "theorem",
       "name": "rawReward_succ_aemeasurable_of_measurable_reward",
       "full_name": "BanditRLProof.ConditionalExpectationReward.rawReward_succ_aemeasurable_of_measurable_reward",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 1670,
+      "line": 1902,
       "statement": "theorem rawReward_succ_aemeasurable_of_measurable_reward {Omega : Type u} [mOmega : MeasurableSpace Omega] (mu : MeasureTheory.Measure Omega) (reward : Omega -> RewardTrace Rat) (hreward : forall t : Nat, Measurable (fun omega : Omega => reward omega t)) (i : Nat) : AEMeasurable"
     },
     {
@@ -2086,7 +2102,7 @@
       "name": "selectedMean_succ_aemeasurable_of_measurable_mean",
       "full_name": "BanditRLProof.ConditionalExpectationReward.selectedMean_succ_aemeasurable_of_measurable_mean",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 1687,
+      "line": 1919,
       "statement": "theorem selectedMean_succ_aemeasurable_of_measurable_mean {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] (mu : MeasureTheory.Measure Omega) (policy : Nat -> Policy.MeasurablePolicy State Action) (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)"
     },
     {
@@ -2094,7 +2110,7 @@
       "name": "selectedMean_succ_bound_of_mean_range_bound",
       "full_name": "BanditRLProof.ConditionalExpectationReward.selectedMean_succ_bound_of_mean_range_bound",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 1754,
+      "line": 1986,
       "statement": "theorem selectedMean_succ_bound_of_mean_range_bound {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] (mu : MeasureTheory.Measure Omega) (policy : Nat -> Policy.MeasurablePolicy State Action) (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)"
     },
     {
@@ -2102,7 +2118,7 @@
       "name": "rawReward_succ_bound_of_reward_range_bound",
       "full_name": "BanditRLProof.ConditionalExpectationReward.rawReward_succ_bound_of_reward_range_bound",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 1794,
+      "line": 2026,
       "statement": "theorem rawReward_succ_bound_of_reward_range_bound {Omega : Type u} [mOmega : MeasurableSpace Omega] (mu : MeasureTheory.Measure Omega) (reward : Omega -> RewardTrace Rat) (rewardLo rewardHi : Nat -> Real) (hreward_bound : forall i : Nat, forall omega : Omega, Set.Icc (rewardLo i) (rewardHi i)"
     },
     {
@@ -2110,7 +2126,7 @@
       "name": "generatedActionRandomPairRawMeanBoundedSource_of_rawBoundMeanBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.generatedActionRandomPairRawMeanBoundedSource_of_rawBoundMeanBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 1818,
+      "line": 2050,
       "statement": "def generatedActionRandomPairRawMeanBoundedSource_of_rawBoundMeanBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2118,7 +2134,7 @@
       "name": "generatedActionRandomPairRawBoundMeanBoundedSource_of_rawBoundMeasurableMeanBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.generatedActionRandomPairRawBoundMeanBoundedSource_of_rawBoundMeasurableMeanBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 1861,
+      "line": 2093,
       "statement": "def generatedActionRandomPairRawBoundMeanBoundedSource_of_rawBoundMeasurableMeanBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2126,7 +2142,7 @@
       "name": "generatedActionRandomPairRawBoundMeasurableMeanBoundedSource_of_rawBoundMeasurableMeanRangeBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.generatedActionRandomPairRawBoundMeasurableMeanBoundedSource_of_rawBoundMeasurableMeanRangeBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 1905,
+      "line": 2137,
       "statement": "def generatedActionRandomPairRawBoundMeasurableMeanBoundedSource_of_rawBoundMeasurableMeanRangeBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2134,7 +2150,7 @@
       "name": "generatedActionRandomPairRawBoundMeasurableMeanRangeBoundedSource_of_rawRangeMeasurableMeanRangeBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.generatedActionRandomPairRawBoundMeasurableMeanRangeBoundedSource_of_rawRangeMeasurableMeanRangeBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 1950,
+      "line": 2182,
       "statement": "def generatedActionRandomPairRawBoundMeasurableMeanRangeBoundedSource_of_rawRangeMeasurableMeanRangeBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2142,7 +2158,7 @@
       "name": "generatedActionRandomPairRawRangeMeasurableMeanRangeBoundedSource_of_definitionalRawRangeMeasurableMeanRangeBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.generatedActionRandomPairRawRangeMeasurableMeanRangeBoundedSource_of_definitionalRawRangeMeasurableMeanRangeBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 1994,
+      "line": 2226,
       "statement": "def generatedActionRandomPairRawRangeMeasurableMeanRangeBoundedSource_of_definitionalRawRangeMeasurableMeanRangeBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -2150,7 +2166,7 @@
       "name": "generatedActionRandomPairMapSource_of_definitionalRawRangeMeasurableMeanRangeBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.generatedActionRandomPairMapSource_of_definitionalRawRangeMeasurableMeanRangeBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 2049,
+      "line": 2281,
       "statement": "def generatedActionRandomPairMapSource_of_definitionalRawRangeMeasurableMeanRangeBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -2158,7 +2174,7 @@
       "name": "centeredReward_succ_aemeasurable_of_generatedActionRandomPairRawMeanBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_aemeasurable_of_generatedActionRandomPairRawMeanBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 2093,
+      "line": 2325,
       "statement": "theorem centeredReward_succ_aemeasurable_of_generatedActionRandomPairRawMeanBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2166,7 +2182,7 @@
       "name": "centeredReward_succ_bound_of_generatedActionRandomPairRawMeanBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_bound_of_generatedActionRandomPairRawMeanBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 2137,
+      "line": 2369,
       "statement": "theorem centeredReward_succ_bound_of_generatedActionRandomPairRawMeanBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2174,7 +2190,7 @@
       "name": "generatedActionRandomPairBoundedCenteredSource_of_rawMeanBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.generatedActionRandomPairBoundedCenteredSource_of_rawMeanBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 2212,
+      "line": 2444,
       "statement": "def generatedActionRandomPairBoundedCenteredSource_of_rawMeanBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2182,7 +2198,7 @@
       "name": "centeredReward_succ_integrable_of_generatedActionRandomPairBoundedCenteredSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_integrable_of_generatedActionRandomPairBoundedCenteredSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 2288,
+      "line": 2520,
       "statement": "theorem centeredReward_succ_integrable_of_generatedActionRandomPairBoundedCenteredSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2190,7 +2206,7 @@
       "name": "generatedActionRandomPairCenteredSource_of_boundedCenteredSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.generatedActionRandomPairCenteredSource_of_boundedCenteredSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 2333,
+      "line": 2565,
       "statement": "def generatedActionRandomPairCenteredSource_of_boundedCenteredSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2198,7 +2214,7 @@
       "name": "generatedActionActualRewardMapSource_of_randomPairBoundedCenteredSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.generatedActionActualRewardMapSource_of_randomPairBoundedCenteredSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 2392,
+      "line": 2624,
       "statement": "def generatedActionActualRewardMapSource_of_randomPairBoundedCenteredSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2206,7 +2222,7 @@
       "name": "generatedActionActualRewardMapSource_of_randomPairRawMeanBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.generatedActionActualRewardMapSource_of_randomPairRawMeanBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 2442,
+      "line": 2674,
       "statement": "def generatedActionActualRewardMapSource_of_randomPairRawMeanBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2214,7 +2230,7 @@
       "name": "generatedActionActualRewardMapSource_of_randomPairRawBoundMeanBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.generatedActionActualRewardMapSource_of_randomPairRawBoundMeanBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 2492,
+      "line": 2724,
       "statement": "def generatedActionActualRewardMapSource_of_randomPairRawBoundMeanBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2222,7 +2238,7 @@
       "name": "generatedActionActualRewardMapSource_of_randomPairRawBoundMeasurableMeanBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.generatedActionActualRewardMapSource_of_randomPairRawBoundMeasurableMeanBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 2542,
+      "line": 2774,
       "statement": "def generatedActionActualRewardMapSource_of_randomPairRawBoundMeasurableMeanBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2230,7 +2246,7 @@
       "name": "generatedActionActualRewardMapSource_of_randomPairRawBoundMeasurableMeanRangeBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.generatedActionActualRewardMapSource_of_randomPairRawBoundMeasurableMeanRangeBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 2593,
+      "line": 2825,
       "statement": "def generatedActionActualRewardMapSource_of_randomPairRawBoundMeasurableMeanRangeBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2238,7 +2254,7 @@
       "name": "generatedActionActualRewardMapSource_of_randomPairRawRangeMeasurableMeanRangeBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.generatedActionActualRewardMapSource_of_randomPairRawRangeMeasurableMeanRangeBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 2645,
+      "line": 2877,
       "statement": "def generatedActionActualRewardMapSource_of_randomPairRawRangeMeasurableMeanRangeBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2246,7 +2262,7 @@
       "name": "generatedActionDefinitionalActualRewardMapSource_of_randomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.generatedActionDefinitionalActualRewardMapSource_of_randomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 2697,
+      "line": 2929,
       "statement": "def generatedActionDefinitionalActualRewardMapSource_of_randomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -2254,7 +2270,7 @@
       "name": "generatedActionActualRewardMapSource_of_randomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.generatedActionActualRewardMapSource_of_randomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 2742,
+      "line": 2974,
       "statement": "def generatedActionActualRewardMapSource_of_randomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -2262,7 +2278,7 @@
       "name": "actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionActualRewardMapSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionActualRewardMapSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 2802,
+      "line": 3034,
       "statement": "theorem actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionActualRewardMapSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2270,7 +2286,7 @@
       "name": "actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionActualRewardMapSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionActualRewardMapSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 2896,
+      "line": 3128,
       "statement": "theorem actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionActualRewardMapSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2278,7 +2294,7 @@
       "name": "centeredReward_succ_condExp_eq_zero_of_generatedActionActualRewardMapSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionActualRewardMapSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 2971,
+      "line": 3203,
       "statement": "theorem centeredReward_succ_condExp_eq_zero_of_generatedActionActualRewardMapSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2286,7 +2302,7 @@
       "name": "actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionDefinitionalActualRewardMapSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionDefinitionalActualRewardMapSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 3050,
+      "line": 3282,
       "statement": "theorem actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionDefinitionalActualRewardMapSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -2294,7 +2310,7 @@
       "name": "actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionDefinitionalActualRewardMapSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionDefinitionalActualRewardMapSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 3152,
+      "line": 3384,
       "statement": "theorem actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionDefinitionalActualRewardMapSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -2302,7 +2318,7 @@
       "name": "centeredReward_succ_condExp_eq_zero_of_generatedActionDefinitionalActualRewardMapSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionDefinitionalActualRewardMapSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 3256,
+      "line": 3488,
       "statement": "theorem centeredReward_succ_condExp_eq_zero_of_generatedActionDefinitionalActualRewardMapSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -2310,7 +2326,7 @@
       "name": "actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairMapSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairMapSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 3352,
+      "line": 3584,
       "statement": "theorem actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairMapSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2318,7 +2334,7 @@
       "name": "actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairMapSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairMapSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 3446,
+      "line": 3678,
       "statement": "theorem actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairMapSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2326,7 +2342,7 @@
       "name": "centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairMapSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairMapSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 3521,
+      "line": 3753,
       "statement": "theorem centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairMapSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2334,7 +2350,7 @@
       "name": "actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairDefinitionalMapSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairDefinitionalMapSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 3600,
+      "line": 3832,
       "statement": "theorem actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairDefinitionalMapSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -2342,7 +2358,7 @@
       "name": "actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairDefinitionalMapSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairDefinitionalMapSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 3702,
+      "line": 3934,
       "statement": "theorem actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairDefinitionalMapSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -2350,7 +2366,7 @@
       "name": "centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairDefinitionalMapSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairDefinitionalMapSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 3807,
+      "line": 4039,
       "statement": "theorem centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairDefinitionalMapSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -2358,7 +2374,7 @@
       "name": "actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairCenteredSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairCenteredSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 3902,
+      "line": 4134,
       "statement": "theorem actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairCenteredSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2366,7 +2382,7 @@
       "name": "actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairCenteredSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairCenteredSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 3974,
+      "line": 4206,
       "statement": "theorem actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairCenteredSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2374,7 +2390,7 @@
       "name": "centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairCenteredSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairCenteredSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 4048,
+      "line": 4280,
       "statement": "theorem centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairCenteredSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2382,7 +2398,7 @@
       "name": "actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairDefinitionalCenteredSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairDefinitionalCenteredSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 4111,
+      "line": 4343,
       "statement": "theorem actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairDefinitionalCenteredSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -2390,7 +2406,7 @@
       "name": "actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairDefinitionalCenteredSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairDefinitionalCenteredSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 4216,
+      "line": 4448,
       "statement": "theorem actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairDefinitionalCenteredSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -2398,7 +2414,7 @@
       "name": "centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairDefinitionalCenteredSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairDefinitionalCenteredSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 4324,
+      "line": 4556,
       "statement": "theorem centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairDefinitionalCenteredSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -2406,7 +2422,7 @@
       "name": "actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairBoundedCenteredSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairBoundedCenteredSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 4403,
+      "line": 4635,
       "statement": "theorem actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairBoundedCenteredSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2414,7 +2430,7 @@
       "name": "actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairBoundedCenteredSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairBoundedCenteredSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 4493,
+      "line": 4725,
       "statement": "theorem actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairBoundedCenteredSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2422,7 +2438,7 @@
       "name": "centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairBoundedCenteredSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairBoundedCenteredSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 4585,
+      "line": 4817,
       "statement": "theorem centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairBoundedCenteredSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2430,7 +2446,7 @@
       "name": "centeredReward_succ_integrable_of_generatedActionRandomPairRawMeanBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_integrable_of_generatedActionRandomPairRawMeanBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 4662,
+      "line": 4894,
       "statement": "theorem centeredReward_succ_integrable_of_generatedActionRandomPairRawMeanBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2438,7 +2454,7 @@
       "name": "actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairRawMeanBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairRawMeanBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 4739,
+      "line": 4971,
       "statement": "theorem actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairRawMeanBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2446,7 +2462,7 @@
       "name": "actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairRawMeanBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairRawMeanBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 4833,
+      "line": 5065,
       "statement": "theorem actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairRawMeanBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2454,7 +2470,7 @@
       "name": "centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairRawMeanBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairRawMeanBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 4929,
+      "line": 5161,
       "statement": "theorem centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairRawMeanBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2462,7 +2478,7 @@
       "name": "centeredReward_succ_aemeasurable_of_generatedActionRandomPairRawBoundMeanBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_aemeasurable_of_generatedActionRandomPairRawBoundMeanBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 5010,
+      "line": 5242,
       "statement": "theorem centeredReward_succ_aemeasurable_of_generatedActionRandomPairRawBoundMeanBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2470,7 +2486,7 @@
       "name": "centeredReward_succ_bound_of_generatedActionRandomPairRawBoundMeanBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_bound_of_generatedActionRandomPairRawBoundMeanBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 5089,
+      "line": 5321,
       "statement": "theorem centeredReward_succ_bound_of_generatedActionRandomPairRawBoundMeanBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2478,7 +2494,7 @@
       "name": "centeredReward_succ_integrable_of_generatedActionRandomPairRawBoundMeanBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_integrable_of_generatedActionRandomPairRawBoundMeanBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 5170,
+      "line": 5402,
       "statement": "theorem centeredReward_succ_integrable_of_generatedActionRandomPairRawBoundMeanBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2486,7 +2502,7 @@
       "name": "actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairRawBoundMeanBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairRawBoundMeanBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 5249,
+      "line": 5481,
       "statement": "theorem actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairRawBoundMeanBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2494,7 +2510,7 @@
       "name": "actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairRawBoundMeanBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairRawBoundMeanBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 5345,
+      "line": 5577,
       "statement": "theorem actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairRawBoundMeanBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2502,7 +2518,7 @@
       "name": "centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairRawBoundMeanBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairRawBoundMeanBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 5443,
+      "line": 5675,
       "statement": "theorem centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairRawBoundMeanBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2510,7 +2526,7 @@
       "name": "centeredReward_succ_aemeasurable_of_generatedActionRandomPairRawBoundMeasurableMeanBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_aemeasurable_of_generatedActionRandomPairRawBoundMeasurableMeanBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 5526,
+      "line": 5758,
       "statement": "theorem centeredReward_succ_aemeasurable_of_generatedActionRandomPairRawBoundMeasurableMeanBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2518,7 +2534,7 @@
       "name": "centeredReward_succ_bound_of_generatedActionRandomPairRawBoundMeasurableMeanBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_bound_of_generatedActionRandomPairRawBoundMeasurableMeanBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 5605,
+      "line": 5837,
       "statement": "theorem centeredReward_succ_bound_of_generatedActionRandomPairRawBoundMeasurableMeanBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2526,7 +2542,7 @@
       "name": "centeredReward_succ_integrable_of_generatedActionRandomPairRawBoundMeasurableMeanBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_integrable_of_generatedActionRandomPairRawBoundMeasurableMeanBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 5686,
+      "line": 5918,
       "statement": "theorem centeredReward_succ_integrable_of_generatedActionRandomPairRawBoundMeasurableMeanBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2534,7 +2550,7 @@
       "name": "actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairRawBoundMeasurableMeanBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairRawBoundMeasurableMeanBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 5765,
+      "line": 5997,
       "statement": "theorem actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairRawBoundMeasurableMeanBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2542,7 +2558,7 @@
       "name": "actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairRawBoundMeasurableMeanBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairRawBoundMeasurableMeanBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 5861,
+      "line": 6093,
       "statement": "theorem actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairRawBoundMeasurableMeanBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2550,7 +2566,7 @@
       "name": "centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairRawBoundMeasurableMeanBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairRawBoundMeasurableMeanBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 5959,
+      "line": 6191,
       "statement": "theorem centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairRawBoundMeasurableMeanBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2558,7 +2574,7 @@
       "name": "centeredReward_succ_aemeasurable_of_generatedActionRandomPairRawBoundMeasurableMeanRangeBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_aemeasurable_of_generatedActionRandomPairRawBoundMeasurableMeanRangeBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 6042,
+      "line": 6274,
       "statement": "theorem centeredReward_succ_aemeasurable_of_generatedActionRandomPairRawBoundMeasurableMeanRangeBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2566,7 +2582,7 @@
       "name": "centeredReward_succ_bound_of_generatedActionRandomPairRawBoundMeasurableMeanRangeBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_bound_of_generatedActionRandomPairRawBoundMeasurableMeanRangeBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 6121,
+      "line": 6353,
       "statement": "theorem centeredReward_succ_bound_of_generatedActionRandomPairRawBoundMeasurableMeanRangeBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2574,7 +2590,7 @@
       "name": "centeredReward_succ_integrable_of_generatedActionRandomPairRawBoundMeasurableMeanRangeBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_integrable_of_generatedActionRandomPairRawBoundMeasurableMeanRangeBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 6202,
+      "line": 6434,
       "statement": "theorem centeredReward_succ_integrable_of_generatedActionRandomPairRawBoundMeasurableMeanRangeBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2582,7 +2598,7 @@
       "name": "actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairRawBoundMeasurableMeanRangeBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairRawBoundMeasurableMeanRangeBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 6281,
+      "line": 6513,
       "statement": "theorem actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairRawBoundMeasurableMeanRangeBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2590,7 +2606,7 @@
       "name": "actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairRawBoundMeasurableMeanRangeBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairRawBoundMeasurableMeanRangeBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 6377,
+      "line": 6609,
       "statement": "theorem actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairRawBoundMeasurableMeanRangeBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2598,7 +2614,7 @@
       "name": "centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairRawBoundMeasurableMeanRangeBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairRawBoundMeasurableMeanRangeBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 6475,
+      "line": 6707,
       "statement": "theorem centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairRawBoundMeasurableMeanRangeBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2606,7 +2622,7 @@
       "name": "centeredReward_succ_aemeasurable_of_generatedActionRandomPairRawRangeMeasurableMeanRangeBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_aemeasurable_of_generatedActionRandomPairRawRangeMeasurableMeanRangeBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 6558,
+      "line": 6790,
       "statement": "theorem centeredReward_succ_aemeasurable_of_generatedActionRandomPairRawRangeMeasurableMeanRangeBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2614,7 +2630,7 @@
       "name": "centeredReward_succ_bound_of_generatedActionRandomPairRawRangeMeasurableMeanRangeBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_bound_of_generatedActionRandomPairRawRangeMeasurableMeanRangeBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 6637,
+      "line": 6869,
       "statement": "theorem centeredReward_succ_bound_of_generatedActionRandomPairRawRangeMeasurableMeanRangeBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2622,7 +2638,7 @@
       "name": "centeredReward_succ_integrable_of_generatedActionRandomPairRawRangeMeasurableMeanRangeBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_integrable_of_generatedActionRandomPairRawRangeMeasurableMeanRangeBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 6718,
+      "line": 6950,
       "statement": "theorem centeredReward_succ_integrable_of_generatedActionRandomPairRawRangeMeasurableMeanRangeBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2630,7 +2646,7 @@
       "name": "actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairRawRangeMeasurableMeanRangeBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairRawRangeMeasurableMeanRangeBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 6797,
+      "line": 7029,
       "statement": "theorem actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairRawRangeMeasurableMeanRangeBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2638,7 +2654,7 @@
       "name": "actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairRawRangeMeasurableMeanRangeBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairRawRangeMeasurableMeanRangeBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 6893,
+      "line": 7125,
       "statement": "theorem actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairRawRangeMeasurableMeanRangeBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2646,7 +2662,7 @@
       "name": "centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairRawRangeMeasurableMeanRangeBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairRawRangeMeasurableMeanRangeBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 6991,
+      "line": 7223,
       "statement": "theorem centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairRawRangeMeasurableMeanRangeBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -2654,7 +2670,7 @@
       "name": "centeredReward_succ_aemeasurable_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_aemeasurable_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 7074,
+      "line": 7306,
       "statement": "theorem centeredReward_succ_aemeasurable_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -2662,7 +2678,7 @@
       "name": "centeredReward_succ_bound_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_bound_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 7153,
+      "line": 7385,
       "statement": "theorem centeredReward_succ_bound_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -2670,7 +2686,7 @@
       "name": "generatedActionRandomPairBoundedCenteredSource_of_definitionalRawRangeMeasurableMeanRangeBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.generatedActionRandomPairBoundedCenteredSource_of_definitionalRawRangeMeasurableMeanRangeBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 7234,
+      "line": 7466,
       "statement": "def generatedActionRandomPairBoundedCenteredSource_of_definitionalRawRangeMeasurableMeanRangeBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -2678,7 +2694,7 @@
       "name": "generatedActionRandomPairCenteredSource_of_definitionalRawRangeMeasurableMeanRangeBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.generatedActionRandomPairCenteredSource_of_definitionalRawRangeMeasurableMeanRangeBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 7325,
+      "line": 7557,
       "statement": "def generatedActionRandomPairCenteredSource_of_definitionalRawRangeMeasurableMeanRangeBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -2686,7 +2702,7 @@
       "name": "centeredReward_succ_integrable_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_integrable_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 7397,
+      "line": 7629,
       "statement": "theorem centeredReward_succ_integrable_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -2694,7 +2710,7 @@
       "name": "generatedActionRandomPairDefinitionalCenteredSource_of_definitionalRawRangeMeasurableMeanRangeBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.generatedActionRandomPairDefinitionalCenteredSource_of_definitionalRawRangeMeasurableMeanRangeBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 7480,
+      "line": 7712,
       "statement": "def generatedActionRandomPairDefinitionalCenteredSource_of_definitionalRawRangeMeasurableMeanRangeBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -2702,7 +2718,7 @@
       "name": "actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 7529,
+      "line": 7761,
       "statement": "theorem actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -2710,7 +2726,7 @@
       "name": "actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 7644,
+      "line": 7876,
       "statement": "theorem actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -2718,7 +2734,7 @@
       "name": "centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource",
       "file": "BanditRLProof/ConditionalRewardLawSource.lean",
-      "line": 7761,
+      "line": 7993,
       "statement": "theorem centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
