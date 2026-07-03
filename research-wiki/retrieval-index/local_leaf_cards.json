@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-03T11:22:50+00:00",
+  "generated": "2026-07-03T11:33:25+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -1898,21 +1898,26 @@
         "COND-EXPECT-REWARD",
         "KERNEL-POLICY-BIND",
         "MEAS-HISTORY",
-        "KERNEL-REWARD"
+        "KERNEL-REWARD",
+        "INT-REWARD-BOUNDED",
+        "MEAS-REWARD"
       ],
       "module": "BanditRLProof.ConditionalExpectationReward",
       "status": "leanCompiled",
       "declarations": [
         "ConditionalExpectationReward.reward_condExpKernel_map_eq_selected_actual_action_of_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
-        "ConditionalExpectationReward.reward_condExpKernel_map_eq_selected_actual_action_of_generatedActionTraceSucc_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace"
+        "ConditionalExpectationReward.reward_condExpKernel_map_eq_selected_actual_action_of_generatedActionTraceSucc_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
+        "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionTraceSucc_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_rawRangeMeasurableMeanRangeBounded"
       ],
-      "role": "Compiled project-local reward-coordinate adapter for the COND-EXPECT-REWARD partialTraj route: a full finite-pair trace condExpKernel/partialTraj law is first projected to the next (Action x Reward) law, then mapped through Prod.snd and RewardKernel.actionRewardHistoryStepKernelFamily_reward_map to recover the selected reward measure. A generated-action wrapper supplies the successor action equality from Policy.generatedActionTraceSucc and rewrites the policy-selected action to the actual next action. This still assumes the full finite-pair trace condExpKernel/partialTraj law and does not construct the ambient trajectory identification or final adaptive theorem.",
+      "role": "Compiled project-local reward-coordinate adapter for the COND-EXPECT-REWARD partialTraj route: a full finite-pair trace condExpKernel/partialTraj law is first projected to the next (Action x Reward) law, then mapped through Prod.snd and RewardKernel.actionRewardHistoryStepKernelFamily_reward_map to recover the selected reward measure. A generated-action wrapper supplies the successor action equality from Policy.generatedActionTraceSucc and rewrites the policy-selected action to the actual next action. A raw-reward/selected-mean range consumer now uses this reward-map adapter to obtain succ-indexed conditional mean-zero directly from the same full finite-pair trace law without separately passing integrability. This still assumes the full finite-pair trace condExpKernel/partialTraj law and does not construct the ambient trajectory identification or final adaptive theorem.",
       "mathlib_routes": [
         "MLIB-CONDITIONAL-EXPECTATION",
         "Mathlib.MeasureTheory.Measure.Map",
         "LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-CONSUMER",
         "LOCAL-LEAF-KERNEL-REWARD-MAP-LAW-TRANSFER",
-        "LOCAL-LEAF-COND-EXPECT-REWARD-ACTION-FREEZE-GENERATED-TRACE-SOURCE"
+        "LOCAL-LEAF-COND-EXPECT-REWARD-ACTION-FREEZE-GENERATED-TRACE-SOURCE",
+        "INT-REWARD-BOUNDED",
+        "MEAS-REWARD"
       ]
     },
     {
