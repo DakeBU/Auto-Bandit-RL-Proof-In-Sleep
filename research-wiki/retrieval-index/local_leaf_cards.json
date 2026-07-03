@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-03T10:58:20+00:00",
+  "generated": "2026-07-03T11:08:18+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -1767,19 +1767,24 @@
       "leaf_ids": [
         "COND-EXPECT-REWARD",
         "FILTRATION-HISTORY",
-        "KERNEL-POLICY-BIND"
+        "KERNEL-POLICY-BIND",
+        "INT-REWARD-BOUNDED",
+        "MEAS-REWARD"
       ],
       "module": "BanditRLProof.ConditionalExpectationReward",
       "status": "leanCompiled",
       "declarations": [
-        "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc"
+        "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc",
+        "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_rawRangeMeasurableMeanRangeBounded"
       ],
-      "role": "Compiled project-local generated-history specialization of the pair-law consumer for COND-EXPECT-REWARD: under History.historyFiltrationSucc, timewise action/reward measurability supplies next-coordinate measurability and History.measurable_reward_mem_historyFiltration_of_lt supplies the finite reward-prefix measurability required by the pair-map consumer. The remaining structural input is still the condExpKernel action/reward pair-law pushforward identity into RewardKernel.actionRewardHistoryStepKernelFamily.",
+      "role": "Compiled project-local generated-history specialization of the pair-law consumer for COND-EXPECT-REWARD: under History.historyFiltrationSucc, timewise action/reward measurability supplies next-coordinate measurability and History.measurable_reward_mem_historyFiltration_of_lt supplies the finite reward-prefix measurability required by the pair-map consumer. A source-free raw-reward/selected-mean range wrapper now derives centered-reward integrability automatically before consuming the same generated-history next-pair law. The remaining structural input is still the condExpKernel action/reward pair-law pushforward identity into RewardKernel.actionRewardHistoryStepKernelFamily.",
       "mathlib_routes": [
         "MLIB-CONDITIONAL-EXPECTATION",
         "LOCAL-LEAF-COND-EXPECT-REWARD-PAIR-MAP-CONSUMER",
         "LOCAL-LEAF-HISTORY-FILTRATION",
-        "LOCAL-LEAF-HISTORY-ADAPTED-COORDINATES"
+        "LOCAL-LEAF-HISTORY-ADAPTED-COORDINATES",
+        "INT-REWARD-BOUNDED",
+        "MEAS-REWARD"
       ]
     },
     {
