@@ -2376,18 +2376,23 @@ LOCAL_LEAF_CARDS = [
         "leaf_ids": [
             "COND-EXPECT-REWARD",
             "KERNEL-POLICY-BIND",
+            "INT-REWARD-BOUNDED",
+            "MEAS-REWARD",
         ],
         "module": "BanditRLProof.ConditionalExpectationReward",
         "status": "leanCompiled",
         "declarations": [
             "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardHistoryStepKernelFamily_pair_map_eq_of_coordinate_measurable",
+            "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardHistoryStepKernelFamily_pair_map_eq_of_coordinate_measurable_rawRangeMeasurableMeanRangeBounded",
         ],
-        "role": "Compiled project-local pair-law consumer for COND-EXPECT-REWARD: a condExpKernel next-step (Action x Reward) pushforward identity against RewardKernel.actionRewardHistoryStepKernelFamily, plus compatibility between pair-history context/state and reward-history context/state, implies the reward-coordinate map-law consumer needed for ordinary conditional mean-zero. This packages the Prod.snd marginalization step through RewardKernel.actionRewardHistoryStepKernelFamily_reward_map; it still assumes, rather than proves, the condExpKernel action/reward pair-law identification from partialTraj.",
+        "role": "Compiled project-local pair-law consumer for COND-EXPECT-REWARD: a condExpKernel next-step (Action x Reward) pushforward identity against RewardKernel.actionRewardHistoryStepKernelFamily, plus compatibility between pair-history context/state and reward-history context/state, implies the reward-coordinate map-law consumer needed for ordinary conditional mean-zero. A source-free raw-reward/selected-mean range wrapper now derives centered-reward integrability automatically before consuming this direct pair-map law. This packages the Prod.snd marginalization step through RewardKernel.actionRewardHistoryStepKernelFamily_reward_map; it still assumes, rather than proves, the condExpKernel action/reward pair-law identification from partialTraj.",
         "mathlib_routes": [
             "MLIB-CONDITIONAL-EXPECTATION",
             "LOCAL-LEAF-COND-EXPECT-REWARD-MAP-CONSUMER-FROZEN-HOOKUP",
             "LOCAL-LEAF-KERNEL-REWARD-MAP-LAW-TRANSFER",
             "LOCAL-LEAF-POLICY-REWARD-ACTION-REWARD-PARTIAL-TRAJECTORY",
+            "INT-REWARD-BOUNDED",
+            "MEAS-REWARD",
         ],
     },
     {
@@ -5678,7 +5683,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- COND-EXPECT-REWARD-PAIR-HISTORY-FROZEN-HOOKUP is compiled locally as the finite action/reward pair-history frozen-past hookup under [Countable Action], with a generated History.historyFiltrationSucc specialization; the actual partialTraj/condExpKernel pair-law identification remains open.")
     print("- COND-EXPECT-REWARD-PAIR-HISTORY-SUCC-EXTEND-HOOKUP is compiled locally as the successor-extension bridge: the i+1 pair trace decomposes into a frozen pair prefix plus the random next pair under generated condExpKernel; the full partialTraj/condExpKernel joint law remains open.")
     print("- COND-EXPECT-REWARD-MAP-CONSUMER-FROZEN-HOOKUP is compiled locally as the map-law consumer with frozen-past discharged from coordinate measurability or generated History.historyFiltrationSucc; the reward-coordinate condExpKernel-to-historyStepKernelFamily pushforward identity remains open.")
-    print("- COND-EXPECT-REWARD-PAIR-MAP-CONSUMER is compiled locally as the next action/reward pair-law consumer: a condExpKernel pushforward identity to RewardKernel.actionRewardHistoryStepKernelFamily now marginalizes through Prod.snd into the reward-coordinate map-law consumer; the actual partialTraj-to-condExpKernel pair-law identification remains open.")
+    print("- COND-EXPECT-REWARD-PAIR-MAP-CONSUMER is compiled locally as the next action/reward pair-law consumer: a condExpKernel pushforward identity to RewardKernel.actionRewardHistoryStepKernelFamily now marginalizes through Prod.snd into the reward-coordinate map-law consumer, with a raw/mean range wrapper deriving centered-reward integrability automatically; the actual partialTraj-to-condExpKernel pair-law identification remains open.")
     print("- COND-EXPECT-REWARD-PAIR-MAP-HISTORYFILTRATION-HOOKUP is compiled locally as the generated History.historyFiltrationSucc specialization of the pair-law consumer; next-coordinate and prefix measurability are supplied by local history-filtration APIs, while the actual condExpKernel pair-law identity remains open.")
     print("- COND-EXPECT-REWARD-PAIR-MAP-HISTORYTRACE-PROJECTION-HOOKUP is compiled locally as the concrete finite trace-pair history and reward-projection context/state specialization of the generated-history pair-law consumer; the actual condExpKernel pair-law identity remains open.")
     print("- COND-EXPECT-REWARD-PAIR-MAP-PROJECTION-MEAS-HOOKUP is compiled locally as the measurable reward-projection hookup for pair histories, deriving projected pairContext/pairState measurability from reward-history context/state measurability; the actual condExpKernel pair-law identity remains open.")

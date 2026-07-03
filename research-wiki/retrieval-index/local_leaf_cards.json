@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-03T10:50:31+00:00",
+  "generated": "2026-07-03T10:58:20+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -1742,19 +1742,24 @@
       "id": "LOCAL-LEAF-COND-EXPECT-REWARD-PAIR-MAP-CONSUMER",
       "leaf_ids": [
         "COND-EXPECT-REWARD",
-        "KERNEL-POLICY-BIND"
+        "KERNEL-POLICY-BIND",
+        "INT-REWARD-BOUNDED",
+        "MEAS-REWARD"
       ],
       "module": "BanditRLProof.ConditionalExpectationReward",
       "status": "leanCompiled",
       "declarations": [
-        "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardHistoryStepKernelFamily_pair_map_eq_of_coordinate_measurable"
+        "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardHistoryStepKernelFamily_pair_map_eq_of_coordinate_measurable",
+        "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardHistoryStepKernelFamily_pair_map_eq_of_coordinate_measurable_rawRangeMeasurableMeanRangeBounded"
       ],
-      "role": "Compiled project-local pair-law consumer for COND-EXPECT-REWARD: a condExpKernel next-step (Action x Reward) pushforward identity against RewardKernel.actionRewardHistoryStepKernelFamily, plus compatibility between pair-history context/state and reward-history context/state, implies the reward-coordinate map-law consumer needed for ordinary conditional mean-zero. This packages the Prod.snd marginalization step through RewardKernel.actionRewardHistoryStepKernelFamily_reward_map; it still assumes, rather than proves, the condExpKernel action/reward pair-law identification from partialTraj.",
+      "role": "Compiled project-local pair-law consumer for COND-EXPECT-REWARD: a condExpKernel next-step (Action x Reward) pushforward identity against RewardKernel.actionRewardHistoryStepKernelFamily, plus compatibility between pair-history context/state and reward-history context/state, implies the reward-coordinate map-law consumer needed for ordinary conditional mean-zero. A source-free raw-reward/selected-mean range wrapper now derives centered-reward integrability automatically before consuming this direct pair-map law. This packages the Prod.snd marginalization step through RewardKernel.actionRewardHistoryStepKernelFamily_reward_map; it still assumes, rather than proves, the condExpKernel action/reward pair-law identification from partialTraj.",
       "mathlib_routes": [
         "MLIB-CONDITIONAL-EXPECTATION",
         "LOCAL-LEAF-COND-EXPECT-REWARD-MAP-CONSUMER-FROZEN-HOOKUP",
         "LOCAL-LEAF-KERNEL-REWARD-MAP-LAW-TRANSFER",
-        "LOCAL-LEAF-POLICY-REWARD-ACTION-REWARD-PARTIAL-TRAJECTORY"
+        "LOCAL-LEAF-POLICY-REWARD-ACTION-REWARD-PARTIAL-TRAJECTORY",
+        "INT-REWARD-BOUNDED",
+        "MEAS-REWARD"
       ]
     },
     {
