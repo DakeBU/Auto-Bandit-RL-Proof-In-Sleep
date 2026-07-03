@@ -2524,6 +2524,8 @@ LOCAL_LEAF_CARDS = [
             "KERNEL-POLICY-BIND",
             "MEAS-HISTORY",
             "FILTRATION-HISTORY",
+            "INT-REWARD-BOUNDED",
+            "MEAS-REWARD",
         ],
         "module": "BanditRLProof.ConditionalExpectationReward",
         "status": "leanCompiled",
@@ -2531,13 +2533,16 @@ LOCAL_LEAF_CARDS = [
             "ConditionalExpectationReward.finitePairHistory_succ_condExpKernel_map_eq_extend_historyFiltrationSucc",
             "ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_of_extend_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
             "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardPartialTrajectoryKernel_extend_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
+            "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardPartialTrajectoryKernel_extend_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_rawRangeMeasurableMeanRangeBounded",
         ],
-        "role": "Compiled project-local extension-map consumer for the COND-EXPECT-REWARD partialTraj route: the generated History.historyFiltrationSucc condExpKernel successor decomposition is upgraded from an a.e. equality to a Measure.map equality by Mathlib Measure.map_congr, a reusable adapter turns an extension-map partialTraj law into the full finite-pair-trace partialTraj law, and the centered-reward consumer can assume only that condExpKernel pushed through the deterministic frozen-prefix extension map agrees with the one-step action/reward partialTraj kernel. This narrows the remaining trajectory-law assumption from the whole i+1 finite pair trace to the extension of a frozen old pair prefix by the random next pair; it still does not prove the actual condExpKernel/partialTraj law.",
+        "role": "Compiled project-local extension-map consumer for the COND-EXPECT-REWARD partialTraj route: the generated History.historyFiltrationSucc condExpKernel successor decomposition is upgraded from an a.e. equality to a Measure.map equality by Mathlib Measure.map_congr, a reusable adapter turns an extension-map partialTraj law into the full finite-pair-trace partialTraj law, and the centered-reward consumer can assume only that condExpKernel pushed through the deterministic frozen-prefix extension map agrees with the one-step action/reward partialTraj kernel. A raw-reward/selected-mean range wrapper now derives centered-reward integrability automatically before consuming that narrower extension-map law. This narrows the remaining trajectory-law assumption from the whole i+1 finite pair trace to the extension of a frozen old pair prefix by the random next pair; it still does not prove the actual condExpKernel/partialTraj law.",
         "mathlib_routes": [
             "MLIB-CONDITIONAL-EXPECTATION",
             "LOCAL-LEAF-COND-EXPECT-REWARD-PAIR-HISTORY-SUCC-EXTEND-HOOKUP",
             "LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-CONSUMER",
             "LOCAL-LEAF-POLICY-REWARD-PARTIALTRAJ-SUCC-NEXT-MAP",
+            "INT-REWARD-BOUNDED",
+            "MEAS-REWARD",
         ],
     },
     {
@@ -5668,7 +5673,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- COND-EXPECT-REWARD-PAIR-MAP-PROJECTION-MEAS-HOOKUP is compiled locally as the measurable reward-projection hookup for pair histories, deriving projected pairContext/pairState measurability from reward-history context/state measurability; the actual condExpKernel pair-law identity remains open.")
     print("- COND-EXPECT-REWARD-PAIR-MAP-FINITEPAIRTRACE-HOOKUP is compiled locally as the named History.finitePairHistoryOfTrace specialization of the generated-history pair-law consumer; the actual condExpKernel pair-law identity remains open.")
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-CONSUMER is compiled locally as the partialTraj finite-pair-trace consumer: an explicit generated-history condExpKernel law for the extended pair trace projects through the partialTraj next-coordinate marginal into a reusable next-pair map-law adapter, then into the centered-reward consumer; a raw-reward/selected-mean range wrapper now derives centered-reward integrability automatically before consuming the same full finite-pair partialTraj law; the actual condExpKernel/partialTraj law remains open.")
-    print("- COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-CONSUMER is compiled locally as the extension-map partialTraj consumer: Measure.map_congr turns the generated successor decomposition into a pushforward identity, and a reusable adapter lifts an extension-map law back to the full finite-pair-trace partialTraj law; the actual condExpKernel/partialTraj law remains open.")
+    print("- COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-CONSUMER is compiled locally as the extension-map partialTraj consumer: Measure.map_congr turns the generated successor decomposition into a pushforward identity, a reusable adapter lifts an extension-map law back to the full finite-pair-trace partialTraj law, and a raw-reward/selected-mean range wrapper derives centered-reward integrability automatically before consuming the narrower extension-map law; the actual condExpKernel/partialTraj law remains open.")
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-FROM-PAIRMAP is compiled locally as the law builder from a next-pair condExpKernel pushforward identity to the extension-map partialTraj identity; the next-pair law itself remains open.")
     print("- COND-EXPECT-REWARD-NEXTPAIR-SPLIT-LAW-BUILDER is compiled locally as the split-law builder from conditional action a.e. equality plus reward-coordinate map law to the full next-pair condExpKernel law; predictability and reward-law sources remain open.")
     print("- COND-EXPECT-REWARD-NEXTPAIR-RANDOM-PAIR-HISTORYSTEP-LAW is compiled locally as the law-shape adapter from a generated-action random next-pair source law stated with Measure.map (Prod.mk actualAction) selectedMeasure into the canonical RewardKernel.actionRewardHistoryStepKernelFamily pair law; the random-pair law itself remains assumed.")

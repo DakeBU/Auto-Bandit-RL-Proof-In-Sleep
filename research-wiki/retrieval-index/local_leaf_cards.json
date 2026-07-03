@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-03T10:18:26+00:00",
+  "generated": "2026-07-03T10:25:53+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -1890,21 +1890,26 @@
         "COND-EXPECT-REWARD",
         "KERNEL-POLICY-BIND",
         "MEAS-HISTORY",
-        "FILTRATION-HISTORY"
+        "FILTRATION-HISTORY",
+        "INT-REWARD-BOUNDED",
+        "MEAS-REWARD"
       ],
       "module": "BanditRLProof.ConditionalExpectationReward",
       "status": "leanCompiled",
       "declarations": [
         "ConditionalExpectationReward.finitePairHistory_succ_condExpKernel_map_eq_extend_historyFiltrationSucc",
         "ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_of_extend_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
-        "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardPartialTrajectoryKernel_extend_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace"
+        "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardPartialTrajectoryKernel_extend_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
+        "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardPartialTrajectoryKernel_extend_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_rawRangeMeasurableMeanRangeBounded"
       ],
-      "role": "Compiled project-local extension-map consumer for the COND-EXPECT-REWARD partialTraj route: the generated History.historyFiltrationSucc condExpKernel successor decomposition is upgraded from an a.e. equality to a Measure.map equality by Mathlib Measure.map_congr, a reusable adapter turns an extension-map partialTraj law into the full finite-pair-trace partialTraj law, and the centered-reward consumer can assume only that condExpKernel pushed through the deterministic frozen-prefix extension map agrees with the one-step action/reward partialTraj kernel. This narrows the remaining trajectory-law assumption from the whole i+1 finite pair trace to the extension of a frozen old pair prefix by the random next pair; it still does not prove the actual condExpKernel/partialTraj law.",
+      "role": "Compiled project-local extension-map consumer for the COND-EXPECT-REWARD partialTraj route: the generated History.historyFiltrationSucc condExpKernel successor decomposition is upgraded from an a.e. equality to a Measure.map equality by Mathlib Measure.map_congr, a reusable adapter turns an extension-map partialTraj law into the full finite-pair-trace partialTraj law, and the centered-reward consumer can assume only that condExpKernel pushed through the deterministic frozen-prefix extension map agrees with the one-step action/reward partialTraj kernel. A raw-reward/selected-mean range wrapper now derives centered-reward integrability automatically before consuming that narrower extension-map law. This narrows the remaining trajectory-law assumption from the whole i+1 finite pair trace to the extension of a frozen old pair prefix by the random next pair; it still does not prove the actual condExpKernel/partialTraj law.",
       "mathlib_routes": [
         "MLIB-CONDITIONAL-EXPECTATION",
         "LOCAL-LEAF-COND-EXPECT-REWARD-PAIR-HISTORY-SUCC-EXTEND-HOOKUP",
         "LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-CONSUMER",
-        "LOCAL-LEAF-POLICY-REWARD-PARTIALTRAJ-SUCC-NEXT-MAP"
+        "LOCAL-LEAF-POLICY-REWARD-PARTIALTRAJ-SUCC-NEXT-MAP",
+        "INT-REWARD-BOUNDED",
+        "MEAS-REWARD"
       ]
     },
     {
