@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-03T11:33:25+00:00",
+  "generated": "2026-07-03T11:46:05+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -1955,21 +1955,26 @@
         "KERNEL-POLICY-BIND",
         "MEAS-HISTORY",
         "FILTRATION-HISTORY",
-        "KERNEL-REWARD"
+        "KERNEL-REWARD",
+        "INT-REWARD-BOUNDED",
+        "MEAS-REWARD"
       ],
       "module": "BanditRLProof.ConditionalExpectationReward",
       "status": "leanCompiled",
       "declarations": [
         "ConditionalExpectationReward.reward_condExpKernel_map_eq_selected_actual_action_of_actionRewardPartialTrajectoryKernel_extend_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
-        "ConditionalExpectationReward.reward_condExpKernel_map_eq_selected_actual_action_of_generatedActionTraceSucc_actionRewardPartialTrajectoryKernel_extend_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace"
+        "ConditionalExpectationReward.reward_condExpKernel_map_eq_selected_actual_action_of_generatedActionTraceSucc_actionRewardPartialTrajectoryKernel_extend_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
+        "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionTraceSucc_actionRewardPartialTrajectoryKernel_extend_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_rawRangeMeasurableMeanRangeBounded"
       ],
-      "role": "Compiled project-local reward-coordinate adapter for the extension-map partialTraj route: the deterministic frozen-prefix extension-map law is first lifted to the full finite-pair trace law by the existing successor-decomposition adapter, then the finite-pair trace reward-map adapter projects through the next pair and Prod.snd to recover the actual-action selected reward law. A generated-action wrapper supplies the successor action equality from Policy.generatedActionTraceSucc. This still assumes the extension-map condExpKernel/partialTraj law and does not construct the ambient trajectory identification or final adaptive theorem.",
+      "role": "Compiled project-local reward-coordinate adapter and raw-range mean-zero consumer for the extension-map partialTraj route: the deterministic frozen-prefix extension-map law is first lifted to the full finite-pair trace law by the existing successor-decomposition adapter, then the finite-pair trace reward-map adapter projects through the next pair and Prod.snd to recover the actual-action selected reward law. A generated-action wrapper supplies the successor action equality from Policy.generatedActionTraceSucc, and the raw-reward/selected-mean range wrapper derives integrability before consuming the selected-reward law to obtain succ-indexed conditional mean-zero. This still assumes the extension-map condExpKernel/partialTraj law and does not construct the ambient trajectory identification or final adaptive theorem.",
       "mathlib_routes": [
         "MLIB-CONDITIONAL-EXPECTATION",
         "Mathlib.MeasureTheory.Measure.Map",
         "LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-CONSUMER",
         "LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-REWARD-MAP",
-        "LOCAL-LEAF-COND-EXPECT-REWARD-ACTION-FREEZE-GENERATED-TRACE-SOURCE"
+        "LOCAL-LEAF-COND-EXPECT-REWARD-ACTION-FREEZE-GENERATED-TRACE-SOURCE",
+        "INT-REWARD-BOUNDED",
+        "MEAS-REWARD"
       ]
     },
     {

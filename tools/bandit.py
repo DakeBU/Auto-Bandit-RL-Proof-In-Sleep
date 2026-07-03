@@ -2589,20 +2589,25 @@ LOCAL_LEAF_CARDS = [
             "MEAS-HISTORY",
             "FILTRATION-HISTORY",
             "KERNEL-REWARD",
+            "INT-REWARD-BOUNDED",
+            "MEAS-REWARD",
         ],
         "module": "BanditRLProof.ConditionalExpectationReward",
         "status": "leanCompiled",
         "declarations": [
             "ConditionalExpectationReward.reward_condExpKernel_map_eq_selected_actual_action_of_actionRewardPartialTrajectoryKernel_extend_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
             "ConditionalExpectationReward.reward_condExpKernel_map_eq_selected_actual_action_of_generatedActionTraceSucc_actionRewardPartialTrajectoryKernel_extend_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
+            "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionTraceSucc_actionRewardPartialTrajectoryKernel_extend_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_rawRangeMeasurableMeanRangeBounded",
         ],
-        "role": "Compiled project-local reward-coordinate adapter for the extension-map partialTraj route: the deterministic frozen-prefix extension-map law is first lifted to the full finite-pair trace law by the existing successor-decomposition adapter, then the finite-pair trace reward-map adapter projects through the next pair and Prod.snd to recover the actual-action selected reward law. A generated-action wrapper supplies the successor action equality from Policy.generatedActionTraceSucc. This still assumes the extension-map condExpKernel/partialTraj law and does not construct the ambient trajectory identification or final adaptive theorem.",
+        "role": "Compiled project-local reward-coordinate adapter and raw-range mean-zero consumer for the extension-map partialTraj route: the deterministic frozen-prefix extension-map law is first lifted to the full finite-pair trace law by the existing successor-decomposition adapter, then the finite-pair trace reward-map adapter projects through the next pair and Prod.snd to recover the actual-action selected reward law. A generated-action wrapper supplies the successor action equality from Policy.generatedActionTraceSucc, and the raw-reward/selected-mean range wrapper derives integrability before consuming the selected-reward law to obtain succ-indexed conditional mean-zero. This still assumes the extension-map condExpKernel/partialTraj law and does not construct the ambient trajectory identification or final adaptive theorem.",
         "mathlib_routes": [
             "MLIB-CONDITIONAL-EXPECTATION",
             "Mathlib.MeasureTheory.Measure.Map",
             "LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-CONSUMER",
             "LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-REWARD-MAP",
             "LOCAL-LEAF-COND-EXPECT-REWARD-ACTION-FREEZE-GENERATED-TRACE-SOURCE",
+            "INT-REWARD-BOUNDED",
+            "MEAS-REWARD",
         ],
     },
     {
@@ -5894,7 +5899,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-DEFINITIONAL-CENTERED-SOURCE is compiled locally as a source-conversion leaf: a definitional raw-reward-range/measurable-mean-range bounded generated random-pair source now packages its definitional map source, centered law, context measurability, and bounded-derived integrability into the definitional centered source; it still assumes the definitional raw-range/measurable-mean-range source fields and random pair law.")
     print("- COND-EXPECT-REWARD-RANDOM-PAIR-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE is compiled locally as a source-conversion leaf: a definitional raw-reward-range/measurable-mean-range bounded generated random-pair source now projects its packaged definitional map source into the weaker definitional actual-action reward-coordinate source; it still assumes the definitional raw-range/measurable-mean-range source fields and random pair law.")
     print("- COND-EXPECT-REWARD-RANDOM-PAIR-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE is compiled locally as a source-conversion leaf: a definitional raw-reward-range/measurable-mean-range bounded generated random-pair source now projects through the definitional actual-map source into the explicit generated actual-action reward-coordinate source using generatedActionFromRewardHistory; it still assumes the definitional raw-range/measurable-mean-range source fields and random pair law.")
-    print("- COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-REWARD-MAP is compiled locally as the extension-map reward-coordinate adapter: it lifts the frozen-prefix extension-map partialTraj law to the full finite-pair trace law and projects it to the actual-action selected reward law; it still assumes the extension-map law and ambient trajectory-to-condExpKernel identification.")
+    print("- COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-REWARD-MAP is compiled locally as the extension-map reward-coordinate adapter and raw-range mean-zero consumer: it lifts the frozen-prefix extension-map partialTraj law to the full finite-pair trace law, projects it to the actual-action selected reward law, and derives succ-indexed conditional mean-zero from raw-reward/selected-mean range bounds; it still assumes the extension-map law and ambient trajectory-to-condExpKernel identification.")
     print("- COND-EXPECT-REWARD-NEXTPAIR-HISTORYSTEP-REWARD-MAP is compiled locally as the direct history-step next-pair reward-coordinate adapter: it projects an explicit RewardKernel.actionRewardHistoryStepKernelFamily pair law through Prod.snd and rewrites the policy action to the actual successor action; it still assumes the next-pair condExpKernel law and ambient trajectory-to-condExpKernel identification.")
     print("- Review responses recorded include the historical Extended Pro artifacts and the current local dual-agent review artifacts under reports/.")
     print("- ETC-WRONG-COMMIT-PROBABILITY-DESIGN is recorded as theorem-card-only / missing-leaf design, not a local proof.")
