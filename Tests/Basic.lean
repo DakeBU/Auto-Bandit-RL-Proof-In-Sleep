@@ -16483,4 +16483,41 @@ example {Time Feature : Type} [Fintype Time] [Fintype Feature]
     OFUL.regularizedFeatureGram_quadraticForm_pos_of_pos_lambda
       lam hlam x y hy
 
+example {Feature : Type} [Fintype Feature]
+    (A : Matrix Feature Feature Real) (y : Feature -> Real) :
+    dotProduct y (Matrix.mulVec A y) = OFUL.quadraticForm A y := by
+  exact OFUL.dotProduct_mulVec_eq_quadraticForm A y
+
+example {Time Feature : Type} [Fintype Time] [Fintype Feature]
+    (x : Time -> Feature -> Real) :
+    (OFUL.featureGram x).IsHermitian := by
+  exact OFUL.featureGram_isHermitian x
+
+example {Time Feature : Type} [Fintype Time] [Fintype Feature]
+    [DecidableEq Feature]
+    (lam : Real) (x : Time -> Feature -> Real) :
+    (OFUL.regularizedFeatureGram lam x).IsHermitian := by
+  exact OFUL.regularizedFeatureGram_isHermitian lam x
+
+example {Time Feature : Type} [Fintype Time] [Fintype Feature]
+    [DecidableEq Feature]
+    (lam : Real) (hlam : 0 < lam)
+    (x : Time -> Feature -> Real) :
+    (OFUL.regularizedFeatureGram lam x).PosDef := by
+  exact OFUL.regularizedFeatureGram_posDef lam hlam x
+
+example {Time Feature : Type} [Fintype Time] [Fintype Feature]
+    [DecidableEq Feature]
+    (lam : Real) (hlam : 0 < lam)
+    (x : Time -> Feature -> Real) :
+    0 < (OFUL.regularizedFeatureGram lam x).det := by
+  exact OFUL.regularizedFeatureGram_det_pos lam hlam x
+
+example {Time Feature : Type} [Fintype Time] [Fintype Feature]
+    [DecidableEq Feature]
+    (lam : Real) (hlam : 0 < lam)
+    (x : Time -> Feature -> Real) :
+    IsUnit (OFUL.regularizedFeatureGram lam x).det := by
+  exact OFUL.isUnit_det_regularizedFeatureGram lam hlam x
+
 end BanditRLProof

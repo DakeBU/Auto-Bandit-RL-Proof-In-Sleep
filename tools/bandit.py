@@ -1261,6 +1261,26 @@ LOCAL_LEAF_CARDS = [
         "mathlib_routes": ["LOCAL-LEAF-OFUL-REGULARIZED-GRAM-QFORM", "LOCAL-LEAF-OFUL-REGULARIZED-GRAM-BASE", "MLIB-CONVEX-LINALG", "MLIB-FINSET-SUMS"],
     },
     {
+        "id": "LOCAL-LEAF-OFUL-REGULARIZED-GRAM-DET-POS",
+        "leaf_ids": [
+            "OFUL-ELLIPTICAL-POTENTIAL",
+        ],
+        "module": "BanditRLProof.OFULEllipticalPotential",
+        "status": "leanCompiled",
+        "declarations": [
+            "OFUL.dotProduct_mulVec_eq_quadraticForm",
+            "OFUL.exists_coord_ne_zero_of_ne_zero",
+            "OFUL.featureGram_isHermitian",
+            "OFUL.regularizedFeatureGram_isHermitian",
+            "OFUL.regularizedFeatureGram_posDef",
+            "OFUL.regularizedFeatureGram_det_pos",
+            "OFUL.regularizedFeatureGram_det_ne_zero",
+            "OFUL.isUnit_det_regularizedFeatureGram",
+        ],
+        "role": "Compiled Mathlib PosDef/determinant bridge for OFUL/LinUCB regularized Grams: connects the local quadratic-form proof to Mathlib's `Matrix.PosDef`, proves Hermitian wrappers, proves positive determinant and nonzero determinant under `0 < lambda`, and packages the `IsUnit det` side condition for arbitrary finite-history regularized Gram matrices. This does not prove log-determinant telescoping, determinant-growth inequalities, self-normalized martingale concentration, confidence ellipsoids, or OFUL regret.",
+        "mathlib_routes": ["Mathlib.Analysis.Matrix.PosDef", "LOCAL-LEAF-OFUL-REGULARIZED-GRAM-POS-QFORM", "LOCAL-LEAF-OFUL-REGULARIZED-GRAM-QFORM", "MLIB-CONVEX-LINALG"],
+    },
+    {
         "id": "LOCAL-LEAF-CONCENTRATION-SUBGAUSSIAN",
         "leaf_ids": [
             "TAIL-HOEFFDING-BOUNDED",
@@ -6253,6 +6273,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- OFUL-REGULARIZED-GRAM-BASE is compiled locally as the scalar regularization base for OFUL Gram recursions: `det (lambda I) = lambda^d`, nonzero determinant/IsUnit, named regularized Gram, and the first scalar-base rank-one determinant update; arbitrary regularized Gram invertibility, log-det telescoping, determinant-growth inequalities, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- OFUL-REGULARIZED-GRAM-QFORM is compiled locally as the regularized-Gram quadratic-form expansion and PSD wrapper: scalar term plus finite-history squared projections under `0 <= lambda`; strict positive definiteness, determinant positivity, arbitrary regularized Gram invertibility, log-det telescoping, determinant-growth inequalities, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- OFUL-REGULARIZED-GRAM-POS-QFORM is compiled locally as the strict-positive regularized-Gram quadratic-form wrapper under `0 < lambda` and nonzero vector input; determinant positivity, arbitrary regularized Gram invertibility, log-det telescoping, determinant-growth inequalities, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
+    print("- OFUL-REGULARIZED-GRAM-DET-POS is compiled locally as the Mathlib PosDef/determinant bridge for arbitrary finite-history regularized Grams under `0 < lambda`: Hermitian wrappers, PosDef, positive/nonzero determinant, and `IsUnit det`; log-det telescoping, determinant-growth inequalities, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- TAIL-HOEFFDING-BOUNDED is compiled locally as the generic bounded-centered Hoeffding MGF wrapper with an interval variance proxy.")
     print("- TAIL-SUBGAUSS-SUM is compiled locally as the Mathlib-backed independent sub-Gaussian finite-sum tail wrapper.")
     print("- TAIL-SUBGAUSS-DIFF-SUM-IMPORT is compiled locally as the ENNReal-valued independent sub-Gaussian finite-sum tail boundary wrapper.")

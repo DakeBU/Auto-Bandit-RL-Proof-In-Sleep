@@ -1,5 +1,6 @@
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.Order.Field.Basic
+import Mathlib.Analysis.Matrix.PosDef
 import Mathlib.Data.Matrix.Basic
 import Mathlib.Data.Real.Basic
 import Mathlib.LinearAlgebra.Matrix.SchurComplement
@@ -181,6 +182,13 @@ theorem quadraticForm_add
           (fun j => y i * B i j * y j)) := by
       rw [Finset.sum_add_distrib]
 
+/-- The Mathlib dot-product/mulVec form agrees with the local quadratic form. -/
+theorem dotProduct_mulVec_eq_quadraticForm
+    {Feature : Type u} [Fintype Feature]
+    (A : Matrix Feature Feature Real) (y : Feature -> Real) :
+    dotProduct y (Matrix.mulVec A y) = quadraticForm A y := by
+  simp [dotProduct, Matrix.mulVec, quadraticForm, Finset.mul_sum, mul_assoc]
+
 /-- Quadratic form of the scalar regularization matrix `lambda I`. -/
 theorem quadraticForm_scalar_identity
     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
@@ -215,12 +223,32 @@ theorem sum_sq_pos_of_exists_ne_zero
   exact Exists.intro i
     (And.intro (Finset.mem_univ i) (sq_pos_of_ne_zero hi))
 
+/-- A nonzero vector has a nonzero coordinate. -/
+theorem exists_coord_ne_zero_of_ne_zero
+    {Feature : Type u} (y : Feature -> Real) (hy : y ≠ 0) :
+    ∃ i : Feature, y i ≠ 0 := by
+  by_contra h
+  apply hy
+  funext i
+  by_contra hi
+  exact h (Exists.intro i hi)
+
 /-- Finite-history feature Gram matrix `sum_t x_t x_t^T`. -/
 noncomputable def featureGram {Time : Type v} {Feature : Type u}
     [Fintype Time] (x : Time -> Feature -> Real) :
     Matrix Feature Feature Real :=
   fun i j => (Finset.univ : Finset Time).sum
     (fun t => x t i * x t j)
+
+/-- Finite-history feature Gram matrices are Hermitian. -/
+theorem featureGram_isHermitian
+    {Time : Type v} {Feature : Type u}
+    [Fintype Time] [Fintype Feature]
+    (x : Time -> Feature -> Real) :
+    (featureGram x).IsHermitian := by
+  refine Matrix.IsHermitian.ext ?_
+  intro i j
+  simp [featureGram, mul_comm]
 
 /-- Regularized finite-history Gram matrix `lambda I + sum_t x_t x_t^T`. -/
 noncomputable def regularizedFeatureGram
@@ -238,6 +266,17 @@ theorem regularizedFeatureGram_eq_scalar_add_featureGram
     regularizedFeatureGram lambda x =
       Matrix.scalar Feature lambda + featureGram x := by
   rfl
+
+/-- Regularized finite-history feature Gram matrices are Hermitian. -/
+theorem regularizedFeatureGram_isHermitian
+    {Time : Type v} {Feature : Type u}
+    [Fintype Time] [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (x : Time -> Feature -> Real) :
+    (regularizedFeatureGram lambda x).IsHermitian := by
+  rw [regularizedFeatureGram_eq_scalar_add_featureGram]
+  exact Matrix.IsHermitian.add (by
+    rw [Matrix.scalar_apply]
+    exact Matrix.isHermitian_diagonal _) (featureGram_isHermitian x)
 
 /--
 The quadratic form of a rank-one Gram matrix is the square of the projection
@@ -405,6 +444,54 @@ theorem regularizedFeatureGram_quadraticForm_pos_of_pos_lambda
   exact add_pos_of_pos_of_nonneg
     (mul_pos hlambda (sum_sq_pos_of_exists_ne_zero y hy))
     (Finset.sum_nonneg (fun t _ht => sq_nonneg _))
+
+/-- Regularized finite-history Gram matrices are Mathlib-positive definite. -/
+theorem regularizedFeatureGram_posDef
+    {Time : Type v} {Feature : Type u}
+    [Fintype Time] [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (x : Time -> Feature -> Real) :
+    (regularizedFeatureGram lambda x).PosDef := by
+  refine Matrix.PosDef.of_dotProduct_mulVec_pos
+    (regularizedFeatureGram_isHermitian lambda x) ?_
+  intro y hy
+  have hstar : star y = y := by
+    funext i
+    simp
+  rw [hstar]
+  rw [dotProduct_mulVec_eq_quadraticForm]
+  exact regularizedFeatureGram_quadraticForm_pos_of_pos_lambda
+    lambda hlambda x y (exists_coord_ne_zero_of_ne_zero y hy)
+
+/-- Regularized finite-history Gram matrices have positive determinant. -/
+theorem regularizedFeatureGram_det_pos
+    {Time : Type v} {Feature : Type u}
+    [Fintype Time] [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (x : Time -> Feature -> Real) :
+    0 < (regularizedFeatureGram lambda x).det := by
+  exact Matrix.PosDef.det_pos (regularizedFeatureGram_posDef lambda hlambda x)
+
+/-- Regularized finite-history Gram matrices have nonzero determinant. -/
+theorem regularizedFeatureGram_det_ne_zero
+    {Time : Type v} {Feature : Type u}
+    [Fintype Time] [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (x : Time -> Feature -> Real) :
+    (regularizedFeatureGram lambda x).det ≠ 0 := by
+  exact ne_of_gt (regularizedFeatureGram_det_pos lambda hlambda x)
+
+/--
+Positive regularization supplies Mathlib's determinant-unit side condition for
+arbitrary finite-history regularized Gram matrices.
+-/
+theorem isUnit_det_regularizedFeatureGram
+    {Time : Type v} {Feature : Type u}
+    [Fintype Time] [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (x : Time -> Feature -> Real) :
+    IsUnit (regularizedFeatureGram lambda x).det := by
+  exact IsUnit.mk0 _ (regularizedFeatureGram_det_ne_zero lambda hlambda x)
 
 end OFUL
 end BanditRLProof
