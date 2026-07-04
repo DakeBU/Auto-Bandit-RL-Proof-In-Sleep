@@ -1016,6 +1016,24 @@ LOCAL_LEAF_CARDS = [
         "mathlib_routes": ["MLIB-ORDER-ALGEBRA", "LOCAL-LEAF-TAIL-SUMMABILITY-UCB"],
     },
     {
+        "id": "LOCAL-LEAF-UCB-CONFIDENCE-EVENT-CONSUMER",
+        "leaf_ids": [
+            "UCB-GOOD-EVENT-GAP-CONSUMER",
+        ],
+        "module": "BanditRLProof.Algorithms.UCB",
+        "status": "leanCompiled",
+        "declarations": [
+            "UCB.upperConfidenceBad",
+            "UCB.lowerConfidenceBad",
+            "UCB.confidenceBadEvent",
+            "UCB.not_upperConfidenceBad_of_not_confidenceBadEvent",
+            "UCB.not_lowerConfidenceBad_of_not_confidenceBadEvent",
+            "UCB.meanGap_le_two_radius_of_not_confidenceBadEvent",
+        ],
+        "role": "Compiled UCB confidence-event consumer: defines random empirical-mean upper/lower confidence failure sets and their finite-arm union bad event, proves that outside this bad event each arm has the needed upper/lower confidence facts, and combines that event complement with UCB score maximality to get `gap <= 2 * chosenRadius`. This connects the deterministic good-event algebra to future finite-union/tail summability; it does not prove measurability, tail bounds, log/sqrt radius formulas, pull-count bounds, or final regret.",
+        "mathlib_routes": ["LOCAL-LEAF-UCB-CONFIDENCE-ALGEBRA", "LOCAL-LEAF-TAIL-SUMMABILITY-UCB", "LOCAL-LEAF-TAIL-UNION-FINITE"],
+    },
+    {
         "id": "LOCAL-LEAF-IID-REWARD-FAMILY",
         "leaf_ids": [
             "IID-REWARD-FAMILY",
@@ -6530,6 +6548,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- ETC-COMMIT-ORACLE-CONCRETE-FILTERED-SUM-PAIRWISE-TAIL is compiled locally as the concrete argmax-oracle filtered-sum pairwise-tail consumer wrapper.")
     print("- ETC-PAIRWISE-TAIL-CONTRACT-SURFACE is compiled locally as the abstract fixed-commit ETC empirical-mean pairwise-tail contract and consumer wrapper.")
     print("- UCB-CONFIDENCE-ALGEBRA is compiled locally as the deterministic good-event/index-maximality consumer: best-arm upper confidence, chosen-arm lower confidence, and UCB score maximality imply `gap <= 2 * chosenRadius`, with a strict-gap contradiction wrapper; log/sqrt radius formulas, tail producers, expected pull-count bounds, and final UCB regret remain separate.")
+    print("- UCB-CONFIDENCE-EVENT-CONSUMER is compiled locally as the finite-arm good-event complement consumer: outside the union of upper/lower confidence failures, score maximality implies `gap <= 2 * chosenRadius`; measurability, tail bounds, log/sqrt radius formulas, pull-count bounds, and final UCB regret remain separate.")
     print("- TAIL-UNION-FINITE is compiled locally as generic finite-union outer-measure wrappers for explicit Finset and Fintype event families.")
     print("- TAIL-SUMMABILITY-UCB is compiled locally as an abstract finite-horizon UCB bad-event summability wrapper over finite arms and t < T; the UCB log/sqrt tail producer remains separate.")
     print("- EXP3-POTENTIAL is compiled locally as a deterministic finite-action exponential-weights potential surface with updated-potential unfolding, nonnegativity, one-step increment algebra, and finite-horizon telescope; estimator/log/regret leaves remain separate.")

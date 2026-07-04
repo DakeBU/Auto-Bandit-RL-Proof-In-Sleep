@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T18:28:19+00:00",
+  "generated": "2026-07-04T18:33:15+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -114,6 +114,28 @@
       "mathlib_routes": [
         "MLIB-ORDER-ALGEBRA",
         "LOCAL-LEAF-TAIL-SUMMABILITY-UCB"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-UCB-CONFIDENCE-EVENT-CONSUMER",
+      "leaf_ids": [
+        "UCB-GOOD-EVENT-GAP-CONSUMER"
+      ],
+      "module": "BanditRLProof.Algorithms.UCB",
+      "status": "leanCompiled",
+      "declarations": [
+        "UCB.upperConfidenceBad",
+        "UCB.lowerConfidenceBad",
+        "UCB.confidenceBadEvent",
+        "UCB.not_upperConfidenceBad_of_not_confidenceBadEvent",
+        "UCB.not_lowerConfidenceBad_of_not_confidenceBadEvent",
+        "UCB.meanGap_le_two_radius_of_not_confidenceBadEvent"
+      ],
+      "role": "Compiled UCB confidence-event consumer: defines random empirical-mean upper/lower confidence failure sets and their finite-arm union bad event, proves that outside this bad event each arm has the needed upper/lower confidence facts, and combines that event complement with UCB score maximality to get `gap <= 2 * chosenRadius`. This connects the deterministic good-event algebra to future finite-union/tail summability; it does not prove measurability, tail bounds, log/sqrt radius formulas, pull-count bounds, or final regret.",
+      "mathlib_routes": [
+        "LOCAL-LEAF-UCB-CONFIDENCE-ALGEBRA",
+        "LOCAL-LEAF-TAIL-SUMMABILITY-UCB",
+        "LOCAL-LEAF-TAIL-UNION-FINITE"
       ]
     },
     {

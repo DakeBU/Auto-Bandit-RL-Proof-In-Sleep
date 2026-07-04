@@ -15033,6 +15033,33 @@ example {Arm : Type} (trueMean empiricalMean radius : Arm -> Real)
     trueMean empiricalMean radius best chosen
     hbest_upper hchosen_lower hscore hgap_large
 
+example {Omega Arm : Type} [Fintype Arm]
+    (trueMean : Arm -> Real) (empiricalMean : Omega -> Arm -> Real)
+    (radius : Arm -> Real) (omega : Omega) (arm : Arm)
+    (hgood : omega ∉ UCB.confidenceBadEvent trueMean empiricalMean radius) :
+    omega ∉ UCB.upperConfidenceBad trueMean empiricalMean radius arm := by
+  exact UCB.not_upperConfidenceBad_of_not_confidenceBadEvent
+    trueMean empiricalMean radius omega arm hgood
+
+example {Omega Arm : Type} [Fintype Arm]
+    (trueMean : Arm -> Real) (empiricalMean : Omega -> Arm -> Real)
+    (radius : Arm -> Real) (omega : Omega) (arm : Arm)
+    (hgood : omega ∉ UCB.confidenceBadEvent trueMean empiricalMean radius) :
+    omega ∉ UCB.lowerConfidenceBad trueMean empiricalMean radius arm := by
+  exact UCB.not_lowerConfidenceBad_of_not_confidenceBadEvent
+    trueMean empiricalMean radius omega arm hgood
+
+example {Omega Arm : Type} [Fintype Arm]
+    (trueMean : Arm -> Real) (empiricalMean : Omega -> Arm -> Real)
+    (radius : Arm -> Real) (omega : Omega) (best chosen : Arm)
+    (hgood : omega ∉ UCB.confidenceBadEvent trueMean empiricalMean radius)
+    (hscore :
+      UCB.confidenceScore (empiricalMean omega) radius best <=
+        UCB.confidenceScore (empiricalMean omega) radius chosen) :
+    UCB.meanGap trueMean best chosen <= 2 * radius chosen := by
+  exact UCB.meanGap_le_two_radius_of_not_confidenceBadEvent
+    trueMean empiricalMean radius omega best chosen hgood hscore
+
 def twoArmModel : FiniteBanditModel 2 where
   hK := by decide
   mean := fun arm => if arm.val = 0 then 1 else 0
