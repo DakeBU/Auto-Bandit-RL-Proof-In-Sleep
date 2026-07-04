@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T18:00:51+00:00",
+  "generated": "2026-07-04T18:07:49+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -5264,6 +5264,22 @@
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
       "line": 1442,
       "statement": "theorem sum_range_min_prefix_update_le_two_det_mul_exp_upper {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Nat -> Feature -> Real) (T : Nat) (B : Real) (hdet_upper : (regularizedPrefixFeatureGram lambda history T).det <= lambda ^ Fintype.card Feature * Real.exp B) : (Finset.range T).sum"
+    },
+    {
+      "kind": "theorem",
+      "name": "det_regularizedPrefixFeatureGram_le_mul_exp_of_trace_average_bound",
+      "full_name": "BanditRLProof.OFUL.det_regularizedPrefixFeatureGram_le_mul_exp_of_trace_average_bound",
+      "file": "BanditRLProof/OFULEllipticalPotential.lean",
+      "line": 1465,
+      "statement": "theorem det_regularizedPrefixFeatureGram_le_mul_exp_of_trace_average_bound {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Nat -> Feature -> Real) (T : Nat) (L2 B : Real) (hbound : forall t : Nat, t < T -> dotProduct (history t) (history t) <= L2) (haverage_to_exp : (((Fintype.card Feature : Real) * lambda + T * L2) /"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_range_min_prefix_update_le_two_of_trace_average_bound",
+      "full_name": "BanditRLProof.OFUL.sum_range_min_prefix_update_le_two_of_trace_average_bound",
+      "file": "BanditRLProof/OFULEllipticalPotential.lean",
+      "line": 1484,
+      "statement": "theorem sum_range_min_prefix_update_le_two_of_trace_average_bound {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Nat -> Feature -> Real) (T : Nat) (L2 B : Real) (hbound : forall t : Nat, t < T -> dotProduct (history t) (history t) <= L2) (haverage_to_exp : (((Fintype.card Feature : Real) * lambda + T * L2) /"
     },
     {
       "kind": "inductive",

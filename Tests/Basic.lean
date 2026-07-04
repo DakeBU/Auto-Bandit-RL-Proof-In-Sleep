@@ -16680,6 +16680,20 @@ example {Feature : Type} [Fintype Feature] [DecidableEq Feature] [Nonempty Featu
   exact OFUL.det_regularizedPrefixFeatureGram_le_pow_trace_bound_average_of_pos_lambda
     lam hlam history T L2 hbound
 
+example {Feature : Type} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]
+    (lam : Real) (hlam : 0 < lam)
+    (history : Nat -> Feature -> Real) (T : Nat) (L2 B : Real)
+    (hbound : forall t : Nat, t < T ->
+      dotProduct (history t) (history t) <= L2)
+    (haverage_to_exp :
+      (((Fintype.card Feature : Real) * lam + T * L2) /
+          (Fintype.card Feature : Real)) ^ Fintype.card Feature <=
+        lam ^ Fintype.card Feature * Real.exp B) :
+    (OFUL.regularizedPrefixFeatureGram lam history T).det <=
+      lam ^ Fintype.card Feature * Real.exp B := by
+  exact OFUL.det_regularizedPrefixFeatureGram_le_mul_exp_of_trace_average_bound
+    lam hlam history T L2 B hbound haverage_to_exp
+
 example {Feature : Type} [Fintype Feature] [DecidableEq Feature]
     (lam : Real) (hlam : 0 < lam)
     (history : Nat -> Feature -> Real) (T : Nat) :
@@ -16808,5 +16822,23 @@ example {Feature : Type} [Fintype Feature] [DecidableEq Feature]
       2 * B := by
   exact OFUL.sum_range_min_prefix_update_le_two_det_mul_exp_upper
     lam hlam history T B hdet_upper
+
+example {Feature : Type} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]
+    (lam : Real) (hlam : 0 < lam)
+    (history : Nat -> Feature -> Real) (T : Nat) (L2 B : Real)
+    (hbound : forall t : Nat, t < T ->
+      dotProduct (history t) (history t) <= L2)
+    (haverage_to_exp :
+      (((Fintype.card Feature : Real) * lam + T * L2) /
+          (Fintype.card Feature : Real)) ^ Fintype.card Feature <=
+        lam ^ Fintype.card Feature * Real.exp B) :
+    (Finset.range T).sum
+        (fun t => min 1 (dotProduct (history t)
+          (Matrix.mulVec
+            ((OFUL.regularizedPrefixFeatureGram lam history t)⁻¹)
+            (history t)))) <=
+      2 * B := by
+  exact OFUL.sum_range_min_prefix_update_le_two_of_trace_average_bound
+    lam hlam history T L2 B hbound haverage_to_exp
 
 end BanditRLProof

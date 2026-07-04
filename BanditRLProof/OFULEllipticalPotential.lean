@@ -1457,5 +1457,50 @@ theorem sum_range_min_prefix_update_le_two_det_mul_exp_upper
     (log_det_regularizedPrefixFeatureGram_sub_base_le_of_det_le_mul_exp
       lambda hlambda history T B hdet_upper)
 
+/--
+If the trace-average determinant upper bound is simplified to the standard
+multiplicative `lambda^d * exp(B)` form, regularized Nat-prefix Grams inherit
+that multiplicative determinant upper bound.
+-/
+theorem det_regularizedPrefixFeatureGram_le_mul_exp_of_trace_average_bound
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Nat -> Feature -> Real) (T : Nat) (L2 B : Real)
+    (hbound : forall t : Nat, t < T ->
+      dotProduct (history t) (history t) <= L2)
+    (haverage_to_exp :
+      (((Fintype.card Feature : Real) * lambda + T * L2) /
+          (Fintype.card Feature : Real)) ^ Fintype.card Feature <=
+        lambda ^ Fintype.card Feature * Real.exp B) :
+    (regularizedPrefixFeatureGram lambda history T).det <=
+      lambda ^ Fintype.card Feature * Real.exp B := by
+  exact (det_regularizedPrefixFeatureGram_le_pow_trace_bound_average_of_pos_lambda
+    lambda hlambda history T L2 hbound).trans haverage_to_exp
+
+/--
+Clipped prefix inverse-quadratic sum bound from the AM-GM determinant trace
+route plus a separate scalar simplification to `lambda^d * exp(B)`.
+-/
+theorem sum_range_min_prefix_update_le_two_of_trace_average_bound
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Nat -> Feature -> Real) (T : Nat) (L2 B : Real)
+    (hbound : forall t : Nat, t < T ->
+      dotProduct (history t) (history t) <= L2)
+    (haverage_to_exp :
+      (((Fintype.card Feature : Real) * lambda + T * L2) /
+          (Fintype.card Feature : Real)) ^ Fintype.card Feature <=
+        lambda ^ Fintype.card Feature * Real.exp B) :
+    (Finset.range T).sum
+        (fun t => min 1 (dotProduct (history t)
+          (Matrix.mulVec
+            ((regularizedPrefixFeatureGram lambda history t)⁻¹)
+            (history t)))) <=
+      2 * B := by
+  exact sum_range_min_prefix_update_le_two_det_mul_exp_upper
+    lambda hlambda history T B
+    (det_regularizedPrefixFeatureGram_le_mul_exp_of_trace_average_bound
+      lambda hlambda history T L2 B hbound haverage_to_exp)
+
 end OFUL
 end BanditRLProof
