@@ -16624,6 +16624,22 @@ example {Feature : Type} [Fintype Feature] [DecidableEq Feature]
   exact OFUL.det_regularizedPrefixFeatureGram_zero lam history
 
 example {Feature : Type} [Fintype Feature] [DecidableEq Feature]
+    (lam : Real) (history : Nat -> Feature -> Real) (T : Nat) :
+    (OFUL.regularizedPrefixFeatureGram lam history T).trace =
+      (Fintype.card Feature : Real) * lam +
+        (Finset.range T).sum (fun t => dotProduct (history t) (history t)) := by
+  exact OFUL.trace_regularizedPrefixFeatureGram lam history T
+
+example {Feature : Type} [Fintype Feature] [DecidableEq Feature]
+    (lam : Real) (history : Nat -> Feature -> Real) (T : Nat) (L2 : Real)
+    (hbound : forall t : Nat, t < T ->
+      dotProduct (history t) (history t) <= L2) :
+    (OFUL.regularizedPrefixFeatureGram lam history T).trace <=
+      (Fintype.card Feature : Real) * lam + T * L2 := by
+  exact OFUL.trace_regularizedPrefixFeatureGram_le
+    lam history T L2 hbound
+
+example {Feature : Type} [Fintype Feature] [DecidableEq Feature]
     (lam : Real) (hlam : 0 < lam)
     (history : Nat -> Feature -> Real) (T : Nat) :
     Real.log (OFUL.regularizedPrefixFeatureGram lam history (T + 1)).det -

@@ -364,6 +364,62 @@ theorem regularizedPrefixFeatureGram_isHermitian
     rw [Matrix.scalar_apply]
     exact Matrix.isHermitian_diagonal _) (prefixFeatureGram_isHermitian x T)
 
+/-- The trace of a rank-one Gram is the squared feature norm. -/
+theorem trace_rankOneGram
+    {Feature : Type u} [Fintype Feature]
+    (x : Feature -> Real) :
+    (rankOneGram x).trace = dotProduct x x := by
+  simp [Matrix.trace, rankOneGram, dotProduct]
+
+/-- The trace of the scalar regularization matrix is `d * lambda`. -/
+theorem trace_scalar_identity
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) :
+    (Matrix.scalar Feature lambda : Matrix Feature Feature Real).trace =
+      (Fintype.card Feature : Real) * lambda := by
+  rw [Matrix.scalar_apply]
+  simp [Matrix.trace]
+
+/-- Prefix Gram trace as the finite sum of squared feature norms. -/
+theorem trace_prefixFeatureGram
+    {Feature : Type u} [Fintype Feature]
+    (x : Nat -> Feature -> Real) (T : Nat) :
+    (prefixFeatureGram x T).trace =
+      (Finset.range T).sum (fun t => dotProduct (x t) (x t)) := by
+  unfold prefixFeatureGram
+  simp [Matrix.trace, dotProduct]
+  rw [Finset.sum_comm]
+
+/-- Regularized prefix Gram trace as scalar base plus squared feature norms. -/
+theorem trace_regularizedPrefixFeatureGram
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (x : Nat -> Feature -> Real) (T : Nat) :
+    (regularizedPrefixFeatureGram lambda x T).trace =
+      (Fintype.card Feature : Real) * lambda +
+        (Finset.range T).sum (fun t => dotProduct (x t) (x t)) := by
+  rw [regularizedPrefixFeatureGram]
+  rw [Matrix.trace_add]
+  rw [trace_scalar_identity, trace_prefixFeatureGram]
+
+/--
+If each feature vector has squared norm at most `L2`, the regularized prefix
+Gram trace is bounded by `d * lambda + T * L2`.
+-/
+theorem trace_regularizedPrefixFeatureGram_le
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (x : Nat -> Feature -> Real) (T : Nat) (L2 : Real)
+    (hbound : forall t : Nat, t < T -> dotProduct (x t) (x t) <= L2) :
+    (regularizedPrefixFeatureGram lambda x T).trace <=
+      (Fintype.card Feature : Real) * lambda + T * L2 := by
+  rw [trace_regularizedPrefixFeatureGram]
+  have hsum :
+      (Finset.range T).sum (fun t => dotProduct (x t) (x t)) <= T * L2 := by
+    simpa [Finset.card_range, nsmul_eq_mul] using
+      (Finset.sum_le_card_nsmul (Finset.range T)
+      (fun t => dotProduct (x t) (x t)) L2
+      (fun t ht => hbound t (Finset.mem_range.mp ht)))
+  linarith
+
 /--
 The quadratic form of a rank-one Gram matrix is the square of the projection
 of the query vector onto the feature vector.

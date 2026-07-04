@@ -1439,6 +1439,23 @@ LOCAL_LEAF_CARDS = [
         "mathlib_routes": ["LOCAL-LEAF-OFUL-LOG-DET-UPPER-CONSUMER", "Mathlib.Analysis.SpecialFunctions.Log.Basic", "Mathlib.Analysis.Matrix.PosDef"],
     },
     {
+        "id": "LOCAL-LEAF-OFUL-PREFIX-TRACE-BOUND",
+        "leaf_ids": [
+            "OFUL-ELLIPTICAL-POTENTIAL",
+        ],
+        "module": "BanditRLProof.OFULEllipticalPotential",
+        "status": "leanCompiled",
+        "declarations": [
+            "OFUL.trace_rankOneGram",
+            "OFUL.trace_scalar_identity",
+            "OFUL.trace_prefixFeatureGram",
+            "OFUL.trace_regularizedPrefixFeatureGram",
+            "OFUL.trace_regularizedPrefixFeatureGram_le",
+        ],
+        "role": "Compiled trace/radius input layer for the OFUL/LinUCB determinant-upper route: proves rank-one, scalar, prefix, and regularized-prefix trace expansions, and bounds `trace(V_T)` by `d * lambda + T * L2` under a pointwise squared-feature-norm ceiling. This is the trace side of the future trace/AM-GM determinant upper bound; it does not prove the AM-GM product-of-eigenvalues inequality, the concrete multiplicative determinant bound, self-normalized martingale concentration, confidence ellipsoids, or OFUL regret.",
+        "mathlib_routes": ["LOCAL-LEAF-OFUL-DET-MUL-EXP-UPPER-CONSUMER", "Mathlib.LinearAlgebra.Matrix.Trace", "MLIB-FINSET-SUMS"],
+    },
+    {
         "id": "LOCAL-LEAF-CONCENTRATION-SUBGAUSSIAN",
         "leaf_ids": [
             "TAIL-HOEFFDING-BOUNDED",
@@ -6441,6 +6458,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- OFUL-INVERSE-QUADRATIC-NONNEG-CONSUMER is compiled locally as the PosDef-inverse consumer that proves `0 <= x_t^T V_t^{-1} x_t` for regularized Nat-prefix Grams and removes the explicit nonnegativity contract from the min/log determinant-growth bound; determinant upper bounds, dimension/radius simplifications, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- OFUL-LOG-DET-UPPER-CONSUMER is compiled locally as the terminal upper-bound handoff: any future proof of `log det(V_T)-log(lambda^d) <= B` immediately yields the clipped elliptical-potential bound `sum_t min(1,u_t) <= 2 * B`; concrete determinant upper bounds, dimension/radius simplifications, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- OFUL-DET-MUL-EXP-UPPER-CONSUMER is compiled locally as the multiplicative determinant-upper handoff: any future proof of `det(V_T) <= lambda^d * exp(B)` yields both `log det(V_T)-log(lambda^d) <= B` and `sum_t min(1,u_t) <= 2 * B`; concrete trace/AM-GM determinant bounds, dimension/radius simplifications, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
+    print("- OFUL-PREFIX-TRACE-BOUND is compiled locally as the trace/radius input for determinant upper bounds: `trace(V_T) = d * lambda + sum_t ||x_t||^2` and `trace(V_T) <= d * lambda + T * L2` under a pointwise squared-norm ceiling; AM-GM determinant upper bounds, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- TAIL-HOEFFDING-BOUNDED is compiled locally as the generic bounded-centered Hoeffding MGF wrapper with an interval variance proxy.")
     print("- TAIL-SUBGAUSS-SUM is compiled locally as the Mathlib-backed independent sub-Gaussian finite-sum tail wrapper.")
     print("- TAIL-SUBGAUSS-DIFF-SUM-IMPORT is compiled locally as the ENNReal-valued independent sub-Gaussian finite-sum tail boundary wrapper.")

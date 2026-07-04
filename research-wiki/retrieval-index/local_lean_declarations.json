@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T17:39:39+00:00",
+  "generated": "2026-07-04T17:46:54+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -4771,10 +4771,50 @@
     },
     {
       "kind": "theorem",
+      "name": "trace_rankOneGram",
+      "full_name": "BanditRLProof.OFUL.trace_rankOneGram",
+      "file": "BanditRLProof/OFULEllipticalPotential.lean",
+      "line": 368,
+      "statement": "theorem trace_rankOneGram {Feature : Type u} [Fintype Feature] (x : Feature -> Real) : (rankOneGram x).trace = dotProduct x x"
+    },
+    {
+      "kind": "theorem",
+      "name": "trace_scalar_identity",
+      "full_name": "BanditRLProof.OFUL.trace_scalar_identity",
+      "file": "BanditRLProof/OFULEllipticalPotential.lean",
+      "line": 375,
+      "statement": "theorem trace_scalar_identity {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) : (Matrix.scalar Feature lambda : Matrix Feature Feature Real).trace = (Fintype.card Feature : Real) * lambda"
+    },
+    {
+      "kind": "theorem",
+      "name": "trace_prefixFeatureGram",
+      "full_name": "BanditRLProof.OFUL.trace_prefixFeatureGram",
+      "file": "BanditRLProof/OFULEllipticalPotential.lean",
+      "line": 384,
+      "statement": "theorem trace_prefixFeatureGram {Feature : Type u} [Fintype Feature] (x : Nat -> Feature -> Real) (T : Nat) : (prefixFeatureGram x T).trace = (Finset.range T).sum (fun t => dotProduct (x t) (x t))"
+    },
+    {
+      "kind": "theorem",
+      "name": "trace_regularizedPrefixFeatureGram",
+      "full_name": "BanditRLProof.OFUL.trace_regularizedPrefixFeatureGram",
+      "file": "BanditRLProof/OFULEllipticalPotential.lean",
+      "line": 394,
+      "statement": "theorem trace_regularizedPrefixFeatureGram {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (x : Nat -> Feature -> Real) (T : Nat) : (regularizedPrefixFeatureGram lambda x T).trace = (Fintype.card Feature : Real) * lambda + (Finset.range T).sum (fun t => dotProduct (x t) (x t))"
+    },
+    {
+      "kind": "theorem",
+      "name": "trace_regularizedPrefixFeatureGram_le",
+      "full_name": "BanditRLProof.OFUL.trace_regularizedPrefixFeatureGram_le",
+      "file": "BanditRLProof/OFULEllipticalPotential.lean",
+      "line": 408,
+      "statement": "theorem trace_regularizedPrefixFeatureGram_le {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (x : Nat -> Feature -> Real) (T : Nat) (L2 : Real) (hbound : forall t : Nat, t < T -> dotProduct (x t) (x t) <= L2) : (regularizedPrefixFeatureGram lambda x T).trace <= (Fintype.card Feature : Real) * lambda + T * L2"
+    },
+    {
+      "kind": "theorem",
       "name": "rankOneGram_quadraticForm_eq_sq",
       "full_name": "BanditRLProof.OFUL.rankOneGram_quadraticForm_eq_sq",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 371,
+      "line": 427,
       "statement": "theorem rankOneGram_quadraticForm_eq_sq {Feature : Type u} [Fintype Feature] (x y : Feature -> Real) : quadraticForm (rankOneGram x) y = ((Finset.univ : Finset Feature).sum (fun i => x i * y i)) ^ 2"
     },
     {
@@ -4782,7 +4822,7 @@
       "name": "rankOneGram_posSemidef",
       "full_name": "BanditRLProof.OFUL.rankOneGram_posSemidef",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 415,
+      "line": 471,
       "statement": "theorem rankOneGram_posSemidef {Feature : Type u} [Fintype Feature] (x : Feature -> Real) : (rankOneGram x).PosSemidef"
     },
     {
@@ -4790,7 +4830,7 @@
       "name": "rankOneGram_quadraticForm_nonneg",
       "full_name": "BanditRLProof.OFUL.rankOneGram_quadraticForm_nonneg",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 431,
+      "line": 487,
       "statement": "theorem rankOneGram_quadraticForm_nonneg {Feature : Type u} [Fintype Feature] (x y : Feature -> Real) : 0 <= quadraticForm (rankOneGram x) y"
     },
     {
@@ -4798,7 +4838,7 @@
       "name": "featureGram_quadraticForm_eq_sum_sq",
       "full_name": "BanditRLProof.OFUL.featureGram_quadraticForm_eq_sum_sq",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 442,
+      "line": 498,
       "statement": "theorem featureGram_quadraticForm_eq_sum_sq {Time : Type v} {Feature : Type u} [Fintype Time] [Fintype Feature] (x : Time -> Feature -> Real) (y : Feature -> Real) : quadraticForm (featureGram x) y = (Finset.univ : Finset Time).sum (fun t => ((Finset.univ : Finset Feature).sum (fun i => x t i * y i)) ^ 2)"
     },
     {
@@ -4806,7 +4846,7 @@
       "name": "prefixFeatureGram_quadraticForm_eq_sum_sq",
       "full_name": "BanditRLProof.OFUL.prefixFeatureGram_quadraticForm_eq_sum_sq",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 497,
+      "line": 553,
       "statement": "theorem prefixFeatureGram_quadraticForm_eq_sum_sq {Feature : Type u} [Fintype Feature] (x : Nat -> Feature -> Real) (T : Nat) (y : Feature -> Real) : quadraticForm (prefixFeatureGram x T) y = (Finset.range T).sum (fun t => ((Finset.univ : Finset Feature).sum (fun i => x t i * y i)) ^ 2)"
     },
     {
@@ -4814,7 +4854,7 @@
       "name": "regularizedFeatureGram_quadraticForm_eq_sum_sq",
       "full_name": "BanditRLProof.OFUL.regularizedFeatureGram_quadraticForm_eq_sum_sq",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 552,
+      "line": 608,
       "statement": "theorem regularizedFeatureGram_quadraticForm_eq_sum_sq {Time : Type v} {Feature : Type u} [Fintype Time] [Fintype Feature] [DecidableEq Feature] (lambda : Real) (x : Time -> Feature -> Real) (y : Feature -> Real) : quadraticForm (regularizedFeatureGram lambda x) y = lambda * (Finset.univ : Finset Feature).sum (fun i => y i ^ 2) + (Finset.univ : Finset Time).sum (fun t =>"
     },
     {
@@ -4822,7 +4862,7 @@
       "name": "regularizedPrefixFeatureGram_quadraticForm_eq_sum_sq",
       "full_name": "BanditRLProof.OFUL.regularizedPrefixFeatureGram_quadraticForm_eq_sum_sq",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 571,
+      "line": 627,
       "statement": "theorem regularizedPrefixFeatureGram_quadraticForm_eq_sum_sq {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (x : Nat -> Feature -> Real) (T : Nat) (y : Feature -> Real) : quadraticForm (regularizedPrefixFeatureGram lambda x T) y = lambda * (Finset.univ : Finset Feature).sum (fun i => y i ^ 2) + (Finset.range T).sum (fun t =>"
     },
     {
@@ -4830,7 +4870,7 @@
       "name": "featureGram_quadraticForm_nonneg",
       "full_name": "BanditRLProof.OFUL.featureGram_quadraticForm_nonneg",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 587,
+      "line": 643,
       "statement": "theorem featureGram_quadraticForm_nonneg {Time : Type v} {Feature : Type u} [Fintype Time] [Fintype Feature] (x : Time -> Feature -> Real) (y : Feature -> Real) : 0 <= quadraticForm (featureGram x) y"
     },
     {
@@ -4838,7 +4878,7 @@
       "name": "prefixFeatureGram_quadraticForm_nonneg",
       "full_name": "BanditRLProof.OFUL.prefixFeatureGram_quadraticForm_nonneg",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 595,
+      "line": 651,
       "statement": "theorem prefixFeatureGram_quadraticForm_nonneg {Feature : Type u} [Fintype Feature] (x : Nat -> Feature -> Real) (T : Nat) (y : Feature -> Real) : 0 <= quadraticForm (prefixFeatureGram x T) y"
     },
     {
@@ -4846,7 +4886,7 @@
       "name": "regularizedFeatureGram_quadraticForm_nonneg",
       "full_name": "BanditRLProof.OFUL.regularizedFeatureGram_quadraticForm_nonneg",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 603,
+      "line": 659,
       "statement": "theorem regularizedFeatureGram_quadraticForm_nonneg {Time : Type v} {Feature : Type u} [Fintype Time] [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 <= lambda) (x : Time -> Feature -> Real) (y : Feature -> Real) : 0 <= quadraticForm (regularizedFeatureGram lambda x) y"
     },
     {
@@ -4854,7 +4894,7 @@
       "name": "regularizedPrefixFeatureGram_quadraticForm_nonneg",
       "full_name": "BanditRLProof.OFUL.regularizedPrefixFeatureGram_quadraticForm_nonneg",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 617,
+      "line": 673,
       "statement": "theorem regularizedPrefixFeatureGram_quadraticForm_nonneg {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 <= lambda) (x : Nat -> Feature -> Real) (T : Nat) (y : Feature -> Real) : 0 <= quadraticForm (regularizedPrefixFeatureGram lambda x T) y"
     },
     {
@@ -4862,7 +4902,7 @@
       "name": "regularizedFeatureGram_quadraticForm_pos_of_pos_lambda",
       "full_name": "BanditRLProof.OFUL.regularizedFeatureGram_quadraticForm_pos_of_pos_lambda",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 633,
+      "line": 689,
       "statement": "theorem regularizedFeatureGram_quadraticForm_pos_of_pos_lambda {Time : Type v} {Feature : Type u} [Fintype Time] [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (x : Time -> Feature -> Real) (y : Feature -> Real) (hy : \u2203 i : Feature, y i \u2260 0) : 0 < quadraticForm (regularizedFeatureGram lambda x) y"
     },
     {
@@ -4870,7 +4910,7 @@
       "name": "regularizedPrefixFeatureGram_quadraticForm_pos_of_pos_lambda",
       "full_name": "BanditRLProof.OFUL.regularizedPrefixFeatureGram_quadraticForm_pos_of_pos_lambda",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 649,
+      "line": 705,
       "statement": "theorem regularizedPrefixFeatureGram_quadraticForm_pos_of_pos_lambda {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (x : Nat -> Feature -> Real) (T : Nat) (y : Feature -> Real) (hy : \u2203 i : Feature, y i \u2260 0) : 0 < quadraticForm (regularizedPrefixFeatureGram lambda x T) y"
     },
     {
@@ -4878,7 +4918,7 @@
       "name": "regularizedFeatureGram_posDef",
       "full_name": "BanditRLProof.OFUL.regularizedFeatureGram_posDef",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 661,
+      "line": 717,
       "statement": "theorem regularizedFeatureGram_posDef {Time : Type v} {Feature : Type u} [Fintype Time] [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (x : Time -> Feature -> Real) : (regularizedFeatureGram lambda x).PosDef"
     },
     {
@@ -4886,7 +4926,7 @@
       "name": "regularizedPrefixFeatureGram_posDef",
       "full_name": "BanditRLProof.OFUL.regularizedPrefixFeatureGram_posDef",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 679,
+      "line": 735,
       "statement": "theorem regularizedPrefixFeatureGram_posDef {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (x : Nat -> Feature -> Real) (T : Nat) : (regularizedPrefixFeatureGram lambda x T).PosDef"
     },
     {
@@ -4894,7 +4934,7 @@
       "name": "regularizedPrefixFeatureGram_inv_posDef",
       "full_name": "BanditRLProof.OFUL.regularizedPrefixFeatureGram_inv_posDef",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 696,
+      "line": 752,
       "statement": "theorem regularizedPrefixFeatureGram_inv_posDef {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (x : Nat -> Feature -> Real) (T : Nat) : ((regularizedPrefixFeatureGram lambda x T)\u207b\u00b9).PosDef"
     },
     {
@@ -4902,7 +4942,7 @@
       "name": "regularizedPrefixFeatureGram_inv_quadratic_nonneg",
       "full_name": "BanditRLProof.OFUL.regularizedPrefixFeatureGram_inv_quadratic_nonneg",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 708,
+      "line": 764,
       "statement": "theorem regularizedPrefixFeatureGram_inv_quadratic_nonneg {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (x : Nat -> Feature -> Real) (T : Nat) (y : Feature -> Real) : 0 <= dotProduct y (Matrix.mulVec ((regularizedPrefixFeatureGram lambda x T)\u207b\u00b9) y)"
     },
     {
@@ -4910,7 +4950,7 @@
       "name": "regularizedFeatureGram_det_pos",
       "full_name": "BanditRLProof.OFUL.regularizedFeatureGram_det_pos",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 725,
+      "line": 781,
       "statement": "theorem regularizedFeatureGram_det_pos {Time : Type v} {Feature : Type u} [Fintype Time] [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (x : Time -> Feature -> Real) : 0 < (regularizedFeatureGram lambda x).det"
     },
     {
@@ -4918,7 +4958,7 @@
       "name": "regularizedPrefixFeatureGram_det_pos",
       "full_name": "BanditRLProof.OFUL.regularizedPrefixFeatureGram_det_pos",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 734,
+      "line": 790,
       "statement": "theorem regularizedPrefixFeatureGram_det_pos {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (x : Nat -> Feature -> Real) (T : Nat) : 0 < (regularizedPrefixFeatureGram lambda x T).det"
     },
     {
@@ -4926,7 +4966,7 @@
       "name": "regularizedFeatureGram_det_ne_zero",
       "full_name": "BanditRLProof.OFUL.regularizedFeatureGram_det_ne_zero",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 743,
+      "line": 799,
       "statement": "theorem regularizedFeatureGram_det_ne_zero {Time : Type v} {Feature : Type u} [Fintype Time] [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (x : Time -> Feature -> Real) : (regularizedFeatureGram lambda x).det \u2260 0"
     },
     {
@@ -4934,7 +4974,7 @@
       "name": "regularizedPrefixFeatureGram_det_ne_zero",
       "full_name": "BanditRLProof.OFUL.regularizedPrefixFeatureGram_det_ne_zero",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 752,
+      "line": 808,
       "statement": "theorem regularizedPrefixFeatureGram_det_ne_zero {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (x : Nat -> Feature -> Real) (T : Nat) : (regularizedPrefixFeatureGram lambda x T).det \u2260 0"
     },
     {
@@ -4942,7 +4982,7 @@
       "name": "isUnit_det_regularizedFeatureGram",
       "full_name": "BanditRLProof.OFUL.isUnit_det_regularizedFeatureGram",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 763,
+      "line": 819,
       "statement": "theorem isUnit_det_regularizedFeatureGram {Time : Type v} {Feature : Type u} [Fintype Time] [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (x : Time -> Feature -> Real) : IsUnit (regularizedFeatureGram lambda x).det"
     },
     {
@@ -4950,7 +4990,7 @@
       "name": "isUnit_det_regularizedPrefixFeatureGram",
       "full_name": "BanditRLProof.OFUL.isUnit_det_regularizedPrefixFeatureGram",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 775,
+      "line": 831,
       "statement": "theorem isUnit_det_regularizedPrefixFeatureGram {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (x : Nat -> Feature -> Real) (T : Nat) : IsUnit (regularizedPrefixFeatureGram lambda x T).det"
     },
     {
@@ -4958,7 +4998,7 @@
       "name": "det_regularizedFeatureGram_add_rankOneGram",
       "full_name": "BanditRLProof.OFUL.det_regularizedFeatureGram_add_rankOneGram",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 790,
+      "line": 846,
       "statement": "theorem det_regularizedFeatureGram_add_rankOneGram {Time : Type v} {Feature : Type u} [Fintype Time] [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Time -> Feature -> Real) (x : Feature -> Real) : (regularizedFeatureGram lambda history + rankOneGram x).det = (regularizedFeatureGram lambda history).det * (1 + dotProduct x"
     },
     {
@@ -4966,7 +5006,7 @@
       "name": "det_regularizedPrefixFeatureGram_add_rankOneGram",
       "full_name": "BanditRLProof.OFUL.det_regularizedPrefixFeatureGram_add_rankOneGram",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 808,
+      "line": 864,
       "statement": "theorem det_regularizedPrefixFeatureGram_add_rankOneGram {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Nat -> Feature -> Real) (T : Nat) (x : Feature -> Real) : (regularizedPrefixFeatureGram lambda history T + rankOneGram x).det = (regularizedPrefixFeatureGram lambda history T).det * (1 + dotProduct x (Matrix.mulVec"
     },
     {
@@ -4974,7 +5014,7 @@
       "name": "regularizedFeatureGram_add_rankOneGram_posDef",
       "full_name": "BanditRLProof.OFUL.regularizedFeatureGram_add_rankOneGram_posDef",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 821,
+      "line": 877,
       "statement": "theorem regularizedFeatureGram_add_rankOneGram_posDef {Time : Type v} {Feature : Type u} [Fintype Time] [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Time -> Feature -> Real) (x : Feature -> Real) : (regularizedFeatureGram lambda history + rankOneGram x).PosDef"
     },
     {
@@ -4982,7 +5022,7 @@
       "name": "regularizedPrefixFeatureGram_add_rankOneGram_posDef",
       "full_name": "BanditRLProof.OFUL.regularizedPrefixFeatureGram_add_rankOneGram_posDef",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 832,
+      "line": 888,
       "statement": "theorem regularizedPrefixFeatureGram_add_rankOneGram_posDef {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Nat -> Feature -> Real) (T : Nat) (x : Feature -> Real) : (regularizedPrefixFeatureGram lambda history T + rankOneGram x).PosDef"
     },
     {
@@ -4990,7 +5030,7 @@
       "name": "det_regularizedFeatureGram_add_rankOneGram_pos",
       "full_name": "BanditRLProof.OFUL.det_regularizedFeatureGram_add_rankOneGram_pos",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 842,
+      "line": 898,
       "statement": "theorem det_regularizedFeatureGram_add_rankOneGram_pos {Time : Type v} {Feature : Type u} [Fintype Time] [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Time -> Feature -> Real) (x : Feature -> Real) : 0 < (regularizedFeatureGram lambda history + rankOneGram x).det"
     },
     {
@@ -4998,7 +5038,7 @@
       "name": "det_regularizedPrefixFeatureGram_add_rankOneGram_pos",
       "full_name": "BanditRLProof.OFUL.det_regularizedPrefixFeatureGram_add_rankOneGram_pos",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 853,
+      "line": 909,
       "statement": "theorem det_regularizedPrefixFeatureGram_add_rankOneGram_pos {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Nat -> Feature -> Real) (T : Nat) (x : Feature -> Real) : 0 < (regularizedPrefixFeatureGram lambda history T + rankOneGram x).det"
     },
     {
@@ -5006,7 +5046,7 @@
       "name": "regularizedFeatureGram_rankOne_update_factor_pos",
       "full_name": "BanditRLProof.OFUL.regularizedFeatureGram_rankOne_update_factor_pos",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 863,
+      "line": 919,
       "statement": "theorem regularizedFeatureGram_rankOne_update_factor_pos {Time : Type v} {Feature : Type u} [Fintype Time] [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Time -> Feature -> Real) (x : Feature -> Real) : 0 < 1 + dotProduct x (Matrix.mulVec ((regularizedFeatureGram lambda history)\u207b\u00b9) x)"
     },
     {
@@ -5014,7 +5054,7 @@
       "name": "regularizedPrefixFeatureGram_rankOne_update_factor_pos",
       "full_name": "BanditRLProof.OFUL.regularizedPrefixFeatureGram_rankOne_update_factor_pos",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 889,
+      "line": 945,
       "statement": "theorem regularizedPrefixFeatureGram_rankOne_update_factor_pos {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Nat -> Feature -> Real) (T : Nat) (x : Feature -> Real) : 0 < 1 + dotProduct x (Matrix.mulVec ((regularizedPrefixFeatureGram lambda history T)\u207b\u00b9) x)"
     },
     {
@@ -5022,7 +5062,7 @@
       "name": "log_det_regularizedFeatureGram_add_rankOneGram",
       "full_name": "BanditRLProof.OFUL.log_det_regularizedFeatureGram_add_rankOneGram",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 914,
+      "line": 970,
       "statement": "theorem log_det_regularizedFeatureGram_add_rankOneGram {Time : Type v} {Feature : Type u} [Fintype Time] [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Time -> Feature -> Real) (x : Feature -> Real) : Real.log (regularizedFeatureGram lambda history + rankOneGram x).det = Real.log (regularizedFeatureGram lambda history).det + Real.log (1 + dotProduct x"
     },
     {
@@ -5030,7 +5070,7 @@
       "name": "log_det_regularizedPrefixFeatureGram_add_rankOneGram",
       "full_name": "BanditRLProof.OFUL.log_det_regularizedPrefixFeatureGram_add_rankOneGram",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 931,
+      "line": 987,
       "statement": "theorem log_det_regularizedPrefixFeatureGram_add_rankOneGram {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Nat -> Feature -> Real) (T : Nat) (x : Feature -> Real) : Real.log (regularizedPrefixFeatureGram lambda history T + rankOneGram x).det = Real.log (regularizedPrefixFeatureGram lambda history T).det + Real.log (1 + dotProduct x (Matrix.mulVec"
     },
     {
@@ -5038,7 +5078,7 @@
       "name": "log_det_regularizedFeatureGram_add_rankOneGram_sub",
       "full_name": "BanditRLProof.OFUL.log_det_regularizedFeatureGram_add_rankOneGram_sub",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 948,
+      "line": 1004,
       "statement": "theorem log_det_regularizedFeatureGram_add_rankOneGram_sub {Time : Type v} {Feature : Type u} [Fintype Time] [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Time -> Feature -> Real) (x : Feature -> Real) : Real.log (regularizedFeatureGram lambda history + rankOneGram x).det - Real.log (regularizedFeatureGram lambda history).det = Real.log (1 + dotProduct x"
     },
     {
@@ -5046,7 +5086,7 @@
       "name": "log_det_regularizedPrefixFeatureGram_add_rankOneGram_sub",
       "full_name": "BanditRLProof.OFUL.log_det_regularizedPrefixFeatureGram_add_rankOneGram_sub",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 962,
+      "line": 1018,
       "statement": "theorem log_det_regularizedPrefixFeatureGram_add_rankOneGram_sub {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Nat -> Feature -> Real) (T : Nat) (x : Feature -> Real) : Real.log (regularizedPrefixFeatureGram lambda history T + rankOneGram x).det - Real.log (regularizedPrefixFeatureGram lambda history T).det = Real.log (1 + dotProduct x (Matrix.mulVec"
     },
     {
@@ -5054,7 +5094,7 @@
       "name": "det_regularizedPrefixFeatureGram_succ",
       "full_name": "BanditRLProof.OFUL.det_regularizedPrefixFeatureGram_succ",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 976,
+      "line": 1032,
       "statement": "theorem det_regularizedPrefixFeatureGram_succ {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Nat -> Feature -> Real) (T : Nat) : (regularizedPrefixFeatureGram lambda history (T + 1)).det = (regularizedPrefixFeatureGram lambda history T).det * (1 + dotProduct (history T) (Matrix.mulVec"
     },
     {
@@ -5062,7 +5102,7 @@
       "name": "log_det_regularizedPrefixFeatureGram_succ_sub",
       "full_name": "BanditRLProof.OFUL.log_det_regularizedPrefixFeatureGram_succ_sub",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 991,
+      "line": 1047,
       "statement": "theorem log_det_regularizedPrefixFeatureGram_succ_sub {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Nat -> Feature -> Real) (T : Nat) : Real.log (regularizedPrefixFeatureGram lambda history (T + 1)).det - Real.log (regularizedPrefixFeatureGram lambda history T).det = Real.log (1 + dotProduct (history T) (Matrix.mulVec"
     },
     {
@@ -5070,7 +5110,7 @@
       "name": "sum_range_forward_difference",
       "full_name": "BanditRLProof.OFUL.sum_range_forward_difference",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 1006,
+      "line": 1062,
       "statement": "theorem sum_range_forward_difference (Phi : Nat -> Real) (T : Nat) : (Finset.range T).sum (fun t => Phi (t + 1) - Phi t) = Phi T - Phi 0"
     },
     {
@@ -5078,7 +5118,7 @@
       "name": "sum_range_log_update_factor_eq_log_det_ratio",
       "full_name": "BanditRLProof.OFUL.sum_range_log_update_factor_eq_log_det_ratio",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 1023,
+      "line": 1079,
       "statement": "theorem sum_range_log_update_factor_eq_log_det_ratio (detSeq factor : Nat -> Real) (T : Nat) (hstep : forall t : Nat, t < T -> Real.log (detSeq (t + 1)) - Real.log (detSeq t) = Real.log (factor t)) : (Finset.range T).sum (fun t => Real.log (factor t)) = Real.log (detSeq T) - Real.log (detSeq 0)"
     },
     {
@@ -5086,7 +5126,7 @@
       "name": "div_one_add_self_le_log_one_add",
       "full_name": "BanditRLProof.OFUL.div_one_add_self_le_log_one_add",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 1042,
+      "line": 1098,
       "statement": "theorem div_one_add_self_le_log_one_add {z : Real} (hz : 0 <= z) : z / (1 + z) <= Real.log (1 + z)"
     },
     {
@@ -5094,7 +5134,7 @@
       "name": "self_le_two_log_one_add_of_le_one",
       "full_name": "BanditRLProof.OFUL.self_le_two_log_one_add_of_le_one",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 1060,
+      "line": 1116,
       "statement": "theorem self_le_two_log_one_add_of_le_one {z : Real} (hz0 : 0 <= z) (hz1 : z <= 1) : z <= 2 * Real.log (1 + z)"
     },
     {
@@ -5102,7 +5142,7 @@
       "name": "one_le_two_log_two",
       "full_name": "BanditRLProof.OFUL.one_le_two_log_two",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 1073,
+      "line": 1129,
       "statement": "theorem one_le_two_log_two : (1 : Real) <= 2 * Real.log 2"
     },
     {
@@ -5110,7 +5150,7 @@
       "name": "min_one_le_two_log_one_add",
       "full_name": "BanditRLProof.OFUL.min_one_le_two_log_one_add",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 1080,
+      "line": 1136,
       "statement": "theorem min_one_le_two_log_one_add {z : Real} (hz : 0 <= z) : min 1 z <= 2 * Real.log (1 + z)"
     },
     {
@@ -5118,7 +5158,7 @@
       "name": "sum_range_min_one_le_two_sum_log_one_add",
       "full_name": "BanditRLProof.OFUL.sum_range_min_one_le_two_sum_log_one_add",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 1098,
+      "line": 1154,
       "statement": "theorem sum_range_min_one_le_two_sum_log_one_add (u : Nat -> Real) (T : Nat) (hu : forall t : Nat, t < T -> 0 <= u t) : (Finset.range T).sum (fun t => min 1 (u t)) <= 2 * (Finset.range T).sum (fun t => Real.log (1 + u t))"
     },
     {
@@ -5126,7 +5166,7 @@
       "name": "sum_range_log_regularizedPrefixFeatureGram_update_factor_eq_log_det_ratio",
       "full_name": "BanditRLProof.OFUL.sum_range_log_regularizedPrefixFeatureGram_update_factor_eq_log_det_ratio",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 1118,
+      "line": 1174,
       "statement": "theorem sum_range_log_regularizedPrefixFeatureGram_update_factor_eq_log_det_ratio {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Nat -> Feature -> Real) (T : Nat) : (Finset.range T).sum (fun t => Real.log (1 + dotProduct (history t) (Matrix.mulVec ((regularizedPrefixFeatureGram lambda history t)\u207b\u00b9)"
     },
     {
@@ -5134,7 +5174,7 @@
       "name": "sum_range_log_regularizedPrefixFeatureGram_update_factor_eq_log_det_sub_base",
       "full_name": "BanditRLProof.OFUL.sum_range_log_regularizedPrefixFeatureGram_update_factor_eq_log_det_sub_base",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 1144,
+      "line": 1200,
       "statement": "theorem sum_range_log_regularizedPrefixFeatureGram_update_factor_eq_log_det_sub_base {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Nat -> Feature -> Real) (T : Nat) : (Finset.range T).sum (fun t => Real.log (1 + dotProduct (history t) (Matrix.mulVec ((regularizedPrefixFeatureGram lambda history t)\u207b\u00b9)"
     },
     {
@@ -5142,7 +5182,7 @@
       "name": "sum_range_min_prefix_update_le_two_log_det_sub_base",
       "full_name": "BanditRLProof.OFUL.sum_range_min_prefix_update_le_two_log_det_sub_base",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 1166,
+      "line": 1222,
       "statement": "theorem sum_range_min_prefix_update_le_two_log_det_sub_base {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Nat -> Feature -> Real) (T : Nat) (hquad_nonneg : forall t : Nat, t < T -> 0 <= dotProduct (history t) (Matrix.mulVec ((regularizedPrefixFeatureGram lambda history t)\u207b\u00b9)"
     },
     {
@@ -5150,7 +5190,7 @@
       "name": "sum_range_min_prefix_update_le_two_log_det_sub_base_of_pos_lambda",
       "full_name": "BanditRLProof.OFUL.sum_range_min_prefix_update_le_two_log_det_sub_base_of_pos_lambda",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 1197,
+      "line": 1253,
       "statement": "theorem sum_range_min_prefix_update_le_two_log_det_sub_base_of_pos_lambda {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Nat -> Feature -> Real) (T : Nat) : (Finset.range T).sum (fun t => min 1 (dotProduct (history t) (Matrix.mulVec ((regularizedPrefixFeatureGram lambda history t)\u207b\u00b9)"
     },
     {
@@ -5158,7 +5198,7 @@
       "name": "sum_range_min_prefix_update_le_two_log_det_upper",
       "full_name": "BanditRLProof.OFUL.sum_range_min_prefix_update_le_two_log_det_upper",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 1218,
+      "line": 1274,
       "statement": "theorem sum_range_min_prefix_update_le_two_log_det_upper {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Nat -> Feature -> Real) (T : Nat) (B : Real) (hlog_upper : Real.log (regularizedPrefixFeatureGram lambda history T).det - Real.log (lambda ^ Fintype.card Feature) <= B) : (Finset.range T).sum"
     },
     {
@@ -5166,7 +5206,7 @@
       "name": "log_det_regularizedPrefixFeatureGram_sub_base_le_of_det_le_mul_exp",
       "full_name": "BanditRLProof.OFUL.log_det_regularizedPrefixFeatureGram_sub_base_le_of_det_le_mul_exp",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 1240,
+      "line": 1296,
       "statement": "theorem log_det_regularizedPrefixFeatureGram_sub_base_le_of_det_le_mul_exp {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Nat -> Feature -> Real) (T : Nat) (B : Real) (hdet_upper : (regularizedPrefixFeatureGram lambda history T).det <= lambda ^ Fintype.card Feature * Real.exp B) : Real.log (regularizedPrefixFeatureGram lambda history T).det -"
     },
     {
@@ -5174,7 +5214,7 @@
       "name": "sum_range_min_prefix_update_le_two_det_mul_exp_upper",
       "full_name": "BanditRLProof.OFUL.sum_range_min_prefix_update_le_two_det_mul_exp_upper",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 1267,
+      "line": 1323,
       "statement": "theorem sum_range_min_prefix_update_le_two_det_mul_exp_upper {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Nat -> Feature -> Real) (T : Nat) (B : Real) (hdet_upper : (regularizedPrefixFeatureGram lambda history T).det <= lambda ^ Fintype.card Feature * Real.exp B) : (Finset.range T).sum"
     },
     {
