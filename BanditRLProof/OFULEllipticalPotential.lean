@@ -421,6 +421,38 @@ theorem trace_regularizedPrefixFeatureGram_le
   linarith
 
 /--
+If a separate AM-GM/eigenvalue route supplies
+`det(V_T) <= (trace(V_T) / d)^d`, the prefix trace bound converts it into a
+dimension/radius determinant upper bound.
+-/
+theorem det_regularizedPrefixFeatureGram_le_pow_trace_bound_average
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (x : Nat -> Feature -> Real) (T : Nat) (L2 : Real)
+    (hdet_by_trace :
+      (regularizedPrefixFeatureGram lambda x T).det <=
+        ((regularizedPrefixFeatureGram lambda x T).trace /
+          (Fintype.card Feature : Real)) ^ Fintype.card Feature)
+    (havg_nonneg :
+      0 <= (regularizedPrefixFeatureGram lambda x T).trace /
+        (Fintype.card Feature : Real))
+    (hbound : forall t : Nat, t < T -> dotProduct (x t) (x t) <= L2) :
+    (regularizedPrefixFeatureGram lambda x T).det <=
+      (((Fintype.card Feature : Real) * lambda + T * L2) /
+        (Fintype.card Feature : Real)) ^ Fintype.card Feature := by
+  have htrace :=
+    trace_regularizedPrefixFeatureGram_le lambda x T L2 hbound
+  have hcard_nonneg : 0 <= (Fintype.card Feature : Real) := by
+    exact_mod_cast (Nat.zero_le (Fintype.card Feature))
+  have hdiv :
+      (regularizedPrefixFeatureGram lambda x T).trace /
+          (Fintype.card Feature : Real) <=
+        ((Fintype.card Feature : Real) * lambda + T * L2) /
+          (Fintype.card Feature : Real) := by
+    exact div_le_div_of_nonneg_right htrace hcard_nonneg
+  exact hdet_by_trace.trans
+    (pow_le_pow_left₀ havg_nonneg hdiv (Fintype.card Feature))
+
+/--
 The quadratic form of a rank-one Gram matrix is the square of the projection
 of the query vector onto the feature vector.
 -/

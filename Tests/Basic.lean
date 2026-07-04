@@ -16640,6 +16640,23 @@ example {Feature : Type} [Fintype Feature] [DecidableEq Feature]
     lam history T L2 hbound
 
 example {Feature : Type} [Fintype Feature] [DecidableEq Feature]
+    (lam : Real) (history : Nat -> Feature -> Real) (T : Nat) (L2 : Real)
+    (hdet_by_trace :
+      (OFUL.regularizedPrefixFeatureGram lam history T).det <=
+        ((OFUL.regularizedPrefixFeatureGram lam history T).trace /
+          (Fintype.card Feature : Real)) ^ Fintype.card Feature)
+    (havg_nonneg :
+      0 <= (OFUL.regularizedPrefixFeatureGram lam history T).trace /
+        (Fintype.card Feature : Real))
+    (hbound : forall t : Nat, t < T ->
+      dotProduct (history t) (history t) <= L2) :
+    (OFUL.regularizedPrefixFeatureGram lam history T).det <=
+      (((Fintype.card Feature : Real) * lam + T * L2) /
+        (Fintype.card Feature : Real)) ^ Fintype.card Feature := by
+  exact OFUL.det_regularizedPrefixFeatureGram_le_pow_trace_bound_average
+    lam history T L2 hdet_by_trace havg_nonneg hbound
+
+example {Feature : Type} [Fintype Feature] [DecidableEq Feature]
     (lam : Real) (hlam : 0 < lam)
     (history : Nat -> Feature -> Real) (T : Nat) :
     Real.log (OFUL.regularizedPrefixFeatureGram lam history (T + 1)).det -
