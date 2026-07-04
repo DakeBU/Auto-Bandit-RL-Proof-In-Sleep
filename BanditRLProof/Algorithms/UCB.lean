@@ -240,6 +240,91 @@ theorem measure_confidenceBadEvent_le_sum_upper_lower
               (upperConfidenceBad trueMean empiricalMean radius arm)
               (lowerConfidenceBad trueMean empiricalMean radius arm))
 
+/-- Time-indexed UCB confidence bad event. -/
+def confidenceBadEventAt {Omega Arm : Type} [Fintype Arm]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (radius : Nat -> Arm -> Real) (t : Nat) : Set Omega :=
+  confidenceBadEvent trueMean
+    (fun omega arm => empiricalMean omega t arm) (radius t)
+
+/--
+The time-indexed UCB confidence bad event is measurable from per-arm empirical
+mean measurability at that time.
+-/
+theorem measurableSet_confidenceBadEventAt
+    {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (radius : Nat -> Arm -> Real) (t : Nat)
+    (hmeas : forall arm : Arm,
+      Measurable (fun omega : Omega => empiricalMean omega t arm)) :
+    MeasurableSet (confidenceBadEventAt trueMean empiricalMean radius t) := by
+  simpa [confidenceBadEventAt] using
+    measurableSet_confidenceBadEvent trueMean
+      (fun omega arm => empiricalMean omega t arm) (radius t) hmeas
+
+/-- Finite-horizon union of time-indexed UCB confidence bad events. -/
+def finiteHorizonConfidenceBadEvent {Omega Arm : Type} [Fintype Arm]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (radius : Nat -> Arm -> Real) (T : Nat) : Set Omega :=
+  ⋃ t ∈ Finset.range T,
+    confidenceBadEventAt trueMean empiricalMean radius t
+
+/--
+Finite-horizon union bound for UCB confidence bad events.
+
+This assembles the single-time upper/lower confidence-event union bound across
+`t < T`. It does not produce concentration tails or simplify the resulting
+double finite sum.
+-/
+theorem measure_finiteHorizonConfidenceBadEvent_le_sum_upper_lower
+    {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
+    (mu : Measure Omega)
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (radius : Nat -> Arm -> Real) (T : Nat) :
+    mu (finiteHorizonConfidenceBadEvent trueMean empiricalMean radius T) <=
+      (Finset.range T).sum
+        (fun t =>
+          (Finset.univ : Finset Arm).sum
+            (fun arm =>
+              mu (upperConfidenceBad trueMean
+                (fun omega arm => empiricalMean omega t arm)
+                (radius t) arm) +
+              mu (lowerConfidenceBad trueMean
+                (fun omega arm => empiricalMean omega t arm)
+                (radius t) arm))) := by
+  unfold finiteHorizonConfidenceBadEvent confidenceBadEventAt
+  calc
+    mu (⋃ t ∈ Finset.range T,
+        confidenceBadEvent trueMean
+          (fun omega arm => empiricalMean omega t arm) (radius t))
+        <= (Finset.range T).sum
+            (fun t =>
+              mu (confidenceBadEvent trueMean
+                (fun omega arm => empiricalMean omega t arm) (radius t))) := by
+          exact ProbabilityUnionBound.measure_biUnion_finset_le
+            mu (Finset.range T)
+            (fun t =>
+              confidenceBadEvent trueMean
+                (fun omega arm => empiricalMean omega t arm) (radius t))
+    _ <= (Finset.range T).sum
+        (fun t =>
+          (Finset.univ : Finset Arm).sum
+            (fun arm =>
+              mu (upperConfidenceBad trueMean
+                (fun omega arm => empiricalMean omega t arm)
+                (radius t) arm) +
+              mu (lowerConfidenceBad trueMean
+                (fun omega arm => empiricalMean omega t arm)
+                (radius t) arm))) := by
+          exact Finset.sum_le_sum (fun t _ht =>
+            measure_confidenceBadEvent_le_sum_upper_lower
+              mu trueMean
+              (fun omega arm => empiricalMean omega t arm) (radius t))
+
 /-- The proof-DAG leaves usually needed for UCB regret formalization. -/
 def obligationNames : List String :=
   [ "initial_round_robin_count_positive"

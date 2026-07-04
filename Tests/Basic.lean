@@ -15097,6 +15097,37 @@ example {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
   exact UCB.measurableSet_confidenceBadEvent
     trueMean empiricalMean radius hmeas
 
+example {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (radius : Nat -> Arm -> Real) (t : Nat)
+    (hmeas : forall arm : Arm,
+      Measurable (fun omega : Omega => empiricalMean omega t arm)) :
+    MeasurableSet
+      (UCB.confidenceBadEventAt trueMean empiricalMean radius t) := by
+  exact UCB.measurableSet_confidenceBadEventAt
+    trueMean empiricalMean radius t hmeas
+
+example {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
+    (mu : MeasureTheory.Measure Omega)
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (radius : Nat -> Arm -> Real) (T : Nat) :
+    mu (UCB.finiteHorizonConfidenceBadEvent
+        trueMean empiricalMean radius T) <=
+      (Finset.range T).sum
+        (fun t =>
+          (Finset.univ : Finset Arm).sum
+            (fun arm =>
+              mu (UCB.upperConfidenceBad trueMean
+                (fun omega arm => empiricalMean omega t arm)
+                (radius t) arm) +
+              mu (UCB.lowerConfidenceBad trueMean
+                (fun omega arm => empiricalMean omega t arm)
+                (radius t) arm))) := by
+  exact UCB.measure_finiteHorizonConfidenceBadEvent_le_sum_upper_lower
+    mu trueMean empiricalMean radius T
+
 def twoArmModel : FiniteBanditModel 2 where
   hK := by decide
   mean := fun arm => if arm.val = 0 then 1 else 0

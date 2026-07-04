@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T18:46:09+00:00",
+  "generated": "2026-07-04T18:52:30+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -173,6 +173,28 @@
         "LOCAL-LEAF-UCB-CONFIDENCE-EVENT-CONSUMER",
         "LOCAL-LEAF-UCB-CONFIDENCE-EVENT-UNION-BOUND",
         "MLIB-MEASURE-INTEGRAL"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-UCB-FINITE-HORIZON-CONFIDENCE-EVENT",
+      "leaf_ids": [
+        "UCB-GOOD-EVENT-GAP-CONSUMER",
+        "TAIL-SUMMABILITY-UCB"
+      ],
+      "module": "BanditRLProof.Algorithms.UCB",
+      "status": "leanCompiled",
+      "declarations": [
+        "UCB.confidenceBadEventAt",
+        "UCB.measurableSet_confidenceBadEventAt",
+        "UCB.finiteHorizonConfidenceBadEvent",
+        "UCB.measure_finiteHorizonConfidenceBadEvent_le_sum_upper_lower"
+      ],
+      "role": "Compiled finite-horizon UCB confidence-event bridge: packages the time-indexed confidence bad event, proves its single-time measurability from per-arm empirical-mean measurability, and bounds the finite-horizon bad-event measure by the double finite sum over times, arms, and upper/lower confidence failures. This assembles existing single-time UCB event wrappers across t < T; concrete empirical-mean construction, concentration tails, log/sqrt radius formulas, pull-count bounds, and final UCB regret remain separate.",
+      "mathlib_routes": [
+        "LOCAL-LEAF-UCB-CONFIDENCE-EVENT-MEASURABILITY",
+        "LOCAL-LEAF-UCB-CONFIDENCE-EVENT-UNION-BOUND",
+        "LOCAL-LEAF-TAIL-SUMMABILITY-UCB",
+        "MLIB-FINSET-SUMS"
       ]
     },
     {
