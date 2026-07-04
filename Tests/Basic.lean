@@ -16656,6 +16656,30 @@ example {Feature : Type} [Fintype Feature] [DecidableEq Feature]
   exact OFUL.det_regularizedPrefixFeatureGram_le_pow_trace_bound_average
     lam history T L2 hdet_by_trace havg_nonneg hbound
 
+example {Feature : Type} [Fintype Feature] [Nonempty Feature]
+    (z : Feature -> Real) (hz : forall i : Feature, 0 <= z i) :
+    (Finset.univ.prod z) <=
+      ((Finset.univ.sum z) / (Fintype.card Feature : Real)) ^
+        Fintype.card Feature := by
+  exact OFUL.prod_univ_le_pow_sum_div_card_of_nonneg z hz
+
+example {Feature : Type} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]
+    (A : Matrix Feature Feature Real) (hA : A.PosSemidef) :
+    A.det <= (A.trace / (Fintype.card Feature : Real)) ^
+      Fintype.card Feature := by
+  exact OFUL.det_posSemidef_le_pow_trace_div_card A hA
+
+example {Feature : Type} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]
+    (lam : Real) (hlam : 0 < lam)
+    (history : Nat -> Feature -> Real) (T : Nat) (L2 : Real)
+    (hbound : forall t : Nat, t < T ->
+      dotProduct (history t) (history t) <= L2) :
+    (OFUL.regularizedPrefixFeatureGram lam history T).det <=
+      (((Fintype.card Feature : Real) * lam + T * L2) /
+        (Fintype.card Feature : Real)) ^ Fintype.card Feature := by
+  exact OFUL.det_regularizedPrefixFeatureGram_le_pow_trace_bound_average_of_pos_lambda
+    lam hlam history T L2 hbound
+
 example {Feature : Type} [Fintype Feature] [DecidableEq Feature]
     (lam : Real) (hlam : 0 < lam)
     (history : Nat -> Feature -> Real) (T : Nat) :

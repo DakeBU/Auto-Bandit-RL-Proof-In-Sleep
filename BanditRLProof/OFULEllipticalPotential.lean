@@ -1,5 +1,6 @@
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.Order.Field.Basic
+import Mathlib.Analysis.MeanInequalities
 import Mathlib.Analysis.Matrix.PosDef
 import Mathlib.Data.Matrix.Basic
 import Mathlib.Data.Real.Basic
@@ -420,6 +421,53 @@ theorem trace_regularizedPrefixFeatureGram_le
       (fun t ht => hbound t (Finset.mem_range.mp ht)))
   linarith
 
+/-- Finite nonnegative product is bounded by the corresponding arithmetic mean power. -/
+theorem finset_prod_le_pow_sum_div_card_of_nonneg
+    {ι : Type v} (s : Finset ι) (hs : s.Nonempty)
+    (z : ι -> Real) (hz : forall i : ι, i ∈ s -> 0 <= z i) :
+    (s.prod z) <= ((s.sum z) / (s.card : Real)) ^ s.card := by
+  have hcard_ne : s.card ≠ 0 := hs.card_ne_zero
+  have hsumw : (s.sum (fun _ : ι => (1 : Real))) = (s.card : Real) := by
+    simp
+  have hwpos : 0 < s.sum (fun _ : ι => (1 : Real)) := by
+    rw [hsumw]
+    exact_mod_cast hs.card_pos
+  have hamgm := Real.geom_mean_le_arith_mean s
+    (fun _ : ι => (1 : Real)) z
+    (fun _ _ => by norm_num) hwpos hz
+  have hgeom :
+      (s.prod z) ^ ((s.card : Real)⁻¹) <=
+        (s.sum z) / (s.card : Real) := by
+    simpa [hsumw] using hamgm
+  have hprod_nonneg : 0 <= s.prod z :=
+    Finset.prod_nonneg (fun i hi => hz i hi)
+  have hpow := pow_le_pow_left₀
+    (Real.rpow_nonneg hprod_nonneg _) hgeom s.card
+  simpa [Real.rpow_inv_natCast_pow hprod_nonneg hcard_ne] using hpow
+
+/-- Fintype specialization of the finite AM-GM product bound. -/
+theorem prod_univ_le_pow_sum_div_card_of_nonneg
+    {ι : Type v} [Fintype ι] [Nonempty ι]
+    (z : ι -> Real) (hz : forall i : ι, 0 <= z i) :
+    (Finset.univ.prod z) <=
+      ((Finset.univ.sum z) / (Fintype.card ι : Real)) ^ Fintype.card ι := by
+  exact finset_prod_le_pow_sum_div_card_of_nonneg
+    (Finset.univ : Finset ι) Finset.univ_nonempty z
+    (fun i _hi => hz i)
+
+/-- Positive-semidefinite determinant upper bound from AM-GM on eigenvalues. -/
+theorem det_posSemidef_le_pow_trace_div_card
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]
+    (A : Matrix Feature Feature Real) (hA : A.PosSemidef) :
+    A.det <= (A.trace / (Fintype.card Feature : Real)) ^
+      Fintype.card Feature := by
+  have hprod := prod_univ_le_pow_sum_div_card_of_nonneg
+    (fun i : Feature => hA.isHermitian.eigenvalues i)
+    (fun i => hA.eigenvalues_nonneg i)
+  rw [hA.isHermitian.det_eq_prod_eigenvalues,
+    hA.isHermitian.trace_eq_sum_eigenvalues]
+  exact hprod
+
 /--
 If a separate AM-GM/eigenvalue route supplies
 `det(V_T) <= (trace(V_T) / d)^d`, the prefix trace bound converts it into a
@@ -779,6 +827,45 @@ theorem regularizedPrefixFeatureGram_posDef
   rw [dotProduct_mulVec_eq_quadraticForm]
   exact regularizedPrefixFeatureGram_quadraticForm_pos_of_pos_lambda
     lambda hlambda x T y (exists_coord_ne_zero_of_ne_zero y hy)
+
+/-- Regularized Nat-prefix Gram determinant is bounded by trace average power. -/
+theorem det_regularizedPrefixFeatureGram_le_pow_trace_div_card
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (x : Nat -> Feature -> Real) (T : Nat) :
+    (regularizedPrefixFeatureGram lambda x T).det <=
+      ((regularizedPrefixFeatureGram lambda x T).trace /
+        (Fintype.card Feature : Real)) ^ Fintype.card Feature := by
+  exact det_posSemidef_le_pow_trace_div_card
+    (regularizedPrefixFeatureGram lambda x T)
+    (Matrix.PosDef.posSemidef
+      (regularizedPrefixFeatureGram_posDef lambda hlambda x T))
+
+/--
+Concrete trace/radius determinant upper bound for regularized Nat-prefix
+Grams.
+-/
+theorem det_regularizedPrefixFeatureGram_le_pow_trace_bound_average_of_pos_lambda
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (x : Nat -> Feature -> Real) (T : Nat) (L2 : Real)
+    (hbound : forall t : Nat, t < T -> dotProduct (x t) (x t) <= L2) :
+    (regularizedPrefixFeatureGram lambda x T).det <=
+      (((Fintype.card Feature : Real) * lambda + T * L2) /
+        (Fintype.card Feature : Real)) ^ Fintype.card Feature := by
+  have hposdef := regularizedPrefixFeatureGram_posDef lambda hlambda x T
+  have htrace_nonneg :
+      0 <= (regularizedPrefixFeatureGram lambda x T).trace :=
+    Matrix.PosSemidef.trace_nonneg hposdef.posSemidef
+  have hcard_pos : 0 < (Fintype.card Feature : Real) := by
+    exact_mod_cast (Fintype.card_pos_iff.mpr inferInstance :
+      0 < Fintype.card Feature)
+  exact det_regularizedPrefixFeatureGram_le_pow_trace_bound_average
+    lambda x T L2
+    (det_regularizedPrefixFeatureGram_le_pow_trace_div_card
+      lambda hlambda x T)
+    (div_nonneg htrace_nonneg (le_of_lt hcard_pos))
+    hbound
 
 /-- Inverses of regularized Nat-prefix Gram matrices are positive definite. -/
 theorem regularizedPrefixFeatureGram_inv_posDef
