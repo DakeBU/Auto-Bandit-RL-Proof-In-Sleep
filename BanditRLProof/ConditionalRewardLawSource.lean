@@ -8451,6 +8451,249 @@ theorem centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairCentered
       (source.centered_integrable i)
 
 /--
+Consume a centered generated-policy random next-pair source to obtain the
+succ-indexed conditional sub-Gaussian MGF witness for the centered reward.
+
+The source supplies the generated-action law, the canonical next-pair map law,
+the centered reward-kernel law, and context/state measurability.  The analytic
+regularity contracts required by Mathlib's conditional MGF predicate remain
+explicit: ambient centered-reward measurability, exponential integrability, and
+the deterministic variance-proxy upper bound.
+-/
+theorem centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairCenteredSource
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (action : Omega -> ActionTrace Action)
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (haction : forall t : Nat,
+      Measurable (fun omega : Omega => action omega t))
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (source :
+      GeneratedActionRandomPairCenteredSource mu action rewardKernel policy
+        context state mean varianceProxy defaultAction reward haction hreward)
+    (i : Nat)
+    (c : NNReal)
+    (h_centered_meas :
+      @Measurable Omega Real mOmega inferInstance
+        (fun omega : Omega =>
+          (((reward omega (i + 1) -
+            mean
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+                Rat) : Real))))
+    (h_integrable_exp :
+      forall t : Real,
+        MeasureTheory.Integrable
+          (fun omega : Omega =>
+            Real.exp (t *
+              (((reward omega (i + 1) -
+                mean
+                  (context i
+                    (History.finiteRewardHistoryOfTrace (reward omega) i))
+                  ((policy i).action
+                    (state i
+                      (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+                    Rat) : Real)))) mu)
+    (h_variance_le :
+      Filter.Eventually
+        (fun omega : Omega =>
+          varianceProxy
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace (reward omega) i))) <=
+            c)
+        (ae
+          (mu.trim
+            ((History.historyFiltrationSucc action reward haction hreward).le
+              i)))) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc action reward haction hreward) i)
+      ((History.historyFiltrationSucc action reward haction hreward).le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      c mu := by
+  let F : MeasureTheory.Filtration Nat mOmega :=
+    History.historyFiltrationSucc action reward haction hreward
+  let pairContext :
+      (n : Nat) -> ((j : Finset.Iic n) -> Prod Action Rat) -> Context :=
+    fun n history => context n (History.pairHistoryRewardProjection history)
+  let pairState :
+      (n : Nat) -> ((j : Finset.Iic n) -> Prod Action Rat) -> State :=
+    fun n history => state n (History.pairHistoryRewardProjection history)
+  let pairHistory : Omega -> ((j : Finset.Iic i) -> Prod Action Rat) :=
+    fun omega : Omega =>
+      History.finitePairHistoryOfTrace (action omega) (reward omega) i
+  have h_pair_map :
+      Filter.Eventually
+        (fun omega : Omega =>
+          @MeasureTheory.Measure.map Omega (Prod Action Rat) mOmega inferInstance
+            (fun y : Omega => (action y (i + 1), reward y (i + 1)))
+            (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _ (F i)
+              omega) =
+          RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy
+            pairContext pairState
+            (fun n : Nat =>
+              (source.hcontext n).comp
+                (History.measurable_pairHistoryRewardProjection
+                  (Action := Action) (Reward := Rat) n))
+            (fun n : Nat =>
+              (source.hstate n).comp
+                (History.measurable_pairHistoryRewardProjection
+                  (Action := Action) (Reward := Rat) n))
+            i (pairHistory omega))
+        (ae (mu.trim (F.le i))) := by
+    simpa [F, pairContext, pairState, pairHistory] using
+      actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairCenteredSource
+        (mu := mu)
+        (action := action)
+        (rewardKernel := rewardKernel)
+        (policy := policy)
+        (context := context)
+        (state := state)
+        (mean := mean)
+        (varianceProxy := varianceProxy)
+        (defaultAction := defaultAction)
+        (reward := reward)
+        (haction := haction)
+        (hreward := hreward)
+        (source := source)
+        (i := i)
+  have h_action_policy_eq :
+      Filter.Eventually
+        (fun omega : Omega =>
+          action omega (i + 1) =
+            (policy i).action (pairState i (pairHistory omega)))
+        (ae (mu.trim (F.le i))) := by
+    exact Filter.Eventually.of_forall (fun omega => by
+      have h_point :=
+        congrFun (congrFun source.map_source.action_generated omega) (i + 1)
+      simpa [F, pairState, pairHistory,
+        Policy.generatedActionTraceSucc,
+        History.pairHistoryRewardProjection_finitePairHistoryOfTrace]
+        using h_point)
+  have h_reward_actual :
+      Filter.Eventually
+        (fun omega : Omega =>
+          @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+            (fun y : Omega => reward y (i + 1))
+            (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _ (F i)
+              omega) =
+          RewardKernel.selectedMeasure rewardKernel
+            (pairContext i (pairHistory omega))
+            (action omega (i + 1)))
+        (ae (mu.trim (F.le i))) := by
+    exact
+      reward_condExpKernel_map_eq_selected_actual_action_of_actionRewardHistoryStepKernelFamily_pair_map_eq
+        (mu := mu)
+        (F := F)
+        (rewardKernel := rewardKernel)
+        (policy := policy)
+        (pairContext := pairContext)
+        (pairState := pairState)
+        (hpairContext := fun n : Nat =>
+          (source.hcontext n).comp
+            (History.measurable_pairHistoryRewardProjection
+              (Action := Action) (Reward := Rat) n))
+        (hpairState := fun n : Nat =>
+          (source.hstate n).comp
+            (History.measurable_pairHistoryRewardProjection
+              (Action := Action) (Reward := Rat) n))
+        (action := action)
+        (reward := reward)
+        (haction := haction)
+        (hreward := hreward)
+        (i := i)
+        (pairHistory := pairHistory)
+        h_action_policy_eq
+        h_pair_map
+  have h_reward_policy :
+      Filter.Eventually
+        (fun omega : Omega =>
+          @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+            (fun y : Omega => reward y (i + 1))
+            (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _ (F i)
+              omega) =
+          RewardKernel.selectedMeasure rewardKernel
+            (pairContext i (pairHistory omega))
+            ((policy i).action (pairState i (pairHistory omega))))
+        (ae (mu.trim (F.le i))) := by
+    exact
+      reward_condExpKernel_map_eq_selected_policy_of_action_eq
+        (mu := mu)
+        (F := F)
+        (rewardKernel := rewardKernel)
+        (policy := policy)
+        (pairContext := pairContext)
+        (pairState := pairState)
+        (action := action)
+        (reward := reward)
+        (i := i)
+        (pairHistory := pairHistory)
+        h_action_policy_eq
+        h_reward_actual
+  have h_kernel_map_eq :
+      Filter.Eventually
+        (fun omega : Omega =>
+          @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+            (fun y : Omega => reward y (i + 1))
+            (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _ (F i)
+              omega) =
+          RewardKernel.historyStepKernelFamily rewardKernel policy context state
+            source.hcontext source.hstate i
+            (History.finiteRewardHistoryOfTrace (reward omega) i))
+        (ae (mu.trim (F.le i))) := by
+    simpa [F, pairContext, pairState, pairHistory,
+      RewardKernel.historyStepKernelFamily_apply,
+      History.pairHistoryRewardProjection_finitePairHistoryOfTrace]
+      using h_reward_policy
+  exact
+    centeredReward_succ_hasCondSubgaussianMGF_of_historyStepKernelFamily_condExpKernel_map_eq_historyFiltrationSucc
+      (mu := mu)
+      (action := action)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (hcontext := source.hcontext)
+      (hstate := source.hstate)
+      (mean := mean)
+      (varianceProxy := varianceProxy)
+      (law := source.kernel_law)
+      (reward := reward)
+      (haction := haction)
+      (hreward := hreward)
+      (i := i)
+      (c := c)
+      h_centered_meas
+      h_integrable_exp
+      h_kernel_map_eq
+      h_variance_le
+
+/--
 Consume a definitional centered generated-policy random next-pair source to
 obtain the canonical history-step pair law.
 -/

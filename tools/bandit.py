@@ -3246,6 +3246,31 @@ LOCAL_LEAF_CARDS = [
         ],
     },
     {
+        "id": "LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-CENTERED-SOURCE-COND-MGF-CONSUMER",
+        "leaf_ids": [
+            "COND-EXPECT-REWARD",
+            "ADAPTED-ACTION",
+            "MEAS-POLICY",
+            "KERNEL-POLICY-BIND",
+            "KERNEL-REWARD",
+            "MEAS-REWARD",
+        ],
+        "module": "BanditRLProof.ConditionalRewardLawSource",
+        "status": "leanCompiled",
+        "declarations": [
+            "ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairCenteredSource",
+        ],
+        "role": "Compiled project-local centered-source conditional MGF consumer for COND-EXPECT-REWARD: a GeneratedActionRandomPairCenteredSource now feeds its generated-action equality, canonical next-pair map law, centered kernel law, and context/state measurability into the history-filtration conditional-MGF route, yielding Mathlib HasCondSubgaussianMGF for the centered successor reward. Ambient centered-reward measurability, exponential integrability, and deterministic variance-proxy domination remain explicit regularity contracts; the theorem still assumes the random next-pair law source and ambient trajectory-to-condExpKernel identification.",
+        "mathlib_routes": [
+            "MLIB-PROBABILITY-SUBGAUSSIAN",
+            "MLIB-CONDITIONAL-EXPECTATION",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-HISTORYSTEP-CONDEXPKERNEL-COND-MGF-CONSUMER",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-CENTERED-SOURCE-TO-HISTORYSTEP-PAIR-LAW",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-CENTERED-SOURCE-CONTRACT",
+            "FILTRATION-HISTORY",
+        ],
+    },
+    {
         "id": "LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-BOUNDED-CENTERED-SOURCE-TO-HISTORYSTEP-PAIR-LAW",
         "leaf_ids": [
             "COND-EXPECT-REWARD",
@@ -5925,6 +5950,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- COND-EXPECT-REWARD-RANDOM-PAIR-DEFINITIONAL-MAP-SOURCE-TO-HISTORYSTEP-PAIR-LAW is compiled locally as the definitional source-level canonical pair-law consumer: GeneratedActionRandomPairDefinitionalMapSource now directly yields the RewardKernel.actionRewardHistoryStepKernelFamily next-pair law over generatedActionFromRewardHistory; it still assumes the definitional random next-pair law source and ambient trajectory-to-condExpKernel identification.")
     print("- COND-EXPECT-REWARD-GENERATED-CENTERED-SOURCE-CONTRACT is compiled locally as a centered regularity/source package over the generated random-pair source, including context/state measurability, kernel centered law, and per-step ambient integrability; it still assumes those source/integrability fields rather than deriving them.")
     print("- COND-EXPECT-REWARD-RANDOM-PAIR-CENTERED-SOURCE-TO-HISTORYSTEP-PAIR-LAW is compiled locally as the centered-source canonical pair-law consumer: GeneratedActionRandomPairCenteredSource now directly yields the RewardKernel.actionRewardHistoryStepKernelFamily next-pair law while preserving centered law and integrability fields for later consumers; it still assumes the random next-pair law source and ambient trajectory-to-condExpKernel identification.")
+    print("- COND-EXPECT-REWARD-RANDOM-PAIR-CENTERED-SOURCE-COND-MGF-CONSUMER is compiled locally as the centered-source conditional MGF consumer: GeneratedActionRandomPairCenteredSource now yields Mathlib HasCondSubgaussianMGF for the centered successor reward under explicit centered measurability, exponential integrability, and variance-proxy upper-bound contracts; it still assumes the random next-pair law source and ambient trajectory-to-condExpKernel identification.")
     print("- COND-EXPECT-REWARD-RANDOM-PAIR-BOUNDED-CENTERED-SOURCE-TO-HISTORYSTEP-PAIR-LAW is compiled locally as the bounded-centered-source canonical pair-law consumer: GeneratedActionRandomPairBoundedCenteredSource now directly yields the RewardKernel.actionRewardHistoryStepKernelFamily next-pair law by lowering through the integrability-based centered source; it still assumes the random next-pair law source and ambient trajectory-to-condExpKernel identification.")
     print("- COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-CENTERED-SOURCE-CONTRACT is compiled locally as the definitional generated-action centered source: it removes explicit action-trace/haction inputs from the centered source layer using generatedActionFromRewardHistory plus the definitional map source, then reuses the centered-source finite-pair-trace and conditional mean-zero consumers; it still assumes the definitional random pair law and centered integrability fields.")
     print("- COND-EXPECT-REWARD-RANDOM-PAIR-DEFINITIONAL-CENTERED-SOURCE-TO-HISTORYSTEP-PAIR-LAW is compiled locally as the definitional centered-source canonical pair-law consumer: GeneratedActionRandomPairDefinitionalCenteredSource now directly yields the RewardKernel.actionRewardHistoryStepKernelFamily next-pair law over generatedActionFromRewardHistory; it still assumes the definitional random next-pair law source and ambient trajectory-to-condExpKernel identification.")
