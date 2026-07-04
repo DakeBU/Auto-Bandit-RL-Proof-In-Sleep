@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T13:49:26+00:00",
+  "generated": "2026-07-04T13:54:54+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -3763,6 +3763,32 @@
         "MLIB-CONDITIONAL-EXPECTATION",
         "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-COND-MGF-SOURCE-REGULARITY-CONSUMER",
         "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-COND-MGF-UNIFORM-VARIANCE-CONSUMER",
+        "FILTRATION-HISTORY"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-HISTORY-VARIANCE-SOURCE-COND-MGF-CONSUMER",
+      "leaf_ids": [
+        "COND-EXPECT-REWARD",
+        "ADAPTED-ACTION",
+        "MEAS-POLICY",
+        "MEAS-HISTORY",
+        "KERNEL-POLICY-BIND",
+        "KERNEL-REWARD",
+        "INT-REWARD-BOUNDED",
+        "MEAS-REWARD"
+      ],
+      "module": "BanditRLProof.ConditionalRewardLawSource",
+      "status": "leanCompiled",
+      "declarations": [
+        "ConditionalExpectationReward.GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource",
+        "ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource"
+      ],
+      "role": "Compiled project-local practical source wrapper and consumer for time-indexed selected-history variance ceilings: a definitional raw-reward-range/measurable-mean-range source can be packaged with varianceCeiling : Nat -> NNReal and forall i history, varianceProxy (context i history) ((policy i).action (state i history)) <= varianceCeiling i, yielding HasCondSubgaussianMGF at time i with proxy varianceCeiling i. It keeps the history-level variance contract explicit while avoiding per-call trimmed-a.e. variance hypotheses.",
+      "mathlib_routes": [
+        "MLIB-PROBABILITY-SUBGAUSSIAN",
+        "MLIB-CONDITIONAL-EXPECTATION",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-COND-MGF-HISTORY-VARIANCE-CONSUMER",
         "FILTRATION-HISTORY"
       ]
     },
