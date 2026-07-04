@@ -1294,6 +1294,25 @@ LOCAL_LEAF_CARDS = [
         "mathlib_routes": ["LOCAL-LEAF-OFUL-REGULARIZED-GRAM-DET-POS", "LOCAL-LEAF-OFUL-RANKONE-DET-UPDATE", "Mathlib.LinearAlgebra.Matrix.SchurComplement"],
     },
     {
+        "id": "LOCAL-LEAF-OFUL-LOG-DET-UPDATE",
+        "leaf_ids": [
+            "OFUL-ELLIPTICAL-POTENTIAL",
+        ],
+        "module": "BanditRLProof.OFULEllipticalPotential",
+        "status": "leanCompiled",
+        "declarations": [
+            "OFUL.rankOneGram_isHermitian",
+            "OFUL.rankOneGram_posSemidef",
+            "OFUL.regularizedFeatureGram_add_rankOneGram_posDef",
+            "OFUL.det_regularizedFeatureGram_add_rankOneGram_pos",
+            "OFUL.regularizedFeatureGram_rankOne_update_factor_pos",
+            "OFUL.log_det_regularizedFeatureGram_add_rankOneGram",
+            "OFUL.log_det_regularizedFeatureGram_add_rankOneGram_sub",
+        ],
+        "role": "Compiled logarithmic one-step determinant-update wrapper for OFUL/LinUCB: proves rank-one Grams are Mathlib-positive semidefinite, the rank-one update of a positive regularized Gram remains PosDef with positive determinant, the determinant-update scalar factor is positive, and `log det(V + x x^T) - log det(V) = log(1 + x^T V^{-1} x)`. This is the local log-det increment input; it does not prove finite-horizon log-det telescoping, determinant-growth inequalities, self-normalized martingale concentration, confidence ellipsoids, or OFUL regret.",
+        "mathlib_routes": ["LOCAL-LEAF-OFUL-REGULARIZED-GRAM-DET-UPDATE", "LOCAL-LEAF-OFUL-REGULARIZED-GRAM-DET-POS", "Mathlib.Analysis.SpecialFunctions.Log.Basic"],
+    },
+    {
         "id": "LOCAL-LEAF-CONCENTRATION-SUBGAUSSIAN",
         "leaf_ids": [
             "TAIL-HOEFFDING-BOUNDED",
@@ -6288,6 +6307,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- OFUL-REGULARIZED-GRAM-POS-QFORM is compiled locally as the strict-positive regularized-Gram quadratic-form wrapper under `0 < lambda` and nonzero vector input; determinant positivity, arbitrary regularized Gram invertibility, log-det telescoping, determinant-growth inequalities, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- OFUL-REGULARIZED-GRAM-DET-POS is compiled locally as the Mathlib PosDef/determinant bridge for arbitrary finite-history regularized Grams under `0 < lambda`: Hermitian wrappers, PosDef, positive/nonzero determinant, and `IsUnit det`; log-det telescoping, determinant-growth inequalities, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- OFUL-REGULARIZED-GRAM-DET-UPDATE is compiled locally as the arbitrary finite-history regularized-Gram rank-one determinant recursion with the `IsUnit det` side condition discharged from positive regularization; log-det telescoping, determinant-growth inequalities, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
+    print("- OFUL-LOG-DET-UPDATE is compiled locally as the logarithmic one-step determinant-update wrapper: rank-one PSD, updated determinant positivity, positive update factor, and `log det(V + x x^T) - log det(V) = log(1 + x^T V^{-1} x)`; finite-horizon log-det telescoping, determinant-growth inequalities, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- TAIL-HOEFFDING-BOUNDED is compiled locally as the generic bounded-centered Hoeffding MGF wrapper with an interval variance proxy.")
     print("- TAIL-SUBGAUSS-SUM is compiled locally as the Mathlib-backed independent sub-Gaussian finite-sum tail wrapper.")
     print("- TAIL-SUBGAUSS-DIFF-SUM-IMPORT is compiled locally as the ENNReal-valued independent sub-Gaussian finite-sum tail boundary wrapper.")

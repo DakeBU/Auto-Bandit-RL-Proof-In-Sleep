@@ -39,6 +39,15 @@ theorem rankOneGram_eq_replicateCol_mul_replicateRow
   ext i j
   simp [rankOneGram, Matrix.mul_apply]
 
+/-- Rank-one Gram matrices are Hermitian. -/
+theorem rankOneGram_isHermitian
+    {Feature : Type u} [Fintype Feature]
+    (x : Feature -> Real) :
+    (rankOneGram x).IsHermitian := by
+  refine Matrix.IsHermitian.ext ?_
+  intro i j
+  simp [rankOneGram, mul_comm]
+
 /--
 Rank-one determinant lemma at the identity, specialized to feature Gram
 updates.
@@ -325,6 +334,22 @@ theorem rankOneGram_quadraticForm_eq_sq
     _ = ((Finset.univ : Finset Feature).sum (fun i => x i * y i)) ^ 2 := by
       ring
 
+/-- Rank-one Gram matrices are Mathlib-positive semidefinite. -/
+theorem rankOneGram_posSemidef
+    {Feature : Type u} [Fintype Feature]
+    (x : Feature -> Real) :
+    (rankOneGram x).PosSemidef := by
+  refine Matrix.PosSemidef.of_dotProduct_mulVec_nonneg
+    (rankOneGram_isHermitian x) ?_
+  intro y
+  have hstar : star y = y := by
+    funext i
+    simp
+  rw [hstar]
+  rw [dotProduct_mulVec_eq_quadraticForm]
+  rw [rankOneGram_quadraticForm_eq_sq]
+  exact sq_nonneg _
+
 /-- Rank-one Gram matrices have nonnegative quadratic forms. -/
 theorem rankOneGram_quadraticForm_nonneg
     {Feature : Type u} [Fintype Feature]
@@ -512,6 +537,85 @@ theorem det_regularizedFeatureGram_add_rankOneGram
             ((regularizedFeatureGram lambda history)⁻¹) x)) := by
   exact det_add_rankOneGram (regularizedFeatureGram lambda history)
     (isUnit_det_regularizedFeatureGram lambda hlambda history) x
+
+/-- Positive regularized Grams stay positive definite after a rank-one update. -/
+theorem regularizedFeatureGram_add_rankOneGram_posDef
+    {Time : Type v} {Feature : Type u}
+    [Fintype Time] [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Time -> Feature -> Real) (x : Feature -> Real) :
+    (regularizedFeatureGram lambda history + rankOneGram x).PosDef := by
+  exact Matrix.PosDef.add_posSemidef
+    (regularizedFeatureGram_posDef lambda hlambda history)
+    (rankOneGram_posSemidef x)
+
+/-- The determinant after a positive regularized rank-one update is positive. -/
+theorem det_regularizedFeatureGram_add_rankOneGram_pos
+    {Time : Type v} {Feature : Type u}
+    [Fintype Time] [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Time -> Feature -> Real) (x : Feature -> Real) :
+    0 < (regularizedFeatureGram lambda history + rankOneGram x).det := by
+  exact Matrix.PosDef.det_pos
+    (regularizedFeatureGram_add_rankOneGram_posDef
+      lambda hlambda history x)
+
+/-- The scalar rank-one determinant-update factor is positive. -/
+theorem regularizedFeatureGram_rankOne_update_factor_pos
+    {Time : Type v} {Feature : Type u}
+    [Fintype Time] [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Time -> Feature -> Real) (x : Feature -> Real) :
+    0 < 1 + dotProduct x
+      (Matrix.mulVec ((regularizedFeatureGram lambda history)⁻¹) x) := by
+  set factor := 1 + dotProduct x
+    (Matrix.mulVec ((regularizedFeatureGram lambda history)⁻¹) x)
+  have hdet :
+      (regularizedFeatureGram lambda history + rankOneGram x).det =
+        (regularizedFeatureGram lambda history).det * factor := by
+    simpa [factor] using
+      det_regularizedFeatureGram_add_rankOneGram
+        lambda hlambda history x
+  have hnew : 0 <
+      (regularizedFeatureGram lambda history + rankOneGram x).det :=
+    det_regularizedFeatureGram_add_rankOneGram_pos
+      lambda hlambda history x
+  have hmul : 0 <
+      (regularizedFeatureGram lambda history).det * factor := by
+    simpa [hdet] using hnew
+  exact pos_of_mul_pos_right hmul
+    (le_of_lt (regularizedFeatureGram_det_pos lambda hlambda history))
+
+/-- Logarithmic one-step determinant recursion for regularized Grams. -/
+theorem log_det_regularizedFeatureGram_add_rankOneGram
+    {Time : Type v} {Feature : Type u}
+    [Fintype Time] [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Time -> Feature -> Real) (x : Feature -> Real) :
+    Real.log (regularizedFeatureGram lambda history + rankOneGram x).det =
+      Real.log (regularizedFeatureGram lambda history).det +
+        Real.log (1 + dotProduct x
+          (Matrix.mulVec ((regularizedFeatureGram lambda history)⁻¹) x)) := by
+  rw [det_regularizedFeatureGram_add_rankOneGram
+    lambda hlambda history x]
+  exact Real.log_mul
+    (regularizedFeatureGram_det_ne_zero lambda hlambda history)
+    (ne_of_gt (regularizedFeatureGram_rankOne_update_factor_pos
+      lambda hlambda history x))
+
+/-- Increment form of the logarithmic determinant recursion. -/
+theorem log_det_regularizedFeatureGram_add_rankOneGram_sub
+    {Time : Type v} {Feature : Type u}
+    [Fintype Time] [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Time -> Feature -> Real) (x : Feature -> Real) :
+    Real.log (regularizedFeatureGram lambda history + rankOneGram x).det -
+        Real.log (regularizedFeatureGram lambda history).det =
+      Real.log (1 + dotProduct x
+        (Matrix.mulVec ((regularizedFeatureGram lambda history)⁻¹) x)) := by
+  rw [log_det_regularizedFeatureGram_add_rankOneGram
+    lambda hlambda history x]
+  ring
 
 end OFUL
 end BanditRLProof

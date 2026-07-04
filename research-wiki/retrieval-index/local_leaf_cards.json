@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T16:44:15+00:00",
+  "generated": "2026-07-04T16:53:12+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -453,6 +453,29 @@
         "LOCAL-LEAF-OFUL-REGULARIZED-GRAM-DET-POS",
         "LOCAL-LEAF-OFUL-RANKONE-DET-UPDATE",
         "Mathlib.LinearAlgebra.Matrix.SchurComplement"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-OFUL-LOG-DET-UPDATE",
+      "leaf_ids": [
+        "OFUL-ELLIPTICAL-POTENTIAL"
+      ],
+      "module": "BanditRLProof.OFULEllipticalPotential",
+      "status": "leanCompiled",
+      "declarations": [
+        "OFUL.rankOneGram_isHermitian",
+        "OFUL.rankOneGram_posSemidef",
+        "OFUL.regularizedFeatureGram_add_rankOneGram_posDef",
+        "OFUL.det_regularizedFeatureGram_add_rankOneGram_pos",
+        "OFUL.regularizedFeatureGram_rankOne_update_factor_pos",
+        "OFUL.log_det_regularizedFeatureGram_add_rankOneGram",
+        "OFUL.log_det_regularizedFeatureGram_add_rankOneGram_sub"
+      ],
+      "role": "Compiled logarithmic one-step determinant-update wrapper for OFUL/LinUCB: proves rank-one Grams are Mathlib-positive semidefinite, the rank-one update of a positive regularized Gram remains PosDef with positive determinant, the determinant-update scalar factor is positive, and `log det(V + x x^T) - log det(V) = log(1 + x^T V^{-1} x)`. This is the local log-det increment input; it does not prove finite-horizon log-det telescoping, determinant-growth inequalities, self-normalized martingale concentration, confidence ellipsoids, or OFUL regret.",
+      "mathlib_routes": [
+        "LOCAL-LEAF-OFUL-REGULARIZED-GRAM-DET-UPDATE",
+        "LOCAL-LEAF-OFUL-REGULARIZED-GRAM-DET-POS",
+        "Mathlib.Analysis.SpecialFunctions.Log.Basic"
       ]
     },
     {

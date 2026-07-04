@@ -16532,4 +16532,62 @@ example {Time Feature : Type} [Fintype Time] [Fintype Feature]
   exact OFUL.det_regularizedFeatureGram_add_rankOneGram
     lam hlam history x
 
+example {Feature : Type} [Fintype Feature]
+    (x : Feature -> Real) :
+    (OFUL.rankOneGram x).PosSemidef := by
+  exact OFUL.rankOneGram_posSemidef x
+
+example {Time Feature : Type} [Fintype Time] [Fintype Feature]
+    [DecidableEq Feature]
+    (lam : Real) (hlam : 0 < lam)
+    (history : Time -> Feature -> Real) (x : Feature -> Real) :
+    (OFUL.regularizedFeatureGram lam history +
+        OFUL.rankOneGram x).PosDef := by
+  exact OFUL.regularizedFeatureGram_add_rankOneGram_posDef
+    lam hlam history x
+
+example {Time Feature : Type} [Fintype Time] [Fintype Feature]
+    [DecidableEq Feature]
+    (lam : Real) (hlam : 0 < lam)
+    (history : Time -> Feature -> Real) (x : Feature -> Real) :
+    0 < (OFUL.regularizedFeatureGram lam history +
+        OFUL.rankOneGram x).det := by
+  exact OFUL.det_regularizedFeatureGram_add_rankOneGram_pos
+    lam hlam history x
+
+example {Time Feature : Type} [Fintype Time] [Fintype Feature]
+    [DecidableEq Feature]
+    (lam : Real) (hlam : 0 < lam)
+    (history : Time -> Feature -> Real) (x : Feature -> Real) :
+    0 < 1 + dotProduct x
+      (Matrix.mulVec ((OFUL.regularizedFeatureGram lam history)⁻¹) x) := by
+  exact OFUL.regularizedFeatureGram_rankOne_update_factor_pos
+    lam hlam history x
+
+example {Time Feature : Type} [Fintype Time] [Fintype Feature]
+    [DecidableEq Feature]
+    (lam : Real) (hlam : 0 < lam)
+    (history : Time -> Feature -> Real) (x : Feature -> Real) :
+    Real.log (OFUL.regularizedFeatureGram lam history +
+        OFUL.rankOneGram x).det =
+      Real.log (OFUL.regularizedFeatureGram lam history).det +
+        Real.log (1 + dotProduct x
+          (Matrix.mulVec
+            ((OFUL.regularizedFeatureGram lam history)⁻¹) x)) := by
+  exact OFUL.log_det_regularizedFeatureGram_add_rankOneGram
+    lam hlam history x
+
+example {Time Feature : Type} [Fintype Time] [Fintype Feature]
+    [DecidableEq Feature]
+    (lam : Real) (hlam : 0 < lam)
+    (history : Time -> Feature -> Real) (x : Feature -> Real) :
+    Real.log (OFUL.regularizedFeatureGram lam history +
+        OFUL.rankOneGram x).det -
+        Real.log (OFUL.regularizedFeatureGram lam history).det =
+      Real.log (1 + dotProduct x
+        (Matrix.mulVec
+          ((OFUL.regularizedFeatureGram lam history)⁻¹) x)) := by
+  exact OFUL.log_det_regularizedFeatureGram_add_rankOneGram_sub
+    lam hlam history x
+
 end BanditRLProof
