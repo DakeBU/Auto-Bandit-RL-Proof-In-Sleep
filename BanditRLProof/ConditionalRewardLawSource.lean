@@ -11650,6 +11650,137 @@ theorem centeredReward_succ_condExp_eq_zero_of_reward_map_eq_actual_action_defin
       h_kernel_extend_map_eq i
 
 /--
+Directly consume the policy-selected reward-coordinate law plus the practical
+raw/mean range regularity package to obtain ordinary succ-indexed conditional
+mean-zero.
+
+This is the definitional generated-action counterpart of the explicit
+policy-selected reward-coordinate wrapper: callers can state the reward law at
+`(policy i).action (state i history)` without first rewriting it to the
+generated successor action.
+-/
+theorem centeredReward_succ_condExp_eq_zero_of_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeBounded
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (h_reward_map_eq_policy :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+              (fun y : Omega => reward y (i + 1))
+              (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+                ((History.historyFiltrationSucc
+                  (generatedActionFromRewardHistory policy state defaultAction
+                    reward)
+                  reward
+                  (generatedActionFromRewardHistory_measurable
+                    (policy := policy) (state := state)
+                    (defaultAction := defaultAction) (reward := reward)
+                    hreward hstate)
+                  hreward) i)
+                omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace (reward omega) i))))
+          (ae
+            (mu.trim
+              ((History.historyFiltrationSucc
+                (generatedActionFromRewardHistory policy state defaultAction
+                  reward)
+                reward
+                (generatedActionFromRewardHistory_measurable
+                  (policy := policy) (state := state)
+                  (defaultAction := defaultAction) (reward := reward)
+                  hreward hstate)
+                hreward).le i))))
+    (i : Nat) :
+    Filter.EventuallyEq (ae mu)
+      (@condExp Omega Real
+        ((History.historyFiltrationSucc
+          (generatedActionFromRewardHistory policy state defaultAction reward)
+          reward
+          (generatedActionFromRewardHistory_measurable
+            (policy := policy) (state := state)
+            (defaultAction := defaultAction) (reward := reward)
+            hreward hstate)
+          hreward) i)
+        mOmega _ _ _ mu
+        (fun omega : Omega =>
+          (((reward omega (i + 1) -
+            mean
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+              Rat) : Real))))
+      (fun _omega : Omega => (0 : Real)) := by
+  exact
+    centeredReward_succ_condExp_eq_zero_of_generatedActionTraceSucc_reward_map_eq_selected_policy_rawRangeMeasurableMeanRangeBounded
+      (mu := mu)
+      (action :=
+        generatedActionFromRewardHistory policy state defaultAction reward)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (hcontext := hcontext)
+      (hstate := hstate)
+      (mean := mean)
+      (varianceProxy := varianceProxy)
+      (hmean := hmean)
+      (hkernel := hkernel)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (haction :=
+        generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state)
+          (defaultAction := defaultAction) (reward := reward)
+          hreward hstate)
+      (hreward := hreward)
+      (rewardLo := rewardLo)
+      (rewardHi := rewardHi)
+      (meanLo := meanLo)
+      (meanHi := meanHi)
+      (hraw := hraw)
+      (hmean_range := hmean_range)
+      (i := i)
+      rfl
+      (h_reward_map_eq_policy i)
+
+/--
 Consume a definitional actual-action reward-coordinate source plus the
 practical raw/mean range regularity package to obtain ordinary succ-indexed
 conditional mean-zero.
