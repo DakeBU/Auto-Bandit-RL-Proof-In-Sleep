@@ -231,6 +231,73 @@ structure GeneratedActionDefinitionalActualRewardMapSource
               hreward).le i)))
 
 /--
+Build the definitional actual reward-coordinate source from the same
+reward-coordinate law stated at the policy-selected action.
+
+For `generatedActionFromRewardHistory`, the successor coordinate `i + 1`
+is definitionally `(policy i).action` applied to the finite reward-history
+state.  This adapter lets callers use that policy-facing law surface without
+first rewriting it to the generated successor action.
+-/
+def generatedActionDefinitionalActualRewardMapSource_of_reward_map_eq_selected_policy
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (h_reward_map_eq_policy :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+              (fun y : Omega => reward y (i + 1))
+              (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+                ((History.historyFiltrationSucc
+                  (generatedActionFromRewardHistory policy state defaultAction
+                    reward)
+                  reward
+                  (generatedActionFromRewardHistory_measurable
+                    (policy := policy) (state := state)
+                    (defaultAction := defaultAction) (reward := reward)
+                    hreward hstate)
+                  hreward) i)
+                omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace (reward omega) i))))
+          (ae
+            (mu.trim
+              ((History.historyFiltrationSucc
+                (generatedActionFromRewardHistory policy state defaultAction
+                  reward)
+                reward
+                (generatedActionFromRewardHistory_measurable
+                  (policy := policy) (state := state)
+                  (defaultAction := defaultAction) (reward := reward)
+                  hreward hstate)
+                hreward).le i)))) :
+    GeneratedActionDefinitionalActualRewardMapSource mu rewardKernel policy
+      context state defaultAction reward hreward where
+  hstate := hstate
+  reward_map_eq_actual_action := by
+    intro i
+    filter_upwards [h_reward_map_eq_policy i] with omega h_reward
+    simpa [generatedActionFromRewardHistory] using h_reward
+
+/--
 Definitional generated-policy conditional next-pair law source.
 
 Here the action trace is not a separate parameter with an equality witness:
