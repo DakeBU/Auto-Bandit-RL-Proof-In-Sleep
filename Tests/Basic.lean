@@ -15264,6 +15264,65 @@ example {Omega Arm : Type} [MeasurableSpace Omega]
   exact UCB.measure_absDeviation_le_subGaussian_tail
     mu trueMean empiricalMean radius proxy t arm hradius hsubG
 
+example {Omega Arm : Type} [MeasurableSpace Omega]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (radius : Nat -> Arm -> Real)
+    (proxy : Nat -> Arm -> NNReal) (t : Nat) (arm : Arm)
+    (hradius : 0 <= radius t arm)
+    (hsubG :
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    mu (UCB.upperConfidenceBad trueMean
+        (fun omega arm => empiricalMean omega t arm)
+        (radius t) arm) <=
+      UCB.subGaussianOneSidedDeviationTail radius proxy t arm := by
+  exact UCB.measure_upperConfidenceBad_le_subGaussian_tail
+    mu trueMean empiricalMean radius proxy t arm hradius hsubG
+
+example {Omega Arm : Type} [MeasurableSpace Omega]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (radius : Nat -> Arm -> Real)
+    (proxy : Nat -> Arm -> NNReal) (t : Nat) (arm : Arm)
+    (hradius : 0 <= radius t arm)
+    (hsubG :
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    mu (UCB.lowerConfidenceBad trueMean
+        (fun omega arm => empiricalMean omega t arm)
+        (radius t) arm) <=
+      UCB.subGaussianOneSidedDeviationTail radius proxy t arm := by
+  exact UCB.measure_lowerConfidenceBad_le_subGaussian_tail
+    mu trueMean empiricalMean radius proxy t arm hradius hsubG
+
+example {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (radius : Nat -> Arm -> Real)
+    (proxy : Nat -> Arm -> NNReal) (T : Nat)
+    (hradius : forall t arm, t < T -> 0 <= radius t arm)
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    mu (UCB.finiteHorizonConfidenceBadEvent
+        trueMean empiricalMean radius T) <=
+      (Finset.range T).sum
+        (fun t =>
+          (Finset.univ : Finset Arm).sum
+            (fun arm =>
+              UCB.subGaussianOneSidedDeviationTail radius proxy t arm +
+                UCB.subGaussianOneSidedDeviationTail radius proxy t arm)) := by
+  exact
+    UCB.measure_finiteHorizonConfidenceBadEvent_le_subGaussian_oneSided_tail_sum
+      mu trueMean empiricalMean radius proxy T hradius hsubG
+
 example {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
     (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
     (trueMean : Arm -> Real)

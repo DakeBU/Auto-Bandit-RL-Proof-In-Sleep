@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T19:15:16+00:00",
+  "generated": "2026-07-04T19:27:59+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -277,6 +277,29 @@
       "role": "Compiled UCB sub-Gaussian absolute-deviation tail producer: if the centered empirical-mean error `empiricalMean t arm - trueMean arm` has a Mathlib `HasSubgaussianMGF` proxy and the radius is nonnegative, then the UCB absolute-deviation event has the standard two-sided exponential tail, and the finite-horizon confidence bad event is bounded by the corresponding double finite sum. This is still an abstract centered empirical-mean tail route; empirical-mean construction, proxy/radius simplification to the textbook log/sqrt form, pull-count bounds, and final UCB regret remain separate.",
       "mathlib_routes": [
         "LOCAL-LEAF-UCB-ABS-DEVIATION-TAIL-ADAPTER",
+        "LOCAL-LEAF-CONCENTRATION-SUBGAUSSIAN",
+        "TAIL-SUBGAUSS-SUM",
+        "TAIL-COND-SUBGAUSS"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-UCB-SUBGAUSSIAN-ONE-SIDED-TAIL",
+      "leaf_ids": [
+        "UCB-GOOD-EVENT-GAP-CONSUMER",
+        "TAIL-SUMMABILITY-UCB",
+        "TAIL-SUBGAUSS-SUM"
+      ],
+      "module": "BanditRLProof.Algorithms.UCB",
+      "status": "leanCompiled",
+      "declarations": [
+        "UCB.subGaussianOneSidedDeviationTail",
+        "UCB.measure_upperConfidenceBad_le_subGaussian_tail",
+        "UCB.measure_lowerConfidenceBad_le_subGaussian_tail",
+        "UCB.measure_finiteHorizonConfidenceBadEvent_le_subGaussian_oneSided_tail_sum"
+      ],
+      "role": "Compiled sharper UCB one-sided sub-Gaussian tail producer: if the centered empirical-mean error `empiricalMean t arm - trueMean arm` has a Mathlib `HasSubgaussianMGF` proxy and the radius is nonnegative, then each upper/lower confidence failure is bounded by the one-sided exponential tail, and the finite-horizon confidence bad event is bounded by the corresponding upper-plus-lower finite sum. This avoids routing one-sided confidence failures through a two-sided absolute-deviation budget, but still leaves empirical-mean construction, proxy/radius simplification to the textbook log/sqrt form, pull-count bounds, and final UCB regret separate.",
+      "mathlib_routes": [
+        "LOCAL-LEAF-UCB-FINITE-HORIZON-CONFIDENCE-TAIL-CONSUMER",
         "LOCAL-LEAF-CONCENTRATION-SUBGAUSSIAN",
         "TAIL-SUBGAUSS-SUM",
         "TAIL-COND-SUBGAUSS"

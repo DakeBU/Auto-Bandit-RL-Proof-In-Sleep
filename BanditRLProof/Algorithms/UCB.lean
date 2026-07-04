@@ -541,6 +541,163 @@ theorem measure_finiteHorizonConfidenceBadEvent_le_chebyshev_tail_sum
         (hmem t arm ht) (hradius t arm ht) (hmean t arm ht))
 
 /--
+One-sided sub-Gaussian tail budget for a UCB empirical mean at time `t` and
+arm `arm`.
+
+The proxy is for the centered variable `empiricalMean t arm - trueMean arm`.
+This one-sided budget is the sharper producer for the existing upper/lower
+confidence tail consumer; the absolute-deviation wrapper remains available for
+two-sided concentration statements.
+-/
+noncomputable def subGaussianOneSidedDeviationTail
+    {Arm : Type}
+    (radius : Nat -> Arm -> Real)
+    (proxy : Nat -> Arm -> NNReal) (t : Nat) (arm : Arm) : ENNReal :=
+  ENNReal.ofReal
+    (Real.exp (-(radius t arm) ^ 2 /
+      (2 * ((proxy t arm : NNReal) : Real))))
+
+/-- Single-time one-sided sub-Gaussian tail for an upper-confidence failure. -/
+theorem measure_upperConfidenceBad_le_subGaussian_tail
+    {Omega Arm : Type} [MeasurableSpace Omega]
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (radius : Nat -> Arm -> Real)
+    (proxy : Nat -> Arm -> NNReal) (t : Nat) (arm : Arm)
+    (hradius : 0 <= radius t arm)
+    (hsubG :
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    mu (upperConfidenceBad trueMean
+        (fun omega arm => empiricalMean omega t arm)
+        (radius t) arm) <=
+      subGaussianOneSidedDeviationTail radius proxy t arm := by
+  let X : Omega -> Real :=
+    fun omega => empiricalMean omega t arm - trueMean arm
+  let eps := radius t arm
+  let tailReal : Real :=
+    Real.exp (-(radius t arm) ^ 2 /
+      (2 * ((proxy t arm : NNReal) : Real)))
+  have htail_nonneg : 0 <= tailReal := (Real.exp_pos _).le
+  have hsubGX :
+      ProbabilityTheory.HasSubgaussianMGF X (proxy t arm) mu := by
+    simpa [X] using hsubG
+  have hneg : ProbabilityTheory.HasSubgaussianMGF
+      (-X) (proxy t arm) mu := hsubGX.neg
+  have htailReal :
+      mu.real {omega | eps <= (-X) omega} <= tailReal := by
+    simpa [X, eps, tailReal] using
+      (ProbabilityTheory.HasSubgaussianMGF.measure_ge_le
+        (X := -X) (c := proxy t arm) hneg hradius)
+  have htail :
+      mu {omega | eps <= (-X) omega} <= ENNReal.ofReal tailReal := by
+    rw [Measure.real] at htailReal
+    exact (ENNReal.le_ofReal_iff_toReal_le
+      (measure_ne_top mu {omega | eps <= (-X) omega}) htail_nonneg).2
+      htailReal
+  have hsubset :
+      upperConfidenceBad trueMean
+          (fun omega arm => empiricalMean omega t arm)
+          (radius t) arm ⊆ {omega | eps <= (-X) omega} := by
+    intro omega hbad
+    dsimp [upperConfidenceBad, confidenceScore] at hbad
+    dsimp [X, eps]
+    linarith
+  exact (measure_mono hsubset).trans htail
+
+/-- Single-time one-sided sub-Gaussian tail for a lower-confidence failure. -/
+theorem measure_lowerConfidenceBad_le_subGaussian_tail
+    {Omega Arm : Type} [MeasurableSpace Omega]
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (radius : Nat -> Arm -> Real)
+    (proxy : Nat -> Arm -> NNReal) (t : Nat) (arm : Arm)
+    (hradius : 0 <= radius t arm)
+    (hsubG :
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    mu (lowerConfidenceBad trueMean
+        (fun omega arm => empiricalMean omega t arm)
+        (radius t) arm) <=
+      subGaussianOneSidedDeviationTail radius proxy t arm := by
+  let X : Omega -> Real :=
+    fun omega => empiricalMean omega t arm - trueMean arm
+  let eps := radius t arm
+  let tailReal : Real :=
+    Real.exp (-(radius t arm) ^ 2 /
+      (2 * ((proxy t arm : NNReal) : Real)))
+  have htail_nonneg : 0 <= tailReal := (Real.exp_pos _).le
+  have hsubGX :
+      ProbabilityTheory.HasSubgaussianMGF X (proxy t arm) mu := by
+    simpa [X] using hsubG
+  have htailReal :
+      mu.real {omega | eps <= X omega} <= tailReal := by
+    simpa [X, eps, tailReal] using
+      (ProbabilityTheory.HasSubgaussianMGF.measure_ge_le
+        (X := X) (c := proxy t arm) hsubGX hradius)
+  have htail :
+      mu {omega | eps <= X omega} <= ENNReal.ofReal tailReal := by
+    rw [Measure.real] at htailReal
+    exact (ENNReal.le_ofReal_iff_toReal_le
+      (measure_ne_top mu {omega | eps <= X omega}) htail_nonneg).2
+      htailReal
+  have hsubset :
+      lowerConfidenceBad trueMean
+          (fun omega arm => empiricalMean omega t arm)
+          (radius t) arm ⊆ {omega | eps <= X omega} := by
+    intro omega hbad
+    dsimp [lowerConfidenceBad] at hbad
+    dsimp [X, eps]
+    linarith
+  exact (measure_mono hsubset).trans htail
+
+/--
+Finite-horizon UCB confidence bad-event bound from one-sided sub-Gaussian
+upper/lower tails.
+
+This is the sharper UCB-facing sub-Gaussian producer for the existing
+upper/lower tail consumer. It still leaves empirical-mean construction,
+proxy/radius simplification to the textbook log/sqrt form, pull-count bounds,
+and final regret to later leaves.
+-/
+theorem measure_finiteHorizonConfidenceBadEvent_le_subGaussian_oneSided_tail_sum
+    {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (radius : Nat -> Arm -> Real)
+    (proxy : Nat -> Arm -> NNReal) (T : Nat)
+    (hradius : forall t arm, t < T -> 0 <= radius t arm)
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    mu (finiteHorizonConfidenceBadEvent trueMean empiricalMean radius T) <=
+      (Finset.range T).sum
+        (fun t =>
+          (Finset.univ : Finset Arm).sum
+            (fun arm =>
+              subGaussianOneSidedDeviationTail radius proxy t arm +
+                subGaussianOneSidedDeviationTail radius proxy t arm)) := by
+  exact measure_finiteHorizonConfidenceBadEvent_le_tail_sum
+    mu trueMean empiricalMean radius
+    (fun t arm => subGaussianOneSidedDeviationTail radius proxy t arm)
+    (fun t arm => subGaussianOneSidedDeviationTail radius proxy t arm)
+    T
+    (fun t arm ht =>
+      measure_upperConfidenceBad_le_subGaussian_tail
+        mu trueMean empiricalMean radius proxy t arm
+        (hradius t arm ht) (hsubG t arm ht))
+    (fun t arm ht =>
+      measure_lowerConfidenceBad_le_subGaussian_tail
+        mu trueMean empiricalMean radius proxy t arm
+        (hradius t arm ht) (hsubG t arm ht))
+
+/--
 Two-sided sub-Gaussian tail budget for a UCB empirical mean at time `t` and
 arm `arm`.
 
