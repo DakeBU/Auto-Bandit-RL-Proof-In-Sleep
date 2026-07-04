@@ -12694,9 +12694,148 @@ theorem centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairDefiniti
           (rewardLo := rewardLo)
           (rewardHi := rewardHi)
           (meanLo := meanLo)
+      (meanHi := meanHi)
+          source)
+      (i := i)
+
+/--
+Consume a practical definitional raw-range/measurable-mean-range generated
+random-pair source to obtain the succ-indexed conditional sub-Gaussian MGF
+witness for the centered reward.
+
+This exposes the newest definitional centered-source MGF consumer at the
+top-level bounded practical source surface.  The range evidence is used through
+the existing conversion into `GeneratedActionRandomPairDefinitionalCenteredSource`;
+Mathlib's MGF regularity contracts remain explicit.
+-/
+theorem centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (source :
+      GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource
+        mu rewardKernel policy context state mean varianceProxy defaultAction
+        reward hreward rewardLo rewardHi meanLo meanHi)
+    (i : Nat)
+    (c : NNReal)
+    (h_centered_meas :
+      @Measurable Omega Real mOmega inferInstance
+        (fun omega : Omega =>
+          (((reward omega (i + 1) -
+            mean
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+                Rat) : Real))))
+    (h_integrable_exp :
+      forall t : Real,
+        MeasureTheory.Integrable
+          (fun omega : Omega =>
+            Real.exp (t *
+              (((reward omega (i + 1) -
+                mean
+                  (context i
+                    (History.finiteRewardHistoryOfTrace (reward omega) i))
+                  ((policy i).action
+                    (state i
+                      (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+                    Rat) : Real)))) mu)
+    (h_variance_le :
+      Filter.Eventually
+        (fun omega : Omega =>
+          varianceProxy
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace (reward omega) i))) <=
+            c)
+        (ae
+          (mu.trim
+            ((History.historyFiltrationSucc
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward)
+              reward
+              (generatedActionFromRewardHistory_measurable
+                (policy := policy) (state := state)
+                (defaultAction := defaultAction) (reward := reward)
+                hreward source.definitional_map_source.hstate)
+              hreward).le i)))) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward source.definitional_map_source.hstate)
+        hreward) i)
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward source.definitional_map_source.hstate)
+        hreward).le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      c mu := by
+  exact
+    centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalCenteredSource
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (mean := mean)
+      (varianceProxy := varianceProxy)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (source :=
+        generatedActionRandomPairDefinitionalCenteredSource_of_definitionalRawRangeMeasurableMeanRangeBoundedSource
+          (mu := mu)
+          (rewardKernel := rewardKernel)
+          (policy := policy)
+          (context := context)
+          (state := state)
+          (mean := mean)
+          (varianceProxy := varianceProxy)
+          (defaultAction := defaultAction)
+          (reward := reward)
+          (hreward := hreward)
+          (rewardLo := rewardLo)
+          (rewardHi := rewardHi)
+          (meanLo := meanLo)
           (meanHi := meanHi)
           source)
       (i := i)
+      (c := c)
+      h_centered_meas
+      h_integrable_exp
+      h_variance_le
 
 /--
 Directly consume the full finite-pair-trace `partialTraj` law plus the
