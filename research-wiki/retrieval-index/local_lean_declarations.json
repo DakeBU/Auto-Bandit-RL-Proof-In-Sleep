@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T16:40:26+00:00",
+  "generated": "2026-07-04T16:44:15+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -4776,6 +4776,14 @@
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
       "line": 488,
       "statement": "theorem isUnit_det_regularizedFeatureGram {Time : Type v} {Feature : Type u} [Fintype Time] [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (x : Time -> Feature -> Real) : IsUnit (regularizedFeatureGram lambda x).det"
+    },
+    {
+      "kind": "theorem",
+      "name": "det_regularizedFeatureGram_add_rankOneGram",
+      "full_name": "BanditRLProof.OFUL.det_regularizedFeatureGram_add_rankOneGram",
+      "file": "BanditRLProof/OFULEllipticalPotential.lean",
+      "line": 503,
+      "statement": "theorem det_regularizedFeatureGram_add_rankOneGram {Time : Type v} {Feature : Type u} [Fintype Time] [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Time -> Feature -> Real) (x : Feature -> Real) : (regularizedFeatureGram lambda history + rankOneGram x).det = (regularizedFeatureGram lambda history).det * (1 + dotProduct x"
     },
     {
       "kind": "inductive",

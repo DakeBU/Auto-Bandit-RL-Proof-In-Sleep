@@ -16520,4 +16520,16 @@ example {Time Feature : Type} [Fintype Time] [Fintype Feature]
     IsUnit (OFUL.regularizedFeatureGram lam x).det := by
   exact OFUL.isUnit_det_regularizedFeatureGram lam hlam x
 
+example {Time Feature : Type} [Fintype Time] [Fintype Feature]
+    [DecidableEq Feature]
+    (lam : Real) (hlam : 0 < lam)
+    (history : Time -> Feature -> Real) (x : Feature -> Real) :
+    (OFUL.regularizedFeatureGram lam history + OFUL.rankOneGram x).det =
+      (OFUL.regularizedFeatureGram lam history).det *
+        (1 + dotProduct x
+          (Matrix.mulVec
+            ((OFUL.regularizedFeatureGram lam history)⁻¹) x)) := by
+  exact OFUL.det_regularizedFeatureGram_add_rankOneGram
+    lam hlam history x
+
 end BanditRLProof

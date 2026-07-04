@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T16:40:26+00:00",
+  "generated": "2026-07-04T16:44:15+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -436,6 +436,23 @@
         "LOCAL-LEAF-OFUL-REGULARIZED-GRAM-POS-QFORM",
         "LOCAL-LEAF-OFUL-REGULARIZED-GRAM-QFORM",
         "MLIB-CONVEX-LINALG"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-OFUL-REGULARIZED-GRAM-DET-UPDATE",
+      "leaf_ids": [
+        "OFUL-ELLIPTICAL-POTENTIAL"
+      ],
+      "module": "BanditRLProof.OFULEllipticalPotential",
+      "status": "leanCompiled",
+      "declarations": [
+        "OFUL.det_regularizedFeatureGram_add_rankOneGram"
+      ],
+      "role": "Compiled one-step determinant recursion for OFUL/LinUCB regularized Grams: specializes the rank-one determinant lemma to an arbitrary finite-history regularized Gram and discharges the determinant-unit side condition from positive regularization. This is the direct algebraic input for log-det telescoping; it does not prove the telescope, determinant-growth inequalities, self-normalized martingale concentration, confidence ellipsoids, or OFUL regret.",
+      "mathlib_routes": [
+        "LOCAL-LEAF-OFUL-REGULARIZED-GRAM-DET-POS",
+        "LOCAL-LEAF-OFUL-RANKONE-DET-UPDATE",
+        "Mathlib.LinearAlgebra.Matrix.SchurComplement"
       ]
     },
     {

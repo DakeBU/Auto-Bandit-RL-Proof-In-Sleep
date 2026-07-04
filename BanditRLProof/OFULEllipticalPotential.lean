@@ -493,5 +493,25 @@ theorem isUnit_det_regularizedFeatureGram
     IsUnit (regularizedFeatureGram lambda x).det := by
   exact IsUnit.mk0 _ (regularizedFeatureGram_det_ne_zero lambda hlambda x)
 
+/--
+One-step determinant recursion for an arbitrary finite-history regularized Gram
+matrix.
+
+This is the determinant identity consumed by OFUL/LinUCB log-det telescoping:
+the `IsUnit det` side condition is discharged from positive regularization.
+-/
+theorem det_regularizedFeatureGram_add_rankOneGram
+    {Time : Type v} {Feature : Type u}
+    [Fintype Time] [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Time -> Feature -> Real) (x : Feature -> Real) :
+    (regularizedFeatureGram lambda history + rankOneGram x).det =
+      (regularizedFeatureGram lambda history).det *
+        (1 + dotProduct x
+          (Matrix.mulVec
+            ((regularizedFeatureGram lambda history)⁻¹) x)) := by
+  exact det_add_rankOneGram (regularizedFeatureGram lambda history)
+    (isUnit_det_regularizedFeatureGram lambda hlambda history) x
+
 end OFUL
 end BanditRLProof
