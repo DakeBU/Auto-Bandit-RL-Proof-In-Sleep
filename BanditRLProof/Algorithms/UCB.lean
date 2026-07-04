@@ -3,6 +3,7 @@ import Mathlib.Data.Real.Basic
 import Mathlib.MeasureTheory.Constructions.BorelSpace.Order
 import Mathlib.MeasureTheory.MeasurableSpace.Basic
 import Mathlib.Tactic.Linarith
+import BanditRLProof.ConcentrationSubGaussian
 import BanditRLProof.ConcentrationVariance
 import BanditRLProof.ProbabilityUnionBound
 import BanditRLProof.Regret
@@ -538,6 +539,138 @@ theorem measure_finiteHorizonConfidenceBadEvent_le_chebyshev_tail_sum
       measure_absDeviation_le_chebyshev_tail
         mu trueMean empiricalMean radius t arm
         (hmem t arm ht) (hradius t arm ht) (hmean t arm ht))
+
+/--
+Two-sided sub-Gaussian tail budget for a UCB empirical mean at time `t` and
+arm `arm`.
+
+The proxy is for the centered variable `empiricalMean t arm - trueMean arm`.
+This is still abstract: a later empirical-mean construction must prove the
+sub-Gaussian proxy and choose the usual log/sqrt radius.
+-/
+noncomputable def subGaussianAbsDeviationTail
+    {Arm : Type}
+    (radius : Nat -> Arm -> Real)
+    (proxy : Nat -> Arm -> NNReal) (t : Nat) (arm : Arm) : ENNReal :=
+  ENNReal.ofReal
+    (2 *
+      Real.exp (-(radius t arm) ^ 2 /
+        (2 * ((proxy t arm : NNReal) : Real))))
+
+/--
+Single-time two-sided sub-Gaussian tail for the UCB absolute-deviation event.
+-/
+theorem measure_absDeviation_le_subGaussian_tail
+    {Omega Arm : Type} [MeasurableSpace Omega]
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (radius : Nat -> Arm -> Real)
+    (proxy : Nat -> Arm -> NNReal) (t : Nat) (arm : Arm)
+    (hradius : 0 <= radius t arm)
+    (hsubG :
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    mu {omega | radius t arm <=
+        |empiricalMean omega t arm - trueMean arm|} <=
+      subGaussianAbsDeviationTail radius proxy t arm := by
+  let X : Omega -> Real :=
+    fun omega => empiricalMean omega t arm - trueMean arm
+  let eps := radius t arm
+  let tailReal : Real :=
+    Real.exp (-(radius t arm) ^ 2 /
+      (2 * ((proxy t arm : NNReal) : Real)))
+  have htail_nonneg : 0 <= tailReal := (Real.exp_pos _).le
+  have hsubGX :
+      ProbabilityTheory.HasSubgaussianMGF X (proxy t arm) mu := by
+    simpa [X] using hsubG
+  have hupperReal :
+      mu.real {omega | eps <= X omega} <= tailReal := by
+    simpa [X, eps, tailReal] using
+      (ProbabilityTheory.HasSubgaussianMGF.measure_ge_le
+        (X := X) (c := proxy t arm) (μ := mu) hsubGX hradius)
+  have hupper :
+      mu {omega | eps <= X omega} <= ENNReal.ofReal tailReal := by
+    rw [Measure.real] at hupperReal
+    exact (ENNReal.le_ofReal_iff_toReal_le
+      (measure_ne_top mu {omega | eps <= X omega}) htail_nonneg).2
+      hupperReal
+  have hlowerReal :
+      mu.real {omega | eps <= (-X) omega} <= tailReal := by
+    have hneg : ProbabilityTheory.HasSubgaussianMGF
+        (-X) (proxy t arm) mu := hsubGX.neg
+    simpa [X, eps, tailReal] using
+      (ProbabilityTheory.HasSubgaussianMGF.measure_ge_le
+        (X := -X)
+        (c := proxy t arm) (μ := mu) hneg hradius)
+  have hlower :
+      mu {omega | eps <= (-X) omega} <= ENNReal.ofReal tailReal := by
+    rw [Measure.real] at hlowerReal
+    exact (ENNReal.le_ofReal_iff_toReal_le
+      (measure_ne_top mu {omega | eps <= (-X) omega}) htail_nonneg).2
+      hlowerReal
+  have hsubset :
+      {omega | eps <= |X omega|} ⊆
+        {omega | eps <= X omega} ∪ {omega | eps <= (-X) omega} := by
+    intro omega homega
+    by_cases hnonneg : 0 <= X omega
+    · exact Or.inl (by simpa [abs_of_nonneg hnonneg] using homega)
+    · have hnonpos : X omega <= 0 := le_of_not_ge hnonneg
+      exact Or.inr (by simpa [abs_of_nonpos hnonpos] using homega)
+  calc
+    mu {omega | radius t arm <=
+        |empiricalMean omega t arm - trueMean arm|}
+        <= mu ({omega | eps <= X omega} ∪
+          {omega | eps <= (-X) omega}) := by
+          exact measure_mono (by
+            intro omega homega
+            exact hsubset (by simpa [X, eps] using homega))
+    _ <= mu {omega | eps <= X omega} +
+        mu {omega | eps <= (-X) omega} := by
+          exact measure_union_le
+            {omega | eps <= X omega} {omega | eps <= (-X) omega}
+    _ <= ENNReal.ofReal tailReal + ENNReal.ofReal tailReal := by
+          exact add_le_add hupper hlower
+    _ = subGaussianAbsDeviationTail radius proxy t arm := by
+          rw [← ENNReal.ofReal_add htail_nonneg htail_nonneg]
+          simp [subGaussianAbsDeviationTail, tailReal, two_mul]
+
+/--
+Finite-horizon UCB confidence bad-event bound from abstract sub-Gaussian
+absolute-deviation tails.
+
+This is the UCB-facing sub-Gaussian producer layer. It still leaves empirical
+mean construction, proxy simplification, log/sqrt radius choice, pull-count
+bounds, and final regret to later leaves.
+-/
+theorem measure_finiteHorizonConfidenceBadEvent_le_subGaussian_tail_sum
+    {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (radius : Nat -> Arm -> Real)
+    (proxy : Nat -> Arm -> NNReal) (T : Nat)
+    (hradius : forall t arm, t < T -> 0 <= radius t arm)
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    mu (finiteHorizonConfidenceBadEvent trueMean empiricalMean radius T) <=
+      (Finset.range T).sum
+        (fun t =>
+          (Finset.univ : Finset Arm).sum
+            (fun arm =>
+              subGaussianAbsDeviationTail radius proxy t arm +
+                subGaussianAbsDeviationTail radius proxy t arm)) := by
+  exact measure_finiteHorizonConfidenceBadEvent_le_absDeviation_tail_sum
+    mu trueMean empiricalMean radius
+    (fun t arm => subGaussianAbsDeviationTail radius proxy t arm)
+    T
+    (fun t arm ht =>
+      measure_absDeviation_le_subGaussian_tail
+        mu trueMean empiricalMean radius proxy t arm
+        (hradius t arm ht) (hsubG t arm ht))
 
 /-- The proof-DAG leaves usually needed for UCB regret formalization. -/
 def obligationNames : List String :=
