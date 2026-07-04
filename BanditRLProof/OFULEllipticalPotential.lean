@@ -1518,6 +1518,34 @@ theorem trace_average_pow_le_lambda_pow_mul_exp_dim_scaled
             ((T * L2) / ((Fintype.card Feature : Real) * lambda))) := by
           simp [d, x]
 
+/-- Dimension cancellation in the scalar OFUL trace-average exponent. -/
+theorem trace_average_exp_exponent_dim_cancel
+    {Feature : Type u} [Fintype Feature] [Nonempty Feature]
+    (lambda : Real) (hlambda : 0 < lambda) (T : Nat) (L2 : Real) :
+    (Fintype.card Feature : Real) *
+        ((T * L2) / ((Fintype.card Feature : Real) * lambda)) =
+      (T * L2) / lambda := by
+  have hcard_ne : (Fintype.card Feature : Real) ≠ 0 := by
+    exact_mod_cast (Fintype.card_ne_zero (α := Feature))
+  have hlambda_ne : lambda ≠ 0 := ne_of_gt hlambda
+  field_simp [hcard_ne, hlambda_ne]
+
+/--
+Scalar AM-GM trace/radius simplification with the dimension-cancelled
+exponent `T * L2 / lambda`.
+-/
+theorem trace_average_pow_le_lambda_pow_mul_exp
+    {Feature : Type u} [Fintype Feature] [Nonempty Feature]
+    (lambda : Real) (hlambda : 0 < lambda) (T : Nat) (L2 : Real)
+    (hL2 : 0 <= L2) :
+    (((Fintype.card Feature : Real) * lambda + T * L2) /
+        (Fintype.card Feature : Real)) ^ Fintype.card Feature <=
+      lambda ^ Fintype.card Feature * Real.exp ((T * L2) / lambda) := by
+  simpa [trace_average_exp_exponent_dim_cancel
+    (Feature := Feature) lambda hlambda T L2] using
+    trace_average_pow_le_lambda_pow_mul_exp_dim_scaled
+      (Feature := Feature) lambda hlambda T L2 hL2
+
 /--
 If the trace-average determinant upper bound is simplified to the standard
 multiplicative `lambda^d * exp(B)` form, regularized Nat-prefix Grams inherit
@@ -1610,6 +1638,46 @@ theorem sum_range_min_prefix_update_le_two_trace_average_dim_scaled
       ((T * L2) / ((Fintype.card Feature : Real) * lambda)))
     hbound
     (trace_average_pow_le_lambda_pow_mul_exp_dim_scaled
+      (Feature := Feature) lambda hlambda T L2 hL2)
+
+/--
+Concrete determinant upper bound from trace/radius with the
+dimension-cancelled exponent `T * L2 / lambda`.
+-/
+theorem det_regularizedPrefixFeatureGram_le_mul_exp_trace_average
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Nat -> Feature -> Real) (T : Nat) (L2 : Real)
+    (hL2 : 0 <= L2)
+    (hbound : forall t : Nat, t < T ->
+      dotProduct (history t) (history t) <= L2) :
+    (regularizedPrefixFeatureGram lambda history T).det <=
+      lambda ^ Fintype.card Feature * Real.exp ((T * L2) / lambda) := by
+  exact det_regularizedPrefixFeatureGram_le_mul_exp_of_trace_average_bound
+    lambda hlambda history T L2 ((T * L2) / lambda) hbound
+    (trace_average_pow_le_lambda_pow_mul_exp
+      (Feature := Feature) lambda hlambda T L2 hL2)
+
+/--
+Concrete clipped elliptical-potential sum bound with the
+dimension-cancelled exponent `T * L2 / lambda`.
+-/
+theorem sum_range_min_prefix_update_le_two_trace_average
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Nat -> Feature -> Real) (T : Nat) (L2 : Real)
+    (hL2 : 0 <= L2)
+    (hbound : forall t : Nat, t < T ->
+      dotProduct (history t) (history t) <= L2) :
+    (Finset.range T).sum
+        (fun t => min 1 (dotProduct (history t)
+          (Matrix.mulVec
+            ((regularizedPrefixFeatureGram lambda history t)⁻¹)
+            (history t)))) <=
+      2 * ((T * L2) / lambda) := by
+  exact sum_range_min_prefix_update_le_two_of_trace_average_bound
+    lambda hlambda history T L2 ((T * L2) / lambda) hbound
+    (trace_average_pow_le_lambda_pow_mul_exp
       (Feature := Feature) lambda hlambda T L2 hL2)
 
 end OFUL

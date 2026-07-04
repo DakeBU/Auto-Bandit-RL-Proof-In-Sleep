@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T18:16:05+00:00",
+  "generated": "2026-07-04T18:21:36+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -720,11 +720,31 @@
         "OFUL.det_regularizedPrefixFeatureGram_le_mul_exp_trace_average_dim_scaled",
         "OFUL.sum_range_min_prefix_update_le_two_trace_average_dim_scaled"
       ],
-      "role": "Compiled scalar exponential simplification and concrete OFUL/LinUCB consumers: under `0 < lambda`, `0 <= L2`, nonempty feature type, and pointwise squared-norm ceiling, proves `((d*lambda + T*L2)/d)^d <= lambda^d * exp(d * (T*L2/(d*lambda)))`, then derives the determinant bound and clipped elliptical-potential sum bound with that explicit exponent. Cosmetic cancellation of `d * (T*L2/(d*lambda))` to `T*L2/lambda`, self-normalized martingale concentration, confidence ellipsoids, and OFUL regret remain separate.",
+      "role": "Compiled scalar exponential simplification and concrete OFUL/LinUCB consumers: under `0 < lambda`, `0 <= L2`, nonempty feature type, and pointwise squared-norm ceiling, proves `((d*lambda + T*L2)/d)^d <= lambda^d * exp(d * (T*L2/(d*lambda)))`, then derives the determinant bound and clipped elliptical-potential sum bound with that explicit exponent. Dimension cancellation is handled by a later local leaf; self-normalized martingale concentration, confidence ellipsoids, and OFUL regret remain separate.",
       "mathlib_routes": [
         "LOCAL-LEAF-OFUL-AMGM-DET-TRACE-BOUND",
         "LOCAL-LEAF-OFUL-TRACE-AVERAGE-EXP-CONSUMER",
         "Mathlib.Analysis.SpecialFunctions.Exp",
+        "MLIB-ORDER-ALGEBRA"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-OFUL-SCALAR-TRACE-AVERAGE-EXP-CANCEL",
+      "leaf_ids": [
+        "OFUL-ELLIPTICAL-POTENTIAL"
+      ],
+      "module": "BanditRLProof.OFULEllipticalPotential",
+      "status": "leanCompiled",
+      "declarations": [
+        "OFUL.trace_average_exp_exponent_dim_cancel",
+        "OFUL.trace_average_pow_le_lambda_pow_mul_exp",
+        "OFUL.det_regularizedPrefixFeatureGram_le_mul_exp_trace_average",
+        "OFUL.sum_range_min_prefix_update_le_two_trace_average"
+      ],
+      "role": "Compiled dimension-cancelled scalar exponential OFUL/LinUCB consumers: proves `d * (T*L2/(d*lambda)) = T*L2/lambda`, upgrades the trace-average scalar inequality to `((d*lambda + T*L2)/d)^d <= lambda^d * exp(T*L2/lambda)`, and derives determinant plus clipped elliptical-potential bounds with the standard exponent. Self-normalized martingale concentration, confidence ellipsoids, and OFUL regret remain separate.",
+      "mathlib_routes": [
+        "LOCAL-LEAF-OFUL-SCALAR-TRACE-AVERAGE-EXP-BOUND",
+        "LOCAL-LEAF-OFUL-TRACE-AVERAGE-EXP-CONSUMER",
         "MLIB-ORDER-ALGEBRA"
       ]
     },
