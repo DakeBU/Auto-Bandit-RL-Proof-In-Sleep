@@ -16726,4 +16726,30 @@ example {Feature : Type} [Fintype Feature] [DecidableEq Feature]
   exact OFUL.sum_range_min_prefix_update_le_two_log_det_upper
     lam hlam history T B hlog_upper
 
+example {Feature : Type} [Fintype Feature] [DecidableEq Feature]
+    (lam : Real) (hlam : 0 < lam)
+    (history : Nat -> Feature -> Real) (T : Nat) (B : Real)
+    (hdet_upper :
+      (OFUL.regularizedPrefixFeatureGram lam history T).det <=
+        lam ^ Fintype.card Feature * Real.exp B) :
+    Real.log (OFUL.regularizedPrefixFeatureGram lam history T).det -
+        Real.log (lam ^ Fintype.card Feature) <= B := by
+  exact OFUL.log_det_regularizedPrefixFeatureGram_sub_base_le_of_det_le_mul_exp
+    lam hlam history T B hdet_upper
+
+example {Feature : Type} [Fintype Feature] [DecidableEq Feature]
+    (lam : Real) (hlam : 0 < lam)
+    (history : Nat -> Feature -> Real) (T : Nat) (B : Real)
+    (hdet_upper :
+      (OFUL.regularizedPrefixFeatureGram lam history T).det <=
+        lam ^ Fintype.card Feature * Real.exp B) :
+    (Finset.range T).sum
+        (fun t => min 1 (dotProduct (history t)
+          (Matrix.mulVec
+            ((OFUL.regularizedPrefixFeatureGram lam history t)⁻¹)
+            (history t)))) <=
+      2 * B := by
+  exact OFUL.sum_range_min_prefix_update_le_two_det_mul_exp_upper
+    lam hlam history T B hdet_upper
+
 end BanditRLProof

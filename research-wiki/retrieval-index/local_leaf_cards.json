@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T17:35:49+00:00",
+  "generated": "2026-07-04T17:39:39+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -610,6 +610,24 @@
         "LOCAL-LEAF-OFUL-INVERSE-QUADRATIC-NONNEG-CONSUMER",
         "LOCAL-LEAF-OFUL-DETERMINANT-GROWTH-CONSUMER",
         "MLIB-CONVEX-LINALG"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-OFUL-DET-MUL-EXP-UPPER-CONSUMER",
+      "leaf_ids": [
+        "OFUL-ELLIPTICAL-POTENTIAL"
+      ],
+      "module": "BanditRLProof.OFULEllipticalPotential",
+      "status": "leanCompiled",
+      "declarations": [
+        "OFUL.log_det_regularizedPrefixFeatureGram_sub_base_le_of_det_le_mul_exp",
+        "OFUL.sum_range_min_prefix_update_le_two_det_mul_exp_upper"
+      ],
+      "role": "Compiled multiplicative determinant-upper consumer for OFUL/LinUCB: turns a future bound `det(V_T) <= lambda^d * exp(B)` into `log det(V_T)-log(lambda^d) <= B` using Mathlib `Real.log_le_log`, `Real.log_mul`, and `Real.log_exp`, then yields the clipped elliptical-potential sum bound `<= 2 * B`. It does not prove the concrete determinant upper bound itself, trace/AM-GM dimension-radius simplification, self-normalized martingale concentration, confidence ellipsoids, or OFUL regret.",
+      "mathlib_routes": [
+        "LOCAL-LEAF-OFUL-LOG-DET-UPPER-CONSUMER",
+        "Mathlib.Analysis.SpecialFunctions.Log.Basic",
+        "Mathlib.Analysis.Matrix.PosDef"
       ]
     },
     {

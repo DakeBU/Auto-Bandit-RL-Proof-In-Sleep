@@ -1232,5 +1232,55 @@ theorem sum_range_min_prefix_update_le_two_log_det_upper
     lambda hlambda history T).trans
     (mul_le_mul_of_nonneg_left hlog_upper (by norm_num))
 
+/--
+A multiplicative determinant upper bound of the form
+`det(V_T) <= lambda^d * exp(B)` supplies the terminal log-determinant upper
+bound used by the clipped elliptical-potential consumer.
+-/
+theorem log_det_regularizedPrefixFeatureGram_sub_base_le_of_det_le_mul_exp
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Nat -> Feature -> Real) (T : Nat) (B : Real)
+    (hdet_upper :
+      (regularizedPrefixFeatureGram lambda history T).det <=
+        lambda ^ Fintype.card Feature * Real.exp B) :
+    Real.log (regularizedPrefixFeatureGram lambda history T).det -
+        Real.log (lambda ^ Fintype.card Feature) <= B := by
+  have hdet_pos :
+      0 < (regularizedPrefixFeatureGram lambda history T).det :=
+    regularizedPrefixFeatureGram_det_pos lambda hlambda history T
+  have hbase_pos : 0 < lambda ^ Fintype.card Feature := by
+    exact pow_pos hlambda _
+  have hlog_le := Real.log_le_log hdet_pos hdet_upper
+  have hlog_prod :
+      Real.log (lambda ^ Fintype.card Feature * Real.exp B) =
+        Real.log (lambda ^ Fintype.card Feature) + B := by
+    rw [Real.log_mul (ne_of_gt hbase_pos) (ne_of_gt (Real.exp_pos B))]
+    rw [Real.log_exp]
+  rw [hlog_prod] at hlog_le
+  linarith
+
+/--
+Clipped prefix inverse-quadratic sum bound from a multiplicative terminal
+determinant upper bound.
+-/
+theorem sum_range_min_prefix_update_le_two_det_mul_exp_upper
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Nat -> Feature -> Real) (T : Nat) (B : Real)
+    (hdet_upper :
+      (regularizedPrefixFeatureGram lambda history T).det <=
+        lambda ^ Fintype.card Feature * Real.exp B) :
+    (Finset.range T).sum
+        (fun t => min 1 (dotProduct (history t)
+          (Matrix.mulVec
+            ((regularizedPrefixFeatureGram lambda history t)⁻¹)
+            (history t)))) <=
+      2 * B := by
+  exact sum_range_min_prefix_update_le_two_log_det_upper
+    lambda hlambda history T B
+    (log_det_regularizedPrefixFeatureGram_sub_base_le_of_det_le_mul_exp
+      lambda hlambda history T B hdet_upper)
+
 end OFUL
 end BanditRLProof

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T17:35:49+00:00",
+  "generated": "2026-07-04T17:39:39+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -5160,6 +5160,22 @@
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
       "line": 1218,
       "statement": "theorem sum_range_min_prefix_update_le_two_log_det_upper {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Nat -> Feature -> Real) (T : Nat) (B : Real) (hlog_upper : Real.log (regularizedPrefixFeatureGram lambda history T).det - Real.log (lambda ^ Fintype.card Feature) <= B) : (Finset.range T).sum"
+    },
+    {
+      "kind": "theorem",
+      "name": "log_det_regularizedPrefixFeatureGram_sub_base_le_of_det_le_mul_exp",
+      "full_name": "BanditRLProof.OFUL.log_det_regularizedPrefixFeatureGram_sub_base_le_of_det_le_mul_exp",
+      "file": "BanditRLProof/OFULEllipticalPotential.lean",
+      "line": 1240,
+      "statement": "theorem log_det_regularizedPrefixFeatureGram_sub_base_le_of_det_le_mul_exp {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Nat -> Feature -> Real) (T : Nat) (B : Real) (hdet_upper : (regularizedPrefixFeatureGram lambda history T).det <= lambda ^ Fintype.card Feature * Real.exp B) : Real.log (regularizedPrefixFeatureGram lambda history T).det -"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_range_min_prefix_update_le_two_det_mul_exp_upper",
+      "full_name": "BanditRLProof.OFUL.sum_range_min_prefix_update_le_two_det_mul_exp_upper",
+      "file": "BanditRLProof/OFULEllipticalPotential.lean",
+      "line": 1267,
+      "statement": "theorem sum_range_min_prefix_update_le_two_det_mul_exp_upper {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Nat -> Feature -> Real) (T : Nat) (B : Real) (hdet_upper : (regularizedPrefixFeatureGram lambda history T).det <= lambda ^ Fintype.card Feature * Real.exp B) : (Finset.range T).sum"
     },
     {
       "kind": "inductive",
