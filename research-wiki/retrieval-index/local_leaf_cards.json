@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T11:14:43+00:00",
+  "generated": "2026-07-04T11:22:24+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -2358,11 +2358,14 @@
       "status": "leanCompiled",
       "declarations": [
         "ConditionalExpectationReward.GeneratedActionRandomPairMapSource",
+        "ConditionalExpectationReward.generatedActionRandomPairMapSource_of_actionRewardHistoryStepKernelFamily_pair_map_eq",
+        "ConditionalExpectationReward.generatedActionRandomPairMapSource_of_actionRewardPartialTrajectoryKernel_map_eq",
+        "ConditionalExpectationReward.generatedActionRandomPairMapSource_of_actionRewardPartialTrajectoryKernel_extend_map_eq",
         "ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairMapSource",
         "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairMapSource",
         "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairMapSource_rawRangeMeasurableMeanRangeBounded"
       ],
-      "role": "Compiled generated-policy random next-pair law source contract for the COND-EXPECT-REWARD route: it packages shifted generated-action equality plus the per-step random next-pair condExpKernel map law as a reusable structure, then consumes the existing generated-action/random-pair route to expose full finite-pair-trace partialTraj law and succ-indexed conditional mean-zero. The mean-zero consumer is available both under a direct integrability hypothesis and from raw reward plus selected-mean range regularity. This is a contract surface; it still does not construct the pair/reward law source, ambient trajectory-to-condExpKernel identification, or a final adaptive theorem.",
+      "role": "Compiled generated-policy random next-pair law source contract for the COND-EXPECT-REWARD route: it packages shifted generated-action equality plus the per-step random next-pair condExpKernel map law as a reusable structure, can now also build that source directly from canonical history-step next-pair, full finite-pair partialTraj, or frozen-prefix extension-map partialTraj law hypotheses, then consumes the existing generated-action/random-pair route to expose full finite-pair-trace partialTraj law and succ-indexed conditional mean-zero. The mean-zero consumer is available both under a direct integrability hypothesis and from raw reward plus selected-mean range regularity. This is a contract surface; it still does not construct the pair/reward law source, ambient trajectory-to-condExpKernel identification, or a final adaptive theorem.",
       "mathlib_routes": [
         "MLIB-CONDITIONAL-EXPECTATION",
         "LOCAL-LEAF-COND-EXPECT-REWARD-NEXTPAIR-GENERATED-ACTION-ACTUAL-REWARD-HOOKUP",
