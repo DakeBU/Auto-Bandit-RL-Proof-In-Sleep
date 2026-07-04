@@ -11791,6 +11791,67 @@ example {Omega Context State Action : Type}
     (hreward : forall t : Nat,
       Measurable (fun omega : Omega => reward omega t))
     (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (source :
+      ConditionalExpectationReward.GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource
+        mu rewardKernel policy context state mean varianceProxy defaultAction
+        reward hreward rewardLo rewardHi meanLo meanHi)
+    (i : Nat)
+    (c : NNReal)
+    (h_variance_history :
+      forall history : ((j : Finset.Iic i) -> Rat),
+        varianceProxy (context i history)
+          ((policy i).action (state i history)) <= c) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc
+        (ConditionalExpectationReward.generatedActionFromRewardHistory
+          policy state defaultAction reward)
+        reward
+        (ConditionalExpectationReward.generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward source.definitional_map_source.hstate)
+        hreward) i)
+      ((History.historyFiltrationSucc
+        (ConditionalExpectationReward.generatedActionFromRewardHistory
+          policy state defaultAction reward)
+        reward
+        (ConditionalExpectationReward.generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward source.definitional_map_source.hstate)
+        hreward).le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      c mu := by
+  exact
+    ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_history_variance_le
+      (mOmega := mOmega)
+      mu rewardKernel policy context state mean varianceProxy defaultAction
+      reward hreward rewardLo rewardHi meanLo meanHi source i c
+      h_variance_history
+
+example {Omega Context State Action : Type}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
     (varianceCeiling : NNReal)
     (source :
       ConditionalExpectationReward.GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource
