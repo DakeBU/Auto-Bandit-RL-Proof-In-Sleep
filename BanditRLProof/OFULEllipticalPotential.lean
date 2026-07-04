@@ -617,5 +617,41 @@ theorem log_det_regularizedFeatureGram_add_rankOneGram_sub
     lambda hlambda history x]
   ring
 
+/-- Finite forward-difference telescope used by log-det recursions. -/
+theorem sum_range_forward_difference
+    (Phi : Nat -> Real) (T : Nat) :
+    (Finset.range T).sum (fun t => Phi (t + 1) - Phi t) =
+      Phi T - Phi 0 := by
+  induction T with
+  | zero => simp
+  | succ T ih =>
+      rw [Finset.sum_range_succ, ih]
+      ring
+
+/--
+Abstract finite-horizon log-det telescope from one-step log-update factors.
+
+This packages the shape needed after instantiating `detSeq` with an OFUL
+regularized Gram determinant process and `factor` with the corresponding
+rank-one update factor.
+-/
+theorem sum_range_log_update_factor_eq_log_det_ratio
+    (detSeq factor : Nat -> Real) (T : Nat)
+    (hstep : forall t : Nat, t < T ->
+      Real.log (detSeq (t + 1)) - Real.log (detSeq t) =
+        Real.log (factor t)) :
+    (Finset.range T).sum (fun t => Real.log (factor t)) =
+      Real.log (detSeq T) - Real.log (detSeq 0) := by
+  calc
+    (Finset.range T).sum (fun t => Real.log (factor t)) =
+      (Finset.range T).sum
+        (fun t => Real.log (detSeq (t + 1)) - Real.log (detSeq t)) := by
+      apply Finset.sum_congr rfl
+      intro t ht
+      exact (hstep t (Finset.mem_range.mp ht)).symm
+    _ = Real.log (detSeq T) - Real.log (detSeq 0) := by
+      exact sum_range_forward_difference
+        (fun t => Real.log (detSeq t)) T
+
 end OFUL
 end BanditRLProof

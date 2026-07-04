@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T16:53:12+00:00",
+  "generated": "2026-07-04T16:58:46+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -4840,6 +4840,22 @@
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
       "line": 607,
       "statement": "theorem log_det_regularizedFeatureGram_add_rankOneGram_sub {Time : Type v} {Feature : Type u} [Fintype Time] [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Time -> Feature -> Real) (x : Feature -> Real) : Real.log (regularizedFeatureGram lambda history + rankOneGram x).det - Real.log (regularizedFeatureGram lambda history).det = Real.log (1 + dotProduct x"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_range_forward_difference",
+      "full_name": "BanditRLProof.OFUL.sum_range_forward_difference",
+      "file": "BanditRLProof/OFULEllipticalPotential.lean",
+      "line": 621,
+      "statement": "theorem sum_range_forward_difference (Phi : Nat -> Real) (T : Nat) : (Finset.range T).sum (fun t => Phi (t + 1) - Phi t) = Phi T - Phi 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_range_log_update_factor_eq_log_det_ratio",
+      "full_name": "BanditRLProof.OFUL.sum_range_log_update_factor_eq_log_det_ratio",
+      "file": "BanditRLProof/OFULEllipticalPotential.lean",
+      "line": 638,
+      "statement": "theorem sum_range_log_update_factor_eq_log_det_ratio (detSeq factor : Nat -> Real) (T : Nat) (hstep : forall t : Nat, t < T -> Real.log (detSeq (t + 1)) - Real.log (detSeq t) = Real.log (factor t)) : (Finset.range T).sum (fun t => Real.log (factor t)) = Real.log (detSeq T) - Real.log (detSeq 0)"
     },
     {
       "kind": "inductive",

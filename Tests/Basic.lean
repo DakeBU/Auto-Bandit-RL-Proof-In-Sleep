@@ -16590,4 +16590,18 @@ example {Time Feature : Type} [Fintype Time] [Fintype Feature]
   exact OFUL.log_det_regularizedFeatureGram_add_rankOneGram_sub
     lam hlam history x
 
+example (Phi : Nat -> Real) (T : Nat) :
+    (Finset.range T).sum (fun t => Phi (t + 1) - Phi t) =
+      Phi T - Phi 0 := by
+  exact OFUL.sum_range_forward_difference Phi T
+
+example (detSeq factor : Nat -> Real) (T : Nat)
+    (hstep : forall t : Nat, t < T ->
+      Real.log (detSeq (t + 1)) - Real.log (detSeq t) =
+        Real.log (factor t)) :
+    (Finset.range T).sum (fun t => Real.log (factor t)) =
+      Real.log (detSeq T) - Real.log (detSeq 0) := by
+  exact OFUL.sum_range_log_update_factor_eq_log_det_ratio
+    detSeq factor T hstep
+
 end BanditRLProof
