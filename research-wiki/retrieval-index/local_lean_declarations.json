@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T18:21:36+00:00",
+  "generated": "2026-07-04T18:28:19+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -1214,7 +1214,7 @@
       "name": "Spec",
       "full_name": "BanditRLProof.UCB.Spec",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 11,
+      "line": 13,
       "statement": "structure Spec (K : Nat) where"
     },
     {
@@ -1222,7 +1222,7 @@
       "name": "IndexState",
       "full_name": "BanditRLProof.UCB.IndexState",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 16,
+      "line": 18,
       "statement": "structure IndexState (K : Nat) where"
     },
     {
@@ -1230,7 +1230,7 @@
       "name": "score",
       "full_name": "BanditRLProof.UCB.score",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 26,
+      "line": 28,
       "statement": "def score (_spec : Spec K) (state : IndexState K) (arm : Fin K) : Rat :="
     },
     {
@@ -1238,15 +1238,63 @@
       "name": "score_eq_empiricalMean",
       "full_name": "BanditRLProof.UCB.score_eq_empiricalMean",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 29,
+      "line": 31,
       "statement": "@[simp] theorem score_eq_empiricalMean (spec : Spec K) (state : IndexState K) (arm : Fin K) : score spec state arm = state.empiricalMean arm"
+    },
+    {
+      "kind": "def",
+      "name": "confidenceScore",
+      "full_name": "BanditRLProof.UCB.confidenceScore",
+      "file": "BanditRLProof/Algorithms/UCB.lean",
+      "line": 36,
+      "statement": "def confidenceScore {Arm : Type} (empiricalMean radius : Arm -> Real) (arm : Arm) : Real :="
+    },
+    {
+      "kind": "theorem",
+      "name": "confidenceScore_apply",
+      "full_name": "BanditRLProof.UCB.confidenceScore_apply",
+      "file": "BanditRLProof/Algorithms/UCB.lean",
+      "line": 40,
+      "statement": "@[simp] theorem confidenceScore_apply {Arm : Type} (empiricalMean radius : Arm -> Real) (arm : Arm) : confidenceScore empiricalMean radius arm = empiricalMean arm + radius arm"
+    },
+    {
+      "kind": "def",
+      "name": "meanGap",
+      "full_name": "BanditRLProof.UCB.meanGap",
+      "file": "BanditRLProof/Algorithms/UCB.lean",
+      "line": 46,
+      "statement": "def meanGap {Arm : Type} (trueMean : Arm -> Real) (best arm : Arm) : Real :="
+    },
+    {
+      "kind": "theorem",
+      "name": "meanGap_apply",
+      "full_name": "BanditRLProof.UCB.meanGap_apply",
+      "file": "BanditRLProof/Algorithms/UCB.lean",
+      "line": 49,
+      "statement": "@[simp] theorem meanGap_apply {Arm : Type} (trueMean : Arm -> Real) (best arm : Arm) : meanGap trueMean best arm = trueMean best - trueMean arm"
+    },
+    {
+      "kind": "theorem",
+      "name": "meanGap_le_two_radius_of_confidenceScore_max",
+      "full_name": "BanditRLProof.UCB.meanGap_le_two_radius_of_confidenceScore_max",
+      "file": "BanditRLProof/Algorithms/UCB.lean",
+      "line": 59,
+      "statement": "theorem meanGap_le_two_radius_of_confidenceScore_max {Arm : Type} (trueMean empiricalMean radius : Arm -> Real) (best chosen : Arm) (hbest_upper : trueMean best <= confidenceScore empiricalMean radius best) (hchosen_lower : empiricalMean chosen - radius chosen <= trueMean chosen) (hscore :"
+    },
+    {
+      "kind": "theorem",
+      "name": "not_two_radius_lt_meanGap_of_confidenceScore_max",
+      "full_name": "BanditRLProof.UCB.not_two_radius_lt_meanGap_of_confidenceScore_max",
+      "file": "BanditRLProof/Algorithms/UCB.lean",
+      "line": 78,
+      "statement": "theorem not_two_radius_lt_meanGap_of_confidenceScore_max {Arm : Type} (trueMean empiricalMean radius : Arm -> Real) (best chosen : Arm) (hbest_upper : trueMean best <= confidenceScore empiricalMean radius best) (hchosen_lower : empiricalMean chosen - radius chosen <= trueMean chosen) (hscore :"
     },
     {
       "kind": "def",
       "name": "obligationNames",
       "full_name": "BanditRLProof.UCB.obligationNames",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 34,
+      "line": 95,
       "statement": "def obligationNames : List String :="
     },
     {

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T18:21:36+00:00",
+  "generated": "2026-07-04T18:28:19+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -95,6 +95,25 @@
       "mathlib_routes": [
         "MLIB-FINTYPE-FIN",
         "MLIB-ORDER-ALGEBRA"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-UCB-CONFIDENCE-ALGEBRA",
+      "leaf_ids": [
+        "UCB-GOOD-EVENT-GAP-CONSUMER"
+      ],
+      "module": "BanditRLProof.Algorithms.UCB",
+      "status": "leanCompiled",
+      "declarations": [
+        "UCB.confidenceScore",
+        "UCB.meanGap",
+        "UCB.meanGap_le_two_radius_of_confidenceScore_max",
+        "UCB.not_two_radius_lt_meanGap_of_confidenceScore_max"
+      ],
+      "role": "Compiled deterministic UCB confidence-radius algebra: defines the Real-valued confidence score `empiricalMean + radius` and mean gap against a designated best arm, proves that best-arm upper confidence, chosen-arm lower confidence, and score maximality imply `gap <= 2 * chosenRadius`, and exposes the strict-gap contradiction consumer. This is the good-event algebra input for future suboptimal-pull/count bounds; it does not prove the log/sqrt radius formula, concentration tail producer, expected pull-count bound, or final UCB regret theorem.",
+      "mathlib_routes": [
+        "MLIB-ORDER-ALGEBRA",
+        "LOCAL-LEAF-TAIL-SUMMABILITY-UCB"
       ]
     },
     {

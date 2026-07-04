@@ -14995,6 +14995,44 @@ example (arm : Fin 2) :
     UCB.score ucbSpec ucbState arm = ucbState.empiricalMean arm := by
   simp
 
+example {Arm : Type} (empiricalMean radius : Arm -> Real) (arm : Arm) :
+    UCB.confidenceScore empiricalMean radius arm =
+      empiricalMean arm + radius arm := by
+  simp [UCB.confidenceScore]
+
+example {Arm : Type} (trueMean : Arm -> Real) (best arm : Arm) :
+    UCB.meanGap trueMean best arm = trueMean best - trueMean arm := by
+  simp [UCB.meanGap]
+
+example {Arm : Type} (trueMean empiricalMean radius : Arm -> Real)
+    (best chosen : Arm)
+    (hbest_upper :
+      trueMean best <= UCB.confidenceScore empiricalMean radius best)
+    (hchosen_lower :
+      empiricalMean chosen - radius chosen <= trueMean chosen)
+    (hscore :
+      UCB.confidenceScore empiricalMean radius best <=
+        UCB.confidenceScore empiricalMean radius chosen) :
+    UCB.meanGap trueMean best chosen <= 2 * radius chosen := by
+  exact UCB.meanGap_le_two_radius_of_confidenceScore_max
+    trueMean empiricalMean radius best chosen
+    hbest_upper hchosen_lower hscore
+
+example {Arm : Type} (trueMean empiricalMean radius : Arm -> Real)
+    (best chosen : Arm)
+    (hbest_upper :
+      trueMean best <= UCB.confidenceScore empiricalMean radius best)
+    (hchosen_lower :
+      empiricalMean chosen - radius chosen <= trueMean chosen)
+    (hscore :
+      UCB.confidenceScore empiricalMean radius best <=
+        UCB.confidenceScore empiricalMean radius chosen)
+    (hgap_large : 2 * radius chosen < UCB.meanGap trueMean best chosen) :
+    False := by
+  exact UCB.not_two_radius_lt_meanGap_of_confidenceScore_max
+    trueMean empiricalMean radius best chosen
+    hbest_upper hchosen_lower hscore hgap_large
+
 def twoArmModel : FiniteBanditModel 2 where
   hK := by decide
   mean := fun arm => if arm.val = 0 then 1 else 0
