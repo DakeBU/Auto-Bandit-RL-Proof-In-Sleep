@@ -287,6 +287,58 @@ theorem regularizedFeatureGram_isHermitian
     rw [Matrix.scalar_apply]
     exact Matrix.isHermitian_diagonal _) (featureGram_isHermitian x)
 
+/-- Prefix Gram matrix `sum_{t < T} x_t x_t^T` for a Nat-indexed history. -/
+noncomputable def prefixFeatureGram {Feature : Type u}
+    (x : Nat -> Feature -> Real) (T : Nat) :
+    Matrix Feature Feature Real :=
+  fun i j => (Finset.range T).sum (fun t => x t i * x t j)
+
+/-- Regularized prefix Gram matrix `lambda I + sum_{t < T} x_t x_t^T`. -/
+noncomputable def regularizedPrefixFeatureGram
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (x : Nat -> Feature -> Real) (T : Nat) :
+    Matrix Feature Feature Real :=
+  Matrix.scalar Feature lambda + prefixFeatureGram x T
+
+/-- Prefix Grams grow by one rank-one feature update. -/
+theorem prefixFeatureGram_succ
+    {Feature : Type u}
+    (x : Nat -> Feature -> Real) (T : Nat) :
+    prefixFeatureGram x (T + 1) =
+      prefixFeatureGram x T + rankOneGram (x T) := by
+  ext i j
+  simp [prefixFeatureGram, rankOneGram, Finset.sum_range_succ]
+
+/-- Regularized prefix Grams grow by one rank-one feature update. -/
+theorem regularizedPrefixFeatureGram_succ
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (x : Nat -> Feature -> Real) (T : Nat) :
+    regularizedPrefixFeatureGram lambda x (T + 1) =
+      regularizedPrefixFeatureGram lambda x T + rankOneGram (x T) := by
+  ext i j
+  simp [regularizedPrefixFeatureGram, prefixFeatureGram, rankOneGram,
+    Finset.sum_range_succ]
+  ring
+
+/-- Prefix Gram matrices are Hermitian. -/
+theorem prefixFeatureGram_isHermitian
+    {Feature : Type u} [Fintype Feature]
+    (x : Nat -> Feature -> Real) (T : Nat) :
+    (prefixFeatureGram x T).IsHermitian := by
+  refine Matrix.IsHermitian.ext ?_
+  intro i j
+  simp [prefixFeatureGram, mul_comm]
+
+/-- Regularized prefix Gram matrices are Hermitian. -/
+theorem regularizedPrefixFeatureGram_isHermitian
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (x : Nat -> Feature -> Real) (T : Nat) :
+    (regularizedPrefixFeatureGram lambda x T).IsHermitian := by
+  rw [regularizedPrefixFeatureGram]
+  exact Matrix.IsHermitian.add (by
+    rw [Matrix.scalar_apply]
+    exact Matrix.isHermitian_diagonal _) (prefixFeatureGram_isHermitian x T)
+
 /--
 The quadratic form of a rank-one Gram matrix is the square of the projection
 of the query vector onto the feature vector.
@@ -414,6 +466,61 @@ theorem featureGram_quadraticForm_eq_sum_sq
         rankOneGram_quadraticForm_eq_sq (x := x t) (y := y)
 
 /--
+The quadratic form of a Nat-prefix Gram matrix is a finite range sum of
+squared feature projections.
+-/
+theorem prefixFeatureGram_quadraticForm_eq_sum_sq
+    {Feature : Type u} [Fintype Feature]
+    (x : Nat -> Feature -> Real) (T : Nat) (y : Feature -> Real) :
+    quadraticForm (prefixFeatureGram x T) y =
+      (Finset.range T).sum
+        (fun t =>
+          ((Finset.univ : Finset Feature).sum
+            (fun i => x t i * y i)) ^ 2) := by
+  unfold quadraticForm prefixFeatureGram
+  calc
+    (Finset.univ : Finset Feature).sum
+        (fun i => (Finset.univ : Finset Feature).sum
+          (fun j =>
+            y i *
+              ((Finset.range T).sum
+                (fun t => x t i * x t j)) *
+              y j))
+        =
+      (Finset.univ : Finset Feature).sum
+        (fun i => (Finset.univ : Finset Feature).sum
+          (fun j => (Finset.range T).sum
+            (fun t => y i * (x t i * x t j) * y j))) := by
+      apply Finset.sum_congr rfl
+      intro i _hi
+      apply Finset.sum_congr rfl
+      intro j _hj
+      rw [Finset.mul_sum, Finset.sum_mul]
+    _ =
+      (Finset.univ : Finset Feature).sum
+        (fun i => (Finset.range T).sum
+          (fun t => (Finset.univ : Finset Feature).sum
+            (fun j => y i * (x t i * x t j) * y j))) := by
+      apply Finset.sum_congr rfl
+      intro i _hi
+      rw [Finset.sum_comm]
+    _ =
+      (Finset.range T).sum
+        (fun t => (Finset.univ : Finset Feature).sum
+          (fun i => (Finset.univ : Finset Feature).sum
+            (fun j => y i * (x t i * x t j) * y j))) := by
+      rw [Finset.sum_comm]
+    _ =
+      (Finset.range T).sum
+        (fun t =>
+          ((Finset.univ : Finset Feature).sum
+            (fun i => x t i * y i)) ^ 2) := by
+      apply Finset.sum_congr rfl
+      intro t _ht
+      simpa [quadraticForm, rankOneGram] using
+        rankOneGram_quadraticForm_eq_sq (x := x t) (y := y)
+
+/--
 The regularized Gram quadratic form is the scalar regularization term plus the
 finite-history Gram sum of squared feature projections.
 -/
@@ -432,12 +539,39 @@ theorem regularizedFeatureGram_quadraticForm_eq_sum_sq
   rw [quadraticForm_scalar_identity]
   rw [featureGram_quadraticForm_eq_sum_sq]
 
+/--
+The regularized prefix Gram quadratic form is the scalar regularization term
+plus the prefix sum of squared feature projections.
+-/
+theorem regularizedPrefixFeatureGram_quadraticForm_eq_sum_sq
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (x : Nat -> Feature -> Real) (T : Nat)
+    (y : Feature -> Real) :
+    quadraticForm (regularizedPrefixFeatureGram lambda x T) y =
+      lambda * (Finset.univ : Finset Feature).sum (fun i => y i ^ 2) +
+        (Finset.range T).sum
+          (fun t =>
+            ((Finset.univ : Finset Feature).sum
+              (fun i => x t i * y i)) ^ 2) := by
+  rw [regularizedPrefixFeatureGram]
+  rw [quadraticForm_add]
+  rw [quadraticForm_scalar_identity]
+  rw [prefixFeatureGram_quadraticForm_eq_sum_sq]
+
 /-- Finite-history Gram matrices have nonnegative quadratic forms. -/
 theorem featureGram_quadraticForm_nonneg
     {Time : Type v} {Feature : Type u} [Fintype Time] [Fintype Feature]
     (x : Time -> Feature -> Real) (y : Feature -> Real) :
     0 <= quadraticForm (featureGram x) y := by
   rw [featureGram_quadraticForm_eq_sum_sq]
+  exact Finset.sum_nonneg (fun t _ht => sq_nonneg _)
+
+/-- Nat-prefix Gram matrices have nonnegative quadratic forms. -/
+theorem prefixFeatureGram_quadraticForm_nonneg
+    {Feature : Type u} [Fintype Feature]
+    (x : Nat -> Feature -> Real) (T : Nat) (y : Feature -> Real) :
+    0 <= quadraticForm (prefixFeatureGram x T) y := by
+  rw [prefixFeatureGram_quadraticForm_eq_sum_sq]
   exact Finset.sum_nonneg (fun t _ht => sq_nonneg _)
 
 /-- Regularized finite-history Gram matrices are PSD when `0 <= lambda`. -/
@@ -454,6 +588,19 @@ theorem regularizedFeatureGram_quadraticForm_nonneg
     (mul_nonneg hlambda (Finset.sum_nonneg (fun i _hi => sq_nonneg _)))
     (featureGram_quadraticForm_nonneg x y)
 
+/-- Regularized Nat-prefix Gram matrices are PSD when `0 <= lambda`. -/
+theorem regularizedPrefixFeatureGram_quadraticForm_nonneg
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 <= lambda)
+    (x : Nat -> Feature -> Real) (T : Nat) (y : Feature -> Real) :
+    0 <= quadraticForm (regularizedPrefixFeatureGram lambda x T) y := by
+  rw [regularizedPrefixFeatureGram]
+  rw [quadraticForm_add]
+  rw [quadraticForm_scalar_identity]
+  exact add_nonneg
+    (mul_nonneg hlambda (Finset.sum_nonneg (fun i _hi => sq_nonneg _)))
+    (prefixFeatureGram_quadraticForm_nonneg x T y)
+
 /--
 Regularized finite-history Gram matrices have strictly positive quadratic
 forms on nonzero vectors when `0 < lambda`.
@@ -466,6 +613,21 @@ theorem regularizedFeatureGram_quadraticForm_pos_of_pos_lambda
     (hy : ∃ i : Feature, y i ≠ 0) :
     0 < quadraticForm (regularizedFeatureGram lambda x) y := by
   rw [regularizedFeatureGram_quadraticForm_eq_sum_sq]
+  exact add_pos_of_pos_of_nonneg
+    (mul_pos hlambda (sum_sq_pos_of_exists_ne_zero y hy))
+    (Finset.sum_nonneg (fun t _ht => sq_nonneg _))
+
+/--
+Regularized Nat-prefix Gram matrices have strictly positive quadratic forms on
+nonzero vectors when `0 < lambda`.
+-/
+theorem regularizedPrefixFeatureGram_quadraticForm_pos_of_pos_lambda
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (x : Nat -> Feature -> Real) (T : Nat) (y : Feature -> Real)
+    (hy : ∃ i : Feature, y i ≠ 0) :
+    0 < quadraticForm (regularizedPrefixFeatureGram lambda x T) y := by
+  rw [regularizedPrefixFeatureGram_quadraticForm_eq_sum_sq]
   exact add_pos_of_pos_of_nonneg
     (mul_pos hlambda (sum_sq_pos_of_exists_ne_zero y hy))
     (Finset.sum_nonneg (fun t _ht => sq_nonneg _))
@@ -488,6 +650,23 @@ theorem regularizedFeatureGram_posDef
   exact regularizedFeatureGram_quadraticForm_pos_of_pos_lambda
     lambda hlambda x y (exists_coord_ne_zero_of_ne_zero y hy)
 
+/-- Regularized Nat-prefix Gram matrices are Mathlib-positive definite. -/
+theorem regularizedPrefixFeatureGram_posDef
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (x : Nat -> Feature -> Real) (T : Nat) :
+    (regularizedPrefixFeatureGram lambda x T).PosDef := by
+  refine Matrix.PosDef.of_dotProduct_mulVec_pos
+    (regularizedPrefixFeatureGram_isHermitian lambda x T) ?_
+  intro y hy
+  have hstar : star y = y := by
+    funext i
+    simp
+  rw [hstar]
+  rw [dotProduct_mulVec_eq_quadraticForm]
+  exact regularizedPrefixFeatureGram_quadraticForm_pos_of_pos_lambda
+    lambda hlambda x T y (exists_coord_ne_zero_of_ne_zero y hy)
+
 /-- Regularized finite-history Gram matrices have positive determinant. -/
 theorem regularizedFeatureGram_det_pos
     {Time : Type v} {Feature : Type u}
@@ -497,6 +676,15 @@ theorem regularizedFeatureGram_det_pos
     0 < (regularizedFeatureGram lambda x).det := by
   exact Matrix.PosDef.det_pos (regularizedFeatureGram_posDef lambda hlambda x)
 
+/-- Regularized Nat-prefix Gram matrices have positive determinant. -/
+theorem regularizedPrefixFeatureGram_det_pos
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (x : Nat -> Feature -> Real) (T : Nat) :
+    0 < (regularizedPrefixFeatureGram lambda x T).det := by
+  exact Matrix.PosDef.det_pos
+    (regularizedPrefixFeatureGram_posDef lambda hlambda x T)
+
 /-- Regularized finite-history Gram matrices have nonzero determinant. -/
 theorem regularizedFeatureGram_det_ne_zero
     {Time : Type v} {Feature : Type u}
@@ -505,6 +693,14 @@ theorem regularizedFeatureGram_det_ne_zero
     (x : Time -> Feature -> Real) :
     (regularizedFeatureGram lambda x).det ≠ 0 := by
   exact ne_of_gt (regularizedFeatureGram_det_pos lambda hlambda x)
+
+/-- Regularized Nat-prefix Gram matrices have nonzero determinant. -/
+theorem regularizedPrefixFeatureGram_det_ne_zero
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (x : Nat -> Feature -> Real) (T : Nat) :
+    (regularizedPrefixFeatureGram lambda x T).det ≠ 0 := by
+  exact ne_of_gt (regularizedPrefixFeatureGram_det_pos lambda hlambda x T)
 
 /--
 Positive regularization supplies Mathlib's determinant-unit side condition for
@@ -517,6 +713,18 @@ theorem isUnit_det_regularizedFeatureGram
     (x : Time -> Feature -> Real) :
     IsUnit (regularizedFeatureGram lambda x).det := by
   exact IsUnit.mk0 _ (regularizedFeatureGram_det_ne_zero lambda hlambda x)
+
+/--
+Positive regularization supplies Mathlib's determinant-unit side condition for
+Nat-prefix regularized Gram matrices.
+-/
+theorem isUnit_det_regularizedPrefixFeatureGram
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (x : Nat -> Feature -> Real) (T : Nat) :
+    IsUnit (regularizedPrefixFeatureGram lambda x T).det := by
+  exact IsUnit.mk0 _
+    (regularizedPrefixFeatureGram_det_ne_zero lambda hlambda x T)
 
 /--
 One-step determinant recursion for an arbitrary finite-history regularized Gram
@@ -538,6 +746,23 @@ theorem det_regularizedFeatureGram_add_rankOneGram
   exact det_add_rankOneGram (regularizedFeatureGram lambda history)
     (isUnit_det_regularizedFeatureGram lambda hlambda history) x
 
+/--
+One-step determinant recursion for Nat-prefix regularized Gram matrices.
+
+This keeps the growing-history surface in a single Nat-indexed feature stream.
+-/
+theorem det_regularizedPrefixFeatureGram_add_rankOneGram
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Nat -> Feature -> Real) (T : Nat) (x : Feature -> Real) :
+    (regularizedPrefixFeatureGram lambda history T + rankOneGram x).det =
+      (regularizedPrefixFeatureGram lambda history T).det *
+        (1 + dotProduct x
+          (Matrix.mulVec
+            ((regularizedPrefixFeatureGram lambda history T)⁻¹) x)) := by
+  exact det_add_rankOneGram (regularizedPrefixFeatureGram lambda history T)
+    (isUnit_det_regularizedPrefixFeatureGram lambda hlambda history T) x
+
 /-- Positive regularized Grams stay positive definite after a rank-one update. -/
 theorem regularizedFeatureGram_add_rankOneGram_posDef
     {Time : Type v} {Feature : Type u}
@@ -547,6 +772,16 @@ theorem regularizedFeatureGram_add_rankOneGram_posDef
     (regularizedFeatureGram lambda history + rankOneGram x).PosDef := by
   exact Matrix.PosDef.add_posSemidef
     (regularizedFeatureGram_posDef lambda hlambda history)
+    (rankOneGram_posSemidef x)
+
+/-- Positive regularized prefix Grams stay positive definite after a rank-one update. -/
+theorem regularizedPrefixFeatureGram_add_rankOneGram_posDef
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Nat -> Feature -> Real) (T : Nat) (x : Feature -> Real) :
+    (regularizedPrefixFeatureGram lambda history T + rankOneGram x).PosDef := by
+  exact Matrix.PosDef.add_posSemidef
+    (regularizedPrefixFeatureGram_posDef lambda hlambda history T)
     (rankOneGram_posSemidef x)
 
 /-- The determinant after a positive regularized rank-one update is positive. -/
@@ -559,6 +794,16 @@ theorem det_regularizedFeatureGram_add_rankOneGram_pos
   exact Matrix.PosDef.det_pos
     (regularizedFeatureGram_add_rankOneGram_posDef
       lambda hlambda history x)
+
+/-- The determinant after a positive regularized prefix rank-one update is positive. -/
+theorem det_regularizedPrefixFeatureGram_add_rankOneGram_pos
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Nat -> Feature -> Real) (T : Nat) (x : Feature -> Real) :
+    0 < (regularizedPrefixFeatureGram lambda history T + rankOneGram x).det := by
+  exact Matrix.PosDef.det_pos
+    (regularizedPrefixFeatureGram_add_rankOneGram_posDef
+      lambda hlambda history T x)
 
 /-- The scalar rank-one determinant-update factor is positive. -/
 theorem regularizedFeatureGram_rankOne_update_factor_pos
@@ -586,6 +831,31 @@ theorem regularizedFeatureGram_rankOne_update_factor_pos
   exact pos_of_mul_pos_right hmul
     (le_of_lt (regularizedFeatureGram_det_pos lambda hlambda history))
 
+/-- The scalar Nat-prefix rank-one determinant-update factor is positive. -/
+theorem regularizedPrefixFeatureGram_rankOne_update_factor_pos
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Nat -> Feature -> Real) (T : Nat) (x : Feature -> Real) :
+    0 < 1 + dotProduct x
+      (Matrix.mulVec ((regularizedPrefixFeatureGram lambda history T)⁻¹) x) := by
+  set factor := 1 + dotProduct x
+    (Matrix.mulVec ((regularizedPrefixFeatureGram lambda history T)⁻¹) x)
+  have hdet :
+      (regularizedPrefixFeatureGram lambda history T + rankOneGram x).det =
+        (regularizedPrefixFeatureGram lambda history T).det * factor := by
+    simpa [factor] using
+      det_regularizedPrefixFeatureGram_add_rankOneGram
+        lambda hlambda history T x
+  have hnew : 0 <
+      (regularizedPrefixFeatureGram lambda history T + rankOneGram x).det :=
+    det_regularizedPrefixFeatureGram_add_rankOneGram_pos
+      lambda hlambda history T x
+  have hmul : 0 <
+      (regularizedPrefixFeatureGram lambda history T).det * factor := by
+    simpa [hdet] using hnew
+  exact pos_of_mul_pos_right hmul
+    (le_of_lt (regularizedPrefixFeatureGram_det_pos lambda hlambda history T))
+
 /-- Logarithmic one-step determinant recursion for regularized Grams. -/
 theorem log_det_regularizedFeatureGram_add_rankOneGram
     {Time : Type v} {Feature : Type u}
@@ -603,6 +873,23 @@ theorem log_det_regularizedFeatureGram_add_rankOneGram
     (ne_of_gt (regularizedFeatureGram_rankOne_update_factor_pos
       lambda hlambda history x))
 
+/-- Logarithmic one-step determinant recursion for regularized prefix Grams. -/
+theorem log_det_regularizedPrefixFeatureGram_add_rankOneGram
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Nat -> Feature -> Real) (T : Nat) (x : Feature -> Real) :
+    Real.log (regularizedPrefixFeatureGram lambda history T + rankOneGram x).det =
+      Real.log (regularizedPrefixFeatureGram lambda history T).det +
+        Real.log (1 + dotProduct x
+          (Matrix.mulVec
+            ((regularizedPrefixFeatureGram lambda history T)⁻¹) x)) := by
+  rw [det_regularizedPrefixFeatureGram_add_rankOneGram
+    lambda hlambda history T x]
+  exact Real.log_mul
+    (regularizedPrefixFeatureGram_det_ne_zero lambda hlambda history T)
+    (ne_of_gt (regularizedPrefixFeatureGram_rankOne_update_factor_pos
+      lambda hlambda history T x))
+
 /-- Increment form of the logarithmic determinant recursion. -/
 theorem log_det_regularizedFeatureGram_add_rankOneGram_sub
     {Time : Type v} {Feature : Type u}
@@ -616,6 +903,50 @@ theorem log_det_regularizedFeatureGram_add_rankOneGram_sub
   rw [log_det_regularizedFeatureGram_add_rankOneGram
     lambda hlambda history x]
   ring
+
+/-- Increment form of the logarithmic determinant recursion for prefix Grams. -/
+theorem log_det_regularizedPrefixFeatureGram_add_rankOneGram_sub
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Nat -> Feature -> Real) (T : Nat) (x : Feature -> Real) :
+    Real.log (regularizedPrefixFeatureGram lambda history T + rankOneGram x).det -
+        Real.log (regularizedPrefixFeatureGram lambda history T).det =
+      Real.log (1 + dotProduct x
+        (Matrix.mulVec
+          ((regularizedPrefixFeatureGram lambda history T)⁻¹) x)) := by
+  rw [log_det_regularizedPrefixFeatureGram_add_rankOneGram
+    lambda hlambda history T x]
+  ring
+
+/-- Determinant recursion for the concrete prefix update `T -> T + 1`. -/
+theorem det_regularizedPrefixFeatureGram_succ
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Nat -> Feature -> Real) (T : Nat) :
+    (regularizedPrefixFeatureGram lambda history (T + 1)).det =
+      (regularizedPrefixFeatureGram lambda history T).det *
+        (1 + dotProduct (history T)
+          (Matrix.mulVec
+            ((regularizedPrefixFeatureGram lambda history T)⁻¹)
+            (history T))) := by
+  rw [regularizedPrefixFeatureGram_succ]
+  exact det_regularizedPrefixFeatureGram_add_rankOneGram
+    lambda hlambda history T (history T)
+
+/-- Log-det increment recursion for the concrete prefix update `T -> T + 1`. -/
+theorem log_det_regularizedPrefixFeatureGram_succ_sub
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Nat -> Feature -> Real) (T : Nat) :
+    Real.log (regularizedPrefixFeatureGram lambda history (T + 1)).det -
+        Real.log (regularizedPrefixFeatureGram lambda history T).det =
+      Real.log (1 + dotProduct (history T)
+        (Matrix.mulVec
+          ((regularizedPrefixFeatureGram lambda history T)⁻¹)
+          (history T))) := by
+  rw [regularizedPrefixFeatureGram_succ]
+  exact log_det_regularizedPrefixFeatureGram_add_rankOneGram_sub
+    lambda hlambda history T (history T)
 
 /-- Finite forward-difference telescope used by log-det recursions. -/
 theorem sum_range_forward_difference
@@ -652,6 +983,34 @@ theorem sum_range_log_update_factor_eq_log_det_ratio
     _ = Real.log (detSeq T) - Real.log (detSeq 0) := by
       exact sum_range_forward_difference
         (fun t => Real.log (detSeq t)) T
+
+/--
+Concrete finite-horizon log-det telescope for Nat-prefix regularized Grams.
+
+This is the growing-history instantiation of the abstract telescope.  It does
+not prove any determinant-growth upper bound for the resulting ratio.
+-/
+theorem sum_range_log_regularizedPrefixFeatureGram_update_factor_eq_log_det_ratio
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Nat -> Feature -> Real) (T : Nat) :
+    (Finset.range T).sum
+        (fun t => Real.log (1 + dotProduct (history t)
+          (Matrix.mulVec
+            ((regularizedPrefixFeatureGram lambda history t)⁻¹)
+            (history t)))) =
+      Real.log (regularizedPrefixFeatureGram lambda history T).det -
+        Real.log (regularizedPrefixFeatureGram lambda history 0).det := by
+  exact sum_range_log_update_factor_eq_log_det_ratio
+    (fun t => (regularizedPrefixFeatureGram lambda history t).det)
+    (fun t => 1 + dotProduct (history t)
+      (Matrix.mulVec
+        ((regularizedPrefixFeatureGram lambda history t)⁻¹)
+        (history t)))
+    T
+    (fun t _ht =>
+      log_det_regularizedPrefixFeatureGram_succ_sub
+        lambda hlambda history t)
 
 end OFUL
 end BanditRLProof

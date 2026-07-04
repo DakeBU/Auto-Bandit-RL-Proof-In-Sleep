@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T16:58:46+00:00",
+  "generated": "2026-07-04T17:11:43+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -491,6 +491,46 @@
       ],
       "role": "Compiled abstract finite-horizon log-det telescope wrapper for OFUL/LinUCB: packages `sum_t (Phi_{t+1} - Phi_t) = Phi_T - Phi_0` and the corresponding sum of one-step log-update factors into a final log-determinant ratio. This is not yet instantiated with a concrete growing OFUL history process and does not prove determinant-growth inequalities, self-normalized martingale concentration, confidence ellipsoids, or OFUL regret.",
       "mathlib_routes": [
+        "LOCAL-LEAF-OFUL-LOG-DET-UPDATE",
+        "MLIB-FINSET-SUMS"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-OFUL-PREFIX-LOG-DET-TELESCOPE",
+      "leaf_ids": [
+        "OFUL-ELLIPTICAL-POTENTIAL"
+      ],
+      "module": "BanditRLProof.OFULEllipticalPotential",
+      "status": "leanCompiled",
+      "declarations": [
+        "OFUL.prefixFeatureGram",
+        "OFUL.regularizedPrefixFeatureGram",
+        "OFUL.prefixFeatureGram_succ",
+        "OFUL.regularizedPrefixFeatureGram_succ",
+        "OFUL.prefixFeatureGram_isHermitian",
+        "OFUL.regularizedPrefixFeatureGram_isHermitian",
+        "OFUL.prefixFeatureGram_quadraticForm_eq_sum_sq",
+        "OFUL.regularizedPrefixFeatureGram_quadraticForm_eq_sum_sq",
+        "OFUL.prefixFeatureGram_quadraticForm_nonneg",
+        "OFUL.regularizedPrefixFeatureGram_quadraticForm_nonneg",
+        "OFUL.regularizedPrefixFeatureGram_quadraticForm_pos_of_pos_lambda",
+        "OFUL.regularizedPrefixFeatureGram_posDef",
+        "OFUL.regularizedPrefixFeatureGram_det_pos",
+        "OFUL.regularizedPrefixFeatureGram_det_ne_zero",
+        "OFUL.isUnit_det_regularizedPrefixFeatureGram",
+        "OFUL.det_regularizedPrefixFeatureGram_add_rankOneGram",
+        "OFUL.regularizedPrefixFeatureGram_add_rankOneGram_posDef",
+        "OFUL.det_regularizedPrefixFeatureGram_add_rankOneGram_pos",
+        "OFUL.regularizedPrefixFeatureGram_rankOne_update_factor_pos",
+        "OFUL.log_det_regularizedPrefixFeatureGram_add_rankOneGram",
+        "OFUL.log_det_regularizedPrefixFeatureGram_add_rankOneGram_sub",
+        "OFUL.det_regularizedPrefixFeatureGram_succ",
+        "OFUL.log_det_regularizedPrefixFeatureGram_succ_sub",
+        "OFUL.sum_range_log_regularizedPrefixFeatureGram_update_factor_eq_log_det_ratio"
+      ],
+      "role": "Compiled concrete Nat-prefix growing-history log-det telescope for OFUL/LinUCB: defines prefix Grams `sum_{t<T} x_t x_t^T`, proves successor rank-one updates, Hermitian/quadratic-form/PSD/PosDef and determinant side conditions under `0 < lambda`, proves one-step determinant/log-det recursions for `T -> T+1`, and instantiates the abstract finite-horizon log-det telescope to the prefix determinant sequence. This does not prove determinant-growth upper bounds such as elliptical-potential min/log inequalities, self-normalized martingale concentration, confidence ellipsoids, or OFUL regret.",
+      "mathlib_routes": [
+        "LOCAL-LEAF-OFUL-LOG-DET-TELESCOPE",
         "LOCAL-LEAF-OFUL-LOG-DET-UPDATE",
         "MLIB-FINSET-SUMS"
       ]

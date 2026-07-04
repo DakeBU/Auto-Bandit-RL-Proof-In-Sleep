@@ -1327,6 +1327,42 @@ LOCAL_LEAF_CARDS = [
         "mathlib_routes": ["LOCAL-LEAF-OFUL-LOG-DET-UPDATE", "MLIB-FINSET-SUMS"],
     },
     {
+        "id": "LOCAL-LEAF-OFUL-PREFIX-LOG-DET-TELESCOPE",
+        "leaf_ids": [
+            "OFUL-ELLIPTICAL-POTENTIAL",
+        ],
+        "module": "BanditRLProof.OFULEllipticalPotential",
+        "status": "leanCompiled",
+        "declarations": [
+            "OFUL.prefixFeatureGram",
+            "OFUL.regularizedPrefixFeatureGram",
+            "OFUL.prefixFeatureGram_succ",
+            "OFUL.regularizedPrefixFeatureGram_succ",
+            "OFUL.prefixFeatureGram_isHermitian",
+            "OFUL.regularizedPrefixFeatureGram_isHermitian",
+            "OFUL.prefixFeatureGram_quadraticForm_eq_sum_sq",
+            "OFUL.regularizedPrefixFeatureGram_quadraticForm_eq_sum_sq",
+            "OFUL.prefixFeatureGram_quadraticForm_nonneg",
+            "OFUL.regularizedPrefixFeatureGram_quadraticForm_nonneg",
+            "OFUL.regularizedPrefixFeatureGram_quadraticForm_pos_of_pos_lambda",
+            "OFUL.regularizedPrefixFeatureGram_posDef",
+            "OFUL.regularizedPrefixFeatureGram_det_pos",
+            "OFUL.regularizedPrefixFeatureGram_det_ne_zero",
+            "OFUL.isUnit_det_regularizedPrefixFeatureGram",
+            "OFUL.det_regularizedPrefixFeatureGram_add_rankOneGram",
+            "OFUL.regularizedPrefixFeatureGram_add_rankOneGram_posDef",
+            "OFUL.det_regularizedPrefixFeatureGram_add_rankOneGram_pos",
+            "OFUL.regularizedPrefixFeatureGram_rankOne_update_factor_pos",
+            "OFUL.log_det_regularizedPrefixFeatureGram_add_rankOneGram",
+            "OFUL.log_det_regularizedPrefixFeatureGram_add_rankOneGram_sub",
+            "OFUL.det_regularizedPrefixFeatureGram_succ",
+            "OFUL.log_det_regularizedPrefixFeatureGram_succ_sub",
+            "OFUL.sum_range_log_regularizedPrefixFeatureGram_update_factor_eq_log_det_ratio",
+        ],
+        "role": "Compiled concrete Nat-prefix growing-history log-det telescope for OFUL/LinUCB: defines prefix Grams `sum_{t<T} x_t x_t^T`, proves successor rank-one updates, Hermitian/quadratic-form/PSD/PosDef and determinant side conditions under `0 < lambda`, proves one-step determinant/log-det recursions for `T -> T+1`, and instantiates the abstract finite-horizon log-det telescope to the prefix determinant sequence. This does not prove determinant-growth upper bounds such as elliptical-potential min/log inequalities, self-normalized martingale concentration, confidence ellipsoids, or OFUL regret.",
+        "mathlib_routes": ["LOCAL-LEAF-OFUL-LOG-DET-TELESCOPE", "LOCAL-LEAF-OFUL-LOG-DET-UPDATE", "MLIB-FINSET-SUMS"],
+    },
+    {
         "id": "LOCAL-LEAF-CONCENTRATION-SUBGAUSSIAN",
         "leaf_ids": [
             "TAIL-HOEFFDING-BOUNDED",
@@ -6322,7 +6358,8 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- OFUL-REGULARIZED-GRAM-DET-POS is compiled locally as the Mathlib PosDef/determinant bridge for arbitrary finite-history regularized Grams under `0 < lambda`: Hermitian wrappers, PosDef, positive/nonzero determinant, and `IsUnit det`; log-det telescoping, determinant-growth inequalities, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- OFUL-REGULARIZED-GRAM-DET-UPDATE is compiled locally as the arbitrary finite-history regularized-Gram rank-one determinant recursion with the `IsUnit det` side condition discharged from positive regularization; log-det telescoping, determinant-growth inequalities, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- OFUL-LOG-DET-UPDATE is compiled locally as the logarithmic one-step determinant-update wrapper: rank-one PSD, updated determinant positivity, positive update factor, and `log det(V + x x^T) - log det(V) = log(1 + x^T V^{-1} x)`; finite-horizon log-det telescoping, determinant-growth inequalities, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
-    print("- OFUL-LOG-DET-TELESCOPE is compiled locally as an abstract finite-horizon log-det telescope over one-step log-update factors; concrete growing-history instantiation, determinant-growth inequalities, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
+    print("- OFUL-LOG-DET-TELESCOPE is compiled locally as an abstract finite-horizon log-det telescope over one-step log-update factors; concrete Nat-prefix instantiation is tracked separately, and determinant-growth inequalities, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
+    print("- OFUL-PREFIX-LOG-DET-TELESCOPE is compiled locally as a concrete Nat-prefix growing-history regularized-Gram sequence with successor rank-one updates, determinant/log-det recursions, and a finite-horizon log-det telescope; determinant-growth inequalities, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- TAIL-HOEFFDING-BOUNDED is compiled locally as the generic bounded-centered Hoeffding MGF wrapper with an interval variance proxy.")
     print("- TAIL-SUBGAUSS-SUM is compiled locally as the Mathlib-backed independent sub-Gaussian finite-sum tail wrapper.")
     print("- TAIL-SUBGAUSS-DIFF-SUM-IMPORT is compiled locally as the ENNReal-valued independent sub-Gaussian finite-sum tail boundary wrapper.")

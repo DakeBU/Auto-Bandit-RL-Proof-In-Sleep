@@ -16604,4 +16604,42 @@ example (detSeq factor : Nat -> Real) (T : Nat)
   exact OFUL.sum_range_log_update_factor_eq_log_det_ratio
     detSeq factor T hstep
 
+example {Feature : Type}
+    (history : Nat -> Feature -> Real) (T : Nat) :
+    OFUL.prefixFeatureGram history (T + 1) =
+      OFUL.prefixFeatureGram history T + OFUL.rankOneGram (history T) := by
+  exact OFUL.prefixFeatureGram_succ history T
+
+example {Feature : Type} [Fintype Feature] [DecidableEq Feature]
+    (lam : Real) (history : Nat -> Feature -> Real) (T : Nat) :
+    OFUL.regularizedPrefixFeatureGram lam history (T + 1) =
+      OFUL.regularizedPrefixFeatureGram lam history T +
+        OFUL.rankOneGram (history T) := by
+  exact OFUL.regularizedPrefixFeatureGram_succ lam history T
+
+example {Feature : Type} [Fintype Feature] [DecidableEq Feature]
+    (lam : Real) (hlam : 0 < lam)
+    (history : Nat -> Feature -> Real) (T : Nat) :
+    Real.log (OFUL.regularizedPrefixFeatureGram lam history (T + 1)).det -
+        Real.log (OFUL.regularizedPrefixFeatureGram lam history T).det =
+      Real.log (1 + dotProduct (history T)
+        (Matrix.mulVec
+          ((OFUL.regularizedPrefixFeatureGram lam history T)⁻¹)
+          (history T))) := by
+  exact OFUL.log_det_regularizedPrefixFeatureGram_succ_sub
+    lam hlam history T
+
+example {Feature : Type} [Fintype Feature] [DecidableEq Feature]
+    (lam : Real) (hlam : 0 < lam)
+    (history : Nat -> Feature -> Real) (T : Nat) :
+    (Finset.range T).sum
+        (fun t => Real.log (1 + dotProduct (history t)
+          (Matrix.mulVec
+            ((OFUL.regularizedPrefixFeatureGram lam history t)⁻¹)
+            (history t)))) =
+      Real.log (OFUL.regularizedPrefixFeatureGram lam history T).det -
+        Real.log (OFUL.regularizedPrefixFeatureGram lam history 0).det := by
+  exact OFUL.sum_range_log_regularizedPrefixFeatureGram_update_factor_eq_log_det_ratio
+    lam hlam history T
+
 end BanditRLProof
