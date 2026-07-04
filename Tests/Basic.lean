@@ -15151,6 +15151,58 @@ example {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
   exact UCB.measure_finiteHorizonConfidenceBadEvent_le_tail_sum
     mu trueMean empiricalMean radius upperTail lowerTail T hupper hlower
 
+example {Omega Arm : Type}
+    (trueMean : Arm -> Real) (empiricalMean : Omega -> Arm -> Real)
+    (radius : Arm -> Real) (arm : Arm) :
+    UCB.upperConfidenceBad trueMean empiricalMean radius arm ⊆
+      {omega | radius arm <= |empiricalMean omega arm - trueMean arm|} := by
+  exact UCB.upperConfidenceBad_subset_absDeviation
+    trueMean empiricalMean radius arm
+
+example {Omega Arm : Type}
+    (trueMean : Arm -> Real) (empiricalMean : Omega -> Arm -> Real)
+    (radius : Arm -> Real) (arm : Arm) :
+    UCB.lowerConfidenceBad trueMean empiricalMean radius arm ⊆
+      {omega | radius arm <= |empiricalMean omega arm - trueMean arm|} := by
+  exact UCB.lowerConfidenceBad_subset_absDeviation
+    trueMean empiricalMean radius arm
+
+example {Omega Arm : Type} [MeasurableSpace Omega]
+    (mu : MeasureTheory.Measure Omega)
+    (trueMean : Arm -> Real) (empiricalMean : Omega -> Arm -> Real)
+    (radius : Arm -> Real) (arm : Arm) :
+    mu (UCB.upperConfidenceBad trueMean empiricalMean radius arm) <=
+      mu {omega | radius arm <= |empiricalMean omega arm - trueMean arm|} := by
+  exact UCB.measure_upperConfidenceBad_le_absDeviation
+    mu trueMean empiricalMean radius arm
+
+example {Omega Arm : Type} [MeasurableSpace Omega]
+    (mu : MeasureTheory.Measure Omega)
+    (trueMean : Arm -> Real) (empiricalMean : Omega -> Arm -> Real)
+    (radius : Arm -> Real) (arm : Arm) :
+    mu (UCB.lowerConfidenceBad trueMean empiricalMean radius arm) <=
+      mu {omega | radius arm <= |empiricalMean omega arm - trueMean arm|} := by
+  exact UCB.measure_lowerConfidenceBad_le_absDeviation
+    mu trueMean empiricalMean radius arm
+
+example {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
+    (mu : MeasureTheory.Measure Omega)
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (radius : Nat -> Arm -> Real)
+    (tail : Nat -> Arm -> ENNReal) (T : Nat)
+    (htail : forall t arm, t < T ->
+      mu {omega | radius t arm <=
+        |empiricalMean omega t arm - trueMean arm|} <= tail t arm) :
+    mu (UCB.finiteHorizonConfidenceBadEvent
+        trueMean empiricalMean radius T) <=
+      (Finset.range T).sum
+        (fun t =>
+          (Finset.univ : Finset Arm).sum
+            (fun arm => tail t arm + tail t arm)) := by
+  exact UCB.measure_finiteHorizonConfidenceBadEvent_le_absDeviation_tail_sum
+    mu trueMean empiricalMean radius tail T htail
+
 def twoArmModel : FiniteBanditModel 2 where
   hK := by decide
   mean := fun arm => if arm.val = 0 then 1 else 0

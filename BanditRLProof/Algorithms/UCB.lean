@@ -361,6 +361,104 @@ theorem measure_finiteHorizonConfidenceBadEvent_le_tail_sum
             (hupper t arm (Finset.mem_range.mp ht))
             (hlower t arm (Finset.mem_range.mp ht)))))
 
+/--
+An upper-confidence failure implies an absolute empirical-mean deviation at
+least as large as the radius.
+-/
+theorem upperConfidenceBad_subset_absDeviation
+    {Omega Arm : Type}
+    (trueMean : Arm -> Real) (empiricalMean : Omega -> Arm -> Real)
+    (radius : Arm -> Real) (arm : Arm) :
+    upperConfidenceBad trueMean empiricalMean radius arm ⊆
+      {omega | radius arm <= |empiricalMean omega arm - trueMean arm|} := by
+  intro omega hbad
+  have hrad :
+      radius arm <= trueMean arm - empiricalMean omega arm := by
+    dsimp [upperConfidenceBad, confidenceScore] at hbad
+    linarith
+  have habs :
+      trueMean arm - empiricalMean omega arm <=
+        |empiricalMean omega arm - trueMean arm| := by
+    have h := neg_le_abs (empiricalMean omega arm - trueMean arm)
+    linarith
+  exact hrad.trans habs
+
+/--
+A lower-confidence failure implies an absolute empirical-mean deviation at
+least as large as the radius.
+-/
+theorem lowerConfidenceBad_subset_absDeviation
+    {Omega Arm : Type}
+    (trueMean : Arm -> Real) (empiricalMean : Omega -> Arm -> Real)
+    (radius : Arm -> Real) (arm : Arm) :
+    lowerConfidenceBad trueMean empiricalMean radius arm ⊆
+      {omega | radius arm <= |empiricalMean omega arm - trueMean arm|} := by
+  intro omega hbad
+  have hrad :
+      radius arm <= empiricalMean omega arm - trueMean arm := by
+    dsimp [lowerConfidenceBad] at hbad
+    linarith
+  exact hrad.trans (le_abs_self (empiricalMean omega arm - trueMean arm))
+
+/-- Measure monotonicity form of `upperConfidenceBad_subset_absDeviation`. -/
+theorem measure_upperConfidenceBad_le_absDeviation
+    {Omega Arm : Type} [MeasurableSpace Omega]
+    (mu : Measure Omega)
+    (trueMean : Arm -> Real) (empiricalMean : Omega -> Arm -> Real)
+    (radius : Arm -> Real) (arm : Arm) :
+    mu (upperConfidenceBad trueMean empiricalMean radius arm) <=
+      mu {omega | radius arm <= |empiricalMean omega arm - trueMean arm|} := by
+  exact measure_mono
+    (upperConfidenceBad_subset_absDeviation
+      trueMean empiricalMean radius arm)
+
+/-- Measure monotonicity form of `lowerConfidenceBad_subset_absDeviation`. -/
+theorem measure_lowerConfidenceBad_le_absDeviation
+    {Omega Arm : Type} [MeasurableSpace Omega]
+    (mu : Measure Omega)
+    (trueMean : Arm -> Real) (empiricalMean : Omega -> Arm -> Real)
+    (radius : Arm -> Real) (arm : Arm) :
+    mu (lowerConfidenceBad trueMean empiricalMean radius arm) <=
+      mu {omega | radius arm <= |empiricalMean omega arm - trueMean arm|} := by
+  exact measure_mono
+    (lowerConfidenceBad_subset_absDeviation
+      trueMean empiricalMean radius arm)
+
+/--
+Finite-horizon UCB confidence bad-event bound from absolute-deviation tails.
+
+This is the UCB-facing adapter for concentration inequalities that bound
+`mu {omega | radius <= |empiricalMean - trueMean|}`.  The same absolute
+deviation tail controls both the upper and lower confidence failures.
+-/
+theorem measure_finiteHorizonConfidenceBadEvent_le_absDeviation_tail_sum
+    {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
+    (mu : Measure Omega)
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (radius : Nat -> Arm -> Real)
+    (tail : Nat -> Arm -> ENNReal) (T : Nat)
+    (htail : forall t arm, t < T ->
+      mu {omega | radius t arm <=
+        |empiricalMean omega t arm - trueMean arm|} <= tail t arm) :
+    mu (finiteHorizonConfidenceBadEvent trueMean empiricalMean radius T) <=
+      (Finset.range T).sum
+        (fun t =>
+          (Finset.univ : Finset Arm).sum
+            (fun arm => tail t arm + tail t arm)) := by
+  exact measure_finiteHorizonConfidenceBadEvent_le_tail_sum
+    mu trueMean empiricalMean radius tail tail T
+    (fun t arm ht =>
+      (measure_upperConfidenceBad_le_absDeviation
+        mu trueMean
+        (fun omega arm => empiricalMean omega t arm)
+        (radius t) arm).trans (htail t arm ht))
+    (fun t arm ht =>
+      (measure_lowerConfidenceBad_le_absDeviation
+        mu trueMean
+        (fun omega arm => empiricalMean omega t arm)
+        (radius t) arm).trans (htail t arm ht))
+
 /-- The proof-DAG leaves usually needed for UCB regret formalization. -/
 def obligationNames : List String :=
   [ "initial_round_robin_count_positive"

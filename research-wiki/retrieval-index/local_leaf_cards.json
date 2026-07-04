@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T18:57:28+00:00",
+  "generated": "2026-07-04T19:03:10+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -213,6 +213,30 @@
         "LOCAL-LEAF-UCB-FINITE-HORIZON-CONFIDENCE-EVENT",
         "LOCAL-LEAF-TAIL-SUMMABILITY-UCB",
         "MLIB-FINSET-SUMS"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-UCB-ABS-DEVIATION-TAIL-ADAPTER",
+      "leaf_ids": [
+        "UCB-GOOD-EVENT-GAP-CONSUMER",
+        "TAIL-SUMMABILITY-UCB",
+        "BRL-OP-CONCENTRATION-001"
+      ],
+      "module": "BanditRLProof.Algorithms.UCB",
+      "status": "leanCompiled",
+      "declarations": [
+        "UCB.upperConfidenceBad_subset_absDeviation",
+        "UCB.lowerConfidenceBad_subset_absDeviation",
+        "UCB.measure_upperConfidenceBad_le_absDeviation",
+        "UCB.measure_lowerConfidenceBad_le_absDeviation",
+        "UCB.measure_finiteHorizonConfidenceBadEvent_le_absDeviation_tail_sum"
+      ],
+      "role": "Compiled UCB absolute-deviation tail adapter: upper and lower confidence failures are subsets of the absolute empirical-mean deviation event `radius <= |empiricalMean - trueMean|`; measure monotonicity exposes upper/lower failure bounds from absolute-deviation bounds, and the finite-horizon confidence bad event is bounded by the double sum of a shared absolute-deviation tail budget. This aligns the UCB event layer with Chebyshev/sub-Gaussian concentration event shapes; concrete empirical-mean construction, concentration tail production, log/sqrt radius formulas, pull-count bounds, and final UCB regret remain separate.",
+      "mathlib_routes": [
+        "LOCAL-LEAF-UCB-FINITE-HORIZON-CONFIDENCE-TAIL-CONSUMER",
+        "TAIL-VARIANCE-ROBUST",
+        "TAIL-SUBGAUSS-SUM",
+        "TAIL-COND-SUBGAUSS"
       ]
     },
     {
