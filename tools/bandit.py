@@ -1397,6 +1397,21 @@ LOCAL_LEAF_CARDS = [
         "mathlib_routes": ["LOCAL-LEAF-OFUL-PREFIX-LOG-DET-BASE", "Mathlib.Analysis.SpecialFunctions.Log.Basic", "MLIB-FINSET-SUMS"],
     },
     {
+        "id": "LOCAL-LEAF-OFUL-INVERSE-QUADRATIC-NONNEG-CONSUMER",
+        "leaf_ids": [
+            "OFUL-ELLIPTICAL-POTENTIAL",
+        ],
+        "module": "BanditRLProof.OFULEllipticalPotential",
+        "status": "leanCompiled",
+        "declarations": [
+            "OFUL.regularizedPrefixFeatureGram_inv_posDef",
+            "OFUL.regularizedPrefixFeatureGram_inv_quadratic_nonneg",
+            "OFUL.sum_range_min_prefix_update_le_two_log_det_sub_base_of_pos_lambda",
+        ],
+        "role": "Compiled PosDef-inverse consumer for the OFUL/LinUCB determinant-growth route: uses Mathlib `Matrix.PosDef.inv` and `PosSemidef.dotProduct_mulVec_nonneg` to prove `0 <= x^T V_t^{-1} x` for Nat-prefix regularized Grams under `0 < lambda`, then removes the explicit inverse-quadratic nonnegativity contract from the clipped min/log determinant-growth bound. It does not prove determinant upper bounds, dimension/radius simplifications, self-normalized martingale concentration, confidence ellipsoids, or OFUL regret.",
+        "mathlib_routes": ["LOCAL-LEAF-OFUL-DETERMINANT-GROWTH-CONSUMER", "LOCAL-LEAF-OFUL-PREFIX-LOG-DET-BASE", "Mathlib.Analysis.Matrix.PosDef"],
+    },
+    {
         "id": "LOCAL-LEAF-CONCENTRATION-SUBGAUSSIAN",
         "leaf_ids": [
             "TAIL-HOEFFDING-BOUNDED",
@@ -6395,7 +6410,8 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- OFUL-LOG-DET-TELESCOPE is compiled locally as an abstract finite-horizon log-det telescope over one-step log-update factors; concrete Nat-prefix instantiation is tracked separately, and determinant-growth inequalities, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- OFUL-PREFIX-LOG-DET-TELESCOPE is compiled locally as a concrete Nat-prefix growing-history regularized-Gram sequence with successor rank-one updates, determinant/log-det recursions, and a finite-horizon log-det telescope; determinant-growth inequalities, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- OFUL-PREFIX-LOG-DET-BASE is compiled locally as the scalar-base endpoint wrapper for the concrete Nat-prefix log-det telescope: `V_0 = lambda I`, `det V_0 = lambda^d`, and the telescope endpoint rewrites to `log det(V_T) - log(lambda^d)`; determinant-growth inequalities, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
-    print("- OFUL-DETERMINANT-GROWTH-CONSUMER is compiled locally as the first min/log determinant-growth consumer: `sum_t min(1,u_t) <= 2 * (log det(V_T) - log(lambda^d))` for Nat-prefix update scalars under explicit `0 <= u_t`; discharging inverse-quadratic nonnegativity, determinant upper bounds, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
+    print("- OFUL-DETERMINANT-GROWTH-CONSUMER is compiled locally as the first min/log determinant-growth consumer: `sum_t min(1,u_t) <= 2 * (log det(V_T) - log(lambda^d))` for Nat-prefix update scalars under explicit `0 <= u_t`; determinant upper bounds, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
+    print("- OFUL-INVERSE-QUADRATIC-NONNEG-CONSUMER is compiled locally as the PosDef-inverse consumer that proves `0 <= x_t^T V_t^{-1} x_t` for regularized Nat-prefix Grams and removes the explicit nonnegativity contract from the min/log determinant-growth bound; determinant upper bounds, dimension/radius simplifications, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- TAIL-HOEFFDING-BOUNDED is compiled locally as the generic bounded-centered Hoeffding MGF wrapper with an interval variance proxy.")
     print("- TAIL-SUBGAUSS-SUM is compiled locally as the Mathlib-backed independent sub-Gaussian finite-sum tail wrapper.")
     print("- TAIL-SUBGAUSS-DIFF-SUM-IMPORT is compiled locally as the ENNReal-valued independent sub-Gaussian finite-sum tail boundary wrapper.")

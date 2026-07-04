@@ -692,6 +692,35 @@ theorem regularizedPrefixFeatureGram_posDef
   exact regularizedPrefixFeatureGram_quadraticForm_pos_of_pos_lambda
     lambda hlambda x T y (exists_coord_ne_zero_of_ne_zero y hy)
 
+/-- Inverses of regularized Nat-prefix Gram matrices are positive definite. -/
+theorem regularizedPrefixFeatureGram_inv_posDef
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (x : Nat -> Feature -> Real) (T : Nat) :
+    ((regularizedPrefixFeatureGram lambda x T)⁻¹).PosDef := by
+  exact Matrix.PosDef.inv
+    (regularizedPrefixFeatureGram_posDef lambda hlambda x T)
+
+/--
+Inverse-quadratic scalars of regularized Nat-prefix Gram matrices are
+nonnegative.
+-/
+theorem regularizedPrefixFeatureGram_inv_quadratic_nonneg
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (x : Nat -> Feature -> Real) (T : Nat) (y : Feature -> Real) :
+    0 <= dotProduct y
+      (Matrix.mulVec ((regularizedPrefixFeatureGram lambda x T)⁻¹) y) := by
+  have hsemidef :
+      ((regularizedPrefixFeatureGram lambda x T)⁻¹).PosSemidef :=
+    Matrix.PosDef.posSemidef
+      (regularizedPrefixFeatureGram_inv_posDef lambda hlambda x T)
+  have hnonneg := hsemidef.dotProduct_mulVec_nonneg y
+  have hstar : star y = y := by
+    funext i
+    simp
+  simpa [hstar] using hnonneg
+
 /-- Regularized finite-history Gram matrices have positive determinant. -/
 theorem regularizedFeatureGram_det_pos
     {Time : Type v} {Feature : Type u}
@@ -1159,6 +1188,28 @@ theorem sum_range_min_prefix_update_le_two_log_det_sub_base
   rw [sum_range_log_regularizedPrefixFeatureGram_update_factor_eq_log_det_sub_base
     lambda hlambda history T] at hsum
   exact hsum
+
+/--
+Concrete prefix determinant-growth consumer with inverse-quadratic
+nonnegativity discharged from the positive-definite inverse of the
+regularized Gram matrix.
+-/
+theorem sum_range_min_prefix_update_le_two_log_det_sub_base_of_pos_lambda
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Nat -> Feature -> Real) (T : Nat) :
+    (Finset.range T).sum
+        (fun t => min 1 (dotProduct (history t)
+          (Matrix.mulVec
+            ((regularizedPrefixFeatureGram lambda history t)⁻¹)
+            (history t)))) <=
+      2 * (Real.log (regularizedPrefixFeatureGram lambda history T).det -
+        Real.log (lambda ^ Fintype.card Feature)) := by
+  exact sum_range_min_prefix_update_le_two_log_det_sub_base
+    lambda hlambda history T
+    (fun t _ht =>
+      regularizedPrefixFeatureGram_inv_quadratic_nonneg
+        lambda hlambda history t (history t))
 
 end OFUL
 end BanditRLProof

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T17:25:44+00:00",
+  "generated": "2026-07-04T17:31:46+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -574,6 +574,25 @@
         "LOCAL-LEAF-OFUL-PREFIX-LOG-DET-BASE",
         "Mathlib.Analysis.SpecialFunctions.Log.Basic",
         "MLIB-FINSET-SUMS"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-OFUL-INVERSE-QUADRATIC-NONNEG-CONSUMER",
+      "leaf_ids": [
+        "OFUL-ELLIPTICAL-POTENTIAL"
+      ],
+      "module": "BanditRLProof.OFULEllipticalPotential",
+      "status": "leanCompiled",
+      "declarations": [
+        "OFUL.regularizedPrefixFeatureGram_inv_posDef",
+        "OFUL.regularizedPrefixFeatureGram_inv_quadratic_nonneg",
+        "OFUL.sum_range_min_prefix_update_le_two_log_det_sub_base_of_pos_lambda"
+      ],
+      "role": "Compiled PosDef-inverse consumer for the OFUL/LinUCB determinant-growth route: uses Mathlib `Matrix.PosDef.inv` and `PosSemidef.dotProduct_mulVec_nonneg` to prove `0 <= x^T V_t^{-1} x` for Nat-prefix regularized Grams under `0 < lambda`, then removes the explicit inverse-quadratic nonnegativity contract from the clipped min/log determinant-growth bound. It does not prove determinant upper bounds, dimension/radius simplifications, self-normalized martingale concentration, confidence ellipsoids, or OFUL regret.",
+      "mathlib_routes": [
+        "LOCAL-LEAF-OFUL-DETERMINANT-GROWTH-CONSUMER",
+        "LOCAL-LEAF-OFUL-PREFIX-LOG-DET-BASE",
+        "Mathlib.Analysis.Matrix.PosDef"
       ]
     },
     {
