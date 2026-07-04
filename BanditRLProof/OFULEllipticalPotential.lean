@@ -2,6 +2,7 @@ import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.Order.Field.Basic
 import Mathlib.Data.Matrix.Basic
 import Mathlib.Data.Real.Basic
+import Mathlib.LinearAlgebra.Matrix.SchurComplement
 import Mathlib.Tactic.Ring
 
 /-!
@@ -26,6 +27,65 @@ universe u v
 def rankOneGram {Feature : Type u}
     (x : Feature -> Real) : Matrix Feature Feature Real :=
   fun i j => x i * x j
+
+/-- The local rank-one Gram matrix is Mathlib's column-row product shape. -/
+theorem rankOneGram_eq_replicateCol_mul_replicateRow
+    {Feature : Type u} [Fintype Feature]
+    (x : Feature -> Real) :
+    rankOneGram x =
+      Matrix.replicateCol Unit x * Matrix.replicateRow Unit x := by
+  ext i j
+  simp [rankOneGram, Matrix.mul_apply]
+
+/--
+Rank-one determinant lemma at the identity, specialized to feature Gram
+updates.
+-/
+theorem det_one_add_rankOneGram
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (x : Feature -> Real) :
+    (1 + rankOneGram x).det = 1 + dotProduct x x := by
+  rw [rankOneGram_eq_replicateCol_mul_replicateRow]
+  simpa using
+    Matrix.det_one_add_replicateCol_mul_replicateRow (ι := Unit)
+      (u := x) (v := x)
+
+/--
+The one-dimensional determinant factor in the rank-one matrix determinant
+lemma is the scalar `1 + x^T A^{-1} x`.
+-/
+theorem det_rankOne_update_factor_eq_one_add_dotProduct_inv_mulVec
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (A : Matrix Feature Feature Real) (x : Feature -> Real) :
+    (1 + Matrix.replicateRow Unit x * A⁻¹ *
+        Matrix.replicateCol Unit x).det =
+      1 + dotProduct x (Matrix.mulVec (A⁻¹) x) := by
+  rw [Matrix.det_unique]
+  simp [Matrix.mul_apply, dotProduct, Matrix.mulVec, Finset.sum_mul]
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro i _hi
+  rw [Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro j _hj
+  ring
+
+/--
+Rank-one matrix determinant lemma in OFUL feature notation.
+
+The invertibility side condition is kept as Mathlib's `IsUnit A.det`, matching
+the upstream Schur-complement API.
+-/
+theorem det_add_rankOneGram
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (A : Matrix Feature Feature Real) (hA : IsUnit A.det)
+    (x : Feature -> Real) :
+    (A + rankOneGram x).det =
+      A.det * (1 + dotProduct x (Matrix.mulVec (A⁻¹) x)) := by
+  rw [rankOneGram_eq_replicateCol_mul_replicateRow]
+  rw [Matrix.det_add_replicateCol_mul_replicateRow (ι := Unit)
+    (A := A) hA x x]
+  rw [det_rankOne_update_factor_eq_one_add_dotProduct_inv_mulVec]
 
 /-- Quadratic form associated with a finite real matrix. -/
 noncomputable def quadraticForm {Feature : Type u} [Fintype Feature]

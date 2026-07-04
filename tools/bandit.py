@@ -1197,6 +1197,22 @@ LOCAL_LEAF_CARDS = [
         "mathlib_routes": ["MLIB-CONVEX-LINALG", "MLIB-FINSET-SUMS", "Mathlib.Data.Matrix.Basic"],
     },
     {
+        "id": "LOCAL-LEAF-OFUL-RANKONE-DET-UPDATE",
+        "leaf_ids": [
+            "OFUL-ELLIPTICAL-POTENTIAL",
+        ],
+        "module": "BanditRLProof.OFULEllipticalPotential",
+        "status": "leanCompiled",
+        "declarations": [
+            "OFUL.rankOneGram_eq_replicateCol_mul_replicateRow",
+            "OFUL.det_one_add_rankOneGram",
+            "OFUL.det_rankOne_update_factor_eq_one_add_dotProduct_inv_mulVec",
+            "OFUL.det_add_rankOneGram",
+        ],
+        "role": "Compiled Mathlib Schur-complement determinant-update wrapper for OFUL/LinUCB: bridges the local rank-one Gram matrix to Mathlib's replicateCol/replicateRow shape, proves `det (1 + x x^T) = 1 + x^T x`, and packages the invertible-base rank-one update `det (A + x x^T) = det A * (1 + x^T A^{-1} x)` under Mathlib's `IsUnit A.det` side condition. This does not prove positive definiteness/invertibility of regularized Gram matrices, log-determinant telescoping, determinant growth inequalities, self-normalized martingale concentration, confidence ellipsoids, or OFUL regret.",
+        "mathlib_routes": ["Mathlib.LinearAlgebra.Matrix.SchurComplement", "LOCAL-LEAF-OFUL-GRAM-PSD", "MLIB-CONVEX-LINALG"],
+    },
+    {
         "id": "LOCAL-LEAF-CONCENTRATION-SUBGAUSSIAN",
         "leaf_ids": [
             "TAIL-HOEFFDING-BOUNDED",
@@ -6185,6 +6201,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- FTRL-ONE-STEP is compiled locally as a deterministic finite-action regularized-objective minimizer wrapper yielding the one-step linear-loss inequality under eta > 0; convexity, minimizer existence, Tsallis regularizer, stability/penalty, and regret remain separate.")
     print("- TSALLIS-REGULARIZER is compiled locally as a finite-simplex Real.rpow power-sum/entropy/negative-entropy regularizer surface with denominator and nonnegative-power-sum well-definedness facts; convexity, stability/penalty, self-bounding, learning-rate, and regret remain separate.")
     print("- OFUL-GRAM-PSD is compiled locally as a finite-dimensional Gram quadratic-form wrapper: rank-one forms are squared projections and finite-history forms are sums of squared projections; determinant growth, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
+    print("- OFUL-RANKONE-DET-UPDATE is compiled locally as a Mathlib Schur-complement wrapper for rank-one feature determinant updates; regularized Gram invertibility, log-det telescoping, determinant-growth inequalities, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- TAIL-HOEFFDING-BOUNDED is compiled locally as the generic bounded-centered Hoeffding MGF wrapper with an interval variance proxy.")
     print("- TAIL-SUBGAUSS-SUM is compiled locally as the Mathlib-backed independent sub-Gaussian finite-sum tail wrapper.")
     print("- TAIL-SUBGAUSS-DIFF-SUM-IMPORT is compiled locally as the ENNReal-valued independent sub-Gaussian finite-sum tail boundary wrapper.")

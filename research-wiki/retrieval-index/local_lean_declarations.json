@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T15:54:48+00:00",
+  "generated": "2026-07-04T16:04:05+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -4534,15 +4534,47 @@
       "name": "rankOneGram",
       "full_name": "BanditRLProof.OFUL.rankOneGram",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 26,
+      "line": 27,
       "statement": "def rankOneGram {Feature : Type u} (x : Feature -> Real) : Matrix Feature Feature Real :="
+    },
+    {
+      "kind": "theorem",
+      "name": "rankOneGram_eq_replicateCol_mul_replicateRow",
+      "full_name": "BanditRLProof.OFUL.rankOneGram_eq_replicateCol_mul_replicateRow",
+      "file": "BanditRLProof/OFULEllipticalPotential.lean",
+      "line": 32,
+      "statement": "theorem rankOneGram_eq_replicateCol_mul_replicateRow {Feature : Type u} [Fintype Feature] (x : Feature -> Real) : rankOneGram x = Matrix.replicateCol Unit x * Matrix.replicateRow Unit x"
+    },
+    {
+      "kind": "theorem",
+      "name": "det_one_add_rankOneGram",
+      "full_name": "BanditRLProof.OFUL.det_one_add_rankOneGram",
+      "file": "BanditRLProof/OFULEllipticalPotential.lean",
+      "line": 44,
+      "statement": "theorem det_one_add_rankOneGram {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (x : Feature -> Real) : (1 + rankOneGram x).det = 1 + dotProduct x x"
+    },
+    {
+      "kind": "theorem",
+      "name": "det_rankOne_update_factor_eq_one_add_dotProduct_inv_mulVec",
+      "full_name": "BanditRLProof.OFUL.det_rankOne_update_factor_eq_one_add_dotProduct_inv_mulVec",
+      "file": "BanditRLProof/OFULEllipticalPotential.lean",
+      "line": 57,
+      "statement": "theorem det_rankOne_update_factor_eq_one_add_dotProduct_inv_mulVec {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (A : Matrix Feature Feature Real) (x : Feature -> Real) : (1 + Matrix.replicateRow Unit x * A\u207b\u00b9 * Matrix.replicateCol Unit x).det = 1 + dotProduct x (Matrix.mulVec (A\u207b\u00b9) x)"
+    },
+    {
+      "kind": "theorem",
+      "name": "det_add_rankOneGram",
+      "full_name": "BanditRLProof.OFUL.det_add_rankOneGram",
+      "file": "BanditRLProof/OFULEllipticalPotential.lean",
+      "line": 79,
+      "statement": "theorem det_add_rankOneGram {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (A : Matrix Feature Feature Real) (hA : IsUnit A.det) (x : Feature -> Real) : (A + rankOneGram x).det = A.det * (1 + dotProduct x (Matrix.mulVec (A\u207b\u00b9) x))"
     },
     {
       "kind": "def",
       "name": "quadraticForm",
       "full_name": "BanditRLProof.OFUL.quadraticForm",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 31,
+      "line": 91,
       "statement": "noncomputable def quadraticForm {Feature : Type u} [Fintype Feature] (A : Matrix Feature Feature Real) (y : Feature -> Real) : Real :="
     },
     {
@@ -4550,7 +4582,7 @@
       "name": "featureGram",
       "full_name": "BanditRLProof.OFUL.featureGram",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 38,
+      "line": 98,
       "statement": "noncomputable def featureGram {Time : Type v} {Feature : Type u} [Fintype Time] (x : Time -> Feature -> Real) : Matrix Feature Feature Real :="
     },
     {
@@ -4558,7 +4590,7 @@
       "name": "rankOneGram_quadraticForm_eq_sq",
       "full_name": "BanditRLProof.OFUL.rankOneGram_quadraticForm_eq_sq",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 48,
+      "line": 108,
       "statement": "theorem rankOneGram_quadraticForm_eq_sq {Feature : Type u} [Fintype Feature] (x y : Feature -> Real) : quadraticForm (rankOneGram x) y = ((Finset.univ : Finset Feature).sum (fun i => x i * y i)) ^ 2"
     },
     {
@@ -4566,7 +4598,7 @@
       "name": "rankOneGram_quadraticForm_nonneg",
       "full_name": "BanditRLProof.OFUL.rankOneGram_quadraticForm_nonneg",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 92,
+      "line": 152,
       "statement": "theorem rankOneGram_quadraticForm_nonneg {Feature : Type u} [Fintype Feature] (x y : Feature -> Real) : 0 <= quadraticForm (rankOneGram x) y"
     },
     {
@@ -4574,7 +4606,7 @@
       "name": "featureGram_quadraticForm_eq_sum_sq",
       "full_name": "BanditRLProof.OFUL.featureGram_quadraticForm_eq_sum_sq",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 103,
+      "line": 163,
       "statement": "theorem featureGram_quadraticForm_eq_sum_sq {Time : Type v} {Feature : Type u} [Fintype Time] [Fintype Feature] (x : Time -> Feature -> Real) (y : Feature -> Real) : quadraticForm (featureGram x) y = (Finset.univ : Finset Time).sum (fun t => ((Finset.univ : Finset Feature).sum (fun i => x t i * y i)) ^ 2)"
     },
     {
@@ -4582,7 +4614,7 @@
       "name": "featureGram_quadraticForm_nonneg",
       "full_name": "BanditRLProof.OFUL.featureGram_quadraticForm_nonneg",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 155,
+      "line": 215,
       "statement": "theorem featureGram_quadraticForm_nonneg {Time : Type v} {Feature : Type u} [Fintype Time] [Fintype Feature] (x : Time -> Feature -> Real) (y : Feature -> Real) : 0 <= quadraticForm (featureGram x) y"
     },
     {

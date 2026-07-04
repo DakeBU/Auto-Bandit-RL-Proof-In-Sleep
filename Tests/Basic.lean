@@ -16390,4 +16390,22 @@ example {Time Feature : Type} [Fintype Time] [Fintype Feature]
     0 <= OFUL.quadraticForm (OFUL.featureGram x) y := by
   exact OFUL.featureGram_quadraticForm_nonneg x y
 
+example {Feature : Type} [Fintype Feature]
+    (x : Feature -> Real) :
+    OFUL.rankOneGram x =
+      Matrix.replicateCol Unit x * Matrix.replicateRow Unit x := by
+  exact OFUL.rankOneGram_eq_replicateCol_mul_replicateRow x
+
+example {Feature : Type} [Fintype Feature] [DecidableEq Feature]
+    (x : Feature -> Real) :
+    (1 + OFUL.rankOneGram x).det = 1 + dotProduct x x := by
+  exact OFUL.det_one_add_rankOneGram x
+
+example {Feature : Type} [Fintype Feature] [DecidableEq Feature]
+    (A : Matrix Feature Feature Real) (hA : IsUnit A.det)
+    (x : Feature -> Real) :
+    (A + OFUL.rankOneGram x).det =
+      A.det * (1 + dotProduct x (Matrix.mulVec (A⁻¹) x)) := by
+  exact OFUL.det_add_rankOneGram A hA x
+
 end BanditRLProof

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T15:54:48+00:00",
+  "generated": "2026-07-04T16:04:05+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -328,6 +328,26 @@
         "MLIB-CONVEX-LINALG",
         "MLIB-FINSET-SUMS",
         "Mathlib.Data.Matrix.Basic"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-OFUL-RANKONE-DET-UPDATE",
+      "leaf_ids": [
+        "OFUL-ELLIPTICAL-POTENTIAL"
+      ],
+      "module": "BanditRLProof.OFULEllipticalPotential",
+      "status": "leanCompiled",
+      "declarations": [
+        "OFUL.rankOneGram_eq_replicateCol_mul_replicateRow",
+        "OFUL.det_one_add_rankOneGram",
+        "OFUL.det_rankOne_update_factor_eq_one_add_dotProduct_inv_mulVec",
+        "OFUL.det_add_rankOneGram"
+      ],
+      "role": "Compiled Mathlib Schur-complement determinant-update wrapper for OFUL/LinUCB: bridges the local rank-one Gram matrix to Mathlib's replicateCol/replicateRow shape, proves `det (1 + x x^T) = 1 + x^T x`, and packages the invertible-base rank-one update `det (A + x x^T) = det A * (1 + x^T A^{-1} x)` under Mathlib's `IsUnit A.det` side condition. This does not prove positive definiteness/invertibility of regularized Gram matrices, log-determinant telescoping, determinant growth inequalities, self-normalized martingale concentration, confidence ellipsoids, or OFUL regret.",
+      "mathlib_routes": [
+        "Mathlib.LinearAlgebra.Matrix.SchurComplement",
+        "LOCAL-LEAF-OFUL-GRAM-PSD",
+        "MLIB-CONVEX-LINALG"
       ]
     },
     {
