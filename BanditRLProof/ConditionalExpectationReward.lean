@@ -68,6 +68,108 @@ theorem condExp_eq_zero_of_condExpKernel_integral_eq_zero
   exact ae_eq_of_ae_eq_trim h_trim_zero
 
 /--
+Monotonicity of the variance proxy in Mathlib's unconditional sub-Gaussian
+MGF predicate.
+
+This small helper lets history-selected kernel witnesses with proxy `c` feed a
+conditional theorem stated with a deterministic upper proxy `d`.
+-/
+theorem hasSubgaussianMGF_mono_varianceProxy
+    {Omega : Type u} [MeasurableSpace Omega]
+    {mu : Measure Omega} {X : Omega -> Real} {c d : NNReal}
+    (hcd : c <= d)
+    (h : ProbabilityTheory.HasSubgaussianMGF X c mu) :
+    ProbabilityTheory.HasSubgaussianMGF X d mu where
+  integrable_exp_mul := h.integrable_exp_mul
+  mgf_le := by
+    intro t
+    calc
+      ProbabilityTheory.mgf X mu t <=
+          Real.exp (((c : NNReal) : Real) * t ^ 2 / 2) :=
+        h.mgf_le t
+      _ <= Real.exp (((d : NNReal) : Real) * t ^ 2 / 2) := by
+        apply Real.exp_le_exp.mpr
+        have hcd_real : ((c : NNReal) : Real) <= ((d : NNReal) : Real) := by
+          exact_mod_cast hcd
+        have ht2 : 0 <= t ^ 2 := sq_nonneg t
+        nlinarith
+
+/--
+Generic `condExpKernel` map-law consumer for conditional sub-Gaussianity.
+
+If the conditional kernel pushed forward by `X` is trim-a.e. a target measure
+whose identity random variable is sub-Gaussian with deterministic proxy `c`,
+then `X` is conditionally sub-Gaussian.  The exponential-integrability field is
+kept explicit because Mathlib's `Kernel.HasSubgaussianMGF` asks for global
+integrability over `(mu.trim hm).bind (condExpKernel mu mcond)`.
+-/
+theorem hasCondSubgaussianMGF_of_condExpKernel_map_eq
+    {Omega : Type u}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (mcond : MeasurableSpace Omega) (hm : mcond <= mOmega)
+    (X : Omega -> Real) (c : NNReal)
+    (hX : @Measurable Omega Real mOmega inferInstance X)
+    (target : Omega -> Measure Real)
+    (h_integrable_exp :
+      forall t : Real,
+        Integrable (fun omega : Omega => Real.exp (t * X omega)) mu)
+    (h_kernel_map_eq :
+      Filter.Eventually
+        (fun omega : Omega =>
+          @Measure.map Omega Real mOmega inferInstance X
+            (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _ mcond
+              omega) =
+          target omega)
+        (ae (mu.trim hm)))
+    (h_target_subG :
+      Filter.Eventually
+        (fun omega : Omega =>
+          ProbabilityTheory.HasSubgaussianMGF
+            (fun z : Real => z) c (target omega))
+        (ae (mu.trim hm))) :
+    ProbabilityTheory.HasCondSubgaussianMGF mcond hm X c mu := by
+  have h_integrable_comp :
+      forall t : Real,
+        Integrable (fun omega : Omega => Real.exp (t * X omega))
+          ((mu.trim hm).bind
+            (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _ mcond)) := by
+    intro t
+    rw [@ProbabilityTheory.condExpKernel_comp_trim
+      Omega mcond mOmega _ mu _ hm]
+    exact h_integrable_exp t
+  change
+    ProbabilityTheory.Kernel.HasSubgaussianMGF X c
+      (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _ mcond)
+      (mu.trim hm)
+  refine ProbabilityTheory.Kernel.HasSubgaussianMGF.of_rat
+    h_integrable_comp ?_
+  intro q
+  filter_upwards [h_kernel_map_eq, h_target_subG] with omega hmap hsub
+  let condKernel : @Measure Omega mOmega :=
+    @ProbabilityTheory.condExpKernel Omega mOmega _ mu _ mcond omega
+  calc
+    ProbabilityTheory.mgf X
+        (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _ mcond omega)
+        (q : Real)
+        =
+      ProbabilityTheory.mgf (fun z : Real => z)
+        (@Measure.map Omega Real mOmega inferInstance X
+          (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _ mcond
+            omega))
+        (q : Real) := by
+          simpa [condKernel] using
+            congrFun
+              (@ProbabilityTheory.mgf_id_map Omega mOmega X condKernel
+                hX.aemeasurable).symm
+              (q : Real)
+    _ = ProbabilityTheory.mgf (fun z : Real => z) (target omega)
+        (q : Real) := by
+          rw [hmap]
+    _ <= Real.exp (((c : NNReal) : Real) * (q : Real) ^ 2 / 2) := by
+          simpa using hsub.mgf_le (q : Real)
+
+/--
 Centered-reward specialization of
 `condExp_eq_zero_of_condExpKernel_integral_eq_zero`.
 
@@ -380,6 +482,180 @@ theorem condExp_eq_zero_of_condExpKernel_map_eq_historyStepKernel_centeredReward
         RewardKernel.historyStepKernelFamily_centeredReward_integral_eq_zero
           rewardKernel policy context state hcontext hstate mean varianceProxy
           law n (history omega)
+
+/--
+Map-law consumer for the history-step conditional sub-Gaussian route.
+
+This is the MGF analogue of
+`condExp_eq_zero_of_condExpKernel_map_eq_historyStepKernel_centeredReward`.
+It keeps two contracts explicit: `h_kernel_X_eq` freezes the history-dependent
+centering under the conditional kernel, and `h_variance_le` bounds the
+history-selected variance proxy by the deterministic proxy `c` required by
+Mathlib's `HasCondSubgaussianMGF`.
+-/
+theorem hasCondSubgaussianMGF_of_condExpKernel_map_eq_historyStepKernel_centeredReward
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action]
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (mcond : MeasurableSpace Omega) (hm : mcond <= mOmega)
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((i : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((i : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (law :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (n : Nat)
+    (history : Omega -> ((i : Finset.Iic n) -> Rat))
+    (nextReward : Omega -> Rat)
+    (X : Omega -> Real)
+    (c : NNReal)
+    (h_nextReward : @Measurable Omega Rat mOmega inferInstance nextReward)
+    (hX : @Measurable Omega Real mOmega inferInstance X)
+    (h_integrable_exp :
+      forall t : Real,
+        Integrable (fun omega : Omega => Real.exp (t * X omega)) mu)
+    (h_kernel_map_eq :
+      Filter.Eventually
+        (fun omega : Omega =>
+          @Measure.map Omega Rat mOmega inferInstance nextReward
+            (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _ mcond
+              omega) =
+          RewardKernel.historyStepKernelFamily rewardKernel policy context
+            state hcontext hstate n (history omega))
+        (ae (mu.trim hm)))
+    (h_kernel_X_eq :
+      Filter.Eventually
+        (fun omega : Omega =>
+          Filter.EventuallyEq
+            (ae (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _ mcond
+              omega))
+            X
+            (fun y : Omega =>
+              (((nextReward y - mean (context n (history omega))
+                ((policy n).action (state n (history omega))) : Rat) : Real))))
+        (ae (mu.trim hm)))
+    (h_variance_le :
+      Filter.Eventually
+        (fun omega : Omega =>
+          varianceProxy (context n (history omega))
+            ((policy n).action (state n (history omega))) <= c)
+        (ae (mu.trim hm))) :
+    ProbabilityTheory.HasCondSubgaussianMGF mcond hm X c mu := by
+  let target : Omega -> Measure Real :=
+    fun omega : Omega =>
+      @Measure.map Rat Real inferInstance inferInstance
+        (fun reward : Rat =>
+          (((reward - mean (context n (history omega))
+            ((policy n).action (state n (history omega))) : Rat) : Real)))
+        (RewardKernel.historyStepKernelFamily rewardKernel policy context
+          state hcontext hstate n (history omega))
+  have h_target_map_eq :
+      Filter.Eventually
+        (fun omega : Omega =>
+          @Measure.map Omega Real mOmega inferInstance X
+            (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _ mcond
+              omega) =
+          target omega)
+        (ae (mu.trim hm)) := by
+    filter_upwards [h_kernel_map_eq, h_kernel_X_eq] with omega hmap hXeq
+    let condKernel : @Measure Omega mOmega :=
+      @ProbabilityTheory.condExpKernel Omega mOmega _ mu _ mcond omega
+    let centeredReward : Rat -> Real :=
+      fun reward : Rat =>
+        (((reward - mean (context n (history omega))
+          ((policy n).action (state n (history omega))) : Rat) : Real))
+    have h_centered_meas : Measurable centeredReward := by
+      exact measurable_of_countable centeredReward
+    have h_X_map :
+        @Measure.map Omega Real mOmega inferInstance X condKernel =
+          @Measure.map Omega Real mOmega inferInstance
+            (fun y : Omega => centeredReward (nextReward y)) condKernel := by
+      exact Measure.map_congr hXeq
+    have h_comp :
+        @Measure.map Rat Real inferInstance inferInstance centeredReward
+            (@Measure.map Omega Rat mOmega inferInstance nextReward
+              condKernel) =
+          @Measure.map Omega Real mOmega inferInstance
+            (fun y : Omega => centeredReward (nextReward y)) condKernel := by
+      rw [Measure.map_map h_centered_meas h_nextReward]
+      rfl
+    calc
+      @Measure.map Omega Real mOmega inferInstance X
+          (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _ mcond
+            omega)
+          =
+        @Measure.map Omega Real mOmega inferInstance X condKernel := by
+          rfl
+      _ =
+        @Measure.map Omega Real mOmega inferInstance
+          (fun y : Omega => centeredReward (nextReward y)) condKernel :=
+        h_X_map
+      _ =
+        @Measure.map Rat Real inferInstance inferInstance centeredReward
+          (@Measure.map Omega Rat mOmega inferInstance nextReward
+            condKernel) :=
+        h_comp.symm
+      _ =
+        @Measure.map Rat Real inferInstance inferInstance centeredReward
+          (RewardKernel.historyStepKernelFamily rewardKernel policy context
+            state hcontext hstate n (history omega)) := by
+        rw [hmap]
+      _ = target omega := by
+        rfl
+  have h_target_subG :
+      Filter.Eventually
+        (fun omega : Omega =>
+          ProbabilityTheory.HasSubgaussianMGF (fun z : Real => z) c
+            (target omega))
+        (ae (mu.trim hm)) := by
+    filter_upwards [h_variance_le] with omega hvar
+    let centeredReward : Rat -> Real :=
+      fun reward : Rat =>
+        (((reward - mean (context n (history omega))
+          ((policy n).action (state n (history omega))) : Rat) : Real))
+    have h_centered_meas : Measurable centeredReward := by
+      exact measurable_of_countable centeredReward
+    have h_subG :
+        ProbabilityTheory.HasSubgaussianMGF centeredReward
+          (varianceProxy (context n (history omega))
+            ((policy n).action (state n (history omega))))
+          (RewardKernel.historyStepKernelFamily rewardKernel policy context
+            state hcontext hstate n (history omega)) := by
+      simpa [centeredReward] using
+        RewardKernel.historyStepKernelFamily_centeredReward_hasSubgaussianMGF
+          rewardKernel policy context state hcontext hstate mean
+          varianceProxy law n (history omega)
+    have h_id_subG :
+        ProbabilityTheory.HasSubgaussianMGF (fun z : Real => z)
+          (varianceProxy (context n (history omega))
+            ((policy n).action (state n (history omega))))
+          (@Measure.map Rat Real inferInstance inferInstance centeredReward
+            (RewardKernel.historyStepKernelFamily rewardKernel policy context
+              state hcontext hstate n (history omega))) := by
+      exact
+        (ProbabilityTheory.HasSubgaussianMGF.id_map_iff
+          h_centered_meas.aemeasurable).2 h_subG
+    simpa [target, centeredReward] using
+      hasSubgaussianMGF_mono_varianceProxy hvar h_id_subG
+  exact
+    hasCondSubgaussianMGF_of_condExpKernel_map_eq
+      (mOmega := mOmega)
+      (mu := mu)
+      (mcond := mcond)
+      (hm := hm)
+      (X := X)
+      (c := c)
+      hX
+      target
+      h_integrable_exp
+      h_target_map_eq
+      h_target_subG
 
 /--
 Event-level frozen-past canary for conditional-expectation kernels.

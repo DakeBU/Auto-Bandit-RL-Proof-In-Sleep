@@ -2235,7 +2235,7 @@ LOCAL_LEAF_CARDS = [
             "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_historyStepKernelFamily_condExpKernel_map_eq_of_coordinate_measurable_rawRangeMeasurableMeanRangeBounded",
             "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_historyStepKernelFamily_condExpKernel_map_eq_historyFiltrationSucc_rawRangeMeasurableMeanRangeBounded",
         ],
-        "role": "Compiled project-local map-law consumer for COND-EXPECT-REWARD: under an explicit trim-a.e. reward-coordinate pushforward equality from condExpKernel to RewardKernel.historyStepKernelFamily plus a frozen-past a.e. equality for the centered target variable, Mathlib integral_map converts the map-level law identification into the earlier integral-equality consumer and ordinary conditional mean-zero. Coordinate-measurable and generated-history raw-reward/selected-mean range wrappers now derive centered-reward integrability automatically before consuming that reward-coordinate map law. This is closer to the future trajectory-law route but still assumes, rather than proves, partialTraj/history-to-condExpKernel identification, arbitrary policy predictability, conditional sub-Gaussian witnesses, and final adaptive ETC/UCB theorems.",
+        "role": "Compiled project-local map-law consumer for COND-EXPECT-REWARD: under an explicit trim-a.e. reward-coordinate pushforward equality from condExpKernel to RewardKernel.historyStepKernelFamily plus a frozen-past a.e. equality for the centered target variable, Mathlib integral_map converts the map-level law identification into the earlier integral-equality consumer and ordinary conditional mean-zero. Coordinate-measurable and generated-history raw-reward/selected-mean range wrappers now derive centered-reward integrability automatically before consuming that reward-coordinate map law. This is closer to the future trajectory-law route but still assumes, rather than proves, partialTraj/history-to-condExpKernel identification, arbitrary policy predictability, source-level conditional sub-Gaussian witness assembly, and final adaptive ETC/UCB theorems.",
         "mathlib_routes": [
             "MLIB-CONDITIONAL-EXPECTATION",
             "MLIB-PROBABILITY-KERNEL",
@@ -2244,6 +2244,27 @@ LOCAL_LEAF_CARDS = [
             "LOCAL-LEAF-KERNEL-CENTERED-REWARD-LAW-TRANSFER",
             "INT-REWARD-BOUNDED",
             "MEAS-REWARD",
+        ],
+    },
+    {
+        "id": "LOCAL-LEAF-COND-EXPECT-REWARD-HISTORYSTEP-CONDEXPKERNEL-COND-MGF-CONSUMER",
+        "leaf_ids": [
+            "COND-EXPECT-REWARD",
+            "MEAS-REWARD",
+        ],
+        "module": "BanditRLProof.ConditionalExpectationReward",
+        "status": "leanCompiled",
+        "declarations": [
+            "ConditionalExpectationReward.hasSubgaussianMGF_mono_varianceProxy",
+            "ConditionalExpectationReward.hasCondSubgaussianMGF_of_condExpKernel_map_eq",
+            "ConditionalExpectationReward.hasCondSubgaussianMGF_of_condExpKernel_map_eq_historyStepKernel_centeredReward",
+        ],
+        "role": "Compiled project-local conditional-MGF consumer for COND-EXPECT-REWARD: a generic condExpKernel pushforward-map equality plus a target HasSubgaussianMGF witness gives Mathlib HasCondSubgaussianMGF, and the history-step specialization feeds RewardKernel.historyStepKernelFamily_centeredReward_hasSubgaussianMGF through a frozen-past centered-variable equality plus an explicit deterministic variance-proxy upper bound. Exponential integrability, reward-coordinate map law, frozen-past equality, and variance bound remain explicit contracts; this does not construct the ambient partialTraj/history-to-condExpKernel law, arbitrary adaptive policy predictability, or final adaptive tail/regret theorem.",
+        "mathlib_routes": [
+            "MLIB-PROBABILITY-SUBGAUSSIAN",
+            "MLIB-PROBABILITY-KERNEL",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-HISTORYSTEP-CONDEXPKERNEL-MAP-CONSUMER",
+            "LOCAL-LEAF-KERNEL-CENTERED-REWARD-LAW-TRANSFER",
         ],
     },
     {
@@ -5734,7 +5755,8 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- KERNEL-REWARD-MAP-LAW-TRANSFER is compiled locally as measure-level reward-marginal map equalities for one-step and history-step action/reward kernels; condExpKernel trajectory-law identification remains open.")
     print("- COND-EXPECT-REWARD-CONDEXPKERNEL-ZERO is compiled locally as a narrow condExpKernel-to-condExp zero bridge for centered rewards; it does not construct the trajectory-law condExpKernel identification.")
     print("- COND-EXPECT-REWARD-HISTORYSTEP-CONDEXPKERNEL-CONSUMER is compiled locally as an explicit law/integral-equality consumer from history-step centered-reward zero integral to ordinary conditional mean-zero; it still assumes the trajectory-law condExpKernel identification.")
-    print("- COND-EXPECT-REWARD-HISTORYSTEP-CONDEXPKERNEL-MAP-CONSUMER is compiled locally as a reward-coordinate pushforward-map consumer plus frozen-past condition; it now also has coordinate-measurable and generated-history raw/mean range wrappers that derive centered-reward integrability automatically; it still assumes, rather than proves, the trajectory-law condExpKernel identification.")
+    print("- COND-EXPECT-REWARD-HISTORYSTEP-CONDEXPKERNEL-MAP-CONSUMER is compiled locally as a reward-coordinate pushforward-map consumer plus frozen-past condition for ordinary conditional mean-zero; it now also has coordinate-measurable and generated-history raw/mean range wrappers that derive centered-reward integrability automatically; it still assumes, rather than proves, the trajectory-law condExpKernel identification.")
+    print("- COND-EXPECT-REWARD-HISTORYSTEP-CONDEXPKERNEL-COND-MGF-CONSUMER is compiled locally as the conditional sub-Gaussian analogue: a condExpKernel pushforward map law plus frozen-past centered-variable equality, explicit exponential integrability, and a deterministic variance-proxy upper bound yield Mathlib HasCondSubgaussianMGF; source-level policy wrappers and trajectory-law construction remain open.")
     print("- COND-EXPECT-REWARD-FROZEN-HISTORY-CENTERED is compiled locally as a deterministic bridge from a frozen finite-history hypothesis to the centered-target a.e. equality required by the map-law consumer; it still assumes the history frozen-past proof itself.")
     print("- COND-EXPECT-REWARD-FROZEN-HISTORY-CONDEXPKERNEL is compiled locally as the conditional-kernel frozen-past route from mcond-measurable events to countable-valued variables and finite reward histories; it is fed by the finite-history measurability hookup and still assumes the trajectory-law reward identification.")
     print("- COND-EXPECT-REWARD-FINITE-HISTORY-MEAS-HOOKUP is compiled locally as the concrete finite reward-history measurability hookup: coordinate measurability at F i and the generated History.historyFiltrationSucc specialization now supply the frozen-past hypothesis; condExpKernel trajectory-law reward identification remains open.")

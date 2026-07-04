@@ -2992,6 +2992,115 @@ example {Omega Context State Action : Type}
       varianceProxy law n history nextReward X h_nextReward h_integrable
       h_kernel_map_eq h_kernel_X_eq
 
+example {Omega : Type} [MeasurableSpace Omega]
+    {mu : MeasureTheory.Measure Omega}
+    {X : Omega -> Real} {c d : NNReal}
+    (hcd : c <= d)
+    (h_subG : ProbabilityTheory.HasSubgaussianMGF X c mu) :
+    ProbabilityTheory.HasSubgaussianMGF X d mu := by
+  exact
+    ConditionalExpectationReward.hasSubgaussianMGF_mono_varianceProxy
+      hcd h_subG
+
+example {Omega : Type}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    (mu : MeasureTheory.Measure Omega)
+    [MeasureTheory.IsFiniteMeasure mu]
+    (mcond : MeasurableSpace Omega) (hm : mcond <= mOmega)
+    (X : Omega -> Real) (c : NNReal)
+    (hX : @Measurable Omega Real mOmega inferInstance X)
+    (target : Omega -> MeasureTheory.Measure Real)
+    (h_integrable_exp :
+      forall t : Real,
+        MeasureTheory.Integrable
+          (fun omega : Omega => Real.exp (t * X omega)) mu)
+    (h_kernel_map_eq :
+      Filter.Eventually
+        (fun omega : Omega =>
+          @MeasureTheory.Measure.map Omega Real mOmega inferInstance X
+            (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _ mcond
+              omega) =
+          target omega)
+        (MeasureTheory.ae (mu.trim hm)))
+    (h_target_subG :
+      Filter.Eventually
+        (fun omega : Omega =>
+          ProbabilityTheory.HasSubgaussianMGF
+            (fun z : Real => z) c (target omega))
+        (MeasureTheory.ae (mu.trim hm))) :
+    ProbabilityTheory.HasCondSubgaussianMGF mcond hm X c mu := by
+  exact
+    ConditionalExpectationReward.hasCondSubgaussianMGF_of_condExpKernel_map_eq
+      (mOmega := mOmega)
+      mu mcond hm X c hX target h_integrable_exp h_kernel_map_eq
+      h_target_subG
+
+example {Omega Context State Action : Type}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action]
+    (mu : MeasureTheory.Measure Omega)
+    [MeasureTheory.IsFiniteMeasure mu]
+    (mcond : MeasurableSpace Omega) (hm : mcond <= mOmega)
+    (rewardKernel :
+      RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (law :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (n : Nat)
+    (history : Omega -> ((j : Finset.Iic n) -> Rat))
+    (nextReward : Omega -> Rat)
+    (X : Omega -> Real)
+    (c : NNReal)
+    (h_nextReward :
+      @Measurable Omega Rat mOmega inferInstance nextReward)
+    (hX : @Measurable Omega Real mOmega inferInstance X)
+    (h_integrable_exp :
+      forall t : Real,
+        MeasureTheory.Integrable
+          (fun omega : Omega => Real.exp (t * X omega)) mu)
+    (h_kernel_map_eq :
+      Filter.Eventually
+        (fun omega : Omega =>
+          @MeasureTheory.Measure.map Omega Rat mOmega inferInstance nextReward
+            (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _ mcond
+              omega) =
+          RewardKernel.historyStepKernelFamily rewardKernel policy context state
+            hcontext hstate n (history omega))
+        (MeasureTheory.ae (mu.trim hm)))
+    (h_kernel_X_eq :
+      Filter.Eventually
+        (fun omega : Omega =>
+          Filter.EventuallyEq
+            (MeasureTheory.ae
+              (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _ mcond
+                omega))
+            X
+            (fun y : Omega =>
+              (((nextReward y - mean (context n (history omega))
+                ((policy n).action (state n (history omega))) : Rat) :
+                Real))))
+        (MeasureTheory.ae (mu.trim hm)))
+    (h_variance_le :
+      Filter.Eventually
+        (fun omega : Omega =>
+          varianceProxy (context n (history omega))
+            ((policy n).action (state n (history omega))) <= c)
+        (MeasureTheory.ae (mu.trim hm))) :
+    ProbabilityTheory.HasCondSubgaussianMGF mcond hm X c mu := by
+  exact
+    ConditionalExpectationReward.hasCondSubgaussianMGF_of_condExpKernel_map_eq_historyStepKernel_centeredReward
+      (mOmega := mOmega)
+      mu mcond hm rewardKernel policy context state hcontext hstate mean
+      varianceProxy law n history nextReward X c h_nextReward hX
+      h_integrable_exp h_kernel_map_eq h_kernel_X_eq h_variance_le
+
 example {Omega : Type}
     [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
     (mu : MeasureTheory.Measure Omega)
