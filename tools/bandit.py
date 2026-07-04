@@ -1379,6 +1379,24 @@ LOCAL_LEAF_CARDS = [
         "mathlib_routes": ["LOCAL-LEAF-OFUL-PREFIX-LOG-DET-TELESCOPE", "LOCAL-LEAF-OFUL-REGULARIZED-GRAM-BASE"],
     },
     {
+        "id": "LOCAL-LEAF-OFUL-DETERMINANT-GROWTH-CONSUMER",
+        "leaf_ids": [
+            "OFUL-ELLIPTICAL-POTENTIAL",
+        ],
+        "module": "BanditRLProof.OFULEllipticalPotential",
+        "status": "leanCompiled",
+        "declarations": [
+            "OFUL.div_one_add_self_le_log_one_add",
+            "OFUL.self_le_two_log_one_add_of_le_one",
+            "OFUL.one_le_two_log_two",
+            "OFUL.min_one_le_two_log_one_add",
+            "OFUL.sum_range_min_one_le_two_sum_log_one_add",
+            "OFUL.sum_range_min_prefix_update_le_two_log_det_sub_base",
+        ],
+        "role": "Compiled first determinant-growth consumer for OFUL/LinUCB: proves the scalar inequality `min 1 z <= 2 log(1+z)` for `0 <= z`, lifts it to finite sums, and combines it with the concrete Nat-prefix log-det telescope to bound the sum of clipped inverse-quadratic update scalars by `2 * (log det(V_T) - log(lambda^d))`. It keeps nonnegativity of each inverse-quadratic scalar as an explicit regularity contract and does not yet prove that contract from `PosDef` inverse APIs, determinant upper bounds, self-normalized martingale concentration, confidence ellipsoids, or OFUL regret.",
+        "mathlib_routes": ["LOCAL-LEAF-OFUL-PREFIX-LOG-DET-BASE", "Mathlib.Analysis.SpecialFunctions.Log.Basic", "MLIB-FINSET-SUMS"],
+    },
+    {
         "id": "LOCAL-LEAF-CONCENTRATION-SUBGAUSSIAN",
         "leaf_ids": [
             "TAIL-HOEFFDING-BOUNDED",
@@ -6377,6 +6395,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- OFUL-LOG-DET-TELESCOPE is compiled locally as an abstract finite-horizon log-det telescope over one-step log-update factors; concrete Nat-prefix instantiation is tracked separately, and determinant-growth inequalities, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- OFUL-PREFIX-LOG-DET-TELESCOPE is compiled locally as a concrete Nat-prefix growing-history regularized-Gram sequence with successor rank-one updates, determinant/log-det recursions, and a finite-horizon log-det telescope; determinant-growth inequalities, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- OFUL-PREFIX-LOG-DET-BASE is compiled locally as the scalar-base endpoint wrapper for the concrete Nat-prefix log-det telescope: `V_0 = lambda I`, `det V_0 = lambda^d`, and the telescope endpoint rewrites to `log det(V_T) - log(lambda^d)`; determinant-growth inequalities, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
+    print("- OFUL-DETERMINANT-GROWTH-CONSUMER is compiled locally as the first min/log determinant-growth consumer: `sum_t min(1,u_t) <= 2 * (log det(V_T) - log(lambda^d))` for Nat-prefix update scalars under explicit `0 <= u_t`; discharging inverse-quadratic nonnegativity, determinant upper bounds, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- TAIL-HOEFFDING-BOUNDED is compiled locally as the generic bounded-centered Hoeffding MGF wrapper with an interval variance proxy.")
     print("- TAIL-SUBGAUSS-SUM is compiled locally as the Mathlib-backed independent sub-Gaussian finite-sum tail wrapper.")
     print("- TAIL-SUBGAUSS-DIFF-SUM-IMPORT is compiled locally as the ENNReal-valued independent sub-Gaussian finite-sum tail boundary wrapper.")

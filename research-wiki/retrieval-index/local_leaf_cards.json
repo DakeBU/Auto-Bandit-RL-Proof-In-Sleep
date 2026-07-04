@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T17:16:39+00:00",
+  "generated": "2026-07-04T17:25:44+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -552,6 +552,28 @@
       "mathlib_routes": [
         "LOCAL-LEAF-OFUL-PREFIX-LOG-DET-TELESCOPE",
         "LOCAL-LEAF-OFUL-REGULARIZED-GRAM-BASE"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-OFUL-DETERMINANT-GROWTH-CONSUMER",
+      "leaf_ids": [
+        "OFUL-ELLIPTICAL-POTENTIAL"
+      ],
+      "module": "BanditRLProof.OFULEllipticalPotential",
+      "status": "leanCompiled",
+      "declarations": [
+        "OFUL.div_one_add_self_le_log_one_add",
+        "OFUL.self_le_two_log_one_add_of_le_one",
+        "OFUL.one_le_two_log_two",
+        "OFUL.min_one_le_two_log_one_add",
+        "OFUL.sum_range_min_one_le_two_sum_log_one_add",
+        "OFUL.sum_range_min_prefix_update_le_two_log_det_sub_base"
+      ],
+      "role": "Compiled first determinant-growth consumer for OFUL/LinUCB: proves the scalar inequality `min 1 z <= 2 log(1+z)` for `0 <= z`, lifts it to finite sums, and combines it with the concrete Nat-prefix log-det telescope to bound the sum of clipped inverse-quadratic update scalars by `2 * (log det(V_T) - log(lambda^d))`. It keeps nonnegativity of each inverse-quadratic scalar as an explicit regularity contract and does not yet prove that contract from `PosDef` inverse APIs, determinant upper bounds, self-normalized martingale concentration, confidence ellipsoids, or OFUL regret.",
+      "mathlib_routes": [
+        "LOCAL-LEAF-OFUL-PREFIX-LOG-DET-BASE",
+        "Mathlib.Analysis.SpecialFunctions.Log.Basic",
+        "MLIB-FINSET-SUMS"
       ]
     },
     {

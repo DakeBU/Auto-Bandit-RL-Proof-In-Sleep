@@ -1009,6 +1009,77 @@ theorem sum_range_log_update_factor_eq_log_det_ratio
       exact sum_range_forward_difference
         (fun t => Real.log (detSeq t)) T
 
+/-- Lower bound for `log (1 + z)` used in elliptical-potential estimates. -/
+theorem div_one_add_self_le_log_one_add
+    {z : Real} (hz : 0 <= z) :
+    z / (1 + z) <= Real.log (1 + z) := by
+  have hpos : 0 < 1 + z := by linarith
+  have hinvpos : 0 < 1 / (1 + z) := by positivity
+  have hlog := Real.log_le_sub_one_of_pos hinvpos
+  rw [Real.log_div one_ne_zero (ne_of_gt hpos), Real.log_one] at hlog
+  have hsub : 1 / (1 + z) - 1 = - z / (1 + z) := by
+    field_simp [ne_of_gt hpos]
+    ring
+  rw [hsub] at hlog
+  have hneg' : - Real.log (1 + z) <= -z / (1 + z) := by
+    simpa [zero_sub] using hlog
+  have hneg : - Real.log (1 + z) <= - (z / (1 + z)) := by
+    simpa [neg_div] using hneg'
+  exact neg_le_neg_iff.mp hneg
+
+/-- For `0 <= z <= 1`, `z` is bounded by twice the log update. -/
+theorem self_le_two_log_one_add_of_le_one
+    {z : Real} (hz0 : 0 <= z) (hz1 : z <= 1) :
+    z <= 2 * Real.log (1 + z) := by
+  have hbase : z / (1 + z) <= Real.log (1 + z) :=
+    div_one_add_self_le_log_one_add hz0
+  have hpos : 0 < 1 + z := by linarith
+  have hdiv : z <= 2 * (z / (1 + z)) := by
+    rw [show 2 * (z / (1 + z)) = (2 * z) / (1 + z) by ring]
+    rw [le_div_iff₀ hpos]
+    nlinarith [mul_nonneg hz0 (sub_nonneg.mpr hz1)]
+  nlinarith
+
+/-- Numeric endpoint: `1 <= 2 * log 2`. -/
+theorem one_le_two_log_two : (1 : Real) <= 2 * Real.log 2 := by
+  have hbase : (1 : Real) / (1 + 1) <= Real.log (1 + 1) :=
+    div_one_add_self_le_log_one_add (by norm_num)
+  norm_num at hbase ⊢
+  nlinarith
+
+/-- Elliptical-potential scalar inequality: `min 1 z <= 2 log (1+z)`. -/
+theorem min_one_le_two_log_one_add
+    {z : Real} (hz : 0 <= z) :
+    min 1 z <= 2 * Real.log (1 + z) := by
+  by_cases hz1 : z <= 1
+  · rw [min_eq_right hz1]
+    exact self_le_two_log_one_add_of_le_one hz hz1
+  · have hge : (1 : Real) <= z := le_of_lt (lt_of_not_ge hz1)
+    rw [min_eq_left hge]
+    have hmono : Real.log 2 <= Real.log (1 + z) := by
+      exact Real.log_le_log (by norm_num) (by linarith)
+    nlinarith [one_le_two_log_two, hmono]
+
+/--
+Finite-sum scalar elliptical-potential wrapper.
+
+This consumes nonnegativity of each update scalar and leaves the log telescope
+or determinant-ratio identity as a separate input.
+-/
+theorem sum_range_min_one_le_two_sum_log_one_add
+    (u : Nat -> Real) (T : Nat)
+    (hu : forall t : Nat, t < T -> 0 <= u t) :
+    (Finset.range T).sum (fun t => min 1 (u t)) <=
+      2 * (Finset.range T).sum (fun t => Real.log (1 + u t)) := by
+  calc
+    (Finset.range T).sum (fun t => min 1 (u t)) <=
+      (Finset.range T).sum (fun t => 2 * Real.log (1 + u t)) := by
+      apply Finset.sum_le_sum
+      intro t ht
+      exact min_one_le_two_log_one_add (hu t (Finset.mem_range.mp ht))
+    _ = 2 * (Finset.range T).sum (fun t => Real.log (1 + u t)) := by
+      rw [Finset.mul_sum]
+
 /--
 Concrete finite-horizon log-det telescope for Nat-prefix regularized Grams.
 
@@ -1055,6 +1126,39 @@ theorem sum_range_log_regularizedPrefixFeatureGram_update_factor_eq_log_det_sub_
   rw [sum_range_log_regularizedPrefixFeatureGram_update_factor_eq_log_det_ratio
     lambda hlambda history T]
   rw [det_regularizedPrefixFeatureGram_zero]
+
+/--
+Concrete prefix determinant-growth consumer with the inverse-quadratic
+nonnegativity contract left explicit.
+
+This is the finite-sum elliptical-potential inequality once each update
+scalar `x_t^T V_t^{-1} x_t` is known nonnegative.
+-/
+theorem sum_range_min_prefix_update_le_two_log_det_sub_base
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Nat -> Feature -> Real) (T : Nat)
+    (hquad_nonneg : forall t : Nat, t < T ->
+      0 <= dotProduct (history t)
+        (Matrix.mulVec
+          ((regularizedPrefixFeatureGram lambda history t)⁻¹)
+          (history t))) :
+    (Finset.range T).sum
+        (fun t => min 1 (dotProduct (history t)
+          (Matrix.mulVec
+            ((regularizedPrefixFeatureGram lambda history t)⁻¹)
+            (history t)))) <=
+      2 * (Real.log (regularizedPrefixFeatureGram lambda history T).det -
+        Real.log (lambda ^ Fintype.card Feature)) := by
+  have hsum := sum_range_min_one_le_two_sum_log_one_add
+    (fun t => dotProduct (history t)
+      (Matrix.mulVec
+        ((regularizedPrefixFeatureGram lambda history t)⁻¹)
+        (history t)))
+    T hquad_nonneg
+  rw [sum_range_log_regularizedPrefixFeatureGram_update_factor_eq_log_det_sub_base
+    lambda hlambda history T] at hsum
+  exact hsum
 
 end OFUL
 end BanditRLProof

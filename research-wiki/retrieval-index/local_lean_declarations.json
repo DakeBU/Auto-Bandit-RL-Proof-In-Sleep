@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T17:16:39+00:00",
+  "generated": "2026-07-04T17:25:44+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -5067,10 +5067,50 @@
     },
     {
       "kind": "theorem",
+      "name": "div_one_add_self_le_log_one_add",
+      "full_name": "BanditRLProof.OFUL.div_one_add_self_le_log_one_add",
+      "file": "BanditRLProof/OFULEllipticalPotential.lean",
+      "line": 1013,
+      "statement": "theorem div_one_add_self_le_log_one_add {z : Real} (hz : 0 <= z) : z / (1 + z) <= Real.log (1 + z)"
+    },
+    {
+      "kind": "theorem",
+      "name": "self_le_two_log_one_add_of_le_one",
+      "full_name": "BanditRLProof.OFUL.self_le_two_log_one_add_of_le_one",
+      "file": "BanditRLProof/OFULEllipticalPotential.lean",
+      "line": 1031,
+      "statement": "theorem self_le_two_log_one_add_of_le_one {z : Real} (hz0 : 0 <= z) (hz1 : z <= 1) : z <= 2 * Real.log (1 + z)"
+    },
+    {
+      "kind": "theorem",
+      "name": "one_le_two_log_two",
+      "full_name": "BanditRLProof.OFUL.one_le_two_log_two",
+      "file": "BanditRLProof/OFULEllipticalPotential.lean",
+      "line": 1044,
+      "statement": "theorem one_le_two_log_two : (1 : Real) <= 2 * Real.log 2"
+    },
+    {
+      "kind": "theorem",
+      "name": "min_one_le_two_log_one_add",
+      "full_name": "BanditRLProof.OFUL.min_one_le_two_log_one_add",
+      "file": "BanditRLProof/OFULEllipticalPotential.lean",
+      "line": 1051,
+      "statement": "theorem min_one_le_two_log_one_add {z : Real} (hz : 0 <= z) : min 1 z <= 2 * Real.log (1 + z)"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_range_min_one_le_two_sum_log_one_add",
+      "full_name": "BanditRLProof.OFUL.sum_range_min_one_le_two_sum_log_one_add",
+      "file": "BanditRLProof/OFULEllipticalPotential.lean",
+      "line": 1069,
+      "statement": "theorem sum_range_min_one_le_two_sum_log_one_add (u : Nat -> Real) (T : Nat) (hu : forall t : Nat, t < T -> 0 <= u t) : (Finset.range T).sum (fun t => min 1 (u t)) <= 2 * (Finset.range T).sum (fun t => Real.log (1 + u t))"
+    },
+    {
+      "kind": "theorem",
       "name": "sum_range_log_regularizedPrefixFeatureGram_update_factor_eq_log_det_ratio",
       "full_name": "BanditRLProof.OFUL.sum_range_log_regularizedPrefixFeatureGram_update_factor_eq_log_det_ratio",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 1018,
+      "line": 1089,
       "statement": "theorem sum_range_log_regularizedPrefixFeatureGram_update_factor_eq_log_det_ratio {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Nat -> Feature -> Real) (T : Nat) : (Finset.range T).sum (fun t => Real.log (1 + dotProduct (history t) (Matrix.mulVec ((regularizedPrefixFeatureGram lambda history t)\u207b\u00b9)"
     },
     {
@@ -5078,8 +5118,16 @@
       "name": "sum_range_log_regularizedPrefixFeatureGram_update_factor_eq_log_det_sub_base",
       "full_name": "BanditRLProof.OFUL.sum_range_log_regularizedPrefixFeatureGram_update_factor_eq_log_det_sub_base",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 1044,
+      "line": 1115,
       "statement": "theorem sum_range_log_regularizedPrefixFeatureGram_update_factor_eq_log_det_sub_base {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Nat -> Feature -> Real) (T : Nat) : (Finset.range T).sum (fun t => Real.log (1 + dotProduct (history t) (Matrix.mulVec ((regularizedPrefixFeatureGram lambda history t)\u207b\u00b9)"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_range_min_prefix_update_le_two_log_det_sub_base",
+      "full_name": "BanditRLProof.OFUL.sum_range_min_prefix_update_le_two_log_det_sub_base",
+      "file": "BanditRLProof/OFULEllipticalPotential.lean",
+      "line": 1137,
+      "statement": "theorem sum_range_min_prefix_update_le_two_log_det_sub_base {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Nat -> Feature -> Real) (T : Nat) (hquad_nonneg : forall t : Nat, t < T -> 0 <= dotProduct (history t) (Matrix.mulVec ((regularizedPrefixFeatureGram lambda history t)\u207b\u00b9)"
     },
     {
       "kind": "inductive",
