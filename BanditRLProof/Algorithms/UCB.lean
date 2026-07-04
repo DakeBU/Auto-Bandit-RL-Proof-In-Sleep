@@ -3,6 +3,7 @@ import Mathlib.Data.Real.Basic
 import Mathlib.MeasureTheory.Constructions.BorelSpace.Order
 import Mathlib.MeasureTheory.MeasurableSpace.Basic
 import Mathlib.Tactic.Linarith
+import BanditRLProof.ConcentrationVariance
 import BanditRLProof.ProbabilityUnionBound
 import BanditRLProof.Regret
 
@@ -458,6 +459,85 @@ theorem measure_finiteHorizonConfidenceBadEvent_le_absDeviation_tail_sum
         mu trueMean
         (fun omega arm => empiricalMean omega t arm)
         (radius t) arm).trans (htail t arm ht))
+
+/--
+Chebyshev tail budget for a UCB empirical mean at time `t` and arm `arm`.
+
+This is intentionally an abstract finite-variance budget: it does not prove the
+variance rate of an empirical mean or choose a log/sqrt UCB radius.
+-/
+noncomputable def chebyshevAbsDeviationTail
+    {Omega Arm : Type} [MeasurableSpace Omega]
+    (mu : Measure Omega)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (radius : Nat -> Arm -> Real) (t : Nat) (arm : Arm) : ENNReal :=
+  ENNReal.ofReal
+    (ProbabilityTheory.variance
+      (fun omega : Omega => empiricalMean omega t arm) mu /
+        (radius t arm) ^ 2)
+
+/--
+Single-time Chebyshev tail for the UCB absolute-deviation event, under an
+explicit mean-identification contract.
+-/
+theorem measure_absDeviation_le_chebyshev_tail
+    {Omega Arm : Type} [MeasurableSpace Omega]
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (radius : Nat -> Arm -> Real) (t : Nat) (arm : Arm)
+    (hmem :
+      MemLp (fun omega : Omega => empiricalMean omega t arm) 2 mu)
+    (hradius : 0 < radius t arm)
+    (hmean :
+      integral mu (fun omega : Omega => empiricalMean omega t arm) =
+        trueMean arm) :
+    mu {omega | radius t arm <=
+        |empiricalMean omega t arm - trueMean arm|} <=
+      chebyshevAbsDeviationTail mu empiricalMean radius t arm := by
+  have htail :=
+    Concentration.variance_chebyshev_tail
+      (mu := mu)
+      (X := fun omega : Omega => empiricalMean omega t arm)
+      hmem (eps := radius t arm) hradius
+  simpa [chebyshevAbsDeviationTail, hmean] using htail
+
+/--
+Finite-horizon UCB confidence bad-event bound from Chebyshev absolute-deviation
+tails.
+
+This is a concrete concentration producer for the abstract absolute-deviation
+tail adapter.  It still leaves empirical-mean construction, variance-rate
+simplification, log/sqrt radius choice, pull-count bounds, and final regret to
+later leaves.
+-/
+theorem measure_finiteHorizonConfidenceBadEvent_le_chebyshev_tail_sum
+    {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (radius : Nat -> Arm -> Real) (T : Nat)
+    (hmem : forall t arm, t < T ->
+      MemLp (fun omega : Omega => empiricalMean omega t arm) 2 mu)
+    (hradius : forall t arm, t < T -> 0 < radius t arm)
+    (hmean : forall t arm, t < T ->
+      integral mu (fun omega : Omega => empiricalMean omega t arm) =
+        trueMean arm) :
+    mu (finiteHorizonConfidenceBadEvent trueMean empiricalMean radius T) <=
+      (Finset.range T).sum
+        (fun t =>
+          (Finset.univ : Finset Arm).sum
+            (fun arm =>
+              chebyshevAbsDeviationTail mu empiricalMean radius t arm +
+                chebyshevAbsDeviationTail mu empiricalMean radius t arm)) := by
+  exact measure_finiteHorizonConfidenceBadEvent_le_absDeviation_tail_sum
+    mu trueMean empiricalMean radius
+    (fun t arm => chebyshevAbsDeviationTail mu empiricalMean radius t arm)
+    T
+    (fun t arm ht =>
+      measure_absDeviation_le_chebyshev_tail
+        mu trueMean empiricalMean radius t arm
+        (hmem t arm ht) (hradius t arm ht) (hmean t arm ht))
 
 /-- The proof-DAG leaves usually needed for UCB regret formalization. -/
 def obligationNames : List String :=

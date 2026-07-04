@@ -15203,6 +15203,50 @@ example {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
   exact UCB.measure_finiteHorizonConfidenceBadEvent_le_absDeviation_tail_sum
     mu trueMean empiricalMean radius tail T htail
 
+example {Omega Arm : Type} [MeasurableSpace Omega]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (radius : Nat -> Arm -> Real) (t : Nat) (arm : Arm)
+    (hmem :
+      MeasureTheory.MemLp
+        (fun omega : Omega => empiricalMean omega t arm) 2 mu)
+    (hradius : 0 < radius t arm)
+    (hmean :
+      MeasureTheory.integral mu
+        (fun omega : Omega => empiricalMean omega t arm) =
+        trueMean arm) :
+    mu {omega | radius t arm <=
+        |empiricalMean omega t arm - trueMean arm|} <=
+      UCB.chebyshevAbsDeviationTail mu empiricalMean radius t arm := by
+  exact UCB.measure_absDeviation_le_chebyshev_tail
+    mu trueMean empiricalMean radius t arm hmem hradius hmean
+
+example {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (radius : Nat -> Arm -> Real) (T : Nat)
+    (hmem : forall t arm, t < T ->
+      MeasureTheory.MemLp
+        (fun omega : Omega => empiricalMean omega t arm) 2 mu)
+    (hradius : forall t arm, t < T -> 0 < radius t arm)
+    (hmean : forall t arm, t < T ->
+      MeasureTheory.integral mu
+        (fun omega : Omega => empiricalMean omega t arm) =
+        trueMean arm) :
+    mu (UCB.finiteHorizonConfidenceBadEvent
+        trueMean empiricalMean radius T) <=
+      (Finset.range T).sum
+        (fun t =>
+          (Finset.univ : Finset Arm).sum
+            (fun arm =>
+              UCB.chebyshevAbsDeviationTail mu empiricalMean radius t arm +
+                UCB.chebyshevAbsDeviationTail
+                  mu empiricalMean radius t arm)) := by
+  exact UCB.measure_finiteHorizonConfidenceBadEvent_le_chebyshev_tail_sum
+    mu trueMean empiricalMean radius T hmem hradius hmean
+
 def twoArmModel : FiniteBanditModel 2 where
   hK := by decide
   mean := fun arm => if arm.val = 0 then 1 else 0

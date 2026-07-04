@@ -1113,6 +1113,23 @@ LOCAL_LEAF_CARDS = [
         "mathlib_routes": ["LOCAL-LEAF-UCB-FINITE-HORIZON-CONFIDENCE-TAIL-CONSUMER", "TAIL-VARIANCE-ROBUST", "TAIL-SUBGAUSS-SUM", "TAIL-COND-SUBGAUSS"],
     },
     {
+        "id": "LOCAL-LEAF-UCB-CHEBYSHEV-ABS-DEVIATION-TAIL",
+        "leaf_ids": [
+            "UCB-GOOD-EVENT-GAP-CONSUMER",
+            "TAIL-SUMMABILITY-UCB",
+            "TAIL-VARIANCE-ROBUST",
+        ],
+        "module": "BanditRLProof.Algorithms.UCB",
+        "status": "leanCompiled",
+        "declarations": [
+            "UCB.chebyshevAbsDeviationTail",
+            "UCB.measure_absDeviation_le_chebyshev_tail",
+            "UCB.measure_finiteHorizonConfidenceBadEvent_le_chebyshev_tail_sum",
+        ],
+        "role": "Compiled UCB Chebyshev absolute-deviation tail producer: under finite measure, `MemLp` second-moment evidence, positive radius, and empirical-mean expectation identified with `trueMean`, the UCB absolute-deviation event is bounded by the Mathlib variance/Chebyshev budget, and the finite-horizon confidence bad event is bounded by the corresponding double finite sum. This is a finite-variance concentration route only; empirical-mean construction, variance-rate simplification, sub-Gaussian/log-sqrt UCB radius formulas, pull-count bounds, and final UCB regret remain separate.",
+        "mathlib_routes": ["LOCAL-LEAF-UCB-ABS-DEVIATION-TAIL-ADAPTER", "LOCAL-LEAF-CONCENTRATION-VARIANCE", "MLIB-PROBABILITY-VARIANCE"],
+    },
+    {
         "id": "LOCAL-LEAF-IID-REWARD-FAMILY",
         "leaf_ids": [
             "IID-REWARD-FAMILY",
@@ -6633,6 +6650,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- UCB-FINITE-HORIZON-CONFIDENCE-EVENT is compiled locally as the time-indexed confidence-bad-event bridge and finite-horizon union-bound assembler over t < T, arms, and upper/lower failures; concrete empirical-mean construction, concentration tails, log/sqrt radius formulas, pull-count bounds, and final UCB regret remain separate.")
     print("- UCB-FINITE-HORIZON-CONFIDENCE-TAIL-CONSUMER is compiled locally as the finite-horizon confidence-bad-event tail-budget consumer over t < T, arms, and upper/lower failure tails; concrete empirical-mean construction, concentration tail production, log/sqrt radius formulas, pull-count bounds, and final UCB regret remain separate.")
     print("- UCB-ABS-DEVIATION-TAIL-ADAPTER is compiled locally as the adapter from upper/lower confidence failures to absolute empirical-mean deviation events and a finite-horizon shared absolute-deviation tail budget; concrete empirical-mean construction, concentration tail production, log/sqrt radius formulas, pull-count bounds, and final UCB regret remain separate.")
+    print("- UCB-CHEBYSHEV-ABS-DEVIATION-TAIL is compiled locally as a finite-variance Chebyshev producer for UCB absolute-deviation tails and finite-horizon confidence bad-event budgets; empirical-mean construction, variance-rate simplification, sub-Gaussian/log-sqrt radius formulas, pull-count bounds, and final UCB regret remain separate.")
     print("- TAIL-UNION-FINITE is compiled locally as generic finite-union outer-measure wrappers for explicit Finset and Fintype event families.")
     print("- TAIL-SUMMABILITY-UCB is compiled locally as an abstract finite-horizon UCB bad-event summability wrapper over finite arms and t < T; the UCB log/sqrt tail producer remains separate.")
     print("- EXP3-POTENTIAL is compiled locally as a deterministic finite-action exponential-weights potential surface with updated-potential unfolding, nonnegativity, one-step increment algebra, and finite-horizon telescope; estimator/log/regret leaves remain separate.")
