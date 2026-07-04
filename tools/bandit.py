@@ -1465,7 +1465,7 @@ LOCAL_LEAF_CARDS = [
         "declarations": [
             "OFUL.det_regularizedPrefixFeatureGram_le_pow_trace_bound_average",
         ],
-        "role": "Compiled trace-average determinant-upper consumer for OFUL/LinUCB: if a future AM-GM/eigenvalue route supplies `det(V_T) <= (trace(V_T)/d)^d`, the local trace/radius bound converts it to `det(V_T) <= ((d*lambda + T*L2)/d)^d` under a pointwise squared-feature-norm ceiling and an explicit average nonnegativity side condition. It does not prove the AM-GM product-of-eigenvalues theorem itself, nor the final multiplicative `lambda^d * exp(B)` simplification, self-normalized martingale concentration, confidence ellipsoids, or OFUL regret.",
+        "role": "Compiled trace-average determinant-upper consumer for OFUL/LinUCB: if a future AM-GM/eigenvalue route supplies `det(V_T) <= (trace(V_T)/d)^d`, the local trace/radius bound converts it to `det(V_T) <= ((d*lambda + T*L2)/d)^d` under a pointwise squared-feature-norm ceiling and an explicit average nonnegativity side condition. The AM-GM and scalar-exp simplifications are handled by later local leaves; self-normalized martingale concentration, confidence ellipsoids, and OFUL regret remain separate.",
         "mathlib_routes": ["LOCAL-LEAF-OFUL-PREFIX-TRACE-BOUND", "Mathlib.Analysis.MeanInequalities", "Mathlib.Analysis.Matrix.PosDef"],
     },
     {
@@ -1482,7 +1482,7 @@ LOCAL_LEAF_CARDS = [
             "OFUL.det_regularizedPrefixFeatureGram_le_pow_trace_div_card",
             "OFUL.det_regularizedPrefixFeatureGram_le_pow_trace_bound_average_of_pos_lambda",
         ],
-        "role": "Compiled Mathlib-backed AM-GM determinant trace bound for OFUL/LinUCB: wraps `Real.geom_mean_le_arith_mean` into a finite nonnegative product bound, applies it to positive-semidefinite eigenvalues using Mathlib `det_eq_prod_eigenvalues` and `trace_eq_sum_eigenvalues`, proves `det(V_T) <= (trace(V_T)/d)^d` for regularized Nat-prefix Grams under `0 < lambda`, and combines this with the local trace/radius bound to get `det(V_T) <= ((d*lambda + T*L2)/d)^d`. It assumes a nonempty feature type and still leaves the final multiplicative `lambda^d * exp(B)` simplification, self-normalized martingale concentration, confidence ellipsoids, and OFUL regret separate.",
+        "role": "Compiled Mathlib-backed AM-GM determinant trace bound for OFUL/LinUCB: wraps `Real.geom_mean_le_arith_mean` into a finite nonnegative product bound, applies it to positive-semidefinite eigenvalues using Mathlib `det_eq_prod_eigenvalues` and `trace_eq_sum_eigenvalues`, proves `det(V_T) <= (trace(V_T)/d)^d` for regularized Nat-prefix Grams under `0 < lambda`, and combines this with the local trace/radius bound to get `det(V_T) <= ((d*lambda + T*L2)/d)^d`. It assumes a nonempty feature type; scalar-exp simplification is handled by a later local leaf, while self-normalized martingale concentration, confidence ellipsoids, and OFUL regret remain separate.",
         "mathlib_routes": ["LOCAL-LEAF-OFUL-TRACE-AVERAGE-DET-CONSUMER", "LOCAL-LEAF-OFUL-PREFIX-TRACE-BOUND", "Mathlib.Analysis.MeanInequalities", "Mathlib.Analysis.Matrix.PosDef"],
     },
     {
@@ -1496,8 +1496,23 @@ LOCAL_LEAF_CARDS = [
             "OFUL.det_regularizedPrefixFeatureGram_le_mul_exp_of_trace_average_bound",
             "OFUL.sum_range_min_prefix_update_le_two_of_trace_average_bound",
         ],
-        "role": "Compiled final multiplicative handoff consumer for OFUL/LinUCB determinant growth: once a scalar simplification proves `((d*lambda + T*L2)/d)^d <= lambda^d * exp(B)`, the local AM-GM/trace/radius route yields `det(V_T) <= lambda^d * exp(B)` and therefore the clipped elliptical-potential sum bound `<= 2 * B`. It does not yet prove the scalar simplification itself, self-normalized martingale concentration, confidence ellipsoids, or OFUL regret.",
+        "role": "Compiled final multiplicative handoff consumer for OFUL/LinUCB determinant growth: once a scalar simplification proves `((d*lambda + T*L2)/d)^d <= lambda^d * exp(B)`, the local AM-GM/trace/radius route yields `det(V_T) <= lambda^d * exp(B)` and therefore the clipped elliptical-potential sum bound `<= 2 * B`. The concrete scalar-exp simplification is now tracked by `LOCAL-LEAF-OFUL-SCALAR-TRACE-AVERAGE-EXP-BOUND`; self-normalized martingale concentration, confidence ellipsoids, and OFUL regret remain separate.",
         "mathlib_routes": ["LOCAL-LEAF-OFUL-AMGM-DET-TRACE-BOUND", "LOCAL-LEAF-OFUL-DET-MUL-EXP-UPPER-CONSUMER", "Mathlib.Analysis.SpecialFunctions.Exp"],
+    },
+    {
+        "id": "LOCAL-LEAF-OFUL-SCALAR-TRACE-AVERAGE-EXP-BOUND",
+        "leaf_ids": [
+            "OFUL-ELLIPTICAL-POTENTIAL",
+        ],
+        "module": "BanditRLProof.OFULEllipticalPotential",
+        "status": "leanCompiled",
+        "declarations": [
+            "OFUL.trace_average_pow_le_lambda_pow_mul_exp_dim_scaled",
+            "OFUL.det_regularizedPrefixFeatureGram_le_mul_exp_trace_average_dim_scaled",
+            "OFUL.sum_range_min_prefix_update_le_two_trace_average_dim_scaled",
+        ],
+        "role": "Compiled scalar exponential simplification and concrete OFUL/LinUCB consumers: under `0 < lambda`, `0 <= L2`, nonempty feature type, and pointwise squared-norm ceiling, proves `((d*lambda + T*L2)/d)^d <= lambda^d * exp(d * (T*L2/(d*lambda)))`, then derives the determinant bound and clipped elliptical-potential sum bound with that explicit exponent. Cosmetic cancellation of `d * (T*L2/(d*lambda))` to `T*L2/lambda`, self-normalized martingale concentration, confidence ellipsoids, and OFUL regret remain separate.",
+        "mathlib_routes": ["LOCAL-LEAF-OFUL-AMGM-DET-TRACE-BOUND", "LOCAL-LEAF-OFUL-TRACE-AVERAGE-EXP-CONSUMER", "Mathlib.Analysis.SpecialFunctions.Exp", "MLIB-ORDER-ALGEBRA"],
     },
     {
         "id": "LOCAL-LEAF-CONCENTRATION-SUBGAUSSIAN",
@@ -6503,9 +6518,10 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- OFUL-LOG-DET-UPPER-CONSUMER is compiled locally as the terminal upper-bound handoff: any future proof of `log det(V_T)-log(lambda^d) <= B` immediately yields the clipped elliptical-potential bound `sum_t min(1,u_t) <= 2 * B`; concrete determinant upper bounds, dimension/radius simplifications, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- OFUL-DET-MUL-EXP-UPPER-CONSUMER is compiled locally as the multiplicative determinant-upper handoff: any future proof of `det(V_T) <= lambda^d * exp(B)` yields both `log det(V_T)-log(lambda^d) <= B` and `sum_t min(1,u_t) <= 2 * B`; concrete trace/AM-GM determinant bounds, dimension/radius simplifications, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- OFUL-PREFIX-TRACE-BOUND is compiled locally as the trace/radius input for determinant upper bounds: `trace(V_T) = d * lambda + sum_t ||x_t||^2` and `trace(V_T) <= d * lambda + T * L2` under a pointwise squared-norm ceiling; AM-GM determinant upper bounds, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
-    print("- OFUL-TRACE-AVERAGE-DET-CONSUMER is compiled locally as the trace-average determinant handoff: a future AM-GM proof of `det(V_T) <= (trace(V_T)/d)^d` plus the local trace/radius bound yields `det(V_T) <= ((d*lambda + T*L2)/d)^d`; AM-GM itself, multiplicative `lambda^d * exp(B)` simplification, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
-    print("- OFUL-AMGM-DET-TRACE-BOUND is compiled locally as the Mathlib-backed AM-GM/eigenvalue determinant trace bound: nonempty-feature regularized prefix Grams satisfy `det(V_T) <= (trace(V_T)/d)^d`, hence `det(V_T) <= ((d*lambda + T*L2)/d)^d` under a pointwise squared-norm ceiling; final multiplicative `lambda^d * exp(B)` simplification, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
-    print("- OFUL-TRACE-AVERAGE-EXP-CONSUMER is compiled locally as the final multiplicative handoff consumer: any scalar proof of `((d*lambda + T*L2)/d)^d <= lambda^d * exp(B)` now yields `det(V_T) <= lambda^d * exp(B)` and the clipped elliptical-potential bound `sum_t min(1,u_t) <= 2 * B`; scalar simplification, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
+    print("- OFUL-TRACE-AVERAGE-DET-CONSUMER is compiled locally as the trace-average determinant handoff: a future AM-GM proof of `det(V_T) <= (trace(V_T)/d)^d` plus the local trace/radius bound yields `det(V_T) <= ((d*lambda + T*L2)/d)^d`; AM-GM and scalar-exp simplification are handled by later local leaves, while self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
+    print("- OFUL-AMGM-DET-TRACE-BOUND is compiled locally as the Mathlib-backed AM-GM/eigenvalue determinant trace bound: nonempty-feature regularized prefix Grams satisfy `det(V_T) <= (trace(V_T)/d)^d`, hence `det(V_T) <= ((d*lambda + T*L2)/d)^d` under a pointwise squared-norm ceiling; scalar-exp simplification is handled by a later local leaf, while self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
+    print("- OFUL-TRACE-AVERAGE-EXP-CONSUMER is compiled locally as the final multiplicative handoff consumer: any scalar proof of `((d*lambda + T*L2)/d)^d <= lambda^d * exp(B)` now yields `det(V_T) <= lambda^d * exp(B)` and the clipped elliptical-potential bound `sum_t min(1,u_t) <= 2 * B`; concrete scalar-exp simplification is tracked by OFUL-SCALAR-TRACE-AVERAGE-EXP-BOUND, while self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
+    print("- OFUL-SCALAR-TRACE-AVERAGE-EXP-BOUND is compiled locally as the scalar exponential simplification plus concrete determinant/clipped-sum consumers: under `0 < lambda`, `0 <= L2`, and a pointwise squared-norm ceiling, the AM-GM trace-average route yields `det(V_T) <= lambda^d * exp(d * (T*L2/(d*lambda)))` and `sum_t min(1,u_t) <= 2 * (d * (T*L2/(d*lambda)))`; dimension-cancellation polish, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- TAIL-HOEFFDING-BOUNDED is compiled locally as the generic bounded-centered Hoeffding MGF wrapper with an interval variance proxy.")
     print("- TAIL-SUBGAUSS-SUM is compiled locally as the Mathlib-backed independent sub-Gaussian finite-sum tail wrapper.")
     print("- TAIL-SUBGAUSS-DIFF-SUM-IMPORT is compiled locally as the ENNReal-valued independent sub-Gaussian finite-sum tail boundary wrapper.")

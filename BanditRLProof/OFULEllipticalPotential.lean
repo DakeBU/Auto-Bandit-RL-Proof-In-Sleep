@@ -1458,6 +1458,67 @@ theorem sum_range_min_prefix_update_le_two_det_mul_exp_upper
       lambda hlambda history T B hdet_upper)
 
 /--
+Scalar simplification for the AM-GM trace/radius determinant upper bound.
+
+With `d = Fintype.card Feature` and squared-radius bound `L2 >= 0`, the
+trace-average expression is bounded by the multiplicative exponential form
+with exponent `d * (T * L2 / (d * lambda))`.
+-/
+theorem trace_average_pow_le_lambda_pow_mul_exp_dim_scaled
+    {Feature : Type u} [Fintype Feature] [Nonempty Feature]
+    (lambda : Real) (hlambda : 0 < lambda) (T : Nat) (L2 : Real)
+    (hL2 : 0 <= L2) :
+    (((Fintype.card Feature : Real) * lambda + T * L2) /
+        (Fintype.card Feature : Real)) ^ Fintype.card Feature <=
+      lambda ^ Fintype.card Feature *
+        Real.exp ((Fintype.card Feature : Real) *
+          ((T * L2) / ((Fintype.card Feature : Real) * lambda))) := by
+  let d : Real := Fintype.card Feature
+  let x : Real := (T * L2) / (d * lambda)
+  have hd_nat : 0 < Fintype.card Feature := Fintype.card_pos
+  have hd : 0 < d := by
+    dsimp [d]
+    exact_mod_cast hd_nat
+  have hd_ne : d ≠ 0 := ne_of_gt hd
+  have hlambda_ne : lambda ≠ 0 := ne_of_gt hlambda
+  have hden_pos : 0 < d * lambda := mul_pos hd hlambda
+  have hx_nonneg : 0 <= x := by
+    dsimp [x]
+    exact div_nonneg (mul_nonneg (Nat.cast_nonneg T) hL2) (le_of_lt hden_pos)
+  have hone_nonneg : 0 <= 1 + x := by
+    linarith
+  have hbase_le : 1 + x <= Real.exp x := by
+    simpa [add_comm] using Real.add_one_le_exp x
+  have hpow :
+      (1 + x) ^ Fintype.card Feature <= (Real.exp x) ^ Fintype.card Feature := by
+    exact pow_le_pow_left₀ hone_nonneg hbase_le _
+  have hmul :
+      lambda ^ Fintype.card Feature * (1 + x) ^ Fintype.card Feature <=
+        lambda ^ Fintype.card Feature * (Real.exp x) ^ Fintype.card Feature := by
+    exact mul_le_mul_of_nonneg_left hpow
+      (pow_nonneg (le_of_lt hlambda) _)
+  have havg :
+      ((d * lambda + T * L2) / d) = lambda * (1 + x) := by
+    dsimp [x]
+    field_simp [hd_ne, hlambda_ne]
+  calc
+    (((Fintype.card Feature : Real) * lambda + T * L2) /
+        (Fintype.card Feature : Real)) ^ Fintype.card Feature
+        = (lambda * (1 + x)) ^ Fintype.card Feature := by
+          simp [d] at havg
+          rw [havg]
+    _ = lambda ^ Fintype.card Feature * (1 + x) ^ Fintype.card Feature := by
+          rw [mul_pow]
+    _ <= lambda ^ Fintype.card Feature * (Real.exp x) ^ Fintype.card Feature := hmul
+    _ = lambda ^ Fintype.card Feature *
+          Real.exp ((Fintype.card Feature : Real) * x) := by
+          rw [Real.exp_nat_mul]
+    _ = lambda ^ Fintype.card Feature *
+          Real.exp ((Fintype.card Feature : Real) *
+            ((T * L2) / ((Fintype.card Feature : Real) * lambda))) := by
+          simp [d, x]
+
+/--
 If the trace-average determinant upper bound is simplified to the standard
 multiplicative `lambda^d * exp(B)` form, regularized Nat-prefix Grams inherit
 that multiplicative determinant upper bound.
@@ -1501,6 +1562,55 @@ theorem sum_range_min_prefix_update_le_two_of_trace_average_bound
     lambda hlambda history T B
     (det_regularizedPrefixFeatureGram_le_mul_exp_of_trace_average_bound
       lambda hlambda history T L2 B hbound haverage_to_exp)
+
+/--
+Concrete determinant upper bound obtained by combining the AM-GM trace/radius
+route with the scalar exponential simplification.
+-/
+theorem det_regularizedPrefixFeatureGram_le_mul_exp_trace_average_dim_scaled
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Nat -> Feature -> Real) (T : Nat) (L2 : Real)
+    (hL2 : 0 <= L2)
+    (hbound : forall t : Nat, t < T ->
+      dotProduct (history t) (history t) <= L2) :
+    (regularizedPrefixFeatureGram lambda history T).det <=
+      lambda ^ Fintype.card Feature *
+        Real.exp ((Fintype.card Feature : Real) *
+          ((T * L2) / ((Fintype.card Feature : Real) * lambda))) := by
+  exact det_regularizedPrefixFeatureGram_le_mul_exp_of_trace_average_bound
+    lambda hlambda history T L2
+    ((Fintype.card Feature : Real) *
+      ((T * L2) / ((Fintype.card Feature : Real) * lambda)))
+    hbound
+    (trace_average_pow_le_lambda_pow_mul_exp_dim_scaled
+      (Feature := Feature) lambda hlambda T L2 hL2)
+
+/--
+Concrete clipped elliptical-potential sum bound obtained from the trace/radius
+route and scalar exponential simplification.
+-/
+theorem sum_range_min_prefix_update_le_two_trace_average_dim_scaled
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Nat -> Feature -> Real) (T : Nat) (L2 : Real)
+    (hL2 : 0 <= L2)
+    (hbound : forall t : Nat, t < T ->
+      dotProduct (history t) (history t) <= L2) :
+    (Finset.range T).sum
+        (fun t => min 1 (dotProduct (history t)
+          (Matrix.mulVec
+            ((regularizedPrefixFeatureGram lambda history t)⁻¹)
+            (history t)))) <=
+      2 * ((Fintype.card Feature : Real) *
+        ((T * L2) / ((Fintype.card Feature : Real) * lambda))) := by
+  exact sum_range_min_prefix_update_le_two_of_trace_average_bound
+    lambda hlambda history T L2
+    ((Fintype.card Feature : Real) *
+      ((T * L2) / ((Fintype.card Feature : Real) * lambda)))
+    hbound
+    (trace_average_pow_le_lambda_pow_mul_exp_dim_scaled
+      (Feature := Feature) lambda hlambda T L2 hL2)
 
 end OFUL
 end BanditRLProof

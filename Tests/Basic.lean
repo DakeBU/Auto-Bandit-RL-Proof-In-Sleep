@@ -16694,6 +16694,30 @@ example {Feature : Type} [Fintype Feature] [DecidableEq Feature] [Nonempty Featu
   exact OFUL.det_regularizedPrefixFeatureGram_le_mul_exp_of_trace_average_bound
     lam hlam history T L2 B hbound haverage_to_exp
 
+example {Feature : Type} [Fintype Feature] [Nonempty Feature]
+    (lam : Real) (hlam : 0 < lam) (T : Nat) (L2 : Real)
+    (hL2 : 0 <= L2) :
+    (((Fintype.card Feature : Real) * lam + T * L2) /
+        (Fintype.card Feature : Real)) ^ Fintype.card Feature <=
+      lam ^ Fintype.card Feature *
+        Real.exp ((Fintype.card Feature : Real) *
+          ((T * L2) / ((Fintype.card Feature : Real) * lam))) := by
+  exact OFUL.trace_average_pow_le_lambda_pow_mul_exp_dim_scaled
+    (Feature := Feature) lam hlam T L2 hL2
+
+example {Feature : Type} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]
+    (lam : Real) (hlam : 0 < lam)
+    (history : Nat -> Feature -> Real) (T : Nat) (L2 : Real)
+    (hL2 : 0 <= L2)
+    (hbound : forall t : Nat, t < T ->
+      dotProduct (history t) (history t) <= L2) :
+    (OFUL.regularizedPrefixFeatureGram lam history T).det <=
+      lam ^ Fintype.card Feature *
+        Real.exp ((Fintype.card Feature : Real) *
+          ((T * L2) / ((Fintype.card Feature : Real) * lam))) := by
+  exact OFUL.det_regularizedPrefixFeatureGram_le_mul_exp_trace_average_dim_scaled
+    lam hlam history T L2 hL2 hbound
+
 example {Feature : Type} [Fintype Feature] [DecidableEq Feature]
     (lam : Real) (hlam : 0 < lam)
     (history : Nat -> Feature -> Real) (T : Nat) :
@@ -16840,5 +16864,21 @@ example {Feature : Type} [Fintype Feature] [DecidableEq Feature] [Nonempty Featu
       2 * B := by
   exact OFUL.sum_range_min_prefix_update_le_two_of_trace_average_bound
     lam hlam history T L2 B hbound haverage_to_exp
+
+example {Feature : Type} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]
+    (lam : Real) (hlam : 0 < lam)
+    (history : Nat -> Feature -> Real) (T : Nat) (L2 : Real)
+    (hL2 : 0 <= L2)
+    (hbound : forall t : Nat, t < T ->
+      dotProduct (history t) (history t) <= L2) :
+    (Finset.range T).sum
+        (fun t => min 1 (dotProduct (history t)
+          (Matrix.mulVec
+            ((OFUL.regularizedPrefixFeatureGram lam history t)⁻¹)
+            (history t)))) <=
+      2 * ((Fintype.card Feature : Real) *
+        ((T * L2) / ((Fintype.card Feature : Real) * lam))) := by
+  exact OFUL.sum_range_min_prefix_update_le_two_trace_average_dim_scaled
+    lam hlam history T L2 hL2 hbound
 
 end BanditRLProof
