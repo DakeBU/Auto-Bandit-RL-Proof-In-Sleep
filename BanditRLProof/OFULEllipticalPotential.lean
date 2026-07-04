@@ -144,6 +144,65 @@ noncomputable def quadraticForm {Feature : Type u} [Fintype Feature]
     (fun i => (Finset.univ : Finset Feature).sum
       (fun j => y i * A i j * y j))
 
+/-- Quadratic forms distribute over matrix addition. -/
+theorem quadraticForm_add
+    {Feature : Type u} [Fintype Feature]
+    (A B : Matrix Feature Feature Real) (y : Feature -> Real) :
+    quadraticForm (A + B) y = quadraticForm A y + quadraticForm B y := by
+  unfold quadraticForm
+  calc
+    (Finset.univ : Finset Feature).sum
+        (fun i => (Finset.univ : Finset Feature).sum
+          (fun j => y i * (A i j + B i j) * y j)) =
+      (Finset.univ : Finset Feature).sum
+        (fun i => (Finset.univ : Finset Feature).sum
+          (fun j => y i * A i j * y j + y i * B i j * y j)) := by
+      apply Finset.sum_congr rfl
+      intro i _hi
+      apply Finset.sum_congr rfl
+      intro j _hj
+      ring
+    _ =
+      (Finset.univ : Finset Feature).sum
+        (fun i =>
+          (Finset.univ : Finset Feature).sum
+            (fun j => y i * A i j * y j) +
+          (Finset.univ : Finset Feature).sum
+            (fun j => y i * B i j * y j)) := by
+      apply Finset.sum_congr rfl
+      intro i _hi
+      rw [Finset.sum_add_distrib]
+    _ =
+      (Finset.univ : Finset Feature).sum
+        (fun i => (Finset.univ : Finset Feature).sum
+          (fun j => y i * A i j * y j)) +
+      (Finset.univ : Finset Feature).sum
+        (fun i => (Finset.univ : Finset Feature).sum
+          (fun j => y i * B i j * y j)) := by
+      rw [Finset.sum_add_distrib]
+
+/-- Quadratic form of the scalar regularization matrix `lambda I`. -/
+theorem quadraticForm_scalar_identity
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (y : Feature -> Real) :
+    quadraticForm
+        (Matrix.scalar Feature lambda : Matrix Feature Feature Real) y =
+      lambda * (Finset.univ : Finset Feature).sum (fun i => y i ^ 2) := by
+  unfold quadraticForm
+  rw [Matrix.scalar_apply]
+  simp [Matrix.diagonal_apply]
+  calc
+    (Finset.univ : Finset Feature).sum
+        (fun x => y x * lambda * y x) =
+      (Finset.univ : Finset Feature).sum
+        (fun x => lambda * y x ^ 2) := by
+      apply Finset.sum_congr rfl
+      intro x _hx
+      ring
+    _ =
+      lambda * (Finset.univ : Finset Feature).sum (fun i => y i ^ 2) := by
+      rw [Finset.mul_sum]
+
 /-- Finite-history feature Gram matrix `sum_t x_t x_t^T`. -/
 noncomputable def featureGram {Time : Type v} {Feature : Type u}
     [Fintype Time] (x : Time -> Feature -> Real) :
@@ -278,6 +337,25 @@ theorem featureGram_quadraticForm_eq_sum_sq
       simpa [quadraticForm, rankOneGram] using
         rankOneGram_quadraticForm_eq_sq (x := x t) (y := y)
 
+/--
+The regularized Gram quadratic form is the scalar regularization term plus the
+finite-history Gram sum of squared feature projections.
+-/
+theorem regularizedFeatureGram_quadraticForm_eq_sum_sq
+    {Time : Type v} {Feature : Type u}
+    [Fintype Time] [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (x : Time -> Feature -> Real) (y : Feature -> Real) :
+    quadraticForm (regularizedFeatureGram lambda x) y =
+      lambda * (Finset.univ : Finset Feature).sum (fun i => y i ^ 2) +
+        (Finset.univ : Finset Time).sum
+          (fun t =>
+            ((Finset.univ : Finset Feature).sum
+              (fun i => x t i * y i)) ^ 2) := by
+  rw [regularizedFeatureGram_eq_scalar_add_featureGram]
+  rw [quadraticForm_add]
+  rw [quadraticForm_scalar_identity]
+  rw [featureGram_quadraticForm_eq_sum_sq]
+
 /-- Finite-history Gram matrices have nonnegative quadratic forms. -/
 theorem featureGram_quadraticForm_nonneg
     {Time : Type v} {Feature : Type u} [Fintype Time] [Fintype Feature]
@@ -285,6 +363,20 @@ theorem featureGram_quadraticForm_nonneg
     0 <= quadraticForm (featureGram x) y := by
   rw [featureGram_quadraticForm_eq_sum_sq]
   exact Finset.sum_nonneg (fun t _ht => sq_nonneg _)
+
+/-- Regularized finite-history Gram matrices are PSD when `0 <= lambda`. -/
+theorem regularizedFeatureGram_quadraticForm_nonneg
+    {Time : Type v} {Feature : Type u}
+    [Fintype Time] [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 <= lambda)
+    (x : Time -> Feature -> Real) (y : Feature -> Real) :
+    0 <= quadraticForm (regularizedFeatureGram lambda x) y := by
+  rw [regularizedFeatureGram_eq_scalar_add_featureGram]
+  rw [quadraticForm_add]
+  rw [quadraticForm_scalar_identity]
+  exact add_nonneg
+    (mul_nonneg hlambda (Finset.sum_nonneg (fun i _hi => sq_nonneg _)))
+    (featureGram_quadraticForm_nonneg x y)
 
 end OFUL
 end BanditRLProof

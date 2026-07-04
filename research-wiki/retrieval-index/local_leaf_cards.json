@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T16:19:41+00:00",
+  "generated": "2026-07-04T16:26:08+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -371,6 +371,27 @@
         "LOCAL-LEAF-OFUL-GRAM-PSD",
         "Mathlib.LinearAlgebra.Matrix.SchurComplement",
         "MLIB-CONVEX-LINALG"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-OFUL-REGULARIZED-GRAM-QFORM",
+      "leaf_ids": [
+        "OFUL-ELLIPTICAL-POTENTIAL"
+      ],
+      "module": "BanditRLProof.OFULEllipticalPotential",
+      "status": "leanCompiled",
+      "declarations": [
+        "OFUL.quadraticForm_add",
+        "OFUL.quadraticForm_scalar_identity",
+        "OFUL.regularizedFeatureGram_quadraticForm_eq_sum_sq",
+        "OFUL.regularizedFeatureGram_quadraticForm_nonneg"
+      ],
+      "role": "Compiled regularized-Gram quadratic-form wrapper for OFUL/LinUCB: proves quadratic forms distribute over matrix addition, unfolds the scalar regularization term as `lambda * sum_i y_i^2`, unfolds the regularized Gram quadratic form as scalar regularization plus finite-history squared projections, and proves PSD under `0 <= lambda`. This does not prove strict positive definiteness, determinant positivity, invertibility of arbitrary regularized Grams, log-determinant telescoping, determinant-growth inequalities, self-normalized martingale concentration, confidence ellipsoids, or OFUL regret.",
+      "mathlib_routes": [
+        "LOCAL-LEAF-OFUL-REGULARIZED-GRAM-BASE",
+        "LOCAL-LEAF-OFUL-GRAM-PSD",
+        "MLIB-CONVEX-LINALG",
+        "MLIB-FINSET-SUMS"
       ]
     },
     {

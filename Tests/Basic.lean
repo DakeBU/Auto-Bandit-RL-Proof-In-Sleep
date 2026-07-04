@@ -16437,4 +16437,35 @@ example {Time Feature : Type} [Fintype Time] [Fintype Feature]
       Matrix.scalar Feature lam + OFUL.featureGram x := by
   exact OFUL.regularizedFeatureGram_eq_scalar_add_featureGram lam x
 
+example {Feature : Type} [Fintype Feature]
+    (A B : Matrix Feature Feature Real) (y : Feature -> Real) :
+    OFUL.quadraticForm (A + B) y =
+      OFUL.quadraticForm A y + OFUL.quadraticForm B y := by
+  exact OFUL.quadraticForm_add A B y
+
+example {Feature : Type} [Fintype Feature] [DecidableEq Feature]
+    (lam : Real) (y : Feature -> Real) :
+    OFUL.quadraticForm
+        (Matrix.scalar Feature lam : Matrix Feature Feature Real) y =
+      lam * (Finset.univ : Finset Feature).sum (fun i => y i ^ 2) := by
+  exact OFUL.quadraticForm_scalar_identity lam y
+
+example {Time Feature : Type} [Fintype Time] [Fintype Feature]
+    [DecidableEq Feature]
+    (lam : Real) (x : Time -> Feature -> Real) (y : Feature -> Real) :
+    OFUL.quadraticForm (OFUL.regularizedFeatureGram lam x) y =
+      lam * (Finset.univ : Finset Feature).sum (fun i => y i ^ 2) +
+        (Finset.univ : Finset Time).sum
+          (fun t =>
+            ((Finset.univ : Finset Feature).sum
+              (fun i => x t i * y i)) ^ 2) := by
+  exact OFUL.regularizedFeatureGram_quadraticForm_eq_sum_sq lam x y
+
+example {Time Feature : Type} [Fintype Time] [Fintype Feature]
+    [DecidableEq Feature]
+    (lam : Real) (hlam : 0 <= lam)
+    (x : Time -> Feature -> Real) (y : Feature -> Real) :
+    0 <= OFUL.quadraticForm (OFUL.regularizedFeatureGram lam x) y := by
+  exact OFUL.regularizedFeatureGram_quadraticForm_nonneg lam hlam x y
+
 end BanditRLProof
