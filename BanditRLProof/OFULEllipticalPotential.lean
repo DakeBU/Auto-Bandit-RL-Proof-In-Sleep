@@ -320,6 +320,31 @@ theorem regularizedPrefixFeatureGram_succ
     Finset.sum_range_succ]
   ring
 
+/-- The zero-horizon prefix Gram is the zero matrix. -/
+theorem prefixFeatureGram_zero
+    {Feature : Type u} (x : Nat -> Feature -> Real) :
+    prefixFeatureGram x 0 = 0 := by
+  ext i j
+  simp [prefixFeatureGram]
+
+/-- The zero-horizon regularized prefix Gram is the scalar base `lambda I`. -/
+theorem regularizedPrefixFeatureGram_zero
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (x : Nat -> Feature -> Real) :
+    regularizedPrefixFeatureGram lambda x 0 =
+      (Matrix.scalar Feature lambda : Matrix Feature Feature Real) := by
+  rw [regularizedPrefixFeatureGram, prefixFeatureGram_zero]
+  simp
+
+/-- The zero-horizon regularized prefix Gram determinant is `lambda^d`. -/
+theorem det_regularizedPrefixFeatureGram_zero
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (x : Nat -> Feature -> Real) :
+    (regularizedPrefixFeatureGram lambda x 0).det =
+      lambda ^ Fintype.card Feature := by
+  rw [regularizedPrefixFeatureGram_zero]
+  exact det_scalar_identity lambda
+
 /-- Prefix Gram matrices are Hermitian. -/
 theorem prefixFeatureGram_isHermitian
     {Feature : Type u} [Fintype Feature]
@@ -1011,6 +1036,25 @@ theorem sum_range_log_regularizedPrefixFeatureGram_update_factor_eq_log_det_rati
     (fun t _ht =>
       log_det_regularizedPrefixFeatureGram_succ_sub
         lambda hlambda history t)
+
+/--
+Concrete prefix log-det telescope with the scalar-base determinant expanded as
+`lambda ^ d`.
+-/
+theorem sum_range_log_regularizedPrefixFeatureGram_update_factor_eq_log_det_sub_base
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Nat -> Feature -> Real) (T : Nat) :
+    (Finset.range T).sum
+        (fun t => Real.log (1 + dotProduct (history t)
+          (Matrix.mulVec
+            ((regularizedPrefixFeatureGram lambda history t)⁻¹)
+            (history t)))) =
+      Real.log (regularizedPrefixFeatureGram lambda history T).det -
+        Real.log (lambda ^ Fintype.card Feature) := by
+  rw [sum_range_log_regularizedPrefixFeatureGram_update_factor_eq_log_det_ratio
+    lambda hlambda history T]
+  rw [det_regularizedPrefixFeatureGram_zero]
 
 end OFUL
 end BanditRLProof

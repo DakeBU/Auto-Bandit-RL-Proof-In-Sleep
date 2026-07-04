@@ -16618,6 +16618,12 @@ example {Feature : Type} [Fintype Feature] [DecidableEq Feature]
   exact OFUL.regularizedPrefixFeatureGram_succ lam history T
 
 example {Feature : Type} [Fintype Feature] [DecidableEq Feature]
+    (lam : Real) (history : Nat -> Feature -> Real) :
+    (OFUL.regularizedPrefixFeatureGram lam history 0).det =
+      lam ^ Fintype.card Feature := by
+  exact OFUL.det_regularizedPrefixFeatureGram_zero lam history
+
+example {Feature : Type} [Fintype Feature] [DecidableEq Feature]
     (lam : Real) (hlam : 0 < lam)
     (history : Nat -> Feature -> Real) (T : Nat) :
     Real.log (OFUL.regularizedPrefixFeatureGram lam history (T + 1)).det -
@@ -16640,6 +16646,19 @@ example {Feature : Type} [Fintype Feature] [DecidableEq Feature]
       Real.log (OFUL.regularizedPrefixFeatureGram lam history T).det -
         Real.log (OFUL.regularizedPrefixFeatureGram lam history 0).det := by
   exact OFUL.sum_range_log_regularizedPrefixFeatureGram_update_factor_eq_log_det_ratio
+    lam hlam history T
+
+example {Feature : Type} [Fintype Feature] [DecidableEq Feature]
+    (lam : Real) (hlam : 0 < lam)
+    (history : Nat -> Feature -> Real) (T : Nat) :
+    (Finset.range T).sum
+        (fun t => Real.log (1 + dotProduct (history t)
+          (Matrix.mulVec
+            ((OFUL.regularizedPrefixFeatureGram lam history t)⁻¹)
+            (history t)))) =
+      Real.log (OFUL.regularizedPrefixFeatureGram lam history T).det -
+        Real.log (lam ^ Fintype.card Feature) := by
+  exact OFUL.sum_range_log_regularizedPrefixFeatureGram_update_factor_eq_log_det_sub_base
     lam hlam history T
 
 end BanditRLProof
