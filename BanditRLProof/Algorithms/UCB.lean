@@ -1,5 +1,7 @@
 import Mathlib.Data.Fintype.Basic
 import Mathlib.Data.Real.Basic
+import Mathlib.MeasureTheory.Constructions.BorelSpace.Order
+import Mathlib.MeasureTheory.MeasurableSpace.Basic
 import Mathlib.Tactic.Linarith
 import BanditRLProof.ProbabilityUnionBound
 import BanditRLProof.Regret
@@ -107,12 +109,47 @@ def lowerConfidenceBad {Omega Arm : Type}
     (radius : Arm -> Real) (arm : Arm) : Set Omega :=
   {omega | empiricalMean omega arm - radius arm > trueMean arm}
 
+/-- Upper-confidence failure is measurable when the arm empirical mean is measurable. -/
+theorem measurableSet_upperConfidenceBad
+    {Omega Arm : Type} [MeasurableSpace Omega]
+    (trueMean : Arm -> Real) (empiricalMean : Omega -> Arm -> Real)
+    (radius : Arm -> Real) (arm : Arm)
+    (hmeas : Measurable (fun omega : Omega => empiricalMean omega arm)) :
+    MeasurableSet (upperConfidenceBad trueMean empiricalMean radius arm) := by
+  simpa [upperConfidenceBad, confidenceScore] using
+    measurableSet_lt (hmeas.add measurable_const) measurable_const
+
+/-- Lower-confidence failure is measurable when the arm empirical mean is measurable. -/
+theorem measurableSet_lowerConfidenceBad
+    {Omega Arm : Type} [MeasurableSpace Omega]
+    (trueMean : Arm -> Real) (empiricalMean : Omega -> Arm -> Real)
+    (radius : Arm -> Real) (arm : Arm)
+    (hmeas : Measurable (fun omega : Omega => empiricalMean omega arm)) :
+    MeasurableSet (lowerConfidenceBad trueMean empiricalMean radius arm) := by
+  simpa [lowerConfidenceBad] using
+    measurableSet_lt measurable_const (hmeas.sub measurable_const)
+
 /-- The finite-arm UCB confidence bad event, as a union of upper/lower failures. -/
 def confidenceBadEvent {Omega Arm : Type} [Fintype Arm]
     (trueMean : Arm -> Real) (empiricalMean : Omega -> Arm -> Real)
     (radius : Arm -> Real) : Set Omega :=
   ⋃ arm : Arm, upperConfidenceBad trueMean empiricalMean radius arm ∪
     lowerConfidenceBad trueMean empiricalMean radius arm
+
+/-- The finite-arm UCB confidence bad event is measurable from per-arm empirical-mean measurability. -/
+theorem measurableSet_confidenceBadEvent
+    {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
+    (trueMean : Arm -> Real) (empiricalMean : Omega -> Arm -> Real)
+    (radius : Arm -> Real)
+    (hmeas : forall arm : Arm,
+      Measurable (fun omega : Omega => empiricalMean omega arm)) :
+    MeasurableSet (confidenceBadEvent trueMean empiricalMean radius) := by
+  unfold confidenceBadEvent
+  exact MeasurableSet.iUnion (fun arm =>
+    (measurableSet_upperConfidenceBad trueMean empiricalMean radius arm
+      (hmeas arm)).union
+      (measurableSet_lowerConfidenceBad trueMean empiricalMean radius arm
+        (hmeas arm)))
 
 theorem not_upperConfidenceBad_of_not_confidenceBadEvent
     {Omega Arm : Type} [Fintype Arm]
