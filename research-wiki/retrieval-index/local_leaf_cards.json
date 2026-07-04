@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T16:26:08+00:00",
+  "generated": "2026-07-04T16:31:36+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -390,6 +390,25 @@
       "mathlib_routes": [
         "LOCAL-LEAF-OFUL-REGULARIZED-GRAM-BASE",
         "LOCAL-LEAF-OFUL-GRAM-PSD",
+        "MLIB-CONVEX-LINALG",
+        "MLIB-FINSET-SUMS"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-OFUL-REGULARIZED-GRAM-POS-QFORM",
+      "leaf_ids": [
+        "OFUL-ELLIPTICAL-POTENTIAL"
+      ],
+      "module": "BanditRLProof.OFULEllipticalPotential",
+      "status": "leanCompiled",
+      "declarations": [
+        "OFUL.sum_sq_pos_of_exists_ne_zero",
+        "OFUL.regularizedFeatureGram_quadraticForm_pos_of_pos_lambda"
+      ],
+      "role": "Compiled strict-positive regularized-Gram quadratic-form wrapper for OFUL/LinUCB: proves a finite coordinate square sum is positive for nonzero vectors and therefore `quadraticForm (lambda I + sum_t x_t x_t^T) y > 0` under `0 < lambda` and `y != 0`. This is a positive-definiteness route lemma; it does not prove determinant positivity, matrix inverse existence for arbitrary regularized Grams, log-determinant telescoping, determinant-growth inequalities, self-normalized martingale concentration, confidence ellipsoids, or OFUL regret.",
+      "mathlib_routes": [
+        "LOCAL-LEAF-OFUL-REGULARIZED-GRAM-QFORM",
+        "LOCAL-LEAF-OFUL-REGULARIZED-GRAM-BASE",
         "MLIB-CONVEX-LINALG",
         "MLIB-FINSET-SUMS"
       ]

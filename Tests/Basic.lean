@@ -16468,4 +16468,19 @@ example {Time Feature : Type} [Fintype Time] [Fintype Feature]
     0 <= OFUL.quadraticForm (OFUL.regularizedFeatureGram lam x) y := by
   exact OFUL.regularizedFeatureGram_quadraticForm_nonneg lam hlam x y
 
+example {Feature : Type} [Fintype Feature]
+    (y : Feature -> Real) (hy : ∃ i : Feature, y i ≠ 0) :
+    0 < (Finset.univ : Finset Feature).sum (fun i => y i ^ 2) := by
+  exact OFUL.sum_sq_pos_of_exists_ne_zero y hy
+
+example {Time Feature : Type} [Fintype Time] [Fintype Feature]
+    [DecidableEq Feature]
+    (lam : Real) (hlam : 0 < lam)
+    (x : Time -> Feature -> Real) (y : Feature -> Real)
+    (hy : ∃ i : Feature, y i ≠ 0) :
+    0 < OFUL.quadraticForm (OFUL.regularizedFeatureGram lam x) y := by
+  exact
+    OFUL.regularizedFeatureGram_quadraticForm_pos_of_pos_lambda
+      lam hlam x y hy
+
 end BanditRLProof

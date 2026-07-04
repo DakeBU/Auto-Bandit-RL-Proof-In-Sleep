@@ -203,6 +203,18 @@ theorem quadraticForm_scalar_identity
       lambda * (Finset.univ : Finset Feature).sum (fun i => y i ^ 2) := by
       rw [Finset.mul_sum]
 
+/-- A finite sum of coordinate squares is positive for a nonzero vector. -/
+theorem sum_sq_pos_of_exists_ne_zero
+    {Feature : Type u} [Fintype Feature]
+    (y : Feature -> Real) (hy : ∃ i : Feature, y i ≠ 0) :
+    0 < (Finset.univ : Finset Feature).sum (fun i => y i ^ 2) := by
+  classical
+  let i := Classical.choose hy
+  have hi : y i ≠ 0 := Classical.choose_spec hy
+  refine Finset.sum_pos' (fun j _hj => sq_nonneg (y j)) ?_
+  exact Exists.intro i
+    (And.intro (Finset.mem_univ i) (sq_pos_of_ne_zero hi))
+
 /-- Finite-history feature Gram matrix `sum_t x_t x_t^T`. -/
 noncomputable def featureGram {Time : Type v} {Feature : Type u}
     [Fintype Time] (x : Time -> Feature -> Real) :
@@ -377,6 +389,22 @@ theorem regularizedFeatureGram_quadraticForm_nonneg
   exact add_nonneg
     (mul_nonneg hlambda (Finset.sum_nonneg (fun i _hi => sq_nonneg _)))
     (featureGram_quadraticForm_nonneg x y)
+
+/--
+Regularized finite-history Gram matrices have strictly positive quadratic
+forms on nonzero vectors when `0 < lambda`.
+-/
+theorem regularizedFeatureGram_quadraticForm_pos_of_pos_lambda
+    {Time : Type v} {Feature : Type u}
+    [Fintype Time] [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (x : Time -> Feature -> Real) (y : Feature -> Real)
+    (hy : ∃ i : Feature, y i ≠ 0) :
+    0 < quadraticForm (regularizedFeatureGram lambda x) y := by
+  rw [regularizedFeatureGram_quadraticForm_eq_sum_sq]
+  exact add_pos_of_pos_of_nonneg
+    (mul_pos hlambda (sum_sq_pos_of_exists_ne_zero y hy))
+    (Finset.sum_nonneg (fun t _ht => sq_nonneg _))
 
 end OFUL
 end BanditRLProof
