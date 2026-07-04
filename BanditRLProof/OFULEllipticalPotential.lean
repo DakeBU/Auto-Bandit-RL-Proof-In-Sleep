@@ -11,11 +11,12 @@ import Mathlib.Tactic.Ring
 This module records the first deterministic finite-dimensional linear-algebra
 surface needed by OFUL/LinUCB routes.  It packages rank-one feature Gram
 matrices and finite-history Gram matrices, then proves their quadratic forms
-are squares or sums of squares.
+are squares or sums of squares.  It also exposes the determinant and
+invertibility side condition for the scalar regularization base used in OFUL
+Gram recursions.
 
-It does not prove a matrix determinant lemma, log-determinant telescoping,
-self-normalized concentration, confidence ellipsoids, or an OFUL regret
-theorem.
+It does not prove log-determinant telescoping, determinant growth inequalities,
+self-normalized concentration, confidence ellipsoids, or an OFUL regret theorem.
 -/
 
 namespace BanditRLProof
@@ -87,6 +88,55 @@ theorem det_add_rankOneGram
     (A := A) hA x x]
   rw [det_rankOne_update_factor_eq_one_add_dotProduct_inv_mulVec]
 
+/-- Determinant of the scalar regularization matrix `lambda I`. -/
+theorem det_scalar_identity
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) :
+    (Matrix.scalar Feature lambda : Matrix Feature Feature Real).det =
+      lambda ^ Fintype.card Feature := by
+  rw [Matrix.scalar_apply]
+  rw [Matrix.det_diagonal]
+  simp
+
+/-- Nonzero scalar regularization has nonzero determinant. -/
+theorem det_scalar_identity_ne_zero
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    {lambda : Real} (hlambda : lambda ≠ 0) :
+    (Matrix.scalar Feature lambda : Matrix Feature Feature Real).det ≠ 0 := by
+  rw [det_scalar_identity]
+  exact pow_ne_zero _ hlambda
+
+/--
+Nonzero scalar regularization satisfies Mathlib's determinant-unit side
+condition for the rank-one determinant update lemma.
+-/
+theorem isUnit_det_scalar_identity
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    {lambda : Real} (hlambda : lambda ≠ 0) :
+    IsUnit (Matrix.scalar Feature lambda : Matrix Feature Feature Real).det := by
+  exact IsUnit.mk0 _ (det_scalar_identity_ne_zero hlambda)
+
+/--
+First determinant update from the regularized scalar base `lambda I`.
+
+This is the one-step OFUL/LinUCB determinant recursion specialized to the
+empty-history base matrix.  General log-det telescoping and determinant-growth
+bounds remain separate leaves.
+-/
+theorem det_scalar_add_rankOneGram
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    {lambda : Real} (hlambda : lambda ≠ 0) (x : Feature -> Real) :
+    ((Matrix.scalar Feature lambda : Matrix Feature Feature Real) +
+        rankOneGram x).det =
+      (Matrix.scalar Feature lambda : Matrix Feature Feature Real).det *
+        (1 + dotProduct x
+          (Matrix.mulVec
+            ((Matrix.scalar Feature lambda :
+              Matrix Feature Feature Real)⁻¹) x)) := by
+  exact det_add_rankOneGram
+    (Matrix.scalar Feature lambda : Matrix Feature Feature Real)
+    (isUnit_det_scalar_identity hlambda) x
+
 /-- Quadratic form associated with a finite real matrix. -/
 noncomputable def quadraticForm {Feature : Type u} [Fintype Feature]
     (A : Matrix Feature Feature Real) (y : Feature -> Real) : Real :=
@@ -100,6 +150,23 @@ noncomputable def featureGram {Time : Type v} {Feature : Type u}
     Matrix Feature Feature Real :=
   fun i j => (Finset.univ : Finset Time).sum
     (fun t => x t i * x t j)
+
+/-- Regularized finite-history Gram matrix `lambda I + sum_t x_t x_t^T`. -/
+noncomputable def regularizedFeatureGram
+    {Time : Type v} {Feature : Type u}
+    [Fintype Time] [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (x : Time -> Feature -> Real) :
+    Matrix Feature Feature Real :=
+  Matrix.scalar Feature lambda + featureGram x
+
+/-- The named regularized Gram unfolds to scalar regularization plus Gram. -/
+theorem regularizedFeatureGram_eq_scalar_add_featureGram
+    {Time : Type v} {Feature : Type u}
+    [Fintype Time] [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (x : Time -> Feature -> Real) :
+    regularizedFeatureGram lambda x =
+      Matrix.scalar Feature lambda + featureGram x := by
+  rfl
 
 /--
 The quadratic form of a rank-one Gram matrix is the square of the projection

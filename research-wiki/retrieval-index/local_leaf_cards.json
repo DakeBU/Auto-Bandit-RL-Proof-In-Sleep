@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T16:04:05+00:00",
+  "generated": "2026-07-04T16:19:41+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -347,6 +347,29 @@
       "mathlib_routes": [
         "Mathlib.LinearAlgebra.Matrix.SchurComplement",
         "LOCAL-LEAF-OFUL-GRAM-PSD",
+        "MLIB-CONVEX-LINALG"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-OFUL-REGULARIZED-GRAM-BASE",
+      "leaf_ids": [
+        "OFUL-ELLIPTICAL-POTENTIAL"
+      ],
+      "module": "BanditRLProof.OFULEllipticalPotential",
+      "status": "leanCompiled",
+      "declarations": [
+        "OFUL.det_scalar_identity",
+        "OFUL.det_scalar_identity_ne_zero",
+        "OFUL.isUnit_det_scalar_identity",
+        "OFUL.det_scalar_add_rankOneGram",
+        "OFUL.regularizedFeatureGram",
+        "OFUL.regularizedFeatureGram_eq_scalar_add_featureGram"
+      ],
+      "role": "Compiled regularized-Gram base wrapper for OFUL/LinUCB: defines `lambda I + sum_t x_t x_t^T`, proves `det (lambda I) = lambda^d`, packages nonzero scalar regularization as Mathlib's `IsUnit det` side condition, and specializes the rank-one determinant update from the scalar base. This does not prove positive definiteness/invertibility of arbitrary regularized Grams, log-determinant telescoping, determinant-growth inequalities, self-normalized martingale concentration, confidence ellipsoids, or OFUL regret.",
+      "mathlib_routes": [
+        "LOCAL-LEAF-OFUL-RANKONE-DET-UPDATE",
+        "LOCAL-LEAF-OFUL-GRAM-PSD",
+        "Mathlib.LinearAlgebra.Matrix.SchurComplement",
         "MLIB-CONVEX-LINALG"
       ]
     },

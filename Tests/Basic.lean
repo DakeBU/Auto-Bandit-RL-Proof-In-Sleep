@@ -16408,4 +16408,33 @@ example {Feature : Type} [Fintype Feature] [DecidableEq Feature]
       A.det * (1 + dotProduct x (Matrix.mulVec (A⁻¹) x)) := by
   exact OFUL.det_add_rankOneGram A hA x
 
+example {Feature : Type} [Fintype Feature] [DecidableEq Feature]
+    (lam : Real) :
+    (Matrix.scalar Feature lam : Matrix Feature Feature Real).det =
+      lam ^ Fintype.card Feature := by
+  exact OFUL.det_scalar_identity lam
+
+example {Feature : Type} [Fintype Feature] [DecidableEq Feature]
+    {lam : Real} (hlam : lam ≠ 0) :
+    IsUnit (Matrix.scalar Feature lam : Matrix Feature Feature Real).det := by
+  exact OFUL.isUnit_det_scalar_identity hlam
+
+example {Feature : Type} [Fintype Feature] [DecidableEq Feature]
+    {lam : Real} (hlam : lam ≠ 0) (x : Feature -> Real) :
+    ((Matrix.scalar Feature lam : Matrix Feature Feature Real) +
+        OFUL.rankOneGram x).det =
+      (Matrix.scalar Feature lam : Matrix Feature Feature Real).det *
+        (1 + dotProduct x
+          (Matrix.mulVec
+            ((Matrix.scalar Feature lam :
+              Matrix Feature Feature Real)⁻¹) x)) := by
+  exact OFUL.det_scalar_add_rankOneGram hlam x
+
+example {Time Feature : Type} [Fintype Time] [Fintype Feature]
+    [DecidableEq Feature]
+    (lam : Real) (x : Time -> Feature -> Real) :
+    OFUL.regularizedFeatureGram lam x =
+      Matrix.scalar Feature lam + OFUL.featureGram x := by
+  exact OFUL.regularizedFeatureGram_eq_scalar_add_featureGram lam x
+
 end BanditRLProof
