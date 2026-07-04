@@ -9106,9 +9106,149 @@ theorem centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairDefiniti
           (varianceProxy := varianceProxy)
           (defaultAction := defaultAction)
           (reward := reward)
+      (hreward := hreward)
+          source)
+      (i := i)
+
+/--
+Consume a definitional centered generated-policy random next-pair source to
+obtain the succ-indexed conditional sub-Gaussian MGF witness for the centered
+reward.
+
+This is the definitional-action wrapper around the explicit centered-source MGF
+consumer: the action trace is fixed to `generatedActionFromRewardHistory`, and
+the definitional source is lowered to the explicit centered source.  The
+analytic contracts required by Mathlib's MGF predicate remain explicit.
+-/
+theorem centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalCenteredSource
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (source :
+      GeneratedActionRandomPairDefinitionalCenteredSource mu rewardKernel
+        policy context state mean varianceProxy defaultAction reward hreward)
+    (i : Nat)
+    (c : NNReal)
+    (h_centered_meas :
+      @Measurable Omega Real mOmega inferInstance
+        (fun omega : Omega =>
+          (((reward omega (i + 1) -
+            mean
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+                Rat) : Real))))
+    (h_integrable_exp :
+      forall t : Real,
+        MeasureTheory.Integrable
+          (fun omega : Omega =>
+            Real.exp (t *
+              (((reward omega (i + 1) -
+                mean
+                  (context i
+                    (History.finiteRewardHistoryOfTrace (reward omega) i))
+                  ((policy i).action
+                    (state i
+                      (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+                    Rat) : Real)))) mu)
+    (h_variance_le :
+      Filter.Eventually
+        (fun omega : Omega =>
+          varianceProxy
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace (reward omega) i))) <=
+            c)
+        (ae
+          (mu.trim
+            ((History.historyFiltrationSucc
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward)
+              reward
+              (generatedActionFromRewardHistory_measurable
+                (policy := policy) (state := state)
+                (defaultAction := defaultAction) (reward := reward)
+                hreward source.definitional_map_source.hstate)
+              hreward).le i)))) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward source.definitional_map_source.hstate)
+        hreward) i)
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward source.definitional_map_source.hstate)
+        hreward).le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      c mu := by
+  exact
+    centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairCenteredSource
+      (mu := mu)
+      (action :=
+        generatedActionFromRewardHistory policy state defaultAction reward)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (mean := mean)
+      (varianceProxy := varianceProxy)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (haction :=
+        generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state)
+          (defaultAction := defaultAction) (reward := reward)
+          hreward source.definitional_map_source.hstate)
+      (hreward := hreward)
+      (source :=
+        generatedActionRandomPairCenteredSource_of_definitionalCenteredSource
+          (mu := mu)
+          (rewardKernel := rewardKernel)
+          (policy := policy)
+          (context := context)
+          (state := state)
+          (mean := mean)
+          (varianceProxy := varianceProxy)
+          (defaultAction := defaultAction)
+          (reward := reward)
           (hreward := hreward)
           source)
       (i := i)
+      (c := c)
+      h_centered_meas
+      h_integrable_exp
+      h_variance_le
 
 /--
 Consume a bounded centered generated-policy random next-pair source to obtain

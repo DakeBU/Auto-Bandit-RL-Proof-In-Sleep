@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T12:35:53+00:00",
+  "generated": "2026-07-04T12:44:16+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -2717,6 +2717,32 @@
         "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-MAP-SOURCE-CONTRACT",
         "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-RANDOM-PAIR-SOURCE-CONTRACT",
         "LOCAL-LEAF-KERNEL-REWARD-MAP-LAW-TRANSFER",
+        "FILTRATION-HISTORY"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-DEFINITIONAL-CENTERED-SOURCE-COND-MGF-CONSUMER",
+      "leaf_ids": [
+        "COND-EXPECT-REWARD",
+        "ADAPTED-ACTION",
+        "MEAS-POLICY",
+        "MEAS-HISTORY",
+        "KERNEL-POLICY-BIND",
+        "KERNEL-REWARD",
+        "MEAS-REWARD"
+      ],
+      "module": "BanditRLProof.ConditionalRewardLawSource",
+      "status": "leanCompiled",
+      "declarations": [
+        "ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalCenteredSource"
+      ],
+      "role": "Compiled project-local definitional centered-source conditional MGF consumer for COND-EXPECT-REWARD: a GeneratedActionRandomPairDefinitionalCenteredSource now fixes the action trace to generatedActionFromRewardHistory, lowers to the explicit centered source, and reuses the Mathlib HasCondSubgaussianMGF route for the centered successor reward. This removes explicit action/haction inputs at the centered MGF layer while leaving ambient centered-reward measurability, exponential integrability, and variance-proxy domination as explicit regularity contracts.",
+      "mathlib_routes": [
+        "MLIB-PROBABILITY-SUBGAUSSIAN",
+        "MLIB-CONDITIONAL-EXPECTATION",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-CENTERED-SOURCE-COND-MGF-CONSUMER",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-CENTERED-SOURCE-CONTRACT",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-DEFINITIONAL-CENTERED-SOURCE-TO-HISTORYSTEP-PAIR-LAW",
         "FILTRATION-HISTORY"
       ]
     },
