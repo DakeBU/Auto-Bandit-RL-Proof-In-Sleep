@@ -1,6 +1,7 @@
 import Mathlib.Data.Fintype.Basic
 import Mathlib.Data.Real.Basic
 import Mathlib.Tactic.Linarith
+import BanditRLProof.ProbabilityUnionBound
 import BanditRLProof.Regret
 
 /-!
@@ -9,6 +10,8 @@ import BanditRLProof.Regret
 
 namespace BanditRLProof
 namespace UCB
+
+open MeasureTheory
 
 /-- Parameters for a finite-arm UCB run. -/
 structure Spec (K : Nat) where
@@ -162,6 +165,43 @@ theorem meanGap_le_two_radius_of_not_confidenceBadEvent
   exact meanGap_le_two_radius_of_confidenceScore_max
     trueMean (empiricalMean omega) radius best chosen
     hbest_upper hchosen_lower hscore
+
+/--
+Finite-arm union bound for the UCB confidence bad event.
+
+This is still an outer-measure bound: it does not require measurability of the
+upper/lower confidence failure events.
+-/
+theorem measure_confidenceBadEvent_le_sum_upper_lower
+    {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
+    (mu : Measure Omega)
+    (trueMean : Arm -> Real) (empiricalMean : Omega -> Arm -> Real)
+    (radius : Arm -> Real) :
+    mu (confidenceBadEvent trueMean empiricalMean radius) <=
+      (Finset.univ : Finset Arm).sum
+        (fun arm =>
+          mu (upperConfidenceBad trueMean empiricalMean radius arm) +
+            mu (lowerConfidenceBad trueMean empiricalMean radius arm)) := by
+  unfold confidenceBadEvent
+  calc
+    mu (⋃ arm : Arm, upperConfidenceBad trueMean empiricalMean radius arm ∪
+        lowerConfidenceBad trueMean empiricalMean radius arm)
+        <= (Finset.univ : Finset Arm).sum
+            (fun arm =>
+              mu (upperConfidenceBad trueMean empiricalMean radius arm ∪
+                lowerConfidenceBad trueMean empiricalMean radius arm)) := by
+          exact ProbabilityUnionBound.measure_iUnion_fintype_le_sum
+            mu (fun arm : Arm =>
+              upperConfidenceBad trueMean empiricalMean radius arm ∪
+                lowerConfidenceBad trueMean empiricalMean radius arm)
+    _ <= (Finset.univ : Finset Arm).sum
+          (fun arm =>
+            mu (upperConfidenceBad trueMean empiricalMean radius arm) +
+              mu (lowerConfidenceBad trueMean empiricalMean radius arm)) := by
+          exact Finset.sum_le_sum (fun arm _h =>
+            measure_union_le
+              (upperConfidenceBad trueMean empiricalMean radius arm)
+              (lowerConfidenceBad trueMean empiricalMean radius arm))
 
 /-- The proof-DAG leaves usually needed for UCB regret formalization. -/
 def obligationNames : List String :=

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T18:33:15+00:00",
+  "generated": "2026-07-04T18:37:29+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -136,6 +136,24 @@
         "LOCAL-LEAF-UCB-CONFIDENCE-ALGEBRA",
         "LOCAL-LEAF-TAIL-SUMMABILITY-UCB",
         "LOCAL-LEAF-TAIL-UNION-FINITE"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-UCB-CONFIDENCE-EVENT-UNION-BOUND",
+      "leaf_ids": [
+        "UCB-GOOD-EVENT-GAP-CONSUMER",
+        "TAIL-SUMMABILITY-UCB"
+      ],
+      "module": "BanditRLProof.Algorithms.UCB",
+      "status": "leanCompiled",
+      "declarations": [
+        "UCB.measure_confidenceBadEvent_le_sum_upper_lower"
+      ],
+      "role": "Compiled finite-arm union-bound consumer for UCB confidence events: the measure of the union of upper/lower confidence failures is bounded by the finite sum of each arm's upper and lower failure measures. This is an outer-measure wrapper and connects the confidence event API to future per-arm tail bounds; it does not prove event measurability, concentration tails, log/sqrt radius formulas, pull-count bounds, or final regret.",
+      "mathlib_routes": [
+        "LOCAL-LEAF-UCB-CONFIDENCE-EVENT-CONSUMER",
+        "LOCAL-LEAF-TAIL-UNION-FINITE",
+        "LOCAL-LEAF-TAIL-SUMMABILITY-UCB"
       ]
     },
     {

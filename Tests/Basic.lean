@@ -15060,6 +15060,18 @@ example {Omega Arm : Type} [Fintype Arm]
   exact UCB.meanGap_le_two_radius_of_not_confidenceBadEvent
     trueMean empiricalMean radius omega best chosen hgood hscore
 
+example {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
+    (mu : MeasureTheory.Measure Omega)
+    (trueMean : Arm -> Real) (empiricalMean : Omega -> Arm -> Real)
+    (radius : Arm -> Real) :
+    mu (UCB.confidenceBadEvent trueMean empiricalMean radius) <=
+      (Finset.univ : Finset Arm).sum
+        (fun arm =>
+          mu (UCB.upperConfidenceBad trueMean empiricalMean radius arm) +
+            mu (UCB.lowerConfidenceBad trueMean empiricalMean radius arm)) := by
+  exact UCB.measure_confidenceBadEvent_le_sum_upper_lower
+    mu trueMean empiricalMean radius
+
 def twoArmModel : FiniteBanditModel 2 where
   hK := by decide
   mean := fun arm => if arm.val = 0 then 1 else 0
