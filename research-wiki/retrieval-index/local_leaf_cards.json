@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T18:52:30+00:00",
+  "generated": "2026-07-04T18:57:28+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -193,6 +193,24 @@
       "mathlib_routes": [
         "LOCAL-LEAF-UCB-CONFIDENCE-EVENT-MEASURABILITY",
         "LOCAL-LEAF-UCB-CONFIDENCE-EVENT-UNION-BOUND",
+        "LOCAL-LEAF-TAIL-SUMMABILITY-UCB",
+        "MLIB-FINSET-SUMS"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-UCB-FINITE-HORIZON-CONFIDENCE-TAIL-CONSUMER",
+      "leaf_ids": [
+        "UCB-GOOD-EVENT-GAP-CONSUMER",
+        "TAIL-SUMMABILITY-UCB"
+      ],
+      "module": "BanditRLProof.Algorithms.UCB",
+      "status": "leanCompiled",
+      "declarations": [
+        "UCB.measure_finiteHorizonConfidenceBadEvent_le_tail_sum"
+      ],
+      "role": "Compiled finite-horizon UCB confidence-event tail-budget consumer: if every time/arm upper and lower confidence failure has an ENNReal tail bound, then the finite-horizon confidence bad event is bounded by the double finite sum of those upper/lower tail budgets. This assembles abstract tail assumptions only; concrete empirical-mean construction, concentration tail production, log/sqrt radius formulas, pull-count bounds, and final UCB regret remain separate.",
+      "mathlib_routes": [
+        "LOCAL-LEAF-UCB-FINITE-HORIZON-CONFIDENCE-EVENT",
         "LOCAL-LEAF-TAIL-SUMMABILITY-UCB",
         "MLIB-FINSET-SUMS"
       ]

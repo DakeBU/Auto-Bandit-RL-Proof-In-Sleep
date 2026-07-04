@@ -325,6 +325,42 @@ theorem measure_finiteHorizonConfidenceBadEvent_le_sum_upper_lower
               mu trueMean
               (fun omega arm => empiricalMean omega t arm) (radius t))
 
+/--
+Finite-horizon tail-bound consumer for UCB confidence bad events.
+
+The hypotheses `hupper` and `hlower` are the per-time/per-arm concentration
+inputs for the upper and lower confidence failures.  This wrapper only
+assembles those local tail budgets across `t < T` and finite arms.
+-/
+theorem measure_finiteHorizonConfidenceBadEvent_le_tail_sum
+    {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
+    (mu : Measure Omega)
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (radius : Nat -> Arm -> Real)
+    (upperTail lowerTail : Nat -> Arm -> ENNReal) (T : Nat)
+    (hupper : forall t arm, t < T ->
+      mu (upperConfidenceBad trueMean
+        (fun omega arm => empiricalMean omega t arm)
+        (radius t) arm) <= upperTail t arm)
+    (hlower : forall t arm, t < T ->
+      mu (lowerConfidenceBad trueMean
+        (fun omega arm => empiricalMean omega t arm)
+        (radius t) arm) <= lowerTail t arm) :
+    mu (finiteHorizonConfidenceBadEvent trueMean empiricalMean radius T) <=
+      (Finset.range T).sum
+        (fun t =>
+          (Finset.univ : Finset Arm).sum
+            (fun arm => upperTail t arm + lowerTail t arm)) := by
+  exact
+    (measure_finiteHorizonConfidenceBadEvent_le_sum_upper_lower
+      mu trueMean empiricalMean radius T).trans
+      (Finset.sum_le_sum (fun t ht =>
+        Finset.sum_le_sum (fun arm _harm =>
+          add_le_add
+            (hupper t arm (Finset.mem_range.mp ht))
+            (hlower t arm (Finset.mem_range.mp ht)))))
+
 /-- The proof-DAG leaves usually needed for UCB regret formalization. -/
 def obligationNames : List String :=
   [ "initial_round_robin_count_positive"
