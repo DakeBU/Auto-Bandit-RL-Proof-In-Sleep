@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T19:27:59+00:00",
+  "generated": "2026-07-04T19:37:17+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -5563,10 +5563,18 @@
     },
     {
       "kind": "theorem",
+      "name": "trace_average_pow_le_lambda_pow_mul_exp_log",
+      "full_name": "BanditRLProof.OFUL.trace_average_pow_le_lambda_pow_mul_exp_log",
+      "file": "BanditRLProof/OFULEllipticalPotential.lean",
+      "line": 1528,
+      "statement": "theorem trace_average_pow_le_lambda_pow_mul_exp_log {Feature : Type u} [Fintype Feature] [Nonempty Feature] (lambda : Real) (hlambda : 0 < lambda) (T : Nat) (L2 : Real) (hL2 : 0 <= L2) : (((Fintype.card Feature : Real) * lambda + T * L2) / (Fintype.card Feature : Real)) ^ Fintype.card Feature <= lambda ^ Fintype.card Feature * Real.exp ((Fintype.card Feature : Real) *"
+    },
+    {
+      "kind": "theorem",
       "name": "trace_average_exp_exponent_dim_cancel",
       "full_name": "BanditRLProof.OFUL.trace_average_exp_exponent_dim_cancel",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 1522,
+      "line": 1578,
       "statement": "theorem trace_average_exp_exponent_dim_cancel {Feature : Type u} [Fintype Feature] [Nonempty Feature] (lambda : Real) (hlambda : 0 < lambda) (T : Nat) (L2 : Real) : (Fintype.card Feature : Real) * ((T * L2) / ((Fintype.card Feature : Real) * lambda)) = (T * L2) / lambda"
     },
     {
@@ -5574,7 +5582,7 @@
       "name": "trace_average_pow_le_lambda_pow_mul_exp",
       "full_name": "BanditRLProof.OFUL.trace_average_pow_le_lambda_pow_mul_exp",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 1537,
+      "line": 1593,
       "statement": "theorem trace_average_pow_le_lambda_pow_mul_exp {Feature : Type u} [Fintype Feature] [Nonempty Feature] (lambda : Real) (hlambda : 0 < lambda) (T : Nat) (L2 : Real) (hL2 : 0 <= L2) : (((Fintype.card Feature : Real) * lambda + T * L2) / (Fintype.card Feature : Real)) ^ Fintype.card Feature <= lambda ^ Fintype.card Feature * Real.exp ((T * L2) / lambda)"
     },
     {
@@ -5582,7 +5590,7 @@
       "name": "det_regularizedPrefixFeatureGram_le_mul_exp_of_trace_average_bound",
       "full_name": "BanditRLProof.OFUL.det_regularizedPrefixFeatureGram_le_mul_exp_of_trace_average_bound",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 1554,
+      "line": 1610,
       "statement": "theorem det_regularizedPrefixFeatureGram_le_mul_exp_of_trace_average_bound {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Nat -> Feature -> Real) (T : Nat) (L2 B : Real) (hbound : forall t : Nat, t < T -> dotProduct (history t) (history t) <= L2) (haverage_to_exp : (((Fintype.card Feature : Real) * lambda + T * L2) /"
     },
     {
@@ -5590,7 +5598,7 @@
       "name": "sum_range_min_prefix_update_le_two_of_trace_average_bound",
       "full_name": "BanditRLProof.OFUL.sum_range_min_prefix_update_le_two_of_trace_average_bound",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 1573,
+      "line": 1629,
       "statement": "theorem sum_range_min_prefix_update_le_two_of_trace_average_bound {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Nat -> Feature -> Real) (T : Nat) (L2 B : Real) (hbound : forall t : Nat, t < T -> dotProduct (history t) (history t) <= L2) (haverage_to_exp : (((Fintype.card Feature : Real) * lambda + T * L2) /"
     },
     {
@@ -5598,7 +5606,7 @@
       "name": "det_regularizedPrefixFeatureGram_le_mul_exp_trace_average_dim_scaled",
       "full_name": "BanditRLProof.OFUL.det_regularizedPrefixFeatureGram_le_mul_exp_trace_average_dim_scaled",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 1598,
+      "line": 1654,
       "statement": "theorem det_regularizedPrefixFeatureGram_le_mul_exp_trace_average_dim_scaled {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Nat -> Feature -> Real) (T : Nat) (L2 : Real) (hL2 : 0 <= L2) (hbound : forall t : Nat, t < T -> dotProduct (history t) (history t) <= L2) : (regularizedPrefixFeatureGram lambda history T).det <="
     },
     {
@@ -5606,7 +5614,7 @@
       "name": "sum_range_min_prefix_update_le_two_trace_average_dim_scaled",
       "full_name": "BanditRLProof.OFUL.sum_range_min_prefix_update_le_two_trace_average_dim_scaled",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 1621,
+      "line": 1677,
       "statement": "theorem sum_range_min_prefix_update_le_two_trace_average_dim_scaled {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Nat -> Feature -> Real) (T : Nat) (L2 : Real) (hL2 : 0 <= L2) (hbound : forall t : Nat, t < T -> dotProduct (history t) (history t) <= L2) : (Finset.range T).sum"
     },
     {
@@ -5614,16 +5622,32 @@
       "name": "det_regularizedPrefixFeatureGram_le_mul_exp_trace_average",
       "full_name": "BanditRLProof.OFUL.det_regularizedPrefixFeatureGram_le_mul_exp_trace_average",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 1647,
+      "line": 1703,
       "statement": "theorem det_regularizedPrefixFeatureGram_le_mul_exp_trace_average {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Nat -> Feature -> Real) (T : Nat) (L2 : Real) (hL2 : 0 <= L2) (hbound : forall t : Nat, t < T -> dotProduct (history t) (history t) <= L2) : (regularizedPrefixFeatureGram lambda history T).det <="
+    },
+    {
+      "kind": "theorem",
+      "name": "det_regularizedPrefixFeatureGram_le_mul_exp_trace_average_log",
+      "full_name": "BanditRLProof.OFUL.det_regularizedPrefixFeatureGram_le_mul_exp_trace_average_log",
+      "file": "BanditRLProof/OFULEllipticalPotential.lean",
+      "line": 1721,
+      "statement": "theorem det_regularizedPrefixFeatureGram_le_mul_exp_trace_average_log {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Nat -> Feature -> Real) (T : Nat) (L2 : Real) (hL2 : 0 <= L2) (hbound : forall t : Nat, t < T -> dotProduct (history t) (history t) <= L2) : (regularizedPrefixFeatureGram lambda history T).det <="
     },
     {
       "kind": "theorem",
       "name": "sum_range_min_prefix_update_le_two_trace_average",
       "full_name": "BanditRLProof.OFUL.sum_range_min_prefix_update_le_two_trace_average",
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
-      "line": 1665,
+      "line": 1746,
       "statement": "theorem sum_range_min_prefix_update_le_two_trace_average {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Nat -> Feature -> Real) (T : Nat) (L2 : Real) (hL2 : 0 <= L2) (hbound : forall t : Nat, t < T -> dotProduct (history t) (history t) <= L2) : (Finset.range T).sum"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_range_min_prefix_update_le_two_trace_average_log",
+      "full_name": "BanditRLProof.OFUL.sum_range_min_prefix_update_le_two_trace_average_log",
+      "file": "BanditRLProof/OFULEllipticalPotential.lean",
+      "line": 1771,
+      "statement": "theorem sum_range_min_prefix_update_le_two_trace_average_log {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Nat -> Feature -> Real) (T : Nat) (L2 : Real) (hL2 : 0 <= L2) (hbound : forall t : Nat, t < T -> dotProduct (history t) (history t) <= L2) : (Finset.range T).sum"
     },
     {
       "kind": "inductive",

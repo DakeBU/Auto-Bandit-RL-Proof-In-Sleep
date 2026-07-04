@@ -1696,6 +1696,21 @@ LOCAL_LEAF_CARDS = [
         "mathlib_routes": ["LOCAL-LEAF-OFUL-SCALAR-TRACE-AVERAGE-EXP-BOUND", "LOCAL-LEAF-OFUL-TRACE-AVERAGE-EXP-CONSUMER", "MLIB-ORDER-ALGEBRA"],
     },
     {
+        "id": "LOCAL-LEAF-OFUL-SCALAR-TRACE-AVERAGE-EXP-LOG",
+        "leaf_ids": [
+            "OFUL-ELLIPTICAL-POTENTIAL",
+        ],
+        "module": "BanditRLProof.OFULEllipticalPotential",
+        "status": "leanCompiled",
+        "declarations": [
+            "OFUL.trace_average_pow_le_lambda_pow_mul_exp_log",
+            "OFUL.det_regularizedPrefixFeatureGram_le_mul_exp_trace_average_log",
+            "OFUL.sum_range_min_prefix_update_le_two_trace_average_log",
+        ],
+        "role": "Compiled standard logarithmic OFUL/LinUCB trace-average endpoint: under `0 < lambda`, `0 <= L2`, nonempty feature type, and pointwise squared-norm ceiling, proves `((d*lambda + T*L2)/d)^d <= lambda^d * exp(d * log(1 + T*L2/(d*lambda)))`, then derives the determinant bound and clipped elliptical-potential sum bound `<= 2 * d * log(1 + T*L2/(d*lambda))`. This keeps the textbook logarithmic determinant-growth shape instead of linearizing to `T*L2/lambda`; self-normalized martingale concentration, confidence ellipsoids, and OFUL regret remain separate.",
+        "mathlib_routes": ["LOCAL-LEAF-OFUL-AMGM-DET-TRACE-BOUND", "LOCAL-LEAF-OFUL-TRACE-AVERAGE-EXP-CONSUMER", "Mathlib.Analysis.SpecialFunctions.Log.Basic", "Mathlib.Analysis.SpecialFunctions.Exp"],
+    },
+    {
         "id": "LOCAL-LEAF-CONCENTRATION-SUBGAUSSIAN",
         "leaf_ids": [
             "TAIL-HOEFFDING-BOUNDED",
@@ -6714,6 +6729,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- OFUL-TRACE-AVERAGE-EXP-CONSUMER is compiled locally as the final multiplicative handoff consumer: any scalar proof of `((d*lambda + T*L2)/d)^d <= lambda^d * exp(B)` now yields `det(V_T) <= lambda^d * exp(B)` and the clipped elliptical-potential bound `sum_t min(1,u_t) <= 2 * B`; concrete scalar-exp simplification is tracked by OFUL-SCALAR-TRACE-AVERAGE-EXP-BOUND, while self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- OFUL-SCALAR-TRACE-AVERAGE-EXP-BOUND is compiled locally as the scalar exponential simplification plus concrete determinant/clipped-sum consumers: under `0 < lambda`, `0 <= L2`, and a pointwise squared-norm ceiling, the AM-GM trace-average route yields `det(V_T) <= lambda^d * exp(d * (T*L2/(d*lambda)))` and `sum_t min(1,u_t) <= 2 * (d * (T*L2/(d*lambda)))`; dimension cancellation is handled by OFUL-SCALAR-TRACE-AVERAGE-EXP-CANCEL, while self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- OFUL-SCALAR-TRACE-AVERAGE-EXP-CANCEL is compiled locally as the dimension-cancelled scalar exponential consumer: `d * (T*L2/(d*lambda)) = T*L2/lambda`, so the AM-GM trace-average route now yields `det(V_T) <= lambda^d * exp(T*L2/lambda)` and `sum_t min(1,u_t) <= 2 * (T*L2/lambda)`; self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
+    print("- OFUL-SCALAR-TRACE-AVERAGE-EXP-LOG is compiled locally as the standard logarithmic scalar endpoint: the AM-GM trace-average route now yields `det(V_T) <= lambda^d * exp(d * log(1 + T*L2/(d*lambda)))` and `sum_t min(1,u_t) <= 2 * d * log(1 + T*L2/(d*lambda))`; self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- TAIL-HOEFFDING-BOUNDED is compiled locally as the generic bounded-centered Hoeffding MGF wrapper with an interval variance proxy.")
     print("- TAIL-SUBGAUSS-SUM is compiled locally as the Mathlib-backed independent sub-Gaussian finite-sum tail wrapper.")
     print("- TAIL-SUBGAUSS-DIFF-SUM-IMPORT is compiled locally as the ENNReal-valued independent sub-Gaussian finite-sum tail boundary wrapper.")
