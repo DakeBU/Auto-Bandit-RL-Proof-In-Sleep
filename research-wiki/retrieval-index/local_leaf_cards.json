@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T13:11:43+00:00",
+  "generated": "2026-07-04T13:24:15+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -3498,9 +3498,10 @@
       "status": "leanCompiled",
       "declarations": [
         "ConditionalExpectationReward.centeredReward_succ_aemeasurable_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource",
+        "ConditionalExpectationReward.centeredReward_succ_measurable_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource",
         "ConditionalExpectationReward.centeredReward_succ_bound_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource"
       ],
-      "role": "Compiled project-local regularity leaf for the COND-EXPECT-REWARD route: the practical definitional raw-reward-range/measurable-mean-range generated-policy random next-pair source now exposes centered successor reward a.e. measurability and the centered interval bound directly, by lowering through the existing explicit raw-range source conversion and reusing the raw-range regularity consumers. It still assumes the definitional random next-pair law, mean measurability, deterministic raw reward and mean range bounds, ambient trajectory-to-condExpKernel identification, and final adaptive theorem.",
+      "role": "Compiled project-local regularity leaf for the COND-EXPECT-REWARD route: the practical definitional raw-reward-range/measurable-mean-range generated-policy random next-pair source now exposes centered successor reward a.e. measurability, full measurability, and the centered interval bound directly. Full measurability is derived from timewise reward measurability, finite reward-history context/state measurability, policy measurability, and the measurable mean surface; the interval bound still lowers through the explicit raw-range source conversion. It still assumes the definitional random next-pair law, mean measurability, deterministic raw reward and mean range bounds, ambient trajectory-to-condExpKernel identification, and final adaptive theorem.",
       "mathlib_routes": [
         "MLIB-MEASURE-INTEGRAL",
         "MLIB-CONDITIONAL-EXPECTATION",
@@ -3679,6 +3680,34 @@
         "MLIB-CONDITIONAL-EXPECTATION",
         "MLIB-MEASURE-INTEGRAL",
         "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-COND-MGF-CONSUMER",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-EXP-INTEGRABILITY",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-CENTERED-REGULARITY",
+        "FILTRATION-HISTORY"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-COND-MGF-SOURCE-REGULARITY-CONSUMER",
+      "leaf_ids": [
+        "COND-EXPECT-REWARD",
+        "ADAPTED-ACTION",
+        "MEAS-POLICY",
+        "MEAS-HISTORY",
+        "KERNEL-POLICY-BIND",
+        "KERNEL-REWARD",
+        "INT-REWARD-BOUNDED",
+        "MEAS-REWARD"
+      ],
+      "module": "BanditRLProof.ConditionalRewardLawSource",
+      "status": "leanCompiled",
+      "declarations": [
+        "ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_variance_le"
+      ],
+      "role": "Compiled project-local practical conditional MGF consumer with source-derived regularity: the definitional raw-reward-range/measurable-mean-range source now feeds the Mathlib HasCondSubgaussianMGF route while deriving centered-reward measurability and h_integrable_exp from its own fields. The only remaining analytic MGF side condition at this surface is the deterministic variance-proxy domination hypothesis; the theorem still assumes the definitional random next-pair law source and ambient trajectory-to-condExpKernel identification.",
+      "mathlib_routes": [
+        "MLIB-PROBABILITY-SUBGAUSSIAN",
+        "MLIB-CONDITIONAL-EXPECTATION",
+        "MLIB-MEASURE-INTEGRAL",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-COND-MGF-BOUNDED-EXP-CONSUMER",
         "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-EXP-INTEGRABILITY",
         "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-CENTERED-REGULARITY",
         "FILTRATION-HISTORY"

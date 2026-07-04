@@ -4131,9 +4131,10 @@ LOCAL_LEAF_CARDS = [
         "status": "leanCompiled",
         "declarations": [
             "ConditionalExpectationReward.centeredReward_succ_aemeasurable_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource",
+            "ConditionalExpectationReward.centeredReward_succ_measurable_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource",
             "ConditionalExpectationReward.centeredReward_succ_bound_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource",
         ],
-        "role": "Compiled project-local regularity leaf for the COND-EXPECT-REWARD route: the practical definitional raw-reward-range/measurable-mean-range generated-policy random next-pair source now exposes centered successor reward a.e. measurability and the centered interval bound directly, by lowering through the existing explicit raw-range source conversion and reusing the raw-range regularity consumers. It still assumes the definitional random next-pair law, mean measurability, deterministic raw reward and mean range bounds, ambient trajectory-to-condExpKernel identification, and final adaptive theorem.",
+        "role": "Compiled project-local regularity leaf for the COND-EXPECT-REWARD route: the practical definitional raw-reward-range/measurable-mean-range generated-policy random next-pair source now exposes centered successor reward a.e. measurability, full measurability, and the centered interval bound directly. Full measurability is derived from timewise reward measurability, finite reward-history context/state measurability, policy measurability, and the measurable mean surface; the interval bound still lowers through the explicit raw-range source conversion. It still assumes the definitional random next-pair law, mean measurability, deterministic raw reward and mean range bounds, ambient trajectory-to-condExpKernel identification, and final adaptive theorem.",
         "mathlib_routes": [
             "MLIB-MEASURE-INTEGRAL",
             "MLIB-CONDITIONAL-EXPECTATION",
@@ -4312,6 +4313,34 @@ LOCAL_LEAF_CARDS = [
             "MLIB-CONDITIONAL-EXPECTATION",
             "MLIB-MEASURE-INTEGRAL",
             "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-COND-MGF-CONSUMER",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-EXP-INTEGRABILITY",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-CENTERED-REGULARITY",
+            "FILTRATION-HISTORY",
+        ],
+    },
+    {
+        "id": "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-COND-MGF-SOURCE-REGULARITY-CONSUMER",
+        "leaf_ids": [
+            "COND-EXPECT-REWARD",
+            "ADAPTED-ACTION",
+            "MEAS-POLICY",
+            "MEAS-HISTORY",
+            "KERNEL-POLICY-BIND",
+            "KERNEL-REWARD",
+            "INT-REWARD-BOUNDED",
+            "MEAS-REWARD",
+        ],
+        "module": "BanditRLProof.ConditionalRewardLawSource",
+        "status": "leanCompiled",
+        "declarations": [
+            "ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_variance_le",
+        ],
+        "role": "Compiled project-local practical conditional MGF consumer with source-derived regularity: the definitional raw-reward-range/measurable-mean-range source now feeds the Mathlib HasCondSubgaussianMGF route while deriving centered-reward measurability and h_integrable_exp from its own fields. The only remaining analytic MGF side condition at this surface is the deterministic variance-proxy domination hypothesis; the theorem still assumes the definitional random next-pair law source and ambient trajectory-to-condExpKernel identification.",
+        "mathlib_routes": [
+            "MLIB-PROBABILITY-SUBGAUSSIAN",
+            "MLIB-CONDITIONAL-EXPECTATION",
+            "MLIB-MEASURE-INTEGRAL",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-COND-MGF-BOUNDED-EXP-CONSUMER",
             "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-EXP-INTEGRABILITY",
             "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-CENTERED-REGULARITY",
             "FILTRATION-HISTORY",
@@ -6143,13 +6172,14 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-CONTRACT is compiled locally as the practical definitional generated-action source: it removes explicit action-trace/haction inputs from the raw-range/measurable-mean-range layer by using generatedActionFromRewardHistory and the definitional random-pair map source; it now also constructs that top-layer source from full finite-pair, frozen-prefix extension-map partialTraj, and canonical history-step next-pair law hypotheses plus raw/mean range regularity, directly consumes the full finite-pair partialTraj law plus regularity into succ-indexed conditional mean-zero, directly consumes the frozen-prefix extension-map law plus regularity into that mean-zero fact, directly consumes the canonical history-step next-pair law plus regularity into that mean-zero fact, and directly consumes generated-action policy-selected or actual-action reward-coordinate selected-measure laws plus regularity into mean-zero; it still assumes the reward-coordinate/next-pair/ambient trajectory-to-condExpKernel law shape and does not construct it.")
     print("- COND-EXPECT-REWARD-RANDOM-PAIR-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-HISTORYSTEP-PAIR-LAW is compiled locally as the definitional raw-reward-range/measurable-mean-range canonical pair-law consumer: GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource now directly yields the RewardKernel.actionRewardHistoryStepKernelFamily next-pair law over generatedActionFromRewardHistory by lowering through the explicit raw-range source; it still assumes the definitional random next-pair law source and ambient trajectory-to-condExpKernel identification.")
     print("- COND-EXPECT-REWARD-RANDOM-PAIR-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-RANDOM-PAIR-MAP-SOURCE is compiled locally as a source-conversion leaf: a definitional raw-reward-range/measurable-mean-range bounded generated random-pair source now projects its packaged definitional map source into the explicit generated random-pair map source using generatedActionFromRewardHistory; it still assumes the definitional raw-range/measurable-mean-range source fields and random pair law.")
-    print("- COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-CENTERED-REGULARITY is compiled locally as a regularity leaf: a definitional raw-reward-range/measurable-mean-range bounded generated random-pair source now exposes centered successor reward a.e. measurability and the centered interval bound directly; it still assumes the definitional raw-range/measurable-mean-range source fields and random pair law.")
+    print("- COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-CENTERED-REGULARITY is compiled locally as a regularity leaf: a definitional raw-reward-range/measurable-mean-range bounded generated random-pair source now exposes centered successor reward a.e. measurability, full measurability, and the centered interval bound directly; it still assumes the definitional raw-range/measurable-mean-range source fields and random pair law.")
     print("- COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-BOUNDED-CENTERED-SOURCE is compiled locally as a source-conversion leaf: a definitional raw-reward-range/measurable-mean-range bounded generated random-pair source now packages its explicit generated random-pair map source plus centered a.e. measurability and bounds into the bounded centered source over generatedActionFromRewardHistory; it still assumes the definitional raw-range/measurable-mean-range source fields and random pair law.")
     print("- COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-CENTERED-SOURCE is compiled locally as a source-conversion leaf: a definitional raw-reward-range/measurable-mean-range bounded generated random-pair source now lowers through the bounded-centered source into the integrability-based centered source over generatedActionFromRewardHistory; it still assumes the definitional raw-range/measurable-mean-range source fields and random pair law.")
     print("- COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-DEFINITIONAL-CENTERED-SOURCE is compiled locally as a source-conversion leaf: a definitional raw-reward-range/measurable-mean-range bounded generated random-pair source now packages its definitional map source, centered law, context measurability, and bounded-derived integrability into the definitional centered source; it still assumes the definitional raw-range/measurable-mean-range source fields and random pair law.")
     print("- COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-COND-MGF-CONSUMER is compiled locally as a practical top-level conditional MGF consumer: the definitional raw-range/measurable-mean-range source now lowers through the definitional centered source and reuses the Mathlib HasCondSubgaussianMGF route over generatedActionFromRewardHistory; explicit centered measurability, exponential integrability, and variance-proxy domination remain regularity contracts.")
     print("- COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-EXP-INTEGRABILITY is compiled locally as the practical top-level exponential-integrability consumer: deterministic raw reward and selected-mean range evidence now derives exp(t * centeredReward) integrability for every real t over generatedActionFromRewardHistory.")
     print("- COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-COND-MGF-BOUNDED-EXP-CONSUMER is compiled locally as the practical conditional MGF wrapper that derives the h_integrable_exp side condition from source bounds; centered measurability and variance-proxy domination remain explicit.")
+    print("- COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-COND-MGF-SOURCE-REGULARITY-CONSUMER is compiled locally as the practical conditional MGF wrapper that derives both centered-reward measurability and h_integrable_exp from source regularity; only variance-proxy domination remains explicit.")
     print("- COND-EXPECT-REWARD-RANDOM-PAIR-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE is compiled locally as a source-conversion leaf: a definitional raw-reward-range/measurable-mean-range bounded generated random-pair source now projects its packaged definitional map source into the weaker definitional actual-action reward-coordinate source; it still assumes the definitional raw-range/measurable-mean-range source fields and random pair law.")
     print("- COND-EXPECT-REWARD-RANDOM-PAIR-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE is compiled locally as a source-conversion leaf: a definitional raw-reward-range/measurable-mean-range bounded generated random-pair source now projects through the definitional actual-map source into the explicit generated actual-action reward-coordinate source using generatedActionFromRewardHistory; it still assumes the definitional raw-range/measurable-mean-range source fields and random pair law.")
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-REWARD-MAP is compiled locally as the extension-map reward-coordinate adapter and raw-range mean-zero consumer: it lifts the frozen-prefix extension-map partialTraj law to the full finite-pair trace law, projects it to the actual-action selected reward law, and derives succ-indexed conditional mean-zero from raw-reward/selected-mean range bounds; it still assumes the extension-map law and ambient trajectory-to-condExpKernel identification.")
