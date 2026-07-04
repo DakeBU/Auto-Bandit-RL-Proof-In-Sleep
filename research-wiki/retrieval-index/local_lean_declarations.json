@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T17:31:46+00:00",
+  "generated": "2026-07-04T17:35:49+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -5152,6 +5152,14 @@
       "file": "BanditRLProof/OFULEllipticalPotential.lean",
       "line": 1197,
       "statement": "theorem sum_range_min_prefix_update_le_two_log_det_sub_base_of_pos_lambda {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Nat -> Feature -> Real) (T : Nat) : (Finset.range T).sum (fun t => min 1 (dotProduct (history t) (Matrix.mulVec ((regularizedPrefixFeatureGram lambda history t)\u207b\u00b9)"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_range_min_prefix_update_le_two_log_det_upper",
+      "full_name": "BanditRLProof.OFUL.sum_range_min_prefix_update_le_two_log_det_upper",
+      "file": "BanditRLProof/OFULEllipticalPotential.lean",
+      "line": 1218,
+      "statement": "theorem sum_range_min_prefix_update_le_two_log_det_upper {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : 0 < lambda) (history : Nat -> Feature -> Real) (T : Nat) (B : Real) (hlog_upper : Real.log (regularizedPrefixFeatureGram lambda history T).det - Real.log (lambda ^ Fintype.card Feature) <= B) : (Finset.range T).sum"
     },
     {
       "kind": "inductive",

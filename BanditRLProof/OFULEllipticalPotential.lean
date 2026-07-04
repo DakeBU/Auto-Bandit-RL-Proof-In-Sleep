@@ -1211,5 +1211,26 @@ theorem sum_range_min_prefix_update_le_two_log_det_sub_base_of_pos_lambda
       regularizedPrefixFeatureGram_inv_quadratic_nonneg
         lambda hlambda history t (history t))
 
+/--
+If a separate route supplies a terminal log-determinant upper bound, the
+clipped prefix inverse-quadratic sum inherits the corresponding bound.
+-/
+theorem sum_range_min_prefix_update_le_two_log_det_upper
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Nat -> Feature -> Real) (T : Nat) (B : Real)
+    (hlog_upper :
+      Real.log (regularizedPrefixFeatureGram lambda history T).det -
+        Real.log (lambda ^ Fintype.card Feature) <= B) :
+    (Finset.range T).sum
+        (fun t => min 1 (dotProduct (history t)
+          (Matrix.mulVec
+            ((regularizedPrefixFeatureGram lambda history t)⁻¹)
+            (history t)))) <=
+      2 * B := by
+  exact (sum_range_min_prefix_update_le_two_log_det_sub_base_of_pos_lambda
+    lambda hlambda history T).trans
+    (mul_le_mul_of_nonneg_left hlog_upper (by norm_num))
+
 end OFUL
 end BanditRLProof

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T17:31:46+00:00",
+  "generated": "2026-07-04T17:35:49+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -593,6 +593,23 @@
         "LOCAL-LEAF-OFUL-DETERMINANT-GROWTH-CONSUMER",
         "LOCAL-LEAF-OFUL-PREFIX-LOG-DET-BASE",
         "Mathlib.Analysis.Matrix.PosDef"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-OFUL-LOG-DET-UPPER-CONSUMER",
+      "leaf_ids": [
+        "OFUL-ELLIPTICAL-POTENTIAL"
+      ],
+      "module": "BanditRLProof.OFULEllipticalPotential",
+      "status": "leanCompiled",
+      "declarations": [
+        "OFUL.sum_range_min_prefix_update_le_two_log_det_upper"
+      ],
+      "role": "Compiled terminal log-determinant upper-bound consumer for OFUL/LinUCB: if a later route supplies `log det(V_T) - log(lambda^d) <= B`, the local clipped elliptical-potential sum is bounded by `2 * B`. This is the handoff surface for determinant upper bounds; it does not prove the concrete trace/AM-GM determinant upper bound, dimension/radius simplification, self-normalized martingale concentration, confidence ellipsoids, or OFUL regret.",
+      "mathlib_routes": [
+        "LOCAL-LEAF-OFUL-INVERSE-QUADRATIC-NONNEG-CONSUMER",
+        "LOCAL-LEAF-OFUL-DETERMINANT-GROWTH-CONSUMER",
+        "MLIB-CONVEX-LINALG"
       ]
     },
     {
