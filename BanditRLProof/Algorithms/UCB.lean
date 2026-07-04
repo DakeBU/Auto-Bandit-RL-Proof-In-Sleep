@@ -557,6 +557,37 @@ noncomputable def subGaussianOneSidedDeviationTail
     (Real.exp (-(radius t arm) ^ 2 /
       (2 * ((proxy t arm : NNReal) : Real))))
 
+/--
+Radius-budget simplification for the one-sided UCB sub-Gaussian tail.
+
+If `radius^2` dominates `2 * proxy * budget`, the canonical exponential
+producer is bounded by `exp (-budget)`. This is the algebraic handoff between
+abstract sub-Gaussian tails and later log/sqrt UCB radius choices.
+-/
+theorem subGaussianOneSidedDeviationTail_le_exp_neg_budget
+    {Arm : Type}
+    (radius : Nat -> Arm -> Real)
+    (proxy : Nat -> Arm -> NNReal) (budget : Nat -> Arm -> Real)
+    (t : Nat) (arm : Arm)
+    (hproxy : 0 < ((proxy t arm : NNReal) : Real))
+    (hradius_sq :
+      2 * ((proxy t arm : NNReal) : Real) * budget t arm <=
+        (radius t arm) ^ 2) :
+    subGaussianOneSidedDeviationTail radius proxy t arm <=
+      ENNReal.ofReal (Real.exp (-(budget t arm))) := by
+  unfold subGaussianOneSidedDeviationTail
+  refine ENNReal.ofReal_le_ofReal ?_
+  apply Real.exp_le_exp.mpr
+  have hden_pos : 0 < 2 * ((proxy t arm : NNReal) : Real) := by
+    exact mul_pos (by norm_num) hproxy
+  have hbudget_le :
+      budget t arm <=
+        (radius t arm) ^ 2 /
+          (2 * ((proxy t arm : NNReal) : Real)) := by
+    rw [le_div_iff₀ hden_pos]
+    simpa [mul_assoc, mul_comm, mul_left_comm] using hradius_sq
+  simpa [neg_div] using neg_le_neg hbudget_le
+
 /-- Single-time one-sided sub-Gaussian tail for an upper-confidence failure. -/
 theorem measure_upperConfidenceBad_le_subGaussian_tail
     {Omega Arm : Type} [MeasurableSpace Omega]
@@ -607,6 +638,35 @@ theorem measure_upperConfidenceBad_le_subGaussian_tail
     linarith
   exact (measure_mono hsubset).trans htail
 
+/--
+Single-time upper-confidence failure bound with an explicit exponential budget.
+-/
+theorem measure_upperConfidenceBad_le_subGaussian_exp_neg_budget
+    {Omega Arm : Type} [MeasurableSpace Omega]
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (radius : Nat -> Arm -> Real)
+    (proxy : Nat -> Arm -> NNReal) (budget : Nat -> Arm -> Real)
+    (t : Nat) (arm : Arm)
+    (hradius : 0 <= radius t arm)
+    (hproxy : 0 < ((proxy t arm : NNReal) : Real))
+    (hradius_sq :
+      2 * ((proxy t arm : NNReal) : Real) * budget t arm <=
+        (radius t arm) ^ 2)
+    (hsubG :
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    mu (upperConfidenceBad trueMean
+        (fun omega arm => empiricalMean omega t arm)
+        (radius t) arm) <=
+      ENNReal.ofReal (Real.exp (-(budget t arm))) := by
+  exact (measure_upperConfidenceBad_le_subGaussian_tail
+    mu trueMean empiricalMean radius proxy t arm hradius hsubG).trans
+      (subGaussianOneSidedDeviationTail_le_exp_neg_budget
+        radius proxy budget t arm hproxy hradius_sq)
+
 /-- Single-time one-sided sub-Gaussian tail for a lower-confidence failure. -/
 theorem measure_lowerConfidenceBad_le_subGaussian_tail
     {Omega Arm : Type} [MeasurableSpace Omega]
@@ -656,6 +716,35 @@ theorem measure_lowerConfidenceBad_le_subGaussian_tail
   exact (measure_mono hsubset).trans htail
 
 /--
+Single-time lower-confidence failure bound with an explicit exponential budget.
+-/
+theorem measure_lowerConfidenceBad_le_subGaussian_exp_neg_budget
+    {Omega Arm : Type} [MeasurableSpace Omega]
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (radius : Nat -> Arm -> Real)
+    (proxy : Nat -> Arm -> NNReal) (budget : Nat -> Arm -> Real)
+    (t : Nat) (arm : Arm)
+    (hradius : 0 <= radius t arm)
+    (hproxy : 0 < ((proxy t arm : NNReal) : Real))
+    (hradius_sq :
+      2 * ((proxy t arm : NNReal) : Real) * budget t arm <=
+        (radius t arm) ^ 2)
+    (hsubG :
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    mu (lowerConfidenceBad trueMean
+        (fun omega arm => empiricalMean omega t arm)
+        (radius t) arm) <=
+      ENNReal.ofReal (Real.exp (-(budget t arm))) := by
+  exact (measure_lowerConfidenceBad_le_subGaussian_tail
+    mu trueMean empiricalMean radius proxy t arm hradius hsubG).trans
+      (subGaussianOneSidedDeviationTail_le_exp_neg_budget
+        radius proxy budget t arm hproxy hradius_sq)
+
+/--
 Finite-horizon UCB confidence bad-event bound from one-sided sub-Gaussian
 upper/lower tails.
 
@@ -696,6 +785,53 @@ theorem measure_finiteHorizonConfidenceBadEvent_le_subGaussian_oneSided_tail_sum
       measure_lowerConfidenceBad_le_subGaussian_tail
         mu trueMean empiricalMean radius proxy t arm
         (hradius t arm ht) (hsubG t arm ht))
+
+/--
+Finite-horizon confidence bad-event bound with explicit one-sided exponential
+budgets.
+
+This is the UCB radius-budget handoff: later leaves can instantiate `budget`
+with a log schedule and prove the displayed radius-square domination.
+-/
+theorem measure_finiteHorizonConfidenceBadEvent_le_subGaussian_exp_neg_budget_sum
+    {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (radius : Nat -> Arm -> Real)
+    (proxy : Nat -> Arm -> NNReal) (budget : Nat -> Arm -> Real) (T : Nat)
+    (hradius : forall t arm, t < T -> 0 <= radius t arm)
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hradius_sq : forall t arm, t < T ->
+      2 * ((proxy t arm : NNReal) : Real) * budget t arm <=
+        (radius t arm) ^ 2)
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    mu (finiteHorizonConfidenceBadEvent trueMean empiricalMean radius T) <=
+      (Finset.range T).sum
+        (fun t =>
+          (Finset.univ : Finset Arm).sum
+            (fun arm =>
+              ENNReal.ofReal (Real.exp (-(budget t arm))) +
+                ENNReal.ofReal (Real.exp (-(budget t arm))))) := by
+  exact measure_finiteHorizonConfidenceBadEvent_le_tail_sum
+    mu trueMean empiricalMean radius
+    (fun t arm => ENNReal.ofReal (Real.exp (-(budget t arm))))
+    (fun t arm => ENNReal.ofReal (Real.exp (-(budget t arm))))
+    T
+    (fun t arm ht =>
+      measure_upperConfidenceBad_le_subGaussian_exp_neg_budget
+        mu trueMean empiricalMean radius proxy budget t arm
+        (hradius t arm ht) (hproxy t arm ht)
+        (hradius_sq t arm ht) (hsubG t arm ht))
+    (fun t arm ht =>
+      measure_lowerConfidenceBad_le_subGaussian_exp_neg_budget
+        mu trueMean empiricalMean radius proxy budget t arm
+        (hradius t arm ht) (hproxy t arm ht)
+        (hradius_sq t arm ht) (hsubG t arm ht))
 
 /--
 Two-sided sub-Gaussian tail budget for a UCB empirical mean at time `t` and

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T19:37:17+00:00",
+  "generated": "2026-07-04T19:46:05+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -303,6 +303,28 @@
         "LOCAL-LEAF-CONCENTRATION-SUBGAUSSIAN",
         "TAIL-SUBGAUSS-SUM",
         "TAIL-COND-SUBGAUSS"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-UCB-SUBGAUSSIAN-RADIUS-BUDGET",
+      "leaf_ids": [
+        "UCB-GOOD-EVENT-GAP-CONSUMER",
+        "TAIL-SUMMABILITY-UCB",
+        "TAIL-SUBGAUSS-SUM"
+      ],
+      "module": "BanditRLProof.Algorithms.UCB",
+      "status": "leanCompiled",
+      "declarations": [
+        "UCB.subGaussianOneSidedDeviationTail_le_exp_neg_budget",
+        "UCB.measure_upperConfidenceBad_le_subGaussian_exp_neg_budget",
+        "UCB.measure_lowerConfidenceBad_le_subGaussian_exp_neg_budget",
+        "UCB.measure_finiteHorizonConfidenceBadEvent_le_subGaussian_exp_neg_budget_sum"
+      ],
+      "role": "Compiled UCB one-sided sub-Gaussian radius-budget simplification: if `0 < proxy` and `2 * proxy * budget <= radius^2`, the canonical one-sided tail is bounded by `exp(-budget)`, and the upper/lower confidence-failure plus finite-horizon bad-event wrappers consume that budget directly. This is the algebraic handoff toward textbook log/sqrt radii; empirical-mean construction, the actual sqrt/log radius instantiation, pull-count bounds, and final UCB regret remain separate.",
+      "mathlib_routes": [
+        "LOCAL-LEAF-UCB-SUBGAUSSIAN-ONE-SIDED-TAIL",
+        "Mathlib.Analysis.SpecialFunctions.Exp",
+        "Mathlib.Data.ENNReal.Real"
       ]
     },
     {
