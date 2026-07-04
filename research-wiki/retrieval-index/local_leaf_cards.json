@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T13:24:15+00:00",
+  "generated": "2026-07-04T13:42:26+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -3710,6 +3710,33 @@
         "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-COND-MGF-BOUNDED-EXP-CONSUMER",
         "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-EXP-INTEGRABILITY",
         "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-CENTERED-REGULARITY",
+        "FILTRATION-HISTORY"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-COND-MGF-UNIFORM-VARIANCE-CONSUMER",
+      "leaf_ids": [
+        "COND-EXPECT-REWARD",
+        "ADAPTED-ACTION",
+        "MEAS-POLICY",
+        "MEAS-HISTORY",
+        "KERNEL-POLICY-BIND",
+        "KERNEL-REWARD",
+        "INT-REWARD-BOUNDED",
+        "MEAS-REWARD"
+      ],
+      "module": "BanditRLProof.ConditionalRewardLawSource",
+      "status": "leanCompiled",
+      "declarations": [
+        "ConditionalExpectationReward.GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource",
+        "ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_uniform_variance_le",
+        "ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource"
+      ],
+      "role": "Compiled project-local practical conditional MGF consumer with a deterministic variance-proxy ceiling: the definitional raw-reward-range/measurable-mean-range source now reduces the trimmed-a.e. selected-history variance domination condition to a pointwise model-side bound forall context action, varianceProxy context action <= c. A packaged uniform-variance source wrapper carries the base practical source plus the ceiling and directly yields HasCondSubgaussianMGF with proxy varianceCeiling. It still assumes the definitional random next-pair law source, ambient trajectory-to-condExpKernel identification, and an explicit uniform variance ceiling; raw/mean range bounds alone do not imply an arbitrary varianceProxy ceiling.",
+      "mathlib_routes": [
+        "MLIB-PROBABILITY-SUBGAUSSIAN",
+        "MLIB-CONDITIONAL-EXPECTATION",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-COND-MGF-SOURCE-REGULARITY-CONSUMER",
         "FILTRATION-HISTORY"
       ]
     },

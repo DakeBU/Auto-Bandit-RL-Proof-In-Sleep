@@ -4347,6 +4347,33 @@ LOCAL_LEAF_CARDS = [
         ],
     },
     {
+        "id": "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-COND-MGF-UNIFORM-VARIANCE-CONSUMER",
+        "leaf_ids": [
+            "COND-EXPECT-REWARD",
+            "ADAPTED-ACTION",
+            "MEAS-POLICY",
+            "MEAS-HISTORY",
+            "KERNEL-POLICY-BIND",
+            "KERNEL-REWARD",
+            "INT-REWARD-BOUNDED",
+            "MEAS-REWARD",
+        ],
+        "module": "BanditRLProof.ConditionalRewardLawSource",
+        "status": "leanCompiled",
+        "declarations": [
+            "ConditionalExpectationReward.GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource",
+            "ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_uniform_variance_le",
+            "ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource",
+        ],
+        "role": "Compiled project-local practical conditional MGF consumer with a deterministic variance-proxy ceiling: the definitional raw-reward-range/measurable-mean-range source now reduces the trimmed-a.e. selected-history variance domination condition to a pointwise model-side bound forall context action, varianceProxy context action <= c. A packaged uniform-variance source wrapper carries the base practical source plus the ceiling and directly yields HasCondSubgaussianMGF with proxy varianceCeiling. It still assumes the definitional random next-pair law source, ambient trajectory-to-condExpKernel identification, and an explicit uniform variance ceiling; raw/mean range bounds alone do not imply an arbitrary varianceProxy ceiling.",
+        "mathlib_routes": [
+            "MLIB-PROBABILITY-SUBGAUSSIAN",
+            "MLIB-CONDITIONAL-EXPECTATION",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-COND-MGF-SOURCE-REGULARITY-CONSUMER",
+            "FILTRATION-HISTORY",
+        ],
+    },
+    {
         "id": "LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE",
         "leaf_ids": [
             "COND-EXPECT-REWARD",
@@ -6180,6 +6207,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-EXP-INTEGRABILITY is compiled locally as the practical top-level exponential-integrability consumer: deterministic raw reward and selected-mean range evidence now derives exp(t * centeredReward) integrability for every real t over generatedActionFromRewardHistory.")
     print("- COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-COND-MGF-BOUNDED-EXP-CONSUMER is compiled locally as the practical conditional MGF wrapper that derives the h_integrable_exp side condition from source bounds; centered measurability and variance-proxy domination remain explicit.")
     print("- COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-COND-MGF-SOURCE-REGULARITY-CONSUMER is compiled locally as the practical conditional MGF wrapper that derives both centered-reward measurability and h_integrable_exp from source regularity; only variance-proxy domination remains explicit.")
+    print("- COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-COND-MGF-UNIFORM-VARIANCE-CONSUMER is compiled locally as the practical conditional MGF wrapper that reduces the remaining trimmed-a.e. variance-domination side condition to a model-side uniform varianceProxy ceiling, with a packaged uniform-variance source wrapper.")
     print("- COND-EXPECT-REWARD-RANDOM-PAIR-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE is compiled locally as a source-conversion leaf: a definitional raw-reward-range/measurable-mean-range bounded generated random-pair source now projects its packaged definitional map source into the weaker definitional actual-action reward-coordinate source; it still assumes the definitional raw-range/measurable-mean-range source fields and random pair law.")
     print("- COND-EXPECT-REWARD-RANDOM-PAIR-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE is compiled locally as a source-conversion leaf: a definitional raw-reward-range/measurable-mean-range bounded generated random-pair source now projects through the definitional actual-map source into the explicit generated actual-action reward-coordinate source using generatedActionFromRewardHistory; it still assumes the definitional raw-range/measurable-mean-range source fields and random pair law.")
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-REWARD-MAP is compiled locally as the extension-map reward-coordinate adapter and raw-range mean-zero consumer: it lifts the frozen-prefix extension-map partialTraj law to the full finite-pair trace law, projects it to the actual-action selected reward law, and derives succ-indexed conditional mean-zero from raw-reward/selected-mean range bounds; it still assumes the extension-map law and ambient trajectory-to-condExpKernel identification.")

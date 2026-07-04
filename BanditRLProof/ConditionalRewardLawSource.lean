@@ -2818,6 +2818,42 @@ structure GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBounde
         (((mean context action : Rat) : Real))
 
 /--
+Practical definitional raw-range source with a deterministic variance-proxy
+ceiling.
+
+The base source carries the generated-action random next-pair law, raw reward
+range, selected-mean range, and centered kernel law.  This wrapper adds the
+uniform model-side upper bound needed to choose a deterministic
+`HasCondSubgaussianMGF` variance proxy.
+-/
+structure GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (varianceCeiling : NNReal) where
+  base_source :
+    GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource
+      mu rewardKernel policy context state mean varianceProxy defaultAction
+      reward hreward rewardLo rewardHi meanLo meanHi
+  variance_le :
+    forall context : Context, forall action : Action,
+      varianceProxy context action <= varianceCeiling
+
+/--
 Build the practical definitional generated-policy raw-range source from a full
 finite-pair-trace `partialTraj` law.
 
@@ -13346,6 +13382,169 @@ theorem centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDe
         (source := source)
         (i := i))
       h_variance_le
+
+/--
+Consume the practical definitional raw-range source for the conditional MGF
+route under a deterministic variance-proxy ceiling.
+
+This replaces the trimmed-a.e. selected-history variance domination hypothesis
+with a pointwise kernel-level ceiling on `varianceProxy`.
+-/
+theorem centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_uniform_variance_le
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (source :
+      GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource
+        mu rewardKernel policy context state mean varianceProxy defaultAction
+        reward hreward rewardLo rewardHi meanLo meanHi)
+    (i : Nat)
+    (c : NNReal)
+    (h_variance_uniform :
+      forall context : Context, forall action : Action,
+        varianceProxy context action <= c) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward source.definitional_map_source.hstate)
+        hreward) i)
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward source.definitional_map_source.hstate)
+        hreward).le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      c mu := by
+  exact
+    centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_variance_le
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (mean := mean)
+      (varianceProxy := varianceProxy)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (rewardLo := rewardLo)
+      (rewardHi := rewardHi)
+      (meanLo := meanLo)
+      (meanHi := meanHi)
+      (source := source)
+      (i := i)
+      (c := c)
+      (Filter.Eventually.of_forall
+        (fun omega : Omega =>
+          h_variance_uniform
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i)))))
+
+/--
+Consume a practical definitional raw-range source with a packaged deterministic
+variance-proxy ceiling for the conditional MGF route.
+-/
+theorem centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (varianceCeiling : NNReal)
+    (source :
+      GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource
+        mu rewardKernel policy context state mean varianceProxy defaultAction
+        reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling)
+    (i : Nat) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward
+          source.base_source.definitional_map_source.hstate)
+        hreward) i)
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward
+          source.base_source.definitional_map_source.hstate)
+        hreward).le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      varianceCeiling mu := by
+  exact
+    centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_uniform_variance_le
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (mean := mean)
+      (varianceProxy := varianceProxy)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (rewardLo := rewardLo)
+      (rewardHi := rewardHi)
+      (meanLo := meanLo)
+      (meanHi := meanHi)
+      (source := source.base_source)
+      (i := i)
+      (c := varianceCeiling)
+      source.variance_le
 
 /--
 Directly consume the full finite-pair-trace `partialTraj` law plus the
