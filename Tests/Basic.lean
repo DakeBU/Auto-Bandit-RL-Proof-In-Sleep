@@ -3534,6 +3534,94 @@ example {Omega Context State Action : Type}
       RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
     (reward : Omega -> RewardTrace Rat)
     (i : Nat)
+    (history : Omega -> ((j : Finset.Iic i) -> Rat))
+    (c : NNReal)
+    (h_reward :
+      @Measurable Omega Rat mOmega inferInstance
+        (fun omega : Omega => reward omega (i + 1)))
+    (h_centered_meas :
+      @Measurable Omega Real mOmega inferInstance
+        (fun omega : Omega =>
+          (((reward omega (i + 1) -
+            mean (context i (history omega))
+              ((policy i).action (state i (history omega))) : Rat) :
+                Real))))
+    (h_integrable_exp :
+      forall t : Real,
+        MeasureTheory.Integrable
+          (fun omega : Omega =>
+            Real.exp (t *
+              (((reward omega (i + 1) -
+                mean (context i (history omega))
+                  ((policy i).action (state i (history omega))) : Rat) :
+                    Real)))) mu)
+    (h_kernel_map_eq :
+      Filter.Eventually
+        (fun omega : Omega =>
+          @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+            (fun y : Omega => reward y (i + 1))
+            (ProbabilityTheory.condExpKernel
+              (Ω := Omega) (mΩ := mOmega) mu (F i) omega) =
+          RewardKernel.historyStepKernelFamily rewardKernel policy context state
+            hcontext hstate i (history omega))
+        (MeasureTheory.ae (mu.trim (F.le i))))
+    (h_kernel_X_eq :
+      Filter.Eventually
+        (fun omega : Omega =>
+          Filter.EventuallyEq
+            (MeasureTheory.ae
+              (ProbabilityTheory.condExpKernel
+                (Ω := Omega) (mΩ := mOmega) mu (F i) omega))
+            (fun y : Omega =>
+              (((reward y (i + 1) -
+                mean (context i (history y))
+                  ((policy i).action (state i (history y))) : Rat) :
+                    Real)))
+            (fun y : Omega =>
+              (((reward y (i + 1) -
+                mean (context i (history omega))
+                  ((policy i).action (state i (history omega))) : Rat) :
+                    Real))))
+        (MeasureTheory.ae (mu.trim (F.le i))))
+    (h_variance_le :
+      Filter.Eventually
+        (fun omega : Omega =>
+          varianceProxy (context i (history omega))
+            ((policy i).action (state i (history omega))) <= c)
+        (MeasureTheory.ae (mu.trim (F.le i)))) :
+    ProbabilityTheory.HasCondSubgaussianMGF (F i) (F.le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean (context i (history omega))
+            ((policy i).action (state i (history omega))) : Rat) : Real)))
+      c mu := by
+  exact
+    ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_historyStepKernelFamily_condExpKernel_map_eq
+      (mOmega := mOmega)
+      mu F rewardKernel policy context state hcontext hstate mean varianceProxy
+      law reward i history c h_reward h_centered_meas h_integrable_exp
+      h_kernel_map_eq h_kernel_X_eq h_variance_le
+
+example {Omega Context State Action : Type}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action]
+    (mu : MeasureTheory.Measure Omega)
+    [MeasureTheory.IsFiniteMeasure mu]
+    (F : MeasureTheory.Filtration Nat mOmega)
+    (rewardKernel :
+      RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (law :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (reward : Omega -> RewardTrace Rat)
+    (i : Nat)
     (h_reward :
       @Measurable Omega Rat mOmega inferInstance
         (fun omega : Omega => reward omega (i + 1)))
@@ -3580,6 +3668,98 @@ example {Omega Context State Action : Type}
       (mOmega := mOmega)
       mu F rewardKernel policy context state hcontext hstate mean varianceProxy
       law reward i h_reward h_prefix_meas h_integrable h_kernel_map_eq
+
+example {Omega Context State Action : Type}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action]
+    (mu : MeasureTheory.Measure Omega)
+    [MeasureTheory.IsFiniteMeasure mu]
+    (F : MeasureTheory.Filtration Nat mOmega)
+    (rewardKernel :
+      RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (law :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (reward : Omega -> RewardTrace Rat)
+    (i : Nat)
+    (c : NNReal)
+    (h_reward :
+      @Measurable Omega Rat mOmega inferInstance
+        (fun omega : Omega => reward omega (i + 1)))
+    (h_prefix_meas :
+      forall j : Finset.Iic i,
+        @Measurable Omega Rat (F i) inferInstance
+          (fun omega : Omega => reward omega j.1))
+    (h_centered_meas :
+      @Measurable Omega Real mOmega inferInstance
+        (fun omega : Omega =>
+          (((reward omega (i + 1) -
+            mean
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+                Rat) : Real))))
+    (h_integrable_exp :
+      forall t : Real,
+        MeasureTheory.Integrable
+          (fun omega : Omega =>
+            Real.exp (t *
+              (((reward omega (i + 1) -
+                mean
+                  (context i
+                    (History.finiteRewardHistoryOfTrace (reward omega) i))
+                  ((policy i).action
+                    (state i
+                      (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+                    Rat) : Real)))) mu)
+    (h_kernel_map_eq :
+      Filter.Eventually
+        (fun omega : Omega =>
+          @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+            (fun y : Omega => reward y (i + 1))
+            (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _ (F i)
+              omega) =
+          RewardKernel.historyStepKernelFamily rewardKernel policy context state
+            hcontext hstate i
+            (History.finiteRewardHistoryOfTrace (reward omega) i))
+        (MeasureTheory.ae (mu.trim (F.le i))))
+    (h_variance_le :
+      Filter.Eventually
+        (fun omega : Omega =>
+          varianceProxy
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace (reward omega) i))) <=
+            c)
+        (MeasureTheory.ae (mu.trim (F.le i)))) :
+    ProbabilityTheory.HasCondSubgaussianMGF (F i) (F.le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      c mu := by
+  exact
+    ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_historyStepKernelFamily_condExpKernel_map_eq_of_coordinate_measurable
+      (mOmega := mOmega)
+      mu F rewardKernel policy context state hcontext hstate mean varianceProxy
+      law reward i c h_reward h_prefix_meas h_centered_meas
+      h_integrable_exp h_kernel_map_eq h_variance_le
 
 example {Omega Context State Action : Type}
     [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
@@ -3718,6 +3898,104 @@ example {Omega Context State Action : Type}
       (mOmega := mOmega)
       mu action rewardKernel policy context state hcontext hstate mean
       varianceProxy law reward haction hreward i h_integrable h_kernel_map_eq
+
+example {Omega Context State Action : Type}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    (mu : MeasureTheory.Measure Omega)
+    [MeasureTheory.IsFiniteMeasure mu]
+    (action : Omega -> ActionTrace Action)
+    (rewardKernel :
+      RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (law :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (reward : Omega -> RewardTrace Rat)
+    (haction : forall t : Nat,
+      Measurable (fun omega : Omega => action omega t))
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (i : Nat)
+    (c : NNReal)
+    (h_centered_meas :
+      @Measurable Omega Real mOmega inferInstance
+        (fun omega : Omega =>
+          (((reward omega (i + 1) -
+            mean
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+                Rat) : Real))))
+    (h_integrable_exp :
+      forall t : Real,
+        MeasureTheory.Integrable
+          (fun omega : Omega =>
+            Real.exp (t *
+              (((reward omega (i + 1) -
+                mean
+                  (context i
+                    (History.finiteRewardHistoryOfTrace (reward omega) i))
+                  ((policy i).action
+                    (state i
+                      (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+                    Rat) : Real)))) mu)
+    (h_kernel_map_eq :
+      Filter.Eventually
+        (fun omega : Omega =>
+          @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+            (fun y : Omega => reward y (i + 1))
+            (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+              ((History.historyFiltrationSucc action reward haction hreward) i)
+              omega) =
+          RewardKernel.historyStepKernelFamily rewardKernel policy context state
+            hcontext hstate i
+            (History.finiteRewardHistoryOfTrace (reward omega) i))
+        (MeasureTheory.ae
+          (mu.trim
+            ((History.historyFiltrationSucc action reward haction hreward).le
+              i))))
+    (h_variance_le :
+      Filter.Eventually
+        (fun omega : Omega =>
+          varianceProxy
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace (reward omega) i))) <=
+            c)
+        (MeasureTheory.ae
+          (mu.trim
+            ((History.historyFiltrationSucc action reward haction hreward).le
+              i)))) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc action reward haction hreward) i)
+      ((History.historyFiltrationSucc action reward haction hreward).le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      c mu := by
+  exact
+    ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_historyStepKernelFamily_condExpKernel_map_eq_historyFiltrationSucc
+      (mOmega := mOmega)
+      mu action rewardKernel policy context state hcontext hstate mean
+      varianceProxy law reward haction hreward i c h_centered_meas
+      h_integrable_exp h_kernel_map_eq h_variance_le
 
 example {Omega Context State Action : Type}
     [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]

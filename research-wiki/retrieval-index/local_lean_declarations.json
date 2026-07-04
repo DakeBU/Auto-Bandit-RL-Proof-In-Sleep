@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T11:49:43+00:00",
+  "generated": "2026-07-04T12:12:39+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -1483,10 +1483,18 @@
     },
     {
       "kind": "theorem",
+      "name": "centeredReward_succ_hasCondSubgaussianMGF_of_historyStepKernelFamily_condExpKernel_map_eq",
+      "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_historyStepKernelFamily_condExpKernel_map_eq",
+      "file": "BanditRLProof/ConditionalExpectationReward.lean",
+      "line": 670,
+      "statement": "theorem centeredReward_succ_hasCondSubgaussianMGF_of_historyStepKernelFamily_condExpKernel_map_eq {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] (mu : Measure Omega) [IsFiniteMeasure mu] (F : Filtration Nat mOmega) (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
+    },
+    {
+      "kind": "theorem",
       "name": "condExpKernel_event_real_eq_indicator_of_measurableSet",
       "full_name": "BanditRLProof.ConditionalExpectationReward.condExpKernel_event_real_eq_indicator_of_measurableSet",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 667,
+      "line": 787,
       "statement": "theorem condExpKernel_event_real_eq_indicator_of_measurableSet {Omega : Type u} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] (mu : Measure Omega) [IsFiniteMeasure mu] (mcond : MeasurableSpace Omega) (hm : mcond <= mOmega) (s : Set Omega) (hs : @MeasurableSet Omega mcond s) : Filter.Eventually (fun omega : Omega =>"
     },
     {
@@ -1494,7 +1502,7 @@
       "name": "condExpKernel_ae_eq_const_of_countable_measurable",
       "full_name": "BanditRLProof.ConditionalExpectationReward.condExpKernel_ae_eq_const_of_countable_measurable",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 705,
+      "line": 825,
       "statement": "theorem condExpKernel_ae_eq_const_of_countable_measurable {Omega : Type u} {A : Type v} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace A] [MeasurableSingletonClass A] [Countable A] (mu : Measure Omega) [IsFiniteMeasure mu] (mcond : MeasurableSpace Omega) (hm : mcond <= mOmega) (Y : Omega -> A) (hY : @Measurable Omega A mcond inferInstance Y) :"
     },
     {
@@ -1502,7 +1510,7 @@
       "name": "action_condExpKernel_ae_eq_policy_of_measurable_of_policy_eq",
       "full_name": "BanditRLProof.ConditionalExpectationReward.action_condExpKernel_ae_eq_policy_of_measurable_of_policy_eq",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 782,
+      "line": 902,
       "statement": "theorem action_condExpKernel_ae_eq_policy_of_measurable_of_policy_eq {Omega : Type u} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : Measure Omega) [IsFiniteMeasure mu] (F : Filtration Nat mOmega) (policy : Nat -> Policy.MeasurablePolicy State Action)"
     },
     {
@@ -1510,7 +1518,7 @@
       "name": "action_condExpKernel_ae_eq_policy_of_pairHistory_measurable_of_action_eq",
       "full_name": "BanditRLProof.ConditionalExpectationReward.action_condExpKernel_ae_eq_policy_of_pairHistory_measurable_of_action_eq",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 839,
+      "line": 959,
       "statement": "theorem action_condExpKernel_ae_eq_policy_of_pairHistory_measurable_of_action_eq {Omega : Type u} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : Measure Omega) [IsFiniteMeasure mu] (F : Filtration Nat mOmega) (policy : Nat -> Policy.MeasurablePolicy State Action)"
     },
     {
@@ -1518,7 +1526,7 @@
       "name": "action_condExpKernel_ae_eq_policy_historyFiltrationSucc_finitePairHistoryOfTrace_of_action_eq",
       "full_name": "BanditRLProof.ConditionalExpectationReward.action_condExpKernel_ae_eq_policy_historyFiltrationSucc_finitePairHistoryOfTrace_of_action_eq",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 909,
+      "line": 1029,
       "statement": "theorem action_condExpKernel_ae_eq_policy_historyFiltrationSucc_finitePairHistoryOfTrace_of_action_eq {Omega : Type u} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : Measure Omega) [IsFiniteMeasure mu] (policy : Nat -> Policy.MeasurablePolicy State Action)"
     },
     {
@@ -1526,7 +1534,7 @@
       "name": "action_condExpKernel_ae_eq_policy_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc",
       "full_name": "BanditRLProof.ConditionalExpectationReward.action_condExpKernel_ae_eq_policy_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 1003,
+      "line": 1123,
       "statement": "theorem action_condExpKernel_ae_eq_policy_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc {Omega : Type u} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : Measure Omega) [IsFiniteMeasure mu] (policy : Nat -> Policy.MeasurablePolicy State Action)"
     },
     {
@@ -1534,7 +1542,7 @@
       "name": "reward_condExpKernel_map_eq_selected_policy_of_action_eq",
       "full_name": "BanditRLProof.ConditionalExpectationReward.reward_condExpKernel_map_eq_selected_policy_of_action_eq",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 1079,
+      "line": 1199,
       "statement": "theorem reward_condExpKernel_map_eq_selected_policy_of_action_eq {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] (mu : Measure Omega) [IsFiniteMeasure mu] (F : Filtration Nat mOmega) (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -1542,7 +1550,7 @@
       "name": "reward_condExpKernel_map_eq_selected_actual_action_of_pair_map_eq",
       "full_name": "BanditRLProof.ConditionalExpectationReward.reward_condExpKernel_map_eq_selected_actual_action_of_pair_map_eq",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 1136,
+      "line": 1256,
       "statement": "theorem reward_condExpKernel_map_eq_selected_actual_action_of_pair_map_eq {Omega : Type u} {Context : Type v} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace Action] (mu : Measure Omega) [IsFiniteMeasure mu] (F : Filtration Nat mOmega) (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat) (pairContext :"
     },
     {
@@ -1550,7 +1558,7 @@
       "name": "pair_condExpKernel_map_eq_frozen_actual_action_of_generatedActionTraceSucc_random_pair_map_eq",
       "full_name": "BanditRLProof.ConditionalExpectationReward.pair_condExpKernel_map_eq_frozen_actual_action_of_generatedActionTraceSucc_random_pair_map_eq",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 1225,
+      "line": 1345,
       "statement": "theorem pair_condExpKernel_map_eq_frozen_actual_action_of_generatedActionTraceSucc_random_pair_map_eq {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : Measure Omega) [IsFiniteMeasure mu] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -1558,7 +1566,7 @@
       "name": "actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc_random_pair_map_eq_actual_action",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc_random_pair_map_eq_actual_action",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 1376,
+      "line": 1496,
       "statement": "theorem actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc_random_pair_map_eq_actual_action {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : Measure Omega) [IsFiniteMeasure mu] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -1566,7 +1574,7 @@
       "name": "finiteRewardHistory_condExpKernel_frozen_of_measurable",
       "full_name": "BanditRLProof.ConditionalExpectationReward.finiteRewardHistory_condExpKernel_frozen_of_measurable",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 1493,
+      "line": 1613,
       "statement": "theorem finiteRewardHistory_condExpKernel_frozen_of_measurable {Omega : Type u} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] (mu : Measure Omega) [IsFiniteMeasure mu] (F : Filtration Nat mOmega) (i : Nat) (history : Omega -> ((j : Finset.Iic i) -> Rat)) (hhistory :"
     },
     {
@@ -1574,7 +1582,7 @@
       "name": "finiteRewardHistory_condExpKernel_frozen_of_coordinate_measurable",
       "full_name": "BanditRLProof.ConditionalExpectationReward.finiteRewardHistory_condExpKernel_frozen_of_coordinate_measurable",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 1527,
+      "line": 1647,
       "statement": "theorem finiteRewardHistory_condExpKernel_frozen_of_coordinate_measurable {Omega : Type u} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] (mu : Measure Omega) [IsFiniteMeasure mu] (F : Filtration Nat mOmega) (reward : Omega -> RewardTrace Rat) (i : Nat) (hreward :"
     },
     {
@@ -1582,7 +1590,7 @@
       "name": "finiteRewardHistory_condExpKernel_frozen_historyFiltrationSucc",
       "full_name": "BanditRLProof.ConditionalExpectationReward.finiteRewardHistory_condExpKernel_frozen_historyFiltrationSucc",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 1568,
+      "line": 1688,
       "statement": "theorem finiteRewardHistory_condExpKernel_frozen_historyFiltrationSucc {Omega : Type u} {Action : Type v} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Action] [MeasurableSingletonClass Action] (mu : Measure Omega) [IsFiniteMeasure mu] (action : Omega -> ActionTrace Action) (reward : Omega -> RewardTrace Rat) (haction : forall t : Nat,"
     },
     {
@@ -1590,7 +1598,7 @@
       "name": "finitePairHistory_condExpKernel_frozen_of_measurable",
       "full_name": "BanditRLProof.ConditionalExpectationReward.finitePairHistory_condExpKernel_frozen_of_measurable",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 1615,
+      "line": 1735,
       "statement": "theorem finitePairHistory_condExpKernel_frozen_of_measurable {Omega : Type u} {Action : Type v} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : Measure Omega) [IsFiniteMeasure mu] (F : Filtration Nat mOmega) (i : Nat)"
     },
     {
@@ -1598,7 +1606,7 @@
       "name": "finitePairHistory_condExpKernel_frozen_of_coordinate_measurable",
       "full_name": "BanditRLProof.ConditionalExpectationReward.finitePairHistory_condExpKernel_frozen_of_coordinate_measurable",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 1650,
+      "line": 1770,
       "statement": "theorem finitePairHistory_condExpKernel_frozen_of_coordinate_measurable {Omega : Type u} {Action : Type v} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : Measure Omega) [IsFiniteMeasure mu] (F : Filtration Nat mOmega) (action : Omega -> ActionTrace Action)"
     },
     {
@@ -1606,7 +1614,7 @@
       "name": "finitePairHistory_condExpKernel_frozen_historyFiltrationSucc",
       "full_name": "BanditRLProof.ConditionalExpectationReward.finitePairHistory_condExpKernel_frozen_historyFiltrationSucc",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 1699,
+      "line": 1819,
       "statement": "theorem finitePairHistory_condExpKernel_frozen_historyFiltrationSucc {Omega : Type u} {Action : Type v} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : Measure Omega) [IsFiniteMeasure mu] (action : Omega -> ActionTrace Action) (reward : Omega -> RewardTrace Rat)"
     },
     {
@@ -1614,7 +1622,7 @@
       "name": "finitePairHistory_succ_ae_eq_extend_of_pairHistory_frozen",
       "full_name": "BanditRLProof.ConditionalExpectationReward.finitePairHistory_succ_ae_eq_extend_of_pairHistory_frozen",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 1754,
+      "line": 1874,
       "statement": "theorem finitePairHistory_succ_ae_eq_extend_of_pairHistory_frozen {Omega : Type u} {Action : Type v} [mOmega : MeasurableSpace Omega] (nu : Measure Omega) (action : Omega -> ActionTrace Action) (reward : Omega -> RewardTrace Rat) (i : Nat) (omega : Omega) (h_pair_history_frozen :"
     },
     {
@@ -1622,7 +1630,7 @@
       "name": "finitePairHistory_succ_condExpKernel_ae_eq_extend_historyFiltrationSucc",
       "full_name": "BanditRLProof.ConditionalExpectationReward.finitePairHistory_succ_condExpKernel_ae_eq_extend_historyFiltrationSucc",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 1795,
+      "line": 1915,
       "statement": "theorem finitePairHistory_succ_condExpKernel_ae_eq_extend_historyFiltrationSucc {Omega : Type u} {Action : Type v} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : Measure Omega) [IsFiniteMeasure mu] (action : Omega -> ActionTrace Action) (reward : Omega -> RewardTrace Rat)"
     },
     {
@@ -1630,7 +1638,7 @@
       "name": "finitePairHistory_succ_condExpKernel_map_eq_extend_historyFiltrationSucc",
       "full_name": "BanditRLProof.ConditionalExpectationReward.finitePairHistory_succ_condExpKernel_map_eq_extend_historyFiltrationSucc",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 1854,
+      "line": 1974,
       "statement": "theorem finitePairHistory_succ_condExpKernel_map_eq_extend_historyFiltrationSucc {Omega : Type u} {Action : Type v} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : Measure Omega) [IsFiniteMeasure mu] (action : Omega -> ActionTrace Action) (reward : Omega -> RewardTrace Rat)"
     },
     {
@@ -1638,15 +1646,31 @@
       "name": "centeredReward_succ_frozenPast_ae_of_history_frozen",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_frozenPast_ae_of_history_frozen",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 1910,
+      "line": 2030,
       "statement": "theorem centeredReward_succ_frozenPast_ae_of_history_frozen {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace State] [MeasurableSpace Action] (mu : Measure Omega) [IsFiniteMeasure mu] (F : Filtration Nat mOmega) (policy : Nat -> Policy.MeasurablePolicy State Action) (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)"
+    },
+    {
+      "kind": "theorem",
+      "name": "centeredReward_succ_hasCondSubgaussianMGF_of_historyStepKernelFamily_condExpKernel_map_eq_of_coordinate_measurable",
+      "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_historyStepKernelFamily_condExpKernel_map_eq_of_coordinate_measurable",
+      "file": "BanditRLProof/ConditionalExpectationReward.lean",
+      "line": 2079,
+      "statement": "theorem centeredReward_succ_hasCondSubgaussianMGF_of_historyStepKernelFamily_condExpKernel_map_eq_of_coordinate_measurable {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] (mu : Measure Omega) [IsFiniteMeasure mu] (F : Filtration Nat mOmega) (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
+    },
+    {
+      "kind": "theorem",
+      "name": "centeredReward_succ_hasCondSubgaussianMGF_of_historyStepKernelFamily_condExpKernel_map_eq_historyFiltrationSucc",
+      "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_historyStepKernelFamily_condExpKernel_map_eq_historyFiltrationSucc",
+      "file": "BanditRLProof/ConditionalExpectationReward.lean",
+      "line": 2245,
+      "statement": "theorem centeredReward_succ_hasCondSubgaussianMGF_of_historyStepKernelFamily_condExpKernel_map_eq_historyFiltrationSucc {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] (mu : Measure Omega) [IsFiniteMeasure mu] (action : Omega -> ActionTrace Action) (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
       "kind": "theorem",
       "name": "centeredReward_succ_condExp_eq_zero_of_historyStepKernelFamily_condExpKernel_map_eq",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_historyStepKernelFamily_condExpKernel_map_eq",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 1957,
+      "line": 2370,
       "statement": "theorem centeredReward_succ_condExp_eq_zero_of_historyStepKernelFamily_condExpKernel_map_eq {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] (mu : Measure Omega) [IsFiniteMeasure mu] (F : Filtration Nat mOmega) (rewardKernel : RewardKernel.MarkovRewardKernel (Context \u00d7 Action) Rat)"
     },
     {
@@ -1654,7 +1678,7 @@
       "name": "centeredReward_succ_condExp_eq_zero_of_historyStepKernelFamily_condExpKernel_map_eq_of_coordinate_measurable",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_historyStepKernelFamily_condExpKernel_map_eq_of_coordinate_measurable",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 2058,
+      "line": 2471,
       "statement": "theorem centeredReward_succ_condExp_eq_zero_of_historyStepKernelFamily_condExpKernel_map_eq_of_coordinate_measurable {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] (mu : Measure Omega) [IsFiniteMeasure mu] (F : Filtration Nat mOmega) (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -1662,7 +1686,7 @@
       "name": "centeredReward_succ_condExp_eq_zero_of_historyStepKernelFamily_condExpKernel_map_eq_historyFiltrationSucc",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_historyStepKernelFamily_condExpKernel_map_eq_historyFiltrationSucc",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 2196,
+      "line": 2609,
       "statement": "theorem centeredReward_succ_condExp_eq_zero_of_historyStepKernelFamily_condExpKernel_map_eq_historyFiltrationSucc {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] (mu : Measure Omega) [IsFiniteMeasure mu] (action : Omega -> ActionTrace Action) (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -1670,7 +1694,7 @@
       "name": "centeredReward_succ_condExp_eq_zero_of_actionRewardHistoryStepKernelFamily_pair_map_eq_of_coordinate_measurable",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardHistoryStepKernelFamily_pair_map_eq_of_coordinate_measurable",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 2293,
+      "line": 2706,
       "statement": "theorem centeredReward_succ_condExp_eq_zero_of_actionRewardHistoryStepKernelFamily_pair_map_eq_of_coordinate_measurable {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] (mu : Measure Omega) [IsFiniteMeasure mu] (F : Filtration Nat mOmega) (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -1678,7 +1702,7 @@
       "name": "centeredReward_succ_condExp_eq_zero_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 2457,
+      "line": 2870,
       "statement": "theorem centeredReward_succ_condExp_eq_zero_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] (mu : Measure Omega) [IsFiniteMeasure mu] (action : Omega -> ActionTrace Action) (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -1686,7 +1710,7 @@
       "name": "centeredReward_succ_condExp_eq_zero_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_projected",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_projected",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 2579,
+      "line": 2992,
       "statement": "theorem centeredReward_succ_condExp_eq_zero_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_projected {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] (mu : Measure Omega) [IsFiniteMeasure mu] (action : Omega -> ActionTrace Action) (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -1694,7 +1718,7 @@
       "name": "centeredReward_succ_condExp_eq_zero_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_projected_of_context_state_measurable",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_projected_of_context_state_measurable",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 2699,
+      "line": 3112,
       "statement": "theorem centeredReward_succ_condExp_eq_zero_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_projected_of_context_state_measurable {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] (mu : Measure Omega) [IsFiniteMeasure mu] (action : Omega -> ActionTrace Action) (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -1702,7 +1726,7 @@
       "name": "centeredReward_succ_condExp_eq_zero_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 2811,
+      "line": 3224,
       "statement": "theorem centeredReward_succ_condExp_eq_zero_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] (mu : Measure Omega) [IsFiniteMeasure mu] (action : Omega -> ActionTrace Action) (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -1710,7 +1734,7 @@
       "name": "actionRewardHistoryStepKernelFamily_pair_map_eq_of_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_map_eq_of_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 2917,
+      "line": 3330,
       "statement": "theorem actionRewardHistoryStepKernelFamily_pair_map_eq_of_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] (mu : Measure Omega) [IsFiniteMeasure mu] (action : Omega -> ActionTrace Action) (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -1718,7 +1742,7 @@
       "name": "reward_condExpKernel_map_eq_selected_actual_action_of_actionRewardHistoryStepKernelFamily_pair_map_eq",
       "full_name": "BanditRLProof.ConditionalExpectationReward.reward_condExpKernel_map_eq_selected_actual_action_of_actionRewardHistoryStepKernelFamily_pair_map_eq",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 3126,
+      "line": 3539,
       "statement": "theorem reward_condExpKernel_map_eq_selected_actual_action_of_actionRewardHistoryStepKernelFamily_pair_map_eq {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] (mu : Measure Omega) [IsFiniteMeasure mu] (F : Filtration Nat mOmega) (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -1726,7 +1750,7 @@
       "name": "reward_condExpKernel_map_eq_selected_actual_action_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
       "full_name": "BanditRLProof.ConditionalExpectationReward.reward_condExpKernel_map_eq_selected_actual_action_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 3234,
+      "line": 3647,
       "statement": "theorem reward_condExpKernel_map_eq_selected_actual_action_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] (mu : Measure Omega) [IsFiniteMeasure mu] (action : Omega -> ActionTrace Action) (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -1734,7 +1758,7 @@
       "name": "reward_condExpKernel_map_eq_selected_actual_action_of_generatedActionTraceSucc_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
       "full_name": "BanditRLProof.ConditionalExpectationReward.reward_condExpKernel_map_eq_selected_actual_action_of_generatedActionTraceSucc_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 3361,
+      "line": 3774,
       "statement": "theorem reward_condExpKernel_map_eq_selected_actual_action_of_generatedActionTraceSucc_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] (mu : Measure Omega) [IsFiniteMeasure mu] (action : Omega -> ActionTrace Action) (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -1742,7 +1766,7 @@
       "name": "reward_condExpKernel_map_eq_selected_actual_action_of_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
       "full_name": "BanditRLProof.ConditionalExpectationReward.reward_condExpKernel_map_eq_selected_actual_action_of_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 3469,
+      "line": 3882,
       "statement": "theorem reward_condExpKernel_map_eq_selected_actual_action_of_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] (mu : Measure Omega) [IsFiniteMeasure mu] (action : Omega -> ActionTrace Action) (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -1750,7 +1774,7 @@
       "name": "reward_condExpKernel_map_eq_selected_actual_action_of_generatedActionTraceSucc_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
       "full_name": "BanditRLProof.ConditionalExpectationReward.reward_condExpKernel_map_eq_selected_actual_action_of_generatedActionTraceSucc_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 3657,
+      "line": 4070,
       "statement": "theorem reward_condExpKernel_map_eq_selected_actual_action_of_generatedActionTraceSucc_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] (mu : Measure Omega) [IsFiniteMeasure mu] (action : Omega -> ActionTrace Action) (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -1758,7 +1782,7 @@
       "name": "centeredReward_succ_condExp_eq_zero_of_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 3767,
+      "line": 4180,
       "statement": "theorem centeredReward_succ_condExp_eq_zero_of_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] (mu : Measure Omega) [IsFiniteMeasure mu] (action : Omega -> ActionTrace Action) (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -1766,7 +1790,7 @@
       "name": "actionRewardHistoryStepKernelFamily_pair_map_eq_of_action_ae_eq_policy_reward_map_eq",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_map_eq_of_action_ae_eq_policy_reward_map_eq",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 4024,
+      "line": 4437,
       "statement": "theorem actionRewardHistoryStepKernelFamily_pair_map_eq_of_action_ae_eq_policy_reward_map_eq {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] (mu : Measure Omega) [IsFiniteMeasure mu] (F : Filtration Nat mOmega) (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -1774,7 +1798,7 @@
       "name": "actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc_reward_map_eq_actual_action",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc_reward_map_eq_actual_action",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 4149,
+      "line": 4562,
       "statement": "theorem actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc_reward_map_eq_actual_action {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : Measure Omega) [IsFiniteMeasure mu] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -1782,7 +1806,7 @@
       "name": "actionRewardPartialTrajectoryKernel_extend_map_eq_of_actionRewardHistoryStepKernelFamily_pair_map_eq",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_extend_map_eq_of_actionRewardHistoryStepKernelFamily_pair_map_eq",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 4302,
+      "line": 4715,
       "statement": "theorem actionRewardPartialTrajectoryKernel_extend_map_eq_of_actionRewardHistoryStepKernelFamily_pair_map_eq {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] (mu : Measure Omega) [IsFiniteMeasure mu] (F : Filtration Nat mOmega) (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -1790,7 +1814,7 @@
       "name": "actionRewardPartialTrajectoryKernel_extend_map_eq_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_extend_map_eq_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 4424,
+      "line": 4837,
       "statement": "theorem actionRewardPartialTrajectoryKernel_extend_map_eq_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] (mu : Measure Omega) [IsFiniteMeasure mu] (action : Omega -> ActionTrace Action) (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)"
     },
     {
@@ -1798,7 +1822,7 @@
       "name": "actionRewardPartialTrajectoryKernel_extend_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc_reward_map_eq_actual_action",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_extend_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc_reward_map_eq_actual_action",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 4540,
+      "line": 4953,
       "statement": "theorem actionRewardPartialTrajectoryKernel_extend_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc_reward_map_eq_actual_action {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : Measure Omega) [IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -1806,7 +1830,7 @@
       "name": "actionRewardPartialTrajectoryKernel_map_eq_of_extend_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_of_extend_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 4706,
+      "line": 5119,
       "statement": "theorem actionRewardPartialTrajectoryKernel_map_eq_of_extend_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : Measure Omega) [IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -1814,7 +1838,7 @@
       "name": "reward_condExpKernel_map_eq_selected_actual_action_of_actionRewardPartialTrajectoryKernel_extend_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
       "full_name": "BanditRLProof.ConditionalExpectationReward.reward_condExpKernel_map_eq_selected_actual_action_of_actionRewardPartialTrajectoryKernel_extend_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 4831,
+      "line": 5244,
       "statement": "theorem reward_condExpKernel_map_eq_selected_actual_action_of_actionRewardPartialTrajectoryKernel_extend_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : Measure Omega) [IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -1822,7 +1846,7 @@
       "name": "reward_condExpKernel_map_eq_selected_actual_action_of_generatedActionTraceSucc_actionRewardPartialTrajectoryKernel_extend_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
       "full_name": "BanditRLProof.ConditionalExpectationReward.reward_condExpKernel_map_eq_selected_actual_action_of_generatedActionTraceSucc_actionRewardPartialTrajectoryKernel_extend_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 4977,
+      "line": 5390,
       "statement": "theorem reward_condExpKernel_map_eq_selected_actual_action_of_generatedActionTraceSucc_actionRewardPartialTrajectoryKernel_extend_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : Measure Omega) [IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -1830,7 +1854,7 @@
       "name": "actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc_reward_map_eq_actual_action",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc_reward_map_eq_actual_action",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 5090,
+      "line": 5503,
       "statement": "theorem actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc_reward_map_eq_actual_action {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : Measure Omega) [IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -1838,7 +1862,7 @@
       "name": "centeredReward_succ_condExp_eq_zero_of_actionRewardPartialTrajectoryKernel_extend_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardPartialTrajectoryKernel_extend_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 5238,
+      "line": 5651,
       "statement": "theorem centeredReward_succ_condExp_eq_zero_of_actionRewardPartialTrajectoryKernel_extend_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : Measure Omega) [IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -1846,7 +1870,7 @@
       "name": "centeredReward_succ_condExp_eq_zero_of_generatedActionTraceSucc_reward_map_eq_actual_action",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionTraceSucc_reward_map_eq_actual_action",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 5396,
+      "line": 5809,
       "statement": "theorem centeredReward_succ_condExp_eq_zero_of_generatedActionTraceSucc_reward_map_eq_actual_action {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : Measure Omega) [IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -1854,7 +1878,7 @@
       "name": "actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc_pair_map_eq_actual_action",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc_pair_map_eq_actual_action",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 5544,
+      "line": 5957,
       "statement": "theorem actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc_pair_map_eq_actual_action {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : Measure Omega) [IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -1862,7 +1886,7 @@
       "name": "centeredReward_succ_condExp_eq_zero_of_generatedActionTraceSucc_pair_map_eq_actual_action",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionTraceSucc_pair_map_eq_actual_action",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 5678,
+      "line": 6091,
       "statement": "theorem centeredReward_succ_condExp_eq_zero_of_generatedActionTraceSucc_pair_map_eq_actual_action {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : Measure Omega) [IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -1870,7 +1894,7 @@
       "name": "actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc_random_pair_map_eq_actual_action",
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc_random_pair_map_eq_actual_action",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 5828,
+      "line": 6241,
       "statement": "theorem actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc_random_pair_map_eq_actual_action {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : Measure Omega) [IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {
@@ -1878,7 +1902,7 @@
       "name": "centeredReward_succ_condExp_eq_zero_of_generatedActionTraceSucc_random_pair_map_eq_actual_action",
       "full_name": "BanditRLProof.ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionTraceSucc_random_pair_map_eq_actual_action",
       "file": "BanditRLProof/ConditionalExpectationReward.lean",
-      "line": 6005,
+      "line": 6418,
       "statement": "theorem centeredReward_succ_condExp_eq_zero_of_generatedActionTraceSucc_random_pair_map_eq_actual_action {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : Measure Omega) [IsFiniteMeasure mu] (action : Omega -> ActionTrace Action)"
     },
     {

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T11:49:43+00:00",
+  "generated": "2026-07-04T12:12:39+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -1624,9 +1624,12 @@
       "declarations": [
         "ConditionalExpectationReward.hasSubgaussianMGF_mono_varianceProxy",
         "ConditionalExpectationReward.hasCondSubgaussianMGF_of_condExpKernel_map_eq",
-        "ConditionalExpectationReward.hasCondSubgaussianMGF_of_condExpKernel_map_eq_historyStepKernel_centeredReward"
+        "ConditionalExpectationReward.hasCondSubgaussianMGF_of_condExpKernel_map_eq_historyStepKernel_centeredReward",
+        "ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_historyStepKernelFamily_condExpKernel_map_eq",
+        "ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_historyStepKernelFamily_condExpKernel_map_eq_of_coordinate_measurable",
+        "ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_historyStepKernelFamily_condExpKernel_map_eq_historyFiltrationSucc"
       ],
-      "role": "Compiled project-local conditional-MGF consumer for COND-EXPECT-REWARD: a generic condExpKernel pushforward-map equality plus a target HasSubgaussianMGF witness gives Mathlib HasCondSubgaussianMGF, and the history-step specialization feeds RewardKernel.historyStepKernelFamily_centeredReward_hasSubgaussianMGF through a frozen-past centered-variable equality plus an explicit deterministic variance-proxy upper bound. Exponential integrability, reward-coordinate map law, frozen-past equality, and variance bound remain explicit contracts; this does not construct the ambient partialTraj/history-to-condExpKernel law, arbitrary adaptive policy predictability, or final adaptive tail/regret theorem.",
+      "role": "Compiled project-local conditional-MGF consumer for COND-EXPECT-REWARD: a generic condExpKernel pushforward-map equality plus a target HasSubgaussianMGF witness gives Mathlib HasCondSubgaussianMGF, the history-step specialization feeds RewardKernel.historyStepKernelFamily_centeredReward_hasSubgaussianMGF through a frozen-past centered-variable equality plus an explicit deterministic variance-proxy upper bound, and succ-indexed coordinate-measurable/generated-history-filtration wrappers discharge that frozen-past side condition. Exponential integrability, ambient centered-reward measurability, reward-coordinate map law, and variance bound remain explicit contracts; this does not construct the ambient partialTraj/history-to-condExpKernel law, arbitrary adaptive policy predictability, or final adaptive tail/regret theorem.",
       "mathlib_routes": [
         "MLIB-PROBABILITY-SUBGAUSSIAN",
         "MLIB-PROBABILITY-KERNEL",
