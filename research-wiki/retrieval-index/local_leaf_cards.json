@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T12:25:01+00:00",
+  "generated": "2026-07-04T12:35:53+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -2634,6 +2634,33 @@
         "LOCAL-LEAF-COND-EXPECT-REWARD-HISTORYSTEP-CONDEXPKERNEL-COND-MGF-CONSUMER",
         "LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-CENTERED-SOURCE-TO-HISTORYSTEP-PAIR-LAW",
         "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-CENTERED-SOURCE-CONTRACT",
+        "FILTRATION-HISTORY"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-BOUNDED-CENTERED-SOURCE-COND-MGF-CONSUMER",
+      "leaf_ids": [
+        "COND-EXPECT-REWARD",
+        "ADAPTED-ACTION",
+        "MEAS-POLICY",
+        "KERNEL-POLICY-BIND",
+        "KERNEL-REWARD",
+        "MEAS-REWARD",
+        "INT-REWARD-BOUNDED"
+      ],
+      "module": "BanditRLProof.ConditionalRewardLawSource",
+      "status": "leanCompiled",
+      "declarations": [
+        "ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairBoundedCenteredSource"
+      ],
+      "role": "Compiled project-local bounded-centered-source conditional MGF consumer for COND-EXPECT-REWARD: a GeneratedActionRandomPairBoundedCenteredSource now lowers through the bounded-to-centered source adapter and reuses the centered-source Mathlib HasCondSubgaussianMGF route for the centered successor reward. The wrapper preserves the bounded/a.e. regularity source layer while still keeping ambient centered-reward measurability, exponential integrability, and deterministic variance-proxy domination as explicit regularity contracts.",
+      "mathlib_routes": [
+        "MLIB-PROBABILITY-SUBGAUSSIAN",
+        "MLIB-CONDITIONAL-EXPECTATION",
+        "MLIB-MEASURE-INTEGRAL",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-CENTERED-SOURCE-COND-MGF-CONSUMER",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-BOUNDED-CENTERED-SOURCE-CONTRACT",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-BOUNDED-CENTERED-SOURCE-TO-HISTORYSTEP-PAIR-LAW",
         "FILTRATION-HISTORY"
       ]
     },
