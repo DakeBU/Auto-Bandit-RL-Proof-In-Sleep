@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T13:54:54+00:00",
+  "generated": "2026-07-04T15:54:48+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -4528,6 +4528,62 @@
       "file": "BanditRLProof/MeasureFoundation.lean",
       "line": 64,
       "statement": "theorem measurable_actionTrace_eval_eq_indicator_reward {Omega : Type u} {Action : Type v} {Reward : Type w} [MeasurableSpace Omega] [MeasurableSpace Action] [MeasurableSingletonClass Action] [MeasurableSpace Reward] [Zero Reward] (action : Omega -> ActionTrace Action) (reward : Omega -> RewardTrace Reward) (haction : forall t : Nat, Measurable (fun omega : Omega => action omega t))"
+    },
+    {
+      "kind": "def",
+      "name": "rankOneGram",
+      "full_name": "BanditRLProof.OFUL.rankOneGram",
+      "file": "BanditRLProof/OFULEllipticalPotential.lean",
+      "line": 26,
+      "statement": "def rankOneGram {Feature : Type u} (x : Feature -> Real) : Matrix Feature Feature Real :="
+    },
+    {
+      "kind": "def",
+      "name": "quadraticForm",
+      "full_name": "BanditRLProof.OFUL.quadraticForm",
+      "file": "BanditRLProof/OFULEllipticalPotential.lean",
+      "line": 31,
+      "statement": "noncomputable def quadraticForm {Feature : Type u} [Fintype Feature] (A : Matrix Feature Feature Real) (y : Feature -> Real) : Real :="
+    },
+    {
+      "kind": "def",
+      "name": "featureGram",
+      "full_name": "BanditRLProof.OFUL.featureGram",
+      "file": "BanditRLProof/OFULEllipticalPotential.lean",
+      "line": 38,
+      "statement": "noncomputable def featureGram {Time : Type v} {Feature : Type u} [Fintype Time] (x : Time -> Feature -> Real) : Matrix Feature Feature Real :="
+    },
+    {
+      "kind": "theorem",
+      "name": "rankOneGram_quadraticForm_eq_sq",
+      "full_name": "BanditRLProof.OFUL.rankOneGram_quadraticForm_eq_sq",
+      "file": "BanditRLProof/OFULEllipticalPotential.lean",
+      "line": 48,
+      "statement": "theorem rankOneGram_quadraticForm_eq_sq {Feature : Type u} [Fintype Feature] (x y : Feature -> Real) : quadraticForm (rankOneGram x) y = ((Finset.univ : Finset Feature).sum (fun i => x i * y i)) ^ 2"
+    },
+    {
+      "kind": "theorem",
+      "name": "rankOneGram_quadraticForm_nonneg",
+      "full_name": "BanditRLProof.OFUL.rankOneGram_quadraticForm_nonneg",
+      "file": "BanditRLProof/OFULEllipticalPotential.lean",
+      "line": 92,
+      "statement": "theorem rankOneGram_quadraticForm_nonneg {Feature : Type u} [Fintype Feature] (x y : Feature -> Real) : 0 <= quadraticForm (rankOneGram x) y"
+    },
+    {
+      "kind": "theorem",
+      "name": "featureGram_quadraticForm_eq_sum_sq",
+      "full_name": "BanditRLProof.OFUL.featureGram_quadraticForm_eq_sum_sq",
+      "file": "BanditRLProof/OFULEllipticalPotential.lean",
+      "line": 103,
+      "statement": "theorem featureGram_quadraticForm_eq_sum_sq {Time : Type v} {Feature : Type u} [Fintype Time] [Fintype Feature] (x : Time -> Feature -> Real) (y : Feature -> Real) : quadraticForm (featureGram x) y = (Finset.univ : Finset Time).sum (fun t => ((Finset.univ : Finset Feature).sum (fun i => x t i * y i)) ^ 2)"
+    },
+    {
+      "kind": "theorem",
+      "name": "featureGram_quadraticForm_nonneg",
+      "full_name": "BanditRLProof.OFUL.featureGram_quadraticForm_nonneg",
+      "file": "BanditRLProof/OFULEllipticalPotential.lean",
+      "line": 155,
+      "statement": "theorem featureGram_quadraticForm_nonneg {Time : Type v} {Feature : Type u} [Fintype Time] [Fintype Feature] (x : Time -> Feature -> Real) (y : Feature -> Real) : 0 <= quadraticForm (featureGram x) y"
     },
     {
       "kind": "inductive",

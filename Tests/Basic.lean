@@ -16365,4 +16365,29 @@ example {Action : Type} (arms : Finset Action)
     Tsallis.negEntropyRegularizer_wellDefined_on_finiteSimplex
       arms alpha p hp halpha
 
+example {Feature : Type} [Fintype Feature]
+    (x y : Feature -> Real) :
+    OFUL.quadraticForm (OFUL.rankOneGram x) y =
+      ((Finset.univ : Finset Feature).sum (fun i => x i * y i)) ^ 2 := by
+  exact OFUL.rankOneGram_quadraticForm_eq_sq x y
+
+example {Feature : Type} [Fintype Feature]
+    (x y : Feature -> Real) :
+    0 <= OFUL.quadraticForm (OFUL.rankOneGram x) y := by
+  exact OFUL.rankOneGram_quadraticForm_nonneg x y
+
+example {Time Feature : Type} [Fintype Time] [Fintype Feature]
+    (x : Time -> Feature -> Real) (y : Feature -> Real) :
+    OFUL.quadraticForm (OFUL.featureGram x) y =
+      (Finset.univ : Finset Time).sum
+        (fun t =>
+          ((Finset.univ : Finset Feature).sum
+            (fun i => x t i * y i)) ^ 2) := by
+  exact OFUL.featureGram_quadraticForm_eq_sum_sq x y
+
+example {Time Feature : Type} [Fintype Time] [Fintype Feature]
+    (x : Time -> Feature -> Real) (y : Feature -> Real) :
+    0 <= OFUL.quadraticForm (OFUL.featureGram x) y := by
+  exact OFUL.featureGram_quadraticForm_nonneg x y
+
 end BanditRLProof

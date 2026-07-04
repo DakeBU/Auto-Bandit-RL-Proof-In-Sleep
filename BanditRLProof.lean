@@ -44,6 +44,7 @@ import BanditRLProof.UCBSummability
 import BanditRLProof.Exp3Potential
 import BanditRLProof.FTRLOneStep
 import BanditRLProof.TsallisRegularizer
+import BanditRLProof.OFULEllipticalPotential
 import BanditRLProof.Algorithms.ETC
 import BanditRLProof.Algorithms.ETCTrace
 import BanditRLProof.Algorithms.ETCTraceCountLemmas

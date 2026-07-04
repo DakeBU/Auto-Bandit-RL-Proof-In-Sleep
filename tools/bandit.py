@@ -1178,6 +1178,25 @@ LOCAL_LEAF_CARDS = [
         "mathlib_routes": ["MLIB-REAL-RPOW-TSALLIS", "LOCAL-LEAF-FTRL-ONE-STEP", "MLIB-FINSET-SUMS"],
     },
     {
+        "id": "LOCAL-LEAF-OFUL-GRAM-PSD",
+        "leaf_ids": [
+            "OFUL-ELLIPTICAL-POTENTIAL",
+        ],
+        "module": "BanditRLProof.OFULEllipticalPotential",
+        "status": "leanCompiled",
+        "declarations": [
+            "OFUL.rankOneGram",
+            "OFUL.quadraticForm",
+            "OFUL.featureGram",
+            "OFUL.rankOneGram_quadraticForm_eq_sq",
+            "OFUL.rankOneGram_quadraticForm_nonneg",
+            "OFUL.featureGram_quadraticForm_eq_sum_sq",
+            "OFUL.featureGram_quadraticForm_nonneg",
+        ],
+        "role": "Compiled deterministic finite-dimensional OFUL/LinUCB Gram-matrix surface: defines rank-one feature Gram matrices, finite-history feature Gram matrices, an explicit quadratic form, proves the rank-one form is a squared projection, proves the finite-history form is a sum of squared projections, and exposes nonnegativity wrappers. This is a PSD foundation only; it does not prove a determinant lemma, log-determinant telescope, self-normalized martingale bound, confidence ellipsoid, or OFUL regret theorem.",
+        "mathlib_routes": ["MLIB-CONVEX-LINALG", "MLIB-FINSET-SUMS", "Mathlib.Data.Matrix.Basic"],
+    },
+    {
         "id": "LOCAL-LEAF-CONCENTRATION-SUBGAUSSIAN",
         "leaf_ids": [
             "TAIL-HOEFFDING-BOUNDED",
@@ -6165,6 +6184,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- EXP3-POTENTIAL is compiled locally as a deterministic finite-action exponential-weights potential surface with updated-potential unfolding, nonnegativity, one-step increment algebra, and finite-horizon telescope; estimator/log/regret leaves remain separate.")
     print("- FTRL-ONE-STEP is compiled locally as a deterministic finite-action regularized-objective minimizer wrapper yielding the one-step linear-loss inequality under eta > 0; convexity, minimizer existence, Tsallis regularizer, stability/penalty, and regret remain separate.")
     print("- TSALLIS-REGULARIZER is compiled locally as a finite-simplex Real.rpow power-sum/entropy/negative-entropy regularizer surface with denominator and nonnegative-power-sum well-definedness facts; convexity, stability/penalty, self-bounding, learning-rate, and regret remain separate.")
+    print("- OFUL-GRAM-PSD is compiled locally as a finite-dimensional Gram quadratic-form wrapper: rank-one forms are squared projections and finite-history forms are sums of squared projections; determinant growth, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- TAIL-HOEFFDING-BOUNDED is compiled locally as the generic bounded-centered Hoeffding MGF wrapper with an interval variance proxy.")
     print("- TAIL-SUBGAUSS-SUM is compiled locally as the Mathlib-backed independent sub-Gaussian finite-sum tail wrapper.")
     print("- TAIL-SUBGAUSS-DIFF-SUM-IMPORT is compiled locally as the ENNReal-valued independent sub-Gaussian finite-sum tail boundary wrapper.")

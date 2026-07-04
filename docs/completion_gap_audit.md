@@ -285,7 +285,7 @@ statements, imports, or local proofs.
 | Thompson sampling | theorem cards only | posterior identity route, integrability, Bayes-regret decomposition |
 | EXP3/adversarial | finite-action exponential-weights potential surface and generic FTRL one-step minimizer inequality compiled; paper/weapon cards for the rest | importance-weighted estimator, exp/log inequality, learning-rate algebra, algorithm-specific FTRL/OMD stability, and final regret |
 | Tsallis-INF/FTRL | generic finite-simplex FTRL one-step wrapper and finite-simplex Tsallis regularizer well-definedness compiled; paper/weapon cards for the rest | convexity/existence side conditions, rpow stability/penalty algebra, self-bounding conversion, learning-rate optimization |
-| Linear/OFUL/LinUCB | paper/weapon cards only | Gram matrix, confidence ellipsoid, self-normalized tail |
+| Linear/OFUL/LinUCB | first local Gram PSD wrapper compiled; paper/weapon cards for the rest | determinant growth, confidence ellipsoid, self-normalized tail |
 | RL/MDP | scenario/paper cards only | finite kernels, Bellman recursion, occupancy measures, episode regret |
 | Proof export | skeleton exists | exports must be generated from compiled theorem declarations |
 

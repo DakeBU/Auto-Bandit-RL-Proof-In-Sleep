@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T13:54:54+00:00",
+  "generated": "2026-07-04T15:54:48+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -305,6 +305,29 @@
         "MLIB-REAL-RPOW-TSALLIS",
         "LOCAL-LEAF-FTRL-ONE-STEP",
         "MLIB-FINSET-SUMS"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-OFUL-GRAM-PSD",
+      "leaf_ids": [
+        "OFUL-ELLIPTICAL-POTENTIAL"
+      ],
+      "module": "BanditRLProof.OFULEllipticalPotential",
+      "status": "leanCompiled",
+      "declarations": [
+        "OFUL.rankOneGram",
+        "OFUL.quadraticForm",
+        "OFUL.featureGram",
+        "OFUL.rankOneGram_quadraticForm_eq_sq",
+        "OFUL.rankOneGram_quadraticForm_nonneg",
+        "OFUL.featureGram_quadraticForm_eq_sum_sq",
+        "OFUL.featureGram_quadraticForm_nonneg"
+      ],
+      "role": "Compiled deterministic finite-dimensional OFUL/LinUCB Gram-matrix surface: defines rank-one feature Gram matrices, finite-history feature Gram matrices, an explicit quadratic form, proves the rank-one form is a squared projection, proves the finite-history form is a sum of squared projections, and exposes nonnegativity wrappers. This is a PSD foundation only; it does not prove a determinant lemma, log-determinant telescope, self-normalized martingale bound, confidence ellipsoid, or OFUL regret theorem.",
+      "mathlib_routes": [
+        "MLIB-CONVEX-LINALG",
+        "MLIB-FINSET-SUMS",
+        "Mathlib.Data.Matrix.Basic"
       ]
     },
     {

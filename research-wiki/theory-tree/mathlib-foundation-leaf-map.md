@@ -181,7 +181,7 @@ reward-law identification.
 | `TSALLIS-REGULARIZER` | Tsallis entropy regularizer is well-defined on simplex | compiled-local | `LOCAL-LEAF-TSALLIS-REGULARIZER`, `MLIB-REAL-RPOW-TSALLIS`, `LOCAL-LEAF-FTRL-ONE-STEP` | finite action `Finset`, compiled `FTRL.finiteSimplex`, Real exponent `alpha`, `alpha != 1`; defines power sum, entropy, and negative-entropy regularizer, and proves nonnegative power sum plus nonzero denominator; convexity, stability/penalty, self-bounding, learning-rate, and regret remain separate |
 | `TSALLIS-STABILITY` | Tsallis-INF stability term bound | weapon-only | `WEAPON-TSALLIS-INF-FTRL`, `MLIB-REAL-RPOW-TSALLIS` | simplex, unbiased loss estimate |
 | `SELF-BOUNDING-CONVERSION` | self-bounding condition converts adversarial regret to stochastic/gap-dependent bound | weapon-only | `WEAPON-TSALLIS-INF-FTRL` | problem-dependent lower bound, gaps |
-| `OFUL-ELLIPTICAL-POTENTIAL` | elliptical potential / determinant growth bound | missing-leaf | `MLIB-CONVEX-LINALG`, `MLIB-MARTINGALE-STOCHASTIC` | positive semidefinite Gram matrices |
+| `OFUL-ELLIPTICAL-POTENTIAL` | elliptical potential / determinant growth bound; local Gram PSD sub-wrapper now compiled | missing-leaf | `LOCAL-LEAF-OFUL-GRAM-PSD`, `MLIB-CONVEX-LINALG`, `MLIB-MARTINGALE-STOCHASTIC` | finite feature/time types, Real feature vectors, rank-one and finite-history Gram quadratic-form identity/nonnegativity compiled; determinant lemma, log-det telescope, self-normalized tail, confidence ellipsoid, and final OFUL theorem remain separate |
 
 ## Finite Bookkeeping Bridges
 
