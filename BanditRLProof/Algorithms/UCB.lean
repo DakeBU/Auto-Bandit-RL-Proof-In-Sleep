@@ -2134,6 +2134,90 @@ theorem lintegral_confidenceScoreArgmax_pullCount_le_free_or_delta_sum
         simpa [hfree] using hdelta_bound)
 
 /--
+Budgeted form of the threshold/suffix pull-count split.
+
+The only new input is a bound on the free-time indicator sum. Future
+radius-threshold leaves can discharge `hfree_budget` by proving a cardinality
+bound for the low-radius/small-sample times.
+-/
+theorem lintegral_confidenceScoreArgmax_pullCount_le_freeBudget_add_horizon_delta
+    {Omega : Type} [MeasurableSpace Omega]
+    {K : Nat} (hK : 0 < K)
+    [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)]
+    (mu : Measure Omega) [MeasureTheory.IsProbabilityMeasure mu]
+    (trueMean : Fin K -> Real)
+    (empiricalMean : Omega -> Nat -> Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (freeTimes chargedTimes : Finset Nat) (freeBudget : ENNReal)
+    (best chosen : Fin K)
+    (hT : 0 < T) (hdelta : 0 < delta)
+    (hfree_budget :
+      (Finset.range T).sum
+        (fun t : Nat =>
+          if t ∈ freeTimes then (1 : ENNReal) else 0) <= freeBudget)
+    (hcharged_of_not_free : forall t, t < T -> t ∉ freeTimes -> t ∈ chargedTimes)
+    (hgap_large : forall t, t ∈ chargedTimes ->
+      2 * subGaussianTextbookDeltaRadius proxy T delta t chosen <
+        meanGap trueMean best chosen)
+    (haction : forall t : Nat,
+      Measurable
+        (fun omega : Omega =>
+          confidenceScoreArgmaxAction hK empiricalMean
+            (subGaussianTextbookDeltaRadius proxy T delta) omega t))
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    MeasureTheory.lintegral mu
+      (fun omega : Omega =>
+        ((pullCount
+          ((confidenceScoreArgmaxAction hK empiricalMean
+            (subGaussianTextbookDeltaRadius proxy T delta)) omega)
+          chosen T : Nat) : ENNReal)) <=
+      freeBudget + (T : ENNReal) * ENNReal.ofReal delta := by
+  have hsplit :=
+    lintegral_confidenceScoreArgmax_pullCount_le_free_or_delta_sum
+      hK mu trueMean empiricalMean proxy T delta freeTimes chargedTimes
+      best chosen hT hdelta hcharged_of_not_free hgap_large
+      haction hproxy hsubG
+  have hsum :
+      (Finset.range T).sum
+        (fun t : Nat =>
+          if t ∈ freeTimes then (1 : ENNReal) else ENNReal.ofReal delta)
+        <=
+      freeBudget + (T : ENNReal) * ENNReal.ofReal delta := by
+    calc
+      (Finset.range T).sum
+          (fun t : Nat =>
+            if t ∈ freeTimes then (1 : ENNReal) else ENNReal.ofReal delta)
+          <=
+        (Finset.range T).sum
+          (fun t : Nat =>
+            (if t ∈ freeTimes then (1 : ENNReal) else 0) +
+              ENNReal.ofReal delta) := by
+            exact Finset.sum_le_sum
+              (by
+                intro t _ht
+                by_cases hfree : t ∈ freeTimes
+                · simp [hfree]
+                · simp [hfree])
+      _ =
+        (Finset.range T).sum
+          (fun t : Nat =>
+            if t ∈ freeTimes then (1 : ENNReal) else 0) +
+        (Finset.range T).sum (fun _t : Nat => ENNReal.ofReal delta) := by
+            rw [Finset.sum_add_distrib]
+      _ <=
+        freeBudget + (Finset.range T).sum
+          (fun _t : Nat => ENNReal.ofReal delta) := by
+            exact add_le_add hfree_budget (le_refl _)
+      _ = freeBudget + (T : ENNReal) * ENNReal.ofReal delta := by
+            simp [Finset.sum_const, nsmul_eq_mul]
+  exact hsplit.trans hsum
+
+/--
 Two-sided sub-Gaussian tail budget for a UCB empirical mean at time `t` and
 arm `arm`.
 

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-05T03:52:08+00:00",
+  "generated": "2026-07-05T03:58:26+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -511,9 +511,10 @@
         "UCB.sum_measure_confidenceScoreArgmax_selectedLargeGapEventOn_le_card_mul_delta",
         "UCB.lintegral_confidenceScoreArgmax_selectedLargeGapCountOn_le_card_mul_delta",
         "UCB.lintegral_confidenceScoreArgmax_pullCount_le_horizon_mul_delta",
-        "UCB.lintegral_confidenceScoreArgmax_pullCount_le_free_or_delta_sum"
+        "UCB.lintegral_confidenceScoreArgmax_pullCount_le_free_or_delta_sum",
+        "UCB.lintegral_confidenceScoreArgmax_pullCount_le_freeBudget_add_horizon_delta"
       ],
-      "role": "Compiled count-facing UCB score-argmax bridge: sums the single-time concrete large-gap selected-arm probability bounds over an explicit finite time set, lifts the result through the existing finite-sum selected-action indicator lower-integral API, yielding a selected-time count budget `|times| * delta`, specializes `times = Finset.range T` through the existing recursive `pullCount` lower-integral identity to bound the selected arm's horizon pull count by `T * delta` when the large-gap condition holds throughout the horizon, and exposes a threshold/suffix-shaped pull-count split charging explicit `freeTimes` by `1` and all other horizon times by `delta` under a charged-times large-gap contract. Empirical-mean construction, history-recursive UCB action trace, concrete radius-threshold cardinality, and final regret remain separate.",
+      "role": "Compiled count-facing UCB score-argmax bridge: sums the single-time concrete large-gap selected-arm probability bounds over an explicit finite time set, lifts the result through the existing finite-sum selected-action indicator lower-integral API, yielding a selected-time count budget `|times| * delta`, specializes `times = Finset.range T` through the existing recursive `pullCount` lower-integral identity to bound the selected arm's horizon pull count by `T * delta` when the large-gap condition holds throughout the horizon, exposes a threshold/suffix-shaped pull-count split charging explicit `freeTimes` by `1` and all other horizon times by `delta`, and consumes an abstract free-time budget to produce `freeBudget + T * delta`. Empirical-mean construction, history-recursive UCB action trace, concrete radius-threshold cardinality, and final regret remain separate.",
       "mathlib_routes": [
         "LOCAL-LEAF-UCB-CONCRETE-SCORE-ARGMAX-ACTION",
         "LOCAL-LEAF-EXPECTATION-SUMS",
