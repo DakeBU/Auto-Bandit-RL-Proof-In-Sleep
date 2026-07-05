@@ -15108,6 +15108,36 @@ example {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
   exact UCB.measurableSet_confidenceBadEventAt
     trueMean empiricalMean radius t hmeas
 
+example {Omega Arm : Type} [Fintype Arm]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (radius : Nat -> Arm -> Real) (T : Nat)
+    (omega : Omega) (t : Nat) (ht : t < T)
+    (hgood :
+      omega ∉ UCB.finiteHorizonConfidenceBadEvent
+        trueMean empiricalMean radius T) :
+    omega ∉ UCB.confidenceBadEventAt trueMean empiricalMean radius t := by
+  exact
+    UCB.not_confidenceBadEventAt_of_not_finiteHorizonConfidenceBadEvent
+      trueMean empiricalMean radius T omega t ht hgood
+
+example {Omega Arm : Type} [Fintype Arm]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (radius : Nat -> Arm -> Real) (T : Nat)
+    (omega : Omega) (t : Nat) (best chosen : Arm)
+    (ht : t < T)
+    (hgood :
+      omega ∉ UCB.finiteHorizonConfidenceBadEvent
+        trueMean empiricalMean radius T)
+    (hscore :
+      UCB.confidenceScore (empiricalMean omega t) (radius t) best <=
+        UCB.confidenceScore (empiricalMean omega t) (radius t) chosen) :
+    UCB.meanGap trueMean best chosen <= 2 * radius t chosen := by
+  exact
+    UCB.meanGap_le_two_radius_of_not_finiteHorizonConfidenceBadEvent
+      trueMean empiricalMean radius T omega t best chosen ht hgood hscore
+
 example {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
     (mu : MeasureTheory.Measure Omega)
     (trueMean : Arm -> Real)

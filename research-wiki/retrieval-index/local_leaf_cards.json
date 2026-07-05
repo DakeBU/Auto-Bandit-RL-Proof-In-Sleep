@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-05T02:57:27+00:00",
+  "generated": "2026-07-05T03:02:39+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -194,6 +194,24 @@
         "LOCAL-LEAF-UCB-CONFIDENCE-EVENT-MEASURABILITY",
         "LOCAL-LEAF-UCB-CONFIDENCE-EVENT-UNION-BOUND",
         "LOCAL-LEAF-TAIL-SUMMABILITY-UCB",
+        "MLIB-FINSET-SUMS"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-UCB-FINITE-HORIZON-GOOD-EVENT-CONSUMER",
+      "leaf_ids": [
+        "UCB-GOOD-EVENT-GAP-CONSUMER"
+      ],
+      "module": "BanditRLProof.Algorithms.UCB",
+      "status": "leanCompiled",
+      "declarations": [
+        "UCB.not_confidenceBadEventAt_of_not_finiteHorizonConfidenceBadEvent",
+        "UCB.meanGap_le_two_radius_of_not_finiteHorizonConfidenceBadEvent"
+      ],
+      "role": "Compiled finite-horizon UCB good-event consumer: outside `finiteHorizonConfidenceBadEvent`, every `t < T` single-time confidence bad event is absent, and score maximality at that time yields `meanGap <= 2 * radius t chosen`. This connects the finite-horizon confidence event to the deterministic gap-radius consumer used by later pull-count proofs; concrete selected-arm trace, empirical-mean construction, pull-count bounds, and final UCB regret remain separate.",
+      "mathlib_routes": [
+        "LOCAL-LEAF-UCB-FINITE-HORIZON-CONFIDENCE-EVENT",
+        "LOCAL-LEAF-UCB-CONFIDENCE-EVENT-CONSUMER",
         "MLIB-FINSET-SUMS"
       ]
     },

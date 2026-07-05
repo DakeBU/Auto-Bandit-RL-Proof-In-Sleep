@@ -278,6 +278,53 @@ def finiteHorizonConfidenceBadEvent {Omega Arm : Type} [Fintype Arm]
     confidenceBadEventAt trueMean empiricalMean radius t
 
 /--
+Outside the finite-horizon confidence bad event, every time-indexed bad event
+inside the horizon is absent.
+-/
+theorem not_confidenceBadEventAt_of_not_finiteHorizonConfidenceBadEvent
+    {Omega Arm : Type} [Fintype Arm]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (radius : Nat -> Arm -> Real) (T : Nat)
+    (omega : Omega) (t : Nat) (ht : t < T)
+    (hgood :
+      omega ∉ finiteHorizonConfidenceBadEvent trueMean empiricalMean radius T) :
+    omega ∉ confidenceBadEventAt trueMean empiricalMean radius t := by
+  intro hbad
+  exact hgood (by
+    unfold finiteHorizonConfidenceBadEvent
+    exact Set.mem_iUnion.mpr
+      ⟨t, Set.mem_iUnion.mpr
+        ⟨Finset.mem_range.mpr ht, hbad⟩⟩)
+
+/--
+Finite-horizon good-event consumer: outside the finite-horizon confidence bad
+event, score maximality at any `t < T` gives the standard UCB gap-radius
+bound for the chosen arm.
+-/
+theorem meanGap_le_two_radius_of_not_finiteHorizonConfidenceBadEvent
+    {Omega Arm : Type} [Fintype Arm]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (radius : Nat -> Arm -> Real) (T : Nat)
+    (omega : Omega) (t : Nat) (best chosen : Arm)
+    (ht : t < T)
+    (hgood :
+      omega ∉ finiteHorizonConfidenceBadEvent trueMean empiricalMean radius T)
+    (hscore :
+      confidenceScore (empiricalMean omega t) (radius t) best <=
+        confidenceScore (empiricalMean omega t) (radius t) chosen) :
+    meanGap trueMean best chosen <= 2 * radius t chosen := by
+  have hgood_at :
+      omega ∉ confidenceBadEventAt trueMean empiricalMean radius t :=
+    not_confidenceBadEventAt_of_not_finiteHorizonConfidenceBadEvent
+      trueMean empiricalMean radius T omega t ht hgood
+  simpa [confidenceBadEventAt] using
+    meanGap_le_two_radius_of_not_confidenceBadEvent
+      trueMean (fun omega arm => empiricalMean omega t arm) (radius t)
+      omega best chosen hgood_at hscore
+
+/--
 Finite-horizon union bound for UCB confidence bad events.
 
 This assembles the single-time upper/lower confidence-event union bound across
