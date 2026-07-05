@@ -1523,6 +1523,80 @@ theorem measure_scoreMaxEvent_le_subGaussian_textbookDeltaRadius_delta_of_gap
       mu trueMean empiricalMean proxy T delta hT hdelta hproxy hsubG)
 
 /--
+Selecting `chosen` is contained in the corresponding UCB score-max event when
+the action trace exposes score maximality against `best`.
+
+This is intentionally abstract: the concrete argmax/tie-breaking policy can
+later discharge `hscore_of_selected`.
+-/
+theorem selectedEvent_subset_scoreMaxEvent_of_action_score_max
+    {Omega Arm : Type}
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (radius : Nat -> Arm -> Real)
+    (action : Omega -> Nat -> Arm)
+    (t : Nat) (best chosen : Arm)
+    (hscore_of_selected : forall omega,
+      action omega t = chosen ->
+        confidenceScore (empiricalMean omega t) (radius t) best <=
+          confidenceScore (empiricalMean omega t) (radius t) chosen) :
+    Set.Subset
+      {omega : Omega | action omega t = chosen}
+      {omega : Omega |
+        confidenceScore (empiricalMean omega t) (radius t) best <=
+          confidenceScore (empiricalMean omega t) (radius t) chosen} := by
+  intro omega hselected
+  exact hscore_of_selected omega hselected
+
+/--
+Selected large-gap arms inherit the textbook delta probability budget once the
+selected-action trace certifies UCB score maximality.
+
+This is the action-trace-facing bridge before a concrete pull-count summation:
+selection plus a large-gap radius condition implies that the selected event is
+covered by the finite-horizon confidence bad event.
+-/
+theorem measure_selectedLargeGapEvent_le_subGaussian_textbookDeltaRadius_delta
+    {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm] [Nonempty Arm]
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (action : Omega -> Nat -> Arm)
+    (proxy : Nat -> Arm -> NNReal) (T : Nat) (delta : Real)
+    (t : Nat) (best chosen : Arm)
+    (hT : 0 < T) (hdelta : 0 < delta) (ht : t < T)
+    (hgap_large :
+      2 * subGaussianTextbookDeltaRadius proxy T delta t chosen <
+        meanGap trueMean best chosen)
+    (hscore_of_selected : forall omega,
+      action omega t = chosen ->
+        confidenceScore (empiricalMean omega t)
+            (subGaussianTextbookDeltaRadius proxy T delta t) best <=
+          confidenceScore (empiricalMean omega t)
+            (subGaussianTextbookDeltaRadius proxy T delta t) chosen)
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    mu {omega : Omega | action omega t = chosen} <= ENNReal.ofReal delta := by
+  have hsubset :
+      Set.Subset
+        {omega : Omega | action omega t = chosen}
+        {omega : Omega |
+          confidenceScore (empiricalMean omega t)
+              (subGaussianTextbookDeltaRadius proxy T delta t) best <=
+            confidenceScore (empiricalMean omega t)
+              (subGaussianTextbookDeltaRadius proxy T delta t) chosen} :=
+    selectedEvent_subset_scoreMaxEvent_of_action_score_max
+      empiricalMean (subGaussianTextbookDeltaRadius proxy T delta)
+      action t best chosen hscore_of_selected
+  exact (measure_mono hsubset).trans
+    (measure_scoreMaxEvent_le_subGaussian_textbookDeltaRadius_delta_of_gap
+      mu trueMean empiricalMean proxy T delta t best chosen
+      hT hdelta ht hgap_large hproxy hsubG)
+
+/--
 Two-sided sub-Gaussian tail budget for a UCB empirical mean at time `t` and
 arm `arm`.
 

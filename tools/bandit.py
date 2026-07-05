@@ -1286,6 +1286,22 @@ LOCAL_LEAF_CARDS = [
         "mathlib_routes": ["LOCAL-LEAF-UCB-SUBGAUSSIAN-CONSTANT-LOG-BUDGET-RADIUS", "Mathlib.Tactic.Ring", "MLIB-FINSET-SUMS", "MLIB-FINTYPE-FIN"],
     },
     {
+        "id": "LOCAL-LEAF-UCB-SELECTED-LARGE-GAP-DELTA",
+        "leaf_ids": [
+            "UCB-GOOD-EVENT-GAP-CONSUMER",
+            "TAIL-SUMMABILITY-UCB",
+            "TAIL-SUBGAUSS-SUM",
+        ],
+        "module": "BanditRLProof.Algorithms.UCB",
+        "status": "leanCompiled",
+        "declarations": [
+            "UCB.selectedEvent_subset_scoreMaxEvent_of_action_score_max",
+            "UCB.measure_selectedLargeGapEvent_le_subGaussian_textbookDeltaRadius_delta",
+        ],
+        "role": "Compiled selected-action UCB delta bridge: if a selected action certifies score maximality against the best arm, then the selected-action event is contained in the score-max event, and large-gap selected-arm events inherit the textbook `delta` probability budget under the existing centered empirical-mean sub-Gaussian hypotheses. Concrete UCB argmax/tie-breaking policy, empirical-mean construction, pull-count summation, and final regret remain separate.",
+        "mathlib_routes": ["LOCAL-LEAF-UCB-SUBGAUSSIAN-TEXTBOOK-DELTA-RADIUS", "MLIB-MEASURE-INTEGRAL", "MLIB-FINSET-SUMS"],
+    },
+    {
         "id": "LOCAL-LEAF-IID-REWARD-FAMILY",
         "leaf_ids": [
             "IID-REWARD-FAMILY",
@@ -6830,6 +6846,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- UCB-SUBGAUSSIAN-LOG-BUDGET-RADIUS is compiled locally as the schedule-agnostic logarithmic budget radius leaf: `sqrt (2 * proxy * log scale)` is nonnegative, satisfies the radius-square domination contract, and yields upper/lower and finite-horizon confidence bad-event bounds with `scale^-1` tails under `0 < scale`; constant-scale double-sum folding is compiled separately as UCB-SUBGAUSSIAN-CONSTANT-LOG-BUDGET-RADIUS, while textbook scale choices, empirical-mean construction, pull-count bounds, and final UCB regret remain separate.")
     print("- UCB-SUBGAUSSIAN-CONSTANT-LOG-BUDGET-RADIUS is compiled locally as the constant-scale logarithmic budget radius leaf: `sqrt (2 * proxy * log scale)` yields finite-horizon confidence bad-event bounds with the inverse-scale double sum folded into `T` and `Fintype.card Arm` nsmul; textbook finite-horizon delta scale is compiled separately as UCB-SUBGAUSSIAN-TEXTBOOK-DELTA-RADIUS, while empirical-mean construction, pull-count bounds, and final UCB regret remain separate.")
     print("- UCB-SUBGAUSSIAN-TEXTBOOK-DELTA-RADIUS is compiled locally as the textbook finite-horizon delta-scale leaf: `scale = 2 * T * |Arm| / delta` is positive under `0 < T`, nonempty finite arms, and `0 < delta`, the folded two-sided inverse-scale tail budget is bounded by `ENNReal.ofReal delta`, the finite-horizon confidence bad event is bounded by `delta`, and large-gap score-max events inherit that same delta budget under centered empirical-mean sub-Gaussian hypotheses; empirical-mean construction, pull-count bounds, and final UCB regret remain separate.")
+    print("- UCB-SELECTED-LARGE-GAP-DELTA is compiled locally as the selected-action bridge: a selected action with a score-maximality certificate is contained in the score-max event, so large-gap selected-arm events inherit the textbook `delta` budget; concrete UCB argmax/tie-breaking policy, empirical-mean construction, pull-count summation, and final regret remain separate.")
     print("- TAIL-UNION-FINITE is compiled locally as generic finite-union outer-measure wrappers for explicit Finset and Fintype event families.")
     print("- TAIL-SUMMABILITY-UCB is compiled locally as an abstract finite-horizon UCB bad-event summability wrapper over finite arms and t < T; UCB empirical-mean construction, pull-count bounds, and final regret remain separate.")
     print("- EXP3-POTENTIAL is compiled locally as a deterministic finite-action exponential-weights potential surface with updated-potential unfolding, nonnegativity, one-step increment algebra, and finite-horizon telescope; estimator/log/regret leaves remain separate.")
