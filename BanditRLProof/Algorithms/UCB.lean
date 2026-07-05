@@ -2522,6 +2522,70 @@ theorem lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusThreshol
   exact hbase.trans (add_le_add hcard (le_refl _))
 
 /--
+Half-gap radius condition in the textbook form implies the large-gap condition
+consumed by the UCB selected-event and pull-count budget wrappers.
+-/
+theorem subGaussianTextbookDeltaRadius_large_gap_of_lt_half_meanGap
+    {K : Nat} (trueMean : Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (best chosen : Fin K) (t : Nat)
+    (hhalf :
+      subGaussianTextbookDeltaRadius proxy T delta t chosen <
+        meanGap trueMean best chosen / 2) :
+    2 * subGaussianTextbookDeltaRadius proxy T delta t chosen <
+      meanGap trueMean best chosen := by
+  linarith
+
+/--
+Half-gap threshold version of the concrete textbook-radius UCB pull-count
+budget.
+
+This is the surface normally targeted by the remaining logarithmic/gap algebra:
+prove that after threshold `B`, the textbook radius is below half the chosen
+arm's gap.
+-/
+theorem lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusHalfGapThreshold_add_horizon_delta
+    {Omega : Type} [MeasurableSpace Omega]
+    {K : Nat} (hK : 0 < K)
+    [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)]
+    (mu : Measure Omega) [MeasureTheory.IsProbabilityMeasure mu]
+    (trueMean : Fin K -> Real)
+    (empiricalMean : Omega -> Nat -> Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (best chosen : Fin K) (B : Nat)
+    (hT : 0 < T) (hdelta : 0 < delta)
+    (hhalf_after : forall t, t < T -> B <= t ->
+      subGaussianTextbookDeltaRadius proxy T delta t chosen <
+        meanGap trueMean best chosen / 2)
+    (haction : forall t : Nat,
+      Measurable
+        (fun omega : Omega =>
+          confidenceScoreArgmaxAction hK empiricalMean
+            (subGaussianTextbookDeltaRadius proxy T delta) omega t))
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    MeasureTheory.lintegral mu
+      (fun omega : Omega =>
+        ((pullCount
+          ((confidenceScoreArgmaxAction hK empiricalMean
+            (subGaussianTextbookDeltaRadius proxy T delta)) omega)
+          chosen T : Nat) : ENNReal)) <=
+      (B : ENNReal) + (T : ENNReal) * ENNReal.ofReal delta := by
+  exact
+    lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusThreshold_add_horizon_delta
+      hK mu trueMean empiricalMean proxy T delta best chosen B hT hdelta
+      (by
+        intro t ht hB
+        exact
+          subGaussianTextbookDeltaRadius_large_gap_of_lt_half_meanGap
+            trueMean proxy T delta best chosen t (hhalf_after t ht hB))
+      haction hproxy hsubG
+
+/--
 Two-sided sub-Gaussian tail budget for a UCB empirical mean at time `t` and
 arm `arm`.
 
