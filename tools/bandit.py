@@ -1200,7 +1200,7 @@ LOCAL_LEAF_CARDS = [
             "UCB.measure_lowerConfidenceBad_le_subGaussian_budgetRadius",
             "UCB.measure_finiteHorizonConfidenceBadEvent_le_subGaussian_budgetRadius_sum",
         ],
-        "role": "Compiled concrete UCB square-root budget radius leaf: defines `subGaussianBudgetRadius proxy budget t arm = sqrt (2 * proxy * budget)`, proves nonnegativity and the radius-square domination using Mathlib `Real.sq_sqrt'`, then specializes the one-sided sub-Gaussian upper/lower confidence-failure and finite-horizon bad-event bounds to `exp(-budget)` tails. The logarithmic schedule surface is compiled separately as `LOCAL-LEAF-UCB-SUBGAUSSIAN-LOG-BUDGET-RADIUS`; empirical-mean construction, textbook scale choices, pull-count bounds, and final UCB regret remain separate.",
+        "role": "Compiled concrete UCB square-root budget radius leaf: defines `subGaussianBudgetRadius proxy budget t arm = sqrt (2 * proxy * budget)`, proves nonnegativity and the radius-square domination using Mathlib `Real.sq_sqrt'`, then specializes the one-sided sub-Gaussian upper/lower confidence-failure and finite-horizon bad-event bounds to `exp(-budget)` tails. The logarithmic schedule and textbook delta-scale surfaces are compiled separately; empirical-mean construction, pull-count bounds, and final UCB regret remain separate.",
         "mathlib_routes": ["LOCAL-LEAF-UCB-SUBGAUSSIAN-RADIUS-BUDGET", "Mathlib.Data.Real.Sqrt", "Mathlib.Analysis.SpecialFunctions.Exp"],
     },
     {
@@ -1223,7 +1223,7 @@ LOCAL_LEAF_CARDS = [
             "UCB.measure_lowerConfidenceBad_le_subGaussian_logBudgetRadius",
             "UCB.measure_finiteHorizonConfidenceBadEvent_le_subGaussian_logBudgetRadius_inv_scale_sum",
         ],
-        "role": "Compiled schedule-agnostic UCB logarithmic budget radius leaf: defines `subGaussianLogBudgetRadius proxy scale = sqrt (2 * proxy * log scale)`, proves nonnegativity and radius-square domination via the square-root budget leaf, simplifies `exp(-log scale)` to `scale⁻¹` under `0 < scale`, and specializes one-sided sub-Gaussian upper/lower confidence-failure plus finite-horizon bad-event bounds to inverse-scale tails. Constant-scale double-sum folding is compiled separately as `LOCAL-LEAF-UCB-SUBGAUSSIAN-CONSTANT-LOG-BUDGET-RADIUS`; textbook scale choices, empirical-mean construction, pull-count bounds, and final UCB regret remain separate.",
+        "role": "Compiled schedule-agnostic UCB logarithmic budget radius leaf: defines `subGaussianLogBudgetRadius proxy scale = sqrt (2 * proxy * log scale)`, proves nonnegativity and radius-square domination via the square-root budget leaf, simplifies `exp(-log scale)` to `scale⁻¹` under `0 < scale`, and specializes one-sided sub-Gaussian upper/lower confidence-failure plus finite-horizon bad-event bounds to inverse-scale tails. Constant-scale double-sum folding and textbook delta-scale allocation are compiled separately; empirical-mean construction, pull-count bounds, and final UCB regret remain separate.",
         "mathlib_routes": ["LOCAL-LEAF-UCB-SUBGAUSSIAN-SQRT-BUDGET-RADIUS", "Mathlib.Analysis.SpecialFunctions.Log.Basic", "Mathlib.Data.Real.Sqrt"],
     },
     {
@@ -1243,8 +1243,30 @@ LOCAL_LEAF_CARDS = [
             "UCB.constant_invScale_double_sum",
             "UCB.measure_finiteHorizonConfidenceBadEvent_le_subGaussian_constantLogBudgetRadius_card",
         ],
-        "role": "Compiled constant-scale UCB logarithmic budget radius leaf: defines `subGaussianConstantLogBudgetRadius proxy scale = sqrt (2 * proxy * log scale)`, reuses the schedule-agnostic log-budget radius regularity, and folds the finite-horizon inverse-scale double sum into `T` and `Fintype.card Arm` nsmul. Concrete textbook scale choices such as `T * |A| / delta`, delta allocation, empirical-mean construction, pull-count bounds, and final UCB regret remain separate.",
+        "role": "Compiled constant-scale UCB logarithmic budget radius leaf: defines `subGaussianConstantLogBudgetRadius proxy scale = sqrt (2 * proxy * log scale)`, reuses the schedule-agnostic log-budget radius regularity, and folds the finite-horizon inverse-scale double sum into `T` and `Fintype.card Arm` nsmul. The textbook finite-horizon delta scale is compiled separately as `LOCAL-LEAF-UCB-SUBGAUSSIAN-TEXTBOOK-DELTA-RADIUS`; empirical-mean construction, pull-count bounds, and final UCB regret remain separate.",
         "mathlib_routes": ["LOCAL-LEAF-UCB-SUBGAUSSIAN-LOG-BUDGET-RADIUS", "MLIB-FINSET-SUMS", "MLIB-FINTYPE-FIN"],
+    },
+    {
+        "id": "LOCAL-LEAF-UCB-SUBGAUSSIAN-TEXTBOOK-DELTA-RADIUS",
+        "leaf_ids": [
+            "UCB-GOOD-EVENT-GAP-CONSUMER",
+            "TAIL-SUMMABILITY-UCB",
+            "TAIL-SUBGAUSS-SUM",
+        ],
+        "module": "BanditRLProof.Algorithms.UCB",
+        "status": "leanCompiled",
+        "declarations": [
+            "UCB.constant_invScale_double_sum_le_of_real",
+            "UCB.textbookDeltaScale",
+            "UCB.textbookDeltaScale_pos",
+            "UCB.textbookDeltaScale_total_inv_budget_eq_delta",
+            "UCB.constant_invScale_double_sum_textbookDeltaScale_le_delta",
+            "UCB.subGaussianTextbookDeltaRadius",
+            "UCB.subGaussianTextbookDeltaRadius_apply",
+            "UCB.measure_finiteHorizonConfidenceBadEvent_le_subGaussian_textbookDeltaRadius_delta",
+        ],
+        "role": "Compiled textbook finite-horizon UCB delta-scale leaf: defines `textbookDeltaScale T delta = 2 * T * |Arm| / delta`, proves positivity under `0 < T`, nonempty finite arms, and `0 < delta`, proves the folded two-sided inverse-scale tail budget equals `delta` at the real level and is bounded by `ENNReal.ofReal delta`, defines the corresponding `subGaussianTextbookDeltaRadius`, and proves the finite-horizon confidence bad event is bounded by `delta` under centered empirical-mean sub-Gaussian hypotheses. Concrete empirical-mean construction, pull-count bounds, and final UCB regret remain separate.",
+        "mathlib_routes": ["LOCAL-LEAF-UCB-SUBGAUSSIAN-CONSTANT-LOG-BUDGET-RADIUS", "Mathlib.Tactic.Ring", "MLIB-FINSET-SUMS", "MLIB-FINTYPE-FIN"],
     },
     {
         "id": "LOCAL-LEAF-IID-REWARD-FAMILY",
@@ -6786,11 +6808,12 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- UCB-SUBGAUSSIAN-ABS-DEVIATION-TAIL is compiled locally as an abstract centered empirical-mean sub-Gaussian producer for two-sided UCB absolute-deviation tails and finite-horizon confidence bad-event budgets; empirical-mean construction, proxy/radius simplification to textbook log/sqrt form, pull-count bounds, and final UCB regret remain separate.")
     print("- UCB-SUBGAUSSIAN-ONE-SIDED-TAIL is compiled locally as a sharper centered empirical-mean sub-Gaussian producer for one-sided upper/lower UCB confidence failures and finite-horizon confidence bad-event budgets; empirical-mean construction, proxy/radius simplification to textbook log/sqrt form, pull-count bounds, and final UCB regret remain separate.")
     print("- UCB-SUBGAUSSIAN-RADIUS-BUDGET is compiled locally as the one-sided radius-budget simplification: `0 < proxy` and `2 * proxy * budget <= radius^2` yield upper/lower and finite-horizon confidence bad-event bounds with `exp(-budget)` tails; empirical-mean construction, concrete sqrt/log radius instantiation, pull-count bounds, and final UCB regret remain separate.")
-    print("- UCB-SUBGAUSSIAN-SQRT-BUDGET-RADIUS is compiled locally as the concrete square-root budget radius leaf: `sqrt (2 * proxy * budget)` is nonnegative, satisfies the radius-square domination contract, and yields upper/lower and finite-horizon confidence bad-event bounds with `exp(-budget)` tails; the logarithmic schedule surface is compiled separately as UCB-SUBGAUSSIAN-LOG-BUDGET-RADIUS, while empirical-mean construction, textbook scale choices, pull-count bounds, and final UCB regret remain separate.")
+    print("- UCB-SUBGAUSSIAN-SQRT-BUDGET-RADIUS is compiled locally as the concrete square-root budget radius leaf: `sqrt (2 * proxy * budget)` is nonnegative, satisfies the radius-square domination contract, and yields upper/lower and finite-horizon confidence bad-event bounds with `exp(-budget)` tails; the logarithmic schedule and textbook delta-scale surfaces are compiled separately, while empirical-mean construction, pull-count bounds, and final UCB regret remain separate.")
     print("- UCB-SUBGAUSSIAN-LOG-BUDGET-RADIUS is compiled locally as the schedule-agnostic logarithmic budget radius leaf: `sqrt (2 * proxy * log scale)` is nonnegative, satisfies the radius-square domination contract, and yields upper/lower and finite-horizon confidence bad-event bounds with `scale^-1` tails under `0 < scale`; constant-scale double-sum folding is compiled separately as UCB-SUBGAUSSIAN-CONSTANT-LOG-BUDGET-RADIUS, while textbook scale choices, empirical-mean construction, pull-count bounds, and final UCB regret remain separate.")
-    print("- UCB-SUBGAUSSIAN-CONSTANT-LOG-BUDGET-RADIUS is compiled locally as the constant-scale logarithmic budget radius leaf: `sqrt (2 * proxy * log scale)` yields finite-horizon confidence bad-event bounds with the inverse-scale double sum folded into `T` and `Fintype.card Arm` nsmul; textbook scale choices such as `T * |A| / delta`, delta allocation, empirical-mean construction, pull-count bounds, and final UCB regret remain separate.")
+    print("- UCB-SUBGAUSSIAN-CONSTANT-LOG-BUDGET-RADIUS is compiled locally as the constant-scale logarithmic budget radius leaf: `sqrt (2 * proxy * log scale)` yields finite-horizon confidence bad-event bounds with the inverse-scale double sum folded into `T` and `Fintype.card Arm` nsmul; textbook finite-horizon delta scale is compiled separately as UCB-SUBGAUSSIAN-TEXTBOOK-DELTA-RADIUS, while empirical-mean construction, pull-count bounds, and final UCB regret remain separate.")
+    print("- UCB-SUBGAUSSIAN-TEXTBOOK-DELTA-RADIUS is compiled locally as the textbook finite-horizon delta-scale leaf: `scale = 2 * T * |Arm| / delta` is positive under `0 < T`, nonempty finite arms, and `0 < delta`, the folded two-sided inverse-scale tail budget is bounded by `ENNReal.ofReal delta`, and the finite-horizon confidence bad event is bounded by `delta` under centered empirical-mean sub-Gaussian hypotheses; empirical-mean construction, pull-count bounds, and final UCB regret remain separate.")
     print("- TAIL-UNION-FINITE is compiled locally as generic finite-union outer-measure wrappers for explicit Finset and Fintype event families.")
-    print("- TAIL-SUMMABILITY-UCB is compiled locally as an abstract finite-horizon UCB bad-event summability wrapper over finite arms and t < T; UCB textbook scale choices, empirical-mean construction, pull-count bounds, and final regret remain separate.")
+    print("- TAIL-SUMMABILITY-UCB is compiled locally as an abstract finite-horizon UCB bad-event summability wrapper over finite arms and t < T; UCB empirical-mean construction, pull-count bounds, and final regret remain separate.")
     print("- EXP3-POTENTIAL is compiled locally as a deterministic finite-action exponential-weights potential surface with updated-potential unfolding, nonnegativity, one-step increment algebra, and finite-horizon telescope; estimator/log/regret leaves remain separate.")
     print("- FTRL-ONE-STEP is compiled locally as a deterministic finite-action regularized-objective minimizer wrapper yielding the one-step linear-loss inequality under eta > 0; convexity, minimizer existence, Tsallis regularizer, stability/penalty, and regret remain separate.")
     print("- TSALLIS-REGULARIZER is compiled locally as a finite-simplex Real.rpow power-sum/entropy/negative-entropy regularizer surface with denominator and nonnegative-power-sum well-definedness facts; convexity, stability/penalty, self-bounding, learning-rate, and regret remain separate.")

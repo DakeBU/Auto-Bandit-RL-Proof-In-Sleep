@@ -15638,6 +15638,78 @@ example {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
     UCB.measure_finiteHorizonConfidenceBadEvent_le_subGaussian_constantLogBudgetRadius_card
       mu trueMean empiricalMean proxy scale T hproxy hscale hsubG
 
+example {Arm : Type} [Fintype Arm] (T : Nat) (delta : Real) :
+    UCB.textbookDeltaScale (Arm := Arm) T delta =
+      (2 * (T : Real) * (Fintype.card Arm : Real)) / delta := by
+  rfl
+
+example {Arm : Type} [Fintype Arm] [Nonempty Arm]
+    (T : Nat) (delta : Real) (hT : 0 < T) (hdelta : 0 < delta) :
+    0 < UCB.textbookDeltaScale (Arm := Arm) T delta := by
+  exact UCB.textbookDeltaScale_pos (Arm := Arm) T delta hT hdelta
+
+example {Arm : Type} [Fintype Arm] [Nonempty Arm]
+    (T : Nat) (delta : Real) (hT : 0 < T) (hdelta : 0 < delta) :
+    (T : Real) *
+        ((Fintype.card Arm : Real) *
+          ((UCB.textbookDeltaScale (Arm := Arm) T delta)⁻¹ +
+            (UCB.textbookDeltaScale (Arm := Arm) T delta)⁻¹)) =
+      delta := by
+  exact UCB.textbookDeltaScale_total_inv_budget_eq_delta
+    (Arm := Arm) T delta hT hdelta
+
+example {Arm : Type} [Fintype Arm] (T : Nat) (scale delta : Real)
+    (hscale : 0 < scale)
+    (hreal :
+      (T : Real) *
+        ((Fintype.card Arm : Real) * (scale⁻¹ + scale⁻¹)) <= delta) :
+    HSMul.hSMul T
+        (HSMul.hSMul (Fintype.card Arm)
+          (ENNReal.ofReal scale⁻¹ + ENNReal.ofReal scale⁻¹)) <=
+      ENNReal.ofReal delta := by
+  exact UCB.constant_invScale_double_sum_le_of_real
+    (Arm := Arm) T scale delta hscale hreal
+
+example {Arm : Type} [Fintype Arm] [Nonempty Arm]
+    (T : Nat) (delta : Real) (hT : 0 < T) (hdelta : 0 < delta) :
+    HSMul.hSMul T
+        (HSMul.hSMul (Fintype.card Arm)
+          (ENNReal.ofReal (UCB.textbookDeltaScale (Arm := Arm) T delta)⁻¹ +
+            ENNReal.ofReal (UCB.textbookDeltaScale (Arm := Arm) T delta)⁻¹)) <=
+      ENNReal.ofReal delta := by
+  exact UCB.constant_invScale_double_sum_textbookDeltaScale_le_delta
+    (Arm := Arm) T delta hT hdelta
+
+example {Arm : Type} [Fintype Arm]
+    (proxy : Nat -> Arm -> NNReal) (T : Nat) (delta : Real)
+    (t : Nat) (arm : Arm) :
+    UCB.subGaussianTextbookDeltaRadius proxy T delta t arm =
+      Real.sqrt
+        (2 * ((proxy t arm : NNReal) : Real) *
+          Real.log (UCB.textbookDeltaScale (Arm := Arm) T delta)) := by
+  rfl
+
+example {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
+    [Nonempty Arm]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (proxy : Nat -> Arm -> NNReal) (T : Nat) (delta : Real)
+    (hT : 0 < T) (hdelta : 0 < delta)
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    mu (UCB.finiteHorizonConfidenceBadEvent
+        trueMean empiricalMean
+        (UCB.subGaussianTextbookDeltaRadius proxy T delta) T) <=
+      ENNReal.ofReal delta := by
+  exact
+    UCB.measure_finiteHorizonConfidenceBadEvent_le_subGaussian_textbookDeltaRadius_delta
+      mu trueMean empiricalMean proxy T delta hT hdelta hproxy hsubG
+
 example {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
     (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
     (trueMean : Arm -> Real)

@@ -5,6 +5,7 @@ import Mathlib.Data.Real.Sqrt
 import Mathlib.MeasureTheory.Constructions.BorelSpace.Order
 import Mathlib.MeasureTheory.MeasurableSpace.Basic
 import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Ring
 import BanditRLProof.ConcentrationSubGaussian
 import BanditRLProof.ConcentrationVariance
 import BanditRLProof.ProbabilityUnionBound
@@ -1246,6 +1247,139 @@ theorem measure_finiteHorizonConfidenceBadEvent_le_subGaussian_constantLogBudget
         (fun _ _ _ => hscale) hsubG
   exact htail.trans
     (le_of_eq (constant_invScale_double_sum (Arm := Arm) T scale))
+
+/--
+Convert a constant inverse-scale finite-horizon ENNReal tail budget back to an
+ordinary real budget.
+-/
+theorem constant_invScale_double_sum_le_of_real
+    {Arm : Type} [Fintype Arm] (T : Nat) (scale delta : Real)
+    (hscale : 0 < scale)
+    (hreal :
+      (T : Real) *
+        ((Fintype.card Arm : Real) * (scale⁻¹ + scale⁻¹)) <= delta) :
+    HSMul.hSMul T
+        (HSMul.hSMul (Fintype.card Arm)
+          (ENNReal.ofReal scale⁻¹ + ENNReal.ofReal scale⁻¹)) <=
+      ENNReal.ofReal delta := by
+  have hscale_inv_nonneg : 0 <= scale⁻¹ := inv_nonneg.mpr hscale.le
+  have hadd : ENNReal.ofReal (scale⁻¹ + scale⁻¹) =
+      ENNReal.ofReal scale⁻¹ + ENNReal.ofReal scale⁻¹ := by
+    exact ENNReal.ofReal_add hscale_inv_nonneg hscale_inv_nonneg
+  rw [hadd.symm]
+  rw [nsmul_eq_mul, nsmul_eq_mul]
+  rw [(ENNReal.ofReal_natCast (Fintype.card Arm)).symm]
+  rw [(ENNReal.ofReal_natCast T).symm]
+  rw [(ENNReal.ofReal_mul (Nat.cast_nonneg (Fintype.card Arm))).symm]
+  rw [(ENNReal.ofReal_mul (Nat.cast_nonneg T)).symm]
+  exact ENNReal.ofReal_le_ofReal hreal
+
+/--
+Textbook UCB finite-horizon scale for allocating two one-sided tails across
+`T` times and all arms.
+
+The factor `2` accounts for upper and lower confidence failures.
+-/
+noncomputable def textbookDeltaScale
+    {Arm : Type} [Fintype Arm] (T : Nat) (delta : Real) : Real :=
+  (2 * (T : Real) * (Fintype.card Arm : Real)) / delta
+
+/-- The textbook delta scale is positive under the usual horizon/arm/delta contracts. -/
+theorem textbookDeltaScale_pos
+    {Arm : Type} [Fintype Arm] [Nonempty Arm]
+    (T : Nat) (delta : Real) (hT : 0 < T) (hdelta : 0 < delta) :
+    0 < textbookDeltaScale (Arm := Arm) T delta := by
+  have hcard : 0 < Fintype.card Arm := Fintype.card_pos
+  unfold textbookDeltaScale
+  positivity
+
+/--
+The textbook delta scale makes the folded constant inverse-scale tail budget
+equal to `delta` at the real-number level.
+-/
+theorem textbookDeltaScale_total_inv_budget_eq_delta
+    {Arm : Type} [Fintype Arm] [Nonempty Arm]
+    (T : Nat) (delta : Real) (hT : 0 < T) (hdelta : 0 < delta) :
+    (T : Real) *
+        ((Fintype.card Arm : Real) *
+          ((textbookDeltaScale (Arm := Arm) T delta)⁻¹ +
+            (textbookDeltaScale (Arm := Arm) T delta)⁻¹)) =
+      delta := by
+  have hcard_nat : 0 < Fintype.card Arm := Fintype.card_pos
+  have hTpos : 0 < (T : Real) := by exact_mod_cast hT
+  have hcard_pos : 0 < (Fintype.card Arm : Real) := by
+    exact_mod_cast hcard_nat
+  have hT_ne : Ne (T : Real) 0 := ne_of_gt hTpos
+  have hcard_ne : Ne (Fintype.card Arm : Real) 0 := ne_of_gt hcard_pos
+  have hdelta_ne : Ne delta 0 := ne_of_gt hdelta
+  unfold textbookDeltaScale
+  field_simp [hT_ne, hcard_ne, hdelta_ne]
+  ring
+
+/--
+The folded constant-scale UCB tail budget with textbook delta scale is bounded
+by `delta`.
+-/
+theorem constant_invScale_double_sum_textbookDeltaScale_le_delta
+    {Arm : Type} [Fintype Arm] [Nonempty Arm]
+    (T : Nat) (delta : Real) (hT : 0 < T) (hdelta : 0 < delta) :
+    HSMul.hSMul T
+        (HSMul.hSMul (Fintype.card Arm)
+          (ENNReal.ofReal (textbookDeltaScale (Arm := Arm) T delta)⁻¹ +
+            ENNReal.ofReal (textbookDeltaScale (Arm := Arm) T delta)⁻¹)) <=
+      ENNReal.ofReal delta := by
+  exact constant_invScale_double_sum_le_of_real
+    (Arm := Arm) T (textbookDeltaScale (Arm := Arm) T delta) delta
+    (textbookDeltaScale_pos (Arm := Arm) T delta hT hdelta)
+    (le_of_eq
+      (textbookDeltaScale_total_inv_budget_eq_delta
+        (Arm := Arm) T delta hT hdelta))
+
+/-- Textbook delta-scale logarithmic UCB radius. -/
+noncomputable def subGaussianTextbookDeltaRadius
+    {Arm : Type} [Fintype Arm]
+    (proxy : Nat -> Arm -> NNReal) (T : Nat) (delta : Real) :
+    Nat -> Arm -> Real :=
+  subGaussianConstantLogBudgetRadius proxy
+    (textbookDeltaScale (Arm := Arm) T delta)
+
+@[simp] theorem subGaussianTextbookDeltaRadius_apply
+    {Arm : Type} [Fintype Arm]
+    (proxy : Nat -> Arm -> NNReal) (T : Nat) (delta : Real)
+    (t : Nat) (arm : Arm) :
+    subGaussianTextbookDeltaRadius proxy T delta t arm =
+      Real.sqrt
+        (2 * ((proxy t arm : NNReal) : Real) *
+          Real.log (textbookDeltaScale (Arm := Arm) T delta)) := rfl
+
+/--
+Finite-horizon confidence bad-event bound for the textbook delta-scale
+logarithmic UCB radius.
+-/
+theorem measure_finiteHorizonConfidenceBadEvent_le_subGaussian_textbookDeltaRadius_delta
+    {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm] [Nonempty Arm]
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (proxy : Nat -> Arm -> NNReal) (T : Nat) (delta : Real)
+    (hT : 0 < T) (hdelta : 0 < delta)
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    mu (finiteHorizonConfidenceBadEvent trueMean empiricalMean
+        (subGaussianTextbookDeltaRadius proxy T delta) T) <=
+      ENNReal.ofReal delta := by
+  have htail :=
+    measure_finiteHorizonConfidenceBadEvent_le_subGaussian_constantLogBudgetRadius_card
+      mu trueMean empiricalMean proxy
+      (textbookDeltaScale (Arm := Arm) T delta) T hproxy
+      (textbookDeltaScale_pos (Arm := Arm) T delta hT hdelta) hsubG
+  exact htail.trans
+    (constant_invScale_double_sum_textbookDeltaScale_le_delta
+      (Arm := Arm) T delta hT hdelta)
 
 /--
 Two-sided sub-Gaussian tail budget for a UCB empirical mean at time `t` and
