@@ -15138,6 +15138,39 @@ example {Omega Arm : Type} [Fintype Arm]
     UCB.meanGap_le_two_radius_of_not_finiteHorizonConfidenceBadEvent
       trueMean empiricalMean radius T omega t best chosen ht hgood hscore
 
+example {Omega Arm : Type} [Fintype Arm]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (radius : Nat -> Arm -> Real) (T : Nat)
+    (omega : Omega) (t : Nat) (best chosen : Arm)
+    (ht : t < T)
+    (hscore :
+      UCB.confidenceScore (empiricalMean omega t) (radius t) best <=
+        UCB.confidenceScore (empiricalMean omega t) (radius t) chosen)
+    (hgap_large :
+      2 * radius t chosen < UCB.meanGap trueMean best chosen) :
+    omega ∈ UCB.finiteHorizonConfidenceBadEvent
+      trueMean empiricalMean radius T := by
+  exact
+    UCB.mem_finiteHorizonConfidenceBadEvent_of_two_radius_lt_meanGap_of_score_max
+      trueMean empiricalMean radius T omega t best chosen ht hscore hgap_large
+
+example {Omega Arm : Type} [Fintype Arm]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (radius : Nat -> Arm -> Real) (T : Nat)
+    (t : Nat) (best chosen : Arm)
+    (ht : t < T)
+    (hgap_large :
+      2 * radius t chosen < UCB.meanGap trueMean best chosen) :
+    {omega : Omega |
+      UCB.confidenceScore (empiricalMean omega t) (radius t) best <=
+        UCB.confidenceScore (empiricalMean omega t) (radius t) chosen} ⊆
+      UCB.finiteHorizonConfidenceBadEvent trueMean empiricalMean radius T := by
+  exact
+    UCB.scoreMaxEvent_subset_finiteHorizonConfidenceBadEvent_of_two_radius_lt_meanGap
+      trueMean empiricalMean radius T t best chosen ht hgap_large
+
 example {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
     (mu : MeasureTheory.Measure Omega)
     (trueMean : Arm -> Real)

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-05T03:02:39+00:00",
+  "generated": "2026-07-05T03:07:29+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -206,9 +206,11 @@
       "status": "leanCompiled",
       "declarations": [
         "UCB.not_confidenceBadEventAt_of_not_finiteHorizonConfidenceBadEvent",
-        "UCB.meanGap_le_two_radius_of_not_finiteHorizonConfidenceBadEvent"
+        "UCB.meanGap_le_two_radius_of_not_finiteHorizonConfidenceBadEvent",
+        "UCB.mem_finiteHorizonConfidenceBadEvent_of_two_radius_lt_meanGap_of_score_max",
+        "UCB.scoreMaxEvent_subset_finiteHorizonConfidenceBadEvent_of_two_radius_lt_meanGap"
       ],
-      "role": "Compiled finite-horizon UCB good-event consumer: outside `finiteHorizonConfidenceBadEvent`, every `t < T` single-time confidence bad event is absent, and score maximality at that time yields `meanGap <= 2 * radius t chosen`. This connects the finite-horizon confidence event to the deterministic gap-radius consumer used by later pull-count proofs; concrete selected-arm trace, empirical-mean construction, pull-count bounds, and final UCB regret remain separate.",
+      "role": "Compiled finite-horizon UCB good-event consumer: outside `finiteHorizonConfidenceBadEvent`, every `t < T` single-time confidence bad event is absent, and score maximality at that time yields `meanGap <= 2 * radius t chosen`; contrapositively, a score-max event for a large-gap arm is included in the finite-horizon bad event. This connects the confidence event to the deterministic gap-radius consumer used by later pull-count proofs; concrete selected-arm trace, empirical-mean construction, pull-count bounds, and final UCB regret remain separate.",
       "mathlib_routes": [
         "LOCAL-LEAF-UCB-FINITE-HORIZON-CONFIDENCE-EVENT",
         "LOCAL-LEAF-UCB-CONFIDENCE-EVENT-CONSUMER",

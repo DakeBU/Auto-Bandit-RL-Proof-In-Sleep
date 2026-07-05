@@ -325,6 +325,54 @@ theorem meanGap_le_two_radius_of_not_finiteHorizonConfidenceBadEvent
       omega best chosen hgood_at hscore
 
 /--
+Contrapositive finite-horizon good-event consumer: if a chosen arm's gap is
+larger than twice its current radius and it beats the best arm's UCB score, the
+finite-horizon confidence bad event must occur.
+-/
+theorem mem_finiteHorizonConfidenceBadEvent_of_two_radius_lt_meanGap_of_score_max
+    {Omega Arm : Type} [Fintype Arm]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (radius : Nat -> Arm -> Real) (T : Nat)
+    (omega : Omega) (t : Nat) (best chosen : Arm)
+    (ht : t < T)
+    (hscore :
+      confidenceScore (empiricalMean omega t) (radius t) best <=
+        confidenceScore (empiricalMean omega t) (radius t) chosen)
+    (hgap_large :
+      2 * radius t chosen < meanGap trueMean best chosen) :
+    omega ∈ finiteHorizonConfidenceBadEvent trueMean empiricalMean radius T := by
+  by_contra hgood
+  have hgap_le :
+      meanGap trueMean best chosen <= 2 * radius t chosen :=
+    meanGap_le_two_radius_of_not_finiteHorizonConfidenceBadEvent
+      trueMean empiricalMean radius T omega t best chosen ht hgood hscore
+  linarith
+
+/--
+Event-level form of the finite-horizon large-gap consumer. This is the set
+inclusion shape needed before applying measure monotonicity in pull-count
+arguments.
+-/
+theorem scoreMaxEvent_subset_finiteHorizonConfidenceBadEvent_of_two_radius_lt_meanGap
+    {Omega Arm : Type} [Fintype Arm]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (radius : Nat -> Arm -> Real) (T : Nat)
+    (t : Nat) (best chosen : Arm)
+    (ht : t < T)
+    (hgap_large :
+      2 * radius t chosen < meanGap trueMean best chosen) :
+    {omega : Omega |
+      confidenceScore (empiricalMean omega t) (radius t) best <=
+        confidenceScore (empiricalMean omega t) (radius t) chosen} ⊆
+      finiteHorizonConfidenceBadEvent trueMean empiricalMean radius T := by
+  intro omega hscore
+  exact
+    mem_finiteHorizonConfidenceBadEvent_of_two_radius_lt_meanGap_of_score_max
+      trueMean empiricalMean radius T omega t best chosen ht hscore hgap_large
+
+/--
 Finite-horizon union bound for UCB confidence bad events.
 
 This assembles the single-time upper/lower confidence-event union bound across
