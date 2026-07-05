@@ -1,4 +1,5 @@
 import Mathlib.Data.Fintype.Basic
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Data.Real.Basic
 import Mathlib.Data.Real.Sqrt
 import Mathlib.MeasureTheory.Constructions.BorelSpace.Order
@@ -975,6 +976,181 @@ theorem measure_finiteHorizonConfidenceBadEvent_le_subGaussian_budgetRadius_sum
     (fun t arm _ht =>
       subGaussianBudgetRadius_sq_domination proxy budget t arm)
     hsubG
+
+/--
+Elementary log-budget simplification used by UCB tail producers.
+
+The positivity hypothesis is the regularity contract for later concrete
+schedules such as `scale = T * |A| / delta`.
+-/
+theorem exp_neg_log_eq_inv {x : Real} (hx : 0 < x) :
+    Real.exp (-(Real.log x)) = x⁻¹ := by
+  rw [Real.exp_neg, Real.exp_log hx]
+
+/--
+Concrete square-root radius with a logarithmic budget.
+
+This is still schedule-agnostic: `scale` is the positive quantity whose inverse
+will become the one-sided tail budget after simplifying `exp (-log scale)`.
+-/
+noncomputable def subGaussianLogBudgetRadius
+    {Arm : Type}
+    (proxy : Nat -> Arm -> NNReal) (scale : Nat -> Arm -> Real) :
+    Nat -> Arm -> Real :=
+  subGaussianBudgetRadius proxy (fun t arm => Real.log (scale t arm))
+
+@[simp] theorem subGaussianLogBudgetRadius_apply
+    {Arm : Type}
+    (proxy : Nat -> Arm -> NNReal) (scale : Nat -> Arm -> Real)
+    (t : Nat) (arm : Arm) :
+    subGaussianLogBudgetRadius proxy scale t arm =
+      Real.sqrt
+        (2 * ((proxy t arm : NNReal) : Real) * Real.log (scale t arm)) := rfl
+
+/-- The logarithmic square-root budget radius is nonnegative. -/
+theorem subGaussianLogBudgetRadius_nonneg
+    {Arm : Type}
+    (proxy : Nat -> Arm -> NNReal) (scale : Nat -> Arm -> Real)
+    (t : Nat) (arm : Arm) :
+    0 <= subGaussianLogBudgetRadius proxy scale t arm := by
+  simpa [subGaussianLogBudgetRadius] using
+    subGaussianBudgetRadius_nonneg proxy
+      (fun t arm => Real.log (scale t arm)) t arm
+
+/--
+The logarithmic square-root budget radius satisfies the square-domination
+contract with budget `log scale`.
+-/
+theorem subGaussianLogBudgetRadius_sq_domination
+    {Arm : Type}
+    (proxy : Nat -> Arm -> NNReal) (scale : Nat -> Arm -> Real)
+    (t : Nat) (arm : Arm) :
+    2 * ((proxy t arm : NNReal) : Real) * Real.log (scale t arm) <=
+      (subGaussianLogBudgetRadius proxy scale t arm) ^ 2 := by
+  simpa [subGaussianLogBudgetRadius] using
+    subGaussianBudgetRadius_sq_domination proxy
+      (fun t arm => Real.log (scale t arm)) t arm
+
+/--
+One-sided sub-Gaussian tail bound specialized to a logarithmic square-root
+budget radius.
+-/
+theorem subGaussianOneSidedDeviationTail_logBudgetRadius_le_inv_scale
+    {Arm : Type}
+    (proxy : Nat -> Arm -> NNReal) (scale : Nat -> Arm -> Real)
+    (t : Nat) (arm : Arm)
+    (hproxy : 0 < ((proxy t arm : NNReal) : Real))
+    (hscale : 0 < scale t arm) :
+    subGaussianOneSidedDeviationTail
+        (subGaussianLogBudgetRadius proxy scale) proxy t arm <=
+      ENNReal.ofReal ((scale t arm)⁻¹) := by
+  have htail :=
+    subGaussianOneSidedDeviationTail_budgetRadius_le_exp_neg_budget
+      proxy (fun t arm => Real.log (scale t arm)) t arm hproxy
+  simpa [subGaussianLogBudgetRadius, exp_neg_log_eq_inv hscale] using htail
+
+/--
+Single-time upper-confidence failure bound for the logarithmic square-root
+budget radius.
+-/
+theorem measure_upperConfidenceBad_le_subGaussian_logBudgetRadius
+    {Omega Arm : Type} [MeasurableSpace Omega]
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (proxy : Nat -> Arm -> NNReal) (scale : Nat -> Arm -> Real)
+    (t : Nat) (arm : Arm)
+    (hproxy : 0 < ((proxy t arm : NNReal) : Real))
+    (hscale : 0 < scale t arm)
+    (hsubG :
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    mu (upperConfidenceBad trueMean
+        (fun omega arm => empiricalMean omega t arm)
+        (subGaussianLogBudgetRadius proxy scale t) arm) <=
+      ENNReal.ofReal ((scale t arm)⁻¹) := by
+  have htail :=
+    measure_upperConfidenceBad_le_subGaussian_budgetRadius
+      mu trueMean empiricalMean proxy
+      (fun t arm => Real.log (scale t arm)) t arm hproxy hsubG
+  simpa [subGaussianLogBudgetRadius, exp_neg_log_eq_inv hscale] using htail
+
+/--
+Single-time lower-confidence failure bound for the logarithmic square-root
+budget radius.
+-/
+theorem measure_lowerConfidenceBad_le_subGaussian_logBudgetRadius
+    {Omega Arm : Type} [MeasurableSpace Omega]
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (proxy : Nat -> Arm -> NNReal) (scale : Nat -> Arm -> Real)
+    (t : Nat) (arm : Arm)
+    (hproxy : 0 < ((proxy t arm : NNReal) : Real))
+    (hscale : 0 < scale t arm)
+    (hsubG :
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    mu (lowerConfidenceBad trueMean
+        (fun omega arm => empiricalMean omega t arm)
+        (subGaussianLogBudgetRadius proxy scale t) arm) <=
+      ENNReal.ofReal ((scale t arm)⁻¹) := by
+  have htail :=
+    measure_lowerConfidenceBad_le_subGaussian_budgetRadius
+      mu trueMean empiricalMean proxy
+      (fun t arm => Real.log (scale t arm)) t arm hproxy hsubG
+  simpa [subGaussianLogBudgetRadius, exp_neg_log_eq_inv hscale] using htail
+
+/--
+Finite-horizon confidence bad-event bound for logarithmic square-root budget
+radii.
+
+This is the schedule-agnostic log-budget producer. Later UCB leaves can set
+`scale t arm` to a concrete positive expression and then simplify the double
+sum.
+-/
+theorem measure_finiteHorizonConfidenceBadEvent_le_subGaussian_logBudgetRadius_inv_scale_sum
+    {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (proxy : Nat -> Arm -> NNReal) (scale : Nat -> Arm -> Real) (T : Nat)
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hscale : forall t arm, t < T -> 0 < scale t arm)
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    mu (finiteHorizonConfidenceBadEvent trueMean empiricalMean
+        (subGaussianLogBudgetRadius proxy scale) T) <=
+      (Finset.range T).sum
+        (fun t =>
+          (Finset.univ : Finset Arm).sum
+            (fun arm =>
+              ENNReal.ofReal ((scale t arm)⁻¹) +
+                ENNReal.ofReal ((scale t arm)⁻¹))) := by
+  have htail :
+      mu (finiteHorizonConfidenceBadEvent trueMean empiricalMean
+          (subGaussianLogBudgetRadius proxy scale) T) <=
+        (Finset.range T).sum
+          (fun t =>
+            (Finset.univ : Finset Arm).sum
+              (fun arm =>
+                ENNReal.ofReal
+                    (Real.exp (-(Real.log (scale t arm)))) +
+                  ENNReal.ofReal
+                    (Real.exp (-(Real.log (scale t arm)))))) := by
+    simpa [subGaussianLogBudgetRadius] using
+      measure_finiteHorizonConfidenceBadEvent_le_subGaussian_budgetRadius_sum
+        mu trueMean empiricalMean proxy
+        (fun t arm => Real.log (scale t arm)) T hproxy hsubG
+  exact htail.trans
+    (Finset.sum_le_sum (fun t ht =>
+      Finset.sum_le_sum (fun arm _harm => by
+        simp [exp_neg_log_eq_inv (hscale t arm (Finset.mem_range.mp ht))])))
 
 /--
 Two-sided sub-Gaussian tail budget for a UCB empirical mean at time `t` and
