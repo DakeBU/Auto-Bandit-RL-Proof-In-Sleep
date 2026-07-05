@@ -1597,6 +1597,85 @@ theorem measure_selectedLargeGapEvent_le_subGaussian_textbookDeltaRadius_delta
       hT hdelta ht hgap_large hproxy hsubG)
 
 /--
+Finite-time selected-action events are covered by the finite-horizon confidence
+bad event when every selected time in the index set has a large enough gap and
+certifies UCB score maximality.
+
+This is the event-level bridge needed before turning selected-time collections
+into pull-count or suffix-time bounds.
+-/
+theorem selectedEventOn_subset_finiteHorizonConfidenceBadEvent_of_action_score_max
+    {Omega Arm : Type} [Fintype Arm]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (radius : Nat -> Arm -> Real)
+    (action : Omega -> Nat -> Arm)
+    (T : Nat) (times : Finset Nat)
+    (best chosen : Arm)
+    (htimes : forall t, t ∈ times -> t < T)
+    (hscore_of_selected : forall omega t, t ∈ times ->
+      action omega t = chosen ->
+        confidenceScore (empiricalMean omega t) (radius t) best <=
+          confidenceScore (empiricalMean omega t) (radius t) chosen)
+    (hgap_large : forall t, t ∈ times ->
+      2 * radius t chosen < meanGap trueMean best chosen) :
+    Set.Subset
+      {omega : Omega | exists t, t ∈ times /\ action omega t = chosen}
+      (finiteHorizonConfidenceBadEvent trueMean empiricalMean radius T) := by
+  intro omega hselected
+  rcases hselected with ⟨t, ht_mem, hselected_t⟩
+  exact
+    mem_finiteHorizonConfidenceBadEvent_of_two_radius_lt_meanGap_of_score_max
+      trueMean empiricalMean radius T omega t best chosen
+      (htimes t ht_mem)
+      (hscore_of_selected omega t ht_mem hselected_t)
+      (hgap_large t ht_mem)
+
+/--
+The textbook delta budget also controls the event that a fixed arm is selected
+at any time from a finite index set, provided each such time satisfies the
+large-gap radius condition and selected-action score maximality.
+-/
+theorem measure_selectedLargeGapEventOn_le_subGaussian_textbookDeltaRadius_delta
+    {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm] [Nonempty Arm]
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (action : Omega -> Nat -> Arm)
+    (proxy : Nat -> Arm -> NNReal) (T : Nat) (delta : Real)
+    (times : Finset Nat) (best chosen : Arm)
+    (hT : 0 < T) (hdelta : 0 < delta)
+    (htimes : forall t, t ∈ times -> t < T)
+    (hgap_large : forall t, t ∈ times ->
+      2 * subGaussianTextbookDeltaRadius proxy T delta t chosen <
+        meanGap trueMean best chosen)
+    (hscore_of_selected : forall omega t, t ∈ times ->
+      action omega t = chosen ->
+        confidenceScore (empiricalMean omega t)
+            (subGaussianTextbookDeltaRadius proxy T delta t) best <=
+          confidenceScore (empiricalMean omega t)
+            (subGaussianTextbookDeltaRadius proxy T delta t) chosen)
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    mu {omega : Omega | exists t, t ∈ times /\ action omega t = chosen} <=
+      ENNReal.ofReal delta := by
+  have hsubset :
+      Set.Subset
+        {omega : Omega | exists t, t ∈ times /\ action omega t = chosen}
+        (finiteHorizonConfidenceBadEvent trueMean empiricalMean
+          (subGaussianTextbookDeltaRadius proxy T delta) T) :=
+    selectedEventOn_subset_finiteHorizonConfidenceBadEvent_of_action_score_max
+      trueMean empiricalMean (subGaussianTextbookDeltaRadius proxy T delta)
+      action T times best chosen htimes hscore_of_selected hgap_large
+  exact (measure_mono hsubset).trans
+    (measure_finiteHorizonConfidenceBadEvent_le_subGaussian_textbookDeltaRadius_delta
+      mu trueMean empiricalMean proxy T delta hT hdelta hproxy hsubG)
+
+/--
 Two-sided sub-Gaussian tail budget for a UCB empirical mean at time `t` and
 arm `arm`.
 

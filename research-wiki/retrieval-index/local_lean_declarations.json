@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-05T03:20:38+00:00",
+  "generated": "2026-07-05T03:27:32+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -1834,11 +1834,27 @@
       "statement": "theorem measure_selectedLargeGapEvent_le_subGaussian_textbookDeltaRadius_delta {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm] [Nonempty Arm] (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (action : Omega -> Nat -> Arm) (proxy : Nat -> Arm -> NNReal) (T : Nat) (delta : Real) (t : Nat) (best chosen : Arm)"
     },
     {
+      "kind": "theorem",
+      "name": "selectedEventOn_subset_finiteHorizonConfidenceBadEvent_of_action_score_max",
+      "full_name": "BanditRLProof.UCB.selectedEventOn_subset_finiteHorizonConfidenceBadEvent_of_action_score_max",
+      "file": "BanditRLProof/Algorithms/UCB.lean",
+      "line": 1607,
+      "statement": "theorem selectedEventOn_subset_finiteHorizonConfidenceBadEvent_of_action_score_max {Omega Arm : Type} [Fintype Arm] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (radius : Nat -> Arm -> Real) (action : Omega -> Nat -> Arm) (T : Nat) (times : Finset Nat) (best chosen : Arm)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_selectedLargeGapEventOn_le_subGaussian_textbookDeltaRadius_delta",
+      "full_name": "BanditRLProof.UCB.measure_selectedLargeGapEventOn_le_subGaussian_textbookDeltaRadius_delta",
+      "file": "BanditRLProof/Algorithms/UCB.lean",
+      "line": 1639,
+      "statement": "theorem measure_selectedLargeGapEventOn_le_subGaussian_textbookDeltaRadius_delta {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm] [Nonempty Arm] (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (action : Omega -> Nat -> Arm) (proxy : Nat -> Arm -> NNReal) (T : Nat) (delta : Real) (times : Finset Nat) (best chosen : Arm)"
+    },
+    {
       "kind": "def",
       "name": "subGaussianAbsDeviationTail",
       "full_name": "BanditRLProof.UCB.subGaussianAbsDeviationTail",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1607,
+      "line": 1686,
       "statement": "noncomputable def subGaussianAbsDeviationTail {Arm : Type} (radius : Nat -> Arm -> Real) (proxy : Nat -> Arm -> NNReal) (t : Nat) (arm : Arm) : ENNReal :="
     },
     {
@@ -1846,7 +1862,7 @@
       "name": "measure_absDeviation_le_subGaussian_tail",
       "full_name": "BanditRLProof.UCB.measure_absDeviation_le_subGaussian_tail",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1619,
+      "line": 1698,
       "statement": "theorem measure_absDeviation_le_subGaussian_tail {Omega Arm : Type} [MeasurableSpace Omega] (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (radius : Nat -> Arm -> Real) (proxy : Nat -> Arm -> NNReal) (t : Nat) (arm : Arm) (hradius : 0 <= radius t arm)"
     },
     {
@@ -1854,7 +1870,7 @@
       "name": "measure_finiteHorizonConfidenceBadEvent_le_subGaussian_tail_sum",
       "full_name": "BanditRLProof.UCB.measure_finiteHorizonConfidenceBadEvent_le_subGaussian_tail_sum",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1703,
+      "line": 1782,
       "statement": "theorem measure_finiteHorizonConfidenceBadEvent_le_subGaussian_tail_sum {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm] (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (radius : Nat -> Arm -> Real) (proxy : Nat -> Arm -> NNReal) (T : Nat) (hradius : forall t arm, t < T -> 0 <= radius t arm)"
     },
     {
@@ -1862,7 +1878,7 @@
       "name": "obligationNames",
       "full_name": "BanditRLProof.UCB.obligationNames",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1732,
+      "line": 1811,
       "statement": "def obligationNames : List String :="
     },
     {

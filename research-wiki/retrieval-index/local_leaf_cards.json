@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-05T03:20:38+00:00",
+  "generated": "2026-07-05T03:27:32+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -462,9 +462,11 @@
       "status": "leanCompiled",
       "declarations": [
         "UCB.selectedEvent_subset_scoreMaxEvent_of_action_score_max",
-        "UCB.measure_selectedLargeGapEvent_le_subGaussian_textbookDeltaRadius_delta"
+        "UCB.measure_selectedLargeGapEvent_le_subGaussian_textbookDeltaRadius_delta",
+        "UCB.selectedEventOn_subset_finiteHorizonConfidenceBadEvent_of_action_score_max",
+        "UCB.measure_selectedLargeGapEventOn_le_subGaussian_textbookDeltaRadius_delta"
       ],
-      "role": "Compiled selected-action UCB delta bridge: if a selected action certifies score maximality against the best arm, then the selected-action event is contained in the score-max event, and large-gap selected-arm events inherit the textbook `delta` probability budget under the existing centered empirical-mean sub-Gaussian hypotheses. Concrete UCB argmax/tie-breaking policy, empirical-mean construction, pull-count summation, and final regret remain separate.",
+      "role": "Compiled selected-action UCB delta bridge: if a selected action certifies score maximality against the best arm, then the selected-action event is contained in the score-max event, and large-gap selected-arm events inherit the textbook `delta` probability budget under the existing centered empirical-mean sub-Gaussian hypotheses. The finite-time-set variant shows that selecting the same large-gap arm at any time from an explicit `Finset Nat` is still covered by the same finite-horizon confidence bad event and therefore the same `delta` budget. Concrete UCB argmax/tie-breaking policy, empirical-mean construction, pull-count summation, and final regret remain separate.",
       "mathlib_routes": [
         "LOCAL-LEAF-UCB-SUBGAUSSIAN-TEXTBOOK-DELTA-RADIUS",
         "MLIB-MEASURE-INTEGRAL",
