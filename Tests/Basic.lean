@@ -16230,6 +16230,55 @@ example {Omega Action : Type} [MeasurableSpace Omega] [DecidableEq Action]
   exact UCB.lintegral_selectedSmallPullCount_indicator_sum_le_threshold
     mu action chosen T B
 
+example {Action : Type} [DecidableEq Action]
+    (action : ActionTrace Action) (chosen : Action) (T : Nat) :
+    (Finset.range T).sum
+        (fun t : Nat => if action t = chosen then (1 : Nat) else 0) =
+      pullCount action chosen T := by
+  exact UCB.selectedPullCount_sum_eq_pullCount action chosen T
+
+example {Action : Type} [DecidableEq Action]
+    (action : ActionTrace Action) (chosen : Action) (T : Nat) :
+    (Finset.range T).sum
+        (fun t : Nat => if action t = chosen then (1 : ENNReal) else 0) =
+      ((pullCount action chosen T : Nat) : ENNReal) := by
+  exact UCB.selectedPullCount_indicator_sum_eq_natCast_pullCount
+    action chosen T
+
+example {Action : Type} [DecidableEq Action]
+    (action : ActionTrace Action) (chosen : Action) (T B : Nat) :
+    (Finset.range T).sum
+        (fun t : Nat => if action t = chosen then (1 : ENNReal) else 0) =
+      (Finset.range T).sum
+          (fun t : Nat =>
+            if action t = chosen ∧ pullCount action chosen t < B then
+              (1 : ENNReal)
+            else
+              0) +
+        (Finset.range T).sum
+          (fun t : Nat =>
+            if action t = chosen ∧ B <= pullCount action chosen t then
+              (1 : ENNReal)
+            else
+              0) := by
+  exact
+    UCB.selectedPullCount_indicator_sum_eq_selectedSmall_add_selectedLargePullCount
+      action chosen T B
+
+example {Action : Type} [DecidableEq Action]
+    (action : ActionTrace Action) (chosen : Action) (T B : Nat) :
+    ((pullCount action chosen T : Nat) : ENNReal) <=
+      (B : ENNReal) +
+        (Finset.range T).sum
+          (fun t : Nat =>
+            if action t = chosen ∧ B <= pullCount action chosen t then
+              (1 : ENNReal)
+            else
+              0) := by
+  exact
+    UCB.natCast_pullCount_le_threshold_add_selectedLargePullCount_indicator_sum
+      action chosen T B
+
 example {Omega : Type} [MeasurableSpace Omega]
     {K : Nat} (hK : 0 < K)
     [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)]

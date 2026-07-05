@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-05T05:07:19+00:00",
+  "generated": "2026-07-05T05:14:42+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -1987,10 +1987,42 @@
     },
     {
       "kind": "theorem",
+      "name": "selectedPullCount_sum_eq_pullCount",
+      "full_name": "BanditRLProof.UCB.selectedPullCount_sum_eq_pullCount",
+      "file": "BanditRLProof/Algorithms/UCB.lean",
+      "line": 2396,
+      "statement": "theorem selectedPullCount_sum_eq_pullCount {Action : Type} [DecidableEq Action] (action : ActionTrace Action) (chosen : Action) (T : Nat) : (Finset.range T).sum (fun t : Nat => if action t = chosen then (1 : Nat) else 0) = pullCount action chosen T"
+    },
+    {
+      "kind": "theorem",
+      "name": "selectedPullCount_indicator_sum_eq_natCast_pullCount",
+      "full_name": "BanditRLProof.UCB.selectedPullCount_indicator_sum_eq_natCast_pullCount",
+      "file": "BanditRLProof/Algorithms/UCB.lean",
+      "line": 2420,
+      "statement": "theorem selectedPullCount_indicator_sum_eq_natCast_pullCount {Action : Type} [DecidableEq Action] (action : ActionTrace Action) (chosen : Action) (T : Nat) : (Finset.range T).sum (fun t : Nat => if action t = chosen then (1 : ENNReal) else 0) = ((pullCount action chosen T : Nat) : ENNReal)"
+    },
+    {
+      "kind": "theorem",
+      "name": "selectedPullCount_indicator_sum_eq_selectedSmall_add_selectedLargePullCount",
+      "full_name": "BanditRLProof.UCB.selectedPullCount_indicator_sum_eq_selectedSmall_add_selectedLargePullCount",
+      "file": "BanditRLProof/Algorithms/UCB.lean",
+      "line": 2439,
+      "statement": "theorem selectedPullCount_indicator_sum_eq_selectedSmall_add_selectedLargePullCount {Action : Type} [DecidableEq Action] (action : ActionTrace Action) (chosen : Action) (T B : Nat) : (Finset.range T).sum (fun t : Nat => if action t = chosen then (1 : ENNReal) else 0) = (Finset.range T).sum (fun t : Nat => if action t = chosen \u2227 pullCount action chosen t < B then"
+    },
+    {
+      "kind": "theorem",
+      "name": "natCast_pullCount_le_threshold_add_selectedLargePullCount_indicator_sum",
+      "full_name": "BanditRLProof.UCB.natCast_pullCount_le_threshold_add_selectedLargePullCount_indicator_sum",
+      "file": "BanditRLProof/Algorithms/UCB.lean",
+      "line": 2481,
+      "statement": "theorem natCast_pullCount_le_threshold_add_selectedLargePullCount_indicator_sum {Action : Type} [DecidableEq Action] (action : ActionTrace Action) (chosen : Action) (T B : Nat) : ((pullCount action chosen T : Nat) : ENNReal) <= (B : ENNReal) + (Finset.range T).sum (fun t : Nat => if action t = chosen \u2227 B <= pullCount action chosen t then"
+    },
+    {
+      "kind": "theorem",
       "name": "lintegral_confidenceScoreArgmax_pullCount_le_freeCard_add_horizon_delta",
       "full_name": "BanditRLProof.UCB.lintegral_confidenceScoreArgmax_pullCount_le_freeCard_add_horizon_delta",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 2400,
+      "line": 2535,
       "statement": "theorem lintegral_confidenceScoreArgmax_pullCount_le_freeCard_add_horizon_delta {Omega : Type} [MeasurableSpace Omega] {K : Nat} (hK : 0 < K) [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)] (mu : Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (trueMean : Fin K -> Real) (empiricalMean : Omega -> Nat -> Fin K -> Real) (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)"
     },
     {
@@ -1998,7 +2030,7 @@
       "name": "subGaussianTextbookDeltaRadiusChargedTimes",
       "full_name": "BanditRLProof.UCB.subGaussianTextbookDeltaRadiusChargedTimes",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 2443,
+      "line": 2578,
       "statement": "noncomputable def subGaussianTextbookDeltaRadiusChargedTimes {K : Nat} (trueMean : Fin K -> Real) (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real) (best chosen : Fin K) : Finset Nat :="
     },
     {
@@ -2006,7 +2038,7 @@
       "name": "subGaussianTextbookDeltaRadiusFreeTimes",
       "full_name": "BanditRLProof.UCB.subGaussianTextbookDeltaRadiusFreeTimes",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 2458,
+      "line": 2593,
       "statement": "noncomputable def subGaussianTextbookDeltaRadiusFreeTimes {K : Nat} (trueMean : Fin K -> Real) (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real) (best chosen : Fin K) : Finset Nat :="
     },
     {
@@ -2014,7 +2046,7 @@
       "name": "mem_subGaussianTextbookDeltaRadiusChargedTimes_iff",
       "full_name": "BanditRLProof.UCB.mem_subGaussianTextbookDeltaRadiusChargedTimes_iff",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 2467,
+      "line": 2602,
       "statement": "@[simp] theorem mem_subGaussianTextbookDeltaRadiusChargedTimes_iff {K : Nat} (trueMean : Fin K -> Real) (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real) (best chosen : Fin K) (t : Nat) : t \u2208 subGaussianTextbookDeltaRadiusChargedTimes trueMean proxy T delta best chosen \u2194 t < T \u2227 2 * subGaussianTextbookDeltaRadius proxy T delta t chosen <"
     },
     {
@@ -2022,7 +2054,7 @@
       "name": "mem_subGaussianTextbookDeltaRadiusFreeTimes_iff",
       "full_name": "BanditRLProof.UCB.mem_subGaussianTextbookDeltaRadiusFreeTimes_iff",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 2478,
+      "line": 2613,
       "statement": "@[simp] theorem mem_subGaussianTextbookDeltaRadiusFreeTimes_iff {K : Nat} (trueMean : Fin K -> Real) (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real) (best chosen : Fin K) (t : Nat) : t \u2208 subGaussianTextbookDeltaRadiusFreeTimes trueMean proxy T delta best chosen \u2194 t < T \u2227 \u00ac 2 * subGaussianTextbookDeltaRadius proxy T delta t chosen <"
     },
     {
@@ -2030,7 +2062,7 @@
       "name": "subGaussianTextbookDeltaRadiusChargedTimes_of_not_free",
       "full_name": "BanditRLProof.UCB.subGaussianTextbookDeltaRadiusChargedTimes_of_not_free",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 2489,
+      "line": 2624,
       "statement": "theorem subGaussianTextbookDeltaRadiusChargedTimes_of_not_free {K : Nat} (trueMean : Fin K -> Real) (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real) (best chosen : Fin K) (t : Nat) : t < T -> t \u2209 subGaussianTextbookDeltaRadiusFreeTimes trueMean proxy T delta best chosen -> t \u2208 subGaussianTextbookDeltaRadiusChargedTimes"
     },
     {
@@ -2038,7 +2070,7 @@
       "name": "subGaussianTextbookDeltaRadiusChargedTimes_gap_large",
       "full_name": "BanditRLProof.UCB.subGaussianTextbookDeltaRadiusChargedTimes_gap_large",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 2506,
+      "line": 2641,
       "statement": "theorem subGaussianTextbookDeltaRadiusChargedTimes_gap_large {K : Nat} (trueMean : Fin K -> Real) (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real) (best chosen : Fin K) (t : Nat) : t \u2208 subGaussianTextbookDeltaRadiusChargedTimes trueMean proxy T delta best chosen -> 2 * subGaussianTextbookDeltaRadius proxy T delta t chosen < meanGap trueMean best chosen"
     },
     {
@@ -2046,7 +2078,7 @@
       "name": "lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusFreeCard_add_horizon_delta",
       "full_name": "BanditRLProof.UCB.lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusFreeCard_add_horizon_delta",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 2526,
+      "line": 2661,
       "statement": "theorem lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusFreeCard_add_horizon_delta {Omega : Type} [MeasurableSpace Omega] {K : Nat} (hK : 0 < K) [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)] (mu : Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (trueMean : Fin K -> Real) (empiricalMean : Omega -> Nat -> Fin K -> Real) (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)"
     },
     {
@@ -2054,7 +2086,7 @@
       "name": "subGaussianTextbookDeltaRadiusFreeTimes_card_le_threshold",
       "full_name": "BanditRLProof.UCB.subGaussianTextbookDeltaRadiusFreeTimes_card_le_threshold",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 2581,
+      "line": 2716,
       "statement": "theorem subGaussianTextbookDeltaRadiusFreeTimes_card_le_threshold {K : Nat} (trueMean : Fin K -> Real) (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real) (best chosen : Fin K) (B : Nat) (hlarge_after : forall t, t < T -> B <= t -> 2 * subGaussianTextbookDeltaRadius proxy T delta t chosen < meanGap trueMean best chosen) : (subGaussianTextbookDeltaRadiusFreeTimes"
     },
     {
@@ -2062,7 +2094,7 @@
       "name": "subGaussianTextbookDeltaRadiusFreeTimes_card_le_threshold_ennreal",
       "full_name": "BanditRLProof.UCB.subGaussianTextbookDeltaRadiusFreeTimes_card_le_threshold_ennreal",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 2608,
+      "line": 2743,
       "statement": "theorem subGaussianTextbookDeltaRadiusFreeTimes_card_le_threshold_ennreal {K : Nat} (trueMean : Fin K -> Real) (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real) (best chosen : Fin K) (B : Nat) (hlarge_after : forall t, t < T -> B <= t -> 2 * subGaussianTextbookDeltaRadius proxy T delta t chosen < meanGap trueMean best chosen) : ((subGaussianTextbookDeltaRadiusFreeTimes"
     },
     {
@@ -2070,7 +2102,7 @@
       "name": "lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusThreshold_add_horizon_delta",
       "full_name": "BanditRLProof.UCB.lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusThreshold_add_horizon_delta",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 2629,
+      "line": 2764,
       "statement": "theorem lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusThreshold_add_horizon_delta {Omega : Type} [MeasurableSpace Omega] {K : Nat} (hK : 0 < K) [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)] (mu : Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (trueMean : Fin K -> Real) (empiricalMean : Omega -> Nat -> Fin K -> Real) (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)"
     },
     {
@@ -2078,7 +2110,7 @@
       "name": "subGaussianTextbookDeltaRadius_large_gap_of_lt_half_meanGap",
       "full_name": "BanditRLProof.UCB.subGaussianTextbookDeltaRadius_large_gap_of_lt_half_meanGap",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 2676,
+      "line": 2811,
       "statement": "theorem subGaussianTextbookDeltaRadius_large_gap_of_lt_half_meanGap {K : Nat} (trueMean : Fin K -> Real) (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real) (best chosen : Fin K) (t : Nat) (hhalf : subGaussianTextbookDeltaRadius proxy T delta t chosen < meanGap trueMean best chosen / 2) : 2 * subGaussianTextbookDeltaRadius proxy T delta t chosen <"
     },
     {
@@ -2086,7 +2118,7 @@
       "name": "lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusHalfGapThreshold_add_horizon_delta",
       "full_name": "BanditRLProof.UCB.lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusHalfGapThreshold_add_horizon_delta",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 2695,
+      "line": 2830,
       "statement": "theorem lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusHalfGapThreshold_add_horizon_delta {Omega : Type} [MeasurableSpace Omega] {K : Nat} (hK : 0 < K) [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)] (mu : Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (trueMean : Fin K -> Real) (empiricalMean : Omega -> Nat -> Fin K -> Real) (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)"
     },
     {
@@ -2094,7 +2126,7 @@
       "name": "subGaussianTextbookDeltaRadius_lt_half_meanGap_of_sq_lt",
       "full_name": "BanditRLProof.UCB.subGaussianTextbookDeltaRadius_lt_half_meanGap_of_sq_lt",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 2741,
+      "line": 2876,
       "statement": "theorem subGaussianTextbookDeltaRadius_lt_half_meanGap_of_sq_lt {K : Nat} (trueMean : Fin K -> Real) (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real) (best chosen : Fin K) (t : Nat) (hgap_pos : 0 < meanGap trueMean best chosen) (hsq : 2 * ((proxy t chosen : NNReal) : Real) * Real.log (textbookDeltaScale (Arm"
     },
     {
@@ -2102,7 +2134,7 @@
       "name": "subGaussianTextbookDeltaRadius_lt_half_meanGap_of_eight_mul_lt_sq",
       "full_name": "BanditRLProof.UCB.subGaussianTextbookDeltaRadius_lt_half_meanGap_of_eight_mul_lt_sq",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 2761,
+      "line": 2896,
       "statement": "theorem subGaussianTextbookDeltaRadius_lt_half_meanGap_of_eight_mul_lt_sq {K : Nat} (trueMean : Fin K -> Real) (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real) (best chosen : Fin K) (t : Nat) (hgap_pos : 0 < meanGap trueMean best chosen) (height : 8 * ((proxy t chosen : NNReal) : Real) * Real.log (textbookDeltaScale (Arm"
     },
     {
@@ -2110,7 +2142,7 @@
       "name": "lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusEightProxyLogThreshold_add_horizon_delta",
       "full_name": "BanditRLProof.UCB.lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusEightProxyLogThreshold_add_horizon_delta",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 2790,
+      "line": 2925,
       "statement": "theorem lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusEightProxyLogThreshold_add_horizon_delta {Omega : Type} [MeasurableSpace Omega] {K : Nat} (hK : 0 < K) [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)] (mu : Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (trueMean : Fin K -> Real) (empiricalMean : Omega -> Nat -> Fin K -> Real) (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)"
     },
     {
@@ -2118,7 +2150,7 @@
       "name": "subGaussianTextbookDeltaRadius_lt_half_meanGap_of_proxy_lt_gap_sq_div",
       "full_name": "BanditRLProof.UCB.subGaussianTextbookDeltaRadius_lt_half_meanGap_of_proxy_lt_gap_sq_div",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 2840,
+      "line": 2975,
       "statement": "theorem subGaussianTextbookDeltaRadius_lt_half_meanGap_of_proxy_lt_gap_sq_div {K : Nat} (trueMean : Fin K -> Real) (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real) (best chosen : Fin K) (t : Nat) (hgap_pos : 0 < meanGap trueMean best chosen) (hlog_pos : 0 < Real.log (textbookDeltaScale (Arm"
     },
     {
@@ -2126,7 +2158,7 @@
       "name": "lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusProxyThreshold_add_horizon_delta",
       "full_name": "BanditRLProof.UCB.lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusProxyThreshold_add_horizon_delta",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 2886,
+      "line": 3021,
       "statement": "theorem lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusProxyThreshold_add_horizon_delta {Omega : Type} [MeasurableSpace Omega] {K : Nat} (hK : 0 < K) [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)] (mu : Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (trueMean : Fin K -> Real) (empiricalMean : Omega -> Nat -> Fin K -> Real) (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)"
     },
     {
@@ -2134,7 +2166,7 @@
       "name": "subGaussianTextbookDeltaRadius_lt_half_meanGap_of_proxy_le_variance_div_count",
       "full_name": "BanditRLProof.UCB.subGaussianTextbookDeltaRadius_lt_half_meanGap_of_proxy_le_variance_div_count",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 2938,
+      "line": 3073,
       "statement": "theorem subGaussianTextbookDeltaRadius_lt_half_meanGap_of_proxy_le_variance_div_count {K : Nat} (trueMean : Fin K -> Real) (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real) (best chosen : Fin K) (t : Nat) (varianceProxy : NNReal) (count : Nat) (hgap_pos : 0 < meanGap trueMean best chosen) (hlog_pos : 0 < Real.log (textbookDeltaScale (Arm"
     },
     {
@@ -2142,7 +2174,7 @@
       "name": "lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusSampleCountThreshold_add_horizon_delta",
       "full_name": "BanditRLProof.UCB.lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusSampleCountThreshold_add_horizon_delta",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 2982,
+      "line": 3117,
       "statement": "theorem lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusSampleCountThreshold_add_horizon_delta {Omega : Type} [MeasurableSpace Omega] {K : Nat} (hK : 0 < K) [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)] (mu : Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (trueMean : Fin K -> Real) (empiricalMean : Omega -> Nat -> Fin K -> Real) (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)"
     },
     {
@@ -2150,7 +2182,7 @@
       "name": "subGaussianTextbookDeltaRadius_count_large_of_threshold_lt_bound",
       "full_name": "BanditRLProof.UCB.subGaussianTextbookDeltaRadius_count_large_of_threshold_lt_bound",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 3042,
+      "line": 3177,
       "statement": "theorem subGaussianTextbookDeltaRadius_count_large_of_threshold_lt_bound {K : Nat} (trueMean : Fin K -> Real) (T : Nat) (delta : Real) (best chosen : Fin K) (varianceProxy : NNReal) (B count : Nat) (hgap_pos : 0 < meanGap trueMean best chosen) (hthreshold_lt_B : 8 * ((varianceProxy : NNReal) : Real) * Real.log (textbookDeltaScale (Arm"
     },
     {
@@ -2158,7 +2190,7 @@
       "name": "lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusSampleCountLowerBound_add_horizon_delta",
       "full_name": "BanditRLProof.UCB.lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusSampleCountLowerBound_add_horizon_delta",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 3077,
+      "line": 3212,
       "statement": "theorem lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusSampleCountLowerBound_add_horizon_delta {Omega : Type} [MeasurableSpace Omega] {K : Nat} (hK : 0 < K) [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)] (mu : Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (trueMean : Fin K -> Real) (empiricalMean : Omega -> Nat -> Fin K -> Real) (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)"
     },
     {
@@ -2166,7 +2198,7 @@
       "name": "subGaussianAbsDeviationTail",
       "full_name": "BanditRLProof.UCB.subGaussianAbsDeviationTail",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 3144,
+      "line": 3279,
       "statement": "noncomputable def subGaussianAbsDeviationTail {Arm : Type} (radius : Nat -> Arm -> Real) (proxy : Nat -> Arm -> NNReal) (t : Nat) (arm : Arm) : ENNReal :="
     },
     {
@@ -2174,7 +2206,7 @@
       "name": "measure_absDeviation_le_subGaussian_tail",
       "full_name": "BanditRLProof.UCB.measure_absDeviation_le_subGaussian_tail",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 3156,
+      "line": 3291,
       "statement": "theorem measure_absDeviation_le_subGaussian_tail {Omega Arm : Type} [MeasurableSpace Omega] (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (radius : Nat -> Arm -> Real) (proxy : Nat -> Arm -> NNReal) (t : Nat) (arm : Arm) (hradius : 0 <= radius t arm)"
     },
     {
@@ -2182,7 +2214,7 @@
       "name": "measure_finiteHorizonConfidenceBadEvent_le_subGaussian_tail_sum",
       "full_name": "BanditRLProof.UCB.measure_finiteHorizonConfidenceBadEvent_le_subGaussian_tail_sum",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 3240,
+      "line": 3375,
       "statement": "theorem measure_finiteHorizonConfidenceBadEvent_le_subGaussian_tail_sum {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm] (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (radius : Nat -> Arm -> Real) (proxy : Nat -> Arm -> NNReal) (T : Nat) (hradius : forall t arm, t < T -> 0 <= radius t arm)"
     },
     {
@@ -2190,7 +2222,7 @@
       "name": "obligationNames",
       "full_name": "BanditRLProof.UCB.obligationNames",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 3269,
+      "line": 3404,
       "statement": "def obligationNames : List String :="
     },
     {

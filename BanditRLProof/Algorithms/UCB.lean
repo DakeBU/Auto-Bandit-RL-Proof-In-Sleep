@@ -2391,6 +2391,141 @@ theorem lintegral_selectedSmallPullCount_indicator_sum_le_threshold
         simp [MeasureTheory.IsProbabilityMeasure.measure_univ]
 
 /--
+The selected-time Nat indicator sum is exactly the recursive pull count.
+-/
+theorem selectedPullCount_sum_eq_pullCount
+    {Action : Type} [DecidableEq Action]
+    (action : ActionTrace Action) (chosen : Action) (T : Nat) :
+    (Finset.range T).sum
+        (fun t : Nat => if action t = chosen then (1 : Nat) else 0) =
+      pullCount action chosen T := by
+  induction T with
+  | zero =>
+      simp
+  | succ T ih =>
+      by_cases hselected : action T = chosen
+      · rw [Finset.sum_range_succ]
+        rw [if_pos hselected]
+        rw [pullCount_succ_of_eq action chosen T hselected]
+        rw [ih]
+      · rw [Finset.sum_range_succ]
+        rw [if_neg hselected]
+        rw [pullCount_succ_of_ne action chosen T hselected]
+        rw [ih]
+        simp
+
+/--
+ENNReal-facing selected-time indicator identity for the recursive pull count.
+-/
+theorem selectedPullCount_indicator_sum_eq_natCast_pullCount
+    {Action : Type} [DecidableEq Action]
+    (action : ActionTrace Action) (chosen : Action) (T : Nat) :
+    (Finset.range T).sum
+        (fun t : Nat => if action t = chosen then (1 : ENNReal) else 0) =
+      ((pullCount action chosen T : Nat) : ENNReal) := by
+  have hnat := selectedPullCount_sum_eq_pullCount action chosen T
+  simpa using
+    (show
+      (((Finset.range T).sum
+          (fun t : Nat =>
+            if action t = chosen then (1 : Nat) else 0) : Nat) : ENNReal) =
+        ((pullCount action chosen T : Nat) : ENNReal) from by
+          exact_mod_cast hnat)
+
+/--
+Every selected time is either a selected-small time or a selected-large-count
+time, split by the threshold `B`.
+-/
+theorem selectedPullCount_indicator_sum_eq_selectedSmall_add_selectedLargePullCount
+    {Action : Type} [DecidableEq Action]
+    (action : ActionTrace Action) (chosen : Action) (T B : Nat) :
+    (Finset.range T).sum
+        (fun t : Nat => if action t = chosen then (1 : ENNReal) else 0) =
+      (Finset.range T).sum
+          (fun t : Nat =>
+            if action t = chosen ∧ pullCount action chosen t < B then
+              (1 : ENNReal)
+            else
+              0) +
+        (Finset.range T).sum
+          (fun t : Nat =>
+            if action t = chosen ∧ B <= pullCount action chosen t then
+              (1 : ENNReal)
+            else
+              0) := by
+  rw [← Finset.sum_add_distrib]
+  apply Finset.sum_congr rfl
+  intro t _ht
+  by_cases hselected : action t = chosen
+  · by_cases hsmall : pullCount action chosen t < B
+    · have hnot_large :
+          ¬ B <= pullCount action chosen t :=
+        Nat.not_le_of_gt hsmall
+      simp [hselected, hsmall, hnot_large]
+    · have hlarge : B <= pullCount action chosen t :=
+        Nat.le_of_not_gt hsmall
+      have hnot_small :
+          ¬ (action t = chosen ∧ pullCount action chosen t < B) := by
+        intro h
+        exact hsmall h.2
+      simp [hselected, hsmall, hlarge]
+  ·
+    simp [hselected]
+
+/--
+Pointwise ENNReal UCB count budget after isolating selected-large-count times.
+
+The selected-small part is charged by `B`; only selected times whose prior
+pull count is at least `B` remain for a future large-gap tail bound.
+-/
+theorem natCast_pullCount_le_threshold_add_selectedLargePullCount_indicator_sum
+    {Action : Type} [DecidableEq Action]
+    (action : ActionTrace Action) (chosen : Action) (T B : Nat) :
+    ((pullCount action chosen T : Nat) : ENNReal) <=
+      (B : ENNReal) +
+        (Finset.range T).sum
+          (fun t : Nat =>
+            if action t = chosen ∧ B <= pullCount action chosen t then
+              (1 : ENNReal)
+            else
+              0) := by
+  calc
+    ((pullCount action chosen T : Nat) : ENNReal) =
+        (Finset.range T).sum
+          (fun t : Nat =>
+            if action t = chosen then (1 : ENNReal) else 0) := by
+          exact
+            (selectedPullCount_indicator_sum_eq_natCast_pullCount
+              action chosen T).symm
+    _ =
+        (Finset.range T).sum
+          (fun t : Nat =>
+            if action t = chosen ∧ pullCount action chosen t < B then
+              (1 : ENNReal)
+            else
+              0) +
+        (Finset.range T).sum
+          (fun t : Nat =>
+            if action t = chosen ∧ B <= pullCount action chosen t then
+              (1 : ENNReal)
+            else
+              0) := by
+          exact
+            selectedPullCount_indicator_sum_eq_selectedSmall_add_selectedLargePullCount
+              action chosen T B
+    _ <=
+        (B : ENNReal) +
+        (Finset.range T).sum
+          (fun t : Nat =>
+            if action t = chosen ∧ B <= pullCount action chosen t then
+              (1 : ENNReal)
+            else
+              0) := by
+          exact add_le_add
+            (selectedSmallPullCount_indicator_sum_le_threshold
+              action chosen T B) (le_refl _)
+
+/--
 Concrete cardinality-budget version of the threshold/suffix pull-count split.
 
 This discharges the abstract `freeBudget` input with `freeTimes.card`. A later
