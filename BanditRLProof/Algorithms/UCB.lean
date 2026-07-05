@@ -1477,6 +1477,52 @@ theorem measure_finiteHorizonConfidenceBadEvent_le_subGaussian_textbookDeltaRadi
       (Arm := Arm) T delta hT hdelta)
 
 /--
+Large-gap score-max events under the textbook delta radius are controlled by
+the finite-horizon confidence budget.
+
+This is a probability-facing handoff for later pull-count arguments: once a
+chosen arm has gap larger than twice its current radius, selecting it by UCB
+score can only happen on the confidence bad event.
+-/
+theorem measure_scoreMaxEvent_le_subGaussian_textbookDeltaRadius_delta_of_gap
+    {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm] [Nonempty Arm]
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (proxy : Nat -> Arm -> NNReal) (T : Nat) (delta : Real)
+    (t : Nat) (best chosen : Arm)
+    (hT : 0 < T) (hdelta : 0 < delta) (ht : t < T)
+    (hgap_large :
+      2 * subGaussianTextbookDeltaRadius proxy T delta t chosen <
+        meanGap trueMean best chosen)
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    mu {omega : Omega |
+      confidenceScore (empiricalMean omega t)
+          (subGaussianTextbookDeltaRadius proxy T delta t) best <=
+        confidenceScore (empiricalMean omega t)
+          (subGaussianTextbookDeltaRadius proxy T delta t) chosen} <=
+      ENNReal.ofReal delta := by
+  have hsubset :
+      {omega : Omega |
+        confidenceScore (empiricalMean omega t)
+            (subGaussianTextbookDeltaRadius proxy T delta t) best <=
+          confidenceScore (empiricalMean omega t)
+            (subGaussianTextbookDeltaRadius proxy T delta t) chosen} ⊆
+        finiteHorizonConfidenceBadEvent trueMean empiricalMean
+          (subGaussianTextbookDeltaRadius proxy T delta) T :=
+    scoreMaxEvent_subset_finiteHorizonConfidenceBadEvent_of_two_radius_lt_meanGap
+      trueMean empiricalMean (subGaussianTextbookDeltaRadius proxy T delta)
+      T t best chosen ht hgap_large
+  exact (measure_mono hsubset).trans
+    (measure_finiteHorizonConfidenceBadEvent_le_subGaussian_textbookDeltaRadius_delta
+      mu trueMean empiricalMean proxy T delta hT hdelta hproxy hsubG)
+
+/--
 Two-sided sub-Gaussian tail budget for a UCB empirical mean at time `t` and
 arm `arm`.
 
