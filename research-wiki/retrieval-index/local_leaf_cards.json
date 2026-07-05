@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-05T03:27:32+00:00",
+  "generated": "2026-07-05T03:34:47+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -470,6 +470,31 @@
       "mathlib_routes": [
         "LOCAL-LEAF-UCB-SUBGAUSSIAN-TEXTBOOK-DELTA-RADIUS",
         "MLIB-MEASURE-INTEGRAL",
+        "MLIB-FINSET-SUMS"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-UCB-CONCRETE-SCORE-ARGMAX-ACTION",
+      "leaf_ids": [
+        "UCB-GOOD-EVENT-GAP-CONSUMER",
+        "TAIL-SUMMABILITY-UCB",
+        "TAIL-SUBGAUSS-SUM"
+      ],
+      "module": "BanditRLProof.Algorithms.UCB",
+      "status": "leanCompiled",
+      "declarations": [
+        "UCB.scoreArgmax",
+        "UCB.scoreArgmax_spec",
+        "UCB.confidenceScoreArgmaxAction",
+        "UCB.confidenceScoreArgmaxAction_score_max",
+        "UCB.confidenceScoreArgmaxAction_score_max_of_selected",
+        "UCB.measure_confidenceScoreArgmax_selectedLargeGapEvent_le_subGaussian_textbookDeltaRadius_delta",
+        "UCB.measure_confidenceScoreArgmax_selectedLargeGapEventOn_le_subGaussian_textbookDeltaRadius_delta"
+      ],
+      "role": "Compiled concrete finite-arm UCB score-argmax action leaf: scans `List.finRange K` over Real scores, proves the selected score dominates every `Fin K` arm, packages a confidence-score argmax action, discharges the selected-action score-maximality contract, and specializes the single-time and finite-time-set large-gap textbook `delta` bounds without an external `hscore_of_selected` hypothesis. Concrete empirical-mean construction, action-trace recursion from histories, pull-count summation, and final regret remain separate.",
+      "mathlib_routes": [
+        "LOCAL-LEAF-UCB-SELECTED-LARGE-GAP-DELTA",
+        "MLIB-FINTYPE-FIN",
         "MLIB-FINSET-SUMS"
       ]
     },

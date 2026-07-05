@@ -15000,6 +15000,35 @@ example {Arm : Type} (empiricalMean radius : Arm -> Real) (arm : Arm) :
       empiricalMean arm + radius arm := by
   simp [UCB.confidenceScore]
 
+example {K : Nat} (hK : 0 < K)
+    (scores : Fin K -> Real) (arm : Fin K) :
+    scores arm <= scores (UCB.scoreArgmax hK scores) := by
+  exact UCB.scoreArgmax_spec hK scores arm
+
+example {Omega : Type} {K : Nat} (hK : 0 < K)
+    (empiricalMean : Omega -> Nat -> Fin K -> Real)
+    (radius : Nat -> Fin K -> Real)
+    (omega : Omega) (t : Nat) (arm : Fin K) :
+    UCB.confidenceScore (empiricalMean omega t) (radius t) arm <=
+      UCB.confidenceScore (empiricalMean omega t) (radius t)
+        (UCB.confidenceScoreArgmaxAction hK empiricalMean radius omega t) := by
+  exact
+    UCB.confidenceScoreArgmaxAction_score_max
+      hK empiricalMean radius omega t arm
+
+example {Omega : Type} {K : Nat} (hK : 0 < K)
+    (empiricalMean : Omega -> Nat -> Fin K -> Real)
+    (radius : Nat -> Fin K -> Real)
+    (omega : Omega) (t : Nat) (best chosen : Fin K)
+    (hselected :
+      UCB.confidenceScoreArgmaxAction hK empiricalMean radius omega t =
+        chosen) :
+    UCB.confidenceScore (empiricalMean omega t) (radius t) best <=
+      UCB.confidenceScore (empiricalMean omega t) (radius t) chosen := by
+  exact
+    UCB.confidenceScoreArgmaxAction_score_max_of_selected
+      hK empiricalMean radius omega t best chosen hselected
+
 example {Arm : Type} (trueMean : Arm -> Real) (best arm : Arm) :
     UCB.meanGap trueMean best arm = trueMean best - trueMean arm := by
   simp [UCB.meanGap]
@@ -15902,6 +15931,62 @@ example {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
     UCB.measure_selectedLargeGapEventOn_le_subGaussian_textbookDeltaRadius_delta
       mu trueMean empiricalMean action proxy T delta times best chosen
       hT hdelta htimes hgap_large hscore_of_selected hproxy hsubG
+
+example {Omega : Type} [MeasurableSpace Omega]
+    {K : Nat} (hK : 0 < K)
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (trueMean : Fin K -> Real)
+    (empiricalMean : Omega -> Nat -> Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (t : Nat) (best chosen : Fin K)
+    (hT : 0 < T) (hdelta : 0 < delta) (ht : t < T)
+    (hgap_large :
+      2 * UCB.subGaussianTextbookDeltaRadius proxy T delta t chosen <
+        UCB.meanGap trueMean best chosen)
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    mu {omega : Omega |
+      UCB.confidenceScoreArgmaxAction hK empiricalMean
+        (UCB.subGaussianTextbookDeltaRadius proxy T delta) omega t =
+          chosen} <=
+      ENNReal.ofReal delta := by
+  exact
+    UCB.measure_confidenceScoreArgmax_selectedLargeGapEvent_le_subGaussian_textbookDeltaRadius_delta
+      hK mu trueMean empiricalMean proxy T delta t best chosen
+      hT hdelta ht hgap_large hproxy hsubG
+
+example {Omega : Type} [MeasurableSpace Omega]
+    {K : Nat} (hK : 0 < K)
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (trueMean : Fin K -> Real)
+    (empiricalMean : Omega -> Nat -> Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (times : Finset Nat) (best chosen : Fin K)
+    (hT : 0 < T) (hdelta : 0 < delta)
+    (htimes : forall t, t ∈ times -> t < T)
+    (hgap_large : forall t, t ∈ times ->
+      2 * UCB.subGaussianTextbookDeltaRadius proxy T delta t chosen <
+        UCB.meanGap trueMean best chosen)
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    mu {omega : Omega |
+      exists t, t ∈ times /\
+        UCB.confidenceScoreArgmaxAction hK empiricalMean
+          (UCB.subGaussianTextbookDeltaRadius proxy T delta) omega t =
+            chosen} <=
+      ENNReal.ofReal delta := by
+  exact
+    UCB.measure_confidenceScoreArgmax_selectedLargeGapEventOn_le_subGaussian_textbookDeltaRadius_delta
+      hK mu trueMean empiricalMean proxy T delta times best chosen
+      hT hdelta htimes hgap_large hproxy hsubG
 
 example {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
     (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]

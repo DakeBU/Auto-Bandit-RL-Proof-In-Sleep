@@ -53,6 +53,132 @@ def confidenceScore {Arm : Type} (empiricalMean radius : Arm -> Real)
     confidenceScore empiricalMean radius arm =
       empiricalMean arm + radius arm := rfl
 
+private theorem score_le_foldl_select
+    {K : Nat} (scores : Fin K -> Real) (init : Fin K) :
+    forall l : List (Fin K),
+      (forall a : Fin K, List.Mem a l ->
+        scores a <=
+          scores
+            (l.foldl
+              (fun best arm : Fin K =>
+                if scores best < scores arm then arm else best)
+              init)) /\
+      scores init <=
+        scores
+          (l.foldl
+            (fun best arm : Fin K =>
+              if scores best < scores arm then arm else best)
+            init)
+  | [] => by
+      exact And.intro
+        (by
+          intro _ ha
+          cases ha)
+        (by
+          simp)
+  | arm :: rest => by
+      let select :=
+        fun best arm : Fin K =>
+          if scores best < scores arm then arm else best
+      let next := select init arm
+      have ih := score_le_foldl_select (scores := scores) next rest
+      have harm_next : scores arm <= scores next := by
+        exact if hlt : scores init < scores arm then
+          by
+            simp [next, select, hlt]
+        else
+          by
+            simp [next, select, hlt, le_of_not_gt hlt]
+      exact And.intro
+        (by
+          intro a ha
+          cases ha with
+          | head =>
+              exact le_trans harm_next ih.2
+          | tail _ ha =>
+              exact ih.1 a ha)
+        (by
+          have hinit_next : scores init <= scores next := by
+            exact if hlt : scores init < scores arm then
+              by
+                simpa [next, select, hlt] using le_of_lt hlt
+            else
+              by
+                simp [next, select, hlt]
+          exact le_trans hinit_next ih.2)
+
+/--
+Concrete finite-arm Real score argmax selector.
+
+The selector scans `List.finRange K`, keeps the previous arm on ties, and uses
+`hK` only to seed the nonempty finite arm set. This mirrors the ETC argmax
+oracle but targets the Real-valued UCB confidence-score surface.
+-/
+noncomputable def scoreArgmax
+    {K : Nat} (hK : 0 < K) (scores : Fin K -> Real) : Fin K :=
+  (List.finRange K).foldl
+    (fun best arm : Fin K =>
+      if scores best < scores arm then arm else best)
+    (Fin.mk 0 hK)
+
+/-- The concrete Real score argmax dominates every arm score. -/
+theorem scoreArgmax_spec
+    {K : Nat} (hK : 0 < K)
+    (scores : Fin K -> Real) (a : Fin K) :
+    scores a <= scores (scoreArgmax hK scores) := by
+  unfold scoreArgmax
+  exact
+    (score_le_foldl_select
+      (scores := scores)
+      (init := Fin.mk 0 hK)
+      (List.finRange K)).1 a (List.mem_finRange a)
+
+/-- Concrete UCB action that maximizes the current confidence score. -/
+noncomputable def confidenceScoreArgmaxAction
+    {Omega : Type} {K : Nat} (hK : 0 < K)
+    (empiricalMean : Omega -> Nat -> Fin K -> Real)
+    (radius : Nat -> Fin K -> Real) :
+    Omega -> Nat -> Fin K :=
+  fun omega t =>
+    scoreArgmax hK
+      (fun arm => confidenceScore (empiricalMean omega t) (radius t) arm)
+
+/--
+The concrete confidence-score argmax action supplies score maximality against
+any comparison arm.
+-/
+theorem confidenceScoreArgmaxAction_score_max
+    {Omega : Type} {K : Nat} (hK : 0 < K)
+    (empiricalMean : Omega -> Nat -> Fin K -> Real)
+    (radius : Nat -> Fin K -> Real)
+    (omega : Omega) (t : Nat) (arm : Fin K) :
+    confidenceScore (empiricalMean omega t) (radius t) arm <=
+      confidenceScore (empiricalMean omega t) (radius t)
+        (confidenceScoreArgmaxAction hK empiricalMean radius omega t) := by
+  unfold confidenceScoreArgmaxAction
+  exact
+    scoreArgmax_spec hK
+      (fun arm => confidenceScore (empiricalMean omega t) (radius t) arm)
+      arm
+
+/--
+Selected-arm form of `confidenceScoreArgmaxAction_score_max`, matching the
+abstract selected-action bridge contract.
+-/
+theorem confidenceScoreArgmaxAction_score_max_of_selected
+    {Omega : Type} {K : Nat} (hK : 0 < K)
+    (empiricalMean : Omega -> Nat -> Fin K -> Real)
+    (radius : Nat -> Fin K -> Real)
+    (omega : Omega) (t : Nat) (best chosen : Fin K)
+    (hselected :
+      confidenceScoreArgmaxAction hK empiricalMean radius omega t = chosen) :
+    confidenceScore (empiricalMean omega t) (radius t) best <=
+      confidenceScore (empiricalMean omega t) (radius t) chosen := by
+  have hmax :=
+    confidenceScoreArgmaxAction_score_max
+      hK empiricalMean radius omega t best
+  simpa [hselected] using hmax
+
 /-- Mean gap against a designated best arm for Real-valued UCB algebra. -/
 def meanGap {Arm : Type} (trueMean : Arm -> Real) (best arm : Arm) : Real :=
   trueMean best - trueMean arm
@@ -1674,6 +1800,95 @@ theorem measure_selectedLargeGapEventOn_le_subGaussian_textbookDeltaRadius_delta
   exact (measure_mono hsubset).trans
     (measure_finiteHorizonConfidenceBadEvent_le_subGaussian_textbookDeltaRadius_delta
       mu trueMean empiricalMean proxy T delta hT hdelta hproxy hsubG)
+
+/--
+Concrete confidence-score argmax version of the selected large-gap delta bound.
+
+The score-maximality contract is discharged by `confidenceScoreArgmaxAction`,
+so the remaining assumptions are the textbook radius/concentration contracts
+and the large-gap condition for the selected arm.
+-/
+theorem measure_confidenceScoreArgmax_selectedLargeGapEvent_le_subGaussian_textbookDeltaRadius_delta
+    {Omega : Type} [MeasurableSpace Omega]
+    {K : Nat} (hK : 0 < K)
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (trueMean : Fin K -> Real)
+    (empiricalMean : Omega -> Nat -> Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (t : Nat) (best chosen : Fin K)
+    (hT : 0 < T) (hdelta : 0 < delta) (ht : t < T)
+    (hgap_large :
+      2 * subGaussianTextbookDeltaRadius proxy T delta t chosen <
+        meanGap trueMean best chosen)
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    mu {omega : Omega |
+      confidenceScoreArgmaxAction hK empiricalMean
+        (subGaussianTextbookDeltaRadius proxy T delta) omega t = chosen} <=
+      ENNReal.ofReal delta := by
+  letI : Nonempty (Fin K) := ⟨Fin.mk 0 hK⟩
+  exact
+    measure_selectedLargeGapEvent_le_subGaussian_textbookDeltaRadius_delta
+      mu trueMean empiricalMean
+      (confidenceScoreArgmaxAction hK empiricalMean
+        (subGaussianTextbookDeltaRadius proxy T delta))
+      proxy T delta t best chosen
+      hT hdelta ht hgap_large
+      (by
+        intro omega hselected
+        exact
+          confidenceScoreArgmaxAction_score_max_of_selected
+            hK empiricalMean (subGaussianTextbookDeltaRadius proxy T delta)
+            omega t best chosen hselected)
+      hproxy hsubG
+
+/--
+Finite-time-set concrete confidence-score argmax version of the selected
+large-gap delta bound.
+-/
+theorem measure_confidenceScoreArgmax_selectedLargeGapEventOn_le_subGaussian_textbookDeltaRadius_delta
+    {Omega : Type} [MeasurableSpace Omega]
+    {K : Nat} (hK : 0 < K)
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (trueMean : Fin K -> Real)
+    (empiricalMean : Omega -> Nat -> Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (times : Finset Nat) (best chosen : Fin K)
+    (hT : 0 < T) (hdelta : 0 < delta)
+    (htimes : forall t, t ∈ times -> t < T)
+    (hgap_large : forall t, t ∈ times ->
+      2 * subGaussianTextbookDeltaRadius proxy T delta t chosen <
+        meanGap trueMean best chosen)
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    mu {omega : Omega |
+      exists t, t ∈ times /\
+        confidenceScoreArgmaxAction hK empiricalMean
+          (subGaussianTextbookDeltaRadius proxy T delta) omega t = chosen} <=
+      ENNReal.ofReal delta := by
+  letI : Nonempty (Fin K) := ⟨Fin.mk 0 hK⟩
+  exact
+    measure_selectedLargeGapEventOn_le_subGaussian_textbookDeltaRadius_delta
+      mu trueMean empiricalMean
+      (confidenceScoreArgmaxAction hK empiricalMean
+        (subGaussianTextbookDeltaRadius proxy T delta))
+      proxy T delta times best chosen
+      hT hdelta htimes hgap_large
+      (by
+        intro omega t ht_mem hselected
+        exact
+          confidenceScoreArgmaxAction_score_max_of_selected
+            hK empiricalMean (subGaussianTextbookDeltaRadius proxy T delta)
+            omega t best chosen hselected)
+      hproxy hsubG
 
 /--
 Two-sided sub-Gaussian tail budget for a UCB empirical mean at time `t` and
