@@ -2586,6 +2586,104 @@ theorem lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusHalfGapT
       haction hproxy hsubG
 
 /--
+Square-form deterministic algebra for the textbook delta radius: if the
+quantity under the square root is below `(gap / 2)^2`, the radius is below
+half the gap.
+-/
+theorem subGaussianTextbookDeltaRadius_lt_half_meanGap_of_sq_lt
+    {K : Nat} (trueMean : Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (best chosen : Fin K) (t : Nat)
+    (hgap_pos : 0 < meanGap trueMean best chosen)
+    (hsq :
+      2 * ((proxy t chosen : NNReal) : Real) *
+          Real.log (textbookDeltaScale (Arm := Fin K) T delta) <
+        (meanGap trueMean best chosen / 2) ^ 2) :
+    subGaussianTextbookDeltaRadius proxy T delta t chosen <
+      meanGap trueMean best chosen / 2 := by
+  have hhalf_pos : 0 < meanGap trueMean best chosen / 2 := by
+    linarith
+  simpa [subGaussianTextbookDeltaRadius] using
+    (Real.sqrt_lt' hhalf_pos).2 hsq
+
+/--
+Common UCB algebra form for the textbook delta radius: the sufficient condition
+`8 * proxy * log(scale) < gap^2` implies `radius < gap / 2`.
+-/
+theorem subGaussianTextbookDeltaRadius_lt_half_meanGap_of_eight_mul_lt_sq
+    {K : Nat} (trueMean : Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (best chosen : Fin K) (t : Nat)
+    (hgap_pos : 0 < meanGap trueMean best chosen)
+    (height :
+      8 * ((proxy t chosen : NNReal) : Real) *
+          Real.log (textbookDeltaScale (Arm := Fin K) T delta) <
+        (meanGap trueMean best chosen) ^ 2) :
+    subGaussianTextbookDeltaRadius proxy T delta t chosen <
+      meanGap trueMean best chosen / 2 := by
+  apply subGaussianTextbookDeltaRadius_lt_half_meanGap_of_sq_lt
+    trueMean proxy T delta best chosen t hgap_pos
+  have hsq :
+      2 * ((proxy t chosen : NNReal) : Real) *
+          Real.log (textbookDeltaScale (Arm := Fin K) T delta) <
+        (meanGap trueMean best chosen) ^ 2 / 4 := by
+    nlinarith [height]
+  convert hsq using 1
+  ring
+
+/--
+Eight-proxy-log threshold version of the concrete textbook-radius UCB
+pull-count budget.
+
+The remaining closed-form work is to prove the displayed square inequality
+from a concrete choice of `B` and whatever sample-count/proxy monotonicity the
+eventual empirical-mean construction provides.
+-/
+theorem lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusEightProxyLogThreshold_add_horizon_delta
+    {Omega : Type} [MeasurableSpace Omega]
+    {K : Nat} (hK : 0 < K)
+    [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)]
+    (mu : Measure Omega) [MeasureTheory.IsProbabilityMeasure mu]
+    (trueMean : Fin K -> Real)
+    (empiricalMean : Omega -> Nat -> Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (best chosen : Fin K) (B : Nat)
+    (hT : 0 < T) (hdelta : 0 < delta)
+    (hgap_pos : 0 < meanGap trueMean best chosen)
+    (height_after : forall t, t < T -> B <= t ->
+      8 * ((proxy t chosen : NNReal) : Real) *
+          Real.log (textbookDeltaScale (Arm := Fin K) T delta) <
+        (meanGap trueMean best chosen) ^ 2)
+    (haction : forall t : Nat,
+      Measurable
+        (fun omega : Omega =>
+          confidenceScoreArgmaxAction hK empiricalMean
+            (subGaussianTextbookDeltaRadius proxy T delta) omega t))
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    MeasureTheory.lintegral mu
+      (fun omega : Omega =>
+        ((pullCount
+          ((confidenceScoreArgmaxAction hK empiricalMean
+            (subGaussianTextbookDeltaRadius proxy T delta)) omega)
+          chosen T : Nat) : ENNReal)) <=
+      (B : ENNReal) + (T : ENNReal) * ENNReal.ofReal delta := by
+  exact
+    lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusHalfGapThreshold_add_horizon_delta
+      hK mu trueMean empiricalMean proxy T delta best chosen B hT hdelta
+      (by
+        intro t ht hB
+        exact
+          subGaussianTextbookDeltaRadius_lt_half_meanGap_of_eight_mul_lt_sq
+            trueMean proxy T delta best chosen t hgap_pos
+            (height_after t ht hB))
+      haction hproxy hsubG
+
+/--
 Two-sided sub-Gaussian tail budget for a UCB empirical mean at time `t` and
 arm `arm`.
 
