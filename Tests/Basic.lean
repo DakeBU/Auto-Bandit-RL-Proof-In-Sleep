@@ -16279,6 +16279,216 @@ example {Action : Type} [DecidableEq Action]
     UCB.natCast_pullCount_le_threshold_add_selectedLargePullCount_indicator_sum
       action chosen T B
 
+example {Omega Action : Type}
+    [MeasurableSpace Omega] [MeasurableSpace Action]
+    [MeasurableSingletonClass Action]
+    [MeasurableSpace Nat] [MeasurableAdd₂ Nat] [OpensMeasurableSpace Nat]
+    [DecidableEq Action]
+    (action : Omega -> ActionTrace Action)
+    (haction : forall t : Nat,
+      Measurable (fun omega : Omega => action omega t))
+    (chosen : Action) (t B : Nat) :
+    MeasurableSet
+      {omega : Omega |
+        action omega t = chosen ∧ B <= pullCount (action omega) chosen t} := by
+  exact UCB.measurableSet_selectedLargePullCount
+    action haction chosen t B
+
+example {Omega Action : Type}
+    [MeasurableSpace Omega] [MeasurableSpace Action]
+    [MeasurableSingletonClass Action]
+    [MeasurableSpace Nat] [MeasurableAdd₂ Nat] [OpensMeasurableSpace Nat]
+    [DecidableEq Action]
+    (mu : MeasureTheory.Measure Omega)
+    (action : Omega -> ActionTrace Action)
+    (haction : forall t : Nat,
+      Measurable (fun omega : Omega => action omega t))
+    (chosen : Action) (T B : Nat) :
+    MeasureTheory.lintegral mu
+      (fun omega : Omega =>
+        (Finset.range T).sum
+          (fun t : Nat =>
+            if action omega t = chosen ∧
+                B <= pullCount (action omega) chosen t then
+              (1 : ENNReal)
+            else
+              0))
+      =
+    (Finset.range T).sum
+      (fun t : Nat =>
+        mu {omega : Omega |
+          action omega t = chosen ∧
+            B <= pullCount (action omega) chosen t}) := by
+  exact UCB.lintegral_selectedLargePullCount_indicator_sum_eq_sum_measure
+    mu action haction chosen T B
+
+example {Omega : Type} [MeasurableSpace Omega]
+    {K : Nat} (hK : 0 < K)
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (trueMean : Fin K -> Real)
+    (empiricalMean : Omega -> Nat -> Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (t B : Nat) (best chosen : Fin K)
+    (hT : 0 < T) (hdelta : 0 < delta) (ht : t < T)
+    (hlarge_count_gap : forall omega : Omega,
+      UCB.confidenceScoreArgmaxAction hK empiricalMean
+          (UCB.subGaussianTextbookDeltaRadius proxy T delta) omega t = chosen ->
+        B <= pullCount
+          ((UCB.confidenceScoreArgmaxAction hK empiricalMean
+            (UCB.subGaussianTextbookDeltaRadius proxy T delta)) omega)
+          chosen t ->
+        2 * UCB.subGaussianTextbookDeltaRadius proxy T delta t chosen <
+          UCB.meanGap trueMean best chosen)
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    mu {omega : Omega |
+      UCB.confidenceScoreArgmaxAction hK empiricalMean
+          (UCB.subGaussianTextbookDeltaRadius proxy T delta) omega t = chosen ∧
+        B <= pullCount
+          ((UCB.confidenceScoreArgmaxAction hK empiricalMean
+            (UCB.subGaussianTextbookDeltaRadius proxy T delta)) omega)
+          chosen t} <=
+      ENNReal.ofReal delta := by
+  exact
+    UCB.measure_confidenceScoreArgmax_selectedLargePullCountEvent_le_subGaussian_textbookDeltaRadius_delta
+      hK mu trueMean empiricalMean proxy T delta t B best chosen
+      hT hdelta ht hlarge_count_gap hproxy hsubG
+
+example {Omega : Type} [MeasurableSpace Omega]
+    {K : Nat} (hK : 0 < K)
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (trueMean : Fin K -> Real)
+    (empiricalMean : Omega -> Nat -> Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (B : Nat) (best chosen : Fin K)
+    (hT : 0 < T) (hdelta : 0 < delta)
+    (hlarge_count_gap : forall omega t, t < T ->
+      UCB.confidenceScoreArgmaxAction hK empiricalMean
+          (UCB.subGaussianTextbookDeltaRadius proxy T delta) omega t = chosen ->
+        B <= pullCount
+          ((UCB.confidenceScoreArgmaxAction hK empiricalMean
+            (UCB.subGaussianTextbookDeltaRadius proxy T delta)) omega)
+          chosen t ->
+        2 * UCB.subGaussianTextbookDeltaRadius proxy T delta t chosen <
+          UCB.meanGap trueMean best chosen)
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    (Finset.range T).sum
+        (fun t : Nat =>
+          mu {omega : Omega |
+            UCB.confidenceScoreArgmaxAction hK empiricalMean
+                (UCB.subGaussianTextbookDeltaRadius proxy T delta) omega t =
+              chosen ∧
+            B <= pullCount
+              ((UCB.confidenceScoreArgmaxAction hK empiricalMean
+                (UCB.subGaussianTextbookDeltaRadius proxy T delta)) omega)
+              chosen t}) <=
+      (T : ENNReal) * ENNReal.ofReal delta := by
+  exact
+    UCB.sum_measure_confidenceScoreArgmax_selectedLargePullCountEvent_le_horizon_mul_delta
+      hK mu trueMean empiricalMean proxy T delta B best chosen
+      hT hdelta hlarge_count_gap hproxy hsubG
+
+example {Omega : Type} [MeasurableSpace Omega]
+    {K : Nat} (hK : 0 < K)
+    [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)]
+    [MeasurableSpace Nat] [MeasurableAdd₂ Nat] [OpensMeasurableSpace Nat]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (trueMean : Fin K -> Real)
+    (empiricalMean : Omega -> Nat -> Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (B : Nat) (best chosen : Fin K)
+    (hT : 0 < T) (hdelta : 0 < delta)
+    (haction : forall t : Nat,
+      Measurable
+        (fun omega : Omega =>
+          UCB.confidenceScoreArgmaxAction hK empiricalMean
+            (UCB.subGaussianTextbookDeltaRadius proxy T delta) omega t))
+    (hlarge_count_gap : forall omega t, t < T ->
+      UCB.confidenceScoreArgmaxAction hK empiricalMean
+          (UCB.subGaussianTextbookDeltaRadius proxy T delta) omega t = chosen ->
+        B <= pullCount
+          ((UCB.confidenceScoreArgmaxAction hK empiricalMean
+            (UCB.subGaussianTextbookDeltaRadius proxy T delta)) omega)
+          chosen t ->
+        2 * UCB.subGaussianTextbookDeltaRadius proxy T delta t chosen <
+          UCB.meanGap trueMean best chosen)
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    MeasureTheory.lintegral mu
+      (fun omega : Omega =>
+        (Finset.range T).sum
+          (fun t : Nat =>
+            if UCB.confidenceScoreArgmaxAction hK empiricalMean
+                (UCB.subGaussianTextbookDeltaRadius proxy T delta) omega t =
+                  chosen ∧
+                B <= pullCount
+                  ((UCB.confidenceScoreArgmaxAction hK empiricalMean
+                    (UCB.subGaussianTextbookDeltaRadius proxy T delta)) omega)
+                  chosen t then
+              (1 : ENNReal)
+            else
+              0)) <=
+      (T : ENNReal) * ENNReal.ofReal delta := by
+  exact
+    UCB.lintegral_confidenceScoreArgmax_selectedLargePullCount_indicator_sum_le_horizon_mul_delta
+      hK mu trueMean empiricalMean proxy T delta B best chosen
+      hT hdelta haction hlarge_count_gap hproxy hsubG
+
+example {Omega : Type} [MeasurableSpace Omega]
+    {K : Nat} (hK : 0 < K)
+    [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)]
+    [MeasurableSpace Nat] [MeasurableAdd₂ Nat] [OpensMeasurableSpace Nat]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsProbabilityMeasure mu]
+    (trueMean : Fin K -> Real)
+    (empiricalMean : Omega -> Nat -> Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (B : Nat) (best chosen : Fin K)
+    (hT : 0 < T) (hdelta : 0 < delta)
+    (haction : forall t : Nat,
+      Measurable
+        (fun omega : Omega =>
+          UCB.confidenceScoreArgmaxAction hK empiricalMean
+            (UCB.subGaussianTextbookDeltaRadius proxy T delta) omega t))
+    (hlarge_count_gap : forall omega t, t < T ->
+      UCB.confidenceScoreArgmaxAction hK empiricalMean
+          (UCB.subGaussianTextbookDeltaRadius proxy T delta) omega t = chosen ->
+        B <= pullCount
+          ((UCB.confidenceScoreArgmaxAction hK empiricalMean
+            (UCB.subGaussianTextbookDeltaRadius proxy T delta)) omega)
+          chosen t ->
+        2 * UCB.subGaussianTextbookDeltaRadius proxy T delta t chosen <
+          UCB.meanGap trueMean best chosen)
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    MeasureTheory.lintegral mu
+      (fun omega : Omega =>
+        ((pullCount
+          ((UCB.confidenceScoreArgmaxAction hK empiricalMean
+            (UCB.subGaussianTextbookDeltaRadius proxy T delta)) omega)
+          chosen T : Nat) : ENNReal)) <=
+      (B : ENNReal) + (T : ENNReal) * ENNReal.ofReal delta := by
+  exact
+    UCB.lintegral_confidenceScoreArgmax_pullCount_le_threshold_add_horizon_delta_of_selectedLargePullCount
+      hK mu trueMean empiricalMean proxy T delta B best chosen
+      hT hdelta haction hlarge_count_gap hproxy hsubG
+
 example {Omega : Type} [MeasurableSpace Omega]
     {K : Nat} (hK : 0 < K)
     [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)]

@@ -10,6 +10,7 @@ import BanditRLProof.ConcentrationSubGaussian
 import BanditRLProof.ConcentrationVariance
 import BanditRLProof.ExpectationPullCount
 import BanditRLProof.ExpectationSums
+import BanditRLProof.MeasurablePullCount
 import BanditRLProof.ProbabilityUnionBound
 import BanditRLProof.Regret
 
@@ -2524,6 +2525,429 @@ theorem natCast_pullCount_le_threshold_add_selectedLargePullCount_indicator_sum
           exact add_le_add
             (selectedSmallPullCount_indicator_sum_le_threshold
               action chosen T B) (le_refl _)
+
+/--
+Measurability of a selected-large-count event for a fixed time.
+-/
+theorem measurableSet_selectedLargePullCount
+    {Omega Action : Type}
+    [MeasurableSpace Omega] [MeasurableSpace Action]
+    [MeasurableSingletonClass Action]
+    [MeasurableSpace Nat] [MeasurableAdd₂ Nat] [OpensMeasurableSpace Nat]
+    [DecidableEq Action]
+    (action : Omega -> ActionTrace Action)
+    (haction : forall t : Nat,
+      Measurable (fun omega : Omega => action omega t))
+    (chosen : Action) (t B : Nat) :
+    MeasurableSet
+      {omega : Omega |
+        action omega t = chosen ∧ B <= pullCount (action omega) chosen t} := by
+  exact
+    (measurableSet_actionTrace_eval_eq action haction chosen t).inter
+      (measurableSet_le measurable_const
+        (measurable_pullCount action haction chosen t))
+
+/--
+The lower integral of selected-large-count indicators is the corresponding
+finite sum of event measures.
+-/
+theorem lintegral_selectedLargePullCount_indicator_sum_eq_sum_measure
+    {Omega Action : Type}
+    [MeasurableSpace Omega] [MeasurableSpace Action]
+    [MeasurableSingletonClass Action]
+    [MeasurableSpace Nat] [MeasurableAdd₂ Nat] [OpensMeasurableSpace Nat]
+    [DecidableEq Action]
+    (mu : Measure Omega)
+    (action : Omega -> ActionTrace Action)
+    (haction : forall t : Nat,
+      Measurable (fun omega : Omega => action omega t))
+    (chosen : Action) (T B : Nat) :
+    MeasureTheory.lintegral mu
+      (fun omega : Omega =>
+        (Finset.range T).sum
+          (fun t : Nat =>
+            if action omega t = chosen ∧
+                B <= pullCount (action omega) chosen t then
+              (1 : ENNReal)
+            else
+              0))
+      =
+    (Finset.range T).sum
+      (fun t : Nat =>
+        mu {omega : Omega |
+          action omega t = chosen ∧
+            B <= pullCount (action omega) chosen t}) := by
+  have hfun :
+      (fun omega : Omega =>
+        (Finset.range T).sum
+          (fun t : Nat =>
+            if action omega t = chosen ∧
+                B <= pullCount (action omega) chosen t then
+              (1 : ENNReal)
+            else
+              0))
+        =
+      (fun omega : Omega =>
+        (Finset.range T).sum
+          (fun t : Nat =>
+            (({omega' : Omega |
+              action omega' t = chosen ∧
+                B <= pullCount (action omega') chosen t} : Set Omega).indicator
+              (1 : Omega -> ENNReal)) omega)) := by
+    funext omega
+    apply Finset.sum_congr rfl
+    intro t _ht
+    by_cases h :
+        action omega t = chosen ∧ B <= pullCount (action omega) chosen t
+    · simp [Set.indicator_of_mem, h]
+    · simp [Set.indicator_of_notMem, h]
+  rw [hfun]
+  have hmeas :
+      forall t : Nat, t ∈ Finset.range T ->
+        Measurable
+          (fun omega : Omega =>
+            (({omega' : Omega |
+              action omega' t = chosen ∧
+                B <= pullCount (action omega') chosen t} : Set Omega).indicator
+              (1 : Omega -> ENNReal)) omega) := by
+    intro t _ht
+    exact Measurable.indicator measurable_const
+      (measurableSet_selectedLargePullCount action haction chosen t B)
+  calc
+    MeasureTheory.lintegral mu
+      (fun omega : Omega =>
+        (Finset.range T).sum
+          (fun t : Nat =>
+            (({omega' : Omega |
+              action omega' t = chosen ∧
+                B <= pullCount (action omega') chosen t} : Set Omega).indicator
+              (1 : Omega -> ENNReal)) omega))
+        =
+      (Finset.range T).sum
+        (fun t : Nat =>
+          MeasureTheory.lintegral mu
+            (fun omega : Omega =>
+              (({omega' : Omega |
+                action omega' t = chosen ∧
+                  B <= pullCount (action omega') chosen t} : Set Omega).indicator
+                (1 : Omega -> ENNReal)) omega)) := by
+          simpa [Finset.sum_apply] using
+            (@MeasureTheory.lintegral_finset_sum
+              Omega Nat _ mu (Finset.range T)
+              (f := fun t omega =>
+                (({omega' : Omega |
+                  action omega' t = chosen ∧
+                    B <= pullCount (action omega') chosen t} : Set Omega).indicator
+                  (1 : Omega -> ENNReal)) omega)
+              hmeas)
+    _ =
+      (Finset.range T).sum
+        (fun t : Nat =>
+          mu {omega : Omega |
+            action omega t = chosen ∧
+              B <= pullCount (action omega) chosen t}) := by
+        apply Finset.sum_congr rfl
+        intro t _ht
+        simpa using
+          (@MeasureTheory.lintegral_indicator_one
+            Omega _ mu
+            {omega : Omega |
+              action omega t = chosen ∧
+                B <= pullCount (action omega) chosen t}
+            (measurableSet_selectedLargePullCount action haction chosen t B))
+
+/--
+Single-time selected-large-count event budget for concrete score-argmax UCB.
+
+If the event is nonempty but the deterministic large-gap inequality fails, the
+pointwise large-count-to-large-gap contract gives a contradiction. Otherwise it
+reduces to the existing selected-event `delta` bound.
+-/
+theorem measure_confidenceScoreArgmax_selectedLargePullCountEvent_le_subGaussian_textbookDeltaRadius_delta
+    {Omega : Type} [MeasurableSpace Omega]
+    {K : Nat} (hK : 0 < K)
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (trueMean : Fin K -> Real)
+    (empiricalMean : Omega -> Nat -> Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (t B : Nat) (best chosen : Fin K)
+    (hT : 0 < T) (hdelta : 0 < delta) (ht : t < T)
+    (hlarge_count_gap : forall omega : Omega,
+      confidenceScoreArgmaxAction hK empiricalMean
+          (subGaussianTextbookDeltaRadius proxy T delta) omega t = chosen ->
+        B <= pullCount
+          ((confidenceScoreArgmaxAction hK empiricalMean
+            (subGaussianTextbookDeltaRadius proxy T delta)) omega)
+          chosen t ->
+        2 * subGaussianTextbookDeltaRadius proxy T delta t chosen <
+          meanGap trueMean best chosen)
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    mu {omega : Omega |
+      confidenceScoreArgmaxAction hK empiricalMean
+          (subGaussianTextbookDeltaRadius proxy T delta) omega t = chosen ∧
+        B <= pullCount
+          ((confidenceScoreArgmaxAction hK empiricalMean
+            (subGaussianTextbookDeltaRadius proxy T delta)) omega)
+          chosen t} <=
+      ENNReal.ofReal delta := by
+  by_cases hgap_large :
+      2 * subGaussianTextbookDeltaRadius proxy T delta t chosen <
+        meanGap trueMean best chosen
+  · have hsubset :
+      Set.Subset
+        {omega : Omega |
+          confidenceScoreArgmaxAction hK empiricalMean
+              (subGaussianTextbookDeltaRadius proxy T delta) omega t = chosen ∧
+            B <= pullCount
+              ((confidenceScoreArgmaxAction hK empiricalMean
+                (subGaussianTextbookDeltaRadius proxy T delta)) omega)
+              chosen t}
+        {omega : Omega |
+          confidenceScoreArgmaxAction hK empiricalMean
+            (subGaussianTextbookDeltaRadius proxy T delta) omega t = chosen} := by
+        intro omega h
+        exact h.1
+    exact (measure_mono hsubset).trans
+      (measure_confidenceScoreArgmax_selectedLargeGapEvent_le_subGaussian_textbookDeltaRadius_delta
+        hK mu trueMean empiricalMean proxy T delta t best chosen
+        hT hdelta ht hgap_large hproxy hsubG)
+  · have hempty :
+      {omega : Omega |
+        confidenceScoreArgmaxAction hK empiricalMean
+            (subGaussianTextbookDeltaRadius proxy T delta) omega t = chosen ∧
+          B <= pullCount
+            ((confidenceScoreArgmaxAction hK empiricalMean
+              (subGaussianTextbookDeltaRadius proxy T delta)) omega)
+            chosen t} = ∅ := by
+      ext omega
+      constructor
+      · intro h
+        exact False.elim (hgap_large (hlarge_count_gap omega h.1 h.2))
+      · intro h
+        simp at h
+    simp [hempty]
+
+/--
+Finite-horizon sum budget for selected-large-count concrete score-argmax events.
+-/
+theorem sum_measure_confidenceScoreArgmax_selectedLargePullCountEvent_le_horizon_mul_delta
+    {Omega : Type} [MeasurableSpace Omega]
+    {K : Nat} (hK : 0 < K)
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (trueMean : Fin K -> Real)
+    (empiricalMean : Omega -> Nat -> Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (B : Nat) (best chosen : Fin K)
+    (hT : 0 < T) (hdelta : 0 < delta)
+    (hlarge_count_gap : forall omega t, t < T ->
+      confidenceScoreArgmaxAction hK empiricalMean
+          (subGaussianTextbookDeltaRadius proxy T delta) omega t = chosen ->
+        B <= pullCount
+          ((confidenceScoreArgmaxAction hK empiricalMean
+            (subGaussianTextbookDeltaRadius proxy T delta)) omega)
+          chosen t ->
+        2 * subGaussianTextbookDeltaRadius proxy T delta t chosen <
+          meanGap trueMean best chosen)
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    (Finset.range T).sum
+        (fun t : Nat =>
+          mu {omega : Omega |
+            confidenceScoreArgmaxAction hK empiricalMean
+                (subGaussianTextbookDeltaRadius proxy T delta) omega t =
+              chosen ∧
+            B <= pullCount
+              ((confidenceScoreArgmaxAction hK empiricalMean
+                (subGaussianTextbookDeltaRadius proxy T delta)) omega)
+              chosen t}) <=
+      (T : ENNReal) * ENNReal.ofReal delta := by
+  calc
+    (Finset.range T).sum
+        (fun t : Nat =>
+          mu {omega : Omega |
+            confidenceScoreArgmaxAction hK empiricalMean
+                (subGaussianTextbookDeltaRadius proxy T delta) omega t =
+              chosen ∧
+            B <= pullCount
+              ((confidenceScoreArgmaxAction hK empiricalMean
+                (subGaussianTextbookDeltaRadius proxy T delta)) omega)
+              chosen t})
+        <=
+      (Finset.range T).sum (fun _t : Nat => ENNReal.ofReal delta) := by
+        exact Finset.sum_le_sum
+          (by
+            intro t ht_mem
+            have ht : t < T := by
+              simpa using ht_mem
+            exact
+              measure_confidenceScoreArgmax_selectedLargePullCountEvent_le_subGaussian_textbookDeltaRadius_delta
+                hK mu trueMean empiricalMean proxy T delta t B best chosen
+                hT hdelta ht
+                (by
+                  intro omega hselected hcount
+                  exact hlarge_count_gap omega t ht hselected hcount)
+                hproxy hsubG)
+    _ = (T : ENNReal) * ENNReal.ofReal delta := by
+        simp [Finset.sum_const, nsmul_eq_mul]
+
+/--
+Lower-integral finite-sum budget for selected-large-count concrete score-argmax
+events.
+-/
+theorem lintegral_confidenceScoreArgmax_selectedLargePullCount_indicator_sum_le_horizon_mul_delta
+    {Omega : Type} [MeasurableSpace Omega]
+    {K : Nat} (hK : 0 < K)
+    [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)]
+    [MeasurableSpace Nat] [MeasurableAdd₂ Nat] [OpensMeasurableSpace Nat]
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (trueMean : Fin K -> Real)
+    (empiricalMean : Omega -> Nat -> Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (B : Nat) (best chosen : Fin K)
+    (hT : 0 < T) (hdelta : 0 < delta)
+    (haction : forall t : Nat,
+      Measurable
+        (fun omega : Omega =>
+          confidenceScoreArgmaxAction hK empiricalMean
+            (subGaussianTextbookDeltaRadius proxy T delta) omega t))
+    (hlarge_count_gap : forall omega t, t < T ->
+      confidenceScoreArgmaxAction hK empiricalMean
+          (subGaussianTextbookDeltaRadius proxy T delta) omega t = chosen ->
+        B <= pullCount
+          ((confidenceScoreArgmaxAction hK empiricalMean
+            (subGaussianTextbookDeltaRadius proxy T delta)) omega)
+          chosen t ->
+        2 * subGaussianTextbookDeltaRadius proxy T delta t chosen <
+          meanGap trueMean best chosen)
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    MeasureTheory.lintegral mu
+      (fun omega : Omega =>
+        (Finset.range T).sum
+          (fun t : Nat =>
+            if confidenceScoreArgmaxAction hK empiricalMean
+                (subGaussianTextbookDeltaRadius proxy T delta) omega t =
+                  chosen ∧
+                B <= pullCount
+                  ((confidenceScoreArgmaxAction hK empiricalMean
+                    (subGaussianTextbookDeltaRadius proxy T delta)) omega)
+                  chosen t then
+              (1 : ENNReal)
+            else
+              0)) <=
+      (T : ENNReal) * ENNReal.ofReal delta := by
+  rw [lintegral_selectedLargePullCount_indicator_sum_eq_sum_measure
+    (mu := mu)
+    (action :=
+      confidenceScoreArgmaxAction hK empiricalMean
+        (subGaussianTextbookDeltaRadius proxy T delta))
+    (haction := haction)
+    (chosen := chosen)
+    (T := T)
+    (B := B)]
+  exact
+    sum_measure_confidenceScoreArgmax_selectedLargePullCountEvent_le_horizon_mul_delta
+      hK mu trueMean empiricalMean proxy T delta B best chosen
+      hT hdelta hlarge_count_gap hproxy hsubG
+
+/--
+Integrated UCB pull-count budget from a selected-large-count large-gap source.
+-/
+theorem lintegral_confidenceScoreArgmax_pullCount_le_threshold_add_horizon_delta_of_selectedLargePullCount
+    {Omega : Type} [MeasurableSpace Omega]
+    {K : Nat} (hK : 0 < K)
+    [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)]
+    [MeasurableSpace Nat] [MeasurableAdd₂ Nat] [OpensMeasurableSpace Nat]
+    (mu : Measure Omega) [MeasureTheory.IsProbabilityMeasure mu]
+    (trueMean : Fin K -> Real)
+    (empiricalMean : Omega -> Nat -> Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (B : Nat) (best chosen : Fin K)
+    (hT : 0 < T) (hdelta : 0 < delta)
+    (haction : forall t : Nat,
+      Measurable
+        (fun omega : Omega =>
+          confidenceScoreArgmaxAction hK empiricalMean
+            (subGaussianTextbookDeltaRadius proxy T delta) omega t))
+    (hlarge_count_gap : forall omega t, t < T ->
+      confidenceScoreArgmaxAction hK empiricalMean
+          (subGaussianTextbookDeltaRadius proxy T delta) omega t = chosen ->
+        B <= pullCount
+          ((confidenceScoreArgmaxAction hK empiricalMean
+            (subGaussianTextbookDeltaRadius proxy T delta)) omega)
+          chosen t ->
+        2 * subGaussianTextbookDeltaRadius proxy T delta t chosen <
+          meanGap trueMean best chosen)
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    MeasureTheory.lintegral mu
+      (fun omega : Omega =>
+        ((pullCount
+          ((confidenceScoreArgmaxAction hK empiricalMean
+            (subGaussianTextbookDeltaRadius proxy T delta)) omega)
+          chosen T : Nat) : ENNReal)) <=
+      (B : ENNReal) + (T : ENNReal) * ENNReal.ofReal delta := by
+  let action : Omega -> ActionTrace (Fin K) :=
+    confidenceScoreArgmaxAction hK empiricalMean
+      (subGaussianTextbookDeltaRadius proxy T delta)
+  let largeCount : Omega -> ENNReal := fun omega =>
+    (Finset.range T).sum
+      (fun t : Nat =>
+        if action omega t = chosen ∧
+            B <= pullCount (action omega) chosen t then
+          (1 : ENNReal)
+        else
+          0)
+  have hpoint : forall omega : Omega,
+      ((pullCount (action omega) chosen T : Nat) : ENNReal) <=
+        (B : ENNReal) + largeCount omega := by
+    intro omega
+    exact
+      natCast_pullCount_le_threshold_add_selectedLargePullCount_indicator_sum
+        (action omega) chosen T B
+  have hlarge_lintegral :
+      MeasureTheory.lintegral mu largeCount <=
+        (T : ENNReal) * ENNReal.ofReal delta := by
+    simpa [action, largeCount] using
+      lintegral_confidenceScoreArgmax_selectedLargePullCount_indicator_sum_le_horizon_mul_delta
+        hK mu trueMean empiricalMean proxy T delta B best chosen
+        hT hdelta haction hlarge_count_gap hproxy hsubG
+  calc
+    MeasureTheory.lintegral mu
+      (fun omega : Omega =>
+        ((pullCount (action omega) chosen T : Nat) : ENNReal))
+        <=
+      MeasureTheory.lintegral mu
+        (fun omega : Omega => (B : ENNReal) + largeCount omega) := by
+          exact MeasureTheory.lintegral_mono hpoint
+    _ =
+      MeasureTheory.lintegral mu (fun _omega : Omega => (B : ENNReal)) +
+      MeasureTheory.lintegral mu largeCount := by
+        rw [MeasureTheory.lintegral_add_left measurable_const]
+    _ =
+      (B : ENNReal) + MeasureTheory.lintegral mu largeCount := by
+        rw [MeasureTheory.lintegral_const]
+        simp [MeasureTheory.IsProbabilityMeasure.measure_univ]
+    _ <=
+      (B : ENNReal) + (T : ENNReal) * ENNReal.ofReal delta := by
+        exact add_le_add (le_refl _) hlarge_lintegral
 
 /--
 Concrete cardinality-budget version of the threshold/suffix pull-count split.
