@@ -16175,6 +16175,50 @@ example {Omega : Type} [MeasurableSpace Omega]
       freeBudget best chosen hT hdelta hfree_budget hcharged_of_not_free
       hgap_large haction hproxy hsubG
 
+example (T : Nat) (freeTimes : Finset Nat) :
+    (Finset.range T).sum
+        (fun t : Nat => if t ∈ freeTimes then (1 : ENNReal) else 0) <=
+      (freeTimes.card : ENNReal) := by
+  exact UCB.freeTimes_indicator_sum_le_card T freeTimes
+
+example {Omega : Type} [MeasurableSpace Omega]
+    {K : Nat} (hK : 0 < K)
+    [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsProbabilityMeasure mu]
+    (trueMean : Fin K -> Real)
+    (empiricalMean : Omega -> Nat -> Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (freeTimes chargedTimes : Finset Nat) (best chosen : Fin K)
+    (hT : 0 < T) (hdelta : 0 < delta)
+    (hcharged_of_not_free :
+      forall t, t < T -> t ∉ freeTimes -> t ∈ chargedTimes)
+    (hgap_large : forall t, t ∈ chargedTimes ->
+      2 * UCB.subGaussianTextbookDeltaRadius proxy T delta t chosen <
+        UCB.meanGap trueMean best chosen)
+    (haction : forall t : Nat,
+      Measurable
+        (fun omega : Omega =>
+          UCB.confidenceScoreArgmaxAction hK empiricalMean
+            (UCB.subGaussianTextbookDeltaRadius proxy T delta) omega t))
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    MeasureTheory.lintegral mu
+      (fun omega : Omega =>
+        ((pullCount
+          ((UCB.confidenceScoreArgmaxAction hK empiricalMean
+            (UCB.subGaussianTextbookDeltaRadius proxy T delta)) omega)
+          chosen T : Nat) : ENNReal)) <=
+      (freeTimes.card : ENNReal) + (T : ENNReal) * ENNReal.ofReal delta := by
+  exact
+    UCB.lintegral_confidenceScoreArgmax_pullCount_le_freeCard_add_horizon_delta
+      hK mu trueMean empiricalMean proxy T delta freeTimes chargedTimes
+      best chosen hT hdelta hcharged_of_not_free hgap_large
+      haction hproxy hsubG
+
 example {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
     (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
     (trueMean : Arm -> Real)

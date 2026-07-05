@@ -2218,6 +2218,77 @@ theorem lintegral_confidenceScoreArgmax_pullCount_le_freeBudget_add_horizon_delt
   exact hsplit.trans hsum
 
 /--
+The ENNReal indicator count of a finite set of free horizon times is bounded by
+the total number of declared free times.
+-/
+theorem freeTimes_indicator_sum_le_card
+    (T : Nat) (freeTimes : Finset Nat) :
+    (Finset.range T).sum
+        (fun t : Nat => if t ∈ freeTimes then (1 : ENNReal) else 0) <=
+      (freeTimes.card : ENNReal) := by
+  have hfilter_subset :
+      (Finset.range T).filter (fun t : Nat => t ∈ freeTimes) ⊆ freeTimes := by
+    intro t ht
+    exact (Finset.mem_filter.mp ht).2
+  calc
+    (Finset.range T).sum
+        (fun t : Nat => if t ∈ freeTimes then (1 : ENNReal) else 0)
+        =
+      ((Finset.range T).filter (fun t : Nat => t ∈ freeTimes)).sum
+        (fun _t : Nat => (1 : ENNReal)) := by
+        rw [Finset.sum_filter]
+    _ = (((Finset.range T).filter (fun t : Nat => t ∈ freeTimes)).card : ENNReal) := by
+        simp [Finset.sum_const, nsmul_eq_mul]
+    _ <= (freeTimes.card : ENNReal) := by
+        exact_mod_cast Finset.card_le_card hfilter_subset
+
+/--
+Concrete cardinality-budget version of the threshold/suffix pull-count split.
+
+This discharges the abstract `freeBudget` input with `freeTimes.card`. A later
+radius-threshold leaf can instantiate `freeTimes` and prove its cardinality is
+the usual logarithmic/gap-dependent budget.
+-/
+theorem lintegral_confidenceScoreArgmax_pullCount_le_freeCard_add_horizon_delta
+    {Omega : Type} [MeasurableSpace Omega]
+    {K : Nat} (hK : 0 < K)
+    [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)]
+    (mu : Measure Omega) [MeasureTheory.IsProbabilityMeasure mu]
+    (trueMean : Fin K -> Real)
+    (empiricalMean : Omega -> Nat -> Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (freeTimes chargedTimes : Finset Nat) (best chosen : Fin K)
+    (hT : 0 < T) (hdelta : 0 < delta)
+    (hcharged_of_not_free : forall t, t < T -> t ∉ freeTimes -> t ∈ chargedTimes)
+    (hgap_large : forall t, t ∈ chargedTimes ->
+      2 * subGaussianTextbookDeltaRadius proxy T delta t chosen <
+        meanGap trueMean best chosen)
+    (haction : forall t : Nat,
+      Measurable
+        (fun omega : Omega =>
+          confidenceScoreArgmaxAction hK empiricalMean
+            (subGaussianTextbookDeltaRadius proxy T delta) omega t))
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    MeasureTheory.lintegral mu
+      (fun omega : Omega =>
+        ((pullCount
+          ((confidenceScoreArgmaxAction hK empiricalMean
+            (subGaussianTextbookDeltaRadius proxy T delta)) omega)
+          chosen T : Nat) : ENNReal)) <=
+      (freeTimes.card : ENNReal) + (T : ENNReal) * ENNReal.ofReal delta := by
+  exact
+    lintegral_confidenceScoreArgmax_pullCount_le_freeBudget_add_horizon_delta
+      hK mu trueMean empiricalMean proxy T delta freeTimes chargedTimes
+      (freeTimes.card : ENNReal) best chosen hT hdelta
+      (freeTimes_indicator_sum_le_card T freeTimes)
+      hcharged_of_not_free hgap_large haction hproxy hsubG
+
+/--
 Two-sided sub-Gaussian tail budget for a UCB empirical mean at time `t` and
 arm `arm`.
 

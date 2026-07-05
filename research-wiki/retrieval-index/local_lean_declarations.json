@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-05T03:58:26+00:00",
+  "generated": "2026-07-05T04:05:38+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -1946,11 +1946,27 @@
       "statement": "theorem lintegral_confidenceScoreArgmax_pullCount_le_freeBudget_add_horizon_delta {Omega : Type} [MeasurableSpace Omega] {K : Nat} (hK : 0 < K) [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)] (mu : Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (trueMean : Fin K -> Real) (empiricalMean : Omega -> Nat -> Fin K -> Real) (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)"
     },
     {
+      "kind": "theorem",
+      "name": "freeTimes_indicator_sum_le_card",
+      "full_name": "BanditRLProof.UCB.freeTimes_indicator_sum_le_card",
+      "file": "BanditRLProof/Algorithms/UCB.lean",
+      "line": 2224,
+      "statement": "theorem freeTimes_indicator_sum_le_card (T : Nat) (freeTimes : Finset Nat) : (Finset.range T).sum (fun t : Nat => if t \u2208 freeTimes then (1 : ENNReal) else 0) <= (freeTimes.card : ENNReal)"
+    },
+    {
+      "kind": "theorem",
+      "name": "lintegral_confidenceScoreArgmax_pullCount_le_freeCard_add_horizon_delta",
+      "full_name": "BanditRLProof.UCB.lintegral_confidenceScoreArgmax_pullCount_le_freeCard_add_horizon_delta",
+      "file": "BanditRLProof/Algorithms/UCB.lean",
+      "line": 2252,
+      "statement": "theorem lintegral_confidenceScoreArgmax_pullCount_le_freeCard_add_horizon_delta {Omega : Type} [MeasurableSpace Omega] {K : Nat} (hK : 0 < K) [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)] (mu : Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (trueMean : Fin K -> Real) (empiricalMean : Omega -> Nat -> Fin K -> Real) (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)"
+    },
+    {
       "kind": "def",
       "name": "subGaussianAbsDeviationTail",
       "full_name": "BanditRLProof.UCB.subGaussianAbsDeviationTail",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 2228,
+      "line": 2299,
       "statement": "noncomputable def subGaussianAbsDeviationTail {Arm : Type} (radius : Nat -> Arm -> Real) (proxy : Nat -> Arm -> NNReal) (t : Nat) (arm : Arm) : ENNReal :="
     },
     {
@@ -1958,7 +1974,7 @@
       "name": "measure_absDeviation_le_subGaussian_tail",
       "full_name": "BanditRLProof.UCB.measure_absDeviation_le_subGaussian_tail",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 2240,
+      "line": 2311,
       "statement": "theorem measure_absDeviation_le_subGaussian_tail {Omega Arm : Type} [MeasurableSpace Omega] (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (radius : Nat -> Arm -> Real) (proxy : Nat -> Arm -> NNReal) (t : Nat) (arm : Arm) (hradius : 0 <= radius t arm)"
     },
     {
@@ -1966,7 +1982,7 @@
       "name": "measure_finiteHorizonConfidenceBadEvent_le_subGaussian_tail_sum",
       "full_name": "BanditRLProof.UCB.measure_finiteHorizonConfidenceBadEvent_le_subGaussian_tail_sum",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 2324,
+      "line": 2395,
       "statement": "theorem measure_finiteHorizonConfidenceBadEvent_le_subGaussian_tail_sum {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm] (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (radius : Nat -> Arm -> Real) (proxy : Nat -> Arm -> NNReal) (T : Nat) (hradius : forall t arm, t < T -> 0 <= radius t arm)"
     },
     {
@@ -1974,7 +1990,7 @@
       "name": "obligationNames",
       "full_name": "BanditRLProof.UCB.obligationNames",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 2353,
+      "line": 2424,
       "statement": "def obligationNames : List String :="
     },
     {
