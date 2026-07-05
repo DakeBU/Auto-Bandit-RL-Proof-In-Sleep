@@ -16181,6 +16181,55 @@ example (T : Nat) (freeTimes : Finset Nat) :
       (freeTimes.card : ENNReal) := by
   exact UCB.freeTimes_indicator_sum_le_card T freeTimes
 
+example {Action : Type} [DecidableEq Action]
+    (action : ActionTrace Action) (chosen : Action) (T B : Nat) :
+    (Finset.range T).sum
+        (fun t : Nat =>
+          if action t = chosen ∧ pullCount action chosen t < B then
+            (1 : Nat)
+          else
+            0) =
+      Nat.min (pullCount action chosen T) B := by
+  exact UCB.selectedSmallPullCount_sum_eq_min_pullCount action chosen T B
+
+example {Action : Type} [DecidableEq Action]
+    (action : ActionTrace Action) (chosen : Action) (T B : Nat) :
+    (Finset.range T).sum
+        (fun t : Nat =>
+          if action t = chosen ∧ pullCount action chosen t < B then
+            (1 : Nat)
+          else
+            0) <= B := by
+  exact UCB.selectedSmallPullCount_sum_le_threshold action chosen T B
+
+example {Action : Type} [DecidableEq Action]
+    (action : ActionTrace Action) (chosen : Action) (T B : Nat) :
+    (Finset.range T).sum
+        (fun t : Nat =>
+          if action t = chosen ∧ pullCount action chosen t < B then
+            (1 : ENNReal)
+          else
+            0) <=
+      (B : ENNReal) := by
+  exact UCB.selectedSmallPullCount_indicator_sum_le_threshold
+    action chosen T B
+
+example {Omega Action : Type} [MeasurableSpace Omega] [DecidableEq Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsProbabilityMeasure mu]
+    (action : Omega -> ActionTrace Action) (chosen : Action) (T B : Nat) :
+    MeasureTheory.lintegral mu
+      (fun omega : Omega =>
+        (Finset.range T).sum
+          (fun t : Nat =>
+            if action omega t = chosen ∧
+                pullCount (action omega) chosen t < B then
+              (1 : ENNReal)
+            else
+              0)) <=
+      (B : ENNReal) := by
+  exact UCB.lintegral_selectedSmallPullCount_indicator_sum_le_threshold
+    mu action chosen T B
+
 example {Omega : Type} [MeasurableSpace Omega]
     {K : Nat} (hK : 0 < K)
     [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)]

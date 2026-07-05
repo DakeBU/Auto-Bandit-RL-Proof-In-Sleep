@@ -2243,6 +2243,154 @@ theorem freeTimes_indicator_sum_le_card
         exact_mod_cast Finset.card_le_card hfilter_subset
 
 /--
+Along one concrete action trace, the number of selected times whose previous
+pull count is still below threshold `B` is the minimum of the terminal pull
+count and `B`.
+
+This is the pathwise source of the usual UCB small-count budget: selected
+occurrences with `pullCount < B` can happen at most `B` times, regardless of the
+ambient horizon length.
+-/
+theorem selectedSmallPullCount_sum_eq_min_pullCount
+    {Action : Type} [DecidableEq Action]
+    (action : ActionTrace Action) (chosen : Action) (T B : Nat) :
+    (Finset.range T).sum
+        (fun t : Nat =>
+          if action t = chosen ∧ pullCount action chosen t < B then
+            (1 : Nat)
+          else
+            0) =
+      Nat.min (pullCount action chosen T) B := by
+  induction T with
+  | zero =>
+      simp
+  | succ T ih =>
+      by_cases hselected : action T = chosen
+      · by_cases hsmall : pullCount action chosen T < B
+        · have hold :
+              Nat.min (pullCount action chosen T) B =
+                pullCount action chosen T := by
+            exact Nat.min_eq_left (Nat.le_of_lt hsmall)
+          have hnew :
+              Nat.min (pullCount action chosen (T + 1)) B =
+                pullCount action chosen T + 1 := by
+            rw [pullCount_succ_of_eq action chosen T hselected]
+            exact Nat.min_eq_left (Nat.succ_le_of_lt hsmall)
+          rw [Finset.sum_range_succ]
+          rw [if_pos ⟨hselected, hsmall⟩]
+          rw [ih, hold, hnew]
+        · have hnot_small : ¬ pullCount action chosen T < B := hsmall
+          have hold :
+              Nat.min (pullCount action chosen T) B = B := by
+            exact Nat.min_eq_right (Nat.le_of_not_gt hnot_small)
+          have hnew :
+              Nat.min (pullCount action chosen (T + 1)) B = B := by
+            rw [pullCount_succ_of_eq action chosen T hselected]
+            exact Nat.min_eq_right
+              (Nat.le_trans (Nat.le_of_not_gt hnot_small) (Nat.le_succ _))
+          have hnot :
+              ¬ (action T = chosen ∧ pullCount action chosen T < B) := by
+            intro h
+            exact hnot_small h.2
+          rw [Finset.sum_range_succ]
+          rw [if_neg hnot]
+          rw [ih, hold, hnew]
+          simp
+      · have hnot :
+            ¬ (action T = chosen ∧ pullCount action chosen T < B) := by
+          intro h
+          exact hselected h.1
+        have hnew :
+            pullCount action chosen (T + 1) = pullCount action chosen T :=
+          pullCount_succ_of_ne action chosen T hselected
+        rw [Finset.sum_range_succ]
+        rw [if_neg hnot]
+        rw [ih, hnew]
+        simp
+
+/--
+Pathwise UCB small-count budget in Nat form.
+-/
+theorem selectedSmallPullCount_sum_le_threshold
+    {Action : Type} [DecidableEq Action]
+    (action : ActionTrace Action) (chosen : Action) (T B : Nat) :
+    (Finset.range T).sum
+        (fun t : Nat =>
+          if action t = chosen ∧ pullCount action chosen t < B then
+            (1 : Nat)
+          else
+            0) <= B := by
+  rw [selectedSmallPullCount_sum_eq_min_pullCount action chosen T B]
+  exact Nat.min_le_right _ _
+
+/--
+ENNReal-facing pathwise UCB small-count budget.
+-/
+theorem selectedSmallPullCount_indicator_sum_le_threshold
+    {Action : Type} [DecidableEq Action]
+    (action : ActionTrace Action) (chosen : Action) (T B : Nat) :
+    (Finset.range T).sum
+        (fun t : Nat =>
+          if action t = chosen ∧ pullCount action chosen t < B then
+            (1 : ENNReal)
+          else
+            0) <=
+      (B : ENNReal) := by
+  have hnat :=
+    selectedSmallPullCount_sum_le_threshold action chosen T B
+  simpa using
+    (show
+      (((Finset.range T).sum
+          (fun t : Nat =>
+            if action t = chosen ∧ pullCount action chosen t < B then
+              (1 : Nat)
+            else
+              0) : Nat) : ENNReal) <=
+        (B : ENNReal) from by
+          exact_mod_cast hnat)
+
+/--
+Probability-facing version of the pathwise selected-small budget.
+
+No measurability assumption is needed for this upper bound: the lower integral
+is dominated pointwise by the constant `B`, and the measure is a probability
+measure.
+-/
+theorem lintegral_selectedSmallPullCount_indicator_sum_le_threshold
+    {Omega Action : Type} [MeasurableSpace Omega] [DecidableEq Action]
+    (mu : Measure Omega) [MeasureTheory.IsProbabilityMeasure mu]
+    (action : Omega -> ActionTrace Action) (chosen : Action) (T B : Nat) :
+    MeasureTheory.lintegral mu
+      (fun omega : Omega =>
+        (Finset.range T).sum
+          (fun t : Nat =>
+            if action omega t = chosen ∧
+                pullCount (action omega) chosen t < B then
+              (1 : ENNReal)
+            else
+              0)) <=
+      (B : ENNReal) := by
+  calc
+    MeasureTheory.lintegral mu
+      (fun omega : Omega =>
+        (Finset.range T).sum
+          (fun t : Nat =>
+            if action omega t = chosen ∧
+                pullCount (action omega) chosen t < B then
+              (1 : ENNReal)
+            else
+              0))
+        <=
+      MeasureTheory.lintegral mu (fun _omega : Omega => (B : ENNReal)) := by
+        exact MeasureTheory.lintegral_mono
+          (fun omega =>
+            selectedSmallPullCount_indicator_sum_le_threshold
+              (action omega) chosen T B)
+    _ = (B : ENNReal) := by
+        rw [MeasureTheory.lintegral_const]
+        simp [MeasureTheory.IsProbabilityMeasure.measure_univ]
+
+/--
 Concrete cardinality-budget version of the threshold/suffix pull-count split.
 
 This discharges the abstract `freeBudget` input with `freeTimes.card`. A later
