@@ -1153,6 +1153,101 @@ theorem measure_finiteHorizonConfidenceBadEvent_le_subGaussian_logBudgetRadius_i
         simp [exp_neg_log_eq_inv (hscale t arm (Finset.mem_range.mp ht))])))
 
 /--
+Logarithmic square-root radius with a constant positive scale.
+
+This is the direct finite-horizon shape for later choices such as
+`scale = T * |A| / delta`.
+-/
+noncomputable def subGaussianConstantLogBudgetRadius
+    {Arm : Type}
+    (proxy : Nat -> Arm -> NNReal) (scale : Real) :
+    Nat -> Arm -> Real :=
+  subGaussianLogBudgetRadius proxy (fun _ _ => scale)
+
+@[simp] theorem subGaussianConstantLogBudgetRadius_apply
+    {Arm : Type}
+    (proxy : Nat -> Arm -> NNReal) (scale : Real)
+    (t : Nat) (arm : Arm) :
+    subGaussianConstantLogBudgetRadius proxy scale t arm =
+      Real.sqrt
+        (2 * ((proxy t arm : NNReal) : Real) * Real.log scale) := rfl
+
+/-- Constant logarithmic square-root budget radii are nonnegative. -/
+theorem subGaussianConstantLogBudgetRadius_nonneg
+    {Arm : Type}
+    (proxy : Nat -> Arm -> NNReal) (scale : Real)
+    (t : Nat) (arm : Arm) :
+    0 <= subGaussianConstantLogBudgetRadius proxy scale t arm := by
+  simpa [subGaussianConstantLogBudgetRadius] using
+    subGaussianLogBudgetRadius_nonneg proxy (fun _ _ => scale) t arm
+
+/--
+Constant logarithmic square-root budget radii satisfy the square-domination
+contract with budget `log scale`.
+-/
+theorem subGaussianConstantLogBudgetRadius_sq_domination
+    {Arm : Type}
+    (proxy : Nat -> Arm -> NNReal) (scale : Real)
+    (t : Nat) (arm : Arm) :
+    2 * ((proxy t arm : NNReal) : Real) * Real.log scale <=
+      (subGaussianConstantLogBudgetRadius proxy scale t arm) ^ 2 := by
+  simpa [subGaussianConstantLogBudgetRadius] using
+    subGaussianLogBudgetRadius_sq_domination proxy
+      (fun _ _ => scale) t arm
+
+/--
+Double finite sum of a constant inverse-scale one-sided tail budget.
+-/
+theorem constant_invScale_double_sum
+    {Arm : Type} [Fintype Arm] (T : Nat) (scale : Real) :
+    (Finset.range T).sum
+        (fun _ =>
+          (Finset.univ : Finset Arm).sum
+            (fun _ =>
+              ENNReal.ofReal scale⁻¹ + ENNReal.ofReal scale⁻¹)) =
+      HSMul.hSMul T
+        (HSMul.hSMul (Fintype.card Arm)
+          (ENNReal.ofReal scale⁻¹ + ENNReal.ofReal scale⁻¹)) := by
+  simp [Finset.sum_const]
+
+/--
+Finite-horizon confidence bad-event bound for a constant logarithmic scale,
+with the time/arm double sum folded into `T` and `Fintype.card Arm`.
+-/
+theorem measure_finiteHorizonConfidenceBadEvent_le_subGaussian_constantLogBudgetRadius_card
+    {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (proxy : Nat -> Arm -> NNReal) (scale : Real) (T : Nat)
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hscale : 0 < scale)
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    mu (finiteHorizonConfidenceBadEvent trueMean empiricalMean
+        (subGaussianConstantLogBudgetRadius proxy scale) T) <=
+      HSMul.hSMul T
+        (HSMul.hSMul (Fintype.card Arm)
+          (ENNReal.ofReal scale⁻¹ + ENNReal.ofReal scale⁻¹)) := by
+  have htail :
+      mu (finiteHorizonConfidenceBadEvent trueMean empiricalMean
+          (subGaussianConstantLogBudgetRadius proxy scale) T) <=
+        (Finset.range T).sum
+          (fun _ =>
+            (Finset.univ : Finset Arm).sum
+              (fun _ =>
+                ENNReal.ofReal scale⁻¹ + ENNReal.ofReal scale⁻¹)) := by
+    simpa [subGaussianConstantLogBudgetRadius] using
+      measure_finiteHorizonConfidenceBadEvent_le_subGaussian_logBudgetRadius_inv_scale_sum
+        mu trueMean empiricalMean proxy (fun _ _ => scale) T hproxy
+        (fun _ _ _ => hscale) hsubG
+  exact htail.trans
+    (le_of_eq (constant_invScale_double_sum (Arm := Arm) T scale))
+
+/--
 Two-sided sub-Gaussian tail budget for a UCB empirical mean at time `t` and
 arm `arm`.
 

@@ -15583,6 +15583,61 @@ example {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
     UCB.measure_finiteHorizonConfidenceBadEvent_le_subGaussian_logBudgetRadius_inv_scale_sum
       mu trueMean empiricalMean proxy scale T hproxy hscale hsubG
 
+example {Arm : Type}
+    (proxy : Nat -> Arm -> NNReal) (scale : Real)
+    (t : Nat) (arm : Arm) :
+    UCB.subGaussianConstantLogBudgetRadius proxy scale t arm =
+      Real.sqrt (2 * ((proxy t arm : NNReal) : Real) * Real.log scale) := by
+  rfl
+
+example {Arm : Type}
+    (proxy : Nat -> Arm -> NNReal) (scale : Real)
+    (t : Nat) (arm : Arm) :
+    0 <= UCB.subGaussianConstantLogBudgetRadius proxy scale t arm := by
+  exact UCB.subGaussianConstantLogBudgetRadius_nonneg proxy scale t arm
+
+example {Arm : Type}
+    (proxy : Nat -> Arm -> NNReal) (scale : Real)
+    (t : Nat) (arm : Arm) :
+    2 * ((proxy t arm : NNReal) : Real) * Real.log scale <=
+      (UCB.subGaussianConstantLogBudgetRadius proxy scale t arm) ^ 2 := by
+  exact UCB.subGaussianConstantLogBudgetRadius_sq_domination
+    proxy scale t arm
+
+example {Arm : Type} [Fintype Arm] (T : Nat) (scale : Real) :
+    (Finset.range T).sum
+        (fun _ =>
+          (Finset.univ : Finset Arm).sum
+            (fun _ =>
+              ENNReal.ofReal scale⁻¹ + ENNReal.ofReal scale⁻¹)) =
+      HSMul.hSMul T
+        (HSMul.hSMul (Fintype.card Arm)
+          (ENNReal.ofReal scale⁻¹ + ENNReal.ofReal scale⁻¹)) := by
+  exact UCB.constant_invScale_double_sum T scale
+
+example {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (proxy : Nat -> Arm -> NNReal) (scale : Real)
+    (T : Nat)
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hscale : 0 < scale)
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    mu (UCB.finiteHorizonConfidenceBadEvent
+        trueMean empiricalMean
+        (UCB.subGaussianConstantLogBudgetRadius proxy scale) T) <=
+      HSMul.hSMul T
+        (HSMul.hSMul (Fintype.card Arm)
+          (ENNReal.ofReal scale⁻¹ + ENNReal.ofReal scale⁻¹)) := by
+  exact
+    UCB.measure_finiteHorizonConfidenceBadEvent_le_subGaussian_constantLogBudgetRadius_card
+      mu trueMean empiricalMean proxy scale T hproxy hscale hsubG
+
 example {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
     (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
     (trueMean : Arm -> Real)

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-05T02:32:47+00:00",
+  "generated": "2026-07-05T02:43:36+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -1667,10 +1667,58 @@
     },
     {
       "kind": "def",
+      "name": "subGaussianConstantLogBudgetRadius",
+      "full_name": "BanditRLProof.UCB.subGaussianConstantLogBudgetRadius",
+      "file": "BanditRLProof/Algorithms/UCB.lean",
+      "line": 1161,
+      "statement": "noncomputable def subGaussianConstantLogBudgetRadius {Arm : Type} (proxy : Nat -> Arm -> NNReal) (scale : Real) : Nat -> Arm -> Real :="
+    },
+    {
+      "kind": "theorem",
+      "name": "subGaussianConstantLogBudgetRadius_apply",
+      "full_name": "BanditRLProof.UCB.subGaussianConstantLogBudgetRadius_apply",
+      "file": "BanditRLProof/Algorithms/UCB.lean",
+      "line": 1167,
+      "statement": "@[simp] theorem subGaussianConstantLogBudgetRadius_apply {Arm : Type} (proxy : Nat -> Arm -> NNReal) (scale : Real) (t : Nat) (arm : Arm) : subGaussianConstantLogBudgetRadius proxy scale t arm = Real.sqrt (2 * ((proxy t arm : NNReal) : Real) * Real.log scale)"
+    },
+    {
+      "kind": "theorem",
+      "name": "subGaussianConstantLogBudgetRadius_nonneg",
+      "full_name": "BanditRLProof.UCB.subGaussianConstantLogBudgetRadius_nonneg",
+      "file": "BanditRLProof/Algorithms/UCB.lean",
+      "line": 1176,
+      "statement": "theorem subGaussianConstantLogBudgetRadius_nonneg {Arm : Type} (proxy : Nat -> Arm -> NNReal) (scale : Real) (t : Nat) (arm : Arm) : 0 <= subGaussianConstantLogBudgetRadius proxy scale t arm"
+    },
+    {
+      "kind": "theorem",
+      "name": "subGaussianConstantLogBudgetRadius_sq_domination",
+      "full_name": "BanditRLProof.UCB.subGaussianConstantLogBudgetRadius_sq_domination",
+      "file": "BanditRLProof/Algorithms/UCB.lean",
+      "line": 1188,
+      "statement": "theorem subGaussianConstantLogBudgetRadius_sq_domination {Arm : Type} (proxy : Nat -> Arm -> NNReal) (scale : Real) (t : Nat) (arm : Arm) : 2 * ((proxy t arm : NNReal) : Real) * Real.log scale <= (subGaussianConstantLogBudgetRadius proxy scale t arm) ^ 2"
+    },
+    {
+      "kind": "theorem",
+      "name": "constant_invScale_double_sum",
+      "full_name": "BanditRLProof.UCB.constant_invScale_double_sum",
+      "file": "BanditRLProof/Algorithms/UCB.lean",
+      "line": 1201,
+      "statement": "theorem constant_invScale_double_sum {Arm : Type} [Fintype Arm] (T : Nat) (scale : Real) : (Finset.range T).sum (fun _ => (Finset.univ : Finset Arm).sum (fun _ => ENNReal.ofReal scale\u207b\u00b9 + ENNReal.ofReal scale\u207b\u00b9)) = HSMul.hSMul T"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_finiteHorizonConfidenceBadEvent_le_subGaussian_constantLogBudgetRadius_card",
+      "full_name": "BanditRLProof.UCB.measure_finiteHorizonConfidenceBadEvent_le_subGaussian_constantLogBudgetRadius_card",
+      "file": "BanditRLProof/Algorithms/UCB.lean",
+      "line": 1217,
+      "statement": "theorem measure_finiteHorizonConfidenceBadEvent_le_subGaussian_constantLogBudgetRadius_card {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm] (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (proxy : Nat -> Arm -> NNReal) (scale : Real) (T : Nat) (hproxy : forall t arm, t < T -> 0 < ((proxy t arm : NNReal) : Real))"
+    },
+    {
+      "kind": "def",
       "name": "subGaussianAbsDeviationTail",
       "full_name": "BanditRLProof.UCB.subGaussianAbsDeviationTail",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1163,
+      "line": 1258,
       "statement": "noncomputable def subGaussianAbsDeviationTail {Arm : Type} (radius : Nat -> Arm -> Real) (proxy : Nat -> Arm -> NNReal) (t : Nat) (arm : Arm) : ENNReal :="
     },
     {
@@ -1678,7 +1726,7 @@
       "name": "measure_absDeviation_le_subGaussian_tail",
       "full_name": "BanditRLProof.UCB.measure_absDeviation_le_subGaussian_tail",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1175,
+      "line": 1270,
       "statement": "theorem measure_absDeviation_le_subGaussian_tail {Omega Arm : Type} [MeasurableSpace Omega] (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (radius : Nat -> Arm -> Real) (proxy : Nat -> Arm -> NNReal) (t : Nat) (arm : Arm) (hradius : 0 <= radius t arm)"
     },
     {
@@ -1686,7 +1734,7 @@
       "name": "measure_finiteHorizonConfidenceBadEvent_le_subGaussian_tail_sum",
       "full_name": "BanditRLProof.UCB.measure_finiteHorizonConfidenceBadEvent_le_subGaussian_tail_sum",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1259,
+      "line": 1354,
       "statement": "theorem measure_finiteHorizonConfidenceBadEvent_le_subGaussian_tail_sum {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm] (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (radius : Nat -> Arm -> Real) (proxy : Nat -> Arm -> NNReal) (T : Nat) (hradius : forall t arm, t < T -> 0 <= radius t arm)"
     },
     {
@@ -1694,7 +1742,7 @@
       "name": "obligationNames",
       "full_name": "BanditRLProof.UCB.obligationNames",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1288,
+      "line": 1383,
       "statement": "def obligationNames : List String :="
     },
     {
