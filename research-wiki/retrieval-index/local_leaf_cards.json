@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-05T03:34:47+00:00",
+  "generated": "2026-07-05T03:41:58+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -495,6 +495,27 @@
       "mathlib_routes": [
         "LOCAL-LEAF-UCB-SELECTED-LARGE-GAP-DELTA",
         "MLIB-FINTYPE-FIN",
+        "MLIB-FINSET-SUMS"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-UCB-CONCRETE-SCORE-ARGMAX-COUNT-BUDGET",
+      "leaf_ids": [
+        "UCB-GOOD-EVENT-GAP-CONSUMER",
+        "TAIL-SUMMABILITY-UCB",
+        "EXP-FINSET-INDICATOR-PULL"
+      ],
+      "module": "BanditRLProof.Algorithms.UCB",
+      "status": "leanCompiled",
+      "declarations": [
+        "UCB.sum_measure_confidenceScoreArgmax_selectedLargeGapEventOn_le_card_mul_delta",
+        "UCB.lintegral_confidenceScoreArgmax_selectedLargeGapCountOn_le_card_mul_delta"
+      ],
+      "role": "Compiled count-facing UCB score-argmax bridge: sums the single-time concrete large-gap selected-arm probability bounds over an explicit finite time set and lifts the result through the existing finite-sum selected-action indicator lower-integral API, yielding a selected-time count budget `|times| * delta`. This is not yet recursive `pullCount`; empirical-mean construction, history-recursive UCB action trace, pull-count conversion over threshold/suffix sets, and final regret remain separate.",
+      "mathlib_routes": [
+        "LOCAL-LEAF-UCB-CONCRETE-SCORE-ARGMAX-ACTION",
+        "LOCAL-LEAF-EXPECTATION-SUMS",
+        "EXP-FINSET-INDICATOR-PULL",
         "MLIB-FINSET-SUMS"
       ]
     },

@@ -8,6 +8,7 @@ import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Ring
 import BanditRLProof.ConcentrationSubGaussian
 import BanditRLProof.ConcentrationVariance
+import BanditRLProof.ExpectationSums
 import BanditRLProof.ProbabilityUnionBound
 import BanditRLProof.Regret
 
@@ -1889,6 +1890,117 @@ theorem measure_confidenceScoreArgmax_selectedLargeGapEventOn_le_subGaussian_tex
             hK empiricalMean (subGaussianTextbookDeltaRadius proxy T delta)
             omega t best chosen hselected)
       hproxy hsubG
+
+/--
+Summing the single-time concrete score-argmax selected large-gap bounds over a
+finite time set gives a finite-count probability budget.
+
+This is the first counting-facing UCB bridge: it keeps the statement as a sum
+of selected-action event probabilities before converting it to a lower
+integral of selected-time indicators.
+-/
+theorem sum_measure_confidenceScoreArgmax_selectedLargeGapEventOn_le_card_mul_delta
+    {Omega : Type} [MeasurableSpace Omega]
+    {K : Nat} (hK : 0 < K)
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (trueMean : Fin K -> Real)
+    (empiricalMean : Omega -> Nat -> Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (times : Finset Nat) (best chosen : Fin K)
+    (hT : 0 < T) (hdelta : 0 < delta)
+    (htimes : forall t, t ∈ times -> t < T)
+    (hgap_large : forall t, t ∈ times ->
+      2 * subGaussianTextbookDeltaRadius proxy T delta t chosen <
+        meanGap trueMean best chosen)
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    times.sum
+        (fun t : Nat =>
+          mu {omega : Omega |
+            confidenceScoreArgmaxAction hK empiricalMean
+              (subGaussianTextbookDeltaRadius proxy T delta) omega t =
+                chosen}) <=
+      (times.card : ENNReal) * ENNReal.ofReal delta := by
+  calc
+    times.sum
+        (fun t : Nat =>
+          mu {omega : Omega |
+            confidenceScoreArgmaxAction hK empiricalMean
+              (subGaussianTextbookDeltaRadius proxy T delta) omega t =
+                chosen})
+        <=
+      times.sum (fun _t : Nat => ENNReal.ofReal delta) := by
+        exact Finset.sum_le_sum
+          (by
+            intro t ht_mem
+            exact
+              measure_confidenceScoreArgmax_selectedLargeGapEvent_le_subGaussian_textbookDeltaRadius_delta
+                hK mu trueMean empiricalMean proxy T delta t best chosen
+                hT hdelta (htimes t ht_mem) (hgap_large t ht_mem)
+                hproxy hsubG)
+    _ = (times.card : ENNReal) * ENNReal.ofReal delta := by
+        simp [Finset.sum_const, nsmul_eq_mul]
+
+/--
+Lower-integral selected-count budget for concrete score-argmax UCB over an
+explicit finite time set.
+
+The integrand is the finite sum of selected-action indicators over `times`.
+This is not yet the recursive `pullCount`, but it is the expectation-facing
+finite-count surface needed to bridge the selected-event probability bounds
+into pull-count and regret arguments.
+-/
+theorem lintegral_confidenceScoreArgmax_selectedLargeGapCountOn_le_card_mul_delta
+    {Omega : Type} [MeasurableSpace Omega]
+    {K : Nat} (hK : 0 < K)
+    [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)]
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (trueMean : Fin K -> Real)
+    (empiricalMean : Omega -> Nat -> Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (times : Finset Nat) (best chosen : Fin K)
+    (hT : 0 < T) (hdelta : 0 < delta)
+    (htimes : forall t, t ∈ times -> t < T)
+    (hgap_large : forall t, t ∈ times ->
+      2 * subGaussianTextbookDeltaRadius proxy T delta t chosen <
+        meanGap trueMean best chosen)
+    (haction : forall t : Nat,
+      Measurable
+        (fun omega : Omega =>
+          confidenceScoreArgmaxAction hK empiricalMean
+            (subGaussianTextbookDeltaRadius proxy T delta) omega t))
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    MeasureTheory.lintegral mu
+      (fun omega : Omega =>
+        times.sum
+          (fun t : Nat =>
+            (({omega' : Omega |
+              confidenceScoreArgmaxAction hK empiricalMean
+                (subGaussianTextbookDeltaRadius proxy T delta) omega' t =
+                  chosen} : Set Omega).indicator
+              (1 : Omega -> ENNReal)) omega)) <=
+      (times.card : ENNReal) * ENNReal.ofReal delta := by
+  rw [lintegral_finset_sum_actionTrace_eval_eq_indicator_one
+    (mu := mu)
+    (action :=
+      confidenceScoreArgmaxAction hK empiricalMean
+        (subGaussianTextbookDeltaRadius proxy T delta))
+    (haction := haction)
+    (a := chosen)
+    (s := times)]
+  exact
+    sum_measure_confidenceScoreArgmax_selectedLargeGapEventOn_le_card_mul_delta
+      hK mu trueMean empiricalMean proxy T delta times best chosen
+      hT hdelta htimes hgap_large hproxy hsubG
 
 /--
 Two-sided sub-Gaussian tail budget for a UCB empirical mean at time `t` and

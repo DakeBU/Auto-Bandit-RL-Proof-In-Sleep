@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-05T03:34:47+00:00",
+  "generated": "2026-07-05T03:41:58+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -1214,7 +1214,7 @@
       "name": "Spec",
       "full_name": "BanditRLProof.UCB.Spec",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 24,
+      "line": 25,
       "statement": "structure Spec (K : Nat) where"
     },
     {
@@ -1222,7 +1222,7 @@
       "name": "IndexState",
       "full_name": "BanditRLProof.UCB.IndexState",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 29,
+      "line": 30,
       "statement": "structure IndexState (K : Nat) where"
     },
     {
@@ -1230,7 +1230,7 @@
       "name": "score",
       "full_name": "BanditRLProof.UCB.score",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 39,
+      "line": 40,
       "statement": "def score (_spec : Spec K) (state : IndexState K) (arm : Fin K) : Rat :="
     },
     {
@@ -1238,7 +1238,7 @@
       "name": "score_eq_empiricalMean",
       "full_name": "BanditRLProof.UCB.score_eq_empiricalMean",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 42,
+      "line": 43,
       "statement": "@[simp] theorem score_eq_empiricalMean (spec : Spec K) (state : IndexState K) (arm : Fin K) : score spec state arm = state.empiricalMean arm"
     },
     {
@@ -1246,7 +1246,7 @@
       "name": "confidenceScore",
       "full_name": "BanditRLProof.UCB.confidenceScore",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 47,
+      "line": 48,
       "statement": "def confidenceScore {Arm : Type} (empiricalMean radius : Arm -> Real) (arm : Arm) : Real :="
     },
     {
@@ -1254,7 +1254,7 @@
       "name": "confidenceScore_apply",
       "full_name": "BanditRLProof.UCB.confidenceScore_apply",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 51,
+      "line": 52,
       "statement": "@[simp] theorem confidenceScore_apply {Arm : Type} (empiricalMean radius : Arm -> Real) (arm : Arm) : confidenceScore empiricalMean radius arm = empiricalMean arm + radius arm"
     },
     {
@@ -1262,7 +1262,7 @@
       "name": "scoreArgmax",
       "full_name": "BanditRLProof.UCB.scoreArgmax",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 117,
+      "line": 118,
       "statement": "noncomputable def scoreArgmax {K : Nat} (hK : 0 < K) (scores : Fin K -> Real) : Fin K :="
     },
     {
@@ -1270,7 +1270,7 @@
       "name": "scoreArgmax_spec",
       "full_name": "BanditRLProof.UCB.scoreArgmax_spec",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 125,
+      "line": 126,
       "statement": "theorem scoreArgmax_spec {K : Nat} (hK : 0 < K) (scores : Fin K -> Real) (a : Fin K) : scores a <= scores (scoreArgmax hK scores)"
     },
     {
@@ -1278,7 +1278,7 @@
       "name": "confidenceScoreArgmaxAction",
       "full_name": "BanditRLProof.UCB.confidenceScoreArgmaxAction",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 137,
+      "line": 138,
       "statement": "noncomputable def confidenceScoreArgmaxAction {Omega : Type} {K : Nat} (hK : 0 < K) (empiricalMean : Omega -> Nat -> Fin K -> Real) (radius : Nat -> Fin K -> Real) : Omega -> Nat -> Fin K :="
     },
     {
@@ -1286,7 +1286,7 @@
       "name": "confidenceScoreArgmaxAction_score_max",
       "full_name": "BanditRLProof.UCB.confidenceScoreArgmaxAction_score_max",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 150,
+      "line": 151,
       "statement": "theorem confidenceScoreArgmaxAction_score_max {Omega : Type} {K : Nat} (hK : 0 < K) (empiricalMean : Omega -> Nat -> Fin K -> Real) (radius : Nat -> Fin K -> Real) (omega : Omega) (t : Nat) (arm : Fin K) : confidenceScore (empiricalMean omega t) (radius t) arm <= confidenceScore (empiricalMean omega t) (radius t) (confidenceScoreArgmaxAction hK empiricalMean radius omega t)"
     },
     {
@@ -1294,7 +1294,7 @@
       "name": "confidenceScoreArgmaxAction_score_max_of_selected",
       "full_name": "BanditRLProof.UCB.confidenceScoreArgmaxAction_score_max_of_selected",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 168,
+      "line": 169,
       "statement": "theorem confidenceScoreArgmaxAction_score_max_of_selected {Omega : Type} {K : Nat} (hK : 0 < K) (empiricalMean : Omega -> Nat -> Fin K -> Real) (radius : Nat -> Fin K -> Real) (omega : Omega) (t : Nat) (best chosen : Fin K) (hselected : confidenceScoreArgmaxAction hK empiricalMean radius omega t = chosen) : confidenceScore (empiricalMean omega t) (radius t) best <="
     },
     {
@@ -1302,7 +1302,7 @@
       "name": "meanGap",
       "full_name": "BanditRLProof.UCB.meanGap",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 183,
+      "line": 184,
       "statement": "def meanGap {Arm : Type} (trueMean : Arm -> Real) (best arm : Arm) : Real :="
     },
     {
@@ -1310,7 +1310,7 @@
       "name": "meanGap_apply",
       "full_name": "BanditRLProof.UCB.meanGap_apply",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 186,
+      "line": 187,
       "statement": "@[simp] theorem meanGap_apply {Arm : Type} (trueMean : Arm -> Real) (best arm : Arm) : meanGap trueMean best arm = trueMean best - trueMean arm"
     },
     {
@@ -1318,7 +1318,7 @@
       "name": "meanGap_le_two_radius_of_confidenceScore_max",
       "full_name": "BanditRLProof.UCB.meanGap_le_two_radius_of_confidenceScore_max",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 196,
+      "line": 197,
       "statement": "theorem meanGap_le_two_radius_of_confidenceScore_max {Arm : Type} (trueMean empiricalMean radius : Arm -> Real) (best chosen : Arm) (hbest_upper : trueMean best <= confidenceScore empiricalMean radius best) (hchosen_lower : empiricalMean chosen - radius chosen <= trueMean chosen) (hscore :"
     },
     {
@@ -1326,7 +1326,7 @@
       "name": "not_two_radius_lt_meanGap_of_confidenceScore_max",
       "full_name": "BanditRLProof.UCB.not_two_radius_lt_meanGap_of_confidenceScore_max",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 215,
+      "line": 216,
       "statement": "theorem not_two_radius_lt_meanGap_of_confidenceScore_max {Arm : Type} (trueMean empiricalMean radius : Arm -> Real) (best chosen : Arm) (hbest_upper : trueMean best <= confidenceScore empiricalMean radius best) (hchosen_lower : empiricalMean chosen - radius chosen <= trueMean chosen) (hscore :"
     },
     {
@@ -1334,7 +1334,7 @@
       "name": "upperConfidenceBad",
       "full_name": "BanditRLProof.UCB.upperConfidenceBad",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 232,
+      "line": 233,
       "statement": "def upperConfidenceBad {Omega Arm : Type} (trueMean : Arm -> Real) (empiricalMean : Omega -> Arm -> Real) (radius : Arm -> Real) (arm : Arm) : Set Omega :="
     },
     {
@@ -1342,7 +1342,7 @@
       "name": "lowerConfidenceBad",
       "full_name": "BanditRLProof.UCB.lowerConfidenceBad",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 238,
+      "line": 239,
       "statement": "def lowerConfidenceBad {Omega Arm : Type} (trueMean : Arm -> Real) (empiricalMean : Omega -> Arm -> Real) (radius : Arm -> Real) (arm : Arm) : Set Omega :="
     },
     {
@@ -1350,7 +1350,7 @@
       "name": "measurableSet_upperConfidenceBad",
       "full_name": "BanditRLProof.UCB.measurableSet_upperConfidenceBad",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 244,
+      "line": 245,
       "statement": "theorem measurableSet_upperConfidenceBad {Omega Arm : Type} [MeasurableSpace Omega] (trueMean : Arm -> Real) (empiricalMean : Omega -> Arm -> Real) (radius : Arm -> Real) (arm : Arm) (hmeas : Measurable (fun omega : Omega => empiricalMean omega arm)) : MeasurableSet (upperConfidenceBad trueMean empiricalMean radius arm)"
     },
     {
@@ -1358,7 +1358,7 @@
       "name": "measurableSet_lowerConfidenceBad",
       "full_name": "BanditRLProof.UCB.measurableSet_lowerConfidenceBad",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 254,
+      "line": 255,
       "statement": "theorem measurableSet_lowerConfidenceBad {Omega Arm : Type} [MeasurableSpace Omega] (trueMean : Arm -> Real) (empiricalMean : Omega -> Arm -> Real) (radius : Arm -> Real) (arm : Arm) (hmeas : Measurable (fun omega : Omega => empiricalMean omega arm)) : MeasurableSet (lowerConfidenceBad trueMean empiricalMean radius arm)"
     },
     {
@@ -1366,7 +1366,7 @@
       "name": "confidenceBadEvent",
       "full_name": "BanditRLProof.UCB.confidenceBadEvent",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 264,
+      "line": 265,
       "statement": "def confidenceBadEvent {Omega Arm : Type} [Fintype Arm] (trueMean : Arm -> Real) (empiricalMean : Omega -> Arm -> Real) (radius : Arm -> Real) : Set Omega :="
     },
     {
@@ -1374,7 +1374,7 @@
       "name": "measurableSet_confidenceBadEvent",
       "full_name": "BanditRLProof.UCB.measurableSet_confidenceBadEvent",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 271,
+      "line": 272,
       "statement": "theorem measurableSet_confidenceBadEvent {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm] (trueMean : Arm -> Real) (empiricalMean : Omega -> Arm -> Real) (radius : Arm -> Real) (hmeas : forall arm : Arm, Measurable (fun omega : Omega => empiricalMean omega arm)) : MeasurableSet (confidenceBadEvent trueMean empiricalMean radius)"
     },
     {
@@ -1382,7 +1382,7 @@
       "name": "not_upperConfidenceBad_of_not_confidenceBadEvent",
       "full_name": "BanditRLProof.UCB.not_upperConfidenceBad_of_not_confidenceBadEvent",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 285,
+      "line": 286,
       "statement": "theorem not_upperConfidenceBad_of_not_confidenceBadEvent {Omega Arm : Type} [Fintype Arm] (trueMean : Arm -> Real) (empiricalMean : Omega -> Arm -> Real) (radius : Arm -> Real) (omega : Omega) (arm : Arm) (hgood : omega \u2209 confidenceBadEvent trueMean empiricalMean radius) : omega \u2209 upperConfidenceBad trueMean empiricalMean radius arm"
     },
     {
@@ -1390,7 +1390,7 @@
       "name": "not_lowerConfidenceBad_of_not_confidenceBadEvent",
       "full_name": "BanditRLProof.UCB.not_lowerConfidenceBad_of_not_confidenceBadEvent",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 296,
+      "line": 297,
       "statement": "theorem not_lowerConfidenceBad_of_not_confidenceBadEvent {Omega Arm : Type} [Fintype Arm] (trueMean : Arm -> Real) (empiricalMean : Omega -> Arm -> Real) (radius : Arm -> Real) (omega : Omega) (arm : Arm) (hgood : omega \u2209 confidenceBadEvent trueMean empiricalMean radius) : omega \u2209 lowerConfidenceBad trueMean empiricalMean radius arm"
     },
     {
@@ -1398,7 +1398,7 @@
       "name": "meanGap_le_two_radius_of_not_confidenceBadEvent",
       "full_name": "BanditRLProof.UCB.meanGap_le_two_radius_of_not_confidenceBadEvent",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 312,
+      "line": 313,
       "statement": "theorem meanGap_le_two_radius_of_not_confidenceBadEvent {Omega Arm : Type} [Fintype Arm] (trueMean : Arm -> Real) (empiricalMean : Omega -> Arm -> Real) (radius : Arm -> Real) (omega : Omega) (best chosen : Arm) (hgood : omega \u2209 confidenceBadEvent trueMean empiricalMean radius) (hscore : confidenceScore (empiricalMean omega) radius best <= confidenceScore (empiricalMean omega) radius chosen) :"
     },
     {
@@ -1406,7 +1406,7 @@
       "name": "measure_confidenceBadEvent_le_sum_upper_lower",
       "full_name": "BanditRLProof.UCB.measure_confidenceBadEvent_le_sum_upper_lower",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 343,
+      "line": 344,
       "statement": "theorem measure_confidenceBadEvent_le_sum_upper_lower {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm] (mu : Measure Omega) (trueMean : Arm -> Real) (empiricalMean : Omega -> Arm -> Real) (radius : Arm -> Real) : mu (confidenceBadEvent trueMean empiricalMean radius) <= (Finset.univ : Finset Arm).sum (fun arm =>"
     },
     {
@@ -1414,7 +1414,7 @@
       "name": "confidenceBadEventAt",
       "full_name": "BanditRLProof.UCB.confidenceBadEventAt",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 375,
+      "line": 376,
       "statement": "def confidenceBadEventAt {Omega Arm : Type} [Fintype Arm] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (radius : Nat -> Arm -> Real) (t : Nat) : Set Omega :="
     },
     {
@@ -1422,7 +1422,7 @@
       "name": "measurableSet_confidenceBadEventAt",
       "full_name": "BanditRLProof.UCB.measurableSet_confidenceBadEventAt",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 386,
+      "line": 387,
       "statement": "theorem measurableSet_confidenceBadEventAt {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (radius : Nat -> Arm -> Real) (t : Nat) (hmeas : forall arm : Arm, Measurable (fun omega : Omega => empiricalMean omega t arm)) : MeasurableSet (confidenceBadEventAt trueMean empiricalMean radius t)"
     },
     {
@@ -1430,7 +1430,7 @@
       "name": "finiteHorizonConfidenceBadEvent",
       "full_name": "BanditRLProof.UCB.finiteHorizonConfidenceBadEvent",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 399,
+      "line": 400,
       "statement": "def finiteHorizonConfidenceBadEvent {Omega Arm : Type} [Fintype Arm] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (radius : Nat -> Arm -> Real) (T : Nat) : Set Omega :="
     },
     {
@@ -1438,7 +1438,7 @@
       "name": "not_confidenceBadEventAt_of_not_finiteHorizonConfidenceBadEvent",
       "full_name": "BanditRLProof.UCB.not_confidenceBadEventAt_of_not_finiteHorizonConfidenceBadEvent",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 410,
+      "line": 411,
       "statement": "theorem not_confidenceBadEventAt_of_not_finiteHorizonConfidenceBadEvent {Omega Arm : Type} [Fintype Arm] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (radius : Nat -> Arm -> Real) (T : Nat) (omega : Omega) (t : Nat) (ht : t < T) (hgood : omega \u2209 finiteHorizonConfidenceBadEvent trueMean empiricalMean radius T) :"
     },
     {
@@ -1446,7 +1446,7 @@
       "name": "meanGap_le_two_radius_of_not_finiteHorizonConfidenceBadEvent",
       "full_name": "BanditRLProof.UCB.meanGap_le_two_radius_of_not_finiteHorizonConfidenceBadEvent",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 431,
+      "line": 432,
       "statement": "theorem meanGap_le_two_radius_of_not_finiteHorizonConfidenceBadEvent {Omega Arm : Type} [Fintype Arm] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (radius : Nat -> Arm -> Real) (T : Nat) (omega : Omega) (t : Nat) (best chosen : Arm) (ht : t < T) (hgood :"
     },
     {
@@ -1454,7 +1454,7 @@
       "name": "mem_finiteHorizonConfidenceBadEvent_of_two_radius_lt_meanGap_of_score_max",
       "full_name": "BanditRLProof.UCB.mem_finiteHorizonConfidenceBadEvent_of_two_radius_lt_meanGap_of_score_max",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 458,
+      "line": 459,
       "statement": "theorem mem_finiteHorizonConfidenceBadEvent_of_two_radius_lt_meanGap_of_score_max {Omega Arm : Type} [Fintype Arm] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (radius : Nat -> Arm -> Real) (T : Nat) (omega : Omega) (t : Nat) (best chosen : Arm) (ht : t < T) (hscore :"
     },
     {
@@ -1462,7 +1462,7 @@
       "name": "scoreMaxEvent_subset_finiteHorizonConfidenceBadEvent_of_two_radius_lt_meanGap",
       "full_name": "BanditRLProof.UCB.scoreMaxEvent_subset_finiteHorizonConfidenceBadEvent_of_two_radius_lt_meanGap",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 483,
+      "line": 484,
       "statement": "theorem scoreMaxEvent_subset_finiteHorizonConfidenceBadEvent_of_two_radius_lt_meanGap {Omega Arm : Type} [Fintype Arm] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (radius : Nat -> Arm -> Real) (T : Nat) (t : Nat) (best chosen : Arm) (ht : t < T) (hgap_large :"
     },
     {
@@ -1470,7 +1470,7 @@
       "name": "measure_finiteHorizonConfidenceBadEvent_le_sum_upper_lower",
       "full_name": "BanditRLProof.UCB.measure_finiteHorizonConfidenceBadEvent_le_sum_upper_lower",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 508,
+      "line": 509,
       "statement": "theorem measure_finiteHorizonConfidenceBadEvent_le_sum_upper_lower {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm] (mu : Measure Omega) (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (radius : Nat -> Arm -> Real) (T : Nat) : mu (finiteHorizonConfidenceBadEvent trueMean empiricalMean radius T) <= (Finset.range T).sum"
     },
     {
@@ -1478,7 +1478,7 @@
       "name": "measure_finiteHorizonConfidenceBadEvent_le_tail_sum",
       "full_name": "BanditRLProof.UCB.measure_finiteHorizonConfidenceBadEvent_le_tail_sum",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 561,
+      "line": 562,
       "statement": "theorem measure_finiteHorizonConfidenceBadEvent_le_tail_sum {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm] (mu : Measure Omega) (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (radius : Nat -> Arm -> Real) (upperTail lowerTail : Nat -> Arm -> ENNReal) (T : Nat) (hupper : forall t arm, t < T ->"
     },
     {
@@ -1486,7 +1486,7 @@
       "name": "upperConfidenceBad_subset_absDeviation",
       "full_name": "BanditRLProof.UCB.upperConfidenceBad_subset_absDeviation",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 594,
+      "line": 595,
       "statement": "theorem upperConfidenceBad_subset_absDeviation {Omega Arm : Type} (trueMean : Arm -> Real) (empiricalMean : Omega -> Arm -> Real) (radius : Arm -> Real) (arm : Arm) : upperConfidenceBad trueMean empiricalMean radius arm \u2286 {omega | radius arm <= |empiricalMean omega arm - trueMean arm|}"
     },
     {
@@ -1494,7 +1494,7 @@
       "name": "lowerConfidenceBad_subset_absDeviation",
       "full_name": "BanditRLProof.UCB.lowerConfidenceBad_subset_absDeviation",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 616,
+      "line": 617,
       "statement": "theorem lowerConfidenceBad_subset_absDeviation {Omega Arm : Type} (trueMean : Arm -> Real) (empiricalMean : Omega -> Arm -> Real) (radius : Arm -> Real) (arm : Arm) : lowerConfidenceBad trueMean empiricalMean radius arm \u2286 {omega | radius arm <= |empiricalMean omega arm - trueMean arm|}"
     },
     {
@@ -1502,7 +1502,7 @@
       "name": "measure_upperConfidenceBad_le_absDeviation",
       "full_name": "BanditRLProof.UCB.measure_upperConfidenceBad_le_absDeviation",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 630,
+      "line": 631,
       "statement": "theorem measure_upperConfidenceBad_le_absDeviation {Omega Arm : Type} [MeasurableSpace Omega] (mu : Measure Omega) (trueMean : Arm -> Real) (empiricalMean : Omega -> Arm -> Real) (radius : Arm -> Real) (arm : Arm) : mu (upperConfidenceBad trueMean empiricalMean radius arm) <= mu {omega | radius arm <= |empiricalMean omega arm - trueMean arm|}"
     },
     {
@@ -1510,7 +1510,7 @@
       "name": "measure_lowerConfidenceBad_le_absDeviation",
       "full_name": "BanditRLProof.UCB.measure_lowerConfidenceBad_le_absDeviation",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 642,
+      "line": 643,
       "statement": "theorem measure_lowerConfidenceBad_le_absDeviation {Omega Arm : Type} [MeasurableSpace Omega] (mu : Measure Omega) (trueMean : Arm -> Real) (empiricalMean : Omega -> Arm -> Real) (radius : Arm -> Real) (arm : Arm) : mu (lowerConfidenceBad trueMean empiricalMean radius arm) <= mu {omega | radius arm <= |empiricalMean omega arm - trueMean arm|}"
     },
     {
@@ -1518,7 +1518,7 @@
       "name": "measure_finiteHorizonConfidenceBadEvent_le_absDeviation_tail_sum",
       "full_name": "BanditRLProof.UCB.measure_finiteHorizonConfidenceBadEvent_le_absDeviation_tail_sum",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 660,
+      "line": 661,
       "statement": "theorem measure_finiteHorizonConfidenceBadEvent_le_absDeviation_tail_sum {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm] (mu : Measure Omega) (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (radius : Nat -> Arm -> Real) (tail : Nat -> Arm -> ENNReal) (T : Nat) (htail : forall t arm, t < T ->"
     },
     {
@@ -1526,7 +1526,7 @@
       "name": "chebyshevAbsDeviationTail",
       "full_name": "BanditRLProof.UCB.chebyshevAbsDeviationTail",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 694,
+      "line": 695,
       "statement": "noncomputable def chebyshevAbsDeviationTail {Omega Arm : Type} [MeasurableSpace Omega] (mu : Measure Omega) (empiricalMean : Omega -> Nat -> Arm -> Real) (radius : Nat -> Arm -> Real) (t : Nat) (arm : Arm) : ENNReal :="
     },
     {
@@ -1534,7 +1534,7 @@
       "name": "measure_absDeviation_le_chebyshev_tail",
       "full_name": "BanditRLProof.UCB.measure_absDeviation_le_chebyshev_tail",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 708,
+      "line": 709,
       "statement": "theorem measure_absDeviation_le_chebyshev_tail {Omega Arm : Type} [MeasurableSpace Omega] (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (radius : Nat -> Arm -> Real) (t : Nat) (arm : Arm) (hmem : MemLp (fun omega : Omega => empiricalMean omega t arm) 2 mu)"
     },
     {
@@ -1542,7 +1542,7 @@
       "name": "measure_finiteHorizonConfidenceBadEvent_le_chebyshev_tail_sum",
       "full_name": "BanditRLProof.UCB.measure_finiteHorizonConfidenceBadEvent_le_chebyshev_tail_sum",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 739,
+      "line": 740,
       "statement": "theorem measure_finiteHorizonConfidenceBadEvent_le_chebyshev_tail_sum {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm] (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (radius : Nat -> Arm -> Real) (T : Nat) (hmem : forall t arm, t < T -> MemLp (fun omega : Omega => empiricalMean omega t arm) 2 mu)"
     },
     {
@@ -1550,7 +1550,7 @@
       "name": "subGaussianOneSidedDeviationTail",
       "full_name": "BanditRLProof.UCB.subGaussianOneSidedDeviationTail",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 776,
+      "line": 777,
       "statement": "noncomputable def subGaussianOneSidedDeviationTail {Arm : Type} (radius : Nat -> Arm -> Real) (proxy : Nat -> Arm -> NNReal) (t : Nat) (arm : Arm) : ENNReal :="
     },
     {
@@ -1558,7 +1558,7 @@
       "name": "subGaussianOneSidedDeviationTail_le_exp_neg_budget",
       "full_name": "BanditRLProof.UCB.subGaussianOneSidedDeviationTail_le_exp_neg_budget",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 791,
+      "line": 792,
       "statement": "theorem subGaussianOneSidedDeviationTail_le_exp_neg_budget {Arm : Type} (radius : Nat -> Arm -> Real) (proxy : Nat -> Arm -> NNReal) (budget : Nat -> Arm -> Real) (t : Nat) (arm : Arm) (hproxy : 0 < ((proxy t arm : NNReal) : Real)) (hradius_sq : 2 * ((proxy t arm : NNReal) : Real) * budget t arm <="
     },
     {
@@ -1566,7 +1566,7 @@
       "name": "subGaussianBudgetRadius",
       "full_name": "BanditRLProof.UCB.subGaussianBudgetRadius",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 821,
+      "line": 822,
       "statement": "noncomputable def subGaussianBudgetRadius {Arm : Type} (proxy : Nat -> Arm -> NNReal) (budget : Nat -> Arm -> Real) : Nat -> Arm -> Real :="
     },
     {
@@ -1574,7 +1574,7 @@
       "name": "subGaussianBudgetRadius_nonneg",
       "full_name": "BanditRLProof.UCB.subGaussianBudgetRadius_nonneg",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 829,
+      "line": 830,
       "statement": "theorem subGaussianBudgetRadius_nonneg {Arm : Type} (proxy : Nat -> Arm -> NNReal) (budget : Nat -> Arm -> Real) (t : Nat) (arm : Arm) : 0 <= subGaussianBudgetRadius proxy budget t arm"
     },
     {
@@ -1582,7 +1582,7 @@
       "name": "subGaussianBudgetRadius_sq_domination",
       "full_name": "BanditRLProof.UCB.subGaussianBudgetRadius_sq_domination",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 843,
+      "line": 844,
       "statement": "theorem subGaussianBudgetRadius_sq_domination {Arm : Type} (proxy : Nat -> Arm -> NNReal) (budget : Nat -> Arm -> Real) (t : Nat) (arm : Arm) : 2 * ((proxy t arm : NNReal) : Real) * budget t arm <= (subGaussianBudgetRadius proxy budget t arm) ^ 2"
     },
     {
@@ -1590,7 +1590,7 @@
       "name": "subGaussianOneSidedDeviationTail_budgetRadius_le_exp_neg_budget",
       "full_name": "BanditRLProof.UCB.subGaussianOneSidedDeviationTail_budgetRadius_le_exp_neg_budget",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 857,
+      "line": 858,
       "statement": "theorem subGaussianOneSidedDeviationTail_budgetRadius_le_exp_neg_budget {Arm : Type} (proxy : Nat -> Arm -> NNReal) (budget : Nat -> Arm -> Real) (t : Nat) (arm : Arm) (hproxy : 0 < ((proxy t arm : NNReal) : Real)) : subGaussianOneSidedDeviationTail (subGaussianBudgetRadius proxy budget) proxy t arm <= ENNReal.ofReal (Real.exp (-(budget t arm)))"
     },
     {
@@ -1598,7 +1598,7 @@
       "name": "measure_upperConfidenceBad_le_subGaussian_tail",
       "full_name": "BanditRLProof.UCB.measure_upperConfidenceBad_le_subGaussian_tail",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 870,
+      "line": 871,
       "statement": "theorem measure_upperConfidenceBad_le_subGaussian_tail {Omega Arm : Type} [MeasurableSpace Omega] (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (radius : Nat -> Arm -> Real) (proxy : Nat -> Arm -> NNReal) (t : Nat) (arm : Arm) (hradius : 0 <= radius t arm)"
     },
     {
@@ -1606,7 +1606,7 @@
       "name": "measure_upperConfidenceBad_le_subGaussian_exp_neg_budget",
       "full_name": "BanditRLProof.UCB.measure_upperConfidenceBad_le_subGaussian_exp_neg_budget",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 922,
+      "line": 923,
       "statement": "theorem measure_upperConfidenceBad_le_subGaussian_exp_neg_budget {Omega Arm : Type} [MeasurableSpace Omega] (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (radius : Nat -> Arm -> Real) (proxy : Nat -> Arm -> NNReal) (budget : Nat -> Arm -> Real) (t : Nat) (arm : Arm)"
     },
     {
@@ -1614,7 +1614,7 @@
       "name": "measure_upperConfidenceBad_le_subGaussian_budgetRadius",
       "full_name": "BanditRLProof.UCB.measure_upperConfidenceBad_le_subGaussian_budgetRadius",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 952,
+      "line": 953,
       "statement": "theorem measure_upperConfidenceBad_le_subGaussian_budgetRadius {Omega Arm : Type} [MeasurableSpace Omega] (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (proxy : Nat -> Arm -> NNReal) (budget : Nat -> Arm -> Real) (t : Nat) (arm : Arm) (hproxy : 0 < ((proxy t arm : NNReal) : Real))"
     },
     {
@@ -1622,7 +1622,7 @@
       "name": "measure_lowerConfidenceBad_le_subGaussian_tail",
       "full_name": "BanditRLProof.UCB.measure_lowerConfidenceBad_le_subGaussian_tail",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 975,
+      "line": 976,
       "statement": "theorem measure_lowerConfidenceBad_le_subGaussian_tail {Omega Arm : Type} [MeasurableSpace Omega] (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (radius : Nat -> Arm -> Real) (proxy : Nat -> Arm -> NNReal) (t : Nat) (arm : Arm) (hradius : 0 <= radius t arm)"
     },
     {
@@ -1630,7 +1630,7 @@
       "name": "measure_lowerConfidenceBad_le_subGaussian_exp_neg_budget",
       "full_name": "BanditRLProof.UCB.measure_lowerConfidenceBad_le_subGaussian_exp_neg_budget",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1025,
+      "line": 1026,
       "statement": "theorem measure_lowerConfidenceBad_le_subGaussian_exp_neg_budget {Omega Arm : Type} [MeasurableSpace Omega] (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (radius : Nat -> Arm -> Real) (proxy : Nat -> Arm -> NNReal) (budget : Nat -> Arm -> Real) (t : Nat) (arm : Arm)"
     },
     {
@@ -1638,7 +1638,7 @@
       "name": "measure_lowerConfidenceBad_le_subGaussian_budgetRadius",
       "full_name": "BanditRLProof.UCB.measure_lowerConfidenceBad_le_subGaussian_budgetRadius",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1055,
+      "line": 1056,
       "statement": "theorem measure_lowerConfidenceBad_le_subGaussian_budgetRadius {Omega Arm : Type} [MeasurableSpace Omega] (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (proxy : Nat -> Arm -> NNReal) (budget : Nat -> Arm -> Real) (t : Nat) (arm : Arm) (hproxy : 0 < ((proxy t arm : NNReal) : Real))"
     },
     {
@@ -1646,7 +1646,7 @@
       "name": "measure_finiteHorizonConfidenceBadEvent_le_subGaussian_oneSided_tail_sum",
       "full_name": "BanditRLProof.UCB.measure_finiteHorizonConfidenceBadEvent_le_subGaussian_oneSided_tail_sum",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1086,
+      "line": 1087,
       "statement": "theorem measure_finiteHorizonConfidenceBadEvent_le_subGaussian_oneSided_tail_sum {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm] (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (radius : Nat -> Arm -> Real) (proxy : Nat -> Arm -> NNReal) (T : Nat) (hradius : forall t arm, t < T -> 0 <= radius t arm)"
     },
     {
@@ -1654,7 +1654,7 @@
       "name": "measure_finiteHorizonConfidenceBadEvent_le_subGaussian_exp_neg_budget_sum",
       "full_name": "BanditRLProof.UCB.measure_finiteHorizonConfidenceBadEvent_le_subGaussian_exp_neg_budget_sum",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1126,
+      "line": 1127,
       "statement": "theorem measure_finiteHorizonConfidenceBadEvent_le_subGaussian_exp_neg_budget_sum {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm] (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (radius : Nat -> Arm -> Real) (proxy : Nat -> Arm -> NNReal) (budget : Nat -> Arm -> Real) (T : Nat) (hradius : forall t arm, t < T -> 0 <= radius t arm)"
     },
     {
@@ -1662,7 +1662,7 @@
       "name": "measure_finiteHorizonConfidenceBadEvent_le_subGaussian_budgetRadius_sum",
       "full_name": "BanditRLProof.UCB.measure_finiteHorizonConfidenceBadEvent_le_subGaussian_budgetRadius_sum",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1172,
+      "line": 1173,
       "statement": "theorem measure_finiteHorizonConfidenceBadEvent_le_subGaussian_budgetRadius_sum {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm] (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (proxy : Nat -> Arm -> NNReal) (budget : Nat -> Arm -> Real) (T : Nat) (hproxy : forall t arm, t < T -> 0 < ((proxy t arm : NNReal) : Real))"
     },
     {
@@ -1670,7 +1670,7 @@
       "name": "exp_neg_log_eq_inv",
       "full_name": "BanditRLProof.UCB.exp_neg_log_eq_inv",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1208,
+      "line": 1209,
       "statement": "theorem exp_neg_log_eq_inv {x : Real} (hx : 0 < x) : Real.exp (-(Real.log x)) = x\u207b\u00b9"
     },
     {
@@ -1678,7 +1678,7 @@
       "name": "subGaussianLogBudgetRadius",
       "full_name": "BanditRLProof.UCB.subGaussianLogBudgetRadius",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1218,
+      "line": 1219,
       "statement": "noncomputable def subGaussianLogBudgetRadius {Arm : Type} (proxy : Nat -> Arm -> NNReal) (scale : Nat -> Arm -> Real) : Nat -> Arm -> Real :="
     },
     {
@@ -1686,7 +1686,7 @@
       "name": "subGaussianLogBudgetRadius_apply",
       "full_name": "BanditRLProof.UCB.subGaussianLogBudgetRadius_apply",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1224,
+      "line": 1225,
       "statement": "@[simp] theorem subGaussianLogBudgetRadius_apply {Arm : Type} (proxy : Nat -> Arm -> NNReal) (scale : Nat -> Arm -> Real) (t : Nat) (arm : Arm) : subGaussianLogBudgetRadius proxy scale t arm = Real.sqrt (2 * ((proxy t arm : NNReal) : Real) * Real.log (scale t arm))"
     },
     {
@@ -1694,7 +1694,7 @@
       "name": "subGaussianLogBudgetRadius_nonneg",
       "full_name": "BanditRLProof.UCB.subGaussianLogBudgetRadius_nonneg",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1233,
+      "line": 1234,
       "statement": "theorem subGaussianLogBudgetRadius_nonneg {Arm : Type} (proxy : Nat -> Arm -> NNReal) (scale : Nat -> Arm -> Real) (t : Nat) (arm : Arm) : 0 <= subGaussianLogBudgetRadius proxy scale t arm"
     },
     {
@@ -1702,7 +1702,7 @@
       "name": "subGaussianLogBudgetRadius_sq_domination",
       "full_name": "BanditRLProof.UCB.subGaussianLogBudgetRadius_sq_domination",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1246,
+      "line": 1247,
       "statement": "theorem subGaussianLogBudgetRadius_sq_domination {Arm : Type} (proxy : Nat -> Arm -> NNReal) (scale : Nat -> Arm -> Real) (t : Nat) (arm : Arm) : 2 * ((proxy t arm : NNReal) : Real) * Real.log (scale t arm) <= (subGaussianLogBudgetRadius proxy scale t arm) ^ 2"
     },
     {
@@ -1710,7 +1710,7 @@
       "name": "subGaussianOneSidedDeviationTail_logBudgetRadius_le_inv_scale",
       "full_name": "BanditRLProof.UCB.subGaussianOneSidedDeviationTail_logBudgetRadius_le_inv_scale",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1260,
+      "line": 1261,
       "statement": "theorem subGaussianOneSidedDeviationTail_logBudgetRadius_le_inv_scale {Arm : Type} (proxy : Nat -> Arm -> NNReal) (scale : Nat -> Arm -> Real) (t : Nat) (arm : Arm) (hproxy : 0 < ((proxy t arm : NNReal) : Real)) (hscale : 0 < scale t arm) : subGaussianOneSidedDeviationTail (subGaussianLogBudgetRadius proxy scale) proxy t arm <="
     },
     {
@@ -1718,7 +1718,7 @@
       "name": "measure_upperConfidenceBad_le_subGaussian_logBudgetRadius",
       "full_name": "BanditRLProof.UCB.measure_upperConfidenceBad_le_subGaussian_logBudgetRadius",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1278,
+      "line": 1279,
       "statement": "theorem measure_upperConfidenceBad_le_subGaussian_logBudgetRadius {Omega Arm : Type} [MeasurableSpace Omega] (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (proxy : Nat -> Arm -> NNReal) (scale : Nat -> Arm -> Real) (t : Nat) (arm : Arm) (hproxy : 0 < ((proxy t arm : NNReal) : Real))"
     },
     {
@@ -1726,7 +1726,7 @@
       "name": "measure_lowerConfidenceBad_le_subGaussian_logBudgetRadius",
       "full_name": "BanditRLProof.UCB.measure_lowerConfidenceBad_le_subGaussian_logBudgetRadius",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1305,
+      "line": 1306,
       "statement": "theorem measure_lowerConfidenceBad_le_subGaussian_logBudgetRadius {Omega Arm : Type} [MeasurableSpace Omega] (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (proxy : Nat -> Arm -> NNReal) (scale : Nat -> Arm -> Real) (t : Nat) (arm : Arm) (hproxy : 0 < ((proxy t arm : NNReal) : Real))"
     },
     {
@@ -1734,7 +1734,7 @@
       "name": "measure_finiteHorizonConfidenceBadEvent_le_subGaussian_logBudgetRadius_inv_scale_sum",
       "full_name": "BanditRLProof.UCB.measure_finiteHorizonConfidenceBadEvent_le_subGaussian_logBudgetRadius_inv_scale_sum",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1336,
+      "line": 1337,
       "statement": "theorem measure_finiteHorizonConfidenceBadEvent_le_subGaussian_logBudgetRadius_inv_scale_sum {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm] (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (proxy : Nat -> Arm -> NNReal) (scale : Nat -> Arm -> Real) (T : Nat) (hproxy : forall t arm, t < T -> 0 < ((proxy t arm : NNReal) : Real))"
     },
     {
@@ -1742,7 +1742,7 @@
       "name": "subGaussianConstantLogBudgetRadius",
       "full_name": "BanditRLProof.UCB.subGaussianConstantLogBudgetRadius",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1383,
+      "line": 1384,
       "statement": "noncomputable def subGaussianConstantLogBudgetRadius {Arm : Type} (proxy : Nat -> Arm -> NNReal) (scale : Real) : Nat -> Arm -> Real :="
     },
     {
@@ -1750,7 +1750,7 @@
       "name": "subGaussianConstantLogBudgetRadius_apply",
       "full_name": "BanditRLProof.UCB.subGaussianConstantLogBudgetRadius_apply",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1389,
+      "line": 1390,
       "statement": "@[simp] theorem subGaussianConstantLogBudgetRadius_apply {Arm : Type} (proxy : Nat -> Arm -> NNReal) (scale : Real) (t : Nat) (arm : Arm) : subGaussianConstantLogBudgetRadius proxy scale t arm = Real.sqrt (2 * ((proxy t arm : NNReal) : Real) * Real.log scale)"
     },
     {
@@ -1758,7 +1758,7 @@
       "name": "subGaussianConstantLogBudgetRadius_nonneg",
       "full_name": "BanditRLProof.UCB.subGaussianConstantLogBudgetRadius_nonneg",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1398,
+      "line": 1399,
       "statement": "theorem subGaussianConstantLogBudgetRadius_nonneg {Arm : Type} (proxy : Nat -> Arm -> NNReal) (scale : Real) (t : Nat) (arm : Arm) : 0 <= subGaussianConstantLogBudgetRadius proxy scale t arm"
     },
     {
@@ -1766,7 +1766,7 @@
       "name": "subGaussianConstantLogBudgetRadius_sq_domination",
       "full_name": "BanditRLProof.UCB.subGaussianConstantLogBudgetRadius_sq_domination",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1410,
+      "line": 1411,
       "statement": "theorem subGaussianConstantLogBudgetRadius_sq_domination {Arm : Type} (proxy : Nat -> Arm -> NNReal) (scale : Real) (t : Nat) (arm : Arm) : 2 * ((proxy t arm : NNReal) : Real) * Real.log scale <= (subGaussianConstantLogBudgetRadius proxy scale t arm) ^ 2"
     },
     {
@@ -1774,7 +1774,7 @@
       "name": "constant_invScale_double_sum",
       "full_name": "BanditRLProof.UCB.constant_invScale_double_sum",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1423,
+      "line": 1424,
       "statement": "theorem constant_invScale_double_sum {Arm : Type} [Fintype Arm] (T : Nat) (scale : Real) : (Finset.range T).sum (fun _ => (Finset.univ : Finset Arm).sum (fun _ => ENNReal.ofReal scale\u207b\u00b9 + ENNReal.ofReal scale\u207b\u00b9)) = HSMul.hSMul T"
     },
     {
@@ -1782,7 +1782,7 @@
       "name": "measure_finiteHorizonConfidenceBadEvent_le_subGaussian_constantLogBudgetRadius_card",
       "full_name": "BanditRLProof.UCB.measure_finiteHorizonConfidenceBadEvent_le_subGaussian_constantLogBudgetRadius_card",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1439,
+      "line": 1440,
       "statement": "theorem measure_finiteHorizonConfidenceBadEvent_le_subGaussian_constantLogBudgetRadius_card {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm] (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (proxy : Nat -> Arm -> NNReal) (scale : Real) (T : Nat) (hproxy : forall t arm, t < T -> 0 < ((proxy t arm : NNReal) : Real))"
     },
     {
@@ -1790,7 +1790,7 @@
       "name": "constant_invScale_double_sum_le_of_real",
       "full_name": "BanditRLProof.UCB.constant_invScale_double_sum_le_of_real",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1476,
+      "line": 1477,
       "statement": "theorem constant_invScale_double_sum_le_of_real {Arm : Type} [Fintype Arm] (T : Nat) (scale delta : Real) (hscale : 0 < scale) (hreal : (T : Real) * ((Fintype.card Arm : Real) * (scale\u207b\u00b9 + scale\u207b\u00b9)) <= delta) : HSMul.hSMul T (HSMul.hSMul (Fintype.card Arm)"
     },
     {
@@ -1798,7 +1798,7 @@
       "name": "textbookDeltaScale",
       "full_name": "BanditRLProof.UCB.textbookDeltaScale",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1504,
+      "line": 1505,
       "statement": "noncomputable def textbookDeltaScale {Arm : Type} [Fintype Arm] (T : Nat) (delta : Real) : Real :="
     },
     {
@@ -1806,7 +1806,7 @@
       "name": "textbookDeltaScale_pos",
       "full_name": "BanditRLProof.UCB.textbookDeltaScale_pos",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1509,
+      "line": 1510,
       "statement": "theorem textbookDeltaScale_pos {Arm : Type} [Fintype Arm] [Nonempty Arm] (T : Nat) (delta : Real) (hT : 0 < T) (hdelta : 0 < delta) : 0 < textbookDeltaScale (Arm"
     },
     {
@@ -1814,7 +1814,7 @@
       "name": "textbookDeltaScale_total_inv_budget_eq_delta",
       "full_name": "BanditRLProof.UCB.textbookDeltaScale_total_inv_budget_eq_delta",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1521,
+      "line": 1522,
       "statement": "theorem textbookDeltaScale_total_inv_budget_eq_delta {Arm : Type} [Fintype Arm] [Nonempty Arm] (T : Nat) (delta : Real) (hT : 0 < T) (hdelta : 0 < delta) : (T : Real) * ((Fintype.card Arm : Real) * ((textbookDeltaScale (Arm"
     },
     {
@@ -1822,7 +1822,7 @@
       "name": "constant_invScale_double_sum_textbookDeltaScale_le_delta",
       "full_name": "BanditRLProof.UCB.constant_invScale_double_sum_textbookDeltaScale_le_delta",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1544,
+      "line": 1545,
       "statement": "theorem constant_invScale_double_sum_textbookDeltaScale_le_delta {Arm : Type} [Fintype Arm] [Nonempty Arm] (T : Nat) (delta : Real) (hT : 0 < T) (hdelta : 0 < delta) : HSMul.hSMul T (HSMul.hSMul (Fintype.card Arm) (ENNReal.ofReal (textbookDeltaScale (Arm"
     },
     {
@@ -1830,7 +1830,7 @@
       "name": "subGaussianTextbookDeltaRadius",
       "full_name": "BanditRLProof.UCB.subGaussianTextbookDeltaRadius",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1560,
+      "line": 1561,
       "statement": "noncomputable def subGaussianTextbookDeltaRadius {Arm : Type} [Fintype Arm] (proxy : Nat -> Arm -> NNReal) (T : Nat) (delta : Real) : Nat -> Arm -> Real :="
     },
     {
@@ -1838,7 +1838,7 @@
       "name": "subGaussianTextbookDeltaRadius_apply",
       "full_name": "BanditRLProof.UCB.subGaussianTextbookDeltaRadius_apply",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1567,
+      "line": 1568,
       "statement": "@[simp] theorem subGaussianTextbookDeltaRadius_apply {Arm : Type} [Fintype Arm] (proxy : Nat -> Arm -> NNReal) (T : Nat) (delta : Real) (t : Nat) (arm : Arm) : subGaussianTextbookDeltaRadius proxy T delta t arm = Real.sqrt (2 * ((proxy t arm : NNReal) : Real) * Real.log (textbookDeltaScale (Arm"
     },
     {
@@ -1846,7 +1846,7 @@
       "name": "measure_finiteHorizonConfidenceBadEvent_le_subGaussian_textbookDeltaRadius_delta",
       "full_name": "BanditRLProof.UCB.measure_finiteHorizonConfidenceBadEvent_le_subGaussian_textbookDeltaRadius_delta",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1580,
+      "line": 1581,
       "statement": "theorem measure_finiteHorizonConfidenceBadEvent_le_subGaussian_textbookDeltaRadius_delta {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm] [Nonempty Arm] (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (proxy : Nat -> Arm -> NNReal) (T : Nat) (delta : Real) (hT : 0 < T) (hdelta : 0 < delta) (hproxy : forall t arm, t < T ->"
     },
     {
@@ -1854,7 +1854,7 @@
       "name": "measure_scoreMaxEvent_le_subGaussian_textbookDeltaRadius_delta_of_gap",
       "full_name": "BanditRLProof.UCB.measure_scoreMaxEvent_le_subGaussian_textbookDeltaRadius_delta_of_gap",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1613,
+      "line": 1614,
       "statement": "theorem measure_scoreMaxEvent_le_subGaussian_textbookDeltaRadius_delta_of_gap {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm] [Nonempty Arm] (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (proxy : Nat -> Arm -> NNReal) (T : Nat) (delta : Real) (t : Nat) (best chosen : Arm) (hT : 0 < T) (hdelta : 0 < delta) (ht : t < T)"
     },
     {
@@ -1862,7 +1862,7 @@
       "name": "selectedEvent_subset_scoreMaxEvent_of_action_score_max",
       "full_name": "BanditRLProof.UCB.selectedEvent_subset_scoreMaxEvent_of_action_score_max",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1658,
+      "line": 1659,
       "statement": "theorem selectedEvent_subset_scoreMaxEvent_of_action_score_max {Omega Arm : Type} (empiricalMean : Omega -> Nat -> Arm -> Real) (radius : Nat -> Arm -> Real) (action : Omega -> Nat -> Arm) (t : Nat) (best chosen : Arm) (hscore_of_selected : forall omega, action omega t = chosen ->"
     },
     {
@@ -1870,7 +1870,7 @@
       "name": "measure_selectedLargeGapEvent_le_subGaussian_textbookDeltaRadius_delta",
       "full_name": "BanditRLProof.UCB.measure_selectedLargeGapEvent_le_subGaussian_textbookDeltaRadius_delta",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1684,
+      "line": 1685,
       "statement": "theorem measure_selectedLargeGapEvent_le_subGaussian_textbookDeltaRadius_delta {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm] [Nonempty Arm] (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (action : Omega -> Nat -> Arm) (proxy : Nat -> Arm -> NNReal) (T : Nat) (delta : Real) (t : Nat) (best chosen : Arm)"
     },
     {
@@ -1878,7 +1878,7 @@
       "name": "selectedEventOn_subset_finiteHorizonConfidenceBadEvent_of_action_score_max",
       "full_name": "BanditRLProof.UCB.selectedEventOn_subset_finiteHorizonConfidenceBadEvent_of_action_score_max",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1733,
+      "line": 1734,
       "statement": "theorem selectedEventOn_subset_finiteHorizonConfidenceBadEvent_of_action_score_max {Omega Arm : Type} [Fintype Arm] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (radius : Nat -> Arm -> Real) (action : Omega -> Nat -> Arm) (T : Nat) (times : Finset Nat) (best chosen : Arm)"
     },
     {
@@ -1886,7 +1886,7 @@
       "name": "measure_selectedLargeGapEventOn_le_subGaussian_textbookDeltaRadius_delta",
       "full_name": "BanditRLProof.UCB.measure_selectedLargeGapEventOn_le_subGaussian_textbookDeltaRadius_delta",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1765,
+      "line": 1766,
       "statement": "theorem measure_selectedLargeGapEventOn_le_subGaussian_textbookDeltaRadius_delta {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm] [Nonempty Arm] (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (action : Omega -> Nat -> Arm) (proxy : Nat -> Arm -> NNReal) (T : Nat) (delta : Real) (times : Finset Nat) (best chosen : Arm)"
     },
     {
@@ -1894,7 +1894,7 @@
       "name": "measure_confidenceScoreArgmax_selectedLargeGapEvent_le_subGaussian_textbookDeltaRadius_delta",
       "full_name": "BanditRLProof.UCB.measure_confidenceScoreArgmax_selectedLargeGapEvent_le_subGaussian_textbookDeltaRadius_delta",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1811,
+      "line": 1812,
       "statement": "theorem measure_confidenceScoreArgmax_selectedLargeGapEvent_le_subGaussian_textbookDeltaRadius_delta {Omega : Type} [MeasurableSpace Omega] {K : Nat} (hK : 0 < K) (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Fin K -> Real) (empiricalMean : Omega -> Nat -> Fin K -> Real) (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real) (t : Nat) (best chosen : Fin K)"
     },
     {
@@ -1902,15 +1902,31 @@
       "name": "measure_confidenceScoreArgmax_selectedLargeGapEventOn_le_subGaussian_textbookDeltaRadius_delta",
       "full_name": "BanditRLProof.UCB.measure_confidenceScoreArgmax_selectedLargeGapEventOn_le_subGaussian_textbookDeltaRadius_delta",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1853,
+      "line": 1854,
       "statement": "theorem measure_confidenceScoreArgmax_selectedLargeGapEventOn_le_subGaussian_textbookDeltaRadius_delta {Omega : Type} [MeasurableSpace Omega] {K : Nat} (hK : 0 < K) (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Fin K -> Real) (empiricalMean : Omega -> Nat -> Fin K -> Real) (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real) (times : Finset Nat) (best chosen : Fin K)"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_measure_confidenceScoreArgmax_selectedLargeGapEventOn_le_card_mul_delta",
+      "full_name": "BanditRLProof.UCB.sum_measure_confidenceScoreArgmax_selectedLargeGapEventOn_le_card_mul_delta",
+      "file": "BanditRLProof/Algorithms/UCB.lean",
+      "line": 1902,
+      "statement": "theorem sum_measure_confidenceScoreArgmax_selectedLargeGapEventOn_le_card_mul_delta {Omega : Type} [MeasurableSpace Omega] {K : Nat} (hK : 0 < K) (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Fin K -> Real) (empiricalMean : Omega -> Nat -> Fin K -> Real) (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real) (times : Finset Nat) (best chosen : Fin K)"
+    },
+    {
+      "kind": "theorem",
+      "name": "lintegral_confidenceScoreArgmax_selectedLargeGapCountOn_le_card_mul_delta",
+      "full_name": "BanditRLProof.UCB.lintegral_confidenceScoreArgmax_selectedLargeGapCountOn_le_card_mul_delta",
+      "file": "BanditRLProof/Algorithms/UCB.lean",
+      "line": 1957,
+      "statement": "theorem lintegral_confidenceScoreArgmax_selectedLargeGapCountOn_le_card_mul_delta {Omega : Type} [MeasurableSpace Omega] {K : Nat} (hK : 0 < K) [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)] (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Fin K -> Real) (empiricalMean : Omega -> Nat -> Fin K -> Real) (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)"
     },
     {
       "kind": "def",
       "name": "subGaussianAbsDeviationTail",
       "full_name": "BanditRLProof.UCB.subGaussianAbsDeviationTail",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1901,
+      "line": 2013,
       "statement": "noncomputable def subGaussianAbsDeviationTail {Arm : Type} (radius : Nat -> Arm -> Real) (proxy : Nat -> Arm -> NNReal) (t : Nat) (arm : Arm) : ENNReal :="
     },
     {
@@ -1918,7 +1934,7 @@
       "name": "measure_absDeviation_le_subGaussian_tail",
       "full_name": "BanditRLProof.UCB.measure_absDeviation_le_subGaussian_tail",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1913,
+      "line": 2025,
       "statement": "theorem measure_absDeviation_le_subGaussian_tail {Omega Arm : Type} [MeasurableSpace Omega] (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (radius : Nat -> Arm -> Real) (proxy : Nat -> Arm -> NNReal) (t : Nat) (arm : Arm) (hradius : 0 <= radius t arm)"
     },
     {
@@ -1926,7 +1942,7 @@
       "name": "measure_finiteHorizonConfidenceBadEvent_le_subGaussian_tail_sum",
       "full_name": "BanditRLProof.UCB.measure_finiteHorizonConfidenceBadEvent_le_subGaussian_tail_sum",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 1997,
+      "line": 2109,
       "statement": "theorem measure_finiteHorizonConfidenceBadEvent_le_subGaussian_tail_sum {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm] (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (radius : Nat -> Arm -> Real) (proxy : Nat -> Arm -> NNReal) (T : Nat) (hradius : forall t arm, t < T -> 0 <= radius t arm)"
     },
     {
@@ -1934,7 +1950,7 @@
       "name": "obligationNames",
       "full_name": "BanditRLProof.UCB.obligationNames",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 2026,
+      "line": 2138,
       "statement": "def obligationNames : List String :="
     },
     {

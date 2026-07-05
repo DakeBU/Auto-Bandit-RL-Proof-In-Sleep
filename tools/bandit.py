@@ -1325,6 +1325,22 @@ LOCAL_LEAF_CARDS = [
         "mathlib_routes": ["LOCAL-LEAF-UCB-SELECTED-LARGE-GAP-DELTA", "MLIB-FINTYPE-FIN", "MLIB-FINSET-SUMS"],
     },
     {
+        "id": "LOCAL-LEAF-UCB-CONCRETE-SCORE-ARGMAX-COUNT-BUDGET",
+        "leaf_ids": [
+            "UCB-GOOD-EVENT-GAP-CONSUMER",
+            "TAIL-SUMMABILITY-UCB",
+            "EXP-FINSET-INDICATOR-PULL",
+        ],
+        "module": "BanditRLProof.Algorithms.UCB",
+        "status": "leanCompiled",
+        "declarations": [
+            "UCB.sum_measure_confidenceScoreArgmax_selectedLargeGapEventOn_le_card_mul_delta",
+            "UCB.lintegral_confidenceScoreArgmax_selectedLargeGapCountOn_le_card_mul_delta",
+        ],
+        "role": "Compiled count-facing UCB score-argmax bridge: sums the single-time concrete large-gap selected-arm probability bounds over an explicit finite time set and lifts the result through the existing finite-sum selected-action indicator lower-integral API, yielding a selected-time count budget `|times| * delta`. This is not yet recursive `pullCount`; empirical-mean construction, history-recursive UCB action trace, pull-count conversion over threshold/suffix sets, and final regret remain separate.",
+        "mathlib_routes": ["LOCAL-LEAF-UCB-CONCRETE-SCORE-ARGMAX-ACTION", "LOCAL-LEAF-EXPECTATION-SUMS", "EXP-FINSET-INDICATOR-PULL", "MLIB-FINSET-SUMS"],
+    },
+    {
         "id": "LOCAL-LEAF-IID-REWARD-FAMILY",
         "leaf_ids": [
             "IID-REWARD-FAMILY",
@@ -6871,6 +6887,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- UCB-SUBGAUSSIAN-TEXTBOOK-DELTA-RADIUS is compiled locally as the textbook finite-horizon delta-scale leaf: `scale = 2 * T * |Arm| / delta` is positive under `0 < T`, nonempty finite arms, and `0 < delta`, the folded two-sided inverse-scale tail budget is bounded by `ENNReal.ofReal delta`, the finite-horizon confidence bad event is bounded by `delta`, and large-gap score-max events inherit that same delta budget under centered empirical-mean sub-Gaussian hypotheses; empirical-mean construction, pull-count bounds, and final UCB regret remain separate.")
     print("- UCB-SELECTED-LARGE-GAP-DELTA is compiled locally as the selected-action bridge: a selected action with a score-maximality certificate is contained in the score-max event, and finite-time-set large-gap selected-arm events are covered by the same finite-horizon bad event, so they inherit the textbook `delta` budget; concrete UCB argmax/tie-breaking policy, empirical-mean construction, pull-count summation, and final regret remain separate.")
     print("- UCB-CONCRETE-SCORE-ARGMAX-ACTION is compiled locally as a concrete finite-arm Real score argmax action for UCB confidence scores; it discharges selected-action score maximality and specializes the single-time and finite-time-set large-gap textbook `delta` bounds without an external score certificate; empirical-mean construction, recursive history action trace, pull-count summation, and final regret remain separate.")
+    print("- UCB-CONCRETE-SCORE-ARGMAX-COUNT-BUDGET is compiled locally as a count-facing bridge: finite-time-set selected large-gap probabilities for concrete UCB score argmax sum to at most `|times| * delta`, and the same budget controls the lower integral of the selected-time indicator count; recursive pullCount conversion and final regret remain separate.")
     print("- TAIL-UNION-FINITE is compiled locally as generic finite-union outer-measure wrappers for explicit Finset and Fintype event families.")
     print("- TAIL-SUMMABILITY-UCB is compiled locally as an abstract finite-horizon UCB bad-event summability wrapper over finite arms and t < T; UCB empirical-mean construction, pull-count bounds, and final regret remain separate.")
     print("- EXP3-POTENTIAL is compiled locally as a deterministic finite-action exponential-weights potential surface with updated-potential unfolding, nonnegativity, one-step increment algebra, and finite-horizon telescope; estimator/log/regret leaves remain separate.")
