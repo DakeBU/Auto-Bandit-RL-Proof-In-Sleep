@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-05T04:05:38+00:00",
+  "generated": "2026-07-05T04:12:38+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -1963,10 +1963,66 @@
     },
     {
       "kind": "def",
+      "name": "subGaussianTextbookDeltaRadiusChargedTimes",
+      "full_name": "BanditRLProof.UCB.subGaussianTextbookDeltaRadiusChargedTimes",
+      "file": "BanditRLProof/Algorithms/UCB.lean",
+      "line": 2295,
+      "statement": "noncomputable def subGaussianTextbookDeltaRadiusChargedTimes {K : Nat} (trueMean : Fin K -> Real) (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real) (best chosen : Fin K) : Finset Nat :="
+    },
+    {
+      "kind": "def",
+      "name": "subGaussianTextbookDeltaRadiusFreeTimes",
+      "full_name": "BanditRLProof.UCB.subGaussianTextbookDeltaRadiusFreeTimes",
+      "file": "BanditRLProof/Algorithms/UCB.lean",
+      "line": 2310,
+      "statement": "noncomputable def subGaussianTextbookDeltaRadiusFreeTimes {K : Nat} (trueMean : Fin K -> Real) (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real) (best chosen : Fin K) : Finset Nat :="
+    },
+    {
+      "kind": "theorem",
+      "name": "mem_subGaussianTextbookDeltaRadiusChargedTimes_iff",
+      "full_name": "BanditRLProof.UCB.mem_subGaussianTextbookDeltaRadiusChargedTimes_iff",
+      "file": "BanditRLProof/Algorithms/UCB.lean",
+      "line": 2319,
+      "statement": "@[simp] theorem mem_subGaussianTextbookDeltaRadiusChargedTimes_iff {K : Nat} (trueMean : Fin K -> Real) (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real) (best chosen : Fin K) (t : Nat) : t \u2208 subGaussianTextbookDeltaRadiusChargedTimes trueMean proxy T delta best chosen \u2194 t < T \u2227 2 * subGaussianTextbookDeltaRadius proxy T delta t chosen <"
+    },
+    {
+      "kind": "theorem",
+      "name": "mem_subGaussianTextbookDeltaRadiusFreeTimes_iff",
+      "full_name": "BanditRLProof.UCB.mem_subGaussianTextbookDeltaRadiusFreeTimes_iff",
+      "file": "BanditRLProof/Algorithms/UCB.lean",
+      "line": 2330,
+      "statement": "@[simp] theorem mem_subGaussianTextbookDeltaRadiusFreeTimes_iff {K : Nat} (trueMean : Fin K -> Real) (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real) (best chosen : Fin K) (t : Nat) : t \u2208 subGaussianTextbookDeltaRadiusFreeTimes trueMean proxy T delta best chosen \u2194 t < T \u2227 \u00ac 2 * subGaussianTextbookDeltaRadius proxy T delta t chosen <"
+    },
+    {
+      "kind": "theorem",
+      "name": "subGaussianTextbookDeltaRadiusChargedTimes_of_not_free",
+      "full_name": "BanditRLProof.UCB.subGaussianTextbookDeltaRadiusChargedTimes_of_not_free",
+      "file": "BanditRLProof/Algorithms/UCB.lean",
+      "line": 2341,
+      "statement": "theorem subGaussianTextbookDeltaRadiusChargedTimes_of_not_free {K : Nat} (trueMean : Fin K -> Real) (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real) (best chosen : Fin K) (t : Nat) : t < T -> t \u2209 subGaussianTextbookDeltaRadiusFreeTimes trueMean proxy T delta best chosen -> t \u2208 subGaussianTextbookDeltaRadiusChargedTimes"
+    },
+    {
+      "kind": "theorem",
+      "name": "subGaussianTextbookDeltaRadiusChargedTimes_gap_large",
+      "full_name": "BanditRLProof.UCB.subGaussianTextbookDeltaRadiusChargedTimes_gap_large",
+      "file": "BanditRLProof/Algorithms/UCB.lean",
+      "line": 2358,
+      "statement": "theorem subGaussianTextbookDeltaRadiusChargedTimes_gap_large {K : Nat} (trueMean : Fin K -> Real) (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real) (best chosen : Fin K) (t : Nat) : t \u2208 subGaussianTextbookDeltaRadiusChargedTimes trueMean proxy T delta best chosen -> 2 * subGaussianTextbookDeltaRadius proxy T delta t chosen < meanGap trueMean best chosen"
+    },
+    {
+      "kind": "theorem",
+      "name": "lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusFreeCard_add_horizon_delta",
+      "full_name": "BanditRLProof.UCB.lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusFreeCard_add_horizon_delta",
+      "file": "BanditRLProof/Algorithms/UCB.lean",
+      "line": 2378,
+      "statement": "theorem lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusFreeCard_add_horizon_delta {Omega : Type} [MeasurableSpace Omega] {K : Nat} (hK : 0 < K) [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)] (mu : Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (trueMean : Fin K -> Real) (empiricalMean : Omega -> Nat -> Fin K -> Real) (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)"
+    },
+    {
+      "kind": "def",
       "name": "subGaussianAbsDeviationTail",
       "full_name": "BanditRLProof.UCB.subGaussianAbsDeviationTail",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 2299,
+      "line": 2436,
       "statement": "noncomputable def subGaussianAbsDeviationTail {Arm : Type} (radius : Nat -> Arm -> Real) (proxy : Nat -> Arm -> NNReal) (t : Nat) (arm : Arm) : ENNReal :="
     },
     {
@@ -1974,7 +2030,7 @@
       "name": "measure_absDeviation_le_subGaussian_tail",
       "full_name": "BanditRLProof.UCB.measure_absDeviation_le_subGaussian_tail",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 2311,
+      "line": 2448,
       "statement": "theorem measure_absDeviation_le_subGaussian_tail {Omega Arm : Type} [MeasurableSpace Omega] (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (radius : Nat -> Arm -> Real) (proxy : Nat -> Arm -> NNReal) (t : Nat) (arm : Arm) (hradius : 0 <= radius t arm)"
     },
     {
@@ -1982,7 +2038,7 @@
       "name": "measure_finiteHorizonConfidenceBadEvent_le_subGaussian_tail_sum",
       "full_name": "BanditRLProof.UCB.measure_finiteHorizonConfidenceBadEvent_le_subGaussian_tail_sum",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 2395,
+      "line": 2532,
       "statement": "theorem measure_finiteHorizonConfidenceBadEvent_le_subGaussian_tail_sum {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm] (mu : Measure Omega) [IsFiniteMeasure mu] (trueMean : Arm -> Real) (empiricalMean : Omega -> Nat -> Arm -> Real) (radius : Nat -> Arm -> Real) (proxy : Nat -> Arm -> NNReal) (T : Nat) (hradius : forall t arm, t < T -> 0 <= radius t arm)"
     },
     {
@@ -1990,7 +2046,7 @@
       "name": "obligationNames",
       "full_name": "BanditRLProof.UCB.obligationNames",
       "file": "BanditRLProof/Algorithms/UCB.lean",
-      "line": 2424,
+      "line": 2561,
       "statement": "def obligationNames : List String :="
     },
     {

@@ -2289,6 +2289,143 @@ theorem lintegral_confidenceScoreArgmax_pullCount_le_freeCard_add_horizon_delta
       hcharged_of_not_free hgap_large haction hproxy hsubG
 
 /--
+Horizon times where the textbook delta radius is already small enough for the
+selected arm to satisfy the large-gap condition.
+-/
+noncomputable def subGaussianTextbookDeltaRadiusChargedTimes
+    {K : Nat} (trueMean : Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (best chosen : Fin K) : Finset Nat :=
+  (Finset.range T).filter
+    (fun t : Nat =>
+      2 * subGaussianTextbookDeltaRadius proxy T delta t chosen <
+        meanGap trueMean best chosen)
+
+/--
+Horizon times not yet discharged by the textbook large-gap radius condition.
+
+The next cardinality leaf can bound this concrete set by a closed-form
+gap/log/sample threshold.
+-/
+noncomputable def subGaussianTextbookDeltaRadiusFreeTimes
+    {K : Nat} (trueMean : Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (best chosen : Fin K) : Finset Nat :=
+  (Finset.range T).filter
+    (fun t : Nat =>
+      ¬ 2 * subGaussianTextbookDeltaRadius proxy T delta t chosen <
+        meanGap trueMean best chosen)
+
+@[simp] theorem mem_subGaussianTextbookDeltaRadiusChargedTimes_iff
+    {K : Nat} (trueMean : Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (best chosen : Fin K) (t : Nat) :
+    t ∈ subGaussianTextbookDeltaRadiusChargedTimes
+        trueMean proxy T delta best chosen ↔
+      t < T ∧
+        2 * subGaussianTextbookDeltaRadius proxy T delta t chosen <
+          meanGap trueMean best chosen := by
+  simp [subGaussianTextbookDeltaRadiusChargedTimes]
+
+@[simp] theorem mem_subGaussianTextbookDeltaRadiusFreeTimes_iff
+    {K : Nat} (trueMean : Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (best chosen : Fin K) (t : Nat) :
+    t ∈ subGaussianTextbookDeltaRadiusFreeTimes
+        trueMean proxy T delta best chosen ↔
+      t < T ∧
+        ¬ 2 * subGaussianTextbookDeltaRadius proxy T delta t chosen <
+          meanGap trueMean best chosen := by
+  simp [subGaussianTextbookDeltaRadiusFreeTimes]
+
+theorem subGaussianTextbookDeltaRadiusChargedTimes_of_not_free
+    {K : Nat} (trueMean : Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (best chosen : Fin K) (t : Nat) :
+    t < T ->
+    t ∉ subGaussianTextbookDeltaRadiusFreeTimes
+        trueMean proxy T delta best chosen ->
+    t ∈ subGaussianTextbookDeltaRadiusChargedTimes
+        trueMean proxy T delta best chosen := by
+  intro ht hnot_free
+  rw [mem_subGaussianTextbookDeltaRadiusChargedTimes_iff]
+  refine ⟨ht, ?_⟩
+  by_contra hnot_gap
+  exact hnot_free
+    ((mem_subGaussianTextbookDeltaRadiusFreeTimes_iff
+      trueMean proxy T delta best chosen t).2 ⟨ht, hnot_gap⟩)
+
+theorem subGaussianTextbookDeltaRadiusChargedTimes_gap_large
+    {K : Nat} (trueMean : Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (best chosen : Fin K) (t : Nat) :
+    t ∈ subGaussianTextbookDeltaRadiusChargedTimes
+        trueMean proxy T delta best chosen ->
+      2 * subGaussianTextbookDeltaRadius proxy T delta t chosen <
+        meanGap trueMean best chosen := by
+  intro ht
+  exact
+    ((mem_subGaussianTextbookDeltaRadiusChargedTimes_iff
+      trueMean proxy T delta best chosen t).1 ht).2
+
+/--
+Concrete radius-threshold split for the textbook delta UCB pull-count budget.
+
+This instantiates the abstract `freeTimes`/`chargedTimes` split with the
+large-gap predicate induced by `subGaussianTextbookDeltaRadius`. It leaves the
+closed-form cardinality bound for the concrete free-time set to the next leaf.
+-/
+theorem lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusFreeCard_add_horizon_delta
+    {Omega : Type} [MeasurableSpace Omega]
+    {K : Nat} (hK : 0 < K)
+    [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)]
+    (mu : Measure Omega) [MeasureTheory.IsProbabilityMeasure mu]
+    (trueMean : Fin K -> Real)
+    (empiricalMean : Omega -> Nat -> Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (best chosen : Fin K)
+    (hT : 0 < T) (hdelta : 0 < delta)
+    (haction : forall t : Nat,
+      Measurable
+        (fun omega : Omega =>
+          confidenceScoreArgmaxAction hK empiricalMean
+            (subGaussianTextbookDeltaRadius proxy T delta) omega t))
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    MeasureTheory.lintegral mu
+      (fun omega : Omega =>
+        ((pullCount
+          ((confidenceScoreArgmaxAction hK empiricalMean
+            (subGaussianTextbookDeltaRadius proxy T delta)) omega)
+          chosen T : Nat) : ENNReal)) <=
+      ((subGaussianTextbookDeltaRadiusFreeTimes
+        trueMean proxy T delta best chosen).card : ENNReal) +
+        (T : ENNReal) * ENNReal.ofReal delta := by
+  exact
+    lintegral_confidenceScoreArgmax_pullCount_le_freeCard_add_horizon_delta
+      hK mu trueMean empiricalMean proxy T delta
+      (subGaussianTextbookDeltaRadiusFreeTimes
+        trueMean proxy T delta best chosen)
+      (subGaussianTextbookDeltaRadiusChargedTimes
+        trueMean proxy T delta best chosen)
+      best chosen hT hdelta
+      (by
+        intro t ht hnot_free
+        exact
+          subGaussianTextbookDeltaRadiusChargedTimes_of_not_free
+            trueMean proxy T delta best chosen t ht hnot_free)
+      (by
+        intro t ht
+        exact
+          subGaussianTextbookDeltaRadiusChargedTimes_gap_large
+            trueMean proxy T delta best chosen t ht)
+      haction hproxy hsubG
+
+/--
 Two-sided sub-Gaussian tail budget for a UCB empirical mean at time `t` and
 arm `arm`.
 

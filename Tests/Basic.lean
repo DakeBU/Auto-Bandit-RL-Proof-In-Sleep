@@ -16219,6 +16219,64 @@ example {Omega : Type} [MeasurableSpace Omega]
       best chosen hT hdelta hcharged_of_not_free hgap_large
       haction hproxy hsubG
 
+example {K : Nat} (trueMean : Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (best chosen : Fin K) (t : Nat) :
+    t ∈ UCB.subGaussianTextbookDeltaRadiusChargedTimes
+        trueMean proxy T delta best chosen ↔
+      t < T ∧
+        2 * UCB.subGaussianTextbookDeltaRadius proxy T delta t chosen <
+          UCB.meanGap trueMean best chosen := by
+  exact
+    UCB.mem_subGaussianTextbookDeltaRadiusChargedTimes_iff
+      trueMean proxy T delta best chosen t
+
+example {K : Nat} (trueMean : Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (best chosen : Fin K) (t : Nat) :
+    t < T ->
+    t ∉ UCB.subGaussianTextbookDeltaRadiusFreeTimes
+        trueMean proxy T delta best chosen ->
+    t ∈ UCB.subGaussianTextbookDeltaRadiusChargedTimes
+        trueMean proxy T delta best chosen := by
+  exact
+    UCB.subGaussianTextbookDeltaRadiusChargedTimes_of_not_free
+      trueMean proxy T delta best chosen t
+
+example {Omega : Type} [MeasurableSpace Omega]
+    {K : Nat} (hK : 0 < K)
+    [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsProbabilityMeasure mu]
+    (trueMean : Fin K -> Real)
+    (empiricalMean : Omega -> Nat -> Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (best chosen : Fin K)
+    (hT : 0 < T) (hdelta : 0 < delta)
+    (haction : forall t : Nat,
+      Measurable
+        (fun omega : Omega =>
+          UCB.confidenceScoreArgmaxAction hK empiricalMean
+            (UCB.subGaussianTextbookDeltaRadius proxy T delta) omega t))
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    MeasureTheory.lintegral mu
+      (fun omega : Omega =>
+        ((pullCount
+          ((UCB.confidenceScoreArgmaxAction hK empiricalMean
+            (UCB.subGaussianTextbookDeltaRadius proxy T delta)) omega)
+          chosen T : Nat) : ENNReal)) <=
+      ((UCB.subGaussianTextbookDeltaRadiusFreeTimes
+        trueMean proxy T delta best chosen).card : ENNReal) +
+        (T : ENNReal) * ENNReal.ofReal delta := by
+  exact
+    UCB.lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusFreeCard_add_horizon_delta
+      hK mu trueMean empiricalMean proxy T delta best chosen
+      hT hdelta haction hproxy hsubG
+
 example {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
     (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
     (trueMean : Arm -> Real)
