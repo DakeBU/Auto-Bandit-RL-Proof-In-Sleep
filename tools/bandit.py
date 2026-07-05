@@ -1183,6 +1183,27 @@ LOCAL_LEAF_CARDS = [
         "mathlib_routes": ["LOCAL-LEAF-UCB-SUBGAUSSIAN-ONE-SIDED-TAIL", "Mathlib.Analysis.SpecialFunctions.Exp", "Mathlib.Data.ENNReal.Real"],
     },
     {
+        "id": "LOCAL-LEAF-UCB-SUBGAUSSIAN-SQRT-BUDGET-RADIUS",
+        "leaf_ids": [
+            "UCB-GOOD-EVENT-GAP-CONSUMER",
+            "TAIL-SUMMABILITY-UCB",
+            "TAIL-SUBGAUSS-SUM",
+        ],
+        "module": "BanditRLProof.Algorithms.UCB",
+        "status": "leanCompiled",
+        "declarations": [
+            "UCB.subGaussianBudgetRadius",
+            "UCB.subGaussianBudgetRadius_nonneg",
+            "UCB.subGaussianBudgetRadius_sq_domination",
+            "UCB.subGaussianOneSidedDeviationTail_budgetRadius_le_exp_neg_budget",
+            "UCB.measure_upperConfidenceBad_le_subGaussian_budgetRadius",
+            "UCB.measure_lowerConfidenceBad_le_subGaussian_budgetRadius",
+            "UCB.measure_finiteHorizonConfidenceBadEvent_le_subGaussian_budgetRadius_sum",
+        ],
+        "role": "Compiled concrete UCB square-root budget radius leaf: defines `subGaussianBudgetRadius proxy budget t arm = sqrt (2 * proxy * budget)`, proves nonnegativity and the radius-square domination using Mathlib `Real.sq_sqrt'`, then specializes the one-sided sub-Gaussian upper/lower confidence-failure and finite-horizon bad-event bounds to `exp(-budget)` tails. Logarithmic budget schedules, empirical-mean construction, pull-count bounds, and final UCB regret remain separate.",
+        "mathlib_routes": ["LOCAL-LEAF-UCB-SUBGAUSSIAN-RADIUS-BUDGET", "Mathlib.Data.Real.Sqrt", "Mathlib.Analysis.SpecialFunctions.Exp"],
+    },
+    {
         "id": "LOCAL-LEAF-IID-REWARD-FAMILY",
         "leaf_ids": [
             "IID-REWARD-FAMILY",
@@ -6722,6 +6743,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- UCB-SUBGAUSSIAN-ABS-DEVIATION-TAIL is compiled locally as an abstract centered empirical-mean sub-Gaussian producer for two-sided UCB absolute-deviation tails and finite-horizon confidence bad-event budgets; empirical-mean construction, proxy/radius simplification to textbook log/sqrt form, pull-count bounds, and final UCB regret remain separate.")
     print("- UCB-SUBGAUSSIAN-ONE-SIDED-TAIL is compiled locally as a sharper centered empirical-mean sub-Gaussian producer for one-sided upper/lower UCB confidence failures and finite-horizon confidence bad-event budgets; empirical-mean construction, proxy/radius simplification to textbook log/sqrt form, pull-count bounds, and final UCB regret remain separate.")
     print("- UCB-SUBGAUSSIAN-RADIUS-BUDGET is compiled locally as the one-sided radius-budget simplification: `0 < proxy` and `2 * proxy * budget <= radius^2` yield upper/lower and finite-horizon confidence bad-event bounds with `exp(-budget)` tails; empirical-mean construction, concrete sqrt/log radius instantiation, pull-count bounds, and final UCB regret remain separate.")
+    print("- UCB-SUBGAUSSIAN-SQRT-BUDGET-RADIUS is compiled locally as the concrete square-root budget radius leaf: `sqrt (2 * proxy * budget)` is nonnegative, satisfies the radius-square domination contract, and yields upper/lower and finite-horizon confidence bad-event bounds with `exp(-budget)` tails; logarithmic budget schedules, empirical-mean construction, pull-count bounds, and final UCB regret remain separate.")
     print("- TAIL-UNION-FINITE is compiled locally as generic finite-union outer-measure wrappers for explicit Finset and Fintype event families.")
     print("- TAIL-SUMMABILITY-UCB is compiled locally as an abstract finite-horizon UCB bad-event summability wrapper over finite arms and t < T; the UCB log/sqrt tail producer remains separate.")
     print("- EXP3-POTENTIAL is compiled locally as a deterministic finite-action exponential-weights potential surface with updated-potential unfolding, nonnegativity, one-step increment algebra, and finite-horizon telescope; estimator/log/regret leaves remain separate.")

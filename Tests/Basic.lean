@@ -15313,6 +15313,36 @@ example {Arm : Type}
   exact UCB.subGaussianOneSidedDeviationTail_le_exp_neg_budget
     radius proxy budget t arm hproxy hradius_sq
 
+example {Arm : Type}
+    (proxy : Nat -> Arm -> NNReal)
+    (budget : Nat -> Arm -> Real) (t : Nat) (arm : Arm) :
+    UCB.subGaussianBudgetRadius proxy budget t arm =
+      Real.sqrt (2 * ((proxy t arm : NNReal) : Real) * budget t arm) := by
+  rfl
+
+example {Arm : Type}
+    (proxy : Nat -> Arm -> NNReal)
+    (budget : Nat -> Arm -> Real) (t : Nat) (arm : Arm) :
+    0 <= UCB.subGaussianBudgetRadius proxy budget t arm := by
+  exact UCB.subGaussianBudgetRadius_nonneg proxy budget t arm
+
+example {Arm : Type}
+    (proxy : Nat -> Arm -> NNReal)
+    (budget : Nat -> Arm -> Real) (t : Nat) (arm : Arm) :
+    2 * ((proxy t arm : NNReal) : Real) * budget t arm <=
+      (UCB.subGaussianBudgetRadius proxy budget t arm) ^ 2 := by
+  exact UCB.subGaussianBudgetRadius_sq_domination proxy budget t arm
+
+example {Arm : Type}
+    (proxy : Nat -> Arm -> NNReal)
+    (budget : Nat -> Arm -> Real) (t : Nat) (arm : Arm)
+    (hproxy : 0 < ((proxy t arm : NNReal) : Real)) :
+    UCB.subGaussianOneSidedDeviationTail
+        (UCB.subGaussianBudgetRadius proxy budget) proxy t arm <=
+      ENNReal.ofReal (Real.exp (-(budget t arm))) := by
+  exact UCB.subGaussianOneSidedDeviationTail_budgetRadius_le_exp_neg_budget
+    proxy budget t arm hproxy
+
 example {Omega Arm : Type} [MeasurableSpace Omega]
     (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
     (trueMean : Arm -> Real)
@@ -15361,6 +15391,42 @@ example {Omega Arm : Type} [MeasurableSpace Omega]
     mu trueMean empiricalMean radius proxy budget t arm
     hradius hproxy hradius_sq hsubG
 
+example {Omega Arm : Type} [MeasurableSpace Omega]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (proxy : Nat -> Arm -> NNReal) (budget : Nat -> Arm -> Real)
+    (t : Nat) (arm : Arm)
+    (hproxy : 0 < ((proxy t arm : NNReal) : Real))
+    (hsubG :
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    mu (UCB.upperConfidenceBad trueMean
+        (fun omega arm => empiricalMean omega t arm)
+        (UCB.subGaussianBudgetRadius proxy budget t) arm) <=
+      ENNReal.ofReal (Real.exp (-(budget t arm))) := by
+  exact UCB.measure_upperConfidenceBad_le_subGaussian_budgetRadius
+    mu trueMean empiricalMean proxy budget t arm hproxy hsubG
+
+example {Omega Arm : Type} [MeasurableSpace Omega]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (proxy : Nat -> Arm -> NNReal) (budget : Nat -> Arm -> Real)
+    (t : Nat) (arm : Arm)
+    (hproxy : 0 < ((proxy t arm : NNReal) : Real))
+    (hsubG :
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    mu (UCB.lowerConfidenceBad trueMean
+        (fun omega arm => empiricalMean omega t arm)
+        (UCB.subGaussianBudgetRadius proxy budget t) arm) <=
+      ENNReal.ofReal (Real.exp (-(budget t arm))) := by
+  exact UCB.measure_lowerConfidenceBad_le_subGaussian_budgetRadius
+    mu trueMean empiricalMean proxy budget t arm hproxy hsubG
+
 example {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
     (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
     (trueMean : Arm -> Real)
@@ -15390,6 +15456,31 @@ example {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
     UCB.measure_finiteHorizonConfidenceBadEvent_le_subGaussian_exp_neg_budget_sum
       mu trueMean empiricalMean radius proxy budget T
       hradius hproxy hradius_sq hsubG
+
+example {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (trueMean : Arm -> Real)
+    (empiricalMean : Omega -> Nat -> Arm -> Real)
+    (proxy : Nat -> Arm -> NNReal) (budget : Nat -> Arm -> Real)
+    (T : Nat)
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    mu (UCB.finiteHorizonConfidenceBadEvent
+        trueMean empiricalMean
+        (UCB.subGaussianBudgetRadius proxy budget) T) <=
+      (Finset.range T).sum
+        (fun t =>
+          (Finset.univ : Finset Arm).sum
+            (fun arm =>
+              ENNReal.ofReal (Real.exp (-(budget t arm))) +
+                ENNReal.ofReal (Real.exp (-(budget t arm))))) := by
+  exact
+    UCB.measure_finiteHorizonConfidenceBadEvent_le_subGaussian_budgetRadius_sum
+      mu trueMean empiricalMean proxy budget T hproxy hsubG
 
 example {Omega Arm : Type} [MeasurableSpace Omega] [Fintype Arm]
     (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
