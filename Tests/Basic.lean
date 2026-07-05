@@ -16548,6 +16548,73 @@ example {Omega : Type} [MeasurableSpace Omega]
 example {Omega : Type} [MeasurableSpace Omega]
     {K : Nat} (hK : 0 < K)
     [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)]
+    [MeasurableSpace Nat] [MeasurableAdd₂ Nat] [OpensMeasurableSpace Nat]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsProbabilityMeasure mu]
+    (trueMean : Fin K -> Real)
+    (empiricalMean : Omega -> Nat -> Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (B : Nat) (best chosen : Fin K) (varianceProxy : NNReal)
+    (sampleCount : Omega -> Nat -> Fin K -> Nat)
+    (hT : 0 < T) (hdelta : 0 < delta)
+    (hgap_pos : 0 < UCB.meanGap trueMean best chosen)
+    (hlog_pos :
+      0 < Real.log (UCB.textbookDeltaScale (Arm := Fin K) T delta))
+    (hB_pos : 0 < B)
+    (hthreshold_lt_B :
+      8 * ((varianceProxy : NNReal) : Real) *
+          Real.log (UCB.textbookDeltaScale (Arm := Fin K) T delta) /
+          (UCB.meanGap trueMean best chosen) ^ 2 <
+        (B : Real))
+    (haction : forall t : Nat,
+      Measurable
+        (fun omega : Omega =>
+          UCB.confidenceScoreArgmaxAction hK empiricalMean
+            (UCB.subGaussianTextbookDeltaRadius proxy T delta) omega t))
+    (hsampleCount_eq_pullCount_selected_large : forall omega t, t < T ->
+      UCB.confidenceScoreArgmaxAction hK empiricalMean
+          (UCB.subGaussianTextbookDeltaRadius proxy T delta) omega t = chosen ->
+        B <= pullCount
+          ((UCB.confidenceScoreArgmaxAction hK empiricalMean
+            (UCB.subGaussianTextbookDeltaRadius proxy T delta)) omega)
+          chosen t ->
+        sampleCount omega t chosen =
+          pullCount
+            ((UCB.confidenceScoreArgmaxAction hK empiricalMean
+              (UCB.subGaussianTextbookDeltaRadius proxy T delta)) omega)
+            chosen t)
+    (hproxy_le_sampleCount_selected_large : forall omega t, t < T ->
+      UCB.confidenceScoreArgmaxAction hK empiricalMean
+          (UCB.subGaussianTextbookDeltaRadius proxy T delta) omega t = chosen ->
+        B <= pullCount
+          ((UCB.confidenceScoreArgmaxAction hK empiricalMean
+            (UCB.subGaussianTextbookDeltaRadius proxy T delta)) omega)
+          chosen t ->
+        ((proxy t chosen : NNReal) : Real) <=
+          ((varianceProxy : NNReal) : Real) /
+            (sampleCount omega t chosen : Real))
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    MeasureTheory.lintegral mu
+      (fun omega : Omega =>
+        ((pullCount
+          ((UCB.confidenceScoreArgmaxAction hK empiricalMean
+            (UCB.subGaussianTextbookDeltaRadius proxy T delta)) omega)
+          chosen T : Nat) : ENNReal)) <=
+      (B : ENNReal) + (T : ENNReal) * ENNReal.ofReal delta := by
+  exact
+    UCB.lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusSampleCountSource_add_horizon_delta
+      hK mu trueMean empiricalMean proxy T delta B best chosen varianceProxy
+      sampleCount hT hdelta hgap_pos hlog_pos hB_pos hthreshold_lt_B
+      haction hsampleCount_eq_pullCount_selected_large
+      hproxy_le_sampleCount_selected_large hproxy hsubG
+
+example {Omega : Type} [MeasurableSpace Omega]
+    {K : Nat} (hK : 0 < K)
+    [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)]
     (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsProbabilityMeasure mu]
     (trueMean : Fin K -> Real)
     (empiricalMean : Omega -> Nat -> Fin K -> Real)

@@ -3789,6 +3789,93 @@ theorem lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusRecursiv
   · exact hsubG
 
 /--
+Source-count version of the recursive sample-count UCB budget.
+
+This wrapper is meant for later empirical-mean leaves: they can expose their
+own history-derived `sampleCount`, prove it agrees with recursive `pullCount`
+on selected-large events, and provide the usual variance-over-count proxy bound
+for that source count. The existing recursive sample-count adapter then gives
+the same `B + T * delta` pull-count budget.
+-/
+theorem lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusSampleCountSource_add_horizon_delta
+    {Omega : Type} [MeasurableSpace Omega]
+    {K : Nat} (hK : 0 < K)
+    [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)]
+    [MeasurableSpace Nat] [MeasurableAdd₂ Nat] [OpensMeasurableSpace Nat]
+    (mu : Measure Omega) [MeasureTheory.IsProbabilityMeasure mu]
+    (trueMean : Fin K -> Real)
+    (empiricalMean : Omega -> Nat -> Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (B : Nat) (best chosen : Fin K) (varianceProxy : NNReal)
+    (sampleCount : Omega -> Nat -> Fin K -> Nat)
+    (hT : 0 < T) (hdelta : 0 < delta)
+    (hgap_pos : 0 < meanGap trueMean best chosen)
+    (hlog_pos :
+      0 < Real.log (textbookDeltaScale (Arm := Fin K) T delta))
+    (hB_pos : 0 < B)
+    (hthreshold_lt_B :
+      8 * ((varianceProxy : NNReal) : Real) *
+          Real.log (textbookDeltaScale (Arm := Fin K) T delta) /
+          (meanGap trueMean best chosen) ^ 2 <
+        (B : Real))
+    (haction : forall t : Nat,
+      Measurable
+        (fun omega : Omega =>
+          confidenceScoreArgmaxAction hK empiricalMean
+            (subGaussianTextbookDeltaRadius proxy T delta) omega t))
+    (hsampleCount_eq_pullCount_selected_large : forall omega t, t < T ->
+      confidenceScoreArgmaxAction hK empiricalMean
+          (subGaussianTextbookDeltaRadius proxy T delta) omega t = chosen ->
+        B <= pullCount
+          ((confidenceScoreArgmaxAction hK empiricalMean
+            (subGaussianTextbookDeltaRadius proxy T delta)) omega)
+          chosen t ->
+        sampleCount omega t chosen =
+          pullCount
+            ((confidenceScoreArgmaxAction hK empiricalMean
+              (subGaussianTextbookDeltaRadius proxy T delta)) omega)
+            chosen t)
+    (hproxy_le_sampleCount_selected_large : forall omega t, t < T ->
+      confidenceScoreArgmaxAction hK empiricalMean
+          (subGaussianTextbookDeltaRadius proxy T delta) omega t = chosen ->
+        B <= pullCount
+          ((confidenceScoreArgmaxAction hK empiricalMean
+            (subGaussianTextbookDeltaRadius proxy T delta)) omega)
+          chosen t ->
+        ((proxy t chosen : NNReal) : Real) <=
+          ((varianceProxy : NNReal) : Real) /
+            (sampleCount omega t chosen : Real))
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    MeasureTheory.lintegral mu
+      (fun omega : Omega =>
+        ((pullCount
+          ((confidenceScoreArgmaxAction hK empiricalMean
+            (subGaussianTextbookDeltaRadius proxy T delta)) omega)
+          chosen T : Nat) : ENNReal)) <=
+      (B : ENNReal) + (T : ENNReal) * ENNReal.ofReal delta := by
+  exact
+    lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusRecursiveSampleCount_add_horizon_delta
+      hK mu trueMean empiricalMean proxy T delta B best chosen varianceProxy
+      hT hdelta hgap_pos hlog_pos hB_pos hthreshold_lt_B haction
+      (by
+        intro omega t ht hselected hcount
+        have hsample :
+            sampleCount omega t chosen =
+              pullCount
+                ((confidenceScoreArgmaxAction hK empiricalMean
+                  (subGaussianTextbookDeltaRadius proxy T delta)) omega)
+                chosen t :=
+          hsampleCount_eq_pullCount_selected_large omega t ht hselected hcount
+        simpa [hsample] using
+          hproxy_le_sampleCount_selected_large omega t ht hselected hcount)
+      hproxy hsubG
+
+/--
 Two-sided sub-Gaussian tail budget for a UCB empirical mean at time `t` and
 arm `arm`.
 
