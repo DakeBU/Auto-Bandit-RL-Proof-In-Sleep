@@ -2063,6 +2063,77 @@ theorem lintegral_confidenceScoreArgmax_pullCount_le_horizon_mul_delta
       hproxy hsubG
 
 /--
+Threshold/suffix-shaped pull-count budget for concrete score-argmax UCB.
+
+Times in `freeTimes` are charged by the trivial probability bound `1`; every
+other horizon time must be listed in `chargedTimes` and satisfy the large-gap
+condition, so those selected events are charged by `delta`.
+-/
+theorem lintegral_confidenceScoreArgmax_pullCount_le_free_or_delta_sum
+    {Omega : Type} [MeasurableSpace Omega]
+    {K : Nat} (hK : 0 < K)
+    [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)]
+    (mu : Measure Omega) [MeasureTheory.IsProbabilityMeasure mu]
+    (trueMean : Fin K -> Real)
+    (empiricalMean : Omega -> Nat -> Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (freeTimes chargedTimes : Finset Nat) (best chosen : Fin K)
+    (hT : 0 < T) (hdelta : 0 < delta)
+    (hcharged_of_not_free : forall t, t < T -> t ∉ freeTimes -> t ∈ chargedTimes)
+    (hgap_large : forall t, t ∈ chargedTimes ->
+      2 * subGaussianTextbookDeltaRadius proxy T delta t chosen <
+        meanGap trueMean best chosen)
+    (haction : forall t : Nat,
+      Measurable
+        (fun omega : Omega =>
+          confidenceScoreArgmaxAction hK empiricalMean
+            (subGaussianTextbookDeltaRadius proxy T delta) omega t))
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    MeasureTheory.lintegral mu
+      (fun omega : Omega =>
+        ((pullCount
+          ((confidenceScoreArgmaxAction hK empiricalMean
+            (subGaussianTextbookDeltaRadius proxy T delta)) omega)
+          chosen T : Nat) : ENNReal)) <=
+      (Finset.range T).sum
+        (fun t : Nat =>
+          if t ∈ freeTimes then (1 : ENNReal) else ENNReal.ofReal delta) := by
+  rw [lintegral_natCast_pullCount_eq_sum_measure_actionTrace_eval_eq
+    (mu := mu)
+    (action :=
+      confidenceScoreArgmaxAction hK empiricalMean
+        (subGaussianTextbookDeltaRadius proxy T delta))
+    (haction := haction)
+    (a := chosen)
+    (n := T)]
+  exact Finset.sum_le_sum
+    (by
+      intro t ht_mem
+      have ht : t < T := by
+        simpa using ht_mem
+      by_cases hfree : t ∈ freeTimes
+      · have hle_univ :
+            mu {omega : Omega |
+              confidenceScoreArgmaxAction hK empiricalMean
+                (subGaussianTextbookDeltaRadius proxy T delta) omega t =
+                  chosen} <= mu Set.univ :=
+          measure_mono (Set.subset_univ _)
+        simpa [hfree, MeasureTheory.IsProbabilityMeasure.measure_univ] using
+          hle_univ
+      · have hcharged : t ∈ chargedTimes :=
+          hcharged_of_not_free t ht hfree
+        have hdelta_bound :=
+          measure_confidenceScoreArgmax_selectedLargeGapEvent_le_subGaussian_textbookDeltaRadius_delta
+            hK mu trueMean empiricalMean proxy T delta t best chosen
+            hT hdelta ht (hgap_large t hcharged) hproxy hsubG
+        simpa [hfree] using hdelta_bound)
+
+/--
 Two-sided sub-Gaussian tail budget for a UCB empirical mean at time `t` and
 arm `arm`.
 
