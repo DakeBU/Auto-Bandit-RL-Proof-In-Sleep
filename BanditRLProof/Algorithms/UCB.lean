@@ -3693,6 +3693,102 @@ theorem lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusSampleCo
       haction hproxy hsubG
 
 /--
+Recursive sample-count adapter for the selected-large-count UCB budget.
+
+For selected times whose previous recursive pull count is at least `B`, a
+variance-over-count proxy bound plus the closed real threshold certificate
+implies the textbook radius is below half the gap. The selected-large-count
+wrapper then yields the usual `B + T * delta` pull-count budget.
+-/
+theorem lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusRecursiveSampleCount_add_horizon_delta
+    {Omega : Type} [MeasurableSpace Omega]
+    {K : Nat} (hK : 0 < K)
+    [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)]
+    [MeasurableSpace Nat] [MeasurableAdd₂ Nat] [OpensMeasurableSpace Nat]
+    (mu : Measure Omega) [MeasureTheory.IsProbabilityMeasure mu]
+    (trueMean : Fin K -> Real)
+    (empiricalMean : Omega -> Nat -> Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (B : Nat) (best chosen : Fin K) (varianceProxy : NNReal)
+    (hT : 0 < T) (hdelta : 0 < delta)
+    (hgap_pos : 0 < meanGap trueMean best chosen)
+    (hlog_pos :
+      0 < Real.log (textbookDeltaScale (Arm := Fin K) T delta))
+    (hB_pos : 0 < B)
+    (hthreshold_lt_B :
+      8 * ((varianceProxy : NNReal) : Real) *
+          Real.log (textbookDeltaScale (Arm := Fin K) T delta) /
+          (meanGap trueMean best chosen) ^ 2 <
+        (B : Real))
+    (haction : forall t : Nat,
+      Measurable
+        (fun omega : Omega =>
+          confidenceScoreArgmaxAction hK empiricalMean
+            (subGaussianTextbookDeltaRadius proxy T delta) omega t))
+    (hproxy_le_selected_large : forall omega t, t < T ->
+      confidenceScoreArgmaxAction hK empiricalMean
+          (subGaussianTextbookDeltaRadius proxy T delta) omega t = chosen ->
+        B <= pullCount
+          ((confidenceScoreArgmaxAction hK empiricalMean
+            (subGaussianTextbookDeltaRadius proxy T delta)) omega)
+          chosen t ->
+        ((proxy t chosen : NNReal) : Real) <=
+          ((varianceProxy : NNReal) : Real) /
+            (pullCount
+              ((confidenceScoreArgmaxAction hK empiricalMean
+                (subGaussianTextbookDeltaRadius proxy T delta)) omega)
+              chosen t : Real))
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    MeasureTheory.lintegral mu
+      (fun omega : Omega =>
+        ((pullCount
+          ((confidenceScoreArgmaxAction hK empiricalMean
+            (subGaussianTextbookDeltaRadius proxy T delta)) omega)
+          chosen T : Nat) : ENNReal)) <=
+      (B : ENNReal) + (T : ENNReal) * ENNReal.ofReal delta := by
+  apply
+    lintegral_confidenceScoreArgmax_pullCount_le_threshold_add_horizon_delta_of_selectedLargePullCount
+      hK mu trueMean empiricalMean proxy T delta B best chosen
+      hT hdelta haction
+  · intro omega t ht hselected hcount
+    let sampleCount : Nat :=
+      pullCount
+        ((confidenceScoreArgmaxAction hK empiricalMean
+          (subGaussianTextbookDeltaRadius proxy T delta)) omega)
+        chosen t
+    have hcount_pos : 0 < sampleCount := by
+      exact Nat.lt_of_lt_of_le hB_pos hcount
+    have hcount_large :
+        8 * ((varianceProxy : NNReal) : Real) *
+            Real.log (textbookDeltaScale (Arm := Fin K) T delta) <
+          (meanGap trueMean best chosen) ^ 2 * (sampleCount : Real) := by
+      exact
+        subGaussianTextbookDeltaRadius_count_large_of_threshold_lt_bound
+          trueMean T delta best chosen varianceProxy B sampleCount
+          hgap_pos hthreshold_lt_B hcount
+    have hhalf :
+        subGaussianTextbookDeltaRadius proxy T delta t chosen <
+          meanGap trueMean best chosen / 2 := by
+      exact
+        subGaussianTextbookDeltaRadius_lt_half_meanGap_of_proxy_le_variance_div_count
+          trueMean proxy T delta best chosen t varianceProxy sampleCount
+          hgap_pos hlog_pos hcount_pos
+          (by
+            simpa [sampleCount] using
+              hproxy_le_selected_large omega t ht hselected hcount)
+          hcount_large
+    exact
+      subGaussianTextbookDeltaRadius_large_gap_of_lt_half_meanGap
+        trueMean proxy T delta best chosen t hhalf
+  · exact hproxy
+  · exact hsubG
+
+/--
 Two-sided sub-Gaussian tail budget for a UCB empirical mean at time `t` and
 arm `arm`.
 
