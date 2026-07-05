@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-05T03:41:58+00:00",
+  "generated": "2026-07-05T03:46:22+00:00",
   "cards": [
     {
       "id": "LOCAL-LEAF-FINITE-BOOKKEEPING",
@@ -509,12 +509,14 @@
       "status": "leanCompiled",
       "declarations": [
         "UCB.sum_measure_confidenceScoreArgmax_selectedLargeGapEventOn_le_card_mul_delta",
-        "UCB.lintegral_confidenceScoreArgmax_selectedLargeGapCountOn_le_card_mul_delta"
+        "UCB.lintegral_confidenceScoreArgmax_selectedLargeGapCountOn_le_card_mul_delta",
+        "UCB.lintegral_confidenceScoreArgmax_pullCount_le_horizon_mul_delta"
       ],
-      "role": "Compiled count-facing UCB score-argmax bridge: sums the single-time concrete large-gap selected-arm probability bounds over an explicit finite time set and lifts the result through the existing finite-sum selected-action indicator lower-integral API, yielding a selected-time count budget `|times| * delta`. This is not yet recursive `pullCount`; empirical-mean construction, history-recursive UCB action trace, pull-count conversion over threshold/suffix sets, and final regret remain separate.",
+      "role": "Compiled count-facing UCB score-argmax bridge: sums the single-time concrete large-gap selected-arm probability bounds over an explicit finite time set, lifts the result through the existing finite-sum selected-action indicator lower-integral API, yielding a selected-time count budget `|times| * delta`, and specializes `times = Finset.range T` through the existing recursive `pullCount` lower-integral identity to bound the selected arm's horizon pull count by `T * delta` when the large-gap condition holds throughout the horizon. Empirical-mean construction, history-recursive UCB action trace, threshold/suffix decomposition, and final regret remain separate.",
       "mathlib_routes": [
         "LOCAL-LEAF-UCB-CONCRETE-SCORE-ARGMAX-ACTION",
         "LOCAL-LEAF-EXPECTATION-SUMS",
+        "LOCAL-LEAF-EXPECTATION-PULLCOUNT",
         "EXP-FINSET-INDICATOR-PULL",
         "MLIB-FINSET-SUMS"
       ]
