@@ -4964,6 +4964,35 @@ LOCAL_LEAF_CARDS = [
         ],
     },
     {
+        "id": "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-RAW-BOUND-MEASURABLE-MEAN-BOUNDED-SOURCE-MEAN-ZERO",
+        "leaf_ids": [
+            "COND-EXPECT-REWARD",
+            "ADAPTED-ACTION",
+            "MEAS-POLICY",
+            "MEAS-HISTORY",
+            "KERNEL-POLICY-BIND",
+            "KERNEL-REWARD",
+            "INT-REWARD-BOUNDED",
+            "MEAS-REWARD",
+        ],
+        "module": "BanditRLProof.ConditionalRewardLawSource",
+        "status": "leanCompiled",
+        "declarations": [
+            "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairRawBoundMeasurableMeanBoundedSource",
+        ],
+        "role": "Compiled project-local source-level raw-bound/measurable-selected-mean conditional mean-zero consumer leaf for the COND-EXPECT-REWARD route: a GeneratedActionRandomPairRawBoundMeasurableMeanBoundedSource packages the generated random-pair law source, centered reward-kernel law, raw reward interval bounds, selected-mean interval bounds, and mean measurability, then yields the succ-indexed ordinary conditional expectation zero statement. The proof lowers the source to the raw-bound/mean-bounded layer and reuses that compiled conditional mean-zero consumer. It still assumes the packaged random next-pair law, source regularity fields, and ambient trajectory-to-condExpKernel identification; it adds no variance ceiling, conditional MGF witness, adaptive law identification, or final regret theorem.",
+        "mathlib_routes": [
+            "MLIB-CONDITIONAL-EXPECTATION",
+            "MLIB-MEASURE-INTEGRAL",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-RAW-BOUND-MEASURABLE-MEAN-BOUNDED-SOURCE-CONTRACT",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-RAW-BOUND-MEAN-BOUNDED-SOURCE-CONTRACT",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-RANDOM-PAIR-SOURCE-CONTRACT",
+            "FILTRATION-HISTORY",
+            "INT-REWARD-BOUNDED",
+            "MEAS-REWARD",
+        ],
+    },
+    {
         "id": "LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-RAW-BOUND-MEASURABLE-MEAN-BOUNDED-SOURCE-TO-HISTORYSTEP-PAIR-LAW",
         "leaf_ids": [
             "COND-EXPECT-REWARD",
@@ -8754,6 +8783,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- COND-EXPECT-REWARD-RANDOM-PAIR-RAW-BOUND-MEAN-BOUNDED-SOURCE-TO-HISTORYSTEP-PAIR-LAW is compiled locally as the raw-reward-bound/selected-mean bounded canonical pair-law consumer: GeneratedActionRandomPairRawBoundMeanBoundedSource now directly yields the RewardKernel.actionRewardHistoryStepKernelFamily next-pair law by lowering through the raw/mean bounded source; it still assumes the random next-pair law source and ambient trajectory-to-condExpKernel identification.")
     print("- COND-EXPECT-REWARD-RANDOM-PAIR-RAW-BOUND-MEAN-BOUNDED-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE is compiled locally as a source-conversion leaf: a raw-reward-bound/selected-mean bounded generated random-pair source now projects its packaged map source and state measurability into the weaker actual-action reward-coordinate source; it still assumes the raw-bound/mean-bounded source fields and random pair law.")
     print("- COND-EXPECT-REWARD-GENERATED-RAW-BOUND-MEASURABLE-MEAN-BOUNDED-SOURCE-CONTRACT is compiled locally as the variant that derives selected mean Rat-to-Real a.e. measurability from a measurable mean surface composed with finite reward histories, context/state extractors, and the measurable policy action, then reuses the raw-bound/mean-bounded source consumers; it still assumes the random pair law source, raw reward bounds, selected mean bounds, and ambient trajectory-to-condExpKernel identification.")
+    print("- COND-EXPECT-REWARD-GENERATED-RAW-BOUND-MEASURABLE-MEAN-BOUNDED-SOURCE-MEAN-ZERO is compiled locally as the source-level raw-bound/measurable-selected-mean conditional mean-zero consumer: a GeneratedActionRandomPairRawBoundMeasurableMeanBoundedSource lowers to the raw-bound/mean-bounded layer and yields succ-indexed ordinary conditional expectation zero; it still assumes the packaged random next-pair law, source regularity fields, and ambient trajectory-to-condExpKernel identification.")
     print("- COND-EXPECT-REWARD-RANDOM-PAIR-RAW-BOUND-MEASURABLE-MEAN-BOUNDED-SOURCE-TO-HISTORYSTEP-PAIR-LAW is compiled locally as the raw-reward-bound/measurable-selected-mean canonical pair-law consumer: GeneratedActionRandomPairRawBoundMeasurableMeanBoundedSource now directly yields the RewardKernel.actionRewardHistoryStepKernelFamily next-pair law by lowering through the raw-bound/mean-bounded source; it still assumes the random next-pair law source and ambient trajectory-to-condExpKernel identification.")
     print("- COND-EXPECT-REWARD-RANDOM-PAIR-RAW-BOUND-MEASURABLE-MEAN-BOUNDED-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE is compiled locally as a source-conversion leaf: a raw-reward-bound/measurable-selected-mean generated random-pair source now projects its packaged map source and state measurability into the weaker actual-action reward-coordinate source; it still assumes the raw-bound/measurable-mean source fields and random pair law.")
     print("- COND-EXPECT-REWARD-GENERATED-RAW-BOUND-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-CONTRACT is compiled locally as the variant that derives selected mean a.e. interval bounds from deterministic pointwise mean range bounds, then reuses the raw-bound/measurable-mean source consumers; it still assumes the random pair law source, raw reward bounds, mean measurability, deterministic mean range bounds, and ambient trajectory-to-condExpKernel identification.")
