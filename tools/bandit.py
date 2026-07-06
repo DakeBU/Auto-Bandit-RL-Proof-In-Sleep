@@ -5301,6 +5301,32 @@ LOCAL_LEAF_CARDS = [
         ],
     },
     {
+        "id": "LOCAL-LEAF-COND-EXPECT-REWARD-SELECTED-POLICY-UNIFORM-VARIANCE-LARGER-PROXY-COND-MGF",
+        "leaf_ids": [
+            "COND-EXPECT-REWARD",
+            "ADAPTED-ACTION",
+            "MEAS-POLICY",
+            "MEAS-HISTORY",
+            "KERNEL-POLICY-BIND",
+            "KERNEL-REWARD",
+            "INT-REWARD-BOUNDED",
+            "MEAS-REWARD",
+        ],
+        "module": "BanditRLProof.ConditionalRewardLawSource",
+        "status": "leanCompiled",
+        "declarations": [
+            "ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded_of_varianceCeiling_le",
+        ],
+        "role": "Compiled project-local practical conditional MGF consumer for coarser downstream proxies from the policy-selected reward-coordinate selected-measure law surface: the existing policy-selected law plus raw/mean range regularity and a global varianceCeiling can be consumed at any deterministic proxy c satisfying varianceCeiling <= c. The proof constructs the packaged policy-selected uniform-variance source and reuses the packaged uniform-source larger-proxy consumer; it still assumes the reward-coordinate condExpKernel law and does not construct the ambient trajectory law or final adaptive theorem.",
+        "mathlib_routes": [
+            "LOCAL-LEAF-COND-EXPECT-REWARD-SELECTED-POLICY-UNIFORM-VARIANCE-SOURCE",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-LARGER-PROXY-COND-MGF",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-SELECTED-POLICY-UNIFORM-VARIANCE-COND-MGF",
+            "MLIB-PROBABILITY-SUBGAUSSIAN",
+            "FILTRATION-HISTORY",
+        ],
+    },
+    {
         "id": "LOCAL-LEAF-COND-EXPECT-REWARD-SELECTED-POLICY-HISTORY-VARIANCE-COND-MGF",
         "leaf_ids": [
             "COND-EXPECT-REWARD",
@@ -7864,6 +7890,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- COND-EXPECT-REWARD-ACTUAL-REWARD-MAP-HISTORY-VARIANCE-SOURCE is compiled locally as the actual-action reward-coordinate selected-measure law source constructor for the practical definitional raw-range/measurable-mean-range history-variance route.")
     print("- COND-EXPECT-REWARD-SELECTED-POLICY-UNIFORM-VARIANCE-COND-MGF is compiled locally as the policy-selected reward-coordinate selected-measure law conditional MGF consumer for the practical definitional raw-range/measurable-mean-range uniform-variance route.")
     print("- COND-EXPECT-REWARD-SELECTED-POLICY-UNIFORM-VARIANCE-SOURCE is compiled locally as the policy-selected reward-coordinate selected-measure law source constructor for the practical definitional raw-range/measurable-mean-range uniform-variance route.")
+    print("- COND-EXPECT-REWARD-SELECTED-POLICY-UNIFORM-VARIANCE-LARGER-PROXY-COND-MGF is compiled locally as a coarser-proxy consumer: the policy-selected reward-coordinate selected-measure law plus a global varianceCeiling can be consumed at any deterministic proxy c satisfying varianceCeiling <= c.")
     print("- COND-EXPECT-REWARD-SELECTED-POLICY-HISTORY-VARIANCE-COND-MGF is compiled locally as the policy-selected reward-coordinate selected-measure law conditional MGF consumer for the practical definitional raw-range/measurable-mean-range history-variance route.")
     print("- COND-EXPECT-REWARD-SELECTED-POLICY-HISTORY-VARIANCE-SOURCE is compiled locally as the policy-selected reward-coordinate selected-measure law source constructor for the practical definitional raw-range/measurable-mean-range history-variance route.")
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-HISTORY-VARIANCE-SOURCE is compiled locally as the frozen-prefix extension-map partialTraj-law constructor for the packaged definitional raw-range/measurable-mean-range history-variance source.")
