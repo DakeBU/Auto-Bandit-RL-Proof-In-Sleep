@@ -4973,6 +4973,32 @@ LOCAL_LEAF_CARDS = [
         ],
     },
     {
+        "id": "LOCAL-LEAF-COND-EXPECT-REWARD-ACTUAL-REWARD-MAP-UNIFORM-VARIANCE-COND-MGF",
+        "leaf_ids": [
+            "COND-EXPECT-REWARD",
+            "ADAPTED-ACTION",
+            "MEAS-POLICY",
+            "MEAS-HISTORY",
+            "KERNEL-POLICY-BIND",
+            "KERNEL-REWARD",
+            "INT-REWARD-BOUNDED",
+            "MEAS-REWARD",
+        ],
+        "module": "BanditRLProof.ConditionalRewardLawSource",
+        "status": "leanCompiled",
+        "declarations": [
+            "ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_reward_map_eq_actual_action_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded",
+        ],
+        "role": "Compiled project-local practical conditional MGF consumer for the COND-EXPECT-REWARD route: an actual-action reward-coordinate selected-measure law, raw reward range, selected-mean range, centered kernel law, and a global varianceProxy ceiling now directly yield the succ-indexed HasCondSubgaussianMGF witness with proxy varianceCeiling. It reuses the generated-action reward-map-to-extension-map adapter and the frozen-prefix extension-map uniform-variance MGF consumer. It still assumes the reward-coordinate condExpKernel law and a model-side global variance ceiling; it does not construct the reward-coordinate law, derive the ceiling from ranges, or prove a final adaptive theorem.",
+        "mathlib_routes": [
+            "LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-UNIFORM-VARIANCE-COND-MGF",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-REWARD-MAP",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-COND-MGF-UNIFORM-VARIANCE-CONSUMER",
+            "MLIB-PROBABILITY-SUBGAUSSIAN",
+            "FILTRATION-HISTORY",
+        ],
+    },
+    {
         "id": "LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-HISTORY-VARIANCE-SOURCE",
         "leaf_ids": [
             "COND-EXPECT-REWARD",
@@ -7394,6 +7420,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-HISTORY-VARIANCE-COND-MGF is compiled locally as the full finite-pair partialTraj-law conditional MGF consumer for the practical definitional raw-range/measurable-mean-range history-variance route.")
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-UNIFORM-VARIANCE-SOURCE is compiled locally as the frozen-prefix extension-map partialTraj-law constructor for the packaged definitional raw-range/measurable-mean-range uniform-variance source.")
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-UNIFORM-VARIANCE-COND-MGF is compiled locally as the frozen-prefix extension-map partialTraj-law conditional MGF consumer for the practical definitional raw-range/measurable-mean-range uniform-variance route.")
+    print("- COND-EXPECT-REWARD-ACTUAL-REWARD-MAP-UNIFORM-VARIANCE-COND-MGF is compiled locally as the actual-action reward-coordinate selected-measure law conditional MGF consumer for the practical definitional raw-range/measurable-mean-range uniform-variance route.")
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-HISTORY-VARIANCE-SOURCE is compiled locally as the frozen-prefix extension-map partialTraj-law constructor for the packaged definitional raw-range/measurable-mean-range history-variance source.")
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-HISTORY-VARIANCE-COND-MGF is compiled locally as the frozen-prefix extension-map partialTraj-law conditional MGF consumer for the practical definitional raw-range/measurable-mean-range history-variance route.")
     print("- COND-EXPECT-REWARD-HISTORYSTEP-UNIFORM-VARIANCE-SOURCE is compiled locally as the canonical history-step next-pair law constructor for the packaged definitional raw-range/measurable-mean-range uniform-variance source.")
