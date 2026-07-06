@@ -1792,5 +1792,49 @@ theorem sum_range_min_prefix_update_le_two_trace_average_log
     (trace_average_pow_le_lambda_pow_mul_exp_log
       (Feature := Feature) lambda hlambda T L2 hL2)
 
+/--
+Unclipped logarithmic elliptical-potential bound for small update scalars.
+
+If every inverse-quadratic update scalar is already at most one, the clipped
+sum bound applies to the raw update sum.
+-/
+theorem sum_range_prefix_update_le_two_trace_average_log_of_update_le_one
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Nat -> Feature -> Real) (T : Nat) (L2 : Real)
+    (hL2 : 0 <= L2)
+    (hbound : forall t : Nat, t < T ->
+      dotProduct (history t) (history t) <= L2)
+    (hupdate_le_one : forall t : Nat, t < T ->
+      dotProduct (history t)
+        (Matrix.mulVec
+          ((regularizedPrefixFeatureGram lambda history t)⁻¹)
+          (history t)) <= 1) :
+    (Finset.range T).sum
+        (fun t => dotProduct (history t)
+          (Matrix.mulVec
+            ((regularizedPrefixFeatureGram lambda history t)⁻¹)
+            (history t))) <=
+      2 * ((Fintype.card Feature : Real) *
+        Real.log (1 +
+          (T * L2) / ((Fintype.card Feature : Real) * lambda))) := by
+  let u : Nat -> Real := fun t =>
+    dotProduct (history t)
+      (Matrix.mulVec
+        ((regularizedPrefixFeatureGram lambda history t)⁻¹)
+        (history t))
+  have hsum_eq :
+      (Finset.range T).sum (fun t => u t) =
+        (Finset.range T).sum (fun t => min 1 (u t)) := by
+    apply Finset.sum_congr rfl
+    intro t ht
+    have htT : t < T := Finset.mem_range.mp ht
+    have hu_le_one : u t <= 1 := hupdate_le_one t htT
+    have hmin : min 1 (u t) = u t := min_eq_right hu_le_one
+    exact hmin.symm
+  rw [hsum_eq]
+  exact sum_range_min_prefix_update_le_two_trace_average_log
+    lambda hlambda history T L2 hL2 hbound
+
 end OFUL
 end BanditRLProof
