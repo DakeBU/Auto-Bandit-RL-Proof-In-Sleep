@@ -16468,6 +16468,60 @@ theorem ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_le_sum_gap_mul_
 - Failure policy: do not prove post-exploration corollaries, empirical commit
   correctness, or probability facts in the same batch.
 
+`LOCAL-LEAF-OFUL-UNCLIPPED-SMALL-UPDATE-LOG-DET-EXPLICIT-NONNEG` is compiled locally:
+
+```lean
+theorem OFUL.sum_range_prefix_update_le_two_log_det_sub_base
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Nat -> Feature -> Real) (T : Nat)
+    (hquad_nonneg : forall t : Nat, t < T ->
+      0 <= dotProduct (history t)
+        (Matrix.mulVec
+          ((OFUL.regularizedPrefixFeatureGram lambda history t)⁻¹)
+          (history t)))
+    (hupdate_le_one : forall t : Nat, t < T ->
+      dotProduct (history t)
+        (Matrix.mulVec
+          ((OFUL.regularizedPrefixFeatureGram lambda history t)⁻¹)
+          (history t)) <= 1) :
+    (Finset.range T).sum
+        (fun t => dotProduct (history t)
+          (Matrix.mulVec
+            ((OFUL.regularizedPrefixFeatureGram lambda history t)⁻¹)
+            (history t))) <=
+      2 * (Real.log (OFUL.regularizedPrefixFeatureGram lambda history T).det -
+        Real.log (lambda ^ Fintype.card Feature))
+```
+
+- Exact Lean-facing statement: under explicit nonnegativity
+  `0 <= x_t^T V_t^{-1} x_t` and small-update
+  `x_t^T V_t^{-1} x_t <= 1` for every `t < T`, the raw inverse-quadratic
+  update sum is bounded by the log-det telescope endpoint
+  `2 * (log det(V_T) - log(lambda^d))`.
+- Local APIs/imports: `BanditRLProof.OFULEllipticalPotential`,
+  `OFUL.regularizedPrefixFeatureGram`,
+  `OFUL.sum_range_min_prefix_update_le_two_log_det_sub_base`, and existing
+  finite-sum, matrix, and logarithm APIs imported by the OFUL module.
+- Intended proof route: define `u t = x_t^T V_t^{-1} x_t`; prove
+  `sum_t u t = sum_t min 1 (u t)` by `Finset.sum_congr` and
+  `min_eq_right (hupdate_le_one t ht)`; then reuse the clipped explicit
+  nonnegativity endpoint `OFUL.sum_range_min_prefix_update_le_two_log_det_sub_base`.
+- Regularity contracts: finite feature type with decidable equality, positive
+  regularization `0 < lambda`, explicit inverse-quadratic nonnegativity for
+  all `t < T`, and explicit small-update evidence for all `t < T`.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-OFUL-UNCLIPPED-SMALL-UPDATE-LOG-DET-EXPLICIT-NONNEG`;
+  declaration is `OFUL.sum_range_prefix_update_le_two_log_det_sub_base`;
+  dependency cards include `LOCAL-LEAF-OFUL-DETERMINANT-GROWTH-CONSUMER` and
+  `MLIB-FINSET-SUMS`.
+- Status: project-local compiled deterministic OFUL/LinUCB explicit-regularity
+  log-det-endpoint-to-raw-sum handoff.
+- Failure policy: this does not discharge inverse-quadratic nonnegativity from
+  PosDef, prove terminal determinant upper bounds, trace/AM-GM simplifications,
+  the small-update contract, self-normalized martingale concentration,
+  confidence ellipsoids, or final OFUL/LinUCB regret.
+
 `LOCAL-LEAF-OFUL-UNCLIPPED-SMALL-UPDATE-LOG-DET-SUB-BASE` is compiled locally:
 
 ```lean

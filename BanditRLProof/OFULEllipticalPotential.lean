@@ -1365,6 +1365,49 @@ theorem sum_range_min_prefix_update_le_two_log_det_sub_base
   exact hsum
 
 /--
+Raw prefix inverse-quadratic sum bound from the terminal log-determinant ratio,
+with inverse-quadratic nonnegativity and small-update contracts left explicit.
+-/
+theorem sum_range_prefix_update_le_two_log_det_sub_base
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Nat -> Feature -> Real) (T : Nat)
+    (hquad_nonneg : forall t : Nat, t < T ->
+      0 <= dotProduct (history t)
+        (Matrix.mulVec
+          ((regularizedPrefixFeatureGram lambda history t)⁻¹)
+          (history t)))
+    (hupdate_le_one : forall t : Nat, t < T ->
+      dotProduct (history t)
+        (Matrix.mulVec
+          ((regularizedPrefixFeatureGram lambda history t)⁻¹)
+          (history t)) <= 1) :
+    (Finset.range T).sum
+        (fun t => dotProduct (history t)
+          (Matrix.mulVec
+            ((regularizedPrefixFeatureGram lambda history t)⁻¹)
+            (history t))) <=
+      2 * (Real.log (regularizedPrefixFeatureGram lambda history T).det -
+        Real.log (lambda ^ Fintype.card Feature)) := by
+  let u : Nat -> Real := fun t =>
+    dotProduct (history t)
+      (Matrix.mulVec
+        ((regularizedPrefixFeatureGram lambda history t)⁻¹)
+        (history t))
+  have hsum_eq :
+      (Finset.range T).sum (fun t => u t) =
+        (Finset.range T).sum (fun t => min 1 (u t)) := by
+    apply Finset.sum_congr rfl
+    intro t ht
+    have htT : t < T := Finset.mem_range.mp ht
+    have hu_le_one : u t <= 1 := hupdate_le_one t htT
+    have hmin : min 1 (u t) = u t := min_eq_right hu_le_one
+    exact hmin.symm
+  rw [hsum_eq]
+  exact sum_range_min_prefix_update_le_two_log_det_sub_base
+    lambda hlambda history T hquad_nonneg
+
+/--
 Concrete prefix determinant-growth consumer with inverse-quadratic
 nonnegativity discharged from the positive-definite inverse of the
 regularized Gram matrix.
@@ -1409,23 +1452,12 @@ theorem sum_range_prefix_update_le_two_log_det_sub_base_of_update_le_one
             (history t))) <=
       2 * (Real.log (regularizedPrefixFeatureGram lambda history T).det -
         Real.log (lambda ^ Fintype.card Feature)) := by
-  let u : Nat -> Real := fun t =>
-    dotProduct (history t)
-      (Matrix.mulVec
-        ((regularizedPrefixFeatureGram lambda history t)⁻¹)
-        (history t))
-  have hsum_eq :
-      (Finset.range T).sum (fun t => u t) =
-        (Finset.range T).sum (fun t => min 1 (u t)) := by
-    apply Finset.sum_congr rfl
-    intro t ht
-    have htT : t < T := Finset.mem_range.mp ht
-    have hu_le_one : u t <= 1 := hupdate_le_one t htT
-    have hmin : min 1 (u t) = u t := min_eq_right hu_le_one
-    exact hmin.symm
-  rw [hsum_eq]
-  exact sum_range_min_prefix_update_le_two_log_det_sub_base_of_pos_lambda
+  exact sum_range_prefix_update_le_two_log_det_sub_base
     lambda hlambda history T
+    (fun t _ht =>
+      regularizedPrefixFeatureGram_inv_quadratic_nonneg
+        lambda hlambda history t (history t))
+    hupdate_le_one
 
 /--
 If a separate route supplies a terminal log-determinant upper bound, the
