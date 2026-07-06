@@ -4700,6 +4700,29 @@
       ]
     },
     {
+      "id": "LOCAL-LEAF-COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-HISTORY-VARIANCE-SOURCE",
+      "leaf_ids": [
+        "COND-EXPECT-REWARD",
+        "ADAPTED-ACTION",
+        "MEAS-POLICY",
+        "MEAS-HISTORY",
+        "KERNEL-POLICY-BIND",
+        "KERNEL-REWARD",
+        "INT-REWARD-BOUNDED",
+        "MEAS-REWARD"
+      ],
+      "module": "BanditRLProof.ConditionalRewardLawSource",
+      "status": "leanCompiled",
+      "declarations": [
+        "ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource_of_uniformVarianceBoundedSource"
+      ],
+      "role": "Compiled project-local source-conversion leaf for the practical conditional MGF route: a packaged uniform variance-proxy source now yields the time-indexed selected-history variance source with constant ceiling fun _ => varianceCeiling. This lets consumers stated against the weaker history-variance interface reuse a stronger global context/action variance ceiling while still assuming the same definitional random next-pair law source and ambient trajectory-to-condExpKernel identification.",
+      "mathlib_routes": [
+        "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-COND-MGF-UNIFORM-VARIANCE-CONSUMER",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-HISTORY-VARIANCE-SOURCE-COND-MGF-CONSUMER"
+      ]
+    },
+    {
       "id": "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-HISTORY-VARIANCE-SOURCE-COND-MGF-CONSUMER",
       "leaf_ids": [
         "COND-EXPECT-REWARD",
@@ -4715,13 +4738,15 @@
       "status": "leanCompiled",
       "declarations": [
         "ConditionalExpectationReward.GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource",
+        "ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource_of_uniformVarianceBoundedSource",
         "ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource"
       ],
-      "role": "Compiled project-local practical source wrapper and consumer for time-indexed selected-history variance ceilings: a definitional raw-reward-range/measurable-mean-range source can be packaged with varianceCeiling : Nat -> NNReal and forall i history, varianceProxy (context i history) ((policy i).action (state i history)) <= varianceCeiling i, yielding HasCondSubgaussianMGF at time i with proxy varianceCeiling i. It keeps the history-level variance contract explicit while avoiding per-call trimmed-a.e. variance hypotheses.",
+      "role": "Compiled project-local practical source wrapper and consumer for time-indexed selected-history variance ceilings: a definitional raw-reward-range/measurable-mean-range source can be packaged with varianceCeiling : Nat -> NNReal and forall i history, varianceProxy (context i history) ((policy i).action (state i history)) <= varianceCeiling i, yielding HasCondSubgaussianMGF at time i with proxy varianceCeiling i. A uniform-variance source now converts into this history-variance source with constant ceiling fun _ => varianceCeiling. It keeps the history-level variance contract explicit while avoiding per-call trimmed-a.e. variance hypotheses.",
       "mathlib_routes": [
         "MLIB-PROBABILITY-SUBGAUSSIAN",
         "MLIB-CONDITIONAL-EXPECTATION",
         "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-COND-MGF-HISTORY-VARIANCE-CONSUMER",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-HISTORY-VARIANCE-SOURCE",
         "FILTRATION-HISTORY"
       ]
     },
