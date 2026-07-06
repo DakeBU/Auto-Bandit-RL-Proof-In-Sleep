@@ -1949,6 +1949,19 @@ LOCAL_LEAF_CARDS = [
         "mathlib_routes": ["LOCAL-LEAF-OFUL-TRACE-AVERAGE-EXP-CONSUMER", "LOCAL-LEAF-OFUL-INVERSE-QUADRATIC-NONNEG-CONSUMER", "MLIB-FINSET-SUMS"],
     },
     {
+        "id": "LOCAL-LEAF-OFUL-UNCLIPPED-SMALL-UPDATE-LINEAR",
+        "leaf_ids": [
+            "OFUL-ELLIPTICAL-POTENTIAL",
+        ],
+        "module": "BanditRLProof.OFULEllipticalPotential",
+        "status": "leanCompiled",
+        "declarations": [
+            "OFUL.sum_range_prefix_update_le_two_trace_average_of_update_le_one",
+        ],
+        "role": "Compiled dimension-cancelled small-update OFUL/LinUCB elliptical-potential consumer: under `0 < lambda`, `0 <= L2`, pointwise squared-norm ceiling, and `u_t <= 1`, the raw inverse-quadratic update sum is bounded by `2 * (T*L2/lambda)`. This is a deterministic coarse endpoint for later least-squares/confidence routes; self-normalized martingale concentration, confidence ellipsoids, and OFUL regret remain separate.",
+        "mathlib_routes": ["LOCAL-LEAF-OFUL-UNCLIPPED-SMALL-UPDATE-GENERIC", "LOCAL-LEAF-OFUL-SCALAR-TRACE-AVERAGE-EXP-CANCEL", "MLIB-FINSET-SUMS"],
+    },
+    {
         "id": "LOCAL-LEAF-OFUL-UNCLIPPED-SMALL-UPDATE-LOG",
         "leaf_ids": [
             "OFUL-ELLIPTICAL-POTENTIAL",
@@ -7543,6 +7556,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- OFUL-SCALAR-TRACE-AVERAGE-EXP-CANCEL is compiled locally as the dimension-cancelled scalar exponential consumer: `d * (T*L2/(d*lambda)) = T*L2/lambda`, so the AM-GM trace-average route now yields `det(V_T) <= lambda^d * exp(T*L2/lambda)` and `sum_t min(1,u_t) <= 2 * (T*L2/lambda)`; self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- OFUL-SCALAR-TRACE-AVERAGE-EXP-LOG is compiled locally as the standard logarithmic scalar endpoint: the AM-GM trace-average route now yields `det(V_T) <= lambda^d * exp(d * log(1 + T*L2/(d*lambda)))` and `sum_t min(1,u_t) <= 2 * d * log(1 + T*L2/(d*lambda))`; self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- OFUL-UNCLIPPED-SMALL-UPDATE-GENERIC is compiled locally as the generic small-update elliptical-potential consumer: under `u_t <= 1`, any trace-average scalar certificate with exponent `B` yields the raw inverse-quadratic update-sum bound `<= 2 * B`; self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
+    print("- OFUL-UNCLIPPED-SMALL-UPDATE-LINEAR is compiled locally as the dimension-cancelled small-update elliptical-potential consumer: under `u_t <= 1`, the raw inverse-quadratic update sum is bounded by `2 * (T*L2/lambda)`; self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- OFUL-UNCLIPPED-SMALL-UPDATE-LOG is compiled locally as the small-update logarithmic elliptical-potential consumer: under `u_t <= 1`, the raw inverse-quadratic update sum inherits the standard clipped logarithmic trace-average bound; self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- TAIL-HOEFFDING-BOUNDED is compiled locally as the generic bounded-centered Hoeffding MGF wrapper with an interval variance proxy.")
     print("- TAIL-SUBGAUSS-SUM is compiled locally as the Mathlib-backed independent sub-Gaussian finite-sum tail wrapper.")

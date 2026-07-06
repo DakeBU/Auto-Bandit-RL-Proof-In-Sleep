@@ -16527,6 +16527,62 @@ theorem OFUL.sum_range_prefix_update_le_two_of_trace_average_bound_of_update_le_
   concentration, confidence ellipsoids, least-squares estimation, or OFUL
   regret.
 
+`LOCAL-LEAF-OFUL-UNCLIPPED-SMALL-UPDATE-LINEAR` is compiled locally:
+
+```lean
+theorem OFUL.sum_range_prefix_update_le_two_trace_average_of_update_le_one
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    [Nonempty Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Nat -> Feature -> Real) (T : Nat) (L2 : Real)
+    (hL2 : 0 <= L2)
+    (hbound : forall t : Nat, t < T ->
+      dotProduct (history t) (history t) <= L2)
+    (hupdate_le_one : forall t : Nat, t < T ->
+      dotProduct (history t)
+        (Matrix.mulVec
+          ((OFUL.regularizedPrefixFeatureGram lambda history t)⁻¹)
+          (history t)) <= 1) :
+    (Finset.range T).sum
+        (fun t => dotProduct (history t)
+          (Matrix.mulVec
+            ((OFUL.regularizedPrefixFeatureGram lambda history t)⁻¹)
+            (history t))) <=
+      2 * ((T * L2) / lambda)
+```
+
+- Exact Lean-facing statement: under finite nonempty feature type, positive
+  regularization `0 < lambda`, nonnegative radius budget `0 <= L2`, pointwise
+  squared-feature bound for every `t < T`, and explicit small-update contract
+  `x_t^T V_t^{-1} x_t <= 1`, the raw inverse-quadratic update sum is bounded
+  by the dimension-cancelled endpoint `2 * ((T * L2) / lambda)`.
+- Local APIs/imports: `BanditRLProof.OFULEllipticalPotential`,
+  `OFUL.regularizedPrefixFeatureGram`,
+  `OFUL.sum_range_prefix_update_le_two_of_trace_average_bound_of_update_le_one`,
+  `OFUL.trace_average_pow_le_lambda_pow_mul_exp`, and existing finite-sum,
+  matrix, exp, and order APIs imported by the OFUL module.
+- Intended proof route: instantiate the generic small-update raw-sum handoff
+  `OFUL.sum_range_prefix_update_le_two_of_trace_average_bound_of_update_le_one`
+  with `B := (T * L2) / lambda`; discharge the scalar trace-average
+  certificate using `OFUL.trace_average_pow_le_lambda_pow_mul_exp`.
+- Regularity contracts: finite nonempty feature type with decidable equality,
+  `0 < lambda`, `0 <= L2`, squared-norm ceiling
+  `dotProduct (history t) (history t) <= L2` for all `t < T`, and explicit
+  small-update evidence for the raw scalar
+  `dotProduct (history t) (V_t^{-1} * history t) <= 1`.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-OFUL-UNCLIPPED-SMALL-UPDATE-LINEAR`; declaration is
+  `OFUL.sum_range_prefix_update_le_two_trace_average_of_update_le_one`;
+  dependency cards include `LOCAL-LEAF-OFUL-UNCLIPPED-SMALL-UPDATE-GENERIC`,
+  `LOCAL-LEAF-OFUL-SCALAR-TRACE-AVERAGE-EXP-CANCEL`, and
+  `MLIB-FINSET-SUMS`.
+- Status: project-local compiled deterministic OFUL/LinUCB
+  elliptical-potential consumer.
+- Failure policy: this is the coarse dimension-cancelled deterministic
+  endpoint only.  It does not prove the small-update contract,
+  self-normalized martingale concentration, confidence ellipsoids,
+  least-squares estimation, or final OFUL/LinUCB regret.
+
 `LOCAL-LEAF-OFUL-UNCLIPPED-SMALL-UPDATE-LOG` is compiled locally:
 
 ```lean
