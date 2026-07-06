@@ -3047,6 +3047,25 @@ LOCAL_LEAF_CARDS = [
         ],
     },
     {
+        "id": "LOCAL-LEAF-POLICY-REWARD-TRAJMEASURE-CONDDISTRIB-HISTORYSTEP",
+        "leaf_ids": [
+            "COND-EXPECT-REWARD",
+            "KERNEL-POLICY-BIND",
+        ],
+        "module": "BanditRLProof.RewardKernel",
+        "status": "leanCompiled",
+        "declarations": [
+            "RewardKernel.instIsMarkovKernel_actionRewardHistoryStepKernelFamily",
+            "RewardKernel.actionRewardHistoryStepKernelFamily_condDistrib_trajMeasure",
+        ],
+        "role": "Compiled Mathlib-backed canonical trajectory-measure conditional law: for the action/reward history-step kernel family, Mathlib trajMeasure has regular conditional distribution of the next pair given the finite prefix equal a.e. to RewardKernel.actionRewardHistoryStepKernelFamily. This is the canonical Ionescu-Tulcea source side of the COND-EXPECT-REWARD law-identification route; it does not identify an arbitrary ambient condExpKernel over Omega, transport History.historyFiltrationSucc, or prove the final adaptive theorem.",
+        "mathlib_routes": [
+            "Mathlib.Probability.Kernel.IonescuTulcea.Traj",
+            "Mathlib.Probability.Kernel.CondDistrib",
+            "LOCAL-LEAF-POLICY-REWARD-ACTION-REWARD-PARTIAL-TRAJECTORY",
+        ],
+    },
+    {
         "id": "LOCAL-LEAF-KERNEL-CENTERED-REWARD-LAW-TRANSFER",
         "leaf_ids": [
             "COND-EXPECT-REWARD",
@@ -8530,6 +8549,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- KERNEL-POLICY-BIND is compiled locally as a Mathlib partialTraj finite-prefix action/reward pair trajectory-kernel surface from deterministic policy action kernels and selected reward kernels, with selected-reward marginal wrappers for one-step and history-step action/reward kernels and a one-step frozen-prefix extension map wrapper.")
     print("- POLICY-REWARD-PARTIALTRAJ-SUCC-NEXT-MAP is compiled locally as the Mathlib partialTraj one-step next-coordinate marginal wrapper for reward-history and action/reward pair trajectories; condExpKernel trajectory-law identification remains open.")
     print("- POLICY-REWARD-PARTIALTRAJ-SUCC-EXTEND-MAP is compiled locally as the Mathlib partialTraj one-step full-extension wrapper: the n-to-n+1 action/reward trajectory measure is the history-step pair kernel pushed through History.extendPairHistorySucc.")
+    print("- POLICY-REWARD-TRAJMEASURE-CONDDISTRIB is compiled locally as the canonical Mathlib trajMeasure conditional-distribution law: for the action/reward history-step kernel family, condDistrib of the next pair given the finite prefix is a.e. RewardKernel.actionRewardHistoryStepKernelFamily; ambient Omega/condExpKernel and History.historyFiltrationSucc transport remain open.")
     print("- KERNEL-CENTERED-REWARD-LAW-TRANSFER is compiled locally as a kernel-level selected reward law transfer surface: policy-composed and finite reward-history step kernels inherit centered integrability, zero integral, and sub-Gaussian MGF witnesses from pointwise context/action reward laws; condExpKernel identification remains open.")
     print("- KERNEL-REWARD-MAP-LAW-TRANSFER is compiled locally as measure-level reward-marginal map equalities for one-step and history-step action/reward kernels; condExpKernel trajectory-law identification remains open.")
     print("- COND-EXPECT-REWARD-CONDEXPKERNEL-ZERO is compiled locally as a narrow condExpKernel-to-condExp zero bridge for centered rewards; it does not construct the trajectory-law condExpKernel identification.")
@@ -8548,6 +8568,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- COND-EXPECT-REWARD-PAIR-MAP-PROJECTION-MEAS-HOOKUP is compiled locally as the measurable reward-projection hookup for pair histories, deriving projected pairContext/pairState measurability from reward-history context/state measurability and now deriving centered-reward integrability from raw-reward/selected-mean range bounds; the actual condExpKernel pair-law identity remains open.")
     print("- COND-EXPECT-REWARD-PAIR-MAP-FINITEPAIRTRACE-HOOKUP is compiled locally as the named History.finitePairHistoryOfTrace specialization of the generated-history pair-law consumer; the actual condExpKernel pair-law identity remains open.")
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-CONSUMER is compiled locally as the partialTraj finite-pair-trace consumer: an explicit generated-history condExpKernel law for the extended pair trace projects through the partialTraj next-coordinate marginal into a reusable next-pair map-law adapter, then into the centered-reward consumer; a raw-reward/selected-mean range wrapper now derives centered-reward integrability automatically before consuming the same full finite-pair partialTraj law; the actual condExpKernel/partialTraj law remains open.")
+    print("- COND-EXPECT-REWARD-PARTIALTRAJ-CONDEXPKERNEL-PAIR-LAW-CARD is theorem-card-only: the exact missing law is the generated-history condExpKernel pushforward of History.finitePairHistoryOfTrace at i+1 equals RewardKernel.actionRewardPartialTrajectoryKernel at the frozen i-prefix; prove this from an explicit trajectory-law/disintegration source before adding more consumers.")
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-CONSUMER is compiled locally as the extension-map partialTraj consumer: Measure.map_congr turns the generated successor decomposition into a pushforward identity, a reusable adapter lifts an extension-map law back to the full finite-pair-trace partialTraj law, and a raw-reward/selected-mean range wrapper derives centered-reward integrability automatically before consuming the narrower extension-map law; the actual condExpKernel/partialTraj law remains open.")
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-FROM-PAIRMAP is compiled locally as the law builder from a next-pair condExpKernel pushforward identity to the extension-map partialTraj identity; the next-pair law itself remains open.")
     print("- COND-EXPECT-REWARD-NEXTPAIR-SPLIT-LAW-BUILDER is compiled locally as the split-law builder and raw-range mean-zero consumer: conditional action a.e. equality plus reward-coordinate map law produce the full next-pair condExpKernel law, and raw-reward/selected-mean range evidence then yields succ-indexed conditional mean-zero through the finite-pair consumer; predictability and reward-law sources remain open.")

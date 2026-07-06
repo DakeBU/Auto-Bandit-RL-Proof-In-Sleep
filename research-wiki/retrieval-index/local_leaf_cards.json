@@ -2620,6 +2620,25 @@
       ]
     },
     {
+      "id": "LOCAL-LEAF-POLICY-REWARD-TRAJMEASURE-CONDDISTRIB-HISTORYSTEP",
+      "leaf_ids": [
+        "COND-EXPECT-REWARD",
+        "KERNEL-POLICY-BIND"
+      ],
+      "module": "BanditRLProof.RewardKernel",
+      "status": "leanCompiled",
+      "declarations": [
+        "RewardKernel.instIsMarkovKernel_actionRewardHistoryStepKernelFamily",
+        "RewardKernel.actionRewardHistoryStepKernelFamily_condDistrib_trajMeasure"
+      ],
+      "role": "Compiled Mathlib-backed canonical trajectory-measure conditional law: for the action/reward history-step kernel family, Mathlib trajMeasure has regular conditional distribution of the next pair given the finite prefix equal a.e. to RewardKernel.actionRewardHistoryStepKernelFamily. This is the canonical Ionescu-Tulcea source side of the COND-EXPECT-REWARD law-identification route; it does not identify an arbitrary ambient condExpKernel over Omega, transport History.historyFiltrationSucc, or prove the final adaptive theorem.",
+      "mathlib_routes": [
+        "Mathlib.Probability.Kernel.IonescuTulcea.Traj",
+        "Mathlib.Probability.Kernel.CondDistrib",
+        "LOCAL-LEAF-POLICY-REWARD-ACTION-REWARD-PARTIAL-TRAJECTORY"
+      ]
+    },
+    {
       "id": "LOCAL-LEAF-KERNEL-CENTERED-REWARD-LAW-TRANSFER",
       "leaf_ids": [
         "COND-EXPECT-REWARD",
