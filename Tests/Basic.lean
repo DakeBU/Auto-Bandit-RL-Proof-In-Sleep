@@ -16669,6 +16669,60 @@ example {Omega : Type} [MeasurableSpace Omega]
       haction hhistoryAction_eq_argmax hproxy_le_history_selected_large
       hproxy hsubG
 
+example {Omega State : Type} [MeasurableSpace Omega] [MeasurableSpace State]
+    {K : Nat} (hK : 0 < K)
+    [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)]
+    [MeasurableSpace Nat] [MeasurableAdd₂ Nat] [OpensMeasurableSpace Nat]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsProbabilityMeasure mu]
+    (trueMean : Fin K -> Real)
+    (empiricalMean : Omega -> Nat -> Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (B : Nat) (best chosen : Fin K) (varianceProxy : NNReal)
+    (policy : Policy.MeasurablePolicy State (Fin K))
+    (state : Nat -> Omega -> State)
+    (hT : 0 < T) (hdelta : 0 < delta)
+    (hgap_pos : 0 < UCB.meanGap trueMean best chosen)
+    (hlog_pos :
+      0 < Real.log (UCB.textbookDeltaScale (Arm := Fin K) T delta))
+    (hB_pos : 0 < B)
+    (hthreshold_lt_B :
+      8 * ((varianceProxy : NNReal) : Real) *
+          Real.log (UCB.textbookDeltaScale (Arm := Fin K) T delta) /
+          (UCB.meanGap trueMean best chosen) ^ 2 <
+        (B : Real))
+    (hstate : forall t : Nat, Measurable (state t))
+    (hgenerated_eq_argmax : forall omega t,
+      (Policy.generatedActionTrace policy state omega) t =
+        UCB.confidenceScoreArgmaxAction hK empiricalMean
+          (UCB.subGaussianTextbookDeltaRadius proxy T delta) omega t)
+    (hproxy_le_generated_selected_large : forall omega t, t < T ->
+      (Policy.generatedActionTrace policy state omega) t = chosen ->
+        B <= pullCount
+          (Policy.generatedActionTrace policy state omega) chosen t ->
+        ((proxy t chosen : NNReal) : Real) <=
+          ((varianceProxy : NNReal) : Real) /
+            (pullCount
+              (Policy.generatedActionTrace policy state omega) chosen t :
+              Real))
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    MeasureTheory.lintegral mu
+      (fun omega : Omega =>
+        ((pullCount
+          (Policy.generatedActionTrace policy state omega) chosen T : Nat) :
+          ENNReal)) <=
+      (B : ENNReal) + (T : ENNReal) * ENNReal.ofReal delta := by
+  exact
+    UCB.lintegral_generatedActionTrace_pullCount_le_textbookDeltaRadiusSampleCountSource_add_horizon_delta
+      hK mu trueMean empiricalMean proxy T delta B best chosen varianceProxy
+      policy state hT hdelta hgap_pos hlog_pos hB_pos hthreshold_lt_B
+      hstate hgenerated_eq_argmax hproxy_le_generated_selected_large
+      hproxy hsubG
+
 example {Omega : Type} [MeasurableSpace Omega]
     {K : Nat} (hK : 0 < K)
     [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)]

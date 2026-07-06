@@ -11,6 +11,7 @@ import BanditRLProof.ConcentrationVariance
 import BanditRLProof.ExpectationPullCount
 import BanditRLProof.ExpectationSums
 import BanditRLProof.MeasurablePullCount
+import BanditRLProof.PolicyMeasurability
 import BanditRLProof.ProbabilityUnionBound
 import BanditRLProof.Regret
 
@@ -3994,6 +3995,92 @@ theorem lintegral_historyAction_pullCount_le_textbookDeltaRadiusSampleCountSourc
           simpa [scoreAction] using hhistoryAction_eq_argmax omega s hs)
     simp [hcount_eq]
   simpa [htarget] using hscore
+
+/--
+Generated-policy source-count version of the textbook-radius UCB pull-count
+budget.
+
+This packages the previous history-action wrapper for a concrete
+`Policy.generatedActionTrace`.  Pointwise equality with score argmax over all
+time coordinates transfers measurability from the generated policy trace to the
+score-argmax trace, and the existing history-action adapter supplies the
+`B + T * delta` selected-arm count budget.
+-/
+theorem lintegral_generatedActionTrace_pullCount_le_textbookDeltaRadiusSampleCountSource_add_horizon_delta
+    {Omega State : Type} [MeasurableSpace Omega] [MeasurableSpace State]
+    {K : Nat} (hK : 0 < K)
+    [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)]
+    [MeasurableSpace Nat] [MeasurableAdd₂ Nat] [OpensMeasurableSpace Nat]
+    (mu : Measure Omega) [MeasureTheory.IsProbabilityMeasure mu]
+    (trueMean : Fin K -> Real)
+    (empiricalMean : Omega -> Nat -> Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (B : Nat) (best chosen : Fin K) (varianceProxy : NNReal)
+    (policy : Policy.MeasurablePolicy State (Fin K))
+    (state : Nat -> Omega -> State)
+    (hT : 0 < T) (hdelta : 0 < delta)
+    (hgap_pos : 0 < meanGap trueMean best chosen)
+    (hlog_pos :
+      0 < Real.log (textbookDeltaScale (Arm := Fin K) T delta))
+    (hB_pos : 0 < B)
+    (hthreshold_lt_B :
+      8 * ((varianceProxy : NNReal) : Real) *
+          Real.log (textbookDeltaScale (Arm := Fin K) T delta) /
+          (meanGap trueMean best chosen) ^ 2 <
+        (B : Real))
+    (hstate : forall t : Nat, Measurable (state t))
+    (hgenerated_eq_argmax : forall omega t,
+      (Policy.generatedActionTrace policy state omega) t =
+        confidenceScoreArgmaxAction hK empiricalMean
+          (subGaussianTextbookDeltaRadius proxy T delta) omega t)
+    (hproxy_le_generated_selected_large : forall omega t, t < T ->
+      (Policy.generatedActionTrace policy state omega) t = chosen ->
+        B <= pullCount
+          (Policy.generatedActionTrace policy state omega) chosen t ->
+        ((proxy t chosen : NNReal) : Real) <=
+          ((varianceProxy : NNReal) : Real) /
+            (pullCount
+              (Policy.generatedActionTrace policy state omega) chosen t :
+              Real))
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    MeasureTheory.lintegral mu
+      (fun omega : Omega =>
+        ((pullCount
+          (Policy.generatedActionTrace policy state omega) chosen T : Nat) :
+          ENNReal)) <=
+      (B : ENNReal) + (T : ENNReal) * ENNReal.ofReal delta := by
+  exact
+    lintegral_historyAction_pullCount_le_textbookDeltaRadiusSampleCountSource_add_horizon_delta
+      hK mu trueMean empiricalMean proxy T delta B best chosen varianceProxy
+      (Policy.generatedActionTrace policy state)
+      hT hdelta hgap_pos hlog_pos hB_pos hthreshold_lt_B
+      (by
+        intro t
+        have hgen :
+            Measurable
+              (fun omega : Omega =>
+                (Policy.generatedActionTrace policy state omega) t) :=
+          Policy.measurable_generatedActionTrace_eval_of_measurable_state
+            policy state hstate t
+        have heq :
+            (fun omega : Omega =>
+              confidenceScoreArgmaxAction hK empiricalMean
+                (subGaussianTextbookDeltaRadius proxy T delta) omega t) =
+            (fun omega : Omega =>
+              (Policy.generatedActionTrace policy state omega) t) := by
+          funext omega
+          exact (hgenerated_eq_argmax omega t).symm
+        rw [heq]
+        exact hgen)
+      (by
+        intro omega t _ht
+        exact hgenerated_eq_argmax omega t)
+      hproxy_le_generated_selected_large hproxy hsubG
 
 /--
 Two-sided sub-Gaussian tail budget for a UCB empirical mean at time `t` and
