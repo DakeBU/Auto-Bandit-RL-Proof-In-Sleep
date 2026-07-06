@@ -6272,6 +6272,76 @@ theorem ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_
   theorem.  If the source fields are unavailable, first construct the source
   or use a more primitive law-identification route.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-TO-DEFINITIONAL-RANDOM-PAIR-MAP-SOURCE`
+is compiled locally:
+
+```lean
+def ConditionalExpectationReward.generatedActionRandomPairDefinitionalMapSource_of_generatedActionDefinitionalActualRewardMapSource
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (source :
+      GeneratedActionDefinitionalActualRewardMapSource mu rewardKernel policy
+        context state defaultAction reward hreward) :
+    GeneratedActionRandomPairDefinitionalMapSource mu rewardKernel policy
+      context state defaultAction reward hreward
+```
+
+- Exact Lean-facing statement: a
+  `GeneratedActionDefinitionalActualRewardMapSource`, plus measurable
+  reward-history context extractors, builds the stronger
+  `GeneratedActionRandomPairDefinitionalMapSource` over
+  `generatedActionFromRewardHistory`.
+- Local APIs/imports: `BanditRLProof.ConditionalRewardLawSource`,
+  `ConditionalExpectationReward.GeneratedActionDefinitionalActualRewardMapSource`,
+  `ConditionalExpectationReward.GeneratedActionRandomPairDefinitionalMapSource`,
+  `ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionDefinitionalActualRewardMapSource`,
+  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalMapSource_of_actionRewardPartialTrajectoryKernel_map_eq`,
+  `History.finitePairHistoryOfTrace`,
+  `History.pairHistoryRewardProjection`,
+  `RewardKernel.actionRewardPartialTrajectoryKernel`, and Mathlib
+  `partialTraj`/`Measure.map` interfaces already imported by the module.
+- Intended proof route: first consume the definitional actual reward-coordinate
+  source to obtain the full finite-pair `partialTraj` law over
+  `generatedActionFromRewardHistory`; then feed that law, `hcontext`, and
+  `source.hstate` to the existing definitional random-pair source constructor.
+- Regularity contracts: standard Borel sample space, finite measure,
+  measurable context/state/action spaces, measurable singleton and countable
+  action space, timewise measurable reward trace, measurable reward-history
+  context extractor, source-provided measurable reward-history state
+  extractor, and the packaged definitional actual-action reward-coordinate
+  `condExpKernel` map law.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-COND-EXPECT-REWARD-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-TO-DEFINITIONAL-RANDOM-PAIR-MAP-SOURCE`;
+  declaration
+  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalMapSource_of_generatedActionDefinitionalActualRewardMapSource`.
+  Upstream route cards are
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-TO-PARTIALTRAJ-LAW`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-MAP-SOURCE-CONTRACT`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-CONSUMER`,
+  `LOCAL-LEAF-FINITE-HISTORY-PRODUCT-MEASURABILITY`,
+  `LOCAL-LEAF-POLICY-MEASURABILITY`, and `FILTRATION-HISTORY`.
+- Status: project-local compiled source-conversion leaf for
+  `COND-EXPECT-REWARD`, `ADAPTED-ACTION`, `MEAS-POLICY`, `MEAS-HISTORY`,
+  `KERNEL-POLICY-BIND`, and `KERNEL-REWARD`.
+- Failure policy: this is a composition/packaging wrapper.  It does not prove
+  the definitional actual reward-coordinate law source, does not identify the
+  ambient trajectory law with `condExpKernel`, and does not derive
+  raw/mean-range regularity, integrability, conditional MGF witnesses,
+  martingale witnesses, or final adaptive bandit/regret theorems.
+
 `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-RANDOM-PAIR-SOURCE-CONTRACT` is
 compiled locally:
 

@@ -3904,6 +3904,34 @@ LOCAL_LEAF_CARDS = [
         ],
     },
     {
+        "id": "LOCAL-LEAF-COND-EXPECT-REWARD-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-TO-DEFINITIONAL-RANDOM-PAIR-MAP-SOURCE",
+        "leaf_ids": [
+            "COND-EXPECT-REWARD",
+            "ADAPTED-ACTION",
+            "MEAS-POLICY",
+            "MEAS-HISTORY",
+            "KERNEL-POLICY-BIND",
+            "KERNEL-REWARD",
+        ],
+        "module": "BanditRLProof.ConditionalRewardLawSource",
+        "status": "leanCompiled",
+        "declarations": [
+            "ConditionalExpectationReward.generatedActionRandomPairDefinitionalMapSource_of_generatedActionDefinitionalActualRewardMapSource",
+        ],
+        "role": "Compiled project-local source-conversion leaf for the COND-EXPECT-REWARD route: a definitional actual-action reward-coordinate map source plus context measurability now builds the stronger definitional generated random-pair map source by first deriving the full finite-pair partialTraj law and then reusing the existing definitional random-pair source constructor. It still assumes the definitional actual reward-coordinate source and ambient trajectory-to-condExpKernel identification; it does not construct the source, regularity, conditional MGF, adaptive, or final regret theorem.",
+        "mathlib_routes": [
+            "MLIB-CONDITIONAL-EXPECTATION",
+            "Mathlib.Probability.Kernel.IonescuTulcea.PartialTraj",
+            "Mathlib.MeasureTheory.Measure.Map",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-TO-PARTIALTRAJ-LAW",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-MAP-SOURCE-CONTRACT",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-CONSUMER",
+            "LOCAL-LEAF-FINITE-HISTORY-PRODUCT-MEASURABILITY",
+            "LOCAL-LEAF-POLICY-MEASURABILITY",
+            "FILTRATION-HISTORY",
+        ],
+    },
+    {
         "id": "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-RANDOM-PAIR-SOURCE-CONTRACT",
         "leaf_ids": [
             "COND-EXPECT-REWARD",
@@ -8292,6 +8320,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-CONTRACT is compiled locally as the definitional generated-action variant of the actual reward-map source: it removes explicit action-trace/haction inputs by using generatedActionFromRewardHistory and measurable reward-history state extractors, can package a policy-selected reward-coordinate law, full finite-pair partialTraj law, frozen-prefix extension-map partialTraj law, or canonical history-step next-pair law into the actual generated-successor reward-map source, reuses the actual reward-map consumers, and now directly consumes the source plus raw/mean range regularity into succ-indexed conditional mean-zero without a separate integrability hypothesis; it still assumes the reward-coordinate or ambient trajectory-to-condExpKernel/partialTraj/history-step law.")
     print("- COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-TO-HISTORYSTEP-PAIR-LAW is compiled locally as the definitional actual reward-coordinate source-level canonical pair-law consumer: GeneratedActionDefinitionalActualRewardMapSource now yields the RewardKernel.actionRewardHistoryStepKernelFamily next-pair law over generatedActionFromRewardHistory; it still assumes the definitional actual reward-coordinate law source and ambient trajectory-to-condExpKernel identification.")
     print("- COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-TO-PARTIALTRAJ-LAW is compiled locally as the definitional actual reward-coordinate source-level full finite-pair-trace partialTraj consumer: GeneratedActionDefinitionalActualRewardMapSource now yields the actionRewardPartialTrajectoryKernel law over generatedActionFromRewardHistory; it still assumes the definitional actual reward-coordinate law source and ambient trajectory-to-condExpKernel identification.")
+    print("- COND-EXPECT-REWARD-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-TO-DEFINITIONAL-RANDOM-PAIR-MAP-SOURCE is compiled locally as a source-conversion leaf: a definitional actual-action reward-coordinate map source plus context measurability now builds the stronger definitional generated random-pair map source through the full finite-pair partialTraj law and existing random-pair source constructor; it still assumes the definitional actual reward-coordinate source and ambient trajectory-to-condExpKernel identification.")
     print("- COND-EXPECT-REWARD-GENERATED-RANDOM-PAIR-SOURCE-CONTRACT is compiled locally as a reusable generated-policy random next-pair law source package; it now also builds that source from canonical history-step next-pair, full finite-pair partialTraj, or frozen-prefix extension-map partialTraj law hypotheses before exposing finite-pair-trace partialTraj law and succ-indexed conditional mean-zero consumers; it still assumes the pair/reward law source and ambient trajectory-to-condExpKernel identification.")
     print("- COND-EXPECT-REWARD-GENERATED-RANDOM-PAIR-SOURCE-TO-HISTORYSTEP-PAIR-LAW is compiled locally as the source-level canonical pair-law consumer: GeneratedActionRandomPairMapSource now directly yields the RewardKernel.actionRewardHistoryStepKernelFamily next-pair law over History.finitePairHistoryOfTrace; it still assumes the random next-pair law source and ambient trajectory-to-condExpKernel identification.")
     print("- COND-EXPECT-REWARD-RANDOM-PAIR-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE is compiled locally as a source-conversion leaf: a generated random next-pair source now produces the weaker actual-action reward-coordinate map source by action freezing and Prod.snd marginalization; it still assumes the random pair law and state measurability.")

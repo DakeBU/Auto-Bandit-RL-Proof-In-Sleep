@@ -8631,6 +8631,61 @@ theorem actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finiteP
       (i := i)
 
 /--
+Upgrade a definitional generated-action actual reward-coordinate law source to
+the stronger definitional generated random next-pair source.
+
+The proof factors through the existing full finite-pair `partialTraj` consumer:
+the actual reward-coordinate source supplies the full trace law, and the
+definitional random-pair source constructor projects that law back to the next
+action/reward pair.
+-/
+def generatedActionRandomPairDefinitionalMapSource_of_generatedActionDefinitionalActualRewardMapSource
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (source :
+      GeneratedActionDefinitionalActualRewardMapSource mu rewardKernel policy
+        context state defaultAction reward hreward) :
+    GeneratedActionRandomPairDefinitionalMapSource mu rewardKernel policy
+      context state defaultAction reward hreward :=
+  generatedActionRandomPairDefinitionalMapSource_of_actionRewardPartialTrajectoryKernel_map_eq
+    (mu := mu)
+    (rewardKernel := rewardKernel)
+    (policy := policy)
+    (context := context)
+    (state := state)
+    (hcontext := hcontext)
+    (hstate := source.hstate)
+    (defaultAction := defaultAction)
+    (reward := reward)
+    (hreward := hreward)
+    (fun i =>
+      actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionDefinitionalActualRewardMapSource
+        (mu := mu)
+        (rewardKernel := rewardKernel)
+        (policy := policy)
+        (context := context)
+        (state := state)
+        (hcontext := hcontext)
+        (defaultAction := defaultAction)
+        (reward := reward)
+        (hreward := hreward)
+        (source := source)
+        (i := i))
+
+/--
 Consume a definitional generated-action actual reward-coordinate law source to
 obtain ordinary succ-indexed conditional mean-zero.
 -/
