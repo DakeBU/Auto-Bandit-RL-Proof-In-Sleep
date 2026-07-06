@@ -21226,6 +21226,15 @@ example (u : Nat -> Real) (T : Nat)
   exact OFUL.sum_range_le_two_sum_log_one_add_of_le_one
     u T hu_nonneg hu_le_one
 
+example (u : Nat -> Real) (T : Nat) (B : Real)
+    (hu_nonneg : forall t : Nat, t < T -> 0 <= u t)
+    (hu_le_one : forall t : Nat, t < T -> u t <= 1)
+    (hlog_sum_le :
+      (Finset.range T).sum (fun t => Real.log (1 + u t)) <= B) :
+    (Finset.range T).sum (fun t => u t) <= 2 * B := by
+  exact OFUL.sum_range_le_two_of_sum_log_one_add_le_of_le_one
+    u T B hu_nonneg hu_le_one hlog_sum_le
+
 example {Feature : Type} [Fintype Feature] [DecidableEq Feature]
     (lam : Real) (hlam : 0 < lam)
     (history : Nat -> Feature -> Real) (T : Nat)

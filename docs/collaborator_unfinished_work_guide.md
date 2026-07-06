@@ -16506,6 +16506,46 @@ theorem OFUL.sum_range_le_two_sum_log_one_add_of_le_one
   contract for OFUL features, self-normalized martingale concentration,
   confidence ellipsoids, or final OFUL/LinUCB regret.
 
+`LOCAL-LEAF-OFUL-UNCLIPPED-SMALL-UPDATE-SUM-LOG-UPPER` is compiled locally:
+
+```lean
+theorem OFUL.sum_range_le_two_of_sum_log_one_add_le_of_le_one
+    (u : Nat -> Real) (T : Nat) (B : Real)
+    (hu_nonneg : forall t : Nat, t < T -> 0 <= u t)
+    (hu_le_one : forall t : Nat, t < T -> u t <= 1)
+    (hlog_sum_le :
+      (Finset.range T).sum (fun t => Real.log (1 + u t)) <= B) :
+    (Finset.range T).sum (fun t => u t) <= 2 * B
+```
+
+- Exact Lean-facing statement: for any finite Nat prefix of scalar updates,
+  explicit nonnegativity `0 <= u_t`, small-update evidence `u_t <= 1`, and
+  an abstract log-sum certificate `sum_t log(1 + u_t) <= B` imply the raw
+  finite sum is bounded by `2 * B`.
+- Local APIs/imports: `BanditRLProof.OFULEllipticalPotential`,
+  `OFUL.sum_range_le_two_sum_log_one_add_of_le_one`,
+  `mul_le_mul_of_nonneg_left`, and Mathlib finite-sum/order APIs already
+  imported by the OFUL module.
+- Intended proof route: compose the compiled small-update raw/log finite-sum
+  bridge with the supplied log-sum upper bound by transitivity, multiplying
+  the upper bound by the nonnegative scalar `2`.
+- Regularity contracts: scalar sequence `u : Nat -> Real`, finite horizon
+  `T`, scalar bound `B`, pointwise nonnegativity for all `t < T`, pointwise
+  small-update bound for all `t < T`, and the explicit log-sum upper
+  certificate; no matrix, determinant, PosDef, probability, or trajectory
+  assumptions.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-OFUL-UNCLIPPED-SMALL-UPDATE-SUM-LOG-UPPER`; declaration is
+  `OFUL.sum_range_le_two_of_sum_log_one_add_le_of_le_one`; dependency cards
+  include `LOCAL-LEAF-OFUL-UNCLIPPED-SMALL-UPDATE-SUM-LOG` and
+  `MLIB-FINSET-SUMS`.
+- Status: project-local compiled deterministic finite-sum log-upper handoff.
+- Failure policy: this does not construct the log-sum certificate, prove a
+  determinant telescope, discharge OFUL inverse-quadratic nonnegativity,
+  prove determinant upper bounds, prove the small-update contract, or touch
+  self-normalized martingale concentration, confidence ellipsoids, or final
+  OFUL/LinUCB regret.
+
 `LOCAL-LEAF-OFUL-UNCLIPPED-SMALL-UPDATE-LOG-DET-EXPLICIT-NONNEG` is compiled locally:
 
 ```lean

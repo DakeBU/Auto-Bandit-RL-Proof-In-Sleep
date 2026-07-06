@@ -1308,6 +1308,23 @@ theorem sum_range_le_two_sum_log_one_add_of_le_one
   exact sum_range_min_one_le_two_sum_log_one_add u T hu_nonneg
 
 /--
+Raw finite-sum upper-bound handoff under an explicit log-sum certificate.
+
+This keeps the scalar small-update proof independent from any determinant or
+matrix route that might later prove the log-sum upper bound.
+-/
+theorem sum_range_le_two_of_sum_log_one_add_le_of_le_one
+    (u : Nat -> Real) (T : Nat) (B : Real)
+    (hu_nonneg : forall t : Nat, t < T -> 0 <= u t)
+    (hu_le_one : forall t : Nat, t < T -> u t <= 1)
+    (hlog_sum_le :
+      (Finset.range T).sum (fun t => Real.log (1 + u t)) <= B) :
+    (Finset.range T).sum (fun t => u t) <= 2 * B := by
+  exact (sum_range_le_two_sum_log_one_add_of_le_one
+    u T hu_nonneg hu_le_one).trans
+    (mul_le_mul_of_nonneg_left hlog_sum_le (by norm_num))
+
+/--
 Concrete finite-horizon log-det telescope for Nat-prefix regularized Grams.
 
 This is the growing-history instantiation of the abstract telescope.  It does
