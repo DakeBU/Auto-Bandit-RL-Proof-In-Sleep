@@ -12052,6 +12052,122 @@ def ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMe
   the actual-action selected-measure law and selected-history variance
   ceilings.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-ACTUAL-REWARD-MAP-HISTORY-VARIANCE-LARGER-PROXY-COND-MGF`
+is compiled locally:
+
+```lean
+theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_reward_map_eq_actual_action_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded_of_varianceCeiling_le
+    ...
+    (varianceCeiling : Nat -> NNReal)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (hvariance :
+      forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat),
+        varianceProxy (context i history)
+          ((policy i).action (state i history)) <= varianceCeiling i)
+    (h_reward_map_eq_actual_action :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            Measure.map (fun y : Omega => reward y (i + 1))
+              (condExpKernel mu
+                ((History.historyFiltrationSucc
+                  (generatedActionFromRewardHistory policy state
+                    defaultAction reward)
+                  reward
+                  (generatedActionFromRewardHistory_measurable hreward hstate)
+                  hreward) i)
+                omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward omega (i + 1)))
+          (ae (mu.trim
+            ((History.historyFiltrationSucc
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward)
+              reward
+              (generatedActionFromRewardHistory_measurable hreward hstate)
+              hreward).le i))))
+    (i : Nat)
+    (c : NNReal)
+    (hceiling : varianceCeiling i <= c) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable hreward hstate)
+        hreward) i)
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable hreward hstate)
+        hreward).le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      c mu
+```
+
+- Exact Lean-facing statement: an actual-action reward-coordinate
+  selected-measure law, raw reward range, selected mean range, centered kernel
+  law, and selected finite-history variance ceilings directly yield the
+  succ-indexed `HasCondSubgaussianMGF` witness at any deterministic proxy
+  `c` satisfying `varianceCeiling i <= c`.
+- Local APIs/imports: `BanditRLProof.ConditionalRewardLawSource`,
+  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource_of_reward_map_eq_actual_action`,
+  `ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource_of_varianceCeiling_le`,
+  `History.historyFiltrationSucc`,
+  `History.finiteRewardHistoryOfTrace`, `RewardKernel.selectedMeasure`, and
+  `ProbabilityTheory.HasCondSubgaussianMGF`.
+- Intended proof route: build the packaged actual-action history-variance
+  source from the selected-measure law and regularity contracts, then reuse the
+  packaged selected-history source coarser-proxy consumer with `hceiling`.
+- Regularity contracts: finite measure, standard Borel sample space,
+  measurable context/state/action spaces, measurable singleton and countable
+  action space, timewise measurable rewards, measurable context and state
+  extractors, measurable mean surface, centered reward-kernel law,
+  deterministic raw reward range, deterministic selected mean range, selected
+  finite-history variance ceiling, the actual-action reward-coordinate
+  `condExpKernel` selected-measure law, and the explicit proxy domination
+  contract `varianceCeiling i <= c`.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-COND-EXPECT-REWARD-ACTUAL-REWARD-MAP-HISTORY-VARIANCE-LARGER-PROXY-COND-MGF`;
+  declaration is
+  `ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_reward_map_eq_actual_action_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded_of_varianceCeiling_le`.
+  It reuses
+  `LOCAL-LEAF-COND-EXPECT-REWARD-ACTUAL-REWARD-MAP-HISTORY-VARIANCE-SOURCE`
+  and
+  `LOCAL-LEAF-COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-LARGER-PROXY-COND-MGF`.
+- Status: project-local compiled conditional-MGF consumer for
+  `COND-EXPECT-REWARD`, `ADAPTED-ACTION`, `MEAS-POLICY`, `MEAS-HISTORY`,
+  `KERNEL-POLICY-BIND`, `KERNEL-REWARD`, `INT-REWARD-BOUNDED`, and
+  `MEAS-REWARD`.
+- Failure policy: this is not a reward-coordinate law constructor, not an
+  ambient trajectory-to-`condExpKernel` theorem, not a selected-history
+  variance-ceiling derivation, and not a final adaptive theorem.  It assumes
+  the actual-action selected-measure law, selected-history variance ceilings,
+  and the caller-supplied coarser-proxy domination proof.
+
 `LOCAL-LEAF-COND-EXPECT-REWARD-SELECTED-POLICY-UNIFORM-VARIANCE-COND-MGF`
 is compiled locally:
 
