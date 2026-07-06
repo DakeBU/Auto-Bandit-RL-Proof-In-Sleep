@@ -3652,6 +3652,32 @@
       ]
     },
     {
+      "id": "LOCAL-LEAF-COND-EXPECT-REWARD-SELECTED-POLICY-REWARD-MAP-TO-DEFINITIONAL-RANDOM-PAIR-MAP-SOURCE",
+      "leaf_ids": [
+        "COND-EXPECT-REWARD",
+        "ADAPTED-ACTION",
+        "MEAS-POLICY",
+        "MEAS-HISTORY",
+        "KERNEL-POLICY-BIND",
+        "KERNEL-REWARD"
+      ],
+      "module": "BanditRLProof.ConditionalRewardLawSource",
+      "status": "leanCompiled",
+      "declarations": [
+        "ConditionalExpectationReward.generatedActionRandomPairDefinitionalMapSource_of_reward_map_eq_selected_policy"
+      ],
+      "role": "Compiled project-local source-constructor leaf for the COND-EXPECT-REWARD route: a policy-selected reward-coordinate selected-measure law plus context/state measurability now builds the bare GeneratedActionRandomPairDefinitionalMapSource. The proof rewrites the policy-selected law to the generated successor action, lifts it through the frozen-prefix extension-map partialTraj route, and reuses the existing definitional random-pair map source constructor. It still assumes the policy-selected reward-coordinate condExpKernel law and ambient trajectory-to-condExpKernel identification; it adds no raw range, mean range, variance ceiling, MGF witness, or final adaptive theorem.",
+      "mathlib_routes": [
+        "MLIB-CONDITIONAL-EXPECTATION",
+        "Mathlib.MeasureTheory.Measure.Map",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-MAP-SOURCE-CONTRACT",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-CONSUMER",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-REWARD-MAP",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-ACTION-FREEZE-GENERATED-TRACE-SOURCE",
+        "FILTRATION-HISTORY"
+      ]
+    },
+    {
       "id": "LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-DEFINITIONAL-MAP-SOURCE-TO-HISTORYSTEP-PAIR-LAW",
       "leaf_ids": [
         "COND-EXPECT-REWARD",

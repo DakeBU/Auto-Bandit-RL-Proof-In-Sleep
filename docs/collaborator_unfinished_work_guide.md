@@ -6738,6 +6738,89 @@ theorem ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_gene
   identification, centered-reward integrability, sub-Gaussianity, or final
   adaptive ETC/UCB theorem.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-SELECTED-POLICY-REWARD-MAP-TO-DEFINITIONAL-RANDOM-PAIR-MAP-SOURCE`
+is compiled locally:
+
+```lean
+def ConditionalExpectationReward.generatedActionRandomPairDefinitionalMapSource_of_reward_map_eq_selected_policy
+    ...
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (h_reward_map_eq_policy :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            Measure.map (fun y : Omega => reward y (i + 1))
+              (condExpKernel mu
+                ((History.historyFiltrationSucc
+                  (generatedActionFromRewardHistory policy state
+                    defaultAction reward)
+                  reward
+                  (generatedActionFromRewardHistory_measurable hreward hstate)
+                  hreward) i)
+                omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace (reward omega) i))))
+          (ae (mu.trim
+            ((History.historyFiltrationSucc
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward)
+              reward
+              (generatedActionFromRewardHistory_measurable hreward hstate)
+              hreward).le i)))) :
+    GeneratedActionRandomPairDefinitionalMapSource
+      mu rewardKernel policy context state defaultAction reward hreward
+```
+
+- Exact Lean-facing statement: a policy-selected reward-coordinate
+  selected-measure law, context/state measurability, and timewise reward
+  measurability build the bare
+  `GeneratedActionRandomPairDefinitionalMapSource` over
+  `generatedActionFromRewardHistory`.  This is below the raw-range and
+  conditional-MGF source layers.
+- Local APIs/imports: `BanditRLProof.ConditionalRewardLawSource`,
+  `ConditionalExpectationReward.generatedActionFromRewardHistory`,
+  `ConditionalExpectationReward.generatedActionFromRewardHistory_measurable`,
+  `ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_extend_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc_reward_map_eq_actual_action`,
+  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalMapSource_of_actionRewardPartialTrajectoryKernel_extend_map_eq`,
+  `History.historyFiltrationSucc`,
+  `History.finiteRewardHistoryOfTrace`,
+  `History.finitePairHistoryOfTrace`,
+  `History.extendPairHistorySucc`, and
+  `RewardKernel.actionRewardPartialTrajectoryKernel`.
+- Intended proof route: rewrite the policy-facing selected-measure law with
+  `simp [generatedActionFromRewardHistory]` to obtain the actual successor
+  action reward law, lift that law through the generated-action frozen-prefix
+  extension-map `partialTraj` route, and feed the resulting extension-map law
+  into the existing definitional random-pair map source constructor.
+- Regularity contracts: standard Borel sample space, finite measure,
+  measurable context/state/action spaces, measurable singleton and countable
+  action space, timewise measurable reward trace, measurable context and state
+  extractors, and the policy-selected reward-coordinate `condExpKernel`
+  selected-measure law.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-COND-EXPECT-REWARD-SELECTED-POLICY-REWARD-MAP-TO-DEFINITIONAL-RANDOM-PAIR-MAP-SOURCE`;
+  declaration is
+  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalMapSource_of_reward_map_eq_selected_policy`.
+  Dependency cards are
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-MAP-SOURCE-CONTRACT`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-CONSUMER`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-REWARD-MAP`, and
+  `LOCAL-LEAF-COND-EXPECT-REWARD-ACTION-FREEZE-GENERATED-TRACE-SOURCE`.
+- Status: project-local compiled source-constructor leaf for
+  `COND-EXPECT-REWARD`, `ADAPTED-ACTION`, `MEAS-POLICY`, `MEAS-HISTORY`,
+  `KERNEL-POLICY-BIND`, and `KERNEL-REWARD`.
+- Failure policy: this is not an ambient trajectory-to-`condExpKernel`
+  theorem, not a raw/mean range source, not a variance-ceiling derivation, not
+  a conditional MGF theorem, and not a final adaptive theorem.  It still
+  assumes the policy-selected reward-coordinate selected-measure law.
+
 `LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-DEFINITIONAL-MAP-SOURCE-TO-HISTORYSTEP-PAIR-LAW`
 is compiled locally:
 
