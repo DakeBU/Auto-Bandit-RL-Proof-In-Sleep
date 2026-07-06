@@ -2237,6 +2237,81 @@ def generatedActionDefinitionalActualRewardMapSource_of_randomPairDefinitionalMa
     exact explicitSource.reward_map_eq_actual_action
 
 /--
+Project a definitional generated random next-pair source to the
+policy-selected reward-coordinate law.
+
+The definitional source first weakens to the actual generated-action
+reward-coordinate source; unfolding `generatedActionFromRewardHistory` rewrites
+that generated successor action to the policy-selected action at the visible
+finite reward history.
+-/
+theorem reward_condExpKernel_map_eq_selected_policy_of_generatedActionRandomPairDefinitionalMapSource
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (source :
+      GeneratedActionRandomPairDefinitionalMapSource mu rewardKernel policy
+        context state defaultAction reward hreward)
+    (i : Nat) :
+    Filter.Eventually
+      (fun omega : Omega =>
+        @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+          (fun y : Omega => reward y (i + 1))
+          (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+            ((History.historyFiltrationSucc
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward)
+              reward
+              (generatedActionFromRewardHistory_measurable
+                (policy := policy) (state := state)
+                (defaultAction := defaultAction) (reward := reward)
+                hreward source.hstate)
+              hreward) i)
+            omega) =
+        RewardKernel.selectedMeasure rewardKernel
+          (context i
+            (History.finiteRewardHistoryOfTrace (reward omega) i))
+          ((policy i).action
+            (state i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))))
+      (ae
+        (mu.trim
+          ((History.historyFiltrationSucc
+            (generatedActionFromRewardHistory policy state defaultAction reward)
+            reward
+            (generatedActionFromRewardHistory_measurable
+              (policy := policy) (state := state)
+              (defaultAction := defaultAction) (reward := reward)
+              hreward source.hstate)
+            hreward).le i))) := by
+  let actualSource :
+      GeneratedActionDefinitionalActualRewardMapSource mu rewardKernel policy
+        context state defaultAction reward hreward :=
+    generatedActionDefinitionalActualRewardMapSource_of_randomPairDefinitionalMapSource
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (source := source)
+  simpa [actualSource, generatedActionFromRewardHistory] using
+    actualSource.reward_map_eq_actual_action i
+
+/--
 Generated-policy random next-pair source plus centered-reward regularity.
 
 This packages the source contract together with the measurable context/state
