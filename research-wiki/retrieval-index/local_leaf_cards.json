@@ -4568,6 +4568,32 @@
       ]
     },
     {
+      "id": "LOCAL-LEAF-COND-EXPECT-REWARD-SELECTED-POLICY-REWARD-MAP-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE",
+      "leaf_ids": [
+        "COND-EXPECT-REWARD",
+        "ADAPTED-ACTION",
+        "MEAS-POLICY",
+        "MEAS-HISTORY",
+        "KERNEL-POLICY-BIND",
+        "KERNEL-REWARD",
+        "INT-REWARD-BOUNDED",
+        "MEAS-REWARD"
+      ],
+      "module": "BanditRLProof.ConditionalRewardLawSource",
+      "status": "leanCompiled",
+      "declarations": [
+        "ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_reward_map_eq_selected_policy"
+      ],
+      "role": "Compiled project-local source-constructor leaf for the COND-EXPECT-REWARD route: a policy-selected reward-coordinate selected-measure law plus raw reward range, selected-mean range, centered kernel law, and context/state/mean measurability now directly builds the base definitional raw-range/measurable-mean-range generated random-pair source. The proof rewrites the policy-selected action to generatedActionFromRewardHistory's successor action and reuses the actual-action base source constructor. It still assumes the policy-selected reward-coordinate condExpKernel law and ambient trajectory-to-condExpKernel identification; it adds no variance ceiling, MGF witness, or final adaptive theorem.",
+      "mathlib_routes": [
+        "MLIB-CONDITIONAL-EXPECTATION",
+        "Mathlib.MeasureTheory.Measure.Map",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-ACTUAL-REWARD-MAP-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-CONTRACT",
+        "FILTRATION-HISTORY"
+      ]
+    },
+    {
       "id": "LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-UNIFORM-VARIANCE-SOURCE",
       "leaf_ids": [
         "COND-EXPECT-REWARD",
