@@ -9988,6 +9988,100 @@ def ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMe
   definitional actual reward-map source, deterministic raw/mean range
   regularity, and model-side varianceProxy ceiling.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-UNIFORM-VARIANCE-COND-MGF`
+is compiled locally:
+
+```lean
+theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionDefinitionalActualRewardMapSource_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded
+    ...
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (varianceCeiling : NNReal)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (hvariance :
+      forall context : Context, forall action : Action,
+        varianceProxy context action <= varianceCeiling)
+    (source :
+      GeneratedActionDefinitionalActualRewardMapSource mu rewardKernel policy
+        context state defaultAction reward hreward)
+    (i : Nat) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable hreward source.hstate)
+        hreward) i)
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable hreward source.hstate)
+        hreward).le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      varianceCeiling mu
+```
+
+- Exact Lean-facing statement: a packaged
+  `GeneratedActionDefinitionalActualRewardMapSource`, raw/mean range
+  regularity, centered kernel law, measurable mean surface, context
+  measurability, and a global model-side varianceProxy ceiling directly yield
+  the succ-indexed `HasCondSubgaussianMGF` witness for the centered selected
+  reward with proxy `varianceCeiling`.
+- Local APIs/imports: `BanditRLProof.ConditionalRewardLawSource`,
+  `ConditionalExpectationReward.GeneratedActionDefinitionalActualRewardMapSource`,
+  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource_of_generatedActionDefinitionalActualRewardMapSource`,
+  `ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource`,
+  `RewardKernel.CenteredRewardKernelLaw`, `History.historyFiltrationSucc`,
+  and Mathlib's `ProbabilityTheory.HasCondSubgaussianMGF` surface.
+- Intended proof route: build the packaged definitional
+  raw-range/measurable-mean-range uniform-variance source from the packaged
+  definitional actual reward-map source, then invoke the existing source-level
+  uniform-variance conditional MGF consumer.
+- Regularity contracts: standard Borel sample space, finite measure,
+  measurable context/state/action spaces, measurable singleton and countable
+  action space, timewise measurable rewards, packaged state measurability and
+  reward-coordinate law from the definitional actual source, context
+  measurability, measurable mean surface, centered reward-kernel law,
+  deterministic raw reward range bounds, deterministic selected mean range
+  bounds, and a global varianceProxy ceiling.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-COND-EXPECT-REWARD-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-UNIFORM-VARIANCE-COND-MGF`;
+  declaration is
+  `ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionDefinitionalActualRewardMapSource_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded`.
+  Dependency cards are
+  `LOCAL-LEAF-COND-EXPECT-REWARD-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-UNIFORM-VARIANCE-SOURCE`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-COND-MGF-UNIFORM-VARIANCE-CONSUMER`,
+  and
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-CONTRACT`.
+- Status: project-local compiled conditional MGF consumer leaf for
+  `COND-EXPECT-REWARD`, `ADAPTED-ACTION`, `MEAS-POLICY`, `MEAS-HISTORY`,
+  `KERNEL-POLICY-BIND`, `KERNEL-REWARD`, `INT-REWARD-BOUNDED`, and
+  `MEAS-REWARD`.
+- Failure policy: this is not a proof of the packaged reward-coordinate law,
+  not an ambient trajectory-to-`condExpKernel` identification, not a derivation
+  of the global variance ceiling from reward ranges, and not a final adaptive
+  theorem.  It assumes the packaged definitional actual reward-map source,
+  deterministic raw/mean range regularity, and model-side varianceProxy
+  ceiling.
+
 `LOCAL-LEAF-COND-EXPECT-REWARD-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-HISTORY-VARIANCE-SOURCE`
 is compiled locally:
 
