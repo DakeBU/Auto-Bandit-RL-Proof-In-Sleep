@@ -5011,6 +5011,32 @@ LOCAL_LEAF_CARDS = [
         ],
     },
     {
+        "id": "LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-UNIFORM-VARIANCE-LARGER-PROXY-COND-MGF",
+        "leaf_ids": [
+            "COND-EXPECT-REWARD",
+            "ADAPTED-ACTION",
+            "MEAS-POLICY",
+            "MEAS-HISTORY",
+            "KERNEL-POLICY-BIND",
+            "KERNEL-REWARD",
+            "INT-REWARD-BOUNDED",
+            "MEAS-REWARD",
+        ],
+        "module": "BanditRLProof.ConditionalRewardLawSource",
+        "status": "leanCompiled",
+        "declarations": [
+            "ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_actionRewardPartialTrajectoryKernel_map_eq_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded_of_varianceCeiling_le",
+        ],
+        "role": "Compiled project-local practical conditional MGF consumer for coarser downstream proxies from the full finite-pair partialTraj law plus a global variance surface: the existing full finite-pair partialTraj law plus raw/mean range regularity and a global varianceCeiling can be consumed at any deterministic proxy c satisfying varianceCeiling <= c. The proof constructs the packaged full-trace uniform-variance source and reuses the packaged uniform-source larger-proxy consumer; it still assumes the full finite-pair partialTraj/condExpKernel law and does not construct the ambient trajectory law or final adaptive theorem.",
+        "mathlib_routes": [
+            "LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-UNIFORM-VARIANCE-SOURCE",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-LARGER-PROXY-COND-MGF",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-UNIFORM-VARIANCE-COND-MGF",
+            "MLIB-PROBABILITY-SUBGAUSSIAN",
+            "FILTRATION-HISTORY",
+        ],
+    },
+    {
         "id": "LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-HISTORY-VARIANCE-SOURCE",
         "leaf_ids": [
             "COND-EXPECT-REWARD",
@@ -8009,6 +8035,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-CONTRACT is compiled locally as the practical definitional generated-action source: it removes explicit action-trace/haction inputs from the raw-range/measurable-mean-range layer by using generatedActionFromRewardHistory and the definitional random-pair map source; it now also constructs that top-layer source from full finite-pair, frozen-prefix extension-map partialTraj, and canonical history-step next-pair law hypotheses plus raw/mean range regularity, directly consumes the full finite-pair partialTraj law plus regularity into succ-indexed conditional mean-zero, directly consumes the frozen-prefix extension-map law plus regularity into that mean-zero fact, directly consumes the canonical history-step next-pair law plus regularity into that mean-zero fact, and directly consumes generated-action policy-selected or actual-action reward-coordinate selected-measure laws plus regularity into mean-zero; it still assumes the reward-coordinate/next-pair/ambient trajectory-to-condExpKernel law shape and does not construct it.")
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-UNIFORM-VARIANCE-SOURCE is compiled locally as the full finite-pair partialTraj-law constructor for the packaged definitional raw-range/measurable-mean-range uniform-variance source.")
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-UNIFORM-VARIANCE-COND-MGF is compiled locally as the full finite-pair partialTraj-law conditional MGF consumer for the practical definitional raw-range/measurable-mean-range uniform-variance route.")
+    print("- COND-EXPECT-REWARD-PARTIALTRAJ-UNIFORM-VARIANCE-LARGER-PROXY-COND-MGF is compiled locally as a coarser-proxy consumer: the full finite-pair partialTraj law plus a global varianceCeiling can be consumed at any deterministic proxy c satisfying varianceCeiling <= c.")
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-HISTORY-VARIANCE-SOURCE is compiled locally as the full finite-pair partialTraj-law constructor for the packaged definitional raw-range/measurable-mean-range history-variance source.")
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-HISTORY-VARIANCE-COND-MGF is compiled locally as the full finite-pair partialTraj-law conditional MGF consumer for the practical definitional raw-range/measurable-mean-range history-variance route.")
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-HISTORY-VARIANCE-LARGER-PROXY-COND-MGF is compiled locally as a coarser-proxy consumer: the full finite-pair partialTraj law plus a selected-history varianceCeiling can be consumed at any deterministic proxy c satisfying varianceCeiling i <= c.")
