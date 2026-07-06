@@ -5231,6 +5231,32 @@ LOCAL_LEAF_CARDS = [
         ],
     },
     {
+        "id": "LOCAL-LEAF-COND-EXPECT-REWARD-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-HISTORY-VARIANCE-SOURCE",
+        "leaf_ids": [
+            "COND-EXPECT-REWARD",
+            "ADAPTED-ACTION",
+            "MEAS-POLICY",
+            "MEAS-HISTORY",
+            "KERNEL-POLICY-BIND",
+            "KERNEL-REWARD",
+            "INT-REWARD-BOUNDED",
+            "MEAS-REWARD",
+        ],
+        "module": "BanditRLProof.ConditionalRewardLawSource",
+        "status": "leanCompiled",
+        "declarations": [
+            "ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource_of_generatedActionDefinitionalActualRewardMapSource",
+        ],
+        "role": "Compiled project-local source-constructor leaf for the COND-EXPECT-REWARD conditional MGF route: a packaged definitional actual-action reward-coordinate source plus context/mean/kernel/raw-range/mean-range regularity and time-indexed selected-history variance ceilings builds the packaged definitional raw-range/measurable-mean-range history-variance source. The proof reuses the packaged actual-source to raw-range source constructor and then stores the selected-history bound for downstream MGF consumers. It still assumes the packaged actual-action reward-coordinate law, raw/mean range regularity, selected-history variance ceilings, and ambient trajectory-to-condExpKernel identification; it does not prove an MGF witness or final adaptive theorem.",
+        "mathlib_routes": [
+            "MLIB-PROBABILITY-SUBGAUSSIAN",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-COND-MGF-HISTORY-VARIANCE-CONSUMER",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-CONTRACT",
+            "FILTRATION-HISTORY",
+        ],
+    },
+    {
         "id": "LOCAL-LEAF-COND-EXPECT-REWARD-ACTUAL-REWARD-MAP-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE",
         "leaf_ids": [
             "COND-EXPECT-REWARD",
@@ -8419,6 +8445,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-CONTRACT is compiled locally as the practical definitional generated-action source: it removes explicit action-trace/haction inputs from the raw-range/measurable-mean-range layer by using generatedActionFromRewardHistory and the definitional random-pair map source; it now also constructs that top-layer source from full finite-pair, frozen-prefix extension-map partialTraj, and canonical history-step next-pair law hypotheses plus raw/mean range regularity, directly consumes the full finite-pair partialTraj law plus regularity into succ-indexed conditional mean-zero, directly consumes the frozen-prefix extension-map law plus regularity into that mean-zero fact, directly consumes the canonical history-step next-pair law plus regularity into that mean-zero fact, and directly consumes generated-action policy-selected or actual-action reward-coordinate selected-measure laws plus regularity into mean-zero; it still assumes the reward-coordinate/next-pair/ambient trajectory-to-condExpKernel law shape and does not construct it.")
     print("- COND-EXPECT-REWARD-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE is compiled locally as a source-constructor leaf: a packaged definitional actual-action reward-coordinate source plus context/mean/kernel/raw-range/mean-range regularity now builds the base definitional raw-range/measurable-mean-range generated random-pair source by reusing the definitional actual-source to definitional random-pair map-source bridge; it still assumes the packaged reward-coordinate law and does not add variance ceilings, MGF witnesses, or final adaptive theorem.")
     print("- COND-EXPECT-REWARD-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-UNIFORM-VARIANCE-SOURCE is compiled locally as a source-constructor leaf: a packaged definitional actual-action reward-coordinate source plus raw/mean range regularity and a global varianceProxy ceiling now builds the packaged definitional raw-range/measurable-mean-range uniform-variance source for downstream MGF consumers; it still assumes the packaged reward-coordinate law and does not itself prove the MGF witness or final adaptive theorem.")
+    print("- COND-EXPECT-REWARD-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-HISTORY-VARIANCE-SOURCE is compiled locally as a source-constructor leaf: a packaged definitional actual-action reward-coordinate source plus raw/mean range regularity and time-indexed selected-history variance ceilings now builds the packaged definitional raw-range/measurable-mean-range history-variance source for downstream MGF consumers; it still assumes the packaged reward-coordinate law and does not itself prove the MGF witness or final adaptive theorem.")
     print("- COND-EXPECT-REWARD-ACTUAL-REWARD-MAP-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE is compiled locally as a source-constructor leaf: an actual-action reward-coordinate selected-measure law plus raw/mean range regularity now builds the base definitional raw-range/measurable-mean-range generated random-pair source without adding variance or MGF assumptions; it still assumes the actual-action reward-coordinate condExpKernel law and ambient trajectory-to-condExpKernel identification.")
     print("- COND-EXPECT-REWARD-SELECTED-POLICY-REWARD-MAP-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE is compiled locally as a source-constructor leaf: a policy-selected reward-coordinate selected-measure law plus raw/mean range regularity now builds the base definitional raw-range/measurable-mean-range generated random-pair source by rewriting to the generated successor action; it still assumes the policy-selected reward-coordinate condExpKernel law and ambient trajectory-to-condExpKernel identification.")
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-UNIFORM-VARIANCE-SOURCE is compiled locally as the full finite-pair partialTraj-law constructor for the packaged definitional raw-range/measurable-mean-range uniform-variance source.")
