@@ -3846,6 +3846,30 @@ LOCAL_LEAF_CARDS = [
         ],
     },
     {
+        "id": "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-MEAN-ZERO",
+        "leaf_ids": [
+            "COND-EXPECT-REWARD",
+            "ADAPTED-ACTION",
+            "MEAS-POLICY",
+            "MEAS-HISTORY",
+            "KERNEL-POLICY-BIND",
+            "KERNEL-REWARD",
+        ],
+        "module": "BanditRLProof.ConditionalRewardLawSource",
+        "status": "leanCompiled",
+        "declarations": [
+            "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionDefinitionalActualRewardMapSource",
+        ],
+        "role": "Compiled project-local conditional mean-zero consumer leaf for the COND-EXPECT-REWARD route: a packaged definitional generated-action actual reward-coordinate source, centered reward-kernel law, and explicit centered-reward integrability yield the succ-indexed ordinary conditional expectation zero statement over the generated-action history filtration. The proof derives action measurability from the source's state measurability, lowers through the explicit actual reward-map source, and reuses the existing generated-action actual reward-map mean-zero consumer. It still assumes the packaged actual-action reward-coordinate law, centered-reward integrability, and ambient trajectory-to-condExpKernel identification; it adds no raw/mean range regularity, variance ceiling, MGF witness, or final adaptive theorem.",
+        "mathlib_routes": [
+            "MLIB-CONDITIONAL-EXPECTATION",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-CONTRACT",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-ACTUAL-REWARD-MAP-SOURCE-CONTRACT",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-ACTUAL-REWARD-MAP-SOURCE-TO-HISTORYSTEP-PAIR-LAW",
+            "FILTRATION-HISTORY",
+        ],
+    },
+    {
         "id": "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-TO-HISTORYSTEP-PAIR-LAW",
         "leaf_ids": [
             "COND-EXPECT-REWARD",
@@ -8580,6 +8604,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- COND-EXPECT-REWARD-GENERATED-ACTUAL-REWARD-MAP-SOURCE-CONTRACT is compiled locally as the narrower source contract that packages only the actual next-action reward-coordinate conditional map law, now also builds that source from full finite-pair partialTraj, frozen-prefix extension-map partialTraj, or canonical history-step next-pair law hypotheses, then reuses the existing generated-action actual reward-map route for finite-pair-trace partialTraj law and conditional mean-zero; it still assumes the reward-coordinate or ambient trajectory-to-condExpKernel/partialTraj/history-step law.")
     print("- COND-EXPECT-REWARD-GENERATED-ACTUAL-REWARD-MAP-SOURCE-TO-HISTORYSTEP-PAIR-LAW is compiled locally as the actual reward-coordinate source-level canonical pair-law consumer: GeneratedActionActualRewardMapSource now directly yields the RewardKernel.actionRewardHistoryStepKernelFamily next-pair law over History.finitePairHistoryOfTrace; it still assumes the actual reward-coordinate law source and ambient trajectory-to-condExpKernel identification.")
     print("- COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-CONTRACT is compiled locally as the definitional generated-action variant of the actual reward-map source: it removes explicit action-trace/haction inputs by using generatedActionFromRewardHistory and measurable reward-history state extractors, can package a policy-selected reward-coordinate law, full finite-pair partialTraj law, frozen-prefix extension-map partialTraj law, or canonical history-step next-pair law into the actual generated-successor reward-map source, reuses the actual reward-map consumers, and now directly consumes the source plus raw/mean range regularity into succ-indexed conditional mean-zero without a separate integrability hypothesis; it still assumes the reward-coordinate or ambient trajectory-to-condExpKernel/partialTraj/history-step law.")
+    print("- COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-MEAN-ZERO is compiled locally as the standalone integrability-based source-level conditional mean-zero consumer: a packaged GeneratedActionDefinitionalActualRewardMapSource plus centered reward-kernel law and explicit centered-reward integrability yields succ-indexed ordinary conditional expectation zero over generatedActionFromRewardHistory; it still assumes the packaged reward-coordinate law and ambient trajectory-to-condExpKernel identification.")
     print("- COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-TO-HISTORYSTEP-PAIR-LAW is compiled locally as the definitional actual reward-coordinate source-level canonical pair-law consumer: GeneratedActionDefinitionalActualRewardMapSource now yields the RewardKernel.actionRewardHistoryStepKernelFamily next-pair law over generatedActionFromRewardHistory; it still assumes the definitional actual reward-coordinate law source and ambient trajectory-to-condExpKernel identification.")
     print("- COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-TO-PARTIALTRAJ-LAW is compiled locally as the definitional actual reward-coordinate source-level full finite-pair-trace partialTraj consumer: GeneratedActionDefinitionalActualRewardMapSource now yields the actionRewardPartialTrajectoryKernel law over generatedActionFromRewardHistory; it still assumes the definitional actual reward-coordinate law source and ambient trajectory-to-condExpKernel identification.")
     print("- COND-EXPECT-REWARD-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-TO-DEFINITIONAL-RANDOM-PAIR-MAP-SOURCE is compiled locally as a source-conversion leaf: a definitional actual-action reward-coordinate map source plus context measurability now builds the stronger definitional generated random-pair map source through the full finite-pair partialTraj law and existing random-pair source constructor; it still assumes the definitional actual reward-coordinate source and ambient trajectory-to-condExpKernel identification.")
