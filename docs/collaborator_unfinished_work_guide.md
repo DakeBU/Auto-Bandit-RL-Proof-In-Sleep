@@ -11696,6 +11696,58 @@ theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_o
   derivation, and not a final adaptive theorem.  It assumes the actual-action
   selected-measure law and a global model-side variance ceiling.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-ACTUAL-REWARD-MAP-UNIFORM-VARIANCE-LARGER-PROXY-COND-MGF`
+is compiled locally:
+
+```lean
+theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_reward_map_eq_actual_action_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded_of_varianceCeiling_le
+    ...
+    (varianceCeiling : NNReal)
+    ...
+    (hvariance :
+      forall context : Context, forall action : Action,
+        varianceProxy context action <= varianceCeiling)
+    (h_reward_map_eq_actual_action : ...)
+    (i : Nat)
+    (c : NNReal)
+    (hceiling : varianceCeiling <= c) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ...
+      c mu
+```
+
+- Exact Lean-facing statement: an actual-action reward-coordinate
+  selected-measure law, raw reward range, selected mean range, centered kernel
+  law, and a global context/action variance ceiling directly yield the
+  succ-indexed `HasCondSubgaussianMGF` witness at any deterministic proxy
+  `c`, assuming `varianceCeiling <= c`.
+- Local APIs/imports: `BanditRLProof.ConditionalRewardLawSource`,
+  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource_of_reward_map_eq_actual_action`,
+  and
+  `ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource_of_varianceCeiling_le`.
+- Intended proof route: construct the packaged uniform-variance source from
+  the actual-action reward-coordinate law, then consume that source through
+  the packaged uniform-source larger-proxy theorem with
+  `hceiling : varianceCeiling <= c`.
+- Regularity contracts: same as the exact actual-action uniform-variance MGF
+  consumer, plus the deterministic proxy inequality `varianceCeiling <= c`.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-COND-EXPECT-REWARD-ACTUAL-REWARD-MAP-UNIFORM-VARIANCE-LARGER-PROXY-COND-MGF`;
+  declaration is
+  `ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_reward_map_eq_actual_action_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded_of_varianceCeiling_le`.
+  Dependency cards are
+  `LOCAL-LEAF-COND-EXPECT-REWARD-ACTUAL-REWARD-MAP-UNIFORM-VARIANCE-SOURCE`
+  and
+  `LOCAL-LEAF-COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-LARGER-PROXY-COND-MGF`.
+- Status: project-local compiled coarser-proxy consumer for
+  `COND-EXPECT-REWARD`, `ADAPTED-ACTION`, `MEAS-POLICY`, `MEAS-HISTORY`,
+  `KERNEL-POLICY-BIND`, `KERNEL-REWARD`, `INT-REWARD-BOUNDED`, and
+  `MEAS-REWARD`.
+- Failure policy: this only relaxes the output proxy for an already assumed
+  actual-action reward-coordinate law. It does not construct that law, prove
+  the ambient trajectory-to-`condExpKernel` identification, derive the global
+  variance ceiling, or prove any final adaptive ETC/UCB/RL theorem.
+
 `LOCAL-LEAF-COND-EXPECT-REWARD-ACTUAL-REWARD-MAP-UNIFORM-VARIANCE-SOURCE`
 is compiled locally:
 
