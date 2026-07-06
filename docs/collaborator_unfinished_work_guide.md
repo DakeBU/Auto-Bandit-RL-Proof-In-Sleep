@@ -19653,6 +19653,67 @@ theorem ETC.lintegral_ofReal_pseudoRegret_actionWithCommit_choice_le_exploration
   work here.  The next leaf should instantiate `commit`, `hmeas_wrong`, and
   `hprob_wrong` from the concrete argmax oracle/infinitePi probability route.
 
+`ETC-WRONG-COMMIT-BOCHNER-REGRET-ASSEMBLY` is compiled locally:
+
+```lean
+theorem ETC.integral_real_pseudoRegret_actionWithCommit_choice_le_exploration_add_suffix_badGap_prob
+    {Omega : Type u} {K : Nat}
+    [MeasurableSpace Omega]
+    (mu : Measure Omega) [MeasureTheory.IsProbabilityMeasure mu]
+    (spec : ETC.Spec K) (model : FiniteBanditModel K)
+    (commit : Omega -> Fin K) (r : Nat)
+    (badGapBound : Rat) (pWrong : Real)
+    (hbadGap :
+      forall a : Fin K, (a = model.bestArm -> False) ->
+        model.gap a <= badGapBound)
+    (hbadGap_nonneg : (0 : Rat) <= badGapBound)
+    (hmeas_wrong :
+      MeasurableSet {omega : Omega | commit omega = model.bestArm -> False})
+    (hprob_wrong :
+      mu.real {omega : Omega | commit omega = model.bestArm -> False} <=
+        pWrong)
+    (hinteg : Integrable
+      (fun omega : Omega =>
+        (((pseudoRegret model (ETC.actionWithCommit spec (commit omega))
+          (spec.explorationPulls * K + r) : Rat) : Real))) mu) :
+    MeasureTheory.integral mu
+      (fun omega : Omega =>
+        (((pseudoRegret model
+            (ETC.actionWithCommit spec (commit omega))
+            (spec.explorationPulls * K + r) : Rat) : Real))) <=
+    (((((Finset.univ : Finset (Fin K)).sum
+      (fun a : Fin K => model.gap a)) *
+      (((spec.explorationPulls : Nat) : Rat)) : Rat) : Real)) +
+    ((((((r : Nat) : Rat) * badGapBound : Rat) : Real)) * pWrong)
+```
+
+- Local APIs/imports:
+  `BanditRLProof.Algorithms.ETCExpectedRegretAssembly`, consuming
+  `Mathlib.MeasureTheory.Integral.Bochner.Set`,
+  `MeasureTheory.integral_mono`, `MeasureTheory.integral_indicator`,
+  `MeasureTheory.setIntegral_const`, `Measure.real`, and
+  `ETC.pseudoRegret_actionWithCommit_choice_le_sum_gap_mul_explorationPulls_add_suffix_badGap`.
+- Intended proof route: use the pointwise wrong-commit regret assembly, cast
+  the Rat inequality to Real, dominate it by a constant exploration budget plus
+  a wrong-event indicator carrying the suffix budget, integrate with
+  `integral_mono`, evaluate the indicator constant integral as
+  `suffixReal * mu.real wrongSet`, and apply the abstract `hprob_wrong` using
+  nonnegativity of the suffix.
+- Regularity contracts: probability measure `mu`, wrong-event measurability,
+  a non-best gap upper bound `badGapBound`, `0 <= badGapBound`, abstract Real
+  wrong-commit probability control `mu.real wrongSet <= pWrong`, and
+  integrability of the Real pseudo-regret random variable.
+- Retrieval evidence: local declaration is
+  `ETC.integral_real_pseudoRegret_actionWithCommit_choice_le_exploration_add_suffix_badGap_prob`;
+  retrieval card is
+  `LOCAL-LEAF-ETC-WRONG-COMMIT-BOCHNER-REGRET-ASSEMBLY`.
+- Status: project-local compiled Bochner/Real expected-regret assembly with an
+  abstract wrong-probability supplier.
+- Failure policy: do not claim this proves the concrete ETC expected-regret
+  theorem.  It does not instantiate the argmax/infinitePi probability source,
+  prove integrability, construct a random selected commit arm, or connect to
+  filtration/adaptive policy laws.
+
 `ETC-WRONG-COMMIT-INFINITEPI-LINTEGRAL-REGRET-ASSEMBLY` is compiled locally:
 
 ```lean

@@ -1,4 +1,5 @@
 import Mathlib.MeasureTheory.Integral.Lebesgue.Add
+import Mathlib.MeasureTheory.Integral.Bochner.Set
 import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
 import Mathlib.Data.ENNReal.Real
 import BanditRLProof.Algorithms.ETCWrongCommitRegretAssembly
@@ -148,6 +149,157 @@ theorem lintegral_ofReal_pseudoRegret_actionWithCommit_choice_le_exploration_add
               (mul_le_mul_right
                 (by simpa [wrongSet] using hprob_wrong)
                 suffix)
+
+/--
+Bochner/Real expected-regret assembly for an `Omega`-indexed ETC commit
+selector.
+
+This is the Real-valued analogue of
+`lintegral_ofReal_pseudoRegret_actionWithCommit_choice_le_exploration_add_suffix_badGap_prob`.
+It still consumes an abstract wrong-commit probability bound, but the
+conclusion is an ordinary Bochner integral of the Real-cast pseudo-regret.
+-/
+theorem integral_real_pseudoRegret_actionWithCommit_choice_le_exploration_add_suffix_badGap_prob
+    {Omega : Type u} {K : Nat}
+    [MeasurableSpace Omega]
+    (mu : Measure Omega) [MeasureTheory.IsProbabilityMeasure mu]
+    (spec : ETC.Spec K) (model : FiniteBanditModel K)
+    (commit : Omega -> Fin K) (r : Nat)
+    (badGapBound : Rat) (pWrong : Real)
+    (hbadGap :
+      forall a : Fin K, (a = model.bestArm -> False) ->
+        model.gap a <= badGapBound)
+    (hbadGap_nonneg : (0 : Rat) <= badGapBound)
+    (hmeas_wrong :
+      MeasurableSet {omega : Omega | commit omega = model.bestArm -> False})
+    (hprob_wrong :
+      mu.real {omega : Omega | commit omega = model.bestArm -> False} <=
+        pWrong)
+    (hinteg : Integrable
+      (fun omega : Omega =>
+        (((pseudoRegret model (ETC.actionWithCommit spec (commit omega))
+          (spec.explorationPulls * K + r) : Rat) : Real))) mu) :
+    MeasureTheory.integral mu
+      (fun omega : Omega =>
+        (((pseudoRegret model
+            (ETC.actionWithCommit spec (commit omega))
+            (spec.explorationPulls * K + r) : Rat) : Real))) <=
+    (((((Finset.univ : Finset (Fin K)).sum
+      (fun a : Fin K => model.gap a)) *
+      (((spec.explorationPulls : Nat) : Rat)) : Rat) : Real)) +
+    ((((((r : Nat) : Rat) * badGapBound : Rat) : Real)) * pWrong) := by
+  let wrongSet : Set Omega :=
+    {omega : Omega | commit omega = model.bestArm -> False}
+  let baseRat : Rat :=
+    ((Finset.univ : Finset (Fin K)).sum
+      (fun a : Fin K => model.gap a)) *
+      (((spec.explorationPulls : Nat) : Rat))
+  let suffixRat : Omega -> Rat :=
+    fun omega : Omega =>
+      (((r : Nat) : Rat) *
+        (if commit omega = model.bestArm then (0 : Rat) else badGapBound))
+  let baseReal : Real := (((baseRat : Rat) : Real))
+  let suffixReal : Real :=
+    (((((r : Nat) : Rat) * badGapBound : Rat) : Real))
+  let bound : Omega -> Real :=
+    fun omega : Omega =>
+      baseReal + wrongSet.indicator (fun _ => suffixReal) omega
+  have hsuffix_nonneg : 0 <= suffixReal := by
+    have hr_nonneg : (0 : Rat) <= (((r : Nat) : Rat)) := by
+      exact_mod_cast Nat.zero_le r
+    have hsuffix_rat_nonneg :
+        (0 : Rat) <= (((r : Nat) : Rat) * badGapBound) :=
+      mul_nonneg hr_nonneg hbadGap_nonneg
+    have hsuffix_real_nonneg :
+        (0 : Real) <=
+          ((((r : Nat) : Rat) * badGapBound : Rat) : Real) := by
+      exact_mod_cast hsuffix_rat_nonneg
+    simpa [suffixReal] using hsuffix_real_nonneg
+  have hpoint :
+      (fun omega : Omega =>
+        (((pseudoRegret model
+            (ETC.actionWithCommit spec (commit omega))
+            (spec.explorationPulls * K + r) : Rat) : Real))) <= bound := by
+    intro omega
+    have hrat :
+        pseudoRegret model (ETC.actionWithCommit spec (commit omega))
+            (spec.explorationPulls * K + r) <=
+          baseRat + suffixRat omega := by
+      simpa [baseRat, suffixRat] using
+        ETC.pseudoRegret_actionWithCommit_choice_le_sum_gap_mul_explorationPulls_add_suffix_badGap
+          (spec := spec)
+          (model := model)
+          (commit := commit)
+          (r := r)
+          (badGapBound := badGapBound)
+          (hbadGap := hbadGap)
+          (omega := omega)
+    have hreal :
+        (((pseudoRegret model
+            (ETC.actionWithCommit spec (commit omega))
+            (spec.explorationPulls * K + r) : Rat) : Real)) <=
+          (((baseRat + suffixRat omega : Rat) : Real)) := by
+      exact_mod_cast hrat
+    have hrhs :
+        (((baseRat + suffixRat omega : Rat) : Real)) = bound omega := by
+      by_cases hcommit : commit omega = model.bestArm
+      · simp [bound, wrongSet, baseReal, suffixReal, suffixRat, hcommit,
+          Rat.cast]
+      · simp [bound, wrongSet, baseReal, suffixReal, suffixRat, hcommit,
+          Rat.cast]
+    simpa [hrhs]
+      using hreal
+  have hbound_integrable : Integrable bound mu := by
+    have hconst : Integrable (fun _omega : Omega => baseReal) mu :=
+      integrable_const baseReal
+    have hsuffix :
+        Integrable (wrongSet.indicator (fun _ : Omega => suffixReal)) mu :=
+      (integrable_const suffixReal).indicator
+        (by simpa [wrongSet] using hmeas_wrong)
+    simpa [bound] using hconst.add hsuffix
+  calc
+    MeasureTheory.integral mu
+      (fun omega : Omega =>
+        (((pseudoRegret model
+            (ETC.actionWithCommit spec (commit omega))
+            (spec.explorationPulls * K + r) : Rat) : Real)))
+        <= MeasureTheory.integral mu bound := by
+          exact MeasureTheory.integral_mono hinteg hbound_integrable hpoint
+    _ =
+        baseReal + suffixReal * mu.real wrongSet := by
+          have hconst : Integrable (fun _omega : Omega => baseReal) mu :=
+            integrable_const baseReal
+          have hsuffix :
+              Integrable
+                (wrongSet.indicator (fun _ : Omega => suffixReal)) mu :=
+            (integrable_const suffixReal).indicator
+              (by simpa [wrongSet] using hmeas_wrong)
+          rw [show bound =
+              (fun omega : Omega =>
+                (fun _omega : Omega => baseReal) omega +
+                  wrongSet.indicator (fun _ : Omega => suffixReal) omega) by
+                funext omega
+                rfl]
+          rw [MeasureTheory.integral_add hconst hsuffix]
+          rw [MeasureTheory.integral_const]
+          rw [MeasureTheory.integral_indicator
+            (by simpa [wrongSet] using hmeas_wrong)]
+          rw [MeasureTheory.setIntegral_const]
+          simp [MeasureTheory.probReal_univ, mul_comm]
+    _ <= baseReal + suffixReal * pWrong := by
+          exact
+            add_le_add
+              (le_refl baseReal)
+              (mul_le_mul_of_nonneg_left
+                (by simpa [wrongSet] using hprob_wrong)
+                hsuffix_nonneg)
+    _ =
+        (((((Finset.univ : Finset (Fin K)).sum
+          (fun a : Fin K => model.gap a)) *
+          (((spec.explorationPulls : Nat) : Rat)) : Rat) : Real)) +
+        ((((((r : Nat) : Rat) * badGapBound : Rat) : Real)) *
+          pWrong) := by
+          simp [baseReal, suffixReal, baseRat]
 
 end ETC
 end BanditRLProof

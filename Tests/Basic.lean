@@ -24222,4 +24222,38 @@ noncomputable example
     RewardKernel.actionRewardHistoryStepKernelFamily_condDistrib_trajMeasure
       mu0 rewardKernel policy context state hcontext hstate n
 
+noncomputable example {Omega : Type} {K : Nat}
+    [MeasurableSpace Omega]
+    (mu : MeasureTheory.Measure Omega)
+    [MeasureTheory.IsProbabilityMeasure mu]
+    (spec : ETC.Spec K) (model : FiniteBanditModel K)
+    (commit : Omega -> Fin K) (r : Nat)
+    (badGapBound : Rat) (pWrong : Real)
+    (hbadGap :
+      forall a : Fin K, (a = model.bestArm -> False) ->
+        model.gap a <= badGapBound)
+    (hbadGap_nonneg : (0 : Rat) <= badGapBound)
+    (hmeas_wrong :
+      MeasurableSet {omega : Omega | commit omega = model.bestArm -> False})
+    (hprob_wrong :
+      mu.real {omega : Omega | commit omega = model.bestArm -> False} <=
+        pWrong)
+    (hinteg : MeasureTheory.Integrable
+      (fun omega : Omega =>
+        (((pseudoRegret model (ETC.actionWithCommit spec (commit omega))
+          (spec.explorationPulls * K + r) : Rat) : Real))) mu) :
+    MeasureTheory.integral mu
+      (fun omega : Omega =>
+        (((pseudoRegret model
+          (ETC.actionWithCommit spec (commit omega))
+          (spec.explorationPulls * K + r) : Rat) : Real))) <=
+    (((((Finset.univ : Finset (Fin K)).sum
+      (fun a : Fin K => model.gap a)) *
+      (((spec.explorationPulls : Nat) : Rat)) : Rat) : Real)) +
+    ((((((r : Nat) : Rat) * badGapBound : Rat) : Real)) * pWrong) := by
+  exact
+    ETC.integral_real_pseudoRegret_actionWithCommit_choice_le_exploration_add_suffix_badGap_prob
+      mu spec model commit r badGapBound pWrong hbadGap hbadGap_nonneg
+      hmeas_wrong hprob_wrong hinteg
+
 end BanditRLProof
