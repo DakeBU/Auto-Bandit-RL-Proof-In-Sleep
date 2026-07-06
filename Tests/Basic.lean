@@ -21319,6 +21319,29 @@ example {Feature : Type} [Fintype Feature] [DecidableEq Feature] [Nonempty Featu
 
 example {Feature : Type} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]
     (lam : Real) (hlam : 0 < lam)
+    (history : Nat -> Feature -> Real) (T : Nat) (L2 B : Real)
+    (hbound : forall t : Nat, t < T ->
+      dotProduct (history t) (history t) <= L2)
+    (haverage_to_exp :
+      (((Fintype.card Feature : Real) * lam + T * L2) /
+          (Fintype.card Feature : Real)) ^ Fintype.card Feature <=
+        lam ^ Fintype.card Feature * Real.exp B)
+    (hupdate_le_one : forall t : Nat, t < T ->
+      dotProduct (history t)
+        (Matrix.mulVec
+          ((OFUL.regularizedPrefixFeatureGram lam history t)⁻¹)
+          (history t)) <= 1) :
+    (Finset.range T).sum
+        (fun t => dotProduct (history t)
+          (Matrix.mulVec
+            ((OFUL.regularizedPrefixFeatureGram lam history t)⁻¹)
+            (history t))) <=
+      2 * B := by
+  exact OFUL.sum_range_prefix_update_le_two_of_trace_average_bound_of_update_le_one
+    lam hlam history T L2 B hbound haverage_to_exp hupdate_le_one
+
+example {Feature : Type} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]
+    (lam : Real) (hlam : 0 < lam)
     (history : Nat -> Feature -> Real) (T : Nat) (L2 : Real)
     (hL2 : 0 <= L2)
     (hbound : forall t : Nat, t < T ->

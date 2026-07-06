@@ -1648,6 +1648,52 @@ theorem sum_range_min_prefix_update_le_two_of_trace_average_bound
       lambda hlambda history T L2 B hbound haverage_to_exp)
 
 /--
+Unclipped prefix inverse-quadratic sum bound from a scalar trace-average
+certificate, under a small-update contract.
+
+When each update scalar is at most one, the raw update sum agrees with the
+clipped sum used by the standard elliptical-potential route.
+-/
+theorem sum_range_prefix_update_le_two_of_trace_average_bound_of_update_le_one
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Nat -> Feature -> Real) (T : Nat) (L2 B : Real)
+    (hbound : forall t : Nat, t < T ->
+      dotProduct (history t) (history t) <= L2)
+    (haverage_to_exp :
+      (((Fintype.card Feature : Real) * lambda + T * L2) /
+          (Fintype.card Feature : Real)) ^ Fintype.card Feature <=
+        lambda ^ Fintype.card Feature * Real.exp B)
+    (hupdate_le_one : forall t : Nat, t < T ->
+      dotProduct (history t)
+        (Matrix.mulVec
+          ((regularizedPrefixFeatureGram lambda history t)⁻¹)
+          (history t)) <= 1) :
+    (Finset.range T).sum
+        (fun t => dotProduct (history t)
+          (Matrix.mulVec
+            ((regularizedPrefixFeatureGram lambda history t)⁻¹)
+            (history t))) <=
+      2 * B := by
+  let u : Nat -> Real := fun t =>
+    dotProduct (history t)
+      (Matrix.mulVec
+        ((regularizedPrefixFeatureGram lambda history t)⁻¹)
+        (history t))
+  have hsum_eq :
+      (Finset.range T).sum (fun t => u t) =
+        (Finset.range T).sum (fun t => min 1 (u t)) := by
+    apply Finset.sum_congr rfl
+    intro t ht
+    have htT : t < T := Finset.mem_range.mp ht
+    have hu_le_one : u t <= 1 := hupdate_le_one t htT
+    have hmin : min 1 (u t) = u t := min_eq_right hu_le_one
+    exact hmin.symm
+  rw [hsum_eq]
+  exact sum_range_min_prefix_update_le_two_of_trace_average_bound
+    lambda hlambda history T L2 B hbound haverage_to_exp
+
+/--
 Concrete determinant upper bound obtained by combining the AM-GM trace/radius
 route with the scalar exponential simplification.
 -/

@@ -16468,6 +16468,65 @@ theorem ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_le_sum_gap_mul_
 - Failure policy: do not prove post-exploration corollaries, empirical commit
   correctness, or probability facts in the same batch.
 
+`LOCAL-LEAF-OFUL-UNCLIPPED-SMALL-UPDATE-GENERIC` is compiled locally:
+
+```lean
+theorem OFUL.sum_range_prefix_update_le_two_of_trace_average_bound_of_update_le_one
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    [Nonempty Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Nat -> Feature -> Real) (T : Nat) (L2 B : Real)
+    (hbound : forall t : Nat, t < T ->
+      dotProduct (history t) (history t) <= L2)
+    (haverage_to_exp :
+      (((Fintype.card Feature : Real) * lambda + T * L2) /
+          (Fintype.card Feature : Real)) ^ Fintype.card Feature <=
+        lambda ^ Fintype.card Feature * Real.exp B)
+    (hupdate_le_one : forall t : Nat, t < T ->
+      dotProduct (history t)
+        (Matrix.mulVec
+          ((OFUL.regularizedPrefixFeatureGram lambda history t)⁻¹)
+          (history t)) <= 1) :
+    (Finset.range T).sum
+        (fun t => dotProduct (history t)
+          (Matrix.mulVec
+            ((OFUL.regularizedPrefixFeatureGram lambda history t)⁻¹)
+            (history t))) <=
+      2 * B
+```
+
+- Exact Lean-facing statement: any scalar trace-average certificate
+  `((d*lambda + T*L2)/d)^d <= lambda^d * exp(B)` gives the raw
+  inverse-quadratic update-sum bound `sum_t x_t^T V_t^{-1} x_t <= 2 * B`
+  when every update scalar is at most one.
+- Local APIs/imports: `BanditRLProof.OFULEllipticalPotential`,
+  `OFUL.regularizedPrefixFeatureGram`,
+  `OFUL.sum_range_min_prefix_update_le_two_of_trace_average_bound`,
+  `Mathlib.Analysis.SpecialFunctions.Exp`, and finite-sum APIs through the
+  existing OFUL module imports.
+- Intended proof route: define `u t = x_t^T V_t^{-1} x_t`; prove
+  `sum_t u t = sum_t min 1 (u t)` by `Finset.sum_congr` and
+  `min_eq_right (hupdate_le_one t ht)`; then reuse the existing clipped
+  trace-average consumer
+  `OFUL.sum_range_min_prefix_update_le_two_of_trace_average_bound`.
+- Regularity contracts: finite nonempty feature type, decidable feature
+  equality, positive regularization `0 < lambda`, pointwise squared-feature
+  bound `dotProduct (history t) (history t) <= L2` for `t < T`, scalar
+  trace-average exponential certificate with exponent `B`, and explicit
+  small-update assumption `x_t^T V_t^{-1} x_t <= 1` for `t < T`.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-OFUL-UNCLIPPED-SMALL-UPDATE-GENERIC`; declaration is
+  `OFUL.sum_range_prefix_update_le_two_of_trace_average_bound_of_update_le_one`;
+  dependency cards include `LOCAL-LEAF-OFUL-TRACE-AVERAGE-EXP-CONSUMER`,
+  `LOCAL-LEAF-OFUL-INVERSE-QUADRATIC-NONNEG-CONSUMER`, and
+  `MLIB-FINSET-SUMS`.
+- Status: project-local compiled deterministic OFUL/LinUCB elliptical-potential
+  consumer.
+- Failure policy: this is only a small-update handoff from clipped to raw sums.
+  It does not prove the small-update contract, self-normalized martingale
+  concentration, confidence ellipsoids, least-squares estimation, or OFUL
+  regret.
+
 `LOCAL-LEAF-OFUL-UNCLIPPED-SMALL-UPDATE-LOG` is compiled locally:
 
 ```lean
