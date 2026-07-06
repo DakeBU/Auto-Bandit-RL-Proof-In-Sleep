@@ -5001,6 +5001,32 @@ LOCAL_LEAF_CARDS = [
         ],
     },
     {
+        "id": "LOCAL-LEAF-COND-EXPECT-REWARD-HISTORYSTEP-UNIFORM-VARIANCE-COND-MGF",
+        "leaf_ids": [
+            "COND-EXPECT-REWARD",
+            "ADAPTED-ACTION",
+            "MEAS-POLICY",
+            "MEAS-HISTORY",
+            "KERNEL-POLICY-BIND",
+            "KERNEL-REWARD",
+            "INT-REWARD-BOUNDED",
+            "MEAS-REWARD",
+        ],
+        "module": "BanditRLProof.ConditionalRewardLawSource",
+        "status": "leanCompiled",
+        "declarations": [
+            "ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_actionRewardHistoryStepKernelFamily_pair_map_eq_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded",
+        ],
+        "role": "Compiled project-local practical conditional MGF consumer for the COND-EXPECT-REWARD route: a canonical history-step next-pair law, raw reward range, selected-mean range, centered kernel law, and a global varianceProxy ceiling now directly yield the succ-indexed HasCondSubgaussianMGF witness with proxy varianceCeiling. It still assumes the history-step pair-map condExpKernel law and a model-side global variance ceiling; it does not construct the next-pair law, derive the ceiling from ranges, or prove a final adaptive theorem.",
+        "mathlib_routes": [
+            "LOCAL-LEAF-COND-EXPECT-REWARD-HISTORYSTEP-UNIFORM-VARIANCE-SOURCE",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-NEXTPAIR-HISTORYSTEP-REWARD-MAP",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-COND-MGF-UNIFORM-VARIANCE-CONSUMER",
+            "MLIB-PROBABILITY-SUBGAUSSIAN",
+            "FILTRATION-HISTORY",
+        ],
+    },
+    {
         "id": "LOCAL-LEAF-COND-EXPECT-REWARD-HISTORYSTEP-HISTORY-VARIANCE-SOURCE",
         "leaf_ids": [
             "COND-EXPECT-REWARD",
@@ -7317,6 +7343,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-HISTORY-VARIANCE-SOURCE is compiled locally as the frozen-prefix extension-map partialTraj-law constructor for the packaged definitional raw-range/measurable-mean-range history-variance source.")
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-HISTORY-VARIANCE-COND-MGF is compiled locally as the frozen-prefix extension-map partialTraj-law conditional MGF consumer for the practical definitional raw-range/measurable-mean-range history-variance route.")
     print("- COND-EXPECT-REWARD-HISTORYSTEP-UNIFORM-VARIANCE-SOURCE is compiled locally as the canonical history-step next-pair law constructor for the packaged definitional raw-range/measurable-mean-range uniform-variance source.")
+    print("- COND-EXPECT-REWARD-HISTORYSTEP-UNIFORM-VARIANCE-COND-MGF is compiled locally as the canonical history-step next-pair law conditional MGF consumer for the practical definitional raw-range/measurable-mean-range uniform-variance route.")
     print("- COND-EXPECT-REWARD-HISTORYSTEP-HISTORY-VARIANCE-SOURCE is compiled locally as the canonical history-step next-pair law constructor for the packaged definitional raw-range/measurable-mean-range history-variance source.")
     print("- COND-EXPECT-REWARD-HISTORYSTEP-HISTORY-VARIANCE-COND-MGF is compiled locally as the canonical history-step next-pair law conditional MGF consumer for the practical definitional raw-range/measurable-mean-range history-variance route.")
     print("- COND-EXPECT-REWARD-RANDOM-PAIR-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-HISTORYSTEP-PAIR-LAW is compiled locally as the definitional raw-reward-range/measurable-mean-range canonical pair-law consumer: GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource now directly yields the RewardKernel.actionRewardHistoryStepKernelFamily next-pair law over generatedActionFromRewardHistory by lowering through the explicit raw-range source; it still assumes the definitional random next-pair law source and ambient trajectory-to-condExpKernel identification.")
