@@ -13708,6 +13708,98 @@ theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_o
   it does not derive that ceiling from raw/mean ranges, construct the
   random-pair law, or prove UCB/ETC/RL regret.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-HISTORYSTEP-UNIFORM-VARIANCE-LARGER-PROXY-COND-MGF`
+is compiled locally:
+
+```lean
+theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_actionRewardHistoryStepKernelFamily_pair_map_eq_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded_of_varianceCeiling_le
+    ...
+    (varianceCeiling : NNReal)
+    ...
+    (hvariance :
+      forall context : Context, forall action : Action,
+        varianceProxy context action <= varianceCeiling)
+    (h_kernel_pair_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            Measure.map
+              (fun y : Omega =>
+                (generatedActionFromRewardHistory policy state defaultAction
+                  reward y (i + 1),
+                  reward y (i + 1)))
+              (condExpKernel mu
+                ((History.historyFiltrationSucc
+                  (generatedActionFromRewardHistory policy state
+                    defaultAction reward)
+                  reward
+                  (generatedActionFromRewardHistory_measurable hreward hstate)
+                  hreward) i)
+                omega) =
+            RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy
+              ... i
+              (History.finitePairHistoryOfTrace
+                (generatedActionFromRewardHistory policy state defaultAction
+                  reward omega)
+                (reward omega) i))
+          (ae (mu.trim
+            ((History.historyFiltrationSucc
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward)
+              reward
+              (generatedActionFromRewardHistory_measurable hreward hstate)
+              hreward).le i))))
+    (i : Nat)
+    (c : NNReal)
+    (hceiling : varianceCeiling <= c) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ...
+      c mu
+```
+
+- Exact Lean-facing statement: a canonical generated-history history-step
+  next-pair law, raw reward range, selected mean range, centered kernel law,
+  and global varianceProxy ceiling directly imply the succ-indexed
+  `HasCondSubgaussianMGF` witness for the centered successor reward at any
+  deterministic proxy `c` satisfying `varianceCeiling <= c`.
+- Local APIs/imports: `BanditRLProof.ConditionalRewardLawSource`,
+  `ConditionalExpectationReward.generatedActionFromRewardHistory`,
+  `ConditionalExpectationReward.generatedActionFromRewardHistory_measurable`,
+  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource_of_actionRewardHistoryStepKernelFamily_pair_map_eq`,
+  `ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource_of_varianceCeiling_le`,
+  `History.historyFiltrationSucc`,
+  `History.finiteRewardHistoryOfTrace`,
+  `History.finitePairHistoryOfTrace`,
+  `History.pairHistoryRewardProjection`,
+  `RewardKernel.actionRewardHistoryStepKernelFamily`, and
+  Mathlib's `ProbabilityTheory.HasCondSubgaussianMGF`.
+- Intended proof route: package the canonical history-step next-pair law into
+  `GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource`
+  via
+  `generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource_of_actionRewardHistoryStepKernelFamily_pair_map_eq`,
+  then reuse the already compiled source-level uniform-variance larger-proxy
+  conditional MGF consumer with `hceiling : varianceCeiling <= c`.
+- Regularity contracts: finite measure, standard Borel sample space,
+  measurable context/state/action spaces, measurable singleton and countable
+  action space, timewise measurable rewards, measurable context and state
+  extractors, measurable mean surface, centered reward-kernel law,
+  deterministic raw reward range, deterministic selected mean range, global
+  context/action variance ceiling, the canonical history-step next-pair
+  `condExpKernel` law, and `varianceCeiling <= c`.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-COND-EXPECT-REWARD-HISTORYSTEP-UNIFORM-VARIANCE-LARGER-PROXY-COND-MGF`;
+  declaration is
+  `ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_actionRewardHistoryStepKernelFamily_pair_map_eq_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded_of_varianceCeiling_le`.
+- Status: project-local compiled conditional MGF consumer for
+  `COND-EXPECT-REWARD`, `ADAPTED-ACTION`, `MEAS-POLICY`, `MEAS-HISTORY`,
+  `KERNEL-POLICY-BIND`, `KERNEL-REWARD`, `INT-REWARD-BOUNDED`, and
+  `MEAS-REWARD`.
+- Failure policy: this is not a proof of the canonical history-step next-pair
+  law, not a variance-ceiling derivation, and not a final adaptive theorem.
+  It only weakens the exact global-variance proxy to a larger deterministic
+  `c`; it still assumes the history-step pair-map `condExpKernel` identity
+  and a model-side global variance ceiling.
+
 `LOCAL-LEAF-COND-EXPECT-REWARD-HISTORYSTEP-HISTORY-VARIANCE-SOURCE`
 is compiled locally:
 
