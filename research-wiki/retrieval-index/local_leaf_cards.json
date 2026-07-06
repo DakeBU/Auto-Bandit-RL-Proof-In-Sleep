@@ -3567,6 +3567,29 @@
       ]
     },
     {
+      "id": "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-RANDOM-PAIR-SOURCE-MEAN-ZERO",
+      "leaf_ids": [
+        "COND-EXPECT-REWARD",
+        "ADAPTED-ACTION",
+        "MEAS-POLICY",
+        "KERNEL-POLICY-BIND",
+        "KERNEL-REWARD"
+      ],
+      "module": "BanditRLProof.ConditionalRewardLawSource",
+      "status": "leanCompiled",
+      "declarations": [
+        "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairMapSource"
+      ],
+      "role": "Compiled project-local conditional mean-zero consumer leaf for the COND-EXPECT-REWARD route: a packaged generated-policy random next-pair map source, centered reward-kernel law, and explicit centered-reward integrability yield the succ-indexed ordinary conditional expectation zero statement over the supplied generated action/reward history filtration. The proof unpacks source.action_generated and the per-step random-pair map law, then reuses the compiled generated-action random-pair route. It still assumes the packaged random next-pair law, centered-reward integrability, and ambient trajectory-to-condExpKernel identification; it adds no raw/mean range regularity, variance ceiling, MGF witness, or final adaptive theorem.",
+      "mathlib_routes": [
+        "MLIB-CONDITIONAL-EXPECTATION",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-RANDOM-PAIR-SOURCE-CONTRACT",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-NEXTPAIR-GENERATED-ACTION-ACTUAL-REWARD-HOOKUP",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-ACTION-FREEZE-GENERATED-TRACE-SOURCE",
+        "FILTRATION-HISTORY"
+      ]
+    },
+    {
       "id": "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-RANDOM-PAIR-SOURCE-TO-HISTORYSTEP-PAIR-LAW",
       "leaf_ids": [
         "COND-EXPECT-REWARD",

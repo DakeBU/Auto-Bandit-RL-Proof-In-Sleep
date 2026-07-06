@@ -6586,6 +6586,104 @@ theorem ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_gene
   identification, centered-reward integrability, sub-Gaussianity, or final
   adaptive ETC/UCB theorem.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-RANDOM-PAIR-SOURCE-MEAN-ZERO`
+is compiled locally:
+
+```lean
+theorem ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairMapSource
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (action : Omega -> ActionTrace Action)
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (law :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (haction : forall t : Nat,
+      Measurable (fun omega : Omega => action omega t))
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (source :
+      GeneratedActionRandomPairMapSource mu action rewardKernel policy context
+        state defaultAction reward haction hreward)
+    (i : Nat)
+    (h_integrable :
+      MeasureTheory.Integrable
+        (fun omega : Omega =>
+          (((reward omega (i + 1) -
+            mean
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+                Rat) : Real))) mu) :
+    Filter.EventuallyEq (ae mu)
+      (@condExp Omega Real
+        ((History.historyFiltrationSucc action reward haction hreward) i)
+        mOmega _ _ _ mu
+        (fun omega : Omega =>
+          (((reward omega (i + 1) -
+            mean
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+                Rat) : Real))))
+      (fun _omega : Omega => (0 : Real))
+```
+
+- Exact Lean-facing statement: a packaged
+  `GeneratedActionRandomPairMapSource`, context/state measurability, centered
+  reward-kernel law, and explicit integrability of the succ-indexed centered
+  selected reward imply that the ordinary conditional expectation of that
+  centered reward is a.e. zero against
+  `History.historyFiltrationSucc action reward haction hreward`.
+- Local APIs/imports: `BanditRLProof.ConditionalRewardLawSource`,
+  `ConditionalExpectationReward.GeneratedActionRandomPairMapSource`,
+  `ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionTraceSucc_random_pair_map_eq_actual_action`,
+  `History.historyFiltrationSucc`, `History.finiteRewardHistoryOfTrace`,
+  `RewardKernel.CenteredRewardKernelLaw`, and `MeasureTheory.condExp`.
+- Intended proof route: unpack `source.action_generated` and
+  `source.random_pair_map_eq_actual_action i`, then feed them into the
+  existing generated-action/random-pair map-law mean-zero consumer together
+  with `law` and `h_integrable`.
+- Regularity contracts: standard Borel sample space, finite measure,
+  measurable context/state/action spaces, measurable singleton and countable
+  action space, timewise measurable action and reward traces, context/state
+  measurability, generated shifted policy trace equality, per-step random
+  next-pair conditional map law, centered reward-kernel law, and per-index
+  centered-reward integrability.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-RANDOM-PAIR-SOURCE-MEAN-ZERO`;
+  declaration is
+  `ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairMapSource`.
+  The canary is in `Tests/Basic.lean`.  Dependency cards are
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-RANDOM-PAIR-SOURCE-CONTRACT`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-NEXTPAIR-GENERATED-ACTION-ACTUAL-REWARD-HOOKUP`,
+  and
+  `LOCAL-LEAF-COND-EXPECT-REWARD-ACTION-FREEZE-GENERATED-TRACE-SOURCE`.
+- Status: project-local compiled conditional mean-zero consumer leaf for
+  `COND-EXPECT-REWARD`, `ADAPTED-ACTION`, `MEAS-POLICY`,
+  `KERNEL-POLICY-BIND`, and `KERNEL-REWARD`.
+- Failure policy: this is not a proof of the packaged random next-pair law,
+  not an ambient trajectory-to-`condExpKernel` identification, not a raw/mean
+  range bounded route, not a variance-ceiling source, not a conditional MGF
+  theorem, and not a final adaptive theorem.  It assumes the generated random
+  pair source and explicit centered-reward integrability.
+
 `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-RANDOM-PAIR-SOURCE-TO-HISTORYSTEP-PAIR-LAW`
 is compiled locally:
 
