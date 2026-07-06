@@ -16468,6 +16468,58 @@ theorem ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_le_sum_gap_mul_
 - Failure policy: do not prove post-exploration corollaries, empirical commit
   correctness, or probability facts in the same batch.
 
+`LOCAL-LEAF-OFUL-UNCLIPPED-SMALL-UPDATE-LOG-DET-UPPER` is compiled locally:
+
+```lean
+theorem OFUL.sum_range_prefix_update_le_two_log_det_upper_of_update_le_one
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Nat -> Feature -> Real) (T : Nat) (B : Real)
+    (hlog_upper :
+      Real.log (OFUL.regularizedPrefixFeatureGram lambda history T).det -
+        Real.log (lambda ^ Fintype.card Feature) <= B)
+    (hupdate_le_one : forall t : Nat, t < T ->
+      dotProduct (history t)
+        (Matrix.mulVec
+          ((OFUL.regularizedPrefixFeatureGram lambda history t)⁻¹)
+          (history t)) <= 1) :
+    (Finset.range T).sum
+        (fun t => dotProduct (history t)
+          (Matrix.mulVec
+            ((OFUL.regularizedPrefixFeatureGram lambda history t)⁻¹)
+            (history t))) <=
+      2 * B
+```
+
+- Exact Lean-facing statement: any terminal log-determinant upper bound
+  `log det(V_T) - log(lambda^d) <= B` gives the raw inverse-quadratic
+  update-sum bound `sum_t x_t^T V_t^{-1} x_t <= 2 * B` when every update
+  scalar is at most one.
+- Local APIs/imports: `BanditRLProof.OFULEllipticalPotential`,
+  `OFUL.regularizedPrefixFeatureGram`,
+  `OFUL.sum_range_min_prefix_update_le_two_log_det_upper`, and finite-sum,
+  matrix, and logarithm APIs through the existing OFUL module imports.
+- Intended proof route: define `u t = x_t^T V_t^{-1} x_t`; prove
+  `sum_t u t = sum_t min 1 (u t)` by `Finset.sum_congr` and
+  `min_eq_right (hupdate_le_one t ht)`; then reuse the clipped terminal
+  log-det consumer `OFUL.sum_range_min_prefix_update_le_two_log_det_upper`.
+- Regularity contracts: finite feature type with decidable equality, positive
+  regularization `0 < lambda`, terminal log-determinant upper bound
+  `Real.log det(V_T) - Real.log(lambda^d) <= B`, and explicit small-update
+  evidence `dotProduct (history t) (V_t^{-1} * history t) <= 1` for every
+  `t < T`.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-OFUL-UNCLIPPED-SMALL-UPDATE-LOG-DET-UPPER`; declaration is
+  `OFUL.sum_range_prefix_update_le_two_log_det_upper_of_update_le_one`;
+  dependency cards include `LOCAL-LEAF-OFUL-LOG-DET-UPPER-CONSUMER` and
+  `MLIB-FINSET-SUMS`.
+- Status: project-local compiled deterministic OFUL/LinUCB terminal
+  log-det-to-raw-sum handoff.
+- Failure policy: this does not prove the terminal log-determinant upper
+  bound, the small-update contract, multiplicative determinant upper bounds,
+  trace/AM-GM simplifications, self-normalized martingale concentration,
+  confidence ellipsoids, or final OFUL/LinUCB regret.
+
 `LOCAL-LEAF-OFUL-UNCLIPPED-SMALL-UPDATE-GENERIC` is compiled locally:
 
 ```lean

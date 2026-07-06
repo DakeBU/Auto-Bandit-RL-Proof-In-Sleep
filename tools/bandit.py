@@ -1815,6 +1815,19 @@ LOCAL_LEAF_CARDS = [
         "mathlib_routes": ["LOCAL-LEAF-OFUL-INVERSE-QUADRATIC-NONNEG-CONSUMER", "LOCAL-LEAF-OFUL-DETERMINANT-GROWTH-CONSUMER", "MLIB-CONVEX-LINALG"],
     },
     {
+        "id": "LOCAL-LEAF-OFUL-UNCLIPPED-SMALL-UPDATE-LOG-DET-UPPER",
+        "leaf_ids": [
+            "OFUL-ELLIPTICAL-POTENTIAL",
+        ],
+        "module": "BanditRLProof.OFULEllipticalPotential",
+        "status": "leanCompiled",
+        "declarations": [
+            "OFUL.sum_range_prefix_update_le_two_log_det_upper_of_update_le_one",
+        ],
+        "role": "Compiled small-update terminal log-determinant upper-bound consumer for OFUL/LinUCB: if `log det(V_T)-log(lambda^d) <= B` and every inverse-quadratic update scalar satisfies `u_t <= 1`, the raw unclipped update sum is bounded by `2 * B`. This is a deterministic handoff only; determinant upper bounds, self-normalized martingale concentration, confidence ellipsoids, and OFUL regret remain separate.",
+        "mathlib_routes": ["LOCAL-LEAF-OFUL-LOG-DET-UPPER-CONSUMER", "MLIB-FINSET-SUMS"],
+    },
+    {
         "id": "LOCAL-LEAF-OFUL-DET-MUL-EXP-UPPER-CONSUMER",
         "leaf_ids": [
             "OFUL-ELLIPTICAL-POTENTIAL",
@@ -7560,6 +7573,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- OFUL-DETERMINANT-GROWTH-CONSUMER is compiled locally as the first min/log determinant-growth consumer: `sum_t min(1,u_t) <= 2 * (log det(V_T) - log(lambda^d))` for Nat-prefix update scalars under explicit `0 <= u_t`; determinant upper bounds, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- OFUL-INVERSE-QUADRATIC-NONNEG-CONSUMER is compiled locally as the PosDef-inverse consumer that proves `0 <= x_t^T V_t^{-1} x_t` for regularized Nat-prefix Grams and removes the explicit nonnegativity contract from the min/log determinant-growth bound; determinant upper bounds, dimension/radius simplifications, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- OFUL-LOG-DET-UPPER-CONSUMER is compiled locally as the terminal upper-bound handoff: any future proof of `log det(V_T)-log(lambda^d) <= B` immediately yields the clipped elliptical-potential bound `sum_t min(1,u_t) <= 2 * B`; concrete determinant upper bounds, dimension/radius simplifications, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
+    print("- OFUL-UNCLIPPED-SMALL-UPDATE-LOG-DET-UPPER is compiled locally as the small-update terminal upper-bound handoff: any future proof of `log det(V_T)-log(lambda^d) <= B` plus `u_t <= 1` yields the raw inverse-quadratic update-sum bound `sum_t u_t <= 2 * B`; determinant upper bounds, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- OFUL-DET-MUL-EXP-UPPER-CONSUMER is compiled locally as the multiplicative determinant-upper handoff: any future proof of `det(V_T) <= lambda^d * exp(B)` yields both `log det(V_T)-log(lambda^d) <= B` and `sum_t min(1,u_t) <= 2 * B`; concrete trace/AM-GM determinant bounds, dimension/radius simplifications, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- OFUL-PREFIX-TRACE-BOUND is compiled locally as the trace/radius input for determinant upper bounds: `trace(V_T) = d * lambda + sum_t ||x_t||^2` and `trace(V_T) <= d * lambda + T * L2` under a pointwise squared-norm ceiling; AM-GM determinant upper bounds, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- OFUL-TRACE-AVERAGE-DET-CONSUMER is compiled locally as the trace-average determinant handoff: a future AM-GM proof of `det(V_T) <= (trace(V_T)/d)^d` plus the local trace/radius bound yields `det(V_T) <= ((d*lambda + T*L2)/d)^d`; AM-GM and scalar-exp simplification are handled by later local leaves, while self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
