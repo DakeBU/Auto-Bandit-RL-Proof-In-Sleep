@@ -4151,6 +4151,35 @@ LOCAL_LEAF_CARDS = [
         ],
     },
     {
+        "id": "LOCAL-LEAF-COND-EXPECT-REWARD-SELECTED-POLICY-DEFINITIONAL-MAP-SOURCE-HISTORY-VARIANCE-COND-MGF",
+        "leaf_ids": [
+            "COND-EXPECT-REWARD",
+            "ADAPTED-ACTION",
+            "MEAS-POLICY",
+            "MEAS-HISTORY",
+            "KERNEL-POLICY-BIND",
+            "KERNEL-REWARD",
+            "TAIL-COND-SUBGAUSS",
+        ],
+        "module": "BanditRLProof.ConditionalRewardLawSource",
+        "status": "leanCompiled",
+        "declarations": [
+            "ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_reward_map_eq_selected_policy_definitionalMapSource_rawRangeMeasurableMeanRangeHistoryVarianceBounded",
+        ],
+        "role": "Compiled project-local conditional MGF consumer for the COND-EXPECT-REWARD route: a policy-selected reward-coordinate selected-measure law first builds the bare GeneratedActionRandomPairDefinitionalMapSource, then raw/mean range regularity and time-indexed selected-history variance ceilings wrap it into the practical history-variance source and yield succ-indexed HasCondSubgaussianMGF at varianceCeiling i. It still assumes the policy-selected reward-coordinate condExpKernel law, raw reward and selected-mean range regularity, centered reward-kernel law, selected-history variance ceilings, and ambient trajectory-to-condExpKernel identification; it does not prove the trajectory law or final adaptive theorem.",
+        "mathlib_routes": [
+            "MLIB-CONDITIONAL-EXPECTATION",
+            "MLIB-PROBABILITY-SUBGAUSSIAN",
+            "Mathlib.MeasureTheory.Measure.Map",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-SELECTED-POLICY-REWARD-MAP-TO-DEFINITIONAL-RANDOM-PAIR-MAP-SOURCE",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-SELECTED-POLICY-DEFINITIONAL-MAP-SOURCE-RAW-RANGE-MEAN-ZERO",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-SELECTED-POLICY-DEFINITIONAL-MAP-SOURCE-UNIFORM-VARIANCE-COND-MGF",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-COND-MGF-HISTORY-VARIANCE-CONSUMER",
+            "LOCAL-LEAF-KERNEL-REWARD-MAP-LAW-TRANSFER",
+            "FILTRATION-HISTORY",
+        ],
+    },
+    {
         "id": "LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-DEFINITIONAL-MAP-SOURCE-TO-HISTORYSTEP-PAIR-LAW",
         "leaf_ids": [
             "COND-EXPECT-REWARD",
@@ -8190,6 +8219,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- COND-EXPECT-REWARD-SELECTED-POLICY-REWARD-MAP-TO-DEFINITIONAL-RANDOM-PAIR-MAP-SOURCE is compiled locally as a source-constructor leaf: a policy-selected reward-coordinate selected-measure law plus context/state measurability now builds the bare definitional random-pair map source by rewriting to the generated successor action and reusing the frozen-prefix extension-map route; it still assumes the reward-coordinate condExpKernel law and ambient trajectory-to-condExpKernel identification.")
     print("- COND-EXPECT-REWARD-SELECTED-POLICY-DEFINITIONAL-MAP-SOURCE-RAW-RANGE-MEAN-ZERO is compiled locally as a mean-zero consumer: the policy-selected reward-coordinate selected-measure law first builds the bare definitional random-pair map source, then the raw/mean range source consumer yields succ-indexed conditional mean-zero; it still assumes the reward-coordinate law, raw/mean range regularity, centered kernel law, and ambient trajectory-to-condExpKernel identification.")
     print("- COND-EXPECT-REWARD-SELECTED-POLICY-DEFINITIONAL-MAP-SOURCE-UNIFORM-VARIANCE-COND-MGF is compiled locally as a conditional MGF consumer: the policy-selected reward-coordinate selected-measure law first builds the bare definitional random-pair map source, then raw/mean range regularity plus a global variance ceiling yield succ-indexed HasCondSubgaussianMGF; it still assumes the reward-coordinate law, regularity, variance ceiling, and ambient trajectory-to-condExpKernel identification.")
+    print("- COND-EXPECT-REWARD-SELECTED-POLICY-DEFINITIONAL-MAP-SOURCE-HISTORY-VARIANCE-COND-MGF is compiled locally as a conditional MGF consumer: the policy-selected reward-coordinate selected-measure law first builds the bare definitional random-pair map source, then raw/mean range regularity plus time-indexed selected-history variance ceilings yield succ-indexed HasCondSubgaussianMGF at varianceCeiling i; it still assumes the reward-coordinate law, regularity, selected-history variance ceilings, and ambient trajectory-to-condExpKernel identification.")
     print("- COND-EXPECT-REWARD-RANDOM-PAIR-DEFINITIONAL-MAP-SOURCE-TO-HISTORYSTEP-PAIR-LAW is compiled locally as the definitional source-level canonical pair-law consumer: GeneratedActionRandomPairDefinitionalMapSource now directly yields the RewardKernel.actionRewardHistoryStepKernelFamily next-pair law over generatedActionFromRewardHistory; it still assumes the definitional random next-pair law source and ambient trajectory-to-condExpKernel identification.")
     print("- COND-EXPECT-REWARD-GENERATED-CENTERED-SOURCE-CONTRACT is compiled locally as a centered regularity/source package over the generated random-pair source, including context/state measurability, kernel centered law, and per-step ambient integrability; it still assumes those source/integrability fields rather than deriving them.")
     print("- COND-EXPECT-REWARD-RANDOM-PAIR-CENTERED-SOURCE-TO-HISTORYSTEP-PAIR-LAW is compiled locally as the centered-source canonical pair-law consumer: GeneratedActionRandomPairCenteredSource now directly yields the RewardKernel.actionRewardHistoryStepKernelFamily next-pair law while preserving centered law and integrability fields for later consumers; it still assumes the random next-pair law source and ambient trajectory-to-condExpKernel identification.")
