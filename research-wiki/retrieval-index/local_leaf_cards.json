@@ -5455,6 +5455,30 @@
       ]
     },
     {
+      "id": "LOCAL-LEAF-COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-LARGER-PROXY-COND-MGF",
+      "leaf_ids": [
+        "COND-EXPECT-REWARD",
+        "ADAPTED-ACTION",
+        "MEAS-POLICY",
+        "MEAS-HISTORY",
+        "KERNEL-POLICY-BIND",
+        "KERNEL-REWARD",
+        "INT-REWARD-BOUNDED",
+        "MEAS-REWARD"
+      ],
+      "module": "BanditRLProof.ConditionalRewardLawSource",
+      "status": "leanCompiled",
+      "declarations": [
+        "ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource_of_varianceCeiling_le"
+      ],
+      "role": "Compiled project-local practical conditional MGF consumer for coarser downstream proxies from a packaged uniform-variance source: if the global varianceCeiling is bounded by c, the generated centered successor reward has HasCondSubgaussianMGF with proxy c. The proof converts the uniform source to the constant selected-history variance source and reuses the history-variance larger-proxy consumer; it still assumes the definitional random next-pair law source and ambient trajectory-to-condExpKernel identification.",
+      "mathlib_routes": [
+        "LOCAL-LEAF-COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-HISTORY-VARIANCE-SOURCE",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-LARGER-PROXY-COND-MGF",
+        "MLIB-PROBABILITY-SUBGAUSSIAN"
+      ]
+    },
+    {
       "id": "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-HISTORY-VARIANCE-SOURCE-COND-MGF-CONSUMER",
       "leaf_ids": [
         "COND-EXPECT-REWARD",

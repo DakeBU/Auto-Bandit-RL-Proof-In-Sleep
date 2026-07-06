@@ -14719,6 +14719,110 @@ theorem centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDe
       i
 
 /--
+Consume a packaged uniform-variance source with any deterministic proxy that
+dominates the global variance ceiling.
+
+This is the uniform-source companion to the selected-history larger-proxy
+consumer above.
+-/
+theorem centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource_of_varianceCeiling_le
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (varianceCeiling : NNReal)
+    (source :
+      GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource
+        mu rewardKernel policy context state mean varianceProxy defaultAction
+        reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling)
+    (i : Nat)
+    (c : NNReal)
+    (hceiling : varianceCeiling <= c) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward
+          source.base_source.definitional_map_source.hstate)
+        hreward) i)
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward
+          source.base_source.definitional_map_source.hstate)
+        hreward).le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      c mu := by
+  let historySource :
+      GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource
+        mu rewardKernel policy context state mean varianceProxy defaultAction
+        reward hreward rewardLo rewardHi meanLo meanHi
+        (fun _ : Nat => varianceCeiling) :=
+    generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource_of_uniformVarianceBoundedSource
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (mean := mean)
+      (varianceProxy := varianceProxy)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (rewardLo := rewardLo)
+      (rewardHi := rewardHi)
+      (meanLo := meanLo)
+      (meanHi := meanHi)
+      (varianceCeiling := varianceCeiling)
+      source
+  exact
+    centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource_of_varianceCeiling_le
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (mean := mean)
+      (varianceProxy := varianceProxy)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (rewardLo := rewardLo)
+      (rewardHi := rewardHi)
+      (meanLo := meanLo)
+      (meanHi := meanHi)
+      (varianceCeiling := fun _ : Nat => varianceCeiling)
+      (source := historySource)
+      (i := i)
+      (c := c)
+      hceiling
+
+/--
 Directly consume the canonical history-step next-pair law plus the practical
 raw/mean range regularity package and a global variance ceiling to obtain the
 succ-indexed conditional MGF witness.

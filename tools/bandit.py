@@ -5874,6 +5874,30 @@ LOCAL_LEAF_CARDS = [
         ],
     },
     {
+        "id": "LOCAL-LEAF-COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-LARGER-PROXY-COND-MGF",
+        "leaf_ids": [
+            "COND-EXPECT-REWARD",
+            "ADAPTED-ACTION",
+            "MEAS-POLICY",
+            "MEAS-HISTORY",
+            "KERNEL-POLICY-BIND",
+            "KERNEL-REWARD",
+            "INT-REWARD-BOUNDED",
+            "MEAS-REWARD",
+        ],
+        "module": "BanditRLProof.ConditionalRewardLawSource",
+        "status": "leanCompiled",
+        "declarations": [
+            "ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource_of_varianceCeiling_le",
+        ],
+        "role": "Compiled project-local practical conditional MGF consumer for coarser downstream proxies from a packaged uniform-variance source: if the global varianceCeiling is bounded by c, the generated centered successor reward has HasCondSubgaussianMGF with proxy c. The proof converts the uniform source to the constant selected-history variance source and reuses the history-variance larger-proxy consumer; it still assumes the definitional random next-pair law source and ambient trajectory-to-condExpKernel identification.",
+        "mathlib_routes": [
+            "LOCAL-LEAF-COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-HISTORY-VARIANCE-SOURCE",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-LARGER-PROXY-COND-MGF",
+            "MLIB-PROBABILITY-SUBGAUSSIAN",
+        ],
+    },
+    {
         "id": "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-HISTORY-VARIANCE-SOURCE-COND-MGF-CONSUMER",
         "leaf_ids": [
             "COND-EXPECT-REWARD",
@@ -7835,6 +7859,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-COND-MGF-HISTORY-VARIANCE-CONSUMER is compiled locally as the practical conditional MGF wrapper that reduces the trimmed-a.e. variance-domination side condition to a selected finite-history varianceProxy ceiling, weaker than the global context/action ceiling.")
     print("- COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-HISTORY-VARIANCE-SOURCE is compiled locally as a source-conversion leaf: a packaged uniform variance ceiling yields the time-indexed selected-history variance source with constant ceiling fun _ => varianceCeiling.")
     print("- COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-VIA-HISTORY-COND-MGF is compiled locally as a convenience consumer: a packaged uniform variance source is converted to the selected-history variance source and then consumed through the history-variance conditional MGF interface; it still assumes the definitional random next-pair law source and ambient trajectory-to-condExpKernel identification.")
+    print("- COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-LARGER-PROXY-COND-MGF is compiled locally as a coarser-proxy consumer: a packaged uniform variance source with global varianceCeiling can be consumed at any deterministic proxy c satisfying varianceCeiling <= c.")
     print("- COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-HISTORY-VARIANCE-SOURCE-COND-MGF-CONSUMER is compiled locally as the time-indexed selected-history variance source wrapper and conditional MGF consumer, yielding proxy varianceCeiling i without per-call trimmed-a.e. variance hypotheses and accepting uniform sources through the constant-ceiling source conversion.")
     print("- COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-LARGER-PROXY-COND-MGF is compiled locally as a coarser-proxy consumer: a packaged selected-history variance source with proxy varianceCeiling i can be consumed at any deterministic proxy c satisfying varianceCeiling i <= c.")
     print("- COND-EXPECT-REWARD-RANDOM-PAIR-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE is compiled locally as a source-conversion leaf: a definitional raw-reward-range/measurable-mean-range bounded generated random-pair source now projects its packaged definitional map source into the weaker definitional actual-action reward-coordinate source; it still assumes the definitional raw-range/measurable-mean-range source fields and random pair law.")

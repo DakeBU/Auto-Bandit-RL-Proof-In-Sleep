@@ -13190,6 +13190,50 @@ theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_o
   identification, derive a variance ceiling from raw/mean ranges, or prove any
   final adaptive ETC/UCB/RL theorem.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-LARGER-PROXY-COND-MGF`
+is compiled locally:
+
+```lean
+theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource_of_varianceCeiling_le
+    ...
+```
+
+- Exact Lean-facing statement: from a packaged practical definitional
+  raw-range/measurable-mean-range uniform-variance source, derive
+  `HasCondSubgaussianMGF` for the generated centered successor reward at time
+  `i` with any deterministic proxy `c`, assuming
+  `varianceCeiling <= c`.
+- Local APIs/imports: `BanditRLProof.ConditionalRewardLawSource`,
+  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource_of_uniformVarianceBoundedSource`,
+  and
+  `ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource_of_varianceCeiling_le`.
+- Intended proof route: convert the uniform source to the history-variance
+  source with constant schedule `fun _ : Nat => varianceCeiling`, then invoke
+  the history-variance larger-proxy consumer using
+  `hceiling : varianceCeiling <= c`.
+- Regularity contracts: same as the packaged uniform source: finite measure,
+  standard Borel sample space, measurable context/state/action spaces,
+  countable action space, timewise measurable reward trace, practical
+  raw/mean range source fields, a global variance ceiling, and the extra
+  deterministic inequality `varianceCeiling <= c`.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-LARGER-PROXY-COND-MGF`;
+  declaration is
+  `ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource_of_varianceCeiling_le`.
+  Dependency cards are
+  `LOCAL-LEAF-COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-HISTORY-VARIANCE-SOURCE`
+  and
+  `LOCAL-LEAF-COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-LARGER-PROXY-COND-MGF`.
+- Status: project-local compiled coarser-proxy consumer for
+  `COND-EXPECT-REWARD`, `ADAPTED-ACTION`, `MEAS-POLICY`, `MEAS-HISTORY`,
+  `KERNEL-POLICY-BIND`, `KERNEL-REWARD`, `INT-REWARD-BOUNDED`, and
+  `MEAS-REWARD`.
+- Failure policy: this only relaxes the output proxy of an already packaged
+  uniform-variance source by routing through the selected-history variance
+  interface. It does not construct the definitional random next-pair law,
+  prove the ambient trajectory-to-`condExpKernel` identification, derive the
+  global variance ceiling, or prove any final adaptive ETC/UCB/RL theorem.
+
 `LOCAL-LEAF-COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-LARGER-PROXY-COND-MGF`
 is compiled locally:
 
