@@ -5432,6 +5432,29 @@
       ]
     },
     {
+      "id": "LOCAL-LEAF-COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-VIA-HISTORY-COND-MGF",
+      "leaf_ids": [
+        "COND-EXPECT-REWARD",
+        "ADAPTED-ACTION",
+        "MEAS-POLICY",
+        "MEAS-HISTORY",
+        "KERNEL-POLICY-BIND",
+        "KERNEL-REWARD",
+        "INT-REWARD-BOUNDED",
+        "MEAS-REWARD"
+      ],
+      "module": "BanditRLProof.ConditionalRewardLawSource",
+      "status": "leanCompiled",
+      "declarations": [
+        "ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource_via_historyVarianceSource"
+      ],
+      "role": "Compiled project-local convenience consumer for the practical conditional MGF route: a packaged uniform variance-proxy source is first converted to the selected-history variance source with constant ceiling and then consumed through the history-variance conditional MGF interface. This gives the same `HasCondSubgaussianMGF` proxy as the direct uniform consumer while keeping downstream callers standardized on the weaker history-variance source API; it still assumes the definitional random next-pair law source and ambient trajectory-to-condExpKernel identification.",
+      "mathlib_routes": [
+        "LOCAL-LEAF-COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-HISTORY-VARIANCE-SOURCE",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-HISTORY-VARIANCE-SOURCE-COND-MGF-CONSUMER"
+      ]
+    },
+    {
       "id": "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-HISTORY-VARIANCE-SOURCE-COND-MGF-CONSUMER",
       "leaf_ids": [
         "COND-EXPECT-REWARD",

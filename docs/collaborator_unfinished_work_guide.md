@@ -13148,6 +13148,48 @@ def ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMe
   variance ceiling from raw/mean range bounds, or prove any final adaptive
   ETC/UCB theorem.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-VIA-HISTORY-COND-MGF`
+is compiled locally:
+
+```lean
+theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource_via_historyVarianceSource
+    ...
+```
+
+- Exact Lean-facing statement: from a packaged practical definitional
+  raw-range/measurable-mean-range uniform-variance source, derive
+  `HasCondSubgaussianMGF` for the generated centered successor reward at time
+  `i` with proxy `varianceCeiling`, by consuming the source through the weaker
+  selected-history variance interface.
+- Local APIs/imports: `BanditRLProof.ConditionalRewardLawSource`,
+  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource_of_uniformVarianceBoundedSource`,
+  and
+  `ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource`.
+- Intended proof route: convert the uniform source to the history-variance
+  source with constant schedule `fun _ : Nat => varianceCeiling`, then invoke
+  the history-variance conditional MGF consumer at `i`.
+- Regularity contracts: same as the packaged uniform source: finite measure,
+  standard Borel sample space, measurable context/state/action spaces,
+  countable action space, timewise measurable reward trace, practical
+  raw/mean range source fields, and a global variance ceiling.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-VIA-HISTORY-COND-MGF`;
+  declaration is
+  `ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource_via_historyVarianceSource`.
+  Dependency cards are
+  `LOCAL-LEAF-COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-HISTORY-VARIANCE-SOURCE`
+  and
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-HISTORY-VARIANCE-SOURCE-COND-MGF-CONSUMER`.
+- Status: project-local compiled convenience consumer for
+  `COND-EXPECT-REWARD`, `ADAPTED-ACTION`, `MEAS-POLICY`, `MEAS-HISTORY`,
+  `KERNEL-POLICY-BIND`, `KERNEL-REWARD`, `INT-REWARD-BOUNDED`, and
+  `MEAS-REWARD`.
+- Failure policy: this only routes a packaged uniform source through the
+  history-variance interface. It does not construct the definitional random
+  next-pair law, prove the ambient trajectory-to-`condExpKernel`
+  identification, derive a variance ceiling from raw/mean ranges, or prove any
+  final adaptive ETC/UCB/RL theorem.
+
 Current boundary after this leaf:
 
 - `KERNEL-REWARD` is now compiled as the reward-kernel contract surface above.
