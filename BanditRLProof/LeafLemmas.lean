@@ -98,6 +98,29 @@ theorem pullCount_pos_of_eq_before {s t : Nat}
   exact Nat.lt_of_lt_of_le hpos
     (pullCount_mono action a (Nat.succ_le_of_lt hst))
 
+/--
+Pull counts depend only on the half-open action prefix `0, ..., t - 1`.
+
+This keeps later adaptive-policy wrappers from reproving the same induction
+when a history-generated trace is known to agree pointwise with an index-policy
+trace up to a finite horizon.
+-/
+theorem pullCount_eq_of_forall_lt
+    (action action' : ActionTrace Action) (a : Action) :
+    forall t : Nat,
+      (forall s : Nat, s < t -> action s = action' s) ->
+        pullCount action a t = pullCount action' a t := by
+  intro t
+  induction t with
+  | zero =>
+      intro _h
+      simp
+  | succ t ih =>
+      intro h
+      rw [pullCount_succ, pullCount_succ]
+      rw [ih (fun s hs => h s (Nat.lt_trans hs (Nat.lt_succ_self t)))]
+      rw [h t (Nat.lt_succ_self t)]
+
 @[simp] theorem pullCount_const_self (a : Action) (t : Nat) :
     pullCount (fun _ => a) a t = t := by
   apply pullCount_eq_time_of_forall_eq

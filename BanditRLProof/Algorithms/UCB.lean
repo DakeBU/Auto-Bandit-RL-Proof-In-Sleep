@@ -3867,13 +3867,133 @@ theorem lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusSampleCo
         have hsample :
             sampleCount omega t chosen =
               pullCount
-                ((confidenceScoreArgmaxAction hK empiricalMean
-                  (subGaussianTextbookDeltaRadius proxy T delta)) omega)
-                chosen t :=
+            ((confidenceScoreArgmaxAction hK empiricalMean
+              (subGaussianTextbookDeltaRadius proxy T delta)) omega)
+            chosen t :=
           hsampleCount_eq_pullCount_selected_large omega t ht hselected hcount
         simpa [hsample] using
           hproxy_le_sampleCount_selected_large omega t ht hselected hcount)
       hproxy hsubG
+
+/--
+History-action source-count version of the textbook-radius UCB pull-count
+budget.
+
+If an externally generated history trace agrees with the concrete
+score-argmax UCB trace throughout the horizon, and its own recursive pull count
+supplies the variance-over-count proxy contract on selected-large events, then
+that history trace inherits the same `B + T * delta` selected-arm count budget.
+-/
+theorem lintegral_historyAction_pullCount_le_textbookDeltaRadiusSampleCountSource_add_horizon_delta
+    {Omega : Type} [MeasurableSpace Omega]
+    {K : Nat} (hK : 0 < K)
+    [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)]
+    [MeasurableSpace Nat] [MeasurableAdd₂ Nat] [OpensMeasurableSpace Nat]
+    (mu : Measure Omega) [MeasureTheory.IsProbabilityMeasure mu]
+    (trueMean : Fin K -> Real)
+    (empiricalMean : Omega -> Nat -> Fin K -> Real)
+    (proxy : Nat -> Fin K -> NNReal) (T : Nat) (delta : Real)
+    (B : Nat) (best chosen : Fin K) (varianceProxy : NNReal)
+    (historyAction : Omega -> ActionTrace (Fin K))
+    (hT : 0 < T) (hdelta : 0 < delta)
+    (hgap_pos : 0 < meanGap trueMean best chosen)
+    (hlog_pos :
+      0 < Real.log (textbookDeltaScale (Arm := Fin K) T delta))
+    (hB_pos : 0 < B)
+    (hthreshold_lt_B :
+      8 * ((varianceProxy : NNReal) : Real) *
+          Real.log (textbookDeltaScale (Arm := Fin K) T delta) /
+          (meanGap trueMean best chosen) ^ 2 <
+        (B : Real))
+    (haction : forall t : Nat,
+      Measurable
+        (fun omega : Omega =>
+          confidenceScoreArgmaxAction hK empiricalMean
+            (subGaussianTextbookDeltaRadius proxy T delta) omega t))
+    (hhistoryAction_eq_argmax : forall omega t, t < T ->
+      historyAction omega t =
+        confidenceScoreArgmaxAction hK empiricalMean
+          (subGaussianTextbookDeltaRadius proxy T delta) omega t)
+    (hproxy_le_history_selected_large : forall omega t, t < T ->
+      historyAction omega t = chosen ->
+        B <= pullCount (historyAction omega) chosen t ->
+        ((proxy t chosen : NNReal) : Real) <=
+          ((varianceProxy : NNReal) : Real) /
+            (pullCount (historyAction omega) chosen t : Real))
+    (hproxy : forall t arm, t < T ->
+      0 < ((proxy t arm : NNReal) : Real))
+    (hsubG : forall t arm, t < T ->
+      ProbabilityTheory.HasSubgaussianMGF
+        (fun omega : Omega => empiricalMean omega t arm - trueMean arm)
+        (proxy t arm) mu) :
+    MeasureTheory.lintegral mu
+      (fun omega : Omega =>
+        ((pullCount (historyAction omega) chosen T : Nat) : ENNReal)) <=
+      (B : ENNReal) + (T : ENNReal) * ENNReal.ofReal delta := by
+  let scoreAction : Omega -> ActionTrace (Fin K) :=
+    fun omega t =>
+      confidenceScoreArgmaxAction hK empiricalMean
+        (subGaussianTextbookDeltaRadius proxy T delta) omega t
+  have hscore :
+      MeasureTheory.lintegral mu
+        (fun omega : Omega =>
+          ((pullCount (scoreAction omega) chosen T : Nat) : ENNReal)) <=
+        (B : ENNReal) + (T : ENNReal) * ENNReal.ofReal delta := by
+    simpa [scoreAction] using
+      lintegral_confidenceScoreArgmax_pullCount_le_textbookDeltaRadiusSampleCountSource_add_horizon_delta
+        hK mu trueMean empiricalMean proxy T delta B best chosen
+        varianceProxy
+        (fun omega t arm => pullCount (historyAction omega) arm t)
+        hT hdelta hgap_pos hlog_pos hB_pos hthreshold_lt_B haction
+        (by
+          intro omega t ht _hselected _hcount
+          exact
+            pullCount_eq_of_forall_lt
+              (historyAction omega)
+              ((confidenceScoreArgmaxAction hK empiricalMean
+                (subGaussianTextbookDeltaRadius proxy T delta)) omega)
+              chosen t
+              (fun s hs =>
+                hhistoryAction_eq_argmax omega s (Nat.lt_trans hs ht)))
+        (by
+          intro omega t ht hselected hcount
+          have hselected_history : historyAction omega t = chosen := by
+            simpa [hhistoryAction_eq_argmax omega t ht] using hselected
+          have hcount_history :
+              B <= pullCount (historyAction omega) chosen t := by
+            have hcount_eq :
+                pullCount (historyAction omega) chosen t =
+                  pullCount
+                    ((confidenceScoreArgmaxAction hK empiricalMean
+                      (subGaussianTextbookDeltaRadius proxy T delta)) omega)
+                    chosen t :=
+              pullCount_eq_of_forall_lt
+                (historyAction omega)
+                ((confidenceScoreArgmaxAction hK empiricalMean
+                  (subGaussianTextbookDeltaRadius proxy T delta)) omega)
+                chosen t
+                (fun s hs =>
+                  hhistoryAction_eq_argmax omega s (Nat.lt_trans hs ht))
+            simpa [hcount_eq] using hcount
+          exact
+            hproxy_le_history_selected_large omega t ht
+              hselected_history hcount_history)
+        hproxy hsubG
+  have htarget :
+      (fun omega : Omega =>
+        ((pullCount (historyAction omega) chosen T : Nat) : ENNReal)) =
+      (fun omega : Omega =>
+        ((pullCount (scoreAction omega) chosen T : Nat) : ENNReal)) := by
+    funext omega
+    have hcount_eq :
+        pullCount (historyAction omega) chosen T =
+          pullCount (scoreAction omega) chosen T :=
+      pullCount_eq_of_forall_lt
+        (historyAction omega) (scoreAction omega) chosen T
+        (fun s hs => by
+          simpa [scoreAction] using hhistoryAction_eq_argmax omega s hs)
+    simp [hcount_eq]
+  simpa [htarget] using hscore
 
 /--
 Two-sided sub-Gaussian tail budget for a UCB empirical mean at time `t` and
