@@ -4842,6 +4842,32 @@ LOCAL_LEAF_CARDS = [
         ],
     },
     {
+        "id": "LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-UNIFORM-VARIANCE-COND-MGF",
+        "leaf_ids": [
+            "COND-EXPECT-REWARD",
+            "ADAPTED-ACTION",
+            "MEAS-POLICY",
+            "MEAS-HISTORY",
+            "KERNEL-POLICY-BIND",
+            "KERNEL-REWARD",
+            "INT-REWARD-BOUNDED",
+            "MEAS-REWARD",
+        ],
+        "module": "BanditRLProof.ConditionalRewardLawSource",
+        "status": "leanCompiled",
+        "declarations": [
+            "ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_actionRewardPartialTrajectoryKernel_map_eq_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded",
+        ],
+        "role": "Compiled project-local practical conditional MGF consumer for the COND-EXPECT-REWARD route: a full finite-pair-trace partialTraj law, raw reward range, selected-mean range, centered kernel law, and a global varianceProxy ceiling now directly yield the succ-indexed HasCondSubgaussianMGF witness with proxy varianceCeiling. It still assumes the full partialTraj/condExpKernel law and a model-side global variance ceiling; it does not construct the trajectory law, derive the ceiling from ranges, or prove a final adaptive theorem.",
+        "mathlib_routes": [
+            "LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-UNIFORM-VARIANCE-SOURCE",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-CONSUMER",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-COND-MGF-UNIFORM-VARIANCE-CONSUMER",
+            "MLIB-PROBABILITY-SUBGAUSSIAN",
+            "FILTRATION-HISTORY",
+        ],
+    },
+    {
         "id": "LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-HISTORY-VARIANCE-SOURCE",
         "leaf_ids": [
             "COND-EXPECT-REWARD",
@@ -7337,6 +7363,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- COND-EXPECT-REWARD-RANDOM-PAIR-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE is compiled locally as a source-conversion leaf: a raw-reward-range/measurable-mean-range bounded generated random-pair source now projects its packaged map source and state measurability into the weaker actual-action reward-coordinate source; it still assumes the raw-range/measurable-mean-range source fields and random pair law.")
     print("- COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-CONTRACT is compiled locally as the practical definitional generated-action source: it removes explicit action-trace/haction inputs from the raw-range/measurable-mean-range layer by using generatedActionFromRewardHistory and the definitional random-pair map source; it now also constructs that top-layer source from full finite-pair, frozen-prefix extension-map partialTraj, and canonical history-step next-pair law hypotheses plus raw/mean range regularity, directly consumes the full finite-pair partialTraj law plus regularity into succ-indexed conditional mean-zero, directly consumes the frozen-prefix extension-map law plus regularity into that mean-zero fact, directly consumes the canonical history-step next-pair law plus regularity into that mean-zero fact, and directly consumes generated-action policy-selected or actual-action reward-coordinate selected-measure laws plus regularity into mean-zero; it still assumes the reward-coordinate/next-pair/ambient trajectory-to-condExpKernel law shape and does not construct it.")
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-UNIFORM-VARIANCE-SOURCE is compiled locally as the full finite-pair partialTraj-law constructor for the packaged definitional raw-range/measurable-mean-range uniform-variance source.")
+    print("- COND-EXPECT-REWARD-PARTIALTRAJ-UNIFORM-VARIANCE-COND-MGF is compiled locally as the full finite-pair partialTraj-law conditional MGF consumer for the practical definitional raw-range/measurable-mean-range uniform-variance route.")
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-HISTORY-VARIANCE-SOURCE is compiled locally as the full finite-pair partialTraj-law constructor for the packaged definitional raw-range/measurable-mean-range history-variance source.")
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-HISTORY-VARIANCE-COND-MGF is compiled locally as the full finite-pair partialTraj-law conditional MGF consumer for the practical definitional raw-range/measurable-mean-range history-variance route.")
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-UNIFORM-VARIANCE-SOURCE is compiled locally as the frozen-prefix extension-map partialTraj-law constructor for the packaged definitional raw-range/measurable-mean-range uniform-variance source.")
