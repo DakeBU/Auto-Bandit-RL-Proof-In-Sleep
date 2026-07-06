@@ -8994,6 +8994,100 @@ theorem ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_gene
   trajectory-to-`condExpKernel` identification, sub-Gaussianity, or final
   adaptive ETC/UCB theorem.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-ACTUAL-REWARD-MAP-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE`
+is compiled locally:
+
+```lean
+def ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_reward_map_eq_actual_action
+    ...
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (h_reward_map_eq_actual_action :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            Measure.map (fun y : Omega => reward y (i + 1))
+              (condExpKernel mu
+                ((History.historyFiltrationSucc
+                  (generatedActionFromRewardHistory policy state
+                    defaultAction reward)
+                  reward
+                  (generatedActionFromRewardHistory_measurable hreward hstate)
+                  hreward) i)
+                omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward omega (i + 1)))
+          (ae (mu.trim
+            ((History.historyFiltrationSucc
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward)
+              reward
+              (generatedActionFromRewardHistory_measurable hreward hstate)
+              hreward).le i)))) :
+    GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource
+      mu rewardKernel policy context state mean varianceProxy defaultAction
+      reward hreward rewardLo rewardHi meanLo meanHi
+```
+
+- Exact Lean-facing statement: an actual-action reward-coordinate
+  selected-measure law, raw reward range, selected mean range, centered kernel
+  law, and context/state/mean measurability build the base
+  `GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource`.
+  Unlike the uniform/history variance source constructors, this leaf adds no
+  variance ceiling and no conditional MGF conclusion.
+- Local APIs/imports: `BanditRLProof.ConditionalRewardLawSource`,
+  `ConditionalExpectationReward.generatedActionFromRewardHistory`,
+  `ConditionalExpectationReward.generatedActionFromRewardHistory_measurable`,
+  `ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_extend_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc_reward_map_eq_actual_action`,
+  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_actionRewardPartialTrajectoryKernel_extend_map_eq`,
+  `History.historyFiltrationSucc`,
+  `History.finiteRewardHistoryOfTrace`,
+  `History.finitePairHistoryOfTrace`,
+  `History.extendPairHistorySucc`, and
+  `RewardKernel.actionRewardPartialTrajectoryKernel`.
+- Intended proof route: derive generated-action timewise measurability from
+  the reward history, use the actual-action reward-coordinate law to build the
+  frozen-prefix extension-map `partialTraj` law, then feed that law plus
+  raw/mean range regularity into the existing base source constructor.
+- Regularity contracts: finite measure, standard Borel sample space,
+  measurable context/state/action spaces, measurable singleton and countable
+  action space, timewise measurable rewards, measurable context and state
+  extractors, measurable mean surface, centered reward-kernel law,
+  deterministic raw reward range, deterministic selected mean range, and the
+  actual-action reward-coordinate `condExpKernel` selected-measure law.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-COND-EXPECT-REWARD-ACTUAL-REWARD-MAP-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE`;
+  declaration is
+  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_reward_map_eq_actual_action`.
+  Dependency cards are
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-CONTRACT`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-CONSUMER`,
+  and
+  `LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-REWARD-MAP`.
+- Status: project-local compiled source-constructor leaf for
+  `COND-EXPECT-REWARD`, `ADAPTED-ACTION`, `MEAS-POLICY`, `MEAS-HISTORY`,
+  `KERNEL-POLICY-BIND`, `KERNEL-REWARD`, `INT-REWARD-BOUNDED`, and
+  `MEAS-REWARD`.
+- Failure policy: this is not an ambient trajectory-to-`condExpKernel`
+  theorem, not a variance-ceiling derivation, not a conditional MGF theorem,
+  and not a final adaptive theorem.  It still assumes the actual-action
+  reward-coordinate selected-measure law.
+
 `LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-HISTORYSTEP-PAIR-LAW`
 is compiled locally:
 
