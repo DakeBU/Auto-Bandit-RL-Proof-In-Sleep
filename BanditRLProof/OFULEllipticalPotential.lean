@@ -1743,6 +1743,38 @@ theorem sum_range_min_prefix_update_le_two_trace_average_dim_scaled
       (Feature := Feature) lambda hlambda T L2 hL2)
 
 /--
+Concrete raw small-update elliptical-potential sum bound with the
+dimension-scaled exponent `d * (T * L2 / (d * lambda))`.
+-/
+theorem sum_range_prefix_update_le_two_trace_average_dim_scaled_of_update_le_one
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Nat -> Feature -> Real) (T : Nat) (L2 : Real)
+    (hL2 : 0 <= L2)
+    (hbound : forall t : Nat, t < T ->
+      dotProduct (history t) (history t) <= L2)
+    (hupdate_le_one : forall t : Nat, t < T ->
+      dotProduct (history t)
+        (Matrix.mulVec
+          ((regularizedPrefixFeatureGram lambda history t)⁻¹)
+          (history t)) <= 1) :
+    (Finset.range T).sum
+        (fun t => dotProduct (history t)
+          (Matrix.mulVec
+            ((regularizedPrefixFeatureGram lambda history t)⁻¹)
+            (history t))) <=
+      2 * ((Fintype.card Feature : Real) *
+        ((T * L2) / ((Fintype.card Feature : Real) * lambda))) := by
+  exact sum_range_prefix_update_le_two_of_trace_average_bound_of_update_le_one
+    lambda hlambda history T L2
+    ((Fintype.card Feature : Real) *
+      ((T * L2) / ((Fintype.card Feature : Real) * lambda)))
+    hbound
+    (trace_average_pow_le_lambda_pow_mul_exp_dim_scaled
+      (Feature := Feature) lambda hlambda T L2 hL2)
+    hupdate_le_one
+
+/--
 Concrete determinant upper bound from trace/radius with the
 dimension-cancelled exponent `T * L2 / lambda`.
 -/
