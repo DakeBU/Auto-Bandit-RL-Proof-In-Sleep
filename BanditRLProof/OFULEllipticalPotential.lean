@@ -1285,6 +1285,21 @@ theorem sum_range_min_one_le_two_sum_log_one_add
       rw [Finset.mul_sum]
 
 /--
+Clipped finite-sum upper-bound handoff under an explicit log-sum certificate.
+
+This is the scalar clipped counterpart of the later small-update raw-sum
+handoff and does not mention any determinant or matrix route.
+-/
+theorem sum_range_min_one_le_two_of_sum_log_one_add_le
+    (u : Nat -> Real) (T : Nat) (B : Real)
+    (hu : forall t : Nat, t < T -> 0 <= u t)
+    (hlog_sum_le :
+      (Finset.range T).sum (fun t => Real.log (1 + u t)) <= B) :
+    (Finset.range T).sum (fun t => min 1 (u t)) <= 2 * B := by
+  exact (sum_range_min_one_le_two_sum_log_one_add u T hu).trans
+    (mul_le_mul_of_nonneg_left hlog_sum_le (by norm_num))
+
+/--
 Raw finite-sum log upper bound under an explicit small-update contract.
 
 For nonnegative update scalars bounded by one, the unclipped sum agrees with

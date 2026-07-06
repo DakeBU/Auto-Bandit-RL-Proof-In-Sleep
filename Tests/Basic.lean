@@ -21218,6 +21218,14 @@ example (u : Nat -> Real) (T : Nat)
       2 * (Finset.range T).sum (fun t => Real.log (1 + u t)) := by
   exact OFUL.sum_range_min_one_le_two_sum_log_one_add u T hu
 
+example (u : Nat -> Real) (T : Nat) (B : Real)
+    (hu : forall t : Nat, t < T -> 0 <= u t)
+    (hlog_sum_le :
+      (Finset.range T).sum (fun t => Real.log (1 + u t)) <= B) :
+    (Finset.range T).sum (fun t => min 1 (u t)) <= 2 * B := by
+  exact OFUL.sum_range_min_one_le_two_of_sum_log_one_add_le
+    u T B hu hlog_sum_le
+
 example (u : Nat -> Real) (T : Nat)
     (hu_nonneg : forall t : Nat, t < T -> 0 <= u t)
     (hu_le_one : forall t : Nat, t < T -> u t <= 1) :

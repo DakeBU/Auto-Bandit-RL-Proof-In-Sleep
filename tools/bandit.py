@@ -1787,6 +1787,19 @@ LOCAL_LEAF_CARDS = [
         "mathlib_routes": ["LOCAL-LEAF-OFUL-PREFIX-LOG-DET-BASE", "Mathlib.Analysis.SpecialFunctions.Log.Basic", "MLIB-FINSET-SUMS"],
     },
     {
+        "id": "LOCAL-LEAF-OFUL-CLIPPED-SUM-LOG-UPPER",
+        "leaf_ids": [
+            "OFUL-ELLIPTICAL-POTENTIAL",
+        ],
+        "module": "BanditRLProof.OFULEllipticalPotential",
+        "status": "leanCompiled",
+        "declarations": [
+            "OFUL.sum_range_min_one_le_two_of_sum_log_one_add_le",
+        ],
+        "role": "Compiled clipped finite-sum log-upper handoff for OFUL/LinUCB: under explicit `0 <= u_t` and an abstract certificate `sum_t log(1+u_t) <= B`, the clipped update sum `sum_t min(1,u_t)` is bounded by `2 * B`. This keeps scalar clipped-sum bookkeeping separate from determinant telescopes, PosDef discharge, determinant upper bounds, self-normalized martingale concentration, confidence ellipsoids, and OFUL regret.",
+        "mathlib_routes": ["LOCAL-LEAF-OFUL-DETERMINANT-GROWTH-CONSUMER", "MLIB-FINSET-SUMS"],
+    },
+    {
         "id": "LOCAL-LEAF-OFUL-UNCLIPPED-SMALL-UPDATE-SUM-LOG",
         "leaf_ids": [
             "OFUL-ELLIPTICAL-POTENTIAL",
@@ -7636,6 +7649,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- OFUL-PREFIX-LOG-DET-TELESCOPE is compiled locally as a concrete Nat-prefix growing-history regularized-Gram sequence with successor rank-one updates, determinant/log-det recursions, and a finite-horizon log-det telescope; determinant-growth inequalities, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- OFUL-PREFIX-LOG-DET-BASE is compiled locally as the scalar-base endpoint wrapper for the concrete Nat-prefix log-det telescope: `V_0 = lambda I`, `det V_0 = lambda^d`, and the telescope endpoint rewrites to `log det(V_T) - log(lambda^d)`; determinant-growth inequalities, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- OFUL-DETERMINANT-GROWTH-CONSUMER is compiled locally as the first min/log determinant-growth consumer: `sum_t min(1,u_t) <= 2 * (log det(V_T) - log(lambda^d))` for Nat-prefix update scalars under explicit `0 <= u_t`; determinant upper bounds, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
+    print("- OFUL-CLIPPED-SUM-LOG-UPPER is compiled locally as the clipped finite-sum log-upper handoff: under explicit `0 <= u_t` and `sum_t log(1+u_t) <= B`, the clipped update sum is bounded by `2 * B`; determinant telescope, PosDef discharge, determinant upper bounds, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- OFUL-UNCLIPPED-SMALL-UPDATE-SUM-LOG is compiled locally as the finite-sum small-update log bridge: under explicit `0 <= u_t` and `u_t <= 1`, the raw update sum is bounded by `2 * sum_t log(1+u_t)`; determinant telescope, PosDef discharge, determinant upper bounds, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- OFUL-UNCLIPPED-SMALL-UPDATE-SUM-LOG-UPPER is compiled locally as the finite-sum small-update log-upper handoff: under explicit `0 <= u_t`, `u_t <= 1`, and `sum_t log(1+u_t) <= B`, the raw update sum is bounded by `2 * B`; determinant telescope, PosDef discharge, determinant upper bounds, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")
     print("- OFUL-UNCLIPPED-SMALL-UPDATE-LOG-DET-EXPLICIT-NONNEG is compiled locally as the explicit-regularity small-update log-det endpoint handoff: under explicit `0 <= u_t` and `u_t <= 1`, the raw inverse-quadratic update sum is bounded by `2 * (log det(V_T)-log(lambda^d))`; PosDef discharge, determinant upper bounds, self-normalized tails, confidence ellipsoids, and final OFUL regret remain separate.")

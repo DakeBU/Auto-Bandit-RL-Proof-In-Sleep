@@ -16468,6 +16468,44 @@ theorem ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_le_sum_gap_mul_
 - Failure policy: do not prove post-exploration corollaries, empirical commit
   correctness, or probability facts in the same batch.
 
+`LOCAL-LEAF-OFUL-CLIPPED-SUM-LOG-UPPER` is compiled locally:
+
+```lean
+theorem OFUL.sum_range_min_one_le_two_of_sum_log_one_add_le
+    (u : Nat -> Real) (T : Nat) (B : Real)
+    (hu : forall t : Nat, t < T -> 0 <= u t)
+    (hlog_sum_le :
+      (Finset.range T).sum (fun t => Real.log (1 + u t)) <= B) :
+    (Finset.range T).sum (fun t => min 1 (u t)) <= 2 * B
+```
+
+- Exact Lean-facing statement: for any finite Nat prefix of scalar updates,
+  explicit nonnegativity `0 <= u_t` and an abstract log-sum certificate
+  `sum_t log(1 + u_t) <= B` imply the clipped finite sum
+  `sum_t min(1,u_t)` is bounded by `2 * B`.
+- Local APIs/imports: `BanditRLProof.OFULEllipticalPotential`,
+  `OFUL.sum_range_min_one_le_two_sum_log_one_add`,
+  `mul_le_mul_of_nonneg_left`, and Mathlib finite-sum/order APIs already
+  imported by the OFUL module.
+- Intended proof route: compose the compiled clipped finite-sum min/log bridge
+  with the supplied log-sum upper bound by transitivity, multiplying the upper
+  bound by the nonnegative scalar `2`.
+- Regularity contracts: scalar sequence `u : Nat -> Real`, finite horizon
+  `T`, scalar bound `B`, pointwise nonnegativity for all `t < T`, and the
+  explicit log-sum upper certificate; no small-update, matrix, determinant,
+  PosDef, probability, or trajectory assumptions.
+- Retrieval evidence: local card `LOCAL-LEAF-OFUL-CLIPPED-SUM-LOG-UPPER`;
+  declaration is `OFUL.sum_range_min_one_le_two_of_sum_log_one_add_le`;
+  dependency cards include `LOCAL-LEAF-OFUL-DETERMINANT-GROWTH-CONSUMER` and
+  `MLIB-FINSET-SUMS`.
+- Status: project-local compiled deterministic clipped finite-sum log-upper
+  handoff.
+- Failure policy: this does not construct the log-sum certificate, prove a
+  determinant telescope, discharge OFUL inverse-quadratic nonnegativity, prove
+  determinant upper bounds, prove any raw-sum small-update contract, or touch
+  self-normalized martingale concentration, confidence ellipsoids, or final
+  OFUL/LinUCB regret.
+
 `LOCAL-LEAF-OFUL-UNCLIPPED-SMALL-UPDATE-SUM-LOG` is compiled locally:
 
 ```lean
