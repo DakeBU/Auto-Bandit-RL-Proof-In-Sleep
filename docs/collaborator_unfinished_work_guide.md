@@ -9671,6 +9671,96 @@ theorem ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_gene
   trajectory-to-`condExpKernel` identification, sub-Gaussianity, or final
   adaptive ETC/UCB theorem.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-RAW-BOUND-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-MEAN-ZERO`
+is compiled locally:
+
+```lean
+theorem ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairRawBoundMeasurableMeanRangeBoundedSource
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (action : Omega -> ActionTrace Action)
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (haction : forall t : Nat,
+      Measurable (fun omega : Omega => action omega t))
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (source :
+      GeneratedActionRandomPairRawBoundMeasurableMeanRangeBoundedSource
+        mu action rewardKernel policy context state mean varianceProxy
+        defaultAction reward haction hreward rewardLo rewardHi meanLo meanHi)
+    (i : Nat) :
+    Filter.EventuallyEq (ae mu)
+      (@condExp Omega Real
+        ((History.historyFiltrationSucc action reward haction hreward) i)
+        mOmega _ _ _ mu
+        (fun omega : Omega =>
+          (((reward omega (i + 1) -
+            mean
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+                Rat) : Real))))
+      (fun _omega : Omega => (0 : Real))
+```
+
+- Exact Lean-facing statement: a
+  `GeneratedActionRandomPairRawBoundMeasurableMeanRangeBoundedSource` over the
+  supplied generated action/reward traces yields a.e. zero ordinary
+  conditional expectation of the succ-indexed centered selected reward against
+  `History.historyFiltrationSucc action reward haction hreward`.
+- Local APIs/imports: `BanditRLProof.ConditionalRewardLawSource`,
+  `ConditionalExpectationReward.GeneratedActionRandomPairRawBoundMeasurableMeanRangeBoundedSource`,
+  `ConditionalExpectationReward.generatedActionRandomPairRawBoundMeasurableMeanBoundedSource_of_rawBoundMeasurableMeanRangeBoundedSource`,
+  `ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairRawBoundMeasurableMeanBoundedSource`,
+  `History.historyFiltrationSucc`, `History.finiteRewardHistoryOfTrace`,
+  `MeasureTheory.condExp`, `MLIB-CONDITIONAL-EXPECTATION`, and
+  `MLIB-MEASURE-INTEGRAL`.
+- Intended proof route: lower the raw-bound/measurable-mean-range source to
+  `GeneratedActionRandomPairRawBoundMeasurableMeanBoundedSource` using the
+  compiled conversion, then reuse the raw-bound/measurable-mean bounded
+  conditional mean-zero consumer.  The lower layer derives the selected-mean
+  a.e. interval bound from the deterministic mean range contract before
+  applying the integrability-based mean-zero route.
+- Regularity contracts: standard Borel sample space, finite measure,
+  measurable context/state/action spaces, measurable singleton and countable
+  action space, timewise measurable action/reward traces, generated random
+  next-pair map source, context/state measurability, centered reward-kernel
+  law, raw reward interval bounds, measurable mean surface, and deterministic
+  selected-mean range bounds.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-RAW-BOUND-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-MEAN-ZERO`;
+  declaration is
+  `ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairRawBoundMeasurableMeanRangeBoundedSource`.
+  The canary is in `Tests/Basic.lean`.  Dependency cards are
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-RAW-BOUND-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-CONTRACT`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-RAW-BOUND-MEASURABLE-MEAN-BOUNDED-SOURCE-CONTRACT`,
+  and `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-RANDOM-PAIR-SOURCE-CONTRACT`.
+- Status: project-local compiled source-level raw-bound/measurable-mean-range
+  conditional mean-zero consumer leaf for `COND-EXPECT-REWARD`,
+  `ADAPTED-ACTION`, `MEAS-POLICY`, `MEAS-HISTORY`,
+  `KERNEL-POLICY-BIND`, `KERNEL-REWARD`, `INT-REWARD-BOUNDED`, and
+  `MEAS-REWARD`.
+- Failure policy: this is not a proof of the generated random next-pair law,
+  not raw reward interval bounds, not mean measurability, not deterministic
+  mean range bounds, not ambient trajectory-to-`condExpKernel`
+  identification, not a variance-ceiling or conditional MGF theorem, and not a
+  final adaptive theorem.  It assumes the packaged raw-bound/measurable-mean
+  range source and consumes it.
+
 `LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-RAW-BOUND-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-HISTORYSTEP-PAIR-LAW`
 is compiled locally:
 
