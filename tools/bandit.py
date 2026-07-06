@@ -2622,6 +2622,48 @@ LOCAL_LEAF_CARDS = [
         ],
     },
     {
+        "id": "LOCAL-LEAF-ETC-ACTIONWITHCOMMIT-PSEUDOREGRET-INTEGRABILITY",
+        "leaf_ids": [
+            "ETC-ACTIONWITHCOMMIT-PSEUDOREGRET-INTEGRABILITY",
+        ],
+        "module": "BanditRLProof.Algorithms.ETCExpectedRegretAssembly",
+        "status": "leanCompiled",
+        "declarations": [
+            "ETC.integrable_real_pseudoRegret_actionWithCommit_choice_of_measurable_commit",
+        ],
+        "role": "Compiled project-local Bochner regularity helper: for a finite-valued measurable ETC commit selector and any finite measure, the Real-cast finite-horizon pseudoRegret of actionWithCommit is Integrable. The proof uses Mathlib measurable_of_countable, Integrable.of_bound, and a finite Finset sum bound over all commit arms. This discharges the abstract Bochner wrapper's integrability side condition for measurable finite-arm selectors; it does not prove commit measurability or any probability/concentration bound.",
+        "mathlib_routes": [
+            "Mathlib.MeasureTheory.Integral.Bochner.Set",
+            "LOCAL-LEAF-ETC-WRONG-COMMIT-BOCHNER-REGRET-ASSEMBLY",
+            "MLIB-MEASURE-INTEGRAL",
+            "MLIB-FINSET-SUMS",
+        ],
+    },
+    {
+        "id": "LOCAL-LEAF-ETC-WRONG-COMMIT-INFINITEPI-BOCHNER-REGRET-ASSEMBLY",
+        "leaf_ids": [
+            "ETC-WRONG-COMMIT-INFINITEPI-BOCHNER-REGRET-ASSEMBLY",
+        ],
+        "module": "BanditRLProof.Algorithms.ETCInfinitePiExpectedRegretAssembly",
+        "status": "leanCompiled",
+        "declarations": [
+            "ETC.fixedProductWrongCommitTailBudget",
+            "ETC.fixedProductWrongCommitTailBudgetReal",
+            "ETC.fixedProductBadGapIntegralRegretBoundReal",
+            "ETC.integral_real_pseudoRegret_argmaxCommitOracle_actionWithCommit_le_exploration_add_suffix_badGap_prob_of_infinitePi_bounded_actionMean",
+        ],
+        "role": "Compiled concrete fixed-product Bochner/Real expected-regret assembly for the finite argmax ETC commit oracle under an infinitePi bounded-reward source. It reuses the existing infinitePi wrong-commit probability bound, converts the finite ENNReal canonical tail budget to Real with toReal, discharges integrability via the finite-valued measurable commit selector helper, and concludes an ordinary MeasureTheory.integral bound against a named bad-gap Real RHS. It remains fixed-product/fixed-exploration and does not prove max-gap/sum-gap Real adapters, adaptive policy laws, or the final ETC theorem.",
+        "mathlib_routes": [
+            "LOCAL-LEAF-ETC-WRONG-COMMIT-BOCHNER-REGRET-ASSEMBLY",
+            "LOCAL-LEAF-ETC-ACTIONWITHCOMMIT-PSEUDOREGRET-INTEGRABILITY",
+            "LOCAL-LEAF-ETC-WRONG-COMMIT-INFINITEPI-BOUNDED-REWARD-SOURCE",
+            "LOCAL-LEAF-ETC-COMMIT-ORACLE-WRONG-EVENT-MEASURABILITY-OF-COORDINATES",
+            "MLIB-MEASURE-INTEGRAL",
+            "MLIB-PROBABILITY-INDEPENDENCE",
+            "MLIB-PROBABILITY-SUBGAUSSIAN",
+        ],
+    },
+    {
         "id": "LOCAL-LEAF-ETC-WRONG-COMMIT-INFINITEPI-LINTEGRAL-REGRET-ASSEMBLY",
         "leaf_ids": [
             "ETC-WRONG-COMMIT-INFINITEPI-LINTEGRAL-REGRET-ASSEMBLY",
@@ -8775,6 +8817,8 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- ETC-WRONG-COMMIT-REGRET-ASSEMBLY-POINTWISE is compiled locally as the deterministic bridge from an Omega-indexed commit selector to exploration budget plus wrong-commit suffix penalty.")
     print("- ETC-WRONG-COMMIT-LINTEGRAL-REGRET-ASSEMBLY is compiled locally as the ENNReal.ofReal lower-integral bridge using an abstract wrong-commit probability bound.")
     print("- ETC-WRONG-COMMIT-BOCHNER-REGRET-ASSEMBLY is compiled locally as the Bochner/Real expected-regret bridge using an abstract Real wrong-commit probability bound and an explicit integrability contract.")
+    print("- ETC-ACTIONWITHCOMMIT-PSEUDOREGRET-INTEGRABILITY is compiled locally as the finite-valued measurable commit selector integrability helper for Bochner expected-regret wrappers.")
+    print("- ETC-WRONG-COMMIT-INFINITEPI-BOCHNER-REGRET-ASSEMBLY is compiled locally as the concrete fixed-product argmax/infinitePi Bochner expected-regret assembly with a named Real bad-gap RHS.")
     print("- ETC-WRONG-COMMIT-INFINITEPI-LINTEGRAL-REGRET-ASSEMBLY is compiled locally as the concrete argmax/infinitePi ENNReal.ofReal lower-integral regret assembly.")
     print("- ETC-WRONG-COMMIT-INFINITEPI-SUMGAP-LINTEGRAL-REGRET-ASSEMBLY is compiled locally as the conservative sum-gap suffix adapter for that concrete lower-integral assembly.")
     print("- ETC-WRONG-COMMIT-INFINITEPI-MAXGAP-LINTEGRAL-REGRET-ASSEMBLY is compiled locally as the sharper max-gap suffix adapter for that concrete lower-integral assembly.")

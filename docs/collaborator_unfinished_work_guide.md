@@ -19714,6 +19714,109 @@ theorem ETC.integral_real_pseudoRegret_actionWithCommit_choice_le_exploration_ad
   prove integrability, construct a random selected commit arm, or connect to
   filtration/adaptive policy laws.
 
+`ETC-ACTIONWITHCOMMIT-PSEUDOREGRET-INTEGRABILITY` is compiled locally:
+
+```lean
+theorem ETC.integrable_real_pseudoRegret_actionWithCommit_choice_of_measurable_commit
+    {Omega : Type u} {K : Nat}
+    [MeasurableSpace Omega]
+    (mu : Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (spec : ETC.Spec K) (model : FiniteBanditModel K)
+    (commit : Omega -> Fin K) (r : Nat)
+    (hmeas_commit : Measurable commit) :
+    Integrable
+      (fun omega : Omega =>
+        (((pseudoRegret model (ETC.actionWithCommit spec (commit omega))
+          (spec.explorationPulls * K + r) : Rat) : Real))) mu
+```
+
+- Local APIs/imports: `BanditRLProof.Algorithms.ETCExpectedRegretAssembly`,
+  `Mathlib.MeasureTheory.Integral.Bochner.Set`, `measurable_of_countable`,
+  `MeasureTheory.Integrable.of_bound`, and `Finset.single_le_sum`.
+- Intended proof route: rewrite the integrand as a measurable composition
+  through the finite commit arm, bound its norm by the finite sum of the norms
+  of all arm-indexed constants, then apply `Integrable.of_bound` under a
+  finite measure.
+- Regularity contracts: finite measure `mu`, measurable commit selector
+  `commit : Omega -> Fin K`, fixed `spec`, `model`, and suffix `r`.
+- Retrieval evidence: local declaration is
+  `ETC.integrable_real_pseudoRegret_actionWithCommit_choice_of_measurable_commit`;
+  retrieval card is
+  `LOCAL-LEAF-ETC-ACTIONWITHCOMMIT-PSEUDOREGRET-INTEGRABILITY`.
+- Status: project-local compiled Bochner integrability helper.
+- Failure policy: do not treat this as a probability or concentration result.
+  It only discharges integrability after commit measurability is available.
+
+`ETC-WRONG-COMMIT-INFINITEPI-BOCHNER-REGRET-ASSEMBLY` is compiled locally:
+
+```lean
+theorem ETC.integral_real_pseudoRegret_argmaxCommitOracle_actionWithCommit_le_exploration_add_suffix_badGap_prob_of_infinitePi_bounded_actionMean
+    {K : Nat}
+    (coordLaw : Nat -> MeasureTheory.Measure Rat)
+    [forall t : Nat, MeasureTheory.IsProbabilityMeasure (coordLaw t)]
+    (spec : ETC.Spec K)
+    (model : FiniteBanditModel K)
+    (baseCommitArm : Fin K)
+    (r : Nat)
+    (badGapBound : Rat)
+    (lo hi : Fin K -> Nat -> Real)
+    (hexplorationPulls_pos : 0 < spec.explorationPulls)
+    (hbadGap :
+      forall a : Fin K, (a = model.bestArm -> False) ->
+        model.gap a <= badGapBound)
+    (hbadGap_nonneg : (0 : Rat) <= badGapBound)
+    (h_coord_bound :
+      forall t, t < spec.explorationPulls * K ->
+        Filter.Eventually
+          (fun rewardValue : Rat =>
+            Set.Icc
+              (lo (ETC.actionWithCommit spec baseCommitArm t) t)
+              (hi (ETC.actionWithCommit spec baseCommitArm t) t)
+              (((rewardValue : Rat) : Real)))
+          (MeasureTheory.ae (coordLaw t)))
+    (h_coord_mean :
+      forall t, t < spec.explorationPulls * K ->
+        MeasureTheory.integral (coordLaw t)
+          (fun rewardValue : Rat => (((rewardValue : Rat) : Real))) =
+        (((model.mean (ETC.actionWithCommit spec baseCommitArm t) : Rat) : Real))) :
+    MeasureTheory.integral (MeasureTheory.Measure.infinitePi coordLaw)
+      (fun omega : RewardTrace Rat =>
+        (((pseudoRegret model
+          (ETC.fixedProductArgmaxAction spec model baseCommitArm omega)
+          (spec.explorationPulls * K + r) : Rat) : Real))) <=
+    ETC.fixedProductBadGapIntegralRegretBoundReal
+      spec model baseCommitArm r badGapBound lo hi
+```
+
+- Local APIs/imports:
+  `BanditRLProof.Algorithms.ETCInfinitePiExpectedRegretAssembly`,
+  `ETC.integral_real_pseudoRegret_actionWithCommit_choice_le_exploration_add_suffix_badGap_prob`,
+  `ETC.integrable_real_pseudoRegret_actionWithCommit_choice_of_measurable_commit`,
+  `ETC.prob_argmaxCommitOracle_ne_bestArm_le_filtered_sum_centeredDiffSubGaussianTail_of_infinitePi_bounded_actionMean`,
+  `ETC.measurable_commitOracle_choose_of_forall_measurable_empMean`, and
+  `ETC.measurableSet_commitOracle_ne_bestArm_of_forall_measurable_empMean`.
+- Intended proof route: use empirical-mean coordinate measurability to prove
+  the finite argmax commit selector is measurable; reuse the infinitePi
+  wrong-commit probability bound; convert its finite `ENNReal` canonical tail
+  budget to Real via `toReal`; use the integrability helper; then feed these
+  facts into the abstract Bochner expected-regret assembly.
+- Regularity contracts: probability coordinate laws, fixed `spec`, `model`,
+  `baseCommitArm`, suffix `r`, explicit `badGapBound`, `0 <= badGapBound`,
+  positive exploration count, non-best gap upper bound, action-matched
+  coordinate a.s. bounds, and coordinate mean identities.
+- Retrieval evidence: local declarations are
+  `ETC.fixedProductWrongCommitTailBudget`,
+  `ETC.fixedProductWrongCommitTailBudgetReal`,
+  `ETC.fixedProductBadGapIntegralRegretBoundReal`, and
+  `ETC.integral_real_pseudoRegret_argmaxCommitOracle_actionWithCommit_le_exploration_add_suffix_badGap_prob_of_infinitePi_bounded_actionMean`;
+  retrieval card is
+  `LOCAL-LEAF-ETC-WRONG-COMMIT-INFINITEPI-BOCHNER-REGRET-ASSEMBLY`.
+- Status: project-local compiled concrete fixed-product Bochner/Real
+  expected-regret assembly.
+- Failure policy: this is still fixed product-coordinate and fixed
+  exploration.  It does not prove the sum-gap or max-gap Real adapters,
+  adaptive policy laws, conditional expectation source, or final ETC theorem.
+
 `ETC-WRONG-COMMIT-INFINITEPI-LINTEGRAL-REGRET-ASSEMBLY` is compiled locally:
 
 ```lean

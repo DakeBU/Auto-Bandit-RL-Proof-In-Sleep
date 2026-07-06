@@ -5,12 +5,12 @@ import Mathlib.Data.ENNReal.Real
 import BanditRLProof.Algorithms.ETCWrongCommitRegretAssembly
 
 /-!
-# ETC lower-integral regret assembly
+# ETC lower-integral and Bochner regret assembly
 
 This module lifts the pointwise wrong-commit regret bridge to the project's
-current expectation surface: an `ENNReal.ofReal` lower-integral surrogate.  It
-does not introduce a Bochner/Rat-valued expected regret theorem, concentration,
-filtrations, or a final ETC theorem.
+expectation surfaces: an `ENNReal.ofReal` lower-integral surrogate and an
+ordinary Real-valued Bochner integral wrapper.  It does not introduce
+concentration, filtrations, or a final ETC theorem.
 -/
 
 universe u
@@ -149,6 +149,50 @@ theorem lintegral_ofReal_pseudoRegret_actionWithCommit_choice_le_exploration_add
               (mul_le_mul_right
                 (by simpa [wrongSet] using hprob_wrong)
                 suffix)
+
+/--
+Finite-arm `actionWithCommit` pseudo-regret has an integrable Real cast when
+the selected commit arm is measurable and the ambient measure is finite.
+
+The proof uses only the finite range of `commit : Omega -> Fin K`: the
+integrand is a measurable finite-valued function, hence bounded by the finite
+sum of the absolute values of its arm-indexed constants.
+-/
+theorem integrable_real_pseudoRegret_actionWithCommit_choice_of_measurable_commit
+    {Omega : Type u} {K : Nat}
+    [MeasurableSpace Omega]
+    (mu : Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (spec : ETC.Spec K) (model : FiniteBanditModel K)
+    (commit : Omega -> Fin K) (r : Nat)
+    (hmeas_commit : Measurable commit) :
+    Integrable
+      (fun omega : Omega =>
+        (((pseudoRegret model (ETC.actionWithCommit spec (commit omega))
+          (spec.explorationPulls * K + r) : Rat) : Real))) mu := by
+  let c : Fin K -> Real :=
+    fun a : Fin K =>
+      (((pseudoRegret model (ETC.actionWithCommit spec a)
+        (spec.explorationPulls * K + r) : Rat) : Real))
+  have hc_meas : Measurable c := by
+    exact measurable_of_countable c
+  have hf_meas : Measurable (fun omega : Omega => c (commit omega)) :=
+    hc_meas.comp hmeas_commit
+  have hbound :
+      exists C : Real, forall omega : Omega, norm (c (commit omega)) <= C := by
+    let C : Real :=
+      ((Finset.univ : Finset (Fin K)).sum (fun a : Fin K => norm (c a)))
+    refine Exists.intro C ?_
+    intro omega
+    exact
+      Finset.single_le_sum
+        (fun a _ha => norm_nonneg (c a))
+        (Finset.mem_univ (commit omega))
+  cases hbound with
+  | intro C hC =>
+      change Integrable (fun omega : Omega => c (commit omega)) mu
+      refine MeasureTheory.Integrable.of_bound
+        hf_meas.aestronglyMeasurable C ?_
+      exact Filter.Eventually.of_forall hC
 
 /--
 Bochner/Real expected-regret assembly for an `Omega`-indexed ETC commit

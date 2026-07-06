@@ -24256,4 +24256,59 @@ noncomputable example {Omega : Type} {K : Nat}
       mu spec model commit r badGapBound pWrong hbadGap hbadGap_nonneg
       hmeas_wrong hprob_wrong hinteg
 
+noncomputable example {Omega : Type} {K : Nat}
+    [MeasurableSpace Omega]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (spec : ETC.Spec K) (model : FiniteBanditModel K)
+    (commit : Omega -> Fin K) (r : Nat)
+    (hmeas_commit : Measurable commit) :
+    MeasureTheory.Integrable
+      (fun omega : Omega =>
+        (((pseudoRegret model (ETC.actionWithCommit spec (commit omega))
+          (spec.explorationPulls * K + r) : Rat) : Real))) mu := by
+  exact
+    ETC.integrable_real_pseudoRegret_actionWithCommit_choice_of_measurable_commit
+      mu spec model commit r hmeas_commit
+
+noncomputable example {K : Nat}
+    (coordLaw : Nat -> MeasureTheory.Measure Rat)
+    [forall t : Nat, MeasureTheory.IsProbabilityMeasure (coordLaw t)]
+    (spec : ETC.Spec K)
+    (model : FiniteBanditModel K)
+    (baseCommitArm : Fin K)
+    (r : Nat)
+    (badGapBound : Rat)
+    (lo hi : Fin K -> Nat -> Real)
+    (hexplorationPulls_pos : 0 < spec.explorationPulls)
+    (hbadGap :
+      forall a : Fin K, (a = model.bestArm -> False) ->
+        model.gap a <= badGapBound)
+    (hbadGap_nonneg : (0 : Rat) <= badGapBound)
+    (h_coord_bound :
+      forall t, t < spec.explorationPulls * K ->
+        Filter.Eventually
+          (fun rewardValue : Rat =>
+            Set.Icc
+              (lo (ETC.actionWithCommit spec baseCommitArm t) t)
+              (hi (ETC.actionWithCommit spec baseCommitArm t) t)
+              (((rewardValue : Rat) : Real)))
+          (MeasureTheory.ae (coordLaw t)))
+    (h_coord_mean :
+      forall t, t < spec.explorationPulls * K ->
+        MeasureTheory.integral (coordLaw t)
+          (fun rewardValue : Rat => (((rewardValue : Rat) : Real))) =
+        (((model.mean (ETC.actionWithCommit spec baseCommitArm t) : Rat) : Real))) :
+    MeasureTheory.integral (MeasureTheory.Measure.infinitePi coordLaw)
+      (fun omega : RewardTrace Rat =>
+        (((pseudoRegret model
+          (ETC.fixedProductArgmaxAction spec model baseCommitArm omega)
+          (spec.explorationPulls * K + r) : Rat) : Real))) <=
+    ETC.fixedProductBadGapIntegralRegretBoundReal
+      spec model baseCommitArm r badGapBound lo hi := by
+  exact
+    ETC.integral_real_pseudoRegret_argmaxCommitOracle_actionWithCommit_le_exploration_add_suffix_badGap_prob_of_infinitePi_bounded_actionMean
+      coordLaw spec model baseCommitArm r badGapBound lo hi
+      hexplorationPulls_pos hbadGap hbadGap_nonneg h_coord_bound
+      h_coord_mean
+
 end BanditRLProof

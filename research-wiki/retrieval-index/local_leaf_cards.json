@@ -2111,6 +2111,48 @@
       ]
     },
     {
+      "id": "LOCAL-LEAF-ETC-ACTIONWITHCOMMIT-PSEUDOREGRET-INTEGRABILITY",
+      "leaf_ids": [
+        "ETC-ACTIONWITHCOMMIT-PSEUDOREGRET-INTEGRABILITY"
+      ],
+      "module": "BanditRLProof.Algorithms.ETCExpectedRegretAssembly",
+      "status": "leanCompiled",
+      "declarations": [
+        "ETC.integrable_real_pseudoRegret_actionWithCommit_choice_of_measurable_commit"
+      ],
+      "role": "Compiled project-local Bochner regularity helper: for a finite-valued measurable ETC commit selector and any finite measure, the Real-cast finite-horizon pseudoRegret of actionWithCommit is Integrable. The proof uses Mathlib measurable_of_countable, Integrable.of_bound, and a finite Finset sum bound over all commit arms. This discharges the abstract Bochner wrapper's integrability side condition for measurable finite-arm selectors; it does not prove commit measurability or any probability/concentration bound.",
+      "mathlib_routes": [
+        "Mathlib.MeasureTheory.Integral.Bochner.Set",
+        "LOCAL-LEAF-ETC-WRONG-COMMIT-BOCHNER-REGRET-ASSEMBLY",
+        "MLIB-MEASURE-INTEGRAL",
+        "MLIB-FINSET-SUMS"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-ETC-WRONG-COMMIT-INFINITEPI-BOCHNER-REGRET-ASSEMBLY",
+      "leaf_ids": [
+        "ETC-WRONG-COMMIT-INFINITEPI-BOCHNER-REGRET-ASSEMBLY"
+      ],
+      "module": "BanditRLProof.Algorithms.ETCInfinitePiExpectedRegretAssembly",
+      "status": "leanCompiled",
+      "declarations": [
+        "ETC.fixedProductWrongCommitTailBudget",
+        "ETC.fixedProductWrongCommitTailBudgetReal",
+        "ETC.fixedProductBadGapIntegralRegretBoundReal",
+        "ETC.integral_real_pseudoRegret_argmaxCommitOracle_actionWithCommit_le_exploration_add_suffix_badGap_prob_of_infinitePi_bounded_actionMean"
+      ],
+      "role": "Compiled concrete fixed-product Bochner/Real expected-regret assembly for the finite argmax ETC commit oracle under an infinitePi bounded-reward source. It reuses the existing infinitePi wrong-commit probability bound, converts the finite ENNReal canonical tail budget to Real with toReal, discharges integrability via the finite-valued measurable commit selector helper, and concludes an ordinary MeasureTheory.integral bound against a named bad-gap Real RHS. It remains fixed-product/fixed-exploration and does not prove max-gap/sum-gap Real adapters, adaptive policy laws, or the final ETC theorem.",
+      "mathlib_routes": [
+        "LOCAL-LEAF-ETC-WRONG-COMMIT-BOCHNER-REGRET-ASSEMBLY",
+        "LOCAL-LEAF-ETC-ACTIONWITHCOMMIT-PSEUDOREGRET-INTEGRABILITY",
+        "LOCAL-LEAF-ETC-WRONG-COMMIT-INFINITEPI-BOUNDED-REWARD-SOURCE",
+        "LOCAL-LEAF-ETC-COMMIT-ORACLE-WRONG-EVENT-MEASURABILITY-OF-COORDINATES",
+        "MLIB-MEASURE-INTEGRAL",
+        "MLIB-PROBABILITY-INDEPENDENCE",
+        "MLIB-PROBABILITY-SUBGAUSSIAN"
+      ]
+    },
+    {
       "id": "LOCAL-LEAF-ETC-WRONG-COMMIT-INFINITEPI-LINTEGRAL-REGRET-ASSEMBLY",
       "leaf_ids": [
         "ETC-WRONG-COMMIT-INFINITEPI-LINTEGRAL-REGRET-ASSEMBLY"
