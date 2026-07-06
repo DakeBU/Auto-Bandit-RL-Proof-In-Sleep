@@ -4894,6 +4894,33 @@ LOCAL_LEAF_CARDS = [
         ],
     },
     {
+        "id": "LOCAL-LEAF-COND-EXPECT-REWARD-HISTORYSTEP-HISTORY-VARIANCE-SOURCE",
+        "leaf_ids": [
+            "COND-EXPECT-REWARD",
+            "ADAPTED-ACTION",
+            "MEAS-POLICY",
+            "MEAS-HISTORY",
+            "KERNEL-POLICY-BIND",
+            "KERNEL-REWARD",
+            "INT-REWARD-BOUNDED",
+            "MEAS-REWARD",
+        ],
+        "module": "BanditRLProof.ConditionalRewardLawSource",
+        "status": "leanCompiled",
+        "declarations": [
+            "ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource_of_actionRewardHistoryStepKernelFamily_pair_map_eq",
+        ],
+        "role": "Compiled project-local practical source constructor for the COND-EXPECT-REWARD conditional MGF route: a canonical history-step next-pair law, raw reward range, selected-mean range, centered kernel law, and a time-indexed selected-history varianceProxy ceiling now directly build the packaged definitional raw-range/measurable-mean-range history-variance source. It still assumes the history-step pair-map condExpKernel law and a model-side selected-history variance ceiling; it does not construct the next-pair law, derive the ceiling from ranges, or prove a final adaptive theorem.",
+        "mathlib_routes": [
+            "LOCAL-LEAF-COND-EXPECT-REWARD-HISTORYSTEP-UNIFORM-VARIANCE-SOURCE",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-NEXTPAIR-HISTORYSTEP-REWARD-MAP",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-CONTRACT",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-COND-MGF-HISTORY-VARIANCE-CONSUMER",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-HISTORY-VARIANCE-SOURCE-COND-MGF-CONSUMER",
+            "FILTRATION-HISTORY",
+        ],
+    },
+    {
         "id": "LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-HISTORYSTEP-PAIR-LAW",
         "leaf_ids": [
             "COND-EXPECT-REWARD",
@@ -7153,6 +7180,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-UNIFORM-VARIANCE-SOURCE is compiled locally as the full finite-pair partialTraj-law constructor for the packaged definitional raw-range/measurable-mean-range uniform-variance source.")
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-UNIFORM-VARIANCE-SOURCE is compiled locally as the frozen-prefix extension-map partialTraj-law constructor for the packaged definitional raw-range/measurable-mean-range uniform-variance source.")
     print("- COND-EXPECT-REWARD-HISTORYSTEP-UNIFORM-VARIANCE-SOURCE is compiled locally as the canonical history-step next-pair law constructor for the packaged definitional raw-range/measurable-mean-range uniform-variance source.")
+    print("- COND-EXPECT-REWARD-HISTORYSTEP-HISTORY-VARIANCE-SOURCE is compiled locally as the canonical history-step next-pair law constructor for the packaged definitional raw-range/measurable-mean-range history-variance source.")
     print("- COND-EXPECT-REWARD-RANDOM-PAIR-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-HISTORYSTEP-PAIR-LAW is compiled locally as the definitional raw-reward-range/measurable-mean-range canonical pair-law consumer: GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource now directly yields the RewardKernel.actionRewardHistoryStepKernelFamily next-pair law over generatedActionFromRewardHistory by lowering through the explicit raw-range source; it still assumes the definitional random next-pair law source and ambient trajectory-to-condExpKernel identification.")
     print("- COND-EXPECT-REWARD-RANDOM-PAIR-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-RANDOM-PAIR-MAP-SOURCE is compiled locally as a source-conversion leaf: a definitional raw-reward-range/measurable-mean-range bounded generated random-pair source now projects its packaged definitional map source into the explicit generated random-pair map source using generatedActionFromRewardHistory; it still assumes the definitional raw-range/measurable-mean-range source fields and random pair law.")
     print("- COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-CENTERED-REGULARITY is compiled locally as a regularity leaf: a definitional raw-reward-range/measurable-mean-range bounded generated random-pair source now exposes centered successor reward a.e. measurability, full measurability, and the centered interval bound directly; it still assumes the definitional raw-range/measurable-mean-range source fields and random pair law.")

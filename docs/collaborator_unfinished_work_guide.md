@@ -11226,6 +11226,109 @@ def ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMe
   not derive that ceiling from raw/mean ranges, construct the random-pair law,
   or prove UCB/ETC/RL regret.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-HISTORYSTEP-HISTORY-VARIANCE-SOURCE`
+is compiled locally:
+
+```lean
+def ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource_of_actionRewardHistoryStepKernelFamily_pair_map_eq
+    ...
+    (varianceCeiling : Nat -> NNReal)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (hvariance :
+      forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat),
+        varianceProxy (context i history)
+          ((policy i).action (state i history)) <= varianceCeiling i)
+    (h_kernel_pair_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            Measure.map
+              (fun y : Omega =>
+                (generatedActionFromRewardHistory policy state defaultAction
+                  reward y (i + 1),
+                  reward y (i + 1)))
+              (condExpKernel mu
+                ((History.historyFiltrationSucc
+                  (generatedActionFromRewardHistory policy state
+                    defaultAction reward)
+                  reward
+                  (generatedActionFromRewardHistory_measurable hreward hstate)
+                  hreward) i)
+                omega) =
+            RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy
+              ... i
+              (History.finitePairHistoryOfTrace
+                (generatedActionFromRewardHistory policy state defaultAction
+                  reward omega)
+                (reward omega) i))
+          (ae (mu.trim
+            ((History.historyFiltrationSucc
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward)
+              reward
+              (generatedActionFromRewardHistory_measurable hreward hstate)
+              hreward).le i)))) :
+    ConditionalExpectationReward.GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource
+      mu rewardKernel policy context state mean varianceProxy defaultAction
+      reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling
+```
+
+- Exact Lean-facing statement: a canonical generated-history history-step
+  next-pair law, raw reward range, selected mean range, centered kernel law,
+  and time-indexed selected-history variance ceiling build the packaged
+  practical definitional raw-range/measurable-mean-range history-variance
+  source.  The return type is the same history-variance source package
+  consumed by the selected-history conditional MGF route, but the law
+  hypothesis is stated directly against
+  `RewardKernel.actionRewardHistoryStepKernelFamily`.
+- Local APIs/imports: `BanditRLProof.ConditionalRewardLawSource`,
+  `ConditionalExpectationReward.generatedActionFromRewardHistory`,
+  `ConditionalExpectationReward.generatedActionFromRewardHistory_measurable`,
+  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_actionRewardHistoryStepKernelFamily_pair_map_eq`,
+  `ConditionalExpectationReward.GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource`,
+  `History.historyFiltrationSucc`,
+  `History.finitePairHistoryOfTrace`,
+  `History.pairHistoryRewardProjection`, and
+  `RewardKernel.actionRewardHistoryStepKernelFamily`.
+- Intended proof route: first reuse the existing canonical history-step
+  constructor for
+  `GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource`.
+  Then fill the history-variance source field `variance_history_le` directly
+  with `hvariance`.
+- Regularity contracts: finite measure, standard Borel sample space,
+  measurable context/state/action spaces, measurable singleton and countable
+  action space, timewise measurable rewards, measurable context and state
+  extractors, measurable mean surface, centered reward-kernel law,
+  deterministic raw reward range, deterministic selected mean range,
+  time-indexed selected-history variance ceiling, and the canonical
+  history-step next-pair `condExpKernel` law.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-COND-EXPECT-REWARD-HISTORYSTEP-HISTORY-VARIANCE-SOURCE`;
+  declaration is
+  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource_of_actionRewardHistoryStepKernelFamily_pair_map_eq`.
+- Status: project-local compiled source constructor for
+  `COND-EXPECT-REWARD`, `ADAPTED-ACTION`, `MEAS-POLICY`, `MEAS-HISTORY`,
+  `KERNEL-POLICY-BIND`, `KERNEL-REWARD`, `INT-REWARD-BOUNDED`, and
+  `MEAS-REWARD`.
+- Failure policy: this is not a proof of the canonical history-step next-pair
+  law and not a final adaptive theorem.  It still assumes the history-step
+  pair-map `condExpKernel` identity and a model-side selected-history
+  variance ceiling; it does not derive that ceiling from raw/mean ranges,
+  construct the random-pair law, or prove UCB/ETC/RL regret.
+
 `LOCAL-LEAF-COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-HISTORY-VARIANCE-SOURCE`
 is compiled locally:
 
