@@ -1285,6 +1285,29 @@ theorem sum_range_min_one_le_two_sum_log_one_add
       rw [Finset.mul_sum]
 
 /--
+Raw finite-sum log upper bound under an explicit small-update contract.
+
+For nonnegative update scalars bounded by one, the unclipped sum agrees with
+the clipped sum consumed by the determinant-growth route.
+-/
+theorem sum_range_le_two_sum_log_one_add_of_le_one
+    (u : Nat -> Real) (T : Nat)
+    (hu_nonneg : forall t : Nat, t < T -> 0 <= u t)
+    (hu_le_one : forall t : Nat, t < T -> u t <= 1) :
+    (Finset.range T).sum (fun t => u t) <=
+      2 * (Finset.range T).sum (fun t => Real.log (1 + u t)) := by
+  have hsum_eq :
+      (Finset.range T).sum (fun t => u t) =
+        (Finset.range T).sum (fun t => min 1 (u t)) := by
+    apply Finset.sum_congr rfl
+    intro t ht
+    have htT : t < T := Finset.mem_range.mp ht
+    have hmin : min 1 (u t) = u t := min_eq_right (hu_le_one t htT)
+    exact hmin.symm
+  rw [hsum_eq]
+  exact sum_range_min_one_le_two_sum_log_one_add u T hu_nonneg
+
+/--
 Concrete finite-horizon log-det telescope for Nat-prefix regularized Grams.
 
 This is the growing-history instantiation of the abstract telescope.  It does
@@ -1394,18 +1417,11 @@ theorem sum_range_prefix_update_le_two_log_det_sub_base
       (Matrix.mulVec
         ((regularizedPrefixFeatureGram lambda history t)⁻¹)
         (history t))
-  have hsum_eq :
-      (Finset.range T).sum (fun t => u t) =
-        (Finset.range T).sum (fun t => min 1 (u t)) := by
-    apply Finset.sum_congr rfl
-    intro t ht
-    have htT : t < T := Finset.mem_range.mp ht
-    have hu_le_one : u t <= 1 := hupdate_le_one t htT
-    have hmin : min 1 (u t) = u t := min_eq_right hu_le_one
-    exact hmin.symm
-  rw [hsum_eq]
-  exact sum_range_min_prefix_update_le_two_log_det_sub_base
-    lambda hlambda history T hquad_nonneg
+  have hsum :=
+    sum_range_le_two_sum_log_one_add_of_le_one u T hquad_nonneg hupdate_le_one
+  rw [sum_range_log_regularizedPrefixFeatureGram_update_factor_eq_log_det_sub_base
+    lambda hlambda history T] at hsum
+  exact hsum
 
 /--
 Concrete prefix determinant-growth consumer with inverse-quadratic

@@ -16468,6 +16468,44 @@ theorem ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_le_sum_gap_mul_
 - Failure policy: do not prove post-exploration corollaries, empirical commit
   correctness, or probability facts in the same batch.
 
+`LOCAL-LEAF-OFUL-UNCLIPPED-SMALL-UPDATE-SUM-LOG` is compiled locally:
+
+```lean
+theorem OFUL.sum_range_le_two_sum_log_one_add_of_le_one
+    (u : Nat -> Real) (T : Nat)
+    (hu_nonneg : forall t : Nat, t < T -> 0 <= u t)
+    (hu_le_one : forall t : Nat, t < T -> u t <= 1) :
+    (Finset.range T).sum (fun t => u t) <=
+      2 * (Finset.range T).sum (fun t => Real.log (1 + u t))
+```
+
+- Exact Lean-facing statement: for any finite Nat prefix of scalar updates,
+  explicit nonnegativity `0 <= u_t` and small-update evidence `u_t <= 1`
+  imply the raw finite sum is bounded by
+  `2 * sum_t log(1 + u_t)`.
+- Local APIs/imports: `BanditRLProof.OFULEllipticalPotential`,
+  `OFUL.sum_range_min_one_le_two_sum_log_one_add`, `Finset.sum_congr`,
+  `Finset.range`, and Mathlib real logarithm/order APIs already imported by
+  the OFUL module.
+- Intended proof route: rewrite `sum_t u_t` to `sum_t min 1 (u_t)` using
+  `Finset.sum_congr` and `min_eq_right (hu_le_one t ht)`, then reuse the
+  compiled clipped finite-sum bridge
+  `OFUL.sum_range_min_one_le_two_sum_log_one_add`.
+- Regularity contracts: scalar sequence `u : Nat -> Real`, finite horizon
+  `T`, pointwise nonnegativity for all `t < T`, and pointwise
+  small-update bound for all `t < T`; no matrix, determinant, PosDef,
+  probability, or trajectory assumptions.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-OFUL-UNCLIPPED-SMALL-UPDATE-SUM-LOG`; declaration is
+  `OFUL.sum_range_le_two_sum_log_one_add_of_le_one`; dependency cards include
+  `LOCAL-LEAF-OFUL-DETERMINANT-GROWTH-CONSUMER` and `MLIB-FINSET-SUMS`.
+- Status: project-local compiled deterministic finite-sum small-update
+  log bridge.
+- Failure policy: this does not prove the log-det telescope, PosDef
+  inverse-quadratic nonnegativity, determinant upper bounds, the small-update
+  contract for OFUL features, self-normalized martingale concentration,
+  confidence ellipsoids, or final OFUL/LinUCB regret.
+
 `LOCAL-LEAF-OFUL-UNCLIPPED-SMALL-UPDATE-LOG-DET-EXPLICIT-NONNEG` is compiled locally:
 
 ```lean
