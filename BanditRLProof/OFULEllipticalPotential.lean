@@ -1501,6 +1501,34 @@ theorem sum_range_min_prefix_update_le_two_det_mul_exp_upper
       lambda hlambda history T B hdet_upper)
 
 /--
+Raw prefix inverse-quadratic sum bound from a multiplicative determinant upper
+bound, under a small-update contract.
+-/
+theorem sum_range_prefix_update_le_two_det_mul_exp_upper_of_update_le_one
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Nat -> Feature -> Real) (T : Nat) (B : Real)
+    (hdet_upper :
+      (regularizedPrefixFeatureGram lambda history T).det <=
+        lambda ^ Fintype.card Feature * Real.exp B)
+    (hupdate_le_one : forall t : Nat, t < T ->
+      dotProduct (history t)
+        (Matrix.mulVec
+          ((regularizedPrefixFeatureGram lambda history t)⁻¹)
+          (history t)) <= 1) :
+    (Finset.range T).sum
+        (fun t => dotProduct (history t)
+          (Matrix.mulVec
+            ((regularizedPrefixFeatureGram lambda history t)⁻¹)
+            (history t))) <=
+      2 * B := by
+  exact sum_range_prefix_update_le_two_log_det_upper_of_update_le_one
+    lambda hlambda history T B
+    (log_det_regularizedPrefixFeatureGram_sub_base_le_of_det_le_mul_exp
+      lambda hlambda history T B hdet_upper)
+    hupdate_le_one
+
+/--
 Scalar simplification for the AM-GM trace/radius determinant upper bound.
 
 With `d = Fintype.card Feature` and squared-radius bound `L2 >= 0`, the

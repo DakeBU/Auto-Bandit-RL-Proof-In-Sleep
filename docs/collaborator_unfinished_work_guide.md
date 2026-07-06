@@ -16520,6 +16520,62 @@ theorem OFUL.sum_range_prefix_update_le_two_log_det_upper_of_update_le_one
   trace/AM-GM simplifications, self-normalized martingale concentration,
   confidence ellipsoids, or final OFUL/LinUCB regret.
 
+`LOCAL-LEAF-OFUL-UNCLIPPED-SMALL-UPDATE-DET-MUL-EXP-UPPER` is compiled locally:
+
+```lean
+theorem OFUL.sum_range_prefix_update_le_two_det_mul_exp_upper_of_update_le_one
+    {Feature : Type u} [Fintype Feature] [DecidableEq Feature]
+    (lambda : Real) (hlambda : 0 < lambda)
+    (history : Nat -> Feature -> Real) (T : Nat) (B : Real)
+    (hdet_upper :
+      (OFUL.regularizedPrefixFeatureGram lambda history T).det <=
+        lambda ^ Fintype.card Feature * Real.exp B)
+    (hupdate_le_one : forall t : Nat, t < T ->
+      dotProduct (history t)
+        (Matrix.mulVec
+          ((OFUL.regularizedPrefixFeatureGram lambda history t)⁻¹)
+          (history t)) <= 1) :
+    (Finset.range T).sum
+        (fun t => dotProduct (history t)
+          (Matrix.mulVec
+            ((OFUL.regularizedPrefixFeatureGram lambda history t)⁻¹)
+            (history t))) <=
+      2 * B
+```
+
+- Exact Lean-facing statement: any multiplicative determinant upper bound
+  `det(V_T) <= lambda^d * exp(B)` gives the raw inverse-quadratic update-sum
+  bound `sum_t x_t^T V_t^{-1} x_t <= 2 * B` when every update scalar is at
+  most one.
+- Local APIs/imports: `BanditRLProof.OFULEllipticalPotential`,
+  `OFUL.regularizedPrefixFeatureGram`,
+  `OFUL.log_det_regularizedPrefixFeatureGram_sub_base_le_of_det_le_mul_exp`,
+  `OFUL.sum_range_prefix_update_le_two_log_det_upper_of_update_le_one`, and
+  existing finite-sum, matrix, logarithm, and exponential APIs imported by the
+  OFUL module.
+- Intended proof route: convert the determinant upper bound to the terminal
+  log-det upper bound with
+  `OFUL.log_det_regularizedPrefixFeatureGram_sub_base_le_of_det_le_mul_exp`;
+  then reuse
+  `OFUL.sum_range_prefix_update_le_two_log_det_upper_of_update_le_one` under
+  the same small-update contract.
+- Regularity contracts: finite feature type with decidable equality, positive
+  regularization `0 < lambda`, multiplicative terminal determinant upper bound
+  `det(V_T) <= lambda^d * exp(B)`, and explicit small-update evidence
+  `dotProduct (history t) (V_t^{-1} * history t) <= 1` for every `t < T`.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-OFUL-UNCLIPPED-SMALL-UPDATE-DET-MUL-EXP-UPPER`; declaration is
+  `OFUL.sum_range_prefix_update_le_two_det_mul_exp_upper_of_update_le_one`;
+  dependency cards include
+  `LOCAL-LEAF-OFUL-UNCLIPPED-SMALL-UPDATE-LOG-DET-UPPER`,
+  `LOCAL-LEAF-OFUL-DET-MUL-EXP-UPPER-CONSUMER`, and
+  `Mathlib.Analysis.SpecialFunctions.Log.Basic`.
+- Status: project-local compiled deterministic OFUL/LinUCB
+  determinant-upper-to-raw-sum handoff.
+- Failure policy: this does not prove the determinant upper bound, trace/AM-GM
+  simplifications, the small-update contract, self-normalized martingale
+  concentration, confidence ellipsoids, or final OFUL/LinUCB regret.
+
 `LOCAL-LEAF-OFUL-UNCLIPPED-SMALL-UPDATE-GENERIC` is compiled locally:
 
 ```lean
