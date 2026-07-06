@@ -4734,6 +4734,35 @@
       ]
     },
     {
+      "id": "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-MEAN-ZERO",
+      "leaf_ids": [
+        "COND-EXPECT-REWARD",
+        "ADAPTED-ACTION",
+        "MEAS-POLICY",
+        "MEAS-HISTORY",
+        "KERNEL-POLICY-BIND",
+        "KERNEL-REWARD",
+        "INT-REWARD-BOUNDED",
+        "MEAS-REWARD"
+      ],
+      "module": "BanditRLProof.ConditionalRewardLawSource",
+      "status": "leanCompiled",
+      "declarations": [
+        "ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairRawRangeMeasurableMeanRangeBoundedSource"
+      ],
+      "role": "Compiled project-local source-level raw-range conditional mean-zero consumer leaf for the COND-EXPECT-REWARD route: a GeneratedActionRandomPairRawRangeMeasurableMeanRangeBoundedSource packages the generated random-pair law source, centered reward-kernel law, mean measurability, deterministic raw reward range bounds, and deterministic selected-mean range bounds, then yields the succ-indexed ordinary conditional expectation zero statement. The proof lowers the source to the raw-bound/measurable-mean-range layer and reuses that compiled conditional mean-zero consumer. It still assumes the packaged random next-pair law, source regularity fields, and ambient trajectory-to-condExpKernel identification; it adds no variance ceiling, conditional MGF witness, adaptive law identification, or final regret theorem.",
+      "mathlib_routes": [
+        "MLIB-CONDITIONAL-EXPECTATION",
+        "MLIB-MEASURE-INTEGRAL",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-CONTRACT",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-RAW-BOUND-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-CONTRACT",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-RANDOM-PAIR-SOURCE-CONTRACT",
+        "FILTRATION-HISTORY",
+        "INT-REWARD-BOUNDED",
+        "MEAS-REWARD"
+      ]
+    },
+    {
       "id": "LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-HISTORYSTEP-PAIR-LAW",
       "leaf_ids": [
         "COND-EXPECT-REWARD",
