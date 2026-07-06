@@ -13190,6 +13190,50 @@ theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_o
   identification, derive a variance ceiling from raw/mean ranges, or prove any
   final adaptive ETC/UCB/RL theorem.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-LARGER-PROXY-COND-MGF`
+is compiled locally:
+
+```lean
+theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource_of_varianceCeiling_le
+    ...
+```
+
+- Exact Lean-facing statement: from a packaged practical definitional
+  raw-range/measurable-mean-range selected-history variance source, derive
+  `HasCondSubgaussianMGF` for the generated centered successor reward at time
+  `i` with any deterministic proxy `c`, assuming
+  `varianceCeiling i <= c`.
+- Local APIs/imports: `BanditRLProof.ConditionalRewardLawSource`,
+  `ConditionalExpectationReward.GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource`,
+  and
+  `ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_history_variance_le`.
+- Intended proof route: lower the packaged history-variance source to its
+  `base_source`, compose `source.variance_history_le i history` with
+  `hceiling : varianceCeiling i <= c`, and invoke the base
+  selected-history variance conditional MGF consumer with proxy `c`.
+- Regularity contracts: same as the packaged history-variance source: finite
+  measure, standard Borel sample space, measurable context/state/action
+  spaces, countable action space, timewise measurable reward trace, practical
+  raw/mean range source fields, a time-indexed selected-history variance
+  ceiling, and the extra deterministic inequality `varianceCeiling i <= c`.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-LARGER-PROXY-COND-MGF`;
+  declaration is
+  `ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource_of_varianceCeiling_le`.
+  Dependency cards include
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-HISTORY-VARIANCE-SOURCE-COND-MGF-CONSUMER`
+  and
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-COND-MGF-HISTORY-VARIANCE-CONSUMER`.
+- Status: project-local compiled coarser-proxy consumer for
+  `COND-EXPECT-REWARD`, `ADAPTED-ACTION`, `MEAS-POLICY`, `MEAS-HISTORY`,
+  `KERNEL-POLICY-BIND`, `KERNEL-REWARD`, `INT-REWARD-BOUNDED`, and
+  `MEAS-REWARD`.
+- Failure policy: this only relaxes the output proxy of an already packaged
+  selected-history variance source. It does not construct the definitional
+  random next-pair law, prove the ambient trajectory-to-`condExpKernel`
+  identification, derive the time-indexed variance schedule, or prove any
+  final adaptive ETC/UCB/RL theorem.
+
 Current boundary after this leaf:
 
 - `KERNEL-REWARD` is now compiled as the reward-kernel contract surface above.
