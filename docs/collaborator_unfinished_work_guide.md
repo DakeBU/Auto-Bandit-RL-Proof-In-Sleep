@@ -9911,6 +9911,99 @@ def ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMe
   adaptive theorem.  It assumes the definitional actual reward-map source and
   deterministic raw/mean range regularity.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-RAW-RANGE-MEASURABLE-MEAN-RANGE-MEAN-ZERO`
+is compiled locally:
+
+```lean
+theorem ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionDefinitionalActualRewardMapSource_definitionalRawRangeMeasurableMeanRangeBounded
+    ...
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (source :
+      GeneratedActionDefinitionalActualRewardMapSource mu rewardKernel policy
+        context state defaultAction reward hreward)
+    (i : Nat) :
+    Filter.EventuallyEq (ae mu)
+      (@condExp Omega Real
+        ((History.historyFiltrationSucc
+          (generatedActionFromRewardHistory policy state defaultAction reward)
+          reward
+          (generatedActionFromRewardHistory_measurable
+            (policy := policy) (state := state)
+            (defaultAction := defaultAction) (reward := reward)
+            hreward source.hstate)
+          hreward) i)
+        mOmega _ _ _ mu
+        (fun omega : Omega =>
+          (((reward omega (i + 1) -
+            mean
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+              Rat) : Real))))
+      (fun _omega : Omega => (0 : Real))
+```
+
+- Exact Lean-facing statement: a packaged
+  `GeneratedActionDefinitionalActualRewardMapSource`, context measurability,
+  measurable mean surface, centered reward-kernel law, deterministic raw reward
+  range bounds, and deterministic selected mean range bounds imply that the
+  ordinary conditional expectation of the succ-indexed centered selected
+  reward is a.e. zero against the generated-action history filtration.  This
+  is the source-level mean-zero consumer for the definitional actual
+  reward-coordinate route.
+- Local APIs/imports: `BanditRLProof.ConditionalRewardLawSource`,
+  `ConditionalExpectationReward.GeneratedActionDefinitionalActualRewardMapSource`,
+  `ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_reward_map_eq_actual_action_definitionalRawRangeMeasurableMeanRangeBounded`,
+  `ConditionalExpectationReward.generatedActionFromRewardHistory`,
+  `ConditionalExpectationReward.generatedActionFromRewardHistory_measurable`,
+  `History.historyFiltrationSucc`, `History.finiteRewardHistoryOfTrace`,
+  `RewardKernel.CenteredRewardKernelLaw`, and `MeasureTheory.condExp`.
+- Intended proof route: unpack `source.hstate` and
+  `source.reward_map_eq_actual_action`, then feed them with `hcontext`,
+  `hmean`, `hkernel`, `hraw`, and `hmean_range` into the existing direct
+  actual-action reward-coordinate raw-range/measurable-mean-range consumer.
+  The wrapper does not build a new law; it makes the packaged source usable at
+  the final conditional-mean-zero surface.
+- Regularity contracts: standard Borel sample space, finite measure,
+  measurable context/state/action spaces, measurable singleton and countable
+  action space, timewise measurable reward trace, packaged state measurability
+  and reward-coordinate law from the definitional actual source, context
+  measurability, measurable mean surface, centered reward-kernel law,
+  deterministic raw reward range bounds, and deterministic selected mean range
+  bounds.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-COND-EXPECT-REWARD-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-RAW-RANGE-MEASURABLE-MEAN-RANGE-MEAN-ZERO`;
+  declaration is
+  `ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionDefinitionalActualRewardMapSource_definitionalRawRangeMeasurableMeanRangeBounded`.
+  The canary is in `Tests/Basic.lean`.  Dependency cards are
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-CONTRACT`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-CONTRACT`,
+  and
+  `LOCAL-LEAF-COND-EXPECT-REWARD-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE`.
+- Status: project-local compiled conditional mean-zero consumer leaf for
+  `COND-EXPECT-REWARD`, `ADAPTED-ACTION`, `MEAS-POLICY`, `MEAS-HISTORY`,
+  `KERNEL-POLICY-BIND`, `KERNEL-REWARD`, `INT-REWARD-BOUNDED`, and
+  `MEAS-REWARD`.
+- Failure policy: this is not a proof of the packaged reward-coordinate law,
+  not an ambient trajectory-to-`condExpKernel` identification, not a
+  variance-ceiling source, not a conditional MGF theorem, and not a final
+  adaptive theorem.  It assumes the definitional actual reward-map source and
+  deterministic raw/mean range regularity.
+
 `LOCAL-LEAF-COND-EXPECT-REWARD-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-UNIFORM-VARIANCE-SOURCE`
 is compiled locally:
 
