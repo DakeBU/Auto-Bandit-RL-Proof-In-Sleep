@@ -209,6 +209,12 @@ The requested unfinished-work workflow is now available:
   a source-consumer wrapper lowering the packaged uniform-variance source
   through its generated random-pair map source into the canonical
   `RewardKernel.actionRewardHistoryStepKernelFamily` next-pair law.
+- `COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE`
+  is compiled locally as
+  `ConditionalExpectationReward.generatedActionDefinitionalActualRewardMapSource_of_uniformVarianceBoundedSource`,
+  a source-conversion wrapper lowering the packaged uniform-variance source
+  through its base raw-range/measurable-mean-range source into the weaker
+  definitional generated actual-action reward-coordinate source.
 - `COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE`
   is compiled locally as
   `ConditionalExpectationReward.generatedActionActualRewardMapSource_of_uniformVarianceBoundedSource`,
@@ -1811,6 +1817,16 @@ Context:
   law consumers a direct interface from the uniform variance source while
   keeping the random next-pair law and global variance ceiling as source
   assumptions.
+- `COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE`
+  now compiles as the uniform variance definitional actual reward-map
+  projection:
+  `generatedActionDefinitionalActualRewardMapSource_of_uniformVarianceBoundedSource`
+  first forgets the uniform-variance wrapper to its packaged practical
+  raw-range/measurable-mean-range source and then reuses the existing
+  definitional actual reward-coordinate projection.  This gives definitional
+  reward-coordinate consumers a direct interface from the uniform variance
+  source while keeping the random next-pair law and global variance ceiling as
+  source assumptions.
 - `COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE`
   now compiles as the uniform variance actual-reward-map projection:
   `generatedActionActualRewardMapSource_of_uniformVarianceBoundedSource`

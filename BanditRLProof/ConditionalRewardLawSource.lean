@@ -15140,6 +15140,72 @@ theorem actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_fi
 
 /--
 Lower a definitional generated-action raw-range/uniform-variance source into
+the weaker definitional actual-action reward-map source.
+
+This keeps consumers on the definitional `generatedActionFromRewardHistory`
+surface while hiding the uniform variance wrapper and the stronger random-pair
+law package.
+-/
+def generatedActionDefinitionalActualRewardMapSource_of_uniformVarianceBoundedSource
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (varianceCeiling : NNReal)
+    (source :
+      GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource
+        mu rewardKernel policy context state mean varianceProxy defaultAction
+        reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling) :
+    GeneratedActionDefinitionalActualRewardMapSource mu rewardKernel policy
+      context state defaultAction reward hreward :=
+  generatedActionDefinitionalActualRewardMapSource_of_randomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource
+    (mu := mu)
+    (rewardKernel := rewardKernel)
+    (policy := policy)
+    (context := context)
+    (state := state)
+    (mean := mean)
+    (varianceProxy := varianceProxy)
+    (defaultAction := defaultAction)
+    (reward := reward)
+    (hreward := hreward)
+    (rewardLo := rewardLo)
+    (rewardHi := rewardHi)
+    (meanLo := meanLo)
+    (meanHi := meanHi)
+    (generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_uniformVarianceBoundedSource
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (mean := mean)
+      (varianceProxy := varianceProxy)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (rewardLo := rewardLo)
+      (rewardHi := rewardHi)
+      (meanLo := meanLo)
+      (meanHi := meanHi)
+      (varianceCeiling := varianceCeiling)
+      source)
+
+/--
+Lower a definitional generated-action raw-range/uniform-variance source into
 the explicit generated actual-action reward-map source.
 
 This is the direct projection for consumers that only need the selected reward
