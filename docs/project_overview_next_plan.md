@@ -209,6 +209,12 @@ The requested unfinished-work workflow is now available:
   a source-conversion wrapper lowering the packaged uniform-variance source
   through its base raw-range/measurable-mean-range source into the bounded
   centered-source interface.
+- `COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-CENTERED-SOURCE`
+  is compiled locally as
+  `ConditionalExpectationReward.generatedActionRandomPairCenteredSource_of_uniformVarianceBoundedSource`,
+  a source-conversion wrapper lowering the packaged uniform-variance source
+  through its bounded centered-source projection into the integrability-based
+  centered-source interface.
 - `COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-RAW-RANGE-BOUNDED-SOURCE`
   is compiled locally as
   `ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_historyVarianceBoundedSource`,
@@ -1726,6 +1732,14 @@ Context:
   projection.  This preserves deterministic centered reward bounds for
   bounded-integrability and tail consumers while keeping the global variance
   ceiling as part of the source package.
+- `COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-CENTERED-SOURCE`
+  now compiles as the uniform variance centered-source projection:
+  `generatedActionRandomPairCenteredSource_of_uniformVarianceBoundedSource`
+  first lowers the uniform-variance wrapper to the bounded centered-source
+  projection and then reuses the existing integrability-based centered-source
+  conversion.  This gives downstream mean-zero and centered-source consumers a
+  direct interface from the uniform variance source while keeping the random
+  next-pair law and global variance ceiling as source assumptions.
 - `COND-EXPECT-REWARD-RANDOM-PAIR-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE`
   now compiles as the definitional raw-range projection layer:
   `generatedActionDefinitionalActualRewardMapSource_of_randomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource`
