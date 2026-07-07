@@ -24135,6 +24135,70 @@ def ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMe
   variance ceiling as the selected-history variance source.  Conditional MGF
   consumers still require their separate source or consumer leaves.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-HISTORY-VARIANCE-SOURCE`
+is compiled locally:
+
+```lean
+def ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource_of_partialTrajectoryPairLawSource
+    ...
+    (varianceCeiling : Nat -> NNReal)
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (hvariance :
+      forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat),
+        varianceProxy (context i history)
+          ((policy i).action (state i history)) <= varianceCeiling i)
+    (source :
+      GeneratedActionPartialTrajectoryPairLawSource mu rewardKernel policy
+        context state defaultAction reward hreward) :
+    GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource
+      mu rewardKernel policy context state mean varianceProxy defaultAction
+      reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling
+```
+
+- Exact Lean-facing statement: a packaged generated-history full finite-pair
+  `partialTraj`/`condExpKernel` law source, together with raw/mean range
+  regularity and selected-history variance ceilings, constructs the practical
+  definitional generated-action history-variance source.
+- Local APIs/imports:
+  `BanditRLProof.ConditionalRewardLawSource`,
+  `GeneratedActionPartialTrajectoryPairLawSource`,
+  `GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource`,
+  `generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource_of_actionRewardPartialTrajectoryKernel_map_eq`,
+  `generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_partialTrajectoryPairLawSource`,
+  `RewardKernel.CenteredRewardKernelLaw`, Mathlib `NNReal`, `Measurable`,
+  `Set.Icc`, `Measure.map`, and `condExpKernel`.
+- Intended proof route: project `source.hcontext`, `source.hstate`, and
+  `source.partialtraj_map_eq` into the existing direct full finite-pair
+  `partialTraj` history-variance constructor; the variance field is the
+  explicit selected-history `hvariance` contract.
+- Regularity contracts: all contracts from the raw-range bounded source
+  conversion, plus `varianceCeiling : Nat -> NNReal` and
+  `forall i history, varianceProxy (context i history)
+    ((policy i).action (state i history)) <= varianceCeiling i`.
+- Retrieval evidence:
+  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource_of_partialTrajectoryPairLawSource`,
+  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource_of_actionRewardPartialTrajectoryKernel_map_eq`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-RAW-RANGE-BOUNDED-SOURCE`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-UNIFORM-VARIANCE-SOURCE`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-HISTORY-VARIANCE-SOURCE`,
+  and `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-TRAJECTORY-PARTIALTRAJ-PAIR-LAW-SOURCE-CONTRACT`.
+- Status: compiled-local source-conversion leaf.
+- Failure policy: do not cite this as proving the generated-history
+  `partialTraj`/`condExpKernel` pair-law, and do not treat the selected-history
+  ceiling as constructed from reward laws.  Conditional MGF consumers still
+  require their separate source or consumer leaves.
+
 `COND-EXPECT-REWARD-PARTIALTRAJ-CONDEXPKERNEL-PAIR-LAW-CARD` is
 theorem-card-only:
 

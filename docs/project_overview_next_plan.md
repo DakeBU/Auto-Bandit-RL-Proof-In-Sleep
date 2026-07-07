@@ -1255,6 +1255,12 @@ Context:
   `varianceProxy context action <= varianceCeiling` builds the packaged
   uniform-variance practical source.  It prepares the conditional-MGF route
   without proving the underlying `partialTraj`/`condExpKernel` law.
+- `COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-HISTORY-VARIANCE-SOURCE`
+  now compiles as the selected-history companion: the same generated
+  `partialTraj` pair-law source plus
+  `varianceProxy (context i history) ((policy i).action (state i history)) <=
+  varianceCeiling i` builds the packaged history-variance practical source.
+  This is still a source conversion, not a proof of the trajectory-law card.
 - `COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-REWARD-MAP` now compiles as
   the reward-coordinate adapter for that same full finite-pair-trace law:
   after projecting the `partialTraj` law to the next `(Action, Reward)` pair,
