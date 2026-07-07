@@ -24561,6 +24561,54 @@ noncomputable example
                 ((i : Finset.Iic n) -> Prod Action Reward)).comap
               (Preorder.frestrictLe n))
             trajectory) =
+        ((stepKernel n).map Prod.fst) (Preorder.frestrictLe n trajectory))
+      (MeasureTheory.ae trajMeasure) := by
+  exact
+    ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_actionMarginal_condExpKernel_map_trajMeasure
+      mu0 rewardKernel policy context state hcontext hstate n
+
+noncomputable example
+    {Context State Action Reward : Type}
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSpace Reward]
+    [StandardBorelSpace (Prod Action Reward)]
+    [StandardBorelSpace Action]
+    [StandardBorelSpace ((t : Nat) -> Prod Action Reward)]
+    [Nonempty (Prod Action Reward)] [Nonempty Action]
+    [Nonempty ((t : Nat) -> Prod Action Reward)]
+    [MeasurableSingletonClass Action] [Countable Action]
+    (mu0 : MeasureTheory.Measure (Prod Action Reward))
+    [MeasureTheory.IsProbabilityMeasure mu0]
+    (rewardKernel :
+      RewardKernel.MarkovRewardKernel (Prod Context Action) Reward)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Reward) -> Context)
+    (state :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Reward) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (n : Nat) :
+    let stepKernel :=
+      RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy
+        context state hcontext hstate
+    let trajMeasure :=
+      ProbabilityTheory.Kernel.trajMeasure
+        (X := fun _ : Nat => Prod Action Reward) mu0 stepKernel
+    Filter.Eventually
+      (fun trajectory : (t : Nat) -> Prod Action Reward =>
+        @MeasureTheory.Measure.map
+          ((t : Nat) -> Prod Action Reward) Action
+          inferInstance inferInstance
+          (fun y : (t : Nat) -> Prod Action Reward => (y (n + 1)).1)
+          (@ProbabilityTheory.condExpKernel
+            ((t : Nat) -> Prod Action Reward) inferInstance _
+            trajMeasure _
+            ((inferInstance :
+              MeasurableSpace
+                ((i : Finset.Iic n) -> Prod Action Reward)).comap
+              (Preorder.frestrictLe n))
+            trajectory) =
         MeasureTheory.Measure.dirac
           ((policy n).action (state n (Preorder.frestrictLe n trajectory))))
       (MeasureTheory.ae trajMeasure) := by

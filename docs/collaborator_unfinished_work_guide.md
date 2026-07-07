@@ -4773,6 +4773,81 @@ theorem ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_action_
   ambient process.  It is only the canonical Ionescu-Tulcea action-side source
   law and still needs transport to `History.historyFiltrationSucc`.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-ACTION-MARGINAL-CONDEXPKERNEL-MAP`
+is compiled locally:
+
+```lean
+theorem ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_actionMarginal_condExpKernel_map_trajMeasure
+    {Context : Type x} {State : Type u} {Action : Type v}
+    {Reward : Type w}
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSpace Reward]
+    [StandardBorelSpace (Prod Action Reward)]
+    [StandardBorelSpace Action]
+    [StandardBorelSpace ((t : Nat) -> Prod Action Reward)]
+    [Nonempty (Prod Action Reward)] [Nonempty Action]
+    [Nonempty ((t : Nat) -> Prod Action Reward)]
+    [MeasurableSingletonClass Action] [Countable Action]
+    (mu0 : Measure (Prod Action Reward))
+    [MeasureTheory.IsProbabilityMeasure mu0]
+    (rewardKernel :
+      RewardKernel.MarkovRewardKernel (Prod Context Action) Reward)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Reward) -> Context)
+    (state :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Reward) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (n : Nat) :
+    let stepKernel :=
+      RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy
+        context state hcontext hstate
+    let trajMeasure :=
+      ProbabilityTheory.Kernel.trajMeasure
+        (X := fun _ : Nat => Prod Action Reward) mu0 stepKernel
+    Filter.Eventually
+      (fun trajectory : (t : Nat) -> Prod Action Reward =>
+        Measure.map
+          (fun y : (t : Nat) -> Prod Action Reward => (y (n + 1)).1)
+          (ProbabilityTheory.condExpKernel trajMeasure
+            ((inferInstance :
+              MeasurableSpace
+                ((i : Finset.Iic n) -> Prod Action Reward)).comap
+              (Preorder.frestrictLe n))
+            trajectory) =
+        ((stepKernel n).map Prod.fst) (Preorder.frestrictLe n trajectory))
+      (ae trajMeasure)
+```
+
+- Exact Lean-facing statement: for canonical `trajMeasure`, the
+  conditional-expectation kernel conditioned on the finite pair prefix, pushed
+  forward by the next action coordinate, is a.e. the `Prod.fst` action
+  marginal of the configured history-step kernel.
+- Local APIs/imports:
+  `ConditionalExpectationReward.condExpKernel_map_eq_of_condDistrib_ae_eq_countable`,
+  `RewardKernel.actionRewardHistoryStepKernelFamily_action_condDistrib_trajMeasure`,
+  `ProbabilityTheory.condExpKernel`, `ProbabilityTheory.Kernel.trajMeasure`,
+  and `Preorder.frestrictLe`.
+- Intended proof route: instantiate the countable-target
+  `condDistrib`-to-`condExpKernel` bridge with
+  `X := fun trajectory => (trajectory (n + 1)).1` and
+  `Y := Preorder.frestrictLe n`; the required input law is the canonical
+  action-coordinate `condDistrib` law.
+- Regularity contracts: standard Borel pair, action, and trajectory spaces;
+  nonempty pair/action/trajectory spaces; measurable-singleton and countable
+  `Action`; initial probability measure; project-local Markov reward kernel;
+  measurable policy; and measurable pair-history context/state extractors.
+- Retrieval evidence:
+  `LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-ACTION-MARGINAL-CONDEXPKERNEL-MAP`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-CONDDISTRIB-TO-CONDEXPKERNEL-MAP`, and
+  `LOCAL-LEAF-POLICY-REWARD-TRAJMEASURE-ACTION-CONDDISTRIB`.
+- Status: project-local compiled canonical `trajMeasure` bridge leaf.
+- Failure policy: do not cite this as an arbitrary ambient
+  `Omega`/generated-history theorem.  It is the direct countable-action
+  canonical marginal source law and still needs transport to
+  `History.historyFiltrationSucc`.
+
 `LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-SELECTED-ACTION-CONDEXPKERNEL-MAP`
 is compiled locally:
 
@@ -4826,17 +4901,12 @@ theorem ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_selecte
   forward by the next action coordinate, is a.e. the Dirac law at the
   policy-selected action.
 - Local APIs/imports:
-  `ConditionalExpectationReward.condExpKernel_map_eq_of_condDistrib_ae_eq_countable`,
-  `RewardKernel.actionRewardHistoryStepKernelFamily_action_condDistrib_trajMeasure`,
+  `ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_actionMarginal_condExpKernel_map_trajMeasure`,
   `RewardKernel.actionRewardHistoryStepKernelFamily_action_map`,
-  `ProbabilityTheory.condExpKernel`, `ProbabilityTheory.Kernel.trajMeasure`,
-  and `Preorder.frestrictLe`.
-- Intended proof route: instantiate the countable-target
-  `condDistrib`-to-`condExpKernel` bridge with
-  `X := fun trajectory => (trajectory (n + 1)).1` and
-  `Y := Preorder.frestrictLe n`; use the canonical action-coordinate
-  `condDistrib` law as the input law, then rewrite the target
-  `((stepKernel n).map Prod.fst)` with
+  `ProbabilityTheory.condExpKernel`, and `Preorder.frestrictLe`.
+- Intended proof route: consume
+  `ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_actionMarginal_condExpKernel_map_trajMeasure`,
+  then rewrite the target `((stepKernel n).map Prod.fst)` with
   `RewardKernel.actionRewardHistoryStepKernelFamily_action_map`.
 - Regularity contracts: standard Borel pair, action, and trajectory spaces;
   nonempty pair/action/trajectory spaces; measurable-singleton and countable
@@ -4846,8 +4916,7 @@ theorem ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_selecte
   contract needed by the pair-projection route.
 - Retrieval evidence:
   `LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-SELECTED-ACTION-CONDEXPKERNEL-MAP`,
-  `LOCAL-LEAF-COND-EXPECT-REWARD-CONDDISTRIB-TO-CONDEXPKERNEL-MAP`,
-  `LOCAL-LEAF-POLICY-REWARD-TRAJMEASURE-ACTION-CONDDISTRIB`, and
+  `LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-ACTION-MARGINAL-CONDEXPKERNEL-MAP`,
   `LOCAL-LEAF-KERNEL-REWARD-MAP-LAW-TRANSFER`.
 - Status: project-local compiled canonical `trajMeasure` bridge leaf.
 - Failure policy: do not cite this as an arbitrary ambient
