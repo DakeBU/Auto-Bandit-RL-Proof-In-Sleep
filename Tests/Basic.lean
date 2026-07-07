@@ -1533,6 +1533,32 @@ example {History : Type u} {Env : Type v} {Action : Type w}
     Thompson.PosteriorActionIdentityLedger.actionKernel_apply_singleton_eq_posteriorBest_preimage
       ledger history action
 
+example {Env : Type v} {Action : Type w}
+    [MeasurableSpace Env] [MeasurableSingletonClass Env] [Countable Env]
+    [MeasurableSpace Action]
+    (bestAction : Env -> Action) :
+    Measurable bestAction := by
+  exact Thompson.bestAction_measurable_of_countable_env bestAction
+
+example {History : Type u} {Env : Type v} {Action : Type w}
+    [MeasurableSpace History] [MeasurableSpace Env]
+    [MeasurableSingletonClass Env] [Countable Env]
+    [MeasurableSpace Action]
+    (posterior : PosteriorKernel.MarkovPosteriorKernel History Env)
+    (actionKernel : ProbabilityTheory.Kernel History Action)
+    (hactionKernel : ProbabilityTheory.IsMarkovKernel actionKernel)
+    (bestAction : Env -> Action)
+    (hmatch :
+      forall (history : History) {event : Set Action},
+        MeasurableSet event ->
+          actionKernel history event =
+            MeasureTheory.Measure.map bestAction
+              (posterior.kernel history) event) :
+    Thompson.PosteriorActionIdentityLedger History Env Action := by
+  exact
+    Thompson.PosteriorActionIdentityLedger.ofCountableEnv
+      posterior actionKernel hactionKernel bestAction hmatch
+
 example {Omega : Type u}
     [MeasurableSpace Omega]
     {Idx : Type v}

@@ -3926,6 +3926,59 @@ theorem Thompson.PosteriorActionIdentityLedger.actionKernel_apply_singleton_eq_p
   `LML-TS-POSTERIOR-ACTION`, prove posterior best-action measurability from a
   concrete model, or prove Bayesian regret.
 
+`LOCAL-LEAF-TS-POSTERIOR-BEST-ACTION-MEASURABILITY` is compiled locally as a
+finite/countable posterior best-action regularity leaf:
+
+```lean
+theorem Thompson.bestAction_measurable_of_countable_env
+    [MeasurableSpace Env] [MeasurableSingletonClass Env] [Countable Env]
+    [MeasurableSpace Action]
+    (bestAction : Env -> Action) :
+    Measurable bestAction
+```
+
+```lean
+def Thompson.PosteriorActionIdentityLedger.ofCountableEnv
+    [MeasurableSingletonClass Env] [Countable Env]
+    (posterior : PosteriorKernel.MarkovPosteriorKernel History Env)
+    (actionKernel : ProbabilityTheory.Kernel History Action)
+    (hactionKernel : ProbabilityTheory.IsMarkovKernel actionKernel)
+    (bestAction : Env -> Action)
+    (hmatch :
+      forall (history : History) {event : Set Action},
+        MeasurableSet event ->
+          actionKernel history event =
+            Measure.map bestAction (posterior.kernel history) event) :
+    Thompson.PosteriorActionIdentityLedger History Env Action
+```
+
+- Exact Lean-facing statement: on a countable environment space with
+  measurable singleton atoms, every `bestAction : Env -> Action` is measurable;
+  the posterior-action identity ledger can therefore be built from the
+  posterior kernel, action kernel, best-action selector, and event-level
+  matching law without an extra measurability field.
+- Local APIs/imports: `BanditRLProof.Algorithms.Thompson`,
+  `BanditRLProof.PosteriorKernel`, Mathlib `measurable_of_countable`,
+  `ProbabilityTheory.Kernel`, and `ProbabilityTheory.IsMarkovKernel`.
+- Intended proof route: use Mathlib `measurable_of_countable` for the
+  best-action selector, then populate the ledger fields using the supplied
+  event-level posterior action law.
+- Regularity contracts: measurable history/environment/action spaces,
+  `[MeasurableSingletonClass Env]`, `[Countable Env]`, a posterior Markov
+  kernel, a Markov action kernel, and an externally supplied event-level
+  probability-matching law.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-TS-POSTERIOR-BEST-ACTION-MEASURABILITY`; declarations are
+  `Thompson.bestAction_measurable_of_countable_env` and
+  `Thompson.PosteriorActionIdentityLedger.ofCountableEnv`.
+- Status: project-local compiled regularity/source-constructor leaf for
+  `TS-PROB-MATCH` and `POSTERIOR-KERNEL`.
+- Failure policy: this discharges only finite/countable best-action
+  measurability for the local ledger. It does not prove the posterior action
+  law, construct a posterior sampler, import or port `LML-TS-POSTERIOR-ACTION`,
+  handle noncountable argmax measurability, prove Bayes' rule, or prove
+  Bayesian regret.
+
 `POLICY-REWARD-ONE-STEP-KERNEL-COMPOSITION` is compiled locally:
 
 ```lean

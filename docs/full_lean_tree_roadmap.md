@@ -124,7 +124,7 @@ until their first exact theorem targets are chosen.
 
 | Route | Shared roots | First concrete leaves |
 | --- | --- | --- |
-| Thompson/Bayesian | posterior kernels, posterior-action identity ledger, conditional expectation, expected regret | prior/environment law, posterior action-law construction/import, posterior best-action measurability, Bayesian regret integrability |
+| Thompson/Bayesian | posterior kernels, posterior-action identity ledger, finite/countable best-action measurability, conditional expectation, expected regret | prior/environment law, posterior action-law construction/import, noncountable best-action measurability if needed, Bayesian regret integrability |
 | Linear/OFUL | linear algebra, martingale concentration, finite regret | feature-vector API, Gram matrix PSD/monotonicity, ellipsoid confidence, elliptical potential |
 | RL/UCB-VI | kernels, finite trajectories, Bellman recursion | finite MDP API, value recursion, occupancy measure, episode regret telescope |
 | BwK/resource | budget stopping time, finite sums, expectation | resource trace, budget feasibility, primal-dual comparison |

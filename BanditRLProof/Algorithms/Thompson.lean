@@ -53,6 +53,21 @@ structure PosteriorActionIdentityLedger
         actionKernel history event =
           Measure.map bestAction (posterior.kernel history) event
 
+/--
+Any best-action selector out of a countable singleton-measurable environment
+space is measurable.
+
+This is the regularity wrapper needed by finite or countable posterior model
+spaces before constructing a Thompson posterior-action identity ledger.
+-/
+theorem bestAction_measurable_of_countable_env
+    {Env : Type v} {Action : Type w}
+    [MeasurableSpace Env] [MeasurableSingletonClass Env] [Countable Env]
+    [MeasurableSpace Action]
+    (bestAction : Env -> Action) :
+    Measurable bestAction :=
+  measurable_of_countable bestAction
+
 namespace PosteriorActionIdentityLedger
 
 variable {History : Type u} {Env : Type v} {Action : Type w}
@@ -62,6 +77,29 @@ instance instActionKernelIsMarkovKernel
     (ledger : PosteriorActionIdentityLedger History Env Action) :
     ProbabilityTheory.IsMarkovKernel ledger.actionKernel :=
   ledger.actionKernel_isMarkov
+
+/--
+Build a posterior-action identity ledger over a countable environment space
+without separately supplying best-action measurability.
+-/
+def ofCountableEnv
+    [MeasurableSingletonClass Env] [Countable Env]
+    (posterior : PosteriorKernel.MarkovPosteriorKernel History Env)
+    (actionKernel : ProbabilityTheory.Kernel History Action)
+    (hactionKernel : ProbabilityTheory.IsMarkovKernel actionKernel)
+    (bestAction : Env -> Action)
+    (hmatch :
+      forall (history : History) {event : Set Action},
+        MeasurableSet event ->
+          actionKernel history event =
+            Measure.map bestAction (posterior.kernel history) event) :
+    PosteriorActionIdentityLedger History Env Action where
+  posterior := posterior
+  actionKernel := actionKernel
+  actionKernel_isMarkov := hactionKernel
+  bestAction := bestAction
+  bestAction_measurable := bestAction_measurable_of_countable_env bestAction
+  actionKernel_eq_posteriorBest := hmatch
 
 /--
 Event-level Thompson probability matching from the packaged ledger.

@@ -3054,6 +3054,27 @@ LOCAL_LEAF_CARDS = [
         ],
     },
     {
+        "id": "LOCAL-LEAF-TS-POSTERIOR-BEST-ACTION-MEASURABILITY",
+        "leaf_ids": [
+            "TS-PROB-MATCH",
+            "POSTERIOR-KERNEL",
+        ],
+        "module": "BanditRLProof.Algorithms.Thompson",
+        "status": "leanCompiled",
+        "declarations": [
+            "Thompson.bestAction_measurable_of_countable_env",
+            "Thompson.PosteriorActionIdentityLedger.ofCountableEnv",
+        ],
+        "role": "Compiled Thompson posterior best-action regularity leaf: on a countable singleton-measurable environment space, any environment-to-action bestAction selector is measurable, and the posterior-action identity ledger can be built without separately supplying that measurability field. This discharges the finite/countable posterior best-action measurability side condition for the local probability-matching ledger, while still assuming the event-level posterior action law and not proving Bayes' rule, constructing the posterior sampler, importing LML, or proving Bayesian regret.",
+        "mathlib_routes": [
+            "MLIB-PROBABILITY-KERNEL",
+            "Mathlib.MeasureTheory.MeasurableSpace.Constructions",
+            "LOCAL-LEAF-POSTERIOR-KERNEL-CONTRACT",
+            "LOCAL-LEAF-TS-POSTERIOR-ACTION-IDENTITY-LEDGER",
+            "LML-TS-POSTERIOR-ACTION",
+        ],
+    },
+    {
         "id": "LOCAL-LEAF-POLICY-REWARD-ONE-STEP-KERNEL-COMPOSITION",
         "leaf_ids": [
             "POLICY-REWARD-ONE-STEP-KERNEL-COMPOSITION",
@@ -10102,6 +10123,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- KERNEL-REWARD is compiled locally as a Mathlib Markov-kernel reward-law contract surface with context/action selected-measure measurability wrappers.")
     print("- POSTERIOR-KERNEL is compiled locally as a Mathlib Markov-kernel posterior contract surface over histories and environments; Bayes-rule identification and Thompson probability matching remain separate.")
     print("- TS-POSTERIOR-ACTION-IDENTITY-LEDGER is compiled locally as a Thompson probability-matching contract surface: a posterior kernel, Thompson action kernel, measurable bestAction map, and event-level action-law equality yield event and singleton posterior best-action probability consumers; Bayes-rule identification, posterior sampler construction, and Bayesian regret remain separate.")
+    print("- TS-POSTERIOR-BEST-ACTION-MEASURABILITY is compiled locally as a Thompson regularity leaf: for countable singleton-measurable environment spaces, any bestAction selector is measurable, and the posterior-action identity ledger can be built without a separate bestAction measurability proof; the event-level posterior action law remains assumed.")
     print("- POLICY-REWARD-ONE-STEP-KERNEL-COMPOSITION is compiled locally as a one-step context/state Markov reward kernel obtained from a measurable policy and context/action reward kernel.")
     print("- POLICY-REWARD-IIC-HISTORY-PARTIAL-TRAJECTORY is compiled locally as a Mathlib partialTraj finite-prefix reward-history kernel surface from time-indexed policies and measurable context/state extractors.")
     print("- KERNEL-POLICY-BIND is compiled locally as a Mathlib partialTraj finite-prefix action/reward pair trajectory-kernel surface from deterministic policy action kernels and selected reward kernels, with selected-reward marginal wrappers for one-step and history-step action/reward kernels and a one-step frozen-prefix extension map wrapper.")

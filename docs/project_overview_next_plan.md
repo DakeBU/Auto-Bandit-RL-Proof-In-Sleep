@@ -2503,6 +2503,13 @@ Current review conclusion:
   event-level and singleton action-probability consumers.  This still consumes
   the posterior action law; it does not prove Bayes' rule, construct the
   posterior sampler, import LML, or prove Bayesian regret.
+- `TS-POSTERIOR-BEST-ACTION-MEASURABILITY` now compiles locally in
+  `BanditRLProof.Algorithms.Thompson`: for countable singleton-measurable
+  environment spaces, any `bestAction : Env -> Action` is measurable by
+  Mathlib `measurable_of_countable`, and the posterior-action identity ledger
+  can be built without a separate best-action measurability proof.  This
+  discharges the finite/countable best-action regularity side condition, but
+  the posterior action-law identity itself remains assumed.
 - `POLICY-REWARD-ONE-STEP-KERNEL-COMPOSITION` now compiles locally in
   `BanditRLProof.RewardKernel`: a measurable policy plus a context/action
   Markov reward kernel gives a context/state Markov reward kernel, with
