@@ -197,6 +197,12 @@ The requested unfinished-work workflow is now available:
   a source-projection wrapper exposing the packaged practical base
   raw-range/measurable-mean-range bounded source from a uniform-variance
   source.
+- `COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-DEFINITIONAL-CENTERED-SOURCE`
+  is compiled locally as
+  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalCenteredSource_of_uniformVarianceBoundedSource`,
+  a source-conversion wrapper lowering the packaged uniform-variance source
+  through its base raw-range/measurable-mean-range source into the definitional
+  centered-source interface.
 - `COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-RAW-RANGE-BOUNDED-SOURCE`
   is compiled locally as
   `ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_historyVarianceBoundedSource`,
@@ -1684,6 +1690,14 @@ Context:
   centered-source projection above.  This gives downstream centered-source
   consumers a direct interface from the selected-history variance source while
   keeping the random next-pair law and variance ceilings as source assumptions.
+- `COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-DEFINITIONAL-CENTERED-SOURCE`
+  now compiles as the uniform variance-source projection:
+  `generatedActionRandomPairDefinitionalCenteredSource_of_uniformVarianceBoundedSource`
+  first forgets the uniform-variance wrapper to its packaged practical
+  raw-range/measurable-mean-range source and then reuses the same definitional
+  centered-source projection.  This gives downstream centered-source consumers
+  a direct interface from the uniform variance source while keeping the random
+  next-pair law and global variance ceiling as source assumptions.
 - `COND-EXPECT-REWARD-RANDOM-PAIR-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE`
   now compiles as the definitional raw-range projection layer:
   `generatedActionDefinitionalActualRewardMapSource_of_randomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource`
