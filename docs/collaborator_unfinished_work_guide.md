@@ -7069,6 +7069,74 @@ theorem ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_gene
   ambient trajectory-to-`condExpKernel` identification, integrability, or final
   adaptive ETC/UCB theorem.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-TO-GENERATED-RANDOM-PAIR-MAP-SOURCE`
+is compiled locally:
+
+```lean
+def ConditionalExpectationReward.generatedActionRandomPairMapSource_of_generatedActionDefinitionalActualRewardMapSource
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (source :
+      GeneratedActionDefinitionalActualRewardMapSource mu rewardKernel policy
+        context state defaultAction reward hreward) :
+    GeneratedActionRandomPairMapSource mu
+      (generatedActionFromRewardHistory policy state defaultAction reward)
+      rewardKernel policy context state defaultAction reward
+      (generatedActionFromRewardHistory_measurable
+        (policy := policy) (state := state) (defaultAction := defaultAction)
+        (reward := reward) hreward source.hstate)
+      hreward
+```
+
+- Exact Lean-facing statement: a definitional actual reward-coordinate source
+  directly yields the explicit generated-action random next-pair map source
+  over `generatedActionFromRewardHistory`.
+- Local APIs/imports: `BanditRLProof.ConditionalRewardLawSource`,
+  `ConditionalExpectationReward.GeneratedActionDefinitionalActualRewardMapSource`,
+  `ConditionalExpectationReward.GeneratedActionRandomPairMapSource`,
+  `ConditionalExpectationReward.generatedActionActualRewardMapSource_of_definitionalActualRewardMapSource`,
+  `ConditionalExpectationReward.generatedActionRandomPairMapSource_of_generatedActionActualRewardMapSource`,
+  `ConditionalExpectationReward.generatedActionFromRewardHistory`, and
+  `ConditionalExpectationReward.generatedActionFromRewardHistory_measurable`.
+- Intended proof route: lower the definitional source to the explicit
+  `GeneratedActionActualRewardMapSource` over
+  `generatedActionFromRewardHistory`, derive the action trace measurability
+  from the source's `hstate`, then apply the explicit actual-to-random source
+  conversion backed by the ambient split-product condExpKernel law.
+- Regularity contracts: standard Borel sample space, finite measure,
+  measurable context/state/action spaces, measurable singleton and countable
+  action space, timewise measurable reward trace, source-provided state
+  measurability, and the definitional actual-action reward-coordinate
+  `condExpKernel` map law.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-COND-EXPECT-REWARD-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-TO-GENERATED-RANDOM-PAIR-MAP-SOURCE`;
+  declaration
+  `ConditionalExpectationReward.generatedActionRandomPairMapSource_of_generatedActionDefinitionalActualRewardMapSource`;
+  upstream route cards
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-CONTRACT`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-ACTUAL-REWARD-MAP-SOURCE-TO-RANDOM-PAIR-MAP-SOURCE`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-RANDOM-PAIR-SOURCE-CONTRACT`, and
+  `FILTRATION-HISTORY`.
+- Status: project-local compiled source-conversion leaf for
+  `COND-EXPECT-REWARD`, `ADAPTED-ACTION`, `MEAS-POLICY`,
+  `KERNEL-POLICY-BIND`, and `KERNEL-REWARD`.
+- Failure policy: this is not construction of the definitional actual
+  reward-coordinate law.  It also does not prove ambient
+  trajectory-to-`condExpKernel` identification, regularity, conditional MGF, or
+  final adaptive ETC/UCB theorem.
+
 `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-MEAN-ZERO`
 is compiled locally:
 

@@ -2280,6 +2280,67 @@ def generatedActionRandomPairMapSource_of_generatedActionActualRewardMapSource
       using h_pair_map_eq
 
 /--
+Definitional generated-action actual reward-coordinate sources also produce
+the explicit generated-action random next-pair map source.
+
+This is the direct explicit-action counterpart of the definitional random-pair
+source conversion: it first exposes the definitional actual source as an
+explicit actual reward-coordinate source, then applies the split-product source
+upgrade above.
+-/
+def generatedActionRandomPairMapSource_of_generatedActionDefinitionalActualRewardMapSource
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (source :
+      GeneratedActionDefinitionalActualRewardMapSource mu rewardKernel policy
+        context state defaultAction reward hreward) :
+    GeneratedActionRandomPairMapSource mu
+      (generatedActionFromRewardHistory policy state defaultAction reward)
+      rewardKernel policy context state defaultAction reward
+      (generatedActionFromRewardHistory_measurable
+        (policy := policy) (state := state) (defaultAction := defaultAction)
+        (reward := reward) hreward source.hstate)
+      hreward :=
+  generatedActionRandomPairMapSource_of_generatedActionActualRewardMapSource
+    (mu := mu)
+    (action := generatedActionFromRewardHistory policy state defaultAction reward)
+    (rewardKernel := rewardKernel)
+    (policy := policy)
+    (context := context)
+    (state := state)
+    (hstate := source.hstate)
+    (defaultAction := defaultAction)
+    (reward := reward)
+    (haction :=
+      generatedActionFromRewardHistory_measurable
+        (policy := policy) (state := state) (defaultAction := defaultAction)
+        (reward := reward) hreward source.hstate)
+    (hreward := hreward)
+    (source :=
+      generatedActionActualRewardMapSource_of_definitionalActualRewardMapSource
+        (mu := mu)
+        (rewardKernel := rewardKernel)
+        (policy := policy)
+        (context := context)
+        (state := state)
+        (defaultAction := defaultAction)
+        (reward := reward)
+        (hreward := hreward)
+        source)
+
+/--
 Definitional generated-action version of
 `generatedActionActualRewardMapSource_of_randomPairMapSource`.
 

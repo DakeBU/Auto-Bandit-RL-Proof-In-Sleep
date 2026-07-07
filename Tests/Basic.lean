@@ -8102,6 +8102,36 @@ example {Omega Context State Action : Type}
     [MeasurableSpace Action] [MeasurableSingletonClass Action]
     [Countable Action]
     (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (source :
+      ConditionalExpectationReward.GeneratedActionDefinitionalActualRewardMapSource
+        mu rewardKernel policy context state defaultAction reward hreward) :
+    ConditionalExpectationReward.GeneratedActionRandomPairMapSource mu
+      (ConditionalExpectationReward.generatedActionFromRewardHistory
+        policy state defaultAction reward)
+      rewardKernel policy context state defaultAction reward
+      (ConditionalExpectationReward.generatedActionFromRewardHistory_measurable
+        (policy := policy) (state := state) (defaultAction := defaultAction)
+        (reward := reward) hreward source.hstate)
+      hreward := by
+  exact
+    ConditionalExpectationReward.generatedActionRandomPairMapSource_of_generatedActionDefinitionalActualRewardMapSource
+      (mOmega := mOmega)
+      mu rewardKernel policy context state defaultAction reward hreward source
+
+example {Omega Context State Action : Type}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
     (action : Omega -> ActionTrace Action)
     (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
     (policy : Nat -> Policy.MeasurablePolicy State Action)
