@@ -18296,6 +18296,66 @@ def ConditionalExpectationReward.generatedActionRandomPairMapSource_of_uniformVa
   identification, derive a variance ceiling from raw/mean range bounds, or
   prove any final adaptive ETC/UCB theorem.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-PARTIALTRAJ-PAIR-LAW-SOURCE`
+is compiled locally:
+
+```lean
+def ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_of_uniformVarianceBoundedSource
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (varianceCeiling : NNReal)
+    (source :
+      ConditionalExpectationReward.GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource
+        mu rewardKernel policy context state mean varianceProxy defaultAction
+        reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling) :
+    ConditionalExpectationReward.GeneratedActionPartialTrajectoryPairLawSource
+      mu rewardKernel policy context state defaultAction reward hreward
+```
+
+- Exact Lean-facing statement: a practical definitional
+  raw-range/measurable-mean-range source with a packaged global variance
+  ceiling weakens directly to `GeneratedActionPartialTrajectoryPairLawSource`
+  over `generatedActionFromRewardHistory`.
+- Local APIs/imports: `BanditRLProof.ConditionalRewardLawSource`,
+  `ConditionalExpectationReward.GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource`,
+  `ConditionalExpectationReward.GeneratedActionPartialTrajectoryPairLawSource`,
+  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_uniformVarianceBoundedSource`,
+  and
+  `ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_of_randomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource`.
+- Intended proof route: first forget the uniform-variance wrapper to its
+  packaged raw-range/measurable-mean-range bounded base source, then reuse the
+  base source to partialTraj-source conversion. No variance ceiling is consumed
+  by the final partialTraj source interface; it remains part of the stronger
+  source package for MGF consumers.
+- Regularity contracts: finite measure, standard Borel sample space,
+  measurable context/state/action spaces, measurable singleton and countable
+  action space, timewise measurable reward trace, the source-packaged practical
+  raw-range/measurable-mean-range fields, source-packaged definitional random
+  next-pair law, and a global deterministic variance ceiling.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-PARTIALTRAJ-PAIR-LAW-SOURCE`;
+  declaration is
+  `ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_of_uniformVarianceBoundedSource`.
+- Status: project-local compiled source-conversion leaf for
+  `COND-EXPECT-REWARD`, `ADAPTED-ACTION`, `MEAS-POLICY`, `MEAS-HISTORY`,
+  `KERNEL-POLICY-BIND`, `KERNEL-REWARD`, `INT-REWARD-BOUNDED`, and
+  `MEAS-REWARD`.
+- Failure policy: this is only a wrapper/projection into the generated
+  finite-pair partialTraj source. It does not construct the definitional random
+  next-pair law, prove the ambient partialTraj/history-to-`condExpKernel`
+  identification, derive a variance ceiling from raw/mean range bounds, or
+  prove any final adaptive ETC/UCB theorem.
+
 `LOCAL-LEAF-COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-HISTORYSTEP-PAIR-LAW`
 is compiled locally:
 

@@ -1934,6 +1934,15 @@ Context:
   and partialTraj consumers a direct interface from the uniform variance
   source while keeping the random next-pair law and global variance ceiling as
   source assumptions.
+- `COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-PARTIALTRAJ-PAIR-LAW-SOURCE`
+  now compiles as the uniform variance partialTraj-source projection:
+  `generatedActionPartialTrajectoryPairLawSource_of_uniformVarianceBoundedSource`
+  first forgets the uniform-variance wrapper to its packaged practical
+  raw-range/measurable-mean-range source and then reuses the base source to
+  `GeneratedActionPartialTrajectoryPairLawSource` conversion.  This gives full
+  finite-pair `partialTraj` source consumers a direct interface from the
+  uniform variance source while keeping the random next-pair law and global
+  variance ceiling as source assumptions.
 - `COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-HISTORYSTEP-PAIR-LAW`
   now compiles as the uniform variance canonical pair-law consumer:
   `actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_uniformVarianceBoundedSource`
