@@ -10063,6 +10063,51 @@ theorem ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_ma
   derive raw/mean bound evidence, identify the ambient trajectory law with
   `condExpKernel`, prove sub-Gaussianity, or close a final adaptive theorem.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-RAW-MEAN-BOUNDED-SOURCE-TO-RANDOM-PAIR-MAP-SOURCE`
+is compiled locally:
+
+```lean
+def ConditionalExpectationReward.generatedActionRandomPairMapSource_of_randomPairRawMeanBoundedSource
+    ...
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (source :
+      ConditionalExpectationReward.GeneratedActionRandomPairRawMeanBoundedSource
+        mu action rewardKernel policy context state mean varianceProxy
+        defaultAction reward haction hreward rewardLo rewardHi meanLo meanHi) :
+    ConditionalExpectationReward.GeneratedActionRandomPairMapSource
+      mu action rewardKernel policy context state defaultAction reward
+      haction hreward
+```
+
+- Exact Lean-facing statement: a
+  `GeneratedActionRandomPairRawMeanBoundedSource` produces its packaged
+  `GeneratedActionRandomPairMapSource` for the same generated action/reward
+  traces, reward kernel, policy, context, state, and default action.
+- Local APIs/imports: `BanditRLProof.ConditionalRewardLawSource`,
+  `ConditionalExpectationReward.GeneratedActionRandomPairRawMeanBoundedSource`,
+  `ConditionalExpectationReward.GeneratedActionRandomPairMapSource`, and the
+  `map_source` field of the raw/mean bounded source package.
+- Intended proof route: exact field projection, `source.map_source`.  The raw
+  reward and selected mean a.e. measurability/bound fields remain available
+  for centered-bound and integrability consumers but are not needed by this
+  weaker map-source interface.
+- Regularity contracts: standard Borel sample space, finite measure,
+  measurable context/state/action spaces, measurable singleton and countable
+  action space, timewise measurable action/reward traces, centered
+  reward-kernel law, raw reward a.e. measurability/bounds, selected mean
+  a.e. measurability/bounds, and the packaged random next-pair map source.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-RAW-MEAN-BOUNDED-SOURCE-TO-RANDOM-PAIR-MAP-SOURCE`;
+  declaration is
+  `ConditionalExpectationReward.generatedActionRandomPairMapSource_of_randomPairRawMeanBoundedSource`.
+- Status: project-local compiled source-conversion leaf for
+  `COND-EXPECT-REWARD`, `ADAPTED-ACTION`, `MEAS-POLICY`,
+  `KERNEL-POLICY-BIND`, `KERNEL-REWARD`, and `INT-REWARD-BOUNDED`.
+- Failure policy: this is a projection/weakening wrapper.  It does not derive
+  the random next-pair law, raw reward or selected mean regularity, ambient
+  trajectory-to-`condExpKernel` identification, sub-Gaussianity, or final
+  adaptive ETC/UCB theorem.
+
 `LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-RAW-MEAN-BOUNDED-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE`
 is compiled locally:
 
