@@ -7620,6 +7620,31 @@ LOCAL_LEAF_CARDS = [
         ],
     },
     {
+        "id": "LOCAL-LEAF-COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-RANDOM-PAIR-MAP-SOURCE",
+        "leaf_ids": [
+            "COND-EXPECT-REWARD",
+            "ADAPTED-ACTION",
+            "MEAS-POLICY",
+            "MEAS-HISTORY",
+            "KERNEL-POLICY-BIND",
+            "KERNEL-REWARD",
+            "MEAS-REWARD",
+        ],
+        "module": "BanditRLProof.ConditionalRewardLawSource",
+        "status": "leanCompiled",
+        "declarations": [
+            "ConditionalExpectationReward.generatedActionRandomPairMapSource_of_historyVarianceBoundedSource",
+        ],
+        "role": "Compiled project-local source-conversion leaf for the COND-EXPECT-REWARD route: a practical selected-history-variance raw-range/measurable-mean-range source now directly yields the explicit generated random-pair map source over generatedActionFromRewardHistory. It reuses the packaged base raw-range/measurable-mean-range bounded source and the existing definitional raw-range-to-random-pair-map projection, so full next-pair law and partialTraj consumers no longer need to unpack the history-variance wrapper. It still assumes the packaged random next-pair law, raw/mean range regularity, selected-history variance ceilings, ambient trajectory-to-condExpKernel identification, and final adaptive theorem.",
+        "mathlib_routes": [
+            "MLIB-CONDITIONAL-EXPECTATION",
+            "Mathlib.MeasureTheory.Measure.Map",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-RANDOM-PAIR-SOURCE-CONTRACT",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-RAW-RANGE-BOUNDED-SOURCE",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-RANDOM-PAIR-MAP-SOURCE",
+        ],
+    },
+    {
         "id": "LOCAL-LEAF-COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE",
         "leaf_ids": [
             "COND-EXPECT-REWARD",
@@ -9823,6 +9848,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-BOUNDED-CENTERED-SOURCE is compiled locally as a source-conversion leaf: a practical uniform-variance source now lowers through its packaged base source into the bounded centered-source interface over generatedActionFromRewardHistory.")
     print("- COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-CENTERED-SOURCE is compiled locally as a source-conversion leaf: a practical uniform-variance source now lowers through its bounded centered-source projection into the integrability-based centered-source interface over generatedActionFromRewardHistory.")
     print("- COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-RAW-RANGE-BOUNDED-SOURCE is compiled locally as a source-projection leaf: a practical selected-history-variance source now directly exposes its packaged raw-range/measurable-mean-range bounded base source; it still assumes the packaged random-pair law, raw/mean range regularity, and selected-history variance ceilings.")
+    print("- COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-RANDOM-PAIR-MAP-SOURCE is compiled locally as a source-conversion leaf: a practical selected-history-variance source now lowers through its packaged base source into the explicit generated random-pair map source over generatedActionFromRewardHistory.")
     print("- COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE is compiled locally as a source-conversion leaf: a practical selected-history-variance source now lowers through its packaged base source into the explicit generated actual-action reward-map source over generatedActionFromRewardHistory.")
     print("- COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-BOUNDED-CENTERED-SOURCE is compiled locally as a source-conversion leaf: a practical selected-history-variance source now lowers through its packaged base source into the bounded centered-source interface over generatedActionFromRewardHistory.")
     print("- COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-CENTERED-SOURCE is compiled locally as a source-conversion leaf: a practical selected-history-variance source now lowers through its bounded centered-source projection into the integrability-based centered-source interface over generatedActionFromRewardHistory.")

@@ -7201,6 +7201,31 @@
     ]
   },
   {
+    "id": "LOCAL-LEAF-COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-RANDOM-PAIR-MAP-SOURCE",
+    "leaf_ids": [
+      "COND-EXPECT-REWARD",
+      "ADAPTED-ACTION",
+      "MEAS-POLICY",
+      "MEAS-HISTORY",
+      "KERNEL-POLICY-BIND",
+      "KERNEL-REWARD",
+      "MEAS-REWARD"
+    ],
+    "module": "BanditRLProof.ConditionalRewardLawSource",
+    "status": "leanCompiled",
+    "declarations": [
+      "ConditionalExpectationReward.generatedActionRandomPairMapSource_of_historyVarianceBoundedSource"
+    ],
+    "role": "Compiled project-local source-conversion leaf for the COND-EXPECT-REWARD route: a practical selected-history-variance raw-range/measurable-mean-range source now directly yields the explicit generated random-pair map source over generatedActionFromRewardHistory. It reuses the packaged base raw-range/measurable-mean-range bounded source and the existing definitional raw-range-to-random-pair-map projection, so full next-pair law and partialTraj consumers no longer need to unpack the history-variance wrapper. It still assumes the packaged random next-pair law, raw/mean range regularity, selected-history variance ceilings, ambient trajectory-to-condExpKernel identification, and final adaptive theorem.",
+    "mathlib_routes": [
+      "MLIB-CONDITIONAL-EXPECTATION",
+      "Mathlib.MeasureTheory.Measure.Map",
+      "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-RANDOM-PAIR-SOURCE-CONTRACT",
+      "LOCAL-LEAF-COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-RAW-RANGE-BOUNDED-SOURCE",
+      "LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-RANDOM-PAIR-MAP-SOURCE"
+    ]
+  },
+  {
     "id": "LOCAL-LEAF-COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE",
     "leaf_ids": [
       "COND-EXPECT-REWARD",
