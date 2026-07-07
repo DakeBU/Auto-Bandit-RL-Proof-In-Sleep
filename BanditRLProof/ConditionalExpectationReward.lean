@@ -258,6 +258,62 @@ theorem pair_map_eq_map_prod_mk_of_action_ae_eq_const_reward_map_eq
         rw [h_reward_map_eq]
 
 /--
+Build a conditional next-pair product law from split action and reward laws.
+
+For each conditioning point, the action side freezes a.e. under the
+`condExpKernel`, while the reward side supplies the selected reward measure.
+This is the ambient `condExpKernel` form of
+`pair_map_eq_map_prod_mk_of_action_ae_eq_const_reward_map_eq`.
+-/
+theorem condExpKernel_pair_map_eq_map_prod_mk_of_action_ae_reward_map_eq
+    {Omega : Type u} {Action : Type v} {Reward : Type w}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Action] [MeasurableSpace Reward]
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (F : Filtration Nat mOmega) (i : Nat)
+    (nextAction : Omega -> Action) (nextReward : Omega -> Reward)
+    (selectedAction : Omega -> Action)
+    (selectedReward : Omega -> Measure Reward)
+    (h_nextReward :
+      @Measurable Omega Reward mOmega inferInstance nextReward)
+    (h_action_ae :
+      Filter.Eventually
+        (fun omega : Omega =>
+          Filter.EventuallyEq
+            (ae (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _ (F i)
+              omega))
+            nextAction
+            (fun _y : Omega => selectedAction omega))
+        (ae (mu.trim (F.le i))))
+    (h_reward_map_eq :
+      Filter.Eventually
+        (fun omega : Omega =>
+          @Measure.map Omega Reward mOmega inferInstance nextReward
+            (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _ (F i)
+              omega) =
+          selectedReward omega)
+        (ae (mu.trim (F.le i)))) :
+    Filter.Eventually
+      (fun omega : Omega =>
+        @Measure.map Omega (Prod Action Reward) mOmega inferInstance
+          (fun y : Omega => (nextAction y, nextReward y))
+          (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _ (F i)
+            omega) =
+        Measure.map (Prod.mk (selectedAction omega))
+          (selectedReward omega))
+      (ae (mu.trim (F.le i))) := by
+  filter_upwards [h_action_ae, h_reward_map_eq] with omega h_action h_reward
+  exact
+    pair_map_eq_map_prod_mk_of_action_ae_eq_const_reward_map_eq
+      (mu := @ProbabilityTheory.condExpKernel Omega mOmega _ mu _ (F i)
+        omega)
+      (nextAction := nextAction)
+      (nextReward := nextReward)
+      (selectedAction := selectedAction omega)
+      (selectedReward := selectedReward omega)
+      h_nextReward h_action h_reward
+
+/--
 Canonical `trajMeasure` next-pair law in `condExpKernel.map` form.
 
 This is the pair-coordinate analogue of
@@ -2522,6 +2578,144 @@ theorem reward_condExpKernel_map_eq_selected_actual_action_of_pair_map_eq
         simpa [condKernel, selectedReward, actualPair] using
           congrArg (Measure.map Prod.snd) h_pair
     _ = selectedReward := h_right
+
+/--
+Generated-action reward-map source for the random next-pair product law.
+
+The shifted generated-action trace supplies the conditional action a.e.
+equality, while the hypothesis supplies the reward-coordinate selected-measure
+law.  The conclusion is the fully random next-pair product law consumed by the
+trajectory-facing random-pair route.
+-/
+theorem random_pair_condExpKernel_map_eq_actual_action_of_generatedActionTraceSucc_reward_map_eq_actual_action
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (pairContext :
+      (n : Nat) -> ((j : Finset.Iic n) -> Prod Action Rat) -> Context)
+    (pairState :
+      (n : Nat) -> ((j : Finset.Iic n) -> Prod Action Rat) -> State)
+    (hpairState : forall n : Nat, Measurable (pairState n))
+    (defaultAction : Action)
+    (action : Omega -> ActionTrace Action)
+    (reward : Omega -> RewardTrace Rat)
+    (haction : forall t : Nat,
+      Measurable (fun omega : Omega => action omega t))
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (i : Nat)
+    (h_action_generated :
+      action =
+        Policy.generatedActionTraceSucc policy
+          (fun n omega =>
+            pairState n
+              (History.finitePairHistoryOfTrace
+                (action omega) (reward omega) n))
+          defaultAction)
+    (h_reward_map_eq_actual_action :
+      Filter.Eventually
+        (fun omega : Omega =>
+          @Measure.map Omega Rat mOmega inferInstance
+            (fun y : Omega => reward y (i + 1))
+            (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+              ((History.historyFiltrationSucc action reward haction hreward) i)
+              omega) =
+          RewardKernel.selectedMeasure rewardKernel
+            (pairContext i
+              (History.finitePairHistoryOfTrace
+                (action omega) (reward omega) i))
+            (action omega (i + 1)))
+        (ae
+          (mu.trim
+            ((History.historyFiltrationSucc action reward haction hreward).le
+              i)))) :
+    Filter.Eventually
+      (fun omega : Omega =>
+        @Measure.map Omega (Prod Action Rat) mOmega inferInstance
+          (fun y : Omega => (action y (i + 1), reward y (i + 1)))
+          (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+            ((History.historyFiltrationSucc action reward haction hreward) i)
+            omega) =
+        Measure.map
+          (Prod.mk (action omega (i + 1)))
+          (RewardKernel.selectedMeasure rewardKernel
+            (pairContext i
+              (History.finitePairHistoryOfTrace
+                (action omega) (reward omega) i))
+            (action omega (i + 1))))
+      (ae
+        (mu.trim
+          ((History.historyFiltrationSucc action reward haction hreward).le
+            i))) := by
+  let F : Filtration Nat mOmega :=
+    History.historyFiltrationSucc action reward haction hreward
+  let pairHistory : Omega -> ((j : Finset.Iic i) -> Prod Action Rat) :=
+    fun omega : Omega =>
+      History.finitePairHistoryOfTrace (action omega) (reward omega) i
+  have h_action_ae_eq_policy :
+      Filter.Eventually
+        (fun omega : Omega =>
+          Filter.EventuallyEq
+            (ae (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _ (F i)
+              omega))
+            (fun y : Omega => action y (i + 1))
+            (fun _y : Omega =>
+              (policy i).action (pairState i (pairHistory omega))))
+        (ae (mu.trim (F.le i))) := by
+    simpa [F, pairHistory] using
+      action_condExpKernel_ae_eq_policy_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc
+        (mu := mu)
+        (policy := policy)
+        (pairState := pairState)
+        (hpairState := hpairState)
+        (defaultAction := defaultAction)
+        (action := action)
+        (reward := reward)
+        (haction := haction)
+        (hreward := hreward)
+        (i := i)
+        h_action_generated
+  have h_action_policy_eq :
+      Filter.Eventually
+        (fun omega : Omega =>
+          action omega (i + 1) =
+            (policy i).action (pairState i (pairHistory omega)))
+        (ae (mu.trim (F.le i))) := by
+    exact Filter.Eventually.of_forall (fun omega => by
+      have h_point := congrFun (congrFun h_action_generated omega) (i + 1)
+      simpa [F, pairHistory, Policy.generatedActionTraceSucc] using h_point)
+  have h_action_ae_eq_actual :
+      Filter.Eventually
+        (fun omega : Omega =>
+          Filter.EventuallyEq
+            (ae (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _ (F i)
+              omega))
+            (fun y : Omega => action y (i + 1))
+            (fun _y : Omega => action omega (i + 1)))
+        (ae (mu.trim (F.le i))) := by
+    filter_upwards [h_action_ae_eq_policy, h_action_policy_eq] with omega
+      h_action_ae h_action_eq
+    simpa [h_action_eq] using h_action_ae
+  exact
+    condExpKernel_pair_map_eq_map_prod_mk_of_action_ae_reward_map_eq
+      (mu := mu)
+      (F := F)
+      (i := i)
+      (nextAction := fun y : Omega => action y (i + 1))
+      (nextReward := fun y : Omega => reward y (i + 1))
+      (selectedAction := fun omega : Omega => action omega (i + 1))
+      (selectedReward := fun omega : Omega =>
+        RewardKernel.selectedMeasure rewardKernel
+          (pairContext i (pairHistory omega))
+          (action omega (i + 1)))
+      (h_nextReward := hreward (i + 1))
+      h_action_ae_eq_actual
+      (by simpa [F, pairHistory] using h_reward_map_eq_actual_action)
 
 /--
 Freeze the action coordinate in a random next-pair law.

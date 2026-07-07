@@ -6269,6 +6269,51 @@ theorem ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_ma
   the reward-coordinate selected-measure law.  It only composes those two
   contract surfaces into the full next-pair law.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-NEXTPAIR-SPLIT-PRODUCT-LAW` is compiled locally:
+
+```lean
+theorem ConditionalExpectationReward.condExpKernel_pair_map_eq_map_prod_mk_of_action_ae_reward_map_eq
+
+theorem ConditionalExpectationReward.random_pair_condExpKernel_map_eq_actual_action_of_generatedActionTraceSucc_reward_map_eq_actual_action
+```
+
+- Exact Lean-facing statement: the generic theorem says that if, trim-a.e. in
+  the conditioning point, `nextAction` is a.e. equal under `condExpKernel` to
+  `selectedAction omega` and the `nextReward` pushforward equals
+  `selectedReward omega`, then the fully random next-pair pushforward equals
+  `Measure.map (Prod.mk (selectedAction omega)) (selectedReward omega)`.  The
+  generated-action specialization instantiates this for
+  `(action y (i + 1), reward y (i + 1))`, selected action
+  `action omega (i + 1)`, and
+  `RewardKernel.selectedMeasure ... (action omega (i + 1))`.
+- Local APIs/imports: `BanditRLProof.ConditionalExpectationReward`,
+  `ProbabilityTheory.condExpKernel`, `History.historyFiltrationSucc`,
+  `History.finitePairHistoryOfTrace`, `Policy.generatedActionTraceSucc`,
+  `RewardKernel.selectedMeasure`, Mathlib `Measure.map_congr`, and
+  `Measure.map_map`.
+- Intended proof route: apply
+  `ConditionalExpectationReward.pair_map_eq_map_prod_mk_of_action_ae_eq_const_reward_map_eq`
+  pointwise under `filter_upwards`; in the generated specialization, derive
+  conditional action a.e. equality from
+  `action_condExpKernel_ae_eq_policy_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc`
+  plus the pointwise successor equality from `Policy.generatedActionTraceSucc`,
+  then invoke the generic product-law builder.
+- Regularity contracts: standard Borel sample space, finite measure, measurable
+  action/reward coordinates, generated `History.historyFiltrationSucc`, a
+  measurable singleton/countable action space for the generated specialization,
+  and an explicit actual-action reward-coordinate selected-measure law.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-COND-EXPECT-REWARD-NEXTPAIR-SPLIT-PRODUCT-LAW`; local inputs are
+  `LOCAL-LEAF-COND-EXPECT-REWARD-NEXTPAIR-SPLIT-LAW-BUILDER`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-ACTION-FREEZE-GENERATED-TRACE-SOURCE`, and
+  `LOCAL-LEAF-KERNEL-REWARD-MAP-LAW-TRANSFER`; Mathlib route is
+  `Mathlib.MeasureTheory.Measure.Map`.
+- Status: project-local compiled split-product leaf for `COND-EXPECT-REWARD`,
+  `KERNEL-POLICY-BIND`, `ADAPTED-ACTION`, and `KERNEL-REWARD`.
+- Failure policy: do not treat this as an ambient trajectory-law proof.  It
+  still assumes the reward-coordinate selected-measure law and only converts
+  the split action/reward laws into the random next-pair product law.
+
 `LOCAL-LEAF-COND-EXPECT-REWARD-NEXTPAIR-RANDOM-PAIR-HISTORYSTEP-LAW` is
 compiled locally:
 

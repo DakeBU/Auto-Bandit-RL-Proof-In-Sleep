@@ -4036,6 +4036,30 @@ LOCAL_LEAF_CARDS = [
         ],
     },
     {
+        "id": "LOCAL-LEAF-COND-EXPECT-REWARD-NEXTPAIR-SPLIT-PRODUCT-LAW",
+        "leaf_ids": [
+            "COND-EXPECT-REWARD",
+            "KERNEL-POLICY-BIND",
+            "ADAPTED-ACTION",
+            "KERNEL-REWARD",
+            "MEAS-HISTORY",
+        ],
+        "module": "BanditRLProof.ConditionalExpectationReward",
+        "status": "leanCompiled",
+        "declarations": [
+            "ConditionalExpectationReward.condExpKernel_pair_map_eq_map_prod_mk_of_action_ae_reward_map_eq",
+            "ConditionalExpectationReward.random_pair_condExpKernel_map_eq_actual_action_of_generatedActionTraceSucc_reward_map_eq_actual_action",
+        ],
+        "role": "Compiled project-local ambient split-product law for the COND-EXPECT-REWARD random next-pair route: a conditional action a.e. equality plus a reward-coordinate selected-measure law directly produce the fully random next-pair product pushforward Measure.map (Prod.mk selectedAction) selectedReward. The generated History.historyFiltrationSucc specialization obtains the action side from Policy.generatedActionTraceSucc and turns an actual-action reward map law into the random next-pair product law consumed by downstream adapters. It still assumes the reward-coordinate selected-measure law and does not identify ambient trajectory laws with condExpKernel.",
+        "mathlib_routes": [
+            "MLIB-CONDITIONAL-EXPECTATION",
+            "Mathlib.MeasureTheory.Measure.Map",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-NEXTPAIR-SPLIT-LAW-BUILDER",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-ACTION-FREEZE-GENERATED-TRACE-SOURCE",
+            "LOCAL-LEAF-KERNEL-REWARD-MAP-LAW-TRANSFER",
+        ],
+    },
+    {
         "id": "LOCAL-LEAF-COND-EXPECT-REWARD-NEXTPAIR-RANDOM-PAIR-HISTORYSTEP-LAW",
         "leaf_ids": [
             "COND-EXPECT-REWARD",
@@ -8983,6 +9007,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-CONSUMER is compiled locally as the extension-map partialTraj consumer: Measure.map_congr turns the generated successor decomposition into a pushforward identity, a reusable adapter lifts an extension-map law back to the full finite-pair-trace partialTraj law, and a raw-reward/selected-mean range wrapper derives centered-reward integrability automatically before consuming the narrower extension-map law; the actual condExpKernel/partialTraj law remains open.")
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-FROM-PAIRMAP is compiled locally as the law builder from a next-pair condExpKernel pushforward identity to the extension-map partialTraj identity; the next-pair law itself remains open.")
     print("- COND-EXPECT-REWARD-NEXTPAIR-SPLIT-LAW-BUILDER is compiled locally as the split-law builder and raw-range mean-zero consumer: conditional action a.e. equality plus reward-coordinate map law produce the full next-pair condExpKernel law, and raw-reward/selected-mean range evidence then yields succ-indexed conditional mean-zero through the finite-pair consumer; predictability and reward-law sources remain open.")
+    print("- COND-EXPECT-REWARD-NEXTPAIR-SPLIT-PRODUCT-LAW is compiled locally as the ambient split-product law: conditional action a.e. equality plus reward-coordinate selected-measure law directly produce the fully random next-pair product pushforward, with a generated History.historyFiltrationSucc specialization from Policy.generatedActionTraceSucc plus an actual-action reward map law; the reward-coordinate law and ambient trajectory identification remain open.")
     print("- COND-EXPECT-REWARD-NEXTPAIR-RANDOM-PAIR-HISTORYSTEP-LAW is compiled locally as the law-shape adapter from a generated-action random next-pair source law stated with Measure.map (Prod.mk actualAction) selectedMeasure into the canonical RewardKernel.actionRewardHistoryStepKernelFamily pair law; the random-pair law itself remains assumed.")
     print("- COND-EXPECT-REWARD-ACTION-FREEZE-POLICY-HOOKUP is compiled locally as the action-freezing side of the split-law builder: countable F_i-measurable next actions plus trim-a.e. policy equality produce the conditional action a.e. equality; policy predictability and reward-law sources remain open.")
     print("- COND-EXPECT-REWARD-ACTION-FREEZE-GENERATED-HISTORY-HOOKUP is compiled locally as the generated-history action side of the split-law builder: visible finite pair histories, measurable pairState, and pointwise policy-generation equality produce the conditional action a.e. equality; reward-law sources remain open.")

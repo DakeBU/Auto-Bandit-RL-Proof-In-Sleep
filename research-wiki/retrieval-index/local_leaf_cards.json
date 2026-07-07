@@ -3617,6 +3617,30 @@
       ]
     },
     {
+      "id": "LOCAL-LEAF-COND-EXPECT-REWARD-NEXTPAIR-SPLIT-PRODUCT-LAW",
+      "leaf_ids": [
+        "COND-EXPECT-REWARD",
+        "KERNEL-POLICY-BIND",
+        "ADAPTED-ACTION",
+        "KERNEL-REWARD",
+        "MEAS-HISTORY"
+      ],
+      "module": "BanditRLProof.ConditionalExpectationReward",
+      "status": "leanCompiled",
+      "declarations": [
+        "ConditionalExpectationReward.condExpKernel_pair_map_eq_map_prod_mk_of_action_ae_reward_map_eq",
+        "ConditionalExpectationReward.random_pair_condExpKernel_map_eq_actual_action_of_generatedActionTraceSucc_reward_map_eq_actual_action"
+      ],
+      "role": "Compiled project-local ambient split-product law for the COND-EXPECT-REWARD random next-pair route: a conditional action a.e. equality plus a reward-coordinate selected-measure law directly produce the fully random next-pair product pushforward Measure.map (Prod.mk selectedAction) selectedReward. The generated History.historyFiltrationSucc specialization obtains the action side from Policy.generatedActionTraceSucc and turns an actual-action reward map law into the random next-pair product law consumed by downstream adapters. It still assumes the reward-coordinate selected-measure law and does not identify ambient trajectory laws with condExpKernel.",
+      "mathlib_routes": [
+        "MLIB-CONDITIONAL-EXPECTATION",
+        "Mathlib.MeasureTheory.Measure.Map",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-NEXTPAIR-SPLIT-LAW-BUILDER",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-ACTION-FREEZE-GENERATED-TRACE-SOURCE",
+        "LOCAL-LEAF-KERNEL-REWARD-MAP-LAW-TRANSFER"
+      ]
+    },
+    {
       "id": "LOCAL-LEAF-COND-EXPECT-REWARD-NEXTPAIR-RANDOM-PAIR-HISTORYSTEP-LAW",
       "leaf_ids": [
         "COND-EXPECT-REWARD",

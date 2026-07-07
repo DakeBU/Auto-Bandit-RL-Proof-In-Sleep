@@ -5916,6 +5916,82 @@ example {Omega Context State Action : Type}
               (History.finitePairHistoryOfTrace
                 (action omega) (reward omega) n))
           defaultAction)
+    (h_reward_map_eq_actual_action :
+      Filter.Eventually
+        (fun omega : Omega =>
+          @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+            (fun y : Omega => reward y (i + 1))
+            (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+              ((History.historyFiltrationSucc action reward haction hreward) i)
+              omega) =
+          RewardKernel.selectedMeasure rewardKernel
+            (pairContext i
+              (History.finitePairHistoryOfTrace
+                (action omega) (reward omega) i))
+            (action omega (i + 1)))
+        (MeasureTheory.ae
+          (mu.trim
+            ((History.historyFiltrationSucc action reward haction hreward).le
+              i)))) :
+    Filter.Eventually
+      (fun omega : Omega =>
+        @MeasureTheory.Measure.map Omega (Prod Action Rat) mOmega
+          inferInstance
+          (fun y : Omega => (action y (i + 1), reward y (i + 1)))
+          (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+            ((History.historyFiltrationSucc action reward haction hreward) i)
+            omega) =
+        MeasureTheory.Measure.map
+          (Prod.mk (action omega (i + 1)))
+          (RewardKernel.selectedMeasure rewardKernel
+            (pairContext i
+              (History.finitePairHistoryOfTrace
+                (action omega) (reward omega) i))
+            (action omega (i + 1))))
+      (MeasureTheory.ae
+        (mu.trim
+          ((History.historyFiltrationSucc action reward haction hreward).le
+            i))) := by
+  exact
+    ConditionalExpectationReward.random_pair_condExpKernel_map_eq_actual_action_of_generatedActionTraceSucc_reward_map_eq_actual_action
+      (mOmega := mOmega)
+      mu rewardKernel policy pairContext pairState hpairState defaultAction
+      action reward haction hreward i h_action_generated
+      h_reward_map_eq_actual_action
+
+example {Omega Context State Action : Type}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega)
+    [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel :
+      RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (pairContext :
+      (n : Nat) -> ((j : Finset.Iic n) -> Prod Action Rat) -> Context)
+    (pairState :
+      (n : Nat) -> ((j : Finset.Iic n) -> Prod Action Rat) -> State)
+    (hpairState : forall n : Nat, Measurable (pairState n))
+    (defaultAction : Action)
+    (action : Omega -> ActionTrace Action)
+    (reward : Omega -> RewardTrace Rat)
+    (haction : forall t : Nat,
+      @Measurable Omega Action mOmega inferInstance
+        (fun omega : Omega => action omega t))
+    (hreward : forall t : Nat,
+      @Measurable Omega Rat mOmega inferInstance
+        (fun omega : Omega => reward omega t))
+    (i : Nat)
+    (h_action_generated :
+      action =
+        Policy.generatedActionTraceSucc policy
+          (fun n omega =>
+            pairState n
+              (History.finitePairHistoryOfTrace
+                (action omega) (reward omega) n))
+          defaultAction)
     (h_random_pair_map_eq_actual_action :
       Filter.Eventually
         (fun omega : Omega =>
