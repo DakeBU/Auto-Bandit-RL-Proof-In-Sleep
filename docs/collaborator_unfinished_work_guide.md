@@ -24281,6 +24281,123 @@ def ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_o
   and do not mark
   `COND-EXPECT-REWARD-PARTIALTRAJ-CONDEXPKERNEL-PAIR-LAW-CARD` as compiled.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-FROM-SPLIT-NEXTPAIR-LAW`
+is compiled locally:
+
+```lean
+def ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_of_action_ae_eq_policy_reward_map_eq
+    ...
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (h_action_ae_eq_policy :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega =>
+            Filter.EventuallyEq
+              (ae (condExpKernel
+                ((History.historyFiltrationSucc
+                  (generatedActionFromRewardHistory policy state
+                    defaultAction reward)
+                  reward
+                  (generatedActionFromRewardHistory_measurable ...
+                    hreward hstate)
+                  hreward) i)
+                omega))
+              (fun y =>
+                generatedActionFromRewardHistory policy state defaultAction
+                  reward y (i + 1))
+              (fun _y =>
+                (policy i).action
+                  (state i
+                    (History.finiteRewardHistoryOfTrace
+                      (reward omega) i))))
+          (ae (mu.trim
+            ((History.historyFiltrationSucc
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward)
+              reward
+              (generatedActionFromRewardHistory_measurable ... hreward
+                hstate)
+              hreward).le i))))
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega =>
+            Measure.map (fun y => reward y (i + 1))
+              (condExpKernel
+                ((History.historyFiltrationSucc
+                  (generatedActionFromRewardHistory policy state
+                    defaultAction reward)
+                  reward
+                  (generatedActionFromRewardHistory_measurable ...
+                    hreward hstate)
+                  hreward) i)
+                omega)
+            =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace
+                    (reward omega) i))))
+          (ae (mu.trim
+            ((History.historyFiltrationSucc
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward)
+              reward
+              (generatedActionFromRewardHistory_measurable ... hreward
+                hstate)
+              hreward).le i)))) :
+    GeneratedActionPartialTrajectoryPairLawSource mu rewardKernel policy
+      context state defaultAction reward hreward
+```
+
+- Exact Lean-facing statement: given measurable context/state extractors, the
+  generated action conditional a.e. equality, and the policy-selected
+  reward-coordinate `condExpKernel` map law, construct the full
+  `GeneratedActionPartialTrajectoryPairLawSource`.
+- Local APIs/imports:
+  `BanditRLProof.ConditionalRewardLawSource`,
+  `ConditionalExpectationReward.generatedActionFromRewardHistory`,
+  `ConditionalExpectationReward.generatedActionFromRewardHistory_measurable`,
+  `ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_map_eq_of_action_ae_eq_policy_reward_map_eq`,
+  `ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_of_actionRewardHistoryStepKernelFamily_pair_map_eq`,
+  `GeneratedActionPartialTrajectoryPairLawSource`,
+  `History.finiteRewardHistoryOfTrace`,
+  `History.finitePairHistoryOfTrace`,
+  `History.pairHistoryRewardProjection_finitePairHistoryOfTrace`,
+  `History.historyFiltrationSucc`, `RewardKernel.selectedMeasure`,
+  `RewardKernel.actionRewardHistoryStepKernelFamily`, Mathlib
+  `condExpKernel`, `Measure.map`, `IonescuTulcea.Traj`, and
+  `IonescuTulcea.PartialTraj`.
+- Intended proof route: define the projected pair-history `context` and
+  `state`, rewrite `History.pairHistoryRewardProjection` of the generated
+  finite pair trace to the finite reward trace, use the split next-pair law
+  builder to obtain the history-step pair law, then feed that into
+  `generatedActionPartialTrajectoryPairLawSource_of_actionRewardHistoryStepKernelFamily_pair_map_eq`.
+- Regularity contracts: `[StandardBorelSpace Omega]`, finite `mu`,
+  `[MeasurableSingletonClass Action]`, `[Countable Action]`, timewise reward
+  measurability, measurable context/state extractors, generated-action
+  measurability, plus the two split law hypotheses.  It does not require a
+  full next-pair law as input.
+- Retrieval evidence:
+  `ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_of_action_ae_eq_policy_reward_map_eq`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-FROM-HISTORYSTEP-PAIR-LAW`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-NEXTPAIR-SPLIT-LAW-BUILDER`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-SELECTED-ACTION-CONDEXPKERNEL-AE`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-SELECTED-REWARD-CONDEXPKERNEL-MAP`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-PAIR-CONDEXPKERNEL-MAP-SPLIT`,
+  `Mathlib.Probability.Kernel.IonescuTulcea.Traj`, and
+  `Mathlib.Probability.Kernel.IonescuTulcea.PartialTraj`.
+- Status: compiled-local source-constructor leaf.  It lowers the future
+  `GeneratedActionPartialTrajectoryPairLawSource` obligation to the two split
+  generated-history next-pair laws.
+- Failure policy: do not cite this as proving either split law, do not claim
+  canonical `trajMeasure` has been transported to arbitrary ambient `Omega`,
+  and do not mark
+  `COND-EXPECT-REWARD-PARTIALTRAJ-CONDEXPKERNEL-PAIR-LAW-CARD` as compiled.
+
 `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-RAW-RANGE-BOUNDED-SOURCE`
 is compiled locally:
 

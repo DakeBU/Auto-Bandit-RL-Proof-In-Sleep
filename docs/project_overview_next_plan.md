@@ -1261,6 +1261,13 @@ Context:
   `GeneratedActionPartialTrajectoryPairLawSource` via the next-pair-to-extension
   and extension-to-full-source adapters.  This makes the remaining law target
   closer to the canonical `trajMeasure` next-pair route.
+- `COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-FROM-SPLIT-NEXTPAIR-LAW`
+  now compiles as the split-law source constructor: the generated action
+  conditional a.e. law plus the policy-selected reward-coordinate
+  `condExpKernel` map law build the same
+  `GeneratedActionPartialTrajectoryPairLawSource` through the split next-pair
+  law builder and existing source adapters.  This narrows the next proof target
+  to the two split laws while keeping the theorem-card law open.
 - `COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-RAW-RANGE-BOUNDED-SOURCE`
   now compiles as the practical source-conversion wrapper for that same
   source contract: `GeneratedActionPartialTrajectoryPairLawSource`, measurable
