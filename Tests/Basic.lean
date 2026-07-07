@@ -16881,6 +16881,46 @@ example {Omega Context State Action : Type}
     (hreward : forall t : Nat,
       Measurable (fun omega : Omega => reward omega t))
     (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (varianceCeiling : Nat -> NNReal)
+    (source :
+      ConditionalExpectationReward.GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource
+        mu rewardKernel policy context state mean varianceProxy defaultAction
+        reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling) :
+    ConditionalExpectationReward.GeneratedActionRandomPairBoundedCenteredSource
+      mu
+      (ConditionalExpectationReward.generatedActionFromRewardHistory
+        policy state defaultAction reward)
+      rewardKernel policy context state mean varianceProxy defaultAction reward
+      (ConditionalExpectationReward.generatedActionFromRewardHistory_measurable
+        (policy := policy) (state := state) (defaultAction := defaultAction)
+        (reward := reward) hreward
+        source.base_source.definitional_map_source.hstate)
+      hreward
+      (fun i => rewardLo i - meanHi i)
+      (fun i => rewardHi i - meanLo i) := by
+  exact
+    ConditionalExpectationReward.generatedActionRandomPairBoundedCenteredSource_of_historyVarianceBoundedSource
+      (mOmega := mOmega)
+      mu rewardKernel policy context state mean varianceProxy defaultAction
+      reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling source
+
+example {Omega Context State Action : Type}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
     (varianceCeiling : NNReal)
     (source :
       ConditionalExpectationReward.GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource
