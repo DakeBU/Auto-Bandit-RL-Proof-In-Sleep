@@ -7496,6 +7496,32 @@ LOCAL_LEAF_CARDS = [
         ],
     },
     {
+        "id": "LOCAL-LEAF-COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-HISTORYSTEP-PAIR-LAW",
+        "leaf_ids": [
+            "COND-EXPECT-REWARD",
+            "ADAPTED-ACTION",
+            "MEAS-POLICY",
+            "MEAS-HISTORY",
+            "KERNEL-POLICY-BIND",
+            "KERNEL-REWARD",
+            "MEAS-REWARD",
+        ],
+        "module": "BanditRLProof.ConditionalRewardLawSource",
+        "status": "leanCompiled",
+        "declarations": [
+            "ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_uniformVarianceBoundedSource",
+        ],
+        "role": "Compiled project-local source-consumer leaf for the COND-EXPECT-REWARD route: a practical uniform-variance raw-range/measurable-mean-range source now directly yields the canonical RewardKernel.actionRewardHistoryStepKernelFamily next-pair law over generatedActionFromRewardHistory and History.finitePairHistoryOfTrace. It first exposes the generated random-pair map source and then reuses the generic random-pair-source history-step consumer, so downstream history-step consumers no longer need to manually unpack the uniform-variance wrapper. It still assumes the packaged random next-pair law, raw/mean range regularity, global variance ceiling, ambient trajectory-to-condExpKernel identification, and final adaptive theorem.",
+        "mathlib_routes": [
+            "MLIB-CONDITIONAL-EXPECTATION",
+            "Mathlib.MeasureTheory.Measure.Map",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-RANDOM-PAIR-MAP-SOURCE",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-RANDOM-PAIR-SOURCE-TO-HISTORYSTEP-PAIR-LAW",
+            "LOCAL-LEAF-FINITE-HISTORY-PRODUCT-MEASURABILITY",
+            "FILTRATION-HISTORY",
+        ],
+    },
+    {
         "id": "LOCAL-LEAF-COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE",
         "leaf_ids": [
             "COND-EXPECT-REWARD",
@@ -9869,6 +9895,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-COND-MGF-HISTORY-VARIANCE-CONSUMER is compiled locally as the practical conditional MGF wrapper that reduces the trimmed-a.e. variance-domination side condition to a selected finite-history varianceProxy ceiling, weaker than the global context/action ceiling.")
     print("- COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-RAW-RANGE-BOUNDED-SOURCE is compiled locally as a source-projection leaf: a practical uniform-variance source now directly exposes its packaged raw-range/measurable-mean-range bounded base source; it still assumes the packaged random-pair law, raw/mean range regularity, and global variance ceiling.")
     print("- COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-RANDOM-PAIR-MAP-SOURCE is compiled locally as a source-conversion leaf: a practical uniform-variance source now lowers through its packaged base source into the explicit generated random-pair map source over generatedActionFromRewardHistory.")
+    print("- COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-HISTORYSTEP-PAIR-LAW is compiled locally as a source-consumer leaf: a practical uniform-variance source now lowers through its generated random-pair map source into the canonical RewardKernel.actionRewardHistoryStepKernelFamily next-pair law over generatedActionFromRewardHistory.")
     print("- COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE is compiled locally as a source-conversion leaf: a practical uniform-variance source now lowers through its packaged base source into the explicit generated actual-action reward-map source over generatedActionFromRewardHistory.")
     print("- COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-DEFINITIONAL-CENTERED-SOURCE is compiled locally as a source-conversion leaf: a practical uniform-variance source now lowers through its packaged base source into the definitional centered-source interface over generatedActionFromRewardHistory.")
     print("- COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-BOUNDED-CENTERED-SOURCE is compiled locally as a source-conversion leaf: a practical uniform-variance source now lowers through its packaged base source into the bounded centered-source interface over generatedActionFromRewardHistory.")

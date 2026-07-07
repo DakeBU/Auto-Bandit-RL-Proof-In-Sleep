@@ -18238,6 +18238,114 @@ def ConditionalExpectationReward.generatedActionRandomPairMapSource_of_uniformVa
   identification, derive a variance ceiling from raw/mean range bounds, or
   prove any final adaptive ETC/UCB theorem.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-HISTORYSTEP-PAIR-LAW`
+is compiled locally:
+
+```lean
+theorem ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_uniformVarianceBoundedSource
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (varianceCeiling : NNReal)
+    (source :
+      ConditionalExpectationReward.GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource
+        mu rewardKernel policy context state mean varianceProxy defaultAction
+        reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling)
+    (i : Nat) :
+    Filter.Eventually
+      (fun omega : Omega =>
+        @Measure.map Omega (Prod Action Rat) _ _
+          (fun y : Omega =>
+            (ConditionalExpectationReward.generatedActionFromRewardHistory
+              policy state defaultAction reward y (i + 1),
+              reward y (i + 1)))
+          (@ProbabilityTheory.condExpKernel Omega _ _ mu _
+            ((History.historyFiltrationSucc
+              (ConditionalExpectationReward.generatedActionFromRewardHistory
+                policy state defaultAction reward)
+              reward
+              (ConditionalExpectationReward.generatedActionFromRewardHistory_measurable
+                (policy := policy) (state := state)
+                (defaultAction := defaultAction) (reward := reward)
+                hreward source.base_source.definitional_map_source.hstate)
+              hreward) i)
+            omega) =
+        RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy
+          (fun n history =>
+            context n (History.pairHistoryRewardProjection history))
+          (fun n history =>
+            state n (History.pairHistoryRewardProjection history))
+          (fun n : Nat =>
+            (source.base_source.hcontext n).comp
+              (History.measurable_pairHistoryRewardProjection
+                (Action := Action) (Reward := Rat) n))
+          (fun n : Nat =>
+            (source.base_source.definitional_map_source.hstate n).comp
+              (History.measurable_pairHistoryRewardProjection
+                (Action := Action) (Reward := Rat) n))
+          i
+          (History.finitePairHistoryOfTrace
+            (ConditionalExpectationReward.generatedActionFromRewardHistory
+              policy state defaultAction reward omega)
+            (reward omega) i))
+      (ae
+        (mu.trim
+          ((History.historyFiltrationSucc
+            (ConditionalExpectationReward.generatedActionFromRewardHistory
+              policy state defaultAction reward)
+            reward
+            (ConditionalExpectationReward.generatedActionFromRewardHistory_measurable
+              (policy := policy) (state := state)
+              (defaultAction := defaultAction) (reward := reward)
+              hreward source.base_source.definitional_map_source.hstate)
+            hreward).le i)))
+```
+
+- Exact Lean-facing statement: a practical definitional
+  raw-range/measurable-mean-range source with a packaged global context/action
+  variance ceiling directly yields the canonical
+  `RewardKernel.actionRewardHistoryStepKernelFamily` next-pair law over
+  `generatedActionFromRewardHistory` and `History.finitePairHistoryOfTrace`.
+- Local APIs/imports: `BanditRLProof.ConditionalRewardLawSource`,
+  `ConditionalExpectationReward.GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource`,
+  `ConditionalExpectationReward.GeneratedActionRandomPairMapSource`,
+  `ConditionalExpectationReward.generatedActionRandomPairMapSource_of_uniformVarianceBoundedSource`,
+  `ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionRandomPairMapSource`,
+  `History.finitePairHistoryOfTrace`, and
+  `History.measurable_pairHistoryRewardProjection`.
+- Intended proof route: first project the uniform-variance source into its
+  explicit generated random-pair map source using
+  `generatedActionRandomPairMapSource_of_uniformVarianceBoundedSource`, then
+  reuse the generic generated random-pair-source history-step consumer with
+  context/state lifted through `History.pairHistoryRewardProjection`.
+- Regularity contracts: finite measure, standard Borel sample space,
+  measurable context/state/action spaces, measurable singleton and countable
+  action space, timewise measurable reward trace, generated action
+  measurability from the source's state extractor, projected pair-history
+  context/state measurability, the packaged random next-pair law, raw/mean
+  range regularity, and a global deterministic variance ceiling.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-HISTORYSTEP-PAIR-LAW`;
+  declaration is
+  `ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_uniformVarianceBoundedSource`.
+- Status: project-local compiled source-consumer leaf for
+  `COND-EXPECT-REWARD`, `ADAPTED-ACTION`, `MEAS-POLICY`, `MEAS-HISTORY`,
+  `KERNEL-POLICY-BIND`, `KERNEL-REWARD`, and `MEAS-REWARD`.
+- Failure policy: this is only a wrapper/consumer into the canonical
+  history-step pair law. It does not construct the definitional random
+  next-pair law, prove the ambient trajectory-to-`condExpKernel`
+  identification, derive a variance ceiling from raw/mean range bounds, or
+  prove any final adaptive ETC/UCB theorem.
+
 `LOCAL-LEAF-COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE`
 is compiled locally:
 

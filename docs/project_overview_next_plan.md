@@ -203,6 +203,12 @@ The requested unfinished-work workflow is now available:
   a source-conversion wrapper lowering the packaged uniform-variance source
   through its base raw-range/measurable-mean-range source into the explicit
   generated random-pair map source.
+- `COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-HISTORYSTEP-PAIR-LAW`
+  is compiled locally as
+  `ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_uniformVarianceBoundedSource`,
+  a source-consumer wrapper lowering the packaged uniform-variance source
+  through its generated random-pair map source into the canonical
+  `RewardKernel.actionRewardHistoryStepKernelFamily` next-pair law.
 - `COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE`
   is compiled locally as
   `ConditionalExpectationReward.generatedActionActualRewardMapSource_of_uniformVarianceBoundedSource`,
@@ -1797,6 +1803,14 @@ Context:
   and partialTraj consumers a direct interface from the uniform variance
   source while keeping the random next-pair law and global variance ceiling as
   source assumptions.
+- `COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-HISTORYSTEP-PAIR-LAW`
+  now compiles as the uniform variance canonical pair-law consumer:
+  `actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_uniformVarianceBoundedSource`
+  first exposes the generated random-pair map source and then reuses the
+  generic random-pair-source history-step consumer.  This gives history-step
+  law consumers a direct interface from the uniform variance source while
+  keeping the random next-pair law and global variance ceiling as source
+  assumptions.
 - `COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE`
   now compiles as the uniform variance actual-reward-map projection:
   `generatedActionActualRewardMapSource_of_uniformVarianceBoundedSource`

@@ -17193,6 +17193,82 @@ example {Omega Context State Action : Type}
     (source :
       ConditionalExpectationReward.GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource
         mu rewardKernel policy context state mean varianceProxy defaultAction
+        reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling)
+    (i : Nat) :
+    Filter.Eventually
+      (fun omega : Omega =>
+        @MeasureTheory.Measure.map Omega (Prod Action Rat) mOmega inferInstance
+          (fun y : Omega =>
+            (ConditionalExpectationReward.generatedActionFromRewardHistory
+              policy state defaultAction reward y (i + 1),
+              reward y (i + 1)))
+          (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+            ((History.historyFiltrationSucc
+              (ConditionalExpectationReward.generatedActionFromRewardHistory
+                policy state defaultAction reward)
+              reward
+              (ConditionalExpectationReward.generatedActionFromRewardHistory_measurable
+                (policy := policy) (state := state)
+                (defaultAction := defaultAction) (reward := reward)
+                hreward source.base_source.definitional_map_source.hstate)
+              hreward) i)
+            omega) =
+        RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy
+          (fun n history =>
+            context n (History.pairHistoryRewardProjection history))
+          (fun n history =>
+            state n (History.pairHistoryRewardProjection history))
+          (fun n : Nat =>
+            (source.base_source.hcontext n).comp
+              (History.measurable_pairHistoryRewardProjection
+                (Action := Action) (Reward := Rat) n))
+          (fun n : Nat =>
+            (source.base_source.definitional_map_source.hstate n).comp
+              (History.measurable_pairHistoryRewardProjection
+                (Action := Action) (Reward := Rat) n))
+          i
+          (History.finitePairHistoryOfTrace
+            (ConditionalExpectationReward.generatedActionFromRewardHistory
+              policy state defaultAction reward omega)
+            (reward omega) i))
+      (MeasureTheory.ae
+        (mu.trim
+          ((History.historyFiltrationSucc
+            (ConditionalExpectationReward.generatedActionFromRewardHistory
+              policy state defaultAction reward)
+            reward
+            (ConditionalExpectationReward.generatedActionFromRewardHistory_measurable
+              (policy := policy) (state := state)
+              (defaultAction := defaultAction) (reward := reward)
+              hreward source.base_source.definitional_map_source.hstate)
+            hreward).le i))) := by
+  exact
+    ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_uniformVarianceBoundedSource
+      (mOmega := mOmega)
+      mu rewardKernel policy context state mean varianceProxy defaultAction
+      reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling source i
+
+example {Omega Context State Action : Type}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (varianceCeiling : NNReal)
+    (source :
+      ConditionalExpectationReward.GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource
+        mu rewardKernel policy context state mean varianceProxy defaultAction
         reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling) :
     ConditionalExpectationReward.GeneratedActionActualRewardMapSource
       mu
