@@ -1283,6 +1283,13 @@ Context:
   `varianceCeiling i`.  It removes the same manual `hcontext`/`hstate`/law
   threading for the history-variance route while still consuming the packaged
   source law.
+- `COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-HISTORY-VARIANCE-LARGER-PROXY-COND-MGF`
+  now compiles as the coarser-proxy selected-history source-level MGF
+  consumer: the same generated `partialTraj` pair-law source plus raw/mean
+  range regularity, selected-history variance ceilings, and
+  `varianceCeiling i <= c` directly yields the succ-indexed
+  `ProbabilityTheory.HasCondSubgaussianMGF` witness at proxy `c`.  It still
+  consumes the supplied full finite-pair law and the proxy domination.
 - `COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-REWARD-MAP` now compiles as
   the reward-coordinate adapter for that same full finite-pair-trace law:
   after projecting the `partialTraj` law to the next `(Action, Reward)` pair,
