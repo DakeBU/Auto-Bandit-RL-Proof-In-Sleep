@@ -3451,6 +3451,34 @@
       ]
     },
     {
+      "id": "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-TRAJECTORY-PARTIALTRAJ-PAIR-LAW-SOURCE-CONTRACT",
+      "leaf_ids": [
+        "COND-EXPECT-REWARD",
+        "ADAPTED-ACTION",
+        "MEAS-POLICY",
+        "MEAS-HISTORY",
+        "FILTRATION-HISTORY",
+        "KERNEL-POLICY-BIND",
+        "KERNEL-REWARD"
+      ],
+      "module": "BanditRLProof.ConditionalRewardLawSource",
+      "status": "leanCompiled",
+      "declarations": [
+        "ConditionalExpectationReward.GeneratedActionPartialTrajectoryPairLawSource",
+        "ConditionalExpectationReward.generatedActionRandomPairDefinitionalMapSource_of_partialTrajectoryPairLawSource"
+      ],
+      "role": "Compiled project-local source-contract leaf for the remaining generated-history partialTraj/condExpKernel pair-law gap: it packages the exact full finite-pair trace law over generatedActionFromRewardHistory as a reusable source, then feeds that source into the existing definitional generated random-pair map source constructor. This does not prove the law from arbitrary mu/action/reward, does not transport canonical trajMeasure to ambient Omega, and does not upgrade COND-EXPECT-REWARD-PARTIALTRAJ-CONDEXPKERNEL-PAIR-LAW-CARD from theorem-card-only.",
+      "mathlib_routes": [
+        "MLIB-CONDITIONAL-EXPECTATION",
+        "Mathlib.Probability.Kernel.IonescuTulcea.Traj",
+        "Mathlib.Probability.Kernel.IonescuTulcea.PartialTraj",
+        "Mathlib.Probability.Kernel.Disintegration.StandardBorel",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-CONSUMER",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-MAP-SOURCE-CONTRACT",
+        "LOCAL-LEAF-FINITE-HISTORY-PRODUCT-MEASURABILITY"
+      ]
+    },
+    {
       "id": "LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-REWARD-MAP",
       "leaf_ids": [
         "COND-EXPECT-REWARD",

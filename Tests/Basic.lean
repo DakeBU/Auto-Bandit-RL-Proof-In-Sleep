@@ -9833,6 +9833,30 @@ example {Omega Context State Action : Type}
     (hreward : forall t : Nat,
       Measurable (fun omega : Omega => reward omega t))
     (source :
+      ConditionalExpectationReward.GeneratedActionPartialTrajectoryPairLawSource
+        mu rewardKernel policy context state defaultAction reward hreward) :
+    ConditionalExpectationReward.GeneratedActionRandomPairDefinitionalMapSource
+      mu rewardKernel policy context state defaultAction reward hreward := by
+  exact
+    ConditionalExpectationReward.generatedActionRandomPairDefinitionalMapSource_of_partialTrajectoryPairLawSource
+      (mOmega := mOmega)
+      mu rewardKernel policy context state defaultAction reward hreward source
+
+example {Omega Context State Action : Type}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (source :
       ConditionalExpectationReward.GeneratedActionRandomPairDefinitionalMapSource
         mu rewardKernel policy context state defaultAction reward hreward) :
     ConditionalExpectationReward.GeneratedActionRandomPairMapSource mu

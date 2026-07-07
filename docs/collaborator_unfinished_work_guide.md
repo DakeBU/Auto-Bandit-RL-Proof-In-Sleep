@@ -23953,6 +23953,68 @@ theorem RewardKernel.actionRewardHistoryStepKernelFamily_selectedMeasure_condDis
   `condExpKernel`/`History.historyFiltrationSucc` identification and not a
   final adaptive theorem.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-TRAJECTORY-PARTIALTRAJ-PAIR-LAW-SOURCE-CONTRACT`
+is compiled locally:
+
+```lean
+structure ConditionalExpectationReward.GeneratedActionPartialTrajectoryPairLawSource
+    ...
+
+def ConditionalExpectationReward.generatedActionRandomPairDefinitionalMapSource_of_partialTrajectoryPairLawSource
+    ...
+    (source :
+      GeneratedActionPartialTrajectoryPairLawSource mu rewardKernel policy
+        context state defaultAction reward hreward) :
+    GeneratedActionRandomPairDefinitionalMapSource mu rewardKernel policy
+      context state defaultAction reward hreward
+```
+
+- Exact Lean-facing statement: the source contract packages the generated
+  `History.historyFiltrationSucc` full finite-pair law as a field:
+  for each `i`, pushing `condExpKernel` forward by
+  `History.finitePairHistoryOfTrace
+    (generatedActionFromRewardHistory policy state defaultAction reward y)
+    (reward y) (i + 1)`
+  equals `RewardKernel.actionRewardPartialTrajectoryKernel ... i (i + 1)`
+  at the frozen generated `i`-prefix.  The compiled consumer then feeds that
+  explicit source into
+  `generatedActionRandomPairDefinitionalMapSource_of_actionRewardPartialTrajectoryKernel_map_eq`.
+- Local APIs/imports:
+  `BanditRLProof.ConditionalRewardLawSource`,
+  `ConditionalExpectationReward.generatedActionFromRewardHistory`,
+  `ConditionalExpectationReward.generatedActionFromRewardHistory_measurable`,
+  `GeneratedActionPartialTrajectoryPairLawSource`,
+  `GeneratedActionRandomPairDefinitionalMapSource`,
+  `History.historyFiltrationSucc`,
+  `History.finitePairHistoryOfTrace`,
+  `History.pairHistoryRewardProjection`,
+  `RewardKernel.actionRewardPartialTrajectoryKernel`,
+  Mathlib `condExpKernel`, `Measure.map`, and `partialTraj`.
+- Intended proof route: this is not the proof of the missing law.  Future
+  work should prove the contract field from an ambient trajectory-law or
+  disintegration source, likely by transporting the canonical `trajMeasure`
+  or `partialTraj` law through the concrete generated history map.  Once that
+  field is available, the new wrapper immediately yields the definitional
+  generated random-pair map source.
+- Regularity contracts: `[StandardBorelSpace Omega]`, finite `mu`,
+  `[Countable Action]`, timewise measurable reward traces, measurable
+  context/state extractors, generated action measurability from
+  `generatedActionFromRewardHistory_measurable`, and the full finite-pair
+  `partialTraj`/`condExpKernel` law as an explicit source field.
+- Retrieval evidence:
+  `ConditionalExpectationReward.GeneratedActionPartialTrajectoryPairLawSource`,
+  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalMapSource_of_partialTrajectoryPairLawSource`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-CONSUMER`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-MAP-SOURCE-CONTRACT`,
+  `Mathlib.Probability.Kernel.IonescuTulcea.Traj`,
+  `Mathlib.Probability.Kernel.IonescuTulcea.PartialTraj`, and
+  `Mathlib.Probability.Kernel.Disintegration.StandardBorel`.
+- Status: compiled-local source-contract leaf.  It is a named source surface
+  plus a source-to-consumer wrapper.
+- Failure policy: do not cite this as proving the theorem-card law, do not say
+  it holds for arbitrary `mu/action/reward`, and do not mark
+  `COND-EXPECT-REWARD-PARTIALTRAJ-CONDEXPKERNEL-PAIR-LAW-CARD` as compiled.
+
 `COND-EXPECT-REWARD-PARTIALTRAJ-CONDEXPKERNEL-PAIR-LAW-CARD` is
 theorem-card-only:
 

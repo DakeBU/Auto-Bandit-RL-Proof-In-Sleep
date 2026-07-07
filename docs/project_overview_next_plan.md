@@ -1232,6 +1232,15 @@ Context:
   `RewardKernel.actionRewardPartialTrajectoryKernel_succ_next_map_apply` into
   a reusable next-pair map-law adapter, then into the centered-reward consumer.
   The actual `partialTraj`/history-to-`condExpKernel` law remains open.
+- `COND-EXPECT-REWARD-GENERATED-TRAJECTORY-PARTIALTRAJ-PAIR-LAW-SOURCE-CONTRACT`
+  now compiles as the explicit source-contract for that remaining law shape:
+  `GeneratedActionPartialTrajectoryPairLawSource` stores the full finite-pair
+  `partialTraj`/`condExpKernel` equality over
+  `generatedActionFromRewardHistory`, and
+  `generatedActionRandomPairDefinitionalMapSource_of_partialTrajectoryPairLawSource`
+  feeds it into the existing definitional generated random-pair map source.
+  This names the exact input expected from future disintegration work without
+  proving the theorem-card law.
 - `COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-REWARD-MAP` now compiles as
   the reward-coordinate adapter for that same full finite-pair-trace law:
   after projecting the `partialTraj` law to the next `(Action, Reward)` pair,

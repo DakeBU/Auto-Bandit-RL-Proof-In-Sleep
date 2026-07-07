@@ -3870,6 +3870,34 @@ LOCAL_LEAF_CARDS = [
         ],
     },
     {
+        "id": "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-TRAJECTORY-PARTIALTRAJ-PAIR-LAW-SOURCE-CONTRACT",
+        "leaf_ids": [
+            "COND-EXPECT-REWARD",
+            "ADAPTED-ACTION",
+            "MEAS-POLICY",
+            "MEAS-HISTORY",
+            "FILTRATION-HISTORY",
+            "KERNEL-POLICY-BIND",
+            "KERNEL-REWARD",
+        ],
+        "module": "BanditRLProof.ConditionalRewardLawSource",
+        "status": "leanCompiled",
+        "declarations": [
+            "ConditionalExpectationReward.GeneratedActionPartialTrajectoryPairLawSource",
+            "ConditionalExpectationReward.generatedActionRandomPairDefinitionalMapSource_of_partialTrajectoryPairLawSource",
+        ],
+        "role": "Compiled project-local source-contract leaf for the remaining generated-history partialTraj/condExpKernel pair-law gap: it packages the exact full finite-pair trace law over generatedActionFromRewardHistory as a reusable source, then feeds that source into the existing definitional generated random-pair map source constructor. This does not prove the law from arbitrary mu/action/reward, does not transport canonical trajMeasure to ambient Omega, and does not upgrade COND-EXPECT-REWARD-PARTIALTRAJ-CONDEXPKERNEL-PAIR-LAW-CARD from theorem-card-only.",
+        "mathlib_routes": [
+            "MLIB-CONDITIONAL-EXPECTATION",
+            "Mathlib.Probability.Kernel.IonescuTulcea.Traj",
+            "Mathlib.Probability.Kernel.IonescuTulcea.PartialTraj",
+            "Mathlib.Probability.Kernel.Disintegration.StandardBorel",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-CONSUMER",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-MAP-SOURCE-CONTRACT",
+            "LOCAL-LEAF-FINITE-HISTORY-PRODUCT-MEASURABILITY",
+        ],
+    },
+    {
         "id": "LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-REWARD-MAP",
         "leaf_ids": [
             "COND-EXPECT-REWARD",
@@ -9630,6 +9658,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- COND-EXPECT-REWARD-PAIR-MAP-PROJECTION-MEAS-HOOKUP is compiled locally as the measurable reward-projection hookup for pair histories, deriving projected pairContext/pairState measurability from reward-history context/state measurability and now deriving centered-reward integrability from raw-reward/selected-mean range bounds; the actual condExpKernel pair-law identity remains open.")
     print("- COND-EXPECT-REWARD-PAIR-MAP-FINITEPAIRTRACE-HOOKUP is compiled locally as the named History.finitePairHistoryOfTrace specialization of the generated-history pair-law consumer; the actual condExpKernel pair-law identity remains open.")
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-CONSUMER is compiled locally as the partialTraj finite-pair-trace consumer: an explicit generated-history condExpKernel law for the extended pair trace projects through the partialTraj next-coordinate marginal into a reusable next-pair map-law adapter, then into the centered-reward consumer; a raw-reward/selected-mean range wrapper now derives centered-reward integrability automatically before consuming the same full finite-pair partialTraj law; the actual condExpKernel/partialTraj law remains open.")
+    print("- COND-EXPECT-REWARD-GENERATED-TRAJECTORY-PARTIALTRAJ-PAIR-LAW-SOURCE-CONTRACT is compiled locally as a source-contract leaf: it packages the exact generatedActionFromRewardHistory full finite-pair partialTraj/condExpKernel law as an explicit source and feeds that source into the definitional generated random-pair map source constructor; it does not prove the law or upgrade the theorem-card row.")
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-CONDEXPKERNEL-PAIR-LAW-CARD is theorem-card-only: the exact missing law is the generated-history condExpKernel pushforward of History.finitePairHistoryOfTrace at i+1 equals RewardKernel.actionRewardPartialTrajectoryKernel at the frozen i-prefix; prove this from an explicit trajectory-law/disintegration source before adding more consumers.")
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-CONSUMER is compiled locally as the extension-map partialTraj consumer: Measure.map_congr turns the generated successor decomposition into a pushforward identity, a reusable adapter lifts an extension-map law back to the full finite-pair-trace partialTraj law, and a raw-reward/selected-mean range wrapper derives centered-reward integrability automatically before consuming the narrower extension-map law; the actual condExpKernel/partialTraj law remains open.")
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-FROM-PAIRMAP is compiled locally as the law builder from a next-pair condExpKernel pushforward identity to the extension-map partialTraj identity; the next-pair law itself remains open.")
