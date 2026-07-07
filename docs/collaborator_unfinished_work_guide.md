@@ -18226,6 +18226,66 @@ def ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMe
   selected-history variance ceilings from raw/mean range bounds, or prove any
   final adaptive ETC/UCB theorem.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-DEFINITIONAL-CENTERED-SOURCE`
+is compiled locally:
+
+```lean
+def ConditionalExpectationReward.generatedActionRandomPairDefinitionalCenteredSource_of_historyVarianceBoundedSource
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (varianceCeiling : Nat -> NNReal)
+    (source :
+      ConditionalExpectationReward.GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource
+        mu rewardKernel policy context state mean varianceProxy defaultAction
+        reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling) :
+    ConditionalExpectationReward.GeneratedActionRandomPairDefinitionalCenteredSource
+      mu rewardKernel policy context state mean varianceProxy defaultAction
+      reward hreward
+```
+
+- Exact Lean-facing statement: a practical definitional
+  raw-range/measurable-mean-range source with packaged selected-history
+  variance ceilings exposes the definitional centered-source interface over
+  `generatedActionFromRewardHistory`.
+- Local APIs/imports: `BanditRLProof.ConditionalRewardLawSource`,
+  `ConditionalExpectationReward.GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource`,
+  `ConditionalExpectationReward.GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource`,
+  and
+  `ConditionalExpectationReward.GeneratedActionRandomPairDefinitionalCenteredSource`.
+- Intended proof route: first project the history-variance source to its
+  packaged raw-range/measurable-mean-range bounded base source using
+  `generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_historyVarianceBoundedSource`,
+  then reuse
+  `generatedActionRandomPairDefinitionalCenteredSource_of_definitionalRawRangeMeasurableMeanRangeBoundedSource`.
+- Regularity contracts: finite measure, standard Borel sample space,
+  measurable context/state/action spaces, measurable singleton and countable
+  action space, timewise measurable reward trace, the packaged practical
+  definitional raw-range/measurable-mean-range source fields, and
+  time-indexed selected-history variance ceilings.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-DEFINITIONAL-CENTERED-SOURCE`;
+  declaration is
+  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalCenteredSource_of_historyVarianceBoundedSource`.
+- Status: project-local compiled source-conversion leaf for
+  `COND-EXPECT-REWARD`, `ADAPTED-ACTION`, `MEAS-POLICY`, `MEAS-HISTORY`,
+  `KERNEL-POLICY-BIND`, `KERNEL-REWARD`, `INT-REWARD-BOUNDED`, and
+  `MEAS-REWARD`.
+- Failure policy: this is only a wrapper/projection into an existing centered
+  interface. It does not construct the definitional random next-pair law, prove
+  the ambient trajectory-to-`condExpKernel` identification, derive
+  selected-history variance ceilings from raw/mean range bounds, or prove any
+  final adaptive ETC/UCB theorem.
+
 `LOCAL-LEAF-COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-HISTORY-VARIANCE-SOURCE`
 is compiled locally:
 

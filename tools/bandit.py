@@ -7497,6 +7497,32 @@ LOCAL_LEAF_CARDS = [
         ],
     },
     {
+        "id": "LOCAL-LEAF-COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-DEFINITIONAL-CENTERED-SOURCE",
+        "leaf_ids": [
+            "COND-EXPECT-REWARD",
+            "ADAPTED-ACTION",
+            "MEAS-POLICY",
+            "MEAS-HISTORY",
+            "KERNEL-POLICY-BIND",
+            "KERNEL-REWARD",
+            "INT-REWARD-BOUNDED",
+            "MEAS-REWARD",
+        ],
+        "module": "BanditRLProof.ConditionalRewardLawSource",
+        "status": "leanCompiled",
+        "declarations": [
+            "ConditionalExpectationReward.generatedActionRandomPairDefinitionalCenteredSource_of_historyVarianceBoundedSource",
+        ],
+        "role": "Compiled project-local source-conversion leaf for the COND-EXPECT-REWARD route: a practical selected-history-variance raw-range/measurable-mean-range source now directly yields the definitional centered-source interface over generatedActionFromRewardHistory. It reuses the packaged base raw-range/measurable-mean-range bounded source and the existing bounded-to-definitional-centered conversion, making centered-source consumers available without manually unpacking the history-variance wrapper. It still assumes the packaged random next-pair law, raw/mean range regularity, selected-history variance ceilings, ambient trajectory-to-condExpKernel identification, and final adaptive theorem.",
+        "mathlib_routes": [
+            "MLIB-MEASURE-INTEGRAL",
+            "MLIB-CONDITIONAL-EXPECTATION",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-CENTERED-SOURCE-CONTRACT",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-RAW-RANGE-BOUNDED-SOURCE",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-DEFINITIONAL-CENTERED-SOURCE",
+        ],
+    },
+    {
         "id": "LOCAL-LEAF-COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-HISTORY-VARIANCE-SOURCE",
         "leaf_ids": [
             "COND-EXPECT-REWARD",
@@ -9592,6 +9618,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-COND-MGF-HISTORY-VARIANCE-CONSUMER is compiled locally as the practical conditional MGF wrapper that reduces the trimmed-a.e. variance-domination side condition to a selected finite-history varianceProxy ceiling, weaker than the global context/action ceiling.")
     print("- COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-RAW-RANGE-BOUNDED-SOURCE is compiled locally as a source-projection leaf: a practical uniform-variance source now directly exposes its packaged raw-range/measurable-mean-range bounded base source; it still assumes the packaged random-pair law, raw/mean range regularity, and global variance ceiling.")
     print("- COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-RAW-RANGE-BOUNDED-SOURCE is compiled locally as a source-projection leaf: a practical selected-history-variance source now directly exposes its packaged raw-range/measurable-mean-range bounded base source; it still assumes the packaged random-pair law, raw/mean range regularity, and selected-history variance ceilings.")
+    print("- COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-DEFINITIONAL-CENTERED-SOURCE is compiled locally as a source-conversion leaf: a practical selected-history-variance source now lowers through its packaged base source into the definitional centered-source interface over generatedActionFromRewardHistory.")
     print("- COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-HISTORY-VARIANCE-SOURCE is compiled locally as a source-conversion leaf: a packaged uniform variance ceiling yields the time-indexed selected-history variance source with constant ceiling fun _ => varianceCeiling.")
     print("- COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-VIA-HISTORY-COND-MGF is compiled locally as a convenience consumer: a packaged uniform variance source is converted to the selected-history variance source and then consumed through the history-variance conditional MGF interface; it still assumes the definitional random next-pair law source and ambient trajectory-to-condExpKernel identification.")
     print("- COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-LARGER-PROXY-COND-MGF is compiled locally as a coarser-proxy consumer: a packaged uniform variance source with global varianceCeiling can be consumed at any deterministic proxy c satisfying varianceCeiling <= c.")

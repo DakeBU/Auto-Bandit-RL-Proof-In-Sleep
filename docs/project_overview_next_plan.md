@@ -203,6 +203,12 @@ The requested unfinished-work workflow is now available:
   a source-projection wrapper exposing the packaged practical base
   raw-range/measurable-mean-range bounded source from a selected-history
   variance source.
+- `COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-DEFINITIONAL-CENTERED-SOURCE`
+  is compiled locally as
+  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalCenteredSource_of_historyVarianceBoundedSource`,
+  a source-conversion wrapper lowering the packaged selected-history-variance
+  source through its base raw-range/measurable-mean-range source into the
+  definitional centered-source interface.
 - `MEAS-HISTORY` is compiled locally as finite action/reward history product
   objects, trace-restriction maps, and coordinate measurability over
   `Finset.Iic` prefixes in `BanditRLProof.HistoryFiltration`; it now also
@@ -1670,6 +1676,14 @@ Context:
   surface while reusing the bounded-derived integrability theorem, so the newer
   definitional centered-source consumers can be reached without first exposing
   an explicit action trace.
+- `COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-DEFINITIONAL-CENTERED-SOURCE`
+  now compiles as the selected-history variance-source projection:
+  `generatedActionRandomPairDefinitionalCenteredSource_of_historyVarianceBoundedSource`
+  first forgets the history-variance wrapper to its packaged practical
+  raw-range/measurable-mean-range source and then reuses the definitional
+  centered-source projection above.  This gives downstream centered-source
+  consumers a direct interface from the selected-history variance source while
+  keeping the random next-pair law and variance ceilings as source assumptions.
 - `COND-EXPECT-REWARD-RANDOM-PAIR-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE`
   now compiles as the definitional raw-range projection layer:
   `generatedActionDefinitionalActualRewardMapSource_of_randomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource`
