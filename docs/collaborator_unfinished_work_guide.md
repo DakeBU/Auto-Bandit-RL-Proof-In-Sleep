@@ -24015,6 +24015,65 @@ def ConditionalExpectationReward.generatedActionRandomPairDefinitionalMapSource_
   it holds for arbitrary `mu/action/reward`, and do not mark
   `COND-EXPECT-REWARD-PARTIALTRAJ-CONDEXPKERNEL-PAIR-LAW-CARD` as compiled.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-RAW-RANGE-BOUNDED-SOURCE`
+is compiled locally:
+
+```lean
+def ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_partialTrajectoryPairLawSource
+    ...
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (source :
+      GeneratedActionPartialTrajectoryPairLawSource mu rewardKernel policy
+        context state defaultAction reward hreward) :
+    GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource
+      mu rewardKernel policy context state mean varianceProxy defaultAction
+      reward hreward rewardLo rewardHi meanLo meanHi
+```
+
+- Exact Lean-facing statement: a packaged generated-history full finite-pair
+  `partialTraj`/`condExpKernel` law source, together with measurable mean,
+  centered reward-kernel law, raw reward range bounds, and deterministic mean
+  range bounds, constructs the practical definitional generated-action
+  raw-range/measurable-mean-range bounded source.
+- Local APIs/imports:
+  `BanditRLProof.ConditionalRewardLawSource`,
+  `GeneratedActionPartialTrajectoryPairLawSource`,
+  `GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource`,
+  `generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_actionRewardPartialTrajectoryKernel_map_eq`,
+  `RewardKernel.CenteredRewardKernelLaw`, Mathlib `Measurable`, `Set.Icc`,
+  `Measure.map`, and `condExpKernel`.
+- Intended proof route: project `source.hcontext`, `source.hstate`, and
+  `source.partialtraj_map_eq` into the existing full finite-pair `partialTraj`
+  raw-range constructor.  No new measure-theoretic law is proved.
+- Regularity contracts: `[StandardBorelSpace Omega]`, finite `mu`,
+  `[Countable Action]`, timewise measurable rewards, the source's measurable
+  context/state fields, measurable global mean over `Context x Action`, the
+  centered reward-kernel law, pointwise raw reward interval bounds, and
+  pointwise mean interval bounds.
+- Retrieval evidence:
+  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_partialTrajectoryPairLawSource`,
+  `ConditionalExpectationReward.GeneratedActionPartialTrajectoryPairLawSource`,
+  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_actionRewardPartialTrajectoryKernel_map_eq`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-TRAJECTORY-PARTIALTRAJ-PAIR-LAW-SOURCE-CONTRACT`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-CONTRACT`,
+  and `LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-CONSUMER`.
+- Status: compiled-local source-conversion leaf.
+- Failure policy: do not cite this as proving the generated-history
+  `partialTraj`/`condExpKernel` pair-law; it only consumes the packaged source.
+  Do not infer variance ceilings or conditional MGF wrappers from this leaf
+  without the separate uniform/history variance source leaves.
+
 `COND-EXPECT-REWARD-PARTIALTRAJ-CONDEXPKERNEL-PAIR-LAW-CARD` is
 theorem-card-only:
 

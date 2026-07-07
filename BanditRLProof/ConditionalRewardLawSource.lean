@@ -3710,6 +3710,73 @@ def generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSourc
   mean_range_bound := hmean_range
 
 /--
+Consume a generated-history `partialTraj` pair-law source into the practical
+definitional raw-range/measurable-mean-range source interface.
+
+The remaining trajectory-law input is still explicit; this wrapper only
+reuses the packaged source fields and adds the raw/mean regularity contracts
+needed by the top source layer.
+-/
+def generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_partialTrajectoryPairLawSource
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (source :
+      GeneratedActionPartialTrajectoryPairLawSource mu rewardKernel policy
+        context state defaultAction reward hreward) :
+    GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource
+      mu rewardKernel policy context state mean varianceProxy defaultAction
+      reward hreward rewardLo rewardHi meanLo meanHi :=
+  generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_actionRewardPartialTrajectoryKernel_map_eq
+    (mu := mu)
+    (rewardKernel := rewardKernel)
+    (policy := policy)
+    (context := context)
+    (state := state)
+    (mean := mean)
+    (varianceProxy := varianceProxy)
+    (defaultAction := defaultAction)
+    (reward := reward)
+    (hreward := hreward)
+    (rewardLo := rewardLo)
+    (rewardHi := rewardHi)
+    (meanLo := meanLo)
+    (meanHi := meanHi)
+    (hcontext := source.hcontext)
+    (hstate := source.hstate)
+    (hmean := hmean)
+    (hkernel := hkernel)
+    (hraw := hraw)
+    (hmean_range := hmean_range)
+    source.partialtraj_map_eq
+
+/--
 Build the practical definitional generated-policy raw-range source with a
 packaged uniform variance ceiling from a full finite-pair-trace `partialTraj`
 law.

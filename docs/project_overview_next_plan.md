@@ -1241,6 +1241,14 @@ Context:
   feeds it into the existing definitional generated random-pair map source.
   This names the exact input expected from future disintegration work without
   proving the theorem-card law.
+- `COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-RAW-RANGE-BOUNDED-SOURCE`
+  now compiles as the practical source-conversion wrapper for that same
+  source contract: `GeneratedActionPartialTrajectoryPairLawSource`, measurable
+  mean, centered reward-kernel law, raw reward range bounds, and deterministic
+  mean range bounds build
+  `GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource`.
+  This lets downstream raw-range/mean-range consumers use the named source
+  directly, while still leaving the theorem-card pair-law proof open.
 - `COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-REWARD-MAP` now compiles as
   the reward-coordinate adapter for that same full finite-pair-trace law:
   after projecting the `partialTraj` law to the next `(Action, Reward)` pair,
