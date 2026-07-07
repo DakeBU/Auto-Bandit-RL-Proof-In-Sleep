@@ -239,6 +239,12 @@ The requested unfinished-work workflow is now available:
   a source-conversion wrapper lowering the packaged selected-history-variance
   source through its base raw-range/measurable-mean-range source into the
   explicit generated random-pair map source.
+- `COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-HISTORYSTEP-PAIR-LAW`
+  is compiled locally as
+  `ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_historyVarianceBoundedSource`,
+  a source-consumer wrapper lowering the packaged selected-history-variance
+  source through its generated random-pair map source into the canonical
+  history-step next-pair law.
 - `COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE`
   is compiled locally as
   `ConditionalExpectationReward.generatedActionActualRewardMapSource_of_historyVarianceBoundedSource`,
@@ -1747,6 +1753,15 @@ Context:
   and partialTraj consumers a direct interface from the selected-history
   variance source while keeping the random next-pair law and time-indexed
   variance ceilings as source assumptions.
+- `COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-HISTORYSTEP-PAIR-LAW`
+  now compiles as the selected-history variance history-step pair-law
+  consumer:
+  `actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_historyVarianceBoundedSource`
+  first exposes the generated random-pair map source and then reuses the
+  source-level canonical history-step consumer.  This gives history-step
+  consumers a direct interface from the selected-history variance source while
+  keeping the random next-pair law and time-indexed variance ceilings as source
+  assumptions.
 - `COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE`
   now compiles as the selected-history variance actual-reward-map projection:
   `generatedActionActualRewardMapSource_of_historyVarianceBoundedSource`
