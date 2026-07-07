@@ -1241,6 +1241,13 @@ Context:
   feeds it into the existing definitional generated random-pair map source.
   This names the exact input expected from future disintegration work without
   proving the theorem-card law.
+- `COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-PROJECTION` now
+  compiles as the source-projection theorem for that same law: a
+  `GeneratedActionPartialTrajectoryPairLawSource` exposes its full finite-pair
+  `partialTraj`/`condExpKernel` field as a named theorem matching the
+  theorem-card law shape.  This improves retrieval and downstream theorem
+  application, while still leaving the actual disintegration/trajectory-law
+  proof open.
 - `COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-RAW-RANGE-BOUNDED-SOURCE`
   now compiles as the practical source-conversion wrapper for that same
   source contract: `GeneratedActionPartialTrajectoryPairLawSource`, measurable

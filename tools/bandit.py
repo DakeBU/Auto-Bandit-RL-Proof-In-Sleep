@@ -3898,6 +3898,32 @@ LOCAL_LEAF_CARDS = [
         ],
     },
     {
+        "id": "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-PROJECTION",
+        "leaf_ids": [
+            "COND-EXPECT-REWARD",
+            "ADAPTED-ACTION",
+            "MEAS-POLICY",
+            "MEAS-HISTORY",
+            "FILTRATION-HISTORY",
+            "KERNEL-POLICY-BIND",
+            "KERNEL-REWARD",
+        ],
+        "module": "BanditRLProof.ConditionalRewardLawSource",
+        "status": "leanCompiled",
+        "declarations": [
+            "ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_partialTrajectoryPairLawSource",
+        ],
+        "role": "Compiled project-local source-projection leaf: a GeneratedActionPartialTrajectoryPairLawSource directly exposes the theorem-card-shaped generated-history full finite-pair partialTraj/condExpKernel law as a named theorem. It consumes the source field; it does not construct the law from arbitrary mu/action/reward, transport canonical trajMeasure to ambient Omega, or upgrade COND-EXPECT-REWARD-PARTIALTRAJ-CONDEXPKERNEL-PAIR-LAW-CARD from theorem-card-only.",
+        "mathlib_routes": [
+            "MLIB-CONDITIONAL-EXPECTATION",
+            "Mathlib.Probability.Kernel.IonescuTulcea.PartialTraj",
+            "Mathlib.Probability.Kernel.Disintegration.StandardBorel",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-TRAJECTORY-PARTIALTRAJ-PAIR-LAW-SOURCE-CONTRACT",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-CONSUMER",
+            "LOCAL-LEAF-FINITE-HISTORY-PRODUCT-MEASURABILITY",
+        ],
+    },
+    {
         "id": "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-RAW-RANGE-BOUNDED-SOURCE",
         "leaf_ids": [
             "COND-EXPECT-REWARD",
@@ -3918,6 +3944,7 @@ LOCAL_LEAF_CARDS = [
         "role": "Compiled project-local source-conversion leaf: a GeneratedActionPartialTrajectoryPairLawSource plus measurable mean, centered reward-kernel law, raw reward range bounds, and deterministic mean range bounds now builds the practical GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource. It only consumes the packaged full finite-pair partialTraj/condExpKernel law; it does not prove that law, transport canonical trajMeasure to ambient Omega, add variance ceilings, or upgrade COND-EXPECT-REWARD-PARTIALTRAJ-CONDEXPKERNEL-PAIR-LAW-CARD from theorem-card-only.",
         "mathlib_routes": [
             "MLIB-CONDITIONAL-EXPECTATION",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-PROJECTION",
             "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-TRAJECTORY-PARTIALTRAJ-PAIR-LAW-SOURCE-CONTRACT",
             "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-CONTRACT",
             "LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-CONSUMER",
@@ -9866,6 +9893,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- COND-EXPECT-REWARD-PAIR-MAP-FINITEPAIRTRACE-HOOKUP is compiled locally as the named History.finitePairHistoryOfTrace specialization of the generated-history pair-law consumer; the actual condExpKernel pair-law identity remains open.")
     print("- COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-CONSUMER is compiled locally as the partialTraj finite-pair-trace consumer: an explicit generated-history condExpKernel law for the extended pair trace projects through the partialTraj next-coordinate marginal into a reusable next-pair map-law adapter, then into the centered-reward consumer; a raw-reward/selected-mean range wrapper now derives centered-reward integrability automatically before consuming the same full finite-pair partialTraj law; the actual condExpKernel/partialTraj law remains open.")
     print("- COND-EXPECT-REWARD-GENERATED-TRAJECTORY-PARTIALTRAJ-PAIR-LAW-SOURCE-CONTRACT is compiled locally as a source-contract leaf: it packages the exact generatedActionFromRewardHistory full finite-pair partialTraj/condExpKernel law as an explicit source and feeds that source into the definitional generated random-pair map source constructor; it does not prove the law or upgrade the theorem-card row.")
+    print("- COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-PROJECTION is compiled locally as a source-projection leaf: a GeneratedActionPartialTrajectoryPairLawSource exposes its full finite-pair partialTraj/condExpKernel law field as a named theorem matching the theorem-card law shape; it does not prove the law or upgrade the theorem-card row.")
     print("- COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-RAW-RANGE-BOUNDED-SOURCE is compiled locally as a source-conversion leaf: a GeneratedActionPartialTrajectoryPairLawSource plus measurable mean, centered reward-kernel law, raw reward range bounds, and deterministic mean range bounds builds the practical definitional raw-range/measurable-mean-range bounded source; it still consumes, rather than proves, the full finite-pair partialTraj/condExpKernel law.")
     print("- COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-UNIFORM-VARIANCE-SOURCE is compiled locally as a source-conversion leaf: the same GeneratedActionPartialTrajectoryPairLawSource plus raw/mean range regularity and a global variance ceiling builds the packaged uniform-variance practical source; it still consumes, rather than proves, the full finite-pair partialTraj/condExpKernel law.")
     print("- COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-UNIFORM-VARIANCE-COND-MGF is compiled locally as a source-consumer leaf: the same GeneratedActionPartialTrajectoryPairLawSource plus raw/mean range regularity and a global variance ceiling directly yields the succ-indexed conditional sub-Gaussian MGF witness; it still consumes, rather than proves, the full finite-pair partialTraj/condExpKernel law.")

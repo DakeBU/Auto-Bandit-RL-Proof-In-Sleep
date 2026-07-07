@@ -24015,6 +24015,91 @@ def ConditionalExpectationReward.generatedActionRandomPairDefinitionalMapSource_
   it holds for arbitrary `mu/action/reward`, and do not mark
   `COND-EXPECT-REWARD-PARTIALTRAJ-CONDEXPKERNEL-PAIR-LAW-CARD` as compiled.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-PROJECTION`
+is compiled locally:
+
+```lean
+theorem ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_partialTrajectoryPairLawSource
+    ...
+    (source :
+      GeneratedActionPartialTrajectoryPairLawSource mu rewardKernel policy
+        context state defaultAction reward hreward)
+    (i : Nat) :
+    Filter.Eventually
+      (fun omega =>
+        Measure.map
+          (fun y =>
+            History.finitePairHistoryOfTrace
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward y)
+              (reward y) (i + 1))
+          (condExpKernel
+            ((History.historyFiltrationSucc
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward)
+              reward
+              (generatedActionFromRewardHistory_measurable ... hreward
+                source.hstate)
+              hreward) i)
+            omega)
+        =
+        RewardKernel.actionRewardPartialTrajectoryKernel rewardKernel policy
+          (fun n history =>
+            context n (History.pairHistoryRewardProjection history))
+          (fun n history =>
+            state n (History.pairHistoryRewardProjection history))
+          ... i (i + 1)
+          (History.finitePairHistoryOfTrace
+            (generatedActionFromRewardHistory policy state defaultAction
+              reward omega)
+            (reward omega) i))
+      (ae (mu.trim
+        ((History.historyFiltrationSucc
+          (generatedActionFromRewardHistory policy state defaultAction reward)
+          reward
+          (generatedActionFromRewardHistory_measurable ... hreward
+            source.hstate)
+          hreward).le i)))
+```
+
+- Exact Lean-facing statement: this is the full finite-pair
+  `partialTraj`/`condExpKernel` equality stored in
+  `GeneratedActionPartialTrajectoryPairLawSource.partialtraj_map_eq`, exposed
+  as a named theorem.  The left side is the generated-history
+  `condExpKernel` pushed forward by
+  `History.finitePairHistoryOfTrace ... (i + 1)`; the right side is
+  `RewardKernel.actionRewardPartialTrajectoryKernel ... i (i + 1)` evaluated
+  at the frozen generated finite-pair prefix at time `i`.
+- Local APIs/imports:
+  `BanditRLProof.ConditionalRewardLawSource`,
+  `GeneratedActionPartialTrajectoryPairLawSource`,
+  `ConditionalExpectationReward.generatedActionFromRewardHistory`,
+  `ConditionalExpectationReward.generatedActionFromRewardHistory_measurable`,
+  `History.historyFiltrationSucc`, `History.finitePairHistoryOfTrace`,
+  `History.pairHistoryRewardProjection`,
+  `RewardKernel.actionRewardPartialTrajectoryKernel`, Mathlib
+  `condExpKernel`, `Measure.map`, and `IonescuTulcea.PartialTraj`.
+- Intended proof route: the proof is just `source.partialtraj_map_eq i`.
+  Future trajectory/disintegration work should construct the source field;
+  once constructed, this theorem gives the theorem-card law shape by name.
+- Regularity contracts: `[StandardBorelSpace Omega]`, finite `mu`,
+  `[Countable Action]`, timewise reward measurability, source-provided
+  measurable context/state extractors, generated-action measurability, and
+  the full finite-pair law as an explicit source field.
+- Retrieval evidence:
+  `ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_partialTrajectoryPairLawSource`,
+  `ConditionalExpectationReward.GeneratedActionPartialTrajectoryPairLawSource`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-TRAJECTORY-PARTIALTRAJ-PAIR-LAW-SOURCE-CONTRACT`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-CONSUMER`,
+  `Mathlib.Probability.Kernel.IonescuTulcea.PartialTraj`, and
+  `Mathlib.Probability.Kernel.Disintegration.StandardBorel`.
+- Status: compiled-local source-projection leaf.  It exposes an existing
+  explicit law source as a named theorem.
+- Failure policy: do not cite this as proving the source field, do not claim
+  a generated-history `condExpKernel` law for arbitrary ambient `Omega`
+  without the source, and do not mark
+  `COND-EXPECT-REWARD-PARTIALTRAJ-CONDEXPKERNEL-PAIR-LAW-CARD` as compiled.
+
 `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-RAW-RANGE-BOUNDED-SOURCE`
 is compiled locally:
 
