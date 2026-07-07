@@ -203,6 +203,12 @@ The requested unfinished-work workflow is now available:
   a source-conversion wrapper lowering the packaged uniform-variance source
   through its base raw-range/measurable-mean-range source into the definitional
   centered-source interface.
+- `COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-BOUNDED-CENTERED-SOURCE`
+  is compiled locally as
+  `ConditionalExpectationReward.generatedActionRandomPairBoundedCenteredSource_of_uniformVarianceBoundedSource`,
+  a source-conversion wrapper lowering the packaged uniform-variance source
+  through its base raw-range/measurable-mean-range source into the bounded
+  centered-source interface.
 - `COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-RAW-RANGE-BOUNDED-SOURCE`
   is compiled locally as
   `ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_historyVarianceBoundedSource`,
@@ -1712,6 +1718,14 @@ Context:
   centered-source projection.  This gives downstream centered-source consumers
   a direct interface from the uniform variance source while keeping the random
   next-pair law and global variance ceiling as source assumptions.
+- `COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-BOUNDED-CENTERED-SOURCE`
+  now compiles as the uniform variance bounded-source projection:
+  `generatedActionRandomPairBoundedCenteredSource_of_uniformVarianceBoundedSource`
+  first forgets the uniform-variance wrapper to its packaged practical
+  raw-range/measurable-mean-range source and then reuses the bounded-centered
+  projection.  This preserves deterministic centered reward bounds for
+  bounded-integrability and tail consumers while keeping the global variance
+  ceiling as part of the source package.
 - `COND-EXPECT-REWARD-RANDOM-PAIR-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE`
   now compiles as the definitional raw-range projection layer:
   `generatedActionDefinitionalActualRewardMapSource_of_randomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource`
