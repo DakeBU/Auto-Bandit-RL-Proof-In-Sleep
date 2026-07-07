@@ -1249,6 +1249,12 @@ Context:
   `GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource`.
   This lets downstream raw-range/mean-range consumers use the named source
   directly, while still leaving the theorem-card pair-law proof open.
+- `COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-UNIFORM-VARIANCE-SOURCE`
+  now compiles as the global-variance companion: the same generated
+  `partialTraj` pair-law source plus a pointwise bound
+  `varianceProxy context action <= varianceCeiling` builds the packaged
+  uniform-variance practical source.  It prepares the conditional-MGF route
+  without proving the underlying `partialTraj`/`condExpKernel` law.
 - `COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-REWARD-MAP` now compiles as
   the reward-coordinate adapter for that same full finite-pair-trace law:
   after projecting the `partialTraj` law to the next `(Action, Reward)` pair,

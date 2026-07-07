@@ -24074,6 +24074,67 @@ def ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMe
   Do not infer variance ceilings or conditional MGF wrappers from this leaf
   without the separate uniform/history variance source leaves.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-UNIFORM-VARIANCE-SOURCE`
+is compiled locally:
+
+```lean
+def ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource_of_partialTrajectoryPairLawSource
+    ...
+    (varianceCeiling : NNReal)
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (hvariance :
+      forall context : Context, forall action : Action,
+        varianceProxy context action <= varianceCeiling)
+    (source :
+      GeneratedActionPartialTrajectoryPairLawSource mu rewardKernel policy
+        context state defaultAction reward hreward) :
+    GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource
+      mu rewardKernel policy context state mean varianceProxy defaultAction
+      reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling
+```
+
+- Exact Lean-facing statement: a packaged generated-history full finite-pair
+  `partialTraj`/`condExpKernel` law source, together with raw/mean range
+  regularity and a global variance ceiling, constructs the practical
+  definitional generated-action uniform-variance source.
+- Local APIs/imports:
+  `BanditRLProof.ConditionalRewardLawSource`,
+  `GeneratedActionPartialTrajectoryPairLawSource`,
+  `GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource`,
+  `generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource_of_actionRewardPartialTrajectoryKernel_map_eq`,
+  `generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_partialTrajectoryPairLawSource`,
+  `RewardKernel.CenteredRewardKernelLaw`, Mathlib `NNReal`, `Measurable`,
+  `Set.Icc`, `Measure.map`, and `condExpKernel`.
+- Intended proof route: project `source.hcontext`, `source.hstate`, and
+  `source.partialtraj_map_eq` into the existing direct full finite-pair
+  `partialTraj` uniform-variance constructor; the variance field is exactly
+  the explicit pointwise `hvariance` contract.
+- Regularity contracts: all contracts from the raw-range bounded source
+  conversion, plus a global `varianceCeiling : NNReal` and
+  `forall context action, varianceProxy context action <= varianceCeiling`.
+- Retrieval evidence:
+  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource_of_partialTrajectoryPairLawSource`,
+  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource_of_actionRewardPartialTrajectoryKernel_map_eq`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-RAW-RANGE-BOUNDED-SOURCE`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-UNIFORM-VARIANCE-SOURCE`,
+  and `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-TRAJECTORY-PARTIALTRAJ-PAIR-LAW-SOURCE-CONTRACT`.
+- Status: compiled-local source-conversion leaf.
+- Failure policy: do not cite this as proving the generated-history
+  `partialTraj`/`condExpKernel` pair-law, and do not treat the global
+  variance ceiling as the selected-history variance source.  Conditional MGF
+  consumers still require their separate source or consumer leaves.
+
 `COND-EXPECT-REWARD-PARTIALTRAJ-CONDEXPKERNEL-PAIR-LAW-CARD` is
 theorem-card-only:
 
