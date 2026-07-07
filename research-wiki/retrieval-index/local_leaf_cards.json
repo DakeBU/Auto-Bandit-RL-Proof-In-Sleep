@@ -3081,6 +3081,28 @@
       ]
     },
     {
+      "id": "LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-PAIR-CONDEXPKERNEL-MAP-SPLIT",
+      "leaf_ids": [
+        "COND-EXPECT-REWARD",
+        "KERNEL-POLICY-BIND"
+      ],
+      "module": "BanditRLProof.ConditionalExpectationReward",
+      "status": "leanCompiled",
+      "declarations": [
+        "ConditionalExpectationReward.pair_map_eq_map_prod_mk_of_action_ae_eq_const_reward_map_eq",
+        "ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_condExpKernel_map_trajMeasure_of_selectedAction_ae_selectedMeasure"
+      ],
+      "role": "Compiled canonical split-route next-pair law: a generic measure helper combines a conditional a.e. deterministic action side with a selected-reward pushforward law to identify the pair pushforward as Measure.map (Prod.mk selectedAction) selectedReward, and the canonical trajMeasure selected-action a.e. law plus selected-reward condExpKernel map law then recover RewardKernel.actionRewardHistoryStepKernelFamily. This validates the split route on canonical Ionescu-Tulcea trajectories using separate Countable Action and Countable Reward assumptions, while arbitrary ambient Omega/History.historyFiltrationSucc transport remains open.",
+      "mathlib_routes": [
+        "LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-SELECTED-ACTION-CONDEXPKERNEL-AE",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-SELECTED-REWARD-CONDEXPKERNEL-MAP",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-NEXTPAIR-SPLIT-LAW-BUILDER",
+        "LOCAL-LEAF-KERNEL-REWARD-MAP-LAW-TRANSFER",
+        "Mathlib.MeasureTheory.Measure.Map",
+        "Mathlib.Probability.Kernel.Condexp"
+      ]
+    },
+    {
       "id": "LOCAL-LEAF-COND-EXPECT-REWARD-HISTORYSTEP-CONDEXPKERNEL-CONSUMER",
       "leaf_ids": [
         "COND-EXPECT-REWARD"

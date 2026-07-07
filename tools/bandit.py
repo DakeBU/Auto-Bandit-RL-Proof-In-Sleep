@@ -3500,6 +3500,28 @@ LOCAL_LEAF_CARDS = [
         ],
     },
     {
+        "id": "LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-PAIR-CONDEXPKERNEL-MAP-SPLIT",
+        "leaf_ids": [
+            "COND-EXPECT-REWARD",
+            "KERNEL-POLICY-BIND",
+        ],
+        "module": "BanditRLProof.ConditionalExpectationReward",
+        "status": "leanCompiled",
+        "declarations": [
+            "ConditionalExpectationReward.pair_map_eq_map_prod_mk_of_action_ae_eq_const_reward_map_eq",
+            "ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_condExpKernel_map_trajMeasure_of_selectedAction_ae_selectedMeasure",
+        ],
+        "role": "Compiled canonical split-route next-pair law: a generic measure helper combines a conditional a.e. deterministic action side with a selected-reward pushforward law to identify the pair pushforward as Measure.map (Prod.mk selectedAction) selectedReward, and the canonical trajMeasure selected-action a.e. law plus selected-reward condExpKernel map law then recover RewardKernel.actionRewardHistoryStepKernelFamily. This validates the split route on canonical Ionescu-Tulcea trajectories using separate Countable Action and Countable Reward assumptions, while arbitrary ambient Omega/History.historyFiltrationSucc transport remains open.",
+        "mathlib_routes": [
+            "LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-SELECTED-ACTION-CONDEXPKERNEL-AE",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-SELECTED-REWARD-CONDEXPKERNEL-MAP",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-NEXTPAIR-SPLIT-LAW-BUILDER",
+            "LOCAL-LEAF-KERNEL-REWARD-MAP-LAW-TRANSFER",
+            "Mathlib.MeasureTheory.Measure.Map",
+            "Mathlib.Probability.Kernel.Condexp",
+        ],
+    },
+    {
         "id": "LOCAL-LEAF-COND-EXPECT-REWARD-HISTORYSTEP-CONDEXPKERNEL-CONSUMER",
         "leaf_ids": [
             "COND-EXPECT-REWARD",
@@ -8941,6 +8963,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- COND-EXPECT-REWARD-TRAJMEASURE-PREFIX-CONDEXPKERNEL-MAP is compiled locally as the canonical full-prefix specialization: the extension-map law plus condExpKernel frozen-prefix evidence rewrites the pushforward to Preorder.frestrictLe (n + 1), recovering RewardKernel.actionRewardPartialTrajectoryKernel on the full finite prefix; ambient Omega/History.historyFiltrationSucc transport remains open.")
     print("- COND-EXPECT-REWARD-TRAJMEASURE-REWARD-CONDEXPKERNEL-MAP is compiled locally as the canonical trajMeasure specialization: conditioning on the finite pair prefix and pushing condExpKernel forward by the next reward coordinate recovers the history-step reward marginal; ambient Omega/History.historyFiltrationSucc transport remains open.")
     print("- COND-EXPECT-REWARD-TRAJMEASURE-SELECTED-REWARD-CONDEXPKERNEL-MAP is compiled locally as the selected-reward form of the canonical trajMeasure condExpKernel map law; ambient Omega/History.historyFiltrationSucc transport remains open.")
+    print("- COND-EXPECT-REWARD-TRAJMEASURE-PAIR-CONDEXPKERNEL-MAP-SPLIT is compiled locally as the canonical split-route next-pair law: selected-action conditional a.e. equality plus selected-reward condExpKernel map law recover the full history-step pair law under separate Countable Action and Countable Reward assumptions; ambient Omega/History.historyFiltrationSucc transport remains open.")
     print("- COND-EXPECT-REWARD-HISTORYSTEP-CONDEXPKERNEL-CONSUMER is compiled locally as an explicit law/integral-equality consumer from history-step centered-reward zero integral to ordinary conditional mean-zero; it still assumes the trajectory-law condExpKernel identification.")
     print("- COND-EXPECT-REWARD-HISTORYSTEP-CONDEXPKERNEL-MAP-CONSUMER is compiled locally as a reward-coordinate pushforward-map consumer plus frozen-past condition for ordinary conditional mean-zero; it now also has coordinate-measurable and generated-history raw/mean range wrappers that derive centered-reward integrability automatically; it still assumes, rather than proves, the trajectory-law condExpKernel identification.")
     print("- COND-EXPECT-REWARD-HISTORYSTEP-CONDEXPKERNEL-COND-MGF-CONSUMER is compiled locally as the conditional sub-Gaussian analogue: a condExpKernel pushforward map law plus explicit exponential integrability/centered measurability and a deterministic variance-proxy upper bound yield Mathlib HasCondSubgaussianMGF; coordinate-measurable and generated-history-filtration wrappers discharge the frozen-past equality, while source-level policy wrappers and trajectory-law construction remain open.")

@@ -5337,6 +5337,113 @@ theorem ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_selecte
   `condExpKernel` law for an arbitrary ambient process.  It remains a
   canonical-source theorem awaiting transport to `History.historyFiltrationSucc`.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-PAIR-CONDEXPKERNEL-MAP-SPLIT` is
+compiled locally:
+
+```lean
+theorem ConditionalExpectationReward.pair_map_eq_map_prod_mk_of_action_ae_eq_const_reward_map_eq
+    {Omega : Type u} {Action : Type v} {Reward : Type w}
+    [mOmega : MeasurableSpace Omega]
+    [MeasurableSpace Action] [MeasurableSpace Reward]
+    (mu : Measure Omega)
+    (nextAction : Omega -> Action) (nextReward : Omega -> Reward)
+    (selectedAction : Action) (selectedReward : Measure Reward)
+    (h_nextReward :
+      @Measurable Omega Reward mOmega inferInstance nextReward)
+    (h_action_ae :
+      Filter.EventuallyEq (ae mu) nextAction
+        (fun _omega : Omega => selectedAction))
+    (h_reward_map_eq :
+      @Measure.map Omega Reward mOmega inferInstance nextReward mu =
+        selectedReward) :
+    @Measure.map Omega (Prod Action Reward) mOmega inferInstance
+        (fun omega : Omega => (nextAction omega, nextReward omega)) mu =
+      Measure.map (Prod.mk selectedAction) selectedReward
+
+theorem ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_condExpKernel_map_trajMeasure_of_selectedAction_ae_selectedMeasure
+    {Context : Type x} {State : Type u} {Action : Type v}
+    {Reward : Type w}
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSpace Reward]
+    [StandardBorelSpace (Prod Action Reward)]
+    [StandardBorelSpace Action] [StandardBorelSpace Reward]
+    [StandardBorelSpace ((t : Nat) -> Prod Action Reward)]
+    [Nonempty (Prod Action Reward)] [Nonempty Action] [Nonempty Reward]
+    [Nonempty ((t : Nat) -> Prod Action Reward)]
+    [MeasurableSingletonClass Action] [Countable Action]
+    [MeasurableSingletonClass Reward] [Countable Reward]
+    (mu0 : Measure (Prod Action Reward))
+    [MeasureTheory.IsProbabilityMeasure mu0]
+    (rewardKernel :
+      RewardKernel.MarkovRewardKernel (Prod Context Action) Reward)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Reward) -> Context)
+    (state :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Reward) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (n : Nat) :
+    let stepKernel :=
+      RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy
+        context state hcontext hstate
+    let trajMeasure :=
+      ProbabilityTheory.Kernel.trajMeasure
+        (X := fun _ : Nat => Prod Action Reward) mu0 stepKernel
+    Filter.Eventually
+      (fun trajectory : (t : Nat) -> Prod Action Reward =>
+        @Measure.map ((t : Nat) -> Prod Action Reward) (Prod Action Reward)
+          inferInstance inferInstance
+          (fun y : (t : Nat) -> Prod Action Reward => y (n + 1))
+          (@ProbabilityTheory.condExpKernel
+            ((t : Nat) -> Prod Action Reward) inferInstance _
+            trajMeasure _
+            ((inferInstance :
+              MeasurableSpace
+                ((i : Finset.Iic n) -> Prod Action Reward)).comap
+              (Preorder.frestrictLe n))
+            trajectory) =
+        stepKernel n (Preorder.frestrictLe n trajectory))
+      (ae trajMeasure)
+```
+
+- Exact Lean-facing statement: the helper builds a pair pushforward law from
+  a deterministic action a.e. side and a reward pushforward law.  The canonical
+  theorem instantiates that helper with the selected-action `trajMeasure`
+  conditional a.e. law and selected-reward `condExpKernel.map` law to recover
+  the full history-step next-pair law.
+- Local APIs/imports:
+  `ConditionalExpectationReward.pair_map_eq_map_prod_mk_of_action_ae_eq_const_reward_map_eq`,
+  `ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_selectedAction_condExpKernel_ae_trajMeasure`,
+  `ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_selectedMeasure_condExpKernel_map_trajMeasure`,
+  `RewardKernel.actionRewardHistoryStepKernelFamily_apply_eq_map_prod_mk`,
+  `Measure.map_congr`, and `Measure.map_map`.
+- Intended proof route: replace the random action coordinate by the frozen
+  selected action using the conditional a.e. equality and `Measure.map_congr`;
+  rewrite the resulting pair map as `Measure.map (Prod.mk selectedAction)` of
+  the reward pushforward with `Measure.map_map`; use the selected-reward law;
+  finally rewrite the resulting product-shaped measure with
+  `RewardKernel.actionRewardHistoryStepKernelFamily_apply_eq_map_prod_mk`.
+- Regularity contracts: the generic helper needs only measurable spaces and a
+  measurable reward coordinate.  The canonical theorem needs standard Borel
+  pair/action/reward/trajectory spaces, nonempty pair/action/reward/trajectory
+  spaces, measurable-singleton and countable `Action`, measurable-singleton
+  and countable `Reward`, an initial probability measure, a project-local
+  Markov reward kernel, a measurable policy, and measurable pair-history
+  context/state extractors.  It does not require
+  `[Countable (Prod Action Reward)]`.
+- Retrieval evidence:
+  `LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-PAIR-CONDEXPKERNEL-MAP-SPLIT`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-SELECTED-ACTION-CONDEXPKERNEL-AE`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-SELECTED-REWARD-CONDEXPKERNEL-MAP`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-NEXTPAIR-SPLIT-LAW-BUILDER`, and
+  `LOCAL-LEAF-KERNEL-REWARD-MAP-LAW-TRANSFER`.
+- Status: project-local compiled canonical `trajMeasure` split-route bridge.
+- Failure policy: do not cite this as an arbitrary ambient
+  `Omega`/generated-history theorem.  It validates the split route on the
+  canonical Ionescu-Tulcea source law and still awaits transport to
+  `History.historyFiltrationSucc`.
+
 `LOCAL-LEAF-COND-EXPECT-REWARD-HISTORYSTEP-CONDEXPKERNEL-CONSUMER` is compiled
 locally:
 
