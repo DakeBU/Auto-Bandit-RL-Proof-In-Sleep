@@ -3320,6 +3320,26 @@ LOCAL_LEAF_CARDS = [
         ],
     },
     {
+        "id": "LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-PREFIX-CONDEXPKERNEL-MAP",
+        "leaf_ids": [
+            "COND-EXPECT-REWARD",
+            "KERNEL-POLICY-BIND",
+        ],
+        "module": "BanditRLProof.ConditionalExpectationReward",
+        "status": "leanCompiled",
+        "declarations": [
+            "ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_prefix_condExpKernel_map_trajMeasure",
+        ],
+        "role": "Compiled canonical full-prefix trajMeasure condExpKernel law: the canonical extension-map law plus condExpKernel frozen-prefix evidence rewrites the pushforward to Preorder.frestrictLe (n + 1), yielding the one-step RewardKernel.actionRewardPartialTrajectoryKernel surface on the full finite prefix. This is still canonical trajMeasure only; arbitrary ambient Omega/History.historyFiltrationSucc transport remains open.",
+        "mathlib_routes": [
+            "LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-EXTEND-CONDEXPKERNEL-MAP",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-FROZEN-HISTORY-CONDEXPKERNEL",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-CONSUMER",
+            "Mathlib.Probability.Kernel.Condexp",
+            "Mathlib.MeasureTheory.Measure.Trim",
+        ],
+    },
+    {
         "id": "LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-REWARD-CONDEXPKERNEL-MAP",
         "leaf_ids": [
             "COND-EXPECT-REWARD",
@@ -8792,6 +8812,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- COND-EXPECT-REWARD-CONDDISTRIB-TO-CONDEXPKERNEL-MAP is compiled locally as a countable-target Mathlib bridge from condDistrib laws to condExpKernel pushforward map laws; it consumes a condDistrib identification but does not construct the trajectory law.")
     print("- COND-EXPECT-REWARD-TRAJMEASURE-PAIR-CONDEXPKERNEL-MAP is compiled locally as the canonical trajMeasure next-pair specialization: conditioning on the finite pair prefix and pushing condExpKernel forward by the next action/reward coordinate recovers RewardKernel.actionRewardHistoryStepKernelFamily; ambient Omega/History.historyFiltrationSucc transport remains open.")
     print("- COND-EXPECT-REWARD-TRAJMEASURE-EXTEND-CONDEXPKERNEL-MAP is compiled locally as the canonical extension-map specialization: the canonical next-pair condExpKernel map law pushed through History.extendPairHistorySucc recovers the one-step RewardKernel.actionRewardPartialTrajectoryKernel surface; ambient Omega/History.historyFiltrationSucc transport remains open.")
+    print("- COND-EXPECT-REWARD-TRAJMEASURE-PREFIX-CONDEXPKERNEL-MAP is compiled locally as the canonical full-prefix specialization: the extension-map law plus condExpKernel frozen-prefix evidence rewrites the pushforward to Preorder.frestrictLe (n + 1), recovering RewardKernel.actionRewardPartialTrajectoryKernel on the full finite prefix; ambient Omega/History.historyFiltrationSucc transport remains open.")
     print("- COND-EXPECT-REWARD-TRAJMEASURE-REWARD-CONDEXPKERNEL-MAP is compiled locally as the canonical trajMeasure specialization: conditioning on the finite pair prefix and pushing condExpKernel forward by the next reward coordinate recovers the history-step reward marginal; ambient Omega/History.historyFiltrationSucc transport remains open.")
     print("- COND-EXPECT-REWARD-TRAJMEASURE-SELECTED-REWARD-CONDEXPKERNEL-MAP is compiled locally as the selected-reward form of the canonical trajMeasure condExpKernel map law; ambient Omega/History.historyFiltrationSucc transport remains open.")
     print("- COND-EXPECT-REWARD-HISTORYSTEP-CONDEXPKERNEL-CONSUMER is compiled locally as an explicit law/integral-equality consumer from history-step centered-reward zero integral to ordinary conditional mean-zero; it still assumes the trajectory-law condExpKernel identification.")

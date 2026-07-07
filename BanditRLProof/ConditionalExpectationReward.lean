@@ -1344,6 +1344,189 @@ theorem condExpKernel_ae_eq_const_of_countable_measurable
   exact h_ae_mem
 
 /--
+Canonical `trajMeasure` full finite-prefix law in `condExpKernel.map` form.
+
+The earlier canonical extension-map theorem states the law for the deterministic
+extension of the frozen prefix by the random next pair.  This wrapper uses the
+standard `condExpKernel` frozen-prefix property for the conditioning map
+`Preorder.frestrictLe n`, then rewrites that extension map back to the full
+`Preorder.frestrictLe (n + 1)` prefix under the conditional kernel.
+-/
+theorem actionRewardPartialTrajectoryKernel_prefix_condExpKernel_map_trajMeasure
+    {Context : Type x} {State : Type u} {Action : Type v}
+    {Reward : Type w}
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSpace Reward]
+    [StandardBorelSpace (Prod Action Reward)]
+    [StandardBorelSpace ((t : Nat) -> Prod Action Reward)]
+    [Nonempty (Prod Action Reward)]
+    [Nonempty ((t : Nat) -> Prod Action Reward)]
+    [MeasurableSingletonClass (Prod Action Reward)]
+    [Countable (Prod Action Reward)]
+    (mu0 : Measure (Prod Action Reward))
+    [MeasureTheory.IsProbabilityMeasure mu0]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Reward)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Reward) -> Context)
+    (state :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Reward) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (n : Nat) :
+    let stepKernel :=
+      RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy
+        context state hcontext hstate
+    let trajMeasure :=
+      ProbabilityTheory.Kernel.trajMeasure
+        (X := fun _ : Nat => Prod Action Reward) mu0 stepKernel
+    Filter.Eventually
+      (fun trajectory : (t : Nat) -> Prod Action Reward =>
+        @Measure.map
+          ((t : Nat) -> Prod Action Reward)
+          ((i : Finset.Iic (n + 1)) -> Prod Action Reward)
+          inferInstance inferInstance
+          (Preorder.frestrictLe (n + 1))
+          (@ProbabilityTheory.condExpKernel
+            ((t : Nat) -> Prod Action Reward) inferInstance _ trajMeasure _
+            ((inferInstance :
+              MeasurableSpace
+                ((i : Finset.Iic n) -> Prod Action Reward)).comap
+              (Preorder.frestrictLe n))
+            trajectory) =
+        RewardKernel.actionRewardPartialTrajectoryKernel rewardKernel policy
+          context state hcontext hstate n (n + 1)
+          (Preorder.frestrictLe n trajectory))
+      (ae trajMeasure) := by
+  let stepKernel :=
+    RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy
+      context state hcontext hstate
+  let trajMeasure :=
+    ProbabilityTheory.Kernel.trajMeasure
+      (X := fun _ : Nat => Prod Action Reward) mu0 stepKernel
+  let prefixMap :
+      ((t : Nat) -> Prod Action Reward) ->
+        ((i : Finset.Iic n) -> Prod Action Reward) :=
+    Preorder.frestrictLe n
+  let fullPrefix :
+      ((t : Nat) -> Prod Action Reward) ->
+        ((i : Finset.Iic (n + 1)) -> Prod Action Reward) :=
+    Preorder.frestrictLe (n + 1)
+  have h_prefix_meas : Measurable prefixMap := by
+    fun_prop
+  have h_extend :=
+    actionRewardPartialTrajectoryKernel_extend_condExpKernel_map_trajMeasure
+      mu0 rewardKernel policy context state hcontext hstate n
+  have h_frozen_trim :
+      Filter.Eventually
+        (fun trajectory : (t : Nat) -> Prod Action Reward =>
+          Filter.EventuallyEq
+            (ae
+              (@ProbabilityTheory.condExpKernel
+                ((t : Nat) -> Prod Action Reward) inferInstance _
+                trajMeasure _
+                ((inferInstance :
+                  MeasurableSpace
+                    ((i : Finset.Iic n) -> Prod Action Reward)).comap
+                  prefixMap)
+                trajectory))
+            prefixMap
+            (fun _y : (t : Nat) -> Prod Action Reward => prefixMap trajectory))
+        (ae (trajMeasure.trim h_prefix_meas.comap_le)) := by
+    exact
+      condExpKernel_ae_eq_const_of_countable_measurable
+        (mu := trajMeasure)
+        (mcond :=
+          ((inferInstance :
+            MeasurableSpace
+              ((i : Finset.Iic n) -> Prod Action Reward)).comap
+            prefixMap))
+        (hm := h_prefix_meas.comap_le)
+        (Y := prefixMap)
+        (comap_measurable prefixMap)
+  have h_frozen :
+      Filter.Eventually
+        (fun trajectory : (t : Nat) -> Prod Action Reward =>
+          Filter.EventuallyEq
+            (ae
+              (@ProbabilityTheory.condExpKernel
+                ((t : Nat) -> Prod Action Reward) inferInstance _
+                trajMeasure _
+                ((inferInstance :
+                  MeasurableSpace
+                    ((i : Finset.Iic n) -> Prod Action Reward)).comap
+                  prefixMap)
+                trajectory))
+            prefixMap
+            (fun _y : (t : Nat) -> Prod Action Reward => prefixMap trajectory))
+        (ae trajMeasure) :=
+    ae_of_ae_trim h_prefix_meas.comap_le h_frozen_trim
+  filter_upwards [h_extend, h_frozen] with trajectory h_extend_eq h_prefix_frozen
+  let condKernel : Measure ((t : Nat) -> Prod Action Reward) :=
+    @ProbabilityTheory.condExpKernel
+      ((t : Nat) -> Prod Action Reward) inferInstance _ trajMeasure _
+      ((inferInstance :
+        MeasurableSpace ((i : Finset.Iic n) -> Prod Action Reward)).comap
+        prefixMap)
+      trajectory
+  let extendFromFrozen :
+      ((t : Nat) -> Prod Action Reward) ->
+        ((i : Finset.Iic (n + 1)) -> Prod Action Reward) :=
+    fun y =>
+      History.extendPairHistorySucc
+        (Preorder.frestrictLe n trajectory)
+        (y (n + 1))
+  have h_full_eq_extend :
+      Filter.EventuallyEq (ae condKernel) fullPrefix extendFromFrozen := by
+    filter_upwards [h_prefix_frozen] with y h_frozen_y
+    funext j
+    by_cases hj : j.1 <= n
+    · have h_prefix_coord :=
+        congrFun h_frozen_y ⟨j.1, Finset.mem_Iic.mpr hj⟩
+      simpa [fullPrefix, prefixMap, extendFromFrozen,
+        History.extendPairHistorySucc, hj] using h_prefix_coord
+    · have hj_le : j.1 <= n + 1 := Finset.mem_Iic.mp j.2
+      have h_succ_le : n + 1 <= j.1 :=
+        Nat.succ_le_of_lt (lt_of_not_ge hj)
+      have hj_eq : j.1 = n + 1 := le_antisymm hj_le h_succ_le
+      simp [fullPrefix, extendFromFrozen, History.extendPairHistorySucc, hj_eq]
+  have h_map_congr :
+      @Measure.map
+          ((t : Nat) -> Prod Action Reward)
+          ((i : Finset.Iic (n + 1)) -> Prod Action Reward)
+          inferInstance inferInstance fullPrefix condKernel =
+        @Measure.map
+          ((t : Nat) -> Prod Action Reward)
+          ((i : Finset.Iic (n + 1)) -> Prod Action Reward)
+          inferInstance inferInstance extendFromFrozen condKernel := by
+    exact Measure.map_congr h_full_eq_extend
+  calc
+    @Measure.map
+        ((t : Nat) -> Prod Action Reward)
+        ((i : Finset.Iic (n + 1)) -> Prod Action Reward)
+        inferInstance inferInstance
+        (Preorder.frestrictLe (n + 1))
+        (@ProbabilityTheory.condExpKernel
+          ((t : Nat) -> Prod Action Reward) inferInstance _ trajMeasure _
+          ((inferInstance :
+            MeasurableSpace
+              ((i : Finset.Iic n) -> Prod Action Reward)).comap
+            (Preorder.frestrictLe n))
+          trajectory)
+        =
+      @Measure.map
+        ((t : Nat) -> Prod Action Reward)
+        ((i : Finset.Iic (n + 1)) -> Prod Action Reward)
+        inferInstance inferInstance extendFromFrozen condKernel := by
+        simpa [condKernel, prefixMap, fullPrefix] using h_map_congr
+    _ =
+      RewardKernel.actionRewardPartialTrajectoryKernel rewardKernel policy
+        context state hcontext hstate n (n + 1)
+        (Preorder.frestrictLe n trajectory) := by
+        simpa [condKernel, prefixMap, extendFromFrozen, stepKernel, trajMeasure]
+          using h_extend_eq
+
+/--
 Action-freezing hookup for the next-pair split-law route.
 
 If the next action is measurable at filtration level `F i`, the conditional

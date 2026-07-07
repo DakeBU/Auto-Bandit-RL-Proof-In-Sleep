@@ -4752,6 +4752,92 @@ theorem ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_extend_
   extension-map source shape only; the arbitrary ambient process
   identification remains open.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-PREFIX-CONDEXPKERNEL-MAP` is
+compiled locally:
+
+```lean
+theorem ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_prefix_condExpKernel_map_trajMeasure
+    {Context : Type x} {State : Type u} {Action : Type v}
+    {Reward : Type w}
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSpace Reward]
+    [StandardBorelSpace (Prod Action Reward)]
+    [StandardBorelSpace ((t : Nat) -> Prod Action Reward)]
+    [Nonempty (Prod Action Reward)]
+    [Nonempty ((t : Nat) -> Prod Action Reward)]
+    [MeasurableSingletonClass (Prod Action Reward)]
+    [Countable (Prod Action Reward)]
+    (mu0 : Measure (Prod Action Reward))
+    [MeasureTheory.IsProbabilityMeasure mu0]
+    (rewardKernel :
+      RewardKernel.MarkovRewardKernel (Prod Context Action) Reward)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Reward) -> Context)
+    (state :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Reward) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (n : Nat) :
+    let stepKernel :=
+      RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy
+        context state hcontext hstate
+    let trajMeasure :=
+      ProbabilityTheory.Kernel.trajMeasure
+        (X := fun _ : Nat => Prod Action Reward) mu0 stepKernel
+    Filter.Eventually
+      (fun trajectory : (t : Nat) -> Prod Action Reward =>
+        @Measure.map
+          ((t : Nat) -> Prod Action Reward)
+          ((i : Finset.Iic (n + 1)) -> Prod Action Reward)
+          inferInstance inferInstance
+          (Preorder.frestrictLe (n + 1))
+          (@ProbabilityTheory.condExpKernel
+            ((t : Nat) -> Prod Action Reward) inferInstance _ trajMeasure _
+            ((inferInstance :
+              MeasurableSpace
+                ((i : Finset.Iic n) -> Prod Action Reward)).comap
+              (Preorder.frestrictLe n))
+            trajectory) =
+        RewardKernel.actionRewardPartialTrajectoryKernel rewardKernel policy
+          context state hcontext hstate n (n + 1)
+          (Preorder.frestrictLe n trajectory))
+      (ae trajMeasure)
+```
+
+- Exact Lean-facing statement: the theorem above states that on the canonical
+  Mathlib `trajMeasure`, conditioning on the finite pair prefix
+  `Preorder.frestrictLe n` and pushing `condExpKernel` forward by the full
+  successor prefix map `Preorder.frestrictLe (n + 1)` gives the one-step
+  `RewardKernel.actionRewardPartialTrajectoryKernel` at the frozen old prefix.
+- Local APIs/imports:
+  `ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_extend_condExpKernel_map_trajMeasure`,
+  `ConditionalExpectationReward.condExpKernel_ae_eq_const_of_countable_measurable`,
+  `MeasureTheory.ae_of_ae_trim`, `Measure.map_congr`,
+  `History.extendPairHistorySucc`, and `Preorder.frestrictLe`.
+- Intended proof route: obtain the canonical extension-map law, prove the
+  conditioning prefix is frozen under `condExpKernel` by applying the
+  countable-valued frozen-prefix lemma to `Preorder.frestrictLe n`, lift the
+  trimmed a.e. frozen-prefix fact to ordinary `ae trajMeasure`, use
+  `Measure.map_congr` to replace the deterministic extension map by
+  `Preorder.frestrictLe (n + 1)`, then reuse the extension-map equality.
+- Regularity contracts: same standard Borel and countable pair/trajectory
+  contracts as the pair and extension canonical leaves; the frozen-prefix
+  step also uses `[MeasurableSingletonClass (Prod Action Reward)]` and
+  `[Countable (Prod Action Reward)]` to make the finite prefix
+  countable-valued for `condExpKernel_ae_eq_const_of_countable_measurable`.
+- Retrieval evidence:
+  `LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-PREFIX-CONDEXPKERNEL-MAP`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-EXTEND-CONDEXPKERNEL-MAP`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-FROZEN-HISTORY-CONDEXPKERNEL`, and
+  `LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-CONSUMER`.
+- Status: project-local compiled canonical `trajMeasure` full-prefix bridge
+  leaf for `COND-EXPECT-REWARD`.
+- Failure policy: do not cite this as an arbitrary ambient-process theorem.
+  It is a canonical Ionescu-Tulcea source law and still does not identify
+  `condExpKernel` for an arbitrary generated
+  `Omega`/`History.historyFiltrationSucc` process.
+
 `LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-REWARD-CONDEXPKERNEL-MAP` is
 compiled locally:
 
