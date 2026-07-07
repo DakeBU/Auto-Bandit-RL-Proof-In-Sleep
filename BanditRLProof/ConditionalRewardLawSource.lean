@@ -226,6 +226,115 @@ theorem actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finiteP
   exact source.partialtraj_map_eq i
 
 /--
+Build the generated-history finite-pair `partialTraj` source from the narrower
+frozen-prefix extension-map law.
+
+This packages the existing extension-to-full-trace adapter at the source layer:
+future disintegration work may prove only the conditional law of extending the
+already frozen `i`-prefix by the random successor pair, and this constructor
+turns that into the full `GeneratedActionPartialTrajectoryPairLawSource`.
+-/
+def generatedActionPartialTrajectoryPairLawSource_of_partialTrajectoryKernel_extend_map_eq
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (h_extend_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            @MeasureTheory.Measure.map Omega
+              ((j : Finset.Iic (i + 1)) -> Prod Action Rat)
+              mOmega inferInstance
+              (fun y : Omega =>
+                History.extendPairHistorySucc
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)
+                  (generatedActionFromRewardHistory policy state defaultAction
+                    reward y (i + 1), reward y (i + 1)))
+              (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+                ((History.historyFiltrationSucc
+                  (generatedActionFromRewardHistory policy state defaultAction
+                    reward)
+                  reward
+                  (generatedActionFromRewardHistory_measurable
+                    (policy := policy) (state := state)
+                    (defaultAction := defaultAction) (reward := reward)
+                    hreward hstate)
+                  hreward) i)
+                omega) =
+            RewardKernel.actionRewardPartialTrajectoryKernel rewardKernel
+              policy
+              (fun n history =>
+                context n (History.pairHistoryRewardProjection history))
+              (fun n history =>
+                state n (History.pairHistoryRewardProjection history))
+              (fun n : Nat =>
+                (hcontext n).comp
+                  (History.measurable_pairHistoryRewardProjection
+                    (Action := Action) (Reward := Rat) n))
+              (fun n : Nat =>
+                (hstate n).comp
+                  (History.measurable_pairHistoryRewardProjection
+                    (Action := Action) (Reward := Rat) n))
+              i (i + 1)
+              (History.finitePairHistoryOfTrace
+                (generatedActionFromRewardHistory policy state defaultAction
+                  reward omega)
+                (reward omega) i))
+          (ae
+            (mu.trim
+              ((History.historyFiltrationSucc
+                (generatedActionFromRewardHistory policy state defaultAction
+                  reward)
+                reward
+                (generatedActionFromRewardHistory_measurable
+                  (policy := policy) (state := state)
+                  (defaultAction := defaultAction) (reward := reward)
+                  hreward hstate)
+                hreward).le i)))) :
+    GeneratedActionPartialTrajectoryPairLawSource mu rewardKernel policy
+      context state defaultAction reward hreward where
+  hcontext := hcontext
+  hstate := hstate
+  partialtraj_map_eq := by
+    intro i
+    exact
+      actionRewardPartialTrajectoryKernel_map_eq_of_extend_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace
+        (mu := mu)
+        (action :=
+          generatedActionFromRewardHistory policy state defaultAction reward)
+        (rewardKernel := rewardKernel)
+        (policy := policy)
+        (context := context)
+        (state := state)
+        (hcontext := hcontext)
+        (hstate := hstate)
+        (reward := reward)
+        (haction :=
+          generatedActionFromRewardHistory_measurable
+            (policy := policy) (state := state)
+            (defaultAction := defaultAction) (reward := reward)
+            hreward hstate)
+        (hreward := hreward)
+        (i := i)
+        (h_extend_map_eq i)
+
+/--
 A generated-policy conditional next-pair law source.
 
 The action trace is generated by the shifted policy from the reward-history

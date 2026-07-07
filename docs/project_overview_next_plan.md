@@ -1248,6 +1248,12 @@ Context:
   theorem-card law shape.  This improves retrieval and downstream theorem
   application, while still leaving the actual disintegration/trajectory-law
   proof open.
+- `COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-FROM-EXTEND-MAP`
+  now compiles as a source constructor from the narrower frozen-prefix
+  extension-map law.  Future trajectory-law work can prove the extension-map
+  `partialTraj`/`condExpKernel` equality, then this wrapper builds the full
+  `GeneratedActionPartialTrajectoryPairLawSource` through the existing
+  extension-to-full-trace adapter.
 - `COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-RAW-RANGE-BOUNDED-SOURCE`
   now compiles as the practical source-conversion wrapper for that same
   source contract: `GeneratedActionPartialTrajectoryPairLawSource`, measurable

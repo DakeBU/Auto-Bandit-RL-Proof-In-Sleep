@@ -24100,6 +24100,95 @@ theorem ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_
   without the source, and do not mark
   `COND-EXPECT-REWARD-PARTIALTRAJ-CONDEXPKERNEL-PAIR-LAW-CARD` as compiled.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-FROM-EXTEND-MAP`
+is compiled locally:
+
+```lean
+def ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_of_partialTrajectoryKernel_extend_map_eq
+    ...
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (h_extend_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega =>
+            Measure.map
+              (fun y =>
+                History.extendPairHistorySucc
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)
+                  (generatedActionFromRewardHistory policy state
+                    defaultAction reward y (i + 1),
+                    reward y (i + 1)))
+              (condExpKernel
+                ((History.historyFiltrationSucc
+                  (generatedActionFromRewardHistory policy state
+                    defaultAction reward)
+                  reward
+                  (generatedActionFromRewardHistory_measurable ... hreward
+                    hstate)
+                  hreward) i)
+                omega)
+            =
+            RewardKernel.actionRewardPartialTrajectoryKernel rewardKernel
+              policy ... i (i + 1)
+              (History.finitePairHistoryOfTrace
+                (generatedActionFromRewardHistory policy state
+                  defaultAction reward omega)
+                (reward omega) i))
+          (ae (mu.trim
+            ((History.historyFiltrationSucc
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward)
+              reward
+              (generatedActionFromRewardHistory_measurable ... hreward
+                hstate)
+              hreward).le i)))) :
+    GeneratedActionPartialTrajectoryPairLawSource mu rewardKernel policy
+      context state defaultAction reward hreward
+```
+
+- Exact Lean-facing statement: given measurable context/state extractors and
+  a generated-history frozen-prefix extension-map law, construct the full
+  `GeneratedActionPartialTrajectoryPairLawSource`.  The input law pushes the
+  conditional kernel forward by
+  `History.extendPairHistorySucc (frozen i-prefix) (next generated action,
+  next reward)` and identifies it with
+  `RewardKernel.actionRewardPartialTrajectoryKernel ... i (i + 1)` at the
+  same frozen prefix.
+- Local APIs/imports:
+  `BanditRLProof.ConditionalRewardLawSource`,
+  `ConditionalExpectationReward.generatedActionFromRewardHistory`,
+  `ConditionalExpectationReward.generatedActionFromRewardHistory_measurable`,
+  `ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_of_extend_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace`,
+  `GeneratedActionPartialTrajectoryPairLawSource`,
+  `History.extendPairHistorySucc`,
+  `History.finitePairHistoryOfTrace`, `History.historyFiltrationSucc`,
+  `RewardKernel.actionRewardPartialTrajectoryKernel`, Mathlib
+  `condExpKernel`, `Measure.map`, and `IonescuTulcea.PartialTraj`.
+- Intended proof route: set `hcontext` and `hstate` as source fields, then
+  prove `partialtraj_map_eq` by applying the existing
+  extension-to-full-trace adapter to `h_extend_map_eq i`.
+- Regularity contracts: `[StandardBorelSpace Omega]`, finite `mu`,
+  `[Countable Action]`, timewise reward measurability, measurable
+  context/state extractors, generated-action measurability from
+  `generatedActionFromRewardHistory_measurable`, and the extension-map law as
+  an explicit source input.
+- Retrieval evidence:
+  `ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_of_partialTrajectoryKernel_extend_map_eq`,
+  `ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_partialTrajectoryPairLawSource`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-PROJECTION`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-CONSUMER`,
+  `LOCAL-LEAF-POLICY-REWARD-PARTIALTRAJ-SUCC-EXTEND-MAP`, and
+  `Mathlib.Probability.Kernel.IonescuTulcea.PartialTraj`.
+- Status: compiled-local source-constructor leaf.  It lowers the future source
+  obligation from a full finite-pair law to an extension-map law.
+- Failure policy: do not cite this as proving the extension-map law, do not
+  claim ambient trajectory transport, and do not mark
+  `COND-EXPECT-REWARD-PARTIALTRAJ-CONDEXPKERNEL-PAIR-LAW-CARD` as compiled.
+
 `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-RAW-RANGE-BOUNDED-SOURCE`
 is compiled locally:
 
