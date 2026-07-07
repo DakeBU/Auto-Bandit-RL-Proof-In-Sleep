@@ -2801,6 +2801,36 @@ example {Omega : Type}
       (mOmega := mOmega)
       mu mcond hm X h_integrable h_kernel_zero
 
+example {Omega Target Condition : Type}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [Nonempty Omega]
+    [mTarget : MeasurableSpace Target] [StandardBorelSpace Target]
+    [Nonempty Target] [MeasurableSingletonClass Target] [Countable Target]
+    [mCondition : MeasurableSpace Condition]
+    (mu : MeasureTheory.Measure Omega)
+    [MeasureTheory.IsFiniteMeasure mu]
+    (X : Omega -> Target) (Y : Omega -> Condition)
+    (hX : @Measurable Omega Target mOmega mTarget X)
+    (hY : @Measurable Omega Condition mOmega mCondition Y)
+    (kernel : ProbabilityTheory.Kernel Condition Target)
+    (hcond :
+      Filter.EventuallyEq (MeasureTheory.ae (mu.map Y))
+        (ProbabilityTheory.condDistrib X Y mu)
+        kernel) :
+    Filter.Eventually
+      (fun omega : Omega =>
+        @MeasureTheory.Measure.map Omega Target mOmega mTarget X
+          (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+            (mCondition.comap Y) omega) =
+        kernel (Y omega))
+      (MeasureTheory.ae mu) := by
+  exact
+    ConditionalExpectationReward.condExpKernel_map_eq_of_condDistrib_ae_eq_countable
+      (mOmega := mOmega)
+      (mTarget := mTarget)
+      (mCondition := mCondition)
+      mu X Y hX hY kernel hcond
+
 example {Omega : Type} {K : Nat}
     [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
     (mu : MeasureTheory.Measure Omega)

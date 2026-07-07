@@ -4536,6 +4536,63 @@ theorem ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_cond
   sub-Gaussian witness construction, arbitrary adaptive-policy predictability,
   or final ETC/UCB regret from this leaf.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-CONDDISTRIB-TO-CONDEXPKERNEL-MAP` is compiled
+locally:
+
+```lean
+theorem ConditionalExpectationReward.condExpKernel_map_eq_of_condDistrib_ae_eq_countable
+    {Omega : Type u} {Target : Type v} {Condition : Type w}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [Nonempty Omega]
+    [mTarget : MeasurableSpace Target] [StandardBorelSpace Target]
+    [Nonempty Target] [MeasurableSingletonClass Target] [Countable Target]
+    [mCondition : MeasurableSpace Condition]
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (X : Omega -> Target) (Y : Omega -> Condition)
+    (hX : @Measurable Omega Target mOmega mTarget X)
+    (hY : @Measurable Omega Condition mOmega mCondition Y)
+    (kernel : ProbabilityTheory.Kernel Condition Target)
+    (hcond :
+      Filter.EventuallyEq (ae (mu.map Y))
+        (ProbabilityTheory.condDistrib X Y mu)
+        kernel) :
+    Filter.Eventually
+      (fun omega : Omega =>
+        @Measure.map Omega Target mOmega mTarget X
+          (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+            (mCondition.comap Y) omega) =
+        kernel (Y omega))
+      (ae mu)
+```
+
+- Exact Lean-facing statement: for countable `Target`, an a.e. regular
+  conditional distribution identification
+  `condDistrib X Y mu = kernel` over `mu.map Y` implies that
+  `condExpKernel mu (mCondition.comap Y)` pushed forward by `X` is a.e.
+  `kernel (Y omega)`.
+- Local APIs/imports: `BanditRLProof.ConditionalExpectationReward`,
+  `ProbabilityTheory.condDistrib_apply_ae_eq_condExpKernel_map`,
+  `ProbabilityTheory.condExpKernel`, `ProbabilityTheory.Kernel.map`,
+  `Measure.ext_of_singleton`, and `ae_all_iff`.
+- Intended proof route: pull the `condDistrib` a.e. equality back along
+  `Y`; use Mathlib's eventwise `condDistrib`/`condExpKernel.map` equality on
+  each singleton; combine the singleton equalities by `ae_all_iff`; then use
+  `Measure.ext_of_singleton`.
+- Regularity contracts: `[StandardBorelSpace Omega]`, `[Nonempty Omega]`,
+  finite `mu`, measurable `X` and `Y`, standard Borel countable target with
+  measurable singletons, and an existing `condDistrib` law.
+- Retrieval evidence:
+  `LOCAL-LEAF-COND-EXPECT-REWARD-CONDDISTRIB-TO-CONDEXPKERNEL-MAP`,
+  `Mathlib.Probability.Kernel.Condexp`, and
+  `Mathlib.Probability.Kernel.CondDistrib`.
+- Status: project-local compiled bridge leaf.  It narrows the gap between
+  canonical `trajMeasure` conditional laws and project `condExpKernel`
+  consumers.
+- Failure policy: do not cite this as constructing the `condDistrib` law, the
+  generated-history `History.historyFiltrationSucc` law, or the final adaptive
+  theorem.  It only converts an already-proved `condDistrib` law into a
+  `condExpKernel` map law on countable targets.
+
 `LOCAL-LEAF-COND-EXPECT-REWARD-HISTORYSTEP-CONDEXPKERNEL-CONSUMER` is compiled
 locally:
 

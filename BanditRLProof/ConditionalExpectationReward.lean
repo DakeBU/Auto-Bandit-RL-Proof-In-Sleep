@@ -95,6 +95,81 @@ theorem hasSubgaussianMGF_mono_varianceProxy
         nlinarith
 
 /--
+Convert a `condDistrib` law into a `condExpKernel` pushforward law on a
+countable target.
+
+Mathlib supplies eventwise equality between regular conditional distributions
+and `condExpKernel` pushforwards.  This wrapper packages those singleton
+equalities into a measure equality when the target type is countable.  It is a
+local bridge from canonical `condDistrib` trajectory laws toward the
+`condExpKernel` map-law consumers below; it does not itself construct the
+trajectory law.
+-/
+theorem condExpKernel_map_eq_of_condDistrib_ae_eq_countable
+    {Omega : Type u} {Target : Type v} {Condition : Type w}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [Nonempty Omega]
+    [mTarget : MeasurableSpace Target] [StandardBorelSpace Target]
+    [Nonempty Target] [MeasurableSingletonClass Target] [Countable Target]
+    [mCondition : MeasurableSpace Condition]
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (X : Omega -> Target) (Y : Omega -> Condition)
+    (hX : @Measurable Omega Target mOmega mTarget X)
+    (hY : @Measurable Omega Condition mOmega mCondition Y)
+    (kernel : ProbabilityTheory.Kernel Condition Target)
+    (hcond :
+      Filter.EventuallyEq (ae (mu.map Y))
+        (ProbabilityTheory.condDistrib X Y mu)
+        kernel) :
+    Filter.Eventually
+      (fun omega : Omega =>
+        @Measure.map Omega Target mOmega mTarget X
+          (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+            (mCondition.comap Y) omega) =
+        kernel (Y omega))
+      (ae mu) := by
+  have hcond_pullback :
+      Filter.Eventually
+        (fun omega : Omega =>
+          ProbabilityTheory.condDistrib X Y mu (Y omega) =
+          kernel (Y omega))
+        (ae mu) :=
+    MeasureTheory.ae_of_ae_map hY.aemeasurable hcond
+  have hsingle :
+      Filter.Eventually
+        (fun omega : Omega =>
+          forall z : Target,
+            ((@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+                  (mCondition.comap Y)).map X omega) {z} =
+              kernel (Y omega) {z})
+        (ae mu) := by
+    rw [ae_all_iff]
+    intro z
+    have h_event :
+        Filter.EventuallyEq (ae mu)
+          (fun omega : Omega =>
+            ProbabilityTheory.condDistrib X Y mu (Y omega) {z})
+          (fun omega : Omega =>
+            ((@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+                (mCondition.comap Y)).map X omega) {z}) :=
+      ProbabilityTheory.condDistrib_apply_ae_eq_condExpKernel_map
+        (μ := mu) hX hY (MeasurableSet.singleton z)
+    filter_upwards [h_event, hcond_pullback] with omega h_event_eq hcond_eq
+    calc
+      ((@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+            (mCondition.comap Y)).map X omega) {z}
+          =
+        ProbabilityTheory.condDistrib X Y mu (Y omega) {z} := h_event_eq.symm
+      _ = kernel (Y omega) {z} := by rw [hcond_eq]
+  filter_upwards [hsingle] with omega hsingle_omega
+  have hkernel :
+      ((@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+          (mCondition.comap Y)).map X omega) =
+        kernel (Y omega) :=
+    Measure.ext_of_singleton hsingle_omega
+  simpa [ProbabilityTheory.Kernel.map_apply _ hX] using hkernel
+
+/--
 Generic `condExpKernel` map-law consumer for conditional sub-Gaussianity.
 
 If the conditional kernel pushed forward by `X` is trim-a.e. a target measure

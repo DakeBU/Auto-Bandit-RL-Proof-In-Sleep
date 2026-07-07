@@ -3264,6 +3264,24 @@ LOCAL_LEAF_CARDS = [
         "mathlib_routes": ["MLIB-CONDITIONAL-EXPECTATION", "MLIB-PROBABILITY-KERNEL", "Mathlib.Probability.Independence.Conditional"],
     },
     {
+        "id": "LOCAL-LEAF-COND-EXPECT-REWARD-CONDDISTRIB-TO-CONDEXPKERNEL-MAP",
+        "leaf_ids": [
+            "COND-EXPECT-REWARD",
+        ],
+        "module": "BanditRLProof.ConditionalExpectationReward",
+        "status": "leanCompiled",
+        "declarations": [
+            "ConditionalExpectationReward.condExpKernel_map_eq_of_condDistrib_ae_eq_countable",
+        ],
+        "role": "Compiled Mathlib-backed bridge from a regular conditional distribution law to a conditional-expectation-kernel pushforward law on countable targets: if condDistrib X Y mu is a.e. a kernel k over the conditioning variable, then condExpKernel mu (comap Y) pushed forward by X is a.e. k (Y omega). This packages Mathlib condDistrib_apply_ae_eq_condExpKernel_map plus singleton measure ext; it does not construct the trajectory law or final adaptive theorem.",
+        "mathlib_routes": [
+            "MLIB-CONDITIONAL-EXPECTATION",
+            "Mathlib.Probability.Kernel.Condexp",
+            "Mathlib.Probability.Kernel.CondDistrib",
+            "Mathlib.MeasureTheory.Measure.Dirac",
+        ],
+    },
+    {
         "id": "LOCAL-LEAF-COND-EXPECT-REWARD-HISTORYSTEP-CONDEXPKERNEL-CONSUMER",
         "leaf_ids": [
             "COND-EXPECT-REWARD",
@@ -8695,6 +8713,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- KERNEL-CENTERED-REWARD-LAW-TRANSFER is compiled locally as a kernel-level selected reward law transfer surface: policy-composed and finite reward-history step kernels inherit centered integrability, zero integral, and sub-Gaussian MGF witnesses from pointwise context/action reward laws; condExpKernel identification remains open.")
     print("- KERNEL-REWARD-MAP-LAW-TRANSFER is compiled locally as measure-level reward-marginal map equalities for one-step and history-step action/reward kernels; condExpKernel trajectory-law identification remains open.")
     print("- COND-EXPECT-REWARD-CONDEXPKERNEL-ZERO is compiled locally as a narrow condExpKernel-to-condExp zero bridge for centered rewards; it does not construct the trajectory-law condExpKernel identification.")
+    print("- COND-EXPECT-REWARD-CONDDISTRIB-TO-CONDEXPKERNEL-MAP is compiled locally as a countable-target Mathlib bridge from condDistrib laws to condExpKernel pushforward map laws; it consumes a condDistrib identification but does not construct the trajectory law.")
     print("- COND-EXPECT-REWARD-HISTORYSTEP-CONDEXPKERNEL-CONSUMER is compiled locally as an explicit law/integral-equality consumer from history-step centered-reward zero integral to ordinary conditional mean-zero; it still assumes the trajectory-law condExpKernel identification.")
     print("- COND-EXPECT-REWARD-HISTORYSTEP-CONDEXPKERNEL-MAP-CONSUMER is compiled locally as a reward-coordinate pushforward-map consumer plus frozen-past condition for ordinary conditional mean-zero; it now also has coordinate-measurable and generated-history raw/mean range wrappers that derive centered-reward integrability automatically; it still assumes, rather than proves, the trajectory-law condExpKernel identification.")
     print("- COND-EXPECT-REWARD-HISTORYSTEP-CONDEXPKERNEL-COND-MGF-CONSUMER is compiled locally as the conditional sub-Gaussian analogue: a condExpKernel pushforward map law plus explicit exponential integrability/centered measurability and a deterministic variance-proxy upper bound yield Mathlib HasCondSubgaussianMGF; coordinate-measurable and generated-history-filtration wrappers discharge the frozen-past equality, while source-level policy wrappers and trajectory-law construction remain open.")
