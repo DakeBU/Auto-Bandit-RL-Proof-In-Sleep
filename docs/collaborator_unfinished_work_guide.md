@@ -4924,6 +4924,101 @@ theorem ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_selecte
   canonical Ionescu-Tulcea source law and still needs transport to
   `History.historyFiltrationSucc`.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-SELECTED-ACTION-CONDEXPKERNEL-AE`
+is compiled locally:
+
+```lean
+theorem ConditionalExpectationReward.eventuallyEq_const_of_map_eq_dirac
+    {Omega : Type u} {Target : Type v}
+    [mOmega : MeasurableSpace Omega]
+    [mTarget : MeasurableSpace Target]
+    [MeasurableSingletonClass Target]
+    (mu : Measure Omega) (X : Omega -> Target) (x : Target)
+    (hX : @Measurable Omega Target mOmega mTarget X)
+    (hmap : @Measure.map Omega Target mOmega mTarget X mu =
+      Measure.dirac x) :
+    Filter.EventuallyEq (ae mu) X (fun _omega : Omega => x)
+
+theorem ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_selectedAction_condExpKernel_ae_trajMeasure
+    {Context : Type x} {State : Type u} {Action : Type v}
+    {Reward : Type w}
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSpace Reward]
+    [StandardBorelSpace (Prod Action Reward)]
+    [StandardBorelSpace Action]
+    [StandardBorelSpace ((t : Nat) -> Prod Action Reward)]
+    [Nonempty (Prod Action Reward)] [Nonempty Action]
+    [Nonempty ((t : Nat) -> Prod Action Reward)]
+    [MeasurableSingletonClass Action] [Countable Action]
+    (mu0 : Measure (Prod Action Reward))
+    [MeasureTheory.IsProbabilityMeasure mu0]
+    (rewardKernel :
+      RewardKernel.MarkovRewardKernel (Prod Context Action) Reward)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Reward) -> Context)
+    (state :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Reward) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (n : Nat) :
+    let stepKernel :=
+      RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy
+        context state hcontext hstate
+    let trajMeasure :=
+      ProbabilityTheory.Kernel.trajMeasure
+        (X := fun _ : Nat => Prod Action Reward) mu0 stepKernel
+    Filter.Eventually
+      (fun trajectory : (t : Nat) -> Prod Action Reward =>
+        Filter.EventuallyEq
+          (ae
+            (@ProbabilityTheory.condExpKernel
+              ((t : Nat) -> Prod Action Reward) inferInstance _
+              trajMeasure _
+              ((inferInstance :
+                MeasurableSpace
+                  ((i : Finset.Iic n) -> Prod Action Reward)).comap
+                (Preorder.frestrictLe n))
+              trajectory))
+          (fun y : (t : Nat) -> Prod Action Reward => (y (n + 1)).1)
+          (fun _y : (t : Nat) -> Prod Action Reward =>
+            (policy n).action
+              (state n (Preorder.frestrictLe n trajectory))))
+      (ae trajMeasure)
+```
+
+- Exact Lean-facing statement: the helper converts a measurable
+  `Measure.map X mu = Measure.dirac x` law into `X =ᵐ[mu] fun _ => x`.
+  The canonical theorem applies this helper to the selected-action
+  `trajMeasure` condExpKernel map law, yielding the conditional a.e. equality
+  of the next action coordinate with the policy-selected action at the frozen
+  finite prefix.
+- Local APIs/imports:
+  `ConditionalExpectationReward.eventuallyEq_const_of_map_eq_dirac`,
+  `ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_selectedAction_condExpKernel_map_trajMeasure`,
+  `MeasureTheory.ae_of_ae_map`, `Measure.dirac`, `Measure.map`,
+  `ProbabilityTheory.condExpKernel`, and `Preorder.frestrictLe`.
+- Intended proof route: use Mathlib's `ae_of_ae_map` plus the Dirac a.e.
+  simplification to pull a constant-law fact back through `Measure.map`; then
+  apply that helper pointwise to the canonical selected-action
+  `condExpKernel.map = dirac` theorem.
+- Regularity contracts: measurable-singleton target for the helper; for the
+  canonical theorem, standard Borel pair/action/trajectory spaces, nonempty
+  pair/action/trajectory spaces, measurable-singleton and countable `Action`,
+  initial probability measure, project-local Markov reward kernel, measurable
+  policy, and measurable pair-history context/state extractors.
+- Retrieval evidence:
+  `LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-SELECTED-ACTION-CONDEXPKERNEL-AE`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-SELECTED-ACTION-CONDEXPKERNEL-MAP`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-NEXTPAIR-SPLIT-LAW-BUILDER`,
+  `Mathlib.MeasureTheory.Measure.Map`, and
+  `Mathlib.MeasureTheory.Measure.Dirac`.
+- Status: project-local compiled canonical `trajMeasure` bridge leaf.
+- Failure policy: do not cite this as an arbitrary ambient
+  `Omega`/generated-history theorem.  It supplies the action side of the
+  split-law route only for canonical Ionescu-Tulcea trajectories; transport to
+  `History.historyFiltrationSucc` remains open.
+
 `LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-EXTEND-CONDEXPKERNEL-MAP` is
 compiled locally:
 

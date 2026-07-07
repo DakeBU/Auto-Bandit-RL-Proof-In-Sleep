@@ -3402,6 +3402,27 @@ LOCAL_LEAF_CARDS = [
         ],
     },
     {
+        "id": "LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-SELECTED-ACTION-CONDEXPKERNEL-AE",
+        "leaf_ids": [
+            "COND-EXPECT-REWARD",
+            "KERNEL-POLICY-BIND",
+        ],
+        "module": "BanditRLProof.ConditionalExpectationReward",
+        "status": "leanCompiled",
+        "declarations": [
+            "ConditionalExpectationReward.eventuallyEq_const_of_map_eq_dirac",
+            "ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_selectedAction_condExpKernel_ae_trajMeasure",
+        ],
+        "role": "Compiled canonical selected-action condExpKernel a.e. law: a reusable Dirac-pushforward helper turns Measure.map X mu = dirac x into X =ᵐ[mu] const x, and the canonical trajMeasure selected-action condExpKernel map law is converted into the conditional a.e. next-action equality required by the next-pair split-law builder. This supplies the action side on canonical Ionescu-Tulcea trajectories; arbitrary ambient Omega/History.historyFiltrationSucc transport remains open.",
+        "mathlib_routes": [
+            "LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-SELECTED-ACTION-CONDEXPKERNEL-MAP",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-NEXTPAIR-SPLIT-LAW-BUILDER",
+            "Mathlib.MeasureTheory.Measure.Map",
+            "Mathlib.MeasureTheory.Measure.Dirac",
+            "Mathlib.Probability.Kernel.Condexp",
+        ],
+    },
+    {
         "id": "LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-EXTEND-CONDEXPKERNEL-MAP",
         "leaf_ids": [
             "COND-EXPECT-REWARD",
@@ -8915,6 +8936,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- COND-EXPECT-REWARD-TRAJMEASURE-ACTION-CONDEXPKERNEL-MAP is compiled locally as the canonical trajMeasure next-action specialization: projecting the canonical next-pair condExpKernel map law through Prod.fst recovers the Dirac law at the policy-selected action; ambient Omega/History.historyFiltrationSucc transport remains open.")
     print("- COND-EXPECT-REWARD-TRAJMEASURE-ACTION-MARGINAL-CONDEXPKERNEL-MAP is compiled locally as the direct countable-Action canonical action-marginal law: applying the condDistrib-to-condExpKernel bridge to the next action coordinate and the canonical action condDistrib law recovers the Prod.fst marginal of RewardKernel.actionRewardHistoryStepKernelFamily; ambient Omega/History.historyFiltrationSucc transport remains open.")
     print("- COND-EXPECT-REWARD-TRAJMEASURE-SELECTED-ACTION-CONDEXPKERNEL-MAP is compiled locally as the direct countable-Action trajMeasure next-action specialization: applying the condDistrib-to-condExpKernel bridge to the next action coordinate and the canonical action condDistrib law recovers the policy-selected Dirac law without requiring Countable (Action x Reward); ambient Omega/History.historyFiltrationSucc transport remains open.")
+    print("- COND-EXPECT-REWARD-TRAJMEASURE-SELECTED-ACTION-CONDEXPKERNEL-AE is compiled locally as the canonical selected-action conditional a.e. law: a Dirac pushforward equality for the next-action condExpKernel map now yields the Filter.EventuallyEq action side consumed by the split-law builder; ambient Omega/History.historyFiltrationSucc transport remains open.")
     print("- COND-EXPECT-REWARD-TRAJMEASURE-EXTEND-CONDEXPKERNEL-MAP is compiled locally as the canonical extension-map specialization: the canonical next-pair condExpKernel map law pushed through History.extendPairHistorySucc recovers the one-step RewardKernel.actionRewardPartialTrajectoryKernel surface; ambient Omega/History.historyFiltrationSucc transport remains open.")
     print("- COND-EXPECT-REWARD-TRAJMEASURE-PREFIX-CONDEXPKERNEL-MAP is compiled locally as the canonical full-prefix specialization: the extension-map law plus condExpKernel frozen-prefix evidence rewrites the pushforward to Preorder.frestrictLe (n + 1), recovering RewardKernel.actionRewardPartialTrajectoryKernel on the full finite prefix; ambient Omega/History.historyFiltrationSucc transport remains open.")
     print("- COND-EXPECT-REWARD-TRAJMEASURE-REWARD-CONDEXPKERNEL-MAP is compiled locally as the canonical trajMeasure specialization: conditioning on the finite pair prefix and pushing condExpKernel forward by the next reward coordinate recovers the history-step reward marginal; ambient Omega/History.historyFiltrationSucc transport remains open.")
