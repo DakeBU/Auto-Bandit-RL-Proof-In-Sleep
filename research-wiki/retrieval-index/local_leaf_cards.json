@@ -7179,6 +7179,32 @@
     ]
   },
   {
+    "id": "LOCAL-LEAF-COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-CENTERED-SOURCE",
+    "leaf_ids": [
+      "COND-EXPECT-REWARD",
+      "ADAPTED-ACTION",
+      "MEAS-POLICY",
+      "MEAS-HISTORY",
+      "KERNEL-POLICY-BIND",
+      "KERNEL-REWARD",
+      "INT-REWARD-BOUNDED",
+      "MEAS-REWARD"
+    ],
+    "module": "BanditRLProof.ConditionalRewardLawSource",
+    "status": "leanCompiled",
+    "declarations": [
+      "ConditionalExpectationReward.generatedActionRandomPairCenteredSource_of_historyVarianceBoundedSource"
+    ],
+    "role": "Compiled project-local source-conversion leaf for the COND-EXPECT-REWARD route: a practical selected-history-variance raw-range/measurable-mean-range source now directly yields the integrability-based centered-source interface over generatedActionFromRewardHistory. It lowers through the already packaged bounded centered-source projection, so centered-source consumers no longer need to unpack the history-variance wrapper or manually derive integrability from centered bounds. It still assumes the packaged random next-pair law, raw/mean range regularity, selected-history variance ceilings, ambient trajectory-to-condExpKernel identification, and final adaptive theorem.",
+    "mathlib_routes": [
+      "MLIB-MEASURE-INTEGRAL",
+      "MLIB-CONDITIONAL-EXPECTATION",
+      "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-CENTERED-SOURCE-CONTRACT",
+      "LOCAL-LEAF-COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-BOUNDED-CENTERED-SOURCE",
+      "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-CENTERED-SOURCE"
+    ]
+  },
+  {
     "id": "LOCAL-LEAF-COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-DEFINITIONAL-CENTERED-SOURCE",
     "leaf_ids": [
       "COND-EXPECT-REWARD",

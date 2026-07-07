@@ -227,6 +227,12 @@ The requested unfinished-work workflow is now available:
   a source-conversion wrapper lowering the packaged selected-history-variance
   source through its base raw-range/measurable-mean-range source into the
   bounded centered-source interface.
+- `COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-CENTERED-SOURCE`
+  is compiled locally as
+  `ConditionalExpectationReward.generatedActionRandomPairCenteredSource_of_historyVarianceBoundedSource`,
+  a source-conversion wrapper lowering the packaged selected-history-variance
+  source through its bounded centered-source projection into the
+  integrability-based centered-source interface.
 - `COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-DEFINITIONAL-CENTERED-SOURCE`
   is compiled locally as
   `ConditionalExpectationReward.generatedActionRandomPairDefinitionalCenteredSource_of_historyVarianceBoundedSource`,
@@ -1716,6 +1722,15 @@ Context:
   projection.  This preserves deterministic centered reward bounds for
   bounded-integrability and tail consumers while keeping the selected-history
   variance ceiling as part of the source package.
+- `COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-CENTERED-SOURCE`
+  now compiles as the selected-history variance centered-source projection:
+  `generatedActionRandomPairCenteredSource_of_historyVarianceBoundedSource`
+  first lowers the history-variance wrapper to the bounded centered-source
+  projection and then reuses the existing integrability-based centered-source
+  conversion.  This gives downstream mean-zero and centered-source consumers a
+  direct interface from the selected-history variance source while keeping the
+  random next-pair law and time-indexed variance ceilings as source
+  assumptions.
 - `COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-DEFINITIONAL-CENTERED-SOURCE`
   now compiles as the uniform variance-source projection:
   `generatedActionRandomPairDefinitionalCenteredSource_of_uniformVarianceBoundedSource`

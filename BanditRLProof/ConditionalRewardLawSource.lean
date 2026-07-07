@@ -14620,6 +14620,81 @@ def generatedActionRandomPairBoundedCenteredSource_of_historyVarianceBoundedSour
       source)
 
 /--
+Lower a definitional generated-action raw-range/history-variance source into
+the integrability-based centered-source interface.
+
+This is the direct projection for consumers that need the centered-source
+contract rather than the stronger bounded-centered or definitional interfaces.
+-/
+def generatedActionRandomPairCenteredSource_of_historyVarianceBoundedSource
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (varianceCeiling : Nat -> NNReal)
+    (source :
+      GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource
+        mu rewardKernel policy context state mean varianceProxy defaultAction
+        reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling) :
+    GeneratedActionRandomPairCenteredSource mu
+      (generatedActionFromRewardHistory policy state defaultAction reward)
+      rewardKernel policy context state mean varianceProxy defaultAction reward
+      (generatedActionFromRewardHistory_measurable
+        (policy := policy) (state := state) (defaultAction := defaultAction)
+        (reward := reward) hreward
+        source.base_source.definitional_map_source.hstate)
+      hreward :=
+  generatedActionRandomPairCenteredSource_of_boundedCenteredSource
+    (mu := mu)
+    (action := generatedActionFromRewardHistory
+      policy state defaultAction reward)
+    (rewardKernel := rewardKernel)
+    (policy := policy)
+    (context := context)
+    (state := state)
+    (mean := mean)
+    (varianceProxy := varianceProxy)
+    (defaultAction := defaultAction)
+    (reward := reward)
+    (haction := generatedActionFromRewardHistory_measurable
+      (policy := policy) (state := state) (defaultAction := defaultAction)
+      (reward := reward) hreward
+      source.base_source.definitional_map_source.hstate)
+    (hreward := hreward)
+    (lo := fun i => rewardLo i - meanHi i)
+    (hi := fun i => rewardHi i - meanLo i)
+    (generatedActionRandomPairBoundedCenteredSource_of_historyVarianceBoundedSource
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (mean := mean)
+      (varianceProxy := varianceProxy)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (rewardLo := rewardLo)
+      (rewardHi := rewardHi)
+      (meanLo := meanLo)
+      (meanHi := meanHi)
+      (varianceCeiling := varianceCeiling)
+      source)
+
+/--
 Lower a definitional generated-action raw-range/uniform-variance source into
 the bounded centered-source interface.
 
