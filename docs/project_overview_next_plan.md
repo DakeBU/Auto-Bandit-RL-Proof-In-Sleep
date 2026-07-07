@@ -257,6 +257,12 @@ The requested unfinished-work workflow is now available:
   a source-consumer wrapper lowering the packaged selected-history-variance
   source through its generated random-pair map source into the canonical
   history-step next-pair law.
+- `COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE`
+  is compiled locally as
+  `ConditionalExpectationReward.generatedActionDefinitionalActualRewardMapSource_of_historyVarianceBoundedSource`,
+  a source-conversion wrapper lowering the packaged selected-history-variance
+  source through its base raw-range/measurable-mean-range source into the
+  weaker definitional generated actual-action reward-coordinate source.
 - `COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE`
   is compiled locally as
   `ConditionalExpectationReward.generatedActionActualRewardMapSource_of_historyVarianceBoundedSource`,
@@ -1774,6 +1780,16 @@ Context:
   consumers a direct interface from the selected-history variance source while
   keeping the random next-pair law and time-indexed variance ceilings as source
   assumptions.
+- `COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE`
+  now compiles as the selected-history variance definitional actual
+  reward-map projection:
+  `generatedActionDefinitionalActualRewardMapSource_of_historyVarianceBoundedSource`
+  first forgets the history-variance wrapper to its packaged practical
+  raw-range/measurable-mean-range source and then reuses the existing
+  definitional actual reward-coordinate projection.  This gives definitional
+  reward-coordinate consumers a direct interface from the selected-history
+  variance source while keeping the random next-pair law and time-indexed
+  variance ceilings as source assumptions.
 - `COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE`
   now compiles as the selected-history variance actual-reward-map projection:
   `generatedActionActualRewardMapSource_of_historyVarianceBoundedSource`
