@@ -2743,6 +2743,25 @@
       ]
     },
     {
+      "id": "LOCAL-LEAF-POLICY-REWARD-TRAJMEASURE-REWARD-CONDDISTRIB",
+      "leaf_ids": [
+        "COND-EXPECT-REWARD",
+        "KERNEL-POLICY-BIND"
+      ],
+      "module": "BanditRLProof.RewardKernel",
+      "status": "leanCompiled",
+      "declarations": [
+        "RewardKernel.actionRewardHistoryStepKernelFamily_reward_condDistrib_trajMeasure"
+      ],
+      "role": "Compiled Mathlib-backed canonical reward-marginal trajectory conditional law: for the action/reward history-step kernel family, condDistrib of the next reward coordinate given the finite pair prefix is a.e. the Prod.snd pushforward of RewardKernel.actionRewardHistoryStepKernelFamily. It is obtained from Mathlib condDistrib_comp plus the local next-pair trajMeasure law; it still does not identify an arbitrary ambient condExpKernel over Omega, transport History.historyFiltrationSucc, or prove the final adaptive theorem.",
+      "mathlib_routes": [
+        "Mathlib.Probability.Kernel.IonescuTulcea.Traj",
+        "Mathlib.Probability.Kernel.CondDistrib",
+        "LOCAL-LEAF-POLICY-REWARD-TRAJMEASURE-CONDDISTRIB-HISTORYSTEP",
+        "LOCAL-LEAF-KERNEL-REWARD-MAP-LAW-TRANSFER"
+      ]
+    },
+    {
       "id": "LOCAL-LEAF-KERNEL-CENTERED-REWARD-LAW-TRANSFER",
       "leaf_ids": [
         "COND-EXPECT-REWARD",
