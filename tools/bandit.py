@@ -7449,6 +7449,29 @@ LOCAL_LEAF_CARDS = [
         ],
     },
     {
+        "id": "LOCAL-LEAF-COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-RAW-RANGE-BOUNDED-SOURCE",
+        "leaf_ids": [
+            "COND-EXPECT-REWARD",
+            "ADAPTED-ACTION",
+            "MEAS-POLICY",
+            "KERNEL-POLICY-BIND",
+            "KERNEL-REWARD",
+            "INT-REWARD-BOUNDED",
+        ],
+        "module": "BanditRLProof.ConditionalRewardLawSource",
+        "status": "leanCompiled",
+        "declarations": [
+            "ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_uniformVarianceBoundedSource",
+        ],
+        "role": "Compiled project-local source-projection leaf for the COND-EXPECT-REWARD route: a practical definitional raw-range/measurable-mean-range uniform-variance source now directly exposes its packaged base raw-range/measurable-mean-range bounded source. This lets downstream non-variance consumers reuse the generated random-pair law and raw/mean range regularity without unpacking the uniform variance wrapper. It still assumes the packaged source fields, global variance ceiling, random next-pair law, ambient trajectory-to-condExpKernel identification, and final adaptive theorem.",
+        "mathlib_routes": [
+            "MLIB-CONDITIONAL-EXPECTATION",
+            "MLIB-MEASURE-INTEGRAL",
+            "Mathlib.MeasureTheory.Measure.Map",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-CONTRACT",
+        ],
+    },
+    {
         "id": "LOCAL-LEAF-COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-HISTORY-VARIANCE-SOURCE",
         "leaf_ids": [
             "COND-EXPECT-REWARD",
@@ -9542,6 +9565,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-COND-MGF-SOURCE-REGULARITY-CONSUMER is compiled locally as the practical conditional MGF wrapper that derives both centered-reward measurability and h_integrable_exp from source regularity; only variance-proxy domination remains explicit.")
     print("- COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-COND-MGF-UNIFORM-VARIANCE-CONSUMER is compiled locally as the practical conditional MGF wrapper that reduces the remaining trimmed-a.e. variance-domination side condition to a model-side uniform varianceProxy ceiling, with a packaged uniform-variance source wrapper.")
     print("- COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-COND-MGF-HISTORY-VARIANCE-CONSUMER is compiled locally as the practical conditional MGF wrapper that reduces the trimmed-a.e. variance-domination side condition to a selected finite-history varianceProxy ceiling, weaker than the global context/action ceiling.")
+    print("- COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-RAW-RANGE-BOUNDED-SOURCE is compiled locally as a source-projection leaf: a practical uniform-variance source now directly exposes its packaged raw-range/measurable-mean-range bounded base source; it still assumes the packaged random-pair law, raw/mean range regularity, and global variance ceiling.")
     print("- COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-HISTORY-VARIANCE-SOURCE is compiled locally as a source-conversion leaf: a packaged uniform variance ceiling yields the time-indexed selected-history variance source with constant ceiling fun _ => varianceCeiling.")
     print("- COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-VIA-HISTORY-COND-MGF is compiled locally as a convenience consumer: a packaged uniform variance source is converted to the selected-history variance source and then consumed through the history-variance conditional MGF interface; it still assumes the definitional random next-pair law source and ambient trajectory-to-condExpKernel identification.")
     print("- COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-LARGER-PROXY-COND-MGF is compiled locally as a coarser-proxy consumer: a packaged uniform variance source with global varianceCeiling can be consumed at any deterministic proxy c satisfying varianceCeiling <= c.")

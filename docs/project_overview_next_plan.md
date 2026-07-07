@@ -191,6 +191,12 @@ The requested unfinished-work workflow is now available:
 - `MEAS-REWARD` is compiled locally as
   `measurable_actionTrace_eval_eq_indicator_reward` in
   `BanditRLProof.MeasureFoundation`.
+- `COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-RAW-RANGE-BOUNDED-SOURCE`
+  is compiled locally as
+  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_uniformVarianceBoundedSource`,
+  a source-projection wrapper exposing the packaged practical base
+  raw-range/measurable-mean-range bounded source from a uniform-variance
+  source.
 - `MEAS-HISTORY` is compiled locally as finite action/reward history product
   objects, trace-restriction maps, and coordinate measurability over
   `Finset.Iic` prefixes in `BanditRLProof.HistoryFiltration`; it now also
