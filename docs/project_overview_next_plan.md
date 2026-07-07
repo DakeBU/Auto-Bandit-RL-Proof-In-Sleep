@@ -1268,6 +1268,14 @@ Context:
   `GeneratedActionPartialTrajectoryPairLawSource` through the split next-pair
   law builder and existing source adapters.  This narrows the next proof target
   to the two split laws while keeping the theorem-card law open.
+- `COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-FROM-SELECTED-REWARD-LAW`
+  now compiles as the selected-reward source constructor: for
+  `generatedActionFromRewardHistory`, the generated-trace action-freezing API
+  supplies the action side automatically, so the policy-selected
+  reward-coordinate `condExpKernel` map law alone builds the same
+  `GeneratedActionPartialTrajectoryPairLawSource`.  The remaining upstream
+  proof target is now the selected reward-coordinate law under the generated
+  history filtration.
 - `COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-RAW-RANGE-BOUNDED-SOURCE`
   now compiles as the practical source-conversion wrapper for that same
   source contract: `GeneratedActionPartialTrajectoryPairLawSource`, measurable
