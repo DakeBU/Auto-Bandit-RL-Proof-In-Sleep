@@ -1296,6 +1296,12 @@ Context:
   `GeneratedActionRandomPairDefinitionalMapSource` into
   `GeneratedActionDefinitionalActualRewardMapSource` using the source's
   state-measurability field.  This does not construct the random-pair law.
+- `COND-EXPECT-REWARD-RANDOM-PAIR-CENTERED-SOURCE-TO-RANDOM-PAIR-MAP-SOURCE`
+  now compiles as the centered source map-source projection:
+  `generatedActionRandomPairMapSource_of_randomPairCenteredSource` exposes the
+  source's packaged `GeneratedActionRandomPairMapSource` directly.  This is a
+  named interface wrapper; it does not construct the random next-pair law or
+  the ambient `condExpKernel` trajectory identification.
 - `COND-EXPECT-REWARD-RANDOM-PAIR-CENTERED-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE`
   now compiles as the centered-source projection layer:
   `generatedActionActualRewardMapSource_of_randomPairCenteredSource` weakens

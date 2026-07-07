@@ -16883,6 +16883,38 @@ example {Omega Context State Action : Type}
       ConditionalExpectationReward.GeneratedActionRandomPairCenteredSource
         mu action rewardKernel policy context state mean varianceProxy
         defaultAction reward haction hreward) :
+    ConditionalExpectationReward.GeneratedActionRandomPairMapSource
+      mu action rewardKernel policy context state defaultAction reward
+      haction hreward := by
+  exact
+    ConditionalExpectationReward.generatedActionRandomPairMapSource_of_randomPairCenteredSource
+      (mOmega := mOmega)
+      mu action rewardKernel policy context state mean varianceProxy
+      defaultAction reward haction hreward source
+
+example {Omega Context State Action : Type}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (action : Omega -> ActionTrace Action)
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (haction : forall t : Nat,
+      Measurable (fun omega : Omega => action omega t))
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (source :
+      ConditionalExpectationReward.GeneratedActionRandomPairCenteredSource
+        mu action rewardKernel policy context state mean varianceProxy
+        defaultAction reward haction hreward) :
     ConditionalExpectationReward.GeneratedActionActualRewardMapSource
       mu action rewardKernel policy context state defaultAction reward
       haction hreward := by

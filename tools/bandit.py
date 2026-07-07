@@ -4579,6 +4579,28 @@ LOCAL_LEAF_CARDS = [
         ],
     },
     {
+        "id": "LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-CENTERED-SOURCE-TO-RANDOM-PAIR-MAP-SOURCE",
+        "leaf_ids": [
+            "COND-EXPECT-REWARD",
+            "ADAPTED-ACTION",
+            "MEAS-POLICY",
+            "KERNEL-POLICY-BIND",
+            "KERNEL-REWARD",
+        ],
+        "module": "BanditRLProof.ConditionalRewardLawSource",
+        "status": "leanCompiled",
+        "declarations": [
+            "ConditionalExpectationReward.generatedActionRandomPairMapSource_of_randomPairCenteredSource",
+        ],
+        "role": "Compiled project-local source-conversion leaf for the COND-EXPECT-REWARD route: a generated-policy centered random next-pair source now directly exposes its packaged GeneratedActionRandomPairMapSource through a stable named projection. The centered reward-kernel law and per-step centered-reward integrability fields remain available for stronger centered consumers, but are not needed by this weaker map-source interface. It still assumes the random next-pair law, centered-source regularity fields, ambient trajectory-to-condExpKernel identification, and final adaptive theorem.",
+        "mathlib_routes": [
+            "MLIB-CONDITIONAL-EXPECTATION",
+            "Mathlib.MeasureTheory.Measure.Map",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-RANDOM-PAIR-SOURCE-CONTRACT",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-CENTERED-SOURCE-CONTRACT",
+        ],
+    },
+    {
         "id": "LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-CENTERED-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE",
         "leaf_ids": [
             "COND-EXPECT-REWARD",
@@ -9391,6 +9413,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- COND-EXPECT-REWARD-GENERATED-RANDOM-PAIR-SOURCE-RAW-RANGE-MEASURABLE-MEAN-RANGE-MEAN-ZERO is compiled locally as the source-level raw-range conditional mean-zero consumer: a packaged GeneratedActionRandomPairMapSource plus centered reward-kernel law, deterministic raw reward range bounds, deterministic selected-mean range bounds, and reward measurability yields succ-indexed ordinary conditional expectation zero without a separate integrability hypothesis; it still assumes the packaged random next-pair law and ambient trajectory-to-condExpKernel identification.")
     print("- COND-EXPECT-REWARD-GENERATED-RANDOM-PAIR-SOURCE-TO-HISTORYSTEP-PAIR-LAW is compiled locally as the source-level canonical pair-law consumer: GeneratedActionRandomPairMapSource now directly yields the RewardKernel.actionRewardHistoryStepKernelFamily next-pair law over History.finitePairHistoryOfTrace; it still assumes the random next-pair law source and ambient trajectory-to-condExpKernel identification.")
     print("- COND-EXPECT-REWARD-RANDOM-PAIR-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE is compiled locally as a source-conversion leaf: a generated random next-pair source now produces the weaker actual-action reward-coordinate map source by action freezing and Prod.snd marginalization; it still assumes the random pair law and state measurability.")
+    print("- COND-EXPECT-REWARD-RANDOM-PAIR-CENTERED-SOURCE-TO-RANDOM-PAIR-MAP-SOURCE is compiled locally as a source-conversion leaf: a centered generated random-pair source now directly exposes its packaged GeneratedActionRandomPairMapSource; it still assumes the random next-pair law and source regularity fields.")
     print("- COND-EXPECT-REWARD-RANDOM-PAIR-CENTERED-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE is compiled locally as a source-conversion leaf: a centered generated random-pair source now projects its packaged map source and state measurability into the weaker actual-action reward-coordinate source; it still assumes the centered source fields and random pair law.")
     print("- COND-EXPECT-REWARD-RANDOM-PAIR-BOUNDED-CENTERED-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE is compiled locally as a source-conversion leaf: a bounded centered generated random-pair source now projects its packaged map source and state measurability into the weaker actual-action reward-coordinate source; it still assumes the bounded-centered source fields and random pair law.")
     print("- COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-MAP-SOURCE-CONTRACT is compiled locally as the variant that defines the action trace as the shifted policy-generated trace over finite reward histories and derives its timewise measurability from measurable state extractors plus reward traces; it now also exposes source constructors from full finite-pair, frozen-prefix extension-map partialTraj, and canonical history-step next-pair law hypotheses, then reuses the generated random-pair map source consumers including the raw/mean range regularity mean-zero route; it still assumes the ambient trajectory-to-condExpKernel law shape and does not construct it.")
