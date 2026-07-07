@@ -24257,6 +24257,91 @@ noncomputable example
     [MeasurableSpace Context] [MeasurableSpace State]
     [MeasurableSpace Action] [MeasurableSpace Reward]
     [StandardBorelSpace (Prod Action Reward)]
+    [StandardBorelSpace Action]
+    [Nonempty (Prod Action Reward)] [Nonempty Action]
+    (mu0 : MeasureTheory.Measure (Prod Action Reward))
+    [MeasureTheory.IsProbabilityMeasure mu0]
+    (rewardKernel :
+      RewardKernel.MarkovRewardKernel (Prod Context Action) Reward)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Reward) -> Context)
+    (state :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Reward) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (n : Nat) :
+    Filter.EventuallyEq
+      (MeasureTheory.ae
+        ((ProbabilityTheory.Kernel.trajMeasure
+          (X := fun _ : Nat => Prod Action Reward)
+          mu0
+          (RewardKernel.actionRewardHistoryStepKernelFamily
+            rewardKernel policy context state hcontext hstate)).map
+          (Preorder.frestrictLe n)))
+      (ProbabilityTheory.condDistrib
+        (fun trajectory : (t : Nat) -> Prod Action Reward =>
+          (trajectory (n + 1)).1)
+        (Preorder.frestrictLe n)
+        (ProbabilityTheory.Kernel.trajMeasure
+          (X := fun _ : Nat => Prod Action Reward)
+          mu0
+          (RewardKernel.actionRewardHistoryStepKernelFamily
+            rewardKernel policy context state hcontext hstate)))
+      ((RewardKernel.actionRewardHistoryStepKernelFamily
+        rewardKernel policy context state hcontext hstate n).map Prod.fst) := by
+  exact
+    RewardKernel.actionRewardHistoryStepKernelFamily_action_condDistrib_trajMeasure
+      mu0 rewardKernel policy context state hcontext hstate n
+
+noncomputable example
+    {Context State Action Reward : Type}
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSpace Reward]
+    [StandardBorelSpace (Prod Action Reward)]
+    [StandardBorelSpace Action]
+    [Nonempty (Prod Action Reward)] [Nonempty Action]
+    (mu0 : MeasureTheory.Measure (Prod Action Reward))
+    [MeasureTheory.IsProbabilityMeasure mu0]
+    (rewardKernel :
+      RewardKernel.MarkovRewardKernel (Prod Context Action) Reward)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Reward) -> Context)
+    (state :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Reward) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (n : Nat) :
+    Filter.EventuallyEq
+      (MeasureTheory.ae
+        ((ProbabilityTheory.Kernel.trajMeasure
+          (X := fun _ : Nat => Prod Action Reward)
+          mu0
+          (RewardKernel.actionRewardHistoryStepKernelFamily
+            rewardKernel policy context state hcontext hstate)).map
+          (Preorder.frestrictLe n)))
+      (ProbabilityTheory.condDistrib
+        (fun trajectory : (t : Nat) -> Prod Action Reward =>
+          (trajectory (n + 1)).1)
+        (Preorder.frestrictLe n)
+        (ProbabilityTheory.Kernel.trajMeasure
+          (X := fun _ : Nat => Prod Action Reward)
+          mu0
+          (RewardKernel.actionRewardHistoryStepKernelFamily
+            rewardKernel policy context state hcontext hstate)))
+      (fun history : (i : Finset.Iic n) -> Prod Action Reward =>
+        MeasureTheory.Measure.dirac
+          ((policy n).action (state n history))) := by
+  exact
+    RewardKernel.actionRewardHistoryStepKernelFamily_selectedAction_condDistrib_trajMeasure
+      mu0 rewardKernel policy context state hcontext hstate n
+
+noncomputable example
+    {Context State Action Reward : Type}
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSpace Reward]
+    [StandardBorelSpace (Prod Action Reward)]
     [StandardBorelSpace Reward]
     [Nonempty (Prod Action Reward)] [Nonempty Reward]
     (mu0 : MeasureTheory.Measure (Prod Action Reward))
