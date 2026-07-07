@@ -19814,8 +19814,75 @@ theorem ETC.integral_real_pseudoRegret_argmaxCommitOracle_actionWithCommit_le_ex
 - Status: project-local compiled concrete fixed-product Bochner/Real
   expected-regret assembly.
 - Failure policy: this is still fixed product-coordinate and fixed
-  exploration.  It does not prove the sum-gap or max-gap Real adapters,
-  adaptive policy laws, conditional expectation source, or final ETC theorem.
+  exploration.  It does not remove the bad-gap contract itself; the max-gap
+  Real specialization is a separate adapter.  It does not prove the sum-gap
+  Real adapter, adaptive policy laws, conditional expectation source, or final
+  ETC theorem.
+
+`ETC-WRONG-COMMIT-INFINITEPI-BOCHNER-MAXGAP-ADAPTER` is compiled locally:
+
+```lean
+theorem ETC.integral_real_pseudoRegret_fixedProductArgmaxAction_le_fixedProductMaxGapIntegralRegretBoundReal_of_infinitePi_bounded_actionMean
+    {K : Nat}
+    (coordLaw : Nat -> MeasureTheory.Measure Rat)
+    [forall t : Nat, MeasureTheory.IsProbabilityMeasure (coordLaw t)]
+    (spec : ETC.Spec K)
+    (model : FiniteBanditModel K)
+    (baseCommitArm : Fin K)
+    (r : Nat)
+    (lo hi : Fin K -> Nat -> Real)
+    (hexplorationPulls_pos : 0 < spec.explorationPulls)
+    (h_coord_bound :
+      forall t, t < spec.explorationPulls * K ->
+        Filter.Eventually
+          (fun rewardValue : Rat =>
+            Set.Icc
+              (lo (ETC.actionWithCommit spec baseCommitArm t) t)
+              (hi (ETC.actionWithCommit spec baseCommitArm t) t)
+              (((rewardValue : Rat) : Real)))
+          (MeasureTheory.ae (coordLaw t)))
+    (h_coord_mean :
+      forall t, t < spec.explorationPulls * K ->
+        MeasureTheory.integral (coordLaw t)
+          (fun rewardValue : Rat => (((rewardValue : Rat) : Real))) =
+        (((model.mean (ETC.actionWithCommit spec baseCommitArm t) : Rat) : Real))) :
+    MeasureTheory.integral (MeasureTheory.Measure.infinitePi coordLaw)
+      (fun omega : RewardTrace Rat =>
+        (((pseudoRegret model
+          (ETC.fixedProductArgmaxAction spec model baseCommitArm omega)
+          (spec.explorationPulls * K + r) : Rat) : Real))) <=
+    ETC.fixedProductMaxGapIntegralRegretBoundReal
+      spec model baseCommitArm r lo hi
+```
+
+- Local APIs/imports:
+  `BanditRLProof.Algorithms.ETCInfinitePiExpectedRegretAssembly`,
+  `ETC.integral_real_pseudoRegret_argmaxCommitOracle_actionWithCommit_le_exploration_add_suffix_badGap_prob_of_infinitePi_bounded_actionMean`,
+  `FiniteBanditModel.gap_le_maxGap`, `FiniteBanditModel.maxGap_nonneg`,
+  `ETC.fixedProductMaxGapIntegralRegretBoundReal`, and
+  `ETC.fixedProductArgmaxAction`.
+- Intended proof route: specialize the concrete infinitePi bad-gap Bochner
+  theorem with `badGapBound := model.maxGap`; discharge the non-best gap bound
+  using `FiniteBanditModel.gap_le_maxGap`; discharge nonnegativity using
+  `FiniteBanditModel.maxGap_nonneg`; then unfold the named fixed-product action
+  trace and named Real max-gap RHS.
+- Regularity contracts: same fixed product-coordinate source assumptions as
+  the concrete bad-gap Bochner assembly: probability coordinate laws, fixed
+  `spec`, `model`, `baseCommitArm`, suffix `r`, interval bounds `lo hi`,
+  positive exploration count, action-matched coordinate a.s. bounds, and
+  coordinate mean identities.  There is no explicit `badGapBound`, `hbadGap`,
+  or `hbadGap_nonneg` contract in the polished wrapper.
+- Retrieval evidence: local declarations are
+  `ETC.fixedProductMaxGapIntegralRegretBoundReal`,
+  `ETC.integral_real_pseudoRegret_argmaxCommitOracle_actionWithCommit_le_exploration_add_suffix_maxGap_prob_of_infinitePi_bounded_actionMean`, and
+  `ETC.integral_real_pseudoRegret_fixedProductArgmaxAction_le_fixedProductMaxGapIntegralRegretBoundReal_of_infinitePi_bounded_actionMean`;
+  retrieval card is
+  `LOCAL-LEAF-ETC-WRONG-COMMIT-INFINITEPI-BOCHNER-MAXGAP-ADAPTER`.
+- Status: project-local compiled fixed-product Bochner/Real max-gap adapter.
+- Failure policy: do not present this as the final ETC theorem.  It is still
+  fixed product-coordinate and fixed exploration, does not construct adaptive
+  policy laws or conditional reward-law identification, and does not provide
+  the conservative sum-gap Real adapter.
 
 `ETC-WRONG-COMMIT-INFINITEPI-LINTEGRAL-REGRET-ASSEMBLY` is compiled locally:
 
