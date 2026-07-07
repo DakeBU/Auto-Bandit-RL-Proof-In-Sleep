@@ -1255,6 +1255,13 @@ Context:
   `varianceProxy context action <= varianceCeiling` builds the packaged
   uniform-variance practical source.  It prepares the conditional-MGF route
   without proving the underlying `partialTraj`/`condExpKernel` law.
+- `COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-UNIFORM-VARIANCE-COND-MGF`
+  now compiles as the source-level uniform MGF consumer: the same generated
+  `partialTraj` pair-law source plus raw/mean range regularity and a global
+  variance ceiling directly yields the succ-indexed
+  `ProbabilityTheory.HasCondSubgaussianMGF` witness.  It removes the need for
+  downstream callers to manually pass `hcontext`, `hstate`, and the full
+  finite-pair partialTraj law, while still leaving the theorem-card law open.
 - `COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-HISTORY-VARIANCE-SOURCE`
   now compiles as the selected-history companion: the same generated
   `partialTraj` pair-law source plus
