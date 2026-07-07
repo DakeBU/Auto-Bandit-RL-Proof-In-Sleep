@@ -7136,6 +7136,43 @@ def generatedActionRandomPairCenteredSource_of_boundedCenteredSource
       i
 
 /--
+Project a bounded centered generated random next-pair source directly to its
+packaged random-pair map source.
+
+The bounded source keeps a.e. measurability and interval-bound evidence for
+integrability consumers.  This wrapper records the weaker map-source interface
+under a stable name for downstream law consumers that do not need those bounds.
+-/
+def generatedActionRandomPairMapSource_of_randomPairBoundedCenteredSource
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (action : Omega -> ActionTrace Action)
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (haction : forall t : Nat,
+      Measurable (fun omega : Omega => action omega t))
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (lo hi : Nat -> Real)
+    (source :
+      GeneratedActionRandomPairBoundedCenteredSource mu action rewardKernel
+        policy context state mean varianceProxy defaultAction reward haction
+        hreward lo hi) :
+    GeneratedActionRandomPairMapSource mu action rewardKernel policy context
+      state defaultAction reward haction hreward :=
+  source.map_source
+
+/--
 Convert a bounded centered generated random next-pair source into the weaker
 generated actual-action reward-coordinate source.
 

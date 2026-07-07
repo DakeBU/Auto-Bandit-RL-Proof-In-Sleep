@@ -1310,6 +1310,13 @@ Context:
   packaged random-pair map source and state-measurability field.  The centered
   kernel law and integrability fields remain assumptions carried by the
   stronger source.
+- `COND-EXPECT-REWARD-RANDOM-PAIR-BOUNDED-CENTERED-SOURCE-TO-RANDOM-PAIR-MAP-SOURCE`
+  now compiles as the bounded-centered source map-source projection:
+  `generatedActionRandomPairMapSource_of_randomPairBoundedCenteredSource`
+  exposes the source's packaged `GeneratedActionRandomPairMapSource` directly.
+  Its a.e. measurability and interval-bound evidence remain available for
+  integrability consumers but are not needed by this weaker map-source
+  interface.
 - `COND-EXPECT-REWARD-RANDOM-PAIR-BOUNDED-CENTERED-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE`
   now compiles as the bounded-centered projection layer:
   `generatedActionActualRewardMapSource_of_randomPairBoundedCenteredSource`

@@ -8129,6 +8129,53 @@ def ConditionalExpectationReward.generatedActionActualRewardMapSource_of_randomP
   trajectory-to-`condExpKernel` identification, sub-Gaussianity, or final
   adaptive ETC/UCB theorem.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-BOUNDED-CENTERED-SOURCE-TO-RANDOM-PAIR-MAP-SOURCE`
+is compiled locally:
+
+```lean
+def ConditionalExpectationReward.generatedActionRandomPairMapSource_of_randomPairBoundedCenteredSource
+    ...
+    (lo hi : Nat -> Real)
+    (source :
+      ConditionalExpectationReward.GeneratedActionRandomPairBoundedCenteredSource
+        mu action rewardKernel policy context state mean varianceProxy
+        defaultAction reward haction hreward lo hi) :
+    ConditionalExpectationReward.GeneratedActionRandomPairMapSource
+      mu action rewardKernel policy context state defaultAction reward
+      haction hreward
+```
+
+- Exact Lean-facing statement: a
+  `GeneratedActionRandomPairBoundedCenteredSource` directly exposes the weaker
+  `GeneratedActionRandomPairMapSource` for the same generated action/reward
+  traces, reward kernel, policy, context, state, and default action.
+- Local APIs/imports: `BanditRLProof.ConditionalRewardLawSource`,
+  `ConditionalExpectationReward.GeneratedActionRandomPairBoundedCenteredSource`,
+  `ConditionalExpectationReward.GeneratedActionRandomPairMapSource`, and the
+  packaged field `GeneratedActionRandomPairBoundedCenteredSource.map_source`.
+- Intended proof route: return `source.map_source`.  The wrapper is a stable
+  named projection so downstream law consumers can depend on the weaker
+  random-pair map-source interface without unpacking the bounded-centered
+  source.
+- Regularity contracts: standard Borel sample space, finite measure,
+  measurable context/state/action spaces, measurable singleton and countable
+  action space, timewise measurable action/reward traces, plus all fields
+  already packaged by the bounded-centered source: context/state
+  measurability, centered reward-kernel law, random next-pair map source,
+  per-step a.e. centered-reward measurability, and per-step a.e. interval
+  bounds.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-BOUNDED-CENTERED-SOURCE-TO-RANDOM-PAIR-MAP-SOURCE`;
+  declaration is
+  `ConditionalExpectationReward.generatedActionRandomPairMapSource_of_randomPairBoundedCenteredSource`.
+- Status: project-local compiled source-conversion leaf for
+  `COND-EXPECT-REWARD`, `ADAPTED-ACTION`, `MEAS-POLICY`,
+  `KERNEL-POLICY-BIND`, `KERNEL-REWARD`, and `INT-REWARD-BOUNDED`.
+- Failure policy: this is a projection wrapper only.  It does not derive the
+  random next-pair law, centered-kernel law, a.e. bound evidence, ambient
+  trajectory-to-`condExpKernel` identification, sub-Gaussianity, or final
+  adaptive ETC/UCB theorem.
+
 `LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-BOUNDED-CENTERED-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE`
 is compiled locally:
 
