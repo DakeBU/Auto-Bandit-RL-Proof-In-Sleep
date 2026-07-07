@@ -251,6 +251,12 @@ The requested unfinished-work workflow is now available:
   a source-conversion wrapper lowering the packaged selected-history-variance
   source through its base raw-range/measurable-mean-range source into the
   explicit generated random-pair map source.
+- `COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-PARTIALTRAJ-PAIR-LAW-SOURCE`
+  is compiled locally as
+  `ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_of_historyVarianceBoundedSource`,
+  a source-conversion wrapper lowering the packaged selected-history-variance
+  source through its base raw-range/measurable-mean-range source into the
+  generated full finite-pair `partialTraj` source.
 - `COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-HISTORYSTEP-PAIR-LAW`
   is compiled locally as
   `ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_historyVarianceBoundedSource`,
@@ -1880,6 +1886,16 @@ Context:
   and partialTraj consumers a direct interface from the selected-history
   variance source while keeping the random next-pair law and time-indexed
   variance ceilings as source assumptions.
+- `COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-PARTIALTRAJ-PAIR-LAW-SOURCE`
+  now compiles as the selected-history variance full finite-pair
+  `partialTraj` source projection:
+  `generatedActionPartialTrajectoryPairLawSource_of_historyVarianceBoundedSource`
+  first forgets the history-variance wrapper to its packaged practical
+  raw-range/measurable-mean-range source and then reuses the raw-range-to-
+  `partialTraj` source conversion.  This gives full finite-pair consumers a
+  direct interface from the selected-history variance source while keeping the
+  random next-pair law and time-indexed variance ceilings as source
+  assumptions.
 - `COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-HISTORYSTEP-PAIR-LAW`
   now compiles as the selected-history variance history-step pair-law
   consumer:

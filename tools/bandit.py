@@ -8157,6 +8157,32 @@ LOCAL_LEAF_CARDS = [
         ],
     },
     {
+        "id": "LOCAL-LEAF-COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-PARTIALTRAJ-PAIR-LAW-SOURCE",
+        "leaf_ids": [
+            "COND-EXPECT-REWARD",
+            "ADAPTED-ACTION",
+            "MEAS-POLICY",
+            "MEAS-HISTORY",
+            "KERNEL-POLICY-BIND",
+            "KERNEL-REWARD",
+            "INT-REWARD-BOUNDED",
+            "MEAS-REWARD",
+        ],
+        "module": "BanditRLProof.ConditionalRewardLawSource",
+        "status": "leanCompiled",
+        "declarations": [
+            "ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_of_historyVarianceBoundedSource",
+        ],
+        "role": "Compiled project-local source-conversion leaf for the COND-EXPECT-REWARD route: a practical selected-history-variance raw-range/measurable-mean-range source now lowers through its packaged base source into GeneratedActionPartialTrajectoryPairLawSource over generatedActionFromRewardHistory. This hides the history-variance wrapper for full finite-pair partialTraj-source consumers while preserving the packaged random next-pair law assumption. It still assumes the raw/mean range regularity, selected-history variance ceilings, packaged definitional random-pair law, ambient partialTraj/condExpKernel trajectory identification, and final adaptive theorem.",
+        "mathlib_routes": [
+            "MLIB-CONDITIONAL-EXPECTATION",
+            "Mathlib.Probability.Kernel.IonescuTulcea.PartialTraj",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-RAW-RANGE-BOUNDED-SOURCE",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-PARTIALTRAJ-PAIR-LAW-SOURCE",
+            "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-FROM-DEFINITIONAL-MAP-SOURCE",
+        ],
+    },
+    {
         "id": "LOCAL-LEAF-COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-HISTORYSTEP-PAIR-LAW",
         "leaf_ids": [
             "COND-EXPECT-REWARD",
@@ -10430,6 +10456,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-CENTERED-SOURCE is compiled locally as a source-conversion leaf: a practical uniform-variance source now lowers through its bounded centered-source projection into the integrability-based centered-source interface over generatedActionFromRewardHistory.")
     print("- COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-RAW-RANGE-BOUNDED-SOURCE is compiled locally as a source-projection leaf: a practical selected-history-variance source now directly exposes its packaged raw-range/measurable-mean-range bounded base source; it still assumes the packaged random-pair law, raw/mean range regularity, and selected-history variance ceilings.")
     print("- COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-RANDOM-PAIR-MAP-SOURCE is compiled locally as a source-conversion leaf: a practical selected-history-variance source now lowers through its packaged base source into the explicit generated random-pair map source over generatedActionFromRewardHistory.")
+    print("- COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-PARTIALTRAJ-PAIR-LAW-SOURCE is compiled locally as a source-conversion leaf: a practical selected-history-variance source now lowers through its packaged raw-range base source into GeneratedActionPartialTrajectoryPairLawSource; it still assumes the packaged random-pair law and does not prove the ambient partialTraj/condExpKernel trajectory identification.")
     print("- COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-HISTORYSTEP-PAIR-LAW is compiled locally as a source-consumer leaf: a practical selected-history-variance source now lowers through its generated random-pair map source into the canonical RewardKernel.actionRewardHistoryStepKernelFamily next-pair law over generatedActionFromRewardHistory.")
     print("- COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE is compiled locally as a source-conversion leaf: a practical selected-history-variance source now lowers through its packaged base source into the weaker definitional generated actual-action reward-coordinate source over generatedActionFromRewardHistory.")
     print("- COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE is compiled locally as a source-conversion leaf: a practical selected-history-variance source now lowers through its packaged base source into the explicit generated actual-action reward-map source over generatedActionFromRewardHistory.")
