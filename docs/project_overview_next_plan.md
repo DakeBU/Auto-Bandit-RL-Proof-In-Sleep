@@ -1504,6 +1504,12 @@ Context:
   its consumers.  Raw reward bounds, mean measurability, deterministic mean
   range bounds, the random pair law, and ambient `condExpKernel` trajectory
   identification remain open.
+- `COND-EXPECT-REWARD-RANDOM-PAIR-RAW-BOUND-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-RANDOM-PAIR-MAP-SOURCE`
+  now compiles as the raw-bound/measurable-mean-range map-source projection:
+  `generatedActionRandomPairMapSource_of_randomPairRawBoundMeasurableMeanRangeBoundedSource`
+  exposes the source's packaged `GeneratedActionRandomPairMapSource` directly.
+  This is a named interface wrapper; it does not construct the random
+  next-pair law or the ambient `condExpKernel` trajectory identification.
 - `COND-EXPECT-REWARD-RANDOM-PAIR-RAW-BOUND-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-HISTORYSTEP-PAIR-LAW`
   now compiles as the raw-bound/measurable-mean-range canonical pair-law
   consumer: `GeneratedActionRandomPairRawBoundMeasurableMeanRangeBoundedSource`
