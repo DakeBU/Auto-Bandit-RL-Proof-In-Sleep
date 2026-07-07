@@ -197,6 +197,12 @@ The requested unfinished-work workflow is now available:
   a source-projection wrapper exposing the packaged practical base
   raw-range/measurable-mean-range bounded source from a uniform-variance
   source.
+- `COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-RANDOM-PAIR-MAP-SOURCE`
+  is compiled locally as
+  `ConditionalExpectationReward.generatedActionRandomPairMapSource_of_uniformVarianceBoundedSource`,
+  a source-conversion wrapper lowering the packaged uniform-variance source
+  through its base raw-range/measurable-mean-range source into the explicit
+  generated random-pair map source.
 - `COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE`
   is compiled locally as
   `ConditionalExpectationReward.generatedActionActualRewardMapSource_of_uniformVarianceBoundedSource`,
@@ -1752,6 +1758,15 @@ Context:
   direct interface from the selected-history variance source while keeping the
   random next-pair law and time-indexed variance ceilings as source
   assumptions.
+- `COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-RANDOM-PAIR-MAP-SOURCE`
+  now compiles as the uniform variance random-pair map projection:
+  `generatedActionRandomPairMapSource_of_uniformVarianceBoundedSource`
+  first forgets the uniform-variance wrapper to its packaged practical
+  raw-range/measurable-mean-range source and then reuses the explicit
+  generated random-pair map-source projection.  This gives full next-pair law
+  and partialTraj consumers a direct interface from the uniform variance
+  source while keeping the random next-pair law and global variance ceiling as
+  source assumptions.
 - `COND-EXPECT-REWARD-UNIFORM-VARIANCE-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE`
   now compiles as the uniform variance actual-reward-map projection:
   `generatedActionActualRewardMapSource_of_uniformVarianceBoundedSource`
