@@ -2664,6 +2664,28 @@ LOCAL_LEAF_CARDS = [
         ],
     },
     {
+        "id": "LOCAL-LEAF-ETC-WRONG-COMMIT-INFINITEPI-BOCHNER-SUMGAP-ADAPTER",
+        "leaf_ids": [
+            "ETC-WRONG-COMMIT-INFINITEPI-BOCHNER-SUMGAP-ADAPTER",
+        ],
+        "module": "BanditRLProof.Algorithms.ETCInfinitePiExpectedRegretAssembly",
+        "status": "leanCompiled",
+        "declarations": [
+            "ETC.fixedProductSumGapIntegralRegretBoundReal",
+            "ETC.integral_real_pseudoRegret_argmaxCommitOracle_actionWithCommit_le_exploration_add_suffix_sumGap_prob_of_infinitePi_bounded_actionMean",
+            "ETC.integral_real_pseudoRegret_fixedProductArgmaxAction_le_fixedProductSumGapIntegralRegretBoundReal_of_infinitePi_bounded_actionMean",
+        ],
+        "role": "Compiled conservative sum-gap specialization of the concrete fixed-product Bochner/Real ETC expected-regret assembly. It removes the explicit badGapBound and hbadGap contracts by using the finite sum of all model gaps, FiniteBanditModel.gap_nonneg, and Finset.single_le_sum, exposes a named Real sum-gap RHS, and provides the polished fixedProductArgmaxAction wrapper. It remains fixed-product/fixed-exploration and does not prove adaptive policy laws or the final ETC theorem.",
+        "mathlib_routes": [
+            "LOCAL-LEAF-ETC-WRONG-COMMIT-INFINITEPI-BOCHNER-REGRET-ASSEMBLY",
+            "LOCAL-LEAF-FINITE-BANDIT-MODEL-INVARIANTS",
+            "LOCAL-LEAF-ETC-WRONG-COMMIT-INFINITEPI-SUMGAP-LINTEGRAL-REGRET-ASSEMBLY",
+            "MLIB-MEASURE-INTEGRAL",
+            "MLIB-FINSET-SUMS",
+            "MLIB-ORDER-ALGEBRA",
+        ],
+    },
+    {
         "id": "LOCAL-LEAF-ETC-WRONG-COMMIT-INFINITEPI-BOCHNER-MAXGAP-ADAPTER",
         "leaf_ids": [
             "ETC-WRONG-COMMIT-INFINITEPI-BOCHNER-MAXGAP-ADAPTER",
@@ -2675,7 +2697,7 @@ LOCAL_LEAF_CARDS = [
             "ETC.integral_real_pseudoRegret_argmaxCommitOracle_actionWithCommit_le_exploration_add_suffix_maxGap_prob_of_infinitePi_bounded_actionMean",
             "ETC.integral_real_pseudoRegret_fixedProductArgmaxAction_le_fixedProductMaxGapIntegralRegretBoundReal_of_infinitePi_bounded_actionMean",
         ],
-        "role": "Compiled max-gap specialization of the concrete fixed-product Bochner/Real ETC expected-regret assembly. It removes the explicit badGapBound and hbadGap contracts by using FiniteBanditModel.gap_le_maxGap and maxGap_nonneg, exposes a named Real max-gap RHS, and provides the polished fixedProductArgmaxAction wrapper. It remains fixed-product/fixed-exploration and does not prove the sum-gap Real adapter, adaptive policy laws, or final ETC theorem.",
+        "role": "Compiled max-gap specialization of the concrete fixed-product Bochner/Real ETC expected-regret assembly. It removes the explicit badGapBound and hbadGap contracts by using FiniteBanditModel.gap_le_maxGap and maxGap_nonneg, exposes a named Real max-gap RHS, and provides the polished fixedProductArgmaxAction wrapper. It remains fixed-product/fixed-exploration and does not prove adaptive policy laws or the final ETC theorem.",
         "mathlib_routes": [
             "LOCAL-LEAF-ETC-WRONG-COMMIT-INFINITEPI-BOCHNER-REGRET-ASSEMBLY",
             "LOCAL-LEAF-FINITE-BANDIT-MODEL-INVARIANTS",
@@ -8841,6 +8863,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- ETC-WRONG-COMMIT-BOCHNER-REGRET-ASSEMBLY is compiled locally as the Bochner/Real expected-regret bridge using an abstract Real wrong-commit probability bound and an explicit integrability contract.")
     print("- ETC-ACTIONWITHCOMMIT-PSEUDOREGRET-INTEGRABILITY is compiled locally as the finite-valued measurable commit selector integrability helper for Bochner expected-regret wrappers.")
     print("- ETC-WRONG-COMMIT-INFINITEPI-BOCHNER-REGRET-ASSEMBLY is compiled locally as the concrete fixed-product argmax/infinitePi Bochner expected-regret assembly with a named Real bad-gap RHS.")
+    print("- ETC-WRONG-COMMIT-INFINITEPI-BOCHNER-SUMGAP-ADAPTER is compiled locally as the fixed-product argmax/infinitePi Bochner conservative sum-gap specialization with a named Real sum-gap RHS.")
     print("- ETC-WRONG-COMMIT-INFINITEPI-BOCHNER-MAXGAP-ADAPTER is compiled locally as the fixed-product argmax/infinitePi Bochner max-gap specialization with a named Real max-gap RHS.")
     print("- ETC-WRONG-COMMIT-INFINITEPI-LINTEGRAL-REGRET-ASSEMBLY is compiled locally as the concrete argmax/infinitePi ENNReal.ofReal lower-integral regret assembly.")
     print("- ETC-WRONG-COMMIT-INFINITEPI-SUMGAP-LINTEGRAL-REGRET-ASSEMBLY is compiled locally as the conservative sum-gap suffix adapter for that concrete lower-integral assembly.")
