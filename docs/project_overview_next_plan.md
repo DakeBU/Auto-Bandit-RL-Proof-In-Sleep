@@ -197,6 +197,12 @@ The requested unfinished-work workflow is now available:
   a source-projection wrapper exposing the packaged practical base
   raw-range/measurable-mean-range bounded source from a uniform-variance
   source.
+- `COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-RAW-RANGE-BOUNDED-SOURCE`
+  is compiled locally as
+  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_historyVarianceBoundedSource`,
+  a source-projection wrapper exposing the packaged practical base
+  raw-range/measurable-mean-range bounded source from a selected-history
+  variance source.
 - `MEAS-HISTORY` is compiled locally as finite action/reward history product
   objects, trace-restriction maps, and coordinate measurability over
   `Finset.Iic` prefixes in `BanditRLProof.HistoryFiltration`; it now also

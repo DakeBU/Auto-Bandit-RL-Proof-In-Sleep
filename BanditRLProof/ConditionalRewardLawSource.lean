@@ -3402,6 +3402,43 @@ def generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSourc
   source.base_source
 
 /--
+Project a definitional raw-range/measurable-mean-range history-variance source
+to its packaged base raw-range/measurable-mean-range bounded source.
+
+The history-variance source adds selected-history variance-proxy ceilings for
+MGF consumers.  This wrapper records the weaker base-source interface for
+downstream consumers that only need the generated random-pair law and raw/mean
+range regularity.
+-/
+def generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_historyVarianceBoundedSource
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (varianceCeiling : Nat -> NNReal)
+    (source :
+      GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource
+        mu rewardKernel policy context state mean varianceProxy defaultAction
+        reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling) :
+    GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource
+      mu rewardKernel policy context state mean varianceProxy defaultAction
+      reward hreward rewardLo rewardHi meanLo meanHi :=
+  source.base_source
+
+/--
 A uniform variance-proxy ceiling is a constant time-indexed selected-history
 variance ceiling.
 
