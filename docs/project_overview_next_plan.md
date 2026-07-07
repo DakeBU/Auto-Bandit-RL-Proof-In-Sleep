@@ -1457,6 +1457,12 @@ Context:
   reward-measurability-from-`hreward` source layer aligned with the canonical
   next-pair law while still leaving the random next-pair law and ambient
   `condExpKernel` trajectory identification as assumptions.
+- `COND-EXPECT-REWARD-RANDOM-PAIR-RAW-BOUND-MEAN-BOUNDED-SOURCE-TO-RANDOM-PAIR-MAP-SOURCE`
+  now compiles as the raw-bound/mean-bounded map-source projection:
+  `generatedActionRandomPairMapSource_of_randomPairRawBoundMeanBoundedSource`
+  exposes the source's packaged `GeneratedActionRandomPairMapSource` directly.
+  This is a named interface wrapper; it does not construct the random
+  next-pair law or the ambient `condExpKernel` trajectory identification.
 - `COND-EXPECT-REWARD-RANDOM-PAIR-RAW-BOUND-MEAN-BOUNDED-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE`
   now compiles as the raw-bound/mean-bounded projection layer:
   `generatedActionActualRewardMapSource_of_randomPairRawBoundMeanBoundedSource`

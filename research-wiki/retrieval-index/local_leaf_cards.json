@@ -4973,6 +4973,31 @@
       ]
     },
     {
+      "id": "LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-RAW-BOUND-MEAN-BOUNDED-SOURCE-TO-RANDOM-PAIR-MAP-SOURCE",
+      "leaf_ids": [
+        "COND-EXPECT-REWARD",
+        "ADAPTED-ACTION",
+        "MEAS-POLICY",
+        "KERNEL-POLICY-BIND",
+        "KERNEL-REWARD",
+        "INT-REWARD-BOUNDED",
+        "MEAS-REWARD"
+      ],
+      "module": "BanditRLProof.ConditionalRewardLawSource",
+      "status": "leanCompiled",
+      "declarations": [
+        "ConditionalExpectationReward.generatedActionRandomPairMapSource_of_randomPairRawBoundMeanBoundedSource"
+      ],
+      "role": "Compiled project-local source-conversion leaf for the COND-EXPECT-REWARD route: a raw-reward-bound/selected-mean bounded generated-policy random next-pair source now directly exposes its packaged GeneratedActionRandomPairMapSource through a stable named projection. The raw reward interval bounds and selected mean a.e. measurability/bound fields remain available for stronger centered-bound and integrability consumers, but are not needed by this weaker map-source interface. It still assumes the random next-pair law, raw-bound/mean-bounded source regularity fields, ambient trajectory-to-condExpKernel identification, and final adaptive theorem.",
+      "mathlib_routes": [
+        "MLIB-CONDITIONAL-EXPECTATION",
+        "MLIB-MEASURE-INTEGRAL",
+        "Mathlib.MeasureTheory.Measure.Map",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-RANDOM-PAIR-SOURCE-CONTRACT",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-RAW-BOUND-MEAN-BOUNDED-SOURCE-CONTRACT"
+      ]
+    },
+    {
       "id": "LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-RAW-BOUND-MEAN-BOUNDED-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE",
       "leaf_ids": [
         "COND-EXPECT-REWARD",
