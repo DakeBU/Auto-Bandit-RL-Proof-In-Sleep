@@ -24285,6 +24285,95 @@ def ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMe
   ceiling as constructed from reward laws.  Conditional MGF consumers still
   require their separate source or consumer leaves.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-HISTORY-VARIANCE-COND-MGF`
+is compiled locally:
+
+```lean
+theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_partialTrajectoryPairLawSource_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded
+    ...
+    (varianceCeiling : Nat -> NNReal)
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (hvariance :
+      forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat),
+        varianceProxy (context i history)
+          ((policy i).action (state i history)) <= varianceCeiling i)
+    (source :
+      GeneratedActionPartialTrajectoryPairLawSource mu rewardKernel policy
+        context state defaultAction reward hreward)
+    (i : Nat) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward source.hstate)
+        hreward) i)
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward source.hstate)
+        hreward).le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      (varianceCeiling i) mu
+```
+
+- Exact Lean-facing statement: a packaged generated-history full finite-pair
+  `partialTraj`/`condExpKernel` law source, together with raw/mean range
+  regularity and selected-history variance ceilings, directly gives the
+  succ-indexed conditional sub-Gaussian MGF witness at proxy
+  `varianceCeiling i`.
+- Local APIs/imports:
+  `BanditRLProof.ConditionalRewardLawSource`,
+  `GeneratedActionPartialTrajectoryPairLawSource`,
+  `generatedActionFromRewardHistory`,
+  `generatedActionFromRewardHistory_measurable`,
+  `centeredReward_succ_hasCondSubgaussianMGF_of_actionRewardPartialTrajectoryKernel_map_eq_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded`,
+  `RewardKernel.CenteredRewardKernelLaw`, Mathlib `NNReal`,
+  `ProbabilityTheory.HasCondSubgaussianMGF`, `Measurable`, `Set.Icc`,
+  `Measure.map`, and `condExpKernel`.
+- Intended proof route: project `source.hcontext`, `source.hstate`, and
+  `source.partialtraj_map_eq` into the existing direct full finite-pair
+  `partialTraj` history-variance conditional MGF consumer.
+- Regularity contracts: measurable selected mean surface, centered reward
+  kernel law, deterministic raw reward interval bounds, deterministic selected
+  mean interval bounds, and selected-history variance ceilings
+  `forall i history, varianceProxy (context i history)
+    ((policy i).action (state i history)) <= varianceCeiling i`.
+- Retrieval evidence:
+  `ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_partialTrajectoryPairLawSource_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded`,
+  `ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_actionRewardPartialTrajectoryKernel_map_eq_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-HISTORY-VARIANCE-SOURCE`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-HISTORY-VARIANCE-COND-MGF`,
+  and `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-TRAJECTORY-PARTIALTRAJ-PAIR-LAW-SOURCE-CONTRACT`.
+- Status: compiled-local source-consumer leaf.
+- Failure policy: do not cite this as proving the generated-history
+  `partialTraj`/`condExpKernel` pair-law, constructing selected-history
+  variance ceilings, or transporting canonical `trajMeasure` to an ambient
+  process.  It is a thin consumer wrapper around an explicitly supplied
+  source contract.
+
 `COND-EXPECT-REWARD-PARTIALTRAJ-CONDEXPKERNEL-PAIR-LAW-CARD` is
 theorem-card-only:
 

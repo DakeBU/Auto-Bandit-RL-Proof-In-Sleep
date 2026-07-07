@@ -1268,6 +1268,14 @@ Context:
   `varianceProxy (context i history) ((policy i).action (state i history)) <=
   varianceCeiling i` builds the packaged history-variance practical source.
   This is still a source conversion, not a proof of the trajectory-law card.
+- `COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-HISTORY-VARIANCE-COND-MGF`
+  now compiles as the selected-history source-level MGF consumer: the same
+  generated `partialTraj` pair-law source plus raw/mean range regularity and
+  selected-history variance ceilings directly yields the succ-indexed
+  `ProbabilityTheory.HasCondSubgaussianMGF` witness at proxy
+  `varianceCeiling i`.  It removes the same manual `hcontext`/`hstate`/law
+  threading for the history-variance route while still consuming the packaged
+  source law.
 - `COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-REWARD-MAP` now compiles as
   the reward-coordinate adapter for that same full finite-pair-trace law:
   after projecting the `partialTraj` law to the next `(Action, Reward)` pair,
