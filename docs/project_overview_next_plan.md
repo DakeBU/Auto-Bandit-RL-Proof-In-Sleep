@@ -221,6 +221,12 @@ The requested unfinished-work workflow is now available:
   a source-projection wrapper exposing the packaged practical base
   raw-range/measurable-mean-range bounded source from a selected-history
   variance source.
+- `COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE`
+  is compiled locally as
+  `ConditionalExpectationReward.generatedActionActualRewardMapSource_of_historyVarianceBoundedSource`,
+  a source-conversion wrapper lowering the packaged selected-history-variance
+  source through its base raw-range/measurable-mean-range source into the
+  explicit generated actual-action reward-map source.
 - `COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-BOUNDED-CENTERED-SOURCE`
   is compiled locally as
   `ConditionalExpectationReward.generatedActionRandomPairBoundedCenteredSource_of_historyVarianceBoundedSource`,
@@ -1714,6 +1720,15 @@ Context:
   centered-source projection above.  This gives downstream centered-source
   consumers a direct interface from the selected-history variance source while
   keeping the random next-pair law and variance ceilings as source assumptions.
+- `COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-ACTUAL-REWARD-MAP-SOURCE`
+  now compiles as the selected-history variance actual-reward-map projection:
+  `generatedActionActualRewardMapSource_of_historyVarianceBoundedSource`
+  first forgets the history-variance wrapper to its packaged practical
+  raw-range/measurable-mean-range source and then reuses the explicit
+  generated actual reward-map projection.  This gives reward-coordinate law
+  consumers a direct interface from the selected-history variance source while
+  keeping the random next-pair law and time-indexed variance ceilings as source
+  assumptions.
 - `COND-EXPECT-REWARD-HISTORY-VARIANCE-SOURCE-TO-BOUNDED-CENTERED-SOURCE`
   now compiles as the selected-history variance bounded-source projection:
   `generatedActionRandomPairBoundedCenteredSource_of_historyVarianceBoundedSource`
