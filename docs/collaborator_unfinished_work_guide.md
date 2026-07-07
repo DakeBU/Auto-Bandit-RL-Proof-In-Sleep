@@ -4670,6 +4670,79 @@ theorem ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_reward_
   process under `History.historyFiltrationSucc`; it only supplies the
   canonical `trajMeasure` version in the `condExpKernel.map` shape.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-SELECTED-REWARD-CONDEXPKERNEL-MAP`
+is compiled locally:
+
+```lean
+theorem ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_selectedMeasure_condExpKernel_map_trajMeasure
+    {Context : Type x} {State : Type u} {Action : Type v}
+    {Reward : Type w}
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSpace Reward]
+    [StandardBorelSpace (Prod Action Reward)]
+    [StandardBorelSpace Reward]
+    [StandardBorelSpace ((t : Nat) -> Prod Action Reward)]
+    [Nonempty (Prod Action Reward)] [Nonempty Reward]
+    [Nonempty ((t : Nat) -> Prod Action Reward)]
+    [MeasurableSingletonClass Reward] [Countable Reward]
+    (mu0 : Measure (Prod Action Reward))
+    [MeasureTheory.IsProbabilityMeasure mu0]
+    (rewardKernel :
+      RewardKernel.MarkovRewardKernel (Prod Context Action) Reward)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Reward) -> Context)
+    (state :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Reward) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (n : Nat) :
+    let stepKernel :=
+      RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy
+        context state hcontext hstate
+    let trajMeasure :=
+      ProbabilityTheory.Kernel.trajMeasure
+        (X := fun _ : Nat => Prod Action Reward) mu0 stepKernel
+    Filter.Eventually
+      (fun trajectory : (t : Nat) -> Prod Action Reward =>
+        Measure.map
+          (fun y : (t : Nat) -> Prod Action Reward => (y (n + 1)).2)
+          (ProbabilityTheory.condExpKernel trajMeasure
+            ((inferInstance :
+              MeasurableSpace
+                ((i : Finset.Iic n) -> Prod Action Reward)).comap
+              (Preorder.frestrictLe n))
+            trajectory) =
+        RewardKernel.selectedMeasure rewardKernel
+          (context n (Preorder.frestrictLe n trajectory))
+          ((policy n).action
+            (state n (Preorder.frestrictLe n trajectory))))
+      (ae trajMeasure)
+```
+
+- Exact Lean-facing statement: the canonical `trajMeasure` next-reward
+  `condExpKernel.map` law can be rewritten directly to the selected
+  context/action reward measure at the frozen finite pair prefix.
+- Local APIs/imports:
+  `ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_reward_condExpKernel_map_trajMeasure`,
+  `RewardKernel.actionRewardHistoryStepKernelFamily_reward_map`,
+  `RewardKernel.selectedMeasure`, and `ProbabilityTheory.Kernel.map`.
+- Intended proof route: consume the canonical reward-marginal
+  `condExpKernel.map` theorem, unfold the pointwise kernel map with
+  `ProbabilityTheory.Kernel.map_apply`, then apply
+  `RewardKernel.actionRewardHistoryStepKernelFamily_reward_map`.
+- Regularity contracts: same as
+  `LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-REWARD-CONDEXPKERNEL-MAP`.
+- Retrieval evidence:
+  `LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-SELECTED-REWARD-CONDEXPKERNEL-MAP`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-REWARD-CONDEXPKERNEL-MAP`,
+  `LOCAL-LEAF-POLICY-REWARD-TRAJMEASURE-SELECTED-REWARD-CONDDISTRIB`, and
+  `LOCAL-LEAF-KERNEL-REWARD-MAP-LAW-TRANSFER`.
+- Status: project-local compiled canonical `trajMeasure` bridge leaf.
+- Failure policy: do not cite this as the generated-history
+  `condExpKernel` law for an arbitrary ambient process.  It remains a
+  canonical-source theorem awaiting transport to `History.historyFiltrationSucc`.
+
 `LOCAL-LEAF-COND-EXPECT-REWARD-HISTORYSTEP-CONDEXPKERNEL-CONSUMER` is compiled
 locally:
 
