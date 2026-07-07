@@ -1262,6 +1262,13 @@ Context:
   `ProbabilityTheory.HasCondSubgaussianMGF` witness.  It removes the need for
   downstream callers to manually pass `hcontext`, `hstate`, and the full
   finite-pair partialTraj law, while still leaving the theorem-card law open.
+- `COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-UNIFORM-VARIANCE-LARGER-PROXY-COND-MGF`
+  now compiles as the coarser-proxy source-level uniform MGF consumer: the same
+  generated `partialTraj` pair-law source plus raw/mean range regularity, a
+  global variance ceiling, and `varianceCeiling <= c` directly yields the
+  succ-indexed `ProbabilityTheory.HasCondSubgaussianMGF` witness at proxy `c`.
+  It is still a consumer of the supplied full finite-pair law, not a proof of
+  that law or of the proxy domination.
 - `COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-HISTORY-VARIANCE-SOURCE`
   now compiles as the selected-history companion: the same generated
   `partialTraj` pair-law source plus
