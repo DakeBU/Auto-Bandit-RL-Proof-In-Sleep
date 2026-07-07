@@ -6911,6 +6911,75 @@ theorem ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_ma
   this theorem as a law source; use it only after that source has been
   constructed.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-ACTUAL-REWARD-MAP-SOURCE-TO-RANDOM-PAIR-MAP-SOURCE`
+is compiled locally:
+
+```lean
+def ConditionalExpectationReward.generatedActionRandomPairMapSource_of_generatedActionActualRewardMapSource
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (action : Omega -> ActionTrace Action)
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (haction : forall t : Nat,
+      Measurable (fun omega : Omega => action omega t))
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (source :
+      GeneratedActionActualRewardMapSource mu action rewardKernel policy
+        context state defaultAction reward haction hreward) :
+    GeneratedActionRandomPairMapSource mu action rewardKernel policy context
+      state defaultAction reward haction hreward
+```
+
+- Exact Lean-facing statement: a packaged generated-action actual
+  reward-coordinate source, together with reward-history state measurability,
+  produces the stronger generated-action random next-pair map source.
+- Local APIs/imports: `BanditRLProof.ConditionalRewardLawSource`,
+  `ConditionalExpectationReward.GeneratedActionActualRewardMapSource`,
+  `ConditionalExpectationReward.GeneratedActionRandomPairMapSource`,
+  `ConditionalExpectationReward.random_pair_condExpKernel_map_eq_actual_action_of_generatedActionTraceSucc_reward_map_eq_actual_action`,
+  `History.pairHistoryRewardProjection`,
+  `History.pairHistoryRewardProjection_finitePairHistoryOfTrace`, and
+  `History.measurable_pairHistoryRewardProjection`.
+- Intended proof route: rewrite the packaged generated-action equality from
+  reward histories to projected finite pair histories, rewrite the packaged
+  reward-coordinate selected-measure law into the projected pair-history
+  context, compose `hstate` with
+  `History.measurable_pairHistoryRewardProjection`, and consume the ambient
+  split-product condExpKernel theorem to recover the full random next-pair
+  product law.
+- Regularity contracts: standard Borel sample space, finite measure,
+  measurable context/state/action spaces, measurable singleton and countable
+  action space, timewise measurable action and reward traces, state
+  measurability, shifted generated-action equality, and the packaged
+  actual-action reward-coordinate `condExpKernel` map law.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-COND-EXPECT-REWARD-ACTUAL-REWARD-MAP-SOURCE-TO-RANDOM-PAIR-MAP-SOURCE`;
+  declaration
+  `ConditionalExpectationReward.generatedActionRandomPairMapSource_of_generatedActionActualRewardMapSource`;
+  upstream route cards
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-ACTUAL-REWARD-MAP-SOURCE-CONTRACT`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-NEXTPAIR-SPLIT-PRODUCT-LAW`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-RANDOM-PAIR-SOURCE-CONTRACT`, and
+  `FILTRATION-HISTORY`.
+- Status: project-local compiled source-conversion leaf for
+  `COND-EXPECT-REWARD`, `ADAPTED-ACTION`, `MEAS-POLICY`,
+  `KERNEL-POLICY-BIND`, and `KERNEL-REWARD`.
+- Failure policy: this does not prove the actual reward-coordinate law or the
+  ambient trajectory-to-`condExpKernel` identification.  If no
+  `GeneratedActionActualRewardMapSource` exists, this wrapper gives no new
+  probabilistic law by itself.
+
 `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-CONTRACT`
 is compiled locally:
 

@@ -9291,6 +9291,38 @@ example {Omega Context State Action : Type}
     (policy : Nat -> Policy.MeasurablePolicy State Action)
     (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
     (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (haction : forall t : Nat,
+      Measurable (fun omega : Omega => action omega t))
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (source :
+      ConditionalExpectationReward.GeneratedActionActualRewardMapSource
+        mu action rewardKernel policy context state defaultAction reward
+        haction hreward)
+    :
+    ConditionalExpectationReward.GeneratedActionRandomPairMapSource
+      mu action rewardKernel policy context state defaultAction reward
+      haction hreward := by
+  exact
+    ConditionalExpectationReward.generatedActionRandomPairMapSource_of_generatedActionActualRewardMapSource
+      (mOmega := mOmega)
+      mu action rewardKernel policy context state hstate defaultAction reward
+      haction hreward source
+
+example {Omega Context State Action : Type}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (action : Omega -> ActionTrace Action)
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
     (hcontext : forall n : Nat, Measurable (context n))
     (hstate : forall n : Nat, Measurable (state n))
     (defaultAction : Action)
