@@ -3214,6 +3214,60 @@ theorem reward_condExpKernel_map_eq_selected_policy_of_generatedActionRandomPair
     actualSource.reward_map_eq_actual_action i
 
 /--
+Convert a definitional generated random next-pair source into the generated
+finite-pair `partialTraj` source.
+
+The definitional random-pair source already contains a stronger next-pair law.
+Projecting it to the policy-selected reward-coordinate law and using the
+generated-trace action-freezing constructor above builds the
+`GeneratedActionPartialTrajectoryPairLawSource`.  This is only a source-surface
+conversion; it does not prove the random-pair source law itself.
+-/
+def generatedActionPartialTrajectoryPairLawSource_of_randomPairDefinitionalMapSource
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (source :
+      GeneratedActionRandomPairDefinitionalMapSource mu rewardKernel policy
+        context state defaultAction reward hreward) :
+    GeneratedActionPartialTrajectoryPairLawSource mu rewardKernel policy
+      context state defaultAction reward hreward :=
+  generatedActionPartialTrajectoryPairLawSource_of_reward_map_eq_selected_policy
+    (mu := mu)
+    (rewardKernel := rewardKernel)
+    (policy := policy)
+    (context := context)
+    (state := state)
+    (hcontext := hcontext)
+    (hstate := source.hstate)
+    (defaultAction := defaultAction)
+    (reward := reward)
+    (hreward := hreward)
+    (fun i =>
+      reward_condExpKernel_map_eq_selected_policy_of_generatedActionRandomPairDefinitionalMapSource
+        (mu := mu)
+        (rewardKernel := rewardKernel)
+        (policy := policy)
+        (context := context)
+        (state := state)
+        (defaultAction := defaultAction)
+        (reward := reward)
+        (hreward := hreward)
+        source i)
+
+/--
 Generated-policy random next-pair source plus centered-reward regularity.
 
 This packages the source contract together with the measurable context/state

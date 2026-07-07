@@ -1276,6 +1276,13 @@ Context:
   `GeneratedActionPartialTrajectoryPairLawSource`.  The remaining upstream
   proof target is now the selected reward-coordinate law under the generated
   history filtration.
+- `COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-FROM-DEFINITIONAL-MAP-SOURCE`
+  now compiles as a source-conversion wrapper: an existing
+  `GeneratedActionRandomPairDefinitionalMapSource` projects to the
+  policy-selected reward-coordinate law and then builds
+  `GeneratedActionPartialTrajectoryPairLawSource`.  This connects the older
+  definitional random-pair source surface to the newer partialTraj source
+  route without changing the theorem-card status.
 - `COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-RAW-RANGE-BOUNDED-SOURCE`
   now compiles as the practical source-conversion wrapper for that same
   source contract: `GeneratedActionPartialTrajectoryPairLawSource`, measurable

@@ -24485,6 +24485,56 @@ def ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_o
   ambient `Omega`, and do not mark
   `COND-EXPECT-REWARD-PARTIALTRAJ-CONDEXPKERNEL-PAIR-LAW-CARD` as compiled.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-FROM-DEFINITIONAL-MAP-SOURCE`
+is compiled locally:
+
+```lean
+def ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_of_randomPairDefinitionalMapSource
+    ...
+    (hcontext : forall n : Nat, Measurable (context n))
+    (source :
+      GeneratedActionRandomPairDefinitionalMapSource mu rewardKernel policy
+        context state defaultAction reward hreward) :
+    GeneratedActionPartialTrajectoryPairLawSource mu rewardKernel policy
+      context state defaultAction reward hreward
+```
+
+- Exact Lean-facing statement: given a measurable context extractor and an
+  existing `GeneratedActionRandomPairDefinitionalMapSource`, construct the full
+  `GeneratedActionPartialTrajectoryPairLawSource`.
+- Local APIs/imports:
+  `BanditRLProof.ConditionalRewardLawSource`,
+  `GeneratedActionRandomPairDefinitionalMapSource`,
+  `GeneratedActionPartialTrajectoryPairLawSource`,
+  `ConditionalExpectationReward.reward_condExpKernel_map_eq_selected_policy_of_generatedActionRandomPairDefinitionalMapSource`,
+  `ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_of_reward_map_eq_selected_policy`,
+  `History.historyFiltrationSucc`, `RewardKernel.selectedMeasure`,
+  Mathlib `condExpKernel`, `Measure.map`, and
+  `Mathlib.Probability.Kernel.IonescuTulcea.PartialTraj`.
+- Intended proof route: project the definitional random-pair source to the
+  policy-selected reward-coordinate law, then invoke
+  `generatedActionPartialTrajectoryPairLawSource_of_reward_map_eq_selected_policy`
+  with `source.hstate`.
+- Regularity contracts: `[StandardBorelSpace Omega]`, finite `mu`,
+  `[MeasurableSingletonClass Action]`, `[Countable Action]`, timewise reward
+  measurability, measurable context extractor, and the packaged
+  `GeneratedActionRandomPairDefinitionalMapSource`.  It does not require an
+  explicit selected reward law because that is projected from the source.
+- Retrieval evidence:
+  `ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_of_randomPairDefinitionalMapSource`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-FROM-SELECTED-REWARD-LAW`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-MAP-SOURCE-CONTRACT`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-DEFINITIONAL-RANDOM-PAIR-MAP-SOURCE-TO-SELECTED-POLICY-REWARD-MAP`,
+  `Mathlib.Probability.Kernel.IonescuTulcea.PartialTraj`, and
+  `Mathlib.Probability.Kernel.Disintegration.StandardBorel`.
+- Status: compiled-local source-conversion leaf.  It connects the existing
+  definitional generated random-pair source surface to the newer
+  `GeneratedActionPartialTrajectoryPairLawSource` route.
+- Failure policy: do not cite this as proving the definitional random-pair
+  source law, do not claim canonical `trajMeasure` has been transported to
+  arbitrary ambient `Omega`, and do not mark
+  `COND-EXPECT-REWARD-PARTIALTRAJ-CONDEXPKERNEL-PAIR-LAW-CARD` as compiled.
+
 `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-RAW-RANGE-BOUNDED-SOURCE`
 is compiled locally:
 
