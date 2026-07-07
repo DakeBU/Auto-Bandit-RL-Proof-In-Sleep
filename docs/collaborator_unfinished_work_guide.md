@@ -4432,17 +4432,48 @@ theorem RewardKernel.actionRewardHistoryStepKernelFamily_reward_map
         (context n history) ((policy n).action (state n history))
 ```
 
+```lean
+theorem RewardKernel.composePolicyActionReward_action_map
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Reward)
+    (policy : Policy.MeasurablePolicy State Action)
+    (pair : Prod Context State) :
+    Measure.map Prod.fst
+        ((RewardKernel.composePolicyActionReward rewardKernel policy).kernel
+          pair) =
+      Measure.dirac (policy.action pair.2)
+```
+
+```lean
+theorem RewardKernel.actionRewardHistoryStepKernelFamily_action_map
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Reward)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Reward) -> Context)
+    (state :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Reward) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (n : Nat) (history : (i : Finset.Iic n) -> Prod Action Reward) :
+    Measure.map Prod.fst
+        (RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy
+          context state hcontext hstate n history) =
+      Measure.dirac ((policy n).action (state n history))
+```
+
 - Exact Lean-facing statement: mapping the one-step action/reward kernel, or
   the history-indexed action/reward step kernel, along `Prod.snd` recovers the
-  selected reward measure.
+  selected reward measure; mapping along `Prod.fst` recovers the Dirac measure
+  at the policy-selected action.
 - Local APIs/imports: `BanditRLProof.RewardKernel`,
   `Mathlib.Probability.Kernel.Composition.Prod`, and Mathlib
   `Measure.map`.
-- Intended proof route: apply `Measure.ext`; for each measurable reward event
-  use `Measure.map_apply measurable_snd`, then close with the compiled
-  event-level marginal wrappers
-  `RewardKernel.composePolicyActionReward_reward_event` and
-  `RewardKernel.actionRewardHistoryStepKernelFamily_reward_event`.
+- Intended proof route: the reward side applies `Measure.ext`; for each
+  measurable reward event use `Measure.map_apply measurable_snd`, then close
+  with the compiled event-level marginal wrappers.  The action side rewrites
+  the product kernel with
+  `RewardKernel.composePolicyActionReward_kernel_apply_eq_map_prod_mk`, then
+  evaluates the constant `Prod.fst` pushforward by event extensionality and
+  `Measure.dirac_apply'`.
 - Regularity contracts: measurable context/state/action/reward spaces,
   `RewardKernel.MarkovRewardKernel (Context × Action) Reward`, a measurable
   policy or policy family, and measurable context/state extractors for the
@@ -4456,8 +4487,8 @@ theorem RewardKernel.actionRewardHistoryStepKernelFamily_reward_map
 - Failure policy: do not claim this proves the `condExpKernel` trajectory-law
   identification, frozen-past condition, arbitrary adaptive-policy
   predictability, posterior kernels, or final ETC/UCB regret.  It only upgrades
-  the selected-reward marginal from event equality to measure pushforward
-  equality.
+  the selected-reward marginal and deterministic action marginal to measure
+  pushforward equalities.
 
 `LOCAL-LEAF-COND-EXPECT-REWARD-CONDEXPKERNEL-ZERO` is compiled locally:
 
@@ -4669,6 +4700,78 @@ theorem ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_co
   `Omega`/generated-history theorem.  It still does not transport the actual
   process under `History.historyFiltrationSucc`; it only supplies the
   canonical `trajMeasure` next-pair law in the `condExpKernel.map` shape.
+
+`LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-ACTION-CONDEXPKERNEL-MAP` is
+compiled locally:
+
+```lean
+theorem ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_action_condExpKernel_map_trajMeasure
+    {Context : Type x} {State : Type u} {Action : Type v}
+    {Reward : Type w}
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSpace Reward]
+    [StandardBorelSpace (Prod Action Reward)]
+    [StandardBorelSpace ((t : Nat) -> Prod Action Reward)]
+    [Nonempty (Prod Action Reward)]
+    [Nonempty ((t : Nat) -> Prod Action Reward)]
+    [MeasurableSingletonClass (Prod Action Reward)]
+    [Countable (Prod Action Reward)]
+    (mu0 : Measure (Prod Action Reward))
+    [MeasureTheory.IsProbabilityMeasure mu0]
+    (rewardKernel :
+      RewardKernel.MarkovRewardKernel (Prod Context Action) Reward)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Reward) -> Context)
+    (state :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Reward) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (n : Nat) :
+    let stepKernel :=
+      RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy
+        context state hcontext hstate
+    let trajMeasure :=
+      ProbabilityTheory.Kernel.trajMeasure
+        (X := fun _ : Nat => Prod Action Reward) mu0 stepKernel
+    Filter.Eventually
+      (fun trajectory : (t : Nat) -> Prod Action Reward =>
+        Measure.map
+          (fun y : (t : Nat) -> Prod Action Reward => (y (n + 1)).1)
+          (ProbabilityTheory.condExpKernel trajMeasure
+            ((inferInstance :
+              MeasurableSpace
+                ((i : Finset.Iic n) -> Prod Action Reward)).comap
+              (Preorder.frestrictLe n))
+            trajectory) =
+        Measure.dirac
+          ((policy n).action (state n (Preorder.frestrictLe n trajectory))))
+      (ae trajMeasure)
+```
+
+- Exact Lean-facing statement: for canonical `trajMeasure`, the
+  conditional-expectation kernel conditioned on the finite pair prefix, pushed
+  forward by the next action coordinate, is a.e. the Dirac law at the
+  policy-selected action.
+- Local APIs/imports:
+  `ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_condExpKernel_map_trajMeasure`,
+  `RewardKernel.actionRewardHistoryStepKernelFamily_action_map`,
+  `Measure.map_map`, `measurable_fst`, and `Preorder.frestrictLe`.
+- Intended proof route: consume the canonical next-pair `condExpKernel.map`
+  law, map both sides through `Prod.fst`, use `Measure.map_map` to identify
+  the left side with the next-action pushforward, then use the history-step
+  action marginal wrapper to rewrite the right side to `Measure.dirac`.
+- Regularity contracts: same pair/trajectory countability and standard Borel
+  contracts as the canonical next-pair leaf.  No countability of `Action`
+  alone is required because this is projected from the countable pair law.
+- Retrieval evidence:
+  `LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-ACTION-CONDEXPKERNEL-MAP`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-PAIR-CONDEXPKERNEL-MAP`, and
+  `LOCAL-LEAF-KERNEL-REWARD-MAP-LAW-TRANSFER`.
+- Status: project-local compiled canonical `trajMeasure` bridge leaf.
+- Failure policy: do not cite this as policy predictability for an arbitrary
+  ambient process.  It is only the canonical Ionescu-Tulcea action-side source
+  law and still needs transport to `History.historyFiltrationSucc`.
 
 `LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-EXTEND-CONDEXPKERNEL-MAP` is
 compiled locally:
@@ -17374,7 +17477,8 @@ Current boundary after this leaf:
   This is not a `condExpKernel` identity for the finite-prefix trajectory law.
 - `LOCAL-LEAF-KERNEL-REWARD-MAP-LAW-TRANSFER` is now compiled locally in
   `BanditRLProof.RewardKernel`: one-step and history-step action/reward
-  kernels push forward through `Prod.snd` to the selected reward measure.  This
+  kernels push forward through `Prod.snd` to the selected reward measure and
+  through `Prod.fst` to the Dirac law at the policy-selected action.  This
   matches the map-law consumer shape but still does not construct the
   `condExpKernel` trajectory-law identification.
 - `LOCAL-LEAF-COND-EXPECT-REWARD-CONDEXPKERNEL-ZERO` is now compiled locally in

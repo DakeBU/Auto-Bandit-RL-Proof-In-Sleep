@@ -253,6 +253,101 @@ theorem actionRewardHistoryStepKernelFamily_pair_condExpKernel_map_trajMeasure
   simpa [stepKernel, trajMeasure, prefixMap, nextPair] using hbridge
 
 /--
+Canonical `trajMeasure` next-action law in `condExpKernel.map` form.
+
+This is the action-coordinate projection of
+`actionRewardHistoryStepKernelFamily_pair_condExpKernel_map_trajMeasure`: on
+Mathlib's canonical action/reward trajectory measure, conditioning on the
+finite pair prefix and pushing `condExpKernel` forward by the next action
+coordinate recovers the Dirac law at the policy-selected action.
+-/
+theorem actionRewardHistoryStepKernelFamily_action_condExpKernel_map_trajMeasure
+    {Context : Type x} {State : Type u} {Action : Type v}
+    {Reward : Type w}
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSpace Reward]
+    [StandardBorelSpace (Prod Action Reward)]
+    [StandardBorelSpace ((t : Nat) -> Prod Action Reward)]
+    [Nonempty (Prod Action Reward)]
+    [Nonempty ((t : Nat) -> Prod Action Reward)]
+    [MeasurableSingletonClass (Prod Action Reward)]
+    [Countable (Prod Action Reward)]
+    (mu0 : Measure (Prod Action Reward))
+    [MeasureTheory.IsProbabilityMeasure mu0]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Reward)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Reward) -> Context)
+    (state :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Reward) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (n : Nat) :
+    let stepKernel :=
+      RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy
+        context state hcontext hstate
+    let trajMeasure :=
+      ProbabilityTheory.Kernel.trajMeasure
+        (X := fun _ : Nat => Prod Action Reward) mu0 stepKernel
+    Filter.Eventually
+      (fun trajectory : (t : Nat) -> Prod Action Reward =>
+        @Measure.map ((t : Nat) -> Prod Action Reward) Action
+          inferInstance inferInstance
+          (fun y : (t : Nat) -> Prod Action Reward => (y (n + 1)).1)
+          (@ProbabilityTheory.condExpKernel
+            ((t : Nat) -> Prod Action Reward) inferInstance _
+            trajMeasure _
+            ((inferInstance :
+              MeasurableSpace
+                ((i : Finset.Iic n) -> Prod Action Reward)).comap
+              (Preorder.frestrictLe n))
+            trajectory) =
+        Measure.dirac
+          ((policy n).action (state n (Preorder.frestrictLe n trajectory))))
+      (ae trajMeasure) := by
+  let stepKernel :=
+    RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy
+      context state hcontext hstate
+  let trajMeasure :=
+    ProbabilityTheory.Kernel.trajMeasure
+      (X := fun _ : Nat => Prod Action Reward) mu0 stepKernel
+  have hpair :=
+    actionRewardHistoryStepKernelFamily_pair_condExpKernel_map_trajMeasure
+      mu0 rewardKernel policy context state hcontext hstate n
+  filter_upwards [hpair] with trajectory h_pair
+  let condKernel : Measure ((t : Nat) -> Prod Action Reward) :=
+    @ProbabilityTheory.condExpKernel
+      ((t : Nat) -> Prod Action Reward) inferInstance _ trajMeasure _
+      ((inferInstance :
+        MeasurableSpace ((i : Finset.Iic n) -> Prod Action Reward)).comap
+        (Preorder.frestrictLe n))
+      trajectory
+  let nextPair : ((t : Nat) -> Prod Action Reward) -> Prod Action Reward :=
+    fun y => y (n + 1)
+  let nextAction : ((t : Nat) -> Prod Action Reward) -> Action :=
+    fun y => (y (n + 1)).1
+  have h_nextPair_meas : Measurable nextPair := by
+    exact measurable_pi_apply (n + 1)
+  calc
+    @Measure.map ((t : Nat) -> Prod Action Reward) Action
+        inferInstance inferInstance nextAction condKernel =
+      Measure.map Prod.fst (Measure.map nextPair condKernel) := by
+        rw [Measure.map_map measurable_fst h_nextPair_meas]
+        rfl
+    _ =
+      Measure.map Prod.fst
+        (stepKernel n (Preorder.frestrictLe n trajectory)) := by
+        exact congrArg (Measure.map Prod.fst) h_pair
+    _ =
+      Measure.dirac
+        ((policy n).action
+          (state n (Preorder.frestrictLe n trajectory))) := by
+        exact
+          RewardKernel.actionRewardHistoryStepKernelFamily_action_map
+            rewardKernel policy context state hcontext hstate n
+            (Preorder.frestrictLe n trajectory)
+
+/--
 Canonical `trajMeasure` extension-map law in `condExpKernel.map` form.
 
 This pushes

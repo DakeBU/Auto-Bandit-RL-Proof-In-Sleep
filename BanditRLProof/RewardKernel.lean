@@ -535,6 +535,59 @@ theorem composePolicyActionReward_kernel_apply_eq_map_prod_mk
   rw [Measure.dirac_prod]
 
 /--
+Measure-level action marginal of the one-step action/reward kernel.
+
+The action coordinate is deterministic: mapping the `(Action × Reward)` law
+through `Prod.fst` recovers the Dirac measure at the policy-selected action.
+-/
+theorem composePolicyActionReward_action_map
+    {State : Type u} [MeasurableSpace State]
+    (rewardKernel : MarkovRewardKernel (Prod Context Action) Reward)
+    (policy : Policy.MeasurablePolicy State Action)
+    (pair : Prod Context State) :
+    Measure.map Prod.fst
+        ((composePolicyActionReward rewardKernel policy).kernel pair) =
+      Measure.dirac (policy.action pair.2) := by
+  rw [composePolicyActionReward_kernel_apply_eq_map_prod_mk]
+  have hprod :
+      Measurable
+        (Prod.mk (policy.action pair.2) :
+          Reward -> Prod Action Reward) := by
+    fun_prop
+  haveI :
+      IsProbabilityMeasure
+        (selectedMeasure rewardKernel pair.1 (policy.action pair.2)) :=
+    isProbabilityMeasure_selectedMeasure rewardKernel pair.1
+      (policy.action pair.2)
+  refine Measure.ext fun event hevent => ?_
+  rw [Measure.map_apply measurable_fst hevent]
+  rw [Measure.map_apply hprod (measurable_fst hevent)]
+  rw [Measure.dirac_apply' (policy.action pair.2) hevent]
+  by_cases hmem : event (policy.action pair.2)
+  · have hpre :
+        Set.preimage
+            (Prod.mk (policy.action pair.2) :
+              Reward -> Prod Action Reward)
+            (Set.preimage Prod.fst event) =
+          Set.univ := by
+      ext reward
+      change event (policy.action pair.2) ↔ True
+      exact iff_true_intro hmem
+    rw [hpre]
+    simp [Set.indicator_of_mem hmem]
+  · have hpre :
+        Set.preimage
+            (Prod.mk (policy.action pair.2) :
+              Reward -> Prod Action Reward)
+            (Set.preimage Prod.fst event) =
+          {reward : Reward | False} := by
+      ext reward
+      change event (policy.action pair.2) ↔ False
+      exact iff_false_intro hmem
+    rw [hpre]
+    simp [Set.indicator_of_notMem hmem]
+
+/--
 Pointwise centered-reward law contract for a context/action reward kernel.
 
 For every context/action index, the selected reward law has a centered reward
@@ -1217,6 +1270,36 @@ theorem actionRewardHistoryStepKernelFamily_reward_map
   exact
     actionRewardHistoryStepKernelFamily_reward_event rewardKernel policy
       context state hcontext hstate n history hevent
+
+/--
+Measure-level action marginal of a history-indexed one-step action/reward
+kernel.
+
+For a fixed finite history, the next action is deterministic and equals the
+action chosen by the time-`n` policy on the state selected from that history.
+-/
+theorem actionRewardHistoryStepKernelFamily_action_map
+    {Context : Type x} {State : Type u} {Action : Type y}
+    {Reward : Type v}
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSpace Reward]
+    (rewardKernel : MarkovRewardKernel (Prod Context Action) Reward)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Reward) -> Context)
+    (state :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Reward) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (n : Nat) (history : (i : Finset.Iic n) -> Prod Action Reward) :
+    Measure.map Prod.fst
+        (actionRewardHistoryStepKernelFamily rewardKernel policy context state
+          hcontext hstate n history) =
+      Measure.dirac ((policy n).action (state n history)) := by
+  rw [actionRewardHistoryStepKernelFamily_apply]
+  exact
+    composePolicyActionReward_action_map rewardKernel (policy n)
+      (context n history, state n history)
 
 /--
 Pointwise measure shape of a history-indexed action/reward step kernel.
