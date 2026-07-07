@@ -1508,6 +1508,31 @@ example {Omega : Type u} {History : Type u} {Env : Type v}
   exact PosteriorKernel.measurable_eventProbability_of_measurable_history
     posterior history hhistory hevent
 
+example {History : Type u} {Env : Type v} {Action : Type w}
+    [MeasurableSpace History] [MeasurableSpace Env] [MeasurableSpace Action]
+    (ledger : Thompson.PosteriorActionIdentityLedger History Env Action)
+    (history : History)
+    {event : Set Action}
+    (hevent : MeasurableSet event) :
+    ledger.actionKernel history event =
+      MeasureTheory.Measure.map ledger.bestAction
+        (ledger.posterior.kernel history) event := by
+  exact
+    Thompson.PosteriorActionIdentityLedger.actionKernel_apply_eq_posteriorBest_map
+      ledger history hevent
+
+example {History : Type u} {Env : Type v} {Action : Type w}
+    [MeasurableSpace History] [MeasurableSpace Env] [MeasurableSpace Action]
+    [MeasurableSingletonClass Action]
+    (ledger : Thompson.PosteriorActionIdentityLedger History Env Action)
+    (history : History)
+    (action : Action) :
+    ledger.actionKernel history ({action} : Set Action) =
+      ledger.posterior.kernel history {env : Env | ledger.bestAction env = action} := by
+  exact
+    Thompson.PosteriorActionIdentityLedger.actionKernel_apply_singleton_eq_posteriorBest_preimage
+      ledger history action
+
 example {Omega : Type u}
     [MeasurableSpace Omega]
     {Idx : Type v}

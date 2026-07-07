@@ -2586,13 +2586,34 @@
         "PosteriorKernel.BayesianPosteriorSurface.posterior_isProbabilityMeasure_apply"
       ],
       "role": "Compiled posterior-kernel contract surface: wraps Mathlib's Markov kernel API as a posterior distribution over environments indexed by histories, builds kernels from measurable posterior-measure selectors or countable/discrete history selectors, exposes selected posterior probability and event-probability measurability, and records a prior/likelihood/posterior surface. This is not a Bayes-rule proof, regular conditional distribution existence theorem, Thompson probability-matching identity, or Bayesian regret theorem.",
-      "mathlib_routes": [
-        "MLIB-PROBABILITY-KERNEL",
-        "MLIB-CONDITIONAL-EXPECTATION"
-      ]
-    },
-    {
-      "id": "LOCAL-LEAF-POLICY-REWARD-ONE-STEP-KERNEL-COMPOSITION",
+    "mathlib_routes": [
+      "MLIB-PROBABILITY-KERNEL",
+      "MLIB-CONDITIONAL-EXPECTATION"
+    ]
+  },
+  {
+    "id": "LOCAL-LEAF-TS-POSTERIOR-ACTION-IDENTITY-LEDGER",
+    "leaf_ids": [
+      "TS-PROB-MATCH",
+      "POSTERIOR-KERNEL"
+    ],
+    "module": "BanditRLProof.Algorithms.Thompson",
+    "status": "leanCompiled",
+    "declarations": [
+      "Thompson.PosteriorActionIdentityLedger",
+      "Thompson.PosteriorActionIdentityLedger.actionKernel_apply_eq_posteriorBest_map",
+      "Thompson.PosteriorActionIdentityLedger.actionKernel_apply_singleton_eq_posteriorBest_preimage"
+    ],
+    "role": "Compiled Thompson posterior-action identity ledger: packages a posterior kernel over environments, a Thompson action kernel, a measurable environment-to-best-action map, and the event-level probability-matching equality saying the action kernel equals the posterior pushforward by bestAction. It exposes event-level and singleton action-probability consumers. This is not a Bayes-rule proof, posterior sampler construction, LML import, or Bayesian regret theorem.",
+    "mathlib_routes": [
+      "MLIB-PROBABILITY-KERNEL",
+      "MLIB-CONDITIONAL-EXPECTATION",
+      "LOCAL-LEAF-POSTERIOR-KERNEL-CONTRACT",
+      "LML-TS-POSTERIOR-ACTION"
+    ]
+  },
+  {
+    "id": "LOCAL-LEAF-POLICY-REWARD-ONE-STEP-KERNEL-COMPOSITION",
       "leaf_ids": [
         "POLICY-REWARD-ONE-STEP-KERNEL-COMPOSITION"
       ],

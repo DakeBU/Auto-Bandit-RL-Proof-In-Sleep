@@ -613,7 +613,8 @@ The requested unfinished-work workflow is now available:
   obligation names.
 
 - `BanditRLProof/Algorithms/Thompson.lean`: Thompson sampling and Bayesian
-  regret obligation names.
+  regret obligation names plus a posterior-action identity ledger for the
+  probability-matching route.
 
 - `BanditRLProof/Literature.lean`: LML theorem-card registry.
 
@@ -2495,6 +2496,13 @@ Current review conclusion:
   prior/likelihood/posterior surface is named.  Bayes-rule identification,
   regular conditional distribution existence, Thompson probability matching,
   and Bayesian regret remain separate.
+- `TS-POSTERIOR-ACTION-IDENTITY-LEDGER` now compiles locally in
+  `BanditRLProof.Algorithms.Thompson`: a posterior kernel, Thompson action
+  kernel, measurable environment-to-best-action map, and event-level
+  probability-matching equality are packaged as a source contract, with
+  event-level and singleton action-probability consumers.  This still consumes
+  the posterior action law; it does not prove Bayes' rule, construct the
+  posterior sampler, import LML, or prove Bayesian regret.
 - `POLICY-REWARD-ONE-STEP-KERNEL-COMPOSITION` now compiles locally in
   `BanditRLProof.RewardKernel`: a measurable policy plus a context/action
   Markov reward kernel gives a context/state Markov reward kernel, with

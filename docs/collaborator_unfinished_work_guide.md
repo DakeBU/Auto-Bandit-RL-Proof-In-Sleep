@@ -3855,6 +3855,77 @@ structure PosteriorKernel.BayesianPosteriorSurface
   Thompson probability matching, posterior best-arm measurability, or Bayesian
   regret in the same batch.
 
+`LOCAL-LEAF-TS-POSTERIOR-ACTION-IDENTITY-LEDGER` is compiled locally as a
+Thompson probability-matching source contract:
+
+```lean
+structure Thompson.PosteriorActionIdentityLedger
+    (History : Type u) (Env : Type v) (Action : Type w)
+    [MeasurableSpace History] [MeasurableSpace Env]
+    [MeasurableSpace Action] where
+  posterior : PosteriorKernel.MarkovPosteriorKernel History Env
+  actionKernel : ProbabilityTheory.Kernel History Action
+  actionKernel_isMarkov :
+    ProbabilityTheory.IsMarkovKernel actionKernel
+  bestAction : Env -> Action
+  bestAction_measurable : Measurable bestAction
+  actionKernel_eq_posteriorBest :
+    forall (history : History) {event : Set Action},
+      MeasurableSet event ->
+        actionKernel history event =
+          Measure.map bestAction (posterior.kernel history) event
+```
+
+```lean
+theorem Thompson.PosteriorActionIdentityLedger.actionKernel_apply_eq_posteriorBest_map
+    (ledger :
+      Thompson.PosteriorActionIdentityLedger History Env Action)
+    (history : History) {event : Set Action}
+    (hevent : MeasurableSet event) :
+    ledger.actionKernel history event =
+      Measure.map ledger.bestAction
+        (ledger.posterior.kernel history) event
+```
+
+```lean
+theorem Thompson.PosteriorActionIdentityLedger.actionKernel_apply_singleton_eq_posteriorBest_preimage
+    [MeasurableSingletonClass Action]
+    (ledger :
+      Thompson.PosteriorActionIdentityLedger History Env Action)
+    (history : History) (action : Action) :
+    ledger.actionKernel history ({action} : Set Action) =
+      ledger.posterior.kernel history
+        {env : Env | ledger.bestAction env = action}
+```
+
+- Exact Lean-facing statement: the ledger packages a posterior kernel over
+  environments, a Thompson action kernel over actions, a measurable
+  environment-to-best-action map, and the event-level equality saying the
+  Thompson action law is the posterior pushforward by `bestAction`.
+- Local APIs/imports: `BanditRLProof.Algorithms.Thompson`,
+  `BanditRLProof.PosteriorKernel`, Mathlib `ProbabilityTheory.Kernel`,
+  `ProbabilityTheory.IsMarkovKernel`, `Measure.map`, and
+  `Measure.map_apply`.
+- Intended proof route: consume the packaged event-level identity directly for
+  arbitrary measurable action events; for singleton action events, rewrite the
+  pushed-forward posterior measure with `Measure.map_apply` and
+  `MeasurableSet.singleton`.
+- Regularity contracts: measurable history, environment, and action spaces; a
+  posterior Markov kernel; a Markov action kernel; a measurable best-action map;
+  and an externally supplied event-level probability-matching identity.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-TS-POSTERIOR-ACTION-IDENTITY-LEDGER`; declarations are
+  `Thompson.PosteriorActionIdentityLedger`,
+  `Thompson.PosteriorActionIdentityLedger.actionKernel_apply_eq_posteriorBest_map`,
+  and
+  `Thompson.PosteriorActionIdentityLedger.actionKernel_apply_singleton_eq_posteriorBest_preimage`.
+- Status: project-local compiled source-contract/consumer leaf for
+  `TS-PROB-MATCH` and `POSTERIOR-KERNEL`.
+- Failure policy: this consumes a posterior action identity; it does not prove
+  Bayes' rule, construct a posterior sampler, import or port
+  `LML-TS-POSTERIOR-ACTION`, prove posterior best-action measurability from a
+  concrete model, or prove Bayesian regret.
+
 `POLICY-REWARD-ONE-STEP-KERNEL-COMPOSITION` is compiled locally:
 
 ```lean
