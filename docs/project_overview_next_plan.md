@@ -1817,6 +1817,15 @@ Context:
   directly into the explicit `GeneratedActionRandomPairMapSource` whose action
   trace is `generatedActionFromRewardHistory`.  This keeps the lower map-law
   route available without first building the full explicit raw-range source.
+- `COND-EXPECT-REWARD-RANDOM-PAIR-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-PARTIALTRAJ-PAIR-LAW-SOURCE`
+  now compiles as the matching partialTraj-source projection:
+  `generatedActionPartialTrajectoryPairLawSource_of_randomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource`
+  weakens the same practical definitional raw-range source directly into
+  `GeneratedActionPartialTrajectoryPairLawSource` by projecting the packaged
+  definitional random-pair map source and context measurability.  This is a
+  source-surface conversion only; it still assumes the packaged random next-pair
+  law and does not prove the ambient `partialTraj`/`condExpKernel` trajectory
+  identification.
 - `COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-CENTERED-REGULARITY`
   now compiles as the top definitional regularity layer:
   `centeredReward_succ_aemeasurable_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource`

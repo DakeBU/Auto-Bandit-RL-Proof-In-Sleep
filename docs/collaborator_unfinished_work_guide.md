@@ -13125,6 +13125,64 @@ def ConditionalExpectationReward.generatedActionRandomPairMapSource_of_definitio
   mean range bounds, ambient trajectory-to-`condExpKernel` identification,
   sub-Gaussianity, or final adaptive ETC/UCB theorem.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-PARTIALTRAJ-PAIR-LAW-SOURCE`
+is compiled locally:
+
+```lean
+def ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_of_randomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (source :
+      ConditionalExpectationReward.GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource
+        mu rewardKernel policy context state mean varianceProxy defaultAction
+        reward hreward rewardLo rewardHi meanLo meanHi) :
+    ConditionalExpectationReward.GeneratedActionPartialTrajectoryPairLawSource
+      mu rewardKernel policy context state defaultAction reward hreward
+```
+
+- Exact Lean-facing statement: a
+  `GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource`
+  weakens directly to `GeneratedActionPartialTrajectoryPairLawSource` for
+  `generatedActionFromRewardHistory policy state defaultAction reward`.
+- Local APIs/imports: `BanditRLProof.ConditionalRewardLawSource`,
+  `ConditionalExpectationReward.GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource`,
+  `ConditionalExpectationReward.GeneratedActionPartialTrajectoryPairLawSource`,
+  and
+  `ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_of_randomPairDefinitionalMapSource`.
+- Intended proof route: project `source.hcontext` and
+  `source.definitional_map_source`, then reuse the existing definitional
+  random-pair map source to partialTraj source conversion.  No centered
+  regularity or variance field is needed for this weaker interface.
+- Regularity contracts: standard Borel sample space, finite measure,
+  measurable context/state/action spaces, measurable singleton and countable
+  action space, timewise measurable reward trace, source-packaged measurable
+  context extractors, and the source-packaged definitional random next-pair map
+  law.  Mean measurability, centered reward-kernel law, raw reward range, mean
+  range, and variance proxy remain part of the practical source but are not
+  consumed by the conversion.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-PARTIALTRAJ-PAIR-LAW-SOURCE`;
+  declaration is
+  `ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_of_randomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource`.
+- Status: project-local compiled source-conversion leaf for
+  `COND-EXPECT-REWARD`, `ADAPTED-ACTION`, `MEAS-POLICY`, `MEAS-HISTORY`,
+  `KERNEL-POLICY-BIND`, `KERNEL-REWARD`, `INT-REWARD-BOUNDED`, and
+  `MEAS-REWARD`.
+- Failure policy: this is not a proof of the theorem-card trajectory law.  It
+  does not derive the definitional random next-pair law, deterministic
+  raw/mean range bounds, ambient `partialTraj`/history-to-`condExpKernel`
+  identification, sub-Gaussianity, or final adaptive ETC/UCB theorem.
+
 `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-CENTERED-REGULARITY`
 is compiled locally:
 

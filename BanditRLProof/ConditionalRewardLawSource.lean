@@ -8849,6 +8849,52 @@ def generatedActionActualRewardMapSource_of_randomPairDefinitionalRawRangeMeasur
           (source := source))
 
 /--
+Convert a definitional raw-reward-range/measurable-mean-range bounded
+generated random next-pair source into the generated finite-pair `partialTraj`
+source.
+
+The practical raw-range source already contains the definitional random-pair
+map source and context measurability.  This wrapper exposes the weaker
+`GeneratedActionPartialTrajectoryPairLawSource` surface directly.  It is only
+a source conversion: the packaged random next-pair law is still assumed.
+-/
+def generatedActionPartialTrajectoryPairLawSource_of_randomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (source :
+      GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource
+        mu rewardKernel policy context state mean varianceProxy defaultAction
+        reward hreward rewardLo rewardHi meanLo meanHi) :
+    GeneratedActionPartialTrajectoryPairLawSource mu rewardKernel policy
+      context state defaultAction reward hreward :=
+  generatedActionPartialTrajectoryPairLawSource_of_randomPairDefinitionalMapSource
+    (mu := mu)
+    (rewardKernel := rewardKernel)
+    (policy := policy)
+    (context := context)
+    (state := state)
+    (hcontext := source.hcontext)
+    (defaultAction := defaultAction)
+    (reward := reward)
+    (hreward := hreward)
+    (source := source.definitional_map_source)
+
+/--
 Consume a generated-policy actual reward-coordinate law source to obtain the
 canonical history-step pair law.
 -/
