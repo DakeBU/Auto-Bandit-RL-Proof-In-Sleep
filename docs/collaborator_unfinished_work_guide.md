@@ -21237,6 +21237,76 @@ theorem RewardKernel.actionRewardHistoryStepKernelFamily_reward_condDistrib_traj
   still identify or transport the ambient conditional kernel into the
   canonical `trajMeasure` law.
 
+`POLICY-REWARD-TRAJMEASURE-SELECTED-REWARD-CONDDISTRIB` is compiled locally:
+
+```lean
+theorem RewardKernel.actionRewardHistoryStepKernelFamily_selectedMeasure_condDistrib_trajMeasure
+    {Context : Type x} {State : Type u} {Action : Type y}
+    {Reward : Type v}
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSpace Reward]
+    [StandardBorelSpace (Prod Action Reward)]
+    [StandardBorelSpace Reward]
+    [Nonempty (Prod Action Reward)] [Nonempty Reward]
+    (mu0 : Measure (Prod Action Reward))
+    [MeasureTheory.IsProbabilityMeasure mu0]
+    (rewardKernel : RewardKernel.MarkovRewardKernel
+      (Prod Context Action) Reward)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Reward) ->
+        Context)
+    (state :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Reward) ->
+        State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (n : Nat) :
+    Filter.EventuallyEq
+      (MeasureTheory.ae
+        ((ProbabilityTheory.Kernel.trajMeasure
+          (X := fun _ : Nat => Prod Action Reward)
+          mu0
+          (RewardKernel.actionRewardHistoryStepKernelFamily
+            rewardKernel policy context state hcontext hstate)).map
+          (Preorder.frestrictLe n)))
+      (ProbabilityTheory.condDistrib
+        (fun trajectory : (t : Nat) -> Prod Action Reward =>
+          (trajectory (n + 1)).2)
+        (Preorder.frestrictLe n)
+        (ProbabilityTheory.Kernel.trajMeasure
+          (X := fun _ : Nat => Prod Action Reward)
+          mu0
+          (RewardKernel.actionRewardHistoryStepKernelFamily
+            rewardKernel policy context state hcontext hstate)))
+      (fun history : (i : Finset.Iic n) -> Prod Action Reward =>
+        RewardKernel.selectedMeasure rewardKernel
+          (context n history) ((policy n).action (state n history)))
+```
+
+- Exact Lean-facing statement: the same canonical `trajMeasure` next-reward
+  conditional distribution is a.e. the selected context/action reward measure
+  determined by the frozen finite pair history and policy action.
+- Local APIs/imports:
+  `RewardKernel.actionRewardHistoryStepKernelFamily_reward_condDistrib_trajMeasure`,
+  `RewardKernel.actionRewardHistoryStepKernelFamily_reward_map`,
+  `RewardKernel.selectedMeasure`, `ProbabilityTheory.Kernel.map`, and
+  `Preorder.frestrictLe`.
+- Intended proof route: consume the reward-marginal canonical law, then use
+  `RewardKernel.actionRewardHistoryStepKernelFamily_reward_map` pointwise to
+  rewrite the mapped action/reward kernel to `selectedMeasure`.
+- Regularity contracts: same as
+  `POLICY-REWARD-TRAJMEASURE-REWARD-CONDDISTRIB`.
+- Retrieval evidence:
+  `LOCAL-LEAF-POLICY-REWARD-TRAJMEASURE-SELECTED-REWARD-CONDDISTRIB`,
+  `LOCAL-LEAF-POLICY-REWARD-TRAJMEASURE-REWARD-CONDDISTRIB`, and
+  `LOCAL-LEAF-KERNEL-REWARD-MAP-LAW-TRANSFER`.
+- Status: compiled-local.  It is the canonical selected-reward law for
+  Mathlib `trajMeasure`.
+- Failure policy: still not an ambient generated-history
+  `condExpKernel`/`History.historyFiltrationSucc` identification and not a
+  final adaptive theorem.
+
 `COND-EXPECT-REWARD-PARTIALTRAJ-CONDEXPKERNEL-PAIR-LAW-CARD` is
 theorem-card-only:
 

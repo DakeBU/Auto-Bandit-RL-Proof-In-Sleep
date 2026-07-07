@@ -3189,6 +3189,25 @@ LOCAL_LEAF_CARDS = [
         ],
     },
     {
+        "id": "LOCAL-LEAF-POLICY-REWARD-TRAJMEASURE-SELECTED-REWARD-CONDDISTRIB",
+        "leaf_ids": [
+            "COND-EXPECT-REWARD",
+            "KERNEL-POLICY-BIND",
+        ],
+        "module": "BanditRLProof.RewardKernel",
+        "status": "leanCompiled",
+        "declarations": [
+            "RewardKernel.actionRewardHistoryStepKernelFamily_selectedMeasure_condDistrib_trajMeasure",
+        ],
+        "role": "Compiled Mathlib-backed canonical selected-reward trajectory conditional law: for the action/reward history-step kernel family, condDistrib of the next reward coordinate given the finite pair prefix is a.e. the selected context/action reward measure determined by the frozen prefix and policy action. It rewrites the canonical reward-marginal law through RewardKernel.actionRewardHistoryStepKernelFamily_reward_map; it still does not identify an arbitrary ambient condExpKernel over Omega, transport History.historyFiltrationSucc, or prove the final adaptive theorem.",
+        "mathlib_routes": [
+            "Mathlib.Probability.Kernel.IonescuTulcea.Traj",
+            "Mathlib.Probability.Kernel.CondDistrib",
+            "LOCAL-LEAF-POLICY-REWARD-TRAJMEASURE-REWARD-CONDDISTRIB",
+            "LOCAL-LEAF-KERNEL-REWARD-MAP-LAW-TRANSFER",
+        ],
+    },
+    {
         "id": "LOCAL-LEAF-KERNEL-CENTERED-REWARD-LAW-TRANSFER",
         "leaf_ids": [
             "COND-EXPECT-REWARD",
@@ -8672,7 +8691,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
     print("- KERNEL-POLICY-BIND is compiled locally as a Mathlib partialTraj finite-prefix action/reward pair trajectory-kernel surface from deterministic policy action kernels and selected reward kernels, with selected-reward marginal wrappers for one-step and history-step action/reward kernels and a one-step frozen-prefix extension map wrapper.")
     print("- POLICY-REWARD-PARTIALTRAJ-SUCC-NEXT-MAP is compiled locally as the Mathlib partialTraj one-step next-coordinate marginal wrapper for reward-history and action/reward pair trajectories; condExpKernel trajectory-law identification remains open.")
     print("- POLICY-REWARD-PARTIALTRAJ-SUCC-EXTEND-MAP is compiled locally as the Mathlib partialTraj one-step full-extension wrapper: the n-to-n+1 action/reward trajectory measure is the history-step pair kernel pushed through History.extendPairHistorySucc.")
-    print("- POLICY-REWARD-TRAJMEASURE-CONDDISTRIB is compiled locally as the canonical Mathlib trajMeasure conditional-distribution law: for the action/reward history-step kernel family, condDistrib of the next pair given the finite prefix is a.e. RewardKernel.actionRewardHistoryStepKernelFamily, and the next reward coordinate conditional law is its Prod.snd marginal via condDistrib_comp; ambient Omega/condExpKernel and History.historyFiltrationSucc transport remain open.")
+    print("- POLICY-REWARD-TRAJMEASURE-CONDDISTRIB is compiled locally as the canonical Mathlib trajMeasure conditional-distribution law: for the action/reward history-step kernel family, condDistrib of the next pair given the finite prefix is a.e. RewardKernel.actionRewardHistoryStepKernelFamily, the next reward coordinate conditional law is its Prod.snd marginal via condDistrib_comp, and the selected context/action reward-measure form is compiled; ambient Omega/condExpKernel and History.historyFiltrationSucc transport remain open.")
     print("- KERNEL-CENTERED-REWARD-LAW-TRANSFER is compiled locally as a kernel-level selected reward law transfer surface: policy-composed and finite reward-history step kernels inherit centered integrability, zero integral, and sub-Gaussian MGF witnesses from pointwise context/action reward laws; condExpKernel identification remains open.")
     print("- KERNEL-REWARD-MAP-LAW-TRANSFER is compiled locally as measure-level reward-marginal map equalities for one-step and history-step action/reward kernels; condExpKernel trajectory-law identification remains open.")
     print("- COND-EXPECT-REWARD-CONDEXPKERNEL-ZERO is compiled locally as a narrow condExpKernel-to-condExp zero bridge for centered rewards; it does not construct the trajectory-law condExpKernel identification.")
