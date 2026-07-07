@@ -11284,6 +11284,52 @@ theorem ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_gene
   conditional MGF theorem, and not a final adaptive theorem.  It assumes the
   packaged raw-range source and consumes it.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-RANDOM-PAIR-MAP-SOURCE`
+is compiled locally:
+
+```lean
+def ConditionalExpectationReward.generatedActionRandomPairMapSource_of_randomPairRawRangeMeasurableMeanRangeBoundedSource
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (action : Omega -> ActionTrace Action)
+    ...
+    (source :
+      ConditionalExpectationReward.GeneratedActionRandomPairRawRangeMeasurableMeanRangeBoundedSource
+        mu action rewardKernel policy context state mean varianceProxy
+        defaultAction reward haction hreward rewardLo rewardHi meanLo meanHi) :
+    ConditionalExpectationReward.GeneratedActionRandomPairMapSource
+      mu action rewardKernel policy context state defaultAction reward
+      haction hreward
+```
+
+- Exact Lean-facing statement: a
+  `GeneratedActionRandomPairRawRangeMeasurableMeanRangeBoundedSource` projects
+  directly to its packaged `GeneratedActionRandomPairMapSource` with the same
+  action/reward trace, reward kernel, generated policy, context/state maps,
+  default action, and measurability witnesses.
+- Local APIs/imports: `BanditRLProof.ConditionalRewardLawSource`,
+  `ConditionalExpectationReward.GeneratedActionRandomPairRawRangeMeasurableMeanRangeBoundedSource`,
+  and `ConditionalExpectationReward.GeneratedActionRandomPairMapSource`.
+- Intended proof route: return `source.map_source`.  No measure manipulation
+  or regularity proof is introduced; the wrapper exists as a stable named API
+  for downstream law consumers.
+- Regularity contracts: the source already packages standard Borel/finite
+  measure assumptions, measurable context/state/action spaces, countable
+  action space, timewise measurable traces, the random next-pair map source,
+  centered reward-kernel law, mean measurability, and deterministic raw/mean
+  range bounds.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-RANDOM-PAIR-MAP-SOURCE`;
+  declaration is
+  `ConditionalExpectationReward.generatedActionRandomPairMapSource_of_randomPairRawRangeMeasurableMeanRangeBoundedSource`.
+- Status: project-local compiled source-projection leaf for
+  `COND-EXPECT-REWARD`, `ADAPTED-ACTION`, `MEAS-POLICY`, `MEAS-HISTORY`,
+  `KERNEL-POLICY-BIND`, `KERNEL-REWARD`, `INT-REWARD-BOUNDED`, and
+  `MEAS-REWARD`.
+- Failure policy: this is not construction of the random next-pair law, raw
+  reward/mean range regularity, ambient trajectory-to-`condExpKernel`
+  identification, conditional MGF witness, or final adaptive theorem.  It only
+  exposes the packaged map-source field.
+
 `LOCAL-LEAF-COND-EXPECT-REWARD-RANDOM-PAIR-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-TO-HISTORYSTEP-PAIR-LAW`
 is compiled locally:
 
