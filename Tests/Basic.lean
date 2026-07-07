@@ -10006,6 +10006,80 @@ example {Omega Context State Action : Type}
     (policy : Nat -> Policy.MeasurablePolicy State Action)
     (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
     (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (h_pair_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            @MeasureTheory.Measure.map Omega (Prod Action Rat)
+              mOmega inferInstance
+              (fun y : Omega =>
+                (ConditionalExpectationReward.generatedActionFromRewardHistory
+                  policy state defaultAction reward y (i + 1),
+                  reward y (i + 1)))
+              (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+                ((History.historyFiltrationSucc
+                  (ConditionalExpectationReward.generatedActionFromRewardHistory
+                    policy state defaultAction reward)
+                  reward
+                  (ConditionalExpectationReward.generatedActionFromRewardHistory_measurable
+                    (policy := policy) (state := state)
+                    (defaultAction := defaultAction) (reward := reward)
+                    hreward hstate)
+                  hreward) i)
+                omega) =
+            RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy
+              (fun n history =>
+                context n (History.pairHistoryRewardProjection history))
+              (fun n history =>
+                state n (History.pairHistoryRewardProjection history))
+              (fun n : Nat =>
+                (hcontext n).comp
+                  (History.measurable_pairHistoryRewardProjection
+                    (Action := Action) (Reward := Rat) n))
+              (fun n : Nat =>
+                (hstate n).comp
+                  (History.measurable_pairHistoryRewardProjection
+                    (Action := Action) (Reward := Rat) n))
+              i
+              (History.finitePairHistoryOfTrace
+                (ConditionalExpectationReward.generatedActionFromRewardHistory
+                  policy state defaultAction reward omega)
+                (reward omega) i))
+          (MeasureTheory.ae
+            (mu.trim
+              ((History.historyFiltrationSucc
+                (ConditionalExpectationReward.generatedActionFromRewardHistory
+                  policy state defaultAction reward)
+                reward
+                (ConditionalExpectationReward.generatedActionFromRewardHistory_measurable
+                  (policy := policy) (state := state)
+                  (defaultAction := defaultAction) (reward := reward)
+                  hreward hstate)
+                hreward).le i)))) :
+    ConditionalExpectationReward.GeneratedActionPartialTrajectoryPairLawSource
+      mu rewardKernel policy context state defaultAction reward hreward := by
+  exact
+    ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_of_actionRewardHistoryStepKernelFamily_pair_map_eq
+      (mOmega := mOmega)
+      mu rewardKernel policy context state hcontext hstate defaultAction reward
+      hreward h_pair_map_eq
+
+example {Omega Context State Action : Type}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
     (mean : Context -> Action -> Rat)
     (varianceProxy : Context -> Action -> NNReal)
     (defaultAction : Action)

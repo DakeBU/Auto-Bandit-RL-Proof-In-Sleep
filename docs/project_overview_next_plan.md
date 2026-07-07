@@ -1254,6 +1254,13 @@ Context:
   `partialTraj`/`condExpKernel` equality, then this wrapper builds the full
   `GeneratedActionPartialTrajectoryPairLawSource` through the existing
   extension-to-full-trace adapter.
+- `COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-FROM-HISTORYSTEP-PAIR-LAW`
+  now compiles as the next upstream source constructor: a generated next-pair
+  `condExpKernel` law identified with
+  `RewardKernel.actionRewardHistoryStepKernelFamily` builds the same
+  `GeneratedActionPartialTrajectoryPairLawSource` via the next-pair-to-extension
+  and extension-to-full-source adapters.  This makes the remaining law target
+  closer to the canonical `trajMeasure` next-pair route.
 - `COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-RAW-RANGE-BOUNDED-SOURCE`
   now compiles as the practical source-conversion wrapper for that same
   source contract: `GeneratedActionPartialTrajectoryPairLawSource`, measurable

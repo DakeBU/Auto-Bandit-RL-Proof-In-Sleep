@@ -3533,6 +3533,35 @@
       ]
     },
     {
+      "id": "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-FROM-HISTORYSTEP-PAIR-LAW",
+      "leaf_ids": [
+        "COND-EXPECT-REWARD",
+        "ADAPTED-ACTION",
+        "MEAS-POLICY",
+        "MEAS-HISTORY",
+        "FILTRATION-HISTORY",
+        "KERNEL-POLICY-BIND",
+        "KERNEL-REWARD"
+      ],
+      "module": "BanditRLProof.ConditionalRewardLawSource",
+      "status": "leanCompiled",
+      "declarations": [
+        "ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_of_actionRewardHistoryStepKernelFamily_pair_map_eq"
+      ],
+      "role": "Compiled project-local source-constructor leaf: a generated-history next-pair condExpKernel law identified with RewardKernel.actionRewardHistoryStepKernelFamily now constructs a GeneratedActionPartialTrajectoryPairLawSource via the existing next-pair-to-extension-map and extension-to-full-source adapters. It reduces the future source-building obligation to the canonical next-pair law but does not prove that law, transport canonical trajMeasure to ambient Omega, or upgrade COND-EXPECT-REWARD-PARTIALTRAJ-CONDEXPKERNEL-PAIR-LAW-CARD from theorem-card-only.",
+      "mathlib_routes": [
+        "MLIB-CONDITIONAL-EXPECTATION",
+        "Mathlib.Probability.Kernel.IonescuTulcea.Traj",
+        "Mathlib.Probability.Kernel.IonescuTulcea.PartialTraj",
+        "Mathlib.Probability.Kernel.Disintegration.StandardBorel",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-FROM-EXTEND-MAP",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-PROJECTION",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-FROM-PAIRMAP",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-NEXTPAIR-SPLIT-LAW-BUILDER",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-PAIR-CONDEXPKERNEL-MAP"
+      ]
+    },
+    {
       "id": "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-RAW-RANGE-BOUNDED-SOURCE",
       "leaf_ids": [
         "COND-EXPECT-REWARD",
@@ -3553,6 +3582,7 @@
       "role": "Compiled project-local source-conversion leaf: a GeneratedActionPartialTrajectoryPairLawSource plus measurable mean, centered reward-kernel law, raw reward range bounds, and deterministic mean range bounds now builds the practical GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource. It only consumes the packaged full finite-pair partialTraj/condExpKernel law; it does not prove that law, transport canonical trajMeasure to ambient Omega, add variance ceilings, or upgrade COND-EXPECT-REWARD-PARTIALTRAJ-CONDEXPKERNEL-PAIR-LAW-CARD from theorem-card-only.",
       "mathlib_routes": [
         "MLIB-CONDITIONAL-EXPECTATION",
+        "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-FROM-HISTORYSTEP-PAIR-LAW",
         "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-FROM-EXTEND-MAP",
         "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-PROJECTION",
         "LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-TRAJECTORY-PARTIALTRAJ-PAIR-LAW-SOURCE-CONTRACT",
