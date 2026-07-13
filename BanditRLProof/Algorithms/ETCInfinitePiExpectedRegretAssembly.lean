@@ -89,6 +89,52 @@ noncomputable def fixedProductWrongCommitTailBudget
         (ETC.centeredRewardBoundVarianceProxy lo hi)))
 
 /--
+Named RHS budget for the fixed product-coordinate bad-gap lower-integral ETC
+regret wrapper.
+
+This is still an `ENNReal.ofReal` surrogate budget.  It packages the explicit
+bad-gap suffix contract behind the same fixed-product tail budget used by the
+Bochner/Real bad-gap wrapper.
+-/
+noncomputable def fixedProductBadGapLintegralRegretBound
+    {K : Nat}
+    (spec : ETC.Spec K)
+    (model : FiniteBanditModel K)
+    (baseCommitArm : Fin K)
+    (r : Nat)
+    (badGapBound : Rat)
+    (lo hi : Fin K -> Nat -> Real) : ENNReal :=
+  ENNReal.ofReal
+    (((((Finset.univ : Finset (Fin K)).sum
+      (fun a : Fin K => model.gap a)) *
+      (((spec.explorationPulls : Nat) : Rat)) : Rat) : Real)) +
+  ENNReal.ofReal
+    ((((((r : Nat) : Rat) * badGapBound : Rat) : Real))) *
+    ETC.fixedProductWrongCommitTailBudget spec model baseCommitArm lo hi
+
+/--
+Named RHS budget for the conservative fixed product-coordinate sum-gap
+lower-integral ETC regret wrapper.
+
+This is the sum-gap specialization of
+`fixedProductBadGapLintegralRegretBound`; it removes the explicit
+`badGapBound` parameter while remaining on the `ENNReal.ofReal`
+lower-integral surface.
+-/
+noncomputable def fixedProductSumGapLintegralRegretBound
+    {K : Nat}
+    (spec : ETC.Spec K)
+    (model : FiniteBanditModel K)
+    (baseCommitArm : Fin K)
+    (r : Nat)
+    (lo hi : Fin K -> Nat -> Real) : ENNReal :=
+  ETC.fixedProductBadGapLintegralRegretBound
+    spec model baseCommitArm r
+      ((Finset.univ : Finset (Fin K)).sum
+        (fun a : Fin K => model.gap a))
+      lo hi
+
+/--
 Real-valued view of the fixed product-coordinate wrong-commit tail budget.
 -/
 noncomputable def fixedProductWrongCommitTailBudgetReal
@@ -161,6 +207,43 @@ noncomputable def fixedProductMaxGapIntegralRegretBoundReal
     (lo hi : Fin K -> Nat -> Real) : Real :=
   ETC.fixedProductBadGapIntegralRegretBoundReal
     spec model baseCommitArm r model.maxGap lo hi
+
+/--
+The canonical fixed-product ETC commit arm uses the round-robin exploration
+prefix only.  Internally it fixes the already-selected best arm as a harmless
+post-exploration seed; every public source contract below is stated directly
+against `ETC.exploreArm`.
+-/
+noncomputable def explorationArgmaxCommit
+    {K : Nat}
+    (spec : ETC.Spec K)
+    (model : FiniteBanditModel K)
+    (omega : RewardTrace Rat) : Fin K :=
+  ETC.fixedProductArgmaxCommit spec model model.bestArm omega
+
+/--
+The canonical fixed-product ETC trace: round-robin exploration followed by the
+argmax commit computed from that exploration prefix.
+-/
+noncomputable def explorationArgmaxAction
+    {K : Nat}
+    (spec : ETC.Spec K)
+    (model : FiniteBanditModel K)
+    (omega : RewardTrace Rat) : ActionTrace (Fin K) :=
+  ETC.fixedProductArgmaxAction spec model model.bestArm omega
+
+/--
+Real-valued max-gap regret budget for the canonical round-robin exploration
+fixed-product ETC endpoint.
+-/
+noncomputable def explorationMaxGapIntegralRegretBoundReal
+    {K : Nat}
+    (spec : ETC.Spec K)
+    (model : FiniteBanditModel K)
+    (r : Nat)
+    (lo hi : Fin K -> Nat -> Real) : Real :=
+  ETC.fixedProductMaxGapIntegralRegretBoundReal
+    spec model model.bestArm r lo hi
 
 /--
 Concrete lower-integral ETC regret assembly for the finite argmax commit oracle
@@ -283,6 +366,193 @@ theorem lintegral_ofReal_pseudoRegret_argmaxCommitOracle_actionWithCommit_le_exp
       (hbadGap := hbadGap)
       (hmeas_wrong := hmeas_wrong)
       (hprob_wrong := hprob_wrong))
+
+/--
+Polished fixed-product bad-gap lower-integral ETC regret wrapper.
+
+The statement names both the fixed-product argmax action trace and the
+bad-gap lower-integral RHS budget while remaining on the same fixed
+product-coordinate, fixed-exploration `ENNReal.ofReal` surface as the concrete
+assembly theorem.
+-/
+theorem lintegral_ofReal_pseudoRegret_fixedProductArgmaxAction_le_fixedProductBadGapLintegralRegretBound_of_infinitePi_bounded_actionMean
+    {K : Nat}
+    (coordLaw : Nat -> MeasureTheory.Measure Rat)
+    [forall t : Nat, MeasureTheory.IsProbabilityMeasure (coordLaw t)]
+    (spec : ETC.Spec K)
+    (model : FiniteBanditModel K)
+    (baseCommitArm : Fin K)
+    (r : Nat)
+    (badGapBound : Rat)
+    (lo hi : Fin K -> Nat -> Real)
+    (hexplorationPulls_pos : 0 < spec.explorationPulls)
+    (hbadGap :
+      forall a : Fin K, (a = model.bestArm -> False) ->
+        model.gap a <= badGapBound)
+    (h_coord_bound :
+      forall t, t < spec.explorationPulls * K ->
+        Filter.Eventually
+          (fun rewardValue : Rat =>
+            Set.Icc
+              (lo (ETC.actionWithCommit spec baseCommitArm t) t)
+              (hi (ETC.actionWithCommit spec baseCommitArm t) t)
+              (((rewardValue : Rat) : Real)))
+          (MeasureTheory.ae (coordLaw t)))
+    (h_coord_mean :
+      forall t, t < spec.explorationPulls * K ->
+        MeasureTheory.integral (coordLaw t)
+          (fun rewardValue : Rat => (((rewardValue : Rat) : Real))) =
+        (((model.mean (ETC.actionWithCommit spec baseCommitArm t) : Rat) : Real))) :
+    MeasureTheory.lintegral (MeasureTheory.Measure.infinitePi coordLaw)
+      (fun omega : RewardTrace Rat =>
+        ENNReal.ofReal
+          (((pseudoRegret model
+              (ETC.fixedProductArgmaxAction spec model baseCommitArm omega)
+              (spec.explorationPulls * K + r) : Rat) : Real))) <=
+    ETC.fixedProductBadGapLintegralRegretBound
+      spec model baseCommitArm r badGapBound lo hi := by
+  simpa [ETC.fixedProductArgmaxAction, ETC.fixedProductArgmaxCommit,
+    ETC.fixedProductBadGapLintegralRegretBound,
+    ETC.fixedProductWrongCommitTailBudget] using
+    (ETC.lintegral_ofReal_pseudoRegret_argmaxCommitOracle_actionWithCommit_le_exploration_add_suffix_badGap_prob_of_infinitePi_bounded_actionMean
+      (coordLaw := coordLaw)
+      (spec := spec)
+      (model := model)
+      (baseCommitArm := baseCommitArm)
+      (r := r)
+      (badGapBound := badGapBound)
+      (lo := lo)
+      (hi := hi)
+      (hexplorationPulls_pos := hexplorationPulls_pos)
+      (hbadGap := hbadGap)
+      (h_coord_bound := h_coord_bound)
+      (h_coord_mean := h_coord_mean))
+
+/--
+Polished fixed-product sum-gap lower-integral ETC regret wrapper.
+
+The statement names both the fixed-product argmax action trace and the
+conservative sum-gap lower-integral RHS budget, while remaining on the fixed
+product-coordinate, fixed-exploration `ENNReal.ofReal` surface.
+-/
+theorem lintegral_ofReal_pseudoRegret_fixedProductArgmaxAction_le_fixedProductSumGapLintegralRegretBound_of_infinitePi_bounded_actionMean
+    {K : Nat}
+    (coordLaw : Nat -> MeasureTheory.Measure Rat)
+    [forall t : Nat, MeasureTheory.IsProbabilityMeasure (coordLaw t)]
+    (spec : ETC.Spec K)
+    (model : FiniteBanditModel K)
+    (baseCommitArm : Fin K)
+    (r : Nat)
+    (lo hi : Fin K -> Nat -> Real)
+    (hexplorationPulls_pos : 0 < spec.explorationPulls)
+    (h_coord_bound :
+      forall t, t < spec.explorationPulls * K ->
+        Filter.Eventually
+          (fun rewardValue : Rat =>
+            Set.Icc
+              (lo (ETC.actionWithCommit spec baseCommitArm t) t)
+              (hi (ETC.actionWithCommit spec baseCommitArm t) t)
+              (((rewardValue : Rat) : Real)))
+          (MeasureTheory.ae (coordLaw t)))
+    (h_coord_mean :
+      forall t, t < spec.explorationPulls * K ->
+        MeasureTheory.integral (coordLaw t)
+          (fun rewardValue : Rat => (((rewardValue : Rat) : Real))) =
+        (((model.mean (ETC.actionWithCommit spec baseCommitArm t) : Rat) : Real))) :
+    MeasureTheory.lintegral (MeasureTheory.Measure.infinitePi coordLaw)
+      (fun omega : RewardTrace Rat =>
+        ENNReal.ofReal
+          (((pseudoRegret model
+              (ETC.fixedProductArgmaxAction spec model baseCommitArm omega)
+              (spec.explorationPulls * K + r) : Rat) : Real))) <=
+    ETC.fixedProductSumGapLintegralRegretBound
+      spec model baseCommitArm r lo hi := by
+  simpa [ETC.fixedProductArgmaxAction, ETC.fixedProductArgmaxCommit,
+    ETC.fixedProductSumGapLintegralRegretBound,
+    ETC.fixedProductBadGapLintegralRegretBound,
+    ETC.fixedProductWrongCommitTailBudget] using
+    (ETC.lintegral_ofReal_pseudoRegret_fixedProductArgmaxAction_le_fixedProductBadGapLintegralRegretBound_of_infinitePi_bounded_actionMean
+      (coordLaw := coordLaw)
+      (spec := spec)
+      (model := model)
+      (baseCommitArm := baseCommitArm)
+      (r := r)
+      (badGapBound :=
+        (Finset.univ : Finset (Fin K)).sum
+          (fun a : Fin K => model.gap a))
+      (lo := lo)
+      (hi := hi)
+      (hexplorationPulls_pos := hexplorationPulls_pos)
+      (hbadGap := by
+        intro a _hne
+        exact Finset.single_le_sum
+          (fun b _ => FiniteBanditModel.gap_nonneg model b)
+          (Finset.mem_univ a))
+      (h_coord_bound := h_coord_bound)
+      (h_coord_mean := h_coord_mean))
+
+/--
+Real-valued fixed-product wrong-commit probability bound.
+
+This exposes the `ENNReal.toReal` conversion used by the Bochner expected-regret
+assembly as a standalone reusable surface.  It remains tied to the concrete
+infinite product-coordinate reward source and fixed exploration trace.
+-/
+theorem real_measure_fixedProductArgmaxCommit_ne_bestArm_le_fixedProductWrongCommitTailBudgetReal_of_infinitePi_bounded_actionMean
+    {K : Nat}
+    (coordLaw : Nat -> MeasureTheory.Measure Rat)
+    [forall t : Nat, MeasureTheory.IsProbabilityMeasure (coordLaw t)]
+    (spec : ETC.Spec K)
+    (model : FiniteBanditModel K)
+    (baseCommitArm : Fin K)
+    (lo hi : Fin K -> Nat -> Real)
+    (hexplorationPulls_pos : 0 < spec.explorationPulls)
+    (h_coord_bound :
+      forall t, t < spec.explorationPulls * K ->
+        Filter.Eventually
+          (fun rewardValue : Rat =>
+            Set.Icc
+              (lo (ETC.actionWithCommit spec baseCommitArm t) t)
+              (hi (ETC.actionWithCommit spec baseCommitArm t) t)
+              (((rewardValue : Rat) : Real)))
+          (MeasureTheory.ae (coordLaw t)))
+    (h_coord_mean :
+      forall t, t < spec.explorationPulls * K ->
+        MeasureTheory.integral (coordLaw t)
+          (fun rewardValue : Rat => (((rewardValue : Rat) : Real))) =
+        (((model.mean (ETC.actionWithCommit spec baseCommitArm t) : Rat) : Real))) :
+    (MeasureTheory.Measure.infinitePi coordLaw).real
+      {omega : RewardTrace Rat |
+        ETC.fixedProductArgmaxCommit spec model baseCommitArm omega =
+          model.bestArm -> False} <=
+    ETC.fixedProductWrongCommitTailBudgetReal spec model baseCommitArm lo hi := by
+  let pWrong : ENNReal :=
+    ETC.fixedProductWrongCommitTailBudget spec model baseCommitArm lo hi
+  have hprob_wrong :
+      MeasureTheory.Measure.infinitePi coordLaw
+        {omega : RewardTrace Rat |
+          ETC.fixedProductArgmaxCommit spec model baseCommitArm omega =
+            model.bestArm -> False} <=
+      pWrong := by
+    simpa [ETC.fixedProductArgmaxCommit, pWrong,
+      ETC.fixedProductWrongCommitTailBudget] using
+      (ETC.prob_argmaxCommitOracle_ne_bestArm_le_filtered_sum_centeredDiffSubGaussianTail_of_infinitePi_bounded_actionMean
+        (hK := model.hK)
+        (coordLaw := coordLaw)
+        (spec := spec)
+        (model := model)
+        (commitArm := baseCommitArm)
+        (lo := lo)
+        (hi := hi)
+        (hexplorationPulls_pos := hexplorationPulls_pos)
+        (h_coord_bound := h_coord_bound)
+        (h_coord_mean := h_coord_mean))
+  have hpWrong_ne_none : Not (pWrong = (none : ENNReal)) := by
+    simp [pWrong, ETC.fixedProductWrongCommitTailBudget,
+      ETC.centeredDiffSubGaussianTail]
+  simpa [MeasureTheory.Measure.real, ETC.fixedProductWrongCommitTailBudgetReal,
+    pWrong] using
+    (ENNReal.toReal_mono (by simpa using hpWrong_ne_none) hprob_wrong)
 
 /--
 Concrete Bochner/Real ETC regret assembly for the finite argmax commit oracle
@@ -424,6 +694,65 @@ theorem integral_real_pseudoRegret_argmaxCommitOracle_actionWithCommit_le_explor
       (hmeas_wrong := hmeas_wrong)
       (hprob_wrong := hprob_wrong_real)
       (hinteg := hinteg))
+
+/--
+Polished fixed-product bad-gap Bochner/Real ETC regret wrapper.
+
+The underlying concrete theorem already uses the named fixed-product argmax
+action in its conclusion; this wrapper gives that endpoint the same API shape
+as the sum-gap and max-gap Bochner wrappers.
+-/
+theorem integral_real_pseudoRegret_fixedProductArgmaxAction_le_fixedProductBadGapIntegralRegretBoundReal_of_infinitePi_bounded_actionMean
+    {K : Nat}
+    (coordLaw : Nat -> MeasureTheory.Measure Rat)
+    [forall t : Nat, MeasureTheory.IsProbabilityMeasure (coordLaw t)]
+    (spec : ETC.Spec K)
+    (model : FiniteBanditModel K)
+    (baseCommitArm : Fin K)
+    (r : Nat)
+    (badGapBound : Rat)
+    (lo hi : Fin K -> Nat -> Real)
+    (hexplorationPulls_pos : 0 < spec.explorationPulls)
+    (hbadGap :
+      forall a : Fin K, (a = model.bestArm -> False) ->
+        model.gap a <= badGapBound)
+    (hbadGap_nonneg : (0 : Rat) <= badGapBound)
+    (h_coord_bound :
+      forall t, t < spec.explorationPulls * K ->
+        Filter.Eventually
+          (fun rewardValue : Rat =>
+            Set.Icc
+              (lo (ETC.actionWithCommit spec baseCommitArm t) t)
+              (hi (ETC.actionWithCommit spec baseCommitArm t) t)
+              (((rewardValue : Rat) : Real)))
+          (MeasureTheory.ae (coordLaw t)))
+    (h_coord_mean :
+      forall t, t < spec.explorationPulls * K ->
+        MeasureTheory.integral (coordLaw t)
+          (fun rewardValue : Rat => (((rewardValue : Rat) : Real))) =
+        (((model.mean (ETC.actionWithCommit spec baseCommitArm t) : Rat) : Real))) :
+    MeasureTheory.integral (MeasureTheory.Measure.infinitePi coordLaw)
+      (fun omega : RewardTrace Rat =>
+        (((pseudoRegret model
+            (ETC.fixedProductArgmaxAction spec model baseCommitArm omega)
+            (spec.explorationPulls * K + r) : Rat) : Real))) <=
+    ETC.fixedProductBadGapIntegralRegretBoundReal
+      spec model baseCommitArm r badGapBound lo hi := by
+  simpa [ETC.fixedProductArgmaxAction, ETC.fixedProductArgmaxCommit] using
+    (ETC.integral_real_pseudoRegret_argmaxCommitOracle_actionWithCommit_le_exploration_add_suffix_badGap_prob_of_infinitePi_bounded_actionMean
+      (coordLaw := coordLaw)
+      (spec := spec)
+      (model := model)
+      (baseCommitArm := baseCommitArm)
+      (r := r)
+      (badGapBound := badGapBound)
+      (lo := lo)
+      (hi := hi)
+      (hexplorationPulls_pos := hexplorationPulls_pos)
+      (hbadGap := hbadGap)
+      (hbadGap_nonneg := hbadGap_nonneg)
+      (h_coord_bound := h_coord_bound)
+      (h_coord_mean := h_coord_mean))
 
 /--
 Conservative concrete Bochner/Real ETC regret assembly using the total sum of
@@ -656,6 +985,70 @@ theorem integral_real_pseudoRegret_fixedProductArgmaxAction_le_fixedProductMaxGa
       (hexplorationPulls_pos := hexplorationPulls_pos)
       (h_coord_bound := h_coord_bound)
       (h_coord_mean := h_coord_mean))
+
+/--
+Canonical fixed-product Bochner/Real ETC expected-regret theorem stated only
+with round-robin exploration coordinates.
+
+Unlike the lower-level fixed-product wrapper, callers do not supply an
+arbitrary `baseCommitArm`: every coordinate bound and mean identity is indexed
+by `ETC.exploreArm`.  The result remains a fixed-product/fixed-exploration
+endpoint and does not construct an adaptive environment or policy law.
+-/
+theorem integral_real_pseudoRegret_explorationArgmaxAction_le_explorationMaxGapIntegralRegretBoundReal_of_infinitePi_bounded_exploreMean
+    {K : Nat}
+    (coordLaw : Nat -> MeasureTheory.Measure Rat)
+    [forall t : Nat, MeasureTheory.IsProbabilityMeasure (coordLaw t)]
+    (spec : ETC.Spec K)
+    (model : FiniteBanditModel K)
+    (r : Nat)
+    (lo hi : Fin K -> Nat -> Real)
+    (hexplorationPulls_pos : 0 < spec.explorationPulls)
+    (h_coord_bound :
+      forall t, t < spec.explorationPulls * K ->
+        Filter.Eventually
+          (fun rewardValue : Rat =>
+            Set.Icc
+              (lo (ETC.exploreArm spec t) t)
+              (hi (ETC.exploreArm spec t) t)
+              (((rewardValue : Rat) : Real)))
+          (MeasureTheory.ae (coordLaw t)))
+    (h_coord_mean :
+      forall t, t < spec.explorationPulls * K ->
+        MeasureTheory.integral (coordLaw t)
+          (fun rewardValue : Rat => (((rewardValue : Rat) : Real))) =
+        (((model.mean (ETC.exploreArm spec t) : Rat) : Real))) :
+    MeasureTheory.integral (MeasureTheory.Measure.infinitePi coordLaw)
+      (fun omega : RewardTrace Rat =>
+        (((pseudoRegret model
+            (ETC.explorationArgmaxAction spec model omega)
+            (spec.explorationPulls * K + r) : Rat) : Real))) <=
+    ETC.explorationMaxGapIntegralRegretBoundReal spec model r lo hi := by
+  have h_coord_bound' :
+      forall t, t < spec.explorationPulls * K ->
+        Filter.Eventually
+          (fun rewardValue : Rat =>
+            Set.Icc
+              (lo (ETC.actionWithCommit spec model.bestArm t) t)
+              (hi (ETC.actionWithCommit spec model.bestArm t) t)
+              (((rewardValue : Rat) : Real)))
+          (MeasureTheory.ae (coordLaw t)) := by
+    intro t ht
+    simpa only [ETC.actionWithCommit_eq_exploreArm_of_lt spec model.bestArm ht] using
+      h_coord_bound t ht
+  have h_coord_mean' :
+      forall t, t < spec.explorationPulls * K ->
+        MeasureTheory.integral (coordLaw t)
+          (fun rewardValue : Rat => (((rewardValue : Rat) : Real))) =
+        (((model.mean (ETC.actionWithCommit spec model.bestArm t) : Rat) : Real)) := by
+    intro t ht
+    simpa only [ETC.actionWithCommit_eq_exploreArm_of_lt spec model.bestArm ht] using
+      h_coord_mean t ht
+  simpa [ETC.explorationArgmaxAction, ETC.explorationArgmaxCommit,
+    ETC.explorationMaxGapIntegralRegretBoundReal] using
+    (ETC.integral_real_pseudoRegret_fixedProductArgmaxAction_le_fixedProductMaxGapIntegralRegretBoundReal_of_infinitePi_bounded_actionMean
+      coordLaw spec model model.bestArm r lo hi hexplorationPulls_pos
+      h_coord_bound' h_coord_mean')
 
 /--
 Conservative concrete lower-integral ETC regret assembly using the total sum

@@ -136,10 +136,16 @@ Source gate:
   `ETC-CENTERED-DIFF-SUBGAUSSIAN-WITNESS-CONTRACT`
 - Implemented centered-diff canonical sub-Gaussian tail helper:
   `ETC-CENTERED-DIFF-SUBGAUSSIAN-CANONICAL-TAIL`
+- Implemented fixed product-coordinate Real wrong-commit probability bridge:
+  `ETC-WRONG-COMMIT-INFINITEPI-REAL-PROBABILITY-BOUND`
 - Implemented concrete argmax/infinitePi lower-integral regret assembly:
   `ETC-WRONG-COMMIT-INFINITEPI-LINTEGRAL-REGRET-ASSEMBLY`
+- Implemented polished fixed product-coordinate bad-gap lower-integral wrapper:
+  `ETC-FIXED-PRODUCT-BADGAP-LINTEGRAL-REGRET-WRAPPER`
 - Implemented conservative sum-gap suffix adapter:
   `ETC-WRONG-COMMIT-INFINITEPI-SUMGAP-LINTEGRAL-REGRET-ASSEMBLY`
+- Implemented polished fixed product-coordinate sum-gap lower-integral wrapper:
+  `ETC-FIXED-PRODUCT-SUMGAP-LINTEGRAL-REGRET-WRAPPER`
 - Implemented sharper max-gap suffix adapter:
   `ETC-WRONG-COMMIT-INFINITEPI-MAXGAP-LINTEGRAL-REGRET-ASSEMBLY`
 - Implemented polished fixed product-coordinate max-gap wrapper:
@@ -1808,6 +1814,31 @@ map identities, and coordinate integral transport to discharge the
 selected-commit trace, adaptive filtration, conditional expectation route, or
 expected-regret theorem.
 
+## Compiled Fixed-Product Real Wrong-Commit Probability Bridge
+
+`ETC-WRONG-COMMIT-INFINITEPI-REAL-PROBABILITY-BOUND` is now compiled locally in
+`BanditRLProof.Algorithms.ETCInfinitePiExpectedRegretAssembly`.
+
+```lean
+theorem ETC.real_measure_fixedProductArgmaxCommit_ne_bestArm_le_fixedProductWrongCommitTailBudgetReal_of_infinitePi_bounded_actionMean
+```
+
+Status: project-local compiled `Measure.real` probability bridge for the
+fixed-product argmax/infinitePi source.
+
+This layer reuses
+`ETC.prob_argmaxCommitOracle_ne_bestArm_le_filtered_sum_centeredDiffSubGaussianTail_of_infinitePi_bounded_actionMean`,
+names the finite ENNReal supplier as
+`ETC.fixedProductWrongCommitTailBudget`, converts it through
+`ENNReal.toReal_mono`, and exposes the Real supplier
+`ETC.fixedProductWrongCommitTailBudgetReal` consumed by Bochner expected-regret
+wrappers.  Its regularity contracts are exactly the fixed product-coordinate
+source contracts: probability coordinate laws, fixed `spec`, `model`, and
+`baseCommitArm`, positive exploration count, action-matched coordinate a.s.
+bounds, and coordinate mean identities.  It does not prove integrability,
+event measurability beyond the compiled argmax source, lower-integral or
+Bochner regret assembly, adaptive policy laws, or the final ETC theorem.
+
 ## Compiled Pointwise Wrong-Commit Regret Assembly
 
 `ETC-WRONG-COMMIT-REGRET-ASSEMBLY-POINTWISE` is now compiled locally in
@@ -1904,7 +1935,49 @@ finite `Finset.sup'` maximum of local model gaps.  It removes the explicit
 `badGapBound`/`hbadGap` contract with a sharper suffix constant.  It still does
 not introduce Bochner expectation or prove the final adaptive ETC theorem.
 
-## Compiled Fixed Product-Coordinate Wrapper
+## Compiled Fixed Product-Coordinate Bad-Gap Wrapper
+
+`ETC-FIXED-PRODUCT-BADGAP-LINTEGRAL-REGRET-WRAPPER` is now compiled locally in
+`BanditRLProof.Algorithms.ETCInfinitePiExpectedRegretAssembly`.
+
+```lean
+noncomputable def ETC.fixedProductBadGapLintegralRegretBound
+
+theorem ETC.lintegral_ofReal_pseudoRegret_fixedProductArgmaxAction_le_fixedProductBadGapLintegralRegretBound_of_infinitePi_bounded_actionMean
+```
+
+Status: project-local compiled fixed product-coordinate bad-gap wrapper.
+
+This wrapper names the argmax-commit action trace and the bad-gap
+`ENNReal.ofReal` RHS budget, then reuses the compiled concrete bad-gap
+infinitePi lower-integral theorem.  It remains fixed-product/fixed-exploration
+and keeps the explicit `badGapBound` contract; it does not introduce Bochner
+expectation, filtration, conditional concentration, or final adaptive ETC
+theorem assembly.
+
+## Compiled Fixed Product-Coordinate Sum-Gap Wrapper
+
+`ETC-FIXED-PRODUCT-SUMGAP-LINTEGRAL-REGRET-WRAPPER` is now compiled locally in
+`BanditRLProof.Algorithms.ETCInfinitePiExpectedRegretAssembly`.
+
+```lean
+noncomputable def ETC.fixedProductSumGapLintegralRegretBound
+
+theorem ETC.lintegral_ofReal_pseudoRegret_fixedProductArgmaxAction_le_fixedProductSumGapLintegralRegretBound_of_infinitePi_bounded_actionMean
+```
+
+Status: project-local compiled fixed product-coordinate conservative sum-gap
+wrapper.
+
+This wrapper names the argmax-commit action trace and the conservative
+sum-gap `ENNReal.ofReal` RHS budget.  It reuses the fixed-product bad-gap
+wrapper with `badGapBound` instantiated to the total finite sum of model gaps,
+discharging the non-best gap bound with `FiniteBanditModel.gap_nonneg` and
+`Finset.single_le_sum`.  It remains fixed-product/fixed-exploration and does
+not introduce Bochner expectation, filtration, conditional concentration, or
+final adaptive ETC theorem assembly.
+
+## Compiled Fixed Product-Coordinate Max-Gap Wrapper
 
 `ETC-FIXED-PRODUCT-MAXGAP-LINTEGRAL-REGRET-WRAPPER` is now compiled locally in
 `BanditRLProof.Algorithms.ETCInfinitePiExpectedRegretAssembly`.
@@ -1923,6 +1996,310 @@ This wrapper names the argmax-commit action trace and max-gap RHS budget, then
 reuses the compiled max-gap infinitePi lower-integral theorem.  It is still
 fixed-product/fixed-exploration and does not introduce Bochner expectation,
 filtration, conditional concentration, or final adaptive ETC theorem assembly.
+
+## Compiled Canonical Exploration Fixed-Product Bochner Endpoint
+
+`ETC-CANONICAL-EXPLORATION-INFINITEPI-BOCHNER-REGRET` is now compiled locally
+in `BanditRLProof.Algorithms.ETCInfinitePiExpectedRegretAssembly`.
+
+```lean
+noncomputable def ETC.explorationArgmaxCommit
+noncomputable def ETC.explorationArgmaxAction
+noncomputable def ETC.explorationMaxGapIntegralRegretBoundReal
+
+theorem ETC.integral_real_pseudoRegret_explorationArgmaxAction_le_explorationMaxGapIntegralRegretBoundReal_of_infinitePi_bounded_exploreMean
+```
+
+Status: project-local compiled fixed-product Bochner/Real expected-regret
+endpoint.
+
+The wrapper exposes only round-robin `ETC.exploreArm` in its coordinate a.s.
+bounds and mean identities.  It fixes `model.bestArm` internally solely to
+reuse the existing base-commit surface, justified by
+`ETC.actionWithCommit_eq_exploreArm_of_lt` on the exploration horizon.  It
+does not construct an adaptive action-dependent reward law, conditional reward
+transport, or the final LML ETC theorem.
+
+## Compiled Exploration Empirical-Mean Prefix Congruence
+
+`ETC-EMPMEAN-EXPLORATION-PREFIX-CONGRUENCE` is now compiled locally in
+`BanditRLProof.Algorithms.ETCEmpiricalMean` as
+`ETC.empMeanAtExploration_eq_of_eq_on_prefix`. It transports equality of
+reward coordinates on the strict horizon `t < spec.explorationPulls * K` to
+equality of every exploration empirical-mean coordinate. The proof uses the
+finite `sumRewards` filter/range representation and `Finset.sum_congr` only.
+It is a deterministic prerequisite for a future finite reward-history commit
+policy; no tail bound, probability law, policy equality, filtration, or
+conditional expectation is proved here.
+
+Failure policy: apply this lemma only after the proposed history completion is
+proved equal to the ambient reward trace at every exploration coordinate. Do
+not treat a finite history at an earlier time as sufficient, or identify this
+support lemma with the adaptive ETC theorem.
+
+## Compiled Finite-History Score Reconstruction
+
+`ETC-EMPMEAN-FINITE-HISTORY-RECONSTRUCTION` is now compiled through
+`History.completeRewardTrace` and
+`ETC.empMeanAtExploration_completeRewardTrace_eq_of_explorationHorizon_le`.
+The completion reads a finite history through `t` and uses zero afterward. If
+`spec.explorationPulls * K <= t + 1`, every coordinate needed by the exploration
+score is inside that history, so the completed trace and ambient trace have
+equal score at every arm. This is deliberately a score-level fact: it does not
+yet show that a finite-history policy chooses the matching argmax, nor that a
+generated trace equals `ETC.actionWithCommit`.
+
+Failure policy: retain the horizon inclusion exactly. The zero-filled suffix is
+not an assumption about actual rewards and cannot justify reward-law transport.
+
+## Compiled Generated Finite-History ETC Policy Alignment
+
+`ETC-GENERATED-HISTORY-POLICY-ACTION-ALIGNMENT` is now compiled in
+`BanditRLProof.Algorithms.ETCGeneratedHistoryPolicy`. It defines a measurable
+policy over `RewardTrace Rat`: successor action `t + 1` uses round-robin
+exploration inside the prefix and otherwise applies the finite score-vector
+argmax to the zero-completed reward history. The theorem
+`ETC.explorationArgmaxGeneratedAction_eq_explorationArgmaxAction` proves
+function-level equality with the canonical empirical-mean ETC action generator
+under `0 < spec.explorationPulls`.
+
+The positive-pulls contract is essential only for time zero, whose generated
+default action is `ETC.exploreArm spec 0`. Later commit-time equality is
+obtained from `spec.explorationPulls * K <= t + 1` and finite-history score
+reconstruction. No reward kernel, selected reward law, conditional expectation,
+or concentration conclusion is obtained.
+
+Failure policy: do not call this an adaptive bandit environment. The next route
+must identify an action-dependent selected reward law for this generated trace;
+the current fixed product-coordinate law is not automatically such a law.
+
+## Compiled Canonical Generated ETC Trajectory Law
+
+`ETC-GENERATED-HISTORY-POLICY-TRAJMEASURE-PARTIALTRAJ-LAW` is now compiled as
+`ETC.explorationArgmaxGeneratedActionPartialTrajectoryPairLawSource_trajMeasure`.
+It instantiates the existing `RewardKernel.historyStepKernelFamily`
+canonical-trajectory construction at the finite-history ETC policy and packages
+the full generated finite-pair `partialTraj` law. This is a real
+action-dependent `condExpKernel` law under the Markov-kernel trajectory
+measure, not merely a source hypothesis.
+
+Failure policy: its probability space is the canonical kernel trajectory.
+Do not identify it with the current independent product-coordinate reward law,
+or with an arbitrary adaptive finite-bandit environment, without a separate
+measure/kernel transport theorem and model regularity identification.
+
+## Compiled Model-Mean Conditional MGF On Canonical ETC Trajectory
+
+`ETC-GENERATED-HISTORY-POLICY-TRAJMEASURE-COND-MGF-MODEL-MEAN` is now compiled
+as `ETC.explorationArgmaxHistory_centeredReward_succ_hasCondSubgaussianMGF_trajMeasure`.
+It specializes the canonical trajectory MGF theorem to the context-independent
+mean `fun _ arm => model.mean arm`. A centered reward-kernel law supplies the
+one-step centered MGF, and a variance ceiling keyed to the selected finite
+reward history supplies the requested proxy.
+
+Failure policy: this is not a derivation of the kernel law, the variance
+ceiling, product-coordinate independence, or a wrong-commit probability bound.
+Those contracts must be constructed and transported before applying the
+existing finite-sum concentration and regret assemblies.
+
+## Compiled Finite-Arm Laws To Markov Reward Kernel
+
+`ETC-FINITE-ARM-LAWS-MARKOV-REWARD-KERNEL` is now compiled as
+`RewardKernel.contextIndependentOfActionLaws` with selected-measure theorem
+`RewardKernel.selectedMeasure_contextIndependentOfActionLaws`. The constructor
+uses Mathlib `Kernel.ofFunOfCountable` on action-indexed laws and
+`Kernel.comap Prod.snd`, requiring measurable singletons, countable actions,
+and an `IsProbabilityMeasure` witness for every action. For `Fin K`, this
+provides the raw finite-bandit reward kernel expected by the canonical ETC
+trajectory route.
+
+Failure policy: selected-measure equality alone does not prove that the arm law
+has `model.mean`, bounded support, a centered MGF, or the requested variance
+proxy. It also does not identify the resulting trajectory with the fixed
+product-coordinate source.
+
+## Compiled Bounded Arm Laws To Canonical Conditional MGF
+
+`ETC-FINITE-ARM-BOUNDED-CENTERED-KERNEL-COND-MGF` is compiled in
+`BanditRLProof.Algorithms.ETCFiniteArmRewardLaw`. The declaration
+`ETC.finiteArmBoundedCenteredRewardKernelLaw` packages bounded integrability,
+exact centered integral zero, and Mathlib's bounded Hoeffding MGF into the
+context-independent centered kernel law. The direct theorem
+`ETC.explorationArgmaxHistory_centeredReward_succ_hasCondSubgaussianMGF_of_boundedArmLaws`
+feeds that law into the canonical generated-history trajectory and discharges
+the selected-history variance ceiling because the common interval gives a
+constant proxy.
+
+Failure policy: this is a one-step conditional MGF under canonical
+`trajMeasure` for successor coordinates. It does not align arbitrary `mu0`
+with the time-zero selected arm or prove its unconditional MGF, and it is not
+the conditional sum tail, finite-arm wrong-commit union bound, product-source
+identification, or expected-regret theorem.
+
+## Compiled Full Canonical Centered-Reward Sum Tail
+
+`ETC-FINITE-ARM-BOUNDED-CENTERED-FULL-SUM-TAIL` is compiled as
+`ETC.explorationArgmaxHistory_centeredRewardProcess_sum_tail_ennreal_of_boundedArmLaws`.
+The initial law is the law of `ETC.exploreArm spec 0`, and
+`RewardKernel.trajMeasure_map_eval_zero` transfers its bounded centered MGF to
+the actual zeroth trajectory coordinate. Together with the successor
+conditional MGF witnesses and generated-history StronglyAdapted process, this
+gives Mathlib's one-sided Azuma-Hoeffding bound for all terms in
+`Finset.range n`.
+
+Failure policy: the event is a total selected-reward sum. Wrong commit is an
+arm-specific empirical-mean comparison, requiring masked or pairwise centered
+processes and an event adapter before the existing finite-arm union bound can
+be used. No product/arbitrary-law transport or expected regret follows here.
+
+## Compiled Canonical Bounded-Arm Pairwise Wrong-Commit Bound
+
+`ETC-FINITE-ARM-BOUNDED-PAIRWISE-WRONG-COMMIT` now supplies the previously
+missing pairwise endpoint under the canonical generated-history trajectory.
+The key bridge is finite-prefix rather than global: for every time before
+`spec.explorationPulls * K`,
+`ETC.explorationArgmaxGeneratedAction_eq_actionWithCommit_of_lt` identifies the
+generated policy action with the fixed round-robin action. Consequently
+`History.historyFiltrationSucc_eq_of_action_eq_on_prefix` identifies the two
+conditioning sigma-algebras used by the canonical selected-reward MGF and the
+existing fixed-commit centered-diff witness package.
+
+Because `HasCondSubgaussianMGF` depends on the proof that the conditioning
+space is below the ambient space, ordinary rewriting is insufficient. The
+generic compiled adapter
+`ProbabilityTheory.HasCondSubgaussianMGF.of_measurableSpace_eq` performs this
+dependent transport. The bounded arm laws then construct
+`ETC.explorationArgmaxHistory_centeredRewardCondSubGaussianWitnesses_of_boundedArmLaws`,
+which feeds the existing centered-diff tail contract and yields
+`ETC.explorationArgmaxHistory_prob_wrongCommit_le_pairwiseTailSum_of_boundedArmLaws`.
+
+Concentration ledger: the summand is the fixed-exploration masked centered
+reward for a non-best arm plus the sign-flipped masked centered reward for the
+best arm; the filtration is generated finite action/reward history; the proxy
+is the masked common interval proxy; the event is one-sided at the fixed
+exploration horizon and then union-bounded over non-best arms.
+
+Failure policy: do not extend the prefix equality past commitment, and do not
+claim an external environment law or expected regret from this probability
+bound alone. The downstream canonical Bochner leaf now performs the conversion
+and expected-regret assembly; external law transport remains separate.
+
+## Compiled Canonical Bounded-Arm Bochner Regret
+
+`ETC-FINITE-ARM-BOUNDED-CANONICAL-BOCHNER-REGRET` packages the pairwise tail as
+`ETC.canonicalBoundedArmWrongCommitTailBudget` and its Real view, then proves
+`ETC.real_measure_explorationArgmaxCommit_ne_bestArm_le_canonicalBoundedArmWrongCommitTailBudgetReal`.
+Finiteness follows definitionally from the finite sum of `ENNReal.ofReal`
+exponentials, allowing `ENNReal.toReal_mono` to convert the probability bound.
+
+The final local endpoint
+`ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal`
+uses coordinatewise empirical-mean measurability to obtain a measurable argmax
+commit and wrong event, then reuses the finite-valued integrability and generic
+Bochner exploration/suffix assembly. The suffix is charged by `model.maxGap`.
+
+Failure policy: the expected-regret theorem is under the canonical
+`RewardKernel.historyStepKernelFamily` trajectory measure initialized by the
+first exploration arm law. An external adaptive bandit environment must provide
+an equality of trajectory laws or finite-horizon pushforward identities before
+this integral can be transported. Do not identify the measures from matching
+one-step arm laws alone, and do not claim the LML theorem until its model,
+regret, horizon, and constant conventions are explicitly mapped.
+
+## Compiled External Exploration-Prefix Law Transport
+
+`ETC.explorationArgmaxPrefixRegretReal` and its measurability/factorization
+theorems show that finite-horizon generated ETC pseudo-regret depends only on
+the reward prefix through `spec.explorationPulls * K - 1`. Consequently,
+`ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_explorationPrefix_map_eq`
+transports the canonical bound to an arbitrary external reward-trace
+probability law from equality of those finite-prefix pushforwards. No suffix
+reward law or full infinite-trajectory equality is assumed.
+
+Proof route: measurable completed-prefix regret, exploration-score
+reconstruction, generated/canonical action equality, two applications of
+`MeasureTheory.integral_map`, then the canonical theorem. Regularity contracts:
+positive exploration pulls, external probability, finite-prefix pushforward
+equality, and the existing common-bounded exact-mean arm-law inputs.
+
+The downstream theorem
+`ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_initial_map_eq_condDistrib`
+now discharges the prefix equality from an external initial marginal and the
+successor `condDistrib` laws through exploration. Its generic source is
+`RewardKernel.rewardTrace_prefix_map_eq_trajMeasure_of_condDistrib`, proved by
+joint-law induction through Mathlib `compProd` and `trajMeasure` recurrence.
+
+Regularities are coordinate measurability, probability/finite measures,
+standard Borel reward target for the generic theorem, bounded exact-mean Rat
+arm laws and measurable context for ETC, and positive exploration pulls. The
+conditional laws are required only for `i < m*K-1`; no suffix law, full
+trajectory equality, or independence is assumed.
+
+Failure policy: a concrete environment still has to prove these conditional
+identities; one-step marginal equality alone is insufficient. The scheduled
+exploration-arm adapter below removes local kernel plumbing, while a concrete
+source or `IsAlgEnvSeq` bridge remains required. The exact LML theorem is
+strictly stronger in interface and conclusion: it uses Real stationary arm
+kernels with a common sub-Gaussian proxy, upstream measurable-argmax semantics,
+and per-arm gap-weighted pull-count bounds. Do not relabel the bounded Rat
+max-gap union theorem as that port.
+
+## Compiled Scheduled Exploration-Arm Conditional-Law Adapter
+
+`ETC.explorationArgmaxHistory_stepKernel_apply_eq_exploreArmLaw_of_lt` proves
+that, under `i+1 < explorationPulls*K`, the generated-history reward step
+kernel is exactly `armLaw (ETC.exploreArm spec (i+1))`. Consequently,
+`ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_initial_map_eq_explorationArm_condDistrib`
+states the external regret endpoint using only the initial exploration-arm law
+and scheduled exploration-arm conditional laws.
+
+Proof route: unfold `explorationArgmaxHistoryPolicy` on its deterministic
+exploration branch, then unfold `historyStepKernelFamily` and the selected
+measure of `contextIndependentOfActionLaws`; transport the external a.e.
+arm-law equality to the previous step-kernel theorem. The public endpoint
+instantiates the irrelevant context as `Unit`, so context/state/policy kernels
+and `trajMeasure` no longer appear in the caller signature.
+
+Failure policy: this theorem does not manufacture conditional laws from
+unconditional marginals. A concrete source or LML `IsAlgEnvSeq` bridge must
+prove the scheduled-arm `condDistrib` identities. Exact LML Real/sub-Gaussian,
+argmax, and per-arm RHS alignment remains independent.
+
+## Compiled Full Action/Reward-History Conditional-Law Transport
+
+`RewardKernel.condDistrib_ae_eq_const_of_comp` proves that a constant target
+law conditioned on a fine variable remains constant after measurable
+projection to a coarser variable. Its proof maps the defining product joint law
+with `Measure.map_prod_map`; injectivity is unnecessary. The companion
+`RewardKernel.map_eq_of_condDistrib_ae_eq_const` recovers the target marginal
+through `Measure.snd`.
+
+`ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_actionRewardHistory_explorationArm_condDistrib`
+uses these results for reward zero conditioned on action zero and for reward
+`i+1` conditioned on `(finitePairHistoryOfTrace action reward i, action (i+1))`.
+This is the conditioning shape of LML `IsAlgEnvSeq` feedback fields at seed
+`19dc3ab`, but the local assumption is already the constant scheduled-arm law.
+
+Failure policy: LML `stationaryEnv` first yields a feedback kernel depending on
+the next action, while `ETC.arm_of_lt` supplies only an a.e. constant action in
+exploration. The remaining seed adapter must combine those facts before this
+consumer applies; the dependency-light version is compiled immediately below.
+Do not describe the current theorem as a direct LML import.
+
+## Compiled Action-Dependent Feedback-Kernel Adapter
+
+`RewardKernel.condDistrib_ae_eq_const_of_ae_eq_selected` pushes an a.e.
+selector identity from the source measure to the conditioning-variable law and
+rewrites a pointwise selected kernel as a constant kernel. The ETC theorem
+`ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_actionDependent_actionRewardHistory_condDistrib`
+instantiates this with `id` at action zero and `Prod.snd` at successor full
+histories, then consumes the constant-law full-history endpoint.
+
+This closes the dependency-light mathematical analogue of the exact-seed
+`IsAlgEnvSeq` law transport. A direct LML wrapper would only translate
+`HasCondDistrib` and `ETC.arm_of_lt`; it is not needed by the local bounded Rat
+theorem. Failure policy now moves to the independent Real/common-sub-Gaussian,
+argmax, and per-arm RHS layers.
 
 ## Failure Policy
 
@@ -1955,17 +2332,58 @@ filtration, conditional concentration, or final adaptive ETC theorem assembly.
   `ETC-BOUNDED-REWARD-TRACE-SOURCE-CONTRACT`,
   `ETC-BOUNDED-REWARD-INFINITEPI-SOURCE`, and
   `ETC-WRONG-COMMIT-INFINITEPI-BOUNDED-REWARD-SOURCE`, and
+  `ETC-WRONG-COMMIT-INFINITEPI-REAL-PROBABILITY-BOUND`, and
   `ETC-WRONG-COMMIT-REGRET-ASSEMBLY-POINTWISE`, and
   `ETC-WRONG-COMMIT-LINTEGRAL-REGRET-ASSEMBLY`, and
   `ETC-WRONG-COMMIT-INFINITEPI-LINTEGRAL-REGRET-ASSEMBLY`,
+  `ETC-FIXED-PRODUCT-BADGAP-LINTEGRAL-REGRET-WRAPPER`,
   `ETC-WRONG-COMMIT-INFINITEPI-SUMGAP-LINTEGRAL-REGRET-ASSEMBLY`,
+  `ETC-FIXED-PRODUCT-SUMGAP-LINTEGRAL-REGRET-WRAPPER`,
   `ETC-WRONG-COMMIT-INFINITEPI-MAXGAP-LINTEGRAL-REGRET-ASSEMBLY`, and
   `ETC-FIXED-PRODUCT-MAXGAP-LINTEGRAL-REGRET-WRAPPER` are compiled locally.
-  Next assemble the bounded/source reward-level conditional MGF package using
-  the compiled shifted-history adaptedness field, zero-summand MGF source,
-  sampled-arm MGF transfer, independence-based conditional MGF bridge,
-  reward-level conditional witness contract, conditional centered-diff witness
-  package, and conditional sub-Gaussian wrapper.
-  Do not treat the wrong-commit bound, pointwise regret bridge, or
-  lower-integral surrogate as final expected regret, and do not start final ETC
-  theorem work in the same batch.
+  The later native Real exact route now compiles through finite-prefix law and
+  scheduled initial/successor `condDistrib` transport in
+  `ETC-NATIVE-REAL-PREFIX-LAW-EXTERNAL-EXACT-REGRET`. This older design branch
+  remains retrieval evidence only. Do not reopen its bounded/lower-integral
+  route; the source-shaped history-score wrapper and faithful local LML-field
+  theorem now compile, leaving only actual cross-toolchain symbol import.
+
+## Compiled Per-Arm Expected-Regret Assembly
+
+`ETC.integral_real_pseudoRegret_actionWithCommit_choice_le_exploration_add_suffix_sum_gap_mul_commit_prob`
+now preserves the suffix as `sum_a (r * gap a) * P(commit=a)`. The proof uses
+measurable singleton fibers of the finite commit selector, the local Bochner
+finite-sum wrapper, and Mathlib indicator integrals. This closes the generic
+expectation-assembly half of the per-arm RHS mismatch.
+
+The sharper probability leaf is now compiled: for each non-best `a`,
+`P(explorationArgmaxCommit = a) <= pairwiseTail a` under the canonical bounded-
+arm trajectory. It follows from the concrete argmax fiber inclusion and the
+matching `PairwiseEmpMeanTailContract.bound a`, with no union. Its finite Real
+conversion and termwise gap-weighted substitution now compile as
+`ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalBoundedArmPerArmIntegralRegretBoundReal`.
+The proof uses gap nonnegativity for non-best arms and `gap_bestArm` to remove
+the unconstrained best-arm term. The per-arm integral now also transports
+through exploration-prefix pushforward equality via
+`ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalBoundedArmPerArmIntegralRegretBoundReal_of_explorationPrefix_map_eq`.
+This needs neither full trajectory nor suffix/fiber law equality. The per-arm
+conditional-law consumer derives the prefix identity from initial and
+successor `condDistrib` laws and pulls the mapped reward integral back to the
+original sample space. Its stationary scheduled exploration-arm adapter now
+also compiles, with no caller-visible local kernel. The full action/reward-
+history constant-law per-arm adapter now compiles through generic coarsening
+and marginal extraction. Its action-dependent selected-kernel counterpart now
+also compiles, closing the dependency-light bounded-Rat law route. Direct
+common-proxy arm MGFs now compile through the canonical pairwise empirical-mean
+tail contract without bounded support. Concrete commit-fiber bounds, finite
+Real tails, and the canonical gap-weighted per-arm Bochner theorem now compile
+as well. Its external exploration-prefix equality, generic initial/successor
+conditional-law, scheduled exploration-arm, and LML-shaped full action/reward-
+history constant-law transport and its action-dependent selected-kernel
+consumer now also compile, closing dependency-light direct-MGF `Rat` law
+transport. The subsequent native Real product, exact regret, finite-prefix,
+selected conditional-law, least-encoded tie, and action assembly endpoints also
+compile. Upstream history empirical-mean equality and the local `IsAlgEnvSeq`-
+field consumer now compile as well. Only direct import over the actual LML
+symbols remains; do not return to a max-gap union or another concentration
+theorem.

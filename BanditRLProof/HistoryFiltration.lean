@@ -51,6 +51,20 @@ def finiteRewardHistoryOfTrace
     FiniteRewardHistory Reward t :=
   fun i => reward i.1
 
+/--
+Complete a finite reward history to an infinite trace, using `default` outside
+the observed prefix.
+
+The completion agrees with `history` at every coordinate through `t`.  It is a
+deterministic history-reconstruction helper; it does not assert that the
+defaulted future coordinates agree with an ambient reward process.
+-/
+def completeRewardTrace
+    {Reward : Type w}
+    (t : Nat) (history : FiniteRewardHistory Reward t) (default : Reward) :
+    RewardTrace Reward :=
+  fun s => if h : s <= t then history ⟨s, Finset.mem_Iic.mpr h⟩ else default
+
 /-- Restrict infinite action and reward traces to a paired finite history. -/
 def finiteHistoryOfTrace
     {Action : Type v} {Reward : Type w}
@@ -92,6 +106,19 @@ theorem finiteRewardHistoryOfTrace_apply
     {Reward : Type w}
     (reward : RewardTrace Reward) (t : Nat) (i : Finset.Iic t) :
     finiteRewardHistoryOfTrace reward t i = reward i.1 := rfl
+
+/--
+Completing the actual finite reward prefix recovers every original coordinate
+through that prefix.
+-/
+@[simp]
+theorem completeRewardTrace_finiteRewardHistoryOfTrace_apply_of_le
+    {Reward : Type w}
+    (reward : RewardTrace Reward) (t s : Nat) (default : Reward)
+    (hs : s <= t) :
+    completeRewardTrace t (finiteRewardHistoryOfTrace reward t) default s =
+      reward s := by
+  simp [completeRewardTrace, hs, finiteRewardHistoryOfTrace]
 
 @[simp]
 theorem finiteHistoryOfTrace_fst
@@ -622,6 +649,228 @@ theorem measurable_reward_mem_historyFiltration_of_lt
     (fun r : Reward =>
       measurableSet_reward_mem_historyFiltration
         action reward haction hreward hit r)
+
+/--
+Finite pair histories up to `n` are measurable with respect to any generated
+history filtration level strictly after `n`.
+
+This is the product-valued counterpart of the coordinate measurability canaries
+above.  It is intentionally countable/discrete, matching the singleton-event
+definition of `historyMeasurableSpace`.
+-/
+theorem measurable_finitePairHistoryOfTrace_mem_historyFiltration_of_lt
+    {Omega : Type u} {Action : Type v} {Reward : Type w}
+    [mOmega : MeasurableSpace Omega] [MeasurableSpace Action]
+    [MeasurableSingletonClass Action] [Countable Action]
+    [MeasurableSpace Reward] [MeasurableSingletonClass Reward]
+    [Countable Reward]
+    (action : Omega -> ActionTrace Action)
+    (reward : Omega -> RewardTrace Reward)
+    (haction : forall t : Nat,
+      Measurable (fun omega : Omega => action omega t))
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    {n t : Nat} (hnt : n < t) :
+    @Measurable Omega ((i : Finset.Iic n) -> Prod Action Reward)
+      (historyFiltration (mOmega := mOmega) action reward haction hreward t)
+      inferInstance
+      (fun omega : Omega =>
+        finitePairHistoryOfTrace (action omega) (reward omega) n) := by
+  letI : MeasurableSpace Omega :=
+    historyFiltration (mOmega := mOmega) action reward haction hreward t
+  change Measurable
+    (fun omega : Omega =>
+      finitePairHistoryOfTrace (action omega) (reward omega) n)
+  refine measurable_pi_lambda _ ?_
+  intro i
+  have hit : i.1 < t := lt_of_le_of_lt (Finset.mem_Iic.mp i.2) hnt
+  have h_action :
+      Measurable (fun omega : Omega => action omega i.1) := by
+    change @Measurable Omega Action
+      (historyFiltration (mOmega := mOmega) action reward haction hreward t)
+      inferInstance
+      (fun omega : Omega => action omega i.1)
+    exact
+      measurable_action_mem_historyFiltration_of_lt
+        (mOmega := mOmega) action reward haction hreward hit
+  have h_reward :
+      Measurable (fun omega : Omega => reward omega i.1) := by
+    change @Measurable Omega Reward
+      (historyFiltration (mOmega := mOmega) action reward haction hreward t)
+      inferInstance
+      (fun omega : Omega => reward omega i.1)
+    exact
+      measurable_reward_mem_historyFiltration_of_lt
+        (mOmega := mOmega) action reward haction hreward hit
+  simpa [finitePairHistoryOfTrace] using h_action.prod h_reward
+
+/--
+The generated history filtration after observing indices `<= n` is exactly the
+comap of the finite pair-history restriction map.
+
+The forward inclusion follows from the singleton generators.  The reverse
+inclusion follows from the previous product-valued measurability wrapper.
+This equality is a local bridge between the hand-rolled history filtration and
+Mathlib conditional-distribution statements conditioned on finite prefixes.
+-/
+theorem historyFiltration_succ_eq_comap_finitePairHistoryOfTrace
+    {Omega : Type u} {Action : Type v} {Reward : Type w}
+    [mOmega : MeasurableSpace Omega] [MeasurableSpace Action]
+    [MeasurableSingletonClass Action] [Countable Action]
+    [MeasurableSpace Reward] [MeasurableSingletonClass Reward]
+    [Countable Reward]
+    (action : Omega -> ActionTrace Action)
+    (reward : Omega -> RewardTrace Reward)
+    (haction : forall t : Nat,
+      Measurable (fun omega : Omega => action omega t))
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (n : Nat) :
+    (historyFiltration action reward haction hreward (n + 1) :
+        MeasurableSpace Omega) =
+      (inferInstance :
+        MeasurableSpace ((i : Finset.Iic n) -> Prod Action Reward)).comap
+        (fun omega : Omega =>
+          finitePairHistoryOfTrace (action omega) (reward omega) n) := by
+  apply le_antisymm
+  · rw [historyFiltration_apply]
+    refine MeasurableSpace.generateFrom_le ?_
+    intro s hs
+    rcases hs with hs | hs
+    · rcases hs with ⟨i, hi, a, hs_eq⟩
+      rw [hs_eq]
+      have hin : i <= n := Nat.lt_succ_iff.mp hi
+      let j : Finset.Iic n := ⟨i, Finset.mem_Iic.mpr hin⟩
+      have hcoord :
+          @Measurable Omega Action
+            ((inferInstance :
+              MeasurableSpace
+                ((k : Finset.Iic n) -> Prod Action Reward)).comap
+              (fun omega : Omega =>
+                finitePairHistoryOfTrace (action omega) (reward omega) n))
+            inferInstance
+            (fun omega : Omega => action omega i) := by
+        have hbase :
+            Measurable
+              (fun history :
+                  (k : Finset.Iic n) -> Prod Action Reward =>
+                (history j).1) :=
+          measurable_fst.comp (measurable_pi_apply j)
+        have hprefix :
+            @Measurable Omega
+              ((k : Finset.Iic n) -> Prod Action Reward)
+              ((inferInstance :
+                MeasurableSpace
+                  ((k : Finset.Iic n) -> Prod Action Reward)).comap
+                (fun omega : Omega =>
+                  finitePairHistoryOfTrace (action omega) (reward omega) n))
+              inferInstance
+              (fun omega : Omega =>
+                finitePairHistoryOfTrace (action omega) (reward omega) n) :=
+          Measurable.of_comap_le le_rfl
+        simpa [finitePairHistoryOfTrace, j] using hbase.comp hprefix
+      exact hcoord (MeasurableSet.singleton a)
+    · rcases hs with ⟨i, hi, r, hs_eq⟩
+      rw [hs_eq]
+      have hin : i <= n := Nat.lt_succ_iff.mp hi
+      let j : Finset.Iic n := ⟨i, Finset.mem_Iic.mpr hin⟩
+      have hcoord :
+          @Measurable Omega Reward
+            ((inferInstance :
+              MeasurableSpace
+                ((k : Finset.Iic n) -> Prod Action Reward)).comap
+              (fun omega : Omega =>
+                finitePairHistoryOfTrace (action omega) (reward omega) n))
+            inferInstance
+            (fun omega : Omega => reward omega i) := by
+        have hbase :
+            Measurable
+              (fun history :
+                  (k : Finset.Iic n) -> Prod Action Reward =>
+                (history j).2) :=
+          measurable_snd.comp (measurable_pi_apply j)
+        have hprefix :
+            @Measurable Omega
+              ((k : Finset.Iic n) -> Prod Action Reward)
+              ((inferInstance :
+                MeasurableSpace
+                  ((k : Finset.Iic n) -> Prod Action Reward)).comap
+                (fun omega : Omega =>
+                  finitePairHistoryOfTrace (action omega) (reward omega) n))
+              inferInstance
+              (fun omega : Omega =>
+                finitePairHistoryOfTrace (action omega) (reward omega) n) :=
+          Measurable.of_comap_le le_rfl
+        simpa [finitePairHistoryOfTrace, j] using hbase.comp hprefix
+      exact hcoord (MeasurableSet.singleton r)
+  · exact
+      Measurable.comap_le
+        (measurable_finitePairHistoryOfTrace_mem_historyFiltration_of_lt
+          (mOmega := mOmega) action reward haction hreward
+          (Nat.lt_succ_self n))
+
+/--
+The shifted generated-history filtration at time `n` is exactly the comap of
+the finite pair-history restriction through index `n`.
+
+This is the `historyFiltrationSucc`-indexed form used by the conditional-kernel
+source contracts.
+-/
+theorem historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace
+    {Omega : Type u} {Action : Type v} {Reward : Type w}
+    [mOmega : MeasurableSpace Omega] [MeasurableSpace Action]
+    [MeasurableSingletonClass Action] [Countable Action]
+    [MeasurableSpace Reward] [MeasurableSingletonClass Reward]
+    [Countable Reward]
+    (action : Omega -> ActionTrace Action)
+    (reward : Omega -> RewardTrace Reward)
+    (haction : forall t : Nat,
+      Measurable (fun omega : Omega => action omega t))
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (n : Nat) :
+    (historyFiltrationSucc action reward haction hreward n :
+        MeasurableSpace Omega) =
+      (inferInstance :
+        MeasurableSpace ((i : Finset.Iic n) -> Prod Action Reward)).comap
+        (fun omega : Omega =>
+          finitePairHistoryOfTrace (action omega) (reward omega) n) := by
+  simpa [historyFiltrationSucc_apply] using
+    historyFiltration_succ_eq_comap_finitePairHistoryOfTrace
+      (mOmega := mOmega) action reward haction hreward n
+
+/--
+Two shifted history filtrations agree at time `n` when their action traces
+agree pointwise through `n` and they use the same reward trace.
+
+The proof passes through the finite-pair-history comap characterization. It is
+useful when an adaptive policy has a deterministic exploration prefix.
+-/
+theorem historyFiltrationSucc_eq_of_action_eq_on_prefix
+    {Omega : Type u} {Action : Type v} {Reward : Type w}
+    [mOmega : MeasurableSpace Omega]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action]
+    [MeasurableSpace Reward] [MeasurableSingletonClass Reward] [Countable Reward]
+    (action0 action1 : Omega -> ActionTrace Action)
+    (reward : Omega -> RewardTrace Reward)
+    (haction0 : forall t : Nat,
+      Measurable (fun omega : Omega => action0 omega t))
+    (haction1 : forall t : Nat,
+      Measurable (fun omega : Omega => action1 omega t))
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (n : Nat)
+    (haction_eq : forall omega i, i <= n -> action0 omega i = action1 omega i) :
+    (historyFiltrationSucc action0 reward haction0 hreward n :
+        MeasurableSpace Omega) =
+      (historyFiltrationSucc action1 reward haction1 hreward n :
+        MeasurableSpace Omega) := by
+  rw [historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace,
+    historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace]
+  congr 1
+  funext omega i
+  simp only [finitePairHistoryOfTrace_apply]
+  rw [haction_eq omega i.1 (Finset.mem_Iic.mp i.2)]
 
 end History
 end BanditRLProof

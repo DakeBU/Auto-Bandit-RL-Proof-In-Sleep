@@ -1,5 +1,29 @@
 import Mathlib.Probability.Moments.SubGaussian
 
+namespace ProbabilityTheory
+
+/--
+Transport a conditional sub-Gaussian witness across equality of the
+conditioning measurable spaces.
+
+The two sub-sigma-algebra proofs are propositionally irrelevant once the
+measurable spaces are identified. This is a general-purpose adapter for
+filtrations presented through different but extensionally equal histories.
+-/
+theorem HasCondSubgaussianMGF.of_measurableSpace_eq
+    {Omega : Type u} {m0 m1 mOmega : MeasurableSpace Omega}
+    [StandardBorelSpace Omega]
+    {mu : MeasureTheory.Measure Omega} [MeasureTheory.IsFiniteMeasure mu]
+    {X : Omega -> Real} {c : NNReal}
+    (hm0 : m0 <= mOmega) (hm1 : m1 <= mOmega)
+    (hm : m0 = m1)
+    (hX : HasCondSubgaussianMGF m0 hm0 X c mu) :
+    HasCondSubgaussianMGF m1 hm1 X c mu := by
+  subst m1
+  simpa only using hX
+
+end ProbabilityTheory
+
 /-!
 # Sub-Gaussian concentration wrappers
 

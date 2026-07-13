@@ -170,6 +170,86 @@ theorem condExpKernel_map_eq_of_condDistrib_ae_eq_countable
   simpa [ProbabilityTheory.Kernel.map_apply _ hX] using hkernel
 
 /--
+Trim-a.e. form of the countable-target `condDistrib` to
+`condExpKernel.map` bridge.
+
+The ordinary bridge gives equality almost everywhere for the ambient measure.
+For each target singleton, both event-probability functions are measurable in
+the conditioning sigma-algebra.  Mathlib's `ae_eq_trim_of_measurable` therefore
+upgrades those scalar equalities to the trimmed measure, after which
+countability reconstructs equality of the pushed-forward measures.
+-/
+theorem condExpKernel_map_eq_of_condDistrib_ae_eq_countable_trim
+    {Omega : Type u} {Target : Type v} {Condition : Type w}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [Nonempty Omega]
+    [mTarget : MeasurableSpace Target] [StandardBorelSpace Target]
+    [Nonempty Target] [MeasurableSingletonClass Target] [Countable Target]
+    [mCondition : MeasurableSpace Condition]
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (X : Omega -> Target) (Y : Omega -> Condition)
+    (hX : @Measurable Omega Target mOmega mTarget X)
+    (hY : @Measurable Omega Condition mOmega mCondition Y)
+    (kernel : ProbabilityTheory.Kernel Condition Target)
+    (hcond :
+      Filter.EventuallyEq (ae (mu.map Y))
+        (ProbabilityTheory.condDistrib X Y mu)
+        kernel) :
+    Filter.Eventually
+      (fun omega : Omega =>
+        @Measure.map Omega Target mOmega mTarget X
+          (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+            (mCondition.comap Y) omega) =
+        kernel (Y omega))
+      (ae (mu.trim hY.comap_le)) := by
+  have hmap_ae :=
+    condExpKernel_map_eq_of_condDistrib_ae_eq_countable
+      mu X Y hX hY kernel hcond
+  have hsingle :
+      Filter.Eventually
+        (fun omega : Omega =>
+          forall z : Target,
+            (@Measure.map Omega Target mOmega mTarget X
+              (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+                (mCondition.comap Y) omega)) {z} =
+              kernel (Y omega) {z})
+        (ae (mu.trim hY.comap_le)) := by
+    rw [ae_all_iff]
+    intro z
+    have h_lhs_meas :
+        @Measurable Omega ENNReal
+          (mCondition.comap Y) inferInstance
+          (fun omega : Omega =>
+            (@Measure.map Omega Target mOmega mTarget X
+              (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+                (mCondition.comap Y) omega)) {z}) := by
+      have hkernel_meas :=
+        ((@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+            (mCondition.comap Y)).map X).measurable_coe
+          (MeasurableSet.singleton z)
+      simpa [ProbabilityTheory.Kernel.map_apply _ hX] using hkernel_meas
+    have h_rhs_meas :
+        @Measurable Omega ENNReal
+          (mCondition.comap Y) inferInstance
+          (fun omega : Omega => kernel (Y omega) {z}) := by
+      exact
+        (kernel.measurable_coe (MeasurableSet.singleton z)).comp
+          (Measurable.of_comap_le le_rfl)
+    have hsingle_ae :
+        Filter.EventuallyEq (ae mu)
+          (fun omega : Omega =>
+            (@Measure.map Omega Target mOmega mTarget X
+              (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+                (mCondition.comap Y) omega)) {z})
+          (fun omega : Omega => kernel (Y omega) {z}) := by
+      filter_upwards [hmap_ae] with omega hmap_eq
+      rw [hmap_eq]
+    exact
+      ae_eq_trim_of_measurable hY.comap_le h_lhs_meas h_rhs_meas hsingle_ae
+  filter_upwards [hsingle] with omega hsingle_omega
+  exact Measure.ext_of_singleton hsingle_omega
+
+/--
 If a measurable pushforward law is a Dirac measure, the original random
 variable is a.e. constant.
 
@@ -312,6 +392,189 @@ theorem condExpKernel_pair_map_eq_map_prod_mk_of_action_ae_reward_map_eq
       (selectedAction := selectedAction omega)
       (selectedReward := selectedReward omega)
       h_nextReward h_action h_reward
+
+/--
+Canonical reward-only `trajMeasure` selected-reward law in
+`condExpKernel.map` form.
+
+This applies Mathlib's `Kernel.condDistrib_trajMeasure` theorem directly to
+`RewardKernel.historyStepKernelFamily`, then uses the local countable-target
+`condDistrib`-to-`condExpKernel.map` bridge.  Unlike the action/reward pair
+trajectory route below, the canonical process here has only reward
+coordinates, so its finite prefix is already the reward history consumed by
+the policy, context, and state maps.
+-/
+theorem historyStepKernelFamily_selectedMeasure_condExpKernel_map_trajMeasure
+    {Context : Type x} {State : Type u} {Action : Type v}
+    {Reward : Type w}
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSpace Reward]
+    [StandardBorelSpace Reward]
+    [StandardBorelSpace ((t : Nat) -> Reward)]
+    [Nonempty Reward] [Nonempty ((t : Nat) -> Reward)]
+    [MeasurableSingletonClass Reward] [Countable Reward]
+    (mu0 : Measure Reward)
+    [MeasureTheory.IsProbabilityMeasure mu0]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Reward)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context :
+      (n : Nat) -> ((i : Finset.Iic n) -> Reward) -> Context)
+    (state :
+      (n : Nat) -> ((i : Finset.Iic n) -> Reward) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (n : Nat) :
+    let stepKernel :=
+      RewardKernel.historyStepKernelFamily rewardKernel policy context state
+        hcontext hstate
+    let trajMeasure :=
+      ProbabilityTheory.Kernel.trajMeasure
+        (X := fun _ : Nat => Reward) mu0 stepKernel
+    Filter.Eventually
+      (fun trajectory : (t : Nat) -> Reward =>
+        @Measure.map ((t : Nat) -> Reward) Reward
+          inferInstance inferInstance
+          (fun y : (t : Nat) -> Reward => y (n + 1))
+          (@ProbabilityTheory.condExpKernel
+            ((t : Nat) -> Reward) inferInstance _
+            trajMeasure _
+            ((inferInstance :
+              MeasurableSpace ((i : Finset.Iic n) -> Reward)).comap
+              (Preorder.frestrictLe n))
+            trajectory) =
+        RewardKernel.selectedMeasure rewardKernel
+          (context n (Preorder.frestrictLe n trajectory))
+          ((policy n).action
+            (state n (Preorder.frestrictLe n trajectory))))
+      (ae trajMeasure) := by
+  let stepKernel :=
+    RewardKernel.historyStepKernelFamily rewardKernel policy context state
+      hcontext hstate
+  let trajMeasure :=
+    ProbabilityTheory.Kernel.trajMeasure
+      (X := fun _ : Nat => Reward) mu0 stepKernel
+  let prefixMap :
+      ((t : Nat) -> Reward) -> ((i : Finset.Iic n) -> Reward) :=
+    Preorder.frestrictLe n
+  let nextReward : ((t : Nat) -> Reward) -> Reward :=
+    fun trajectory => trajectory (n + 1)
+  have h_nextReward : Measurable nextReward := by
+    exact measurable_pi_apply (n + 1)
+  have h_prefix : Measurable prefixMap := by
+    fun_prop
+  have hcond :
+      Filter.EventuallyEq (ae (trajMeasure.map prefixMap))
+        (ProbabilityTheory.condDistrib nextReward prefixMap trajMeasure)
+        (stepKernel n) := by
+    simpa [stepKernel, trajMeasure, prefixMap, nextReward] using
+      (ProbabilityTheory.Kernel.condDistrib_trajMeasure
+        (X := fun _ : Nat => Reward)
+        (a := n))
+  have hbridge :=
+    condExpKernel_map_eq_of_condDistrib_ae_eq_countable
+      (mu := trajMeasure)
+      (X := nextReward)
+      (Y := prefixMap)
+      h_nextReward h_prefix (stepKernel n) hcond
+  simpa [stepKernel, trajMeasure, prefixMap, nextReward,
+    RewardKernel.historyStepKernelFamily_apply] using hbridge
+
+/--
+Trim-a.e. canonical reward-only `trajMeasure` selected-reward law.
+
+This is the source-facing strengthening of
+`historyStepKernelFamily_selectedMeasure_condExpKernel_map_trajMeasure`.  It
+uses the trim-aware countable-target bridge, so the conclusion is stated on
+the finite reward-prefix conditioning sigma-algebra itself.
+-/
+theorem historyStepKernelFamily_selectedMeasure_condExpKernel_map_trajMeasure_trim
+    {Context : Type x} {State : Type u} {Action : Type v}
+    {Reward : Type w}
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSpace Reward]
+    [StandardBorelSpace Reward]
+    [StandardBorelSpace ((t : Nat) -> Reward)]
+    [Nonempty Reward] [Nonempty ((t : Nat) -> Reward)]
+    [MeasurableSingletonClass Reward] [Countable Reward]
+    (mu0 : Measure Reward)
+    [MeasureTheory.IsProbabilityMeasure mu0]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Reward)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context :
+      (n : Nat) -> ((i : Finset.Iic n) -> Reward) -> Context)
+    (state :
+      (n : Nat) -> ((i : Finset.Iic n) -> Reward) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (n : Nat) :
+    let stepKernel :=
+      RewardKernel.historyStepKernelFamily rewardKernel policy context state
+        hcontext hstate
+    let trajMeasure :=
+      ProbabilityTheory.Kernel.trajMeasure
+        (X := fun _ : Nat => Reward) mu0 stepKernel
+    Filter.Eventually
+      (fun trajectory : (t : Nat) -> Reward =>
+        @Measure.map ((t : Nat) -> Reward) Reward
+          inferInstance inferInstance
+          (fun y : (t : Nat) -> Reward => y (n + 1))
+          (@ProbabilityTheory.condExpKernel
+            ((t : Nat) -> Reward) inferInstance _
+            trajMeasure _
+            ((inferInstance :
+              MeasurableSpace ((i : Finset.Iic n) -> Reward)).comap
+              (Preorder.frestrictLe n))
+            trajectory) =
+        RewardKernel.selectedMeasure rewardKernel
+          (context n (Preorder.frestrictLe n trajectory))
+          ((policy n).action
+            (state n (Preorder.frestrictLe n trajectory))))
+      (ae
+        (trajMeasure.trim
+          (show
+            ((inferInstance :
+              MeasurableSpace ((i : Finset.Iic n) -> Reward)).comap
+                (Preorder.frestrictLe n)) <=
+              (inferInstance :
+                MeasurableSpace ((t : Nat) -> Reward)) from by
+            have hprefix :
+                Measurable
+                  (Preorder.frestrictLe n :
+                    ((t : Nat) -> Reward) ->
+                      ((i : Finset.Iic n) -> Reward)) := by
+              fun_prop
+            exact hprefix.comap_le))) := by
+  let stepKernel :=
+    RewardKernel.historyStepKernelFamily rewardKernel policy context state
+      hcontext hstate
+  let trajMeasure :=
+    ProbabilityTheory.Kernel.trajMeasure
+      (X := fun _ : Nat => Reward) mu0 stepKernel
+  let prefixMap :
+      ((t : Nat) -> Reward) -> ((i : Finset.Iic n) -> Reward) :=
+    Preorder.frestrictLe n
+  let nextReward : ((t : Nat) -> Reward) -> Reward :=
+    fun trajectory => trajectory (n + 1)
+  have h_nextReward : Measurable nextReward := by
+    exact measurable_pi_apply (n + 1)
+  have h_prefix : Measurable prefixMap := by
+    fun_prop
+  have hcond :
+      Filter.EventuallyEq (ae (trajMeasure.map prefixMap))
+        (ProbabilityTheory.condDistrib nextReward prefixMap trajMeasure)
+        (stepKernel n) := by
+    simpa [stepKernel, trajMeasure, prefixMap, nextReward] using
+      (ProbabilityTheory.Kernel.condDistrib_trajMeasure
+        (X := fun _ : Nat => Reward)
+        (a := n))
+  have hbridge :=
+    condExpKernel_map_eq_of_condDistrib_ae_eq_countable_trim
+      (mu := trajMeasure)
+      (X := nextReward)
+      (Y := prefixMap)
+      h_nextReward h_prefix (stepKernel n) hcond
+  simpa [stepKernel, trajMeasure, prefixMap, nextReward,
+    RewardKernel.historyStepKernelFamily_apply] using hbridge
 
 /--
 Canonical `trajMeasure` next-pair law in `condExpKernel.map` form.
@@ -1041,6 +1304,189 @@ theorem actionRewardHistoryStepKernelFamily_selectedMeasure_condExpKernel_map_tr
       (Preorder.frestrictLe n trajectory)
 
 /--
+Canonical `trajMeasure` selected-reward law in
+`History.finitePairHistoryOfTrace` notation.
+
+This is the same canonical Ionescu-Tulcea conditional reward law as
+`actionRewardHistoryStepKernelFamily_selectedMeasure_condExpKernel_map_trajMeasure`;
+the theorem only exposes the finite pair history prefix in the notation used by
+the bandit-history API.
+-/
+theorem actionRewardHistoryStepKernelFamily_selectedMeasure_finitePairHistoryOfTrace_condExpKernel_map_trajMeasure
+    {Context : Type x} {State : Type u} {Action : Type v}
+    {Reward : Type w}
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSpace Reward]
+    [StandardBorelSpace (Prod Action Reward)]
+    [StandardBorelSpace Reward]
+    [StandardBorelSpace ((t : Nat) -> Prod Action Reward)]
+    [Nonempty (Prod Action Reward)] [Nonempty Reward]
+    [Nonempty ((t : Nat) -> Prod Action Reward)]
+    [MeasurableSingletonClass Reward] [Countable Reward]
+    (mu0 : Measure (Prod Action Reward))
+    [MeasureTheory.IsProbabilityMeasure mu0]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Reward)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Reward) -> Context)
+    (state :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Reward) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (n : Nat) :
+    let stepKernel :=
+      RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy
+        context state hcontext hstate
+    let trajMeasure :=
+      ProbabilityTheory.Kernel.trajMeasure
+        (X := fun _ : Nat => Prod Action Reward) mu0 stepKernel
+    let prefixMap :
+        ((t : Nat) -> Prod Action Reward) ->
+          ((i : Finset.Iic n) -> Prod Action Reward) :=
+      fun y =>
+        History.finitePairHistoryOfTrace
+          (fun t => (y t).1) (fun t => (y t).2) n
+    Filter.Eventually
+      (fun trajectory : (t : Nat) -> Prod Action Reward =>
+        @Measure.map ((t : Nat) -> Prod Action Reward) Reward
+          inferInstance inferInstance
+          (fun y : (t : Nat) -> Prod Action Reward => (y (n + 1)).2)
+          (@ProbabilityTheory.condExpKernel
+            ((t : Nat) -> Prod Action Reward) inferInstance _
+            trajMeasure _
+            ((inferInstance :
+              MeasurableSpace
+                ((i : Finset.Iic n) -> Prod Action Reward)).comap
+              prefixMap)
+            trajectory) =
+        RewardKernel.selectedMeasure rewardKernel
+          (context n (prefixMap trajectory))
+          ((policy n).action (state n (prefixMap trajectory))))
+      (ae trajMeasure) := by
+  have h_prefixMap :
+      (fun y : (t : Nat) -> Prod Action Reward =>
+        History.finitePairHistoryOfTrace
+          (fun t => (y t).1) (fun t => (y t).2) n) =
+        (Preorder.frestrictLe n :
+          ((t : Nat) -> Prod Action Reward) ->
+            ((i : Finset.Iic n) -> Prod Action Reward)) := by
+    funext y j
+    simp
+  simpa [h_prefixMap] using
+    actionRewardHistoryStepKernelFamily_selectedMeasure_condExpKernel_map_trajMeasure
+      mu0 rewardKernel policy context state hcontext hstate n
+
+/--
+Canonical `trajMeasure` selected-reward law with reward-history
+context/state extractors.
+
+This specializes the finite-pair-history notation wrapper to pair-context and
+pair-state maps obtained by projecting finite pair histories to reward
+histories.  It is still a canonical Ionescu-Tulcea theorem, not an ambient
+`History.historyFiltrationSucc` transport result.
+-/
+theorem actionRewardHistoryStepKernelFamily_selectedMeasure_rewardHistoryOfTrace_condExpKernel_map_trajMeasure
+    {Context : Type x} {State : Type u} {Action : Type v}
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action]
+    [StandardBorelSpace (Prod Action Rat)]
+    [StandardBorelSpace Rat]
+    [StandardBorelSpace ((t : Nat) -> Prod Action Rat)]
+    [Nonempty (Prod Action Rat)] [Nonempty Rat]
+    [Nonempty ((t : Nat) -> Prod Action Rat)]
+    [MeasurableSingletonClass Rat] [Countable Rat]
+    (mu0 : Measure (Prod Action Rat))
+    [MeasureTheory.IsProbabilityMeasure mu0]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((i : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((i : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (n : Nat) :
+    let pairContext :
+        (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Rat) -> Context :=
+      fun n history =>
+        context n (History.pairHistoryRewardProjection history)
+    let pairState :
+        (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Rat) -> State :=
+      fun n history =>
+        state n (History.pairHistoryRewardProjection history)
+    let hpairContext : forall n : Nat, Measurable (pairContext n) :=
+      fun n =>
+        (hcontext n).comp
+          (History.measurable_pairHistoryRewardProjection
+            (Action := Action) (Reward := Rat) n)
+    let hpairState : forall n : Nat, Measurable (pairState n) :=
+      fun n =>
+        (hstate n).comp
+          (History.measurable_pairHistoryRewardProjection
+            (Action := Action) (Reward := Rat) n)
+    let stepKernel :=
+      RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy
+        pairContext pairState hpairContext hpairState
+    let trajMeasure :=
+      ProbabilityTheory.Kernel.trajMeasure
+        (X := fun _ : Nat => Prod Action Rat) mu0 stepKernel
+    let prefixMap :
+        ((t : Nat) -> Prod Action Rat) ->
+          ((i : Finset.Iic n) -> Prod Action Rat) :=
+      fun y =>
+        History.finitePairHistoryOfTrace
+          (fun t => (y t).1) (fun t => (y t).2) n
+    Filter.Eventually
+      (fun trajectory : (t : Nat) -> Prod Action Rat =>
+        @Measure.map ((t : Nat) -> Prod Action Rat) Rat
+          inferInstance inferInstance
+          (fun y : (t : Nat) -> Prod Action Rat => (y (n + 1)).2)
+          (@ProbabilityTheory.condExpKernel
+            ((t : Nat) -> Prod Action Rat) inferInstance _
+            trajMeasure _
+            ((inferInstance :
+              MeasurableSpace
+                ((i : Finset.Iic n) -> Prod Action Rat)).comap
+              prefixMap)
+            trajectory) =
+        RewardKernel.selectedMeasure rewardKernel
+          (context n
+            (History.finiteRewardHistoryOfTrace
+              (fun t => (trajectory t).2) n))
+          ((policy n).action
+            (state n
+              (History.finiteRewardHistoryOfTrace
+                (fun t => (trajectory t).2) n))))
+      (ae trajMeasure) := by
+  let pairContext :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Rat) -> Context :=
+    fun n history =>
+      context n (History.pairHistoryRewardProjection history)
+  let pairState :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Rat) -> State :=
+    fun n history =>
+      state n (History.pairHistoryRewardProjection history)
+  let hpairContext : forall n : Nat, Measurable (pairContext n) :=
+    fun n =>
+      (hcontext n).comp
+        (History.measurable_pairHistoryRewardProjection
+          (Action := Action) (Reward := Rat) n)
+  let hpairState : forall n : Nat, Measurable (pairState n) :=
+    fun n =>
+      (hstate n).comp
+        (History.measurable_pairHistoryRewardProjection
+          (Action := Action) (Reward := Rat) n)
+  simpa [pairContext, pairState, hpairContext, hpairState,
+    History.pairHistoryRewardProjection_finitePairHistoryOfTrace] using
+    actionRewardHistoryStepKernelFamily_selectedMeasure_finitePairHistoryOfTrace_condExpKernel_map_trajMeasure
+      (mu0 := mu0)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := pairContext)
+      (state := pairState)
+      (hcontext := hpairContext)
+      (hstate := hpairState)
+      (n := n)
+
+/--
 Canonical `trajMeasure` next-pair law rebuilt from split inputs.
 
 This theorem verifies the split route on Mathlib's canonical
@@ -1163,9 +1609,10 @@ Generic `condExpKernel` map-law consumer for conditional sub-Gaussianity.
 
 If the conditional kernel pushed forward by `X` is trim-a.e. a target measure
 whose identity random variable is sub-Gaussian with deterministic proxy `c`,
-then `X` is conditionally sub-Gaussian.  The exponential-integrability field is
-kept explicit because Mathlib's `Kernel.HasSubgaussianMGF` asks for global
-integrability over `(mu.trim hm).bind (condExpKernel mu mcond)`.
+then `X` is conditionally sub-Gaussian.  The target MGF bound also supplies the
+global exponential-integrability field: `Measure.integrable_comp_iff` combines
+the target laws' pointwise integrability with their common deterministic MGF
+bound over the finite trim measure.
 -/
 theorem hasCondSubgaussianMGF_of_condExpKernel_map_eq
     {Omega : Type u}
@@ -1175,9 +1622,6 @@ theorem hasCondSubgaussianMGF_of_condExpKernel_map_eq
     (X : Omega -> Real) (c : NNReal)
     (hX : @Measurable Omega Real mOmega inferInstance X)
     (target : Omega -> Measure Real)
-    (h_integrable_exp :
-      forall t : Real,
-        Integrable (fun omega : Omega => Real.exp (t * X omega)) mu)
     (h_kernel_map_eq :
       Filter.Eventually
         (fun omega : Omega =>
@@ -1193,45 +1637,56 @@ theorem hasCondSubgaussianMGF_of_condExpKernel_map_eq
             (fun z : Real => z) c (target omega))
         (ae (mu.trim hm))) :
     ProbabilityTheory.HasCondSubgaussianMGF mcond hm X c mu := by
+  let condKernel :=
+    @ProbabilityTheory.condExpKernel Omega mOmega _ mu _ mcond
+  have h_cond_subG :
+      Filter.Eventually
+        (fun omega : Omega =>
+          ProbabilityTheory.HasSubgaussianMGF X c (condKernel omega))
+        (ae (mu.trim hm)) := by
+    filter_upwards [h_kernel_map_eq, h_target_subG] with omega hmap hsub
+    apply
+      (ProbabilityTheory.HasSubgaussianMGF.id_map_iff
+        hX.aemeasurable).1
+    rw [hmap]
+    exact hsub
   have h_integrable_comp :
       forall t : Real,
         Integrable (fun omega : Omega => Real.exp (t * X omega))
-          ((mu.trim hm).bind
-            (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _ mcond)) := by
+          ((mu.trim hm).bind condKernel) := by
     intro t
-    rw [@ProbabilityTheory.condExpKernel_comp_trim
-      Omega mcond mOmega _ mu _ hm]
-    exact h_integrable_exp t
+    let f : Omega -> Real := fun omega => Real.exp (t * X omega)
+    have hf : @Measurable Omega Real mOmega inferInstance f := by
+      exact Real.measurable_exp.comp (measurable_const.mul hX)
+    refine
+      (@Measure.integrable_comp_iff Omega Omega Real mcond mOmega _
+        condKernel (mu.trim hm) f hf.aestronglyMeasurable).2 ⟨?_, ?_⟩
+    · filter_upwards [h_cond_subG] with omega hsub
+      simpa [f] using hsub.integrable_exp_mul t
+    · have h_inner_strong :
+          @StronglyMeasurable Omega Real inferInstance mcond
+            (fun omega : Omega =>
+              ∫ y, ‖f y‖ ∂condKernel omega) :=
+        (@StronglyMeasurable.integral_kernel Omega Omega mcond mOmega
+          condKernel Real _ _ (fun y : Omega => ‖f y‖)
+          hf.stronglyMeasurable.norm)
+      refine Integrable.of_bound h_inner_strong.aestronglyMeasurable
+        (Real.exp (((c : NNReal) : Real) * t ^ 2 / 2)) ?_
+      filter_upwards [h_cond_subG] with omega hsub
+      have h_inner_eq :
+          (∫ y, ‖f y‖ ∂condKernel omega) =
+            ProbabilityTheory.mgf X (condKernel omega) t := by
+        simp [f, ProbabilityTheory.mgf, Real.norm_eq_abs]
+      rw [h_inner_eq,
+        Real.norm_of_nonneg ProbabilityTheory.mgf_nonneg]
+      exact hsub.mgf_le t
   change
-    ProbabilityTheory.Kernel.HasSubgaussianMGF X c
-      (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _ mcond)
-      (mu.trim hm)
+    ProbabilityTheory.Kernel.HasSubgaussianMGF X c condKernel (mu.trim hm)
   refine ProbabilityTheory.Kernel.HasSubgaussianMGF.of_rat
     h_integrable_comp ?_
   intro q
-  filter_upwards [h_kernel_map_eq, h_target_subG] with omega hmap hsub
-  let condKernel : @Measure Omega mOmega :=
-    @ProbabilityTheory.condExpKernel Omega mOmega _ mu _ mcond omega
-  calc
-    ProbabilityTheory.mgf X
-        (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _ mcond omega)
-        (q : Real)
-        =
-      ProbabilityTheory.mgf (fun z : Real => z)
-        (@Measure.map Omega Real mOmega inferInstance X
-          (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _ mcond
-            omega))
-        (q : Real) := by
-          simpa [condKernel] using
-            congrFun
-              (@ProbabilityTheory.mgf_id_map Omega mOmega X condKernel
-                hX.aemeasurable).symm
-              (q : Real)
-    _ = ProbabilityTheory.mgf (fun z : Real => z) (target omega)
-        (q : Real) := by
-          rw [hmap]
-    _ <= Real.exp (((c : NNReal) : Real) * (q : Real) ^ 2 / 2) := by
-          simpa using hsub.mgf_le (q : Real)
+  filter_upwards [h_cond_subG] with omega hsub
+  simpa using hsub.mgf_le (q : Real)
 
 /--
 Centered-reward specialization of
@@ -1555,7 +2010,8 @@ This is the MGF analogue of
 It keeps two contracts explicit: `h_kernel_X_eq` freezes the history-dependent
 centering under the conditional kernel, and `h_variance_le` bounds the
 history-selected variance proxy by the deterministic proxy `c` required by
-Mathlib's `HasCondSubgaussianMGF`.
+Mathlib's `HasCondSubgaussianMGF`.  Exponential integrability is generated by
+the generic integrated target-law transfer above.
 -/
 theorem hasCondSubgaussianMGF_of_condExpKernel_map_eq_historyStepKernel_centeredReward
     {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
@@ -1581,9 +2037,6 @@ theorem hasCondSubgaussianMGF_of_condExpKernel_map_eq_historyStepKernel_centered
     (c : NNReal)
     (h_nextReward : @Measurable Omega Rat mOmega inferInstance nextReward)
     (hX : @Measurable Omega Real mOmega inferInstance X)
-    (h_integrable_exp :
-      forall t : Real,
-        Integrable (fun omega : Omega => Real.exp (t * X omega)) mu)
     (h_kernel_map_eq :
       Filter.Eventually
         (fun omega : Omega =>
@@ -1717,7 +2170,6 @@ theorem hasCondSubgaussianMGF_of_condExpKernel_map_eq_historyStepKernel_centered
       (c := c)
       hX
       target
-      h_integrable_exp
       h_target_map_eq
       h_target_subG
 
@@ -1727,9 +2179,9 @@ map-law consumer.
 
 This is the MGF analogue of
 `centeredReward_succ_condExp_eq_zero_of_historyStepKernelFamily_condExpKernel_map_eq`.
-It keeps exponential integrability, measurability, and deterministic variance
-domination explicit; the theorem only discharges the kernel-side
-sub-Gaussian law from the history-step reward-kernel contract.
+It keeps measurability and deterministic variance domination explicit; the
+kernel-side sub-Gaussian law now also discharges exponential integrability via
+the integrated target-law transfer.
 -/
 theorem centeredReward_succ_hasCondSubgaussianMGF_of_historyStepKernelFamily_condExpKernel_map_eq
     {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
@@ -1762,15 +2214,6 @@ theorem centeredReward_succ_hasCondSubgaussianMGF_of_historyStepKernelFamily_con
             mean (context i (history omega))
               ((policy i).action (state i (history omega))) : Rat) :
                 Real))))
-    (h_integrable_exp :
-      forall t : Real,
-        Integrable
-          (fun omega : Omega =>
-            Real.exp (t *
-              (((reward omega (i + 1) -
-                mean (context i (history omega))
-                  ((policy i).action (state i (history omega))) : Rat) :
-                    Real)))) mu)
     (h_kernel_map_eq :
       Filter.Eventually
         (fun omega : Omega =>
@@ -1836,7 +2279,6 @@ theorem centeredReward_succ_hasCondSubgaussianMGF_of_historyStepKernelFamily_con
       (c := c)
       h_reward
       h_centered_meas
-      h_integrable_exp
       h_kernel_map_eq
       h_kernel_X_eq
       h_variance_le
@@ -2135,6 +2577,103 @@ theorem actionRewardPartialTrajectoryKernel_prefix_condExpKernel_map_trajMeasure
         (Preorder.frestrictLe n trajectory) := by
         simpa [condKernel, prefixMap, extendFromFrozen, stepKernel, trajMeasure]
           using h_extend_eq
+
+/--
+Canonical `trajMeasure` full finite-pair-history law in the project's concrete
+`History.finitePairHistoryOfTrace` notation.
+
+This is a notation-alignment wrapper around
+`actionRewardPartialTrajectoryKernel_extend_condExpKernel_map_trajMeasure`: the
+ambient theorem-card still needs a transport from canonical `trajMeasure` to an
+arbitrary generated process.
+-/
+theorem actionRewardPartialTrajectoryKernel_finitePairHistoryOfTrace_condExpKernel_map_trajMeasure
+    {Context : Type x} {State : Type u} {Action : Type v}
+    {Reward : Type w}
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSpace Reward]
+    [StandardBorelSpace (Prod Action Reward)]
+    [StandardBorelSpace ((t : Nat) -> Prod Action Reward)]
+    [Nonempty (Prod Action Reward)]
+    [Nonempty ((t : Nat) -> Prod Action Reward)]
+    [MeasurableSingletonClass (Prod Action Reward)]
+    [Countable (Prod Action Reward)]
+    (mu0 : Measure (Prod Action Reward))
+    [MeasureTheory.IsProbabilityMeasure mu0]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Reward)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Reward) -> Context)
+    (state :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Reward) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (n : Nat) :
+    let stepKernel :=
+      RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy
+        context state hcontext hstate
+    let trajMeasure :=
+      ProbabilityTheory.Kernel.trajMeasure
+        (X := fun _ : Nat => Prod Action Reward) mu0 stepKernel
+    let prefixMap :
+        ((t : Nat) -> Prod Action Reward) ->
+          ((i : Finset.Iic n) -> Prod Action Reward) :=
+      fun y =>
+        History.finitePairHistoryOfTrace
+          (fun t => (y t).1) (fun t => (y t).2) n
+    let fullPrefix :
+        ((t : Nat) -> Prod Action Reward) ->
+          ((i : Finset.Iic (n + 1)) -> Prod Action Reward) :=
+      fun y =>
+        History.finitePairHistoryOfTrace
+          (fun t => (y t).1) (fun t => (y t).2) (n + 1)
+    Filter.Eventually
+      (fun trajectory : (t : Nat) -> Prod Action Reward =>
+        @Measure.map
+          ((t : Nat) -> Prod Action Reward)
+          ((i : Finset.Iic (n + 1)) -> Prod Action Reward)
+          inferInstance inferInstance
+          fullPrefix
+          (@ProbabilityTheory.condExpKernel
+            ((t : Nat) -> Prod Action Reward) inferInstance _ trajMeasure _
+            ((inferInstance :
+              MeasurableSpace
+                ((i : Finset.Iic n) -> Prod Action Reward)).comap
+              prefixMap)
+            trajectory) =
+        RewardKernel.actionRewardPartialTrajectoryKernel rewardKernel policy
+          context state hcontext hstate n (n + 1)
+          (prefixMap trajectory))
+      (ae trajMeasure) := by
+  have h_prefixMap :
+      (fun y : (t : Nat) -> Prod Action Reward =>
+        History.finitePairHistoryOfTrace
+          (fun t => (y t).1) (fun t => (y t).2) n) =
+        (Preorder.frestrictLe n :
+          ((t : Nat) -> Prod Action Reward) ->
+            ((i : Finset.Iic n) -> Prod Action Reward)) := by
+    funext y j
+    simp
+  have h_fullPrefix :
+      (Preorder.frestrictLe (n + 1) :
+          ((t : Nat) -> Prod Action Reward) ->
+            ((i : Finset.Iic (n + 1)) -> Prod Action Reward)) =
+        (fun y : (t : Nat) -> Prod Action Reward =>
+          History.extendPairHistorySucc
+            (History.finitePairHistoryOfTrace
+              (fun t => (y t).1) (fun t => (y t).2) n)
+            (y (n + 1))) := by
+    funext y j
+    by_cases hj : j.1 <= n
+    · simp [History.extendPairHistorySucc, hj]
+    · have hj_le : j.1 <= n + 1 := Finset.mem_Iic.mp j.2
+      have h_succ_le : n + 1 <= j.1 :=
+        Nat.succ_le_of_lt (lt_of_not_ge hj)
+      have hj_eq : j.1 = n + 1 := le_antisymm hj_le h_succ_le
+      simp [History.extendPairHistorySucc, hj_eq]
+  simpa [h_prefixMap, h_fullPrefix] using
+    actionRewardPartialTrajectoryKernel_prefix_condExpKernel_map_trajMeasure
+      mu0 rewardKernel policy context state hcontext hstate n
 
 /--
 Action-freezing hookup for the next-pair split-law route.
@@ -3457,9 +3996,9 @@ Conditional sub-Gaussian map-law consumer with the frozen-past side condition
 discharged from prefix coordinate measurability.
 
 The remaining structural input is the reward-coordinate pushforward identity
-from `condExpKernel` to the history-step reward kernel.  Exponential
-integrability, ambient measurability of the centered reward, and the
-deterministic variance-proxy upper bound remain explicit regularity contracts.
+from `condExpKernel` to the history-step reward kernel.  Ambient measurability
+of the centered reward and the deterministic variance-proxy upper bound remain
+explicit regularity contracts; exponential integrability is derived.
 -/
 theorem centeredReward_succ_hasCondSubgaussianMGF_of_historyStepKernelFamily_condExpKernel_map_eq_of_coordinate_measurable
     {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
@@ -3499,19 +4038,6 @@ theorem centeredReward_succ_hasCondSubgaussianMGF_of_historyStepKernelFamily_con
                 (state i
                   (History.finiteRewardHistoryOfTrace (reward omega) i))) :
                 Rat) : Real))))
-    (h_integrable_exp :
-      forall t : Real,
-        Integrable
-          (fun omega : Omega =>
-            Real.exp (t *
-              (((reward omega (i + 1) -
-                mean
-                  (context i
-                    (History.finiteRewardHistoryOfTrace (reward omega) i))
-                  ((policy i).action
-                    (state i
-                      (History.finiteRewardHistoryOfTrace (reward omega) i))) :
-                    Rat) : Real)))) mu)
     (h_kernel_map_eq :
       Filter.Eventually
         (fun omega : Omega =>
@@ -3613,7 +4139,6 @@ theorem centeredReward_succ_hasCondSubgaussianMGF_of_historyStepKernelFamily_con
       (c := c)
       h_reward
       (by simpa [history] using h_centered_meas)
-      (by simpa [history] using h_integrable_exp)
       (by simpa [history] using h_kernel_map_eq)
       h_kernel_X_eq
       (by simpa [history] using h_variance_le)
@@ -3625,7 +4150,8 @@ map-law consumer.
 At filtration level `History.historyFiltrationSucc ... i`, the reward prefix
 up to `i` is visible by construction, so the coordinate-measurable consumer
 applies directly.  The reward-coordinate pushforward identity and analytic
-regularity contracts remain explicit.
+measurability/variance contracts remain explicit, while exponential
+integrability is derived from the selected target laws.
 -/
 theorem centeredReward_succ_hasCondSubgaussianMGF_of_historyStepKernelFamily_condExpKernel_map_eq_historyFiltrationSucc
     {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
@@ -3662,19 +4188,6 @@ theorem centeredReward_succ_hasCondSubgaussianMGF_of_historyStepKernelFamily_con
                 (state i
                   (History.finiteRewardHistoryOfTrace (reward omega) i))) :
                 Rat) : Real))))
-    (h_integrable_exp :
-      forall t : Real,
-        Integrable
-          (fun omega : Omega =>
-            Real.exp (t *
-              (((reward omega (i + 1) -
-                mean
-                  (context i
-                    (History.finiteRewardHistoryOfTrace (reward omega) i))
-                  ((policy i).action
-                    (state i
-                      (History.finiteRewardHistoryOfTrace (reward omega) i))) :
-                    Rat) : Real)))) mu)
     (h_kernel_map_eq :
       Filter.Eventually
         (fun omega : Omega =>
@@ -3736,7 +4249,6 @@ theorem centeredReward_succ_hasCondSubgaussianMGF_of_historyStepKernelFamily_con
       (h_reward := hreward (i + 1))
       ?_
       h_centered_meas
-      h_integrable_exp
       h_kernel_map_eq
       h_variance_le
   intro j

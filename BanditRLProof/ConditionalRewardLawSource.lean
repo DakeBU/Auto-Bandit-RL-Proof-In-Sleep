@@ -1,4 +1,5 @@
 import BanditRLProof.ConditionalExpectationReward
+import BanditRLProof.ConcentrationSubGaussian
 
 /-!
 # Conditional reward-law source contracts
@@ -17,6 +18,16 @@ namespace BanditRLProof
 namespace ConditionalExpectationReward
 
 open MeasureTheory
+
+private theorem eventually_ae_trim_of_eq_measurableSpace
+    {Omega : Type u} {m0 m1 m2 : MeasurableSpace Omega}
+    {mu : @MeasureTheory.Measure Omega m0}
+    (h : m1 = m2) (hm1 : m1 <= m0) {hm2 : m2 <= m0}
+    {p : Omega -> Prop}
+    (hp : Filter.Eventually p (ae (mu.trim hm2))) :
+    Filter.Eventually p (ae (mu.trim hm1)) := by
+  cases h
+  simpa using hp
 
 /--
 The shifted policy-generated action trace whose state reads the finite reward
@@ -65,6 +76,438 @@ theorem generatedActionFromRewardHistory_measurable
   exact
     (hstate n).comp
       (History.measurable_finiteRewardHistoryOfTrace reward hreward n)
+
+/--
+For actions generated deterministically from finite reward histories, the
+finite pair prefix and the finite reward prefix generate the same measurable
+space.
+
+The nontrivial inclusion is that every generated action coordinate through
+time `n` is measurable from the reward prefix through time `n`; the reverse
+inclusion is the measurable reward projection from pair histories.
+-/
+theorem comap_finitePairHistoryOfTrace_generatedActionFromRewardHistory_eq_comap_finiteRewardHistoryOfTrace
+    {Omega : Type u} {State : Type w} {Action : Type x}
+    [MeasurableSpace State] [MeasurableSpace Action]
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (n : Nat) :
+    ((inferInstance :
+        MeasurableSpace ((j : Finset.Iic n) -> Prod Action Rat)).comap
+      (fun omega : Omega =>
+        History.finitePairHistoryOfTrace
+          (generatedActionFromRewardHistory policy state defaultAction reward
+            omega)
+          (reward omega) n)) =
+    ((inferInstance :
+        MeasurableSpace ((j : Finset.Iic n) -> Rat)).comap
+      (fun omega : Omega =>
+        History.finiteRewardHistoryOfTrace (reward omega) n)) := by
+  let rewardPrefix : Omega -> ((j : Finset.Iic n) -> Rat) :=
+    fun omega => History.finiteRewardHistoryOfTrace (reward omega) n
+  let pairPrefix : Omega -> ((j : Finset.Iic n) -> Prod Action Rat) :=
+    fun omega =>
+      History.finitePairHistoryOfTrace
+        (generatedActionFromRewardHistory policy state defaultAction reward
+          omega)
+        (reward omega) n
+  apply le_antisymm
+  · have h_rewardPrefix :
+        @Measurable Omega ((j : Finset.Iic n) -> Rat)
+          ((inferInstance :
+            MeasurableSpace ((j : Finset.Iic n) -> Rat)).comap rewardPrefix)
+          inferInstance rewardPrefix :=
+      Measurable.of_comap_le le_rfl
+    letI : MeasurableSpace Omega :=
+      (inferInstance :
+        MeasurableSpace ((j : Finset.Iic n) -> Rat)).comap rewardPrefix
+    have h_pairPrefix :
+        @Measurable Omega ((j : Finset.Iic n) -> Prod Action Rat)
+          ((inferInstance :
+            MeasurableSpace ((j : Finset.Iic n) -> Rat)).comap rewardPrefix)
+          inferInstance pairPrefix := by
+      refine measurable_pi_lambda _ ?_
+      intro j
+      have h_reward_coord :
+          @Measurable Omega Rat
+            ((inferInstance :
+              MeasurableSpace ((k : Finset.Iic n) -> Rat)).comap rewardPrefix)
+            inferInstance
+            (fun omega : Omega => reward omega j.1) := by
+        have h_eval :
+            Measurable
+              (fun history : (k : Finset.Iic n) -> Rat => history j) :=
+          measurable_pi_apply j
+        simpa [rewardPrefix, History.finiteRewardHistoryOfTrace] using
+          h_eval.comp h_rewardPrefix
+      have h_action_coord :
+          @Measurable Omega Action
+            ((inferInstance :
+              MeasurableSpace ((k : Finset.Iic n) -> Rat)).comap rewardPrefix)
+            inferInstance
+            (fun omega : Omega =>
+              generatedActionFromRewardHistory policy state defaultAction
+                reward omega j.1) := by
+        cases hj : j.1 with
+        | zero =>
+            simp [generatedActionFromRewardHistory,
+              Policy.generatedActionTraceSucc]
+        | succ k =>
+            have hk_le_n : k <= n := by
+              have hj_le : j.1 <= n := Finset.mem_Iic.mp j.2
+              omega
+            let restrictPrefix :
+                ((q : Finset.Iic n) -> Rat) ->
+                  ((q : Finset.Iic k) -> Rat) :=
+              fun history q =>
+                history
+                  ⟨q.1, Finset.mem_Iic.mpr
+                    ((Finset.mem_Iic.mp q.2).trans hk_le_n)⟩
+            have h_restrictPrefix : Measurable restrictPrefix := by
+              refine measurable_pi_lambda _ ?_
+              intro q
+              exact measurable_pi_apply _
+            have h_smallPrefix :
+                @Measurable Omega ((q : Finset.Iic k) -> Rat)
+                  ((inferInstance :
+                    MeasurableSpace ((q : Finset.Iic n) -> Rat)).comap
+                      rewardPrefix)
+                  inferInstance
+                  (fun omega : Omega =>
+                    History.finiteRewardHistoryOfTrace (reward omega) k) := by
+              simpa [restrictPrefix, rewardPrefix,
+                History.finiteRewardHistoryOfTrace, Function.comp_def] using
+                h_restrictPrefix.comp h_rewardPrefix
+            have h_state :
+                @Measurable Omega State
+                  ((inferInstance :
+                    MeasurableSpace ((q : Finset.Iic n) -> Rat)).comap
+                      rewardPrefix)
+                  inferInstance
+                  (fun omega : Omega =>
+                    state k
+                      (History.finiteRewardHistoryOfTrace (reward omega) k)) :=
+              (hstate k).comp h_smallPrefix
+            have h_action :=
+              Policy.measurable_action_of_measurable_state
+                (policy k)
+                (fun omega : Omega =>
+                  state k
+                    (History.finiteRewardHistoryOfTrace (reward omega) k))
+                h_state
+            simpa [generatedActionFromRewardHistory,
+              Policy.generatedActionTraceSucc, hj] using h_action
+      simpa [pairPrefix, History.finitePairHistoryOfTrace] using
+        h_action_coord.prod h_reward_coord
+    exact h_pairPrefix.comap_le
+  · have h_pairPrefix :
+        @Measurable Omega ((j : Finset.Iic n) -> Prod Action Rat)
+          ((inferInstance :
+            MeasurableSpace
+              ((j : Finset.Iic n) -> Prod Action Rat)).comap pairPrefix)
+          inferInstance pairPrefix :=
+      Measurable.of_comap_le le_rfl
+    letI : MeasurableSpace Omega :=
+      (inferInstance :
+        MeasurableSpace ((j : Finset.Iic n) -> Prod Action Rat)).comap
+          pairPrefix
+    have h_rewardPrefix :
+        @Measurable Omega ((j : Finset.Iic n) -> Rat)
+          ((inferInstance :
+            MeasurableSpace
+              ((j : Finset.Iic n) -> Prod Action Rat)).comap pairPrefix)
+          inferInstance rewardPrefix := by
+      have h_projection :=
+        (History.measurable_pairHistoryRewardProjection
+          (Action := Action) (Reward := Rat) n).comp h_pairPrefix
+      simpa [pairPrefix, rewardPrefix,
+        History.pairHistoryRewardProjection_finitePairHistoryOfTrace] using
+        h_projection
+    exact h_rewardPrefix.comap_le
+
+/--
+The shifted generated action/reward history filtration is therefore exactly
+the comap of the finite reward prefix.
+
+This removes the generated action coordinates from the conditioning surface
+without changing the filtration.
+-/
+theorem historyFiltrationSucc_generatedActionFromRewardHistory_eq_comap_finiteRewardHistoryOfTrace
+    {Omega : Type u} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega]
+    [MeasurableSpace State] [MeasurableSpace Action]
+    [MeasurableSingletonClass Action] [Countable Action]
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (n : Nat) :
+    ((History.historyFiltrationSucc (mOmega := mOmega)
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (mOmega := mOmega) (policy := policy) (state := state)
+          (defaultAction := defaultAction) (reward := reward)
+          hreward hstate)
+        hreward) n : MeasurableSpace Omega) =
+      ((inferInstance :
+        MeasurableSpace ((j : Finset.Iic n) -> Rat)).comap
+        (fun omega : Omega =>
+          History.finiteRewardHistoryOfTrace (reward omega) n)) := by
+  rw [History.historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace
+    (mOmega := mOmega)
+    (generatedActionFromRewardHistory policy state defaultAction reward)
+    reward
+    (generatedActionFromRewardHistory_measurable
+      (mOmega := mOmega) (policy := policy) (state := state)
+      (defaultAction := defaultAction) (reward := reward)
+      hreward hstate)
+    hreward n]
+  exact
+    comap_finitePairHistoryOfTrace_generatedActionFromRewardHistory_eq_comap_finiteRewardHistoryOfTrace
+      policy state hstate defaultAction reward n
+
+/--
+Canonical reward-only `trajMeasure` selected-reward law on the generated
+finite-pair conditioning surface.
+
+The underlying trajectory contains only reward coordinates.  The previous
+comap equality shows that adjoining the deterministically generated policy
+actions to each finite prefix does not change the conditioning measurable
+space, so the canonical reward-only law can be stated directly in the same
+finite-pair notation used by the ambient source contracts.
+-/
+theorem historyStepKernelFamily_selectedMeasure_condExpKernel_map_trajMeasure_generatedActionFromRewardHistory_finitePairHistoryOfTrace
+    {Context : Type v} {State : Type w} {Action : Type x}
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action]
+    (mu0 : Measure Rat) [MeasureTheory.IsProbabilityMeasure mu0]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (n : Nat) :
+    let stepKernel :=
+      RewardKernel.historyStepKernelFamily rewardKernel policy context state
+        hcontext hstate
+    let trajMeasure :=
+      ProbabilityTheory.Kernel.trajMeasure
+        (X := fun _ : Nat => Rat) mu0 stepKernel
+    let reward : RewardTrace Rat -> RewardTrace Rat := fun trajectory => trajectory
+    let generatedAction : RewardTrace Rat -> ActionTrace Action :=
+      generatedActionFromRewardHistory policy state defaultAction reward
+    Filter.Eventually
+      (fun trajectory : RewardTrace Rat =>
+        @Measure.map (RewardTrace Rat) Rat inferInstance inferInstance
+          (fun y : RewardTrace Rat => y (n + 1))
+          (@ProbabilityTheory.condExpKernel
+            (RewardTrace Rat) inferInstance _ trajMeasure _
+            ((inferInstance :
+              MeasurableSpace
+                ((j : Finset.Iic n) -> Prod Action Rat)).comap
+              (fun y : RewardTrace Rat =>
+                History.finitePairHistoryOfTrace
+                  (generatedAction y) (reward y) n))
+            trajectory) =
+        RewardKernel.selectedMeasure rewardKernel
+          (context n
+            (History.pairHistoryRewardProjection
+              (History.finitePairHistoryOfTrace
+                (generatedAction trajectory) (reward trajectory) n)))
+          ((policy n).action
+            (state n
+              (History.pairHistoryRewardProjection
+                (History.finitePairHistoryOfTrace
+                  (generatedAction trajectory) (reward trajectory) n)))))
+      (ae trajMeasure) := by
+  let stepKernel :=
+    RewardKernel.historyStepKernelFamily rewardKernel policy context state
+      hcontext hstate
+  let trajMeasure :=
+    ProbabilityTheory.Kernel.trajMeasure
+      (X := fun _ : Nat => Rat) mu0 stepKernel
+  let reward : RewardTrace Rat -> RewardTrace Rat := fun trajectory => trajectory
+  let generatedAction : RewardTrace Rat -> ActionTrace Action :=
+    generatedActionFromRewardHistory policy state defaultAction reward
+  have hcanonical :=
+    historyStepKernelFamily_selectedMeasure_condExpKernel_map_trajMeasure
+      mu0 rewardKernel policy context state hcontext hstate n
+  have hcomap :=
+    comap_finitePairHistoryOfTrace_generatedActionFromRewardHistory_eq_comap_finiteRewardHistoryOfTrace
+      (Omega := RewardTrace Rat)
+      policy state hstate defaultAction reward n
+  dsimp only [reward, generatedAction] at hcomap ⊢
+  rw [hcomap]
+  simpa [stepKernel, trajMeasure, reward, generatedAction,
+    History.pairHistoryRewardProjection_finitePairHistoryOfTrace,
+    History.finiteRewardHistoryOfTrace] using hcanonical
+
+/--
+Trim-a.e. canonical reward-only `trajMeasure` selected-reward law on the
+generated finite-pair conditioning surface.
+
+The trim-aware canonical reward law is first proved on the finite reward-prefix
+comap.  Deterministically generated policy actions do not enlarge that comap,
+so the same law holds on the finite pair-prefix sigma-algebra used by the
+generated selected-reward source contract.
+-/
+theorem historyStepKernelFamily_selectedMeasure_condExpKernel_map_trajMeasure_generatedActionFromRewardHistory_finitePairHistoryOfTrace_trim
+    {Context : Type v} {State : Type w} {Action : Type x}
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action]
+    (mu0 : Measure Rat) [MeasureTheory.IsProbabilityMeasure mu0]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (n : Nat) :
+    let stepKernel :=
+      RewardKernel.historyStepKernelFamily rewardKernel policy context state
+        hcontext hstate
+    let trajMeasure :=
+      ProbabilityTheory.Kernel.trajMeasure
+        (X := fun _ : Nat => Rat) mu0 stepKernel
+    let reward : RewardTrace Rat -> RewardTrace Rat := fun trajectory => trajectory
+    let generatedAction : RewardTrace Rat -> ActionTrace Action :=
+      generatedActionFromRewardHistory policy state defaultAction reward
+    Filter.Eventually
+      (fun trajectory : RewardTrace Rat =>
+        @Measure.map (RewardTrace Rat) Rat inferInstance inferInstance
+          (fun y : RewardTrace Rat => y (n + 1))
+          (@ProbabilityTheory.condExpKernel
+            (RewardTrace Rat) inferInstance _ trajMeasure _
+            ((inferInstance :
+              MeasurableSpace
+                ((j : Finset.Iic n) -> Prod Action Rat)).comap
+              (fun y : RewardTrace Rat =>
+                History.finitePairHistoryOfTrace
+                  (generatedAction y) (reward y) n))
+            trajectory) =
+        RewardKernel.selectedMeasure rewardKernel
+          (context n
+            (History.pairHistoryRewardProjection
+              (History.finitePairHistoryOfTrace
+                (generatedAction trajectory) (reward trajectory) n)))
+          ((policy n).action
+            (state n
+              (History.pairHistoryRewardProjection
+                (History.finitePairHistoryOfTrace
+                  (generatedAction trajectory) (reward trajectory) n)))))
+      (ae
+        (trajMeasure.trim
+          (show
+            ((inferInstance :
+              MeasurableSpace
+                ((j : Finset.Iic n) -> Prod Action Rat)).comap
+              (fun y : RewardTrace Rat =>
+                History.finitePairHistoryOfTrace
+                  (generatedAction y) (reward y) n)) <=
+              (inferInstance : MeasurableSpace (RewardTrace Rat)) from by
+            rw [
+              comap_finitePairHistoryOfTrace_generatedActionFromRewardHistory_eq_comap_finiteRewardHistoryOfTrace
+                (Omega := RewardTrace Rat)
+                policy state hstate defaultAction reward n]
+            exact
+              (History.measurable_finiteRewardHistoryOfTrace reward
+                (fun t => measurable_pi_apply t) n).comap_le))) := by
+  let stepKernel :=
+    RewardKernel.historyStepKernelFamily rewardKernel policy context state
+      hcontext hstate
+  let trajMeasure :=
+    ProbabilityTheory.Kernel.trajMeasure
+      (X := fun _ : Nat => Rat) mu0 stepKernel
+  let reward : RewardTrace Rat -> RewardTrace Rat := fun trajectory => trajectory
+  let generatedAction : RewardTrace Rat -> ActionTrace Action :=
+    generatedActionFromRewardHistory policy state defaultAction reward
+  have hcanonical :=
+    historyStepKernelFamily_selectedMeasure_condExpKernel_map_trajMeasure_trim
+      mu0 rewardKernel policy context state hcontext hstate n
+  have hcomap :
+      ((inferInstance :
+        MeasurableSpace ((j : Finset.Iic n) -> Prod Action Rat)).comap
+        (fun y : RewardTrace Rat =>
+          History.finitePairHistoryOfTrace
+            (generatedAction y) (reward y) n)) =
+      ((inferInstance :
+        MeasurableSpace ((j : Finset.Iic n) -> Rat)).comap
+        (fun y : RewardTrace Rat =>
+          History.finiteRewardHistoryOfTrace (reward y) n)) := by
+    exact
+      comap_finitePairHistoryOfTrace_generatedActionFromRewardHistory_eq_comap_finiteRewardHistoryOfTrace
+        (Omega := RewardTrace Rat)
+        policy state hstate defaultAction reward n
+  have hreward_le :
+      ((inferInstance :
+        MeasurableSpace ((j : Finset.Iic n) -> Rat)).comap
+        (fun y : RewardTrace Rat =>
+          History.finiteRewardHistoryOfTrace (reward y) n)) <=
+        (inferInstance : MeasurableSpace (RewardTrace Rat)) := by
+    exact
+      (History.measurable_finiteRewardHistoryOfTrace reward
+        (fun t => measurable_pi_apply t) n).comap_le
+  have hpair_le :
+      ((inferInstance :
+        MeasurableSpace ((j : Finset.Iic n) -> Prod Action Rat)).comap
+        (fun y : RewardTrace Rat =>
+          History.finitePairHistoryOfTrace
+            (generatedAction y) (reward y) n)) <=
+        (inferInstance : MeasurableSpace (RewardTrace Rat)) := by
+    simpa only [hcomap] using hreward_le
+  have hcanonicalReward :
+      Filter.Eventually
+        (fun trajectory : RewardTrace Rat =>
+          @Measure.map (RewardTrace Rat) Rat inferInstance inferInstance
+            (fun y : RewardTrace Rat => y (n + 1))
+            (@ProbabilityTheory.condExpKernel
+              (RewardTrace Rat) inferInstance _ trajMeasure _
+              ((inferInstance :
+                MeasurableSpace ((j : Finset.Iic n) -> Rat)).comap
+                (fun y : RewardTrace Rat =>
+                  History.finiteRewardHistoryOfTrace (reward y) n))
+              trajectory) =
+          RewardKernel.selectedMeasure rewardKernel
+            (context n
+              (History.pairHistoryRewardProjection
+                (History.finitePairHistoryOfTrace
+                  (generatedAction trajectory) (reward trajectory) n)))
+            ((policy n).action
+              (state n
+                (History.pairHistoryRewardProjection
+                (History.finitePairHistoryOfTrace
+                    (generatedAction trajectory) (reward trajectory) n)))))
+        (ae (trajMeasure.trim hreward_le)) := by
+    simpa [stepKernel, trajMeasure, reward, generatedAction,
+      History.pairHistoryRewardProjection_finitePairHistoryOfTrace,
+      History.finiteRewardHistoryOfTrace] using hcanonical
+  have htransported :=
+    eventually_ae_trim_of_eq_measurableSpace hcomap hpair_le hcanonicalReward
+  change Filter.Eventually _ (ae (trajMeasure.trim hpair_le))
+  filter_upwards [htransported] with trajectory htrajectory
+  change
+    @Measure.map (RewardTrace Rat) Rat inferInstance inferInstance
+        (fun y : RewardTrace Rat => y (n + 1))
+        (@ProbabilityTheory.condExpKernel
+          (RewardTrace Rat) inferInstance _ trajMeasure _
+          ((inferInstance :
+            MeasurableSpace ((j : Finset.Iic n) -> Prod Action Rat)).comap
+            (fun y : RewardTrace Rat =>
+              History.finitePairHistoryOfTrace
+                (generatedAction y) (reward y) n))
+          trajectory) = _
+  rw [hcomap]
+  exact htrajectory
 
 /--
 Explicit source contract for the remaining generated-history
@@ -759,6 +1202,2590 @@ def generatedActionPartialTrajectoryPairLawSource_of_reward_map_eq_selected_poli
     h_reward_map_eq
 
 /--
+Consume a policy-selected reward-coordinate law stated at the generated reward
+history surface and expose the full generated finite-pair `partialTraj` law
+directly.
+
+This is the theorem-shaped wrapper around
+`generatedActionPartialTrajectoryPairLawSource_of_reward_map_eq_selected_policy`.
+It keeps the same reward-history selected-law contract and only projects the
+stored full finite-pair law from the generated partial-trajectory source; it
+does not prove the selected reward-coordinate law from an ambient trajectory
+construction.
+-/
+theorem actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_reward_map_eq_selected_policy
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+              (fun y : Omega => reward y (i + 1))
+              (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+                ((History.historyFiltrationSucc
+                  (generatedActionFromRewardHistory policy state defaultAction
+                    reward)
+                  reward
+                  (generatedActionFromRewardHistory_measurable
+                    (policy := policy) (state := state)
+                    (defaultAction := defaultAction) (reward := reward)
+                    hreward hstate)
+                  hreward) i)
+                omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace (reward omega) i))))
+          (ae
+            (mu.trim
+              ((History.historyFiltrationSucc
+                (generatedActionFromRewardHistory policy state defaultAction
+                  reward)
+                reward
+                (generatedActionFromRewardHistory_measurable
+                  (policy := policy) (state := state)
+                  (defaultAction := defaultAction) (reward := reward)
+                  hreward hstate)
+                hreward).le i))))
+    (i : Nat) :
+    Filter.Eventually
+      (fun omega : Omega =>
+        @MeasureTheory.Measure.map Omega
+          ((j : Finset.Iic (i + 1)) -> Prod Action Rat)
+          mOmega inferInstance
+          (fun y : Omega =>
+            History.finitePairHistoryOfTrace
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward y)
+              (reward y) (i + 1))
+          (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+            ((History.historyFiltrationSucc
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward)
+              reward
+              (generatedActionFromRewardHistory_measurable
+                (policy := policy) (state := state)
+                (defaultAction := defaultAction) (reward := reward)
+                hreward hstate)
+              hreward) i)
+            omega) =
+        RewardKernel.actionRewardPartialTrajectoryKernel rewardKernel policy
+          (fun n history =>
+            context n (History.pairHistoryRewardProjection history))
+          (fun n history =>
+            state n (History.pairHistoryRewardProjection history))
+          (fun n : Nat =>
+            (hcontext n).comp
+              (History.measurable_pairHistoryRewardProjection
+                (Action := Action) (Reward := Rat) n))
+          (fun n : Nat =>
+            (hstate n).comp
+              (History.measurable_pairHistoryRewardProjection
+                (Action := Action) (Reward := Rat) n))
+          i (i + 1)
+          (History.finitePairHistoryOfTrace
+            (generatedActionFromRewardHistory policy state defaultAction
+              reward omega)
+            (reward omega) i))
+      (ae
+        (mu.trim
+          ((History.historyFiltrationSucc
+            (generatedActionFromRewardHistory policy state defaultAction
+              reward)
+            reward
+            (generatedActionFromRewardHistory_measurable
+              (policy := policy) (state := state)
+              (defaultAction := defaultAction) (reward := reward)
+              hreward hstate)
+            hreward).le i))) := by
+  let source :=
+    generatedActionPartialTrajectoryPairLawSource_of_reward_map_eq_selected_policy
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (hcontext := hcontext)
+      (hstate := hstate)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      h_reward_map_eq
+  exact
+    actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_partialTrajectoryPairLawSource
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (source := source)
+      i
+
+/--
+Build the generated-history finite-pair `partialTraj` source from an
+actual-action reward-coordinate law stated directly for
+`generatedActionFromRewardHistory`.
+
+This removes the explicit action trace and generated-trace equality required by
+the generic generated-action theorem.  The remaining law input is still the
+actual successor-action reward-coordinate `condExpKernel` map law; this wrapper
+does not prove that law from a global trajectory/disintegration argument.
+-/
+def generatedActionPartialTrajectoryPairLawSource_of_reward_map_eq_actual_action
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (h_reward_map_eq_actual_action :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+              (fun y : Omega => reward y (i + 1))
+              (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+                ((History.historyFiltrationSucc
+                  (generatedActionFromRewardHistory policy state defaultAction
+                    reward)
+                  reward
+                  (generatedActionFromRewardHistory_measurable
+                    (policy := policy) (state := state)
+                    (defaultAction := defaultAction) (reward := reward)
+                    hreward hstate)
+                  hreward) i)
+                omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward omega (i + 1)))
+          (ae
+            (mu.trim
+              ((History.historyFiltrationSucc
+                (generatedActionFromRewardHistory policy state defaultAction
+                  reward)
+                reward
+                (generatedActionFromRewardHistory_measurable
+                  (policy := policy) (state := state)
+                  (defaultAction := defaultAction) (reward := reward)
+                  hreward hstate)
+                hreward).le i)))) :
+    GeneratedActionPartialTrajectoryPairLawSource mu rewardKernel policy
+      context state defaultAction reward hreward where
+  hcontext := hcontext
+  hstate := hstate
+  partialtraj_map_eq := by
+    intro i
+    exact
+      actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc_reward_map_eq_actual_action
+        (mu := mu)
+        (action :=
+          generatedActionFromRewardHistory policy state defaultAction reward)
+        (rewardKernel := rewardKernel)
+        (policy := policy)
+        (context := context)
+        (state := state)
+        (hcontext := hcontext)
+        (hstate := hstate)
+        (defaultAction := defaultAction)
+        (reward := reward)
+        (haction :=
+          generatedActionFromRewardHistory_measurable
+            (policy := policy) (state := state)
+            (defaultAction := defaultAction) (reward := reward)
+            hreward hstate)
+        (hreward := hreward)
+        (i := i)
+        rfl
+        (h_reward_map_eq_actual_action i)
+
+/--
+Consume an actual-action reward-coordinate law stated at the generated reward
+history surface and expose the full generated finite-pair `partialTraj` law
+directly.
+
+This is the theorem-shaped wrapper around
+`generatedActionPartialTrajectoryPairLawSource_of_reward_map_eq_actual_action`.
+It keeps the same reward-history actual-action law contract and only projects
+the stored full finite-pair law from the generated partial-trajectory source.
+-/
+theorem actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_reward_map_eq_actual_action
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (h_reward_map_eq_actual_action :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+              (fun y : Omega => reward y (i + 1))
+              (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+                ((History.historyFiltrationSucc
+                  (generatedActionFromRewardHistory policy state defaultAction
+                    reward)
+                  reward
+                  (generatedActionFromRewardHistory_measurable
+                    (policy := policy) (state := state)
+                    (defaultAction := defaultAction) (reward := reward)
+                    hreward hstate)
+                  hreward) i)
+                omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward omega (i + 1)))
+          (ae
+            (mu.trim
+              ((History.historyFiltrationSucc
+                (generatedActionFromRewardHistory policy state defaultAction
+                  reward)
+                reward
+                (generatedActionFromRewardHistory_measurable
+                  (policy := policy) (state := state)
+                  (defaultAction := defaultAction) (reward := reward)
+                  hreward hstate)
+                hreward).le i))))
+    (i : Nat) :
+    Filter.Eventually
+      (fun omega : Omega =>
+        @MeasureTheory.Measure.map Omega
+          ((j : Finset.Iic (i + 1)) -> Prod Action Rat)
+          mOmega inferInstance
+          (fun y : Omega =>
+            History.finitePairHistoryOfTrace
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward y)
+              (reward y) (i + 1))
+          (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+            ((History.historyFiltrationSucc
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward)
+              reward
+              (generatedActionFromRewardHistory_measurable
+                (policy := policy) (state := state)
+                (defaultAction := defaultAction) (reward := reward)
+                hreward hstate)
+              hreward) i)
+            omega) =
+        RewardKernel.actionRewardPartialTrajectoryKernel rewardKernel policy
+          (fun n history =>
+            context n (History.pairHistoryRewardProjection history))
+          (fun n history =>
+            state n (History.pairHistoryRewardProjection history))
+          (fun n : Nat =>
+            (hcontext n).comp
+              (History.measurable_pairHistoryRewardProjection
+                (Action := Action) (Reward := Rat) n))
+          (fun n : Nat =>
+            (hstate n).comp
+              (History.measurable_pairHistoryRewardProjection
+                (Action := Action) (Reward := Rat) n))
+          i (i + 1)
+          (History.finitePairHistoryOfTrace
+            (generatedActionFromRewardHistory policy state defaultAction
+              reward omega)
+            (reward omega) i))
+      (ae
+        (mu.trim
+          ((History.historyFiltrationSucc
+            (generatedActionFromRewardHistory policy state defaultAction
+              reward)
+            reward
+            (generatedActionFromRewardHistory_measurable
+              (policy := policy) (state := state)
+              (defaultAction := defaultAction) (reward := reward)
+              hreward hstate)
+            hreward).le i))) := by
+  let source :=
+    generatedActionPartialTrajectoryPairLawSource_of_reward_map_eq_actual_action
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (hcontext := hcontext)
+      (hstate := hstate)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      h_reward_map_eq_actual_action
+  exact
+    actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_partialTrajectoryPairLawSource
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (source := source)
+      i
+
+/--
+Build the generated-history finite-pair `partialTraj` source from a
+policy-selected reward-coordinate law stated at the generated finite pair
+prefix.
+
+Future disintegration work often naturally phrases the selected reward law with
+`History.finitePairHistoryOfTrace`.  This adapter rewrites that prefix through
+`History.pairHistoryRewardProjection_finitePairHistoryOfTrace` and reuses the
+existing reward-history source constructor.  It still assumes the ambient
+reward-coordinate law; it does not prove it.
+-/
+def generatedActionPartialTrajectoryPairLawSource_of_finitePairHistory_reward_map_eq_selected_policy
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+              (fun y : Omega => reward y (i + 1))
+              (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+                ((History.historyFiltrationSucc
+                  (generatedActionFromRewardHistory policy state defaultAction
+                    reward)
+                  reward
+                  (generatedActionFromRewardHistory_measurable
+                    (policy := policy) (state := state)
+                    (defaultAction := defaultAction) (reward := reward)
+                    hreward hstate)
+                  hreward) i)
+                omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.pairHistoryRewardProjection
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)))
+              ((policy i).action
+                (state i
+                  (History.pairHistoryRewardProjection
+                    (History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward omega)
+                      (reward omega) i)))))
+          (ae
+            (mu.trim
+              ((History.historyFiltrationSucc
+                (generatedActionFromRewardHistory policy state defaultAction
+                  reward)
+                reward
+                (generatedActionFromRewardHistory_measurable
+                  (policy := policy) (state := state)
+                  (defaultAction := defaultAction) (reward := reward)
+                  hreward hstate)
+                hreward).le i)))) :
+    GeneratedActionPartialTrajectoryPairLawSource mu rewardKernel policy
+      context state defaultAction reward hreward :=
+  generatedActionPartialTrajectoryPairLawSource_of_reward_map_eq_selected_policy
+    (mu := mu)
+    (rewardKernel := rewardKernel)
+    (policy := policy)
+    (context := context)
+    (state := state)
+    (hcontext := hcontext)
+    (hstate := hstate)
+    (defaultAction := defaultAction)
+    (reward := reward)
+    (hreward := hreward)
+    (fun i => by
+      simpa [History.pairHistoryRewardProjection_finitePairHistoryOfTrace]
+        using h_reward_map_eq i)
+
+/--
+Explicit source contract for the generated ambient selected-reward law stated
+at the generated finite pair prefix.
+
+This is a narrower source surface than
+`GeneratedActionPartialTrajectoryPairLawSource`: it packages only the
+reward-coordinate `condExpKernel.map` law.  The generated action side is later
+supplied by the definitional shifted-policy trace, so this source can be
+converted into the full finite-pair `partialTraj` law source without assuming a
+separate action law.
+-/
+structure GeneratedActionSelectedRewardFinitePairHistoryLawSource
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t)) where
+  hcontext : forall n : Nat, Measurable (context n)
+  hstate : forall n : Nat, Measurable (state n)
+  reward_map_eq_selected_policy_finitePairHistory :
+    forall i : Nat,
+      Filter.Eventually
+        (fun omega : Omega =>
+          @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+            (fun y : Omega => reward y (i + 1))
+            (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+              ((History.historyFiltrationSucc
+                (generatedActionFromRewardHistory policy state defaultAction
+                  reward)
+                reward
+                (generatedActionFromRewardHistory_measurable
+                  (policy := policy) (state := state)
+                  (defaultAction := defaultAction) (reward := reward)
+                  hreward hstate)
+                hreward) i)
+              omega) =
+          RewardKernel.selectedMeasure rewardKernel
+            (context i
+              (History.pairHistoryRewardProjection
+                (History.finitePairHistoryOfTrace
+                  (generatedActionFromRewardHistory policy state defaultAction
+                    reward omega)
+                  (reward omega) i)))
+            ((policy i).action
+              (state i
+                (History.pairHistoryRewardProjection
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)))))
+        (ae
+          (mu.trim
+            ((History.historyFiltrationSucc
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward)
+              reward
+              (generatedActionFromRewardHistory_measurable
+                (policy := policy) (state := state)
+                (defaultAction := defaultAction) (reward := reward)
+                hreward hstate)
+              hreward).le i)))
+
+/--
+Build the selected-reward finite-pair-history source from the same
+`condExpKernel.map` law stated with the conditioning sigma-algebra as the comap
+of `History.finitePairHistoryOfTrace`.
+
+This is the source-layer consumer for
+`History.historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace`: future
+trajectory/disintegration work can target the Mathlib-style finite-prefix
+comap conditioning surface and then enter the existing generated-history source
+route without restating the law at `History.historyFiltrationSucc`.
+-/
+def generatedActionSelectedRewardFinitePairHistoryLawSource_of_comap_reward_map_eq_selected_policy
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+              (fun y : Omega => reward y (i + 1))
+              (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.pairHistoryRewardProjection
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)))
+              ((policy i).action
+                (state i
+                  (History.pairHistoryRewardProjection
+                    (History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward omega)
+                      (reward omega) i)))))
+          (ae
+            (mu.trim
+              ((History.historyFiltrationSucc
+                (generatedActionFromRewardHistory policy state defaultAction
+                  reward)
+                reward
+                (generatedActionFromRewardHistory_measurable
+                  (policy := policy) (state := state)
+                  (defaultAction := defaultAction) (reward := reward)
+                  hreward hstate)
+                hreward).le i)))) :
+    GeneratedActionSelectedRewardFinitePairHistoryLawSource
+      mu rewardKernel policy context state defaultAction reward hreward where
+  hcontext := hcontext
+  hstate := hstate
+  reward_map_eq_selected_policy_finitePairHistory := by
+    intro i
+    have hfiltration :
+        ((History.historyFiltrationSucc
+            (generatedActionFromRewardHistory policy state defaultAction
+              reward)
+            reward
+            (generatedActionFromRewardHistory_measurable
+              (policy := policy) (state := state)
+              (defaultAction := defaultAction) (reward := reward)
+              hreward hstate)
+            hreward) i :
+          MeasurableSpace Omega) =
+        ((inferInstance :
+          MeasurableSpace ((j : Finset.Iic i) -> Prod Action Rat)).comap
+          (fun y : Omega =>
+            History.finitePairHistoryOfTrace
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward y)
+              (reward y) i)) := by
+      exact
+        History.historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace
+          (mOmega := mOmega)
+          (generatedActionFromRewardHistory policy state defaultAction reward)
+          reward
+          (generatedActionFromRewardHistory_measurable
+            (policy := policy) (state := state)
+            (defaultAction := defaultAction) (reward := reward)
+            hreward hstate)
+          hreward i
+    have hkernel_apply :
+        forall omega : Omega,
+          (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+            (History.historyMeasurableSpace
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward)
+              reward (i + 1))
+            omega) =
+          (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+            ((inferInstance :
+              MeasurableSpace ((j : Finset.Iic i) -> Prod Action Rat)).comap
+              (fun y : Omega =>
+                History.finitePairHistoryOfTrace
+                  (generatedActionFromRewardHistory policy state defaultAction
+                    reward y)
+                  (reward y) i))
+            omega) := by
+      intro omega
+      have hmeasurableSpace :
+          History.historyMeasurableSpace
+            (generatedActionFromRewardHistory policy state defaultAction reward)
+            reward (i + 1) =
+          ((inferInstance :
+            MeasurableSpace ((j : Finset.Iic i) -> Prod Action Rat)).comap
+            (fun y : Omega =>
+              History.finitePairHistoryOfTrace
+                (generatedActionFromRewardHistory policy state defaultAction
+                  reward y)
+                (reward y) i)) := by
+        simpa [History.historyFiltrationSucc_apply,
+          History.historyFiltration_apply] using hfiltration
+      rw [hmeasurableSpace]
+    filter_upwards [h_reward_map_eq i] with omega h
+    calc
+      @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+          (fun y : Omega => reward y (i + 1))
+          (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+            (History.historyMeasurableSpace
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward)
+              reward (i + 1))
+            omega)
+          =
+        @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+          (fun y : Omega => reward y (i + 1))
+          (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+            ((inferInstance :
+              MeasurableSpace ((j : Finset.Iic i) -> Prod Action Rat)).comap
+              (fun y : Omega =>
+                History.finitePairHistoryOfTrace
+                  (generatedActionFromRewardHistory policy state defaultAction
+                    reward y)
+                  (reward y) i))
+            omega) := by
+            rw [hkernel_apply omega]
+      _ =
+        RewardKernel.selectedMeasure rewardKernel
+          (context i
+            (History.pairHistoryRewardProjection
+              (History.finitePairHistoryOfTrace
+                (generatedActionFromRewardHistory policy state defaultAction
+                  reward omega)
+                (reward omega) i)))
+          ((policy i).action
+            (state i
+              (History.pairHistoryRewardProjection
+                (History.finitePairHistoryOfTrace
+                  (generatedActionFromRewardHistory policy state defaultAction
+                    reward omega)
+                  (reward omega) i)))) := h
+
+/--
+Build the selected-reward finite-pair-history source from the same
+selected-reward law, but with the a.e. filter stated directly on the comap
+finite-pair-prefix sigma-algebra.
+
+This is the Mathlib-facing source entry: a future disintegration proof can
+state the law entirely at the finite-prefix comap conditioning surface.  The
+adapter only rewrites that surface through
+`History.historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace`; it still
+consumes, rather than proves, the selected-reward law.
+-/
+def generatedActionSelectedRewardFinitePairHistoryLawSource_of_comap_trim_reward_map_eq_selected_policy
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+              (fun y : Omega => reward y (i + 1))
+              (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.pairHistoryRewardProjection
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)))
+              ((policy i).action
+                (state i
+                  (History.pairHistoryRewardProjection
+                    (History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward omega)
+                      (reward omega) i)))))
+          (ae
+            (mu.trim
+              (show
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i)) <= mOmega from by
+                rw [←
+                  History.historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace
+                    (mOmega := mOmega)
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward)
+                    reward
+                    (generatedActionFromRewardHistory_measurable
+                      (mOmega := mOmega)
+                      (policy := policy) (state := state)
+                      (defaultAction := defaultAction) (reward := reward)
+                      hreward hstate)
+                    hreward i]
+                exact
+                  ((History.historyFiltrationSucc (mOmega := mOmega)
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward)
+                    reward
+                    (generatedActionFromRewardHistory_measurable
+                      (mOmega := mOmega)
+                      (policy := policy) (state := state)
+                      (defaultAction := defaultAction) (reward := reward)
+                      hreward hstate)
+                    hreward).le i))))) :
+    GeneratedActionSelectedRewardFinitePairHistoryLawSource
+      mu rewardKernel policy context state defaultAction reward hreward :=
+  generatedActionSelectedRewardFinitePairHistoryLawSource_of_comap_reward_map_eq_selected_policy
+    (mu := mu)
+    (rewardKernel := rewardKernel)
+    (policy := policy)
+    (context := context)
+    (state := state)
+    (hcontext := hcontext)
+    (hstate := hstate)
+    (defaultAction := defaultAction)
+    (reward := reward)
+    (hreward := hreward)
+    (by
+      intro i
+      have hfiltration :
+          ((History.historyFiltrationSucc (mOmega := mOmega)
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward)
+              reward
+              (generatedActionFromRewardHistory_measurable
+                (mOmega := mOmega)
+                (policy := policy) (state := state)
+                (defaultAction := defaultAction) (reward := reward)
+                hreward hstate)
+              hreward) i :
+            MeasurableSpace Omega) =
+          ((inferInstance :
+            MeasurableSpace ((j : Finset.Iic i) -> Prod Action Rat)).comap
+            (fun y : Omega =>
+              History.finitePairHistoryOfTrace
+                (generatedActionFromRewardHistory policy state defaultAction
+                  reward y)
+                (reward y) i)) := by
+        exact
+          History.historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace
+            (mOmega := mOmega)
+            (generatedActionFromRewardHistory policy state defaultAction
+              reward)
+            reward
+            (generatedActionFromRewardHistory_measurable
+              (mOmega := mOmega)
+              (policy := policy) (state := state)
+              (defaultAction := defaultAction) (reward := reward)
+              hreward hstate)
+            hreward i
+      let mHist : MeasurableSpace Omega :=
+        (History.historyFiltrationSucc (mOmega := mOmega)
+          (generatedActionFromRewardHistory policy state defaultAction reward)
+          reward
+          (generatedActionFromRewardHistory_measurable
+            (mOmega := mOmega)
+            (policy := policy) (state := state)
+            (defaultAction := defaultAction) (reward := reward)
+            hreward hstate)
+          hreward) i
+      let mComap : MeasurableSpace Omega :=
+        ((inferInstance :
+          MeasurableSpace ((j : Finset.Iic i) -> Prod Action Rat)).comap
+          (fun y : Omega =>
+            History.finitePairHistoryOfTrace
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward y)
+              (reward y) i))
+      have hfiltration' : mHist = mComap := by
+        simpa [mHist, mComap] using hfiltration
+      have hhist_le : mHist <= mOmega := by
+        dsimp [mHist]
+        exact
+          ((History.historyFiltrationSucc (mOmega := mOmega)
+            (generatedActionFromRewardHistory policy state defaultAction
+              reward)
+            reward
+            (generatedActionFromRewardHistory_measurable
+              (mOmega := mOmega)
+              (policy := policy) (state := state)
+              (defaultAction := defaultAction) (reward := reward)
+              hreward hstate)
+            hreward).le i)
+      exact
+        eventually_ae_trim_of_eq_measurableSpace
+          (mu := mu) hfiltration' hhist_le (h_reward_map_eq i))
+
+/--
+Construct the generated selected-reward finite-pair-history source for the
+canonical reward-only `trajMeasure`.
+
+Unlike the generic source adapters above, this constructor discharges the
+selected-reward law from Mathlib's `Kernel.trajMeasure` conditional-distribution
+result, routed through the trim-aware countable-target bridge.  The remaining
+action assumptions are exactly those needed by the generated finite-pair
+filtration surface.
+-/
+def historyStepKernelFamily_generatedActionSelectedRewardFinitePairHistoryLawSource_trajMeasure
+    {Context : Type v} {State : Type w} {Action : Type x}
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu0 : Measure Rat) [MeasureTheory.IsProbabilityMeasure mu0]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action) :
+    let stepKernel :=
+      RewardKernel.historyStepKernelFamily rewardKernel policy context state
+        hcontext hstate
+    let trajMeasure :=
+      ProbabilityTheory.Kernel.trajMeasure
+        (X := fun _ : Nat => Rat) mu0 stepKernel
+    let reward : RewardTrace Rat -> RewardTrace Rat := fun trajectory => trajectory
+    GeneratedActionSelectedRewardFinitePairHistoryLawSource
+      trajMeasure rewardKernel policy context state defaultAction reward
+        (fun t => measurable_pi_apply t) := by
+  let stepKernel :=
+    RewardKernel.historyStepKernelFamily rewardKernel policy context state
+      hcontext hstate
+  let trajMeasure :=
+    ProbabilityTheory.Kernel.trajMeasure
+      (X := fun _ : Nat => Rat) mu0 stepKernel
+  let reward : RewardTrace Rat -> RewardTrace Rat := fun trajectory => trajectory
+  have hreward : forall t : Nat,
+      Measurable (fun trajectory : RewardTrace Rat => reward trajectory t) := by
+    intro t
+    exact measurable_pi_apply t
+  change
+    GeneratedActionSelectedRewardFinitePairHistoryLawSource
+      trajMeasure rewardKernel policy context state defaultAction reward hreward
+  exact
+    generatedActionSelectedRewardFinitePairHistoryLawSource_of_comap_trim_reward_map_eq_selected_policy
+      (mu := trajMeasure)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (hcontext := hcontext)
+      (hstate := hstate)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (by
+        intro i
+        simpa [stepKernel, trajMeasure, reward, hreward] using
+          (historyStepKernelFamily_selectedMeasure_condExpKernel_map_trajMeasure_generatedActionFromRewardHistory_finitePairHistoryOfTrace_trim
+            mu0 rewardKernel policy context state hcontext hstate
+              defaultAction i))
+
+/--
+Convert the generated ambient selected-reward finite-pair-history source into
+the full generated finite-pair `partialTraj` source.
+
+This uses the existing generated-action split route; it still consumes the
+selected-reward source field rather than proving it.
+-/
+def generatedActionPartialTrajectoryPairLawSource_of_selectedRewardFinitePairHistoryLawSource
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (source :
+      GeneratedActionSelectedRewardFinitePairHistoryLawSource
+        mu rewardKernel policy context state defaultAction reward hreward) :
+    GeneratedActionPartialTrajectoryPairLawSource mu rewardKernel policy
+      context state defaultAction reward hreward :=
+  generatedActionPartialTrajectoryPairLawSource_of_finitePairHistory_reward_map_eq_selected_policy
+    (mu := mu)
+    (rewardKernel := rewardKernel)
+    (policy := policy)
+    (context := context)
+    (state := state)
+    (hcontext := source.hcontext)
+    (hstate := source.hstate)
+    (defaultAction := defaultAction)
+    (reward := reward)
+    (hreward := hreward)
+    source.reward_map_eq_selected_policy_finitePairHistory
+
+/--
+Construct the full generated finite-pair `partialTraj` source for the canonical
+reward-only `trajMeasure`.
+
+The selected-reward law is supplied by the canonical trim-aware source, while
+the action coordinate is the deterministic generated policy action.  Thus this
+constructor reaches the full pair-history source without assuming an ambient
+selected-reward or random-pair law.
+-/
+def historyStepKernelFamily_generatedActionPartialTrajectoryPairLawSource_trajMeasure
+    {Context : Type v} {State : Type w} {Action : Type x}
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu0 : Measure Rat) [MeasureTheory.IsProbabilityMeasure mu0]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action) :
+    let stepKernel :=
+      RewardKernel.historyStepKernelFamily rewardKernel policy context state
+        hcontext hstate
+    let trajMeasure :=
+      ProbabilityTheory.Kernel.trajMeasure
+        (X := fun _ : Nat => Rat) mu0 stepKernel
+    let reward : RewardTrace Rat -> RewardTrace Rat := fun trajectory => trajectory
+    GeneratedActionPartialTrajectoryPairLawSource trajMeasure rewardKernel policy
+      context state defaultAction reward (fun t => measurable_pi_apply t) := by
+  let stepKernel :=
+    RewardKernel.historyStepKernelFamily rewardKernel policy context state
+      hcontext hstate
+  let trajMeasure :=
+    ProbabilityTheory.Kernel.trajMeasure
+      (X := fun _ : Nat => Rat) mu0 stepKernel
+  let reward : RewardTrace Rat -> RewardTrace Rat := fun trajectory => trajectory
+  have hreward : forall t : Nat,
+      Measurable (fun trajectory : RewardTrace Rat => reward trajectory t) := by
+    intro t
+    exact measurable_pi_apply t
+  let selectedSource :=
+    historyStepKernelFamily_generatedActionSelectedRewardFinitePairHistoryLawSource_trajMeasure
+      mu0 rewardKernel policy context state hcontext hstate defaultAction
+  change
+    GeneratedActionPartialTrajectoryPairLawSource trajMeasure rewardKernel policy
+      context state defaultAction reward hreward
+  exact
+    generatedActionPartialTrajectoryPairLawSource_of_selectedRewardFinitePairHistoryLawSource
+      (mu := trajMeasure)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      selectedSource
+
+/--
+Canonical reward-only `trajMeasure` full generated finite-pair `partialTraj`
+law.
+
+This is the theorem-shaped endpoint of the canonical selected-reward route:
+the next finite pair prefix under `condExpKernel`, conditioned on the generated
+finite pair history, has the configured one-step partial-trajectory kernel.
+No ambient selected-reward or random-pair source assumption remains.
+-/
+theorem historyStepKernelFamily_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_trajMeasure
+    {Context : Type v} {State : Type w} {Action : Type x}
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu0 : Measure Rat) [MeasureTheory.IsProbabilityMeasure mu0]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (i : Nat) :
+    let stepKernel :=
+      RewardKernel.historyStepKernelFamily rewardKernel policy context state
+        hcontext hstate
+    let trajMeasure :=
+      ProbabilityTheory.Kernel.trajMeasure
+        (X := fun _ : Nat => Rat) mu0 stepKernel
+    let reward : RewardTrace Rat -> RewardTrace Rat := fun trajectory => trajectory
+    let hreward : forall t : Nat,
+        Measurable
+          (fun trajectory : RewardTrace Rat => reward trajectory t) :=
+      fun t => measurable_pi_apply t
+    Filter.Eventually
+      (fun trajectory : RewardTrace Rat =>
+        @MeasureTheory.Measure.map (RewardTrace Rat)
+          ((j : Finset.Iic (i + 1)) -> Prod Action Rat)
+          inferInstance inferInstance
+          (fun y : RewardTrace Rat =>
+            History.finitePairHistoryOfTrace
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward y)
+              (reward y) (i + 1))
+          (@ProbabilityTheory.condExpKernel (RewardTrace Rat) inferInstance _
+            trajMeasure _
+            ((History.historyFiltrationSucc
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward)
+              reward
+              (generatedActionFromRewardHistory_measurable
+                (policy := policy) (state := state)
+                (defaultAction := defaultAction) (reward := reward)
+                hreward hstate)
+              hreward) i)
+            trajectory) =
+        RewardKernel.actionRewardPartialTrajectoryKernel rewardKernel policy
+          (fun n history =>
+            context n (History.pairHistoryRewardProjection history))
+          (fun n history =>
+            state n (History.pairHistoryRewardProjection history))
+          (fun n : Nat =>
+            (hcontext n).comp
+              (History.measurable_pairHistoryRewardProjection
+                (Action := Action) (Reward := Rat) n))
+          (fun n : Nat =>
+            (hstate n).comp
+              (History.measurable_pairHistoryRewardProjection
+                (Action := Action) (Reward := Rat) n))
+          i (i + 1)
+          (History.finitePairHistoryOfTrace
+            (generatedActionFromRewardHistory policy state defaultAction
+              reward trajectory)
+            (reward trajectory) i))
+      (ae
+        (trajMeasure.trim
+          ((History.historyFiltrationSucc
+            (generatedActionFromRewardHistory policy state defaultAction
+              reward)
+            reward
+            (generatedActionFromRewardHistory_measurable
+              (policy := policy) (state := state)
+              (defaultAction := defaultAction) (reward := reward)
+              hreward hstate)
+            hreward).le i))) := by
+  dsimp only
+  let source :=
+    historyStepKernelFamily_generatedActionPartialTrajectoryPairLawSource_trajMeasure
+      mu0 rewardKernel policy context state hcontext hstate defaultAction
+  simpa only using source.partialtraj_map_eq i
+
+/--
+Canonical reward-only `trajMeasure` successor centered reward has conditional
+expectation zero under the generated finite-pair history.
+
+The canonical full `partialTraj` law discharges the probability-law
+identification.  Ambient integrability of the centered successor reward remains
+an explicit regularity contract; this avoids imposing pointwise bounds on every
+trace in `Nat -> Rat`, including null trajectories outside the generated law's
+support.
+-/
+theorem historyStepKernelFamily_centeredReward_succ_condExp_eq_zero_trajMeasure
+    {Context : Type v} {State : Type w} {Action : Type x}
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu0 : Measure Rat) [MeasureTheory.IsProbabilityMeasure mu0]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (law :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (defaultAction : Action)
+    (i : Nat)
+    (h_integrable :
+      Integrable
+        (fun trajectory : RewardTrace Rat =>
+          (((trajectory (i + 1) -
+            mean
+              (context i
+                (History.finiteRewardHistoryOfTrace trajectory i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace trajectory i))) :
+              Rat) : Real)))
+        (ProbabilityTheory.Kernel.trajMeasure
+          (X := fun _ : Nat => Rat) mu0
+          (RewardKernel.historyStepKernelFamily rewardKernel policy context
+            state hcontext hstate))) :
+    let stepKernel :=
+      RewardKernel.historyStepKernelFamily rewardKernel policy context state
+        hcontext hstate
+    let trajMeasure :=
+      ProbabilityTheory.Kernel.trajMeasure
+        (X := fun _ : Nat => Rat) mu0 stepKernel
+    let reward : RewardTrace Rat -> RewardTrace Rat := fun trajectory => trajectory
+    let hreward : forall t : Nat,
+        Measurable
+          (fun trajectory : RewardTrace Rat => reward trajectory t) :=
+      fun t => measurable_pi_apply t
+    Filter.EventuallyEq (ae trajMeasure)
+      (@condExp (RewardTrace Rat) Real
+        ((History.historyFiltrationSucc
+          (generatedActionFromRewardHistory policy state defaultAction reward)
+          reward
+          (generatedActionFromRewardHistory_measurable
+            (policy := policy) (state := state)
+            (defaultAction := defaultAction) (reward := reward)
+            hreward hstate)
+          hreward) i)
+        inferInstance _ _ _ trajMeasure
+        (fun trajectory : RewardTrace Rat =>
+          (((reward trajectory (i + 1) -
+            mean
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward trajectory) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace
+                    (reward trajectory) i))) : Rat) : Real))))
+      (fun _trajectory : RewardTrace Rat => (0 : Real)) := by
+  let stepKernel :=
+    RewardKernel.historyStepKernelFamily rewardKernel policy context state
+      hcontext hstate
+  let trajMeasure :=
+    ProbabilityTheory.Kernel.trajMeasure
+      (X := fun _ : Nat => Rat) mu0 stepKernel
+  let reward : RewardTrace Rat -> RewardTrace Rat := fun trajectory => trajectory
+  have hreward : forall t : Nat,
+      Measurable (fun trajectory : RewardTrace Rat => reward trajectory t) := by
+    intro t
+    exact measurable_pi_apply t
+  let action : RewardTrace Rat -> ActionTrace Action :=
+    generatedActionFromRewardHistory policy state defaultAction reward
+  have haction : forall t : Nat,
+      Measurable (fun trajectory : RewardTrace Rat => action trajectory t) :=
+    generatedActionFromRewardHistory_measurable
+      (policy := policy) (state := state)
+      (defaultAction := defaultAction) (reward := reward)
+      hreward hstate
+  have hpartial :=
+    historyStepKernelFamily_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_trajMeasure
+      mu0 rewardKernel policy context state hcontext hstate defaultAction i
+  have hzero :=
+    centeredReward_succ_condExp_eq_zero_of_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace
+      (mu := trajMeasure)
+      (action := action)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (hcontext := hcontext)
+      (hstate := hstate)
+      (mean := mean)
+      (varianceProxy := varianceProxy)
+      (law := law)
+      (reward := reward)
+      (haction := haction)
+      (hreward := hreward)
+      (i := i)
+      (by
+        simpa [stepKernel, trajMeasure, reward] using h_integrable)
+      (by
+        simpa [stepKernel, trajMeasure, reward, action] using hpartial)
+  simpa [stepKernel, trajMeasure, reward, action] using hzero
+
+/--
+Canonical reward-only `trajMeasure` successor centered reward has a conditional
+sub-Gaussian MGF under the generated finite-pair history.
+
+The canonical full `partialTraj` law supplies the reward-coordinate conditional
+law.  Measurability follows from the measurable mean surface, and the integrated
+target-law transfer derives exponential integrability from the selected kernel
+MGF bounds.  A deterministic bound over finite reward histories supplies the
+trim-a.e. variance domination.
+-/
+theorem historyStepKernelFamily_centeredReward_succ_hasCondSubgaussianMGF_trajMeasure
+    {Context : Type v} {State : Type w} {Action : Type x}
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu0 : Measure Rat) [MeasureTheory.IsProbabilityMeasure mu0]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (law :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (defaultAction : Action)
+    (i : Nat)
+    (c : NNReal)
+    (hvariance :
+      forall history : ((j : Finset.Iic i) -> Rat),
+        varianceProxy (context i history)
+          ((policy i).action (state i history)) <= c) :
+    let stepKernel :=
+      RewardKernel.historyStepKernelFamily rewardKernel policy context state
+        hcontext hstate
+    let trajMeasure :=
+      ProbabilityTheory.Kernel.trajMeasure
+        (X := fun _ : Nat => Rat) mu0 stepKernel
+    let reward : RewardTrace Rat -> RewardTrace Rat := fun trajectory => trajectory
+    let hreward : forall t : Nat,
+        Measurable
+          (fun trajectory : RewardTrace Rat => reward trajectory t) :=
+      fun t => measurable_pi_apply t
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state)
+          (defaultAction := defaultAction) (reward := reward)
+          hreward hstate)
+        hreward) i)
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state)
+          (defaultAction := defaultAction) (reward := reward)
+          hreward hstate)
+        hreward).le i)
+      (fun trajectory : RewardTrace Rat =>
+        (((reward trajectory (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward trajectory) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace
+                  (reward trajectory) i))) : Rat) : Real)))
+      c trajMeasure := by
+  let stepKernel :=
+    RewardKernel.historyStepKernelFamily rewardKernel policy context state
+      hcontext hstate
+  let trajMeasure :=
+    ProbabilityTheory.Kernel.trajMeasure
+      (X := fun _ : Nat => Rat) mu0 stepKernel
+  let reward : RewardTrace Rat -> RewardTrace Rat := fun trajectory => trajectory
+  have hreward : forall t : Nat,
+      Measurable (fun trajectory : RewardTrace Rat => reward trajectory t) := by
+    intro t
+    exact measurable_pi_apply t
+  let action : RewardTrace Rat -> ActionTrace Action :=
+    generatedActionFromRewardHistory policy state defaultAction reward
+  have haction : forall t : Nat,
+      Measurable (fun trajectory : RewardTrace Rat => action trajectory t) :=
+    generatedActionFromRewardHistory_measurable
+      (policy := policy) (state := state)
+      (defaultAction := defaultAction) (reward := reward)
+      hreward hstate
+  have hhistory :
+      Measurable
+        (fun trajectory : RewardTrace Rat =>
+          History.finiteRewardHistoryOfTrace (reward trajectory) i) :=
+    History.measurable_finiteRewardHistoryOfTrace reward hreward i
+  have hcontext_trajectory :
+      Measurable
+        (fun trajectory : RewardTrace Rat =>
+          context i
+            (History.finiteRewardHistoryOfTrace (reward trajectory) i)) :=
+    (hcontext i).comp hhistory
+  have hstate_trajectory :
+      Measurable
+        (fun trajectory : RewardTrace Rat =>
+          state i
+            (History.finiteRewardHistoryOfTrace (reward trajectory) i)) :=
+    (hstate i).comp hhistory
+  have haction_trajectory :
+      Measurable
+        (fun trajectory : RewardTrace Rat =>
+          (policy i).action
+            (state i
+              (History.finiteRewardHistoryOfTrace (reward trajectory) i))) :=
+    (policy i).measurable_action.comp hstate_trajectory
+  have hselectedMean :
+      Measurable
+        (fun trajectory : RewardTrace Rat =>
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward trajectory) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace
+                  (reward trajectory) i)))) :=
+    hmean.comp (hcontext_trajectory.prodMk haction_trajectory)
+  have hcentered_meas :
+      Measurable
+        (fun trajectory : RewardTrace Rat =>
+          (((reward trajectory (i + 1) -
+            mean
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward trajectory) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace
+                    (reward trajectory) i))) : Rat) : Real))) := by
+    have hreward_real :
+        Measurable
+          (fun trajectory : RewardTrace Rat =>
+            ((reward trajectory (i + 1) : Rat) : Real)) :=
+      (measurable_of_countable (fun value : Rat => ((value : Rat) : Real))).comp
+        (hreward (i + 1))
+    have hmean_real :
+        Measurable
+          (fun trajectory : RewardTrace Rat =>
+            ((mean
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward trajectory) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace
+                    (reward trajectory) i))) : Rat) : Real)) :=
+      (measurable_of_countable (fun value : Rat => ((value : Rat) : Real))).comp
+        hselectedMean
+    simpa [Rat.cast_sub] using hreward_real.sub hmean_real
+  have hpartial :=
+    historyStepKernelFamily_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_trajMeasure
+      mu0 rewardKernel policy context state hcontext hstate defaultAction i
+  have hrewardMap :=
+    reward_condExpKernel_map_eq_selected_actual_action_of_generatedActionTraceSucc_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace
+      (mu := trajMeasure)
+      (action := action)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (hcontext := hcontext)
+      (hstate := hstate)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (haction := haction)
+      (hreward := hreward)
+      (i := i)
+      (h_action_generated := by rfl)
+      (by
+        simpa [stepKernel, trajMeasure, reward, action] using hpartial)
+  have hkernelMap :
+      Filter.Eventually
+        (fun trajectory : RewardTrace Rat =>
+          @Measure.map (RewardTrace Rat) Rat inferInstance inferInstance
+            (fun y : RewardTrace Rat => reward y (i + 1))
+            (@ProbabilityTheory.condExpKernel (RewardTrace Rat) inferInstance _
+              trajMeasure _
+              ((History.historyFiltrationSucc action reward haction hreward) i)
+              trajectory) =
+          RewardKernel.historyStepKernelFamily rewardKernel policy context state
+            hcontext hstate i
+            (History.finiteRewardHistoryOfTrace (reward trajectory) i))
+        (ae
+          (trajMeasure.trim
+            ((History.historyFiltrationSucc action reward haction hreward).le
+              i))) := by
+    filter_upwards [hrewardMap] with trajectory hmap
+    simpa [stepKernel, reward, action, generatedActionFromRewardHistory,
+      Policy.generatedActionTraceSucc,
+      RewardKernel.historyStepKernelFamily_apply] using hmap
+  have hvariance_event :
+      Filter.Eventually
+        (fun trajectory : RewardTrace Rat =>
+          varianceProxy
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward trajectory) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace
+                    (reward trajectory) i))) <= c)
+        (ae
+          (trajMeasure.trim
+            ((History.historyFiltrationSucc action reward haction hreward).le
+              i))) :=
+    Filter.Eventually.of_forall (fun trajectory =>
+      hvariance
+        (History.finiteRewardHistoryOfTrace (reward trajectory) i))
+  have hmgf :=
+    centeredReward_succ_hasCondSubgaussianMGF_of_historyStepKernelFamily_condExpKernel_map_eq_historyFiltrationSucc
+      (mu := trajMeasure)
+      (action := action)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (hcontext := hcontext)
+      (hstate := hstate)
+      (mean := mean)
+      (varianceProxy := varianceProxy)
+      (law := law)
+      (reward := reward)
+      (haction := haction)
+      (hreward := hreward)
+      (i := i)
+      (c := c)
+      hcentered_meas
+      hkernelMap
+      hvariance_event
+  simpa [stepKernel, trajMeasure, reward, action] using hmgf
+
+/--
+The zero-initialized successor centered-reward process is strongly adapted to
+the generated shifted history filtration.
+
+Index zero is reserved for the deterministic value zero.  At index `i + 1`
+the process uses reward `i + 1` centered by the context/action mean selected
+from the finite reward history through `i`.  This indexing matches Mathlib's
+conditional sub-Gaussian finite-sum tail API.
+-/
+theorem generatedActionFromRewardHistory_centeredRewardSuccProcess_stronglyAdapted
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (mean : Context -> Action -> Rat)
+    (hmean : Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t)) :
+    let action :=
+      generatedActionFromRewardHistory policy state defaultAction reward
+    let haction :=
+      generatedActionFromRewardHistory_measurable
+        (policy := policy) (state := state)
+        (defaultAction := defaultAction) (reward := reward)
+        hreward hstate
+    let F := History.historyFiltrationSucc action reward haction hreward
+    let Y : Nat -> Omega -> Real := fun t omega =>
+      match t with
+      | 0 => 0
+      | i + 1 =>
+          (((reward omega (i + 1) -
+            mean
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+              Rat) : Real))
+    StronglyAdapted F Y := by
+  let action :=
+    generatedActionFromRewardHistory policy state defaultAction reward
+  have haction : forall t : Nat,
+      Measurable (fun omega : Omega => action omega t) :=
+    generatedActionFromRewardHistory_measurable
+      (policy := policy) (state := state)
+      (defaultAction := defaultAction) (reward := reward)
+      hreward hstate
+  let F := History.historyFiltrationSucc action reward haction hreward
+  let Y : Nat -> Omega -> Real := fun t omega =>
+    match t with
+    | 0 => 0
+    | i + 1 =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real))
+  change StronglyAdapted F Y
+  intro t
+  cases t with
+  | zero =>
+      have hzero :
+          @Measurable Omega Real (F 0) inferInstance
+            (fun _omega : Omega => (0 : Real)) :=
+        measurable_const
+      simpa [Y] using hzero.stronglyMeasurable
+  | succ i =>
+      have hreward_succ :
+          @Measurable Omega Rat (F (i + 1)) inferInstance
+            (fun omega : Omega => reward omega (i + 1)) := by
+        simpa [F, History.historyFiltrationSucc_apply] using
+          (History.measurable_reward_mem_historyFiltration_of_lt
+            (mOmega := mOmega) action reward haction hreward
+            (Nat.lt_succ_self (i + 1)))
+      have hhistory :
+          @Measurable Omega ((j : Finset.Iic i) -> Rat)
+            (F (i + 1)) inferInstance
+            (fun omega : Omega =>
+              History.finiteRewardHistoryOfTrace (reward omega) i) := by
+        letI : MeasurableSpace Omega := F (i + 1)
+        change Measurable
+          (fun omega : Omega =>
+            History.finiteRewardHistoryOfTrace (reward omega) i)
+        refine measurable_pi_lambda _ ?_
+        intro j
+        change Measurable (fun omega : Omega => reward omega j.1)
+        change @Measurable Omega Rat (F (i + 1)) inferInstance
+          (fun omega : Omega => reward omega j.1)
+        simpa [F, History.historyFiltrationSucc_apply] using
+          (History.measurable_reward_mem_historyFiltration_of_lt
+            (mOmega := mOmega) action reward haction hreward
+            (Nat.lt_succ_of_le
+              (Nat.le_trans (Finset.mem_Iic.mp j.2) (Nat.le_succ i))))
+      have hcontext_history :
+          @Measurable Omega Context (F (i + 1)) inferInstance
+            (fun omega : Omega =>
+              context i
+                (History.finiteRewardHistoryOfTrace (reward omega) i)) :=
+        (hcontext i).comp hhistory
+      have hstate_history :
+          @Measurable Omega State (F (i + 1)) inferInstance
+            (fun omega : Omega =>
+              state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i)) :=
+        (hstate i).comp hhistory
+      have hselected_action :
+          @Measurable Omega Action (F (i + 1)) inferInstance
+            (fun omega : Omega =>
+              (policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace (reward omega) i))) :=
+        (policy i).measurable_action.comp hstate_history
+      have hselected_mean :
+          @Measurable Omega Rat (F (i + 1)) inferInstance
+            (fun omega : Omega =>
+              mean
+                (context i
+                  (History.finiteRewardHistoryOfTrace (reward omega) i))
+                ((policy i).action
+                  (state i
+                    (History.finiteRewardHistoryOfTrace (reward omega) i)))) :=
+        hmean.comp (hcontext_history.prodMk hselected_action)
+      have hreward_real :
+          @Measurable Omega Real (F (i + 1)) inferInstance
+            (fun omega : Omega => ((reward omega (i + 1) : Rat) : Real)) :=
+        (measurable_of_countable (fun value : Rat => ((value : Rat) : Real))).comp
+          hreward_succ
+      have hmean_real :
+          @Measurable Omega Real (F (i + 1)) inferInstance
+            (fun omega : Omega =>
+              ((mean
+                (context i
+                  (History.finiteRewardHistoryOfTrace (reward omega) i))
+                ((policy i).action
+                  (state i
+                    (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+                Rat) : Real)) :=
+        (measurable_of_countable (fun value : Rat => ((value : Rat) : Real))).comp
+          hselected_mean
+      have hcentered :
+          @Measurable Omega Real (F (i + 1)) inferInstance
+            (fun omega : Omega =>
+              ((reward omega (i + 1) : Rat) : Real) -
+                ((mean
+                  (context i
+                    (History.finiteRewardHistoryOfTrace (reward omega) i))
+                  ((policy i).action
+                    (state i
+                      (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+                  Rat) : Real)) :=
+        hreward_real.sub hmean_real
+      simpa [Y, Rat.cast_sub] using hcentered.stronglyMeasurable
+
+/--
+Canonical reward-only `trajMeasure` Azuma-Hoeffding bound for the finite sum of
+successor policy-centered rewards.
+
+The zero initial term aligns the successor conditional-MGF witnesses with
+Mathlib's `Finset.range n` tail theorem.  Thus the random sum contains centered
+rewards at indices `1, ..., n - 1`, and its proxy sum contains the corresponding
+history-selected deterministic ceilings.
+-/
+theorem historyStepKernelFamily_centeredRewardSuccProcess_sum_tail_ennreal_trajMeasure
+    {Context : Type v} {State : Type w} {Action : Type x}
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu0 : Measure Rat) [IsProbabilityMeasure mu0]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hmean : Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (defaultAction : Action)
+    (varianceCeiling : Nat -> NNReal)
+    (hvariance :
+      forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat),
+        varianceProxy (context i history)
+          ((policy i).action (state i history)) <= varianceCeiling i)
+    (n : Nat) {eps : Real} (heps : 0 <= eps) :
+    let stepKernel :=
+      RewardKernel.historyStepKernelFamily rewardKernel policy context state
+        hcontext hstate
+    let trajMeasure :=
+      ProbabilityTheory.Kernel.trajMeasure
+        (X := fun _ : Nat => Rat) mu0 stepKernel
+    let reward : RewardTrace Rat -> RewardTrace Rat := fun trajectory => trajectory
+    let Y : Nat -> RewardTrace Rat -> Real := fun t trajectory =>
+      match t with
+      | 0 => 0
+      | i + 1 =>
+          (((reward trajectory (i + 1) -
+            mean
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward trajectory) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace
+                    (reward trajectory) i))) : Rat) : Real))
+    let cY : Nat -> NNReal := fun t =>
+      match t with
+      | 0 => 0
+      | i + 1 => varianceCeiling i
+    trajMeasure
+        {trajectory |
+          eps <= (Finset.range n).sum (fun t => Y t trajectory)} <=
+      ENNReal.ofReal
+        (Real.exp
+          (-eps ^ 2 /
+            (2 * (((Finset.range n).sum cY : NNReal) : Real)))) := by
+  let stepKernel :=
+    RewardKernel.historyStepKernelFamily rewardKernel policy context state
+      hcontext hstate
+  let trajMeasure :=
+    ProbabilityTheory.Kernel.trajMeasure
+      (X := fun _ : Nat => Rat) mu0 stepKernel
+  let reward : RewardTrace Rat -> RewardTrace Rat := fun trajectory => trajectory
+  have hreward : forall t : Nat,
+      Measurable (fun trajectory : RewardTrace Rat => reward trajectory t) := by
+    intro t
+    exact measurable_pi_apply t
+  let action :=
+    generatedActionFromRewardHistory policy state defaultAction reward
+  have haction : forall t : Nat,
+      Measurable (fun trajectory : RewardTrace Rat => action trajectory t) :=
+    generatedActionFromRewardHistory_measurable
+      (policy := policy) (state := state)
+      (defaultAction := defaultAction) (reward := reward)
+      hreward hstate
+  let F := History.historyFiltrationSucc action reward haction hreward
+  let Y : Nat -> RewardTrace Rat -> Real := fun t trajectory =>
+    match t with
+    | 0 => 0
+    | i + 1 =>
+        (((reward trajectory (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward trajectory) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace
+                  (reward trajectory) i))) : Rat) : Real))
+  let cY : Nat -> NNReal := fun t =>
+    match t with
+    | 0 => 0
+    | i + 1 => varianceCeiling i
+  have hadapted : StronglyAdapted F Y := by
+    simpa [F, Y, action, reward] using
+      (generatedActionFromRewardHistory_centeredRewardSuccProcess_stronglyAdapted
+        (policy := policy)
+        (context := context)
+        (state := state)
+        (hcontext := hcontext)
+        (hstate := hstate)
+        (mean := mean)
+        (hmean := hmean)
+        (defaultAction := defaultAction)
+        (reward := reward)
+        (hreward := hreward))
+  have hzero :
+      ProbabilityTheory.HasSubgaussianMGF (Y 0) (cY 0) trajMeasure := by
+    simp [Y, cY]
+  have hcond :
+      forall i, i < n - 1 ->
+        ProbabilityTheory.HasCondSubgaussianMGF
+          (F i) (F.le i) (Y (i + 1)) (cY (i + 1)) trajMeasure := by
+    intro i _hi
+    have hmgf :=
+      historyStepKernelFamily_centeredReward_succ_hasCondSubgaussianMGF_trajMeasure
+        mu0 rewardKernel policy context state hcontext hstate mean
+        varianceProxy law hmean defaultAction i (varianceCeiling i)
+        (hvariance i)
+    simpa [stepKernel, trajMeasure, reward, action, F, Y, cY] using hmgf
+  have htail :=
+    Concentration.condSubGaussian_sum_tail_ennreal_of_stronglyAdapted
+      (mu := trajMeasure) (Y := Y) (cY := cY) (F := F)
+      hadapted hzero n hcond heps
+  simpa [stepKernel, trajMeasure, reward, action, F, Y, cY] using htail
+
+/--
+Canonical reward-only `trajMeasure` Azuma-Hoeffding bound for the empirical
+average of `m` successor policy-centered rewards.
+
+The `Finset.range (m + 1)` sum retains the deterministic zero slot required by
+the conditional-MGF tail API, so its remaining terms are exactly rewards
+`1, ..., m`.  The strict positivity of `m` is the explicit denominator
+regularity contract used to rewrite the average-tail event as a sum-tail
+event with threshold `m * eps`.
+-/
+theorem historyStepKernelFamily_centeredRewardSuccProcess_average_tail_ennreal_trajMeasure
+    {Context : Type v} {State : Type w} {Action : Type x}
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu0 : Measure Rat) [IsProbabilityMeasure mu0]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hmean : Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (defaultAction : Action)
+    (varianceCeiling : Nat -> NNReal)
+    (hvariance :
+      forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat),
+        varianceProxy (context i history)
+          ((policy i).action (state i history)) <= varianceCeiling i)
+    (m : Nat) (hm : 0 < m) {eps : Real} (heps : 0 <= eps) :
+    let stepKernel :=
+      RewardKernel.historyStepKernelFamily rewardKernel policy context state
+        hcontext hstate
+    let trajMeasure :=
+      ProbabilityTheory.Kernel.trajMeasure
+        (X := fun _ : Nat => Rat) mu0 stepKernel
+    let reward : RewardTrace Rat -> RewardTrace Rat := fun trajectory => trajectory
+    let Y : Nat -> RewardTrace Rat -> Real := fun t trajectory =>
+      match t with
+      | 0 => 0
+      | i + 1 =>
+          (((reward trajectory (i + 1) -
+            mean
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward trajectory) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace
+                    (reward trajectory) i))) : Rat) : Real))
+    let cY : Nat -> NNReal := fun t =>
+      match t with
+      | 0 => 0
+      | i + 1 => varianceCeiling i
+    trajMeasure
+        {trajectory |
+          eps <=
+            ((Finset.range (m + 1)).sum (fun t => Y t trajectory)) / (m : Real)} <=
+      ENNReal.ofReal
+        (Real.exp
+          (-((m : Real) * eps) ^ 2 /
+            (2 * (((Finset.range (m + 1)).sum cY : NNReal) : Real)))) := by
+  let stepKernel :=
+    RewardKernel.historyStepKernelFamily rewardKernel policy context state
+      hcontext hstate
+  let trajMeasure :=
+    ProbabilityTheory.Kernel.trajMeasure
+      (X := fun _ : Nat => Rat) mu0 stepKernel
+  let reward : RewardTrace Rat -> RewardTrace Rat := fun trajectory => trajectory
+  let Y : Nat -> RewardTrace Rat -> Real := fun t trajectory =>
+    match t with
+    | 0 => 0
+    | i + 1 =>
+        (((reward trajectory (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward trajectory) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace
+                  (reward trajectory) i))) : Rat) : Real))
+  let cY : Nat -> NNReal := fun t =>
+    match t with
+    | 0 => 0
+    | i + 1 => varianceCeiling i
+  have htail :=
+    historyStepKernelFamily_centeredRewardSuccProcess_sum_tail_ennreal_trajMeasure
+      mu0 rewardKernel policy context state hcontext hstate mean varianceProxy law hmean
+      defaultAction varianceCeiling hvariance (m + 1)
+      (eps := (m : Real) * eps)
+      (mul_nonneg (Nat.cast_nonneg m) heps)
+  have hevent :
+      {trajectory |
+        eps <= ((Finset.range (m + 1)).sum (fun t => Y t trajectory)) / (m : Real)} =
+        {trajectory |
+          (m : Real) * eps <=
+            (Finset.range (m + 1)).sum (fun t => Y t trajectory)} := by
+    ext trajectory
+    simp only [Set.mem_setOf_eq]
+    simpa [mul_comm] using
+      (le_div_iff₀ (Nat.cast_pos.mpr hm) :
+        eps <= ((Finset.range (m + 1)).sum (fun t => Y t trajectory)) / (m : Real) ↔
+          eps * (m : Real) <= (Finset.range (m + 1)).sum (fun t => Y t trajectory))
+  change
+    trajMeasure
+        {trajectory |
+          eps <= ((Finset.range (m + 1)).sum (fun t => Y t trajectory)) / (m : Real)} <=
+      ENNReal.ofReal
+        (Real.exp
+          (-((m : Real) * eps) ^ 2 /
+            (2 * (((Finset.range (m + 1)).sum cY : NNReal) : Real))))
+  rw [hevent]
+  simpa [stepKernel, trajMeasure, reward, Y, cY] using htail
+
+/--
+Build the full generated finite-pair `partialTraj` source directly from a
+selected-reward law stated at the finite pair-prefix comap conditioning
+sigma-algebra.
+
+This composes the comap-to-selected-source adapter with the existing
+selected-source-to-`partialTraj` route, so future disintegration work can target
+the Mathlib-style comap conditioning surface and immediately obtain the full
+generated finite-pair source.
+-/
+def generatedActionPartialTrajectoryPairLawSource_of_comap_reward_map_eq_selected_policy
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+              (fun y : Omega => reward y (i + 1))
+              (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.pairHistoryRewardProjection
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)))
+              ((policy i).action
+                (state i
+                  (History.pairHistoryRewardProjection
+                    (History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward omega)
+                      (reward omega) i)))))
+          (ae
+            (mu.trim
+              ((History.historyFiltrationSucc
+                (generatedActionFromRewardHistory policy state defaultAction
+                  reward)
+                reward
+                (generatedActionFromRewardHistory_measurable
+                  (policy := policy) (state := state)
+                  (defaultAction := defaultAction) (reward := reward)
+                  hreward hstate)
+                hreward).le i)))) :
+    GeneratedActionPartialTrajectoryPairLawSource mu rewardKernel policy
+      context state defaultAction reward hreward :=
+  generatedActionPartialTrajectoryPairLawSource_of_selectedRewardFinitePairHistoryLawSource
+    (mu := mu)
+    (rewardKernel := rewardKernel)
+    (policy := policy)
+    (context := context)
+    (state := state)
+    (defaultAction := defaultAction)
+    (reward := reward)
+    (hreward := hreward)
+    (generatedActionSelectedRewardFinitePairHistoryLawSource_of_comap_reward_map_eq_selected_policy
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (hcontext := hcontext)
+      (hstate := hstate)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      h_reward_map_eq)
+
+/--
+Build the full generated finite-pair `partialTraj` source directly from a
+selected-reward law stated with both the conditioning sigma-algebra and the
+trim filter at the finite pair-prefix comap surface.
+
+This is the direct partialTraj entry for Mathlib-facing disintegration work:
+it composes the comap-trim selected-source adapter with the existing
+selected-source-to-`partialTraj` route, and still consumes rather than proves
+the selected-reward law.
+-/
+def generatedActionPartialTrajectoryPairLawSource_of_comap_trim_reward_map_eq_selected_policy
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+              (fun y : Omega => reward y (i + 1))
+              (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.pairHistoryRewardProjection
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)))
+              ((policy i).action
+                (state i
+                  (History.pairHistoryRewardProjection
+                    (History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward omega)
+                      (reward omega) i)))))
+          (ae
+            (mu.trim
+              (show
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i)) <= mOmega from by
+                have hfiltration :
+                    ((History.historyFiltrationSucc (mOmega := mOmega)
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward)
+                      reward
+                      (generatedActionFromRewardHistory_measurable
+                        (mOmega := mOmega)
+                        (policy := policy) (state := state)
+                        (defaultAction := defaultAction) (reward := reward)
+                        hreward hstate)
+                      hreward) i :
+                        MeasurableSpace Omega) =
+                    ((inferInstance :
+                      MeasurableSpace
+                        ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                      (fun y : Omega =>
+                        History.finitePairHistoryOfTrace
+                          (generatedActionFromRewardHistory policy state
+                            defaultAction reward y)
+                          (reward y) i)) :=
+                  History.historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace
+                    (mOmega := mOmega)
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward)
+                    reward
+                    (generatedActionFromRewardHistory_measurable
+                      (mOmega := mOmega)
+                      (policy := policy) (state := state)
+                      (defaultAction := defaultAction) (reward := reward)
+                      hreward hstate)
+                    hreward i
+                have hhist_le :
+                    ((History.historyFiltrationSucc (mOmega := mOmega)
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward)
+                      reward
+                      (generatedActionFromRewardHistory_measurable
+                        (mOmega := mOmega)
+                        (policy := policy) (state := state)
+                        (defaultAction := defaultAction) (reward := reward)
+                        hreward hstate)
+                      hreward) i :
+                        MeasurableSpace Omega) <= mOmega :=
+                  ((History.historyFiltrationSucc (mOmega := mOmega)
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward)
+                    reward
+                    (generatedActionFromRewardHistory_measurable
+                      (mOmega := mOmega)
+                      (policy := policy) (state := state)
+                      (defaultAction := defaultAction) (reward := reward)
+                      hreward hstate)
+                    hreward).le i)
+                simpa only [hfiltration.symm] using hhist_le)))) :
+    GeneratedActionPartialTrajectoryPairLawSource mu rewardKernel policy
+      context state defaultAction reward hreward :=
+  generatedActionPartialTrajectoryPairLawSource_of_selectedRewardFinitePairHistoryLawSource
+    (mu := mu)
+    (rewardKernel := rewardKernel)
+    (policy := policy)
+    (context := context)
+    (state := state)
+    (defaultAction := defaultAction)
+    (reward := reward)
+    (hreward := hreward)
+    (generatedActionSelectedRewardFinitePairHistoryLawSource_of_comap_trim_reward_map_eq_selected_policy
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (hcontext := hcontext)
+      (hstate := hstate)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      h_reward_map_eq)
+
+/--
+Consume the generated selected-reward finite-pair-history source at the exact
+full finite-pair `partialTraj` law surface.
+
+This is the Lean-facing theorem-card target specialized to the generated
+reward-history action trace.  It still consumes the selected-reward source
+field; the ambient disintegration proof of that field remains separate.
+-/
+theorem actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_selectedRewardFinitePairHistoryLawSource
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (source :
+      GeneratedActionSelectedRewardFinitePairHistoryLawSource
+        mu rewardKernel policy context state defaultAction reward hreward)
+    (i : Nat) :
+    Filter.Eventually
+      (fun omega : Omega =>
+        @MeasureTheory.Measure.map Omega
+          ((j : Finset.Iic (i + 1)) -> Prod Action Rat)
+          mOmega inferInstance
+          (fun y : Omega =>
+            History.finitePairHistoryOfTrace
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward y)
+              (reward y) (i + 1))
+          (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+            ((History.historyFiltrationSucc
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward)
+              reward
+              (generatedActionFromRewardHistory_measurable
+                (policy := policy) (state := state)
+                (defaultAction := defaultAction) (reward := reward)
+                hreward source.hstate)
+              hreward) i)
+            omega) =
+        RewardKernel.actionRewardPartialTrajectoryKernel rewardKernel policy
+          (fun n history =>
+            context n (History.pairHistoryRewardProjection history))
+          (fun n history =>
+            state n (History.pairHistoryRewardProjection history))
+          (fun n : Nat =>
+            (source.hcontext n).comp
+              (History.measurable_pairHistoryRewardProjection
+                (Action := Action) (Reward := Rat) n))
+          (fun n : Nat =>
+            (source.hstate n).comp
+              (History.measurable_pairHistoryRewardProjection
+                (Action := Action) (Reward := Rat) n))
+          i (i + 1)
+          (History.finitePairHistoryOfTrace
+            (generatedActionFromRewardHistory policy state defaultAction
+              reward omega)
+            (reward omega) i))
+      (ae
+        (mu.trim
+          ((History.historyFiltrationSucc
+            (generatedActionFromRewardHistory policy state defaultAction
+              reward)
+            reward
+            (generatedActionFromRewardHistory_measurable
+              (policy := policy) (state := state)
+              (defaultAction := defaultAction) (reward := reward)
+              hreward source.hstate)
+            hreward).le i))) := by
+  let partialSource :=
+    generatedActionPartialTrajectoryPairLawSource_of_selectedRewardFinitePairHistoryLawSource
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      source
+  exact
+    actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_partialTrajectoryPairLawSource
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (source := partialSource)
+      i
+
+/--
+Consume a selected-reward law stated at the finite pair-prefix comap
+conditioning surface and expose the full generated finite-pair `partialTraj`
+law directly.
+
+This is a theorem-shaped wrapper around
+`generatedActionSelectedRewardFinitePairHistoryLawSource_of_comap_reward_map_eq_selected_policy`
+and
+`actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_selectedRewardFinitePairHistoryLawSource`.
+It still consumes the selected-reward conditional law; it does not prove that
+law from an ambient trajectory/disintegration construction.
+-/
+theorem actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_comap_reward_map_eq_selected_policy
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+              (fun y : Omega => reward y (i + 1))
+              (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.pairHistoryRewardProjection
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)))
+              ((policy i).action
+                (state i
+                  (History.pairHistoryRewardProjection
+                    (History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward omega)
+                      (reward omega) i)))))
+          (ae
+            (mu.trim
+              ((History.historyFiltrationSucc
+                (generatedActionFromRewardHistory policy state defaultAction
+                  reward)
+                reward
+                (generatedActionFromRewardHistory_measurable
+                  (policy := policy) (state := state)
+                  (defaultAction := defaultAction) (reward := reward)
+                  hreward hstate)
+                hreward).le i))))
+    (i : Nat) :
+    Filter.Eventually
+      (fun omega : Omega =>
+        @MeasureTheory.Measure.map Omega
+          ((j : Finset.Iic (i + 1)) -> Prod Action Rat)
+          mOmega inferInstance
+          (fun y : Omega =>
+            History.finitePairHistoryOfTrace
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward y)
+              (reward y) (i + 1))
+          (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+            ((History.historyFiltrationSucc
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward)
+              reward
+              (generatedActionFromRewardHistory_measurable
+                (policy := policy) (state := state)
+                (defaultAction := defaultAction) (reward := reward)
+                hreward hstate)
+              hreward) i)
+            omega) =
+        RewardKernel.actionRewardPartialTrajectoryKernel rewardKernel policy
+          (fun n history =>
+            context n (History.pairHistoryRewardProjection history))
+          (fun n history =>
+            state n (History.pairHistoryRewardProjection history))
+          (fun n : Nat =>
+            (hcontext n).comp
+              (History.measurable_pairHistoryRewardProjection
+                (Action := Action) (Reward := Rat) n))
+          (fun n : Nat =>
+            (hstate n).comp
+              (History.measurable_pairHistoryRewardProjection
+                (Action := Action) (Reward := Rat) n))
+          i (i + 1)
+          (History.finitePairHistoryOfTrace
+            (generatedActionFromRewardHistory policy state defaultAction
+              reward omega)
+            (reward omega) i))
+      (ae
+        (mu.trim
+          ((History.historyFiltrationSucc
+            (generatedActionFromRewardHistory policy state defaultAction
+              reward)
+            reward
+            (generatedActionFromRewardHistory_measurable
+              (policy := policy) (state := state)
+              (defaultAction := defaultAction) (reward := reward)
+              hreward hstate)
+            hreward).le i))) := by
+  let source :=
+    generatedActionSelectedRewardFinitePairHistoryLawSource_of_comap_reward_map_eq_selected_policy
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (hcontext := hcontext)
+      (hstate := hstate)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      h_reward_map_eq
+  exact
+    actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_selectedRewardFinitePairHistoryLawSource
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (source := source)
+      i
+
+/--
+Consume a selected-reward law stated entirely at the finite pair-prefix comap
+conditioning surface, including the `trim` a.e. filter, and expose the full
+generated finite-pair `partialTraj` law directly.
+
+This is the theorem-shaped companion to
+`generatedActionPartialTrajectoryPairLawSource_of_comap_trim_reward_map_eq_selected_policy`.
+It still consumes the selected-reward conditional law; it does not prove that
+law from an ambient trajectory/disintegration construction.
+-/
+theorem actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_comap_trim_reward_map_eq_selected_policy
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+              (fun y : Omega => reward y (i + 1))
+              (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.pairHistoryRewardProjection
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)))
+              ((policy i).action
+                (state i
+                  (History.pairHistoryRewardProjection
+                    (History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward omega)
+                      (reward omega) i)))))
+          (ae
+            (mu.trim
+              (show
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i)) <= mOmega from by
+                have hfiltration :
+                    ((History.historyFiltrationSucc (mOmega := mOmega)
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward)
+                      reward
+                      (generatedActionFromRewardHistory_measurable
+                        (mOmega := mOmega)
+                        (policy := policy) (state := state)
+                        (defaultAction := defaultAction) (reward := reward)
+                        hreward hstate)
+                      hreward) i :
+                        MeasurableSpace Omega) =
+                    ((inferInstance :
+                      MeasurableSpace
+                        ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                      (fun y : Omega =>
+                        History.finitePairHistoryOfTrace
+                          (generatedActionFromRewardHistory policy state
+                            defaultAction reward y)
+                          (reward y) i)) :=
+                  History.historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace
+                    (mOmega := mOmega)
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward)
+                    reward
+                    (generatedActionFromRewardHistory_measurable
+                      (mOmega := mOmega)
+                      (policy := policy) (state := state)
+                      (defaultAction := defaultAction) (reward := reward)
+                      hreward hstate)
+                    hreward i
+                have hhist_le :
+                    ((History.historyFiltrationSucc (mOmega := mOmega)
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward)
+                      reward
+                      (generatedActionFromRewardHistory_measurable
+                        (mOmega := mOmega)
+                        (policy := policy) (state := state)
+                        (defaultAction := defaultAction) (reward := reward)
+                        hreward hstate)
+                      hreward) i :
+                        MeasurableSpace Omega) <= mOmega :=
+                  ((History.historyFiltrationSucc (mOmega := mOmega)
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward)
+                    reward
+                    (generatedActionFromRewardHistory_measurable
+                      (mOmega := mOmega)
+                      (policy := policy) (state := state)
+                      (defaultAction := defaultAction) (reward := reward)
+                      hreward hstate)
+                    hreward).le i)
+                simpa only [hfiltration.symm] using hhist_le))))
+    (i : Nat) :
+    Filter.Eventually
+      (fun omega : Omega =>
+        @MeasureTheory.Measure.map Omega
+          ((j : Finset.Iic (i + 1)) -> Prod Action Rat)
+          mOmega inferInstance
+          (fun y : Omega =>
+            History.finitePairHistoryOfTrace
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward y)
+              (reward y) (i + 1))
+          (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+            ((History.historyFiltrationSucc
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward)
+              reward
+              (generatedActionFromRewardHistory_measurable
+                (policy := policy) (state := state)
+                (defaultAction := defaultAction) (reward := reward)
+                hreward hstate)
+              hreward) i)
+            omega) =
+        RewardKernel.actionRewardPartialTrajectoryKernel rewardKernel policy
+          (fun n history =>
+            context n (History.pairHistoryRewardProjection history))
+          (fun n history =>
+            state n (History.pairHistoryRewardProjection history))
+          (fun n : Nat =>
+            (hcontext n).comp
+              (History.measurable_pairHistoryRewardProjection
+                (Action := Action) (Reward := Rat) n))
+          (fun n : Nat =>
+            (hstate n).comp
+              (History.measurable_pairHistoryRewardProjection
+                (Action := Action) (Reward := Rat) n))
+          i (i + 1)
+          (History.finitePairHistoryOfTrace
+            (generatedActionFromRewardHistory policy state defaultAction
+              reward omega)
+            (reward omega) i))
+      (ae
+        (mu.trim
+          ((History.historyFiltrationSucc
+            (generatedActionFromRewardHistory policy state defaultAction
+              reward)
+            reward
+            (generatedActionFromRewardHistory_measurable
+              (policy := policy) (state := state)
+              (defaultAction := defaultAction) (reward := reward)
+              hreward hstate)
+            hreward).le i))) := by
+  let source :=
+    generatedActionSelectedRewardFinitePairHistoryLawSource_of_comap_trim_reward_map_eq_selected_policy
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (hcontext := hcontext)
+      (hstate := hstate)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      h_reward_map_eq
+  exact
+    actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_selectedRewardFinitePairHistoryLawSource
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (source := source)
+      i
+
+/--
 A generated-policy conditional next-pair law source.
 
 The action trace is generated by the shifted policy from the reward-history
@@ -990,6 +4017,47 @@ def generatedActionDefinitionalActualRewardMapSource_of_reward_map_eq_selected_p
     simpa [generatedActionFromRewardHistory] using h_reward
 
 /--
+Convert a definitional actual-action reward-coordinate source into the
+generated selected-reward finite-pair-history source.
+
+For `generatedActionFromRewardHistory`, the actual successor action is
+definitionally the policy-selected action at the finite reward history, and
+`History.pairHistoryRewardProjection_finitePairHistoryOfTrace` removes the
+irrelevant action coordinates from the generated finite pair prefix.  This
+adapter exposes the same reward-coordinate law at the finite-pair-history
+source surface.
+-/
+def generatedActionSelectedRewardFinitePairHistoryLawSource_of_definitionalActualRewardMapSource
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (source :
+      GeneratedActionDefinitionalActualRewardMapSource
+        mu rewardKernel policy context state defaultAction reward hreward) :
+    GeneratedActionSelectedRewardFinitePairHistoryLawSource
+      mu rewardKernel policy context state defaultAction reward hreward where
+  hcontext := hcontext
+  hstate := source.hstate
+  reward_map_eq_selected_policy_finitePairHistory := by
+    intro i
+    filter_upwards [source.reward_map_eq_actual_action i] with omega h_reward
+    simpa [generatedActionFromRewardHistory,
+      History.pairHistoryRewardProjection_finitePairHistoryOfTrace] using
+      h_reward
+
+/--
 Build the definitional actual reward-coordinate source from a full finite-pair
 `partialTraj` law over the generated action trace.
 
@@ -1096,6 +4164,101 @@ def generatedActionDefinitionalActualRewardMapSource_of_partialTrajectoryKernel_
         (i := i)
         rfl
         (h_partialtraj_map_eq i)
+
+/--
+Project a generated-history `partialTraj` pair-law source to the definitional
+actual-action reward-coordinate source.
+
+The `partialTraj` source already packages context/state measurability and the
+full finite-pair trace law.  This wrapper exposes the weaker
+reward-coordinate source interface needed by mean-zero and conditional-MGF
+consumers without asking callers to unpack the source fields manually.
+-/
+def generatedActionDefinitionalActualRewardMapSource_of_partialTrajectoryPairLawSource
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (source :
+      GeneratedActionPartialTrajectoryPairLawSource mu rewardKernel policy
+        context state defaultAction reward hreward) :
+    GeneratedActionDefinitionalActualRewardMapSource mu rewardKernel policy
+      context state defaultAction reward hreward :=
+  generatedActionDefinitionalActualRewardMapSource_of_partialTrajectoryKernel_map_eq
+    (mu := mu)
+    (rewardKernel := rewardKernel)
+    (policy := policy)
+    (context := context)
+    (state := state)
+    (hcontext := source.hcontext)
+    (hstate := source.hstate)
+    (defaultAction := defaultAction)
+    (reward := reward)
+    (hreward := hreward)
+    source.partialtraj_map_eq
+
+/--
+Project a generated-history `partialTraj` pair-law source to the selected
+reward-coordinate source stated at the generated finite-pair-history surface.
+
+This is the source-level reverse of the selected-reward-to-`partialTraj`
+constructor: it first projects the full pair law to the definitional
+actual-action reward law, then rewrites the generated successor action and
+finite-pair reward projection into the policy-selected reward-law source.  It
+does not construct the full pair law or transport canonical `trajMeasure` to an
+ambient process.
+-/
+def generatedActionSelectedRewardFinitePairHistoryLawSource_of_partialTrajectoryPairLawSource
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (source :
+      GeneratedActionPartialTrajectoryPairLawSource mu rewardKernel policy
+        context state defaultAction reward hreward) :
+    GeneratedActionSelectedRewardFinitePairHistoryLawSource
+      mu rewardKernel policy context state defaultAction reward hreward :=
+  generatedActionSelectedRewardFinitePairHistoryLawSource_of_definitionalActualRewardMapSource
+    (mu := mu)
+    (rewardKernel := rewardKernel)
+    (policy := policy)
+    (context := context)
+    (state := state)
+    (hcontext := source.hcontext)
+    (defaultAction := defaultAction)
+    (reward := reward)
+    (hreward := hreward)
+    (source :=
+      generatedActionDefinitionalActualRewardMapSource_of_partialTrajectoryPairLawSource
+        (mu := mu)
+        (rewardKernel := rewardKernel)
+        (policy := policy)
+        (context := context)
+        (state := state)
+        (defaultAction := defaultAction)
+        (reward := reward)
+        (hreward := hreward)
+        source)
 
 /--
 Build the definitional actual reward-coordinate source from the frozen-prefix
@@ -2492,6 +5655,61 @@ def generatedActionActualRewardMapSource_of_definitionalActualRewardMapSource
       hreward where
   action_generated := rfl
   reward_map_eq_actual_action := source.reward_map_eq_actual_action
+
+/--
+Project a generated-history `partialTraj` pair-law source to the explicit
+generated-action actual reward-coordinate source.
+
+This is the explicit-source companion to
+`generatedActionDefinitionalActualRewardMapSource_of_partialTrajectoryPairLawSource`.
+It keeps the action trace at `generatedActionFromRewardHistory` and derives its
+measurability from the packaged state measurability.
+-/
+def generatedActionActualRewardMapSource_of_partialTrajectoryPairLawSource
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (source :
+      GeneratedActionPartialTrajectoryPairLawSource mu rewardKernel policy
+        context state defaultAction reward hreward) :
+    GeneratedActionActualRewardMapSource mu
+      (generatedActionFromRewardHistory policy state defaultAction reward)
+      rewardKernel policy context state defaultAction reward
+      (generatedActionFromRewardHistory_measurable
+        (policy := policy) (state := state) (defaultAction := defaultAction)
+        (reward := reward) hreward source.hstate)
+      hreward :=
+  generatedActionActualRewardMapSource_of_definitionalActualRewardMapSource
+    (mu := mu)
+    (rewardKernel := rewardKernel)
+    (policy := policy)
+    (context := context)
+    (state := state)
+    (defaultAction := defaultAction)
+    (reward := reward)
+    (hreward := hreward)
+    (source :=
+      generatedActionDefinitionalActualRewardMapSource_of_partialTrajectoryPairLawSource
+        (mu := mu)
+        (rewardKernel := rewardKernel)
+        (policy := policy)
+        (context := context)
+        (state := state)
+        (defaultAction := defaultAction)
+        (reward := reward)
+        (hreward := hreward)
+        source)
 
 /--
 Build the explicit generated-action actual reward-coordinate source from a
@@ -4444,6 +7662,302 @@ def generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSourc
     source.partialtraj_map_eq
 
 /--
+Build the practical raw-range/measurable-mean-range source directly from a
+finite-pair-history comap selected-reward law.
+
+This is the comap-selected-reward entry point for the base source-conversion
+leaf: the selected-reward law first constructs the generated full finite-pair
+`partialTraj` source, then the existing source-contract constructor packages
+the raw/mean range regularity.
+-/
+def generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_comap_reward_map_eq_selected_policy
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+              (fun y : Omega => reward y (i + 1))
+              (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.pairHistoryRewardProjection
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)))
+              ((policy i).action
+                (state i
+                  (History.pairHistoryRewardProjection
+                    (History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward omega)
+                      (reward omega) i)))))
+          (ae
+            (mu.trim
+              ((History.historyFiltrationSucc
+                (generatedActionFromRewardHistory policy state defaultAction
+                  reward)
+                reward
+                (generatedActionFromRewardHistory_measurable
+                  (policy := policy) (state := state)
+                  (defaultAction := defaultAction) (reward := reward)
+                  hreward hstate)
+                hreward).le i)))) :
+    GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource
+      mu rewardKernel policy context state mean varianceProxy defaultAction
+      reward hreward rewardLo rewardHi meanLo meanHi := by
+  let source :=
+    generatedActionPartialTrajectoryPairLawSource_of_comap_reward_map_eq_selected_policy
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (hcontext := hcontext)
+      (hstate := hstate)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      h_reward_map_eq
+  exact
+    generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_partialTrajectoryPairLawSource
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (mean := mean)
+      (varianceProxy := varianceProxy)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (rewardLo := rewardLo)
+      (rewardHi := rewardHi)
+      (meanLo := meanLo)
+      (meanHi := meanHi)
+      (hmean := hmean)
+      (hkernel := hkernel)
+      (hraw := hraw)
+      (hmean_range := hmean_range)
+      (source := source)
+
+/--
+Build the practical raw-range/measurable-mean-range source directly from a
+finite-pair-history comap selected-reward law whose a.e. filter is also stated
+at the comap-trim conditioning surface.
+
+This is the direct comap-trim companion to
+`generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_comap_reward_map_eq_selected_policy`.
+It changes only the selected-reward law entry surface: the proof first builds
+the generated full finite-pair `partialTraj` source through the comap-trim law
+constructor, then reuses the existing raw-range source-contract package.
+-/
+def generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_comap_trim_reward_map_eq_selected_policy
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+              (fun y : Omega => reward y (i + 1))
+              (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.pairHistoryRewardProjection
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)))
+              ((policy i).action
+                (state i
+                  (History.pairHistoryRewardProjection
+                    (History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward omega)
+                      (reward omega) i)))))
+          (ae
+            (mu.trim
+              (show
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i)) <= mOmega from by
+                have hfiltration :
+                    ((History.historyFiltrationSucc (mOmega := mOmega)
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward)
+                      reward
+                      (generatedActionFromRewardHistory_measurable
+                        (mOmega := mOmega)
+                        (policy := policy) (state := state)
+                        (defaultAction := defaultAction) (reward := reward)
+                        hreward hstate)
+                      hreward) i :
+                        MeasurableSpace Omega) =
+                    ((inferInstance :
+                      MeasurableSpace
+                        ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                      (fun y : Omega =>
+                        History.finitePairHistoryOfTrace
+                          (generatedActionFromRewardHistory policy state
+                            defaultAction reward y)
+                          (reward y) i)) :=
+                  History.historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace
+                    (mOmega := mOmega)
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward)
+                    reward
+                    (generatedActionFromRewardHistory_measurable
+                      (mOmega := mOmega)
+                      (policy := policy) (state := state)
+                      (defaultAction := defaultAction) (reward := reward)
+                      hreward hstate)
+                    hreward i
+                have hhist_le :
+                    ((History.historyFiltrationSucc (mOmega := mOmega)
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward)
+                      reward
+                      (generatedActionFromRewardHistory_measurable
+                        (mOmega := mOmega)
+                        (policy := policy) (state := state)
+                        (defaultAction := defaultAction) (reward := reward)
+                        hreward hstate)
+                      hreward) i :
+                        MeasurableSpace Omega) <= mOmega :=
+                  ((History.historyFiltrationSucc (mOmega := mOmega)
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward)
+                    reward
+                    (generatedActionFromRewardHistory_measurable
+                      (mOmega := mOmega)
+                      (policy := policy) (state := state)
+                      (defaultAction := defaultAction) (reward := reward)
+                      hreward hstate)
+                    hreward).le i)
+                simpa only [hfiltration.symm] using hhist_le)))) :
+    GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource
+      mu rewardKernel policy context state mean varianceProxy defaultAction
+      reward hreward rewardLo rewardHi meanLo meanHi := by
+  let source :=
+    generatedActionPartialTrajectoryPairLawSource_of_comap_trim_reward_map_eq_selected_policy
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (hcontext := hcontext)
+      (hstate := hstate)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      h_reward_map_eq
+  exact
+    generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_partialTrajectoryPairLawSource
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (mean := mean)
+      (varianceProxy := varianceProxy)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (rewardLo := rewardLo)
+      (rewardHi := rewardHi)
+      (meanLo := meanLo)
+      (meanHi := meanHi)
+      (hmean := hmean)
+      (hkernel := hkernel)
+      (hraw := hraw)
+      (hmean_range := hmean_range)
+      (source := source)
+
+/--
 Build the practical definitional generated-policy raw-range source with a
 packaged uniform variance ceiling from a full finite-pair-trace `partialTraj`
 law.
@@ -4640,6 +8154,314 @@ def generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVaria
     (hmean_range := hmean_range)
     (hvariance := hvariance)
     source.partialtraj_map_eq
+
+/--
+Build the packaged uniform-variance practical source directly from a
+finite-pair-history comap selected-reward law.
+
+This is the comap-selected-reward entry point for the source-conversion leaf:
+the selected-reward law first constructs the generated full finite-pair
+`partialTraj` source, then the existing source-contract constructor packages
+the raw/mean range and global variance regularity.
+-/
+def generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource_of_comap_reward_map_eq_selected_policy
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (varianceCeiling : NNReal)
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (hvariance :
+      forall context : Context, forall action : Action,
+        varianceProxy context action <= varianceCeiling)
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+              (fun y : Omega => reward y (i + 1))
+              (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.pairHistoryRewardProjection
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)))
+              ((policy i).action
+                (state i
+                  (History.pairHistoryRewardProjection
+                    (History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward omega)
+                      (reward omega) i)))))
+          (ae
+            (mu.trim
+              ((History.historyFiltrationSucc
+                (generatedActionFromRewardHistory policy state defaultAction
+                  reward)
+                reward
+                (generatedActionFromRewardHistory_measurable
+                  (policy := policy) (state := state)
+                  (defaultAction := defaultAction) (reward := reward)
+                  hreward hstate)
+                hreward).le i)))) :
+    GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource
+      mu rewardKernel policy context state mean varianceProxy defaultAction
+      reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling := by
+  let source :=
+    generatedActionPartialTrajectoryPairLawSource_of_comap_reward_map_eq_selected_policy
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (hcontext := hcontext)
+      (hstate := hstate)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      h_reward_map_eq
+  exact
+    generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource_of_partialTrajectoryPairLawSource
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (mean := mean)
+      (varianceProxy := varianceProxy)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (rewardLo := rewardLo)
+      (rewardHi := rewardHi)
+      (meanLo := meanLo)
+      (meanHi := meanHi)
+      (varianceCeiling := varianceCeiling)
+      (hmean := hmean)
+      (hkernel := hkernel)
+      (hraw := hraw)
+      (hmean_range := hmean_range)
+      (hvariance := hvariance)
+      (source := source)
+
+/--
+Build the packaged uniform-variance practical source directly from a
+finite-pair-history comap selected-reward law whose a.e. filter is also stated
+at the comap-trim conditioning surface.
+
+This is the direct comap-trim companion to
+`generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource_of_comap_reward_map_eq_selected_policy`.
+It changes only the selected-reward law entry surface: the proof first builds
+the generated full finite-pair `partialTraj` source through the comap-trim law
+constructor, then reuses the existing source-contract uniform-variance package.
+-/
+def generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource_of_comap_trim_reward_map_eq_selected_policy
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (varianceCeiling : NNReal)
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (hvariance :
+      forall context : Context, forall action : Action,
+        varianceProxy context action <= varianceCeiling)
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+              (fun y : Omega => reward y (i + 1))
+              (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.pairHistoryRewardProjection
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)))
+              ((policy i).action
+                (state i
+                  (History.pairHistoryRewardProjection
+                    (History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward omega)
+                      (reward omega) i)))))
+          (ae
+            (mu.trim
+              (show
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i)) <= mOmega from by
+                have hfiltration :
+                    ((History.historyFiltrationSucc (mOmega := mOmega)
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward)
+                      reward
+                      (generatedActionFromRewardHistory_measurable
+                        (mOmega := mOmega)
+                        (policy := policy) (state := state)
+                        (defaultAction := defaultAction) (reward := reward)
+                        hreward hstate)
+                      hreward) i :
+                        MeasurableSpace Omega) =
+                    ((inferInstance :
+                      MeasurableSpace
+                        ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                      (fun y : Omega =>
+                        History.finitePairHistoryOfTrace
+                          (generatedActionFromRewardHistory policy state
+                            defaultAction reward y)
+                          (reward y) i)) :=
+                  History.historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace
+                    (mOmega := mOmega)
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward)
+                    reward
+                    (generatedActionFromRewardHistory_measurable
+                      (mOmega := mOmega)
+                      (policy := policy) (state := state)
+                      (defaultAction := defaultAction) (reward := reward)
+                      hreward hstate)
+                    hreward i
+                have hhist_le :
+                    ((History.historyFiltrationSucc (mOmega := mOmega)
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward)
+                      reward
+                      (generatedActionFromRewardHistory_measurable
+                        (mOmega := mOmega)
+                        (policy := policy) (state := state)
+                        (defaultAction := defaultAction) (reward := reward)
+                        hreward hstate)
+                      hreward) i :
+                        MeasurableSpace Omega) <= mOmega :=
+                  ((History.historyFiltrationSucc (mOmega := mOmega)
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward)
+                    reward
+                    (generatedActionFromRewardHistory_measurable
+                      (mOmega := mOmega)
+                      (policy := policy) (state := state)
+                      (defaultAction := defaultAction) (reward := reward)
+                      hreward hstate)
+                    hreward).le i)
+                simpa only [hfiltration.symm] using hhist_le)))) :
+    GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource
+      mu rewardKernel policy context state mean varianceProxy defaultAction
+      reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling := by
+  let source :=
+    generatedActionPartialTrajectoryPairLawSource_of_comap_trim_reward_map_eq_selected_policy
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (hcontext := hcontext)
+      (hstate := hstate)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      h_reward_map_eq
+  exact
+    generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource_of_partialTrajectoryPairLawSource
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (mean := mean)
+      (varianceProxy := varianceProxy)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (rewardLo := rewardLo)
+      (rewardHi := rewardHi)
+      (meanLo := meanLo)
+      (meanHi := meanHi)
+      (varianceCeiling := varianceCeiling)
+      (hmean := hmean)
+      (hkernel := hkernel)
+      (hraw := hraw)
+      (hmean_range := hmean_range)
+      (hvariance := hvariance)
+      (source := source)
 
 /--
 Build the practical definitional generated-policy raw-range source with a
@@ -4840,6 +8662,317 @@ def generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVaria
     (hmean_range := hmean_range)
     (hvariance := hvariance)
     source.partialtraj_map_eq
+
+/--
+Build the packaged selected-history-variance practical source directly from a
+finite-pair-history comap selected-reward law.
+
+This is the comap-selected-reward entry point for the selected-history source
+conversion leaf: the selected-reward law first constructs the generated full
+finite-pair `partialTraj` source, then the existing source-contract
+constructor packages the raw/mean range and selected-history variance
+regularity.
+-/
+def generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource_of_comap_reward_map_eq_selected_policy
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (varianceCeiling : Nat -> NNReal)
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (hvariance :
+      forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat),
+        varianceProxy (context i history)
+          ((policy i).action (state i history)) <= varianceCeiling i)
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+              (fun y : Omega => reward y (i + 1))
+              (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.pairHistoryRewardProjection
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)))
+              ((policy i).action
+                (state i
+                  (History.pairHistoryRewardProjection
+                    (History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward omega)
+                      (reward omega) i)))))
+          (ae
+            (mu.trim
+              ((History.historyFiltrationSucc
+                (generatedActionFromRewardHistory policy state defaultAction
+                  reward)
+                reward
+                (generatedActionFromRewardHistory_measurable
+                  (policy := policy) (state := state)
+                  (defaultAction := defaultAction) (reward := reward)
+                  hreward hstate)
+                hreward).le i)))) :
+    GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource
+      mu rewardKernel policy context state mean varianceProxy defaultAction
+      reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling := by
+  let source :=
+    generatedActionPartialTrajectoryPairLawSource_of_comap_reward_map_eq_selected_policy
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (hcontext := hcontext)
+      (hstate := hstate)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      h_reward_map_eq
+  exact
+    generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource_of_partialTrajectoryPairLawSource
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (mean := mean)
+      (varianceProxy := varianceProxy)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (rewardLo := rewardLo)
+      (rewardHi := rewardHi)
+      (meanLo := meanLo)
+      (meanHi := meanHi)
+      (varianceCeiling := varianceCeiling)
+      (hmean := hmean)
+      (hkernel := hkernel)
+      (hraw := hraw)
+      (hmean_range := hmean_range)
+      (hvariance := hvariance)
+      (source := source)
+
+/--
+Build the packaged selected-history-variance practical source directly from a
+finite-pair-history comap selected-reward law whose a.e. filter is also stated
+at the comap-trim conditioning surface.
+
+This is the direct comap-trim companion to
+`generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource_of_comap_reward_map_eq_selected_policy`.
+It changes only the selected-reward law entry surface: the proof first builds
+the generated full finite-pair `partialTraj` source through the comap-trim law
+constructor, then reuses the existing source-contract history-variance package.
+-/
+def generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource_of_comap_trim_reward_map_eq_selected_policy
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (varianceCeiling : Nat -> NNReal)
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (hvariance :
+      forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat),
+        varianceProxy (context i history)
+          ((policy i).action (state i history)) <= varianceCeiling i)
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+              (fun y : Omega => reward y (i + 1))
+              (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.pairHistoryRewardProjection
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)))
+              ((policy i).action
+                (state i
+                  (History.pairHistoryRewardProjection
+                    (History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward omega)
+                      (reward omega) i)))))
+          (ae
+            (mu.trim
+              (show
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i)) <= mOmega from by
+                have hfiltration :
+                    ((History.historyFiltrationSucc (mOmega := mOmega)
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward)
+                      reward
+                      (generatedActionFromRewardHistory_measurable
+                        (mOmega := mOmega)
+                        (policy := policy) (state := state)
+                        (defaultAction := defaultAction) (reward := reward)
+                        hreward hstate)
+                      hreward) i :
+                        MeasurableSpace Omega) =
+                    ((inferInstance :
+                      MeasurableSpace
+                        ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                      (fun y : Omega =>
+                        History.finitePairHistoryOfTrace
+                          (generatedActionFromRewardHistory policy state
+                            defaultAction reward y)
+                          (reward y) i)) :=
+                  History.historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace
+                    (mOmega := mOmega)
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward)
+                    reward
+                    (generatedActionFromRewardHistory_measurable
+                      (mOmega := mOmega)
+                      (policy := policy) (state := state)
+                      (defaultAction := defaultAction) (reward := reward)
+                      hreward hstate)
+                    hreward i
+                have hhist_le :
+                    ((History.historyFiltrationSucc (mOmega := mOmega)
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward)
+                      reward
+                      (generatedActionFromRewardHistory_measurable
+                        (mOmega := mOmega)
+                        (policy := policy) (state := state)
+                        (defaultAction := defaultAction) (reward := reward)
+                        hreward hstate)
+                      hreward) i :
+                        MeasurableSpace Omega) <= mOmega :=
+                  ((History.historyFiltrationSucc (mOmega := mOmega)
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward)
+                    reward
+                    (generatedActionFromRewardHistory_measurable
+                      (mOmega := mOmega)
+                      (policy := policy) (state := state)
+                      (defaultAction := defaultAction) (reward := reward)
+                      hreward hstate)
+                    hreward).le i)
+                simpa only [hfiltration.symm] using hhist_le)))) :
+    GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource
+      mu rewardKernel policy context state mean varianceProxy defaultAction
+      reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling := by
+  let source :=
+    generatedActionPartialTrajectoryPairLawSource_of_comap_trim_reward_map_eq_selected_policy
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (hcontext := hcontext)
+      (hstate := hstate)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      h_reward_map_eq
+  exact
+    generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource_of_partialTrajectoryPairLawSource
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (mean := mean)
+      (varianceProxy := varianceProxy)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (rewardLo := rewardLo)
+      (rewardHi := rewardHi)
+      (meanLo := meanLo)
+      (meanHi := meanHi)
+      (varianceCeiling := varianceCeiling)
+      (hmean := hmean)
+      (hkernel := hkernel)
+      (hraw := hraw)
+      (hmean_range := hmean_range)
+      (hvariance := hvariance)
+      (source := source)
 
 /--
 Build the practical definitional generated-policy raw-range source from the
@@ -8895,6 +13028,167 @@ def generatedActionPartialTrajectoryPairLawSource_of_randomPairDefinitionalRawRa
     (source := source.definitional_map_source)
 
 /--
+Convert a practical definitional raw-range/measurable-mean-range bounded
+generated random next-pair source into the generated selected-reward
+finite-pair-history source.
+
+This is a source-conversion theorem route for downstream selected-reward
+consumers: the practical source already exposes the full finite-pair
+`partialTraj` law, and the selected finite-pair-history source is obtained by
+projecting that law to the policy-selected reward coordinate.  It still
+consumes the packaged random next-pair law rather than proving the ambient
+trajectory identification.
+-/
+def generatedActionSelectedRewardFinitePairHistoryLawSource_of_randomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (source :
+      GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource
+        mu rewardKernel policy context state mean varianceProxy defaultAction
+        reward hreward rewardLo rewardHi meanLo meanHi) :
+    GeneratedActionSelectedRewardFinitePairHistoryLawSource
+      mu rewardKernel policy context state defaultAction reward hreward :=
+  generatedActionSelectedRewardFinitePairHistoryLawSource_of_partialTrajectoryPairLawSource
+    (mu := mu)
+    (rewardKernel := rewardKernel)
+    (policy := policy)
+    (context := context)
+    (state := state)
+    (defaultAction := defaultAction)
+    (reward := reward)
+    (hreward := hreward)
+    (source :=
+      generatedActionPartialTrajectoryPairLawSource_of_randomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource
+        (mu := mu)
+        (rewardKernel := rewardKernel)
+        (policy := policy)
+        (context := context)
+        (state := state)
+        (mean := mean)
+        (varianceProxy := varianceProxy)
+        (defaultAction := defaultAction)
+        (reward := reward)
+        (hreward := hreward)
+        (rewardLo := rewardLo)
+        (rewardHi := rewardHi)
+        (meanLo := meanLo)
+        (meanHi := meanHi)
+        (source := source))
+
+/--
+Project a practical uniform-variance source to the generated selected-reward
+finite-pair-history law source.
+
+The variance ceiling is retained by the original source and can be supplied to
+conditional-MGF consumers after this selected-law projection.
+-/
+def generatedActionSelectedRewardFinitePairHistoryLawSource_of_uniformVarianceBoundedSource
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (varianceCeiling : NNReal)
+    (source :
+      GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource
+        mu rewardKernel policy context state mean varianceProxy defaultAction
+        reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling) :
+    GeneratedActionSelectedRewardFinitePairHistoryLawSource
+      mu rewardKernel policy context state defaultAction reward hreward :=
+  generatedActionSelectedRewardFinitePairHistoryLawSource_of_randomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource
+    (mu := mu)
+    (rewardKernel := rewardKernel)
+    (policy := policy)
+    (context := context)
+    (state := state)
+    (mean := mean)
+    (varianceProxy := varianceProxy)
+    (defaultAction := defaultAction)
+    (reward := reward)
+    (hreward := hreward)
+    (rewardLo := rewardLo)
+    (rewardHi := rewardHi)
+    (meanLo := meanLo)
+    (meanHi := meanHi)
+    (source := source.base_source)
+
+/--
+Project a practical selected-history variance source to the generated
+selected-reward finite-pair-history law source.
+
+The time-indexed variance ceilings remain source-side regularity that can be
+fed to the selected finite-pair-history conditional-MGF consumers.
+-/
+def generatedActionSelectedRewardFinitePairHistoryLawSource_of_historyVarianceBoundedSource
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (varianceCeiling : Nat -> NNReal)
+    (source :
+      GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource
+        mu rewardKernel policy context state mean varianceProxy defaultAction
+        reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling) :
+    GeneratedActionSelectedRewardFinitePairHistoryLawSource
+      mu rewardKernel policy context state defaultAction reward hreward :=
+  generatedActionSelectedRewardFinitePairHistoryLawSource_of_randomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource
+    (mu := mu)
+    (rewardKernel := rewardKernel)
+    (policy := policy)
+    (context := context)
+    (state := state)
+    (mean := mean)
+    (varianceProxy := varianceProxy)
+    (defaultAction := defaultAction)
+    (reward := reward)
+    (hreward := hreward)
+    (rewardLo := rewardLo)
+    (rewardHi := rewardHi)
+    (meanLo := meanLo)
+    (meanHi := meanHi)
+    (source := source.base_source)
+
+/--
 Consume a generated-policy actual reward-coordinate law source to obtain the
 canonical history-step pair law.
 -/
@@ -11431,9 +15725,9 @@ succ-indexed conditional sub-Gaussian MGF witness for the centered reward.
 
 The source supplies the generated-action law, the canonical next-pair map law,
 the centered reward-kernel law, and context/state measurability.  The analytic
-regularity contracts required by Mathlib's conditional MGF predicate remain
-explicit: ambient centered-reward measurability, exponential integrability, and
-the deterministic variance-proxy upper bound.
+regularity contracts that remain explicit are ambient centered-reward
+measurability and the deterministic variance-proxy upper bound; exponential
+integrability is derived by the integrated target-law transfer.
 -/
 theorem centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairCenteredSource
     {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
@@ -11471,19 +15765,6 @@ theorem centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairCe
                 (state i
                   (History.finiteRewardHistoryOfTrace (reward omega) i))) :
                 Rat) : Real))))
-    (h_integrable_exp :
-      forall t : Real,
-        MeasureTheory.Integrable
-          (fun omega : Omega =>
-            Real.exp (t *
-              (((reward omega (i + 1) -
-                mean
-                  (context i
-                    (History.finiteRewardHistoryOfTrace (reward omega) i))
-                  ((policy i).action
-                    (state i
-                      (History.finiteRewardHistoryOfTrace (reward omega) i))) :
-                    Rat) : Real)))) mu)
     (h_variance_le :
       Filter.Eventually
         (fun omega : Omega =>
@@ -11664,7 +15945,6 @@ theorem centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairCe
       (i := i)
       (c := c)
       h_centered_meas
-      h_integrable_exp
       h_kernel_map_eq
       h_variance_le
 
@@ -11674,9 +15954,8 @@ the succ-indexed conditional sub-Gaussian MGF witness for the centered reward.
 
 This is the bounded-source wrapper around the centered-source MGF consumer.  It
 uses the bounded source only to lower into `GeneratedActionRandomPairCenteredSource`;
-Mathlib's MGF predicate still receives the ambient centered-reward
-measurability, exponential integrability, and variance-proxy domination
-contracts explicitly.
+ambient centered-reward measurability and variance-proxy domination remain
+explicit, while exponential integrability is derived.
 -/
 theorem centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairBoundedCenteredSource
     {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
@@ -11716,19 +15995,6 @@ theorem centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairBo
                 (state i
                   (History.finiteRewardHistoryOfTrace (reward omega) i))) :
                 Rat) : Real))))
-    (h_integrable_exp :
-      forall t : Real,
-        MeasureTheory.Integrable
-          (fun omega : Omega =>
-            Real.exp (t *
-              (((reward omega (i + 1) -
-                mean
-                  (context i
-                    (History.finiteRewardHistoryOfTrace (reward omega) i))
-                  ((policy i).action
-                    (state i
-                      (History.finiteRewardHistoryOfTrace (reward omega) i))) :
-                    Rat) : Real)))) mu)
     (h_variance_le :
       Filter.Eventually
         (fun omega : Omega =>
@@ -11790,7 +16056,6 @@ theorem centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairBo
       (i := i)
       (c := c)
       h_centered_meas
-      h_integrable_exp
       h_variance_le
 
 /--
@@ -12093,7 +16358,8 @@ reward.
 This is the definitional-action wrapper around the explicit centered-source MGF
 consumer: the action trace is fixed to `generatedActionFromRewardHistory`, and
 the definitional source is lowered to the explicit centered source.  The
-analytic contracts required by Mathlib's MGF predicate remain explicit.
+centered-reward measurability and variance ceiling remain explicit; exponential
+integrability is derived.
 -/
 theorem centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalCenteredSource
     {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
@@ -12128,19 +16394,6 @@ theorem centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDe
                 (state i
                   (History.finiteRewardHistoryOfTrace (reward omega) i))) :
                 Rat) : Real))))
-    (h_integrable_exp :
-      forall t : Real,
-        MeasureTheory.Integrable
-          (fun omega : Omega =>
-            Real.exp (t *
-              (((reward omega (i + 1) -
-                mean
-                  (context i
-                    (History.finiteRewardHistoryOfTrace (reward omega) i))
-                  ((policy i).action
-                    (state i
-                      (History.finiteRewardHistoryOfTrace (reward omega) i))) :
-                    Rat) : Real)))) mu)
     (h_variance_le :
       Filter.Eventually
         (fun omega : Omega =>
@@ -12222,7 +16475,6 @@ theorem centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDe
       (i := i)
       (c := c)
       h_centered_meas
-      h_integrable_exp
       h_variance_le
 
 /--
@@ -17067,7 +21319,8 @@ witness for the centered reward.
 This exposes the newest definitional centered-source MGF consumer at the
 top-level bounded practical source surface.  The range evidence is used through
 the existing conversion into `GeneratedActionRandomPairDefinitionalCenteredSource`;
-Mathlib's MGF regularity contracts remain explicit.
+centered-reward measurability and the variance ceiling remain explicit, while
+the converted selected laws derive exponential integrability.
 -/
 theorem centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource
     {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
@@ -17104,19 +21357,6 @@ theorem centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDe
                 (state i
                   (History.finiteRewardHistoryOfTrace (reward omega) i))) :
                 Rat) : Real))))
-    (h_integrable_exp :
-      forall t : Real,
-        MeasureTheory.Integrable
-          (fun omega : Omega =>
-            Real.exp (t *
-              (((reward omega (i + 1) -
-                mean
-                  (context i
-                    (History.finiteRewardHistoryOfTrace (reward omega) i))
-                  ((policy i).action
-                    (state i
-                      (History.finiteRewardHistoryOfTrace (reward omega) i))) :
-                    Rat) : Real)))) mu)
     (h_variance_le :
       Filter.Eventually
         (fun omega : Omega =>
@@ -17195,13 +21435,12 @@ theorem centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDe
       (i := i)
       (c := c)
       h_centered_meas
-      h_integrable_exp
       h_variance_le
 
 /--
 Consume the practical definitional raw-range source for the conditional MGF
-route while deriving the exponential-integrability regularity contract from
-the source bounds.
+route from a supplied centered-reward measurability witness.  The selected-law
+MGF transfer now derives exponential integrability directly.
 -/
 theorem centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_centered_meas
     {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
@@ -17304,31 +21543,12 @@ theorem centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDe
       (i := i)
       (c := c)
       h_centered_meas
-      (fun t =>
-        centeredReward_succ_integrable_exp_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource
-          (mu := mu)
-          (rewardKernel := rewardKernel)
-          (policy := policy)
-          (context := context)
-          (state := state)
-          (mean := mean)
-          (varianceProxy := varianceProxy)
-          (defaultAction := defaultAction)
-          (reward := reward)
-          (hreward := hreward)
-          (rewardLo := rewardLo)
-          (rewardHi := rewardHi)
-          (meanLo := meanLo)
-          (meanHi := meanHi)
-          (source := source)
-          (i := i)
-          (t := t))
       h_variance_le
 
 /--
 Consume the practical definitional raw-range source for the conditional MGF
-route while deriving both centered-reward measurability and exponential
-integrability from the source regularity fields.
+route while deriving centered-reward measurability from the source regularity
+fields; exponential integrability follows from the selected laws.
 -/
 theorem centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_variance_le
     {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
@@ -20667,6 +24887,2975 @@ theorem centeredReward_succ_condExp_eq_zero_of_actionRewardPartialTrajectoryKern
           (hmean_range := hmean_range)
           h_kernel_partialtraj_map_eq)
       (i := i)
+
+/--
+Consume a packaged full finite-pair-trace `partialTraj` law plus the practical
+raw/mean range regularity package to obtain ordinary succ-indexed conditional
+mean-zero.
+
+This is the source-level companion to the full-trace law-surface wrapper above:
+the packaged source supplies context/state measurability and the
+`partialTraj`/`condExpKernel` law field.
+-/
+theorem centeredReward_succ_condExp_eq_zero_of_partialTrajectoryPairLawSource_definitionalRawRangeMeasurableMeanRangeBounded
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (source :
+      GeneratedActionPartialTrajectoryPairLawSource mu rewardKernel policy
+        context state defaultAction reward hreward)
+    (i : Nat) :
+    Filter.EventuallyEq (ae mu)
+      (@condExp Omega Real
+        ((History.historyFiltrationSucc
+          (generatedActionFromRewardHistory policy state defaultAction reward)
+          reward
+          (generatedActionFromRewardHistory_measurable
+            (policy := policy) (state := state)
+            (defaultAction := defaultAction) (reward := reward)
+            hreward source.hstate)
+          hreward) i)
+        mOmega _ _ _ mu
+        (fun omega : Omega =>
+          (((reward omega (i + 1) -
+            mean
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+              Rat) : Real))))
+      (fun _omega : Omega => (0 : Real)) := by
+  exact
+    centeredReward_succ_condExp_eq_zero_of_actionRewardPartialTrajectoryKernel_map_eq_definitionalRawRangeMeasurableMeanRangeBounded
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (mean := mean)
+      (varianceProxy := varianceProxy)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (rewardLo := rewardLo)
+      (rewardHi := rewardHi)
+      (meanLo := meanLo)
+      (meanHi := meanHi)
+      (hcontext := source.hcontext)
+      (hstate := source.hstate)
+      (hmean := hmean)
+      (hkernel := hkernel)
+      (hraw := hraw)
+      (hmean_range := hmean_range)
+      (h_kernel_partialtraj_map_eq := source.partialtraj_map_eq)
+      (i := i)
+
+/--
+Consume the generated selected-reward finite-pair-history source plus the
+practical raw/mean range regularity package to obtain ordinary succ-indexed
+conditional mean-zero.
+
+This is the direct mean-zero consumer for
+`GeneratedActionSelectedRewardFinitePairHistoryLawSource`: the source is first
+converted to `GeneratedActionPartialTrajectoryPairLawSource`, then the existing
+full finite-pair-trace consumer applies.  The selected-reward law is still a
+source field, not proved here.
+-/
+theorem centeredReward_succ_condExp_eq_zero_of_selectedRewardFinitePairHistoryLawSource_definitionalRawRangeMeasurableMeanRangeBounded
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (source :
+      GeneratedActionSelectedRewardFinitePairHistoryLawSource
+        mu rewardKernel policy context state defaultAction reward hreward)
+    (i : Nat) :
+    Filter.EventuallyEq (ae mu)
+      (@condExp Omega Real
+        ((History.historyFiltrationSucc
+          (generatedActionFromRewardHistory policy state defaultAction reward)
+          reward
+          (generatedActionFromRewardHistory_measurable
+            (policy := policy) (state := state)
+            (defaultAction := defaultAction) (reward := reward)
+            hreward source.hstate)
+          hreward) i)
+        mOmega _ _ _ mu
+        (fun omega : Omega =>
+          (((reward omega (i + 1) -
+            mean
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+              Rat) : Real))))
+      (fun _omega : Omega => (0 : Real)) := by
+  let partialSource :
+      GeneratedActionPartialTrajectoryPairLawSource mu rewardKernel policy
+        context state defaultAction reward hreward :=
+    generatedActionPartialTrajectoryPairLawSource_of_selectedRewardFinitePairHistoryLawSource
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      source
+  simpa [partialSource,
+    generatedActionPartialTrajectoryPairLawSource_of_selectedRewardFinitePairHistoryLawSource]
+    using
+      centeredReward_succ_condExp_eq_zero_of_partialTrajectoryPairLawSource_definitionalRawRangeMeasurableMeanRangeBounded
+        (mu := mu)
+        (rewardKernel := rewardKernel)
+        (policy := policy)
+        (context := context)
+        (state := state)
+        (mean := mean)
+        (varianceProxy := varianceProxy)
+        (defaultAction := defaultAction)
+        (reward := reward)
+        (hreward := hreward)
+        (rewardLo := rewardLo)
+        (rewardHi := rewardHi)
+        (meanLo := meanLo)
+        (meanHi := meanHi)
+        (hmean := hmean)
+        (hkernel := hkernel)
+        (hraw := hraw)
+        (hmean_range := hmean_range)
+        (source := partialSource)
+        (i := i)
+
+/--
+Consume the generated selected-reward finite-pair-history source plus the
+practical raw/mean range regularity package and a global variance ceiling to
+obtain the succ-indexed conditional MGF witness.
+
+This is the selected-reward source-level companion to the packaged
+`partialTraj` source consumer.  The source is lowered through
+`GeneratedActionPartialTrajectoryPairLawSource`; it still consumes the
+selected-reward law field and does not prove ambient trajectory transport.
+-/
+theorem centeredReward_succ_hasCondSubgaussianMGF_of_selectedRewardFinitePairHistoryLawSource_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (varianceCeiling : NNReal)
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (hvariance :
+      forall context : Context, forall action : Action,
+        varianceProxy context action <= varianceCeiling)
+    (source :
+      GeneratedActionSelectedRewardFinitePairHistoryLawSource
+        mu rewardKernel policy context state defaultAction reward hreward)
+    (i : Nat) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward source.hstate)
+        hreward) i)
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward source.hstate)
+        hreward).le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      varianceCeiling mu := by
+  let partialSource :
+      GeneratedActionPartialTrajectoryPairLawSource mu rewardKernel policy
+        context state defaultAction reward hreward :=
+    generatedActionPartialTrajectoryPairLawSource_of_selectedRewardFinitePairHistoryLawSource
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      source
+  simpa [partialSource,
+    generatedActionPartialTrajectoryPairLawSource_of_selectedRewardFinitePairHistoryLawSource]
+    using
+      centeredReward_succ_hasCondSubgaussianMGF_of_partialTrajectoryPairLawSource_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded
+        (mu := mu)
+        (rewardKernel := rewardKernel)
+        (policy := policy)
+        (context := context)
+        (state := state)
+        (mean := mean)
+        (varianceProxy := varianceProxy)
+        (defaultAction := defaultAction)
+        (reward := reward)
+        (hreward := hreward)
+        (rewardLo := rewardLo)
+        (rewardHi := rewardHi)
+        (meanLo := meanLo)
+        (meanHi := meanHi)
+        (varianceCeiling := varianceCeiling)
+        (hmean := hmean)
+        (hkernel := hkernel)
+        (hraw := hraw)
+        (hmean_range := hmean_range)
+        (hvariance := hvariance)
+        (source := partialSource)
+        (i := i)
+
+/--
+Consume the generated selected-reward finite-pair-history source plus the
+practical uniform variance package at any deterministic proxy dominating the
+global ceiling.
+
+This is the coarser-proxy selected-source wrapper for the existing packaged
+`partialTraj` source MGF consumer.
+-/
+theorem centeredReward_succ_hasCondSubgaussianMGF_of_selectedRewardFinitePairHistoryLawSource_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded_of_varianceCeiling_le
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (varianceCeiling : NNReal)
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (hvariance :
+      forall context : Context, forall action : Action,
+        varianceProxy context action <= varianceCeiling)
+    (source :
+      GeneratedActionSelectedRewardFinitePairHistoryLawSource
+        mu rewardKernel policy context state defaultAction reward hreward)
+    (i : Nat)
+    (c : NNReal)
+    (hceiling : varianceCeiling <= c) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward source.hstate)
+        hreward) i)
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward source.hstate)
+        hreward).le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      c mu := by
+  let partialSource :
+      GeneratedActionPartialTrajectoryPairLawSource mu rewardKernel policy
+        context state defaultAction reward hreward :=
+    generatedActionPartialTrajectoryPairLawSource_of_selectedRewardFinitePairHistoryLawSource
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      source
+  simpa [partialSource,
+    generatedActionPartialTrajectoryPairLawSource_of_selectedRewardFinitePairHistoryLawSource]
+    using
+      centeredReward_succ_hasCondSubgaussianMGF_of_partialTrajectoryPairLawSource_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded_of_varianceCeiling_le
+        (mu := mu)
+        (rewardKernel := rewardKernel)
+        (policy := policy)
+        (context := context)
+        (state := state)
+        (mean := mean)
+        (varianceProxy := varianceProxy)
+        (defaultAction := defaultAction)
+        (reward := reward)
+        (hreward := hreward)
+        (rewardLo := rewardLo)
+        (rewardHi := rewardHi)
+        (meanLo := meanLo)
+        (meanHi := meanHi)
+        (varianceCeiling := varianceCeiling)
+        (hmean := hmean)
+        (hkernel := hkernel)
+        (hraw := hraw)
+        (hmean_range := hmean_range)
+        (hvariance := hvariance)
+        (source := partialSource)
+        (i := i)
+        (c := c)
+        hceiling
+
+/--
+Consume the generated selected-reward finite-pair-history source plus the
+practical raw/mean range regularity package and selected-history variance
+ceilings to obtain the succ-indexed conditional MGF witness.
+
+This is the selected-source wrapper for the existing packaged `partialTraj`
+source history-variance consumer.
+-/
+theorem centeredReward_succ_hasCondSubgaussianMGF_of_selectedRewardFinitePairHistoryLawSource_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (varianceCeiling : Nat -> NNReal)
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (hvariance :
+      forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat),
+        varianceProxy (context i history)
+          ((policy i).action (state i history)) <= varianceCeiling i)
+    (source :
+      GeneratedActionSelectedRewardFinitePairHistoryLawSource
+        mu rewardKernel policy context state defaultAction reward hreward)
+    (i : Nat) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward source.hstate)
+        hreward) i)
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward source.hstate)
+        hreward).le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      (varianceCeiling i) mu := by
+  let partialSource :
+      GeneratedActionPartialTrajectoryPairLawSource mu rewardKernel policy
+        context state defaultAction reward hreward :=
+    generatedActionPartialTrajectoryPairLawSource_of_selectedRewardFinitePairHistoryLawSource
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      source
+  simpa [partialSource,
+    generatedActionPartialTrajectoryPairLawSource_of_selectedRewardFinitePairHistoryLawSource]
+    using
+      centeredReward_succ_hasCondSubgaussianMGF_of_partialTrajectoryPairLawSource_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded
+        (mu := mu)
+        (rewardKernel := rewardKernel)
+        (policy := policy)
+        (context := context)
+        (state := state)
+        (mean := mean)
+        (varianceProxy := varianceProxy)
+        (defaultAction := defaultAction)
+        (reward := reward)
+        (hreward := hreward)
+        (rewardLo := rewardLo)
+        (rewardHi := rewardHi)
+        (meanLo := meanLo)
+        (meanHi := meanHi)
+        (varianceCeiling := varianceCeiling)
+        (hmean := hmean)
+        (hkernel := hkernel)
+        (hraw := hraw)
+        (hmean_range := hmean_range)
+        (hvariance := hvariance)
+        (source := partialSource)
+        (i := i)
+
+/--
+Consume the generated selected-reward finite-pair-history source plus the
+practical selected-history variance package at any deterministic proxy
+dominating the requested time's ceiling.
+
+This is the coarser-proxy selected-source wrapper for the existing packaged
+`partialTraj` source history-variance MGF consumer.
+-/
+theorem centeredReward_succ_hasCondSubgaussianMGF_of_selectedRewardFinitePairHistoryLawSource_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded_of_varianceCeiling_le
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (varianceCeiling : Nat -> NNReal)
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (hvariance :
+      forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat),
+        varianceProxy (context i history)
+          ((policy i).action (state i history)) <= varianceCeiling i)
+    (source :
+      GeneratedActionSelectedRewardFinitePairHistoryLawSource
+        mu rewardKernel policy context state defaultAction reward hreward)
+    (i : Nat)
+    (c : NNReal)
+    (hceiling : varianceCeiling i <= c) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward source.hstate)
+        hreward) i)
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward source.hstate)
+        hreward).le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      c mu := by
+  let partialSource :
+      GeneratedActionPartialTrajectoryPairLawSource mu rewardKernel policy
+        context state defaultAction reward hreward :=
+    generatedActionPartialTrajectoryPairLawSource_of_selectedRewardFinitePairHistoryLawSource
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      source
+  simpa [partialSource,
+    generatedActionPartialTrajectoryPairLawSource_of_selectedRewardFinitePairHistoryLawSource]
+    using
+      centeredReward_succ_hasCondSubgaussianMGF_of_partialTrajectoryPairLawSource_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded_of_varianceCeiling_le
+        (mu := mu)
+        (rewardKernel := rewardKernel)
+        (policy := policy)
+        (context := context)
+        (state := state)
+        (mean := mean)
+        (varianceProxy := varianceProxy)
+        (defaultAction := defaultAction)
+        (reward := reward)
+        (hreward := hreward)
+        (rewardLo := rewardLo)
+        (rewardHi := rewardHi)
+        (meanLo := meanLo)
+        (meanHi := meanHi)
+        (varianceCeiling := varianceCeiling)
+        (hmean := hmean)
+        (hkernel := hkernel)
+        (hraw := hraw)
+        (hmean_range := hmean_range)
+        (hvariance := hvariance)
+        (source := partialSource)
+        (i := i)
+      (c := c)
+      hceiling
+
+/--
+Consume the practical definitional raw-range source through the generated
+selected-reward finite-pair-history source route to obtain ordinary
+succ-indexed conditional mean-zero.
+
+This records the end-to-end composition used by selected-reward theorem-card
+routes: the practical package is projected to
+`GeneratedActionSelectedRewardFinitePairHistoryLawSource`, then the selected
+source mean-zero consumer applies.  The packaged random next-pair law is still
+a source field, not proved here.
+-/
+theorem centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_via_selectedRewardFinitePairHistoryLawSource
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (source :
+      GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource
+        mu rewardKernel policy context state mean varianceProxy defaultAction
+        reward hreward rewardLo rewardHi meanLo meanHi)
+    (i : Nat) :
+    Filter.EventuallyEq (ae mu)
+      (@condExp Omega Real
+        ((History.historyFiltrationSucc
+          (generatedActionFromRewardHistory policy state defaultAction reward)
+          reward
+          (generatedActionFromRewardHistory_measurable
+            (policy := policy) (state := state)
+            (defaultAction := defaultAction) (reward := reward)
+            hreward source.definitional_map_source.hstate)
+          hreward) i)
+        mOmega _ _ _ mu
+        (fun omega : Omega =>
+          (((reward omega (i + 1) -
+            mean
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+              Rat) : Real))))
+      (fun _omega : Omega => (0 : Real)) := by
+  let selectedSource :
+      GeneratedActionSelectedRewardFinitePairHistoryLawSource
+        mu rewardKernel policy context state defaultAction reward hreward :=
+    generatedActionSelectedRewardFinitePairHistoryLawSource_of_randomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (mean := mean)
+      (varianceProxy := varianceProxy)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (rewardLo := rewardLo)
+      (rewardHi := rewardHi)
+      (meanLo := meanLo)
+      (meanHi := meanHi)
+      (source := source)
+  simpa [selectedSource,
+    generatedActionSelectedRewardFinitePairHistoryLawSource_of_randomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource,
+    generatedActionSelectedRewardFinitePairHistoryLawSource_of_partialTrajectoryPairLawSource,
+    generatedActionPartialTrajectoryPairLawSource_of_randomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource]
+    using
+      centeredReward_succ_condExp_eq_zero_of_selectedRewardFinitePairHistoryLawSource_definitionalRawRangeMeasurableMeanRangeBounded
+        (mu := mu)
+        (rewardKernel := rewardKernel)
+        (policy := policy)
+        (context := context)
+        (state := state)
+        (mean := mean)
+        (varianceProxy := varianceProxy)
+        (defaultAction := defaultAction)
+        (reward := reward)
+        (hreward := hreward)
+        (rewardLo := rewardLo)
+        (rewardHi := rewardHi)
+        (meanLo := meanLo)
+        (meanHi := meanHi)
+        (hmean := source.mean_measurable)
+        (hkernel := source.kernel_law)
+        (hraw := source.raw_reward_range_bound)
+        (hmean_range := source.mean_range_bound)
+        (source := selectedSource)
+        (i := i)
+
+/--
+Consume the practical uniform-variance source through the generated
+selected-reward finite-pair-history source route to obtain the conditional MGF
+witness at the packaged global variance ceiling.
+-/
+theorem centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource_via_selectedRewardFinitePairHistoryLawSource
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (varianceCeiling : NNReal)
+    (source :
+      GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource
+        mu rewardKernel policy context state mean varianceProxy defaultAction
+        reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling)
+    (i : Nat) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward
+          source.base_source.definitional_map_source.hstate)
+        hreward) i)
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward
+          source.base_source.definitional_map_source.hstate)
+        hreward).le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      varianceCeiling mu := by
+  let selectedSource :
+      GeneratedActionSelectedRewardFinitePairHistoryLawSource
+        mu rewardKernel policy context state defaultAction reward hreward :=
+    generatedActionSelectedRewardFinitePairHistoryLawSource_of_uniformVarianceBoundedSource
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (mean := mean)
+      (varianceProxy := varianceProxy)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (rewardLo := rewardLo)
+      (rewardHi := rewardHi)
+      (meanLo := meanLo)
+      (meanHi := meanHi)
+      (varianceCeiling := varianceCeiling)
+      (source := source)
+  simpa [selectedSource,
+    generatedActionSelectedRewardFinitePairHistoryLawSource_of_uniformVarianceBoundedSource,
+    generatedActionSelectedRewardFinitePairHistoryLawSource_of_randomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource,
+    generatedActionSelectedRewardFinitePairHistoryLawSource_of_partialTrajectoryPairLawSource,
+    generatedActionPartialTrajectoryPairLawSource_of_randomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource]
+    using
+      centeredReward_succ_hasCondSubgaussianMGF_of_selectedRewardFinitePairHistoryLawSource_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded
+        (mu := mu)
+        (rewardKernel := rewardKernel)
+        (policy := policy)
+        (context := context)
+        (state := state)
+        (mean := mean)
+        (varianceProxy := varianceProxy)
+        (defaultAction := defaultAction)
+        (reward := reward)
+        (hreward := hreward)
+        (rewardLo := rewardLo)
+        (rewardHi := rewardHi)
+        (meanLo := meanLo)
+        (meanHi := meanHi)
+        (varianceCeiling := varianceCeiling)
+        (hmean := source.base_source.mean_measurable)
+        (hkernel := source.base_source.kernel_law)
+        (hraw := source.base_source.raw_reward_range_bound)
+        (hmean_range := source.base_source.mean_range_bound)
+        (hvariance := source.variance_le)
+        (source := selectedSource)
+        (i := i)
+
+/--
+Consume the practical uniform-variance source through the selected-source route
+at any deterministic proxy dominating the packaged global ceiling.
+-/
+theorem centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource_via_selectedRewardFinitePairHistoryLawSource_of_varianceCeiling_le
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (varianceCeiling : NNReal)
+    (source :
+      GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource
+        mu rewardKernel policy context state mean varianceProxy defaultAction
+        reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling)
+    (i : Nat)
+    (c : NNReal)
+    (hceiling : varianceCeiling <= c) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward
+          source.base_source.definitional_map_source.hstate)
+        hreward) i)
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward
+          source.base_source.definitional_map_source.hstate)
+        hreward).le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      c mu := by
+  let selectedSource :
+      GeneratedActionSelectedRewardFinitePairHistoryLawSource
+        mu rewardKernel policy context state defaultAction reward hreward :=
+    generatedActionSelectedRewardFinitePairHistoryLawSource_of_uniformVarianceBoundedSource
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (mean := mean)
+      (varianceProxy := varianceProxy)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (rewardLo := rewardLo)
+      (rewardHi := rewardHi)
+      (meanLo := meanLo)
+      (meanHi := meanHi)
+      (varianceCeiling := varianceCeiling)
+      (source := source)
+  simpa [selectedSource,
+    generatedActionSelectedRewardFinitePairHistoryLawSource_of_uniformVarianceBoundedSource,
+    generatedActionSelectedRewardFinitePairHistoryLawSource_of_randomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource,
+    generatedActionSelectedRewardFinitePairHistoryLawSource_of_partialTrajectoryPairLawSource,
+    generatedActionPartialTrajectoryPairLawSource_of_randomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource]
+    using
+      centeredReward_succ_hasCondSubgaussianMGF_of_selectedRewardFinitePairHistoryLawSource_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded_of_varianceCeiling_le
+        (mu := mu)
+        (rewardKernel := rewardKernel)
+        (policy := policy)
+        (context := context)
+        (state := state)
+        (mean := mean)
+        (varianceProxy := varianceProxy)
+        (defaultAction := defaultAction)
+        (reward := reward)
+        (hreward := hreward)
+        (rewardLo := rewardLo)
+        (rewardHi := rewardHi)
+        (meanLo := meanLo)
+        (meanHi := meanHi)
+        (varianceCeiling := varianceCeiling)
+        (hmean := source.base_source.mean_measurable)
+        (hkernel := source.base_source.kernel_law)
+        (hraw := source.base_source.raw_reward_range_bound)
+        (hmean_range := source.base_source.mean_range_bound)
+        (hvariance := source.variance_le)
+        (source := selectedSource)
+        (i := i)
+        (c := c)
+        hceiling
+
+/--
+Consume the practical selected-history variance source through the generated
+selected-reward finite-pair-history source route to obtain the conditional MGF
+witness at the requested time-indexed ceiling.
+-/
+theorem centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource_via_selectedRewardFinitePairHistoryLawSource
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (varianceCeiling : Nat -> NNReal)
+    (source :
+      GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource
+        mu rewardKernel policy context state mean varianceProxy defaultAction
+        reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling)
+    (i : Nat) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward
+          source.base_source.definitional_map_source.hstate)
+        hreward) i)
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward
+          source.base_source.definitional_map_source.hstate)
+        hreward).le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      (varianceCeiling i) mu := by
+  let selectedSource :
+      GeneratedActionSelectedRewardFinitePairHistoryLawSource
+        mu rewardKernel policy context state defaultAction reward hreward :=
+    generatedActionSelectedRewardFinitePairHistoryLawSource_of_historyVarianceBoundedSource
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (mean := mean)
+      (varianceProxy := varianceProxy)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (rewardLo := rewardLo)
+      (rewardHi := rewardHi)
+      (meanLo := meanLo)
+      (meanHi := meanHi)
+      (varianceCeiling := varianceCeiling)
+      (source := source)
+  simpa [selectedSource,
+    generatedActionSelectedRewardFinitePairHistoryLawSource_of_historyVarianceBoundedSource,
+    generatedActionSelectedRewardFinitePairHistoryLawSource_of_randomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource,
+    generatedActionSelectedRewardFinitePairHistoryLawSource_of_partialTrajectoryPairLawSource,
+    generatedActionPartialTrajectoryPairLawSource_of_randomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource]
+    using
+      centeredReward_succ_hasCondSubgaussianMGF_of_selectedRewardFinitePairHistoryLawSource_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded
+        (mu := mu)
+        (rewardKernel := rewardKernel)
+        (policy := policy)
+        (context := context)
+        (state := state)
+        (mean := mean)
+        (varianceProxy := varianceProxy)
+        (defaultAction := defaultAction)
+        (reward := reward)
+        (hreward := hreward)
+        (rewardLo := rewardLo)
+        (rewardHi := rewardHi)
+        (meanLo := meanLo)
+        (meanHi := meanHi)
+        (varianceCeiling := varianceCeiling)
+        (hmean := source.base_source.mean_measurable)
+        (hkernel := source.base_source.kernel_law)
+        (hraw := source.base_source.raw_reward_range_bound)
+        (hmean_range := source.base_source.mean_range_bound)
+        (hvariance := source.variance_history_le)
+        (source := selectedSource)
+        (i := i)
+
+/--
+Consume the practical selected-history variance source through the
+selected-source route at any deterministic proxy dominating the requested
+time-indexed ceiling.
+-/
+theorem centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource_via_selectedRewardFinitePairHistoryLawSource_of_varianceCeiling_le
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (varianceCeiling : Nat -> NNReal)
+    (source :
+      GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource
+        mu rewardKernel policy context state mean varianceProxy defaultAction
+        reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling)
+    (i : Nat)
+    (c : NNReal)
+    (hceiling : varianceCeiling i <= c) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward
+          source.base_source.definitional_map_source.hstate)
+        hreward) i)
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward
+          source.base_source.definitional_map_source.hstate)
+        hreward).le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      c mu := by
+  let selectedSource :
+      GeneratedActionSelectedRewardFinitePairHistoryLawSource
+        mu rewardKernel policy context state defaultAction reward hreward :=
+    generatedActionSelectedRewardFinitePairHistoryLawSource_of_historyVarianceBoundedSource
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (mean := mean)
+      (varianceProxy := varianceProxy)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (rewardLo := rewardLo)
+      (rewardHi := rewardHi)
+      (meanLo := meanLo)
+      (meanHi := meanHi)
+      (varianceCeiling := varianceCeiling)
+      (source := source)
+  simpa [selectedSource,
+    generatedActionSelectedRewardFinitePairHistoryLawSource_of_historyVarianceBoundedSource,
+    generatedActionSelectedRewardFinitePairHistoryLawSource_of_randomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource,
+    generatedActionSelectedRewardFinitePairHistoryLawSource_of_partialTrajectoryPairLawSource,
+    generatedActionPartialTrajectoryPairLawSource_of_randomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource]
+    using
+      centeredReward_succ_hasCondSubgaussianMGF_of_selectedRewardFinitePairHistoryLawSource_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded_of_varianceCeiling_le
+        (mu := mu)
+        (rewardKernel := rewardKernel)
+        (policy := policy)
+        (context := context)
+        (state := state)
+        (mean := mean)
+        (varianceProxy := varianceProxy)
+        (defaultAction := defaultAction)
+        (reward := reward)
+        (hreward := hreward)
+        (rewardLo := rewardLo)
+        (rewardHi := rewardHi)
+        (meanLo := meanLo)
+        (meanHi := meanHi)
+        (varianceCeiling := varianceCeiling)
+        (hmean := source.base_source.mean_measurable)
+        (hkernel := source.base_source.kernel_law)
+        (hraw := source.base_source.raw_reward_range_bound)
+        (hmean_range := source.base_source.mean_range_bound)
+        (hvariance := source.variance_history_le)
+        (source := selectedSource)
+        (i := i)
+        (c := c)
+        hceiling
+
+/--
+Directly consume a selected-reward law stated at the finite pair-prefix comap
+conditioning surface plus the practical raw/mean range regularity package to
+obtain ordinary succ-indexed conditional mean-zero.
+
+This composes the comap-law source constructor with the selected-reward source
+mean-zero consumer.  It still consumes the selected-reward conditional law; it
+does not prove that law from an ambient trajectory/disintegration construction.
+-/
+theorem centeredReward_succ_condExp_eq_zero_of_comap_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeBounded
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+              (fun y : Omega => reward y (i + 1))
+              (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.pairHistoryRewardProjection
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)))
+              ((policy i).action
+                (state i
+                  (History.pairHistoryRewardProjection
+                    (History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward omega)
+                      (reward omega) i)))))
+          (ae
+            (mu.trim
+              ((History.historyFiltrationSucc
+                (generatedActionFromRewardHistory policy state defaultAction
+                  reward)
+                reward
+                (generatedActionFromRewardHistory_measurable
+                  (policy := policy) (state := state)
+                  (defaultAction := defaultAction) (reward := reward)
+                  hreward hstate)
+                hreward).le i))))
+    (i : Nat) :
+    Filter.EventuallyEq (ae mu)
+      (@condExp Omega Real
+        ((History.historyFiltrationSucc
+          (generatedActionFromRewardHistory policy state defaultAction reward)
+          reward
+          (generatedActionFromRewardHistory_measurable
+            (policy := policy) (state := state)
+            (defaultAction := defaultAction) (reward := reward)
+            hreward hstate)
+          hreward) i)
+        mOmega _ _ _ mu
+        (fun omega : Omega =>
+          (((reward omega (i + 1) -
+            mean
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+              Rat) : Real))))
+      (fun _omega : Omega => (0 : Real)) := by
+  let source :=
+    generatedActionSelectedRewardFinitePairHistoryLawSource_of_comap_reward_map_eq_selected_policy
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (hcontext := hcontext)
+      (hstate := hstate)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      h_reward_map_eq
+  exact
+    centeredReward_succ_condExp_eq_zero_of_selectedRewardFinitePairHistoryLawSource_definitionalRawRangeMeasurableMeanRangeBounded
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (mean := mean)
+      (varianceProxy := varianceProxy)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (rewardLo := rewardLo)
+      (rewardHi := rewardHi)
+      (meanLo := meanLo)
+      (meanHi := meanHi)
+      (hmean := hmean)
+      (hkernel := hkernel)
+      (hraw := hraw)
+      (hmean_range := hmean_range)
+      (source := source)
+      (i := i)
+
+/--
+Directly consume a selected-reward law stated entirely at the finite pair-prefix
+comap conditioning surface, including the `trim` a.e. filter, plus the
+practical raw/mean range regularity package to obtain ordinary succ-indexed
+conditional mean-zero.
+
+This is the comap-trim companion to the generated-history-trim mean-zero
+wrapper.  It only changes the input law surface; the proof still routes through
+`GeneratedActionSelectedRewardFinitePairHistoryLawSource` and does not prove the
+selected-reward law from an ambient trajectory/disintegration construction.
+-/
+theorem centeredReward_succ_condExp_eq_zero_of_comap_trim_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeBounded
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+              (fun y : Omega => reward y (i + 1))
+              (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.pairHistoryRewardProjection
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)))
+              ((policy i).action
+                (state i
+                  (History.pairHistoryRewardProjection
+                    (History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward omega)
+                      (reward omega) i)))))
+          (ae
+            (mu.trim
+              (show
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i)) <= mOmega from by
+                have hfiltration :
+                    ((History.historyFiltrationSucc (mOmega := mOmega)
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward)
+                      reward
+                      (generatedActionFromRewardHistory_measurable
+                        (mOmega := mOmega)
+                        (policy := policy) (state := state)
+                        (defaultAction := defaultAction) (reward := reward)
+                        hreward hstate)
+                      hreward) i :
+                        MeasurableSpace Omega) =
+                    ((inferInstance :
+                      MeasurableSpace
+                        ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                      (fun y : Omega =>
+                        History.finitePairHistoryOfTrace
+                          (generatedActionFromRewardHistory policy state
+                            defaultAction reward y)
+                          (reward y) i)) :=
+                  History.historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace
+                    (mOmega := mOmega)
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward)
+                    reward
+                    (generatedActionFromRewardHistory_measurable
+                      (mOmega := mOmega)
+                      (policy := policy) (state := state)
+                      (defaultAction := defaultAction) (reward := reward)
+                      hreward hstate)
+                    hreward i
+                have hhist_le :
+                    ((History.historyFiltrationSucc (mOmega := mOmega)
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward)
+                      reward
+                      (generatedActionFromRewardHistory_measurable
+                        (mOmega := mOmega)
+                        (policy := policy) (state := state)
+                        (defaultAction := defaultAction) (reward := reward)
+                        hreward hstate)
+                      hreward) i :
+                        MeasurableSpace Omega) <= mOmega :=
+                  ((History.historyFiltrationSucc (mOmega := mOmega)
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward)
+                    reward
+                    (generatedActionFromRewardHistory_measurable
+                      (mOmega := mOmega)
+                      (policy := policy) (state := state)
+                      (defaultAction := defaultAction) (reward := reward)
+                      hreward hstate)
+                    hreward).le i)
+                simpa only [hfiltration.symm] using hhist_le))))
+    (i : Nat) :
+    Filter.EventuallyEq (ae mu)
+      (@condExp Omega Real
+        ((History.historyFiltrationSucc
+          (generatedActionFromRewardHistory policy state defaultAction reward)
+          reward
+          (generatedActionFromRewardHistory_measurable
+            (policy := policy) (state := state)
+            (defaultAction := defaultAction) (reward := reward)
+            hreward hstate)
+          hreward) i)
+        mOmega _ _ _ mu
+        (fun omega : Omega =>
+          (((reward omega (i + 1) -
+            mean
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+              Rat) : Real))))
+      (fun _omega : Omega => (0 : Real)) := by
+  let source :=
+    generatedActionSelectedRewardFinitePairHistoryLawSource_of_comap_trim_reward_map_eq_selected_policy
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (hcontext := hcontext)
+      (hstate := hstate)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      h_reward_map_eq
+  exact
+    centeredReward_succ_condExp_eq_zero_of_selectedRewardFinitePairHistoryLawSource_definitionalRawRangeMeasurableMeanRangeBounded
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (mean := mean)
+      (varianceProxy := varianceProxy)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (rewardLo := rewardLo)
+      (rewardHi := rewardHi)
+      (meanLo := meanLo)
+      (meanHi := meanHi)
+      (hmean := hmean)
+      (hkernel := hkernel)
+      (hraw := hraw)
+      (hmean_range := hmean_range)
+      (source := source)
+      (i := i)
+
+/--
+Directly consume a selected-reward law stated at the finite pair-prefix comap
+conditioning surface plus the practical raw/mean range regularity package and a
+global variance ceiling to obtain the succ-indexed conditional MGF witness.
+
+This is the uniform-variance MGF companion to the comap mean-zero wrapper: it
+constructs the full generated finite-pair `partialTraj` source from the comap
+selected-reward law, then invokes the existing source-level conditional MGF
+consumer.  It still consumes the selected-reward conditional law; it does not
+prove that law from an ambient trajectory/disintegration construction.
+-/
+theorem centeredReward_succ_hasCondSubgaussianMGF_of_comap_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (varianceCeiling : NNReal)
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (hvariance :
+      forall context : Context, forall action : Action,
+        varianceProxy context action <= varianceCeiling)
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+              (fun y : Omega => reward y (i + 1))
+              (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.pairHistoryRewardProjection
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)))
+              ((policy i).action
+                (state i
+                  (History.pairHistoryRewardProjection
+                    (History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward omega)
+                      (reward omega) i)))))
+          (ae
+            (mu.trim
+              ((History.historyFiltrationSucc
+                (generatedActionFromRewardHistory policy state defaultAction
+                  reward)
+                reward
+                (generatedActionFromRewardHistory_measurable
+                  (policy := policy) (state := state)
+                  (defaultAction := defaultAction) (reward := reward)
+                  hreward hstate)
+                hreward).le i))))
+    (i : Nat) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward hstate)
+        hreward) i)
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward hstate)
+        hreward).le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      varianceCeiling mu := by
+  let source :=
+    generatedActionPartialTrajectoryPairLawSource_of_comap_reward_map_eq_selected_policy
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (hcontext := hcontext)
+      (hstate := hstate)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      h_reward_map_eq
+  exact
+    centeredReward_succ_hasCondSubgaussianMGF_of_partialTrajectoryPairLawSource_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (mean := mean)
+      (varianceProxy := varianceProxy)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (rewardLo := rewardLo)
+      (rewardHi := rewardHi)
+      (meanLo := meanLo)
+      (meanHi := meanHi)
+      (varianceCeiling := varianceCeiling)
+      (hmean := hmean)
+      (hkernel := hkernel)
+      (hraw := hraw)
+      (hmean_range := hmean_range)
+      (hvariance := hvariance)
+      (source := source)
+      (i := i)
+
+/--
+Directly consume a selected-reward law stated entirely at the finite pair-prefix
+comap conditioning surface, including the `trim` a.e. filter, plus the
+practical raw/mean range regularity package and a global variance ceiling to
+obtain the succ-indexed conditional MGF witness.
+
+This is the comap-trim companion to the uniform-variance MGF wrapper.  It
+constructs the full generated finite-pair `partialTraj` source from the
+comap-trim selected-reward law, then invokes the existing source-level
+conditional MGF consumer.  It still consumes the selected-reward conditional
+law; it does not prove that law from an ambient trajectory/disintegration
+construction.
+-/
+theorem centeredReward_succ_hasCondSubgaussianMGF_of_comap_trim_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (varianceCeiling : NNReal)
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (hvariance :
+      forall context : Context, forall action : Action,
+        varianceProxy context action <= varianceCeiling)
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+              (fun y : Omega => reward y (i + 1))
+              (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.pairHistoryRewardProjection
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)))
+              ((policy i).action
+                (state i
+                  (History.pairHistoryRewardProjection
+                    (History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward omega)
+                      (reward omega) i)))))
+          (ae
+            (mu.trim
+              (show
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i)) <= mOmega from by
+                have hfiltration :
+                    ((History.historyFiltrationSucc (mOmega := mOmega)
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward)
+                      reward
+                      (generatedActionFromRewardHistory_measurable
+                        (mOmega := mOmega)
+                        (policy := policy) (state := state)
+                        (defaultAction := defaultAction) (reward := reward)
+                        hreward hstate)
+                      hreward) i :
+                        MeasurableSpace Omega) =
+                    ((inferInstance :
+                      MeasurableSpace
+                        ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                      (fun y : Omega =>
+                        History.finitePairHistoryOfTrace
+                          (generatedActionFromRewardHistory policy state
+                            defaultAction reward y)
+                          (reward y) i)) :=
+                  History.historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace
+                    (mOmega := mOmega)
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward)
+                    reward
+                    (generatedActionFromRewardHistory_measurable
+                      (mOmega := mOmega)
+                      (policy := policy) (state := state)
+                      (defaultAction := defaultAction) (reward := reward)
+                      hreward hstate)
+                    hreward i
+                have hhist_le :
+                    ((History.historyFiltrationSucc (mOmega := mOmega)
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward)
+                      reward
+                      (generatedActionFromRewardHistory_measurable
+                        (mOmega := mOmega)
+                        (policy := policy) (state := state)
+                        (defaultAction := defaultAction) (reward := reward)
+                        hreward hstate)
+                      hreward) i :
+                        MeasurableSpace Omega) <= mOmega :=
+                  ((History.historyFiltrationSucc (mOmega := mOmega)
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward)
+                    reward
+                    (generatedActionFromRewardHistory_measurable
+                      (mOmega := mOmega)
+                      (policy := policy) (state := state)
+                      (defaultAction := defaultAction) (reward := reward)
+                      hreward hstate)
+                    hreward).le i)
+                simpa only [hfiltration.symm] using hhist_le))))
+    (i : Nat) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward hstate)
+        hreward) i)
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward hstate)
+        hreward).le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      varianceCeiling mu := by
+  let source :=
+    generatedActionPartialTrajectoryPairLawSource_of_comap_trim_reward_map_eq_selected_policy
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (hcontext := hcontext)
+      (hstate := hstate)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      h_reward_map_eq
+  exact
+    centeredReward_succ_hasCondSubgaussianMGF_of_partialTrajectoryPairLawSource_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (mean := mean)
+      (varianceProxy := varianceProxy)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (rewardLo := rewardLo)
+      (rewardHi := rewardHi)
+      (meanLo := meanLo)
+      (meanHi := meanHi)
+      (varianceCeiling := varianceCeiling)
+      (hmean := hmean)
+      (hkernel := hkernel)
+      (hraw := hraw)
+      (hmean_range := hmean_range)
+      (hvariance := hvariance)
+      (source := source)
+      (i := i)
+
+/--
+Directly consume a selected-reward law stated entirely at the finite pair-prefix
+comap conditioning surface, including the `trim` a.e. filter, plus a global
+variance ceiling at any deterministic coarser proxy.
+
+This is the comap-trim companion to the coarser-proxy uniform-variance MGF
+wrapper.  It constructs the full generated finite-pair `partialTraj` source
+from the comap-trim selected-reward law, then invokes the existing source-level
+larger-proxy conditional MGF consumer.  It still consumes the selected-reward
+conditional law and the proxy-domination proof; it does not prove either one
+from an ambient trajectory/disintegration construction.
+-/
+theorem centeredReward_succ_hasCondSubgaussianMGF_of_comap_trim_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded_of_varianceCeiling_le
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (varianceCeiling : NNReal)
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (hvariance :
+      forall context : Context, forall action : Action,
+        varianceProxy context action <= varianceCeiling)
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+              (fun y : Omega => reward y (i + 1))
+              (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.pairHistoryRewardProjection
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)))
+              ((policy i).action
+                (state i
+                  (History.pairHistoryRewardProjection
+                    (History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward omega)
+                      (reward omega) i)))))
+          (ae
+            (mu.trim
+              (show
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i)) <= mOmega from by
+                have hfiltration :
+                    ((History.historyFiltrationSucc (mOmega := mOmega)
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward)
+                      reward
+                      (generatedActionFromRewardHistory_measurable
+                        (mOmega := mOmega)
+                        (policy := policy) (state := state)
+                        (defaultAction := defaultAction) (reward := reward)
+                        hreward hstate)
+                      hreward) i :
+                        MeasurableSpace Omega) =
+                    ((inferInstance :
+                      MeasurableSpace
+                        ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                      (fun y : Omega =>
+                        History.finitePairHistoryOfTrace
+                          (generatedActionFromRewardHistory policy state
+                            defaultAction reward y)
+                          (reward y) i)) :=
+                  History.historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace
+                    (mOmega := mOmega)
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward)
+                    reward
+                    (generatedActionFromRewardHistory_measurable
+                      (mOmega := mOmega)
+                      (policy := policy) (state := state)
+                      (defaultAction := defaultAction) (reward := reward)
+                      hreward hstate)
+                    hreward i
+                have hhist_le :
+                    ((History.historyFiltrationSucc (mOmega := mOmega)
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward)
+                      reward
+                      (generatedActionFromRewardHistory_measurable
+                        (mOmega := mOmega)
+                        (policy := policy) (state := state)
+                        (defaultAction := defaultAction) (reward := reward)
+                        hreward hstate)
+                      hreward) i :
+                        MeasurableSpace Omega) <= mOmega :=
+                  ((History.historyFiltrationSucc (mOmega := mOmega)
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward)
+                    reward
+                    (generatedActionFromRewardHistory_measurable
+                      (mOmega := mOmega)
+                      (policy := policy) (state := state)
+                      (defaultAction := defaultAction) (reward := reward)
+                      hreward hstate)
+                    hreward).le i)
+                simpa only [hfiltration.symm] using hhist_le))))
+    (i : Nat)
+    (c : NNReal)
+    (hceiling : varianceCeiling <= c) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward hstate)
+        hreward) i)
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward hstate)
+        hreward).le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      c mu := by
+  let source :=
+    generatedActionPartialTrajectoryPairLawSource_of_comap_trim_reward_map_eq_selected_policy
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (hcontext := hcontext)
+      (hstate := hstate)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      h_reward_map_eq
+  exact
+    centeredReward_succ_hasCondSubgaussianMGF_of_partialTrajectoryPairLawSource_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded_of_varianceCeiling_le
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (mean := mean)
+      (varianceProxy := varianceProxy)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (rewardLo := rewardLo)
+      (rewardHi := rewardHi)
+      (meanLo := meanLo)
+      (meanHi := meanHi)
+      (varianceCeiling := varianceCeiling)
+      (hmean := hmean)
+      (hkernel := hkernel)
+      (hraw := hraw)
+      (hmean_range := hmean_range)
+      (hvariance := hvariance)
+      (source := source)
+      (i := i)
+      (c := c)
+      hceiling
+
+/--
+Directly consume a selected-reward law stated at the finite pair-prefix comap
+plus a global variance ceiling at any deterministic coarser proxy.
+
+This is the coarser-proxy companion to the comap uniform-variance wrapper.  It
+constructs the full generated finite-pair `partialTraj` source from the comap
+selected-reward law, then invokes the existing source-level larger-proxy
+conditional MGF consumer.
+-/
+theorem centeredReward_succ_hasCondSubgaussianMGF_of_comap_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded_of_varianceCeiling_le
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (varianceCeiling : NNReal)
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (hvariance :
+      forall context : Context, forall action : Action,
+        varianceProxy context action <= varianceCeiling)
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+              (fun y : Omega => reward y (i + 1))
+              (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.pairHistoryRewardProjection
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)))
+              ((policy i).action
+                (state i
+                  (History.pairHistoryRewardProjection
+                    (History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward omega)
+                      (reward omega) i)))))
+          (ae
+            (mu.trim
+              ((History.historyFiltrationSucc
+                (generatedActionFromRewardHistory policy state defaultAction
+                  reward)
+                reward
+                (generatedActionFromRewardHistory_measurable
+                  (policy := policy) (state := state)
+                  (defaultAction := defaultAction) (reward := reward)
+                  hreward hstate)
+                hreward).le i))))
+    (i : Nat)
+    (c : NNReal)
+    (hceiling : varianceCeiling <= c) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward hstate)
+        hreward) i)
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward hstate)
+        hreward).le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      c mu := by
+  let source :=
+    generatedActionPartialTrajectoryPairLawSource_of_comap_reward_map_eq_selected_policy
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (hcontext := hcontext)
+      (hstate := hstate)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      h_reward_map_eq
+  exact
+    centeredReward_succ_hasCondSubgaussianMGF_of_partialTrajectoryPairLawSource_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded_of_varianceCeiling_le
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (mean := mean)
+      (varianceProxy := varianceProxy)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (rewardLo := rewardLo)
+      (rewardHi := rewardHi)
+      (meanLo := meanLo)
+      (meanHi := meanHi)
+      (varianceCeiling := varianceCeiling)
+      (hmean := hmean)
+      (hkernel := hkernel)
+      (hraw := hraw)
+      (hmean_range := hmean_range)
+      (hvariance := hvariance)
+      (source := source)
+      (i := i)
+      (c := c)
+      hceiling
+
+/--
+Directly consume a selected-reward law stated at the finite pair-prefix comap,
+raw/mean range regularity, and selected-history variance ceilings to obtain the
+succ-indexed conditional MGF witness.
+
+This is the history-variance companion to the comap uniform-variance wrapper:
+it constructs the full generated finite-pair `partialTraj` source from the
+comap selected-reward law, then invokes the existing source-level conditional
+MGF consumer.  It still consumes the selected-reward conditional law; it does
+not prove that law from an ambient trajectory/disintegration construction.
+-/
+theorem centeredReward_succ_hasCondSubgaussianMGF_of_comap_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (varianceCeiling : Nat -> NNReal)
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (hvariance :
+      forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat),
+        varianceProxy (context i history)
+          ((policy i).action (state i history)) <= varianceCeiling i)
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+              (fun y : Omega => reward y (i + 1))
+              (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.pairHistoryRewardProjection
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)))
+              ((policy i).action
+                (state i
+                  (History.pairHistoryRewardProjection
+                    (History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward omega)
+                      (reward omega) i)))))
+          (ae
+            (mu.trim
+              ((History.historyFiltrationSucc
+                (generatedActionFromRewardHistory policy state defaultAction
+                  reward)
+                reward
+                (generatedActionFromRewardHistory_measurable
+                  (policy := policy) (state := state)
+                  (defaultAction := defaultAction) (reward := reward)
+                  hreward hstate)
+                hreward).le i))))
+    (i : Nat) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward hstate)
+        hreward) i)
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward hstate)
+        hreward).le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      (varianceCeiling i) mu := by
+  let source :=
+    generatedActionPartialTrajectoryPairLawSource_of_comap_reward_map_eq_selected_policy
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (hcontext := hcontext)
+      (hstate := hstate)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      h_reward_map_eq
+  exact
+    centeredReward_succ_hasCondSubgaussianMGF_of_partialTrajectoryPairLawSource_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (mean := mean)
+      (varianceProxy := varianceProxy)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (rewardLo := rewardLo)
+      (rewardHi := rewardHi)
+      (meanLo := meanLo)
+      (meanHi := meanHi)
+      (varianceCeiling := varianceCeiling)
+      (hmean := hmean)
+      (hkernel := hkernel)
+      (hraw := hraw)
+      (hmean_range := hmean_range)
+      (hvariance := hvariance)
+      (source := source)
+      (i := i)
+
+/--
+Directly consume a selected-reward law stated entirely at the finite pair-prefix
+comap conditioning surface, including the `trim` a.e. filter, raw/mean range
+regularity, and selected-history variance ceilings to obtain the succ-indexed
+conditional MGF witness.
+
+This is the comap-trim companion to the history-variance MGF wrapper.  It
+constructs the full generated finite-pair `partialTraj` source from the
+comap-trim selected-reward law, then invokes the existing source-level
+conditional MGF consumer.  It still consumes the selected-reward conditional
+law and selected-history ceilings; it does not prove either from an ambient
+trajectory/disintegration construction.
+-/
+theorem centeredReward_succ_hasCondSubgaussianMGF_of_comap_trim_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (varianceCeiling : Nat -> NNReal)
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (hvariance :
+      forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat),
+        varianceProxy (context i history)
+          ((policy i).action (state i history)) <= varianceCeiling i)
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+              (fun y : Omega => reward y (i + 1))
+              (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.pairHistoryRewardProjection
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)))
+              ((policy i).action
+                (state i
+                  (History.pairHistoryRewardProjection
+                    (History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward omega)
+                      (reward omega) i)))))
+          (ae
+            (mu.trim
+              (show
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i)) <= mOmega from by
+                have hfiltration :
+                    ((History.historyFiltrationSucc (mOmega := mOmega)
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward)
+                      reward
+                      (generatedActionFromRewardHistory_measurable
+                        (mOmega := mOmega)
+                        (policy := policy) (state := state)
+                        (defaultAction := defaultAction) (reward := reward)
+                        hreward hstate)
+                      hreward) i :
+                        MeasurableSpace Omega) =
+                    ((inferInstance :
+                      MeasurableSpace
+                        ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                      (fun y : Omega =>
+                        History.finitePairHistoryOfTrace
+                          (generatedActionFromRewardHistory policy state
+                            defaultAction reward y)
+                          (reward y) i)) :=
+                  History.historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace
+                    (mOmega := mOmega)
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward)
+                    reward
+                    (generatedActionFromRewardHistory_measurable
+                      (mOmega := mOmega)
+                      (policy := policy) (state := state)
+                      (defaultAction := defaultAction) (reward := reward)
+                      hreward hstate)
+                    hreward i
+                have hhist_le :
+                    ((History.historyFiltrationSucc (mOmega := mOmega)
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward)
+                      reward
+                      (generatedActionFromRewardHistory_measurable
+                        (mOmega := mOmega)
+                        (policy := policy) (state := state)
+                        (defaultAction := defaultAction) (reward := reward)
+                        hreward hstate)
+                      hreward) i :
+                        MeasurableSpace Omega) <= mOmega :=
+                  ((History.historyFiltrationSucc (mOmega := mOmega)
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward)
+                    reward
+                    (generatedActionFromRewardHistory_measurable
+                      (mOmega := mOmega)
+                      (policy := policy) (state := state)
+                      (defaultAction := defaultAction) (reward := reward)
+                      hreward hstate)
+                    hreward).le i)
+                simpa only [hfiltration.symm] using hhist_le))))
+    (i : Nat) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward hstate)
+        hreward) i)
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward hstate)
+        hreward).le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      (varianceCeiling i) mu := by
+  let source :=
+    generatedActionPartialTrajectoryPairLawSource_of_comap_trim_reward_map_eq_selected_policy
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (hcontext := hcontext)
+      (hstate := hstate)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      h_reward_map_eq
+  exact
+    centeredReward_succ_hasCondSubgaussianMGF_of_partialTrajectoryPairLawSource_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (mean := mean)
+      (varianceProxy := varianceProxy)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (rewardLo := rewardLo)
+      (rewardHi := rewardHi)
+      (meanLo := meanLo)
+      (meanHi := meanHi)
+      (varianceCeiling := varianceCeiling)
+      (hmean := hmean)
+      (hkernel := hkernel)
+      (hraw := hraw)
+      (hmean_range := hmean_range)
+      (hvariance := hvariance)
+      (source := source)
+      (i := i)
+
+/--
+Directly consume a selected-reward law stated at the finite pair-prefix comap
+plus selected-history variance ceilings at any deterministic coarser proxy.
+
+This is the coarser-proxy companion to the comap history-variance wrapper.  It
+constructs the full generated finite-pair `partialTraj` source from the comap
+selected-reward law, then invokes the existing source-level larger-proxy
+conditional MGF consumer.
+-/
+theorem centeredReward_succ_hasCondSubgaussianMGF_of_comap_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded_of_varianceCeiling_le
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (varianceCeiling : Nat -> NNReal)
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (hvariance :
+      forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat),
+        varianceProxy (context i history)
+          ((policy i).action (state i history)) <= varianceCeiling i)
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+              (fun y : Omega => reward y (i + 1))
+              (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.pairHistoryRewardProjection
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)))
+              ((policy i).action
+                (state i
+                  (History.pairHistoryRewardProjection
+                    (History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward omega)
+                      (reward omega) i)))))
+          (ae
+            (mu.trim
+              ((History.historyFiltrationSucc
+                (generatedActionFromRewardHistory policy state defaultAction
+                  reward)
+                reward
+                (generatedActionFromRewardHistory_measurable
+                  (policy := policy) (state := state)
+                  (defaultAction := defaultAction) (reward := reward)
+                  hreward hstate)
+                hreward).le i))))
+    (i : Nat)
+    (c : NNReal)
+    (hceiling : varianceCeiling i <= c) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward hstate)
+        hreward) i)
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward hstate)
+        hreward).le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      c mu := by
+  let source :=
+    generatedActionPartialTrajectoryPairLawSource_of_comap_reward_map_eq_selected_policy
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (hcontext := hcontext)
+      (hstate := hstate)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      h_reward_map_eq
+  exact
+    centeredReward_succ_hasCondSubgaussianMGF_of_partialTrajectoryPairLawSource_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded_of_varianceCeiling_le
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (mean := mean)
+      (varianceProxy := varianceProxy)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (rewardLo := rewardLo)
+      (rewardHi := rewardHi)
+      (meanLo := meanLo)
+      (meanHi := meanHi)
+      (varianceCeiling := varianceCeiling)
+      (hmean := hmean)
+      (hkernel := hkernel)
+      (hraw := hraw)
+      (hmean_range := hmean_range)
+      (hvariance := hvariance)
+      (source := source)
+      (i := i)
+      (c := c)
+      hceiling
+
+/--
+Directly consume a selected-reward law stated entirely at the finite pair-prefix
+comap conditioning surface, including the `trim` a.e. filter, plus
+selected-history variance ceilings at any deterministic coarser proxy.
+
+This is the comap-trim companion to the coarser-proxy history-variance MGF
+wrapper.  It constructs the full generated finite-pair `partialTraj` source
+from the comap-trim selected-reward law, then invokes the existing source-level
+larger-proxy conditional MGF consumer.
+-/
+theorem centeredReward_succ_hasCondSubgaussianMGF_of_comap_trim_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded_of_varianceCeiling_le
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (varianceCeiling : Nat -> NNReal)
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (hvariance :
+      forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat),
+        varianceProxy (context i history)
+          ((policy i).action (state i history)) <= varianceCeiling i)
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+              (fun y : Omega => reward y (i + 1))
+              (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.pairHistoryRewardProjection
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)))
+              ((policy i).action
+                (state i
+                  (History.pairHistoryRewardProjection
+                    (History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward omega)
+                      (reward omega) i)))))
+          (ae
+            (mu.trim
+              (show
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i)) <= mOmega from by
+                have hfiltration :
+                    ((History.historyFiltrationSucc (mOmega := mOmega)
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward)
+                      reward
+                      (generatedActionFromRewardHistory_measurable
+                        (mOmega := mOmega)
+                        (policy := policy) (state := state)
+                        (defaultAction := defaultAction) (reward := reward)
+                        hreward hstate)
+                      hreward) i :
+                        MeasurableSpace Omega) =
+                    ((inferInstance :
+                      MeasurableSpace
+                        ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                      (fun y : Omega =>
+                        History.finitePairHistoryOfTrace
+                          (generatedActionFromRewardHistory policy state
+                            defaultAction reward y)
+                          (reward y) i)) :=
+                  History.historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace
+                    (mOmega := mOmega)
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward)
+                    reward
+                    (generatedActionFromRewardHistory_measurable
+                      (mOmega := mOmega)
+                      (policy := policy) (state := state)
+                      (defaultAction := defaultAction) (reward := reward)
+                      hreward hstate)
+                    hreward i
+                have hhist_le :
+                    ((History.historyFiltrationSucc (mOmega := mOmega)
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward)
+                      reward
+                      (generatedActionFromRewardHistory_measurable
+                        (mOmega := mOmega)
+                        (policy := policy) (state := state)
+                        (defaultAction := defaultAction) (reward := reward)
+                        hreward hstate)
+                      hreward) i :
+                        MeasurableSpace Omega) <= mOmega :=
+                  ((History.historyFiltrationSucc (mOmega := mOmega)
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward)
+                    reward
+                    (generatedActionFromRewardHistory_measurable
+                      (mOmega := mOmega)
+                      (policy := policy) (state := state)
+                      (defaultAction := defaultAction) (reward := reward)
+                      hreward hstate)
+                    hreward).le i)
+                simpa only [hfiltration.symm] using hhist_le))))
+    (i : Nat)
+    (c : NNReal)
+    (hceiling : varianceCeiling i <= c) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward hstate)
+        hreward) i)
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward hstate)
+        hreward).le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      c mu := by
+  let source :=
+    generatedActionPartialTrajectoryPairLawSource_of_comap_trim_reward_map_eq_selected_policy
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (hcontext := hcontext)
+      (hstate := hstate)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      h_reward_map_eq
+  exact
+    centeredReward_succ_hasCondSubgaussianMGF_of_partialTrajectoryPairLawSource_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded_of_varianceCeiling_le
+      (mu := mu)
+      (rewardKernel := rewardKernel)
+      (policy := policy)
+      (context := context)
+      (state := state)
+      (mean := mean)
+      (varianceProxy := varianceProxy)
+      (defaultAction := defaultAction)
+      (reward := reward)
+      (hreward := hreward)
+      (rewardLo := rewardLo)
+      (rewardHi := rewardHi)
+      (meanLo := meanLo)
+      (meanHi := meanHi)
+      (varianceCeiling := varianceCeiling)
+      (hmean := hmean)
+      (hkernel := hkernel)
+      (hraw := hraw)
+      (hmean_range := hmean_range)
+      (hvariance := hvariance)
+      (source := source)
+      (i := i)
+      (c := c)
+      hceiling
 
 /--
 Directly consume the frozen-prefix extension-map `partialTraj` law plus the

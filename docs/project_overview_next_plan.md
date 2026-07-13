@@ -57,7 +57,8 @@ Already present:
   `gap * pullCount`;
 - deterministic Rat/Nat count-bound-to-regret scaffolds;
 - Bochner and ENNReal expectation/pull-count/regret bridge leaves;
-- measure, finite-history, history-filtration, policy-measurability,
+- measure, finite-history, history-filtration finite-pair/comap alignment,
+  policy-measurability,
   reward-kernel, finite-prefix `partialTraj`, and conditional-expectation
   bridge surfaces;
 - independent and strongly adapted conditional sub-Gaussian tail wrappers;
@@ -577,6 +578,8 @@ The requested unfinished-work workflow is now available:
   - `ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc_reward_map_eq_actual_action`;
   - `ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_extend_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc_reward_map_eq_actual_action`;
   - `ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc_reward_map_eq_actual_action`;
+  - `ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_of_reward_map_eq_actual_action`;
+  - `ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_reward_map_eq_actual_action`;
   - `ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc_pair_map_eq_actual_action`;
   - `ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionTraceSucc_reward_map_eq_actual_action`;
   - `ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionTraceSucc_pair_map_eq_actual_action`;
@@ -720,10 +723,13 @@ ETC-WRONG-COMMIT-ACTION-MATCHED-BOUNDED-REWARD-BOUND compiled-local
 ETC-BOUNDED-REWARD-TRACE-SOURCE-CONTRACT compiled-local
 ETC-BOUNDED-REWARD-INFINITEPI-SOURCE compiled-local
 ETC-WRONG-COMMIT-INFINITEPI-BOUNDED-REWARD-SOURCE compiled-local
+ETC-WRONG-COMMIT-INFINITEPI-REAL-PROBABILITY-BOUND compiled-local
 ETC-WRONG-COMMIT-REGRET-ASSEMBLY-POINTWISE compiled-local
 ETC-WRONG-COMMIT-LINTEGRAL-REGRET-ASSEMBLY compiled-local
 ETC-WRONG-COMMIT-INFINITEPI-LINTEGRAL-REGRET-ASSEMBLY compiled-local
+ETC-FIXED-PRODUCT-BADGAP-LINTEGRAL-REGRET-WRAPPER compiled-local
 ETC-WRONG-COMMIT-INFINITEPI-SUMGAP-LINTEGRAL-REGRET-ASSEMBLY compiled-local
+ETC-FIXED-PRODUCT-SUMGAP-LINTEGRAL-REGRET-WRAPPER compiled-local
 ETC-WRONG-COMMIT-INFINITEPI-MAXGAP-LINTEGRAL-REGRET-ASSEMBLY compiled-local
 ETC-FIXED-PRODUCT-MAXGAP-LINTEGRAL-REGRET-WRAPPER compiled-local
 PULLCOUNT-SUM-TIME         compiled-local
@@ -1239,6 +1245,13 @@ Context:
   `RewardKernel.actionRewardPartialTrajectoryKernel_succ_next_map_apply` into
   a reusable next-pair map-law adapter, then into the centered-reward consumer.
   The actual `partialTraj`/history-to-`condExpKernel` law remains open.
+- `COND-EXPECT-REWARD-TRAJMEASURE-FINITEPAIRHISTORY-CONDEXPKERNEL-MAP` now
+  compiles as the project-notation canonical wrapper: the Mathlib
+  `trajMeasure` full-prefix `condExpKernel` law is restated with
+  `History.finitePairHistoryOfTrace` for the old and successor pair prefixes.
+  This aligns the canonical source theorem with the theorem-card shape, while
+  still not transporting the law to an arbitrary generated
+  `Omega`/`History.historyFiltrationSucc` process.
 - `COND-EXPECT-REWARD-GENERATED-TRAJECTORY-PARTIALTRAJ-PAIR-LAW-SOURCE-CONTRACT`
   now compiles as the explicit source-contract for that remaining law shape:
   `GeneratedActionPartialTrajectoryPairLawSource` stores the full finite-pair
@@ -1252,9 +1265,13 @@ Context:
   compiles as the source-projection theorem for that same law: a
   `GeneratedActionPartialTrajectoryPairLawSource` exposes its full finite-pair
   `partialTraj`/`condExpKernel` field as a named theorem matching the
-  theorem-card law shape.  This improves retrieval and downstream theorem
-  application, while still leaving the actual disintegration/trajectory-law
-  proof open.
+  theorem-card law shape, and it now also projects to the weaker
+  `GeneratedActionDefinitionalActualRewardMapSource`,
+  `GeneratedActionSelectedRewardFinitePairHistoryLawSource`, and explicit
+  `GeneratedActionActualRewardMapSource` interfaces.  This lets downstream
+  selected-reward, mean-zero, and conditional-MGF routes share the same
+  packaged partialTraj source without unpacking its fields manually, while
+  still leaving the actual disintegration/trajectory-law proof open.
 - `COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-FROM-EXTEND-MAP`
   now compiles as a source constructor from the narrower frozen-prefix
   extension-map law.  Future trajectory-law work can prove the extension-map
@@ -1276,12 +1293,14 @@ Context:
   law builder and existing source adapters.  This narrows the next proof target
   to the two split laws while keeping the theorem-card law open.
 - `COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-FROM-SELECTED-REWARD-LAW`
-  now compiles as the selected-reward source constructor: for
+  now compiles as the selected-reward source constructor and theorem wrapper:
+  for
   `generatedActionFromRewardHistory`, the generated-trace action-freezing API
   supplies the action side automatically, so the policy-selected
   reward-coordinate `condExpKernel` map law alone builds the same
-  `GeneratedActionPartialTrajectoryPairLawSource`.  The remaining upstream
-  proof target is now the selected reward-coordinate law under the generated
+  `GeneratedActionPartialTrajectoryPairLawSource` and directly exposes the
+  full finite-pair `partialTraj`/`condExpKernel` law.  The remaining upstream
+  proof target is still the selected reward-coordinate law under the generated
   history filtration.
 - `COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-FROM-DEFINITIONAL-MAP-SOURCE`
   now compiles as a source-conversion wrapper: an existing
@@ -1298,12 +1317,28 @@ Context:
   `GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource`.
   This lets downstream raw-range/mean-range consumers use the named source
   directly, while still leaving the theorem-card pair-law proof open.
+  The finite-pair comap selected-reward law can now enter at this base source
+  layer too, with either the generated-history trim filter or the direct
+  comap-trim filter, constructing the full finite-pair source internally before
+  packaging the raw-range/measurable-mean-range source.
+- `COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-MEAN-ZERO`
+  now compiles as the matching source-level mean-zero consumer: the same
+  generated `partialTraj` pair-law source plus raw/mean range regularity
+  directly yields ordinary succ-indexed conditional mean-zero for the centered
+  generated reward.  It removes manual `hcontext`/`hstate`/full-law threading
+  for this route, while still consuming rather than proving the underlying
+  `partialTraj`/`condExpKernel` law.
 - `COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-UNIFORM-VARIANCE-SOURCE`
   now compiles as the global-variance companion: the same generated
   `partialTraj` pair-law source plus a pointwise bound
   `varianceProxy context action <= varianceCeiling` builds the packaged
   uniform-variance practical source.  It prepares the conditional-MGF route
   without proving the underlying `partialTraj`/`condExpKernel` law.
+  The finite-pair comap selected-reward law can now enter at this source layer
+  as well, constructing the full finite-pair source internally before packaging
+  the uniform-variance practical source, with either the generated-history
+  trim filter or the direct comap-trim filter accepted as the law surface; the
+  selected-reward law and global ceiling remain explicit caller obligations.
 - `COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-UNIFORM-VARIANCE-COND-MGF`
   now compiles as the source-level uniform MGF consumer: the same generated
   `partialTraj` pair-law source plus raw/mean range regularity and a global
@@ -1311,6 +1346,10 @@ Context:
   `ProbabilityTheory.HasCondSubgaussianMGF` witness.  It removes the need for
   downstream callers to manually pass `hcontext`, `hstate`, and the full
   finite-pair partialTraj law, while still leaving the theorem-card law open.
+  The finite-pair comap selected-reward law can now be consumed directly into
+  the same witness by first constructing the generated selected-reward source
+  and full finite-pair `partialTraj` source; this still assumes the selected
+  reward law rather than proving transport from canonical `trajMeasure`.
 - `COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-UNIFORM-VARIANCE-LARGER-PROXY-COND-MGF`
   now compiles as the coarser-proxy source-level uniform MGF consumer: the same
   generated `partialTraj` pair-law source plus raw/mean range regularity, a
@@ -1318,12 +1357,20 @@ Context:
   succ-indexed `ProbabilityTheory.HasCondSubgaussianMGF` witness at proxy `c`.
   It is still a consumer of the supplied full finite-pair law, not a proof of
   that law or of the proxy domination.
+  The finite-pair comap selected-reward law can now enter this coarser-proxy
+  route directly as well, by constructing the full finite-pair source
+  internally; `varianceCeiling <= c` remains an explicit caller obligation.
 - `COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-HISTORY-VARIANCE-SOURCE`
   now compiles as the selected-history companion: the same generated
   `partialTraj` pair-law source plus
   `varianceProxy (context i history) ((policy i).action (state i history)) <=
   varianceCeiling i` builds the packaged history-variance practical source.
   This is still a source conversion, not a proof of the trajectory-law card.
+  The finite-pair comap selected-reward law can now enter at this source layer
+  too, constructing the full finite-pair source internally before packaging the
+  selected-history-variance practical source, with either the generated-history
+  trim filter or the direct comap-trim filter accepted as the law surface;
+  selected-history ceilings remain explicit caller obligations.
 - `COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-HISTORY-VARIANCE-COND-MGF`
   now compiles as the selected-history source-level MGF consumer: the same
   generated `partialTraj` pair-law source plus raw/mean range regularity and
@@ -1332,6 +1379,11 @@ Context:
   `varianceCeiling i`.  It removes the same manual `hcontext`/`hstate`/law
   threading for the history-variance route while still consuming the packaged
   source law.
+  The finite-pair comap selected-reward law now has the same direct entry into
+  this selected-history-variance witness by constructing the full finite-pair
+  source internally, with either the generated-history trim filter or the
+  direct comap-trim filter accepted as the law surface; selected-history
+  ceilings and the selected-reward law are still assumed inputs.
 - `COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-HISTORY-VARIANCE-LARGER-PROXY-COND-MGF`
   now compiles as the coarser-proxy selected-history source-level MGF
   consumer: the same generated `partialTraj` pair-law source plus raw/mean
@@ -1339,6 +1391,11 @@ Context:
   `varianceCeiling i <= c` directly yields the succ-indexed
   `ProbabilityTheory.HasCondSubgaussianMGF` witness at proxy `c`.  It still
   consumes the supplied full finite-pair law and the proxy domination.
+  The finite-pair comap selected-reward law can now enter this coarser-proxy
+  selected-history route directly by constructing the full finite-pair source
+  internally, with either the generated-history trim filter or the direct
+  comap-trim filter accepted as the law surface; `varianceCeiling i <= c`
+  remains an explicit caller obligation.
 - `COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-REWARD-MAP` now compiles as
   the reward-coordinate adapter for that same full finite-pair-trace law:
   after projecting the `partialTraj` law to the next `(Action, Reward)` pair,
@@ -1370,6 +1427,87 @@ Context:
   context/state, and the generated-action wrapper removes the explicit
   successor equality when `Policy.generatedActionTraceSucc` is available.  The
   next-pair `condExpKernel` law itself remains assumed.
+- `COND-EXPECT-REWARD-TRAJMEASURE-SELECTED-REWARD-FINITEPAIRHISTORY-CONDEXPKERNEL-MAP`
+  now compiles as the selected-reward canonical `trajMeasure` law in project
+  finite-pair-history notation: it rewrites the `Preorder.frestrictLe n`
+  conditioning prefix to `History.finitePairHistoryOfTrace` and returns
+  `RewardKernel.selectedMeasure` at that prefix.  This is only the canonical
+  Mathlib trajectory source; the ambient `Omega`/`History.historyFiltrationSucc`
+  transport step remains open.
+- `COND-EXPECT-REWARD-TRAJMEASURE-SELECTED-REWARD-REWARDHISTORY-CONDEXPKERNEL-MAP`
+  now compiles as the reward-history projection of that canonical law, and
+  `COND-EXPECT-REWARD-GENERATED-SELECTED-REWARD-FINITEPAIRHISTORY-LAW-SOURCE-CONTRACT`
+  now packages the corresponding generated ambient selected-reward law as an
+  explicit source that converts into `GeneratedActionPartialTrajectoryPairLawSource`.
+  The source still consumes the ambient reward-law field; it does not prove the
+  trajectory-to-`condExpKernel` transport.
+- `COND-EXPECT-REWARD-GENERATED-SELECTED-REWARD-FINITEPAIRHISTORY-SOURCE-FROM-COMAP-LAW`
+  now compiles as the source constructor from the Mathlib-facing finite-prefix
+  comap conditioning shape into
+  `GeneratedActionSelectedRewardFinitePairHistoryLawSource`.  It uses
+  `History.historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace` and now
+  accepts both the existing generated-history trim filter and a direct
+  comap-trim filter at the selected-source, partialTraj-source, and theorem
+  wrapper layers, so future selected-reward transport can target the comap
+  sigma-algebra and directly enter the generated-history source route.  The
+  same comap law now also constructs the full
+  `GeneratedActionPartialTrajectoryPairLawSource` directly and exposes the
+  theorem-card-shaped full finite-pair `partialTraj`/`condExpKernel` law
+  without requiring callers to manually build and project the source.  It still
+  consumes the selected-reward law.
+- `COND-EXPECT-REWARD-GENERATED-SELECTED-REWARD-FINITEPAIRHISTORY-PARTIALTRAJ-LAW`
+  now compiles as the source-projection theorem for that contract: a
+  `GeneratedActionSelectedRewardFinitePairHistoryLawSource` directly exposes
+  the theorem-card-shaped full `finitePairHistoryOfTrace` partialTraj law over
+  `generatedActionFromRewardHistory`.  This narrows the Lean-facing surface for
+  downstream consumers but still assumes the selected-reward law field.
+- `COND-EXPECT-REWARD-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-TO-SELECTED-REWARD-FINITEPAIRHISTORY-SOURCE`
+  now compiles as the upstream source conversion from the definitional
+  actual-action reward-coordinate source to that selected-reward
+  finite-pair-history source.  The proof only unfolds
+  `generatedActionFromRewardHistory` and projects pair histories to reward
+  histories; it still assumes the actual-action reward-coordinate law.
+- `COND-EXPECT-REWARD-PRACTICAL-RAW-RANGE-SOURCE-TO-SELECTED-REWARD-FINITEPAIRHISTORY-SOURCE`
+  now compiles as the practical source conversion route: the definitional
+  raw-range/measurable-mean-range generated random next-pair package, plus its
+  uniform-variance and selected-history-variance wrappers, projects directly
+  to `GeneratedActionSelectedRewardFinitePairHistoryLawSource` through the
+  full finite-pair `partialTraj` source projection.  This lets the selected
+  source mean-zero and conditional-MGF consumers start from the practical
+  package surface; it still assumes the packaged random next-pair law.
+- `COND-EXPECT-REWARD-PRACTICAL-SOURCE-VIA-SELECTED-FINITEPAIRHISTORY-COND-MGF`
+  now compiles as the route-specific theorem surface for that composition:
+  the practical base source reaches ordinary conditional mean-zero, and the
+  practical uniform-variance/history-variance wrappers reach succ-indexed
+  `HasCondSubgaussianMGF` witnesses, by first constructing the selected
+  finite-pair-history source and then applying the selected-source consumers.
+  This records the selected finite-pair-history route end-to-end while still
+  consuming the packaged random next-pair law and variance/proxy contracts.
+- `COND-EXPECT-REWARD-GENERATED-SELECTED-REWARD-FINITEPAIRHISTORY-SOURCE-MEAN-ZERO`
+  now compiles as the direct mean-zero consumer for that source contract:
+  once the generated selected-reward finite-pair-history law is supplied, the
+  existing full finite-pair source route plus raw/mean range regularity yields
+  ordinary succ-indexed conditional mean-zero.  The finite-pair comap
+  selected-reward law can now be consumed directly into the same mean-zero
+  surface with either the generated-history trim filter or the direct
+  comap-trim filter, after the local comap-to-source adapter constructs the
+  source internally.
+  The same selected-reward finite-pair-history source now also has direct
+  conditional-MGF consumers: with raw/mean range regularity it feeds
+  succ-indexed `HasCondSubgaussianMGF` witnesses under either a global
+  variance ceiling, a coarser global proxy, selected-history variance
+  ceilings, or a coarser selected-history proxy.  These wrappers reuse the
+  packaged full finite-pair `partialTraj` source route and still consume the
+  selected-reward law plus variance/proxy contracts.
+  The uniform-variance conditional MGF consumer now accepts the same direct
+  comap-trim law surface, provided raw/mean range regularity and a global
+  variance ceiling are supplied.
+  Its coarser-proxy companion now accepts the same direct comap-trim law
+  surface when a deterministic domination proof `varianceCeiling <= c` is
+  supplied.
+  The selected-history-variance conditional MGF consumer now accepts the same
+  direct comap-trim law surface under the time-indexed selected-history
+  variance ceiling contract.
 - `POLICY-REWARD-PARTIALTRAJ-SUCC-EXTEND-MAP` now compiles as the RewardKernel
   side of that route: the one-step action/reward `partialTraj` measure equals
   `Measure.map (History.extendPairHistorySucc history)` of
@@ -1385,8 +1523,11 @@ Context:
   exposes generated-action reward-coordinate, actual-action pair-product, and
   fully random next-pair law shapes as full finite-pair-trace `partialTraj` law
   adapters before applying the centered conditional mean-zero consumers.  The
-  pair/reward law source and ambient trajectory-to-`condExpKernel`
-  identification remain open.
+  generatedActionFromRewardHistory actual-action reward-coordinate surface now
+  also has a source constructor and theorem wrapper that expose the same full
+  finite-pair `partialTraj` law without passing an explicit action trace or
+  generated-trace equality.  The pair/reward law source and ambient
+  trajectory-to-`condExpKernel` identification remain open.
 - `COND-EXPECT-REWARD-NEXTPAIR-SPLIT-LAW-BUILDER` now compiles as the next
   decomposition: the full next-pair `condExpKernel` law follows from a
   conditional action a.e. equality to the policy-selected action plus a
@@ -1423,7 +1564,11 @@ Context:
   rewritten to the policy-selected action, fed to the split-law builder, pushed
   through the extension-map `partialTraj` bridge, exposed as reusable
   full-trace law adapters, and consumed for succ-indexed conditional mean-zero
-  under integrability.  The pair/reward-law source and ambient
+  under integrability.  The generatedActionFromRewardHistory actual-action
+  reward-coordinate law is now also exposed directly as
+  `GeneratedActionPartialTrajectoryPairLawSource` and as the theorem-card-shaped
+  full finite-pair `partialTraj` law, with no explicit action trace/equality
+  argument at the call site.  The pair/reward-law source and ambient
   trajectory-to-`condExpKernel` identification remain open.
 - `COND-EXPECT-REWARD-GENERATED-ACTUAL-REWARD-MAP-SOURCE-CONTRACT` now
   compiles in `BanditRLProof.ConditionalRewardLawSource` as the narrower
@@ -2313,18 +2458,97 @@ Plan to evaluate:
     source and its direct wrong-commit probability bound are now compiled as
     `ETC-BOUNDED-REWARD-INFINITEPI-SOURCE` and
     `ETC-WRONG-COMMIT-INFINITEPI-BOUNDED-REWARD-SOURCE`.
+    The same fixed-product wrong-commit bound now also has a standalone
+    `Measure.real` bridge from the finite `ENNReal` tail budget under
+    `ETC-WRONG-COMMIT-INFINITEPI-REAL-PROBABILITY-BOUND`.
     The pointwise wrong-commit regret assembly bridge is now compiled as
     `ETC-WRONG-COMMIT-REGRET-ASSEMBLY-POINTWISE`.
     The abstract lower-integral wrong-commit regret assembly is now compiled
     as `ETC-WRONG-COMMIT-LINTEGRAL-REGRET-ASSEMBLY`.
     The concrete finite-argmax/infinitePi lower-integral regret assembly is now
     compiled as `ETC-WRONG-COMMIT-INFINITEPI-LINTEGRAL-REGRET-ASSEMBLY`.
+    The fixed product-coordinate bad-gap lower-integral endpoint now also has
+    a named `ETC.fixedProductArgmaxAction` wrapper and named `ENNReal.ofReal`
+    RHS budget under `ETC-FIXED-PRODUCT-BADGAP-LINTEGRAL-REGRET-WRAPPER`.
     The conservative sum-gap suffix adapter for that assembly is now compiled
     as `ETC-WRONG-COMMIT-INFINITEPI-SUMGAP-LINTEGRAL-REGRET-ASSEMBLY`.
+    The fixed product-coordinate conservative sum-gap lower-integral endpoint
+    now also has a named `ETC.fixedProductArgmaxAction` wrapper and named
+    `ENNReal.ofReal` RHS budget under
+    `ETC-FIXED-PRODUCT-SUMGAP-LINTEGRAL-REGRET-WRAPPER`.
     The sharper max-gap suffix adapter is now compiled as
     `ETC-WRONG-COMMIT-INFINITEPI-MAXGAP-LINTEGRAL-REGRET-ASSEMBLY`.
     The polished fixed product-coordinate max-gap wrapper is now compiled as
     `ETC-FIXED-PRODUCT-MAXGAP-LINTEGRAL-REGRET-WRAPPER`.
+    The Bochner/Real finite-argmax/infinitePi expected-regret assembly now also
+    exposes the bad-gap endpoint through the named `ETC.fixedProductArgmaxAction`
+    API, aligned with the existing sum-gap and max-gap Real wrappers, under
+    `ETC-WRONG-COMMIT-INFINITEPI-BOCHNER-REGRET-ASSEMBLY`.
+    `ETC-CANONICAL-EXPLORATION-INFINITEPI-BOCHNER-REGRET` now removes the
+    public `baseCommitArm` artifact from the fixed-product max-gap Real endpoint:
+    bounds and means are stated directly at `ETC.exploreArm`, while the existing
+    wrapper is reused with `model.bestArm` only as an internal seed.  This closes
+    the canonical fixed-product theorem surface, not the adaptive/LML ETC
+    theorem; the next required transport is an action-dependent environment law
+    aligned with the random post-exploration commit trace.
+    `ETC-EMPMEAN-EXPLORATION-PREFIX-CONGRUENCE` is now compiled as the first
+    direct support leaf for that transport: it proves fixed-commit exploration
+    scores depend only on reward coordinates below the exploration horizon. The
+    next narrow route remains construction and alignment of a history-derived
+    commit policy, not an expected-regret theorem.
+    `ETC-EMPMEAN-FINITE-HISTORY-RECONSTRUCTION` now provides the exact
+    generated-state score reconstruction needed by that next route: a history
+    through time `t` determines the exploration argmax scores when the
+    exploration horizon is at most `t + 1`. The remaining narrow task is an
+    action equality for a measurable finite-history ETC policy.
+    `ETC-GENERATED-HISTORY-POLICY-ACTION-ALIGNMENT` now compiles that policy
+    and function-level action equality. The next narrow task is no longer a
+    deterministic ETC wrapper: it is an action-dependent reward-law source for
+    the generated trace, to be consumed by the already compiled conditional
+    expectation and conditional-MGF surfaces.
+    `ETC-GENERATED-HISTORY-POLICY-TRAJMEASURE-PARTIALTRAJ-LAW` now supplies the
+    full generated finite-pair law for the canonical Markov-kernel trajectory.
+    The next narrow task is measure/kernel transport and finite-bandit
+    regularity identification, not another generated-policy construction.
+    `ETC-GENERATED-HISTORY-POLICY-TRAJMEASURE-COND-MGF-MODEL-MEAN` now also
+    reaches the conditional-MGF layer for rewards centered at `model.mean`.
+    `ETC-FINITE-ARM-LAWS-MARKOV-REWARD-KERNEL` now constructs the raw
+    context-independent Markov reward kernel from per-arm probability laws and
+    proves selected-measure equality.
+    `ETC-FINITE-ARM-BOUNDED-CENTERED-KERNEL-COND-MGF` now also constructs the
+    centered model-mean law from common bounded arm laws and feeds it through
+    the canonical trajectory conditional-MGF theorem.
+    `ETC-FINITE-ARM-BOUNDED-CENTERED-FULL-SUM-TAIL` now adds the true time-zero
+    term and proves the complete selected centered-reward finite-sum tail.
+    `ETC-FINITE-ARM-BOUNDED-PAIRWISE-WRONG-COMMIT` now constructs the required
+    fixed-exploration masked pairwise process through the existing witness
+    package and proves the actual empirical-mean wrong-commit finite-union bound
+    under canonical `trajMeasure`.
+    `ETC-FINITE-ARM-BOUNDED-CANONICAL-BOCHNER-REGRET` now also compiles the
+    Real probability conversion, measurable commit/wrong event, integrability,
+    and generated-action Bochner expected-regret endpoint.
+    `ETC-FINITE-ARM-BOUNDED-EXTERNAL-PREFIX-LAW-BOCHNER-REGRET` now factors the
+    integrand through the `m*K` exploration rewards and transports the bound to
+    any external reward law with the same finite-prefix pushforward.
+    `ETC-FINITE-ARM-BOUNDED-EXTERNAL-CONDDISTRIB-BOCHNER-REGRET` now derives
+    that pushforward identity from the initial reward marginal and successor
+    `condDistrib` laws only through exploration, then transports the integral
+    back to the original sample space.
+    `ETC-FINITE-ARM-BOUNDED-EXTERNAL-EXPLORATION-ARM-CONDDISTRIB-BOCHNER-REGRET`
+    now rewrites those hypotheses directly as stationary laws of the scheduled
+    exploration arms, with no caller-visible context/state/policy kernel or
+    trajectory measure. The next narrow law work is a concrete environment or
+    LML `IsAlgEnvSeq` bridge to these conditional laws.
+    `ETC-FINITE-ARM-BOUNDED-EXTERNAL-ACTION-REWARD-HISTORY-CONDDISTRIB-BOCHNER-REGRET`
+    now accepts constant scheduled-arm laws with the exact LML feedback
+    conditioning-variable shape and projects them to reward prefixes. The next
+    seed-specific action-dependent kernel plus a.e. action transport is now
+    compiled by the action-dependent full-history endpoint. The law route is
+    complete without an LML dependency; a direct `IsAlgEnvSeq` wrapper is
+    optional. The exact LML route next needs Real
+    rewards/models, arbitrary common-sub-Gaussian laws, argmax tie semantics,
+    and per-arm gap-weighted expected pull-count bounds; the local max-gap union
+    theorem must not be presented as the exact `Bandits.ETC.regret_le` port.
 83. Do not start final adaptive ETC/UCB theorem work from the compiled
     lower-integral surrogate.  The current narrow option is a deliberately
     split derivation of conditional witness fields from a concrete reward law:
@@ -2373,6 +2597,15 @@ Current review conclusion:
   also names the measurable successor-extension map for pair histories.
 - `FILTRATION-HISTORY` now compiles locally in
   `BanditRLProof.HistoryFiltration`.
+- `HISTORY-FILTRATION-FINITEPAIR-COMAP` now compiles locally in
+  `BanditRLProof.HistoryFiltration`: finite pair histories are measurable at
+  later generated-history filtration levels, and
+  `History.historyFiltration ... (n + 1)` is exactly the comap of
+  `History.finitePairHistoryOfTrace ... n`; the shifted
+  `History.historyFiltrationSucc ... n` form is also named.  This is the
+  sigma-algebra bridge between the local generated-history filtration and
+  Mathlib finite-prefix conditioning surfaces; it does not prove reward-law or
+  trajectory-law transport.
 - `ADAPTED-ACTION` now compiles locally in
   `BanditRLProof.HistoryFiltration` as a countable/discrete past-coordinate
   measurability canary, with a reward-coordinate companion theorem.
@@ -2464,6 +2697,8 @@ Current review conclusion:
 - `ETC-BOUNDED-REWARD-INFINITEPI-SOURCE` and
   `ETC-WRONG-COMMIT-INFINITEPI-BOUNDED-REWARD-SOURCE` now compile locally in
   `BanditRLProof.Algorithms.ETCBoundedRewardInfinitePiSource`.
+- `ETC-WRONG-COMMIT-INFINITEPI-REAL-PROBABILITY-BOUND` now compiles locally in
+  `BanditRLProof.Algorithms.ETCInfinitePiExpectedRegretAssembly`.
 - `ETC-CENTERED-REWARD-COND-CANONICAL-TAIL-INFINITEPI-SOURCE` now compiles
   locally in `BanditRLProof.Algorithms.ETCBoundedRewardInfinitePiSource`.
 - `ETC-WRONG-COMMIT-REGRET-ASSEMBLY-POINTWISE` now compiles locally in
@@ -2472,8 +2707,12 @@ Current review conclusion:
   `BanditRLProof.Algorithms.ETCExpectedRegretAssembly`.
 - `ETC-WRONG-COMMIT-INFINITEPI-LINTEGRAL-REGRET-ASSEMBLY` now compiles locally
   in `BanditRLProof.Algorithms.ETCInfinitePiExpectedRegretAssembly`.
+- `ETC-FIXED-PRODUCT-BADGAP-LINTEGRAL-REGRET-WRAPPER` now compiles locally in
+  `BanditRLProof.Algorithms.ETCInfinitePiExpectedRegretAssembly`.
 - `ETC-WRONG-COMMIT-INFINITEPI-SUMGAP-LINTEGRAL-REGRET-ASSEMBLY` now compiles
   locally in `BanditRLProof.Algorithms.ETCInfinitePiExpectedRegretAssembly`.
+- `ETC-FIXED-PRODUCT-SUMGAP-LINTEGRAL-REGRET-WRAPPER` now compiles locally in
+  `BanditRLProof.Algorithms.ETCInfinitePiExpectedRegretAssembly`.
 - `ETC-WRONG-COMMIT-INFINITEPI-MAXGAP-LINTEGRAL-REGRET-ASSEMBLY` now compiles
   locally in `BanditRLProof.Algorithms.ETCInfinitePiExpectedRegretAssembly`.
 - `ETC-FIXED-PRODUCT-MAXGAP-LINTEGRAL-REGRET-WRAPPER` now compiles locally in
@@ -2660,3 +2899,209 @@ Current review conclusion:
   declaration
   `ETC.measurableSet_commitOracle_ne_bestArm_of_forall_measurable_empMean`
   now compiles in `BanditRLProof.Algorithms.ETCMeasurability`.
+
+## Reward-Only Canonical Conditional Law Increment
+
+- `RewardKernel.instIsMarkovKernel_historyStepKernelFamily` now exposes the
+  existing reward-history step-family Markov proof to Mathlib trajectory APIs.
+- `ConditionalExpectationReward.historyStepKernelFamily_selectedMeasure_condExpKernel_map_trajMeasure`
+  now proves the selected-reward `condExpKernel.map` law on the canonical
+  reward-only Ionescu-Tulcea trajectory measure.  The proof uses Mathlib
+  `Kernel.condDistrib_trajMeasure`, the compiled countable-target bridge, and
+  `RewardKernel.historyStepKernelFamily_apply`; it does not consume a packaged
+  generated random-pair law.
+- The contracts are standard Borel/countable reward regularity, a probability
+  initial reward measure, and measurable policy context/state inputs.  The
+  leaf is project-local and compiled with an external canary.
+- The reward-prefix/generated finite-pair-prefix alignment is now compiled:
+  the two prefixes induce equal comap measurable spaces,
+  `History.historyFiltrationSucc` reduces to the reward-prefix comap, and the
+  canonical selected-reward law is exposed on the generated finite-pair
+  surface.
+- `ConditionalExpectationReward.condExpKernel_map_eq_of_condDistrib_ae_eq_countable_trim`
+  now proves the required trim strengthening soundly: singleton event
+  probabilities on both sides are conditioning-measurable, so Mathlib
+  `ae_eq_trim_of_measurable` applies before countable singleton extensionality.
+  This is not a reversal of `ae_of_ae_trim`.
+- The trim bridge is specialized to the reward-only `historyStepKernelFamily`
+  trajectory measure, transported through the generated finite-pair comap,
+  and consumed by
+  `historyStepKernelFamily_generatedActionSelectedRewardFinitePairHistoryLawSource_trajMeasure`.
+  The canonical reward-only process therefore constructs
+  `GeneratedActionSelectedRewardFinitePairHistoryLawSource` without an assumed
+  selected-reward law.
+- `historyStepKernelFamily_generatedActionPartialTrajectoryPairLawSource_trajMeasure`
+  now converts that selected source through the deterministic generated-action
+  split, and
+  `historyStepKernelFamily_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_trajMeasure`
+  proves the full theorem-shaped successor finite-pair conditional law on the
+  canonical reward-only process.  This endpoint no longer assumes an ambient
+  selected-reward, random-pair, or partialTraj source.
+- `historyStepKernelFamily_centeredReward_succ_condExp_eq_zero_trajMeasure`
+  now consumes this full law together with `CenteredRewardKernelLaw` and
+  explicit ambient centered-reward integrability to prove the canonical
+  successor conditional mean-zero theorem.  It does not require the practical
+  source's pointwise raw bounds, which are generally unsuitable for the full
+  ambient space `Nat -> Rat`.
+- `historyStepKernelFamily_centeredReward_succ_hasCondSubgaussianMGF_trajMeasure`
+  now reaches the canonical concentration interface.  Measurable mean derives
+  centered measurability, a finite-history ceiling derives trim-a.e. variance
+  domination, and the integrated target-law transfer derives all-real ambient
+  exponential integrability from the selected kernel MGF laws.  The theorem no
+  longer accepts an ambient `h_integrable_exp` premise.
+- The transfer is compiled generically in
+  `hasCondSubgaussianMGF_of_condExpKernel_map_eq`: target-wise integrability and
+  the common MGF ceiling feed `Measure.integrable_comp_iff`, with the inner norm
+  integral bounded over the finite trim measure.  The same strengthening is
+  exposed by centered, bounded, definitional, and practical raw-range source
+  consumers.
+- `generatedActionFromRewardHistory_centeredRewardSuccProcess_stronglyAdapted`
+  now proves the zero-initialized successor centered-reward process adapted to
+  generated shifted history.  The index-zero value is deterministic zero, so
+  Mathlib's unconditional first-summand contract is discharged without adding
+  an artificial initial reward law.
+- `historyStepKernelFamily_centeredRewardSuccProcess_sum_tail_ennreal_trajMeasure`
+  combines that adaptedness, the canonical successor conditional-MGF witnesses,
+  and `condSubGaussian_sum_tail_ennreal_of_stronglyAdapted` into a canonical
+  ENNReal Azuma-Hoeffding bound for the `Finset.range n` sum of centered rewards
+  at indices `1..n-1`.
+- `historyStepKernelFamily_centeredRewardSuccProcess_average_tail_ennreal_trajMeasure`
+  now turns that sum tail into a canonical aggregate average tail: `m > 0`
+  rewrites `eps <= sum / m` to `m * eps <= sum`, and `Finset.range (m + 1)`
+  still contains exactly successors `1..m` because index zero is deterministic.
+  It is deliberately not an arm-wise empirical-mean or confidence-radius
+  theorem.  The next route is to align it with a concrete arm/sample-count
+  surface, or to prove arbitrary ambient transport; the `COND-EXPECT-REWARD`
+  conversion-window and proof-obligation files mentioned by the retrieval
+  index are currently absent and must be restored before their metadata is
+  used.  The arbitrary-ambient `partialTraj` theorem-card row and final
+  adaptive theorem remain open.
+
+## ETC Next Leaf
+
+The canonical bounded-Rat per-arm expected-regret endpoint and its external
+exploration-prefix transport now compile. Equal prefix pushforwards through
+`m*K-1` give equal generated ETC regret integrals, so the external law inherits
+the same gap-weighted armwise tails without a max-gap union, full trajectory
+equality, or suffix laws. An initial reward marginal plus successor
+`condDistrib` laws now derive this prefix identity and return the per-arm RHS
+directly on the original sample space. The scheduled exploration-arm wrapper
+also compiles: it fixes the irrelevant context to `Unit`, rewrites the local
+step kernel to the stationary arm law, and exposes no local kernel plumbing.
+The full action/reward-history constant-law adapter now also compiles: it
+projects complete pair-history/next-action conditions to reward prefixes and
+extracts the initial marginal without changing the per-arm RHS. The raw
+action-selected feedback-kernel adapter now also compiles, using a.e. scheduled
+exploration actions and preserving the per-arm conclusion. This closes the
+dependency-light bounded-Rat law route. The canonical concentration layer now
+also compiles from direct per-arm centered `HasSubgaussianMGF` witnesses at a
+common proxy: it builds the kernel law, generated/fixed-filtration reward
+witnesses, and exact pairwise empirical-mean tail contract without bounded
+support. That contract now also feeds concrete non-best commit fibers, named
+finite Real tails, and the canonical gap-weighted per-arm Bochner expected-
+regret theorem, with no max-gap collapse or arm union. Its exploration-prefix,
+generic initial/successor conditional-law, and scheduled exploration-arm
+consumers now also compile on arbitrary external reward processes. The public
+scheduled endpoint fixes `Context := Unit` and requires neither bounded support
+nor a caller-visible local kernel. The LML-shaped full action/reward-history
+direct-MGF adapter now also compiles by marginalizing the initial constant law
+and coarsening each complete pair-history/next-action condition to the reward
+prefix. The action-dependent selected-kernel adapter now also compiles: raw
+action-indexed kernels plus scheduled-action a.e. identities reduce to those
+constant laws without changing the per-arm RHS. This closes dependency-light
+direct-MGF `Rat` law transport. The new Real scalar regret/pull-count leaf below
+closes the target-side bookkeeping mismatch, and its stationary-kernel
+specialization now also compiles. The Real ETC count-to-probability endpoint
+now compiles too: measurable `actionWithCommit` pull counts are integrable and
+their expectation is exactly `m + (n - K*m) * P(commit=a)`. The canonical Rat
+arm-law route now also compiles the exact LML exponential constant and the
+matching per-arm expected-count bound. The canonical native Real
+`Measure.infinitePi` route now compiles the same single-arm tail, expected
+count, kernel gap, and full finite-sum regret bound directly for a Markov Real
+kernel. Native Real finite-prefix factorization and external process transport
+now compile too, including a direct scheduled-arm initial/successor
+`condDistrib` endpoint. The next narrow route is mapping the actual
+`IsAlgEnvSeq` stationary-environment fields to those compiled premises plus
+upstream measurable-argmax action/tie equivalence; direct LML integration is
+now the remaining source boundary rather than an optional concentration path.
+
+## Exact ETC Route Update: Real Mean Regret
+
+The completed `REAL-MEAN-REGRET-PULLCOUNT` leaf provides the exact-route Real
+scalar bookkeeping surface in `BanditRLProof.RealMeanRegretPullCount`.
+`integral_realMeanRegret_eq_sum_gap_mul_integral_pullCount` rewrites the
+Bochner expectation of `n * iSup mean - sum mean(action)` as the finite sum of
+each `realMeanGap` times the expected pull count. It uses existing finite-sum,
+fiber-cardinality, integrability, and Bochner wrappers and requires only
+per-arm pull-count integrability.
+
+That stationary Real reward-kernel specialization now compiles in
+`BanditRLProof.RealKernelRegretPullCount`, including nonnegative kernel gaps and
+the kernel-facing Bochner pull-count equality. The downstream
+`REAL-ETC-EXPECTED-PULLCOUNT` leaf now closes pull-count integrability, exact
+commit-fiber indicator integration, and the abstract probability-bound
+consumer. `ETC-EXACT-COMMON-SUBGAUSSIAN-PER-ARM-EXPECTED-PULLCOUNT` now also
+closes the exact `exp (-m*gap^2/(4*sigma2))` arithmetic, canonical Rat-arm-law
+commit-fiber bound, and matching per-arm expected-count endpoint.
+`ETC-RAT-ARM-LAW-REAL-KERNEL-EXACT-REGRET` now maps those laws to a Markov Real
+kernel, identifies its identity-integral gaps, and closes the full finite-sum
+regret assembly. `ETC-NATIVE-REAL-EMPIRICAL-MEAN-ARGMAX-COUNT` now additionally
+defines the Real exploration means and deterministic finite argmax directly,
+proves their measurability without a countability assumption on Real score
+vectors, and connects the resulting action to the exact expected-count
+consumer. `ETC-NATIVE-REAL-INFINITEPI-EXACT-REGRET` now closes the native Real
+canonical product-law concentration route through the exact full finite sum,
+using `iIndepFun_infinitePi`, coordinate map laws, the common centered MGF
+contract, and the existing Real kernel regret decomposition.
+`ETC-NATIVE-REAL-PREFIX-LAW-EXTERNAL-EXACT-REGRET` now factors the entire
+native action/regret through `Fin (m*K)` rewards, transports equal prefix laws,
+and derives that equality directly from scheduled-arm initial and successor
+conditional laws. `ETC-NATIVE-REAL-ACTION-DEPENDENT-SOURCE-EXACT-REGRET` now
+also maps the upstream-shaped action-selected initial and complete pair-history
+successor feedback laws into those scheduled laws, preserving the exact Real
+finite-sum conclusion.
+
+`ETC-NATIVE-REAL-LEAST-ENCODED-ACTION-EXACT-REGRET` now identifies the strict
+fold with Mathlib `List.argmax`, proves equality with the LML-shaped least-
+encode `Nat.find` selector, combines round-robin exploration, commit, and
+persistence into action equality, and consumes the selected feedback laws for
+the exact native Real finite sum.
+
+`ETC-NATIVE-REAL-HISTORY-SCORE-SOURCE-EXACT-REGRET` now mirrors the upstream
+finite-history count/sum/mean surface, proves the `K*m-1` history score equals
+the local exploration score under `ETC.arm_of_lt`-shaped action equality, and
+feeds a history-shaped commit law directly into the exact finite-sum theorem.
+
+`ETC-NATIVE-REAL-LML-FIELD-COMPAT-EXACT-REGRET` now packages the precise
+measurability, three-phase action, and stationary feedback-law consequences in
+`ETC.RealStationaryETCSequence`. Its theorem projects that bundle into the
+history-score endpoint and returns the exact LML-shaped finite sum.
+
+The next narrow boundary is no longer mathematical field compatibility. It is
+a task-level decision about importing actual LML symbols across ABRL's Lean/
+mathlib `v4.29.1` and pinned LML's Lean `v4.32.0-rc1` toolchains. Any attempt
+must isolate the dependency/toolchain and symbol-identity work; do not reopen
+history arithmetic, tie semantics, reward laws, concentration, constants,
+gaps, or finite sums, and do not call the upstream theorem imported meanwhile.
+
+The active UCB theorem route now also advances through
+`UCB-NATIVE-REAL-HISTORY-INDEX`. The new module compiles the exact Real
+empirical mean, sample-path-dependent pull-count width, finite-history score,
+least-encoded score action, measurability, maximality, and history/trace
+alignment used by pinned `Bandits.UCB.regret_le`.
+
+`UCB-FIXED-COUNT-PEELING-LAW` now compiles the source-faithful next stage. A
+`FixedArmPrefixSource` records that selected rewards from an arm are exactly
+the first `pullCount` entries of a latent arm stream. The adaptive pair event
+is peeled over `k <= n` with the finite outer-measure union bound, and one
+complete-stream `IdentDistrib` law transports all fixed-count events to a
+canonical stream.
+
+The next UCB leaf is therefore narrower and more concrete: construct that
+source and canonical stationary/product arm-stream law for the actual
+generated UCB action/reward sequence, mirroring the role of LML's array/stream
+model, or prove a recorded conditional-MGF replacement with equivalent
+adaptive-sum strength. Only then should the route specialize the existing
+fixed-sum sub-Gaussian inequalities to one-sided UCB index failures. Do not
+substitute the older `proxy : Nat -> Arm -> NNReal` confidence route: its
+radius is deterministic in the sample point and is not the actual UCB width.

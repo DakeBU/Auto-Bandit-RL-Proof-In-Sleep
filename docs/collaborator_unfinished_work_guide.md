@@ -3383,6 +3383,109 @@ theorem History.measurableSet_reward_mem_historyFiltration
   final adaptive ETC regret, UCB, Thompson/EXP3/Tsallis/OFUL/RL, or broad
   kernel work in the same batch.
 
+`HISTORY-FILTRATION-FINITEPAIR-COMAP` is compiled locally:
+
+```lean
+theorem History.measurable_finitePairHistoryOfTrace_mem_historyFiltration_of_lt
+    [mOmega : MeasurableSpace Omega] [MeasurableSpace Action]
+    [MeasurableSingletonClass Action] [Countable Action]
+    [MeasurableSpace Reward] [MeasurableSingletonClass Reward]
+    [Countable Reward]
+    (action : Omega -> ActionTrace Action)
+    (reward : Omega -> RewardTrace Reward)
+    (haction : forall t : Nat,
+      Measurable (fun omega : Omega => action omega t))
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    {n t : Nat} (hnt : n < t) :
+    @Measurable Omega ((i : Finset.Iic n) -> Prod Action Reward)
+      (History.historyFiltration action reward haction hreward t)
+      inferInstance
+      (fun omega : Omega =>
+        History.finitePairHistoryOfTrace (action omega) (reward omega) n)
+
+theorem History.historyFiltration_succ_eq_comap_finitePairHistoryOfTrace
+    [mOmega : MeasurableSpace Omega] [MeasurableSpace Action]
+    [MeasurableSingletonClass Action] [Countable Action]
+    [MeasurableSpace Reward] [MeasurableSingletonClass Reward]
+    [Countable Reward]
+    (action : Omega -> ActionTrace Action)
+    (reward : Omega -> RewardTrace Reward)
+    (haction : forall t : Nat,
+      Measurable (fun omega : Omega => action omega t))
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (n : Nat) :
+    (History.historyFiltration action reward haction hreward (n + 1) :
+        MeasurableSpace Omega) =
+      (inferInstance :
+        MeasurableSpace ((i : Finset.Iic n) -> Prod Action Reward)).comap
+        (fun omega : Omega =>
+          History.finitePairHistoryOfTrace (action omega) (reward omega) n)
+
+theorem History.historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace
+    [mOmega : MeasurableSpace Omega] [MeasurableSpace Action]
+    [MeasurableSingletonClass Action] [Countable Action]
+    [MeasurableSpace Reward] [MeasurableSingletonClass Reward]
+    [Countable Reward]
+    (action : Omega -> ActionTrace Action)
+    (reward : Omega -> RewardTrace Reward)
+    (haction : forall t : Nat,
+      Measurable (fun omega : Omega => action omega t))
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (n : Nat) :
+    (History.historyFiltrationSucc action reward haction hreward n :
+        MeasurableSpace Omega) =
+      (inferInstance :
+        MeasurableSpace ((i : Finset.Iic n) -> Prod Action Reward)).comap
+        (fun omega : Omega =>
+          History.finitePairHistoryOfTrace (action omega) (reward omega) n)
+```
+
+- Exact Lean-facing statement: the first theorem proves that the finite
+  `(Action, Reward)` pair prefix up to `n` is measurable with respect to any
+  generated history filtration level `t` satisfying `n < t`.  The second
+  theorem identifies the successor history sigma-algebra
+  `History.historyFiltration ... (n + 1)` with the comap of the finite
+  pair-prefix map `History.finitePairHistoryOfTrace ... n`; the third theorem
+  exposes the same equality in the shifted `History.historyFiltrationSucc`
+  indexing used by conditional-kernel source contracts.
+- Local APIs/imports: `BanditRLProof.HistoryFiltration`, consuming
+  `History.finitePairHistoryOfTrace`,
+  `History.measurable_action_mem_historyFiltration_of_lt`,
+  `History.measurable_reward_mem_historyFiltration_of_lt`,
+  `History.historyFiltration_apply`,
+  `History.measurableSet_action_mem_historyFiltration`, and
+  `History.measurableSet_reward_mem_historyFiltration`.
+- Intended proof route: prove product-valued prefix measurability by
+  `measurable_pi_lambda`, using the action and reward adapted-coordinate
+  canaries on each `Finset.Iic n` coordinate.  For the sigma-algebra equality,
+  prove the generator-to-comap inclusion by expanding
+  `History.historyFiltration_apply` and expressing action/reward singleton
+  generators as coordinate preimages of the finite pair prefix; prove the
+  reverse inclusion by `Measurable.comap_le` from the product-valued prefix
+  measurability theorem.
+- Regularity contracts: ambient `[MeasurableSpace Omega]`,
+  singleton-measurable and countable action and reward spaces, timewise
+  measurable action and reward traces, and the generated history filtration.
+  This is a countable/discrete sigma-algebra alignment leaf, not a general
+  standard-Borel disintegration theorem.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-HISTORY-FILTRATION-FINITEPAIR-COMAP`; dependency cards
+  `LOCAL-LEAF-FINITE-HISTORY-PRODUCT-MEASURABILITY`,
+  `LOCAL-LEAF-HISTORY-FILTRATION`, and
+  `LOCAL-LEAF-HISTORY-ADAPTED-COORDINATES`; local declarations are
+  `History.measurable_finitePairHistoryOfTrace_mem_historyFiltration_of_lt`
+  `History.historyFiltration_succ_eq_comap_finitePairHistoryOfTrace`, and
+  `History.historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace`.
+- Status: project-local compiled history-filtration finite-pair/comap bridge.
+- Failure policy: if a future `condDistrib` or `condExpKernel` transport route
+  fails, reuse this bridge as the sigma-algebra alignment step and split only
+  the actual reward-law, trajectory-law, or ambient disintegration obligation.
+  Do not mark `COND-EXPECT-REWARD-PARTIALTRAJ-CONDEXPKERNEL-PAIR-LAW-CARD` as
+  compiled from this leaf alone.
+
 Current boundary after this leaf:
 
 - `ADAPTED-ACTION` is compiled locally as a countable/discrete
@@ -5311,6 +5414,99 @@ theorem ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_prefix_
   `condExpKernel` for an arbitrary generated
   `Omega`/`History.historyFiltrationSucc` process.
 
+`LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-FINITEPAIRHISTORY-CONDEXPKERNEL-MAP`
+is compiled locally:
+
+```lean
+theorem ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_finitePairHistoryOfTrace_condExpKernel_map_trajMeasure
+    {Context : Type x} {State : Type u} {Action : Type v}
+    {Reward : Type w}
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSpace Reward]
+    [StandardBorelSpace (Prod Action Reward)]
+    [StandardBorelSpace ((t : Nat) -> Prod Action Reward)]
+    [Nonempty (Prod Action Reward)]
+    [Nonempty ((t : Nat) -> Prod Action Reward)]
+    [MeasurableSingletonClass (Prod Action Reward)]
+    [Countable (Prod Action Reward)]
+    (mu0 : Measure (Prod Action Reward))
+    [MeasureTheory.IsProbabilityMeasure mu0]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Reward)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Reward) -> Context)
+    (state :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Reward) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (n : Nat) :
+    let stepKernel :=
+      RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy
+        context state hcontext hstate
+    let trajMeasure :=
+      ProbabilityTheory.Kernel.trajMeasure
+        (X := fun _ : Nat => Prod Action Reward) mu0 stepKernel
+    let prefixMap :=
+      fun y : (t : Nat) -> Prod Action Reward =>
+        History.finitePairHistoryOfTrace
+          (fun t => (y t).1) (fun t => (y t).2) n
+    let fullPrefix :=
+      fun y : (t : Nat) -> Prod Action Reward =>
+        History.finitePairHistoryOfTrace
+          (fun t => (y t).1) (fun t => (y t).2) (n + 1)
+    Filter.Eventually
+      (fun trajectory : (t : Nat) -> Prod Action Reward =>
+        Measure.map fullPrefix
+          (ProbabilityTheory.condExpKernel trajMeasure
+            ((inferInstance :
+              MeasurableSpace
+                ((i : Finset.Iic n) -> Prod Action Reward)).comap
+              prefixMap)
+            trajectory) =
+        RewardKernel.actionRewardPartialTrajectoryKernel rewardKernel policy
+          context state hcontext hstate n (n + 1)
+          (prefixMap trajectory))
+      (ae trajMeasure)
+```
+
+- Exact Lean-facing statement: on the canonical Mathlib `trajMeasure`,
+  conditioning by the old pair prefix written as
+  `History.finitePairHistoryOfTrace (fun t => (trajectory t).1)
+  (fun t => (trajectory t).2) n` and pushing `condExpKernel` forward by the
+  successor pair prefix in the same notation yields the one-step
+  `RewardKernel.actionRewardPartialTrajectoryKernel` at the frozen old prefix.
+- Local APIs/imports:
+  `ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_prefix_condExpKernel_map_trajMeasure`,
+  `RewardKernel.actionRewardHistoryStepKernelFamily`,
+  `RewardKernel.actionRewardPartialTrajectoryKernel`,
+  `History.finitePairHistoryOfTrace`, `History.extendPairHistorySucc`,
+  `Preorder.frestrictLe`, `ProbabilityTheory.Kernel.trajMeasure`,
+  `ProbabilityTheory.condExpKernel`, and `Measure.map`.
+- Intended proof route: prove the old-prefix function written with
+  `History.finitePairHistoryOfTrace` is equal to `Preorder.frestrictLe n`,
+  prove the successor prefix is the same full-prefix map, using the local
+  successor-extension decomposition, and then rewrite the existing canonical
+  full-prefix theorem.
+- Regularity contracts: same canonical trajectory contracts as the prefix
+  bridge: measurable context/state/action/reward spaces,
+  `[StandardBorelSpace (Prod Action Reward)]`,
+  `[StandardBorelSpace ((t : Nat) -> Prod Action Reward)]`,
+  `[MeasurableSingletonClass (Prod Action Reward)]`,
+  `[Countable (Prod Action Reward)]`, nonempty pair/trajectory spaces, an
+  initial probability measure `mu0`, and measurable context/state extractors
+  from finite pair histories.
+- Retrieval evidence:
+  `ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_finitePairHistoryOfTrace_condExpKernel_map_trajMeasure`,
+  `ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_prefix_condExpKernel_map_trajMeasure`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-FINITEPAIRHISTORY-CONDEXPKERNEL-MAP`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-PREFIX-CONDEXPKERNEL-MAP`, and
+  `LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-CONSUMER`.
+- Status: project-local compiled canonical `trajMeasure` notation-alignment
+  bridge leaf for `COND-EXPECT-REWARD`.
+- Failure policy: do not cite this as the missing ambient
+  `Omega`/`History.historyFiltrationSucc` theorem-card.  It only restates the
+  canonical Ionescu-Tulcea law in the project's finite-pair-history notation.
+
 `LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-REWARD-CONDEXPKERNEL-MAP` is
 compiled locally:
 
@@ -5460,6 +5656,1013 @@ theorem ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_selecte
 - Failure policy: do not cite this as the generated-history
   `condExpKernel` law for an arbitrary ambient process.  It remains a
   canonical-source theorem awaiting transport to `History.historyFiltrationSucc`.
+
+`LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-SELECTED-REWARD-FINITEPAIRHISTORY-CONDEXPKERNEL-MAP`
+is compiled locally:
+
+```lean
+theorem ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_selectedMeasure_finitePairHistoryOfTrace_condExpKernel_map_trajMeasure
+    {Context : Type x} {State : Type u} {Action : Type v}
+    {Reward : Type w}
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSpace Reward]
+    [StandardBorelSpace (Prod Action Reward)]
+    [StandardBorelSpace Reward]
+    [StandardBorelSpace ((t : Nat) -> Prod Action Reward)]
+    [Nonempty (Prod Action Reward)] [Nonempty Reward]
+    [Nonempty ((t : Nat) -> Prod Action Reward)]
+    [MeasurableSingletonClass Reward] [Countable Reward]
+    (mu0 : Measure (Prod Action Reward))
+    [MeasureTheory.IsProbabilityMeasure mu0]
+    (rewardKernel :
+      RewardKernel.MarkovRewardKernel (Prod Context Action) Reward)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Reward) -> Context)
+    (state :
+      (n : Nat) -> ((i : Finset.Iic n) -> Prod Action Reward) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (n : Nat) :
+    let stepKernel :=
+      RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy
+        context state hcontext hstate
+    let trajMeasure :=
+      ProbabilityTheory.Kernel.trajMeasure
+        (X := fun _ : Nat => Prod Action Reward) mu0 stepKernel
+    let prefixMap :
+        ((t : Nat) -> Prod Action Reward) ->
+          ((i : Finset.Iic n) -> Prod Action Reward) :=
+      fun y =>
+        History.finitePairHistoryOfTrace
+          (fun t => (y t).1) (fun t => (y t).2) n
+    Filter.Eventually
+      (fun trajectory : (t : Nat) -> Prod Action Reward =>
+        Measure.map
+          (fun y : (t : Nat) -> Prod Action Reward => (y (n + 1)).2)
+          (ProbabilityTheory.condExpKernel trajMeasure
+            ((inferInstance :
+              MeasurableSpace
+                ((i : Finset.Iic n) -> Prod Action Reward)).comap
+              prefixMap)
+            trajectory) =
+        RewardKernel.selectedMeasure rewardKernel
+          (context n (prefixMap trajectory))
+          ((policy n).action (state n (prefixMap trajectory))))
+      (ae trajMeasure)
+```
+
+- Exact Lean-facing statement: the canonical `trajMeasure` selected-reward
+  `condExpKernel.map` law can be stated with the conditioning finite pair
+  prefix written as `History.finitePairHistoryOfTrace (fun t => (trajectory t).1)
+  (fun t => (trajectory t).2) n`, and the resulting next-reward pushforward is
+  a.e. the selected context/action reward measure at that prefix.
+- Local APIs/imports:
+  `ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_selectedMeasure_condExpKernel_map_trajMeasure`,
+  `History.finitePairHistoryOfTrace`, `Preorder.frestrictLe`,
+  `RewardKernel.selectedMeasure`, `ProbabilityTheory.Kernel.trajMeasure`,
+  `ProbabilityTheory.condExpKernel`, and `Measure.map`.
+- Intended proof route: show the `History.finitePairHistoryOfTrace` prefix map
+  is definitionally equal to `Preorder.frestrictLe n` by function extensionality
+  and `simp`, then rewrite the compiled selected-reward canonical law.
+- Regularity contracts: same as
+  `LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-SELECTED-REWARD-CONDEXPKERNEL-MAP`:
+  measurable context/state/action/reward spaces, standard Borel pair, reward,
+  and trajectory spaces, nonempty pair/reward/trajectory spaces, countable
+  reward target with measurable singletons, initial probability measure,
+  Markov reward kernel, measurable policy, and measurable pair-history
+  context/state extractors.
+- Retrieval evidence:
+  `ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_selectedMeasure_finitePairHistoryOfTrace_condExpKernel_map_trajMeasure`,
+  `ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_selectedMeasure_condExpKernel_map_trajMeasure`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-SELECTED-REWARD-FINITEPAIRHISTORY-CONDEXPKERNEL-MAP`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-SELECTED-REWARD-CONDEXPKERNEL-MAP`,
+  and `LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-FINITEPAIRHISTORY-CONDEXPKERNEL-MAP`.
+- Status: project-local compiled canonical `trajMeasure` notation-alignment
+  bridge leaf for the selected-reward side of `COND-EXPECT-REWARD`.
+- Failure policy: do not cite this as an arbitrary
+  `Omega`/`History.historyFiltrationSucc` reward-law theorem.  It only
+  restates the canonical Ionescu-Tulcea selected-reward law in project
+  finite-pair-history notation.
+
+`LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-SELECTED-REWARD-REWARDHISTORY-CONDEXPKERNEL-MAP`
+is compiled locally:
+
+```lean
+theorem ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_selectedMeasure_rewardHistoryOfTrace_condExpKernel_map_trajMeasure
+    {Context : Type x} {State : Type u} {Action : Type v}
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action]
+    [StandardBorelSpace (Prod Action Rat)]
+    [StandardBorelSpace Rat]
+    [StandardBorelSpace ((t : Nat) -> Prod Action Rat)]
+    [Nonempty (Prod Action Rat)] [Nonempty Rat]
+    [Nonempty ((t : Nat) -> Prod Action Rat)]
+    [MeasurableSingletonClass Rat] [Countable Rat]
+    (mu0 : Measure (Prod Action Rat))
+    [MeasureTheory.IsProbabilityMeasure mu0]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((i : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((i : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (n : Nat) :
+    -- canonical trajMeasure selected-reward law with pairContext/pairState
+    -- defined by History.pairHistoryRewardProjection, and RHS stated using
+    -- History.finiteRewardHistoryOfTrace
+    Filter.Eventually ... (ae trajMeasure)
+```
+
+- Exact Lean-facing statement: on the canonical Mathlib `trajMeasure` built
+  from `RewardKernel.actionRewardHistoryStepKernelFamily` where
+  `pairContext n history := context n
+  (History.pairHistoryRewardProjection history)` and similarly for state,
+  conditioning by the finite pair prefix in `History.finitePairHistoryOfTrace`
+  notation and pushing the conditional kernel by the next reward coordinate
+  yields `RewardKernel.selectedMeasure rewardKernel` at
+  `History.finiteRewardHistoryOfTrace (fun t => (trajectory t).2) n`.
+- Local APIs/imports:
+  `ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_selectedMeasure_finitePairHistoryOfTrace_condExpKernel_map_trajMeasure`,
+  `History.pairHistoryRewardProjection_finitePairHistoryOfTrace`,
+  `History.measurable_pairHistoryRewardProjection`,
+  `History.finiteRewardHistoryOfTrace`,
+  `RewardKernel.actionRewardHistoryStepKernelFamily`, and
+  `ProbabilityTheory.Kernel.trajMeasure`.
+- Intended proof route: define `pairContext`, `pairState`, `hpairContext`, and
+  `hpairState`; invoke the compiled selected-reward finite-pair-history
+  canonical theorem; close by `simpa` using
+  `History.pairHistoryRewardProjection_finitePairHistoryOfTrace`.
+- Regularity contracts: measurable context/state/action spaces, standard
+  Borel `(Action x Rat)`, standard Borel `Rat`, standard Borel trajectory
+  space, nonempty pair/reward/trajectory spaces, countable reward target,
+  measurable singleton reward target, initial probability measure, Markov
+  reward kernel, measurable policy, and measurable reward-history
+  context/state extractors.
+- Retrieval evidence:
+  `ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_selectedMeasure_rewardHistoryOfTrace_condExpKernel_map_trajMeasure`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-SELECTED-REWARD-REWARDHISTORY-CONDEXPKERNEL-MAP`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-SELECTED-REWARD-FINITEPAIRHISTORY-CONDEXPKERNEL-MAP`,
+  and `History.pairHistoryRewardProjection_finitePairHistoryOfTrace`.
+- Status: project-local compiled canonical `trajMeasure` projection wrapper.
+- Failure policy: do not cite this as ambient generated-process transport.
+  It remains a canonical source theorem, useful as the canonical analogue of
+  the generated selected-reward source contract below.
+
+`LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-SELECTED-REWARD-FINITEPAIRHISTORY-LAW-SOURCE-CONTRACT`
+is compiled locally:
+
+```lean
+structure ConditionalExpectationReward.GeneratedActionSelectedRewardFinitePairHistoryLawSource
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t)) where
+  hcontext : forall n : Nat, Measurable (context n)
+  hstate : forall n : Nat, Measurable (state n)
+  reward_map_eq_selected_policy_finitePairHistory :
+    forall i : Nat, Filter.Eventually ... (ae (mu.trim ...))
+
+def ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_of_finitePairHistory_reward_map_eq_selected_policy
+def ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_of_selectedRewardFinitePairHistoryLawSource
+```
+
+- Exact Lean-facing statement: the source packages, for every `i`, the ambient
+  generated-history law
+  `Measure.map (fun y => reward y (i + 1))
+  (condExpKernel mu ((History.historyFiltrationSucc
+  (generatedActionFromRewardHistory policy state defaultAction reward) reward
+  ...) i) omega) = RewardKernel.selectedMeasure rewardKernel ...`, with the
+  context/state prefix written through
+  `History.pairHistoryRewardProjection
+  (History.finitePairHistoryOfTrace (generatedActionFromRewardHistory ...)
+  (reward omega) i)`.  The adapter rewrites that prefix to
+  `History.finiteRewardHistoryOfTrace (reward omega) i` and reuses
+  `generatedActionPartialTrajectoryPairLawSource_of_reward_map_eq_selected_policy`.
+- Local APIs/imports:
+  `GeneratedActionSelectedRewardFinitePairHistoryLawSource`,
+  `generatedActionPartialTrajectoryPairLawSource_of_finitePairHistory_reward_map_eq_selected_policy`,
+  `generatedActionPartialTrajectoryPairLawSource_of_selectedRewardFinitePairHistoryLawSource`,
+  `generatedActionPartialTrajectoryPairLawSource_of_reward_map_eq_selected_policy`,
+  `generatedActionFromRewardHistory`,
+  `generatedActionFromRewardHistory_measurable`,
+  `History.historyFiltrationSucc`,
+  `History.finitePairHistoryOfTrace`,
+  `History.pairHistoryRewardProjection_finitePairHistoryOfTrace`,
+  `ProbabilityTheory.condExpKernel`, and `Measure.map`.
+- Intended proof route: store the selected-reward finite-pair-history law as a
+  source field; the direct adapter closes by `simpa
+  [History.pairHistoryRewardProjection_finitePairHistoryOfTrace]`; the source
+  conversion passes `source.hcontext`, `source.hstate`, and the stored law to
+  that adapter.
+- Regularity contracts: `[StandardBorelSpace Omega]`, finite `mu`,
+  measurable context/state/action spaces, measurable singleton and countable
+  action target, measurable reward trace, source-provided context/state
+  measurability, and the explicit generated selected-reward law field.
+- Retrieval evidence:
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-SELECTED-REWARD-FINITEPAIRHISTORY-LAW-SOURCE-CONTRACT`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-FROM-SELECTED-REWARD-LAW`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-CONTRACT`,
+  and
+  `LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-SELECTED-REWARD-REWARDHISTORY-CONDEXPKERNEL-MAP`.
+- Status: project-local compiled ambient source contract and adapter.
+- Failure policy: this does not prove the generated ambient selected-reward
+  law, does not identify the canonical `trajMeasure` with an arbitrary
+  process, and does not upgrade
+  `COND-EXPECT-REWARD-PARTIALTRAJ-CONDEXPKERNEL-PAIR-LAW-CARD` to compiled.
+
+`LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-SELECTED-REWARD-FINITEPAIRHISTORY-SOURCE-FROM-COMAP-LAW`
+is compiled locally:
+
+```lean
+def ConditionalExpectationReward.generatedActionSelectedRewardFinitePairHistoryLawSource_of_comap_reward_map_eq_selected_policy
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            Measure.map (fun y : Omega => reward y (i + 1))
+              (ProbabilityTheory.condExpKernel
+                (mu := mu)
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                omega)
+            =
+            RewardKernel.selectedMeasure rewardKernel ... )
+          (ae (mu.trim ((History.historyFiltrationSucc
+            (generatedActionFromRewardHistory policy state defaultAction
+              reward)
+            reward ... hreward).le i)))) :
+    ConditionalExpectationReward.GeneratedActionSelectedRewardFinitePairHistoryLawSource
+      mu rewardKernel policy context state defaultAction reward hreward
+
+def ConditionalExpectationReward.generatedActionSelectedRewardFinitePairHistoryLawSource_of_comap_trim_reward_map_eq_selected_policy
+    -- same selected-reward `condExpKernel.map` law at the finite-pair comap
+    -- conditioning sigma-algebra, but with the a.e. filter stated directly as
+    -- `ae (mu.trim hcomap_le)` for that comap sigma-algebra:
+    (h_reward_map_eq : forall i : Nat, Filter.Eventually ...)
+    :
+    ConditionalExpectationReward.GeneratedActionSelectedRewardFinitePairHistoryLawSource
+      mu rewardKernel policy context state defaultAction reward hreward
+
+def ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_of_comap_reward_map_eq_selected_policy
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            Measure.map (fun y : Omega => reward y (i + 1))
+              (ProbabilityTheory.condExpKernel
+                (mu := mu)
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                omega)
+            =
+            RewardKernel.selectedMeasure rewardKernel ... )
+          (ae (mu.trim ((History.historyFiltrationSucc
+            (generatedActionFromRewardHistory policy state defaultAction
+              reward)
+            reward ... hreward).le i)))) :
+    ConditionalExpectationReward.GeneratedActionPartialTrajectoryPairLawSource
+      mu rewardKernel policy context state defaultAction reward hreward
+
+def ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_of_comap_trim_reward_map_eq_selected_policy
+    -- same selected-reward `condExpKernel.map` law at the finite-pair comap
+    -- conditioning sigma-algebra, with the a.e. filter stated directly as
+    -- `ae (mu.trim hcomap_le)` for that comap sigma-algebra:
+    (h_reward_map_eq : forall i : Nat, Filter.Eventually ...)
+    :
+    ConditionalExpectationReward.GeneratedActionPartialTrajectoryPairLawSource
+      mu rewardKernel policy context state defaultAction reward hreward
+
+theorem ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_comap_reward_map_eq_selected_policy
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (h_reward_map_eq : forall i : Nat, Filter.Eventually ...)
+    (i : Nat) :
+    Filter.Eventually
+      (fun omega : Omega =>
+        Measure.map
+          (fun y : Omega =>
+            History.finitePairHistoryOfTrace
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward y)
+              (reward y) (i + 1))
+          (ProbabilityTheory.condExpKernel
+            (mu := mu)
+            ((History.historyFiltrationSucc
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward)
+              reward ... hreward) i)
+            omega)
+        =
+        RewardKernel.actionRewardPartialTrajectoryKernel
+          rewardKernel policy ... i (i + 1)
+          (History.finitePairHistoryOfTrace
+            (generatedActionFromRewardHistory policy state defaultAction
+              reward omega)
+            (reward omega) i))
+      (ae (mu.trim ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward ... hreward).le i)))
+
+theorem ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_comap_trim_reward_map_eq_selected_policy
+    -- same theorem-card-shaped full finite-pair law wrapper, but consuming the
+    -- selected-reward law with the direct comap-trim a.e. filter:
+    (h_reward_map_eq : forall i : Nat, Filter.Eventually ...)
+    (i : Nat) :
+    Filter.Eventually ... (ae (mu.trim ((History.historyFiltrationSucc
+      (generatedActionFromRewardHistory policy state defaultAction reward)
+      reward ... hreward).le i)))
+```
+
+- Exact Lean-facing statement: if the generated selected-reward
+  `condExpKernel.map` law is stated with the conditioning sigma-algebra as
+  the finite pair-prefix comap
+  `(inferInstance : MeasurableSpace ((j : Finset.Iic i) -> Prod Action Rat)).comap
+  (fun y => History.finitePairHistoryOfTrace
+    (generatedActionFromRewardHistory ... y) (reward y) i)`,
+  then it constructs the existing
+  `GeneratedActionSelectedRewardFinitePairHistoryLawSource`.  The source now
+  has both the original generated-history-trim entry and the direct
+  comap-trim entry
+  `generatedActionSelectedRewardFinitePairHistoryLawSource_of_comap_trim_reward_map_eq_selected_policy`;
+  the companion
+  constructors immediately compose either trim surface into the full
+  `GeneratedActionPartialTrajectoryPairLawSource`, including
+  `generatedActionPartialTrajectoryPairLawSource_of_comap_trim_reward_map_eq_selected_policy`;
+  and the theorem wrappers directly expose the full theorem-card-shaped
+  `History.finitePairHistoryOfTrace (i + 1)` partialTraj/condExpKernel law
+  from the same comap input, including the direct
+  `actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_comap_trim_reward_map_eq_selected_policy`
+  entry.
+- Local APIs/imports: `BanditRLProof.ConditionalRewardLawSource`, consuming
+  `GeneratedActionSelectedRewardFinitePairHistoryLawSource`,
+  `actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_selectedRewardFinitePairHistoryLawSource`,
+  `generatedActionFromRewardHistory`,
+  `generatedActionFromRewardHistory_measurable`,
+  `History.historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace`,
+  `History.finitePairHistoryOfTrace`,
+  `ProbabilityTheory.condExpKernel`, and `Measure.map`.
+- Intended proof route: use
+  `History.historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace` to get the
+  exact equality between the shifted generated-history conditioning
+  sigma-algebra and the finite pair-prefix comap.  The original constructor
+  rewrites the `condExpKernel` application and uses the generated-history
+  trimmed filter.  The comap-trim constructor first transports `Eventually`
+  across equal sub-sigma-algebras with
+  `eventually_ae_trim_of_eq_measurableSpace`, then reuses the original
+  constructor.  The full partialTraj source
+  constructors then compose
+  `generatedActionSelectedRewardFinitePairHistoryLawSource_of_comap_reward_map_eq_selected_policy`
+  or
+  `generatedActionSelectedRewardFinitePairHistoryLawSource_of_comap_trim_reward_map_eq_selected_policy`
+  with
+  `generatedActionPartialTrajectoryPairLawSource_of_selectedRewardFinitePairHistoryLawSource`.
+  The direct theorem wrappers construct the same selected-reward source and
+  immediately invokes
+  `actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_selectedRewardFinitePairHistoryLawSource`.
+- Regularity contracts: `[StandardBorelSpace Omega]`, finite `mu`,
+  measurable context/state/action spaces, measurable singleton and countable
+  action target, measurable reward trace, context/state measurability, and the
+  explicit selected-reward map law at the comap conditioning sigma-algebra.
+  The law may be supplied over either the existing generated-history trimmed
+  filter or the direct comap-trim filter.
+- Retrieval evidence:
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-SELECTED-REWARD-FINITEPAIRHISTORY-SOURCE-FROM-COMAP-LAW`,
+  `LOCAL-LEAF-HISTORY-FILTRATION-FINITEPAIR-COMAP`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-SELECTED-REWARD-FINITEPAIRHISTORY-LAW-SOURCE-CONTRACT`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-FROM-SELECTED-REWARD-LAW`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-SELECTED-REWARD-FINITEPAIRHISTORY-PARTIALTRAJ-LAW`,
+  and
+  `LOCAL-LEAF-COND-EXPECT-REWARD-CONDDISTRIB-TO-CONDEXPKERNEL-MAP`.
+- Status: project-local compiled comap-conditioned selected-reward source,
+  partialTraj source, and theorem wrappers, including comap-trim entries at
+  each layer.
+- Failure policy: this still consumes the selected-reward conditional law.  If
+  future transport fails, keep this as the source boundary and split only the
+  canonical-to-ambient law/disintegration step; do not mark the full
+  `COND-EXPECT-REWARD-PARTIALTRAJ-CONDEXPKERNEL-PAIR-LAW-CARD` as compiled.
+
+`LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-SELECTED-REWARD-FINITEPAIRHISTORY-PARTIALTRAJ-LAW`
+is compiled locally:
+
+```lean
+theorem ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_selectedRewardFinitePairHistoryLawSource
+    (source :
+      ConditionalExpectationReward.GeneratedActionSelectedRewardFinitePairHistoryLawSource
+        mu rewardKernel policy context state defaultAction reward hreward)
+    (i : Nat) :
+    Filter.Eventually
+      (fun omega =>
+        Measure.map
+          (fun y =>
+            History.finitePairHistoryOfTrace
+              (ConditionalExpectationReward.generatedActionFromRewardHistory
+                policy state defaultAction reward y)
+              (reward y) (i + 1))
+          (ProbabilityTheory.condExpKernel
+            (mu := mu)
+            ((History.historyFiltrationSucc
+              (ConditionalExpectationReward.generatedActionFromRewardHistory
+                policy state defaultAction reward)
+              reward ... hreward) i)
+            omega)
+        =
+        RewardKernel.actionRewardPartialTrajectoryKernel rewardKernel policy
+          (fun n history =>
+            context n (History.pairHistoryRewardProjection history))
+          (fun n history =>
+            state n (History.pairHistoryRewardProjection history))
+          ... i (i + 1)
+          (History.finitePairHistoryOfTrace
+            (ConditionalExpectationReward.generatedActionFromRewardHistory
+              policy state defaultAction reward omega)
+            (reward omega) i))
+      (ae (mu.trim ((History.historyFiltrationSucc ...).le i)))
+```
+
+- Exact Lean-facing statement: from a
+  `GeneratedActionSelectedRewardFinitePairHistoryLawSource`, for every `i`,
+  the generated-history conditional kernel pushed forward by
+  `History.finitePairHistoryOfTrace` at `i + 1` equals
+  `RewardKernel.actionRewardPartialTrajectoryKernel rewardKernel policy ... i
+  (i + 1)` at the frozen generated finite-pair prefix.
+- Local APIs/imports:
+  `GeneratedActionSelectedRewardFinitePairHistoryLawSource`,
+  `generatedActionPartialTrajectoryPairLawSource_of_selectedRewardFinitePairHistoryLawSource`,
+  `actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_partialTrajectoryPairLawSource`,
+  `generatedActionFromRewardHistory`,
+  `generatedActionFromRewardHistory_measurable`,
+  `History.historyFiltrationSucc`,
+  `History.finitePairHistoryOfTrace`,
+  `History.pairHistoryRewardProjection`,
+  `RewardKernel.actionRewardPartialTrajectoryKernel`,
+  `ProbabilityTheory.condExpKernel`, and `Measure.map`.
+- Intended proof route: convert the selected-reward finite-pair-history source
+  into `GeneratedActionPartialTrajectoryPairLawSource`, then use the existing
+  source projection theorem to expose the full finite-pair `partialTraj` law.
+- Regularity contracts: `[StandardBorelSpace Omega]`, finite `mu`,
+  measurable context/state/action spaces, measurable singleton and countable
+  action target, measurable reward trace, source-provided context/state
+  measurability, and the selected-reward finite-pair-history law field.
+- Retrieval evidence:
+  `ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_selectedRewardFinitePairHistoryLawSource`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-SELECTED-REWARD-FINITEPAIRHISTORY-PARTIALTRAJ-LAW`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-SELECTED-REWARD-FINITEPAIRHISTORY-LAW-SOURCE-CONTRACT`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-PROJECTION`,
+  and `LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-CONSUMER`.
+- Status: project-local compiled source-projection theorem.
+- Failure policy: do not mark the theorem-card row as solved from this leaf.
+  It still assumes the selected-reward finite-pair-history law field and does
+  not prove the ambient disintegration/transport argument.
+
+`LOCAL-LEAF-COND-EXPECT-REWARD-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-TO-SELECTED-REWARD-FINITEPAIRHISTORY-SOURCE`
+is compiled locally:
+
+```lean
+def ConditionalExpectationReward.generatedActionSelectedRewardFinitePairHistoryLawSource_of_definitionalActualRewardMapSource
+    (hcontext : forall n : Nat, Measurable (context n))
+    (source :
+      ConditionalExpectationReward.GeneratedActionDefinitionalActualRewardMapSource
+        mu rewardKernel policy context state defaultAction reward hreward) :
+    ConditionalExpectationReward.GeneratedActionSelectedRewardFinitePairHistoryLawSource
+      mu rewardKernel policy context state defaultAction reward hreward
+```
+
+- Exact Lean-facing statement: a
+  `GeneratedActionDefinitionalActualRewardMapSource` over
+  `generatedActionFromRewardHistory`, together with context measurability,
+  constructs `GeneratedActionSelectedRewardFinitePairHistoryLawSource` for the
+  same `mu`, reward kernel, policy, context/state, default action, and reward
+  trace.
+- Local APIs/imports:
+  `GeneratedActionDefinitionalActualRewardMapSource`,
+  `GeneratedActionSelectedRewardFinitePairHistoryLawSource`,
+  `generatedActionFromRewardHistory`,
+  `History.finitePairHistoryOfTrace`,
+  `History.finiteRewardHistoryOfTrace`,
+  `History.pairHistoryRewardProjection_finitePairHistoryOfTrace`,
+  `ProbabilityTheory.condExpKernel`, and `Measure.map`.
+- Intended proof route: use `source.hstate` for state measurability; for each
+  `i`, take `source.reward_map_eq_actual_action i`; unfold
+  `generatedActionFromRewardHistory` to rewrite the actual successor action as
+  the policy-selected action; rewrite
+  `History.pairHistoryRewardProjection (History.finitePairHistoryOfTrace ...)`
+  to `History.finiteRewardHistoryOfTrace`.
+- Regularity contracts: `[StandardBorelSpace Omega]`, finite `mu`,
+  measurable context/state/action spaces, countable singleton-measurable
+  action target, measurable reward trace, context measurability input, and the
+  definitional actual-action reward-map source.
+- Retrieval evidence:
+  `ConditionalExpectationReward.generatedActionSelectedRewardFinitePairHistoryLawSource_of_definitionalActualRewardMapSource`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-TO-SELECTED-REWARD-FINITEPAIRHISTORY-SOURCE`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-CONTRACT`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-SELECTED-REWARD-FINITEPAIRHISTORY-LAW-SOURCE-CONTRACT`,
+  and `History.pairHistoryRewardProjection_finitePairHistoryOfTrace`.
+- Status: project-local compiled source-conversion leaf.
+- Failure policy: this does not prove the actual-action reward-coordinate law;
+  it only repackages that law at the selected-reward finite-pair-history
+  source surface.  Do not count it as ambient trajectory/disintegration
+  transport.
+
+`LOCAL-LEAF-COND-EXPECT-REWARD-PRACTICAL-RAW-RANGE-SOURCE-TO-SELECTED-REWARD-FINITEPAIRHISTORY-SOURCE`
+is compiled locally:
+
+```lean
+def ConditionalExpectationReward.generatedActionSelectedRewardFinitePairHistoryLawSource_of_randomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource
+    (source :
+      ConditionalExpectationReward.GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource
+        mu rewardKernel policy context state mean varianceProxy defaultAction
+        reward hreward rewardLo rewardHi meanLo meanHi) :
+    ConditionalExpectationReward.GeneratedActionSelectedRewardFinitePairHistoryLawSource
+      mu rewardKernel policy context state defaultAction reward hreward
+
+def ConditionalExpectationReward.generatedActionSelectedRewardFinitePairHistoryLawSource_of_uniformVarianceBoundedSource
+    (varianceCeiling : NNReal)
+    (source :
+      ConditionalExpectationReward.GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource
+        mu rewardKernel policy context state mean varianceProxy defaultAction
+        reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling) :
+    ConditionalExpectationReward.GeneratedActionSelectedRewardFinitePairHistoryLawSource
+      mu rewardKernel policy context state defaultAction reward hreward
+
+def ConditionalExpectationReward.generatedActionSelectedRewardFinitePairHistoryLawSource_of_historyVarianceBoundedSource
+    (varianceCeiling : Nat -> NNReal)
+    (source :
+      ConditionalExpectationReward.GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource
+        mu rewardKernel policy context state mean varianceProxy defaultAction
+        reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling) :
+    ConditionalExpectationReward.GeneratedActionSelectedRewardFinitePairHistoryLawSource
+      mu rewardKernel policy context state defaultAction reward hreward
+```
+
+- Exact Lean-facing statement: the practical definitional
+  raw-range/measurable-mean-range generated random next-pair package now
+  constructs `GeneratedActionSelectedRewardFinitePairHistoryLawSource`
+  directly.  The same projection is available for the practical
+  uniform-variance and selected-history-variance source wrappers.
+- Local APIs/imports:
+  `GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource`,
+  `GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource`,
+  `GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource`,
+  `generatedActionPartialTrajectoryPairLawSource_of_randomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource`,
+  and `generatedActionSelectedRewardFinitePairHistoryLawSource_of_partialTrajectoryPairLawSource`.
+- Intended proof route: project the practical source to
+  `GeneratedActionPartialTrajectoryPairLawSource`, then reuse the existing
+  selected finite-pair-history projection.  The uniform/history variants first
+  expose `source.base_source`.
+- Regularity contracts: exactly the source fields of the practical base,
+  uniform-variance, or selected-history-variance packages, including
+  generated random next-pair law, context/state measurability, reward
+  measurability, centered kernel law, raw reward range bounds, selected-mean
+  range bounds, and the corresponding variance ceiling package when present.
+- Retrieval evidence:
+  `LOCAL-LEAF-COND-EXPECT-REWARD-PRACTICAL-RAW-RANGE-SOURCE-TO-SELECTED-REWARD-FINITEPAIRHISTORY-SOURCE`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-PROJECTION`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-CONTRACT`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-SELECTED-REWARD-FINITEPAIRHISTORY-LAW-SOURCE-CONTRACT`,
+  and `MLIB-PROBABILITY-SUBGAUSSIAN`.
+- Status: project-local compiled source-conversion route.
+- Failure policy: this still consumes the packaged generated random next-pair
+  law stored in the practical source.  Do not count it as proving ambient
+  trajectory transport, canonical `trajMeasure` transport, variance ceilings,
+  or final concentration theorem-card closure.
+
+`LOCAL-LEAF-COND-EXPECT-REWARD-PRACTICAL-SOURCE-VIA-SELECTED-FINITEPAIRHISTORY-COND-MGF`
+is compiled locally:
+
+```lean
+theorem ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_via_selectedRewardFinitePairHistoryLawSource
+    (source :
+      ConditionalExpectationReward.GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource
+        mu rewardKernel policy context state mean varianceProxy defaultAction
+        reward hreward rewardLo rewardHi meanLo meanHi)
+    (i : Nat) :
+    Filter.EventuallyEq (ae mu)
+      (condExp
+        (m := (History.historyFiltrationSucc
+          (generatedActionFromRewardHistory policy state defaultAction reward)
+          reward ... hreward) i)
+        (fun omega =>
+          (((reward omega (i + 1) -
+            mean (context i (History.finiteRewardHistoryOfTrace
+              (reward omega) i))
+              ((policy i).action (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      (fun _ => 0)
+
+theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource_via_selectedRewardFinitePairHistoryLawSource
+    (varianceCeiling : NNReal)
+    (source :
+      ConditionalExpectationReward.GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource
+        mu rewardKernel policy context state mean varianceProxy defaultAction
+        reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling)
+    (i : Nat) :
+    ProbabilityTheory.HasCondSubgaussianMGF ... varianceCeiling mu
+
+theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource_via_selectedRewardFinitePairHistoryLawSource_of_varianceCeiling_le
+    (varianceCeiling : NNReal)
+    (source :
+      ConditionalExpectationReward.GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource
+        mu rewardKernel policy context state mean varianceProxy defaultAction
+        reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling)
+    (i : Nat) (c : NNReal) (hceiling : varianceCeiling <= c) :
+    ProbabilityTheory.HasCondSubgaussianMGF ... c mu
+
+theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource_via_selectedRewardFinitePairHistoryLawSource
+    (varianceCeiling : Nat -> NNReal)
+    (source :
+      ConditionalExpectationReward.GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource
+        mu rewardKernel policy context state mean varianceProxy defaultAction
+        reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling)
+    (i : Nat) :
+    ProbabilityTheory.HasCondSubgaussianMGF ... (varianceCeiling i) mu
+
+theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource_via_selectedRewardFinitePairHistoryLawSource_of_varianceCeiling_le
+    (varianceCeiling : Nat -> NNReal)
+    (source :
+      ConditionalExpectationReward.GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource
+        mu rewardKernel policy context state mean varianceProxy defaultAction
+        reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling)
+    (i : Nat) (c : NNReal) (hceiling : varianceCeiling i <= c) :
+    ProbabilityTheory.HasCondSubgaussianMGF ... c mu
+```
+
+- Exact Lean-facing statement: the practical base source directly yields
+  ordinary succ-indexed conditional mean-zero through the selected
+  finite-pair-history source route.  The practical uniform-variance and
+  selected-history-variance source wrappers directly yield succ-indexed
+  `ProbabilityTheory.HasCondSubgaussianMGF` witnesses, including coarser
+  deterministic proxy variants.
+- Local APIs/imports:
+  `generatedActionSelectedRewardFinitePairHistoryLawSource_of_randomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource`,
+  `generatedActionSelectedRewardFinitePairHistoryLawSource_of_uniformVarianceBoundedSource`,
+  `generatedActionSelectedRewardFinitePairHistoryLawSource_of_historyVarianceBoundedSource`,
+  `centeredReward_succ_condExp_eq_zero_of_selectedRewardFinitePairHistoryLawSource_definitionalRawRangeMeasurableMeanRangeBounded`,
+  `centeredReward_succ_hasCondSubgaussianMGF_of_selectedRewardFinitePairHistoryLawSource_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded`,
+  `centeredReward_succ_hasCondSubgaussianMGF_of_selectedRewardFinitePairHistoryLawSource_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded_of_varianceCeiling_le`,
+  `centeredReward_succ_hasCondSubgaussianMGF_of_selectedRewardFinitePairHistoryLawSource_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded`,
+  `centeredReward_succ_hasCondSubgaussianMGF_of_selectedRewardFinitePairHistoryLawSource_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded_of_varianceCeiling_le`,
+  and Mathlib `ProbabilityTheory.HasCondSubgaussianMGF`.
+- Intended proof route: construct the generated selected-reward
+  finite-pair-history source from the practical package, then invoke the
+  selected-source mean-zero or conditional-MGF consumer.  The source fields
+  discharge measurable mean, centered kernel law, raw reward bounds, mean
+  range bounds, and variance ceiling hypotheses.
+- Regularity contracts: exactly the practical base/uniform/history source
+  contracts plus the coarser proxy domination proof in the larger-proxy
+  variants.  No additional law transport is introduced.
+- Retrieval evidence:
+  `LOCAL-LEAF-COND-EXPECT-REWARD-PRACTICAL-SOURCE-VIA-SELECTED-FINITEPAIRHISTORY-COND-MGF`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-PRACTICAL-RAW-RANGE-SOURCE-TO-SELECTED-REWARD-FINITEPAIRHISTORY-SOURCE`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-SELECTED-REWARD-FINITEPAIRHISTORY-SOURCE-MEAN-ZERO`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-SELECTED-REWARD-FINITEPAIRHISTORY-SOURCE-COND-MGF`,
+  `MLIB-CONDITIONAL-EXPECTATION`, and
+  `MLIB-PROBABILITY-SUBGAUSSIAN`.
+- Status: project-local compiled route-specific theorem surface.
+- Failure policy: this proves the selected finite-pair-history source route
+  from the practical package to mean-zero/MGF consumers, but it still consumes
+  the packaged generated random next-pair law and variance/proxy contracts.
+  Do not count it as proving ambient trajectory transport, canonical
+  `trajMeasure` transport, or final regret/concentration theorem-card closure.
+
+`LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-SELECTED-REWARD-FINITEPAIRHISTORY-SOURCE-MEAN-ZERO`
+is compiled locally:
+
+```lean
+theorem ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_selectedRewardFinitePairHistoryLawSource_definitionalRawRangeMeasurableMeanRangeBounded
+    {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (source :
+      GeneratedActionSelectedRewardFinitePairHistoryLawSource
+        mu rewardKernel policy context state defaultAction reward hreward)
+    (i : Nat) :
+    Filter.EventuallyEq (ae mu)
+      (condExp
+        (m := (History.historyFiltrationSucc
+          (generatedActionFromRewardHistory policy state defaultAction reward)
+          reward ... hreward) i)
+        (fun omega =>
+          (((reward omega (i + 1) -
+            mean (context i (History.finiteRewardHistoryOfTrace
+              (reward omega) i))
+              ((policy i).action (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      (fun _ => 0)
+
+theorem ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_comap_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeBounded
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            Measure.map (fun y : Omega => reward y (i + 1))
+              (ProbabilityTheory.condExpKernel
+                (mu := mu)
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                omega)
+            =
+            RewardKernel.selectedMeasure rewardKernel ... )
+          (ae (mu.trim ((History.historyFiltrationSucc
+            (generatedActionFromRewardHistory policy state defaultAction
+              reward)
+            reward ... hreward).le i))))
+    (i : Nat) :
+    Filter.EventuallyEq (ae mu)
+      (condExp
+        (m := (History.historyFiltrationSucc
+          (generatedActionFromRewardHistory policy state defaultAction reward)
+          reward ... hreward) i)
+        (fun omega =>
+          (((reward omega (i + 1) -
+            mean (context i (History.finiteRewardHistoryOfTrace
+              (reward omega) i))
+              ((policy i).action (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      (fun _ => 0)
+
+theorem ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_comap_trim_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeBounded
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            Measure.map (fun y : Omega => reward y (i + 1))
+              (ProbabilityTheory.condExpKernel
+                (mu := mu)
+                ((inferInstance :
+                  MeasurableSpace
+                    ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                omega)
+            =
+            RewardKernel.selectedMeasure rewardKernel ... )
+          (ae (mu.trim
+            (show
+              ((inferInstance :
+                MeasurableSpace
+                  ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                (fun y : Omega =>
+                  History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward y)
+                    (reward y) i)) <= mOmega from ...))))
+    (i : Nat) :
+    Filter.EventuallyEq (ae mu)
+      (condExp
+        (m := (History.historyFiltrationSucc
+          (generatedActionFromRewardHistory policy state defaultAction reward)
+          reward ... hreward) i)
+        (fun omega =>
+          (((reward omega (i + 1) -
+            mean (context i (History.finiteRewardHistoryOfTrace
+              (reward omega) i))
+              ((policy i).action (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      (fun _ => 0)
+```
+
+- Exact Lean-facing statement: a
+  `GeneratedActionSelectedRewardFinitePairHistoryLawSource` plus the practical
+  raw-reward/selected-mean range regularity and centered reward-kernel law
+  directly yields ordinary succ-indexed conditional mean-zero for the generated
+  reward-history action trace.  The companion wrapper takes the same
+  regularity package plus the finite-pair comap selected-reward law and
+  constructs the source internally before returning the same mean-zero target;
+  the input law may use either the generated-history trim filter or the
+  Mathlib-facing direct comap-trim filter.
+- Local APIs/imports:
+  `GeneratedActionSelectedRewardFinitePairHistoryLawSource`,
+  `generatedActionSelectedRewardFinitePairHistoryLawSource_of_comap_reward_map_eq_selected_policy`,
+  `generatedActionSelectedRewardFinitePairHistoryLawSource_of_comap_trim_reward_map_eq_selected_policy`,
+  `generatedActionPartialTrajectoryPairLawSource_of_selectedRewardFinitePairHistoryLawSource`,
+  `GeneratedActionPartialTrajectoryPairLawSource`, and
+  `centeredReward_succ_condExp_eq_zero_of_partialTrajectoryPairLawSource_definitionalRawRangeMeasurableMeanRangeBounded`.
+- Intended proof route: convert `source` to
+  `GeneratedActionPartialTrajectoryPairLawSource`, then invoke the existing
+  full finite-pair source mean-zero consumer.  For the comap wrapper, first use
+  `generatedActionSelectedRewardFinitePairHistoryLawSource_of_comap_reward_map_eq_selected_policy`
+  or its comap-trim companion to build the selected-reward source, then reuse
+  the source consumer.
+- Regularity contracts: same as the selected-reward source contract, plus
+  measurable selected mean, `RewardKernel.CenteredRewardKernelLaw`, pointwise
+  raw reward interval bounds, and deterministic selected-mean interval bounds.
+- Retrieval evidence:
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-SELECTED-REWARD-FINITEPAIRHISTORY-SOURCE-MEAN-ZERO`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-SELECTED-REWARD-FINITEPAIRHISTORY-SOURCE-FROM-COMAP-LAW`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-SELECTED-REWARD-FINITEPAIRHISTORY-LAW-SOURCE-CONTRACT`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-MEAN-ZERO`, and
+  `MLIB-CONDITIONAL-EXPECTATION`.
+- Status: project-local compiled direct mean-zero source/comap consumer.
+- Failure policy: this still consumes the ambient selected-reward law, either
+  through a source field or as the explicit comap-law hypothesis.  Do not cite
+  it as proving the law, proving canonical-to-ambient transport, or closing the
+  theorem-card row.
+
+`LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-SELECTED-REWARD-FINITEPAIRHISTORY-SOURCE-COND-MGF`
+is compiled locally:
+
+```lean
+theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_selectedRewardFinitePairHistoryLawSource_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded
+    ...
+    (varianceCeiling : NNReal)
+    (hvariance :
+      forall context : Context, forall action : Action,
+        varianceProxy context action <= varianceCeiling)
+    (source :
+      GeneratedActionSelectedRewardFinitePairHistoryLawSource
+        mu rewardKernel policy context state defaultAction reward hreward)
+    (i : Nat) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward ... hreward) i)
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward ... hreward).le i)
+      (fun omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      varianceCeiling mu
+
+theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_selectedRewardFinitePairHistoryLawSource_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded_of_varianceCeiling_le
+    ...
+    (varianceCeiling : NNReal)
+    (hvariance :
+      forall context : Context, forall action : Action,
+        varianceProxy context action <= varianceCeiling)
+    (source :
+      GeneratedActionSelectedRewardFinitePairHistoryLawSource
+        mu rewardKernel policy context state defaultAction reward hreward)
+    (i : Nat) (c : NNReal) (hceiling : varianceCeiling <= c) :
+    ProbabilityTheory.HasCondSubgaussianMGF ... c mu
+
+theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_selectedRewardFinitePairHistoryLawSource_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded
+    ...
+    (varianceCeiling : Nat -> NNReal)
+    (hvariance :
+      forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat),
+        varianceProxy (context i history)
+          ((policy i).action (state i history)) <= varianceCeiling i)
+    (source :
+      GeneratedActionSelectedRewardFinitePairHistoryLawSource
+        mu rewardKernel policy context state defaultAction reward hreward)
+    (i : Nat) :
+    ProbabilityTheory.HasCondSubgaussianMGF ... (varianceCeiling i) mu
+
+theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_selectedRewardFinitePairHistoryLawSource_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded_of_varianceCeiling_le
+    ...
+    (varianceCeiling : Nat -> NNReal)
+    (hvariance :
+      forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat),
+        varianceProxy (context i history)
+          ((policy i).action (state i history)) <= varianceCeiling i)
+    (source :
+      GeneratedActionSelectedRewardFinitePairHistoryLawSource
+        mu rewardKernel policy context state defaultAction reward hreward)
+    (i : Nat) (c : NNReal) (hceiling : varianceCeiling i <= c) :
+    ProbabilityTheory.HasCondSubgaussianMGF ... c mu
+```
+
+- Exact Lean-facing statement: a
+  `GeneratedActionSelectedRewardFinitePairHistoryLawSource` plus the same
+  practical raw-reward/selected-mean range regularity package now directly
+  yields succ-indexed `ProbabilityTheory.HasCondSubgaussianMGF` witnesses.
+  The proxy can be the global `varianceCeiling`, any coarser deterministic
+  proxy `c` with `varianceCeiling <= c`, the selected-history ceiling
+  `varianceCeiling i`, or any coarser deterministic proxy `c` with
+  `varianceCeiling i <= c`.
+- Local APIs/imports:
+  `GeneratedActionSelectedRewardFinitePairHistoryLawSource`,
+  `generatedActionPartialTrajectoryPairLawSource_of_selectedRewardFinitePairHistoryLawSource`,
+  `GeneratedActionPartialTrajectoryPairLawSource`,
+  `centeredReward_succ_hasCondSubgaussianMGF_of_partialTrajectoryPairLawSource_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded`,
+  `centeredReward_succ_hasCondSubgaussianMGF_of_partialTrajectoryPairLawSource_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded_of_varianceCeiling_le`,
+  `centeredReward_succ_hasCondSubgaussianMGF_of_partialTrajectoryPairLawSource_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded`,
+  `centeredReward_succ_hasCondSubgaussianMGF_of_partialTrajectoryPairLawSource_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded_of_varianceCeiling_le`,
+  and Mathlib `ProbabilityTheory.HasCondSubgaussianMGF`.
+- Intended proof route: convert the selected-reward finite-pair-history source
+  to `GeneratedActionPartialTrajectoryPairLawSource`, then invoke the
+  corresponding already compiled partialTraj-source MGF consumer.  The coarser
+  proxy wrappers pass through the deterministic domination hypothesis.
+- Regularity contracts: same as the selected-reward source contract, plus
+  measurable selected mean, `RewardKernel.CenteredRewardKernelLaw`, pointwise
+  raw reward interval bounds, deterministic selected-mean interval bounds, and
+  either a global variance ceiling or selected-history variance ceilings,
+  optionally with a coarser proxy domination proof.
+- Retrieval evidence:
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-SELECTED-REWARD-FINITEPAIRHISTORY-SOURCE-COND-MGF`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-SELECTED-REWARD-FINITEPAIRHISTORY-SOURCE-MEAN-ZERO`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-SELECTED-REWARD-FINITEPAIRHISTORY-LAW-SOURCE-CONTRACT`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-UNIFORM-VARIANCE-COND-MGF`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-UNIFORM-VARIANCE-LARGER-PROXY-COND-MGF`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-HISTORY-VARIANCE-COND-MGF`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-HISTORY-VARIANCE-LARGER-PROXY-COND-MGF`,
+  and `MLIB-PROBABILITY-SUBGAUSSIAN`.
+- Status: project-local compiled direct selected-source conditional-MGF
+  consumer.
+- Failure policy: this still consumes the ambient selected-reward law through
+  a source field and separately consumes variance/proxy contracts.  Do not
+  cite it as proving the reward law, deriving variance ceilings, proving
+  proxy domination, transporting canonical `trajMeasure`, or closing the
+  theorem-card row.
 
 `LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-PAIR-CONDEXPKERNEL-MAP-SPLIT` is
 compiled locally:
@@ -6741,6 +7944,10 @@ theorem ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_extend_
 
 theorem ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc_reward_map_eq_actual_action
 
+def ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_of_reward_map_eq_actual_action
+
+theorem ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_reward_map_eq_actual_action
+
 theorem ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc_pair_map_eq_actual_action
 
 theorem ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_generatedActionTraceSucc_reward_map_eq_actual_action
@@ -6784,9 +7991,14 @@ theorem ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_gene
   accepts the upstream actual-action pair-product law directly and exposes the
   same full finite-pair-trace `partialTraj` law; the random-pair law adapter
   accepts the fully random next-pair law, freezes the action coordinate, and
-  exposes that same full-trace law.  The final consumers add the centered reward
-  integrability hypothesis and conclude ordinary succ-indexed conditional
-  mean-zero.
+  exposes that same full-trace law.  The new generatedActionFromRewardHistory
+  wrapper accepts the actual-action reward-coordinate law at the generated
+  reward-history filtration, constructs
+  `GeneratedActionPartialTrajectoryPairLawSource`, and exposes the same
+  theorem-card-shaped full finite-pair `partialTraj` law without requiring an
+  explicit action trace or generated-trace equality argument.  The final
+  consumers add the centered reward integrability hypothesis and conclude
+  ordinary succ-indexed conditional mean-zero.
 - Local APIs/imports: `BanditRLProof.ConditionalExpectationReward`,
   `Policy.generatedActionTraceSucc`,
   `ConditionalExpectationReward.action_condExpKernel_ae_eq_policy_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc`,
@@ -6797,6 +8009,8 @@ theorem ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_gene
   `ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_extend_map_eq_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace`,
   `ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_of_extend_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace`,
   `ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc_reward_map_eq_actual_action`,
+  `ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_of_reward_map_eq_actual_action`,
+  `ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_reward_map_eq_actual_action`,
   `ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc_pair_map_eq_actual_action`,
   `ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_generatedActionTraceSucc_random_pair_map_eq_actual_action`,
   `ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace`,
@@ -6821,17 +8035,22 @@ theorem ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_gene
   next-pair law through the extension-map `partialTraj` builder, expose the
   full finite-pair-trace `partialTraj` law with the extension-to-trace adapter,
   lift the pair-product and fully random pair law shapes to that same law
-  surface, and finally feed the existing centered-reward conditional mean-zero
+  surface, and specialize the generic generated-action actual reward-coordinate
+  law to `generatedActionFromRewardHistory` with `rfl` for the generated trace
+  equality to build both a partial-trajectory source and a direct theorem
+  wrapper.  Finally feed the existing centered-reward conditional mean-zero
   consumer.
 - Regularity contracts: standard Borel sample space, finite measure,
   measurable context/state/action spaces, measurable singleton/countable action
   space for the action-freezing source, measurable `pairContext` and
   `pairState`, timewise measurable action/reward traces, a default action for
   the shifted trace, equality of the actual action trace to the shifted
-  generated trace, an externally supplied actual-action reward-coordinate map
-  law, actual-action pair-product law, or fully random next-pair law under the
-  generated history filtration, and integrability of the centered reward for the final
-  conditional mean-zero consumer.
+  generated trace for the generic theorem, or the definitional
+  `generatedActionFromRewardHistory` wrapper where that equality is discharged
+  by `rfl`, an externally supplied actual-action reward-coordinate map law,
+  actual-action pair-product law, or fully random next-pair law under the
+  generated history filtration, and integrability of the centered reward for
+  the final conditional mean-zero consumer.
 - Retrieval evidence: local card
   `LOCAL-LEAF-COND-EXPECT-REWARD-NEXTPAIR-GENERATED-ACTION-ACTUAL-REWARD-HOOKUP`;
   it builds on
@@ -6840,15 +8059,23 @@ theorem ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_gene
   `LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-FROM-PAIRMAP`,
   `LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-CONSUMER`,
   `LOCAL-LEAF-KERNEL-REWARD-MAP-LAW-TRANSFER`, and `FILTRATION-HISTORY`.
+  The generatedActionFromRewardHistory wrapper declarations are
+  `ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_of_reward_map_eq_actual_action`
+  and
+  `ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_reward_map_eq_actual_action`.
 - Status: project-local compiled next-pair hookup for `COND-EXPECT-REWARD`,
   `ADAPTED-ACTION`, `MEAS-POLICY`, `KERNEL-POLICY-BIND`, and
   `KERNEL-REWARD`.  It now exports full finite-pair-trace `partialTraj` law
   adapters for reward-coordinate, actual-action pair-product, and fully random
-  next-pair law shapes, plus the centered conditional mean-zero consumers.
+  next-pair law shapes, plus a generatedActionFromRewardHistory direct
+  source-constructor/theorem-wrapper surface and the centered conditional
+  mean-zero consumers.
 - Failure policy: this theorem deliberately does not prove the actual-action
-  or random pair/reward law or the ambient trajectory-to-`condExpKernel` identification.
-  If the external reward source is not available, do not use this card as a
-  theorem dependency; treat it as a route adapter only.
+  or random pair/reward law or the ambient trajectory-to-`condExpKernel`
+  identification.  The generatedActionFromRewardHistory wrapper removes only
+  the explicit action trace/equality plumbing; if the external reward source is
+  not available, do not use this card as a theorem dependency; treat it as a
+  route adapter only.
 
 `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-ACTUAL-REWARD-MAP-SOURCE-CONTRACT`
 is compiled locally:
@@ -22548,6 +23775,65 @@ theorem ETC.integrable_real_pseudoRegret_actionWithCommit_choice_of_measurable_c
 - Failure policy: do not treat this as a probability or concentration result.
   It only discharges integrability after commit measurability is available.
 
+`ETC-WRONG-COMMIT-INFINITEPI-REAL-PROBABILITY-BOUND` is compiled locally:
+
+```lean
+theorem ETC.real_measure_fixedProductArgmaxCommit_ne_bestArm_le_fixedProductWrongCommitTailBudgetReal_of_infinitePi_bounded_actionMean
+    {K : Nat}
+    (coordLaw : Nat -> MeasureTheory.Measure Rat)
+    [forall t : Nat, MeasureTheory.IsProbabilityMeasure (coordLaw t)]
+    (spec : ETC.Spec K)
+    (model : FiniteBanditModel K)
+    (baseCommitArm : Fin K)
+    (lo hi : Fin K -> Nat -> Real)
+    (hexplorationPulls_pos : 0 < spec.explorationPulls)
+    (h_coord_bound :
+      forall t, t < spec.explorationPulls * K ->
+        Filter.Eventually
+          (fun rewardValue : Rat =>
+            Set.Icc
+              (lo (ETC.actionWithCommit spec baseCommitArm t) t)
+              (hi (ETC.actionWithCommit spec baseCommitArm t) t)
+              (((rewardValue : Rat) : Real)))
+          (MeasureTheory.ae (coordLaw t)))
+    (h_coord_mean :
+      forall t, t < spec.explorationPulls * K ->
+        MeasureTheory.integral (coordLaw t)
+          (fun rewardValue : Rat => (((rewardValue : Rat) : Real))) =
+        (((model.mean (ETC.actionWithCommit spec baseCommitArm t) : Rat) : Real))) :
+    (MeasureTheory.Measure.infinitePi coordLaw).real
+      {omega : RewardTrace Rat |
+        ETC.fixedProductArgmaxCommit spec model baseCommitArm omega =
+          model.bestArm -> False} <=
+    ETC.fixedProductWrongCommitTailBudgetReal spec model baseCommitArm lo hi
+```
+
+- Local APIs/imports:
+  `BanditRLProof.Algorithms.ETCInfinitePiExpectedRegretAssembly`,
+  `ETC.fixedProductWrongCommitTailBudget`,
+  `ETC.fixedProductWrongCommitTailBudgetReal`,
+  `ETC.prob_argmaxCommitOracle_ne_bestArm_le_filtered_sum_centeredDiffSubGaussianTail_of_infinitePi_bounded_actionMean`,
+  `MeasureTheory.Measure.real`, and `ENNReal.toReal_mono`.
+- Intended proof route: reuse the compiled ENNReal wrong-commit probability
+  bound for the fixed product-coordinate source, name its RHS as
+  `ETC.fixedProductWrongCommitTailBudget`, prove the finite tail budget is not
+  `none`, apply `ENNReal.toReal_mono`, and unfold
+  `ETC.fixedProductWrongCommitTailBudgetReal` plus `Measure.real`.
+- Regularity contracts: probability coordinate laws, fixed `spec`, `model`,
+  and `baseCommitArm`, positive exploration count, action-matched coordinate
+  a.s. bounds, and coordinate mean identities.  There is no suffix length,
+  `badGapBound`, integrability, or adaptive policy contract.
+- Retrieval evidence: local declarations are
+  `ETC.fixedProductWrongCommitTailBudgetReal` and
+  `ETC.real_measure_fixedProductArgmaxCommit_ne_bestArm_le_fixedProductWrongCommitTailBudgetReal_of_infinitePi_bounded_actionMean`;
+  retrieval card is
+  `LOCAL-LEAF-ETC-WRONG-COMMIT-INFINITEPI-REAL-PROBABILITY-BOUND`.
+- Status: project-local compiled fixed-product `Measure.real`
+  wrong-commit probability bridge.
+- Failure policy: do not treat this as an expected-regret theorem.  It is only
+  the concrete Real probability supplier for downstream Bochner wrappers and
+  remains fixed product-coordinate/fixed exploration.
+
 `ETC-WRONG-COMMIT-INFINITEPI-BOCHNER-REGRET-ASSEMBLY` is compiled locally:
 
 ```lean
@@ -22589,18 +23875,64 @@ theorem ETC.integral_real_pseudoRegret_argmaxCommitOracle_actionWithCommit_le_ex
       spec model baseCommitArm r badGapBound lo hi
 ```
 
+The same leaf also exposes the named fixed-product action endpoint:
+
+```lean
+theorem ETC.integral_real_pseudoRegret_fixedProductArgmaxAction_le_fixedProductBadGapIntegralRegretBoundReal_of_infinitePi_bounded_actionMean
+    {K : Nat}
+    (coordLaw : Nat -> MeasureTheory.Measure Rat)
+    [forall t : Nat, MeasureTheory.IsProbabilityMeasure (coordLaw t)]
+    (spec : ETC.Spec K)
+    (model : FiniteBanditModel K)
+    (baseCommitArm : Fin K)
+    (r : Nat)
+    (badGapBound : Rat)
+    (lo hi : Fin K -> Nat -> Real)
+    (hexplorationPulls_pos : 0 < spec.explorationPulls)
+    (hbadGap :
+      forall a : Fin K, (a = model.bestArm -> False) ->
+        model.gap a <= badGapBound)
+    (hbadGap_nonneg : (0 : Rat) <= badGapBound)
+    (h_coord_bound :
+      forall t, t < spec.explorationPulls * K ->
+        Filter.Eventually
+          (fun rewardValue : Rat =>
+            Set.Icc
+              (lo (ETC.actionWithCommit spec baseCommitArm t) t)
+              (hi (ETC.actionWithCommit spec baseCommitArm t) t)
+              (((rewardValue : Rat) : Real)))
+          (MeasureTheory.ae (coordLaw t)))
+    (h_coord_mean :
+      forall t, t < spec.explorationPulls * K ->
+        MeasureTheory.integral (coordLaw t)
+          (fun rewardValue : Rat => (((rewardValue : Rat) : Real))) =
+        (((model.mean (ETC.actionWithCommit spec baseCommitArm t) : Rat) : Real))) :
+    MeasureTheory.integral (MeasureTheory.Measure.infinitePi coordLaw)
+      (fun omega : RewardTrace Rat =>
+        (((pseudoRegret model
+          (ETC.fixedProductArgmaxAction spec model baseCommitArm omega)
+          (spec.explorationPulls * K + r) : Rat) : Real))) <=
+    ETC.fixedProductBadGapIntegralRegretBoundReal
+      spec model baseCommitArm r badGapBound lo hi
+```
+
 - Local APIs/imports:
   `BanditRLProof.Algorithms.ETCInfinitePiExpectedRegretAssembly`,
   `ETC.integral_real_pseudoRegret_actionWithCommit_choice_le_exploration_add_suffix_badGap_prob`,
   `ETC.integrable_real_pseudoRegret_actionWithCommit_choice_of_measurable_commit`,
+  `ETC.real_measure_fixedProductArgmaxCommit_ne_bestArm_le_fixedProductWrongCommitTailBudgetReal_of_infinitePi_bounded_actionMean`,
   `ETC.prob_argmaxCommitOracle_ne_bestArm_le_filtered_sum_centeredDiffSubGaussianTail_of_infinitePi_bounded_actionMean`,
   `ETC.measurable_commitOracle_choose_of_forall_measurable_empMean`, and
   `ETC.measurableSet_commitOracle_ne_bestArm_of_forall_measurable_empMean`.
 - Intended proof route: use empirical-mean coordinate measurability to prove
-  the finite argmax commit selector is measurable; reuse the infinitePi
-  wrong-commit probability bound; convert its finite `ENNReal` canonical tail
-  budget to Real via `toReal`; use the integrability helper; then feed these
-  facts into the abstract Bochner expected-regret assembly.
+  the finite argmax commit selector is measurable; reuse the fixed-product
+  `Measure.real` wrong-commit probability bridge; use the integrability helper;
+  then feed these facts into the abstract Bochner expected-regret assembly.
+  The polished
+  `ETC.fixedProductArgmaxAction` bad-gap wrapper is a definitional `simpa`
+  through `ETC.fixedProductArgmaxAction` and `ETC.fixedProductArgmaxCommit`,
+  giving the bad-gap endpoint the same external API shape as the sum-gap and
+  max-gap Real wrappers.
 - Regularity contracts: probability coordinate laws, fixed `spec`, `model`,
   `baseCommitArm`, suffix `r`, explicit `badGapBound`, `0 <= badGapBound`,
   positive exploration count, non-best gap upper bound, action-matched
@@ -22609,14 +23941,17 @@ theorem ETC.integral_real_pseudoRegret_argmaxCommitOracle_actionWithCommit_le_ex
   `ETC.fixedProductWrongCommitTailBudget`,
   `ETC.fixedProductWrongCommitTailBudgetReal`,
   `ETC.fixedProductBadGapIntegralRegretBoundReal`, and
-  `ETC.integral_real_pseudoRegret_argmaxCommitOracle_actionWithCommit_le_exploration_add_suffix_badGap_prob_of_infinitePi_bounded_actionMean`;
+  `ETC.integral_real_pseudoRegret_argmaxCommitOracle_actionWithCommit_le_exploration_add_suffix_badGap_prob_of_infinitePi_bounded_actionMean`,
+  and
+  `ETC.integral_real_pseudoRegret_fixedProductArgmaxAction_le_fixedProductBadGapIntegralRegretBoundReal_of_infinitePi_bounded_actionMean`;
   retrieval card is
   `LOCAL-LEAF-ETC-WRONG-COMMIT-INFINITEPI-BOCHNER-REGRET-ASSEMBLY`.
 - Status: project-local compiled concrete fixed-product Bochner/Real
-  expected-regret assembly.
+  expected-regret assembly with the named fixed-product bad-gap endpoint.
 - Failure policy: this is still fixed product-coordinate and fixed
-  exploration.  It does not remove the bad-gap contract itself; the sum-gap
-  and max-gap Real specializations are separate adapters.  It does not prove
+  exploration.  The named bad-gap wrapper still keeps the explicit bad-gap
+  contract; the sum-gap and max-gap Real specializations are separate adapters.
+  It does not prove
   adaptive policy laws, conditional expectation source, or final ETC theorem.
 
 `ETC-WRONG-COMMIT-INFINITEPI-BOCHNER-SUMGAP-ADAPTER` is compiled locally:
@@ -22752,6 +24087,251 @@ theorem ETC.integral_real_pseudoRegret_fixedProductArgmaxAction_le_fixedProductM
   policy laws or conditional reward-law identification, and remains scoped to
   the fixed product-coordinate ETC route.
 
+`ETC-CANONICAL-EXPLORATION-INFINITEPI-BOCHNER-REGRET` is compiled locally:
+
+```lean
+theorem ETC.integral_real_pseudoRegret_explorationArgmaxAction_le_explorationMaxGapIntegralRegretBoundReal_of_infinitePi_bounded_exploreMean
+```
+
+- Lean-facing statement: a Real Bochner expected pseudo-regret bound for the
+  infinite-product source whose public coordinate contracts are indexed by
+  `ETC.exploreArm`, with a canonical argmax commit/action trace and max-gap
+  RHS.
+- Local APIs/imports:
+  `BanditRLProof.Algorithms.ETCInfinitePiExpectedRegretAssembly`,
+  `ETC.actionWithCommit_eq_exploreArm_of_lt`,
+  `ETC.fixedProductArgmaxAction`, and the fixed-product max-gap Bochner
+  theorem.
+- Proof route: set the internal seed to `model.bestArm`, rewrite source bounds
+  and means at every exploration coordinate with the phase equality, and reuse
+  the existing max-gap theorem.
+- Regularity contracts: probability coordinate laws, fixed `spec`/`model`,
+  suffix `r`, `lo`/`hi` bounds and means indexed by `ETC.exploreArm`, and
+  positive exploration pulls.
+- Retrieval evidence:
+  `LOCAL-LEAF-ETC-CANONICAL-EXPLORATION-INFINITEPI-BOCHNER-REGRET`,
+  `LOCAL-LEAF-ETC-WRONG-COMMIT-INFINITEPI-BOCHNER-MAXGAP-ADAPTER`,
+  `MLIB-MEASURE-INTEGRAL`, `MLIB-PROBABILITY-INDEPENDENCE`, and
+  `MLIB-PROBABILITY-SUBGAUSSIAN`; `WEAPON-TAIL-INEQUALITIES` is
+  inspiration-only.
+- Status: `leanCompiled`, with a `Tests.Basic` public canary.
+- Failure policy: this eliminates only the public base-commit artifact.  Do
+  not claim `Bandits.ETC.regret_le`: the remaining blocker is an adaptive,
+  action-dependent environment law and conditional reward-law/predictability
+  transport.
+
+`ETC-EMPMEAN-EXPLORATION-PREFIX-CONGRUENCE` is compiled locally:
+
+```lean
+theorem ETC.empMeanAtExploration_eq_of_eq_on_prefix
+```
+
+- Lean statement: equality of two `RewardTrace Rat` values at every time
+  strictly below `spec.explorationPulls * K` gives equality of the exploration
+  empirical mean at any arm.
+- Local APIs/imports: `ETC.empMeanAtExploration`,
+  `sumRewards_eq_finset_filter_sum`, `Finset.sum_congr`, and
+  `BanditRLProof.MathlibWrappers`.
+- Proof route: rewrite the finite filtered sums and apply coordinatewise prefix
+  equality.
+- Regularity contracts: none beyond the stated finite prefix equality; no
+  probability, measurability, integrability, filtration, or positivity field.
+- Retrieval evidence: `TXT-LATTIMORE-SZEPESVARI-2020`,
+  `SCN-STOCHASTIC-FINITE`, `MLIB-FINSET-SUMS`, and
+  `LOCAL-LEAF-MATHLIB-FINSET-WRAPPERS`.
+- Status: `leanCompiled`, with `Tests.Basic` canary.
+- Failure policy: require proof that a future finite-history completion agrees
+  with the full reward trace at every exploration coordinate. This is not a
+  generated-action equality, an adaptive reward law, or `Bandits.ETC.regret_le`.
+
+`ETC-EMPMEAN-FINITE-HISTORY-RECONSTRUCTION` is compiled locally:
+
+```lean
+def History.completeRewardTrace
+theorem ETC.empMeanAtExploration_completeRewardTrace_eq_of_explorationHorizon_le
+```
+
+- Lean statement: a finite reward history through time `t`, completed by zero,
+  has the ambient fixed-commit exploration score at each arm if
+  `spec.explorationPulls * K <= t + 1`.
+- Local APIs/imports: `History.finiteRewardHistoryOfTrace`,
+  `History.completeRewardTrace`, its coordinate-restoration theorem, and the
+  compiled empirical-mean prefix congruence theorem.
+- Proof route: turn `s < m * K <= t + 1` into `s <= t`, restore that coordinate
+  from the finite history, then consume score prefix congruence.
+- Regularity contracts: only the explicit horizon inclusion; no probability,
+  measurability, integrability, filtration, or conditional law assumption.
+- Retrieval evidence: `TXT-LATTIMORE-SZEPESVARI-2020`,
+  `SCN-STOCHASTIC-FINITE`, `MLIB-FINSET-SUMS`, and the preceding empirical
+  prefix leaf.
+- Status: `leanCompiled`, with public `Tests.Basic` canaries.
+- Failure policy: the defaulted future suffix says nothing about actual reward
+  values. Do not infer argmax action equality, policy measurability, adaptive
+  reward-law transport, or the final ETC theorem.
+
+`ETC-GENERATED-HISTORY-POLICY-ACTION-ALIGNMENT` is compiled locally:
+
+```lean
+noncomputable def ETC.explorationArgmaxHistoryPolicy
+noncomputable def ETC.explorationArgmaxGeneratedAction
+theorem ETC.explorationArgmaxGeneratedAction_eq_explorationArgmaxAction
+```
+
+- Lean statement: the measurable policy reading zero-completed finite reward
+  histories generates exactly the canonical `ETC.explorationArgmaxAction`.
+- Local APIs/imports: `Policy.MeasurablePolicy`,
+  `generatedActionFromRewardHistory`, completed-history score reconstruction,
+  coordinate empirical-mean measurability, and measurable finite-vector argmax
+  choice.
+- Proof route: explore at successor action times inside the prefix; at later
+  times rewrite the complete score vector and hence the deterministic argmax.
+  Positive exploration pulls align the initial default action.
+- Regularity contracts: `0 < spec.explorationPulls`; no probability measure,
+  reward kernel, conditional expectation, concentration, or integrability
+  hypothesis.
+- Retrieval evidence: `TXT-LATTIMORE-SZEPESVARI-2020`,
+  `SCN-STOCHASTIC-FINITE`, `LOCAL-LEAF-POLICY-MEASURABILITY`,
+  `LOCAL-LEAF-ETC-EMPMEAN-FINITE-HISTORY-RECONSTRUCTION`, and
+  `MLIB-FINSET-SUMS`.
+- Status: `leanCompiled`, with `Tests.Basic` canaries.
+- Failure policy: this is action alignment only. The next leaf must establish
+  the action-dependent selected-reward law for this generated trace before any
+  conditional expectation, concentration, or LML regret conclusion.
+
+`ETC-GENERATED-HISTORY-POLICY-TRAJMEASURE-PARTIALTRAJ-LAW` is compiled locally:
+
+```lean
+noncomputable def
+  ETC.explorationArgmaxGeneratedActionPartialTrajectoryPairLawSource_trajMeasure
+```
+
+- Lean statement: the canonical `RewardKernel.historyStepKernelFamily`
+  `trajMeasure` carries a full generated finite-pair `partialTraj` source for
+  the finite-history ETC policy.
+- Local APIs/imports: `RewardKernel.historyStepKernelFamily`,
+  `Kernel.trajMeasure`, the generic generated partial-trajectory source
+  constructor, and the completed-history ETC policy/state.
+- Proof route: direct specialization of the existing canonical generated-action
+  trajectory-law constructor; the earlier action equality supplies the
+  interpretation as the canonical ETC action trace when pulls are positive.
+- Regularity contracts: initial probability measure, Markov reward kernel,
+  measurable context, finite action. No product-coordinate independence,
+  finite-bandit mean/bound law, concentration, or integrability contract.
+- Retrieval evidence: `MLIB-PROBABILITY-KERNEL`,
+  `MLIB-CONDITIONAL-EXPECTATION`, and the generated-history policy alignment
+  leaf.
+- Status: `leanCompiled`, with `Tests.Basic` source-instantiation canary.
+- Failure policy: this law is only for the canonical kernel trajectory. A
+  separate measure/kernel transport and regularity identification is required
+  before using it as the fixed-product or arbitrary adaptive bandit law.
+
+`ETC-GENERATED-HISTORY-POLICY-TRAJMEASURE-COND-MGF-MODEL-MEAN` is compiled
+locally:
+
+```lean
+theorem
+  ETC.explorationArgmaxHistory_centeredReward_succ_hasCondSubgaussianMGF_trajMeasure
+```
+
+- Lean statement: successor reward minus `model.mean` of the arm selected by
+  the finite-history ETC policy has Mathlib `HasCondSubgaussianMGF` on the
+  canonical kernel trajectory.
+- Local APIs/imports: canonical generated `partialTraj` law,
+  `CenteredRewardKernelLaw`, the canonical trajectory conditional-MGF theorem,
+  and `measurable_of_countable` for the finite model mean map.
+- Proof route: specialize the generic trajectory MGF theorem to
+  `fun _ arm => model.mean arm`; a selected finite-history variance ceiling is
+  passed unchanged to the generic consumer.
+- Regularity contracts: initial probability, Markov reward kernel, measurable
+  context, centered kernel law, and selected-history variance ceiling.
+- Retrieval evidence: `MLIB-PROBABILITY-SUBGAUSSIAN`,
+  `MLIB-CONDITIONAL-EXPECTATION`, `MLIB-PROBABILITY-KERNEL`, and the canonical
+  ETC trajectory-law leaf.
+- Status: `leanCompiled`, with `Tests.Basic` instantiation canary.
+- Failure policy: do not claim the centered kernel law, variance ceiling,
+  independence, tail bound, or product/adaptive-environment transport. They
+  remain concrete next obligations for the final theorem route.
+
+`ETC-FINITE-ARM-LAWS-MARKOV-REWARD-KERNEL` is compiled locally:
+
+```lean
+def RewardKernel.contextIndependentOfActionLaws
+theorem RewardKernel.selectedMeasure_contextIndependentOfActionLaws
+```
+
+- Lean statement: per-action probability measures form a context-independent
+  `MarkovRewardKernel`, and selecting an action returns its original law.
+- Local APIs/imports: Mathlib `Kernel.ofFunOfCountable`, `Kernel.comap`,
+  measurable `Prod.snd`, and local `RewardKernel.selectedMeasure`.
+- Proof route: construct the countable-action kernel, pull it back over
+  `Context × Action`, then discharge Markov probability pointwise.
+- Regularity contracts: measurable spaces, measurable action singletons,
+  countable actions, and one probability witness per action; `Fin K` is the
+  intended route instance.
+- Retrieval evidence: `MLIB-PROBABILITY-KERNEL` and the two Mathlib kernel
+  constructors above; no theorem-card or weapon-only proof is claimed.
+- Status: `leanCompiled`, with an external `Fin K` canary in `Tests.Basic`.
+- Failure policy: this does not establish arm means, reward bounds, centered
+  MGF/variance contracts, trajectory transport, concentration, or regret.
+
+`ETC-FINITE-ARM-BOUNDED-CENTERED-KERNEL-COND-MGF` is compiled locally:
+
+```lean
+noncomputable def ETC.finiteArmBoundedCenteredRewardKernelLaw
+theorem ETC.explorationArgmaxHistory_centeredReward_succ_hasCondSubgaussianMGF_of_boundedArmLaws
+```
+
+- Lean statement: common-bounded per-arm probability laws with exact
+  `model.mean` integrals construct the centered reward-kernel law and directly
+  give the generated-history ETC successor conditional MGF.
+- Local APIs/imports: finite-arm kernel constructor, selected-measure rewrite,
+  `Integrable.of_mem_Icc`, `integral_sub`, bounded Hoeffding MGF wrapper, and
+  canonical ETC trajectory MGF consumer.
+- Proof route: package integrability, zero centered integral, and common-proxy
+  MGF armwise; the constant proxy discharges selected-history domination by
+  reflexivity.
+- Regularity contracts: arm probabilities, common a.s. interval, reward-cast
+  a.e. measurability, exact model means, initial probability, measurable
+  context. No product-law independence is required at this layer.
+- Retrieval evidence: `MLIB-PROBABILITY-KERNEL`,
+  `MLIB-PROBABILITY-SUBGAUSSIAN`, `MLIB-MEASURE-INTEGRAL`, and
+  `WEAPON-TAIL-INEQUALITIES` inspiration-only.
+- Status: `leanCompiled`, with `Tests.Basic` builder and direct-consumer
+  canaries.
+- Failure policy: do not claim trajectory/product-source equality, a
+  time-zero MGF for arbitrary `mu0`, conditional sum tail, wrong-commit
+  probability, or final ETC regret. Align the initial law with the time-zero
+  selected arm before applying the conditional-sum concentration route.
+
+`ETC-FINITE-ARM-BOUNDED-CENTERED-FULL-SUM-TAIL` is compiled locally:
+
+```lean
+theorem RewardKernel.trajMeasure_map_eval_zero
+theorem ETC.explorationArgmaxHistory_centeredRewardProcess_sum_tail_ennreal_of_boundedArmLaws
+```
+
+- Lean statement: with initial law equal to the time-zero exploration arm law,
+  the complete selected centered-reward process over `Finset.range n` has a
+  one-sided ENNReal Azuma-Hoeffding bound.
+- Local APIs/imports: trajectory zeroth marginal, `HasSubgaussianMGF.of_map`,
+  generated-history StronglyAdapted, bounded-arm successor conditional MGF,
+  and Mathlib conditional-sum tail.
+- Proof route: transport the arm MGF to coordinate zero, replace the zero slot
+  in the existing successor process by the actual centered reward, and combine
+  it with all successor conditional witnesses.
+- Regularity contracts: common arm bounds and exact means, arm probabilities,
+  measurable context, nonnegative threshold, and initial law fixed to
+  `armLaw (ETC.exploreArm spec 0)`.
+- Retrieval evidence: `MLIB-PROBABILITY-SUBGAUSSIAN`,
+  `MLIB-MARTINGALE-STOCHASTIC`, `MLIB-PROBABILITY-KERNEL`, and
+  `WEAPON-TAIL-INEQUALITIES` inspiration-only.
+- Status: `leanCompiled`; the zeroth marginal is a Mathlib candidate.
+- Failure policy: this total selected-reward sum is not itself an arm-masked or
+  pairwise empirical-mean comparison. The downstream canonical bounded-arm
+  pairwise wrong-commit leaf is now compiled; use that declaration rather than
+  reinterpreting this total-sum event. Environment transport and regret remain
+  separate.
+
 `ETC-WRONG-COMMIT-INFINITEPI-LINTEGRAL-REGRET-ASSEMBLY` is compiled locally:
 
 ```lean
@@ -22833,6 +24413,85 @@ theorem ETC.lintegral_ofReal_pseudoRegret_argmaxCommitOracle_actionWithCommit_le
   conditional expectation route, random environment kernel, final ETC theorem,
   or theorem-card promotion beyond the compiled statement.
 
+`ETC-FIXED-PRODUCT-BADGAP-LINTEGRAL-REGRET-WRAPPER` is compiled locally:
+
+```lean
+noncomputable def ETC.fixedProductBadGapLintegralRegretBound
+    {K : Nat}
+    (spec : ETC.Spec K)
+    (model : FiniteBanditModel K)
+    (baseCommitArm : Fin K)
+    (r : Nat)
+    (badGapBound : Rat)
+    (lo hi : Fin K -> Nat -> Real) : ENNReal
+
+theorem ETC.lintegral_ofReal_pseudoRegret_fixedProductArgmaxAction_le_fixedProductBadGapLintegralRegretBound_of_infinitePi_bounded_actionMean
+    {K : Nat}
+    (coordLaw : Nat -> MeasureTheory.Measure Rat)
+    [forall t : Nat, MeasureTheory.IsProbabilityMeasure (coordLaw t)]
+    (spec : ETC.Spec K)
+    (model : FiniteBanditModel K)
+    (baseCommitArm : Fin K)
+    (r : Nat)
+    (badGapBound : Rat)
+    (lo hi : Fin K -> Nat -> Real)
+    (hexplorationPulls_pos : 0 < spec.explorationPulls)
+    (hbadGap :
+      forall a : Fin K, (a = model.bestArm -> False) ->
+        model.gap a <= badGapBound)
+    (h_coord_bound :
+      forall t, t < spec.explorationPulls * K ->
+        Filter.Eventually
+          (fun rewardValue : Rat =>
+            Set.Icc
+              (lo (ETC.actionWithCommit spec baseCommitArm t) t)
+              (hi (ETC.actionWithCommit spec baseCommitArm t) t)
+              (((rewardValue : Rat) : Real)))
+          (MeasureTheory.ae (coordLaw t)))
+    (h_coord_mean :
+      forall t, t < spec.explorationPulls * K ->
+        MeasureTheory.integral (coordLaw t)
+          (fun rewardValue : Rat => (((rewardValue : Rat) : Real))) =
+        (((model.mean (ETC.actionWithCommit spec baseCommitArm t) : Rat) : Real))) :
+    MeasureTheory.lintegral (MeasureTheory.Measure.infinitePi coordLaw)
+      (fun omega : RewardTrace Rat =>
+        ENNReal.ofReal
+          (((pseudoRegret model
+              (ETC.fixedProductArgmaxAction spec model baseCommitArm omega)
+              (spec.explorationPulls * K + r) : Rat) : Real))) <=
+    ETC.fixedProductBadGapLintegralRegretBound
+      spec model baseCommitArm r badGapBound lo hi
+```
+
+- Local APIs/imports:
+  `BanditRLProof.Algorithms.ETCInfinitePiExpectedRegretAssembly`,
+  `ETC.fixedProductWrongCommitTailBudget`,
+  `ETC.fixedProductArgmaxAction`, and the concrete bad-gap lower-integral
+  theorem
+  `ETC.lintegral_ofReal_pseudoRegret_argmaxCommitOracle_actionWithCommit_le_exploration_add_suffix_badGap_prob_of_infinitePi_bounded_actionMean`.
+- Intended proof route: define the named `ENNReal.ofReal` RHS budget using the
+  same exploration term, bad-gap suffix term, and
+  `ETC.fixedProductWrongCommitTailBudget`; then use `simpa` through
+  `ETC.fixedProductArgmaxAction`, `ETC.fixedProductArgmaxCommit`, the named
+  RHS budget, and the wrong-commit tail budget to reuse the concrete theorem.
+- Regularity contracts: same contracts as the concrete bad-gap infinitePi
+  lower-integral assembly: probability coordinate laws, fixed `spec`, `model`,
+  `baseCommitArm`, suffix `r`, explicit `badGapBound`, positive exploration
+  count, non-best gap upper bound, action-matched coordinate a.s. bounds, and
+  coordinate mean identities.
+- Retrieval evidence: local declarations are
+  `ETC.fixedProductBadGapLintegralRegretBound` and
+  `ETC.lintegral_ofReal_pseudoRegret_fixedProductArgmaxAction_le_fixedProductBadGapLintegralRegretBound_of_infinitePi_bounded_actionMean`;
+  retrieval card is
+  `LOCAL-LEAF-ETC-FIXED-PRODUCT-BADGAP-LINTEGRAL-REGRET-WRAPPER`.
+- Status: project-local compiled polished fixed product-coordinate bad-gap
+  lower-integral wrapper.
+- Failure policy: this is still an `ENNReal.ofReal` lower-integral surrogate
+  and keeps the explicit `badGapBound` contract.  It is not Bochner/Rat-valued
+  expected regret, does not prove adaptive policy laws or conditional
+  reward-law identification, and does not replace the sum-gap or max-gap
+  adapters.
+
 `ETC-WRONG-COMMIT-INFINITEPI-SUMGAP-LINTEGRAL-REGRET-ASSEMBLY` is compiled
 locally:
 
@@ -22906,6 +24565,79 @@ theorem ETC.lintegral_ofReal_pseudoRegret_argmaxCommitOracle_actionWithCommit_le
 - Failure policy: this deliberately trades sharpness for a simpler contract.
   It does not optimize constants, introduce Bochner expectation, or make the
   theorem adaptive.
+
+`ETC-FIXED-PRODUCT-SUMGAP-LINTEGRAL-REGRET-WRAPPER` is compiled locally:
+
+```lean
+noncomputable def ETC.fixedProductSumGapLintegralRegretBound
+    {K : Nat}
+    (spec : ETC.Spec K)
+    (model : FiniteBanditModel K)
+    (baseCommitArm : Fin K)
+    (r : Nat)
+    (lo hi : Fin K -> Nat -> Real) : ENNReal
+
+theorem ETC.lintegral_ofReal_pseudoRegret_fixedProductArgmaxAction_le_fixedProductSumGapLintegralRegretBound_of_infinitePi_bounded_actionMean
+    {K : Nat}
+    (coordLaw : Nat -> MeasureTheory.Measure Rat)
+    [forall t : Nat, MeasureTheory.IsProbabilityMeasure (coordLaw t)]
+    (spec : ETC.Spec K)
+    (model : FiniteBanditModel K)
+    (baseCommitArm : Fin K)
+    (r : Nat)
+    (lo hi : Fin K -> Nat -> Real)
+    (hexplorationPulls_pos : 0 < spec.explorationPulls)
+    (h_coord_bound :
+      forall t, t < spec.explorationPulls * K ->
+        Filter.Eventually
+          (fun rewardValue : Rat =>
+            Set.Icc
+              (lo (ETC.actionWithCommit spec baseCommitArm t) t)
+              (hi (ETC.actionWithCommit spec baseCommitArm t) t)
+              (((rewardValue : Rat) : Real)))
+          (MeasureTheory.ae (coordLaw t)))
+    (h_coord_mean :
+      forall t, t < spec.explorationPulls * K ->
+        MeasureTheory.integral (coordLaw t)
+          (fun rewardValue : Rat => (((rewardValue : Rat) : Real))) =
+        (((model.mean (ETC.actionWithCommit spec baseCommitArm t) : Rat) : Real))) :
+    MeasureTheory.lintegral (MeasureTheory.Measure.infinitePi coordLaw)
+      (fun omega : RewardTrace Rat =>
+        ENNReal.ofReal
+          (((pseudoRegret model
+              (ETC.fixedProductArgmaxAction spec model baseCommitArm omega)
+              (spec.explorationPulls * K + r) : Rat) : Real))) <=
+    ETC.fixedProductSumGapLintegralRegretBound
+      spec model baseCommitArm r lo hi
+```
+
+- Local APIs/imports:
+  `BanditRLProof.Algorithms.ETCInfinitePiExpectedRegretAssembly`,
+  `ETC.fixedProductBadGapLintegralRegretBound`,
+  `ETC.fixedProductArgmaxAction`,
+  `FiniteBanditModel.gap_nonneg`, and Mathlib `Finset.single_le_sum`.
+- Intended proof route: define the named sum-gap `ENNReal.ofReal` RHS as the
+  bad-gap lower-integral budget specialized to
+  `(Finset.univ : Finset (Fin K)).sum (fun a => model.gap a)`.  Reuse the
+  fixed-product bad-gap wrapper, discharging the non-best gap upper bound with
+  `Finset.single_le_sum` and `FiniteBanditModel.gap_nonneg`, then `simpa`
+  through the named budget and fixed-product action trace.
+- Regularity contracts: same product-coordinate source assumptions as the
+  sum-gap infinitePi lower-integral assembly: probability coordinate laws,
+  fixed `spec`, `model`, `baseCommitArm`, suffix `r`, interval functions,
+  positive exploration count, action-matched coordinate a.s. bounds, and
+  coordinate mean identities.  There is no explicit `badGapBound` or `hbadGap`.
+- Retrieval evidence: local declarations are
+  `ETC.fixedProductSumGapLintegralRegretBound` and
+  `ETC.lintegral_ofReal_pseudoRegret_fixedProductArgmaxAction_le_fixedProductSumGapLintegralRegretBound_of_infinitePi_bounded_actionMean`;
+  retrieval card is
+  `LOCAL-LEAF-ETC-FIXED-PRODUCT-SUMGAP-LINTEGRAL-REGRET-WRAPPER`.
+- Status: project-local compiled polished fixed product-coordinate conservative
+  sum-gap lower-integral wrapper.
+- Failure policy: this is still an `ENNReal.ofReal` lower-integral surrogate.
+  It is conservative, not constant-sharp, not Bochner/Rat-valued expected
+  regret, and does not prove adaptive policy laws, conditional reward-law
+  identification, or final ETC theorem.
 
 `ETC-WRONG-COMMIT-INFINITEPI-MAXGAP-LINTEGRAL-REGRET-ASSEMBLY` is compiled
 locally:
@@ -24362,6 +26094,33 @@ theorem ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_
           (generatedActionFromRewardHistory_measurable ... hreward
             source.hstate)
           hreward).le i)))
+
+def ConditionalExpectationReward.generatedActionDefinitionalActualRewardMapSource_of_partialTrajectoryPairLawSource
+    ...
+    (source :
+      GeneratedActionPartialTrajectoryPairLawSource mu rewardKernel policy
+        context state defaultAction reward hreward) :
+    GeneratedActionDefinitionalActualRewardMapSource mu rewardKernel policy
+      context state defaultAction reward hreward
+
+def ConditionalExpectationReward.generatedActionSelectedRewardFinitePairHistoryLawSource_of_partialTrajectoryPairLawSource
+    ...
+    (source :
+      GeneratedActionPartialTrajectoryPairLawSource mu rewardKernel policy
+        context state defaultAction reward hreward) :
+    GeneratedActionSelectedRewardFinitePairHistoryLawSource
+      mu rewardKernel policy context state defaultAction reward hreward
+
+def ConditionalExpectationReward.generatedActionActualRewardMapSource_of_partialTrajectoryPairLawSource
+    ...
+    (source :
+      GeneratedActionPartialTrajectoryPairLawSource mu rewardKernel policy
+        context state defaultAction reward hreward) :
+    GeneratedActionActualRewardMapSource mu
+      (generatedActionFromRewardHistory policy state defaultAction reward)
+      rewardKernel policy context state defaultAction reward
+      (generatedActionFromRewardHistory_measurable ... hreward source.hstate)
+      hreward
 ```
 
 - Exact Lean-facing statement: this is the full finite-pair
@@ -24371,35 +26130,63 @@ theorem ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_
   `condExpKernel` pushed forward by
   `History.finitePairHistoryOfTrace ... (i + 1)`; the right side is
   `RewardKernel.actionRewardPartialTrajectoryKernel ... i (i + 1)` evaluated
-  at the frozen generated finite-pair prefix at time `i`.
+  at the frozen generated finite-pair prefix at time `i`.  The same packaged
+  source now also lowers to the weaker definitional actual-action
+  reward-coordinate source, the selected-reward finite-pair-history source,
+  and the explicit generated-action actual reward-coordinate source.
 - Local APIs/imports:
   `BanditRLProof.ConditionalRewardLawSource`,
   `GeneratedActionPartialTrajectoryPairLawSource`,
+  `GeneratedActionDefinitionalActualRewardMapSource`,
+  `GeneratedActionSelectedRewardFinitePairHistoryLawSource`,
+  `GeneratedActionActualRewardMapSource`,
   `ConditionalExpectationReward.generatedActionFromRewardHistory`,
   `ConditionalExpectationReward.generatedActionFromRewardHistory_measurable`,
   `History.historyFiltrationSucc`, `History.finitePairHistoryOfTrace`,
   `History.pairHistoryRewardProjection`,
-  `RewardKernel.actionRewardPartialTrajectoryKernel`, Mathlib
-  `condExpKernel`, `Measure.map`, and `IonescuTulcea.PartialTraj`.
-- Intended proof route: the proof is just `source.partialtraj_map_eq i`.
+  `RewardKernel.actionRewardPartialTrajectoryKernel`,
+  `reward_condExpKernel_map_eq_selected_actual_action_of_generatedActionTraceSucc_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace`,
+  Mathlib `condExpKernel`, `Measure.map`, and `IonescuTulcea.PartialTraj`.
+- Intended proof route: the theorem proof is just
+  `source.partialtraj_map_eq i`.  The definitional actual-source projection
+  reuses
+  `generatedActionDefinitionalActualRewardMapSource_of_partialTrajectoryKernel_map_eq`
+  with `source.hcontext`, `source.hstate`, and `source.partialtraj_map_eq`.
+  The selected finite-pair-history source projection reuses
+  `generatedActionSelectedRewardFinitePairHistoryLawSource_of_definitionalActualRewardMapSource`
+  after the definitional actual-source projection.
+  The explicit actual-source projection then lowers through
+  `generatedActionActualRewardMapSource_of_definitionalActualRewardMapSource`.
   Future trajectory/disintegration work should construct the source field;
-  once constructed, this theorem gives the theorem-card law shape by name.
+  once constructed, these wrappers expose both theorem-card law and
+  selected/actual reward source surfaces by name.
 - Regularity contracts: `[StandardBorelSpace Omega]`, finite `mu`,
   `[Countable Action]`, timewise reward measurability, source-provided
   measurable context/state extractors, generated-action measurability, and
   the full finite-pair law as an explicit source field.
 - Retrieval evidence:
   `ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_partialTrajectoryPairLawSource`,
+  `ConditionalExpectationReward.generatedActionDefinitionalActualRewardMapSource_of_partialTrajectoryPairLawSource`,
+  `ConditionalExpectationReward.generatedActionSelectedRewardFinitePairHistoryLawSource_of_partialTrajectoryPairLawSource`,
+  `ConditionalExpectationReward.generatedActionActualRewardMapSource_of_partialTrajectoryPairLawSource`,
   `ConditionalExpectationReward.GeneratedActionPartialTrajectoryPairLawSource`,
+  `ConditionalExpectationReward.GeneratedActionDefinitionalActualRewardMapSource`,
+  `ConditionalExpectationReward.GeneratedActionSelectedRewardFinitePairHistoryLawSource`,
+  `ConditionalExpectationReward.GeneratedActionActualRewardMapSource`,
   `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-TRAJECTORY-PARTIALTRAJ-PAIR-LAW-SOURCE-CONTRACT`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-SELECTED-REWARD-FINITEPAIRHISTORY-LAW-SOURCE-CONTRACT`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-ACTUAL-REWARD-MAP-SOURCE-CONTRACT`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-ACTUAL-REWARD-MAP-SOURCE-CONTRACT`,
   `LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-CONSUMER`,
   `Mathlib.Probability.Kernel.IonescuTulcea.PartialTraj`, and
   `Mathlib.Probability.Kernel.Disintegration.StandardBorel`.
 - Status: compiled-local source-projection leaf.  It exposes an existing
-  explicit law source as a named theorem.
+  explicit law source as a named theorem and as selected-reward and actual
+  reward-map source interfaces.
 - Failure policy: do not cite this as proving the source field, do not claim
   a generated-history `condExpKernel` law for arbitrary ambient `Omega`
-  without the source, and do not mark
+  without the source, do not claim it proves the selected reward law or the
+  selected-reward source field, and do not mark
   `COND-EXPECT-REWARD-PARTIALTRAJ-CONDEXPKERNEL-PAIR-LAW-CARD` as compiled.
 
 `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-FROM-EXTEND-MAP`
@@ -24740,12 +26527,83 @@ def ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_o
               hreward).le i)))) :
     GeneratedActionPartialTrajectoryPairLawSource mu rewardKernel policy
       context state defaultAction reward hreward
+
+theorem ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_reward_map_eq_selected_policy
+    ...
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega =>
+            Measure.map (fun y => reward y (i + 1))
+              (condExpKernel
+                ((History.historyFiltrationSucc
+                  (generatedActionFromRewardHistory policy state
+                    defaultAction reward)
+                  reward
+                  (generatedActionFromRewardHistory_measurable ...
+                    hreward hstate)
+                  hreward) i)
+                omega)
+            =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace
+                    (reward omega) i))))
+          (ae (mu.trim
+            ((History.historyFiltrationSucc
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward)
+              reward
+              (generatedActionFromRewardHistory_measurable ... hreward
+                hstate)
+              hreward).le i))))
+    (i : Nat) :
+    Filter.Eventually
+      (fun omega =>
+        Measure.map
+          (fun y =>
+            History.finitePairHistoryOfTrace
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward y)
+              (reward y) (i + 1))
+          (condExpKernel
+            ((History.historyFiltrationSucc
+              (generatedActionFromRewardHistory policy state defaultAction
+                reward)
+              reward
+              (generatedActionFromRewardHistory_measurable ... hreward
+                hstate)
+              hreward) i)
+            omega)
+        =
+        RewardKernel.actionRewardPartialTrajectoryKernel rewardKernel policy
+          (fun n history =>
+            context n (History.pairHistoryRewardProjection history))
+          (fun n history =>
+            state n (History.pairHistoryRewardProjection history))
+          ... i (i + 1)
+          (History.finitePairHistoryOfTrace
+            (generatedActionFromRewardHistory policy state defaultAction
+              reward omega)
+            (reward omega) i))
+      (ae (mu.trim
+        ((History.historyFiltrationSucc
+          (generatedActionFromRewardHistory policy state defaultAction reward)
+          reward
+          (generatedActionFromRewardHistory_measurable ... hreward hstate)
+          hreward).le i)))
 ```
 
 - Exact Lean-facing statement: given measurable context/state extractors and
   a policy-selected reward-coordinate `condExpKernel` map law under the
   generated `History.historyFiltrationSucc`, construct the full
-  `GeneratedActionPartialTrajectoryPairLawSource`.
+  `GeneratedActionPartialTrajectoryPairLawSource` and expose its
+  theorem-card-shaped full finite-pair `partialTraj`/`condExpKernel` law.
 - Local APIs/imports:
   `BanditRLProof.ConditionalRewardLawSource`,
   `ConditionalExpectationReward.generatedActionFromRewardHistory`,
@@ -24766,6 +26624,10 @@ def ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_o
   generated-trace action-freezing theorem for the action-side a.e. equality,
   and feed that evidence plus `h_reward_map_eq` into
   `generatedActionPartialTrajectoryPairLawSource_of_action_ae_eq_policy_reward_map_eq`.
+  The theorem wrapper then builds the source through
+  `generatedActionPartialTrajectoryPairLawSource_of_reward_map_eq_selected_policy`
+  and projects the stored law with
+  `actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_partialTrajectoryPairLawSource`.
 - Regularity contracts: `[StandardBorelSpace Omega]`, finite `mu`,
   `[MeasurableSingletonClass Action]`, `[Countable Action]`, timewise reward
   measurability, measurable context/state extractors, generated-action
@@ -24773,15 +26635,17 @@ def ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_o
   require an explicit action-side law or full next-pair law as input.
 - Retrieval evidence:
   `ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_of_reward_map_eq_selected_policy`,
+  `ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_reward_map_eq_selected_policy`,
   `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-FROM-SPLIT-NEXTPAIR-LAW`,
   `LOCAL-LEAF-COND-EXPECT-REWARD-ACTION-FREEZE-GENERATED-TRACE-SOURCE`,
   `LOCAL-LEAF-COND-EXPECT-REWARD-TRAJMEASURE-SELECTED-REWARD-CONDEXPKERNEL-MAP`,
   `LOCAL-LEAF-COND-EXPECT-REWARD-SELECTED-POLICY-REWARD-MAP-TO-DEFINITIONAL-RANDOM-PAIR-MAP-SOURCE`,
   `Mathlib.Probability.Kernel.IonescuTulcea.Traj`, and
   `Mathlib.Probability.Kernel.IonescuTulcea.PartialTraj`.
-- Status: compiled-local source-constructor leaf.  It lowers the future
-  `GeneratedActionPartialTrajectoryPairLawSource` obligation to the selected
-  reward-coordinate generated-history law.
+- Status: compiled-local source-constructor/theorem-wrapper leaf.  It lowers
+  the future `GeneratedActionPartialTrajectoryPairLawSource` obligation to the
+  selected reward-coordinate generated-history law and now exposes the full
+  finite-pair theorem surface directly.
 - Failure policy: do not cite this as proving the selected reward-coordinate
   law, do not claim canonical `trajMeasure` has been transported to arbitrary
   ambient `Omega`, and do not mark
@@ -24861,40 +26725,232 @@ def ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMe
     GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource
       mu rewardKernel policy context state mean varianceProxy defaultAction
       reward hreward rewardLo rewardHi meanLo meanHi
+
+def ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_comap_reward_map_eq_selected_policy
+    ...
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            Measure.map (fun y : Omega => reward y (i + 1))
+              (condExpKernel
+                ((inferInstance :
+                  MeasurableSpace ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                mu omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.pairHistoryRewardProjection
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)))
+              ((policy i).action
+                (state i
+                  (History.pairHistoryRewardProjection
+                    (History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward omega)
+                      (reward omega) i)))))
+          (ae (mu.trim
+            ((History.historyFiltrationSucc
+              (generatedActionFromRewardHistory policy state defaultAction reward)
+              reward
+              (generatedActionFromRewardHistory_measurable
+                (policy := policy) (state := state) (defaultAction := defaultAction)
+                (reward := reward) hreward hstate)
+              hreward).le i)))) :
+    GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource
+      mu rewardKernel policy context state mean varianceProxy defaultAction
+      reward hreward rewardLo rewardHi meanLo meanHi
+
+def ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_comap_trim_reward_map_eq_selected_policy
+    ...
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega => ...)
+          (ae (mu.trim
+            (show
+              ((inferInstance :
+                MeasurableSpace ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                (fun y : Omega =>
+                  History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward y)
+                    (reward y) i)) <= mOmega from ...)))) :
+    GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource
+      mu rewardKernel policy context state mean varianceProxy defaultAction
+      reward hreward rewardLo rewardHi meanLo meanHi
+```
+
+- Exact Lean-facing statement: either a packaged generated-history full
+  finite-pair `partialTraj`/`condExpKernel` law source, or the finite-pair
+  comap selected-reward law that constructs that source at either the
+  generated-history trim surface or the direct comap-trim surface, together
+  with measurable mean, centered reward-kernel law, raw reward range bounds,
+  and deterministic mean range bounds, constructs the practical definitional
+  generated-action raw-range/measurable-mean-range bounded source.
+- Local APIs/imports:
+  `BanditRLProof.ConditionalRewardLawSource`,
+  `GeneratedActionPartialTrajectoryPairLawSource`,
+  `generatedActionPartialTrajectoryPairLawSource_of_comap_reward_map_eq_selected_policy`,
+  `generatedActionPartialTrajectoryPairLawSource_of_comap_trim_reward_map_eq_selected_policy`,
+  `GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource`,
+  `generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_actionRewardPartialTrajectoryKernel_map_eq`,
+  `History.historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace`,
+  `RewardKernel.CenteredRewardKernelLaw`, Mathlib `Measurable`, `Set.Icc`,
+  `Measure.map`, and `condExpKernel`.
+- Intended proof route: project `source.hcontext`, `source.hstate`, and
+  `source.partialtraj_map_eq` into the existing full finite-pair `partialTraj`
+  raw-range constructor.  The generated-history-trim comap wrapper first constructs the full
+  finite-pair source with
+  `generatedActionPartialTrajectoryPairLawSource_of_comap_reward_map_eq_selected_policy`,
+  then invokes this source-level constructor.  The direct comap-trim wrapper
+  first constructs the same full finite-pair source with
+  `generatedActionPartialTrajectoryPairLawSource_of_comap_trim_reward_map_eq_selected_policy`,
+  using the local history-filtration/comap equality to justify the trim
+  surface, and then invokes the same source-level constructor.  No new
+  measure-theoretic law is proved.
+- Regularity contracts: `[StandardBorelSpace Omega]`, finite `mu`,
+  `[Countable Action]`, timewise measurable rewards, the source's measurable
+  context/state fields or wrapper-supplied `hcontext`/`hstate`, selected-reward
+  law in either generated-history-trim or direct finite-pair comap-trim form,
+  measurable global mean over `Context x Action`, the centered reward-kernel
+  law, pointwise raw reward interval bounds, and pointwise mean interval
+  bounds.  No variance ceiling is part of this base source contract.
+- Retrieval evidence:
+  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_partialTrajectoryPairLawSource`,
+  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_comap_reward_map_eq_selected_policy`,
+  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_comap_trim_reward_map_eq_selected_policy`,
+  `ConditionalExpectationReward.GeneratedActionPartialTrajectoryPairLawSource`,
+  `ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_of_comap_trim_reward_map_eq_selected_policy`,
+  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_actionRewardPartialTrajectoryKernel_map_eq`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-SELECTED-REWARD-FINITEPAIRHISTORY-SOURCE-FROM-COMAP-LAW`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-TRAJECTORY-PARTIALTRAJ-PAIR-LAW-SOURCE-CONTRACT`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-CONTRACT`,
+  and `LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-CONSUMER`.
+- Status: compiled-local source/comap source-conversion leaf.
+- Failure policy: do not cite this as proving the generated-history
+  `partialTraj`/`condExpKernel` pair-law or the finite-pair selected-reward
+  comap law under either trim filter.  Do not infer variance ceilings or
+  conditional MGF wrappers from this leaf without the separate uniform/history
+  variance source leaves.
+
+`LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-MEAN-ZERO`
+is compiled locally:
+
+```lean
+theorem ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_partialTrajectoryPairLawSource_definitionalRawRangeMeasurableMeanRangeBounded
+    ...
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (source :
+      GeneratedActionPartialTrajectoryPairLawSource mu rewardKernel policy
+        context state defaultAction reward hreward)
+    (i : Nat) :
+    Filter.EventuallyEq (ae mu)
+      (@condExp Omega Real
+        ((History.historyFiltrationSucc
+          (generatedActionFromRewardHistory policy state defaultAction reward)
+          reward
+          (generatedActionFromRewardHistory_measurable
+            (policy := policy) (state := state)
+            (defaultAction := defaultAction) (reward := reward)
+            hreward source.hstate)
+          hreward) i)
+        mOmega _ _ _ mu
+        (fun omega : Omega =>
+          (((reward omega (i + 1) -
+            mean
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+              Rat) : Real))))
+      (fun _omega : Omega => (0 : Real))
 ```
 
 - Exact Lean-facing statement: a packaged generated-history full finite-pair
   `partialTraj`/`condExpKernel` law source, together with measurable mean,
   centered reward-kernel law, raw reward range bounds, and deterministic mean
-  range bounds, constructs the practical definitional generated-action
-  raw-range/measurable-mean-range bounded source.
+  range bounds, directly yields ordinary succ-indexed conditional mean-zero for
+  the centered reward under `generatedActionFromRewardHistory`.
 - Local APIs/imports:
   `BanditRLProof.ConditionalRewardLawSource`,
   `GeneratedActionPartialTrajectoryPairLawSource`,
-  `GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource`,
-  `generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_actionRewardPartialTrajectoryKernel_map_eq`,
-  `RewardKernel.CenteredRewardKernelLaw`, Mathlib `Measurable`, `Set.Icc`,
-  `Measure.map`, and `condExpKernel`.
-- Intended proof route: project `source.hcontext`, `source.hstate`, and
-  `source.partialtraj_map_eq` into the existing full finite-pair `partialTraj`
-  raw-range constructor.  No new measure-theoretic law is proved.
+  `generatedActionFromRewardHistory`,
+  `generatedActionFromRewardHistory_measurable`,
+  `centeredReward_succ_condExp_eq_zero_of_actionRewardPartialTrajectoryKernel_map_eq_definitionalRawRangeMeasurableMeanRangeBounded`,
+  `RewardKernel.CenteredRewardKernelLaw`, `History.historyFiltrationSucc`,
+  `History.finiteRewardHistoryOfTrace`, Mathlib `condExp`, `ae`,
+  `Filter.EventuallyEq`, and `Set.Icc`.
+- Intended proof route: pass `source.hcontext`, `source.hstate`, and
+  `source.partialtraj_map_eq` to the existing full finite-pair `partialTraj`
+  conditional mean-zero consumer.  No new `condExpKernel` identification or
+  trajectory-disintegration law is proved.
 - Regularity contracts: `[StandardBorelSpace Omega]`, finite `mu`,
-  `[Countable Action]`, timewise measurable rewards, the source's measurable
-  context/state fields, measurable global mean over `Context x Action`, the
-  centered reward-kernel law, pointwise raw reward interval bounds, and
-  pointwise mean interval bounds.
+  `[Countable Action]`, timewise measurable rewards, source-provided
+  context/state measurability and full finite-pair law, measurable global mean
+  over `Context x Action`, the centered reward-kernel law, pointwise raw reward
+  interval bounds, and pointwise mean interval bounds.
 - Retrieval evidence:
-  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_partialTrajectoryPairLawSource`,
+  `ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_partialTrajectoryPairLawSource_definitionalRawRangeMeasurableMeanRangeBounded`,
+  `ConditionalExpectationReward.centeredReward_succ_condExp_eq_zero_of_actionRewardPartialTrajectoryKernel_map_eq_definitionalRawRangeMeasurableMeanRangeBounded`,
   `ConditionalExpectationReward.GeneratedActionPartialTrajectoryPairLawSource`,
-  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_actionRewardPartialTrajectoryKernel_map_eq`,
-  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-TRAJECTORY-PARTIALTRAJ-PAIR-LAW-SOURCE-CONTRACT`,
-  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-DEFINITIONAL-RAW-RANGE-MEASURABLE-MEAN-RANGE-BOUNDED-SOURCE-CONTRACT`,
-  and `LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-CONSUMER`.
-- Status: compiled-local source-conversion leaf.
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-MEAN-ZERO`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-RAW-RANGE-BOUNDED-SOURCE`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-CONDEXPKERNEL-ZERO`,
+  and `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-TRAJECTORY-PARTIALTRAJ-PAIR-LAW-SOURCE-CONTRACT`.
+- Status: compiled-local source-consumer leaf.
 - Failure policy: do not cite this as proving the generated-history
-  `partialTraj`/`condExpKernel` pair-law; it only consumes the packaged source.
-  Do not infer variance ceilings or conditional MGF wrappers from this leaf
-  without the separate uniform/history variance source leaves.
+  `partialTraj`/`condExpKernel` pair-law, canonical `trajMeasure` transport,
+  variance ceilings, conditional MGF wrappers, or the broad theorem-card row.
+  It only consumes an already packaged full finite-pair source law plus
+  raw/mean range regularity.
 
 `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-UNIFORM-VARIANCE-SOURCE`
 is compiled locally:
@@ -24924,15 +26980,142 @@ def ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMe
     GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource
       mu rewardKernel policy context state mean varianceProxy defaultAction
       reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling
+
+def ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource_of_comap_reward_map_eq_selected_policy
+    ...
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (varianceCeiling : NNReal)
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (hvariance :
+      forall context : Context, forall action : Action,
+        varianceProxy context action <= varianceCeiling)
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            Measure.map (fun y : Omega => reward y (i + 1))
+              (condExpKernel
+                ((inferInstance :
+                  MeasurableSpace ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                mu omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.pairHistoryRewardProjection
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)))
+              ((policy i).action
+                (state i
+                  (History.pairHistoryRewardProjection
+                    (History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward omega)
+                      (reward omega) i)))))
+          (ae (mu.trim
+            ((History.historyFiltrationSucc
+              (generatedActionFromRewardHistory policy state defaultAction reward)
+              reward
+              (generatedActionFromRewardHistory_measurable
+                (policy := policy) (state := state) (defaultAction := defaultAction)
+                (reward := reward) hreward hstate)
+              hreward).le i)))) :
+    GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource
+      mu rewardKernel policy context state mean varianceProxy defaultAction
+      reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling
+
+def ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource_of_comap_trim_reward_map_eq_selected_policy
+    ...
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (varianceCeiling : NNReal)
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (hvariance :
+      forall context : Context, forall action : Action,
+        varianceProxy context action <= varianceCeiling)
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            Measure.map (fun y : Omega => reward y (i + 1))
+              (condExpKernel
+                ((inferInstance :
+                  MeasurableSpace ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                mu omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.pairHistoryRewardProjection
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)))
+              ((policy i).action
+                (state i
+                  (History.pairHistoryRewardProjection
+                    (History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward omega)
+                      (reward omega) i)))))
+          (ae (mu.trim
+            (show
+              ((inferInstance :
+                MeasurableSpace ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                (fun y : Omega =>
+                  History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward y)
+                    (reward y) i)) <= mOmega from ...)))) :
+    GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource
+      mu rewardKernel policy context state mean varianceProxy defaultAction
+      reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling
 ```
 
-- Exact Lean-facing statement: a packaged generated-history full finite-pair
-  `partialTraj`/`condExpKernel` law source, together with raw/mean range
-  regularity and a global variance ceiling, constructs the practical
-  definitional generated-action uniform-variance source.
+- Exact Lean-facing statement: either a packaged generated-history full
+  finite-pair `partialTraj`/`condExpKernel` law source, or the finite-pair
+  comap selected-reward law that constructs that source, together with
+  raw/mean range regularity and a global variance ceiling, constructs the
+  practical definitional generated-action uniform-variance source.  The
+  selected-reward law can be supplied either at the generated-history trim
+  surface or entirely at the finite-pair comap-trim surface.
 - Local APIs/imports:
   `BanditRLProof.ConditionalRewardLawSource`,
   `GeneratedActionPartialTrajectoryPairLawSource`,
+  `generatedActionPartialTrajectoryPairLawSource_of_comap_reward_map_eq_selected_policy`,
+  `generatedActionPartialTrajectoryPairLawSource_of_comap_trim_reward_map_eq_selected_policy`,
+  `History.historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace`,
   `GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource`,
   `generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource_of_actionRewardPartialTrajectoryKernel_map_eq`,
   `generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_partialTrajectoryPairLawSource`,
@@ -24941,21 +27124,37 @@ def ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMe
 - Intended proof route: project `source.hcontext`, `source.hstate`, and
   `source.partialtraj_map_eq` into the existing direct full finite-pair
   `partialTraj` uniform-variance constructor; the variance field is exactly
-  the explicit pointwise `hvariance` contract.
+  the explicit pointwise `hvariance` contract.  The comap wrapper first
+  constructs the full finite-pair source with
+  `generatedActionPartialTrajectoryPairLawSource_of_comap_reward_map_eq_selected_policy`,
+  then invokes this source-level constructor.  The direct comap-trim wrapper
+  uses
+  `generatedActionPartialTrajectoryPairLawSource_of_comap_trim_reward_map_eq_selected_policy`,
+  whose internal transport rewrites the generated-history filtration to the
+  finite-pair comap sigma-algebra via
+  `History.historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace`.
 - Regularity contracts: all contracts from the raw-range bounded source
   conversion, plus a global `varianceCeiling : NNReal` and
   `forall context action, varianceProxy context action <= varianceCeiling`.
+  The direct comap-trim entry additionally requires the selected-reward law to
+  hold under `ae (mu.trim hcomap_le)` for the finite-pair comap sigma-algebra.
 - Retrieval evidence:
   `ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource_of_partialTrajectoryPairLawSource`,
+  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource_of_comap_reward_map_eq_selected_policy`,
+  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource_of_comap_trim_reward_map_eq_selected_policy`,
   `ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeUniformVarianceBoundedSource_of_actionRewardPartialTrajectoryKernel_map_eq`,
+  `ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_of_comap_trim_reward_map_eq_selected_policy`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-SELECTED-REWARD-FINITEPAIRHISTORY-SOURCE-FROM-COMAP-LAW`,
   `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-RAW-RANGE-BOUNDED-SOURCE`,
   `LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-UNIFORM-VARIANCE-SOURCE`,
   and `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-TRAJECTORY-PARTIALTRAJ-PAIR-LAW-SOURCE-CONTRACT`.
-- Status: compiled-local source-conversion leaf.
+- Status: compiled-local source/comap source-conversion leaf; the direct
+  comap-trim source constructor is covered by an external `Tests.Basic` canary.
 - Failure policy: do not cite this as proving the generated-history
-  `partialTraj`/`condExpKernel` pair-law, and do not treat the global
-  variance ceiling as the selected-history variance source.  Conditional MGF
-  consumers still require their separate source or consumer leaves.
+  `partialTraj`/`condExpKernel` pair-law or the finite-pair selected-reward
+  comap law under either trim filter, and do not treat the global variance
+  ceiling as the selected-history variance source.  Conditional MGF consumers
+  still require their separate source or consumer leaves.
 
 `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-UNIFORM-VARIANCE-COND-MGF`
 is compiled locally:
@@ -25007,17 +27206,135 @@ theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_o
               (state i
                 (History.finiteRewardHistoryOfTrace (reward omega) i))) :
             Rat) : Real)))
+       varianceCeiling mu
+
+theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_comap_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded
+    ...
+    (hvariance :
+      forall context : Context, forall action : Action,
+        varianceProxy context action <= varianceCeiling)
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            Measure.map (fun y : Omega => reward y (i + 1))
+              (condExpKernel
+                ((inferInstance :
+                  MeasurableSpace ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                mu omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.pairHistoryRewardProjection
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)))
+              ((policy i).action
+                (state i
+                  (History.pairHistoryRewardProjection
+                    (History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward omega)
+                      (reward omega) i)))))
+          (ae (mu.trim
+            ((History.historyFiltrationSucc
+              (generatedActionFromRewardHistory policy state defaultAction reward)
+              reward
+              (generatedActionFromRewardHistory_measurable
+                (policy := policy) (state := state) (defaultAction := defaultAction)
+                (reward := reward) hreward hstate)
+              hreward).le i))))
+    (i : Nat) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward hstate)
+        hreward) i)
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward hstate)
+        hreward).le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      varianceCeiling mu
+
+theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_comap_trim_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded
+    ...
+    (hvariance :
+      forall context : Context, forall action : Action,
+        varianceProxy context action <= varianceCeiling)
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega => ...)
+          (ae (mu.trim
+            (show
+              ((inferInstance :
+                MeasurableSpace ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                (fun y : Omega =>
+                  History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward y)
+                    (reward y) i)) <= mOmega from by
+              ...))))
+    (i : Nat) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward hstate)
+        hreward) i)
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward hstate)
+        hreward).le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
       varianceCeiling mu
 ```
 
-- Exact Lean-facing statement: a packaged generated-history full finite-pair
-  `partialTraj`/`condExpKernel` law source, together with raw/mean range
-  regularity and a global variance ceiling, directly gives the succ-indexed
-  conditional sub-Gaussian MGF witness for the generated reward-history action
-  trace.
+- Exact Lean-facing statement: either a packaged generated-history full
+  finite-pair `partialTraj`/`condExpKernel` law source, or the finite-pair
+  comap selected-reward law that constructs that source, with either the
+  generated-history trim filter or the direct comap-trim filter, together with
+  raw/mean range regularity and a global variance ceiling, directly gives the
+  succ-indexed conditional sub-Gaussian MGF witness for the generated
+  reward-history action trace.
 - Local APIs/imports:
   `BanditRLProof.ConditionalRewardLawSource`,
   `GeneratedActionPartialTrajectoryPairLawSource`,
+  `generatedActionPartialTrajectoryPairLawSource_of_comap_reward_map_eq_selected_policy`,
+  `generatedActionPartialTrajectoryPairLawSource_of_comap_trim_reward_map_eq_selected_policy`,
   `generatedActionFromRewardHistory`,
   `generatedActionFromRewardHistory_measurable`,
   `centeredReward_succ_hasCondSubgaussianMGF_of_actionRewardPartialTrajectoryKernel_map_eq_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded`,
@@ -25026,18 +27343,26 @@ theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_o
   `Measure.map`, and `condExpKernel`.
 - Intended proof route: project `source.hcontext`, `source.hstate`, and
   `source.partialtraj_map_eq` into the existing direct full finite-pair
-  `partialTraj` uniform-variance conditional MGF consumer.
+  `partialTraj` uniform-variance conditional MGF consumer; the comap wrapper
+  first constructs the full finite-pair source with
+  `generatedActionPartialTrajectoryPairLawSource_of_comap_reward_map_eq_selected_policy`,
+  and the comap-trim wrapper does the same with
+  `generatedActionPartialTrajectoryPairLawSource_of_comap_trim_reward_map_eq_selected_policy`,
+  then invokes the same source-level consumer.
 - Regularity contracts: measurable selected mean surface, centered reward
   kernel law, deterministic raw reward interval bounds, deterministic selected
   mean interval bounds, and global pointwise
   `varianceProxy context action <= varianceCeiling`.
 - Retrieval evidence:
   `ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_partialTrajectoryPairLawSource_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded`,
+  `ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_comap_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded`,
+  `ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_comap_trim_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded`,
   `ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_actionRewardPartialTrajectoryKernel_map_eq_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-SELECTED-REWARD-FINITEPAIRHISTORY-SOURCE-FROM-COMAP-LAW`,
   `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-UNIFORM-VARIANCE-SOURCE`,
   `LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-UNIFORM-VARIANCE-COND-MGF`,
   and `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-TRAJECTORY-PARTIALTRAJ-PAIR-LAW-SOURCE-CONTRACT`.
-- Status: compiled-local source-consumer leaf.
+- Status: compiled-local source/comap consumer leaf.
 - Failure policy: do not cite this as proving the generated-history
   `partialTraj`/`condExpKernel` pair-law, deriving the variance ceiling, or
   transporting canonical `trajMeasure` to an ambient process.  It is a thin
@@ -25096,16 +27421,140 @@ theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_o
                 (History.finiteRewardHistoryOfTrace (reward omega) i))) :
             Rat) : Real)))
       c mu
+
+theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_comap_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded_of_varianceCeiling_le
+    ...
+    (varianceCeiling : NNReal)
+    (hvariance :
+      forall context : Context, forall action : Action,
+        varianceProxy context action <= varianceCeiling)
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            Measure.map (fun y : Omega => reward y (i + 1))
+              (condExpKernel
+                ((inferInstance :
+                  MeasurableSpace ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                mu omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.pairHistoryRewardProjection
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)))
+              ((policy i).action
+                (state i
+                  (History.pairHistoryRewardProjection
+                    (History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward omega)
+                      (reward omega) i)))))
+          (ae (mu.trim
+            ((History.historyFiltrationSucc
+              (generatedActionFromRewardHistory policy state defaultAction reward)
+              reward
+              (generatedActionFromRewardHistory_measurable
+                (policy := policy) (state := state) (defaultAction := defaultAction)
+                (reward := reward) hreward hstate)
+              hreward).le i))))
+    (i : Nat)
+    (c : NNReal)
+    (hceiling : varianceCeiling <= c) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward hstate)
+        hreward) i)
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward hstate)
+        hreward).le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      c mu
+
+theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_comap_trim_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded_of_varianceCeiling_le
+    ...
+    (varianceCeiling : NNReal)
+    (hvariance :
+      forall context : Context, forall action : Action,
+        varianceProxy context action <= varianceCeiling)
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega => ...)
+          (ae (mu.trim
+            (show
+              ((inferInstance :
+                MeasurableSpace ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                (fun y : Omega =>
+                  History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward y)
+                    (reward y) i)) <= mOmega from by
+              ...))))
+    (i : Nat)
+    (c : NNReal)
+    (hceiling : varianceCeiling <= c) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward hstate)
+        hreward) i)
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward hstate)
+        hreward).le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      c mu
 ```
 
-- Exact Lean-facing statement: a packaged generated-history full finite-pair
-  `partialTraj`/`condExpKernel` law source, raw/mean range regularity, a global
-  variance ceiling, and a coarser deterministic proxy `c` satisfying
-  `varianceCeiling <= c` directly give the succ-indexed conditional
-  sub-Gaussian MGF witness at proxy `c`.
+- Exact Lean-facing statement: either a packaged generated-history full
+  finite-pair `partialTraj`/`condExpKernel` law source, or the finite-pair
+  comap selected-reward law that constructs that source, with either the
+  generated-history trim filter or the direct comap-trim filter, together with
+  raw/mean range regularity, a global variance ceiling, and a coarser
+  deterministic proxy `c` satisfying `varianceCeiling <= c`, directly gives
+  the succ-indexed conditional sub-Gaussian MGF witness at proxy `c`.
 - Local APIs/imports:
   `BanditRLProof.ConditionalRewardLawSource`,
   `GeneratedActionPartialTrajectoryPairLawSource`,
+  `generatedActionPartialTrajectoryPairLawSource_of_comap_reward_map_eq_selected_policy`,
+  `generatedActionPartialTrajectoryPairLawSource_of_comap_trim_reward_map_eq_selected_policy`,
   `generatedActionFromRewardHistory`,
   `generatedActionFromRewardHistory_measurable`,
   `centeredReward_succ_hasCondSubgaussianMGF_of_actionRewardPartialTrajectoryKernel_map_eq_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded_of_varianceCeiling_le`,
@@ -25115,7 +27564,11 @@ theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_o
 - Intended proof route: project `source.hcontext`, `source.hstate`, and
   `source.partialtraj_map_eq` into the existing direct full finite-pair
   `partialTraj` uniform larger-proxy conditional MGF consumer, then pass
-  `hceiling`.
+  `hceiling`; the comap wrapper first constructs the full finite-pair source
+  with `generatedActionPartialTrajectoryPairLawSource_of_comap_reward_map_eq_selected_policy`,
+  and the comap-trim wrapper does the same with
+  `generatedActionPartialTrajectoryPairLawSource_of_comap_trim_reward_map_eq_selected_policy`,
+  then invokes the same source-level larger-proxy consumer.
 - Regularity contracts: measurable selected mean surface, centered reward
   kernel law, deterministic raw reward interval bounds, deterministic selected
   mean interval bounds, global pointwise
@@ -25123,11 +27576,14 @@ theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_o
   domination `varianceCeiling <= c`.
 - Retrieval evidence:
   `ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_partialTrajectoryPairLawSource_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded_of_varianceCeiling_le`,
+  `ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_comap_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded_of_varianceCeiling_le`,
+  `ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_comap_trim_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded_of_varianceCeiling_le`,
   `ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_actionRewardPartialTrajectoryKernel_map_eq_definitionalRawRangeMeasurableMeanRangeUniformVarianceBounded_of_varianceCeiling_le`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-SELECTED-REWARD-FINITEPAIRHISTORY-SOURCE-FROM-COMAP-LAW`,
   `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-UNIFORM-VARIANCE-SOURCE`,
   `LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-UNIFORM-VARIANCE-LARGER-PROXY-COND-MGF`,
   and `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-TRAJECTORY-PARTIALTRAJ-PAIR-LAW-SOURCE-CONTRACT`.
-- Status: compiled-local source-consumer leaf.
+- Status: compiled-local source/comap consumer leaf.
 - Failure policy: do not cite this as proving the generated-history
   `partialTraj`/`condExpKernel` pair-law, deriving the variance ceiling,
   proving `varianceCeiling <= c`, or transporting canonical `trajMeasure` to
@@ -25163,15 +27619,144 @@ def ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMe
     GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource
       mu rewardKernel policy context state mean varianceProxy defaultAction
       reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling
+
+def ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource_of_comap_reward_map_eq_selected_policy
+    ...
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (varianceCeiling : Nat -> NNReal)
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (hvariance :
+      forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat),
+        varianceProxy (context i history)
+          ((policy i).action (state i history)) <= varianceCeiling i)
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            Measure.map (fun y : Omega => reward y (i + 1))
+              (condExpKernel
+                ((inferInstance :
+                  MeasurableSpace ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                mu omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.pairHistoryRewardProjection
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)))
+              ((policy i).action
+                (state i
+                  (History.pairHistoryRewardProjection
+                    (History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward omega)
+                      (reward omega) i)))))
+          (ae (mu.trim
+            ((History.historyFiltrationSucc
+              (generatedActionFromRewardHistory policy state defaultAction reward)
+              reward
+              (generatedActionFromRewardHistory_measurable
+                (policy := policy) (state := state) (defaultAction := defaultAction)
+                (reward := reward) hreward hstate)
+              hreward).le i)))) :
+    GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource
+      mu rewardKernel policy context state mean varianceProxy defaultAction
+      reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling
+
+def ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource_of_comap_trim_reward_map_eq_selected_policy
+    ...
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (varianceCeiling : Nat -> NNReal)
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (hvariance :
+      forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat),
+        varianceProxy (context i history)
+          ((policy i).action (state i history)) <= varianceCeiling i)
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            Measure.map (fun y : Omega => reward y (i + 1))
+              (condExpKernel
+                ((inferInstance :
+                  MeasurableSpace ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                mu omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.pairHistoryRewardProjection
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)))
+              ((policy i).action
+                (state i
+                  (History.pairHistoryRewardProjection
+                    (History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward omega)
+                      (reward omega) i)))))
+          (ae (mu.trim
+            (show
+              ((inferInstance :
+                MeasurableSpace ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                (fun y : Omega =>
+                  History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward y)
+                    (reward y) i)) <= mOmega from ...)))) :
+    GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource
+      mu rewardKernel policy context state mean varianceProxy defaultAction
+      reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling
 ```
 
-- Exact Lean-facing statement: a packaged generated-history full finite-pair
-  `partialTraj`/`condExpKernel` law source, together with raw/mean range
-  regularity and selected-history variance ceilings, constructs the practical
-  definitional generated-action history-variance source.
+- Exact Lean-facing statement: either a packaged generated-history full
+  finite-pair `partialTraj`/`condExpKernel` law source, or the finite-pair
+  comap selected-reward law that constructs that source, together with
+  raw/mean range regularity and selected-history variance ceilings, constructs
+  the practical definitional generated-action history-variance source.  The
+  selected-reward law can be supplied either at the generated-history trim
+  surface or entirely at the finite-pair comap-trim surface.
 - Local APIs/imports:
   `BanditRLProof.ConditionalRewardLawSource`,
   `GeneratedActionPartialTrajectoryPairLawSource`,
+  `generatedActionPartialTrajectoryPairLawSource_of_comap_reward_map_eq_selected_policy`,
+  `generatedActionPartialTrajectoryPairLawSource_of_comap_trim_reward_map_eq_selected_policy`,
+  `History.historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace`,
   `GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource`,
   `generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource_of_actionRewardPartialTrajectoryKernel_map_eq`,
   `generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource_of_partialTrajectoryPairLawSource`,
@@ -25180,21 +27765,37 @@ def ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMe
 - Intended proof route: project `source.hcontext`, `source.hstate`, and
   `source.partialtraj_map_eq` into the existing direct full finite-pair
   `partialTraj` history-variance constructor; the variance field is the
-  explicit selected-history `hvariance` contract.
+  explicit selected-history `hvariance` contract.  The comap wrapper first
+  constructs the full finite-pair source with
+  `generatedActionPartialTrajectoryPairLawSource_of_comap_reward_map_eq_selected_policy`,
+  then invokes this source-level constructor.  The direct comap-trim wrapper
+  uses
+  `generatedActionPartialTrajectoryPairLawSource_of_comap_trim_reward_map_eq_selected_policy`,
+  whose internal transport rewrites the generated-history filtration to the
+  finite-pair comap sigma-algebra via
+  `History.historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace`.
 - Regularity contracts: all contracts from the raw-range bounded source
   conversion, plus `varianceCeiling : Nat -> NNReal` and
   `forall i history, varianceProxy (context i history)
-    ((policy i).action (state i history)) <= varianceCeiling i`.
+    ((policy i).action (state i history)) <= varianceCeiling i`.  The direct
+  comap-trim entry additionally requires the selected-reward law to hold under
+  `ae (mu.trim hcomap_le)` for the finite-pair comap sigma-algebra.
 - Retrieval evidence:
   `ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource_of_partialTrajectoryPairLawSource`,
+  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource_of_comap_reward_map_eq_selected_policy`,
+  `ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource_of_comap_trim_reward_map_eq_selected_policy`,
   `ConditionalExpectationReward.generatedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeHistoryVarianceBoundedSource_of_actionRewardPartialTrajectoryKernel_map_eq`,
+  `ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_of_comap_trim_reward_map_eq_selected_policy`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-SELECTED-REWARD-FINITEPAIRHISTORY-SOURCE-FROM-COMAP-LAW`,
   `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-RAW-RANGE-BOUNDED-SOURCE`,
   `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-UNIFORM-VARIANCE-SOURCE`,
   `LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-HISTORY-VARIANCE-SOURCE`,
   and `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-TRAJECTORY-PARTIALTRAJ-PAIR-LAW-SOURCE-CONTRACT`.
-- Status: compiled-local source-conversion leaf.
+- Status: compiled-local source/comap source-conversion leaf; the direct
+  comap-trim source constructor is covered by an external `Tests.Basic` canary.
 - Failure policy: do not cite this as proving the generated-history
-  `partialTraj`/`condExpKernel` pair-law, and do not treat the selected-history
+  `partialTraj`/`condExpKernel` pair-law or the finite-pair selected-reward
+  comap law under either trim filter, and do not treat the selected-history
   ceiling as constructed from reward laws.  Conditional MGF consumers still
   require their separate source or consumer leaves.
 
@@ -25250,25 +27851,178 @@ theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_o
                 (History.finiteRewardHistoryOfTrace (reward omega) i))) :
             Rat) : Real)))
       (varianceCeiling i) mu
+
+theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_comap_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded
+    ...
+    (varianceCeiling : Nat -> NNReal)
+    (hvariance :
+      forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat),
+        varianceProxy (context i history)
+          ((policy i).action (state i history)) <= varianceCeiling i)
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            Measure.map (fun y : Omega => reward y (i + 1))
+              (condExpKernel
+                ((inferInstance :
+                  MeasurableSpace ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                mu omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.pairHistoryRewardProjection
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)))
+              ((policy i).action
+                (state i
+                  (History.pairHistoryRewardProjection
+                    (History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward omega)
+                      (reward omega) i)))))
+          (ae (mu.trim
+            ((History.historyFiltrationSucc
+              (generatedActionFromRewardHistory policy state defaultAction reward)
+              reward
+              (generatedActionFromRewardHistory_measurable
+                (policy := policy) (state := state) (defaultAction := defaultAction)
+                (reward := reward) hreward hstate)
+              hreward).le i))))
+    (i : Nat) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward hstate)
+        hreward) i)
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward hstate)
+        hreward).le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      (varianceCeiling i) mu
+
+theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_comap_trim_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded
+    ...
+    (varianceCeiling : Nat -> NNReal)
+    (hvariance :
+      forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat),
+        varianceProxy (context i history)
+          ((policy i).action (state i history)) <= varianceCeiling i)
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            Measure.map (fun y : Omega => reward y (i + 1))
+              (condExpKernel
+                ((inferInstance :
+                  MeasurableSpace ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                mu omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.pairHistoryRewardProjection
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)))
+              ((policy i).action
+                (state i
+                  (History.pairHistoryRewardProjection
+                    (History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward omega)
+                      (reward omega) i)))))
+          (ae (mu.trim
+            (show
+              ((inferInstance :
+                MeasurableSpace ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                (fun y : Omega =>
+                  History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward y)
+                    (reward y) i)) <= mOmega from by ...))))
+    (i : Nat) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward hstate)
+        hreward) i)
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward hstate)
+        hreward).le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      (varianceCeiling i) mu
 ```
 
-- Exact Lean-facing statement: a packaged generated-history full finite-pair
-  `partialTraj`/`condExpKernel` law source, together with raw/mean range
-  regularity and selected-history variance ceilings, directly gives the
-  succ-indexed conditional sub-Gaussian MGF witness at proxy
-  `varianceCeiling i`.
+- Exact Lean-facing statement: either a packaged generated-history full
+  finite-pair `partialTraj`/`condExpKernel` law source, or the finite-pair
+  comap selected-reward law that constructs that source, with either the
+  generated-history trim filter or the direct finite-pair comap-trim filter,
+  together with raw/mean range regularity and selected-history variance
+  ceilings, directly gives the succ-indexed conditional sub-Gaussian MGF
+  witness at proxy `varianceCeiling i`.
 - Local APIs/imports:
   `BanditRLProof.ConditionalRewardLawSource`,
   `GeneratedActionPartialTrajectoryPairLawSource`,
+  `generatedActionPartialTrajectoryPairLawSource_of_comap_reward_map_eq_selected_policy`,
+  `generatedActionPartialTrajectoryPairLawSource_of_comap_trim_reward_map_eq_selected_policy`,
   `generatedActionFromRewardHistory`,
   `generatedActionFromRewardHistory_measurable`,
+  `History.historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace`,
   `centeredReward_succ_hasCondSubgaussianMGF_of_actionRewardPartialTrajectoryKernel_map_eq_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded`,
   `RewardKernel.CenteredRewardKernelLaw`, Mathlib `NNReal`,
   `ProbabilityTheory.HasCondSubgaussianMGF`, `Measurable`, `Set.Icc`,
   `Measure.map`, and `condExpKernel`.
 - Intended proof route: project `source.hcontext`, `source.hstate`, and
   `source.partialtraj_map_eq` into the existing direct full finite-pair
-  `partialTraj` history-variance conditional MGF consumer.
+  `partialTraj` history-variance conditional MGF consumer; the comap wrappers
+  first construct the full finite-pair source with either
+  `generatedActionPartialTrajectoryPairLawSource_of_comap_reward_map_eq_selected_policy`
+  or
+  `generatedActionPartialTrajectoryPairLawSource_of_comap_trim_reward_map_eq_selected_policy`,
+  then invoke the same source-level consumer.  The direct comap-trim statement
+  uses `History.historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace` only
+  to expose the required `mu.trim` measurability surface.
 - Regularity contracts: measurable selected mean surface, centered reward
   kernel law, deterministic raw reward interval bounds, deterministic selected
   mean interval bounds, and selected-history variance ceilings
@@ -25276,16 +28030,22 @@ theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_o
     ((policy i).action (state i history)) <= varianceCeiling i`.
 - Retrieval evidence:
   `ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_partialTrajectoryPairLawSource_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded`,
+  `ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_comap_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded`,
+  `ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_comap_trim_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded`,
   `ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_actionRewardPartialTrajectoryKernel_map_eq_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded`,
+  `ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_of_comap_trim_reward_map_eq_selected_policy`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-SELECTED-REWARD-FINITEPAIRHISTORY-SOURCE-FROM-COMAP-LAW`,
   `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-HISTORY-VARIANCE-SOURCE`,
   `LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-HISTORY-VARIANCE-COND-MGF`,
   and `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-TRAJECTORY-PARTIALTRAJ-PAIR-LAW-SOURCE-CONTRACT`.
-- Status: compiled-local source-consumer leaf.
+- Status: compiled-local source/comap consumer leaf; the direct comap-trim
+  theorem is covered by an external `Tests.Basic` canary.
 - Failure policy: do not cite this as proving the generated-history
   `partialTraj`/`condExpKernel` pair-law, constructing selected-history
-  variance ceilings, or transporting canonical `trajMeasure` to an ambient
-  process.  It is a thin consumer wrapper around an explicitly supplied
-  source contract.
+  variance ceilings, transporting canonical `trajMeasure` to an ambient
+  process, or deriving the selected-reward law from disintegration.  The
+  direct comap-trim theorem is only an entry-surface adapter around an
+  explicitly supplied source contract.
 
 `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-HISTORY-VARIANCE-LARGER-PROXY-COND-MGF`
 is compiled locally:
@@ -25341,18 +28101,183 @@ theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_o
                 (History.finiteRewardHistoryOfTrace (reward omega) i))) :
             Rat) : Real)))
       c mu
+
+theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_comap_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded_of_varianceCeiling_le
+    ...
+    (varianceCeiling : Nat -> NNReal)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (hvariance :
+      forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat),
+        varianceProxy (context i history)
+          ((policy i).action (state i history)) <= varianceCeiling i)
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            Measure.map (fun y : Omega => reward y (i + 1))
+              (condExpKernel
+                ((inferInstance :
+                  MeasurableSpace ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                mu omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.pairHistoryRewardProjection
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)))
+              ((policy i).action
+                (state i
+                  (History.pairHistoryRewardProjection
+                    (History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward omega)
+                      (reward omega) i)))))
+          (ae (mu.trim
+            ((History.historyFiltrationSucc
+              (generatedActionFromRewardHistory policy state defaultAction reward)
+              reward
+              (generatedActionFromRewardHistory_measurable
+                (policy := policy) (state := state) (defaultAction := defaultAction)
+                (reward := reward) hreward hstate)
+              hreward).le i))))
+    (i : Nat)
+    (c : NNReal)
+    (hceiling : varianceCeiling i <= c) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward hstate)
+        hreward) i)
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward hstate)
+        hreward).le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      c mu
+
+theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_comap_trim_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded_of_varianceCeiling_le
+    ...
+    (varianceCeiling : Nat -> NNReal)
+    (hvariance :
+      forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat),
+        varianceProxy (context i history)
+          ((policy i).action (state i history)) <= varianceCeiling i)
+    (h_reward_map_eq :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            Measure.map (fun y : Omega => reward y (i + 1))
+              (condExpKernel
+                ((inferInstance :
+                  MeasurableSpace ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                  (fun y : Omega =>
+                    History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward y)
+                      (reward y) i))
+                mu omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.pairHistoryRewardProjection
+                  (History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward omega)
+                    (reward omega) i)))
+              ((policy i).action
+                (state i
+                  (History.pairHistoryRewardProjection
+                    (History.finitePairHistoryOfTrace
+                      (generatedActionFromRewardHistory policy state
+                        defaultAction reward omega)
+                      (reward omega) i)))))
+          (ae (mu.trim
+            (show
+              ((inferInstance :
+                MeasurableSpace ((j : Finset.Iic i) -> Prod Action Rat)).comap
+                (fun y : Omega =>
+                  History.finitePairHistoryOfTrace
+                    (generatedActionFromRewardHistory policy state
+                      defaultAction reward y)
+                    (reward y) i)) <= mOmega from by ...))))
+    (i : Nat)
+    (c : NNReal)
+    (hceiling : varianceCeiling i <= c) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward hstate)
+        hreward) i)
+      ((History.historyFiltrationSucc
+        (generatedActionFromRewardHistory policy state defaultAction reward)
+        reward
+        (generatedActionFromRewardHistory_measurable
+          (policy := policy) (state := state) (defaultAction := defaultAction)
+          (reward := reward) hreward hstate)
+        hreward).le i)
+      (fun omega : Omega =>
+        (((reward omega (i + 1) -
+          mean
+            (context i
+              (History.finiteRewardHistoryOfTrace (reward omega) i))
+            ((policy i).action
+              (state i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))) :
+            Rat) : Real)))
+      c mu
 ```
 
-- Exact Lean-facing statement: a packaged generated-history full finite-pair
-  `partialTraj`/`condExpKernel` law source, raw/mean range regularity,
-  selected-history variance ceilings, and a coarser deterministic proxy `c`
-  satisfying `varianceCeiling i <= c` directly give the succ-indexed
-  conditional sub-Gaussian MGF witness at proxy `c`.
+- Exact Lean-facing statement: either a packaged generated-history full
+  finite-pair `partialTraj`/`condExpKernel` law source, or the finite-pair
+  comap selected-reward law that constructs that source, with either the
+  generated-history trim filter or the direct finite-pair comap-trim filter,
+  together with raw/mean range regularity, selected-history variance ceilings,
+  and a coarser deterministic proxy `c` satisfying `varianceCeiling i <= c`,
+  directly gives the succ-indexed conditional sub-Gaussian MGF witness at
+  proxy `c`.
 - Local APIs/imports:
   `BanditRLProof.ConditionalRewardLawSource`,
   `GeneratedActionPartialTrajectoryPairLawSource`,
+  `generatedActionPartialTrajectoryPairLawSource_of_comap_reward_map_eq_selected_policy`,
+  `generatedActionPartialTrajectoryPairLawSource_of_comap_trim_reward_map_eq_selected_policy`,
   `generatedActionFromRewardHistory`,
   `generatedActionFromRewardHistory_measurable`,
+  `History.historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace`,
   `centeredReward_succ_hasCondSubgaussianMGF_of_actionRewardPartialTrajectoryKernel_map_eq_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded_of_varianceCeiling_le`,
   `RewardKernel.CenteredRewardKernelLaw`, Mathlib `NNReal`,
   `ProbabilityTheory.HasCondSubgaussianMGF`, `Measurable`, `Set.Icc`,
@@ -25360,7 +28285,15 @@ theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_o
 - Intended proof route: project `source.hcontext`, `source.hstate`, and
   `source.partialtraj_map_eq` into the existing direct full finite-pair
   `partialTraj` history-variance larger-proxy conditional MGF consumer, then
-  pass `hceiling`.
+  pass `hceiling`; the comap wrappers first construct the full finite-pair
+  source with either
+  `generatedActionPartialTrajectoryPairLawSource_of_comap_reward_map_eq_selected_policy`
+  or
+  `generatedActionPartialTrajectoryPairLawSource_of_comap_trim_reward_map_eq_selected_policy`,
+  then invoke the same source-level larger-proxy consumer.  The direct
+  comap-trim statement uses
+  `History.historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace` only to
+  expose the required `mu.trim` measurability surface.
 - Regularity contracts: measurable selected mean surface, centered reward
   kernel law, deterministic raw reward interval bounds, deterministic selected
   mean interval bounds, selected-history variance ceilings
@@ -25369,16 +28302,23 @@ theorem ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_o
   deterministic proxy domination `varianceCeiling i <= c`.
 - Retrieval evidence:
   `ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_partialTrajectoryPairLawSource_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded_of_varianceCeiling_le`,
+  `ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_comap_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded_of_varianceCeiling_le`,
+  `ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_comap_trim_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded_of_varianceCeiling_le`,
   `ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_actionRewardPartialTrajectoryKernel_map_eq_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded_of_varianceCeiling_le`,
+  `ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_of_comap_trim_reward_map_eq_selected_policy`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-SELECTED-REWARD-FINITEPAIRHISTORY-SOURCE-FROM-COMAP-LAW`,
   `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-TO-HISTORY-VARIANCE-SOURCE`,
   `LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-HISTORY-VARIANCE-LARGER-PROXY-COND-MGF`,
   and `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-TRAJECTORY-PARTIALTRAJ-PAIR-LAW-SOURCE-CONTRACT`.
-- Status: compiled-local source-consumer leaf.
+- Status: compiled-local source/comap consumer leaf; the direct comap-trim
+  larger-proxy theorem is covered by an external `Tests.Basic` canary.
 - Failure policy: do not cite this as proving the generated-history
-  `partialTraj`/`condExpKernel` pair-law, constructing selected-history
-  variance ceilings, proving `varianceCeiling i <= c`, or transporting
-  canonical `trajMeasure` to an ambient process.  It is a thin coarser-proxy
-  consumer wrapper around an explicitly supplied source contract.
+  `partialTraj`/`condExpKernel` pair-law, the finite-pair selected-reward
+  comap law, constructing selected-history variance ceilings, proving
+  `varianceCeiling i <= c`, transporting canonical `trajMeasure` to an
+  ambient process, or deriving the selected-reward law from disintegration.
+  It is a thin coarser-proxy consumer wrapper around an explicitly supplied
+  source contract or comap source-builder premise.
 
 `COND-EXPECT-REWARD-PARTIALTRAJ-CONDEXPKERNEL-PAIR-LAW-CARD` is
 theorem-card-only:
@@ -25453,10 +28393,13 @@ theorem ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_
   Mathlib `Probability.Kernel.IonescuTulcea.PartialTraj`,
   `Probability.Kernel.IonescuTulcea.Traj`, and conditional-kernel/
   disintegration APIs.
-- Intended proof route: do not reprove downstream consumers.  First identify
-  or construct a trajectory-law source for `(action,reward)` showing that the
-  ambient measure is generated by the same policy/reward kernel family.  Then
-  use Mathlib Ionescu-Tulcea projection facts such as
+- Intended proof route: the canonical reward-only specialization with
+  deterministic generated actions is now compiled as
+  `historyStepKernelFamily_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_trajMeasure`.
+  For arbitrary ambient processes, do not reprove downstream consumers.  First
+  identify or construct a trajectory-law source for `(action,reward)` showing
+  that the ambient measure is generated by the same policy/reward kernel
+  family.  Then use Mathlib Ionescu-Tulcea projection facts such as
   `Kernel.traj_map_frestrictLe` / `Kernel.partialTraj_succ_self`, plus
   disintegration or regular-conditional-distribution uniqueness for
   `condExpKernel`, to derive the displayed trim-a.e. equality.  Feed the
@@ -25469,7 +28412,9 @@ theorem ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_
   projection, and a real model-side trajectory-law/disintegration source.
   The displayed conclusion is not true for arbitrary `mu`, `action`, and
   `reward` without such a generation law.
-- Retrieval evidence: existing compiled consumers
+- Retrieval evidence: the compiled canonical specialization
+  `LOCAL-LEAF-COND-EXPECT-REWARD-REWARDONLY-TRAJMEASURE-GENERATED-PARTIALTRAJ-LAW`,
+  existing compiled consumers
   `LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-FINITEPAIRTRACE-CONSUMER`,
   `LOCAL-LEAF-COND-EXPECT-REWARD-PARTIALTRAJ-EXTEND-MAP-CONSUMER`,
   `LOCAL-LEAF-POLICY-REWARD-PARTIALTRAJ-SUCC-NEXT-MAP`,
@@ -25478,13 +28423,753 @@ theorem ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_
   `Mathlib.Probability.Kernel.IonescuTulcea.Traj`,
   `Mathlib.Probability.Kernel.IonescuTulcea.PartialTraj`, and
   `Mathlib.Probability.Kernel.Disintegration.StandardBorel`.
-- Status: theorem-card-only / missing-law decision.  This is not a local
-  proof and must not be cited as compiled.
-- Failure policy: if the disintegration route is too large, split the work by
-  first adding an explicit generated-trajectory source contract whose field is
-  exactly the displayed equality.  Do not add another wrapper that merely
-  assumes `h_kernel_partialtraj_map_eq` and re-emits an existing consumer; the
-  consumer layer is already compiled.
+- Status: the arbitrary-ambient statement remains theorem-card-only; its
+  canonical reward-only generated-action specialization is `leanCompiled`.
+  Do not cite the generic card as compiled.
+- Failure policy: use the canonical theorem directly when the process is the
+  reward-only `historyStepKernelFamily` `trajMeasure`.  For other ambient
+  processes, supply a law-preserving transport or explicit generated-trajectory
+  source.  Do not add another wrapper that merely assumes
+  `h_kernel_partialtraj_map_eq` and re-emits an existing consumer; the consumer
+  layer is already compiled.
+
+## Reward-Only Canonical Trajectory Law
+
+- Lean-facing statement:
+  `ConditionalExpectationReward.historyStepKernelFamily_selectedMeasure_condExpKernel_map_trajMeasure`
+  states that, under the canonical reward-only `Kernel.trajMeasure` generated
+  by `RewardKernel.historyStepKernelFamily`, pushing the conditional kernel
+  forward by reward coordinate `n + 1` equals the selected context/action
+  reward measure at `Preorder.frestrictLe n trajectory`, almost everywhere.
+- Local APIs/imports: `BanditRLProof.RewardKernel`,
+  `RewardKernel.historyStepKernelFamily`,
+  `RewardKernel.isMarkovKernel_historyStepKernelFamily`, the new instance
+  `RewardKernel.instIsMarkovKernel_historyStepKernelFamily`,
+  `ProbabilityTheory.Kernel.condDistrib_trajMeasure`,
+  `ConditionalExpectationReward.condExpKernel_map_eq_of_condDistrib_ae_eq_countable`,
+  `ProbabilityTheory.condExpKernel`, and `Measure.map`.
+- Proof route: expose the already-proved Markov property as a typeclass
+  instance, obtain the canonical next-reward `condDistrib` law from Mathlib,
+  pass it through the compiled countable-target bridge, and unfold
+  `RewardKernel.historyStepKernelFamily_apply` to the selected reward measure.
+- Regularity contracts: measurable context/state/action/reward spaces,
+  `[StandardBorelSpace Reward]`, standard Borel and nonempty reward-trajectory
+  space, `[MeasurableSingletonClass Reward]`, `[Countable Reward]`, measurable
+  context/state extractors, and a probability initial reward measure.
+- Retrieval evidence:
+  `MLIB-PROBABILITY-KERNEL`, `MLIB-CONDITIONAL-EXPECTATION`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-CONDDISTRIB-TO-CONDEXPKERNEL-MAP`,
+  Mathlib `Probability.Kernel.IonescuTulcea.Traj`, and compiled local
+  `RewardKernel.historyStepKernelFamily` APIs.  No theorem card or proof weapon
+  is used as a proof term.
+- Status: `leanCompiled` under
+  `LOCAL-LEAF-COND-EXPECT-REWARD-REWARDONLY-TRAJMEASURE-SELECTED-REWARD-CONDEXPKERNEL-MAP`,
+  with an external `Tests.Basic` canary.
+- Failure policy / next leaf: the generated finite-pair/reward-prefix comap
+  equality and the conditioning-measurable trim strengthening are now compiled
+  downstream.  Do not reintroduce an unsafe generic `ae`-to-trim conversion;
+  reuse `condExpKernel_map_eq_of_condDistrib_ae_eq_countable_trim`, whose proof
+  explicitly establishes measurable singleton probability functions.
+
+## Generated Finite-Pair Conditioning Alignment
+
+- Lean-facing statements:
+  `comap_finitePairHistoryOfTrace_generatedActionFromRewardHistory_eq_comap_finiteRewardHistoryOfTrace`
+  proves equality of the generated finite-pair-prefix and reward-prefix comap
+  measurable spaces;
+  `historyFiltrationSucc_generatedActionFromRewardHistory_eq_comap_finiteRewardHistoryOfTrace`
+  rewrites the shifted generated filtration to the reward-prefix comap; and
+  `historyStepKernelFamily_selectedMeasure_condExpKernel_map_trajMeasure_generatedActionFromRewardHistory_finitePairHistoryOfTrace`
+  exposes the canonical selected-reward law on that generated finite-pair
+  conditioning surface.
+- Local APIs/imports: `generatedActionFromRewardHistory`,
+  `Policy.measurable_action_of_measurable_state`,
+  `History.measurable_pairHistoryRewardProjection`,
+  `History.pairHistoryRewardProjection_finitePairHistoryOfTrace`,
+  `History.historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace`,
+  `Measurable.comap_le`, and the compiled reward-only canonical law.
+- Proof route: under the reward-prefix comap, prove every generated action and
+  reward pair coordinate measurable; obtain the reverse inclusion by
+  projecting pair histories to rewards; rewrite `historyFiltrationSucc`; then
+  rewrite the canonical reward-only `condExpKernel.map` theorem by the comap
+  equality.
+- Regularity contracts: the pure comap equality needs only measurable policy,
+  state, and action spaces plus measurable state extractors.  The filtration
+  wrapper additionally needs countable/singleton actions and timewise reward
+  measurability.  The canonical theorem needs a probability initial Rat law.
+- Retrieval evidence: `MLIB-MEASURE-INTEGRAL`,
+  `MLIB-CONDITIONAL-EXPECTATION`, `MLIB-PROBABILITY-KERNEL`,
+  `LOCAL-LEAF-HISTORY-FILTRATION-FINITEPAIR-COMAP`, and
+  `LOCAL-LEAF-COND-EXPECT-REWARD-REWARDONLY-TRAJMEASURE-SELECTED-REWARD-CONDEXPKERNEL-MAP`.
+- Status: `leanCompiled` as
+  `LOCAL-LEAF-COND-EXPECT-REWARD-REWARDONLY-TRAJMEASURE-GENERATED-FINITEPAIR-CONDITIONING`,
+  with one external canary instantiating all three declarations.
+- Failure policy / exact next blocker: the ordinary theorem remains useful as
+  an `ae trajMeasure` surface, but its sound trim companion and canonical
+  selected-source constructor are now compiled below.  Reuse that route rather
+  than reversing `ae_of_ae_trim`.  The canonical generated full finite-pair
+  `partialTraj` theorem is now compiled downstream; the remaining blocker is
+  transport from the canonical reward-only process to an arbitrary ambient
+  `Omega` or an independent pair-valued process model.
+
+## Trim-A.E. Canonical Selected Source
+
+- Lean-facing statements:
+  `condExpKernel_map_eq_of_condDistrib_ae_eq_countable_trim` strengthens the
+  countable-target condDistrib bridge to `ae (mu.trim hY.comap_le)`;
+  `historyStepKernelFamily_selectedMeasure_condExpKernel_map_trajMeasure_trim`
+  specializes it to the reward-only canonical trajectory measure;
+  `historyStepKernelFamily_selectedMeasure_condExpKernel_map_trajMeasure_generatedActionFromRewardHistory_finitePairHistoryOfTrace_trim`
+  transports the law to generated finite-pair conditioning; and
+  `historyStepKernelFamily_generatedActionSelectedRewardFinitePairHistoryLawSource_trajMeasure`
+  constructs `GeneratedActionSelectedRewardFinitePairHistoryLawSource`.
+- Local APIs/imports: `BanditRLProof.ConditionalExpectationReward`,
+  `ProbabilityTheory.condDistrib_apply_ae_eq_condExpKernel_map`,
+  `ProbabilityTheory.measurable_condExpKernel`, `Kernel.measurable_coe`,
+  `Kernel.map_apply`, `Measure.ext_of_singleton`,
+  `MeasureTheory.ae_eq_trim_of_measurable`,
+  `History.measurable_finiteRewardHistoryOfTrace`, and the generated
+  finite-pair/reward-prefix comap equality.
+- Proof route: obtain ordinary singleton event-probability equalities from the
+  existing bridge; prove both scalar sides measurable in `mCondition.comap Y`;
+  lift each equality with `ae_eq_trim_of_measurable`; reconstruct measure
+  equality by countable singleton extensionality; specialize to
+  `Kernel.trajMeasure`; then transport the trim filter separately from the
+  dependent `condExpKernel` rewrite before invoking the comap-trim source
+  constructor.
+- Regularity contracts: finite `mu`, standard Borel/nonempty `Omega` and
+  countable standard-Borel target for the generic theorem; measurable `X` and
+  `Y`; a probability initial Rat law and measurable context/state extractors
+  for the canonical theorem; countable/singleton actions only at the generated
+  selected-source boundary.
+- Retrieval evidence: `MLIB-MEASURE-INTEGRAL`,
+  `MLIB-CONDITIONAL-EXPECTATION`, `MLIB-PROBABILITY-KERNEL`, Mathlib
+  `Probability.Kernel.Condexp`, `Probability.Kernel.CondDistrib`, and
+  `MeasureTheory.Measure.Trim`.  The generic trim helper is recorded as a
+  Mathlib candidate; no theorem card or proof weapon is used as a proof term.
+- Status: `leanCompiled` as
+  `LOCAL-LEAF-COND-EXPECT-REWARD-REWARDONLY-TRAJMEASURE-TRIM-SELECTED-SOURCE`,
+  with external canaries for both the generic trim bridge and canonical source.
+- Failure policy: do not generalize by asserting every `ae mu` statement holds
+  under `ae (mu.trim hm)`.  New targets must either prove conditioning-space
+  measurability of the relevant equality or supply an independent trimmed law.
+  This leaf does not identify arbitrary ambient process laws or close a final
+  bandit/RL theorem.  Its canonical full `partialTraj` consumer is recorded
+  below.
+
+## Canonical Generated PartialTraj Law
+
+- Lean-facing statements:
+  `historyStepKernelFamily_generatedActionPartialTrajectoryPairLawSource_trajMeasure`
+  constructs `GeneratedActionPartialTrajectoryPairLawSource` for the canonical
+  reward-only `Kernel.trajMeasure`; and
+  `historyStepKernelFamily_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_trajMeasure`
+  proves that the conditional pushforward of the successor finite pair prefix
+  equals `RewardKernel.actionRewardPartialTrajectoryKernel` at the generated
+  finite pair history.
+- Local APIs/imports: `BanditRLProof.ConditionalRewardLawSource`,
+  `historyStepKernelFamily_generatedActionSelectedRewardFinitePairHistoryLawSource_trajMeasure`,
+  `generatedActionPartialTrajectoryPairLawSource_of_selectedRewardFinitePairHistoryLawSource`,
+  `GeneratedActionPartialTrajectoryPairLawSource.partialtraj_map_eq`,
+  `generatedActionFromRewardHistory_measurable`,
+  `History.measurable_pairHistoryRewardProjection`, and
+  `RewardKernel.actionRewardPartialTrajectoryKernel`.
+- Proof route: construct the canonical trim-aware selected source; combine its
+  selected-reward law with the definitional generated action through the
+  existing split adapter; package the full partial-trajectory source; then
+  project its `partialtraj_map_eq` field at time `i`.
+- Regularity contracts: a probability initial Rat measure, measurable
+  context/state/action spaces, measurable context and state extractors,
+  `[MeasurableSingletonClass Action]`, and `[Countable Action]`.  No ambient
+  reward-law, random-pair-law, or partialTraj source hypothesis is required.
+- Retrieval evidence:
+  `LOCAL-LEAF-COND-EXPECT-REWARD-REWARDONLY-TRAJMEASURE-TRIM-SELECTED-SOURCE`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-FROM-SELECTED-REWARD-LAW`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-PARTIALTRAJ-PAIR-LAW-SOURCE-PROJECTION`,
+  Mathlib `Probability.Kernel.IonescuTulcea.Traj`, `Condexp`, and `Measure.Trim`.
+  The generic theorem card is route evidence only, not a proof term.
+- Status: `leanCompiled` as
+  `LOCAL-LEAF-COND-EXPECT-REWARD-REWARDONLY-TRAJMEASURE-GENERATED-PARTIALTRAJ-LAW`,
+  with external canaries for the source constructor and theorem endpoint.
+- Failure policy: this theorem proves the full law only for the canonical
+  reward-only process with deterministic generated actions.  Do not upgrade
+  `COND-EXPECT-REWARD-PARTIALTRAJ-CONDEXPKERNEL-PAIR-LAW-CARD` to compiled for
+  arbitrary ambient `Omega`; such a route still needs an explicit law-preserving
+  transport or independent ambient disintegration proof.  The canonical
+  conditional mean-zero consumer is compiled below; ambient integrability,
+  variance, and final regret assumptions remain separate.
+
+## Canonical Centered-Reward Mean Zero
+
+- Lean-facing statement:
+  `historyStepKernelFamily_centeredReward_succ_condExp_eq_zero_trajMeasure`
+  states that, on the canonical reward-only `historyStepKernelFamily`
+  trajectory measure, the successor reward minus the policy-selected kernel
+  mean has conditional expectation zero under the generated finite-pair
+  history filtration.
+- Local APIs/imports: the canonical full finite-pair theorem
+  `historyStepKernelFamily_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_trajMeasure`,
+  `centeredReward_succ_condExp_eq_zero_of_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace`,
+  `RewardKernel.CenteredRewardKernelLaw`, `MeasureTheory.Integrable`,
+  `MeasureTheory.condExp`, and `History.finiteRewardHistoryOfTrace`.
+- Proof route: instantiate the generic full-`partialTraj` mean-zero consumer
+  with the canonical generated action and identity reward trace; discharge its
+  law premise with the compiled canonical partialTraj theorem; retain the
+  consumer's ambient centered-reward integrability premise explicitly.
+- Regularity contracts: probability initial Rat law, measurable context/state
+  extractors, countable/singleton actions,
+  `RewardKernel.CenteredRewardKernelLaw`, and
+  `Integrable centeredReward canonicalTrajMeasure` at the selected time.
+  Measurable mean and pointwise raw/mean range bounds are not needed.
+- Retrieval evidence:
+  `LOCAL-LEAF-COND-EXPECT-REWARD-REWARDONLY-TRAJMEASURE-GENERATED-PARTIALTRAJ-LAW`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-HISTORYSTEP-CONDEXPKERNEL-CONSUMER`,
+  `LOCAL-LEAF-KERNEL-CENTERED-REWARD-LAW-TRANSFER`,
+  `MLIB-CONDITIONAL-EXPECTATION`, and `MLIB-MEASURE-INTEGRAL`.
+- Status: `leanCompiled` as
+  `LOCAL-LEAF-COND-EXPECT-REWARD-REWARDONLY-TRAJMEASURE-CENTERED-MEAN-ZERO`,
+  with an external `Tests.Basic` canary.
+- Failure policy: do not package this canonical theorem through
+  `GeneratedActionRandomPairDefinitionalRawRangeMeasurableMeanRangeBoundedSource`
+  unless bounds really hold for every ambient trace; for
+  `Omega = Nat -> Rat`, that pointwise contract is normally false outside the
+  generated measure's support.  Also do not infer ambient integrability from
+  pointwise kernel integrability without a uniform or history-integrable first
+  moment bound.  The conditional-MGF route below has a stronger uniform MGF
+  ceiling and now derives its own exponential integrability.
+
+## Integrated Conditional-MGF Transfer
+
+- Lean-facing statement:
+  `hasCondSubgaussianMGF_of_condExpKernel_map_eq` turns a trim-a.e.
+  `condExpKernel.map X = target` law and trim-a.e. target
+  `HasSubgaussianMGF id c` witnesses into
+  `HasCondSubgaussianMGF mcond hm X c mu`, without `h_integrable_exp`.
+- Local APIs/imports: Mathlib `Probability.Moments.SubGaussian`,
+  `Kernel.Condexp`, `Measure.integrable_comp_iff`,
+  `StronglyMeasurable.integral_kernel`, `Integrable.of_bound`,
+  `HasSubgaussianMGF.id_map_iff`, and `Kernel.HasSubgaussianMGF.of_rat`.
+- Proof route: pull each target witness back through `Measure.map`; use target
+  exponential integrability for the pointwise composition condition; identify
+  the inner norm integral with the conditional MGF; bound it by the common
+  deterministic ceiling over the finite trim measure; construct the kernel
+  witness with `of_rat`.
+- Regularity contracts: finite `mu`, standard Borel `Omega`,
+  `mcond <= mOmega`, measurable `X`, trim-a.e. map equality, and one common
+  target proxy `c`.  The common MGF bound is the uniform domination needed for
+  the integrated step.
+- Retrieval evidence:
+  `LOCAL-LEAF-COND-EXPECT-REWARD-CONDEXPKERNEL-COND-MGF-INTEGRATED-TRANSFER`,
+  `MLIB-PROBABILITY-SUBGAUSSIAN`, `MLIB-CONDITIONAL-EXPECTATION`, and
+  `MLIB-MEASURE-INTEGRAL`.
+- Status: `leanCompiled`, with external canaries for the generic consumer,
+  history-step wrappers, generated-history wrapper, canonical `trajMeasure`,
+  and practical source consumers.
+- Failure policy: when applying `Measure.integrable_comp_iff` to
+  `condExpKernel`, explicitly instantiate the source measurable space as
+  `mcond` and the target measurable space as `mOmega`; inference collapses them
+  because both kernel sides use the carrier `Omega`.  Do not weaken the common
+  MGF ceiling to pointwise finite integrability alone.
+
+## Canonical Centered-Reward Conditional MGF
+
+- Lean-facing statement:
+  `historyStepKernelFamily_centeredReward_succ_hasCondSubgaussianMGF_trajMeasure`
+  provides `ProbabilityTheory.HasCondSubgaussianMGF` for the canonical
+  successor centered reward under generated finite-pair history.
+- Local APIs/imports:
+  `historyStepKernelFamily_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_trajMeasure`,
+  `reward_condExpKernel_map_eq_selected_actual_action_of_generatedActionTraceSucc_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace`,
+  `centeredReward_succ_hasCondSubgaussianMGF_of_historyStepKernelFamily_condExpKernel_map_eq_historyFiltrationSucc`,
+  `RewardKernel.CenteredRewardKernelLaw`,
+  `History.measurable_finiteRewardHistoryOfTrace`, and Mathlib
+  `Probability.Moments.SubGaussian` / `Kernel.Condexp`.
+- Proof route: project the canonical full partialTraj law to the selected
+  next-reward `condExpKernel.map` law; derive centered measurability from the
+  measurable mean surface and measurable history/context/state/policy maps;
+  convert the finite-history variance ceiling to a trim-a.e. fact; then invoke
+  the generated-history conditional-MGF consumer, whose integrated transfer
+  derives ambient exponential integrability from the selected kernel laws.
+- Regularity contracts: probability initial Rat law, measurable context/state
+  extractors, measurable mean surface, countable/singleton actions,
+  `RewardKernel.CenteredRewardKernelLaw`, and a deterministic proxy ceiling
+  over finite reward histories at time `i`.  No ambient `h_integrable_exp` or
+  law-source premise remains.
+- Retrieval evidence:
+  `LOCAL-LEAF-COND-EXPECT-REWARD-REWARDONLY-TRAJMEASURE-GENERATED-PARTIALTRAJ-LAW`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-CONDEXPKERNEL-COND-MGF-INTEGRATED-TRANSFER`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-HISTORYSTEP-CONDEXPKERNEL-COND-MGF-CONSUMER`,
+  `LOCAL-LEAF-KERNEL-CENTERED-REWARD-LAW-TRANSFER`,
+  `MLIB-PROBABILITY-SUBGAUSSIAN`, and `MLIB-CONDITIONAL-EXPECTATION`.
+- Status: `leanCompiled` as
+  `LOCAL-LEAF-COND-EXPECT-REWARD-REWARDONLY-TRAJMEASURE-CENTERED-COND-MGF`,
+  with an external `Tests.Basic` canary.
+- Failure policy: the integrated transfer depends on one deterministic proxy
+  ceiling, not merely pointwise finite exponential moments.  A canonical sum
+  tail is compiled downstream, but this leaf does not transport arbitrary
+  ambient processes, derive confidence radii, or prove final ETC/UCB regret.
+
+## Canonical Centered-Reward Finite-Sum Tail
+
+- Lean-facing statements:
+  `generatedActionFromRewardHistory_centeredRewardSuccProcess_stronglyAdapted`
+  proves adaptedness of the zero-initialized successor centered-reward process;
+  `historyStepKernelFamily_centeredRewardSuccProcess_sum_tail_ennreal_trajMeasure`
+  gives its canonical reward-only ENNReal Azuma-Hoeffding bound.
+- Local APIs/imports: `History.historyFiltrationSucc`,
+  `History.measurable_reward_mem_historyFiltration_of_lt`,
+  `historyStepKernelFamily_centeredReward_succ_hasCondSubgaussianMGF_trajMeasure`,
+  `Concentration.condSubGaussian_sum_tail_ennreal_of_stronglyAdapted`,
+  `MeasureTheory.StronglyAdapted`, and Mathlib
+  `ProbabilityTheory.HasSubgaussianMGF.fun_zero`.
+- Proof route: define `Y 0 = 0` and let `Y (i + 1)` be reward `i + 1`
+  centered by the finite-history policy-selected mean; prove each successor
+  coordinate measurable at shifted history level `i + 1`; set `cY 0 = 0` and
+  `cY (i + 1) = varianceCeiling i`; apply the canonical conditional-MGF theorem
+  at every successor index and then the Mathlib-backed conditional sum tail.
+- Regularity contracts: probability initial Rat law; measurable context/state
+  extractors and mean surface; countable/singleton actions;
+  `RewardKernel.CenteredRewardKernelLaw`; deterministic selected finite-history
+  variance ceilings; finite horizon `n`; and `0 <= eps`.  Independence,
+  ambient law sources, and ambient exponential integrability are not required.
+- Retrieval evidence:
+  `LOCAL-LEAF-COND-EXPECT-REWARD-REWARDONLY-TRAJMEASURE-CENTERED-SUM-TAIL`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-REWARDONLY-TRAJMEASURE-CENTERED-COND-MGF`,
+  `LOCAL-LEAF-CONCENTRATION-SUBGAUSSIAN`, `LOCAL-LEAF-HISTORY-FILTRATION`,
+  and `MLIB-PROBABILITY-SUBGAUSSIAN`.
+- Status: `leanCompiled`, with a `Tests.Basic` canary instantiating both the
+  adaptedness and canonical tail declarations.
+- Failure policy: preserve the zero-initialized successor indexing.  Replacing
+  `Y 0 = 0` by reward zero would require a separate unconditional initial-law
+  MGF contract, while shifting the conditional witness to `F (i + 1)` would no
+  longer match Mathlib's predecessor-filtration API.  The theorem is a centered
+  sum tail, not yet an empirical-mean, confidence-radius, or regret theorem.
+
+## Canonical Centered-Reward Average Tail
+
+- Lean-facing statement:
+  `historyStepKernelFamily_centeredRewardSuccProcess_average_tail_ennreal_trajMeasure`
+  bounds the canonical aggregate average of `m` successor centered rewards for
+  `m > 0`.
+- Local APIs/imports:
+  `historyStepKernelFamily_centeredRewardSuccProcess_sum_tail_ennreal_trajMeasure`,
+  `Finset.range`, `le_div_iff₀`, `Nat.cast_pos`, and the existing
+  `BanditRLProof.ConcentrationSubGaussian` import.
+- Proof route: instantiate the canonical sum tail at horizon `m + 1` and
+  threshold `(m : Real) * eps`; use positivity of the natural denominator to
+  rewrite `eps <= sum / m` into `(m : Real) * eps <= sum`.  The zero slot is
+  retained, so the sum contains precisely centered rewards `1..m`.
+- Regularity contracts: all canonical sum-tail contracts, plus `m > 0` and
+  `0 <= eps`.  The theorem requires neither independence nor an ambient source
+  law or exponential-integrability premise.
+- Retrieval evidence:
+  `LOCAL-LEAF-COND-EXPECT-REWARD-REWARDONLY-TRAJMEASURE-CENTERED-AVERAGE-TAIL`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-REWARDONLY-TRAJMEASURE-CENTERED-SUM-TAIL`,
+  `MLIB-PROBABILITY-SUBGAUSSIAN`, `MLIB-FINSET-SUMS`, and
+  `MLIB-ORDER-ALGEBRA`.  `PPR-AUER-CBF-2002-UCB1` and
+  `WEAPON-TAIL-INEQUALITIES` are route background only, never proof
+  dependencies.  The retrieval index names absent `COND-EXPECT-REWARD`
+  conversion-window/proof-obligation files; do not rely on those stale paths.
+- Status: `leanCompiled`, with a `Tests.Basic` canary instantiating the public
+  theorem.
+- Failure policy: do not identify this aggregate average with an arm-wise
+  empirical mean without a separate fixed-action/sample-count alignment.  Do
+  not weaken `m > 0`: it is the exact denominator condition for `le_div_iff₀`.
+
+## Canonical ETC Pairwise Wrong-Commit Probability
+
+- Lean-facing statements:
+  `ProbabilityTheory.HasCondSubgaussianMGF.of_measurableSpace_eq`,
+  `History.historyFiltrationSucc_eq_of_action_eq_on_prefix`,
+  `ETC.explorationArgmaxGeneratedAction_eq_actionWithCommit_of_lt`,
+  `ETC.explorationArgmaxHistory_centeredRewardCondSubGaussianWitnesses_of_boundedArmLaws`,
+  `ETC.explorationArgmaxHistory_pairwiseEmpMeanTailContract_of_boundedArmLaws`,
+  and
+  `ETC.explorationArgmaxHistory_prob_wrongCommit_le_pairwiseTailSum_of_boundedArmLaws`.
+- Local APIs/imports:
+  `BanditRLProof.Algorithms.ETCFiniteArmRewardLaw`,
+  `BanditRLProof.Algorithms.ETCCondSubGaussianWitnesses`,
+  `History.historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace`,
+  `ETC.CenteredRewardCondSubGaussianWitnesses`, the existing centered-diff
+  conditional witness conversion and pairwise contract consumer, and the
+  finite wrong-commit union consumer.
+- Proof route: generated and fixed-commit actions coincide through the strict
+  round-robin exploration prefix; finite pair-history comaps identify the two
+  shifted filtrations; the explicit dependent measurable-space adapter
+  transports the canonical selected-reward conditional MGF; bounded arm laws
+  provide time-zero and successor witnesses; existing centered-diff/event/union
+  consumers close the actual empirical-mean wrong-commit probability.
+- Regularity contracts: positive exploration pulls; per-arm probability laws;
+  common a.s. reward interval; a.e. measurable Rat-to-Real casts; exact model
+  means; measurable history context; initial trajectory law equal to the first
+  round-robin arm law. Coordinate independence is not assumed.
+- Concentration classification: one-sided fixed-horizon pairwise event,
+  conditionally sub-Gaussian with masked common interval proxies, then finitely
+  union-bounded over non-best arms. It is not two-sided, uniform-in-time, or an
+  anytime confidence result.
+- Retrieval evidence: `MLIB-PROBABILITY-SUBGAUSSIAN`,
+  `MLIB-CONDITIONAL-EXPECTATION`, `MLIB-PROBABILITY-KERNEL`,
+  `MLIB-MARTINGALE-STOCHASTIC`, `TXT-LATTIMORE-SZEPESVARI-2020`,
+  `SCN-STOCHASTIC-FINITE`, and the compiled local centered-diff witness cards.
+  `WEAPON-TAIL-INEQUALITIES` is inspiration-only.
+- Status: `leanCompiled` as
+  `LOCAL-LEAF-ETC-FINITE-ARM-BOUNDED-PAIRWISE-WRONG-COMMIT`, with an external
+  `Tests.Basic` canary.
+- Failure policy: do not claim global generated/fixed action equality after
+  commitment, and do not use theorem cards as local proofs. The downstream
+  canonical Bochner leaf now performs the measurable wrong-event,
+  integrability, and ENNReal-to-Real conversion steps. External environment-law
+  transport remains a later obligation.
+
+## Canonical ETC Bounded-Arm Bochner Regret
+
+- Lean-facing statements:
+  `ETC.canonicalBoundedArmWrongCommitTailBudget`,
+  `ETC.canonicalBoundedArmWrongCommitTailBudgetReal`,
+  `ETC.canonicalBoundedArmMaxGapIntegralRegretBoundReal`,
+  `ETC.real_measure_explorationArgmaxCommit_ne_bestArm_le_canonicalBoundedArmWrongCommitTailBudgetReal`,
+  and
+  `ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal`.
+- Local APIs/imports:
+  the canonical bounded-arm pairwise wrong-commit theorem,
+  `ENNReal.toReal_mono`, empirical-mean coordinate measurability, finite argmax
+  choice/wrong-event measurability,
+  `ETC.integrable_real_pseudoRegret_actionWithCommit_choice_of_measurable_commit`,
+  and the generic Bochner exploration-plus-suffix regret consumer.
+- Proof route: name the finite ENNReal tail sum and prove it is finite; convert
+  its probability bound to Real; construct the measurable empirical-mean
+  commit and wrong set; derive finite-valued pseudo-regret integrability; use
+  `model.maxGap` for every non-best suffix; invoke the generic Bochner theorem;
+  rewrite the canonical argmax action to the generated finite-history action.
+- Regularity contracts: positive exploration pulls, finite-arm probability
+  laws, common a.s. interval, exact model means, a.e. measurable reward casts,
+  measurable history context, and finite suffix horizon. Coordinate
+  independence is not required.
+- Retrieval evidence: `MLIB-MEASURE-INTEGRAL`, `MLIB-FINSET-SUMS`,
+  `MLIB-ORDER-ALGEBRA`, `MLIB-PROBABILITY-KERNEL`,
+  `MLIB-PROBABILITY-SUBGAUSSIAN`,
+  `LOCAL-LEAF-ETC-ACTIONWITHCOMMIT-PSEUDOREGRET-INTEGRABILITY`, and
+  `LOCAL-LEAF-ETC-FINITE-ARM-BOUNDED-PAIRWISE-WRONG-COMMIT`.
+  `WEAPON-TAIL-INEQUALITIES` is inspiration-only.
+- Status: `leanCompiled` as
+  `LOCAL-LEAF-ETC-FINITE-ARM-BOUNDED-CANONICAL-BOCHNER-REGRET`, with public
+  `Tests.Basic` budget, Real probability, and expected-regret canaries.
+- Failure policy: this theorem is only under the canonical
+  `RewardKernel.historyStepKernelFamily` trajectory. The next route must expose
+  an external action/reward process law and prove equality of trajectory laws
+  or sufficient finite-horizon pushforward identities before transporting the
+  regret integral. Do not infer that equality from matching per-arm one-step
+  laws, and do not claim `Bandits.ETC.regret_le` before the LML type and
+  constant conventions are mapped.
+
+`ETC-FINITE-ARM-BOUNDED-EXTERNAL-PREFIX-LAW-BOCHNER-REGRET` is compiled
+locally:
+
+- Lean statements:
+  `ETC.explorationArgmaxPrefixRegretReal`,
+  `ETC.measurable_explorationArgmaxPrefixRegretReal`,
+  `ETC.explorationArgmaxPrefixRegretReal_finiteRewardHistoryOfTrace_generated`,
+  and
+  `ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_explorationPrefix_map_eq`.
+- Local APIs/imports: `BanditRLProof.MeasurableRegret`, finite reward-history
+  restriction/completion, exploration-score reconstruction, generated action
+  alignment, `MeasureTheory.integral_map`, and the canonical bounded-arm
+  Bochner endpoint.
+- Proof route: realize pseudo-regret as a measurable function of the completed
+  history through `m*K-1`; prove pointwise equality with generated ETC regret;
+  rewrite both expectations over their prefix pushforwards; apply the supplied
+  equality and the canonical theorem.
+- Regularity contracts: external probability law on `RewardTrace Rat`,
+  positive exploration pulls, equality of the `m*K` reward-prefix laws, and
+  the existing common bounded arm-law/exact-mean/measurable-context inputs. No
+  full trajectory equality or suffix reward law is required.
+- Retrieval evidence: `LML-ETC-REGRET` exact seed audit,
+  `MLIB-MEASURE-INTEGRAL`, `MLIB-PROBABILITY-KERNEL`,
+  `LOCAL-LEAF-ETC-EMPMEAN-FINITE-HISTORY-RECONSTRUCTION`, and
+  `LOCAL-LEAF-ETC-FINITE-ARM-BOUNDED-CANONICAL-BOCHNER-REGRET`.
+- Status: `leanCompiled`, with an external-law `Tests.Basic` canary.
+- Failure policy: `hprefix` is an explicit source obligation, not proved by
+  this theorem. The downstream conditional-law leaf now derives it; matching
+  one-step marginals alone remains insufficient. The exact upstream
+  theorem remains different in reward/model type, sub-Gaussian generality,
+  argmax tie behavior, and per-arm RHS. Do not report the bounded Rat/max-gap
+  consumer as `Bandits.ETC.regret_le`.
+
+`ETC-FINITE-ARM-BOUNDED-EXTERNAL-CONDDISTRIB-BOCHNER-REGRET` is compiled
+locally:
+
+- Lean statements:
+  `RewardKernel.rewardTrace_prefix_map_eq_trajMeasure_of_condDistrib` and
+  `ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_initial_map_eq_condDistrib`.
+- Local APIs/imports: Mathlib
+  `condDistrib_ae_eq_iff_measure_eq_compProd`,
+  `Kernel.map_frestrictLe_trajMeasure_compProd_eq_map_trajMeasure`, local
+  `RewardKernel.trajMeasure_map_eval_zero`, prefix measurability,
+  `Measure.map_map`, `integral_map`, and the external-prefix theorem.
+- Proof route: finite-prefix induction converts each conditional law into a
+  joint prefix/next-reward law, matches the canonical trajMeasure recurrence,
+  and glues the extended prefix; specialize at `m*K-1`, consume the prefix
+  transport, then pull the integral back to the original `Omega`.
+- Regularity contracts: arbitrary external probability space and
+  coordinate-measurable reward trace; initial selected-arm law; successor
+  conditional laws only for `i < m*K-1`; positive exploration pulls; bounded
+  Rat arm laws with exact means and measurable context. The generic prefix
+  theorem additionally exposes finite `mu`, probability `mu0`, and nonempty
+  standard Borel reward target contracts. No suffix law, full trajectory
+  equality, or independence is needed.
+- Retrieval evidence: Mathlib `CondDistrib.lean` and
+  `Kernel/IonescuTulcea/Traj.lean`, `MLIB-PROBABILITY-KERNEL`,
+  `MLIB-MEASURE-INTEGRAL`, and the external-prefix local leaf. The exact LML
+  source audit remains at seed `19dc3ab132c2a7539f5944503d1114eac4c5bb74`;
+  theorem cards and weapons are route evidence only.
+- Status: `leanCompiled`, with `Tests.Basic` external instantiation. The
+  independent subagent review attempt failed on quota; focused module/Test
+  builds, declaration export, and the full project check are the fallback.
+- Failure policy: if a concrete environment cannot yet prove the `condDistrib`
+  hypotheses, add a separate stationary/selected-arm law adapter. Do not
+  weaken the regret target, substitute `trajMeasure` definitionally, or claim
+  exact LML alignment.
+
+`ETC-FINITE-ARM-BOUNDED-EXTERNAL-EXPLORATION-ARM-CONDDISTRIB-BOCHNER-REGRET`
+is compiled locally:
+
+- Lean statements:
+  `ETC.explorationArgmaxHistory_stepKernel_apply_eq_exploreArmLaw_of_lt` and
+  `ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_initial_map_eq_explorationArm_condDistrib`.
+- Local APIs/imports: `ETC.explorationArgmaxHistoryPolicy`,
+  `RewardKernel.historyStepKernelFamily_apply`,
+  `RewardKernel.selectedMeasure_contextIndependentOfActionLaws`, and the
+  external-condDistrib regret theorem.
+- Proof route: reduce the canonical reward step kernel to the stationary law
+  of `exploreArm spec (i+1)` on the deterministic exploration branch; convert
+  the caller's a.e. scheduled-arm law to the previous theorem's step-kernel
+  law and consume that theorem.
+- Regularity contracts: arbitrary external probability space,
+  coordinate-measurable rewards, initial law of `exploreArm spec 0`, scheduled
+  arm conditional laws for `i<m*K-1`, positive exploration pulls, common
+  bounded exact-mean Rat arm laws. The public endpoint fixes `Context := Unit`
+  and mentions no context, reconstructed state, policy/reward kernel, or trajectory
+  measure; no suffix law, full trajectory equality, or independence is used.
+- Retrieval evidence: the three local APIs above,
+  `LOCAL-LEAF-ETC-FINITE-ARM-BOUNDED-EXTERNAL-CONDDISTRIB-BOCHNER-REGRET`, and
+  exact `LML-ETC-REGRET` source seed
+  `19dc3ab132c2a7539f5944503d1114eac4c5bb74`.
+- Status: `leanCompiled`, with direct step-kernel and exact expected-regret
+  inequality canaries in `Tests.Basic`. Independent local review findings on
+  context leakage, canary strength, and stale residual text were fixed; the
+  follow-up review reported no remaining findings.
+- Failure policy: one-step marginal laws remain insufficient. Build a
+  concrete source or LML `IsAlgEnvSeq` adapter for the conditional laws; do
+  not weaken the theorem or claim exact LML alignment.
+
+`ETC-FINITE-ARM-BOUNDED-EXTERNAL-ACTION-REWARD-HISTORY-CONDDISTRIB-BOCHNER-REGRET`
+is compiled locally:
+
+- Lean statements: `RewardKernel.condDistrib_ae_eq_const_of_comp`,
+  `RewardKernel.map_eq_of_condDistrib_ae_eq_const`, and
+  `ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_actionRewardHistory_explorationArm_condDistrib`.
+- Local APIs/imports: Mathlib joint-law characterization of `condDistrib`,
+  `Measure.compProd_const`, `Measure.map_prod_map`, `Measure.snd_map_prodMk`,
+  `Measure.snd_prod`; local pair-history measurability and reward projection.
+- Proof route: map a constant product joint law from the fine full-history
+  condition to its reward-prefix projection; recover the time-zero reward
+  marginal by `snd`; consume the scheduled exploration-arm theorem.
+- Regularity contracts: external probability, timewise measurable action and
+  reward traces, initial constant law conditioned on action zero, constant
+  scheduled-arm law conditioned on full pair history and next action through
+  exploration, positive exploration pulls, and bounded exact-mean Rat arm
+  laws. No injectivity, action-generation proof, suffix law, full trajectory
+  equality, or independence is required.
+- Retrieval evidence: fixed LML seed `19dc3ab132c2a7539f5944503d1114eac4c5bb74`
+  definitions of `IsAlgEnvSeq`, `stationaryEnv`, and `ETC.arm_of_lt`, plus
+  Mathlib `CondDistrib`, `MeasureCompProd`, and product-measure source APIs.
+- Status: `leanCompiled`, with an exact endpoint canary in `Tests.Basic`.
+  Independent local review reported no findings on the measure transport,
+  projection, marginal extraction, or LML status boundary.
+- Failure policy: this is LML-shaped rather than an imported `IsAlgEnvSeq`
+  theorem. The downstream action-dependent adapter now reduces its local
+  kernel analogue to the constant scheduled-arm law using exploration action
+  a.e. equality.
+
+`ETC-FINITE-ARM-BOUNDED-EXTERNAL-ACTION-DEPENDENT-ACTION-REWARD-HISTORY-CONDDISTRIB-BOCHNER-REGRET`
+is compiled locally:
+
+- Lean statements: `RewardKernel.condDistrib_ae_eq_const_of_ae_eq_selected`
+  and
+  `ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_actionDependent_actionRewardHistory_condDistrib`.
+- Local APIs/imports: `ae_map_iff`, `measurableSet_eq_fun`,
+  `Kernel.ofFunOfCountable`, context-independent action laws, and the full-
+  history constant-law theorem.
+- Proof route: push the a.e. selected-action identity to `mu.map fine`, rewrite
+  the selected kernel to a constant law, specialize to `id` and `Prod.snd`,
+  then consume the full-history endpoint.
+- Regularity contracts: external probability, measurable action/reward traces,
+  action-zero and successor exploration action a.e. identities, action-selected
+  feedback conditional laws only through exploration, positive exploration
+  pulls, and bounded exact-mean Rat arm laws. No suffix law, full trajectory
+  equality, or independence is required.
+- Retrieval evidence: exact seed `IsAlgEnvSeq` feedback fields,
+  `stationaryEnv`, `ETC.arm_of_lt`, Mathlib a.e.-map APIs, and local action-law
+  kernels.
+- Status: `leanCompiled`, with an exact endpoint canary in `Tests.Basic`.
+- Review: the independent agent hit its quota; focused builds, declaration
+  export, placeholder/syntax checks, and the full project gate are the fallback.
+- Failure policy: dependency-light law transport is complete. Treat a direct
+  LML wrapper as optional toolchain integration; next theorem work is the
+  Real/common-sub-Gaussian, argmax, and per-arm RHS route.
+
+`ETC-FINITE-ARM-COMMON-SUBGAUSSIAN-PAIRWISE-TAIL-CONTRACT` is compiled locally:
+
+- Lean statements:
+  `ETC.finiteArmCenteredRewardKernelLaw_of_hasSubgaussianMGF`,
+  `ETC.explorationArgmaxHistory_centeredReward_succ_hasCondSubgaussianMGF_of_armLaws`,
+  `ETC.explorationArgmaxHistory_centeredRewardCondSubGaussianWitnesses_of_armLaws`,
+  and `ETC.explorationArgmaxHistory_pairwiseEmpMeanTailContract_of_armLaws`.
+- Local APIs/imports: Mathlib `HasSubgaussianMGF.integrable` and `of_map`;
+  local `trajMeasure_map_eval_zero`, canonical successor conditional MGF,
+  exploration-prefix filtration equality, measurable-space MGF transport, and
+  centered-reward to centered-difference witness conversion.
+- Proof route: construct the centered kernel law directly from common-proxy
+  arm MGFs and exact means; transport the zeroth arm MGF to coordinate zero;
+  derive successor conditional MGFs on generated history; move them to the
+  fixed `actionWithCommit` filtration during exploration; consume the existing
+  pairwise empirical-mean contract constructor.
+- Regularity contracts: per-arm probability laws on `Rat`, exact model means,
+  direct centered MGFs at one `NNReal` proxy, measurable context, and positive
+  exploration pulls. The pairwise process is one-sided, masked, fixed-horizon,
+  and takes no arm union.
+- Retrieval evidence: exact LML seed common-proxy MGF hypothesis, Mathlib
+  sub-Gaussian APIs, and the compiled local kernel/filtration/pairwise route.
+  The LML theorem card is route evidence, not a local proof.
+- Status: `leanCompiled`; focused module and `Tests.Basic` canary builds pass.
+- Failure policy: reward/model values remain `Rat`; the concrete commit-fiber
+  probability and canonical per-arm Bochner theorem now compile downstream.
+  External conditional-law transport, Real rewards, and exact argmax ties
+  remain open.
+
+`ETC-FINITE-ARM-COMMON-SUBGAUSSIAN-CANONICAL-PER-ARM-BOCHNER-REGRET` is
+compiled locally:
+
+- Lean statements:
+  `ETC.explorationArgmaxHistory_prob_commit_eq_arm_le_pairwiseTail_of_armLaws`,
+  `ETC.canonicalSubGaussianArmPairwiseTailReal`,
+  `ETC.canonicalSubGaussianArmPerArmIntegralRegretBoundReal`,
+  `ETC.real_measure_explorationArgmaxCommit_eq_arm_le_canonicalSubGaussianArmPairwiseTailReal`,
+  and
+  `ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal`.
+- Local APIs/imports: direct-MGF pairwise contract, concrete argmax-fiber
+  consumer, `ENNReal.toReal_mono`, measurable commit selector, generic per-arm
+  Bochner assembly, finite sums, gap nonnegativity, and `gap_bestArm`.
+- Proof route: bound every non-best commit fiber by its matching masked tail;
+  convert it to Real; substitute termwise under nonnegative `r * gap a`;
+  remove the best-arm term; rewrite to the generated-history action.
+- Regularity contracts: per-arm `Rat` probability laws, exact model means,
+  common `sigma2`, direct centered arm MGFs, measurable context, positive
+  exploration pulls, and finite suffix. No bounded support, max-gap collapse,
+  arm union, coordinate independence, or external trajectory law is needed.
+- Retrieval evidence: exact LML common-proxy/per-arm route, compiled direct-
+  MGF pairwise contract, local commit-fiber theorem, and Mathlib finite-tail,
+  integral, and Finset APIs.
+- Status: `leanCompiled`; focused module and exact `Tests.Basic` endpoint
+  canary builds pass.
+- Failure policy: its exploration-prefix, generic conditional-law, and
+  scheduled-arm and full-history constant-law consumers now compile
+  downstream. The next worker should add the action-dependent selected-kernel
+  direct-MGF adapter. Real rewards, exact constants/pull-count semantics, and
+  argmax ties remain later obligations.
+
+`ETC-FINITE-ARM-COMMON-SUBGAUSSIAN-EXTERNAL-EXPLORATION-ARM-CONDDISTRIB-PER-ARM-BOCHNER-REGRET`
+is compiled locally:
+
+- Lean statements:
+  `ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal_of_explorationPrefix_map_eq`,
+  `ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal_of_initial_map_eq_condDistrib`,
+  and
+  `ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal_of_initial_map_eq_explorationArm_condDistrib`.
+- Local APIs/imports: canonical direct-MGF per-arm endpoint, finite-prefix
+  regret factorization, `RewardKernel.rewardTrace_prefix_map_eq_trajMeasure_of_condDistrib`,
+  `Measure.map_map`, `Measure.integral_map`, and the exploration step-kernel
+  equality.
+- Proof route: factor generated ETC regret through the exploration prefix;
+  identify the external and canonical prefix pushforwards from the initial
+  marginal and successor conditional laws; specialize those laws to
+  `armLaw (ETC.exploreArm spec (i+1))` with `Context := Unit`.
+- Regularity contracts: arbitrary external probability, coordinate-measurable
+  `RewardTrace Rat`, exact-mean arm probability laws, direct centered MGFs at
+  one common `sigma2`, positive exploration pulls, finite suffix, the initial
+  scheduled-arm marginal, and scheduled-arm successor conditional laws only
+  through exploration. No bounded support, arm union, suffix/full trajectory
+  law, independence, local kernel/state/context, or fiber transport is used.
+- Retrieval evidence: Mathlib `Measure.map_map`/`integral_map`, compiled finite-
+  prefix uniqueness and step-kernel reduction, and the canonical direct-MGF
+  theorem. The LML card remains route evidence only.
+- Status: `leanCompiled`; focused module and exact external `Tests.Basic`
+  canary builds pass.
+- Failure policy: the full action/reward-history constant-law consumer now
+  compiles downstream. The action-dependent selected-kernel direct-MGF adapter
+  is next. The current theorem remains `Rat`-valued and does not settle exact
+  Real constants, pull-count semantics, or argmax ties.
+
+`ETC-FINITE-ARM-COMMON-SUBGAUSSIAN-EXTERNAL-ACTION-REWARD-HISTORY-CONDDISTRIB-PER-ARM-BOCHNER-REGRET`
+is compiled locally:
+
+- Lean statement:
+  `ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal_of_actionRewardHistory_explorationArm_condDistrib`.
+- Local APIs/imports: `RewardKernel.map_eq_of_condDistrib_ae_eq_const`,
+  `RewardKernel.condDistrib_ae_eq_const_of_comp`, finite pair-history
+  measurability/reward projection, and the scheduled-arm direct-MGF endpoint.
+- Proof route: extract the reward-zero marginal from its constant conditional
+  law given action zero; project each constant successor law given complete
+  pair history and next action to the reward-only prefix; consume the external
+  scheduled-arm theorem with the same gap-weighted armwise RHS.
+- Regularity contracts: external probability, timewise measurable action and
+  `Rat` reward traces, exact-mean arm probability laws, direct centered MGFs at
+  one common `sigma2`, positive exploration pulls, finite suffix, the initial
+  constant conditional law, and constant scheduled-arm successor laws through
+  exploration. No bounded support, arm union, injectivity, action-generation
+  proof, suffix/full trajectory law, independence, or local trajectory kernel
+  is used.
+- Retrieval evidence: compiled generic constant-law marginal/coarsening APIs,
+  finite pair-history projection, the scheduled-arm direct-MGF theorem, and
+  the exact LML feedback conditioning-variable shape. The LML theorem card is
+  route evidence only.
+- Status: `leanCompiled`; focused module and exact external `Tests.Basic`
+  canary builds pass.
+- Failure policy: the action-dependent selected-kernel direct-MGF consumer now
+  compiles downstream, closing dependency-light `Rat` law transport. Real
+  support, direct LML import, and argmax ties remain open; exact constants and
+  canonical per-arm expected counts now compile downstream.
+
+`ETC-FINITE-ARM-COMMON-SUBGAUSSIAN-EXTERNAL-ACTION-DEPENDENT-ACTION-REWARD-HISTORY-CONDDISTRIB-PER-ARM-BOCHNER-REGRET`
+is compiled locally:
+
+- Lean statement:
+  `ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal_of_actionDependent_actionRewardHistory_condDistrib`.
+- Local APIs/imports: `RewardKernel.condDistrib_ae_eq_const_of_ae_eq_selected`,
+  `ProbabilityTheory.Kernel.ofFunOfCountable`, context-independent arm-law
+  kernels, finite pair-history measurability, and the full-history direct-MGF
+  endpoint.
+- Proof route: push scheduled action a.e. identities to the initial and each
+  complete-history conditioning pushforward; rewrite raw selected kernels to
+  constant scheduled-arm laws; consume the full-history theorem with the same
+  gap-weighted armwise RHS.
+- Regularity contracts: external probability, timewise measurable action and
+  `Rat` reward traces, exact-mean arm probability laws, direct centered MGFs at
+  one common `sigma2`, positive exploration pulls, finite suffix, scheduled
+  action-zero/successor a.e. identities, and raw selected-kernel conditional
+  laws through exploration. No bounded support, arm union, suffix/full
+  trajectory law, independence, direct LML dependency, or local trajectory
+  kernel is used.
+- Retrieval evidence: compiled selector transport, Mathlib `ae_map_iff`,
+  countable action kernel, context-independent reward kernel, full-history
+  direct-MGF theorem, and exact LML stationary feedback/action-law shape. The
+  theorem card remains route evidence only.
+- Status: `leanCompiled`; focused module and exact external `Tests.Basic`
+  canary builds pass.
+- Failure policy: dependency-light direct common-sub-Gaussian `Rat` law
+  transport is closed. Next work must tackle Real reward/model types, exact
+  constants/pull-count, and argmax tie alignment, or add a direct LML wrapper
+  without overstating theorem alignment.
 
 ## Required Closeout
 
@@ -25497,3 +29182,424 @@ python3 tools/bandit.py unfinished
 ```
 
 Do not mark a leaf `compiled-local` until the Lean gate has actually passed.
+
+## ETC Per-Arm Commit Assembly
+
+`ETC-PER-ARM-COMMIT-PROB-BOCHNER-ASSEMBLY` is `leanCompiled` with an exact
+`Tests.Basic` canary. Its Lean endpoint requires only a probability measure and
+measurable `commit : Omega -> Fin K`, and returns the exploration budget plus
+`sum_a (r * gap a) * P(commit=a)`. It uses the phase-split regret bound,
+finite-valued integrability, the Bochner finite-sum wrapper, and Mathlib
+indicator integrals. The arm-specific canonical ENNReal commit probability
+bound, Real conversion, and termwise substitution now compile downstream as
+`ETC-FINITE-ARM-BOUNDED-CANONICAL-PER-ARM-BOCHNER-REGRET`. The best-arm term
+vanishes by `gap_bestArm`, and the proof does not revert to a max-gap union.
+
+`ETC-FINITE-ARM-BOUNDED-COMMIT-ARM-PAIRWISE-TAIL` is `leanCompiled`. It reduces
+the concrete argmax fiber for one non-best arm to that arm's empirical-mean
+comparison event and consumes the matching entry of the canonical bounded-arm
+pairwise tail contract. The event is one-sided at the fixed exploration
+horizon and is not union-bounded. The theorem remains canonical Rat/bounded-
+arm work; it does not transport individual fibers to an external law or align
+upstream `measurableArgmax` ties.
+
+`ETC-FINITE-ARM-BOUNDED-CANONICAL-PER-ARM-BOCHNER-REGRET` is `leanCompiled`
+with an exact `Tests.Basic` canary. It exposes a named Real tail per arm and a
+named exploration-plus-gap-weighted-tail budget under the canonical bounded
+generated-history trajectory. Its exploration-prefix transport now compiles as
+`ETC-FINITE-ARM-BOUNDED-EXTERNAL-PREFIX-LAW-PER-ARM-BOCHNER-REGRET`.
+
+The external per-arm prefix leaf is `leanCompiled` with an exact canary. Its
+reusable equality factors generated ETC regret through the finite exploration
+prefix and uses `Measure.integral_map`; it assumes only equality of the two
+prefix pushforwards, not full trajectories, suffix rewards, or individual
+commit fibers. The initial marginal plus successor `condDistrib` per-arm
+consumer now compiles as
+`ETC-FINITE-ARM-BOUNDED-EXTERNAL-CONDDISTRIB-PER-ARM-BOCHNER-REGRET` with an
+exact canary. Its stationary scheduled-arm wrapper now also compiles as
+`ETC-FINITE-ARM-BOUNDED-EXTERNAL-EXPLORATION-ARM-CONDDISTRIB-PER-ARM-BOCHNER-REGRET`:
+the public endpoint fixes `Context := Unit` and consumes only the initial and
+scheduled exploration-arm laws. LML-shaped full action/reward-history constant
+laws now coarsen to this per-arm reward-prefix endpoint as
+`ETC-FINITE-ARM-BOUNDED-EXTERNAL-ACTION-REWARD-HISTORY-CONDDISTRIB-PER-ARM-BOCHNER-REGRET`,
+including an exact external canary. Raw action-selected feedback kernels plus
+a.e. scheduled exploration actions now compile through it as
+`ETC-FINITE-ARM-BOUNDED-EXTERNAL-ACTION-DEPENDENT-ACTION-REWARD-HISTORY-CONDDISTRIB-PER-ARM-BOCHNER-REGRET`.
+The dependency-light bounded-Rat law route is therefore closed. Direct common-
+proxy arm MGFs now also compile through the canonical pairwise empirical-mean
+tail contract without bounded support, and the concrete commit-fiber, finite
+Real tail, and canonical gap-weighted per-arm Bochner consumers now compile.
+That theorem now propagates through exploration-prefix equality, generic
+initial/successor conditional laws, scheduled exploration-arm laws, and the
+LML-shaped full action/reward-history constant-law surface and its action-
+dependent selected-kernel consumer. Dependency-light direct-MGF `Rat` law
+transport is now closed. The next worker should change the remaining reward/
+model surface to Real and align exact constants/pull-count and measurable-
+argmax ties. The optional direct LML `HasCondDistrib` wrapper remains separate
+integration work.
+
+`REAL-MEAN-REGRET-PULLCOUNT` is compiled locally:
+
+- Lean statements: `realMeanGap`, `realMeanRegret`,
+  `realMeanRegret_eq_sum_gap_mul_pullCount`,
+  `integrable_realMeanRegret_of_integrable_pullCount`, and
+  `integral_realMeanRegret_eq_sum_gap_mul_integral_pullCount`.
+- Local APIs/imports: `BanditRLProof.RealMeanRegretPullCount`, the pull-count
+  Finset wrapper, `Finset.sum_fiberwise'`, finite-sum integrability, and
+  Bochner finite-sum integration.
+- Proof route: exact-route Real scalar regret to selected gaps, arm-fiber
+  grouping, then termwise integration.
+- Regularity contracts: arbitrary measure, Real arm means, and integrable
+  Real-cast pull counts only.
+- Retrieval evidence: exact LML seed scalar definitions, Mathlib finite-sum
+  and integral APIs, and local compiled wrappers. LML remains card-only.
+- Status: `leanCompiled` with an external `Tests.Basic` canary.
+- Failure policy: the kernel-mean specialization now compiles downstream; do
+  not return to Rat bookkeeping or claim exact ETC completion before Real
+  concentration/constants, per-arm expected counts, and measurableArgmax
+  semantics compile.
+
+`REAL-KERNEL-REGRET-PULLCOUNT` is compiled locally:
+
+- Lean statements: `realKernelMean`, `realKernelGap`, `realKernelRegret`,
+  `realKernelGap_nonneg`, `realKernelRegret_eq_sum_gap_mul_pullCount`, and
+  `integral_realKernelRegret_eq_sum_gap_mul_integral_pullCount`.
+- Local APIs/imports: `Mathlib.Probability.Kernel.Integral` and the compiled
+  `RealMeanRegretPullCount` surface.
+- Proof route: identity-integral arm means, definitional specialization,
+  `le_ciSup` for nonnegative gaps, then deterministic/Bochner theorem reuse.
+- Regularity contracts: a Real arm kernel, arbitrary action-space measure, and
+  per-arm pull-count integrability; only gap nonnegativity needs nonempty arms.
+- Retrieval evidence: exact LML seed kernel definitions, Mathlib kernel
+  integral, and local Real mean/pull-count declarations. LML is card-only.
+- Status: `leanCompiled` with an exact external canary.
+- Failure policy: kernel scalar bookkeeping is closed. Next implement one Real
+  ETC expected-count/concentration leaf or isolate its first missing reward-law
+  fact; do not add Rat wrappers or overstate the final theorem.
+
+`REAL-ETC-EXPECTED-PULLCOUNT` is compiled locally:
+
+- Lean statements: the arbitrary-horizon integrability adapter, exact suffix
+  and `n - K*m` expectation identities, and
+  `ETC.integral_real_pullCount_actionWithCommit_choice_le_exploration_add_remaining_mul_of_commit_prob_le`.
+- Local APIs/imports: deterministic ETC suffix counts, measurable Real-cast
+  pull counts, Bochner indicator/set integrals, and `Measure.real`.
+- Proof route: bounded integrability, pathwise count-to-indicator rewrite,
+  exact integration, horizon normalization, then monotonicity under the
+  supplied commit-fiber probability bound.
+- Regularity contracts: probability measure, measurable finite-arm commit,
+  and `K*m <= n`; no reward law, concentration, best arm, or tie premise.
+- Retrieval evidence: exact LML ETC expected-count route and compiled local
+  count, measurability, integral, and Real-kernel cards.
+- Status: `leanCompiled` with an exact external canary.
+- Failure policy: next prove the exact Real exponential `P(commit=a)` bound;
+  do not create another count wrapper or mark the final ETC theorem complete.
+
+`ETC-EXACT-COMMON-SUBGAUSSIAN-PER-ARM-EXPECTED-PULLCOUNT` is compiled locally:
+
+- Lean statements: exact masked pairwise proxy-sum and non-best gap-threshold
+  equalities, the exact canonical Real tail equality, the canonical commit-fiber
+  probability bound, and
+  `ETC.integral_real_pullCount_explorationArgmaxAction_le_exploration_add_remaining_mul_exp_of_armLaws`.
+- Local APIs/imports: `ETCFiniteArmRewardLaw`, `ETCExpectedPullCount`, masked
+  pairwise variance proxies, exact exploration pull counts, `Finset.filter`,
+  `FieldSimp`, and `Ring`.
+- Proof route: reduce both indicator counts to `m`, rewrite the threshold as
+  `m*gap`, normalize the exponent with an explicit zero-proxy branch, then
+  compose canonical fiber concentration with the Bochner count consumer.
+- Regularity contracts: positive `m`, `K*m <= n`, a non-best arm, canonical
+  generated history, Rat probability arm laws with exact Real-cast means,
+  centered Real common-proxy MGFs, and measurable context. This is a one-sided
+  fixed-horizon single-arm result, not an arm union.
+- Retrieval evidence: exact LML ETC exponent, compiled canonical direct-MGF
+  Rat law chain, Mathlib finite-sum/measure APIs, and the prior expected-count
+  leaf. LML remains card-only.
+- Status: `leanCompiled` with a focused module build and exact external canary.
+- Failure policy: do not revisit exact constants or relabel this theorem as a
+  native Real-kernel result. The next worker should isolate and compile native
+  Real reward-kernel/`IsAlgEnvSeq` law transport and kernel-gap equality, then
+  align the actual action and measurableArgmax tie rule before final assembly.
+
+`ETC-RAT-ARM-LAW-REAL-KERNEL-EXACT-REGRET` is compiled locally:
+
+- Lean statements: `ETC.ratArmLawRealKernel`, its application and Markovness
+  facts, exact mapped kernel mean and gap identifications, and
+  `ETC.integral_realKernelRegret_explorationArgmaxAction_le_exact_sum_of_armLaws`.
+- Local APIs/imports: `Measure.map`, `Measure.isProbabilityMeasure_map`,
+  `integral_map`, `Kernel.ofFunOfCountable`, conditional `iSup`, finite-model
+  best-arm/gap invariants, Real kernel regret decomposition, and the exact
+  per-arm count theorem.
+- Proof route: map Rat laws to Real; identify identity-integral means and the
+  best-arm supremum; rewrite every kernel gap; decompose the regret integral;
+  derive pull-count integrability from measurable commit; eliminate the
+  best-arm term; apply non-best exact count bounds under the finite sum.
+- Regularity contracts: positive exploration pulls, horizon fit, Rat
+  probability arm laws with exact cast means and centered common-proxy MGFs,
+  and a measurable canonical context. The Real kernel is the cast pushforward
+  and the trajectory remains canonical Rat; arbitrary native Real adaptive or
+  stationary environments are not covered.
+- Retrieval evidence: exact LML finite-sum RHS, Mathlib kernel/map/integral and
+  finite-sum APIs, the Real kernel regret leaf, and the exact per-arm count
+  leaf. LML remains card-only.
+- Status: `leanCompiled` with focused module and exact external endpoint canary.
+- Failure policy: kernel-gap identification and canonical finite-sum assembly
+  are closed. Next work on arbitrary native Real stationary-kernel/`IsAlgEnvSeq`
+  law and upstream action/tie transport; do not reopen the cast-pushforward
+  algebra or describe it as the final LML theorem.
+
+`ETC-NATIVE-REAL-EMPIRICAL-MEAN-ARGMAX-COUNT` is compiled locally:
+
+- Lean statements: direct Real exploration empirical means, deterministic
+  finite argmax and maximality, coordinate/fold/commit measurability, the
+  reward-dependent ETC action, and exact plus upper expected-count consumers.
+- Local APIs/imports: `measurable_sumRewards`, `Finset.measurable_sum`,
+  `measurableSet_eq_fun`, `measurableSet_lt`, `Measurable.ite`,
+  `List.finRange`/`foldl`, exact ETC exploration counts, and
+  `ETCExpectedPullCount`.
+- Proof route: rewrite the empirical denominator; prove fold maximality;
+  express the score at a measurable selected arm as a finite indicator sum;
+  induct through the comparison fold; instantiate the generic expected-count
+  theorem with the resulting measurable commit selector.
+- Regularity contracts: timewise measurable Real reward coordinates;
+  `ETC.Spec.hK`; a probability measure and `K*m <= n` only for expected-count
+  formulas. No reward law, MGF, concentration, best-arm, or environment-law
+  premise is hidden.
+- Retrieval evidence: exact LML empiricalMean/measurableArgmax/action route,
+  Mathlib measurable finite sums and comparisons, and compiled local
+  measurable-sum/count consumers. LML remains card-only.
+- Status: `leanCompiled` with a focused module build and two external canaries.
+- Failure policy: the local native Real algorithm/count surface is closed.
+  Native canonical-product concentration now compiles downstream; do not
+  reopen this selector/count implementation when working on external law or
+  upstream action equivalence.
+
+`ETC-NATIVE-REAL-INFINITEPI-EXACT-REGRET` is compiled locally:
+
+- Lean statements: native Real kernel best-arm attainment and gap identity,
+  pairwise centered event/independence/MGF/proxy lemmas,
+  `ETC.real_measure_realExplorationArgmaxCommit_eq_arm_le_exp_of_infinitePi_kernel`,
+  the matching expected-count theorem, and
+  `ETC.integral_realKernelRegret_realExplorationArgmaxAction_le_exact_sum_of_infinitePi_kernel`.
+- Local APIs/imports: `ETCRealEmpiricalMean`,
+  `iIndepFun_rewardTrace_infinitePi`, `Measure.infinitePi_map_eval`,
+  `HasSubgaussianMGF.of_map`/`neg`/`congr`, the independent finite-sum tail,
+  exact exploration pull counts, `measureReal_mono`, `FieldSimp`, `Ring`, and
+  the Real kernel regret pull-count decomposition.
+- Proof route: select an attained finite best arm; include each wrong-commit
+  fiber in a centered pairwise sum event; transport arm MGFs to independent
+  product coordinates; normalize the exact exponent; consume the fiber bound
+  in expected counts; sum termwise after eliminating the best-arm gap.
+- Regularity contracts: `ETC.Spec.hK`, positive exploration pulls,
+  `K*m <= n`, `IsMarkovKernel nu`, and a common centered `NNReal` MGF proxy for
+  every arm. The probability law is specifically the action-matched canonical
+  infinite product, not an arbitrary algorithm/environment process.
+- Retrieval evidence: exact upstream LML `Bandits.ETC.regret_le` source route,
+  Mathlib independence/sub-Gaussian/kernel/integral/finite-sum APIs, and the
+  local IID reward-family, Real empirical argmax, expected-count, and Real
+  kernel-regret declarations. LML is source/card evidence only.
+- Status: `leanCompiled` with focused module build and external full-endpoint
+  canary.
+- Failure policy: canonical native Real concentration/count/regret is closed.
+  The downstream external prefix-law and scheduled conditional-law transport
+  now compiles; do not reopen this canonical concentration module.
+
+`ETC-NATIVE-REAL-PREFIX-LAW-EXTERNAL-EXACT-REGRET` is compiled locally:
+
+- Lean statements: measurable `Fin (m*K)` reward-prefix extraction and zero
+  extension; empirical mean, commit, action, and regret prefix factorization;
+  measurable prefix regret; constant-kernel `trajMeasure = infinitePi`;
+  external exact regret from prefix-law equality; external-action exact regret
+  under a.e. horizon equality; and
+  `ETC.integral_realKernelRegret_externalAction_le_exact_sum_of_initial_map_eq_condDistrib`.
+- Local APIs/imports: `ETCRealInfinitePiTail`, generic
+  `RewardKernel.rewardTrace_prefix_map_eq_trajMeasure_of_condDistrib`,
+  `History.finiteRewardHistoryOfTrace`, `Measure.map_map`, `integral_map`,
+  `measurePreserving_piUnique`, `IsProjectiveLimit.unique`, constant kernels,
+  measurable Pi maps, and finite-sum kernel regret.
+- Proof route: factor all ETC statistics through exploration rewards; transport
+  the measurable prefix functional across equal pushforwards; insert the
+  canonical exact bound; reduce external actions by finite-horizon congruence;
+  then derive prefix-law equality from the zeroth marginal and successor
+  conditional laws using Ionescu-Tulcea uniqueness.
+- Regularity contracts: probability space, timewise measurable Real rewards,
+  Markov arm kernel, positive `m`, `K*m <= n`, common centered MGF proxy,
+  scheduled-arm zeroth and successor laws through exploration, and a.e. action
+  equality only for `t<n`. No `StandardBorelSpace Omega`, external action
+  measurability, full reward law, or infinite action equality is assumed.
+- Retrieval evidence: exact LML `IsAlgEnvSeq` and `Bandits.ETC.regret_le`
+  source shapes, Mathlib finite-dimensional/projective-limit APIs, generic
+  local prefix uniqueness, and the compiled native Real canonical theorem.
+  LML remains source/card evidence only.
+- Status: `leanCompiled` with focused build and public prefix-law plus direct
+  conditional-law external canaries.
+- Failure policy: prefix factorization, law transport, and scheduled-arm
+  conditional-law transport are closed. The following source adapter now maps
+  the feedback fields to `hzero` and `hcond`; only action/tie alignment remains.
+
+## Native Real Action-Dependent Source Exact ETC Regret
+
+`ETC-NATIVE-REAL-ACTION-DEPENDENT-SOURCE-EXACT-REGRET` is compiled locally:
+
+- Lean statement:
+  `ETC.integral_realKernelRegret_externalAction_le_exact_sum_of_actionDependent_actionRewardHistory_condDistrib`.
+- Local APIs/imports: `ETCRealPrefixLawTransport`, selected-kernel-to-constant
+  condDistrib transport, constant-law marginal extraction, measurable
+  condDistrib coarsening, `contextIndependentOfActionLaws`, full finite pair
+  histories, and `pairHistoryRewardProjection`.
+- Proof route: freeze action-selected feedback kernels using a.e. exploration
+  actions; extract the reward-zero marginal; coarsen successor conditions from
+  complete action/reward histories to reward prefixes; consume the exact native
+  Real conditional-law theorem.
+- Regularity contracts: probability space, measurable external actions and
+  Real rewards, Markov arm kernel, common centered MGF proxy, positive
+  exploration, horizon fit, exploration action identities, initial/successor
+  selected feedback laws, and local ETC action equality only below `n`. No
+  sample-space standard-Borel, full law, independence, or infinite action
+  equality premise is introduced.
+- Retrieval evidence: pinned LML seed `19dc3ab...`, exact `IsAlgEnvSeq`
+  feedback fields, `stationaryEnv`, `ETC.arm_of_lt`, Mathlib condDistrib/map
+  APIs, and the prior prefix-law leaf. LML remains card-only.
+- Status: `leanCompiled`; focused module, umbrella, and exact external canary
+  builds pass.
+- Failure policy: feedback-law mapping is closed. Next prove `hactionETC` from
+  the downstream action adapter rather than reopening this leaf. Do not add
+  law assumptions or report the upstream theorem as imported.
+
+## Native Real Least-Encoded Action Exact Regret
+
+`ETC-NATIVE-REAL-LEAST-ENCODED-ACTION-EXACT-REGRET` is compiled locally:
+
+- Lean statements:
+  `ETC.realLeastEncodedArgmax_eq_realArgmaxCommit`,
+  `ETC.eventually_realExplorationArgmaxAction_eq_of_roundRobin_leastEncodedCommit_persist`,
+  and the exact-regret `_of_leastEncodedCommit_persist` endpoint.
+- Local APIs/imports: `ETCRealArgmaxTie`, Mathlib `List.argmax`,
+  `index_of_argmax`, `idxOf_finRange`, `Nat.find_spec`, `Nat.find_min'`, encode
+  injectivity, `ETCRealEmpiricalMean`, and `ETCRealSourceAdapter`.
+- Proof route: identify strict fold with first list argmax; prove least-encode
+  selection; port the LML-shaped Nat.find selector; assemble exploration,
+  commit, and persistence; invoke the source-law exact theorem.
+- Regularity contracts: source-adapter contracts plus a.e. round-robin action,
+  least-encoded local empirical-mean commit at `K*m`, and persistence. No
+  preassembled horizon action equality, standard-Borel sample-space, full law,
+  independence, or stronger infinite action assumption.
+- Retrieval evidence: pinned LML commit `19dc3ab...`, measurableArgmax Nat.find
+  definition, `ETC.arm_of_lt`, `ETC.arm_mul`, `ETC.arm_of_ge`, Mathlib
+  `List.MinMax`, and the prior compiled source adapter. LML remains card-only.
+- Status: `leanCompiled`; focused module and selector/exact external canaries
+  pass.
+- Failure policy: tie semantics and three-piece action assembly are closed.
+  The downstream history-score source leaf now closes finite-history score
+  equality. Only actual `measurableArgmax`/`IsAlgEnvSeq` symbol-and-field
+  compatibility remains.
+
+## Native Real History-Score Source Exact Regret
+
+`ETC-NATIVE-REAL-HISTORY-SCORE-SOURCE-EXACT-REGRET` is compiled locally:
+
+- Lean statements: `ETC.realHistoryPullCount`,
+  `ETC.realHistorySumRewards`, `ETC.realHistoryEmpMean`, their trace-prefix
+  equalities, the exploration score equality, and the
+  `_of_historyLeastEncodedCommit_persist` exact-regret endpoint.
+- Local APIs/imports: `ETCRealHistoryScore`, finite pair histories,
+  `pullCount_eq_finset_filter_card`, `sumRewards_eq_finset_filter_sum`,
+  `Finset.sum_coe_sort`, `Finset.Iic`/`range`, `ae_all_iff`, and the prior
+  least-encoded source theorem.
+- Proof route: convert inclusive history sums/counts to an exclusive trace
+  prefix, specialize `K*m-1`, identify actions with round robin throughout the
+  finite exploration prefix, then rewrite the history commit score on a common
+  a.e. event and invoke the exact theorem.
+- Regularity contracts: prior source-adapter contracts, positive exploration,
+  round-robin action laws, history-score least-encoded commit, and persistence;
+  no local-score commit, preassembled horizon equality, standard-Borel sample
+  space, full law, independence, or infinite action equality.
+- Retrieval evidence: pinned LML `history`, `pullCount'`, `sumRewards'`,
+  `empMean'`, `ETC.arm_mul`, measurableArgmax Nat.find semantics, Mathlib finite
+  sums, and the prior least-encoded leaf. LML remains card-only.
+- Status: `leanCompiled`; focused module and score/exact external canaries pass.
+- Failure policy: history score mapping is closed, and the local faithful field
+  consumer now compiles downstream. Record the remaining cross-toolchain
+  imported-symbol boundary directly instead of strengthening the mathematical
+  contracts.
+
+## Native Real LML Field Compatibility Exact Regret
+
+`ETC-NATIVE-REAL-LML-FIELD-COMPAT-EXACT-REGRET` is compiled locally:
+
+- Lean statements: `ETC.RealStationaryETCSequence` and
+  `ETC.regret_le_of_realStationaryETCSequence`.
+- Local APIs/imports: `ETCRealLMLCompat`, `ETCRealHistoryScore`, Mathlib
+  measure/kernel/`condDistrib` APIs, finite pair histories,
+  `realLeastEncodedArgmax`, and `contextIndependentOfActionLaws`.
+- Proof route: bundle the exact source measurability, three action phases, and
+  stationary feedback-law consequences, then project them into the compiled
+  history-score endpoint.
+- Regularity contracts: probability measure, Markov Real arm kernel, common
+  centered MGF proxy, positive exploration, and horizon fit; no standard-Borel
+  sample space, full law, independence, local-score premise, or preassembled
+  horizon action equality.
+- Retrieval evidence: pinned LML `IsAlgEnvSeq`, `stationaryEnv`,
+  `arm_of_lt`/`arm_mul`/`arm_of_ge`, and `regret_le`, with the audited
+  ABRL-v4.29.1 versus LML-v4.32.0-rc1 toolchain mismatch.
+- Status: `leanCompiled`; focused module and external canary pass.
+- Failure policy: the mathematical field compatibility theorem is closed. The
+  actual upstream declaration remains `card-only`; a direct import requires an
+  explicit repository-wide toolchain decision and must not be inferred from
+  this local bundle.
+
+## Native Real UCB History Index
+
+`UCB-NATIVE-REAL-HISTORY-INDEX` is compiled locally:
+
+- Lean statements: `UCB.realEmpiricalMean`, `UCB.realWidth`,
+  `UCB.realIndex`, their inclusive history versions,
+  `UCB.realIndexAction`, `UCB.realHistoryIndexAction`, maximality,
+  measurability, and history/trace equality theorems.
+- Local APIs/imports: `UCBRealHistoryIndex`, `ETCRealHistoryScore`,
+  least-encoded Real argmax, finite pair histories, measurable selected reward
+  sums and pull-count casts, Mathlib `Real.log`, `Real.sqrt`, and division.
+- Proof route: use the realized `sumRewards/pullCount` mean and
+  `sqrt(2*c*log(n+1)/pullCount)` width; identify inclusive history `n` with
+  trace horizon `n+1`; reuse the finite least-encoded selector.
+- Regularity contracts: positive arm count for selection and timewise
+  measurable actions/rewards for measurability; no probability, law, MGF,
+  filtration, independence, or count-positivity assumption.
+- Retrieval evidence: pinned LML `ucbWidth'`/`ucbWidth`,
+  `empMean'`/`empMean`, `nextArm`, `measurableArgmax`, and `regret_le`, plus
+  local log/sqrt, finite-sum, and measurability cards.
+- Status: `leanCompiled`; focused module and external canaries pass.
+- Failure policy: the actual random width is now compiled. Next work only on
+  the compiled fixed-count source interface and its generated-process
+  instantiation, then one-sided tails and the expected-count consumer. Do not
+  pretend the deterministic proxy surface is definitionally this index.
+
+## UCB Fixed-Count Peeling And Stream-Law Transport
+
+`UCB-FIXED-COUNT-PEELING-LAW` is compiled locally:
+
+- Lean statements: `UCB.ArmRewardStream`, `UCB.armPrefixSum`,
+  `UCB.FixedArmPrefixSource`, the source stream/prefix measurability theorems,
+  `UCB.measure_pullCount_prod_sumRewards_mem_le_of_fixedArmPrefixSource`, and
+  its `_identDistrib` canonical-law endpoint.
+- Local APIs/imports: `UCBFixedCountPeeling`, `UCBRealHistoryIndex`,
+  `pullCount_le_time`, the local finite outer-measure union bound,
+  `Finset.range`/`filter`/`sum`, measurable Pi evaluation and sums, and
+  Mathlib `ProbabilityTheory.IdentDistrib`.
+- Proof route: expose the latent per-arm stream whose prefix at the realized
+  pull count is `sumRewards`; cover the adaptive event by the fixed-count
+  union; apply finite subadditivity; compose one complete-stream law equality
+  with each measurable prefix sum to transport the event measure.
+- Regularity contracts: measurable source/canonical spaces and stream
+  coordinates, measurable pair event, and decidable projected-count filter.
+  No probability measure, independence, MGF, filtration, or positive count is
+  required by this leaf.
+- Retrieval evidence: pinned LML commit `19dc3ab...`,
+  `identDistrib_sum_range_snd`, `prob_pullCount_prod_sumRewards_mem_le`, and
+  their use in `prob_ucbIndex_le/ge`, plus local Mathlib measure, independence,
+  and finite-sum cards.
+- Status: `leanCompiled`; focused module and two external canaries pass.
+- Failure policy: peeling and abstract stream-law transport are closed. The
+  next leaf must instantiate `FixedArmPrefixSource` and the canonical
+  stationary/product `IdentDistrib` law for the actual generated UCB process,
+  or explicitly prove an equivalent conditional-MGF source. Do not jump from
+  this abstract contract directly to a claimed UCB tail or regret theorem.

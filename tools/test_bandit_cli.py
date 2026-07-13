@@ -155,6 +155,22 @@ class ReviewStatusCliTests(unittest.TestCase):
 
 
 class ReviewResponseDetectionTests(unittest.TestCase):
+    def test_read_snapshot_keeps_complete_head_and_tail_lines(self) -> None:
+        bandit = load_bandit_module()
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "snapshot.md"
+            lines = [f"row-{i:03d}" for i in range(200)]
+            path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+            snapshot = bandit.read_snapshot(path, 240)
+
+            self.assertTrue(snapshot.startswith("row-000\n"))
+            self.assertTrue(snapshot.endswith("row-199\n"))
+            self.assertIn("characters omitted from the middle", snapshot)
+            for line in snapshot.splitlines():
+                if line and not line.startswith("<!--"):
+                    self.assertIn(line, lines)
+
     def test_response_detection_ignores_prompts_pending_and_templates(self) -> None:
         bandit = load_bandit_module()
         original_root = bandit.ROOT

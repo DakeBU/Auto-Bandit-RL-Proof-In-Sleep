@@ -126,14 +126,20 @@ Progress update:
 - `ETC-BOUNDED-REWARD-INFINITEPI-SOURCE` and
   `ETC-WRONG-COMMIT-INFINITEPI-BOUNDED-REWARD-SOURCE` are compiled locally in
   `BanditRLProof.Algorithms.ETCBoundedRewardInfinitePiSource`.
+- `ETC-WRONG-COMMIT-INFINITEPI-REAL-PROBABILITY-BOUND` is compiled locally in
+  `BanditRLProof.Algorithms.ETCInfinitePiExpectedRegretAssembly`.
 - `ETC-WRONG-COMMIT-REGRET-ASSEMBLY-POINTWISE` is compiled locally in
   `BanditRLProof.Algorithms.ETCWrongCommitRegretAssembly`.
 - `ETC-WRONG-COMMIT-LINTEGRAL-REGRET-ASSEMBLY` is compiled locally in
   `BanditRLProof.Algorithms.ETCExpectedRegretAssembly`.
 - `ETC-WRONG-COMMIT-INFINITEPI-LINTEGRAL-REGRET-ASSEMBLY` is compiled locally
   in `BanditRLProof.Algorithms.ETCInfinitePiExpectedRegretAssembly`.
+- `ETC-FIXED-PRODUCT-BADGAP-LINTEGRAL-REGRET-WRAPPER` is compiled locally in
+  `BanditRLProof.Algorithms.ETCInfinitePiExpectedRegretAssembly`.
 - `ETC-WRONG-COMMIT-INFINITEPI-SUMGAP-LINTEGRAL-REGRET-ASSEMBLY` is compiled
   locally in `BanditRLProof.Algorithms.ETCInfinitePiExpectedRegretAssembly`.
+- `ETC-FIXED-PRODUCT-SUMGAP-LINTEGRAL-REGRET-WRAPPER` is compiled locally in
+  `BanditRLProof.Algorithms.ETCInfinitePiExpectedRegretAssembly`.
 - `ETC-WRONG-COMMIT-INFINITEPI-MAXGAP-LINTEGRAL-REGRET-ASSEMBLY` is compiled
   locally in `BanditRLProof.Algorithms.ETCInfinitePiExpectedRegretAssembly`.
 - `ETC-FIXED-PRODUCT-MAXGAP-LINTEGRAL-REGRET-WRAPPER` is compiled locally in
@@ -427,13 +433,48 @@ MLIB-PROBABILITY-INDEPENDENCE
 MLIB-CONDITIONAL-EXPECTATION
 ```
 
+Canonical bounded-arm implementation evidence now also includes:
+
+```text
+ProbabilityTheory.HasCondSubgaussianMGF.of_measurableSpace_eq
+BanditRLProof.History.historyFiltrationSucc_eq_of_action_eq_on_prefix
+BanditRLProof.ETC.explorationArgmaxGeneratedAction_eq_actionWithCommit_of_lt
+BanditRLProof.ETC.explorationArgmaxHistory_centeredRewardCondSubGaussianWitnesses_of_boundedArmLaws
+BanditRLProof.ETC.explorationArgmaxHistory_pairwiseEmpMeanTailContract_of_boundedArmLaws
+BanditRLProof.ETC.explorationArgmaxHistory_prob_wrongCommit_le_pairwiseTailSum_of_boundedArmLaws
+```
+
+The downstream canonical expectation endpoint is also compiled as
+`ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal`.
+The downstream external exploration-prefix consumer is compiled as
+`ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_explorationPrefix_map_eq`.
+The downstream external conditional-law consumer is also compiled as
+`ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_initial_map_eq_condDistrib`.
+Its generic prefix induction derives the pushforward identity from the zeroth
+marginal and successor `condDistrib` laws through exploration. The remaining
+project-local kernel adapter is now compiled as
+`ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_initial_map_eq_explorationArm_condDistrib`:
+the law contract states only the stationary law of each scheduled exploration
+arm. The remaining law portion is a concrete source or `IsAlgEnvSeq` bridge,
+not another canonical pairwise or Bochner wrapper. The compiled full-history
+consumer now matches the LML feedback conditioning variable and coarsens a
+constant law to reward prefixes. The action-dependent adapter now uses selector
+a.e. equality to turn raw action-selected kernels into those constant laws,
+closing the dependency-light seed-shaped law route. Exact LML alignment separately requires a Real/common-
+sub-Gaussian/per-arm route.
+
 ## Status
 
-`theorem-card-only`.
+`compiled-local` for the canonical bounded finite-arm `trajMeasure` route and
+for external laws satisfying the explicit exploration-prefix equality;
+`theorem-card-only` for deriving that equality from a general environment and
+for the exact LML theorem.
 
-This card is not a local Lean proof.  It must not be listed as
-`compiled-local` until an actual imported or project-local pairwise-tail
-producer compiles through:
+The concrete local implementation is
+`ETC-FINITE-ARM-BOUNDED-PAIRWISE-WRONG-COMMIT`, ending at
+`ETC.explorationArgmaxHistory_prob_wrongCommit_le_pairwiseTailSum_of_boundedArmLaws`.
+It uses exploration-prefix action/filtration equality and the existing
+conditional centered-diff consumer, and has compiled through:
 
 ```bash
 python3 tools/bandit.py check
@@ -441,8 +482,10 @@ python3 tools/bandit.py check
 
 ## Failure Policy
 
-If no direct Mathlib theorem matches the pairwise empirical-mean event, stop
-and split the route into smaller leaves.  The common-denominator comparison
+If extending beyond the canonical bounded arm-law trajectory, do not reuse its
+prefix filtration equality without proving the target environment law. Split
+the route into explicit law transport, measurability/integrability, and regret
+assembly leaves. The common-denominator comparison
 leaf is already compiled as `ETC-EMP-MEAN-COMPARISON-AS-FINITE-SUM`; the next
 tail import wrappers are already compiled as `TAIL-SUBGAUSS-SUM` and
 `TAIL-SUBGAUSS-DIFF-SUM-IMPORT`, the abstract sub-Gaussian contract producer is
@@ -485,3 +528,43 @@ The next split should prove/import a source for one of:
 Do not pivot in the same batch to a full Hoeffding proof, filtration/history
 implementation, conditional expectation development, UCB, Thompson sampling,
 EXP3/Tsallis/OFUL/RL, or a final ETC theorem.
+
+## Per-Arm Assembly Update
+
+`ETC-PER-ARM-COMMIT-PROB-BOCHNER-ASSEMBLY` is now compiled. The expected suffix
+cost is a finite sum of `gap a` times the probability of the concrete commit
+fiber, so the route no longer needs a max-gap union assembly. The armwise event
+inclusion and canonical ENNReal probability bound are now compiled as
+`ETC-FINITE-ARM-BOUNDED-COMMIT-ARM-PAIRWISE-TAIL`. The current pairwise tail
+contract remains the one-sided fixed-horizon source. Finite ENNReal-to-Real
+conversion and termwise substitution now compile as
+`ETC-FINITE-ARM-BOUNDED-CANONICAL-PER-ARM-BOCHNER-REGRET`; the best-arm term
+vanishes and no arm union is taken. External exploration-prefix transport now
+compiles as
+`ETC-FINITE-ARM-BOUNDED-EXTERNAL-PREFIX-LAW-PER-ARM-BOCHNER-REGRET`, requiring
+only equality of the finite prefix pushforwards. Initial and successor
+conditional laws now derive that identity in
+`ETC-FINITE-ARM-BOUNDED-EXTERNAL-CONDDISTRIB-PER-ARM-BOCHNER-REGRET`. The
+stationary scheduled-arm replacement now compiles as
+`ETC-FINITE-ARM-BOUNDED-EXTERNAL-EXPLORATION-ARM-CONDDISTRIB-PER-ARM-BOCHNER-REGRET`;
+the LML-shaped full action/reward-history constant-law coarsening now compiles
+as `ETC-FINITE-ARM-BOUNDED-EXTERNAL-ACTION-REWARD-HISTORY-CONDDISTRIB-PER-ARM-BOCHNER-REGRET`.
+Action-selected feedback kernels and a.e. scheduled actions now convert to
+those constant laws in
+`ETC-FINITE-ARM-BOUNDED-EXTERNAL-ACTION-DEPENDENT-ACTION-REWARD-HISTORY-CONDDISTRIB-PER-ARM-BOCHNER-REGRET`.
+The dependency-light bounded law chain is closed. Direct common-proxy arm MGFs
+now also compile through the canonical pairwise empirical-mean tail contract,
+without bounded support. Concrete commit-fiber bounds, finite Real tails, and
+the canonical gap-weighted per-arm Bochner theorem now compile downstream.
+External exploration-prefix equality, generic initial/successor conditional-
+law transport, the scheduled exploration-arm endpoint, and the LML-shaped
+full action/reward-history constant-law consumer and its action-dependent
+selected-kernel adapter now compile as well. Dependency-light direct-MGF `Rat`
+law transport is closed. The downstream native Real product theorem,
+finite-prefix integral transport, scheduled initial/successor `condDistrib`
+exact-regret endpoint, and upstream-shaped selected feedback-law adapter now
+compile. The downstream least-encoded selector and action assembly also
+compile, including source-shaped history-score mapping and a faithful local
+bundle of the LML sequence fields. The remaining route is only a true
+cross-toolchain import over the actual LML symbols; do not reopen this tail-
+import route.

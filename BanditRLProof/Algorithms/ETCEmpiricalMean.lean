@@ -1,6 +1,8 @@
 import Mathlib.Algebra.Order.Field.Rat
 import Mathlib.Data.Real.Basic
 import BanditRLProof.Algorithms.ETCTraceCountLemmas
+import BanditRLProof.HistoryFiltration
+import BanditRLProof.MathlibWrappers
 
 /-!
 # ETC empirical means
@@ -25,6 +27,59 @@ def empMeanAtExploration {K : Nat} (spec : ETC.Spec K) (commitArm : Fin K)
       (spec.explorationPulls * K) /
     (pullCount (ETC.actionWithCommit spec commitArm) a
       (spec.explorationPulls * K) : Rat)
+
+/--
+Exploration empirical means depend only on the reward coordinates observed
+before the configured exploration horizon.
+
+This is the prefix-congruence bridge needed to reconstruct the ETC commit
+score from a finite reward history after exploration, rather than from an
+ambient reward trace with future coordinates.
+-/
+theorem empMeanAtExploration_eq_of_eq_on_prefix
+    {K : Nat}
+    (spec : ETC.Spec K) (commitArm : Fin K)
+    (reward0 reward1 : RewardTrace Rat)
+    (hprefix :
+      forall t, t < spec.explorationPulls * K -> reward0 t = reward1 t)
+    (a : Fin K) :
+    ETC.empMeanAtExploration spec commitArm reward0 a =
+      ETC.empMeanAtExploration spec commitArm reward1 a := by
+  have hsum :
+      sumRewards (ETC.actionWithCommit spec commitArm) reward0 a
+          (spec.explorationPulls * K) =
+        sumRewards (ETC.actionWithCommit spec commitArm) reward1 a
+          (spec.explorationPulls * K) := by
+    rw [sumRewards_eq_finset_filter_sum, sumRewards_eq_finset_filter_sum]
+    apply Finset.sum_congr rfl
+    intro t ht
+    exact hprefix t (Finset.mem_range.mp (Finset.mem_filter.mp ht).1)
+  simp [ETC.empMeanAtExploration, hsum]
+
+/--
+Once a finite reward history reaches the configured exploration horizon, its
+default-completed trace gives the same ETC exploration empirical mean as the
+ambient reward trace.
+
+This is the history-reconstruction bridge for a later generated commit policy:
+at generated action time `t + 1`, the state reads a history through `t`, so the
+explicit `spec.explorationPulls * K <= t + 1` contract supplies every score
+coordinate used by the commit rule.
+-/
+theorem empMeanAtExploration_completeRewardTrace_eq_of_explorationHorizon_le
+    {K : Nat}
+    (spec : ETC.Spec K) (commitArm : Fin K)
+    (reward : RewardTrace Rat) (t : Nat)
+    (horizon_le : spec.explorationPulls * K <= t + 1)
+    (a : Fin K) :
+    ETC.empMeanAtExploration spec commitArm
+      (History.completeRewardTrace t
+        (History.finiteRewardHistoryOfTrace reward t) (0 : Rat)) a =
+      ETC.empMeanAtExploration spec commitArm reward a := by
+  apply ETC.empMeanAtExploration_eq_of_eq_on_prefix
+  intro s hs
+  apply History.completeRewardTrace_finiteRewardHistoryOfTrace_apply_of_le
+  exact Nat.lt_succ_iff.mp (lt_of_lt_of_le hs horizon_le)
 
 /--
 The empirical-mean denominator at the ETC exploration horizon rewrites to the

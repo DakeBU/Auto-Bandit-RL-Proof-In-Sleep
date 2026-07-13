@@ -105,6 +105,59 @@ theorem argmaxCommitOracle_choose_spec
       (List.finRange K)).1 a (List.mem_finRange a)
 
 /--
+Selecting a particular arm with the concrete ETC argmax implies that arm's
+score is at least the selected model best arm's score.
+
+This is a deterministic single-fiber refinement of the existing wrong-commit
+union reduction. It preserves the candidate arm instead of existentially or
+union bounding it.
+-/
+theorem argmaxCommitOracle_eq_arm_subset_empMean_ge_bestArm
+    {Omega : Type u} {K : Nat}
+    (hK : 0 < K)
+    (model : FiniteBanditModel K)
+    (empMean : Omega -> Fin K -> Rat)
+    (a : Fin K) :
+    Set.Subset
+      {omega : Omega |
+        (ETC.argmaxCommitOracle hK).choose (empMean omega) = a}
+      {omega : Omega |
+        empMean omega a >= empMean omega model.bestArm} := by
+  intro omega hchoose
+  have hmax :=
+    ETC.argmaxCommitOracle_choose_spec hK (empMean omega) model.bestArm
+  rw [hchoose] at hmax
+  exact hmax
+
+/--
+The probability of committing to one concrete arm is bounded by any supplied
+tail bound for that arm's empirical mean exceeding the model best arm's mean.
+
+No union bound is taken. The result uses only measure monotonicity and the
+deterministic concrete-argmax fiber inclusion above.
+-/
+theorem prob_argmaxCommitOracle_eq_arm_le_pairwise_tail
+    {Omega : Type u} {K : Nat}
+    [MeasurableSpace Omega]
+    (hK : 0 < K)
+    (mu : MeasureTheory.Measure Omega)
+    (model : FiniteBanditModel K)
+    (empMean : Omega -> Fin K -> Rat)
+    (tail : Fin K -> ENNReal)
+    (a : Fin K)
+    (hpair_tail :
+      mu {omega : Omega |
+        empMean omega a >= empMean omega model.bestArm} <= tail a) :
+    mu {omega : Omega |
+        (ETC.argmaxCommitOracle hK).choose (empMean omega) = a} <=
+      tail a := by
+  exact le_trans
+    (MeasureTheory.measure_mono
+      (ETC.argmaxCommitOracle_eq_arm_subset_empMean_ge_bestArm
+        hK model empMean a))
+    hpair_tail
+
+/--
 The concrete argmax oracle instantiates the existing deterministic wrong-commit
 event reduction.
 

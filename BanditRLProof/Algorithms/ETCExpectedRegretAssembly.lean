@@ -3,6 +3,7 @@ import Mathlib.MeasureTheory.Integral.Bochner.Set
 import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
 import Mathlib.Data.ENNReal.Real
 import BanditRLProof.Algorithms.ETCWrongCommitRegretAssembly
+import BanditRLProof.ExpectationBochnerSums
 
 /-!
 # ETC lower-integral and Bochner regret assembly
@@ -193,6 +194,138 @@ theorem integrable_real_pseudoRegret_actionWithCommit_choice_of_measurable_commi
       refine MeasureTheory.Integrable.of_bound
         hf_meas.aestronglyMeasurable C ?_
       exact Filter.Eventually.of_forall hC
+
+/--
+Bochner/Real expected-regret assembly with a separate probability charge for
+each possible commit arm.
+
+The suffix term is decomposed into the finite family of measurable events
+`{omega | commit omega = a}`.  Unlike the coarser wrong-commit wrapper below,
+this theorem preserves every arm gap and therefore exposes the per-arm RHS
+needed by the LML ETC route.  It does not supply the armwise probability
+bounds themselves.
+-/
+theorem integral_real_pseudoRegret_actionWithCommit_choice_le_exploration_add_suffix_sum_gap_mul_commit_prob
+    {Omega : Type u} {K : Nat}
+    [MeasurableSpace Omega]
+    (mu : Measure Omega) [MeasureTheory.IsProbabilityMeasure mu]
+    (spec : ETC.Spec K) (model : FiniteBanditModel K)
+    (commit : Omega -> Fin K) (r : Nat)
+    (hmeas_commit : Measurable commit) :
+    MeasureTheory.integral mu
+      (fun omega : Omega =>
+        (((pseudoRegret model
+            (ETC.actionWithCommit spec (commit omega))
+            (spec.explorationPulls * K + r) : Rat) : Real))) <=
+    (((((Finset.univ : Finset (Fin K)).sum
+      (fun a : Fin K => model.gap a)) *
+      (((spec.explorationPulls : Nat) : Rat)) : Rat) : Real)) +
+    (Finset.univ : Finset (Fin K)).sum
+      (fun a : Fin K =>
+        ((((((r : Nat) : Rat) * model.gap a : Rat) : Real))) *
+          mu.real {omega : Omega | commit omega = a}) := by
+  let regret : Omega -> Real :=
+    fun omega : Omega =>
+      (((pseudoRegret model
+          (ETC.actionWithCommit spec (commit omega))
+          (spec.explorationPulls * K + r) : Rat) : Real))
+  let baseRat : Rat :=
+    ((Finset.univ : Finset (Fin K)).sum
+      (fun a : Fin K => model.gap a)) *
+      (((spec.explorationPulls : Nat) : Rat))
+  let baseReal : Real := ((baseRat : Rat) : Real)
+  let suffixValue : Fin K -> Real :=
+    fun a : Fin K =>
+      (((((r : Nat) : Rat) * model.gap a : Rat) : Real))
+  let commitSet : Fin K -> Set Omega :=
+    fun a : Fin K => {omega : Omega | commit omega = a}
+  let suffixTerm : Fin K -> Omega -> Real :=
+    fun a : Fin K => (commitSet a).indicator (fun _ => suffixValue a)
+  let suffix : Omega -> Real :=
+    fun omega : Omega =>
+      (Finset.univ : Finset (Fin K)).sum
+        (fun a : Fin K => suffixTerm a omega)
+  let bound : Omega -> Real :=
+    fun omega : Omega => baseReal + suffix omega
+  have hcommitSet : forall a : Fin K, MeasurableSet (commitSet a) := by
+    intro a
+    change MeasurableSet (commit ⁻¹' {a})
+    exact hmeas_commit (measurableSet_singleton a)
+  have hterm : forall a : Fin K, Integrable (suffixTerm a) mu := by
+    intro a
+    exact (integrable_const (suffixValue a)).indicator (hcommitSet a)
+  have hsuffix_integrable : Integrable suffix mu := by
+    exact
+      BanditRLProof.IntegrabilitySums.integrable_univ_sum
+        (mu := mu) (f := suffixTerm) hterm
+  have hbound_integrable : Integrable bound mu := by
+    exact (integrable_const baseReal).add hsuffix_integrable
+  have hregret_integrable : Integrable regret mu := by
+    simpa [regret] using
+      (ETC.integrable_real_pseudoRegret_actionWithCommit_choice_of_measurable_commit
+        (mu := mu) (spec := spec) (model := model)
+        (commit := commit) (r := r) hmeas_commit)
+  have hsuffix_apply : forall omega : Omega,
+      suffix omega = suffixValue (commit omega) := by
+    intro omega
+    rw [show suffix omega =
+        (Finset.univ : Finset (Fin K)).sum
+          (fun a : Fin K => suffixTerm a omega) by rfl]
+    rw [Finset.sum_eq_single (commit omega)]
+    all_goals simp [suffixTerm, commitSet]
+    aesop
+  have hpoint : forall omega : Omega, regret omega <= bound omega := by
+    intro omega
+    have hrat :=
+      ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_explorationPulls_add_suffix_gap
+        (spec := spec) (model := model) (commitArm := commit omega) (r := r)
+    have hreal :
+        regret omega <= baseReal + suffixValue (commit omega) := by
+      unfold regret baseReal baseRat suffixValue
+      exact_mod_cast hrat
+    simpa [bound, hsuffix_apply omega] using hreal
+  have hintegral_suffix :
+      MeasureTheory.integral mu suffix =
+        (Finset.univ : Finset (Fin K)).sum
+          (fun a : Fin K =>
+            suffixValue a * mu.real (commitSet a)) := by
+    rw [show suffix = fun omega : Omega =>
+        (Finset.univ : Finset (Fin K)).sum
+          (fun a : Fin K => suffixTerm a omega) by rfl]
+    rw [BanditRLProof.ExpectationBochnerSums.integral_univ_sum
+      (mu := mu) (f := suffixTerm) hterm]
+    apply Finset.sum_congr rfl
+    intro a _ha
+    rw [show suffixTerm a =
+        (commitSet a).indicator (fun _ : Omega => suffixValue a) by rfl]
+    rw [MeasureTheory.integral_indicator (hcommitSet a)]
+    rw [MeasureTheory.setIntegral_const]
+    simp [Measure.real, mul_comm]
+  calc
+    MeasureTheory.integral mu regret <=
+        MeasureTheory.integral mu bound := by
+      exact MeasureTheory.integral_mono
+        hregret_integrable hbound_integrable hpoint
+    _ = baseReal + MeasureTheory.integral mu suffix := by
+      rw [show bound = fun omega : Omega =>
+          (fun _omega : Omega => baseReal) omega + suffix omega by rfl]
+      rw [MeasureTheory.integral_add
+        (integrable_const baseReal) hsuffix_integrable]
+      rw [MeasureTheory.integral_const]
+      simp [MeasureTheory.probReal_univ]
+    _ = baseReal +
+        (Finset.univ : Finset (Fin K)).sum
+          (fun a : Fin K => suffixValue a * mu.real (commitSet a)) := by
+      rw [hintegral_suffix]
+    _ =
+        (((((Finset.univ : Finset (Fin K)).sum
+          (fun a : Fin K => model.gap a)) *
+          (((spec.explorationPulls : Nat) : Rat)) : Rat) : Real)) +
+        (Finset.univ : Finset (Fin K)).sum
+          (fun a : Fin K =>
+            ((((((r : Nat) : Rat) * model.gap a : Rat) : Real))) *
+              mu.real {omega : Omega | commit omega = a}) := by
+      rfl
 
 /--
 Bochner/Real expected-regret assembly for an `Omega`-indexed ETC commit

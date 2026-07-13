@@ -1,10 +1,10 @@
 # Memory Digest
 
-Task: `BRL-UCB-PORT-001`
-Generated: `2026-06-25T01:34:18+00:00`
+Task: `BRL-ETC-PORT-001`
+Generated: `2026-07-13T08:14:02+00:00`
 
-Recent trials: `6`
-Retrieval index: `research-wiki/retrieval-index/BRL-UCB-PORT-001.json`
+Recent trials: `0`
+Retrieval index: `research-wiki/retrieval-index/BRL-ETC-PORT-001.json`
 
 Next agents should read the task, conversion window, proof obligations, and
-LML theorem-card index before editing Lean.
+LML/Mathlib/textbook/scenario theorem-card indexes before editing Lean.

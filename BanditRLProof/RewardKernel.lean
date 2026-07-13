@@ -1,5 +1,6 @@
 import BanditRLProof.PolicyMeasurability
 import Mathlib.Probability.Kernel.Basic
+import Mathlib.Probability.Kernel.Composition.MapComap
 import Mathlib.Probability.Kernel.Composition.Prod
 import Mathlib.Probability.Kernel.IonescuTulcea.PartialTraj
 import Mathlib.Probability.Kernel.IonescuTulcea.Traj
@@ -128,6 +129,36 @@ def selectedMeasure
     (context : Context) (action : Action) :
     Measure Reward :=
   rewardKernel.kernel (context, action)
+
+/--
+Build a context-independent reward kernel from action-indexed probability
+laws. Countability and measurable singletons make the action-to-measure map
+measurable; pulling it back along `Prod.snd` leaves the context unrestricted.
+-/
+def contextIndependentOfActionLaws
+    [MeasurableSingletonClass Action] [Countable Action]
+    (actionLaw : Action -> Measure Reward)
+    (hprob : forall action, IsProbabilityMeasure (actionLaw action)) :
+    MarkovRewardKernel (Context × Action) Reward where
+  kernel :=
+    (ProbabilityTheory.Kernel.ofFunOfCountable actionLaw).comap
+      Prod.snd measurable_snd
+  isMarkovKernel := by
+    constructor
+    intro pair
+    simpa using hprob pair.2
+
+/-- A context-independent reward kernel selects the original action law. -/
+@[simp]
+theorem selectedMeasure_contextIndependentOfActionLaws
+    [MeasurableSingletonClass Action] [Countable Action]
+    (actionLaw : Action -> Measure Reward)
+    (hprob : forall action, IsProbabilityMeasure (actionLaw action))
+    (context : Context) (action : Action) :
+    selectedMeasure
+        (contextIndependentOfActionLaws actionLaw hprob) context action =
+      actionLaw action := by
+  rfl
 
 /-- A context/action-selected reward measure is a probability measure. -/
 theorem isProbabilityMeasure_selectedMeasure
@@ -777,6 +808,23 @@ theorem isMarkovKernel_historyStepKernelFamily
         (historyStepKernelFamily rewardKernel policy context state hcontext hstate n) :=
   fun n =>
     (historyStepRewardKernel rewardKernel policy context state hcontext hstate n).isMarkovKernel
+
+instance instIsMarkovKernel_historyStepKernelFamily
+    {Context : Type x} {State : Type u} {Action : Type y}
+    {Reward : Type v}
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSpace Reward]
+    (rewardKernel : MarkovRewardKernel (Context × Action) Reward)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((i : Finset.Iic n) -> Reward) -> Context)
+    (state : (n : Nat) -> ((i : Finset.Iic n) -> Reward) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n)) :
+    forall n : Nat,
+      ProbabilityTheory.IsMarkovKernel
+        (historyStepKernelFamily rewardKernel policy context state hcontext hstate n) :=
+  isMarkovKernel_historyStepKernelFamily rewardKernel policy context state
+    hcontext hstate
 
 /--
 For any measurable reward event, the event probability selected by one member
