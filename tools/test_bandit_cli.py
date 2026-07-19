@@ -90,6 +90,47 @@ class ReviewStatusCliTests(unittest.TestCase):
         self.assertEqual(spine_proc.returncode, 0, spine_proc.stderr)
         self.assertIn("spine: SPINE-CONCENTRATION", spine_proc.stdout)
 
+    def test_compact_lean_statement_preserves_result_let(self) -> None:
+        bandit = load_bandit_module()
+        statement = bandit.compact_lean_statement([
+            "theorem example (n : Nat) :",
+            "    let doubled := n + n",
+            "    doubled = 2 * n := by",
+            "  omega",
+        ], 0)
+        self.assertIn("let doubled := n + n", statement)
+        self.assertTrue(statement.endswith("doubled = 2 * n"), statement)
+        self.assertNotIn(":= by", statement)
+
+    def test_scan_lean_declarations_ignores_nested_block_comments(self) -> None:
+        bandit = load_bandit_module()
+        original_root = bandit.ROOT
+        try:
+            with tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                source_dir = root / "BanditRLProof"
+                source_dir.mkdir()
+                (source_dir / "Commented.lean").write_text(
+                    "/-!\n"
+                    "theorem fakeDoc : False := by contradiction\n"
+                    "/- def fakeNested := 0 -/\n"
+                    "-/\n"
+                    "namespace Demo\n"
+                    "def marker : String := \"-- /- not comments -/\"\n"
+                    "/- inline comment -/ theorem actual : True := by\n"
+                    "  trivial\n"
+                    "end Demo\n",
+                    encoding="utf-8",
+                )
+                bandit.ROOT = root
+
+                declarations = bandit.scan_lean_declarations()
+                names = [declaration["full_name"] for declaration in declarations]
+
+                self.assertEqual(names, ["Demo.marker", "Demo.actual"])
+        finally:
+            bandit.ROOT = original_root
+
     def test_run_cycle_review_gate_stops_when_response_missing(self) -> None:
         status_proc = self.run_bandit("review-status", "--json")
         payload = json.loads(status_proc.stdout)

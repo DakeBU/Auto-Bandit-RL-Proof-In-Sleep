@@ -2414,6 +2414,19 @@ example {Omega : Type u}
 
 example {Omega : Type u}
     [MeasurableSpace Omega]
+    {Idx : Type v} [DecidableEq Idx]
+    (mu : MeasureTheory.Measure Omega)
+    (s : Finset Idx) (hs : s.Nonempty)
+    (delta : Real)
+    (E : Idx -> Set Omega)
+    (hE : forall i, i ∈ s ->
+      mu (E i) <= ENNReal.ofReal (delta / (s.card : Real))) :
+    mu (⋃ i ∈ s, E i) <= ENNReal.ofReal delta := by
+  exact ProbabilityUnionBound.measure_biUnion_finset_le_of_uniform
+    mu s hs delta E hE
+
+example {Omega : Type u}
+    [MeasurableSpace Omega]
     {Idx : Type v} [Fintype Idx]
     (mu : MeasureTheory.Measure Omega)
     (E : Idx -> Set Omega) :
@@ -2532,6 +2545,294 @@ example {History : Type u} {Env : Type v} {Action : Type w}
   exact
     Thompson.PosteriorActionIdentityLedger.ofCountableEnv
       posterior actionKernel hactionKernel bestAction hmatch
+
+noncomputable example {History : Type u} {Env : Type v} {Action : Type w}
+    [MeasurableSpace History] [MeasurableSpace Env] [MeasurableSpace Action]
+    (posterior : PosteriorKernel.MarkovPosteriorKernel History Env)
+    (bestAction : Env -> Action) (hbestAction : Measurable bestAction) :
+    (Thompson.PosteriorActionIdentityLedger.ofPosteriorMap
+      posterior bestAction hbestAction).actionKernel =
+        posterior.kernel.map bestAction := by
+  rfl
+
+noncomputable example
+    {Omega : Type u} {History : Type v} {Env : Type w} {Action : Type*}
+    [MeasurableSpace Omega] [MeasurableSpace History]
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (env : Omega -> Env) (history : Omega -> History)
+    (nextAction : Omega -> Action)
+    (posterior : PosteriorKernel.MarkovPosteriorKernel History Env)
+    (bestAction : Env -> Action) (hbestAction : Measurable bestAction)
+    (henv : Measurable env) (hhistory : Measurable history)
+    (hnextAction : Measurable nextAction)
+    (haction :
+      ProbabilityTheory.condDistrib nextAction history mu =ᵐ[mu.map history]
+        posterior.kernel.map bestAction)
+    (hposterior :
+      posterior.kernel =ᵐ[mu.map history]
+        ProbabilityTheory.condDistrib env history mu) :
+    ProbabilityTheory.condDistrib nextAction history mu =ᵐ[mu.map history]
+      ProbabilityTheory.condDistrib (bestAction ∘ env) history mu := by
+  exact
+    Thompson.condDistrib_action_ae_eq_bestAction_of_posteriorMap
+      mu env history nextAction posterior bestAction hbestAction
+      henv hhistory hnextAction haction hposterior
+
+noncomputable example
+    {History : Type u} {Env : Type v}
+    [MeasurableSpace History]
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    (prior : MeasureTheory.Measure Env)
+    [MeasureTheory.IsProbabilityMeasure prior]
+    (likelihood : ProbabilityTheory.Kernel Env History)
+    [ProbabilityTheory.IsMarkovKernel likelihood] :
+    (PosteriorKernel.canonicalPosterior prior likelihood).kernel =ᵐ[
+        (PosteriorKernel.canonicalJointMeasure prior likelihood).map Prod.snd]
+      ProbabilityTheory.condDistrib Prod.fst Prod.snd
+        (PosteriorKernel.canonicalJointMeasure prior likelihood) := by
+  exact PosteriorKernel.canonicalPosterior_kernel_ae_eq_condDistrib_fst_snd
+    prior likelihood
+
+noncomputable example
+    {History : Type u} {Env : Type v} {Action : Type w}
+    [MeasurableSpace History]
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]
+    (prior : MeasureTheory.Measure Env)
+    [MeasureTheory.IsProbabilityMeasure prior]
+    (likelihood : ProbabilityTheory.Kernel Env History)
+    [ProbabilityTheory.IsMarkovKernel likelihood]
+    (nextAction : Env × History -> Action)
+    (bestAction : Env -> Action) (hbestAction : Measurable bestAction)
+    (hnextAction : Measurable nextAction)
+    (haction :
+      ProbabilityTheory.condDistrib nextAction Prod.snd
+          (PosteriorKernel.canonicalJointMeasure prior likelihood) =ᵐ[
+        (PosteriorKernel.canonicalJointMeasure prior likelihood).map Prod.snd]
+          (PosteriorKernel.canonicalPosterior prior likelihood).kernel.map
+            bestAction) :
+    ProbabilityTheory.condDistrib nextAction Prod.snd
+        (PosteriorKernel.canonicalJointMeasure prior likelihood) =ᵐ[
+      (PosteriorKernel.canonicalJointMeasure prior likelihood).map Prod.snd]
+        ProbabilityTheory.condDistrib (bestAction ∘ Prod.fst) Prod.snd
+          (PosteriorKernel.canonicalJointMeasure prior likelihood) := by
+  exact
+    Thompson.condDistrib_action_ae_eq_bestAction_of_canonicalPriorLikelihood
+      prior likelihood nextAction bestAction hbestAction hnextAction haction
+
+noncomputable example
+    {History : Type u} {Env : Type v} {Action : Type w}
+    [MeasurableSpace History]
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]
+    (prior : MeasureTheory.Measure Env)
+    [MeasureTheory.IsProbabilityMeasure prior]
+    (likelihood : ProbabilityTheory.Kernel Env History)
+    [ProbabilityTheory.IsMarkovKernel likelihood]
+    (bestAction : Env -> Action) (hbestAction : Measurable bestAction) :
+    ProbabilityTheory.condDistrib Thompson.canonicalSamplerAction
+        Thompson.canonicalSamplerHistory
+        (Thompson.canonicalSamplerMeasure
+          prior likelihood bestAction hbestAction) =ᵐ[
+      (Thompson.canonicalSamplerMeasure
+        prior likelihood bestAction hbestAction).map
+          Thompson.canonicalSamplerHistory]
+      ProbabilityTheory.condDistrib
+        (bestAction ∘ Thompson.canonicalSamplerEnv)
+        Thompson.canonicalSamplerHistory
+        (Thompson.canonicalSamplerMeasure
+          prior likelihood bestAction hbestAction) := by
+  exact Thompson.canonicalSampler_condDistrib_action_ae_eq_bestAction
+    prior likelihood bestAction hbestAction
+
+noncomputable example
+    {Omega : Type u} {OmegaRef : Type v}
+    {Env : Type w} {Action Reward : Type*}
+    [MeasurableSpace Omega] [MeasurableSpace OmegaRef]
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]
+    [MeasurableSpace Reward]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (env : Omega -> Env)
+    (action : Omega -> ActionTrace Action)
+    (reward : Omega -> RewardTrace Reward)
+    (henv : Measurable env)
+    (haction : forall t : Nat, Measurable (fun omega => action omega t))
+    (hreward : forall t : Nat, Measurable (fun omega => reward omega t))
+    (referenceMu : MeasureTheory.Measure OmegaRef)
+    [MeasureTheory.IsFiniteMeasure referenceMu]
+    (referenceEnv : OmegaRef -> Env)
+    (referenceAction : OmegaRef -> ActionTrace Action)
+    (referenceReward : OmegaRef -> RewardTrace Reward)
+    (hreferenceEnv : Measurable referenceEnv)
+    (hreferenceAction : forall t : Nat,
+      Measurable (fun omega => referenceAction omega t))
+    (hreferenceReward : forall t : Nat,
+      Measurable (fun omega => referenceReward omega t))
+    (n : Nat)
+    (bestAction : Env -> Action) (hbestAction : Measurable bestAction)
+    (hposteriorInvariance :
+      ProbabilityTheory.condDistrib referenceEnv
+          (fun omega => History.finitePairHistoryOfTrace
+            (referenceAction omega) (referenceReward omega) n)
+          referenceMu =ᵐ[
+        mu.map (fun omega => History.finitePairHistoryOfTrace
+          (action omega) (reward omega) n)]
+        ProbabilityTheory.condDistrib env
+          (fun omega => History.finitePairHistoryOfTrace
+            (action omega) (reward omega) n) mu) :
+    let actualHistory := fun omega => History.finitePairHistoryOfTrace
+      (action omega) (reward omega) n
+    let referenceHistory := fun omega => History.finitePairHistoryOfTrace
+      (referenceAction omega) (referenceReward omega) n
+    let policy := Thompson.referenceActionKernel
+      referenceMu referenceEnv referenceHistory hreferenceEnv
+      (History.measurable_finitePairHistoryOfTrace
+        referenceAction referenceReward hreferenceAction hreferenceReward n)
+      bestAction hbestAction
+    let sampler := Thompson.policySamplerMeasure mu actualHistory
+      (History.measurable_finitePairHistoryOfTrace
+        action reward haction hreward n) policy
+    ProbabilityTheory.condDistrib Thompson.policySamplerAction
+        (Thompson.policySamplerHistory actualHistory) sampler =ᵐ[
+      sampler.map (Thompson.policySamplerHistory actualHistory)]
+      ProbabilityTheory.condDistrib
+        (bestAction ∘ Thompson.policySamplerEnv env)
+        (Thompson.policySamplerHistory actualHistory) sampler := by
+  exact
+    Thompson.finitePairReferencePolicySampler_condDistrib_action_ae_eq_bestAction_of_posterior_invariance
+      (Omega := Omega) (OmegaRef := OmegaRef)
+      (Env := Env) (Action := Action) (Reward := Reward)
+      mu env action reward henv haction hreward
+      referenceMu referenceEnv referenceAction referenceReward
+      hreferenceEnv hreferenceAction hreferenceReward n
+      bestAction hbestAction hposteriorInvariance
+
+noncomputable example
+    {Omega : Type u} {OmegaRef : Type v}
+    {Env : Type w} {Action Reward : Type*}
+    [MeasurableSpace Omega] [MeasurableSpace OmegaRef]
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]
+    [MeasurableSpace Reward]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (env : Omega -> Env)
+    (action : Omega -> ActionTrace Action)
+    (reward : Omega -> RewardTrace Reward)
+    (henv : Measurable env)
+    (haction : forall t : Nat, Measurable (fun omega => action omega t))
+    (hreward : forall t : Nat, Measurable (fun omega => reward omega t))
+    (referenceMu : MeasureTheory.Measure OmegaRef)
+    [MeasureTheory.IsFiniteMeasure referenceMu]
+    (referenceEnv : OmegaRef -> Env)
+    (referenceAction : OmegaRef -> ActionTrace Action)
+    (referenceReward : OmegaRef -> RewardTrace Reward)
+    (hreferenceEnv : Measurable referenceEnv)
+    (hreferenceAction : forall t : Nat,
+      Measurable (fun omega => referenceAction omega t))
+    (hreferenceReward : forall t : Nat,
+      Measurable (fun omega => referenceReward omega t))
+    (n : Nat)
+    (bestAction : Env -> Action) (hbestAction : Measurable bestAction)
+    (source : Thompson.AlgorithmDensityPosteriorSource mu env
+      (fun omega => History.finitePairHistoryOfTrace
+        (action omega) (reward omega) n)
+      referenceMu referenceEnv
+      (fun omega => History.finitePairHistoryOfTrace
+        (referenceAction omega) (referenceReward omega) n)) :
+    let actualHistory := fun omega => History.finitePairHistoryOfTrace
+      (action omega) (reward omega) n
+    let referenceHistory := fun omega => History.finitePairHistoryOfTrace
+      (referenceAction omega) (referenceReward omega) n
+    let policy := Thompson.referenceActionKernel
+      referenceMu referenceEnv referenceHistory hreferenceEnv
+      (History.measurable_finitePairHistoryOfTrace
+        referenceAction referenceReward hreferenceAction hreferenceReward n)
+      bestAction hbestAction
+    let sampler := Thompson.policySamplerMeasure mu actualHistory
+      (History.measurable_finitePairHistoryOfTrace
+        action reward haction hreward n) policy
+    ProbabilityTheory.condDistrib Thompson.policySamplerAction
+        (Thompson.policySamplerHistory actualHistory) sampler =ᵐ[
+      sampler.map (Thompson.policySamplerHistory actualHistory)]
+      ProbabilityTheory.condDistrib
+        (bestAction ∘ Thompson.policySamplerEnv env)
+        (Thompson.policySamplerHistory actualHistory) sampler := by
+  exact
+    Thompson.finitePairReferencePolicySampler_condDistrib_action_ae_eq_bestAction_of_algorithmDensitySource
+      (Omega := Omega) (OmegaRef := OmegaRef)
+      (Env := Env) (Action := Action) (Reward := Reward)
+      mu env action reward henv haction hreward
+      referenceMu referenceEnv referenceAction referenceReward
+      hreferenceEnv hreferenceAction hreferenceReward n
+      bestAction hbestAction source
+
+noncomputable example
+    {Omega : Type u} {OmegaRef : Type v}
+    {Env : Type w} {Action Reward : Type*}
+    [MeasurableSpace Omega] [MeasurableSpace OmegaRef]
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]
+    [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (env : Omega -> Env)
+    (action : Omega -> ActionTrace Action)
+    (reward : Omega -> RewardTrace Reward)
+    (henv : Measurable env)
+    (haction : forall t : Nat, Measurable (fun omega => action omega t))
+    (hreward : forall t : Nat, Measurable (fun omega => reward omega t))
+    (referenceMu : MeasureTheory.Measure OmegaRef)
+    [MeasureTheory.IsFiniteMeasure referenceMu]
+    (referenceEnv : OmegaRef -> Env)
+    (referenceAction : OmegaRef -> ActionTrace Action)
+    (referenceReward : OmegaRef -> RewardTrace Reward)
+    (hreferenceEnv : Measurable referenceEnv)
+    (hreferenceAction : forall t : Nat,
+      Measurable (fun omega => referenceAction omega t))
+    (hreferenceReward : forall t : Nat,
+      Measurable (fun omega => referenceReward omega t))
+    (n : Nat)
+    (density : History.FinitePairHistory Action Reward n -> ENNReal)
+    (hdensity : Measurable density)
+    (henvLaw : mu.map env = referenceMu.map referenceEnv)
+    (hcond :
+      ProbabilityTheory.condDistrib
+          (fun omega => History.finitePairHistoryOfTrace
+            (action omega) (reward omega) n) env mu =ᵐ[mu.map env]
+        (ProbabilityTheory.condDistrib
+          (fun omega => History.finitePairHistoryOfTrace
+            (referenceAction omega) (referenceReward omega) n)
+          referenceEnv referenceMu).withDensity
+            (fun _ history => density history))
+    (bestAction : Env -> Action) (hbestAction : Measurable bestAction) :
+    let actualHistory := fun omega => History.finitePairHistoryOfTrace
+      (action omega) (reward omega) n
+    let referenceHistory := fun omega => History.finitePairHistoryOfTrace
+      (referenceAction omega) (referenceReward omega) n
+    let policy := Thompson.referenceActionKernel
+      referenceMu referenceEnv referenceHistory hreferenceEnv
+      (History.measurable_finitePairHistoryOfTrace
+        referenceAction referenceReward hreferenceAction hreferenceReward n)
+      bestAction hbestAction
+    let sampler := Thompson.policySamplerMeasure mu actualHistory
+      (History.measurable_finitePairHistoryOfTrace
+        action reward haction hreward n) policy
+    ProbabilityTheory.condDistrib Thompson.policySamplerAction
+        (Thompson.policySamplerHistory actualHistory) sampler =ᵐ[
+      sampler.map (Thompson.policySamplerHistory actualHistory)]
+      ProbabilityTheory.condDistrib
+        (bestAction ∘ Thompson.policySamplerEnv env)
+        (Thompson.policySamplerHistory actualHistory) sampler := by
+  exact
+    Thompson.finitePairReferencePolicySampler_condDistrib_action_ae_eq_bestAction_of_condDistrib_history_withDensity
+      (Omega := Omega) (OmegaRef := OmegaRef)
+      (Env := Env) (Action := Action) (Reward := Reward)
+      mu env action reward henv haction hreward
+      referenceMu referenceEnv referenceAction referenceReward
+      hreferenceEnv hreferenceAction hreferenceReward n
+      density hdensity henvLaw hcond bestAction hbestAction
 
 example {Omega : Type u}
     [MeasurableSpace Omega]
@@ -3292,6 +3593,214 @@ example {Omega : Type} [mOmega : MeasurableSpace Omega]
   exact Concentration.condSubGaussian_sum_tail_ennreal_of_stronglyAdapted
     h_adapted h0 n h_subG heps
 
+example {Omega : Type} [mOmega : MeasurableSpace Omega]
+    [StandardBorelSpace Omega]
+    {mu : MeasureTheory.Measure Omega}
+    [MeasureTheory.IsFiniteMeasure mu] [MeasureTheory.IsZeroOrProbabilityMeasure mu]
+    {Y : Nat -> Omega -> Real} {cY : Nat -> NNReal}
+    {F : MeasureTheory.Filtration Nat mOmega}
+    (h_adapted : MeasureTheory.StronglyAdapted F Y)
+    (h0 : ProbabilityTheory.HasSubgaussianMGF (Y 0) (cY 0) mu)
+    (n : Nat)
+    (h_subG :
+      forall i, i < n - 1 ->
+        ProbabilityTheory.HasCondSubgaussianMGF
+          (F i) (F.le i) (Y (i + 1)) (cY (i + 1)) mu)
+    {eps : Real} (heps : 0 <= eps) :
+    mu {omega |
+        eps <= |(Finset.range n).sum (fun i => Y i omega)|} <=
+      ENNReal.ofReal
+        (2 * Real.exp
+          (-eps ^ 2 / (2 * (((Finset.range n).sum cY : NNReal) : Real)))) := by
+  exact Concentration.condSubGaussian_sum_abs_tail_ennreal_of_stronglyAdapted
+    h_adapted h0 n h_subG heps
+
+example {Omega : Type} [mOmega : MeasurableSpace Omega]
+    [StandardBorelSpace Omega]
+    {mu : MeasureTheory.Measure Omega}
+    [MeasureTheory.IsFiniteMeasure mu] [MeasureTheory.IsZeroOrProbabilityMeasure mu]
+    {Y : Nat -> Omega -> Real} {cY : Nat -> NNReal}
+    {F : MeasureTheory.Filtration Nat mOmega}
+    (h_adapted : MeasureTheory.StronglyAdapted F Y)
+    (h0 : ProbabilityTheory.HasSubgaussianMGF (Y 0) (cY 0) mu)
+    (n : Nat)
+    (h_subG :
+      forall i, i < n - 1 ->
+        ProbabilityTheory.HasCondSubgaussianMGF
+          (F i) (F.le i) (Y (i + 1)) (cY (i + 1)) mu)
+    (hvariance : 0 < ((((Finset.range n).sum cY : NNReal) : Real)))
+    (delta : Real) (hdelta : 0 < delta) (hdelta_le_one : delta <= 1) :
+    mu {omega |
+        Concentration.subGaussianSumConfidenceRadius
+            ((Finset.range n).sum cY) delta <=
+          |(Finset.range n).sum (fun i => Y i omega)|} <=
+      ENNReal.ofReal delta := by
+  exact
+    Concentration.condSubGaussian_sum_abs_tail_ennreal_delta_of_stronglyAdapted
+      h_adapted h0 n h_subG hvariance delta hdelta hdelta_le_one
+
+example {Omega : Type} [mOmega : MeasurableSpace Omega]
+    [StandardBorelSpace Omega]
+    {mu : MeasureTheory.Measure Omega}
+    [MeasureTheory.IsFiniteMeasure mu] [MeasureTheory.IsZeroOrProbabilityMeasure mu]
+    {Y : Nat -> Omega -> Real} {cY : Nat -> NNReal}
+    {F : MeasureTheory.Filtration Nat mOmega}
+    (h_adapted : MeasureTheory.StronglyAdapted F Y)
+    (h0 : ProbabilityTheory.HasSubgaussianMGF (Y 0) (cY 0) mu)
+    (m : Nat) (hm : 0 < m)
+    (h_subG :
+      forall i, i < (m + 1) - 1 ->
+        ProbabilityTheory.HasCondSubgaussianMGF
+          (F i) (F.le i) (Y (i + 1)) (cY (i + 1)) mu)
+    (hvariance :
+      0 < ((((Finset.range (m + 1)).sum cY : NNReal) : Real)))
+    (delta : Real) (hdelta : 0 < delta) (hdelta_le_one : delta <= 1) :
+    mu {omega |
+        Concentration.subGaussianAverageConfidenceRadius
+            ((Finset.range (m + 1)).sum cY) m delta <=
+          |((Finset.range (m + 1)).sum (fun i => Y i omega)) /
+            (m : Real)|} <=
+      ENNReal.ofReal delta := by
+  exact
+    Concentration.condSubGaussian_average_abs_tail_ennreal_delta_of_stronglyAdapted
+      h_adapted h0 m hm h_subG hvariance delta hdelta hdelta_le_one
+
+example {Omega : Type} [MeasurableSpace Omega]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    {X : Nat -> Omega -> Real} {c : Nat -> NNReal}
+    (h_indep : ProbabilityTheory.iIndepFun X mu)
+    (m : Nat) (hm : 0 < m)
+    (h_subG : forall i, i < m ->
+      ProbabilityTheory.HasSubgaussianMGF (X i) (c i) mu)
+    (hvariance :
+      0 < ((((Finset.range m).sum c : NNReal) : Real)))
+    (delta : Real) (hdelta : 0 < delta) (hdelta_le_one : delta <= 1) :
+    mu {omega |
+        Concentration.subGaussianAverageConfidenceRadius
+            ((Finset.range m).sum c) m delta <=
+          |((Finset.range m).sum (fun i => X i omega)) / (m : Real)|} <=
+      ENNReal.ofReal delta := by
+  exact
+    Concentration.subGaussian_average_abs_tail_ennreal_delta_of_iIndepFun
+      mu h_indep m hm h_subG hvariance delta hdelta hdelta_le_one
+
+example {Omega : Type} [MeasurableSpace Omega]
+    (mu : MeasureTheory.Measure Omega) (X : Omega -> Real)
+    (count : Omega -> Nat) (variance : NNReal) (delta : Real)
+    (htail :
+      mu {omega |
+          Concentration.subGaussianSumConfidenceRadius variance delta <=
+            |X omega|} <=
+        ENNReal.ofReal delta) :
+    mu {omega |
+        0 < count omega /\
+          Concentration.subGaussianAverageConfidenceRadius
+              variance (count omega) delta <=
+            |X omega / (count omega : Real)|} <=
+      ENNReal.ofReal delta := by
+  exact
+    Concentration.measure_randomCount_average_abs_tail_le_of_measure_sum_abs_tail
+      mu X count variance delta htail
+
+example {Omega : Type} [MeasurableSpace Omega]
+    (mu : MeasureTheory.Measure Omega) (count : Omega -> Nat)
+    (maxCount : Nat) (bad : Nat -> Set Omega)
+    (hcount_le : forall omega, count omega <= maxCount) :
+    mu {omega | 0 < count omega ∧ omega ∈ bad (count omega)} <=
+      (Finset.range maxCount).sum (fun i =>
+        mu {omega | count omega = i + 1 ∧ omega ∈ bad (i + 1)}) := by
+  exact
+    Concentration.measure_positive_randomCount_event_le_sum_exactCount
+      mu count maxCount bad hcount_le
+
+example {Omega : Type} [MeasurableSpace Omega]
+    (mu : MeasureTheory.Measure Omega) (count : Omega -> Nat)
+    (maxCount : Nat) (bad : Nat -> Set Omega)
+    (hcount_le : forall omega, count omega <= maxCount)
+    (hmaxCount : 0 < maxCount)
+    (delta : Real) (hdelta : 0 < delta)
+    (hfiber : forall k, 0 < k -> k <= maxCount ->
+      mu {omega | count omega = k ∧ omega ∈ bad k} <=
+        ENNReal.ofReal (delta / (maxCount : Real))) :
+    mu {omega | 0 < count omega ∧ omega ∈ bad (count omega)} <=
+      ENNReal.ofReal delta := by
+  exact
+    Concentration.measure_positive_randomCount_event_le_of_exactCount_uniform
+      mu count maxCount bad hcount_le hmaxCount delta hdelta hfiber
+
+example {Omega : Type} {m mOmega : MeasurableSpace Omega}
+    [StandardBorelSpace Omega]
+    {mu : MeasureTheory.Measure Omega}
+    [MeasureTheory.IsProbabilityMeasure mu]
+    {X : Omega -> Real} {c : NNReal}
+    (hm : m <= mOmega)
+    (hX : ProbabilityTheory.HasCondSubgaussianMGF m hm X c mu)
+    {s : Set Omega} (hs : @MeasurableSet Omega m s) :
+    ProbabilityTheory.HasCondSubgaussianMGF m hm (s.indicator X) c mu := by
+  exact ProbabilityTheory.HasCondSubgaussianMGF.indicator hm hX hs
+
+example {Omega : Type} {m mOmega : MeasurableSpace Omega}
+    [StandardBorelSpace Omega]
+    {mu : MeasureTheory.Measure Omega}
+    [MeasureTheory.IsProbabilityMeasure mu]
+    {X : Omega -> Real} {c : NNReal}
+    (hm : m <= mOmega)
+    (hX : ProbabilityTheory.HasCondSubgaussianMGF m hm X c mu)
+    {s : Set Omega} (hs : @MeasurableSet Omega m s)
+    (tilt : Real) :
+    Concentration.HasCondMGFUpperBoundAt m hm
+      (fun omega =>
+        tilt * s.indicator X omega -
+          (((c : NNReal) : Real) * tilt ^ 2 / 2) *
+            s.indicator (fun _ : Omega => (1 : Real)) omega)
+      1 0 mu := by
+  exact
+    ProbabilityTheory.HasCondSubgaussianMGF.indicator_compensated_hasCondMGFUpperBoundAt
+      hm hX hs tilt
+
+example {Omega : Type} [mOmega : MeasurableSpace Omega]
+    [StandardBorelSpace Omega]
+    {mu : MeasureTheory.Measure Omega}
+    [MeasureTheory.IsProbabilityMeasure mu]
+    (F : MeasureTheory.Filtration Nat mOmega)
+    (X : Nat -> Omega -> Real) (c : Nat -> NNReal)
+    (s : Nat -> Set Omega)
+    (hY : MeasureTheory.StronglyAdapted F (fun t omega =>
+      match t with
+      | 0 => 0
+      | i + 1 => (s i).indicator (X i) omega))
+    (hV : MeasureTheory.StronglyAdapted F (fun t omega =>
+      match t with
+      | 0 => 0
+      | i + 1 =>
+          (s i).indicator (fun _ => (((c i : NNReal) : Real))) omega))
+    (hs : forall i, @MeasurableSet Omega (F i) (s i))
+    (n : Nat)
+    (h_subG : forall i, i < n - 1 ->
+      ProbabilityTheory.HasCondSubgaussianMGF
+        (F i) (F.le i) (X i) (c i) mu)
+    (varianceBudget delta : Real)
+    (hvarianceBudget : 0 < varianceBudget) (hdelta : 0 < delta) :
+    mu {omega |
+        Concentration.subGaussianPredictableVarianceRadius
+            varianceBudget delta <=
+          |(Finset.range n).sum (fun t =>
+            match t with
+            | 0 => 0
+            | i + 1 => (s i).indicator (X i) omega)| /\
+        (Finset.range n).sum (fun t =>
+          match t with
+          | 0 => 0
+          | i + 1 =>
+              (s i).indicator
+                (fun _ => (((c i : NNReal) : Real))) omega) <=
+          varianceBudget} <=
+      ENNReal.ofReal delta := by
+  exact
+    Concentration.condSubGaussian_indicator_sum_abs_tail_predictableVariance_delta
+      F X c s hY hV hs n h_subG varianceBudget delta
+        hvarianceBudget hdelta
+
 example {Omega : Type} {K : Nat}
     [MeasurableSpace Omega]
     (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
@@ -3867,6 +4376,42 @@ example {Omega : Type}
     ConditionalExpectationReward.condExp_eq_zero_of_condExpKernel_integral_eq_zero
       (mOmega := mOmega)
       mu mcond hm X h_integrable h_kernel_zero
+
+example {Omega Target : Type}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [mTarget : MeasurableSpace Target]
+    [MeasurableSpace.CountablyGenerated Target]
+    (mu : MeasureTheory.Measure Omega)
+    [MeasureTheory.IsFiniteMeasure mu]
+    (mcond : MeasurableSpace Omega) (hm : mcond <= mOmega)
+    (X : Omega -> Target)
+    (hX : @Measurable Omega Target mcond mTarget X) :
+    Filter.EventuallyEq (MeasureTheory.ae (mu.trim hm))
+      (@ProbabilityTheory.Kernel.map Omega Omega mcond mOmega Target mTarget
+        (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _ mcond) X)
+      (@ProbabilityTheory.Kernel.deterministic Omega Target mcond mTarget X hX) := by
+  exact
+    ConditionalExpectationReward.condExpKernel_map_eq_deterministic_of_measurable
+      (mOmega := mOmega) (mTarget := mTarget) mu mcond hm X hX
+
+example {Omega Target : Type}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [mTarget : MeasurableSpace Target]
+    [MeasurableSpace.CountablyGenerated Target]
+    (mu : MeasureTheory.Measure Omega)
+    [MeasureTheory.IsFiniteMeasure mu]
+    (mcond : MeasurableSpace Omega) (hm : mcond <= mOmega)
+    (X : Omega -> Target)
+    (hX : @Measurable Omega Target mcond mTarget X) :
+    Filter.Eventually
+      (fun omega =>
+        @MeasureTheory.Measure.map Omega Target mOmega mTarget X
+            (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _ mcond omega) =
+          @MeasureTheory.Measure.dirac Target mTarget (X omega))
+      (MeasureTheory.ae (mu.trim hm)) := by
+  exact
+    ConditionalExpectationReward.condExpKernel_map_eq_dirac_of_measurable
+      (mOmega := mOmega) (mTarget := mTarget) mu mcond hm X hX
 
 example {Omega Target Condition : Type}
     [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
@@ -29698,6 +30243,888 @@ example {Action : Type} (arms : Finset Action)
         Exp3Potential.potentialProcess arms w 0 := by
   exact Exp3Potential.potentialProcess_telescope_sum_range arms w T
 
+example {Action : Type} (arms : Finset Action) (harms : arms.Nonempty)
+    (eta : Real) (heta : 0 < eta) (heta_le : eta <= 1)
+    (loss : Nat -> Action -> Real) (T : Nat)
+    (hloss : forall t, t < T -> forall a, a ∈ arms ->
+      0 <= loss t a ∧ loss t a <= 1)
+    (comparator : Action) (hcomparator : comparator ∈ arms) :
+    (Finset.range T).sum (fun t => Exp3.mixedLoss arms eta loss t) -
+        Exp3.cumulativeLoss loss T comparator <=
+      Real.log arms.card / eta +
+        eta * (Finset.range T).sum
+          (fun t => Exp3.mixedSquaredLoss arms eta loss t) := by
+  exact Exp3.hedge_regret_le_log_card_div_add_eta_mul_mixedSquaredLoss
+    arms harms eta heta heta_le loss T hloss comparator hcomparator
+
+example {Action : Type} (arms : Finset Action) (harms : arms.Nonempty)
+    (eta : Real) (heta : 0 < eta) (heta_le : eta <= 1)
+    (loss : Nat -> Action -> Real) (T : Nat)
+    (hloss : forall t, t < T -> forall a, a ∈ arms ->
+      0 <= loss t a ∧ loss t a <= 1)
+    (comparator : Action) (hcomparator : comparator ∈ arms) :
+    (Finset.range T).sum (fun t => Exp3.mixedLoss arms eta loss t) -
+        Exp3.cumulativeLoss loss T comparator <=
+      Real.log arms.card / eta + eta * T := by
+  exact Exp3.hedge_regret_le_log_card_div_add_eta_mul_horizon
+    arms harms eta heta heta_le loss T hloss comparator hcomparator
+
+example {Action : Type} (arms : Finset Action) (harms : arms.Nonempty)
+    (eta : Real) (heta : 0 < eta)
+    (loss : Nat -> Action -> Real) (T : Nat)
+    (hloss : forall t, t < T -> forall a, a ∈ arms -> 0 <= loss t a)
+    (comparator : Action) (hcomparator : comparator ∈ arms) :
+    (Finset.range T).sum (fun t => Exp3.mixedLoss arms eta loss t) -
+        Exp3.cumulativeLoss loss T comparator <=
+      Real.log arms.card / eta +
+        eta * (Finset.range T).sum
+          (fun t => Exp3.mixedSquaredLoss arms eta loss t) := by
+  exact
+    Exp3.hedge_regret_le_log_card_div_add_eta_mul_mixedSquaredLoss_of_nonneg
+      arms harms eta heta loss T hloss comparator hcomparator
+
+example {Action : Type} [DecidableEq Action]
+    (arms : Finset Action) (prob loss : Action -> Real)
+    (action : Action) (haction : action ∈ arms) (hprob : prob action ≠ 0) :
+    arms.sum (fun chosen =>
+        prob chosen * Exp3.importanceWeightedLoss prob loss chosen action) =
+      loss action := by
+  exact Exp3.sum_prob_mul_importanceWeightedLoss_eq_loss
+    arms prob loss action haction hprob
+
+example {Action : Type} [DecidableEq Action]
+    (arms : Finset Action) (prob loss : Action -> Real)
+    (hprob : forall action, action ∈ arms -> prob action ≠ 0) :
+    arms.sum (fun chosen =>
+        prob chosen *
+          Exp3.mixedImportanceWeightedLoss arms prob loss chosen) =
+      arms.sum (fun action => prob action * loss action) := by
+  exact Exp3.sum_prob_mul_mixedImportanceWeightedLoss_eq_mixedLoss
+    arms prob loss hprob
+
+example {Action : Type} [DecidableEq Action]
+    (arms : Finset Action) (prob loss : Action -> Real)
+    (hprob : forall action, action ∈ arms -> prob action ≠ 0)
+    (hloss : forall action, action ∈ arms ->
+      0 <= loss action ∧ loss action <= 1) :
+    arms.sum (fun chosen =>
+        prob chosen *
+          Exp3.mixedSquaredImportanceWeightedLoss arms prob loss chosen) <=
+      arms.card := by
+  exact Exp3.sum_prob_mul_mixedSquaredImportanceWeightedLoss_le_card
+    arms prob loss hprob hloss
+
+example {Action : Type} [MeasurableSpace Action]
+    [MeasurableSingletonClass Action]
+    (arms : Finset Action) (prob : Action -> Real)
+    (hdist : Exp3.FiniteActionDistribution arms prob) :
+    MeasureTheory.IsProbabilityMeasure
+      (Exp3.finiteActionMeasure arms prob) := by
+  exact Exp3.finiteActionMeasure_isProbabilityMeasure arms prob hdist
+
+example {Omega History Action : Type}
+    [MeasurableSpace Omega] [MeasurableSpace History]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (history : Omega -> History) (hhistory : Measurable history)
+    (action : Omega -> Action) (haction : Measurable action)
+    (arms : Finset Action) (prob loss : History -> Action -> Real)
+    (hdist : forall h, Exp3.FiniteActionDistribution arms (prob h))
+    (hprob : forall h candidate, candidate ∈ arms -> 0 < prob h candidate)
+    (policy : ProbabilityTheory.Kernel History Action)
+    [ProbabilityTheory.IsMarkovKernel policy]
+    (hpolicy : policy =ᵐ[mu.map history]
+      fun h => Exp3.finiteActionMeasure arms (prob h))
+    (hcond : ProbabilityTheory.condDistrib action history mu =ᵐ[mu.map history]
+      policy)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (hscore : Measurable (fun z : History × Action =>
+      Exp3.importanceWeightedLoss (prob z.1) (loss z.1) z.2 comparator))
+    (hIntegrable : MeasureTheory.Integrable (fun z : History × Action =>
+      Exp3.importanceWeightedLoss (prob z.1) (loss z.1) z.2 comparator)
+      (MeasureTheory.Measure.compProd (mu.map history) policy)) :
+    MeasureTheory.integral mu (fun omega =>
+      Exp3.importanceWeightedLoss (prob (history omega))
+        (loss (history omega)) (action omega) comparator) =
+      MeasureTheory.integral (mu.map history) (fun h => loss h comparator) := by
+  exact Exp3.integral_importanceWeightedLoss_eq_integral_loss_of_condDistrib
+    mu history hhistory action haction arms prob loss hdist hprob policy
+      hpolicy hcond comparator hcomparator hscore hIntegrable
+
+example {Omega History Action : Type}
+    [MeasurableSpace Omega] [MeasurableSpace History]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (history : Omega -> History) (hhistory : Measurable history)
+    (action : Omega -> Action) (haction : Measurable action)
+    (arms : Finset Action) (prob loss : History -> Action -> Real)
+    (hdist : forall h, Exp3.FiniteActionDistribution arms (prob h))
+    (hprob : forall h candidate, candidate ∈ arms -> 0 < prob h candidate)
+    (policy : ProbabilityTheory.Kernel History Action)
+    [ProbabilityTheory.IsMarkovKernel policy]
+    (hpolicy : policy =ᵐ[mu.map history]
+      fun h => Exp3.finiteActionMeasure arms (prob h))
+    (hcond : ProbabilityTheory.condDistrib action history mu =ᵐ[mu.map history]
+      policy)
+    (hscore : Measurable (fun z : History × Action =>
+      Exp3.mixedSquaredImportanceWeightedLoss arms
+        (prob z.1) (loss z.1) z.2))
+    (hIntegrable : MeasureTheory.Integrable (fun z : History × Action =>
+      Exp3.mixedSquaredImportanceWeightedLoss arms
+        (prob z.1) (loss z.1) z.2)
+      (MeasureTheory.Measure.compProd (mu.map history) policy)) :
+    MeasureTheory.integral mu (fun omega =>
+      Exp3.mixedSquaredImportanceWeightedLoss arms
+        (prob (history omega)) (loss (history omega)) (action omega)) =
+      MeasureTheory.integral (mu.map history) (fun h =>
+        arms.sum (fun candidate => (loss h candidate) ^ 2)) := by
+  exact
+    Exp3.integral_mixedSquaredImportanceWeightedLoss_eq_integral_sum_loss_sq_of_condDistrib
+      mu history hhistory action haction arms prob loss hdist hprob policy
+        hpolicy hcond hscore hIntegrable
+
+example {History Action : Type}
+    [MeasurableSpace History]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action]
+    (historyMu : MeasureTheory.Measure History)
+    [MeasureTheory.IsFiniteMeasure historyMu]
+    (arms : Finset Action) (prob : History -> Action -> Real)
+    (source : Exp3.MeasurableFiniteActionDistribution arms prob) :
+    ProbabilityTheory.condDistrib Exp3.actionProcessAction
+        Exp3.actionProcessHistory
+        (Exp3.actionProcessMeasure historyMu arms prob source) =ᵐ[
+      (Exp3.actionProcessMeasure historyMu arms prob source).map
+        Exp3.actionProcessHistory]
+      Exp3.finiteActionKernel arms prob source := by
+  exact Exp3.actionProcess_condDistrib_action_ae_eq_finiteActionKernel
+    historyMu arms prob source
+
+example {History Action : Type}
+    [MeasurableSpace History]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    (historyMu : MeasureTheory.Measure History)
+    [MeasureTheory.IsFiniteMeasure historyMu]
+    (arms : Finset Action) (prob : History -> Action -> Real)
+    (source : Exp3.MeasurableFiniteActionDistribution arms prob) :
+    (Exp3.actionProcessMeasure historyMu arms prob source).map
+        Exp3.actionProcessHistory = historyMu := by
+  exact Exp3.actionProcess_history_map_eq historyMu arms prob source
+
+#check Exp3.actionProcess_integral_importanceWeightedLoss_eq_integral_loss
+#check Exp3.actionProcess_integral_mixedImportanceWeightedLoss_eq_integral_mixedLoss
+
+example {History Action : Type}
+    [MeasurableSpace History]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (historyMu : MeasureTheory.Measure History)
+    [MeasureTheory.IsFiniteMeasure historyMu]
+    (arms : Finset Action) (prob loss : History -> Action -> Real)
+    (source : Exp3.MeasurableFiniteActionDistribution arms prob)
+    (hprob : forall history action, action ∈ arms -> 0 < prob history action)
+    (hscore : Measurable (fun z : History × Action =>
+      Exp3.mixedSquaredImportanceWeightedLoss arms
+        (prob z.1) (loss z.1) z.2))
+    (hIntegrable : MeasureTheory.Integrable (fun z : History × Action =>
+      Exp3.mixedSquaredImportanceWeightedLoss arms
+        (prob z.1) (loss z.1) z.2)
+      (MeasureTheory.Measure.compProd historyMu
+        (Exp3.finiteActionKernel arms prob source))) :
+    MeasureTheory.integral
+        (Exp3.actionProcessMeasure historyMu arms prob source) (fun sample =>
+          Exp3.mixedSquaredImportanceWeightedLoss arms
+            (prob (Exp3.actionProcessHistory sample))
+            (loss (Exp3.actionProcessHistory sample))
+            (Exp3.actionProcessAction sample)) =
+      MeasureTheory.integral historyMu (fun history =>
+        arms.sum (fun action => (loss history action) ^ 2)) := by
+  exact
+    Exp3.actionProcess_integral_mixedSquaredImportanceWeightedLoss_eq_integral_sum_loss_sq
+      historyMu arms prob loss source hprob hscore hIntegrable
+
+#check Exp3.BoundedMeasurableLossWithProbabilityFloor
+#check Exp3.norm_mixedSquaredImportanceWeightedLoss_score_le_inv_floor_sq
+#check Exp3.actionProcess_integral_importanceWeightedLoss_eq_integral_loss_of_regularity
+#check Exp3.actionProcess_integral_mixedImportanceWeightedLoss_eq_integral_mixedLoss_of_regularity
+#check Exp3.actionProcess_integral_mixedSquaredImportanceWeightedLoss_eq_integral_sum_loss_sq_of_regularity
+
+example {History Action : Type}
+    [MeasurableSpace History]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [DecidableEq Action]
+    (historyMu : MeasureTheory.Measure History)
+    [MeasureTheory.IsFiniteMeasure historyMu]
+    (arms : Finset Action) (prob loss : History -> Action -> Real)
+    (source : Exp3.MeasurableFiniteActionDistribution arms prob)
+    (epsilon : Real)
+    (regularity : Exp3.BoundedMeasurableLossWithProbabilityFloor
+      arms prob loss epsilon) :
+    MeasureTheory.Integrable (fun sample : History × Action =>
+      Exp3.mixedSquaredImportanceWeightedLoss arms
+        (prob sample.1) (loss sample.1) sample.2)
+      (MeasureTheory.Measure.compProd historyMu
+        (Exp3.finiteActionKernel arms prob source)) := by
+  exact Exp3.integrable_mixedSquaredImportanceWeightedLoss_score
+    historyMu arms prob loss source epsilon regularity
+
+example {History Action : Type}
+    [MeasurableSpace History]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (historyMu : MeasureTheory.Measure History)
+    [MeasureTheory.IsFiniteMeasure historyMu]
+    (arms : Finset Action) (prob loss : History -> Action -> Real)
+    (source : Exp3.MeasurableFiniteActionDistribution arms prob)
+    (epsilon : Real)
+    (regularity : Exp3.BoundedMeasurableLossWithProbabilityFloor
+      arms prob loss epsilon) :
+    MeasureTheory.integral
+        (Exp3.actionProcessMeasure historyMu arms prob source) (fun sample =>
+          Exp3.mixedSquaredImportanceWeightedLoss arms
+            (prob (Exp3.actionProcessHistory sample))
+            (loss (Exp3.actionProcessHistory sample))
+            (Exp3.actionProcessAction sample)) =
+      MeasureTheory.integral historyMu (fun history =>
+        arms.sum (fun action => (loss history action) ^ 2)) := by
+  exact
+    Exp3.actionProcess_integral_mixedSquaredImportanceWeightedLoss_eq_integral_sum_loss_sq_of_regularity
+      historyMu arms prob loss source epsilon regularity
+
+#check Exp3.MeasurableFiniteHistoryScore
+#check Exp3.exploredHistoryDistribution_floor
+#check Exp3.exploredTrajectoryKernel
+
+example {Env Action Loss : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action]
+    [MeasurableSpace Loss] [StandardBorelSpace Loss] [Nonempty Loss]
+    (prior : MeasureTheory.Measure Env)
+    [MeasureTheory.IsFiniteMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real)
+    (score : (n : Nat) -> History.FinitePairHistory Action Loss n ->
+      Action -> Real)
+    (hscore : Exp3.MeasurableFiniteHistoryScore arms score)
+    (hgamma_nonneg : 0 <= gamma) (hgamma_le_one : gamma <= 1)
+    (environment : Thompson.MeasurableHistoryEnvironment Env Action Loss)
+    (n : Nat) :
+    ProbabilityTheory.condDistrib
+        (fun sample : Env × ((k : Nat) -> Action × Loss) =>
+          (sample.2 (n + 1)).1)
+        (fun sample => Preorder.frestrictLe n sample.2)
+        (MeasureTheory.Measure.compProd prior
+          (Exp3.exploredTrajectoryKernel arms harms eta gamma score
+            hscore hgamma_nonneg hgamma_le_one environment)) =ᵐ[
+      (MeasureTheory.Measure.compProd prior
+        (Exp3.exploredTrajectoryKernel arms harms eta gamma score
+          hscore hgamma_nonneg hgamma_le_one environment)).map
+          (fun sample => Preorder.frestrictLe n sample.2)]
+      Exp3.finiteActionKernel arms
+        (Exp3.exploredHistoryDistribution arms eta gamma (score n))
+        (Exp3.exploredHistoryDistributionSource arms harms eta gamma score
+          hscore hgamma_nonneg hgamma_le_one n) := by
+  exact Exp3.exploredTrajectoryMeasure_condDistrib_action prior arms harms
+    eta gamma score hscore hgamma_nonneg hgamma_le_one environment n
+
+#check Exp3.sampledHistoryScore_succ
+#check Exp3.measurableFiniteHistoryScore_sampledHistoryScore
+#check Exp3.sampledImportanceWeightedHistoryAlgorithm
+#check Exp3.sampledImportanceWeightedTrajectoryKernel
+
+example {Action : Type} [DecidableEq Action]
+    (arms : Finset Action) (eta gamma : Real) (n : Nat)
+    (history : History.FinitePairHistory Action Real (n + 1))
+    (action : Action) :
+    Exp3.sampledHistoryScore arms eta gamma (n + 1) history action =
+      Exp3.sampledHistoryScore arms eta gamma n
+          (Exp3.previousPairHistory history) action +
+        Exp3.importanceWeightedLoss
+          (Exp3.sampledHistoryDistribution arms eta gamma n
+            (Exp3.previousPairHistory history))
+          (fun _ =>
+            (history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩).2)
+          (history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩).1 action := by
+  exact Exp3.sampledHistoryScore_succ arms eta gamma n history action
+
+example {Env Action : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : MeasureTheory.Measure Env)
+    [MeasureTheory.IsFiniteMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real)
+    (hgamma_nonneg : 0 <= gamma) (hgamma_le_one : gamma <= 1)
+    (environment : Thompson.MeasurableHistoryEnvironment Env Action Real)
+    (n : Nat) :
+    ProbabilityTheory.condDistrib
+        (fun sample : Env × ((k : Nat) -> Action × Real) =>
+          (sample.2 (n + 1)).1)
+        (fun sample => Preorder.frestrictLe n sample.2)
+        (MeasureTheory.Measure.compProd prior
+          (Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+            eta gamma hgamma_nonneg hgamma_le_one environment)) =ᵐ[
+      (MeasureTheory.Measure.compProd prior
+        (Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+          eta gamma hgamma_nonneg hgamma_le_one environment)).map
+          (fun sample => Preorder.frestrictLe n sample.2)]
+      Exp3.finiteActionKernel arms
+        (Exp3.sampledHistoryDistribution arms eta gamma n)
+        (Exp3.exploredHistoryDistributionSource arms harms eta gamma
+          (Exp3.sampledHistoryScore arms eta gamma)
+          (Exp3.measurableFiniteHistoryScore_sampledHistoryScore
+            arms eta gamma)
+          hgamma_nonneg hgamma_le_one n) := by
+  exact
+    Exp3.sampledImportanceWeightedTrajectoryMeasure_condDistrib_action
+      prior arms harms eta gamma hgamma_nonneg hgamma_le_one environment n
+
+#check Exp3.PredictableLossVector
+#check Exp3.sampledImportanceWeightedTrajectoryMeasure_condDistrib_action_given_environment
+#check Exp3.canonicalMeasurableEnvironmentTrajectoryMeasure_map_environment_prefix_next_eq_compProd
+#check Exp3.canonicalPredictableTrajectoryMeasure_reward_zero_eq_initialLoss_ae
+#check Exp3.sampledPredictableTrajectoryMeasure_reward_eq_successorLoss_ae
+#check Exp3.sampledPredictableObservedSuccessor_first_second_moment
+#check Exp3.sampledPredictableObservedAt_first_second_moment
+#check Exp3.sampledPredictableObserved_finiteHorizon_first_second_moment
+
+example {Env Action : Type}
+    [MeasurableSpace Env] [MeasurableSpace Action]
+    (loss : Exp3.PredictableLossVector Env Action)
+    (n : Nat) (env : Env)
+    (history : History.FinitePairHistory Action Real n) (action : Action) :
+    loss.environment.feedback n (env, (history, action)) =
+      MeasureTheory.Measure.dirac
+        (loss.successor n env history action) := by
+  exact loss.environment_feedback_apply n env history action
+
+example {Env Action : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : MeasureTheory.Measure Env) [MeasureTheory.IsFiniteMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real)
+    (hgamma_nonneg : 0 <= gamma) (hgamma_le_one : gamma <= 1)
+    (loss : Exp3.PredictableLossVector Env Action) (n : Nat) :
+    (fun sample : Env × ((k : Nat) -> Action × Real) =>
+        (sample.2 (n + 1)).2) =ᵐ[
+      MeasureTheory.Measure.compProd prior
+        (Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+          eta gamma hgamma_nonneg hgamma_le_one loss.environment)]
+      (fun sample : Env × ((k : Nat) -> Action × Real) =>
+        loss.successor n sample.1 (Preorder.frestrictLe n sample.2)
+          (sample.2 (n + 1)).1) := by
+  exact
+    Exp3.sampledPredictableTrajectoryMeasure_reward_eq_successorLoss_ae
+      prior arms harms eta gamma hgamma_nonneg hgamma_le_one loss n
+
+example {Env Action : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : MeasureTheory.Measure Env) [MeasureTheory.IsFiniteMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (hgamma_pos : 0 < gamma)
+    (hgamma_le_one : gamma <= 1)
+    (loss : Exp3.PredictableLossVector Env Action) (n : Nat)
+    (comparator : Action) (hcomparator : comparator ∈ arms) :
+    let mu := MeasureTheory.Measure.compProd prior
+      (Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+        eta gamma hgamma_pos.le hgamma_le_one loss.environment)
+    let history := fun sample : Env × ((k : Nat) -> Action × Real) =>
+      (sample.1, Preorder.frestrictLe n sample.2)
+    let prob :=
+      fun input : Env × History.FinitePairHistory Action Real n =>
+        Exp3.sampledHistoryDistribution arms eta gamma n input.2
+    let roundLoss :=
+      fun input : Env × History.FinitePairHistory Action Real n =>
+        loss.successor n input.1 input.2
+    (MeasureTheory.integral mu (fun sample =>
+        Exp3.importanceWeightedLoss (prob (history sample))
+          (fun _ => (sample.2 (n + 1)).2)
+          (sample.2 (n + 1)).1 comparator) =
+      MeasureTheory.integral (mu.map history)
+        (fun input => roundLoss input comparator)) ∧
+    (MeasureTheory.integral mu (fun sample =>
+        Exp3.mixedSquaredImportanceWeightedLoss arms (prob (history sample))
+          (fun _ => (sample.2 (n + 1)).2)
+          (sample.2 (n + 1)).1) =
+      MeasureTheory.integral (mu.map history) (fun input =>
+        arms.sum (fun action => (roundLoss input action) ^ 2))) := by
+  exact
+    Exp3.sampledPredictableObservedSuccessor_first_second_moment
+      prior arms harms eta gamma hgamma_pos hgamma_le_one loss n
+        comparator hcomparator
+
+example {Env Action : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : MeasureTheory.Measure Env) [MeasureTheory.IsFiniteMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (hgamma_pos : 0 < gamma)
+    (hgamma_le_one : gamma <= 1)
+    (loss : Exp3.PredictableLossVector Env Action) (horizon : Nat)
+    (comparator : Action) (hcomparator : comparator ∈ arms) :
+    let mu := MeasureTheory.Measure.compProd prior
+      (Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+        eta gamma hgamma_pos.le hgamma_le_one loss.environment)
+    (MeasureTheory.integral mu (fun sample => (Finset.range horizon).sum (fun t =>
+        Exp3.observedImportanceWeightedLossAt
+          arms eta gamma t sample comparator)) =
+      MeasureTheory.integral mu (fun sample => (Finset.range horizon).sum (fun t =>
+        Exp3.predictableLossAt loss t sample comparator))) ∧
+    (MeasureTheory.integral mu (fun sample => (Finset.range horizon).sum (fun t =>
+        Exp3.observedMixedSquaredImportanceWeightedLossAt
+          arms eta gamma t sample)) =
+      MeasureTheory.integral mu (fun sample => (Finset.range horizon).sum (fun t =>
+        arms.sum (fun action =>
+          (Exp3.predictableLossAt loss t sample action) ^ 2)))) := by
+  exact Exp3.sampledPredictableObserved_finiteHorizon_first_second_moment
+    prior arms harms eta gamma hgamma_pos hgamma_le_one loss horizon
+      comparator hcomparator
+
+#check Exp3.sampledHistoryScore_frestrictLe_eq_cumulativeLoss
+#check Exp3.sampledTrajectoryProbabilityAt_eq_mix_distribution
+#check Exp3.sampledHistoryScore_hedge_regret_le
+
+example {Env Action : Type} [DecidableEq Action]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (heta : 0 < eta)
+    (hgamma_nonneg : 0 <= gamma) (hgamma_le_one : gamma <= 1)
+    (sample : Env × ((k : Nat) -> Action × Real)) (n : Nat)
+    (hreward_nonneg : forall t, t < n + 1 -> 0 <= (sample.2 t).2)
+    (comparator : Action) (hcomparator : comparator ∈ arms) :
+    (Finset.range (n + 1)).sum (fun t =>
+        Exp3.mixedLoss arms eta
+          (Exp3.sampledTrajectoryObservedLoss arms eta gamma sample) t) -
+        Exp3.sampledHistoryScore arms eta gamma n
+          (Preorder.frestrictLe n sample.2) comparator <=
+      Real.log arms.card / eta +
+        eta * (Finset.range (n + 1)).sum (fun t =>
+          Exp3.mixedSquaredLoss arms eta
+            (Exp3.sampledTrajectoryObservedLoss arms eta gamma sample) t) := by
+  exact Exp3.sampledHistoryScore_hedge_regret_le arms harms eta gamma heta
+    hgamma_nonneg hgamma_le_one sample n hreward_nonneg comparator hcomparator
+
+#check Exp3.sampledPredictableTrajectoryMeasure_reward_nonneg_ae
+#check Exp3.sampledPredictableTrajectoryMeasure_finiteHorizon_reward_nonneg_ae
+#check Exp3.sampledPredictableScoreHedge_ae
+
+example {Env Action : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : MeasureTheory.Measure Env) [MeasureTheory.IsFiniteMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (heta : 0 < eta)
+    (hgamma_nonneg : 0 <= gamma) (hgamma_le_one : gamma <= 1)
+    (loss : Exp3.PredictableLossVector Env Action) (n : Nat)
+    (comparator : Action) (hcomparator : comparator ∈ arms) :
+    let mu := MeasureTheory.Measure.compProd prior
+      (Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+        eta gamma hgamma_nonneg hgamma_le_one loss.environment)
+    ∀ᵐ sample ∂mu,
+      (Finset.range (n + 1)).sum (fun t =>
+          Exp3.mixedLoss arms eta
+            (Exp3.sampledTrajectoryObservedLoss arms eta gamma sample) t) -
+          Exp3.sampledHistoryScore arms eta gamma n
+            (Preorder.frestrictLe n sample.2) comparator <=
+        Real.log arms.card / eta +
+          eta * (Finset.range (n + 1)).sum (fun t =>
+            Exp3.mixedSquaredLoss arms eta
+              (Exp3.sampledTrajectoryObservedLoss arms eta gamma sample) t) := by
+  exact Exp3.sampledPredictableScoreHedge_ae prior arms harms eta gamma heta
+    hgamma_nonneg hgamma_le_one loss n comparator hcomparator
+
+#check Exp3.distribution_le_sampledTrajectoryProbabilityAt_div_one_sub_gamma
+#check Exp3.mixedSquaredLoss_sampledTrajectoryObservedLoss_le_inv_one_sub_gamma
+#check Exp3.sampledTrajectoryPredictableMixedLoss_le_pure_add_gamma
+#check Exp3.sampledTrajectory_finiteHorizon_explorationBias_secondMoment
+
+example {Env Action : Type}
+    [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (hgamma_nonneg : 0 <= gamma)
+    (hgamma_lt_one : gamma < 1)
+    (loss : Exp3.PredictableLossVector Env Action) (horizon : Nat)
+    (sample : Env × ((k : Nat) -> Action × Real)) :
+    ((Finset.range horizon).sum (fun t =>
+        arms.sum (fun action =>
+          Exp3.sampledTrajectoryProbabilityAt arms eta gamma t sample action *
+            Exp3.predictableLossAt loss t sample action)) <=
+      (Finset.range horizon).sum (fun t =>
+        arms.sum (fun action =>
+          Exp3.distribution arms eta
+              (Exp3.sampledTrajectoryObservedLoss arms eta gamma sample) t action *
+            Exp3.predictableLossAt loss t sample action)) +
+        gamma * (horizon : Real)) ∧
+    ((Finset.range horizon).sum (fun t =>
+        Exp3.mixedSquaredLoss arms eta
+          (Exp3.sampledTrajectoryObservedLoss arms eta gamma sample) t) <=
+      (1 / (1 - gamma)) * (Finset.range horizon).sum (fun t =>
+        Exp3.observedMixedSquaredImportanceWeightedLossAt
+          arms eta gamma t sample)) := by
+  exact Exp3.sampledTrajectory_finiteHorizon_explorationBias_secondMoment
+    arms harms eta gamma hgamma_nonneg hgamma_lt_one loss horizon sample
+
+#check Exp3.sum_prob_mul_weightedImportanceWeightedLoss_eq_weightedLoss
+#check Exp3.integral_weightedImportanceWeightedLoss_eq_integral_weightedLoss_of_condDistrib
+#check Exp3.sampledPredictablePureObserved_finiteHorizon_integral_eq
+#check Exp3.sampledPredictable_integral_pureHedge_le_exploredSecondMoment
+#check Exp3.sampledPredictable_expectedRegret_le
+#check Exp3.expectedRegretBudget_le_four_mul_gamma_mul_horizon
+#check Exp3.tunedExplorationRate_mul_eq_sqrt_mul
+#check Exp3.sampledPredictable_expectedRegret_le_four_mul_gamma_mul_horizon
+#check Exp3.sampledPredictable_expectedRegret_le_four_mul_sqrt
+#check Exp3.sampledTrajectoryRealizedLossAt_ae_eq_selectedPredictable
+#check Exp3.sampledPredictableRealized_finiteHorizon_integral_eq_explored
+#check Exp3.sampledPredictable_realizedExpectedRegret_le
+#check Exp3.sampledPredictable_realizedExpectedRegret_le_four_mul_sqrt
+#check Exp3.sampledPredictable_realizedExpectedRegret_le_horizon
+#check Exp3.clippedPredictableTrajectoryKernel
+#check Exp3.sampledPredictable_clippedRealizedExpectedRegret_le_min
+#check Exp3.condExpKernel_map_eq_finiteActionMeasure_of_condDistrib_ae_eq
+#check Exp3.sampledTrajectorySelectedDeviationAt
+#check Exp3.measurable_sampledTrajectorySelectedDeviationAt
+#check Exp3.sampledPredictableSelectedDeviation_succ_hasCondSubgaussianMGF
+#check Exp3.sampledTrajectoryRealizedDeviationAt
+#check Exp3.sampledPredictableRealizedDeviation_succ_hasCondSubgaussianMGF
+#check Exp3.sampledPredictableSelectedDeviation_zero_hasCondSubgaussianMGF
+#check Exp3.sampledPredictableRealizedDeviation_zero_hasCondSubgaussianMGF
+#check Exp3.sampledPredictableDeviationFiltration
+#check Exp3.sampledPredictableRealizedDeviationProcess_stronglyAdapted
+#check Exp3.sampledPredictableRealizedDeviation_sum_tail_ennreal
+#check Exp3.sampledPredictableRealizedDeviationConfidenceRadius
+#check Exp3.sampledPredictableRealizedDeviation_sum_tail_exp_neg_budget
+#check Exp3.sampledPredictableRealizedDeviation_sum_tail_delta
+#check Exp3.comparatorEstimator_hasCondSubgaussianMGF_of_condDistrib_ae_eq_finiteActionKernel
+#check Exp3.sampledTrajectoryObservedComparatorEstimatorDeviationAt
+#check Exp3.sampledObservedComparatorEstimatorDeviationProcess_stronglyAdapted
+#check Exp3.sampledObservedComparatorEstimatorDeviation_sum_tail_ennreal
+#check Exp3.sampledComparatorEstimatorConfidenceRadius
+#check Exp3.sampledObservedComparatorEstimatorDeviation_sum_tail_delta
+#check Exp3.weightedEstimator_hasCondSubgaussianMGF_of_condDistrib_ae_eq_finiteActionKernel
+#check Exp3.sampledTrajectoryPureObservedDeviationAt
+#check Exp3.sampledPureObservedDeviationProcess_stronglyAdapted
+#check Exp3.sampledPureObservedDeviation_sum_tail_ennreal
+#check Exp3.sampledPureObservedDeviationConfidenceRadius
+#check Exp3.sampledPureObservedDeviation_sum_tail_delta
+#check Exp3.sampledTrajectoryPurePredictableMinusObservedAt
+#check Exp3.sampledPurePredictableMinusObservedProcess_stronglyAdapted
+#check Exp3.sampledPurePredictableMinusObserved_sum_tail_ennreal
+#check Exp3.sampledPurePredictableMinusObserved_sum_tail_delta
+#check Exp3.observedMixedSquaredImportanceWeightedLossAt_le_inv_explorationFloor
+#check Exp3.sampledPredictableTrajectoryMeasure_reward_mem_unitInterval_ae
+#check Exp3.sampledPredictableTrajectoryMeasure_observedMixedSquared_sum_le_ae
+#check Exp3.sampledPredictableHighProbabilityRegretBudget
+#check Exp3.sampledPredictable_highProbabilityRegret_tail_delta
+#check Exp3.sampledPredictable_highProbabilityRegret_tail_total_delta
+#check Exp3.sampledPredictableRealizedHighProbabilityRegretBudget
+#check Exp3.sampledPredictable_realizedHighProbabilityRegret_tail_delta
+#check Exp3.sampledPredictable_realizedHighProbabilityRegret_tail_total_delta
+
+noncomputable example {Env Action : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : MeasureTheory.Measure Env)
+    [MeasureTheory.IsFiniteMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real)
+    (hgamma_nonneg : 0 <= gamma) (hgamma_le_one : gamma <= 1)
+    (loss : Exp3.PredictableLossVector Env Action) (n : Nat) :
+    let mu := MeasureTheory.Measure.compProd prior
+      (Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+        eta gamma hgamma_nonneg hgamma_le_one loss.environment)
+    let history := fun sample : Env × ((k : Nat) -> Action × Real) =>
+      (sample.1, Preorder.frestrictLe n sample.2)
+    ProbabilityTheory.HasCondSubgaussianMGF
+      ((inferInstance : MeasurableSpace
+        (Env × History.FinitePairHistory Action Real n)).comap history)
+      (measurable_fst.prodMk
+        ((Preorder.measurable_frestrictLe n).comp measurable_snd)).comap_le
+      (Exp3.sampledTrajectoryRealizedDeviationAt
+        arms eta gamma loss (n + 1))
+      (Concentration.intervalVarianceProxy 0 1) mu := by
+  exact Exp3.sampledPredictableRealizedDeviation_succ_hasCondSubgaussianMGF
+    prior arms harms eta gamma hgamma_nonneg hgamma_le_one loss n
+
+noncomputable example {Env Action : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : MeasureTheory.Measure Env)
+    [MeasureTheory.IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real)
+    (hgamma_nonneg : 0 <= gamma) (hgamma_le_one : gamma <= 1)
+    (loss : Exp3.PredictableLossVector Env Action) (horizon : Nat)
+    {eps : Real} (heps : 0 <= eps) :
+    let mu := MeasureTheory.Measure.compProd prior
+      (Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+        eta gamma hgamma_nonneg hgamma_le_one loss.environment)
+    mu {sample | eps <= (Finset.range horizon).sum (fun i =>
+        Exp3.sampledTrajectoryRealizedDeviationAt
+          arms eta gamma loss i sample)} <=
+      ENNReal.ofReal (Real.exp
+        (-eps ^ 2 /
+          (2 * ((((horizon : NNReal) *
+            Concentration.intervalVarianceProxy 0 1 : NNReal)) : Real)))) := by
+  exact Exp3.sampledPredictableRealizedDeviation_sum_tail_ennreal
+    prior arms harms eta gamma hgamma_nonneg hgamma_le_one loss horizon heps
+
+noncomputable example {Env Action : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : MeasureTheory.Measure Env)
+    [MeasureTheory.IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real)
+    (hgamma_nonneg : 0 <= gamma) (hgamma_le_one : gamma <= 1)
+    (loss : Exp3.PredictableLossVector Env Action) (horizon : Nat)
+    (hhorizon : 0 < horizon) (delta : Real) (hdelta : 0 < delta) :
+    let mu := MeasureTheory.Measure.compProd prior
+      (Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+        eta gamma hgamma_nonneg hgamma_le_one loss.environment)
+    mu {sample |
+        Exp3.sampledPredictableRealizedDeviationConfidenceRadius horizon delta <=
+          (Finset.range horizon).sum (fun i =>
+            Exp3.sampledTrajectoryRealizedDeviationAt
+              arms eta gamma loss i sample)} <=
+      ENNReal.ofReal delta := by
+  exact Exp3.sampledPredictableRealizedDeviation_sum_tail_delta
+    prior arms harms eta gamma hgamma_nonneg hgamma_le_one loss horizon
+      hhorizon delta hdelta
+
+noncomputable example {Env Action : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : MeasureTheory.Measure Env)
+    [MeasureTheory.IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (hgamma_pos : 0 < gamma)
+    (hgamma_le_one : gamma <= 1)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon : Nat) (hhorizon : 0 < horizon)
+    (delta : Real) (hdelta : 0 < delta) :
+    let mu := MeasureTheory.Measure.compProd prior
+      (Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+        eta gamma hgamma_pos.le hgamma_le_one loss.environment)
+    mu {sample |
+        Exp3.sampledComparatorEstimatorConfidenceRadius
+            arms gamma horizon delta <=
+          (Finset.range horizon).sum (fun i =>
+            Exp3.observedImportanceWeightedLossAt
+                arms eta gamma i sample comparator -
+              Exp3.predictableLossAt loss i sample comparator)} <=
+      ENNReal.ofReal delta := by
+  exact Exp3.sampledObservedComparatorEstimatorDeviation_sum_tail_delta
+    prior arms harms eta gamma hgamma_pos hgamma_le_one loss comparator
+      hcomparator horizon hhorizon delta hdelta
+
+noncomputable example {Env Action : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : MeasureTheory.Measure Env)
+    [MeasureTheory.IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (hgamma_pos : 0 < gamma)
+    (hgamma_le_one : gamma <= 1)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (horizon : Nat) (hhorizon : 0 < horizon)
+    (delta : Real) (hdelta : 0 < delta) :
+    let mu := MeasureTheory.Measure.compProd prior
+      (Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+        eta gamma hgamma_pos.le hgamma_le_one loss.environment)
+    mu {sample |
+        Exp3.sampledPureObservedDeviationConfidenceRadius
+            arms gamma horizon delta <=
+          (Finset.range horizon).sum (fun i =>
+            Exp3.sampledTrajectoryPurePredictableLossAt
+                arms eta gamma loss i sample -
+              Exp3.sampledTrajectoryPureObservedLossAt
+                arms eta gamma i sample)} <=
+      ENNReal.ofReal delta := by
+  exact Exp3.sampledPurePredictableMinusObserved_sum_tail_delta
+    prior arms harms eta gamma hgamma_pos hgamma_le_one loss
+      horizon hhorizon delta hdelta
+
+noncomputable example {Env Action : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : MeasureTheory.Measure Env)
+    [MeasureTheory.IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (heta : 0 < eta)
+    (hgamma_pos : 0 < gamma) (hgamma_lt_one : gamma < 1)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon : Nat) (hhorizon : 0 < horizon)
+    (delta : Real) (hdelta : 0 < delta) :
+    let mu := MeasureTheory.Measure.compProd prior
+      (Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+        eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment)
+    mu {sample |
+        Exp3.sampledPredictableHighProbabilityRegretBudget
+            arms eta gamma horizon (delta / 2) <=
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryExploredPredictableLossAt
+                arms eta gamma loss t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} <=
+      ENNReal.ofReal delta := by
+  exact Exp3.sampledPredictable_highProbabilityRegret_tail_total_delta
+    prior arms harms eta gamma heta hgamma_pos hgamma_lt_one loss comparator
+      hcomparator horizon hhorizon delta hdelta
+
+noncomputable example {Env Action : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : MeasureTheory.Measure Env)
+    [MeasureTheory.IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (heta : 0 < eta)
+    (hgamma_pos : 0 < gamma) (hgamma_lt_one : gamma < 1)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon : Nat) (hhorizon : 0 < horizon)
+    (delta : Real) (hdelta : 0 < delta) :
+    let mu := MeasureTheory.Measure.compProd prior
+      (Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+        eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment)
+    mu {sample |
+        Exp3.sampledPredictableRealizedHighProbabilityRegretBudget
+            arms eta gamma horizon (delta / 3) <=
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} <=
+      ENNReal.ofReal delta := by
+  exact Exp3.sampledPredictable_realizedHighProbabilityRegret_tail_total_delta
+    prior arms harms eta gamma heta hgamma_pos hgamma_lt_one loss comparator
+      hcomparator horizon hhorizon delta hdelta
+
+noncomputable example {Env Action : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : MeasureTheory.Measure Env)
+    [MeasureTheory.IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (heta : 0 < eta)
+    (hgamma_pos : 0 < gamma) (hgamma_lt_one : gamma < 1)
+    (loss : Exp3.PredictableLossVector Env Action) (horizon : Nat)
+    (comparator : Action) (hcomparator : comparator ∈ arms) :
+    let mu := MeasureTheory.Measure.compProd prior
+      (Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+        eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment)
+    MeasureTheory.integral mu (fun sample =>
+      (Finset.range horizon).sum (fun t =>
+          Exp3.sampledTrajectoryExploredPredictableLossAt
+            arms eta gamma loss t sample) -
+        (Finset.range horizon).sum (fun t =>
+          Exp3.predictableLossAt loss t sample comparator)) <=
+      Real.log arms.card / eta +
+        (eta * (1 / (1 - gamma))) *
+          ((arms.card : Real) * (horizon : Real)) +
+        gamma * (horizon : Real) := by
+  exact Exp3.sampledPredictable_expectedRegret_le prior arms harms eta gamma
+    heta hgamma_pos hgamma_lt_one loss horizon comparator hcomparator
+
+noncomputable example {Env Action : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : MeasureTheory.Measure Env)
+    [MeasureTheory.IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 <= arms.card)
+    (loss : Exp3.PredictableLossVector Env Action) (horizon : Nat)
+    (hhorizon_pos : 0 < horizon)
+    (hscale :
+      4 * (arms.card : Real) * Real.log arms.card <= (horizon : Real))
+    (comparator : Action) (hcomparator : comparator ∈ arms) :
+    let K := (arms.card : Real)
+    let T := (horizon : Real)
+    let gamma := Exp3.tunedExplorationRate K T
+    let eta := Exp3.tunedLearningRate K T
+    let mu := MeasureTheory.Measure.compProd prior
+      (Exp3.tunedPredictableTrajectoryKernel arms harms hcard_two loss horizon
+        hhorizon_pos hscale)
+    MeasureTheory.integral mu (fun sample =>
+      (Finset.range horizon).sum (fun t =>
+          Exp3.sampledTrajectoryExploredPredictableLossAt
+            arms eta gamma loss t sample) -
+        (Finset.range horizon).sum (fun t =>
+          Exp3.predictableLossAt loss t sample comparator)) <=
+      4 * Real.sqrt (K * T * Real.log K) := by
+  exact Exp3.sampledPredictable_expectedRegret_le_four_mul_sqrt
+    prior arms harms hcard_two loss horizon hhorizon_pos hscale comparator
+      hcomparator
+
+noncomputable example {Env Action : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : MeasureTheory.Measure Env)
+    [MeasureTheory.IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 <= arms.card)
+    (loss : Exp3.PredictableLossVector Env Action) (horizon : Nat)
+    (hhorizon_pos : 0 < horizon)
+    (hscale :
+      4 * (arms.card : Real) * Real.log arms.card <= (horizon : Real))
+    (comparator : Action) (hcomparator : comparator ∈ arms) :
+    let K := (arms.card : Real)
+    let T := (horizon : Real)
+    let mu := MeasureTheory.Measure.compProd prior
+      (Exp3.tunedPredictableTrajectoryKernel arms harms hcard_two loss horizon
+        hhorizon_pos hscale)
+    MeasureTheory.integral mu (fun sample =>
+      (Finset.range horizon).sum (fun t =>
+          Exp3.sampledTrajectoryRealizedLossAt t sample) -
+        (Finset.range horizon).sum (fun t =>
+          Exp3.predictableLossAt loss t sample comparator)) <=
+      4 * Real.sqrt (K * T * Real.log K) := by
+  exact Exp3.sampledPredictable_realizedExpectedRegret_le_four_mul_sqrt
+    prior arms harms hcard_two loss horizon hhorizon_pos hscale comparator
+      hcomparator
+
+noncomputable example {Env Action : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : MeasureTheory.Measure Env)
+    [MeasureTheory.IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 <= arms.card)
+    (loss : Exp3.PredictableLossVector Env Action) (horizon : Nat)
+    (comparator : Action) (hcomparator : comparator ∈ arms) :
+    let K := (arms.card : Real)
+    let T := (horizon : Real)
+    let mu := MeasureTheory.Measure.compProd prior
+      (Exp3.clippedPredictableTrajectoryKernel arms harms loss horizon)
+    MeasureTheory.integral mu (fun sample =>
+      (Finset.range horizon).sum (fun t =>
+          Exp3.sampledTrajectoryRealizedLossAt t sample) -
+        (Finset.range horizon).sum (fun t =>
+          Exp3.predictableLossAt loss t sample comparator)) <=
+      min T (4 * Real.sqrt (K * T * Real.log K)) := by
+  exact Exp3.sampledPredictable_clippedRealizedExpectedRegret_le_min
+    prior arms harms hcard_two loss horizon comparator hcomparator
+
 example {Action : Type} (arms : Finset Action)
     (p loss : Action -> Real) :
     FTRL.linearLoss arms p loss =
@@ -30636,6 +32063,321 @@ noncomputable example
   have _hpartialLaw :=
     ConditionalExpectationReward.historyStepKernelFamily_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_trajMeasure
       mu0 rewardKernel policy context state hcontext hstate defaultAction n
+  trivial
+
+noncomputable example
+    {Omega Context State Action : Type}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action] [Nonempty Omega]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (mu0 : MeasureTheory.Measure Rat)
+    [MeasureTheory.IsProbabilityMeasure mu0]
+    (rewardKernel :
+      RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (hident :
+      ProbabilityTheory.IdentDistrib reward id mu
+        (ProbabilityTheory.Kernel.trajMeasure
+          (X := fun _ : Nat => Rat) mu0
+          (RewardKernel.historyStepKernelFamily rewardKernel policy context
+            state hcontext hstate)))
+    (n : Nat) : True := by
+  have _htransport :=
+    ConditionalExpectationReward.historyStepKernelFamily_selectedMeasure_condExpKernel_map_of_identDistrib_trajMeasure_trim
+      mu mu0 rewardKernel policy context state hcontext hstate reward hreward
+        hident n
+  have hsource :=
+    ConditionalExpectationReward.historyStepKernelFamily_generatedActionSelectedRewardFinitePairHistoryLawSource_of_identDistrib_trajMeasure
+      mu mu0 rewardKernel policy context state hcontext hstate defaultAction
+        reward hreward hident
+  have _hpartialSource :=
+    ConditionalExpectationReward.generatedActionPartialTrajectoryPairLawSource_of_selectedRewardFinitePairHistoryLawSource
+      mu rewardKernel policy context state defaultAction reward hreward hsource
+  trivial
+
+noncomputable example
+    {Omega Context State Action : Type}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action] [Nonempty Omega]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (mu0 : MeasureTheory.Measure Rat)
+    [MeasureTheory.IsProbabilityMeasure mu0]
+    (rewardKernel :
+      RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (hzero :
+      MeasureTheory.Measure.map (fun omega : Omega => reward omega 0) mu = mu0)
+    (hcond : forall i : Nat,
+      Filter.EventuallyEq
+        (MeasureTheory.ae (mu.map (fun omega : Omega =>
+          Preorder.frestrictLe i (reward omega))))
+        (ProbabilityTheory.condDistrib
+          (fun omega : Omega => reward omega (i + 1))
+          (fun omega : Omega => Preorder.frestrictLe i (reward omega))
+          mu)
+        (RewardKernel.historyStepKernelFamily rewardKernel policy context state
+          hcontext hstate i)) : True := by
+  have _hident :=
+    ConditionalExpectationReward.historyStepKernelFamily_identDistrib_trajMeasure_of_condDistrib
+      mu mu0 rewardKernel policy context state hcontext hstate reward hreward
+        hzero hcond
+  have _hselectedSource :=
+    ConditionalExpectationReward.historyStepKernelFamily_generatedActionSelectedRewardFinitePairHistoryLawSource_of_condDistrib
+      mu mu0 rewardKernel policy context state hcontext hstate defaultAction
+        reward hreward hzero hcond
+  have _hpartialSource :=
+    ConditionalExpectationReward.historyStepKernelFamily_generatedActionPartialTrajectoryPairLawSource_of_condDistrib
+      mu mu0 rewardKernel policy context state hcontext hstate defaultAction
+        reward hreward hzero hcond
+  trivial
+
+noncomputable example
+    {Omega Context State Action : Type}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action] [Nonempty Omega]
+    (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]
+    (mu0 : MeasureTheory.Measure Rat)
+    [MeasureTheory.IsProbabilityMeasure mu0]
+    (rewardKernel :
+      RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (law :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (defaultAction : Action)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (hzero :
+      MeasureTheory.Measure.map (fun omega : Omega => reward omega 0) mu = mu0)
+    (hcond : forall i : Nat,
+      Filter.EventuallyEq
+        (MeasureTheory.ae (mu.map (fun omega : Omega =>
+          Preorder.frestrictLe i (reward omega))))
+        (ProbabilityTheory.condDistrib
+          (fun omega : Omega => reward omega (i + 1))
+          (fun omega : Omega => Preorder.frestrictLe i (reward omega))
+          mu)
+        (RewardKernel.historyStepKernelFamily rewardKernel policy context state
+          hcontext hstate i))
+    (varianceCeiling : Nat -> NNReal)
+    (hvariance :
+      forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat),
+        varianceProxy (context i history)
+          ((policy i).action (state i history)) <= varianceCeiling i)
+    (i n : Nat) (eps : Real) (heps : 0 <= eps) : True := by
+  let source :=
+    ConditionalExpectationReward.historyStepKernelFamily_generatedActionPartialTrajectoryPairLawSource_of_condDistrib
+      mu mu0 rewardKernel policy context state hcontext hstate defaultAction
+        reward hreward hzero hcond
+  have _hsourceMGF :=
+    ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_partialTrajectoryPairLawSource
+      mu rewardKernel policy context state mean varianceProxy law hmean
+        defaultAction reward hreward source i (varianceCeiling i) (hvariance i)
+  have _hrecursiveMGF :=
+    ConditionalExpectationReward.historyStepKernelFamily_centeredReward_succ_hasCondSubgaussianMGF_of_condDistrib
+      mu mu0 rewardKernel policy context state hcontext hstate mean
+        varianceProxy law hmean defaultAction reward hreward hzero hcond i
+        (varianceCeiling i) (hvariance i)
+  have _htail :=
+    ConditionalExpectationReward.historyStepKernelFamily_centeredRewardSuccProcess_sum_tail_ennreal_of_condDistrib
+      mu mu0 rewardKernel policy context state hcontext hstate mean
+        varianceProxy law hmean defaultAction reward hreward hzero hcond
+        varianceCeiling hvariance n heps
+  trivial
+
+noncomputable example
+    {Omega Context State Action : Type}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [MeasurableSpace Context] [MeasurableSpace State]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [Countable Action] [DecidableEq Action]
+    (mu : MeasureTheory.Measure Omega)
+    [MeasureTheory.IsProbabilityMeasure mu]
+    (rewardKernel :
+      RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)
+    (policy : Nat -> Policy.MeasurablePolicy State Action)
+    (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context)
+    (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State)
+    (mean : Context -> Action -> Rat)
+    (varianceProxy : Context -> Action -> NNReal)
+    (defaultAction arm : Action)
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (armMean : Rat)
+    (armMeanFamily : Action -> Rat)
+    (reward : Omega -> RewardTrace Rat)
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (rewardLo rewardHi meanLo meanHi : Nat -> Real)
+    (varianceCeiling : Nat -> NNReal)
+    (sigma2 : NNReal)
+    (hcontext : forall n : Nat, Measurable (context n))
+    (hstate : forall n : Nat, Measurable (state n))
+    (hmean :
+      Measurable (fun pair : Prod Context Action => mean pair.1 pair.2))
+    (hkernel :
+      RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)
+    (hraw :
+      forall i : Nat, forall omega : Omega,
+        Set.Icc (rewardLo i) (rewardHi i)
+          (((reward omega (i + 1) : Rat) : Real)))
+    (hmean_range :
+      forall i : Nat, forall context : Context, forall action : Action,
+        Set.Icc (meanLo i) (meanHi i)
+          (((mean context action : Rat) : Real)))
+    (hvariance :
+      forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat),
+        varianceProxy (context i history)
+          ((policy i).action (state i history)) <= varianceCeiling i)
+    (hvarianceUniform :
+      forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat),
+        varianceProxy (context i history)
+          ((policy i).action (state i history)) <= sigma2)
+    (harmMean :
+      forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat),
+        mean (context i history) arm = armMean)
+    (harmMeanFamily :
+      forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat),
+        forall candidate, candidate ∈ arms ->
+          mean (context i history) candidate = armMeanFamily candidate)
+    (h_reward_map_eq_policy :
+      forall i : Nat,
+        Filter.Eventually
+          (fun omega : Omega =>
+            @MeasureTheory.Measure.map Omega Rat mOmega inferInstance
+              (fun y : Omega => reward y (i + 1))
+              (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+                ((History.historyFiltrationSucc
+                  (ConditionalExpectationReward.generatedActionFromRewardHistory
+                    policy state defaultAction reward)
+                  reward
+                  (ConditionalExpectationReward.generatedActionFromRewardHistory_measurable
+                    (policy := policy) (state := state)
+                    (defaultAction := defaultAction) (reward := reward)
+                    hreward hstate)
+                  hreward) i)
+                omega) =
+            RewardKernel.selectedMeasure rewardKernel
+              (context i
+                (History.finiteRewardHistoryOfTrace (reward omega) i))
+              ((policy i).action
+                (state i
+                  (History.finiteRewardHistoryOfTrace (reward omega) i))))
+          (MeasureTheory.ae
+            (mu.trim
+              ((History.historyFiltrationSucc
+                (ConditionalExpectationReward.generatedActionFromRewardHistory
+                  policy state defaultAction reward)
+                reward
+                (ConditionalExpectationReward.generatedActionFromRewardHistory_measurable
+                  (policy := policy) (state := state)
+                  (defaultAction := defaultAction) (reward := reward)
+                  hreward hstate)
+                hreward).le i))))
+    (n : Nat) (hn : 0 < n)
+    (k : Nat) (hk : 0 < k)
+    (hsigma2 : 0 < (((sigma2 : NNReal) : Real)))
+    (htotalVariance :
+      0 < ((((Finset.range n).sum (fun t =>
+        match t with
+        | 0 => 0
+        | i + 1 => varianceCeiling i) : NNReal) : Real)))
+    (m : Nat) (hm : 0 < m)
+    (htotalAverageVariance :
+      0 < ((((Finset.range (m + 1)).sum (fun t =>
+        match t with
+        | 0 => 0
+        | i + 1 => varianceCeiling i) : NNReal) : Real)))
+    (eps : Real) (heps : 0 <= eps)
+    (delta : Real) (hdelta : 0 < delta) (hdelta_le_one : delta <= 1)
+    (ucbSource : UCB.SelectedPolicySuccessorInitializedScoreMaxSource
+      (ConditionalExpectationReward.generatedActionFromRewardHistory
+        policy state defaultAction reward)
+      reward arms armMeanFamily sigma2 n delta) : True := by
+  have _htail :=
+    ConditionalExpectationReward.centeredRewardSuccProcess_sum_tail_ennreal_of_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded
+      mu rewardKernel policy context state mean varianceProxy defaultAction
+        reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling
+        hcontext hstate hmean hkernel hraw hmean_range hvariance
+        h_reward_map_eq_policy n heps
+  have _hdeltaTail :=
+    ConditionalExpectationReward.centeredRewardSuccProcess_sum_abs_tail_ennreal_delta_of_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded
+      mu rewardKernel policy context state mean varianceProxy defaultAction
+        reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling
+        hcontext hstate hmean hkernel hraw hmean_range hvariance
+        h_reward_map_eq_policy n htotalVariance delta hdelta hdelta_le_one
+  have _harmMaskedDeltaTail :=
+    ConditionalExpectationReward.armMaskedCenteredRewardSuccProcess_sum_abs_tail_ennreal_delta_of_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded
+      mu rewardKernel policy context state mean varianceProxy defaultAction arm
+        reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling
+        hcontext hstate hmean hkernel hraw hmean_range hvariance
+        h_reward_map_eq_policy n htotalVariance delta hdelta hdelta_le_one
+  have _harmEmpiricalMeanDeltaTail :=
+    ConditionalExpectationReward.successorArmEmpiricalMean_abs_tail_ennreal_delta_of_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded
+      mu rewardKernel policy context state mean varianceProxy defaultAction arm
+        armMean reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling
+        hcontext hstate hmean hkernel hraw hmean_range hvariance harmMean
+        h_reward_map_eq_policy n htotalVariance delta hdelta hdelta_le_one
+  have _harmExactCountEmpiricalMeanDeltaTail :=
+    ConditionalExpectationReward.successorArmEmpiricalMean_abs_tail_exact_pullCount_ennreal_delta_of_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded
+      mu rewardKernel policy context state mean varianceProxy defaultAction arm
+        armMean reward hreward rewardLo rewardHi meanLo meanHi sigma2
+        hcontext hstate hmean hkernel hraw hmean_range hvarianceUniform harmMean
+        h_reward_map_eq_policy n k hk hsigma2 delta hdelta
+  have _harmRandomCountEmpiricalMeanDeltaTail :=
+    ConditionalExpectationReward.successorArmEmpiricalMean_abs_tail_random_pullCount_ennreal_delta_of_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded
+      mu rewardKernel policy context state mean varianceProxy defaultAction arm
+        armMean reward hreward rewardLo rewardHi meanLo meanHi sigma2
+        hcontext hstate hmean hkernel hraw hmean_range hvarianceUniform harmMean
+        h_reward_map_eq_policy n hn hsigma2 delta hdelta
+  have _harmTimeSimultaneousEmpiricalMeanDeltaTail :=
+    ConditionalExpectationReward.successorArmEmpiricalMean_simultaneous_finiteArmTime_abs_tail_ennreal_delta_of_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded
+      mu rewardKernel policy context state mean varianceProxy defaultAction arms
+        harms armMeanFamily reward hreward rewardLo rewardHi meanLo meanHi sigma2
+        hcontext hstate hmean hkernel hraw hmean_range hvarianceUniform
+        harmMeanFamily h_reward_map_eq_policy n hn hsigma2 delta hdelta
+  have _hucbLargeGapDeltaTail :=
+    UCB.measure_selectedPolicySuccessorLargeGapEvent_le_ennreal_delta_of_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded
+      mu rewardKernel policy context state mean varianceProxy defaultAction arms
+        harms armMeanFamily reward hreward rewardLo rewardHi meanLo meanHi sigma2
+        hcontext hstate hmean hkernel hraw hmean_range hvarianceUniform
+        harmMeanFamily h_reward_map_eq_policy n hn hsigma2 delta hdelta ucbSource
+  have _haverageDeltaTail :=
+    ConditionalExpectationReward.centeredRewardSuccProcess_average_abs_tail_ennreal_delta_of_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded
+      mu rewardKernel policy context state mean varianceProxy defaultAction
+        reward hreward rewardLo rewardHi meanLo meanHi varianceCeiling
+        hcontext hstate hmean hkernel hraw hmean_range hvariance
+        h_reward_map_eq_policy m hm htotalAverageVariance delta hdelta
+        hdelta_le_one
   trivial
 
 noncomputable example
@@ -31914,6 +33656,2388 @@ end BanditRLProof
 
 namespace BanditRLProof
 
+open MeasureTheory ProbabilityTheory
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 <= arms.card)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (horizon : Nat) (hhorizon : 0 < horizon)
+    (delta : Real) (hdelta : 0 < delta) (hdelta_le_one : delta <= 1) :
+    let deltaArm := delta / (arms.card : Real)
+    let gamma := Exp3.bernsteinSquareClippedExplorationRate
+      (arms.card : Real) (horizon : Real) deltaArm
+    let eta := Exp3.bernsteinSquareHighProbabilityLearningRate
+      arms gamma horizon deltaArm
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma
+        (Exp3.bernsteinSquareClippedExplorationRate_pos
+          (arms.card : Real) (horizon : Real) deltaArm
+          (by exact_mod_cast hcard_two)
+          (by exact_mod_cast hhorizon)).le
+        (by
+          exact (Exp3.bernsteinSquareClippedExplorationRate_le_half
+            (arms.card : Real) (horizon : Real) deltaArm).trans (by norm_num))
+        loss.environment
+    mu {sample |
+        Exp3.bernsteinSquareBestArmAllHorizonRegretThreshold
+            arms horizon delta <=
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            Exp3.sampledPredictableBestArmCumulativeLoss
+              arms harms loss horizon sample} <=
+      ENNReal.ofReal delta := by
+  exact
+    Exp3.sampledPredictable_allHorizonBernsteinSquareBestArmRealizedRegret_tail
+      prior arms harms hcard_two loss horizon hhorizon
+        delta hdelta hdelta_le_one
+
+end BanditRLProof
+
+namespace BanditRLProof
+
+open MeasureTheory ProbabilityTheory
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (hgamma_pos : 0 < gamma)
+    (hgamma_le_one : gamma <= 1)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (horizon : Nat) (varianceBudget delta : Real)
+    (hvarianceBudget : 0 < varianceBudget) (hdelta : 0 < delta) :
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma hgamma_pos.le hgamma_le_one loss.environment
+    mu {sample |
+        Exp3.sampledMixedSquaredPredictableVarianceRadius
+            arms gamma varianceBudget delta <=
+          (Finset.range horizon).sum (fun i =>
+            Exp3.sampledTrajectoryPredictableMixedSquaredDeviationAt
+              arms eta gamma loss i sample) ∧
+        (Finset.range horizon).sum (fun i =>
+          Exp3.sampledTrajectoryPredictableMixedSquaredVarianceAt
+            arms eta gamma loss i sample) <= varianceBudget} <=
+      ENNReal.ofReal delta := by
+  exact
+    Exp3.sampledPredictableMixedSquaredDeviation_sum_tail_predictableVariance_delta
+      prior arms harms eta gamma hgamma_pos hgamma_le_one loss horizon
+        varianceBudget delta hvarianceBudget hdelta
+
+end BanditRLProof
+
+namespace BanditRLProof
+
+open MeasureTheory ProbabilityTheory
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (heta : 0 < eta)
+    (hgamma_pos : 0 < gamma) (hgamma_lt_one : gamma < 1)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon : Nat) (varianceBudget delta : Real)
+    (hvarianceBudget : 0 < varianceBudget) (hdelta : 0 < delta) :
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment
+    mu {sample |
+        Exp3.sampledPredictableVarianceSquareHighProbabilityRegretBudget arms eta
+            gamma horizon varianceBudget (delta / 3) (delta / 3) <=
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryExploredPredictableLossAt
+                arms eta gamma loss t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} <=
+      ENNReal.ofReal delta +
+        mu {sample |
+          varianceBudget < (Finset.range horizon).sum (fun i =>
+            Exp3.sampledTrajectoryPredictableMixedSquaredVarianceAt
+              arms eta gamma loss i sample)} := by
+  exact
+    Exp3.sampledPredictable_predictableVarianceSquareHighProbabilityRegret_tail_total_delta
+      prior arms harms eta gamma heta hgamma_pos hgamma_lt_one loss comparator
+        hcomparator horizon varianceBudget delta hvarianceBudget hdelta
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (heta : 0 < eta)
+    (hgamma_pos : 0 < gamma) (hgamma_lt_one : gamma < 1)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon : Nat) (hhorizon : 0 < horizon)
+    (varianceBudget delta : Real)
+    (hvarianceBudget : 0 < varianceBudget) (hdelta : 0 < delta) :
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment
+    mu {sample |
+        Exp3.sampledPredictableVarianceSquareRealizedHighProbabilityRegretBudget
+            arms eta gamma horizon varianceBudget (delta / 4) (delta / 4)
+              (delta / 4) <=
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} <=
+      ENNReal.ofReal delta +
+        mu {sample |
+          varianceBudget < (Finset.range horizon).sum (fun i =>
+            Exp3.sampledTrajectoryPredictableMixedSquaredVarianceAt
+              arms eta gamma loss i sample)} := by
+  exact
+    Exp3.sampledPredictable_predictableVarianceSquareRealizedHighProbabilityRegret_tail_total_delta
+      prior arms harms eta gamma heta hgamma_pos hgamma_lt_one loss comparator
+        hcomparator horizon hhorizon varianceBudget delta hvarianceBudget hdelta
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (heta : 0 < eta)
+    (hgamma_pos : 0 < gamma) (hgamma_lt_one : gamma < 1)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon : Nat) (hhorizon : 0 < horizon)
+    (varianceMeanBudget delta : Real)
+    (hvarianceMeanBudget : 0 < varianceMeanBudget) (hdelta : 0 < delta)
+    (hvarianceLIntegral :
+      Exp3.sampledPredictableMixedSquaredVarianceLIntegral
+          (prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+            eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment)
+          arms eta gamma loss horizon ≤ ENNReal.ofReal varianceMeanBudget) :
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment
+    mu {sample |
+        Exp3.sampledPredictableVarianceSquareRealizedMarkovHighProbabilityRegretBudget
+            arms eta gamma horizon varianceMeanBudget delta ≤
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} ≤
+      ENNReal.ofReal delta := by
+  exact
+    Exp3.sampledPredictable_predictableVarianceSquareRealizedMarkovHighProbabilityRegret_tail_total_delta
+      prior arms harms eta gamma heta hgamma_pos hgamma_lt_one loss comparator
+        hcomparator horizon hhorizon varianceMeanBudget delta
+        hvarianceMeanBudget hdelta hvarianceLIntegral
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (heta : 0 < eta)
+    (hgamma_pos : 0 < gamma) (hgamma_lt_one : gamma < 1)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon : Nat) (hhorizon : 0 < horizon)
+    (lossSquaredBudget delta : Real)
+    (hlossSquaredBudget : 0 < lossSquaredBudget) (hdelta : 0 < delta)
+    (henergy : ∀ sample,
+      Exp3.sampledPredictableLossSquaredSum arms loss horizon sample ≤
+        lossSquaredBudget) :
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment
+    mu {sample |
+        Exp3.sampledPredictableVarianceSquareLossEnergyRealizedMarkovHighProbabilityRegretBudget
+            arms eta gamma horizon lossSquaredBudget delta ≤
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} ≤
+      ENNReal.ofReal delta := by
+  exact
+    Exp3.sampledPredictable_predictableVarianceSquareLossEnergyRealizedMarkovHighProbabilityRegret_tail_total_delta
+      prior arms harms eta gamma heta hgamma_pos hgamma_lt_one loss comparator
+        hcomparator horizon hhorizon lossSquaredBudget delta
+        hlossSquaredBudget hdelta henergy
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (heta : 0 < eta)
+    (hgamma_pos : 0 < gamma) (hgamma_lt_one : gamma < 1)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon : Nat) (hhorizon : 0 < horizon)
+    (lossMassBudget delta : Real)
+    (hlossMassBudget : 0 < lossMassBudget) (hdelta : 0 < delta)
+    (hmass : ∀ sample,
+      Exp3.sampledPredictableLossMassSum arms loss horizon sample ≤
+        lossMassBudget) :
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment
+    mu {sample |
+        Exp3.sampledPredictableVarianceSquareSmallLossRealizedMarkovHighProbabilityRegretBudget
+            arms eta gamma horizon lossMassBudget delta ≤
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} ≤
+      ENNReal.ofReal delta := by
+  exact
+    Exp3.sampledPredictable_predictableVarianceSquareSmallLossRealizedMarkovHighProbabilityRegret_tail_total_delta
+      prior arms harms eta gamma heta hgamma_pos hgamma_lt_one loss comparator
+        hcomparator horizon hhorizon lossMassBudget delta
+        hlossMassBudget hdelta (Filter.Eventually.of_forall hmass)
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (heta : 0 < eta)
+    (hgamma_pos : 0 < gamma) (hgamma_lt_one : gamma < 1)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon sparsity : Nat) (hhorizon : 0 < horizon)
+    (hsparsity : 0 < sparsity) (delta : Real) (hdelta : 0 < delta)
+    (hsparse : ∀ sample t, t < horizon →
+      (Exp3.sampledPredictableLossSupport arms loss t sample).card ≤ sparsity) :
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment
+    mu {sample |
+        Exp3.sampledPredictableVarianceSquareSparseLossRealizedMarkovHighProbabilityRegretBudget
+            arms eta gamma horizon sparsity delta ≤
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} ≤
+      ENNReal.ofReal delta := by
+  exact
+    Exp3.sampledPredictable_predictableVarianceSquareSparseLossRealizedMarkovHighProbabilityRegret_tail_total_delta
+      prior arms harms eta gamma heta hgamma_pos hgamma_lt_one loss comparator
+        hcomparator horizon sparsity hhorizon hsparsity delta hdelta hsparse
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 ≤ arms.card)
+    (gamma : Real) (hgamma_pos : 0 < gamma)
+    (hgamma_le_half : gamma ≤ 1 / 2)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon sparsity : Nat) (hhorizon : 0 < horizon)
+    (hsparsity : 0 < sparsity)
+    (delta : Real) (hdelta : 0 < delta)
+    (hsparse : ∀ sample t, t < horizon →
+      (Exp3.sampledPredictableLossSupport arms loss t sample).card ≤ sparsity) :
+    let eta := Exp3.sparseLossPredictableVarianceHighProbabilityLearningRate
+      arms gamma horizon sparsity delta
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma hgamma_pos.le (by linarith : gamma ≤ 1) loss.environment
+    mu {sample |
+        Exp3.sparseLossPredictableVarianceRealizedMarkovTunedThreshold
+            arms gamma horizon sparsity delta ≤
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} ≤
+      ENNReal.ofReal delta := by
+  exact
+    Exp3.sampledPredictable_tunedSparseLossPredictableVarianceRealizedMarkovRegret_tail
+      prior arms harms hcard_two gamma hgamma_pos hgamma_le_half loss comparator
+        hcomparator horizon sparsity hhorizon hsparsity delta hdelta hsparse
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 ≤ arms.card)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon sparsity : Nat) (hhorizon : 0 < horizon)
+    (hsparsity : 0 < sparsity)
+    (delta : Real) (hdelta : 0 < delta) (hdelta_le_one : delta ≤ 1)
+    (hlarge_arm :
+      4 * ((sparsity : Real) * Real.log (arms.card : Real)) ≤
+        (horizon : Real))
+    (hlarge_mixed :
+      32 * (5 * (arms.card : Real) * (sparsity : Real) *
+          Real.log (arms.card : Real) ^ 2 * Real.log (5 / delta)) ≤
+        delta * (horizon : Real) ^ 3)
+    (hlarge_confidence :
+      8 * ((arms.card : Real) * Real.log (5 / delta)) ≤
+        (horizon : Real))
+    (hlarge_realized :
+      8 * ((Concentration.intervalVarianceProxy 0 1 : NNReal) : Real) *
+          Real.log (5 / delta) ≤ (horizon : Real))
+    (hsparse : ∀ sample t, t < horizon →
+      (Exp3.sampledPredictableLossSupport arms loss t sample).card ≤ sparsity) :
+    let gamma := Exp3.sparseLossPredictableVarianceClippedExplorationRate
+      (arms.card : Real) (sparsity : Real) (horizon : Real) delta
+    let eta := Exp3.sparseLossPredictableVarianceHighProbabilityLearningRate
+      arms gamma horizon sparsity delta
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma
+        (Exp3.sparseLossPredictableVarianceClippedExplorationRate_pos
+          (arms.card : Real) (sparsity : Real) (horizon : Real) delta
+          (by exact_mod_cast hcard_two)
+          (by exact_mod_cast hsparsity)
+          (by exact_mod_cast hhorizon)).le
+        (by
+          exact
+            (Exp3.sparseLossPredictableVarianceClippedExplorationRate_le_half
+              (arms.card : Real) (sparsity : Real) (horizon : Real)
+                delta).trans (by norm_num))
+        loss.environment
+    mu {sample |
+        Exp3.sparseLossPredictableVarianceRealizedMarkovExplicitThreshold
+            arms gamma horizon sparsity delta ≤
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} ≤
+      ENNReal.ofReal delta := by
+  exact
+    Exp3.sampledPredictable_explicitSparseLossPredictableVarianceRealizedMarkovRegret_tail
+      prior arms harms hcard_two loss comparator hcomparator horizon sparsity
+        hhorizon hsparsity delta hdelta hdelta_le_one hlarge_arm hlarge_mixed
+        hlarge_confidence hlarge_realized hsparse
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 ≤ arms.card)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon sparsity : Nat) (hhorizon : 0 < horizon)
+    (hsparsity : 0 < sparsity)
+    (delta : Real) (hdelta : 0 < delta) (hdelta_le_one : delta ≤ 1)
+    (hsparse : ∀ sample t, t < horizon →
+      (Exp3.sampledPredictableLossSupport arms loss t sample).card ≤ sparsity) :
+    let gamma := Exp3.sparseLossPredictableVarianceClippedExplorationRate
+      (arms.card : Real) (sparsity : Real) (horizon : Real) delta
+    let eta := Exp3.sparseLossPredictableVarianceHighProbabilityLearningRate
+      arms gamma horizon sparsity delta
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma
+        (Exp3.sparseLossPredictableVarianceClippedExplorationRate_pos
+          (arms.card : Real) (sparsity : Real) (horizon : Real) delta
+          (by exact_mod_cast hcard_two)
+          (by exact_mod_cast hsparsity)
+          (by exact_mod_cast hhorizon)).le
+        (by
+          exact
+            (Exp3.sparseLossPredictableVarianceClippedExplorationRate_le_half
+              (arms.card : Real) (sparsity : Real) (horizon : Real)
+                delta).trans (by norm_num))
+        loss.environment
+    mu {sample |
+        Exp3.sparseLossPredictableVarianceAllHorizonRegretThreshold
+            arms horizon sparsity delta ≤
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} ≤
+      ENNReal.ofReal delta := by
+  exact
+    Exp3.sampledPredictable_allHorizonSparseLossPredictableVarianceRealizedMarkovRegret_tail
+      prior arms harms hcard_two loss comparator hcomparator horizon sparsity
+        hhorizon hsparsity delta hdelta hdelta_le_one hsparse
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 ≤ arms.card)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon sparsity : Nat) (hhorizon : 0 < horizon)
+    (hsparsity : 0 < sparsity)
+    (delta : Real) (hdelta : 0 < delta) (hdelta_le_one : delta ≤ 1) :
+    let gamma := Exp3.sparseLossPredictableVarianceClippedExplorationRate
+      (arms.card : Real) (sparsity : Real) (horizon : Real) delta
+    let eta := Exp3.sparseLossPredictableVarianceHighProbabilityLearningRate
+      arms gamma horizon sparsity delta
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma
+        (Exp3.sparseLossPredictableVarianceClippedExplorationRate_pos
+          (arms.card : Real) (sparsity : Real) (horizon : Real) delta
+          (by exact_mod_cast hcard_two)
+          (by exact_mod_cast hsparsity)
+          (by exact_mod_cast hhorizon)).le
+        (by
+          exact
+            (Exp3.sparseLossPredictableVarianceClippedExplorationRate_le_half
+              (arms.card : Real) (sparsity : Real) (horizon : Real)
+                delta).trans (by norm_num))
+        loss.environment
+    (∀ᵐ sample ∂mu, ∀ t, t < horizon →
+      (Exp3.sampledPredictableLossSupport arms loss t sample).card ≤ sparsity) →
+    mu {sample |
+        Exp3.sparseLossPredictableVarianceAllHorizonRegretThreshold
+            arms horizon sparsity delta ≤
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} ≤
+      ENNReal.ofReal delta := by
+  exact
+    Exp3.sampledPredictable_allHorizonSparseLossPredictableVarianceRealizedMarkovRegret_tail_of_ae_sparsity
+      prior arms harms hcard_two loss comparator hcomparator horizon sparsity
+        hhorizon hsparsity delta hdelta hdelta_le_one
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (heta : 0 < eta)
+    (hgamma_pos : 0 < gamma) (hgamma_lt_one : gamma < 1)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon sparsity : Nat) (hhorizon : 0 < horizon)
+    (delta epsilon : Real) (hdelta : 0 < delta)
+    (hfailure :
+      (prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+        eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment)
+          (Exp3.sampledPredictableSparsityFailure
+            arms loss horizon sparsity) ≤ ENNReal.ofReal epsilon) :
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment
+    mu {sample |
+        Exp3.sampledPredictableVarianceSquareProbabilisticSparseLossRealizedMarkovHighProbabilityRegretBudget
+            arms eta gamma horizon sparsity delta ≤
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} ≤
+      ENNReal.ofReal delta + ENNReal.ofReal epsilon := by
+  exact
+    Exp3.sampledPredictable_predictableVarianceSquareProbabilisticSparseLossRealizedMarkovHighProbabilityRegret_tail_of_sparsityFailure_le
+      prior arms harms eta gamma heta hgamma_pos hgamma_lt_one loss comparator
+        hcomparator horizon sparsity hhorizon delta epsilon hdelta hfailure
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (heta : 0 < eta)
+    (hgamma_pos : 0 < gamma) (hgamma_lt_one : gamma < 1)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon sparsity : Nat) (hhorizon : 0 < horizon)
+    (hsparsity : 0 < sparsity)
+    (delta epsilon : Real) (hdelta : 0 < delta)
+    (hfailure :
+      (prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+        eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment)
+          (Exp3.sampledPredictableSparsityFailure
+            arms loss horizon sparsity) ≤ ENNReal.ofReal epsilon) :
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment
+    mu {sample |
+        Exp3.sampledPredictableVarianceSquareProbabilisticSparseLossRealizedPathwiseVarianceHighProbabilityRegretBudget
+            arms eta gamma horizon sparsity delta ≤
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} ≤
+      ENNReal.ofReal delta + ENNReal.ofReal epsilon := by
+  exact
+    Exp3.sampledPredictable_predictableVarianceSquareProbabilisticSparseLossRealizedPathwiseVarianceHighProbabilityRegret_tail_of_sparsityFailure_le
+      prior arms harms eta gamma heta hgamma_pos hgamma_lt_one loss comparator
+        hcomparator horizon sparsity hhorizon hsparsity delta epsilon hdelta
+          hfailure
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 ≤ arms.card)
+    (gamma : Real) (hgamma_pos : 0 < gamma)
+    (hgamma_le_half : gamma ≤ 1 / 2)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon sparsity : Nat) (hhorizon : 0 < horizon)
+    (hsparsity : 0 < sparsity)
+    (delta epsilon : Real) (hdelta : 0 < delta) :
+    let eta :=
+      Exp3.pathwiseVarianceProbabilisticSparseLossHighProbabilityLearningRate
+        arms gamma horizon sparsity delta
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma hgamma_pos.le (by linarith : gamma ≤ 1) loss.environment
+    mu (Exp3.sampledPredictableSparsityFailure arms loss horizon sparsity) ≤
+        ENNReal.ofReal epsilon →
+      mu {sample |
+          Exp3.pathwiseVarianceProbabilisticSparseLossRealizedTunedThreshold
+              arms gamma horizon sparsity delta ≤
+            (Finset.range horizon).sum (fun t =>
+                Exp3.sampledTrajectoryRealizedLossAt t sample) -
+              (Finset.range horizon).sum (fun t =>
+                Exp3.predictableLossAt loss t sample comparator)} ≤
+        ENNReal.ofReal delta + ENNReal.ofReal epsilon := by
+  exact
+    Exp3.sampledPredictable_tunedProbabilisticSparseLossPathwiseVarianceRealizedRegret_tail_of_sparsityFailure_le
+      prior arms harms hcard_two gamma hgamma_pos hgamma_le_half loss comparator
+        hcomparator horizon sparsity hhorizon hsparsity delta epsilon hdelta
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 ≤ arms.card)
+    (gamma : Real) (hgamma_pos : 0 < gamma)
+    (hgamma_le_half : gamma ≤ 1 / 2)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon sparsity : Nat) (hhorizon : 0 < horizon)
+    (hsparsity : 0 < sparsity)
+    (delta epsilon : Real) (hdelta : 0 < delta) :
+    let eta :=
+      Exp3.probabilisticSparseLossPredictableVarianceHighProbabilityLearningRate
+        arms gamma horizon sparsity delta
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma hgamma_pos.le (by linarith : gamma ≤ 1) loss.environment
+    mu (Exp3.sampledPredictableSparsityFailure arms loss horizon sparsity) ≤
+        ENNReal.ofReal epsilon →
+      mu {sample |
+          Exp3.probabilisticSparseLossPredictableVarianceRealizedMarkovTunedThreshold
+              arms gamma horizon sparsity delta ≤
+            (Finset.range horizon).sum (fun t =>
+                Exp3.sampledTrajectoryRealizedLossAt t sample) -
+              (Finset.range horizon).sum (fun t =>
+                Exp3.predictableLossAt loss t sample comparator)} ≤
+        ENNReal.ofReal delta + ENNReal.ofReal epsilon := by
+  exact
+    Exp3.sampledPredictable_tunedProbabilisticSparseLossPredictableVarianceRealizedMarkovRegret_tail_of_sparsityFailure_le
+      prior arms harms hcard_two gamma hgamma_pos hgamma_le_half loss comparator
+        hcomparator horizon sparsity hhorizon hsparsity delta epsilon hdelta
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 ≤ arms.card)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon sparsity : Nat) (hhorizon : 0 < horizon)
+    (hsparsity : 0 < sparsity)
+    (delta epsilon : Real) (hdelta : 0 < delta)
+    (hdelta_le_one : delta ≤ 1)
+    (hlarge_arm :
+      4 * ((sparsity : Real) * Real.log (arms.card : Real)) ≤
+        (horizon : Real))
+    (hlarge_mixed :
+      32 * (5 * (arms.card : Real) ^ 2 *
+          Real.log (arms.card : Real) ^ 2 * Real.log (5 / delta)) ≤
+        delta * (horizon : Real) ^ 3)
+    (hlarge_confidence :
+      8 * ((arms.card : Real) * Real.log (5 / delta)) ≤
+        (horizon : Real))
+    (hlarge_realized :
+      8 * ((Concentration.intervalVarianceProxy 0 1 : NNReal) : Real) *
+          Real.log (5 / delta) ≤ (horizon : Real)) :
+    let gamma :=
+      Exp3.probabilisticSparseLossPredictableVarianceClippedExplorationRate
+        (arms.card : Real) (sparsity : Real) (horizon : Real) delta
+    let eta :=
+      Exp3.probabilisticSparseLossPredictableVarianceHighProbabilityLearningRate
+        arms gamma horizon sparsity delta
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma
+        (Exp3.probabilisticSparseLossPredictableVarianceClippedExplorationRate_pos
+          (arms.card : Real) (sparsity : Real) (horizon : Real) delta
+          (by exact_mod_cast hcard_two)
+          (by exact_mod_cast hsparsity)
+          (by exact_mod_cast hhorizon)).le
+        (by
+          exact
+            (Exp3.probabilisticSparseLossPredictableVarianceClippedExplorationRate_le_half
+              (arms.card : Real) (sparsity : Real) (horizon : Real)
+                delta).trans (by norm_num))
+        loss.environment
+    mu (Exp3.sampledPredictableSparsityFailure arms loss horizon sparsity) ≤
+        ENNReal.ofReal epsilon →
+      mu {sample |
+          Exp3.probabilisticSparseLossPredictableVarianceRealizedMarkovExplicitThreshold
+              arms gamma horizon sparsity delta ≤
+            (Finset.range horizon).sum (fun t =>
+                Exp3.sampledTrajectoryRealizedLossAt t sample) -
+              (Finset.range horizon).sum (fun t =>
+                Exp3.predictableLossAt loss t sample comparator)} ≤
+        ENNReal.ofReal delta + ENNReal.ofReal epsilon := by
+  exact
+    Exp3.sampledPredictable_explicitProbabilisticSparseLossPredictableVarianceRealizedMarkovRegret_tail_of_sparsityFailure_le
+      prior arms harms hcard_two loss comparator hcomparator horizon sparsity
+        hhorizon hsparsity delta epsilon hdelta hdelta_le_one hlarge_arm
+        hlarge_mixed hlarge_confidence hlarge_realized
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 ≤ arms.card)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon sparsity : Nat) (hhorizon : 0 < horizon)
+    (hsparsity : 0 < sparsity)
+    (delta epsilon : Real) (hdelta : 0 < delta)
+    (hdelta_le_one : delta ≤ 1) :
+    let gamma :=
+      Exp3.probabilisticSparseLossPredictableVarianceClippedExplorationRate
+        (arms.card : Real) (sparsity : Real) (horizon : Real) delta
+    let eta :=
+      Exp3.probabilisticSparseLossPredictableVarianceHighProbabilityLearningRate
+        arms gamma horizon sparsity delta
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma
+        (Exp3.probabilisticSparseLossPredictableVarianceClippedExplorationRate_pos
+          (arms.card : Real) (sparsity : Real) (horizon : Real) delta
+          (by exact_mod_cast hcard_two)
+          (by exact_mod_cast hsparsity)
+          (by exact_mod_cast hhorizon)).le
+        (by
+          exact
+            (Exp3.probabilisticSparseLossPredictableVarianceClippedExplorationRate_le_half
+              (arms.card : Real) (sparsity : Real) (horizon : Real)
+                delta).trans (by norm_num))
+        loss.environment
+    mu (Exp3.sampledPredictableSparsityFailure arms loss horizon sparsity) ≤
+        ENNReal.ofReal epsilon →
+      mu {sample |
+          Exp3.probabilisticSparseLossPredictableVarianceAllHorizonRegretThreshold
+              arms horizon sparsity delta ≤
+            (Finset.range horizon).sum (fun t =>
+                Exp3.sampledTrajectoryRealizedLossAt t sample) -
+              (Finset.range horizon).sum (fun t =>
+                Exp3.predictableLossAt loss t sample comparator)} ≤
+        ENNReal.ofReal delta + ENNReal.ofReal epsilon := by
+  exact
+    Exp3.sampledPredictable_allHorizonProbabilisticSparseLossPredictableVarianceRealizedMarkovRegret_tail_of_sparsityFailure_le
+      prior arms harms hcard_two loss comparator hcomparator horizon sparsity
+        hhorizon hsparsity delta epsilon hdelta hdelta_le_one
+
+end BanditRLProof
+
+namespace BanditRLProof
+
+open MeasureTheory ProbabilityTheory
+
+example
+    {History : Type u} {Action : Type v}
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [DecidableEq Action]
+    (arms : Finset Action) (prob loss : History -> Action -> Real)
+    (history : History)
+    (hdist : Exp3.FiniteActionDistribution arms (prob history)) :
+    integral (Exp3.finiteActionMeasure arms (prob history)) (fun chosen =>
+        (Exp3.mixedSquaredImportanceWeightedLoss arms (prob history)
+            (loss history) chosen -
+          arms.sum (fun action => (loss history action) ^ 2)) ^ 2) =
+      Exp3.mixedSquaredEstimatorCenteredSecondMoment
+        arms prob loss history := by
+  exact
+    Exp3.integral_sq_mixedSquaredEstimatorDeviation_finiteActionMeasure_eq
+      arms prob loss history hdist
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [DecidableEq Action]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (hgamma_pos : 0 < gamma)
+    (hgamma_le_one : gamma <= 1)
+    (loss : Exp3.PredictableLossVector Env Action) :
+    IsPredictable (Exp3.sampledPredictableDeviationFiltration Env Action)
+      (Exp3.sampledPredictableMixedSquaredVarianceProcess
+        arms eta gamma loss) := by
+  exact Exp3.sampledPredictableMixedSquaredVarianceProcess_isPredictable
+    arms harms eta gamma hgamma_pos hgamma_le_one loss
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [DecidableEq Action]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (hgamma_pos : 0 < gamma)
+    (hgamma_le_one : gamma <= 1)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (t : Nat) (sample : Env × ((k : Nat) -> Action × Real)) :
+    Exp3.sampledTrajectoryPredictableMixedSquaredVarianceAt
+        arms eta gamma loss t sample <=
+      (arms.card : Real) / (gamma / (arms.card : Real)) := by
+  exact Exp3.sampledTrajectoryPredictableMixedSquaredVarianceAt_le
+    arms harms eta gamma hgamma_pos hgamma_le_one loss t sample
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]
+    (arms : Finset Action) (eta gamma : Real)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (horizon : Nat)
+    (sample : Env × ((k : Nat) -> Action × Real)) :
+    (Finset.range (horizon + 1)).sum (fun i =>
+        Exp3.sampledPredictableMixedSquaredVarianceProcess
+          arms eta gamma loss i sample) =
+      (Finset.range horizon).sum (fun i =>
+        Exp3.sampledTrajectoryPredictableMixedSquaredVarianceAt
+          arms eta gamma loss i sample) := by
+  exact Exp3.sampledPredictableMixedSquaredVarianceProcess_sum_range_succ
+    arms eta gamma loss horizon sample
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [DecidableEq Action]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (hgamma_pos : 0 < gamma)
+    (hgamma_le_one : gamma <= 1)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (horizon : Nat)
+    (sample : Env × ((k : Nat) -> Action × Real)) :
+    (Finset.range horizon).sum (fun i =>
+        Exp3.sampledTrajectoryPredictableMixedSquaredVarianceAt
+          arms eta gamma loss i sample) <=
+      (horizon : Real) *
+        ((arms.card : Real) / (gamma / (arms.card : Real))) := by
+  exact Exp3.sampledPredictableMixedSquaredVariance_sum_le
+    arms harms eta gamma hgamma_pos hgamma_le_one loss horizon sample
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsFiniteMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (hgamma_pos : 0 < gamma)
+    (hgamma_le_one : gamma <= 1)
+    (loss : Exp3.PredictableLossVector Env Action) (n : Nat) :
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma hgamma_pos.le hgamma_le_one loss.environment
+    Filter.Eventually
+      (fun omega =>
+        integral
+            (@condExpKernel
+              (Env × ((k : Nat) -> Action × Real)) inferInstance _ mu _
+              (Exp3.sampledPredictableDeviationFiltration Env Action n) omega)
+            (fun y =>
+              (Exp3.sampledPredictableMixedSquaredDeviationProcess
+                arms eta gamma loss (n + 1) y) ^ 2) =
+          Exp3.sampledPredictableMixedSquaredVarianceProcess
+            arms eta gamma loss (n + 1) omega)
+      (ae (mu.trim
+        ((Exp3.sampledPredictableDeviationFiltration Env Action).le n))) := by
+  exact
+    Exp3.sampledPredictableMixedSquaredDeviationProcess_condExpKernel_integral_sq_eq_varianceProcess
+      prior arms harms eta gamma hgamma_pos hgamma_le_one loss n
+
+end BanditRLProof
+
+namespace BanditRLProof
+
+open MeasureTheory ProbabilityTheory
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 <= arms.card)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon : Nat) (hhorizon : 0 < horizon)
+    (delta : Real) (hdelta : 0 < delta) (hdelta_le_one : delta <= 1)
+    (hlarge_arm :
+      4 * ((arms.card : Real) * Real.log (arms.card : Real)) <=
+        (horizon : Real))
+    (hlarge_mixed :
+      64 * ((arms.card : Real) ^ 2 * Real.log (arms.card : Real) ^ 2 *
+          Real.log (4 / delta) / 2) <= (horizon : Real) ^ 3)
+    (hlarge_confidence :
+      8 * ((arms.card : Real) * Real.log (4 / delta)) <=
+        (horizon : Real))
+    (hlarge_realized :
+      8 * ((Concentration.intervalVarianceProxy 0 1 : NNReal) : Real) *
+          Real.log (4 / delta) <= (horizon : Real)) :
+    let gamma := Exp3.bernsteinSquareClippedExplorationRate
+      (arms.card : Real) (horizon : Real) delta
+    let eta := Exp3.bernsteinSquareHighProbabilityLearningRate
+      arms gamma horizon delta
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma
+        (Exp3.bernsteinSquareClippedExplorationRate_pos
+          (arms.card : Real) (horizon : Real) delta
+          (by exact_mod_cast hcard_two)
+          (by exact_mod_cast hhorizon)).le
+        (by
+          exact (Exp3.bernsteinSquareClippedExplorationRate_le_half
+            (arms.card : Real) (horizon : Real) delta).trans (by norm_num))
+        loss.environment
+    mu {sample |
+        Exp3.bernsteinSquareRealizedExplicitThreshold
+            arms gamma horizon delta <=
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} <=
+      ENNReal.ofReal delta := by
+  exact
+    Exp3.sampledPredictable_explicitBernsteinSquareRealizedRegret_tail
+      prior arms harms hcard_two loss comparator hcomparator horizon hhorizon
+        delta hdelta hdelta_le_one hlarge_arm hlarge_mixed hlarge_confidence
+          hlarge_realized
+
+end BanditRLProof
+
+namespace BanditRLProof
+
+open MeasureTheory ProbabilityTheory
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 <= arms.card)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon : Nat) (hhorizon : 0 < horizon)
+    (delta : Real) (hdelta : 0 < delta) (hdelta_le_one : delta <= 1) :
+    let gamma := Exp3.bernsteinSquareClippedExplorationRate
+      (arms.card : Real) (horizon : Real) delta
+    let eta := Exp3.bernsteinSquareHighProbabilityLearningRate
+      arms gamma horizon delta
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma
+        (Exp3.bernsteinSquareClippedExplorationRate_pos
+          (arms.card : Real) (horizon : Real) delta
+          (by exact_mod_cast hcard_two)
+          (by exact_mod_cast hhorizon)).le
+        (by
+          exact (Exp3.bernsteinSquareClippedExplorationRate_le_half
+            (arms.card : Real) (horizon : Real) delta).trans (by norm_num))
+        loss.environment
+    mu {sample |
+        Exp3.bernsteinSquareAllHorizonRegretThreshold arms horizon delta <=
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} <=
+      ENNReal.ofReal delta := by
+  exact
+    Exp3.sampledPredictable_allHorizonBernsteinSquareRealizedRegret_tail
+      prior arms harms hcard_two loss comparator hcomparator horizon hhorizon
+        delta hdelta hdelta_le_one
+
+end BanditRLProof
+
+namespace BanditRLProof
+
+open MeasureTheory ProbabilityTheory
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 <= arms.card)
+    (gamma : Real) (hgamma_pos : 0 < gamma)
+    (hgamma_le_half : gamma <= 1 / 2)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon : Nat) (hhorizon : 0 < horizon)
+    (delta : Real) (hdelta : 0 < delta) :
+    let eta := Exp3.bernsteinSquareHighProbabilityLearningRate
+      arms gamma horizon delta
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma hgamma_pos.le (by linarith : gamma <= 1) loss.environment
+    mu {sample |
+        Exp3.bernsteinSquareRealizedTunedThreshold arms gamma horizon delta <=
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} <=
+      ENNReal.ofReal delta := by
+  exact
+    Exp3.sampledPredictable_tunedBernsteinSquareRealizedRegret_tail
+      prior arms harms hcard_two gamma hgamma_pos hgamma_le_half loss comparator
+        hcomparator horizon hhorizon delta hdelta
+
+end BanditRLProof
+
+namespace BanditRLProof
+
+open MeasureTheory ProbabilityTheory
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (heta : 0 < eta)
+    (hgamma_pos : 0 < gamma) (hgamma_lt_one : gamma < 1)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon : Nat) (hhorizon : 0 < horizon)
+    (delta : Real) (hdelta : 0 < delta) :
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment
+    mu {sample |
+        Exp3.sampledPredictableBernsteinSquareRealizedHighProbabilityRegretBudget
+            arms eta gamma horizon (delta / 4) (delta / 4) (delta / 4) <=
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} <=
+      ENNReal.ofReal delta := by
+  exact
+    Exp3.sampledPredictable_bernsteinSquareRealizedHighProbabilityRegret_tail_total_delta
+      prior arms harms eta gamma heta hgamma_pos hgamma_lt_one loss comparator
+        hcomparator horizon hhorizon delta hdelta
+
+end BanditRLProof
+
+namespace BanditRLProof
+
+open MeasureTheory ProbabilityTheory
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (heta : 0 < eta)
+    (hgamma_pos : 0 < gamma) (hgamma_lt_one : gamma < 1)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon : Nat) (delta : Real) (hdelta : 0 < delta) :
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment
+    mu {sample |
+        Exp3.sampledPredictableBernsteinSquareHighProbabilityRegretBudget
+            arms eta gamma horizon (delta / 3) (delta / 3) <=
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryExploredPredictableLossAt
+                arms eta gamma loss t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} <=
+      ENNReal.ofReal delta := by
+  exact
+    Exp3.sampledPredictable_bernsteinSquareHighProbabilityRegret_tail_total_delta
+      prior arms harms eta gamma heta hgamma_pos hgamma_lt_one loss comparator
+        hcomparator horizon delta hdelta
+
+end BanditRLProof
+
+namespace BanditRLProof
+
+open MeasureTheory ProbabilityTheory
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (hgamma_pos : 0 < gamma)
+    (hgamma_le_one : gamma <= 1)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (horizon : Nat) (delta : Real) (hdelta : 0 < delta) :
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma hgamma_pos.le hgamma_le_one loss.environment
+    mu {sample |
+        (arms.card : Real) * (horizon : Real) +
+            Exp3.sampledMixedSquaredBernsteinConfidenceRadius
+              arms gamma horizon delta <=
+          Exp3.sampledObservedMixedSquaredSum
+            arms eta gamma horizon sample} <=
+      ENNReal.ofReal delta := by
+  exact
+    Exp3.sampledPredictableObservedMixedSquared_sum_tail_bernstein_delta
+      prior arms harms eta gamma hgamma_pos hgamma_le_one loss horizon delta hdelta
+
+end BanditRLProof
+
+namespace BanditRLProof
+
+open MeasureTheory ProbabilityTheory
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 <= arms.card)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon : Nat) (hhorizon : 0 < horizon)
+    (delta : Real) (hdelta : 0 < delta) (hdelta_le_one : delta <= 1) :
+    let gamma := Exp3.exponentialSquareBernsteinClippedExplorationRate
+      (arms.card : Real) (horizon : Real) delta
+    let eta := Exp3.exponentialSquareHighProbabilityLearningRate
+      arms gamma horizon delta
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma
+        (Exp3.exponentialSquareBernsteinClippedExplorationRate_pos
+          (arms.card : Real) (horizon : Real) delta
+          (by exact_mod_cast hcard_two)
+          (by exact_mod_cast hhorizon)).le
+        (by
+          exact (Exp3.exponentialSquareBernsteinClippedExplorationRate_le_half
+            (arms.card : Real) (horizon : Real) delta).trans (by norm_num))
+        loss.environment
+    mu {sample |
+        Exp3.exponentialSquareBernsteinAllHorizonRegretThreshold
+            arms horizon delta <=
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} <=
+      ENNReal.ofReal delta := by
+  exact
+    Exp3.sampledPredictable_allHorizonExponentialSquareBernsteinRealizedRegret_tail
+      prior arms harms hcard_two loss comparator hcomparator horizon hhorizon
+        delta hdelta hdelta_le_one
+
+end BanditRLProof
+
+namespace BanditRLProof
+
+open MeasureTheory ProbabilityTheory
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 <= arms.card)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon : Nat) (hhorizon : 0 < horizon)
+    (delta : Real) (hdelta : 0 < delta) (hdelta_le_one : delta <= 1)
+    (hlarge_arm :
+      4 * ((arms.card : Real) * Real.log (arms.card : Real)) <=
+        (horizon : Real))
+    (hlarge_mixed :
+      64 * ((arms.card : Real) ^ 2 * Real.log (arms.card : Real) ^ 2 *
+          Real.log (4 / delta) / 2) <= (horizon : Real) ^ 3)
+    (hlarge_confidence :
+      8 * ((arms.card : Real) * Real.log (4 / delta)) <=
+        (horizon : Real))
+    (hlarge_realized :
+      8 * ((Concentration.intervalVarianceProxy 0 1 : NNReal) : Real) *
+          Real.log (4 / delta) <= (horizon : Real)) :
+    let gamma := Exp3.exponentialSquareBernsteinClippedExplorationRate
+      (arms.card : Real) (horizon : Real) delta
+    let eta := Exp3.exponentialSquareHighProbabilityLearningRate
+      arms gamma horizon delta
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma
+        (Exp3.exponentialSquareBernsteinClippedExplorationRate_pos
+          (arms.card : Real) (horizon : Real) delta
+          (by exact_mod_cast hcard_two)
+          (by exact_mod_cast hhorizon)).le
+        (by
+          exact (Exp3.exponentialSquareBernsteinClippedExplorationRate_le_half
+            (arms.card : Real) (horizon : Real) delta).trans (by norm_num))
+        loss.environment
+    mu {sample |
+        Exp3.exponentialSquareBernsteinRealizedExplicitThreshold
+            arms gamma horizon delta <=
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} <=
+      ENNReal.ofReal delta := by
+  exact
+    Exp3.sampledPredictable_explicitExponentialSquareBernsteinRealizedRegret_tail
+      prior arms harms hcard_two loss comparator hcomparator horizon hhorizon
+        delta hdelta hdelta_le_one hlarge_arm hlarge_mixed hlarge_confidence
+          hlarge_realized
+
+end BanditRLProof
+
+namespace BanditRLProof
+
+noncomputable example {Env Action : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : MeasureTheory.Measure Env) [MeasureTheory.IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (hgamma_pos : 0 < gamma)
+    (hgamma_le_one : gamma <= 1)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (horizon : Nat) (hhorizon : 0 < horizon)
+    (delta : Real) (hdelta : 0 < delta) :
+    let mu := MeasureTheory.Measure.compProd prior
+      (Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+        eta gamma hgamma_pos.le hgamma_le_one loss.environment)
+    mu {sample |
+        (arms.card : Real) * (horizon : Real) +
+            Exp3.sampledMixedSquaredConfidenceRadius arms gamma horizon delta <=
+          Exp3.sampledObservedMixedSquaredSum arms eta gamma horizon sample} <=
+      ENNReal.ofReal delta := by
+  exact Exp3.sampledPredictableObservedMixedSquared_sum_tail_delta
+    prior arms harms eta gamma hgamma_pos hgamma_le_one loss horizon hhorizon
+      delta hdelta
+
+end BanditRLProof
+
+namespace BanditRLProof
+
+noncomputable example {Env Action : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : MeasureTheory.Measure Env) [MeasureTheory.IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (heta : 0 < eta)
+    (hgamma_pos : 0 < gamma) (hgamma_lt_one : gamma < 1)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon : Nat) (hhorizon : 0 < horizon)
+    (delta : Real) (hdelta : 0 < delta) :
+    let mu := MeasureTheory.Measure.compProd prior
+      (Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+        eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment)
+    mu {sample |
+        Exp3.sampledPredictableExponentialSquareBernsteinHighProbabilityRegretBudget
+            arms eta gamma horizon (delta / 3) (delta / 3) <=
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryExploredPredictableLossAt
+                arms eta gamma loss t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} <=
+      ENNReal.ofReal delta := by
+  exact
+    Exp3.sampledPredictable_exponentialSquareBernsteinHighProbabilityRegret_tail_total_delta
+      prior arms harms eta gamma heta hgamma_pos hgamma_lt_one loss comparator
+        hcomparator horizon hhorizon delta hdelta
+
+end BanditRLProof
+
+namespace BanditRLProof
+
+noncomputable example {Env Action : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : MeasureTheory.Measure Env) [MeasureTheory.IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (heta : 0 < eta)
+    (hgamma_pos : 0 < gamma) (hgamma_lt_one : gamma < 1)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon : Nat) (hhorizon : 0 < horizon)
+    (delta : Real) (hdelta : 0 < delta) :
+    let mu := MeasureTheory.Measure.compProd prior
+      (Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+        eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment)
+    mu {sample |
+        Exp3.sampledPredictableExponentialSquareBernsteinRealizedHighProbabilityRegretBudget
+            arms eta gamma horizon (delta / 4) (delta / 4) (delta / 4) <=
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} <=
+      ENNReal.ofReal delta := by
+  exact
+    Exp3.sampledPredictable_exponentialSquareBernsteinRealizedHighProbabilityRegret_tail_total_delta
+      prior arms harms eta gamma heta hgamma_pos hgamma_lt_one loss comparator
+        hcomparator horizon hhorizon delta hdelta
+
+end BanditRLProof
+
+namespace BanditRLProof
+
+noncomputable example {Env Action : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : MeasureTheory.Measure Env) [MeasureTheory.IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 <= arms.card)
+    (gamma : Real) (hgamma_pos : 0 < gamma)
+    (hgamma_le_half : gamma <= 1 / 2)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon : Nat) (hhorizon : 0 < horizon)
+    (delta : Real) (hdelta : 0 < delta) :
+    let eta := Exp3.exponentialSquareHighProbabilityLearningRate
+      arms gamma horizon delta
+    let mu := MeasureTheory.Measure.compProd prior
+      (Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+        eta gamma hgamma_pos.le (by linarith : gamma <= 1) loss.environment)
+    mu {sample |
+        Exp3.exponentialSquareBernsteinRealizedTunedThreshold
+            arms gamma horizon delta <=
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} <=
+      ENNReal.ofReal delta := by
+  exact
+    Exp3.sampledPredictable_tunedExponentialSquareBernsteinRealizedRegret_tail
+      prior arms harms hcard_two gamma hgamma_pos hgamma_le_half loss
+        comparator hcomparator horizon hhorizon delta hdelta
+
+end BanditRLProof
+
+namespace BanditRLProof
+
+open MeasureTheory ProbabilityTheory
+
+noncomputable example {Omega : Type} [MeasurableSpace Omega]
+    [StandardBorelSpace Omega] (mu : Measure Omega)
+    [IsProbabilityMeasure mu]
+    (F : Filtration Nat (inferInstance : MeasurableSpace Omega))
+    (Y : Nat -> Omega -> Real) (psi : Nat -> Real) (tilt eps : Real)
+    (hadapted : StronglyAdapted F Y)
+    (hzero : Concentration.HasMGFUpperBoundAt (Y 0) tilt (psi 0) mu)
+    (n : Nat)
+    (hmgf : forall i, i < n - 1 ->
+      Concentration.HasCondMGFUpperBoundAt (F i) (F.le i)
+        (Y (i + 1)) tilt (psi (i + 1)) mu)
+    (htilt : 0 <= tilt) :
+    mu.real {omega | eps <= Finset.sum (Finset.range n) (fun i => Y i omega)} <=
+      Real.exp
+        (-tilt * eps + Finset.sum (Finset.range n) (fun i => psi i)) := by
+  exact Concentration.measure_sum_ge_le_of_hasCondMGFUpperBoundAt
+    hadapted hzero n hmgf eps htilt
+
+noncomputable example {Omega : Type} [MeasurableSpace Omega]
+    [StandardBorelSpace Omega] (mu : Measure Omega)
+    [IsProbabilityMeasure mu]
+    (F : Filtration Nat (inferInstance : MeasurableSpace Omega))
+    (Y V : Nat -> Omega -> Real) (n : Nat)
+    (tilt varianceCoeff threshold varianceBudget : Real)
+    (hadapted : StronglyAdapted F
+      (fun i omega => tilt * Y i omega - varianceCoeff * V i omega))
+    (hzero : Concentration.HasMGFUpperBoundAt
+      (fun omega => tilt * Y 0 omega - varianceCoeff * V 0 omega) 1 0 mu)
+    (hmgf : forall i, i < n - 1 ->
+      Concentration.HasCondMGFUpperBoundAt (F i) (F.le i)
+        (fun omega =>
+          tilt * Y (i + 1) omega - varianceCoeff * V (i + 1) omega)
+        1 0 mu)
+    (htilt : 0 <= tilt) (hvarianceCoeff : 0 <= varianceCoeff) :
+    mu {omega |
+        threshold <= Finset.sum (Finset.range n) (fun i => Y i omega) ∧
+        Finset.sum (Finset.range n) (fun i => V i omega) <= varianceBudget} <=
+      ENNReal.ofReal (Real.exp
+        (-tilt * threshold + varianceCoeff * varianceBudget)) := by
+  exact
+    Concentration.measure_sum_ge_inter_sum_le_of_compensated_hasCondMGFUpperBoundAt
+      Y V n tilt varianceCoeff threshold varianceBudget hadapted hzero hmgf
+        htilt hvarianceCoeff
+
+noncomputable example {Omega : Type} [MeasurableSpace Omega]
+    (mu : Measure Omega) (deviation predictableVariance : Omega -> Real)
+    (varianceScale varianceBudget tiltCap delta : Real)
+    (hvarianceScale : 0 < varianceScale)
+    (hvarianceBudget : 0 < varianceBudget) (htiltCap : 0 < tiltCap)
+    (hdelta : 0 < delta)
+    (hfixed : forall tilt, 0 <= tilt -> tilt <= tiltCap ->
+      mu {omega |
+          Concentration.quadraticFixedMGFRadius
+              varianceScale varianceBudget tiltCap delta <= deviation omega ∧
+            predictableVariance omega <= varianceBudget} <=
+        ENNReal.ofReal (Real.exp
+          (-tilt * Concentration.quadraticFixedMGFRadius
+              varianceScale varianceBudget tiltCap delta +
+            varianceScale * (tilt ^ 2 * varianceBudget)))) :
+    mu {omega |
+        Concentration.quadraticFixedMGFRadius
+            varianceScale varianceBudget tiltCap delta <= deviation omega ∧
+          predictableVariance omega <= varianceBudget} <=
+      ENNReal.ofReal delta := by
+  exact
+    Concentration.measure_deviation_ge_inter_variance_le_delta_of_fixedTilt_quadratic_tail
+      mu deviation predictableVariance varianceScale varianceBudget tiltCap delta
+        hvarianceScale hvarianceBudget htiltCap hdelta hfixed
+
+noncomputable example {Omega Idx : Type} [MeasurableSpace Omega]
+    [DecidableEq Idx] (mu : Measure Omega) (times : Finset Idx)
+    (htimes : times.Nonempty)
+    (deviation predictableVariance : Idx -> Omega -> Real)
+    (varianceScale varianceBudget tiltCap delta : Real)
+    (hvarianceScale : 0 < varianceScale)
+    (hvarianceBudget : 0 < varianceBudget) (htiltCap : 0 < tiltCap)
+    (hdelta : 0 < delta)
+    (hfixed : forall i, i ∈ times -> forall tilt,
+      0 <= tilt -> tilt <= tiltCap ->
+        mu {omega |
+            Concentration.quadraticFixedMGFMaximalRadius times varianceScale
+                varianceBudget tiltCap delta <= deviation i omega ∧
+              predictableVariance i omega <= varianceBudget} <=
+          ENNReal.ofReal (Real.exp
+            (-tilt * Concentration.quadraticFixedMGFMaximalRadius times
+                varianceScale varianceBudget tiltCap delta +
+              varianceScale * (tilt ^ 2 * varianceBudget)))) :
+    mu (⋃ i ∈ times, {omega |
+        Concentration.quadraticFixedMGFMaximalRadius times varianceScale
+            varianceBudget tiltCap delta <= deviation i omega ∧
+          predictableVariance i omega <= varianceBudget}) <=
+      ENNReal.ofReal delta := by
+  exact
+    Concentration.measure_biUnion_deviation_ge_inter_variance_le_delta_of_fixedTilt_quadratic_tail
+      mu times htimes deviation predictableVariance varianceScale varianceBudget
+        tiltCap delta hvarianceScale hvarianceBudget htiltCap hdelta hfixed
+
+noncomputable example
+    {Env Action : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (hgamma_pos : 0 < gamma)
+    (hgamma_le_one : gamma <= 1)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (horizon : Nat) (hhorizon : 0 < horizon)
+    (varianceBudget delta : Real)
+    (hvarianceBudget : 0 < varianceBudget) (hdelta : 0 < delta) :
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma hgamma_pos.le hgamma_le_one loss.environment
+    mu (⋃ t ∈ Finset.range horizon, {sample |
+        Exp3.sampledRealizedPredictableVarianceMaximalRadius
+              horizon varianceBudget delta <=
+            (Finset.range (t + 1)).sum (fun i =>
+              Exp3.sampledTrajectoryRealizedDeviationAt
+                arms eta gamma loss i sample) ∧
+          (Finset.range (t + 1)).sum (fun i =>
+            Exp3.sampledTrajectoryPredictableRealizedVarianceAt
+              arms eta gamma loss i sample) <= varianceBudget}) <=
+      ENNReal.ofReal delta := by
+  exact
+    Exp3.sampledPredictableRealizedDeviation_prefix_max_tail_predictableVariance_delta
+      prior arms harms eta gamma hgamma_pos hgamma_le_one loss horizon hhorizon
+        varianceBudget delta hvarianceBudget hdelta
+
+end BanditRLProof
+
+namespace BanditRLProof
+
+open MeasureTheory ProbabilityTheory
+
+noncomputable example
+    {Env Action : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (hgamma_pos : 0 < gamma)
+    (hgamma_le_one : gamma <= 1)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon : Nat) (tilt : Real) (htilt_nonneg : 0 <= tilt)
+    (htilt_le : tilt <= gamma / (arms.card : Real)) (threshold : Real) :
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma hgamma_pos.le hgamma_le_one loss.environment
+    mu.real {sample | threshold <= (Finset.range horizon).sum (fun i =>
+        Exp3.sampledTrajectoryObservedComparatorEstimatorDeviationAt
+          arms eta gamma loss comparator i sample)} <=
+      Real.exp (-tilt * threshold +
+        (horizon : Real) * (tilt ^ 2 / (gamma / (arms.card : Real)))) := by
+  exact Exp3.sampledObservedComparatorEstimatorDeviation_sum_tail_fixedTilt
+    prior arms harms eta gamma hgamma_pos hgamma_le_one loss comparator hcomparator
+      horizon tilt htilt_nonneg htilt_le threshold
+
+noncomputable example
+    {Env Action : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (hgamma_pos : 0 < gamma)
+    (hgamma_le_one : gamma <= 1)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon : Nat) (delta : Real) (hdelta : 0 < delta) :
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma hgamma_pos.le hgamma_le_one loss.environment
+    mu {sample |
+        Exp3.sampledComparatorEstimatorBernsteinConfidenceRadius
+            arms gamma horizon delta <=
+          (Finset.range horizon).sum (fun i =>
+            Exp3.sampledTrajectoryObservedComparatorEstimatorDeviationAt
+              arms eta gamma loss comparator i sample)} <=
+      ENNReal.ofReal delta := by
+  exact Exp3.sampledObservedComparatorEstimatorDeviation_sum_tail_bernstein_delta
+    prior arms harms eta gamma hgamma_pos hgamma_le_one loss comparator hcomparator
+      horizon delta hdelta
+
+noncomputable example
+    {Env Action : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (hgamma_pos : 0 < gamma)
+    (hgamma_le_one : gamma <= 1)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (horizon : Nat) (delta : Real) (hdelta : 0 < delta) :
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma hgamma_pos.le hgamma_le_one loss.environment
+    mu {sample |
+        Exp3.sampledPurePredictableMinusObservedBernsteinConfidenceRadius
+            arms gamma horizon delta <=
+          (Finset.range horizon).sum (fun i =>
+            Exp3.sampledTrajectoryPurePredictableLossAt
+                arms eta gamma loss i sample -
+              Exp3.sampledTrajectoryPureObservedLossAt arms eta gamma i sample)} <=
+      ENNReal.ofReal delta := by
+  exact Exp3.sampledPurePredictableMinusObserved_sum_tail_bernstein_delta
+    prior arms harms eta gamma hgamma_pos hgamma_le_one loss
+      horizon delta hdelta
+
+noncomputable example
+    {Env Action : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (heta : 0 < eta)
+    (hgamma_pos : 0 < gamma) (hgamma_lt_one : gamma < 1)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon : Nat) (delta : Real) (hdelta : 0 < delta) :
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment
+    mu {sample |
+        Exp3.sampledPredictableBernsteinHighProbabilityRegretBudget
+            arms eta gamma horizon (delta / 2) <=
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryExploredPredictableLossAt
+                arms eta gamma loss t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} <=
+      ENNReal.ofReal delta := by
+  exact Exp3.sampledPredictable_bernsteinHighProbabilityRegret_tail_total_delta
+    prior arms harms eta gamma heta hgamma_pos hgamma_lt_one loss comparator
+      hcomparator horizon delta hdelta
+
+noncomputable example
+    {Env Action : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (heta : 0 < eta)
+    (hgamma_pos : 0 < gamma) (hgamma_lt_one : gamma < 1)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon : Nat) (hhorizon : 0 < horizon)
+    (delta : Real) (hdelta : 0 < delta) :
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment
+    mu {sample |
+        Exp3.sampledPredictableBernsteinRealizedHighProbabilityRegretBudget
+            arms eta gamma horizon (delta / 3) <=
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} <=
+      ENNReal.ofReal delta := by
+  exact
+    Exp3.sampledPredictable_bernsteinRealizedHighProbabilityRegret_tail_total_delta
+      prior arms harms eta gamma heta hgamma_pos hgamma_lt_one loss comparator
+        hcomparator horizon hhorizon delta hdelta
+
+noncomputable example
+    {Env Action : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 <= arms.card)
+    (gamma : Real) (hgamma_pos : 0 < gamma)
+    (hgamma_le_half : gamma <= 1 / 2)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon : Nat) (hhorizon : 0 < horizon)
+    (delta : Real) (hdelta : 0 < delta) (hdelta_le_one : delta <= 1)
+    (hcubic_log :
+      (arms.card : Real) * Real.log (arms.card : Real) <=
+        gamma ^ 3 * (horizon : Real))
+    (hcubic_confidence :
+      (arms.card : Real) * Real.log (3 / delta) <=
+        gamma ^ 3 * (horizon : Real))
+    (hquadratic_realized :
+      2 * ((Concentration.intervalVarianceProxy 0 1 : NNReal) : Real) *
+          Real.log (3 / delta) <=
+        gamma ^ 2 * (horizon : Real)) :
+    let eta := Exp3.bernsteinHighProbabilityLearningRate
+      (arms.card : Real) (horizon : Real) gamma
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma hgamma_pos.le (by linarith : gamma <= 1) loss.environment
+    mu {sample |
+        11 * gamma * (horizon : Real) <=
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} <=
+      ENNReal.ofReal delta := by
+  exact Exp3.sampledPredictable_tunedBernsteinRealizedHighProbabilityRegret_tail
+    prior arms harms hcard_two gamma hgamma_pos hgamma_le_half loss comparator
+      hcomparator horizon hhorizon delta hdelta hdelta_le_one hcubic_log
+        hcubic_confidence hquadratic_realized
+
+noncomputable example
+    {Env Action : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 <= arms.card)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon : Nat) (hhorizon : 0 < horizon)
+    (delta : Real) (hdelta : 0 < delta) (hdelta_le_one : delta <= 1)
+    (hlarge_arm :
+      8 * ((arms.card : Real) * Real.log (arms.card : Real)) <=
+        (horizon : Real))
+    (hlarge_confidence :
+      8 * ((arms.card : Real) * Real.log (3 / delta)) <=
+        (horizon : Real))
+    (hlarge_realized :
+      8 * ((Concentration.intervalVarianceProxy 0 1 : NNReal) : Real) *
+          Real.log (3 / delta) <=
+        (horizon : Real)) :
+    let gamma := Exp3.bernsteinClippedExplorationRate
+      (arms.card : Real) (horizon : Real) delta
+    let eta := Exp3.bernsteinHighProbabilityLearningRate
+      (arms.card : Real) (horizon : Real) gamma
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma
+        (Exp3.bernsteinClippedExplorationRate_pos
+          (arms.card : Real) (horizon : Real) delta
+          (by exact_mod_cast hcard_two)
+          (by exact_mod_cast hhorizon)).le
+        (by
+          exact (Exp3.bernsteinClippedExplorationRate_le_half
+            (arms.card : Real) (horizon : Real) delta).trans (by norm_num))
+        loss.environment
+    mu {sample |
+        11 * gamma * (horizon : Real) <=
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} <=
+      ENNReal.ofReal delta := by
+  exact
+    Exp3.sampledPredictable_explicitBernsteinRealizedHighProbabilityRegret_tail
+      prior arms harms hcard_two loss comparator hcomparator horizon hhorizon
+        delta hdelta hdelta_le_one hlarge_arm hlarge_confidence hlarge_realized
+
+noncomputable example
+    {Env Action : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 <= arms.card)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon : Nat) (hhorizon : 0 < horizon)
+    (delta : Real) (hdelta : 0 < delta) (hdelta_le_one : delta <= 1) :
+    let gamma := Exp3.bernsteinClippedExplorationRate
+      (arms.card : Real) (horizon : Real) delta
+    let eta := Exp3.bernsteinHighProbabilityLearningRate
+      (arms.card : Real) (horizon : Real) gamma
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma
+        (Exp3.bernsteinClippedExplorationRate_pos
+          (arms.card : Real) (horizon : Real) delta
+          (by exact_mod_cast hcard_two)
+          (by exact_mod_cast hhorizon)).le
+        (by
+          exact (Exp3.bernsteinClippedExplorationRate_le_half
+            (arms.card : Real) (horizon : Real) delta).trans (by norm_num))
+        loss.environment
+    mu {sample |
+        Exp3.bernsteinAllHorizonRegretThreshold
+            (arms.card : Real) (horizon : Real) delta <=
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} <=
+      ENNReal.ofReal delta := by
+  exact Exp3.sampledPredictable_allHorizonBernsteinRealizedRegret_tail
+    prior arms harms hcard_two loss comparator hcomparator horizon hhorizon
+      delta hdelta hdelta_le_one
+
+noncomputable example
+    {Env Action : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (heta : 0 < eta)
+    (hgamma_pos : 0 < gamma) (hgamma_lt_one : gamma < 1)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon : Nat) (hhorizon : 0 < horizon)
+    (delta : Real) (hdelta : 0 < delta) :
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment
+    mu {sample |
+        Exp3.sampledPredictableRandomSquareBernsteinHighProbabilityRegretBudget
+            arms eta gamma horizon (delta / 3) (delta / 3) <=
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryExploredPredictableLossAt
+                arms eta gamma loss t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} <=
+      ENNReal.ofReal delta := by
+  exact
+    Exp3.sampledPredictable_randomSquareBernsteinHighProbabilityRegret_tail_total_delta
+      prior arms harms eta gamma heta hgamma_pos hgamma_lt_one loss comparator
+        hcomparator horizon hhorizon delta hdelta
+
+noncomputable example
+    {Env Action : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (heta : 0 < eta)
+    (hgamma_pos : 0 < gamma) (hgamma_lt_one : gamma < 1)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon : Nat) (hhorizon : 0 < horizon)
+    (delta : Real) (hdelta : 0 < delta) :
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment
+    mu {sample |
+        Exp3.sampledPredictableRandomSquareBernsteinRealizedHighProbabilityRegretBudget
+            arms eta gamma horizon (delta / 4) (delta / 4) (delta / 4) <=
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} <=
+      ENNReal.ofReal delta := by
+  exact
+    Exp3.sampledPredictable_randomSquareBernsteinRealizedHighProbabilityRegret_tail_total_delta
+      prior arms harms eta gamma heta hgamma_pos hgamma_lt_one loss comparator
+        hcomparator horizon hhorizon delta hdelta
+
+noncomputable example
+    {Env Action : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 <= arms.card)
+    (gamma : Real) (hgamma_pos : 0 < gamma)
+    (hgamma_le_half : gamma <= 1 / 2)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon : Nat) (hhorizon : 0 < horizon)
+    (delta : Real) (hdelta : 0 < delta) :
+    let eta := Exp3.randomSquareHighProbabilityLearningRate
+      (arms.card : Real) (horizon : Real) delta
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma hgamma_pos.le (by linarith : gamma <= 1) loss.environment
+    mu {sample |
+        Exp3.randomSquareBernsteinRealizedTunedThreshold
+            arms gamma horizon delta <=
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} <=
+      ENNReal.ofReal delta := by
+  exact Exp3.sampledPredictable_tunedRandomSquareBernsteinRealizedRegret_tail
+    prior arms harms hcard_two gamma hgamma_pos hgamma_le_half loss comparator
+      hcomparator horizon hhorizon delta hdelta
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 <= arms.card)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon : Nat) (hhorizon : 0 < horizon)
+    (delta : Real) (hdelta : 0 < delta) (hdelta_le_one : delta <= 1)
+    (hlarge_confidence :
+      8 * ((arms.card : Real) * Real.log (4 / delta)) <=
+        (horizon : Real))
+    (hlarge_realized :
+      8 * ((Concentration.intervalVarianceProxy 0 1 : NNReal) : Real) *
+          Real.log (4 / delta) <=
+        (horizon : Real)) :
+    let gamma := Exp3.randomSquareBernsteinClippedExplorationRate
+      (arms.card : Real) (horizon : Real) delta
+    let eta := Exp3.randomSquareHighProbabilityLearningRate
+      (arms.card : Real) (horizon : Real) delta
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma
+        (Exp3.randomSquareBernsteinClippedExplorationRate_pos
+          (arms.card : Real) (horizon : Real) delta
+          (by positivity) (by exact_mod_cast hhorizon) hdelta hdelta_le_one).le
+        (by
+          exact (Exp3.randomSquareBernsteinClippedExplorationRate_le_half
+            (arms.card : Real) (horizon : Real) delta).trans (by norm_num))
+        loss.environment
+    mu {sample |
+        Exp3.randomSquareBernsteinRealizedExplicitThreshold
+            arms gamma horizon delta <=
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} <=
+      ENNReal.ofReal delta := by
+  exact Exp3.sampledPredictable_explicitRandomSquareBernsteinRealizedRegret_tail
+    prior arms harms hcard_two loss comparator hcomparator horizon hhorizon
+      delta hdelta hdelta_le_one hlarge_confidence hlarge_realized
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 <= arms.card)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon : Nat) (hhorizon : 0 < horizon)
+    (delta : Real) (hdelta : 0 < delta) (hdelta_le_one : delta <= 1) :
+    let gamma := Exp3.randomSquareBernsteinClippedExplorationRate
+      (arms.card : Real) (horizon : Real) delta
+    let eta := Exp3.randomSquareHighProbabilityLearningRate
+      (arms.card : Real) (horizon : Real) delta
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma
+        (Exp3.randomSquareBernsteinClippedExplorationRate_pos
+          (arms.card : Real) (horizon : Real) delta
+          (by positivity) (by exact_mod_cast hhorizon) hdelta hdelta_le_one).le
+        (by
+          exact (Exp3.randomSquareBernsteinClippedExplorationRate_le_half
+            (arms.card : Real) (horizon : Real) delta).trans (by norm_num))
+        loss.environment
+    mu {sample |
+        Exp3.randomSquareBernsteinAllHorizonRegretThreshold
+            arms horizon delta <=
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} <=
+      ENNReal.ofReal delta := by
+  exact Exp3.sampledPredictable_allHorizonRandomSquareBernsteinRealizedRegret_tail
+    prior arms harms hcard_two loss comparator hcomparator horizon hhorizon
+      delta hdelta hdelta_le_one
+
+end BanditRLProof
+
+namespace BanditRLProof
+
+open MeasureTheory ProbabilityTheory
+
+noncomputable example
+    {Omega OmegaRef Action Reward : Type}
+    [MeasurableSpace Omega] [MeasurableSpace OmegaRef]
+    [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]
+    [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward]
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (muRef : Measure OmegaRef) [IsFiniteMeasure muRef]
+    (action : Omega -> ActionTrace Action)
+    (reward : Omega -> RewardTrace Reward)
+    (actionRef : OmegaRef -> ActionTrace Action)
+    (rewardRef : OmegaRef -> RewardTrace Reward)
+    (algorithm referenceAlgorithm : Thompson.HistoryAlgorithm Action Reward)
+    (environment : Thompson.HistoryEnvironment Action Reward)
+    (source : Thompson.IsHistoryAlgorithmEnvironmentSequence
+      mu action reward algorithm environment)
+    (referenceSource : Thompson.IsHistoryAlgorithmEnvironmentSequence
+      muRef actionRef rewardRef referenceAlgorithm environment)
+    (hcontinuous : Thompson.HistoryAlgorithmAbsolutelyContinuous
+      algorithm referenceAlgorithm)
+    (n : Nat) :
+    mu.map (fun omega =>
+        History.finitePairHistoryOfTrace (action omega) (reward omega) n) =
+      (muRef.map (fun omega =>
+        History.finitePairHistoryOfTrace
+          (actionRef omega) (rewardRef omega) n)).withDensity
+        (Thompson.historyDensity algorithm referenceAlgorithm n) := by
+  exact Thompson.finitePairHistory_map_eq_withDensity
+    mu muRef action reward actionRef rewardRef
+    algorithm referenceAlgorithm environment source referenceSource
+    hcontinuous n
+
+noncomputable example
+    {Omega OmegaRef Env Action Reward : Type}
+    [MeasurableSpace Omega] [StandardBorelSpace Omega] [Nonempty Omega]
+    [MeasurableSpace OmegaRef] [StandardBorelSpace OmegaRef]
+    [Nonempty OmegaRef]
+    [MeasurableSpace Env]
+    [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]
+    [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward]
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (env : Omega -> Env)
+    (action : Omega -> ActionTrace Action)
+    (reward : Omega -> RewardTrace Reward)
+    (referenceMu : Measure OmegaRef) [IsFiniteMeasure referenceMu]
+    (referenceEnv : OmegaRef -> Env)
+    (referenceAction : OmegaRef -> ActionTrace Action)
+    (referenceReward : OmegaRef -> RewardTrace Reward)
+    (algorithm referenceAlgorithm : Thompson.HistoryAlgorithm Action Reward)
+    (feedbackEnvironment : Env ->
+      Thompson.HistoryEnvironment Action Reward)
+    (source : Thompson.ConditionalHistoryAlgorithmDensitySource
+      mu env action reward referenceMu referenceEnv referenceAction
+        referenceReward algorithm referenceAlgorithm feedbackEnvironment)
+    (n : Nat) :
+    condDistrib
+        (fun omega => History.finitePairHistoryOfTrace
+          (action omega) (reward omega) n) env mu =ᵐ[mu.map env]
+      (condDistrib
+        (fun omega => History.finitePairHistoryOfTrace
+          (referenceAction omega) (referenceReward omega) n)
+        referenceEnv referenceMu).withDensity
+          (fun _ history =>
+            Thompson.historyDensity algorithm referenceAlgorithm n history) := by
+  exact
+    Thompson.condDistrib_finitePairHistory_eq_withDensity_of_conditionalProcessSource
+      mu env action reward referenceMu referenceEnv referenceAction
+        referenceReward algorithm referenceAlgorithm feedbackEnvironment
+        source n
+
+#check Thompson.finitePairReferencePolicySampler_condDistrib_action_ae_eq_bestAction_of_conditionalProcessSource
+
+noncomputable example
+    {Omega OmegaRef Env Action Reward : Type}
+    [MeasurableSpace Omega] [StandardBorelSpace Omega] [Nonempty Omega]
+    [MeasurableSpace OmegaRef] [StandardBorelSpace OmegaRef]
+    [Nonempty OmegaRef]
+    [MeasurableSpace Env]
+    [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]
+    [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward]
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (env : Omega -> Env)
+    (action : Omega -> ActionTrace Action)
+    (reward : Omega -> RewardTrace Reward)
+    (referenceMu : Measure OmegaRef) [IsFiniteMeasure referenceMu]
+    (referenceEnv : OmegaRef -> Env)
+    (referenceAction : OmegaRef -> ActionTrace Action)
+    (referenceReward : OmegaRef -> RewardTrace Reward)
+    (algorithm referenceAlgorithm : Thompson.HistoryAlgorithm Action Reward)
+    (feedbackEnvironment : Env ->
+      Thompson.HistoryEnvironment Action Reward)
+    (source : Thompson.ConditionalHistoryAlgorithmDensitySplitSource
+      mu env action reward referenceMu referenceEnv referenceAction
+        referenceReward algorithm referenceAlgorithm feedbackEnvironment)
+    (n : Nat) :
+    condDistrib
+        (fun omega => History.finitePairHistoryOfTrace
+          (action omega) (reward omega) n) env mu =ᵐ[mu.map env]
+      (condDistrib
+        (fun omega => History.finitePairHistoryOfTrace
+          (referenceAction omega) (referenceReward omega) n)
+        referenceEnv referenceMu).withDensity
+          (fun _ history =>
+            Thompson.historyDensity algorithm referenceAlgorithm n history) := by
+  exact
+    Thompson.condDistrib_finitePairHistory_eq_withDensity_of_conditionalSplitSource
+      mu env action reward referenceMu referenceEnv referenceAction
+        referenceReward algorithm referenceAlgorithm feedbackEnvironment
+        source n
+
+#check Thompson.conditionalHistoryAlgorithmDensitySource_of_split
+#check Thompson.finitePairReferencePolicySampler_condDistrib_action_ae_eq_bestAction_of_conditionalSplitSource
+#check Thompson.canonicalHistoryAlgorithmEnvironmentSplitSource
+#check Thompson.condDistrib_id_fst_compProd_ae_eq_kernelWithInput
+#check Thompson.conditionalHistoryAlgorithmDensitySplitSource_of_canonicalTrajectoryKernels
+#check Thompson.finitePairReferencePolicySampler_condDistrib_action_ae_eq_bestAction_of_canonicalTrajectoryKernels
+#check Thompson.MeasurableHistoryEnvironment
+#check Thompson.canonicalMeasurableEnvironmentTrajectoryKernel
+#check Thompson.canonicalMeasurableEnvironmentTrajectoryKernel_map_eval_zero
+#check Thompson.canonicalMeasurableEnvironmentTrajectoryKernel_map_prefix_next_eq_compProd
+#check Thompson.canonicalMeasurableEnvironmentTrajectoryKernel_condDistrib_succ
+#check Thompson.canonicalMeasurableEnvironmentTrajectoryKernel_apply_eq_canonical_of_step_condDistrib
+#check Thompson.canonicalMeasurableEnvironmentTrajectoryKernel_apply_eq_canonical
+#check Thompson.finitePairReferencePolicySampler_condDistrib_action_ae_eq_bestAction_of_measurableEnvironment_stepCondDistrib
+#check Thompson.finitePairReferencePolicySampler_condDistrib_action_ae_eq_bestAction_of_measurableEnvironment
+#check Thompson.uniformActionMeasure
+#check Thompson.absolutelyContinuous_uniformActionMeasure
+#check Thompson.uniformHistoryAlgorithm
+#check Thompson.historyAlgorithmAbsolutelyContinuous_uniform
+#check Thompson.trajectoryMixture_map_history_action_eq_compProd
+#check Thompson.trajectoryMixture_condDistrib_action
+#check Thompson.canonicalMeasurableEnvironmentTrajectoryMeasure_condDistrib_action
+#check Thompson.finitePairReferencePosterior_ae_eq_condDistrib_of_conditionalProcessSource
+#check Thompson.referencePosteriorHistoryAlgorithm
+#check Thompson.referencePosteriorHistoryAlgorithm_trajectory_condDistrib_action_ae_eq_bestAction
+#check Thompson.uniformReferenceThompsonAlgorithm
+#check Thompson.uniformReferenceThompsonAlgorithm_trajectory_condDistrib_action_ae_eq_bestAction
+#check Thompson.HistoryActionScore
+#check Thompson.integral_historyAction_eq_of_condDistrib_ae_eq
+#check Thompson.canonicalMeasurableEnvironmentTrajectoryMeasure_map_action_zero
+#check Thompson.uniformReferenceThompsonAlgorithm_map_action_zero_eq_bestAction
+#check Thompson.uniformReferenceThompsonAlgorithm_integral_historyScore_eq_bestAction
+#check Thompson.trajectoryBayesMeanRegret
+#check Thompson.integral_trajectoryBayesMeanRegret_eq_add_historyScore
+#check Thompson.clippedUCB
+#check Thompson.clippedUCBHistory
+#check Thompson.clippedUCB_mem_Icc
+#check Thompson.measurable_uncurry_clippedUCBHistory
+#check Thompson.clippedUCBHistoryScore
+#check Thompson.clippedUCBHistory_finitePairHistoryOfTrace
+#check Thompson.clippedUCBHistoryScore_atTrace
+#check Thompson.integrable_trajectoryHistoryScore_clippedUCB
+#check Thompson.integrable_trajectoryBestHistoryScore_clippedUCB
+#check Thompson.integral_trajectoryBayesMeanRegret_eq_add_clippedUCB
+#check Thompson.stationaryRewardSampler_map_volume
+#check Thompson.stationaryArmStreamKernel_apply
+#check Thompson.stationaryMeasurableHistoryEnvironment_feedback_apply
+#check Thompson.measurable_latentArmStreamInitialReward
+#check Thompson.measurable_latentArmStreamNextReward
+#check Thompson.latentArmStreamMeasurableHistoryEnvironment_feedback_apply
+#check Thompson.canonicalLatentArmStreamTrajectory_reward_eq_rewardFromArmStream_ae
+#check UCB.measurable_rewardFromArmStream_apply
+#check UCB.measure_sumRewards_sub_pullCount_mul_ge_le_of_armStream_identDistrib
+#check UCB.measure_pullCount_mul_sub_sumRewards_ge_le_of_armStream_identDistrib
+#check UCB.measure_sumRewards_sub_pullCount_mul_ge_le_of_canonicalArmStream
+#check UCB.measure_pullCount_mul_sub_sumRewards_ge_le_of_canonicalArmStream
+#check Thompson.latentArmStreamTrajectoryKernel
+#check Thompson.identDistrib_fst_latentArmStreamTrajectoryMeasure
+#check Thompson.latentArmStreamTrajectoryReward_eq_rewardFromArmStream_ae
+#check Thompson.measure_latentArmStreamTrajectory_sumRewards_sub_pullCount_mul_ge_le
+#check Thompson.measure_latentArmStreamTrajectory_pullCount_mul_sub_sumRewards_ge_le
+#check Thompson.stationaryLatentArmStreamTrajectoryKernel_apply
+#check Thompson.stationaryLatentArmStreamTrajectoryKernel_sumRewards_upper_tail
+#check Thompson.stationaryLatentArmStreamTrajectoryKernel_sumRewards_lower_tail
+#check UCB.measure_pos_and_sumRewards_sub_pullCount_mul_ge_le_of_armStream_identDistrib
+#check UCB.measure_pos_and_pullCount_mul_sub_sumRewards_ge_le_of_armStream_identDistrib
+#check Thompson.stationaryLatentArmStreamTrajectoryMeasure
+#check Thompson.stationaryLatentArmStreamTrajectoryMeasure_pos_and_sumRewards_upper_tail
+#check Thompson.stationaryLatentArmStreamTrajectoryMeasure_pos_and_sumRewards_lower_tail
+#check Thompson.clippedCountWidthThreshold_sq_div_eq
+#check Thompson.measurable_pullCount_selectedArm
+#check Thompson.measurable_sumRewards_selectedArm
+#check Thompson.measurable_realEmpiricalMean_selectedArm
+#check Thompson.measure_biUnion_clippedCountWidthThreshold_le_mul_sub_armPrefixSum_le
+#check Thompson.measure_latentArmStreamTrajectory_exists_realEmpiricalMean_add_width_le_mean_le
+#check Thompson.stationaryLatentArmStreamTrajectoryMeasure_exists_selectedArm_realEmpiricalMean_add_width_le_mean_le
+#check Thompson.stationaryLatentArmStreamTrajectoryMeasure_realEmpiricalMean_add_width_le_mean_le_nat_mul_delta
+#check Thompson.stationaryLatentArmStreamTrajectoryMeasure_mean_le_realEmpiricalMean_sub_width_le_nat_mul_delta
+#check Thompson.stationaryLatentArmStreamTrajectoryMeasure_map_prodAssoc_symm
+#check Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_realEmpiricalMean_add_width_le_mean_le_nat_mul_delta
+#check Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_mean_le_realEmpiricalMean_sub_width_le_nat_mul_delta
+#check Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_exists_selectedArm_realEmpiricalMean_add_width_le_mean_le
+#check Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_sum_mean_bestAction_sub_clippedUCB_le
+#check finset_sum_comp_pullCount
+#check Thompson.sum_clippedUCB_action_sub_mean_le
+#check Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_exists_arm_exists_mean_le_realEmpiricalMean_sub_width_le
+#check Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_sum_clippedUCB_action_sub_mean_le
+#check Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryBayesMeanRegret_le_of_delta
+#check Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryBayesMeanRegret_le
+
+end BanditRLProof
+
+namespace BanditRLProof
+
+open MeasureTheory ProbabilityTheory
+
+noncomputable example {K : Nat} (hK : 0 < K)
+    (c : Real) (sigma2 : NNReal)
+    (nu : Kernel (Fin K) Real) [IsMarkovKernel nu]
+    (arm : Fin K) (n : Nat)
+    (hc : 0 < c) (hsigma2 : sigma2 ≠ 0)
+    (hgap : 0 < realKernelGap nu arm)
+    (hsubGBest : HasSubgaussianMGF
+      (fun reward => reward -
+        realKernelMean nu (ETC.realKernelBestArm hK nu)) sigma2
+      (nu (ETC.realKernelBestArm hK nu)))
+    (hsubGArm : HasSubgaussianMGF
+      (fun reward => reward - realKernelMean nu arm) sigma2 (nu arm)) :
+    ∫ stream : UCB.ArmRewardStream K,
+        (pullCount
+          (UCB.armStreamAction hK (c * (sigma2 : Real)) stream) arm n : Real)
+        ∂UCB.armStreamMeasure nu <=
+      UCB.realPullThreshold c sigma2 (realKernelGap nu arm) n + 2 +
+        2 * (UCB.constSum c n).toReal := by
+  exact
+    UCB.integral_real_pullCount_armStreamAction_le_realThreshold_add_two_add_two_mul_constSum
+      hK c sigma2 nu arm n hc hsigma2 hgap hsubGBest hsubGArm
+
+noncomputable example {K : Nat} (hK : 0 < K)
+    (c : Real) (sigma2 : NNReal)
+    (nu : Kernel (Fin K) Real) [IsMarkovKernel nu]
+    (n : Nat) (hc : 0 < c) (hsigma2 : sigma2 ≠ 0)
+    (hsubG : forall arm : Fin K, HasSubgaussianMGF
+      (fun reward => reward - realKernelMean nu arm) sigma2 (nu arm)) :
+    ∫ stream : UCB.ArmRewardStream K,
+        realKernelRegret nu
+          (UCB.armStreamAction hK (c * (sigma2 : Real)) stream) n
+        ∂UCB.armStreamMeasure nu <=
+      (Finset.univ : Finset (Fin K)).sum (fun arm =>
+        8 * c * (sigma2 : Real) * Real.log ((n + 1 : Nat) : Real) /
+            realKernelGap nu arm +
+          realKernelGap nu arm *
+            (2 + 2 * (UCB.constSum c n).toReal)) := by
+  exact UCB.integral_realKernelRegret_armStreamAction_le_lml_sum
+    hK c sigma2 nu n hc hsigma2 hsubG
+
+example {K : Nat} (hK : 0 < K) (c : Real) :
+    Measurable (UCB.armStreamAction hK c :
+      UCB.ArmRewardStream K -> ActionTrace (Fin K)) := by
+  exact UCB.measurable_armStreamActionTrace hK c
+
+example {K : Nat} (nu : Kernel (Fin K) Real) (n : Nat) :
+    Measurable (fun action : ActionTrace (Fin K) =>
+      realKernelRegret nu action n) := by
+  exact UCB.measurable_realKernelRegret_actionTrace nu n
+
+noncomputable example {Omega : Type*} [MeasurableSpace Omega]
+    {K : Nat} (hK : 0 < K) (c : Real) (sigma2 : NNReal)
+    (mu : Measure Omega)
+    (nu : Kernel (Fin K) Real) [IsMarkovKernel nu]
+    (action : Omega -> ActionTrace (Fin K))
+    (hident : IdentDistrib action
+      (UCB.armStreamAction hK (c * (sigma2 : Real)))
+      mu (UCB.armStreamMeasure nu))
+    (n : Nat) (hc : 0 < c) (hsigma2 : sigma2 ≠ 0)
+    (hsubG : forall arm : Fin K, HasSubgaussianMGF
+      (fun reward => reward - realKernelMean nu arm) sigma2 (nu arm)) :
+    integral mu (fun omega => realKernelRegret nu (action omega) n) <=
+      (Finset.univ : Finset (Fin K)).sum (fun arm =>
+        8 * c * (sigma2 : Real) * Real.log ((n + 1 : Nat) : Real) /
+            realKernelGap nu arm +
+          realKernelGap nu arm *
+            (2 + 2 * (UCB.constSum c n).toReal)) := by
+  exact
+    UCB.integral_realKernelRegret_externalAction_le_lml_sum_of_identDistrib_armStreamAction
+      hK c sigma2 mu nu action hident n hc hsigma2 hsubG
+
+noncomputable example {Omega : Type*} [MeasurableSpace Omega]
+    {K : Nat} (hK : 0 < K) (c : Real)
+    (mu : Measure Omega)
+    (nu : Kernel (Fin K) Real) [IsMarkovKernel nu]
+    (armStream : Omega -> UCB.ArmRewardStream K)
+    (action : Omega -> ActionTrace (Fin K))
+    (hstreamLaw : IdentDistrib armStream
+      (id : UCB.ArmRewardStream K -> UCB.ArmRewardStream K)
+      mu (UCB.armStreamMeasure nu))
+    (haction : ∀ᵐ omega ∂mu,
+      action omega = UCB.armStreamAction hK c (armStream omega)) :
+    IdentDistrib action (UCB.armStreamAction hK c)
+      mu (UCB.armStreamMeasure nu) := by
+  exact UCB.identDistrib_action_armStreamAction_of_identDistrib_armStream
+    hK c mu nu armStream action hstreamLaw haction
+
+noncomputable example {Omega : Type*} [MeasurableSpace Omega]
+    {K : Nat} (hK : 0 < K) (c : Real) (sigma2 : NNReal)
+    (mu : Measure Omega)
+    (nu : Kernel (Fin K) Real) [IsMarkovKernel nu]
+    (armStream : Omega -> UCB.ArmRewardStream K)
+    (action : Omega -> ActionTrace (Fin K))
+    (hstreamLaw : IdentDistrib armStream
+      (id : UCB.ArmRewardStream K -> UCB.ArmRewardStream K)
+      mu (UCB.armStreamMeasure nu))
+    (haction : ∀ᵐ omega ∂mu,
+      action omega = UCB.armStreamAction hK
+        (c * (sigma2 : Real)) (armStream omega))
+    (n : Nat) (hc : 0 < c) (hsigma2 : sigma2 ≠ 0)
+    (hsubG : forall arm : Fin K, HasSubgaussianMGF
+      (fun reward => reward - realKernelMean nu arm) sigma2 (nu arm)) :
+    integral mu (fun omega => realKernelRegret nu (action omega) n) <=
+      (Finset.univ : Finset (Fin K)).sum (fun arm =>
+        8 * c * (sigma2 : Real) * Real.log ((n + 1 : Nat) : Real) /
+            realKernelGap nu arm +
+          realKernelGap nu arm *
+            (2 + 2 * (UCB.constSum c n).toReal)) := by
+  exact
+    UCB.integral_realKernelRegret_externalAction_le_lml_sum_of_identDistrib_armStream
+      hK c sigma2 mu nu armStream action hstreamLaw haction n hc hsigma2 hsubG
+
+example {Omega Xi : Type*} [MeasurableSpace Omega] [MeasurableSpace Xi]
+    {K : Nat}
+    (mu : Measure Omega) (mu' : Measure Xi)
+    (action : Omega -> ActionTrace (Fin K))
+    (reward : Omega -> RewardTrace Real)
+    (action' : Xi -> ActionTrace (Fin K))
+    (reward' : Xi -> RewardTrace Real)
+    (htrajectory : IdentDistrib
+      (fun omega t => (action omega t, reward omega t))
+      (fun xi t => (action' xi t, reward' xi t)) mu mu') :
+    IdentDistrib action action' mu mu' := by
+  exact UCB.identDistrib_action_of_identDistrib_actionRewardTrace
+    mu mu' action reward action' reward' htrajectory
+
+noncomputable example {Omega : Type*} [MeasurableSpace Omega]
+    {K : Nat} (hK : 0 < K) (c : Real) (sigma2 : NNReal)
+    (mu : Measure Omega)
+    (nu : Kernel (Fin K) Real) [IsMarkovKernel nu]
+    (action : Omega -> ActionTrace (Fin K))
+    (reward : Omega -> RewardTrace Real)
+    (htrajectory : IdentDistrib
+      (fun omega t => (action omega t, reward omega t))
+      (fun stream t =>
+        (UCB.armStreamAction hK (c * (sigma2 : Real)) stream t,
+          UCB.armStreamReward hK (c * (sigma2 : Real)) stream t))
+      mu (UCB.armStreamMeasure nu))
+    (n : Nat) (hc : 0 < c) (hsigma2 : sigma2 ≠ 0)
+    (hsubG : forall arm : Fin K, HasSubgaussianMGF
+      (fun x => x - realKernelMean nu arm) sigma2 (nu arm)) :
+    integral mu (fun omega => realKernelRegret nu (action omega) n) <=
+      (Finset.univ : Finset (Fin K)).sum (fun arm =>
+        8 * c * (sigma2 : Real) * Real.log ((n + 1 : Nat) : Real) /
+            realKernelGap nu arm +
+          realKernelGap nu arm *
+            (2 + 2 * (UCB.constSum c n).toReal)) := by
+  exact
+    UCB.integral_realKernelRegret_externalAction_le_lml_sum_of_identDistrib_actionRewardTrace
+      hK c sigma2 mu nu action reward htrajectory n hc hsigma2 hsubG
+
+noncomputable example {Omega : Type*} [MeasurableSpace Omega]
+    {K : Nat} [NeZero K] (hK : 0 < K) (c : Real) (sigma2 : NNReal)
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (nu : Kernel (Fin K) Real) [IsMarkovKernel nu]
+    (action : Omega -> ActionTrace (Fin K))
+    (reward : Omega -> RewardTrace Real)
+    (haction : forall t : Nat,
+      Measurable (fun omega : Omega => action omega t))
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (mu0 : Measure (Fin K × Real)) [IsProbabilityMeasure mu0]
+    (pairKernel : (i : Nat) ->
+      Kernel (History.FinitePairHistory (Fin K) Real i) (Fin K × Real))
+    [forall i, IsMarkovKernel (pairKernel i)]
+    (hzero : Measure.map
+      (fun omega : Omega => (action omega 0, reward omega 0)) mu = mu0)
+    (hzeroCanonical : Measure.map
+      (fun stream : UCB.ArmRewardStream K =>
+        (UCB.armStreamAction hK (c * (sigma2 : Real)) stream 0,
+          UCB.armStreamReward hK (c * (sigma2 : Real)) stream 0))
+      (UCB.armStreamMeasure nu) = mu0)
+    (hcond : forall i : Nat,
+      condDistrib
+          (fun omega : Omega =>
+            (action omega (i + 1), reward omega (i + 1)))
+          (fun omega : Omega =>
+            History.finitePairHistoryOfTrace
+              (action omega) (reward omega) i)
+          mu =ᵐ[mu.map (fun omega : Omega =>
+            History.finitePairHistoryOfTrace
+              (action omega) (reward omega) i)]
+        pairKernel i)
+    (hcondCanonical : forall i : Nat,
+      condDistrib
+          (fun stream : UCB.ArmRewardStream K =>
+            (UCB.armStreamAction hK (c * (sigma2 : Real)) stream (i + 1),
+              UCB.armStreamReward hK (c * (sigma2 : Real)) stream (i + 1)))
+          (fun stream : UCB.ArmRewardStream K =>
+            History.finitePairHistoryOfTrace
+              (UCB.armStreamAction hK (c * (sigma2 : Real)) stream)
+              (UCB.armStreamReward hK (c * (sigma2 : Real)) stream) i)
+          (UCB.armStreamMeasure nu) =ᵐ[(UCB.armStreamMeasure nu).map
+            (fun stream : UCB.ArmRewardStream K =>
+              History.finitePairHistoryOfTrace
+                (UCB.armStreamAction hK (c * (sigma2 : Real)) stream)
+                (UCB.armStreamReward hK (c * (sigma2 : Real)) stream) i)]
+        pairKernel i)
+    (n : Nat) (hc : 0 < c) (hsigma2 : sigma2 ≠ 0)
+    (hsubG : forall arm : Fin K, HasSubgaussianMGF
+      (fun x => x - realKernelMean nu arm) sigma2 (nu arm)) :
+    integral mu (fun omega => realKernelRegret nu (action omega) n) <=
+      (Finset.univ : Finset (Fin K)).sum (fun arm =>
+        8 * c * (sigma2 : Real) * Real.log ((n + 1 : Nat) : Real) /
+            realKernelGap nu arm +
+          realKernelGap nu arm *
+            (2 + 2 * (UCB.constSum c n).toReal)) := by
+  exact
+    UCB.integral_realKernelRegret_externalAction_le_lml_sum_of_common_actionReward_condDistrib
+      hK c sigma2 mu nu action reward haction hreward mu0 pairKernel
+      hzero hzeroCanonical hcond hcondCanonical n hc hsigma2 hsubG
+
+noncomputable example {Omega : Type*} [MeasurableSpace Omega]
+    {K : Nat} [NeZero K] (hK : 0 < K) (c : Real) (sigma2 : NNReal)
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (nu : Kernel (Fin K) Real) [IsMarkovKernel nu]
+    (action : Omega -> ActionTrace (Fin K))
+    (reward : Omega -> RewardTrace Real)
+    (haction : forall t : Nat,
+      Measurable (fun omega : Omega => action omega t))
+    (hreward : forall t : Nat,
+      Measurable (fun omega : Omega => reward omega t))
+    (hzero : Measure.map
+      (fun omega : Omega => (action omega 0, reward omega 0)) mu =
+        Measure.map
+          (fun stream : UCB.ArmRewardStream K =>
+            (UCB.armStreamAction hK (c * (sigma2 : Real)) stream 0,
+              UCB.armStreamReward hK (c * (sigma2 : Real)) stream 0))
+          (UCB.armStreamMeasure nu))
+    (hcond : forall i : Nat,
+      condDistrib
+          (fun omega : Omega =>
+            (action omega (i + 1), reward omega (i + 1)))
+          (fun omega : Omega =>
+            History.finitePairHistoryOfTrace
+              (action omega) (reward omega) i)
+          mu =ᵐ[mu.map (fun omega : Omega =>
+            History.finitePairHistoryOfTrace
+              (action omega) (reward omega) i)]
+        condDistrib
+          (fun stream : UCB.ArmRewardStream K =>
+            (UCB.armStreamAction hK (c * (sigma2 : Real)) stream (i + 1),
+              UCB.armStreamReward hK (c * (sigma2 : Real)) stream (i + 1)))
+          (fun stream : UCB.ArmRewardStream K =>
+            History.finitePairHistoryOfTrace
+              (UCB.armStreamAction hK (c * (sigma2 : Real)) stream)
+              (UCB.armStreamReward hK (c * (sigma2 : Real)) stream) i)
+          (UCB.armStreamMeasure nu))
+    (n : Nat) (hc : 0 < c) (hsigma2 : sigma2 ≠ 0)
+    (hsubG : forall arm : Fin K, HasSubgaussianMGF
+      (fun x => x - realKernelMean nu arm) sigma2 (nu arm)) :
+    integral mu (fun omega => realKernelRegret nu (action omega) n) <=
+      (Finset.univ : Finset (Fin K)).sum (fun arm =>
+        8 * c * (sigma2 : Real) * Real.log ((n + 1 : Nat) : Real) /
+            realKernelGap nu arm +
+          realKernelGap nu arm *
+            (2 + 2 * (UCB.constSum c n).toReal)) := by
+  exact
+    UCB.integral_realKernelRegret_externalAction_le_lml_sum_of_condDistrib_eq_armStream
+      hK c sigma2 mu nu action reward haction hreward hzero hcond
+      n hc hsigma2 hsubG
+
+#check RewardKernel.pair_map_eq_compProd_of_map_eq_of_condDistrib
+#check RewardKernel.condDistrib_pair_ae_eq_compProd_of_split
+#check UCB.identDistrib_actionRewardTrace_of_split_condDistrib_eq_armStream
+#check UCB.integral_realKernelRegret_externalAction_le_lml_sum_of_split_condDistrib_eq_armStream
+#check UCB.RealStationaryUCBSequence
+#check UCB.realStationaryUCBSequence_armStream
+#check UCB.identDistrib_actionRewardTrace_of_realStationaryUCBSequence
+#check UCB.regret_le_of_realStationaryUCBSequence
+
+end BanditRLProof
+
+namespace BanditRLProof
+
+open MeasureTheory ProbabilityTheory
+open scoped ENNReal
+
+example {K : Nat} (hK : 0 < K) (c : Real) (n : Nat) :
+    Measurable (fun history : History.FinitePairHistory (Fin K) Real n =>
+      UCB.realHistoryIndexAction hK c n history) := by
+  exact UCB.measurable_realHistoryIndexAction hK c n
+
+example {K : Nat} (hK : 0 < K) (c : Real) (t : Nat) :
+    Measurable (fun stream : UCB.ArmRewardStream K =>
+      UCB.armStreamAction hK c stream t) := by
+  exact UCB.measurable_armStreamAction hK c t
+
+noncomputable example {K : Nat} (hK : 0 < K)
+    (c : Real) (sigma2 : NNReal)
+    (nu : Kernel (Fin K) Real) [IsMarkovKernel nu]
+    (arm : Fin K) (n : Nat)
+    (hc : 0 < c) (hsigma2 : sigma2 ≠ 0)
+    (hgap : 0 < realKernelGap nu arm)
+    (hsubGBest : HasSubgaussianMGF
+      (fun reward => reward -
+        realKernelMean nu (ETC.realKernelBestArm hK nu)) sigma2
+      (nu (ETC.realKernelBestArm hK nu)))
+    (hsubGArm : HasSubgaussianMGF
+      (fun reward => reward - realKernelMean nu arm) sigma2 (nu arm)) :
+    ∫⁻ stream : UCB.ArmRewardStream K,
+        (pullCount
+          (UCB.armStreamAction hK (c * (sigma2 : Real)) stream) arm n : ENNReal)
+        ∂UCB.armStreamMeasure nu <=
+      (UCB.pullThreshold c sigma2 (realKernelGap nu arm) n : ENNReal) +
+        2 * UCB.constSum c n := by
+  exact
+    UCB.lintegral_natCast_pullCount_armStreamAction_le_threshold_add_two_mul_constSum
+      hK c sigma2 nu arm n hc hsigma2 hgap hsubGBest hsubGArm
+
+end BanditRLProof
+
+namespace BanditRLProof
+
 example {Omega : Type} {K : Nat} [MeasurableSpace Omega]
     (mu : MeasureTheory.Measure Omega)
     (action : Omega -> ActionTrace (Fin K))
@@ -31955,6 +36079,90 @@ example {Omega Xi : Type} {K : Nat}
   exact
     UCB.measure_pullCount_prod_sumRewards_mem_le_of_fixedArmPrefixSource_identDistrib
       mu nu action reward source canonicalStream hstreamLaw arm n s hs
+
+example {Omega : Type} {K : Nat}
+    (action : Omega -> ActionTrace (Fin K))
+    (armStream : Omega -> UCB.ArmRewardStream K)
+    (omega : Omega) (arm : Fin K) (n : Nat) :
+    sumRewards (action omega)
+        (UCB.rewardFromArmStream action armStream omega) arm n =
+      UCB.armPrefixSum arm (pullCount (action omega) arm n)
+        (armStream omega) := by
+  exact UCB.sumRewards_rewardFromArmStream_eq_armPrefixSum
+    action armStream omega arm n
+
+example {Omega : Type} {K : Nat} [MeasurableSpace Omega]
+    (action : Omega -> ActionTrace (Fin K))
+    (armStream : Omega -> UCB.ArmRewardStream K)
+    (hmeasurable : forall i arm,
+      Measurable (fun omega => armStream omega i arm)) :
+    UCB.FixedArmPrefixSource action
+      (UCB.rewardFromArmStream action armStream) := by
+  exact UCB.fixedArmPrefixSourceOfArmStream action armStream hmeasurable
+
+example {K : Nat}
+    (mu : MeasureTheory.Measure (UCB.ArmRewardStream K))
+    (action : UCB.ArmRewardStream K -> ActionTrace (Fin K))
+    (arm : Fin K) (n : Nat) (s : Set (Nat × Real))
+    [DecidablePred (fun k : Nat => k ∈ Prod.fst '' s)] :
+    mu {stream |
+        (pullCount (action stream) arm n,
+          sumRewards (action stream)
+            (UCB.rewardFromArmStream action id stream) arm n) ∈ s} ≤
+      ((Finset.range (n + 1)).filter
+        (fun k => k ∈ Prod.fst '' s)).sum (fun k =>
+          mu {stream |
+            UCB.armPrefixSum arm k stream ∈ Prod.mk k ⁻¹' s}) := by
+  exact UCB.measure_pullCount_prod_sumRewards_rewardFromCanonicalArmStream_mem_le
+    mu action arm n s
+
+noncomputable example {K : Nat} (hK : 0 < K) (c : Real)
+    (stream : UCB.ArmRewardStream K) (n : Nat) :
+    UCB.armStreamHistory hK c stream n =
+      History.finitePairHistoryOfTrace
+        (UCB.armStreamAction hK c stream)
+        (UCB.armStreamReward hK c stream) n := by
+  exact UCB.armStreamHistory_eq_finitePairHistoryOfTrace hK c stream n
+
+noncomputable example {K : Nat} (hK : 0 < K) (c : Real)
+    (stream : UCB.ArmRewardStream K) (n : Nat) :
+    UCB.armStreamAction hK c stream (n + 1) =
+      UCB.realHistoryNextArm hK c n
+        (History.finitePairHistoryOfTrace
+          (UCB.armStreamAction hK c stream)
+          (UCB.armStreamReward hK c stream) n) := by
+  exact UCB.armStreamAction_succ_eq_realHistoryNextArm_actualHistory
+    hK c stream n
+
+example {K : Nat}
+    (nu : ProbabilityTheory.Kernel (Fin K) Real)
+    [ProbabilityTheory.IsMarkovKernel nu]
+    (t : Nat) (arm : Fin K) :
+    MeasureTheory.Measure.map (fun stream : UCB.ArmRewardStream K => stream t arm)
+        (UCB.armStreamMeasure nu) = nu arm := by
+  exact UCB.armStreamMeasure_map_coord nu t arm
+
+noncomputable example {K : Nat}
+    (nu : ProbabilityTheory.Kernel (Fin K) Real)
+    [ProbabilityTheory.IsMarkovKernel nu]
+    (arm : Fin K) (mean : Real) (sigma2 : NNReal)
+    (hsubG : ProbabilityTheory.HasSubgaussianMGF
+      (fun reward => reward - mean) sigma2 (nu arm))
+    (k : Nat) (hk : 0 < k) (hsigma2 : sigma2 ≠ 0)
+    (delta : Real) (hdelta : 0 < delta) (hdelta_le_one : delta <= 1) :
+    UCB.armStreamMeasure nu {stream : UCB.ArmRewardStream K |
+        UCB.armPrefixAverageConfidenceRadius sigma2 k delta <=
+          |UCB.armPrefixEmpiricalMean arm k stream - mean|} <=
+      ENNReal.ofReal delta := by
+  exact
+    UCB.measure_armPrefixAverageConfidenceRadius_le_abs_empiricalMean_sub
+      nu arm mean sigma2 hsubG k hk hsigma2 delta hdelta hdelta_le_one
+
+#check UCB.measure_pullCount_prod_sumRewards_armStreamUCB_mem_le
+#check UCB.measure_realEmpiricalMean_add_realWidth_le_mean_log_bound
+#check UCB.measure_mean_le_realEmpiricalMean_sub_realWidth_log_bound
+#check UCB.measure_realEmpiricalMean_add_realWidth_le_mean_rpow_bound
+#check UCB.measure_mean_le_realEmpiricalMean_sub_realWidth_rpow_bound
 
 end BanditRLProof
 
@@ -32387,6 +36595,9 @@ end BanditRLProof
 
 namespace BanditRLProof
 
+open MeasureTheory ProbabilityTheory
+open scoped ENNReal
+
 noncomputable example {K : Nat} {Context : Type}
     [MeasurableSpace Context]
     (spec : ETC.Spec K) (model : FiniteBanditModel K)
@@ -32458,6 +36669,9 @@ end BanditRLProof
 
 namespace BanditRLProof
 
+open MeasureTheory ProbabilityTheory
+open scoped ENNReal
+
 noncomputable example {K : Nat} {Context : Type}
     [MeasurableSpace Context]
     (spec : ETC.Spec K) (model : FiniteBanditModel K)
@@ -32502,5 +36716,935 @@ noncomputable example {K : Nat} {Context : Type}
     ETC.integral_real_pullCount_explorationArgmaxAction_le_exploration_add_remaining_mul_exp_of_armLaws
       spec model armLaw hprob sigma2 hmean hsubG context hcontext
       hexplorationPulls_pos a n hn hne
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 <= arms.card)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon sparsity : Nat) (hhorizon : 0 < horizon)
+    (hsparsity : 0 < sparsity)
+    (delta epsilon : Real) (hdelta : 0 < delta)
+    (hdelta_le_one : delta <= 1)
+    (hlarge_arm :
+      4 * ((sparsity : Real) * Real.log (arms.card : Real)) <=
+        (horizon : Real))
+    (hlarge_mixed :
+      32 * ((arms.card : Real) * (sparsity : Real) *
+          Real.log (arms.card : Real) ^ 2 * Real.log (4 / delta)) <=
+        (horizon : Real) ^ 3)
+    (hlarge_confidence :
+      8 * ((arms.card : Real) * Real.log (4 / delta)) <=
+        (horizon : Real))
+    (hlarge_realized :
+      8 * ((Concentration.intervalVarianceProxy 0 1 : NNReal) : Real) *
+          Real.log (4 / delta) <= (horizon : Real)) :
+    let gamma :=
+      Exp3.pathwiseVarianceProbabilisticSparseLossClippedExplorationRate
+        (arms.card : Real) (sparsity : Real) (horizon : Real) delta
+    let eta :=
+      Exp3.pathwiseVarianceProbabilisticSparseLossHighProbabilityLearningRate
+        arms gamma horizon sparsity delta
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma
+        (Exp3.pathwiseVarianceProbabilisticSparseLossClippedExplorationRate_pos
+          (arms.card : Real) (sparsity : Real) (horizon : Real) delta
+          (by exact_mod_cast hcard_two)
+          (by exact_mod_cast hsparsity)
+          (by exact_mod_cast hhorizon)).le
+        (by
+          exact
+            (Exp3.pathwiseVarianceProbabilisticSparseLossClippedExplorationRate_le_half
+              (arms.card : Real) (sparsity : Real) (horizon : Real)
+                delta).trans (by norm_num))
+        loss.environment
+    mu (Exp3.sampledPredictableSparsityFailure arms loss horizon sparsity) <=
+        ENNReal.ofReal epsilon →
+      mu {sample |
+          Exp3.pathwiseVarianceProbabilisticSparseLossRealizedExplicitThreshold
+              arms gamma horizon sparsity delta <=
+            (Finset.range horizon).sum (fun t =>
+                Exp3.sampledTrajectoryRealizedLossAt t sample) -
+              (Finset.range horizon).sum (fun t =>
+                Exp3.predictableLossAt loss t sample comparator)} <=
+        ENNReal.ofReal delta + ENNReal.ofReal epsilon := by
+  exact
+    Exp3.sampledPredictable_explicitProbabilisticSparseLossPathwiseVarianceRealizedRegret_tail_of_sparsityFailure_le
+      prior arms harms hcard_two loss comparator hcomparator horizon sparsity
+        hhorizon hsparsity delta epsilon hdelta hdelta_le_one hlarge_arm
+        hlarge_mixed hlarge_confidence hlarge_realized
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 <= arms.card)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon sparsity : Nat) (hhorizon : 0 < horizon)
+    (hsparsity : 0 < sparsity)
+    (delta epsilon : Real) (hdelta : 0 < delta)
+    (hdelta_le_one : delta <= 1) :
+    let gamma :=
+      Exp3.pathwiseVarianceProbabilisticSparseLossClippedExplorationRate
+        (arms.card : Real) (sparsity : Real) (horizon : Real) delta
+    let eta :=
+      Exp3.pathwiseVarianceProbabilisticSparseLossHighProbabilityLearningRate
+        arms gamma horizon sparsity delta
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma
+        (Exp3.pathwiseVarianceProbabilisticSparseLossClippedExplorationRate_pos
+          (arms.card : Real) (sparsity : Real) (horizon : Real) delta
+          (by exact_mod_cast hcard_two)
+          (by exact_mod_cast hsparsity)
+          (by exact_mod_cast hhorizon)).le
+        (by
+          exact
+            (Exp3.pathwiseVarianceProbabilisticSparseLossClippedExplorationRate_le_half
+              (arms.card : Real) (sparsity : Real) (horizon : Real)
+                delta).trans (by norm_num))
+        loss.environment
+    mu (Exp3.sampledPredictableSparsityFailure arms loss horizon sparsity) <=
+        ENNReal.ofReal epsilon →
+      mu {sample |
+          Exp3.pathwiseVarianceProbabilisticSparseLossAllHorizonRegretThreshold
+              arms horizon sparsity delta <=
+            (Finset.range horizon).sum (fun t =>
+                Exp3.sampledTrajectoryRealizedLossAt t sample) -
+              (Finset.range horizon).sum (fun t =>
+                Exp3.predictableLossAt loss t sample comparator)} <=
+        ENNReal.ofReal delta + ENNReal.ofReal epsilon := by
+  exact
+    Exp3.sampledPredictable_allHorizonProbabilisticSparseLossPathwiseVarianceRealizedRegret_tail_of_sparsityFailure_le
+      prior arms harms hcard_two loss comparator hcomparator horizon sparsity
+        hhorizon hsparsity delta epsilon hdelta hdelta_le_one
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 <= arms.card)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (horizon sparsity : Nat) (hhorizon : 0 < horizon)
+    (hsparsity : 0 < sparsity)
+    (delta epsilon : Real) (hdelta : 0 < delta)
+    (hdelta_le_one : delta <= 1) :
+    let deltaArm := delta / (arms.card : Real)
+    let gamma :=
+      Exp3.pathwiseVarianceProbabilisticSparseLossClippedExplorationRate
+        (arms.card : Real) (sparsity : Real) (horizon : Real) deltaArm
+    let eta :=
+      Exp3.pathwiseVarianceProbabilisticSparseLossHighProbabilityLearningRate
+        arms gamma horizon sparsity deltaArm
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma
+        (Exp3.pathwiseVarianceProbabilisticSparseLossClippedExplorationRate_pos
+          (arms.card : Real) (sparsity : Real) (horizon : Real) deltaArm
+          (by exact_mod_cast hcard_two)
+          (by exact_mod_cast hsparsity)
+          (by exact_mod_cast hhorizon)).le
+        (by
+          exact
+            (Exp3.pathwiseVarianceProbabilisticSparseLossClippedExplorationRate_le_half
+              (arms.card : Real) (sparsity : Real) (horizon : Real)
+                deltaArm).trans (by norm_num))
+        loss.environment
+    mu (Exp3.sampledPredictableSparsityFailure arms loss horizon sparsity) <=
+        ENNReal.ofReal (epsilon / (arms.card : Real)) →
+      mu {sample |
+          Exp3.pathwiseVarianceProbabilisticSparseLossBestArmAllHorizonRegretThreshold
+              arms horizon sparsity delta <=
+            (Finset.range horizon).sum (fun t =>
+                Exp3.sampledTrajectoryRealizedLossAt t sample) -
+              Exp3.sampledPredictableBestArmCumulativeLoss
+                arms harms loss horizon sample} <=
+        ENNReal.ofReal delta + ENNReal.ofReal epsilon := by
+  exact
+    Exp3.sampledPredictable_allHorizonProbabilisticSparseLossPathwiseVarianceBestArmRealizedRegret_tail_of_sparsityFailure_le
+      prior arms harms hcard_two loss horizon sparsity hhorizon hsparsity
+        delta epsilon hdelta hdelta_le_one
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 <= arms.card)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (horizon sparsity : Nat) (hhorizon : 0 < horizon)
+    (hsparsity : 0 < sparsity)
+    (delta epsilon : Real) (hdelta : 0 < delta)
+    (hdelta_le_one : delta <= 1) :
+    let deltaArm := delta / (arms.card : Real)
+    let gamma :=
+      Exp3.pathwiseVarianceProbabilisticSparseLossClippedExplorationRate
+        (arms.card : Real) (sparsity : Real) (horizon : Real) deltaArm
+    let eta :=
+      Exp3.pathwiseVarianceProbabilisticSparseLossHighProbabilityLearningRate
+        arms gamma horizon sparsity deltaArm
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma
+        (Exp3.pathwiseVarianceProbabilisticSparseLossClippedExplorationRate_pos
+          (arms.card : Real) (sparsity : Real) (horizon : Real) deltaArm
+          (by exact_mod_cast hcard_two)
+          (by exact_mod_cast hsparsity)
+          (by exact_mod_cast hhorizon)).le
+        (by
+          exact
+            (Exp3.pathwiseVarianceProbabilisticSparseLossClippedExplorationRate_le_half
+              (arms.card : Real) (sparsity : Real) (horizon : Real)
+                deltaArm).trans (by norm_num))
+        loss.environment
+    mu (Exp3.sampledPredictableSparsityFailure arms loss horizon sparsity) <=
+        ENNReal.ofReal epsilon →
+      mu {sample |
+          Exp3.pathwiseVarianceProbabilisticSparseLossBestArmAllHorizonRegretThreshold
+              arms horizon sparsity delta <=
+            (Finset.range horizon).sum (fun t =>
+                Exp3.sampledTrajectoryRealizedLossAt t sample) -
+              Exp3.sampledPredictableBestArmCumulativeLoss
+                arms harms loss horizon sample} <=
+        ENNReal.ofReal delta + ENNReal.ofReal epsilon := by
+  exact
+    Exp3.sampledPredictable_allHorizonProbabilisticSparseLossPathwiseVarianceBestArmRealizedRegret_tail_of_sparsityFailure_le_single_charge
+      prior arms harms hcard_two loss horizon sparsity hhorizon hsparsity
+        delta epsilon hdelta hdelta_le_one
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (heta : 0 < eta)
+    (hgamma_pos : 0 < gamma) (hgamma_lt_one : gamma < 1)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon sparsity : Nat) (hhorizon : 0 < horizon)
+    (hsparsity : 0 < sparsity)
+    (delta epsilon : Real) (hdelta : 0 < delta)
+    (hfailure :
+      (prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+        eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment)
+          (Exp3.sampledPredictableSparsityFailure
+            arms loss horizon sparsity) ≤ ENNReal.ofReal epsilon) :
+    let mu := prior ⊗ₘ
+      Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+        eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment
+    mu {sample |
+        Exp3.sampledPredictableDoubleVarianceProbabilisticSparseLossRealizedHighProbabilityRegretBudget
+            arms eta gamma horizon sparsity delta ≤
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} ≤
+      ENNReal.ofReal delta + ENNReal.ofReal epsilon := by
+  exact
+    Exp3.sampledPredictable_doubleVarianceProbabilisticSparseLossRealizedHighProbabilityRegret_tail_of_sparsityFailure_le
+      prior arms harms eta gamma heta hgamma_pos hgamma_lt_one loss comparator
+        hcomparator horizon sparsity hhorizon hsparsity delta epsilon hdelta
+          hfailure
+
+#check Exp3.selectedLossDeviation_compensated_hasCondMGFUpperBoundAt_of_condDistrib
+#check Exp3.sampledPredictableRealizedCompensated_succ_hasCondMGFUpperBoundAt
+#check Exp3.sampledPredictableRealizedDeviation_sum_tail_predictableVariance_delta
+#check Exp3.sampledPredictable_doublePredictableVarianceRealizedHighProbabilityRegret_tail_joint
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 <= arms.card)
+    (gamma : Real) (hgamma_pos : 0 < gamma)
+    (hgamma_le_half : gamma <= 1 / 2)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon sparsity : Nat) (hhorizon : 0 < horizon)
+    (hsparsity : 0 < sparsity)
+    (delta : Real) (hdelta : 0 < delta) :
+    let eta :=
+      Exp3.pathwiseVarianceProbabilisticSparseLossHighProbabilityLearningRate
+        arms gamma horizon sparsity delta
+    let mu := prior ⊗ₘ
+      Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+        eta gamma hgamma_pos.le (hgamma_le_half.trans (by norm_num))
+          loss.environment
+    mu ({sample |
+        Exp3.pathwiseVarianceProbabilisticSparseLossDoubleVarianceRealizedTunedThreshold
+            arms gamma horizon sparsity delta <=
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} \
+      Exp3.sampledPredictableSparsityFailure arms loss horizon sparsity) <=
+        ENNReal.ofReal delta := by
+  exact
+    Exp3.sampledPredictable_tunedDoubleVarianceProbabilisticSparseLossRealizedRegret_tail_off_sparsityFailure
+      prior arms harms hcard_two gamma hgamma_pos hgamma_le_half loss comparator
+        hcomparator horizon sparsity hhorizon hsparsity delta hdelta
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 <= arms.card)
+    (gamma : Real) (hgamma_pos : 0 < gamma)
+    (hgamma_le_half : gamma <= 1 / 2)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon sparsity : Nat) (hhorizon : 0 < horizon)
+    (hsparsity : 0 < sparsity)
+    (delta : Real) (hdelta : 0 < delta) :
+    let eta :=
+      Exp3.pathwiseVarianceProbabilisticSparseLossHighProbabilityLearningRate
+        arms gamma horizon sparsity delta
+    let mu := prior ⊗ₘ
+      Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+        eta gamma hgamma_pos.le (hgamma_le_half.trans (by norm_num))
+          loss.environment
+    mu {sample |
+        Exp3.pathwiseVarianceProbabilisticSparseLossDoubleVarianceRealizedTunedThreshold
+            arms gamma horizon sparsity delta <=
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} <=
+      ENNReal.ofReal delta +
+        mu (Exp3.sampledPredictableSparsityFailure
+          arms loss horizon sparsity) := by
+  exact
+    Exp3.sampledPredictable_tunedDoubleVarianceProbabilisticSparseLossRealizedRegret_tail
+      prior arms harms hcard_two gamma hgamma_pos hgamma_le_half loss comparator
+        hcomparator horizon sparsity hhorizon hsparsity delta hdelta
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 <= arms.card)
+    (gamma : Real) (hgamma_pos : 0 < gamma)
+    (hgamma_le_half : gamma <= 1 / 2)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon sparsity : Nat) (hhorizon : 0 < horizon)
+    (hsparsity : 0 < sparsity)
+    (delta epsilon : Real) (hdelta : 0 < delta)
+    (hfailure :
+      let eta :=
+        Exp3.pathwiseVarianceProbabilisticSparseLossHighProbabilityLearningRate
+          arms gamma horizon sparsity delta
+      let mu := prior ⊗ₘ
+        Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+          eta gamma hgamma_pos.le (hgamma_le_half.trans (by norm_num))
+            loss.environment
+      mu (Exp3.sampledPredictableSparsityFailure arms loss horizon sparsity) <=
+        ENNReal.ofReal epsilon) :
+    let eta :=
+      Exp3.pathwiseVarianceProbabilisticSparseLossHighProbabilityLearningRate
+        arms gamma horizon sparsity delta
+    let mu := prior ⊗ₘ
+      Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+        eta gamma hgamma_pos.le (hgamma_le_half.trans (by norm_num))
+          loss.environment
+    mu {sample |
+        Exp3.pathwiseVarianceProbabilisticSparseLossDoubleVarianceRealizedTunedThreshold
+            arms gamma horizon sparsity delta <=
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} <=
+      ENNReal.ofReal delta + ENNReal.ofReal epsilon := by
+  exact
+    Exp3.sampledPredictable_tunedDoubleVarianceProbabilisticSparseLossRealizedRegret_tail_of_sparsityFailure_le
+      prior arms harms hcard_two gamma hgamma_pos hgamma_le_half loss comparator
+        hcomparator horizon sparsity hhorizon hsparsity delta epsilon hdelta
+          hfailure
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 <= arms.card)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon sparsity : Nat) (hhorizon : 0 < horizon)
+    (hsparsity : 0 < sparsity)
+    (delta : Real) (hdelta : 0 < delta) (hdelta_le_one : delta <= 1)
+    (hlarge_arm :
+      4 * ((sparsity : Real) * Real.log (arms.card : Real)) <=
+        (horizon : Real))
+    (hlarge_mixed :
+      32 * ((arms.card : Real) * (sparsity : Real) *
+          Real.log (arms.card : Real) ^ 2 * Real.log (4 / delta)) <=
+        (horizon : Real) ^ 3)
+    (hlarge_confidence :
+      8 * ((arms.card : Real) * Real.log (4 / delta)) <=
+        (horizon : Real))
+    (hlarge_realized :
+      4 * ((sparsity : Real) * Real.log (4 / delta)) <=
+        (horizon : Real)) :
+    let gamma :=
+      Exp3.doubleVarianceProbabilisticSparseLossClippedExplorationRate
+        (arms.card : Real) (sparsity : Real) (horizon : Real) delta
+    let eta :=
+      Exp3.pathwiseVarianceProbabilisticSparseLossHighProbabilityLearningRate
+        arms gamma horizon sparsity delta
+    let mu := prior ⊗ₘ
+      Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+        eta gamma
+          (Exp3.doubleVarianceProbabilisticSparseLossClippedExplorationRate_pos
+            (arms.card : Real) (sparsity : Real) (horizon : Real) delta
+            (by exact_mod_cast hcard_two)
+            (by exact_mod_cast hsparsity)
+            (by exact_mod_cast hhorizon)).le
+          (by
+            exact
+              (Exp3.doubleVarianceProbabilisticSparseLossClippedExplorationRate_le_half
+                (arms.card : Real) (sparsity : Real) (horizon : Real)
+                  delta).trans (by norm_num))
+          loss.environment
+    mu ({sample |
+        Exp3.pathwiseVarianceProbabilisticSparseLossDoubleVarianceRealizedExplicitThreshold
+            arms gamma horizon sparsity delta <=
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} \
+      Exp3.sampledPredictableSparsityFailure arms loss horizon sparsity) <=
+        ENNReal.ofReal delta := by
+  exact
+    Exp3.sampledPredictable_explicitDoubleVarianceProbabilisticSparseLossRealizedRegret_tail_off_sparsityFailure
+      prior arms harms hcard_two loss comparator hcomparator horizon sparsity
+        hhorizon hsparsity delta hdelta hdelta_le_one hlarge_arm hlarge_mixed
+        hlarge_confidence hlarge_realized
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 <= arms.card)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon sparsity : Nat) (hhorizon : 0 < horizon)
+    (hsparsity : 0 < sparsity)
+    (delta : Real) (hdelta : 0 < delta) (hdelta_le_one : delta <= 1)
+    (hlarge_arm :
+      4 * ((sparsity : Real) * Real.log (arms.card : Real)) <=
+        (horizon : Real))
+    (hlarge_mixed :
+      32 * ((arms.card : Real) * (sparsity : Real) *
+          Real.log (arms.card : Real) ^ 2 * Real.log (4 / delta)) <=
+        (horizon : Real) ^ 3)
+    (hlarge_confidence :
+      8 * ((arms.card : Real) * Real.log (4 / delta)) <=
+        (horizon : Real))
+    (hlarge_realized :
+      4 * ((sparsity : Real) * Real.log (4 / delta)) <=
+        (horizon : Real)) :
+    let gamma :=
+      Exp3.doubleVarianceProbabilisticSparseLossClippedExplorationRate
+        (arms.card : Real) (sparsity : Real) (horizon : Real) delta
+    let eta :=
+      Exp3.pathwiseVarianceProbabilisticSparseLossHighProbabilityLearningRate
+        arms gamma horizon sparsity delta
+    let mu := prior ⊗ₘ
+      Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+        eta gamma
+          (Exp3.doubleVarianceProbabilisticSparseLossClippedExplorationRate_pos
+            (arms.card : Real) (sparsity : Real) (horizon : Real) delta
+            (by exact_mod_cast hcard_two)
+            (by exact_mod_cast hsparsity)
+            (by exact_mod_cast hhorizon)).le
+          (by
+            exact
+              (Exp3.doubleVarianceProbabilisticSparseLossClippedExplorationRate_le_half
+                (arms.card : Real) (sparsity : Real) (horizon : Real)
+                  delta).trans (by norm_num))
+          loss.environment
+    mu {sample |
+        Exp3.pathwiseVarianceProbabilisticSparseLossDoubleVarianceRealizedExplicitThreshold
+            arms gamma horizon sparsity delta <=
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} <=
+      ENNReal.ofReal delta +
+        mu (Exp3.sampledPredictableSparsityFailure
+          arms loss horizon sparsity) := by
+  exact
+    Exp3.sampledPredictable_explicitDoubleVarianceProbabilisticSparseLossRealizedRegret_tail
+      prior arms harms hcard_two loss comparator hcomparator horizon sparsity
+        hhorizon hsparsity delta hdelta hdelta_le_one hlarge_arm hlarge_mixed
+        hlarge_confidence hlarge_realized
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 <= arms.card)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon sparsity : Nat) (hhorizon : 0 < horizon)
+    (hsparsity : 0 < sparsity)
+    (delta epsilon : Real) (hdelta : 0 < delta)
+    (hdelta_le_one : delta <= 1)
+    (hlarge_arm :
+      4 * ((sparsity : Real) * Real.log (arms.card : Real)) <=
+        (horizon : Real))
+    (hlarge_mixed :
+      32 * ((arms.card : Real) * (sparsity : Real) *
+          Real.log (arms.card : Real) ^ 2 * Real.log (4 / delta)) <=
+        (horizon : Real) ^ 3)
+    (hlarge_confidence :
+      8 * ((arms.card : Real) * Real.log (4 / delta)) <=
+        (horizon : Real))
+    (hlarge_realized :
+      4 * ((sparsity : Real) * Real.log (4 / delta)) <=
+        (horizon : Real))
+    (hfailure :
+      let gamma :=
+        Exp3.doubleVarianceProbabilisticSparseLossClippedExplorationRate
+          (arms.card : Real) (sparsity : Real) (horizon : Real) delta
+      let eta :=
+        Exp3.pathwiseVarianceProbabilisticSparseLossHighProbabilityLearningRate
+          arms gamma horizon sparsity delta
+      let mu := prior ⊗ₘ
+        Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+          eta gamma
+            (Exp3.doubleVarianceProbabilisticSparseLossClippedExplorationRate_pos
+              (arms.card : Real) (sparsity : Real) (horizon : Real) delta
+              (by exact_mod_cast hcard_two)
+              (by exact_mod_cast hsparsity)
+              (by exact_mod_cast hhorizon)).le
+            (by
+              exact
+                (Exp3.doubleVarianceProbabilisticSparseLossClippedExplorationRate_le_half
+                  (arms.card : Real) (sparsity : Real) (horizon : Real)
+                    delta).trans (by norm_num))
+            loss.environment
+      mu (Exp3.sampledPredictableSparsityFailure arms loss horizon sparsity) <=
+        ENNReal.ofReal epsilon) :
+    let gamma :=
+      Exp3.doubleVarianceProbabilisticSparseLossClippedExplorationRate
+        (arms.card : Real) (sparsity : Real) (horizon : Real) delta
+    let eta :=
+      Exp3.pathwiseVarianceProbabilisticSparseLossHighProbabilityLearningRate
+        arms gamma horizon sparsity delta
+    let mu := prior ⊗ₘ
+      Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+        eta gamma
+          (Exp3.doubleVarianceProbabilisticSparseLossClippedExplorationRate_pos
+            (arms.card : Real) (sparsity : Real) (horizon : Real) delta
+            (by exact_mod_cast hcard_two)
+            (by exact_mod_cast hsparsity)
+            (by exact_mod_cast hhorizon)).le
+          (by
+            exact
+              (Exp3.doubleVarianceProbabilisticSparseLossClippedExplorationRate_le_half
+                (arms.card : Real) (sparsity : Real) (horizon : Real)
+                  delta).trans (by norm_num))
+          loss.environment
+    mu {sample |
+        Exp3.pathwiseVarianceProbabilisticSparseLossDoubleVarianceRealizedExplicitThreshold
+            arms gamma horizon sparsity delta <=
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} <=
+      ENNReal.ofReal delta + ENNReal.ofReal epsilon := by
+  exact
+    Exp3.sampledPredictable_explicitDoubleVarianceProbabilisticSparseLossRealizedRegret_tail_of_sparsityFailure_le
+      prior arms harms hcard_two loss comparator hcomparator horizon sparsity
+        hhorizon hsparsity delta epsilon hdelta hdelta_le_one hlarge_arm
+        hlarge_mixed hlarge_confidence hlarge_realized hfailure
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 <= arms.card)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon sparsity : Nat) (hhorizon : 0 < horizon)
+    (hsparsity : 0 < sparsity)
+    (delta : Real) (hdelta : 0 < delta) (hdelta_le_one : delta <= 1) :
+    let gamma :=
+      Exp3.doubleVarianceProbabilisticSparseLossClippedExplorationRate
+        (arms.card : Real) (sparsity : Real) (horizon : Real) delta
+    let eta :=
+      Exp3.pathwiseVarianceProbabilisticSparseLossHighProbabilityLearningRate
+        arms gamma horizon sparsity delta
+    let mu := prior ⊗ₘ
+      Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+        eta gamma
+          (Exp3.doubleVarianceProbabilisticSparseLossClippedExplorationRate_pos
+            (arms.card : Real) (sparsity : Real) (horizon : Real) delta
+            (by exact_mod_cast hcard_two)
+            (by exact_mod_cast hsparsity)
+            (by exact_mod_cast hhorizon)).le
+          (by
+            exact
+              (Exp3.doubleVarianceProbabilisticSparseLossClippedExplorationRate_le_half
+                (arms.card : Real) (sparsity : Real) (horizon : Real)
+                  delta).trans (by norm_num))
+          loss.environment
+    mu ({sample |
+        Exp3.doubleVarianceProbabilisticSparseLossAllHorizonRegretThreshold
+            arms horizon sparsity delta <=
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} \
+      Exp3.sampledPredictableSparsityFailure arms loss horizon sparsity) <=
+        ENNReal.ofReal delta := by
+  exact
+    Exp3.sampledPredictable_allHorizonDoubleVarianceProbabilisticSparseLossRealizedRegret_tail_off_sparsityFailure
+      prior arms harms hcard_two loss comparator hcomparator horizon sparsity
+        hhorizon hsparsity delta hdelta hdelta_le_one
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 <= arms.card)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon sparsity : Nat) (hhorizon : 0 < horizon)
+    (hsparsity : 0 < sparsity)
+    (delta : Real) (hdelta : 0 < delta) (hdelta_le_one : delta <= 1) :
+    let gamma :=
+      Exp3.doubleVarianceProbabilisticSparseLossClippedExplorationRate
+        (arms.card : Real) (sparsity : Real) (horizon : Real) delta
+    let eta :=
+      Exp3.pathwiseVarianceProbabilisticSparseLossHighProbabilityLearningRate
+        arms gamma horizon sparsity delta
+    let mu := prior ⊗ₘ
+      Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+        eta gamma
+          (Exp3.doubleVarianceProbabilisticSparseLossClippedExplorationRate_pos
+            (arms.card : Real) (sparsity : Real) (horizon : Real) delta
+            (by exact_mod_cast hcard_two)
+            (by exact_mod_cast hsparsity)
+            (by exact_mod_cast hhorizon)).le
+          (by
+            exact
+              (Exp3.doubleVarianceProbabilisticSparseLossClippedExplorationRate_le_half
+                (arms.card : Real) (sparsity : Real) (horizon : Real)
+                  delta).trans (by norm_num))
+          loss.environment
+    mu {sample |
+        Exp3.doubleVarianceProbabilisticSparseLossAllHorizonRegretThreshold
+            arms horizon sparsity delta <=
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} <=
+      ENNReal.ofReal delta +
+        mu (Exp3.sampledPredictableSparsityFailure
+          arms loss horizon sparsity) := by
+  exact
+    Exp3.sampledPredictable_allHorizonDoubleVarianceProbabilisticSparseLossRealizedRegret_tail
+      prior arms harms hcard_two loss comparator hcomparator horizon sparsity
+        hhorizon hsparsity delta hdelta hdelta_le_one
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 <= arms.card)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (horizon sparsity : Nat) (hhorizon : 0 < horizon)
+    (hsparsity : 0 < sparsity)
+    (delta epsilon : Real) (hdelta : 0 < delta)
+    (hdelta_le_one : delta <= 1)
+    (hfailure :
+      let gamma :=
+        Exp3.doubleVarianceProbabilisticSparseLossClippedExplorationRate
+          (arms.card : Real) (sparsity : Real) (horizon : Real) delta
+      let eta :=
+        Exp3.pathwiseVarianceProbabilisticSparseLossHighProbabilityLearningRate
+          arms gamma horizon sparsity delta
+      let mu := prior ⊗ₘ
+        Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+          eta gamma
+            (Exp3.doubleVarianceProbabilisticSparseLossClippedExplorationRate_pos
+              (arms.card : Real) (sparsity : Real) (horizon : Real) delta
+              (by exact_mod_cast hcard_two)
+              (by exact_mod_cast hsparsity)
+              (by exact_mod_cast hhorizon)).le
+            (by
+              exact
+                (Exp3.doubleVarianceProbabilisticSparseLossClippedExplorationRate_le_half
+                  (arms.card : Real) (sparsity : Real) (horizon : Real)
+                    delta).trans (by norm_num))
+            loss.environment
+      mu (Exp3.sampledPredictableSparsityFailure arms loss horizon sparsity) <=
+        ENNReal.ofReal epsilon) :
+    let gamma :=
+      Exp3.doubleVarianceProbabilisticSparseLossClippedExplorationRate
+        (arms.card : Real) (sparsity : Real) (horizon : Real) delta
+    let eta :=
+      Exp3.pathwiseVarianceProbabilisticSparseLossHighProbabilityLearningRate
+        arms gamma horizon sparsity delta
+    let mu := prior ⊗ₘ
+      Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+        eta gamma
+          (Exp3.doubleVarianceProbabilisticSparseLossClippedExplorationRate_pos
+            (arms.card : Real) (sparsity : Real) (horizon : Real) delta
+            (by exact_mod_cast hcard_two)
+            (by exact_mod_cast hsparsity)
+            (by exact_mod_cast hhorizon)).le
+          (by
+            exact
+              (Exp3.doubleVarianceProbabilisticSparseLossClippedExplorationRate_le_half
+                (arms.card : Real) (sparsity : Real) (horizon : Real)
+                  delta).trans (by norm_num))
+          loss.environment
+    mu {sample |
+        Exp3.doubleVarianceProbabilisticSparseLossAllHorizonRegretThreshold
+            arms horizon sparsity delta <=
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            (Finset.range horizon).sum (fun t =>
+              Exp3.predictableLossAt loss t sample comparator)} <=
+      ENNReal.ofReal delta + ENNReal.ofReal epsilon := by
+  exact
+    Exp3.sampledPredictable_allHorizonDoubleVarianceProbabilisticSparseLossRealizedRegret_tail_of_sparsityFailure_le
+      prior arms harms hcard_two loss comparator hcomparator horizon sparsity
+        hhorizon hsparsity delta epsilon hdelta hdelta_le_one hfailure
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 <= arms.card)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (horizon sparsity : Nat) (hhorizon : 0 < horizon)
+    (hsparsity : 0 < sparsity)
+    (delta : Real) (hdelta : 0 < delta) (hdelta_le_one : delta <= 1) :
+    let deltaArm := delta / (arms.card : Real)
+    let gamma :=
+      Exp3.doubleVarianceProbabilisticSparseLossClippedExplorationRate
+        (arms.card : Real) (sparsity : Real) (horizon : Real) deltaArm
+    let eta :=
+      Exp3.pathwiseVarianceProbabilisticSparseLossHighProbabilityLearningRate
+        arms gamma horizon sparsity deltaArm
+    let mu := prior ⊗ₘ
+      Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+        eta gamma
+          (Exp3.doubleVarianceProbabilisticSparseLossClippedExplorationRate_pos
+            (arms.card : Real) (sparsity : Real) (horizon : Real) deltaArm
+            (by exact_mod_cast hcard_two)
+            (by exact_mod_cast hsparsity)
+            (by exact_mod_cast hhorizon)).le
+          (by
+            exact
+              (Exp3.doubleVarianceProbabilisticSparseLossClippedExplorationRate_le_half
+                (arms.card : Real) (sparsity : Real) (horizon : Real)
+                  deltaArm).trans (by norm_num))
+          loss.environment
+    mu ({sample |
+        Exp3.doubleVarianceProbabilisticSparseLossBestArmAllHorizonRegretThreshold
+            arms horizon sparsity delta <=
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            Exp3.sampledPredictableBestArmCumulativeLoss
+              arms harms loss horizon sample} \
+      Exp3.sampledPredictableSparsityFailure arms loss horizon sparsity) <=
+        ENNReal.ofReal delta := by
+  exact
+    Exp3.sampledPredictable_allHorizonDoubleVarianceProbabilisticSparseLossBestArmRealizedRegret_tail_off_sparsityFailure
+      prior arms harms hcard_two loss horizon sparsity hhorizon hsparsity
+        delta hdelta hdelta_le_one
+
+example
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (hcard_two : 2 <= arms.card)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (horizon sparsity : Nat) (hhorizon : 0 < horizon)
+    (hsparsity : 0 < sparsity)
+    (delta epsilon : Real) (hdelta : 0 < delta)
+    (hdelta_le_one : delta <= 1)
+    (hfailure :
+      let deltaArm := delta / (arms.card : Real)
+      let gamma :=
+        Exp3.doubleVarianceProbabilisticSparseLossClippedExplorationRate
+          (arms.card : Real) (sparsity : Real) (horizon : Real) deltaArm
+      let eta :=
+        Exp3.pathwiseVarianceProbabilisticSparseLossHighProbabilityLearningRate
+          arms gamma horizon sparsity deltaArm
+      let mu := prior ⊗ₘ
+        Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+          eta gamma
+            (Exp3.doubleVarianceProbabilisticSparseLossClippedExplorationRate_pos
+              (arms.card : Real) (sparsity : Real) (horizon : Real) deltaArm
+              (by exact_mod_cast hcard_two)
+              (by exact_mod_cast hsparsity)
+              (by exact_mod_cast hhorizon)).le
+            (by
+              exact
+                (Exp3.doubleVarianceProbabilisticSparseLossClippedExplorationRate_le_half
+                  (arms.card : Real) (sparsity : Real) (horizon : Real)
+                    deltaArm).trans (by norm_num))
+            loss.environment
+      mu (Exp3.sampledPredictableSparsityFailure arms loss horizon sparsity) <=
+        ENNReal.ofReal epsilon) :
+    let deltaArm := delta / (arms.card : Real)
+    let gamma :=
+      Exp3.doubleVarianceProbabilisticSparseLossClippedExplorationRate
+        (arms.card : Real) (sparsity : Real) (horizon : Real) deltaArm
+    let eta :=
+      Exp3.pathwiseVarianceProbabilisticSparseLossHighProbabilityLearningRate
+        arms gamma horizon sparsity deltaArm
+    let mu := prior ⊗ₘ
+      Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+        eta gamma
+          (Exp3.doubleVarianceProbabilisticSparseLossClippedExplorationRate_pos
+            (arms.card : Real) (sparsity : Real) (horizon : Real) deltaArm
+            (by exact_mod_cast hcard_two)
+            (by exact_mod_cast hsparsity)
+            (by exact_mod_cast hhorizon)).le
+          (by
+            exact
+              (Exp3.doubleVarianceProbabilisticSparseLossClippedExplorationRate_le_half
+                (arms.card : Real) (sparsity : Real) (horizon : Real)
+                  deltaArm).trans (by norm_num))
+          loss.environment
+    mu {sample |
+        Exp3.doubleVarianceProbabilisticSparseLossBestArmAllHorizonRegretThreshold
+            arms horizon sparsity delta <=
+          (Finset.range horizon).sum (fun t =>
+              Exp3.sampledTrajectoryRealizedLossAt t sample) -
+            Exp3.sampledPredictableBestArmCumulativeLoss
+              arms harms loss horizon sample} <=
+      ENNReal.ofReal delta + ENNReal.ofReal epsilon := by
+  exact
+    Exp3.sampledPredictable_allHorizonDoubleVarianceProbabilisticSparseLossBestArmRealizedRegret_tail_of_sparsityFailure_le
+      prior arms harms hcard_two loss horizon sparsity hhorizon hsparsity
+        delta epsilon hdelta hdelta_le_one hfailure
+
+#check Exp3.sampledPredictable_smallLossDoublePredictableVarianceRealizedHighProbabilityRegret_tail_joint_off_bad_of_lossMassSum_le_or_mem
+#check Exp3.sampledPredictableDoubleVarianceProbabilisticSparseLossRealizedHighProbabilityRegretBudget_le_tunedThreshold
+#check Exp3.sampledPredictable_tunedDoubleVarianceProbabilisticSparseLossRealizedRegret_tail_off_sparsityFailure
+#check Exp3.sampledPredictable_tunedDoubleVarianceProbabilisticSparseLossRealizedRegret_tail_of_sparsityFailure_le
+#check Exp3.doubleVarianceProbabilisticSparseLossClippedExplorationRate_contracts
+#check Exp3.pathwiseVarianceProbabilisticSparseLossDoubleVarianceRealizedTunedThreshold_le_explicitThreshold
+#check Exp3.sampledPredictable_gammaCharacterizedDoubleVarianceProbabilisticSparseLossRealizedRegret_tail_off_sparsityFailure
+#check Exp3.sampledPredictable_explicitDoubleVarianceProbabilisticSparseLossRealizedRegret_tail_of_sparsityFailure_le
+#check Exp3.doubleVarianceProbabilisticSparseLossLargeHorizonCondition
+#check Exp3.doubleVarianceProbabilisticSparseLossAllHorizonRegretThreshold
+#check Exp3.sampledPredictable_allHorizonDoubleVarianceProbabilisticSparseLossRealizedRegret_tail_off_sparsityFailure
+#check Exp3.sampledPredictable_allHorizonDoubleVarianceProbabilisticSparseLossRealizedRegret_tail_of_sparsityFailure_le
+#check Exp3.doubleVarianceProbabilisticSparseLossBestArmAllHorizonRegretThreshold
+#check Exp3.sampledPredictable_allHorizonDoubleVarianceProbabilisticSparseLossBestArmRealizedRegret_tail_off_sparsityFailure
+#check Exp3.sampledPredictable_allHorizonDoubleVarianceProbabilisticSparseLossBestArmRealizedRegret_tail
+#check Exp3.sampledPredictable_allHorizonDoubleVarianceProbabilisticSparseLossBestArmRealizedRegret_tail_of_sparsityFailure_le
+
+#check UCB.selectedPolicySuccessorGeneratedUCBInitializedScoreMaxSource
+#check UCB.successorArmEmpiricalMeanFiniteArmTimePeelingRadius_lt_gap_of_global_threshold
+#check UCB.measure_successorArmPullCount_selectedPolicySuccessorGeneratedUCBAction_gt_threshold_le_of_global_threshold
+#check UCB.lintegral_successorArmPullCount_selectedPolicySuccessorGeneratedUCBAction_le_threshold_add_horizon_mul_delta_of_global_threshold
+#check UCB.selectedPolicySuccessorPullThreshold
+#check UCB.selectedPolicySuccessorPullThreshold_contracts
+#check UCB.measure_successorArmPullCount_selectedPolicySuccessorGeneratedUCBAction_gt_explicitPullThreshold_le_of_largeGap
+#check UCB.lintegral_successorArmPullCount_selectedPolicySuccessorGeneratedUCBAction_le_explicitPullThreshold_add_horizon_mul_delta_of_reward_map_eq_selected_policy
+#check UCB.modelMeanGap_bestArm_eq_realGap
+#check UCB.pullCount_selectedPolicySuccessorGeneratedUCBRegretAction_eq
+#check UCB.lintegral_ofReal_pseudoRegret_le_sum_gap_mul_bound_of_positiveGap_pullCount
+#check UCB.lintegral_ofReal_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_le_explicitThresholdSum_of_reward_map_eq_selected_policy
+#check UCB.selectedPolicySuccessorTextbookGapBudget
+#check UCB.selectedPolicySuccessorPullThreshold_cast_le_realThreshold_add_two
+#check UCB.gap_mul_selectedPolicySuccessorPullThreshold_cast_le_textbookGapBudget
+#check UCB.sum_gap_mul_explicitThreshold_add_failure_le_textbookGapSum
+#check UCB.lintegral_ofReal_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_le_textbookGapSum_of_reward_map_eq_selected_policy
+#check UCB.selectedPolicySuccessorRewardStepKernelFamily
+#check UCB.isMarkovKernel_selectedPolicySuccessorRewardStepKernelFamily
+#check UCB.selectedPolicySuccessorRewardTrajMeasure
+#check UCB.selectedPolicySuccessorGeneratedUCBSelectedRewardLawSource_trajMeasure
+#check UCB.selectedPolicySuccessorGeneratedUCB_reward_map_eq_selected_policy_trajMeasure
+#check UCB.lintegral_ofReal_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_le_textbookGapSum_trajMeasure
+#check ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_reward_map_eq_selected_policy_centeredKernel_of_variance_le
+#check ConditionalExpectationReward.armMaskedCenteredRewardSuccProcess_sum_abs_tail_predictableVariance_ennreal_delta_of_reward_map_eq_selected_policy_centeredKernel
+#check ConditionalExpectationReward.successorArmEmpiricalMean_abs_tail_exact_pullCount_ennreal_delta_of_reward_map_eq_selected_policy_centeredKernel
+#check ConditionalExpectationReward.successorArmEmpiricalMean_abs_tail_random_pullCount_ennreal_delta_of_reward_map_eq_selected_policy_centeredKernel
+#check ConditionalExpectationReward.successorArmEmpiricalMean_simultaneous_finiteArmTime_abs_tail_ennreal_delta_of_reward_map_eq_selected_policy_centeredKernel
+#check UCB.measure_selectedPolicySuccessorLargeGapEvent_le_ennreal_delta_of_reward_map_eq_selected_policy_centeredKernel
+#check UCB.SelectedPolicySuccessorRewardMapLaw
+#check UCB.measure_selectedPolicySuccessorLargeGapEvent_generatedUCB_le_ennreal_delta_of_reward_map_eq_selected_policy_centeredKernel
+#check UCB.lintegral_successorArmPullCount_selectedPolicySuccessorGeneratedUCBAction_le_explicitPullThreshold_add_horizon_mul_delta_of_reward_map_eq_selected_policy_centeredKernel
+#check UCB.lintegral_ofReal_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_le_explicitThresholdSum_of_reward_map_eq_selected_policy_centeredKernel
+#check UCB.lintegral_ofReal_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_le_textbookGapSum_of_reward_map_eq_selected_policy_centeredKernel
+#check UCB.lintegral_ofReal_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_le_textbookGapSum_trajMeasure_centeredKernel
+#check integrable_real_pullCount_of_measurable_action
+#check UCB.selectedPolicySuccessorTextbookGapBudget_nonneg
+#check UCB.integrable_real_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction
+#check UCB.integral_real_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_le_textbookGapSum_trajMeasure_centeredKernel
+#check Concentration.intervalVarianceProxy_pos_of_lt
+#check RewardKernel.contextIndependentCenteredRewardKernelLaw_of_hasSubgaussianMGF
+#check RewardKernel.contextIndependentBoundedCenteredRewardKernelLaw
+#check UCB.integral_real_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_le_textbookGapSum_boundedFiniteArmLaws
+#check Concentration.finiteArmIntervalVarianceProxy
+#check Concentration.intervalVarianceProxy_le_finiteArmIntervalVarianceProxy
+#check Concentration.finiteArmIntervalVarianceProxy_pos
+#check RewardKernel.contextIndependentArmwiseBoundedCenteredRewardKernelLaw
+#check UCB.integral_real_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_le_textbookGapSum_armwiseBoundedFiniteArmLaws
+#check Concentration.finiteArmVarianceProxy
+#check Concentration.varianceProxy_le_finiteArmVarianceProxy
+#check Concentration.finiteArmVarianceProxy_pos_of_exists
+#check UCB.integral_real_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_le_textbookGapSum_finiteArmSubgaussianLaws
+#check RewardKernel.centeredRewardKernelLaw_of_hasSubgaussianMGF
+#check RewardKernel.boundedCenteredRewardKernelLaw
+#check UCB.integral_real_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_le_textbookGapSum_trajMeasure_contextDependentBoundedRewardKernel
+#check UCB.integral_real_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_le_textbookGapSum_trajMeasure_contextDependentSubgaussianRewardKernel
 
 end BanditRLProof

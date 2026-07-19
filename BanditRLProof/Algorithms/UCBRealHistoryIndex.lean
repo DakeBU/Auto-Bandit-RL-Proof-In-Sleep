@@ -67,6 +67,73 @@ noncomputable def realHistoryIndexAction
   ETC.realLeastEncodedArgmax hK
     (fun arm => realHistoryIndex c n history arm)
 
+/-- A fixed-arm pull count is measurable as a function of finite pair history. -/
+theorem measurable_realHistoryPullCount
+    {K : Nat} (n : Nat) (arm : Fin K) :
+    Measurable (fun history : History.FinitePairHistory (Fin K) Real n =>
+      ETC.realHistoryPullCount n history arm) := by
+  classical
+  unfold ETC.realHistoryPullCount
+  refine Finset.measurable_sum _ ?_
+  intro i _hi
+  exact Measurable.ite
+    (measurableSet_eq_fun
+      (measurable_fst.comp (measurable_pi_apply i)) measurable_const)
+    measurable_const measurable_const
+
+/-- A fixed-arm reward sum is measurable as a function of finite pair history. -/
+theorem measurable_realHistorySumRewards
+    {K : Nat} (n : Nat) (arm : Fin K) :
+    Measurable (fun history : History.FinitePairHistory (Fin K) Real n =>
+      ETC.realHistorySumRewards n history arm) := by
+  classical
+  unfold ETC.realHistorySumRewards
+  refine Finset.measurable_sum _ ?_
+  intro i _hi
+  exact Measurable.ite
+    (measurableSet_eq_fun
+      (measurable_fst.comp (measurable_pi_apply i)) measurable_const)
+    (measurable_snd.comp (measurable_pi_apply i)) measurable_const
+
+/-- A fixed-arm empirical mean is measurable on finite pair histories. -/
+theorem measurable_realHistoryEmpMean
+    {K : Nat} (n : Nat) (arm : Fin K) :
+    Measurable (fun history : History.FinitePairHistory (Fin K) Real n =>
+      ETC.realHistoryEmpMean n history arm) := by
+  unfold ETC.realHistoryEmpMean
+  exact (measurable_realHistorySumRewards n arm).div
+    ((measurable_of_countable (fun count : Nat => (count : Real))).comp
+      (measurable_realHistoryPullCount n arm))
+
+/-- The fixed-arm UCB width is measurable on finite pair histories. -/
+theorem measurable_realHistoryWidth
+    {K : Nat} (c : Real) (n : Nat) (arm : Fin K) :
+    Measurable (fun history : History.FinitePairHistory (Fin K) Real n =>
+      realHistoryWidth c n history arm) := by
+  unfold realHistoryWidth
+  exact (measurable_const.div
+    ((measurable_of_countable (fun count : Nat => (count : Real))).comp
+      (measurable_realHistoryPullCount n arm))).sqrt
+
+/-- Every fixed-arm UCB score is measurable on finite pair histories. -/
+theorem measurable_realHistoryIndex
+    {K : Nat} (c : Real) (n : Nat) (arm : Fin K) :
+    Measurable (fun history : History.FinitePairHistory (Fin K) Real n =>
+      realHistoryIndex c n history arm) := by
+  exact (measurable_realHistoryEmpMean n arm).add
+    (measurable_realHistoryWidth c n arm)
+
+/-- The least-encoded finite-history UCB selector is measurable. -/
+theorem measurable_realHistoryIndexAction
+    {K : Nat} (hK : 0 < K) (c : Real) (n : Nat) :
+    Measurable (fun history : History.FinitePairHistory (Fin K) Real n =>
+      realHistoryIndexAction hK c n history) := by
+  simp only [realHistoryIndexAction,
+    ETC.realLeastEncodedArgmax_eq_realArgmaxCommit]
+  apply ETC.measurable_realArgmaxCommit_of_forall_measurable
+  intro arm
+  exact measurable_realHistoryIndex c n arm
+
 /-- The trace empirical mean is measurable under timewise measurable data. -/
 theorem measurable_realEmpiricalMean
     {Omega : Type u} {K : Nat} [MeasurableSpace Omega]

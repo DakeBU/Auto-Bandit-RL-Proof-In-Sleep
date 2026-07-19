@@ -38,6 +38,43 @@ theorem measure_biUnion_finset_le
       (s := E))
 
 /--
+Equal-share finite-union bound.
+
+Every event receives confidence budget `delta / s.card`; nonemptiness of the
+index set lets the finite sum normalize back to `delta`.  As with
+`measure_biUnion_finset_le`, no event measurability or probability-measure
+assumption is required.
+-/
+theorem measure_biUnion_finset_le_of_uniform
+    {Omega : Type u} [MeasurableSpace Omega]
+    {Idx : Type v} [DecidableEq Idx]
+    (mu : Measure Omega)
+    (s : Finset Idx) (hs : s.Nonempty)
+    (delta : Real)
+    (E : Idx -> Set Omega)
+    (hE : forall i, i ∈ s ->
+      mu (E i) <= ENNReal.ofReal (delta / (s.card : Real))) :
+    mu (⋃ i ∈ s, E i) <= ENNReal.ofReal delta := by
+  have hcardNat : 0 < s.card := Finset.card_pos.mpr hs
+  have hcardReal : 0 < (s.card : Real) := Nat.cast_pos.mpr hcardNat
+  have hcardENN_ne_zero : (s.card : ENNReal) ≠ 0 := by
+    simp [Finset.card_ne_zero.mpr hs]
+  have hcardENN_ne_top : (s.card : ENNReal) ≠ ⊤ := by simp
+  calc
+    mu (⋃ i ∈ s, E i) <= s.sum (fun i => mu (E i)) :=
+      measure_biUnion_finset_le mu s E
+    _ <= s.sum (fun _i =>
+        ENNReal.ofReal (delta / (s.card : Real))) := by
+      exact Finset.sum_le_sum fun i hi => hE i hi
+    _ = (s.card : ENNReal) *
+        ENNReal.ofReal (delta / (s.card : Real)) := by
+      simp [nsmul_eq_mul]
+    _ = ENNReal.ofReal delta := by
+      rw [ENNReal.ofReal_div_of_pos hcardReal]
+      simp only [ENNReal.ofReal_natCast]
+      exact ENNReal.mul_div_cancel hcardENN_ne_zero hcardENN_ne_top
+
+/--
 Fintype specialization of the finite-union probability bound.
 
 The index set is `(Finset.univ : Finset Idx)`, matching the finite-arm style
