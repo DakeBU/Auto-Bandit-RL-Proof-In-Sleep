@@ -1825,6 +1825,17 @@ theorem ProbabilityUnionBound.measure_biUnion_finset_le
 ```
 
 ```lean
+theorem ProbabilityUnionBound.measure_biUnion_finset_le_of_uniform
+    {Omega : Type u} [MeasurableSpace Omega]
+    {Idx : Type v} [DecidableEq Idx]
+    (mu : Measure Omega) (s : Finset Idx) (hs : s.Nonempty)
+    (delta : Real) (E : Idx -> Set Omega)
+    (hE : forall i, i ∈ s ->
+      mu (E i) <= ENNReal.ofReal (delta / (s.card : Real))) :
+    mu (⋃ i ∈ s, E i) <= ENNReal.ofReal delta
+```
+
+```lean
 theorem ProbabilityUnionBound.measure_iUnion_fintype_le_sum
     {Omega : Type u} [MeasurableSpace Omega]
     {Idx : Type v} [Fintype Idx]
@@ -1840,20 +1851,25 @@ theorem ProbabilityUnionBound.measure_iUnion_fintype_le_sum
 - Intended proof route: thin wrappers over
   `MeasureTheory.measure_biUnion_finset_le` and
   `MeasureTheory.measure_iUnion_fintype_le`; the `[Fintype]` variant uses
-  `(Finset.univ : Finset Idx)` to match finite-arm proof style.
+  `(Finset.univ : Finset Idx)` to match finite-arm proof style. The equal-share
+  variant applies the explicit-Finset bound, sums `ofReal(delta/card)`, and uses
+  `ENNReal.ofReal_div_of_pos` plus `ENNReal.mul_div_cancel`.
 - Regularity contracts: `[MeasurableSpace Omega]`, `mu : Measure Omega`,
-  finite event family `E`; no event measurability, probability instance,
-  concentration, filtration, empirical-mean construction, or final theorem.
+  finite event family `E`; the normalized theorem additionally requires
+  `[DecidableEq Idx]` and `s.Nonempty`, but not positive `delta`; no event
+  measurability, probability instance, concentration, filtration,
+  empirical-mean construction, or final theorem.
 - Retrieval evidence: local declarations are
   `ProbabilityUnionBound.measure_biUnion_finset_le` and
+  `ProbabilityUnionBound.measure_biUnion_finset_le_of_uniform` and
   `ProbabilityUnionBound.measure_iUnion_fintype_le_sum`; Mathlib evidence is
   `MeasureTheory.measure_biUnion_finset_le` /
   `MeasureTheory.measure_iUnion_fintype_le`.
 - Status: project-local compiled Mathlib-backed import wrapper for
   `TAIL-UNION-FINITE`.
-- Failure policy: only repair the Mathlib import/signature or finite-union
-  target shape; do not start concentration, reward-law, or final regret theorem
-  work in the same batch.
+- Failure policy: explicit finite equal-share assembly is closed. Per-event
+  tails, nonempty-family production, nonuniform/summable schedules, countable
+  unions, and anytime control remain outside this wrapper.
 
 `TAIL-SUMMABILITY-UCB` is compiled locally as an abstract finite-horizon
 bad-event summability wrapper:
@@ -4081,6 +4097,383 @@ def Thompson.PosteriorActionIdentityLedger.ofCountableEnv
   law, construct a posterior sampler, import or port `LML-TS-POSTERIOR-ACTION`,
   handle noncountable argmax measurability, prove Bayes' rule, or prove
   Bayesian regret.
+
+`LOCAL-LEAF-TS-POSTERIOR-ACTION-CONDDISTRIB` is compiled locally as the
+Mathlib conditional-law transport counterpart of pinned LML
+`Bandits.TS.hasCondDistrib_action`:
+
+```lean
+structure Thompson.BayesianPosteriorActionSource
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (env : Omega -> Env) (history : Omega -> History)
+    (nextAction : Omega -> Action)
+    (ledger : Thompson.PosteriorActionIdentityLedger History Env Action) : Prop where
+  measurable_env : Measurable env
+  measurable_history : Measurable history
+  measurable_nextAction : Measurable nextAction
+  hasCondDistrib_actionKernel :
+    ProbabilityTheory.condDistrib nextAction history mu =ᵐ[mu.map history]
+      ledger.actionKernel
+  posterior_eq_condDistrib_env :
+    ledger.posterior.kernel =ᵐ[mu.map history]
+      ProbabilityTheory.condDistrib env history mu
+```
+
+```lean
+theorem Thompson.condDistrib_action_ae_eq_bestAction_of_posteriorMap
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (env : Omega -> Env) (history : Omega -> History)
+    (nextAction : Omega -> Action)
+    (posterior : PosteriorKernel.MarkovPosteriorKernel History Env)
+    (bestAction : Env -> Action) (hbestAction : Measurable bestAction)
+    (henv : Measurable env) (hhistory : Measurable history)
+    (hnextAction : Measurable nextAction)
+    (haction :
+      ProbabilityTheory.condDistrib nextAction history mu =ᵐ[mu.map history]
+        posterior.kernel.map bestAction)
+    (hposterior :
+      posterior.kernel =ᵐ[mu.map history]
+        ProbabilityTheory.condDistrib env history mu) :
+    ProbabilityTheory.condDistrib nextAction history mu =ᵐ[mu.map history]
+      ProbabilityTheory.condDistrib (bestAction ∘ env) history mu
+```
+
+- Exact Lean-facing statement: an action conditional law equal to the
+  posterior kernel pushed through `bestAction`, together with an a.e.
+  identification of that posterior kernel as the environment conditional law,
+  yields the conditional law of the random best action.
+- Local APIs/imports: `BanditRLProof.Algorithms.Thompson`,
+  `BanditRLProof.PosteriorKernel`, `Mathlib.Probability.Kernel.CondDistrib`,
+  `ProbabilityTheory.Kernel.map`, `Kernel.IsMarkovKernel.map`,
+  `ProbabilityTheory.Kernel.map_apply`, and
+  `ProbabilityTheory.condDistrib_comp`.
+- Intended proof route: construct the action ledger as
+  `posterior.kernel.map bestAction`; map the supplied posterior/environment
+  a.e. kernel equality pointwise through `bestAction`; compose with the action
+  conditional-law equality; finish with `condDistrib_comp`.
+- Regularity contracts: finite `mu`; measurable environment, history, and next
+  action; Standard Borel nonempty environment and action spaces; a Markov
+  posterior kernel; a measurable best-action map; and both supplied
+  conditional-law identities.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-TS-POSTERIOR-ACTION-CONDDISTRIB`; pinned LML sources
+  `LeanMachineLearning/Online/Bandit/Algorithms/TS.lean`,
+  `LeanMachineLearning/SequentialLearning/AlgorithmDensityBayes.lean`, and
+  `LeanMachineLearning/Online/Bandit/BayesRegret.lean` at commit
+  `19dc3ab132c2a7539f5944503d1114eac4c5bb74`; declarations are
+  `Thompson.PosteriorActionIdentityLedger.ofPosteriorMap`,
+  `Thompson.PosteriorActionIdentityLedger.actionKernel_eq_posterior_map`,
+  `Thompson.BayesianPosteriorActionSource`,
+  `Thompson.condDistrib_action_ae_eq_bestAction_of_bayesianPosteriorActionSource`,
+  and `Thompson.condDistrib_action_ae_eq_bestAction_of_posteriorMap`.
+- Status: project-local compiled law-transport leaf for `TS-POSTERIOR` and
+  `TS-PROB-MATCH`; the actual upstream LML declaration remains theorem-card.
+- Failure policy: do not weaken the conditional-law target or call the ledger a
+  Bayes proof. If a concrete model cannot supply
+  `posterior_eq_condDistrib_env`, audit or port the upstream Bayesian
+  algorithm-density theorem. Bayesian regret decomposition, concentration, and
+  the final theorem remain separate leaves.
+
+`LOCAL-LEAF-TS-CANONICAL-POSTERIOR-PAIR-LAW` is compiled locally as the
+canonical Bayes-law producer and its Thompson consumer:
+
+```lean
+theorem PosteriorKernel.canonicalPosterior_kernel_ae_eq_condDistrib_of_pair_map_eq
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (env : Omega -> Env) (history : Omega -> History)
+    (henv : Measurable env) (hhistory : Measurable history)
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (likelihood : ProbabilityTheory.Kernel Env History)
+    [ProbabilityTheory.IsMarkovKernel likelihood]
+    (hpair :
+      mu.map (fun omega => (env omega, history omega)) =
+        PosteriorKernel.canonicalJointMeasure prior likelihood) :
+    (PosteriorKernel.canonicalPosterior prior likelihood).kernel =ᵐ[
+      mu.map history] ProbabilityTheory.condDistrib env history mu
+```
+
+```lean
+theorem Thompson.condDistrib_action_ae_eq_bestAction_of_bayesianPairMap
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (env : Omega -> Env) (history : Omega -> History)
+    (nextAction : Omega -> Action)
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (likelihood : ProbabilityTheory.Kernel Env History)
+    [ProbabilityTheory.IsMarkovKernel likelihood]
+    (bestAction : Env -> Action) (hbestAction : Measurable bestAction)
+    (henv : Measurable env) (hhistory : Measurable history)
+    (hnextAction : Measurable nextAction)
+    (hpair :
+      mu.map (fun omega => (env omega, history omega)) =
+        PosteriorKernel.canonicalJointMeasure prior likelihood)
+    (haction :
+      ProbabilityTheory.condDistrib nextAction history mu =ᵐ[mu.map history]
+        (PosteriorKernel.canonicalPosterior prior likelihood).kernel.map
+          bestAction) :
+    ProbabilityTheory.condDistrib nextAction history mu =ᵐ[mu.map history]
+      ProbabilityTheory.condDistrib (bestAction ∘ env) history mu
+```
+
+- Exact Lean-facing statement: Mathlib's canonical posterior is identified as
+  the environment conditional distribution for any source whose
+  environment/history pair pushforward is `prior ⊗ₘ likelihood`. The Thompson
+  wrapper combines this produced posterior law with the next-action law; the
+  canonical `Env × History` specialization discharges the pair map directly.
+- Local APIs/imports: `BanditRLProof.PosteriorKernel`,
+  `BanditRLProof.Algorithms.Thompson`,
+  `Mathlib.Probability.Kernel.Posterior`,
+  `Mathlib.Probability.Kernel.CondDistrib`,
+  `ProbabilityTheory.posterior`,
+  `ProbabilityTheory.compProd_posterior_eq_map_swap`,
+  `Measure.snd_compProd`, `Measure.map_map`, and
+  `ProbabilityTheory.condDistrib_ae_eq_iff_measure_eq_compProd`.
+- Intended proof route: map the pair law through `Prod.snd` to obtain the
+  history marginal; map it through `Prod.swap`; rewrite the swapped joint law
+  by the canonical posterior compProd theorem; invoke conditional-distribution
+  uniqueness; feed that result to the existing posterior-action transport.
+- Regularity contracts: finite source measure; probability prior; Markov
+  likelihood; Standard Borel nonempty environment and action spaces;
+  measurable environment, history, next-action, and best-action maps; exact
+  pair pushforward; and the next-action conditional law.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-TS-CANONICAL-POSTERIOR-PAIR-LAW`; Mathlib card
+  `MLIB-PROBABILITY-POSTERIOR`; pinned LML
+  `AlgorithmDensityBayes.hasCondDistrib_env_history` and
+  `Bandits.TS.hasCondDistrib_action` at commit
+  `19dc3ab132c2a7539f5944503d1114eac4c5bb74`.
+- Status: project-local compiled canonical posterior producer and Thompson
+  consumer. The upstream LML declarations remain theorem cards.
+- Failure policy: do not replace the exact pair pushforward by unrelated
+  marginals or reintroduce the posterior equality as a hypothesis. If the
+  actual TS process cannot provide `hpair`, construct its trajectory law or
+  port the LML history-density/change-of-algorithm route. If `haction` fails,
+  isolate the concrete Thompson sampler law. Regret decomposition,
+  concentration, and final Bayesian regret remain separate.
+
+`TS-CANONICAL-SAMPLER-PROB-MATCH` is compiled locally:
+
+```lean
+theorem Thompson.canonicalSampler_condDistrib_action_ae_eq_bestAction
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (likelihood : ProbabilityTheory.Kernel Env History)
+    [ProbabilityTheory.IsMarkovKernel likelihood]
+    (bestAction : Env -> Action) (hbestAction : Measurable bestAction) :
+    ProbabilityTheory.condDistrib canonicalSamplerAction canonicalSamplerHistory
+        (canonicalSamplerMeasure prior likelihood bestAction hbestAction) =ᵐ[
+      (canonicalSamplerMeasure prior likelihood bestAction hbestAction).map
+        canonicalSamplerHistory]
+      ProbabilityTheory.condDistrib (bestAction ∘ canonicalSamplerEnv)
+        canonicalSamplerHistory
+        (canonicalSamplerMeasure prior likelihood bestAction hbestAction)
+```
+
+- Exact Lean-facing statement: on the explicitly constructed one-step source
+  `((Env x History) x Action)`, the action conditional distribution given
+  history equals the conditional distribution of the latent environment's
+  best action. There is no pair-law or next-action-law premise.
+- Local APIs/imports: `BanditRLProof.Algorithms.ThompsonCanonicalSampler`,
+  `Mathlib.Probability.Kernel.Composition.Lemmas`, `Kernel.map`,
+  `Kernel.comap`, `Measure.fst_compProd`, `Measure.compProd_apply_prod`,
+  `Measure.ext_prod`, `MeasureTheory.setLIntegral_map`, and
+  `ProbabilityTheory.condDistrib_ae_eq_iff_measure_eq_compProd`.
+- Intended proof route: map the canonical posterior through `bestAction`; lift
+  it along `Prod.snd`; compose it with `prior ⊗ₘ likelihood`; prove the
+  environment/history marginal by `fst_compProd`; prove the history/action
+  marginal by finite product extensionality and set-integral transport; derive
+  the action `condDistrib`; invoke the canonical posterior consumer.
+- Regularity contracts: probability prior; Markov likelihood; Standard Borel
+  nonempty environment and action spaces; measurable best-action selector.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-TS-CANONICAL-SAMPLER-PROB-MATCH`; Mathlib card
+  `MLIB-PROBABILITY-POSTERIOR`; pinned LML
+  `AlgorithmDensityBayes.hasCondDistrib_env_history` and
+  `Bandits.TS.hasCondDistrib_action` at commit
+  `19dc3ab132c2a7539f5944503d1114eac4c5bb74`.
+- Status: project-local compiled canonical one-step sampler and premise-free
+  probability-matching theorem. The upstream LML declaration remains a card.
+- Failure policy: if a future sampler changes coordinates, first prove the two
+  marginal pushforwards from its `compProd` construction. Do not restore
+  pair-law or action-law assumptions merely to match the generic theorem.
+  The downstream reference-policy and algorithm-density leaves now connect
+  this sampler to process-facing density laws; concrete recursive source
+  construction, regret decomposition, concentration, and final Bayesian
+  regret remain separate.
+
+`TS-REFERENCE-POSTERIOR-POLICY-SAMPLER` is compiled locally:
+
+```lean
+theorem Thompson.referencePolicySampler_condDistrib_action_ae_eq_bestAction_of_posterior_invariance
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (env : Omega -> Env) (history : Omega -> History)
+    (henv : Measurable env) (hhistory : Measurable history)
+    (referenceMu : Measure OmegaRef) [IsFiniteMeasure referenceMu]
+    (referenceEnv : OmegaRef -> Env)
+    (referenceHistory : OmegaRef -> History)
+    (hreferenceEnv : Measurable referenceEnv)
+    (hreferenceHistory : Measurable referenceHistory)
+    (bestAction : Env -> Action) (hbestAction : Measurable bestAction)
+    (hposteriorInvariance :
+      (referencePosterior referenceMu referenceEnv referenceHistory
+        hreferenceEnv hreferenceHistory).kernel =ᵐ[mu.map history]
+        ProbabilityTheory.condDistrib env history mu) :
+    let policy := referenceActionKernel referenceMu referenceEnv referenceHistory
+      hreferenceEnv hreferenceHistory bestAction hbestAction
+    let sampler := policySamplerMeasure mu history hhistory policy
+    ProbabilityTheory.condDistrib policySamplerAction
+        (policySamplerHistory history) sampler =ᵐ[
+      sampler.map (policySamplerHistory history)]
+      ProbabilityTheory.condDistrib (bestAction ∘ policySamplerEnv env)
+        (policySamplerHistory history) sampler
+```
+
+- Exact Lean-facing statement: the actual next action is sampled from the
+  `bestAction` pushforward of a fixed reference-process posterior. Its
+  conditional law equals the conditional law of the actual latent
+  environment's best action whenever the reference posterior agrees with the
+  actual posterior at the actual history law. The finite-pair specialization
+  uses `History.finitePairHistoryOfTrace ... n` on both processes.
+- Local APIs/imports: `BanditRLProof.Algorithms.ThompsonReferencePolicy`,
+  `BanditRLProof.HistoryFiltration`, `Kernel.map`, `Kernel.comap`,
+  `Measure.fst_compProd`, `Measure.compProd_apply_prod`, `Measure.ext_prod`,
+  `MeasureTheory.setLIntegral_map`, and
+  `ProbabilityTheory.condDistrib_ae_eq_iff_measure_eq_compProd`.
+- Intended proof route: define the policy from the reference `condDistrib`;
+  adjoin an actual action with a history-comapped `compProd`; prove the
+  history/action joint law and action `condDistrib`; prove that adjoining this
+  action preserves base marginals and the existing environment posterior; map
+  posterior invariance through `bestAction`; specialize to finite pair
+  histories.
+- Regularity contracts: finite actual and reference measures; measurable
+  environment/history maps; Standard Borel nonempty environment and action
+  spaces; measurable best-action selector; for the finite-pair endpoint,
+  coordinatewise measurable actual/reference action and reward traces.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-TS-REFERENCE-POSTERIOR-POLICY-SAMPLER`; Mathlib cards
+  `MLIB-PROBABILITY-POSTERIOR`, `MLIB-PROBABILITY-KERNEL`, and
+  `MLIB-CONDITIONAL-EXPECTATION`; pinned LML
+  `TS.policy`, `TS.hasCondDistrib_action`, and
+  `IsBayesAlgEnvSeq.hasCondDistrib_env_history` at commit
+  `19dc3ab132c2a7539f5944503d1114eac4c5bb74`.
+- Status: project-local compiled reference-posterior policy sampler, generic
+  posterior-invariance consumer, and finite action/reward-prefix endpoint. The
+  action-law premise is discharged; the posterior-invariance producer remains
+  open.
+
+- Failure policy: use the downstream `AlgorithmDensityPosteriorSource` theorem
+  to produce posterior invariance. If its source cannot be built, audit the
+  change-of-algorithm and absolute-continuity contracts. Do not reintroduce an
+  action-law premise or redefine the policy from the actual posterior.
+  Recursive trace coupling, regret decomposition, concentration, and final
+  Bayesian regret remain separate.
+
+`TS-ALGORITHM-DENSITY-POSTERIOR-INVARIANCE` is compiled locally:
+
+```lean
+structure Thompson.AlgorithmDensityPosteriorSource ... where
+  density : History -> ENNReal
+  density_measurable : Measurable density
+  history_map_eq_withDensity :
+    mu.map history = (referenceMu.map referenceHistory).withDensity density
+  historyEnv_map_eq_withDensity :
+    mu.map (fun omega => (history omega, env omega)) =
+      (referenceMu.map
+        (fun omega => (referenceHistory omega, referenceEnv omega))).withDensity
+          (density ∘ Prod.fst)
+
+theorem Thompson.referencePosterior_ae_eq_condDistrib_of_algorithmDensitySource
+    (source : AlgorithmDensityPosteriorSource mu env history
+      referenceMu referenceEnv referenceHistory) :
+    (referencePosterior referenceMu referenceEnv referenceHistory
+      hreferenceEnv hreferenceHistory).kernel =ᵐ[mu.map history]
+      ProbabilityTheory.condDistrib env history mu
+```
+
+- Exact Lean-facing statement: if one measurable density on histories weights
+  both the reference history marginal and the reference history/environment
+  joint pushforward into their actual counterparts, then the reference
+  environment posterior equals the actual environment `condDistrib` at the
+  actual history law. Generic and finite-pair wrappers feed this produced
+  equality directly into the constructed reference-policy sampler.
+- Local APIs/imports: `BanditRLProof.Algorithms.ThompsonAlgorithmDensity`,
+  `Mathlib.Probability.Kernel.CompProdEqIff`, `Measure.withDensity`,
+  `Measure.ext_prod`, `Measure.setLIntegral_compProd`,
+  `setLIntegral_withDensity_eq_setLIntegral_mul`,
+  `compProd_map_condDistrib`, and
+  `condDistrib_ae_eq_of_measure_eq_compProd`.
+- Intended proof route: prove `compProd_withDensity_left`; factor the reference
+  history/environment joint law as reference-history-law `compProd` reference
+  posterior; rewrite both sides by the common density laws; identify the
+  actual joint law as actual-history-law `compProd` reference posterior; invoke
+  conditional-distribution uniqueness; apply the prior reference-policy
+  theorem and specialize to finite pair histories.
+- Regularity contracts: finite actual/reference measures; measurable history
+  density; measurable actual/reference environment and history coordinates at
+  the consumer; Standard Borel nonempty environment and action spaces;
+  measurable best-action selector; coordinatewise measurable traces for the
+  finite-pair endpoint.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-TS-ALGORITHM-DENSITY-POSTERIOR-INVARIANCE`; Mathlib
+  `CompProdEqIff`, `CondDistrib`, and `WithDensity` APIs; pinned LML
+  `IsBayesAlgEnvSeq.condDistrib_history_eq_condDistrib_hist_withDensity`,
+  `IsBayesAlgEnvSeq.hasLaw_history_withDensity`, and
+  `IsBayesAlgEnvSeq.hasCondDistrib_env_history` at commit
+  `19dc3ab132c2a7539f5944503d1114eac4c5bb74`.
+- Status: project-local compiled algorithm-density posterior transport plus
+  generic and finite action/reward-prefix Thompson probability matching. No
+  posterior-invariance or sampled-action conditional-law premise remains.
+- Failure policy: use the compiled conditional-history source constructor below
+  instead of proving the two pushforward equalities separately. Do not restore
+  posterior or action-law assumptions. Recursive trace construction,
+  Bayes-regret decomposition, concentration, and final Bayesian regret remain
+  separate.
+
+`TS-CONDITIONAL-HISTORY-DENSITY-SOURCE` is compiled locally:
+
+```lean
+noncomputable def
+    Thompson.algorithmDensityPosteriorSource_of_condDistrib_history_withDensity
+    (henvLaw : mu.map env = referenceMu.map referenceEnv)
+    (hcond : condDistrib history env mu =ᵐ[mu.map env]
+      (condDistrib referenceHistory referenceEnv referenceMu).withDensity
+        (fun _ history => density history)) :
+    Thompson.AlgorithmDensityPosteriorSource mu env history
+      referenceMu referenceEnv referenceHistory
+```
+
+- Exact Lean-facing statement: equal actual/reference environment marginals
+  and one a.e. conditional-history density law construct both history marginal
+  and history/environment joint density laws. Generic and finite-pair wrappers
+  immediately consume the source into Thompson probability matching.
+- Local APIs/imports: `ProbabilityTheory.condDistrib_comp_map`,
+  `Measure.comp_congr`, `ProbabilityTheory.compProd_map_condDistrib`,
+  `Measure.compProd_congr`, `Measure.compProd_withDensity`,
+  `ProbabilityTheory.Kernel.IsSFiniteKernel.withDensity`,
+  `MeasureTheory.setLIntegral_map`, `Thompson.comp_withDensity_history`, and
+  `Thompson.map_swap_withDensity_snd`.
+- Intended proof route: compose the conditional-history equality over the
+  common environment marginal to obtain the history law; factor both
+  environment/history joint laws with `compProd`; commute density through the
+  composition product; swap coordinates; construct
+  `AlgorithmDensityPosteriorSource`; invoke the existing posterior-invariance
+  consumer.
+- Regularity contracts: finite actual/reference measures; measurable
+  coordinates and density; Standard Borel nonempty history/environment/action.
+  Weighted-kernel s-finiteness is transported from the supplied kernel
+  equality, so no pointwise density-finiteness premise remains. The
+  finite-pair endpoint additionally requires Standard Borel nonempty action and
+  reward spaces and coordinatewise measurable traces.
+- Retrieval evidence: local card
+  `LOCAL-LEAF-TS-CONDITIONAL-HISTORY-DENSITY-SOURCE`; Mathlib `CondDistrib`,
+  `MeasureComp`, `CompProdEqIff`, `WithDensity`, and Lebesgue `Map`; pinned LML
+  `IsBayesAlgEnvSeq.condDistrib_history_eq_condDistrib_hist_withDensity` at
+  commit `19dc3ab132c2a7539f5944503d1114eac4c5bb74`.
+- Status: project-local compiled source constructor, generic consumer, and
+  finite action/reward-prefix consumer with an external canary.
+- Failure policy: the recursive finite-history process theorem now compiles.
+  The next leaf must parameterize it by environment and derive the
+  conditional-history kernel equality through disintegration. On failure,
+  audit measurable-family and reference-support transport; do not separately
+  assume either pushforward law, posterior invariance, or sampled-action law.
 
 `POLICY-REWARD-ONE-STEP-KERNEL-COMPOSITION` is compiled locally:
 
@@ -25013,9 +25406,10 @@ theorem Exp3Potential.potentialProcess_telescope_sum_range
 
 Current boundary after this leaf:
 
-- The next EXP3/adversarial step should be either an importance-weighted
-  estimator API or a small exp/log inequality import wrapper.  Do not jump
-  directly to EXP3 regret.
+- The EXP3 estimator API, global quadratic exp bound, and generalized Hedge
+  endpoint now compile later in this guide. The next step is the
+  history-adaptive conditional action-law transport; do not jump directly to
+  final EXP3 regret.
 
 `ETC-ACTION-WITH-COMMIT-EXPLORATION-HORIZON-REGRET-BOUND` is compiled locally:
 
@@ -28557,6 +28951,134 @@ theorem ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_
   bandit/RL theorem.  Its canonical full `partialTraj` consumer is recorded
   below.
 
+## Ambient IdentDistrib Selected-Reward Transport
+
+- Lean-facing statements:
+  `historyStepKernelFamily_selectedMeasure_condExpKernel_map_of_identDistrib_trajMeasure_trim`
+  transports the canonical selected-reward law to an ambient reward trace;
+  `historyStepKernelFamily_generatedActionSelectedRewardFinitePairHistoryLawSource_of_identDistrib_trajMeasure`
+  constructs the generated selected-reward finite-pair-history source.
+- Local APIs/imports: `BanditRLProof.ConditionalExpectationReward`,
+  `BanditRLProof.ConditionalRewardLawSource`, `ProbabilityTheory.IdentDistrib.comp`,
+  `ProbabilityTheory.Kernel.condDistrib_trajMeasure`,
+  `condDistrib_ae_eq_iff_measure_eq_compProd`,
+  `condDistrib_ae_eq_of_measure_eq_compProd_of_measurable`, the trim
+  countable-target bridge, and the generated pair-prefix/reward-prefix comap
+  equality.
+- Proof route: compose complete reward-trace `IdentDistrib` with the finite
+  prefix and `(prefix, next reward)` maps; transport the canonical joint
+  `compProd` factorization; use disintegration uniqueness to recover ambient
+  `condDistrib`; apply the trim `condDistrib`-to-`condExpKernel.map` bridge;
+  rewrite the generated pair-prefix comap and build the selected source.  The
+  existing selected-source converter then yields the full generated
+  `partialTraj` source.
+- Regularity contracts: finite ambient `mu`, standard-Borel/nonempty `Omega`,
+  a probability initial Rat law, measurable reward coordinates and
+  context/state extractors, countable/singleton actions, and complete ambient
+  reward-trace `IdentDistrib` with canonical `historyStepKernelFamily`
+  `trajMeasure`.
+- Retrieval evidence: `MLIB-CONDITIONAL-EXPECTATION`,
+  `MLIB-PROBABILITY-KERNEL`, Mathlib `Probability.IdentDistrib`,
+  `Probability.Kernel.CondDistrib`, `Probability.Kernel.IonescuTulcea.Traj`,
+  and the compiled local trim-selected-source/comap-source leaves.  No theorem
+  card or weapon-only item is used as a proof term.
+- Status: `leanCompiled` as
+  `LOCAL-LEAF-COND-EXPECT-REWARD-AMBIENT-IDENTDISTRIB-TRAJMEASURE-SELECTED-SOURCE`,
+  with an external canary instantiating the transport theorem, selected source,
+  and full `partialTraj` source converter.
+- Failure policy / next blocker: if complete-trace `IdentDistrib` is not
+  available, use the recursive-condDistrib route below or prove the finite
+  prefix/next reward joint `compProd` equality and enter at disintegration
+  uniqueness.  Do not assume the target ambient `condExpKernel.map` law.
+  Direct ambient mean-zero/MGF/tail consumers remain separate.
+
+## Ambient Recursive CondDistrib PartialTraj Source
+
+- Lean-facing statements:
+  `RewardKernel.rewardTrace_map_eq_trajMeasure_of_condDistrib` identifies a
+  complete reward-trace law from an initial marginal and successor conditional
+  laws;
+  `historyStepKernelFamily_identDistrib_trajMeasure_of_condDistrib` specializes
+  it to the policy/reward history-step family;
+  `historyStepKernelFamily_generatedActionSelectedRewardFinitePairHistoryLawSource_of_condDistrib`
+  and
+  `historyStepKernelFamily_generatedActionPartialTrajectoryPairLawSource_of_condDistrib`
+  construct the selected and full generated sources.
+- Local APIs/imports: foundation module `BanditRLProof.RewardTraceLaw`,
+  `RewardKernel.historyStepKernelFamily`, Mathlib finite-dimensional/projective
+  trajectory laws, the compiled ambient `IdentDistrib` transport, and the
+  deterministic generated-action selected-to-full source converter.
+- Proof route: derive each finite-prefix pushforward by induction from
+  `condDistrib_ae_eq_iff_measure_eq_compProd`; identify the full reward trace
+  with `Kernel.trajMeasure` by projective-limit uniqueness; package
+  `IdentDistrib`; then reuse the ambient selected-law transport and generated
+  action split.
+- Regularity contracts: finite ambient `mu`, probability `mu0`, measurable
+  reward coordinates and context/state extractors, the initial pushforward
+  equality, and every successor `condDistrib` law at its finite reward prefix.
+  Standard-Borel/nonempty `Omega` and countable/singleton actions are needed by
+  the downstream selected-source boundary.
+- Retrieval evidence: `Mathlib.Probability.Process.FiniteDimensionalLaws`,
+  `ProbabilityTheory.condDistrib_ae_eq_iff_measure_eq_compProd`,
+  `ProbabilityTheory.Kernel.trajMeasure`, and the compiled ambient
+  `IdentDistrib` leaf.  The prior ETC-local generic proof was promoted unchanged
+  to the foundation module; no theorem card or weapon-only item is a proof term.
+- Status: `leanCompiled` as
+  `LOCAL-LEAF-COND-EXPECT-REWARD-AMBIENT-RECURSIVE-CONDDISTRIB-PARTIALTRAJ-SOURCE`,
+  with an external canary instantiating the `IdentDistrib`, selected-source, and
+  full-`partialTraj` constructors.
+- Failure policy / next blocker: if the successor `condDistrib` law is not
+  available, prove the finite prefix/next reward joint `compProd` factorization.
+  Do not assume complete-trace `IdentDistrib` or the target
+  `condExpKernel.map` equality.  Direct ambient conditional MGF and finite-sum
+  tail consumers are compiled below; the next upstream task is production of
+  these recursive laws from a concrete algorithm/environment.
+
+## Ambient Recursive CondDistrib Centered Sum Tail
+
+- Lean-facing statements:
+  `centeredReward_succ_hasCondSubgaussianMGF_of_partialTrajectoryPairLawSource`
+  converts any generated full `partialTraj` source into a successor conditional
+  MGF witness;
+  `historyStepKernelFamily_centeredReward_succ_hasCondSubgaussianMGF_of_condDistrib`
+  specializes it to initial-law/successor-`condDistrib` recursion; and
+  `historyStepKernelFamily_centeredRewardSuccProcess_sum_tail_ennreal_of_condDistrib`
+  proves the ambient ENNReal Azuma-Hoeffding finite-sum tail.
+- Local APIs/imports: `GeneratedActionPartialTrajectoryPairLawSource`, the
+  generated-action reward-coordinate projection,
+  `centeredReward_succ_hasCondSubgaussianMGF_of_historyStepKernelFamily_condExpKernel_map_eq_historyFiltrationSucc`,
+  `generatedActionFromRewardHistory_centeredRewardSuccProcess_stronglyAdapted`,
+  `Measure.isProbabilityMeasure_of_map`, and
+  `Concentration.condSubGaussian_sum_tail_ennreal_of_stronglyAdapted`.
+- Proof route: project the source's full finite-pair law to the next reward;
+  use the integrated target-law transfer to derive exponential integrability
+  and the conditional MGF; construct the source from recursive laws; derive
+  `IsProbabilityMeasure mu` from the initial pushforward; prove strong
+  adaptedness of the zero-initialized successor process; apply the finite-sum
+  tail wrapper.
+- Regularity contracts: finite standard-Borel/nonempty ambient `Omega`,
+  probability `mu0`, measurable reward coordinates/context/state/mean,
+  countable/singleton actions, `CenteredRewardKernelLaw`, initial reward
+  pushforward equality, every successor `condDistrib` law, and deterministic
+  selected-history variance ceilings.  Raw/mean range bounds and a separate
+  exponential-integrability premise are not required.
+- Retrieval evidence:
+  `LOCAL-LEAF-COND-EXPECT-REWARD-AMBIENT-RECURSIVE-CONDDISTRIB-PARTIALTRAJ-SOURCE`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-CONDEXPKERNEL-COND-MGF-INTEGRATED-TRANSFER`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-HISTORYSTEP-CONDEXPKERNEL-COND-MGF-CONSUMER`,
+  `LOCAL-LEAF-CONCENTRATION-SUBGAUSSIAN`, and Mathlib
+  probability-measure map transport.  No theorem card or weapon-only item is a
+  proof term.
+- Status: `leanCompiled` as
+  `LOCAL-LEAF-COND-EXPECT-REWARD-AMBIENT-RECURSIVE-CONDDISTRIB-CENTERED-SUM-TAIL`,
+  with an external canary instantiating the source consumer, recursive MGF, and
+  final tail theorem.
+- Failure policy / next blocker: if successor `condDistrib` is unavailable,
+  prove the finite prefix/next `compProd` law; if selected-history variance
+  domination is unavailable, do not claim the tail.  The next theorem-level
+  route is arm/sample-count confidence-event specialization or concrete
+  algorithm/environment production of the recursive laws.
+
 ## Canonical Generated PartialTraj Law
 
 - Lean-facing statements:
@@ -29599,7 +30121,3872 @@ integration work.
   and finite-sum cards.
 - Status: `leanCompiled`; focused module and two external canaries pass.
 - Failure policy: peeling and abstract stream-law transport are closed. The
-  next leaf must instantiate `FixedArmPrefixSource` and the canonical
-  stationary/product `IdentDistrib` law for the actual generated UCB process,
-  or explicitly prove an equivalent conditional-MGF source. Do not jump from
-  this abstract contract directly to a claimed UCB tail or regret theorem.
+  next-unused-coordinate leaf now instantiates `FixedArmPrefixSource`; the
+  remaining leaf must construct the recursive UCB action and canonical
+  stationary/product stream law, or explicitly prove an equivalent
+  conditional-MGF source. Do not jump from this contract directly to a claimed
+  UCB tail or regret theorem.
+
+## UCB Arm-Stream Reward Source
+
+`UCB-ARM-STREAM-REWARD-SOURCE` is compiled locally:
+
+- Lean statements: `UCB.rewardFromArmStream`,
+  `UCB.sumRewards_rewardFromArmStream_eq_armPrefixSum`,
+  `UCB.fixedArmPrefixSourceOfArmStream`, its direct `_identDistrib` peeling
+  consumer, `UCB.canonicalFixedArmPrefixSource`, and the canonical peeling
+  endpoint.
+- Local APIs/imports: `UCBArmStreamSource`, `UCBFixedCountPeeling`,
+  `sumRewards_succ_of_eq/ne`, `pullCount_succ_of_eq/ne`,
+  `Finset.sum_range_succ`, and measurable Pi evaluation.
+- Proof route: reward time `t` from the selected arm's latent coordinate at
+  its prior pull count; induct on the horizon and split on whether the current
+  action is the fixed arm; package the resulting exact prefix identity.
+- Regularity contracts: coordinate measurability only for the general source;
+  the canonical Pi stream discharges it. No action measurability, probability,
+  stationarity, independence, MGF, filtration, or positive count is required.
+- Retrieval evidence: pinned LML `ArrayProbSpace.reward_eq` and
+  `SumRewards.sumRewards_eq` at commit `19dc3ab...`, plus the local count/sum
+  recurrences and compiled peeling leaf.
+- Status: `leanCompiled`; focused module and three external canaries pass.
+- Failure policy: reward consumption and the pathwise prefix source are closed.
+  The recursive process/product law and source-faithful tails now compile in
+  their own leaves; do not infer expected pulls or regret from this source leaf.
+
+## UCB Arm-Stream Process And Index Tails
+
+`UCB-ARM-STREAM-PROCESS-LAW`, `UCB-ARM-STREAM-INDEX-TAIL`,
+`UCB-ARM-STREAM-EXPECTED-PULLCOUNT`, `UCB-ARM-STREAM-LML-REGRET`, and
+`UCB-EXTERNAL-ACTION-LAW-LML-REGRET`, plus
+`UCB-EXTERNAL-ARM-STREAM-SOURCE-LAW-LML-REGRET` and
+`UCB-EXTERNAL-ACTION-REWARD-TRAJECTORY-LAW-LML-REGRET`, plus
+`UCB-COMMON-ACTION-REWARD-CONDDISTRIB-LML-REGRET` and
+`UCB-CANONICAL-ACTION-REWARD-CONDDISTRIB-LML-REGRET`, are compiled locally:
+
+- Lean statements: recursive inclusive history/action/reward definitions,
+  actual-history equality, post-initialization native-index equality, canonical
+  product measure and peeling, product coordinate laws, independent centered
+  MGF transport, adaptive positive-count deviations, and the two final
+  `measure_*_rpow_bound` theorems, measurable recursive history/action/reward,
+  selected-large bad-event inclusion, ENNReal and Real pull-count bounds, and
+  the exact pinned gap-weighted finite-sum expected-regret theorem, plus its
+  transport to any external action trace with the same complete law and a
+  faithful projection from complete observable action/reward trajectory law,
+  and a full trajectory-uniqueness constructor from common initial/successor
+  pair conditional laws, plus a specialization that internally chooses the
+  canonical initial pushforward and conditional kernels.
+- Local APIs/imports: `UCBArmStreamProcess`, `UCBArmStreamTail`,
+  `UCBArmStreamExpectedPullCount`, native index,
+  reward source, fixed-count peeling, `IndependenceFoundation`,
+  `ConcentrationSubGaussian`, `Measure.infinitePi`, and Real/ENNReal rpow.
+- Proof route: mirror pinned LML's recursive stream process; prove the maintained
+  history is the actual trace history; use the stationary double product law;
+  concentrate each fixed arm prefix; peel the random count; simplify the
+  actual width event to `1 / (n+1)^(c-1)`.
+- Regularity contracts: `0<K`, Markov arm kernel, centered per-arm
+  `HasSubgaussianMGF`, `0<=c`, nonzero proxy. The terminal events use outer
+  measure and therefore do not hide recursive action measurability.
+- Retrieval evidence: pinned LML `hist/action/reward`, `nextArm`,
+  `streamMeasure`, and `prob_ucbIndex_le/ge` at commit `19dc3ab...`, plus local
+  product independence and concentration wrappers.
+- Status: `leanCompiled`; focused modules and external canaries pass.
+- Regularity contract for expected pulls: `0<K`, `0<c`, nonzero NNReal proxy,
+  positive queried-arm kernel gap, a Markov Real kernel, and centered MGF
+  witnesses for the best and queried arms; no filtration or standard-Borel
+  premise.
+- Retrieval evidence: pinned LML `pullCount_arm_le`, `pullCount_le_add_three`,
+  `constSum`, and `expectation_pullCount_le'`, plus the local process/tail and
+  generic selected-small/large count leaves.
+- Failure policy: the canonical process/product/measurability/concentration/
+  expected-count/regret route and explicit complete-action-law transport are
+  closed. The transport uses `measurable_pi_lambda`, finite-sum regret
+  measurability, `IdentDistrib.comp`, and `IdentDistrib.integral_eq`; its only
+  added contract is complete action-trace `IdentDistrib`, with no separate
+  external probability, integrability, reward, filtration, or standard-Borel
+  premise. The latent-stream adapter pushes its complete law through the
+  recursive action map and replaces generated action by the external trace
+  a.e.; it is optional and adds no separate measurability premise. The pinned
+  source instead uses `IsAlgEnvSeq.identDistrib_trajectory` against
+  `ArrayModel.isAlgEnvSeq_arrayMeasure`; the local pair-trajectory projection
+  consumes exactly that law shape, while finite-prefix and projective-limit
+  uniqueness construct it from shared initial/successor pair laws. The
+  canonical specialization removes caller-supplied `mu0` and kernels. Do not
+  overstate this as a literal import: deriving external initial/successor law
+  equalities from actual upstream structures and cross-toolchain symbol
+  compatibility remain separate work.
+## UCB IsAlgEnvSeq Split-Law Compatibility
+
+- Lean-facing statements:
+  `RewardKernel.pair_map_eq_compProd_of_map_eq_of_condDistrib`,
+  `RewardKernel.condDistrib_pair_ae_eq_compProd_of_split`,
+  `UCB.identDistrib_actionRewardTrace_of_split_condDistrib_eq_armStream`, and
+  its exact-regret consumer.
+- Local APIs/imports: Mathlib CondDistrib/CompProd, product associativity,
+  finite pair-history measurability, and local trajectory uniqueness.
+- Intended proof route: convert split conditional laws to nested joint laws,
+  reassociate the triple law, build canonical pair kernels internally, then
+  transport the exact regret integral.
+- Regularity: finite measure, measurable coordinates, standard-Borel/nonempty
+  generic targets, Markov split kernels, and existing UCB MGF/positivity.
+- Retrieval evidence: pinned LML `IsAlgEnvSeq` split fields and `stepKernel` at
+  `19dc3ab...`, Mathlib CondDistrib/CompProd, compiled local law transport.
+- Status: `leanCompiled`; Tests declaration canaries added.
+- Failure policy: do not ask the next worker to prove a joint pair law. Ask for
+  exactly one concrete producer of the four split fields, or isolate the
+  cross-toolchain import decision. Never infer unused-arm independence.
+
+## UCB Native Real LML Field Bundle
+
+- Lean-facing statements: `UCB.RealStationaryUCBSequence`, its canonical
+  arm-stream witness, its trajectory-law consumer, and
+  `UCB.regret_le_of_realStationaryUCBSequence`.
+- Local APIs/imports: `UCBRealLMLCompat`, Mathlib `condDistrib`/`IdentDistrib`,
+  finite pair histories, and the compiled split-law exact-regret theorem.
+- Proof route: bundle source fields, project them into the split theorem, then
+  use trajectory uniqueness and exact canonical regret transport.
+- Regularity: finite external measure, nonempty finite actions, positive K/c,
+  nonzero NNReal proxy, Markov Real arm kernel, and per-arm centered MGF.
+- Retrieval evidence: pinned LML `IsAlgEnvSeq`, `stepKernel`, trajectory
+  identity, array-model witness, and UCB regret theorem at `19dc3ab...`.
+- Status: `leanCompiled` with project-root canaries.
+- Failure policy: do not create another equivalent assumption bundle. The next
+  contribution must construct this one from actual imported LML symbols or one
+  separately defined concrete external process; otherwise record the exact
+  toolchain blocker.
+
+## Thompson Recursive Finite-History Density
+
+- Lean-facing statement:
+  `Thompson.finitePairHistory_map_eq_withDensity`.
+- Local APIs/imports:
+  `ThompsonAlgorithmDensityProcess`, finite pair histories,
+  `condDistrib_ae_eq_iff_measure_eq_compProd`, kernel RN derivatives,
+  `Measure.withDensity`, and split reward-law assembly.
+- Proof route: convert initial/successor conditional laws to joint pair laws;
+  transport the initial and policy RN densities through `compProd`; push the
+  multiplied density through `History.extendPairHistorySucc`; induct on time.
+- Regularity: finite source measures, Standard Borel nonempty action/reward
+  spaces, Markov policy/feedback kernels, measurable trace coordinates, and
+  pointwise action-law absolute continuity. No pointwise density-finiteness
+  assumption.
+- Retrieval evidence: pinned LML `AlgorithmDensity.lean` and
+  `AlgorithmDensityBayes.lean`; Mathlib Radon-Nikodym, conditional
+  distribution, composition-product, and with-density APIs.
+- Status: `leanCompiled` with a root import and external test canary.
+- Failure policy: the environment-parameterized conditional-history law now
+  compiles downstream, and the split-source constructor is also compiled. Next
+  build a concrete recursive TS/reference producer for its four split fields;
+  do not assume the desired conditional law or restart posterior/action
+  wrappers.
+
+## Thompson Conditional Process Density Transport
+
+- Lean-facing statements:
+  `Thompson.ConditionalHistoryAlgorithmDensitySource`,
+  `condDistrib_finitePairHistory_eq_withDensity_of_conditionalProcessSource`,
+  and
+  `finitePairReferencePolicySampler_condDistrib_action_ae_eq_bestAction_of_conditionalProcessSource`.
+- Local APIs/imports: Mathlib `condDistrib_comp`, `Kernel.map_apply`,
+  `Kernel.withDensity_apply`, the recursive finite-history theorem, and the
+  compiled conditional-history posterior consumer.
+- Proof route: use `condDistrib id env mu` as the sample law at each
+  environment; identify its history pushforward by `condDistrib_comp`; apply
+  the recursive density theorem a.e.; feed the resulting kernel equality into
+  posterior invariance and the reference-policy sampler.
+- Regularity: finite actual/reference measures; Standard Borel nonempty sample,
+  action, and reward spaces; measurable environment/traces; equal environment
+  marginals; a.e. actual/reference process contracts under a shared
+  environment-indexed feedback law; policy absolute continuity. The final
+  sampler consumer also needs Standard Borel nonempty environment and
+  measurable `bestAction`.
+- Retrieval evidence: pinned LML
+  `condDistrib_history_eq_condDistrib_hist_withDensity`; Mathlib
+  `CondDistrib`, kernel map, and with-density APIs.
+- Status: `leanCompiled` with an external conditional-law canary and exported
+  finite-prefix probability-matching consumer.
+- Failure policy: the split-law source constructor now compiles downstream.
+  Next prove its fields from one concrete recursive TS/reference trajectory. If
+  that fails, isolate the exact conditional-sample process or support field;
+  never assume the target conditional density equality.
+
+## Thompson Conditional Split-Process Source
+
+- Lean-facing statements:
+  `Thompson.ConditionalHistoryAlgorithmEnvironmentSplitSource`,
+  `Thompson.ConditionalHistoryAlgorithmDensitySplitSource`,
+  `Thompson.conditionalHistoryAlgorithmDensitySource_of_split`,
+  `Thompson.condDistrib_finitePairHistory_eq_withDensity_of_conditionalSplitSource`,
+  and
+  `Thompson.finitePairReferencePolicySampler_condDistrib_action_ae_eq_bestAction_of_conditionalSplitSource`.
+- Local APIs/imports: Mathlib `ae_all_iff` and `condDistrib`, local
+  `isHistoryAlgorithmEnvironmentSequence_of_split`, the conditional-process
+  density theorem, and the finite-pair reference-policy consumer.
+- Proof route: record initial action/feedback and successor policy/feedback laws
+  for each conditional sample measure; gather every time-indexed law with
+  `ae_all_iff`; assemble actual/reference process contracts; construct the
+  conditional density source and invoke the existing finite-prefix consumer.
+- Regularity: finite actual/reference measures; Standard Borel nonempty sample,
+  action, and reward spaces; measurable environment/traces; equal environment
+  marginals; four split-law families a.e.; shared environment-indexed feedback
+  kernels; policy absolute continuity. The final consumer also needs Standard
+  Borel environment and measurable `bestAction`.
+- Retrieval evidence: pinned LML `IsAlgEnvSeq` initial/step fields and
+  `AlgorithmDensityBayes`; Mathlib CondDistrib and MeasureCompProd APIs.
+- Status: `leanCompiled` with an external split-source conditional-law canary
+  and exported source/consumer declaration checks.
+- Failure policy: downstream leaves now prove these split laws, construct the
+  measurable `Kernel.traj` producer, couple the uniform-reference posterior
+  policy into the actual recursive TS trace, and compile both `TS-DECOMP` and
+  `TS-CLIPPED-UCB-SCORE`. Proceed to
+  `TS-STATIONARY-EMPIRICAL-MEAN-TAIL-TRANSPORT`; do not restore split, density,
+  or adjoined-sampler premises.
+
+## Thompson Canonical Trajectory Kernel Probability Matching
+
+- Lean-facing statements:
+  `Thompson.canonicalHistoryTrajectoryMeasure`,
+  `Thompson.canonicalHistoryAlgorithmEnvironmentSequence`,
+  `Thompson.canonicalHistoryAlgorithmEnvironmentSplitSource`,
+  `Thompson.condDistrib_id_fst_compProd_ae_eq_kernelWithInput`,
+  `Thompson.conditionalHistoryAlgorithmDensitySplitSource_of_canonicalTrajectoryKernels`,
+  and
+  `Thompson.finitePairReferencePolicySampler_condDistrib_action_ae_eq_bestAction_of_canonicalTrajectoryKernels`.
+- Local APIs/imports: `ThompsonCanonicalTrajectory`, Mathlib
+  `Kernel.trajMeasure`, `Kernel.condDistrib_trajMeasure`, `condDistrib_map`,
+  `condDistrib_ae_eq_of_measure_eq_compProd_of_measurable`,
+  `Measure.compProd_assoc`, `Kernel.fst_compProd`, local
+  `RewardKernel.trajMeasure_map_eval_zero`, and the compiled conditional
+  split-source consumer.
+- Proof route: build the fixed-environment action/reward pair trajectory;
+  establish its combined initial and successor laws; recover the four split
+  action/feedback laws; identify the regular conditional complete-sample law
+  under `prior compProd trajectoryKernel` with the retained-input kernel;
+  transport actual/reference canonical kernels into the conditional density
+  source and invoke finite-prefix probability matching.
+- Regularity: Standard Borel nonempty environment/action/reward; finite prior;
+  Markov actual/reference trajectory kernels whose pointwise values are the
+  matching canonical fixed-environment laws; shared feedback environment;
+  pointwise policy absolute continuity; measurable `bestAction`.
+- Retrieval evidence: pinned LML `IsAlgEnvSeq` and `AlgorithmDensityBayes`;
+  Mathlib Ionescu-Tulcea trajectory, CondDistrib, and MeasureCompProd APIs;
+  compiled local trajectory-map, recursive-density, and split-source leaves.
+- Status: `leanCompiled` with a root import and external declaration canaries.
+- Failure policy: the downstream measurable trajectory and global recursive
+  sampler leaves now construct the families, prove their canonical laws, and
+  couple the policies into the actual TS trace. Do not re-assume full canonical equality,
+  combined process laws, split laws, conditional-history density, or probability
+  matching. Bayes-regret decomposition, concentration, and final regret remain
+  open.
+
+## Thompson Measurable Environment Trajectory Kernel
+
+- Lean-facing statements:
+  `Thompson.MeasurableHistoryEnvironment`,
+  `Thompson.canonicalMeasurableEnvironmentTrajectoryKernel`,
+  `Thompson.canonicalMeasurableEnvironmentTrajectoryKernel_map_eval_zero`,
+  `Thompson.canonicalMeasurableEnvironmentTrajectoryKernel_map_prefix_next_eq_compProd`,
+  `Thompson.canonicalMeasurableEnvironmentTrajectoryKernel_condDistrib_succ`,
+  `Thompson.canonicalMeasurableEnvironmentTrajectoryKernel_apply_eq_canonical_of_step_condDistrib`,
+  `Thompson.canonicalMeasurableEnvironmentTrajectoryKernel_apply_eq_canonical`,
+  and the premise-free
+  `Thompson.finitePairReferencePolicySampler_condDistrib_action_ae_eq_bestAction_of_measurableEnvironment`.
+- Local APIs/imports: `ThompsonMeasurableTrajectory`, Mathlib `Kernel.traj`,
+  `Kernel.map_traj_succ_self`, `Kernel.traj_map_updateFinset`,
+  `Kernel.partialTraj_compProd_eq_map_traj`, `Measure.compProd_map/congr`,
+  CondDistrib uniqueness, the compiled canonical trajectory endpoint, and local
+  `map_compProd_comap_history` plus
+  `RewardKernel.rewardTrace_map_eq_trajMeasure_of_condDistrib`.
+- Proof route: package jointly measurable initial/successor feedback kernels;
+  retain the environment in a homogeneous internal state; seed a dummy pair;
+  run Mathlib's kernel-valued Ionescu-Tulcea construction; prove fixed-input
+  environment support; reconstruct the projected prefix/next joint law; derive
+  the successor conditional law by uniqueness; prove pointwise canonical
+  equality; invoke finite-prefix probability matching.
+- Regularity: measurable environment/action/reward and nonempty action/reward
+  for the producer. The support proof needs Standard Borel environment. The
+  final endpoint additionally requires Standard Borel nonempty
+  environment/action/reward, finite prior, pointwise policy absolute continuity,
+  and measurable `bestAction`; it has no supplied process-law premise.
+- Retrieval evidence: Mathlib Ionescu-Tulcea `Traj`, pinned LML `IsAlgEnvSeq`
+  and `AlgorithmDensityBayes`, and the compiled local canonical trajectory leaf.
+- Status: `leanCompiled` with a root import and external declaration canaries.
+- Failure policy: the measurable producer, successor law, pointwise canonical
+  equality, and finite-prefix endpoint are closed; the downstream global
+  sampler leaf now completes the actual recursive trace coupling, and the
+  downstream score-expectation route compiles `TS-DECOMP`. Do not reintroduce
+  supplied trajectory kernels or process-law premises. Proceed to
+  `TS-STATIONARY-EMPIRICAL-MEAN-TAIL-TRANSPORT`; concentration and final regret
+  remain open.
+
+## Thompson Global Recursive Sampler Coupling
+
+- Lean-facing statements:
+  `Thompson.trajectoryMixture_map_history_action_eq_compProd`,
+  `Thompson.canonicalMeasurableEnvironmentTrajectoryMeasure_condDistrib_action`,
+  `Thompson.finitePairReferencePosterior_ae_eq_condDistrib_of_conditionalProcessSource`,
+  `Thompson.referencePosteriorHistoryAlgorithm`,
+  `Thompson.referencePosteriorHistoryAlgorithm_trajectory_condDistrib_action_ae_eq_bestAction`,
+  `Thompson.uniformReferenceThompsonAlgorithm`, and
+  `Thompson.uniformReferenceThompsonAlgorithm_trajectory_condDistrib_action_ae_eq_bestAction`.
+- Local APIs/imports: `ThompsonRecursiveSampler`, Mathlib
+  `PMF.uniformOfFintype`, `PMF.toMeasure_uniformOfFintype_apply`,
+  `Measure.ext_prod`, `Measure.compProd_apply_prod`,
+  `Measure.setLIntegral_compProd`, CondDistrib uniqueness, and the compiled
+  measurable-trajectory and algorithm-density posterior APIs.
+- Proof route: prove a generic theorem that mixes fixed-environment
+  history/action `compProd` laws through a prior; map the visible successor pair
+  to its action; expose posterior invariance without adjoining a fresh sampler;
+  define the Thompson policy from one fixed reference trajectory posterior;
+  choose a uniform finite-action reference and prove full-support domination;
+  invoke the posterior-map consumer for the action coordinate of the same
+  canonical trajectory.
+- Regularity: probability prior; jointly measurable feedback environment;
+  Standard Borel nonempty environment/action/reward; finite nonempty action;
+  measurable `bestAction`. The final uniform theorem has no supplied trajectory,
+  process, posterior, sampler-law, or absolute-continuity premise.
+- Retrieval evidence: pinned LML `TS.policy`/`tsAlgorithm` uses the same
+  non-circular uniform-reference design; pinned `AlgorithmDensityBayes`;
+  Mathlib Uniform, MeasureCompProd, CondDistrib; local measurable trajectory and
+  recursive-density leaves.
+- Status: `leanCompiled`, root-imported, and externally checked in
+  `Tests.Basic`.
+- Failure policy: global coupling and downstream `TS-DECOMP` are closed. The
+  downstream clipped-UCB score and regularity discharge now compile as well.
+  Proceed to `TS-STATIONARY-EMPIRICAL-MEAN-TAIL-TRANSPORT`; do not reintroduce
+  a separate `policySamplerMeasure` or any upstream law premise.
+
+## Thompson Bayesian Regret Decomposition
+
+- Lean-facing statements: `Thompson.HistoryActionScore`,
+  `Thompson.integral_comp_eq_of_map_eq`,
+  `Thompson.integral_historyAction_eq_of_condDistrib_ae_eq`,
+  `Thompson.canonicalMeasurableEnvironmentTrajectoryMeasure_map_action_zero`,
+  `Thompson.uniformReferenceThompsonAlgorithm_map_action_zero_eq_bestAction`,
+  `Thompson.uniformReferenceThompsonAlgorithm_integral_historyScore_eq_bestAction`,
+  `Thompson.trajectoryBayesMeanRegret`, and
+  `Thompson.integral_trajectoryBayesMeanRegret_eq_add_historyScore`.
+- Local APIs/imports: `ThompsonBayesRegretDecomposition`, the compiled
+  `ThompsonRecursiveSampler` actual-trajectory probability-matching endpoint,
+  Mathlib `compProd_map_condDistrib`, `Measure.compProd_congr`, `integral_map`,
+  `Measure.snd_compProd`, `Measure.map_comp`, `Measure.const_comp`, and local
+  `ExpectationBochnerSums.integral_finset_sum`.
+- Proof route: convert equality of conditional action laws given history into
+  equality of arbitrary measurable history/action score integrals; identify
+  the time-zero selected-action marginal with the prior best-action marginal;
+  combine initial and successor-time score expectation matching; then perform
+  the finite-horizon sum/integral decomposition.
+- Regularity: probability prior; jointly measurable feedback environment;
+  Standard Borel nonempty environment/action/reward; finite nonempty action;
+  measurable `bestAction`; measurable initial/successor scores; explicit
+  finite-horizon integrability of best mean, selected mean, selected score, and
+  best-action score.
+- Retrieval evidence: pinned LML
+  `TS.integral_ucb_action_eq_integral_ucb_bestAction` and
+  `TS.integral_regret_eq_add` at
+  `19dc3ab132c2a7539f5944503d1114eac4c5bb74`; `LML-TS-BAYES-REGRET`;
+  `MLIB-MEASURE-INTEGRAL`; `MLIB-FINSET-SUMS`; Mathlib CondDistrib,
+  MeasureCompProd, and Bochner integral APIs.
+- Status: `leanCompiled`, root-imported, and externally checked in
+  `Tests.Basic`. This is the exact decomposition layer, not upstream
+  `Bandits.integral_regret_le`.
+- Failure policy: the clipped score and concrete decomposition now compile.
+  Continue with exactly `TS-STATIONARY-EMPIRICAL-MEAN-TAIL-TRANSPORT`; do not
+  restore posterior, sampler, trajectory, process, absolute-continuity,
+  abstract score-integral equality, or explicit integrability premises.
+
+## Thompson Clipped UCB Score And Concrete Decomposition
+
+- Lean-facing statements: `Thompson.clippedUCB`,
+  `Thompson.clippedUCBHistory`, `Thompson.clippedUCB_mem_Icc`,
+  `Thompson.measurable_uncurry_clippedUCBHistory`,
+  `Thompson.clippedUCBHistoryScore`,
+  `Thompson.clippedUCBHistory_finitePairHistoryOfTrace`,
+  `Thompson.clippedUCBHistoryScore_atTrace`,
+  `Thompson.integrable_trajectoryHistoryScore_clippedUCB`,
+  `Thompson.integrable_trajectoryBestHistoryScore_clippedUCB`, and
+  `Thompson.integral_trajectoryBayesMeanRegret_eq_add_clippedUCB`.
+- Local APIs/imports: `ThompsonClippedUCBScore`, `UCB.realEmpiricalMean`,
+  `ETC.realHistoryPullCount`, `ETC.realHistoryEmpMean`,
+  `UCB.measurable_realHistoryEmpMean`, the finite-history/trace identities in
+  `UCBRealHistoryIndex`, Mathlib measurable min/max/sqrt/log/division,
+  `Integrable.of_bound`, and the compiled generic TS decomposition.
+- Proof route: define the zero-pull value as `u`; clip empirical mean plus the
+  confidence radius into `[l,u]`; prove fixed-arm and history/action joint
+  measurability; identify inclusive history through `n` with trace statistics
+  at `n+1`; derive selected/best score and mean integrability from measurable
+  range bounds; instantiate the concrete decomposition.
+- Regularity: `l <= u`; probability prior; Standard Borel nonempty
+  environment; finite nonempty `Fin K`; measurable `bestAction`; jointly
+  measurable environment/action mean with values in `[l,u]`; jointly
+  measurable feedback environment. Score regularity itself does not need
+  positivity of `sigma2` or `delta`.
+- Retrieval evidence: pinned LML `ClippedUCB.ucb`, `ucb'`, `ucb_mem_Icc`,
+  `measurable_uncurry_ucb'`, `integrable_uncurry_ucb_comp`, and
+  `TS.integral_regret_eq_add` at
+  `19dc3ab132c2a7539f5944503d1114eac4c5bb74`; `LML-TS-BAYES-REGRET`;
+  `MLIB-MEASURE-INTEGRAL`; `MLIB-REAL-LOG-SQRT`; compiled local
+  `UCBRealHistoryIndex` and `TS-DECOMP` declarations.
+- Status: `leanCompiled`, root-imported, and externally checked in
+  `Tests.Basic`; all four decomposition integrability premises are discharged.
+- Failure policy: the stationary arm-stream adapter is now compiled below.
+  Continue with `TS-LATENT-ARM-STREAM-DETERMINISTIC-TRAJECTORY-SUPPORT`, then
+  transport fixed-arm empirical-mean deviations to the actual recursive TS
+  trajectory. Do not restore score-integrability premises or replace the
+  fixed-arm random-count law by selected-reward `HasCondSubgaussianMGF` alone.
+
+## Thompson Stationary Arm-Stream Adapter
+
+- Lean-facing statements: `Thompson.stationaryRewardSampler_map_volume`,
+  `Thompson.stationaryArmStreamKernel_apply`,
+  `Thompson.stationaryMeasurableHistoryEnvironment`,
+  `Thompson.measurable_latentArmStreamInitialReward`,
+  `Thompson.measurable_latentArmStreamNextReward`,
+  `Thompson.latentArmStreamMeasurableHistoryEnvironment`,
+  `UCB.measure_sumRewards_sub_pullCount_mul_ge_le_of_canonicalArmStream`, and
+  `UCB.measure_pullCount_mul_sub_sumRewards_ge_le_of_canonicalArmStream`.
+- Local APIs/imports: `ThompsonStationaryReward`, Mathlib
+  `Kernel.exists_measurable_map_eq_unitInterval`, `Kernel.map`, `Kernel.comap`,
+  `Kernel.deterministic`, `Measure.infinitePi_map_pi`, local
+  `UCB.armStreamMeasure`, fixed-prefix sub-Gaussian tails, peeling, and
+  `ETC.realHistoryPullCount` measurability.
+- Proof route: sample a doubly indexed independent uniform table, map each
+  coordinate through the measurable reward-kernel representation, identify
+  the fixed-environment output law with the canonical arm-stream product law,
+  peel fixed-prefix deviations over every possible adaptive count for an
+  arbitrary action trace, and expose the same stream through next-unused
+  deterministic history feedback.
+- Regularity: measurable environment, finite `Fin K`, and a Markov reward
+  kernel. Quantitative tails additionally require pointwise centered
+  `HasSubgaussianMGF`, a nonnegative threshold at every count up to the
+  horizon, and no assumption on the action selector.
+- Retrieval evidence: `MLIB-PROBABILITY-KERNEL`,
+  `MLIB-PROBABILITY-INDEPENDENCE`, `MLIB-PROBABILITY-SUBGAUSSIAN`, the compiled
+  UCB arm-stream source/tail declarations, and
+  `LOCAL-LEAF-TS-CLIPPED-UCB-SCORE`. LML remains route evidence only.
+- Status: `leanCompiled`, root-imported, and externally checked in
+  `Tests.Basic`. Product-stream construction and algorithm-independent
+  adaptive-count tails are closed; deterministic trajectory support compiles
+  in the next leaf.
+- Failure policy: do not reopen stream construction. Continue through the
+  compiled deterministic-support leaf below, then isolate augmented-prior
+  mixing and clipped-confidence event measurability.
+
+## Thompson Latent Arm-Stream Deterministic Trajectory Support
+
+- Lean-facing statements:
+  `Thompson.canonicalLatentArmStreamTrajectory_reward_eq_rewardFromArmStream_ae`,
+  `UCB.measure_sumRewards_sub_pullCount_mul_ge_le_of_armStream_identDistrib`,
+  `Thompson.latentArmStreamTrajectoryReward_eq_rewardFromArmStream_ae`,
+  `Thompson.stationaryLatentArmStreamTrajectoryKernel_apply`, and the two
+  `stationaryLatentArmStreamTrajectoryKernel_sumRewards_*_tail` theorems.
+- Local APIs/imports: the canonical measurable environment trajectory kernel,
+  `Kernel.compProd`/`comap`, `Measure.ae_compProd_of_ae_ae`, `ae_all_iff`,
+  `IdentDistrib`, `Measure.fst_compProd`, and compiled UCB arm-stream tails.
+- Proof route: prove zero/successor deterministic support, aggregate all times,
+  transport tails through a joint stream/algorithm-trajectory law, preserve the
+  stream marginal, and identify the environment-indexed stationary kernel.
+- Regularity: Standard Borel environment for the environment-indexed kernel,
+  finite nonempty arms, Markov stationary reward kernel, arbitrary
+  `HistoryAlgorithm`, pointwise centered `HasSubgaussianMGF`, and nonnegative
+  count-indexed thresholds.
+- Retrieval evidence:
+  `LOCAL-LEAF-TS-STATIONARY-ARM-STREAM-ADAPTER`,
+  `LOCAL-LEAF-TS-MEASURABLE-ENVIRONMENT-TRAJECTORY-KERNEL`,
+  `MLIB-PROBABILITY-INDEPENDENCE`, and `MLIB-PROBABILITY-SUBGAUSSIAN`.
+- Status: `leanCompiled`, root-imported, and externally checked in
+  `Tests.Basic`; fixed-environment actual augmented-trajectory tails are closed.
+- Failure policy: the downstream prior-mixture confidence transport now
+  compiles. Do not restore support/coupling premises, use a UCB-specific action
+  process, or substitute selected-reward conditional MGF.
+
+## `TS-STATIONARY-EMPIRICAL-MEAN-TAIL-TRANSPORT`
+
+- Lean-facing statement: for every fixed arm and horizon, each positive-pull
+  lower/upper clipped empirical-mean failure event under
+  `stationaryLatentArmStreamCanonicalTrajectoryMeasure` has measure at most
+  `(n : ENNReal) * ENNReal.ofReal delta`.
+- Main declarations:
+  `UCB.measure_pos_and_sumRewards_sub_pullCount_mul_ge_le_of_armStream_identDistrib`,
+  `Thompson.stationaryLatentArmStreamTrajectoryMeasure_pos_and_sumRewards_upper_tail`,
+  `Thompson.clippedCountWidthThreshold_sq_div_eq`,
+  `Thompson.stationaryLatentArmStreamTrajectoryMeasure_map_prodAssoc_symm`, and
+  the two
+  `stationaryLatentArmStreamCanonicalTrajectoryMeasure_*_le_nat_mul_delta`
+  endpoint theorems.
+- Local APIs/imports: `Measure.compProd_apply`, `Measure.compProd_assoc`,
+  `Measure.map_apply`, `lintegral_mono`, `IdentDistrib`, local pull-count,
+  reward-sum, empirical-mean measurability, and clipped threshold algebra.
+- Proof route: peel away `pullCount = 0`; integrate pointwise kernel tails
+  through the augmented prior; specialize the threshold to
+  `sqrt (2*sigma2*log(1/delta)/k)`; evaluate the finite exponential count sum;
+  map from `Env × (Stream × Trajectory)` to the left-associated sample
+  shape consumed by `TS-DECOMP`.
+- Regularity: probability prior; Standard Borel environment; finite nonempty
+  arms; Markov stationary reward kernel; arbitrary `HistoryAlgorithm`;
+  measurable mean; pointwise centered `HasSubgaussianMGF`; nonzero `sigma2`;
+  and `0 < delta <= 1`.
+- Retrieval evidence: Mathlib measure-product/map APIs,
+  `LOCAL-LEAF-TS-LATENT-ARM-STREAM-DETERMINISTIC-TRAJECTORY-SUPPORT`,
+  `LOCAL-LEAF-TS-CLIPPED-UCB-SCORE`, `MLIB-PROBABILITY-SUBGAUSSIAN`, and the
+  pinned LML Thompson clipped-UCB route.
+- Status: `leanCompiled`, with external `Tests.Basic` canaries.
+- Failure policy: continue with exactly
+  `TS-CLIPPED-UCB-CONCENTRATION-EXPECTATIONS`, deriving finite arm/time unions
+  and the selected/best-action clipped-score expectation bounds. Do not reopen
+  latent-stream support, zero-count peeling, prior mixing, or product
+  associativity, and do not claim final Bayesian regret yet.
+
+## `TS-STATIONARY-SELECTED-ARM-HORIZON-LOWER-TAIL`
+
+- Lean-facing statement: for measurable `selectedArm : Env -> Fin K`, the
+  decomposition-facing stationary canonical trajectory assigns measure at most
+  `((n - 1 : Nat) : ENNReal) * ENNReal.ofReal delta` to the event that some
+  `t < n` has positive selected-arm count and lower-confidence failure.
+- Main declarations: selected-arm pull-count/reward-sum/empirical-mean
+  measurability, the clipped prefix finite-union theorem, the fixed-environment
+  horizon theorem, and the canonical `exists_selectedArm_*_le` endpoint.
+- Local APIs/imports: `UCB.armPrefixSum`,
+  `UCB.sumRewards_rewardFromArmStream_eq_armPrefixSum`, `pullCount_le_time`,
+  `ProbabilityUnionBound.measure_biUnion_finset_le`, `IdentDistrib.map_eq`,
+  `Measure.map_apply`, `Measure.compProd_apply`, and `Measure.compProd_assoc`.
+- Proof route: rewrite actual rewards to the latent stream a.e.; send every bad
+  time to its unique positive realized count in `Finset.Icc 1 (n - 1)`; union
+  only those prefix tails; mix through the prior; transport to the canonical
+  left-associated sample shape.
+- Regularity: probability prior; Standard Borel environment; finite nonempty
+  arms; Markov reward kernel; arbitrary `HistoryAlgorithm`; measurable mean and
+  selected arm; pointwise centered `HasSubgaussianMGF`; nonzero `sigma2`; and
+  `0 < delta <= 1`.
+- Retrieval evidence: pinned LML `BayesRegretTS` first concentration bound at
+  commit `19dc3ab132c2a7539f5944503d1114eac4c5bb74`, local arm-stream tails,
+  `MLIB-PROBABILITY-SUBGAUSSIAN`, and the fixed-time stationary tail leaf.
+- Status: `leanCompiled`, with external declaration canaries.
+- Failure policy: the best-action expectation consumer is compiled. Next prove
+  only the selected-action clipped-UCB-minus-mean expectation using a
+  deterministic score-sum bound and a finite-arm horizon upper event. Do not
+  reopen this lower-tail transport or claim final TS regret.
+
+## `TS-CLIPPED-UCB-BEST-ACTION-EXPECTATION`
+
+- Lean-facing statement: on
+  `stationaryLatentArmStreamCanonicalTrajectoryMeasure`, the integral of the
+  finite sum of `mean(env,bestAction env) - clippedUCB(bestAction env,t)` is at
+  most `(u-l) * (n-1) * n * delta`.
+- Main declaration:
+  `Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_sum_mean_bestAction_sub_clippedUCB_le`.
+- Local APIs/imports: the selected-arm horizon lower tail,
+  `clippedUCB_mem_Icc`, best-mean/score integrability,
+  `IntegrabilitySums.integrable_finset_sum`, `integral_add_compl`,
+  `setIntegral_nonpos`, `setIntegral_mono_on`, `setIntegral_const`, and
+  `ENNReal.toReal_le_of_le_ofReal`.
+- Proof route: split the integral over the horizon bad event; prove every term
+  nonpositive on its complement; bound each bad-event term by `u-l`; multiply
+  the resulting `n*(u-l)` bound by the exact `(n-1)*delta` event probability.
+- Regularity: `l<=u`; probability prior; Standard Borel environment; finite
+  nonempty arms; Markov stationary reward kernel; arbitrary `HistoryAlgorithm`;
+  measurable best action and mean; mean range in `[l,u]`; centered pointwise
+  `HasSubgaussianMGF`; nonzero `sigma2`; and `0<delta<=1`.
+- Retrieval evidence: pinned LML
+  `integral_sum_range_actionMean_bestAction_sub_ucb_bestAction_le` at commit
+  `19dc3ab132c2a7539f5944503d1114eac4c5bb74`, the selected-arm horizon leaf,
+  `MLIB-MEASURE-INTEGRAL`, and `MLIB-PROBABILITY-SUBGAUSSIAN`.
+- Status: `leanCompiled`, with external declaration canary.
+- Failure policy: next prove the selected-action expectation via the pathwise
+  clipped-UCB sum inequality and finite-arm horizon upper event. Do not weaken
+  constants or claim final Bayesian regret yet.
+
+## `TS-CLIPPED-UCB-SELECTED-ACTION-EXPECTATION`
+
+- Lean-facing statement: the selected clipped-UCB excess expectation is at
+  most `(u-l)*K + 4*sqrt(2*sigma2*log(1/delta)*K*n) +
+  (u-l)*K*(n-1)*n*delta` on the stationary canonical trajectory.
+- Main declarations: `finset_sum_comp_pullCount`,
+  `Thompson.sum_clippedUCB_action_sub_mean_le`, the canonical all-arm horizon
+  upper event theorem, and
+  `Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_sum_clippedUCB_action_sub_mean_le`.
+- Proof route: reindex widths by arm/pull count; bound their square-root sum;
+  collapse each bad time to its realized positive count; union once over arms;
+  split the integral over this exact event.
+- Regularity: `l<=u`; probability prior; Standard Borel environment; finite
+  nonempty arms; stationary Markov reward kernel; measurable bounded mean;
+  centered pointwise `HasSubgaussianMGF`; nonzero `sigma2`; `0<delta<=1`.
+- Retrieval evidence: pinned LML second Thompson concentration theorem at
+  commit `19dc3ab132c2a7539f5944503d1114eac4c5bb74`, local stationary tails,
+  Mathlib finite sums, set integrals, union bounds, and real sqrt algebra.
+- Status: `leanCompiled`, with external canaries.
+- Failure policy: preserve count collapse and the exact event constant; do not
+  replace it by a union of fixed-time `t*delta` bounds.
+
+## `TS-FINAL` Stationary Route
+
+- Lean-facing statement: the actual recursive uniform-reference Thompson
+  trajectory under stationary Markov rewards has Bayesian mean regret at most
+  `(2*K+1)*(u-l) + 8*sqrt(sigma2*K*n*log n)`.
+- Main declarations: the `_le_of_delta` decomposition join and
+  `Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryBayesMeanRegret_le`.
+- Proof route: align the augmented stationary prior/environment with the
+  decomposition measure; add both expectation bounds; use `delta=1/n^2`;
+  handle `n=0`; normalize with `Real.log_pow` and sqrt algebra.
+- Regularity: probability prior; Standard Borel nonempty environment; finite
+  nonempty arms; stationary Markov reward kernel; measurable best action and
+  bounded mean; centered pointwise `HasSubgaussianMGF`; nonzero NNReal proxy.
+- Retrieval evidence: pinned LML `TS.integral_regret_le` at the same commit,
+  the compiled decomposition, both expectation leaves, and Mathlib real
+  log/sqrt/integral APIs.
+- Status: `leanCompiled` for the local stationary model.
+- Failure policy: wider nonstationary, contextual, literal-LML-import, and RL
+  routes need explicit adapters; never relabel this theorem as those results.
+
+## EXP3 Deterministic Hedge Regret
+
+`LOCAL-LEAF-EXP3-HEDGE-DETERMINISTIC-REGRET` is compiled locally.
+
+- Lean-facing statements:
+  `Exp3.hedge_regret_le_log_card_div_add_eta_mul_mixedSquaredLoss` proves
+  `sum_t <p_t,loss_t> - sum_t loss_t(comparator) <=
+  log(card arms)/eta + eta*sum_t <p_t,loss_t^2>`;
+  `Exp3.hedge_regret_le_log_card_div_add_eta_mul_horizon` specializes this to
+  `log(card arms)/eta + eta*T` for losses in `[0,1]`.
+- Local APIs/imports: `BanditRLProof.Exp3Potential`,
+  `Mathlib.Analysis.SpecialFunctions.Exp`,
+  `Mathlib.Analysis.SpecialFunctions.Log.Basic`,
+  `Mathlib.Algebra.BigOperators.Field`, `Mathlib.Tactic.FieldSimp`,
+  `Mathlib.Tactic.Linarith`, `Mathlib.Tactic.Ring`,
+  `Real.abs_exp_sub_one_sub_id_le`,
+  `Real.log_le_sub_one_of_pos`, `Real.log_div`, `Finset.sum_div`,
+  `Finset.single_le_sum`, and `Exp3Potential.sum_range_forward_difference`.
+- Proof route: define positive weights from cumulative losses; normalize them
+  on the explicit finite arm set; apply
+  `exp(-eta*ell) <= 1-eta*ell+eta^2*ell^2` termwise; convert the total-weight
+  ratio to a log increment; telescope; lower-bound the terminal total weight by
+  the comparator weight; divide by positive `eta`; finally bound each mixed
+  loss second moment by one.
+- Regularity contracts: an explicit nonempty finite arm set; comparator
+  membership; `0 < eta <= 1`; and all horizon losses in `[0,1]`. There is no
+  probability space, measurability, independence, filtration, estimator, or
+  integrability requirement.
+- Retrieval evidence: `PPR-AUER-CFS-2002-EXP3`,
+  `TXT-BUBECK-CESABIANCHI-2012`, `MLIB-EXP-LOG-INEQUALITIES`,
+  `MLIB-FINSET-SUMS`, `MLIB-ORDER-ALGEBRA`,
+  `LOCAL-LEAF-EXP3-POTENTIAL`, and inspiration-only
+  `WEAPON-EXP3-POTENTIAL`.
+- Status: `leanCompiled`; root import and external second-order/final theorem
+  canaries compile.
+- Failure policy: this is the deterministic full-information theorem, not the
+  final EXP3 bandit theorem. The finite-sum importance-weighted moment route now
+  compiles separately; the next route must transport it through an actual
+  history-adaptive conditional action law before expectation assembly and
+  `eta` optimization.
+
+`LOCAL-LEAF-EXP3-IMPORTANCE-WEIGHTED-MOMENTS` is compiled locally.
+
+- Lean-facing statements: `Exp3.importanceWeightedLoss` defines the sampled
+  coordinate estimate; `Exp3.sum_prob_mul_importanceWeightedLoss_eq_loss` and
+  `Exp3.sum_prob_mul_mixedImportanceWeightedLoss_eq_mixedLoss` prove armwise
+  and mixed finite-sum identities; the exact probability-weighted mixed square is
+  `sum_a loss(a)^2`, with a final upper bound `arms.card` for `[0,1]` losses.
+- Local APIs/imports: `BanditRLProof.Exp3HedgeRegret`,
+  `Mathlib.Algebra.BigOperators.Field`, `Mathlib.Tactic.FieldSimp`,
+  `Mathlib.Tactic.Linarith`, `Finset.sum_eq_single`, `div_mul_cancel₀`,
+  `mul_div_cancel₀`, and finite-sum congruence/order lemmas.
+- Proof route: collapse each estimator sum to its sampled coordinate; cancel
+  nonzero sampling mass; average the pathwise mixed-loss and mixed-square
+  identities; bound each squared `[0,1]` loss by one.
+- Regularity contracts: explicit finite support, decidable action equality at
+  theorem use sites, nonzero sampling mass on support, and `[0,1]` losses only
+  for the cardinality bound. Probability normalization and nonnegativity are
+  unnecessary for the cancellation lemmas but are additional requirements for
+  a probability-law interpretation. There is no measure, filtration,
+  independence, measurability, or integrability premise.
+- Retrieval evidence: `PPR-AUER-CFS-2002-EXP3`,
+  `TXT-BUBECK-CESABIANCHI-2012`, `MLIB-FINSET-SUMS`,
+  `MLIB-ORDER-ALGEBRA`, `LOCAL-LEAF-EXP3-HEDGE-DETERMINISTIC-REGRET`, and
+  inspiration-only `WEAPON-EXP3-POTENTIAL`.
+- Status: `leanCompiled`; root import plus generalized-Hedge, armwise,
+  mixed-loss, and mixed-square external canaries compile.
+- Failure policy: these are deterministic weighted-sum identities, not a
+  conditional-expectation theorem in isolation. Consume the compiled
+  conditional-moment transport rather than calling these sums conditional
+  unbiasedness directly.
+
+`LOCAL-LEAF-EXP3-CONDITIONAL-MOMENT-TRANSPORT` is compiled locally.
+
+- Lean-facing statements: `Exp3.FiniteActionDistribution` and
+  `Exp3.finiteActionMeasure` package a normalized nonnegative finite Dirac law;
+  `Exp3.integral_historyAction_eq_integral_sum_of_condDistrib_ae_eq_finiteActionMeasure`
+  transports any measurable integrable history/action score to its finite
+  conditional weighted sum. Specialized theorems expose armwise unbiasedness,
+  mixed-loss and mixed-square integral identities.
+- Local APIs/imports: `BanditRLProof.Exp3ImportanceWeighted`, Mathlib
+  `Probability.Kernel.CondDistrib`, `Probability.Kernel.Composition.IntegralCompProd`,
+  `condDistrib_ae_eq_iff_measure_eq_compProd`, `Measure.integral_compProd`,
+  `integral_map`, finite-sum/scalar/Dirac integral lemmas, and
+  `ENNReal.ofReal_sum_of_nonneg`.
+- Proof route: identify the joint `(history, action)` pushforward with the
+  history-policy `compProd` measure from the conditional distribution; apply
+  `integral_map` and `integral_compProd`; rewrite the policy a.e. to the finite
+  Dirac action measure; reduce each fiber integral to a weighted `Finset` sum;
+  invoke the compiled importance-weighted identities.
+- Regularity contracts: finite ambient measure; measurable history and action;
+  measurable-singleton Standard Borel nonempty action space; normalized,
+  nonnegative finite support; Markov policy; a.e. policy identification and
+  actual `condDistrib` law; strict positivity on supported arms for estimator
+  cancellation; explicit score measurability and integrability on `compProd`.
+- Retrieval evidence: `MLIB-PROBABILITY-KERNEL`, `MLIB-MEASURE-INTEGRAL`,
+  `MLIB-FINSET-SUMS`, `LOCAL-LEAF-EXP3-IMPORTANCE-WEIGHTED-MOMENTS`,
+  `PPR-AUER-CFS-2002-EXP3`, `TXT-BUBECK-CESABIANCHI-2012`, and
+  inspiration-only `WEAPON-EXP3-POTENTIAL`.
+- Status: `leanCompiled`; root import and external finite-law, armwise, and
+  mixed-square canaries compile.
+- Failure policy: this leaf consumes rather than constructs the adaptive EXP3
+  policy/action process. The ambient measure is only finite, so do not call the
+  integrals normalized expectations without an `IsProbabilityMeasure` instance.
+  Its downstream generated-process leaf now discharges the policy and
+  `condDistrib` premises; the downstream regularity producer now discharges the
+  score premises, while multi-round assembly remains.
+
+`LOCAL-LEAF-EXP3-GENERATED-ACTION-PROCESS` is compiled locally.
+
+- Lean-facing statements: `Exp3.MeasurableFiniteActionDistribution` packages
+  pointwise normalized/nonnegative finite probabilities and measurable
+  coordinates. `Exp3.finiteActionKernel` is the resulting Markov kernel;
+  `Exp3.actionProcessMeasure` is the history-policy `compProd` law.
+  `Exp3.actionProcess_condDistrib_action_ae_eq_finiteActionKernel` proves the
+  generated action's a.e. conditional law, and three canonical integral wrappers
+  discharge the prior leaf's policy/law premises.
+- Local APIs/imports: `BanditRLProof.Exp3ConditionalMoments`, kernel structure
+  measurability, `Measure.measurable_of_measurable_coe`, finite measure sums,
+  scaled Dirac evaluation, `ENNReal.measurable_ofReal`, `Measure.compProd`,
+  `Measure.fst_compProd`, `Measure.map_id`, and
+  `condDistrib_ae_eq_iff_measure_eq_compProd`.
+- Proof route: prove every measurable-set evaluation of the finite Dirac law is
+  a finite sum of measurable probability coordinates; derive pointwise
+  probability measures and Markovness; compose the history measure with the
+  policy; identify the first marginal; apply conditional-distribution
+  uniqueness; feed the resulting law directly into the compiled moment
+  transport.
+- Regularity contracts: finite history measure; measurable history/action
+  spaces; measurable singletons; Standard Borel nonempty actions for
+  `condDistrib`; normalized nonnegative probabilities with supported coordinate
+  measurability; strict positive supported mass and decidable action equality
+  for importance weighting; explicit score measurability/integrability.
+  A probability history measure yields a probability action-process measure;
+  finite-only inputs retain unnormalized integral semantics.
+- Retrieval evidence: `MLIB-PROBABILITY-KERNEL`, `MLIB-MEASURE-INTEGRAL`,
+  `MLIB-FINSET-SUMS`, `LOCAL-LEAF-EXP3-CONDITIONAL-MOMENT-TRANSPORT`,
+  `PPR-AUER-CFS-2002-EXP3`, `TXT-BUBECK-CESABIANCHI-2012`, and
+  inspiration-only `WEAPON-EXP3-POTENTIAL`.
+- Status: `leanCompiled`; root import plus external `condDistrib` and canonical
+  mixed-square consumer canaries compile.
+- Failure policy: this leaf itself is a generated one-round law. Its downstream
+  score-regularity and exploration-mixed recursive-trajectory leaves now
+  compile; use that trajectory and next construct the sampled
+  importance-weighted history score before expectation or regret claims.
+
+`LOCAL-LEAF-EXP3-SCORE-REGULARITY` is compiled locally.
+
+- Lean-facing statements: `Exp3.BoundedMeasurableLossWithProbabilityFloor`
+  packages a positive uniform sampling floor and measurable supported losses
+  in `[0,1]`. Three measurability theorems, three pointwise norm bounds, and
+  three integrability theorems cover the armwise, mixed first-moment, and mixed
+  second-moment scores. Three `_of_regularity` consumers expose the canonical
+  generated-process integral identities without manual `hprob`, `hscore`, or
+  `hIntegrable`.
+- Local APIs/imports: `BanditRLProof.Exp3ActionProcess`, `Measurable.ite`,
+  `Measurable.div`, `Measurable.mul`, `Measurable.pow_const`,
+  `Finset.measurable_sum`, `Finset.abs_sum_le_sum_abs`, `Finset.sum_mul`,
+  `one_div_le_one_div_of_le`, `sq_le_sq₀`, and `Integrable.of_bound`.
+- Proof route: unfold each score, compose supported coordinate measurability
+  with the history projection, use `loss <= 1` and `epsilon <= prob` for the
+  armwise reciprocal bound, sum against the normalized nonnegative
+  probability vector for the mixed bounds, invoke `Integrable.of_bound`, and
+  feed the witnesses into the generated action-process consumers.
+- Regularity contracts: measurable history/action spaces, measurable action
+  singletons, decidable action equality, normalized nonnegative finite
+  probabilities with measurable supported coordinates, `epsilon > 0`, a
+  supported probability floor, and measurable supported losses in `[0,1]`.
+  Standard Borel nonempty actions are required only by final `condDistrib`
+  consumers.
+- Retrieval evidence: `LOCAL-LEAF-EXP3-GENERATED-ACTION-PROCESS`,
+  `LOCAL-LEAF-EXP3-CONDITIONAL-MOMENT-TRANSPORT`, `MLIB-MEASURE-INTEGRAL`,
+  `MLIB-PROBABILITY-KERNEL`, `MLIB-FINSET-SUMS`, `MLIB-ORDER-ALGEBRA`,
+  `PPR-AUER-CFS-2002-EXP3`, `TXT-BUBECK-CESABIANCHI-2012`, and inspiration-only
+  `WEAPON-EXP3-POTENTIAL`.
+- Status: `leanCompiled`; root import plus external integrability and
+  premise-free mixed-square canaries compile.
+- Failure policy: this is one-round regularity under an explicit uniform floor;
+  the generic and concrete sampled-score recursive trajectories now compile.
+  The next missing contract identifies generated scalar feedback with a full
+  adversarial loss-vector coordinate before expectation or regret claims.
+
+`LOCAL-LEAF-EXP3-EXPLORATION-MIXED-RECURSIVE-TRAJECTORY` is compiled locally.
+
+- Lean-facing statements: `Exp3.historyWeight`,
+  `Exp3.normalizedHistoryDistribution`, and
+  `Exp3.exploredHistoryDistribution` build the exploration-mixed law from a
+  cumulative finite-history score. The module proves normalization,
+  nonnegativity, coordinate measurability, and the floor `gamma / arms.card`,
+  packages `Exp3.exploredHistoryAlgorithm`, constructs
+  `Exp3.exploredTrajectoryKernel`, and proves
+  `Exp3.exploredTrajectoryMeasure_condDistrib_action` for every successor time.
+- Local APIs/imports: `BanditRLProof.Exp3ScoreRegularity`,
+  `BanditRLProof.Algorithms.ThompsonRecursiveSampler`, `Real.measurable_exp`,
+  `Finset.measurable_sum`, `Finset.sum_div`, `finiteActionMeasure`,
+  `finiteActionKernel`, `Thompson.HistoryAlgorithm`,
+  `Thompson.MeasurableHistoryEnvironment`, the canonical measurable trajectory
+  kernel, and its successor-action `condDistrib` theorem.
+- Proof route: exponentiate the negative cumulative score, use strict
+  positivity to normalize on a nonempty finite support, mix with the uniform
+  law, prove the exploration floor, package measurable finite distributions at
+  every inclusive history, instantiate the stochastic history algorithm, and
+  specialize the existing Ionescu-Tulcea trajectory and conditional-law route.
+- Regularity contracts: nonempty finite arm support; measurable action/loss/env
+  spaces and measurable action singletons; measurable supported score
+  coordinates for every finite history; `0 <= gamma <= 1`; `gamma > 0` for a
+  strictly positive floor; nonempty action/loss types for trajectory
+  construction; Standard Borel env/action/loss and a finite prior for the final
+  `condDistrib` endpoint.
+- Retrieval evidence: `LOCAL-LEAF-EXP3-SCORE-REGULARITY`,
+  `LOCAL-LEAF-EXP3-GENERATED-ACTION-PROCESS`, `MLIB-PROBABILITY-KERNEL`,
+  `MLIB-MEASURE-INTEGRAL`, `MLIB-FINSET-SUMS`,
+  `MLIB-EXP-LOG-INEQUALITIES`, `PPR-AUER-CFS-2002-EXP3`,
+  `TXT-BUBECK-CESABIANCHI-2012`, and inspiration-only
+  `WEAPON-EXP3-POTENTIAL`.
+- Status: `leanCompiled`; root import plus external score/floor/kernel and full
+  successor conditional-law canaries compile.
+- Failure policy: this generic trajectory accepts an input score; the downstream
+  concrete sampled importance-weighted instantiation now compiles. Use that
+  theorem for EXP3 and next discharge the adversarial feedback-coordinate law.
+
+`LOCAL-LEAF-EXP3-SAMPLED-HISTORY-SCORE-RECURSIVE-TRAJECTORY` is compiled
+locally.
+
+- Lean-facing statements: `Exp3.previousPairHistory` removes the newest
+  inclusive coordinate; `Exp3.sampledHistoryScore_zero` and
+  `Exp3.sampledHistoryScore_succ` state the exact initial and recursive
+  importance-weighted updates; `Exp3.measurable_sampledHistoryScore` packages
+  the coordinate measurability; `Exp3.sampledHistoryDistribution_floor`
+  exposes exploration positivity; and
+  `Exp3.sampledImportanceWeightedTrajectoryMeasure_condDistrib_action` gives
+  the complete trajectory's exact successor action law without external
+  `score/hscore` parameters.
+- Local APIs/imports: `BanditRLProof.Exp3RecursiveTrajectory`,
+  `History.FinitePairHistory`, `measurable_pi_lambda`, `measurable_pi_apply`,
+  measurable `ite`, division, addition and composition,
+  `importanceWeightedLoss`, `initialExploredDistribution`,
+  `exploredHistoryDistribution`, `MeasurableFiniteHistoryScore`, and the
+  generic explored history-algorithm/trajectory/conditional-law route.
+- Proof route: recurse structurally on the inclusive history index. Time zero
+  uses the initial finite law. At a successor, measurably restrict the previous
+  prefix, use the induction hypothesis to measure the prior score and policy
+  coordinate, add the observed chosen-action loss divided by that exact
+  probability, and instantiate the generic trajectory theorem.
+- Regularity contracts: Real observed feedback; measurable action space and
+  singletons; decidable action equality; nonempty finite arms; `0 <= gamma <=
+  1`, with `gamma > 0` when strict positivity is consumed; measurable history
+  environment; Standard Borel environment/action; finite prior. Eta positivity
+  and `[0,1]` bounds belong to regret consumers, not process construction.
+- Retrieval evidence: `LOCAL-LEAF-EXP3-EXPLORATION-MIXED-RECURSIVE-TRAJECTORY`,
+  `LOCAL-LEAF-EXP3-IMPORTANCE-WEIGHTED-MOMENTS`,
+  `LOCAL-LEAF-EXP3-CONDITIONAL-MOMENT-TRANSPORT`, `MLIB-FINSET-SUMS`,
+  `MLIB-MEASURE-INTEGRAL`, `MLIB-PROBABILITY-KERNEL`,
+  `PPR-AUER-CFS-2002-EXP3`, `TXT-BUBECK-CESABIANCHI-2012`, and inspiration-only
+  `WEAPON-EXP3-POTENTIAL`.
+- Status: `leanCompiled`; root import, recursive-equation canary, declaration
+  canaries, and the full external successor `condDistrib` canary compile.
+- Failure policy: this closes the arbitrary-score boundary. The downstream
+  predictable-adversary leaf now supplies pre-action `[0,1]` loss vectors,
+  chosen-coordinate Dirac feedback, and `(Env,prefix)` action conditioning.
+  Use that leaf before applying one-round moments roundwise.
+
+`LOCAL-LEAF-EXP3-PREDICTABLE-ADVERSARY` is compiled locally.
+
+- Lean-facing statements: `Exp3.PredictableLossVector` records jointly
+  measurable initial and finite-history successor loss vectors with pointwise
+  `[0,1]` range; `.environment` realizes selected coordinates as deterministic
+  feedback; `.environment_initialFeedback_apply` and
+  `.environment_feedback_apply` expose exact Dirac laws; and
+  `sampledImportanceWeightedTrajectoryMeasure_condDistrib_action_given_environment`
+  gives the concrete sampled EXP3 action law conditioned on `(Env,prefix)`.
+- Local APIs/imports: `BanditRLProof.Exp3SampledHistoryScore`,
+  `Thompson.MeasurableHistoryEnvironment`, `Kernel.deterministic`,
+  `Measure.ext_prod`, `Measure.compProd`, `Measure.lintegral_compProd`,
+  `condDistrib_ae_eq_of_measure_eq_compProd_of_measurable`, and the canonical
+  fixed-environment history/action joint-law theorem.
+- Proof route: build the feedback kernels directly from measurable loss
+  coordinates. For action transport, take measurable sections of each
+  `(Env,History)` event, apply the fixed-environment joint law, and use Tonelli
+  to reassemble the prior mixture while retaining `Env` in the conditioning
+  variable; then specialize to the concrete sampled-score algorithm.
+- Regularity contracts: pre-action joint measurability and pointwise `[0,1]`;
+  measurable action space and singletons; decidable action equality; nonempty
+  finite arms; `0 <= gamma <= 1`; Standard Borel environment/action; finite
+  prior. Eta positivity and `gamma > 0` remain downstream moment/regret inputs.
+- Retrieval evidence: `LOCAL-LEAF-EXP3-SAMPLED-HISTORY-SCORE-RECURSIVE-TRAJECTORY`,
+  `LOCAL-LEAF-EXP3-CONDITIONAL-MOMENT-TRANSPORT`,
+  `MLIB-PROBABILITY-KERNEL`, `MLIB-MEASURE-INTEGRAL`, `MLIB-FINSET-SUMS`,
+  `PPR-AUER-CFS-2002-EXP3`, `TXT-BUBECK-CESABIANCHI-2012`, and inspiration-only
+  `WEAPON-EXP3-POTENTIAL`.
+- Status: `leanCompiled`; root import, declaration/Dirac external canaries,
+  module/root builds, and `Tests.Basic` compile.
+- Failure policy: this prevents a current-action-reactive loss vector but does
+  not itself prove regret. Its observed-moment and finite-horizon consumers now
+  compile; continue from the sampled-history-score/Hedge-potential join.
+
+### EXP3 predictable observed moment handoff
+
+`LOCAL-LEAF-EXP3-PREDICTABLE-OBSERVED-MOMENTS` is compiled locally in
+`BanditRLProof.Exp3PredictableMoments`.
+
+- Lean statement: use
+  `sampledPredictableObservedSuccessor_first_second_moment` for the actual
+  scalar feedback stored at successor time `n + 1`; its two conclusions are
+  armwise first-moment unbiasedness and the mixed estimator-square identity.
+  Use `sampledPredictableObservedAt_first_second_moment` for a uniform actual
+  time and `sampledPredictableObserved_finiteHorizon_first_second_moment` for
+  the `Finset.range horizon` integral sums over `t < horizon`, including time
+  zero when the horizon is positive.
+- APIs/imports: `Exp3PredictableAdversary`, canonical measurable trajectory
+  map laws, `Measure.compProd`, `Kernel.comap`,
+  `BoundedMeasurableLossWithProbabilityFloor`, and
+  `Exp3ConditionalMoments`.
+- Route: retain `Env` in the finite history, transport the full next-pair law,
+  prove Dirac feedback support, discharge the exploration-floor regularity,
+  apply the vector moment transport, then rewrite to observed scalar feedback
+  almost surely.
+- Contracts: predictable jointly measurable `[0,1]` losses, nonempty arms,
+  `0 < gamma <= 1`, measurable singleton actions with decidable equality,
+  Standard Borel environment/action, finite prior, supported comparator.
+- Status/retrieval: `leanCompiled`; see
+  `LOCAL-LEAF-EXP3-PREDICTABLE-OBSERVED-MOMENTS` and its Mathlib/paper routes.
+- Failure policy: do not add eta positivity or claim a regret result. The
+  finite-horizon moment assembly is compiled; continue with the concrete
+  sampled-history-score/Hedge-potential join, exploration bias, and parameter
+  optimization.
+
+### EXP3 sampled Hedge join
+
+`LOCAL-LEAF-EXP3-SAMPLED-HEDGE` is compiled locally.
+
+- Lean statements: `sampledTrajectoryObservedLoss`,
+  `sampledHistoryScore_frestrictLe_eq_cumulativeLoss`,
+  `distribution_sampledTrajectoryObservedLoss_succ`,
+  `sampledTrajectoryProbabilityAt_eq_mix_distribution`, and
+  `sampledHistoryScore_hedge_regret_le`.
+- Local APIs/imports: `BanditRLProof.Exp3PredictableMoments` and its
+  `Exp3HedgeRegret` import chain, `Preorder.frestrictLe`,
+  `cumulativeLoss_succ`, `Finset.sum_congr`, sampled-score recursion,
+  normalized/explored history distributions, and
+  `importanceWeightedLoss_nonneg`.
+- Proof route: induct over the inclusive history index, rewrite every
+  exponential weight in the finite denominator, expose the exploration
+  mixture at time zero and successors, derive estimator nonnegativity, then
+  specialize the deterministic generalized Hedge theorem.
+- Regularity: nonempty finite arms, decidable action equality, `eta > 0`,
+  `0 <= gamma <= 1`, comparator membership, and finite-prefix nonnegative
+  observed scalar feedback. There are no measure or integrability premises.
+- Retrieval: the deterministic Hedge, sampled-history-score, and predictable
+  finite-horizon moment local cards; Mathlib finite sums and order/exponential
+  algebra; EXP3 paper/textbook cards; weapon card only as inspiration.
+- Status: `leanCompiled`, root imported, with a full `Tests.Basic` canary.
+- Failure policy: this endpoint is pathwise, not expected regret. Build one
+  a.e. finite-horizon predictable reward event, then prove exploration bias
+  and integrate before optimizing eta/gamma.
+
+### EXP3 predictable Hedge almost-sure endpoint
+
+`LOCAL-LEAF-EXP3-PREDICTABLE-HEDGE-AE` is compiled locally.
+
+- Lean statements: every-time and finite-horizon reward-nonnegative a.e.
+  theorems, `sampledPredictableTrajectoryMeasure_hedge_regret_le_ae`, and the
+  score-shaped `sampledPredictableScoreHedge_ae`.
+- Local APIs/imports: `BanditRLProof.Exp3SampledHedge`, the canonical time-zero
+  and sampled successor reward a.e. laws, predictable unit-interval fields,
+  `ae_all_iff`, `filter_upwards`, and both pathwise Hedge endpoints.
+- Proof route: split zero/successor time, rewrite observed feedback to the
+  selected predictable coordinate, extract nonnegativity, aggregate all times
+  on one a.e. event, and apply the pathwise theorem sample by sample.
+- Contracts: predictable measurable `[0,1]` vectors, finite nonempty arms,
+  `eta > 0`, `0 <= gamma <= 1`, comparator membership, Standard Borel
+  environment/action, measurable action singletons, decidable equality, and a
+  finite prior. No gamma positivity, probability prior, or integrability.
+- Retrieval/status: sampled-Hedge plus predictable moment local cards,
+  Mathlib measure/kernel/finite sums, EXP3 paper/textbook cards;
+  `leanCompiled`, root imported, full external canary.
+- Failure policy: this is a.e. pathwise control, not expected regret. Next
+  compare pure `q` and explored `p`, prove integrability, and integrate.
+
+### EXP3 exploration bias
+
+`LOCAL-LEAF-EXP3-EXPLORATION-BIAS` is compiled locally.
+
+- Lean statements: coordinatewise
+  `distribution_le_sampledTrajectoryProbabilityAt_div_one_sub_gamma`, the
+  estimator-square comparison, the one-round predictable-loss bias, and
+  `sampledTrajectory_finiteHorizon_explorationBias_secondMoment`.
+- Local APIs/imports: `BanditRLProof.Exp3PredictableHedge`, the concrete
+  sampling-mixture equality, pure-distribution nonnegativity, predictable
+  unit-interval fields, finite-sum monotonicity/distributivity, and field/ring
+  normalization.
+- Proof route: expose the uniform mixture coordinatewise; divide by positive
+  `1-gamma`; multiply by estimator squares; bound the uniform predictable-loss
+  contribution by `gamma/|arms|`; then sum both inequalities over time.
+- Contracts: finite nonempty arms, decidable action equality, measurable
+  spaces carried by `PredictableLossVector`, and `0 <= gamma < 1`. No eta
+  positivity, prior, probability instance, integrability, or comparator.
+- Retrieval/status: predictable-Hedge, sampled-Hedge, finite-horizon moments,
+  importance-weighted moments, Mathlib finite sums/order algebra, and EXP3
+  paper/textbook cards; `leanCompiled`, root imported, full external canary.
+- Failure policy: pathwise bias is not expected regret by itself. Its adaptive
+  pure-q transport, integrability, and expected-regret consumer now compile;
+  its tuned square-root consumer also compiles downstream.
+
+### EXP3 predictable expected-regret handoff
+
+`LOCAL-LEAF-EXP3-PREDICTABLE-EXPECTED-REGRET` is compiled locally in
+`BanditRLProof.Exp3PredictableIntegration`.
+
+- Lean statement: `sampledPredictable_expectedRegret_le` bounds expected
+  exploration-mixed predictable loss minus any supported comparator by
+  `log(|arms|)/eta + eta/(1-gamma)*|arms|*horizon + gamma*horizon`.
+- Local APIs/imports: `Exp3ExplorationBias`, cross-weighted
+  `weightedImportanceWeightedLoss`, conditional-moment transport,
+  `normalizedHistoryDistributionSource`, generated reward a.e. transport,
+  finite-sum integrability, and Bochner integral summation.
+- Proof route: prove `E_p[q dot hat-loss]=q dot loss`; instantiate the adaptive
+  pure-Hedge `q_t`; aggregate finite-horizon first moments; integrate the a.e.
+  Hedge inequality; compare pure and explored second moments; apply the
+  `[0,1]` second-moment and exploration-bias bounds; finish by scalar algebra.
+- Regularity: probability prior; Standard Borel Env/Action; measurable action
+  singletons; decidable finite nonempty arms; predictable measurable `[0,1]`
+  losses; supported comparator; `eta>0`; `0<gamma<1`. No independence,
+  stationarity, obliviousness, concentration, or external integrability.
+- Retrieval/status: local exploration-bias, predictable-Hedge,
+  finite-horizon-moment, conditional-moment, score-regularity cards; Mathlib
+  measure/kernel/finite-sum/order APIs; EXP3 paper/textbook cards; weapon card
+  inspiration only. Status is `leanCompiled`, root imported, with an external
+  final-theorem canary.
+- Failure policy: this endpoint is the unoptimized premise of the compiled
+  square-root and uniform-horizon corollaries. Its realized selected-loss
+  consumer compiles; preserve this reusable `p_t`-mixed boundary for broader
+  adversary or high-probability work.
+
+### EXP3 tuned expected-regret handoff
+
+`LOCAL-LEAF-EXP3-TUNED-EXPECTED-REGRET` is compiled locally in
+`BanditRLProof.Exp3ExpectedRegret`.
+
+- Lean statement: `sampledPredictable_expectedRegret_le_four_mul_sqrt` gives
+  `E[sum_t p_t dot loss_t - sum_t loss_t(a)] <= 4*sqrt(K*T*log K)`.
+- Local APIs/imports: the unoptimized expected-regret endpoint, the generic
+  `4*gamma*T` budget lemma, tuned rate definitions, Mathlib Real log/sqrt,
+  ordered-field division, `field_simp`, and ring normalization.
+- Proof route: set `eta=gamma/K`; use `gamma<=1/2` to control
+  `1/(1-gamma)`; set `gamma=sqrt(K*log K/T)`; prove the exact square budget and
+  normalize `gamma*T` to `sqrt(K*T*log K)`.
+- Regularity: all prior predictable-EXP3 contracts plus `2<=K`, `0<T`, and
+  `4*K*log K<=T`. No new stochastic-law or integrability assumptions.
+- Retrieval/status: `LOCAL-LEAF-EXP3-PREDICTABLE-EXPECTED-REGRET`,
+  `MLIB-REAL-LOG-SQRT`, order/measure APIs, EXP3 paper/textbook cards, weapon
+  card inspiration only; `leanCompiled`, root imported, full external canary.
+- Failure policy: the theorem covers the explicit large-horizon regime and
+  expected mixed predictable loss. Its realized selected-loss and
+  uniform-horizon clipped-rate consumers now compile; retain the stated regime
+  rather than weakening this theorem.
+
+### EXP3 realized expected-regret handoff
+
+`LOCAL-LEAF-EXP3-REALIZED-EXPECTED-REGRET` is compiled locally in
+`BanditRLProof.Exp3RealizedRegret`.
+
+- Lean statements: `sampledPredictableRealized_finiteHorizon_integral_eq_explored`
+  proves expected generated scalar loss equals expected `p_t`-mixed loss;
+  `sampledPredictable_realizedExpectedRegret_le` and
+  `sampledPredictable_realizedExpectedRegret_le_four_mul_sqrt` expose the
+  unoptimized and tuned realized-regret bounds.
+- Local APIs/imports: `Exp3ExpectedRegret`, generated reward a.e. laws,
+  initial/successor sampled-action conditional laws, generic finite-action
+  conditional integral transport, `Measure.integral_map`, finite-sum Bochner
+  integration, integrability sums, and `integral_sub`.
+- Proof route: identify reward with selected predictable loss a.e.; condition
+  the selected action on environment/prefix history; convert to the finite
+  `p_t` sum; aggregate over `Finset.range`; rewrite the compiled regret bounds.
+- Regularity: finite prior for transport, probability prior for regret,
+  Standard Borel Env/Action, measurable singletons, decidable nonempty finite
+  arms, predictable `[0,1]` losses, original rate/comparator contracts, and the
+  existing large-horizon assumptions for the tuned endpoint. No independence,
+  stationarity, obliviousness, concentration, or new integrability premise.
+- Retrieval/status: predictable/tuned expected-regret, conditional-moment,
+  predictable-adversary, Mathlib measure/kernel/finite-sum, EXP3 paper/textbook
+  cards, weapon inspiration only; `leanCompiled`, root imported, declaration
+  canaries and a full external tuned theorem canary.
+- Failure policy: the realized transport is reusable for legal rates. Its
+  all-horizon clipped-rate consumer now compiles; high-probability and broader
+  adversary routes remain separate.
+
+### EXP3 uniform-horizon realized-regret handoff
+
+`LOCAL-LEAF-EXP3-UNIFORM-HORIZON-REALIZED-REGRET` is compiled locally in
+`BanditRLProof.Exp3UniformRegret`.
+
+- Lean statements: `sampledPredictable_realizedExpectedRegret_le_horizon`
+  gives the trivial `E[R_T] <= T` bound for arbitrary legal rates;
+  `clippedPredictableTrajectoryKernel` packages
+  `gamma=min(1/2,sqrt(K*log K/T))`, `eta=gamma/K`; and
+  `sampledPredictable_clippedRealizedExpectedRegret_le_min` proves
+  `E[R_T] <= min(T,4*sqrt(K*T*log K))` for every natural horizon.
+- Local APIs/imports: `Exp3RealizedRegret`, realized-to-explored finite-horizon
+  expectation transport, explored-loss unit-interval bounds, finite-sum
+  integrability, `integral_mono_ae`, `integral_sub`, `Real.log_pos`, and
+  `Real.sq_sqrt`.
+- Proof route: integrate the pointwise horizon budget; split on
+  `4*K*log K<=T`; rewrite clipped rates to tuned rates in the large branch;
+  prove `T<=4*sqrt(K*T*log K)` in the small branch; combine both bounds with
+  `le_min`.
+- Regularity: probability prior, Standard Borel Env/Action, measurable action
+  singletons, decidable nonempty finite arms with `2<=K`, predictable `[0,1]`
+  losses, and a supported comparator. The theorem includes `T=0` and adds no
+  independence, stationarity, obliviousness, concentration, or supplied
+  integrability premise.
+- Retrieval/status: realized/tuned expected-regret local cards, Mathlib
+  log/sqrt, measure/integral, finite-sum, and order cards, EXP3 paper/textbook
+  cards, weapon inspiration only; `leanCompiled`, root imported, declaration
+  canaries and full external theorem canary.
+- Failure policy: this closes all-horizon expected realized regret for the
+  generated predictable-adversary model only. Do not report it as a
+  high-probability result, stochastic-reward theorem, arbitrary-adversary
+  theorem, or general EXP3-variant completion.
+
+## Conditioning-Measurable State Freeze
+
+- Lean-facing statements:
+  `ConditionalExpectationReward.condExpKernel_map_eq_deterministic_of_measurable`
+  gives trim-a.e. kernel equality with `Kernel.deterministic X hX`, and
+  `condExpKernel_map_eq_dirac_of_measurable` gives the pointwise pushed-forward
+  measure equality with `Measure.dirac (X omega)`.
+- Local APIs/imports: `Mathlib.Probability.Kernel.CompProdEqIff`,
+  `compProd_trim_condExpKernel`, `Measure.compProd_map`,
+  `Measure.compProd_deterministic`, `trim_eq_map`, `Measure.map_map`, and
+  `Kernel.ae_eq_of_compProd_eq`.
+- Proof route: map the diagonal conditional-kernel composition-product through
+  `X`, rewrite the deterministic composition-product as the same diagonal
+  image, then use finite-kernel a.e. uniqueness.
+- Regularity contracts: finite source measure, Standard Borel ambient sample
+  space, `mcond <= mOmega`, countably generated target, and
+  `Measurable[mcond] X`. No countable target, singleton measurability,
+  probability, condDistrib, independence, or integrability premise is needed.
+- Retrieval/status: `MLIB-CONDITIONAL-EXPECTATION`,
+  `MLIB-PROBABILITY-KERNEL`, `Mathlib.Probability.Kernel.CompProdEqIff`, and
+  `LOCAL-LEAF-COND-EXPECT-REWARD-CONDDISTRIB-TO-CONDEXPKERNEL-MAP`;
+  `leanCompiled` with two external `Tests.Basic` canaries.
+- Failure policy / next route: this freezes only visible state. Its generated
+  EXP3 successor-action and bounded centered-loss conditional-MGF consumer now
+  compiles downstream; do not report an Azuma tail or high-probability EXP3
+  theorem before initial-time and strongly adapted process assembly.
+
+## EXP3 Successor Realized-Deviation Conditional MGF
+
+`LOCAL-LEAF-EXP3-REALIZED-DEVIATION-SUCC-COND-MGF` is compiled locally.
+
+- Lean-facing statements: `Exp3.condExpKernel_map_eq_finiteActionMeasure_of_condDistrib_ae_eq`
+  recovers a finite action law without `[Countable Action]`;
+  `sampledPredictableSelectedDeviation_succ_hasCondSubgaussianMGF` proves the
+  selected predictable deviation witness; and
+  `sampledPredictableRealizedDeviation_succ_hasCondSubgaussianMGF` transports it
+  to generated scalar feedback.
+- Local APIs/imports: `Exp3RealizedRegret`, `ConditionalExpectationReward`,
+  `ConcentrationSubGaussian`, successor action `condDistrib`, singleton
+  condExpKernel probabilities, `Measure.ae_mem_finset_iff`, measurable-state
+  Dirac freeze, finite-action integration, bounded-centered Hoeffding, and
+  `condExpKernel_comp_trim`.
+- Proof route: identify all supported singleton action masses; use finite
+  concentration to identify the full action map; freeze `(Env,prefix)`; map the
+  centered action score; prove its exact finite-law mean is zero and raw range
+  is `[0,1]`; transfer selected loss to realized loss a.e.
+- Regularity contracts: finite prior; Standard Borel and nonempty Env/Action;
+  measurable action singletons; decidable nonempty finite arms;
+  `0 <= gamma <= 1`; predictable measurable `[0,1]` loss vectors. No countable
+  action type, independence, stationarity, probability prior, or manually
+  supplied exponential integrability.
+- Retrieval evidence/status: `MLIB-CONDITIONAL-EXPECTATION`,
+  `MLIB-PROBABILITY-KERNEL`, `MLIB-PROBABILITY-SUBGAUSSIAN`, the local
+  measurable-freeze, EXP3 predictable-adversary, and realized-regret cards;
+  `leanCompiled`, root imported, declaration checks and external theorem canary.
+- Failure policy: do not call this an Azuma tail or high-probability regret
+  theorem. The next leaf must align time zero and package a strongly adapted
+  zero-shifted deviation process before finite-horizon aggregation. That
+  downstream aggregation is now compiled in the next leaf.
+
+## EXP3 Finite-Horizon Realized-Deviation Tail
+
+`LOCAL-LEAF-EXP3-REALIZED-DEVIATION-SUM-TAIL` is compiled locally.
+
+- Lean-facing statement: `Exp3.sampledPredictableRealizedDeviation_sum_tail_ennreal`
+  gives the one-sided ENNReal tail for the complete finite-horizon sum of
+  realized loss minus exploration-mixed predictable loss.
+- Local APIs/imports: initial and successor generated-action `condDistrib`, the
+  finite-action condExpKernel map bridge, generated reward a.e. transport,
+  `Preorder.frestrictLe`, `StronglyAdapted`, `HasSubgaussianMGF.fun_zero`, and
+  `Concentration.condSubGaussian_sum_tail_ennreal_of_stronglyAdapted`.
+- Proof route: prove time-zero selected/realized MGFs; shift the filtration and
+  process by one; factor every process coordinate through its finite prefix;
+  dispatch zero/successor MGF cases; apply Azuma at `horizon+1`; normalize the
+  process and proxy sums.
+- Regularity contracts: probability prior; Standard Borel nonempty Env/Action;
+  measurable action singletons; decidable nonempty finite arms; legal gamma;
+  predictable measurable `[0,1]` losses; nonnegative threshold. No countable
+  action type, independence, stationarity, or supplied exponential integrability.
+- Retrieval evidence/status: conditional expectation, probability-kernel and
+  sub-Gaussian Mathlib cards; Auer et al. EXP3 paper card; the compiled
+  successor MGF leaf and local sum-tail wrapper; `leanCompiled`, root imported,
+  and externally instantiated in `Tests.Basic`.
+- Failure policy: this is a realized-minus-mixed concentration theorem, not a
+  complete high-probability regret theorem. Next combine it with the compiled
+  comparator/cross-weight estimator concentration obligations described below.
+
+## EXP3 Realized-Deviation Delta Confidence
+
+`LOCAL-LEAF-EXP3-REALIZED-DEVIATION-DELTA-CONFIDENCE` is compiled locally.
+
+- Lean-facing statements: `sampledPredictableRealizedDeviationConfidenceRadius`
+  defines `sqrt(2 * V_T * log(1/delta))`;
+  `sampledPredictableRealizedDeviation_sum_tail_exp_neg_budget` supplies the
+  arbitrary-budget form; and `sampledPredictableRealizedDeviation_sum_tail_delta`
+  gives the final ENNReal delta event.
+- Local APIs/imports: `Exp3RealizedDeviationTail`, `[0,1]` interval proxy,
+  `Real.sqrt_nonneg`, `Real.sq_sqrt'`, positive-denominator division,
+  `Real.exp_le_exp`, `Real.exp_neg`, `Real.exp_log`, and
+  `ENNReal.ofReal_le_ofReal`.
+- Proof route: prove proxy positivity; establish radius-square domination;
+  specialize the finite-horizon tail; simplify to `exp(-budget)`; instantiate
+  `budget=log(1/delta)`.
+- Regularity contracts: probability prior; Standard Borel nonempty Env/Action;
+  measurable singletons; decidable nonempty arms; predictable measurable
+  `[0,1]` losses; legal gamma; positive horizon and delta. No `delta<=1`,
+  countability, independence, stationarity, or union bound is required.
+- Retrieval/status: `MLIB-REAL-LOG-SQRT`, `MLIB-EXP-LOG-INEQUALITIES`,
+  `MLIB-ORDER-ALGEBRA`, `MLIB-PROBABILITY-SUBGAUSSIAN`,
+  `PPR-AUER-CFS-2002-EXP3`, and the compiled sum-tail leaf; `leanCompiled`,
+  root imported, with a full external canary.
+- Failure policy: do not combine this directly with the estimator-valued Hedge
+  inequality. Full regret needs comparator-estimator and pure-`q` cross-weight
+  concentration, plus random second-moment control or EXP3.P modification.
+
+## EXP3 Comparator-Estimator Delta Confidence
+
+`LOCAL-LEAF-EXP3-COMPARATOR-ESTIMATOR-DELTA-CONFIDENCE` is compiled locally.
+
+- Lean-facing statement: `sampledObservedComparatorEstimatorDeviation_sum_tail_delta`
+  bounds cumulative `observedImportanceWeightedLossAt - predictableLossAt` for
+  one supported comparator by the delta radius using
+  `intervalVarianceProxy 0 (1 / (gamma / |arms|))`.
+- Local APIs/imports: `Exp3RealizedDeviationTail`, finite-action condDistrib and
+  condExpKernel bridges, exact importance-weighted unbiasedness, reciprocal-floor
+  bounds, bounded-centered Hoeffding, observed/predictable a.e. transport,
+  finite-prefix filtration, `StronglyAdapted`, and sqrt/log algebra.
+- Proof route: generic epsilon-floor comparator MGF; generated zero/successor
+  instantiation; observed-score transport; shifted process and proxy sums;
+  arbitrary-epsilon tail; delta specialization.
+- Regularity contracts: probability prior; Standard Borel nonempty Env/Action;
+  measurable singletons; decidable nonempty arms; `0 < gamma <= 1`; predictable
+  measurable `[0,1]` losses; supported comparator; positive horizon/delta. No
+  `delta<=1`, countability, independence, stationarity, union bound, or supplied
+  exponential-integrability witness is required.
+- Retrieval/status: Mathlib order, conditional-expectation, probability-kernel,
+  sub-Gaussian, sqrt/log and exp/log cards; Auer EXP3 paper card; compiled
+  realized sum-tail leaf; `WEAPON-EXP3-POTENTIAL` is inspiration only;
+  `leanCompiled`, root imported, and externally instantiated in `Tests.Basic`.
+- Failure policy: comparator concentration is closed; pure-`q` cross-weight
+  concentration now compiles downstream. Random second-moment control (or
+  EXP3.P) remains before any complete high-probability regret claim.
+
+## EXP3 Pure Cross-Weight Delta Confidence
+
+`LOCAL-LEAF-EXP3-PURE-CROSS-WEIGHT-DELTA-CONFIDENCE` is compiled locally.
+
+- Lean-facing statement: `sampledPurePredictableMinusObserved_sum_tail_delta`
+  bounds cumulative `sampledTrajectoryPurePredictableLossAt -
+  sampledTrajectoryPureObservedLossAt` by the delta radius using
+  `intervalVarianceProxy 0 (1 / (gamma / |arms|))`.
+- Local APIs/imports: `Exp3ComparatorConfidence`, weighted importance losses,
+  exact cross-weight cancellation, pure-q measurable sources, generated action
+  condDistrib and condExpKernel bridges, observed/predictable a.e. transport,
+  finite-prefix filtration, `StronglyAdapted`, and sqrt/log algebra.
+- Proof route: generic `p`-sampled/`q`-weighted conditional MGF; generated
+  zero/successor instantiation; observed-score transport; MGF negation for the
+  regret-required sign; shifted finite-sum process; arbitrary-epsilon tail;
+  delta specialization.
+- Regularity contracts: probability prior; Standard Borel nonempty Env/Action;
+  measurable singletons; decidable nonempty arms; `0 < gamma <= 1`; predictable
+  measurable `[0,1]` losses; positive horizon/delta. No comparator, eta
+  positivity, `delta<=1`, countability, independence, stationarity, union bound,
+  or supplied exponential-integrability witness is required.
+- Retrieval/status: Mathlib order, conditional-expectation, probability-kernel,
+  sub-Gaussian, sqrt/log and exp/log cards; Auer EXP3 paper card; compiled
+  comparator-confidence leaf; `WEAPON-EXP3-POTENTIAL` is inspiration only;
+  `leanCompiled`, root imported, and externally instantiated in `Tests.Basic`.
+- Failure policy: pure-q cross-weight concentration is closed and its generated
+  predictable high-probability consumer compiles downstream. Realized and
+  ideal-rate routes remain separate.
+
+## EXP3 Predictable High-Probability Regret
+
+`LOCAL-LEAF-EXP3-PREDICTABLE-HIGH-PROBABILITY-REGRET` is compiled locally.
+
+- Lean-facing statement:
+  `sampledPredictable_highProbabilityRegret_tail_total_delta` bounds generated
+  exploration-mixed predictable cumulative loss minus one supported
+  comparator's true predictable cumulative loss by
+  `sampledPredictableHighProbabilityRegretBudget` evaluated at `delta / 2`,
+  with total failure probability `ENNReal.ofReal delta`. The raw two-event
+  wrapper remains available as `sampledPredictable_highProbabilityRegret_tail_delta`.
+- Local APIs/imports: `Exp3PureConfidence`, exact selected mixed-square formula,
+  trajectory loss regularity and reward a.e. laws, reciprocal exploration floor,
+  sampled Hedge/exploration bridge, both confidence tails, `measure_mono_ae`, and
+  `measure_union_le`, `ENNReal.ofReal_add`, and `add_halves`.
+- Proof route: derive reward `[0,1]` a.e.; prove each random square is at most
+  `1/(gamma/|arms|)` and sum over the horizon; outside the two confidence bad
+  events add exploration bias, Hedge, the weighted square bound, and both
+  estimator deviations; conclude by a.e. event inclusion and union bound, then
+  split the requested total `delta` equally between the two events.
+- Regularity contracts: probability prior; Standard Borel nonempty Env/Action;
+  measurable singletons; decidable nonempty arms; `eta>0`; `0<gamma<1`;
+  predictable measurable `[0,1]` losses; supported comparator; positive
+  horizon/delta. No `delta<=1`, countability, independence, stationarity,
+  supplied integrability, or separate square concentration is required.
+- Retrieval/status: pure-cross and comparator-confidence leaves,
+  exploration-bias and predictable-Hedge leaves, Mathlib order/finite-sum/
+  sub-Gaussian APIs, Auer EXP3 paper card, inspiration-only
+  `WEAPON-EXP3-POTENTIAL`; `leanCompiled`, root imported, and externally
+  instantiated in `Tests.Basic`.
+- Failure policy: generated predictable high-probability pseudo-regret is
+  closed and consumed by the realized theorem below. The range-based Hoeffding
+  radii may still be too loose for the ideal EXP3 rate.
+
+## EXP3 Realized High-Probability Regret
+
+`LOCAL-LEAF-EXP3-REALIZED-HIGH-PROBABILITY-REGRET` is compiled locally.
+
+- Lean-facing statement:
+  `sampledPredictable_realizedHighProbabilityRegret_tail_total_delta` bounds
+  cumulative scalar generated trajectory loss minus one supported comparator's
+  true predictable cumulative loss by
+  `sampledPredictableRealizedHighProbabilityRegretBudget` evaluated at
+  `delta / 3`, with total failure probability `ENNReal.ofReal delta`. The raw
+  three-event wrapper is also exposed.
+- Local APIs/imports: `Exp3HighProbabilityRegret`, `Exp3RealizedConfidence`,
+  the predictable-regret and realized-deviation delta tails,
+  `sampledTrajectoryRealizedDeviationAt`, `Finset.sum_sub_distrib`, `ring`,
+  `measure_mono`, `measure_union_le`, and `ENNReal.ofReal_add`.
+- Proof route: prove pathwise that realized regret is predictable regret plus
+  cumulative realized deviation; outside both compiled bad events, add the two
+  strict good-event inequalities; use event inclusion and a union bound; split
+  total `delta` equally across pure-q, comparator-estimator, and realized
+  deviation.
+- Regularity contracts: probability prior; Standard Borel nonempty Env/Action;
+  measurable singletons; decidable nonempty arms; `eta>0`; `0<gamma<1`;
+  predictable measurable `[0,1]` losses; supported comparator; positive
+  horizon/delta. No `delta<=1`, countability, independence, stationarity,
+  supplied integrability, or extra law transport is required.
+- Retrieval/status: predictable high-probability and realized-deviation
+  confidence leaves, Mathlib order/finite-sum/sub-Gaussian APIs, Auer EXP3
+  paper card, inspiration-only `WEAPON-EXP3-POTENTIAL`; `leanCompiled`, root
+  imported, and externally instantiated in `Tests.Basic`.
+- Failure policy: generated realized selected-loss high-probability regret is
+  closed for the current range-Hoeffding budget. Do not report an ideal rate or
+  tuned high-probability theorem without variance-sensitive/Freedman control or
+  an EXP3.P estimator route.
+
+`LOCAL-LEAF-CONCENTRATION-FIXED-TILT-CONDITIONAL-MGF-SUM-TAIL` is compiled
+locally.
+
+- Lean-facing statement: `measure_sum_ge_le_of_hasCondMGFUpperBoundAt` bounds a
+  strongly adapted finite-sum upper tail by
+  `exp (-tilt * eps + sum_i psi_i)` from time-zero and successor conditional
+  fixed-tilt MGF budgets with `0 <= tilt`.
+- Local APIs/imports: `Mathlib.Probability.Moments.SubGaussian`, `mgf`,
+  `condExpKernel`, kernel/measure `compProd`, `prodMkLeft`, `MemLp`, `trim`,
+  `Filtration`, `StronglyAdapted`, finite range sums, and
+  `measure_ge_le_exp_mul_mgf`.
+- Proof route: establish one-tilt kernel addition; specialize it to conditional
+  expectation through the diagonal map; induct over the adapted process; apply
+  the exponential Markov inequality.
+- Regularity contracts: Standard Borel sample space, probability measure for
+  the sum theorem, strong adaptedness, all-tilt exponential integrability in
+  each witness, fixed-tilt initial/successor MGF budgets, and nonnegative tilt.
+  No independence, bounded increment, mean-zero, or variance-process contract
+  is hidden in this generic layer.
+- Retrieval/status: Mathlib MGF, conditional expectation, kernel, martingale,
+  and sub-Gaussian composition APIs; local Mathlib search found no
+  Freedman/Bernstein primitive; `leanCompiled`, root imported, and externally
+  instantiated in `Tests.Basic`.
+- Failure policy: do not call this generic theorem Bernstein or Freedman by
+  itself. Its fixed-comparator generated EXP3 consumer is compiled in the
+  adjacent variance-sensitive leaf below.
+
+`LOCAL-LEAF-EXP3-COMPARATOR-BERNSTEIN-FIXED-TILT` is compiled locally.
+
+- Lean-facing statement:
+  `sampledObservedComparatorEstimatorDeviation_sum_tail_fixedTilt` bounds the
+  generated finite-horizon fixed-comparator deviation by
+  `exp (-tilt * threshold + horizon * tilt^2 / (gamma / |arms|))` for
+  `0 <= tilt <= gamma / |arms|`.
+- Local APIs/imports: `ConcentrationFixedMGF`, `Exp3ComparatorConfidence`,
+  `Real.abs_exp_sub_one_sub_id_le`, finite-action measures and sums,
+  `importanceWeightedLoss`, conditional-kernel map transport, generated
+  initial/successor action laws, observed/predictable a.e. equality, and the
+  existing strongly adapted comparator process.
+- Proof route: prove the exact centered second moment and its reciprocal-floor
+  bound; use the quadratic exponential remainder at the selected tilt;
+  transport the finite law through `condExpKernel`; instantiate zero and
+  successor rounds; transfer to observed feedback; sum the fixed-tilt budgets.
+- Regularity contracts: probability prior, Standard Borel nonempty Env/Action,
+  measurable action singletons, decidable finite nonempty arms,
+  `0 < gamma <= 1`, predictable measurable `[0,1]` losses, supported
+  comparator, arbitrary finite horizon/threshold, and
+  `0 <= tilt <= gamma / |arms|`. No independence, stationarity, countable
+  Action, supplied integrability, or delta restriction is required.
+- Retrieval/status: Mathlib MGF/variance/kernel/conditional-expectation APIs,
+  `Real.abs_exp_sub_one_sub_id_le`, the Auer EXP3 card, and inspiration-only
+  tail/EXP3 weapons; `leanCompiled`, root imported, and externally instantiated
+  in `Tests.Basic`.
+- Failure policy: the arbitrary-tilt fixed-comparator tail is closed and has
+  linear reciprocal-floor dependence. Its optimized delta consumer is compiled
+  below, and the pure-cross analogue is compiled after it; comparator union
+  and improved complete EXP3 high-probability regret remain separate.
+
+`LOCAL-LEAF-EXP3-COMPARATOR-BERNSTEIN-DELTA-CONFIDENCE` is compiled locally.
+
+- Lean-facing statement:
+  `sampledObservedComparatorEstimatorDeviation_sum_tail_bernstein_delta`
+  bounds the generated fixed-comparator deviation at radius
+  `2*sqrt(T*budget/epsilon)+budget/epsilon` by `ENNReal.ofReal delta`, where
+  `epsilon=gamma/|arms|` and `budget=max(log(1/delta),0)`.
+- Local APIs/imports: the fixed-tilt comparator tail,
+  `exists_tilt_fixedMGF_exponent_le_neg`, `Real.sqrt/log/exp`, `max`,
+  `ENNReal.le_ofReal_iff_toReal_le`, `measure_ne_top`, and
+  `explorationFloor_pos`.
+- Proof route: split at `budget<=epsilon*T`; use the square-root tilt in the
+  quadratic region and `tilt=epsilon` otherwise; prove exponent `<=-budget`;
+  specialize the generated tail; convert `Measure.real` to ENNReal; compare
+  `exp(-max(log(1/delta),0))` with `delta`.
+- Regularity contracts: probability prior, Standard Borel nonempty Env/Action,
+  measurable action singletons, decidable nonempty finite arms,
+  `0<gamma<=1`, predictable measurable `[0,1]` losses, supported comparator,
+  arbitrary finite horizon, and `delta>0`. No positive-horizon, `delta<=1`,
+  independence, stationarity, countability, or supplied-integrability premise.
+- Retrieval/status: prior fixed-tilt leaf, Mathlib log/sqrt/exponential and
+  ENNReal order APIs, Auer EXP3 card, inspiration-only tail weapon;
+  `leanCompiled`, root imported, and externally instantiated in `Tests.Basic`.
+- Failure policy: one-comparator variance-sensitive delta confidence is closed,
+  with the separate pure-cross analogue compiled below. Do not claim
+  simultaneous comparator confidence, a general Freedman theorem, or complete
+  improved EXP3 regret.
+
+`LOCAL-LEAF-EXP3-PURE-CROSS-BERNSTEIN-DELTA-CONFIDENCE` is compiled locally.
+
+- Lean-facing statement:
+  `sampledPurePredictableMinusObserved_sum_tail_bernstein_delta` bounds the
+  generated cumulative pure predictable loss minus observed cross-weighted
+  loss at radius `2*sqrt(T*budget/epsilon)+budget/epsilon` by
+  `ENNReal.ofReal delta`, where `epsilon=gamma/|arms|` and
+  `budget=max(log(1/delta),0)`.
+- Local APIs/imports: `Exp3ComparatorBernstein`, `Exp3PureConfidence`, finite
+  p/q distributions, `weightedImportanceWeightedLoss`, finite-action measure
+  integrals, condExpKernel map transport, observed/predictable a.e. equality,
+  the existing pure-minus-observed process, and fixed-tilt sum tail.
+- Proof route: reduce the raw score to `q(chosen)*loss(chosen)/p(chosen)`;
+  prove centered second moment at most `1/epsilon`; prove the fixed positive
+  tilt MGF directly for mean-minus-raw; transport and instantiate generated
+  rounds; rewrite to observed feedback; sum; optimize the legal tilt.
+- Regularity contracts: probability prior, Standard Borel nonempty Env/Action,
+  measurable action singletons, decidable nonempty finite arms,
+  `0<gamma<=1`, predictable measurable `[0,1]` losses, arbitrary finite
+  horizon, and `delta>0`. No comparator, eta positivity, positive horizon,
+  `delta<=1`, independence, stationarity, countability, or supplied
+  integrability premise.
+- Retrieval/status: old pure-cross Hoeffding leaf, comparator Bernstein delta
+  leaf, fixed-tilt conditional-MGF sum leaf, Mathlib MGF/variance/kernel and
+  log/sqrt APIs, Auer EXP3 card, inspiration-only tail weapon;
+  `leanCompiled`, root imported, and externally instantiated in `Tests.Basic`.
+- Failure policy: pure-cross variance-sensitive delta confidence is closed.
+  Its predictable two-event consumer compiles below. Do not claim a general
+  Freedman theorem, simultaneous comparator confidence, random Hedge-square
+  concentration, or a realized/tuned ideal-rate theorem.
+
+`LOCAL-LEAF-EXP3-PREDICTABLE-BERNSTEIN-HIGH-PROBABILITY-REGRET` is compiled
+locally.
+
+- Lean-facing statement:
+  `sampledPredictable_bernsteinHighProbabilityRegret_tail_total_delta` bounds
+  generated exploration-mixed predictable regret above the supported
+  comparator by `sampledPredictableBernsteinHighProbabilityRegretBudget` at
+  `delta/2`, with failure at most `ENNReal.ofReal delta`; the raw endpoint
+  exposes both equal-delta failures.
+- Local APIs/imports: `Exp3HighProbabilityRegret`, `Exp3PureBernstein`, both
+  Bernstein delta tails, sampled Hedge/exploration and observed mixed-square
+  a.e. bounds, `measure_mono_ae`, `measure_union_le`,
+  `ENNReal.ofReal_add`, and `add_halves`.
+- Proof route: define the pure-cross and comparator bad events; outside their
+  union combine the two strict confidence complements with sampled Hedge,
+  exploration bias, and the pathwise `T/epsilon` square bound; prove a.e. event
+  inclusion; union bound; allocate `delta/2` per event.
+- Regularity contracts: probability prior, Standard Borel nonempty Env/Action,
+  measurable action singletons, decidable nonempty finite arms, `eta>0`,
+  `0<gamma<1`, predictable measurable `[0,1]` losses, supported comparator,
+  arbitrary finite horizon, and `delta>0`. No positive-horizon, `delta<=1`,
+  independence, stationarity, countability, supplied-integrability, or
+  separate square-concentration premise.
+- Retrieval/status: both Bernstein confidence leaves, the earlier predictable
+  regret/Hedge/exploration leaves, Mathlib order/finite-sum/MGF APIs, Auer EXP3
+  card, and inspiration-only EXP3 potential weapon; `leanCompiled`, root
+  imported, and externally instantiated in `Tests.Basic`.
+- Failure policy: the predictable Bernstein-radius assembly is closed, but it
+  retains the deterministic `T/epsilon` estimator-square term. Its realized
+  selected-loss consumer compiles below; do not claim a general Freedman
+  theorem or ideal tuned EXP3/EXP3.P rate.
+
+`LOCAL-LEAF-EXP3-RANDOM-SQUARE-BERNSTEIN-HIGH-PROBABILITY-REGRET` is compiled
+locally.
+
+- Lean-facing statement: `sampledPredictableObservedMixedSquared_sum_tail_markov`
+  proves failure `deltaSquare` above the random-square threshold
+  `|arms|*T/deltaSquare`; the primary
+  `sampledPredictable_randomSquareBernsteinHighProbabilityRegret_tail_total_delta`
+  allocates `delta/3` to that event and both Bernstein confidence events.
+- Local APIs/imports: `Exp3BernsteinHighProbabilityRegret`,
+  `Exp3PredictableIntegration`, the finite-horizon second-moment integral upper
+  bound, `integrable_observedAt`, observed-square measurability, Mathlib
+  `Integrable.measure_le_integral`, `integral_const_mul`, `measure_mono_ae`,
+  `measure_union_le`, and `ENNReal.ofReal_add`.
+- Proof route: prove each mixed square and its finite sum nonnegative; aggregate
+  measurability/integrability; scale by `deltaSquare/(|arms|*T)`; apply Markov;
+  define square, pure-cross, and comparator bad events; outside their union use
+  sampled Hedge, exploration bias, and all three strict complements; union
+  bound and allocate thirds.
+- Regularity contracts: probability prior; Standard Borel nonempty Env/Action;
+  measurable action singletons; decidable nonempty arms; `eta>0`;
+  `0<gamma<1`; predictable measurable `[0,1]` losses; supported comparator;
+  `T>0`; positive square/confidence allocations. No `delta<=1`, independence,
+  stationarity, countability, supplied integrability, or new law transport.
+- Retrieval/status: predictable Bernstein, expected-regret and finite-horizon
+  moment leaves; Mathlib measure-integral, finite-sum and order APIs; Auer EXP3
+  card; inspiration-only EXP3 potential; `leanCompiled`, root imported, with a
+  full external total-delta canary in `Tests.Basic`.
+- Failure policy: the square term no longer has reciprocal `gamma`, but Markov
+  costs `1/delta`, and both confidence radii retain exploration-floor
+  dependence. The generated realized consumer compiles below; the ideal
+  logarithmic-confidence `sqrt(K*T)` theorem remains open.
+
+`LOCAL-LEAF-EXP3-RANDOM-SQUARE-BERNSTEIN-REALIZED-HIGH-PROBABILITY-REGRET` is
+compiled locally.
+
+- Lean-facing statement:
+  `sampledPredictable_randomSquareBernsteinRealizedHighProbabilityRegret_tail_total_delta`
+  bounds cumulative generated scalar loss minus one supported comparator's
+  true predictable cumulative loss by the random-square predictable budget
+  plus the realized-deviation radius, all four events at `delta/4`.
+- Local APIs/imports: `Exp3RandomSquareHighProbabilityRegret`,
+  `Exp3RealizedConfidence`, the raw random-square predictable tail,
+  realized-deviation delta tail, `sampledTrajectoryRealizedDeviationAt`,
+  `Finset.sum_sub_distrib`, `ring`, `linarith`, `measure_mono`,
+  `measure_union_le`, and `ENNReal.ofReal_add`.
+- Proof route: prove the exact pathwise decomposition into exploration-mixed
+  predictable regret plus realized deviation; contain the target event in the
+  union of the compiled three-event predictable bad set and realized bad set;
+  apply both tails and normalize four equal failure allocations.
+- Regularity contracts: probability prior; Standard Borel nonempty Env/Action;
+  measurable action singletons; decidable nonempty finite arms; `eta>0`;
+  `0<gamma<1`; predictable measurable `[0,1]` losses; supported comparator;
+  positive horizon and square/confidence/realized allocations. No `delta<=1`,
+  independence, stationarity, countability, supplied integrability, or new law
+  transport.
+- Retrieval/status: random-square predictable regret, realized-deviation delta,
+  and prior realized Bernstein assembly leaves; Mathlib order, finite-sum and
+  sub-Gaussian APIs; Auer EXP3 card; inspiration-only EXP3 potential;
+  `leanCompiled`, root imported, and externally instantiated in `Tests.Basic`.
+- Failure policy: the generated realized consumer is closed without restoring
+  reciprocal `gamma` in the Hedge-square term. Markov still costs `1/delta`,
+  the two Bernstein radii retain exploration-floor dependence, and the realized
+  radius remains Hoeffding/Azuma. Do not claim general Freedman or an ideal
+  logarithmic-confidence `sqrt(K*T)` EXP3.P rate. Its learning-rate tuning
+  compiles below.
+
+`LOCAL-LEAF-EXP3-RANDOM-SQUARE-BERNSTEIN-REALIZED-TUNING` is compiled locally.
+
+- Lean-facing statement: `randomSquareHighProbabilityLearningRate` defines
+  `sqrt(log K*(delta/4)/(T*K))`;
+  `sampledPredictableRandomSquareBernsteinRealizedHighProbabilityRegretBudget_le_tunedThreshold`
+  bounds the complete four-event budget; and
+  `sampledPredictable_tunedRandomSquareBernsteinRealizedRegret_tail` gives the
+  matching generated selected-loss tail.
+- Local APIs/imports: `Exp3RandomSquareBernsteinRealizedHighProbabilityRegret`,
+  reusable scalar lemmas from `Exp3BernsteinTuning`, `Real.sqrt`/`Real.log`,
+  `field_simp`, `linear_combination`, `ring`, `linarith`, `measure_mono`, and
+  the compiled random-square realized total-delta theorem.
+- Proof route: specialize the balance parameter to `delta/4`; prove eta
+  positivity and exact square balance; identify entropy with the unamplified
+  Markov-square term; use `1/(1-gamma)<=2`; rewrite the balanced term as
+  `sqrt(4*K*T*log K/delta)`; bound the complete budget and tighten its event.
+- Regularity contracts: probability prior; Standard Borel nonempty Env/Action;
+  measurable action singletons; decidable finite arms with `K>=2`; predictable
+  measurable `[0,1]` losses; supported comparator; `T>0`;
+  `0<gamma<=1/2`; `delta>0`. No `delta<=1`, cubic/quadratic dominance,
+  independence, stationarity, countability, supplied integrability, or new law
+  transport.
+- Retrieval/status: random-square realized route, reusable old Bernstein scalar
+  tuning lemmas, Mathlib real log/sqrt, order and finite-sum APIs, Auer EXP3
+  card, inspiration-only EXP3 potential; `leanCompiled`, root imported, with a
+  full external theorem canary in `Tests.Basic`.
+- Failure policy: eta optimization is closed and exposes the honest
+  `sqrt(K*T*log K/delta)` Markov contribution. The explicit large-horizon
+  gamma schedule compiles below; retain this theorem when weaker contracts are
+  needed. Do not claim general Freedman or ideal EXP3.P.
+
+`LOCAL-LEAF-EXP3-RANDOM-SQUARE-BERNSTEIN-REALIZED-EXPLICIT-TUNING` is compiled
+locally.
+
+- Lean-facing statement: `randomSquareBernsteinRealizedExplicitThreshold` is
+  `3*sqrt(4*K*T*log K/delta)+8*gamma*T`;
+  `randomSquareBernsteinClippedExplorationRate` is the minimum of `1/2` and the
+  maximum of the confidence cube-root and realized square-root scales; and
+  `sampledPredictable_explicitRandomSquareBernsteinRealizedRegret_tail` is the
+  generated selected-loss endpoint.
+- Local APIs/imports: `Exp3RandomSquareBernsteinRealizedTuning`, reusable
+  generic root lemmas from `Exp3BernsteinExplicitTuning`,
+  `bernsteinConfidenceRadius_le_three_mul_gamma_mul_horizon`,
+  `realizedDeviationRadius_le_mul_gamma_mul_horizon`, `Real.rpow`,
+  `Real.sqrt`, max/min order, `field_simp`, `ring`, `nlinarith`, and
+  `measure_mono`.
+- Proof route: rewrite `log(1/(delta/4))` as `log(4/delta)`; use cubic and
+  quadratic dominance to bound the three radii; tighten the tuned event; show
+  both raw schedule components are at most `1/2` under factor-eight horizon
+  contracts; derive gamma positivity/stability and invoke the characterized
+  tail.
+- Regularity contracts: probability prior; Standard Borel nonempty
+  Env/Action; measurable singletons; decidable arms with `K>=2`; predictable
+  `[0,1]` losses; supported comparator; `T>0`; `0<delta<=1`;
+  `8*K*log(4/delta)<=T`; `8*v*log(4/delta)<=T`. No caller-supplied gamma,
+  independence, stationarity, countability, supplied integrability, or new law
+  transport.
+- Retrieval/status: random-square realized tuning, generic explicit Bernstein
+  root lemmas, Mathlib real log/sqrt/rpow and order APIs, finite sums, Auer EXP3
+  card, inspiration-only potential weapon; `leanCompiled`, root imported, with
+  a full external theorem canary in `Tests.Basic`.
+- Failure policy: explicit large-horizon gamma tuning is closed and consumed
+  by the all-horizon route below. The Markov contribution still has
+  `1/sqrt(delta)` and realized deviation remains Hoeffding/Azuma.
+
+`LOCAL-LEAF-EXP3-RANDOM-SQUARE-BERNSTEIN-REALIZED-ALL-HORIZON` is compiled
+locally.
+
+- Lean-facing statement: `randomSquareBernsteinLargeHorizonCondition` records
+  the confidence and realized factor-eight contracts;
+  `randomSquareBernsteinAllHorizonRegretThreshold` chooses the explicit
+  threshold or `T+1`; and
+  `sampledPredictable_allHorizonRandomSquareBernsteinRealizedRegret_tail`
+  proves the generated selected-loss tail for every positive horizon.
+- Local APIs/imports: `Exp3RandomSquareBernsteinRealizedExplicitTuning`,
+  `Exp3BernsteinAllHorizon`, the explicit random-square tail,
+  `sampledPredictable_trivialRealizedRegret_tail`, classical `if`/`by_cases`,
+  clipped-schedule positivity/stability, and the compiled finite-sum, a.e., and
+  measure-zero APIs behind the fallback.
+- Proof route: branch on the exact two-contract condition; invoke the refined
+  theorem in the positive branch; instantiate the strict `T+1` zero-probability
+  theorem with the same eta and gamma in the negative branch.
+- Regularity contracts: probability prior; Standard Borel nonempty
+  Env/Action; measurable singletons; decidable arms with `K>=2`; predictable
+  `[0,1]` losses; supported comparator; `T>0`; `0<delta<=1`. No caller regime
+  proof, independence, stationarity, countability, supplied integrability, or
+  new law transport.
+- Retrieval/status: explicit random-square tuning, generic all-horizon
+  pathwise fallback, Mathlib measure/integral, finite-sum and order APIs, Auer
+  EXP3 card, inspiration-only potential weapon; `leanCompiled`, root imported,
+  with a full external theorem canary in `Tests.Basic`.
+- Failure policy: every positive horizon is covered, but outside the explicit
+  regime the threshold is deliberately the coarse `T+1`. Do not claim a sharp
+  active-clipping rate, general Freedman theorem, or ideal EXP3.P.
+
+`LOCAL-LEAF-EXP3-REALIZED-BERNSTEIN-HIGH-PROBABILITY-REGRET` is compiled
+locally.
+
+- Lean-facing statement:
+  `sampledPredictable_bernsteinRealizedHighProbabilityRegret_tail_total_delta`
+  bounds cumulative generated scalar loss minus the true predictable loss of
+  one supported comparator by
+  `sampledPredictableBernsteinRealizedHighProbabilityRegretBudget` at
+  `delta/3`, with failure at most `ENNReal.ofReal delta`; the raw endpoint
+  exposes all three equal-delta failures.
+- Local APIs/imports: `Exp3BernsteinHighProbabilityRegret`,
+  `Exp3RealizedConfidence`, the predictable Bernstein and realized-deviation
+  delta tails, `sampledTrajectoryRealizedDeviationAt`,
+  `Finset.sum_sub_distrib`, `ring`, `linarith`, `measure_mono`,
+  `measure_union_le`, `ENNReal.ofReal_add`, and real division algebra.
+- Proof route: prove pathwise realized regret equals exploration-mixed
+  predictable regret plus cumulative realized deviation; outside the two
+  compiled bad events add their strict complements; use set inclusion and a
+  union bound; allocate `delta/3` to the two Bernstein confidence events and
+  the bounded realized-deviation event.
+- Regularity contracts: probability prior, Standard Borel nonempty Env/Action,
+  measurable action singletons, decidable nonempty finite arms, `eta>0`,
+  `0<gamma<1`, predictable measurable `[0,1]` losses, supported comparator,
+  positive horizon, and `delta>0`. No `delta<=1`, independence, stationarity,
+  countability, supplied integrability, extra law transport, or separate
+  estimator-square concentration.
+- Retrieval/status: predictable Bernstein regret, realized-deviation delta,
+  and prior realized assembly leaves; Mathlib order/finite-sum/sub-Gaussian
+  APIs; Auer EXP3 card; inspiration-only EXP3 potential weapon;
+  `leanCompiled`, root imported, and externally instantiated in `Tests.Basic`.
+- Failure policy: selected-loss event assembly is closed for the Bernstein
+  predictable route, but the realized radius remains bounded-loss
+  Hoeffding/Azuma and the deterministic `T/epsilon` square term remains. Do not
+  claim general Freedman, a fully Bernstein variance process, or an ideal tuned
+  EXP3/EXP3.P rate.
+
+### EXP3 Bernstein tuned high-probability regret
+
+`LOCAL-LEAF-EXP3-BERNSTEIN-TUNED-HIGH-PROBABILITY-REGRET` is compiled
+locally.
+
+- Lean-facing statement: `bernsteinHighProbabilityLearningRate` defines
+  `sqrt(log K * gamma/(T*K))`;
+  `sampledPredictableBernsteinRealizedHighProbabilityRegretBudget_le_eleven_mul`
+  bounds the complete `delta/3` budget by `11*gamma*T`; and
+  `sampledPredictable_tunedBernsteinRealizedHighProbabilityRegret_tail` gives
+  the matching `ENNReal.ofReal delta` generated selected-loss tail.
+- Local APIs/imports: `Exp3BernsteinRealizedHighProbabilityRegret`, its budget
+  and total-delta tail, `Real.sqrt`/`Real.log`, `field_simp`, `nlinarith`,
+  `intervalVarianceProxy_zero_one_pos`, and `measure_mono`.
+- Proof route: prove learning-rate positivity and the square balance identity;
+  derive `eta<=gamma^2/K` from the arm-log cubic contract; bound entropy plus
+  the stability-amplified square term by `3 gamma T`; bound each Bernstein
+  radius by `3 gamma T` and realized deviation by `gamma T`; add exploration
+  and transport the deterministic threshold through the existing tail event.
+- Regularity contracts: probability prior; Standard Borel nonempty Env/Action;
+  measurable singletons; decidable arms with `2<=K`; predictable measurable
+  `[0,1]` losses; supported comparator; `T>0`; `0<gamma<=1/2`;
+  `0<delta<=1`; two displayed cubic dominance inequalities and one realized
+  quadratic dominance inequality. No independence, stationarity,
+  countability, supplied integrability, or new MGF premise.
+- Retrieval/status: realized and predictable Bernstein assemblies,
+  realized-deviation confidence, Mathlib real log/sqrt, order algebra,
+  finite sums and MGF cards, Auer EXP3 card, inspiration-only EXP3 potential;
+  `leanCompiled`, root imported, with focused builds and an external theorem
+  canary in `Tests.Basic`.
+- Failure policy: the characterized `T^(2/3)`-type implication is closed and
+  consumed by the explicit schedule leaf below. Its short-horizon consumer now
+  compiles; do not claim ideal `sqrt(K*T)` coverage without stronger
+  estimator-square/variance control.
+
+### EXP3 explicit Bernstein high-probability schedule
+
+`LOCAL-LEAF-EXP3-EXPLICIT-BERNSTEIN-HIGH-PROBABILITY-REGRET` is compiled
+locally.
+
+- Lean-facing statement: `bernsteinRawExplorationRate` is the maximum of the
+  arm-entropy cube root, confidence cube root, and realized square root;
+  `bernsteinClippedExplorationRate` clips it at one half;
+  `bernsteinClippedExplorationRate_contracts` synthesizes all tuned premises;
+  and `sampledPredictable_explicitBernsteinRealizedHighProbabilityRegret_tail`
+  proves the generated selected-loss `11*gamma*T` tail.
+- Local APIs/imports: `Exp3BernsteinTuning`, `Real.rpow_inv_natCast_pow`,
+  `Real.rpow_nonneg`, `Real.sqrt_le_iff`, `Real.sq_sqrt`, max/min order,
+  `pow_le_pow_left₀`, `field_simp`, `ring`, and `nlinarith`.
+- Proof route: prove generic cube-root/square-root half bounds and dominance
+  implications; bound all raw maximum components from three factor-eight
+  horizon inequalities; identify clipped and raw schedules; bundle positivity,
+  stability, two cubic contracts, and one quadratic contract; instantiate the
+  characterized tuned tail.
+- Regularity contracts: probability prior; Standard Borel nonempty Env/Action;
+  measurable action singletons; decidable arms with `K>=2`; predictable
+  measurable `[0,1]` losses; supported comparator; `T>0`; `0<delta<=1`; and
+  the three displayed large-horizon inequalities. No supplied dominance,
+  independence, stationarity, countability, or integrability premise.
+- Retrieval/status: tuned and realized Bernstein leaves, Mathlib real
+  log/sqrt/rpow and order algebra, finite sums, Auer EXP3 card, and
+  inspiration-only EXP3 potential; `leanCompiled`, root imported, with a full
+  external theorem canary in `Tests.Basic`.
+- Failure policy: large-horizon explicit tuning is closed and consumed by the
+  all-horizon leaf below. Ideal `sqrt(K*T)` remains outside this
+  deterministic-square route.
+
+### EXP3 all-horizon Bernstein realized regret
+
+`LOCAL-LEAF-EXP3-ALL-HORIZON-BERNSTEIN-REALIZED-REGRET` is compiled locally.
+
+- Lean-facing statement: `sampledPredictable_realizedRegret_le_horizon_ae`
+  proves generated realized regret against any comparator is at most `T`
+  almost surely; `sampledPredictable_trivialRealizedRegret_tail` gives the
+  zero-probability `T+1` tail; and
+  `sampledPredictable_allHorizonBernsteinRealizedRegret_tail` branches between
+  that fallback and the explicit `11*gamma*T` Bernstein endpoint.
+- Local APIs/imports: `Exp3BernsteinExplicitTuning`,
+  `sampledTrajectoryRealizedLossAt_ae_eq_selectedPredictable`, the selected
+  predictable `[0,1]` contract, `ae_all_iff`, `Finset.sum_le_sum`,
+  `Finset.sum_nonneg`, `measure_eq_zero_iff_ae_notMem`, and `filter_upwards`.
+- Proof route: transport each realized coordinate to selected predictable loss
+  a.e.; aggregate the upper bound one through the finite horizon; subtract the
+  pointwise nonnegative comparator sum; turn `regret<=T` a.e. into a zero
+  measure strict `T+1` event; branch on `bernsteinLargeHorizonCondition`.
+- Regularity contracts: probability prior; Standard Borel nonempty Env/Action;
+  measurable action singletons; decidable arms with `K>=2`; predictable
+  measurable `[0,1]` losses; supported comparator; `T>0`; `0<delta<=1`. No
+  caller-supplied large-horizon inequalities, independence, stationarity,
+  countability, or integrability premise.
+- Retrieval/status: explicit and realized EXP3 leaves, Mathlib `ae_all_iff`,
+  finite-sum/order/zero-measure APIs, Auer EXP3 card, inspiration-only EXP3
+  potential; `leanCompiled`, root imported, with a full external theorem canary
+  in `Tests.Basic`.
+- Failure policy: the active-clipping branch is closed with an honest coarse
+  fallback. Do not report this as ideal `sqrt(K*T)` high-probability regret;
+  random estimator-square/variance-process or EXP3.P machinery remains open.
+
+## EXP3 mixed-square exponential confidence
+
+- Lean statement:
+  `Exp3.sampledPredictableObservedMixedSquared_sum_tail_delta` bounds the
+  generated observed square sum above
+  `K*T + sqrt(2*T*intervalVarianceProxy(0,K/gamma)*log(1/delta))` by
+  `ENNReal.ofReal delta`.
+- Local APIs/imports: `Exp3MixedSquareConfidence`, mixed-square selected-loss
+  and exact-mean identities, finite-action `condExpKernel` transport,
+  bounded-centered MGF, the predictable deviation filtration, strongly-adapted
+  finite-sum concentration, and observed/predictable score equality a.e.
+- Proof route: prove raw range `[0,1/epsilon]`; center by the armwise loss
+  square sum; package zero/successor conditional MGFs; establish adaptedness;
+  apply the finite-sum exponential tail; use the `K*T` mean budget; transport
+  to observed scalar feedback; instantiate the radius with
+  `log(1/delta)`.
+- Regularity contracts: probability prior; Standard Borel nonempty Env/Action;
+  measurable action singletons; decidable nonempty arms; `0<gamma<=1`;
+  predictable measurable `[0,1]` losses; positive horizon and delta. No
+  comparator, positive eta, `delta<=1`, independence, stationarity,
+  countability, supplied integrability, or extra reward-law premise.
+- Retrieval/status: local random-square/comparator confidence routes, Mathlib
+  MGF/kernel/finite-sum/integral/order APIs, Auer EXP3 card, inspiration-only
+  potential weapon; `leanCompiled`, root imported, external theorem canary.
+- Failure policy: this is logarithmic in confidence but retains the
+  `(K/gamma)^2` interval proxy. It now feeds the predictable-regret consumer
+  plus its realized, learning-rate-tuned, and explicit-gamma consumers below.
+  Do not label it Freedman or ideal EXP3.P.
+
+### EXP3 exponential-square realized regret
+
+- Lean-facing statement:
+  `sampledPredictable_exponentialSquareBernsteinRealizedHighProbabilityRegret_tail_total_delta`
+  controls generated scalar selected-loss regret against a supported
+  comparator with four `delta/4` allocations.
+- Local APIs/imports: `Exp3MixedSquareExponentialHighProbabilityRegret`,
+  `Exp3RealizedConfidence`, the predictable three-event tail, realized
+  deviation delta tail, pathwise finite-sum decomposition, set inclusion,
+  union bound, and `ENNReal.ofReal_add`.
+- Proof route: write realized regret as predictable regret plus realized
+  deviation; combine the two aggregate bad events; normalize the underlying
+  square, pure-cross, comparator, and realized failures at `delta/4`.
+- Regularity contracts: probability prior; Standard Borel nonempty
+  Env/Action; measurable action singletons; decidable nonempty arms;
+  `eta>0`; `0<gamma<1`; predictable measurable `[0,1]` losses; supported
+  comparator; positive horizon and delta. No `delta<=1`, independence,
+  stationarity, countability, supplied integrability, or new law transport.
+- Retrieval/status: exponential-square predictable leaf, realized-deviation
+  leaf, prior random-square realized assembly, Mathlib finite-sum/order/
+  sub-Gaussian APIs, Auer EXP3 card, inspiration-only potential weapon;
+  `leanCompiled`, root imported, external total-delta canary.
+- Failure policy: Markov square dependence is removed from generated realized
+  regret, but the `K/gamma` interval radius and bounded-loss Hoeffding/Azuma
+  realized radius remain. Learning-rate tuning compiles below; gamma
+  scheduling, Freedman, and ideal EXP3.P are open.
+
+## EXP3 exponential-square predictable regret consumer
+
+- Lean statements:
+  `sampledPredictableExponentialSquareBernsteinHighProbabilityRegretBudget`,
+  the raw three-event tail, and
+  `sampledPredictable_exponentialSquareBernsteinHighProbabilityRegret_tail_total_delta`.
+- Local APIs/imports: `Exp3MixedSquareConfidence`, observed square delta tail,
+  sampled Hedge and exploration-bias inequalities, pure-cross/comparator
+  Bernstein tails, a.e. set inclusion, three-event union bound, and
+  `ENNReal.ofReal_add`.
+- Proof route: replace the Markov square threshold by `K*T+squareRadius`;
+  retain the two Bernstein events; combine all strict good-event inequalities
+  with the pathwise Hedge bound; prove a.e. event containment; allocate
+  `delta/3` to all three failures.
+- Regularity contracts: probability prior; Standard Borel nonempty Env/Action;
+  measurable singletons; decidable nonempty arms; positive eta and horizon;
+  `0<gamma<1`; predictable `[0,1]` losses; supported comparator; positive
+  delta. No `delta<=1`, independence, stationarity, countability, supplied
+  integrability, or extra law transport.
+- Retrieval/status: mixed-square exponential confidence, prior random-square
+  assembly, pure/comparator Bernstein leaves, Mathlib measure/order/finite-sum
+  APIs, Auer EXP3 card, inspiration-only potential; `leanCompiled`, root
+  imported, external total-delta canary.
+- Failure policy: Markov `1/delta` is removed from this predictable budget,
+  but the square interval radius retains `K/gamma` dependence. Realized-loss
+  assembly, exact eta tuning, and explicit large-horizon gamma scheduling now
+  compile downstream. Freedman/ideal EXP3.P are not proved.
+
+## EXP3 mixed-square Bernstein confidence
+
+- Lean statement:
+  `sampledPredictableObservedMixedSquared_sum_tail_bernstein_delta` bounds the
+  generated observed square sum above `K*T` plus
+  `2*sqrt(T*(K/epsilon)*log_+) + log_+/epsilon`, where `epsilon=gamma/K`.
+- Local APIs/imports: `Exp3MixedSquareBernstein`, fixed-tilt conditional MGF
+  infrastructure, the existing mixed-square process/law transport, finite
+  action measures, generated zero/successor action laws, strongly-adapted
+  finite sums, and observed/predictable a.e. equality.
+- Proof route: prove the exact raw second moment; center and bound it by
+  `K/epsilon`; retain the `1/epsilon` range cap; transport the one-step MGF;
+  sum generated rounds; bound means by `K*T`; transfer to observed feedback;
+  optimize separate variance and tilt-cap parameters.
+- Regularity contracts: probability prior; Standard Borel nonempty
+  Env/Action; measurable singletons; decidable nonempty arms; arbitrary eta;
+  `0<gamma<=1`; predictable `[0,1]` losses; any natural horizon; `delta>0`.
+  No comparator, positive eta/horizon, `delta<=1`, independence, stationarity,
+  countability, supplied integrability, or new law transport.
+- Retrieval/status: prior exponential mixed-square process, comparator
+  fixed-tilt Bernstein template, Mathlib measure/finite-sum/order APIs, Auer
+  EXP3 card, inspiration-only potential; `leanCompiled`, root imported,
+  focused build, external full-theorem canary.
+- Failure policy: the deterministic variance coefficient improves the old
+  interval proxy but is not a random quadratic variation. Do not claim
+  anytime, self-normalized, general Freedman, or ideal EXP3.P.
+
+## EXP3 mixed-square predictable variance
+
+- Lean statements: `mixedSquaredEstimatorCenteredSecondMoment`,
+  `integral_sq_mixedSquaredEstimatorDeviation_finiteActionMeasure_eq`,
+  `sampledPredictableMixedSquaredVarianceProcess_isPredictable`, and
+  `sampledPredictableMixedSquaredVariance_sum_le`.
+- Local APIs/imports: `Exp3MixedSquareBernstein`, Mathlib predictable-process
+  APIs, finite-action measures, the exact centered second-moment bound,
+  generated probability sources, predictable-loss regularity, the existing
+  deviation filtration, finite-prefix restrictions, and finite sums.
+- Proof route: package the exact finite-law centered second moment; prove its integral,
+  measurability, nonnegativity, and `K/epsilon` bound; factor generated rounds
+  through Env/finite histories; shift by one for predictability; sum pointwise
+  bounds to `T*(K/(gamma/K))`.
+- Semantic contract: the generic object is a centered second moment because a
+  finite law may have zero-mass arms; only the generated exploration-floor
+  instance is used as the variance-process input.
+- Regularity contracts: measurable Env/Action, measurable singletons,
+  decidable nonempty arms, arbitrary eta, `0<gamma<=1`, predictable `[0,1]`
+  losses, and any horizon. No prior, Standard Borel, comparator, delta, or
+  supplied integrability is required.
+- Retrieval/status: mixed-square Bernstein confidence and all-horizon route,
+  fixed-tilt MGF leaf, Mathlib martingale/MGF/finite-sum/order APIs, Auer EXP3,
+  inspiration-only potential; `leanCompiled`, root imported, focused build,
+  and external predictability/cumulative canaries.
+- Failure policy: this is the predictable variance-process input, not a
+  Freedman theorem. Its ambient `condExpKernel` square-law transport now
+  compiles in the adjacent row and its fixed-horizon random-variance tail is
+  compiled downstream; maximal/anytime control and regret integration remain.
+
+## EXP3 mixed-square predictable variance conditional square law
+
+- Lean statements: the generic centered-score `condExpKernel` pushforward and
+  square-integral theorems, generated zero/successor wrappers, and
+  `sampledPredictableMixedSquaredDeviationProcess_condExpKernel_integral_sq_eq_varianceProcess`.
+- Local APIs/imports: generated finite action `condDistrib`, action-map and
+  frozen-history `condExpKernel` laws, finiteActionKernel/finiteActionMeasure,
+  `Measure.map_map`/`map_congr`, `integral_map`, finite prefixes, and filtration
+  zero/successor equations.
+- Proof route: freeze conditioning history; compose the action law with the
+  centered score; integrate `z^2` on both pushforward laws; specialize time
+  zero and successors; case-split the shifted process index.
+- Regularity contracts: finite prior; Standard Borel nonempty Env/Action;
+  measurable singletons; decidable nonempty arms; arbitrary eta;
+  `0<gamma<=1`; predictable `[0,1]` losses; any index. No probability prior,
+  comparator, horizon, delta, independence, stationarity, or supplied
+  integrability is required.
+- Retrieval/status: predictable-variance and mixed-square Bernstein leaves,
+  fixed-tilt MGF route, Mathlib conditional-expectation/kernel/integral/
+  martingale APIs; `leanCompiled`, root imported, focused build, and external
+  full shifted-process canary.
+- Failure policy: conditional-square law transport is closed and consumed by
+  the fixed-horizon predictable-variance tail. Do not claim maximal,
+  anytime/self-normalized control or ideal EXP3.P from this row alone.
+
+## EXP3 mixed-square Bernstein predictable regret
+
+- Lean statements: `sampledPredictableBernsteinSquareHighProbabilityRegretBudget`
+  and `sampledPredictable_bernsteinSquareHighProbabilityRegret_tail_total_delta`.
+- Local APIs/imports: the new mixed-square Bernstein delta tail, sampled Hedge
+  and exploration-bias inequalities, pure-cross/comparator Bernstein tails,
+  a.e. event inclusion, three-event union bound, and `ENNReal.ofReal_add`.
+- Proof route: replace only the old square radius in the established
+  three-event assembly; combine all strict good-event inequalities with the
+  pathwise Hedge bound; allocate `delta/3` to all failures.
+- Regularity contracts: probability prior; Standard Borel nonempty
+  Env/Action; measurable singletons; decidable nonempty arms; `eta>0`;
+  `0<gamma<1`; predictable `[0,1]` losses; supported comparator; any natural
+  horizon; positive delta. No `delta<=1`, independence, stationarity,
+  countability, supplied integrability, or new law transport.
+- Retrieval/status: mixed-square Bernstein confidence, old exponential-square
+  assembly pattern, pure/comparator Bernstein leaves, Mathlib measure/order/
+  finite-sum APIs; `leanCompiled`, root imported, external total-delta canary,
+  and consumed by the realized route below.
+- Failure policy: predictable regret now consumes the improved square radius;
+  parameter tuning remains open for this branch. This is not general Freedman
+  or ideal EXP3.P.
+
+## EXP3 mixed-square Bernstein realized regret
+
+- Lean statements:
+  `sampledPredictableBernsteinSquareRealizedHighProbabilityRegretBudget` and
+  `sampledPredictable_bernsteinSquareRealizedHighProbabilityRegret_tail_total_delta`.
+- Local APIs/imports: `Exp3MixedSquareBernsteinHighProbabilityRegret`,
+  `Exp3RealizedConfidence`, the compiled predictable three-event tail,
+  realized-deviation delta tail, `sampledTrajectoryRealizedDeviationAt`,
+  `Finset.sum_sub_distrib`, ring/linear arithmetic, `measure_mono`,
+  `measure_union_le`, and `ENNReal.ofReal_add`.
+- Proof route: decompose realized regret pathwise into exploration-mixed
+  predictable regret plus realized deviation; apply both aggregate tails;
+  contain the target event in their union; normalize four `delta/4` events.
+- Regularity contracts: probability prior; Standard Borel nonempty
+  Env/Action; measurable singletons; decidable nonempty arms; `eta>0`;
+  `0<gamma<1`; predictable `[0,1]` losses; supported comparator; positive
+  horizon and delta. No `delta<=1`, independence, stationarity, countability,
+  supplied integrability, or new law transport.
+- Retrieval/status: mixed-square Bernstein predictable regret,
+  realized-deviation delta confidence, prior exponential-square realized
+  assembly, Mathlib order/finite-sum/probability APIs; `leanCompiled`, root
+  imported, focused build, external total-delta canary, and consumed by the
+  eta-tuned route below.
+- Failure policy: generated realized regret now consumes the deterministic
+  `K/epsilon` square radius. Eta tuning is closed downstream; explicit gamma
+  tuning remains open. The square control is not random quadratic variation
+  or general Freedman, and the realized radius remains Hoeffding/Azuma. Do not
+  claim ideal EXP3.P.
+
+## EXP3 mixed-square Bernstein realized learning-rate tuning
+
+- Lean-facing statement:
+  `sampledPredictable_tunedBernsteinSquareRealizedRegret_tail` uses
+  `S=K*T+sampledMixedSquaredBernsteinConfidenceRadius(delta/4)` and
+  `eta=sqrt(log K/S)`, controlling generated realized selected-loss regret at
+  `3*sqrt(log K*S)+gamma*T` plus the two Bernstein and realized radii.
+- Local APIs/imports: Bernstein-square realized total-delta tail and budget,
+  mixed-square Bernstein radius/variance coefficient, `Real.sqrt_pos`,
+  `Real.sq_sqrt`, `Real.log_pos`, field/ring arithmetic, linear/nonlinear
+  arithmetic, positivity/order APIs, and `measure_mono`.
+- Proof route: use `K>=2`, `T>0`, and `gamma>0` to prove epsilon and the
+  variance coefficient positive, the full radius nonnegative, and the scale
+  positive; prove `eta^2*S=log K`; identify entropy with
+  `eta*S` and the balanced square root; use `gamma<=1/2` for stability; compare
+  complete budgets and tighten the compiled event.
+- Regularity contracts: probability prior; Standard Borel nonempty
+  Env/Action; measurable singletons; decidable arms with `K>=2`; predictable
+  `[0,1]` losses; supported comparator; positive horizon and delta;
+  `0<gamma<=1/2`. No `delta<=1`, dominance premise, independence,
+  stationarity, countability, supplied integrability, or new law transport.
+- Retrieval/status: Bernstein-square realized/confidence leaves,
+  exponential-square eta template, Mathlib log/sqrt/order/finite-sum APIs,
+  Auer EXP3 card, inspiration-only potential weapon; `leanCompiled`, root
+  imported, focused build, external full-theorem canary.
+- Failure policy: eta is optimized against the deterministic `K/epsilon`
+  scale, but gamma is caller-selected on this surface. Explicit gamma and
+  all-horizon consumers now compile below. The linear `log_+/epsilon` term
+  remains visible; eliminating it, random quadratic variation, general
+  Freedman, Hoeffding/Azuma replacement, and ideal EXP3.P remain open.
+
+### EXP3 exponential-square realized learning-rate tuning
+
+- Lean-facing statement:
+  `sampledPredictable_tunedExponentialSquareBernsteinRealizedRegret_tail`
+  uses `S=K*T+squareRadius(delta/4)` and `eta=sqrt(log K/S)` and controls
+  generated realized selected-loss regret at `3*sqrt(log K*S)+gamma*T` plus
+  the two Bernstein and realized radii.
+- Local APIs/imports: exponential-square realized total-delta tail,
+  `Real.sqrt_pos`, `Real.sq_sqrt`, `Real.log_pos`, field/ring arithmetic,
+  linear and nonlinear arithmetic, and `measure_mono`.
+- Proof route: prove scale and eta positivity, prove `eta^2*S=log K`, rewrite
+  entropy as `eta*S`, use `gamma<=1/2` for the factor-two stability bound,
+  identify the balanced square root, compare full budgets, and tighten events.
+- Regularity contracts: probability prior; Standard Borel nonempty
+  Env/Action; measurable singletons; decidable arms with `K>=2`; predictable
+  `[0,1]` losses; supported comparator; positive horizon and delta;
+  `0<gamma<=1/2`. No `delta<=1`, dominance premise, independence,
+  stationarity, countability, supplied integrability, or new law transport.
+- Retrieval/status: exponential-square realized and confidence leaves, prior
+  random-square tuning, Mathlib log/sqrt/order/finite-sum APIs, Auer EXP3 card,
+  inspiration-only potential weapon; `leanCompiled`, root imported, external
+  full-theorem canary.
+- Failure policy: eta tuning is closed and its explicit gamma and all-horizon
+  consumers now compile. Keep this caller-selected surface for weaker
+  assumptions; the coarse fallback, Freedman, and ideal EXP3.P remain
+  separate.
+
+### EXP3 exponential-square realized explicit exploration tuning
+
+- Lean-facing statement:
+  `sampledPredictable_explicitExponentialSquareBernsteinRealizedRegret_tail`
+  uses eta balanced against `K*T+squareRadius(delta/4)` and gamma equal to the
+  clipped maximum of the arm square-root, mixed sixth-root, confidence
+  cube-root, and realized square-root scales; the tail threshold is
+  `14*gamma*T`.
+- Local APIs/imports: exponential-square realized eta tuning, random-square
+  explicit tuning, exact interval proxy algebra, mixed-square confidence
+  radius, reusable Bernstein and realized radius bounds,
+  `Real.rpow_inv_natCast_pow`, `Real.sqrt`, max/min order, field arithmetic,
+  nonlinear arithmetic, and `measure_mono`.
+- Proof route: identify the proxy as `(K/(2*gamma))^2`; square the logarithmic
+  mixed radius under a sixth-power contract; control the balanced square root;
+  characterize the full `14*gamma*T` threshold; prove sixth-root half and
+  dominance lemmas; show clipping inactive; bundle four contracts; invoke the
+  characterized generated tail.
+- Regularity contracts: probability prior; Standard Borel nonempty
+  Env/Action; measurable singletons; decidable arms with `K>=2`; predictable
+  `[0,1]` losses; supported comparator; `T>0`; `0<delta<=1`;
+  `4*K*log K<=T`; the factor-64 mixed sixth-power horizon contract;
+  `8*K*log(4/delta)<=T`; and the factor-eight realized contract. No caller
+  gamma, independence, stationarity, countability, supplied integrability, or
+  new law transport.
+- Retrieval/status: eta-tuned exponential-square route, mixed-square
+  confidence, random-square explicit schedule, generic root lemmas, Mathlib
+  log/sqrt/order/finite-sum APIs, Auer EXP3 card, inspiration-only potential;
+  `leanCompiled`, root imported, external full-theorem canary.
+- Failure policy: large-horizon gamma scheduling is closed for the current
+  interval proxy and is consumed by the all-horizon wrapper below. The sixth
+  root records the interval-proxy cost and scales as a square-root horizon
+  term; the confidence cube root causes the overall `T^(2/3)` limitation.
+  Variance-sensitive mixed-square Freedman control and ideal EXP3.P remain
+  open.
+
+### EXP3 exponential-square realized all-horizon wrapper
+
+- Lean-facing statement:
+  `sampledPredictable_allHorizonExponentialSquareBernsteinRealizedRegret_tail`
+  uses the exact clipped four-scale gamma and exponential-square eta. Its
+  threshold is the explicit refined threshold in the four-contract regime
+  and strict `T+1` otherwise.
+- Local APIs/imports: exponential-square explicit tuning,
+  `Exp3BernsteinAllHorizon`, the explicit generated tail,
+  `sampledPredictable_trivialRealizedRegret_tail`, classical `if`/`by_cases`,
+  and the compiled finite-sum/order/measure-zero fallback APIs.
+- Proof route: define the conjunction of the arm factor-four, mixed factor-64,
+  confidence factor-eight, and realized factor-eight horizon contracts; split
+  on it; invoke the explicit theorem in the positive branch and instantiate
+  the strict zero-probability `T+1` theorem in the negative branch.
+- Regularity contracts: probability prior; Standard Borel nonempty
+  Env/Action; measurable singletons; decidable arms with `K>=2`; predictable
+  `[0,1]` losses; supported comparator; `T>0`; `0<delta<=1`. No caller regime
+  proof, independence, stationarity, countability, supplied integrability, or
+  new law transport.
+- Retrieval/status: explicit exponential-square schedule, generic and
+  random-square all-horizon fallback routes, Mathlib measure/finite-sum/order
+  APIs, Auer EXP3 card, inspiration-only potential; `leanCompiled`, root
+  imported, focused build, external full-theorem canary.
+- Failure policy: all positive horizons are covered, but the negative branch
+  deliberately uses the coarse `T+1` threshold. The refined branch retains
+  the confidence cube-root `T^(2/3)` limitation and Hoeffding/Azuma realized
+  deviation; do not claim sharp active clipping, mixed-square Freedman, or
+  ideal EXP3.P.
+
+### EXP3 Bernstein-square realized explicit exploration tuning
+
+- Lean-facing statement:
+  `sampledPredictable_explicitBernsteinSquareRealizedRegret_tail` uses eta
+  balanced against the exact fixed-tilt Bernstein mixed-square scale and the
+  reused four-scale clipped gamma; the tail threshold is `14*gamma*T`.
+- Local APIs/imports: Bernstein-square realized eta tuning, exponential-square
+  explicit schedule contracts, the exact `K^2/gamma` variance coefficient,
+  mixed-square Bernstein radius, reusable Bernstein/realized bounds,
+  `Real.sqrt`, field/ring/nonlinear arithmetic, and `measure_mono`.
+- Proof route: control the square-root radius using the mixed sixth-power
+  contract and `gamma<=1/2`; control the linear `log_+/epsilon` radius using
+  the arm and confidence contracts; prove the balanced root is at most
+  `2*gamma*T`; characterize the `14*gamma*T` threshold; transport the reused
+  schedule contracts; invoke the characterized generated tail.
+- Regularity contracts: probability prior; Standard Borel nonempty
+  Env/Action; measurable singletons; decidable arms with `K>=2`; predictable
+  `[0,1]` losses; supported comparator; `T>0`; `0<delta<=1`; arm factor-four,
+  mixed factor-64, confidence factor-eight, and realized factor-eight
+  contracts. No caller gamma, independence, stationarity, countability,
+  supplied integrability, or new law transport.
+- Retrieval/status: Bernstein realized tuning/confidence, exponential explicit
+  schedule, Mathlib log/sqrt/order/finite-sum APIs, Auer EXP3 card,
+  inspiration-only potential; `leanCompiled`, root imported, focused build,
+  external full-theorem canary.
+- Failure policy: this reuses the conservative sixth-root schedule and does
+  not claim a sharper fifth-root/coupled optimum. Its all-horizon consumer now
+  compiles below. The current linear `log_+/epsilon` correction is controlled;
+  eliminating or improving it, Hoeffding/Azuma replacement, random predictable
+  quadratic variation, general Freedman, and ideal EXP3.P remain open.
+
+### EXP3 Bernstein-square realized all-horizon wrapper
+
+- Lean-facing statement:
+  `sampledPredictable_allHorizonBernsteinSquareRealizedRegret_tail` uses the
+  explicit variance-sensitive threshold in the exact four-contract regime
+  and strict `T+1` otherwise.
+- Local APIs/imports: Bernstein-square explicit tuning,
+  `Exp3BernsteinAllHorizon`, the explicit generated tail, the generic
+  zero-probability fallback, classical `if`/`by_cases`, and compiled
+  finite-sum/order/measure-zero APIs.
+- Proof route: define the conjunction of the arm factor-four, mixed factor-64,
+  confidence factor-eight, and realized factor-eight contracts; split on it;
+  invoke the explicit theorem in the positive branch and instantiate the
+  strict `T+1` fallback with the same eta/gamma in the negative branch.
+- Regularity contracts: probability prior; Standard Borel nonempty
+  Env/Action; measurable singletons; decidable arms with `K>=2`; predictable
+  `[0,1]` losses; supported comparator; `T>0`; `0<delta<=1`. No caller regime
+  proof, independence, stationarity, countability, supplied integrability, or
+  new law transport.
+- Retrieval/status: explicit Bernstein mixed-square schedule, generic and
+  exponential all-horizon fallbacks, Mathlib measure/finite-sum/order APIs,
+  Auer EXP3 card, inspiration-only potential; `leanCompiled`, root imported,
+  focused build, external full-theorem canary.
+- Failure policy: every positive horizon is covered, but the negative branch
+  deliberately uses coarse `T+1`. The refined branch retains the controlled
+  linear `log_+/epsilon` term and Hoeffding/Azuma deviation; do not claim
+  sharp active clipping, a sharper coupled schedule, random quadratic
+  variation, general Freedman, or ideal EXP3.P.
+
+### EXP3 Bernstein-square realized finite best-arm all-horizon wrapper
+
+- Lean-facing statements: shared
+  `sampledPredictableBestArmCumulativeLoss` and
+  `threshold_le_sampledPredictableRealizedLoss_sub_bestArmCumulativeLoss_iff`
+  package the `Finset.inf'` best-arm order step;
+  `bernsteinSquareBestArmAllHorizonRegretThreshold` uses confidence
+  `delta/K`; and
+  `sampledPredictable_allHorizonBernsteinSquareBestArmRealizedRegret_tail`
+  gives failure at most `ENNReal.ofReal delta`.
+- Local APIs/imports: `Exp3BestArm`, the fixed-comparator Bernstein-square
+  all-horizon theorem, finite iUnion membership,
+  `measure_biUnion_finset_le`, `Finset.sum_le_sum`,
+  `ENNReal.ofReal_div_of_pos`, `ENNReal.mul_div_cancel`, finite casts,
+  `omega`, and order algebra.
+- Proof route: derive `0<delta/K<=1`; instantiate every supported comparator
+  under one comparator-independent eta/gamma/generated measure; rewrite the
+  best-arm event as the finite union; apply the finite union bound; normalize
+  `K*ofReal(delta/K)=ofReal(delta)`.
+- Regularity contracts: probability prior; Standard Borel nonempty
+  Env/Action; measurable singletons; decidable arms with `K>=2`; predictable
+  `[0,1]` losses; `T>0`; `0<delta<=1`. Comparator, eta, gamma, infimum, and
+  regime branch are internal. No caller large-horizon premise, sparsity,
+  independence, stationarity, countability, supplied integrability, event
+  measurability, or new law transport.
+- Retrieval/status: fixed-comparator Bernstein-square all-horizon row, the
+  earlier sparse pathwise best-arm union pattern, Mathlib finite-sum,
+  measure, and order cards, finite adversarial scenario, Auer EXP3, and
+  inspiration-only tail/potential weapons; `leanCompiled`, root imported,
+  focused/root and `Tests.Basic` built, external full-theorem canary.
+- Failure policy: finite hindsight best-supported-arm conversion is closed.
+  The `delta/K` schedule retains the expected logarithmic arm-count cost and
+  the short-horizon fallback remains coarse `T+1`. Do not claim
+  stochastic-mean or first-order regret, sharp clipping, random predictable
+  quadratic variation, general Freedman, anytime control, or ideal EXP3.P.
+
+### EXP3 mixed-square predictable-variance tail
+
+- Lean-facing statements:
+  `sampledPredictableMixedSquaredDeviation_sum_tail_predictableVariance_fixedTilt`
+  proves the fixed-tilt joint-event bound, and the `_delta` theorem gives
+  radius `2*sqrt(v*log_+(1/delta))+log_+(1/delta)/(gamma/K)`.
+- Local APIs/imports: exact finite-law centered moment, conditional action-law
+  transport, `HasMGFUpperBoundAt.compensated`, generated zero/successor laws,
+  shifted strongly adapted deviations, predictable variances, and the
+  fixed-MGF finite-sum tail.
+- Proof route: derive the exact one-step MGF, subtract `t^2 V`, transport and
+  iterate the compensated increments, contain the joint event, then optimize
+  the tilt.
+- Regularity contracts: probability prior; Standard Borel nonempty
+  Env/Action; measurable singletons; decidable nonempty arms; arbitrary eta;
+  `0<gamma<=1`; predictable `[0,1]` losses; any horizon; positive variance
+  budget and delta for the optimized wrapper.
+- Retrieval/status: predictable-variance and conditional-square leaves,
+  fixed-MGF iteration, Mathlib kernel/integral/martingale/MGF cards, Auer EXP3,
+  inspiration-only tail weapon; `leanCompiled`, root imported, external delta
+  canary.
+- Failure policy: fixed-horizon joint-event control is closed. Do not present
+  it as maximal, anytime/self-normalized, unconditional without `sum V<=v`,
+  or complete EXP3.P regret. The generated predictable-regret consumer below
+  now preserves this random variance event.
+
+### EXP3 predictable-variance high-probability regret
+
+- Lean-facing statements:
+  `sampledPredictableObservedMixedSquared_sum_tail_predictableVariance_delta`
+  transports the joint tail to the observed Hedge square sum;
+  `sampledPredictable_predictableVarianceSquareHighProbabilityRegret_tail_joint_total_delta`
+  bounds the regret/variance-good joint event; and the primary
+  `_tail_total_delta` theorem proves
+  `P(regret>=budget(v,delta))<=delta+P(sum V>v)`.
+- Local APIs/imports: predictable-variance tail, observed/predictable square
+  a.e. equality, centered-sum identity, `K*T` mean bound, sampled Hedge,
+  exploration bias, pure-cross/comparator Bernstein tails,
+  `measure_mono_ae`, `measure_union_le`, and `ENNReal.ofReal_add`.
+- Proof route: transport centered control to the observed square; assemble
+  the three confidence events on `sum V<=v`; split the unconditional regret
+  event into the joint event and variance overflow; allocate `delta/3`.
+- Regularity contracts: probability prior; Standard Borel nonempty
+  Env/Action; measurable singletons; decidable nonempty arms; `eta>0`;
+  `0<gamma<1`; predictable `[0,1]` losses; supported comparator; any horizon;
+  positive variance budget and delta. No `delta<=1`, independence,
+  stationarity, countability, supplied integrability, deterministic envelope,
+  or new law transport.
+- Retrieval/status: predictable-variance tail and conditional-square rows,
+  deterministic Bernstein regret assembly, Mathlib measure/finite-sum/order/
+  MGF cards, Auer EXP3 card, inspiration-only potential/tail weapons;
+  `leanCompiled`, root imported, focused build, external primary canary.
+- Failure policy: generated predictable regret now preserves random variance.
+  This row is consumed by the realized route below. The remaining blocker is
+  exactly `P(sum V>v)`; do not claim anytime/self-normalized control, general
+  Freedman, or ideal EXP3.P until that overflow is controlled.
+
+### EXP3 predictable-variance realized high-probability regret
+
+- Lean-facing statements:
+  `sampledPredictableVarianceSquareRealizedHighProbabilityRegretBudget` adds
+  the realized-deviation radius;
+  `_tail_joint_total_delta` proves
+  `P(realized regret>=budget(v,delta) and sum V<=v)<=ofReal(delta)`; and the
+  primary `_tail_total_delta` theorem proves
+  `P(realized regret>=budget(v,delta))<=ofReal(delta)+P(sum V>v)`.
+- Local APIs/imports: predictable-variance regret, realized-deviation delta
+  confidence, `sampledTrajectoryRealizedDeviationAt`,
+  `Finset.sum_sub_distrib`, `ring`, `linarith`, `measure_mono`,
+  `measure_union_le`, `ENNReal.ofReal_add`, and real division algebra.
+- Proof route: decompose realized regret into predictable regret plus realized
+  deviation; union the predictable joint bad event with realized deviation
+  while retaining `sum V<=v`; split the unconditional event into the joint
+  branch and strict variance overflow; allocate `delta/4` to four failures.
+- Regularity contracts: probability prior; Standard Borel nonempty
+  Env/Action; measurable singletons; decidable nonempty arms; `eta>0`;
+  `0<gamma<1`; predictable `[0,1]` losses; supported comparator; positive
+  horizon, variance budget, and confidence allocations. No `delta<=1`,
+  independence, stationarity, countability, supplied integrability,
+  deterministic envelope, or new law transport.
+- Retrieval/status: predictable-variance regret, realized-deviation
+  confidence, comparable Bernstein realized assembly, Mathlib measure/
+  finite-sum/order/sub-Gaussian/MGF cards, Auer EXP3 card, inspiration-only
+  potential/tail weapons; `leanCompiled`, root imported, focused build, and
+  external primary residual canary.
+- Failure policy: realized selected-loss transport is closed. The remaining
+  overflow is consumed by the Markov route below; do not claim a sharper
+  deterministic envelope, anytime/self-normalized control, general Freedman,
+  or ideal EXP3.P from this row alone.
+
+### EXP3 predictable-variance realized Markov high-probability regret
+
+- Lean-facing statements:
+  `measure_sampledPredictableMixedSquaredVarianceSum_gt_le_lintegral_div`
+  proves `mu{sum V>v}<=lintegral(ofReal(sum V))/ofReal(v)`;
+  `_tail_of_lintegral_variance_le` consumes a real mean budget; and the primary
+  `_RealizedMarkovHighProbabilityRegret_tail_total_delta` theorem sets
+  `v=varianceMeanBudget/(delta/5)` and bounds realized regret by
+  `ENNReal.ofReal delta`.
+- Local APIs/imports: prior realized residual theorem, Mathlib Lebesgue Markov,
+  cumulative-variance measurable/nonnegative wrappers,
+  `meas_ge_le_lintegral_div`, `ENNReal.measurable_ofReal`, `measure_mono`,
+  `ENNReal.div_le_div`, `ENNReal.ofReal_div_of_pos`,
+  `ENNReal.div_div_cancel`, and `ENNReal.ofReal_add`.
+- Proof route: apply Markov to `ofReal(sum V)`; contain strict real overflow in
+  the weak ENNReal event; insert the caller lintegral budget; consume the
+  realized residual theorem; normalize five `delta/5` failures.
+- Regularity contracts: the generic Markov endpoint accepts any measure,
+  measurable Env/Action with measurable singletons, decidable nonempty arms,
+  `0<gamma<=1`, predictable `[0,1]` losses, and `v>0`. The primary endpoint
+  additionally needs the usual probability/Standard-Borel EXP3 contracts,
+  `eta>0`, `0<gamma<1`, supported comparator, positive horizon, positive mean
+  budget and delta, and `lintegral(ofReal(sum V))<=ofReal(meanBudget)`. No
+  `delta<=1`, independence, stationarity, countability, separate integrability,
+  deterministic envelope, or new law transport.
+- Retrieval/status: prior predictable-variance rows,
+  `MLIB-MEASURE-INTEGRAL` with `meas_ge_le_lintegral_div`, finite-sum/order
+  cards, Auer EXP3, inspiration-only tail/potential weapons; `leanCompiled`,
+  root imported, focused/root built, external primary canary.
+- Failure policy: the overflow probability is closed under the explicit
+  expectation contract, and the loss-energy route below discharges it from a
+  pathwise armwise loss-square budget. Markov still uses the
+  `meanBudget/delta` scale; sharper scenario-specific energy or stronger
+  exponential/self-normalized control is required before claiming general
+  Freedman, anytime control, or ideal EXP3.P.
+
+### EXP3 predictable-variance loss-energy realized Markov regret
+
+- Lean-facing statements:
+  `sum_prob_mul_sq_mixedSquaredEstimatorDeviation_le_inv_floor_mul_sum_loss_sq`
+  proves finite-law centered variance at most `(1/epsilon)*sum loss^2`;
+  `sampledPredictableMixedSquaredVarianceSum_le_inv_floor_mul_lossSquaredSum`
+  gives `sum V<=(1/(gamma/K))*sampledPredictableLossSquaredSum`;
+  `sampledPredictableMixedSquaredVarianceLIntegral_le_of_lossSquaredSum_le`
+  derives the Markov mean contract from a pathwise `L2` budget; and the primary
+  `_LossEnergyRealizedMarkovHighProbabilityRegret_tail_total_delta` theorem
+  closes realized regret at total failure `delta`.
+- Local APIs/imports: prior realized Markov route,
+  `sampledPredictableLossSquaredSum`, exact mixed-square first/second moments,
+  `FiniteActionDistribution.sum_eq_one`, generated probability and loss
+  regularity, finite-sum/order/ring arithmetic, `lintegral_mono`,
+  `ENNReal.ofReal_le_ofReal`, and probability-measure constant integration.
+- Proof route: expand centered variance; use `loss^4<=loss^2` and the positive
+  probability floor termwise; subtract the nonnegative mean square; transport
+  to generated time and sum; integrate the pathwise energy bound; instantiate
+  the Markov theorem with `M=(1/(gamma/K))*L2`.
+- Regularity contracts: positive probability floor and `[0,1]` losses for the
+  finite-law theorem. The primary generated endpoint adds a probability prior,
+  Standard Borel nonempty Env/Action, measurable singletons, decidable
+  nonempty arms, `eta>0`, `0<gamma<1`, supported comparator, positive horizon,
+  positive `L2` and `delta`, and a pathwise cumulative loss-square bound. No
+  `delta<=1`, independence, stationarity, countability, separate integrability,
+  new law transport, or deterministic `K*T` envelope premise.
+- Retrieval/status: prior Markov and predictable-variance rows, mixed-square
+  Bernstein confidence, finite-sum/order/measure cards, Auer EXP3,
+  inspiration-only tail/potential weapons; `leanCompiled`, root imported,
+  focused/root built, external primary canary.
+- Failure policy: the small-loss route below derives `L2<=L1` and replaces the
+  Hedge `K*T` mean upper bound by `L1`. Markov still costs `(L2/epsilon)/delta`;
+  exponential/self-normalized overflow, maximal/anytime control, general
+  Freedman, and ideal EXP3.P remain open.
+
+### EXP3 predictable-variance armwise small-loss realized Markov regret
+
+- Lean-facing statements: `sampledPredictableLossMassSum` defines
+  `L1=sum_t sum_a loss_t(a)`;
+  `sampledPredictableLossSquaredSum_le_lossMassSum` proves `L2<=L1`;
+  the variance sum/lintegral wrappers give `sum V<=(1/(gamma/K))*L1`;
+  `_ObservedMixedSquared_sum_tail_predictableVariance_of_lossMassSum_le`
+  replaces the observed-square `K*T` mean upper bound by `L1`; the predictable and realized
+  joint theorems assemble three and four events; and the primary
+  `_SmallLossRealizedMarkovHighProbabilityRegret_tail_total_delta` theorem
+  closes the fifth Markov event at total `delta`.
+- Local APIs/imports: loss-energy route, predictable loss unit-interval
+  contracts, finite sums/order algebra, centered predictable-variance tail,
+  observed/predictable a.e. square equality, sampled Hedge, exploration bias,
+  pure-cross/comparator Bernstein tails, realized deviation, Mathlib Markov,
+  measure unions, and ENNReal division/ofReal algebra.
+- Proof route: prove `l^2<=l` for every generated coordinate; sum over arms and
+  time; use `L1` in the centered-to-observed bridge; rebuild the three-event
+  predictable Hedge argument; add realized deviation; set
+  `v=((1/(gamma/K))*L1)/(delta/5)` and union the variance-good event with
+  Markov overflow.
+- Regularity contracts: probability prior; Standard Borel nonempty
+  Env/Action; measurable singletons; decidable nonempty arms; `eta>0`;
+  `0<gamma<1`; predictable `[0,1]` losses; supported comparator; positive
+  horizon, armwise `L1`, and `delta`; universal pathwise loss-mass bound. No
+  `delta<=1`, independence, stationarity, countability, separate integrability,
+  new law transport, deterministic `K*T`, supplied `L2`, or supplied variance
+  lintegral.
+- Retrieval/status: loss-energy and predictable/realized variance rows,
+  `MLIB-FINSET-SUMS`, `MLIB-ORDER-ALGEBRA`, `MLIB-MEASURE-INTEGRAL`,
+  `SCN-ADVERSARIAL-FINITE`, Auer EXP3, inspiration-only tail/potential weapons;
+  `leanCompiled`, root imported, focused/root built, external primary canary.
+- Failure policy: this is armwise aggregate small loss, not best-arm first
+  order. The universal `L1` budget is consumed by the sparse-loss route below;
+  eta/gamma are not L1-tuned and Markov retains `1/delta`. Best-arm conversion,
+  exponential/self-normalized or anytime control, general Freedman, and ideal
+  EXP3.P remain open.
+
+### EXP3 predictable-variance sparse-loss realized Markov regret
+
+- Lean-facing statements: `sampledPredictableLossSupport` filters active arms
+  to nonzero predictable losses;
+  `sampledPredictableLossMassAt_le_supportCard` bounds one-round mass by the
+  support cardinality;
+  `sampledPredictableLossMassSum_le_sparsity_mul_horizon` derives
+  `L1<=(s:Real)*T`; the sparse budget and primary
+  `_SparseLossRealizedMarkovHighProbabilityRegret_tail_total_delta` theorem
+  instantiate the compiled small-loss total-delta route.
+- Local APIs/imports: small-loss module and primary theorem, predictable loss
+  unit-interval API, `Finset.filter`, `Finset.filter_subset`,
+  `Finset.sum_subset`, `Finset.sum_le_sum`, `Finset.mem_range`, `Nat.cast_le`,
+  and finite-sum/order algebra.
+- Proof route: delete zero coordinates from each arm sum; bound retained
+  coordinates by one; sum a uniform pathwise support cap over
+  `Finset.range horizon`; prove `(s:Real)*T>0`; invoke the small-loss theorem at
+  `lossMassBudget=s*T`.
+- Regularity contracts: probability prior; Standard Borel nonempty
+  Env/Action; measurable singletons; decidable nonempty arms; `eta>0`;
+  `0<gamma<1`; predictable `[0,1]` losses; supported comparator; positive
+  horizon, natural sparsity, and delta; universal support-cardinality cap for
+  every generated sample and valid time. No `s<=K`, `delta<=1`, independence,
+  stationarity, countability, supplied integrability, new law transport,
+  supplied `L1`/`L2`/lintegral premise, or deterministic `K*T`.
+- Retrieval/status: compiled small-loss route, `MLIB-FINSET-SUMS`,
+  `MLIB-ORDER-ALGEBRA`, `SCN-ADVERSARIAL-FINITE`, Auer EXP3,
+  inspiration-only tail/potential weapons; `leanCompiled`, root imported,
+  focused/root built, external primary canary.
+- Failure policy: the abstract `L1` input is closed for universally pathwise
+  sparse supports, but this is still armwise aggregate and assumes sparsity
+  for every generated sample. Eta is selected by the tuning route below;
+  gamma remains caller-selected and Markov retains `1/delta`. Probabilistic
+  sparsity, best-arm conversion, exponential/self-normalized overflow, general
+  Freedman, anytime control, and ideal EXP3.P remain open.
+
+### EXP3 eta-tuned sparse-loss predictable-variance realized Markov regret
+
+- Lean-facing statements: exact Markov variance-budget and complete-scale
+  definitions; positivity lemmas; internal
+  `sparseLossPredictableVarianceHighProbabilityLearningRate`; its square-times-
+  scale identity; the three-times-square-root Hedge bound; tuned threshold;
+  budget comparison; and final
+  `sampledPredictable_tunedSparseLossPredictableVarianceRealizedMarkovRegret_tail`.
+- Local APIs/imports: sparse-loss budget and total-delta theorem,
+  predictable-variance radius, `Real.log`/`Real.sqrt` positivity and square
+  APIs, finite-cardinality casts, `field_simp`, `ring`, `linarith`,
+  `nlinarith`, and `measure_mono`.
+- Proof route: set `L=s*T`, `v=((1/(gamma/K))*L)/(delta/5)`,
+  `S=L+radius(v,delta/5)`, and `eta=sqrt(log K/S)`; establish positivity and
+  `eta^2*S=log K`; rewrite entropy as `eta*S`; use `gamma<=1/2`; compare the
+  full five-event budget to the tuned threshold; tighten the final event.
+- Regularity contracts: probability prior; Standard Borel nonempty spaces;
+  measurable singletons; decidable arms with `K>=2`; `0<gamma<=1/2`;
+  predictable `[0,1]` losses; supported comparator; positive horizon,
+  sparsity, and delta; universal pathwise support cap. Eta is internal. No eta
+  premise, `s<=K`, `delta<=1`, independence, stationarity, countability,
+  supplied integrability, new law transport, supplied `L1`/`L2`/lintegral, or
+  deterministic `K*T`.
+- Retrieval/status: sparse-loss total-delta route, exponential/Bernstein
+  tuning templates, `MLIB-REAL-LOG-SQRT`, `MLIB-ORDER-ALGEBRA`,
+  `MLIB-FINSET-SUMS`, adversarial finite scenario, Auer EXP3, inspiration-only
+  tail/potential weapons; `leanCompiled`, root imported, focused/root built,
+  external final theorem canary.
+- Failure policy: eta tuning is closed against the exact Markov scale and is
+  consumed by the explicit-gamma route below. Support sparsity remains
+  universal pathwise and Markov retains `1/delta`. Probabilistic sparsity,
+  best-arm conversion, stronger overflow, general Freedman, anytime control,
+  and ideal EXP3.P remain open.
+
+### EXP3 explicit sparse-loss predictable-variance realized Markov tuning
+
+- Lean-facing statements: exact fifth-allocation log and Markov budget
+  identities; log-weighted radius and balanced-root bounds; characterized
+  `14*gamma*T` threshold/tail; sparse arm, Markov fifth-root, confidence
+  cube-root, and realized square-root scales; clipped maximum; fifth-root
+  helper lemmas; horizon-contract package; and final
+  `sampledPredictable_explicitSparseLossPredictableVarianceRealizedMarkovRegret_tail`.
+- Local APIs/imports: preceding eta-tuned theorem, explicit
+  exponential/Bernstein tuning templates, `Real.rpow_inv_natCast_pow`,
+  square-root/power/max/min order APIs, generic Bernstein/realized dominance,
+  finite casts, field/ring normalization, arithmetic tactics, and
+  `measure_mono`.
+- Proof route: normalize `B=log(5/delta)` and
+  `v=5*K*s*T/(gamma*delta)`; square the Markov root under its fifth-power
+  contract; control the linear radius by the sparse base and cubic confidence
+  contracts; derive `14*gamma*T`; prove clipping inactive under constants
+  `4,32,8,8`; recover the four dominance contracts from component bounds and
+  invoke the characterized theorem.
+- Regularity contracts: probability prior; Standard Borel nonempty spaces;
+  measurable singletons; decidable arms with `K>=2`; predictable `[0,1]`
+  losses; supported comparator; positive horizon/sparsity; `0<delta<=1`;
+  four explicit large-horizon inequalities; universal pathwise support cap.
+  Eta and gamma are internal; no `s<=K`, independence, stationarity,
+  countability, supplied integrability, new law transport, `L1`/`L2`/
+  lintegral, or deterministic `K*T`.
+- Retrieval/status: sparse eta-tuned route, exponential/Bernstein explicit
+  templates, real log/sqrt/rpow and order/finite-sum cards, adversarial finite
+  scenario, Auer EXP3, inspiration-only weapons; `leanCompiled`, root
+  imported, focused/root built, external final theorem canary.
+- Failure policy: the explicit large-horizon schedule is closed and consumed
+  by the all-horizon wrapper below. Markov preserves polynomial `1/delta`
+  through the fifth-root component, and the result remains armwise aggregate
+  with universal pathwise sparsity. Probabilistic sparsity, best-arm
+  conversion, stronger overflow, general Freedman, anytime control, sharper
+  constants, and ideal EXP3.P remain open.
+
+### EXP3 all-horizon sparse-loss predictable-variance realized Markov regret
+
+- Lean-facing statements: exact four-contract regime predicate; branch
+  threshold using explicit `14*gamma*T` or strict `T+1`; final
+  `sampledPredictable_allHorizonSparseLossPredictableVarianceRealizedMarkovRegret_tail`.
+- Local APIs/imports: explicit sparse-loss route, generic Bernstein
+  all-horizon fallback, explicit and trivial tail theorems, generated
+  pathwise regret bound, classical branching, clipped-rate
+  positivity/stability, finite-sum/order/measure-zero APIs.
+- Proof route: branch on the packaged regime; project its four contracts into
+  the explicit theorem; otherwise instantiate the strict zero-probability
+  fallback with the identical internal eta and clipped gamma.
+- Regularity contracts: probability prior; Standard Borel nonempty spaces;
+  measurable singletons; decidable arms with `K>=2`; predictable `[0,1]`
+  losses; supported comparator; positive horizon/sparsity; `0<delta<=1`;
+  universal pathwise support cap. No caller regime proof, eta/gamma, `s<=K`,
+  independence, stationarity, countability, supplied integrability, law
+  transport, or `L1`/`L2`/lintegral.
+- Retrieval/status: explicit sparse route, generic Bernstein/exponential
+  all-horizon templates, measure/integral, finite-sum and order cards,
+  adversarial finite scenario, Auer EXP3, inspiration-only weapons;
+  `leanCompiled`, root imported, focused/root built, external final theorem
+  canary.
+- Failure policy: every positive horizon is covered, but the negative branch
+  is deliberately the coarse `T+1` fallback. The refined branch retains
+  Markov polynomial `1/delta`, universal pathwise sparsity, armwise aggregate
+  loss, componentwise constant `14`, and bounded realized deviation. Sharp
+  active clipping, probabilistic sparsity, best-arm conversion, stronger
+  overflow, general Freedman, anytime control, and ideal EXP3.P remain open.
+
+### EXP3 all-horizon a.e.-sparse predictable-variance realized Markov regret
+
+- Lean-facing statement:
+  `sampledPredictable_allHorizonSparseLossPredictableVarianceRealizedMarkovRegret_tail_of_ae_sparsity`
+  assumes one common support-cap event almost everywhere under the exact
+  internally tuned generated measure and proves the same total-delta
+  all-horizon regret tail.
+- Local APIs/imports: pathwise all-horizon sparse route; a.e. small-loss
+  lintegral and observed-square bridges; sample-local support-to-mass lemma;
+  raw a.e.-sparse total-delta tail; clipped contracts; both tuning budget
+  comparisons; strict fallback; filter, lintegral, measure, finite-sum, and
+  order APIs.
+- Proof route: turn a.e. support sparsity into a.e. `L1<=S*T`; consume it
+  without adding a union-bound event; use the explicit branch through budget
+  monotonicity and the strict `T+1` branch otherwise.
+- Regularity contracts: probability prior; Standard Borel nonempty spaces;
+  measurable singletons; decidable arms with `K>=2`; `[0,1]` predictable
+  losses; supported comparator; positive horizon/sparsity; `0<delta<=1`;
+  a.e. support cap under the exact generated measure. No universal pathwise
+  cap, extra sparsity delta, caller regime proof or eta/gamma is required.
+- Retrieval/status: pathwise all-horizon, sparse-base, and small-loss rows;
+  measure/integral, finite-sum and order cards; adversarial finite scenario;
+  Auer EXP3; inspiration-only weapons; `leanCompiled`, root imported,
+  focused-built, external canary.
+- Failure policy: measure-zero exceptions are handled, but
+  positive-probability sparsity failures are not. Markov `1/delta`, armwise
+  aggregate loss, constant `14`, bounded deviation, and the coarse fallback
+  remain.
+
+### EXP3 positive-probability sparse predictable-variance realized regret
+
+- Lean-facing statements: `sampledPredictableSparsityFailure`;
+  `sampledPredictableLossMassSum_le_or_mem_sparsityFailure`;
+  `sampledPredictableMixedSquaredVarianceLIntegral_le_globalLossMass`;
+  the residual `_tail`; and the practical
+  `_tail_of_sparsityFailure_le` theorem with failure `delta+epsilon`.
+- Local APIs/imports: sparse-base support/cardinality lemmas; the small-loss
+  observed-square, predictable, and realized explicit-bad-set consumers;
+  global variance lintegral; Markov overflow; filter/cardinality, measure,
+  ENNReal, finite-sum, and order APIs.
+- Proof route: use `S*T` only off the exact sparsity-failure event; close the
+  unconditional Markov mean with `K*T`; union five ordinary failures and the
+  explicit sparsity event; consume its generated-measure epsilon bound.
+- Regularity contracts: probability prior; Standard Borel nonempty spaces;
+  measurable singletons; decidable nonempty arms; `eta>0`; `0<gamma<1`;
+  `[0,1]` predictable losses; supported comparator; positive horizon/delta;
+  natural sparsity; exact generated-measure failure bound. No universal/a.e.
+  sparsity, positive sparsity, `S<=K`, epsilon positivity, or event
+  measurability premise.
+- Retrieval/status: a.e.-sparse, sparse-base, and small-loss rows;
+  measure/integral, finite-sum, order, adversarial finite, and Auer EXP3
+  cards; inspiration-only weapons; `leanCompiled`, root imported,
+  focused/root built, external `delta+epsilon` canary.
+- Failure policy: the global `K*T` Markov envelope replaces the sparse
+  variance envelope, so this is not the tuned all-horizon `14*gamma*T`
+  theorem. Caller eta/gamma, Markov `1/delta`, armwise aggregate loss,
+  best-arm conversion, stronger overflow, Freedman, anytime control, and
+  ideal EXP3.P remain open.
+
+### EXP3 pathwise variance under positive-probability sparsity
+
+- Lean-facing statements: sparse pathwise variance budget; pointwise
+  variance-or-sparsityFailure split; observed/predictable/realized off-bad
+  small-loss tails; four-event residual `delta+mu(bad)` theorem; practical
+  `delta+epsilon` consumer.
+- Local APIs/imports: probabilistic-sparsity definitions; small-loss
+  pointwise variance and off-bad APIs; set difference/intersection/union;
+  eventually-of-forall; measure monotonicity/union; ENNReal addition;
+  finite-sum, cast, ring, and order APIs.
+- Proof route: on `badᶜ`, combine `L1<=S*T` with
+  `sum V<=(1/(gamma/K))*L1`; apply four confidence events at `delta/4` to the
+  off-bad joint event; union the full regret event with `bad` once.
+- Regularity contracts: probability prior; Standard Borel nonempty spaces;
+  measurable singletons; decidable nonempty arms; `eta>0`; `0<gamma<1`;
+  `[0,1]` predictable losses; supported comparator; positive horizon,
+  sparsity, delta; exact generated-measure failure bound. No event
+  measurability, restricted measure, Markov, universal/a.e. cap, `S<=K`,
+  epsilon positivity, or `delta<=1`.
+- Retrieval/status: probabilistic Markov, small-loss, sparse-base,
+  measure/integral, finite-sum, order, adversarial finite, and Auer EXP3
+  cards; inspiration-only weapons; `leanCompiled`, root imported,
+  focused/root built, external practical canary.
+- Failure policy: caller eta/gamma no longer pay global `K*T`, `K^2`, or
+  Markov `1/delta`. Eta tuning and the large-horizon explicit gamma route
+  compile downstream together with all-horizon off-bad and finite best-arm
+  single-charge consumers. This row itself remains fixed-comparator and
+  caller-parameterized. Do not claim first-order loss dependence, Freedman,
+  anytime control, sharp clipping, or ideal EXP3.P.
+
+### EXP3 eta-tuned pathwise variance under probabilistic sparsity
+
+- Lean-facing statements: four-event scale; internal learning rate with
+  positivity and square-balance lemmas; three-copy Hedge bound; tuned
+  threshold; raw-budget comparison; residual `delta+mu(bad)` theorem;
+  practical internally eta-tuned `delta+epsilon` theorem.
+- Local APIs/imports: pathwise-variance base route, sparse variance budget,
+  predictable-variance radius, real log/sqrt, finite casts, field/ring and
+  nonlinear arithmetic, measure monotonicity, ENNReal addition.
+- Proof route: set
+  `scale=S*T+radius((1/(gamma/K))*S*T,delta/4)`, balance eta, use
+  `gamma<=1/2` for stability, prove raw budget below tuned threshold, and keep
+  the exact generated measure while consuming epsilon.
+- Regularity contracts: probability prior; Standard Borel nonempty spaces;
+  measurable singletons; decidable arms with `K>=2`; `0<gamma<=1/2`;
+  `[0,1]` losses; supported comparator; positive horizon/sparsity/delta;
+  exact internally eta-tuned failure bound. No caller eta, global `K*T`,
+  Markov, event measurability, restricted measure, universal/a.e. cap,
+  `S<=K`, epsilon positivity, or `delta<=1`.
+- Retrieval/status: pathwise-variance base and old tuning template;
+  log/sqrt, measure/integral, finite-sum, order, adversarial finite and Auer
+  EXP3 cards; inspiration-only weapons; `leanCompiled`, root imported,
+  focused/root built, external practical canary.
+- Failure policy: eta migration is closed and consumed by the explicit route
+  below. All-horizon migration is next. Armwise aggregate loss, bounded
+  deviation, best-arm conversion, Freedman, anytime control, and ideal EXP3.P
+  remain open.
+
+### EXP3 explicit gamma with probabilistic sparse pathwise variance
+
+- Lean-facing statements: pathwise budget closed form; log-radius and balanced
+  root bounds; `14*gamma*T` threshold comparison; pathwise mixed fifth-root,
+  raw and clipped schedules; clipping/contract lemmas; fully explicit
+  residual `delta+mu(bad)` and practical `delta+epsilon` theorems.
+- Local APIs/imports: pathwise eta-tuned route; sparse variance and radius;
+  fourth-budget log identity; Bernstein and realized radius bounds; sparse
+  arm and random-square confidence/realized scales; fifth/cube/square-root
+  algebra; real log/sqrt/rpow; casts; field/ring/nonlinear arithmetic;
+  measure monotonicity and ENNReal addition.
+- Proof route: normalize the good-path budget to `K*S*T/gamma`; use
+  `K*S*(log K)^2*log(4/delta)` for the fifth-power contract; control the
+  radius and balanced root; build the clipped four-scale maximum; extract all
+  contracts under four horizon inequalities; invoke the characterized tail
+  under the same internal eta/gamma measure.
+- Regularity contracts: probability prior; Standard Borel nonempty spaces;
+  measurable singletons; decidable `K>=2` arms; `[0,1]` predictable losses;
+  supported comparator; positive horizon/sparsity; `0<delta<=1`; four
+  arm/mixed/confidence/realized large-horizon contracts; exact internally
+  tuned bad-event bound. Eta/gamma internal. No global `K*T`, Markov, `K^2`
+  mixed numerator, polynomial `1/delta`, event measurability, restricted
+  measure, universal/a.e. cap, `S<=K`, or epsilon positivity.
+- Retrieval/status: pathwise eta-tuning and reusable old explicit-algebra
+  rows; log/sqrt/rpow, measure, finite-sum, order, adversarial finite and Auer
+  EXP3 cards; inspiration-only weapons; `leanCompiled`, root imported,
+  focused/root and `Tests.Basic` built, external explicit practical canary,
+  consumed by the all-horizon route.
+- Failure policy: large-horizon explicit gamma is closed on the four-event
+  pathwise scale and its complementary regime is handled downstream by strict
+  `T+1`. Do not claim best-arm first-order, Freedman, anytime, sharp clipping,
+  or ideal EXP3.P.
+
+### EXP3 all-horizon probabilistic sparse pathwise variance
+
+- Lean-facing statements: named conjunction of the four pathwise
+  large-horizon contracts; threshold selecting the explicit refined branch
+  or strict `T+1`; off-bad `delta` theorem; residual `delta+mu(bad)` theorem;
+  practical `delta+epsilon` theorem for every positive horizon.
+- Local APIs/imports: raw through explicit off-bad pathwise chain; generic
+  Bernstein all-horizon fallback; clipped-rate positivity/stability; strict
+  trivial realized-regret tail; set-difference monotonicity; classical
+  `if`/`by_cases`; ENNReal addition; generated regret and sparsity-failure
+  events.
+- Proof route: split on the exact four-contract condition; invoke the explicit
+  off-bad theorem in the true branch; in the false branch rewrite the
+  threshold to `T+1`, contain the off-bad event in the full strict event under
+  the same eta/gamma/measure; add bad once for the residual and consume epsilon
+  without changing measure.
+- Regularity contracts: probability prior; Standard Borel nonempty spaces;
+  measurable singletons; decidable `K>=2` arms; `[0,1]` predictable losses;
+  supported comparator; positive horizon/sparsity; `0<delta<=1`; exact
+  internally tuned bad-event bound. Eta/gamma/regime internal. No caller
+  horizon contracts, global `K*T`, Markov, `K^2`, polynomial `1/delta`,
+  universal/a.e. cap, `S<=K`, epsilon positivity, event measurability,
+  restricted measure, independence, stationarity, countability,
+  integrability, or law transport.
+- Retrieval/status: pathwise explicit-gamma and generic all-horizon rows;
+  measure, finite-sum, order, adversarial finite and Auer EXP3 cards;
+  inspiration-only weapons; `leanCompiled`, root imported, focused/root and
+  `Tests.Basic` built, external practical all-horizon canary; consumed by the
+  finite best-arm single-charge row below.
+- Failure policy: every positive horizon is covered without the old Markov
+  scale, but the complementary threshold is deliberately coarse `T+1`.
+  Bounded deviation, sharp clipping, Freedman, anytime control, and ideal
+  EXP3.P remain open.
+
+### EXP3 finite best-arm all-horizon probabilistic sparse pathwise variance
+
+- Lean-facing statements: hindsight best supported-arm cumulative predictable
+  loss as `Finset.inf'`; exact equivalence between its regret event and a
+  finite existential union of fixed-comparator events; best-arm threshold at
+  confidence share `delta/K`; best-arm off-bad theorem; single-charge residual
+  `delta+mu(bad)` theorem; practical `delta+epsilon` theorem under
+  `mu(bad)<=ofReal(epsilon)`. Older K-charge wrappers remain compatible.
+- Local APIs/imports: raw, eta-tuned, gamma-characterized, explicit, and
+  all-horizon fixed-comparator off-bad theorems; `Finset.inf'_le_iff`,
+  `Finset.inf'_le`; `Set.diff`; finite iUnions;
+  `measure_biUnion_finset_le`, `measure_mono`, `measure_union_le`; finite sums;
+  ENNReal division/cancellation; finite casts and order algebra.
+- Proof route: rewrite against the `Finset.inf'` witness; prove
+  `0<delta/K<=1`; instantiate one common internal eta/gamma/generated measure
+  for every arm at `delta/K`; distribute the common set difference through the
+  finite union; union only the comparator off-bad tails; normalize confidence;
+  add the common bad set exactly once and consume epsilon.
+- Regularity contracts: probability prior; Standard Borel nonempty spaces;
+  measurable singletons; decidable `K>=2` arms; predictable measurable
+  `[0,1]` losses; positive horizon/sparsity; `0<delta<=1`; exact same-measure
+  unscaled epsilon failure bound. Eta, gamma, best-arm infimum, and regime are
+  internal. No caller comparator or horizon contracts, epsilon/K calibration,
+  global Markov envelope, event-measurability premise, universal/a.e. cap,
+  epsilon positivity, independence, stationarity, countability, supplied
+  integrability, or law transport.
+- Retrieval/status: fixed-comparator off-bad pathwise all-horizon chain;
+  finite-sum, measure, order, adversarial finite and Auer EXP3 cards;
+  inspiration-only weapons; `leanCompiled`, root imported, focused/root and
+  `Tests.Basic` built, external single-charge practical best-arm canary.
+- Failure policy: this is finite hindsight best supported arm, not
+  stochastic-mean or first-order best arm. Single charging of the common bad
+  event is closed; `delta/K` still adds the expected logarithmic arm-count cost
+  and the fallback remains coarse `T+1`. Sharp clipping, Freedman, anytime
+  control, and ideal EXP3.P remain open.
+
+### EXP3 eta-tuned positive-probability sparse realized regret
+
+- Lean-facing statements: global probabilistic variance budget; complete
+  scale; internal learning rate and positivity/balance lemmas; three-copy
+  Hedge bound; tuned threshold and raw-budget comparison; residual
+  `delta+mu(bad)` theorem; practical eta-tuned `delta+epsilon` theorem.
+- Local APIs/imports: probabilistic-sparsity residual route, global variance
+  mean/radius, raw tail, real log/sqrt, finite casts, field/ring and nonlinear
+  arithmetic, measure monotonicity, ENNReal addition.
+- Proof route: set `v=((1/(gamma/K))*(K*T))/(delta/5)` and
+  `scale=S*T+radius(v,delta/5)`; balance eta; prove raw<=tuned; contain events
+  under the identical internally tuned generated measure; consume epsilon.
+- Regularity contracts: probability prior; Standard Borel nonempty spaces;
+  measurable singletons; decidable arms with `K>=2`; `0<gamma<=1/2`;
+  `[0,1]` predictable losses; supported comparator; positive horizon,
+  sparsity, delta; exact internally tuned failure-event bound. Eta internal;
+  no universal/a.e. sparsity, `S<=K`, epsilon positivity, or event
+  measurability premise.
+- Retrieval/status: probabilistic residual and pathwise tuning rows;
+  real-log/sqrt, measure/integral, finite-sum, order, adversarial finite, Auer
+  EXP3 cards; inspiration-only weapons; `leanCompiled`, root imported,
+  focused/root built, external eta-tuned `delta+epsilon` canary.
+- Failure policy: the global `K*T` Markov envelope remains and this row is
+  consumed by the explicit-gamma route below. All-horizon fallback, stronger
+  overflow, best-arm conversion, Freedman, anytime control, and ideal EXP3.P
+  remain open.
+
+### EXP3 explicit positive-probability sparse realized regret
+
+- Lean-facing statements: global budget closed form
+  `5*K^2*T/(gamma*delta)`; log-radius and balanced-root bounds; explicit
+  `14*gamma*T` threshold comparison; global-envelope fifth-root component;
+  raw/clipped four-way gamma schedule; horizon-contract extractor; residual
+  `delta+mu(bad)` and practical `delta+epsilon` final theorems.
+- Local APIs/imports: probabilistic eta-tuning, pathwise explicit root/power
+  utilities, global variance/radius, Bernstein and realized radius bounds,
+  real log/sqrt/rpow, finite casts, field/ring/nonlinear arithmetic, measure
+  monotonicity, ENNReal addition.
+- Proof route: normalize the K-squared Markov budget; prove the four algebraic
+  dominance conditions imply the 14-gamma threshold; make gamma the clipped
+  max of arm, Markov, confidence, and realized scales; derive the conditions
+  from four horizon inequalities; invoke the exact same-measure residual
+  route and consume epsilon.
+- Regularity contracts: probability prior; Standard Borel nonempty spaces;
+  measurable singletons; decidable `K>=2` arms; predictable `[0,1]` losses;
+  supported comparator; positive horizon/sparsity; `0<delta<=1`; four
+  large-horizon inequalities; exact internally eta/gamma-tuned failure-event
+  bound. No universal/a.e. cap, `S<=K`, epsilon positivity, independence,
+  stationarity, countability, integrability, event measurability, or new law
+  transport.
+- Retrieval/status: probabilistic eta-tuning and pathwise explicit-gamma rows;
+  log/sqrt/rpow, measure, finite-sum, order, adversarial finite, and Auer EXP3
+  cards; inspiration-only weapons; `leanCompiled`, root imported,
+  focused/root built, external final `delta+epsilon` canary.
+- Failure policy: consumed by the all-horizon route below. The global
+  envelope keeps `K^2` and polynomial `1/delta`; the result is armwise
+  aggregate. Do not claim pathwise sparse variance, stronger overflow,
+  best-arm conversion, Freedman, anytime control, or ideal EXP3.P.
+
+### EXP3 all-horizon positive-probability sparse realized regret
+
+- Lean-facing statements: named four-contract regime; branch threshold using
+  explicit `14*gamma*T` or strict `T+1`; residual `delta+mu(bad)` theorem;
+  practical all-horizon `delta+epsilon` theorem.
+- Local APIs/imports: probabilistic explicit tuning, generic Bernstein
+  all-horizon fallback, clipped-rate positivity/stability, trivial realized
+  tail, classical condition split, ENNReal addition, generated regret and
+  sparsity-failure events.
+- Proof route: split on the internal regime; consume explicit residual in the
+  true branch; use strict `T+1` zero-probability in the false branch; preserve
+  identical eta/gamma/measure; consume epsilon.
+- Regularity contracts: probability prior; Standard Borel nonempty spaces;
+  measurable singletons; decidable `K>=2` arms; predictable `[0,1]` losses;
+  supported comparator; positive horizon/sparsity; `0<delta<=1`; exact
+  internal generated-measure failure bound. No caller regime proof,
+  universal/a.e. cap, `S<=K`, epsilon positivity, independence, stationarity,
+  countability, integrability, event measurability, or law transport.
+- Retrieval/status: probabilistic explicit-gamma, pathwise sparse all-horizon,
+  generic Bernstein fallback, measure, finite-sum, order, adversarial finite,
+  Auer EXP3, and inspiration-only cards; `leanCompiled`, root imported,
+  focused/root built, external final theorem canary.
+- Failure policy: every positive horizon is covered, but fallback `T+1` is
+  coarse. The refined branch keeps `K^2`, polynomial `1/delta`, armwise
+  aggregate loss, and bounded realized deviation. Do not claim sharp
+  clipping, pathwise sparse variance, stronger overflow, best-arm conversion,
+  Freedman, anytime control, or ideal EXP3.P.
+
+### Compiled leaf: tune the sparse double-variance realized threshold
+
+`Exp3MixedSquarePredictableVarianceSparseLossRealizedDoublePathwiseVarianceProbabilisticSparsityTuning`
+now compiles. The prerequisite small-loss double-variance assembler preserves
+the explicit bad set and corrects the raw predictable mean budget from `K*T`
+to `S*T`.
+
+- Lean-facing statements: the reused learning rate is
+  `sqrt(log K/scale)` with `scale=S*T+mixedRadius`; the tuned threshold is
+  `3*sqrt(log K*scale)+gamma*T` plus pure-cross, comparator, and exact
+  selected-loss predictable-variance radii. Off-bad, residual, and practical
+  `delta+epsilon` theorems compile.
+- Local APIs/imports: the generic small-loss double-variance joint tail; the
+  caller-parameterized sparse theorem; old pathwise eta balance; both named
+  variance radii; real log/sqrt; finite casts; `linarith`; set-difference
+  measure monotonicity; ENNReal addition.
+- Proof route: reuse scale positivity and eta-square identity; bound entropy
+  plus stability by three balanced copies under `gamma<=1/2`; retain the
+  realized radius unchanged; prove raw budget at the internal eta is below
+  the tuned threshold; transport under the identical generated measure.
+- Regularity: probability prior; Standard Borel nonempty spaces; measurable
+  singletons; decidable `K>=2` arms; `0<gamma<=1/2`; predictable `[0,1]`
+  losses; supported comparator; positive horizon/sparsity/delta; exact
+  same-measure failure bound only for epsilon. Eta is internal. No event
+  measurability, universal/a.e. sparsity, `S<=K`, epsilon positivity,
+  `delta<=1`, independence, stationarity, countability, supplied
+  integrability, Markov step, fixed Hoeffding realized proxy, or new law.
+- Retrieval/status: double-pathwise sparse row; old pathwise tuning row;
+  `MLIB-REAL-LOG-SQRT`, measure/integral, finite-sum and order cards;
+  adversarial finite/Auer EXP3; weapons inspiration only; `leanCompiled`,
+  root imported, focused/root and `Tests.Basic` built, external practical
+  canary.
+- Failure policy: eta tuning is closed and consumed by the explicit-gamma
+  route below. All-horizon and best-arm statuses still require their own
+  exact double-variance wrappers. Do not inherit them from the
+  bounded-realized route or claim general Freedman, anytime, first-order,
+  stochastic-mean, sharp clipping, or ideal EXP3.P.
+
+### Compiled leaf: explicit gamma for sparse double variance
+
+`Exp3MixedSquarePredictableVarianceSparseLossRealizedDoublePathwiseVarianceProbabilisticSparsityExplicitTuning`
+now compiles and consumes the preceding eta-tuned route.
+
+- Lean-facing statements: gamma is
+  `min(1/2,max(oldPathwiseRaw,sqrt(S*log(4/delta)/T)))`; eta remains the
+  exact sparse square-root rate; the explicit threshold is
+  `16*gamma*T`. Gamma-characterized and clipped off-bad, residual, and
+  practical `delta+epsilon` theorems compile.
+- Local APIs/imports: the exact double-variance tuning module; the older
+  pathwise explicit schedule; sparse arm, mixed fifth-root, and confidence
+  cube-root components; `sampledRealizedPredictableVarianceRadius`;
+  min/max, log/sqrt/rpow order algebra; square/fifth/cube dominance helpers;
+  Bernstein radius control; finite casts; `linarith`/`nlinarith`;
+  `measure_mono`, set difference, and ENNReal addition.
+- Proof route: add the selected-loss scale to the old raw maximum; prove all
+  components are at most one half from four horizon contracts; extract the
+  quadratic/fifth-power/cubic/selected-loss-quadratic contracts; bound the
+  exact radius by `3*gamma*T`; combine `6+1+3+3+3` gamma-horizon units; then
+  transport the eta-tuned event under the identical generated measure.
+- Regularity: probability prior; Standard Borel nonempty spaces; measurable
+  singletons; decidable `K>=2` arms; predictable `[0,1]` losses; supported
+  comparator; positive horizon/sparsity; `0<delta<=1`; four named
+  large-horizon inequalities; exact same-measure failure bound only for
+  epsilon. Eta and gamma are internal. No event measurability, universal/a.e.
+  sparsity, `S<=K`, epsilon positivity, Markov, fixed Hoeffding proxy,
+  supplied integrability, independence, or new law transport.
+- Retrieval/status: exact eta-tuned row; older pathwise explicit row;
+  `MLIB-REAL-LOG-SQRT`, order, finite-sum, and measure cards; adversarial
+  finite/Auer EXP3; weapons inspiration only; `leanCompiled`, root imported,
+  focused and `Tests.Basic` built, and externally canaried at all three
+  theorem surfaces.
+- Failure policy: explicit large-horizon eta/gamma tuning is closed and this
+  leaf is consumed by the all-horizon route below. Active clipping is covered
+  downstream only through strict `T+1`; best-arm migration is next. Do not
+  claim sharp active clipping, general Freedman, anytime/self-normalized,
+  stochastic first-order, or ideal EXP3.P.
+
+### Compiled leaf: all horizons for sparse double variance
+
+`Exp3MixedSquarePredictableVarianceSparseLossRealizedDoublePathwiseVarianceProbabilisticSparsityAllHorizon`
+now compiles and consumes the preceding explicit schedule.
+
+- Lean-facing statements:
+  `doubleVarianceProbabilisticSparseLossLargeHorizonCondition` packages the
+  four explicit contracts;
+  `doubleVarianceProbabilisticSparseLossAllHorizonRegretThreshold` selects the
+  explicit threshold in that regime and strict `T+1` otherwise. Off-bad,
+  residual, and practical `delta+epsilon` theorem surfaces compile.
+- Local APIs/imports: the exact explicit-tuning module;
+  `Exp3BernsteinAllHorizon`; the clipped-rate positivity and half-bound;
+  sparse eta; `sampledPredictable_trivialRealizedRegret_tail`; generated
+  trajectory kernels; `Set.diff_subset`, `measure_mono`, ENNReal addition,
+  and classical `if`/`by_cases` rewriting.
+- Proof route: split on the packaged condition; project its four contracts
+  into the explicit theorem in the refined branch; invoke the strict `T+1`
+  tail under exactly the same eta/gamma/measure in the fallback; use
+  `E\bad subset E` for off-bad and add the common bad event once for the
+  residual; then substitute the same-measure epsilon bound.
+- Regularity: probability prior; Standard Borel nonempty spaces; measurable
+  action singletons; decidable nonempty `K>=2` arms; predictable jointly
+  measurable pointwise `[0,1]` losses; supported comparator; positive
+  horizon/sparsity; `0<delta<=1`. Eta, gamma, branch, and measure are internal.
+  No caller regime proof, event measurability, universal/a.e. sparsity,
+  `S<=K`, epsilon positivity, Markov, fixed Hoeffding proxy, supplied
+  integrability, independence, or new law transport.
+- Retrieval/status: exact explicit row; older pathwise all-horizon template;
+  generic strict realized tail; measure, finite-sum, and order cards;
+  adversarial finite/Auer EXP3; weapons inspiration only; `leanCompiled`,
+  root imported, focused and `Tests.Basic` built, externally canaried at all
+  three theorem surfaces.
+- Failure policy: all positive horizons are covered without caller contracts,
+  but the fallback is deliberately coarse strict `T+1`. This leaf is consumed
+  by the finite best-arm route below. Do not claim sharp clipping, general
+  Freedman, anytime/self-normalized, stochastic first-order, or ideal EXP3.P.
+
+### Compiled theorem: exact double-variance finite best arm
+
+`Exp3MixedSquarePredictableVarianceSparseLossRealizedDoublePathwiseVarianceProbabilisticSparsityBestArmAllHorizon`
+now compiles and consumes the fixed-comparator all-horizon off-bad surface.
+
+- Lean-facing statements:
+  `doubleVarianceProbabilisticSparseLossBestArmAllHorizonRegretThreshold`
+  applies the exact fixed-comparator threshold at `delta/K`; the off-bad
+  theorem gives `delta`, the residual gives `delta+mu(sparsityFailure)`, and
+  the practical theorem gives `delta+epsilon` from an unscaled same-measure
+  failure bound. No comparator argument remains.
+- Local APIs/imports: `Exp3BestArm`; `sampledPredictableBestArmCumulativeLoss`;
+  its `Finset.inf'` event equivalence; the exact fixed-comparator all-horizon
+  off-bad theorem; clipped gamma positivity/half-bound; sparse eta; finite
+  iUnion and `Set.diff`; `measure_biUnion_finset_le`, `measure_mono`,
+  `measure_union_le`; finite sums; ENNReal `ofReal` division/cancellation;
+  casts, `omega`, and order algebra.
+- Proof route: derive `0<delta/K<=1`; use one comparator-independent schedule
+  and measure; rewrite best-arm regret as the finite comparator union;
+  distribute removal of the common bad set; invoke every arm tail at
+  `delta/K`; normalize `K*ofReal(delta/K)=ofReal(delta)`; then add the common
+  bad set exactly once and consume epsilon.
+- Regularity: probability prior; Standard Borel nonempty spaces; measurable
+  action singletons; decidable nonempty `K>=2` arms; predictable jointly
+  measurable pointwise `[0,1]` losses; positive horizon/sparsity;
+  `0<delta<=1`; same-measure failure bound only for the practical endpoint.
+  Comparator, eta, gamma, infimum, and regime are internal. No caller horizon
+  contracts, epsilon/K premise, event measurability, universal/a.e. sparsity,
+  `S<=K`, epsilon positivity, Markov, supplied integrability, independence,
+  or new law transport.
+- Retrieval/status: exact all-horizon row; shared `Exp3BestArm`; compiled
+  pathwise single-charge pattern; finite-sum, measure, and order cards;
+  adversarial finite/Auer EXP3; weapons inspiration only; `leanCompiled`,
+  root imported, focused/root and `Tests.Basic` built, externally canaried at
+  off-bad and practical surfaces, declaration-checked at residual.
+- Failure policy: finite hindsight best-arm conversion and single common-bad
+  charging are closed for this exact route. The `delta/K` schedule retains
+  log-K cost and fallback remains coarse strict `T+1`. Do not claim
+  stochastic-mean/first-order regret, sharp clipping, general Freedman,
+  anytime/self-normalized control, or ideal EXP3.P.
+
+## CONCENTRATION-PREDICTABLE-COMPENSATED-FIXED-TILT-TAIL
+
+- Lean-facing statement:
+  `Concentration.measure_sum_ge_inter_sum_le_of_compensated_hasCondMGFUpperBoundAt`
+  bounds the ENNReal probability of
+  `{threshold<=sum Y, sum V<=varianceBudget}` by
+  `ofReal(exp(-tilt*threshold+varianceCoeff*varianceBudget))`.
+- Local APIs/imports: `ConcentrationFixedMGF`, fixed and conditional
+  `HasMGFUpperBoundAt`, `StronglyAdapted`, `Filtration`, the compiled
+  fixed-tilt finite-sum tail, `Measure.real`, ENNReal conversion, finite sums,
+  and `measure_mono`.
+- Proof route: apply the sum theorem to
+  `tilt*Y_i-varianceCoeff*V_i`; convert the real measure result; prove the
+  joint source event lies in the compensated tail using coefficient
+  nonnegativity. The realized predictable-variance EXP3 fixed-tilt theorem is
+  the first downstream consumer with `varianceCoeff=tilt^2`.
+- Regularity: Standard Borel ambient space, finite zero-or-probability
+  measure, strong adaptedness, source-record exponential integrability,
+  initial and successor conditional MGF witnesses, and nonnegative tilt and
+  variance coefficient. No independence, deterministic variance cap, bounded
+  increments, or event measurability premise.
+- Retrieval/status: prior fixed-tilt concentration leaf, Mathlib
+  MGF/conditional-kernel/martingale cards, no ready Mathlib Freedman theorem;
+  `leanCompiled`, focused-built, consumed, and externally canaried.
+- Failure policy: do not cite this as tilt optimization, a maximal/anytime or
+  self-normalized inequality, a producer of one-step MGF witnesses, or a
+  general Freedman theorem.
+
+## CONCENTRATION-PREDICTABLE-COMPENSATED-QUADRATIC-DELTA-TAIL
+
+- Lean-facing statement:
+  `Concentration.measure_deviation_ge_inter_variance_le_delta_of_fixedTilt_quadratic_tail`
+  turns the family
+  `mu{radius<=D, W<=V}<=ofReal(exp(-tilt*radius+c*tilt^2*V))`, valid for every
+  `0<=tilt<=cap`, into `mu{radius<=D, W<=V}<=ofReal(delta)` at
+  `radius=2*sqrt(c*V*log_+(1/delta))+log_+(1/delta)/cap`.
+- Local APIs/imports: `ConcentrationQuadraticFixedMGF`, the migrated
+  `exists_tilt_quadratic_fixedMGF_exponent_le_neg`, `Real.sqrt/log/exp`, max,
+  ENNReal `ofReal` monotonicity, and ordered-field algebra.
+- Proof route: select the interior-or-cap quadratic optimizer; apply the
+  caller's fixed-tail family at that tilt; compare exponents; prove
+  `exp(-max(log(1/delta),0))<=delta` by splitting at `delta<=1`.
+- Regularity: measurable ambient space; `c,V,cap,delta>0`; the displayed
+  fixed-tail family. Probability, adaptedness, conditional MGF, boundedness,
+  and law transport are producer contracts, not hidden optimizer assumptions.
+- Retrieval/status: prior predictable-compensator fixed-tilt leaf; Mathlib
+  log/sqrt/exp and order cards; realized and mixed-square EXP3 consumers;
+  `leanCompiled`, root imported, focused-built, externally canaried, consumed
+  by both existing delta theorems.
+- Failure policy: quadratic fixed-horizon tilt selection and delta calibration
+  are closed. Do not claim one-step MGF construction, maximal/anytime or
+  mixture bounds, optional stopping, self-normalization, or general Freedman.
+
+## CONCENTRATION-QUADRATIC-FINITE-MAXIMAL-TAIL
+
+- Lean-facing statements:
+  `Concentration.measure_biUnion_deviation_ge_inter_variance_le_delta_of_fixedTilt_quadratic_tail`
+  bounds the finite union at equal-share radius; the consumed EXP3 endpoint is
+  `Exp3.sampledPredictableRealizedDeviation_prefix_max_tail_predictableVariance_delta`
+  for every `t<horizon`, i.e. prefix lengths `1` through `horizon` inclusive.
+- Local APIs/imports: `ConcentrationQuadraticMaximal`, the quadratic delta
+  theorem, `ProbabilityUnionBound.measure_biUnion_finset_le`, finite cards and
+  sums, ENNReal `ofReal` division/cancellation, and the realized EXP3
+  predictable-variance fixed-tilt theorem.
+- Proof route: set `deltaShare=delta/times.card`; prove every indexed event at
+  that confidence; sum the finite outer-measure union; cancel the positive
+  finite cardinality. For EXP3, index `t` is the prefix of length `t+1` and
+  cap is exactly `1`.
+- Regularity: generic measurable ambient space; decidable nonempty finite
+  index set; positive scale, variance budget, cap, and delta; per-index
+  fixed-tail families. EXP3 adds probability/Standard-Borel/action-law/legal
+  gamma/predictable `[0,1]` loss and positive-horizon contracts. No event
+  measurability, independence, stationarity, or `delta<=1`.
+- Retrieval/status: quadratic delta route; finite-union Mathlib wrapper;
+  finite-sum, measure, and log/sqrt cards; realized fixed-tilt producer;
+  `leanCompiled`, root imported, focused/root and Tests.Basic built, externally
+  canaried at generic and model theorem surfaces.
+- Failure policy: finite prefix-union control is closed with the equal-share
+  log-cardinality cost. Do not claim Ville/Doob maximal concentration,
+  horizon-free anytime or mixture bounds, optional stopping,
+  self-normalization, general Freedman, or a new one-step MGF producer.
+
+## Completed leaf: practical selected-policy centered-sum tail
+
+- Lean statement: inspect
+  `ConditionalExpectationReward.centeredRewardSuccProcess_sum_tail_ennreal_of_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded`
+  with `python3 tools/bandit.py list-lean-decls <name> --statement`. It bounds
+  `eps <= sum (Finset.range n) Y` by the canonical exponential ENNReal RHS,
+  with `Y 0 = 0`, `Y (i+1)` the selected-policy centered reward, and
+  `cY (i+1)=varianceCeiling i`.
+- Local APIs/imports: `BanditRLProof.ConditionalRewardLawSource` imports
+  `ConditionalExpectationReward` and `ConcentrationSubGaussian`; the proof uses
+  generated-history `StronglyAdapted`, the practical selected-policy
+  history-variance conditional-MGF theorem, and the Mathlib-backed local
+  conditional sub-Gaussian finite-sum wrapper.
+- Regularity contracts: ambient probability and Standard Borel space;
+  countable measurable actions with measurable singletons; measurable reward
+  coordinates, context, state, and mean; raw reward/selected mean ranges;
+  `CenteredRewardKernelLaw`; selected-history variance ceilings; all-time
+  trim-a.e. selected reward-coordinate `condExpKernel.map` laws; `0 <= eps`.
+- Retrieval/status: local conditional reward-law source, history filtration,
+  conditional sub-Gaussian and Mathlib finite-sum tail cards; `leanCompiled`
+  with a full external `Tests.Basic` canary.
+- Failure policy: if a concrete model cannot prove the selected reward law or
+  selected-history variance bound, isolate that law/variance transport. Do not
+  replace it with independence or an assumed abstract conditional MGF.
+  Arm-wise empirical means, confidence inversion, anytime concentration, and
+  final regret remain downstream.
+
+## Completed theorem route: selected-policy absolute delta confidence
+
+- Lean statements: query
+  `Concentration.condSubGaussian_sum_abs_tail_ennreal_of_stronglyAdapted`,
+  `Concentration.condSubGaussian_sum_abs_tail_ennreal_delta_of_stronglyAdapted`,
+  and
+  `ConditionalExpectationReward.centeredRewardSuccProcess_sum_abs_tail_ennreal_delta_of_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded`
+  using `python3 tools/bandit.py list-lean-decls <name> --statement`.
+- Local APIs/imports: `ConcentrationSubGaussian` uses Mathlib
+  `HasSubgaussianMGF.sum_of_hasCondSubgaussianMGF`, negation, one-sided tails,
+  `measure_union_le`, ENNReal `ofReal`, and log/sqrt algebra. The practical
+  theorem is in `ConditionalRewardLawSource`, whose existing imports already
+  expose that concentration layer and generated-history APIs.
+- Proof route: globalize the finite conditional sum MGF; apply upper and lower
+  tails; union them; calibrate `sqrt(2 V log(2/delta))`; instantiate generated
+  StronglyAdapted rewards and every selected-policy successor MGF.
+- Contracts: positive total proxy variance and `0 < delta <= 1` are added to
+  the previous practical selected-law/raw-range/mean-range/history-variance
+  surface. No independence, stationarity, event measurability, or supplied
+  global MGF is introduced.
+- Retrieval/status: generic card
+  `LOCAL-LEAF-CONCENTRATION-CONDITIONAL-SUBGAUSSIAN-ABS-DELTA` and practical
+  card
+  `LOCAL-LEAF-COND-EXPECT-REWARD-SELECTED-POLICY-HISTORY-VARIANCE-CENTERED-SUM-ABS-DELTA`;
+  both `leanCompiled`, with generic and full practical external canaries.
+- Failure policy: for zero total variance, use a strict bad event or prove the
+  degenerate equality separately; do not drop positivity for the non-strict
+  event. Missing selected law or variance transport remains the exact model
+  blocker. Do not report this as arm-wise, random-count, anytime, Freedman, or
+  regret concentration.
+
+## Completed theorem route: selected-policy fixed-sample average confidence
+
+- Lean statements: query
+  `Concentration.measure_average_abs_tail_le_of_measure_sum_abs_tail`,
+  `Concentration.condSubGaussian_average_abs_tail_ennreal_delta_of_stronglyAdapted`,
+  and
+  `ConditionalExpectationReward.centeredRewardSuccProcess_average_abs_tail_ennreal_delta_of_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded`
+  with `python3 tools/bandit.py list-lean-decls <name> --statement`.
+- Local APIs/imports and proof route: `ConcentrationSubGaussian` uses the
+  compiled absolute sum-delta theorem, `measure_mono`, `abs_div`, and positive
+  real division. `ConditionalRewardLawSource` calls its existing practical
+  selected-policy sum-delta theorem, then the generic transport.
+- Index and contracts: `range (m+1)` has zero at index zero and exactly `m`
+  successor rewards at indices `1..m`; both sum and radius are divided by
+  `(m:Real)`. Require `0<m`, positive total proxy variance, `0<delta<=1`, and
+  all prior selected-law/raw/mean/history-variance regularity.
+- Retrieval/status: cards
+  `LOCAL-LEAF-CONCENTRATION-CONDITIONAL-SUBGAUSSIAN-AVERAGE-ABS-DELTA` and
+  `LOCAL-LEAF-COND-EXPECT-REWARD-SELECTED-POLICY-HISTORY-VARIANCE-CENTERED-AVERAGE-ABS-DELTA`;
+  both `leanCompiled` and externally canaried.
+- Failure policy: do not define this average at `m=0`; zero total variance
+  needs a strict event or separate degenerate proof. Missing selected law or
+  variance transport remains a model blocker. Do not report arm-wise,
+  random-count, anytime/self-normalized/Freedman, or regret confidence.
+
+## Completed theorem route: product-law arm-prefix average confidence
+
+- Lean statements: inspect
+  `Concentration.subGaussian_sum_abs_tail_ennreal_of_iIndepFun`,
+  `Concentration.subGaussian_sum_abs_tail_ennreal_delta_of_iIndepFun`,
+  `Concentration.subGaussian_average_abs_tail_ennreal_delta_of_iIndepFun`,
+  and `UCB.measure_armPrefixAverageConfidenceRadius_le_abs_empiricalMean_sub`.
+- Local APIs/imports: `ConcentrationSubGaussian` uses Mathlib
+  `HasSubgaussianMGF.sum_of_iIndepFun`, negation, outer-measure union, shared
+  log/sqrt calibration, and positive division. `UCBArmStreamTail` supplies
+  `infinitePi` coordinate independence, coordinate-law MGF transport,
+  `armPrefixSum`, `armPrefixEmpiricalMean`, and constant finite sums.
+- Proof route/contracts: sum centered coordinates `0..k-1`, apply the exact
+  `range k` average theorem, rewrite the centered sum divided by `k` as the
+  empirical mean minus `mean`, and derive positive total proxy from `k>0` and
+  `sigma2!=0`. Also require a Markov arm kernel, centered coordinate MGF, and
+  `0<delta<=1`; no event measurability or aggregate-variance premise.
+- Retrieval/status: cards
+  `LOCAL-LEAF-CONCENTRATION-INDEPENDENT-SUBGAUSSIAN-AVERAGE-ABS-DELTA` and
+  `LOCAL-LEAF-UCB-ARM-STREAM-FIXED-PREFIX-AVERAGE-DELTA`; both
+  `leanCompiled`, retrievable, and externally canaried.
+- Failure policy: `k=0` and zero proxy need separate degenerate handling.
+  This fixed-sample theorem does not replace the adaptive peeling route and
+  does not establish non-product selected-law, anytime/self-normalized,
+  Freedman, or new regret results.
+
+## Completed theorem route: selected-policy arm-masked centered sum
+
+- Lean statements: inspect
+  `ProbabilityTheory.HasCondSubgaussianMGF.indicator`,
+  `ConditionalExpectationReward.generatedActionFromRewardHistory_succ_measurable_historyFiltrationSucc`,
+  `ConditionalExpectationReward.generatedActionFromRewardHistory_armMaskedCenteredRewardSuccProcess_stronglyAdapted`, and
+  `ConditionalExpectationReward.armMaskedCenteredRewardSuccProcess_sum_abs_tail_ennreal_delta_of_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded`.
+- Local APIs/imports: `ConditionalExpectation.Indicator`, `condExp_indicator`,
+  `condExpKernel_ae_eq_trim_condExp`, `mgf_congr`, the generated reward-prefix
+  comap equality, `StronglyMeasurable.indicator`, and the existing practical
+  selected-policy one-step conditional-MGF and two-sided delta wrappers.
+- Proof route/contracts: prove `{A_(i+1)=arm}` measurable at `F_i`; mask the
+  centered successor reward; preserve its conditional MGF with the same
+  deterministic `varianceCeiling i`; prove StronglyAdapted; apply the fixed
+  horizon absolute-sum theorem. Retain all selected-law/raw-range/mean-range/
+  centered-kernel/history-variance contracts, positive total proxy variance,
+  fixed arm/horizon, and `0<delta<=1`.
+- Retrieval/status: cards
+  `LOCAL-LEAF-CONCENTRATION-CONDITIONAL-SUBGAUSSIAN-INDICATOR` and
+  `LOCAL-LEAF-COND-EXPECT-REWARD-SELECTED-POLICY-ARM-MASKED-CENTERED-SUM-ABS-DELTA`;
+  both are `leanCompiled` and externally canaried.
+- Failure policy: ambient measurability is insufficient if `F_i`
+  predictability fails. The adjacent predictable-variance theorem supports the
+  random mask explicitly; do not strengthen this older deterministic-proxy
+  statement by rewriting it. Anytime/self-normalized/general Freedman bounds
+  and regret remain open.
+
+## Completed theorem route: masked conditional sub-Gaussian predictable variance
+
+- Lean statements: inspect
+  `ProbabilityTheory.HasCondSubgaussianMGF.indicator_compensated_hasCondMGFUpperBoundAt`,
+  `Concentration.condSubGaussian_indicator_sum_tail_predictableVariance_fixedTilt`,
+  `Concentration.subGaussianPredictableVarianceRadius`, and
+  `Concentration.condSubGaussian_indicator_sum_abs_tail_predictableVariance_delta`.
+- Local APIs/imports: `ConcentrationFixedMGF`,
+  `ConcentrationQuadraticFixedMGF`, `condExp_indicator`, condExpKernel support,
+  compensated fixed-MGF finite-sum iteration, negation, and outer-measure union.
+- Proof route/contracts: subtract `(c*tilt^2/2)*1_s` from `tilt*(1_s X)` at
+  each step; iterate the zero-budget witnesses while retaining `sum (c*1_s)`;
+  optimize upper and negated lower tails at `delta/2`. Require predictable masks,
+  StronglyAdapted masked increments/proxies, successor conditional sub-Gaussian
+  witnesses, fixed horizon, positive variance budget, and positive delta.
+- Retrieval/status: card
+  `LOCAL-LEAF-CONCENTRATION-CONDITIONAL-SUBGAUSSIAN-PREDICTABLE-VARIANCE`;
+  `leanCompiled`, focused-built, and externally canaried.
+- Failure policy: the endpoint controls a joint event with a caller-supplied
+  deterministic budget on the random proxy. It does not prove the budget event,
+  peel over arbitrary variance budgets, or establish maximal/anytime,
+  self-normalized, general Freedman, or regret bounds. Exact Nat-count peeling
+  now compiles in the downstream route.
+
+## Completed theorem route: selected-policy successor-arm empirical mean
+
+- Lean statements: inspect
+  `Concentration.measure_randomCount_average_abs_tail_le_of_measure_sum_abs_tail`,
+  `ConditionalExpectationReward.successorArmPullCount`,
+  `ConditionalExpectationReward.successorArmRewardSum`,
+  `ConditionalExpectationReward.successorArmEmpiricalMean`,
+  `ConditionalExpectationReward.armMaskedCenteredRewardSuccProcess_sum_eq_successorArmRewardSum_sub_pullCount_mul`,
+  `ConditionalExpectationReward.successorArmEmpiricalMean_abs_tail_ennreal_delta_of_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded`,
+  `ConditionalExpectationReward.armMaskedVarianceSuccProcess_sum_eq_mul_successorArmPullCount`,
+  `ConditionalExpectationReward.armMaskedCenteredRewardSuccProcess_sum_abs_tail_predictableVariance_ennreal_delta_of_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded`,
+  `ConditionalExpectationReward.successorArmEmpiricalMeanExactCountRadius`, and
+  `ConditionalExpectationReward.successorArmEmpiricalMean_abs_tail_exact_pullCount_ennreal_delta_of_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded`,
+  `Concentration.measure_positive_randomCount_event_le_sum_exactCount`,
+  `Concentration.measure_positive_randomCount_event_le_of_exactCount_uniform`,
+  `ConditionalExpectationReward.successorArmPullCount_le_horizon`,
+  `ConditionalExpectationReward.successorArmEmpiricalMeanPeelingRadius`, and
+  `ConditionalExpectationReward.successorArmEmpiricalMean_abs_tail_random_pullCount_ennreal_delta_of_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded`,
+  `ProbabilityUnionBound.measure_biUnion_finset_le_of_uniform`,
+  `ConditionalExpectationReward.successorArmEmpiricalMeanFiniteArmTimeConfidenceShare`,
+  `ConditionalExpectationReward.successorArmEmpiricalMeanFiniteArmTimePeelingRadius`,
+  `ConditionalExpectationReward.successorArmEmpiricalMeanFiniteArmTimeBadEvent`, and
+  `ConditionalExpectationReward.successorArmEmpiricalMean_simultaneous_finiteArmTime_abs_tail_ennreal_delta_of_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded`,
+  `UCB.selectedPolicySuccessorEmpiricalMeanAt`,
+  `UCB.selectedPolicySuccessorRadiusAt`,
+  `UCB.selectedPolicySuccessorIndexAt`,
+  `UCB.SelectedPolicySuccessorInitializedScoreMaxSource`,
+  `UCB.selectedPolicySuccessorLargeGapEvent`,
+  `UCB.SelectedPolicySuccessorInitializedScoreMaxSource.meanGap_le_two_radius_of_not_badEvent`, and
+  `UCB.measure_selectedPolicySuccessorLargeGapEvent_le_ennreal_delta_of_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded`.
+- Local APIs/imports: `ConditionalRewardLawSource` imports `MathlibWrappers`;
+  `Algorithms.UCBConditionalRewardLaw` imports that practical theorem plus
+  `Algorithms.UCB` and is exported by the root module;
+  the action/reward universe-general `sumRewards_eq_finset_filter_sum`,
+  `pullCount_eq_finset_filter_card`, positive Real division, and `measure_mono`
+  provide the deterministic and probability transports.
+- Proof route: align successor indices `1..n-1`; rewrite the fixed-arm masked
+  centered sum as reward sum minus pull count times the stationary arm mean;
+  reuse the practical masked sum delta tail; divide by the positive realized
+  count; rewrite to the empirical-mean deviation event. For the sharper route,
+  charge `sigma2` only on the predictable arm-selection mask, identify the
+  cumulative proxy with `sigma2*pullCount`, and restrict to `pullCount=k`.
+  Finally bound the count by `n`, assign every positive fiber `delta/n`, take
+  the finite outer-measure union, and evaluate the radius at realized count.
+  For simultaneous control, form `arms.product (Finset.range T)`, assign each
+  member `delta / family.card`, invoke the random-count theorem at horizon
+  `pair.2+1`, and normalize the outer union with the generic equal-share API.
+  For UCB consumption, retain the sample-dependent radius, package initialized
+  times and positive best/chosen counts in the score-max source, extract both
+  confidence inequalities outside the simultaneous event, apply
+  `UCB.meanGap_le_two_radius_of_confidenceScore_max`, and cover the existential
+  large-gap selection event by the practical bad event.
+- Contracts: all practical selected reward law, measurable surface, raw/mean
+  range, centered-kernel, and history-variance assumptions;
+  `[DecidableEq Action]`; stationary fixed-arm mean for every context history.
+  The older theorem needs positive full proxy and `0<delta<=1`; the exact-count
+  theorem instead needs a uniform ceiling `sigma2`, `k>0`, coerced `sigma2>0`,
+  and `delta>0`. The random-count theorem replaces fixed `k` by `n>0` and keeps
+  the same selected-law, uniform-variance, stationary-mean, and `delta>0`
+  contracts. The simultaneous theorem additionally requires an explicit
+  nonempty arm `Finset`, `T>0`, and stationary means for every arm in that set;
+  it does not require `Fintype Action`, event/count measurability, or
+  `delta<=1`. The current UCB adapter additionally takes `Action : Type` to
+  match the existing universe-0 score algebra and requires a source-supplied
+  initialized time set, arm membership, positive counts, and realized-index
+  score maximality. It does not use the deterministic-radius
+  `UCB.finiteHorizonConfidenceBadEvent` API.
+- Retrieval/status: cards
+  `LOCAL-LEAF-CONCENTRATION-RANDOM-COUNT-AVERAGE-TRANSPORT` and
+  `LOCAL-LEAF-COND-EXPECT-REWARD-SELECTED-POLICY-SUCCESSOR-ARM-EMPIRICAL-MEAN-ABS-DELTA`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-SELECTED-POLICY-SUCCESSOR-ARM-EMPIRICAL-MEAN-EXACT-COUNT-ABS-DELTA`,
+  `LOCAL-LEAF-CONCENTRATION-POSITIVE-RANDOM-COUNT-EXACT-FIBER-PEELING`, and
+  `LOCAL-LEAF-COND-EXPECT-REWARD-SELECTED-POLICY-SUCCESSOR-ARM-EMPIRICAL-MEAN-RANDOM-COUNT-ABS-DELTA`, and
+  `LOCAL-LEAF-COND-EXPECT-REWARD-SELECTED-POLICY-SUCCESSOR-ARM-EMPIRICAL-MEAN-FINITE-ARM-TIME-ABS-DELTA`, and
+  `LOCAL-LEAF-UCB-SELECTED-POLICY-SUCCESSOR-RANDOM-WIDTH-LARGE-GAP-DELTA`;
+  all `leanCompiled` and externally canaried.
+- Failure policy: fixed-horizon positive random-count, simultaneous finite
+  arm/time confidence, and the initialized random-width score consumer now
+  compile. Do not replace the random width by the older deterministic-radius
+  event API. The concrete generated policy/source, initialization, and expected
+  pull-count transport, explicit integer threshold, and finite-arm practical
+  pseudo-regret assembly now compile downstream; anytime,
+  self-normalized/general Freedman, textbook RHS simplification, and final
+  broad bandit theorems remain separate.
+
+## Generated selected-policy UCB pull-count leaf
+
+- Lean-facing statements: use
+  `selectedPolicySuccessorGeneratedUCBInitializedScoreMaxSource`,
+  `measure_successorArmPullCount_selectedPolicySuccessorGeneratedUCBAction_gt_threshold_le_of_global_threshold`,
+  the practical selected-law endpoint, and
+  `lintegral_successorArmPullCount_selectedPolicySuccessorGeneratedUCBAction_le_threshold_add_horizon_mul_delta_of_global_threshold`.
+- Local APIs/imports: import
+  `BanditRLProof.Algorithms.UCBConditionalRewardLawPolicy`; it reuses
+  `UCBConditionalRewardLaw`, `UCBArmStreamProcess`, `ETCCountLemmas`,
+  `generatedActionFromRewardHistory`, `UCB.scoreArgmax`, pull-count monotonicity,
+  measurable finite counts, indicators, and `lintegral`.
+- Proof route: reconstruct the inclusive pair prefix, prove it equals the
+  generated trace, establish one pull per arm by time `K+1`, construct the
+  score-max source, select a prior count `>=B` from a final count `>B`, invert
+  the radius with the global `32/4` inequalities, then integrate the tail.
+- Regularity contracts: `K,T,B>0`, `delta>0`, positive chosen-arm gap, the two
+  strict threshold inequalities, and the prior large-gap bound. The practical
+  endpoint additionally retains the selected reward law, Standard Borel,
+  measurability, range, centered-kernel, stationary-mean, and uniform positive
+  variance contracts.
+- Retrieval/status: card
+  `LOCAL-LEAF-UCB-SELECTED-POLICY-GENERATED-RANDOM-WIDTH-PULLCOUNT` is
+  `leanCompiled`, root imported, focused-built, and canaried in `Tests.Basic`.
+  Local compiled declarations and Mathlib measure/Finset/integral APIs are
+  evidence; theorem-card or weapon-only text is not.
+- Failure policy: the explicit `Nat.ceil` threshold now compiles in the next
+  leaf. Assemble gap-weighted expected counts into selected-policy regret next.
+  Do not reopen policy construction, weaken the random width, or claim
+  model-side law production, anytime/Freedman, LML import, or a final UCB
+  theorem.
+
+## Explicit-threshold practical expected-count leaf
+
+- Lean-facing statement: use
+  `lintegral_successorArmPullCount_selectedPolicySuccessorGeneratedUCBAction_le_explicitPullThreshold_add_horizon_mul_delta_of_reward_map_eq_selected_policy`.
+  Supporting declarations are `selectedPolicySuccessorRealPullThreshold`,
+  `selectedPolicySuccessorPullThreshold`, its `_contracts` theorem, the
+  explicit radius/tail consumers, and the named concrete-source large-gap
+  producer.
+- Local APIs/imports: continue importing
+  `BanditRLProof.Algorithms.UCBConditionalRewardLawPolicy`; the new arithmetic
+  layer uses `Nat.ceil`, `Nat.le_ceil`, `max`, positive square/division algebra,
+  and the prior large-gap/count/`lintegral` APIs.
+- Proof route: take the maximum of the quadratic and linear real thresholds,
+  round up and add one, derive both strict `32/4` inequalities, invoke uniform
+  radius inversion, produce the concrete large-gap event from the practical
+  selected reward law, then integrate the bounded measurable count.
+- Regularity contracts: positive chosen gap, `K,T>0`, `delta>0`, positive
+  uniform variance proxy, and the complete practical Standard Borel,
+  reward-law, measurability, range, centered-kernel, and stationary-mean
+  surface. There is no external `B`, `hradius`, `hlargeGap`, or numeric
+  inequality.
+- Retrieval/status: card
+  `LOCAL-LEAF-UCB-SELECTED-POLICY-GENERATED-EXPLICIT-THRESHOLD-EXPECTED-PULLCOUNT`
+  is `leanCompiled`, root imported, focused-built, and canaried in
+  `Tests.Basic`. Only compiled local/Mathlib declarations count as evidence.
+- Failure policy: the finite-arm positive-gap sum and internal zero-gap handling
+  compile in the next leaf. Concrete-model selected-law production,
+  textbook threshold-sum simplification, anytime/Freedman, cross-LML, and a
+  final broad UCB theorem remain separate.
+
+## Explicit-threshold practical pseudo-regret leaf
+
+- Lean-facing statements: use
+  `modelMeanGap_bestArm_eq_realGap`,
+  `selectedPolicySuccessorGeneratedUCBRegretAction`,
+  `pullCount_selectedPolicySuccessorGeneratedUCBRegretAction_eq`,
+  `lintegral_ofReal_pseudoRegret_le_sum_gap_mul_bound_of_positiveGap_pullCount`,
+  and
+  `lintegral_ofReal_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_le_explicitThresholdSum_of_reward_map_eq_selected_policy`.
+- Local APIs/imports: import
+  `BanditRLProof.Algorithms.UCBConditionalRewardLawRegret`; it combines
+  `UCBConditionalRewardLawPolicy`, `FiniteBanditModelInvariants`,
+  `ScalarPseudoRegret`, the scalar pseudo-regret/pull-count identity,
+  `FiniteBanditModel.gap_nonneg`, finite `lintegral` sums, and constant
+  multiplication.
+- Proof route: shift generated actions `1..T` to regret coordinates `0..T-1`;
+  rewrite their counts as successor counts at `T+1`; expand pseudo-regret into
+  the finite gap-weighted count sum; move `lintegral` through the finite sum;
+  apply the explicit expected-count theorem on positive-gap arms and erase
+  zero-gap summands.
+- Regularity contracts: the generic consumer needs measurable actions,
+  nonnegative model gaps, and positive-gap count bounds. The practical theorem
+  retains probability/Standard-Borel, selected reward law, reward/context/mean
+  measurability, raw/mean ranges, centered kernel, stationary means equal to
+  `model.mean`, positive uniform selected-history variance, `K,T>0`, and
+  `delta>0`; callers supply no per-arm gap positivity.
+- Retrieval/status: card
+  `LOCAL-LEAF-UCB-SELECTED-POLICY-GENERATED-EXPLICIT-THRESHOLD-PSEUDOREGRET`
+  is `leanCompiled`, root imported, focused-built, and canaried in
+  `Tests.Basic`. Compiled local declarations and Mathlib Finset/measure/
+  `lintegral` APIs are evidence; theorem-card and weapon-only text is not.
+- Failure policy: successor reindexing, zero-gap handling, and the practical
+  explicit-threshold ENNReal finite-arm pseudo-regret sum are closed. The
+  textbook reciprocal-gap simplification compiles in the next leaf. Treat a
+  Real/Bochner wrapper and concrete-model selected-law producer as separate
+  leaves; do not claim anytime/Freedman, cross-LML, or a final broad UCB
+  theorem.
+
+## Textbook positive-gap practical pseudo-regret leaf
+
+- Lean-facing statements: use
+  `selectedPolicySuccessorTextbookGapBudget`,
+  `selectedPolicySuccessorPullThreshold_cast_le_realThreshold_add_two`,
+  `gap_mul_selectedPolicySuccessorPullThreshold_cast_le_textbookGapBudget`,
+  `sum_gap_mul_explicitThreshold_add_failure_le_textbookGapSum`, and
+  `lintegral_ofReal_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_le_textbookGapSum_of_reward_map_eq_selected_policy`.
+- Local APIs/imports: the existing
+  `BanditRLProof.Algorithms.UCBConditionalRewardLawRegret` import suffices. The
+  proof reuses `Nat.ceil_lt_add_one`, nonnegative max/order algebra, positive
+  field normalization, `Finset.sum_filter`, `FiniteBanditModel.gap_nonneg`,
+  and ENNReal `ofReal` cast lemmas.
+- Proof route: bound `ceil(max(...))+1` by `max(...)+2`; bound the nonnegative
+  maximum by quadratic plus linear; multiply by positive gap to obtain
+  `32*sigma2*L_T/gap + 4*L_T + 2*gap`; transport to ENNReal; rewrite the arm
+  filter as conditional summands; use gap nonnegativity to erase zero gaps;
+  compose with the practical explicit-threshold pseudo-regret theorem.
+- Regularity contracts: the algebra needs only a positive arm gap. The final
+  theorem retains the full probability/Standard-Borel, selected reward law,
+  measurability, range, centered-kernel, stationary-model-mean, positive
+  uniform-variance, `K,T>0`, and `delta>0` surface. No per-arm positivity,
+  threshold, radius, or inversion inequalities are supplied by the caller.
+- Retrieval/status: card
+  `LOCAL-LEAF-UCB-SELECTED-POLICY-GENERATED-TEXTBOOK-GAP-SUM-PSEUDOREGRET` is
+  `leanCompiled`, root imported through the module, focused-built, and canaried
+  in `Tests.Basic`. Compiled local/Mathlib declarations are evidence;
+  theorem-card and weapon-only text is not.
+- Failure policy: ceiling/max removal, reciprocal-gap normalization, positive-
+  gap filtering, and the complete practical selected-law ENNReal theorem are
+  closed. The canonical generated-UCB law producer and reward-only trajectory
+  theorem compile in the next leaf. Keep an optional Real/Bochner wrapper
+  separate; do not claim anytime/Freedman, cross-LML, or a final broad theorem.
+
+## Canonical reward-only trajMeasure UCB leaf
+
+- Lean-facing statements:
+  `selectedPolicySuccessorRewardStepKernelFamily`,
+  `isMarkovKernel_selectedPolicySuccessorRewardStepKernelFamily`,
+  `selectedPolicySuccessorRewardTrajMeasure`, its probability instance,
+  `selectedPolicySuccessorGeneratedUCBSelectedRewardLawSource_trajMeasure`,
+  `selectedPolicySuccessorGeneratedUCB_reward_map_eq_selected_policy_trajMeasure`,
+  and
+  `lintegral_ofReal_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_le_textbookGapSum_trajMeasure`.
+- Local APIs/imports: import
+  `BanditRLProof.Algorithms.UCBConditionalRewardLawRegret`; reuse
+  `RewardKernel.historyStepKernelFamily`, `Kernel.trajMeasure`,
+  `ProbabilityTheory.IsMarkovKernel`, the canonical trim selected-law theorem,
+  `generatedActionSelectedRewardFinitePairHistoryLawSource_of_comap_trim_reward_map_eq_selected_policy`,
+  `historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace`, and
+  `measurable_pi_apply`.
+- Proof route: specialize the reward-history kernel family to the concrete UCB
+  policy/state; install its Markov instances; build the trajectory measure;
+  specialize the canonical comap-trim law; transport it to the generated
+  history filtration; project the source field; pass that law to the practical
+  textbook pseudo-regret theorem internally.
+- Regularity contracts: probability `mu0`; measurable context and state
+  extraction; Markov reward kernel; measurable mean; centered reward-kernel
+  law; stationary means equal to `model.mean`; positive selected-history
+  variance ceiling; `K,T>0`; `delta>0`; mean range; and pointwise raw range on
+  every trajectory.
+- Retrieval/status: card
+  `LOCAL-LEAF-UCB-SELECTED-POLICY-CANONICAL-REWARD-TRAJMEASURE-TEXTBOOK-PSEUDOREGRET`
+  is `leanCompiled`, root imported, focused-built, and canaried in
+  `Tests.Basic`. Evidence is the compiled local declarations,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-REWARDONLY-TRAJMEASURE-TRIM-SELECTED-SOURCE`,
+  `LOCAL-LEAF-COND-EXPECT-REWARD-GENERATED-SELECTED-REWARD-FINITEPAIRHISTORY-SOURCE-FROM-COMAP-LAW`,
+  and Mathlib kernel/measure APIs. Theorem-card and weapon-only text is not
+  proof evidence.
+- Failure policy: generated-UCB specialization, Markov/probability instances,
+  selected-law transport, removal of caller `h_reward_map_eq_policy`, and the
+  canonical textbook theorem are closed. Its pointwise range surface is closed
+  by the stronger centered-kernel endpoint below; do not reopen a support-
+  restricted sample-space route for this theorem. Real/Bochner, anytime/
+  Freedman, cross-LML, and other broad theorems remain separate.
+
+## Centered-kernel canonical UCB theorem route
+
+- Lean-facing statements: start with
+  `centeredReward_succ_hasCondSubgaussianMGF_of_reward_map_eq_selected_policy_centeredKernel_of_variance_le`,
+  then the masked predictable-variance tail, exact-count, random-count, and
+  finite-arm/time confidence declarations. The UCB layer exposes
+  `SelectedPolicySuccessorRewardMapLaw`, generic and generated large-gap
+  bounds, explicit expected pull counts, explicit-threshold and textbook
+  pseudo-regret sums, and finally
+  `lintegral_ofReal_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_le_textbookGapSum_trajMeasure_centeredKernel`.
+- Local APIs/imports: import
+  `BanditRLProof.Algorithms.UCBConditionalRewardLawTrajMeasure`; reuse
+  `CenteredRewardKernelLaw.hasSubgaussianMGF`,
+  `centeredReward_succ_hasCondSubgaussianMGF_of_historyStepKernelFamily_condExpKernel_map_eq_historyFiltrationSucc`,
+  generated-history `StronglyAdapted` helpers,
+  `condSubGaussian_indicator_sum_abs_tail_predictableVariance_delta`, exact-
+  count peeling, `measure_biUnion_finset_le_of_uniform`, generated UCB
+  score-max sources, pull-count integration, and textbook threshold algebra.
+- Proof route: obtain ambient centered measurability from the strongly adapted
+  successor process; rewrite the canonical selected measure as
+  `historyStepKernelFamily`; transfer the target MGF through
+  `condExpKernel.map`; mask by the predictable arm event; charge
+  `sigma2 * count`; peel exact positive count fibers; union arms and times;
+  apply deterministic UCB large-gap/radius algebra; integrate counts; assemble
+  pseudo-regret; simplify to the reciprocal-gap textbook sum; supply the law
+  internally from the canonical trajectory theorem.
+- Concentration ledger: random process is successor reward minus selected
+  kernel mean; filtration is `historyFiltrationSucc`; conditional mean/MGF is
+  supplied by `CenteredRewardKernelLaw` and the selected law transport;
+  variance proxy is history-selected `varianceProxy <= sigma2`; tail is
+  two-sided on exact positive pull counts, then finite-count peeled and finite
+  arms-times union-bounded. It is fixed-horizon, not anytime.
+- Regularity contracts: probability initial law; measurable context and mean;
+  Markov reward kernel with `CenteredRewardKernelLaw`; stationary means equal
+  to `model.mean`; positive selected-history variance ceiling; `K,T>0`; and
+  `delta>0`. No raw/mean range, support restriction, or external selected-law
+  argument remains in the final canonical theorem.
+- Retrieval/status: card
+  `LOCAL-LEAF-UCB-CANONICAL-REWARD-TRAJMEASURE-CENTERED-KERNEL-TEXTBOOK-PSEUDOREGRET`
+  is `leanCompiled`, root imported, focused-built, and canaried in
+  `Tests.Basic`. Evidence is the exact compiled declarations, the canonical
+  trajMeasure card, integrated conditional-MGF card, predictable-variance
+  concentration card, and Mathlib probability/integration APIs. Theorem-card
+  and weapon-only text is not proof evidence.
+- Failure policy: selected-law transport, centered conditional MGF,
+  predictable masking, random-count concentration, generated-UCB large-gap,
+  expected counts, finite-arm pseudo-regret, textbook simplification, and
+  removal of `hraw`/mean-range are closed. Do not reintroduce range assumptions
+  to this route. Real/Bochner presentation is closed by the route below;
+  context-independent direct-subGaussian and bounded constructors compile in
+  the subsequent bounded finite-arm route.
+  Anytime/self-normalized/general Freedman, cross-LML, and other algorithms
+  remain open.
+
+## Real/Bochner canonical UCB theorem route
+
+- Lean-facing statements:
+  `integrable_real_pullCount_of_measurable_action`,
+  `selectedPolicySuccessorTextbookGapBudget_nonneg`,
+  `integrable_real_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction`,
+  and
+  `integral_real_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_le_textbookGapSum_trajMeasure_centeredKernel`.
+  The final theorem has a Bochner integral and an explicit Real positive-gap
+  finite sum; it does not expose `ENNReal.toReal`.
+- Local APIs/imports: import
+  `UCBConditionalRewardLawCenteredKernel` and `ExpectationRegretPullCount`;
+  reuse `measurable_natCast_pullCount`, `pullCount_le_time`,
+  `Integrable.of_bound`, `integrable_real_pseudoRegret_of_integrable_pullCount`,
+  `pseudoRegret_eq_finset_sum_gap_mul_pullCount`,
+  `ofReal_integral_eq_lintegral_ofReal`, `ENNReal.sum_ne_top`,
+  `ENNReal.ofReal_le_iff_le_toReal`, and the `toReal_sum/add/mul/ofReal` family.
+- Proof route: derive every finite pull count's integrability from coordinate
+  measurability and the horizon bound; assemble pseudo-regret integrability;
+  prove nonnegativity from model gaps; rewrite the Real integral into the
+  compiled lintegral; consume the canonical centered-kernel ENNReal bound;
+  prove its finite sum is not infinity; normalize the RHS term by term.
+- Regularity contracts: the generic adapter needs a finite measure, measurable
+  singleton actions, decidable equality, and timewise measurable actions. The
+  final canonical theorem discharges these from the probability trajectory
+  measure, finite actions, and measurable generated policy. Its external
+  contracts are unchanged: probability `mu0`, measurable context/mean,
+  `CenteredRewardKernelLaw`, stationary model means, selected-history
+  variance at most positive `sigma2`, `K,T>0`, and `delta>0`.
+- Retrieval/status: card
+  `LOCAL-LEAF-UCB-CANONICAL-REWARD-TRAJMEASURE-CENTERED-KERNEL-REAL-TEXTBOOK-PSEUDOREGRET`
+  is `leanCompiled`, root imported, focused-built, and canaried in
+  `Tests.Basic`. Evidence is the prior canonical ENNReal card, exact local
+  declarations, `MLIB-MEASURE-INTEGRAL`, `MLIB-FINSET-SUMS`, and pinned
+  Mathlib Bochner/ENNReal APIs. UCB theorem cards and weapons are route context,
+  not proof terms.
+- Failure policy: do not add caller integrability, raw/mean range, or selected-
+  law premises, and do not weaken the public RHS to `.toReal`. Integrability,
+  nonnegative integral conversion, RHS finiteness, and explicit Real finite-sum
+  normalization are closed. Context-independent direct-subGaussian and bounded
+  constructors compile in the route below.
+
+## Bounded finite-arm UCB law route
+
+- Lean-facing statements: use
+  `Concentration.intervalVarianceProxy_pos_of_lt`,
+  `RewardKernel.contextIndependentCenteredRewardKernelLaw_of_hasSubgaussianMGF`,
+  `RewardKernel.contextIndependentBoundedCenteredRewardKernelLaw`, and finally
+  `UCB.integral_real_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_le_textbookGapSum_boundedFiniteArmLaws`.
+- Local APIs/imports: `FiniteArmRewardKernelLaw` imports
+  `ConcentrationSubGaussian` and `RewardKernel`; the UCB module imports the
+  prior centered-kernel Real theorem. Reuse
+  `contextIndependentOfActionLaws`,
+  `selectedMeasure_contextIndependentOfActionLaws`,
+  `HasSubgaussianMGF.integrable`, `integral_sub`, `integrable_const`,
+  `boundedCentered_hasSubgaussianMGF_of_mem_Icc_integral_eq`, `nnnorm`, and
+  `norm_pos_iff`.
+- Proof route: package direct centered MGF witnesses into the one-step kernel
+  law while deriving zero mean from exact raw means; derive those MGF witnesses
+  from common bounds for the bounded constructor; prove the common interval
+  proxy is positive from `lo < hi`; specialize the canonical trajectory to
+  `Unit` context and stationary model means; invoke the compiled Real theorem.
+- Regularity contracts: generic constructors require countable measurable-
+  singleton actions, per-arm probability laws, and exact means. The bounded
+  constructor additionally requires a.e. measurable reward casts and common
+  a.s. `Set.Icc lo hi` support. The final theorem requires `lo < hi`, a default
+  arm, `T>0`, and `delta>0`; all centered-law, variance, selected-law,
+  trajectory-law, and integrability obligations are internal.
+- Retrieval/status: card
+  `LOCAL-LEAF-UCB-BOUNDED-FINITE-ARM-LAWS-CANONICAL-REAL-TEXTBOOK-PSEUDOREGRET`
+  is `leanCompiled`, root imported, focused-built, and canaried in
+  `Tests.Basic`. Retrieval first found
+  `ETC.finiteArmBoundedCenteredRewardKernelLaw`; it is evidence that the proof
+  shape was already local, but the new generic module avoids an ETC-to-UCB
+  import dependency. Mathlib-backed evidence is `MLIB-PROBABILITY-SUBGAUSSIAN`
+  and `MLIB-MEASURE-INTEGRAL`; weapons remain inspiration-only.
+- Failure policy: direct-subGaussian and common-bounded context-independent
+  constructors, interval-proxy positivity, and the bounded finite-arm
+  canonical Real UCB theorem are closed. Do not ask callers for an abstract
+  `CenteredRewardKernelLaw`, selected-law transport, variance ceiling, or
+  integrability witness. Per-arm unequal ranges compile in the armwise route
+  below. Context-dependent and anytime/Freedman routes remain separate.
+
+## Armwise bounded finite-arm UCB law route
+
+- Lean-facing statements:
+  `Concentration.finiteArmIntervalVarianceProxy`,
+  `Concentration.intervalVarianceProxy_le_finiteArmIntervalVarianceProxy`,
+  `Concentration.finiteArmIntervalVarianceProxy_pos`,
+  `RewardKernel.contextIndependentArmwiseBoundedCenteredRewardKernelLaw`, and
+  `UCB.integral_real_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_le_textbookGapSum_armwiseBoundedFiniteArmLaws`.
+- Local APIs/imports: reuse the existing `FiniteArmRewardKernelLaw` and
+  `UCBBoundedFiniteArmRewardLaw` modules, `Finset.sup`, `Finset.le_sup`,
+  `Finset.mem_univ`, `intervalVarianceProxy_pos_of_lt`,
+  `boundedCentered_hasSubgaussianMGF_of_mem_Icc_integral_eq`,
+  `contextIndependentOfActionLaws`, and the canonical centered-kernel Real UCB
+  theorem. No new algorithm import is introduced.
+- Proof route: apply the bounded centered MGF wrapper separately at each arm;
+  package the arm-dependent proxies in `CenteredRewardKernelLaw`; take their
+  maximum over `Fin K`; use `Finset.le_sup` for the selected proxy ceiling; use
+  `model.hK` to select one arm and prove the maximum positive; specialize the
+  canonical trajectory to `Unit` context and invoke the Real theorem.
+- Regularity contracts: per-arm probability measures; functions `lo`, `hi`
+  with pointwise `lo arm < hi arm`; a.e. measurable Rat-to-Real reward casts;
+  per-arm a.s. `Set.Icc (lo arm) (hi arm)` support; exact integrals equal to
+  `model.mean`; a default arm; `T>0`; and `delta>0`. The common variance proxy,
+  its positivity, centered law, selected law, trajectory law, and integrability
+  are all derived internally.
+- Retrieval/status: card
+  `LOCAL-LEAF-UCB-ARMWISE-BOUNDED-FINITE-ARM-LAWS-CANONICAL-REAL-TEXTBOOK-PSEUDOREGRET`
+  is `leanCompiled`, root-visible through the existing module import,
+  focused-built, and externally canaried in `Tests.Basic`. Retrieval found no
+  existing local finite-arm maximum-proxy declaration; evidence is the exact
+  compiled declarations, `MLIB-FINSET-SUMS`,
+  `MLIB-PROBABILITY-SUBGAUSSIAN`, `Finset.sup`, `Finset.le_sup`, the prior
+  common-interval card, and the canonical Real card. Paper and weapon cards
+  only place or inspire the route.
+- Failure policy: finite maximum construction, armwise proxy domination,
+  positivity, armwise bounded centered-law construction, and the final Real
+  UCB theorem are closed. Do not replace the maximum with a caller-provided
+  ceiling or weaken the result back to a common interval. Context-dependent or
+  nonstationary rewards, anytime/self-normalized/Freedman control, literal LML
+  import, and other algorithms remain separate.
+
+## Direct sub-Gaussian finite-arm UCB law route
+
+- Lean-facing statements:
+  `Concentration.finiteArmVarianceProxy`,
+  `Concentration.varianceProxy_le_finiteArmVarianceProxy`,
+  `Concentration.finiteArmVarianceProxy_pos_of_exists`, and
+  `UCB.integral_real_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_le_textbookGapSum_finiteArmSubgaussianLaws`.
+- Local APIs/imports: `UCBFiniteArmSubGaussianRewardLaw` imports the canonical
+  centered-kernel Real theorem and `FiniteArmRewardKernelLaw`; reuse
+  `Finset.sup`, `Finset.le_sup`,
+  `contextIndependentCenteredRewardKernelLaw_of_hasSubgaussianMGF`,
+  `contextIndependentOfActionLaws`, `HasSubgaussianMGF.integrable`, and the
+  canonical reward trajectory theorem.
+- Proof route: take the finite maximum of the per-arm proxies; prove every
+  policy-selected proxy is below it; derive positivity from one positive arm;
+  package exact means and centered MGF witnesses into the stationary
+  context-independent kernel law; choose `Unit` context and the default-arm
+  initial law; invoke the compiled canonical Real UCB theorem.
+- Regularity contracts: per-arm probability measures; per-arm `NNReal`
+  variance proxies with at least one positive Real coercion; exact reward
+  integrals equal to `model.mean`; centered `HasSubgaussianMGF` for every arm;
+  a default arm; `T>0`; and `delta>0`. MGF regularity supplies the needed
+  integrability. No reward bounds, common interval, caller ceiling, selected
+  law, trajectory law, or extra measurability hypothesis remains.
+- Retrieval/status: card
+  `LOCAL-LEAF-UCB-SUBGAUSSIAN-FINITE-ARM-LAWS-CANONICAL-REAL-TEXTBOOK-PSEUDOREGRET`
+  is `leanCompiled`, root imported, focused-built, and externally canaried in
+  `Tests.Basic`. Retrieval found no prior generic finite-arm maximum-proxy
+  declaration. Evidence is the exact compiled declarations,
+  `MLIB-PROBABILITY-SUBGAUSSIAN`, `MLIB-FINSET-SUMS`, `Finset.sup`,
+  `Finset.le_sup`, the direct centered-law constructor, and the canonical Real
+  card. Paper and weapon cards are placement/inspiration only.
+- Failure policy: direct MGF-to-kernel construction, generic finite maximum,
+  selected-proxy domination, one-positive-member positivity, and the final
+  stationary finite-arm Real UCB theorem are closed. Do not add bounded-support
+  or caller variance-ceiling assumptions. If every proxy is zero, use a
+  separate noiseless theorem rather than fabricating a positive proxy; the
+  current canonical route explicitly assumes positive `sigma2`.
+
+## Context-dependent bounded reward-kernel UCB route
+
+- Lean-facing statements:
+  `Concentration.intervalVarianceProxy_pos_of_lt`,
+  `RewardKernel.centeredRewardKernelLaw_of_hasSubgaussianMGF`,
+  `RewardKernel.boundedCenteredRewardKernelLaw`, and
+  `UCB.integral_real_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_le_textbookGapSum_trajMeasure_contextDependentBoundedRewardKernel`.
+- Local APIs/imports: the algorithm-independent `BoundedRewardKernelLaw` module
+  imports `ConcentrationSubGaussian` and `RewardKernel`; the UCB consumer imports
+  it with the canonical centered-kernel Real theorem. The route reuses
+  `selectedMeasure`, `isProbabilityMeasure_apply`,
+  `boundedCentered_hasSubgaussianMGF_of_mem_Icc_integral_eq`,
+  `HasSubgaussianMGF.integrable`, `Integrable.add`, `integrable_const`, and
+  `integral_sub`. `FiniteArmRewardKernelLaw` now imports this generic layer, so
+  the interval-proxy positivity lemma has algorithm-independent ownership.
+- Proof route: for every context/action selected law, install its probability
+  instance; use the MGF witness for centered integrability; recover raw
+  integrability by adding the mean constant; subtract the exact mean integral
+  to obtain zero centering; package the pointwise MGF in
+  `CenteredRewardKernelLaw`. For bounded laws, first derive the centered MGF
+  from common interval support. In the UCB theorem set
+  `mean(ctx,arm)=model.mean arm`, choose the common interval proxy, prove it
+  positive, and invoke the canonical generated-trajectory Real endpoint.
+- Regularity contracts: measurable context space; finite bandit model;
+  probability initial reward law; arbitrary context/action Markov reward
+  kernel; measurable history-dependent context extraction; common `lo < hi`;
+  pointwise a.e. measurable Rat-to-Real reward casts; pointwise a.s.
+  `Set.Icc lo hi` support; exact selected-law integrals equal to
+  `model.mean arm`; default arm; `T>0`; and `delta>0`. Centered law, common
+  proxy, selected-law probability, trajectory law, variance ceiling,
+  integrability, and zero centered means are internal.
+- Retrieval/status: card
+  `LOCAL-LEAF-UCB-CONTEXT-DEPENDENT-BOUNDED-REWARD-KERNEL-CANONICAL-REAL-TEXTBOOK-PSEUDOREGRET`
+  is `leanCompiled`, root imported, focused-built, and externally canaried in
+  `Tests.Basic`. Retrieval found no prior generic arbitrary-Markov-kernel
+  centered-law constructor. Evidence is the exact declarations,
+  `MLIB-PROBABILITY-SUBGAUSSIAN`, `MLIB-PROBABILITY-KERNEL`,
+  `MLIB-MEASURE-INTEGRAL`, `MLIB-FINSET-SUMS`, and the canonical Real UCB card.
+  `PPR-AUER-CBF-2002-UCB1` places the theorem; weapon cards are inspiration-only.
+- Failure policy: arbitrary-kernel direct-MGF and common-bounded centered-law
+  construction plus context-dependent bounded canonical Real UCB are closed.
+  Do not reintroduce context independence or caller centered-law, selected-law,
+  trajectory-law, ceiling, or integrability premises. Stationary arm means are
+  intentional because the current pseudo-regret model is stationary.
+  Context/action-dependent intervals, context-dependent direct-subGaussian
+  automatic ceilings, nonstationary regret, anytime/self-normalized/Freedman,
+  literal LML import, and other algorithms remain separate.
+
+## Context-dependent direct sub-Gaussian reward-kernel UCB route
+
+- Lean-facing statement:
+  `UCB.integral_real_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_le_textbookGapSum_trajMeasure_contextDependentSubgaussianRewardKernel`.
+  It reuses
+  `RewardKernel.centeredRewardKernelLaw_of_hasSubgaussianMGF` as its supporting
+  law constructor.
+- Local APIs/imports: `UCBContextDependentSubGaussianRewardKernel` imports the
+  canonical centered-kernel Real theorem and `BoundedRewardKernelLaw`. The proof
+  uses `selectedMeasure`, `HasSubgaussianMGF`, the generic centered-law
+  constructor, `measurable_of_countable`, `measurable_snd`, and the canonical
+  theorem's selected-history variance and stationary-mean interfaces. No new
+  conditional-expectation transport is introduced.
+- Proof route: define the stationary mean surface
+  `fun (_ : Context) arm => model.mean arm`; prove its product measurability;
+  package pointwise exact means and MGF witnesses into
+  `CenteredRewardKernelLaw`; specialize the caller's global proxy domination
+  to every generated selected history/action; discharge stationary means by
+  reflexivity; invoke the canonical Real generated-trajectory theorem.
+- Regularity contracts: measurable context; finite bandit model; probability
+  initial law; arbitrary context/action Markov reward kernel; measurable
+  history-dependent context extraction; pointwise `NNReal` variance proxies;
+  positive global `sigma2`; pointwise `varianceProxy ctx arm <= sigma2`;
+  exact selected-law means `model.mean arm`; centered `HasSubgaussianMGF` for
+  every context/action; default arm; `T>0`; and `delta>0`. Centered law,
+  selected-law transport, trajectory law, centering, and integrability are
+  internal. Bounded support and separate reward-cast measurability are absent.
+- Retrieval/status: card
+  `LOCAL-LEAF-UCB-CONTEXT-DEPENDENT-SUBGAUSSIAN-REWARD-KERNEL-CANONICAL-REAL-TEXTBOOK-PSEUDOREGRET`
+  is `leanCompiled`, root imported, focused-built, and externally canaried in
+  `Tests.Basic`. Evidence is the exact declaration, generic direct-MGF
+  constructor, `MLIB-PROBABILITY-SUBGAUSSIAN`,
+  `MLIB-PROBABILITY-KERNEL`, `MLIB-MEASURE-INTEGRAL`, `MLIB-FINSET-SUMS`, and
+  the canonical Real UCB card. Paper and weapon cards are placement/inspiration
+  only.
+- Failure policy: direct context-dependent MGF laws with a caller-supplied
+  positive uniform ceiling are closed. Do not add bounded support,
+  context-independence, abstract centered-law, selected-law, trajectory-law, or
+  integrability premises. Do not claim an automatic maximum over arbitrary
+  `Context`; that requires finite/compact/bounded structure. Automatic context
+  ceilings, all-zero/noiseless models, context-dependent means/nonstationary
+  regret, anytime/self-normalized/Freedman, literal LML import, and other
+  algorithms remain separate.

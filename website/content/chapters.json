@@ -1,0 +1,223 @@
+{
+  "chapters": [
+    {
+      "slug": "foundations",
+      "title": "1. Finite bandits, traces, and regret",
+      "short_title": "Foundations",
+      "status": "compiled",
+      "summary": "The deterministic language shared by the entire project: finite models, action and reward traces, pull counts, gaps, reward sums, pseudo-regret, and count-to-regret decompositions.",
+      "audience": "Start here if you know basic probability or machine learning but are new to this Lean library.",
+      "learning_goals": [
+        "Distinguish a deterministic action trace from a probability law over generated traces.",
+        "Use pull counts as the bookkeeping interface shared by ETC, UCB, EXP3, and Tsallis routes.",
+        "Read the finite-sum identity that regroups time-indexed regret by arm."
+      ],
+      "module_globs": [
+        "BanditRLProof/Core.lean",
+        "BanditRLProof/LeafLemmas.lean",
+        "BanditRLProof/MathlibWrappers.lean",
+        "BanditRLProof/Regret*.lean",
+        "BanditRLProof/PullCount*.lean",
+        "BanditRLProof/Scalar*.lean",
+        "BanditRLProof/RealMeanRegretPullCount.lean",
+        "BanditRLProof/RealKernelRegretPullCount.lean"
+      ],
+      "open_gaps": [
+        "The deterministic identities are reusable; each probabilistic algorithm still needs its own measurable generated law and integrability contracts.",
+        "A local model-facing endpoint need not match every textbook or upstream theorem signature."
+      ]
+    },
+    {
+      "slug": "probability",
+      "title": "2. Probability, kernels, filtrations, and concentration",
+      "short_title": "Probability layer",
+      "status": "partial",
+      "summary": "Measure-theoretic infrastructure for generated histories, conditional reward laws, martingale differences, posterior kernels, stopping times, and concentration.",
+      "audience": "Read after Foundations; familiarity with conditional expectation helps but is not required.",
+      "learning_goals": [
+        "See why policies and history selectors must be measurable maps.",
+        "Separate a marginal reward distribution from a history-conditioned kernel law.",
+        "Track adaptedness, integrability, finite-measure, and variance-proxy assumptions explicitly."
+      ],
+      "module_globs": [
+        "BanditRLProof/Measure*.lean",
+        "BanditRLProof/Measurable*.lean",
+        "BanditRLProof/Integrability*.lean",
+        "BanditRLProof/Independence*.lean",
+        "BanditRLProof/HistoryFiltration.lean",
+        "BanditRLProof/PolicyMeasurability.lean",
+        "BanditRLProof/RewardKernel.lean",
+        "BanditRLProof/RewardTraceLaw.lean",
+        "BanditRLProof/BoundedRewardKernelLaw.lean",
+        "BanditRLProof/FiniteArmRewardKernelLaw.lean",
+        "BanditRLProof/FiniteContextVarianceProxy.lean",
+        "BanditRLProof/Kernel*.lean",
+        "BanditRLProof/PosteriorKernel.lean",
+        "BanditRLProof/Conditional*.lean",
+        "BanditRLProof/Concentration*.lean",
+        "BanditRLProof/MartingaleDifference.lean",
+        "BanditRLProof/ProbabilityUnionBound.lean",
+        "BanditRLProof/UnboundedStoppingTime*.lean"
+      ],
+      "open_gaps": [
+        "Strong conditional-law and stopping-time adapters compile, but there is no single producer for every adaptive environment.",
+        "Self-normalized and RL-specific concentration remain explicit theorem routes rather than one universal wrapper."
+      ]
+    },
+    {
+      "slug": "etc",
+      "title": "3. Explore-Then-Commit",
+      "short_title": "ETC",
+      "status": "partial",
+      "summary": "Round-robin exploration, empirical means, measurable commit choices, wrong-commit tails, and expected-regret assemblies under bounded or sub-Gaussian arm laws.",
+      "audience": "The shortest end-to-end stochastic-bandit route in the repository.",
+      "learning_goals": [
+        "Decompose regret into deterministic exploration cost and wrong-commit probability.",
+        "Follow empirical-mean concentration into a concrete Real expected-regret bound.",
+        "Distinguish compiled local endpoints from the still-partial upstream-compatible port."
+      ],
+      "module_globs": ["BanditRLProof/Algorithms/ETC*.lean"],
+      "open_gaps": [
+        "Direct LML integration remains cross-toolchain work even though concrete local ETC endpoints compile.",
+        "The website never upgrades a theorem card into a local proof certificate."
+      ]
+    },
+    {
+      "slug": "ucb",
+      "title": "4. UCB: confidence events to regret",
+      "short_title": "UCB",
+      "status": "partial",
+      "summary": "History-based UCB scores, count thresholds, generated policies, arm streams, finite-arm and context-dependent reward kernels, expected regret, and asymptotic consistency.",
+      "audience": "Read ETC first if confidence-event arguments are new to you.",
+      "learning_goals": [
+        "Convert a suboptimal UCB selection into a confidence failure or a small-count event.",
+        "Trace conditional sub-Gaussian laws into a textbook-shaped gap-sum bound.",
+        "Read the compiled expected-average-regret convergence results without conflating them with every UCB variant."
+      ],
+      "module_globs": [
+        "BanditRLProof/Algorithms/UCB*.lean",
+        "BanditRLProof/UCB*.lean"
+      ],
+      "open_gaps": [
+        "Multiple local UCB laws and asymptotic consumers compile; exact compatibility with the pinned upstream LML declaration remains a separate task.",
+        "KL-UCB confidence inversion is not supplied by the ordinary UCB route."
+      ]
+    },
+    {
+      "slug": "oful",
+      "title": "5. OFUL, self-normalized confidence, and stopping times",
+      "short_title": "OFUL",
+      "status": "partial",
+      "summary": "Elliptical potential, Gaussian-mixture self-normalization, ridge confidence, strict measurable optimistic selection, finite-window and all-time regret, expected rates, and random-horizon consumers.",
+      "audience": "Read the Probability layer and UCB chapter before this linear-bandit route.",
+      "learning_goals": [
+        "Understand the log-determinant proof of the elliptical-potential inequality.",
+        "Follow a conditional MGF source through ridge confidence and optimistic action selection.",
+        "Separate deterministic horizons, simultaneous one-policy confidence, and square-integrable stopping-time conclusions."
+      ],
+      "module_globs": ["BanditRLProof/OFUL*.lean"],
+      "open_gaps": [
+        "The repository now contains explicit finite-window expected rates, fixed-model average-regret consistency, one-policy all-time confidence, and stopping-time theorems; broader contextual, dynamic, and minimax claims remain separate.",
+        "Budget-forced schedules compile under explicit contracts, but this is not a full primal-dual Bandits-with-Knapsacks theorem."
+      ]
+    },
+    {
+      "slug": "thompson",
+      "title": "6. Thompson sampling and Bayesian regret",
+      "short_title": "Thompson sampling",
+      "status": "partial",
+      "summary": "Posterior kernels, conditional action-law identities, trajectory construction, clipped-UCB decomposition, and stationary latent-arm-stream regret.",
+      "audience": "Best read after the Probability layer.",
+      "learning_goals": [
+        "Read a posterior as a kernel from histories to environments.",
+        "Transport conditional action-law equality onto the generated trajectory.",
+        "Understand why one compiled stationary theorem is not a universal posterior-sampling result."
+      ],
+      "module_globs": ["BanditRLProof/Algorithms/Thompson*.lean"],
+      "open_gaps": [
+        "The stationary latent-arm-stream endpoint is compiled; broader posterior models need their own law producers.",
+        "Exact upstream compatibility remains an independently tracked task."
+      ]
+    },
+    {
+      "slug": "exp3",
+      "title": "7. EXP3 and adversarial concentration",
+      "short_title": "EXP3",
+      "status": "partial",
+      "summary": "Exponential-weight potentials, importance weighting, generated trajectories, expected and high-probability regret, variance-sensitive refinements, and sparse-loss routes.",
+      "audience": "Read Foundations first; later sections use the Probability layer heavily.",
+      "learning_goals": [
+        "Connect the one-step exponential-potential inequality to deterministic Hedge regret.",
+        "See why positive exploration makes importance-weighted estimators legal.",
+        "Track predictable variance and sparsity failures into explicit probability events."
+      ],
+      "module_globs": ["BanditRLProof/Exp3*.lean"],
+      "open_gaps": [
+        "Expected, realized, Bernstein, predictable-variance, and sparse-loss endpoints compile under different exact hypotheses; there is no single hypothesis-free EXP3 theorem.",
+        "The declaration catalog, not historical route-card prose, is authoritative for current local code."
+      ]
+    },
+    {
+      "slug": "tsallis",
+      "title": "8. Tsallis-FTRL, corruption, and nonstationarity",
+      "short_title": "Tsallis-FTRL",
+      "status": "partial",
+      "summary": "Half-Tsallis stability, generated schedules, self-bounding interpolation, corruption bounds, IID and nonidentical reward laws, dynamic comparators, switch counts, and a generated oracle-restart route.",
+      "audience": "This is one of the longest routes; read EXP3 and the Probability layer first.",
+      "learning_goals": [
+        "Separate deterministic FTRL stability from stochastic law transport.",
+        "Use expected action probabilities and gap self-bounds to obtain logarithmic or corruption-sensitive regret.",
+        "Follow the now-compiled generated oracle-restart law while preserving its full-information change-point assumption."
+      ],
+      "module_globs": [
+        "BanditRLProof/FTRL*.lean",
+        "BanditRLProof/Tsallis*.lean"
+      ],
+      "open_gaps": [
+        "Model-specific logarithmic, refined, dynamic, and oracle-restart endpoints compile, but complete literature-level Tsallis-INF with paper-sharp constants is not claimed.",
+        "The oracle restart uses population-mean change points; an observed-reward detector would require a random history-dependent schedule plus concentration for delay and false alarms."
+      ]
+    },
+    {
+      "slug": "finite-horizon-rl",
+      "title": "9. Finite-horizon reinforcement learning",
+      "short_title": "Finite-horizon RL",
+      "status": "partial",
+      "summary": "Finite MDPs, Markov policies, Bellman optimality, generated trajectories, occupancy-regret identities, empirical model confidence, adaptive cumulative exploration, realized behavior regret, consistency, and genuine hittingAfter stopping times.",
+      "audience": "Read Foundations, Probability, UCB, and the OFUL stopping-time material first.",
+      "learning_goals": [
+        "Build finite-horizon value recursion and prove the optimal policy attains the Bellman optimum.",
+        "Rewrite expected policy regret as an occupancy-weighted Bellman gap.",
+        "Follow adaptive empirical confidence through realized behavior consistency and fixed-index stopped expected-regret bounds."
+      ],
+      "module_globs": ["BanditRLProof/RL/*.lean"],
+      "open_gaps": [
+        "The RL layer is no longer planned: hundreds of declarations compile, including stochastic reward, adaptive cumulative, causal, consistency, and stopping-time routes.",
+        "The current terminal is not complete UCB-VI: raw-episode regret, behavior=recommended equality, arbitrary-MDP reachability, minimax rates, optional stopping, uniform-in-threshold integrability, and L1 convergence remain explicit boundaries."
+      ]
+    },
+    {
+      "slug": "frontier",
+      "title": "10. Automation, resources, and open routes",
+      "short_title": "Frontier",
+      "status": "planned",
+      "summary": "The proof harness, task vocabulary, resource stopping leaves, literature registry, and planned KL-UCB, BwK, preference, robust, delayed, federated, and neural-bandit work.",
+      "audience": "Read this chapter to contribute a new route or understand what is deliberately not claimed.",
+      "learning_goals": [
+        "Use the same status vocabulary for source declarations, theorem cards, tasks, and blockers.",
+        "Distinguish a stopping-time foundation from a completed resource-constrained algorithm theorem.",
+        "Move a literature target through task packets, proof obligations, compilation, and synchronized documentation."
+      ],
+      "module_globs": [
+        "BanditRLProof/Automation.lean",
+        "BanditRLProof/BudgetStoppingTime.lean",
+        "BanditRLProof/OpenProblems.lean",
+        "BanditRLProof/Literature.lean"
+      ],
+      "open_gaps": [
+        "KL-UCB, full BwK/primal-dual regret, dueling, robust/delayed, federated, and neural-bandit routes remain planned or partial unless a named local declaration says otherwise.",
+        "The harness records completion gates but does not replace Lean elaboration or mathematical review."
+      ]
+    }
+  ]
+}

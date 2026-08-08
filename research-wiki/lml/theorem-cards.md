@@ -16,6 +16,37 @@ the declaration and passes the local Lean gate.
 | `LML-TS-POSTERIOR-ACTION` | `Bandits.TS.hasCondDistrib_action` | `LeanMachineLearning.Online.Bandit.Algorithms.TS` | posterior best-action identity | theorem-card |
 | `LML-TS-BAYES-REGRET` | `Bandits.integral_regret_le` | `LeanMachineLearning.Online.Bandit.Algorithms.Regret.BayesRegretTS` | Bayesian regret upper bound | theorem-card |
 
+Local status note for `LML-TS-POSTERIOR-ACTION`: ABRL now has the compiled
+Mathlib-facing counterpart
+`Thompson.condDistrib_action_ae_eq_bestAction_of_posteriorMap`, following the
+pinned `TS.lean` route through the posterior/environment law from
+`AlgorithmDensityBayes.lean` and measurable `bestAction` from
+`BayesRegret.lean`. ABRL now also compiles a canonical Mathlib posterior
+producer from an exact environment/history pair pushforward and a Thompson
+consumer that no longer assumes the posterior conditional-law identity. The
+actual upstream declaration remains a theorem card; its algorithm-density
+transport and non-circular uniform-reference design have now been ported into
+the local `ThompsonRecursiveSampler` route. The compiled local endpoint proves
+probability matching for the successor action coordinate of the same global
+recursive trajectory, with finite-action absolute continuity discharged by
+uniform full support. The actual upstream declaration remains card-only because
+LML is not imported on ABRL's toolchain.
+
+Local status note for `LML-TS-BAYES-REGRET`: ABRL now compiles the exact
+decomposition layer corresponding to pinned upstream
+`TS.integral_ucb_action_eq_integral_ucb_bestAction` and
+`TS.integral_regret_eq_add`. The local theorem
+`Thompson.integral_trajectoryBayesMeanRegret_eq_add_historyScore` works on the
+actual recursive uniform-reference trajectory and generalizes the UCB term to
+a measurable `HistoryActionScore`. ABRL now also compiles the exact pinned
+zero-pull/clipped empirical-mean score and
+`Thompson.integral_trajectoryBayesMeanRegret_eq_add_clippedUCB`; measurable
+`[l,u]` range assumptions discharge all four integrability families. Upstream
+`Bandits.integral_regret_le` remains theorem-card only: ABRL has not yet
+transported stationary fixed-arm empirical-mean deviations to the actual
+recursive TS trajectory, bounded its two concentration expectations, or
+proved the final Bayesian regret inequality.
+
 ## LML-ETC-REGRET Exact Seed Contract
 
 At seed `19dc3ab132c2a7539f5944503d1114eac4c5bb74`, the upstream theorem is:
@@ -161,9 +192,86 @@ ABRL's `UCB-FIXED-COUNT-PEELING-LAW` leaf now ports that generic event and law
 transport under an explicit `FixedArmPrefixSource`: selected rewards must be
 the prefix of a measurable latent arm stream at the realized pull count, and
 one complete-stream `IdentDistrib` law supplies all fixed-count laws. This is a
-local theorem, not an imported LML declaration. The remaining source-specific
-blocker is constructing that prefix source and canonical stationary/product
-stream law for the actual generated UCB process (or proving an equivalent
-conditional-MGF route), then specializing the fixed-sum tails. The older ABRL
-deterministic `proxy : Nat -> Arm -> NNReal` surface is useful abstract
-confidence algebra but is not definitionally the source UCB width.
+local theorem, not an imported LML declaration.
+
+ABRL's `UCB-ARM-STREAM-REWARD-SOURCE` leaf now ports the source pathwise:
+`rewardFromArmStream` reads the selected arm's next unused coordinate, and
+`sumRewards_rewardFromArmStream_eq_armPrefixSum` mirrors LML
+`SumRewards.sumRewards_eq` by horizon induction. It supplies general measurable
+and canonical `FixedArmPrefixSource` adapters and direct peeling consumers.
+ABRL's `UCB-ARM-STREAM-PROCESS-LAW` now defines the recursive inclusive
+history, round-robin/native-index action, next-unused reward trace, exact
+actual-history invariant, measurable recursive history/action/reward
+coordinates, and canonical double-`infinitePi` arm-stream law.
+`UCB-ARM-STREAM-INDEX-TAIL` then proves product-coordinate independence and
+MGF transport, peels every positive adaptive count, and establishes both
+actual random-width index tails with the LML-shaped ENNReal envelope
+`1 / (n+1)^(c-1)`. `UCB-ARM-STREAM-EXPECTED-PULLCOUNT` compiles the matching
+ENNReal and Real Bochner count bounds, and `UCB-ARM-STREAM-LML-REGRET` proves
+the canonical arm-stream expected-regret theorem with exactly the RHS shown
+above. These are local compiled theorems; they do not import the upstream LML
+declarations or its `IsAlgEnvSeq` symbol. Literal cross-toolchain import and
+construction of the latent stream law from actual `IsAlgEnvSeq` feedback
+fields remain separate compatibility work. The generic transport itself now compiles as
+`UCB.integral_realKernelRegret_externalAction_le_lml_sum_of_identDistrib_armStreamAction`:
+complete action-trace `IdentDistrib` to the canonical process is enough to
+transport the exact expected-regret RHS through Mathlib `IdentDistrib.comp`
+and `integral_eq`, without an extra probability, integrability, reward-law,
+filtration, or standard-Borel premise.
+The downstream
+`UCB.identDistrib_action_armStreamAction_of_identDistrib_armStream` now
+constructs this complete action law from a latent arm stream with the canonical
+`armStreamMeasure` law and a.e. recursive action generation; its exact-regret
+consumer is
+`UCB.integral_realKernelRegret_externalAction_le_lml_sum_of_identDistrib_armStream`.
+This latent-source endpoint is optional: pinned LML does not derive an external
+unused-arm array law. Its actual route compares the observable pair trajectory
+using `IsAlgEnvSeq.identDistrib_trajectory` with
+`ArrayModel.isAlgEnvSeq_arrayMeasure`. ABRL now compiles the matching projection
+and exact-regret endpoint as
+`UCB.integral_realKernelRegret_externalAction_le_lml_sum_of_identDistrib_actionRewardTrace`.
+ABRL now also compiles the matching uniqueness route as
+`RewardKernel.identDistrib_rewardTrace_of_common_condDistrib` and the exact
+consumer
+`UCB.integral_realKernelRegret_externalAction_le_lml_sum_of_common_actionReward_condDistrib`.
+The practical specialization
+`UCB.integral_realKernelRegret_externalAction_le_lml_sum_of_condDistrib_eq_armStream`
+now chooses the canonical initial pair pushforward and successor
+`condDistrib`s internally. The remaining boundary is deriving the external
+initial/successor pair-law equalities from actual upstream fields, or literal
+compatible-toolchain import.
+The older ABRL deterministic `proxy : Nat -> Arm -> NNReal` surface is useful
+abstract confidence algebra but is not definitionally the source UCB width.
+## Local UCB IsAlgEnvSeq Split-Law Port
+
+Pinned LML separates the process contract into the initial action/feedback
+laws and successor action/feedback conditional laws, then packages them with a
+`stepKernel`. ABRL now has the compiled local Mathlib-facing counterpart:
+`UCB.identDistrib_actionRewardTrace_of_split_condDistrib_eq_armStream` and
+`UCB.integral_realKernelRegret_externalAction_le_lml_sum_of_split_condDistrib_eq_armStream`.
+The local surface uses direct `condDistrib =ᵐ[...]` equalities because LML's
+`HasCondDistrib` symbol is not imported. This is a faithful theorem route, not
+evidence that the pinned LML declaration itself compiles in ABRL.
+
+The theorem-level local compatibility endpoint now lives in
+`BanditRLProof.Algorithms.UCBRealLMLCompat`.
+`UCB.RealStationaryUCBSequence` names the exact local field bundle,
+`UCB.realStationaryUCBSequence_armStream` supplies the canonical witness, and
+`UCB.regret_le_of_realStationaryUCBSequence` returns the exact pinned UCB sum.
+This closes the local mathematical port while preserving theorem-card status
+for the actual upstream declarations.
+
+## Local Thompson Stationary Confidence Transport
+
+The pinned Thompson clipped-UCB concentration route is no longer missing its
+fixed-arm prior-mixture layer. ABRL now compiles positive-pull adaptive-count
+tails, the augmented-prior trajectory measure, exact clipped-radius threshold
+summation, and lower/upper empirical-mean failure bounds on the same
+left-associated sample shape used by the local Bayesian-regret decomposition.
+The two endpoint declarations are
+`Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_realEmpiricalMean_add_width_le_mean_le_nat_mul_delta`
+and
+`Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_mean_le_realEmpiricalMean_sub_width_le_nat_mul_delta`.
+This is a local Mathlib-backed port, not an imported LML theorem. The remaining
+LML-shaped gap is conversion to the two clipped-score expectation bounds and
+their final regret combination.

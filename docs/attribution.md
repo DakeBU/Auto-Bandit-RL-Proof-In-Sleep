@@ -39,6 +39,20 @@ ABRL's public diagrams adapt the same broad visual pattern of harness,
 dependency, and module-layout graphs while replacing the content with
 bandit/RL-specific Mathlib-ready proof leaves and memory contracts.
 
+## Literate Formalization Website
+
+The organization of ABRL's Blueprint-style literate formalization website is
+inspired by [Sho Sonoda's Lean-Ridgelet
+project](https://github.com/shosonoda/lean-ridgelet) and its
+[Blueprint website](https://shosonoda.github.io/lean-ridgelet/), especially
+the idea of an implementation map that connects informal mathematics to Lean
+declarations.  Lean-Ridgelet is distributed under the Apache License 2.0.
+
+ABRL uses an independently implemented static generator and original content.
+It does not copy Lean-Ridgelet source, templates, stylesheets, or
+configuration.  Sho Sonoda has not been represented as an ABRL contributor,
+maintainer, or endorser.
+
 ## Lean And Learning-Theory References
 
 - [lean-stat-learning-theory](https://github.com/YuanheZ/lean-stat-learning-theory).

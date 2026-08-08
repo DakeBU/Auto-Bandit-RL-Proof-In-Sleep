@@ -20,6 +20,13 @@ lean-stat-learning-theory source code.
 - lean-stat-learning-theory,
   https://github.com/YuanheZ/lean-stat-learning-theory.
 - Mathlib, https://github.com/leanprover-community/mathlib4.
+- Lean-Ridgelet by Sho Sonoda,
+  https://github.com/shosonoda/lean-ridgelet, Apache-2.0 License.  ABRL's
+  literate formalization website is conceptually inspired by Lean-Ridgelet's
+  Blueprint organization and implementation map.  No Lean-Ridgelet source,
+  template, stylesheet, or configuration file is copied into this repository,
+  and this reference does not imply participation, endorsement, or maintenance
+  by Sho Sonoda.
 - Bubeck and Cesa-Bianchi, Regret Analysis of Stochastic and Nonstochastic
   Multi-armed Bandit Problems, https://arxiv.org/abs/1204.5721.
 - Lattimore and Szepesvári, Bandit Algorithms,

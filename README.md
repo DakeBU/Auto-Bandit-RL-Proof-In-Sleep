@@ -18,6 +18,29 @@ A hierarchical multi-agent harness for building Lean-checked bandit and reinforc
 
 ## News
 
+* **August 6, 2026.** Expanded the Blueprint-style site into a first
+  researcher-facing IDE prototype.  The new workspace places editable LaTeX,
+  reviewed LaTeX-to-Lean mappings, exact Lean declarations, compiler
+  diagnostics, and a dependency tree in one page.  A loopback-only companion
+  server can invoke the repository's pinned Lean toolchain on temporary
+  snippets; GitHub Pages and temporary reviewer links remain static and never
+  claim browser-side proof execution.  The site inventory was also refreshed
+  for the current tree: 521 scanned Lean modules, 6,806 indexed declarations,
+  27 teaching mappings, and 28 route milestones at this snapshot, including
+  the substantially expanded OFUL, generated Tsallis oracle-restart, and
+  finite-horizon RL/causal stopping-time developments.
+* **July 27, 2026.** Added a Blueprint-style literate formalization website
+  that inventories the current Lean library, connects mathematical statements
+  and proof explanations to local declarations, and records compiled,
+  partial, planned, and blocked theorem routes without treating theorem cards
+  as local proofs.  The site also includes dependency, progress, learning-path,
+  and ABRL workflow diagrams.  See
+  [`website/README.md`](website/README.md) for local build and GitHub Pages
+  deployment instructions.  Its organization is inspired by
+  [Sho Sonoda's Lean-Ridgelet project](https://github.com/shosonoda/lean-ridgelet)
+  and its
+  [Blueprint website](https://shosonoda.github.io/lean-ridgelet/); this
+  attribution denotes design inspiration, not participation or endorsement.
 * **July 3, 2026.** Added the structured Lean route roadmap, route-specific
   PNG diagrams, and collaborator ABRIS screen-run command surface.  Start with
   `python3 tools/bandit.py list-routes`,
@@ -52,10 +75,35 @@ relevant Lean declarations compile.
 
 ![ABRL contract pipeline](docs/assets/abrl_contract_pipeline.svg)
 
+## Documentation Website
+
+Build and verify the Blueprint-style site from the repository root:
+
+```text
+python3 tools/bandit.py check
+python3 website/scripts/build_site.py --lean-verified
+python3 website/scripts/check_site.py
+python3 website/scripts/ide_server.py
+```
+
+The generated site is available locally at `http://localhost:8000/`; the IDE
+workspace is at `http://localhost:8000/ide/`.  `ide_server.py` is intentionally
+loopback-only and sends editable snippets to `lake env lean` in a temporary
+directory without changing project sources.  For a static-only preview, use
+`python3 -m http.server 8000 --directory website/_site` instead.
+[`documentation.yml`](.github/workflows/documentation.yml) repeats the same
+gates and deploys the generated artifact with GitHub Pages. Before the first
+public deployment, select **GitHub Actions** as the Pages source in repository
+settings. Detailed maintenance and status-mapping instructions are in
+[`website/README.md`](website/README.md).
+
 ## Harness Profile
 
 ABRL intentionally starts with the first ABEIS-style harness profile: one
-Hierarchical Harness.  There is no website in this repository.
+Hierarchical Harness.  The
+[Blueprint-style literate formalization website](website/README.md) presents
+the same Lean library, theorem-route status, and proof memory in a
+student-facing form.
 
 ![ABRL hierarchical harness](docs/assets/hierarchical_harness.svg)
 
@@ -89,13 +137,17 @@ tokens.  Hidden regularity conditions such as integrability, continuity,
 measurability, nonemptiness, boundedness, and finiteness become reusable
 contracts instead of ad hoc proof clutter.
 
-The current completion status is intentionally transparent.  ABRL has a useful
-harness, retrieval memory, proof weapon layer, compiled finite-bookkeeping
-leaves, deterministic regret/count adapters, ETC round-robin count scaffolds,
-the basic fixed-commit ETC phase boundary, and the first phase-prefix
-pull-count, post-commit suffix count, and regret transfers, but it does not yet contain the full Mathlib-backed measure,
-probability, concentration, functional-inequality, and algorithm theorem
-library needed to reproduce the current textbook scope end-to-end.  See
+The current completion status is intentionally transparent.  ABRL now has a
+large compiled local library: deterministic finite-bandit bookkeeping;
+measure, kernel, conditional-MGF, martingale, and stopping-time infrastructure;
+model-facing ETC, UCB, Thompson, EXP3, and Tsallis results; an OFUL route with
+self-normalized confidence, all-time events, expected-average consistency,
+and random-horizon consumers; and a finite-horizon RL tree covering Bellman
+optimality, occupancy regret, empirical confidence, adaptive stochastic
+behavior regret, causal laws, consistency, and fixed-index uncapped
+`hittingAfter` expected bounds.  This is still not complete textbook coverage:
+exact upstream ports, complete Tsallis-INF, complete minimax UCB-VI, KL-UCB,
+BwK, optional stopping, and several modern scenarios remain named gaps.  See
 [`docs/completion_gap_audit.md`](docs/completion_gap_audit.md) for the current
 audit and
 [`research-wiki/theory-tree/mathlib-foundation-leaf-map.md`](research-wiki/theory-tree/mathlib-foundation-leaf-map.md)

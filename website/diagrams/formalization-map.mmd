@@ -1,0 +1,14 @@
+flowchart LR
+  Math["Natural-language model and theorem"] --> Ledger["Assumption ledger"]
+  Ledger --> Statement["Exact Lean statement"]
+  Statement --> DAG["Proof-DAG leaves"]
+  DAG --> Decl["Compiled declaration"]
+  Decl --> Explain["Plain-English explanation"]
+  Explain --> Map["Implementation map"]
+  Map --> IDE["Research IDE mapping + dependency tree"]
+  IDE -. "local compile request" .-> Decl
+  Map -. "source link" .-> Decl
+  Map -. "mathematical back-link" .-> Math
+
+  Cards["Theorem and retrieval cards"] -. "route evidence only" .-> Ledger
+  Cards -. "never a local proof certificate" .-> Map

@@ -45,7 +45,7 @@ end PullCountFinset
 
 section SumRewardsFinset
 
-variable {Action Reward : Type u} [DecidableEq Action]
+variable {Action : Type u} {Reward : Type v} [DecidableEq Action]
 variable [AddCommMonoid Reward]
 variable (action : ActionTrace Action) (reward : RewardTrace Reward)
 variable (a : Action) (t : Nat)

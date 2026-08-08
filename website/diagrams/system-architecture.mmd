@@ -1,0 +1,18 @@
+flowchart TB
+  Sources["Papers, textbooks, LML and Mathlib cards"] --> Tasks["tasks/ + proof-blueprints/"]
+  Tasks --> Obligations["proof-obligations/ + conversion-windows/"]
+  Obligations --> Lean["Current Lean modules under BanditRLProof/"]
+  Lean --> Gate["lake build + Tests.Basic + tools/bandit.py check"]
+  Gate --> Inventory["Generated module + declaration inventory"]
+  Inventory --> Site["Literate formalization website"]
+  Inventory --> IDE["Research IDE: reviewed LaTeX ↔ Lean mappings + dependency tree"]
+  IDE -->|"loopback only"| LocalLean["Temporary snippet → lake env lean"]
+  Gate --> Memory["research-wiki/ + retrieval indexes + proof trials"]
+  Memory --> Tasks
+
+  classDef verified fill:#d7f3e3,stroke:#177245,color:#102a1e
+  classDef planning fill:#fff0c7,stroke:#9a6b00,color:#332400
+  classDef publication fill:#dcecff,stroke:#285e9b,color:#11263f
+  class Gate,Lean,LocalLean verified
+  class Sources,Tasks,Obligations,Memory planning
+  class Inventory,Site,IDE publication

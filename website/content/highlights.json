@@ -1,0 +1,349 @@
+{
+  "highlights": [
+    {
+      "full_name": "BanditRLProof.FiniteBanditModel",
+      "chapter": "foundations",
+      "plain": "A finite bandit model packages a rational mean for every arm together with a distinguished best arm and a proof that this arm really has maximal mean.",
+      "math": "\\(\\mathcal M=(\\mu,a^\\star,h_\\star)\\), where \\(\\mu:\\mathrm{Fin}(K)\\to\\mathbb Q\\) and \\(h_\\star:\\forall a,\\ \\mu(a)\\le\\mu(a^\\star)\\).",
+      "intuition": "The structure prevents later regret proofs from silently choosing a nonoptimal comparator. The proof field is data, so every downstream gap theorem can reuse it.",
+      "why": "Gaps, pseudo-regret, ETC commit errors, UCB suboptimal pulls, and the stochastic Tsallis endpoints all need the same fixed comparator.",
+      "position": "This is the model root of the deterministic proof DAG.",
+      "proof_idea": "This is a structure definition rather than a theorem. Its crucial invariant is the maximality field; derived lemmas prove gap nonnegativity and upper bounds.",
+      "lean_notes": "A Lean structure bundles values and proofs. Passing one model value therefore passes both the means and the best-arm certificate without a separate global assumption.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRLProof.pullCount",
+      "chapter": "foundations",
+      "plain": "The pull count of arm a before time n is the number of indices t<n at which the action trace selected a.",
+      "math": "\\(N_a(n)=\\sum_{t=0}^{n-1}\\mathbf 1\\{A_t=a\\}.\\)",
+      "intuition": "Most bandit analyses eventually ask how often a suboptimal arm was selected. This definition is the common bridge from an adaptive trace to finite combinatorics.",
+      "why": "ETC uses exact exploration counts; UCB controls small-count and large-count selections; regret decompositions weight these counts by gaps.",
+      "position": "It sits immediately above action traces and below almost every finite-arm regret theorem.",
+      "proof_idea": "The definition is a finite list count. Separate wrapper lemmas expose equivalent Finset sums and measurable random-variable forms when probability enters.",
+      "lean_notes": "Keeping the core definition dependency-light makes elementary count algebra available before importing measure theory.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRLProof.pseudoRegret_eq_finset_sum_gap_mul_pullCount",
+      "chapter": "foundations",
+      "plain": "Cumulative pseudo-regret can be regrouped by arm: every pull of arm a contributes exactly its fixed gap.",
+      "math": "\\(\\bar R_n=\\sum_{t<n}\\Delta_{A_t}=\\sum_{a\\in\\mathrm{Fin}(K)}\\Delta_a N_a(n).\\)",
+      "intuition": "The left side follows time; the right side follows arms. Algorithm-specific proofs normally bound the right side, one arm at a time.",
+      "why": "It turns a probabilistic control of pull counts into a regret theorem without redoing the deterministic bookkeeping for every algorithm.",
+      "position": "This is the central deterministic join between model gaps and algorithm traces.",
+      "proof_idea": "Expand pseudo-regret as a finite time sum, insert the indicator of each arm, swap finite sums, and identify the inner indicator sum with pullCount.",
+      "lean_notes": "The proof uses Finset rearrangement and previously compiled wrappers. No measure, independence, or integrability assumption appears.",
+      "dependencies": [
+        "BanditRLProof.pullCount",
+        "BanditRLProof.pseudoRegret",
+        "BanditRLProof.FiniteBanditModel"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.Policy.MeasurablePolicy",
+      "chapter": "probability",
+      "plain": "A policy is an action-valued function of a state together with proof that this function is measurable.",
+      "math": "\\(\\pi:S\\to A\\quad\\text{with}\\quad\\pi\\text{ measurable}.\\)",
+      "intuition": "An algorithmic formula is not enough for a probability theorem: the selected action must be a legitimate random variable.",
+      "why": "Generated trajectories, conditional distributions, filtrations, and expected regret all depend on policy measurability.",
+      "position": "This structure is the interface from deterministic state computation to probability-kernel construction.",
+      "proof_idea": "The structure stores the action function and its measurability proof. Composition lemmas then obtain measurable actions from measurable states.",
+      "lean_notes": "Measurable spaces are typeclass arguments. The structure makes the regularity contract explicit instead of relying on an informal claim that the policy is well behaved.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRLProof.PosteriorKernel.canonicalPosterior_kernel_ae_eq_condDistrib_of_pair_map_eq",
+      "chapter": "probability",
+      "plain": "If the joint law of environment and history is the canonical prior-likelihood law, the canonical posterior kernel agrees almost everywhere with the conditional distribution of the environment given history.",
+      "math": "\\(\\mathcal L(E,H)=\\pi\\otimes L\\Longrightarrow \\Pi(\\cdot\\mid H)=\\operatorname{condDistrib}(E\\mid H)\\quad\\text{a.e.}\\)",
+      "intuition": "Bayes' posterior and measure-theoretic conditional distribution are two descriptions of the same object once their joint law is identified.",
+      "why": "Thompson sampling needs to replace a reference posterior sampler by the actual conditional environment law along a generated history.",
+      "position": "This theorem is the principal posterior-law transport in the Thompson proof DAG.",
+      "proof_idea": "Rewrite the supplied pair pushforward as the canonical joint measure and use Mathlib's posterior/conditional-distribution identity, transporting the almost-everywhere statement along the history marginal.",
+      "lean_notes": "The conclusion is kernel equality almost everywhere, not pointwise equality. Standard Borel and finiteness hypotheses make conditional distributions available.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRLProof.MartingaleDiff.martingale_partialSumsSucc_of_succMartingaleDifference",
+      "chapter": "probability",
+      "plain": "The partial sums of an adapted integrable successor-indexed martingale-difference sequence form a martingale.",
+      "math": "\\(\\mathbb E[X_{t+1}\\mid\\mathcal F_t]=0\\Longrightarrow S_n=\\sum_{i<n}X_{i+1}\\text{ is an }(\\mathcal F_n)\\text{-martingale}.\\)",
+      "intuition": "Zero conditional drift is exactly the local condition needed for cumulative noise to have no predictable trend.",
+      "why": "Concentration and optional-stopping arguments reason about cumulative centered reward, not isolated one-step rewards.",
+      "position": "This theorem converts conditional reward-law work into Mathlib's martingale API.",
+      "proof_idea": "Use the witness fields for strong adaptedness, integrability, and zero conditional expectation; unfold the successor partial sum and verify the martingale conditional-expectation equation.",
+      "lean_notes": "The packaged witness prevents measurability and integrability assumptions from disappearing inside a tactic proof.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRLProof.ConditionalExpectationReward.historyStepKernelFamily_centeredReward_succ_hasCondSubgaussianMGF_trajMeasure",
+      "chapter": "probability",
+      "plain": "On the canonical trajectory generated by a measurable history step-kernel family, the selected centered successor reward has the promised conditional sub-Gaussian MGF.",
+      "math": "\\(\\mathbb E[\\exp(\\lambda(R_{t+1}-m_t))\\mid\\mathcal F_t]\\le\\exp(\\lambda^2v_t/2).\\)",
+      "intuition": "The theorem closes the gap between a one-step kernel law and the random reward actually observed on the recursively generated path.",
+      "why": "UCB, ETC, and adversarial high-probability routes need conditional concentration on the same measure that generates the policy history.",
+      "position": "It is a reusable law-transport endpoint in the conditional-reward layer.",
+      "proof_idea": "Identify the conditional kernel of the successor reward under trajMeasure, center the selected law by its declared mean, and reuse the kernel-level conditional-MGF contract.",
+      "lean_notes": "The long name records the transport path. The exact Lean statement below is the authoritative list of measurable-space, kernel, mean, and proxy hypotheses.",
+      "dependencies": [
+        "BanditRLProof.Policy.MeasurablePolicy"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal",
+      "chapter": "etc",
+      "plain": "For the generated Explore-Then-Commit policy under finite-arm sub-Gaussian reward laws, expected Real pseudo-regret is bounded by the canonical per-arm exploration-plus-commit expression.",
+      "math": "\\(\\mathbb E\\bar R_T\\le R_{\\mathrm{explore}}+\\sum_{a\\ne a^\\star}(T-mK)\\Delta_a\\,p_a^{\\mathrm{tail}}.\\)",
+      "intuition": "Exploration pays a deterministic cost; exploitation pays only when empirical noise makes the commit oracle choose the wrong arm.",
+      "why": "This is a concrete end-to-end local ETC theorem rather than only a tail lemma or theorem card.",
+      "position": "It closes one finite-arm sub-Gaussian branch of the ETC proof DAG while the broader upstream-compatible task remains partial.",
+      "proof_idea": "Prove empirical-mean measurability, reduce a wrong commit to a pairwise deviation event, apply the sub-Gaussian tail contract, and integrate the deterministic regret split.",
+      "lean_notes": "The Real integral is explicit. The bound and every arm-law regularity hypothesis are visible in the Lean statement; no LML theorem card is used as a proof term.",
+      "dependencies": [
+        "BanditRLProof.pseudoRegret_eq_finset_sum_gap_mul_pullCount"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.UCB.integral_real_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_le_textbookGapSum_finiteArmSubgaussianLaws_without_proxy_positivity",
+      "chapter": "ucb",
+      "plain": "The generated finite-arm UCB policy has a textbook-shaped expected pseudo-regret gap-sum bound for sub-Gaussian arm laws, including zero variance proxies.",
+      "math": "\\(\\mathbb E\\bar R_T\\le\\sum_{a:\\Delta_a>0}\\Delta_a\\bigl(B_a(T)+T\\delta_a\\bigr),\\quad B_a(T)\\asymp v_a\\log(T/\\delta_a)/\\Delta_a^2.\\)",
+      "intuition": "A suboptimal arm can be chosen many times only while it has too few samples or while a confidence event fails.",
+      "why": "This is the practical model-facing UCB endpoint that connects arm laws, the generated adaptive trace, confidence widths, pull counts, and regret.",
+      "position": "It is a compiled endpoint inside the still-active exact upstream port route.",
+      "proof_idea": "Construct the finite-arm reward kernel, obtain selected conditional MGF bounds, split selections at an explicit count threshold, sum the failure probabilities, and apply the gap-times-count regret decomposition.",
+      "lean_notes": "The suffix without_proxy_positivity matters: the theorem handles the all-zero proxy case separately instead of adding a false global positivity assumption.",
+      "dependencies": [
+        "BanditRLProof.pseudoRegret_eq_finset_sum_gap_mul_pullCount"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.OFUL.sum_range_min_prefix_update_le_two_trace_average_log",
+      "chapter": "oful",
+      "plain": "The cumulative clipped inverse-Gram quadratic width is at most twice a dimension-scaled logarithmic growth term.",
+      "math": "\\(\\sum_{t<T}\\min\\{1,\\|x_t\\|^2_{V_t^{-1}}\\}\\le2d\\log\\!\\left(1+\\frac{TL^2}{d\\lambda}\\right).\\)",
+      "intuition": "Each new feature direction increases the determinant of the regularized Gram matrix; the determinant cannot grow too fast under a norm bound.",
+      "why": "This is the geometric summation step that turns per-round confidence widths into a finite linear-bandit regret scale.",
+      "position": "It is the deterministic geometric core reused by the now-compiled self-normalized confidence, finite-window regret, expected-rate, all-time, and stopping-time consumers.",
+      "proof_idea": "Use the matrix determinant update identity, telescope logarithms, bound the final determinant by a trace-average inequality, and compare min(1,u) with log(1+u).",
+      "lean_notes": "Finite-dimensionality, positive regularization, nonemptiness, and the feature norm bound are explicit. Matrix inverse and determinant side conditions are proved locally.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRLProof.Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryBayesMeanRegret_le",
+      "chapter": "thompson",
+      "plain": "For the canonical stationary latent-arm-stream Thompson process, the expected Bayesian mean regret is bounded by the compiled clipped-UCB expression.",
+      "math": "\\(\\mathbb E[R_T^{\\mathrm{Bayes}}]\\le\\text{initial term}+\\text{confidence widths}+\\text{tail terms}.\\)",
+      "intuition": "Posterior sampling matches the law of the optimal action, so a carefully chosen confidence decomposition can compare the sampled and optimal actions in expectation.",
+      "why": "It is the final stationary theorem of the local Thompson route and demonstrates that posterior-law construction reaches an actual regret endpoint.",
+      "position": "The theorem closes one stationary model while BRL-TS-BAYES-001 remains active for broader compatibility.",
+      "proof_idea": "Construct actual and reference trajectories, prove posterior-action conditional-law equality, integrate the Bayesian regret decomposition, apply clipped-UCB bounds, and discharge stationary reward tails.",
+      "lean_notes": "The exact statement exposes prior, likelihood, measurability, boundedness, sub-Gaussian, and integrability assumptions. It should not be generalized beyond that signature in prose.",
+      "dependencies": [
+        "BanditRLProof.PosteriorKernel.canonicalPosterior_kernel_ae_eq_condDistrib_of_pair_map_eq"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.Exp3.hedge_regret_le_log_card_div_add_eta_mul_mixedSquaredLoss_of_nonneg",
+      "chapter": "exp3",
+      "plain": "For nonnegative estimated losses, exponential weights has pathwise regret at most a log-cardinality term divided by the learning rate plus the learning rate times the mixed squared loss.",
+      "math": "\\(\\sum_t\\langle p_t,\\hat\\ell_t\\rangle-\\sum_t\\hat\\ell_t(a)\\le\\frac{\\log K}{\\eta}+\\eta\\sum_t\\langle p_t,\\hat\\ell_t^2\\rangle.\\)",
+      "intuition": "The log potential can neither fall below the comparator weight nor rise faster than the second-order exponential bound permits.",
+      "why": "This deterministic theorem is the algorithmic core reused by expected and high-probability EXP3 consumers.",
+      "position": "It sits between the potential algebra and probability-specific moment transport.",
+      "proof_idea": "Bound each exponential update by a quadratic inequality, telescope the log normalizer, and compare the final normalizer with one fixed arm's weight.",
+      "lean_notes": "The theorem is pathwise and does not itself mention a probability measure. Unbiasedness and integrability enter later.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRLProof.Exp3.sampledPredictable_expectedRegret_le_four_mul_sqrt",
+      "chapter": "exp3",
+      "plain": "With the repository's tuned learning and exploration rates, the generated predictable EXP3 process has expected regret bounded by an explicit square-root expression.",
+      "math": "\\(\\mathbb E R_T\\le4\\sqrt{KT\\log K}\\) in the theorem's normalized finite-arm setting.",
+      "intuition": "The tuning balances the potential term, second-moment term, and the price of forced exploration.",
+      "why": "It demonstrates a complete expected-regret route from the generated adaptive trajectory, not only a deterministic Hedge inequality.",
+      "position": "This is the clean expected endpoint before the later Bernstein and sparsity-sensitive high-probability branches.",
+      "proof_idea": "Combine the Hedge theorem with conditional importance-weighted moment identities and exploration-bias control, then optimize the scalar parameters.",
+      "lean_notes": "The exact constant and off-by-one horizon convention are governed by the displayed Lean statement. The schematic formula summarizes the leading shape only.",
+      "dependencies": [
+        "BanditRLProof.Exp3.hedge_regret_le_log_card_div_add_eta_mul_mixedSquaredLoss_of_nonneg"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.Exp3.sampledPredictable_allHorizonDoubleVarianceProbabilisticSparseLossBestArmRealizedRegret_tail_of_sparsityFailure_le",
+      "chapter": "exp3",
+      "plain": "Under predictable sparse losses, the probability that best-arm realized regret crosses the tuned all-horizon threshold is at most delta plus the supplied sparsity-failure probability.",
+      "math": "\\(\\Pr\\{R_T^{\\mathrm{real}}\\ge b(K,S,T,\\delta)\\}\\le\\delta+\\varepsilon.\\)",
+      "intuition": "A variance-sensitive martingale bound handles the regular sparse regime, while a separate event explicitly accounts for violations of the sparsity model.",
+      "why": "Keeping the failure event visible prevents a conditional sparsity assumption from being disguised as an unconditional theorem.",
+      "position": "This is one of the deepest compiled adversarial high-probability endpoints.",
+      "proof_idea": "Combine double predictable/pathwise variance control, tuned exploration and learning rates, best-arm comparison, an all-horizon tail argument, and monotonicity with the sparsity-failure measure bound.",
+      "lean_notes": "The theorem's let-bound parameters are part of its formal API. The event difference and ENNReal probability arithmetic are visible in the exact statement.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisFiniteArmIIDRewardLawRegret_le_log",
+      "chapter": "tsallis",
+      "plain": "For independent IID finite-arm reward laws with exact model means and positive non-best gaps, scheduled half-Tsallis FTRL has a logarithmic expected-regret bound in reciprocal gaps.",
+      "math": "\\(\\mathbb E R_T\\le(1+\\log(T+1))\\left(1+25\\sum_{a\\ne a^\\star}\\Delta_a^{-1}\\right)+C.\\)",
+      "intuition": "The stochastic gap law makes the algorithm's own action probabilities pay for regret, and the half-Tsallis schedule converts that self-bound into logarithmic growth.",
+      "why": "This is a model-facing stochastic Tsallis endpoint with no caller-supplied trajectory identification.",
+      "position": "It is the base law theorem reused by corruption and nonstationary extensions.",
+      "proof_idea": "Build IID product reward vectors, prove finite-prefix factorization and independent mean-gap laws, obtain expected gap mass, apply scheduled self-bounding, and close the harmonic/logarithmic schedule.",
+      "lean_notes": "The arm laws, support, exact means, positive gaps, probability instances, and corruption scalar are explicit. Paper cards remain retrieval evidence only.",
+      "dependencies": [
+        "BanditRLProof.FiniteBanditModel"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLawRegret_le_allRegimes",
+      "chapter": "tsallis",
+      "plain": "For a measurable pre-action-history corruption model controlled in conditional expectation, the theorem automatically selects a refined local or logarithmic regret bound across all regimes.",
+      "math": "\\(\\mathbb E R_T\\le\\begin{cases}\\text{refined }\\sqrt{CS}\\text{ expression},&\\text{inside the certified window},\\\\\\text{logarithmic bound}+C,&\\text{otherwise.}\\end{cases}\\)",
+      "intuition": "Predictable corruption may react to the past, but not to the current random action. The theorem keeps that information pattern formal and lets the bound adapt to the corruption scale.",
+      "why": "It closes a substantially more realistic corruption route than a fixed deterministic shift.",
+      "position": "This result lies above IID law construction, predictable loss measurability, self-bounding interpolation, and refined scalar optimization.",
+      "proof_idea": "Construct the actual and reference predictable laws on the same trajectory, bound their gap difference in conditional expectation, derive the exact corruption budget, and invoke the all-regimes optimizer.",
+      "lean_notes": "Current-action corruption, latent-law changes, and expectation-only contracts outside the stated filtration remain separate problems.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisFiniteArmIndependentDriftingMeanDynamicRegret_le_allRegimes",
+      "chapter": "tsallis",
+      "plain": "For independent nonidentical reward laws with controlled drifting means, the expected regret to the time-varying best arm is bounded in all regimes.",
+      "math": "\\(\\mathbb E R_T^{\\mathrm{dyn}}\\le B_{\\mathrm{fixed}}(T,C,S)+\\sum_{t\\le T}\\bigl(\\mu_t(a_t^\\star)-\\mu_t(a^\\star)\\bigr).\\)",
+      "intuition": "Dynamic regret splits into what the algorithm loses against one baseline arm and what that baseline arm loses against the moving best arm.",
+      "why": "This is the first compiled moving-comparator theorem in the long Tsallis nonstationarity chain.",
+      "position": "Path-variation and switch-count modules specialize the explicit comparator-advantage term further.",
+      "proof_idea": "Prove an exact dynamic-to-fixed decomposition, choose the finite actual-mean maximizer at every time, identify expected gaps under the independent law, and bound the comparator advantage using mean-deviation envelopes.",
+      "lean_notes": "The result is expected predictable-environment dynamic regret, not realized sample-path regret or a minimax-sharp variation theorem.",
+      "dependencies": [
+        "BanditRLProof.FiniteBanditModel"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisFiniteArmIndependentGlobalMeanSwitchCountHorizonCompressedDynamicRegret_le_log",
+      "chapter": "tsallis",
+      "plain": "The dynamic-regret nonstationarity cost can be compressed to one terminal count of global population-mean change points, with the theorem's explicit coefficient.",
+      "math": "\\(\\mathbb E R_T^{\\mathrm{dyn}}\\le B_{\\log}(T)+4(K-1)(T+1)S_T.\\)",
+      "intuition": "A single global switch event dominates every armwise mean change, so repeated prefix penalties can be bounded by the terminal global count.",
+      "why": "It replaces a nested time-by-arm deviation sum with a more readable population-level change count.",
+      "position": "This is a compiled but deliberately non-sharp endpoint; the obstruction theorem explains why the present route cannot yield a square-root switch rate by comparison alone.",
+      "proof_idea": "Prove monotonicity of the global prefix count, dominate fixed-deviation and moving-comparator penalties separately, and add the two coefficient-two bounds.",
+      "lean_notes": "The count excludes the post-horizon transition. The theorem does not claim a minimax switch-rate result.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRLProof.Tsallis.sampledScheduledHalfTsallisPredictableMovingComparatorEnvironmentRegret_le_oracleRestartSwitchCountSqrt",
+      "chapter": "tsallis",
+      "plain": "If each oracle-defined epoch has a fixed-comparator regret certificate, their total moving-comparator regret is bounded by a square-root term depending on the number of switches and the horizon.",
+      "math": "\\(R_T^{\\mathrm{mov}}\\le c\\sum_e\\sqrt{|I_e|}\\le c\\sqrt{(S_T+1)(T+1)}.\\)",
+      "intuition": "Restarting turns a moving comparator into several fixed-comparator problems; Cauchy-Schwarz aggregates their square-root costs.",
+      "why": "It isolates the deterministic assembly reused by the generated change-point restart theorem.",
+      "position": "This theorem is an upstream deterministic parent. The selector, one-trajectory law transport, epoch-local stability, and population-mean change-point consumer now compile downstream.",
+      "proof_idea": "Partition the inclusive horizon into epoch fibers, rewrite regret exactly as their sum, apply each local certificate, and bound the sum of square roots by Cauchy-Schwarz.",
+      "lean_notes": "This declaration remains conditional on epoch certificates, but the repository now contains a separate generated consumer. Do not read this parent alone as the final endpoint.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRLProof.OFUL.canonicalStandardExpectedAveragePseudoRegret_tendsto_zero",
+      "chapter": "oful",
+      "plain": "For the canonical finite-action scalar linear-bandit model, the compiled expected pseudo-regret bound divided by the number of rounds converges to zero.",
+      "math": "\\(\\displaystyle \\frac{\\mathbb E R_T}{T+1}\\longrightarrow 0.\\)",
+      "intuition": "The finite-horizon regret grows strictly slower than the horizon, so the expected cost per decision vanishes even though cumulative regret can still grow.",
+      "why": "A finite-time square-root-log bound is useful quantitatively; this theorem records its asymptotic statistical meaning as a Lean limit statement.",
+      "position": "It is the fixed-model asymptotic consumer of the compiled ridge-confidence, optimism, width-summation, and bad-event expectation route.",
+      "proof_idea": "First prove the explicit expected bound is little-o of the natural horizon scale, transfer the bound to the canonical generated regret, and rewrite division as the expected-average definition.",
+      "lean_notes": "The limit is for the horizon-indexed generated family in the theorem's fixed model. It is not a one-policy anytime, pathwise, minimax, or uniform-over-parameter consistency claim.",
+      "dependencies": ["BanditRLProof.OFUL.sum_range_min_prefix_update_le_two_trace_average_log"]
+    },
+    {
+      "full_name": "BanditRLProof.Tsallis.integral_sampledOracleRestartHalfTsallisFiniteArmIndependentGlobalMeanChangeDynamicRegret_le",
+      "chapter": "tsallis",
+      "plain": "The generated half-Tsallis policy that restarts after every global population-mean change has expected dynamic regret bounded by an explicit square-root function of the number of change points and the horizon.",
+      "math": "\\(\\mathbb E R_T^{\\mathrm{dyn}}\\le 8\\sqrt{K}\\,\\sqrt{S_T+1}\\,\\sqrt{T+1}.\\)",
+      "intuition": "Inside an epoch the population means do not change, so one fixed comparator remains optimal; restarting localizes learning and Cauchy-Schwarz aggregates the epoch costs.",
+      "why": "It closes the former gap between the deterministic restart assembly and a single generated probability law.",
+      "position": "This is the current terminal of the full-information population-mean oracle-restart branch.",
+      "proof_idea": "Construct the exact change-point schedule, prove its epoch count is the global switch count plus one, show the epoch-start best arm stays mean-optimal, transport the generated local stability certificates, and invoke the compiled restart assembly.",
+      "lean_notes": "The schedule sees population-mean changes. An observable detector with delay and false alarms is a different, still-open random-schedule theorem route.",
+      "dependencies": ["BanditRLProof.Tsallis.sampledScheduledHalfTsallisPredictableMovingComparatorEnvironmentRegret_le_oracleRestartSwitchCountSqrt"]
+    },
+    {
+      "full_name": "BanditRLProof.FiniteHorizonRL.MDP",
+      "chapter": "finite-horizon-rl",
+      "plain": "A finite-horizon Markov decision process packages a horizon, measurable finite state and action spaces, an initial-stage reward, and a stochastic transition kernel.",
+      "math": "\\(\\mathcal M=(H,\\mathcal S,\\mathcal A,r,P),\\qquad P(\\cdot\\mid s,a)\\text{ is a probability kernel}.\\)",
+      "intuition": "The structure is the common mathematical world in which policies, trajectories, Bellman operators, empirical models, and regret are interpreted.",
+      "why": "Without one explicit MDP interface, later confidence or regret statements could silently switch reward, transition, horizon, or measurability conventions.",
+      "position": "It is the root declaration of the finite-horizon RL chapter.",
+      "proof_idea": "This is a structure, not a theorem. Its fields carry the data and regularity needed by the recursive constructions that follow.",
+      "lean_notes": "Finiteness and measurable-space facts are supplied through typeclasses around the structure. The exact field types in the Lean statement are authoritative.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRLProof.FiniteHorizonRL.MarkovPolicy.expectedRegret_eq_occupancyGapRemaining",
+      "chapter": "finite-horizon-rl",
+      "plain": "A Markov policy's expected regret equals the sum, under its own state occupancies, of the stagewise gap between the optimal Bellman value and the policy's Bellman value.",
+      "math": "\\(\\mathbb E R_H(\\pi)=\\sum_{h=0}^{H-1}\\mathbb E_{S_h\\sim d_h^\\pi}[V_h^\\star(S_h)-Q_h^\\star(S_h,\\pi_h(S_h))].\\)",
+      "intuition": "Regret can be read either as a difference of total values or as local Bellman suboptimality accumulated along the states the policy actually visits.",
+      "why": "Optimistic confidence proofs naturally bound local Bellman residuals; this identity turns those local bounds into an expected policy-regret theorem.",
+      "position": "It joins Bellman optimality to occupancy-based empirical-model and optimistic-certificate consumers.",
+      "proof_idea": "Prove a one-step Bellman difference identity, integrate it through the induced state kernel, and telescope recursively over the remaining horizon.",
+      "lean_notes": "The occupancy recursion and all measurability/integrability obligations are explicit. This is expected policy regret, not realized sample-path regret.",
+      "dependencies": ["BanditRLProof.FiniteHorizonRL.MDP.optimalValueAt_dominates_and_is_attained"]
+    },
+    {
+      "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeStochasticEmpiricalOptimisticSource.exploratorySource_trajectoryMeasure_projectedCumulativeInverseSqrtPathSupport_decayingExplorationAverageRealizedBehaviorConsistency_allWindows_of_standardBorel",
+      "chapter": "finite-horizon-rl",
+      "plain": "Across the scheduled sequence of adaptive empirical planning windows, both the explicit failure probability and the average realized behavior-regret envelope converge to zero, and every window carries the corresponding confidence and optimism guarantee.",
+      "math": "\\((\\delta_n,b_n)\\to(0,0),\\quad \\Pr(R_n^{\\mathrm{beh}}/N_n>b_n)\\le\\delta_n.\\)",
+      "intuition": "Exploration decays slowly enough to keep learning the model while confidence tightens quickly enough that both the bad-event probability and average behavior regret vanish.",
+      "why": "This is a real adaptive stochastic-RL consistency endpoint, far beyond the Bellman interface that the earlier website still described as planned.",
+      "position": "It is the regularity-closed all-window parent for later natural-causal, first-passage, and stopping-time constructions.",
+      "proof_idea": "Combine cumulative empirical transition confidence, path-support visit floors, known reward transport, optimistic planning, selected-return concentration, the decaying exploration schedule, and asymptotic estimates for both coordinates.",
+      "lean_notes": "The long signature records finite nonempty Standard Borel spaces, exact generated sources, support, bounded means, sub-Gaussian rewards, and horizon positivity. It is not a minimax UCB-VI theorem.",
+      "dependencies": ["BanditRLProof.FiniteHorizonRL.MarkovPolicy.expectedRegret_eq_occupancyGapRemaining"]
+    },
+    {
+      "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_stoppedAverageRealizedBehaviorRegret_integrable_and_integral_le_threshold",
+      "chapter": "finite-horizon-rl",
+      "plain": "For each fixed inverse-square-root threshold index and horizon greater than four, the exact average realized behavior-regret process stopped at the genuine uncapped first passage is integrable, and its expectation is at most the threshold that was hit.",
+      "math": "\\(\\tau_j=\\operatorname{hittingAfter}(X,(-\\infty,\\theta_j]),\\quad X_{\\tau_j}\\in L^1,\\quad \\mathbb E[X_{\\tau_j}]\\le\\theta_j.\\)",
+      "intuition": "The stopping rule waits until the certified average-regret process enters a shrinking target; square-integrable stopping fibers and uniform coordinate moments make the unbounded stopped value integrable.",
+      "why": "An almost-sure finite hit does not by itself justify taking expectations. This theorem supplies the missing L1 bridge and the expected upper bound without pretending to use optional stopping.",
+      "position": "It is the current fixed-index terminal of the natural-causal inverse-sqrt hittingAfter route.",
+      "proof_idea": "Decompose the stopping time into equality fibers, use its L2 round count to sum square roots of fiber masses, apply indicator Hölder to uniformly L2 deterministic coordinates, then integrate the almost-everywhere hit-threshold inequality.",
+      "lean_notes": "The result keeps the explicit assumption 4 < horizon and a fixed schedule index. It does not prove expected nonnegativity, an absolute-moment rate, uniform integrability, L1 convergence, optional stopping, raw-episode regret, or complete UCB-VI.",
+      "dependencies": [
+        "BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_squareIntegrableFiniteStoppingTime",
+        "BanditRLProof.integrable_stoppedValue_of_uniform_secondMoment_of_memLp_two_rounds"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.Budget.isStoppingTime_budgetExhaustionTime_of_adapted",
+      "chapter": "frontier",
+      "plain": "The first time an adapted cumulative spending process reaches a fixed budget is a stopping time.",
+      "math": "\\(\\tau_B=\\inf\\{t:\\mathrm{spent}_t\\ge B\\}\\quad\\Longrightarrow\\quad\\{\\tau_B\\le n\\}\\in\\mathcal F_n.\\)",
+      "intuition": "Whether the budget has been exhausted by time n can be decided from information available by time n.",
+      "why": "Any rigorous bandits-with-knapsacks route must stop at a random, history-observable exhaustion time.",
+      "position": "This is a compiled foundation leaf, not a BwK model or regret theorem.",
+      "proof_idea": "Express exhaustion as Mathlib's hittingAfter construction and use adaptedness to prove measurability of each level event.",
+      "lean_notes": "The stopping time takes values in WithTop Nat, allowing the budget never to be reached.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRLProof.HarnessTask",
+      "chapter": "frontier",
+      "plain": "A harness task records the target, task kind, status, source and scenario cards, profile, required artifacts, and acceptance gates used by the automation system.",
+      "math": "\\(\\text{task}=\\text{target}+\\text{evidence}+\\text{status}+\\text{artifacts}+\\text{gates}.\\)",
+      "intuition": "Proof automation is safer when completion criteria are data that can be inspected, rather than an informal instruction that can drift across runs.",
+      "why": "The website uses the same status discipline: a theorem card, a planned target, and a compiled Lean theorem are visibly different objects.",
+      "position": "This structure belongs to the automation layer rather than the mathematical bandit theory.",
+      "proof_idea": "It is a structure definition. The default Lean gate later instantiates the acceptance condition with the repository's build command.",
+      "lean_notes": "Inductive TaskStatus and TaskKind values make invalid status strings unrepresentable inside Lean-side harness data.",
+      "dependencies": []
+    }
+  ]
+}

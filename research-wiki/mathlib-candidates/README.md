@@ -42,6 +42,103 @@ proof route.  If repeated attempts fail, record whether the likely issue is a
 false statement, missing assumption, wrong abstraction, unavailable API, or
 counterexample.  Do not repeatedly rewrite the proof route without that audit.
 
+## MEASURE-MAP-COMPPROD-COMAP-HISTORY
+
+- Proposed name: `Measure.map_compProd_comap`
+- Mathematical area: probability kernels and composition-product measures
+- Intended Mathlib namespace: `MeasureTheory.Measure`
+- Exact statement: for a finite measure `mu`, measurable
+  `history : Omega -> History`, and Markov kernel `policy : Kernel History Action`,
+  `(mu ⊗ₘ policy.comap history hhistory).map
+  (fun sample => (history sample.1, sample.2)) = mu.map history ⊗ₘ policy`.
+- Required imports: `Mathlib.Probability.Kernel.Composition.Lemmas`
+- Local APIs: `Measure.ext_prod`, `Measure.compProd_apply_prod`,
+  `Kernel.comap_apply`, and `MeasureTheory.setLIntegral_map`.
+- Intended proof route: use finite product-measure extensionality; rewrite the
+  preimage of a measurable rectangle; expand both composition products; move
+  the policy event-probability integral across `Measure.map history`.
+- Regularity contracts: finite base measure; measurable source, history, and
+  action spaces; measurable history map; Markov policy kernel.
+- Current ABRL task:
+  `LOCAL-LEAF-TS-REFERENCE-POSTERIOR-POLICY-SAMPLER`
+- Status: locally-compiled
+- Failure signal: `Measure.ext_prod` needs a finite base measure in this route;
+  do not assume the projected history/action law when the `compProd`
+  construction can prove it.
+
+## MEASURE-COMPPROD-WITHDENSITY-LEFT
+
+- Proposed name: `Measure.compProd_withDensity_left`
+- Mathematical area: probability kernels and density-weighted measures
+- Intended Mathlib namespace: `MeasureTheory.Measure`
+- Exact statement: for an s-finite history law `nu`, Markov kernel
+  `posterior`, measurable `density : History -> ENNReal`, and finite weighted
+  base measure,
+  `(nu.withDensity density) ⊗ₘ posterior =
+  (nu ⊗ₘ posterior).withDensity (density ∘ Prod.fst)`.
+- Required imports: `Mathlib.Probability.Kernel.CompProdEqIff`
+- Local APIs: `Measure.ext_prod`, `Measure.compProd_apply_prod`,
+  `Measure.setLIntegral_compProd`,
+  `setLIntegral_withDensity_eq_setLIntegral_mul`, and
+  `Measure.withDensity_apply`.
+- Intended proof route: compare measurable rectangles; expand the left
+  composition product into a set integral under the weighted base; move the
+  density into the integrand; expand the right weighted composition product;
+  integrate the history-only density over the kernel coordinate.
+- Regularity contracts: measurable history/environment spaces; s-finite base
+  measure; Markov kernel; measurable density; finite weighted base measure for
+  product-measure extensionality.
+- Current ABRL task:
+  `LOCAL-LEAF-TS-ALGORITHM-DENSITY-POSTERIOR-INVARIANCE`
+- Status: locally-compiled
+- Failure signal: do not assume posterior invariance directly; first verify
+  that the same density weights both the history marginal and joint law. For
+  non-finite weighted bases, replace finite rectangle extensionality with an
+  appropriate s-finite uniqueness route before proposing this exact statement
+  upstream.
+
+## MEASURE-COMP-WITHDENSITY-HISTORY
+
+- Proposed name: `Measure.comp_withDensity_of_right_constant`
+- Mathematical area: kernel composition and density-weighted measures
+- Intended Mathlib namespace: `MeasureTheory.Measure`
+- Exact statement: composing `kernel.withDensity (fun _ y => density y)` over
+  any base measure equals `(kernel ∘ₘ base).withDensity density` when the
+  kernel is s-finite and the density is measurable.
+- Required imports: `Mathlib.Probability.Kernel.WithDensity` and kernel/measure
+  composition integrals.
+- Local APIs: `Measure.bind_apply`, `Kernel.withDensity_apply'`,
+  `Measure.lintegral_bind`, `MeasureTheory.withDensity_apply`, and
+  `MeasureTheory.lintegral_indicator`.
+- Intended proof route: extensionality on measurable sets, expand bind and
+  with-density evaluations, then commute the indicator-weighted lintegral
+  through bind.
+- Regularity contracts: measurable spaces, s-finite kernel, measurable output
+  density; no finiteness assumption on the base measure.
+- Current ABRL task: `LOCAL-LEAF-TS-CONDITIONAL-HISTORY-DENSITY-SOURCE`
+- Status: locally-compiled as `Thompson.comp_withDensity_history`.
+- Failure signal: keep the density independent of the kernel input; the fully
+  input-dependent statement is `Measure.compProd_withDensity`, not this lemma.
+
+## MEASURE-MAP-SWAP-WITHDENSITY-SND
+
+- Proposed name: `Measure.map_swap_withDensity_snd`
+- Mathematical area: measure maps and density-weighted product measures
+- Intended Mathlib namespace: `MeasureTheory.Measure`
+- Exact statement: mapping a joint measure weighted by `density ∘ Prod.snd`
+  through `Prod.swap` equals the swapped measure weighted by
+  `density ∘ Prod.fst`.
+- Required imports: `Mathlib.MeasureTheory.Integral.Lebesgue.Map`.
+- Local APIs: `Measure.map_apply`, `MeasureTheory.withDensity_apply`, and
+  `MeasureTheory.setLIntegral_map`.
+- Intended proof route: extensionality on measurable sets, expand map and both
+  density evaluations, then use the set-lintegral map theorem.
+- Regularity contracts: measurable product spaces and measurable density.
+- Current ABRL task: `LOCAL-LEAF-TS-CONDITIONAL-HISTORY-DENSITY-SOURCE`
+- Status: locally-compiled as `Thompson.map_swap_withDensity_snd`.
+- Failure signal: audit coordinate order and use `Prod.swap`; do not rewrite the
+  joint law by an unproved pair-map identity.
+
 ## CONDDISTRIB-CONDEXPKERNEL-MAP-TRIM-COUNTABLE
 
 - Proposed name: `condExpKernel_map_eq_of_condDistrib_ae_eq_countable_trim`
@@ -105,6 +202,32 @@ counterexample.  Do not repeatedly rewrite the proof route without that audit.
   measurable spaces; instantiate `mcond` and `mOmega` explicitly.  Pointwise
   integrability without the common MGF bound is insufficient.
 
+## FIXED-MGF-DETERMINISTIC-COMPENSATION
+
+- Proposed name: `HasMGFUpperBoundAt.compensated`.
+- Mathematical area: exponential moments and supermartingale increments.
+- Intended namespace: a future Mathlib fixed-tilt MGF namespace; the current
+  structure is ABRL-local.
+- Exact statement: from `HasMGFUpperBoundAt X t psi mu`, derive
+  `HasMGFUpperBoundAt (fun omega => t * X omega - psi) 1 0 mu`.
+- Required import: `Mathlib.Probability.Moments.SubGaussian` through the local
+  fixed-MGF layer.
+- Local APIs: exponential add/sub identities, constant-multiple integrability,
+  `integral_mul_const`, and the existing MGF upper bound.
+- Proof route: factor every exponential integrability target into the constant
+  `exp(-s*psi)` times the original exponential at tilt `s*t`; for the MGF,
+  multiply `mgf X mu t <= exp psi` by `exp(-psi)`.
+- Regularity contracts: exactly those stored by `HasMGFUpperBoundAt`; no new
+  finite-measure, boundedness, measurability, or sign premise.
+- Current ABRL task:
+  `LOCAL-LEAF-EXP3-MIXED-SQUARE-PREDICTABLE-VARIANCE-TAIL`.
+- Status: locally compiled; project-local candidate because Mathlib has no
+  corresponding fixed-tilt structure in this checkout.
+- Failure signal: this lemma compensates only a deterministic scalar budget.
+  A random predictable budget must first be frozen inside each conditional
+  kernel, as done by the generated mixed-square transport; do not apply the
+  scalar lemma directly to a random function.
+
 ## TRAJMEASURE-MAP-EVAL-ZERO
 
 - Proposed name: `Kernel.trajMeasure_map_eval_zero`
@@ -160,6 +283,36 @@ counterexample.  Do not repeatedly rewrite the proof route without that audit.
   The induction needs conditional laws a.e. under the actual prefix
   pushforward, and the canonical side must use the explicit trajMeasure
   compProd recurrence rather than an assumed full-trajectory equality.
+
+## REWARDTRACE-MAP-EQ-TRAJMEASURE-OF-CONDDISTRIB
+
+- Proposed name: `Kernel.trajMeasure_map_eq_of_condDistrib`
+- Mathematical area: regular conditional distributions, finite-dimensional
+  laws, and Ionescu-Tulcea uniqueness
+- Intended Mathlib namespace: `ProbabilityTheory.Kernel`
+- Exact statement: a coordinate-measurable external sequence with initial law
+  `mu0` and successor conditional kernels `kernel i` has complete pushforward
+  law `Kernel.trajMeasure mu0 kernel`; two such processes are therefore
+  `IdentDistrib`.
+- Required imports: `Mathlib.Probability.Process.FiniteDimensionalLaws` and
+  `Mathlib.Probability.Kernel.IonescuTulcea.Traj`.
+- Local APIs: `RewardKernel.rewardTrace_prefix_map_eq_trajMeasure_of_condDistrib`,
+  `Finset.sup`, `Finset.measurable_restrict`,
+  `MeasureTheory.IsProjectiveLimit.unique`, and `Measure.map_map`.
+- Intended proof route: for each finite coordinate set `I`, map the law of the
+  enclosing prefix `Finset.Iic (I.sup id)` through the measurable restriction
+  to `I`; both complete measures are then projective limits of the same finite
+  marginals, so uniqueness identifies them.
+- Regularity contracts: finite external measure, probability initial measure,
+  coordinate measurability, nonempty standard-Borel coordinate target, and a
+  Markov successor-kernel family.
+- Current ABRL task:
+  `LOCAL-LEAF-UCB-COMMON-ACTION-REWARD-CONDDISTRIB-LML-REGRET`
+- Status: locally-compiled; Mathlib-candidate
+- Failure signal: equality of one-dimensional marginals is insufficient. The
+  proof requires all finite-prefix laws or equivalent successor conditional
+  laws, and full-law equality must be discharged through projective-limit
+  uniqueness rather than assumed from prefix notation.
 
 ## CONDDISTRIB-CONST-OF-COMPOSITION
 
@@ -261,3 +414,170 @@ counterexample.  Do not repeatedly rewrite the proof route without that audit.
 - Status: locally-compiled; project-local
 - Failure signal: equality only after the exploration horizon is insufficient;
   every action coordinate in `Finset.Iic n` must be identified.
+## CONDDISTRIB-SPLIT-COMPPROD
+
+- Proposed names: `pair_map_eq_compProd_of_map_eq_of_condDistrib` and
+  `condDistrib_pair_ae_eq_compProd_of_split`.
+- Mathematical area: regular conditional distributions and kernel products.
+- Intended namespace: `ProbabilityTheory`; currently local under
+  `BanditRLProof.RewardKernel`.
+- Exact statement: an action marginal plus feedback conditional law determine
+  the pair pushforward; action conditional law given history plus feedback law
+  given `(history, action)` determine the pair conditional law via
+  `Kernel.compProd`.
+- Required imports: Mathlib `Probability.Kernel.CondDistrib` and
+  `Probability.Kernel.Composition.CompProd`.
+- Proof route: apply `condDistrib_ae_eq_iff_measure_eq_compProd` to each split
+  law and use `Measure.compProd_assoc'` after mapping by `prodAssoc`.
+- Regularity: finite source measure, measurable coordinates, standard-Borel
+  nonempty action/feedback targets, finite/Markov kernels as appropriate.
+- Current ABRL task: `LOCAL-LEAF-UCB-ISALGENVSEQ-SPLIT-LAWS-LML-REGRET`.
+- Status: locally compiled; Mathlib-candidate.
+- Failure signal: if triple-law reassociation fails, audit the orientation of
+  `MeasurableEquiv.prodAssoc`; do not add independence.
+
+## CONDDISTRIB-ID-FST-COMPPROD
+
+- Proposed name: `condDistrib_id_fst_compProd_ae_eq_kernelWithInput`.
+- Mathematical area: regular conditional distributions and composition-product
+  measures.
+- Intended namespace: `ProbabilityTheory`; currently local under
+  `BanditRLProof.Thompson`.
+- Exact statement: for a finite input measure and a Markov kernel, the regular
+  conditional law of the full `(input, output)` sample given its first
+  coordinate under `prior compProd kernel` is almost everywhere the kernel
+  value with that input retained.
+- Required imports: Mathlib `Probability.Kernel.CondDistrib` and
+  `Probability.Kernel.Composition.MeasureCompProd`.
+- Local APIs: `condDistrib_ae_eq_of_measure_eq_compProd_of_measurable`,
+  `Measure.compProd_assoc`, `Measure.map_compProd`, and `Kernel.fst_compProd`.
+- Proof route: define the retained-input kernel, prove its pointwise apply
+  formula, reassociate the prior/kernel/Dirac joint law, and invoke conditional
+  distribution uniqueness.
+- Regularity: finite input measure; Standard Borel nonempty input and output;
+  Markov kernel. No probability normalization or independence is needed.
+- Current ABRL task:
+  `LOCAL-LEAF-TS-CANONICAL-TRAJECTORY-KERNEL-PROB-MATCH`.
+- Status: locally compiled; Mathlib-candidate.
+- Failure signal: this theorem disintegrates a supplied measurable kernel; it
+  does not prove that a parameterized family of trajectory measures forms a
+  kernel. ABRL now handles that construction locally with Mathlib `Kernel.traj`;
+  the remaining candidate is the observable shifted conditional-law transport
+  described below.
+
+## TRAJ-PROJECTED-SHIFTED-CONDDISTRIB
+
+- Proposed shape: identify the conditional law of the next coordinate of a
+  measurable projection of `Kernel.traj`, conditioned on the projected finite
+  prefix, when an auxiliary retained coordinate is deterministic from that
+  prefix.
+- Mathematical area: Ionescu-Tulcea kernels, regular conditional
+  distributions, measurable maps, and conditioning coarsening.
+- Intended namespace: `ProbabilityTheory.Kernel`; the ABRL specialization now
+  compiles, while extraction of a generic theorem remains optional.
+- Required imports: Mathlib Ionescu-Tulcea `Traj`, `CondDistrib`, kernel
+  map/comap, and finite-prefix restriction measurability.
+- Local APIs: `Thompson.retainEnvironmentKernel`,
+  `Thompson.canonicalMeasurableEnvironmentStepKernel`,
+  `Thompson.measurableEnvironmentPairTrace`, and
+  `RewardKernel.rewardTrace_map_eq_trajMeasure_of_condDistrib`.
+- Proof route used locally: prove fixed-environment support with
+  `traj_map_updateFinset`; reconstruct the projected prefix/next joint law using
+  `partialTraj_compProd_eq_map_traj`, `Measure.compProd_map/congr`, and
+  `map_compProd_comap_history`; then apply `condDistrib` uniqueness. This avoids
+  a standalone conditioning-coarsening theorem.
+- Regularity: Standard Borel nonempty state/observable spaces, Markov step
+  kernels, measurable projection, and deterministic recoverability of the
+  retained coordinate under a fixed input kernel value.
+- Current ABRL task:
+  `LOCAL-LEAF-TS-MEASURABLE-ENVIRONMENT-TRAJECTORY-KERNEL`.
+- Status: fixed-input ABRL specialization compiled as
+  `Thompson.canonicalMeasurableEnvironmentTrajectoryKernel_condDistrib_succ`;
+  generic Mathlib extraction not attempted.
+- Failure signal: a generic submission should preserve the joint-law proof and
+  state explicit recoverability/support hypotheses; do not add independence or
+  assume full trajectory equality.
+
+## TRAJECTORY-MIXTURE-COMMON-CONDDISTRIB
+
+- Proposed shape: if every value of an environment-indexed Markov trajectory
+  kernel has history/action joint law `trajectory(env).map history compProd
+  policy` for one common history-indexed policy, then mixing those trajectories
+  against any finite prior has the same policy as the conditional action law
+  given history.
+- Mathematical area: kernel mixtures, composition products, regular
+  conditional distributions, and measurable pushforwards.
+- Intended namespace: `ProbabilityTheory`; the ABRL specialization is
+  `Thompson.trajectoryMixture_map_history_action_eq_compProd` together with
+  `Thompson.trajectoryMixture_condDistrib_action`.
+- Required imports: Mathlib MeasureCompProd and CondDistrib.
+- Proof route used locally: extensionality on measurable rectangles; expand
+  both composition products; apply the pointwise joint law; use
+  `setLIntegral_map` inside each kernel value and
+  `Measure.setLIntegral_compProd` to exchange the prior mixture with the common
+  policy integral; invoke CondDistrib uniqueness.
+- Regularity: finite prior, Markov trajectory and policy kernels, measurable
+  history/action maps, and Standard Borel nonempty action for the conditional
+  distribution form. No independence assumption is used.
+- Current ABRL task:
+  `LOCAL-LEAF-TS-GLOBAL-RECURSIVE-SAMPLER-COUPLING`.
+- Status: project-local generic theorem and actual-trajectory Thompson consumer
+  compile; upstream Mathlib extraction remains optional.
+- Failure signal: the policy must be common across mixture inputs. If it depends
+  on the latent environment, conditioning only on visible history generally
+  changes the kernel; do not hide that dependency or assert a false mixture
+  law.
+
+## CONDDISTRIB-HISTORY-ACTION-SCORE-INTEGRAL
+
+- Proposed shape: if two action variables have the same regular conditional
+  distribution given one history variable, then every measurable real-valued
+  history/action score has the same integral under the two history/action joint
+  laws.
+- Mathematical area: regular conditional distributions, composition-product
+  measures, measurable pushforwards, and Bochner integration.
+- Intended namespace: `ProbabilityTheory`; the current project-local theorem is
+  `Thompson.integral_historyAction_eq_of_condDistrib_ae_eq`.
+- Required imports: Mathlib CondDistrib, MeasureCompProd, and Bochner integral
+  map APIs.
+- Local APIs: `compProd_map_condDistrib`, `Measure.compProd_congr`,
+  `integral_map`, and `Thompson.integral_comp_eq_of_map_eq`.
+- Proof route used locally: express each history/action pushforward as the
+  history marginal composed with its conditional-action kernel; use the a.e.
+  kernel equality to identify the composition products; map both joint laws by
+  the measurable score and conclude equality of integrals.
+- Regularity: finite source measure; measurable history and both action maps;
+  Standard Borel nonempty action; measurable real-valued score. No
+  integrability assumption is needed for equality of the extended Bochner
+  integrals as used by this wrapper.
+- Current ABRL task: `LOCAL-LEAF-TS-BAYES-REGRET-DECOMPOSITION`.
+- Status: project-local generic theorem and actual recursive Thompson consumer
+  compile; upstream Mathlib extraction remains optional.
+- Failure signal: equality must be for conditional action laws given the same
+  history marginal and the score must depend only on visible history and the
+  candidate action. Do not smuggle the latent environment into the score or
+  infer an unconditional joint-law equality that the conditioning hypothesis
+  does not support.
+
+## CONDEXPKERNEL-MAP-MEASURABLE-DIRAC
+
+- Proposed name: `condExpKernel_map_eq_deterministic_of_measurable`
+- Mathematical area: conditional expectation kernels
+- Intended Mathlib namespace: `ProbabilityTheory`
+- Exact statement: if `m <= mOmega` and `X : Omega -> Target` is measurable
+  from `m`, then `(condExpKernel mu m).map X` is `mu.trim hm`-a.e.
+  `Kernel.deterministic X hX`; equivalently each pushforward is
+  `Measure.dirac (X omega)`.
+- Required imports: `Mathlib.Probability.Kernel.Condexp` and
+  `Mathlib.Probability.Kernel.CompProdEqIff`.
+- Proof route: map `compProd_trim_condExpKernel` through `X`, rewrite the
+  deterministic composition-product and both iterated maps, then apply
+  `Kernel.ae_eq_of_compProd_eq`.
+- Regularity: finite `mu`, Standard Borel ambient space, countably generated
+  target, and conditioning-space measurability of `X`; no target countability
+  or singleton measurability.
+- Current ABRL task:
+  `LOCAL-LEAF-COND-EXPECT-REWARD-CONDEXPKERNEL-MEASURABLE-FREEZE`.
+- Status: locally compiled with kernel and Dirac canaries.
+- Failure signal: this is a frozen-visible-state law only; it does not identify
+  any next-step conditional distribution or imply a conditional MGF.
