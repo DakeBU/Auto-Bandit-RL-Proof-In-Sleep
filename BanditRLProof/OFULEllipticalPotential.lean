@@ -10,15 +10,14 @@ import Mathlib.Tactic.Ring
 /-!
 # OFUL elliptical-potential linear algebra wrappers
 
-This module records the first deterministic finite-dimensional linear-algebra
-surface needed by OFUL/LinUCB routes.  It packages rank-one feature Gram
-matrices and finite-history Gram matrices, then proves their quadratic forms
-are squares or sums of squares.  It also exposes the determinant and
-invertibility side condition for the scalar regularization base used in OFUL
-Gram recursions.
+This module records the deterministic finite-dimensional linear-algebra
+surface needed by OFUL/LinUCB routes.  It packages rank-one and finite-history
+feature Gram matrices, positive-definiteness and inverse facts, determinant
+updates, log-determinant telescoping, trace/eigenvalue determinant bounds, and
+the standard logarithmic clipped elliptical-potential endpoint.
 
-It does not prove log-determinant telescoping, determinant growth inequalities,
-self-normalized concentration, confidence ellipsoids, or an OFUL regret theorem.
+It does not prove self-normalized concentration, confidence ellipsoids,
+optimism, or an OFUL regret theorem.
 -/
 
 namespace BanditRLProof

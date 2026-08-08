@@ -27,6 +27,40 @@ theorem HasCondSubgaussianMGF.of_measurableSpace_eq
   simpa only using hX
 
 /--
+A conditionally sub-Gaussian real random variable is integrable under the
+ambient measure.
+
+Mathlib's conditional MGF contract already includes exponential
+integrability for every real tilt.  Applying it at `1` and `-1` gives
+integrability of the first absolute moment.
+-/
+theorem HasCondSubgaussianMGF.integrable
+    {Omega : Type u} {m mOmega : MeasurableSpace Omega}
+    [StandardBorelSpace Omega]
+    {mu : MeasureTheory.Measure Omega}
+    [MeasureTheory.IsFiniteMeasure mu]
+    {X : Omega -> Real} {c : NNReal}
+    (hm : m <= mOmega)
+    (hX : HasCondSubgaussianMGF m hm X c mu) :
+    MeasureTheory.Integrable X mu := by
+  have h_exp_pos :
+      MeasureTheory.Integrable (fun omega => Real.exp (1 * X omega)) mu :=
+    hX.integrable_exp_mul 1
+  have h_exp_neg :
+      MeasureTheory.Integrable (fun omega => Real.exp (-1 * X omega)) mu :=
+    hX.integrable_exp_mul (-1)
+  have h_abs :
+      MeasureTheory.Integrable (fun omega => |X omega| ^ (1 : Nat)) mu := by
+    exact integrable_pow_abs_of_integrable_exp_mul
+      (t := (1 : Real)) one_ne_zero h_exp_pos (by simpa using h_exp_neg) 1
+  have hX_meas : MeasureTheory.AEStronglyMeasurable X mu := by
+    have h_exp := (hX.integrable_exp_mul 1).aemeasurable
+    simpa using
+      (Real.aemeasurable_of_aemeasurable_exp h_exp).aestronglyMeasurable
+  apply (MeasureTheory.integrable_norm_iff hX_meas).mp
+  simpa [Real.norm_eq_abs] using h_abs
+
+/--
 A conditionally sub-Gaussian variable remains conditionally sub-Gaussian with
 the same proxy after restriction to an event measurable in the conditioning
 sigma-algebra.
@@ -279,9 +313,9 @@ end ProbabilityTheory
 # Sub-Gaussian concentration wrappers
 
 This module exposes small Mathlib-backed concentration imports under the
-project namespace.  It deliberately stays at the reusable tail-theorem layer:
-no ETC reward model, empirical-mean construction, or final regret result is
-introduced here.
+project namespace.  It deliberately stays at the reusable concentration
+layer: no ETC reward model, empirical-mean construction, or final regret
+result is introduced here.
 -/
 
 namespace BanditRLProof
@@ -325,6 +359,180 @@ theorem boundedCentered_hasSubgaussianMGF_of_mem_Icc_integral_eq
   refine h.congr ?_
   exact Filter.Eventually.of_forall (fun omega => by
     simp [hmean])
+
+/--
+A sub-Gaussian MGF controls the first absolute moment at the natural
+square-root scale.
+
+For a positive proxy, evaluate the MGF at the dimensionless tilt
+`t = 1 / sqrt c` and use `exp |x| <= exp x + exp (-x)`.  The zero-proxy case
+is Mathlib's a.e.-zero theorem.  The constant is intentionally simple; the
+route needs the `sqrt c` scaling rather than the sharp Gaussian constant.
+-/
+theorem integral_abs_le_two_mul_sqrt_mul_exp_half_of_hasSubgaussianMGF
+    {Omega : Type u} [MeasurableSpace Omega]
+    (mu : Measure Omega) [IsProbabilityMeasure mu]
+    (X : Omega -> Real) (c : NNReal)
+    (hX : ProbabilityTheory.HasSubgaussianMGF X c mu) :
+    integral mu (fun omega => |X omega|) <=
+      2 * Real.sqrt (c : Real) * Real.exp (1 / 2 : Real) := by
+  by_cases hc : c = 0
+  · subst c
+    have hzero := hX.ae_eq_zero_of_hasSubgaussianMGF_zero
+    have habs : (fun omega => |X omega|) =ᵐ[mu] 0 := by
+      filter_upwards [hzero] with omega homega
+      simp [homega]
+    rw [integral_congr_ae habs]
+    simp
+  · let s : Real := Real.sqrt (c : Real)
+    let t : Real := s⁻¹
+    have hcpos : 0 < (c : Real) := by positivity
+    have hspos : 0 < s := Real.sqrt_pos.2 hcpos
+    have htpos : 0 < t := inv_pos.2 hspos
+    have hst : s * t = 1 := by
+      simp [t, ne_of_gt hspos]
+    have hs_sq : s ^ 2 = (c : Real) := by
+      simp [s, Real.sq_sqrt (le_of_lt hcpos)]
+    have hpoint : forall omega,
+        |X omega| <=
+          s * (Real.exp (t * X omega) + Real.exp (-t * X omega)) := by
+      intro omega
+      have habs_le_exp (x : Real) : |x| <= Real.exp |x| := by
+        calc
+          |x| <= 1 + |x| := by linarith
+          _ = |x| + 1 := by ring
+          _ <= Real.exp |x| := Real.add_one_le_exp |x|
+      calc
+        |X omega| = s * (t * |X omega|) := by rw [← mul_assoc, hst, one_mul]
+        _ = s * |t * X omega| := by
+          rw [abs_mul, abs_of_pos htpos]
+        _ <= s * Real.exp |t * X omega| :=
+          mul_le_mul_of_nonneg_left (habs_le_exp _) hspos.le
+        _ <= s * (Real.exp (t * X omega) + Real.exp (-t * X omega)) :=
+          mul_le_mul_of_nonneg_left (by
+            simpa [neg_mul] using Real.exp_abs_le (t * X omega)) hspos.le
+    have hpos : Integrable (fun omega => Real.exp (t * X omega)) mu :=
+      hX.integrable_exp_mul t
+    have hneg : Integrable (fun omega => Real.exp (-t * X omega)) mu := by
+      simpa [neg_mul] using hX.integrable_exp_mul (-t)
+    have hrhs : Integrable
+        (fun omega => s *
+          (Real.exp (t * X omega) + Real.exp (-t * X omega))) mu :=
+      (hpos.add hneg).const_mul s
+    have hmgf :
+        ProbabilityTheory.mgf X mu t + ProbabilityTheory.mgf X mu (-t) <=
+          Real.exp ((c : Real) * t ^ 2 / 2) +
+            Real.exp ((c : Real) * (-t) ^ 2 / 2) :=
+      add_le_add (hX.mgf_le t) (hX.mgf_le (-t))
+    have hct : (c : Real) * t ^ 2 = 1 := by
+      rw [← hs_sq]
+      calc
+        s ^ 2 * t ^ 2 = (s * t) ^ 2 := by ring
+        _ = 1 := by rw [hst]; norm_num
+    calc
+      integral mu (fun omega => |X omega|) <=
+          integral mu (fun omega => s *
+            (Real.exp (t * X omega) + Real.exp (-t * X omega))) :=
+        integral_mono hX.integrable.abs hrhs hpoint
+      _ = s * (ProbabilityTheory.mgf X mu t +
+            ProbabilityTheory.mgf X mu (-t)) := by
+        simp_rw [integral_const_mul, integral_add hpos hneg]
+        simp [ProbabilityTheory.mgf, neg_mul]
+      _ <= s * (Real.exp ((c : Real) * t ^ 2 / 2) +
+            Real.exp ((c : Real) * (-t) ^ 2 / 2)) :=
+        mul_le_mul_of_nonneg_left hmgf hspos.le
+      _ = 2 * Real.sqrt (c : Real) * Real.exp (1 / 2 : Real) := by
+        rw [neg_sq, hct]
+        simp [s]
+        ring
+
+/--
+A global sub-Gaussian MGF gives a conservative explicit second-moment bound.
+
+For positive proxy `c`, evaluate the MGF at `t = 1 / sqrt c` and use the
+quadratic exponential inequality on `|t * X|`. The constant is intentionally
+non-sharp; it avoids assuming an unavailable derivative-to-variance bridge.
+-/
+theorem integral_sq_le_four_mul_proxy_mul_exp_half_of_hasSubgaussianMGF
+    {Omega : Type u} [MeasurableSpace Omega]
+    (mu : Measure Omega) [IsProbabilityMeasure mu]
+    (X : Omega -> Real) (c : NNReal)
+    (hX : ProbabilityTheory.HasSubgaussianMGF X c mu) :
+    integral mu (fun omega => X omega ^ 2) <=
+      4 * (c : Real) * Real.exp (1 / 2 : Real) := by
+  by_cases hc : c = 0
+  · subst c
+    have hzero := hX.ae_eq_zero_of_hasSubgaussianMGF_zero
+    have hsq : (fun omega => X omega ^ 2) =ᵐ[mu] 0 := by
+      filter_upwards [hzero] with omega homega
+      simp [homega]
+    rw [integral_congr_ae hsq]
+    simp
+  · let s : Real := Real.sqrt (c : Real)
+    let t : Real := s⁻¹
+    have hcpos : 0 < (c : Real) := by positivity
+    have hspos : 0 < s := Real.sqrt_pos.2 hcpos
+    have hst : s * t = 1 := by
+      simp [t, ne_of_gt hspos]
+    have hs_sq : s ^ 2 = (c : Real) := by
+      simp [s, Real.sq_sqrt (le_of_lt hcpos)]
+    have hct : (c : Real) * t ^ 2 = 1 := by
+      rw [← hs_sq]
+      calc
+        s ^ 2 * t ^ 2 = (s * t) ^ 2 := by ring
+        _ = 1 := by rw [hst]; norm_num
+    have hquadratic (x : Real) : |x| ^ 2 <= 2 * Real.exp |x| := by
+      have h := Real.quadratic_le_exp_of_nonneg (abs_nonneg x)
+      nlinarith [abs_nonneg x]
+    have hpoint : forall omega,
+        X omega ^ 2 <=
+          2 * (c : Real) *
+            (Real.exp (t * X omega) + Real.exp (-t * X omega)) := by
+      intro omega
+      calc
+        X omega ^ 2 =
+            (c : Real) * (t * X omega) ^ 2 := by
+          rw [mul_pow]
+          nlinarith
+        _ = (c : Real) * |t * X omega| ^ 2 := by rw [sq_abs]
+        _ <= (c : Real) * (2 * Real.exp |t * X omega|) :=
+          mul_le_mul_of_nonneg_left (hquadratic _) hcpos.le
+        _ <= (c : Real) *
+            (2 * (Real.exp (t * X omega) + Real.exp (-t * X omega))) := by
+          gcongr
+          simpa [neg_mul] using Real.exp_abs_le (t * X omega)
+        _ = 2 * (c : Real) *
+            (Real.exp (t * X omega) + Real.exp (-t * X omega)) := by ring
+    have hpos : Integrable (fun omega => Real.exp (t * X omega)) mu :=
+      hX.integrable_exp_mul t
+    have hneg : Integrable (fun omega => Real.exp (-t * X omega)) mu := by
+      simpa [neg_mul] using hX.integrable_exp_mul (-t)
+    have hrhs : Integrable
+        (fun omega => 2 * (c : Real) *
+          (Real.exp (t * X omega) + Real.exp (-t * X omega))) mu :=
+      (hpos.add hneg).const_mul (2 * (c : Real))
+    have hmgf :
+        ProbabilityTheory.mgf X mu t + ProbabilityTheory.mgf X mu (-t) <=
+          Real.exp ((c : Real) * t ^ 2 / 2) +
+            Real.exp ((c : Real) * (-t) ^ 2 / 2) :=
+      add_le_add (hX.mgf_le t) (hX.mgf_le (-t))
+    calc
+      integral mu (fun omega => X omega ^ 2) <=
+          integral mu (fun omega => 2 * (c : Real) *
+            (Real.exp (t * X omega) + Real.exp (-t * X omega))) :=
+        integral_mono (hX.memLp 2).integrable_sq hrhs hpoint
+      _ = 2 * (c : Real) *
+            (ProbabilityTheory.mgf X mu t +
+              ProbabilityTheory.mgf X mu (-t)) := by
+        simp_rw [integral_const_mul, integral_add hpos hneg]
+        simp [ProbabilityTheory.mgf, neg_mul]
+      _ <= 2 * (c : Real) *
+          (Real.exp ((c : Real) * t ^ 2 / 2) +
+            Real.exp ((c : Real) * (-t) ^ 2 / 2)) :=
+        mul_le_mul_of_nonneg_left hmgf (by positivity)
+      _ = 4 * (c : Real) * Real.exp (1 / 2 : Real) := by
+        rw [neg_sq, hct]
+        ring
 
 /--
 Mathlib-backed one-sided tail bound for a finite sum of independent

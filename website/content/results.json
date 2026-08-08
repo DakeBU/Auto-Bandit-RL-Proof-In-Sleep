@@ -1,0 +1,312 @@
+{
+  "results": [
+    {
+      "id": "FOUNDATION-REGRET-DECOMPOSITION",
+      "title": "Finite-arm pseudo-regret decomposition",
+      "chapter": "foundations",
+      "status": "compiled",
+      "informal": "Finite-horizon pseudo-regret equals the sum over arms of each gap multiplied by its pull count.",
+      "declarations": ["BanditRLProof.pseudoRegret_eq_finset_sum_gap_mul_pullCount"],
+      "depends_on": ["BanditRLProof.pullCount", "BanditRLProof.pseudoRegret", "BanditRLProof.FiniteBanditModel"],
+      "missing": [],
+      "evidence": "BanditRLProof/RegretDecomposition.lean"
+    },
+    {
+      "id": "PROBABILITY-GENERATED-COND-MGF",
+      "title": "Generated-history conditional sub-Gaussian reward law",
+      "chapter": "probability",
+      "status": "compiled",
+      "informal": "A selected successor reward on the canonical generated trajectory inherits the centered conditional MGF bound supplied by its step kernel.",
+      "declarations": ["BanditRLProof.ConditionalExpectationReward.historyStepKernelFamily_centeredReward_succ_hasCondSubgaussianMGF_trajMeasure"],
+      "depends_on": ["BanditRLProof.Policy.MeasurablePolicy"],
+      "missing": [],
+      "evidence": "BanditRLProof/ConditionalRewardLawSource.lean"
+    },
+    {
+      "id": "ETC-CANONICAL-SUBGAUSSIAN-REGRET",
+      "title": "Canonical sub-Gaussian ETC expected regret",
+      "chapter": "etc",
+      "status": "compiled",
+      "informal": "The generated ETC policy under finite-arm sub-Gaussian reward laws satisfies the explicit exploration-plus-wrong-commit expected pseudo-regret bound.",
+      "declarations": ["BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal"],
+      "depends_on": ["BanditRLProof.pseudoRegret_eq_finset_sum_gap_mul_pullCount"],
+      "missing": [],
+      "evidence": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean"
+    },
+    {
+      "id": "ETC-LML-PORT",
+      "title": "Upstream-compatible ETC theorem route",
+      "chapter": "etc",
+      "status": "partial",
+      "informal": "Concrete local ETC endpoints compile, while exact compatibility with the pinned LML theorem surface is still tracked separately.",
+      "declarations": ["BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal"],
+      "depends_on": [],
+      "missing": ["Direct LML integration remains cross-toolchain work.", "Some general adaptive-law transports remain separate from the finite-arm endpoint."],
+      "evidence": "tasks/BRL-ETC-PORT-001.md"
+    },
+    {
+      "id": "UCB-FINITE-ARM-SUBGAUSSIAN",
+      "title": "Finite-arm sub-Gaussian UCB gap-sum bound",
+      "chapter": "ucb",
+      "status": "compiled",
+      "informal": "The generated selected-policy UCB action satisfies a textbook-shaped Real pseudo-regret gap-sum bound, including the zero-proxy case.",
+      "declarations": ["BanditRLProof.UCB.integral_real_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_le_textbookGapSum_finiteArmSubgaussianLaws_without_proxy_positivity"],
+      "depends_on": ["BanditRLProof.pseudoRegret_eq_finset_sum_gap_mul_pullCount"],
+      "missing": [],
+      "evidence": "BanditRLProof/Algorithms/UCBFiniteArmSubGaussianRewardLaw.lean"
+    },
+    {
+      "id": "UCB-EXPECTED-AVERAGE-CONSISTENCY",
+      "title": "Finite-arm UCB expected-average consistency",
+      "chapter": "ucb",
+      "status": "compiled",
+      "informal": "For the compiled finite-arm sub-Gaussian source, expected pseudo-regret divided by the horizon tends to zero.",
+      "declarations": ["BanditRLProof.UCB.selectedPolicySuccessorFiniteArmSubgaussianExpectedAveragePseudoRegret_tendsto_zero"],
+      "depends_on": [],
+      "missing": [],
+      "evidence": "BanditRLProof/Algorithms/UCBFiniteArmSubGaussianSampledAsymptotics.lean"
+    },
+    {
+      "id": "UCB-LML-PORT",
+      "title": "Pinned LML-compatible UCB port",
+      "chapter": "ucb",
+      "status": "partial",
+      "informal": "Local arm-stream and model-facing UCB results compile, but the exact upstream declaration and dependency ledger remain a separate compatibility gate.",
+      "declarations": ["BanditRLProof.UCB.integral_realKernelRegret_armStreamAction_le_lml_sum"],
+      "depends_on": [],
+      "missing": ["Close the exact expected pull-count dependency ledger.", "Do not treat the upstream theorem card as a local proof term."],
+      "evidence": "tasks/BRL-UCB-PORT-001.md"
+    },
+    {
+      "id": "OFUL-ELLIPTICAL-POTENTIAL",
+      "title": "Logarithmic elliptical-potential inequality",
+      "chapter": "oful",
+      "status": "compiled",
+      "informal": "Clipped inverse-Gram quadratic widths are bounded by a dimension-scaled log-determinant growth term.",
+      "declarations": ["BanditRLProof.OFUL.sum_range_min_prefix_update_le_two_trace_average_log"],
+      "depends_on": [],
+      "missing": [],
+      "evidence": "BanditRLProof/OFULEllipticalPotential.lean"
+    },
+    {
+      "id": "OFUL-ALL-TIME-CONFIDENCE",
+      "title": "One-policy all-time OFUL confidence",
+      "chapter": "oful",
+      "status": "compiled",
+      "informal": "A telescoping confidence-budget schedule controls one countable failure event for the generated scalar-ridge policy at every deterministic horizon.",
+      "declarations": ["BanditRLProof.OFUL.measure_telescopingCanonicalHistoryTrajectory_allTimeConfidenceFailureSet_le_of_linearSubgaussianEnvironment"],
+      "depends_on": ["BanditRLProof.OFUL.sum_range_min_prefix_update_le_two_trace_average_log"],
+      "missing": [],
+      "evidence": "BanditRLProof/OFULScheduledAllTimeConfidence.lean"
+    },
+    {
+      "id": "OFUL-EXPECTED-AVERAGE-CONSISTENCY",
+      "title": "Fixed-model OFUL expected-average consistency",
+      "chapter": "oful",
+      "status": "compiled",
+      "informal": "The canonical expected pseudo-regret bound is little-o of the horizon, so the corresponding expected average tends to zero.",
+      "declarations": ["BanditRLProof.OFUL.canonicalStandardExpectedAveragePseudoRegret_tendsto_zero"],
+      "depends_on": ["BanditRLProof.OFUL.sum_range_min_prefix_update_le_two_trace_average_log"],
+      "missing": [],
+      "evidence": "BanditRLProof/OFULExpectedRegretConsistency.lean"
+    },
+    {
+      "id": "OFUL-UNBOUNDED-STOPPING-EXPECTED-REGRET",
+      "title": "Square-integrable random-horizon OFUL expected regret",
+      "chapter": "oful",
+      "status": "compiled",
+      "informal": "Under an explicit square-integrable finite stopping-time contract, the stopped high-probability pseudo-regret is integrable and receives a second-moment-controlled expectation bound.",
+      "declarations": ["BanditRLProof.OFUL.integral_stoppedValue_canonicalStandardHighProbabilityPseudoRegret_nonneg_and_le_quadraticCoefficient_mul_stoppingTimeRoundSecondMoment_add_initialGap_mul_sqrt_stoppingTimeRoundSecondMoment_mul_sqrt_delta_and_stoppedViolation_measure_le_of_squareIntegrableFiniteStoppingTime"],
+      "depends_on": ["BanditRLProof.OFUL.SquareIntegrableFiniteStoppingTime"],
+      "missing": [],
+      "evidence": "BanditRLProof/OFULScheduledUnboundedStoppingTimeExpectedRegretExactMoment.lean"
+    },
+    {
+      "id": "THOMPSON-STATIONARY-REGRET",
+      "title": "Stationary latent-arm-stream Thompson regret",
+      "chapter": "thompson",
+      "status": "compiled",
+      "informal": "The canonical stationary Thompson trajectory satisfies an explicit Bayesian mean-regret upper bound after posterior-action matching.",
+      "declarations": ["BanditRLProof.Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryBayesMeanRegret_le"],
+      "depends_on": ["BanditRLProof.PosteriorKernel.canonicalPosterior_kernel_ae_eq_condDistrib_of_pair_map_eq"],
+      "missing": [],
+      "evidence": "BanditRLProof/Algorithms/ThompsonStationaryReward.lean"
+    },
+    {
+      "id": "THOMPSON-GENERAL-PORT",
+      "title": "General Thompson/LML Bayesian port",
+      "chapter": "thompson",
+      "status": "partial",
+      "informal": "The stationary local endpoint is complete, but posterior-law producers outside that model and exact upstream compatibility remain separate obligations.",
+      "declarations": ["BanditRLProof.Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryBayesMeanRegret_le"],
+      "depends_on": [],
+      "missing": ["Add posterior-law producers for broader models.", "Close the exact upstream compatibility gate."],
+      "evidence": "tasks/BRL-TS-BAYES-001.md"
+    },
+    {
+      "id": "EXP3-EXPECTED-REGRET",
+      "title": "Tuned expected EXP3 regret",
+      "chapter": "exp3",
+      "status": "compiled",
+      "informal": "The generated predictable EXP3 process satisfies an explicit square-root expected-regret bound.",
+      "declarations": ["BanditRLProof.Exp3.sampledPredictable_expectedRegret_le_four_mul_sqrt"],
+      "depends_on": ["BanditRLProof.Exp3.hedge_regret_le_log_card_div_add_eta_mul_mixedSquaredLoss_of_nonneg"],
+      "missing": [],
+      "evidence": "BanditRLProof/Exp3ExpectedRegret.lean"
+    },
+    {
+      "id": "EXP3-SPARSE-ALL-HORIZON",
+      "title": "Sparse-loss all-horizon high-probability EXP3",
+      "chapter": "exp3",
+      "status": "compiled",
+      "informal": "The best-arm realized-regret tail is controlled with the supplied sparsity-failure probability left explicit.",
+      "declarations": ["BanditRLProof.Exp3.sampledPredictable_allHorizonDoubleVarianceProbabilisticSparseLossBestArmRealizedRegret_tail_of_sparsityFailure_le"],
+      "depends_on": [],
+      "missing": [],
+      "evidence": "BanditRLProof/Exp3MixedSquarePredictableVarianceSparseLossRealizedDoublePathwiseVarianceProbabilisticSparsityBestArmAllHorizon.lean"
+    },
+    {
+      "id": "TSALLIS-IID-LOG",
+      "title": "Finite-arm IID half-Tsallis logarithmic regret",
+      "chapter": "tsallis",
+      "status": "compiled",
+      "informal": "IID probability arm laws with exact model means and positive non-best gaps yield a logarithmic reciprocal-gap regret bound.",
+      "declarations": ["BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisFiniteArmIIDRewardLawRegret_le_log"],
+      "depends_on": ["BanditRLProof.FiniteBanditModel"],
+      "missing": [],
+      "evidence": "BanditRLProof/TsallisFiniteArmIIDRewardLaw.lean"
+    },
+    {
+      "id": "TSALLIS-HISTORY-ADAPTIVE-CORRUPTION",
+      "title": "History-adaptive expected-corruption all-regimes bound",
+      "chapter": "tsallis",
+      "status": "compiled",
+      "informal": "A measurable predictable corruption model receives an internally selected refined or logarithmic regret bound.",
+      "declarations": ["BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLawRegret_le_allRegimes"],
+      "depends_on": [],
+      "missing": [],
+      "evidence": "BanditRLProof/TsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLaw.lean"
+    },
+    {
+      "id": "TSALLIS-DYNAMIC-REGRET",
+      "title": "Nonidentical drifting-mean dynamic regret",
+      "chapter": "tsallis",
+      "status": "compiled",
+      "informal": "Predictable-environment regret to the actual moving best arm is bounded by the fixed-comparator route plus an explicit mean-drift penalty.",
+      "declarations": ["BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisFiniteArmIndependentDriftingMeanDynamicRegret_le_allRegimes"],
+      "depends_on": ["BanditRLProof.FiniteBanditModel"],
+      "missing": [],
+      "evidence": "BanditRLProof/TsallisFiniteArmIndependentDriftingMeanDynamicRegret.lean"
+    },
+    {
+      "id": "TSALLIS-ORACLE-RESTART-GENERATED",
+      "title": "Generated oracle-restart switch-count dynamic regret",
+      "chapter": "tsallis",
+      "status": "compiled",
+      "informal": "A change-point schedule built from population-mean switches generates a single restart trajectory whose expected dynamic regret is bounded by the square-root switch-count rate under the route's support assumptions.",
+      "declarations": ["BanditRLProof.Tsallis.integral_sampledOracleRestartHalfTsallisFiniteArmIndependentGlobalMeanChangeDynamicRegret_le"],
+      "depends_on": ["BanditRLProof.Tsallis.sampledScheduledHalfTsallisPredictableMovingComparatorEnvironmentRegret_le_oracleRestartSwitchCountSqrt"],
+      "missing": [],
+      "evidence": "BanditRLProof/TsallisOracleRestartGlobalMeanSwitchCount.lean"
+    },
+    {
+      "id": "RL-FINITE-MDP-BELLMAN",
+      "title": "Finite-horizon MDP and Bellman interface",
+      "chapter": "finite-horizon-rl",
+      "status": "compiled",
+      "informal": "Finite-horizon MDP data, measurable Markov policies, recursive value functions, optimal Bellman operators, and an attaining optimal policy are formalized locally.",
+      "declarations": ["BanditRLProof.FiniteHorizonRL.MDP", "BanditRLProof.FiniteHorizonRL.MDP.optimalValueAt_dominates_and_is_attained"],
+      "depends_on": ["BanditRLProof.FiniteHorizonRL.MarkovPolicy.valueRemaining"],
+      "missing": [],
+      "evidence": "BanditRLProof/RL/FiniteHorizonMDP.lean; BanditRLProof/RL/FiniteHorizonOptimality.lean"
+    },
+    {
+      "id": "RL-OCCUPANCY-REGRET",
+      "title": "Expected regret as an occupancy Bellman gap",
+      "chapter": "finite-horizon-rl",
+      "status": "compiled",
+      "informal": "A Markov policy's expected regret equals the occupancy-weighted Bellman optimality gap and is nonnegative; the optimal policy has zero regret.",
+      "declarations": ["BanditRLProof.FiniteHorizonRL.MarkovPolicy.expectedRegret_eq_occupancyGapRemaining", "BanditRLProof.FiniteHorizonRL.MDP.expectedRegret_eq_occupancyGap_nonneg_and_optimalPolicy_zero"],
+      "depends_on": ["BanditRLProof.FiniteHorizonRL.MDP.optimalValueAt_dominates_and_is_attained"],
+      "missing": [],
+      "evidence": "BanditRLProof/RL/FiniteHorizonOccupancyRegret.lean"
+    },
+    {
+      "id": "RL-ADAPTIVE-REALIZED-CONSISTENCY",
+      "title": "Adaptive realized behavior-regret consistency",
+      "chapter": "finite-horizon-rl",
+      "status": "compiled",
+      "informal": "With the explicit path-support, bounded-mean, sub-Gaussian, scheduling, and Standard Borel contracts, both the failure budget and average realized behavior-regret envelope tend to zero across windows.",
+      "declarations": ["BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeStochasticEmpiricalOptimisticSource.exploratorySource_trajectoryMeasure_projectedCumulativeInverseSqrtPathSupport_decayingExplorationAverageRealizedBehaviorConsistency_allWindows_of_standardBorel"],
+      "depends_on": ["BanditRLProof.FiniteHorizonRL.MarkovPolicy.expectedRegret_eq_occupancyGapRemaining"],
+      "missing": [],
+      "evidence": "BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationRegularityClosedConsistency.lean"
+    },
+    {
+      "id": "RL-UNBOUNDED-HITTINGAFTER-L2",
+      "title": "Inverse-sqrt hittingAfter is a square-integrable finite stopping time",
+      "chapter": "finite-horizon-rl",
+      "status": "compiled",
+      "informal": "For each fixed threshold index and horizon greater than four, the genuine uncapped Mathlib hittingAfter has an L2 round count under the exact generated causal source.",
+      "declarations": ["BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_squareIntegrableFiniteStoppingTime"],
+      "depends_on": ["BanditRLProof.OFUL.SquareIntegrableFiniteStoppingTime"],
+      "missing": [],
+      "evidence": "BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime.lean"
+    },
+    {
+      "id": "RL-UNBOUNDED-HITTINGAFTER-EXPECTED-UPPER-BOUND",
+      "title": "Stopped realized behavior regret is integrable and below its hit threshold in expectation",
+      "chapter": "finite-horizon-rl",
+      "status": "compiled",
+      "informal": "For every fixed inverse-sqrt threshold index and horizon greater than four, the exact average realized behavior-regret process stopped at the uncapped hit is integrable and its integral is at most that threshold.",
+      "declarations": ["BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_stoppedAverageRealizedBehaviorRegret_integrable_and_integral_le_threshold"],
+      "depends_on": ["BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_squareIntegrableFiniteStoppingTime", "BanditRLProof.integrable_stoppedValue_of_uniform_secondMoment_of_memLp_two_rounds"],
+      "missing": [],
+      "evidence": "tasks/RL-FINITE-HORIZON-NATURAL-CAUSAL-INVERSE-SQRT-THRESHOLD-UNBOUNDED-HITTINGAFTER-INTEGRABLE-EXPECTED-UPPER-BOUND.md"
+    },
+    {
+      "id": "RL-COMPLETE-UCBVI",
+      "title": "Complete finite-horizon UCB-VI theorem",
+      "chapter": "finite-horizon-rl",
+      "status": "partial",
+      "informal": "The local RL tree now reaches empirical-model confidence, adaptive exploration, behavior-regret consistency, and fixed-index stopping results, but these do not yet constitute a full minimax UCB-VI theorem.",
+      "declarations": ["BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeStochasticEmpiricalOptimisticSource.exploratorySource_trajectoryMeasure_projectedCumulativeInverseSqrtPathSupport_decayingExplorationAverageRealizedBehaviorConsistency_allWindows_of_standardBorel"],
+      "depends_on": ["BanditRLProof.FiniteHorizonRL.MDP.expectedRegret_eq_occupancyGap_nonneg_and_optimalPolicy_zero"],
+      "missing": ["Raw-episode and recommended-versus-behavior regret bridge.", "General reachability or a replacement assumption family.", "Minimax bonus/rate assembly and literature-level UCB-VI comparison.", "Optional-stopping or uniform-integrability conclusions are not available."],
+      "evidence": "research-wiki/theory-tree/bandit-theory-tree.md"
+    },
+    {
+      "id": "BWK-STOPPING-FOUNDATION",
+      "title": "Budget-exhaustion stopping time",
+      "chapter": "frontier",
+      "status": "compiled",
+      "informal": "An adapted natural-valued spending process reaches a fixed budget at a stopping time.",
+      "declarations": ["BanditRLProof.Budget.isStoppingTime_budgetExhaustionTime_of_adapted"],
+      "depends_on": [],
+      "missing": [],
+      "evidence": "BanditRLProof/BudgetStoppingTime.lean"
+    },
+    {
+      "id": "BWK-FINAL-REGRET",
+      "title": "Bandits-with-knapsacks regret theorem",
+      "chapter": "frontier",
+      "status": "blocked",
+      "informal": "Stopping-time and several positive-cost budget adapters compile, but there is no full resource process, feasibility invariant, primal-dual comparison, and BwK regret theorem.",
+      "declarations": ["BanditRLProof.Budget.isStoppingTime_budgetExhaustionTime_of_adapted"],
+      "depends_on": [],
+      "missing": ["Resource-consumption and feasibility model.", "Primal-dual comparison.", "Final resource-constrained regret assembly."],
+      "evidence": "research-wiki/theory-tree/lean-route-roadmap.json"
+    },
+    {
+      "id": "KL-UCB",
+      "title": "KL-UCB bounded stochastic regret",
+      "chapter": "frontier",
+      "status": "planned",
+      "informal": "Ordinary finite-arm UCB foundations exist, but Bernoulli-KL confidence inversion and a KL-UCB algorithm/regret route have not been formalized locally.",
+      "declarations": [],
+      "depends_on": [],
+      "missing": ["Bernoulli KL API and confidence-set inversion.", "KL-UCB policy, count threshold, and regret assembly."],
+      "evidence": "research-wiki/theory-tree/lean-route-roadmap.json"
+    }
+  ]
+}

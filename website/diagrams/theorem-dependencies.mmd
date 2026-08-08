@@ -1,0 +1,37 @@
+flowchart TB
+  Model["FiniteBanditModel"] --> Decomp["pseudoRegret = Σ gap × pullCount"]
+  Trace["ActionTrace / RewardTrace"] --> Decomp
+  Policy["MeasurablePolicy"] --> Traj["historyStepKernelFamily / trajMeasure"]
+  Kernel["Conditional reward-kernel contracts"] --> Traj
+  Traj --> CondMGF["selected centered reward conditional MGF"]
+  CondMGF --> Concentration["sub-Gaussian / martingale tails"]
+
+  Decomp --> ETC["ETC expected regret"]
+  Concentration --> ETC
+  Decomp --> UCB["UCB gap-sum + average consistency"]
+  Concentration --> UCB
+
+  Ellipse["OFUL log-det + elliptical potential"] --> Ridge["ridge self-normalized confidence"]
+  CondMGF --> Ridge
+  Ridge --> AllTime["one-policy all-time confidence"]
+  AllTime --> OFULRate["expected regret + average consistency"]
+  AllTime --> StopL2["square-integrable random-horizon bounds"]
+
+  Posterior["PosteriorKernel conditional-law identity"] --> TS["Thompson stationary Bayes regret"]
+  Traj --> TS
+
+  Hedge["EXP3 Hedge potential"] --> EXP3["expected + high-probability regret"]
+  Concentration --> EXP3
+  FTRL["Tsallis FTRL stability"] --> SelfBound["scheduled self-bounding"]
+  Traj --> SelfBound
+  SelfBound --> Dynamic["corruption + dynamic regret"]
+  Dynamic --> Restart["generated population-mean oracle restart"]
+
+  MDP["FiniteHorizonRL.MDP"] --> Bellman["optimal Bellman recursion"]
+  Bellman --> Occupancy["expectedRegret_eq_occupancyGapRemaining"]
+  CondMGF --> RLConfidence["adaptive empirical model + return confidence"]
+  Occupancy --> RLConfidence
+  RLConfidence --> Behavior["realized behavior consistency"]
+  StopL2 --> Hitting["uncapped inverse-sqrt hittingAfter L2"]
+  Behavior --> Hitting
+  Hitting --> ExpectedHit["stopped value integrable; expectation ≤ threshold"]

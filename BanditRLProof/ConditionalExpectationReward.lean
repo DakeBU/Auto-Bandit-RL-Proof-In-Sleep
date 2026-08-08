@@ -319,6 +319,153 @@ theorem condExpKernel_map_eq_of_condDistrib_ae_eq_countable_trim
   exact Measure.ext_of_singleton hsingle_omega
 
 /--
+Convert a real-valued `condDistrib` law into a trimmed
+`condExpKernel.map` law without assuming `Countable Real`.
+
+The proof first obtains equality on every rational left ray `Iic q`, upgrades
+those scalar equalities to the trimmed measure using conditioning-space
+measurability, and then reconstructs the full Borel measure by Mathlib's
+countable rational-ray pi-system induction.
+-/
+theorem condExpKernel_map_eq_of_condDistrib_ae_eq_real_trim
+    {Omega : Type u} {Condition : Type v}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    [Nonempty Omega]
+    [mCondition : MeasurableSpace Condition]
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (X : Omega -> Real) (Y : Omega -> Condition)
+    (hX : @Measurable Omega Real mOmega inferInstance X)
+    (hY : @Measurable Omega Condition mOmega mCondition Y)
+    (kernel : ProbabilityTheory.Kernel Condition Real)
+    [ProbabilityTheory.IsMarkovKernel kernel]
+    (hcond :
+      Filter.EventuallyEq (ae (mu.map Y))
+        (ProbabilityTheory.condDistrib X Y mu)
+        kernel) :
+    Filter.Eventually
+      (fun omega : Omega =>
+        @Measure.map Omega Real mOmega inferInstance X
+          (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+            (mCondition.comap Y) omega) =
+        kernel (Y omega))
+      (ae (mu.trim hY.comap_le)) := by
+  let lhs : Omega -> Measure Real := fun omega =>
+    @Measure.map Omega Real mOmega inferInstance X
+      (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+        (mCondition.comap Y) omega)
+  let rhs : Omega -> Measure Real := fun omega => kernel (Y omega)
+  have hcond_pullback :
+      Filter.Eventually
+        (fun omega : Omega =>
+          ProbabilityTheory.condDistrib X Y mu (Y omega) =
+            kernel (Y omega))
+        (ae mu) :=
+    MeasureTheory.ae_of_ae_map hY.aemeasurable hcond
+  have hIic :
+      forall q : Rat,
+        Filter.EventuallyEq (ae (mu.trim hY.comap_le))
+          (fun omega : Omega => lhs omega (Set.Iic (q : Real)))
+          (fun omega : Omega => rhs omega (Set.Iic (q : Real))) := by
+    intro q
+    have hevent :
+        Filter.EventuallyEq (ae mu)
+          (fun omega : Omega =>
+            ProbabilityTheory.condDistrib X Y mu (Y omega)
+              (Set.Iic (q : Real)))
+          (fun omega : Omega =>
+            lhs omega (Set.Iic (q : Real))) := by
+      simpa [lhs, ProbabilityTheory.Kernel.map_apply _ hX] using
+        (ProbabilityTheory.condDistrib_apply_ae_eq_condExpKernel_map
+          (μ := mu) hX hY (measurableSet_Iic :
+            MeasurableSet (Set.Iic (q : Real))))
+    have hambient :
+        Filter.EventuallyEq (ae mu)
+          (fun omega : Omega => lhs omega (Set.Iic (q : Real)))
+          (fun omega : Omega => rhs omega (Set.Iic (q : Real))) := by
+      filter_upwards [hevent, hcond_pullback] with omega heq hkernel
+      rw [← heq, hkernel]
+    have hlhs :
+        @Measurable Omega ENNReal
+          (mCondition.comap Y) inferInstance
+          (fun omega : Omega => lhs omega (Set.Iic (q : Real))) := by
+      have hmeas :=
+        ((@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+          (mCondition.comap Y)).map X).measurable_coe
+            (measurableSet_Iic :
+              MeasurableSet (Set.Iic (q : Real)))
+      simpa [lhs, ProbabilityTheory.Kernel.map_apply _ hX] using hmeas
+    have hrhs :
+        @Measurable Omega ENNReal
+          (mCondition.comap Y) inferInstance
+          (fun omega : Omega => rhs omega (Set.Iic (q : Real))) := by
+      exact
+        (kernel.measurable_coe
+          (measurableSet_Iic :
+            MeasurableSet (Set.Iic (q : Real)))).comp
+          (Measurable.of_comap_le le_rfl)
+    exact
+      ae_eq_trim_of_measurable hY.comap_le hlhs hrhs hambient
+  have huniv :
+      Filter.EventuallyEq (ae (mu.trim hY.comap_le))
+        (fun omega : Omega => lhs omega Set.univ)
+        (fun omega : Omega => rhs omega Set.univ) := by
+    have hevent :
+        Filter.EventuallyEq (ae mu)
+          (fun omega : Omega =>
+            ProbabilityTheory.condDistrib X Y mu (Y omega) Set.univ)
+          (fun omega : Omega => lhs omega Set.univ) := by
+      simpa [lhs, ProbabilityTheory.Kernel.map_apply _ hX] using
+        (ProbabilityTheory.condDistrib_apply_ae_eq_condExpKernel_map
+          (μ := mu) hX hY MeasurableSet.univ)
+    have hambient :
+        Filter.EventuallyEq (ae mu)
+          (fun omega : Omega => lhs omega Set.univ)
+          (fun omega : Omega => rhs omega Set.univ) := by
+      filter_upwards [hevent, hcond_pullback] with omega heq hkernel
+      rw [← heq, hkernel]
+    have hlhs :
+        @Measurable Omega ENNReal
+          (mCondition.comap Y) inferInstance
+          (fun omega : Omega => lhs omega Set.univ) := by
+      have hmeas :=
+        ((@ProbabilityTheory.condExpKernel Omega mOmega _ mu _
+          (mCondition.comap Y)).map X).measurable_coe MeasurableSet.univ
+      simpa [lhs, ProbabilityTheory.Kernel.map_apply _ hX] using hmeas
+    have hrhs :
+        @Measurable Omega ENNReal
+          (mCondition.comap Y) inferInstance
+          (fun omega : Omega => rhs omega Set.univ) := by
+      exact
+        (kernel.measurable_coe MeasurableSet.univ).comp
+          (Measurable.of_comap_le le_rfl)
+    exact
+      ae_eq_trim_of_measurable hY.comap_le hlhs hrhs hambient
+  have hsets :
+      Filter.Eventually
+        (fun omega : Omega =>
+          forall ⦃s : Set Real⦄, MeasurableSet s ->
+            lhs omega s = rhs omega s)
+        (ae (mu.trim hY.comap_le)) := by
+    apply @MeasurableSpace.ae_induction_on_inter
+      Real Omega (mCondition.comap Y) (mu.trim hY.comap_le)
+      (fun omega s => lhs omega s = rhs omega s)
+      (⋃ q : Rat, {Set.Iic (q : Real)}) inferInstance
+      Real.borel_eq_generateFrom_Iic_rat Real.isPiSystem_Iic_rat
+    · simp
+    · simp only [Set.iUnion_singleton_eq_range, Set.mem_range,
+        forall_exists_index, forall_apply_eq_imp_iff]
+      exact ae_all_iff.2 hIic
+    · filter_upwards [huniv] with omega huniv_eq s hs heq
+      rw [measure_compl hs (measure_ne_top _ _), heq, huniv_eq,
+        measure_compl hs (measure_ne_top _ _)]
+    · refine ae_of_all _ (fun omega f hdisj hf heq => ?_)
+      rw [measure_iUnion hdisj hf, measure_iUnion hdisj hf]
+      exact tsum_congr heq
+  filter_upwards [hsets] with omega homega
+  ext s hs
+  exact homega hs
+
+/--
 If a measurable pushforward law is a Dirac measure, the original random
 variable is a.e. constant.
 
@@ -1960,6 +2107,108 @@ theorem hasCondSubgaussianMGF_of_condExpKernel_map_eq
   intro q
   filter_upwards [h_cond_subG] with omega hsub
   simpa using hsub.mgf_le (q : Real)
+
+/--
+Center a real-valued conditional reward law by a quantity measurable in the
+conditioning sigma-algebra.
+
+The conditional kernel freezes the center at the conditioning point.  The
+resulting residual pushforward is therefore the centered pushforward of the
+supplied reward law, which can be consumed by the generic conditional
+sub-Gaussian map-law theorem.
+-/
+theorem hasCondSubgaussianMGF_centered_of_condExpKernel_map_eq
+    {Omega : Type u}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (mcond : MeasurableSpace Omega) (hm : mcond <= mOmega)
+    (X center : Omega -> Real) (c : NNReal)
+    (hX : @Measurable Omega Real mOmega inferInstance X)
+    (hcenter : @Measurable Omega Real mcond inferInstance center)
+    (target : Omega -> Measure Real)
+    (h_kernel_map_eq :
+      Filter.Eventually
+        (fun omega : Omega =>
+          @Measure.map Omega Real mOmega inferInstance X
+            (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _ mcond
+              omega) =
+          target omega)
+        (ae (mu.trim hm)))
+    (h_target_subG :
+      Filter.Eventually
+        (fun omega : Omega =>
+          ProbabilityTheory.HasSubgaussianMGF
+            (fun z : Real => z - center omega) c (target omega))
+        (ae (mu.trim hm))) :
+    ProbabilityTheory.HasCondSubgaussianMGF mcond hm
+      (fun omega => X omega - center omega) c mu := by
+  let condKernel :=
+    @ProbabilityTheory.condExpKernel Omega mOmega _ mu _ mcond
+  have hcenter_map :=
+    condExpKernel_map_eq_dirac_of_measurable
+      (mOmega := mOmega) mu mcond hm center hcenter
+  have h_residual_map :
+      Filter.Eventually
+        (fun omega : Omega =>
+          @Measure.map Omega Real mOmega inferInstance
+              (fun y => X y - center y) (condKernel omega) =
+            Measure.map (fun z : Real => z - center omega)
+              (target omega))
+        (ae (mu.trim hm)) := by
+    filter_upwards [h_kernel_map_eq, hcenter_map] with omega hreward hcenter_eq
+    have hcenter_ae :
+        Filter.EventuallyEq (ae (condKernel omega)) center
+          (fun _y : Omega => center omega) :=
+      eventuallyEq_const_of_map_eq_dirac
+        (mOmega := mOmega) (condKernel omega) center (center omega)
+        (hcenter.mono hm le_rfl) hcenter_eq
+    calc
+      @Measure.map Omega Real mOmega inferInstance
+          (fun y => X y - center y) (condKernel omega) =
+          @Measure.map Omega Real mOmega inferInstance
+            (fun y => X y - center omega) (condKernel omega) := by
+            apply Measure.map_congr
+            filter_upwards [hcenter_ae] with y hy
+            rw [hy]
+      _ = Measure.map (fun z : Real => z - center omega)
+          (@Measure.map Omega Real mOmega inferInstance X
+            (condKernel omega)) := by
+            symm
+            simpa [Function.comp_def] using
+              (Measure.map_map
+                (measurable_id.sub_const (center omega)) hX)
+      _ = Measure.map (fun z : Real => z - center omega)
+          (target omega) := by rw [hreward]
+  apply hasCondSubgaussianMGF_of_condExpKernel_map_eq (mOmega := mOmega)
+    mu mcond hm (fun omega => X omega - center omega) c
+    (hX.sub (hcenter.mono hm le_rfl))
+    (fun omega =>
+      Measure.map (fun z : Real => z - center omega) (target omega))
+    h_residual_map
+  filter_upwards [h_target_subG] with omega hsub
+  exact
+    (ProbabilityTheory.HasSubgaussianMGF.id_map_iff
+      (measurable_id.sub_const (center omega)).aemeasurable).2 hsub
+
+/--
+Transport conditional sub-Gaussianity across equal conditioning measurable
+spaces.  The two inclusion proofs are propositionally irrelevant.
+-/
+theorem hasCondSubgaussianMGF_congr_measurableSpace
+    {Omega : Type u}
+    [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]
+    (mu : Measure Omega) [IsFiniteMeasure mu]
+    (mcond mcond' : MeasurableSpace Omega)
+    (hm : mcond <= mOmega) (hm' : mcond' <= mOmega)
+    (hspaces : mcond = mcond')
+    (X : Omega -> Real) (c : NNReal)
+    (h :
+      ProbabilityTheory.HasCondSubgaussianMGF
+        (mΩ := mOmega) mcond hm X c mu) :
+    ProbabilityTheory.HasCondSubgaussianMGF
+      (mΩ := mOmega) mcond' hm' X c mu := by
+  subst mcond'
+  simpa only using h
 
 /--
 Centered-reward specialization of

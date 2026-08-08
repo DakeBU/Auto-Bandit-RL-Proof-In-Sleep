@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -14,6 +15,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 BANDIT = ROOT / "tools" / "bandit.py"
+LIFECYCLE = ROOT / "tools" / "abrl_lifecycle.py"
 
 
 def load_bandit_module():
@@ -25,12 +27,72 @@ def load_bandit_module():
     return module
 
 
+def load_lifecycle_module():
+    spec = importlib.util.spec_from_file_location("abrl_lifecycle_under_test", LIFECYCLE)
+    if spec is None or spec.loader is None:
+        raise RuntimeError("could not load tools/abrl_lifecycle.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+class LifecycleFrontierTests(unittest.TestCase):
+    def test_analyze_frontier_accepts_null_last_verifier(self) -> None:
+        lifecycle = load_lifecycle_module()
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            runs = root / "runs"
+            runs.mkdir()
+            (runs / "active_frontier.json").write_text(
+                json.dumps({
+                    "current_leaf": {"id": "NEW-LEAF"},
+                    "last_accepted_verifier": None,
+                }),
+                encoding="utf-8",
+            )
+
+            analysis = lifecycle.analyze_frontier(root)
+
+            self.assertEqual(analysis["recorded_frontier"]["current_leaf"]["id"], "NEW-LEAF")
+            self.assertNotIn(
+                "missing_recorded_leaf",
+                [mismatch["kind"] for mismatch in analysis["mismatches"]],
+            )
+
+
+class LongPathIoTests(unittest.TestCase):
+    @unittest.skipUnless(sys.platform == "win32", "Win32 long-path regression")
+    def test_read_write_text_supports_extended_repository_path(self) -> None:
+        bandit = load_bandit_module()
+        with tempfile.TemporaryDirectory() as tmp:
+            try:
+                path = (
+                    Path(tmp)
+                    / ("route-" + "a" * 70)
+                    / ("leaf-" + "b" * 70)
+                    / ("index-" + "c" * 70)
+                    / "card.json"
+                )
+                self.assertGreater(len(str(path.resolve())), 260)
+
+                bandit.write_text(path, "{\"status\": \"leanCompiled\"}\n")
+
+                self.assertEqual(
+                    bandit.read_text(path),
+                    "{\"status\": \"leanCompiled\"}\n",
+                )
+            finally:
+                shutil.rmtree(bandit.io_path(Path(tmp)), ignore_errors=True)
+
+
 class ReviewStatusCliTests(unittest.TestCase):
     def run_bandit(self, *args: str) -> subprocess.CompletedProcess[str]:
         return subprocess.run(
             [sys.executable, str(BANDIT), *args],
             cwd=ROOT,
             text=True,
+            encoding="utf-8",
+            errors="replace",
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             check=False,
@@ -90,6 +152,15 @@ class ReviewStatusCliTests(unittest.TestCase):
         self.assertEqual(spine_proc.returncode, 0, spine_proc.stderr)
         self.assertIn("spine: SPINE-CONCENTRATION", spine_proc.stdout)
 
+    def test_unfinished_reads_current_lowercase_ledger_schema(self) -> None:
+        proc = self.run_bandit("unfinished")
+        self.assertEqual(proc.returncode, 0, proc.stderr)
+        self.assertIn("unfinished leaf rows", proc.stdout)
+        self.assertIn("no matching rows", proc.stdout)
+        self.assertNotIn("[missing-leaf]", proc.stdout)
+        self.assertNotIn("-  []", proc.stdout)
+        self.assertNotIn("\ufffd", proc.stdout)
+
     def test_compact_lean_statement_preserves_result_let(self) -> None:
         bandit = load_bandit_module()
         statement = bandit.compact_lean_statement([
@@ -101,6 +172,90 @@ class ReviewStatusCliTests(unittest.TestCase):
         self.assertIn("let doubled := n + n", statement)
         self.assertTrue(statement.endswith("doubled = 2 * n"), statement)
         self.assertNotIn(":= by", statement)
+
+    def test_compact_lean_statement_preserves_result_letI(self) -> None:
+        bandit = load_bandit_module()
+        statement = bandit.compact_lean_statement([
+            "theorem example (witness : forall n, Nat) :",
+            "    forall n,",
+            "      letI :",
+            "          OfNat Nat 0 :=",
+            "        inferInstance",
+            "      let value := witness n",
+            "      value = witness n := by",
+            "  intro n",
+            "  rfl",
+        ], 0)
+        self.assertIn("letI : OfNat Nat 0 := inferInstance", statement)
+        self.assertIn("let value := witness n", statement)
+        self.assertTrue(statement.endswith("value = witness n"), statement)
+        self.assertNotIn(":= by", statement)
+
+    def test_compact_lean_statement_preserves_bracketed_result_let(self) -> None:
+        bandit = load_bandit_module()
+        statement = bandit.compact_lean_statement([
+            "theorem example (n : Nat) :",
+            "    True /\\",
+            "      (forall i : Fin n,",
+            "        let value := (i : Nat)",
+            "        value = i) /\\",
+            "      True := by",
+            "  refine ⟨trivial, ?_, trivial⟩",
+            "  intro i",
+            "  rfl",
+        ], 0)
+        self.assertIn("let value := (i : Nat)", statement)
+        self.assertTrue(statement.endswith("True /\\ (forall i : Fin n, let value := (i : Nat) value = i) /\\ True"), statement)
+        self.assertNotIn(":= by", statement)
+        self.assertNotIn("refine", statement)
+
+    def test_list_lean_decls_preserves_full_all_windows_statement(self) -> None:
+        proc = self.run_bandit(
+            "list-lean-decls",
+            "exploratorySource_trajectoryMeasure_cumulativeInverseSqrtPathSupport_"
+            "decayingExplorationAverageRealizedBehaviorConsistency_allWindows",
+            "--statement",
+        )
+        self.assertEqual(proc.returncode, 0, proc.stderr)
+        self.assertIn("htrajectoryBorel n", proc.stdout)
+        self.assertIn("violationSet ⊆ combinedBadEvent", proc.stdout)
+        self.assertIn(
+            "source.realizedSuccessorAverageRegret trajectory rounds <=",
+            proc.stdout,
+        )
+
+    def test_compact_lean_statement_preserves_named_arguments(self) -> None:
+        bandit = load_bandit_module()
+        statement = bandit.compact_lean_statement([
+            "theorem example {Feature : Type} (delta : Real) :",
+            "    let regret := fun _trajectory => 0",
+            "    mu {trajectory |",
+            "        explicitBound (Feature := Feature) delta <",
+            "          regret trajectory} <=",
+            "      ENNReal.ofReal delta := by",
+            "  exact tail",
+        ], 0)
+        self.assertIn("(Feature := Feature)", statement)
+        self.assertTrue(
+            statement.endswith("ENNReal.ofReal delta"),
+            statement,
+        )
+        self.assertNotIn(":= by", statement)
+
+    def test_compact_recursive_def_stops_before_omit_wrapped_theorem(self) -> None:
+        bandit = load_bandit_module()
+        statement = bandit.compact_lean_statement([
+            "noncomputable def remainingGap : Nat -> Real",
+            "  | 0 => 0",
+            "  | n + 1 => remainingGap n + 1",
+            "",
+            "omit [Nonempty Action] in",
+            "theorem remainingGap_nonneg (n : Nat) : 0 <= remainingGap n := by",
+            "  omega",
+        ], 0)
+        self.assertIn("| n + 1 => remainingGap n + 1", statement)
+        self.assertNotIn("omit", statement)
+        self.assertNotIn("theorem", statement)
 
     def test_scan_lean_declarations_ignores_nested_block_comments(self) -> None:
         bandit = load_bandit_module()
@@ -128,6 +283,43 @@ class ReviewStatusCliTests(unittest.TestCase):
                 names = [declaration["full_name"] for declaration in declarations]
 
                 self.assertEqual(names, ["Demo.marker", "Demo.actual"])
+        finally:
+            bandit.ROOT = original_root
+
+    def test_scan_lean_declarations_accepts_multiline_headers(self) -> None:
+        bandit = load_bandit_module()
+        original_root = bandit.ROOT
+        try:
+            with tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                source_dir = root / "BanditRLProof"
+                source_dir.mkdir()
+                (source_dir / "Multiline.lean").write_text(
+                    "namespace Demo\n"
+                    "noncomputable def\n"
+                    "    longDefinition : Nat := 0\n"
+                    "theorem\n"
+                    "    longTheorem : True := by\n"
+                    "  trivial\n"
+                    "end Demo\n",
+                    encoding="utf-8",
+                )
+                bandit.ROOT = root
+
+                declarations = bandit.scan_lean_declarations()
+                summary = [
+                    (
+                        declaration["kind"],
+                        declaration["full_name"],
+                        declaration["line"],
+                    )
+                    for declaration in declarations
+                ]
+
+                self.assertEqual(summary, [
+                    ("def", "Demo.longDefinition", 2),
+                    ("theorem", "Demo.longTheorem", 4),
+                ])
         finally:
             bandit.ROOT = original_root
 

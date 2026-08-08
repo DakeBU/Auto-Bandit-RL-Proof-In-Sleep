@@ -77,6 +77,30 @@ theorem finiteArmVarianceProxy_pos_of_exists
     varianceProxy_le_finiteArmVarianceProxy varianceProxy arm
   exact harm.trans_le (by exact_mod_cast hle)
 
+/--
+The finite-arm maximum padded by one, providing a strictly positive tuning
+proxy even when all genuine armwise proxies are zero.
+-/
+noncomputable def finiteArmPositiveVarianceProxy
+    {K : Nat} (varianceProxy : Fin K -> NNReal) : NNReal :=
+  max 1 (finiteArmVarianceProxy varianceProxy)
+
+/-- Every armwise proxy is bounded by the positive padded finite-arm proxy. -/
+theorem varianceProxy_le_finiteArmPositiveVarianceProxy
+    {K : Nat} (varianceProxy : Fin K -> NNReal) (arm : Fin K) :
+    varianceProxy arm <= finiteArmPositiveVarianceProxy varianceProxy := by
+  exact
+    (varianceProxy_le_finiteArmVarianceProxy varianceProxy arm).trans
+      (le_max_right _ _)
+
+/-- The padded finite-arm proxy is always strictly positive. -/
+theorem finiteArmPositiveVarianceProxy_pos
+    {K : Nat} (varianceProxy : Fin K -> NNReal) :
+    0 < ((finiteArmPositiveVarianceProxy varianceProxy : NNReal) : Real) := by
+  have hone : (1 : NNReal) <= finiteArmPositiveVarianceProxy varianceProxy :=
+    le_max_left _ _
+  exact zero_lt_one.trans_le (by exact_mod_cast hone)
+
 end Concentration
 
 namespace RewardKernel
