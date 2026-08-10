@@ -18,6 +18,21 @@ A hierarchical multi-agent harness for building Lean-checked bandit and reinforc
 
 ## News
 
+* **August 10, 2026.** Upgraded the formalization website into the
+  [ABRL Open Formalization Community](https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/)
+  with three explicit entry points: a Lean-aligned teaching path for students,
+  an exhaustive declaration catalog for library users, and a public lemma
+  contribution route for domain experts.  The Research IDE now exports a
+  versioned lemma packet carrying the natural-language statement, LaTeX, Lean
+  draft, imports, dependencies, provenance, credit, and honest compiler status.
+  Public issue forms, packet validation, governance, and automated Pages
+  deployment prepare the same contract for a future authenticated
+  LaTeX↔Lean compiler.  A persistent side navigation now exposes project
+  pages, contributors, installation, contribution guidance, the complete
+  ten-chapter Book Map, and library tools from every generated page.  The
+  community organization also acknowledges
+  inspiration from [StatsMLlib](https://statsmllib.github.io/) without copying
+  its source or implying participation or endorsement.
 * **August 6, 2026.** Expanded the Blueprint-style site into a first
   researcher-facing IDE prototype.  The new workspace places editable LaTeX,
   reviewed LaTeX-to-Lean mappings, exact Lean declarations, compiler
@@ -96,6 +111,13 @@ gates and deploys the generated artifact with GitHub Pages. Before the first
 public deployment, select **GitHub Actions** as the Pages source in repository
 settings. Detailed maintenance and status-mapping instructions are in
 [`website/README.md`](website/README.md).
+
+The project website is published at
+<https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/>.  An independently
+generated static mirror can also be published from the allowlisted website
+artifact when a documentation-only snapshot is needed.  Public lemma packets
+and core-library integration remain separate statuses until the full Lean gate
+and maintainer review pass.
 
 ## Harness Profile
 

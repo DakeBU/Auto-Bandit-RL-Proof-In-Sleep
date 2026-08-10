@@ -12,6 +12,7 @@ import os
 import posixpath
 import re
 import shutil
+import subprocess
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -24,10 +25,16 @@ ROOT = SITE_DIR.parent
 CONTENT_DIR = SITE_DIR / "content"
 DIAGRAM_DIR = SITE_DIR / "diagrams"
 STATIC_DIR = SITE_DIR / "static"
+PUBLIC_REPO_DIR = SITE_DIR / "public-repo"
+COMMUNITY_DIR = SITE_DIR / "community"
 DEFAULT_OUTPUT = SITE_DIR / "_site"
 
 GITHUB_REPO = "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep"
+PUBLIC_SITE_REPO = "https://github.com/jicheng9617/Auto-Bandit-RL-Proof-In-Sleep-site"
+PUBLIC_SITE_URL = "https://jicheng9617.github.io/Auto-Bandit-RL-Proof-In-Sleep-site"
 SOURCE_BRANCH = "main"
+PUBLIC_BASE_URL = ""
+SITE_CHAPTERS: list[dict[str, Any]] = []
 
 STATUS_LABELS = {
     "compiled": "Compiled",
@@ -36,6 +43,7 @@ STATUS_LABELS = {
     "blocked": "Blocked",
     "stated": "Stated, proof incomplete",
     "source": "Source indexed",
+    "integrated": "Integrated",
 }
 
 KIND_LABELS = {
@@ -317,6 +325,8 @@ def assign_chapters(modules: list[dict[str, Any]], chapters: list[dict[str, Any]
 
 
 def source_url(file: str, line: int | None = None) -> str:
+    if PUBLIC_BASE_URL:
+        return f"{PUBLIC_BASE_URL.rstrip('/')}/source-access/"
     url = f"{GITHUB_REPO}/blob/{SOURCE_BRANCH}/{file}"
     return f"{url}#L{line}" if line else url
 
@@ -418,24 +428,47 @@ def layout(
     extra_scripts: tuple[str, ...] = (),
 ) -> str:
     root = page_root(page_path)
-    nav_items = [
+    project_items = [
         ("overview", "Overview", "index.html"),
+        ("contributors", "Contributors", "contributors/index.html"),
+        ("installation", "Installation", "installation/index.html"),
+        ("community", "How to contribute", "community/index.html"),
+    ]
+    library_items = [
+        ("catalog", "Lean declarations", "declarations/index.html"),
         ("map", "Implementation map", "implementation-map/index.html"),
-        ("chapters", "Chapters", "learning/index.html"),
-        ("catalog", "Declarations", "declarations/index.html"),
         ("ide", "Research IDE", "ide/index.html"),
         ("roadmap", "Roadmap", "roadmap/index.html"),
-        ("workflow", "Workflow", "workflow/index.html"),
     ]
-    nav = "".join(
-        f'<a href="{href_from(page_path, target)}"'
-        + (' aria-current="page"' if key == current else "")
-        + f">{label}</a>"
-        for key, label, target in nav_items
+
+    def nav_links(items: list[tuple[str, str, str]]) -> str:
+        return "".join(
+            f'<a href="{href_from(page_path, target)}"'
+            + (' aria-current="page"' if key == current or target == page_path else "")
+            + f">{html.escape(label)}</a>"
+            for key, label, target in items
+        )
+
+    project_nav = nav_links(project_items)
+    library_nav = nav_links(library_items)
+    def book_link(index: int, chapter: dict[str, Any]) -> str:
+        target = f"chapters/{chapter['slug']}/index.html"
+        active = ' aria-current="page"' if page_path == target else ""
+        return (
+            f'<a class="book-nav-link" href="{href_from(page_path, target)}"{active}>'
+            f'<span>{index:02d}</span>{html.escape(chapter["short_title"])}</a>'
+        )
+
+    book_nav = nav_links([("chapters", "All chapters", "learning/index.html")]) + "".join(
+        book_link(index, chapter)
+        for index, chapter in enumerate(SITE_CHAPTERS, start=1)
     )
     toc_html = (
         '<aside class="side-nav" aria-label="On this page"><strong>On this page</strong>'
-        + "".join(f'<a href="#{html.escape(anchor)}">{html.escape(label)}</a>' for anchor, label in toc)
+        + "".join(
+            f'<a data-toc-link href="#{html.escape(anchor)}">{html.escape(label)}</a>'
+            for anchor, label in toc
+        )
         + "</aside>"
         if toc
         else ""
@@ -464,44 +497,59 @@ def layout(
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Literate Lean formalization of bandit and reinforcement-learning proofs in ABRL.">
-  <title>{html.escape(title)} · ABRL Formalization</title>
-  <link rel="stylesheet" href="{root}/static/site.css?v=20260806">
+  <meta name="description" content="An open teaching, browsing, and contribution community for verified bandit and reinforcement-learning mathematics in Lean.">
+  <title>{html.escape(title)} · ABRL Open Formalization</title>
+  <link rel="stylesheet" href="{root}/static/site.css?v=20260811">
   {mathjax}
 </head>
 <body data-site-root="{root}">
   <a class="skip-link" href="#main-content">Skip to content</a>
-  <header class="site-header">
-    <div class="header-inner">
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="{href_from(page_path, 'index.html')}">ABRL Open Formalization</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
       <a class="brand" href="{href_from(page_path, 'index.html')}">
         <span class="brand-mark" aria-hidden="true">A</span>
-        <span>ABRL Formalization</span>
+        <span><strong>ABRL</strong><small>Open Formalization</small></span>
       </a>
-      <nav class="primary-nav" aria-label="Primary">{nav}</nav>
-      <div class="search-shell">
-        <label class="empty" for="global-search">Search Lean declarations</label>
-        <input id="global-search" class="global-search" data-global-search type="search" placeholder="Search declarations…" autocomplete="off">
-        <ul class="search-results" data-global-results hidden></ul>
-      </div>
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search">Search the Lean library</label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off">
+      <ul class="search-results" data-global-results hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <div class="nav-group"><strong class="nav-group-title">Project</strong>{project_nav}</div>
+      <div class="nav-group book-map-nav"><strong class="nav-group-title">Book map</strong>{book_nav}</div>
+      <div class="nav-group"><strong class="nav-group-title">Library</strong>{library_nav}</div>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="{GITHUB_REPO}">GitHub repository <span aria-hidden="true">↗</span></a>
       <div class="theme-switcher" aria-label="Site style">
         <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
         <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
         <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
       </div>
     </div>
-  </header>
-  <div class="verification-strip{verification_class}">{html.escape(verification)}</div>
-  <div class="page-shell">
-    <main class="page-main" id="main-content">{body}</main>
-    {toc_html}
-  </div>
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <p>Generated from the current Lean sources at {html.escape(generated_at)}. The declaration statement and source link are authoritative when prose is abbreviated.</p>
-      <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a>; no participation or endorsement is implied. <a href="{href_from(page_path, 'attribution/index.html')}">Attribution details</a>.</p>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip{verification_class}">{html.escape(verification)}</div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">{body}</main>
+      {toc_html}
     </div>
-  </footer>
-  <script src="{root}/static/site.js?v=20260806"></script>{extra_script_tags}
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p>Generated from the current Lean sources at {html.escape(generated_at)}. Exact Lean statements and verification status take precedence when explanatory prose is abbreviated.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="{href_from(page_path, 'attribution/index.html')}">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="{root}/static/site.js?v=20260811"></script>{extra_script_tags}
 </body>
 </html>
 """
@@ -510,7 +558,62 @@ def layout(
 def write_page(output: Path, page_path: str, content: str) -> None:
     target = output / Path(page_path)
     target.parent.mkdir(parents=True, exist_ok=True)
-    target.write_text(content, encoding="utf-8", newline="\n")
+    clean = "\n".join(line.rstrip() for line in content.splitlines()) + "\n"
+    target.write_text(clean, encoding="utf-8", newline="\n")
+
+
+def render_book_map(
+    page_path: str,
+    chapters: list[dict[str, Any]],
+    *,
+    detailed: bool = False,
+) -> str:
+    cards = []
+    for index, chapter in enumerate(chapters, start=1):
+        audience = (
+            f'<p class="book-audience"><strong>Reader.</strong> {html.escape(chapter["audience"])}</p>'
+            if detailed
+            else ""
+        )
+        cards.append(
+            f"""
+<a class="book-chapter-card" href="{href_from(page_path, f"chapters/{chapter['slug']}/index.html")}">
+  <span class="book-chapter-number" aria-hidden="true">{index:02d}</span>
+  <div class="book-chapter-copy">
+    <span class="book-chapter-meta">{status_badge(chapter['status'])}</span>
+    <strong>{html.escape(chapter['title'])}</strong>
+    <span class="book-summary">{html.escape(chapter['summary'])}</span>
+    {audience}
+  </div>
+  <span class="book-chapter-arrow" aria-hidden="true">→</span>
+</a>"""
+        )
+    return '<div class="book-map-grid">' + "".join(cards) + "</div>"
+
+
+def render_contributor_cards(page_path: str, contributors: list[dict[str, Any]]) -> str:
+    cards = []
+    for contributor in contributors:
+        initials = "".join(part[0] for part in contributor["name"].split() if part)[:2].upper()
+        cards.append(
+            f"""
+<article class="contributor-card">
+  <div class="contributor-avatar" aria-hidden="true">{html.escape(initials)}</div>
+  <div>
+    <h3><a href="{html.escape(contributor['profile'])}">{html.escape(contributor['name'])}</a></h3>
+    <p class="contributor-handle">@{html.escape(contributor['handle'])} · {html.escape(contributor['role'])}</p>
+    <p>{html.escape(contributor['contribution'])}</p>
+  </div>
+</article>"""
+        )
+    cards.append(
+        f"""
+<a class="contributor-card contributor-invite" href="{href_from(page_path, 'community/index.html')}">
+  <div class="contributor-avatar" aria-hidden="true">+</div>
+  <div><h3>Your name here</h3><p>Propose a sourced theorem, improve a teaching note, or submit a Lean-checked lemma packet.</p><strong>How to contribute →</strong></div>
+</a>"""
+    )
+    return '<div class="contributor-grid">' + "".join(cards) + "</div>"
 
 
 def render_highlight(
@@ -559,6 +662,7 @@ def build_index(
     modules: list[dict[str, Any]],
     declarations: list[dict[str, Any]],
     chapters: list[dict[str, Any]],
+    contributors: list[dict[str, Any]],
     results: list[dict[str, Any]],
     verified: bool,
     generated_at: str,
@@ -567,24 +671,41 @@ def build_index(
     counts = Counter(decl["kind"] for decl in declarations)
     status_counts = Counter(result["status"] for result in results)
     placeholder_count = sum(1 for decl in declarations if decl["placeholder"])
-    chapter_cards = "".join(
-        f"""
-<article class="chapter-card">
-  {status_badge(chapter['status'])}
-  <h3><a href="{href_from(page_path, f"chapters/{chapter['slug']}/index.html")}">{html.escape(chapter['title'])}</a></h3>
-  <p>{html.escape(chapter['summary'])}</p>
-</article>"""
-        for chapter in chapters
-    )
+    book_map = render_book_map(page_path, chapters)
+    contributor_cards = render_contributor_cards(page_path, contributors)
     body = f"""
 <section class="hero" id="overview">
-  <p class="eyebrow">Verified mathematics · readable explanations · honest gaps</p>
-  <h1>A map from bandit theory to Lean.</h1>
-  <p class="lede">Auto-Bandit-RL-Proof-In-Sleep turns literature targets into explicit assumptions, proof-DAG leaves, compiled Lean declarations, and explanations that a student can read beside the formal statement.</p>
+  <p class="eyebrow">Learn · inspect · contribute</p>
+  <h1>An open community for bandit and RL proofs in Lean.</h1>
+  <p class="lede">ABRL connects textbook mathematics, exact Lean declarations, and a reviewable contribution path. Students can learn the theory, researchers can inspect every indexed lemma, and domain experts can propose new formal results without pretending that a draft is already verified.</p>
   <div class="hero-actions">
-    <a class="button primary" href="{href_from(page_path, 'learning/index.html')}">Start the guided reading path</a>
-    <a class="button" href="{href_from(page_path, 'implementation-map/index.html')}">Open the implementation map</a>
-    <a class="button" href="{href_from(page_path, 'ide/index.html')}">Try the Research IDE</a>
+    <a class="button primary" href="{href_from(page_path, 'learning/index.html')}">Start learning</a>
+    <a class="button" href="{href_from(page_path, 'declarations/index.html')}">Browse Lean lemmas</a>
+    <a class="button" href="{href_from(page_path, 'community/index.html')}">Contribute a result</a>
+  </div>
+</section>
+
+<section id="three-roles">
+  <h2>One library, three ways to use it</h2>
+  <div class="role-grid">
+    <article class="role-card learn-role">
+      <span class="role-number">01</span><p class="eyebrow">For students</p>
+      <h3>Learn from a Lean-aligned textbook</h3>
+      <p>Follow ten chapters from finite bandit bookkeeping through concentration, stochastic and adversarial algorithms, stopping times, and finite-horizon RL. Read intuition and mathematics before opening the exact type.</p>
+      <a href="{href_from(page_path, 'learning/index.html')}">Follow the teaching path →</a>
+    </article>
+    <article class="role-card browse-role">
+      <span class="role-number">02</span><p class="eyebrow">For library users</p>
+      <h3>Find the exact lemma you need</h3>
+      <p>Search all {len(declarations):,} indexed declarations, filter by chapter and kind, inspect module imports, and distinguish compiled endpoints from broader routes that remain partial or blocked.</p>
+      <a href="{href_from(page_path, 'declarations/index.html')}">Search the declaration catalog →</a>
+    </article>
+    <article class="role-card contribute-role">
+      <span class="role-number">03</span><p class="eyebrow">For contributors</p>
+      <h3>Add knowledge from another field</h3>
+      <p>Submit a structured lemma packet with the source theorem, natural-language statement, LaTeX, Lean draft, dependencies, and honest verification status. The future researcher IDE will emit the same machine-readable format.</p>
+      <a href="{href_from(page_path, 'community/index.html')}">Read the contribution guide →</a>
+    </article>
   </div>
 </section>
 
@@ -607,10 +728,44 @@ def build_index(
   {render_diagram(page_path, 'system-architecture.mmd', 'The ABRL system from literature evidence to a Lean-gated teaching site')}
 </section>
 
-<section id="chapters">
-  <h2>{len(chapters)} teaching chapters</h2>
-  <p>Each chapter explains major declarations in plain English, shows a mathematical reading, gives the exact Lean statement, and links back to the complete module catalog.</p>
-  <div class="chapter-grid">{chapter_cards}</div>
+<section id="book-map">
+  <p class="eyebrow">Formalized textbook map</p>
+  <h2>Book map: ten routes through bandits and RL</h2>
+  <p>Open any chapter to move from textbook intuition and mathematical statements to exact Lean declarations, module dependencies, compiled milestones, and explicitly recorded proof gaps.</p>
+  {book_map}
+</section>
+
+<section id="contributors">
+  <p class="eyebrow">People behind the library</p>
+  <h2>Contributors</h2>
+  <p>This list records contributors who are verifiable in the current repository history. New contributors are added with their actual merged work and preferred credit; the site does not invent affiliations or endorsements.</p>
+  {contributor_cards}
+  <p><a class="button" href="{href_from(page_path, 'contributors/index.html')}">Meet the contributors</a></p>
+</section>
+
+<section id="installation">
+  <p class="eyebrow">Reproduce the formalization</p>
+  <h2>Installation</h2>
+  <div class="installation-steps compact-steps">
+    <article><span>01</span><h3>Install Lean</h3><p>Install Git, Python 3, and <a href="https://lean-lang.org/install/">Lean through Elan</a>. The repository pins <code>leanprover/lean4:v4.29.1</code>.</p></article>
+    <article><span>02</span><h3>Clone the repository</h3><pre><code>git clone {GITHUB_REPO}.git
+cd Auto-Bandit-RL-Proof-In-Sleep</code></pre></article>
+    <article><span>03</span><h3>Run the proof gate</h3><pre><code>lake update
+python3 tools/bandit.py check</code></pre></article>
+  </div>
+  <p><a class="button" href="{href_from(page_path, 'installation/index.html')}">Full installation guide</a></p>
+</section>
+
+<section id="how-to-contribute">
+  <p class="eyebrow">A reviewable path into the library</p>
+  <h2>How to contribute</h2>
+  <ol class="contribution-steps">
+    <li><strong>Choose one claim.</strong><span>Start from a book, paper, proof gap, or existing chapter and record the exact source and assumptions.</span></li>
+    <li><strong>Agree on the statement.</strong><span>Open a lemma proposal before a large formalization so scope, namespace, and dependencies can be reviewed.</span></li>
+    <li><strong>Compile and explain.</strong><span>Add the Lean declaration, tests, plain-English statement, proof idea, and an honest status.</span></li>
+    <li><strong>Submit for integration.</strong><span>The project gate and maintainer review decide when a result becomes indexed as compiled.</span></li>
+  </ol>
+  <div class="hero-actions"><a class="button primary" href="{href_from(page_path, 'community/index.html')}">Read how to contribute</a><a class="button" href="{PUBLIC_SITE_REPO}/issues/new?template=lemma-proposal.yml">Propose a lemma</a></div>
 </section>
 
 <section id="progress">
@@ -626,16 +781,20 @@ def build_index(
 </section>
 
 <section id="research-workspace">
-  <h2>A first researcher-facing IDE loop</h2>
-  <p>The new workspace renders editable LaTeX, loads reviewed LaTeX-to-Lean mappings, visualizes declaration dependencies, and can call the repository's pinned Lean compiler through a loopback-only companion server. Static deployments keep the reading and visualization features but never pretend to execute arbitrary Lean.</p>
-  <a class="button primary" href="{href_from(page_path, 'ide/index.html')}">Open the Research IDE prototype</a>
+  <h2>The library and researcher IDE share one contribution language</h2>
+  <p>The workspace renders editable LaTeX, loads reviewed LaTeX-to-Lean mappings, visualizes declaration dependencies, and can call the pinned Lean compiler through a loopback-only companion server. It can now export a versioned lemma packet for community review; a future authenticated compiler can submit that same packet directly as a proposed contribution.</p>
+  <div class="hero-actions"><a class="button primary" href="{href_from(page_path, 'ide/index.html')}">Open the Research IDE prototype</a><a class="button" href="{href_from(page_path, 'community/index.html#machine-contract')}">Inspect the contribution contract</a></div>
 </section>
 """
     toc = [
         ("overview", "Overview"),
+        ("three-roles", "Three ways to use ABRL"),
         ("live-inventory", "Live inventory"),
         ("purpose", "Project purpose"),
-        ("chapters", "Teaching chapters"),
+        ("book-map", "Book map"),
+        ("contributors", "Contributors"),
+        ("installation", "Installation"),
+        ("how-to-contribute", "How to contribute"),
         ("progress", "Progress"),
         ("reading-order", "Reading order"),
         ("research-workspace", "Research IDE"),
@@ -1039,16 +1198,7 @@ def build_learning(
     generated_at: str,
 ) -> None:
     page_path = "learning/index.html"
-    cards = "".join(
-        f"""
-<article class="chapter-card">
-  {status_badge(chapter['status'])}
-  <h3><a href="{href_from(page_path, f"chapters/{chapter['slug']}/index.html")}">{html.escape(chapter['title'])}</a></h3>
-  <p>{html.escape(chapter['summary'])}</p>
-  <p><strong>Audience.</strong> {html.escape(chapter['audience'])}</p>
-</article>"""
-        for chapter in chapters
-    )
+    cards = render_book_map(page_path, chapters, detailed=True)
     body = f"""
 <section class="hero" id="learning">
   <p class="eyebrow">A student-first route</p>
@@ -1072,16 +1222,269 @@ def build_learning(
   </div>
 </section>
 
-<section id="chapters">
-  <h2>Chapter guide</h2>
-  <div class="chapter-grid">{cards}</div>
+<section id="book-map">
+  <p class="eyebrow">Formalized textbook map</p>
+  <h2>Book map</h2>
+  <p>Each chapter is a clickable bridge from mathematical exposition to the exact Lean modules and declarations that implement it.</p>
+  {cards}
 </section>
 """
-    toc = [("learning", "Reading guide"), ("path", "Recommended path"), ("lean-translation", "Lean ideas"), ("chapters", "Chapters")]
+    toc = [("learning", "Reading guide"), ("path", "Recommended path"), ("lean-translation", "Lean ideas"), ("book-map", "Book map")]
     write_page(
         output,
         page_path,
         layout(page_path, "Learning path", body, toc, "chapters", verified, generated_at),
+    )
+
+
+def build_contributors(
+    output: Path,
+    contributors: list[dict[str, Any]],
+    verified: bool,
+    generated_at: str,
+) -> None:
+    page_path = "contributors/index.html"
+    cards = render_contributor_cards(page_path, contributors)
+    body = f"""
+<section class="hero" id="contributors">
+  <p class="eyebrow">People and credit</p>
+  <h1 class="page-title">Contributors</h1>
+  <p class="lede">ABRL records credit next to real repository work. The list below is grounded in the current Git history and public GitHub accounts; cited researchers and external projects are not presented as contributors unless they actually join the project.</p>
+</section>
+
+<section id="current-contributors">
+  <h2>Current repository contributors</h2>
+  {cards}
+</section>
+
+<section id="credit-policy">
+  <h2>How contribution credit works</h2>
+  <div class="card-grid">
+    <article class="info-card"><h3>Code and proof credit</h3><p>Lean declarations, proof repairs, tests, and module-level refactors are credited through Git history and the merged pull request.</p></article>
+    <article class="info-card"><h3>Mathematical provenance</h3><p>Book, paper, and original-result sources stay attached to a lemma packet. Citing an author does not make that author an ABRL contributor or endorser.</p></article>
+    <article class="info-card"><h3>Teaching and review credit</h3><p>Substantive explanations, counterexamples, assumption audits, dependency maps, and formal review are valid contributions even when they do not add a theorem.</p></article>
+  </div>
+</section>
+
+<section id="join">
+  <h2>Join the contributor list</h2>
+  <p>Begin with one well-scoped result or documentation improvement. Your preferred name and credit travel with the proposal, review, and eventual integrated declaration.</p>
+  <div class="hero-actions"><a class="button primary" href="{href_from(page_path, 'community/index.html')}">How to contribute</a><a class="button" href="{PUBLIC_SITE_REPO}/issues/new?template=lemma-proposal.yml">Propose a lemma</a></div>
+</section>
+"""
+    toc = [
+        ("contributors", "Contributors"),
+        ("current-contributors", "Current contributors"),
+        ("credit-policy", "Credit policy"),
+        ("join", "Join the project"),
+    ]
+    write_page(
+        output,
+        page_path,
+        layout(page_path, "Contributors", body, toc, "contributors", verified, generated_at),
+    )
+
+
+def build_installation(output: Path, verified: bool, generated_at: str) -> None:
+    page_path = "installation/index.html"
+    toolchain = (ROOT / "lean-toolchain").read_text(encoding="utf-8").strip()
+    body = f"""
+<section class="hero" id="installation">
+  <p class="eyebrow">Clone · compile · explore</p>
+  <h1 class="page-title">Installation</h1>
+  <p class="lede">The repository pins its Lean and Mathlib versions, so Elan and Lake can reproduce the same environment used by the formalization website and GitHub Actions.</p>
+</section>
+
+<section id="prerequisites">
+  <h2>1. Install the prerequisites</h2>
+  <div class="card-grid">
+    <article class="info-card"><h3>Git</h3><p>Lake uses Git to fetch Mathlib, and contributors use Git branches and pull requests for review.</p></article>
+    <article class="info-card"><h3>Lean through Elan</h3><p>Follow the <a href="https://lean-lang.org/install/">official Lean installation guide</a>. Elan reads <code>lean-toolchain</code> and selects <code>{html.escape(toolchain)}</code> automatically.</p></article>
+    <article class="info-card"><h3>Python 3</h3><p>The ABRL proof gate, site generator, integrity checks, and local preview helpers use Python 3 and only the standard library.</p></article>
+  </div>
+</section>
+
+<section id="clone">
+  <h2>2. Clone the project</h2>
+  <pre><code>git clone {GITHUB_REPO}.git
+cd Auto-Bandit-RL-Proof-In-Sleep
+lake update</code></pre>
+  <p><code>lake update</code> fetches the pinned Mathlib dependency from <code>lakefile.lean</code>. The first run may take several minutes.</p>
+</section>
+
+<section id="verify">
+  <h2>3. Run the mandatory Lean gate</h2>
+  <pre><code>python3 tools/bandit.py check</code></pre>
+  <p>On Windows, <code>py -3 tools/bandit.py check</code> is equivalent when the Python launcher is installed. The gate runs <code>lake build</code>, builds <code>Tests</code>, and scans local Lean files for forbidden placeholders.</p>
+  <div class="callout warning"><strong>Do not skip this step.</strong> A theorem is marked compiled on the website only after the project gate passes for the source snapshot being published.</div>
+</section>
+
+<section id="website">
+  <h2>4. Build and preview the literate site</h2>
+  <pre><code>python3 website/scripts/build_site.py --lean-verified
+python3 website/scripts/check_site.py
+python3 -m http.server 8000 --directory website/_site</code></pre>
+  <p>Open <code>http://localhost:8000/</code>. The static Research IDE is at <code>/ide/</code>; local Lean compilation requires the loopback-only companion server documented on that page.</p>
+</section>
+
+<section id="first-steps">
+  <h2>5. Choose your first route</h2>
+  <div class="hero-actions"><a class="button primary" href="{href_from(page_path, 'learning/index.html')}">Open the book map</a><a class="button" href="{href_from(page_path, 'declarations/index.html')}">Search Lean declarations</a><a class="button" href="{href_from(page_path, 'community/index.html')}">How to contribute</a></div>
+</section>
+"""
+    toc = [
+        ("installation", "Installation"),
+        ("prerequisites", "Prerequisites"),
+        ("clone", "Clone"),
+        ("verify", "Verify Lean"),
+        ("website", "Build the site"),
+        ("first-steps", "First route"),
+    ]
+    write_page(
+        output,
+        page_path,
+        layout(page_path, "Installation", body, toc, "installation", verified, generated_at),
+    )
+
+
+def build_community(output: Path, verified: bool, generated_at: str) -> None:
+    page_path = "community/index.html"
+    body = f"""
+<section class="hero" id="community">
+  <p class="eyebrow">How to contribute</p>
+  <h1 class="page-title">Bring one theorem. Leave a reusable Lean lemma.</h1>
+  <p class="lede">ABRL welcomes mathematically sourced contributions from bandits, reinforcement learning, probability, optimization, statistics, and adjacent fields. Every contribution keeps its provenance, informal meaning, exact Lean text, dependencies, and verification status together.</p>
+  <div class="hero-actions">
+    <a class="button primary" href="{PUBLIC_SITE_REPO}/issues/new?template=lemma-proposal.yml">Propose a lemma</a>
+    <a class="button" href="{PUBLIC_SITE_REPO}/blob/main/CONTRIBUTING.md">Read the contribution guide</a>
+    <a class="button" href="{href_from(page_path, 'ide/index.html')}">Draft in the Research IDE</a>
+  </div>
+</section>
+
+<section id="four-steps">
+  <h2>Four steps to a reviewed contribution</h2>
+  <ol class="contribution-steps">
+    <li><strong>Source the mathematics.</strong><span>Name the paper, book, formal proof gap, or original result and state every assumption.</span></li>
+    <li><strong>Open a proposal.</strong><span>Agree on the target statement, namespace, module, and dependencies before a large implementation.</span></li>
+    <li><strong>Compile and document.</strong><span>Submit Lean code, tests, plain-English meaning, mathematical notation, and proof correspondence.</span></li>
+    <li><strong>Pass review and integration.</strong><span>Only the full project gate and maintainer review can mark the declaration integrated and compiled.</span></li>
+  </ol>
+</section>
+
+<section id="who-can-contribute">
+  <h2>Three useful contribution sizes</h2>
+  <div class="card-grid contribution-levels">
+    <article class="info-card"><span class="level-label">Level A</span><h3>Explain or connect</h3><p>Improve a teaching note, add a literature pointer, identify a missing assumption, or connect an existing declaration to a textbook theorem.</p></article>
+    <article class="info-card"><span class="level-label">Level B</span><h3>Propose a lemma packet</h3><p>Supply a sourced mathematical statement, LaTeX, a Lean draft or signature, expected imports, and dependencies. A draft is visibly marked <em>proposed</em>.</p></article>
+    <article class="info-card"><span class="level-label">Level C</span><h3>Submit a checked formalization</h3><p>Contribute a compiling Lean implementation with tests and teaching prose. Maintainers still review API placement, assumptions, attribution, and integration.</p></article>
+  </div>
+</section>
+
+<section id="review-loop">
+  <h2>How a lemma joins the library</h2>
+  <p>A GitHub issue is enough to begin. Large formalizations should agree on scope and module ownership before substantial proof work. No proposal is displayed as compiled merely because it contains Lean-looking text.</p>
+  {render_diagram(page_path, 'community-contribution-loop.mmd', 'Community contribution loop from sourced mathematics to an integrated Lean declaration')}
+  <div class="status-legend community-statuses">
+    <div>{status_badge('planned')}<span><strong>Proposed</strong> — sourced mathematics and a review packet exist.</span></div>
+    <div>{status_badge('partial')}<span><strong>In review</strong> — statement, assumptions, namespace, or proof is being checked.</span></div>
+    <div>{status_badge('compiled')}<span><strong>Lean checked</strong> — the submitted snippet compiles in the declared environment.</span></div>
+    <div>{status_badge('integrated')}<span><strong>Integrated</strong> — merged into the indexed ABRL library and included in the next verified snapshot.</span></div>
+  </div>
+</section>
+
+<section id="machine-contract">
+  <h2>A stable contract for the future compiler</h2>
+  <p>The community unit is a versioned JSON <strong>lemma packet</strong>. The browser IDE can export it today. A future authenticated LaTeX↔Lean compiler can validate the packet locally, create a branch or proposal, and attach compiler diagnostics without inventing a second submission format.</p>
+  <div class="contract-grid">
+    <div class="contract-copy">
+      <h3>Required evidence</h3>
+      <ul><li>stable contribution ID and mathematical domain;</li><li>source paper, book, or original-result provenance;</li><li>plain-English and LaTeX statements;</li><li>Lean imports, declaration text, and named dependencies;</li><li>verification status and compiler evidence;</li><li>contributor identity, preferred credit, and license agreement.</li></ul>
+      <p><a href="{href_from(page_path, 'community/contribution.schema.json')}">Open the JSON Schema</a> · <a href="{href_from(page_path, 'community/registry.json')}">Open the machine-readable registry</a></p>
+    </div>
+    <pre class="contract-example"><code>{{
+  "schema_version": "1.0",
+  "id": "domain-short-lemma-name",
+  "status": "proposed",
+  "mathematics": {{ "plain": "...", "latex": "..." }},
+  "lean": {{ "imports": ["BanditRLProof"], "code": "..." }},
+  "provenance": {{ "source": "DOI, arXiv, book, or original" }},
+  "contributor": {{ "name": "...", "credit": "..." }}
+}}</code></pre>
+  </div>
+  <div class="callout warning"><strong>Trust boundary.</strong> The public site accepts proposals and machine-readable packets; it does not execute untrusted Lean code. Compilation stays in the contributor's checkout or a future isolated service. Only a passed project gate can move an integrated result to the site's compiled status.</div>
+</section>
+
+<section id="community-registry" data-community-registry data-registry-url="{href_from(page_path, 'community/registry.json')}">
+  <h2>Community contribution registry</h2>
+  <p data-community-summary>Loading the public registry…</p>
+  <div class="community-entry-grid" data-community-entries></div>
+</section>
+
+<section id="governance">
+  <h2>Credit, review, and governance</h2>
+  <div class="card-grid">
+    <article class="info-card"><h3>Credit travels with the lemma</h3><p>Contributor name, preferred credit, source provenance, and review history remain in the packet and the eventual teaching note.</p></article>
+    <article class="info-card"><h3>Assumptions stay visible</h3><p>Review may strengthen implementation details, but it must not silently weaken the mathematical target or hide a missing proof behind a theorem card.</p></article>
+    <article class="info-card"><h3>Maintainers decide integration</h3><p>Public proposals are open; core-library integration follows mathematical review, namespace and API review, license checks, and the repository's Lean gate.</p></article>
+  </div>
+  <p><a href="{PUBLIC_SITE_REPO}/blob/main/GOVERNANCE.md">Governance</a> · <a href="{PUBLIC_SITE_REPO}/blob/main/CODE_OF_CONDUCT.md">Code of Conduct</a> · <a href="{PUBLIC_SITE_REPO}/issues">Open proposals</a></p>
+</section>
+"""
+    toc = [
+        ("community", "Community"),
+        ("four-steps", "Four steps"),
+        ("who-can-contribute", "Ways to contribute"),
+        ("review-loop", "Review loop"),
+        ("machine-contract", "Compiler contract"),
+        ("community-registry", "Registry"),
+        ("governance", "Governance"),
+    ]
+    write_page(
+        output,
+        page_path,
+        layout(
+            page_path,
+            "How to contribute",
+            body,
+            toc,
+            "community",
+            verified,
+            generated_at,
+            extra_scripts=("static/community.js?v=20260810",),
+        ),
+    )
+
+
+def build_source_access(output: Path, verified: bool, generated_at: str) -> None:
+    page_path = "source-access/index.html"
+    body = f"""
+<section class="hero" id="source-access">
+  <p class="eyebrow">Publication boundary</p>
+  <h1 class="page-title">Lean source access</h1>
+  <p class="lede">This public community site is a verified documentation snapshot. The upstream ABRL research repository is currently private, so public source-line links stop at this explicit boundary instead of leading to a misleading GitHub 404 page.</p>
+</section>
+<section id="available">
+  <h2>What remains publicly usable</h2>
+  <ul><li>the exact scanned Lean declaration signatures and module names;</li><li>the complete searchable declaration catalog and implementation map;</li><li>student-facing mathematical explanations and honest route status;</li><li>public contribution issues, lemma packets, governance, and review history;</li><li>the static Research IDE and contribution-packet export.</li></ul>
+</section>
+<section id="boundary">
+  <h2>What is not published here</h2>
+  <p>Full private Lean files, paper drafts, proof-memory indexes, automated run logs, and credentials are excluded. A public contribution can still be reviewed and credited; maintainers perform final integration and publish the resulting declaration in a later verified snapshot.</p>
+  <div class="hero-actions"><a class="button primary" href="{PUBLIC_SITE_REPO}">Open the public community repository</a><a class="button" href="{href_from(page_path, 'community/index.html')}">Contribute a lemma</a></div>
+</section>
+"""
+    write_page(
+        output,
+        page_path,
+        layout(
+            page_path,
+            "Source access",
+            body,
+            [("source-access", "Source access"), ("available", "Public material"), ("boundary", "Private boundary")],
+            "community",
+            verified,
+            generated_at,
+        ),
     )
 
 
@@ -1148,7 +1551,7 @@ def build_research_ide(
   <div class="card-grid">
     <div class="info-card"><h3>Static / shared site</h3><p>LaTeX preview, curated LaTeX-to-Lean mappings, source navigation, and dependency trees work in any browser. Arbitrary Lean code is not executed.</p></div>
     <div class="info-card"><h3>Local verified mode</h3><p><code>ide_server.py</code> binds to loopback and invokes <code>lake env lean</code> in a temporary directory. Diagnostics are returned to this page without modifying source files.</p></div>
-    <div class="info-card"><h3>Future IDE boundary</h3><p>Proof-state streaming, an LSP session, semantic LaTeX synthesis, tactic suggestions, and collaborative persistence remain roadmap work—not features claimed by this prototype.</p></div>
+    <div class="info-card"><h3>Community handoff</h3><p>The workspace exports a versioned lemma packet containing the mathematics, Lean draft, imports, dependencies, and honest compiler status. Authenticated submission and collaborative persistence remain roadmap work.</p></div>
   </div>
   <div class="callout warning"><strong>Security boundary.</strong> The compile endpoint is intentionally local-only. Do not forward the IDE server through a public or temporary tunnel; use the existing static sharing server for reviewers.</div>
 </section>
@@ -1166,9 +1569,10 @@ def build_research_ide(
     </label>
     <button class="button" type="button" data-ide-load>Load verified mapping</button>
     <button class="button" type="button" data-ide-scaffold>Make safe draft scaffold</button>
+    <button class="button" type="button" data-ide-export>Export lemma packet</button>
     <label class="ide-toggle"><input type="checkbox" data-ide-auto> Auto-compile after edits (opt-in)</label>
   </div>
-  <div class="ide-grid" data-ide-app data-ide-data="{href_from(page_path, 'ide-data.json')}">
+  <div class="ide-grid" data-ide-app data-ide-data="{href_from(page_path, 'ide-data.json')}" data-community-url="{href_from(page_path, 'community/index.html#machine-contract')}">
     <article class="ide-pane">
       <header><div><span class="ide-step">01</span><h3>Mathematical statement</h3></div><span class="status source" data-translation-status>Reviewed mapping</span></header>
       <label for="ide-latex">LaTeX</label>
@@ -1197,16 +1601,17 @@ def build_research_ide(
       <div class="ide-tree" data-ide-tree><p class="empty">Choose a reviewed declaration to draw its teaching dependencies.</p></div>
     </article>
   </div>
+  <div class="callout contribution-export-note" data-ide-export-note><strong>Community handoff.</strong> Export produces a local JSON draft; it does not upload code or claim verification. Review the packet, add source and contributor details, then follow the <a href="{href_from(page_path, 'community/index.html')}">community contribution guide</a>.</div>
 </section>
 
 <section id="architecture">
   <h2>From prototype to a researcher IDE</h2>
-  <p>The maintainable design keeps the browser pleasant and the certificate boundary narrow: editing and visualization live in the front end, while only a loopback companion process is allowed to call the repository's pinned Lean toolchain.</p>
+  <p>The maintainable design keeps the browser pleasant and the certificate boundary narrow: editing, visualization, and packet export live in the front end, while only a loopback companion process is allowed to call the repository's pinned Lean toolchain. The packet schema is the future integration seam for authenticated contribution submission.</p>
   {render_diagram(page_path, 'research-ide-loop.mmd', 'Research IDE loop: reviewed mathematics, local Lean verification, and source-synchronized visualization')}
   <div class="card-grid">
     <div class="info-card"><h3>Next: proof states</h3><p>Attach a persistent Lean language-server session so cursor position can reveal goals, hypotheses, and tactic state without recompiling a whole snippet.</p></div>
     <div class="info-card"><h3>Next: semantic translation</h3><p>Generate candidate Lean from LaTeX with explicit provenance and require compilation plus human review before labeling a mapping verified.</p></div>
-    <div class="info-card"><h3>Next: research graph</h3><p>Combine elaborated declaration dependencies, task obligations, paper references, and counterexample records into one navigable graph.</p></div>
+    <div class="info-card"><h3>Next: community submission</h3><p>Let an authenticated compiler validate a lemma packet, open a public proposal or branch, attach diagnostics, and preserve contributor credit through review.</p></div>
   </div>
 </section>
 """
@@ -1227,7 +1632,7 @@ def build_research_ide(
             "ide",
             verified,
             generated_at,
-            extra_scripts=("static/ide.js?v=20260806",),
+            extra_scripts=("static/ide.js?v=20260810",),
         ),
     )
 
@@ -1360,7 +1765,7 @@ python3 website/scripts/ide_server.py</code></pre>
 
 def build_attribution(output: Path, verified: bool, generated_at: str) -> None:
     page_path = "attribution/index.html"
-    body = """
+    body = f"""
 <section class="hero" id="attribution">
   <p class="eyebrow">Design provenance and license boundary</p>
   <h1 class="page-title">Attribution</h1>
@@ -1374,13 +1779,20 @@ def build_attribution(output: Path, verified: bool, generated_at: str) -> None:
   <div class="callout warning">This attribution records inspiration only. It does not imply that Sho Sonoda participated in, reviewed, endorsed, or maintains Auto-Bandit-RL-Proof-In-Sleep.</div>
 </section>
 
+<section id="statsmllib">
+  <h2>StatsMLlib community inspiration</h2>
+  <p><a href="https://statsmllib.github.io/">StatsMLlib</a> and its <a href="https://github.com/Lean-MoDS/StatsMLlib">public repository</a> demonstrate an effective community-facing organization around a book map, selected theorems, contributor credit, installation, and a visible contribution guide.</p>
+  <p>StatsMLlib is Apache-2.0 licensed. ABRL independently implements its three-purpose learning, browsing, and contribution interface, its lemma-packet schema, governance documents, generator, HTML, CSS, JavaScript, and diagrams. No StatsMLlib template, stylesheet, prose, or source file is copied here.</p>
+  <div class="callout warning">This reference records organizational inspiration only. It does not imply that StatsMLlib, Lean-MoDS, its organizers, or its contributors participate in, endorse, review, or maintain ABRL.</div>
+</section>
+
 <section id="other-sources">
   <h2>Mathematical and software sources</h2>
-  <p>The repository's full literature, Mathlib, LML, automation, and proof-system attribution ledger is maintained in <a href="https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/main/docs/attribution.md"><code>docs/attribution.md</code></a> and <a href="https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/main/NOTICE.md"><code>NOTICE.md</code></a>.</p>
+  <p>The repository's full literature, Mathlib, LML, automation, and proof-system attribution ledger is maintained in <a href="{source_url('docs/attribution.md')}"><code>docs/attribution.md</code></a> and <a href="{source_url('NOTICE.md')}"><code>NOTICE.md</code></a>.</p>
   <p>Theorem cards summarize external results for retrieval. They do not transfer authorship and do not become local proof certificates until an import or local proof compiles.</p>
 </section>
 """
-    toc = [("attribution", "Attribution"), ("lean-ridgelet", "Lean-Ridgelet"), ("other-sources", "Other sources")]
+    toc = [("attribution", "Attribution"), ("lean-ridgelet", "Lean-Ridgelet"), ("statsmllib", "StatsMLlib"), ("other-sources", "Other sources")]
     write_page(
         output,
         page_path,
@@ -1443,6 +1855,85 @@ def build_search_index(output: Path, declarations: list[dict[str, Any]]) -> None
     )
 
 
+def git_source_state() -> tuple[str, bool]:
+    commit = os.environ.get("GITHUB_SHA", "")
+    if not commit:
+        completed = subprocess.run(
+            ["git", "rev-parse", "HEAD"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if completed.returncode == 0:
+            commit = completed.stdout.strip()
+    status = subprocess.run(
+        ["git", "status", "--porcelain", "--untracked-files=all"],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    return commit, status.returncode == 0 and bool(status.stdout.strip())
+
+
+def build_public_repository_readme(output: Path, manifest: dict[str, Any]) -> None:
+    commit = manifest.get("source_commit") or "unrecorded"
+    source_note = (
+        f"a Lean-verified working-tree snapshot based on private upstream commit `{commit}`; "
+        "the manifest records that local changes were present"
+        if manifest.get("source_dirty")
+        else f"private upstream commit `{commit}` after the Lean gate passed"
+    )
+    readme = f"""# ABRL Open Formalization Community
+
+This public repository hosts the community-facing, textbook-style website for
+**Auto-Bandit-RL-Proof-In-Sleep**.
+
+Website: <{PUBLIC_SITE_URL}/>
+
+## Three ways to use ABRL
+
+1. **Learn:** follow a Lean-aligned textbook path through bandit, probability,
+   optimization, stopping-time, and finite-horizon RL mathematics.
+2. **Browse:** search {manifest['declaration_count']:,} exact Lean definitions,
+   theorems, and lemmas across {manifest['module_count']:,} modules.
+3. **Contribute:** propose a sourced result through an issue or versioned lemma
+   packet; the future Research IDE uses the same machine-readable contract.
+
+## Current snapshot
+
+The generated site was built from {source_note}. Compiled, partial, planned,
+blocked, and community-proposal states remain distinct. The public repository
+contains static documentation and public contribution metadata, not the
+private upstream Lean source, proof memory, paper drafts, or run logs.
+
+Start with [CONTRIBUTING.md](CONTRIBUTING.md), the
+[community page]({PUBLIC_SITE_URL}/community/), or the
+[JSON Schema](community/contribution.schema.json). Public packets are validated
+before deployment; only the full upstream project gate can mark a result
+integrated.
+
+## Attribution
+
+The implementation-map organization is inspired by **Sho Sonoda's**
+[Lean-Ridgelet](https://github.com/shosonoda/lean-ridgelet) and its
+[Blueprint](https://shosonoda.github.io/lean-ridgelet/). The community landing
+page and book-to-library navigation also take organizational inspiration from
+[StatsMLlib](https://statsmllib.github.io/) by the
+[Lean Models, Decisions, and Statistics community](https://github.com/Lean-MoDS/StatsMLlib).
+Both references are attribution for inspiration only and do not imply
+participation, endorsement, or maintenance of ABRL. No template, stylesheet,
+or source file was copied from either project.
+
+## License
+
+The public website and intentional community contributions are distributed
+under the [MIT License](LICENSE).
+"""
+    (output / "README.md").write_text(readme, encoding="utf-8", newline="\n")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
@@ -1451,12 +1942,21 @@ def main() -> int:
         action="store_true",
         help="mark non-placeholder local declarations compiled; run only after the Lean gate succeeds",
     )
+    parser.add_argument(
+        "--public-base-url",
+        default="",
+        help="build a public snapshot whose private source links use the explicit source-access page",
+    )
     args = parser.parse_args()
+    global PUBLIC_BASE_URL, SITE_CHAPTERS
+    PUBLIC_BASE_URL = args.public_base_url.rstrip("/")
     output = args.output.resolve()
     if output == ROOT.resolve() or ROOT.resolve() not in output.parents:
         raise SystemExit(f"refusing to build outside the repository: {output}")
 
     chapters = load_json(CONTENT_DIR / "chapters.json")["chapters"]
+    contributors = load_json(CONTENT_DIR / "contributors.json")["contributors"]
+    SITE_CHAPTERS = chapters
     highlights = load_json(CONTENT_DIR / "highlights.json")["highlights"]
     results = load_json(CONTENT_DIR / "results.json")["results"]
     roadmap = load_json(ROOT / "research-wiki" / "theory-tree" / "lean-route-roadmap.json")
@@ -1475,9 +1975,27 @@ def main() -> int:
     output.mkdir(parents=True)
     shutil.copytree(STATIC_DIR, output / "static")
     shutil.copytree(DIAGRAM_DIR, output / "diagrams")
+    shutil.copytree(COMMUNITY_DIR, output / "community")
+    shutil.copytree(PUBLIC_REPO_DIR, output, dirs_exist_ok=True)
+    shutil.copy2(ROOT / "LICENSE", output / "LICENSE")
+    shutil.copy2(ROOT / "NOTICE.md", output / "NOTICE.md")
+    (output / "community" / "registry.json").write_text(
+        json.dumps({"schema_version": "1.0", "entry_count": 0, "entries": []}, indent=2) + "\n",
+        encoding="utf-8",
+        newline="\n",
+    )
     (output / ".nojekyll").write_text("", encoding="utf-8")
 
-    build_index(output, modules, declarations, chapters, results, args.lean_verified, generated_at)
+    build_index(
+        output,
+        modules,
+        declarations,
+        chapters,
+        contributors,
+        results,
+        args.lean_verified,
+        generated_at,
+    )
     build_implementation_map(
         output,
         modules,
@@ -1508,12 +2026,17 @@ def main() -> int:
         generated_at,
     )
     build_learning(output, chapters, args.lean_verified, generated_at)
+    build_contributors(output, contributors, args.lean_verified, generated_at)
+    build_installation(output, args.lean_verified, generated_at)
+    build_community(output, args.lean_verified, generated_at)
     build_research_ide(output, highlights, decl_by_name, args.lean_verified, generated_at)
     build_roadmap(output, results, roadmap, decl_by_name, args.lean_verified, generated_at)
     build_workflow(output, args.lean_verified, generated_at)
     build_attribution(output, args.lean_verified, generated_at)
+    build_source_access(output, args.lean_verified, generated_at)
     build_search_index(output, declarations)
 
+    source_commit, source_dirty = git_source_state()
     manifest = {
         "generated_at": generated_at,
         "lean_verified": args.lean_verified,
@@ -1524,17 +2047,23 @@ def main() -> int:
         "placeholder_count": sum(1 for decl in declarations if decl["placeholder"]),
         "kind_counts": dict(sorted(Counter(decl["kind"] for decl in declarations).items())),
         "chapter_counts": dict(sorted(Counter(decl["chapter"] for decl in declarations).items())),
+        "contributor_count": len(contributors),
         "highlight_count": len(highlights),
         "ide_mapping_count": len(highlights),
         "milestone_count": len(results),
         "milestone_status_counts": dict(sorted(Counter(result["status"] for result in results).items())),
-        "source_commit": os.environ.get("GITHUB_SHA", ""),
+        "community_entry_count": 0,
+        "public_snapshot": bool(PUBLIC_BASE_URL),
+        "public_base_url": PUBLIC_BASE_URL,
+        "source_commit": source_commit,
+        "source_dirty": source_dirty,
     }
     (output / "site-manifest.json").write_text(
         json.dumps(manifest, indent=2, ensure_ascii=False) + "\n",
         encoding="utf-8",
         newline="\n",
     )
+    build_public_repository_readme(output, manifest)
     print(json.dumps(manifest, indent=2))
     return 0
 

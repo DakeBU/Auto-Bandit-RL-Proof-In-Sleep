@@ -155,6 +155,32 @@
       "evidence": "BanditRLProof/Exp3ExpectedRegret.lean"
     },
     {
+      "id": "CONCENTRATION-COUNTABLE-SCHEDULED-QUADRATIC-TAIL",
+      "title": "Countable scheduled quadratic fixed-MGF tail",
+      "chapter": "probability",
+      "status": "compiled",
+      "informal": "A countable union of indexwise deviation-and-variance events is controlled by the sum of their confidence shares and hence by a caller-supplied total budget.",
+      "declarations": ["BanditRLProof.Concentration.measure_iUnion_scheduled_deviation_ge_inter_variance_le_delta_of_fixedTilt_quadratic_tail"],
+      "depends_on": ["BanditRLProof.Concentration.measure_deviation_ge_inter_variance_le_delta_of_fixedTilt_quadratic_tail"],
+      "missing": [],
+      "evidence": "BanditRLProof/ConcentrationQuadraticScheduled.lean; tasks/CONCENTRATION-QUADRATIC-COUNTABLE-SCHEDULED-TAIL.md"
+    },
+    {
+      "id": "EXP3-PREDICTABLE-VARIANCE-GEOMETRIC-ALL-TIME",
+      "title": "All-positive-prefix EXP3 predictable-variance tail",
+      "chapter": "exp3",
+      "status": "compiled",
+      "informal": "On one generated EXP3 trajectory law, geometric confidence shares control the joint selected-loss deviation and predictable-variance failures over every positive prefix by one outer budget.",
+      "declarations": ["BanditRLProof.Exp3.measure_sampledPredictableRealizedDeviationAllTimeFailureSet_le"],
+      "depends_on": [
+        "BanditRLProof.Concentration.measure_iUnion_scheduled_deviation_ge_inter_variance_le_delta_of_fixedTilt_quadratic_tail",
+        "BanditRLProof.Concentration.tsum_ofReal_geometricConfidenceShare",
+        "BanditRLProof.Exp3.sampledPredictableRealizedDeviation_sum_tail_predictableVariance_fixedTilt"
+      ],
+      "missing": [],
+      "evidence": "BanditRLProof/Exp3RealizedPredictableVarianceAllTime.lean; tasks/EXP3-REALIZED-PREDICTABLE-VARIANCE-GEOMETRIC-ALL-TIME-TAIL.md"
+    },
+    {
       "id": "EXP3-SPARSE-ALL-HORIZON",
       "title": "Sparse-loss all-horizon high-probability EXP3",
       "chapter": "exp3",

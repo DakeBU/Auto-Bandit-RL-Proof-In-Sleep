@@ -27,6 +27,14 @@ lean-stat-learning-theory source code.
   template, stylesheet, or configuration file is copied into this repository,
   and this reference does not imply participation, endorsement, or maintenance
   by Sho Sonoda.
+- StatsMLlib by the Lean Models, Decisions, and Statistics community,
+  https://github.com/Lean-MoDS/StatsMLlib, Apache-2.0 License, with its public
+  site at https://statsmllib.github.io/.  ABRL's learning/browsing/contribution
+  organization is conceptually inspired by StatsMLlib's book map, selected
+  theorem presentation, and visible contribution path.  No StatsMLlib source,
+  template, stylesheet, prose, or configuration file is copied, and this
+  reference does not imply participation, endorsement, review, or maintenance
+  by StatsMLlib, Lean-MoDS, its organizers, or its contributors.
 - Bubeck and Cesa-Bianchi, Regret Analysis of Stochastic and Nonstochastic
   Multi-armed Bandit Problems, https://arxiv.org/abs/1204.5721.
 - Lattimore and Szepesvári, Bandit Algorithms,

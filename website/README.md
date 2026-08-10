@@ -13,9 +13,22 @@ hand-maintained declaration list:
   `content/highlights.json`;
 - theorem-route milestones and honest incomplete/blocked states live in
   `content/results.json`;
+- a responsive side navigation exposes project pages, installation,
+  contribution guidance, every chapter in the ten-part Book Map, and the main
+  Lean library tools from every generated page;
+- contributor credit is maintained in `content/contributors.json` and rendered
+  on both the overview and a dedicated contributor page;
 - Mermaid sources in `diagrams/` remain editable alongside the prose.
 - the Research IDE page adds live MathJax rendering, reviewed LaTeX-to-Lean
-  mappings, dependency-tree navigation, and an optional local Lean compiler.
+  mappings, dependency-tree navigation, an optional local Lean compiler, and a
+  versioned community lemma-packet export;
+- the community page separates learning, lemma discovery, public proposal,
+  Lean checking, and upstream integration instead of collapsing them into one
+  completion badge;
+- `community/contribution.schema.json` is the stable handoff contract for the
+  browser prototype and a future authenticated LaTeX↔Lean compiler;
+- `public-repo/` contains the issue form, contribution guide, governance,
+  packet validator, and public Pages workflow copied into a public snapshot.
 
 The generator uses only the Python standard library.  The published site loads
 MathJax and Mermaid from jsDelivr in the browser.
@@ -38,7 +51,8 @@ status banner explicitly says that the Lean gate was not run.
 ## Research IDE execution model
 
 The browser always supports formula rendering, editing, source navigation,
-reviewed mappings, and the visual dependency tree.  `scripts/ide_server.py`
+reviewed mappings, the visual dependency tree, and lemma-packet export.
+`scripts/ide_server.py`
 adds `POST /api/compile` on loopback and invokes `lake env lean` on a temporary
 file.  It serializes compilations, imposes source-size and time limits, deletes
 the temporary directory after each request, and never writes into
@@ -49,6 +63,24 @@ does not yet provide cursor-level proof states, semantic synthesis for
 arbitrary LaTeX, collaborative persistence, or an elaborated environment
 graph.  The “safe draft scaffold” is visibly marked as a placeholder and does
 not claim that its `True` proposition translates the user's mathematics.
+Packet export is local and unauthenticated: it neither uploads code nor marks a
+draft integrated.  The public contribution guide supplies the review step.
+
+## Community contribution contract
+
+The public unit of contribution is one JSON lemma packet.  It records the
+mathematical source, plain-English and LaTeX statements, Lean imports and code,
+named dependencies, compiler evidence, contributor credit, and MIT license
+agreement.  The public validator rejects missing provenance or credit,
+unaccepted license terms, and `lean-checked`/`integrated` statuses without
+compiler evidence.  Only maintainers assign `integrated` after the result has
+entered the indexed ABRL tree and passed the full Lean and website gate.
+
+The public repository uses `scripts/build_community_registry.py` to validate
+`community/entries/*.json` and regenerate `community/registry.json` before
+Pages deployment.  Large formalizations should begin with the public lemma
+proposal issue so statement, assumptions, and module ownership are agreed
+before substantial proof work.
 
 For a static-only preview without any execution endpoint:
 
@@ -100,6 +132,14 @@ is restricted to loopback rather than designed as a multi-user sandbox.
 This separation keeps the exhaustive declaration catalog automatic while
 making mathematical explanations reviewable as ordinary data.
 
+For the independent public snapshot, replace private source-line links with the
+explicit access-boundary page during generation:
+
+```text
+python3 website/scripts/build_site.py --lean-verified --public-base-url https://jicheng9617.github.io/Auto-Bandit-RL-Proof-In-Sleep-site
+python3 website/scripts/check_site.py
+```
+
 ## Deployment
 
 `.github/workflows/documentation.yml` builds Lean and tests, generates the
@@ -108,8 +148,11 @@ site, checks internal links and mapping integrity, and uploads
 the IDE interface and reviewed mappings but no code-execution endpoint.
 Repository maintainers must select
 **GitHub Actions** as the Pages source once in the repository settings.  No
-public deployment URL is claimed here until that repository setting and the
-first workflow deployment have succeeded.
+untrusted Lean code is executed by either Pages workflow.  The primary project
+site is deployed at
+<https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/>.  The independently
+generated documentation-only mirror remains available at
+<https://jicheng9617.github.io/Auto-Bandit-RL-Proof-In-Sleep-site/>.
 
 ## Attribution
 
@@ -121,3 +164,11 @@ the implementation-map idea.  Lean-Ridgelet is Apache-2.0 licensed.  This site
 uses an independent generator and original templates, styles, diagrams, and
 text; no Lean-Ridgelet source file is copied.  The reference does not imply
 that Sho Sonoda participates in, endorses, or maintains ABRL.
+
+The learning/browsing/contribution organization also takes inspiration from
+[StatsMLlib](https://statsmllib.github.io/) and its
+[public repository](https://github.com/Lean-MoDS/StatsMLlib), which is
+Apache-2.0 licensed.  ABRL independently implements its generator, community
+contract, prose, HTML, CSS, JavaScript, diagrams, and governance.  No
+StatsMLlib source file or template is copied, and the reference does not imply
+participation, endorsement, review, or maintenance by StatsMLlib or Lean-MoDS.
