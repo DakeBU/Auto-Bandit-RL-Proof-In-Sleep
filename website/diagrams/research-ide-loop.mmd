@@ -1,20 +1,11 @@
 flowchart LR
-    Paper["Paper / LaTeX statement"] --> Review["Reviewed semantic mapping"]
-    Review --> Editor["Browser research workspace"]
-    Source["BanditRLProof/*.lean"] --> Index["Source-synchronized declaration index"]
-    Index --> Editor
-    Editor --> Preview["MathJax formula preview"]
-    Editor --> Tree["Declaration + module dependency tree"]
-    Editor -->|"loopback only"| Companion["website/scripts/ide_server.py"]
-    Companion --> Lake["lake env lean"]
-    Lake --> Diagnostics["Elaboration diagnostics"]
-    Diagnostics --> Editor
-    Editor -. "future: Lean LSP proof states" .-> LSP["Persistent language-server session"]
-    Editor -. "future: compile-gated synthesis" .-> Synthesis["LaTeX-to-Lean candidate generator"]
-
-    classDef verified fill:#dff4e8,stroke:#176b43,color:#163c2a
-    classDef browser fill:#dbeff0,stroke:#126a70,color:#143c40
-    classDef future fill:#e7ebf7,stroke:#4d5e8d,color:#303b64,stroke-dasharray: 5 5
-    class Source,Index,Companion,Lake,Diagnostics verified
-    class Paper,Review,Editor,Preview,Tree browser
-    class LSP,Synthesis future
+    Input["LaTeX or plain-English target"] --> Retrieve["Grounding retrieval<br/>BanditRLlib + Mathlib + LML"]
+    Retrieve --> Provider{"Server-side provider<br/>configured?"}
+    Provider -->|no| Draft["Draft scaffold<br/>explicitly not formalized"]
+    Provider -->|yes| Candidate["Lean statement candidate<br/>assumptions shown"]
+    Candidate --> Compile["Temporary Lean compile<br/>loopback service"]
+    Compile --> Result["Diagnostics + unresolved obligations<br/>separate semantic, Lean, proof, library status"]
+    Draft --> Result
+    Result --> Packet["Exported contribution packet<br/>no repository write"]
+    Packet --> Harness["ABRL intake and review"]
+    Harness -->|only after full gate| Library["BanditRLlib main"]

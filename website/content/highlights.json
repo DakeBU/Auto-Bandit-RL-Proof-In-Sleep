@@ -201,6 +201,52 @@
       ]
     },
     {
+      "full_name": "BanditRLProof.Exp3.measure_sampledRealizedDeviationGeometricAllTimeFailureSet_le",
+      "chapter": "exp3",
+      "plain": "For one generated EXP3 trajectory, the realized selected-loss deviation stays below a geometric-share radius at every positive prefix except on a set of outer probability at most delta.",
+      "math": "\\(\\mu\\!\\left(\\exists n\\ge0:\\ D_{n+1}\\ge r(n+1,\\delta/2^{n+1})\\right)\\le\\delta.\\)",
+      "intuition": "Each one-step conditional variance is at most one, so the predictable variance accumulated through prefix n+1 is deterministically at most n+1. This removes the variance-good conjunct from the preceding joint event.",
+      "why": "A realized-regret theorem needs a pure martingale-deviation event that can be combined with the separate predictable-regret event.",
+      "position": "It specializes the generic scheduled quadratic tail and the all-time joint deviation/variance result using the linear deterministic variance budget.",
+      "proof_idea": "Prove that the joint event with variance budget n+1 equals the pure deviation event, using the compiled pathwise sum-of-variances bound, then rewrite the existing outer-measure estimate.",
+      "lean_notes": "The process parameters remain fixed while the prefix index is countable. This is a scheduled union bound, not optional stopping or a general anytime martingale theorem.",
+      "dependencies": [
+        "BanditRLProof.Exp3.measure_sampledPredictableRealizedDeviationAllTimeFailureSet_le",
+        "BanditRLProof.Exp3.sampledPredictableRealizedVariance_sum_le_horizon"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.Exp3.measure_sampledPredictableRegretGeometricAllTimeFailureSet_le",
+      "chapter": "exp3",
+      "plain": "Against one supported comparator, the predictable EXP3 regret stays below its scheduled fixed-horizon budget at every positive prefix outside a set of outer probability at most delta.",
+      "math": "\\(\\mu\\!\\left(\\exists n\\ge0:\\ R^{\\mathrm{pred}}_{n+1}\\ge B_{n+1}(\\delta/2^{n+1})\\right)\\le\\delta.\\)",
+      "intuition": "Reuse the already compiled fixed-horizon high-probability theorem once for each prefix and pay for the countable union with a summable geometric confidence schedule.",
+      "why": "This is the predictable half of the final all-positive-prefix realized-regret result.",
+      "position": "It sits above the fixed-horizon EXP3 potential, exploration, comparator-estimator, and tail assembly, but below the realized-regret decomposition.",
+      "proof_idea": "Apply countable outer-measure subadditivity, instantiate the total-delta fixed-prefix theorem at n+1 with the nth confidence share, sum the resulting ENNReal bounds, and use the exact geometric-series identity.",
+      "lean_notes": "The theorem fixes eta, gamma, loss, and comparator across all prefixes. It does not claim a tuned horizon-free learning-rate schedule, Ville/Doob maximal inequality, or general Freedman theorem.",
+      "dependencies": [
+        "BanditRLProof.Exp3.sampledPredictable_highProbabilityRegret_tail_total_delta",
+        "BanditRLProof.Concentration.tsum_ofReal_geometricConfidenceShare"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.Exp3.measure_sampledRealizedRegretGeometricAllTimeFailureSet_le",
+      "chapter": "exp3",
+      "plain": "For one generated EXP3 process and one supported comparator, realized selected-loss regret stays below the sum of scheduled predictable-regret and realized-deviation budgets at every positive prefix, except on a set of outer probability at most delta.",
+      "math": "\\(\\mu\\!\\left(\\exists n\\ge0:\\ R^{\\mathrm{real}}_{n+1}\\ge B^{\\mathrm{pred}}_{n+1}(\\delta/2)+B^{\\mathrm{dev}}_{n+1}(\\delta/2)\\right)\\le\\delta.\\)",
+      "intuition": "Realized regret is predictable regret plus the difference between sampled loss and its predictable conditional mean. If their sum crosses the sum of two budgets, at least one component must cross its own budget.",
+      "why": "This closes the current all-positive-prefix EXP3 chain at a directly observable realized-loss regret event.",
+      "position": "It combines the new predictable-regret and realized-deviation all-time events after the exact finite-prefix algebraic decomposition.",
+      "proof_idea": "Show that the realized crossing set is contained in the union of the two half-budget crossing sets, apply measure monotonicity and the union bound, invoke both compiled all-time estimates, and simplify the two ENNReal half budgets to delta.",
+      "lean_notes": "The exact theorem is an outer-measure statement for fixed process parameters and a fixed comparator. It should not be described as optional stopping, a self-normalized mixture boundary, or a fully tuned horizon-free EXP3 theorem.",
+      "dependencies": [
+        "BanditRLProof.Exp3.sampledTrajectoryRealizedRegret_eq_predictableRegret_add_realizedDeviation",
+        "BanditRLProof.Exp3.measure_sampledPredictableRegretGeometricAllTimeFailureSet_le",
+        "BanditRLProof.Exp3.measure_sampledRealizedDeviationGeometricAllTimeFailureSet_le"
+      ]
+    },
+    {
       "full_name": "BanditRLProof.Exp3.sampledPredictable_allHorizonDoubleVarianceProbabilisticSparseLossBestArmRealizedRegret_tail_of_sparsityFailure_le",
       "chapter": "exp3",
       "plain": "Under predictable sparse losses, the probability that best-arm realized regret crosses the tuned all-horizon threshold is at most delta plus the supplied sparsity-failure probability.",

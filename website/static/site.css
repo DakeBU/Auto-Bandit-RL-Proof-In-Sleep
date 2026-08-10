@@ -695,6 +695,22 @@ h3 {
   font-size: 0.84rem;
 }
 
+.paper-title {
+  max-width: 74ch;
+  margin: 1rem 0 0;
+  padding: 0.85rem 1rem;
+  border-left: 4px solid var(--accent);
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+
+.two-system-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1rem 0 1.5rem;
+}
+
 .chapter-card,
 .info-card {
   padding: 1.1rem 1.2rem;
@@ -1670,6 +1686,50 @@ tbody tr:hover {
   font-style: italic;
 }
 
+.formalization-result-pane {
+  margin: 1rem 0;
+  border-top: 3px solid var(--accent);
+}
+
+.formalization-result-pane > header > span {
+  max-width: 54ch;
+  color: var(--muted);
+  font: 0.72rem/1.45 var(--mono);
+  text-align: right;
+}
+
+.formalization-result-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.formalization-result-grid > section {
+  min-width: 0;
+  padding: 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--bg);
+}
+
+.formalization-result-grid h4 {
+  margin-bottom: 0.45rem;
+  color: var(--accent-strong);
+}
+
+.formalization-result-grid pre,
+.formalization-result-grid ul,
+.formalization-result-grid p {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.formalization-result-grid pre {
+  max-height: 18rem;
+  overflow: auto;
+  white-space: pre-wrap;
+}
+
 @media (max-width: 1240px) {
   .contribution-steps {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1708,7 +1768,9 @@ tbody tr:hover {
   }
 
   .ide-grid,
-  .ide-output-grid {
+  .ide-output-grid,
+  .formalization-result-grid,
+  .two-system-grid {
     grid-template-columns: 1fr;
   }
 

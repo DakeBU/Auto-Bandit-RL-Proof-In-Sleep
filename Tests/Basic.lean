@@ -39565,6 +39565,314 @@ noncomputable example {Omega Idx : Type} [MeasurableSpace Omega]
       mu times htimes deviation predictableVariance varianceScale varianceBudget
         tiltCap delta hvarianceScale hvarianceBudget htiltCap hdelta hfixed
 
+noncomputable example {Omega : Type} [MeasurableSpace Omega]
+    (mu : Measure Omega)
+    (deviation predictableVariance : Nat -> Omega -> Real)
+    (varianceScale varianceBudget tiltCap deltaAt : Nat -> Real)
+    (delta : Real)
+    (hvarianceScale : forall n, 0 < varianceScale n)
+    (hvarianceBudget : forall n, 0 < varianceBudget n)
+    (htiltCap : forall n, 0 < tiltCap n)
+    (hdeltaAt : forall n, 0 < deltaAt n)
+    (hfixed : forall n tilt, 0 <= tilt -> tilt <= tiltCap n ->
+      mu {omega |
+          Concentration.quadraticFixedMGFScheduledRadius
+                varianceScale varianceBudget tiltCap deltaAt n <=
+              deviation n omega ∧
+            predictableVariance n omega <= varianceBudget n} <=
+        ENNReal.ofReal (Real.exp
+          (-tilt * Concentration.quadraticFixedMGFScheduledRadius
+              varianceScale varianceBudget tiltCap deltaAt n +
+            varianceScale n * (tilt ^ 2 * varianceBudget n))))
+    (hbudget : (∑' n, ENNReal.ofReal (deltaAt n)) <= ENNReal.ofReal delta) :
+    mu (⋃ n, {omega |
+        Concentration.quadraticFixedMGFScheduledRadius
+              varianceScale varianceBudget tiltCap deltaAt n <=
+            deviation n omega ∧
+          predictableVariance n omega <= varianceBudget n}) <=
+      ENNReal.ofReal delta := by
+  exact
+    Concentration.measure_iUnion_scheduled_deviation_ge_inter_variance_le_delta_of_fixedTilt_quadratic_tail
+      mu deviation predictableVariance varianceScale varianceBudget tiltCap
+        deltaAt delta hvarianceScale hvarianceBudget htiltCap hdeltaAt hfixed hbudget
+
+example (delta : Real) (hdelta : 0 <= delta) :
+    (∑' n, ENNReal.ofReal
+      (Concentration.geometricConfidenceShare delta n)) =
+      ENNReal.ofReal delta := by
+  exact Concentration.tsum_ofReal_geometricConfidenceShare hdelta
+
+noncomputable example
+    {Env Action : Type}
+    [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]
+    (arms : Finset Action) (eta gamma : Real)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (varianceBudget : Nat -> Real) (delta : Real)
+    (sample : Env × ((k : Nat) -> Action × Real)) :
+    sample ∈ Exp3.sampledPredictableRealizedDeviationAllTimeFailureSet
+        arms eta gamma loss varianceBudget delta ↔
+      ∃ n,
+        Exp3.sampledRealizedPredictableVarianceGeometricRadius
+              varianceBudget delta n <=
+            (Finset.range (n + 1)).sum (fun i =>
+              Exp3.sampledTrajectoryRealizedDeviationAt
+                arms eta gamma loss i sample) ∧
+          (Finset.range (n + 1)).sum (fun i =>
+            Exp3.sampledTrajectoryPredictableRealizedVarianceAt
+              arms eta gamma loss i sample) <= varianceBudget n := by
+  exact
+    Exp3.mem_sampledPredictableRealizedDeviationAllTimeFailureSet_iff
+      arms eta gamma loss varianceBudget delta sample
+
+noncomputable example
+    {Env Action : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (hgamma_pos : 0 < gamma)
+    (hgamma_le_one : gamma <= 1)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (varianceBudget : Nat -> Real)
+    (hvarianceBudget : forall n, 0 < varianceBudget n)
+    (delta : Real) (hdelta : 0 < delta) :
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma hgamma_pos.le hgamma_le_one loss.environment
+    mu (Exp3.sampledPredictableRealizedDeviationAllTimeFailureSet
+        arms eta gamma loss varianceBudget delta) <=
+      ENNReal.ofReal delta := by
+  exact
+    Exp3.measure_sampledPredictableRealizedDeviationAllTimeFailureSet_le
+      prior arms harms eta gamma hgamma_pos hgamma_le_one loss
+        varianceBudget hvarianceBudget delta hdelta
+
+noncomputable example
+    {History Action : Type} [DecidableEq Action]
+    (arms : Finset Action) (prob loss : History -> Action -> Real)
+    (history : History)
+    (hdist : Exp3.FiniteActionDistribution arms (prob history))
+    (hloss : ∀ action ∈ arms,
+      loss history action ∈ Set.Icc (0 : Real) 1) :
+    Exp3.selectedLossCenteredSecondMoment arms prob loss history <= 1 := by
+  exact Exp3.selectedLossCenteredSecondMoment_le_one
+    arms prob loss history hdist hloss
+
+noncomputable example
+    {Env Action : Type}
+    [MeasurableSpace Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [DecidableEq Action]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (hgamma_nonneg : 0 <= gamma)
+    (hgamma_le_one : gamma <= 1)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (t : Nat) (sample : Env × ((k : Nat) -> Action × Real)) :
+    Exp3.sampledTrajectoryPredictableRealizedVarianceAt
+        arms eta gamma loss t sample <= 1 := by
+  exact Exp3.sampledTrajectoryPredictableRealizedVarianceAt_le_one
+    arms harms eta gamma hgamma_nonneg hgamma_le_one loss t sample
+
+noncomputable example
+    {Env Action : Type}
+    [MeasurableSpace Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [DecidableEq Action]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (hgamma_nonneg : 0 <= gamma)
+    (hgamma_le_one : gamma <= 1)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (horizon : Nat) (sample : Env × ((k : Nat) -> Action × Real)) :
+    (Finset.range horizon).sum (fun i =>
+        Exp3.sampledTrajectoryPredictableRealizedVarianceAt
+          arms eta gamma loss i sample) <= (horizon : Real) := by
+  exact Exp3.sampledPredictableRealizedVariance_sum_le_horizon
+    arms harms eta gamma hgamma_nonneg hgamma_le_one loss horizon sample
+
+noncomputable example
+    {Env Action : Type}
+    [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]
+    (arms : Finset Action) (eta gamma : Real)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (delta : Real) (sample : Env × ((k : Nat) -> Action × Real)) :
+    sample ∈ Exp3.sampledRealizedDeviationGeometricAllTimeFailureSet
+        arms eta gamma loss delta ↔
+      ∃ n,
+        Exp3.sampledRealizedDeviationGeometricAllTimeRadius delta n <=
+          (Finset.range (n + 1)).sum (fun i =>
+            Exp3.sampledTrajectoryRealizedDeviationAt
+              arms eta gamma loss i sample) := by
+  exact Exp3.mem_sampledRealizedDeviationGeometricAllTimeFailureSet_iff
+    arms eta gamma loss delta sample
+
+noncomputable example
+    {Env Action : Type}
+    [MeasurableSpace Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [DecidableEq Action]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (hgamma_nonneg : 0 <= gamma)
+    (hgamma_le_one : gamma <= 1)
+    (loss : Exp3.PredictableLossVector Env Action) (delta : Real) :
+    Exp3.sampledPredictableRealizedDeviationAllTimeFailureSet
+        arms eta gamma loss
+          Exp3.sampledRealizedPredictableVarianceLinearBudget delta =
+      Exp3.sampledRealizedDeviationGeometricAllTimeFailureSet
+        arms eta gamma loss delta := by
+  exact
+    Exp3.sampledPredictableRealizedDeviationAllTimeFailureSet_linearBudget_eq
+      arms harms eta gamma hgamma_nonneg hgamma_le_one loss delta
+
+noncomputable example
+    {Env Action : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (hgamma_pos : 0 < gamma)
+    (hgamma_le_one : gamma <= 1)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (delta : Real) (hdelta : 0 < delta) :
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma hgamma_pos.le hgamma_le_one loss.environment
+    mu (Exp3.sampledRealizedDeviationGeometricAllTimeFailureSet
+        arms eta gamma loss delta) <= ENNReal.ofReal delta := by
+  exact Exp3.measure_sampledRealizedDeviationGeometricAllTimeFailureSet_le
+    prior arms harms eta gamma hgamma_pos hgamma_le_one loss delta hdelta
+
+noncomputable example
+    {Action : Type} (arms : Finset Action) (eta gamma delta : Real) (n : Nat) :
+    Exp3.sampledPredictableRegretGeometricAllTimeBudget
+        arms eta gamma delta n =
+      Exp3.sampledPredictableHighProbabilityRegretBudget
+        arms eta gamma (n + 1)
+          (Concentration.geometricConfidenceShare delta n / 2) := by
+  rfl
+
+noncomputable example
+    {Env Action : Type}
+    [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]
+    (arms : Finset Action) (eta gamma : Real)
+    (loss : Exp3.PredictableLossVector Env Action) (comparator : Action)
+    (delta : Real) (sample : Env × ((k : Nat) -> Action × Real)) :
+    sample ∈ Exp3.sampledPredictableRegretGeometricAllTimeFailureSet
+        arms eta gamma loss comparator delta ↔
+      ∃ n,
+        Exp3.sampledPredictableRegretGeometricAllTimeBudget
+              arms eta gamma delta n <=
+            (Finset.range (n + 1)).sum (fun t =>
+              Exp3.sampledTrajectoryExploredPredictableLossAt
+                arms eta gamma loss t sample) -
+          (Finset.range (n + 1)).sum (fun t =>
+            Exp3.predictableLossAt loss t sample comparator) := by
+  exact Exp3.mem_sampledPredictableRegretGeometricAllTimeFailureSet_iff
+    arms eta gamma loss comparator delta sample
+
+noncomputable example
+    {Env Action : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (heta : 0 < eta)
+    (hgamma_pos : 0 < gamma) (hgamma_lt_one : gamma < 1)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (delta : Real) (hdelta : 0 < delta) :
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment
+    mu (Exp3.sampledPredictableRegretGeometricAllTimeFailureSet
+        arms eta gamma loss comparator delta) <= ENNReal.ofReal delta := by
+  exact Exp3.measure_sampledPredictableRegretGeometricAllTimeFailureSet_le
+    prior arms harms eta gamma heta hgamma_pos hgamma_lt_one loss comparator
+      hcomparator delta hdelta
+
+noncomputable example
+    {Env Action : Type}
+    [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]
+    (arms : Finset Action) (eta gamma : Real)
+    (loss : Exp3.PredictableLossVector Env Action) (comparator : Action)
+    (horizon : Nat) (sample : Env × ((k : Nat) -> Action × Real)) :
+    (Finset.range horizon).sum (fun t =>
+        Exp3.sampledTrajectoryRealizedLossAt t sample) -
+      (Finset.range horizon).sum (fun t =>
+        Exp3.predictableLossAt loss t sample comparator) =
+      ((Finset.range horizon).sum (fun t =>
+          Exp3.sampledTrajectoryExploredPredictableLossAt
+            arms eta gamma loss t sample) -
+        (Finset.range horizon).sum (fun t =>
+          Exp3.predictableLossAt loss t sample comparator)) +
+      (Finset.range horizon).sum (fun t =>
+        Exp3.sampledTrajectoryRealizedDeviationAt
+          arms eta gamma loss t sample) := by
+  exact
+    Exp3.sampledTrajectoryRealizedRegret_eq_predictableRegret_add_realizedDeviation
+      arms eta gamma loss comparator horizon sample
+
+noncomputable example
+    {Action : Type} (arms : Finset Action) (eta gamma delta : Real) (n : Nat) :
+    Exp3.sampledRealizedRegretGeometricAllTimeBudget
+        arms eta gamma delta n =
+      Exp3.sampledPredictableRegretGeometricAllTimeBudget
+          arms eta gamma (delta / 2) n +
+        Exp3.sampledRealizedDeviationGeometricAllTimeRadius (delta / 2) n := by
+  rfl
+
+noncomputable example
+    {Env Action : Type}
+    [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]
+    (arms : Finset Action) (eta gamma : Real)
+    (loss : Exp3.PredictableLossVector Env Action) (comparator : Action)
+    (delta : Real) (sample : Env × ((k : Nat) -> Action × Real)) :
+    sample ∈ Exp3.sampledRealizedRegretGeometricAllTimeFailureSet
+        arms eta gamma loss comparator delta ↔
+      ∃ n,
+        Exp3.sampledRealizedRegretGeometricAllTimeBudget
+              arms eta gamma delta n <=
+            (Finset.range (n + 1)).sum (fun t =>
+                Exp3.sampledTrajectoryRealizedLossAt t sample) -
+              (Finset.range (n + 1)).sum (fun t =>
+                Exp3.predictableLossAt loss t sample comparator) := by
+  exact Exp3.mem_sampledRealizedRegretGeometricAllTimeFailureSet_iff
+    arms eta gamma loss comparator delta sample
+
+noncomputable example
+    {Env Action : Type}
+    [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]
+    (arms : Finset Action) (eta gamma : Real)
+    (loss : Exp3.PredictableLossVector Env Action) (comparator : Action)
+    (delta : Real) :
+    Exp3.sampledRealizedRegretGeometricAllTimeFailureSet
+        arms eta gamma loss comparator delta ⊆
+      Exp3.sampledPredictableRegretGeometricAllTimeFailureSet
+          arms eta gamma loss comparator (delta / 2) ∪
+        Exp3.sampledRealizedDeviationGeometricAllTimeFailureSet
+          arms eta gamma loss (delta / 2) := by
+  exact Exp3.sampledRealizedRegretGeometricAllTimeFailureSet_subset
+    arms eta gamma loss comparator delta
+
+noncomputable example
+    {Env Action : Type}
+    [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+    (prior : Measure Env) [IsProbabilityMeasure prior]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (heta : 0 < eta)
+    (hgamma_pos : 0 < gamma) (hgamma_lt_one : gamma < 1)
+    (loss : Exp3.PredictableLossVector Env Action)
+    (comparator : Action) (hcomparator : comparator ∈ arms)
+    (delta : Real) (hdelta : 0 < delta) :
+    let mu := prior ⊗ₘ Exp3.sampledImportanceWeightedTrajectoryKernel arms harms
+      eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment
+    mu (Exp3.sampledRealizedRegretGeometricAllTimeFailureSet
+        arms eta gamma loss comparator delta) <= ENNReal.ofReal delta := by
+  exact Exp3.measure_sampledRealizedRegretGeometricAllTimeFailureSet_le
+    prior arms harms eta gamma heta hgamma_pos hgamma_lt_one loss comparator
+      hcomparator delta hdelta
+
 noncomputable example
     {Env Action : Type}
     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]

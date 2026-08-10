@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_delayedEvent_expectedContribution_tendsto_zero",
+  "file": "BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterDelayedEventExpectedContribution.lean",
+  "statement": "theorem selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_delayedEvent_expectedContribution_tendsto_zero (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] [StandardBorelSpace State] [StandardBorelSpace Action] (rewardSource : mdp.MeanCompatibleRewardKernel) (varianceProxy : NNReal) (hvarianceProxy : 0 < varianceProxy) (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (support : ExploratoryPathSupport mdp initialState) (baseVisitFloor : Real) (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor) (hrewardBound : forall state action, |mdp.reward state action| <= 1) (hhorizon : 4 < mdp.horizon) (hbaseVisitFloor : 0 < baseVisitFloor) : let source := selfConsistentScheduledCausalSource mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor let stoppingPrefix := selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingPrefix mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor let stoppedProcess := selfConsistentScheduledNaturalCausalStoppingTimeAverageRealizedBehaviorRegretProcess mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor stoppingPrefix let delayedSet := selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedDoubleLinearRawWindowFirstPassageDelayedSet mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor (forall scheduleIndex, MeasurableSet (delayedSet scheduleIndex)) /\\ Tendsto (fun scheduleIndex => source.trajectoryMeasure (delayedSet scheduleIndex)) atTop (nhds 0) /\\ Tendsto (fun scheduleIndex => integral (source.trajectoryMeasure.restrict (delayedSet scheduleIndex)) (fun trajectory => |stoppedProcess scheduleIndex trajectory|)) atTop (nhds 0) /\\ Tendsto (fun scheduleIndex => |integral (source.trajectoryMeasure.restrict (delayedSet scheduleIndex)) (stoppedProcess scheduleIndex)|) atTop (nhds 0)",
+  "statement_hash": "304b5afcff7247229518a3b9d160d78c3d85ce1c15f1cd31e4970283b50499c0",
+  "source_assumptions": [
+    "4 < mdp.horizon",
+    "IsProbabilityMeasure initialState",
+    "UniformSubgaussianRewardLaw",
+    "ExploratoryPathUniformVisitFloor",
+    "UnboundedHittingAfterStoppingPrefix",
+    "CappedDoubleLinearRawWindowFirstPassageDelayedSet"
+  ],
+  "created_at": "2026-08-06T22:15:57+00:00"
+}

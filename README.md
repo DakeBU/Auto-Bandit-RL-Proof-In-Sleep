@@ -1,472 +1,191 @@
-<div align="center">
+# Auto-Bandit-RL-Proof-In-Sleep
 
-# Auto-Lean-in-Sleep: Bandit and RL Proofs
+## A Hierarchical Automated Theorem Proving System for Bandit and Reinforcement Learning Theory
 
-<h3 align="center">
-A hierarchical multi-agent harness for building Lean-checked bandit and reinforcement-learning proof libraries.
-</h3>
+**Paper:** *ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory*
 
-[![Lean][Lean-image]][Lean-url]
-[![License][License-image]][License-url]
+**Authors:** Dake Bu · Ji Cheng · Bo Xue · Atsushi Nitanda · Hau-San Wong · Qingfu Zhang
 
-[Lean-image]: https://img.shields.io/badge/Lean-4.29.1-blue?style=flat-square
-[License-image]: https://img.shields.io/badge/License-MIT-orange?style=flat-square
-[Lean-url]: https://lean-lang.org/
-[License-url]: LICENSE
+[BanditRLlib website](https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/) ·
+[Live Formalization](https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/ide/) ·
+[Lean declarations](https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/declarations/) ·
+[How to contribute](CONTRIBUTING.md)
 
-</div>
+This repository has two connected contributions:
+
+1. **ABRL**, a target-faithful hierarchical harness that organizes a mathematical target, retrieval evidence, proof obligations, Lean construction, compiler diagnostics, reviewer feedback, and deterministic acceptance gates.
+2. **BanditRLlib**, the reusable Lean 4 library and literate website produced by accepted ABRL work for bandit and reinforcement-learning theory.
+
+`BanditRLProof` remains the mature internal Lean namespace. **BanditRLlib** is the public library and website name; renaming the namespace would unnecessarily break existing code.
 
 ## News
 
-* **August 10, 2026.** Upgraded the formalization website into the
-  [ABRL Open Formalization Community](https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/)
-  with three explicit entry points: a Lean-aligned teaching path for students,
-  an exhaustive declaration catalog for library users, and a public lemma
-  contribution route for domain experts.  The Research IDE now exports a
-  versioned lemma packet carrying the natural-language statement, LaTeX, Lean
-  draft, imports, dependencies, provenance, credit, and honest compiler status.
-  Public issue forms, packet validation, governance, and automated Pages
-  deployment prepare the same contract for a future authenticated
-  LaTeX↔Lean compiler.  A persistent side navigation now exposes project
-  pages, contributors, installation, contribution guidance, the complete
-  ten-chapter Book Map, and library tools from every generated page.  The
-  community organization also acknowledges
-  inspiration from [StatsMLlib](https://statsmllib.github.io/) without copying
-  its source or implying participation or endorsement.
-* **August 6, 2026.** Expanded the Blueprint-style site into a first
-  researcher-facing IDE prototype.  The new workspace places editable LaTeX,
-  reviewed LaTeX-to-Lean mappings, exact Lean declarations, compiler
-  diagnostics, and a dependency tree in one page.  A loopback-only companion
-  server can invoke the repository's pinned Lean toolchain on temporary
-  snippets; GitHub Pages and temporary reviewer links remain static and never
-  claim browser-side proof execution.  The site inventory was also refreshed
-  for the current tree: 521 scanned Lean modules, 6,806 indexed declarations,
-  27 teaching mappings, and 28 route milestones at this snapshot, including
-  the substantially expanded OFUL, generated Tsallis oracle-restart, and
-  finite-horizon RL/causal stopping-time developments.
-* **July 27, 2026.** Added a Blueprint-style literate formalization website
-  that inventories the current Lean library, connects mathematical statements
-  and proof explanations to local declarations, and records compiled,
-  partial, planned, and blocked theorem routes without treating theorem cards
-  as local proofs.  The site also includes dependency, progress, learning-path,
-  and ABRL workflow diagrams.  See
-  [`website/README.md`](website/README.md) for local build and GitHub Pages
-  deployment instructions.  Its organization is inspired by
-  [Sho Sonoda's Lean-Ridgelet project](https://github.com/shosonoda/lean-ridgelet)
-  and its
-  [Blueprint website](https://shosonoda.github.io/lean-ridgelet/); this
-  attribution denotes design inspiration, not participation or endorsement.
-* **July 3, 2026.** Added the structured Lean route roadmap, route-specific
-  PNG diagrams, and collaborator ABRIS screen-run command surface.  Start with
-  `python3 tools/bandit.py list-routes`,
-  `python3 tools/bandit.py route-plan ROUTE-UCB1-FINITE-STOCHASTIC`, and
-  `python3 tools/bandit.py screen-plan BRL-UCB-PORT-001 --route ROUTE-UCB1-FINITE-STOCHASTIC`.
-* **June 25, 2026.** Initial ABRL harness skeleton is live: a Lean package,
-  default hierarchical multi-agent workflow, LML theorem-card memory, proof
-  obligations, agent skills, and Markdown/LaTeX proof-export protocol.
+- **2026-08 — BanditRLlib public community site.** The Blueprint-style site now presents the complete indexed Lean formalization, ten teaching chapters, plain-English theorem explanations, an implementation map, proof dependencies, progress, and contribution routes.
+- **2026-08 — Live Formalization preview.** A provider-independent, retrieval-grounded local adapter can turn LaTeX or natural language into an explicitly unverified Lean candidate, compile it in a temporary file, and export a review packet. Semantic fidelity, compilation, proof completion, and library integration remain separate statuses.
+- **2026-08 — Canonical publication line.** This repository's `main` branch and GitHub Pages workflow are the single maintained public source.
 
----
+## ABRL and BanditRLlib
 
-ABRL is a Lean 4 project and multi-agent harness for turning bandit and
-reinforcement-learning literature into a maintainable proof library.  Its
-first target is classical stochastic bandit theory: finite arms, pull counts,
-gap decompositions, Explore-Then-Commit, UCB, Thompson sampling, Bayesian
-regret, and the concentration lemmas needed to support those results.
+```mermaid
+flowchart LR
+    T["Mathematical target"] --> U["ABRL upper layer<br/>plan + statement fence"]
+    U --> M["middle layer<br/>route + obligations"]
+    M --> L["lower layer<br/>Lean construction"]
+    L --> C["Lean 4 compiler"]
+    C --> R["reviewer + full gate"]
+    R -. "diagnostics" .-> M
+    R -->|accepted| B["BanditRLlib"]
+```
 
-The project is built around one contract:
+The upper layer protects the intended theorem. The middle layer chooses reusable routes and explicit proof leaves. The lower layer changes Lean code. The reviewer compares the compiled declaration with the fenced target and recorded evidence. A result enters BanditRLlib only after the full gate passes.
+
+```mermaid
+flowchart LR
+    B["BanditRLlib Lean declarations"] --> D["Generated declaration catalogue"]
+    B --> K["Ten-chapter Book Map"]
+    B --> I["Implementation map"]
+    B --> F["Live Formalization retrieval"]
+    F --> P["Candidate contribution packet"]
+    P --> A["ABRL review pipeline"]
+    A -->|accepted| B
+```
+
+The website is therefore not only API documentation. It serves three audiences:
+
+- students learning bandit/RL mathematics beside verified Lean;
+- researchers locating exact declarations, assumptions, files, and dependencies;
+- contributors proposing new lemmas through a reviewable, machine-readable route.
+
+## BanditRLlib website
+
+The public site provides:
+
+- an accessible project overview and recommended reading path;
+- a sidebar Book Map with ten mathematical chapters;
+- an exhaustive generated declaration catalogue;
+- natural-language statements, notation, intuition, proof sketches, and Lean correspondence for selected major interfaces;
+- an implementation map distinguishing compiled, partial, stated, planned, and blocked work;
+- architecture, dependency, learning-path, progress, installation, formalization, and contribution diagrams;
+- installation, contributor, governance, attribution, roadmap, and source-access pages.
+
+Build and inspect it locally:
 
 ```text
-literature theorem or new bandit/RL proof target
--> theorem card and assumption ledger
--> Lean statement and proof-DAG leaves
--> compiled Lean certificate
--> synchronized Markdown and LaTeX explanation
--> reusable memory for the next theorem
+python website/scripts/build_site.py --lean-verified
+python website/scripts/check_site.py
+python -m http.server 8000 --directory website/_site
 ```
 
-Natural-language sketches, theorem cards, simulator checks, and external
-answers can guide the search.  They do not become achieved results until the
-relevant Lean declarations compile.
+Then open `http://localhost:8000/`.
 
-![ABRL contract pipeline](docs/assets/abrl_contract_pipeline.svg)
+## Live Formalization
 
-## Documentation Website
-
-Build and verify the Blueprint-style site from the repository root:
+The static page previews LaTeX, navigates reviewed mappings, draws dependency trees, and exports draft packets. Local compilation and candidate generation use a loopback-only companion:
 
 ```text
-python3 tools/bandit.py check
-python3 website/scripts/build_site.py --lean-verified
-python3 website/scripts/check_site.py
-python3 website/scripts/ide_server.py
+python website/scripts/ide_server.py --port 8000
 ```
 
-The generated site is available locally at `http://localhost:8000/`; the IDE
-workspace is at `http://localhost:8000/ide/`.  `ide_server.py` is intentionally
-loopback-only and sends editable snippets to `lake env lean` in a temporary
-directory without changing project sources.  For a static-only preview, use
-`python3 -m http.server 8000 --directory website/_site` instead.
-[`documentation.yml`](.github/workflows/documentation.yml) repeats the same
-gates and deploys the generated artifact with GitHub Pages. Before the first
-public deployment, select **GitHub Actions** as the Pages source in repository
-settings. Detailed maintenance and status-mapping instructions are in
-[`website/README.md`](website/README.md).
+Optional model-provider configuration stays on the server:
 
-The project website is published at
-<https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/>.  An independently
-generated static mirror can also be published from the allowlisted website
-artifact when a documentation-only snapshot is needed.  Public lemma packets
-and core-library integration remain separate statuses until the full Lean gate
-and maintainer review pass.
-
-## Harness Profile
-
-ABRL intentionally starts with the first ABEIS-style harness profile: one
-Hierarchical Harness.  The
-[Blueprint-style literate formalization website](website/README.md) presents
-the same Lean library, theorem-route status, and proof memory in a
-student-facing form.
-
-![ABRL hierarchical harness](docs/assets/hierarchical_harness.svg)
-
-| Layer | Responsibility | Main artifacts |
-| --- | --- | --- |
-| Upper | Choose the theorem frontier, route literature results, decide what is blocked. | `tasks/`, `proof-blueprints/`, `runs/*/10_upper_director.md` |
-| Middle | Keep Lean, prose, assumptions, theorem cards, and memory synchronized. | `conversion-windows/`, `proof-obligations/`, `research-wiki/` |
-| Lower | Prove one proof-DAG leaf, formalize one definition, or write one precise blocker. | `BanditRLProof/`, `proof-attempts/`, `verifier-feedback/` |
-| Reviewer | Reject target drift, hidden assumptions, stale leaves, and uncompiled claims. | `reviews/`, `runs/*/40_reviewer.md`, `tools/bandit.py check` |
-
-The lower layer has three recurring specializations: natural-language proof
-architect, Lean worker, and retrieval/search worker.  All three operate on the
-same task packet and proof-obligation ledger.
-
-## Core Workflow
-
-The core loop is intentionally conservative: retrieve existing theorem cards,
-write a narrow proof-DAG leaf, run Lean, then compress the result into memory.
-The harness should improve by accumulating reusable proof blocks, not by
-letting agents silently change theorem targets.
-
-ABRL follows a Mathlib-ready leaf policy.  Every proof-DAG leaf should be
-decomposed into small lemmas that fit within one agent context window and are
-stated at the most reusable level possible.  If a leaf lemma is general
-mathematics rather than ABRL-specific glue, its intended destination is
-[Mathlib][mathlib-initiative].  The task packet must specify local APIs,
-imports, hypotheses, and the intended proof route before lower agents start
-tactic work.  Persistent failure is treated as mathematical signal: recheck
-the statement, hidden assumptions, and counterexamples before spending more
-tokens.  Hidden regularity conditions such as integrability, continuity,
-measurability, nonemptiness, boundedness, and finiteness become reusable
-contracts instead of ad hoc proof clutter.
-
-The current completion status is intentionally transparent.  ABRL now has a
-large compiled local library: deterministic finite-bandit bookkeeping;
-measure, kernel, conditional-MGF, martingale, and stopping-time infrastructure;
-model-facing ETC, UCB, Thompson, EXP3, and Tsallis results; an OFUL route with
-self-normalized confidence, all-time events, expected-average consistency,
-and random-horizon consumers; and a finite-horizon RL tree covering Bellman
-optimality, occupancy regret, empirical confidence, adaptive stochastic
-behavior regret, causal laws, consistency, and fixed-index uncapped
-`hittingAfter` expected bounds.  This is still not complete textbook coverage:
-exact upstream ports, complete Tsallis-INF, complete minimax UCB-VI, KL-UCB,
-BwK, optional stopping, and several modern scenarios remain named gaps.  See
-[`docs/completion_gap_audit.md`](docs/completion_gap_audit.md) for the current
-audit and
-[`research-wiki/theory-tree/mathlib-foundation-leaf-map.md`](research-wiki/theory-tree/mathlib-foundation-leaf-map.md)
-for the fine-grained leaf map from Mathlib foundations to bandit/RL theorems.
-At the current ETC post-oracle probability review boundary, print the Extended
-Pro prompt with `python3 tools/bandit.py extended-pro-prompt` and check whether
-a reviewer response has been recorded with
-`python3 tools/bandit.py review-status --require-response`.
-Use `python3 tools/bandit.py extended-pro-response-template` to print the
-response artifact template before pasting a manual Extended Pro result.
-If the raw answer is saved to a file, record it with
-`python3 tools/bandit.py extended-pro-record-response --raw PATH --output PATH`.
-Use `python3 tools/bandit.py extended-pro-handoff` to print the full manual
-submission packet.
-For automation, `python3 tools/bandit.py review-status --json` reports the
-same gate state in machine-readable form; template or incomplete response files
-do not satisfy `--require-response`.
-Use `--require-review-response` on `run-cycle` or `sleep-run` when an automatic
-run must stop before this reviewer boundary is cleared.
-
-For adaptive proof construction, ABRL separates proof weapons from proof
-dependencies.  Upper agents may use proof weapons such as UCB optimism,
-Tsallis-INF/FTRL, posterior sampling, or tail inequalities to generate route
-ideas; middle must then decompose the idea into source cards, Mathlib/LML/local
-declarations, regularity contracts, and one-leaf lower packets.  Lower agents
-may use only compiled local declarations or imported/ported theorem cards as
-proof material.  See
-[`docs/adaptive_harness_design.md`](docs/adaptive_harness_design.md).
-
-## Lean Lemma Leaf Network
-
-ABRL keeps the current proof standard visible as diagrams, not only as prose.
-The leaf-node rule is that every lower-agent target is either a small
-Mathlib-ready lemma, a thin project-local wrapper, or a theorem-card/cited
-result whose import or port plan is explicit.
-
-The full Lean route atlas is split into PNG diagrams so no single figure has
-to carry the entire proof tree.  The machine-readable source is
-`research-wiki/theory-tree/lean-route-roadmap.json`.
-
-![ABRL Lean tree global route map](docs/assets/lean_tree_global.png)
-
-![ETC formalization route](docs/assets/lean_tree_etc.png)
-
-![UCB formalization route](docs/assets/lean_tree_ucb.png)
-
-![Tsallis-INF and FTRL route](docs/assets/lean_tree_tsallis_ftrl.png)
-
-![Contextual and RL watchlist route map](docs/assets/lean_tree_contextual_rl_watchlist.png)
-
-See [`docs/full_lean_tree_roadmap.md`](docs/full_lean_tree_roadmap.md) for the
-complete route explanation and
-[`docs/collaborator_abris_runbook.md`](docs/collaborator_abris_runbook.md) for
-the screen/Codex run procedure.
-
-![ABRL Mathlib-ready lemma leaf framework](docs/assets/lemma_leaf_framework.svg)
-
-The dependency graph separates reusable mathematical infrastructure from
-bandit-specific wrappers and final regret theorems.  A lower agent should work
-on one box-sized leaf and preserve the stated route unless middle or reviewer
-records a mathematical reason to pivot.
-
-![ABRL lemma dependency graph](docs/assets/lemma_dependency_graph.svg)
-
-The public Lean module layout mirrors the same contract: core finite
-bookkeeping stays dependency-light, a thin Mathlib wrapper layer handles
-explicit interop leaves, and probability, concentration, posterior, RL, and
-asymptotic layers are staged as future proof-obligation surfaces.
-
-![ABRL Lean module layout](docs/assets/lean_module_layout.svg)
-
-See [`docs/lemma_leaf_network.md`](docs/lemma_leaf_network.md) and
-[`docs/mathlib_upstream_policy.md`](docs/mathlib_upstream_policy.md) for the
-operational checklist.
-
-ABRL also maintains a wider bandit/RL theory tree.  It connects classic
-textbook roots, paper source cards, Mathlib retrieval cards, LML theorem
-cards, current scenario cards, and final proof-export targets.
-
-![ABRL bandit theory tree](docs/assets/bandit_theory_tree.svg)
-
-The compact search path is:
-
-```bash
-python3 tools/bandit.py reference-index
-python3 tools/bandit.py search-memory UCB
-python3 tools/bandit.py search-memory integrable
-python3 tools/bandit.py search-memory contextual
-python3 tools/bandit.py search-memory KL-UCB
-python3 tools/bandit.py search-memory Tsallis
-python3 tools/bandit.py list-weapons
-python3 tools/bandit.py list-lean-decls pseudoRegret
-python3 tools/bandit.py list-lean-decls between --statement
+```text
+ABRL_FORMALIZER_PROVIDER=json-http
+ABRL_FORMALIZER_ENDPOINT=https://your-provider.example/v1/formalize
+ABRL_FORMALIZER_API_KEY=your-server-side-secret
 ```
 
-See [`docs/mathlib_search_protocol.md`](docs/mathlib_search_protocol.md),
-[`research-wiki/mathlib/theorem-cards.md`](research-wiki/mathlib/theorem-cards.md),
-[`research-wiki/textbooks/bandit-classics.md`](research-wiki/textbooks/bandit-classics.md),
-[`research-wiki/scenarios/bandit-scenario-atlas.md`](research-wiki/scenarios/bandit-scenario-atlas.md),
-[`research-wiki/theory-tree/bandit-theory-tree.md`](research-wiki/theory-tree/bandit-theory-tree.md),
-and
-[`research-wiki/theory-tree/mathlib-foundation-leaf-map.md`](research-wiki/theory-tree/mathlib-foundation-leaf-map.md).
+The browser never receives the API key. The adapter retrieves current BanditRLlib declarations plus Mathlib and LML theorem cards before requesting a candidate. Without a configured provider it reports formalization as unavailable; it does not fabricate a translation.
 
-## Quick Start
+A candidate can have four independent statuses:
 
-```bash
+- translation: candidate or semantically reviewed;
+- Lean: not checked, compiles, or rejected;
+- proof: unproved or compiled;
+- library: proposed or integrated.
+
+Compilation alone never means that LaTeX and Lean have the same mathematical meaning.
+
+## Quick start
+
+Prerequisites: Git, Python 3, and [Elan](https://lean-lang.org/install/). The repository pins the Lean toolchain and Mathlib revision.
+
+```text
+git clone https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep.git
 cd Auto-Bandit-RL-Proof-In-Sleep
-
-python3 tools/bandit.py check
-python3 tools/bandit.py unfinished
-python3 tools/bandit.py list-literature
-python3 tools/bandit.py list-mathlib
-python3 tools/bandit.py list-papers
-python3 tools/bandit.py list-scenarios
-python3 tools/bandit.py list-weapons
-python3 tools/bandit.py list-lean-decls pullCount
-python3 tools/bandit.py next-task
-python3 tools/bandit.py reference-index
-python3 tools/bandit.py list-routes
-python3 tools/bandit.py route-plan ROUTE-UCB1-FINITE-STOCHASTIC --with-commands
-python3 tools/bandit.py screen-plan BRL-UCB-PORT-001 --route ROUTE-UCB1-FINITE-STOCHASTIC
+lake update
+python tools/bandit.py check
 ```
 
-Create a task:
+The mandatory check builds the library, builds `Tests`, scans for forbidden placeholders, refreshes generated indexes, and validates the synchronized proof artifacts.
 
-```bash
-python3 tools/bandit.py new-task BRL-UCB-PORT-001 \
-  --kind literaturePort \
-  --title "Port the UCB regret proof route" \
-  --target-lean BanditRLProof/Algorithms/UCB.lean
+Useful read-only commands:
 
-python3 tools/bandit.py blueprint-refresh BRL-UCB-PORT-001
-python3 tools/bandit.py run-cycle BRL-UCB-PORT-001 --lower-count 3
+```text
+python tools/bandit.py status
+python tools/bandit.py list-lean-decls
+python tools/bandit.py list-lean-decls Exp3 --statement
+python tools/bandit.py route-plan BRL-UCB-PORT-001
 ```
 
-The mandatory acceptance gate is:
+Core paths:
 
-```bash
-lake build && lake build Tests
+- `BanditRLProof/` — Lean modules;
+- `Tests/` — import and theorem smoke tests;
+- `tasks/` and `proof-obligations/` — target and leaf contracts;
+- `proof-blueprints/` — proof-graph snapshots;
+- `research-wiki/` — source-aware theorem cards and retrieval indexes;
+- `runs/` — attempt, lifecycle, and acceptance evidence;
+- `website/` — literate static site, local compiler service, and integrity checker;
+- `tools/bandit.py` — deterministic harness CLI.
+
+## Contributing
+
+Start with [CONTRIBUTING.md](CONTRIBUTING.md) and open a lemma proposal before a large proof. A useful proposal includes the source, exact assumptions, mathematical statement, intended namespace/module, likely dependencies, and known missing steps.
+
+```mermaid
+flowchart LR
+    P["Sourced lemma proposal"] --> J["Schema 1.1 packet"]
+    J --> H["ABRL route + Lean work"]
+    H --> G["Compiler, reviewer, full gate"]
+    G -->|accepted| B["BanditRLlib main"]
+    G -->|changes requested| P
 ```
 
-`python3 tools/bandit.py check` runs that gate and scans local Lean files for
-placeholders such as `sorry`, `admit`, `axiom`, and `postulate`.
+Contribution credit records the specific accepted work. It does not automatically imply authorship of the ABRL paper. See [GOVERNANCE.md](GOVERNANCE.md) and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 
-For unfinished proof work, start from:
+## Related work and design lineage
 
-```bash
-python3 tools/bandit.py unfinished
-```
+| Project | Relevant idea | Relationship here |
+|---|---|---|
+| [Mathlib][mathlib] | Broad, reviewed Lean mathematics | Primary external proof foundation |
+| [LeanMachineLearning/LML][lml] | Machine-learning theorem cards and formalization | Retrieval source; cards are not treated as local compiled declarations |
+| [lean-stat-learning-theory][lean-stat] | Formalized statistical learning theory | Adjacent formalization reference |
+| [LeanMarathon][leanmarathon] | Proof blueprints and deterministic proof gates | Inspiration for inspectable proof-leaf workflows |
+| [ABEIS][abeis] | Hierarchical proof harness | Inspiration for ABRL upper/middle/lower/reviewer organization |
+| [ARIS][aris] | Plain-file autonomous research workflow | Inspiration for inspectable tasks, reviews, and run logs |
+| [StatsMLlib][statsmllib] | Open statistical ML library and teaching navigation | Inspiration for the community-facing sidebar and Book Map |
 
-Then follow
-[`docs/collaborator_unfinished_work_guide.md`](docs/collaborator_unfinished_work_guide.md).
-
-## Daily GitHub Push
-
-Use [`docs/daily_push.md`](docs/daily_push.md) for the day-to-day command
-sequence to push to `DakeBU/Auto-Bandit-RL-Proof-In-Sleep` while typing a
-fine-grained `github_pat` interactively in the console.
-
-## Lean Library Shape
-
-The current Lean package pins Mathlib through Lake, while the core definitions
-and dependency-light leaves remain separated from Mathlib-specific wrappers:
-
-| Path | Purpose |
-| --- | --- |
-| `BanditRLProof/Core.lean` | finite action traces, pull counts, reward sums, finite mean models |
-| `BanditRLProof/FiniteBanditModelInvariants.lean` | compiled best-arm dominance and model-gap nonnegativity invariants for the local `FiniteBanditModel` selector |
-| `BanditRLProof/ScalarENNReal.lean` | scalar `ENNReal.ofReal` faithfulness leaves for nonnegative finite sums |
-| `BanditRLProof/ScalarPseudoRegret.lean` | pointwise scalar/model bridge from Rat pseudo-regret to the `ENNReal.ofReal` weighted pull-count expression under explicit gap nonnegativity |
-| `BanditRLProof/Regret.lean` | pseudo-regret surface and theorem-card records |
-| `BanditRLProof/LeafLemmas.lean` | compiled dependency-light leaf lemmas for pull counts, reward sums, gaps, and pseudo-regret |
-| `BanditRLProof/MathlibWrappers.lean` | compiled Mathlib wrapper leaves for pull counts, selected reward sums, and pseudo-regret over `Finset.range` |
-| `BanditRLProof/PullCountDecomposition.lean` | compiled finite-action count partition theorem for pull counts |
-| `BanditRLProof/RegretDecomposition.lean` | compiled deterministic regret decomposition into arm-indexed `gap * pullCount` sums |
-| `BanditRLProof/RegretCountBounds.lean` | compiled deterministic scaffolds converting Rat/Nat/uniform Nat pull-count bounds into pseudo-regret bounds |
-| `BanditRLProof/MeasureFoundation.lean` | first measurable action-event, pull-indicator, and selected-reward indicator canaries for the probability-facing layer |
-| `BanditRLProof/MeasurableSums.lean` | compiled finite-sum measurability bridge for selected-reward indicator contributions |
-| `BanditRLProof/MeasurableLocalQuantities.lean` | compiled measurability bridge for local recursive reward accumulators such as `sumRewards` |
-| `BanditRLProof/MeasurableRegret.lean` | compiled pseudo-regret random-variable measurability bridge before expectation |
-| `BanditRLProof/MeasurablePullCount.lean` | compiled pull-count random-variable measurability bridge before expected pull-count identities |
-| `BanditRLProof/MeasurablePullCountCast.lean` | compiled scalar-casted pull-count measurability bridge before expected pull-count identities |
-| `BanditRLProof/ExpectationFoundation.lean` | compiled `ENNReal` lower-integral action-event indicator canary |
-| `BanditRLProof/ExpectationSums.lean` | compiled `ENNReal` lower-integral finite-sum bridge for action-event indicators |
-| `BanditRLProof/ExpectationPullCount.lean` | compiled `ENNReal` lower-integral pull-count identity |
-| `BanditRLProof/ExpectationWeightedPullCount.lean` | compiled `ENNReal` lower-integral weighted pull-count bridge |
-| `BanditRLProof/ExpectationPullCountBounds.lean` | compiled probability-measure pull-count budget bound in `ENNReal` |
-| `BanditRLProof/ExpectationWeightedPullCountBounds.lean` | compiled probability-measure weighted pull-count budget bound in `ENNReal` |
-| `BanditRLProof/ExpectationFiniteBanditBounds.lean` | compiled `Fin K`/`Finset.univ` specialization of the weighted probability budget bound |
-| `BanditRLProof/ExpectationFiniteBanditModelBounds.lean` | compiled `ENNReal.ofReal` surrogate bound for `FiniteBanditModel.gap : Fin K -> Rat` |
-| `BanditRLProof/ExpectationPseudoRegretOfRealBounds.lean` | compiled lower-integral bound for `ENNReal.ofReal` pseudo-regret under explicit gap nonnegativity |
-| `BanditRLProof/ExpectationPseudoRegretRatBounds.lean` | Rat-level and model-derived gap nonnegativity adapters for the `ENNReal.ofReal` pseudo-regret lower-integral bound |
-| `BanditRLProof/Algorithms/ETC.lean` | Explore-Then-Commit proof-DAG surfaces |
-| `BanditRLProof/Algorithms/ETCTrace.lean` | compiled fixed-commit ETC phase-switching trace boundary for exploration and commit phases |
-| `BanditRLProof/Algorithms/ETCTraceCountLemmas.lean` | compiled exploration-prefix and exploration-horizon pull-count transfers for the fixed-commit ETC trace |
-| `BanditRLProof/Algorithms/UCB.lean` | UCB index proof-DAG surfaces |
-| `BanditRLProof/Algorithms/Thompson.lean` | Thompson sampling and Bayesian regret surfaces |
-| `BanditRLProof/Literature.lean` | upstream theorem-card registry |
-| `BanditRLProof/Automation.lean` | compiled harness roles, task contracts, gates |
-| `BanditRLProof/OpenProblems.lean` | typed open-problem registry |
-
-This is a staged design.  The memory layer records LML and Mathlib-heavy proof
-routes now; individual tasks can later decide whether to port theorem fragments
-into this package, add Mathlib, or depend on LML once toolchain alignment is
-intentional.
-
-## Memory Library
-
-ABRL treats unfinished proof technology as a first-class artifact.  Important
-memory files include:
-
-- `research-wiki/lml/theorem-cards.md`: LML declarations and proof-route cards.
-- `research-wiki/mathlib/theorem-cards.md`: Mathlib module/search cards for reusable leaf lemmas.
-- `research-wiki/textbooks/bandit-classics.md`: classic textbook and survey source cards.
-- `research-wiki/papers/bandit-frontier-cards.md`: algorithm and modern-scenario paper cards.
-- `research-wiki/scenarios/bandit-scenario-atlas.md`: current bandit/RL scenario taxonomy.
-- `research-wiki/theory-tree/bandit-theory-tree.md`: broad proof-tree map from source to leaf to theorem.
-- `research-wiki/theory-tree/mathlib-foundation-leaf-map.md`: fine-grained Mathlib foundation and algorithm leaf map.
-- `research-wiki/proof-weapons/bandit-proof-weapons.md`: route inspiration cards for upper planning only.
-- `research-wiki/proof-techniques/classical-bandits.md`: regret and concentration proof patterns.
-- `research-wiki/proof-techniques/lean-patterns.md`: Lean formalization patterns for finite actions, kernels, and sums.
-- `research-wiki/open-problems/bandit-proof-backlog.md`: unproved or partially mapped proof technology.
-- `research-wiki/mathlib-candidates/`: reusable leaf lemmas to prepare for upstream Mathlib contribution.
-- `docs/collaborator_unfinished_work_guide.md`: contributor entry point for
-  selecting one unfinished leaf and closing it without broad theorem drift.
-- `conversion-windows/` and `proof-obligations/`: task-local Lean/prose correspondence and active proof-DAG leaves.
-
-Only compiled local declarations enter certified memory.  Theorem cards from
-upstream libraries stay marked as theorem cards until imported or ported and
-build-tested in this repository.
-
-![ABRL memory lifecycle](docs/assets/memory_lifecycle.svg)
-
-## LML Integration
-
-[LeanMachineLearning/LML][lml] is the primary external Lean reference for this
-project.  ABRL uses it for theorem-card memory around:
-
-- stochastic sequential learning interfaces;
-- finite action bookkeeping such as pull counts and reward sums;
-- generic regret decompositions;
-- Explore-Then-Commit regret;
-- UCB regret;
-- Thompson sampling posterior action and Bayesian regret.
-
-At initialization time, ABRL records the LML declarations in
-`BanditRLProof/Literature.lean` and `research-wiki/lml/theorem-cards.md`.
-No LML source code is vendored into this repository in the initial skeleton.
-
-## Proof Export
-
-After a theorem compiles, middle/reviewer agents should run:
-
-```bash
-python3 tools/bandit.py export-proof TASK_ID --title "Human readable theorem title"
-```
-
-The generated `paper-notes/problem-exports/<task-id>/latest.tex` and
-`latest.md` are proof-export targets.  They must name the compiled Lean
-declarations they translate and must not state stronger claims than Lean
-supports.
-
-## Related Work And Similar Patterns
-
-ABRL adapts patterns from adjacent projects while specializing them to bandit
-and RL proof libraries.
-
-| Work | Similar pattern | ABRL use |
-| --- | --- | --- |
-| [ABEIS][abeis] | Hierarchical harness, Lean gate, conversion windows, proof obligations, proof export. | Default upper/middle/lower/reviewer workflow and acceptance rule. |
-| [ARIS][aris] | Plain-file autonomous research workflow, skills, reviews, run logs. | Inspectable task packets, research wiki, prompt decks, and local CLI. |
-| [Learning Beyond Gradients][lbg] | Iterative system improvement through layered feedback and persistent trial memory. | Trial JSONL, summary CSV, failed-route memory, and upper/middle/lower/reviewer maintenance loops. |
-| [EoH][eoh] | Evolutionary search over structured candidate solutions. | Future theorem-route and proof-DAG candidate populations under a fixed Lean-checkable target. |
-| [LeanMachineLearning/LML][lml] | Lean formalization of bandit algorithms and regret bounds. | Theorem-card memory and future import/port target. |
-| [LeanMarathon][leanmarathon] | Proof blueprint, target review, dynamic leaves, deterministic gates. | Proof-blueprint snapshots and one-leaf lower-agent packets. |
-| [lean-stat-learning-theory][lean-slt] | Concentration and empirical-process formalization at ML-theory scale. | Proof-engineering reference for concentration and learning-theory lemmas. |
-| [Mathlib][mathlib] | Core Lean mathematical library. | Future probability, measure, asymptotic, and concentration dependencies. |
-
-More detail is in [`docs/attribution.md`](docs/attribution.md) and
-[`NOTICE.md`](NOTICE.md).
+The Blueprint website design and organization were inspired by **Sho Sonoda's** [Lean-Ridgelet repository](https://github.com/shosonoda/lean-ridgelet) and [Blueprint website](https://shosonoda.github.io/lean-ridgelet/blueprint/html-multi/overview/). See [NOTICE](NOTICE.md) and [docs/attribution.md](docs/attribution.md). This attribution does not imply Sho Sonoda's participation, endorsement, or maintenance of this project.
 
 ## Citation
 
 ```bibtex
-@misc{abrl2026,
-  title = {Auto-Lean-in-Sleep: Bandit and RL Proofs},
-  year = {2026},
-  note = {Lean-checked multi-agent harness for bandit and RL proof libraries}
+@software{bu2026abrl,
+  title  = {ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory},
+  author = {Bu, Dake and Cheng, Ji and Xue, Bo and Nitanda, Atsushi and Wong, Hau-San and Zhang, Qingfu},
+  year   = {2026},
+  url    = {https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep}
 }
 ```
 
-[abeis]: https://github.com/DakeBU/Quantum-Computing-Block-Encoding
-[aris]: https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep
-[lbg]: https://github.com/Trinkle23897/learning-beyond-gradients
-[eoh]: https://github.com/FeiLiu36/EoH
-[lml]: https://github.com/LeanMachineLearning/LML
+## License
+
+Repository code and documentation are governed by [LICENSE](LICENSE). Third-party inspiration and any reused material are recorded in [NOTICE](NOTICE.md) and [docs/attribution.md](docs/attribution.md).
+
+[abeis]: https://github.com/DakeBU/Automated-Block-Encoding-In-Sleep
+[aris]: https://github.com/DakeBU/Automated-Research-In-Sleep
 [leanmarathon]: https://github.com/YuanheZ/LeanMarathon
-[lean-slt]: https://github.com/YuanheZ/lean-stat-learning-theory
+[lml]: https://github.com/leanprover-community/LeanMachineLearning
+[lean-stat]: https://github.com/leanprover-community/lean-stat-learning-theory
 [mathlib]: https://github.com/leanprover-community/mathlib4
-[mathlib-initiative]: https://mathlib-initiative.org/
+[statsmllib]: https://statsmllib.github.io/

@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_stoppedAverageRealizedBehaviorRegret_uniformIntegrable_and_integral_tendsto_zero",
+  "file": "BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterUniformIntegrabilityExpectedConsistency.lean",
+  "statement": "theorem selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_stoppedAverageRealizedBehaviorRegret_uniformIntegrable_and_integral_tendsto_zero (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] [StandardBorelSpace State] [StandardBorelSpace Action] (rewardSource : mdp.MeanCompatibleRewardKernel) (varianceProxy : NNReal) (hvarianceProxy : 0 < varianceProxy) (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (support : ExploratoryPathSupport mdp initialState) (baseVisitFloor : Real) (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor) (hrewardBound : forall state action, |mdp.reward state action| <= 1) (hhorizon : 4 < mdp.horizon) (hbaseVisitFloor : 0 < baseVisitFloor) : let source := selfConsistentScheduledCausalSource mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor let stoppingPrefix := selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingPrefix mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor let stoppedProcess := selfConsistentScheduledNaturalCausalStoppingTimeAverageRealizedBehaviorRegretProcess mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor stoppingPrefix UniformIntegrable stoppedProcess 1 source.trajectoryMeasure /\\ Tendsto (fun scheduleIndex => integral source.trajectoryMeasure (stoppedProcess scheduleIndex)) atTop (nhds 0)",
+  "statement_hash": "2c010befc6a7c4b3cdf975bb76741a4ac4f48bf2e04fb076cffc48125b5fcd24",
+  "source_assumptions": [
+    "4 < mdp.horizon",
+    "IsProbabilityMeasure initialState",
+    "UniformSubgaussianRewardLaw",
+    "ExploratoryPathUniformVisitFloor",
+    "UnboundedHittingAfterStoppingPrefix"
+  ],
+  "created_at": "2026-08-06T21:27:23+00:00"
+}

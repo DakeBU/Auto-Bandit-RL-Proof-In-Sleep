@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_stoppedAverageRealizedBehaviorRegret_integrable_and_integral_le_threshold",
+  "file": "BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterIntegrableExpectedUpperBound.lean",
+  "statement": "theorem selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_stoppedAverageRealizedBehaviorRegret_integrable_and_integral_le_threshold (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] [StandardBorelSpace State] [StandardBorelSpace Action] (rewardSource : mdp.MeanCompatibleRewardKernel) (varianceProxy : NNReal) (hvarianceProxy : 0 < varianceProxy) (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (support : ExploratoryPathSupport mdp initialState) (baseVisitFloor : Real) (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor) (hrewardBound : forall state action, |mdp.reward state action| <= 1) (hhorizon : 4 < mdp.horizon) (hbaseVisitFloor : 0 < baseVisitFloor) (scheduleIndex : Nat) : let source := selfConsistentScheduledCausalSource mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor let stoppingPrefix := selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingPrefix mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor let stoppedProcess := selfConsistentScheduledNaturalCausalStoppingTimeAverageRealizedBehaviorRegretProcess mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor stoppingPrefix scheduleIndex Integrable stoppedProcess source.trajectoryMeasure /\\ integral source.trajectoryMeasure stoppedProcess <= selfConsistentScheduledNaturalCausalInverseSqrtFirstPassageThreshold scheduleIndex",
+  "statement_hash": "4326e209c350a6ef4c209ddd690a13f88678abc556cff1da255bd3c17393d5d3",
+  "source_assumptions": [
+    "(hhorizon : 4 < mdp.horizon)"
+  ],
+  "created_at": "2026-08-06T16:07:35+00:00"
+}

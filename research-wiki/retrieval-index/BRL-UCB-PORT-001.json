@@ -1,6 +1,6 @@
 {
   "task": "BRL-UCB-PORT-001",
-  "generated": "2026-07-13T11:18:44+00:00",
+  "generated": "2026-07-15T14:15:32+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -217,8 +217,8 @@
     {
       "id": "MLIB-ASYMPTOTICS",
       "source": "Mathlib",
-      "module": "Mathlib.Analysis.Asymptotics.Asymptotics",
-      "docs": "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Analysis/Asymptotics/Asymptotics.html",
+      "module": "Mathlib.Analysis.Asymptotics.Lemmas; Mathlib.Analysis.SpecialFunctions.Log.Base; Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics",
+      "docs": "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Analysis/Asymptotics/Lemmas.html",
       "query_terms": [
         "Asymptotics.IsBigO",
         "IsTheta",
@@ -3011,7 +3011,7 @@
         "UCB.realHistoryIndex_finitePairHistoryOfTrace",
         "UCB.realHistoryIndexAction_finitePairHistoryOfTrace"
       ],
-      "role": "Compiled native Real UCB history-index leaf aligned with the pinned LML score. The Lean-facing definitions use realEmpiricalMean = sumRewards / pullCount and the realized path-dependent width realWidth = sqrt (2*c*log(n+1)/pullCount), rather than the older deterministic-in-omega proxy surface. Inclusive finite-pair-history width/index/least-encoded action definitions use the matching n+2 convention and are proved equal to the trace quantities at n+1. The selector reuses the compiled least-Encodable.encode Nat.find semantics and supplies both score maximality and measurability. Local APIs/imports are UCB confidence algebra, ETCRealHistoryScore/ETCRealArgmaxTie, History.finitePairHistoryOfTrace, measurable_sumRewards, measurable_natCast_pullCount, Mathlib Real.log/Real.sqrt and measurable division. Regularity is positive K for the selector, canonical measurable Fin K for measurability, and timewise measurable action/reward coordinates; there is no measure, reward law, MGF, independence, filtration, or positivity-of-count premise in this leaf. Retrieval evidence is pinned LML ucbWidth'/ucbWidth, empMean'/empMean, measurableArgmax, nextArm, and the UCB regret proof at commit 19dc3ab132c2a7539f5944503d1114eac4c5bb74, plus MLIB-REAL-LOG-SQRT, MLIB-FINSET-SUMS, and the compiled local history-score/measurability APIs. Failure policy: concrete empirical-mean, random-width, history/trace score mapping, least-encoded maximization, and measurability are closed. Fixed-count peeling and abstract stream-law transport now compile separately; the next faithful blocker is constructing that source for the actual generated UCB sequence and proving its canonical stationary arm-stream law, followed by one-sided tails and expected pull-count assembly. Do not feed this random width into the older deterministic proxy theorem by strengthening or falsifying its type.",
+      "role": "Compiled native Real UCB history-index leaf aligned with the pinned LML score. The Lean-facing definitions use realEmpiricalMean = sumRewards / pullCount and the realized path-dependent width realWidth = sqrt (2*c*log(n+1)/pullCount), rather than the older deterministic-in-omega proxy surface. Inclusive finite-pair-history width/index/least-encoded action definitions use the matching n+2 convention and are proved equal to the trace quantities at n+1. The selector reuses the compiled least-Encodable.encode Nat.find semantics and supplies both score maximality and measurability. Local APIs/imports are UCB confidence algebra, ETCRealHistoryScore/ETCRealArgmaxTie, History.finitePairHistoryOfTrace, measurable_sumRewards, measurable_natCast_pullCount, Mathlib Real.log/Real.sqrt and measurable division. Regularity is positive K for the selector, canonical measurable Fin K for measurability, and timewise measurable action/reward coordinates; there is no measure, reward law, MGF, independence, filtration, or positivity-of-count premise in this leaf. Retrieval evidence is pinned LML ucbWidth'/ucbWidth, empMean'/empMean, measurableArgmax, nextArm, and the UCB regret proof at commit 19dc3ab132c2a7539f5944503d1114eac4c5bb74, plus MLIB-REAL-LOG-SQRT, MLIB-FINSET-SUMS, and the compiled local history-score/measurability APIs. Failure policy: concrete empirical-mean, random-width, history/trace score mapping, least-encoded maximization, and selector measurability are closed. Fixed-count peeling, next-unused rewards, the actual recursive product-law process, and source-faithful inverse-power one-sided tails now compile separately. The next blocker is measurability of that recursive action as a function of the latent stream, followed by expected pull-count assembly. Do not feed this random width into the older deterministic proxy theorem by strengthening or falsifying its type.",
       "mathlib_routes": [
         "MLIB-REAL-LOG-SQRT",
         "MLIB-FINSET-SUMS",
@@ -3040,7 +3040,7 @@
         "UCB.measure_pullCount_prod_sumRewards_mem_le_of_fixedArmPrefixSource",
         "UCB.measure_pullCount_prod_sumRewards_mem_le_of_fixedArmPrefixSource_identDistrib"
       ],
-      "role": "Compiled source-faithful fixed-count peeling and law-transport leaf for the pinned LML UCB route. FixedArmPrefixSource exposes a measurable latent table Nat -> Fin K -> Real and the pathwise identity sumRewards(action,reward,arm,n) = armPrefixSum arm (pullCount action arm n) armStream. The first theorem covers the adaptive (pullCount,sumRewards) event by the finite union over k <= n and applies the Mathlib-backed outer-measure finite-union bound. The second uses one IdentDistrib law for the complete latent stream and measurable composition with armPrefixSum to transport every fixed-count event to a canonical stream measure. Local imports/APIs are UCBRealHistoryIndex, ProbabilityUnionBound.measure_biUnion_finset_le, pullCount_le_time, Finset.range/filter/sum, measurable_pi_apply, Finset.measurable_sum, and ProbabilityTheory.IdentDistrib.measure_mem_eq/comp. Regularity is measurable source and canonical spaces, coordinate measurability recorded by the source, measurable event s, and DecidablePred for the projected count filter; neither theorem requires a probability measure, independence, an MGF, filtration, or count positivity. Retrieval evidence is pinned LML SumRewards.prob_pullCount_prod_sumRewards_mem_le and identDistrib_sum_range_snd at commit 19dc3ab132c2a7539f5944503d1114eac4c5bb74, plus MLIB-PROBABILITY-INDEPENDENCE, MLIB-MEASURE-INTEGRAL, MLIB-FINSET-SUMS, and the compiled local union-bound/count wrappers. Failure policy: generic adaptive-count peeling and abstract complete-stream law transport are closed. Do not claim the UCB tail or regret theorem until the actual generated UCB process supplies FixedArmPrefixSource and the canonical stationary/product arm-stream IdentDistrib law; alternatively record and prove a conditional-MGF substitute with equivalent adaptive-sum strength.",
+      "role": "Compiled source-faithful fixed-count peeling and law-transport leaf for the pinned LML UCB route. FixedArmPrefixSource exposes a measurable latent table Nat -> Fin K -> Real and the pathwise identity sumRewards(action,reward,arm,n) = armPrefixSum arm (pullCount action arm n) armStream. The first theorem covers the adaptive (pullCount,sumRewards) event by the finite union over k <= n and applies the Mathlib-backed outer-measure finite-union bound. The second uses one IdentDistrib law for the complete latent stream and measurable composition with armPrefixSum to transport every fixed-prefix event to a canonical stream measure. Local imports/APIs are UCBRealHistoryIndex, ProbabilityUnionBound.measure_biUnion_finset_le, pullCount_le_time, Finset.range/filter/sum, measurable_pi_apply, Finset.measurable_sum, and ProbabilityTheory.IdentDistrib.measure_mem_eq/comp. Regularity is measurable source and canonical spaces, coordinate measurability recorded by the source, measurable event s, and DecidablePred for the projected count filter; neither theorem requires a probability measure, independence, an MGF, filtration, or count positivity. Retrieval evidence is pinned LML SumRewards.prob_pullCount_prod_sumRewards_mem_le and identDistrib_sum_range_snd at commit 19dc3ab132c2a7539f5944503d1114eac4c5bb74, plus MLIB-PROBABILITY-INDEPENDENCE, MLIB-MEASURE-INTEGRAL, MLIB-FINSET-SUMS, and the compiled local union-bound/count wrappers. Failure policy: generic adaptive-count peeling and abstract complete-stream law transport are closed. Recursive action measurability, expected pulls, and exact canonical regret now compile in downstream arm-stream leaves; this generic leaf alone still makes no such claim.",
       "mathlib_routes": [
         "LML-UCB-REGRET",
         "MLIB-PROBABILITY-INDEPENDENCE",
@@ -3048,6 +3048,317 @@
         "MLIB-FINSET-SUMS",
         "LOCAL-LEAF-PROBABILITY-UNION-BOUND",
         "LOCAL-LEAF-UCB-NATIVE-REAL-HISTORY-INDEX"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-UCB-ARM-STREAM-REWARD-SOURCE",
+      "leaf_ids": [
+        "UCB-ARM-STREAM-REWARD-SOURCE",
+        "UCB-ARM-STREAM-SOURCE"
+      ],
+      "module": "BanditRLProof.Algorithms.UCBArmStreamSource",
+      "status": "leanCompiled",
+      "declarations": [
+        "UCB.rewardFromArmStream",
+        "UCB.sumRewards_rewardFromArmStream_eq_armPrefixSum",
+        "UCB.fixedArmPrefixSourceOfArmStream",
+        "UCB.measure_pullCount_prod_sumRewards_rewardFromArmStream_mem_le_identDistrib",
+        "UCB.canonicalFixedArmPrefixSource",
+        "UCB.measure_pullCount_prod_sumRewards_rewardFromCanonicalArmStream_mem_le"
+      ],
+      "role": "Compiled next-unused-coordinate reward source for the pinned LML UCB route. rewardFromArmStream reads at time t the coordinate indexed by the number of earlier pulls of the selected arm. Induction on the horizon with sumRewards_succ, pullCount_succ, and Finset.sum_range_succ proves selected sumRewards is exactly armPrefixSum at the realized pullCount. The measurable adapter constructs FixedArmPrefixSource, the IdentDistrib consumer feeds it directly into fixed-count peeling, and the canonical stream specialization removes even the abstract source premise for any action trace on ArmRewardStream K. Local APIs/imports are UCBFixedCountPeeling, sumRewards_succ_of_eq/ne, pullCount_succ_of_eq/ne, Finset.sum_range_succ, measurable_pi_apply, and the existing source/peeling endpoints. Regularity is only coordinate measurability for an arbitrary source space; the canonical stream source discharges it from Pi measurability. No action measurability, probability measure, stationary/product law, independence, MGF, filtration, or count positivity is required. Retrieval evidence is pinned LML ArrayProbSpace.reward_eq and SumRewards.sumRewards_eq at commit 19dc3ab132c2a7539f5944503d1114eac4c5bb74, plus LOCAL-LEAF-UCB-FIXED-COUNT-PEELING-LAW and local pull-count/sum recursion APIs. Failure policy: exact unused-reward indexing and the pathwise FixedArmPrefixSource obligation are closed for any action trace on the latent stream space. The recursive process/product law and source-faithful one-sided inverse-power tails now compile in downstream leaves; expected pulls and regret must not be inferred from this pathwise theorem.",
+      "mathlib_routes": [
+        "LML-UCB-REGRET",
+        "LOCAL-LEAF-UCB-FIXED-COUNT-PEELING-LAW",
+        "MLIB-PROBABILITY-INDEPENDENCE",
+        "MLIB-PROBABILITY-KERNEL",
+        "MLIB-FINSET-SUMS"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-UCB-ARM-STREAM-PROCESS-LAW",
+      "leaf_ids": [
+        "UCB-ARM-STREAM-PROCESS-LAW"
+      ],
+      "module": "BanditRLProof.Algorithms.UCBArmStreamProcess",
+      "status": "leanCompiled",
+      "declarations": [
+        "UCB.initializationArm",
+        "UCB.realHistoryNextArm",
+        "UCB.armStreamHistory",
+        "UCB.armStreamAction",
+        "UCB.armStreamReward",
+        "UCB.armStreamHistory_eq_finitePairHistoryOfTrace",
+        "UCB.armStreamAction_succ_eq_realHistoryNextArm_actualHistory",
+        "UCB.armStreamAction_succ_eq_realHistoryIndexAction_of_not_lt",
+        "UCB.measurable_armRewardStream_apply",
+        "UCB.measurable_armStreamHistory",
+        "UCB.measurable_armStreamAction",
+        "UCB.measurable_armStreamReward",
+        "UCB.armStreamUCBFixedArmPrefixSource",
+        "UCB.armStreamMeasure",
+        "UCB.measure_pullCount_prod_sumRewards_armStreamUCB_mem_le"
+      ],
+      "role": "Compiled source-faithful recursive UCB process and canonical stationary product arm-stream law. The inclusive history starts with arm zero, uses round-robin initialization while n < K-1, then applies the native Real finite-history index; each selected reward is the next unused coordinate of that arm. The pathwise invariant identifies the recursion with History.finitePairHistoryOfTrace. Finite-history count/sum/mean/width/index measurability, measurable finite argmax, joint random stream-coordinate evaluation, and induction through History.extendPairHistorySucc now prove measurable recursive histories, actions, and rewards. The canonical double infinitePi measure supplies independent stationary coordinates and a probability measure, and FixedArmPrefixSource yields actual-process peeling. Local APIs/imports are UCBArmStreamSource, UCBRealHistoryIndex, ETC.realHistoryPullCount, History.measurable_extendPairHistorySucc, measurable_from_prod_countable_left, measurable_pi_apply, Measure.infinitePi, and the compiled peeling endpoint. Regularity is 0 < K, canonical Pi measurable spaces, and a Markov reward kernel only for the product measure; pathwise recursion and measurability need no MGF, filtration, or count positivity. Retrieval evidence is pinned LML ArrayProbSpace.hist/action/reward, Bandits.UCB.nextArm/ucbAlgorithm, and streamMeasure at commit 19dc3ab132c2a7539f5944503d1114eac4c5bb74, plus LOCAL-LEAF-UCB-NATIVE-REAL-HISTORY-INDEX and LOCAL-LEAF-UCB-ARM-STREAM-REWARD-SOURCE. Failure policy: recursive alignment, coordinate measurability, stationary product measure, and outer-measure peeling are closed. Expected pull counts now compile downstream; do not infer a Real Bochner expectation or regret theorem from this process leaf alone.",
+      "mathlib_routes": [
+        "LML-UCB-REGRET",
+        "LOCAL-LEAF-UCB-NATIVE-REAL-HISTORY-INDEX",
+        "LOCAL-LEAF-UCB-ARM-STREAM-REWARD-SOURCE",
+        "LOCAL-LEAF-UCB-FIXED-COUNT-PEELING-LAW",
+        "MLIB-PROBABILITY-INDEPENDENCE",
+        "MLIB-PROBABILITY-KERNEL"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-UCB-ARM-STREAM-INDEX-TAIL",
+      "leaf_ids": [
+        "UCB-ARM-STREAM-INDEX-TAIL",
+        "UCB-TAILS"
+      ],
+      "module": "BanditRLProof.Algorithms.UCBArmStreamTail",
+      "status": "leanCompiled",
+      "declarations": [
+        "UCB.armStreamMeasure_map_coord",
+        "UCB.iIndepFun_armStreamMeasure_coord_sub",
+        "UCB.hasSubgaussianMGF_armStreamMeasure_coord_sub",
+        "UCB.measure_armPrefixSum_sub_mul_ge_le",
+        "UCB.measure_mul_sub_armPrefixSum_ge_le",
+        "UCB.measure_pos_and_sumRewards_sub_pullCount_mul_ge_le",
+        "UCB.measure_pos_and_pullCount_mul_sub_sumRewards_ge_le",
+        "UCB.countWidthThreshold",
+        "UCB.measure_realEmpiricalMean_add_realWidth_le_mean_log_bound",
+        "UCB.measure_mean_le_realEmpiricalMean_sub_realWidth_log_bound",
+        "UCB.natCast_mul_exp_neg_log_le_inv_rpow_sub_one",
+        "UCB.measure_realEmpiricalMean_add_realWidth_le_mean_rpow_bound",
+        "UCB.measure_mean_le_realEmpiricalMean_sub_realWidth_rpow_bound"
+      ],
+      "role": "Compiled source-faithful one-sided UCB index tails for the actual recursive arm-stream process. Product-measure coordinate map laws and Mathlib infinitePi independence transport the per-arm centered HasSubgaussianMGF assumption to fixed-prefix sums. Adaptive count/reward events are peeled over positive k <= n, empirical-mean plus random-width failures are mapped to fixed-count deviations, and the finite exponential sum is simplified to the pinned LML envelope 1/(n+1)^(c-1). Local APIs/imports are UCBArmStreamProcess, IndependenceFoundation.iIndepFun_infinitePi_coord, ConcentrationSubGaussian fixed-sum tails, FixedArmPrefixSource peeling, Real log/sqrt/rpow, and ENNReal rpow algebra. Regularity is 0 < K, a Markov arm kernel, a centered per-arm HasSubgaussianMGF witness with proxy sigma2, 0 <= c, and sigma2 != 0. Retrieval evidence is pinned LML prob_ucbIndex_le/prob_ucbIndex_ge at commit 19dc3ab132c2a7539f5944503d1114eac4c5bb74, Mathlib infinitePi/product independence and sub-Gaussian sum APIs, and the compiled local process/source/peeling leaves. Failure policy: fixed-prefix concentration, adaptive peeling, random-width event algebra, log collapse, and inverse-power one-sided bounds are closed. Measurable selected-large union, ENNReal/Real expected counts, and exact canonical regret now compile downstream; this tail leaf remains an outer-measure producer only.",
+      "mathlib_routes": [
+        "LML-UCB-REGRET",
+        "LOCAL-LEAF-UCB-ARM-STREAM-PROCESS-LAW",
+        "LOCAL-LEAF-UCB-FIXED-COUNT-PEELING-LAW",
+        "MLIB-PROBABILITY-INDEPENDENCE",
+        "MLIB-PROBABILITY-SUBGAUSSIAN",
+        "MLIB-REAL-LOG-SQRT",
+        "MLIB-REAL-RPOW-TSALLIS"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-UCB-ARM-STREAM-EXPECTED-PULLCOUNT",
+      "leaf_ids": [
+        "UCB-ARM-STREAM-EXPECTED-PULLCOUNT",
+        "UCB-EXPECTED-PULLCOUNT"
+      ],
+      "module": "BanditRLProof.Algorithms.UCBArmStreamExpectedPullCount",
+      "status": "leanCompiled",
+      "declarations": [
+        "UCB.pullCount_armStreamAction_K_eq_one",
+        "UCB.pullCount_armStreamAction_pos_of_K_le",
+        "UCB.meanGap_le_two_realWidth_of_selected",
+        "UCB.pullCount_le_eight_scale_log_div_gap_sq",
+        "UCB.realPullThreshold",
+        "UCB.pullThreshold",
+        "UCB.indexTail",
+        "UCB.constSum",
+        "UCB.selectedLargePullCountEvent_subset_lower_union_upper",
+        "UCB.measure_selectedLargePullCountEvent_le_two_mul_indexTail",
+        "UCB.lintegral_selectedLargePullCount_indicator_sum_le_two_mul_constSum",
+        "UCB.lintegral_natCast_pullCount_armStreamAction_le_threshold_add_two_mul_constSum",
+        "UCB.integrable_real_pullCount_armStreamAction",
+        "UCB.integral_real_pullCount_armStreamAction_le_threshold_add_two_mul_constSum",
+        "UCB.integral_real_pullCount_armStreamAction_le_realThreshold_add_two_add_two_mul_constSum"
+      ],
+      "role": "Compiled LML-shaped expected pull-count leaf for the concrete recursive arm-stream UCB process. The ENNReal endpoint bounds the lower integral by ceil(8*c*sigma2*log(n+1)/gap^2)+1 plus twice the finite inverse-power tail sum; the Real Bochner endpoint removes the ceiling and proves the exact upstream shape 8*c*sigma2*log(n+1)/gap^2+2+2*(constSum c n).toReal. Local APIs/imports are UCBArmStreamTail, measurable_armStreamAction, measurable_natCast_pullCount, pullCount_le_time, ofReal_integral_eq_lintegral_ofReal, round-robin initialization counts, realIndexAction_spec, meanGap_le_two_radius_of_confidenceScore_max, the generic selected-small/selected-large indicator split, finite ENNReal sums, and probability-measure integration. The proof route establishes integrability from measurability and the horizon bound, proves positive initial counts, converts good confidence and selected-score maximality into gap <= 2*width, derives the count threshold, includes selected-large in the two one-sided failures, sums their rpow tails, integrates the pointwise split, and converts ENNReal to Real using finite constSum. Regularity is 0<K, c>0, nonzero NNReal sigma2, positive queried-arm kernel gap, a Markov Real arm kernel, and centered HasSubgaussianMGF witnesses for the selected best arm and queried arm; no filtration, conditional expectation, or standard-Borel premise is added. Retrieval evidence is pinned LML pullCount_arm_le, pullCount_le_add_three, constSum, expectation_pullCount_le', and expectation_pullCount_le at commit 19dc3ab132c2a7539f5944503d1114eac4c5bb74, plus the local process/tail/count-split leaves and Mathlib Bochner conversion. Status is leanCompiled with exact external canaries. Failure policy: recursive measurability, deterministic threshold assembly, selected-large union, finite tail summation, ENNReal integration, integrability, and Real expected pull count are closed; the exact canonical gap-weighted regret theorem compiles in the downstream theorem card.",
+      "mathlib_routes": [
+        "LML-UCB-REGRET",
+        "LOCAL-LEAF-UCB-ARM-STREAM-PROCESS-LAW",
+        "LOCAL-LEAF-UCB-ARM-STREAM-INDEX-TAIL",
+        "MLIB-PROBABILITY-SUBGAUSSIAN",
+        "MLIB-MEASURE-INTEGRAL",
+        "MLIB-FINSET-SUMS",
+        "MLIB-REAL-LOG-SQRT"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-UCB-ARM-STREAM-LML-REGRET",
+      "leaf_ids": [
+        "UCB-ARM-STREAM-LML-REGRET",
+        "UCB-FINAL"
+      ],
+      "module": "BanditRLProof.Algorithms.UCBArmStreamExpectedPullCount",
+      "status": "leanCompiled",
+      "declarations": [
+        "UCB.integral_realKernelRegret_armStreamAction_le_sum_gap_mul_realThreshold_add_two_add_two_mul_constSum",
+        "UCB.integral_realKernelRegret_armStreamAction_le_lml_sum"
+      ],
+      "role": "Compiled canonical arm-stream specialization of the pinned LML Bandits.UCB.regret_le theorem. The Lean statement bounds the Bochner expectation of realKernelRegret for the recursive round-robin/native-random-width UCB action under armStreamMeasure by sum_a (8*c*sigma2*log(n+1)/gap a + gap a*(2+2*(constSum c n).toReal)), exactly matching the pinned theorem-card RHS. Local APIs/imports are UCBArmStreamExpectedPullCount, RealKernelRegretPullCount.integral_realKernelRegret_eq_sum_gap_mul_integral_pullCount, finite-arm gap nonnegativity, Finset.sum_le_sum, and field normalization for nonzero gaps. The proof route obtains integrability of every pull count, rewrites expected regret as the gap-weighted sum of expected counts, applies the compiled Real count bound only to positive-gap arms, eliminates zero-gap arms, and expands gap*realPullThreshold to the upstream inverse-gap term. Regularity is 0<K, c>0, nonzero NNReal sigma2, a Markov Real arm kernel, and a centered HasSubgaussianMGF witness with common proxy sigma2 for every arm; the canonical double-infinitePi arm-stream law supplies stationarity and independence. No filtration, conditional expectation, standard-Borel, or separate integrability assumption is required. Retrieval evidence is pinned LML Bandits.UCB.regret_le and expectation_pullCount_le at commit 19dc3ab132c2a7539f5944503d1114eac4c5bb74, LOCAL-LEAF-UCB-ARM-STREAM-EXPECTED-PULLCOUNT, and the compiled Real kernel regret decomposition. Status is leanCompiled with an exact external canary. Failure policy: the complete canonical mathematical UCB regret route and exact finite-sum RHS are closed locally, and the downstream external action-law transport now compiles. Do not overstate this as an import of the upstream IsAlgEnvSeq theorem: constructing the action-trace IdentDistrib contract from actual upstream fields and cross-toolchain symbol compatibility remain separate.",
+      "mathlib_routes": [
+        "LML-UCB-REGRET",
+        "LOCAL-LEAF-UCB-ARM-STREAM-EXPECTED-PULLCOUNT",
+        "LOCAL-LEAF-REAL-KERNEL-REGRET-PULLCOUNT",
+        "MLIB-MEASURE-INTEGRAL",
+        "MLIB-FINSET-SUMS",
+        "MLIB-PROBABILITY-SUBGAUSSIAN"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-UCB-EXTERNAL-ACTION-LAW-LML-REGRET",
+      "leaf_ids": [
+        "UCB-EXTERNAL-ACTION-LAW-LML-REGRET",
+        "UCB-ISALGENVSEQ-LAW-TRANSPORT"
+      ],
+      "module": "BanditRLProof.Algorithms.UCBArmStreamExpectedPullCount",
+      "status": "leanCompiled",
+      "declarations": [
+        "UCB.measurable_armStreamActionTrace",
+        "UCB.measurable_realKernelRegret_actionTrace",
+        "UCB.integral_realKernelRegret_externalAction_le_lml_sum_of_identDistrib_armStreamAction"
+      ],
+      "role": "Compiled external action-law transport for the exact canonical UCB theorem. The Lean endpoint takes any external finite-arm action process whose complete ActionTrace law is IdentDistrib to canonical armStreamAction and returns the exact pinned gap-weighted finite-sum regret bound. Local APIs/imports are measurable Pi traces, finite-sum regret measurability, ProbabilityTheory.IdentDistrib.comp/integral_eq, and the canonical theorem. The proof route composes the law witness with measurable realKernelRegret, transports the Bochner integral, and invokes canonical regret. Regularity is the canonical UCB contract plus complete action-trace IdentDistrib; no external probability instance, timewise measurability, separate integrability, filtration, reward process, or StandardBorelSpace Omega is added. Retrieval evidence is pinned LML Bandits.UCB.regret_le/IsAlgEnvSeq at commit 19dc3ab132c2a7539f5944503d1114eac4c5bb74, Mathlib IdentDistrib, and LOCAL-LEAF-UCB-ARM-STREAM-LML-REGRET. Status is leanCompiled with external canaries. Failure policy: explicit action-law transport is closed. Pair projection, common-law uniqueness, and canonical-condDistrib specialization construct this law downstream; remaining work is external initial/successor pair-law identification or literal import, while latent-stream transport remains optional.",
+      "mathlib_routes": [
+        "LML-UCB-REGRET",
+        "LOCAL-LEAF-UCB-ARM-STREAM-LML-REGRET",
+        "LOCAL-LEAF-REAL-KERNEL-REGRET-PULLCOUNT",
+        "MLIB-MEASURE-INTEGRAL",
+        "Mathlib.Probability.IdentDistrib"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-UCB-EXTERNAL-ARM-STREAM-SOURCE-LAW-LML-REGRET",
+      "leaf_ids": [
+        "UCB-EXTERNAL-ARM-STREAM-SOURCE-LAW-LML-REGRET",
+        "UCB-ISALGENVSEQ-ARM-STREAM-LAW-TRANSPORT"
+      ],
+      "module": "BanditRLProof.Algorithms.UCBArmStreamExpectedPullCount",
+      "status": "leanCompiled",
+      "declarations": [
+        "UCB.identDistrib_action_armStreamAction_of_identDistrib_armStream",
+        "UCB.integral_realKernelRegret_externalAction_le_lml_sum_of_identDistrib_armStream"
+      ],
+      "role": "Compiled optional latent arm-stream source adapter for the exact external UCB theorem. The law constructor accepts an arbitrary measurable external space and measure, a latent ArmRewardStream whose complete law is IdentDistrib to the identity stream under armStreamMeasure, and an external action trace that is almost surely the recursive armStreamAction of that latent stream; it derives the complete canonical action-trace IdentDistrib. The final consumer immediately returns the exact pinned LML regret sum. Local APIs/imports are measurable_armStreamActionTrace, ProbabilityTheory.IdentDistrib.comp/of_ae_eq/trans, AEMeasurable.congr, Filter.EventuallyEq.symm, and the compiled external action-law theorem. The proof route pushes the latent stream law through the measurable recursive action map, obtains external action a.e. measurability from generated-action equality, replaces the generated action by the external action using IdentDistrib.of_ae_eq, composes the law identities, and invokes the exact regret transport. Regularity is the canonical UCB assumptions, complete latent arm-stream IdentDistrib to armStreamMeasure, and a.e. equality of the external action with the generated recursive UCB action. No IsProbabilityMeasure mu, separate stream/action measurability, external reward trace, filtration, conditional expectation, standard-Borel space, or full action-law premise is added. Retrieval evidence is Mathlib Probability.IdentDistrib, LOCAL-LEAF-UCB-ARM-STREAM-PROCESS-LAW, LOCAL-LEAF-UCB-EXTERNAL-ACTION-LAW-LML-REGRET, and the existing FixedArmPrefixSource complete-stream transport pattern. Status is leanCompiled with external law-constructor and exact-regret canaries. Failure policy: this stronger latent-source adapter is closed but is not the faithful upstream IsAlgEnvSeq route. Pinned LML instead uses IsAlgEnvSeq.identDistrib_trajectory against ArrayModel.isAlgEnvSeq_arrayMeasure; downstream pair-trajectory transport now compiles. Do not require or infer unobserved-arm array independence from selected feedback laws.",
+      "mathlib_routes": [
+        "LML-UCB-REGRET",
+        "LOCAL-LEAF-UCB-ARM-STREAM-PROCESS-LAW",
+        "LOCAL-LEAF-UCB-EXTERNAL-ACTION-LAW-LML-REGRET",
+        "MLIB-PROBABILITY-INDEPENDENCE",
+        "MLIB-MEASURE-INTEGRAL",
+        "Mathlib.Probability.IdentDistrib"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-UCB-EXTERNAL-ACTION-REWARD-TRAJECTORY-LAW-LML-REGRET",
+      "leaf_ids": [
+        "UCB-EXTERNAL-ACTION-REWARD-TRAJECTORY-LAW-LML-REGRET",
+        "UCB-ISALGENVSEQ-TRAJECTORY-PROJECTION"
+      ],
+      "module": "BanditRLProof.Algorithms.UCBArmStreamExpectedPullCount",
+      "status": "leanCompiled",
+      "declarations": [
+        "UCB.identDistrib_action_of_identDistrib_actionRewardTrace",
+        "UCB.integral_realKernelRegret_externalAction_le_lml_sum_of_identDistrib_actionRewardTrace"
+      ],
+      "role": "Compiled faithful observable-trajectory transport for exact external UCB regret. The Lean statements project complete Nat-indexed pair-trajectory IdentDistrib through coordinatewise Prod.fst and invoke exact action-law transport. Local APIs/imports are measurable Pi/fst, IdentDistrib.comp, the action-law theorem, and canonical arm-stream process. The proof route is pair-to-action projection then integral transport. Regularity is the canonical UCB contract plus pair-trajectory IdentDistrib; no external probability instance, separate coordinate measurability, latent stream, unused-arm independence, filtration, conditional expectation, or standard-Borel premise is added. Retrieval evidence is pinned LML IsAlgEnvSeq.identDistrib_trajectory and ArrayModel.isAlgEnvSeq_arrayMeasure at commit 19dc3ab132c2a7539f5944503d1114eac4c5bb74. Status is leanCompiled with canaries. Failure policy: projection is closed; common-condDistrib uniqueness and the canonical-condDistrib specialization now construct its premise. Remaining source work is proving the external initial/successor pair laws agree with canonical condDistrib, or literal compatible-toolchain import.",
+      "mathlib_routes": [
+        "LML-UCB-REGRET",
+        "LOCAL-LEAF-UCB-EXTERNAL-ACTION-LAW-LML-REGRET",
+        "LOCAL-LEAF-UCB-ARM-STREAM-PROCESS-LAW",
+        "MLIB-PROBABILITY-KERNEL",
+        "MLIB-MEASURE-INTEGRAL",
+        "Mathlib.Probability.IdentDistrib"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-UCB-COMMON-ACTION-REWARD-CONDDISTRIB-LML-REGRET",
+      "leaf_ids": [
+        "UCB-TRAJECTORY-LAW-UNIQUENESS",
+        "UCB-COMMON-ACTION-REWARD-CONDDISTRIB-LML-REGRET",
+        "UCB-ISALGENVSEQ-TRAJECTORY-UNIQUENESS"
+      ],
+      "module": "BanditRLProof.Algorithms.UCBArmStreamExpectedPullCount",
+      "status": "leanCompiled",
+      "declarations": [
+        "RewardKernel.rewardTrace_map_eq_trajMeasure_of_condDistrib",
+        "RewardKernel.identDistrib_rewardTrace_of_common_condDistrib",
+        "UCB.integral_realKernelRegret_externalAction_le_lml_sum_of_common_actionReward_condDistrib"
+      ],
+      "role": "Compiled trajectory-uniqueness route from initial and successor laws to exact external UCB regret. The generic Lean statements identify a complete coordinate-measurable law with Kernel.trajMeasure from its zeroth marginal and all successor condDistrib kernels, then derive IdentDistrib for two processes sharing those laws. The UCB endpoint instantiates Fin K x Real and returns the exact pinned RHS. Local APIs/imports are finite-prefix uniqueness, measurable finite restrictions, Finset.sup, Mathlib IsProjectiveLimit.unique/FiniteDimensionalLaws, IdentDistrib, and observable-trajectory regret. The proof route encloses every finite coordinate set in an Iic prefix, transports its law, and applies projective-limit uniqueness. Regularity is finite source measures, measurable coordinates, nonempty standard-Borel target, probability initial law, Markov successor kernels, NeZero K at the UCB elaboration boundary, and canonical sub-Gaussian contracts; no latent arrays, filtration, conditional expectation, or full-law premise is added. Retrieval evidence is Mathlib FiniteDimensionalLaws/Projective, local prefix uniqueness, and pinned LML trajectory APIs. Status is leanCompiled; the generic theorem is a Mathlib candidate. Failure policy: common-law uniqueness is closed, and the canonical-condDistrib specialization now constructs mu0 and kernels internally. Remaining work is external-vs-canonical initial/successor law identification or compatible-toolchain import.",
+      "mathlib_routes": [
+        "LML-UCB-REGRET",
+        "LOCAL-LEAF-UCB-EXTERNAL-ACTION-REWARD-TRAJECTORY-LAW-LML-REGRET",
+        "Mathlib.Probability.Process.FiniteDimensionalLaws",
+        "Mathlib.MeasureTheory.Constructions.Projective",
+        "MLIB-PROBABILITY-KERNEL",
+        "Mathlib.Probability.IdentDistrib"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-UCB-CANONICAL-CONDDISTRIB-LML-REGRET",
+      "leaf_ids": [
+        "UCB-CANONICAL-ACTION-REWARD-CONDDISTRIB-LML-REGRET",
+        "UCB-ISALGENVSEQ-CANONICAL-CONDDISTRIB-SPECIALIZATION"
+      ],
+      "module": "BanditRLProof.Algorithms.UCBArmStreamExpectedPullCount",
+      "status": "leanCompiled",
+      "declarations": [
+        "UCB.identDistrib_actionRewardTrace_of_condDistrib_eq_armStream",
+        "UCB.integral_realKernelRegret_externalAction_le_lml_sum_of_condDistrib_eq_armStream"
+      ],
+      "role": "Compiled practical canonical-law specialization of the UCB trajectory-uniqueness route. The Lean law constructor assumes only that the external initial action/reward pair pushforward equals the canonical arm-stream pair pushforward and that each external successor-pair condDistrib given its finite pair history equals the corresponding canonical arm-stream condDistrib. It returns complete pair-trajectory IdentDistrib; the consumer returns the exact pinned regret sum. Local APIs/imports are Measure.isProbabilityMeasure_map, the built-in IsMarkovKernel instance for condDistrib, canonical action/reward coordinate measurability, RewardKernel.identDistrib_rewardTrace_of_common_condDistrib, and the observable-trajectory regret theorem. The proof route internally defines canonicalPair, its time-zero pushforward mu0, and the canonical condDistrib kernel family; reflexivity discharges both canonical law obligations, while the external hypotheses feed common-law uniqueness. Regularity is finite external measure, timewise measurable external action/reward, NeZero K plus hK, Markov arm kernel, canonical UCB sub-Gaussian contracts, equality of initial pair laws, and a.e. equality of successor conditional kernels under each external prefix pushforward. No caller-supplied mu0, pairKernel, canonical law proof, latent stream, unused-arm independence, filtration, conditional expectation, or pre-assumed trajectory law remains. Retrieval evidence is Mathlib Probability.Kernel.CondDistrib, Measure.isProbabilityMeasure_map, local common-condDistrib uniqueness, and pinned LML IsAlgEnvSeq.identDistrib_trajectory/ArrayModel.isAlgEnvSeq_arrayMeasure. Status is leanCompiled with an external exact-regret canary. Failure policy: canonical law-bundle construction and trajectory uniqueness are closed, and the downstream split-law leaf now derives these joint pair laws from the four IsAlgEnvSeq-shaped action/feedback fields. Remaining work is proving those split fields from a concrete upstream sequence or literal compatible-toolchain import; marginal-only reward laws remain insufficient and unused-arm reconstruction is invalid.",
+      "mathlib_routes": [
+        "LML-UCB-REGRET",
+        "LOCAL-LEAF-UCB-COMMON-ACTION-REWARD-CONDDISTRIB-LML-REGRET",
+        "LOCAL-LEAF-UCB-EXTERNAL-ACTION-REWARD-TRAJECTORY-LAW-LML-REGRET",
+        "Mathlib.Probability.Kernel.CondDistrib",
+        "Mathlib.Measure.isProbabilityMeasure_map",
+        "Mathlib.Probability.IdentDistrib"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-UCB-ISALGENVSEQ-SPLIT-LAWS-LML-REGRET",
+      "leaf_ids": [
+        "UCB-ISALGENVSEQ-SPLIT-LAWS-LML-REGRET",
+        "UCB-ISALGENVSEQ-ACTION-FEEDBACK-COMPPROD"
+      ],
+      "module": "BanditRLProof.Algorithms.UCBArmStreamExpectedPullCount",
+      "status": "leanCompiled",
+      "declarations": [
+        "RewardKernel.pair_map_eq_compProd_of_map_eq_of_condDistrib",
+        "RewardKernel.condDistrib_pair_ae_eq_compProd_of_split",
+        "UCB.identDistrib_actionRewardTrace_of_split_condDistrib_eq_armStream",
+        "UCB.integral_realKernelRegret_externalAction_le_lml_sum_of_split_condDistrib_eq_armStream"
+      ],
+      "role": "Compiled Mathlib-facing compatibility route from the four split law surfaces of pinned LML IsAlgEnvSeq to exact canonical arm-stream UCB regret. The generic initial lemma combines an action marginal with feedback condDistrib into the pair pushforward; the generic successor lemma combines action condDistrib given history and feedback condDistrib given (history, action) into the pair condDistrib via Kernel.compProd. The UCB constructor chooses canonical split condDistrib kernels internally, proves both external and canonical joint pair laws, invokes complete trajectory uniqueness, and the consumer returns the exact pinned finite regret sum. Local APIs/imports are ProbabilityTheory.condDistrib_ae_eq_iff_measure_eq_compProd, Kernel.compProd, Measure.compProd_assoc', Measure.isProbabilityMeasure_map, History.measurable_finitePairHistoryOfTrace, RewardKernel.identDistrib_rewardTrace_of_common_condDistrib, and the existing observable-trajectory regret endpoint. The proof route is joint-law characterization, nested triple-law reassociation by MeasurableEquiv.prodAssoc, canonical reflexivity, projective-limit trajectory uniqueness, then integral transport. Regularity is a finite external measure, timewise measurable action/reward coordinates, StandardBorel and Nonempty action/feedback targets in the generic lemmas, Markov split kernels, NeZero K plus hK, a Markov Real arm kernel, positive c, nonzero sigma2, and per-arm centered HasSubgaussianMGF. No independence, filtration, conditional expectation, latent unused-arm array, preassembled pair law, or pre-assumed trajectory IdentDistrib is added. Retrieval evidence is Mathlib Probability.Kernel.CondDistrib and Composition.CompProd plus pinned LML IsAlgEnvSeq.hasLaw_step_zero, hasCondDistrib_action, hasCondDistrib_feedback, stepKernel, and identDistrib_trajectory at commit 19dc3ab132c2a7539f5944503d1114eac4c5bb74; LML remains theorem-card source rather than a local import. Status is leanCompiled with Tests.Basic declaration canaries. Failure policy: split-to-joint composition, canonical law construction, complete trajectory identification, and exact regret transport are closed; the downstream RealStationaryUCBSequence structure now packages and consumes the four fields. Remaining work is constructing that structure from one concrete upstream sequence or resolving literal cross-toolchain LML import; do not reconstruct unused-arm arrays, weaken to marginal reward laws, reopen concentration, or report upstream LML symbols as imported.",
+      "mathlib_routes": [
+        "LML-UCB-REGRET",
+        "LOCAL-LEAF-UCB-CANONICAL-CONDDISTRIB-LML-REGRET",
+        "LOCAL-LEAF-UCB-COMMON-ACTION-REWARD-CONDDISTRIB-LML-REGRET",
+        "Mathlib.Probability.Kernel.CondDistrib",
+        "Mathlib.Probability.Kernel.Composition.CompProd",
+        "Mathlib.Measure.compProd_assoc'",
+        "Mathlib.Probability.IdentDistrib"
+      ]
+    },
+    {
+      "id": "LOCAL-LEAF-UCB-NATIVE-REAL-LML-FIELD-COMPAT-EXACT-REGRET",
+      "leaf_ids": [
+        "UCB-NATIVE-REAL-LML-FIELD-COMPAT-EXACT-REGRET",
+        "UCB-ISALGENVSEQ-LOCAL-FIELD-BUNDLE"
+      ],
+      "module": "BanditRLProof.Algorithms.UCBRealLMLCompat",
+      "status": "leanCompiled",
+      "declarations": [
+        "UCB.RealStationaryUCBSequence",
+        "UCB.realStationaryUCBSequence_armStream",
+        "UCB.identDistrib_actionRewardTrace_of_realStationaryUCBSequence",
+        "UCB.regret_le_of_realStationaryUCBSequence"
+      ],
+      "role": "Compiled faithful local field-bundle theorem for the exact native Real UCB route. RealStationaryUCBSequence packages the precise Mathlib-facing consequences of pinned LML IsAlgEnvSeq used by the proof: timewise measurable action and feedback, the initial action law, initial feedback condDistrib given action, successor action condDistrib given finite observable pair history, and successor feedback condDistrib given (history, next action). The canonical arm-stream process constructs a witness by measurability and reflexivity. A trajectory consumer projects the fields into the compiled split-law theorem, and regret_le_of_realStationaryUCBSequence returns the exact pinned finite-arm UCB sum. Local APIs/imports are UCBArmStreamExpectedPullCount, ActionTrace/RewardTrace, finite pair histories, Mathlib Measure/Kernel condDistrib and IdentDistrib, the split-to-compProd law theorem, and the existing exact-regret endpoint. The proof route packages source fields, applies split-to-joint law composition and projective-limit trajectory uniqueness, then transports the canonical integral bound. Regularity is a finite external measure, NeZero K and hK, a Markov Real arm kernel, timewise measurable coordinates inside the structure, positive c, nonzero NNReal sigma2, and centered HasSubgaussianMGF for every arm. No StandardBorelSpace Omega, independence, filtration, conditional expectation, latent unused-arm array, caller-supplied pair kernels, or preassembled trajectory law is added. Retrieval evidence is pinned LML IsAlgEnvSeq split fields, stepKernel, identDistrib_trajectory, ArrayModel.isAlgEnvSeq_arrayMeasure, and Bandits.UCB.regret_le at commit 19dc3ab132c2a7539f5944503d1114eac4c5bb74, plus the compiled local split-law and canonical UCB routes. Status is leanCompiled with canonical-witness, trajectory, and exact-regret declaration canaries. Failure policy: the local mathematical field compatibility theorem is closed. The only remaining route boundary is constructing the bundle from actual imported LML symbols under a compatible Lean/mathlib toolchain or proving it for one separately defined concrete external sequence; do not report the upstream declaration as imported, reconstruct unused arms, or reopen concentration.",
+      "mathlib_routes": [
+        "LML-UCB-REGRET",
+        "LOCAL-LEAF-UCB-ISALGENVSEQ-SPLIT-LAWS-LML-REGRET",
+        "LOCAL-LEAF-UCB-CANONICAL-CONDDISTRIB-LML-REGRET",
+        "Mathlib.Probability.Kernel.CondDistrib",
+        "Mathlib.Probability.IdentDistrib"
       ]
     },
     {
@@ -13351,7 +13662,7 @@
       "name": "trajMeasure_map_eval_zero",
       "full_name": "BanditRLProof.RewardKernel.trajMeasure_map_eval_zero",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 43,
+      "line": 44,
       "statement": "theorem trajMeasure_map_eval_zero {X : Nat -> Type*} [forall n, MeasurableSpace (X n)] (mu0 : Measure (X 0)) [IsProbabilityMeasure mu0] (kernel : (n : Nat) -> ProbabilityTheory.Kernel ((i : Finset.Iic n) -> X i) (X (n + 1))) [forall n, ProbabilityTheory.IsMarkovKernel (kernel n)] : Measure.map (fun trajectory : ((n : Nat) -> X n) => trajectory 0) (ProbabilityTheory.Kernel.trajMeasure mu0 kernel) = mu0"
     },
     {
@@ -13359,15 +13670,47 @@
       "name": "rewardTrace_prefix_map_eq_trajMeasure_of_condDistrib",
       "full_name": "BanditRLProof.RewardKernel.rewardTrace_prefix_map_eq_trajMeasure_of_condDistrib",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 87,
+      "line": 88,
       "statement": "theorem rewardTrace_prefix_map_eq_trajMeasure_of_condDistrib {Omega Reward : Type*} [MeasurableSpace Omega] [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward] (mu : Measure Omega) [IsFiniteMeasure mu] (mu0 : Measure Reward) [IsProbabilityMeasure mu0] (reward : Omega -> RewardTrace Reward) (hreward : forall t : Nat,"
+    },
+    {
+      "kind": "theorem",
+      "name": "rewardTrace_map_eq_trajMeasure_of_condDistrib",
+      "full_name": "BanditRLProof.RewardKernel.rewardTrace_map_eq_trajMeasure_of_condDistrib",
+      "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
+      "line": 285,
+      "statement": "theorem rewardTrace_map_eq_trajMeasure_of_condDistrib {Omega Reward : Type*} [MeasurableSpace Omega] [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward] (mu : Measure Omega) [IsFiniteMeasure mu] (mu0 : Measure Reward) [IsProbabilityMeasure mu0] (reward : Omega -> RewardTrace Reward) (hreward : forall t : Nat,"
+    },
+    {
+      "kind": "theorem",
+      "name": "identDistrib_rewardTrace_of_common_condDistrib",
+      "full_name": "BanditRLProof.RewardKernel.identDistrib_rewardTrace_of_common_condDistrib",
+      "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
+      "line": 365,
+      "statement": "theorem identDistrib_rewardTrace_of_common_condDistrib {Omega Xi Reward : Type*} [MeasurableSpace Omega] [MeasurableSpace Xi] [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward] (mu : Measure Omega) [IsFiniteMeasure mu] (mu' : Measure Xi) [IsFiniteMeasure mu'] (mu0 : Measure Reward) [IsProbabilityMeasure mu0] (reward : Omega -> RewardTrace Reward)"
+    },
+    {
+      "kind": "theorem",
+      "name": "pair_map_eq_compProd_of_map_eq_of_condDistrib",
+      "full_name": "BanditRLProof.RewardKernel.pair_map_eq_compProd_of_map_eq_of_condDistrib",
+      "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
+      "line": 417,
+      "statement": "theorem pair_map_eq_compProd_of_map_eq_of_condDistrib {Omega Action Feedback : Type*} [MeasurableSpace Omega] [MeasurableSpace Action] [MeasurableSpace Feedback] [StandardBorelSpace Feedback] [Nonempty Feedback] (mu : Measure Omega) [IsFiniteMeasure mu] (action : Omega -> Action) (feedback : Omega -> Feedback) (hfeedback : Measurable feedback)"
+    },
+    {
+      "kind": "theorem",
+      "name": "condDistrib_pair_ae_eq_compProd_of_split",
+      "full_name": "BanditRLProof.RewardKernel.condDistrib_pair_ae_eq_compProd_of_split",
+      "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
+      "line": 446,
+      "statement": "theorem condDistrib_pair_ae_eq_compProd_of_split {Omega History Action Feedback : Type*} [MeasurableSpace Omega] [MeasurableSpace History] [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action] [MeasurableSpace Feedback] [StandardBorelSpace Feedback] [Nonempty Feedback] (mu : Measure Omega) [IsFiniteMeasure mu] (history : Omega -> History) (hhistory : Measurable history)"
     },
     {
       "kind": "theorem",
       "name": "condDistrib_ae_eq_const_of_comp",
       "full_name": "BanditRLProof.RewardKernel.condDistrib_ae_eq_const_of_comp",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 283,
+      "line": 517,
       "statement": "theorem condDistrib_ae_eq_const_of_comp {Omega Fine Coarse Target : Type*} [MeasurableSpace Omega] [MeasurableSpace Fine] [MeasurableSpace Coarse] [MeasurableSpace Target] [StandardBorelSpace Target] [Nonempty Target] (mu : Measure Omega) [IsFiniteMeasure mu] (fine : Omega -> Fine) (hfine : Measurable fine) (coarse : Omega -> Coarse)"
     },
     {
@@ -13375,7 +13718,7 @@
       "name": "map_eq_of_condDistrib_ae_eq_const",
       "full_name": "BanditRLProof.RewardKernel.map_eq_of_condDistrib_ae_eq_const",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 335,
+      "line": 569,
       "statement": "theorem map_eq_of_condDistrib_ae_eq_const {Omega Condition Target : Type*} [MeasurableSpace Omega] [MeasurableSpace Condition] [MeasurableSpace Target] [StandardBorelSpace Target] [Nonempty Target] (mu : Measure Omega) [IsProbabilityMeasure mu] (condition : Omega -> Condition) (hcondition : Measurable condition) (target : Omega -> Target) (htarget : Measurable target)"
     },
     {
@@ -13383,7 +13726,7 @@
       "name": "condDistrib_ae_eq_const_of_ae_eq_selected",
       "full_name": "BanditRLProof.RewardKernel.condDistrib_ae_eq_const_of_ae_eq_selected",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 376,
+      "line": 610,
       "statement": "theorem condDistrib_ae_eq_const_of_ae_eq_selected {Omega Fine Action Target : Type*} [MeasurableSpace Omega] [MeasurableSpace Fine] [MeasurableSpace Action] [MeasurableEq Action] [MeasurableSpace Target] [StandardBorelSpace Target] [Nonempty Target] (mu : Measure Omega) [IsFiniteMeasure mu] (fine : Omega -> Fine) (hfine : Measurable fine) (target : Omega -> Target)"
     },
     {
@@ -13391,7 +13734,7 @@
       "name": "finiteArmCenteredRewardKernelLaw_of_hasSubgaussianMGF",
       "full_name": "BanditRLProof.ETC.finiteArmCenteredRewardKernelLaw_of_hasSubgaussianMGF",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 420,
+      "line": 654,
       "statement": "noncomputable def finiteArmCenteredRewardKernelLaw_of_hasSubgaussianMGF {K : Nat} {Context : Type} [MeasurableSpace Context] (model : FiniteBanditModel K) (armLaw : Fin K -> Measure Rat) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (sigma2 : NNReal) (hmean : forall arm, integral (armLaw arm)"
     },
     {
@@ -13399,7 +13742,7 @@
       "name": "finiteArmBoundedCenteredRewardKernelLaw",
       "full_name": "BanditRLProof.ETC.finiteArmBoundedCenteredRewardKernelLaw",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 472,
+      "line": 706,
       "statement": "noncomputable def finiteArmBoundedCenteredRewardKernelLaw {K : Nat} {Context : Type} [MeasurableSpace Context] (model : FiniteBanditModel K) (armLaw : Fin K -> Measure Rat) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (lo hi : Real) (hmeas : forall arm, AEMeasurable"
     },
     {
@@ -13407,7 +13750,7 @@
       "name": "explorationArgmaxHistory_centeredReward_succ_hasCondSubgaussianMGF_of_boundedArmLaws",
       "full_name": "BanditRLProof.ETC.explorationArgmaxHistory_centeredReward_succ_hasCondSubgaussianMGF_of_boundedArmLaws",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 533,
+      "line": 767,
       "statement": "theorem explorationArgmaxHistory_centeredReward_succ_hasCondSubgaussianMGF_of_boundedArmLaws {K : Nat} {Context : Type} [MeasurableSpace Context] (spec : ETC.Spec K) (model : FiniteBanditModel K) (mu0 : Measure Rat) [IsProbabilityMeasure mu0] (armLaw : Fin K -> Measure Rat) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (lo hi : Real)"
     },
     {
@@ -13415,7 +13758,7 @@
       "name": "explorationArgmaxHistory_centeredReward_succ_hasCondSubgaussianMGF_of_armLaws",
       "full_name": "BanditRLProof.ETC.explorationArgmaxHistory_centeredReward_succ_hasCondSubgaussianMGF_of_armLaws",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 612,
+      "line": 846,
       "statement": "theorem explorationArgmaxHistory_centeredReward_succ_hasCondSubgaussianMGF_of_armLaws {K : Nat} {Context : Type} [MeasurableSpace Context] (spec : ETC.Spec K) (model : FiniteBanditModel K) (mu0 : Measure Rat) [IsProbabilityMeasure mu0] (armLaw : Fin K -> Measure Rat) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (sigma2 : NNReal)"
     },
     {
@@ -13423,7 +13766,7 @@
       "name": "explorationArgmaxHistory_centeredRewardProcess_sum_tail_ennreal_of_boundedArmLaws",
       "full_name": "BanditRLProof.ETC.explorationArgmaxHistory_centeredRewardProcess_sum_tail_ennreal_of_boundedArmLaws",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 690,
+      "line": 924,
       "statement": "theorem explorationArgmaxHistory_centeredRewardProcess_sum_tail_ennreal_of_boundedArmLaws {K : Nat} {Context : Type} [MeasurableSpace Context] (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -> Measure Rat) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (lo hi : Real) (hmeas : forall arm, AEMeasurable"
     },
     {
@@ -13431,7 +13774,7 @@
       "name": "explorationArgmaxHistory_centeredRewardCondSubGaussianWitnesses_of_boundedArmLaws",
       "full_name": "BanditRLProof.ETC.explorationArgmaxHistory_centeredRewardCondSubGaussianWitnesses_of_boundedArmLaws",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 876,
+      "line": 1110,
       "statement": "noncomputable def explorationArgmaxHistory_centeredRewardCondSubGaussianWitnesses_of_boundedArmLaws {K : Nat} {Context : Type} [MeasurableSpace Context] (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -> Measure Rat) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (lo hi : Real) (hmeas : forall arm, AEMeasurable"
     },
     {
@@ -13439,7 +13782,7 @@
       "name": "explorationArgmaxHistory_centeredRewardCondSubGaussianWitnesses_of_armLaws",
       "full_name": "BanditRLProof.ETC.explorationArgmaxHistory_centeredRewardCondSubGaussianWitnesses_of_armLaws",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 1045,
+      "line": 1279,
       "statement": "noncomputable def explorationArgmaxHistory_centeredRewardCondSubGaussianWitnesses_of_armLaws {K : Nat} {Context : Type} [MeasurableSpace Context] (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -> Measure Rat) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (sigma2 : NNReal) (hmean : forall arm, integral (armLaw arm)"
     },
     {
@@ -13447,7 +13790,7 @@
       "name": "explorationArgmaxHistory_pairwiseEmpMeanTailContract_of_boundedArmLaws",
       "full_name": "BanditRLProof.ETC.explorationArgmaxHistory_pairwiseEmpMeanTailContract_of_boundedArmLaws",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 1198,
+      "line": 1432,
       "statement": "theorem explorationArgmaxHistory_pairwiseEmpMeanTailContract_of_boundedArmLaws {K : Nat} {Context : Type} [MeasurableSpace Context] (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -> Measure Rat) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (lo hi : Real) (hmeas : forall arm, AEMeasurable"
     },
     {
@@ -13455,7 +13798,7 @@
       "name": "explorationArgmaxHistory_pairwiseEmpMeanTailContract_of_armLaws",
       "full_name": "BanditRLProof.ETC.explorationArgmaxHistory_pairwiseEmpMeanTailContract_of_armLaws",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 1270,
+      "line": 1504,
       "statement": "theorem explorationArgmaxHistory_pairwiseEmpMeanTailContract_of_armLaws {K : Nat} {Context : Type} [MeasurableSpace Context] (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -> Measure Rat) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (sigma2 : NNReal) (hmean : forall arm, integral (armLaw arm)"
     },
     {
@@ -13463,7 +13806,7 @@
       "name": "explorationArgmaxHistory_prob_commit_eq_arm_le_pairwiseTail_of_armLaws",
       "full_name": "BanditRLProof.ETC.explorationArgmaxHistory_prob_commit_eq_arm_le_pairwiseTail_of_armLaws",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 1338,
+      "line": 1572,
       "statement": "theorem explorationArgmaxHistory_prob_commit_eq_arm_le_pairwiseTail_of_armLaws {K : Nat} {Context : Type} [MeasurableSpace Context] (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -> Measure Rat) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (sigma2 : NNReal) (hmean : forall arm, integral (armLaw arm)"
     },
     {
@@ -13471,7 +13814,7 @@
       "name": "explorationArgmaxHistory_prob_commit_eq_arm_le_pairwiseTail_of_boundedArmLaws",
       "full_name": "BanditRLProof.ETC.explorationArgmaxHistory_prob_commit_eq_arm_le_pairwiseTail_of_boundedArmLaws",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 1411,
+      "line": 1645,
       "statement": "theorem explorationArgmaxHistory_prob_commit_eq_arm_le_pairwiseTail_of_boundedArmLaws {K : Nat} {Context : Type} [MeasurableSpace Context] (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -> Measure Rat) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (lo hi : Real) (hmeas : forall arm, AEMeasurable"
     },
     {
@@ -13479,7 +13822,7 @@
       "name": "explorationArgmaxHistory_prob_wrongCommit_le_pairwiseTailSum_of_boundedArmLaws",
       "full_name": "BanditRLProof.ETC.explorationArgmaxHistory_prob_wrongCommit_le_pairwiseTailSum_of_boundedArmLaws",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 1488,
+      "line": 1722,
       "statement": "theorem explorationArgmaxHistory_prob_wrongCommit_le_pairwiseTailSum_of_boundedArmLaws {K : Nat} {Context : Type} [MeasurableSpace Context] (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -> Measure Rat) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (lo hi : Real) (hmeas : forall arm, AEMeasurable"
     },
     {
@@ -13487,7 +13830,7 @@
       "name": "canonicalBoundedArmWrongCommitTailBudget",
       "full_name": "BanditRLProof.ETC.canonicalBoundedArmWrongCommitTailBudget",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 1561,
+      "line": 1795,
       "statement": "noncomputable def canonicalBoundedArmWrongCommitTailBudget {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (lo hi : Real) : ENNReal :="
     },
     {
@@ -13495,7 +13838,7 @@
       "name": "canonicalBoundedArmWrongCommitTailBudgetReal",
       "full_name": "BanditRLProof.ETC.canonicalBoundedArmWrongCommitTailBudgetReal",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 1573,
+      "line": 1807,
       "statement": "noncomputable def canonicalBoundedArmWrongCommitTailBudgetReal {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (lo hi : Real) : Real :="
     },
     {
@@ -13503,7 +13846,7 @@
       "name": "canonicalBoundedArmMaxGapIntegralRegretBoundReal",
       "full_name": "BanditRLProof.ETC.canonicalBoundedArmMaxGapIntegralRegretBoundReal",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 1584,
+      "line": 1818,
       "statement": "noncomputable def canonicalBoundedArmMaxGapIntegralRegretBoundReal {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (r : Nat) (lo hi : Real) : Real :="
     },
     {
@@ -13511,7 +13854,7 @@
       "name": "canonicalBoundedArmPairwiseTailReal",
       "full_name": "BanditRLProof.ETC.canonicalBoundedArmPairwiseTailReal",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 1597,
+      "line": 1831,
       "statement": "noncomputable def canonicalBoundedArmPairwiseTailReal {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (lo hi : Real) (a : Fin K) : Real :="
     },
     {
@@ -13519,7 +13862,7 @@
       "name": "canonicalBoundedArmPerArmIntegralRegretBoundReal",
       "full_name": "BanditRLProof.ETC.canonicalBoundedArmPerArmIntegralRegretBoundReal",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 1613,
+      "line": 1847,
       "statement": "noncomputable def canonicalBoundedArmPerArmIntegralRegretBoundReal {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (r : Nat) (lo hi : Real) : Real :="
     },
     {
@@ -13527,7 +13870,7 @@
       "name": "canonicalSubGaussianArmPairwiseTailReal",
       "full_name": "BanditRLProof.ETC.canonicalSubGaussianArmPairwiseTailReal",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 1626,
+      "line": 1860,
       "statement": "noncomputable def canonicalSubGaussianArmPairwiseTailReal {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (sigma2 : NNReal) (a : Fin K) : Real :="
     },
     {
@@ -13535,7 +13878,7 @@
       "name": "canonicalSubGaussianArmPerArmIntegralRegretBoundReal",
       "full_name": "BanditRLProof.ETC.canonicalSubGaussianArmPerArmIntegralRegretBoundReal",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 1641,
+      "line": 1875,
       "statement": "noncomputable def canonicalSubGaussianArmPerArmIntegralRegretBoundReal {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (r : Nat) (sigma2 : NNReal) : Real :="
     },
     {
@@ -13543,7 +13886,7 @@
       "name": "real_measure_explorationArgmaxCommit_eq_arm_le_canonicalSubGaussianArmPairwiseTailReal",
       "full_name": "BanditRLProof.ETC.real_measure_explorationArgmaxCommit_eq_arm_le_canonicalSubGaussianArmPairwiseTailReal",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 1660,
+      "line": 1894,
       "statement": "theorem real_measure_explorationArgmaxCommit_eq_arm_le_canonicalSubGaussianArmPairwiseTailReal {K : Nat} {Context : Type} [MeasurableSpace Context] (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -> Measure Rat) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (sigma2 : NNReal) (hmean : forall arm, integral (armLaw arm)"
     },
     {
@@ -13551,7 +13894,7 @@
       "name": "real_measure_explorationArgmaxCommit_eq_arm_le_canonicalBoundedArmPairwiseTailReal",
       "full_name": "BanditRLProof.ETC.real_measure_explorationArgmaxCommit_eq_arm_le_canonicalBoundedArmPairwiseTailReal",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 1731,
+      "line": 1965,
       "statement": "theorem real_measure_explorationArgmaxCommit_eq_arm_le_canonicalBoundedArmPairwiseTailReal {K : Nat} {Context : Type} [MeasurableSpace Context] (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -> Measure Rat) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (lo hi : Real) (hmeas : forall arm, AEMeasurable"
     },
     {
@@ -13559,7 +13902,7 @@
       "name": "real_measure_explorationArgmaxCommit_ne_bestArm_le_canonicalBoundedArmWrongCommitTailBudgetReal",
       "full_name": "BanditRLProof.ETC.real_measure_explorationArgmaxCommit_ne_bestArm_le_canonicalBoundedArmWrongCommitTailBudgetReal",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 1804,
+      "line": 2038,
       "statement": "theorem real_measure_explorationArgmaxCommit_ne_bestArm_le_canonicalBoundedArmWrongCommitTailBudgetReal {K : Nat} {Context : Type} [MeasurableSpace Context] (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -> Measure Rat) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (lo hi : Real) (hmeas : forall arm, AEMeasurable"
     },
     {
@@ -13567,7 +13910,7 @@
       "name": "integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal",
       "full_name": "BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 1876,
+      "line": 2110,
       "statement": "theorem integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal {K : Nat} {Context : Type} [MeasurableSpace Context] (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -> Measure Rat) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (lo hi : Real) (hmeas : forall arm, AEMeasurable"
     },
     {
@@ -13575,7 +13918,7 @@
       "name": "integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalBoundedArmPerArmIntegralRegretBoundReal",
       "full_name": "BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalBoundedArmPerArmIntegralRegretBoundReal",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 1995,
+      "line": 2229,
       "statement": "theorem integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalBoundedArmPerArmIntegralRegretBoundReal {K : Nat} {Context : Type} [MeasurableSpace Context] (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -> Measure Rat) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (lo hi : Real) (hmeas : forall arm, AEMeasurable"
     },
     {
@@ -13583,7 +13926,7 @@
       "name": "integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal",
       "full_name": "BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 2120,
+      "line": 2354,
       "statement": "theorem integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal {K : Nat} {Context : Type} [MeasurableSpace Context] (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -> Measure Rat) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (sigma2 : NNReal) (hmean : forall arm, integral (armLaw arm)"
     },
     {
@@ -13591,7 +13934,7 @@
       "name": "explorationArgmaxPrefixRegretReal",
       "full_name": "BanditRLProof.ETC.explorationArgmaxPrefixRegretReal",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 2244,
+      "line": 2478,
       "statement": "noncomputable def explorationArgmaxPrefixRegretReal {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (t r : Nat) (history : History.FiniteRewardHistory Rat t) : Real :="
     },
     {
@@ -13599,7 +13942,7 @@
       "name": "measurable_explorationArgmaxPrefixRegretReal",
       "full_name": "BanditRLProof.ETC.measurable_explorationArgmaxPrefixRegretReal",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 2253,
+      "line": 2487,
       "statement": "theorem measurable_explorationArgmaxPrefixRegretReal {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (t r : Nat) : Measurable (ETC.explorationArgmaxPrefixRegretReal spec model t r)"
     },
     {
@@ -13607,7 +13950,7 @@
       "name": "explorationArgmaxPrefixRegretReal_finiteRewardHistoryOfTrace",
       "full_name": "BanditRLProof.ETC.explorationArgmaxPrefixRegretReal_finiteRewardHistoryOfTrace",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 2309,
+      "line": 2543,
       "statement": "theorem explorationArgmaxPrefixRegretReal_finiteRewardHistoryOfTrace {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (reward : RewardTrace Rat) (t r : Nat) (horizon_le : spec.explorationPulls * K <= t + 1) : ETC.explorationArgmaxPrefixRegretReal spec model t r (History.finiteRewardHistoryOfTrace reward t) = (((pseudoRegret model (ETC.explorationArgmaxAction spec model reward)"
     },
     {
@@ -13615,7 +13958,7 @@
       "name": "explorationArgmaxPrefixRegretReal_finiteRewardHistoryOfTrace_generated",
       "full_name": "BanditRLProof.ETC.explorationArgmaxPrefixRegretReal_finiteRewardHistoryOfTrace_generated",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 2336,
+      "line": 2570,
       "statement": "theorem explorationArgmaxPrefixRegretReal_finiteRewardHistoryOfTrace_generated {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (reward : RewardTrace Rat) (t r : Nat) (hexplorationPulls_pos : 0 < spec.explorationPulls) (horizon_le : spec.explorationPulls * K <= t + 1) : ETC.explorationArgmaxPrefixRegretReal spec model t r (History.finiteRewardHistoryOfTrace reward t) = (((pseudoRegret model"
     },
     {
@@ -13623,7 +13966,7 @@
       "name": "integral_real_pseudoRegret_explorationArgmaxGeneratedAction_eq_of_explorationPrefix_map_eq",
       "full_name": "BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_eq_of_explorationPrefix_map_eq",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 2359,
+      "line": 2593,
       "statement": "theorem integral_real_pseudoRegret_explorationArgmaxGeneratedAction_eq_of_explorationPrefix_map_eq {K : Nat} (mu nu : Measure (RewardTrace Rat)) (spec : ETC.Spec K) (model : FiniteBanditModel K) (hexplorationPulls_pos : 0 < spec.explorationPulls) (r : Nat) (hprefix : let explorationLast"
     },
     {
@@ -13631,7 +13974,7 @@
       "name": "integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_explorationPrefix_map_eq",
       "full_name": "BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_explorationPrefix_map_eq",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 2441,
+      "line": 2675,
       "statement": "theorem integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_explorationPrefix_map_eq {K : Nat} {Context : Type} [MeasurableSpace Context] (mu : Measure (RewardTrace Rat)) [IsProbabilityMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -> Measure Rat) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (lo hi : Real)"
     },
     {
@@ -13639,7 +13982,7 @@
       "name": "integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalBoundedArmPerArmIntegralRegretBoundReal_of_explorationPrefix_map_eq",
       "full_name": "BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalBoundedArmPerArmIntegralRegretBoundReal_of_explorationPrefix_map_eq",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 2562,
+      "line": 2796,
       "statement": "theorem integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalBoundedArmPerArmIntegralRegretBoundReal_of_explorationPrefix_map_eq {K : Nat} {Context : Type} [MeasurableSpace Context] (mu : Measure (RewardTrace Rat)) [IsProbabilityMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -> Measure Rat) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (lo hi : Real)"
     },
     {
@@ -13647,7 +13990,7 @@
       "name": "integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal_of_explorationPrefix_map_eq",
       "full_name": "BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal_of_explorationPrefix_map_eq",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 2649,
+      "line": 2883,
       "statement": "theorem integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal_of_explorationPrefix_map_eq {K : Nat} {Context : Type} [MeasurableSpace Context] (mu : Measure (RewardTrace Rat)) [IsProbabilityMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -> Measure Rat) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (sigma2 : NNReal)"
     },
     {
@@ -13655,7 +13998,7 @@
       "name": "integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_initial_map_eq_condDistrib",
       "full_name": "BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_initial_map_eq_condDistrib",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 2737,
+      "line": 2971,
       "statement": "theorem integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_initial_map_eq_condDistrib {Omega : Type*} {K : Nat} {Context : Type} [MeasurableSpace Omega] [MeasurableSpace Context] (mu : Measure Omega) [IsProbabilityMeasure mu] (reward : Omega -> RewardTrace Rat) (hreward : forall t : Nat, Measurable (fun omega : Omega => reward omega t)) (spec : ETC.Spec K) (model : FiniteBanditModel K)"
     },
     {
@@ -13663,7 +14006,7 @@
       "name": "integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmPerArmIntegralRegretBoundReal_of_initial_map_eq_condDistrib",
       "full_name": "BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmPerArmIntegralRegretBoundReal_of_initial_map_eq_condDistrib",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 2862,
+      "line": 3096,
       "statement": "theorem integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmPerArmIntegralRegretBoundReal_of_initial_map_eq_condDistrib {Omega : Type*} {K : Nat} {Context : Type} [MeasurableSpace Omega] [MeasurableSpace Context] (mu : Measure Omega) [IsProbabilityMeasure mu] (reward : Omega -> RewardTrace Rat) (hreward : forall t : Nat, Measurable (fun omega : Omega => reward omega t)) (spec : ETC.Spec K) (model : FiniteBanditModel K)"
     },
     {
@@ -13671,7 +14014,7 @@
       "name": "integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal_of_initial_map_eq_condDistrib",
       "full_name": "BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal_of_initial_map_eq_condDistrib",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 2986,
+      "line": 3220,
       "statement": "theorem integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal_of_initial_map_eq_condDistrib {Omega : Type*} {K : Nat} {Context : Type} [MeasurableSpace Omega] [MeasurableSpace Context] (mu : Measure Omega) [IsProbabilityMeasure mu] (reward : Omega -> RewardTrace Rat) (hreward : forall t : Nat, Measurable (fun omega : Omega => reward omega t)) (spec : ETC.Spec K) (model : FiniteBanditModel K)"
     },
     {
@@ -13679,7 +14022,7 @@
       "name": "explorationArgmaxHistory_stepKernel_apply_eq_exploreArmLaw_of_lt",
       "full_name": "BanditRLProof.ETC.explorationArgmaxHistory_stepKernel_apply_eq_exploreArmLaw_of_lt",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 3109,
+      "line": 3343,
       "statement": "theorem explorationArgmaxHistory_stepKernel_apply_eq_exploreArmLaw_of_lt {K : Nat} {Context : Type} [MeasurableSpace Context] (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -> Measure Rat) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context) (hcontext : forall n : Nat, Measurable (context n))"
     },
     {
@@ -13687,7 +14030,7 @@
       "name": "integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_initial_map_eq_explorationArm_condDistrib",
       "full_name": "BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_initial_map_eq_explorationArm_condDistrib",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 3141,
+      "line": 3375,
       "statement": "theorem integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_initial_map_eq_explorationArm_condDistrib {Omega : Type*} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) [IsProbabilityMeasure mu] (reward : Omega -> RewardTrace Rat) (hreward : forall t : Nat, Measurable (fun omega : Omega => reward omega t)) (spec : ETC.Spec K) (model : FiniteBanditModel K)"
     },
     {
@@ -13695,7 +14038,7 @@
       "name": "integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmPerArmIntegralRegretBoundReal_of_initial_map_eq_explorationArm_condDistrib",
       "full_name": "BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmPerArmIntegralRegretBoundReal_of_initial_map_eq_explorationArm_condDistrib",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 3204,
+      "line": 3438,
       "statement": "theorem integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmPerArmIntegralRegretBoundReal_of_initial_map_eq_explorationArm_condDistrib {Omega : Type*} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) [IsProbabilityMeasure mu] (reward : Omega -> RewardTrace Rat) (hreward : forall t : Nat, Measurable (fun omega : Omega => reward omega t)) (spec : ETC.Spec K) (model : FiniteBanditModel K)"
     },
     {
@@ -13703,7 +14046,7 @@
       "name": "integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal_of_initial_map_eq_explorationArm_condDistrib",
       "full_name": "BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal_of_initial_map_eq_explorationArm_condDistrib",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 3267,
+      "line": 3501,
       "statement": "theorem integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal_of_initial_map_eq_explorationArm_condDistrib {Omega : Type*} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) [IsProbabilityMeasure mu] (reward : Omega -> RewardTrace Rat) (hreward : forall t : Nat, Measurable (fun omega : Omega => reward omega t)) (spec : ETC.Spec K) (model : FiniteBanditModel K)"
     },
     {
@@ -13711,7 +14054,7 @@
       "name": "integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_actionRewardHistory_explorationArm_condDistrib",
       "full_name": "BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_actionRewardHistory_explorationArm_condDistrib",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 3331,
+      "line": 3565,
       "statement": "theorem integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_actionRewardHistory_explorationArm_condDistrib {Omega : Type*} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) [IsProbabilityMeasure mu] (action : Omega -> ActionTrace (Fin K)) (haction : forall t : Nat, Measurable (fun omega : Omega => action omega t)) (reward : Omega -> RewardTrace Rat)"
     },
     {
@@ -13719,7 +14062,7 @@
       "name": "integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmPerArmIntegralRegretBoundReal_of_actionRewardHistory_explorationArm_condDistrib",
       "full_name": "BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmPerArmIntegralRegretBoundReal_of_actionRewardHistory_explorationArm_condDistrib",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 3424,
+      "line": 3658,
       "statement": "theorem integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmPerArmIntegralRegretBoundReal_of_actionRewardHistory_explorationArm_condDistrib {Omega : Type*} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) [IsProbabilityMeasure mu] (action : Omega -> ActionTrace (Fin K)) (haction : forall t : Nat, Measurable (fun omega : Omega => action omega t)) (reward : Omega -> RewardTrace Rat)"
     },
     {
@@ -13727,7 +14070,7 @@
       "name": "integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal_of_actionRewardHistory_explorationArm_condDistrib",
       "full_name": "BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal_of_actionRewardHistory_explorationArm_condDistrib",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 3518,
+      "line": 3752,
       "statement": "theorem integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal_of_actionRewardHistory_explorationArm_condDistrib {Omega : Type*} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) [IsProbabilityMeasure mu] (action : Omega -> ActionTrace (Fin K)) (haction : forall t : Nat, Measurable (fun omega : Omega => action omega t)) (reward : Omega -> RewardTrace Rat)"
     },
     {
@@ -13735,7 +14078,7 @@
       "name": "integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_actionDependent_actionRewardHistory_condDistrib",
       "full_name": "BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_actionDependent_actionRewardHistory_condDistrib",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 3611,
+      "line": 3845,
       "statement": "theorem integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_actionDependent_actionRewardHistory_condDistrib {Omega : Type*} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) [IsProbabilityMeasure mu] (action : Omega -> ActionTrace (Fin K)) (haction : forall t : Nat, Measurable (fun omega : Omega => action omega t)) (reward : Omega -> RewardTrace Rat)"
     },
     {
@@ -13743,7 +14086,7 @@
       "name": "integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmPerArmIntegralRegretBoundReal_of_actionDependent_actionRewardHistory_condDistrib",
       "full_name": "BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmPerArmIntegralRegretBoundReal_of_actionDependent_actionRewardHistory_condDistrib",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 3706,
+      "line": 3940,
       "statement": "theorem integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmPerArmIntegralRegretBoundReal_of_actionDependent_actionRewardHistory_condDistrib {Omega : Type*} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) [IsProbabilityMeasure mu] (action : Omega -> ActionTrace (Fin K)) (haction : forall t : Nat, Measurable (fun omega : Omega => action omega t)) (reward : Omega -> RewardTrace Rat)"
     },
     {
@@ -13751,7 +14094,7 @@
       "name": "integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal_of_actionDependent_actionRewardHistory_condDistrib",
       "full_name": "BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal_of_actionDependent_actionRewardHistory_condDistrib",
       "file": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean",
-      "line": 3801,
+      "line": 4035,
       "statement": "theorem integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal_of_actionDependent_actionRewardHistory_condDistrib {Omega : Type*} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) [IsProbabilityMeasure mu] (action : Omega -> ActionTrace (Fin K)) (haction : forall t : Nat, Measurable (fun omega : Omega => action omega t)) (reward : Omega -> RewardTrace Rat)"
     },
     {
@@ -16315,6 +16658,798 @@
       "statement": "def obligationNames : List String :="
     },
     {
+      "kind": "theorem",
+      "name": "armStreamAction_eq_initializationArm_of_lt",
+      "full_name": "BanditRLProof.UCB.armStreamAction_eq_initializationArm_of_lt",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 26,
+      "statement": "theorem armStreamAction_eq_initializationArm_of_lt {K : Nat} (hK : 0 < K) (c : Real) (stream : ArmRewardStream K) (t : Nat) (ht : t < K) : armStreamAction hK c stream t = initializationArm hK t"
+    },
+    {
+      "kind": "theorem",
+      "name": "pullCount_armStreamAction_K_eq_one",
+      "full_name": "BanditRLProof.UCB.pullCount_armStreamAction_K_eq_one",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 38,
+      "statement": "theorem pullCount_armStreamAction_K_eq_one {K : Nat} (hK : 0 < K) (c : Real) (stream : ArmRewardStream K) (arm : Fin K) : pullCount (armStreamAction hK c stream) arm K = 1"
+    },
+    {
+      "kind": "theorem",
+      "name": "pullCount_armStreamAction_pos_of_K_le",
+      "full_name": "BanditRLProof.UCB.pullCount_armStreamAction_pos_of_K_le",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 61,
+      "statement": "theorem pullCount_armStreamAction_pos_of_K_le {K : Nat} (hK : 0 < K) (c : Real) (stream : ArmRewardStream K) (arm : Fin K) (t : Nat) (ht : K <= t) : 0 < pullCount (armStreamAction hK c stream) arm t"
+    },
+    {
+      "kind": "theorem",
+      "name": "K_lt_of_one_lt_pullCount_armStreamAction",
+      "full_name": "BanditRLProof.UCB.K_lt_of_one_lt_pullCount_armStreamAction",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 71,
+      "statement": "theorem K_lt_of_one_lt_pullCount_armStreamAction {K : Nat} (hK : 0 < K) (c : Real) (stream : ArmRewardStream K) (arm : Fin K) (t : Nat) (hcount : 1 < pullCount (armStreamAction hK c stream) arm t) : K < t"
+    },
+    {
+      "kind": "theorem",
+      "name": "armStreamAction_eq_realIndexAction_of_K_le",
+      "full_name": "BanditRLProof.UCB.armStreamAction_eq_realIndexAction_of_K_le",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 84,
+      "statement": "theorem armStreamAction_eq_realIndexAction_of_K_le {K : Nat} (hK : 0 < K) (c : Real) (stream : ArmRewardStream K) (t : Nat) (ht : K <= t) : armStreamAction hK c stream t = realIndexAction hK (armStreamAction hK c stream) (armStreamReward hK c stream) c t"
+    },
+    {
+      "kind": "theorem",
+      "name": "realIndex_le_realIndex_armStreamAction_of_K_le",
+      "full_name": "BanditRLProof.UCB.realIndex_le_realIndex_armStreamAction_of_K_le",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 107,
+      "statement": "theorem realIndex_le_realIndex_armStreamAction_of_K_le {K : Nat} (hK : 0 < K) (c : Real) (stream : ArmRewardStream K) (t : Nat) (ht : K <= t) (arm : Fin K) : realIndex (armStreamAction hK c stream) (armStreamReward hK c stream) c arm t <= realIndex (armStreamAction hK c stream) (armStreamReward hK c stream) c (armStreamAction hK c stream t) t"
+    },
+    {
+      "kind": "theorem",
+      "name": "meanGap_le_two_realWidth_of_selected",
+      "full_name": "BanditRLProof.UCB.meanGap_le_two_realWidth_of_selected",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 120,
+      "statement": "theorem meanGap_le_two_realWidth_of_selected {K : Nat} (hK : 0 < K) (c : Real) (stream : ArmRewardStream K) (t : Nat) (ht : K <= t) (trueMean : Fin K -> Real) (best chosen : Fin K) (hselected : armStreamAction hK c stream t = chosen) (hbest : trueMean best <= realEmpiricalMean (armStreamAction hK c stream) (armStreamReward hK c stream) best t +"
+    },
+    {
+      "kind": "theorem",
+      "name": "pullCount_le_eight_scale_log_div_gap_sq",
+      "full_name": "BanditRLProof.UCB.pullCount_le_eight_scale_log_div_gap_sq",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 146,
+      "statement": "theorem pullCount_le_eight_scale_log_div_gap_sq {K : Nat} (action : ActionTrace (Fin K)) (arm : Fin K) (scale gap : Real) (t : Nat) (hscale : 0 <= scale) (hgap : 0 < gap) (hcount : 0 < pullCount action arm t) (hgap_le : gap <= 2 * realWidth action scale arm t) : (pullCount action arm t : Real) <= 8 * scale * Real.log ((t + 1 : Nat) : Real) / gap ^ 2"
+    },
+    {
+      "kind": "def",
+      "name": "realPullThreshold",
+      "full_name": "BanditRLProof.UCB.realPullThreshold",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 173,
+      "statement": "noncomputable def realPullThreshold (c : Real) (sigma2 : NNReal) (gap : Real) (n : Nat) : Real :="
+    },
+    {
+      "kind": "def",
+      "name": "pullThreshold",
+      "full_name": "BanditRLProof.UCB.pullThreshold",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 178,
+      "statement": "noncomputable def pullThreshold (c : Real) (sigma2 : NNReal) (gap : Real) (n : Nat) : Nat :="
+    },
+    {
+      "kind": "def",
+      "name": "indexTail",
+      "full_name": "BanditRLProof.UCB.indexTail",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 183,
+      "statement": "noncomputable def indexTail (c : Real) (t : Nat) : ENNReal :="
+    },
+    {
+      "kind": "def",
+      "name": "constSum",
+      "full_name": "BanditRLProof.UCB.constSum",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 187,
+      "statement": "noncomputable def constSum (c : Real) (n : Nat) : ENNReal :="
+    },
+    {
+      "kind": "def",
+      "name": "selectedLargePullCountEvent",
+      "full_name": "BanditRLProof.UCB.selectedLargePullCountEvent",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 191,
+      "statement": "noncomputable def selectedLargePullCountEvent {K : Nat} (hK : 0 < K) (c : Real) (sigma2 : NNReal) (gap : Real) (arm : Fin K) (n t : Nat) : Set (ArmRewardStream K) :="
+    },
+    {
+      "kind": "def",
+      "name": "lowerIndexFailure",
+      "full_name": "BanditRLProof.UCB.lowerIndexFailure",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 200,
+      "statement": "noncomputable def lowerIndexFailure {K : Nat} (hK : 0 < K) (c : Real) (sigma2 : NNReal) (arm : Fin K) (mean : Real) (t : Nat) : Set (ArmRewardStream K) :="
+    },
+    {
+      "kind": "def",
+      "name": "upperIndexFailure",
+      "full_name": "BanditRLProof.UCB.upperIndexFailure",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 214,
+      "statement": "noncomputable def upperIndexFailure {K : Nat} (hK : 0 < K) (c : Real) (sigma2 : NNReal) (arm : Fin K) (mean : Real) (t : Nat) : Set (ArmRewardStream K) :="
+    },
+    {
+      "kind": "theorem",
+      "name": "selectedLargePullCountEvent_subset_lower_union_upper",
+      "full_name": "BanditRLProof.UCB.selectedLargePullCountEvent_subset_lower_union_upper",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 232,
+      "statement": "theorem selectedLargePullCountEvent_subset_lower_union_upper {K : Nat} (hK : 0 < K) (c : Real) (sigma2 : NNReal) (nu : Kernel (Fin K) Real) (arm : Fin K) (n t : Nat) (hc : 0 < c) (hsigma2 : sigma2 ≠ 0) (hgap : 0 < realKernelGap nu arm) (ht : t < n) : selectedLargePullCountEvent hK c sigma2 (realKernelGap nu arm) arm n t ⊆ lowerIndexFailure hK c sigma2 (ETC.realKernelBestArm hK nu)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_selectedLargePullCountEvent_le_two_mul_indexTail",
+      "full_name": "BanditRLProof.UCB.measure_selectedLargePullCountEvent_le_two_mul_indexTail",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 375,
+      "statement": "theorem measure_selectedLargePullCountEvent_le_two_mul_indexTail {K : Nat} (hK : 0 < K) (c : Real) (sigma2 : NNReal) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (arm : Fin K) (n t : Nat) (hc : 0 < c) (hsigma2 : sigma2 ≠ 0) (hgap : 0 < realKernelGap nu arm) (ht : t < n) (hsubGBest : HasSubgaussianMGF (fun reward => reward -"
+    },
+    {
+      "kind": "theorem",
+      "name": "lintegral_selectedLargePullCount_indicator_sum_le_two_mul_constSum",
+      "full_name": "BanditRLProof.UCB.lintegral_selectedLargePullCount_indicator_sum_le_two_mul_constSum",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 423,
+      "statement": "theorem lintegral_selectedLargePullCount_indicator_sum_le_two_mul_constSum {K : Nat} (hK : 0 < K) (c : Real) (sigma2 : NNReal) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (arm : Fin K) (n : Nat) (hc : 0 < c) (hsigma2 : sigma2 ≠ 0) (hgap : 0 < realKernelGap nu arm) (hsubGBest : HasSubgaussianMGF (fun reward => reward -"
+    },
+    {
+      "kind": "theorem",
+      "name": "lintegral_natCast_pullCount_armStreamAction_le_threshold_add_two_mul_constSum",
+      "full_name": "BanditRLProof.UCB.lintegral_natCast_pullCount_armStreamAction_le_threshold_add_two_mul_constSum",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 473,
+      "statement": "theorem lintegral_natCast_pullCount_armStreamAction_le_threshold_add_two_mul_constSum {K : Nat} (hK : 0 < K) (c : Real) (sigma2 : NNReal) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (arm : Fin K) (n : Nat) (hc : 0 < c) (hsigma2 : sigma2 ≠ 0) (hgap : 0 < realKernelGap nu arm) (hsubGBest : HasSubgaussianMGF (fun reward => reward -"
+    },
+    {
+      "kind": "theorem",
+      "name": "indexTail_ne_top",
+      "full_name": "BanditRLProof.UCB.indexTail_ne_top",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 538,
+      "statement": "theorem indexTail_ne_top (c : Real) (t : Nat) : indexTail c t ≠ ∞"
+    },
+    {
+      "kind": "theorem",
+      "name": "constSum_ne_top",
+      "full_name": "BanditRLProof.UCB.constSum_ne_top",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 543,
+      "statement": "theorem constSum_ne_top (c : Real) (n : Nat) : constSum c n ≠ ∞"
+    },
+    {
+      "kind": "theorem",
+      "name": "integrable_real_pullCount_armStreamAction",
+      "full_name": "BanditRLProof.UCB.integrable_real_pullCount_armStreamAction",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 548,
+      "statement": "theorem integrable_real_pullCount_armStreamAction {K : Nat} (hK : 0 < K) (c : Real) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (arm : Fin K) (n : Nat) : Integrable (fun stream : ArmRewardStream K => (pullCount (armStreamAction hK c stream) arm n : Real)) (armStreamMeasure nu)"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_real_pullCount_armStreamAction_le_threshold_add_two_mul_constSum",
+      "full_name": "BanditRLProof.UCB.integral_real_pullCount_armStreamAction_le_threshold_add_two_mul_constSum",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 567,
+      "statement": "theorem integral_real_pullCount_armStreamAction_le_threshold_add_two_mul_constSum {K : Nat} (hK : 0 < K) (c : Real) (sigma2 : NNReal) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (arm : Fin K) (n : Nat) (hc : 0 < c) (hsigma2 : sigma2 ≠ 0) (hgap : 0 < realKernelGap nu arm) (hsubGBest : HasSubgaussianMGF (fun reward => reward -"
+    },
+    {
+      "kind": "theorem",
+      "name": "pullThreshold_cast_le_realPullThreshold_add_two",
+      "full_name": "BanditRLProof.UCB.pullThreshold_cast_le_realPullThreshold_add_two",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 635,
+      "statement": "theorem pullThreshold_cast_le_realPullThreshold_add_two (c : Real) (sigma2 : NNReal) (gap : Real) (n : Nat) (hthreshold : 0 <= realPullThreshold c sigma2 gap n) : (pullThreshold c sigma2 gap n : Real) <= realPullThreshold c sigma2 gap n + 2"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_real_pullCount_armStreamAction_le_realThreshold_add_two_add_two_mul_constSum",
+      "full_name": "BanditRLProof.UCB.integral_real_pullCount_armStreamAction_le_realThreshold_add_two_add_two_mul_constSum",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 646,
+      "statement": "theorem integral_real_pullCount_armStreamAction_le_realThreshold_add_two_add_two_mul_constSum {K : Nat} (hK : 0 < K) (c : Real) (sigma2 : NNReal) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (arm : Fin K) (n : Nat) (hc : 0 < c) (hsigma2 : sigma2 ≠ 0) (hgap : 0 < realKernelGap nu arm) (hsubGBest : HasSubgaussianMGF (fun reward => reward -"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_realKernelRegret_armStreamAction_le_sum_gap_mul_realThreshold_add_two_add_two_mul_constSum",
+      "full_name": "BanditRLProof.UCB.integral_realKernelRegret_armStreamAction_le_sum_gap_mul_realThreshold_add_two_add_two_mul_constSum",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 675,
+      "statement": "theorem integral_realKernelRegret_armStreamAction_le_sum_gap_mul_realThreshold_add_two_add_two_mul_constSum {K : Nat} (hK : 0 < K) (c : Real) (sigma2 : NNReal) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) (hc : 0 < c) (hsigma2 : sigma2 ≠ 0) (hsubG : forall arm : Fin K, HasSubgaussianMGF (fun reward => reward - realKernelMean nu arm) sigma2 (nu arm)) : ∫ stream : ArmRewardStream K, realKernelRegret nu"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_realKernelRegret_armStreamAction_le_lml_sum",
+      "full_name": "BanditRLProof.UCB.integral_realKernelRegret_armStreamAction_le_lml_sum",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 718,
+      "statement": "theorem integral_realKernelRegret_armStreamAction_le_lml_sum {K : Nat} (hK : 0 < K) (c : Real) (sigma2 : NNReal) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) (hc : 0 < c) (hsigma2 : sigma2 ≠ 0) (hsubG : forall arm : Fin K, HasSubgaussianMGF (fun reward => reward - realKernelMean nu arm) sigma2 (nu arm)) : ∫ stream : ArmRewardStream K, realKernelRegret nu"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_armStreamActionTrace",
+      "full_name": "BanditRLProof.UCB.measurable_armStreamActionTrace",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 743,
+      "statement": "theorem measurable_armStreamActionTrace {K : Nat} (hK : 0 < K) (c : Real) : Measurable (armStreamAction hK c : ArmRewardStream K -> ActionTrace (Fin K))"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_realKernelRegret_actionTrace",
+      "full_name": "BanditRLProof.UCB.measurable_realKernelRegret_actionTrace",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 750,
+      "statement": "theorem measurable_realKernelRegret_actionTrace {K : Nat} (nu : Kernel (Fin K) Real) (n : Nat) : Measurable (fun action : ActionTrace (Fin K) => realKernelRegret nu action n)"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_realKernelRegret_externalAction_le_lml_sum_of_identDistrib_armStreamAction",
+      "full_name": "BanditRLProof.UCB.integral_realKernelRegret_externalAction_le_lml_sum_of_identDistrib_armStreamAction",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 769,
+      "statement": "theorem integral_realKernelRegret_externalAction_le_lml_sum_of_identDistrib_armStreamAction {Omega : Type*} [MeasurableSpace Omega] {K : Nat} (hK : 0 < K) (c : Real) (sigma2 : NNReal) (mu : Measure Omega) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (action : Omega -> ActionTrace (Fin K)) (hident : IdentDistrib action (armStreamAction hK (c * (sigma2 : Real)))"
+    },
+    {
+      "kind": "theorem",
+      "name": "identDistrib_action_armStreamAction_of_identDistrib_armStream",
+      "full_name": "BanditRLProof.UCB.identDistrib_action_armStreamAction_of_identDistrib_armStream",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 801,
+      "statement": "theorem identDistrib_action_armStreamAction_of_identDistrib_armStream {Omega : Type*} [MeasurableSpace Omega] {K : Nat} (hK : 0 < K) (c : Real) (mu : Measure Omega) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (armStream : Omega -> ArmRewardStream K) (action : Omega -> ActionTrace (Fin K)) (hstreamLaw : IdentDistrib armStream"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_realKernelRegret_externalAction_le_lml_sum_of_identDistrib_armStream",
+      "full_name": "BanditRLProof.UCB.integral_realKernelRegret_externalAction_le_lml_sum_of_identDistrib_armStream",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 829,
+      "statement": "theorem integral_realKernelRegret_externalAction_le_lml_sum_of_identDistrib_armStream {Omega : Type*} [MeasurableSpace Omega] {K : Nat} (hK : 0 < K) (c : Real) (sigma2 : NNReal) (mu : Measure Omega) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (armStream : Omega -> ArmRewardStream K) (action : Omega -> ActionTrace (Fin K)) (hstreamLaw : IdentDistrib armStream"
+    },
+    {
+      "kind": "theorem",
+      "name": "identDistrib_action_of_identDistrib_actionRewardTrace",
+      "full_name": "BanditRLProof.UCB.identDistrib_action_of_identDistrib_actionRewardTrace",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 862,
+      "statement": "theorem identDistrib_action_of_identDistrib_actionRewardTrace {Omega Xi : Type*} [MeasurableSpace Omega] [MeasurableSpace Xi] {K : Nat} (mu : Measure Omega) (mu' : Measure Xi) (action : Omega -> ActionTrace (Fin K)) (reward : Omega -> RewardTrace Real) (action' : Xi -> ActionTrace (Fin K)) (reward' : Xi -> RewardTrace Real)"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_realKernelRegret_externalAction_le_lml_sum_of_identDistrib_actionRewardTrace",
+      "full_name": "BanditRLProof.UCB.integral_realKernelRegret_externalAction_le_lml_sum_of_identDistrib_actionRewardTrace",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 885,
+      "statement": "theorem integral_realKernelRegret_externalAction_le_lml_sum_of_identDistrib_actionRewardTrace {Omega : Type*} [MeasurableSpace Omega] {K : Nat} (hK : 0 < K) (c : Real) (sigma2 : NNReal) (mu : Measure Omega) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (action : Omega -> ActionTrace (Fin K)) (reward : Omega -> RewardTrace Real) (htrajectory : IdentDistrib"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_realKernelRegret_externalAction_le_lml_sum_of_common_actionReward_condDistrib",
+      "full_name": "BanditRLProof.UCB.integral_realKernelRegret_externalAction_le_lml_sum_of_common_actionReward_condDistrib",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 922,
+      "statement": "theorem integral_realKernelRegret_externalAction_le_lml_sum_of_common_actionReward_condDistrib {Omega : Type*} [MeasurableSpace Omega] {K : Nat} [NeZero K] (hK : 0 < K) (c : Real) (sigma2 : NNReal) (mu : Measure Omega) [IsFiniteMeasure mu] (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (action : Omega -> ActionTrace (Fin K)) (reward : Omega -> RewardTrace Real) (haction : forall t : Nat,"
+    },
+    {
+      "kind": "theorem",
+      "name": "identDistrib_actionRewardTrace_of_condDistrib_eq_armStream",
+      "full_name": "BanditRLProof.UCB.identDistrib_actionRewardTrace_of_condDistrib_eq_armStream",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 1011,
+      "statement": "theorem identDistrib_actionRewardTrace_of_condDistrib_eq_armStream {Omega : Type*} [MeasurableSpace Omega] {K : Nat} [NeZero K] (hK : 0 < K) (c : Real) (sigma2 : NNReal) (mu : Measure Omega) [IsFiniteMeasure mu] (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (action : Omega -> ActionTrace (Fin K)) (reward : Omega -> RewardTrace Real) (haction : forall t : Nat,"
+    },
+    {
+      "kind": "theorem",
+      "name": "identDistrib_actionRewardTrace_of_split_condDistrib_eq_armStream",
+      "full_name": "BanditRLProof.UCB.identDistrib_actionRewardTrace_of_split_condDistrib_eq_armStream",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 1097,
+      "statement": "theorem identDistrib_actionRewardTrace_of_split_condDistrib_eq_armStream {Omega : Type*} [MeasurableSpace Omega] {K : Nat} [NeZero K] (hK : 0 < K) (c : Real) (sigma2 : NNReal) (mu : Measure Omega) [IsFiniteMeasure mu] (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (action : Omega -> ActionTrace (Fin K)) (reward : Omega -> RewardTrace Real) (haction : forall t : Nat,"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_realKernelRegret_externalAction_le_lml_sum_of_split_condDistrib_eq_armStream",
+      "full_name": "BanditRLProof.UCB.integral_realKernelRegret_externalAction_le_lml_sum_of_split_condDistrib_eq_armStream",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 1251,
+      "statement": "theorem integral_realKernelRegret_externalAction_le_lml_sum_of_split_condDistrib_eq_armStream {Omega : Type*} [MeasurableSpace Omega] {K : Nat} [NeZero K] (hK : 0 < K) (c : Real) (sigma2 : NNReal) (mu : Measure Omega) [IsFiniteMeasure mu] (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (action : Omega -> ActionTrace (Fin K)) (reward : Omega -> RewardTrace Real) (haction : forall t : Nat,"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_realKernelRegret_externalAction_le_lml_sum_of_condDistrib_eq_armStream",
+      "full_name": "BanditRLProof.UCB.integral_realKernelRegret_externalAction_le_lml_sum_of_condDistrib_eq_armStream",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamExpectedPullCount.lean",
+      "line": 1332,
+      "statement": "theorem integral_realKernelRegret_externalAction_le_lml_sum_of_condDistrib_eq_armStream {Omega : Type*} [MeasurableSpace Omega] {K : Nat} [NeZero K] (hK : 0 < K) (c : Real) (sigma2 : NNReal) (mu : Measure Omega) [IsFiniteMeasure mu] (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (action : Omega -> ActionTrace (Fin K)) (reward : Omega -> RewardTrace Real) (haction : forall t : Nat,"
+    },
+    {
+      "kind": "def",
+      "name": "initializationArm",
+      "full_name": "BanditRLProof.UCB.initializationArm",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamProcess.lean",
+      "line": 20,
+      "statement": "def initializationArm {K : Nat} (hK : 0 < K) (t : Nat) : Fin K :="
+    },
+    {
+      "kind": "theorem",
+      "name": "initializationArm_zero",
+      "full_name": "BanditRLProof.UCB.initializationArm_zero",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamProcess.lean",
+      "line": 24,
+      "statement": "theorem initializationArm_zero {K : Nat} (hK : 0 < K) : initializationArm hK 0 = Fin.mk 0 hK"
+    },
+    {
+      "kind": "def",
+      "name": "realHistoryNextArm",
+      "full_name": "BanditRLProof.UCB.realHistoryNextArm",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamProcess.lean",
+      "line": 34,
+      "statement": "noncomputable def realHistoryNextArm {K : Nat} (hK : 0 < K) (c : Real) (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) : Fin K :="
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_realHistoryNextArm",
+      "full_name": "BanditRLProof.UCB.measurable_realHistoryNextArm",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamProcess.lean",
+      "line": 43,
+      "statement": "theorem measurable_realHistoryNextArm {K : Nat} (hK : 0 < K) (c : Real) (n : Nat) : Measurable (fun history : History.FinitePairHistory (Fin K) Real n => realHistoryNextArm hK c n history)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_armRewardStream_apply",
+      "full_name": "BanditRLProof.UCB.measurable_armRewardStream_apply",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamProcess.lean",
+      "line": 53,
+      "statement": "theorem measurable_armRewardStream_apply {K : Nat} : Measurable (fun input : ArmRewardStream K × (Nat × Fin K) => input.1 input.2.1 input.2.2)"
+    },
+    {
+      "kind": "def",
+      "name": "armStreamHistory",
+      "full_name": "BanditRLProof.UCB.armStreamHistory",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamProcess.lean",
+      "line": 66,
+      "statement": "noncomputable def armStreamHistory {K : Nat} (hK : 0 < K) (c : Real) (stream : ArmRewardStream K) : (n : Nat) -> History.FinitePairHistory (Fin K) Real n | 0 => let arm"
+    },
+    {
+      "kind": "def",
+      "name": "armStreamAction",
+      "full_name": "BanditRLProof.UCB.armStreamAction",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamProcess.lean",
+      "line": 80,
+      "statement": "noncomputable def armStreamAction {K : Nat} (hK : 0 < K) (c : Real) : ArmRewardStream K -> ActionTrace (Fin K) :="
+    },
+    {
+      "kind": "def",
+      "name": "armStreamReward",
+      "full_name": "BanditRLProof.UCB.armStreamReward",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamProcess.lean",
+      "line": 88,
+      "statement": "noncomputable def armStreamReward {K : Nat} (hK : 0 < K) (c : Real) : ArmRewardStream K -> RewardTrace Real :="
+    },
+    {
+      "kind": "theorem",
+      "name": "armStreamAction_zero",
+      "full_name": "BanditRLProof.UCB.armStreamAction_zero",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamProcess.lean",
+      "line": 94,
+      "statement": "theorem armStreamAction_zero {K : Nat} (hK : 0 < K) (c : Real) (stream : ArmRewardStream K) : armStreamAction hK c stream 0 = initializationArm hK 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "armStreamAction_succ",
+      "full_name": "BanditRLProof.UCB.armStreamAction_succ",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamProcess.lean",
+      "line": 100,
+      "statement": "theorem armStreamAction_succ {K : Nat} (hK : 0 < K) (c : Real) (stream : ArmRewardStream K) (n : Nat) : armStreamAction hK c stream (n + 1) = realHistoryNextArm hK c n (armStreamHistory hK c stream n)"
+    },
+    {
+      "kind": "theorem",
+      "name": "armStreamHistory_eq_finitePairHistoryOfTrace",
+      "full_name": "BanditRLProof.UCB.armStreamHistory_eq_finitePairHistoryOfTrace",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamProcess.lean",
+      "line": 111,
+      "statement": "theorem armStreamHistory_eq_finitePairHistoryOfTrace {K : Nat} (hK : 0 < K) (c : Real) (stream : ArmRewardStream K) (n : Nat) : armStreamHistory hK c stream n = History.finitePairHistoryOfTrace (armStreamAction hK c stream) (armStreamReward hK c stream) n"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_armStreamHistory",
+      "full_name": "BanditRLProof.UCB.measurable_armStreamHistory",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamProcess.lean",
+      "line": 141,
+      "statement": "theorem measurable_armStreamHistory {K : Nat} (hK : 0 < K) (c : Real) (n : Nat) : Measurable (fun stream : ArmRewardStream K => armStreamHistory hK c stream n)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_armStreamAction",
+      "full_name": "BanditRLProof.UCB.measurable_armStreamAction",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamProcess.lean",
+      "line": 217,
+      "statement": "theorem measurable_armStreamAction {K : Nat} (hK : 0 < K) (c : Real) (t : Nat) : Measurable (fun stream : ArmRewardStream K => armStreamAction hK c stream t)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_armStreamReward",
+      "full_name": "BanditRLProof.UCB.measurable_armStreamReward",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamProcess.lean",
+      "line": 227,
+      "statement": "theorem measurable_armStreamReward {K : Nat} (hK : 0 < K) (c : Real) (t : Nat) : Measurable (fun stream : ArmRewardStream K => armStreamReward hK c stream t)"
+    },
+    {
+      "kind": "theorem",
+      "name": "armStreamAction_succ_eq_realHistoryNextArm_actualHistory",
+      "full_name": "BanditRLProof.UCB.armStreamAction_succ_eq_realHistoryNextArm_actualHistory",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamProcess.lean",
+      "line": 246,
+      "statement": "theorem armStreamAction_succ_eq_realHistoryNextArm_actualHistory {K : Nat} (hK : 0 < K) (c : Real) (stream : ArmRewardStream K) (n : Nat) : armStreamAction hK c stream (n + 1) = realHistoryNextArm hK c n (History.finitePairHistoryOfTrace (armStreamAction hK c stream) (armStreamReward hK c stream) n)"
+    },
+    {
+      "kind": "theorem",
+      "name": "armStreamAction_succ_eq_realHistoryIndexAction_of_not_lt",
+      "full_name": "BanditRLProof.UCB.armStreamAction_succ_eq_realHistoryIndexAction_of_not_lt",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamProcess.lean",
+      "line": 257,
+      "statement": "theorem armStreamAction_succ_eq_realHistoryIndexAction_of_not_lt {K : Nat} (hK : 0 < K) (c : Real) (stream : ArmRewardStream K) (n : Nat) (hn : ¬ n < K - 1) : armStreamAction hK c stream (n + 1) = realHistoryIndexAction hK c n (History.finitePairHistoryOfTrace (armStreamAction hK c stream) (armStreamReward hK c stream) n)"
+    },
+    {
+      "kind": "def",
+      "name": "armStreamUCBFixedArmPrefixSource",
+      "full_name": "BanditRLProof.UCB.armStreamUCBFixedArmPrefixSource",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamProcess.lean",
+      "line": 269,
+      "statement": "noncomputable def armStreamUCBFixedArmPrefixSource {K : Nat} (hK : 0 < K) (c : Real) : FixedArmPrefixSource (armStreamAction hK c) (armStreamReward hK c)"
+    },
+    {
+      "kind": "def",
+      "name": "armStreamMeasure",
+      "full_name": "BanditRLProof.UCB.armStreamMeasure",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamProcess.lean",
+      "line": 276,
+      "statement": "noncomputable def armStreamMeasure {K : Nat} (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] : Measure (ArmRewardStream K) :="
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_pullCount_prod_sumRewards_armStreamUCB_mem_le",
+      "full_name": "BanditRLProof.UCB.measure_pullCount_prod_sumRewards_armStreamUCB_mem_le",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamProcess.lean",
+      "line": 291,
+      "statement": "theorem measure_pullCount_prod_sumRewards_armStreamUCB_mem_le {K : Nat} (hK : 0 < K) (c : Real) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (arm : Fin K) (n : Nat) (s : Set (Nat × Real)) [DecidablePred (fun k : Nat => k ∈ Prod.fst '' s)] : armStreamMeasure nu {stream | (pullCount (armStreamAction hK c stream) arm n, sumRewards (armStreamAction hK c stream)"
+    },
+    {
+      "kind": "def",
+      "name": "rewardFromArmStream",
+      "full_name": "BanditRLProof.UCB.rewardFromArmStream",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamSource.lean",
+      "line": 28,
+      "statement": "def rewardFromArmStream {Omega : Type u} {K : Nat} (action : Omega -> ActionTrace (Fin K)) (armStream : Omega -> ArmRewardStream K) : Omega -> RewardTrace Real :="
+    },
+    {
+      "kind": "theorem",
+      "name": "sumRewards_rewardFromArmStream_eq_armPrefixSum",
+      "full_name": "BanditRLProof.UCB.sumRewards_rewardFromArmStream_eq_armPrefixSum",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamSource.lean",
+      "line": 42,
+      "statement": "theorem sumRewards_rewardFromArmStream_eq_armPrefixSum {Omega : Type u} {K : Nat} (action : Omega -> ActionTrace (Fin K)) (armStream : Omega -> ArmRewardStream K) (omega : Omega) (arm : Fin K) (n : Nat) : sumRewards (action omega) (rewardFromArmStream action armStream omega) arm n = armPrefixSum arm (pullCount (action omega) arm n) (armStream omega)"
+    },
+    {
+      "kind": "def",
+      "name": "fixedArmPrefixSourceOfArmStream",
+      "full_name": "BanditRLProof.UCB.fixedArmPrefixSourceOfArmStream",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamSource.lean",
+      "line": 65,
+      "statement": "def fixedArmPrefixSourceOfArmStream {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (action : Omega -> ActionTrace (Fin K)) (armStream : Omega -> ArmRewardStream K) (hmeasurable : forall i arm, Measurable (fun omega => armStream omega i arm)) : FixedArmPrefixSource action (rewardFromArmStream action armStream) where"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_pullCount_prod_sumRewards_rewardFromArmStream_mem_le_identDistrib",
+      "full_name": "BanditRLProof.UCB.measure_pullCount_prod_sumRewards_rewardFromArmStream_mem_le_identDistrib",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamSource.lean",
+      "line": 81,
+      "statement": "theorem measure_pullCount_prod_sumRewards_rewardFromArmStream_mem_le_identDistrib {Omega : Type u} {Xi : Type v} {K : Nat} [MeasurableSpace Omega] [MeasurableSpace Xi] (mu : Measure Omega) (nu : Measure Xi) (action : Omega -> ActionTrace (Fin K)) (armStream : Omega -> ArmRewardStream K) (hmeasurable : forall i arm, Measurable (fun omega => armStream omega i arm))"
+    },
+    {
+      "kind": "def",
+      "name": "canonicalFixedArmPrefixSource",
+      "full_name": "BanditRLProof.UCB.canonicalFixedArmPrefixSource",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamSource.lean",
+      "line": 109,
+      "statement": "def canonicalFixedArmPrefixSource {K : Nat} (action : ArmRewardStream K -> ActionTrace (Fin K)) : FixedArmPrefixSource action (rewardFromArmStream action id) :="
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_pullCount_prod_sumRewards_rewardFromCanonicalArmStream_mem_le",
+      "full_name": "BanditRLProof.UCB.measure_pullCount_prod_sumRewards_rewardFromCanonicalArmStream_mem_le",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamSource.lean",
+      "line": 121,
+      "statement": "theorem measure_pullCount_prod_sumRewards_rewardFromCanonicalArmStream_mem_le {K : Nat} (mu : Measure (ArmRewardStream K)) (action : ArmRewardStream K -> ActionTrace (Fin K)) (arm : Fin K) (n : Nat) (s : Set (Nat × Real)) [DecidablePred (fun k : Nat => k ∈ Prod.fst '' s)] : mu {stream | (pullCount (action stream) arm n,"
+    },
+    {
+      "kind": "theorem",
+      "name": "armStreamMeasure_map_coord",
+      "full_name": "BanditRLProof.UCB.armStreamMeasure_map_coord",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamTail.lean",
+      "line": 21,
+      "statement": "theorem armStreamMeasure_map_coord {K : Nat} (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (i : Nat) (arm : Fin K) : Measure.map (fun stream : ArmRewardStream K => stream i arm) (armStreamMeasure nu) = nu arm"
+    },
+    {
+      "kind": "theorem",
+      "name": "iIndepFun_armStreamMeasure_coord_sub",
+      "full_name": "BanditRLProof.UCB.iIndepFun_armStreamMeasure_coord_sub",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamTail.lean",
+      "line": 45,
+      "statement": "theorem iIndepFun_armStreamMeasure_coord_sub {K : Nat} (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (arm : Fin K) (mean : Real) : iIndepFun (fun i (stream : ArmRewardStream K) => stream i arm - mean) (armStreamMeasure nu)"
+    },
+    {
+      "kind": "theorem",
+      "name": "iIndepFun_armStreamMeasure_sub_coord",
+      "full_name": "BanditRLProof.UCB.iIndepFun_armStreamMeasure_sub_coord",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamTail.lean",
+      "line": 59,
+      "statement": "theorem iIndepFun_armStreamMeasure_sub_coord {K : Nat} (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (arm : Fin K) (mean : Real) : iIndepFun (fun i (stream : ArmRewardStream K) => mean - stream i arm) (armStreamMeasure nu)"
+    },
+    {
+      "kind": "theorem",
+      "name": "hasSubgaussianMGF_armStreamMeasure_coord_sub",
+      "full_name": "BanditRLProof.UCB.hasSubgaussianMGF_armStreamMeasure_coord_sub",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamTail.lean",
+      "line": 73,
+      "statement": "theorem hasSubgaussianMGF_armStreamMeasure_coord_sub {K : Nat} (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (arm : Fin K) (mean : Real) (sigma2 : NNReal) (hsubG : HasSubgaussianMGF (fun reward => reward - mean) sigma2 (nu arm)) (i : Nat) : HasSubgaussianMGF (fun stream : ArmRewardStream K => stream i arm - mean)"
+    },
+    {
+      "kind": "theorem",
+      "name": "hasSubgaussianMGF_armStreamMeasure_sub_coord",
+      "full_name": "BanditRLProof.UCB.hasSubgaussianMGF_armStreamMeasure_sub_coord",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamTail.lean",
+      "line": 92,
+      "statement": "theorem hasSubgaussianMGF_armStreamMeasure_sub_coord {K : Nat} (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (arm : Fin K) (mean : Real) (sigma2 : NNReal) (hsubG : HasSubgaussianMGF (fun reward => reward - mean) sigma2 (nu arm)) (i : Nat) : HasSubgaussianMGF (fun stream : ArmRewardStream K => mean - stream i arm)"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_coord_sub_eq_armPrefixSum_sub",
+      "full_name": "BanditRLProof.UCB.sum_coord_sub_eq_armPrefixSum_sub",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamTail.lean",
+      "line": 108,
+      "statement": "theorem sum_coord_sub_eq_armPrefixSum_sub {K : Nat} (stream : ArmRewardStream K) (arm : Fin K) (mean : Real) (k : Nat) : (Finset.range k).sum (fun i => stream i arm - mean) = armPrefixSum arm k stream - (k : Real) * mean"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_sub_coord_eq_mul_sub_armPrefixSum",
+      "full_name": "BanditRLProof.UCB.sum_sub_coord_eq_mul_sub_armPrefixSum",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamTail.lean",
+      "line": 115,
+      "statement": "theorem sum_sub_coord_eq_mul_sub_armPrefixSum {K : Nat} (stream : ArmRewardStream K) (arm : Fin K) (mean : Real) (k : Nat) : (Finset.range k).sum (fun i => mean - stream i arm) = (k : Real) * mean - armPrefixSum arm k stream"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_armPrefixSum_sub_mul_ge_le",
+      "full_name": "BanditRLProof.UCB.measure_armPrefixSum_sub_mul_ge_le",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamTail.lean",
+      "line": 123,
+      "statement": "theorem measure_armPrefixSum_sub_mul_ge_le {K : Nat} (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (arm : Fin K) (mean : Real) (sigma2 : NNReal) (hsubG : HasSubgaussianMGF (fun reward => reward - mean) sigma2 (nu arm)) (k : Nat) {eps : Real} (heps : 0 <= eps) : armStreamMeasure nu {stream : ArmRewardStream K | eps <= armPrefixSum arm k stream - (k : Real) * mean} <="
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_mul_sub_armPrefixSum_ge_le",
+      "full_name": "BanditRLProof.UCB.measure_mul_sub_armPrefixSum_ge_le",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamTail.lean",
+      "line": 146,
+      "statement": "theorem measure_mul_sub_armPrefixSum_ge_le {K : Nat} (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (arm : Fin K) (mean : Real) (sigma2 : NNReal) (hsubG : HasSubgaussianMGF (fun reward => reward - mean) sigma2 (nu arm)) (k : Nat) {eps : Real} (heps : 0 <= eps) : armStreamMeasure nu {stream : ArmRewardStream K | eps <= (k : Real) * mean - armPrefixSum arm k stream} <="
+    },
+    {
+      "kind": "def",
+      "name": "upperDeviationPairs",
+      "full_name": "BanditRLProof.UCB.upperDeviationPairs",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamTail.lean",
+      "line": 169,
+      "statement": "def upperDeviationPairs (mean : Real) (threshold : Nat -> Real) : Set (Nat × Real) :="
+    },
+    {
+      "kind": "def",
+      "name": "lowerDeviationPairs",
+      "full_name": "BanditRLProof.UCB.lowerDeviationPairs",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamTail.lean",
+      "line": 174,
+      "statement": "def lowerDeviationPairs (mean : Real) (threshold : Nat -> Real) : Set (Nat × Real) :="
+    },
+    {
+      "kind": "def",
+      "name": "positiveUpperDeviationPairs",
+      "full_name": "BanditRLProof.UCB.positiveUpperDeviationPairs",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamTail.lean",
+      "line": 179,
+      "statement": "def positiveUpperDeviationPairs (mean : Real) (threshold : Nat -> Real) : Set (Nat × Real) :="
+    },
+    {
+      "kind": "def",
+      "name": "positiveLowerDeviationPairs",
+      "full_name": "BanditRLProof.UCB.positiveLowerDeviationPairs",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamTail.lean",
+      "line": 185,
+      "statement": "def positiveLowerDeviationPairs (mean : Real) (threshold : Nat -> Real) : Set (Nat × Real) :="
+    },
+    {
+      "kind": "theorem",
+      "name": "mem_fst_image_upperDeviationPairs",
+      "full_name": "BanditRLProof.UCB.mem_fst_image_upperDeviationPairs",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamTail.lean",
+      "line": 191,
+      "statement": "theorem mem_fst_image_upperDeviationPairs (mean : Real) (threshold : Nat -> Real) (k : Nat) : k ∈ Prod.fst '' upperDeviationPairs mean threshold"
+    },
+    {
+      "kind": "theorem",
+      "name": "mem_fst_image_lowerDeviationPairs",
+      "full_name": "BanditRLProof.UCB.mem_fst_image_lowerDeviationPairs",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamTail.lean",
+      "line": 200,
+      "statement": "theorem mem_fst_image_lowerDeviationPairs (mean : Real) (threshold : Nat -> Real) (k : Nat) : k ∈ Prod.fst '' lowerDeviationPairs mean threshold"
+    },
+    {
+      "kind": "theorem",
+      "name": "mem_fst_image_positiveUpperDeviationPairs_iff",
+      "full_name": "BanditRLProof.UCB.mem_fst_image_positiveUpperDeviationPairs_iff",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamTail.lean",
+      "line": 209,
+      "statement": "theorem mem_fst_image_positiveUpperDeviationPairs_iff (mean : Real) (threshold : Nat -> Real) (k : Nat) : k ∈ Prod.fst '' positiveUpperDeviationPairs mean threshold ↔ 0 < k"
+    },
+    {
+      "kind": "theorem",
+      "name": "mem_fst_image_positiveLowerDeviationPairs_iff",
+      "full_name": "BanditRLProof.UCB.mem_fst_image_positiveLowerDeviationPairs_iff",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamTail.lean",
+      "line": 224,
+      "statement": "theorem mem_fst_image_positiveLowerDeviationPairs_iff (mean : Real) (threshold : Nat -> Real) (k : Nat) : k ∈ Prod.fst '' positiveLowerDeviationPairs mean threshold ↔ 0 < k"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_sumRewards_sub_pullCount_mul_ge_le",
+      "full_name": "BanditRLProof.UCB.measure_sumRewards_sub_pullCount_mul_ge_le",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamTail.lean",
+      "line": 245,
+      "statement": "theorem measure_sumRewards_sub_pullCount_mul_ge_le {K : Nat} (hK : 0 < K) (c : Real) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (arm : Fin K) (mean : Real) (sigma2 : NNReal) (hsubG : HasSubgaussianMGF (fun reward => reward - mean) sigma2 (nu arm)) (n : Nat) (threshold : Nat -> Real) (hthreshold : forall k, k <= n -> 0 <= threshold k) :"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_pullCount_mul_sub_sumRewards_ge_le",
+      "full_name": "BanditRLProof.UCB.measure_pullCount_mul_sub_sumRewards_ge_le",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamTail.lean",
+      "line": 290,
+      "statement": "theorem measure_pullCount_mul_sub_sumRewards_ge_le {K : Nat} (hK : 0 < K) (c : Real) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (arm : Fin K) (mean : Real) (sigma2 : NNReal) (hsubG : HasSubgaussianMGF (fun reward => reward - mean) sigma2 (nu arm)) (n : Nat) (threshold : Nat -> Real) (hthreshold : forall k, k <= n -> 0 <= threshold k) :"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_pos_and_sumRewards_sub_pullCount_mul_ge_le",
+      "full_name": "BanditRLProof.UCB.measure_pos_and_sumRewards_sub_pullCount_mul_ge_le",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamTail.lean",
+      "line": 335,
+      "statement": "theorem measure_pos_and_sumRewards_sub_pullCount_mul_ge_le {K : Nat} (hK : 0 < K) (c : Real) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (arm : Fin K) (mean : Real) (sigma2 : NNReal) (hsubG : HasSubgaussianMGF (fun reward => reward - mean) sigma2 (nu arm)) (n : Nat) (threshold : Nat -> Real) (hthreshold : forall k, 0 < k -> k <= n -> 0 <= threshold k) :"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_pos_and_pullCount_mul_sub_sumRewards_ge_le",
+      "full_name": "BanditRLProof.UCB.measure_pos_and_pullCount_mul_sub_sumRewards_ge_le",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamTail.lean",
+      "line": 393,
+      "statement": "theorem measure_pos_and_pullCount_mul_sub_sumRewards_ge_le {K : Nat} (hK : 0 < K) (c : Real) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (arm : Fin K) (mean : Real) (sigma2 : NNReal) (hsubG : HasSubgaussianMGF (fun reward => reward - mean) sigma2 (nu arm)) (n : Nat) (threshold : Nat -> Real) (hthreshold : forall k, 0 < k -> k <= n -> 0 <= threshold k) :"
+    },
+    {
+      "kind": "def",
+      "name": "countWidthThreshold",
+      "full_name": "BanditRLProof.UCB.countWidthThreshold",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamTail.lean",
+      "line": 451,
+      "statement": "noncomputable def countWidthThreshold (c : Real) (sigma2 : NNReal) (n k : Nat) : Real :="
+    },
+    {
+      "kind": "theorem",
+      "name": "countWidthThreshold_nonneg",
+      "full_name": "BanditRLProof.UCB.countWidthThreshold_nonneg",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamTail.lean",
+      "line": 458,
+      "statement": "theorem countWidthThreshold_nonneg (c : Real) (sigma2 : NNReal) (n k : Nat) : 0 <= countWidthThreshold c sigma2 n k"
+    },
+    {
+      "kind": "theorem",
+      "name": "countWidthThreshold_le_mul_mean_sub_sumRewards_of_empiricalMean_add_width_le",
+      "full_name": "BanditRLProof.UCB.countWidthThreshold_le_mul_mean_sub_sumRewards_of_empiricalMean_add_width_le",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamTail.lean",
+      "line": 464,
+      "statement": "theorem countWidthThreshold_le_mul_mean_sub_sumRewards_of_empiricalMean_add_width_le {K : Nat} (action : ActionTrace (Fin K)) (reward : RewardTrace Real) (arm : Fin K) (n : Nat) (mean c : Real) (sigma2 : NNReal) (hcount : 0 < pullCount action arm n) (hindex : realEmpiricalMean action reward arm n + realWidth action (c * (sigma2 : Real)) arm n <= mean) : countWidthThreshold c sigma2 n (pullCount action arm n) <="
+    },
+    {
+      "kind": "theorem",
+      "name": "countWidthThreshold_le_sumRewards_sub_mul_mean_of_mean_le_empiricalMean_sub_width",
+      "full_name": "BanditRLProof.UCB.countWidthThreshold_le_sumRewards_sub_mul_mean_of_mean_le_empiricalMean_sub_width",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamTail.lean",
+      "line": 492,
+      "statement": "theorem countWidthThreshold_le_sumRewards_sub_mul_mean_of_mean_le_empiricalMean_sub_width {K : Nat} (action : ActionTrace (Fin K)) (reward : RewardTrace Real) (arm : Fin K) (n : Nat) (mean c : Real) (sigma2 : NNReal) (hcount : 0 < pullCount action arm n) (hindex : mean <= realEmpiricalMean action reward arm n - realWidth action (c * (sigma2 : Real)) arm n) : countWidthThreshold c sigma2 n (pullCount action arm n) <="
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_realEmpiricalMean_add_realWidth_le_mean",
+      "full_name": "BanditRLProof.UCB.measure_realEmpiricalMean_add_realWidth_le_mean",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamTail.lean",
+      "line": 523,
+      "statement": "theorem measure_realEmpiricalMean_add_realWidth_le_mean {K : Nat} (hK : 0 < K) (c : Real) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (arm : Fin K) (mean : Real) (sigma2 : NNReal) (hsubG : HasSubgaussianMGF (fun reward => reward - mean) sigma2 (nu arm)) (n : Nat) : armStreamMeasure nu {stream : ArmRewardStream K |"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_mean_le_realEmpiricalMean_sub_realWidth",
+      "full_name": "BanditRLProof.UCB.measure_mean_le_realEmpiricalMean_sub_realWidth",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamTail.lean",
+      "line": 587,
+      "statement": "theorem measure_mean_le_realEmpiricalMean_sub_realWidth {K : Nat} (hK : 0 < K) (c : Real) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (arm : Fin K) (mean : Real) (sigma2 : NNReal) (hsubG : HasSubgaussianMGF (fun reward => reward - mean) sigma2 (nu arm)) (n : Nat) : armStreamMeasure nu {stream : ArmRewardStream K |"
+    },
+    {
+      "kind": "theorem",
+      "name": "countWidthThreshold_sq_div_eq",
+      "full_name": "BanditRLProof.UCB.countWidthThreshold_sq_div_eq",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamTail.lean",
+      "line": 649,
+      "statement": "theorem countWidthThreshold_sq_div_eq (c : Real) (sigma2 : NNReal) (n k : Nat) (hc : 0 <= c) (hsigma2 : sigma2 ≠ 0) (hk : 0 < k) : (countWidthThreshold c sigma2 n k) ^ 2 / (2 * (k : Real) * (sigma2 : Real)) = c * Real.log ((n + 1 : Nat) : Real)"
+    },
+    {
+      "kind": "theorem",
+      "name": "positiveCountFilter_eq_Icc",
+      "full_name": "BanditRLProof.UCB.positiveCountFilter_eq_Icc",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamTail.lean",
+      "line": 671,
+      "statement": "theorem positiveCountFilter_eq_Icc (n : Nat) : (Finset.range (n + 1)).filter (fun k => 0 < k) = Finset.Icc 1 n"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_countWidthThreshold_tail_eq",
+      "full_name": "BanditRLProof.UCB.sum_countWidthThreshold_tail_eq",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamTail.lean",
+      "line": 678,
+      "statement": "theorem sum_countWidthThreshold_tail_eq (c : Real) (sigma2 : NNReal) (n : Nat) (hc : 0 <= c) (hsigma2 : sigma2 ≠ 0) : ((Finset.range (n + 1)).filter (fun k => 0 < k)).sum (fun k => ENNReal.ofReal (Real.exp (-(countWidthThreshold c sigma2 n k) ^ 2 / (2 * (k : Real) * (sigma2 : Real))))) ="
+    },
+    {
+      "kind": "theorem",
+      "name": "natCast_mul_exp_neg_log_le_inv_rpow_sub_one",
+      "full_name": "BanditRLProof.UCB.natCast_mul_exp_neg_log_le_inv_rpow_sub_one",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamTail.lean",
+      "line": 706,
+      "statement": "theorem natCast_mul_exp_neg_log_le_inv_rpow_sub_one (c : Real) (n : Nat) : (n : ENNReal) * ENNReal.ofReal (Real.exp (-c * Real.log ((n + 1 : Nat) : Real))) <= (1 : ENNReal) / (((n + 1 : Nat) : ENNReal) ^ (c - 1))"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_realEmpiricalMean_add_realWidth_le_mean_log_bound",
+      "full_name": "BanditRLProof.UCB.measure_realEmpiricalMean_add_realWidth_le_mean_log_bound",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamTail.lean",
+      "line": 752,
+      "statement": "theorem measure_realEmpiricalMean_add_realWidth_le_mean_log_bound {K : Nat} (hK : 0 < K) (c : Real) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (arm : Fin K) (mean : Real) (sigma2 : NNReal) (hsubG : HasSubgaussianMGF (fun reward => reward - mean) sigma2 (nu arm)) (hc : 0 <= c) (hsigma2 : sigma2 ≠ 0) (n : Nat) : armStreamMeasure nu {stream : ArmRewardStream K |"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_mean_le_realEmpiricalMean_sub_realWidth_log_bound",
+      "full_name": "BanditRLProof.UCB.measure_mean_le_realEmpiricalMean_sub_realWidth_log_bound",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamTail.lean",
+      "line": 777,
+      "statement": "theorem measure_mean_le_realEmpiricalMean_sub_realWidth_log_bound {K : Nat} (hK : 0 < K) (c : Real) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (arm : Fin K) (mean : Real) (sigma2 : NNReal) (hsubG : HasSubgaussianMGF (fun reward => reward - mean) sigma2 (nu arm)) (hc : 0 <= c) (hsigma2 : sigma2 ≠ 0) (n : Nat) : armStreamMeasure nu {stream : ArmRewardStream K |"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_realEmpiricalMean_add_realWidth_le_mean_rpow_bound",
+      "full_name": "BanditRLProof.UCB.measure_realEmpiricalMean_add_realWidth_le_mean_rpow_bound",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamTail.lean",
+      "line": 803,
+      "statement": "theorem measure_realEmpiricalMean_add_realWidth_le_mean_rpow_bound {K : Nat} (hK : 0 < K) (c : Real) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (arm : Fin K) (mean : Real) (sigma2 : NNReal) (hsubG : HasSubgaussianMGF (fun reward => reward - mean) sigma2 (nu arm)) (hc : 0 <= c) (hsigma2 : sigma2 ≠ 0) (n : Nat) : armStreamMeasure nu {stream : ArmRewardStream K |"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_mean_le_realEmpiricalMean_sub_realWidth_rpow_bound",
+      "full_name": "BanditRLProof.UCB.measure_mean_le_realEmpiricalMean_sub_realWidth_rpow_bound",
+      "file": "BanditRLProof/Algorithms/UCBArmStreamTail.lean",
+      "line": 826,
+      "statement": "theorem measure_mean_le_realEmpiricalMean_sub_realWidth_rpow_bound {K : Nat} (hK : 0 < K) (c : Real) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (arm : Fin K) (mean : Real) (sigma2 : NNReal) (hsubG : HasSubgaussianMGF (fun reward => reward - mean) sigma2 (nu arm)) (hc : 0 <= c) (hsigma2 : sigma2 ≠ 0) (n : Nat) : armStreamMeasure nu {stream : ArmRewardStream K |"
+    },
+    {
       "kind": "abbrev",
       "name": "ArmRewardStream",
       "full_name": "BanditRLProof.UCB.ArmRewardStream",
@@ -16436,10 +17571,58 @@
     },
     {
       "kind": "theorem",
+      "name": "measurable_realHistoryPullCount",
+      "full_name": "BanditRLProof.UCB.measurable_realHistoryPullCount",
+      "file": "BanditRLProof/Algorithms/UCBRealHistoryIndex.lean",
+      "line": 71,
+      "statement": "theorem measurable_realHistoryPullCount {K : Nat} (n : Nat) (arm : Fin K) : Measurable (fun history : History.FinitePairHistory (Fin K) Real n => ETC.realHistoryPullCount n history arm)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_realHistorySumRewards",
+      "full_name": "BanditRLProof.UCB.measurable_realHistorySumRewards",
+      "file": "BanditRLProof/Algorithms/UCBRealHistoryIndex.lean",
+      "line": 85,
+      "statement": "theorem measurable_realHistorySumRewards {K : Nat} (n : Nat) (arm : Fin K) : Measurable (fun history : History.FinitePairHistory (Fin K) Real n => ETC.realHistorySumRewards n history arm)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_realHistoryEmpMean",
+      "full_name": "BanditRLProof.UCB.measurable_realHistoryEmpMean",
+      "file": "BanditRLProof/Algorithms/UCBRealHistoryIndex.lean",
+      "line": 99,
+      "statement": "theorem measurable_realHistoryEmpMean {K : Nat} (n : Nat) (arm : Fin K) : Measurable (fun history : History.FinitePairHistory (Fin K) Real n => ETC.realHistoryEmpMean n history arm)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_realHistoryWidth",
+      "full_name": "BanditRLProof.UCB.measurable_realHistoryWidth",
+      "file": "BanditRLProof/Algorithms/UCBRealHistoryIndex.lean",
+      "line": 109,
+      "statement": "theorem measurable_realHistoryWidth {K : Nat} (c : Real) (n : Nat) (arm : Fin K) : Measurable (fun history : History.FinitePairHistory (Fin K) Real n => realHistoryWidth c n history arm)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_realHistoryIndex",
+      "full_name": "BanditRLProof.UCB.measurable_realHistoryIndex",
+      "file": "BanditRLProof/Algorithms/UCBRealHistoryIndex.lean",
+      "line": 119,
+      "statement": "theorem measurable_realHistoryIndex {K : Nat} (c : Real) (n : Nat) (arm : Fin K) : Measurable (fun history : History.FinitePairHistory (Fin K) Real n => realHistoryIndex c n history arm)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_realHistoryIndexAction",
+      "full_name": "BanditRLProof.UCB.measurable_realHistoryIndexAction",
+      "file": "BanditRLProof/Algorithms/UCBRealHistoryIndex.lean",
+      "line": 127,
+      "statement": "theorem measurable_realHistoryIndexAction {K : Nat} (hK : 0 < K) (c : Real) (n : Nat) : Measurable (fun history : History.FinitePairHistory (Fin K) Real n => realHistoryIndexAction hK c n history)"
+    },
+    {
+      "kind": "theorem",
       "name": "measurable_realEmpiricalMean",
       "full_name": "BanditRLProof.UCB.measurable_realEmpiricalMean",
       "file": "BanditRLProof/Algorithms/UCBRealHistoryIndex.lean",
-      "line": 71,
+      "line": 138,
       "statement": "theorem measurable_realEmpiricalMean {Omega : Type u} {K : Nat} [MeasurableSpace Omega] [MeasurableSingletonClass (Fin K)] (action : Omega -> ActionTrace (Fin K)) (reward : Omega -> RewardTrace Real) (haction : forall t, Measurable (fun omega => action omega t)) (hreward : forall t, Measurable (fun omega => reward omega t)) (arm : Fin K) (n : Nat) :"
     },
     {
@@ -16447,7 +17630,7 @@
       "name": "measurable_realWidth",
       "full_name": "BanditRLProof.UCB.measurable_realWidth",
       "file": "BanditRLProof/Algorithms/UCBRealHistoryIndex.lean",
-      "line": 86,
+      "line": 153,
       "statement": "theorem measurable_realWidth {Omega : Type u} {K : Nat} [MeasurableSpace Omega] [MeasurableSingletonClass (Fin K)] (action : Omega -> ActionTrace (Fin K)) (haction : forall t, Measurable (fun omega => action omega t)) (c : Real) (arm : Fin K) (n : Nat) : Measurable (fun omega => realWidth (action omega) c arm n)"
     },
     {
@@ -16455,7 +17638,7 @@
       "name": "measurable_realIndex",
       "full_name": "BanditRLProof.UCB.measurable_realIndex",
       "file": "BanditRLProof/Algorithms/UCBRealHistoryIndex.lean",
-      "line": 99,
+      "line": 166,
       "statement": "theorem measurable_realIndex {Omega : Type u} {K : Nat} [MeasurableSpace Omega] [MeasurableSingletonClass (Fin K)] (action : Omega -> ActionTrace (Fin K)) (reward : Omega -> RewardTrace Real) (haction : forall t, Measurable (fun omega => action omega t)) (hreward : forall t, Measurable (fun omega => reward omega t)) (c : Real) (arm : Fin K) (n : Nat) :"
     },
     {
@@ -16463,7 +17646,7 @@
       "name": "realIndexAction_spec",
       "full_name": "BanditRLProof.UCB.realIndexAction_spec",
       "file": "BanditRLProof/Algorithms/UCBRealHistoryIndex.lean",
-      "line": 113,
+      "line": 180,
       "statement": "theorem realIndexAction_spec {K : Nat} (hK : 0 < K) (action : ActionTrace (Fin K)) (reward : RewardTrace Real) (c : Real) (n : Nat) (arm : Fin K) : realIndex action reward c arm n <= realIndex action reward c (realIndexAction hK action reward c n) n"
     },
     {
@@ -16471,7 +17654,7 @@
       "name": "measurable_realIndexAction",
       "full_name": "BanditRLProof.UCB.measurable_realIndexAction",
       "file": "BanditRLProof/Algorithms/UCBRealHistoryIndex.lean",
-      "line": 124,
+      "line": 191,
       "statement": "theorem measurable_realIndexAction {Omega : Type u} {K : Nat} [MeasurableSpace Omega] [MeasurableSingletonClass (Fin K)] (hK : 0 < K) (action : Omega -> ActionTrace (Fin K)) (reward : Omega -> RewardTrace Real) (haction : forall t, Measurable (fun omega => action omega t)) (hreward : forall t, Measurable (fun omega => reward omega t))"
     },
     {
@@ -16479,7 +17662,7 @@
       "name": "realHistoryEmpiricalMean_finitePairHistoryOfTrace",
       "full_name": "BanditRLProof.UCB.realHistoryEmpiricalMean_finitePairHistoryOfTrace",
       "file": "BanditRLProof/Algorithms/UCBRealHistoryIndex.lean",
-      "line": 140,
+      "line": 207,
       "statement": "theorem realHistoryEmpiricalMean_finitePairHistoryOfTrace {K : Nat} (action : ActionTrace (Fin K)) (reward : RewardTrace Real) (n : Nat) (arm : Fin K) : ETC.realHistoryEmpMean n (History.finitePairHistoryOfTrace action reward n) arm = realEmpiricalMean action reward arm (n + 1)"
     },
     {
@@ -16487,7 +17670,7 @@
       "name": "realHistoryWidth_finitePairHistoryOfTrace",
       "full_name": "BanditRLProof.UCB.realHistoryWidth_finitePairHistoryOfTrace",
       "file": "BanditRLProof/Algorithms/UCBRealHistoryIndex.lean",
-      "line": 149,
+      "line": 216,
       "statement": "theorem realHistoryWidth_finitePairHistoryOfTrace {K : Nat} (action : ActionTrace (Fin K)) (reward : RewardTrace Real) (c : Real) (n : Nat) (arm : Fin K) : realHistoryWidth c n (History.finitePairHistoryOfTrace action reward n) arm = realWidth action c arm (n + 1)"
     },
     {
@@ -16495,7 +17678,7 @@
       "name": "realHistoryIndex_finitePairHistoryOfTrace",
       "full_name": "BanditRLProof.UCB.realHistoryIndex_finitePairHistoryOfTrace",
       "file": "BanditRLProof/Algorithms/UCBRealHistoryIndex.lean",
-      "line": 159,
+      "line": 226,
       "statement": "theorem realHistoryIndex_finitePairHistoryOfTrace {K : Nat} (action : ActionTrace (Fin K)) (reward : RewardTrace Real) (c : Real) (n : Nat) (arm : Fin K) : realHistoryIndex c n (History.finitePairHistoryOfTrace action reward n) arm = realIndex action reward c arm (n + 1)"
     },
     {
@@ -16503,8 +17686,40 @@
       "name": "realHistoryIndexAction_finitePairHistoryOfTrace",
       "full_name": "BanditRLProof.UCB.realHistoryIndexAction_finitePairHistoryOfTrace",
       "file": "BanditRLProof/Algorithms/UCBRealHistoryIndex.lean",
-      "line": 170,
+      "line": 237,
       "statement": "theorem realHistoryIndexAction_finitePairHistoryOfTrace {K : Nat} (hK : 0 < K) (action : ActionTrace (Fin K)) (reward : RewardTrace Real) (c : Real) (n : Nat) : realHistoryIndexAction hK c n (History.finitePairHistoryOfTrace action reward n) = realIndexAction hK action reward c (n + 1)"
+    },
+    {
+      "kind": "structure",
+      "name": "RealStationaryUCBSequence",
+      "full_name": "BanditRLProof.UCB.RealStationaryUCBSequence",
+      "file": "BanditRLProof/Algorithms/UCBRealLMLCompat.lean",
+      "line": 28,
+      "statement": "structure RealStationaryUCBSequence {Omega : Type u} {K : Nat} [NeZero K] [MeasurableSpace Omega] (mu : Measure Omega) [IsFiniteMeasure mu] (hK : 0 < K) (c : Real) (sigma2 : NNReal) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (action : Omega -> ActionTrace (Fin K)) (reward : Omega -> RewardTrace Real) : Prop where"
+    },
+    {
+      "kind": "theorem",
+      "name": "realStationaryUCBSequence_armStream",
+      "full_name": "BanditRLProof.UCB.realStationaryUCBSequence_armStream",
+      "file": "BanditRLProof/Algorithms/UCBRealLMLCompat.lean",
+      "line": 88,
+      "statement": "theorem realStationaryUCBSequence_armStream {K : Nat} [NeZero K] (hK : 0 < K) (c : Real) (sigma2 : NNReal) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] : RealStationaryUCBSequence (armStreamMeasure nu) hK c sigma2 nu (armStreamAction hK (c * (sigma2 : Real))) (armStreamReward hK (c * (sigma2 : Real)))"
+    },
+    {
+      "kind": "theorem",
+      "name": "identDistrib_actionRewardTrace_of_realStationaryUCBSequence",
+      "full_name": "BanditRLProof.UCB.identDistrib_actionRewardTrace_of_realStationaryUCBSequence",
+      "file": "BanditRLProof/Algorithms/UCBRealLMLCompat.lean",
+      "line": 109,
+      "statement": "theorem identDistrib_actionRewardTrace_of_realStationaryUCBSequence {Omega : Type u} {K : Nat} [NeZero K] [MeasurableSpace Omega] (mu : Measure Omega) [IsFiniteMeasure mu] (hK : 0 < K) (c : Real) (sigma2 : NNReal) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (action : Omega -> ActionTrace (Fin K)) (reward : Omega -> RewardTrace Real) (h : RealStationaryUCBSequence mu hK c sigma2 nu action reward) :"
+    },
+    {
+      "kind": "theorem",
+      "name": "regret_le_of_realStationaryUCBSequence",
+      "full_name": "BanditRLProof.UCB.regret_le_of_realStationaryUCBSequence",
+      "file": "BanditRLProof/Algorithms/UCBRealLMLCompat.lean",
+      "line": 136,
+      "statement": "theorem regret_le_of_realStationaryUCBSequence {Omega : Type u} {K : Nat} [NeZero K] [MeasurableSpace Omega] (mu : Measure Omega) [IsFiniteMeasure mu] (hK : 0 < K) (c : Real) (sigma2 : NNReal) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (action : Omega -> ActionTrace (Fin K)) (reward : Omega -> RewardTrace Real) (h : RealStationaryUCBSequence mu hK c sigma2 nu action reward)"
     },
     {
       "kind": "inductive",

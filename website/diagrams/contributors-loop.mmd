@@ -1,0 +1,8 @@
+flowchart LR
+    Authors["Project authors<br/>paper authorship"] --> Project["ABRL research project"]
+    Community["Community contributors<br/>specific reviewed contributions"] --> Proposal["Issue or contribution packet"]
+    Proposal --> Review["ABRL review and full gate"]
+    Review -->|accepted| Library["BanditRLlib main"]
+    Library --> Registry["Contribution credit<br/>scope recorded"]
+    Project --> Library
+    Registry -. "does not imply paper authorship" .-> Authors

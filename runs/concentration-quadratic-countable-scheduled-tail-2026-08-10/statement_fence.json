@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRLProof.Concentration.measure_iUnion_scheduled_deviation_ge_inter_variance_le_delta_of_fixedTilt_quadratic_tail",
+  "file": "BanditRLProof/ConcentrationQuadraticScheduled.lean",
+  "statement": "theorem measure_iUnion_scheduled_deviation_ge_inter_variance_le_delta_of_fixedTilt_quadratic_tail {Omega : Type*} [MeasurableSpace Omega] (mu : Measure Omega) (deviation predictableVariance : Nat -> Omega -> Real) (varianceScale varianceBudget tiltCap deltaAt : Nat -> Real) (delta : Real) (hvarianceScale : forall n, 0 < varianceScale n) (hvarianceBudget : forall n, 0 < varianceBudget n) (htiltCap : forall n, 0 < tiltCap n) (hdeltaAt : forall n, 0 < deltaAt n) (hfixed : forall n tilt, 0 <= tilt -> tilt <= tiltCap n -> mu {omega | quadraticFixedMGFScheduledRadius varianceScale varianceBudget tiltCap deltaAt n <= deviation n omega ∧ predictableVariance n omega <= varianceBudget n} <= ENNReal.ofReal (Real.exp (-tilt * quadraticFixedMGFScheduledRadius varianceScale varianceBudget tiltCap deltaAt n + varianceScale n * (tilt ^ 2 * varianceBudget n)))) (hbudget : (∑' n, ENNReal.ofReal (deltaAt n)) <= ENNReal.ofReal delta) : mu (⋃ n, {omega | quadraticFixedMGFScheduledRadius varianceScale varianceBudget tiltCap deltaAt n <= deviation n omega ∧ predictableVariance n omega <= varianceBudget n}) <= ENNReal.ofReal delta",
+  "statement_hash": "0e782bcda45091c55081430d14c97cadf7d6446aae9869ca280cd0043ab3a1df",
+  "source_assumptions": [],
+  "created_at": "2026-08-10T04:34:45+00:00"
+}

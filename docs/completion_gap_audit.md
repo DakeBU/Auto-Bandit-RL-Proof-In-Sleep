@@ -1,15 +1,4316 @@
 # Completion Gap Audit
 
+## Closed Gap: Generated EXP3 Realized-Regret Geometric All-Time Tail
+
+- Lean statement: on one fixed generated EXP3 process and against one fixed
+  supported comparator, the union over all positive prefixes where realized
+  selected-loss regret crosses the sum of the two scheduled parent budgets has
+  outer measure at most `ENNReal.ofReal delta`.
+- Local APIs/imports: accepted predictable-regret and pure realized-deviation
+  all-time modules; exact finite-prefix deviation decomposition; parent
+  membership theorems; `measure_mono`, `measure_union_le`,
+  `ENNReal.ofReal_add`, finite sums, ring, and linear arithmetic.
+- Proof route: assign `delta/2` to each parent family; prove exact realized =
+  predictable + deviation decomposition; show a combined weak crossing forces
+  one component weak crossing; apply both parent tails and normalize halves.
+- Regularity: probability prior; Standard Borel nonempty Env/Action;
+  measurable action singletons; decidable nonempty arms; fixed `eta>0` and
+  `0<gamma<1`; one predictable unit-loss process; one supported comparator;
+  positive delta. No event measurability, `delta<=1`, independence,
+  stationarity, countable Action, supplied integrability, or law transport.
+- Retrieval/status: both accepted local all-time parent cards, fixed-horizon
+  realized-regret precedent, Mathlib measure/finite-sum/order cards, source
+  cards placement only, and weapons inspiration only. Six declarations,
+  focused/root/Tests, five canaries, SafeVerify `34d6b6dd...5702`, and baseline
+  axiom audit pass. Independent review found no P0/P1/P2/P3; lifecycle records
+  are accepted; verified memory is `mem-2a0ffec376992850`; frontier shadow has
+  zero mismatches; and the full harness passes.
+- Failure policy: fixed-parameter realized regret against one comparator only.
+  Next add a finite supported-comparator union and best-arm surface. No tuned
+  sublinear all-time rate, horizon retuning, Ville/Doob, mixture, optional
+  stopping, self-normalization, general Freedman, horizon-free tuned EXP3, or
+  ideal EXP3.P is claimed.
+
+## Closed Gap: Generated EXP3 Predictable-Regret Geometric All-Time Tail
+
+- Lean statement: on one fixed generated EXP3 process and against one fixed
+  supported comparator, the union over all positive prefixes where predictable
+  regret crosses the scheduled parent budget has outer measure at most
+  `ENNReal.ofReal delta`.
+- Local APIs/imports: fixed-horizon predictable high-probability regret,
+  `ConcentrationConfidenceSchedule`, `MeasureTheory.measure_iUnion_le`,
+  `ENNReal.tsum_le_tsum`, and exact geometric share positivity/tsum.
+- Proof route: evaluate the parent budget at horizon `n+1` and confidence
+  `geometricConfidenceShare delta n / 2`; specialize the parent total tail at
+  outer share `geometricConfidenceShare delta n`; compare measure tsums; close
+  with the exact outer budget.
+- Regularity: probability prior; Standard Borel nonempty Env/Action;
+  measurable action singletons; decidable nonempty arms; fixed `eta>0` and
+  `0<gamma<1`; one predictable unit-loss process; one supported comparator;
+  positive delta. No event measurability, `delta<=1`, independence,
+  stationarity, countable Action, supplied integrability, or new law transport.
+- Retrieval/status: local predictable-Hedge/exploration/pure-cross/comparator
+  assembly and geometric-schedule cards; Mathlib measure/finite-sum/order
+  cards; source cards placement only; potential/tail weapons inspiration only.
+  Four declarations, root/focused/Tests, three canaries, SafeVerify
+  `dc280a8f...b13a5`, and baseline axiom audit pass. Independent review found
+  no P0/P1/P2 and its retrieval-timing P3 is closed. Lifecycle records are
+  accepted, verified memory is `mem-b8cfa9865d91f12a`, frontier shadow has
+  zero mismatches, and the full harness passes.
+- Failure policy: fixed-parameter predictable pseudo-regret only. The compiled
+  realized-regret all-time route now consumes this event on the same process.
+  No tuned sublinear all-time rate within this parent, realized-regret claim,
+  horizon retuning, Ville/Doob, mixture, optional stopping, self-normalization,
+  general Freedman, horizon-free tuned EXP3, or ideal EXP3.P is claimed.
+
+## Closed Gap: Pure Generated EXP3 Geometric All-Time Deviation
+
+- Lean statement: every exact generated selected-loss predictable variance is
+  at most one, its first `horizon` values sum to at most `horizon`, and the
+  union over positive prefixes `n+1` where pure realized deviation crosses the
+  corresponding deterministic-budget geometric radius has outer measure at
+  most `ENNReal.ofReal delta`.
+- Local APIs/imports: `FiniteActionDistribution.nonneg/sum_eq_one`, exact
+  selected-loss centered variance, generated probability sources,
+  `PredictableLossVector` unit-interval bounds, finite sums, the accepted
+  geometric joint-event API, and named-event membership theorems.
+- Proof route: put the finite-law mean in `[0,1]`; bound every centered square
+  by one; weight and sum; instantiate and accumulate the generated variance;
+  choose budget `n+1`; remove the universally true variance conjunct by set
+  extensionality; rewrite the accepted all-time measure bound.
+- Regularity: finite action law and `[0,1]` losses for the support theorem;
+  measurable Env, measurable-singleton Action, decidable nonempty arms,
+  `0<=gamma<=1`, and one predictable loss process for generated support;
+  additionally a probability prior, Standard Borel nonempty Env/Action,
+  arbitrary fixed eta, `0<gamma`, and positive delta for the terminal. No event
+  measurability, independence, stationarity, `delta<=1`, supplied budget, or
+  variance-good premise is required.
+- Retrieval/status: local selected-variance/geometric/countable parents;
+  `MLIB-FINSET-SUMS`, `MLIB-ORDER-ALGEBRA`, `MLIB-PROBABILITY-VARIANCE`, and
+  `MLIB-PROBABILITY-MGF`; source cards are placement only and the tail weapon
+  is inspiration only. Focused/root/Tests and six semantic canaries compile;
+  SafeVerify fixes `5479f334...870`, and all ten Lean declarations have only
+  baseline axioms. Independent review found no P0/P1; its canary and contract
+  findings are closed. Lifecycle/frontier and the full harness pass; verified
+  memory is `mem-7ceab55257453017` and frontier shadow has zero mismatches.
+- Failure policy: the universal `n+1` radius is not a small-loss or self-
+  normalized improvement. The same-process predictable-regret assembly now
+  compiles above; next combine the two events. No full regret, horizon retuning,
+  Ville/Doob, mixture, optional stopping, general Freedman, horizon-free tuned
+  EXP3, or ideal EXP3.P is claimed.
+
+## Closed Gap: Generated EXP3 Geometric All-Time Predictable-Variance Tail
+
+- Lean statement: `geometricConfidenceShare` allocates `delta/2/2^n`;
+  `tsum_ofReal_geometricConfidenceShare` proves exact ENNReal total
+  `ofReal delta`; the EXP3 radius and named countable failure set expose the
+  exact `n+1` semantics; the terminal bounds that set by `ofReal delta` on one
+  fixed generated process.
+- Local APIs/imports: `ConcentrationConfidenceSchedule`,
+  `ConcentrationQuadraticScheduled`,
+  `Exp3RealizedPredictableVarianceTail`, `hasSum_geometric_two'`,
+  `HasSum.toNNReal`, `ENNReal.hasSum_coe`, the generic countable scheduled
+  quadratic theorem, and the generated fixed-tilt tail.
+- Proof route: transport the real geometric sum through NNReal/ENNReal;
+  instantiate constant variance scale and tilt cap one; specialize each
+  pointwise theorem at prefix `n+1`; apply the countable parent and rewrite the
+  exact total budget.
+- Regularity: probability prior; Standard Borel nonempty Env/Action;
+  measurable action singletons; decidable Action; nonempty arms; fixed
+  `eta`, `0<gamma<=1`, and predictable unit-loss process; positive
+  variance-budget schedule and delta. No event measurability, independence,
+  stationarity, `delta<=1`, or deterministic variance envelope is required.
+- Retrieval/status: the geometric schedule has independent ownership in
+  `LOCAL-LEAF-CONCENTRATION-GEOMETRIC-CONFIDENCE-SCHEDULE`; the consumer uses
+  local countable/quadratic/fixed-tilt parents, Mathlib measure/MGF/log/order
+  cards, and the OFUL all-time scalar ridge leaf as exact-budget precedent.
+  Focused/root/Tests builds, three semantic canaries, SafeVerify
+  `be643bca...73b2`, baseline axiom audit, and independent review pass. Status
+  is `accepted`; verified memory is `mem-1d262929553ef1ca` and frontier shadow
+  reports zero mismatches.
+- Failure policy: the theorem does not establish `W_n <= V_n` by itself; the
+  unit-budget producer and pure-event consumer above now discharge that gap.
+  The next leaf must connect the pure event to same-process pathwise potential,
+  exploration, and comparator regret. No full EXP3 regret,
+  horizon-dependent retuning, Ville/Doob, mixture, optional stopping,
+  self-normalization, general Freedman, or ideal EXP3.P is claimed.
+
+## Closed Gap: Countable Scheduled Quadratic Fixed-MGF Tail
+
+- Lean statement: `quadraticFixedMGFScheduledRadius` evaluates the compiled
+  optimized radius on four `Nat -> Real` schedules. The first theorem bounds
+  the countable union of scheduled joint deviation/variance events by
+  `sum' n, ENNReal.ofReal (deltaAt n)`; the second consumes a caller-supplied
+  ENNReal total budget.
+- Local APIs/imports: `ConcentrationQuadraticFixedMGF`, its one-event quadratic
+  delta theorem, `MeasureTheory.measure_iUnion_le`, and
+  `ENNReal.tsum_le_tsum`; the new module is root-imported and externally
+  canaried through the full outer-budget statement.
+- Proof route: specialize the parent at each index, use countable outer-measure
+  subadditivity, compare every tsum term, then apply order transitivity.
+- Regularity: measurable ambient space; pointwise-positive variance scale,
+  variance budget, tilt cap, and confidence share; per-index fixed-tilt tail
+  families. There is no event measurability, finite/probability measure,
+  independence, filtration, boundedness, stationarity, or share-upper-bound
+  premise.
+- Retrieval/status: local quadratic-delta and finite-maximal leaves plus
+  `MLIB-MEASURE-INTEGRAL`, `MLIB-PROBABILITY-MGF`,
+  `MLIB-REAL-LOG-SQRT`, and `MLIB-EXP-LOG-INEQUALITIES`; textbook and EXP3
+  cards provide placement only. Focused, root, `Tests.Basic`, statement,
+  baseline-axiom, index, lifecycle, and full harness gates pass. Status is
+  `accepted`.
+- Failure policy: no confidence schedule is selected here. Do not infer a
+  Ville/Doob or mixture boundary, horizon-free fixed-policy result, optional
+  stopping, self-normalization, general Freedman, or ideal EXP3.P theorem.
+
+## Closed Gap: Scalar Joint-Error Deterministic-Tail Confidence
+
+- Lean statement: the left-associated maximum of the six literal
+  capped/uncapped sampled-return, actual-successor-policy-return, and
+  same-prefix-gap distances is measurable. For every positive real
+  `epsilon, delta`, one natural `tailStart` controls every later index: its
+  weak superlevel event has `ENNReal` mass `< ENNReal.ofReal delta`, its
+  strict sublevel event has real mass `> 1-delta`, and the scalar strict bound
+  is equivalent to the same six literal strict bounds.
+- Local APIs/imports: the accepted deterministic-tail parent; six coordinate
+  measurability lemmas; `Measurable.dist`, `Measurable.max`, `max_lt_iff`,
+  `le_max_iff`, `measurableSet_lt`, and exact named good/bad event semantics.
+- Proof route: define one six-way maximum, compose measurability, normalize
+  strict and weak max predicates, prove named/scalar event equalities, then
+  rewrite the parent's mass fields and retain its one all-later cutoff.
+- Regularity: finite nonempty Standard Borel state/action spaces, probability
+  laws, positive proxy/floor, bounded means, selected-reward sub-Gaussianity,
+  support/floor, literal actual-policy law, distinct capped `hittingBtwn` and
+  uncapped `hittingAfter`, `4 < horizon`, and positive tolerances only.
+- Retrieval/status: local-first `mem-cd67b8453f91af1b`; source cards are
+  placement only. Seven declarations, root, and typed five-field canary
+  compile. SafeVerify fixes `f4fc8680...355a`; placeholders are empty and all
+  seven axiom reports are baseline-only. Review's P2/P3 ledger findings are
+  closed; lifecycle/frontier/full harness gates pass. Status is `accepted`;
+  verified memory is `mem-6f587b6fba5f9bfd`.
+- Failure policy: the cutoff is existential/noncomputable. No rate,
+  `delta <= 1`, independence, optional stopping, expectation/random-index
+  interchange, model uniformity, raw episodes, recommended-policy
+  substitution, minimax/reachability, or complete UCB-VI is claimed.
+
+## Closed Gap: Stopped Return Deterministic-Tail High-Probability Optimality
+
+- Lean statement: for every positive real `epsilon, delta`, one existential
+  natural `tailStart` works at every later schedule index. The accepted
+  six-error bad event is measurable and has `ENNReal` mass below
+  `ENNReal.ofReal delta`; its named complement has real probability greater
+  than `1 - delta`, exactly when all six literal errors are `< epsilon`.
+- Local APIs/imports: the accepted simultaneous-confidence parent and its bad
+  event, measurability, complement, and eventual-mass APIs; Mathlib
+  `eventually_atTop`, `MeasureTheory.probReal_compl_eq_one_sub`,
+  `ENNReal.toReal_lt_toReal`, and `ENNReal.toReal_ofReal`.
+- Proof route: convert strict bad `ENNReal` mass to strict real mass, rewrite
+  complement probability, define and normalize the named good event, extract
+  one `Nat` cutoff with `eventually_atTop.1`, and package all four fields at
+  each later index.
+- Regularity: finite nonempty Standard Borel state/action spaces, probability
+  laws, positive proxy/floor, bounded means, selected-reward uniform
+  sub-Gaussianity, support/floor, literal actual-policy trajectory law,
+  distinct capped `hittingBtwn` and uncapped `hittingAfter` prefixes, and
+  `4 < horizon`; only `0 < delta`, not `delta <= 1`.
+- Retrieval/status: local-first `mem-89d817ed84c75c44`; source cards are
+  placement only and no theorem card or weapon is consumed. Seven
+  declarations, root import, and typed external canary compile. SafeVerify
+  fixes `09d8972f...a28f`; placeholders are empty and all seven axiom reports
+  are baseline-only. Independent review's P2/P3 ledger findings are closed;
+  lifecycle and full harness gates pass, so the leaf is `accepted`. Verified
+  memory is `mem-5265bad6103b31c3`.
+- Failure policy: the cutoff is existential and noncomputable. No quantitative
+  rate, independence, optional stopping, expectation/random-index
+  interchange, model uniformity, raw episodes, recommended-policy
+  substitution, minimax/reachability, or complete UCB-VI is claimed.
+
+## Closed Gap: Stopped Return Simultaneous High-Probability Optimality
+
+- Lean statement: at one common schedule index and on the exact generated
+  trajectory law, one measurable event is the union of the six capped/uncapped
+  sampled-return, actual-successor-policy-return, and same-prefix-gap distance
+  violations. Outside it all six distances are `< epsilon`; its probability
+  tends to zero and is eventually `< ENNReal.ofReal delta` for positive
+  `epsilon, delta`.
+- Local APIs/imports: four local stopped-coordinate measurability wrappers,
+  two inherited policy-return measurability lemmas, the accepted six
+  `TendstoInMeasure` endpoints, and Mathlib `tendstoInMeasure_iff_dist`,
+  `measure_union_le`, `tendsto_order`, and `ENNReal.ofReal_pos`.
+- Proof route: build the explicit left-associated six-event union, prove its
+  complement by `simp`, convert the six in-measure parents to distance-event
+  mass limits, dominate the union by their six-term sum, squeeze to zero, and
+  specialize the zero neighborhood at a positive confidence tolerance.
+- Regularity: finite nonempty Standard Borel state/action spaces, probability
+  initial/generated laws, positive proxy/floor, bounded reward means,
+  selected-reward sub-Gaussianity, support/floor, literal actual-policy law,
+  distinct exact capped and genuine uncapped prefixes, and `4 < horizon`.
+- Retrieval/status: local-first `mem-8642ef20df67310d`; source cards are
+  placement only and no theorem card or weapon is consumed. Eleven
+  declarations, root import, and typed external canary compile. SafeVerify
+  fixes `abeed7f0...2c443`; placeholders are empty and seven representative
+  axiom reports are baseline-only. Independent review's P2/P3 ledger findings
+  are closed with no open P0-P3; lifecycle and full harness gates pass, so the
+  leaf is `accepted`.
+- Failure policy: finite subadditivity, not independence, proves the joint
+  bound. This is qualitative and fixed-model: no finite-index rate/cutoff,
+  optional stopping, expectation/random-index interchange, model uniformity,
+  raw episodes, recommended-policy substitution, minimax/reachability, or
+  complete UCB-VI is claimed.
+
+## Closed Gap: Stopped Sampled/Policy Return In-Measure And A.E. Optimality
+
+- Lean statement: at both the exact capped inverse-square-root first-passage
+  prefix and genuine uncapped `hittingAfter`, literal stopped sampled return
+  and the trajectory-law expected return of the actual `successorPolicyAt`
+  policies converge in measure and almost everywhere to
+  `optimalInitialExpectedReturn`; their same-prefix gap converges to zero in
+  both modes. The terminal exposes six `TendstoInMeasure` plus six a.e.
+  `Tendsto` contracts.
+- Local APIs/imports: the accepted stopped-return `L1` terminal and its six
+  `eLpNorm 1` limits; capped/uncapped realized and behavior a.e. limits; exact
+  sampled/realized, policy/behavior, and deviation identities; Mathlib
+  `tendstoInMeasure_of_tendsto_eLpNorm`, `Tendsto.const_sub`, and `Tendsto.sub`.
+- Proof route: transport capped realized a.e. convergence through a.s.
+  eventual capped/uncapped equality; rearrange return deviation exactly;
+  derive six in-measure endpoints from exponent-one norm limits; derive the
+  six a.e. endpoints independently from a.e. parents and exact algebra; package
+  the literal capped/uncapped surfaces.
+- Regularity: finite nonempty Standard Borel state/action spaces, probability
+  initial/generated laws, positive proxy/floor, bounded reward means,
+  selected-reward uniform sub-Gaussianity, exploratory support/floor, literal
+  actual-policy trajectory-law semantics, exact prefixes, and
+  `4 < mdp.horizon`.
+- Retrieval/status: local-first `mem-1ae15dfd64b32dc6`; Mathlib
+  `ConvergenceInMeasure` supplies the general conversion API; `SCN-RL-MDP`
+  and the UCB-VI paper card are placement only, with no theorem card or weapon
+  consumed. Fifteen declarations, root import, and external declaration/
+  generic-terminal/typed-twelve-contract canaries compile. SafeVerify fixes
+  `22635f14...ad041`; placeholders are empty and seven representative axiom
+  reports are baseline-only. Independent review's sole P3 stale-ledger
+  finding is closed with no open P0-P3; lifecycle and full harness gates pass,
+  so the leaf is `accepted`.
+- Failure policy: a.e. convergence is not inferred from convergence in
+  measure. This fixed-model qualitative result does not prove
+  expectation/random-index interchange, optional stopping, rates, model
+  uniformity, raw episodes, recommended-policy substitution,
+  minimax/reachability, or complete UCB-VI.
+
+## Closed Gap: Stopped Sampled/Successor-Policy Return L1 Optimality
+
+- Lean statement: at both the exact capped inverse-square-root first-passage
+  prefix and genuine uncapped `hittingAfter`, the sampled-return optimality
+  error, literal actual-successor-policy return optimality error, and their
+  same-prefix gap are coordinatewise `MemLp 1`; all six exponent-one
+  `eLpNorm` sequences tend to zero.
+- Local APIs/imports: the accepted sampled/realized, policy/behavior, and
+  sampled-policy/return-deviation pointwise identities; capped and uncapped
+  realized-regret, behavior-regret, and return-deviation `MemLp 1` and
+  `eLpNorm` limits; Mathlib `MemLp.neg` and `eLpNorm_neg`.
+- Proof route: define three stable centered/gap processes -> rewrite them
+  exactly to negative realized regret, negative behavior expected regret, and
+  return deviation -> transport six coordinatewise `MemLp` contracts and six
+  norm limits -> package the two stopping routes in one terminal theorem.
+- Regularity: finite nonempty Standard Borel state/action spaces, probability
+  initial/generated laws, positive proxy/floor, bounded reward means,
+  selected-reward uniform sub-Gaussianity, exploratory support/floor, literal
+  `successorPolicyAt` trajectory-law semantics, exact same-prefix processes,
+  both exact stops, and `4 < mdp.horizon`.
+- Retrieval/status: local-first record `mem-de0a77c377532117`; scenario
+  `SCN-RL-MDP` and paper card `PPR-AZAR-OSBAND-MUNOS-2017-UCBVI` are placement
+  only; no proof weapon is consumed. Twenty declarations, the project root,
+  and external declaration/generic-terminal/typed-twelve-contract canaries
+  compile. SafeVerify fixes hash `604b612b...a9562a`; the placeholder scan is
+  empty and ten representative axiom reports are baseline-only. Independent
+  review's sole P2 canary finding is closed with no open P0-P3; lifecycle and
+  the full harness gate pass, so the leaf is `accepted`.
+- Failure policy: this proves true fixed-model `L1` convergence, not merely a
+  difference of expectations. It does not prove expectation/random-index
+  interchange, optional stopping, a pathwise or quantitative rate,
+  model-uniform control, raw episodes, recommended-policy substitution,
+  minimax/reachability, or complete UCB-VI.
+
+## Closed Gap: Stopped Sampled/Successor-Policy Expected-Return Consistency
+
+- Lean statement: the actual `successorPolicyAt trajectory t` expected return
+  is the literal integral of cumulative reward under that policy's trajectory
+  law. Its equal-round natural-prefix average, with optimal return at prefix
+  zero, equals optimal return minus average behavior expected regret. At both
+  exact stopping prefixes, sampled return minus this policy return equals
+  return deviation pathwise and in expectation; both signed and absolute
+  expected gaps vanish and both expected policy returns converge to optimal.
+- Local APIs/imports: `MarkovPolicy.expectedRegret`; policy trajectory measure
+  and `cumulativeReward`; existing sampled-return complement; stopped
+  realized/behavior/return-deviation decomposition; stopped behavior
+  `MemLp 1`; capped/uncapped behavior and return-deviation integral limits;
+  finite sums, `integral_sub`, and continuous subtraction.
+- Proof route: literal policy integral -> unfold expected regret -> zero/nonzero
+  finite-prefix complement -> stopped measurability and integrability ->
+  eliminate realized and behavior regret at one random prefix -> exact
+  sampled-policy-deviation integral identity -> signed/absolute gap and
+  policy-return limits ->
+  terminal package.
+- Regularity: finite nonempty Standard Borel state/action spaces, probability
+  initial/generated laws, positive proxy/floor, bounded means, selected-reward
+  sub-Gaussianity, exploratory support/floor, exact dependent source and
+  `successorPolicyAt` indexing, equal-round normalization, zero-prefix
+  convention, both exact stops, and `4 < mdp.horizon`.
+- Retrieval/status: exact no-hit; local-first record `mem-06aaf9949ace539d`;
+  29 declarations plus root and external literal/zero-prefix/positive-prefix/
+  `untopA`/stopped/typed-terminal-projection canaries compile. SafeVerify
+  passes at `e35de2a4...7353`; placeholders are empty and ten representative
+  axiom reports are baseline-only. Independent review's P2/P3 findings are
+  closed by the typed contract canaries, absolute-gap wrappers, and expanded
+  terminal bundle; no P0-P3 remains.
+- Failure policy: no expectation/random-index interchange, optional stopping,
+  pathwise sampled-return convergence, rate, raw episodes, recommended-policy
+  substitution, minimax/reachability, or complete UCB-VI follows.
+
+## Closed Gap: Stopped Average Sampled-Return Expected Optimality
+
+- Lean statement: define the observed successor-batch sample mean and its
+  natural-prefix average, using the optimal initial expected return at prefix
+  zero. Prove the total identity `sampled return = optimal - realized regret`.
+  At both exact capped and genuine uncapped prefixes, sampled return is
+  integrable, its expectation is exactly optimal minus expected realized
+  regret, and its expectation tends to the optimal initial value.
+- Local APIs/imports: `sampledCumulativeRewardSum`; natural average realized
+  regret and its natural-filtration adaptation; `stoppedValue` and
+  `measurable_stoppedValue`; capped/uncapped stopped `MemLp 1`; both realized
+  integral limits; `Finset.sum_sub_distrib`; `integral_sub`;
+  `Tendsto.const_sub`.
+- Proof route: explicit batch/prefix finite sums -> split zero/nonzero prefix
+  -> exact complement algebra -> filtration adaptation -> stopped pointwise
+  identity -> integrability by constant subtraction -> exact Bochner
+  expectation identity -> map both realized-regret expectation limits through
+  constant subtraction -> terminal package.
+- Regularity: finite nonempty Standard Borel state/action spaces, probability
+  initial/generated laws, positive proxy/floor, bounded means,
+  selected-reward sub-Gaussianity, exploratory support/floor, exact source,
+  scheduled batch normalization, natural filtration, zero-prefix convention,
+  generic zero-size batch totalization to zero, positive scheduled batch sizes,
+  both exact stops, and `4 < mdp.horizon`.
+- Retrieval/status: no duplicate; local-first record
+  `mem-31b7a2396410fc17`. Twenty-two declarations, root import, and external
+  semantic/regularity/integrability/expectation/limit/terminal canaries
+  compile. SafeVerify passes at `cf81f234...e5f5`; placeholders are empty and
+  representative axioms are baseline-only. Independent review's two P3
+  hardening findings are closed by the totalization documentation and direct
+  zero-prefix plus capped/uncapped measurability canaries; no P0-P3 remains,
+  lifecycle shadow and the full gate pass.
+- Failure policy: no expectation/random-index interchange, optional stopping,
+  sample-path return convergence, quantitative rate, model uniformity, raw
+  episodes, behavior=recommended equality, minimax/reachability, or complete
+  UCB-VI follows.
+
+## Closed Gap: Stopped Realized/Policy-Value Expected Consistency
+
+- Lean statement: for both the exact capped first-passage and genuine
+  uncapped `hittingAfter` prefixes, expected realized regret minus the
+  successor-policy value-gap expectation equals the negative return-deviation
+  expectation at every schedule index. Both signed and absolute vertical
+  gaps tend to zero. Together with the accepted behavior and realized
+  uncapped-minus-capped gaps, an exact per-index path identity gives a full
+  expectation-consistency square.
+- Local APIs/imports: accepted capped/uncapped expected decompositions;
+  capped/uncapped return-deviation integral limits; accepted horizontal
+  behavior/realized expected gaps; `Tendsto.neg`; `continuous_abs`; `ring`.
+- Proof route: normalize each expected decomposition into the vertical
+  identity -> rewrite each vertical sequence to negative expected return
+  deviation -> apply return convergence and negation -> map through absolute
+  value -> prove the two square paths equal by ring arithmetic -> package all
+  exact identities and eight edge limits.
+- Regularity: finite nonempty Standard Borel state/action spaces, probability
+  initial/generated laws, positive proxy/floor, bounded means,
+  selected-reward sub-Gaussianity, exploratory support/floor, exact source,
+  indexing, centering, normalization, behavior-policy semantics, both exact
+  stops, and `4 < mdp.horizon`.
+- Retrieval/status: no duplicate; local-first record
+  `mem-4fafd4fc9904f47d`. Seven declarations, root import, and external
+  declaration/terminal canaries compile. SafeVerify passes at
+  `d07f9ed4...c7b9`; placeholders are empty, axioms are baseline-only, and
+  independent local review found no open P0-P3. The full gate passes.
+- Failure policy: no expectation/random-index interchange, optional stopping,
+  finite-index equality, quantitative rate, model uniformity, raw episodes,
+  behavior=recommended equality, minimax/reachability, or complete UCB-VI
+  follows.
+
+## Closed Gap: Componentwise Capped/Uncapped Expected Truncation
+
+- Lean statement: on the exact generated trajectory law, the signed and
+  absolute differences between uncapped and capped behavior-expected-regret
+  expectations tend to zero, and the analogous two return-deviation limits
+  hold. Capped and uncapped expected realized regret each equal expected
+  behavior regret minus expected return deviation. All six coordinates are
+  integrable, and all four capped/uncapped component expectations tend to
+  zero.
+- Local APIs/imports: accepted componentwise behavior/return `MemLp 1` and
+  difference-integral limits; accepted realized expectation replacement;
+  exact stopped decomposition; `MemLp.integrable`; `integral_sub`;
+  `continuous_abs`.
+- Proof route: derive coordinate integrability -> rewrite each integral of a
+  difference as a difference of integrals -> apply continuous absolute value
+  -> preserve the pointwise realized/behavior/return identity -> integrate
+  the same representatives -> package the four coordinate limits.
+- Regularity: finite nonempty Standard Borel state/action spaces, probability
+  initial/generated laws, positive proxy/floor, bounded means,
+  selected-reward sub-Gaussianity, exploratory support/floor, exact source,
+  indexing, centering, normalization, behavior-policy semantics, both exact
+  stops, and `4 < mdp.horizon`.
+- Retrieval/status: no duplicate; local-first record
+  `mem-bf148b8e7faff0cd`. Seven declarations, root import, and external
+  expected-gap/decomposition/terminal canaries compile. SafeVerify passes at
+  `d46e2fb3...e0e53`; placeholders are empty, axioms are baseline-only, and
+  independent local review found no P0-P3. The full gate passes.
+- Failure policy: no expectation/random-index interchange, optional stopping,
+  finite-index equality, quantitative truncation rate, model uniformity, raw
+  episodes, behavior=recommended equality, minimax/reachability, or complete
+  UCB-VI follows.
+
+## Closed Gap: Componentwise Capped/Uncapped Policy-Value L1 Truncation
+
+- Lean statement: on the exact generated trajectory law, capped and uncapped
+  stopped behavior-expected-regret and return-deviation coordinates are
+  a.e.-eventually equal. Capped behavior and return are `MemLp 1` with
+  vanishing exponent-one norm and signed integral. Both uncapped-minus-capped
+  component differences are `MemLp 1` and their norms/integrals tend to zero.
+  Both stopped realized/behavior/return decompositions and the exact identity
+  `Delta return = Delta behavior - Delta realized` are retained.
+- Local APIs/imports: capped/uncapped eventual-base prefix theorems; capped
+  stopping-time theorem; all-prefix behavior a.e. limit; generic `2H` bound;
+  accepted capped/uncapped realized L1 terminal; accepted uncapped
+  behavior/return terminal; `MemLp.sub`; `memLp_congr_ae`;
+  `eLpNorm_congr_ae`; `eLpNorm_sub_le`; dominated and Bochner integral
+  continuity.
+- Proof route: capped eventual-base equality -> `untopA` divergence ->
+  random-prefix behavior composition -> bounded/dominated capped behavior L1
+  -> exact capped decomposition -> capped return L1 -> behavior-difference
+  triangle -> exact component-difference algebra plus accepted realized
+  truncation -> return-difference L1 -> signed-integral continuity.
+- Regularity: finite nonempty Standard Borel state/action spaces, probability
+  initial/generated laws, positive proxy/floor, bounded means,
+  selected-reward sub-Gaussianity, exploratory support/floor, exact source,
+  indexing, centering, normalization, behavior-policy semantics, both exact
+  stops, and `4 < mdp.horizon`.
+- Retrieval/status: no duplicate; local-first record
+  `mem-1011ebc0a0909b71`. Eighteen declarations, root import, and external
+  canaries compile. SafeVerify passes at `20132e52...62acb`; placeholders are
+  empty and the public axiom set matches both accepted parents. Independent
+  local review and the full gate pass.
+- Failure policy: no expectation/random-index interchange, optional stopping,
+  finite-index equality, quantitative truncation rate, model uniformity, raw
+  episodes, behavior=recommended equality, minimax/reachability, or complete
+  UCB-VI follows.
+
+## Closed Gap: Uncapped Policy-Value And Return-Deviation L1
+
+- Lean statement: at the exact genuine uncapped `hittingAfter` prefix, the
+  successor-policy value-gap average is measurable, pointwise in `[0,2H]`,
+  `MemLp 1`, and tends to zero a.e., in expected absolute value,
+  `eLpNorm 1`, and signed integral. The exact stopped realized/behavior/return
+  decomposition holds, and return deviation is `MemLp 1` with vanishing
+  exponent-one norm and signed integral.
+- Local APIs/imports: cumulative behavior measurability/nonnegativity/`2H`;
+  `measurable_apply_randomNat`; `ae_tendsto_apply_randomPrefix`; uncapped
+  prefix divergence; `Integrable.of_bound`;
+  `tendsto_integral_filter_of_norm_le_const`;
+  `MemLp.eLpNorm_eq_integral_rpow_norm`; accepted realized L1;
+  `memLp_congr_ae`; `MemLp.sub`; `eLpNorm_congr_ae`; `eLpNorm_sub_le`.
+- Proof route: deterministic average envelope -> measurable random-prefix
+  evaluation -> a.e. composition -> dominated L1 behavior limits -> exact
+  same-prefix decomposition -> L1 triangle for return deviation -> Bochner
+  integral continuity and integral decomposition.
+- Regularity: finite nonempty Standard Borel state/action spaces, probability
+  initial/generated laws, positive proxy/floor, bounded means, selected-reward
+  sub-Gaussianity, support/floor, exact source/indexing/centering/per-batch
+  normalization/behavior semantics, genuine uncapped stop, and
+  `4 < horizon`.
+- Retrieval/status: no duplicate; exact local and Mathlib APIs are recorded
+  under `mem-cd29ac6abaf4cb55`. Twenty-three declarations, root import, and
+  external canaries compile. SafeVerify passes at `0af3bbb9...79da77`, the
+  public axiom audit is baseline-only, independent review found no P0-P3,
+  and the full gate passes with 36 CLI tests and one expected skip.
+- Failure policy: do not substitute a deterministic integrated average,
+  commute expectation with the random index, or infer optional stopping,
+  finite-index equality, rates, model uniformity, raw episodes,
+  behavior=recommended equality, minimax/reachability, or complete UCB-VI.
+
+## Closed Gap: Expected-Regret Truncation Replacement
+
+- Lean statement: on the exact same generated trajectory law, capped and
+  uncapped stopped-process coordinates are integrable, the integral of their
+  pointwise uncapped-minus-capped difference is exactly the difference of
+  their integrals, both forms and the absolute expected gap tend to zero, and
+  both signed expectations tend to zero.
+- Local APIs/imports: accepted capped/uncapped L1 comparison; accepted
+  uncapped signed-expectation terminal; `memLp_one_iff_integrable`;
+  `integrable_zero`; `eLpNorm_congr_ae`; `tendsto_integral_of_L1'`;
+  `integral_sub`; and `continuous_abs`.
+- Proof route: generic arbitrary-measure L1 integral continuity -> exact
+  truncation-error integral limit -> coordinate integrability and
+  `integral_sub` -> signed expected gap -> continuity of absolute value ->
+  direct capped expectation limit plus accepted uncapped expectation limit.
+- Regularity: unchanged finite nonempty Standard Borel spaces, initial and
+  generated probability laws, positive proxy/floor, bounded means,
+  selected-reward sub-Gaussianity, support/floor, exact source/indexing/
+  centering/normalization/behavior, both exact stop definitions, and
+  `4 < horizon`. The generic wrapper has no finite-measure assumption.
+- Retrieval/status: no duplicate; exact accepted local parents and Mathlib
+  Bochner/topology APIs, recorded as `mem-0c4479e50a03a4ce`. Six
+  declarations, root import, and external canaries compile. SafeVerify passes
+  at `ef44a0df...b9741`; the declaration audit uses only baseline axioms.
+  Independent review found no P0-P2; both P3 metadata findings are closed.
+  Lifecycle shadow and the full gate pass, including 36 CLI tests with one
+  expected skip.
+- Failure policy: do not infer finite-index equality, equality on or between
+  delayed events, a quantitative rate, optional stopping, policy-value
+  identity, model uniformity, raw episodes, behavior=recommended equality,
+  minimax/reachability, or complete UCB-VI.
+
+## Closed Gap: Capped/Uncapped HittingAfter L1 Truncation Equivalence
+
+- Lean statement: outside the existing capped inverse-square-root delayed set,
+  both the capped first-passage stop and exact uncapped `hittingAfter` stop
+  equal the common deterministic base and their stopped processes agree;
+  almost every trajectory eventually has exact equality. Their difference is
+  coordinatewise `MemLp 1` and tends to zero in `eLpNorm 1`, named
+  `Lp Real 1`, and measure.
+- Local APIs/imports: delayed-set equality; capped stopping-prefix lower bound;
+  uncapped `eq_base_of_process_le`; compiled capped L1 and uncapped Lp
+  terminals; `MemLp.sub`; `eLpNorm_sub_le`;
+  `Lp.tendsto_Lp_iff_tendsto_eLpNorm''`; and
+  `tendstoInMeasure_of_tendsto_eLpNorm`.
+- Proof route: delayed-set nonmembership -> capped upper bound and threshold
+  nonviolation -> both stops equal base -> pointwise stopped-process equality;
+  Borel-Cantelli parent -> a.e. eventual equality; parent L1 norms plus the
+  triangle inequality -> difference norm convergence -> Lp and in-measure
+  packaging.
+- Regularity: unchanged finite nonempty Standard Borel spaces, initial and
+  generated probability laws, positive proxy/floor, bounded means,
+  selected-reward sub-Gaussianity, support/floor, exact source/indexing/
+  centering/normalization/behavior, exact capped and uncapped stops, exact
+  capped delayed set, and `4 < horizon`.
+- Retrieval/status: no duplicate local comparison theorem; exact compiled
+  parents and Mathlib Lp APIs. Ten declarations, root import, and external
+  terminal/#check canaries compile. SafeVerify passes at `b68c4bc4...76a80`;
+  placeholders and baseline axioms are clean. Independent review found no
+  P0-P2, and its two P3 metadata findings were closed; lifecycle shadow and
+  the full repository gate pass.
+- Failure policy: equality is only outside the capped delayed set. Do not
+  identify capped and uncapped delayed events or infer an explicit truncation
+  rate, optional stopping, model uniformity, raw episodes,
+  behavior=recommended equality, minimax/reachability, or complete UCB-VI.
+
+## Closed Gap: Delayed-Event Expected Contribution At Exact HittingAfter
+
+- Lean statement: the existing capped inverse-square-root first-passage
+  delayed event is measurable and has probability tending to zero; for the
+  genuine uncapped stopped process, both its restricted expected absolute
+  contribution and the absolute signed restricted expectation on that event
+  tend to zero.
+- Local APIs/imports: accepted uniform absolute continuity;
+  `Filter.Tendsto.eventually`; `Iio_mem_nhds`; `eventually_atTop`;
+  `integral_nonneg`; `abs_integral_le_integral_abs`; compiled delayed-set
+  measurability and `delayedProbability_tendsto_zero`.
+- Proof route: event mass convergence enters the UI delta eventually -> apply
+  the uniform restricted absolute-integral bound at half epsilon -> metric
+  convergence of restricted L1 mass -> squeeze the absolute signed integral.
+- Regularity: unchanged finite nonempty Standard Borel spaces, initial and
+  generated probability laws, positive proxy/floor, bounded means,
+  selected-reward sub-Gaussianity, support/floor, exact source/indexing/
+  centering/normalization/behavior, genuine uncapped stop, exact capped
+  delayed-set definition, and `4 < horizon`. The generic bridge needs no
+  finite-measure or probability assumption.
+- Retrieval/status: no memory/local/Mathlib duplicate; exact accepted parent,
+  compiled delayed-event producer, and Mathlib order/integral APIs. Three
+  declarations, root import, and external generic/exact canaries compile;
+  SafeVerify `304b5afc...499c0`, placeholder scan, and baseline-axiom audit
+  pass. Independent review found no P0-P3 and the requested signed generic
+  application canary now compiles. Lifecycle shadow and the full repository
+  gate pass.
+- Failure policy: qualitative fixed-model convergence only; no explicit rate,
+  optional stopping, model uniformity, raw episodes, behavior=recommended
+  equality, minimax/reachability, or complete UCB-VI.
+
+## Closed Gap: Exact Uncapped HittingAfter Uniform Absolute Continuity
+
+- Lean statement: for every positive epsilon, one positive delta controls the
+  exact stopped-regret restricted integral uniformly over every schedule index
+  and measurable event of probability at most `ENNReal.ofReal delta`; both
+  the integral of absolute regret and the absolute signed integral are at
+  most epsilon.
+- Local APIs/imports: accepted exact stopped-process `UniformIntegrable`;
+  `UniformIntegrable.unifIntegrable`; `UniformIntegrable.memLp`;
+  `MemLp.indicator`; `MemLp.eLpNorm_eq_integral_rpow_norm`;
+  `integral_indicator`; `ENNReal.ofReal_le_ofReal_iff`; and
+  `abs_integral_le_integral_abs`.
+- Proof route: take Mathlib's UI delta; rewrite the exponent-one indicator
+  norm as `ofReal` of the restricted absolute integral; reflect the ENNReal
+  bound into `Real`; then dominate the absolute signed integral.
+- Regularity: unchanged finite nonempty Standard Borel spaces, probability
+  laws, positive proxy/floor, bounded means, selected-reward sub-Gaussianity,
+  support/floor, exact source/stop/indexing/centering/normalization/behavior,
+  `4 < horizon`, and per-event measurability.
+- Retrieval/status: no memory or local duplicate; exact Mathlib source and
+  accepted UI parent; two declarations, root import, external generic and
+  terminal canaries, SafeVerify `db0cd463...71c67`, empty placeholder scan,
+  and baseline-only axioms compile. Independent review's one P3 fence-guard
+  finding was repaired, leaving no P0-P3; lifecycle shadow and the full
+  repository gate pass.
+- Failure policy: qualitative fixed-model epsilon-delta only; no computable
+  delta, tail/moment rate, optional stopping, model-uniform control, raw
+  episodes, behavior=recommended equality, or complete UCB-VI.
+
+## Closed Gap: Exact Uncapped HittingAfter Uniform Integrability And Signed Expectation
+
+- Lean statement: the exact genuine uncapped stopped-regret sequence is
+  Mathlib probability-theory `UniformIntegrable` at exponent one, and its
+  signed Bochner integrals tend to zero.
+- Route: the accepted L1/eLpNorm limit gives `UnifIntegrable`; the convergent
+  named `Lp Real 1` range is bounded, and `Lp.enorm_toLp` turns this into the
+  uniform norm field required by `UniformIntegrable`. Independently,
+  `tendsto_integral_of_L1'` gives the signed expectation limit.
+- Evidence: four declarations, root import, external generic and terminal
+  canaries, SafeVerify `2c010bef...fcd24`, empty placeholder scan, baseline
+  axioms, and independent review with no P0-P3.
+- Scope boundary: fixed-model sequence UI and signed expectation consistency,
+  not optional stopping, a stopping-time moment/rate theorem, model/index
+  uniformity, raw episodes, behavior=recommended equality, or complete UCB-VI.
+
+## Closed Gap: Exact Uncapped HittingAfter Lp
+
+- Lean statement: the accepted expected-absolute exact uncapped stopped-regret
+  limit now has coordinate `MemLp 1`, exact exponent-one `eLpNorm`, named
+  `Lp Real 1`, in-measure, and a.e. surfaces in one terminal theorem.
+- Route: fixed-index integrability gives `MemLp 1`; Mathlib identifies
+  `eLpNorm 1` with the lifted absolute integral; continuous `ENNReal.ofReal`
+  and `Lp.tendsto_Lp_iff_tendsto_eLpNorm''` provide the two norm limits.
+- Evidence: the eight-declaration module, root import, and seven external
+  canaries compile; SafeVerify hash is `30ec3b42...aaca8a8`; five audited
+  theorem layers use only the baseline axioms. Independent review found no
+  P0-P3 and its terminal-consumer canary request is closed.
+- Acceptance: retrieval/index/lifecycle records are synchronized, frontier
+  shadow has no mismatches, and full `python3 tools/bandit.py check` passes.
+- Scope boundary: this parent is fixed-model exact-source L1/Lp. The accepted
+  child above now proves sequence UI and signed expectation convergence, but
+  still no optional stopping, stopping-time rate, model-uniform control, raw
+  episodes, or complete UCB-VI.
+
+## Closed Gap: Exact Uncapped HittingAfter L1 Consistency
+
+- Lean statement: the canonical expected absolute exact natural-causal average
+  realized behavior regret at the genuine uncapped inverse-square-root
+  `hittingAfter` tends to zero.
+- New foundations: measurable dynamic coordinate evaluation; square-summable
+  weighted stopping-fiber Holder; global successor-coordinate MGF and uniform
+  L2 envelope; exact first-hit negative-overshoot inequality.
+- Route: the accepted positive-part limit handles excess above zero. For the
+  negative part, immediate hits are bounded by the summable explicit-prefix L1
+  term, while delayed hits are bounded by `|X_(hit-1)| / hit`; the reciprocal
+  square tail makes the latter expectation vanish.
+- Closed gap: the previous exact uncapped route was only one-sided. It now has
+  an accepted fixed-model L1 endpoint after SafeVerify, independent review,
+  lifecycle shadow, and the full repository gate.
+- Still open: optional stopping, a uniform-integrability theorem, stopping-time
+  moment/rate bounds, model-uniform rates, raw-episode regret,
+  behavior=recommended equality, minimax/reachability, and complete UCB-VI.
+
+## Closed Gap: Expected Positive-Part Consistency At Exact HittingAfter
+
+- Lean statement: for the exact uncapped inverse-square-root `hittingAfter`
+  stopped average realized behavior regret, the expected positive part tends
+  to zero as the schedule index tends to infinity.
+- Local APIs/imports: the accepted fixed-index stopped-process integrability
+  parent, exact finite-hit pointwise threshold theorem, `Integrable.abs.mono'`,
+  `Measurable.max`, `integral_mono_ae`, threshold positivity/convergence, and
+  `squeeze_zero`.
+- Proof route: dominate `max stoppedProcess 0` by `abs stoppedProcess`; use
+  a.e. finiteness of the genuine hit to bound the maximum by the positive
+  threshold; integrate; then sandwich the nonnegative expected positive part
+  between zero and the inverse-square-root threshold.
+- Regularity contracts: exact finite nonempty Standard Borel spaces,
+  generated probability law, selected-reward uniform sub-Gaussianity,
+  support/floor and bounded-mean conditions, positive proxy/floor,
+  source/filtration/indexing/centering/normalization/behavior semantics, and
+  `4 < horizon` are preserved from the parent route.
+- Retrieval/status: no matching local theorem or typed memory result; exact
+  local/Mathlib route compiled in scratch as `mem-f0db6d1dd3a432a9`;
+  `leanCompiled` with four declarations, three external canaries, SafeVerify
+  hash `151c8c10...e9815`, clean placeholders, baseline-only axioms, and
+  independent local review with no P0-P3.
+- Failure policy: this is one-sided excess consistency. It does not prove
+  signed expectation convergence, expected-absolute/L1 convergence, uniform
+  integrability, optional stopping, uniform-in-model/index control, raw
+  episodes, behavior=recommended equality, or complete UCB-VI.
+
+## Closed Gap: Cauchy-Schwarz Degree-Four Expected-Absolute Asymptotics
+
+- Lean statement: with finite-MDP/generated-source parameters fixed, the
+  actual expected absolute stopped average realized behavior regret is
+  `O((scheduleIndex+1)^4)`.
+- Local APIs/imports: the accepted degree-eight moment parent,
+  `Real.sum_mul_le_sqrt_mul_sqrt`, `Summable.sum_le_tsum`,
+  `Summable.tsum_le_of_sum_le`, the exact stopping-fiber weighted-moment
+  identity, the uniform coordinate-L2 stopped-value bound,
+  `Asymptotics.IsBigO.sqrt`, and
+  `Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics`.
+- Proof route: apply finite-sum Cauchy--Schwarz to
+  `sqrt p_n=((n+1)*sqrt p_n)*(1/(n+1))`; pass both square sums to `tsum`;
+  rewrite the weighted mass as the actual rounds second moment; substitute
+  its polynomial budget; then use `sqrt(s^8)=s^4` and `IsBigO.sqrt`.
+- Regularity contracts: the generic theorem needs a finite measure,
+  measurable/a.e.-finite fixed stopping time, rounds `MemLp 2`, coordinate
+  `MemLp 2`, and a uniform coordinate second moment. The terminal retains all
+  exact probability/Standard-Borel/MGF/support/indexing/centering/
+  normalization/behavior contracts, positive proxy/floor, bounded means, and
+  `4 < horizon`; only the schedule index varies.
+- Retrieval/status: no direct memory hit; exact local and Mathlib APIs compiled
+  in scratch as `mem-e0a6fb8355363a3e`; `leanCompiled` with two generic and
+  ten RL declarations, five external canaries, SafeVerify hash
+  `11fca241...145b4`, clean placeholders, baseline-only axioms, and
+  independent review with no P0-P3.
+- Failure policy: degree four is an improved fixed-model growth envelope
+  relative to the available degree-eight second moment, not a sharp or
+  decreasing regret rate. It does not prove uniform-in-model/index control,
+  UI/L1 convergence, optional stopping, raw episodes, behavior=recommended,
+  or complete UCB-VI.
+
+## Closed Gap: Degree-Eight Stopping-Round Moment Asymptotics
+
+- Lean statement: with the finite MDP, generated source, reward law, policy,
+  support, variance proxy, and visit floor fixed, both the actual successor
+  stopping-round second moment and expected absolute stopped average realized
+  behavior regret are `O((scheduleIndex+1)^8)`.
+- Local APIs/imports: the accepted polynomial pointwise parent,
+  `Mathlib.Analysis.Asymptotics.Lemmas`, `Asymptotics.isBigO_iff`,
+  `Nat.one_le_pow`, `Nat.pow_le_pow_left`, `one_le_pow₀`,
+  `integral_nonneg`, `tsum_nonneg`, and `Real.norm_eq_abs`.
+- Proof route: normalize `((c*s)^4+1)^2` to a fixed coefficient times
+  `s^8`; absorb the nonnegative weighted MDP and shifted inverse-square
+  constants using `1 <= s^8`; export scalar budget `IsBigO`; then transport
+  the accepted exact integral bounds through norm nonnegativity.
+- Regularity contracts: all model/source parameters are fixed while only the
+  natural schedule index varies. The terminal retains the exact probability,
+  Standard-Borel, MGF, support, indexing, centering, normalization, behavior,
+  positive proxy/floor, bounded-mean, and `4 < horizon` contracts.
+- Retrieval/status: no prior matching card; local parent and OFUL/UCB
+  `isBigO_iff` patterns plus exact Mathlib APIs retrieved as
+  `mem-208816c27b4594b9`; `leanCompiled` with twenty-five declarations, five
+  external canaries, SafeVerify hash `ee350657...66dc1c`, clean placeholders,
+  baseline-only axioms, and independent review with no P0-P3.
+- Failure policy: exponent eight remains the stopping-round second-moment
+  envelope; its expected-absolute exponent is sharpened by the Cauchy--Schwarz
+  child above. It does not evaluate the weighted constant or prove convergence, uniform
+  moments, UI/L1 control, optional stopping, sharpness, raw episodes,
+  behavior=recommended equality, or complete UCB-VI.
+
+## Closed Gap: Polynomial Stopping-Round Second-Moment Bound
+
+- Lean statement: for each fixed index, the explicit ceiling start plus one is
+  at most `(Nat.ceil rateCoefficient + 2) * (scheduleIndex + 1)`. Therefore
+  the exact checkpoint square is bounded by
+  `(((Nat.ceil rateCoefficient + 2) * (scheduleIndex + 1))^4 + 1)^2`, and the
+  actual stopping-round second moment and stopped-regret absolute integral use
+  this degree-eight term plus one named MDP-only weighted failure constant.
+- Local APIs/imports: the accepted explicit-tail-start module,
+  `Real.sqrt_le_iff`, `Nat.le_ceil`, `Nat.ceil_le`, max/multiplication order,
+  `Nat.pow_le_pow_left`, weighted-series `ne_top`, `ENNReal.toReal_add`, and
+  `ENNReal.toReal_mono`.
+- Proof route: bound sqrt by the positive natural scale, transport the rate
+  coefficient through its ceiling, handle both maximum branches and the final
+  successor, raise monotonically through fourth power and square, isolate the
+  unchanged weighted `tsum`, then compose the accepted actual-moment and
+  stopped-value endpoints.
+- Regularity contracts: the scalar inequalities use finite MDP parameters and
+  one fixed index. Real conversion keeps `4 < horizon`; the terminal preserves
+  the exact generated probability/Standard-Borel/MGF/support/indexing/
+  centering/normalization/behavior contracts, positive proxy/floor, and
+  bounded means. No independence or optional-stopping premise is added.
+- Retrieval/status: no prior polynomial-start memory hit; exact local parent
+  declarations and Mathlib order/sqrt/integral APIs retrieved;
+  `leanCompiled` with sixteen declarations, five external canaries, SafeVerify
+  hash `ef4b1038...0aba9`, empty placeholder scan, and baseline-only axioms.
+- Failure policy: the MDP-only failure constant is a proved-finite `tsum`, not
+  a numerical closed form. This is pointwise in `scheduleIndex`, not uniform
+  integrability, L1 convergence, optional stopping, raw episodes,
+  behavior=recommended equality, or complete UCB-VI.
+
+## Closed Gap: Explicit Tail-Start Deterministic Second-Moment Bound
+
+- Lean statement: the exact scheduled realized-regret rate is bounded by one
+  explicit coefficient divided by `n+1`; therefore
+  `max scheduleIndex (Nat.ceil (coefficient * sqrt (scheduleIndex+1)))`
+  satisfies the all-later inverse-sqrt threshold comparison. The canonical
+  `Nat.find` start is no larger, so the actual stopping-round second moment
+  and stopped-regret absolute first moment inherit an explicit deterministic
+  budget with no canonical witness, visit-floor parameter, fibers, or random
+  integral on its right side.
+- Local APIs/imports: compiled component rate envelopes, `Nat.le_ceil`,
+  positive scale/square-root/division order, `Nat.find_min'`, checkpoint
+  monotonicity, ENNReal finiteness, and `ENNReal.toReal_mono`.
+- Proof route: combine the burn-in, logarithmic, and return-radius terms into
+  a reciprocal-linear envelope; invert it at the fixed threshold; compare the
+  least witness; enlarge only the initial checkpoint square in the accepted
+  finite weighted budget; substitute the resulting real bound into the
+  compiled stopped-value theorem.
+- Regularity contracts: the scalar route uses only finite MDP parameters and
+  one fixed index. The terminal preserves the exact generated probability/
+  Standard-Borel/MGF/support/indexing/centering/normalization/behavior
+  contracts, positive proxy/floor, bounded means, and `4 < horizon`.
+- Retrieval/status: no prior explicit-ceiling card; exact local rate and
+  canonical-start APIs plus Mathlib order/sqrt/integral APIs retrieved;
+  `leanCompiled` with fifteen declarations and four external canaries.
+- Failure policy: the remaining deterministic weighted failure `tsum` is
+  finite but not numerically evaluated. Do not infer a uniform-in-index
+  moment, UI/L1 convergence, optional stopping, raw episodes,
+  behavior=recommended equality, or complete UCB-VI.
+
+## Closed Gap: Deterministic Stopping-Round Second-Moment Bound
+
+- Lean statement: a canonical checkpoint start is chosen after the scheduled
+  regret envelope is permanently below the fixed inverse-sqrt threshold; the
+  actual squared successor stopping round is bounded by the squared start
+  checkpoint plus the seventh-degree weighted exact model/return budget. The
+  stopped regret therefore has a deterministic absolute first-moment bound
+  containing neither stopping fibers nor an unevaluated random integral.
+- Local APIs/imports: deterministic rate `Tendsto`, positive threshold,
+  `Nat.find`, compiled delayed-event inclusion and violation budget,
+  checkpoint telescope, `lintegral_tsum`, `lintegral_indicator_const`,
+  weighted-budget summability, `integral_eq_lintegral_of_nonneg_ae`, and
+  `ENNReal.toReal_mono`.
+- Proof route: select and specify the canonical tail start, transport every
+  later delayed event to its failure budget, integrate the squared-checkpoint
+  layer cake, prove the ENNReal budget finite under `4 < horizon`, convert to
+  the Bochner second moment, and substitute it into the prior stopped-value
+  theorem.
+- Regularity contracts: probability measure and measurable stopping value for
+  the generic bridge; inherited exact RL probability/Standard-Borel/MGF/
+  support/indexing/centering/normalization/behavior contracts, positive
+  proxy/floor, bounded means, `4 < horizon`, and fixed `scheduleIndex`.
+- Retrieval/status: no pre-existing memory card; exact local and Mathlib APIs
+  found; generic/source/endpoint declarations and external canary compile.
+- Failure policy: the explicit child above bounds the canonical `Nat.find`
+  start. Preserve this parent interface and do not infer a uniform moment,
+  UI/L1 convergence, optional stopping, raw episodes, behavior=recommended
+  equality, or complete UCB-VI.
+
+## Closed Gap: Stopping-Round Second-Moment Absolute First-Moment Bound
+
+- Lean statement: the squared-successor-index real fiber sum equals the
+  actual stopping-round second moment; hence the square-root fiber-mass sum is
+  at most one half of that moment plus the universal shifted inverse-square
+  series. The exact fixed-index inverse-sqrt RL consumer retains integrability
+  and names the resulting absolute first-moment budget.
+- Local APIs/imports: `UnboundedStoppingTimeL2CoordinateIntegrability`,
+  `ENNReal.tsum_toReal_eq`, `integral_eq_lintegral_of_nonneg_ae`, shifted
+  `Real.summable_one_div_nat_pow`, `Summable.tsum_add`, `tsum_mul_left`, the
+  compiled fiber/Holder bridge, uniform RL moments, and L2 hit parent.
+- Proof route: decompose squared rounds in ENNReal, take `toReal` under
+  finite second moment, identify the Bochner integral, sum Young's pointwise
+  inequality, compose with the existing absolute stopped-value theorem, and
+  instantiate the exact source.
+- Regularity contracts: finite measure; measurable/a.e.-finite tau; `MemLp 2`
+  rounds and coordinates; uniform coordinate second moment; inherited exact
+  RL contracts and `4 < horizon`; fixed `scheduleIndex`; no independence or
+  optional stopping.
+- Retrieval/status: exact local and Mathlib APIs found; weighted identities,
+  generic quantitative bridge, named budget, RL terminal, and external canary
+  compile.
+- Failure policy: the actual stopping-round second moment remains fixed-index
+  and unevaluated. It is not a schedule-index rate, uniform moment estimate,
+  uniform integrability, L1 convergence, raw-episode theorem,
+  behavior=recommended equality, or complete UCB-VI.
+
+## Closed Gap: Stopping-Fiber Absolute First-Moment Bound
+
+- Lean statement: a measurable a.e.-finite stop with L2 successor rounds and
+  uniformly L2 coordinates satisfies
+  `integral |stoppedValue| <= sqrt(envelope) * tsum sqrt(real fiber mass)`;
+  the exact fixed-index inverse-sqrt RL consumer retains integrability and
+  names this RHS.
+- Local APIs/imports: `UnboundedStoppingTimeL2CoordinateIntegrability`, local
+  indicator Holder, compiled fiber square-root summability,
+  `integral_tsum_of_summable_integral_norm`, `Summable.tsum_le_tsum`, uniform
+  RL coordinate moments, and the square-integrable hit/expected-bound parents.
+- Proof route: restrict absolute coordinates to equality fibers, apply
+  Holder, sum the fiber costs, identify the a.e. stopped-value series, and
+  instantiate the exact generated source.
+- Regularity contracts: finite measure; measurable/a.e.-finite tau; `MemLp 2`
+  rounds and coordinates; uniform second moment; inherited exact RL contracts
+  and `4 < horizon`; no independence or optional stopping.
+- Retrieval/status: no prior `integral_abs_stoppedValue` declaration; exact
+  local/Mathlib APIs found; generic/RL modules and external canary compile.
+- Failure policy: the RHS is fixed-index and explicit. It is not a
+  schedule-index absolute-moment rate, uniform integrability, L1 convergence,
+  raw-episode theorem, behavior=recommended equality, or complete UCB-VI.
+
+## Closed Gap: Unbounded HittingAfter Integrable Expected Upper Bound
+
+- Lean statement: for every fixed inverse-sqrt threshold index under
+  `4 < mdp.horizon`, the exact stopped natural-causal average realized
+  behavior regret is `Integrable`, and its integral is at most the threshold.
+- Local APIs/imports: measurable equality fibers, `lintegral_tsum`,
+  `ENNReal.summable_toReal`, shifted inverse-square p-series, Young's
+  inequality, the local L2 indicator Holder bound, compiled coordinate
+  moments, stopped-value measurability, and the square-integrable hit parent.
+- Proof route: L2 rounds give finite squared-index-weighted fiber mass; Young
+  gives summable square-root fiber masses; Holder sums uniformly L2
+  deterministic coordinates into an integrable unbounded `stoppedValue`;
+  finite-hit `Set.Iic` membership then integrates to the threshold bound.
+- Regularity contracts: exact dependent causal source; finite nonempty
+  Standard Borel spaces; probability law; positive proxy/floor; bounded
+  means; selected-reward sub-Gaussianity; support; exact indexing, centering,
+  normalization, and behavior semantics; explicit `4 < horizon`.
+- Retrieval/status: exact local/Mathlib retrieval; `leanCompiled` with seven
+  declarations, root import, external generic-MDP canary, clean placeholders,
+  and baseline-only axiom reports.
+- Failure policy: fixed index only; no expected nonnegativity, absolute-moment
+  rate, uniform integrability/L1 convergence, optional stopping, raw episodes,
+  behavior=recommended, minimax/reachability, or complete UCB-VI.
+
+## Closed Gap: Unbounded HittingAfter Fixed-Index Second Moment
+
+- Lean statement: for every fixed inverse-sqrt threshold index and
+  `4 < mdp.horizon`, the genuine uncapped Mathlib `hittingAfter` satisfies
+  `OFUL.SquareIntegrableFiniteStoppingTime source.trajectoryMeasure tau`.
+- Local APIs/imports: the compiled first-moment/delayed-checkpoint route;
+  `OFUL.SquareIntegrableFiniteStoppingTime`; `memLp_two_iff_integrable_sq`;
+  `Finset.notMemRangeEquiv`, ENNReal product `tsum`, antidiagonal p-series,
+  polynomial-exponential summability, indicators, and `lintegral_tsum`.
+- Proof route: square fourth-power checkpoint values and bound consecutive
+  gaps by `16*(n+2)^7`; use horizon at least five for inverse-tenth local
+  shares; reduce the seventh-weighted shifted model tails to an inverse-cube
+  pair envelope; add the exponential return share; integrate the squared
+  delayed-indicator domination; package `MemLp 2` with prior a.e. finiteness.
+- Regularity contracts: exact dependent causal source; finite nonempty
+  Standard Borel spaces; probability initial law; positive proxy and visit
+  floor; bounded means; selected-reward uniform sub-Gaussian law; exploratory
+  support/floor; exact indexing, centering, normalization, and behavior
+  semantics; explicit `4 < mdp.horizon`. No event independence or optional
+  stopping is added.
+- Retrieval/status: exact local/Mathlib retrieval; `leanCompiled` with 17
+  declarations, root import, generic external final-contract canary, clean
+  placeholders, and three baseline-only critical axiom reports. Independent
+  local checks confirmed the event direction and horizon boundary.
+- Failure policy: for horizon at most four, retain the compiled first-moment
+  theorem; inverse-sixth local shares do not justify the seventh-weighted
+  model sum. The result is fixed-index L2 regularity, not a uniform moment
+  rate, stopped-process L1 theorem, exponential tail, optional-stopping
+  identity, raw-episode result, behavior=recommended equality,
+  minimax/reachability, or complete UCB-VI.
+
+## Closed Gap: Unbounded HittingAfter Fixed-Index First Moment
+
+- Lean statement: for every fixed inverse-sqrt threshold index, the genuine
+  uncapped Mathlib `hittingAfter` satisfies
+  `OFUL.IntegrableFiniteStoppingTime source.trajectoryMeasure tau`.
+- Local APIs/imports: fourth-power checkpoints and explicit burn-in-tail/
+  return budgets; `Finset.notMemRangeEquiv`, `ENNReal.tsum_sigma`, Nat
+  antidiagonals, p-series and polynomial-exponential summability;
+  `hittingAfter_le_of_mem`, `lintegral_tsum`, indicator integration, measurable
+  `WithTop.untopA`, and the compiled fixed-index a.e.-finiteness parent.
+- Proof route: bound each checkpoint gap by `4*(n+2)^3`; reindex shifted model
+  tails and use positive horizon for an inverse-sixth-power charge; combine
+  the resulting p-series with the exponential return share; eventually embed
+  delayed checkpoints in the compiled regret violation; integrate the
+  weighted delayed indicators and package the first moment with a.e.
+  finiteness.
+- Regularity contracts: exact dependent causal source; finite nonempty
+  Standard Borel spaces; probability initial law; positive horizon, proxy,
+  and visit floor; bounded means; selected-reward uniform sub-Gaussian law;
+  exploratory support/floor; exact indexing, centering, normalization, and
+  behavior semantics. No independence or optional stopping is added.
+- Retrieval/status: exact local and Mathlib declaration retrieval;
+  `leanCompiled` with 21 declarations, root import, concrete final-contract
+  canary, clean placeholders, and four baseline-only axiom reports.
+  Independent local checks found no P0-P3 issue.
+- Failure policy: fixed-index first-moment regularity is not a uniform moment
+  rate, second moment, exponential crossing tail, L1/UI stopped-process
+  theorem, optional-stopping identity, raw-episode result,
+  behavior=recommended equality, minimax/reachability, or complete UCB-VI.
+
+## Closed Gap: Unbounded HittingAfter A.E. Finiteness And In-Measure Consistency
+
+- Lean statement: Mathlib `hittingAfter` searches the exact natural average
+  realized behavior-regret process below `1/sqrt(n+1)` from `(n+1)^4` with
+  no finite cap. Each fixed hit is finite a.e.; all schedule indices are
+  finite on one a.e. set; a.e. the hits eventually equal their bases; the
+  stopped process converges a.e. and in measure.
+- Local APIs/imports: `hittingAfter`, `le_hittingAfter`,
+  `hittingAfter_le_of_mem`, `hittingAfter_mem_set_of_ne_top`,
+  `hittingAfter_eq_top_iff`, `Adapted.isStoppingTime_hittingAfter`,
+  `ae_all_iff`, `tendstoInMeasure_of_tendsto_ae`; compiled all-prefix,
+  diverging-stopping-time, and inverse-sqrt summable-delay parents.
+- Proof route: expose lower/base/hit/stopping semantics; use all-prefix a.e.
+  convergence and threshold positivity for fixed-index finiteness; combine
+  the countable family with `ae_all_iff`; use the summable-delay parent for
+  eventual base equality; transfer base divergence through `untopA`; invoke
+  the generic stopped a.e. theorem and then convergence in measure.
+- Regularity contracts: exact dependent causal source, finite nonempty
+  Standard Borel spaces, probability initial law, inherited MGF/support/
+  bounded-mean/indexing/centering/normalization/behavior assumptions. No
+  independence or optional-stopping premise is added.
+- Retrieval/status: exact search returned no uncapped local hit; exact
+  Mathlib hitting-time APIs and compiled local parents were retrieved.
+  Status is `leanCompiled` with 12 declarations, root import, direct canaries,
+  clean placeholders, and 11 baseline-only theorem axiom reports. Independent
+  review's initial P3 semantic-canary gap was repaired and follow-up review
+  confirmed no P0-P3.
+- Failure policy: a.e. finiteness is not pointwise finiteness and does not
+  imply expected delay, crossing tails or moments, L1/UI, optional stopping,
+  raw episodes, behavior=recommended, minimax/reachability, or complete UCB-VI.
+
+## Closed Gap: Inverse-Sqrt First-Passage Summable Delay And Eventual Immediate Stopping
+
+- Lean statement: use threshold `1/sqrt(n+1)` in the capped first-passage
+  scan over `[(n+1)^4,(n+1)^4+(2*n+1)]`. The delay probabilities have
+  finite total mass, so almost every generated trajectory eventually stops
+  exactly at `(n+1)^4`; the stopped process retains `MemLp 1`,
+  expected-absolute, `eLpNorm`, in-measure, and a.e. convergence.
+- Local APIs/imports: compiled capped and reciprocal first-passage routes;
+  explicit polynomial expected-absolute envelope and Markov distance tail;
+  `Real.sqrt_eq_rpow`, `Real.rpow_sub`,
+  `Real.summable_one_div_nat_add_rpow`, `ENNReal.tsum_le_tsum`,
+  `Summable.tsum_ofReal_ne_top`, and `MeasureTheory.ae_eventually_notMem`.
+- Proof route: characterize `base<tau` by the strict base violation; transport
+  into the distance event; divide the inverse-cubic/inverse-square L1
+  envelope by `1/sqrt(n+1)`; normalize to inverse-`5/2` and inverse-`3/2`
+  shifted p-series; prove finite ENNReal delay mass; apply first
+  Borel-Cantelli; combine eventual non-delay with `base<=tau`.
+- Regularity contracts: preserve the exact dependent causal source and all
+  inherited Standard Borel/probability/MGF/support/bounded-mean/indexing/
+  centering/normalization/behavior contracts. First Borel-Cantelli adds no
+  event independence or optional-stopping premise.
+- Retrieval/status: exact calibration search returned no hit; exact local
+  first-passage/L1/Markov/Borel-Cantelli precedents and Mathlib shifted
+  p-series/rpow/ENNReal APIs were retrieved. Status is `leanCompiled` with
+  twenty declarations, root import, and direct summability/finite-mass/
+  eventual-base/root canaries. The placeholder scan is clean, all fifteen
+  public theorem axiom reports are baseline-only, and independent review's
+  initial P3 canary gap was closed; no P0-P3 findings remain.
+- Failure policy: the almost-sure conclusion is along this scheduled family.
+  It does not provide a deterministic eventual index, pointwise
+  all-trajectory stopping, uncapped `hittingAfter`, expected delay,
+  exponential crossing tails, optional stopping, raw episodes,
+  behavior=recommended, minimax/reachability, or complete UCB-VI.
+
+## Closed Gap: Reciprocal-Threshold First-Passage Vanishing Delay Probability And L1 Consistency
+
+- Lean statement: use threshold `1/(n+1)` in the capped first-passage scan
+  over `[(n+1)^4,(n+1)^4+(2*n+1)]`. The probability that the scan advances
+  past its base tends to zero, while the stopped process retains `MemLp 1`,
+  expected-absolute and `eLpNorm 1` convergence, in-measure convergence,
+  and a.e. convergence.
+- Local APIs/imports: compiled finite first-passage semantics and L1 terminal;
+  explicit polynomial-prefix expected-absolute and summable L1 envelopes;
+  scheduled Markov distance tail; scale atTop limits; `measure_mono`,
+  `ENNReal.ofReal_le_ofReal`, and `ENNReal.tendsto_ofReal`.
+- Proof route: prove `base<tau` iff the base process strictly exceeds
+  `1/(n+1)`; embed this event in the absolute-distance violation; apply
+  Markov; divide the exponent-three/exponent-two envelope by the reciprocal
+  threshold to obtain inverse-square plus inverse-linear decay; squeeze the
+  ENNReal probability; append the compiled stopped L1 parent.
+- Regularity contracts: preserve the exact dependent causal source and all
+  inherited Standard Borel/probability/MGF/support/bounded-mean/indexing/
+  centering/normalization/behavior contracts. The concentration step is
+  first-moment Markov and adds neither independence nor optional stopping.
+- Retrieval/status: exact calibration search returned no hit; exact local
+  first-passage, scheduled L1/Markov, and asymptotic declarations were
+  retrieved. Status is `leanCompiled`: sixteen declarations, root import,
+  and external threshold/delay/subset/rate/Markov/probability/root-`MemLp`
+  canaries compile. All theorem axioms are baseline-only, and independent
+  read-only review found no P0-P3 issue.
+- Failure policy: vanishing delay probability does not imply finite-index
+  immediate stopping, summable delay probabilities, eventual immediate
+  stopping a.s., uncapped `hittingAfter`, crossing-time moments, exponential
+  crossing tails, raw episodes, behavior=recommended, minimax/reachability,
+  or complete UCB-VI.
+
+## Closed Gap: Capped Double-Linear Raw-Window First-Passage Stopping-Time L1 Consistency
+
+- Lean statement: at index `n`, Mathlib `hittingBtwn` scans the exact natural
+  average realized behavior-regret process from `(n+1)^4` through
+  `(n+1)^4+(2*n+1)`. It returns the first prefix at or below deterministic
+  `threshold n`, or the right endpoint when no earlier prefix hits. The
+  resulting stopped process converges in expected absolute value,
+  `eLpNorm 1`, in measure, and almost everywhere.
+- Local APIs/imports: the compiled strongly-adapted natural process;
+  `MeasureTheory.hittingBtwn`; its first-hit, no-prior-hit, interval, and
+  stopping-time lemmas; the local `BudgetStoppingTime` precedent; the
+  double-linear candidate-rate theorem; and the generic rate-controlled
+  raw-window L1 terminal.
+- Proof route: construct the finite hitting time for `Set.Iic (threshold n)`;
+  expose exact candidate/base/fallback and before/at-stop certificates; apply
+  `Adapted.isStoppingTime_hittingBtwn`; transport the closed-window bounds to
+  `WithTop Nat`; then specialize the generic L1 terminal.
+- Regularity contracts: preserve the exact dependent source and inherited
+  Standard Borel/probability/MGF/support/bounded-mean/indexing/centering/
+  normalization/behavior contracts. The deterministic threshold has no sign,
+  monotonicity, calibration, or limiting premise. No independence or optional
+  stopping is added.
+- Retrieval/status: the local search found only the previous two-endpoint
+  non-first-passage card; Mathlib hitting-time source, local precedent, and
+  exact parent declarations were then retrieved. Status is `leanCompiled`:
+  eleven declarations, root import, and external semantic/stopping/`MemLp`/
+  expected/`eLpNorm`/in-measure/a.e. canaries compile. Independent review
+  found no P0-P3 findings, and representative axioms are baseline only.
+- Failure policy: a strict pre-cap stop is a threshold hit, but a stop at the
+  cap may be either a hit or the no-earlier-hit fallback. Do not infer a hit
+  at the cap, crossing probability, an uncapped `hittingAfter` theorem,
+  trajectory-dependent thresholds, optional stopping, raw episodes,
+  behavior=recommended, minimax/reachability, or complete UCB-VI.
+
+## Closed Gap: Threshold-Triggered Double-Linear Raw-Window Stopping-Time L1 Consistency
+
+- Lean statement: at index `n`, compare the exact natural average realized
+  behavior-regret process at `(n+1)^4` with a deterministic threshold. Stop
+  there on `process<=threshold`; otherwise stop `2*n+1` raw prefixes later.
+  This rule is an exact-natural-filtration stopping time and its full stopped
+  process converges in expected absolute value, `eLpNorm 1`, in measure, and
+  almost everywhere.
+- Local APIs/imports: compiled strong adaptation of the natural process;
+  `measurableSet_le`; Mathlib `isStoppingTime_piecewise_const`; the
+  explicit double-linear candidate-rate theorem; and the generic
+  rate-controlled raw-window L1 terminal.
+- Proof route: make the base threshold event measurable, construct the
+  two-constant piecewise stopping rule, prove both branches and pointwise
+  window bounds, then specialize the generic parent with base `(n+1)^4`
+  and width `2*n+1`.
+- Regularity contracts: preserve the exact dependent source and inherited
+  Standard Borel/probability/MGF/support/bounded-mean/indexing/centering/
+  normalization/behavior contracts. The threshold is deterministic but needs
+  no sign or limit. No independence or optional stopping is added.
+- Retrieval/status: exact threshold-triggered memory no-hit; exact local
+  declarations and Mathlib's piecewise-constant stopping constructor were
+  retrieved. Status is `leanCompiled`: nine declarations, root import, and
+  external branch/stopping/`MemLp`/expected/`eLpNorm`/in-measure/a.e.
+  canaries compile. Independent review found no P0-P3 findings and confirmed
+  baseline-only axioms.
+- Failure policy: this is a one-shot choice between two endpoints after the
+  base observation, not a first-passage threshold time. Do not infer
+  trajectory-dependent thresholds, arbitrary widths/candidate sets, optional
+  stopping, raw episodes, behavior=recommended, minimax/reachability, or
+  complete UCB-VI; the conditional branch canaries do not prove positive
+  probability for either branch.
+
+## Closed Gap: Rate-Controlled Raw-Window Stopping-Time L1 Consistency
+
+- Lean statement: for deterministic positive `baseRounds` and `windowWidth`,
+  every exact-natural-filtration stopping prefix satisfying
+  `baseRounds n <= tau_n <= baseRounds n+windowWidth n` has vanishing expected
+  absolute natural average realized behavior regret when
+  `((windowWidth n+1)/sqrt(baseRounds n))->0`. The terminal also returns
+  stopped `MemLp 1`, explicit budget/rate bounds, `eLpNorm`, in-measure, and
+  a.e. convergence.
+- Local APIs/imports: the compiled `D/sqrt rounds` all-prefix majorant;
+  `Real.sqrt_le_sqrt`; ordered division; `Finset.sum_const`; `Tendsto.mul`;
+  the WithTop finite-window selector; stopped `MemLp`; finite-sum integration;
+  exponent-one norm, in-measure, and stopped a.e. parents.
+- Proof route: each of the `windowWidth n+1` raw candidates costs at most
+  `D/sqrt(baseRounds n)`. Sum these costs, consume the explicit candidate
+  ratio, select and integrate the stopped coordinate, and transport the
+  expected-absolute limit to `eLpNorm 1` and in measure. The separate
+  `n<=baseRounds n` contract supplies the a.e. lower envelope.
+- Regularity contracts: preserve the exact dependent source and all inherited
+  Standard Borel/probability/MGF/support/bounded-mean/indexing/centering/
+  normalization/behavior contracts. Require positive bases, the candidate
+  ratio limit, `n<=baseRounds n`, one exact stopping time per index, and both
+  pointwise window bounds; no independence or optional stopping is added.
+- Retrieval/status: the explicit raw-window parent and exact declarations were
+  retrieved, together with recorded Mathlib/RL cards; weapon evidence remains
+  inspiration only. Status is `leanCompiled`: nineteen declarations, root
+  import, and an external trajectory-dependent width-`2n+1` endpoint canary directly pin
+  `MemLp`, budget/rate, expected-absolute convergence, `eLpNorm`, in-measure,
+  and a.e. outputs. Independent review found no P0/P1; all P2/P3 record and
+  canary findings are closed.
+- Failure policy: base divergence alone does not replace the candidate-ratio
+  limit, and the a.e. conclusion still needs a diverging lower envelope. Do
+  not infer optional stopping, arbitrary finite candidate sets, arbitrary
+  diverging-stop L1, raw episodes, behavior=recommended, minimax/reachability,
+  or complete UCB-VI.
+
+## Closed Gap: Polynomial-Base Growing Raw-Window Stopping-Time L1 Consistency
+
+- Lean statement: every exact-natural-filtration stopping prefix satisfying
+  `explicitRounds n <= tau_n <= explicitRounds n+n`, where
+  `explicitRounds n=(n+1)^4`, has expected absolute natural average realized
+  behavior regret tending to zero. The terminal also returns stopped
+  `MemLp 1`, the explicit budget and rate, `eLpNorm`, in-measure, and a.e.
+  convergence.
+- Local APIs/imports: `Real.log_le_sub_one_of_pos`, `Real.log_sqrt`,
+  `Real.sq_sqrt`, `Real.sqrt_le_sqrt`, the compiled all-prefix L1 and
+  fixed-window selector/MemLp parents, `Finset.sum_const`, both finite-sum
+  integral wrappers, and the stopping a.e. parent.
+- Proof route: majorize `C(1+log r)/r` and the return first moment by one
+  `D/sqrt r`; every raw coordinate after `(n+1)^4` then costs at most
+  `D/(n+1)^2`. Sum all `n+1` contiguous candidates to obtain
+  `D/(n+1)->0`, select the stopped offset through WithTop bounds, and
+  transport the resulting expected-absolute limit to L1 and in measure.
+- Regularity contracts: preserve the exact dependent source, inherited
+  Standard Borel/probability/MGF/support/bounded-mean contracts, indexing,
+  centering, normalization, and behavior semantics. Require one exact
+  stopping time and both pointwise raw-window bounds per index; no independence
+  or optional stopping is added.
+- Retrieval/status: exact no-hit, compiled local parents, recorded Mathlib and
+  RL cards, and weapon inspiration only. Status is `leanCompiled`: twenty-two
+  declarations, root import, and a trajectory-dependent canary that reaches
+  both raw endpoints and directly pins `MemLp`, budget/rate, `eLpNorm`,
+  in-measure, and a.e. terminals. Independent review found no P0-P2; its P3
+  canary request is closed.
+- Failure policy: this concrete route is now subsumed by the parameterized
+  rate-controlled raw-window theorem. Do not infer candidate sets outside a
+  contiguous interval, arbitrary diverging-stop L1, optional stopping,
+  raw episodes, behavior=recommended, minimax/reachability, or complete UCB-VI.
+
+## Closed Gap: Growing-Window Grid Stopping-Time L1 Consistency
+
+- Lean statement: if `windowAt n -> infinity` and every exact-natural-
+  filtration stopping prefix is pointwise one of
+  `explicitHighProbabilityRounds (n+offset)` for `offset <= windowAt n`, then
+  expected absolute stopped natural average realized behavior regret tends to
+  zero. The terminal also returns stopped `MemLp 1`, `eLpNorm` convergence,
+  convergence in measure, and almost-everywhere convergence.
+- Local APIs/imports: the compiled summable fourth-power-prefix L1 envelope;
+  `summable_nat_add_iff`; `Summable.sum_le_tsum`; `tendsto_sum_nat_add`;
+  `memLp_stoppedValue`; both project finite-sum integral wrappers; the
+  exponent-one norm identity; in-measure transport; and the stopping a.e.
+  parent.
+- Proof route: extract the finite grid offset and its finite endpoint bound;
+  dominate its absolute coordinate by the finite candidate sum; integrate and
+  apply the explicit-grid envelope; dominate every such finite sum by the full
+  shifted summable tail. Then identify `eLpNorm 1`; grid growth in the base
+  index gives the a.e. stopping lower bound.
+- Regularity contracts: preserve the exact finite Standard Borel dependent
+  source, selected-reward sub-Gaussian law, bounded means, support/floor,
+  indexing, centering, normalization, and behavior semantics. Require one
+  exact stopping time per index, pointwise sparse-grid membership, and
+  `windowAt -> infinity`; no independence is added.
+- Retrieval/status: exact no-hit, compiled parent/Mathlib APIs, recorded cards,
+  and weapon inspiration only. Status is `leanCompiled`: eighteen
+  declarations, root import, and a trajectory-dependent width-`n` canary that
+  selects both left and right grid endpoints.
+- Failure policy: arbitrary candidate-count growth is proved only on the
+  summable fourth-power grid. Do not infer an arbitrary raw-prefix growing
+  interval, arbitrary diverging-stopping L1, optional stopping, a sharper
+  rate, raw episodes, behavior=recommended, minimax/reachability, or complete
+  UCB-VI.
+
+## Closed Gap: Fixed-Window Stopping-Time L1 Consistency
+
+- Lean statement: for exact-natural-filtration stopping times satisfying one
+  pointwise fixed window `n+1 <= tau_n <= n+1+window`, expected absolute
+  stopped natural average realized behavior regret tends to zero. The terminal
+  also returns stopped `MemLp 1`, `eLpNorm` convergence, convergence in
+  measure, and almost-everywhere convergence on the exact trajectory measure.
+- Local APIs/imports: the all-prefix L1 envelope and its limit, the stopping
+  a.e. parent, `memLp_stoppedValue`, `MemLp.eLpNorm_eq_integral_rpow_norm`,
+  `tendsto_finset_sum`, `tendsto_add_atTop_nat`,
+  `tendstoInMeasure_of_tendsto_eLpNorm`, and both project finite-sum integral
+  wrappers.
+- Proof route: eliminate `top` using the finite upper bound; write `untopA` as
+  `n+1+offset` with `offset < window+1`; charge its absolute value to the finite
+  coordinate sum; integrate, apply coordinate envelopes, and compose their
+  limits with fixed shifts. Then identify `eLpNorm 1` and reuse the lower-bound
+  stopping-time a.e. theorem.
+- Regularity contracts: preserve the exact finite Standard Borel dependent
+  causal source, selected-reward sub-Gaussian law, bounded means,
+  support/floor, natural indexing, normalization, and behavior semantics.
+  Every `tau_n` is an exact-natural-filtration stopping time and the same
+  deterministic pointwise window bounds all `n`; no independence is added.
+- Retrieval/status: exact no-hit, compiled parent/Mathlib APIs, recorded cards,
+  and weapon inspiration only. Status is `leanCompiled`: twelve declarations,
+  root import, and an external deterministic `tau_n=n+1` canary.
+- Failure policy: no envelope monotonicity or optional-stopping identity is
+  used. The downstream sparse-grid growing-window route is separate. Do not
+  infer raw-prefix growing-window/arbitrary-stopping L1 convergence, a sharper
+  rate than the explicit shifted finite sum, raw episodes,
+  behavior=recommended, minimax/reachability, or complete UCB-VI.
+
+## Closed Gap: Deterministic-Moment Expected Bounded-Stopping Regret
+
+- Lean statement: for one exact-natural-filtration stopping time with
+  `1 <= tau <= T`, the exact stopped average realized behavior-regret second
+  moment is at most a deterministic sum of positive-prefix envelopes. The
+  fixed-quarter overflow is at most `(1/2) * sqrt(momentBudget)`, and expected
+  stopped regret is at most the finite logarithmic-rate budget plus that term.
+- Local APIs/imports: the new
+  `Concentration.integral_sq_le_four_mul_proxy_mul_exp_half_of_hasSubgaussianMGF`,
+  the cumulative behavior `rounds * (2*horizon)` bound, the exact process
+  identity, `MemLp.integrable_sq`, `Finset.single_le_sum`,
+  `IntegrabilitySums.integrable_finset_sum`,
+  `ExpectationBochnerSums.integral_finset_sum`, and the exact-moment parent.
+- Proof route: derive a conservative MGF second moment; bound every positive
+  coordinate by behavior-square plus normalized deviation-square; select the
+  stopped coordinate inside the finite `Icc 1 T` square sum; integrate and
+  sum; apply `Real.sqrt_le_sqrt` to both parent bounds.
+- Regularity contracts: retain the exact finite Standard Borel dependent
+  causal source, bounded means, selected-reward sub-Gaussian law,
+  support/floor, normalization, indexing, and centering. Coordinate bounds
+  require positive rounds; stopping requires exact `IsStoppingTime` and
+  pointwise `1 <= tau <= T`; no independence is added.
+- Retrieval/status: exact no-hit; compiled local/Mathlib APIs and recorded
+  cards, with OFUL/weapon evidence used only as route inspiration. Status is
+  `leanCompiled`: nine declarations across `ConcentrationSubGaussian` and the
+  root-imported RL module, plus external moment and expected-bound canaries.
+- Failure policy: do not claim the sharper `E[X^2] <= c`, endpoint
+  monotonicity, optional stopping, or nonnegative expected realized regret.
+  The finite deterministic sum may grow with `T`; asymptotic expected rate,
+  arbitrary confidence, unbounded stopping, raw episodes,
+  behavior=recommended, minimax/reachability, and complete UCB-VI remain open.
+
+## Closed Gap: Exact-Moment Expected Bounded-Stopping Regret
+
+- Lean statement: for one exact-natural-filtration stopping time with
+  `1 <= tau <= T`, the stopped average realized behavior regret is in `L2`.
+  Its bad-event absolute integral is at most
+  `(1/2) * sqrt(exact stopped second moment)`, and its expectation is at most
+  the finite `Icc 1 T` logarithmic-rate sum plus that overflow. The same
+  theorem retains the `1/4` bad tail, `3/4` good mass, and good-event pathwise
+  stopped rate.
+- Local APIs/imports: new namespace-neutral `MeasureL2Indicator` wrapper;
+  `MemLp.of_bound`, cumulative return `HasSubgaussianMGF.memLp`, exact
+  expected-minus-deviation identity, Mathlib `memLp_stoppedValue`,
+  `Finset.single_le_sum`, `integral_mono`, and the compiled three-quarter
+  parent.
+- Proof route: prove deterministic behavior and return coordinates are `L2`;
+  transport through bounded stopping; name the exact second moment; convert
+  the quarter event tail into a half square-root mass; split paths between the
+  bad-event absolute overflow and the good-event stopped rate; integrate.
+- Regularity contracts: inherit the exact finite Standard Borel causal source,
+  bounded means, selected-reward sub-Gaussian law, support/floor, indexing,
+  normalization, and centering contracts; require `0 < horizon`, `0 < T`, and
+  pointwise positive bounded exact-filtration `IsStoppingTime`; no independence.
+- Retrieval/status: exact no-hit; compiled local parent/process/MGF APIs,
+  Mathlib Holder/stopping/integral APIs, recorded cards, and OFUL/weapon
+  inspiration only. Status is `leanCompiled`: eleven declarations across two
+  root-imported modules, focused builds, and external stopped-`L2`, overflow,
+  and expected-integral canaries.
+- Failure policy: no optional stopping, no `L1 * probability` shortcut, no
+  assumed nonnegative expected realized regret, and no unproved numerical
+  second-moment bound. Therefore this is not yet an asymptotic expected rate,
+  arbitrary confidence, unbounded stopping, raw episodes, behavior=recommended,
+  minimax/reachability, optimal UCB-VI, or complete UCB-VI.
+
+## Closed Gap: Explicit Three-Quarter Bounded-Stopping Good Event
+
+- Lean statement: under the exact natural-causal source and one stopping time
+  with `1 <= tau <= T`, the unchanged scheduled finite-prefix model-failure
+  budget is at most `ENNReal.ofReal (1/8)`. With return budget `1/8`, the
+  measurable joint and stopped bad events have mass at most `1/4`; the joint
+  good event has real mass at least `3/4` and carries the stopped logarithmic
+  pathwise average realized behavior-regret bound.
+- Local APIs/imports: the compiled single-model-event parent;
+  `sum_range_one_div_natCast_add_two_pow_le_one`, the scheduled local-delta and
+  finite model-budget identities, `ENNReal.ofReal_sum_of_nonneg`,
+  `ENNReal.ofReal_add`, and `MeasureTheory.probReal_compl_eq_one_sub`.
+- Proof route: dominate exponent-at-least-six shifted powers by `1/16` of the
+  inverse-square series; map the real finite sum through `ofReal`; charge the
+  two exact model shares to `1/8`; add the return `1/8`; convert the quarter
+  event tail into the three-quarter complement mass; reuse parent containment.
+- Regularity contracts: all source/support/MGF/indexing/normalization contracts
+  are inherited. The numerical bound explicitly needs `0 < mdp.horizon`; the
+  terminal also needs `0 < T` and one pointwise positive bounded stopping time.
+- Retrieval/status: exact search was a no-hit; evidence is the compiled parent,
+  exact local/Mathlib finite-sum and probability-complement APIs, and recorded
+  cards. Status is `leanCompiled`: five declarations, root import, focused and
+  `Tests.Basic` builds, with the trajectory-dependent one-or-two stopping-time
+  canary projecting `1/8`, `1/4`, and `3/4` certificates.
+- Failure policy: preserve the exact schedule and fixed confidence split. This
+  is not arbitrary caller confidence, optional stopping, stopped expectation,
+  unbounded-anytime control, raw episodes, behavior=recommended,
+  minimax/reachability, an optimal UCB-VI rate, or complete UCB-VI.
+
+## Closed Gap: Bounded Stopping-Time Single-Model-Event Tail
+
+- Lean statement: for one exact-natural-filtration stopping time with
+  pointwise `1 <= tau <= T`, allocate one global return budget `delta` over
+  `Finset.Icc 1 T`. The stopped average realized-regret violation is
+  filtration-`T` measurable and contained in one horizon-`T` model event plus
+  the finite return-only window. Both the joint and stopped event have mass at
+  most `modelFailureBudget mdp T + ENNReal.ofReal delta`.
+- Local APIs/imports: the compiled bounded-stopping and fixed-prefix parents;
+  heterogeneous `finiteHorizonBadEvent`; `Set.mem_iUnion`; `Finset.Icc`,
+  `card_pos`, and `measurableSet_biUnion`;
+  `ProbabilityUnionBound.measure_biUnion_finset_le_of_uniform`;
+  `measure_union_le`; `measure_mono`.
+- Proof route: embed every `Fin r` model-event witness into `Fin T`; use the
+  exact unchanged coordinate-event family; divide the return budget by the
+  positive-prefix index-card; split each prefix model/return event; transport
+  its model branch into `M_T` and union-bound only return branches; compose the
+  prior stopped-to-prefix containment.
+- Regularity contracts: all finite/Standard-Borel/probability/support/MGF,
+  source/indexing/normalization/centering assumptions are inherited. New
+  contracts are `0 < T`, one positive bounded `IsStoppingTime`, and
+  `0 < delta <= 1`. No independence is used.
+- Retrieval/status: exact search was a no-hit; direct evidence is the compiled
+  parents, exact local/Mathlib finite-union APIs, and recorded cards. Status is
+  `leanCompiled`: thirteen declarations, root import, focused/Tests builds, a
+  trajectory-dependent one-or-two-prefix canary, clean placeholders,
+  baseline-only axioms, no P0-P3 in independent review, and the full
+  `python3 tools/bandit.py check` gate.
+- Failure policy: retain the horizon model-failure budget. This is not a
+  total-`delta`, optional-stopping, stopped-expectation, unbounded-anytime,
+  raw-episode, behavior=recommended, minimax/reachability, optimal-UCB-VI-rate,
+  or complete-UCB-VI theorem.
+
+## Closed Gap: Bounded Stopping-Time High-Probability Natural Realized Regret
+
+- Lean statement: for one exact-natural-filtration stopping time satisfying
+  pointwise `(1 : WithTop Nat) <= tau <= T`, the exact stopped average realized
+  behavior regret and its scheduled logarithmic rate are defined; their
+  violation is measurable at filtration level `T`, contained in the positive
+  fixed-prefix window, and bounded by the exact sum over `Finset.Icc 1 T` of
+  model and return budgets. Every window-good path obeys the stopped rate.
+- Local APIs/imports: the compiled natural-filtration stopping parent and
+  fixed-prefix high-probability realized parent; `stoppedValue`,
+  `stronglyMeasurable_stoppedValue_of_le`, `WithTop.untopA_eq_untop`,
+  `Finset.measurableSet_biUnion`, `measure_biUnion_finset_le`, and
+  `Finset.sum_le_sum`.
+- Proof route: the finite upper bound excludes `top`; both pointwise bounds
+  put `tau.untopA` in `Icc 1 T`; progressive measurability gives filtered
+  stopped-event measurability; the stopped path chooses its fixed-prefix
+  witness; finite subadditivity and the compiled per-prefix event tails yield
+  the exact finite sum.
+- Regularity contracts: all finite/Standard-Borel/probability/support/MGF,
+  source/indexing/normalization/centering assumptions are inherited. New
+  contracts are one `IsStoppingTime`, pointwise positive finite bounds, and
+  `0 < returnDeltaAt r <= 1` only inside the finite window.
+- Retrieval/status: exact route search was a no-hit; evidence is the two
+  compiled RL parents, local OFUL bounded-stopping pattern, exact Mathlib
+  stopping/finite-union APIs, and the recorded cards. Status is
+  `leanCompiled`: fourteen declarations, root import, focused/Tests builds,
+  a trajectory-dependent one-or-two-prefix source canary, baseline-only
+  representative axioms, and no P0-P3 in independent read-only review.
+- Failure policy: preserve the exact finite sum. This is not optional
+  stopping, a stopped expectation identity, an unbounded anytime theorem,
+  raw episodes, behavior=recommended, minimax/reachability, an optimal UCB-VI
+  rate, or complete UCB-VI.
+
+## Closed Gap: Diverging Stopping-Time Almost-Sure Natural Realized Regret
+
+- Lean statement: the exact dependent `Filtration.piLE` natural filtration is
+  exposed; the per-batch-normalized, equal-round-weighted natural average
+  realized behavior-regret process is `StronglyAdapted`; every Mathlib
+  `stoppedValue` at a `WithTop Nat` stopping time is measurable; and any
+  schedule whose `untopA` values diverge a.e. on the same causal measure tends
+  to zero a.e. A pointwise `n <= tau_n.untopA` terminal is included.
+- Local APIs/imports: the compiled diverging-random-prefix parent,
+  `Filtration.piLE_eq_comap_frestrictLe`, `Preorder.frestrictLe`,
+  `measurable_pi_apply`, `Filtration.mono`, `Finset.measurable_sum`,
+  `StronglyAdapted.progMeasurable_of_discrete`, `measurable_stoppedValue`,
+  `IsStoppingTime.measurable'`, and `IsStoppingTime.measurableSpace_le`.
+- Proof route: prove dependent coordinate evaluation at every later
+  filtration level; lift successor-batch reward sums into the finite prefix;
+  sum and divide to obtain adaptedness; apply Mathlib stopped-value
+  measurability; then transport the compiled all-prefix a.e. limit through the
+  measurable Nat-valued `untopA` coordinates.
+- Regularity contracts: all finite/Standard-Borel/probability/support/MGF,
+  source, successor-indexing, normalization, and centering contracts are
+  inherited. New contracts are `IsStoppingTime` at every schedule index and
+  a.e. divergence of `tau_n.untopA`, or the stronger pointwise lower envelope.
+- Retrieval/status: exact route searches were no-hits; direct evidence is the
+  compiled random-prefix parent, Mathlib filtration/stopping source, and local
+  OFUL stopping-time patterns. Status is `leanCompiled`: fourteen declarations,
+  root import, focused and `Tests.Basic` builds, and an extensionally
+  trajectory-dependent source canary whose explicit zero- and one-reward
+  trajectories choose `n+1` and `n+2` from the time-zero sampled return.
+- Failure policy: this is stopped-subsequence consistency and measurable
+  stopped evaluation, not optional stopping, a stopped expectation identity,
+  an anytime confidence/rate theorem, raw episodes, behavior=recommended,
+  minimax/reachability, or complete UCB-VI. Mathlib assigns `top.untopA` an
+  arbitrary fixed Nat default, so divergence implies eventual non-`top` but
+  permits finitely many `top` values; it cannot be replaced by convergence to
+  `top` in `WithTop Nat`.
+
+## Closed Parent: Diverging Random-Prefix Almost-Sure Natural Realized Regret
+
+- Lean statement: on the same heterogeneous causal trajectory measure, any
+  coordinatewise measurable random-prefix schedule `tau_n` which tends to
+  infinity almost everywhere preserves measurability and the a.e. zero limit
+  of the exact per-batch-normalized, equal-round-weighted average realized
+  behavior-regret process. A pointwise `n <= tau_n` terminal is included.
+- Local APIs/imports: the compiled deterministic all-prefix terminal,
+  `measurable_from_prod_countable_left`, `Measurable.prodMk`, `Tendsto.comp`,
+  `filter_upwards`, `tendsto_atTop`, and `eventually_ge_atTop`; the local UCB
+  arm-stream random-coordinate theorem is implementation-pattern evidence.
+- Proof route: make `(trajectory,n) -> X_n trajectory` jointly measurable and
+  compose with `trajectory -> (trajectory,tau_n trajectory)`; intersect the
+  parent-limit and schedule-divergence full-measure sets and compose limits
+  pathwise; derive divergence from `threshold <= n <= tau_n` when requested.
+- Regularity contracts: all finite/Standard-Borel/probability/positive
+  parameter, bounded-reward, selected-reward MGF, support/floor, filtration,
+  source, indexing, normalization, and centering contracts are inherited.
+  New contracts are measurable schedule coordinates and a.e. divergence on
+  the exact same source measure.
+- Retrieval/status: exact search was a no-hit; the compiled parent, local UCB
+  pattern, and exact Mathlib countable-product/filter APIs are direct proof
+  evidence. Status is `leanCompiled`: eight declarations, root import,
+  generic random-Bool and trajectory-dependent Bool/Bool source canaries,
+  focused and `Tests.Basic` builds, baseline-only axioms, no placeholders,
+  and defect-free independent re-review.
+- Failure policy: divergence is essential; bounded or recurrent schedules are
+  not accepted. This is random-subsequence transport, not optional stopping,
+  a stopping-time or anytime rate, raw online episodes, behavior=recommended,
+  minimax/reachability, or complete UCB-VI.
+
+## Closed Parent: All-Prefix Almost-Sure Equal-Round Natural Realized Regret
+
+- Lean statement: on the one heterogeneous self-consistent causal trajectory
+  measure, every coordinate of the exact per-batch-normalized,
+  equal-round-weighted natural average realized behavior-regret process is
+  measurable, and the process tends to zero almost everywhere over all
+  deterministic natural prefixes.
+- Local APIs/imports: the compiled successor-policy expected-regret a.e.
+  theorem, `Filter.Tendsto.cesaro`, the fixed-prefix normalized-return tail,
+  the linear cumulative proxy bound, `subGaussianSumConfidenceRadius_sq`,
+  shifted real p-series, ENNReal tsum comparison, `ae_eventually_notMem`,
+  `tendsto_add_atTop_iff_nat`, and the exact expected-minus-deviation identity.
+- Proof route: use pathwise Cesaro for the behavior term; at rounds `n+1` use
+  return share `1/(n+2)^2`; bound its divided radius by
+  `sqrt(6*(C+1)*(1+log(n+2))/(n+1))`; sum event measures; apply first
+  Borel-Cantelli without independence; remove the shift and subtract the two
+  pathwise zero limits.
+- Regularity contracts: finite nonempty Standard Borel State/Action with
+  equality and measurable singletons, probability initial law, positive
+  horizon/base floor/proxy, bounded rewards, uniform selected-reward
+  sub-Gaussianity, exploratory support/floor, and inherited filtration/global
+  return measurability. Prefixes are deterministic; there is no stopping-time
+  or event-independence premise.
+- Retrieval/status: exact search was a no-hit; compiled local parents and
+  Mathlib probability/measure/asymptotic APIs are proof evidence. The textbook,
+  UCB-VI paper, scenario, and tail weapon remain placement/inspiration only.
+  Status is `leanCompiled`: 21 declarations, root import, Bool/Bool canaries,
+  focused and `Tests.Basic` builds, baseline-only axioms, clean placeholders.
+- Failure policy: preserve the one dependent source, `t -> t+1`, each batch's
+  own positive-count normalization before equal round averaging, and global
+  centering. This is all deterministic prefixes a.s., not an anytime
+  confidence sequence, random stopping-time theorem, raw episode process,
+  behavior/recommended-policy equality, minimax/reachability, or complete
+  UCB-VI.
+
+## Closed Gap: Explicit Polynomial-Prefix Almost-Sure Equal-Round Consistency
+
+- Lean statement: on deterministic prefixes `(n + 1)^4`, the exact
+  per-batch-normalized, equal-round-weighted average realized behavior-regret
+  process is measurable and tends to zero almost everywhere under the one
+  heterogeneous dependent causal trajectory measure.
+- Local APIs/imports: the compiled all-prefix L1 expected-absolute bound, the
+  explicit schedule/process/distance-event APIs, shifted p-series summability,
+  Markov's inequality, integral/`lintegral` and Real/ENNReal bridges,
+  `MeasureTheory.ae_eventually_not_mem`, and reciprocal-natural thresholds.
+- Proof route: specialize the behavior term to `C3/(n+1)^3` and the normalized
+  return first moment to `C2/(n+1)^2`; sum the deterministic L1 envelope and
+  expected absolute process; apply Markov at every fixed positive threshold;
+  invoke first Borel-Cantelli; intersect the reciprocal thresholds and use
+  `exists_nat_one_div_lt` to obtain pathwise convergence.
+- Regularity: inherited finite nonempty Standard Borel State/Action,
+  probability, positive horizon/floor/proxy, bounded rewards, uniform
+  selected-reward sub-Gaussianity, support/floor, filtration and global-return
+  measurability. No independence or stopping-time premise is added.
+- Retrieval/status: exact search was a no-hit; compiled local L1/schedule APIs
+  and Mathlib summability/measure APIs are direct evidence. The 21-declaration
+  module, root import, and Bool/Bool terminal canaries compile; independent
+  review found no defect, representative axioms are baseline-only, and the
+  placeholder scan and full `tools/bandit.py check` are clean.
+- Failure policy: preserve `(n+1)^4`, one source, global centering, and each
+  batch's own normalization before equal round weights. This is sparse-prefix
+  a.e. convergence and is now consumed by the all-prefix route above; it is
+  not anytime/stopping-time, raw-episode,
+  minimax, reachability, behavior=recommended-policy, or complete UCB-VI.
+
+## Closed Gap: All-Prefix L1 Equal-Round Natural Realized Regret
+
+- Lean statement: on the one heterogeneous dependent causal trajectory
+  measure, the exact natural average realized behavior-regret process which
+  normalizes each successor batch by its own count and then weights rounds
+  equally is integrable and `MemLp 1` for every deterministic prefix. Its
+  expected absolute value, exponent-one `eLpNorm`, and named `Lp Real 1`
+  value tend to zero; `TendstoInMeasure` follows.
+- Local APIs/imports: natural successor-average return increments,
+  `Filtration.piLE`, `StronglyAdapted`, conditional-MGF sum, the local MGF
+  first-moment theorem, linear cumulative variance-proxy bound, `Real.sqrt`
+  order/asymptotics, exact expected-minus-deviation identity, expected-process
+  integrability/nonnegativity/integral and logarithmic rate, and Mathlib
+  integral/`MemLp`/`eLpNorm`/`Lp`/in-measure APIs.
+- Proof route: expose the global MGF already internal to the fixed-prefix tail;
+  bound the divided return first moment by a constant over `sqrt rounds`;
+  integrate `|(E-D)/rounds| <= E/rounds + |D|/rounds`; combine the compiled
+  `log(rounds)/rounds` and inverse-square-root limits; package `L1`.
+- Regularity: inherited finite nonempty Standard Borel State/Action,
+  probability, positivity, bounded reward, selected-reward uniform
+  sub-Gaussian, support/floor, filtration and global-return measurability
+  contracts. No independence, summability, or stopping-time premise is added.
+- Retrieval/status: exact search was a no-hit; compiled local and Mathlib
+  measure/order/log-sqrt/asymptotic APIs are direct evidence. The 23-declaration
+  module, root import, and Bool/Bool canaries compile; representative axioms
+  are baseline-only and there are no placeholders.
+- Failure policy: preserve `t -> t+1`, per-batch normalization followed by
+  equal round weights, one source, and global initial-law centering. The old
+  L1 process is total-episode-mass-weighted and is pattern evidence only. This
+  is not almost-sure, anytime/stopping-time, raw-episode, minimax,
+  reachability, behavior=recommendation, or complete UCB-VI.
+
+## Closed Gap: Explicit Polynomial-Prefix Absolute In-Measure Consistency
+
+- Lean statement: the equal-round-weighted natural average realized
+  behavior-regret process at `rounds n = (n+1)^4` is measurable and tends to
+  zero in Mathlib `TendstoInMeasure`. For every `epsilon > 0`, its measurable
+  distance event `{epsilon <= dist (X_n trajectory) 0}` is eventually
+  contained in the exact model-tail/return event, and its ENNReal probability
+  tends to zero.
+- Local APIs/imports: the compiled explicit-schedule high-probability parent,
+  expected-cumulative-regret nonnegativity, the exact
+  expected-minus-return-deviation identity, positive scheduled rounds,
+  `measurableSet_le`, `Real.dist_eq`, `abs_lt`, `measure_mono`, ENNReal order
+  squeeze, and `tendstoInMeasure_iff_dist`.
+- Proof route: the parent supplies the upper envelope off its event. The
+  return-event complement gives `|deviation| < radius`; expected-regret
+  nonnegativity and positive division give the missing strict lower bound.
+  Both deterministic sides tend to zero, so fixed distance violations are
+  eventually event-contained; measure monotonicity and the vanishing exact
+  budget yield the fixed-threshold probability limit and the Mathlib root.
+- Regularity contracts: unchanged finite nonempty Standard Borel
+  State/Action, probability initial law, positive horizon/base floor/variance
+  proxy, bounded stored means, uniform selected-reward sub-Gaussian law,
+  exploratory path support/visit floor, and inherited filtration/adaptation.
+  No independence, summability, or stopping-time premise is added.
+- Retrieval evidence/status: exact target retrieval was a no-hit. Compiled
+  local declarations and Mathlib measure/order/asymptotic APIs are direct
+  evidence; scenario/UCB-VI cards are placement only and proof weapons are
+  inspiration only. Status is `leanCompiled`: 11 declarations, root import,
+  focused and `Tests.Basic` builds, typed Bool/Bool canaries, clean
+  placeholders, baseline-only axioms, and independent review integrated. The
+  review's stale-blueprint observation was cleared by refresh, and direct
+  lower-bound/event-measure canaries were added.
+- Failure policy: this process normalizes each successor batch before giving
+  rounds equal weight. The older compiled `realizedSuccessorAverageRegret`
+  in-measure theorem weights by total episode mass and is contrast evidence,
+  not a transport theorem. The result is fourth-power-subsequence convergence
+  in measure, not all-prefix, anytime, almost-sure, L1, minimax, reachability,
+  raw-episode, behavior/recommendation equality, or complete UCB-VI.
+- Next boundary: an equal-round-weighted L1 or almost-sure strengthening needs
+  separate integrability or summable-tail infrastructure and is not inferred
+  from this route.
+
+## Closed Gap: Explicit Polynomial-Prefix Upper-Tail Probability Consistency
+
+- Lean statement: for every fixed `epsilon > 0`, the scheduled event
+  `{trajectory | epsilon < average realized behavior regret}` is measurable;
+  eventually it is contained in the compiled envelope-violation set, its
+  trajectory probability is at most the exact model-tail/return failure
+  budget, and that ENNReal probability tends to zero.
+- Local APIs/imports: the compiled explicit fourth-power high-probability
+  terminal and its process/rate/violation/budget surfaces; Mathlib
+  `measurableSet_lt`, `measure_mono`, eventual filters, strict order
+  transitivity, and the order squeeze theorem.
+- Proof route: use the parent's rate limit to obtain eventually
+  `rate n < epsilon`; compose with `epsilon < process n` for event inclusion;
+  project the parent's exact violation-probability bound; transport it with
+  measure monotonicity; squeeze the upper-tail probability between zero and
+  the vanishing budget.
+- Regularity contracts: exactly the parent finite nonempty Standard Borel
+  State/Action, probability, positivity, bounded-mean, selected-reward
+  sub-Gaussian, path-support/visit-floor, filtration, and StronglyAdapted
+  contracts. No independence, summability, or stopping-time premise is added.
+- Retrieval evidence/status: exact local search was a no-hit; all proof terms
+  come from the compiled parent or Mathlib measure/order/asymptotic APIs.
+  UCB-VI/scenario cards are placement only and weapons are inspiration only.
+  Status is `leanCompiled`: 8 declarations, root import, focused and
+  `Tests.Basic` builds, external measurability/inclusion/budget/limit canaries,
+  no placeholders, baseline-only axioms, and independent review integrated.
+- Failure policy: preserve the one dependent source, `t -> t+1`, per-batch
+  normalization, global initial-law centering, fourth-power schedule, and
+  exact budget. This is one-sided subsequence control, not absolute
+  `TendstoInMeasure`, lower-tail, all-prefix, anytime, minimax, reachability,
+  behavior/recommendation equality, or complete UCB-VI.
+- Next route: a lower-tail certificate or an exact connection to an existing
+  absolute in-measure process requires a separate proof; neither follows from
+  this one-sided result.
+
+## Closed Gap: Explicit Polynomial-Prefix High-Probability Average Realized Behavior-Regret Consistency
+
+- Lean statement: with `scale n = n+1`, `burnin n = scale n`,
+  `rounds n = scale n ^ 4`, and `returnDelta n = exp (-scale n)`, the exact
+  model-tail/return failure budget and complete average realized behavior-
+  regret envelope both tend to zero. At every scheduled prefix the terminal
+  exposes measurable event and one-sided violation sets, their inclusion and
+  exact probability bounds, eventual strict-subunit confidence, and the
+  event-good pathwise average bound.
+- Local APIs/imports: the burn-in/tail terminal; natural own-count-normalized
+  return proxy; conditional sub-Gaussian radius-square identity; finite sums;
+  Real exp/log/sqrt and order; ENNReal `ofReal`; filter arithmetic.
+- Proof route: remove the dummy-zero term and bound each positive-count proxy
+  by one per-episode proxy; sum exactly `rounds` terms; reduce the scheduled
+  radius to `2*(C+1)/scale`; compose tail-model and exponential return-share
+  limits; split the average rate into `2H/scale^3`, the logarithmic parent,
+  and the return radius; instantiate the parent terminal for every `n`.
+- Regularity contracts: finite nonempty Standard Borel State/Action,
+  probability initial law, positive horizon/base floor/reward proxy and
+  scheduled counts, bounded means, uniform selected-reward sub-Gaussianity,
+  path support/visit floor, and inherited filtration/StronglyAdapted
+  contracts. No model/return independence is assumed.
+- Retrieval evidence/status: exact search was a no-hit; local compiled
+  burn-in/tail, model-tail, return, logarithmic and finite-sum routes plus
+  Mathlib measure/martingale/sub-Gaussian/order/log-sqrt-exp/asymptotic APIs
+  are direct evidence. `SCN-RL-MDP` and UCB-VI are placement only; weapons
+  are inspiration only. Status is `leanCompiled`: 25 declarations, root
+  import, focused/root/`Tests.Basic` builds, Bool/Bool canaries, no
+  placeholders, and standard axioms only.
+- Failure policy: preserve the one dependent source, `t -> t+1` successor
+  indexing, per-batch positive-count normalization, global initial-law
+  centering, and exact union-bound shares. This is a deterministic cofinal
+  fourth-power prefix subsequence with a one-sided upper envelope, not
+  all-prefix, anytime, absolute `TendstoInMeasure`, minimax, reachability,
+  behavior/recommendation equivalence, or complete UCB-VI.
+- Downstream status: consumed by the compiled fixed-`epsilon` one-sided
+  upper-tail probability route above.
+
+## Closed Gap: Burn-In Tail High-Probability Logarithmic Realized Behavior Regret
+
+`RL-FINITE-HORIZON-ADAPTIVE-STOCHASTIC-REWARD-SAMPLED-EMPIRICAL-OPTIMISTIC-SELF-CONSISTENT-SCHEDULED-HETEROGENEOUS-NATURAL-CAUSAL-BURNIN-TAIL-HIGH-PROBABILITY-LOGARITHMIC-CUMULATIVE-AVERAGE-REALIZED-BEHAVIOR-REGRET`
+now compiles in
+`FiniteHorizonNaturalCausalRealizedBehaviorRegretHighProbabilityBurninLogRate`.
+For deterministic `burnin <= rounds`, it splits the natural finite sum at
+`burnin`, charges exactly the early coordinates by the uniform `2 * horizon`
+bound, and applies the actual one-coordinate model-good planning certificate
+to the later coordinates outside the infinite model tail. The suffix is
+dominated by the existing nonnegative full planning sum and its compiled
+`C_mdp * (1 + log rounds)` envelope.
+
+The terminal unions that infinite tail with the fixed-prefix normalized
+successor-batch-average return event. It proves the joint event and both
+one-sided cumulative/positive-round average violations measurable, contains
+the violations in the joint event, and bounds all three probabilities by the
+exact budget
+`selfConsistentScheduledCausalTailModelFailureBudget mdp burnin +
+ENNReal.ofReal returnDelta`. No model/return independence is assumed. Every
+joint-event-good path has cumulative envelope
+`2 * horizon * burnin + C_mdp * (1 + log rounds) + returnRadius`; the average
+is this quantity divided by positive `rounds`.
+
+Local proof evidence is the compiled fixed-prefix realized route, infinite
+tail-model route, `Finset.sum_range_add_sum_Ico`, per-round `2H` and
+model-good planning bounds, exact realized/expected/deviation identity,
+normalized return tail, `measure_union_le`, and `measure_mono`. Regularity
+retains finite nonempty Standard Borel State/Action, probability initial law,
+positive horizon/rounds/base floor/reward proxy, bounded means, uniform
+selected-reward sub-Gaussianity, exploratory path support/visit floor,
+`burnin <= rounds`, and `0 < returnDelta <= 1`. Exact retrieval was a no-hit;
+UCB-VI/scenario cards are placement only and weapons are inspiration-only.
+Status is `leanCompiled`, root-imported, externally instantiated on Bool/Bool,
+placeholder-free, and baseline-axiom audited.
+
+Failure policy preserves the one dependent source, actual `t -> t+1`
+successor batch, each batch's own positive-count normalization, global
+initial-law centering, and the exact tail-model plus caller-return shares.
+This remains a fixed-`burnin`, fixed-`rounds` batch-average theorem, not
+anytime, minimax, reachability, one-raw-episode regret, behavior/recommended-
+policy equivalence, or complete UCB-VI. The next route must choose a growing
+sublinear burn-in and vanishing return share and prove both the average
+envelope and total failure budget tend to zero.
+
+## Closed Gap: Fixed-Prefix High-Probability Logarithmic Cumulative/Average Realized Behavior Regret
+
+`RL-FINITE-HORIZON-ADAPTIVE-STOCHASTIC-REWARD-SAMPLED-EMPIRICAL-OPTIMISTIC-SELF-CONSISTENT-SCHEDULED-HETEROGENEOUS-NATURAL-CAUSAL-FIXED-PREFIX-HIGH-PROBABILITY-LOGARITHMIC-CUMULATIVE-AVERAGE-REALIZED-BEHAVIOR-REGRET`
+now compiles in
+`FiniteHorizonNaturalCausalRealizedBehaviorRegretHighProbabilityLogRate`.
+Its 41 declarations normalize each actual successor-batch return deviation by
+that batch's positive scheduled episode count, square-scale the conditional
+sub-Gaussian proxy with Mathlib `Kernel.HasSubgaussianMGF.const_mul`, preserve
+the dummy-zero/`piLE` successor indexing, and prove a fixed-prefix two-sided
+tail for their finite sum. The exact identity rewrites cumulative realized
+behavior regret as the existing random cumulative behavior expected regret
+minus this globally initial-law-centered normalized deviation.
+
+The self-consistent terminal unions the actual model event with the normalized
+return event. It exposes measurable cumulative and round-average realized
+processes and violation sets, contains both violations in that union, and
+bounds the union and both violations by
+`selfConsistentScheduledCausalModelFailureBudget mdp rounds +
+ENNReal.ofReal returnDelta`. Every union-good trajectory has cumulative regret
+at most the compiled logarithmic expected-regret envelope plus the normalized
+return radius, and average regret at most that quantity divided by positive
+`rounds`. The proof uses `measure_union_le`; it assumes no independence between
+model and return events. The terminal also explicitly proves that if the exact
+total budget is less than one, then the joint event and both violations each
+have probability strictly less than one.
+
+Regularity retains finite nonempty Standard Borel State/Action, a probability
+initial law, positive horizon/rounds/base floor/reward proxy and scheduled
+batches, bounded means, uniform mean-compatible selected-reward
+sub-Gaussianity, exploratory path support, and `0 < returnDelta <= 1`. Exact
+retrieval was a no-hit; compiled local model/logarithmic and causal return-
+concentration routes plus Mathlib finite-sum, conditional expectation,
+martingale, sub-Gaussian, measure, order, and log/sqrt cards are evidence.
+UCB-VI is placement only; weapon cards are inspiration-only. Status is
+`leanCompiled`, root-imported, and externally instantiated on Bool/Bool.
+
+Failure policy preserves the one dependent causal source, natural `t -> t+1`
+selection, actual successor batches, per-batch rather than total-mass
+normalization, global initial-law centering, positive fixed prefix, and the
+exact model-plus-return shares. This is fixed-prefix batch-average realized
+behavior regret, not one raw online episode per round, arbitrary-delta model
+control, uniform-time/anytime control, minimax/optimal-rate regret,
+reachability, or complete UCB-VI. Any all-prefix or asymptotic consumer must
+separately schedule `returnDelta` and handle the accumulated model budget.
+
+## Closed Gap: Fixed-Prefix High-Probability Logarithmic Cumulative Behavior Expected Regret
+
+`RL-FINITE-HORIZON-ADAPTIVE-STOCHASTIC-REWARD-SAMPLED-EMPIRICAL-OPTIMISTIC-SELF-CONSISTENT-SCHEDULED-HETEROGENEOUS-NATURAL-CAUSAL-FIXED-PREFIX-HIGH-PROBABILITY-LOGARITHMIC-CUMULATIVE-BEHAVIOR-EXPECTED-REGRET`
+now compiles in
+`FiniteHorizonNaturalCausalBehaviorExpectedRegretHighProbabilityLogRate`.
+Its thirteen declarations define the natural planning-rate prefix sum, expose
+the exact finite ENNReal sum of both model-confidence shares, transport the
+complement of the prefix model event to every included coordinate, prove the
+random cumulative behavior expected-regret process measurable, and define its
+one-sided logarithmic violation set. The terminal proves the model and
+violation events measurable, the violation set contained in the model event,
+both probability bounds controlled by the exact accumulated model budget, and
+every model-good trajectory bounded first by the planning sum and then by the
+compiled `C_mdp * (1 + log rounds)` envelope.
+
+The proof uses the existing finite union of actual selected count-and-reward
+model failures; it introduces no new independence or MGF claim. Its local APIs
+are `selfConsistentScheduledCausalModelBadEvent`, the coordinate model event
+and actual-behavior planning theorem, `Set.mem_iUnion_of_mem`,
+`Finset.measurable_sum`, `Finset.sum_le_sum`, `measurableSet_lt`, and
+`measure_mono`, plus the compiled logarithmic parent. Regularity retains finite
+nonempty Standard Borel State/Action, probability initial law, positive
+horizon/base floor/reward proxy, bounded means, uniform mean-compatible
+selected-reward sub-Gaussianity, and path support. Exact retrieval was a
+no-hit; compiled model-confidence/logarithmic routes and Mathlib finite-sum,
+measure, kernel, and sub-Gaussian cards are evidence. RL/UCB-VI cards are
+placement only and the optimism weapon remains inspiration-only. Status is
+`leanCompiled`, root-imported, and externally instantiated on Bool/Bool.
+
+Failure policy preserves actual exploratory behavior rather than the
+recommendation, one dependent source and actual sampled batches, natural
+`t -> t+1` selection, schedules, initial exclusion, and both confidence
+shares. The budget is exact and is not replaced by an arbitrary delta or
+claimed to vanish with the prefix. This is fixed-prefix probability over a
+random behavior expected-regret process, not realized return, uniform-time or
+anytime control, every-trajectory control, reachability, minimax/optimal-rate,
+or complete UCB-VI. The realized fixed-prefix consumer above now supplies the
+separately compiled normalized sampled-return process and combined event.
+
+## Closed Gap: Natural Causal Explicit Logarithmic Cumulative/Average Behavior Rate
+
+`RL-FINITE-HORIZON-ADAPTIVE-STOCHASTIC-REWARD-SAMPLED-EMPIRICAL-OPTIMISTIC-SELF-CONSISTENT-SCHEDULED-HETEROGENEOUS-NATURAL-CAUSAL-EXPLICIT-LOGARITHMIC-CUMULATIVE-AVERAGE-BEHAVIOR-EXPECTED-REGRET-RATE`
+now compiles in `FiniteHorizonNaturalCausalBehaviorExpectedRegretLogRate`.
+Its thirty declarations provide unconditional shifted inverse-square,
+high-power, and harmonic finite-sum bounds; explicit nonnegative rate
+coefficients; refined and logarithmic cumulative/average envelopes; actual
+expected cumulative and average pointwise bounds; Big-O statements for the
+envelope and both actual objectives; and the actual `log(n)/n` average limit.
+
+The coordinate integrated rate is rewritten exactly as
+`a/(t+2)^2 + b/(t+3) + c/(t+2)^(horizon+5)`. The inverse-square term is
+compared to the telescoping difference
+`1/(t+1) - 1/(t+2)` and summed with `Finset.sum_range_sub'`. Exponent
+monotonicity reduces the high-power term to that bound. Mathlib
+`harmonic_le_one_add_log` bounds the shifted exploration sum, and
+`one_le_one_add_log_natCast` absorbs the two summable constants without losing
+the zero-prefix case. `Real.isLittleO_log_id_atTop`,
+`tendsto_const_div_atTop_nhds_zero_nat`, `Asymptotics.isBigO_refl`, and
+`Asymptotics.isBigO_iff` provide the limit and actual asymptotic interfaces.
+
+The scalar leaves have no probability contracts. The causal consumers retain
+finite nonempty measurable State/Action with equality and measurable
+singletons, Standard Borel State/Action, probability initial law, positive
+horizon/base floor/reward proxy, bounded deterministic means, uniform
+mean-compatible selected-reward sub-Gaussianity, and exploratory path support.
+Exact retrieval was a no-hit; compiled finite-prefix and explicit integrated
+parents plus Mathlib finite-sum/order/log/asymptotic cards are direct evidence.
+The RL/UCB-VI paper card is placement only and the optimism weapon is
+inspiration only. Status is `leanCompiled` with root import and Bool/Bool
+pointwise, Big-O, zero-prefix, and limit canaries.
+
+Failure policy preserves actual exploratory behavior rather than the
+recommended policy, one dependent source and sampled batches, natural
+`t -> t+1` successor selection, scheduled budgets, initial exclusion, and both
+integrated confidence shares. The theorem is expectation over source
+randomness, not realized return, every-trajectory, anytime/high-probability,
+reachability, minimax/optimal-rate, or complete UCB-VI. The fixed-prefix
+high-probability consumer now compiles above and keeps the accumulated
+nonvanishing model-confidence budget explicit.
+
+## Closed Gap: Natural Causal Finite-Prefix Cumulative And Average Behavior Rate
+
+`RL-FINITE-HORIZON-ADAPTIVE-STOCHASTIC-REWARD-SAMPLED-EMPIRICAL-OPTIMISTIC-SELF-CONSISTENT-SCHEDULED-HETEROGENEOUS-NATURAL-CAUSAL-FINITE-PREFIX-CUMULATIVE-AVERAGE-BEHAVIOR-EXPECTED-REGRET-RATE`
+now compiles in
+`FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceBehaviorExpectedRegretFinitePrefixCumulativeAverageRate`.
+Its seventeen declarations define the pathwise natural-prefix behavior-regret
+sum, its expectation, cumulative and average deterministic rates, prove
+nonnegativity/integrability, identify the cumulative expectation exactly with
+the sum of coordinate expected absolute regrets, establish cumulative and
+average inequalities, prove both average zero limits, and expose a route
+terminal.
+
+`IntegrabilitySums.integrable_finset_sum` closes prefix integrability and
+`ExpectationBochnerSums.integral_finset_sum` moves the actual pathwise
+`Finset.range` sum through the Bochner integral on the unchanged causal
+measure. Coordinate nonnegativity removes the absolute values. The compiled
+pointwise integrated bound is then summed by `Finset.sum_le_sum`; division by
+the nonnegative real cast of `rounds` gives the average bound. The deterministic
+average rate is exactly `natWeightedAverage (fun _ => 1)`, so the compiled
+positive-weight zero-limit theorem gives Cesaro convergence and
+`squeeze_zero'` transfers it to actual average behavior expected regret.
+
+Beyond the module-wide finite measurable-space assumptions, the exact
+finite-sum identity needs a probability initial law and bounded means for
+coordinate integrability. The rate terminal retains finite nonempty
+Standard Borel State/Action, positive horizon/base floor/reward proxy, uniform
+mean-compatible selected-reward sub-Gaussianity, and path support. Exact route
+retrieval was a no-hit; the compiled pointwise parent, finite-sum wrappers,
+positive-weight-average Mathlib candidate, and Mathlib finite-sum/integral/
+order/asymptotic cards are direct evidence. RL/UCB-VI cards are placement only
+and the optimism weapon is inspiration only. Status is `leanCompiled` with
+Bool/Bool exact-sum, cumulative-bound, zero-prefix, rate-limit, and
+actual-average-limit canaries.
+
+Failure policy preserves actual exploratory behavior rather than the
+recommended policy, one dependent source, sampled batches, natural `t -> t+1`
+successor selection, scheduled budgets, initial exclusion, and both already
+integrated confidence shares. The explicit logarithmic consumer above now
+closes the finite-sum constants and actual Big-O interfaces. This parent remains
+the exact same-source finite-prefix assembly surface and supplies no
+realized-return, every-trajectory/anytime, reachability, minimax/optimal-rate,
+or complete UCB-VI result by itself.
+
+## Closed Gap: Natural Causal Explicit Integrated Behavior Rate
+
+`RL-FINITE-HORIZON-ADAPTIVE-STOCHASTIC-REWARD-SAMPLED-EMPIRICAL-OPTIMISTIC-SELF-CONSISTENT-SCHEDULED-HETEROGENEOUS-NATURAL-CAUSAL-EXPLICIT-INTEGRATED-BEHAVIOR-EXPECTED-REGRET-RATE`
+now compiles in
+`FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceBehaviorExpectedRegretExplicitIntegratedRate`.
+Its ten declarations provide a generic measurable bad-event integral split,
+planning-rate nonnegativity, exact ENNReal-to-Real identification of the two
+coordinate confidence shares, a named and fully expanded finite-coordinate
+envelope, its nonnegativity and zero limit, the expected-absolute behavior
+bound, a quantitative squeeze proof, and a route terminal.
+
+The generic proof majorizes `f` by `rate + bad.indicator envelope` and uses
+`integral_mono`, `Integrable.indicator`, `integral_add`,
+`integral_indicator`, and `Measure.real_def`. The causal consumer applies the
+compiled event-outside actual `successorPolicyAt` planning certificate and the
+global `2 * horizon` bound. The model-round event is measurable and its mass
+is bounded by the exact two-share coordinate budget;
+`ENNReal.toReal_le_toReal` transports that bound and the budget simplifies to
+`2 * delta_t`. Thus expected absolute behavior regret is at most planning
+rate plus `4 * horizon * delta_t`. Planning convergence and summability of
+`delta_t` make the envelope vanish.
+
+The generic lemma requires a probability measure, measurable bad event,
+integrability, nonnegative local rate, and pointwise local/global bounds. The
+causal terminal retains finite nonempty Standard Borel State/Action,
+probability initial law, positive horizon/base floor/reward proxy, bounded
+means, selected-reward sub-Gaussianity, and path support. Exact combined-route
+retrieval was a no-hit; compiled local event/pointwise/L1 parents and Mathlib
+integral/order/asymptotic APIs are direct evidence. RL/UCB-VI cards are
+placement only and the optimism weapon is inspiration only. Status is
+`leanCompiled` with Bool/Bool bound, nonnegativity, envelope-limit, and
+expectation-limit canaries.
+
+Failure policy preserves the actual behavior policy, recommendation/behavior
+distinction, one dependent source, samples, `n -> n+1`, scheduled budgets,
+initial exclusion, and exact two confidence shares; no realized-return MGF is
+used. The compiled finite-prefix consumer above now supplies the exact
+same-source cumulative/average assembly and Cesaro limit. This parent remains
+per-coordinate and is not a realized-return, every-trajectory, anytime,
+reachability, minimax/optimal-rate, or complete UCB-VI result.
+
+## Closed Gap: Natural Causal Behavior-Expected L1 Consistency
+
+`RL-FINITE-HORIZON-ADAPTIVE-STOCHASTIC-REWARD-SAMPLED-EMPIRICAL-OPTIMISTIC-SELF-CONSISTENT-SCHEDULED-HETEROGENEOUS-NATURAL-CAUSAL-L1-BEHAVIOR-EXPECTED-AND-REALIZED-CONSISTENCY`
+now compiles in
+`FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceBehaviorExpectedRegretL1Consistency`.
+Its thirteen declarations provide the actual behavior expected-regret
+process's global `2 * horizon` bound, coordinate integrability, named expected-
+absolute objective and zero limit, `MemLp Real 1`, exact exponent-one
+`eLpNorm`, named `Lp Real 1` convergence, and a same-source joint behavior/
+realized L1 terminal.
+
+The proof consumes the compiled coordinate measurability and a.e. behavior
+limit. `Integrable.of_bound` handles each coordinate, while Mathlib
+`tendsto_integral_filter_of_norm_le_const` applies dominated convergence under
+the constant `2 * horizon` envelope. Nonnegativity converts the integral of
+the absolute value to the process integral. `memLp_one_iff_integrable`,
+`MemLp.eLpNorm_eq_integral_rpow_norm`, `ENNReal.continuous_ofReal`, and
+`Lp.tendsto_Lp_iff_tendsto_eLpNorm''` package the result. The final terminal
+reuses the compiled realized L1 theorem on the identical trajectory measure.
+
+The pointwise bound/integrability need finite measurable nonempty State/Action,
+equality/singletons, a probability initial law, and bounded deterministic
+means; no Standard Borel law or selected-reward MGF enters that part. The
+limits retain the a.e. parent's finite nonempty Standard Borel State/Action,
+positive horizon/base floor/reward proxy, bounded means, uniform mean-
+compatible selected-reward sub-Gaussianity, and path support. Exact combined-
+route retrieval was a no-hit; compiled local a.e./measurability and realized-
+L1 parents plus Mathlib integral/Lp/asymptotic APIs are direct evidence. RL/
+UCB-VI cards are placement only and the optimism weapon is inspiration only.
+Status is `leanCompiled` with Bool/Bool terminal and projection canaries.
+
+Failure policy preserves the actual exploratory policy, recommendation/
+behavior distinction, one dependent source, actual samples, `n -> n+1`,
+scheduled budgets, initial exclusion, and realized-regret global centering.
+The behavior proof does not borrow the realized-return MGF. The explicit-rate
+consumer above now closes the one-model-event finite-coordinate integrated
+bound. This parent still does not supply cumulative/average, every-trajectory,
+anytime, reachability, minimax/optimal-rate, or complete-UCB-VI control.
+
+## Closed Gap: Natural Causal Behavior-Expected In-Measure Consistency
+
+`RL-FINITE-HORIZON-ADAPTIVE-STOCHASTIC-REWARD-SAMPLED-EMPIRICAL-OPTIMISTIC-SELF-CONSISTENT-SCHEDULED-HETEROGENEOUS-NATURAL-CAUSAL-IN-MEASURE-BEHAVIOR-EXPECTED-AND-REALIZED-CONSISTENCY`
+now compiles in
+`FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceBehaviorExpectedRegretInMeasureConsistency`.
+Its four declarations prove a generic finite policy-table selector
+measurability theorem, every coordinate of the actual causal successor-policy
+expected-regret process measurable, behavior expected regret tending to zero
+in measure, and a same-source joint behavior/realized in-measure terminal.
+
+The generic proof writes the selected policy statistic as a finite sum of
+singleton indicators and uses `Finset.measurable_sum`, `Measurable.ite`, and
+measurable singleton preimages. The concrete coordinate composes
+`StochasticEpisodeBatch.measurable_sampledEmpiricalOptimisticPolicyTable`
+with `measurable_pi_apply t`, then unfolds `heterogeneousSuccessorTable` and
+`successorPolicyAt`. Mathlib `tendstoInMeasure_of_tendsto_ae` transports the
+compiled a.e. behavior theorem after each coordinate is promoted to strongly
+measurable. The joint theorem reuses the existing realized in-measure result
+on the identical `source.trajectoryMeasure`.
+
+The generic selector requires finite measurable State/Action, equality,
+measurable singletons, a nonempty Action, and a probability initial law; it
+does not require a nonempty State. The causal terminals
+retain the parent finite nonempty Standard Borel State/Action, positive
+horizon/base floor/reward proxy, bounded means, uniform mean-compatible
+selected-reward sub-Gaussianity, and full-exploration path support. Exact
+retrieval for successor-policy expected-regret measurability was a no-hit;
+the local sampled-table measurability and compiled a.e./realized in-measure
+parents plus Mathlib finite-sum and convergence-in-measure APIs are direct
+evidence. RL/UCB-VI cards are placement only and the optimism weapon is
+inspiration only. Status is `leanCompiled` with external Bool/Bool terminal
+and projection canaries.
+
+Failure policy preserves the actual exploratory policy, the recommendation/
+behavior distinction, one dependent source, actual samples, `n -> n+1`,
+scheduled budgets, initial exclusion, and realized-regret global centering.
+The L1 consumer above now supplies `MemLp 1`, expected-absolute, exact
+`eLpNorm`, and named `Lp` convergence. This parent itself still supplies no
+explicit integrated finite-round rate, every-trajectory, anytime,
+reachability, minimax, optimal-rate, or complete-UCB-VI result.
+
+## Closed Gap: Natural Causal Behavior-Expected And Realized A.E. Consistency
+
+`RL-FINITE-HORIZON-ADAPTIVE-STOCHASTIC-REWARD-SAMPLED-EMPIRICAL-OPTIMISTIC-SELF-CONSISTENT-SCHEDULED-HETEROGENEOUS-NATURAL-CAUSAL-ALMOST-SURE-BEHAVIOR-EXPECTED-AND-REALIZED-CONSISTENCY`
+now compiles in
+`FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceAlmostSureBehaviorExpectedRegretConsistency`.
+Its pointwise leaf proves that outside one model-round bad event, the actual
+exploratory `source.successorPolicyAt trajectory t` has expected regret at
+most `selfConsistentScheduledCausalPlanningRateAt mdp t`. The proof consumes
+the recommended-policy occupancy certificate, applies the compiled
+recommended-to-exploratory transport with its decaying-exploration charge,
+evaluates the occupancy sum, and closes the local planning bound.
+
+Only the model-event sequence is used for the new limit. Its finite measure
+tsum and first Borel-Cantelli give eventual pointwise domination; actual
+policy expected regret is nonnegative and the deterministic planning rate
+tends to zero. The final theorem intersects this a.e. set with the compiled
+realized-regret set. The same trajectories therefore have eventual all-state
+optimism plus the recommended-policy certificate, actual behavior expected-
+regret convergence, and realized-regret convergence.
+
+Regularity is unchanged: finite nonempty Standard Borel State/Action,
+probability initial law, positive horizon/base floor/reward proxy, bounded
+stored means, uniform mean-compatible selected-reward sub-Gaussianity, and
+full-exploration path support. Exact retrieval was a no-hit; the compiled
+coordinate-confidence, exploratory transport, occupancy identity, causal
+rate, and Borel-Cantelli parents are the direct evidence. Status is
+`leanCompiled` with five declarations and external Bool/Bool pointwise,
+standalone-a.e., joint-terminal, behavior-limit, and realized-limit canaries.
+
+This parent does not prove coordinate measurability internally. The finite-
+selector consumer above now supplies that regularity and same-source
+`TendstoInMeasure`. Preserve the actual/recommended policy distinction; the
+remaining narrow boundary is behavior-process `MemLp 1`/`L1`, not every-
+trajectory, anytime, reachability, minimax, optimal-rate, or complete-UCB-VI.
+
+## Closed Gap: Heterogeneous Natural Causal Almost-Sure Consistency
+
+`RL-FINITE-HORIZON-ADAPTIVE-STOCHASTIC-REWARD-SAMPLED-EMPIRICAL-OPTIMISTIC-SELF-CONSISTENT-SCHEDULED-HETEROGENEOUS-NATURAL-CAUSAL-ALMOST-SURE-REALIZED-SUCCESSOR-AVERAGE-CONSISTENCY`
+now compiles in
+`FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceAlmostSureConsistency`.
+On the same genuine round-varying dependent trajectory measure as the natural
+causal in-probability and L1 routes, every regret coordinate is measurable,
+realized successor-average regret tends to zero almost everywhere, and one
+strengthened terminal retains eventual all-state empirical-model optimism and
+the recommended-policy occupancy-radius regret certificate on that same a.e.
+full set.
+
+The new analytic leaf proves `exp (-sqrt n)` summable using Mathlib
+Schloemilch condensation along `(n+1)^2`. Positive scheduled episode batches
+make actual successor mass at least the round index, so the mass-adapted return
+share is summable. Existing p-series model-event bounds and the actual return
+event bounds therefore have finite ENNReal measure tsums. First
+Borel-Cantelli `ae_eventually_notMem` applies separately to both sequences on
+the same dependent source and requires no independence. Almost every
+trajectory receives one finite model-good burn-in and is eventually
+return-good; the compiled fixed-burn-in absolute-regret envelope then tends to
+zero. Applying the existing one-coordinate confidence theorem to the eventual
+model-good filter gives both global optimism and the recommended-policy bound
+without introducing another sample space or another null set.
+
+Regularity is unchanged: finite nonempty Standard Borel State/Action,
+probability initial law, positive horizon/base floor/reward proxy, bounded
+stored means, uniform mean-compatible selected-reward sub-Gaussianity, and
+full-exploration path support. Exact local retrieval was a no-hit; the direct
+Mathlib Borel-Cantelli/Schloemilch sources and compiled causal event/terminal/
+coordinate-confidence parents are the evidence. Status is `leanCompiled` with
+14 declarations and external Bool/Bool summability, eventual-good, final a.e.,
+joint-terminal, and all-state-optimism canaries.
+
+This parent remains a measure-a.e. realized-regret statement, not convergence
+for every theoretical trajectory, an anytime finite-sample envelope, minimax
+control, state reachability, or complete UCB-VI. The behavior-expected consumer
+above now compiles the pointwise successor-policy rate and its a.e. limit on
+this same source. Coordinate measurability of that behavior expected-regret
+process is the next narrow boundary.
+
+## Closed Gap: Heterogeneous Natural Causal L1 Consistency
+
+`RL-FINITE-HORIZON-ADAPTIVE-STOCHASTIC-REWARD-SAMPLED-EMPIRICAL-OPTIMISTIC-SELF-CONSISTENT-SCHEDULED-HETEROGENEOUS-NATURAL-CAUSAL-L1-REALIZED-SUCCESSOR-AVERAGE-CONSISTENCY`
+now compiles in
+`FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceL1Consistency`.
+On the same genuine round-varying dependent trajectory measure as the natural
+causal in-probability route, expected absolute realized successor-average
+regret tends to zero. Every coordinate is `Integrable` and `MemLp 1`, its
+exponent-one `eLpNorm` is identified exactly, and the named `Lp Real 1`
+process converges to zero.
+
+No uniform-integrability axiom is added. Mean-policy regret is globally at
+most `2 * horizon`; a fixed burn-in pays this bound only on the vanishing
+model-tail event. The cumulative globally centered successor return deviation
+has a direct sub-Gaussian MGF under the same causal measure, and the compiled
+MGF-to-absolute-integral theorem bounds its first moment. Dividing by actual
+successor mass gives a vanishing normalized return term. The two-parameter
+proof first chooses burn-in for the p-series model tail and then rounds for
+the planning and return-MGF terms.
+
+Regularity is unchanged: finite nonempty Standard Borel State/Action,
+probability initial law, positive horizon/base floor/reward proxy, bounded
+stored means, uniform mean-compatible selected-reward sub-Gaussianity, and
+full-exploration path support. Exact retrieval was a no-hit; compiled causal
+MGF, integral, asymptotic, `MemLp`, `eLpNorm`, and `Lp` APIs are the direct
+evidence. Status is `leanCompiled` with 27 declarations and external Bool/Bool
+expected-absolute, `MemLp`, named-`Lp`, and terminal canaries.
+
+This L1 theorem alone is not an almost-sure argument. The distinct consumer
+above now supplies summable full-sequence events and first Borel-Cantelli on
+the same source. Neither theorem is an all-trajectory pathwise result, anytime
+control, a minimax rate, state reachability, or complete UCB-VI.
+
+## Closed Gap: Heterogeneous Natural Causal In-Probability Consistency
+
+`RL-FINITE-HORIZON-ADAPTIVE-STOCHASTIC-REWARD-SAMPLED-EMPIRICAL-OPTIMISTIC-SELF-CONSISTENT-SCHEDULED-HETEROGENEOUS-NATURAL-CAUSAL-IN-PROBABILITY-REALIZED-SUCCESSOR-AVERAGE-CONSISTENCY`
+now compiles in
+`FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceConsistency`.
+On the one genuine round-varying causal trajectory measure, its measurable
+realized successor-average regret process tends to zero in Mathlib
+`TendstoInMeasure`.
+
+The proof rewrites the local model share as a summable p-series, bounds the
+union of model failures after an explicit burn-in by the complementary
+`ENNReal` tail sum, and lets that budget vanish. Early expected regret uses
+the deterministic `2 * horizon` policy bound and is diluted by the diverging
+successor episode mass; post-burn-in coordinates use the compiled causal
+planning rate. The return share `exp (-sqrt successorMass)` and its normalized
+sub-Gaussian radius both vanish. A finite terminal combines these terms into
+one measurable bad event and an absolute realized-regret envelope.
+
+Regularity remains finite nonempty Standard Borel State/Action, probability
+initial law, positive horizon/base floor/reward proxy, bounded stored means,
+uniform mean-compatible selected-reward sub-Gaussianity, and full-exploration
+path support. Retrieval found no exact natural heterogeneous causal
+convergence card; the compiled causal parents, Mathlib p-series/tail-sum,
+finite-sum, kernel, integral, log/sqrt, sub-Gaussian, and asymptotic APIs are
+the route evidence. Status is `leanCompiled` with 38 declarations and external
+Bool/Bool finite-tail and convergence canaries.
+
+This theorem itself is convergence in probability only. Its same-measure `L1`
+consumer now compiles above by directly integrating the causal return MGF,
+without importing the independent complete-window product argument. Neither
+result is pathwise, almost-sure, anytime, minimax, state-reachability, or
+complete-UCB-VI control.
+
+## Closed Gap: Heterogeneous Causal Explicit Weighted Rate
+
+`RL-FINITE-HORIZON-ADAPTIVE-STOCHASTIC-REWARD-SAMPLED-EMPIRICAL-OPTIMISTIC-SELF-CONSISTENT-SCHEDULED-HETEROGENEOUS-CAUSAL-EXPLICIT-WEIGHTED-RATE-REALIZED-SUCCESSOR-AVERAGE-BEHAVIOR-REGRET`
+now compiles in
+`FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalExplicitRate`.
+The module proves a reusable positive-natural-weight average theorem from
+Mathlib `Asymptotics.IsLittleO.sum_range`. It then bounds each causal planning
+coordinate by its scale-squared reward/transition rate plus the actual
+successor exploration charge, weights coordinate `t` by `episodes (t+1)`, and
+normalizes by the exact successor mass. The heterogeneous global-return proxy
+is identified as that mass times the one-episode proxy, so a fixed-half
+normalized return radius also tends to zero.
+
+The finite-prefix terminal retains the named causal model/return event, exact
+failure budget, and every sampled-model optimism certificate, while replacing
+the abstract realized-regret bound by the explicit weighted planning-plus-
+return envelope. The envelope tends to zero under the existing finite
+nonempty Standard Borel, probability, positive horizon/base-floor/proxy,
+bounded-mean, uniform selected-reward sub-Gaussian, and path-support contracts.
+Retrieval found no exact weighted causal or weighted-Cesaro card; the compiled
+causal parent, fixed-window rate calibration, finite-sum/order/log-sqrt/
+asymptotic/sub-Gaussian cards, and exact Mathlib `IsLittleO` APIs supply the
+route evidence. Status is `leanCompiled` with 20 declarations and external
+Bool/Bool terminal projections.
+
+Only the deterministic regret envelope vanishes in this fixed-prefix parent.
+The exact finite-prefix model budget accumulates early failures and is not a
+vanishing sequence. The natural causal route above now consumes this result by
+discarding a finite burn-in in its tail event and diluting the early regret;
+this parent alone still proves no convergence statement.
+
+## Closed Gap: Heterogeneous Causal Realized Successor Regret
+
+`RL-FINITE-HORIZON-ADAPTIVE-STOCHASTIC-REWARD-SAMPLED-EMPIRICAL-OPTIMISTIC-SELF-CONSISTENT-SCHEDULED-HETEROGENEOUS-CAUSAL-REALIZED-SUCCESSOR-AVERAGE-BEHAVIOR-REGRET`
+now compiles in
+`FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalRealizedSuccessorRegret`.
+Successor coordinate `n+1` is generated from the prefix through `n`, contributes
+`episodes (n+1)` complete episodes, and is evaluated with the policy that
+actually generated that batch. Expected and realized cumulative regret use
+the same coordinate weights and divide by the actual successor episode mass
+`sum_{t < rounds} episodes (t+1)`. Lean proves the exact identity
+`realized = expected - cumulative globally centered deviation`.
+
+The route applies each actual sampled model's optimism/recommended-regret
+certificate, adds the next-coordinate exploratory behavior charge, sums the
+coordinate planning terms, and unions the causal model event with the
+successor-only global-return event. The final theorem exposes measurability,
+the exact finite model-plus-return failure budget, all finite-prefix optimism
+certificates, and the realized successor-average bound. It retains the finite
+State/Action, probability, Standard Borel, positive schedule/proxy/horizon,
+bounded-mean, uniform selected-reward sub-Gaussian, and exploratory path-floor
+contracts of its parents.
+
+This closes the model/return assembly at a fixed prefix and is now consumed by
+the explicit heterogeneous weighted planning/return envelope above. It does
+not inherit the old constant-window denominator or rates. No common-space,
+uniform-time, pathwise, almost-sure, anytime, minimax, reachability, or
+complete-UCB-VI conclusion follows.
+
+## Closed Gap: Heterogeneous Causal Empirical-Model Confidence
+
+`RL-FINITE-HORIZON-ADAPTIVE-STOCHASTIC-REWARD-SAMPLED-EMPIRICAL-OPTIMISTIC-SELF-CONSISTENT-SCHEDULED-HETEROGENEOUS-CAUSAL-EMPIRICAL-MODEL-CONFIDENCE`
+now compiles in
+`FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalModelConfidence`.
+Initial and successor count/reward model events are pulled back to the dependent
+trajectory. The exact initial marginal and prefix/next `compProd` law reduce
+each coordinate to its generating policy's iid stochastic family, so no
+adaptive-round independence is assumed. Batch sizes and both local shares vary
+with the coordinate; the finite-prefix probability bound is their exact finite
+`ENNReal` sum.
+
+The self-consistent terminal uses each coordinate's scheduled episodes, local
+delta, exploration rate, reward radius, and transition fixed-point budget.
+Outside one named measurable event, every actual batch `0..rounds-1` produces
+an optimistic empirical model and the recommended-policy expected-regret
+certificate. The downstream heterogeneous causal realized-successor route now
+unions this event with the successor-only globally centered return event and
+assembles the behavior certificate. The cumulative prefix failure budget is
+not asserted to vanish with `rounds`; no old-window rate,
+independence, uniform-time, pathwise, almost-sure, anytime, minimax,
+reachability, or complete-UCB-VI conclusion follows.
+
+## Closed Gap: Heterogeneous Causal Sampled-Return Concentration
+
+`RL-FINITE-HORIZON-ADAPTIVE-STOCHASTIC-REWARD-SAMPLED-EMPIRICAL-OPTIMISTIC-SELF-CONSISTENT-SCHEDULED-HETEROGENEOUS-CAUSAL-SAMPLED-RETURN-CONCENTRATION`
+now compiles in
+`FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalReturnConcentration`.
+The supporting sampled-return process uses `episodes 0` and the initial policy
+at coordinate zero, then `episodes (n+1)` and the policy selected from the
+dependent prefix through `n`. It centers each batch at its own sampled initial
+state. The regret-facing process instead sets coordinate zero to zero and
+globally centers successor coordinates `1..rounds` by the initial-law expected
+selected-policy value. Exact iid fibers are mapped through retained-input
+kernels, dynamic `condDistrib`, and trimmed `condExpKernel` to obtain
+conditional sub-Gaussian MGFs relative to `Filtration.piLE`.
+
+Both fixed-round terminals sum genuine coordinate proxies and prove their
+two-sided events have mass at most `ENNReal.ofReal delta`. The global terminal
+uses `iidGlobalSampledCumulativeReturnDeviationVarianceProxy`, retaining the
+sampled-initial-state value fluctuation. Self-consistent wrappers derive total
+proxy positivity from positive rounds, horizon, reward proxy, and every
+scheduled batch size. The downstream realized-successor route now combines
+this return tail with heterogeneous count/reward empirical-model confidence.
+The remaining frontier is an explicit heterogeneous weighted rate; no
+fixed-window rate, uniform-time, pathwise,
+almost-sure, anytime, minimax, reachability, or complete-UCB-VI claim follows.
+
+## Closed Gap: Heterogeneous Actual-Sampled Causal Projective Law
+
+`RL-FINITE-HORIZON-ADAPTIVE-STOCHASTIC-REWARD-SAMPLED-EMPIRICAL-OPTIMISTIC-SELF-CONSISTENT-SCHEDULED-HETEROGENEOUS-CAUSAL-SOURCE-PROJECTIVE-LAW`
+now compiles in
+`FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalSource`.
+A dependent source stores a stochastic batch of size `episodes n` at
+coordinate `n`. Its Mathlib `Kernel.trajMeasure` is one causal process. The
+self-consistent specialization computes the optimistic table from the latest
+actual sampled batch with budgets at `n`, then samples coordinate `n+1` with
+the next exploration rate and episode count. Lean proves the exact initial
+law, every selected iid fiber, next-batch `condDistrib`, prefix/next
+`compProd`, and all finite-marginal projection equalities.
+
+Construction needs only the finite measurable probability setup; Standard
+Borel State/Action enters at the conditional-law terminal. This source is not
+a representation of the old fixed-parameter window laws. Therefore their
+confidence, optimism, and regret rates do not transfer. The heterogeneous
+sampled-return tail now compiles downstream; empirical-model confidence and
+event/regret transport remain before any causal realized-regret theorem.
+
+## Closed Gap: Actual-Sampled Exact-Marginal In-Probability Consistency
+
+`RL-FINITE-HORIZON-ADAPTIVE-STOCHASTIC-REWARD-SAMPLED-EMPIRICAL-OPTIMISTIC-SELF-CONSISTENT-SCHEDULED-COMMON-SPACE-IN-PROBABILITY-REALIZED-SUCCESSOR-AVERAGE-CONSISTENCY`
+now compiles in
+`FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCommonSpaceConsistency`.
+The finite adapter proves an absolute actual-sampled realized successor-average
+bound from the model-good expected certificate and two-sided globally centered
+return deviation. An independent `Measure.infinitePi` coupling then has each
+scheduled trajectory law as an exact evaluation marginal. The pulled-back
+three-share bad event and explicit vanishing absolute envelope prove
+`TendstoInMeasure` to zero.
+
+No regularity changed: finite nonempty Standard Borel State/Action,
+probability, positive horizon/base floor/proxy, uniform selected-reward
+sub-Gaussianity, bounded means, and full-exploration path floor remain visible.
+This is not a natural nested online run and gives no pathwise, almost-sure,
+anytime, reachability, minimax, or complete-UCB-VI theorem. A distinct causal
+source and its fixed-round sampled-return concentration now compile, but do not
+inherit these independent-window marginals or rates.
+
+## Closed Gap: Scheduled Actual-Sampled Explicit Realized Rate
+
+`RL-FINITE-HORIZON-ADAPTIVE-STOCHASTIC-REWARD-SAMPLED-EMPIRICAL-OPTIMISTIC-SELF-CONSISTENT-SCHEDULED-EXPLICIT-RATE-REALIZED-SUCCESSOR-AVERAGE-BEHAVIOR-REGRET`
+now compiles in
+`FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentExplicitRate`.
+Writing `scale=n+2`, the compiled schedule gives `rewardBudget<=scale^-2`,
+`q<=1/2`, and `q<=4*card(State)*horizon/scale^2`. The new ordered-field
+consumer proves the exact fixed-point transition budget is at most `3*q`,
+hence at most `12*card(State)*horizon/scale^2`.
+
+The resulting planning envelope is the scale-squared model term plus the
+explicit `scale^-1` exploration charge. Adding the compiled normalized return
+envelope yields an explicit sum of scale-squared and inverse-scale terms. The
+three event shares are exactly `ofReal(3/scale)`, and the failure and regret
+rate envelopes tend jointly to zero. The pointwise source terminal keeps the
+same actual samples, measurable event, and all-round optimism. No named Lean
+`IsBigO` theorem is claimed by this leaf.
+
+No regularity contract changed: the parent finite nonempty Standard Borel,
+probability, positive proxy, uniform selected-reward sub-Gaussian law,
+bounded-mean, and path-floor assumptions remain exact. This is a sufficient,
+loose, changing-window rate. It is not a natural shared process, reachability,
+almost-sure/anytime/minimax result, or complete UCB-VI. The next distinct
+boundary is the natural shared causal stream or a genuinely tighter rate.
+
+## Closed Gap: Scheduled Actual-Sampled Self-Consistent Realized Consistency
+
+`RL-FINITE-HORIZON-ADAPTIVE-STOCHASTIC-REWARD-SAMPLED-EMPIRICAL-OPTIMISTIC-SELF-CONSISTENT-SCHEDULED-REALIZED-SUCCESSOR-AVERAGE-BEHAVIOR-CONSISTENCY`
+now compiles in
+`FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentSchedule`.
+For `scale=n+2`, it uses exploration and confidence rate `1/scale`,
+`rounds=scale^(horizon+4)`, the path-support floor scaled by
+`explorationRate^horizon`, and an episode count one above the maximum of the
+calibration, count-shrink, and reward-shrink thresholds.
+
+The schedule proves `rewardBudget < scale^-2` and
+`q < 4*card(State)*horizon/scale^2`, while calibration gives `q<=1/2`.
+Consequently the reward budget, contraction, exact fixed-point transition
+budget, exploration charge, and globally centered normalized return radius all
+tend to zero. The named realized successor-average regret bound and the sum of
+three `ofReal(delta)` failure shares therefore tend jointly to zero.
+
+For every `n`, the compiled terminal still uses actual sampled rewards and one
+measurable count/reward/return union; outside it every selected plan is
+optimistic and realized successor-average regret is below the scheduled bound.
+The explicit contracts are finite nonempty measurable State/Action with
+equality/singletons, Standard Borel State/Action, probability initial law,
+positive horizon/base floor/reward proxy, a mean-compatible uniform
+sub-Gaussian selected-reward law, means bounded by one, and a full-exploration
+path-support floor. Batch regularity and all schedule positivity/margin
+obligations are discharged locally.
+
+This is a family of changing finite-window certificates. It is not a common
+causal process, state-reachability theorem, almost-sure/anytime/minimax result,
+or complete UCB-VI theorem. A distinct heterogeneous causal law now compiles;
+its next boundary is conditional concentration/model-confidence transport, or
+a sharper algorithm-specific finite-horizon rate, not reopening the compiled
+schedule algebra.
+
+## Closed Gap: Actual-Sampled Self-Consistent-Budget Realized Successor Regret
+
+`RL-FINITE-HORIZON-ADAPTIVE-STOCHASTIC-REWARD-SAMPLED-EMPIRICAL-OPTIMISTIC-SELF-CONSISTENT-BUDGET-REALIZED-SUCCESSOR-AVERAGE-BEHAVIOR-REGRET`
+now compiles across
+`FiniteHorizonStochasticRewardIIDSelfConsistentCalibration` and
+`FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentRealizedBehaviorRegret`.
+Writing
+`q = card(State) * uniformFloorTransitionCoordinateRadius * horizon`, the
+strict contract `q < 1` defines
+`T = q * (rewardBound + 2 * rewardBudget) / (1 - q)` and proves the exact
+identity `q * (rewardBound + 2 * rewardBudget + T) = T`. This closes every
+transition-radius/value-envelope sum, the fixed-policy and exploratory
+path-support confidence routes, and every adaptively selected actual sampled
+model.
+
+The cumulative successor exploratory-behavior expected-regret bound is
+`rounds * (2 * horizon * (rewardBudget + T) + explorationCharge)`. The generic
+two-budget return transport then yields one measurable three-share event; off
+it all sampled plans are optimistic and realized successor-average regret is
+at most `2 * horizon * (rewardBudget + T) + explorationCharge` plus the global
+return radius over `episodes * rounds`. Actual rewards remain sampled and may
+be unbounded; coordinate `n` still selects batch `n+1`, the initial batch is
+excluded, and no adaptive-round independence is assumed.
+
+Focused foundation/module builds and the root-imported external canaries pass.
+The route removes the coarse budget's forced `2 * horizon * rewardBound` term;
+the explicit vanishing schedule is now compiled by the route above. Preserve
+this module as the finite-window parent rather than duplicating its confidence,
+indexing, or realized-return transport.
+
+## Closed Gap: Actual-Sampled Explicit-Budget Realized Successor Regret
+
+`RL-FINITE-HORIZON-ADAPTIVE-STOCHASTIC-REWARD-SAMPLED-EMPIRICAL-OPTIMISTIC-EXPLICIT-BUDGET-REALIZED-SUCCESSOR-AVERAGE-BEHAVIOR-REGRET`
+now compiles in
+`FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticExplicitBudgetRealizedBehaviorRegret`.
+For every actual sampled plan, `selectedRadiusRemaining` is definitionally
+`rewardBudget + transitionBudget`. The probability occupancy recursion and
+finite-round sum therefore evaluate exactly to
+`rounds * horizon * (2 * (rewardBudget + transitionBudget))`.
+
+With the current uniform-floor calibration
+`transitionBudget = rewardBound + 2 * rewardBudget`, positive-round division
+closes the planning average as
+`2 * horizon * (rewardBound + 3 * rewardBudget) + explorationCharge`.
+The three-share parent terminal is then rewritten without changing its event,
+tail, optimism, successor indexing, global return centering, or normalized
+return radius. Its complete realized successor-average bound is now
+trajectory-independent.
+
+The algebraic layer adds no statistical assumptions and omits `Nonempty State`
+where unnecessary. The terminal inherits the parent's finite Standard Borel,
+probability, sub-Gaussian, positivity/share, path-support and calibration
+contracts, still with unbounded sampled rewards. Focused and external-canary
+builds pass. This is an explicit fixed-budget comparison, not a vanishing rate:
+it contains the irreducible term `2 * horizon * rewardBound`. The compiled
+self-consistent route above repairs that obstruction; fixed-budget schedule
+tuning does not.
+
+## Closed Gap: Actual-Sampled Realized Successor Average Behavior Regret
+
+`RL-FINITE-HORIZON-ADAPTIVE-STOCHASTIC-REWARD-SAMPLED-EMPIRICAL-OPTIMISTIC-REALIZED-SUCCESSOR-AVERAGE-BEHAVIOR-REGRET`
+now compiles in
+`FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticRealizedBehaviorRegret`.
+The measurable sampled-table selector supplies `GlobalReturnMeasurability` for
+the concrete source, and exact wrappers identify the generic source cumulative
+and average expected-regret APIs with the actual sampled-plan exploratory sum.
+
+The route unions the two-share sampled empirical-model event with a separate
+globally centered successor-return event. Thus count, reward-model, and return
+failures retain three explicit confidence shares. Outside the union, every
+sampled plan is optimistic and realized regret over successor batches
+`1..rounds`, normalized by `episodes * rounds`, is at most the actual sampled
+occupancy-radius sum divided by `rounds`, plus the exploration charge and the
+global return confidence radius divided by `episodes * rounds`.
+
+The result inherits the parent finite Standard Borel, probability,
+sub-Gaussian, positivity/share, exploration, bounded-mean, path-support,
+strict-margin, and half-contraction contracts. Return concentration adds
+Standard Borel regularity for stochastic batches/trajectories and positivity
+of the cumulative global-return proxy. It assumes neither bounded sampled
+rewards nor adaptive-round independence. Focused and external-canary builds
+pass. The explicit-budget consumer above now closes its trajectory-dependent
+occupancy term; this parent alone still gives no vanishing, anytime, minimax,
+or complete-UCB-VI rate.
+
+## Closed Gap: Actual-Sampled Successor Exploratory Behavior Expected Regret
+
+`RL-FINITE-HORIZON-ADAPTIVE-STOCHASTIC-REWARD-SAMPLED-EMPIRICAL-OPTIMISTIC-CUMULATIVE-SUCCESSOR-EXPLORATORY-BEHAVIOR-EXPECTED-REGRET`
+now compiles in
+`FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticCumulativeExploratoryBehaviorRegret`.
+The sampled optimistic action table is definitionally the same policy as its
+actual sampled-model plan. Restricting a trajectory through coordinate `n`
+then identifies that table's exploratory mixture with the concrete source
+`successorPolicy n`; this policy generates coordinate `n + 1`.
+
+A named finite sum records these actual successor policies' expected regrets.
+The existing deterministic exploration comparison is applied to every sampled
+table, and finite-sum algebra contributes exactly `rounds` copies of
+`exploratoryBehaviorRegretCharge`. On the unchanged two-share confidence and
+path-support event, all sampled plans remain optimistic and cumulative
+successor exploratory-behavior expected regret is bounded by the cumulative
+occupancy selected-radius sum plus that explicit charge.
+
+The terminal inherits all finite Standard Borel, probability, sub-Gaussian,
+positivity/share, exploration, bounded-mean, path-support, strict-margin, and
+half-contraction contracts from the cumulative recommendation parent. The
+algebraic transport only needs the valid exploration rate and true mean-reward
+bound in addition to the finite spaces and probability initial law. Focused
+and external-canary builds pass. The statement excludes the initial policy and,
+by itself, realized sampled returns. The realized successor consumer above now
+combines it with the globally centered conditional concentration route.
+
+## Closed Gap: Actual-Sampled Cumulative Recommended Expected Regret
+
+`RL-FINITE-HORIZON-ADAPTIVE-STOCHASTIC-REWARD-SAMPLED-EMPIRICAL-OPTIMISTIC-CUMULATIVE-RECOMMENDED-EXPECTED-REGRET`
+now compiles in
+`FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticCumulativeRecommendedRegret`.
+Each stochastic batch coordinate is converted to its actual sampled
+`EpisodeBatch` and then to the all-coordinate empirical optimistic plan. Named
+finite sums collect the resulting recommended policies' expected regrets and
+their occupancy selected-radius certificates. `Finset.sum_le_sum` lifts the
+parent's pointwise inequalities without changing the confidence event.
+
+Under the same two-share selected count/reward event and explicit path-support
+calibration, every finite-window plan remains optimistic and the cumulative
+recommended expected regret is at most the cumulative actual-sampled-model
+occupancy-radius sum. The route inherits the parent's finite Standard Borel,
+probability, sub-Gaussian, positivity/share, exploration, bounded-mean,
+path-support, strict-margin, and half-contraction contracts. The pure finite-
+sum assembly needs only the roundwise certificates.
+
+Focused/root-facing external builds pass, and the existing reward-swap canary
+still prevents a known-mean substitution. The successor exploratory-behavior
+consumer above now adds the per-plan exploration charge. This parent remains
+recommendation-level expected regret and by itself supplies no sampled-return
+deviation, realized regret, explicit scalar rate, anytime/minimax control, or
+complete UCB-VI theorem.
+
+## Closed Gap: Finite-Round Sampled-Reward Adaptive Confidence
+
+`RL-FINITE-HORIZON-ADAPTIVE-STOCHASTIC-REWARD-SAMPLED-EMPIRICAL-OPTIMISTIC-CONFIDENCE`
+now compiles in
+`FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticConfidence`.
+Generic initial and successor event pullbacks transfer a uniform measurable
+history-fiber bound through the adaptive Ionescu--Tulcea trajectory law. The
+concrete source applies this transport to the fixed-policy sampled count and
+reward event with separate local confidence shares, then unions the first
+`rounds` batches to obtain the exact global bound
+`ENNReal.ofReal countDelta + ENNReal.ofReal rewardDelta`.
+
+Outside that event, every actual sampled-reward batch avoids the event for the
+policy that generated it. Exploratory path support supplies the common count
+floor, while the compiled fixed-policy explicit calibration fixes reward and
+transition budgets. Consequently every finite-window empirical model is
+globally optimistic and every recommended policy satisfies the existing
+selected-radius one-episode expected-regret bound.
+
+The terminal requires finite measurable nonempty Standard Borel State/Action,
+equality and measurable singletons, a probability initial law, positive
+rounds/episodes/proxy, a mean-compatible uniform sub-Gaussian reward source,
+two positive confidence shares at most one, valid exploration, bounded true
+means, path support, a strict local count margin, and the scalar
+half-contraction. The generic event transport itself needs neither Standard
+Borel nor concentration. Focused and external-canary builds pass. The
+cumulative recommendation consumer above now sums the per-round selected-
+radius bounds. This parent still proves no exploratory behavior, realized,
+explicit-rate, anytime/minimax, or complete-UCB-VI regret theorem by itself.
+
+## Closed Gap: Sampled-Reward Adaptive Optimistic Source
+
+`RL-FINITE-HORIZON-ADAPTIVE-STOCHASTIC-REWARD-SAMPLED-EMPIRICAL-OPTIMISTIC-SOURCE`
+now compiles in
+`FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSource`.
+The selector reads actual sampled rewards from the latest stochastic batch,
+not the known-mean projection. A fixed-order finite argmax and a dynamic
+empirical-transition kernel make the complete optimistic Bellman recursion
+measurable; the source exposes exact selected-policy iid laws in every history
+fiber.
+
+The route uses finite measurable nonempty State/Action, equality/singletons, a
+probability initial law, a mean-compatible reward source, fixed budgets, and a
+valid exploration rate. Local retrieval is exact; Mathlib kernel-integral,
+finite-sum, and order APIs close regularity. Focused modules and `Tests.Basic`
+compile, and the reward-swap canary proves sampled-reward sensitivity. The
+finite-round selected count/reward consumer above now closes global adaptive
+confidence and pointwise optimism/recommended-regret transport, and the next
+consumer now sums those recommendation bounds. Source construction alone still
+gives no exploratory behavior or realized regret, anytime/minimax rate, or
+complete UCB-VI theorem.
+
+## Closed Gap: Stochastic-Reward IID Explicit Exploratory Calibration
+
+`RL-FINITE-HORIZON-STOCHASTIC-REWARD-IID-EXPLORATORY-PATH-SUPPORT-EXPLICIT-CALIBRATION`
+now compiles in `FiniteHorizonStochasticRewardIIDExplicitCalibration`. One
+common path-support visit floor replaces every coordinatewise expected-count
+margin. The simultaneous reward-sum radius divided by the resulting positive
+denominator gives an explicit uniform reward budget.
+
+The transition budget is `rewardBound + 2 * rewardBudget`. Consequently the
+stochastic value envelope is exactly twice that budget per remaining stage;
+the existing finite-state uniform transition radius and one scalar
+half-contraction prove the complete transition cover. The practical endpoint
+derives the count floor for a deterministic table's exploratory policy and
+invokes the sampled-reward confidence, optimism, and recommended-regret
+terminal.
+
+This remains fixed-policy iid calibration. It is a sufficient finite-sample
+condition, not count-adaptive or minimax tuning, and it does not provide
+history-selected policy updates, cumulative/realized regret, anytime control,
+or complete UCB-VI.
+
+The horizon-two Bool/Bool canary uses 4194304 episodes, visit floor `1/8`,
+uniform exploratory actions, and nondegenerate symmetric `+/-1` rewards. Four
+public axiom audits are baseline-only and placeholders are clean. Independent
+review confirmed the denominator and half-contraction directions and found no
+P0-P2; its unnecessary helper-regularity P3 was removed. Focused/root/Tests
+and the full project gate pass.
+
+## Closed Gap: Stochastic-Reward IID All-Coordinate Empirical-Model Confidence
+
+`RL-FINITE-HORIZON-STOCHASTIC-REWARD-IID-ALL-COORDINATE-EMPIRICAL-MODEL-CONFIDENCE`
+now compiles in
+`FiniteHorizonStochasticRewardIIDEmpiricalRewardConfidence` and
+`FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence`.
+The route maps complete reward-bearing trajectories to `EpisodeBatch` without
+replacing sampled rewards by `mdp.reward`. A visit-masked reward deviation has
+a stage-coordinate sub-Gaussian MGF under the generated trajectory law; finite
+iid episode sums use the conservative proxy `episodes * varianceProxy`.
+
+The pulled-back simultaneous count event and finite reward-coordinate union are
+measurable and retain separate `countDelta` and `rewardDelta` budgets. Outside
+their union, strict expected-count margins control both the random empirical
+reward denominator and transition-frequency denominator. Fixed reward and
+transition covers then construct every field of `FiniteBatchModel.Confidence`.
+The sampled-reward empirical model is globally optimistic and its recommended
+policy satisfies the existing selected-radius one-episode expected-regret
+bound.
+
+This is fixed-policy iid reward-mean estimation with an intentionally coarse
+reward proxy. It does not provide a count-adaptive radius, an adaptive history
+source, cumulative or realized regret, anytime confidence, a minimax rate, or
+complete UCB-VI.
+
+Focused/root/`Tests.Basic` and the full project gate pass. The external
+Bool/Bool horizon-one canary uses 16384 episodes and nondegenerate symmetric
+`+/-1` rewards, proves all margins and covers internally, and verifies that an
+actual sampled reward can be `1` while the stored mean reward is `0`.
+Independent review's vacuity finding is repaired; placeholder and public-axiom
+audits are clean/baseline-only.
+
+## Closed Gap: Stochastic Common-Space L1 Realized Consistency
+
+`RL-FINITE-HORIZON-ADAPTIVE-STOCHASTIC-REWARD-CUMULATIVE-DECAYING-EXPLORATION-COMMON-SPACE-L1-REALIZED-BEHAVIOR-CONSISTENCY`
+now compiles in
+`FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationCommonSpaceL1Consistency`.
+Every scheduled realized-behavior regret coordinate is integrable and belongs
+to `MemLp` at exponent one. Its expected absolute value and exact exponent-one
+`eLpNorm` tend to zero, and the named `Lp Real 1` process converges to zero.
+
+The proof does not bound sampled rewards. The deterministic `2H` envelope is
+used only for selected-policy expected regret in the bounded mean-reward MDP.
+The globally centered stochastic return deviation is integrated from its
+sub-Gaussian MGF at tilt `1 / sqrt(proxy)`, giving the required square-root
+first-moment scale. The expectation bound pays one count-event confidence
+share; the parent's two-share in-probability theorem remains unchanged.
+
+This is L1 convergence on the explicitly independent product of complete
+scheduled experiments. It is not a natural nested stream and gives no
+pathwise, almost-sure, anytime, stochastic reward-mean estimation, minimax, or
+complete-UCB-VI result.
+
+## Closed Gap: Stochastic Common-Space In-Probability Realized Consistency
+
+`RL-FINITE-HORIZON-ADAPTIVE-STOCHASTIC-REWARD-CUMULATIVE-DECAYING-EXPLORATION-COMMON-SPACE-IN-PROBABILITY-REALIZED-BEHAVIOR-CONSISTENCY`
+now compiles in
+`FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationCommonSpaceConsistency`.
+The finite-window stochastic certificate is strengthened from a one-sided
+realized-regret bound to an absolute bound by combining selected-policy
+expected-regret nonnegativity with the exact expected-minus-global-deviation
+identity and the existing two-sided return event.
+
+The changing scheduled laws are coupled on a dependent `Measure.infinitePi`.
+Every evaluation coordinate has exactly its complete stochastic trajectory law,
+the realized-regret coordinate is measurable, and the pulled-back bad event has
+the same two-share failure budget. The vanishing absolute envelope and failure
+budget prove `TendstoInMeasure` of realized successor-average behavior regret to
+zero.
+
+This closes literal convergence in probability under the explicitly
+independent product coupling. It does not construct one nested causal online
+stream and gives no pathwise, almost-sure, anytime, stochastic reward-mean
+estimation, minimax, or complete-UCB-VI result.
+
+## Closed Gap: Composite Standard Borel Regularity For Stochastic Cumulative Consistency
+
+`RL-FINITE-HORIZON-ADAPTIVE-STOCHASTIC-REWARD-CUMULATIVE-DECAYING-EXPLORATION-REGULARITY-CLOSED-REALIZED-BEHAVIOR-CONSISTENCY`
+now compiles in `FiniteHorizonEpisodeBatchStandardBorel` and
+`FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationRegularityClosedConsistency`.
+The custom product-coordinate measurable structure on `EpisodeStep` is
+identified with `State × Action × Real × State`; an induced Polish topology and
+measurable embedding recover its Borel structure. Mathlib's generic countable
+product then synthesizes deterministic batch trajectories; one dedicated
+constant-family instance stabilizes stochastic batch-trajectory synthesis.
+
+The finite- and all-window stochastic realized-consistency endpoints now need
+only Standard Borel State/Action spaces. Callers no longer supply four indexed
+batch/trajectory witnesses. The probability, support, reward-law, bounded-mean,
+positive-horizon, and positive-floor contracts are unchanged. This closes only
+the composite regularity boundary: scheduled windows still live on changing
+sample spaces, with no shared process, convergence in probability, almost-sure
+or anytime claim, reward estimation, minimax rate, or complete UCB-VI theorem.
+
+## Closed Gap: Stochastic Cumulative Decaying-Exploration Realized Consistency
+
+`RL-FINITE-HORIZON-ADAPTIVE-STOCHASTIC-REWARD-CUMULATIVE-DECAYING-EXPLORATION-REALIZED-BEHAVIOR-CONSISTENCY`
+now compiles in
+`FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency`.
+The source selects cumulative empirical-optimistic exploratory tables only from
+the known-reward projection of stochastic history. Initial, selected-batch,
+prefix/next, conditional, and complete-trajectory laws identify that projection
+exactly with the deterministic cumulative source.
+
+The deterministic decaying count/optimism/expected-behavior certificate is
+pulled back and combined with the globally centered stochastic return event.
+The final finite-window theorem exposes a measurable union, the exact sum of two
+scheduled confidence shares, a named realized-regret violation set and its tail,
+and optimism plus realized successor-average regret outside the union. The
+episode-linear global variance proxy yields a normalized stochastic radius
+tending to zero; the two-share failure budget and complete realized bound tend
+jointly to zero.
+
+The parent all-window theorem exposes indexed deterministic and stochastic
+batch and trajectory `StandardBorelSpace` witnesses because every schedule
+index has a different sample space. The downstream regularity-closed wrapper
+now infers those witnesses from State/Action Standard Borel instances. This is
+still not a common-process, convergence-in-probability, almost-sure, anytime,
+reward-estimation, minimax, or complete-UCB-VI theorem.
+
+## Closed Gap: Concrete Stochastic Empirical-Optimistic Realized Behavior Regret
+
+`RL-FINITE-HORIZON-ADAPTIVE-STOCHASTIC-REWARD-EMPIRICAL-OPTIMISTIC-REALIZED-BEHAVIOR-REGRET`
+now compiles in
+`FiniteHorizonAdaptiveStochasticRewardEmpiricalOptimisticRealizedBehaviorRegret`.
+The route derives global-return measurability from the finite projected table
+selector, identifies the actual stochastic successor policies with projected
+exploratory policies, charges their expected regret against the recommended
+policies, closes the fixed-bonus occupancy average, and adds the globally
+centered stochastic return radius.
+
+The count and return events retain separate `countDelta` and `returnDelta`
+budgets, with union mass bounded by the sum of their `ENNReal.ofReal` images.
+The external terminal is instantiated both on the small Unit model and on the
+positive Bool/Bool path-support calibration with two actions, non-degenerate
+symmetric stochastic rewards, positive reward/transition bounds, and distinct
+`1/2` and `1/4` confidence shares. The theorem remains successor-only and
+fixed-window; schedule/vanishing-rate, initial-batch, anytime/common-space,
+minimax, reward-estimation, and complete-UCB-VI claims remain open.
+The final two-action canary locks the complete endpoint proposition. Its
+dependent deterministic/stochastic batch and infinite-trajectory
+`StandardBorelSpace` instances are still explicit assumptions, not locally
+synthesized instances; a future measurable-space leaf must close that boundary.
+
+## Closed Gap: Adaptive Stochastic Known-Mean Projection Confidence
+
+The compiled route is
+`RL-FINITE-HORIZON-ADAPTIVE-STOCHASTIC-REWARD-KNOWN-MEAN-EMPIRICAL-OPTIMISTIC-PROJECTION-CONFIDENCE`.
+`FiniteHorizonAdaptiveStochasticRewardEmpiricalOptimisticProjection` constructs
+the table-indexed stochastic kernel and adaptive source with every selected
+policy factoring through the projected stochastic prefix. Each selected batch
+maps to the deterministic fiber, and dependent `Measure.compProd` transport,
+regular conditional laws, and projective-limit uniqueness identify the complete
+projected trajectory with the deterministic exploratory source law.
+
+The terminal theorem pulls back the deterministic adaptive count bad event,
+proves the same `delta` mass bound under the stochastic trajectory measure, and
+reuses the projected optimism and recommended-policy expected-regret conclusion.
+The evidence includes the complete trajectory equality, not only a source
+constructor or pointwise next-batch map.
+
+The full-law endpoint adds a Standard Borel/nonempty deterministic batch
+contract. It does not add sampled-reward boundedness or infer reward confidence,
+realized behavior regret, minimax rates, or complete UCB-VI.
+
+## Closed Gap: Stochastic Reward Erasure IID Episode-Batch Law
+
+The route
+`RL-FINITE-HORIZON-STOCHASTIC-REWARD-ERASURE-IID-EPISODE-BATCH-LAW`.
+It proves that coordinatewise reward erasure maps the stochastic finite
+trajectory kernel to the ordinary action/next-state trajectory kernel, then
+lifts that equality through the initial-state law, finite iid episode family,
+and the existing known-reward `EpisodeBatch` conversion. This is the exact law
+transport needed before the deterministic empirical-transition selector can be
+reused by a stochastic-reward source. It now compiles in
+`FiniteHorizonStochasticRewardErasureLaw`.
+
+Fourteen declarations cover measurable coordinate erasure, exact `Fin.cons`
+commutation, a reusable two-output `compProd` map theorem, recursive finite
+trajectory kernel equality, the initial-state law, finite iid family, and final
+known-reward `EpisodeBatch` law. Root-imported external canaries use sampled
+rewards `7` and `-3`, verify that next state `true` remains, instantiate the
+two-episode law, and check that the projected empirical reward is the known
+mean `0`. Focused and Tests builds pass; placeholder scanning is clean and four
+representative axiom audits report only `propext`, `Classical.choice`, and
+`Quot.sound`. Independent review found no P0/P1 or mathematical-law defect. Its
+P2 regularity finding is repaired by recording that the final measurable
+`EpisodeBatch` projection additionally needs measurable singletons for State
+and Action, while the kernel, full-trajectory, and iid-erasure laws do not.
+The review's P3 test findings are repaired with a Bool-action uniform policy,
+a symmetric non-degenerate reward source with reward-one mass `1/2`, explicit
+action preservation, and zero-horizon and zero-episode canaries.
+
+The route retains actions and next states and discards only sampled Real reward
+values. Its projected batch deliberately uses the known deterministic mean
+`mdp.reward`. It therefore does not establish stochastic reward estimation,
+reward confidence, adaptive count/optimism transport, realized regret, or
+complete UCB-VI.
+
+The remaining boundary is the adaptive source: its prefix-dependent selector,
+exact successor stochastic iid law, projected count event, and expected-regret
+consumer are not supplied by this fixed-policy transport.
+
+## Closed Gap: Adaptive Stochastic Realized Behavior Regret Transport
+
+The route
+`RL-FINITE-HORIZON-ADAPTIVE-STOCHASTIC-REWARD-HIGH-PROBABILITY-REALIZED-BEHAVIOR-REGRET-TRANSPORT`
+now compiles in
+`FiniteHorizonAdaptiveStochasticRewardRealizedBehaviorRegret`. The global
+batch deviation is actual sampled return minus the selected policy's expected
+return under the initial-state law. Its missing initial-state value
+fluctuation is proved sub-Gaussian from the deterministic reward-mean bound,
+summed over iid complete episodes, and combined with the existing
+per-sampled-state return deviation using the honest
+`(sqrt c_return + sqrt c_value)^2` same-space proxy.
+
+An explicit `GlobalReturnMeasurability` contract supports the dynamic
+prefix-selected statistic. The retained-input conditional law and trimmed
+`condExpKernel` map feed successor coordinates `1..rounds` into the compiled
+strongly-adapted tail; coordinate zero is deliberately zero. Exact cumulative
+and averaged identities then rewrite realized behavior regret as expected
+regret minus the globally centered return deviation. The terminal theorem
+unions a caller-supplied count/optimism bad event with the return bad event and
+charges two `delta` shares.
+
+Fifty-four declarations, the root import, and external Bool/Unit canaries
+compile. The canaries cover the initial marginal, both MGF layers, exact
+global-centering identity, dynamic conditional law, successor conditional
+MGF, positive two-round proxy, tail, regret identity, and full event transport.
+Placeholder scanning is clean and four representative axiom audits report only
+the standard `propext`, `Classical.choice`, and `Quot.sound` baseline.
+Independent review found no P0-P2. Its P3 constant-policy test gap is repaired
+by a history-sensitive Bool-action `Kernel.piecewise` global-measurability and
+dynamic-law canary. A concrete nonzero terminal regret test remains assigned to
+the next empirical-policy/count-event consumer.
+
+The remaining boundary is a concrete stochastic empirical-policy source and
+its count/optimism event. This route does not provide a selector, schedule,
+anytime statement, minimax rate, or complete UCB-VI theorem.
+
+## Closed Gap: Adaptive Stochastic Episode Sampled Return Tail
+
+The route
+`RL-FINITE-HORIZON-ADAPTIVE-STOCHASTIC-REWARD-EPISODE-BATCH-SAMPLED-RETURN-VALUE-DEVIATION-SUBGAUSSIAN-TAIL`.
+now compiles in
+`FiniteHorizonAdaptiveStochasticRewardTotalReturnConcentration`. It combines
+the complete-episode iid sampled-return MGF with an adaptive
+Ionescu--Tulcea/`piLE` martingale route. The generic `retainedInputKernel`
+keeps the conditioning prefix with the next batch, and
+`condDistrib_dynamic_map_ae_eq_of_pair_map_eq_compProd` maps the resulting
+pair through the history-selected sampled-return deviation. The source
+contract records measurability of this prefix×batch statistic rather than
+silently assuming a measurable policy selector.
+
+The initial coordinate and every successor coordinate inherit the compiled iid
+MGF, the increment process is strongly adapted, and the finite-round two-sided
+tail uses exactly
+`rounds * iidSampledCumulativeReturnDeviationVarianceProxy`. External canaries
+instantiate a concrete Bool/Unit source and check the dynamic law, successor
+conditional MGF, proxy `22`, and two-round tail. A second, history-sensitive
+Bool-action `Kernel.piecewise` source proves that two observed prefixes select
+different successor policies and unequal complete conditional batch laws. The
+infinite real-reward trajectory's `StandardBorelSpace` is an explicit
+regularity input because the current Mathlib instance search does not
+synthesize it automatically. Independent review's weak-adaptivity-canary and
+overbroad-regularity findings are repaired; only `Nonempty Action` is required
+at the MGF/tail endpoints.
+
+The theorem does not use global initial-law mean centering, cross-round
+independence, or within-episode stage independence. Its globally centered
+expected-to-realized regret consumer now compiles above. Concrete stochastic
+policy construction, uniform/anytime confidence, optimistic planning, minimax
+rates, and complete UCB-VI remain open downstream.
+
+## Closed Gap: Finite IID Episode Sampled Return Tail
+
+`RL-FINITE-HORIZON-STOCHASTIC-REWARD-IID-EPISODE-SAMPLED-RETURN-VALUE-DEVIATION-SUBGAUSSIAN-TAIL`
+now compiles in
+`FiniteHorizonStochasticRewardIIDTotalReturnConcentration`. The module
+constructs a finite `Measure.pi` product of complete reward-bearing
+trajectories, proves exact coordinate marginals and episode-level independence,
+lifts the initial-law MGF to every coordinate, and applies Mathlib's independent
+sub-Gaussian finite-sum theorem. The resulting proxy is exactly
+`episodes * (horizon * rewardVarianceProxy +
+meanBellmanInnovationVarianceProxy rewardBound horizon)`, followed by the
+fixed-sample two-sided delta tail.
+
+The zero-episode product is also covered: it remains a probability measure,
+the deviation sum and total proxy are zero, and the zero-proxy MGF compiles.
+The tail intentionally requires a positive total proxy, so it does not claim a
+separate zero-episode confidence-radius endpoint.
+
+Independence is across complete episodes only. No independence between stages
+inside one trajectory is introduced. Adaptive policy updates, conditional
+successor episode laws, uniform/anytime control, regret, optimism, minimax
+rates, and complete UCB-VI remain open.
+
+## Closed Gap: Initial-Law Sampled Return Sub-Gaussian Tail
+
+`RL-FINITE-HORIZON-STOCHASTIC-REWARD-TRAJECTORY-INITIAL-LAW-SAMPLED-RETURN-VALUE-DEVIATION-SUBGAUSSIAN-TAIL`
+now compiles in
+`FiniteHorizonStochasticRewardInitialLawTotalReturnConcentration`. A reusable
+finite-index `Measure.compProd` theorem lifts a common fiberwise
+`HasSubgaussianMGF` proxy through an arbitrary probability mixing law. It uses
+the exact Mathlib integrability/Fubini surface, then instantiates the statewise
+sampled-return theorem on the full stochastic trajectory measure.
+
+The statistic is centered by the policy value of its sampled initial state.
+This does not prove concentration around the global initial-law expected value.
+Its finite iid episode product/sum consumer now compiles downstream. Adaptive
+confidence events, uniform/anytime
+control, regret, optimism, minimax rates, and complete UCB-VI remain open.
+
+## Closed Gap: Sampled Return Around Policy Value Sub-Gaussian Tail
+
+`RL-FINITE-HORIZON-STOCHASTIC-REWARD-TRAJECTORY-SAMPLED-RETURN-VALUE-DEVIATION-SUBGAUSSIAN-TAIL`
+now compiles in `FiniteHorizonStochasticRewardTotalReturnConcentration`.
+The actual sampled cumulative return minus `policy.valueRemaining` splits
+pathwise into selected-reward noise and the mean Bellman innovation. Exact
+retained-coordinate reward-kernel maps and Mathlib `add_compProd` give the
+additive proxy
+`remaining * rewardVarianceProxy +
+meanBellmanInnovationVarianceProxy rewardBound remaining`, followed by the
+fixed-horizon two-sided delta tail.
+
+This closes the conditional composition boundary between the two preceding
+concentration routes. Its initial-state-law mixture now compiles downstream,
+but it does not yet provide an iid episode family, adaptive confidence event, uniform/anytime statement,
+regret, optimism, minimax rate, or complete UCB-VI. Arbitrary correlated
+reward/next-state sources also remain outside the product-source contract.
+
+## Closed Gap: Mean Bellman Innovation Sub-Gaussian Tail
+
+`RL-FINITE-HORIZON-STOCHASTIC-REWARD-TRAJECTORY-MEAN-BELLMAN-INNOVATION-SUBGAUSSIAN-TAIL`
+now compiles in
+`FiniteHorizonStochasticRewardBellmanInnovationConcentration`. The statistic
+sums
+`mdp.reward state action + valueRemaining tail nextState - valueRemaining current state`
+along the generated reward-bearing trajectory. This jointly centers policy
+action and transition randomness at the recursive policy value.
+
+The proof bounds `valueRemaining` by its remaining reward envelope, identifies
+the one-step action/transition integral with the current Bellman value, and
+applies the bounded-centered Hoeffding wrapper. Dropping the sampled reward
+from `actionRewardStateKernel` recovers `actionStateKernel`; the recursive
+kernel proof then retains next state beside the tail, uses an a.e. equality for
+the duplicated next-state coordinate, and applies `add_compProd`. The total
+proxy is exactly `sum k=1..remaining, (k * rewardBound)^2`, followed by the
+fixed-horizon two-sided delta tail.
+
+The randomized-action canary computes policy value `1/2`, witnesses innovation
+`3/2`, computes proxy four, and instantiates the generated MGF/tail. A second
+two-stage Bool-state canary gives both transition outcomes mass `1/2` and proves
+that traces with first next state `true/false` have cumulative innovations
+`+1/2/-1/2`. Independent review found no route defect and confirmed the
+conservative `O(H^3 rewardBound^2)` proxy; its initial compile and semantic
+coverage findings are resolved by these canaries. Sampled reward noise remains
+separate in the preceding cumulative-deviation route, while their exact
+conditional composition now compiles in the sampled total-return route above.
+No uniform/anytime, regret, optimism, minimax, or complete UCB-VI claim follows
+from this parent alone.
+
+## Closed Gap: Stochastic Reward Cumulative Deviation Sub-Gaussian Tail
+
+`RL-FINITE-HORIZON-STOCHASTIC-REWARD-TRAJECTORY-CUMULATIVE-DEVIATION-SUBGAUSSIAN-TAIL`
+now compiles in `FiniteHorizonStochasticRewardCumulativeConcentration`. The
+new sampled cumulative deviation subtracts `mdp.reward` at every actual
+pre-step state and sampled action. Its generated-trajectory MGF has proxy
+exactly `remaining * varianceProxy`, and the module exposes the corresponding
+fixed-horizon two-sided delta tail.
+
+The recursive proof retains the sampled next state with
+`Kernel.id ×ₖ tailKernel`, promotes pointwise fiber MGFs to
+`Kernel.HasSubgaussianMGF`, and applies Mathlib `add_compProd`. An exact
+map/compProd equality then rebuilds the original generated trace. This avoids
+the weaker `horizon^2` bounded-total-return shortcut. The source's
+`rewardNextStateKernel` is the conditionally independent reward/transition
+product given state/action; no independence across trajectory stages is
+assumed. Horizon-zero and two-step symmetric-reward canaries check the base
+case, proxy two, recursive MGF, exact all-positive event mass `1/4`, and a
+strict-positive-mass `delta = 3/4` tail endpoint.
+
+This closes cumulative reward-law noise only. Transition randomness, the
+Bellman value innovation, total sampled return around `valueRemaining`,
+uniform/anytime control, regret, optimism, minimax rates, and complete UCB-VI
+remain open.
+
+## Closed Gap: Stochastic Reward Head Conditional Sub-Gaussian Tail
+
+`RL-FINITE-HORIZON-STOCHASTIC-REWARD-TRAJECTORY-HEAD-CONDITIONAL-SUBGAUSSIAN-TAIL`
+now compiles in `FiniteHorizonStochasticRewardConcentration`. It packages one
+common selected-reward sub-Gaussian proxy, constructs that contract from a
+common a.s. interval using the mean-compatible reward identity, and transports
+it to the actual generated first reward conditioned on its sampled action.
+
+The exact centered variable is
+`headReward - mdp.reward state headAction`; the conditioning sigma-algebra is
+`comap headAction`. The compiled conditional-law map feeds the local centered
+conditional-MGF bridge. Mathlib `HasSubgaussianMGF.trim` and
+`add_of_hasCondSubgaussianMGF` give the global MGF, and a constant full
+filtration specializes the existing strongly-adapted finite-sum theorem to a
+one-step two-sided delta tail.
+
+A nondegenerate symmetric `{-1,1}` reward canary proves common interval
+support, computes `intervalVarianceProxy (-1) 1 = 1`, and instantiates the
+conditional MGF, global MGF, and `delta = 1/2` tail. The multi-step cumulative
+reward-deviation MGF and tail now compile downstream. Transition/Bellman
+innovation concentration, regret tails, and complete UCB-VI remain open.
+
+## Closed Gap: Stochastic Reward Trajectory Head Conditional Law
+
+`RL-FINITE-HORIZON-STOCHASTIC-REWARD-TRAJECTORY-HEAD-CONDITIONAL-LAW`
+now compiles in `FiniteHorizonStochasticRewardConditionalLaw`. The one-step
+action/reward law is exactly the policy action measure composed with the
+state-frozen selected reward kernel. Consequently, the first generated reward
+conditioned on the first generated action equals that selected kernel almost
+everywhere at every positive recursive horizon.
+
+The route uses `Kernel.sectR`, `Measure.ext_prod`, `Measure.fst_compProd`, and
+`condDistrib_ae_eq_iff_measure_eq_compProd`, then invokes the compiled local
+Real-valued bridge to obtain a trimmed `condExpKernel.map` equality. The base
+conditional-law layer needs no new measurable-singleton or reward-moment
+contract. The final conditional-expectation wrapper explicitly requires
+standard Borel State/Action and nonempty Action; nonempty State is constructed
+from its explicit starting-state argument.
+
+Randomized Bool-action canaries instantiate the joint, `condDistrib`, and
+`condExpKernel.map` statements and verify that the selected law at action
+`true` assigns mass one to reward `2`; a second canary transports the
+action-dependent mass-one event through the generated `condDistrib`. This
+distinguishes the selected law from the reward-only mixture. This closes only
+the first-step conditional-law adapter. Its bounded/sub-Gaussian selected-law
+consumer, conditional/global MGF, and cumulative reward-noise tail now compile
+downstream; transition/Bellman innovation and regret consumers remain open.
+
+## Closed Gap: Stochastic Reward Trajectory Head Marginal Factorization
+
+`RL-FINITE-HORIZON-STOCHASTIC-REWARD-TRAJECTORY-HEAD-MARGINAL-FACTORIZATION`
+now compiles in `FiniteHorizonStochasticRewardMarginal`. At every positive
+recursive horizon, mapping a generated trace to its first
+`(action,reward,nextState)` coordinate recovers `actionRewardStateKernel`.
+Mapped action/reward and reward-only kernels are Markov, and the route proves
+exact measurable joint-rectangle and reward-event policy-mixture formulas.
+
+The proof uses `map_comp_right`, `fst_compProd`, measurable projection
+preimages, `compProd_apply_prod`, and `prod_apply_prod`. It retains the random
+policy action and actual sampled reward: a Bool-action canary gives mass `1/2`
+to joint `(true,2)` and reward-only `-1` events under uniform action mixing.
+A horizon-two canary checks that a one-step suffix uses stage one, and the
+nondegenerate symmetric generated reward mass transports through the new
+reward map to `rewardMarginalKernel`. No new boundedness, moment,
+measurable-singleton, Standard Borel, or `condDistrib` contract was introduced.
+
+This closes the generated first-coordinate marginal interface, not a regular
+conditional distribution or concentration theorem. The next boundary is an
+explicit filtration/disintegration transport with its Standard Borel
+contracts, or a separately packaged bounded/sub-Gaussian source consumed by a
+concentration route.
+
+## Closed Gap: Stochastic Reward Trajectory Value Identity
+
+`RL-FINITE-HORIZON-STOCHASTIC-REWARD-TRAJECTORY-VALUE-IDENTITY` now compiles
+in `FiniteHorizonStochasticRewardTrajectory`. Generated finite coordinates
+retain the actual sampled `(action,reward,nextState)`. The cumulative reward
+sums those Real reward coordinates and is not a rewrite of `mdp.reward`.
+
+The Real coordinate makes the trace non-finite, so the proof does not reuse
+the deterministic trajectory's automatic finite-type integrability. It
+recursively combines selected reward `L1`, tail `L1`, a measurable tail norm
+envelope, nested `integrable_compProd_iff`, map transport, and Fubini. The
+statewise expectation is `stochasticValueRemaining`; the full initial-state
+expectation is both stochastic `valueAt 0` and the existing mean policy value.
+Independent review found no semantic defect. Its coverage finding was resolved
+by an exact canary showing that the generated symmetric source assigns mass
+`1/2` to the first sampled reward being `1`.
+
+No boundedness, second moment, sub-Gaussian, or Standard Borel contract was
+added. Exact retrieval found no existing reward-bearing consumer. The explicit
+first-coordinate marginals now compile downstream; remaining boundaries are
+their finite-history regular-conditional transport and trajectory
+concentration under separately packaged bounded or sub-Gaussian assumptions.
+Correlated reward/next-state laws and complete UCB-VI remain open.
+
+## Closed Gap: Stochastic Reward Kernel Bellman Transport
+
+`RL-FINITE-HORIZON-STOCHASTIC-REWARD-KERNEL-BELLMAN-TRANSPORT` now compiles in
+`FiniteHorizonStochasticRewardBellman`. A `MeanCompatibleRewardKernel` records
+integrability of every selected Real reward and identifies its integral with
+the existing `mdp.reward state action`. Its reward/next-state product kernel is
+Markov and explicitly models conditional independence given `(state,action)`.
+
+Mathlib product integrability, `Kernel.prod_apply`, and Fubini prove that the
+sampled one-step value is exactly `mdp.bellmanQ`. The identity is integrated
+under each policy action kernel and propagated through a separately defined
+backward stochastic recursion to `valueRemaining` and `valueAt`. The existing
+deterministic reward has a compiled `RewardKernel.deterministic` embedding.
+
+Exact local/memory retrieval found no prior consumer. The route uses compiled
+kernel/integral APIs, not a theorem card. It does not construct a correlated
+reward/next-state law, stochastic-reward trajectory, realized return,
+concentration bound, optimism theorem, regret theorem, or complete UCB-VI.
+The next supporting boundary is a stochastic trajectory/value identity.
+
+## Closed Gap: Common-Space L1 Realized Consistency
+
+`RL-FINITE-HORIZON-ADAPTIVE-CUMULATIVE-EPISODEWISE-DECAYING-EXPLORATION-COMMON-SPACE-L1-REALIZED-CONSISTENCY`
+now compiles in
+`FiniteHorizonAdaptiveCumulativeEpisodewiseCommonSpaceL1Consistency`.
+Every scheduled realized-behavior regret coordinate is `MemLp` at exponent one,
+and its `eLpNorm` is exactly `ENNReal.ofReal` of the compiled expected absolute
+regret. The canonical norm of `process n - 0` tends to zero.
+
+The route also packages each coordinate as a named `Lp Real 1` value, proves
+its coercion agrees almost everywhere with the original process, and proves
+convergence to zero in the `Lp` topology. It uses
+`memLp_one_iff_integrable`, `MemLp.eLpNorm_eq_integral_rpow_norm`,
+`ENNReal.continuous_ofReal`, `eLpNorm_congr_ae`, `MemLp.toLp`, and
+`Lp.tendsto_Lp_iff_tendsto_eLpNorm''`; the standard Lp-to-measure bridge
+recovers `TendstoInMeasure`.
+
+Regularity is unchanged from the expected-absolute parent. Exact memory/local
+retrieval found no prior common-space L1 consumer; the proof is a project-local
+wrapper over pinned Mathlib `MemLp`/`eLpNorm`/`Lp` APIs, with RL/UCB-VI cards
+serving only as route evidence. The result still concerns the independent
+product of complete finite-window experiments, not a nested causal stream;
+pathwise, almost-sure, anytime, stochastic-reward, minimax, and complete UCB-VI
+claims remain open.
+
+## Closed Gap: Common-Space Expected Absolute Realized Consistency
+
+`RL-FINITE-HORIZON-ADAPTIVE-CUMULATIVE-EPISODEWISE-DECAYING-EXPLORATION-COMMON-SPACE-EXPECTED-ABSOLUTE-REALIZED-CONSISTENCY`
+now compiles in
+`FiniteHorizonAdaptiveCumulativeEpisodewiseCommonSpaceExpectedConsistency`.
+Generated adaptive successor batches are reward-consistent almost everywhere;
+the deterministic reward bound therefore gives every realized-average regret
+coordinate a `2*horizon` envelope and proves its Bochner integrability.
+
+The pulled-back common bad event is measurable. Splitting its indicator from
+the good event bounds expected absolute realized regret by the compiled
+finite-window radius plus `2*horizon` times the real-valued failure budget.
+Both terms tend to zero, yielding an explicit `Tendsto` theorem for the
+expectations. The route uses the compiled exact marginals together with
+`Measure.ae_compProd_of_ae_ae`, `ae_of_ae_map`, `Integrable.mono'`,
+`integral_indicator`, `ENNReal.tendsto_toReal`, and `squeeze_zero`.
+
+The regularity contract remains finite measurable nonempty state/action,
+probability initial law, positive horizon/base floor, deterministic absolute
+reward bound one, path support, and indexed Standard Borel witnesses. Exact
+local/memory retrieval found no prior expected-absolute leaf; Mathlib
+measure/integral/kernel/asymptotic APIs supply the proof, while RL/UCB-VI cards
+are route evidence only. The expectation is still under the independent
+product of complete finite-window experiments, not a nested causal stream;
+pathwise, almost-sure, anytime, stochastic-reward, minimax, and complete UCB-VI
+claims remain open.
+
+## Closed Gap: Episodewise Common-Space Consistency In Probability
+
+`RL-FINITE-HORIZON-ADAPTIVE-CUMULATIVE-EPISODEWISE-DECAYING-EXPLORATION-COMMON-SPACE-IN-PROBABILITY-CONSISTENCY`
+now gives the changing scheduled finite-window experiments one explicit common
+probability space. `DecayingExplorationEpisodewiseWindowSpace` is a dependent
+product of the scheduled trajectory types, and
+`decayingExplorationEpisodewiseCommonMeasure` is the Mathlib
+`Measure.infinitePi` of their exact adaptive trajectory laws. The coordinate
+marginal theorem proves that projection `n` has precisely the source law used
+by the compiled finite-window certificate.
+
+The route first proves successor expected regret is nonnegative and combines
+the existing expected upper bound with the sharp two-sided episodewise return
+deviation. Outside the measurable count/return union, the absolute realized
+average regret is therefore bounded by the same deterministic decaying bound.
+Pulling this event back through each coordinate preserves its doubled failure
+budget. Since both the deterministic bound and failure budget tend to zero,
+the terminal theorem proves Mathlib `TendstoInMeasure` of the common-space
+realized-behavior regret process to zero.
+
+The random-variable regularity is explicit rather than implicit: finite sums
+of measurable episode-return coordinates make finite-window cumulative and
+average realized regret measurable, and composition with coordinate evaluation
+makes every common-space regret-process coordinate measurable. The terminal
+returns this family together with exact marginals and convergence in measure.
+
+Verification closes at 17 registered declarations. The focused module builds
+in 3043 jobs, the root in 3529, and full Tests in 3531; external probability,
+marginal, process/measurability, finite-window, and terminal canaries compile.
+Placeholder and generated-index checks are clean, five representative axiom
+audits are baseline-only, and `python3 tools/bandit.py check` passes with 17 CLI
+tests and one expected skip.
+
+This is the independent-coordinate product coupling of complete finite-window
+experiments. It is a valid common-space convergence-in-probability result, but
+not the natural nested causal algorithm on one shared stream. It does not imply
+pathwise, almost-sure, or anytime control. Stochastic reward laws, minimax
+rates, and complete UCB-VI remain open.
+
+## Closed Gap: Episodewise Decaying-Exploration Realized Consistency
+
+`RL-FINITE-HORIZON-ADAPTIVE-CUMULATIVE-EPISODEWISE-DECAYING-EXPLORATION-HIGH-PROBABILITY-REALIZED-BEHAVIOR-CONSISTENCY`
+now closes the within-batch episode decomposition route. Complete generated
+episode rows are independent product coordinates under the iid trajectory law;
+that independence is transported to `iidEpisodeBatchMeasure` and composed with
+full episode return. Each centered return has proxy `horizon^2`, and independent
+sub-Gaussian summation yields batch proxy `episodes*horizon^2` without assuming
+independence between stages of one trajectory.
+
+The existing total-return conditional-law identification transports this MGF
+to adaptive successor increments. Strong adaptation gives cumulative proxy
+`rounds*episodes*horizon^2`, a two-sided return tail, and a sharp
+expected-to-realized regret transport. The exact normalized radius is
+`horizon*sqrt(2*log(2/delta)/(episodes*rounds))`; it is no larger than the
+compiled coarse radius, inherits the decaying envelope, and tends to zero.
+
+The concrete source terminal unions the sharp return event with the existing
+count event, retains two confidence shares and roundwise optimism, and covers a
+named realized-regret violation set. The all-window theorem packages every
+finite window under indexed Borel witnesses together with the joint scalar
+failure/regret limit. Thirty-three public declarations, focused/root/Tests
+builds, numeric and typed canaries, clean placeholders, declaration retrieval,
+and baseline-only axiom audits verify the route.
+
+This dependent-family theorem now has a downstream independent-coordinate
+common-space `TendstoInMeasure` consumer. It still does not itself identify a
+nested shared-stream process or provide pathwise/almost-sure/anytime control,
+stochastic reward laws, minimax rates, or complete UCB-VI.
+
+## Closed Gap: Decaying-Exploration Realized Behavior Consistency
+
+`RL-FINITE-HORIZON-ADAPTIVE-CUMULATIVE-DECAYING-EXPLORATION-HIGH-PROBABILITY-REALIZED-BEHAVIOR-CONSISTENCY`
+now closes the normalized reward-radius boundary of the finite-window realized
+transport. The compiled proxy identities are
+`batchProxy=(episodes*horizon)^2` and
+`cumulativeProxy=rounds*(episodes*horizon)^2`. Consequently, for positive
+episodes and rounds, the normalized radius is exactly
+`horizon*sqrt(2*log(2/delta)/rounds)`; the scheduled batch size cancels.
+
+For `q_n=n+2`, `delta_n=1/q_n`, and
+`rounds_n=q_n^(horizon+4)`, elementary log and power inequalities give the
+explicit bound `radius_n<=2*horizon/q_n`. The radius therefore tends to zero.
+Adding it to the existing decaying exploratory-behavior expected-regret bound
+gives a nonnegative realized bound tending to zero. The union failure budget
+`ofReal(delta_n)+ofReal(delta_n)` also tends to zero, and both quantities
+converge jointly to `(0,0)`.
+
+At every finite window, a named realized-regret violation set is contained in
+the measurable count/return bad-event union. It inherits the two-share outer
+measure bound, while the complement retains roundwise optimism and the
+realized average behavior-regret certificate. The all-window theorem accepts
+indexed `StandardBorelSpace` witnesses for the changing scheduled batch and
+trajectory types and returns the complete dependent family plus the joint
+scalar limit.
+
+This is not convergence in probability or almost-sure/pathwise convergence on
+one process: the sample space and measure may change with `n`. A common-space
+coupling is the next route for those modes. A sharper within-batch
+episode-level concentration proof is separate; stochastic rewards, anytime
+control, minimax rates, and complete UCB-VI remain open.
+
+Independent review found no theorem defect. It did identify that declaration
+retrieval truncated the terminal theorem at a multiline result-level `letI`;
+the parser now preserves that binder and the complete event certificate. Direct
+canaries also lock the two confidence shares and strict membership in the named
+realized-regret violation set.
+
+## Closed Gap: Finite-Window Realized Behavior Regret Transport
+
+`RL-FINITE-HORIZON-ADAPTIVE-CUMULATIVE-HIGH-PROBABILITY-REALIZED-BEHAVIOR-REGRET-TRANSPORT`
+now compiles on the exact adaptive `EpisodeBatchTrajectory` law. Recorded
+episode and batch returns are measurable, agree with generated
+`MDP.cumulativeReward`, and have iid batch mean equal to `episodes` times the
+selected policy's trajectory-return mean. Under `|reward|<=1`, the centered
+batch return has the whole-batch Hoeffding proxy `(episodes*horizon)^2`.
+
+The successor conditional law is mapped through total return and transported
+to the trimmed `condExpKernel`. This yields strongly adapted prefix-kernel
+centered increments and a two-sided finite-window return tail. Exact finite-sum
+algebra proves realized cumulative regret equals `episodes` times successor
+expected cumulative regret minus the centered return deviation. Only source
+coordinates `1..rounds` are charged; coordinate zero remains excluded.
+
+A generic theorem unions a measurable count bad event with the return bad
+event, preserves any count-good certificate, and adds the normalized reward
+radius. The concrete decaying-exploration endpoint retains roundwise optimism,
+bounds the union by `ofReal delta_n + ofReal delta_n`, and returns the realized
+average behavior-regret bound. The route remains finite-window and uses a
+coarse batch proxy. Its normalized reward-radius asymptotic and dependent
+all-window realized consistency consumer now compile downstream. This parent
+still does not construct a common process across changing batch types or
+establish anytime/pathwise/probability/almost-sure, stochastic-reward, minimax,
+or complete UCB-VI results.
+
+## Closed Gap: Decaying-Exploration High-Probability Behavior Consistency
+
+`RL-FINITE-HORIZON-ADAPTIVE-CUMULATIVE-DECAYING-EXPLORATION-HIGH-PROBABILITY-BEHAVIOR-CONSISTENCY`
+now removes the fixed-exploration residual charge. The compiled path lemmas
+show that the selected state-action path floor at stage `t` is the
+full-exploration floor times `gamma^(t+1)`. A full-exploration common floor
+therefore yields the uniform horizon floor `baseVisitFloor*gamma^horizon` for
+every `0<=gamma<=1`.
+
+With `q_n=n+2`, the route chooses `gamma_n=1/q_n`,
+`rounds_n=q_n^(horizon+4)`, `visitFloor_n=baseVisitFloor/q_n^horizon`, and
+`delta_n=1/q_n`. The exact identity
+`visitFloor_n*rounds_n=baseVisitFloor*q_n^4` converts the scheduled
+recommendation envelope to
+`16*card(State)*horizon^2/(sqrt(baseVisitFloor)*q_n^2)`. Adding the behavior
+charge `horizon*(horizon+1)/q_n` still tends to zero. A product-filter theorem
+combines this with the existing `ENNReal.ofReal delta_n -> 0` result.
+
+The finite-window source theorem reuses the scheduled recommendation event,
+transports its good-side bound to the exploratory successor behaviors, and
+contains the behavior-regret violation set in the same measurable count bad
+event. Unit canaries cover `gamma=1/4`, `rounds=1024`, the joint limit, and
+typed source projections. A Bool-state/Bool-action horizon-two canary checks
+the nondegenerate floor `1/8 -> 1/128` and effective visit mass `32`.
+
+This route itself remains a dependent family of expected-regret certificates: scheduled
+episode counts and trajectory types change with `n`. It does not prove that
+the violation set is measurable or establish a common process, realized
+regret, pathwise/probability/almost-sure convergence, stochastic rewards,
+minimax rates, or complete UCB-VI. Those require a coupling/common-space or
+realized-regret martingale layer. That finite-window martingale transport now
+compiles downstream; common-space and asymptotic reward-radius obligations do not.
+
+## Closed Gap: Exploratory Behavior Expected-Regret Transport
+
+`RL-FINITE-HORIZON-ADAPTIVE-CUMULATIVE-EXPLORATORY-BEHAVIOR-REGRET-TRANSPORT`
+now connects the recommendation route to the exploratory policies that
+generate data. The exact PMF integral is a convex mixture of the uniform
+action average and the selected action. A bounded-reward Bellman induction
+then proves that exploratory-policy expected regret is at most the selected
+deterministic policy's expected regret plus
+`explorationRate*rewardBound*horizon*(horizon+1)`.
+
+Finite sums give the cumulative charge `rounds*charge`, and positive-round
+division gives the average charge. An explicit theorem aligns those terms with
+source successor coordinates `1..rounds`; the source's initial-table policy at
+coordinate zero is outside this quantity. The finite-window vanishing-delta endpoint
+defines a behavior-regret violation set, includes it in the existing
+measurable count bad event, inherits the same outer-measure tail, and retains
+roundwise optimism. Unit canaries check the nonzero charge and explicitly
+typed transport, violation, tail, and good-side projections. A two-action
+one-step MDP also checks an exploratory reward expectation of `3/4` and a
+nonzero selected/exploratory value gap of `1/4`.
+
+Independent review found no P0-P2. Its three P3 findings about successor
+indexing, degenerate behavior canaries, and equality wording were resolved by
+the alignment theorem, the two-action canaries, and the bounded-certificate
+wording; re-review found no remaining P0-P3.
+
+This closes fixed-rate expected-regret transport only. At a fixed positive
+exploration rate, the compiled certificate tends to the nonzero charge rather
+than zero. The compatible decaying-exploration zero-limit consumer now
+compiles downstream. Violation-set measurability,
+common-process convergence, realized regret, stochastic rewards, minimax
+rates, and complete UCB-VI remain open.
+
+## Closed Gap: Vanishing-Delta High-Probability Average Consistency
+
+`RL-FINITE-HORIZON-ADAPTIVE-CUMULATIVE-INVERSE-SQRT-VANISHING-DELTA-HIGH-PROBABILITY-AVERAGE-CONSISTENCY`
+now specializes the explicit scheduled average route to
+`delta_n = 1/(n+2)` and `rounds=n+1`. The schedule absorbs the resulting
+logarithmic calibration cost while the deterministic recommendation-regret
+certificate remains below the parent's delta-independent envelope
+`16*card(State)*horizon^2/(sqrt(visitFloor)*sqrt(n+1))`.
+
+The real and `ENNReal` confidence budgets tend to zero, the varying-delta
+certificate tends to zero by squeeze, and a product-filter theorem proves
+that both quantities converge jointly to `(0,0)`. At every finite window, a
+named average-regret violation set is contained in the existing measurable
+cumulative-count bad event, so `measure_mono` gives its outer-measure bound at
+most `ENNReal.ofReal delta_n`. The violation set itself is not proved
+measurable. The same terminal retains roundwise optimism and
+the average recommended-policy expected-regret bound outside that event.
+
+The all-window endpoint is deliberately dependent: callers provide one
+`StandardBorelSpace` witness for each scheduled batch and trajectory type.
+Unit canaries check `delta_0=1/2`, `delta_2=1/4`, joint convergence, a
+nontrivial window terminal, and the dependent family interface. Explicitly
+typed projection canaries lock violation containment/tail, good-side optimism
+and average regret, and the all-window `forall n` certificate. Independent
+review found no P0-P2; its P3 inferred-canary gap is resolved.
+
+This is not a fixed-process convergence-in-probability, pathwise, or
+almost-sure theorem because the scheduled sample space changes with `n`.
+The budgets `1/(n+2)` are also not summable and therefore do not create an
+anytime event. Fixed-rate exploratory-behavior transport and its compatible
+decaying-exploration support/calibration consumer now compile downstream. The
+next exact boundary is an explicit common-space embedding/coupling or a
+realized-regret martingale transport; stochastic rewards, minimax rates, and
+complete UCB-VI remain open.
+
+## Closed Gap: Scheduled Adaptive Cumulative Inverse-Sqrt Average Consistency
+
+`RL-FINITE-HORIZON-ADAPTIVE-CUMULATIVE-INVERSE-SQRT-SCHEDULED-AVERAGE-CONSISTENCY`
+now chooses an explicit natural episodes-per-batch schedule. With `L` the
+existing cumulative log factor and `T` the normalized calibration threshold,
+the schedule is `Nat.ceil(max T (2*L/visitFloor))+1`.
+
+The strict ceil successor clears `T` and gives
+`L < episodes*visitFloor/2`. Consequently the exact parent average bound is at
+most
+`16*card(State)*horizon^2/(sqrt(visitFloor)*sqrt(rounds))`.
+Mathlib's square-root at-top limit, constant-over-at-top division, and
+`squeeze_zero` prove that both this envelope and the scheduled scalar bound
+tend to zero along `rounds=n+1`.
+
+The finite-window source endpoint instantiates the same measurable bad event,
+`ENNReal.ofReal delta` tail, roundwise optimism, and recommended-policy average
+bound at the scheduled batch size. Unit canaries at `delta=1/2` cover strict
+calibration, log-mass coverage, the exact four-round envelope value eight,
+scalar convergence, and the complete source terminal. Focused/root/Tests
+builds, placeholder scan, baseline-only axiom audits, an independent local
+statement/algebra/sample-space audit, and the full root/Tests/CLI gate pass.
+
+This is scalar guarantee consistency plus one source theorem per finite window.
+Since the schedule changes `EpisodeBatchTrajectory` with `n`, it is not a
+single-process pathwise, in-probability, or almost-sure convergence theorem.
+The downstream vanishing-delta dependent finite-window source family and
+fixed-exploration behavior-regret transport now compile. Compatible decaying
+exploration/calibration or explicit common-space embedding remains the next
+exact boundary.
+
+## Closed Gap: Average Adaptive Cumulative Inverse-Sqrt Recommendation Rate
+
+`RL-FINITE-HORIZON-ADAPTIVE-CUMULATIVE-INVERSE-SQRT-AVERAGE-RECOMMENDATION-RATE`
+now divides the compiled normalized recommendation-regret sum by positive
+`rounds`. The named average regret remains the finite sum of recommended-policy
+expected regrets divided by its number of recommendations; it is not the
+exploratory behavior's regret.
+
+The scalar proof rewrites `min rounds x / rounds` as `min 1 (x/rounds)` and
+uses positive episodes, rounds, and visit floor to identify
+`sqrt(rounds)*sqrt(episodes*visitFloor/2)` with
+`sqrt((episodes*rounds)*visitFloor/2)`. The exact average bound is therefore
+`2*horizon * min 1
+  (8*card(State)*horizon*sqrt(L)/sqrt(visitFloor) /
+    sqrt((episodes*rounds)*visitFloor/2))`.
+
+The source theorem reuses the exact normalized bad event, `ENNReal.ofReal
+delta` tail, and roundwise optimism conclusion. The Unit canary uses three
+recommendations, 1000 exploratory episodes per batch, total count 3000,
+`delta=1/2`, and visit floor one. Focused, root, and `Tests.Basic` builds and
+both public axiom audits pass.
+
+This is the finite-window parent of the compiled explicit schedule and scalar
+consistency theorem. Behavior/realized regret, stochastic rewards, minimax
+rates, one-process convergence, and complete UCB-VI remain separate.
+
+## Closed Gap: Normalized Adaptive Cumulative Inverse-Sqrt Rate
+
+`RL-FINITE-HORIZON-ADAPTIVE-CUMULATIVE-INVERSE-SQRT-NORMALIZED-RATE`
+now specializes the explicit two-scale route to deterministic rewards with
+absolute value at most one. It fixes the zero-count budget to one and chooses
+`scale = 4*card(State)*horizon*sqrt(L)/sqrt(visitFloor)` from the existing
+logarithmic factor `L`.
+
+The chosen scale satisfies the parent square-cover condition with equality.
+The old half-margin threshold is dominated by, and its budget-cover threshold
+is exactly,
+`32*card(State)^2*horizon^2*L/visitFloor^2`. One strict inequality against the
+episode count therefore constructs the complete calibration and normalized
+count radius.
+
+The same measurable event, `ENNReal.ofReal delta` tail, and optimism statement
+now yield recommended-policy expected regret at most
+`2*horizon * min rounds
+  (8*card(State)*horizon*sqrt(L)/sqrt(visitFloor)*sqrt(rounds) /
+    sqrt(episodes*visitFloor/2))`.
+The Unit canary closes three rounds at `delta=1/2`, local delta `1/12`, and
+1000 episodes, so the evidence includes a nontrivial probability budget.
+
+This remains a finite-window sum over recommended policies, not behavior or
+realized online regret. Its downstream average route now exposes total
+exploratory episodes `episodes*rounds`; schedule-level consistency, stochastic
+rewards, minimax normalization, and complete UCB-VI remain separate.
+
+## Closed Gap: Explicit Adaptive Cumulative Inverse-Sqrt Calibration And Rate
+
+`RL-FINITE-HORIZON-ADAPTIVE-CUMULATIVE-INVERSE-SQRT-EXPLICIT-CALIBRATION-RATE`
+now removes the caller-supplied roundwise calibration from the capped
+path-support terminal. Let `L` be the local cumulative-count logarithmic factor
+and `C = 2*card(State)*horizon*(rewardBound+budget)`. The explicit episode
+threshold is the maximum of `2*L/visitFloor^2` and
+`2*C^2*L/(budget^2*visitFloor^2)`; the independent scale condition is
+`C^2*L <= scale^2*visitFloor`.
+
+The exact cumulative-radius square is `k*episodes*L/2`. The threshold therefore
+leaves at least half the predictable expected visits in every prefix, proves
+the budget cover by a strict square comparison, and combines with the scale
+condition to prove the inverse-square-root cover. The resulting constructor
+builds `CumulativeInverseSqrtPathCalibration` without any roundwise caller
+premise.
+
+Every envelope is at most its cap and at most a shifted inverse-square-root
+term. The finite sum is bounded by
+`min (rounds*budget)
+  (2*scale*sqrt(rounds)/sqrt(episodes*visitFloor/2))`; the complete endpoint
+multiplies this by `2*horizon` and preserves the parent measurable event,
+`delta` tail, and roundwise optimism. The Unit canary uses horizon one, 100
+episodes, one round, `delta=1`, zero rewards, `budget=1`, and `scale=3`.
+It checks satisfiability and endpoint composition, not a nontrivial tail bound;
+an additional `Fin 3` canary expands the shifted inverse-root indices exactly
+as `1,2,3` to guard the finite-sum boundary.
+
+This parent is not a tuned/minimax UCB-VI theorem. Its downstream normalized
+route now fixes reward bound, budget, and scale and discharges both scalar
+calibration premises. The remaining boundary is average recommendation error
+through total exploratory episodes, not exploratory behavior or realized
+regret.
+
+## Closed Gap: Adaptive Cumulative Inverse-Sqrt Path-Support Regret
+
+`RL-FINITE-HORIZON-ADAPTIVE-CUMULATIVE-INVERSE-SQRT-PATH-SUPPORT-REGRET`
+now compiles the deterministic consumer missing from the cumulative
+count-martingale route. Its usable radius is
+`TransitionCountRadius.cappedInverseSqrt`: it is `budget` at zero visits and
+`min budget (scale / sqrt(count))` at positive counts. The cap and statistical
+scale are independent nonnegative parameters, and the radius is antitone.
+
+Every initial or history-selected exploratory table inherits the same
+path-support expected-visit floor. These batch floors sum over each prefix;
+outside the existing global martingale event, subtracting the cumulative
+confidence radius yields a strict realized visit-count lower bound. Its
+positivity rules out the zero-count planner branch. A roundwise
+`CumulativeInverseSqrtPathCalibration` then discharges the complete finite-state
+transition-coordinate/value-envelope cover with separate cap and inverse-sqrt
+inequalities, and bounds the selected planner radius by
+`min budget (scale / sqrt(lowerMargin))`.
+
+The concrete terminal preserves the same measurable bad event and `delta`
+tail, proves optimism, and bounds recommended-policy expected regret by the
+finite sum of the round-indexed capped inverse-square-root envelopes. No
+additional failure budget is introduced. The calibration is nonvacuous: a
+Unit MDP with horizon one, 100 episodes, one round, `delta = 1`, zero rewards,
+`budget = 1`, and `scale = 3` instantiates the calibration and full terminal.
+
+Independent review rejected the original one-scale radius that reused
+`budget` as the inverse-sqrt numerator: already for the zero-reward Unit MDP,
+the zero-count value envelope forces an asymptotically incompatible scalar
+cover under the current two-sided tail constant. The downstream explicit-rate
+leaf now derives a closed-form sufficient two-scale calibration and simplifies
+the finite sum. This parent theorem does not identify
+exploratory behavior or realized regret, stochastic rewards, a minimax rate,
+or complete UCB-VI.
+
+## Closed Gap: Adaptive Cumulative Count Martingale Confidence
+
+`RL-FINITE-HORIZON-ADAPTIVE-CUMULATIVE-COUNT-MARTINGALE-CONFIDENCE-REGRET`
+now compiles the probability producer for the cumulative planner contract.
+Each adaptive batch visit or joint-transition count is centered by its
+measurable history-kernel integral. The exact history-selected iid batch law
+and real `condDistrib`/`condExpKernel.map` bridge produce conditional
+sub-Gaussian increments with the within-batch Bernoulli proxy `episodes/4` on
+`Filtration.piLE`.
+
+The cumulative two-sided tail uses the sum of those proxies, giving the
+square-root `rounds*episodes` scale rather than a linear sum of batch radii.
+One finite union over prefix rounds and count coordinates gives one measurable
+bad event with probability at most `delta`. Outside it, paired visit and
+transition deviations plus exact transition-joint factorization yield the
+positive realized-denominator empirical singleton bound; zero visits use the
+trivial probability-mass radius one.
+
+The downstream inverse-square-root path-support route now constructs the
+explicit `AdaptiveCumulativeCountMartingaleCover` and selected-radius envelope
+from one deterministic two-scale calibration. Under that cover and envelope,
+the module constructs `CoordinateConfidence`, the global cumulative contract,
+and generic and concrete exploratory-source optimism/recommended-policy
+expected-regret terminals. The downstream explicit-rate route closes the caller
+calibration and finite-sum simplification. The next gap is parameter tuning,
+not another probability-law wrapper. This
+route does not prove behavior or realized regret, stochastic-reward confidence,
+a minimax rate, or complete UCB-VI.
+
+## Closed Gap: Cumulative Count-Radius Contract Route
+
+`RL-FINITE-HORIZON-ADAPTIVE-CUMULATIVE-COUNT-RADIUS-CONTRACT-REGRET`
+now compiles the first adaptive planner/source in this branch that consumes all
+observed batches rather than only the latest one. Every transition coordinate
+is summed over the finite prefix; the summary is measurable, extending the
+prefix adds exactly the new batch, and cumulative visit counts are monotone.
+A `TransitionCountRadius` is nonnegative and antitone, so its radius decreases
+along each accumulated row. The cumulative empirical kernel drives the
+optimistic plan, its value is bounded by the zero-count-radius linear envelope,
+and its history-selected exploratory iid batch source is measurable.
+
+The route also reaches a global-event consumer. An
+`AdaptiveCumulativeCoordinateConfidenceContract` supplies one measurable bad
+event, its `ENNReal.ofReal delta` tail, and cumulative coordinate-confidence
+witnesses off the event. A selected-radius round envelope then yields optimism
+for every recommendation and expected recommendation regret at most
+`sum round, horizon * (2 * radiusEnvelope round)`. In the Unit horizon-one
+canary, prefix visit counts are `1` and `2`, while `linearDecay 4` radii are
+`3` and `2`.
+
+The statistical producer for this contract now compiles in the downstream
+cumulative count-martingale route. The remaining exact gap is deterministic
+calibration of a concrete antitone planner radius against its random-denominator
+coordinate radius and recursive value envelope, followed by a summable
+round-radius bound. Known recommendation regret is not behavior or realized
+regret; stochastic rewards, minimax rates, and complete UCB-VI remain separate.
+
+## Closed Gap: Fixed-Bonus Occupancy-Radius Envelope
+
+`RL-FINITE-HORIZON-ADAPTIVE-EMPIRICAL-OPTIMISTIC-OCCUPANCY-RADIUS-ENVELOPE`
+now compiles through an explicit global-event terminal. A probability
+`occupancySumRemaining` with constant stage cost `c` is exactly
+`remaining * c`. The concrete known-reward empirical plan has reward radius
+zero and fixed transition radius `transitionBonus`, so every selected radius is
+that bonus. Consequently,
+`adaptiveEmpiricalOptimisticOccupancyRadiusSum` is exactly
+`rounds * (horizon * (2 * transitionBonus))`.
+
+Composing this identity with the path-support episode-threshold endpoint keeps
+the same measurable bad event, delta tail, and roundwise optimism, and gives
+recommended expected regret at most
+`rounds * (horizon * (2 * rewardBound))`. The Bool horizon-two, two-round,
+bonus-one canary evaluates both the occupancy sum and terminal RHS to `8`.
+
+This closes the abstract RHS only for the current fixed-bonus plan. It is a
+linear envelope, not a statistical regret rate. The downstream cumulative
+count-radius contract route now replaces latest-batch planning and accepts a
+decreasing envelope, and its adaptive cumulative concentration producer now
+compiles. A concrete deterministic count-radius cover and summable envelope
+are still open. Stochastic rewards, behavior or realized regret, minimax
+rates, and complete UCB-VI remain separate.
+
+## Closed Gap: Path-Support Episode-Threshold Calibration
+
+`RL-FINITE-HORIZON-EXPLORATORY-PATH-SUPPORT-EPISODE-THRESHOLD-CALIBRATION`
+now compiles through the adaptive global terminal. Define
+`q = 4 * card(State) * horizon + 1`. The explicit threshold
+`q^2 * log(2/localCoordinateDelta) / (2*visitFloor^2)` uses the exact
+simultaneous coordinate share at `delta/rounds`. If the Real episode count is
+strictly above it, the exact sub-Gaussian radius-square identity gives
+`countRadius < episodes*visitFloor/q`.
+
+Because `q >= 1`, this proves the strict count margin. The stronger scaled
+inequality also gives
+`4*card(State)*horizon*countRadius < episodes*visitFloor-countRadius`, which
+proves the previous half contraction after division by the positive
+denominator. The route constructs the positive reward-bound transition cover,
+`SourceCalibration`, and the unchanged global confidence, optimism, and
+recommended expected-regret endpoint from one episode-threshold premise.
+
+This is a sufficient fixed-batch threshold. Its downstream fixed-bonus
+occupancy sum now has an exact linear envelope, but there is still no
+accumulated statistic or shrinking statistical rate. It does not model
+stochastic rewards, prove arbitrary-MDP support, identify recommendation regret
+with behavior/realized regret, or complete UCB-VI.
+
+## Closed Gap: Explicit Path-Support Count And Bonus Calibration
+
+`RL-FINITE-HORIZON-EXPLORATORY-PATH-SUPPORT-EXPLICIT-COUNT-BONUS-CALIBRATION`
+now compiles through the adaptive global terminal. A common state-action visit
+floor below every recursive path floor times the exploratory action floor
+gives every initial and successor policy an expected-count floor. The strict
+scalar inequality `countRadius < episodes * visitFloor` makes the denominator
+positive and bounds every transition-coordinate radius by
+`2*countRadius/(episodes*visitFloor-countRadius)`.
+
+The finite next-state sum is then bounded by `card(State)` times that uniform
+radius and the linear remaining-horizon value envelope. Under
+`card(State)*uniformRadius*horizon <= 1/2`, choosing
+`transitionBonus = rewardBound` closes `SourceTransitionBonusCover`, constructs
+`SourceCalibration`, and recovers the existing global-delta confidence,
+optimism, and recommended expected-regret sum theorem.
+
+This removes the prior caller `ExploratoryStateCountMargin` and
+`SourceTransitionBonusCover` premises under explicit scalar conditions. The
+downstream episode-threshold route now discharges both scalar conditions.
+Occupancy-radius rates, accumulated samples, stochastic rewards, behavior/
+realized regret, and complete UCB-VI remain open.
+
+## Closed Gap: Explicit Path-Support State Reachability
+
+`RL-FINITE-HORIZON-EXPLORATORY-PATH-SUPPORT-REACHABILITY-CALIBRATION` now
+compiles through the existing global terminal. `ExploratoryPathSupport` records
+an initial singleton floor and, for every positive-stage target state, one
+predecessor state/action and a true-transition singleton floor. The recursive
+`exploratoryPathStateLower` multiplies those floors by the uniform exploratory
+action floor.
+
+Stage zero is identified with the initial marginal using `Measure.fst_compProd`.
+At successor stages, the selected transition event is contained in the target
+state event; the exact visit and transition-joint factorizations then propagate
+the lower bound. Because the proof is independent of the deterministic table,
+it supplies `SourceStateReachability` for the initial and every adaptive
+successor behavior and directly constructs `SourceCalibration`.
+
+This closes state reachability under an explicit path-support certificate. The
+downstream explicit count/bonus route now discharges the strict margin and a
+nonzero cover from a common visit floor plus a half-contraction, and the further
+episode-threshold route now discharges those scalar conditions. Arbitrary-MDP
+support, all-predecessor sums, accumulated statistics, stochastic rewards,
+behavior/realized regret, an explicit final rate, and complete UCB-VI remain
+open.
+
+## Closed Gap: Exploratory State-Reachability Calibration
+
+`RL-FINITE-HORIZON-EXPLORATORY-STATE-REACHABILITY-CALIBRATION` now compiles
+through a direct terminal theorem. The existing ENNReal uniform-exploration
+floor is converted to the Real action-kernel singleton surface, multiplied by
+the exact generated stage-state mass, and then by episode count. A strict bound
+below this product supplies every `EmpiricalOptimisticCalibration.margin`.
+
+`SourceStateReachability` quantifies the state-only lower envelope over the
+initial and every in-horizon successor behavior policy. The unchanged
+transition-radius/value-envelope requirement is named by
+`SourceTransitionBonusCover`. Together they construct `SourceCalibration` and
+directly recover the prior global-delta confidence, optimism, and recommended
+expected-regret sum theorem.
+
+This removes separately assumed state-action visit margins; it does not derive
+the state reachability envelope, strict episode-count rate, or transition bonus
+cover. Accumulated statistics, stochastic rewards, exploratory behavior or
+realized regret, an explicit rate, and complete UCB-VI remain open.
+
+## Closed Gap: Generated Stage-Visit Factorization
+
+`RL-FINITE-HORIZON-STAGE-VISIT-FACTORIZATION` now compiles. For every valid
+stage, state, and action under a fixed generated Markov-policy trajectory, the
+state/action visit mass is exactly the stage-state event mass times the policy
+action-kernel singleton mass. The proof follows the remaining-trace recursion,
+handles the generated head directly, transports successor coordinates through
+`Kernel.compProd_apply`, and then integrates the identity through the initial
+state law. A named Real `stageStateProbability` exposes the public factorization.
+
+This closes only a population-law identity. It neither proves that a state is
+reachable nor that an action has positive mass. The next calibration leaf can
+combine an explicit state-mass lower bound with the already compiled
+exploratory action floor. Automatic reachability, bonus coverage, an explicit
+rate, behavior or realized regret, and complete UCB-VI remain open.
+
+## Closed Gap: Adaptive Exploratory Empirical Optimistic Confidence
+
+`RL-FINITE-HORIZON-ADAPTIVE-EXPLORATORY-EMPIRICAL-OPTIMISTIC-ALL-COORDINATE-CONFIDENCE-RECOMMENDED-REGRET`
+now compiles. Every latest optimistic table is mixed with uniform exploration;
+the resulting action PMF gives each action at least
+`explorationRate / card Action` mass and indexes the exact iid batch kernel.
+Transition-count transport and the linear known-reward value envelope then
+feed `EmpiricalOptimisticCalibration` and `CoordinateConfidence`.
+
+Off one global count event, every exploratory batch recommends an optimistic
+policy. The finite sum of those recommended policies' expected regrets is
+bounded by the selected-radius occupancy sum. Behavior exploration and
+recommendation regret are distinct surfaces.
+
+This closes exploratory support and the calibrated recommendation-level
+confidence/optimism route. State reachability and bonus coverage remain
+explicit calibration assumptions. It does not prove an explicit rate,
+accumulated statistics, stochastic reward confidence, behavior-policy or
+realized online regret, or complete UCB-VI.
+
+## Closed Gap: Adaptive Empirical-Transition Optimistic Source
+
+`RL-FINITE-HORIZON-ADAPTIVE-EMPIRICAL-OPTIMISTIC-SOURCE-COUNT-CONFIDENCE`
+now compiles. Every raw episode batch is measurably compressed to its complete
+finite transition-count summary. Each count row is normalized to an empirical
+PMF, with an explicit fallback Dirac law at zero visits; the summary then
+defines a known-reward empirical transition plan and deterministic optimistic
+policy table.
+
+The summary space is countable with measurable singletons, so the arbitrary
+finite optimistic-table computation is measurable without treating a
+`MarkovPolicy` structure itself as a measurable value. Mathlib
+`Kernel.ofFunOfCountable` turns table-indexed generated iid batch laws into a
+Markov kernel, and `Kernel.comap` along the latest-batch selector produces the
+exact history-dependent source. A finite decomposition over policy tables
+proves selected count-event measurability. The parent Ionescu--Tulcea route
+then supplies the selected next-batch conditional law and global-delta count
+confidence without caller law or measurability premises.
+
+This closes the concrete measurable source boundary. A downstream exploratory
+variant now supplies action support and compiles all-coordinate
+confidence/optimism plus recommended-policy expected regret under explicit
+state-reachability and bonus-cover calibration. Rewards remain known and only
+the latest batch is used. Accumulated-history semantics, automatic calibration,
+an explicit bonus rate, realized regret, and complete UCB-VI remain open.
+
+## Closed Gap: Adaptive Episode-Batch Count Confidence
+
+`RL-FINITE-HORIZON-ADAPTIVE-EPISODE-BATCH-COUNT-CONFIDENCE` now compiles. It
+replaces the offline finite product by a Mathlib `Kernel.trajMeasure`: the
+initial coordinate has one policy's generated iid batch law, and every
+successor kernel is exactly the generated iid batch law of a policy selected
+from the complete preceding batch prefix. The prefix/next-batch law is an exact
+`compProd`, and under the explicit standard-Borel batch contract Mathlib's
+`condDistrib_trajMeasure` identifies the regular conditional law.
+
+The generic adapted-event layer integrates uniform history-fiber bounds with
+`Measure.compProd_apply` and `lintegral_mono`, then uses equal shares
+`delta / rounds` for one finite global event. Its RL consumer rewrites every
+history fiber to the compiled selected-policy simultaneous-count tail. Outside
+the event, all visit and transition count coordinates satisfy their strict
+deviation bounds relative to the policy actually selected at that round. No
+batch independence is assumed.
+
+This closes the supplied-source adaptive law/count-confidence transport. The
+concrete known-reward/latest-batch empirical-transition optimistic producer now
+compiles downstream. Adaptive reward consistency, calibrated full model
+confidence, accumulated-history updates, cumulative bonus control, and
+realized regret remain open.
+
+## Closed Gap: IID Multibatch Cumulative Confidence Regret
+
+`RL-FINITE-HORIZON-IID-MULTIBATCH-CUMULATIVE-CONFIDENCE-REGRET` now compiles.
+It places finitely many copies of the fixed-policy iid episode-batch law under
+one Mathlib `Measure.pi`. Evaluation is measure preserving, so every pulled-back
+round event has exactly the compiled single-batch marginal probability at local
+budget `delta / rounds`; the finite equal-share union therefore retains global
+failure mass at most `delta`.
+
+Generated reward consistency is pulled back almost everywhere through every
+product coordinate. Off the union, the route constructs a confidence witness
+for every batch-specific empirical model, proves every model optimistic, and
+sums the corresponding optimistic-policy expected-regret inequalities with
+`Finset.sum_le_sum`.
+
+This closes an independent offline multibatch theorem. The data-generating
+policy is fixed even though the derived optimistic policy varies by batch. The
+finite sum is a sum of one-episode expected regrets; it is not realized online
+cumulative regret. Adaptive episode histories, cumulative bonus rates, and
+complete UCB-VI remain open.
+
+## Closed Gap: IID All-Coordinate Finite-Batch Confidence
+
+`RL-FINITE-HORIZON-IID-ALL-COORDINATE-FINITE-BATCH-CONFIDENCE` now compiles.
+The canonical generated empirical model uses reward radius zero and one fixed
+transition budget. Its transition coordinate radius is
+`2 * countRadius / (expectedCount - countRadius)`: the all-coordinate strict
+margin makes the denominator positive, and the simultaneous good event makes
+the realized visit count strictly larger, so the random-denominator transition
+bound transports in the required direction.
+
+Exact generated rewards and the probability empirical kernel give the explicit
+noncircular upper-value envelope
+`remaining * (rewardBound + transitionBudget)`. Given a deterministic finite
+coordinate-radius cover, the route constructs every field of
+`FiniteBatchModel.Confidence`; mapped iid batches have a witness a.e. outside
+the unchanged global-delta count event. Each witness then supplies global
+optimism and the existing selected-radius one-episode expected-regret bound.
+
+This closes fixed-policy finite-batch confidence, not adaptive multi-episode
+UCB-VI. The all-coordinate occupancy margin and deterministic cover are real
+contracts, not consequences of partial eligibility. Stochastic rewards,
+adaptive policy updates, cumulative bonus summation, and cumulative regret
+remain downstream.
+
+## Explicit-Policy Canonical UCB Trajectory Route
+
+`UCB-REAL-STATIONARY-CANONICAL-KERNEL-TRAJECTORY-EXPLICIT-POLICY-EXPECTED-AVERAGE-CONSISTENCY`
+now compiles. The canonical successor-action conditional law is identified
+with `Kernel.deterministic (realHistoryNextArm hK (c * sigma2) n)` almost
+everywhere on the relevant finite-history marginal. This is obtained from
+Mathlib `condDistrib_comp_self` on the canonical arm stream and transported to
+the fresh `Kernel.trajMeasure` process through the complete trajectory
+`IdentDistrib` witness.
+
+The route also transports the measurable policy graph, producing one
+full-measure event on which the initial action is `initializationArm hK 0` and
+every successor action follows `realHistoryNextArm` on its actual finite pair
+history. Its terminal theorem pairs that event with the existing `c=4`
+armwise-bounded expected-average `Tendsto` result on the same process. The
+kernel equality is not global on null histories. Identification of the
+adaptive next-unused reward coordinate with the selected stationary law
+`nu action` remains a separate route.
+
+## Canonical-Kernel Recursive UCB Trajectory Route
+
+`UCB-REAL-STATIONARY-CANONICAL-KERNEL-TRAJECTORY-ARMWISE-BOUNDED-EXPECTED-AVERAGE-CONSISTENCY`
+now compiles. It packages the canonical arm-stream initial/successor action
+`condDistrib` kernels as a `Thompson.HistoryAlgorithm` and the matching reward
+kernels as a `Thompson.HistoryEnvironment`. Mathlib-backed
+`Thompson.canonicalHistoryTrajectoryMeasure` then uses `Kernel.trajMeasure` to
+generate a fresh pair trajectory, rather than mapping a pre-existing stream
+sample through a source function.
+
+The canonical split-source theorem supplies all four exact
+`RealStationaryUCBSequence` fields for the generated coordinate process. A
+finite-arm wrapper internalizes the Markov instance, and armwise-bounded laws
+yield the same nonnegative logarithmic expected-regret envelope and vanishing
+`n+1` average with no caller sample space, traces, or law bundle. This closes
+the non-reparameterized canonical-kernel generator. Its explicit
+`realHistoryNextArm` action-policy consumer now compiles downstream. The
+selected `nu` reward-kernel identification and literal LML import remain.
+
+## Measure-Preserving External UCB Source Route
+
+`UCB-REAL-STATIONARY-MEASURE-PRESERVING-SOURCE-ARMWISE-BOUNDED-EXPECTED-AVERAGE-CONSISTENCY`
+now compiles. Its generic producer derives the complete
+`RealStationaryUCBSequence` bundle by composing canonical arm-stream action and
+reward traces with a measurable measure-preserving source. Instead of
+rewriting a proof-dependent finite-measure instance inside `condDistrib_map`,
+the proof transports the conditioning and joint pair pushforwards, applies
+`compProd_map_condDistrib`, and uses conditional-distribution uniqueness.
+
+The concrete terminal specializes the source to `Prod.fst` on
+`armStreamMeasure nu` times an arbitrary auxiliary probability measure, then
+reuses the armwise-bounded external pointwise and `Tendsto` consumers. This
+closes a concrete external product-space producer with no caller split laws,
+action/reward traces, means, MGFs, trajectory law, or common support interval.
+It is still a canonical process under a measure-preserving reparameterization;
+the downstream canonical-kernel trajectory now provides an independent
+recursive producer. Independent review found no P0-P2; its
+two metadata P3 findings were integrated, and the full project gate passed.
+
+## External Stationary Armwise-Bounded UCB Consistency Route
+
+`UCB-REAL-STATIONARY-ARMWISE-BOUNDED-FINITE-ARM-LAWS-EXPECTED-AVERAGE-CONSISTENCY`
+now compiles. The generic support theorem uses the complete trajectory law from
+`RealStationaryUCBSequence`, projects it to an action-trace law, and transports
+the measurable regret integral exactly. Its practical terminal combines that
+transport with the armwise-bounded canonical route to prove a fixed external
+process has a logarithmic expected-regret envelope and vanishing `n+1` average.
+
+This closes the asymptotic consumer side of the local LML-compatible field
+bundle. Measure-preserving and fresh canonical-kernel trajectory producers now
+construct those fields without direct split-law premises, but the pinned LML
+declaration is not imported. Explicit deterministic-policy/stationary-reward
+kernel identification or a compatible toolchain import remains, while concentration,
+split-to-joint assembly, trajectory uniqueness, and asymptotic transport are
+already compiled.
+Two read-only review passes found no P0-P2 issue, including after the public
+statement indexability refactor; their metadata-only P3 findings were
+integrated into the obligation, card, generated indexes, trials, and review
+report.
+
+## Armwise-Bounded Real Arm-Law One-Policy Route
+
+`UCB-ARM-STREAM-ARMWISE-BOUNDED-FINITE-ARM-LAWS-ONE-POLICY-EXPECTED-AVERAGE-CONSISTENCY`
+now compiles. It derives a centered MGF separately under every `armLaw arm`
+using `Set.Icc (lo arm) (hi arm)` and that law's own identity integral. The
+existing direct consumer preserves this armwise proxy family until its padded
+finite maximum is chosen as the shared UCB scale.
+
+This closes the arm-dependent bounded source-law gap for fixed-policy,
+fixed-measure expected consistency. There is no common interval, caller mean,
+MGF, proxy ceiling/positivity, pointwise nondegeneracy, default action, horizon,
+delta, measurability, or integrability premise. External process production
+and pathwise/probability/almost-sure/Hannan/minimax routes remain separate.
+Independent read-only review found no P0-P2 issue; its metadata-only P3 was
+integrated into the obligation, indexes, trial ledger, and review evidence.
+
+## Bounded Real Arm-Law One-Policy Route
+
+`UCB-ARM-STREAM-BOUNDED-FINITE-ARM-LAWS-ONE-POLICY-EXPECTED-AVERAGE-CONSISTENCY`
+now compiles. `Kernel.ofFunOfCountable` packages `Fin K -> Measure Real`, and
+the pointwise probability witnesses supply `IsMarkovKernel`. A supporting
+direct-sub-Gaussian consumer raises armwise proxies to the positive padded
+finite maximum; the bounded terminal derives each genuine proxy and centered
+MGF from common a.s. interval support and the kernel's own identity integral.
+
+This closes the common-bounded practical source-law gap for fixed-policy,
+fixed-measure expected consistency. No caller mean, MGF, proxy ceiling,
+positivity, default action, horizon, delta, measurability, integrability, or
+`lo<hi` remains. Zero-width support is valid, while `lo>hi` makes the support
+contract inconsistent with the probability laws. Arm-dependent bounds now
+compile downstream; external process-law production and
+pathwise/probability/almost-sure/Hannan/minimax routes remain separate.
+
+## Canonical Arm-Stream One-Policy Consistency Route
+
+`UCB-ARM-STREAM-ONE-POLICY-EXPECTED-AVERAGE-CONSISTENCY` now compiles. Its
+terminal theorem fixes one `armStreamAction` and one `armStreamMeasure` across
+all horizons and proves the exact expected Real pseudo-regret divided by
+`n+1` tends to zero. The proof specializes the exact LML-shaped finite-horizon
+bound at `c=4`, controls its finite inverse-power tail by a convergent cubic
+NNReal p-series, obtains a fixed nonnegative finite-arm coefficient, and uses
+the existing `O(log(n+1))`, `log=o(n+1)`, and quotient-limit APIs.
+
+This closes the previously open shared-measure, one-policy expected-consistency
+gap for the canonical Real arm-stream process. The downstream practical route
+now constructs its kernel and centered MGFs from common-bounded Real arm laws;
+a non-reparameterized external `RealStationaryUCBSequence` producer remains separate. It
+is not pathwise, in probability, almost sure/Hannan, minimax, or a literal LML
+import.
+
+## Armwise-Bounded Sampled UCB Explicit Route
+
+`UCB-ARMWISE-BOUNDED-FINITE-ARM-LAWS-SAMPLED-SUCCESSOR-EXPLICIT-EXPECTED-PSEUDOREGRET`
+now compiles. Its terminal gives both nonnegativity and the exact fixed-model
+coefficient times `1 + log(T+1)` for the named sampled expected pseudo-regret.
+It accepts per-arm probability laws, armwise real bounds, a.e. measurable
+rewards, a.s. armwise support, exact means, a default arm, and
+`2*K <= T+1`.
+
+The direct practical producer derives `0<T` from `model.hK` and the horizon
+condition, reconstructs the canonical pair/kernel surfaces, and uses the
+positive padded finite-arm proxy. The armwise consumer extracts Hoeffding MGFs
+from the existing centered-law producer. Its bounded-MGF theorem accepts
+zero-width support without `lo arm < hi arm`; padding separately gives the UCB
+proxy strict positivity, while inverted intervals make the support premise
+inconsistent. Thus no separate `hT`, direct MGF, law, positivity, or
+integrability premise leaks to callers. This closes the practical pointwise
+envelope for the current
+horizon-indexed sampled family; the separate canonical arm-stream theorem now
+closes the one-policy/shared-measure expected-consistency boundary.
+
+## Armwise-Bounded Sampled UCB Consistency Route
+
+`UCB-ARMWISE-BOUNDED-FINITE-ARM-LAWS-SAMPLED-SUCCESSOR-EXPECTED-AVERAGE-CONSISTENCY`
+now compiles. Its public terminal accepts per-arm probability laws, armwise
+real intervals, a.e. measurable Rat-to-Real rewards, per-arm a.s. support,
+exact integrals equal to `model.mean`, and a default arm. It extracts direct
+MGF witnesses from the existing armwise bounded centered-kernel producer,
+then reuses the exact sampled Big-O, little-o, and Tendsto parent.
+
+Unlike the older fixed-horizon armwise theorem, this route has no pointwise
+`lo arm < hi arm`: the bounded-MGF source accepts zero-width support, and the
+parent pads the possibly zero finite maximum before UCB positivity is required.
+Inverted intervals make the probability-support premise inconsistent. This closes the armwise
+bounded stationary source-law boundary for horizon-indexed expected-average
+consistency. It does not prove one-policy anytime, pathwise/probability/a.s.,
+minimax, or complete-UCB consistency.
+
+## Common-Bounded Sampled UCB Consistency Route
+
+`UCB-BOUNDED-FINITE-ARM-LAWS-SAMPLED-SUCCESSOR-EXPECTED-AVERAGE-CONSISTENCY`
+now compiles. Its public terminal accepts per-arm probability laws, a common
+real interval, a.e. measurable Rat-to-Real rewards, a.s. interval support,
+exact integrals equal to `model.mean`, and a default arm. The bounded centered
+Hoeffding theorem supplies direct MGF witnesses internally, after which the
+compiled practical parent proves the exact sampled expected family is
+`O(log(T+1))`, `o(T+1)`, and average-consistent.
+
+There is intentionally no `lo < hi` contract: the source proxy may be zero,
+while the parent uses a finite-arm maximum padded by one for UCB positivity.
+This closes the common-bounded source-law boundary only. It does not establish
+a single anytime policy, pathwise/probability/almost-sure convergence,
+minimax regret, or complete UCB. The arm-dependent bounded-interval consumer
+now compiles downstream.
+
+## Practical Finite-Arm UCB Consistency Route
+
+`UCB-FINITE-ARM-SUBGAUSSIAN-SAMPLED-SUCCESSOR-EXPECTED-AVERAGE-CONSISTENCY`
+now compiles the stationary finite-arm consumer of the canonical sampled-pair
+asymptotic route. Its public theorem assumes only per-arm probability laws,
+exact integrals equal to `model.mean`, direct centered `HasSubgaussianMGF`
+witnesses, armwise NNReal proxies, and a default arm.
+
+The initial pair law is the measurable pushforward of the default arm reward
+law, successors use `contextIndependentOfActionLaws`, and the existing
+centered-law constructor derives integrability and mean zero. The padded
+finite-arm maximum proves both a uniform cross-horizon variance ceiling and
+strict positivity, including all-zero genuine proxy families. The exact
+sampled `(trajectory (t+1)).1` expected regret is `O(log(T+1))`, `o(T+1)`,
+and its named average tends to zero.
+
+Focused, root, and external `Tests.Basic` builds pass; seven declaration
+checks, a full terminal application, an empty placeholder scan, and
+baseline-only public axiom audit cover the new surface. The remaining boundary
+is not pair-law or variance transport: it is deriving these direct MGF
+contracts from practical bounded laws, or separately developing a one-policy
+anytime/almost-sure route. No such stronger conclusion is claimed here.
+
+## Latest Conditional-Law Route
+
+`UCB-CANONICAL-ACTION-REWARD-TRAJMEASURE-SAMPLED-SUCCESSOR-EXPECTED-AVERAGE-CONSISTENCY`
+now compiles the fixed-model asymptotic consumer of the sampled-successor Real
+theorem. At horizon `T`, it uses the exact canonical pair policy and measure
+with `delta_T=1/(T+1)`, names the resulting Real expected pseudo-regret, proves
+it is `O(log(T+1))` and `o(T+1)`, and proves expected pseudo-regret divided by
+`T+1` tends to zero.
+
+The scheduled algebra keeps the exact positive-gap filter and derives the
+fixed coefficient `128*sigma2/gap + 16 + 3*gap` from the parent 32/4/2 budget
+and `T*delta_T<=1`. The only strengthened cross-horizon contract is a uniform
+variance ceiling for every generated context and arm. No caller integrability,
+selected law, reward range, or trajectory-law premise is introduced. This is
+not one-policy anytime control, pathwise/probability/almost-sure consistency,
+minimax regret, or the complete UCB theorem.
+
+`UCB-CANONICAL-ACTION-REWARD-TRAJMEASURE-SAMPLED-SUCCESSOR-REAL-TEXTBOOK-GAP-SUM-PSEUDOREGRET`
+now compiles the canonical pair theorem directly for sampled successor actions
+`(trajectory (t + 1)).1`. The supporting declaration proves that this complete
+shifted sampled action trace agrees a.e. with the reward-generated UCB regret
+action by combining the canonical per-time policy law with `ae_all_iff` and
+`funext`. `integral_congr_ae` then transports the existing Real endpoint.
+
+The equality is only a.e. under the same pair measure, and pair coordinate
+zero is intentionally outside the `T` charged pseudo-regret rounds. No public
+assumption changes: variance remains restricted to `i < T - 1`, and there is
+no caller integrability, range, selected-law, all-arm positivity, all-time
+variance, event-measurability, or `delta <= 1` premise. Its fixed-model
+expected-average asymptotic consumer now compiles above; anytime confidence
+and a complete UCB theorem remain open.
+
+`UCB-CANONICAL-ACTION-REWARD-TRAJMEASURE-GENERATED-REAL-TEXTBOOK-GAP-SUM-PSEUDOREGRET`
+now compiles the direct Real/Bochner expectation endpoint on the same
+canonical action/reward pair `trajMeasure`. It derives finite-horizon
+integrability from measurable reward coordinates and bounded pull counts,
+consumes the pair ENNReal theorem, proves the finite RHS is not infinity, and
+normalizes it to the explicit positive-gap Real sum. No `ENNReal.toReal`
+appears in the public statement.
+
+The regularity surface is unchanged: probability initial pair law, measurable
+context/mean, `CenteredRewardKernelLaw`, stationary model means, positive
+`T`, `sigma2`, and `delta`, and variance only for `i < T - 1`. No caller
+integrability, reward/mean range, selected-law, all-arm positivity, all-time
+variance, event measurability, or `delta <= 1` premise is added. Its direct
+sampled-successor and fixed-model expected-average consumers now compile
+above; anytime confidence and a complete UCB result remain open routes.
+
+`UCB-CANONICAL-ACTION-REWARD-TRAJMEASURE-GENERATED-TEXTBOOK-GAP-SUM-PSEUDOREGRET`
+now compiles the textbook positive-gap ENNReal pseudo-regret endpoint for the
+concrete generated finite-history UCB policy on the canonical action/reward
+pair `trajMeasure`. It consumes the exact explicit-threshold theorem below and
+the existing finite-arm algebra, with no new probability or conditional-law
+argument.
+
+For each strictly positive gap `g`, the threshold contribution is bounded by
+
+```text
+32 * sigma2 * logBudget / g + 4 * logBudget + 2 * g.
+```
+
+The conclusion filters zero-gap arms and preserves the confidence-failure term
+`ofReal(g) * (T * ofReal(delta))` exactly. It retains variance only for
+`i < T - 1` and the explicit `CenteredRewardKernelLaw`, including its bundled
+pointwise integrability/MGF fields. No selected-reward trajectory law,
+raw/mean ranges, all-arm positivity, separate ambient integrability,
+`delta <= 1`, or event-measurability premise is added. The result is still
+fixed-horizon and ENNReal-valued; its direct pair-surface Real expectation
+consumer now compiles above, while sampled-coordinate form, asymptotic
+normalization, and anytime UCB remain separate.
+
+`UCB-CANONICAL-ACTION-REWARD-TRAJMEASURE-GENERATED-EXPLICIT-THRESHOLD-PSEUDOREGRET`
+now compiles the finite-arm ENNReal pseudo-regret endpoint for the concrete
+generated finite-history UCB policy on the canonical action/reward pair
+`trajMeasure`. It shifts generated successor actions `1, ..., T` onto the
+standard pseudo-regret coordinates `0, ..., T - 1`, then applies the generic
+gap-weighted count assembly.
+
+Only arms with strictly positive model gap request the preceding canonical
+expected-count theorem. `FiniteBanditModel.gap_nonneg` and the generic consumer
+remove zero-gap terms, so there is no exposed all-arm positivity assumption.
+The exact RHS is the finite sum of
+
+```text
+ofReal(gap) * explicitThreshold(gap)
+  + ofReal(gap) * (T * ofReal(delta)).
+```
+
+The theorem keeps `CenteredRewardKernelLaw`, stationary model means, positive
+`T`, sigma2, and delta, and variance only for `i < T - 1`. It adds no caller
+selected-reward law, score source, reward/mean ranges, separate ambient/process
+integrability premise, event measurability, all-time variance, or
+`delta <= 1`; the centered kernel law itself still bundles pointwise
+selected-law integrability and sub-Gaussian MGF fields. This is a fixed-horizon
+explicit-threshold ENNReal result; its textbook reciprocal-gap consumer now
+compiles above. Real expectation, anytime confidence, and asymptotic regret
+remain separate.
+
+`UCB-CANONICAL-ACTION-REWARD-TRAJMEASURE-GENERATED-EXPLICIT-THRESHOLD-EXPECTED-PULLCOUNT`
+now compiles the first concrete generated-UCB expected-count endpoint on the
+canonical action/reward `trajMeasure`. For any chosen arm with positive
+stationary gap, the supporting theorem bounds the event that its successor
+pull count at `T + 1` exceeds the explicit one-more-than-ceiling threshold by
+`ENNReal.ofReal delta`. The endpoint integrates that count as an ENNReal lower
+integral and obtains
+
+```text
+explicitThreshold + T * ENNReal.ofReal delta.
+```
+
+The prior canonical generated large-gap theorem is the only probabilistic
+input. Existing deterministic threshold inversion supplies the explicit
+integer threshold; pair reward-coordinate measurability is automatic, and the
+generic consumer derives generated-action/count measurability and the count
+bound by `T`. The theorem adds only a positive chosen-arm gap to the preceding
+contracts. It has no caller source, selected-reward law, raw/mean ranges,
+integrability, all-time variance, or `delta <= 1` premise. This one-arm result
+is now consumed by the finite-arm pseudo-regret endpoint above; Real
+expectation and anytime confidence remain separate.
+
+`UCB-CANONICAL-ACTION-REWARD-TRAJMEASURE-GENERATED-RANDOM-WIDTH-LARGE-GAP-EVENT`
+now closes the concrete generated finite-history UCB score event on the
+canonical Mathlib action/reward `trajMeasure`. The public theorem constructs
+the policy/state and initialized score-max source internally and bounds its
+strict random-width large-gap event by `ENNReal.ofReal delta`.
+
+The concentration theorem observes the sampled pair action, whereas the source
+uses the reward-history generated action. The proof keeps this distinction:
+the canonical successor action law gives only a.e. equality, `ae_all_iff`
+assembles every successor time, and shifted-action extensionality transports
+pull counts, reward sums, empirical means, and radii from the generated bad
+event to the sampled bad event. `K > 0` supplies `Nonempty (Fin K)` locally.
+Only `i < T - 1` selected-history variance is required, with no caller source,
+selected-reward law, raw/mean ranges, all-time variance, event measurability,
+or `delta <= 1`. Its positive-gap explicit-threshold expected-count consumer
+now compiles above; anytime confidence, all-arm summation, and regret remain
+separate.
+
+`UCB-CANONICAL-ACTION-REWARD-TRAJMEASURE-RANDOM-WIDTH-LARGE-GAP-EVENT` now
+compiles the first UCB score consumer directly on the canonical Mathlib
+Ionescu--Tulcea action/reward trajectory. It takes an initialized score-max
+source over the sampled action/reward coordinates and bounds its strict
+large-gap event by `ENNReal.ofReal delta`.
+
+The proof consumes the canonical named finite-arm/time empirical-mean event.
+Outside that event, the existing deterministic score algebra gives
+`meanGap <= 2 * realizedRadius`, contradicting the source event. The measure,
+sampled coordinates, confidence radius, and horizon family remain unchanged.
+Only `i < T - 1` variance is required; no caller selected-reward law, raw/mean
+range, all-time variance, or event measurability is added. The current score
+source fixes `Action : Type`. Concrete generated-UCB source construction,
+a.e. sampled/generated event transport, expected-count, explicit
+pseudo-regret, and textbook gap-sum consumers now compile downstream;
+uniform-time confidence, sampled-coordinate presentation, Real expectation,
+and asymptotic normalization remain separate.
+
+## Latest Route: One-Policy Power-Of-Two Forcing
+
+The route now compiles through
+`OFUL-SCHEDULED-GENERATED-TRAJECTORY-POWER-OF-TWO-FORCED-HIGH-PROBABILITY-AVERAGE-PSEUDOREGRET-CONSISTENCY`.
+One horizon-independent policy has an exact initial/forced/nonforced
+pseudo-regret decomposition, a same-measure all-time confidence tail, and a
+scalar all-horizon violation budget. The exact threshold includes
+`(Nat.log2 horizon + 1) * (2 * S * Real.sqrt L2)` and has fixed-model growth
+`O(sqrt (horizon + 1) * log (horizon + 1))`, without another union bound or a
+horizon-indexed policy family. It is now also compiled as `o(horizon + 1)`;
+the exact average budget tends to zero and bounds complete pseudo-regret per
+round outside the unchanged violation event. The compiled endpoint now applies
+a pathwise squeeze there, names the exact negated-`Tendsto` failure set, includes
+it in the parent event, and bounds its outer measure by the same fixed `delta`
+under the same policy and canonical measure.
+
+This closes the selected fixed-confidence power-of-two theorem route. It is
+not convergence in probability as the horizon grows, probability-one or
+almost-sure/Hannan consistency, or an expected-regret theorem. The subsequent
+exact sparse EXP3 route now also compiles: fixed parameters eventually make the
+four named schedule inequalities automatic, select the refined
+`16 * gamma_T * T` best-arm threshold, and preserve the parent outer-measure
+tail surfaces without another union bound or policy change. Its horizons still
+index distinct internally tuned generated measures, so it is not an anytime
+single-policy result. A new unfinished route remains to be selected.
+
 This audit answers a blunt question: how far is ABRL from fully reproducing the
 classic bandit textbook proof weapons and the Mathlib-level foundations they
 depend on?
 
-Short answer: ABRL is still early.  The harness, memory indexes, source cards,
-proof weapons, a dependency-light finite bookkeeping layer, the first
-Mathlib-backed deterministic `Finset.range` wrapper layer, and the first
-deterministic regret decomposition consumer exist.  The Mathlib-heavy
-measure/probability/concentration/optimization layers are mostly retrieval
-cards and proof obligations, not compiled local theorem ports.
+Short answer: ABRL remains incomplete at the full multi-algorithm roadmap
+level, but the local OFUL route is no longer only deterministic bookkeeping.
+It now contains compiled probability, conditional-expectation, concentration,
+generated-trajectory, all-time confidence, explicit regret, stopping-time,
+and power-of-two forced-policy consumers. Broad UCB/Thompson/EXP3/Tsallis/RL
+completion claims remain out of scope until their own terminal routes compile.
 
 ## Current Evidence
 
@@ -47,8 +4348,11 @@ Current local evidence:
 | compiled local EXP3 sampled-history-score recursive-trajectory leaves | 1 | `Exp3.sampledHistoryScore` recursively adds each observed chosen-action Real loss divided by the exact preceding exploration-mixed probability, proves score measurability and the concrete floor, constructs the stochastic algorithm and complete trajectory, and proves `Exp3.sampledImportanceWeightedTrajectoryMeasure_condDistrib_action` without external `score/hscore`; the predictable-adversary bridge now compiles downstream |
 | compiled local EXP3 predictable-adversary leaves | 1 | jointly measurable pre-action initial/successor `[0,1]` loss vectors, deterministic chosen-coordinate Dirac feedback kernels, and the concrete sampled EXP3 action `condDistrib` given `(Env,prefix)` compile; the downstream observed-moment leaf now closes successor reward support and one-round moments |
 | compiled local EXP3 predictable expected-regret route | 6 | global next-pair law and conditioning, finite-horizon observed moments, sampled-score/Hedge coupling, predictable-law a.e. control, exploration bias, adaptive pure-q transport, integrability, the unoptimized generated-trajectory theorem, deterministic `4 gamma T` simplification, the large-horizon `4 sqrt(|A| T log|A|)` corollary, realized selected-loss expectation transport, and the all-horizon clipped-rate `min(T, 4 sqrt(|A| T log|A|))` theorem all compile |
-| compiled local FTRL one-step leaves | 1 | `FTRL.linearLoss`, `FTRL.finiteSimplex`, `FTRL.regularizedObjective`, `FTRL.IsRegularizedMinimizer`, and the generic/simplex one-step inequalities; consumes explicit minimizer and feasibility certificates under `0 < eta`, with no convexity, minimizer-existence, Tsallis, stability/penalty, or regret theorem |
-| compiled local Tsallis regularizer leaves | 1 | `Tsallis.powerSum`, `Tsallis.entropy`, `Tsallis.negEntropyRegularizer`, denominator nonzero from `alpha != 1`, nonnegative `Real.rpow` power sum on `FTRL.finiteSimplex`, and the finite-simplex well-definedness package; no convexity, stability/penalty, self-bounding, learning-rate, or regret theorem |
+| compiled local FTRL one-step leaves | 1 | `FTRL.linearLoss`, `FTRL.finiteSimplex`, `FTRL.regularizedObjective`, `FTRL.IsRegularizedMinimizer`, and the generic/simplex one-step inequalities; consumes explicit minimizer and feasibility certificates under `0 < eta`, and is now consumed by the finite-horizon regularized be-the-leader theorem |
+| compiled local Tsallis regularizer leaves | 1 | `Tsallis.powerSum`, `Tsallis.entropy`, `Tsallis.negEntropyRegularizer`, denominator nonzero from `alpha != 1`, nonnegative `Real.rpow` power sum on `FTRL.finiteSimplex`, and the finite-simplex well-definedness package; its exact power-sum penalty is now consumed by the finite-horizon decomposition |
+| compiled local Tsallis-FTRL finite-horizon regret decomposition | 1 | `FTRL.cumulativeLoss`, cumulative linear-loss algebra, scaled regularized be-the-leader, generic and finite-simplex stability/penalty comparator-regret theorems, `Tsallis.negEntropyRegularizer_sub_eq_powerSum_sub_div`, and `Tsallis.cumulativeLinearLoss_sub_comparator_le_stability_add_powerSumPenalty`; explicit cumulative minimizers yield the exact stability sum plus `((powerSum p_0-powerSum q)/(1-alpha))/eta`, with no probability/measurability/convexity or hidden minimizer existence; the concrete Hessian/KKT stability estimate, update construction, conditional transport, self-bounding, and tuning remain open |
+| compiled local Tsallis importance-weighted power-moment leaves | 1 | `Tsallis.powerWeightedSquaredImportanceWeightedLoss`, its pathwise selected-coordinate identity, the exact sampling-mass-weighted finite sum `sum_a loss(a)^2*p(a)^(1-alpha)`, and the `[0,1]` upper bound by `Tsallis.powerSum arms (1-alpha) p`; finite arms, decidable equality, and strictly positive supported weights are explicit; no probability normalization, conditional expectation, Hessian/KKT stability, minimizer existence, or regret is claimed |
+| compiled local half-Tsallis minimizer/stationarity/interiority/horizon leaves | 4 | pairwise simplex shifts, exact half-objective and derivative formulas, minimizer-to-common-multiplier stationarity, the square-root supporting-line converse, boundary strict positivity, compact-standard-simplex minimizer existence, canonical noncomputable current/update/cumulative selectors, successor-update alignment, the direct sampling-law stability consumer with no caller minimizer or positivity proofs, and the no-caller-certificate deterministic finite-horizon decomposition; measurable history-dependent selection, conditional action-law/expectation transport, expected stability assembly, and final regret remain open |
 | compiled local finite-history leaves | 1 | `History.FiniteActionHistory`, `History.FiniteRewardHistory`, `History.FiniteHistory`, `History.FinitePairHistory`, finite trace-restriction maps over `Finset.Iic`, pair-coordinate action/reward trace restriction, pair-history successor extension `History.extendPairHistorySucc`, coordinate evaluation measurability, reward projection from finite `(Action x Reward)` pair histories, measurable successor extension, and measurable finite-history restriction from timewise measurable action/reward traces; this is a product-measurability surface, not a filtration, kernel law, conditional expectation, or trajectory theorem |
 | compiled local history-filtration leaves | 11 | `History.historyGenerators`, `History.historyGenerators_mono`, `History.historyMeasurableSpace`, `History.historyMeasurableSpace_mono`, `History.historyMeasurableSpace_le`, `History.historyFiltration`, `History.historyFiltration_apply`, `History.historyFiltrationSucc`, `History.historyFiltrationSucc_apply`, `History.measurableSet_action_mem_historyFiltration`, and `History.measurableSet_reward_mem_historyFiltration`, the action/reward past singleton-event history filtration canary plus the one-step shifted generated history filtration |
 | compiled local history-filtration finite-pair comap bridge leaves | 1 | `History.measurable_finitePairHistoryOfTrace_mem_historyFiltration_of_lt`, `History.historyFiltration_succ_eq_comap_finitePairHistoryOfTrace`, and `History.historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace`, a countable/discrete bridge showing finite pair histories are measurable at later generated-history filtration levels, that `History.historyFiltration ... (n + 1)` is exactly the comap of `History.finitePairHistoryOfTrace ... n`, and that the shifted `History.historyFiltrationSucc ... n` has the same comap form; this aligns the generated filtration with Mathlib finite-prefix conditioning surfaces, but it is not a reward-law, `condExpKernel`, `partialTraj`, trajectory transport, or final theorem |
@@ -379,9 +4683,9 @@ statements, imports, or local proofs.
 | UCB/ETC textbook routes | wrappers plus theorem cards, with abstract finite-horizon UCB bad-event summability, deterministic/event-level UCB confidence-radius consumers, finite-arm confidence bad-event union bound, confidence-event measurability, finite-horizon confidence-event union assembly, finite-horizon good-event gap and large-gap subset consumers, abstract upper/lower tail-budget consumption, absolute-deviation concentration-event adapter, finite-variance Chebyshev UCB tail producer, abstract centered empirical-mean sub-Gaussian UCB tail producer, square-root radius-budget wrapper, schedule-agnostic logarithmic radius wrapper, constant-scale finite-horizon tail-budget folding, textbook delta confidence-budget and large-gap score-max probability wrappers, selected-action single-time/finite-time-set large-gap delta bridges, concrete finite-arm confidence-score argmax wrappers, finite-time selected-count lower-integral budget wrappers, an all-horizon recursive pull-count budget wrapper, a threshold/suffix-shaped pull-count split, an abstract free-time budget consumer, a free-time cardinality consumer, selected-small pathwise and lower-integral pull-count budgets, selected-small/selected-large count decomposition, selected-large-count `T * delta` wrappers, recursive sample-count UCB count adapter, a source-count wrapper for history-derived sample counts, a history-action transfer wrapper, a generated-policy trace wrapper, an identity-policy concrete score-argmax generated-trace wrapper, a concrete textbook-radius split instantiation, a threshold-cardinality consumer, a half-gap threshold adapter, square/eight-proxy-log threshold consumers, a proxy-small threshold consumer, a sample-count threshold consumer, and a lower-bound-on-count consumer now compiled | concrete empirical-mean construction from reward histories, recursive adaptive UCB action trace, concrete proxy/count source from empirical rewards, and final regret; ETC expected-regret assembly remains separate |
 | Thompson sampling | posterior-action ledger, canonical/reference samplers, posterior-invariance and recursive density transport, measurable environment-indexed trajectories, global uniform-reference recursive sampler coupling, premise-free actual-trajectory probability matching, finite-horizon Bayesian mean-regret decomposition, exact clipped-UCB score regularity, stationary reward-kernel arm-stream representation, all-time latent-stream trajectory support, and fixed-environment actual augmented-trajectory tails compiled; the pinned final LML declaration remains a theorem card | mix the pointwise tails through the augmented prior, build measurable clipped-confidence events and the two concentration expectation bounds, then close the final regret inequality |
 | EXP3/adversarial | finite-action exponential-weights potential, importance-weighted conditional moments, generated exploration-mixed trajectory, predictable `[0,1]` feedback, finite-horizon Hedge/moment integration, the unoptimized expected predictable-regret theorem, deterministic parameter simplification, the large-horizon `4 sqrt(|A| T log|A|)` corollary, realized selected-loss expectation transport, and the all-horizon clipped-rate min bound compiled | high-probability regret, stochastic rewards, broader adversary models, and other EXP3 variants remain separate |
-| Tsallis-INF/FTRL | generic finite-simplex FTRL one-step wrapper and finite-simplex Tsallis regularizer well-definedness compiled; paper/weapon cards for the rest | convexity/existence side conditions, rpow stability/penalty algebra, self-bounding conversion, learning-rate optimization |
-| Linear/OFUL/LinUCB | local Gram PSD wrapper, Mathlib Schur-complement rank-one determinant-update wrapper, scalar regularized-Gram base wrapper, regularized-Gram quadratic-form/PSD wrapper, strict-positive qform wrapper, Mathlib PosDef determinant/IsUnit bridge, arbitrary regularized-Gram rank-one determinant recursion, one-step log-det increment wrapper, abstract finite-horizon log-det telescope, concrete Nat-prefix log-det telescope, scalar-base endpoint, first min/log determinant-growth consumer, clipped finite-sum log-upper handoff, finite-sum small-update log bridge, finite-sum small-update log-upper handoff, explicit-regularity small-update log-det raw-sum handoff, PosDef-inverse quadratic nonnegativity consumer, small-update log-det endpoint raw-sum handoff, terminal log-det upper-bound consumer, small-update terminal log-det raw-sum handoff, multiplicative determinant-upper consumer, small-update multiplicative determinant raw-sum handoff, prefix trace/radius bound, trace-average determinant consumer, AM-GM determinant trace bound, trace-average exp handoff consumer, scalar trace-average exp bound, dimension-cancelled trace-average exp consumers, standard logarithmic trace-average endpoint, generic small-update raw-sum handoff, dimension-scaled small-update raw-sum endpoint, dimension-cancelled small-update raw-sum endpoint, and small-update raw-sum logarithmic consumer compiled; paper/weapon cards for the rest | confidence ellipsoid, self-normalized tail |
-| RL/MDP | scenario/paper cards only | finite kernels, Bellman recursion, occupancy measures, episode regret |
+| Tsallis-INF/FTRL | generated expected environment regret, fixed-gap self-bounding, the paper-shaped all-arm-to-suboptimal consumer, deterministic ordinary-IW conjugate-potential stability, uncollapsed refined expected penalty, unified refined stability/penalty assembly, and concrete square-root-schedule harmonic and logarithmic fixed-gap theorems compile | transport broader stochastic/corrupted reward laws into the self-bounding contract |
+| Linear/OFUL/LinUCB | the deterministic elliptical-potential, vector self-normalized concentration, scalar-ridge confidence, optimism, measurable recursive selection, concrete generated-trajectory reward law, selected-width, normalized all-round high-probability gap, measurable bad-event integration, finite-window expected fixed-optimal-arm pseudo-regret, explicit finite-window rate, fixed-model asymptotic expected regret, and horizon-indexed expected-average convergence routes compile; the algorithm parameter is `1/(T+1)^2` | anytime/one-policy consistency, minimax, contextual, dynamic-regret, pathwise/probability convergence, uniform-over-parameter, and broader linear-bandit routes remain separate |
+| RL/MDP | finite state/action MDP data, Mathlib Markov transition kernel, measurable deterministic reward, stage-indexed Markov policy, induced state kernel, measurable policy Bellman operator, backward policy value, terminal condition, and chronological Bellman recursion compiled | generated finite policy trajectory and expected cumulative-reward/value identity, finite-action Bellman optimality, occupancy measures, UCB-VI optimism, and episode regret |
 | Proof export | skeleton exists | exports must be generated from compiled theorem declarations |
 
 ## Textbook-Scope Completion Estimate
@@ -3322,6 +7626,155 @@ Random predictable quadratic variation, general Freedman, anytime control,
 stochastic-mean/first-order regret, sharp clipping, and ideal EXP3.P remain
 open.
 
+## Expected Gate-Open History-Adaptive Corruption All-Regimes Consumer
+
+`TSALLIS-FINITE-ARM-IID-HISTORY-ADAPTIVE-EXPECTED-CORRUPTION-ALL-REGIMES`
+is `leanCompiled` in
+`TsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLaw`. Its Lean-facing
+corruption scalar is
+`sum_(t<T+1) sum_(a!=best) integral p_t(a) *
+(abs shift_t(a) + abs shift_t(best))`, evaluated under the generated
+trajectory law. Unlike the previous envelope budget, a closed measurable gate
+contributes zero; an open-gate arm is weighted by its conditional selection
+probability and contributes zero when that probability is zero.
+
+The local APIs expose the realized shift selected from pre-action finite pair
+history, its measurability and envelope domination, the exact clipping-based
+actual/reference gap deviation, automatic `p * deviation` integrability,
+budget nonnegativity, and expected-budget domination by the deterministic
+envelope budget. A generic reference-gap self-bounding theorem now accepts a
+sample-dependent deviation and retains the action probability inside the
+integral. The finite-arm IID wrapper reuses the existing IID-prefix
+factorization and uncorrupted expected-gap law, then feeds the resulting
+self-bound into the compiled logarithmic and refined consumers. The final
+theorem selects the refined branch only when a suboptimal arm exists and the
+expected-corruption compact window holds, then uses the logarithmic branch
+otherwise; a thin wrapper instantiates arbitrary measurable history-arm-gated
+boosts.
+
+Regularity contracts remain probability arm laws, a.e. reward support in
+`[0,1]`, exact means, an all-time measurable predictable source, finite
+horizon, positive non-best gaps, and gaps at most one. These gap contracts are
+vacuous for `K=1`; the public all-regimes theorem no longer requires a
+nonempty suboptimal set, while the refined child theorem retains that internal
+premise. The `Fin 1` envelope simplifies to `1 + log(T+1)`. No caller integrability,
+independence, deterministic gate-open count, free corruption scalar, or scalar
+window proof is added. Retrieval evidence is the compiled reference-gap,
+IID-prefix, logarithmic, and refined-window routes; Mathlib finite sums,
+Bochner integrals, kernels, independence, `Preorder.measurable_frestrictLe`,
+`Integrable.of_bound`, and `integral_mono_ae`; and both Tsallis-INF paper cards.
+The paper cards remain evidence, not local proofs. Failure policy: predictable
+expected gate-open corruption is closed. Current-action/nonpredictable gates,
+raw or latent reward-law corruption, paper-sharp constants, and complete
+Tsallis-INF remain open. Horizon-local source contracts compile downstream.
+
+## Horizon-Local Expected-Corruption All-Regimes Consumer
+
+`TSALLIS-FINITE-ARM-IID-HORIZON-HISTORY-ADAPTIVE-EXPECTED-CORRUPTION-ALL-REGIMES`
+is `leanCompiled` in
+`TsallisFiniteArmIIDHorizonHistoryAdaptiveExpectedCorruptedRewardLaw`. Its
+source carries the initial shift/envelope and exactly `Fin horizon` successor
+shift, joint history-arm measurability, envelope, nonnegativity, and absolute
+bound witnesses. Thus round zero and successor rounds `n+1` for `n<horizon`
+are covered, with no post-horizon regularity contract.
+
+The proof constructs an all-time source by preserving every used shift and
+envelope and setting both to zero when `horizon<=n`. On-horizon and
+off-horizon simp lemmas expose this transport. The named loss, expected budget,
+and all-regime bound are definitions over that extension, so the final theorem
+uses exactly the parent generated-policy
+`sum_(t<T+1) sum_(a!=best) E[p_t(a)(|shift_t(a)|+|shift_t(best)|)]`
+quantity and its existing refined/log selector; it does not replace the budget
+by the deterministic envelope.
+
+Required caller contracts are probability arm laws, a.e. `[0,1]` raw rewards,
+exact means, the finite source witnesses, positive non-best gaps, and gaps at
+most one. `horizon=0` has only initial data, and `K=1` remains supported. No
+new law transport, integrability, nonempty-suboptimal, free corruption, or
+scalar-window premise is introduced. Retrieval evidence is the compiled
+all-time expected-corruption leaf, `Fin`, finite sums/integrals, probability
+kernels/independence, and the two Tsallis-INF paper cards. Failure policy:
+horizon-local predictable corruption is closed; current-action/nonpredictable
+or raw/latent-law corruption, paper-sharp constants, and complete Tsallis-INF
+remain open.
+
+## Square-Root Schedule Self-Bounding Optimization
+
+`TSALLIS-SQRT-SCHEDULE-SELF-BOUNDING-OPTIMIZATION` is `leanCompiled` across
+`BanditRLProof.TsallisScheduledSelfBoundingOptimization` and
+`BanditRLProof.TsallisSqrtScheduleSelfBoundingOptimization`. The route now
+splits finite times by the exact active quadratic threshold, derives a
+prefix/suffix form from one cutoff certificate, and consumes the refined
+generated stability/penalty bound. It deliberately does not use the coarse
+terminal-potential interpolation base, whose square-root-schedule term would
+remain of order `sqrt(T)`.
+
+For `A=5*(1+lambda)` and
+`R=sum_(a!=best) 1/(lambda*gap(a))`, the compiled endpoint replaces the two
+time sums by an active term
+`2*A*sqrt(K-1)*sqrt(cutoff)-cutoff*(K-1)/R` and a tail term
+`(A^2/4)*R*log((T+1)/cutoff)`, in addition to the harmonic base and
+`lambda*C`. The proof uses `AntitoneOn.sum_le_integral_Ico`, `integral_inv`,
+finite-sum algebra, and local square-root schedule identities.
+
+Regularity requires positive suboptimal gaps, a nonempty suboptimal arm set,
+`lambda in (0,1]`, `0<cutoff<=T+1`, the explicit cutoff threshold, and the
+terminal self-bound. Retrieval evidence includes the compiled constrained
+quadratic and refined penalty leaves, Mathlib finite sums and log/sqrt APIs,
+and Masoudian--Seldin (2021) as route evidence only. Failure policy: the
+finite-time split and cutoff/log theorem are closed; constructing a useful
+natural cutoff and optimizing it jointly with `lambda` and corruption remain
+open, so the final paper endpoint is not yet established.
+
+### Discrete cutoff and `lambda = 1` endpoint
+
+`TSALLIS-SQRT-SCHEDULE-SELF-BOUNDING-FLOOR-TUNING` is now `leanCompiled` in
+`BanditRLProof.TsallisSqrtScheduleSelfBoundingTuning`. Mathlib's natural-floor
+APIs prove the factor-two sandwich needed to replace the continuous threshold
+by a positive finite-time cutoff. The fixed-`lambda` generated theorem removes
+the caller cutoff, and the `lambda=1` corollary identifies
+`q=25*S^2/(K-1)` and proves the explicit
+`C+100*S+25*S*log(2*(T+1)*(K-1)/(25*S^2))` bound in the branch
+`1<=q<=T+1`.
+
+Regularity and failure policy remain theorem-facing: generated trajectory
+measurability/probability, positive suboptimal gaps, a nonempty suboptimal set,
+the terminal self-bound, and the large-horizon threshold branch are explicit.
+The ordinary corruption theorem is closed for `lambda=1`; the refined
+square-root-in-`C` theorem is not. Its exact remaining scalar obligation is
+the paper's `W_-1` optimizer, or an equivalent convex-root existence and bound
+over the stated corruption range. No Lambert W definition or theorem is
+available in the pinned Mathlib source tree.
+
+### Scalar beta root existence
+
+`TSALLIS-SELF-BOUNDING-BETA-ROOT` is now `leanCompiled` in
+`BanditRLProof.TsallisSelfBoundingBetaRoot`. It defines
+`g(beta)=C*S/scale*beta-log(beta)-1` and uses Mathlib's
+`intermediate_value_Icc` to prove a root exists in `[1,scale/S^2]` under the
+paper's explicit corruption window. The Lean statement retains positive
+`scale` and `S`, `1<=scale/S^2`, `C*S<=scale`, and
+`S*(log(scale/S^2)+1)<=C`; continuity follows from
+`Real.continuousOn_log` because every beta in the interval is positive.
+
+The follow-up `TSALLIS-SQRT-SCHEDULE-SELF-BOUNDING-REFINED-TUNING` leaf is now
+`leanCompiled` in `TsallisSqrtScheduleSelfBoundingRefinedScalar` and
+`TsallisSqrtScheduleSelfBoundingRefinedTuning`. Auditing the compiled floor
+theorem's amplitude `5*(1+lambda)` changes the locally valid equation to
+`C*S/scale*beta-log(beta)-2=0`, with beta in
+`[2,scale/(25*S^2)]`. An elementary inequality
+`(sqrt(w)-1)^2 <= w-log(w)-1` replaces Lambert W and gives the quantitative
+weight bound needed for `alpha=sqrt(25*S^2*beta/scale)` and
+`lambda=alpha/(2-alpha)`. The exact threshold becomes `2*(T+1)/beta`.
+
+The generated endpoint now compiles with bound
+`1+log(T+1)+10*sqrt(C*S)*(2+sqrt(log(scale/(C*S))+1))` under the explicit
+scalar window, generated-law regularity, positive-gap, and terminal self-bound
+contracts. A concrete history-adaptive model consumer and its compact-window
+wrapper now compile downstream. The paper's ideal `-1` equation and sharper
+constants, complementary corruption regimes, stronger corruption models, and
+the complete Tsallis-INF theorem remain open.
+
 ## EXP3 Sparse Double Pathwise Variance
 
 `BanditRLProof.Exp3MixedSquarePredictableVarianceSparseLossRealizedDoublePathwiseVarianceProbabilisticSparsity`
@@ -3902,9 +8355,25 @@ canonical Real trajectory theorem with no support or range assumptions.
 Focused, root, and `Tests.Basic` builds pass. Exact declarations,
 `MLIB-PROBABILITY-SUBGAUSSIAN`, `MLIB-FINSET-SUMS`, `Finset.sup`,
 `Finset.le_sup`, and the canonical Real card are direct evidence. The stationary
-finite-arm direct-subGaussian UCB route is closed. An all-zero-proxy/noiseless
-special theorem, context-dependent/nonstationary rewards, anytime/Freedman,
-cross-toolchain import, and other algorithms remain separate.
+finite-arm direct-subGaussian exact-max UCB route is closed. The positive-padded
+theorem below closes all-zero-proxy/noiseless families. Context-dependent or
+nonstationary rewards, anytime/Freedman, cross-toolchain import, and other
+algorithms remain separate.
+
+## Direct finite-arm all-zero proxy closure
+
+Card
+`LOCAL-LEAF-UCB-SUBGAUSSIAN-FINITE-ARM-LAWS-POSITIVE-PADDED-CANONICAL-REAL-TEXTBOOK-PSEUDOREGRET`
+is `leanCompiled`. The tuning proxy is `max 1 finiteArmVarianceProxy`;
+`le_max_right` preserves genuine-proxy domination and `le_max_left` supplies
+strict positivity. This does not assert that an all-zero genuine maximum is
+positive.
+
+The resulting canonical Real endpoint removes the positive-member premise
+while retaining exact means and original per-arm centered MGF witnesses. All
+kernel, selected-law, trajectory, centering, and integrability obligations are
+internal. The conservative padded bound is closed; sharper zero-width analysis
+remains a separate optimization.
 
 ## Context-dependent bounded reward-kernel closure
 
@@ -3949,6 +8418,2610 @@ trajectory law internally and returns the explicit Real textbook gap sum.
 No bounded support, reward-range premise, context independence, caller
 centered-law, selected-law transport, trajectory law, or integrability witness
 remains. The caller ceiling is not an avoidable artifact: automatic maxima need
-finite/compact/bounded context structure. Such automatic ceilings, noiseless
-zero-proxy models, context-dependent means/nonstationary regret, and
-anytime/Freedman routes remain open.
+finite/compact/bounded context structure. The finite-context exact and padded
+specializations below close finite automatic ceilings and all-zero proxy
+families. Infinite compact/bounded contexts, context-dependent
+means/nonstationary regret, and anytime/Freedman routes remain open.
+
+## Finite-context automatic variance-ceiling closure
+
+Card
+`LOCAL-LEAF-UCB-FINITE-CONTEXT-DEPENDENT-SUBGAUSSIAN-REWARD-KERNEL-AUTOMATIC-CEILING-CANONICAL-REAL-TEXTBOOK-PSEUDOREGRET`
+is `leanCompiled`. For `[Fintype Context]`, the algorithm-independent maximum
+uses nested `Finset.univ.sup`; `Finset.le_sup` closes every context/action
+domination obligation, and existence of one positive proxy closes the
+canonical theorem's strict-positive `sigma2` contract.
+
+The public specialization no longer accepts a caller ceiling. Its remaining
+contracts are the finite measurable context, exact stationary selected-law
+means, direct pointwise centered MGF witnesses, one positive proxy, and the
+existing probability/horizon/delta assumptions. The positive-padded endpoint
+below closes all-zero/noiseless proxies; infinite-context compactness or
+boundedness machinery remains open.
+
+## Finite-context all-zero proxy closure
+
+Card
+`LOCAL-LEAF-UCB-FINITE-CONTEXT-DEPENDENT-SUBGAUSSIAN-REWARD-KERNEL-POSITIVE-PADDED-CANONICAL-REAL-TEXTBOOK-PSEUDOREGRET`
+is `leanCompiled`. The new proxy is `max 1 finiteContextArmVarianceProxy`, so
+`le_max_right` preserves domination and `le_max_left` supplies strict positive
+Real coercion. This is conservative tuning, not a claim that a genuine zero
+proxy is positive.
+
+The resulting canonical Real UCB theorem has no proxy-positivity premise and
+still derives centered law, selected-law transport, trajectory law, and
+integrability internally. Finite-context all-zero handling is closed. Infinite
+context and sharper zero-width/noiseless algorithm analysis remain distinct.
+## Half-Tsallis Canonical Finite-Horizon Decomposition
+
+`TSALLIS-HALF-CANONICAL-FINITE-HORIZON-DECOMPOSITION` is `leanCompiled` in
+`BanditRLProof.TsallisFTRLFiniteHorizonSelection`.  The Lean-facing sequence
+`Tsallis.halfTsallisCumulativeMinimizer` applies the fixed compact-simplex
+minimizer choice to `FTRL.cumulativeLoss loss t`.  Its certificate theorem
+discharges the full family of `t <= T` minimizer premises in
+`Tsallis.cumulativeLinearLoss_sub_comparator_le_stability_add_powerSumPenalty`.
+The resulting canonical theorem assumes only decidable equality, nonempty
+finite arms, positive eta, an arbitrary deterministic Real loss sequence, and
+a feasible comparator.
+
+The successor wrappers prove both the raw cumulative-score equality and the
+importance-weighted update equality.  The route uses the compiled existence
+selector, `FTRL.cumulativeLoss_succ`, and the existing deterministic horizon
+decomposition; no theorem card is treated as a local proof.  Focused/root and
+`Tests.Basic` external calls compile.
+
+Failure policy: this closes deterministic minimizer and horizon plumbing, not
+the stochastic stability sum.  The one-step theorem averages over the sampled
+action and its successor minimizer depends on that action, so it cannot be
+summed pathwise.  `Classical.choose` is also not yet a measurable history
+selector.  Conditional action-law/expectation transport, expected stability
+assembly, self-bounding, tuning, and final Tsallis-INF regret remain open.
+
+## Half-Tsallis Conditional Action Stability
+
+`TSALLIS-HALF-CONDITIONAL-ACTION-STABILITY` is `leanCompiled` in
+`BanditRLProof.TsallisFTRLConditionalStability`. Its generic Lean endpoint
+identifies the regular conditional law of the sampled action with the finite
+current half-Tsallis distribution, rewrites the conditional integral as the
+finite sampling-law sum, applies the compiled current/update minimizer
+stability theorem pointwise in history, and integrates the resulting
+half-power envelope. A generated `Exp3.actionProcessMeasure` specialization
+discharges the conditional-law identity; a canonical history-selector
+consumer also discharges minimizer and finite-simplex certificates.
+
+The regularity boundary remains explicit: a standard-Borel action space with
+measurable singletons, a finite nonempty arm set, finite history measure,
+positive eta, supported losses in
+`[0,1]`, coordinate measurability of the selected current distribution,
+measurability/integrability of the history-action stability score, and
+integrability of the half-power bound. Focused/root builds and external
+source/consumer canaries compile.
+
+Failure policy: one-round conditional action-law transport is closed. This
+module consumes selector and updated-score regularity as contracts; downstream
+generated-regularity and canonical-selector modules now synthesize them and
+close finite-horizon expected assembly. Environment-regret transport,
+self-bounding, tuning, and final Tsallis-INF regret remain open.
+
+## Generated pure half-Tsallis trajectory stability
+
+`TSALLIS-HALF-GENERATED-TRAJECTORY-STABILITY` is `leanCompiled` in
+`BanditRLProof.TsallisFTRLRecursiveTrajectory`. The public endpoint
+`Tsallis.integral_sum_sampledHalfTsallisSuccessorStability_le_integral_sum_halfPowerStabilityBound`
+constructs the recursive finite-pair-history importance-weighted score, pure
+half-Tsallis policy kernels, canonical predictable trajectory, conditional
+successor-action law, and almost-sure score recursion before applying the
+finite-horizon actual-successor stability theorem. Callers no longer supply a
+policy law, `condDistrib` identity, or score-recursion proof.
+
+The remaining regularity boundary is deliberate: coordinate measurability of
+the noncomputable canonical selector is packaged as
+`HalfTsallisFiniteHistorySelectorMeasurability`, and each generated updated
+stability score must be measurable. The downstream automatic-integrability
+leaf now derives both product-law stability integrability and history-marginal
+half-power integrability. Standard-Borel environment/action spaces, measurable
+action singletons, finite nonempty arms, finite prior, positive eta, and a
+predictable `[0,1]` loss vector are retained.
+
+Failure policy: recursive trajectory construction, conditional action-law
+identification, a.e. importance-weighted score recursion, and generated
+finite-horizon stability assembly are closed under those explicit regularity
+contracts. Downstream selector measurability and estimated-to-environment
+transport now compile; self-bounding, comparator specialization, tuning, and
+final Tsallis-INF regret remain open.
+
+## Generated half-Tsallis automatic integrability
+
+`TSALLIS-HALF-GENERATED-STABILITY-AUTOMATIC-INTEGRABILITY` is `leanCompiled`
+in `BanditRLProof.TsallisFTRLGeneratedRegularity`. Its public endpoint
+`Tsallis.integral_sum_sampledHalfTsallisSuccessorStability_le_integral_sum_halfPowerStabilityBound_of_measurable`
+has the same generated actual-successor horizon conclusion but no caller
+`Integrable` families.
+
+The stability proof uses the finite-action identity behind the
+importance-weighted estimator: after multiplication by the sampling mass,
+the denominator cancels and
+`p(chosen) * |stability(chosen)| <= p(chosen) + next(chosen)(chosen)`.
+Finite-simplex normalization then bounds the conditional absolute moment by
+`1 + arms.card`; `Measure.integrable_compProd_iff` supplies product-law
+integrability. The half-power budget is separately bounded by
+`2 * |eta| * arms.card` using coordinate bounds and `Real.rpow_le_one`.
+
+Regularity contracts are now the selector coordinate-measurability contract
+and per-round measurability of the generated updated stability score, together
+with the existing finite-arm, finite-prior, standard-Borel, eta-positive, and
+predictable `[0,1]` loss assumptions. Failure policy: both integrability
+families are closed without a uniform probability floor. The downstream
+generated-measurability leaf derives the scalar score premise from explicit
+selector-coordinate regularity. Do not infer canonical selector or updated-
+minimizer measurability.
+
+## Generated half-Tsallis stability measurability
+
+`TSALLIS-HALF-GENERATED-STABILITY-MEASURABILITY` is `leanCompiled` in
+`BanditRLProof.TsallisFTRLGeneratedMeasurability`. The public endpoint
+`Tsallis.integral_sum_sampledHalfTsallisSuccessorStability_le_integral_sum_halfPowerStabilityBound_of_selector`
+has no caller `hscore` or `Integrable` families. It consumes one
+`HalfTsallisGeneratedSelectorMeasurability` contract, whose finite-history
+component builds the policy and whose updated component states supported
+coordinate measurability on the environment/prefix/chosen-action space.
+
+The proof unfolds both finite linear-loss sums. Each importance-weighted
+coordinate is a measurable singleton-action `ite`; current probabilities,
+predictable losses, and updated selector coordinates are measurable, so
+`Finset.measurable_sum` closes the scalar stability score. The predictable-loss
+coordinate follows from `PredictableLossVector.measurable_successor` by product
+composition. The automatic-integrability theorem then closes the horizon.
+
+Failure policy: generated scalar stability-score measurability, both
+integrability families, conditional-law transport, and horizon assembly are
+closed under the generated-selector contract. The downstream canonical
+selector leaf now proves that the existing `Classical.choose` current and
+updated minimizers satisfy this contract.
+
+## Canonical half-Tsallis selector measurability
+
+`TSALLIS-HALF-CANONICAL-SELECTOR-MEASURABILITY` is `leanCompiled` across
+`BanditRLProof.TsallisFTRLMinimizerUniqueness`,
+`BanditRLProof.TsallisFTRLMinimizerMeasurability`, and
+`BanditRLProof.TsallisFTRLGeneratedMeasurability`. Strict concavity of the
+finite square-root sum gives strict convexity of the half-Tsallis objective and
+uniqueness on supported coordinates. Compact standard-simplex cluster points,
+joint objective continuity, and Mathlib ultrafilter convergence then prove the
+restricted canonical minimizer continuous in the finite score vector. Borel
+composition turns supported score-coordinate measurability into canonical
+selector-coordinate measurability.
+
+The generated layer instantiates both finite-history and sampled-action
+updated selector contracts and exposes
+`integral_sum_sampledHalfTsallisSuccessorStability_le_integral_sum_halfPowerStabilityBound_canonical`,
+which has no selector, `hscore`, or integrability argument. Regularity is a
+nonempty finite arm set and decidable equality for selector continuity;
+measurable singletons for importance-weighted updates; and standard-Borel
+environment/action spaces, finite prior, eta positive, and predictable
+`[0,1]` loss for the horizon endpoint.
+
+Failure policy: canonical selector measurability is closed. Do not claim
+ambient-function uniqueness outside `arms`, whose coordinates are deliberately
+unconstrained. The downstream estimated-to-environment regret route now
+compiles.
+
+## Half-Tsallis Estimated-to-Environment Regret
+
+`TSALLIS-ESTIMATED-ENVIRONMENT-REGRET` is `leanCompiled` in
+`BanditRLProof.TsallisFTRLEstimatedEnvironmentRegret`. The final theorem
+`integral_sampledHalfTsallisPredictableEnvironmentRegret_le` bounds expected
+predictable environment regret over `horizon + 1` actual rounds. It keeps time
+zero separate, because the generated successor theorem covers rounds
+`1, ..., horizon`, then combines the initial half-power stability budget, the
+integrated successor half-power sum, and the finite-simplex comparator penalty.
+
+Local imports/APIs are the canonical generated measurability and stability
+route, deterministic FTRL decomposition, Exp3 predictable trajectory reward
+laws, finite-action kernels, `condDistrib`, `Measure.integrable_compProd_iff`,
+and finite Bochner sums. The proof identifies actual-time cumulative selectors,
+transports observed estimators to predictable losses almost everywhere, proves
+mixed and comparator-weighted conditional first moments, and integrates the
+pathwise decomposition. Finite sampling mass cancels the
+importance-weighted denominator, so no uniform exploration floor is assumed.
+
+Regularity is standard-Borel environment/action spaces, measurable action
+singletons, finite nonempty arms, eta positive, a `PredictableLossVector`, a
+general finite-simplex comparator, and `IsProbabilityMeasure prior` for the
+unscaled initial and penalty constants. Retrieval evidence is the compiled
+canonical selector, generated stability, expected stability, deterministic
+decomposition, local Exp3 law transports, and Mathlib compProd/condDistrib
+integral APIs. Paper cards remain route evidence and the weapon card is
+inspiration-only. Root/focused builds, `Tests.Basic`, placeholder scan, and an
+independent public-import `#print axioms` audit pass.
+
+Failure policy: estimated-comparator-to-environment transport, including the
+otherwise omitted initial round, is closed under these contracts. Do not read
+the successor theorem alone as full regret, add an EXP3-style probability
+floor, or claim the paper's conjugate-potential/final Tsallis-INF theorem. The
+downstream self-bounding consumer now compiles; its missing input is a refined
+suboptimal-arm stability/penalty producer.
+
+## Half-Tsallis Self-Bounding Conversion
+
+`SELF-BOUNDING-CONVERSION` is `leanCompiled` in
+`BanditRLProof.TsallisSelfBounding`. The module defines the point-mass optimal
+comparator, proves its one-round linear regret equals probability-weighted gap
+mass, transports a fixed predictable gap law to the generated trajectory, and
+obtains the integrated `(Delta, C, T)` self-bounding condition for nonnegative
+corruption. It also specializes the existing generated environment-regret
+upper theorem to that comparator.
+
+The reusable consumer
+`regret_le_two_mul_base_add_sum_sq_div_gap_add_corruption` proves the finite
+completion-of-squares step from a refined suboptimal square-root upper bound.
+Its contracts are nonnegative indexed probabilities, strictly positive indexed
+gaps, a scalar self-bound, and the supplied refined upper bound. Finite sums,
+`Real.sqrt`, ordered-field algebra, generated `compProd` integrals, and the
+compiled estimated-environment route are the local APIs.
+
+Failure policy: the current fixed-eta producer remains an all-arm
+`powerSum (1/2)`. The compiled point-mass counterexample proves it cannot be
+uniformly replaced by the required suboptimal-arm square-root sum. Independent
+review also confirms that a paper-level result needs adaptive learning-rate
+stability-plus-penalty; a reduced-variance-estimator proof is a distinct route
+with distinct law transport. The next leaf is
+`TSALLIS-REFINED-SUBOPTIMAL-STABILITY-PENALTY`, not final regret or tuning.
+
+## Refined All-Arm to Suboptimal Stability
+
+`TSALLIS-REFINED-ALLARM-TO-SUBOPTIMAL` is `leanCompiled` in
+`BanditRLProof.TsallisRefinedSuboptimalStability`. For every finite-simplex law
+and supported distinguished arm it proves
+`sum_a sqrt(p_a)*(1-p_a) <= 2*sum_(a != best) sqrt(p_a)`. The best-arm term is
+bounded by `1-p_best`, simplex normalization rewrites this as suboptimal mass,
+and each suboptimal probability is bounded by its square root.
+
+`regret_le_of_refinedHalfPowerSelfBounding` then product-indexes finite time and
+suboptimal arms and composes any nonnegative-coefficient refined all-arm upper
+with positive gaps and the `(Delta,C,T)` self-bound. The result is the explicit
+`2*base + sum_(t,a != best) (2*coefficient_t)^2/gap_a + corruption` endpoint.
+The abstract theorem only needs positive gaps on `arms.erase best`; a later
+algorithm-facing wrapper should additionally expose `gap best = 0`.
+
+Failure policy: `hupper` is not yet produced by the generated algorithm. Paper
+Lemma 11 uses conjugate-potential Taylor/Hessian control, whereas the existing
+local theorem bounds the fixed-eta term `<p_t-p_(t+1),hatLoss_t>` only after a
+multiplier-shift upper has discarded chosen-action information. The compiled
+shifted-IW moment leaf below recovers the required sampled-action cancellation,
+but the compiled minimizer counterexample below proves that the deterministic
+comparison and even its final sampled-action average are false for the current
+symmetrized expression. The paper-faithful alternative is therefore
+`TSALLIS-CONJUGATE-POTENTIAL-STABILITY`. Its expected route additionally needs
+expected-simplex/Jensen transport and places each `eta_t^2/2` remainder in
+`base`. `TSALLIS-TIME-VARYING-PENALTY` also requires scheduled minimizers,
+measurability, kernel identities, and same-`eta_t` auxiliary updates, not only
+a scalar telescope. Only after these producers compile should the combined
+`TSALLIS-REFINED-SUBOPTIMAL-STABILITY-PENALTY` be marked complete.
+
+## Refined Shifted IW Moment
+
+`TSALLIS-REFINED-SHIFTED-IW-MOMENT` is `leanCompiled` in
+`BanditRLProof.TsallisRefinedImportanceWeightedMoment`. Its Lean-facing
+definitions subtract the sampled raw-loss baseline from every ordinary-IW
+coordinate. Exact finite-sum expansions prove
+`sum_prob_mul_shiftedHalfPowerImportanceWeightedMoment_le` and
+`sum_prob_mul_shiftedPositiveCubicImportanceWeightedMoment_le_one`. Thus
+`sum_prob_mul_stability_le_refinedHalfPower_add_square` packages any pointwise
+shifted Taylor/Hessian bound into
+`eta/2 * sum_a sqrt(p_a)*(1-p_a) + eta^2/2`; the current-FTRL wrapper exposes
+the same endpoint with the sole additional hypothesis `hshiftedTaylor`.
+
+Local imports/APIs are `BanditRLProof.TsallisFTRLGeneratedRegularity`,
+`BanditRLProof.TsallisImportanceWeightedMoment`, ordinary importance-weighted
+losses, finite-simplex probabilities, `Finset.erase` sum rearrangements,
+`Real.sqrt`, `max`, and ordered-field cancellation. Contracts are finite
+decidable arms, strictly positive supported probabilities, losses in `[0,1]`,
+and nonnegative eta for the final consumer. No measure, kernel, minimizer,
+integrability, or trajectory premise is hidden.
+
+Retrieval evidence is the compiled local importance-weighted moment and refined
+all-arm leaves, Mathlib finite-sum/order/sqrt APIs, and Tsallis-INF Lemma 11
+Part 2 equations (19)--(21). Numerical testing was used only to reject the false
+pointwise `1-p` replacement, not as proof evidence. Root/focused builds and a
+`Fin 2` `Tests.Basic` canary compile. Failure policy: baseline expansion,
+quadratic cancellation, cubic remainder, and sampled-action averaging are
+closed. The downstream obstruction proves `hshiftedTaylor` is not uniformly
+available for the current symmetrized term; preserve this consumer for the
+different conjugate-potential producer. Do not report it as conjugate-potential
+stability, a conditional-expectation theorem, or final Tsallis-INF regret.
+
+## Refined Averaged Stability Obstruction
+
+`TSALLIS-REFINED-AVERAGED-STABILITY-DIAGNOSTIC` is resolved by the
+`leanCompiled` theorem
+`exists_minimizer_counterexample_to_refinedAveragedStability` in
+`BanditRLProof.TsallisRefinedAveragedStabilityObstruction`. Its public statement
+exhibits `Fin 2` data with positive eta, strict current simplex probabilities,
+`[0,1]` losses, a current half-Tsallis regularized minimizer, and an updated
+half-Tsallis regularized minimizer for every sampled ordinary-IW increment, but
+proves the strict reverse of the locally paper-scaled
+`eta * sum sqrt(p)*(1-p) + 2*eta^2` refined averaged upper bound.
+
+The proof route uses `eta=1/100`, `p=(49/625,576/625)`, rational-square updated
+simplex points, exact KKT multipliers, and
+`isRegularizedMinimizer_of_halfTsallisInteriorStationary`. `Fin.sum_univ_two`,
+explicit `Real.sqrt`/negative-half-rpow certificates, `FinCases`, and
+`NormNum` close all arithmetic. There is no measure, kernel, conditional
+expectation, or trajectory premise. Root/focused/`Tests.Basic` builds and an
+external theorem consumer compile.
+
+Failure policy: do not retry `hshiftedTaylor` or the same averaged coefficient
+for `<p-p_next,hatLoss>` under these contracts. This obstruction does not apply
+to the conjugate-potential quantity in Tsallis-INF Lemmas 17--19; its distinct
+deterministic producer now compiles. Final regret remains open.
+
+## Half-Tsallis Conjugate-Potential Stability
+
+`TSALLIS-CONJUGATE-POTENTIAL-STABILITY` is `leanCompiled` in
+`BanditRLProof.TsallisConjugatePotentialStability`. The Lean-facing surface
+defines `halfTsallisPotentialValue`, `halfTsallisPotentialStability`, the
+explicit coordinate conjugate increment, and its finite-sum upper. The main
+theorems are
+`halfTsallisPotentialStability_importanceWeightedLoss_le_shiftedMoments_of_minimizers`,
+`sum_prob_mul_halfTsallisPotentialStability_importanceWeightedLoss_le_refined_of_minimizers`,
+and the canonical-selector wrapper
+`sum_halfTsallisMinimizer_mul_potentialStability_le_refined`.
+
+Proof route: translate `eta_paper = 2*eta_local`; rewrite each coordinate
+increment exactly as
+`eta*sqrt(p)*p*d^2/(1+eta*d*sqrt(p))`; use the conjugate domain to bound it by
+`eta*sqrt(p)*p*d^2 + 2*eta^2*p^2*max(-d,0)^3`; apply the square-completion
+Fenchel coordinate inequality; cancel score/common multiplier by current
+interior stationarity; cancel the arbitrary baseline by simplex normalization;
+choose the selected raw loss as baseline; and consume the compiled shifted
+ordinary-IW quadratic/cubic moments.
+
+The potential definition includes the paper-normalizing `+1/eta`. Independent
+review caught that the unshifted local regularized-objective value differs from
+the paper potential by this eta-dependent constant: it cancels for the fixed-eta
+one-step theorem but not across a time-varying schedule. The low-level
+`halfTsallisPotentialStability_le_conjugatePotentialUpper_of_feasible` theorem
+is intentionally only a candidate-value bridge; the minimizer-level and
+canonical theorems certify the updated point and therefore expose genuine
+constrained-potential steps.
+
+Regularity contracts are finite decidable arms, local `eta` in `(0,1/2]`, exact
+current and sampled-update half-Tsallis simplex minimizers, and supported losses
+in `[0,1]`. Current strict positivity is derived from minimizer interiority.
+There is no measure, kernel, conditional expectation, integrability, or
+trajectory premise. Retrieval evidence is the local stationarity/minimizer and
+shifted-IW moment layers, Mathlib finite-sum/order/sqrt/field APIs, and
+Tsallis-INF Lemmas 18--19/equations (13)--(15); theorem-card and weapon material
+is not counted as a local proof. Root/focused/`Tests.Basic` builds and external
+generic/canonical canaries compile; the public-import axiom audit reports only
+`propext`, `Classical.choice`, and `Quot.sound`.
+
+Failure policy: this theorem is the distinct conjugate-potential quantity and
+must not be substituted back into the refuted `<p-p_next,hatLoss>` claim. Its
+generated fixed-eta conditional-expectation transport and finite-horizon
+potential telescope now compile downstream. `TSALLIS-TIME-VARYING-PENALTY`,
+their refined assembly, an early-round fallback for local `eta > 1/2`, an exact
+reusable Lemma 18 conjugate-value interface, and final Tsallis-INF regret remain
+open.
+
+## Tsallis Conjugate-Potential Finite-Horizon Decomposition
+
+`TSALLIS-CONJUGATE-POTENTIAL-FINITE-HORIZON-DECOMPOSITION` is `leanCompiled` in
+`BanditRLProof.TsallisConjugatePotentialFiniteHorizon`. Its deterministic theorem
+telescopes the paper-normalized fixed-eta potential using exact score recursion.
+Its generic probability theorem identifies each conditional action law with the
+finite ordinary-IW sampling measure, integrates the compiled one-round bound,
+and exchanges finite sums and Bochner integrals. The generated canonical
+endpoint discharges selector measurability, policy and condDistrib identities,
+a.e. score recursion, and both score and budget integrability.
+
+The regularity boundary is explicit: finite nonempty decidable arms, a finite
+prior, Standard Borel environment/action with measurable action singletons,
+predictable supported `[0,1]` losses, and fixed local `eta` in `(0,1/2]`. No
+uniform probability floor is introduced. Retrieval evidence is the compiled
+conjugate-potential producer and generated half-Tsallis trajectory stack,
+Mathlib finite-sum/measure/kernel APIs, and Tsallis-INF Lemmas 18--19. Root,
+focused, and `Tests.Basic` builds plus external declaration canaries compile.
+
+Failure policy: the fixed-eta successor-round route is closed. This leaf does
+not handle time zero, early rounds with local `eta > 1/2`, learning-rate changes,
+the negative best-arm penalty, refined assembly, or final Tsallis-INF regret.
+
+## Tsallis Time-Varying Penalty
+
+`TSALLIS-TIME-VARYING-PENALTY` is `leanCompiled` in
+`BanditRLProof.TsallisTimeVaryingPenalty`. The generic theorem consumes exact
+current minimizers at `eta_t` and same-`eta_t` next-score auxiliary minimizers,
+then bounds the finite scheduled potential sum by the initial mass, explicit
+reciprocal-rate increments, and the negative terminal comparator mass. For a
+positive nonincreasing schedule, the zero-score minimizer maximizes mass and
+the increments telescope to
+`(mass(initial) - mass(comparator)) / eta_n`. The canonical theorem constructs
+both minimizer families internally. A supported point-mass corollary proves
+`mass(pointMass best) = 1` and exposes the negative best-arm term
+`-1 / eta_n` explicitly.
+
+Local APIs/imports are `Tsallis.halfTsallisPotentialValue`,
+`FTRL.cumulativeLoss`, `FTRL.IsRegularizedMinimizer`,
+`halfTsallisMinimizer_isRegularizedMinimizer`,
+`Exp3Potential.sum_range_forward_difference`, `Finset` finite sums,
+reciprocal order, and field/ring algebra. Regularity contracts are finite
+nonempty decidable arms for the canonical endpoint, arbitrary real loss
+vectors, a finite-simplex comparator, `eta_t > 0` through the terminal index,
+and `eta_(t+1) <= eta_t` before it. There is no probability, measurability,
+kernel, integrability, bounded-loss, or `eta <= 1/2` premise.
+
+Retrieval evidence is the compiled conjugate-potential and minimizer layers,
+Mathlib finite-sum/order APIs, and Tsallis-INF Lemmas 12 and 20. Root, focused,
+and `Tests.Basic` builds plus an external canonical canary compile. Failure
+policy: deterministic cross-rate penalty control is closed, but generated
+scheduled-selector measurability/law transport, early large-step stability,
+refined assembly, tuning, and final regret remain
+separate.
+
+## Half-Tsallis Expected Finite-Horizon Stability
+
+`TSALLIS-HALF-EXPECTED-FINITE-HORIZON-STABILITY` is `leanCompiled` in
+`BanditRLProof.TsallisFTRLExpectedStability`. The generic theorem places every
+round on a common ambient finite measure, uses each condDistrib identity to
+recover the realized history/action map law, transports product-law
+integrability back to that realized composition, applies the compiled
+one-round integral bound, and exchanges the finite time sum with the Bochner
+integral. The canonical endpoint removes minimizer certificates. The final
+successor endpoint assumes exact importance-weighted score recursion and
+rewrites the sampled-action update as the actual next-round selector, proving
+the integral bound for `sum_t (<p_t,hatLoss_t>-<p_(t+1),hatLoss_t>)`. The
+ambient theorem only assumes a finite measure; under a probability measure,
+this integral inequality is the usual expected stability bound.
+
+The regularity boundary is explicit: a finite ambient measure; measurable
+time-indexed histories/actions; a standard-Borel action space with measurable
+singletons; finite nonempty arms; Markov policy laws identified a.e. with the
+canonical half-Tsallis finite laws; eta positive; supported `[0,1]` losses;
+measurable/integrable product-law stability scores; integrable history
+half-power budgets; and exact score recursion. Focused/root builds and the
+external final-successor canary compile.
+
+Failure policy: expected finite-horizon stability assembly and sampled-action
+successor alignment are closed under those contracts. Downstream modules now
+construct the canonical measurable trajectory and consume this theorem in the
+compiled estimated-to-environment regret route. Self-bounding, comparator
+specialization, tuning, and final Tsallis-INF regret remain open.
+
+## Tsallis Scheduled Recursive Trajectory
+
+`TSALLIS-SCHEDULED-RECURSIVE-TRAJECTORY` is `leanCompiled` in
+`BanditRLProof.TsallisScheduledRecursiveTrajectory`. The initial action uses
+`eta 0`; the policy after the visible prefix through `n` uses `eta (n+1)` and
+the recursively accumulated observed importance-weighted score. The module
+compiles a roundwise selector-measurability contract, its canonical inhabitant,
+the scheduled finite-action policy and trajectory kernel, and both the
+history-only and environment-retaining successor `condDistrib` laws.
+
+Local APIs/imports are the compiled canonical half-Tsallis selector,
+`Exp3.measurable_observedImportanceWeightedLoss`, finite-action measures and
+kernels, Thompson's canonical measurable-environment trajectory, Mathlib
+`compProd`, and `condDistrib`. Regularity is finite nonempty decidable arms,
+measurable singleton actions, a deterministic real schedule, and for the law
+wrappers Standard Borel environment/action plus a finite prior and measurable
+history environment. Positivity and monotonicity of `eta` are deliberately not
+needed at this law layer.
+
+Retrieval evidence is the fixed-rate generated trajectory, canonical selector,
+time-varying penalty, and local kernel/conditional-distribution declarations.
+Focused/root and `Tests.Basic` builds plus external canaries compile; the axiom
+audit reports only `propext`, `Classical.choice`, and `Quot.sound`.
+Failure policy: scheduled selector regularity and successor action-law transport
+are closed. Observed-IW cumulative-loss alignment and pathwise
+stability-plus-penalty assembly now compile downstream, as does expected
+refined stability over every successor round. The time-zero consumer, the early
+`eta > 1/2` fallback, tuning, and final Tsallis-INF regret remain separate.
+
+## Tsallis Scheduled Score/Penalty Alignment
+
+`TSALLIS-SCHEDULED-SCORE-PENALTY-ALIGNMENT` is `leanCompiled` in
+`BanditRLProof.TsallisScheduledScoreAlignment`. The inclusive generated history
+score through `n` is proved equal to `FTRL.cumulativeLoss` of the actual
+observed IW vectors through `n`. Consequently the canonical scheduled
+minimizer at time `t` is definitionally transported to the actual generated
+sampling probability. Named same-rate stability, potential-penalty, and
+estimated-regret processes then satisfy an exact pathwise finite-sum
+decomposition. Combining this identity with the deterministic scheduled
+point-mass theorem yields generated best-arm estimated regret bounded by the
+same-rate stability sum plus initial mass divided by `eta_n` minus `1/eta_n`.
+
+Local APIs/imports are `TsallisScheduledRecursiveTrajectory`,
+`TsallisTimeVaryingPenalty`, the fixed-rate alignment pattern,
+`Exp3.previousPairHistory_frestrictLe`, `FTRL.cumulativeLoss_succ`, finite sums,
+and ring/linear arithmetic. Contracts are finite nonempty decidable arms, an
+arbitrary path sample, a supported best arm, positive `eta_t` through `n`, and
+a nonincreasing schedule before `n`. No probability measure, measurability,
+conditional law, integrability, reward bound, probability floor, or eta upper
+bound is used.
+
+Retrieval evidence is the compiled scheduled trajectory, deterministic
+time-varying penalty, fixed-rate estimated-environment alignment, and
+conjugate-potential producer. Failure policy: pathwise alignment and penalty
+assembly are closed, and the expected successor stability sum now compiles.
+The time-zero finite-action expectation and integrability consumer now compiles
+downstream, as does its exact all-times finite-sum assembly with the successor
+endpoint. The next blockers are a coarse fallback for local rates above `1/2`
+and integration of the small-rate expected stability sum with the scheduled
+penalty theorem.
+
+## Tsallis Scheduled Successor Expected Stability
+
+`TSALLIS-SCHEDULED-SUCCESSOR-EXPECTED-STABILITY` is `leanCompiled` in
+`BanditRLProof.TsallisScheduledExpectedStability`. Its endpoint integrates the
+exact pathwise same-rate potential-stability term at actual times `n+1` and
+bounds the finite sum by the integral of
+`eta (n+1) * sum_a sqrt(p_a) * (1-p_a) + 2 * eta (n+1)^2`.
+
+The module packages the environment/prefix history map, successor action map,
+lifted scheduled finite-action source and policy, scheduled current and
+same-rate updated selectors, coordinate measurability, and automatic
+product-law integrability. It instantiates the existing one-round conjugate
+bound separately at each `eta (n+1)`, uses the generated successor
+`condDistrib`, rewrites stored feedback to the predictable loss coordinate via
+`Exp3.canonicalPredictableTrajectoryMeasure_reward_eq_successorLoss_ae`, and
+exchanges the finite sum with the integral using
+`ExpectationBochnerSums.integral_finset_sum`.
+
+Regularity is a finite prior, Standard Borel environment/action, measurable
+action singletons, finite nonempty decidable arms, predictable `[0,1]` losses,
+and `0 < eta (n+1) <= 1/2` for every included successor. No schedule
+monotonicity, probability floor, independence, concentration premise, or
+time-zero law is hidden. Retrieval evidence is the scheduled score/penalty and
+trajectory leaves, fixed-rate conjugate finite-horizon route, Mathlib
+kernel/integral/finite-sum APIs, and Tsallis-INF Lemmas 18--19. Focused/root and
+`Tests.Basic` builds plus the external `Fin 2` endpoint canary compile. The
+placeholder scan is empty, and the public-import axiom audit reports only
+`propext`, `Classical.choice`, and `Quot.sound`.
+
+Failure policy: expected successor stability is closed, and time zero plus the
+combined all-times finite-sum consumer now compile downstream. Do not infer an
+`eta_t > 1/2` fallback, integration of the full
+stability-plus-penalty regret theorem, all-arm refinement, tuning, or final
+Tsallis-INF regret.
+
+## Tsallis Scheduled Initial Expected Stability
+
+`TSALLIS-SCHEDULED-INITIAL-EXPECTED-STABILITY` is `leanCompiled` in
+`BanditRLProof.TsallisScheduledInitialExpectedStability`. Its endpoint proves
+integrability of the exact pathwise scheduled potential-stability term at time
+zero and bounds its integral by the canonical initial refined budget
+`eta 0 * sum_a sqrt(p_0(a)) * (1-p_0(a)) + 2 * (eta 0)^2`.
+
+The proof defines the zero-score initial history/action potential score, reuses
+the canonical initial finite-action source, transports the initial action law
+with `canonicalMeasurableEnvironmentTrajectoryMeasure_condDistrib_action_zero_given_environment`,
+and rewrites the stored reward with
+`canonicalPredictableTrajectoryMeasure_reward_zero_eq_initialLoss_ae`. It then
+identifies the scheduled same-rate next minimizer and applies the generic
+one-round conjugate-potential integral theorem.
+
+Regularity is a finite prior, Standard Borel environment/action, measurable
+action singletons, finite nonempty decidable arms, predictable `[0,1]` initial
+losses, and `0 < eta 0 <= 1/2`. No schedule monotonicity, successor-rate
+premise, probability floor, independence, or concentration is used. Failure
+policy: focused/root/`Tests.Basic` builds and the external `Fin 2` canary pass;
+the source is placeholder-free and the public-import axiom audit reports only
+`propext`, `Classical.choice`, and `Quot.sound`. Time-zero expectation transport
+is closed and the initial-plus-successor finite-sum consumer now compiles
+downstream; early `eta_t > 1/2` fallback, full integrated assembly, tuning, and
+final regret remain open.
+
+## Tsallis Scheduled All-Times Expected Stability
+
+`TSALLIS-SCHEDULED-ALL-TIMES-EXPECTED-STABILITY` is `leanCompiled` in
+`BanditRLProof.TsallisScheduledAllTimesExpectedStability`. Its final statement
+integrates the exact pathwise stability sum over `Finset.range (horizon + 1)`
+and bounds it by the integral of the initial refined budget plus every
+successor refined budget. This is the stability sum consumed by the scheduled
+pathwise regret decomposition, not an auxiliary surrogate.
+
+The proof first exposes the successor path-term/history-action equality as a
+public a.e. API, transports product-law integrability back to each trajectory
+term, and forms the successor finite sum. It then combines this with the
+distinct time-zero integrability theorem using `Finset.sum_range_succ'`, proves
+both budget sides integrable, applies `integral_add`, and adds the initial and
+successor expectation inequalities.
+
+Regularity is a finite prior, Standard Borel environment/action, measurable
+action singletons, finite nonempty decidable arms, predictable `[0,1]` losses,
+and `0 < eta t <= 1/2` for every `t <= horizon`. No monotonicity, probability
+floor, comparator, independence, or concentration premise is used. Retrieval
+evidence is the initial/successor expected-stability leaves, scheduled
+score/penalty alignment, `IntegrabilitySums.integrable_finset_sum`,
+`MeasureTheory.Integrable.add`, `integral_add`, and the Mathlib measure/finite-
+sum cards. Focused/root/`Tests.Basic` builds and the external `Fin 2` canary
+pass; the source is placeholder-free and the public-import axiom audit reports
+only `propext`, `Classical.choice`, and `Quot.sound`.
+
+Failure policy: all-times small-rate expected stability is closed. The local
+`eta_t > 1/2` fallback, expected stability-plus-penalty integration, all-arm
+refinement, tuning, and final Tsallis-INF regret remain open.
+
+## Tsallis Scheduled All-Rate Expected Stability
+
+`TSALLIS-SCHEDULED-ALL-RATE-EXPECTED-STABILITY` is `leanCompiled` in
+`BanditRLProof.TsallisScheduledAllRateExpectedStability`. Its final statement
+keeps the exact `Finset.range (horizon + 1)` pathwise stability sum and bounds
+each actual time by the refined budget when `eta t <= 1/2`, or by the coarse
+constant `1` otherwise. Thus the all-times expectation now requires only
+`0 < eta t` for included times.
+
+The proof route is layered. A deterministic minimizer comparison reduces the
+potential step to a difference of finite linear losses; ordinary-IW
+cancellation and nonnegativity then give the pointwise bound `<= 1`. The
+finite-simplex average, product-law integrability, and identified
+`condDistrib` transport are exposed as generic APIs. Initial and successor
+generated-law wrappers select between those coarse APIs and the existing
+refined endpoints, before `ExpectationBochnerSums.integral_finset_sum` closes
+the exact all-times result.
+
+Regularity is a finite prior, Standard Borel environment/action, measurable
+action singletons, finite nonempty decidable arms, predictable supported
+`[0,1]` losses, and positive included rates. No rate upper bound, schedule
+monotonicity, probability floor, comparator, independence, or concentration
+is assumed. Retrieval evidence includes Tsallis-INF Lemma 11's
+`min {refined, 1}` ordinary-IW branch and early-round constant fallback, the
+compiled scheduled refined endpoints, and local finite-action
+kernel/integral/sum APIs. The paper card is retrieval evidence, not a local
+proof; proof-weapon cards remain inspiration-only.
+
+Failure policy: the early large-rate expected-stability gap is closed, and its
+expected stability-plus-penalty consumer now compiles. The remaining route is
+the all-arm-to-suboptimal conversion, tuning, and final Tsallis-INF regret.
+
+## Tsallis Scheduled Expected Regret
+
+`TSALLIS-SCHEDULED-EXPECTED-REGRET` is `leanCompiled` in
+`BanditRLProof.TsallisScheduledExpectedRegret`. Its endpoint bounds generated
+predictable environment regret against `pointMass best` by the exact
+all-rate scheduled stability-budget integral plus the explicit initial
+potential term divided by `eta horizon` and terminal `-1 / eta horizon`.
+
+The support layer proves scheduled probability measurability and simplex
+membership, no-floor conditional IW first moments, stored-reward to
+predictable-estimator a.e. transport, and finite-horizon integrability. The
+final proof combines the observed/environment integral identity, pathwise
+scheduled point-mass penalty, `integral_mono_ae`, and the compiled all-rate
+expected-stability sum. Contracts are a probability prior, Standard Borel
+environment/action, measurable action singletons, finite nonempty decidable
+arms, predictable `[0,1]` losses, `best ∈ arms`, positive rates through the
+inclusive horizon, and a nonincreasing schedule. No probability floor or eta
+upper bound is used.
+
+Retrieval evidence is the fixed-rate estimated/environment regret module, the
+scheduled score/penalty and all-rate stability leaves, Mathlib conditional-law,
+integral, and finite-sum cards, and Tsallis-INF Lemma 11. Failure policy: the
+expected scheduled assembly is closed, and its small-rate suboptimal-arm
+consumer and exact predictable fixed-gap producer now compile. Model-side
+reward-law-to-gap transport, schedule tuning, and the full Tsallis-INF regret
+theorem remain open.
+
+## Tsallis Scheduled Refined Expected Penalty
+
+`TSALLIS-SCHEDULED-REFINED-EXPECTED-PENALTY` is `leanCompiled` in
+`BanditRLProof.TsallisScheduledRefinedExpectedPenalty`. Its final Lean-facing
+theorem bounds generated predictable environment regret by the all-rate
+stability integral plus an initial refined suboptimal mass and the finite sum
+of reciprocal-rate increments times expected refined suboptimal masses. The
+coarse terminal term `M(p_0) / eta_horizon - 1 / eta_horizon` is absent.
+
+The proof first establishes
+`M(p)-1 <= 2 * sum_{a != best} (sqrt(p_a)-p_a/2)` on a finite simplex. It then
+consumes the uncollapsed deterministic penalty theorem, cancels the constant
+point-mass baseline using `sum_range_forward_difference`, proves the refined
+mass integrable, transports each square root with concave Jensen, and combines
+the result with the exact observed-to-environment regret identity and all-rate
+stability integral.
+
+Contracts are a probability prior, Standard Borel environment/action,
+measurable action singletons, finite nonempty decidable arms, predictable
+supported `[0,1]` losses, a supported best arm, positive rates through the
+inclusive horizon, and a nonincreasing schedule. There is no eta upper bound,
+probability floor, gap law, independence, concentration premise, or tuned
+schedule. Retrieval evidence is Tsallis-INF Lemma 12 part 2, the local
+time-varying penalty and scheduled expected-regret leaves, Mathlib finite-sum,
+integral, and square-root/Jensen APIs. Failure policy: do not return to the
+coarse terminal penalty for stochastic tuning. The next leaf must combine the
+refined stability and penalty coefficients; that assembly now compiles
+downstream. Concrete schedule algebra and full Tsallis-INF regret remain open.
+
+## Tsallis Scheduled Refined Stability-Penalty Assembly
+
+`TSALLIS-SCHEDULED-REFINED-STABILITY-PENALTY-ASSEMBLY` is `leanCompiled` in
+`BanditRLProof.TsallisScheduledRefinedStabilityPenalty`. It defines
+`c_0 = 2*eta_0 + 2/eta_0` and
+`c_(t+1) = 2*eta_(t+1) + 2*(1/eta_(t+1)-1/eta_t)`, then proves generated
+predictable environment regret is at most
+`sum_t 2*eta_t^2 + sum_t c_t*sum_{a != best} sqrt(E[p_t(a)])`.
+
+The final endpoint reuses the exact predictable fixed-gap law and automatic
+self-bound to obtain
+`2*sum_t 2*eta_t^2 + sum_(t,a != best) c_t^2/gap(a) + corruption` without a
+caller-supplied self-bounding hypothesis. The proof drops only the
+nonpositive `-E[p]/2` correction, reindexes time zero plus successors with
+`Finset.sum_range_succ'`, and applies the compiled finite completion-of-squares
+consumer over the time/arm product.
+
+Contracts are a probability prior, Standard Borel environment/action,
+measurable action singletons, finite nonempty decidable arms, predictable
+supported `[0,1]` losses, a supported best arm, positive nonincreasing rates
+bounded by `1/2` through the horizon, exact fixed gaps, positive suboptimal
+gaps, and nonnegative corruption. No probability floor, independence,
+concentration premise, manual self-bound, or concrete schedule is assumed.
+Retrieval evidence is the refined expected penalty, fixed-gap self-bound,
+suboptimal Jensen, generic completion-of-squares, finite-sum, integral, and
+square-root routes. Failure policy: coefficient assembly is closed, and its
+concrete square-root schedule consumer now compiles downstream. Do not reopen
+the coarse terminal penalty or claim the broader stochastic/full theorem.
+
+## Tsallis Square-Root Schedule Fixed-Gap Bound
+
+`TSALLIS-SQRT-SCHEDULE-FIXED-GAP` is `leanCompiled` in
+`BanditRLProof.TsallisSqrtScheduleFixedGap`. It instantiates the generated
+scheduled policy with `eta_t = 1/(2*sqrt(t+1))`, proves positivity,
+monotonicity, `eta_t <= 1/2`, `4*eta_t^2 = 1/(t+1)`, and
+`c_t^2 <= 25/(t+1)`, and closes the time/arm product sum. The final theorem is
+`regret <= H_(T+1)*(1+25*sum_(a != best)1/gap(a))+corruption` under the exact
+predictable fixed-gap law.
+
+The route imports only the compiled refined stability-penalty endpoint and
+uses Mathlib square-root order/square identities, reciprocal order, and finite
+sum/product factorization. Regularity is unchanged from the exact-gap route:
+probability prior, Standard Borel environment/action, measurable singletons,
+finite nonempty decidable arms, supported predictable `[0,1]` losses, supported
+best arm, positive suboptimal gaps, and nonnegative corruption. Schedule
+contracts and the self-bound are no longer caller premises. Retrieval evidence
+is the local refined assembly/fixed-gap route plus `MLIB-FINSET-SUMS` and
+`MLIB-REAL-LOG-SQRT`. Failure policy: the finite harmonic theorem is closed and
+its Mathlib-backed logarithmic corollary now compiles downstream. Broader
+stochastic/corrupted-law transport remains open, so this is not yet the full
+paper Tsallis-INF theorem.
+
+## Tsallis Square-Root Schedule Logarithmic Fixed-Gap Bound
+
+`TSALLIS-SQRT-SCHEDULE-LOG-FIXED-GAP` is `leanCompiled` in
+`BanditRLProof.TsallisSqrtScheduleFixedGap`. The module now identifies its
+Real-valued finite harmonic budget with the Real cast of Mathlib's rational
+`harmonic (T+1)`, applies `harmonic_le_one_add_log`, proves the reciprocal-gap
+factor nonnegative, and exposes
+`regret <= (1+log(T+1))*(1+25*sum_(a!=best)1/gap(a))+corruption`.
+
+The only new import is `Mathlib.NumberTheory.Harmonic.Bounds`; the proof uses
+the rational cast APIs and the existing harmonic fixed-gap endpoint. No new
+regularity premise is introduced. Root, focused, and `Tests.Basic` builds plus
+the external `Fin 2` canary cover the public interface. Failure policy: the
+explicit logarithmic exact predictable-gap theorem is closed. The remaining
+theorem-level gap is transport from broader stochastic/corrupted reward laws
+to self-bounding, not finite-sum or logarithm algebra.
+
+## Tsallis Finite-Bandit Mean-Loss Specialization
+
+`TSALLIS-FINITE-BANDIT-MEAN-LOSS` is `leanCompiled` in
+`BanditRLProof.TsallisFiniteBanditMeanLoss`. Given a `FiniteBanditModel` whose
+Real-cast means lie in `[0,1]`, `Exp3.finiteBanditMeanLoss` constructs the
+stationary predictable loss `1 - mean`. Countability of `Fin K` discharges
+product measurability, and the public gap lemma proves at every time and sample
+that the loss difference against `model.bestArm` is exactly the Real cast of
+`model.gap arm`.
+
+The final endpoint fixes the arm set to `Finset.univ`, obtains nonemptiness from
+`model.bestArm`, and invokes the compiled logarithmic square-root-schedule
+theorem. Callers provide only bounded means, strictly positive non-best model
+gaps, a probability prior on a Standard Borel environment, and nonnegative
+corruption; no predictable-loss object, gap-law proof, or schedule proof is
+exposed. Root, focused, and `Tests.Basic` builds plus an external `Fin 2`
+canary cover the interface. Failure policy: the finite-model deterministic
+mean-loss route is closed. Its feedback law is still Dirac at `1 - mean`;
+random reward-kernel feedback and conditional-mean/self-bounding transport
+remain open and must not be reported as the stochastic Tsallis-INF theorem.
+
+## Tsallis Scheduled Suboptimal Expected Bound
+
+`TSALLIS-REFINED-SUBOPTIMAL-STABILITY-PENALTY` is `leanCompiled` in
+`BanditRLProof.TsallisScheduledSuboptimalExpectedBound`. The module defines
+the expected scheduled action probability, proves that these expectations
+again form a finite simplex, and applies Mathlib's concave Jensen theorem for
+`Real.sqrt` to obtain `E[sqrt (p_t(a))] <= sqrt (E[p_t(a)])`.
+
+Under `0 < eta t <= 1/2`, the piecewise all-rate budget is definitionally the
+refined budget. The existing all-arm elimination lemma removes the best-arm
+coordinate pathwise, finite-sum/integral exchange closes the inclusive
+`Finset.range (horizon + 1)` expression, and the compiled scheduled
+expected-regret theorem supplies the initial-minus-terminal potential penalty.
+The principal endpoint is therefore an environment-regret upper bound by
+`sum_t (2 * eta_t * sum_{a != best} sqrt (E[p_t(a)]) + 2 * eta_t^2)` plus
+that penalty. A second endpoint passes this expression and an explicit
+positive-gap self-bounding inequality to the compiled completion-of-squares
+consumer.
+
+Regularity contracts are a probability prior, Standard Borel environment and
+action spaces, measurable action singletons, finite nonempty decidable arms,
+predictable supported `[0,1]` losses, `best` in the arm set, a positive
+nonincreasing schedule with `eta t <= 1/2` through the inclusive horizon, and,
+for the final self-bounding theorem, positive gaps on `arms.erase best` plus an
+explicit expected-probability self-bound with corruption. No probability
+floor, independence, concentration premise, or tuned schedule is used.
+
+Retrieval evidence is the compiled scheduled expected-regret, all-rate
+stability, refined all-arm-to-suboptimal, and self-bounding leaves; Mathlib's
+concave integral, finite-sum, measure-integral, and square-root APIs; and
+Tsallis-INF Lemma 11. The paper card is evidence only and weapon cards are
+inspiration-only. Failure policy: simplex/Jensen transport, suboptimal-arm
+elimination, scheduled penalty assembly, and abstract self-bounding completion
+are closed. Do not claim an automatic fixed-gap law wrapper, schedule tuning,
+or the full Tsallis-INF theorem. The exact predictable fixed-gap wrapper now
+compiles downstream; this does not derive that law from a stochastic reward
+kernel.
+
+## Tsallis Scheduled Fixed-Gap Self-Bounding
+
+`TSALLIS-SCHEDULED-FIXED-GAP-SELF-BOUNDING` is `leanCompiled` in
+`BanditRLProof.TsallisScheduledFixedGapSelfBounding`. The pathwise theorem
+rewrites scheduled predictable environment regret against `pointMass best` as
+the inclusive time sum of `p_t(a) * gap(a)` over `arms.erase best`. It reuses
+the finite-simplex point-mass gap identity and derives `gap(best) = 0` from the
+exact predictable loss-difference law at each sample and time.
+
+A measure-generic theorem proves integrability of every finite coordinate,
+exchanges both finite sums with the integral, and identifies the result with
+`sum_t sum_{a != best} gap(a) * E[p_t(a)]`. Consequently every nonnegative
+corruption allowance supplies the explicit self-bounding premise automatically.
+The final endpoint invokes the previous completion-of-squares theorem and
+returns the scheduled squared-rate-over-gap regret bound without a
+caller-supplied self-bound.
+
+Regularity contracts are a probability prior, Standard Borel environment and
+action spaces, measurable action singletons, finite nonempty decidable arms,
+predictable supported `[0,1]` losses, a supported best arm, exact samplewise
+`loss_t(a) - loss_t(best) = gap(a)` on the arm set, strictly positive gaps on
+`arms.erase best`, nonnegative corruption, and positive nonincreasing rates
+with `eta t <= 1/2` through the inclusive horizon. No probability floor,
+independence, concentration premise, manually supplied self-bound, or tuned
+schedule is used.
+
+Retrieval evidence is the scheduled suboptimal expected-bound leaf, the
+generic self-bounding conversion, the scheduled expected-regret layer,
+Mathlib finite-sum and measure-integral APIs, and the stochastic self-bounding
+route in Tsallis-INF. The paper card is evidence only and weapon cards are
+inspiration-only. Failure policy: exact predictable gap identification,
+expected gap-mass transport, nonnegative-corruption self-bounding, and final
+completion-of-squares assembly are closed. Do not claim the exact gap law has
+been derived from reward-kernel means, that rates are tuned, or that the full
+Tsallis-INF theorem is complete.
+
+## Tsallis Scheduled Expected-Gap Self-Bounding
+
+`TSALLIS-SCHEDULED-EXPECTED-GAP-SELF-BOUNDING` is `leanCompiled` in
+`BanditRLProof.TsallisScheduledExpectedGapSelfBounding`. Its Lean-facing
+contract `HasScheduledExpectedGapLaw` is coordinatewise: for every included
+time and suboptimal arm,
+`E[p_t(a) * (loss_t(a) - loss_t(best))] = gap(a) * E[p_t(a)]`.
+Unlike the earlier producer, it does not require the loss difference to equal
+the gap at every sample.
+
+The proof establishes measurability and integrability of each weighted loss
+difference using the simplex bound and `[0,1]` predictable losses, rewrites
+point-mass regret as a finite sum over `arms.erase best`, exchanges the time
+and arm sums with the integral, and derives the usual corruption self-bound.
+Generic self-bound consumers were extracted at the refined coefficient and
+square-root schedule layers. The final compiled endpoint is
+`regret <= (1+log(T+1))*(1+25*sum_(a!=best)1/gap(a))+corruption`.
+
+Regularity is a probability trajectory law, measurable action singletons,
+finite nonempty decidable arms, predictable `[0,1]` losses, supported best arm,
+positive suboptimal gaps, nonnegative corruption, and the coordinatewise
+expected-gap law. The generated final wrapper additionally uses Standard
+Borel environment/action spaces and a probability prior. No probability
+floor, samplewise fixed-gap identity, concentration theorem, or caller
+schedule proof is required.
+
+Retrieval evidence is the compiled fixed-gap, scheduled expected-regret,
+refined stability, and square-root/log leaves; `MLIB-MEASURE-INTEGRAL`,
+`MLIB-FINSET-SUMS`, `MLIB-CONDITIONAL-EXPECTATION`; and the Tsallis-INF paper
+card. Cards remain evidence only and weapons remain inspiration-only. The
+public `Fin 2` canary, focused/root/`Tests.Basic` builds, placeholder scan, and
+axiom audit pass; the latter reports only `propext`, `Classical.choice`, and
+`Quot.sound`. Failure policy: expected-gap-to-log-regret transport is closed.
+Deriving `HasScheduledExpectedGapLaw` from an actual stochastic reward/loss
+construction via conditional expectation or independence remains open.
+
+## Tsallis Scheduled Conditional-Mean Expected Gap
+
+`TSALLIS-SCHEDULED-CONDITIONAL-MEAN-EXPECTED-GAP` is `leanCompiled` in
+`BanditRLProof.TsallisScheduledConditionalMeanGap`. The module defines
+`sampledScheduledHalfTsallisPastSigma`: it is `bot` at time zero and the comap
+of the generated action/reward prefix through `n` before time `n+1`. It proves
+that every scheduled probability coordinate `p_t(a)` is strongly measurable
+on this sigma-algebra.
+
+The Lean-facing contract `HasScheduledConditionalMeanGapLaw` requires
+`condExp past_t (loss_t(a)-loss_t(best)) = gap(a)` almost everywhere for each
+included time and suboptimal arm. The producer
+`hasScheduledExpectedGapLaw_of_conditionalMeanGapLaw` applies Mathlib's
+`condExp_mul_of_stronglyMeasurable_left` and `integral_condExp` to obtain
+`HasScheduledExpectedGapLaw`, so all existing self-bounding and logarithmic
+consumers apply without a samplewise fixed-gap premise.
+
+Regularity is a probability trajectory measure, measurable singleton actions,
+finite nonempty decidable arms, predictable `[0,1]` losses, and the stated
+conditional mean law through the inclusive horizon. No Standard Borel,
+independence, reward-kernel, floor, concentration, or schedule premise is added
+by this producer. Retrieval evidence is `MLIB-CONDITIONAL-EXPECTATION`,
+`MLIB-MEASURE-INTEGRAL`, the local expected-gap leaf and local independence
+wrappers, plus the Tsallis-INF paper card; cards are evidence only and weapons
+are inspiration-only. The public-import axiom audit reports only `propext`,
+`Classical.choice`, and `Quot.sound`. Failure policy: past-measurability and
+conditional-mean to first-moment transport are closed. The independence
+producer now compiles downstream; producing its hypotheses from a concrete
+stochastic reward/loss kernel remains open, so this is not the full
+stochastic/corrupted Tsallis-INF theorem.
+
+## Tsallis Scheduled Independent-Mean Gap Regret
+
+`TSALLIS-SCHEDULED-INDEPENDENT-MEAN-GAP-REGRET` is `leanCompiled` in
+`BanditRLProof.TsallisScheduledIndependentMeanGap`. Its contract
+`HasScheduledIndependentMeanGapLaw` states, for each included time and
+suboptimal arm, that the predictable loss difference is independent of the
+pre-action trace sigma-algebra and has global integral equal to the arm gap.
+
+Mathlib's `condExp_indep_eq` turns that contract into
+`HasScheduledConditionalMeanGapLaw`; the compiled conditional-mean producer
+then yields `HasScheduledExpectedGapLaw`. The final generated-trajectory
+theorem reaches
+`regret <= (1+log(T+1))*(1+25*sum_(a!=best)1/gap(a))+corruption` under the
+square-root schedule. Thus independence-to-conditional-mean, expected
+self-bounding, schedule algebra, and logarithmic closure are one compiled
+theorem route rather than disconnected cards.
+
+The generic producers require a probability trajectory measure, finite
+decidable arms, predictable `[0,1]` losses, coordinatewise independence and
+exact global means; the expected-gap step also uses measurable singleton
+actions. The final endpoint additionally uses Standard Borel environment and
+action spaces, a probability prior, positive suboptimal gaps, and nonnegative
+corruption. No samplewise fixed-gap law, probability floor, concentration
+premise, or caller schedule proof is needed.
+
+Retrieval evidence is the local conditional-mean and expected-gap leaves,
+`MLIB-PROBABILITY-INDEPENDENCE`, `MLIB-CONDITIONAL-EXPECTATION`,
+`MLIB-MEASURE-INTEGRAL`, the compiled ETC `condExp_indep_eq` pattern, and the
+Tsallis-INF paper card. Cards are evidence only and weapons are
+inspiration-only. The public-import axiom audit reports only `propext`,
+`Classical.choice`, and `Quot.sound`. Failure policy: the abstract independence route is closed.
+The remaining law transport is to prove its independence and mean premises
+for one concrete stochastic reward/loss kernel on the generated trajectory;
+full stochastic/corrupted Tsallis-INF is not yet claimed.
++
+## Tsallis Scheduled IID Mean-Gap Route
+
+`TSALLIS-SCHEDULED-IID-MEAN-GAP-REGRET` is `leanCompiled` in
+`BanditRLProof.TsallisScheduledIIDMeanGap`.  The Lean-facing model is an IID
+loss-state stream with a jointly measurable `[0,1]` loss evaluator.
+`KernelTrajectoryPrefix.partialTraj_zero_congr` and
+`trajMeasure_map_frestrictLe_congr` show that finite Ionescu-Tulcea marginals
+only use the corresponding finite step-kernel prefix.  The explicit
+`sampledScheduledHalfTsallisIIDPrefixKernel` therefore proves
+`HasScheduledIIDPrefixKernelFactorization` for the canonical trajectory.
+Infinite-product coordinate independence, `Measure.fst_compProd`,
+`Measure.infinitePi_map_eval`, and the past-kernel independence transport then
+produce `HasScheduledIndependentMeanGapLaw` and the explicit logarithmic regret
+endpoint.  The final theorem has no caller-supplied trajectory or `hfactor`.
+
+Regularity is now exactly Standard Borel loss states/actions, measurable
+singleton actions, a probability coordinate law, jointly measurable `[0,1]`
+losses, positive mean gaps, and nonnegative corruption.
+Retrieval evidence is the local IID-coordinate and scheduled independent-mean
+leaves plus `MLIB-PROBABILITY-INDEPENDENCE`, `MLIB-PROBABILITY-KERNEL`,
+`MLIB-MEASURE-INTEGRAL`, and the Tsallis-INF paper card.  Cards remain evidence
+only and weapons inspiration-only. Failure policy: canonical prefix
+factorization, IID independence/global means, and the concrete IID log endpoint
+are closed. The finite-arm stochastic reward-vector/model-gap consumer now
+compiles; an actual corruption contract is separate.
+
+## Tsallis Finite-Arm IID Reward-Law Route
+
+`TSALLIS-FINITE-ARM-IID-REWARD-LAW-REGRET` is `leanCompiled` in
+`BanditRLProof.TsallisFiniteArmIIDRewardLaw`. It closes the model-facing gap
+left by the abstract IID loss-state theorem. A family
+`armLaw : Fin K -> Measure Rat` is assembled into `Measure.pi armLaw`.
+Pointwise clipping gives a globally `[0,1]` selected loss, while the explicit
+a.e. reward-support contract proves clipping does not alter arm means.
+`MeasureTheory.integral_comp_eval` then transports the coordinate integrals,
+and the abstract `iidLossStateMeanGap` is exactly the Real cast of
+`FiniteBanditModel.gap`.
+
+The final theorem exposes the scheduled half-Tsallis logarithmic bound directly
+in model gaps. Required contracts are probability arm laws, rewards a.e. in
+`[0,1]`, exact arm-law means, positive non-best gaps, and nonnegative
+corruption. The concrete process is IID across rounds and uses an independent
+within-round product reward vector. Retrieval evidence is the local IID route,
+Mathlib Pi-integral and measure/integrability cards, and the Tsallis-INF paper
+cards. Failure policy: this stochastic IID model route is closed. Its
+stationary-oblivious corrupted-process consumer now compiles; adaptive
+corruption remains outside this theorem.
+
+## Tsallis Stationary Corrupted IID Reward-Law Route
+
+`TSALLIS-FINITE-ARM-IID-STATIONARY-CORRUPTED-REWARD-LAW-REGRET` is
+`leanCompiled` in
+`BanditRLProof.TsallisFiniteArmIIDCorruptedRewardLaw`. A fixed
+`rewardShift : Fin K -> Real` is added to every fresh IID reward coordinate and
+projected to `[0,1]`. Mathlib's `Set.abs_projIcc_sub_projIcc` bounds each
+coordinate change by `abs (rewardShift arm)`, so the actual mean loss gap is
+within `abs (shift arm) + abs (shift bestArm)` of `model.gap`.
+
+The actual IID mean-gap law is constructed through the existing finite-prefix
+factorization and independence route. A new perturbed-expected-gap consumer
+then derives the baseline self-bound with the explicit inclusive-horizon
+budget
+`(T+1) * sum_(a != best) (abs (shift a) + abs (shift best))`.
+The final logarithmic theorem has no free corruption parameter, and the budget
+is zero for zero shift.
+
+Regularity is one probability law per arm, raw rewards a.e. in `[0,1]`, exact
+baseline means, positive non-best baseline gaps, a fixed real shift per arm,
+and finite horizon. Arms are independent within a round and rounds remain IID.
+Retrieval evidence is the finite-arm IID and expected-gap self-bounding leaves,
+Mathlib measure/integral/independence cards, the unit-interval contraction, and
+the two Tsallis-INF paper cards. Failure policy: stationary oblivious
+corruption is closed. Its deterministic time-indexed predictable consumer now
+compiles; history-adaptive corruption remains outside this theorem.
+
+## Tsallis Time-Varying Expected-Gap Route
+
+`TSALLIS-SCHEDULED-TIME-VARYING-EXPECTED-GAP` is `leanCompiled` in
+`BanditRLProof.TsallisScheduledTimeVaryingExpectedGap`. It generalizes the
+first-moment, conditional-mean, and independence contracts from
+`gap : Action -> Real` to `gap : Nat -> Action -> Real`. Mathlib conditional
+expectation pull-out turns the per-time conditional law into the weighted gap
+identity, and finite Bochner-sum exchange identifies integrated generated
+regret with the full time-by-arm gap mass.
+
+The new baseline consumer assumes
+`abs (actualGap t a - baseGap a) <= deviation t a` and subtracts exactly
+`sum_(t<=T) sum_(a!=best) deviation t a` in the self-bound. Its regularity is a
+probability trajectory measure, finite nonempty decidable arms, measurable
+action singletons, predictable `[0,1]` losses, and the stated deterministic
+time-indexed conditional or independent mean law. Retrieval evidence is the
+compiled conditional/expected-gap route, `MLIB-CONDITIONAL-EXPECTATION`,
+`MLIB-MEASURE-INTEGRAL`, `MLIB-PROBABILITY-INDEPENDENCE`, and the corrupted
+Tsallis-INF paper card. Failure policy: deterministic per-time gap transport
+is closed; a random history-dependent gap requires a stronger past-measurable
+law.
+
+## Tsallis IID Time-Varying Mean-Gap Producer
+
+`TSALLIS-SCHEDULED-IID-TIME-VARYING-MEAN-GAP` is `leanCompiled` in
+`BanditRLProof.TsallisScheduledIIDTimeVaryingMeanGap`. The evaluator
+`value t state action` reads one fresh coordinate from a common IID state law.
+Equal finite state prefixes generate equal visible trajectory prefixes, so a
+measurable finite-prefix extension builds the canonical factorization kernel.
+Product coordinate independence, `Measure.compProd_map`,
+`Measure.fst_compProd`, and `Measure.infinitePi_map_eval` then produce the
+time-varying independent and expected-gap laws.
+
+Regularity is Standard Borel state/action spaces, measurable action
+singletons, a probability coordinate law, and per-time jointly measurable
+`[0,1]` evaluators. Retrieval is the stationary IID producer, the time-varying
+expected-gap leaf, and Mathlib independence/kernel/integral cards. Failure
+policy: common-law IID coordinates with deterministic time-indexed evaluation
+are closed. Nonidentical coordinate laws now compile in the next leaf;
+realized-history-dependent evaluation still needs a separate producer.
+
+## Tsallis Independent Nonidentical Mean-Gap Producer
+
+`TSALLIS-SCHEDULED-INDEPENDENT-NONIDENTICAL-MEAN-GAP` is `leanCompiled` in
+`BanditRLProof.TsallisScheduledIIDTimeVaryingMeanGap`. For
+`law : Nat -> Measure LossState`, with every `law t` a probability measure,
+`Measure.infinitePi law` and the existing finite-prefix factorization imply
+the scheduled time-varying independent mean-gap law with
+`gap(t,a)=∫s, value t s a - value t s best ∂law t`.
+
+The proof reuses `iIndepFun_rewardTrace_infinitePi`, separates coordinate `t`
+from the finite past via `iIndepFun.indepFun_finset`, transports independence
+through the trajectory `compProd`/`comap`, and computes the exact marginal
+using `Measure.fst_compProd` and `Measure.infinitePi_map_eval`. Regularity is
+Standard Borel state/action spaces, measurable action singletons, one
+probability law per coordinate, jointly measurable per-time `[0,1]`
+evaluators, a Markov trajectory kernel, and finite-prefix factorization. The
+old common-law theorem remains a constant-law wrapper and keeps its original
+mean-gap definition for downstream `simp` compatibility. Retrieval is the
+common-law producer, the time-varying expected-gap leaf, and Mathlib
+independence/kernel/integral cards; theorem cards remain evidence only.
+Failure policy: independent nonidentical latent coordinates are closed.
+The concrete finite-arm stationary-mean reward-law theorem now compiles
+downstream; history-dependent laws, current-action corruption, and
+conditional reward kernels need distinct transports.
+
+## Tsallis Time-Varying Corrupted IID Reward-Law Route
+
+`TSALLIS-FINITE-ARM-IID-TIME-VARYING-CORRUPTED-REWARD-LAW-REGRET` is
+`leanCompiled` in
+`BanditRLProof.TsallisFiniteArmIIDTimeVaryingCorruptedRewardLaw`. For a fixed
+schedule `rewardShift : Nat -> Fin K -> Real`, the theorem clips shifted fresh
+IID rewards to `[0,1]`, derives each round's actual mean-gap deviation, and
+returns the baseline logarithmic reciprocal-gap bound plus
+`sum_(t<=T) sum_(a!=best) (abs (shift t a) + abs (shift t best))`.
+There is no free corruption parameter. Zero schedules have zero budget and
+constant schedules recover the stationary budget exactly.
+
+Regularity is probability arm laws, raw rewards a.e. in `[0,1]`, exact
+baseline means, positive non-best baseline gaps, a deterministic full
+time-by-arm shift schedule, and finite horizon. Arms remain independent within
+each base round and base reward vectors remain IID across rounds. Retrieval is
+the stationary corruption theorem, both time-varying supporting leaves,
+Mathlib product/integral/independence and projection-contraction APIs, and both
+Tsallis-INF paper cards; cards remain evidence only. Failure policy:
+deterministic time-indexed oblivious/predictable corruption is closed.
+The measurable pre-action-history shift generalization now compiles below;
+current-action, latent-law, and expectation-only-budget semantics remain
+outside the broader paper theorem.
+
+## History-Adaptive Corrupted IID Reward-Law Route
+
+Three new leaves are `leanCompiled`:
+
+- `TSALLIS-SCHEDULED-REFERENCE-GAP-SELF-BOUNDING` compares actual and
+  reference predictable loss gaps on the same actual trajectory measure and
+  derives the fixed-baseline self-bound from a pointwise deviation envelope.
+- `TSALLIS-SCHEDULED-IID-HISTORY-ADAPTIVE-PREFIX` proves canonical finite IID
+  state-prefix factorization when successor losses inspect the supplied
+  pre-action finite pair history but only the current IID state coordinate.
+- `TSALLIS-FINITE-ARM-IID-HISTORY-ADAPTIVE-CORRUPTED-REWARD-LAW-REGRET`
+  constructs the measurable clipped loss and proves baseline model-gap log
+  regret plus
+  `sum_(t<=T) sum_(a!=best) (envelope(t,a)+envelope(t,best))`.
+
+Local APIs/imports are the scheduled expected-gap and IID mean-gap layers,
+`PredictableLossVector`, finite-prefix extension and trajectory congruence,
+`integral_mono_ae`, product-coordinate independence, `continuous_projIcc`,
+projection contraction, and the sqrt-schedule harmonic/log endpoint. The
+proof route establishes actual trajectory factorization, proves the
+uncorrupted reference model-gap law on that same measure, transports the
+pointwise clipped gap deviation through expected probabilities, and invokes
+the existing self-bound completion.
+
+Regularity is one probability law per arm, raw rewards a.e. in `[0,1]`, exact
+baseline means, positive non-best gaps, measurable pre-action-history shifts,
+a deterministic nonnegative time/arm envelope, finite horizon, independent
+arms within each base round, and IID base rounds. Retrieval uses the local
+stationary/time-varying corruption chain, Mathlib measure/integral/kernel/
+independence/projection APIs, and both Tsallis-INF paper cards; cards are
+evidence only and weapons inspiration-only. Status includes focused/root/test
+canaries and a zero-source budget canary. Failure policy: current-action
+corruption, latent reward-law changes, or budgets available only in
+expectation require a stronger filtration-aware conditional-law theorem.
+
+`TSALLIS-FINITE-ARM-IID-HISTORY-ADAPTIVE-REFINED-CORRUPTED-REWARD-LAW-REGRET`
+is now `leanCompiled` in
+`BanditRLProof.TsallisFiniteArmIIDHistoryAdaptiveRefinedCorruptedRewardLaw`.
+Its first public statement exposes the preceding construction as the exact
+terminal self-bound required by refined tuning. Its final statement fixes
+`C` to `finiteArmIIDHistoryAdaptiveRewardCorruptionBudget`, keeps
+`S=sum_(a!=best) 1/gap(a)`, and proves the generated local endpoint
+`1+log(T+1)+10*sqrt(C*S)*(2+sqrt(log(scale/(C*S))+1))`. Thus neither the
+corruption scalar nor trajectory-law identification is caller supplied.
+
+The model-facing `_of_window` theorem now replaces positive budget and the four
+low-level scalar inequalities by gaps in `(0,1]` plus
+`finiteArmIIDHistoryAdaptiveRefinedCorruptionWindow`. This named predicate has
+three natural clauses: horizon dominates `25*S^2`, corruption mass is at most
+the horizon scale, and the logarithmic lower corruption threshold holds.
+Finite-sum order proves `armCount<=S`; the generic window theorem then derives
+budget positivity and all low-level contracts. Local APIs/imports, proof route,
+and retrieval evidence are the history-adaptive corruption leaf, refined
+tuning leaf, IID-prefix/reference-gap transport, Mathlib measure/kernel/
+independence APIs, and both Tsallis paper cards. Status includes focused/root/
+test and declaration canaries. Failure policy: compact-window transport and
+this model-level composition are closed. The uniform non-best-arm epsilon-boost
+family and its stationary arm-dependent generalization now have compiled exact
+budgets, compact-window producers, named regimes, and all-regimes endpoints.
+Their complements automatically reuse the logarithmic theorem, closing
+zero/small corruption for both families. History-varying or random adaptive
+envelopes, current-action or latent-law corruption, expectation-only budgets,
+and the complete paper theorem remain open.
+
+## Uniform Suboptimal-Arm Boost Refined Consumer
+
+`TSALLIS-FINITE-ARM-IID-UNIFORM-SUBOPTIMAL-BOOST-REFINED-REGRET` compiles in
+`TsallisFiniteArmIIDUniformSuboptimalBoostRefinedRegret`. Lean-facing APIs are
+`uniformSuboptimalRewardBoostSource`, its exact corruption-budget theorem, its
+compact-window theorem, and the final explicit refined regret theorem. The
+proof uses finite-arm measurability, collapses the erased-arm/time envelope
+sums to `(T+1)*k*epsilon`, derives `C*S<=k*(T+1)` from `epsilon*S<=1`, and then
+reuses the existing model `_of_window` theorem. The named regime and total
+bound then split internally: the true branch uses that refined theorem and the
+false branch uses the logarithmic theorem plus the exact-budget rewrite.
+Contracts for the all-regimes endpoint are nonnegative `epsilon`, probability
+arm laws with a.e. `[0,1]` rewards and exact means, a nonempty suboptimal set,
+gaps in `(0,1]`, and finite horizon; no window proof remains caller supplied.
+Retrieval evidence is the two parent local leaves,
+Mathlib finite-sum/measure/kernel/independence and `measurable_of_countable`
+APIs, and both Tsallis-INF paper cards. Status is `leanCompiled`, root imported,
+and externally canaried. This closes all regimes for the uniform deterministic
+boost family; arm-dependent stationary and deterministic time-varying families
+compile downstream, while genuinely random history-adaptive envelopes and
+stronger corruption models remain open.
+
+## Arm-Dependent Suboptimal-Arm Boost All-Regimes Consumer
+
+`TSALLIS-FINITE-ARM-IID-ARM-DEPENDENT-SUBOPTIMAL-BOOST-ALL-REGIMES` compiles in
+`TsallisFiniteArmIIDArmDependentSuboptimalBoostRegret`. Its Lean-facing APIs are
+`armDependentSuboptimalRewardBoostSource`, the exact source-budget theorem,
+`finiteArmIIDArmDependentSuboptimalBoostRefinedRegime`, its compact-window
+transport theorem, `finiteArmIIDArmDependentSuboptimalBoostAllRegimeBound`, and
+the final generated reward-law regret theorem. For nonnegative
+`boost : Fin K -> Real`, the source leaves the best arm unchanged and shifts
+each other arm by its own value. Erased finite sums and a constant time sum give
+the exact budget `(T+1) * sum_(a != best) boost(a)`. The named regime transports
+that exact budget to the existing compact window; the final proof splits on
+the regime and invokes either the refined `_of_window` theorem or the
+logarithmic `+C` theorem.
+
+Regularity contracts are probability arm laws, a.e. unit reward support, exact
+means, a nonempty suboptimal set, gaps in `(0,1]`, pointwise nonnegative boost,
+and a finite horizon. Countability supplies arm measurability, and no caller
+window proof is required. Retrieval evidence is the compiled history-adaptive
+logarithmic/refined leaves, the uniform consumer's finite-sum pattern, Mathlib
+finite-sum/order/measure/kernel/independence APIs, and both Tsallis-INF paper
+cards. Status is `leanCompiled`, root imported, declaration-indexed, and
+externally canaried. Failure policy: stationary nonuniform boosts are closed;
+deterministic time-varying schedules compile in the next leaf, while random
+history-adaptive envelopes, current-action or latent-law corruption,
+expectation-only budgets, paper-sharp constants, and the complete Tsallis-INF
+theorem remain open.
+
+## Time-Varying Suboptimal-Arm Boost All-Regimes Consumer
+
+`TSALLIS-FINITE-ARM-IID-TIME-VARYING-SUBOPTIMAL-BOOST-ALL-REGIMES` compiles in
+`TsallisFiniteArmIIDTimeVaryingSuboptimalBoostRegret`. Its Lean-facing APIs are
+`timeVaryingSuboptimalRewardBoostSource`,
+`finiteArmIIDTimeVaryingSuboptimalBoostBudget`, the exact source-budget theorem,
+`finiteArmIIDTimeVaryingSuboptimalBoostRefinedRegime`, its compact-window
+transport theorem, `finiteArmIIDTimeVaryingSuboptimalBoostAllRegimeBound`, and
+the final generated reward-law regret theorem. A pointwise nonnegative
+`boost : Nat -> Fin K -> Real` is encoded with `boost 0` in the initial source
+and `boost (n+1)` after a length-`n` pre-action history; the best-arm shift is
+forced to zero. Erased finite-arm sums give the exact corruption mass
+`sum_(t<T+1) sum_(a!=best) boost(t,a)` with no uniform time or arm relaxation.
+The named regime rewrites this exact budget into the compact window, and the
+final theorem internally selects the refined `_of_window` or logarithmic `+C`
+parent theorem.
+
+Regularity contracts are probability arm laws, a.e. unit reward support, exact
+means, a nonempty suboptimal set, gaps in `(0,1]`, a pointwise nonnegative
+deterministic schedule, and finite horizon. Countability of `Fin K` supplies
+successor measurability; no new trajectory-law, independence, integrability,
+or caller window contract is introduced. Retrieval evidence is the compiled
+history-adaptive refined/logarithmic route, the stationary arm-dependent
+consumer, Mathlib finite-sum/order/measure/kernel/independence APIs, and both
+Tsallis-INF paper cards. Status is `leanCompiled`, focused-built, root imported,
+declaration-indexed, and externally canaried. Failure policy: deterministic
+time-and-arm nonuniform schedules are closed, and one action-history-dependent
+source compiles downstream. Reward-coordinate or arbitrary measurable history
+gates, current-action or latent-law corruption, expectation-only budgets,
+paper-sharp constants, and the complete Tsallis-INF theorem remain open.
+
+## Previous-Action-Gated Adaptive Boost All-Regimes Consumer
+
+`TSALLIS-FINITE-ARM-IID-PREVIOUS-ACTION-GATED-SUBOPTIMAL-BOOST-ALL-REGIMES`
+compiles in `TsallisFiniteArmIIDPreviousActionGatedSuboptimalBoostRegret`.
+Its Lean-facing APIs are `previousActionGatedSuboptimalRewardBoostSource`, the
+exact source-budget theorem, the refined-window transport theorem, and the
+final all-regimes reward-law regret theorem. At successor time `n+1`, the
+source evaluates action coordinate `n` of
+`History.FinitePairHistory (Fin K) Real n`; it activates `boost (n+1) arm`
+exactly when that previous sampled action equals `triggerArm`, while the best
+arm remains unshifted. The initial round uses `boost 0` on non-best arms.
+
+The successor measurability proof uses `measurable_pi_apply`, product
+projections, `measurableSet_eq_fun`, `Measurable.ite`, and countable-arm
+measurability. The deterministic envelope is still the complete time-and-arm
+schedule, so its exact budget is
+`sum_(t<T+1) sum_(a!=best) boost(t,a)`. The existing time-varying named regime
+therefore supplies the compact window, and the final theorem selects the
+refined or logarithmic parent internally. Regularity contracts are a fixed
+trigger arm, pointwise nonnegative deterministic schedule, probability arm
+laws, a.e. unit reward support, exact means, nonempty suboptimal arms, gaps in
+`(0,1]`, and finite horizon. Retrieval evidence is the time-varying all-regimes
+consumer, the history-adaptive refined/logarithmic route, Mathlib finite-product
+measurability and finite-sum/measure/kernel/independence APIs, and both
+Tsallis-INF paper cards. Status is `leanCompiled`, focused-built, root imported,
+declaration-indexed, and externally canaried. Failure policy: this closes a
+genuine action-history-dependent source, and the arbitrary measurable
+finite-history-and-arm gate generalization compiles below. It does not close
+current-action/latent-law corruption, expectation-only budgets, paper
+constants, or complete Tsallis-INF regret.
+
+## Measurable History-Arm-Gated Adaptive Boost All-Regimes Consumer
+
+`TSALLIS-FINITE-ARM-IID-MEASURABLE-HISTORY-ARM-GATED-SUBOPTIMAL-BOOST-ALL-REGIMES`
+compiles in
+`TsallisFiniteArmIIDMeasurableHistoryArmGatedSuboptimalBoostRegret`. Its
+Lean-facing gates are an arbitrary `initialGate : Set (Fin K)` and an all-time
+family `gate n : Set (History.FinitePairHistory (Fin K) Real n × Fin K)` with
+`MeasurableSet (gate n)`. At time zero, the source applies `boost 0 arm`
+exactly on `initialGate`; at successor time `n+1`, it applies
+`boost (n+1) arm` exactly when `(history, arm)` belongs to `gate n`; the best
+arm is always unshifted. This directly supports measurable action-coordinate,
+past observed clipped-feedback/loss-coordinate, finite Boolean-combination,
+and arm-dependent predictable events. It does not expose the current, raw, or
+latent reward-vector coordinate.
+
+The proof combines the supplied gate with the measurable best-arm event and
+countable-arm scheduled boost through `Measurable.ite`. Its full deterministic
+schedule is the envelope, giving the exact source budget
+`sum_(t<T+1) sum_(a!=best) boost(t,a)`. The named time-varying refined regime
+therefore supplies the compact window, and the final theorem internally
+selects the existing refined `sqrt(C*S)` or logarithmic `+C` parent. Regularity
+contracts are an arbitrary initial arm gate, all-time joint successor-gate
+measurability, all-time pointwise nonnegative deterministic boost, probability
+arm laws, a.e. unit reward support, exact means, nonempty suboptimal arms, gaps
+in `(0,1]`, and finite horizon. Retrieval evidence is the
+previous-action and time-varying consumers, the history-adaptive refined/log
+parents, Mathlib measurable-set/ite/countable-measurability and finite-sum/
+measure/kernel/independence APIs, and both Tsallis-INF paper cards. Status is
+`leanCompiled` with focused/root/Tests builds and external declaration
+canaries. Failure policy: the exact quantity is a worst-case deterministic
+envelope budget, not a realized or expected gate-open budget. Horizon-local
+only gate/boost evidence and the single-arm `K=1` endpoint are not covered.
+Current-action or other nonpredictable gates, raw/latent-law corruption,
+random/expectation-only envelopes, paper-sharp constants, and complete
+Tsallis-INF remain open.
+
+## Scheduled Self-Bounding Lambda Interpolation
+
+`TSALLIS-SCHEDULED-SELF-BOUNDING-INTERPOLATION` is `leanCompiled` in
+`BanditRLProof.TsallisScheduledSelfBoundingInterpolation`. Its generated
+theorem combines the existing scheduled square-root expected-probability
+upper bound with one terminal `(Delta,C,T)` self-bounding inequality. For
+`lambda in [0,1]` the result is exactly `(1+lambda)*upper -
+lambda*gapMass + lambda*C`; no self-bound at an earlier horizon is assumed.
+
+The local route uses ordered multiplication and ring normalization after the
+kernel, integral, finite-sum, and Jensen obligations already discharged by
+`TsallisScheduledSuboptimalExpectedBound`. Retrieval evidence is the local
+self-bounding and scheduled expected-probability leaves, Mathlib finite-sum
+and ordered-real algebra, and Masoudian--Seldin (2021), equations
+`self-bounding` and `upperfull`. The paper remains retrieval evidence, not a
+local proof. Failure policy: the interpolation is closed; constrained joint
+optimization over all expected action probabilities and `lambda`, the time
+threshold split, and the improved square-root corruption endpoint remain
+open.
+
+## Constrained One-Round Tsallis Quadratic Optimization
+
+`TSALLIS-CONSTRAINED-QUADRATIC-OPTIMIZATION` is `leanCompiled` in
+`BanditRLProof.TsallisConstrainedQuadraticOptimization`. The module proves the
+positive-coefficient completion-of-squares bound, both finite-sum branches of
+the appendix optimization, the finite-simplex estimate
+`sum_(a != best) sqrt(p_a) <= sqrt(K-1)`, and direct wrappers for the generated
+scheduled expected action probabilities.
+
+The active branch retains the exact threshold
+`2*M <= b*sum_i (1/c_i)` and concludes
+`sum_i (b*x_i-c_i*x_i^2) <= b*M-M^2/sum_i(1/c_i)`. Its Tsallis specialization
+uses `M=sqrt(card (arms.erase best))`, `x_a=sqrt(p_a)`, and
+`c_a=lambda*gap(a)`. Regularity explicitly requires `0<lambda`, positive
+suboptimal gaps, and a nonempty suboptimal set for the active denominator;
+this makes the paper appendix's implicit denominator conditions Lean-visible.
+
+Retrieval evidence is the preceding interpolation/expected-probability
+leaves, Mathlib finite-sum and ordered-field APIs,
+`Real.sum_sqrt_mul_sqrt_le`, and Masoudian--Seldin (2021). The paper remains
+route evidence only. Failure policy: one-round probability optimization is
+closed, while the across-time threshold split, harmonic/logarithmic sum,
+joint `lambda` optimization, and final square-root corruption endpoint remain
+open.
+
+## Finite-Arm Nonidentical Reward-Law Regret
+
+`TSALLIS-FINITE-ARM-NONIDENTICAL-REWARD-LAW-REGRET` is `leanCompiled` in
+`BanditRLProof.TsallisFiniteArmIndependentRewardLaw`, root imported, and
+externally canaried with distinct same-mean laws. For
+`armLaw : Nat -> Fin K -> Measure Rat`,
+every round may use different arm distributions while retaining the fixed
+`FiniteBanditModel.mean`. `Measure.pi` forms each round reward vector and
+`Measure.infinitePi` makes the round vectors independent but not necessarily
+identically distributed. Exact clipped product-law gaps, canonical prefix
+factorization, nonidentical coordinate independence, and the fixed mean-gap
+consumer yield the explicit logarithmic model-gap regret bound.
+
+Regularity is per-time/per-arm probability, a.e. `[0,1]` reward support,
+exact roundwise model means, positive non-best gaps, finite horizon, and
+nonnegative additive corruption. Retrieval uses the compiled IID reward-law,
+nonidentical mean-gap, Mathlib product/infinite-product measure, integral, and
+independence routes; theorem cards are evidence only. Failure policy:
+stationary means under independent nonidentical reward laws are closed.
+Time-varying means, dependent arms, conditional/history-dependent laws,
+current-action corruption, and the complete paper theorem remain open.
+
+## 2026-07-23 Nonidentical Drifting-Mean Reward-Law Closure
+
+`TSALLIS-FINITE-ARM-NONIDENTICAL-DRIFTING-MEAN-REWARD-LAW-REGRET` is
+`leanCompiled` in
+`BanditRLProof/TsallisFiniteArmIndependentDriftingMeanRewardLaw.lean`.
+It accepts `armLaw : Nat -> Fin K -> Measure Rat` and an absolute
+mean-deviation envelope from one fixed `FiniteBanditModel`. The proof computes
+the actual product-law loss gap, bounds its difference from `model.gap` by
+the selected and best arm deviations, transports the nonidentical independent
+law to the time-varying expected-gap self-bound, and invokes the sqrt-schedule
+log consumer for the fixed `model.bestArm` comparator. It is a static-
+comparator result, not dynamic regret. The additive term is the explicit
+inclusive-horizon double
+finite sum; no caller-chosen corruption scalar remains. Root import, focused
+build, and `Tests.Basic` pass, including a two-arm canary whose means genuinely
+change across rounds. No placeholders were added. Conditional/history or
+dependent laws, current-action changes, data-derived envelopes, and complete
+Tsallis-INF remain open.
+
+## 2026-07-26 Nonidentical Drifting-Mean Refined-Regret Closure
+
+`TSALLIS-FINITE-ARM-NONIDENTICAL-DRIFTING-MEAN-REFINED-REGRET` is
+`leanCompiled` in
+`BanditRLProof/TsallisFiniteArmIndependentDriftingMeanRefinedRegret.lean`.
+The parent drifting-law module now exposes the generated terminal
+self-bounding inequality with the exact finite mean-deviation budget. The new
+module specializes `RefinedLocalCorruptionWindow`, proves the arm-count versus
+reciprocal-gap comparison from non-best gaps in `(0,1]`, extracts the scalar
+optimizer contracts, and invokes the compiled refined local endpoint.
+
+The result is the coefficient-aware local `sqrt(C*S)` bound with
+`C = finiteArmIndependentMeanDeviationBudget` and fixed comparator
+`model.bestArm`. It is conditional on the compact window, so it does not claim
+all-regimes closure. Root import, focused build, and `Tests.Basic` pass; the
+external two-arm canary instantiates the exact final theorem with the existing
+genuinely drifting laws and a `1/4` envelope. No placeholders or new
+probability-law assumptions were introduced. The all-regimes and actual-mean
+dynamic-comparator wrappers now compile downstream.
+
+## 2026-07-26 Nonidentical Drifting-Mean All-Regimes Closure
+
+`TSALLIS-FINITE-ARM-NONIDENTICAL-DRIFTING-MEAN-ALL-REGIMES` is
+`leanCompiled` in
+`BanditRLProof/TsallisFiniteArmIndependentDriftingMeanAllRegimes.lean`.
+`finiteArmIndependentDriftingMeanAllRegimeBound` selects the compiled
+coefficient-aware refined expression exactly when erased arms are nonempty and
+the explicit mean-deviation budget satisfies the compact window. It selects
+the unconditional logarithmic reciprocal-gap-plus-budget expression on both
+complements.
+
+The final generated theorem requires neither a caller window proof nor a
+nonempty-suboptimal premise. Its `Fin 1` bound simplifies to
+`1 + log(T+1)`, while the two-arm external canary instantiates the exact
+all-regimes theorem for genuinely time-varying laws and a `1/4` mean envelope.
+The probability/support/law construction is unchanged from the parent route,
+and this theorem's comparator is fixed `model.bestArm`. It supplies the fixed
+component of the compiled dynamic-regret theorem below.
+
+## 2026-07-26 Nonidentical Drifting-Mean Dynamic-Regret Closure
+
+`TSALLIS-FINITE-ARM-NONIDENTICAL-DRIFTING-MEAN-DYNAMIC-REGRET-ALL-REGIMES`
+is `leanCompiled` in
+`BanditRLProof/TsallisFiniteArmIndependentDriftingMeanDynamicRegret.lean`.
+The module defines moving-comparator predictable environment regret and proves
+its exact decomposition into fixed-baseline regret plus the cumulative
+actual-mean advantage of the moving arm. `finiteArmIndependentBestArmAt`
+selects a finite actual-mean maximizer and proves its max property.
+
+The final generated theorem identifies the integrated comparator advantage
+through the existing independent nonidentical mean-gap law, bounds it using
+`FiniteBanditModel.mean_le_bestArm_mean` and the two armwise deviation
+envelopes, and adds it to the fixed all-regimes theorem. This is expected
+predictable-environment dynamic regret, not realized sample-path regret. It has no caller
+comparator, max, window, or nonempty-suboptimal premise. Focused/root and
+`Tests.Basic` builds pass; canaries cover the max property, zero `Fin 1`
+penalty/bound, one arm, and genuinely switching two arms, including a proof
+that the round-1 maximizer differs from `model.bestArm` and the penalty is
+strictly positive. The exact cumulative actual-mean path-variation
+specialization now compiles downstream. Horizon-compressed or sharp standard
+`V_T`/switch-count rates, conditional/history-dependent or dependent laws,
+paper-optimal constants, and complete Tsallis-INF remain open.
+
+## 2026-07-26 Cumulative Mean Path-Variation Dynamic-Regret Closure
+
+`TSALLIS-FINITE-ARM-NONIDENTICAL-PATH-VARIATION-DYNAMIC-REGRET-ALL-REGIMES`
+is `leanCompiled` in
+`BanditRLProof/TsallisFiniteArmIndependentPathVariationDynamicRegret.lean`.
+It defines the armwise cumulative sum of consecutive actual-mean increments
+and proves by induction that this sum bounds displacement from the round-zero
+mean. A round-zero actual/model mean equality then supplies the arbitrary
+all-time deviation contract required by the parent theorem.
+
+The final generated expected predictable-environment dynamic-regret theorem
+therefore has no caller `meanDeviation` family, comparator, max certificate,
+window, or nonempty-suboptimal premise. Focused/root and `Tests.Basic` builds
+pass; canaries cover zero variation, an exact one-step value `1/2`, `Fin 1`,
+and a genuinely switching two-arm final instantiation. This result retains
+the cumulative envelope separately at every included time. It is not a
+horizon-compressed or minimax-sharp standard `V_T`, switch-count, realized
+sample-path, conditional/history-dependent, dependent-arm, or complete
+Tsallis-INF theorem.
+
+## 2026-07-26 Mean Switch-Count Dynamic-Regret Closure
+
+`TSALLIS-FINITE-ARM-NONIDENTICAL-MEAN-SWITCH-COUNT-DYNAMIC-REGRET-ALL-REGIMES`
+is `leanCompiled` in
+`BanditRLProof/TsallisFiniteArmIndependentMeanSwitchCountDynamicRegret.lean`.
+The module derives population-mean membership in `[0,1]` from the probability
+and a.e. reward-support contracts, defines the real prefix switch count, and
+proves that count equals the coerced filtered cardinality of nonzero
+consecutive mean changes. Each changed increment is at most one, so the
+compiled cumulative path variation is bounded by this exact count.
+
+Round-zero actual/model mean matching then supplies the parent all-time
+deviation contract. The final expected predictable-environment dynamic-regret
+theorem has no caller comparator, variation family, switch budget, max
+certificate, window, or nonempty-suboptimal premise. Focused and
+`Tests.Basic` builds pass; canaries cover mean range, zero and exact one-step
+counts, explicit external use of the filtered-cardinality identity,
+path-to-count domination, `Fin 1`, and an alternating two-arm final
+instantiation. Independent semantic review found no P0/P1 issue and confirmed
+the prefix/horizon indexing and generated-law specialization.
+
+This closure is per arm and prefix-indexed. A single global environment
+change-point budget, minimax switch-rate algorithm, compressed standard
+`V_T`, observable/sample-derived count, realized sample path,
+conditional/history-dependent or dependent reward law, and complete
+Tsallis-INF theorem remain open.
+
+## 2026-07-26 Global Mean Switch-Count Dynamic-Regret Closure
+
+`TSALLIS-FINITE-ARM-NONIDENTICAL-GLOBAL-MEAN-SWITCH-COUNT-DYNAMIC-REGRET-ALL-REGIMES`
+is `leanCompiled` in
+`BanditRLProof/TsallisFiniteArmIndependentGlobalMeanSwitchCountDynamicRegret.lean`.
+The module defines one prefix count of the rounds `s < t` where some arm has
+different population means at `s` and `s+1`, and identifies it with the real
+coercion of the matching filtered cardinality. A pointwise existential
+witness proves that every armwise switch count is bounded by the global
+count.
+
+The compiled armwise path and model-deviation adapters then provide the
+parent theorem's all-time envelope uniformly across arms. The final expected
+predictable-environment dynamic-regret theorem has no caller comparator,
+variation family, armwise count, global switch budget, max certificate,
+window, or nonempty-suboptimal premise. Focused and `Tests.Basic` builds
+pass; canaries cover zero and exact one-step global counts, explicit external
+use of the cardinality identity, a law where only arm one switches while arm
+zero stays fixed, armwise/global and path/global domination, `Fin 1`, and an
+alternating two-arm final instantiation. Independent semantic review found
+no P0/P1 issue and confirmed the prefix indexing, existential aggregation,
+inequality direction, and final parent-theorem specialization.
+
+This is an exact global population-mean change-point count used as a repeated
+prefix envelope. A minimax or horizon-compressed switch-rate/standard `V_T`
+theorem, observable/sample-derived count, realized sample path,
+conditional/history-dependent or dependent reward law, and complete
+Tsallis-INF theorem remain open.
+
+## 2026-07-26 Horizon-Compressed Global Switch-Count Closure
+
+`TSALLIS-FINITE-ARM-NONIDENTICAL-GLOBAL-MEAN-SWITCH-COUNT-HORIZON-COMPRESSED-LOG-DYNAMIC-REGRET`
+is `leanCompiled` in
+`BanditRLProof/TsallisFiniteArmIndependentGlobalMeanSwitchCountCompressedDynamicRegret.lean`.
+The module proves terminal-count nonnegativity and monotonicity, then
+compresses the fixed mean-deviation budget and moving-comparator penalty
+separately to coefficient `2`. Adding them yields coefficient `4` in the
+public logarithmic moving-comparator dynamic-regret bound.
+
+Focused and `Tests.Basic` builds pass. External canaries instantiate count
+monotonicity, both compressed budgets, their sum, the `Fin 1` simplification,
+and the final theorem on a two-arm law whose actual best arm switches. The
+statement requires no upper gap bound, caller budget, deviation family,
+comparator, max certificate, refined window, or nonempty erased-arm premise.
+
+The nonstationarity term now contains one terminal global count rather than
+a time-indexed finite sum. It stops at `globalCount(T)` and therefore excludes
+the post-horizon `T -> T+1` transition. It is nevertheless
+`4*(K-1)*(T+1)*globalCount(T)`, so no minimax, sublinear, sharp
+switch-rate, or sharp standard variation-budget claim is made. Those
+stronger rates, observable/sample-derived counts, realized regret, and
+conditional/dependent-law routes remain open.
+
+## 2026-07-26 Single-Switch Comparator-Route Obstruction
+
+`TSALLIS-FINITE-ARM-NONIDENTICAL-SINGLE-SWITCH-DYNAMIC-COMPARATOR-ADVANTAGE-OBSTRUCTION`
+is `leanCompiled` in
+`BanditRLProof/TsallisFiniteArmIndependentSingleSwitchComparatorObstruction.lean`.
+Its fully concrete `Fin 2` Dirac law satisfies probability, a.e. `[0,1]`
+support, exact initial model matching, and baseline gap contracts. Lean
+identifies the unique actual best arm before and after the switch, proves
+`globalCount(T)=1` for `T>0`, and calculates the inclusive-horizon
+comparator advantage and repeated-prefix penalty exactly as `T/4` and
+`2*T`.
+
+For every natural `c`, the compiled square-horizon witness
+`T=(4*c+1)^2` makes `T/4 > c*sqrt(T)` without increasing the switch count.
+This isolates the remaining gap in the current proof route: an independent
+upper bound on comparator advantage cannot supply a uniform square-root
+switch rate. No generated-regret lower bound, minimax lower bound,
+algorithm impossibility, or Tsallis-INF failure is claimed. Cancellation-
+aware analysis or restarted/windowed/change-detection machinery remains
+open. Independent read-only review found no P0-P3 issue and explicitly
+checked the count indexing, best-arm uniqueness, exact constants, square-root
+witness, regularity surface, external canaries, and claim boundary.
+
+## 2026-07-26 Oracle-Restart Epoch Assembly
+
+`TSALLIS-ORACLE-RESTART-EPOCH-DYNAMIC-REGRET-ASSEMBLY` is `leanCompiled` in
+`BanditRLProof/TsallisOracleRestartDynamicRegret.lean`. The module defines the
+inclusive epoch fibers, proves the exact moving-comparator finite-sum
+decomposition, proves
+`sum_epoch sqrt(|fiber epoch|) <= sqrt(|epochs|)*sqrt(horizon+1)`, and exposes
+both the epoch-count and switch-count global endpoints.
+
+Focused and `Tests.Basic` builds pass. The external canaries include a
+concrete two-epoch/four-round cardinality instance, an unused empty-fiber
+instance, and abstract consumers of the exact decomposition and both assembly
+endpoints. Empty or unused registered epochs require no special premise.
+Independent review found no correctness issue. The axiom audit reports only
+`propext`, `Classical.choice`, and `Quot.sound`.
+
+The generated restarted selector/kernel and its conditional action law now
+compile separately. This assembly remains distinct because its regret
+integrand uses the global scheduled probability. The restart-specific
+probability integrand and schedule-aligned fiber decomposition now compile in
+`TsallisOracleRestartPredictableRegret`; epoch-local law/expected-regret
+transport now compiles in `TsallisOracleRestartExpectedRegret`.
+
+## 2026-07-28 Generated Oracle-Restart Trajectory Action Law
+
+`TSALLIS-ORACLE-RESTART-GENERATED-TRAJECTORY-ACTION-LAW` is `leanCompiled` in
+`BanditRLProof/TsallisOracleRestartGeneratedTrajectory.lean`. It packages the
+restart schedule contract, inclusive epoch-suffix reindexing and
+measurability, boundary/continuation distributions, a measurable
+finite-action `HistoryAlgorithm`, the canonical Markov trajectory kernel,
+the actual-time probability surface, and the successor conditional-action
+law given the complete global prefix.
+
+Focused and root-imported `Tests.Basic` builds pass. External canaries check
+both endpoints of a concrete suffix, never-restart and restart-every-round
+distribution/probability reductions, and a full external consumer of the
+`condDistrib` theorem. The axiom audit reports only `propext`,
+`Classical.choice`, and `Quot.sound`.
+
+This closes process generation and action-law identification only. It does
+not establish fresh independent epoch laws, concentration, or final dynamic
+regret. The restart-specific
+predictable-regret integrand and direct schedule-fiber compatibility now
+compile downstream, and fixed-comparator first-moment/epoch integral transport
+now compiles after that. Independent review found no process-law correctness
+issue; its metadata, regularity, and canary observations were resolved.
+
+## 2026-07-28 Oracle-Restart Predictable Dynamic-Regret Assembly
+
+`TSALLIS-ORACLE-RESTART-PREDICTABLE-DYNAMIC-REGRET-ASSEMBLY` is
+`leanCompiled` in
+`BanditRLProof/TsallisOracleRestartPredictableRegret.lean`. The module defines
+restart-specific fixed- and moving-comparator predictable environment regret,
+proves both never-restart reductions, and proves the fixed-plus-moving
+identity under `best ∈ arms`.
+
+Its finite epoch registry is the image of `schedule.start` over the inclusive
+horizon, so coverage is proved internally. The moving regret is exactly the
+sum over schedule fibers, without an independent epoch map or compatibility
+premise. Pointwise `C*sqrt(fiber.card)` certificates yield both the
+schedule-epoch and explicit switch-count square-root endpoints.
+
+Focused and `Tests.Basic` builds pass. External canaries cover the concrete
+never/every restart registries, both never-restart regret reductions,
+fixed-plus-moving decomposition, exact fiber decomposition, and the final
+switch-count endpoint. Independent review found no P0/P1 issue; the omitted
+`best ∈ arms` contract and missing moving/fixed-plus canaries were added. The
+axiom audit reports only `propext`, `Classical.choice`, and `Quot.sound`.
+
+This is deterministic pointwise regret assembly for the generated restart
+probability surface. It does not prove fresh independent epoch laws,
+the pathwise epoch estimated-regret certificate, a schedule-cardinality
+theorem derived from a change law, concentration, or final dynamic regret.
+Fixed-comparator law/expected-regret transport now compiles downstream;
+schedule cardinality remains a separate leaf.
+
+## 2026-07-28 Oracle-Restart Epoch Fixed-Comparator Regret Transport
+
+`TSALLIS-ORACLE-RESTART-EPOCH-LOCAL-FIXED-COMPARATOR-REGRET-TRANSPORT` is
+`leanCompiled` in
+`BanditRLProof/TsallisOracleRestartExpectedRegret.lean`. The generated action
+law now retains environment plus global prefix, which is the conditioning
+surface required by predictable losses. Boundary and continuation policies
+both have strictly positive arm probabilities.
+
+The module applies the generic mixed/weighted importance-sampling
+first-moment API at time zero and every successor, proves measurability,
+finite-simplex and bounded integrability, and sums the resulting identities
+over each actual schedule fiber. Point masses rewrite to the existing
+arm-valued epoch regret using `schedule.start t = epoch`. Expected epoch
+certificates then feed the compiled finite Cauchy layer and produce both
+schedule-epoch and switch-count expected moving-regret endpoints. The module
+also defines the stored-reward restart estimator, proves its a.e. equality with
+the predictable estimator at each time and epoch, identifies its point-mass
+epoch integral with the same environment regret, and exposes schedule/switch
+consumers that accept stored-reward certificates directly.
+
+Focused and `Tests.Basic` builds pass. External canaries cover per-time first
+moments, both point-mass epoch integral equalities, and the predictable and
+observed final expected switch-count consumers. Independent review found no
+correctness issue and confirmed that no fresh-run independence is used. The
+axiom audit of the observed transport reports only `propext`,
+`Classical.choice`, and `Quot.sound`.
+
+This closes law and expected-regret transport. The downstream
+`TSALLIS-ORACLE-RESTART-EPOCH-LOCAL-SCORE-ALIGNMENT` leaf now also compiles:
+actual probabilities and stored-reward estimators equal scheduled local-time
+surfaces on a shifted path; visited fibers are contiguous translated ranges
+with exact cardinality; and actual observed point-mass epoch estimated regret
+has the scheduled pathwise FTRL stability-plus-penalty bound.
+
+Its local APIs are the restart and scheduled score surfaces,
+`OracleRestartSchedule.start_*`, `Finset.max'`, `Finset.sum_image`, and
+`Finset.card_image_of_injective`. Its only substantive contracts are finite
+nonempty decidable arms, a valid deterministic schedule, visited epoch,
+best-arm membership, and positive nonincreasing local eta. Focused/root/tests
+and external canaries pass; independent review confirmed the pathwise route
+and public-import axiom audit is baseline only.
+
+The downstream
+`TSALLIS-ORACLE-RESTART-EPOCH-LOCAL-EXPECTED-STABILITY-TRANSPORT` leaf now
+also compiles. It uses the environment-plus-global-prefix conditional action
+law of the single generated restart trajectory, proves coarse and refined
+successor stability transport, covers global time zero, and exposes an
+arbitrary-time finite-mass-scaled endpoint. With a probability prior it sums a
+contiguous actual epoch prefix to a literal cardinality bound and integrates
+the pathwise FTRL inequality, yielding an actual observed epoch expected
+estimated-regret bound by cardinality plus deterministic penalty.
+
+Focused and `Tests.Basic` builds and external canaries pass. Axiom audit is
+baseline only. Independent review's refined-branch, time-zero, mass-scaling,
+and deterministic-schedule concerns are reflected in the statements and
+contracts. No fresh epoch law or shifted-trajectory pushforward equality was
+introduced.
+
+The remaining analytic gap is refined finite-sum control plus local-rate and
+penalty tuning to derive `C*sqrt(fiber.card)`. The compiled coarse certificate
+is linear in cardinality. A law-derived schedule-cardinality theorem and final
+generated dynamic regret remain open.
+
+## Restart-local refined stability tuning
+
+`TSALLIS-ORACLE-RESTART-EPOCH-LOCAL-REFINED-STABILITY-TUNING` is now compiled
+in `BanditRLProof.TsallisOracleRestartRefinedStabilityTuning`. The concrete
+schedule `eta_t = 1/(2*sqrt(t+1))` turns the refined successor bounds into an
+actual shifted-prefix expectation of at most
+`4*sqrt(K)*sqrt(localHorizon+1)`. A separate deterministic argument bounds the
+terminal point-mass half-Tsallis penalty by the same quantity.
+
+The visited-epoch consumer derives the local-horizon witness from epoch
+membership and returns the assembly-shaped certificate
+`integral observedEpochEstimatedRegret <=
+(8*sqrt(K))*sqrt(epochRounds.card)`. It stays on the single global restart law
+and requires no caller eta contracts. Focused/root/tests and the external
+cardinality canary pass; public-import axiom audit is baseline only.
+
+This closes the expected local `C*sqrt(fiber.card)` gap. It does not derive the
+number of epochs from a reward-law switch count, instantiate a concrete
+moving-comparator law, optimize constants, or prove complete Tsallis-INF.
+
+## Generated oracle-restart dynamic regret
+
+`TSALLIS-ORACLE-RESTART-GENERATED-DYNAMIC-REGRET` is now compiled in
+`BanditRLProof.TsallisOracleRestartGeneratedDynamicRegret`. It feeds the
+visited-epoch certificate into the existing observed-to-predictable
+moving-comparator assembly and proves
+
+`E[moving regret] <=
+  (8*sqrt(K))*sqrt(scheduleEpochs.card)*sqrt(T+1)`.
+
+With the explicit contract `scheduleEpochs.card <= switches + 1`, a second
+theorem proves the corresponding
+`(8*sqrt(K))*sqrt(switches+1)*sqrt(T+1)` endpoint. The same one global
+generated restart law is retained throughout. Focused and external builds pass
+and the public-import axiom audit is baseline only.
+
+This closes the concrete generated dynamic-regret consumer, but not a
+law-derived epoch-count theorem. Selecting restart times from a reward law and
+proving the cardinality contract are the next distinct obligations; constants
+and complete Tsallis-INF also remain open.
+
+## Global-mean-switch oracle restart
+
+`TSALLIS-ORACLE-RESTART-GLOBAL-MEAN-SWITCH-COUNT-DYNAMIC-REGRET` is now
+compiled in `BanditRLProof.TsallisOracleRestartGlobalMeanSwitchCount`. A
+generic change predicate generates a valid restart schedule with exact epoch
+registry `{0}` plus successors of the filtered change times. Specializing to
+finite-arm population-mean changes proves
+`epochs.card = globalMeanSwitchCount(T) + 1`.
+
+The same module proves that every arm mean is constant within each resulting
+epoch, so the mean-maximizing arm selected at the epoch start remains
+mean-maximizing at every epoch round. Under a.e. `[0,1]` reward support, a
+compiled loss-gap bridge proves that this raw-mean comparator is also optimal
+for the clipped loss. Under the concrete independent roundwise reward-vector
+product law, the generated expected moving-comparator regret is integrable and bounded by
+`8*sqrt(K)*sqrt(globalMeanSwitchCount(T)+1)*sqrt(T+1)`.
+
+No caller schedule, comparator, count, variation, or local-rate witness
+remains. This is a population-mean oracle using the complete law sequence, not
+an observed-reward detector. Detection delay/false alarms, high-probability
+regret, sharper constants, dependent laws, and complete Tsallis-INF remain
+open. Independent review's raw-mean/clipped-loss mismatch was resolved by
+adding the unit-support contract and the compiled nonnegative loss-gap theorem.
+
+## Canonical Conditional Reward Foundation
+
+`COND-EXPECT-REWARD` now has a compiled theorem-facing endpoint in
+`BanditRLProof.ConditionalRewardFoundation`. On the canonical reward-only
+`historyStepKernelFamily` trajectory measure it exposes successor conditional
+mean zero, successor conditional sub-Gaussian MGF witnesses at deterministic
+historywise proxy ceilings, and the zero-initialized finite-sum
+Azuma-Hoeffding upper tail. A reusable
+`ProbabilityTheory.HasCondSubgaussianMGF.integrable` wrapper removes the last
+caller ambient-integrability premise from this canonical mean-zero route.
+
+This does not identify conditional laws for an arbitrary ambient process.
+Such consumers must still supply an initial/successor `condDistrib` or
+selected-law source. Uniform-time confidence, arm-wise empirical means,
+observed change detection, and final UCB/ETC/RL routes remain open.
+
+## OFUL Elliptical Potential
+
+`OFUL.standardLogDeterminantAndEllipticalPotential` now closes the deterministic
+elliptical-potential route as one theorem-facing endpoint. Under positive
+regularization and a uniform squared-feature norm ceiling, it simultaneously
+bounds the terminal Gram determinant and the clipped inverse-quadratic update
+sum by the standard logarithmic dimension/radius budget.
+
+This is deterministic finite-dimensional linear algebra. It does not provide
+the vector self-normalized martingale tail, confidence ellipsoid, optimism
+argument, or final OFUL regret theorem. Those are the remaining probabilistic
+and algorithmic layers.
+
+## OFUL Fixed-Direction Exponential Supermartingale
+
+`BanditRLProof.OFULSelfNormalizedConfidence` now compiles the first
+probabilistic edge of the OFUL route. Its theorem-facing endpoint proves a
+zero-budget fixed-tilt MGF certificate for the finite sum of predictable
+scalar projections times conditionally sub-Gaussian noise, with the exact
+quadratic compensation. A bounded-projection wrapper derives the exponential
+integrability required by the local composition API.
+
+This closes only the deterministic-horizon fixed-direction precursor. The
+scalar, finite-product, and diagonal-coordinate Gaussian
+quadratic-exponential identities now also compile in
+`BanditRLProof.OFULGaussianMixture`, ending in the determinant and
+inverse-diagonal score-quadratic form under coordinatewise `0 <= q_i`.
+`BanditRLProof.OFULGaussianSpectralMixture` now transports that identity
+through Mathlib's orthonormal eigenbasis for every real PSD matrix `A` and
+collects the result as
+`sqrt(det(1+A))^-1 * exp(score^T (1+A)^-1 score / 2)`.
+
+`BanditRLProof.OFULGaussianCovarianceMixture` now transports the normalized
+identity through `multivariateGaussian 0 V_0^-1` for arbitrary
+positive-definite `V_0`. Under `G.PosSemidef`, it collects the exact endpoint
+as
+`sqrt(det V_0 / det(V_0+G)) *
+  exp(score^T (V_0+G)^-1 score / 2)`.
+No caller integrability, measurability, or nonempty-coordinate premise is
+exposed by this deterministic integral theorem.
+
+`BanditRLProof.OFULGaussianMixtureMeasurability` now supplies the random
+product-space surface. Measurable score and coordinatewise measurable Gram
+entries imply joint measurability of
+`ENNReal.ofReal (exp(<score omega,theta>-<theta,G omega theta>/2))`.
+Mathlib's Tonelli theorem then rewrites the product lintegral as the iterated
+lintegral for every `SFinite` parameter law, with a direct
+`N(0,V_0^-1)` wrapper.
+
+`BanditRLProof.OFULFiniteHorizonScoreGram` now defines the stochastic
+finite-horizon score `S_n` and variance-weighted Gram `G_n`, proves
+`G_n.PosSemidef`, and identifies the compensated fixed-direction sum with
+`<S_n,theta>-<theta,G_n theta>/2`. It transports the MGF certificate to the
+real expectation bound and then, by symmetric Tonelli, to a product-space
+`lintegral <= 1` for every probability direction law and for
+`N(0,V_0^-1)`.
+
+`BanditRLProof.OFULGaussianEvaluatedMixture` now evaluates that Gaussian
+direction integral samplewise. Fernique supplies integrability under
+`G_n.PosSemidef`; with deterministic `V_0.PosDef`, the exact inner
+`ENNReal` integral is the determinant-ratio inverse-Gram exponential. Tonelli
+then converts the product bound into the outer sample `lintegral <= 1` for
+that evaluated expression.
+
+`BanditRLProof.OFULSelfNormalizedMarkov` now closes the deterministic-horizon
+vector self-normalized tail. Mathlib Markov transport converts the evaluated
+`ENNReal` moment into the generic variance-weighted probability theorem.
+The common-`R` wrapper proves `G_n(R^2)=R^2 sum x_i x_i^T`, cancels that
+scale from the determinant ratio, and rewrites the inverse quadratic form,
+yielding the exact paper-facing radius
+`2 * R^2 * log(sqrt(det V_n / det V_0) / delta)`.
+
+`BanditRLProof.OFULConfidenceEllipsoid` now consumes that vector tail. It
+defines the finite-horizon response statistic and ridge estimate, proves the
+exact error decomposition
+`thetaHat_n-thetaStar = V_n^-1 S_n - V_n^-1 V_0 thetaStar`, identifies the
+inverse-score matrix norm with the self-normalized quadratic form, and
+transports confidence-radius failure into the compiled tail. Its terminal
+theorem bounds the confidence-ellipsoid bad event by `ENNReal.ofReal delta`
+for `0 < delta <= 1` and an explicit samplewise regularization-bias cap.
+
+`BanditRLProof.OFULScalarRegularizationBias` now discharges the generic bias
+premise for `V_0=lambda I`. Its deterministic energy proof yields
+`||V_n^-1(lambda thetaStar)||_(V_n) <= sqrt(lambda) ||thetaStar||_2` from
+`0 < lambda` and Gram PSD, and its terminal wrapper uses
+`euclideanLength thetaStar <= S` to expose the standard
+`noiseRadius + sqrt(lambda) S` confidence radius.
+
+`BanditRLProof.OFULFiniteActionOptimism` now compiles the weighted dual-norm
+bound, finite score argmax, pointwise comparator-gap certificate, and a
+fixed-horizon theorem bounding the existence of any action-gap violation by
+`ENNReal.ofReal delta`. Candidate features may depend on the sample because
+the proof only includes the violation event into the confidence bad event.
+
+`BanditRLProof.OFULMeasurableRecursiveSelection` now closes measurable
+deterministic tie-breaking for `Fin K` and canonical recursive
+selected-action/feature alignment. It uses the existing strict finite argmax,
+packages a deterministic history kernel, and transports selector-graph
+support from the canonical history/action composition-product law.
+
+`BanditRLProof.OFULConcreteHistoryRidgeSelection` now closes that concrete
+state gap. For an inclusive finite history at index `n`, it extracts the
+observed arm features and Real responses at coordinates `0,...,n`, evaluates
+the scalar-ridge state at horizon `n+1`, and proves every fixed-arm optimistic
+score measurable. The inverse-Gram proof is local and finite-dimensional:
+determinants are finite sums/products, adjugate entries are determinants of
+row updates, and `Matrix.inv_def` supplies the nonsingular inverse.
+
+The same module packages the concrete strict-fold selector as a deterministic
+history algorithm and proves that the feature of the actual canonical
+successor action agrees almost surely with the feature selected from the
+realized ridge state. The process endpoint accepts any valid
+`Thompson.HistoryEnvironment (Fin K) Real`; its feedback laws are already
+packaged as Markov kernels, and no independence is inferred. These statements
+require no positivity or confidence law: `lambda`, `R`, `delta`, and `S` are
+arbitrary for measurability.
+
+`BanditRLProof.OFULUniformTimeConfidence` now closes the generic
+deterministic finite-window confidence budget. It names the scalar-ridge
+failure event, unions it over exactly `n <= horizon`, proves the simultaneous
+confidence complement, and exposes both arbitrary `(0,1]` schedules and the
+equal allocation `delta/(horizon+1)`. The scheduled failure probability is
+bounded by the sum of its budgets; the equal-share endpoint is bounded by
+`ENNReal.ofReal delta`.
+
+This is not an infinite-horizon anytime theorem. It uses a finite union bound,
+requires the fixed-time sub-Gaussian and response contracts only below the
+chosen horizon, and does not identify the abstract process with the canonical
+generated history algorithm.
+
+`BanditRLProof.OFULAllTimeConfidence` now closes the corresponding
+single-process all-time concentration leaf. Its general endpoint applies
+`MeasureTheory.measure_iUnion_le` and `ENNReal.tsum_le_tsum` to the countable
+union of fixed-time scalar-ridge failures. The concrete schedule
+`delta / ((n+1)*(n+2))` is proved positive, at most one, and to have exact
+`ENNReal` sum `ENNReal.ofReal delta` by a finite reciprocal telescope,
+`HasSum.toNNReal`, and `ENNReal.hasSum_coe`. The terminal theorem therefore
+bounds one simultaneous deterministic-horizon failure event by `delta`.
+
+The contracts are all-time versions of the fixed-time source: a Standard
+Borel probability space, finite decidable nonempty features, positive
+regularization/noise scale/budget, theta norm control, predictable features,
+adapted zero-initialized noise, deterministic projection domination, and
+all-time conditional sub-Gaussian and response laws. No event measurability,
+independence, stationarity, bounded rewards, feature ceiling, stopping-time
+claim, generated policy law, or regret integrability is added. Retrieval used
+the compiled fixed-time confidence route, Mathlib countable-measure and
+infinite-sum APIs, the Abbasi-Yadkori paper card, and the OFUL weapon only as
+route inspiration; targeted local retrieval found no pre-existing
+countable-union telescope declaration.
+
+Status is `leanCompiled`, root imported, focused/root/`Tests.Basic` built,
+externally canaried for the exact schedule and full terminal theorem, and
+baseline-axiom audited. Independent review found no correctness/P0/P1 issue;
+its stale-status and direct-import-ledger findings are resolved, and the full
+project check passes. Failure policy: do not identify the existing
+horizon-dependent generated algorithm family with one anytime policy. The
+separate scheduled canonical consumer described next is required for that
+one-policy interpretation.
+
+`BanditRLProof.OFULScheduledAllTimeConfidence` now compiles that scheduled
+generated-process layer under an explicit all-time residual-law source. At
+history index `n`, the strict-fold selector uses
+`allTimeTelescopingDelta delta (n+1)`, exactly matching the confidence event
+at horizon `n+1`. The module proves scheduled score/action measurability and
+maximality, packages one fixed `HistoryAlgorithm`, constructs the strict-past
+predictable feature and residual, proves simultaneous a.e. equality with the
+actual selected features, and transports the countable confidence event back
+to the actual canonical trajectory.
+
+The terminal event existentially quantifies every successor round and states
+that the true comparator gap exceeds twice the matching scheduled confidence
+radius times the selected confidence width. Exact finite-history/trajectory
+ridge-state identities and the existing optimism theorem show this event is
+a.e. contained in the countable confidence failure event, hence its measure
+is at most `ENNReal.ofReal delta`.
+
+The regularity contract is `0<K`, finite decidable nonempty features,
+`0<lambda`, `0<R`, `0<delta<=1`, theta norm control, a valid Real-reward
+history environment, and an all-time conditional sub-Gaussian MGF law for the
+scheduled predictable residual on this one trajectory measure. No
+independence, stationarity, bounded rewards, feature ceiling, integrability,
+event measurability, cumulative-width bound, stopping-time selection, or
+regret premise is introduced. Status is `leanCompiled`, root imported,
+focused/root/`Tests.Basic` built, with all 28 declarations checked and
+external canaries for generated all-time confidence and the full existential
+gap-tail endpoint.
+
+The concrete scheduled law route now also compiles in the same module.
+Algorithm-parametric canonical reward bridges identify the initial reward law
+under an explicit Dirac initial-action contract and the successor reward
+`condDistrib`/trimmed `condExpKernel.map` law through
+`Thompson.historyStepKernel`. The scheduled step marginal is then rewritten to
+`environment.feedback` at the scheduled selected action.
+
+`canonicalScheduledPredictableScalarRidgeResidualLaw_of_linearSubgaussianEnvironment`
+constructs the all-time source from
+`CanonicalLinearSubgaussianEnvironmentLaw`, and the direct terminal wrapper
+`measure_telescopingCanonicalHistoryTrajectoryAllTimeSuccGapViolationSet_le_of_linearSubgaussianEnvironment`
+therefore needs no caller-provided residual law. The contracts remain
+kernel-section centered sub-Gaussian laws, not independence, stationarity, or
+bounded rewards.
+
+Failure policy: one-policy all-time confidence and successor-gap control is
+closed under the concrete environment law. This is not cumulative regret or a
+stopping-time theorem. The next route is an all-horizon cumulative-gap tail on
+the same scheduled trajectory using deterministic radius-width summation.
+
+`BanditRLProof.OFULSelectedWidthSummation` now closes the deterministic width
+consumer. It proves
+`clippedConfidenceWidth V x = min 1 (confidenceWidth V x)` for positive
+definite `V`, applies finite Cauchy--Schwarz to the compiled logarithmic
+elliptical potential, and exposes the resulting
+`sqrt(T) * sqrt(2*d*log(1+T*L2/(d*lambda)))` bound directly for arbitrary
+selected-action sequences. The raw-width endpoint retains an explicit
+pointwise `width <= 1` contract.
+
+The generated-trajectory confidence/index hookup, cumulative successor
+optimism-gap assembly, concrete feedback-kernel residual-law producer, and
+standard radius-times-selected-width assembly now compile. The trajectory
+consumer uses the complete actual prefix `0,...,horizon` with
+`T = horizon + 1`, while the gap sum covers only successor actions
+`1,...,horizon`; this preserves the true prefix Gram at every width. The raw
+route keeps `confidenceWidth <= 1` explicit. The normalized downstream
+consumer now derives that premise under `L2 <= lambda`; initial-round
+accounting and expected bad-event control remain separate, so this theorem is
+not recorded as complete regret.
+
+### Concrete OFUL history-environment reward law
+
+`OFUL-HISTORY-ENVIRONMENT-LINEAR-SUBGAUSSIAN-REWARD-LAW` now compiles in
+`BanditRLProof.OFULHistoryEnvironmentRewardLaw`. It identifies the initial and
+successor reward laws, converts Real-valued `condDistrib` surfaces to trimmed
+`condExpKernel.map` equality without `Countable Real`, freezes the strict-past
+linear center, and constructs `CanonicalPredictableScalarRidgeResidualLaw`
+from `CanonicalLinearSubgaussianEnvironmentLaw`.
+
+This closes the stochastic source producer and reaches the existing
+successor-gap delta tail. Its normalized radius-width consumer now compiles
+under `L2 <= lambda`. It does not infer sub-Gaussianity from Markovness,
+include initial-round regret, or control the expected bad-event contribution.
+
+### Standard OFUL radius-width successor-gap tail
+
+`OFUL-GENERATED-TRAJECTORY-STANDARD-RADIUS-WIDTH-GAP-TAIL` now compiles in
+`BanditRLProof.OFULGeneratedTrajectoryRadiusWidth`. It names the deterministic
+standard log-determinant budget, a uniform confidence-radius upper bound, the
+selected-width budget, and their doubled product. Every prefix radius
+`n <= T` is bounded by the terminal standard radius, and the exact scalar Gram
+is identified with the regularized prefix feature Gram.
+
+The generated consumer applies selected-width summation to all actual actions
+at times `0,...,horizon`, hence `T = horizon + 1`, and removes only the
+nonnegative time-zero radius-width term. It does not build a fictitious Gram
+from successor actions alone. The resulting deterministic successor-gap
+violation event is included in the concrete linear-sub-Gaussian environment
+violation event and therefore has canonical measure at most
+`ENNReal.ofReal delta`.
+
+This base route still assumes every realized raw confidence width before
+`horizon + 1` is at most one. The normalized downstream leaf below discharges
+that premise when `L2 <= lambda`. Time-zero gap control and expected bad-event
+loss remain subsequent leaves.
+
+### Normalized OFUL radius-width successor-gap tail
+
+`OFUL-GENERATED-TRAJECTORY-NORMALIZED-RADIUS-WIDTH-GAP-TAIL` now compiles in
+`BanditRLProof.OFULNormalizedRadiusWidth`. For
+`V = lambda I + sum_{s<T} x_s x_s^T`, `z = V⁻¹ x`, and `q = xᵀz`, inverse
+cancellation and the exact regularized-Gram energy expansion give
+`lambda * ||z||^2 <= q`. Finite Cauchy--Schwarz gives
+`q^2 <= ||x||^2 * ||z||^2`; therefore `||x||^2 <= lambda` and
+inverse-quadratic nonnegativity imply `q <= 1`.
+
+The canonical wrapper derives `||x||^2 <= lambda` from the arm-feature bound
+`||x||^2 <= L2` and the explicit normalization `L2 <= lambda`. It then reuses
+the standard deterministic and concrete linear-sub-Gaussian measure
+consumers, so the terminal theorem has no pathwise `hwidth` premise. Targeted
+retrieval found no direct finite-matrix inverse-Loewner API with the required
+shape; the compiled route uses local positive-definite inverse cancellation,
+the exact energy expansion, and `Finset.sum_mul_sq_le_sq_mul_sq`.
+
+The explicit sufficient normalization used by this leaf is
+`L2 <= lambda`; the lower-level inverse-quadratic theorem only requires the
+selected vector's squared norm to be at most `lambda`. The terminal theorem
+still excludes the fixed time-zero gap and expected bad-event loss, and it is
+not a complete OFUL regret theorem.
+
+### All-round OFUL standard-gap tail
+
+`OFUL-GENERATED-TRAJECTORY-ALL-ROUND-STANDARD-GAP-TAIL` now compiles in
+`BanditRLProof.OFULInitialRoundGap`. Finite-dimensional Cauchy--Schwarz and
+the parameter/arm norm envelopes bound any two-arm linear gap by
+`2*S*sqrt(L2)`. The canonical time-zero action is the fixed arm `0` almost
+surely, so this charge covers the previously omitted initial round.
+
+The named all-round violation event sums over
+`Finset.range (horizon + 1)`. After `Finset.sum_range_succ'` splits time zero,
+its violation implies the compiled normalized successor violation almost
+surely; `measure_mono_ae` therefore yields the same
+`ENNReal.ofReal delta` terminal bound without a pathwise `hwidth` premise.
+At this boundary, the remaining OFUL gap was the measurable bad-event loss
+envelope and expectation integration; the next leaf below closes it.
+
+### Expected finite-window OFUL pseudo-regret
+
+`OFUL-GENERATED-TRAJECTORY-EXPECTED-PSEUDOREGRET` now compiles in
+`BanditRLProof.OFULExpectedRegret`. The complete comparator-gap sum is
+measurable and bounded in absolute value by
+`(horizon+1)*2*S*sqrt(L2)`, so it is integrable. A generic theorem splits the
+expectation at the all-round violation event: the standard gap budget applies
+off the event, while a measurable indicator charges the deterministic
+envelope on it.
+
+The concrete environment theorem converts the compiled
+`ENNReal.ofReal delta` tail to a Real probability bound and obtains
+`standardScalarAllRoundGapBound + envelope*delta`. With a certified optimal
+fixed arm, the integral is also nonnegative and therefore has the intended
+pseudo-regret semantics. The terminal corollary chooses
+`delta_T=1/(horizon+1)`, making the bad-event charge exactly
+`standardScalarInitialGapBound S L2`; the algorithm's local confidence input
+is `1/(horizon+1)^2`.
+
+This closes finite-window expected fixed-optimal-arm pseudo-regret under the
+concrete linear-sub-Gaussian environment and `L2<=lambda`. It does not assert
+an anytime, minimax, contextual, dynamic-regret, or asymptotic theorem. A
+closed-form rate presentation is supplied by the next leaf.
+
+### Explicit finite-window OFUL expected rate
+
+`OFUL-GENERATED-TRAJECTORY-EXPLICIT-EXPECTED-PSEUDOREGRET-RATE` now compiles
+in `BanditRLProof.OFULExpectedRegretRate`. It proves that the outer budget
+`1/(horizon+1)`, after equal-share uniform-time scheduling, is exactly the
+algorithm parameter `1/(horizon+1)^2`. It then normalizes the confidence
+radius using Mathlib log/sqrt identities.
+
+Writing
+`B_T = d*log(1+(T+1)*L2/(d*lambda))`, the terminal expected pseudo-regret is
+nonnegative and at most
+
+`4*S*sqrt(L2) + 2*(R*sqrt(B_T+4*log(T+1))+sqrt(lambda)*S)
+  *sqrt(T+1)*sqrt(2*B_T)`.
+
+The theorem retains the same concrete linear-sub-Gaussian environment,
+certified optimal arm, feature ceiling, and `L2<=lambda` contracts. This
+closes the explicit finite-window rate presentation; its separate asymptotic
+consumer is recorded below. It is not itself a minimax, anytime, contextual,
+or dynamic-regret theorem. Focused,
+root, `Tests.Basic`, and full project checks pass. Independent review found
+no P0/P1 issue; its budget-notation and direct composition-canary findings
+were resolved. The public axiom audit is baseline-only.
+
+### Asymptotic OFUL expected rate
+
+`OFUL-GENERATED-TRAJECTORY-ASYMPTOTIC-EXPECTED-PSEUDOREGRET-RATE` now
+compiles in `BanditRLProof.OFULExpectedRegretAsymptotics`. It fixes the
+feature type, model parameters, action features, environment, and certified
+best arm while the horizon varies, names the exact canonical expected
+pseudo-regret for the generated algorithm at parameter `1/(T+1)^2`, and
+proves
+
+`canonicalStandardExpectedPseudoRegret ... =O[Filter.atTop]
+  (fun T => sqrt(T+1) * log(T+1))`.
+
+The support route proves the standard determinant budget and augmented
+confidence budget are `O(log(T+1))`, transports square roots and products
+through Mathlib's asymptotics API, absorbs `sqrt(log(T+1))` into
+`log(T+1)` eventually, and applies the compiled pointwise explicit bound.
+The actual imports are `Mathlib.Analysis.Asymptotics.Lemmas`,
+`Mathlib.Analysis.SpecialFunctions.Log.Base`, and
+`Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics`; the previously recorded
+aggregate asymptotics module does not exist in the pinned checkout.
+
+The contracts remain `0<K`, finite decidable nonempty features,
+`0<lambda`, `0<R`, `0<=S`, `0<=L2`, the arm squared-norm ceiling,
+`L2<=lambda`, a certified optimal fixed arm, and the concrete canonical
+linear-sub-Gaussian environment law. This is a fixed-model expected-regret
+asymptotic corollary, not a minimax, anytime, high-probability all-horizon,
+contextual, dynamic-regret, uniform-over-parameters, or unrestricted
+linear-bandit theorem. Focused/root/`Tests.Basic` and full checks pass.
+Public signature checks cover all seven declarations, while external proof
+canaries instantiate the explicit-bound helper and full terminal composition.
+Independent review found no P0/P1 or mathematical/Lean semantic issue; its
+stale-snapshot and canary-description findings were resolved. The public
+axiom audit is baseline-only.
+
+### OFUL expected-average consistency
+
+`OFUL-GENERATED-TRAJECTORY-EXPECTED-AVERAGE-PSEUDOREGRET-CONSISTENCY` now
+compiles in `BanditRLProof.OFULExpectedRegretConsistency`. It defines the
+exact complete canonical expected pseudo-regret divided by `T+1` and proves
+
+`Tendsto (canonicalStandardExpectedAveragePseudoRegret ...)
+  Filter.atTop (nhds 0)`.
+
+The analytic bridge is
+`sqrt(T+1)*log(T+1)=o(T+1)`. It is proved from Mathlib
+`isLittleO_log_rpow_atTop` at exponent `1/2`, `Real.sqrt_eq_rpow`,
+`IsLittleO.mul_isBigO`, and `Real.mul_self_sqrt`. The compiled canonical
+`IsBigO` theorem then yields little-o regret through
+`IsBigO.trans_isLittleO`, and `IsLittleO.tendsto_div_nhds_zero` closes the
+average.
+
+All model and regularity contracts are unchanged from the fixed-model
+asymptotic theorem. This is expected-value convergence for a horizon-indexed
+algorithm family whose horizon-`T` parameter is `1/(T+1)^2`. It is not
+pathwise or probability convergence, almost-sure Hannan consistency, an
+anytime theorem, or consistency of one horizon-independent policy.
+Focused/root/`Tests.Basic` and full project checks pass. Public signature
+checks cover all five declarations, while external proof canaries instantiate
+the analytic little-o bridge and terminal canonical convergence theorem.
+Independent review found no P0-P3 issue, and the public axiom audit is
+baseline-only.
+
+### OFUL explicit high-probability pseudo-regret rate
+
+`OFUL-GENERATED-TRAJECTORY-EXPLICIT-HIGH-PROBABILITY-PSEUDOREGRET-RATE`
+now compiles in `BanditRLProof.OFULHighProbabilityRegretRate`. With
+
+`B_T = standardScalarLogDetBudget lambda (T+1) L2`
+
+and
+
+`H_T(delta) = B_T + 2*log((T+1)/delta)`,
+
+the module proves the exact confidence-radius identity at algorithm parameter
+`delta/(T+1)` and rewrites the named all-round budget as
+
+`2*S*sqrt(L2) +
+  2*(R*sqrt(H_T(delta))+sqrt(lambda)*S)*sqrt(T+1)*sqrt(2*B_T)`.
+
+The terminal theorem fixes a certified optimal arm, proves the complete
+`0,...,T` trajectory pseudo-regret is pointwise nonnegative, and bounds the
+measure of the strict exceedance event by `ENNReal.ofReal delta`. Its
+contracts are exactly the existing canonical linear-sub-Gaussian contracts,
+including `0<delta<=1` and `L2<=lambda`; no new law transport, integrability,
+independence, or pathwise-width premise is introduced.
+
+The focused module, root import, and `Tests.Basic` builds pass. All six public
+declarations have signature checks; external canaries instantiate the radius
+identity and full terminal composition. The public axiom audit is
+baseline-only. This is finite-window high probability, not anytime,
+simultaneous all-horizon, minimax-optimal, contextual, dynamic, or
+uniform-over-parameter regret. Independent review found one P2 retrieval-only
+statement truncation at `(Feature := Feature)`; the bracket-aware scanner and
+CLI regression test resolve it, the declaration index now contains the full
+strict-event conclusion, and `python3 tools/bandit.py check` passes.
+
+## UCB Canonical Selected-Reward Consistency Route
+
+`BanditRLProof.Algorithms.UCBArmStreamConditionalReward` now closes the adaptive
+next-unused-coordinate law. In addition to complement independence, recursive
+causality, and condition reconstruction, it defines measurable fibers of the
+coordinate encoded by each successor `(finite history, action)` condition.
+Those fibers and the corresponding stream branches are pairwise disjoint and
+cover their full spaces. `Measure.restrict_iUnion`, `Measure.restrict_map`, and
+`Measure.restrict_prod_eq_prod_univ` turn every branch into the restricted
+condition marginal times `nu target.2`; `Measure.map_sum` and
+`Measure.compProd_sum_left` reassemble the exact full joint law. Consequently
+`armStreamReward_succ_condDistrib_ae_eq_nu` and the packaged environment
+feedback law compile without a caller selected-law premise.
+
+`BanditRLProof.Algorithms.UCBRealStationarySelectedRewardConsistency` transports
+the exact `(finitePairHistoryOfTrace action reward n, action (n+1))` condition
+marginal through the compiled complete trajectory `IdentDistrib`. The fresh
+canonical `Kernel.trajMeasure` process therefore has the stationary selected-arm
+law for its initial reward and every successor reward, a.e. on the corresponding
+generated condition marginal. Its terminal theorem combines both reward-law
+families with the same-process explicit `realHistoryNextArm` event and the
+armwise-bounded expected-average pseudo-regret `Tendsto` result.
+
+The focused modules, root import, and `Tests.Basic` compile with public checks
+and generated-successor/terminal external canaries. The generic law needs only
+positive finite arms and a Markov Real kernel; the terminal adds per-arm
+probability laws and armwise a.s. interval support. No action-only conditioning,
+moment substitute, global kernel equality on null histories, horizon-indexed
+process, common interval, caller selected law, or pathwise/probability/a.s.
+consistency claim is introduced.
+
+## RL Finite Policy Trajectory Value Identity
+
+`RL-FINITE-HORIZON-POLICY-TRAJECTORY-VALUE-IDENTITY` now compiles in
+`BanditRLProof.RL.FiniteHorizonTrajectory`. The module constructs a true finite
+`Fin n -> Action × State` trace, recursively composes policy-action and MDP
+transition kernels, and proves every remaining-horizon kernel Markov. The
+cumulative reward is jointly measurable; finite-range `Integrable.of_bound`
+removes any caller reward-bound or integrability premise. Two nested Mathlib
+`integral_compProd` expansions identify its statewise expectation with
+`valueRemaining`, and the final `Measure.compProd` expansion proves the joint
+trajectory expected return equals the initial-law integral of `valueAt 0`.
+
+Contracts are finite state/action measurable spaces, the compiled MDP and
+Markov-policy contracts, and a probability initial-state measure for the final
+theorem. This closes policy trajectory generation and policy evaluation only.
+Bellman optimality, a maximizing policy, occupancy recursion, optimism, and RL
+regret remain open; literature cards are retrieval evidence, not local proofs.
+
+## RL Finite-Horizon Bellman Optimality
+
+`RL-FINITE-HORIZON-BELLMAN-OPTIMALITY` now compiles in
+`BanditRLProof.RL.FiniteHorizonOptimality`. Mathlib `Finite.exists_max` supplies
+a genuine Bellman-Q maximizing action. On a finite state space with measurable
+singletons, `measurable_of_finite` makes that selector measurable, so the
+greedy policy is constructed explicitly with deterministic Markov kernels.
+Finite-type integrability and `integral_mono` establish transition, Bellman-Q,
+and policy-Bellman monotonicity. Backward optimal values satisfy terminal and
+chronological Bellman equations; decreasing induction proves universal policy
+dominance and, separately, greedy-policy attainment at every stage.
+
+The exact added contracts are nonempty finite actions and singleton-measurable
+finite states. No initial law, reward bound, caller integrability, compactness,
+occupancy, conditional expectation, optimism, UCB-VI, or regret premise is
+used. The downstream occupancy/performance-difference route now compiles.
+
+## RL Finite-Horizon Occupancy Regret
+
+`RL-FINITE-HORIZON-OCCUPANCY-REGRET` now compiles in
+`BanditRLProof.RL.FiniteHorizonOccupancyRegret`. `stateOccupancy` gives the
+chronological policy-induced state laws and preserves probability.
+`policyBellmanGap` is measurable and nonnegative. The induced-kernel integral
+bridge expands `Kernel.map` and `Kernel.compProd`, then the recursive
+`occupancyGapRemaining` theorem telescopes the finite gap sum to the integrated
+optimal-policy value difference. The compiled trajectory/value identity turns
+the same difference into `expectedRegret`; the final endpoint packages exact
+occupancy equality, nonnegativity, and greedy-policy zero regret.
+
+This closes a finite single-episode performance-difference bridge. It does not
+provide an empirical MDP, estimated transition/reward model, confidence set,
+optimistic bonus, multi-episode process, UCB-VI concentration event, or regret
+rate. Those remain the next substantive RL gaps.
+
+## RL Finite-Horizon Optimistic Bellman Certificate
+
+`RL-FINITE-HORIZON-OPTIMISTIC-BELLMAN-CERTIFICATE` now compiles in
+`BanditRLProof.RL.FiniteHorizonOptimisticCertificate`. Local true optimal-
+Bellman upper inequalities and a zero terminal condition imply global
+optimal-value optimism. Generic recursive occupancy sums are monotone under
+pointwise stage-cost bounds. The certificate's policy residual sum telescopes
+exactly to upper value minus policy value, agrees with the old occupancy gap
+for the canonical optimal certificate, and bounds expected regret. A
+pointwise residual-to-bonus inequality yields the final true-occupancy bonus
+regret bound.
+
+This removes the deterministic optimism-induction and episode-regret-
+telescope gaps from the RL roadmap. The deterministic estimated-model
+confidence producer now compiles downstream; empirical estimation and the
+probability of its confidence contract remain open.
+
+## RL Estimated-Model Optimistic Regret Producer
+
+`RL-FINITE-HORIZON-ESTIMATED-MODEL-OPTIMISTIC-REGRET` now compiles in
+`BanditRLProof.RL.FiniteHorizonEstimatedModelCertificate`. A stage-indexed
+estimated reward/transition model and separate radii recursively generate the
+optimistic values and deterministic greedy policy. Two-sided reward error and
+transition-expectation error on the generated tail value imply both true-Q
+optimism and a factor-two selected-radius residual bound. The existing
+certificate/occupancy route converts these into global optimism and a
+single-episode expected-regret bound.
+
+Still missing are finite episode histories and visit counts, empirical reward
+and transition estimators, concentration events proving these two-sided
+errors, any required reward/value range or clipping contracts, cross-episode
+filtration, bonus/martingale summation, and the final high-probability or
+minimax UCB-VI theorem.
+
+## RL Coordinate Model Confidence Transport
+
+`RL-FINITE-HORIZON-COORDINATE-MODEL-CONFIDENCE-REGRET` now compiles in
+`BanditRLProof.RL.FiniteHorizonCoordinateModelConfidence`. Mathlib
+`integral_fintype` expands estimated and true next-state expectations into
+finite singleton-mass sums. Coordinate transition errors and an absolute
+envelope on the recursively generated tail upper value then bound the
+expectation error by a finite coordinate-radius sum. Radius coverage packages
+this result, together with the reward error, as the existing
+`EstimatedModelPlan.Confidence`; the compiled optimism and single-episode
+expected-regret endpoint follows unchanged.
+
+This closes the deterministic finite-state coordinate/L1-to-Bellman bridge.
+It does not construct empirical transition frequencies, visit counts, a
+simultaneous confidence event or its probability. The next producer must
+define those episode-history observables and prove reward plus singleton
+transition-coordinate concentration before cross-episode regret assembly.
+
+## RL Finite-Batch Empirical Model Producer
+
+`RL-FINITE-HORIZON-FINITE-BATCH-EMPIRICAL-MODEL-CONFIDENCE-REGRET` now
+compiles in `BanditRLProof.RL.FiniteHorizonEmpiricalModel`. Finite records
+define visit counts, empirical reward means, next-state counts, normalized
+positive-count PMFs, an explicit zero-count Dirac fallback, and a finite-state
+Markov kernel. `FiniteBatchModel.plan` is therefore generated from empirical
+statistics rather than supplied by the confidence consumer. Raw reward and
+singleton-frequency error contracts transport through `CoordinateConfidence`
+to the compiled optimism and single-episode expected-regret theorem.
+
+The remaining gap is probabilistic, not an empirical-model placeholder. The
+batch is not yet identified with measurable functions of generated episodes;
+there is no simultaneous event, confidence probability, reward-range or
+clipping theorem, count lower bound, episode filtration, failure-budget union
+bound, cross-episode bonus sum, or cumulative/high-probability UCB-VI rate.
+
+## RL IID Generated-Trajectory Batch Law
+
+`RL-FINITE-HORIZON-IID-TRAJECTORY-BATCH-LAW` now compiles in
+`BanditRLProof.RL.FiniteHorizonIIDTrajectoryBatch`. The previously arbitrary
+finite records now have a concrete producer: a measurable pushforward of the
+finite iid product of `MarkovPolicy.trajectoryMeasure`. Coordinate evaluation
+recovers the genuine trajectory law, and `iIndepFun_pi` supplies independence
+for fixed-stage source records and measurable statistics. A finite-product
+map characterization transports that fact to record/statistic independence
+directly under `iidEpisodeBatchMeasure`. Exact identities connect empirical
+visit, reward, and transition aggregates to named independent per-trajectory
+contributions. The measurable-space instance and field projection APIs are
+owned with `EpisodeStep`; independent review's mapped-law P2 and both P3
+findings are resolved. Focused, root, Tests, axiom, index, and full CLI gates
+pass.
+
+The remaining gap is no longer batch-law identification for fixed-policy iid
+episodes. It is concentration and adaptivity. There is not yet a centered
+bounded-variable tail for these contributions, a simultaneous finite
+coordinate event, a visit-count lower bound, a reward/transition ratio theorem,
+an adaptive episode filtration, confidence probability allocation, cumulative
+bonus control, or a high-probability UCB-VI regret theorem. Reward randomness
+beyond the deterministic `mdp.reward` field also requires a separate model.
+
+## RL IID Fixed-Coordinate Count Confidence
+
+`RL-FINITE-HORIZON-IID-COUNT-CONFIDENCE` now compiles in
+`BanditRLProof.RL.FiniteHorizonIIDCountConcentration`. The fixed-policy iid
+batch law now produces actual concentration, not only independence: each
+fixed visit count and each fixed joint transition count has a two-sided
+delta-calibrated tail around episode count times its single-trajectory mean.
+The proof transports the common mean through mapped marginals, uses exact
+count/cast algebra, and consumes the compiled `[0,1]` Hoeffding and independent
+sub-Gaussian finite-sum APIs.
+
+The route now makes the joint semantics explicit: the transition center is
+the measurable event mass `P(S_h=s,A_h=a,S_{h+1}=s')`, lies in `[0,1]`, and is
+at most `P(S_h=s,A_h=a)`. The total Hoeffding proxy is exactly `episodes / 4`.
+Real count/deviation functions and both fixed-coordinate bad events are
+measurable, so the next union route does not need to reconstruct that layer.
+Independent review found no P0/P1/P2 and all P3 findings were resolved;
+focused/full builds, external canaries, baseline axiom audit, and project gate
+pass.
+
+This does not yet prove a simultaneous confidence event. The bundled theorem
+contains two separate inequalities and spends no shared failure budget. There
+is also no occupancy lower bound, positive random denominator, empirical
+transition-frequency ratio bound, stochastic reward-mean confidence,
+adaptive episode filtration, cross-episode policy update, cumulative bonus
+sum, or high-probability UCB-VI regret theorem.
+
+## Closed Gap: Eligible Visit-Count Positivity
+
+`RL-FINITE-HORIZON-IID-ELIGIBLE-VISIT-COUNT-POSITIVITY` now compiles. For each
+coordinate in a caller-supplied finite eligible set, an expected-count margin
+strictly larger than the common radius rules out realized count zero. The
+measurable eligible zero-count union is included in the compiled simultaneous
+bad event and inherits its global-delta tail; its complement exposes positive
+Nat denominators directly.
+
+The explicit margin remains essential because unreachable coordinates have
+zero expectation. The next missing law is not denominator positivity: it is
+the factorization of the named joint-transition probability into visit
+probability times the true transition-kernel singleton mass. Empirical ratios
+and reward confidence remain separate downstream gaps.
+
+## Active Gap: Simultaneous IID Count Confidence
+
+The route `RL-FINITE-HORIZON-IID-SIMULTANEOUS-COUNT-CONFIDENCE` is compiled.
+It combines every finite visit and joint-transition count bad event under the
+same mapped iid batch law, calibrates each at
+`delta / Fintype.card CountCoordinate`, proves the union has measure at most
+global `delta`, and recovers strict count bounds outside the measurable union.
+
+No new probabilistic law transport is missing for this route: marginal laws,
+independence, centered MGF witnesses, exact count identities, and each
+coordinate tail compile. The finite index, exact cardinality, union-budget
+assembly, and empty-horizon branch are now closed. The next separate gap is a
+deterministic occupancy-margin contract that turns the simultaneous visit
+deviation into positive visit counts; empirical conditional transition ratios
+remain downstream of that denominator result.
+
+## Closed Gap: Generated Stage-Transition Joint Factorization
+
+`RL-FINITE-HORIZON-STAGE-TRANSITION-JOINT-FACTORIZATION` now compiles. The
+generated fixed-policy population law satisfies
+`stageTransitionJointProbability = stageVisitProbability * transitionMass`
+for every stage/state/action/next-state coordinate, where `transitionMass` is
+the Real singleton mass of the true MDP transition kernel.
+
+The proof does not assume positive occupancy. It factors a singleton at the
+action/next-state `compProd`, inducts through every earlier recursive trajectory
+layer, transports the constant transition mass through the initial-state
+`Measure.compProd`, and then converts ENNReal event masses to Real. A reachable
+deterministic coordinate evaluates to one, an unreachable coordinate to zero,
+and a horizon-two stage-one canary exercises successor-coordinate transport.
+Independent review found no P0-P2; its two P3 findings were resolved by removing
+unused singleton contracts and adding that successor-stage canary.
+
+This closes population-law identification, not empirical ratio confidence.
+The next gap is ratio algebra using the compiled positive eligible visit counts
+and simultaneous visit/joint-count deviations. Reward confidence, adaptive
+episode filtration, cumulative bonuses, and complete UCB-VI remain downstream.
+
+## Closed Gap: Eligible Empirical Transition Singleton Confidence
+
+`RL-FINITE-HORIZON-IID-ELIGIBLE-EMPIRICAL-TRANSITION-CONFIDENCE` now compiles.
+For every caller-eligible stage/state/action coordinate whose genuine expected
+count strictly exceeds the shared count radius, every next-state singleton obeys
+`|empiricalTransitionMass - trueTransitionMass| < 2 * radius / visitCount`
+outside the existing simultaneous-count event. That same measurable event keeps
+its previously compiled mapped-iid-batch mass bound `<= ENNReal.ofReal delta`.
+
+The proof uses the positive realized count from the eligibility margin, the
+exact empirical `transitionCount / visitCount` law, both simultaneous count
+deviations, and the compiled population joint factorization. The true kernel
+singleton mass lies in `[0,1]`, so the joint and visit numerator errors sum to
+at most twice the common radius before division by the positive realized count.
+No additional next-state union budget is used.
+
+Independent review found no P0-P1. Its stale-status and regularity/API ledger
+observations were synchronized, and its semantic-coverage finding was resolved
+with a concrete Bool-state four-record batch: visit count four, empirical
+`true` mass `1/4`, true transition mass zero, and a public-theorem consumer that
+reduces to the nonzero strict inequality `1/4 < 2 * radius / 4`.
+
+This closes transition singleton-frequency confidence only on eligible
+coordinates. The generated deterministic-reward exactness route below now
+closes its reward-error consumer. Full empirical-model confidence still lacks
+all-coordinate eligibility and the generated value-envelope/transition-radius
+assembly. Adaptive episode policies, anytime confidence, cumulative regret, and
+complete UCB-VI remain downstream.
+
+## Closed Gap: Generated Empirical Reward Exactness
+
+`RL-FINITE-HORIZON-IID-GENERATED-EMPIRICAL-REWARD-EXACTNESS` now compiles. The
+current finite-horizon `MDP` has deterministic `reward : State -> Action -> Real`,
+so trajectory-generated records do not require a separate noisy-reward
+concentration theorem. A reusable `EpisodeBatch.RewardConsistent` contract now
+gives `rewardSum = visitCount * mdp.reward`, and every positive-count empirical
+reward cancels exactly to the true reward. Every `episodeBatchOfTrajectories`
+satisfies that contract definitionally.
+
+The eligible endpoint reuses the same simultaneous-count event: outside it,
+reward-consistent batches have zero reward error and all next-state singleton
+transition errors retain the compiled `2 * radius / visitCount` bound. No new
+failure budget is allocated. The reward-consistency set is measurable, and
+`ae_map_iff` proves that mapped iid episode batches satisfy it almost everywhere,
+so the bundled endpoint no longer needs a caller-supplied support premise.
+Canaries include a generated reward of seven and
+an unvisited state where empirical reward remains zero while the true reward is
+eleven, preventing accidental zero-count overstatement.
+
+This closes the reward-error component only for generated/reward-consistent
+records at eligible positive-count coordinates. Constructing a full
+`FiniteBatchModel.Confidence` still requires all coordinates used by planning
+to be eligible and a noncircular upper-value envelope plus transition-radius
+coverage. Stochastic reward observations would require a different MDP model.

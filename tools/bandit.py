@@ -16394,6 +16394,66 @@ LOCAL_LEAF_CARDS = [
         ],
     },
     {
+        "id": "LOCAL-LEAF-EXP3-PREDICTABLE-REGRET-GEOMETRIC-ALL-TIME-TAIL",
+        "leaf_ids": [
+            "EXP3-PREDICTABLE-REGRET-GEOMETRIC-ALL-TIME-TAIL",
+        ],
+        "module": "BanditRLProof.Exp3PredictableRegretAllTime",
+        "status": "leanCompiled",
+        "declarations": [
+            "Exp3.sampledPredictableRegretGeometricAllTimeBudget",
+            "Exp3.sampledPredictableRegretGeometricAllTimeFailureSet",
+            "Exp3.mem_sampledPredictableRegretGeometricAllTimeFailureSet_iff",
+            "Exp3.measure_sampledPredictableRegretGeometricAllTimeFailureSet_le",
+        ],
+        "role": "Accepted same-process predictable-regret confidence theorem over every positive prefix of one generated EXP3 trajectory against one fixed supported comparator. The scheduled budget evaluates sampledPredictableHighProbabilityRegretBudget at horizon n+1 and geometricConfidenceShare delta n / 2, preserving the fixed parent theorem's internal equal split between pure-cross and comparator-estimator failures. The named countable event uses Finset.range (n+1) for both exploration-mixed predictable loss and comparator predictable loss, and the terminal bounds its outer measure by ENNReal.ofReal delta. Local APIs/imports are BanditRLProof.Exp3HighProbabilityRegret, BanditRLProof.ConcentrationConfidenceSchedule, sampledPredictable_highProbabilityRegret_tail_total_delta, geometricConfidenceShare_pos, tsum_ofReal_geometricConfidenceShare, MeasureTheory.measure_iUnion_le, and ENNReal.tsum_le_tsum. The proof keeps prior, arms, eta, gamma, loss, and comparator outside the countable index, specializes the fixed-horizon pathwise potential/exploration/comparator assembly at every n+1, compares the resulting measure tsum with the geometric shares, and rewrites the exact total. Regularity contracts are a probability prior; Standard Borel nonempty Env/Action; measurable action singletons; decidable nonempty arms; eta>0; 0<gamma<1; one PredictableLossVector; one comparator in arms; and delta>0. Event measurability, delta<=1, independence, stationarity, countable Action, supplied integrability, or new law transport are not required. Retrieval evidence is LOCAL-LEAF-EXP3-PREDICTABLE-HIGH-PROBABILITY-REGRET, LOCAL-LEAF-CONCENTRATION-GEOMETRIC-CONFIDENCE-SCHEDULE, LOCAL-LEAF-EXP3-PREDICTABLE-HEDGE-AE, LOCAL-LEAF-EXP3-EXPLORATION-BIAS, the pure-cross and comparator confidence leaves, MLIB-MEASURE-INTEGRAL, MLIB-FINSET-SUMS, MLIB-ORDER-ALGEBRA, TXT-LATTIMORE-SZEPESVARI-2020, and downstream-only PPR-AUER-CFS-2002-EXP3; WEAPON-EXP3-POTENTIAL and WEAPON-TAIL-INEQUALITIES are inspiration only. Status is leanCompiled and accepted, root imported, focused/root/Tests built, and externally canaried for budget normalization, membership, and terminal statement. Failure policy: this controls predictable pseudo-regret for fixed eta/gamma only. The compiled LOCAL-LEAF-EXP3-REALIZED-REGRET-GEOMETRIC-ALL-TIME-TAIL now combines it with pure realized deviation; this parent alone does not prove realized selected-loss regret, tune a sublinear all-time rate, vary process parameters with n, or establish Ville/Doob, mixture, optional stopping, self-normalization, general Freedman, horizon-free tuned EXP3, or ideal EXP3.P.",
+        "verification": "Focused module, project root, and Tests.Basic compile. Three external canaries fix the inner half-share budget, exact n+1 event membership, and full terminal theorem. SafeVerify fixes statement hash dc280a8f2beb7ccffc95195b4a6b69cc9161585aa8d4d608b3278c89b7bb13a5; all four declarations report only propext, Classical.choice, and Quot.sound. Independent review found no P0/P1/P2 and its P3 retrieval-timing ambiguity is closed. Lifecycle records are accepted, verified memory is mem-b8cfa9865d91f12a, frontier shadow has zero mismatches, reference indexes are refreshed, and the full harness passes with 36 tests and one expected skip.",
+        "mathlib_routes": [
+            "LOCAL-LEAF-EXP3-PREDICTABLE-HIGH-PROBABILITY-REGRET",
+            "LOCAL-LEAF-CONCENTRATION-GEOMETRIC-CONFIDENCE-SCHEDULE",
+            "LOCAL-LEAF-EXP3-PREDICTABLE-HEDGE-AE",
+            "LOCAL-LEAF-EXP3-EXPLORATION-BIAS",
+            "LOCAL-LEAF-EXP3-PURE-CROSS-WEIGHT-DELTA-CONFIDENCE",
+            "LOCAL-LEAF-EXP3-COMPARATOR-ESTIMATOR-DELTA-CONFIDENCE",
+            "MLIB-MEASURE-INTEGRAL",
+            "MLIB-FINSET-SUMS",
+            "MLIB-ORDER-ALGEBRA",
+            "PPR-AUER-CFS-2002-EXP3",
+            "WEAPON-EXP3-POTENTIAL",
+            "WEAPON-TAIL-INEQUALITIES",
+        ],
+    },
+    {
+        "id": "LOCAL-LEAF-EXP3-REALIZED-REGRET-GEOMETRIC-ALL-TIME-TAIL",
+        "leaf_ids": [
+            "EXP3-REALIZED-REGRET-GEOMETRIC-ALL-TIME-TAIL",
+        ],
+        "module": "BanditRLProof.Exp3RealizedRegretAllTime",
+        "status": "leanCompiled",
+        "declarations": [
+            "Exp3.sampledTrajectoryRealizedRegret_eq_predictableRegret_add_realizedDeviation",
+            "Exp3.sampledRealizedRegretGeometricAllTimeBudget",
+            "Exp3.sampledRealizedRegretGeometricAllTimeFailureSet",
+            "Exp3.mem_sampledRealizedRegretGeometricAllTimeFailureSet_iff",
+            "Exp3.sampledRealizedRegretGeometricAllTimeFailureSet_subset",
+            "Exp3.measure_sampledRealizedRegretGeometricAllTimeFailureSet_le",
+        ],
+        "role": "Accepted same-process realized selected-loss regret confidence theorem over every positive prefix of one generated EXP3 trajectory against one fixed supported comparator. The scheduled budget adds the accepted predictable-regret all-time budget and pure realized-deviation radius after assigning total confidence delta/2 to each event family. The finite-prefix decomposition identifies realized selected-loss regret exactly with exploration-mixed predictable regret plus cumulative realized deviation. The combined named event uses Finset.range (n+1), is contained pointwise in the union of the two component all-time failure sets, and has outer measure at most ENNReal.ofReal delta. Local APIs/imports are BanditRLProof.Exp3PredictableRegretAllTime, BanditRLProof.Exp3RealizedDeviationAllTime, both membership and terminal outer-measure theorems, sampledTrajectoryRealizedDeviationAt, Finset.sum_sub_distrib, measure_mono, measure_union_le, ENNReal.ofReal_add, ring, and linarith. The proof keeps prior, arms, eta, gamma, loss, and comparator outside the countable index, proves the exact finite-sum decomposition, turns nonmembership in each component event into strict same-prefix bounds, adds those bounds, and applies finite union subadditivity with exact half-confidence normalization. Regularity contracts are a probability prior; Standard Borel nonempty Env/Action; measurable action singletons; decidable nonempty arms; eta>0; 0<gamma<1; one PredictableLossVector; one comparator in arms; and delta>0. Event measurability, delta<=1, independence, stationarity, countable Action, supplied integrability, or a new law transport are not required. Retrieval evidence is LOCAL-LEAF-EXP3-PREDICTABLE-REGRET-GEOMETRIC-ALL-TIME-TAIL, LOCAL-LEAF-EXP3-REALIZED-DEVIATION-GEOMETRIC-ALL-TIME-TAIL, the fixed-horizon realized-regret composition precedent, MLIB-MEASURE-INTEGRAL, MLIB-FINSET-SUMS, MLIB-ORDER-ALGEBRA, TXT-LATTIMORE-SZEPESVARI-2020, and downstream-only PPR-AUER-CFS-2002-EXP3; WEAPON-EXP3-POTENTIAL and WEAPON-TAIL-INEQUALITIES are inspiration only. Status is leanCompiled and accepted, root imported, focused/root/Tests built, and externally canaried for decomposition, budget normalization, membership, event inclusion, and terminal statement. Failure policy: this is fixed-parameter realized regret against one comparator. It does not yet take the best supported comparator, tune a sublinear all-time rate, vary process parameters with n, or establish Ville/Doob, mixture, optional stopping, self-normalization, general Freedman, horizon-free tuned EXP3, or ideal EXP3.P.",
+        "verification": "Focused module, project root, and Tests.Basic compile. Five external canaries fix the finite-prefix decomposition, exact delta/2 family split, n+1 event membership, component-union inclusion, and full terminal theorem. SafeVerify fixes statement hash 34d6b6dd7518f9b531186f8db39ab7f52a67b685605a43cc8c5871d3fa295702; all six declarations report only propext, Classical.choice, and Quot.sound. Independent review found no P0/P1/P2/P3. Lifecycle records are accepted, verified memory is mem-2a0ffec376992850, frontier shadow has zero mismatches, reference indexes are refreshed, and the full harness passes with 36 tests and one expected skip.",
+        "mathlib_routes": [
+            "LOCAL-LEAF-EXP3-PREDICTABLE-REGRET-GEOMETRIC-ALL-TIME-TAIL",
+            "LOCAL-LEAF-EXP3-REALIZED-DEVIATION-GEOMETRIC-ALL-TIME-TAIL",
+            "LOCAL-LEAF-EXP3-REALIZED-HIGH-PROBABILITY-REGRET",
+            "MLIB-MEASURE-INTEGRAL",
+            "MLIB-FINSET-SUMS",
+            "MLIB-ORDER-ALGEBRA",
+            "TXT-LATTIMORE-SZEPESVARI-2020",
+            "PPR-AUER-CFS-2002-EXP3",
+            "WEAPON-EXP3-POTENTIAL",
+            "WEAPON-TAIL-INEQUALITIES",
+        ],
+    },
+    {
         "id": "LOCAL-LEAF-EXP3-REALIZED-HIGH-PROBABILITY-REGRET",
         "leaf_ids": [
             "EXP3-REALIZED-HIGH-PROBABILITY-REGRET",
@@ -16505,6 +16565,133 @@ LOCAL_LEAF_CARDS = [
             "MLIB-MEASURE-INTEGRAL",
             "MLIB-FINSET-SUMS",
             "MLIB-REAL-LOG-SQRT",
+        ],
+    },
+    {
+        "id": "LOCAL-LEAF-CONCENTRATION-QUADRATIC-COUNTABLE-SCHEDULED-TAIL",
+        "leaf_ids": [
+            "CONCENTRATION-QUADRATIC-COUNTABLE-SCHEDULED-TAIL",
+            "BRL-OP-CONCENTRATION-001",
+        ],
+        "module": "BanditRLProof.ConcentrationQuadraticScheduled",
+        "status": "leanCompiled",
+        "declarations": [
+            "Concentration.quadraticFixedMGFScheduledRadius",
+            "Concentration.measure_iUnion_scheduled_deviation_ge_inter_variance_le_tsum_of_fixedTilt_quadratic_tail",
+            "Concentration.measure_iUnion_scheduled_deviation_ge_inter_variance_le_delta_of_fixedTilt_quadratic_tail",
+        ],
+        "role": "Compiled countable scheduled extension of the quadratic fixed-MGF delta route. The Lean-facing radius quadraticFixedMGFScheduledRadius evaluates the existing optimized radius at time-indexed variance scales, variance budgets, tilt caps, and confidence shares. The tsum theorem assumes each of those four schedules is pointwise positive and receives one fixed-tilt quadratic tail family per index; it proves that the countable union of the corresponding joint deviation/variance events has mass at most sum' n, ENNReal.ofReal (deltaAt n). The outer-budget corollary composes this with a caller-supplied tsum bound. Local APIs/imports are BanditRLProof.ConcentrationQuadraticScheduled, ConcentrationQuadraticFixedMGF, measure_deviation_ge_inter_variance_le_delta_of_fixedTilt_quadratic_tail, MeasureTheory.measure_iUnion_le, and ENNReal.tsum_le_tsum. The proof specializes the one-event optimizer pointwise, applies countable outer-measure subadditivity, compares the tsum termwise, and closes the budget by transitivity. Regularity contracts are only a measurable ambient space, pointwise positivity of the four parameter families, the displayed fixed-tail families, and the optional displayed ENNReal outer budget. Event measurability, a finite or probability measure, independence, filtration, boundedness, stationarity, and deltaAt n <= 1 are not assumed. Retrieval evidence is LOCAL-LEAF-CONCENTRATION-PREDICTABLE-COMPENSATED-QUADRATIC-DELTA-TAIL, LOCAL-LEAF-CONCENTRATION-QUADRATIC-FINITE-MAXIMAL-TAIL, MLIB-MEASURE-INTEGRAL, MLIB-PROBABILITY-MGF, MLIB-REAL-LOG-SQRT, MLIB-EXP-LOG-INEQUALITIES, MLIB-ORDER-ALGEBRA, TXT-LATTIMORE-SZEPESVARI-2020, and downstream-only PPR-AUER-CFS-2002-EXP3; WEAPON-TAIL-INEQUALITIES is inspiration only. Status is leanCompiled, root imported, focused-built, and externally canaried. Failure policy: this leaf chooses no summable schedule and proves no Ville/Doob or mixture boundary, horizon-free fixed-policy consumer, optional-stopping or self-normalized theorem, general Freedman inequality, or ideal EXP3.P result.",
+        "verification": "Focused module, project root, and Tests.Basic builds pass. The full-statement canary instantiates independent deltaAt and outer hbudget arguments. SafeVerify preserves statement hash 0e782bcda45091c55081430d14c97cadf7d6446aae9869ca280cd0043ab3a1df; placeholders are empty; all three declarations depend only on propext, Classical.choice, and Quot.sound. Independent review found no Lean defect and its lifecycle, paper-attribution, measure-terminology, and retrieval-ledger findings were resolved. Verified memory is mem-26c1f8ea632bb05f; frontier shadow has zero drift; the full repository gate passes with 36 CLI tests and one expected skip.",
+        "mathlib_routes": [
+            "LOCAL-LEAF-CONCENTRATION-PREDICTABLE-COMPENSATED-QUADRATIC-DELTA-TAIL",
+            "LOCAL-LEAF-CONCENTRATION-QUADRATIC-FINITE-MAXIMAL-TAIL",
+            "MLIB-MEASURE-INTEGRAL",
+            "MLIB-PROBABILITY-MGF",
+            "MLIB-REAL-LOG-SQRT",
+            "MLIB-EXP-LOG-INEQUALITIES",
+            "MLIB-ORDER-ALGEBRA",
+        ],
+    },
+    {
+        "id": "LOCAL-LEAF-CONCENTRATION-GEOMETRIC-CONFIDENCE-SCHEDULE",
+        "leaf_ids": [
+            "CONCENTRATION-GEOMETRIC-CONFIDENCE-SCHEDULE",
+            "EXP3-REALIZED-PREDICTABLE-VARIANCE-GEOMETRIC-ALL-TIME-TAIL",
+            "BRL-OP-CONCENTRATION-001",
+        ],
+        "module": "BanditRLProof.ConcentrationConfidenceSchedule",
+        "status": "leanCompiled",
+        "declarations": [
+            "Concentration.geometricConfidenceShare",
+            "Concentration.geometricConfidenceShare_pos",
+            "Concentration.tsum_ofReal_geometricConfidenceShare",
+        ],
+        "role": "Compiled reusable geometric confidence schedule. geometricConfidenceShare delta n is delta/2/2^n; the module proves pointwise positivity for positive delta and proves that the ENNReal ofReal masses sum exactly to ofReal delta. Local APIs/imports are Mathlib.Analysis.SpecificLimits.Basic, hasSum_geometric_two', HasSum.toNNReal, ENNReal.hasSum_coe, and ENNReal.ofReal_eq_coe_nnreal. The proof transports the real geometric HasSum through nonnegative NNReal values and ENNReal coercions. Regularity contracts are only delta>0 for positivity and delta>=0 for the exact sum; there is no measurable space, stochastic process, filtration, event measurability, or independence assumption. Retrieval evidence includes LOCAL-LEAF-OFUL-ALL-TIME-TELESCOPING-SCALAR-RIDGE-CONFIDENCE as an existing local exact Real-to-NNReal-to-ENNReal budget-transport pattern, MLIB-ORDER-ALGEBRA, and Mathlib.Analysis.SpecificLimits.Basic. Status is leanCompiled, root imported, focused-built, externally canaried on the exact tsum, statement-fenced through its EXP3 consumer, and baseline-axiom audited. Failure policy: this leaf only constructs a summable confidence allocation; it proves no event tail, process law, maximal inequality, optional stopping, self-normalization, or algorithmic regret theorem.",
+        "mathlib_routes": [
+            "LOCAL-LEAF-OFUL-ALL-TIME-TELESCOPING-SCALAR-RIDGE-CONFIDENCE",
+            "MLIB-ORDER-ALGEBRA",
+            "Mathlib.Analysis.SpecificLimits.Basic",
+        ],
+    },
+    {
+        "id": "LOCAL-LEAF-EXP3-REALIZED-PREDICTABLE-VARIANCE-GEOMETRIC-ALL-TIME-TAIL",
+        "leaf_ids": [
+            "EXP3-REALIZED-PREDICTABLE-VARIANCE-GEOMETRIC-ALL-TIME-TAIL",
+        ],
+        "module": "BanditRLProof.Exp3RealizedPredictableVarianceAllTime",
+        "status": "leanCompiled",
+        "declarations": [
+            "Exp3.sampledRealizedPredictableVarianceGeometricRadius",
+            "Exp3.sampledPredictableRealizedDeviationAllTimeFailureSet",
+            "Exp3.mem_sampledPredictableRealizedDeviationAllTimeFailureSet_iff",
+            "Exp3.measure_sampledPredictableRealizedDeviationAllTimeFailureSet_le",
+        ],
+        "role": "Compiled one-process all-time predictable-variance tail for generated EXP3. The EXP3 module consumes LOCAL-LEAF-CONCENTRATION-GEOMETRIC-CONFIDENCE-SCHEDULE, defines the scheduled quadratic radius and one named countable failure set over every positive prefix n+1, and proves its mass is at most ofReal delta. The terminal measure_sampledPredictableRealizedDeviationAllTimeFailureSet_le keeps prior, arms, eta, gamma, and the predictable loss process fixed while permitting a positive time-varying predictable-variance budget. Local APIs/imports are BanditRLProof.ConcentrationConfidenceSchedule, ConcentrationQuadraticScheduled, Exp3RealizedPredictableVarianceTail, the generic countable scheduled quadratic theorem, and the generated fixed-tilt predictable-variance producer. The proof specializes every prefix tail at n+1 with constant scale/cap one and its geometric share, applies countable outer-measure subadditivity through the generic parent, and rewrites the exact total budget. Regularity contracts are a probability prior; Standard Borel nonempty Env/Action; measurable action singletons; decidable Action; nonempty arms; arbitrary fixed eta; 0<gamma<=1; one PredictableLossVector; a pointwise positive variance-budget schedule; and positive delta. Event measurability, independence, stationarity, delta<=1, and a deterministic variance-budget law are not required. Retrieval evidence is LOCAL-LEAF-CONCENTRATION-GEOMETRIC-CONFIDENCE-SCHEDULE, LOCAL-LEAF-CONCENTRATION-QUADRATIC-COUNTABLE-SCHEDULED-TAIL, LOCAL-LEAF-CONCENTRATION-PREDICTABLE-COMPENSATED-FIXED-TILT-TAIL, LOCAL-LEAF-CONCENTRATION-PREDICTABLE-COMPENSATED-QUADRATIC-DELTA-TAIL, LOCAL-LEAF-OFUL-ALL-TIME-TELESCOPING-SCALAR-RIDGE-CONFIDENCE, MLIB-MEASURE-INTEGRAL, MLIB-PROBABILITY-MGF, MLIB-REAL-LOG-SQRT, MLIB-EXP-LOG-INEQUALITIES, MLIB-ORDER-ALGEBRA, Mathlib.Analysis.SpecificLimits.Basic, TXT-LATTIMORE-SZEPESVARI-2020, and downstream-only PPR-AUER-CFS-2002-EXP3; WEAPON-TAIL-INEQUALITIES is inspiration only. Status is leanCompiled, root imported, focused-built, externally canaried for exact budget, event semantics, and terminal theorem, statement-fenced, and baseline-axiom audited. Failure policy: this theorem does not prove the predictable-variance budget events, assemble the EXP3 potential/comparator regret terms, retune eta/gamma with the horizon, or provide Ville/Doob, mixture, optional-stopping, self-normalized, general Freedman, horizon-free tuned-algorithm, or ideal EXP3.P guarantees.",
+        "verification": "The two focused modules, project root, and Tests.Basic compile. Three external canaries pin the exact geometric tsum, full n+1 membership equivalence, and terminal measure theorem. SafeVerify passes at statement hash be643bca7d9a7f9ddf16cb98c5fcab0d74ee624eaeed4cfe4a4af530b84073b2; all seven public declarations use only propext, Classical.choice, and Quot.sound. Independent read-only review found no Lean/math defect after its semantic-canary, retrieval-ownership, OFUL-evidence, and status findings were fixed. Verified memory is mem-1d262929553ef1ca. Frontier-shadow reports 307 trial rows and zero mismatches, and the full python3 tools/bandit.py check passes with 36 CLI tests and one skip.",
+        "mathlib_routes": [
+            "LOCAL-LEAF-CONCENTRATION-GEOMETRIC-CONFIDENCE-SCHEDULE",
+            "LOCAL-LEAF-CONCENTRATION-QUADRATIC-COUNTABLE-SCHEDULED-TAIL",
+            "LOCAL-LEAF-CONCENTRATION-PREDICTABLE-COMPENSATED-FIXED-TILT-TAIL",
+            "LOCAL-LEAF-CONCENTRATION-PREDICTABLE-COMPENSATED-QUADRATIC-DELTA-TAIL",
+            "LOCAL-LEAF-OFUL-ALL-TIME-TELESCOPING-SCALAR-RIDGE-CONFIDENCE",
+            "MLIB-MEASURE-INTEGRAL",
+            "MLIB-PROBABILITY-MGF",
+            "MLIB-REAL-LOG-SQRT",
+            "MLIB-EXP-LOG-INEQUALITIES",
+            "MLIB-ORDER-ALGEBRA",
+            "Mathlib.Analysis.SpecificLimits.Basic",
+        ],
+    },
+    {
+        "id": "LOCAL-LEAF-EXP3-SELECTED-LOSS-VARIANCE-UNIT-BOUND",
+        "leaf_ids": [
+            "EXP3-SELECTED-LOSS-VARIANCE-UNIT-BOUND",
+            "EXP3-REALIZED-DEVIATION-GEOMETRIC-ALL-TIME-TAIL",
+        ],
+        "module": "BanditRLProof.Exp3RealizedPredictableVariance",
+        "status": "leanCompiled",
+        "declarations": [
+            "Exp3.selectedLossCenteredSecondMoment_le_one",
+            "Exp3.sampledTrajectoryPredictableRealizedVarianceAt_le_one",
+            "Exp3.sampledPredictableRealizedVariance_sum_le_horizon",
+        ],
+        "role": "Compiled deterministic unit-envelope producer for the exact selected-loss predictable variance. The generic theorem bounds the centered second moment of any finite probability law on [0,1] losses by one; generated wrappers instantiate the exact EXP3 finite action distribution at every time and sum the pointwise bounds to obtain cumulative variance at most horizon. Local APIs/imports are FiniteActionDistribution.nonneg/sum_eq_one, selectedLossCenteredSecondMoment, sampledTrajectoryProbabilitySourceAt, predictableLossAt, PredictableLossVector unit-interval fields, Finset.sum_le_sum, linarith, and nlinarith. The proof places the weighted mean in [0,1], shows every centered square is at most one, weights by nonnegative action probabilities, and sums to one; no variance identity, integration, or probability-space theorem is needed. Regularity contracts are a finite action distribution and supported [0,1] losses for the generic theorem; the generated wrappers require measurable Env, measurable-singleton Action, decidable nonempty arms, 0<=gamma<=1, and one PredictableLossVector, but no prior, Standard Borel space, event measurability, independence, stationarity, eta positivity, or horizon positivity. Retrieval evidence is the existing exact selected-loss variance declarations, LOCAL-LEAF-EXP3-REALIZED-PREDICTABLE-VARIANCE-GEOMETRIC-ALL-TIME-TAIL, MLIB-FINSET-SUMS, MLIB-ORDER-ALGEBRA, MLIB-PROBABILITY-VARIANCE, and MLIB-PROBABILITY-MGF; source cards are placement only. Status is leanCompiled and accepted through the pure-event consumer, with focused/root/Tests builds and external generic, generated-pointwise, and generated-cumulative canaries. Failure policy: this is the universal unit variance envelope only; it does not provide small-loss, sparse-loss, empirical-variance, self-normalized, maximal, optional-stopping, general Freedman, or regret conclusions.",
+        "verification": "Focused target and Tests.Basic builds pass. Three external support canaries fix the generic finite-law, generated pointwise, and generated cumulative interfaces. The support declarations participate in SafeVerify 5479f334 and the ten-declaration baseline-only axiom audit. Independent review found no P0/P1 and the missing direct-canary/API-contract findings were closed. Reference refresh, lifecycle acceptance, zero-drift frontier, and python3 tools/bandit.py check pass; verified consumer memory is mem-7ceab55257453017.",
+        "mathlib_routes": [
+            "LOCAL-LEAF-EXP3-REALIZED-PREDICTABLE-VARIANCE-GEOMETRIC-ALL-TIME-TAIL",
+            "MLIB-FINSET-SUMS",
+            "MLIB-ORDER-ALGEBRA",
+            "MLIB-PROBABILITY-VARIANCE",
+            "MLIB-PROBABILITY-MGF",
+        ],
+    },
+    {
+        "id": "LOCAL-LEAF-EXP3-REALIZED-DEVIATION-GEOMETRIC-ALL-TIME-TAIL",
+        "leaf_ids": [
+            "EXP3-REALIZED-DEVIATION-GEOMETRIC-ALL-TIME-TAIL",
+        ],
+        "module": "BanditRLProof.Exp3RealizedDeviationAllTime",
+        "status": "leanCompiled",
+        "declarations": [
+            "Exp3.sampledRealizedPredictableVarianceLinearBudget",
+            "Exp3.sampledRealizedPredictableVarianceLinearBudget_pos",
+            "Exp3.sampledRealizedDeviationGeometricAllTimeRadius",
+            "Exp3.sampledRealizedDeviationGeometricAllTimeFailureSet",
+            "Exp3.mem_sampledRealizedDeviationGeometricAllTimeFailureSet_iff",
+            "Exp3.sampledPredictableRealizedDeviationAllTimeFailureSet_linearBudget_eq",
+            "Exp3.measure_sampledRealizedDeviationGeometricAllTimeFailureSet_le",
+        ],
+        "role": "Compiled pure realized-deviation confidence theorem over every positive prefix of one fixed generated EXP3 process. The module chooses deterministic predictable-variance budget n+1, defines the corresponding geometric-share quadratic radius and named pure crossing event, proves exact membership semantics, identifies the previous joint deviation/variance event at that budget with the pure event using LOCAL-LEAF-EXP3-SELECTED-LOSS-VARIANCE-UNIT-BOUND, and rewrites the accepted joint all-time outer-measure theorem. Local APIs/imports are BanditRLProof.Exp3RealizedPredictableVarianceAllTime, sampledPredictableRealizedVariance_sum_le_horizon, both named-event membership theorems, Set extensionality, finite range sums, and the geometric all-time terminal. The proof keeps prior, arms, eta, gamma, and the predictable loss process outside the countable index and uses Finset.range (n+1) everywhere. Regularity contracts are a probability prior; Standard Borel nonempty Env/Action; measurable action singletons; decidable nonempty arms; arbitrary fixed eta; 0<gamma<=1; one PredictableLossVector; and positive delta. Event measurability, independence, stationarity, delta<=1, a caller-supplied variance budget, and a variance-good premise are not required. Retrieval evidence is LOCAL-LEAF-EXP3-SELECTED-LOSS-VARIANCE-UNIT-BOUND, LOCAL-LEAF-EXP3-REALIZED-PREDICTABLE-VARIANCE-GEOMETRIC-ALL-TIME-TAIL, LOCAL-LEAF-CONCENTRATION-GEOMETRIC-CONFIDENCE-SCHEDULE, LOCAL-LEAF-CONCENTRATION-QUADRATIC-COUNTABLE-SCHEDULED-TAIL, MLIB-FINSET-SUMS, MLIB-ORDER-ALGEBRA, MLIB-PROBABILITY-VARIANCE, MLIB-PROBABILITY-MGF, TXT-LATTIMORE-SZEPESVARI-2020, and downstream-only PPR-AUER-CFS-2002-EXP3; WEAPON-TAIL-INEQUALITIES is inspiration only. Status is leanCompiled and accepted, root imported, focused-built, and externally canaried at the generic variance, generated pointwise and cumulative budgets, pure membership, event equality, and terminal theorem. Independent review found no P0/P1 and its direct-canary, API-contract, and outer-measure wording findings are closed. Failure policy: the universal n+1 radius is not a small-loss or self-normalized improvement. The theorem controls selected-loss deviation only and does not assemble potential, exploration, or comparator regret terms, retune eta/gamma by horizon, or prove Ville/Doob, mixture, optional stopping, general Freedman, horizon-free tuned EXP3, or ideal EXP3.P.",
+        "verification": "Focused modules, project root, and Tests.Basic build. Six external canaries cover the generic variance bound, generated pointwise and cumulative budgets, pure membership, event equality, and terminal outer-measure theorem. SafeVerify fixes statement hash 5479f3349aeab1d757ac8a80547ab40fbe1adde83e05eadb33b9773eb0dce870; all ten Lean declarations report only propext, Classical.choice, and Quot.sound. Independent review found no P0/P1 and all P2/P3 findings are closed. Lifecycle review/build records are accepted; verified memory is mem-7ceab55257453017; frontier shadow reports zero mismatches; reference refresh and python3 tools/bandit.py check pass with 36 tests and one expected skip.",
+        "mathlib_routes": [
+            "LOCAL-LEAF-EXP3-SELECTED-LOSS-VARIANCE-UNIT-BOUND",
+            "LOCAL-LEAF-EXP3-REALIZED-PREDICTABLE-VARIANCE-GEOMETRIC-ALL-TIME-TAIL",
+            "LOCAL-LEAF-CONCENTRATION-GEOMETRIC-CONFIDENCE-SCHEDULE",
+            "LOCAL-LEAF-CONCENTRATION-QUADRATIC-COUNTABLE-SCHEDULED-TAIL",
+            "MLIB-FINSET-SUMS",
+            "MLIB-ORDER-ALGEBRA",
+            "MLIB-PROBABILITY-VARIANCE",
+            "MLIB-PROBABILITY-MGF",
         ],
     },
     {
@@ -27746,6 +27933,7 @@ def cmd_unfinished(args: argparse.Namespace) -> int:
 
     print()
     print("current recommendation")
+    print("- EXP3-REALIZED-REGRET-GEOMETRIC-ALL-TIME-TAIL is accepted. On one fixed generated EXP3 process and against one supported comparator, it combines the accepted predictable-regret and pure realized-deviation all-time events with an exact delta/2 family split and controls realized selected-loss regret at every positive prefix. The next paper-guided target is a finite-supported-comparator union and best-arm external-regret surface before any horizon-free tuning route. This theorem does not prove best-arm regret, a tuned sublinear all-time rate, horizon retuning, Ville/Doob, a mixture boundary, optional stopping, self-normalization, general Freedman, horizon-free tuned EXP3, or ideal EXP3.P.")
     print("- HARNESS-LIFECYCLE-PROOF-FRONTIER-HARDENING is accepted. Use runs/active_frontier.json as the authoritative current pointer; run frontier-shadow before refresh/dispatch; inject only bounded typed memory; preserve declaration fences; dispatch one ready leaf; and retry only transient provider failures. Detached autonomous execution remains disabled without passed deterministic gates and explicit user direction.")
     print("- RL-STOPPED-SAMPLED-POLICY-RETURN-JOINT-ERROR-DETERMINISTIC-TAIL-HIGH-PROBABILITY-OPTIMALITY is accepted. One measurable scalar is the maximum of the six literal capped/uncapped sampled-return, actual-successor-policy-return, and same-prefix-gap errors. For every positive epsilon and delta, one existential natural cutoff controls every later index: the weak scalar superlevel event has ENNReal mass below ENNReal.ofReal delta, the strict scalar sublevel event has real mass above 1-delta, and the scalar strict bound is equivalent to all six literal strict bounds. This is qualitative and fixed-model; there is no rate, delta upper bound, independence, optional stopping, expectation/random-index interchange, model uniformity, raw episodes, recommended-policy substitution, minimax/reachability, or complete UCB-VI.")
     print("- RL-STOPPED-SAMPLED-POLICY-RETURN-DETERMINISTIC-TAIL-HIGH-PROBABILITY-OPTIMALITY is accepted. For every positive epsilon and delta, one existential natural cutoff works for every later schedule index: the named six-error bad event is measurable and below the ENNReal.ofReal delta budget, while its exact complement has real probability above 1-delta and is equivalent to all six literal strict stopped-return bounds. The cutoff is noncomputable and qualitative; there is no quantitative rate, independence, optional stopping, expectation/random-index interchange, model uniformity, raw episodes, recommended-policy substitution, minimax/reachability, or complete UCB-VI.")

@@ -13,3 +13,23 @@ Trial logs:
 runs/trials.jsonl
 runs/trials_summary.csv
 ```
+
+Lifecycle hardening adds:
+
+```text
+runs/active_frontier.json       authoritative current proof/harness leaf
+runs/lifecycle_memory.jsonl     append-only typed memory
+runs/lifecycle_sessions.jsonl   append-only session tree
+runs/statement-fences/          immutable Lean declaration headers
+runs/*/memory_digest.md         bounded task-scoped packet for digest discovery
+```
+
+Use `python3 tools/bandit.py frontier-shadow` before any state refresh. The
+default memory packet contains only five task/role-relevant active records plus
+explicitly selected verified lemmas. Legacy trial rows remain valid; new rows
+add structured changed-file, statement-hash, parent, route-fingerprint, and
+verifier-evidence fields.
+
+`run-cycle` and `sleep-run` default to one lower worker. Parallel lower work
+requires `--parallel-route-json` with materially distinct routes, disjoint file
+ownership, and expected information gain.

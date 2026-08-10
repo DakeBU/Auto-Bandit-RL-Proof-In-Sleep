@@ -9,6 +9,13 @@ ABRL has two target workflows:
 This design keeps proof weapons as planning inspiration while keeping compiled
 Lean and imported theorem cards as the only reusable proof material.
 
+The deterministic lifecycle implementation is documented in
+`docs/lifecycle_and_proof_frontier_hardening.md`. Its
+`runs/active_frontier.json` record is authoritative for the current leaf,
+dependency readiness, statement hash, bounded-memory policy, and last verifier
+evidence. Run `frontier-shadow` and `frontier-replay` before refreshing or
+dispatching that state.
+
 ## End-To-End Loop
 
 ```text
@@ -37,7 +44,7 @@ user theorem / paper proof / new topic
 
 ## Route Population
 
-Upper keeps a population of candidate routes under `candidate-populations/`.
+Upper may keep a small set of candidate routes under `candidate-populations/`.
 Each candidate route should contain:
 
 - target theorem;
@@ -53,6 +60,11 @@ Each candidate route should contain:
 The population is not an evolutionary free-for-all.  Every candidate remains
 under the same Lean-checkable target unless reviewer records a mathematical
 reason to pivot.
+
+Routine tactic attempts do not use a FunSearch-style island population. A
+second lower worker is allowed only for materially distinct route
+fingerprints with disjoint file ownership and explicit expected information
+gain; otherwise one lower leaf is dispatched.
 
 The canonical route atlas lives in
 `research-wiki/theory-tree/lean-route-roadmap.json`.  Agents should inspect it
@@ -116,6 +128,11 @@ compiled Lean or an explicit cited theorem card.
 | Cited result card | external theorem contract | no local proof; can be cited in prose with status |
 | Failed-attempt card | mathematical signal and reusable debugging | no |
 
+Lifecycle prompt memory is a separate compact typed stream in
+`runs/lifecycle_memory.jsonl`. By default an agent receives at most the last
+five active task/role records plus explicitly retrieved verified lemmas. The
+complete trial history is never injected by default.
+
 ## Lean And LaTeX Synchronization
 
 ABRL exports only after Lean closure:
@@ -157,10 +174,15 @@ The harness encodes the following proof-engineering lessons:
 Reviewer should reject any cycle that violates these rules even if the text
 looks plausible.
 
+Frontier reconstruction must also accept `last_accepted_verifier: null` for a
+new leaf that has not passed its first verifier yet. Treat that value as an
+empty verifier record; `tools/test_bandit_cli.py` carries the regression test.
+
 ## Current Limitation
 
-This design is in place as plain-file harness structure and CLI retrieval
-support.  It is not yet a complete automatic prover.  The missing work is the
-large body of Mathlib-backed leaves listed in
+The plain-file design now has deterministic frontier, memory, DAG, fence,
+session, mutation-queue, and retry primitives, but it is not a complete
+automatic prover. Detached execution remains disabled without explicit user
+direction. The missing mathematical work is the body of Mathlib-backed leaves listed in
 `research-wiki/theory-tree/mathlib-foundation-leaf-map.md` and the completion
 gap audit in `docs/completion_gap_audit.md`.

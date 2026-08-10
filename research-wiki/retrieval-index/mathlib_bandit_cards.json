@@ -84,7 +84,7 @@
     {
       "id": "MLIB-MEASURE-INTEGRAL",
       "source": "Mathlib",
-      "module": "Mathlib.MeasureTheory.MeasurableSpace.Basic; Mathlib.MeasureTheory.Integral.Bochner.Basic",
+      "module": "Mathlib.MeasureTheory.MeasurableSpace.Basic; Mathlib.MeasureTheory.Integral.Bochner.Basic; Mathlib.MeasureTheory.Integral.Lebesgue.Markov",
       "docs": "https://leanprover-community.github.io/mathlib4_docs/Mathlib/MeasureTheory/MeasurableSpace/Basic.html",
       "query_terms": [
         "Measurable",
@@ -96,9 +96,15 @@
         "lintegral",
         "integral",
         "AEStronglyMeasurable",
-        "AEMeasurable"
+        "AEMeasurable",
+        "meas_ge_le_lintegral_div",
+        "mul_meas_ge_le_lintegral",
+        "MeasureTheory.measure_iUnion_le",
+        "ENNReal.tsum_le_tsum",
+        "HasSum.toNNReal",
+        "ENNReal.hasSum_coe"
       ],
-      "role": "Measurable-space canaries, expected regret, Bayesian regret, integrability contracts, and expectation linearity routes.",
+      "role": "Measurable-space canaries, countable outer-measure union bounds, ENNReal budget sums, expected regret, Bayesian regret, integrability contracts, expectation linearity routes, and Mathlib-backed Markov overflow tails.",
       "status": "import-candidate"
     },
     {
@@ -162,18 +168,53 @@
       "status": "import-candidate"
     },
     {
+      "id": "MLIB-NAT-LOG-POW",
+      "source": "Mathlib",
+      "module": "Mathlib.Data.Nat.Log",
+      "docs": "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Log.html",
+      "query_terms": [
+        "Nat.le_log2",
+        "Nat.log2_eq_log_two",
+        "Nat.log_pow",
+        "Nat.pow_le_pow_iff_right",
+        "Nat.pow_pos"
+      ],
+      "role": "Natural-number logarithm and power APIs for doubling schedules, power-of-two predicates, and logarithmic prefix counts.",
+      "status": "locally-used"
+    },
+    {
+      "id": "MLIB-PROBABILITY-POSTERIOR",
+      "source": "Mathlib",
+      "module": "Mathlib.Probability.Kernel.Posterior; Mathlib.Probability.Kernel.CondDistrib",
+      "docs": "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Probability/Kernel/Posterior.html",
+      "query_terms": [
+        "ProbabilityTheory.posterior",
+        "compProd_posterior_eq_map_swap",
+        "condDistrib_ae_eq_iff_measure_eq_compProd",
+        "Measure.snd_compProd"
+      ],
+      "role": "Canonical Bayesian posterior kernels, prior-likelihood joint laws, and identification of the posterior with the conditional distribution of an environment given observed history.",
+      "status": "locally-used"
+    },
+    {
       "id": "MLIB-ASYMPTOTICS",
       "source": "Mathlib",
-      "module": "Mathlib.Analysis.Asymptotics.Asymptotics",
-      "docs": "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Analysis/Asymptotics/Asymptotics.html",
+      "module": "Mathlib.Analysis.Asymptotics.Lemmas; Mathlib.Analysis.SpecialFunctions.Log.Base; Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics",
+      "docs": "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Analysis/Asymptotics/Lemmas.html",
       "query_terms": [
         "Asymptotics.IsBigO",
+        "Asymptotics.IsLittleO",
         "IsTheta",
+        "IsBigO.sqrt",
+        "Real.isLittleO_const_log_atTop",
+        "isLittleO_log_rpow_atTop",
+        "IsBigO.trans_isLittleO",
+        "IsLittleO.tendsto_div_nhds_zero",
         "Eventually",
         "Filter.atTop"
       ],
-      "role": "Asymptotic optimality, logarithmic regret, minimax rates, and exported theorem statements.",
-      "status": "import-candidate"
+      "role": "Asymptotic optimality, logarithmic regret, little-o average-regret consistency, minimax rates, and exported theorem statements.",
+      "status": "locally-used"
     },
     {
       "id": "MLIB-CONVEX-LINALG",

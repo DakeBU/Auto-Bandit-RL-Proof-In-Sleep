@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_stoppedAverageRealizedBehaviorRegret_uniformAbsoluteContinuity",
+  "file": "BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterUniformAbsoluteContinuity.lean",
+  "statement": "theorem selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_stoppedAverageRealizedBehaviorRegret_uniformAbsoluteContinuity (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] [StandardBorelSpace State] [StandardBorelSpace Action] (rewardSource : mdp.MeanCompatibleRewardKernel) (varianceProxy : NNReal) (hvarianceProxy : 0 < varianceProxy) (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (support : ExploratoryPathSupport mdp initialState) (baseVisitFloor : Real) (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor) (hrewardBound : forall state action, |mdp.reward state action| <= 1) (hhorizon : 4 < mdp.horizon) (hbaseVisitFloor : 0 < baseVisitFloor) : let source := selfConsistentScheduledCausalSource mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor let stoppingPrefix := selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingPrefix mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor let stoppedProcess := selfConsistentScheduledNaturalCausalStoppingTimeAverageRealizedBehaviorRegretProcess mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor stoppingPrefix forall epsilon : Real, 0 < epsilon -> exists delta : Real, 0 < delta /\\ forall scheduleIndex event, MeasurableSet event -> source.trajectoryMeasure event <= ENNReal.ofReal delta -> |integral (source.trajectoryMeasure.restrict event) (stoppedProcess scheduleIndex)| <= epsilon /\\ integral (source.trajectoryMeasure.restrict event) (fun trajectory => |stoppedProcess scheduleIndex trajectory|) <= epsilon",
+  "statement_hash": "db0cd463782e55ffe17ce727a9d0c172ea59b47b7336cc7229fb793c46171c67",
+  "source_assumptions": [
+    "4 < mdp.horizon",
+    "IsProbabilityMeasure initialState",
+    "UniformSubgaussianRewardLaw",
+    "ExploratoryPathUniformVisitFloor",
+    "UnboundedHittingAfterStoppingPrefix"
+  ],
+  "created_at": "2026-08-06T21:58:18+00:00"
+}

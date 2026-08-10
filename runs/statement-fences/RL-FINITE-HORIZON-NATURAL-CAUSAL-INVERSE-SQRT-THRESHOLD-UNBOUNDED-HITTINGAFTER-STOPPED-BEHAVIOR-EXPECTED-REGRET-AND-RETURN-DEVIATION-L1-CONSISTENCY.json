@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "declaration": "selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_stoppedBehaviorExpectedRegret_and_returnDeviation_L1_consistency",
+  "file": "BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppedBehaviorExpectedRegretAndReturnDeviationL1Consistency.lean",
+  "statement": "theorem selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_stoppedBehaviorExpectedRegret_and_returnDeviation_L1_consistency (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] [StandardBorelSpace State] [StandardBorelSpace Action] (rewardSource : mdp.MeanCompatibleRewardKernel) (varianceProxy : NNReal) (hvarianceProxy : 0 < varianceProxy) (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (support : ExploratoryPathSupport mdp initialState) (baseVisitFloor : Real) (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor) (hrewardBound : forall state action, |mdp.reward state action| <= 1) (hhorizon : 4 < mdp.horizon) (hbaseVisitFloor : 0 < baseVisitFloor) : let source := selfConsistentScheduledCausalSource mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor let stoppingPrefix := selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingPrefix mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor let behaviorProcess := selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor stoppingPrefix let realizedProcess := selfConsistentScheduledNaturalCausalStoppingTimeAverageRealizedBehaviorRegretProcess mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor stoppingPrefix let returnProcess := selfConsistentScheduledNaturalCausalStoppingTimeAverageReturnDeviationProcess mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor stoppingPrefix (forall scheduleIndex, Measurable (behaviorProcess scheduleIndex) /\\ MemLp (behaviorProcess scheduleIndex) 1 source.trajectoryMeasure /\\ MemLp (returnProcess scheduleIndex) 1 source.trajectoryMeasure) /\\ (forall scheduleIndex trajectory, 0 <= behaviorProcess scheduleIndex trajectory /\\ behaviorProcess scheduleIndex trajectory <= 2 * (mdp.horizon : Real) /\\ realizedProcess scheduleIndex trajectory = behaviorProcess scheduleIndex trajectory - returnProcess scheduleIndex trajectory) /\\ (∀ᵐ trajectory ∂source.trajectoryMeasure, Tendsto (fun scheduleIndex => behaviorProcess scheduleIndex trajectory) atTop (nhds 0)) /\\ Tendsto (fun scheduleIndex => integral source.trajectoryMeasure (fun trajectory => |behaviorProcess scheduleIndex trajectory|)) atTop (nhds 0) /\\ Tendsto (fun scheduleIndex => eLpNorm (behaviorProcess scheduleIndex) 1 source.trajectoryMeasure) atTop (nhds 0) /\\ Tendsto (fun scheduleIndex => integral source.trajectoryMeasure (behaviorProcess scheduleIndex)) atTop (nhds 0) /\\ Tendsto (fun scheduleIndex => eLpNorm (returnProcess scheduleIndex) 1 source.trajectoryMeasure) atTop (nhds 0) /\\ Tendsto (fun scheduleIndex => integral source.trajectoryMeasure (returnProcess scheduleIndex)) atTop (nhds 0) /\\ (forall scheduleIndex, integral source.trajectoryMeasure (realizedProcess scheduleIndex) = integral source.trajectoryMeasure (behaviorProcess scheduleIndex) - integral source.trajectoryMeasure (returnProcess scheduleIndex)) /\\ Tendsto (fun scheduleIndex => integral source.trajectoryMeasure (realizedProcess scheduleIndex)) atTop (nhds 0)",
+  "statement_hash": "0af3bbb971be20fb6267d8614825aee6611c66f6544588908ce87ec41a79da77",
+  "source_assumptions": [
+    "4 < mdp.horizon",
+    "IsProbabilityMeasure initialState",
+    "UniformSubgaussianRewardLaw",
+    "ExploratoryPathUniformVisitFloor",
+    "UnboundedHittingAfterStoppingPrefix",
+    "StoppingTimeAverageBehaviorExpectedRegretProcess",
+    "StoppingTimeAverageReturnDeviationProcess",
+    "StoppingTimeAverageRealizedBehaviorRegretProcess",
+    "Measurable",
+    "MemLp",
+    "eLpNorm",
+    "integral source.trajectoryMeasure",
+    "Tendsto",
+    "realizedProcess scheduleIndex trajectory = behaviorProcess scheduleIndex trajectory - returnProcess scheduleIndex trajectory"
+  ],
+  "created_at": "2026-08-06T23:50:41+00:00"
+}

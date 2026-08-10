@@ -1,0 +1,72 @@
+name: Lemma proposal
+description: Propose a sourced mathematical result for teaching, Lean review, or integration.
+title: "[Lemma] "
+labels: ["lemma proposal"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for contributing. A proposal is not proved or integrated until the corresponding evidence exists.
+  - type: input
+    id: domain
+    attributes:
+      label: Mathematical domain
+      description: For example, concentration, contextual bandits, optimization, or finite-horizon RL.
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Source and locator
+      description: Give a DOI, arXiv URL, book and theorem number, or state that this is an original result.
+    validations:
+      required: true
+  - type: textarea
+    id: plain
+    attributes:
+      label: Plain-English statement
+    validations:
+      required: true
+  - type: textarea
+    id: latex
+    attributes:
+      label: Mathematical statement in LaTeX
+      render: latex
+    validations:
+      required: true
+  - type: textarea
+    id: assumptions
+    attributes:
+      label: Assumptions and scope
+      description: List finiteness, measurability, independence, boundedness, filtration, stopping-time, and algorithm assumptions explicitly.
+    validations:
+      required: true
+  - type: textarea
+    id: lean
+    attributes:
+      label: Lean signature or draft
+      description: Optional; include imports and compiler diagnostics if available.
+      render: lean
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Expected dependencies
+      description: Existing BanditRLlib or Mathlib declarations, or mathematical prerequisites.
+  - type: input
+    id: credit
+    attributes:
+      label: Preferred contributor credit
+      description: Name and optional affiliation, ORCID, or profile link.
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Contribution confirmations
+      options:
+        - label: I have the right to submit this material and license my intentional contribution under MIT.
+          required: true
+        - label: I have not described an uncompiled draft as proved or integrated.
+          required: true
+        - label: I have not included credentials, private review material, or sensitive personal information.
+          required: true

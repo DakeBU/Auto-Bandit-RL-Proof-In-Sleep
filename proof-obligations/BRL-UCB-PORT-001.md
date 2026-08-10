@@ -262,3 +262,37 @@ longer exposes a long list of field hypotheses. The remaining boundary is not
 mathematical assembly: it is constructing this bundle from actual imported LML
 symbols under a compatible toolchain or from a separately defined concrete
 external sequence.
+
+The downstream
+`UCB-REAL-STATIONARY-ARMWISE-BOUNDED-FINITE-ARM-LAWS-EXPECTED-AVERAGE-CONSISTENCY`
+route now consumes this exact bundle for one fixed external measure/action/
+reward process. It transports every measurable regret integral to the
+canonical `c=4` arm-stream process and proves the armwise-bounded logarithmic
+envelope and vanishing expected average. Thus the remaining boundary is only
+bundle production or literal import, not an absent asymptotic consumer.
+
+The downstream
+`UCB-REAL-STATIONARY-MEASURE-PRESERVING-SOURCE-ARMWISE-BOUNDED-EXPECTED-AVERAGE-CONSISTENCY`
+route now supplies a concrete bundle producer. Any measure-preserving source of
+canonical arm streams yields all four exact split-law fields; in particular,
+`Prod.fst` from the canonical stream law times an arbitrary auxiliary
+probability measure gives a fixed external product-space process with the same
+pointwise logarithmic envelope and vanishing expected average. This closes
+measure-preserving reparameterizations. The remaining boundary is a
+non-reparameterized external algorithm/environment generator or literal
+compatible-toolchain import.
+
+The downstream
+`UCB-REAL-STATIONARY-CANONICAL-KERNEL-TRAJECTORY-ARMWISE-BOUNDED-EXPECTED-AVERAGE-CONSISTENCY`
+route now closes that generator boundary at the canonical conditional-kernel
+level. It packages the arm-stream split `condDistrib`s as a history algorithm
+and environment, independently regenerates the pair process with Mathlib
+`Kernel.trajMeasure`, constructs the complete field bundle, and reaches the
+armwise-bounded expected-average terminal. The downstream
+`UCB-REAL-STATIONARY-CANONICAL-KERNEL-TRAJECTORY-EXPLICIT-POLICY-EXPECTED-AVERAGE-CONSISTENCY`
+route now identifies the action half with the deterministic
+`realHistoryNextArm` kernel a.e. on each history marginal and transports one
+all-time selector event to the generated process. The remaining source
+refinement is identification of the adaptive next-unused reward coordinate
+with the selected stationary reward kernel, or a literal compatible-toolchain
+import.

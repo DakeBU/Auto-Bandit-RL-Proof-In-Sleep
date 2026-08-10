@@ -53,6 +53,16 @@ It does not copy Lean-Ridgelet source, templates, stylesheets, or
 configuration.  Sho Sonoda has not been represented as an ABRL contributor,
 maintainer, or endorser.
 
+The community-facing sidebar, Book Map, contributor page, installation page,
+and visible contribution route are also inspired by
+[StatsMLlib](https://statsmllib.github.io/) and its
+[public repository](https://github.com/Lean-MoDS/StatsMLlib), distributed under
+Apache License 2.0. BanditRLlib independently implements its generator,
+templates, styles, prose, JavaScript, diagrams, schema, and governance; no
+StatsMLlib source file is copied. This attribution does not imply participation,
+endorsement, review, or maintenance by StatsMLlib, Lean-MoDS, or their
+contributors.
+
 ## Lean And Learning-Theory References
 
 - [lean-stat-learning-theory](https://github.com/YuanheZ/lean-stat-learning-theory).

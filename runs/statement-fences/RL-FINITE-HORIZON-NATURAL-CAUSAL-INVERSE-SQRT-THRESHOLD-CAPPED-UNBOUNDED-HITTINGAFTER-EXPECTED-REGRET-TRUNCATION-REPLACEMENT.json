@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "declaration": "selfConsistentScheduledCausalSource_inverseSqrtThresholdCappedUnboundedHittingAfter_stoppedAverageRealizedBehaviorRegret_expected_truncation_replacement",
+  "file": "BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdCappedUnboundedHittingAfterExpectedRegretTruncationReplacement.lean",
+  "statement": "theorem selfConsistentScheduledCausalSource_inverseSqrtThresholdCappedUnboundedHittingAfter_stoppedAverageRealizedBehaviorRegret_expected_truncation_replacement (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] [StandardBorelSpace State] [StandardBorelSpace Action] (rewardSource : mdp.MeanCompatibleRewardKernel) (varianceProxy : NNReal) (hvarianceProxy : 0 < varianceProxy) (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (support : ExploratoryPathSupport mdp initialState) (baseVisitFloor : Real) (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor) (hrewardBound : forall state action, |mdp.reward state action| <= 1) (hhorizon : 4 < mdp.horizon) (hbaseVisitFloor : 0 < baseVisitFloor) : let source := selfConsistentScheduledCausalSource mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor let cappedStoppingPrefix := selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedDoubleLinearRawWindowFirstPassageStoppingPrefix mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor let uncappedStoppingPrefix := selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingPrefix mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor let cappedProcess := selfConsistentScheduledNaturalCausalStoppingTimeAverageRealizedBehaviorRegretProcess mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor cappedStoppingPrefix let uncappedProcess := selfConsistentScheduledNaturalCausalStoppingTimeAverageRealizedBehaviorRegretProcess mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor uncappedStoppingPrefix (forall scheduleIndex, Integrable (cappedProcess scheduleIndex) source.trajectoryMeasure /\\ Integrable (uncappedProcess scheduleIndex) source.trajectoryMeasure /\\ integral source.trajectoryMeasure (uncappedProcess scheduleIndex - cappedProcess scheduleIndex) = integral source.trajectoryMeasure (uncappedProcess scheduleIndex) - integral source.trajectoryMeasure (cappedProcess scheduleIndex)) /\\ Tendsto (fun scheduleIndex => integral source.trajectoryMeasure (uncappedProcess scheduleIndex - cappedProcess scheduleIndex)) atTop (nhds 0) /\\ Tendsto (fun scheduleIndex => integral source.trajectoryMeasure (uncappedProcess scheduleIndex) - integral source.trajectoryMeasure (cappedProcess scheduleIndex)) atTop (nhds 0) /\\ Tendsto (fun scheduleIndex => |integral source.trajectoryMeasure (uncappedProcess scheduleIndex) - integral source.trajectoryMeasure (cappedProcess scheduleIndex)|) atTop (nhds 0) /\\ Tendsto (fun scheduleIndex => integral source.trajectoryMeasure (cappedProcess scheduleIndex)) atTop (nhds 0) /\\ Tendsto (fun scheduleIndex => integral source.trajectoryMeasure (uncappedProcess scheduleIndex)) atTop (nhds 0)",
+  "statement_hash": "ef44a0df2116d1c9fe140b17b154ea674cf09555e0550fdd2ef2fb79b32b9741",
+  "source_assumptions": [
+    "4 < mdp.horizon",
+    "IsProbabilityMeasure initialState",
+    "UniformSubgaussianRewardLaw",
+    "ExploratoryPathUniformVisitFloor",
+    "CappedDoubleLinearRawWindowFirstPassageStoppingPrefix",
+    "UnboundedHittingAfterStoppingPrefix",
+    "Integrable",
+    "integral source.trajectoryMeasure",
+    "Tendsto"
+  ],
+  "created_at": "2026-08-06T23:20:02+00:00"
+}

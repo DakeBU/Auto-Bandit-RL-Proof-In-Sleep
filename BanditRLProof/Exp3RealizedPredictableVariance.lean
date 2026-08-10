@@ -55,6 +55,52 @@ theorem selectedLossCenteredSecondMoment_nonneg
   exact Finset.sum_nonneg fun selected hselected =>
     mul_nonneg (hdist.nonneg selected hselected) (sq_nonneg _)
 
+/-- A probability-weighted centered second moment of `[0,1]` losses is at
+most one. -/
+theorem selectedLossCenteredSecondMoment_le_one
+    {History : Type u} {Action : Type v} [DecidableEq Action]
+    (arms : Finset Action) (prob loss : History → Action → Real)
+    (history : History) (hdist : FiniteActionDistribution arms (prob history))
+    (hloss : ∀ action ∈ arms, loss history action ∈ Set.Icc (0 : Real) 1) :
+    selectedLossCenteredSecondMoment arms prob loss history ≤ 1 := by
+  let mean := arms.sum fun action => prob history action * loss history action
+  have hmean_nonneg : 0 ≤ mean := by
+    exact Finset.sum_nonneg fun action haction =>
+      mul_nonneg (hdist.nonneg action haction) (hloss action haction).1
+  have hmean_le_one : mean ≤ 1 := by
+    calc
+      mean ≤ arms.sum (fun action => prob history action * 1) := by
+        exact Finset.sum_le_sum fun action haction =>
+          mul_le_mul_of_nonneg_left (hloss action haction).2
+            (hdist.nonneg action haction)
+      _ = 1 := by simpa using hdist.sum_eq_one
+  unfold selectedLossCenteredSecondMoment
+  change
+    (∑ selected ∈ arms,
+      prob history selected * (loss history selected - mean) ^ 2) ≤ 1
+  calc
+    (∑ selected ∈ arms,
+        prob history selected * (loss history selected - mean) ^ 2) ≤
+        ∑ selected ∈ arms, prob history selected * 1 := by
+      exact Finset.sum_le_sum fun selected hselected => by
+        have hl := hloss selected hselected
+        have hl_nonneg : 0 ≤ loss history selected := hl.1
+        have hl_le_one : loss history selected ≤ 1 := hl.2
+        have hlower : -1 ≤ loss history selected - mean := by linarith
+        have hupper : loss history selected - mean ≤ 1 := by linarith
+        have honeplus :
+            0 ≤ 1 + (loss history selected - mean) := by
+          linarith
+        have hproduct :
+            0 ≤ (1 - (loss history selected - mean)) *
+              (1 + (loss history selected - mean)) :=
+          mul_nonneg (sub_nonneg.mpr hupper) honeplus
+        have hsquare : (loss history selected - mean) ^ 2 ≤ 1 := by
+          nlinarith
+        exact mul_le_mul_of_nonneg_left hsquare
+          (hdist.nonneg selected hselected)
+    _ = 1 := by simpa using hdist.sum_eq_one
+
 /-- For `[0,1]` losses, the exact selected-loss variance is at most the
 unweighted armwise loss mass. -/
 theorem selectedLossCenteredSecondMoment_le_lossMass
@@ -311,6 +357,34 @@ theorem sampledTrajectoryPredictableRealizedVarianceAt_le_lossMassAt
         arms eta gamma loss t sample ≤
       arms.sum fun action => predictableLossAt loss t sample action := by
   exact selectedLossCenteredSecondMoment_le_lossMass arms
+    (sampledTrajectoryProbabilityAt (Env := Env) arms eta gamma t)
+    (predictableLossAt loss t) sample
+    ((sampledTrajectoryProbabilitySourceAt (Env := Env) arms harms eta gamma
+      hgamma_nonneg hgamma_le_one t).distribution sample)
+    (fun action _haction => by
+      cases t with
+      | zero =>
+          simpa [predictableLossAt] using
+            loss.initial_mem_unitInterval sample.1 action
+      | succ n =>
+          simpa [predictableLossAt] using
+            loss.successor_mem_unitInterval n sample.1
+              (Preorder.frestrictLe n sample.2) action)
+
+/-- Every generated selected-loss predictable variance is at most one. -/
+theorem sampledTrajectoryPredictableRealizedVarianceAt_le_one
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [DecidableEq Action]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (hgamma_nonneg : 0 ≤ gamma)
+    (hgamma_le_one : gamma ≤ 1)
+    (loss : PredictableLossVector Env Action) (t : Nat)
+    (sample : Env × ((k : Nat) → Action × Real)) :
+    sampledTrajectoryPredictableRealizedVarianceAt
+        arms eta gamma loss t sample ≤ 1 := by
+  exact selectedLossCenteredSecondMoment_le_one arms
     (sampledTrajectoryProbabilityAt (Env := Env) arms eta gamma t)
     (predictableLossAt loss t) sample
     ((sampledTrajectoryProbabilitySourceAt (Env := Env) arms harms eta gamma
@@ -1043,5 +1117,30 @@ theorem sampledPredictableRealizedVariance_sum_le_lossMass
   exact Finset.sum_le_sum fun i _hi =>
     sampledTrajectoryPredictableRealizedVarianceAt_le_lossMassAt
       arms harms eta gamma hgamma_nonneg hgamma_le_one loss i sample
+
+/-- The first `horizon` generated selected-loss predictable variances have
+deterministic total budget `horizon`. -/
+theorem sampledPredictableRealizedVariance_sum_le_horizon
+    {Env : Type u} {Action : Type v}
+    [MeasurableSpace Env]
+    [MeasurableSpace Action] [MeasurableSingletonClass Action]
+    [DecidableEq Action]
+    (arms : Finset Action) (harms : arms.Nonempty)
+    (eta gamma : Real) (hgamma_nonneg : 0 ≤ gamma)
+    (hgamma_le_one : gamma ≤ 1)
+    (loss : PredictableLossVector Env Action)
+    (horizon : Nat) (sample : Env × ((k : Nat) → Action × Real)) :
+    (Finset.range horizon).sum (fun i =>
+        sampledTrajectoryPredictableRealizedVarianceAt
+          arms eta gamma loss i sample) ≤ (horizon : Real) := by
+  calc
+    (Finset.range horizon).sum (fun i =>
+        sampledTrajectoryPredictableRealizedVarianceAt
+          arms eta gamma loss i sample) ≤
+        (Finset.range horizon).sum (fun _ => (1 : Real)) := by
+      exact Finset.sum_le_sum fun i _hi =>
+        sampledTrajectoryPredictableRealizedVarianceAt_le_one
+          arms harms eta gamma hgamma_nonneg hgamma_le_one loss i sample
+    _ = (horizon : Real) := by simp
 
 end BanditRLProof.Exp3

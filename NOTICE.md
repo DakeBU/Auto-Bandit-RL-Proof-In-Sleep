@@ -1,8 +1,8 @@
 # Notice
 
-This repository contains original ABRL harness code and Lean skeleton files.
-It studies and attributes upstream systems and proof libraries, but the initial
-repository does not vendor LML, LeanMarathon, ARIS, ABEIS, or
+This repository contains original ABRL harness code, the BanditRLlib Lean
+library, and its literate website. It studies and attributes upstream systems
+and proof libraries, but the repository does not vendor LML, LeanMarathon, ARIS, ABEIS, or
 lean-stat-learning-theory source code.
 
 ## Referenced Projects

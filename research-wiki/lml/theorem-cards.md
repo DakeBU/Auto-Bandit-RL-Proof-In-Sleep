@@ -261,6 +261,39 @@ The theorem-level local compatibility endpoint now lives in
 This closes the local mathematical port while preserving theorem-card status
 for the actual upstream declarations.
 
+The compiled downstream module
+`BanditRLProof.Algorithms.UCBRealStationaryFiniteArmRewardLaws` now transports
+the bundle's complete observable law to exact expected-regret equality and
+vanishing expected average at `c=4`, including an armwise-bounded finite-law
+consumer. This remains a local Mathlib-facing consequence, not an imported LML
+theorem.
+
+`BanditRLProof.Algorithms.UCBRealStationaryMeasurePreservingSource` now supplies
+a concrete external producer: any measure-preserving map into the canonical
+arm-stream law constructs all four bundle fields, and `Prod.fst` from the
+canonical stream law times an arbitrary auxiliary probability measure gives a
+product-space process with the same armwise-bounded logarithmic expected
+regret and vanishing average. The conditional laws are established through
+joint pushforward equality and Mathlib `condDistrib` uniqueness. This is still
+a measure-preserving reparameterization of the canonical process, not an
+imported `IsAlgEnvSeq`; actual upstream-symbol import or a non-reparameterized
+external algorithm/environment generator remains open.
+
+`BanditRLProof.Algorithms.UCBRealStationaryCanonicalKernelTrajectory` now
+supplies a non-reparameterized recursive producer at the canonical-kernel
+level. It packages the canonical arm-stream split `condDistrib`s as a
+`HistoryAlgorithm` and `HistoryEnvironment`, then generates a fresh observable
+pair process with Mathlib `Kernel.trajMeasure`. Its coordinate process
+satisfies the local field bundle and the armwise-bounded expected-average
+terminal. The downstream module
+`BanditRLProof.Algorithms.UCBRealStationaryExplicitPolicy` now identifies its
+action conditional law with the deterministic `realHistoryNextArm` kernel a.e.
+on the finite-history marginal, transports one all-time selector event, and
+pairs it with the same expected-average terminal. These are still local
+Mathlib-facing constructions, not imported LML declarations. Identification
+of the adaptive next-unused reward coordinate with the stationary selected
+reward kernel remains separate.
+
 ## Local Thompson Stationary Confidence Transport
 
 The pinned Thompson clipped-UCB concentration route is no longer missing its

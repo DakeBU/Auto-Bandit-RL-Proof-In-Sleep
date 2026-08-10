@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "record_id": "frontier-dcd18e158b99820d",
+  "updated_at": "2026-08-10T06:46:53+00:00",
+  "root_objective": "Compile a same-process generated EXP3 all-positive-prefix realized selected-loss regret confidence theorem against one fixed comparator.",
+  "current_leaf": {
+    "id": "EXP3-REALIZED-REGRET-GEOMETRIC-ALL-TIME-TAIL",
+    "kind": "lean",
+    "status": "accepted",
+    "statement": "On one fixed generated EXP3 trajectory law and against one supported comparator, the outer measure of the union over every positive prefix n+1 where realized selected-loss regret crosses the sum of the predictable-regret and pure realized-deviation schedules, each assigned total confidence delta/2, is at most ENNReal.ofReal delta.",
+    "statement_hash": "10af62528aa09fdb7c05465ece936bc860fede6eff7a63b6f6dd3cc2b84a348f",
+    "declaration": "BanditRLProof.Exp3.measure_sampledRealizedRegretGeometricAllTimeFailureSet_le",
+    "file": "BanditRLProof/Exp3RealizedRegretAllTime.lean",
+    "source_status": "accepted local Lean composition; paper/textbook cards placement only; weapon inspiration only; no best-arm aggregation, tuned all-time rate, horizon retuning, Freedman, or EXP3.P claim",
+    "dependencies": [
+      {
+        "kind": "lean",
+        "name": "generated-EXP3-predictable-regret-geometric-all-time",
+        "status": "accepted"
+      },
+      {
+        "kind": "lean",
+        "name": "generated-EXP3-realized-deviation-geometric-all-time",
+        "status": "accepted"
+      },
+      {
+        "kind": "lean",
+        "name": "finite-prefix-realized-regret-decomposition",
+        "status": "accepted"
+      },
+      {
+        "kind": "review",
+        "name": "independent-read-only-review",
+        "status": "accepted"
+      }
+    ]
+  },
+  "dag": {
+    "nodes": [
+      {
+        "id": "EXP3-REALIZED-REGRET-GEOMETRIC-ALL-TIME-TAIL",
+        "kind": "lean",
+        "status": "accepted",
+        "dependencies": [
+          {
+            "kind": "lean",
+            "name": "generated-EXP3-predictable-regret-geometric-all-time",
+            "status": "accepted"
+          },
+          {
+            "kind": "lean",
+            "name": "generated-EXP3-realized-deviation-geometric-all-time",
+            "status": "accepted"
+          },
+          {
+            "kind": "lean",
+            "name": "finite-prefix-realized-regret-decomposition",
+            "status": "accepted"
+          },
+          {
+            "kind": "review",
+            "name": "independent-read-only-review",
+            "status": "accepted"
+          }
+        ],
+        "dispatch_count": 0
+      }
+    ]
+  },
+  "last_accepted_verifier": {
+    "trial_index": 317,
+    "time": "2026-08-10T06:45:55+00:00",
+    "task": "EXP3-REALIZED-REGRET-GEOMETRIC-ALL-TIME-TAIL",
+    "role": "lower",
+    "kind": "build",
+    "status": "accepted",
+    "lean": "BanditRLProof.Exp3.measure_sampledRealizedRegretGeometricAllTimeFailureSet_le",
+    "notes": "Accepted same-process all-positive-prefix realized selected-loss regret outer-measure theorem against one supported comparator; exact two-family half-confidence split and independent review with no findings.",
+    "run_id": "exp3-realized-regret-geometric-all-time-tail-2026-08-10"
+  },
+  "memory_policy": {
+    "recent_role_relevant_limit": 5,
+    "explicit_verified_lemma_ids": [
+      "mem-2a0ffec376992850"
+    ],
+    "whole_history_default": false
+  },
+  "shadow_gate": {
+    "status": "passed",
+    "analyzed_trial_rows": 318,
+    "mismatches": [],
+    "replay_transitions": 3
+  },
+  "mutation_policy": {
+    "canonical_path_queue": true,
+    "cross_process_lock": true,
+    "same_file_serialized": true,
+    "disjoint_files_parallel": true
+  },
+  "autonomous_execution": {
+    "enabled": false,
+    "requires_deterministic_gates": true,
+    "requires_explicit_user_request": true
+  }
+}

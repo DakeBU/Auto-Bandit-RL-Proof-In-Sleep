@@ -4,7 +4,7 @@ Each accepted file in this directory is one machine-readable lemma proposal.
 Use a lowercase kebab-case filename matching the packet's `id`, for example
 `probability-conditional-hoeffding.json`.
 
-Start with the Research IDE export or the schema at
+Start with the Live Formalization export or the schema at
 `../contribution.schema.json`. Before opening a pull request:
 
 - provide a real mathematical source or mark the result as original;
@@ -16,5 +16,5 @@ Start with the Research IDE export or the schema at
 - remove `draft_missing_fields` once every listed item has been supplied.
 
 The public workflow validates packets and builds `../registry.json`. A packet
-can be Lean-checked without being integrated into the private upstream ABRL
-tree; the website keeps those states separate.
+can be Lean-checked without being integrated into BanditRLlib on `main`; the
+website keeps those states separate.

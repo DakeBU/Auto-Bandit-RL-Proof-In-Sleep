@@ -5,6 +5,7 @@
   const select = document.querySelector("[data-ide-declaration]");
   const latex = document.querySelector("[data-ide-latex]");
   const lean = document.querySelector("[data-ide-lean]");
+  const naturalLanguage = document.querySelector("[data-ide-natural-language]");
   const preview = document.querySelector("[data-ide-math-preview]");
   const plain = document.querySelector("[data-ide-plain]");
   const diagnostics = document.querySelector("[data-ide-diagnostics]");
@@ -19,24 +20,37 @@
   const treeSummary = document.querySelector("[data-ide-tree-summary]");
   const autoCompile = document.querySelector("[data-ide-auto]");
   const compileButton = document.querySelector("[data-ide-compile]");
+  const formalizeButton = document.querySelector("[data-ide-formalize]");
   const loadButton = document.querySelector("[data-ide-load]");
   const scaffoldButton = document.querySelector("[data-ide-scaffold]");
   const exportButton = document.querySelector("[data-ide-export]");
   const exportNote = document.querySelector("[data-ide-export-note]");
+  const candidateInterpretation = document.querySelector("[data-candidate-interpretation]");
+  const candidateStatement = document.querySelector("[data-candidate-statement]");
+  const candidateAssumptions = document.querySelector("[data-candidate-assumptions]");
+  const candidateBanditrl = document.querySelector("[data-candidate-banditrl]");
+  const candidateMathlib = document.querySelector("[data-candidate-mathlib]");
+  const candidateLml = document.querySelector("[data-candidate-lml]");
+  const candidateObligations = document.querySelector("[data-candidate-obligations]");
+  const candidateStatuses = document.querySelector("[data-candidate-statuses]");
   let items = [];
   let current = null;
   let localLean = false;
+  let localFormalizer = false;
   let compileTimer = null;
   let lastCompiledSource = "";
   let lastCompileOk = false;
+  let lastFormalization = null;
 
-  const setMode = (available, detail) => {
+  const setMode = (available, detail, formalizerAvailable = false) => {
     localLean = available;
+    localFormalizer = formalizerAvailable;
     mode?.classList.toggle("local", available);
     mode?.classList.toggle("static", !available);
     if (modeTitle) modeTitle.textContent = available ? "Local Lean compiler connected" : "Static teaching mode";
     if (modeDetail) modeDetail.textContent = detail;
     if (compileButton) compileButton.disabled = !available;
+    if (formalizeButton) formalizeButton.disabled = !available || !formalizerAvailable;
     if (autoCompile) {
       autoCompile.disabled = !available;
       if (!available) autoCompile.checked = false;
@@ -89,6 +103,7 @@
     if (latex) latex.value = item.latex;
     if (lean) lean.value = item.compile_source;
     if (plain) plain.textContent = item.plain;
+    if (naturalLanguage) naturalLanguage.value = item.plain;
     if (translationStatus) {
       translationStatus.textContent = "Reviewed mapping";
       translationStatus.className = "status compiled";
@@ -100,7 +115,88 @@
     if (diagnostics) diagnostics.textContent = "Reviewed mapping loaded. Compile locally to ask the pinned Lean toolchain to elaborate the declaration.";
     lastCompiledSource = "";
     lastCompileOk = false;
+    lastFormalization = null;
     scheduleCompile();
+  };
+
+  const renderList = (element, items, formatter = (item) => item) => {
+    if (!element) return;
+    element.replaceChildren();
+    const values = Array.isArray(items) ? items : [];
+    if (!values.length) {
+      const item = document.createElement("li");
+      item.textContent = "None returned.";
+      element.append(item);
+      return;
+    }
+    values.forEach((value) => {
+      const item = document.createElement("li");
+      item.textContent = formatter(value);
+      element.append(item);
+    });
+  };
+
+  const renderFormalization = (result) => {
+    lastFormalization = result;
+    if (candidateInterpretation) candidateInterpretation.textContent = result.interpretation || "No interpretation returned.";
+    if (candidateStatement) candidateStatement.textContent = result.lean_statement || "No Lean statement returned.";
+    renderList(candidateAssumptions, result.assumptions);
+    renderList(candidateBanditrl, result.banditrl_candidates, (item) => `${item.name} — ${item.status}`);
+    renderList(candidateMathlib, result.mathlib_candidates, (item) => `${item.card} — ${item.status}`);
+    renderList(candidateLml, result.lml_candidates, (item) => `${item.card} — ${item.status}`);
+    renderList(candidateObligations, result.unresolved_obligations);
+    if (candidateStatuses) {
+      candidateStatuses.textContent = [
+        `translation: ${result.translation_status}`,
+        `Lean: ${result.lean_status}`,
+        `proof: ${result.proof_status}`,
+        `library: ${result.library_status}`,
+      ].join(" · ");
+    }
+  };
+
+  const formalize = async () => {
+    if (!localFormalizer || !formalizeButton) return;
+    formalizeButton.disabled = true;
+    if (diagnostics) diagnostics.textContent = "BanditRLlib is retrieving local declarations and requesting a candidate translation…";
+    try {
+      const response = await fetch("../api/formalize", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          latex: latex?.value || "",
+          natural_language: naturalLanguage?.value || "",
+          theorem_kind: "theorem",
+          preferred_domain: current?.chapter || "bandit and reinforcement learning",
+          preferred_module: current?.module || "",
+        }),
+      });
+      const payload = await response.json();
+      if (!payload.result) throw new Error(payload.output || `HTTP ${response.status}`);
+      const result = payload.result;
+      renderFormalization(result);
+      if (result.lean_source && lean) lean.value = result.lean_source;
+      const compiler = result.compiler || {};
+      if (diagnostics) {
+        diagnostics.textContent = compiler.output || "Candidate generated; compiler did not run.";
+        diagnostics.classList.toggle("success", Boolean(compiler.ok));
+        diagnostics.classList.toggle("failure", !compiler.ok);
+      }
+      if (duration) duration.textContent = Number.isFinite(compiler.duration_ms) ? `${compiler.duration_ms} ms` : "";
+      lastCompiledSource = compiler.ok ? result.lean_source : "";
+      lastCompileOk = Boolean(compiler.ok);
+      if (translationStatus) {
+        translationStatus.textContent = compiler.ok ? "Candidate compiles; semantic review required" : "Candidate translation; unresolved obligations";
+        translationStatus.className = "status partial";
+      }
+    } catch (error) {
+      if (diagnostics) {
+        diagnostics.textContent = `Formalization did not produce a candidate: ${error.message}`;
+        diagnostics.classList.add("failure");
+      }
+    } finally {
+      formalizeButton.disabled = !localFormalizer;
+    }
   };
 
   const safeDraftScaffold = () => {
@@ -178,7 +274,7 @@
       .filter(Boolean);
     const compilerAcceptedCurrentText = lastCompileOk && lastCompiledSource === code;
     const packet = {
-      schema_version: "1.0",
+      schema_version: "1.1",
       id: packetId(),
       title: current?.plain || "Community lemma proposal",
       domain: current?.chapter || "Unclassified",
@@ -192,6 +288,9 @@
         code,
         proposed_name: current?.name || "",
         dependencies: (current?.dependencies || []).map((dependency) => dependency.name),
+        banditrl_reused: (lastFormalization?.banditrl_candidates || []).map((item) => item.name),
+        mathlib_candidates: (lastFormalization?.mathlib_candidates || []).map((item) => item.card),
+        lml_candidates: (lastFormalization?.lml_candidates || []).map((item) => item.card),
       },
       provenance: {
         source: "",
@@ -207,7 +306,12 @@
         compiler: compilerAcceptedCurrentText ? "local ABRL Lean toolchain" : "not run or source changed",
         accepted: compilerAcceptedCurrentText,
         diagnostics: compilerAcceptedCurrentText ? (diagnostics?.textContent || "Lean accepted the snippet.") : "",
+        translation_status: lastFormalization?.translation_status || "candidate",
+        semantic_review_status: "not-reviewed",
+        proof_status: lastFormalization && compilerAcceptedCurrentText ? "candidate-compiles" : "unproved",
+        library_status: "proposed",
       },
+      unresolved_proof_obligations: lastFormalization?.unresolved_obligations || ["Semantic review and repository integration"],
       license: {
         spdx: "MIT",
         agreed: false,
@@ -235,7 +339,10 @@
       const response = await fetch("../api/health", { headers: { Accept: "application/json" } });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const health = await response.json();
-      setMode(true, `${health.lean_version || "Lean"}; temporary snippets only; source files are untouched. Auto-compile is opt-in for large imports.`);
+      const formalizerDetail = health.formalizer_available
+        ? `Candidate formalizer: ${health.formalizer}.`
+        : `${health.formalizer || "AI formalizer unavailable in this local session."}`;
+      setMode(true, `${health.lean_version || "Lean"}; temporary snippets only; source files are untouched. ${formalizerDetail}`, Boolean(health.formalizer_available));
     } catch (_error) {
       setMode(false, "Rendering, verified mappings, and dependency navigation remain available; code execution is disabled.");
       if (diagnostics) diagnostics.textContent = "Static mode: run `python3 website/scripts/ide_server.py` from the repository root for real Lean diagnostics.";
@@ -260,6 +367,7 @@
   select?.addEventListener("change", () => loadMapping(items[Number(select.value)]));
   loadButton?.addEventListener("click", () => current && loadMapping(current));
   scaffoldButton?.addEventListener("click", safeDraftScaffold);
+  formalizeButton?.addEventListener("click", formalize);
   exportButton?.addEventListener("click", exportPacket);
   compileButton?.addEventListener("click", compile);
   latex?.addEventListener("input", () => {

@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_stoppedAverageRealizedBehaviorRegret_integrable_and_integral_abs_le_stoppingRoundSecondMomentBudget",
+  "file": "BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterIntegrableExpectedUpperBound.lean",
+  "statement": "theorem selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_stoppedAverageRealizedBehaviorRegret_integrable_and_integral_abs_le_stoppingRoundSecondMomentBudget (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] [StandardBorelSpace State] [StandardBorelSpace Action] (rewardSource : mdp.MeanCompatibleRewardKernel) (varianceProxy : NNReal) (hvarianceProxy : 0 < varianceProxy) (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (support : ExploratoryPathSupport mdp initialState) (baseVisitFloor : Real) (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor) (hrewardBound : forall state action, |mdp.reward state action| <= 1) (hhorizon : 4 < mdp.horizon) (hbaseVisitFloor : 0 < baseVisitFloor) (scheduleIndex : Nat) : let source := selfConsistentScheduledCausalSource mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor let stoppingPrefix := selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingPrefix mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor let stoppedProcess := selfConsistentScheduledNaturalCausalStoppingTimeAverageRealizedBehaviorRegretProcess mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor stoppingPrefix scheduleIndex Integrable stoppedProcess source.trajectoryMeasure /\\ integral source.trajectoryMeasure (fun trajectory => |stoppedProcess trajectory|) <= selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingRoundSecondMomentAbsoluteFirstMomentBudget mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor scheduleIndex",
+  "statement_hash": "7452c5413818a66513f495ca3a2bf70211f7b9db3f642c3a34918dfe2cf99192",
+  "source_assumptions": [
+    "4 < mdp.horizon",
+    "(scheduleIndex : Nat)",
+    "selfConsistentScheduledCausalSource"
+  ],
+  "created_at": "2026-08-06T16:57:29+00:00"
+}

@@ -1,6 +1,6 @@
 # Community governance
 
-ABRL uses an open-proposal, reviewed-integration model.
+BanditRLlib uses the ABRL open-proposal, reviewed-integration model.
 
 - Anyone may propose a sourced result, report a missing assumption, improve a
   teaching explanation, or submit a lemma packet.
@@ -14,8 +14,8 @@ ABRL uses an open-proposal, reviewed-integration model.
 - Status disagreements are resolved by evidence: exact source statements,
   compiler output, dependency records, and review discussion take priority
   over informal completion claims.
-- Security-sensitive details, private papers, credentials, proof-run memory,
-  and unpublished source files must not be posted to the public repository.
+- Security-sensitive details, credentials, private peer-review material, and
+  unpublished source files must not be posted to the public repository.
 
 As the contributor base grows, maintainers may appoint domain reviewers based
 on sustained, technically sound contributions and respectful review work.

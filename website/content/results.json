@@ -181,6 +181,49 @@
       "evidence": "BanditRLProof/Exp3RealizedPredictableVarianceAllTime.lean; tasks/EXP3-REALIZED-PREDICTABLE-VARIANCE-GEOMETRIC-ALL-TIME-TAIL.md"
     },
     {
+      "id": "EXP3-REALIZED-DEVIATION-GEOMETRIC-ALL-TIME",
+      "title": "All-positive-prefix EXP3 realized-deviation tail",
+      "chapter": "exp3",
+      "status": "compiled",
+      "informal": "The deterministic unit bound on each selected-loss conditional variance discharges the variance-good side condition, yielding a pure realized-deviation crossing event controlled over every positive prefix.",
+      "declarations": ["BanditRLProof.Exp3.measure_sampledRealizedDeviationGeometricAllTimeFailureSet_le"],
+      "depends_on": [
+        "BanditRLProof.Exp3.measure_sampledPredictableRealizedDeviationAllTimeFailureSet_le",
+        "BanditRLProof.Exp3.sampledPredictableRealizedVariance_sum_le_horizon"
+      ],
+      "missing": [],
+      "evidence": "BanditRLProof/Exp3RealizedDeviationAllTime.lean; tasks/EXP3-REALIZED-DEVIATION-GEOMETRIC-ALL-TIME-TAIL.md"
+    },
+    {
+      "id": "EXP3-PREDICTABLE-REGRET-GEOMETRIC-ALL-TIME",
+      "title": "All-positive-prefix predictable EXP3 regret",
+      "chapter": "exp3",
+      "status": "compiled",
+      "informal": "For one fixed generated EXP3 process and one supported comparator, countable subadditivity plus geometric confidence shares controls predictable-regret crossings at every positive prefix.",
+      "declarations": ["BanditRLProof.Exp3.measure_sampledPredictableRegretGeometricAllTimeFailureSet_le"],
+      "depends_on": [
+        "BanditRLProof.Exp3.sampledPredictable_highProbabilityRegret_tail_total_delta",
+        "BanditRLProof.Concentration.tsum_ofReal_geometricConfidenceShare"
+      ],
+      "missing": [],
+      "evidence": "BanditRLProof/Exp3PredictableRegretAllTime.lean; tasks/EXP3-PREDICTABLE-REGRET-GEOMETRIC-ALL-TIME-TAIL.md"
+    },
+    {
+      "id": "EXP3-REALIZED-REGRET-GEOMETRIC-ALL-TIME",
+      "title": "All-positive-prefix realized EXP3 regret",
+      "chapter": "exp3",
+      "status": "compiled",
+      "informal": "Realized selected-loss regret decomposes into predictable regret plus realized deviation; splitting the confidence budget between their two all-time events controls the combined crossing event at every positive prefix.",
+      "declarations": ["BanditRLProof.Exp3.measure_sampledRealizedRegretGeometricAllTimeFailureSet_le"],
+      "depends_on": [
+        "BanditRLProof.Exp3.sampledTrajectoryRealizedRegret_eq_predictableRegret_add_realizedDeviation",
+        "BanditRLProof.Exp3.measure_sampledPredictableRegretGeometricAllTimeFailureSet_le",
+        "BanditRLProof.Exp3.measure_sampledRealizedDeviationGeometricAllTimeFailureSet_le"
+      ],
+      "missing": [],
+      "evidence": "BanditRLProof/Exp3RealizedRegretAllTime.lean; tasks/EXP3-REALIZED-REGRET-GEOMETRIC-ALL-TIME-TAIL.md"
+    },
+    {
       "id": "EXP3-SPARSE-ALL-HORIZON",
       "title": "Sparse-loss all-horizon high-probability EXP3",
       "chapter": "exp3",

@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://jicheng9617.github.io/Auto-Bandit-RL-Proof-In-Sleep-site/community/contribution.schema.json",
-  "title": "ABRL community lemma packet",
-  "description": "A versioned handoff from sourced mathematics to a reviewable Lean contribution.",
+  "$id": "https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/community/contribution.schema.json",
+  "title": "BanditRLlib community lemma packet",
+  "description": "A versioned handoff from sourced mathematics into the ABRL review and BanditRLlib integration pipeline.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -16,10 +16,11 @@
     "provenance",
     "contributor",
     "verification",
-    "license"
+    "license",
+    "unresolved_proof_obligations"
   ],
   "properties": {
-    "schema_version": { "const": "1.0" },
+    "schema_version": { "const": "1.1" },
     "id": {
       "type": "string",
       "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
@@ -43,7 +44,7 @@
     "lean": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["imports", "code", "proposed_name", "dependencies"],
+      "required": ["imports", "code", "proposed_name", "dependencies", "banditrl_reused", "mathlib_candidates", "lml_candidates"],
       "properties": {
         "imports": {
           "type": "array",
@@ -53,6 +54,21 @@
         "code": { "type": "string" },
         "proposed_name": { "type": "string", "maxLength": 500 },
         "dependencies": {
+          "type": "array",
+          "items": { "type": "string", "maxLength": 500 },
+          "uniqueItems": true
+        },
+        "banditrl_reused": {
+          "type": "array",
+          "items": { "type": "string", "maxLength": 500 },
+          "uniqueItems": true
+        },
+        "mathlib_candidates": {
+          "type": "array",
+          "items": { "type": "string", "maxLength": 500 },
+          "uniqueItems": true
+        },
+        "lml_candidates": {
           "type": "array",
           "items": { "type": "string", "maxLength": 500 },
           "uniqueItems": true
@@ -82,11 +98,15 @@
     "verification": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["compiler", "accepted", "diagnostics"],
+      "required": ["compiler", "accepted", "diagnostics", "translation_status", "semantic_review_status", "proof_status", "library_status"],
       "properties": {
         "compiler": { "type": "string", "maxLength": 500 },
         "accepted": { "type": "boolean" },
-        "diagnostics": { "type": "string", "maxLength": 20000 }
+        "diagnostics": { "type": "string", "maxLength": 20000 },
+        "translation_status": { "enum": ["candidate", "reviewed"] },
+        "semantic_review_status": { "enum": ["not-reviewed", "reviewed"] },
+        "proof_status": { "enum": ["unproved", "candidate-compiles", "compiled"] },
+        "library_status": { "enum": ["external", "proposed", "integrated"] }
       }
     },
     "license": {
@@ -99,6 +119,11 @@
       }
     },
     "created_at": { "type": "string", "format": "date-time" },
+    "unresolved_proof_obligations": {
+      "type": "array",
+      "items": { "type": "string" },
+      "uniqueItems": true
+    },
     "draft_missing_fields": {
       "type": "array",
       "items": { "type": "string" },

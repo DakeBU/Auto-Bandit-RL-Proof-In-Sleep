@@ -31,8 +31,8 @@ def nonempty(packet: dict[str, Any], *keys: str) -> bool:
 def validate(path: Path, packet: dict[str, Any]) -> list[str]:
     errors: list[str] = []
     packet_id = packet.get("id")
-    if packet.get("schema_version") != "1.0":
-        errors.append("schema_version must be 1.0")
+    if packet.get("schema_version") != "1.1":
+        errors.append("schema_version must be 1.1")
     if not isinstance(packet_id, str) or not ID_RE.fullmatch(packet_id):
         errors.append("id must be lowercase kebab-case")
     elif path.stem != packet_id:
@@ -99,7 +99,7 @@ def main() -> int:
             print(f"- {error}")
         return 1
     payload = {
-        "schema_version": "1.0",
+        "schema_version": "1.1",
         "entry_count": len(packets),
         "entries": sorted(packets, key=lambda packet: packet["id"]),
     }

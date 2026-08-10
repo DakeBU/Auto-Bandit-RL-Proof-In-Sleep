@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check the generated ABRL documentation site and its source mappings."""
+"""Check the generated BanditRLlib site, ABRL mappings, and publication contract."""
 
 from __future__ import annotations
 
@@ -16,6 +16,11 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 SITE_DIR = SCRIPT_DIR.parent
 ROOT = SITE_DIR.parent
 DEFAULT_OUTPUT = SITE_DIR / "_site"
+PAPER_TITLE = (
+    "ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library "
+    "for Bandit and Reinforcement Learning Theory"
+)
+EXPECTED_AUTHORS = ["Dake Bu", "Ji Cheng", "Bo Xue", "Atsushi Nitanda", "Hau-San Wong", "Qingfu Zhang"]
 
 
 class LinkCollector(HTMLParser):
@@ -155,17 +160,54 @@ def check_workflow() -> list[str]:
 
 def check_ide_server() -> list[str]:
     path = SITE_DIR / "scripts" / "ide_server.py"
+    formalizer_path = ROOT / "tools" / "bandit_formalizer.py"
     if not path.exists():
         return ["missing website/scripts/ide_server.py"]
-    text = path.read_text(encoding="utf-8")
+    if not formalizer_path.exists():
+        return ["missing tools/bandit_formalizer.py"]
+    text = path.read_text(encoding="utf-8") + "\n" + formalizer_path.read_text(encoding="utf-8")
     required = [
         'default="127.0.0.1"',
         '"/api/compile"',
+        '"/api/formalize"',
         '"lake", "env", "lean"',
         "TemporaryDirectory",
         "loopback-only",
+        "ABRL_FORMALIZER_API_KEY",
     ]
     return [f"IDE server missing safety/compile contract: {item}" for item in required if item not in text]
+
+
+def check_branding_and_formalizer(output: Path, manifest: dict[str, object]) -> list[str]:
+    errors: list[str] = []
+    index_path = output / "index.html"
+    ide_path = output / "ide" / "index.html"
+    combined = "\n".join(
+        path.read_text(encoding="utf-8") for path in (index_path, ide_path) if path.exists()
+    )
+    for required in ("BanditRLlib", PAPER_TITLE, "BanditRLProof"):
+        if required not in combined:
+            errors.append(f"public identity text missing: {required}")
+    if manifest.get("author_count") != len(EXPECTED_AUTHORS):
+        errors.append(f"author_count must be {len(EXPECTED_AUTHORS)}")
+    contributors = json.loads((SITE_DIR / "content" / "contributors.json").read_text(encoding="utf-8"))
+    actual_authors = [entry.get("name") for entry in contributors.get("authors", [])]
+    if actual_authors != EXPECTED_AUTHORS:
+        errors.append("author order does not match the ABRL paper")
+    schema = json.loads((output / "community" / "contribution.schema.json").read_text(encoding="utf-8"))
+    properties = schema.get("properties", {})
+    lean_properties = properties.get("lean", {}).get("properties", {})
+    for field in ("banditrl_reused", "mathlib_candidates", "lml_candidates"):
+        if field not in lean_properties:
+            errors.append(f"community schema missing formalization field: {field}")
+    if "unresolved_proof_obligations" not in properties:
+        errors.append("community schema missing formalization field: unresolved_proof_obligations")
+    ide_js = (output / "static" / "ide.js").read_text(encoding="utf-8")
+    if "ABRL_FORMALIZER_API_KEY" in ide_js or re.search(r"(?:api[_-]?key|authorization)\s*[:=]", ide_js, re.I):
+        errors.append("static IDE JavaScript appears to contain a provider credential interface")
+    if "data-ide-formalize" not in combined or "data-candidate-obligations" not in combined:
+        errors.append("Live Formalization candidate UI is incomplete")
+    return errors
 
 
 def check_community_contract(output: Path, manifest: dict[str, object]) -> list[str]:
@@ -185,8 +227,8 @@ def check_community_contract(output: Path, manifest: dict[str, object]) -> list[
     except json.JSONDecodeError as error:
         errors.append(f"invalid community JSON: {error}")
         return errors
-    if schema.get("properties", {}).get("schema_version", {}).get("const") != "1.0":
-        errors.append("community schema does not declare schema_version 1.0")
+    if schema.get("properties", {}).get("schema_version", {}).get("const") != "1.1":
+        errors.append("community schema does not declare schema_version 1.1")
     entries = registry.get("entries")
     if not isinstance(entries, list):
         errors.append("community registry entries must be an array")
@@ -225,6 +267,7 @@ def main() -> int:
     errors.extend(check_workflow())
     errors.extend(check_ide_server())
     errors.extend(check_community_contract(output, manifest))
+    errors.extend(check_branding_and_formalizer(output, manifest))
 
     expected_pages = {
         output / "index.html",
@@ -357,7 +400,7 @@ def main() -> int:
         f"- declarations: {manifest.get('declaration_count')}\n"
         f"- highlights: {manifest.get('highlight_count')}\n"
         f"- milestones: {manifest.get('milestone_count')}\n"
-        f"- Research IDE mappings: {manifest.get('ide_mapping_count')}\n"
+        f"- Live Formalization mappings: {manifest.get('ide_mapping_count')}\n"
         f"- Mermaid blocks: {totals['mermaid']}\n"
         f"- Lean source links: {totals['source_links']}\n"
         "- internal links and anchors: valid\n"

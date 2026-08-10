@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRLProof.Exp3.measure_sampledPredictableRealizedDeviationAllTimeFailureSet_le",
+  "file": "BanditRLProof/Exp3RealizedPredictableVarianceAllTime.lean",
+  "statement": "theorem measure_sampledPredictableRealizedDeviationAllTimeFailureSet_le {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsProbabilityMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_pos : 0 < gamma) (hgamma_le_one : gamma <= 1) (loss : PredictableLossVector Env Action) (varianceBudget : Nat -> Real) (hvarianceBudget : forall n, 0 < varianceBudget n) (delta : Real) (hdelta : 0 < delta) : let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms eta gamma hgamma_pos.le hgamma_le_one loss.environment mu (sampledPredictableRealizedDeviationAllTimeFailureSet arms eta gamma loss varianceBudget delta) <= ENNReal.ofReal delta",
+  "statement_hash": "be643bca7d9a7f9ddf16cb98c5fcab0d74ee624eaeed4cfe4a4af530b84073b2",
+  "source_assumptions": [],
+  "created_at": "2026-08-10T04:53:27+00:00"
+}

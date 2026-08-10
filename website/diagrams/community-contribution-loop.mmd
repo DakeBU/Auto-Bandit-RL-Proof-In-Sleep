@@ -1,18 +1,9 @@
 flowchart LR
-  A["Sourced theorem<br/>paper, book, or original result"] --> B["Lemma packet<br/>plain English + LaTeX + Lean draft"]
-  B --> C["Public proposal<br/>scope, provenance, and credit"]
-  C --> D["Mathematical review<br/>statement and assumptions"]
-  D --> E["Lean review<br/>imports, namespace, API, proof"]
-  E --> F["Project gate<br/>library + tests + site checks"]
-  F --> G["Integrated declaration<br/>catalog + teaching page"]
-  D -->|"revision requested"| B
-  E -->|"diagnostics or API changes"| B
-  G --> H["Future Research IDE<br/>reuse and propose the next lemma"]
-  H --> B
-
-  classDef source fill:#e7ebf7,stroke:#4d5e8d,color:#18252d
-  classDef review fill:#fff0c7,stroke:#875b00,color:#18252d
-  classDef verified fill:#dff4e8,stroke:#176b43,color:#18252d
-  class A,B,C source
-  class D,E review
-  class F,G,H verified
+    Proposal["Researcher proposal<br/>theorem + assumptions + source"] --> Packet["Contribution packet<br/>schema 1.1"]
+    Packet --> Middle["ABRL middle layer<br/>route and dependency review"]
+    Middle --> Lower["ABRL lower layer<br/>Lean implementation"]
+    Lower --> Compiler["Lean 4 compilation"]
+    Compiler --> Review["Statement fence + reviewer + full gate"]
+    Review -->|changes requested| Proposal
+    Review -->|accepted| Library["BanditRLlib on main"]
+    Library --> Credit["Contributor registry and release notes"]
