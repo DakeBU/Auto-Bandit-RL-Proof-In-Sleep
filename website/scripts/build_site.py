@@ -519,7 +519,8 @@ def layout(
 def write_page(output: Path, page_path: str, content: str) -> None:
     target = output / Path(page_path)
     target.parent.mkdir(parents=True, exist_ok=True)
-    target.write_text(content, encoding="utf-8", newline="\n")
+    clean = "\n".join(line.rstrip() for line in content.splitlines()) + "\n"
+    target.write_text(clean, encoding="utf-8", newline="\n")
 
 
 def render_highlight(
