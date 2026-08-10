@@ -26,6 +26,10 @@ class LinkCollector(HTMLParser):
         self.mermaid_count = 0
         self.mathjax_count = 0
         self.source_link_count = 0
+        self.site_sidebar_count = 0
+        self.book_nav_link_count = 0
+        self.book_chapter_card_count = 0
+        self.contributor_card_count = 0
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         values = {key: value or "" for key, value in attrs}
@@ -34,6 +38,14 @@ class LinkCollector(HTMLParser):
         classes = set(values.get("class", "").split())
         if "mermaid" in classes:
             self.mermaid_count += 1
+        if "site-sidebar" in classes:
+            self.site_sidebar_count += 1
+        if "book-nav-link" in classes:
+            self.book_nav_link_count += 1
+        if "book-chapter-card" in classes:
+            self.book_chapter_card_count += 1
+        if "contributor-card" in classes:
+            self.contributor_card_count += 1
         for attr in ("href", "src"):
             if values.get(attr):
                 self.links.append((attr, values[attr]))
@@ -220,6 +232,8 @@ def main() -> int:
         output / "declarations" / "index.html",
         output / "ide" / "index.html",
         output / "community" / "index.html",
+        output / "contributors" / "index.html",
+        output / "installation" / "index.html",
         output / "learning" / "index.html",
         output / "roadmap" / "index.html",
         output / "workflow" / "index.html",
@@ -230,13 +244,43 @@ def main() -> int:
         if not expected.exists():
             errors.append(f"missing required page: {expected.relative_to(output)}")
 
+    expected_chapter_count = len(
+        json.loads((SITE_DIR / "content" / "chapters.json").read_text(encoding="utf-8"))["chapters"]
+    )
+    for page, collector in pages.items():
+        if collector.site_sidebar_count != 1:
+            errors.append(
+                f"{page.relative_to(output)}: expected one site sidebar, found {collector.site_sidebar_count}"
+            )
+        if collector.book_nav_link_count != expected_chapter_count:
+            errors.append(
+                f"{page.relative_to(output)}: book navigation has {collector.book_nav_link_count} chapter links, "
+                f"expected {expected_chapter_count}"
+            )
+
+    for relative in (Path("index.html"), Path("learning/index.html")):
+        collector = pages.get((output / relative).resolve())
+        if collector and collector.book_chapter_card_count != expected_chapter_count:
+            errors.append(
+                f"{relative}: book map has {collector.book_chapter_card_count} chapter cards, "
+                f"expected {expected_chapter_count}"
+            )
+
+    contributor_page = pages.get((output / "contributors" / "index.html").resolve())
+    expected_contributors = manifest.get("contributor_count", 0)
+    if contributor_page and contributor_page.contributor_card_count != expected_contributors + 1:
+        errors.append(
+            f"contributors/index.html: found {contributor_page.contributor_card_count} contributor cards, "
+            f"expected {expected_contributors} contributors plus one invitation card"
+        )
+
     module_pages = list((output / "modules").glob("*/index.html"))
     chapter_pages = list((output / "chapters").glob("*/index.html"))
     if len(module_pages) != manifest.get("module_count"):
         errors.append(
             f"module-page count {len(module_pages)} != manifest module_count {manifest.get('module_count')}"
         )
-    if len(chapter_pages) != len(json.loads((SITE_DIR / "content" / "chapters.json").read_text(encoding="utf-8"))["chapters"]):
+    if len(chapter_pages) != expected_chapter_count:
         errors.append("chapter-page count does not match chapters.json")
 
     search_path = output / "search-index.json"

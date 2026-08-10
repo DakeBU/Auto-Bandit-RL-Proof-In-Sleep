@@ -19,7 +19,7 @@ A hierarchical multi-agent harness for building Lean-checked bandit and reinforc
 ## News
 
 * **August 10, 2026.** Upgraded the formalization website into the
-  [ABRL Open Formalization Community](https://jicheng9617.github.io/Auto-Bandit-RL-Proof-In-Sleep-site/)
+  [ABRL Open Formalization Community](https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/)
   with three explicit entry points: a Lean-aligned teaching path for students,
   an exhaustive declaration catalog for library users, and a public lemma
   contribution route for domain experts.  The Research IDE now exports a
@@ -27,7 +27,10 @@ A hierarchical multi-agent harness for building Lean-checked bandit and reinforc
   draft, imports, dependencies, provenance, credit, and honest compiler status.
   Public issue forms, packet validation, governance, and automated Pages
   deployment prepare the same contract for a future authenticated
-  LaTeX↔Lean compiler.  The community organization also acknowledges
+  LaTeX↔Lean compiler.  A persistent side navigation now exposes project
+  pages, contributors, installation, contribution guidance, the complete
+  ten-chapter Book Map, and library tools from every generated page.  The
+  community organization also acknowledges
   inspiration from [StatsMLlib](https://statsmllib.github.io/) without copying
   its source or implying participation or endorsement.
 * **August 6, 2026.** Expanded the Blueprint-style site into a first
@@ -109,11 +112,12 @@ public deployment, select **GitHub Actions** as the Pages source in repository
 settings. Detailed maintenance and status-mapping instructions are in
 [`website/README.md`](website/README.md).
 
-The independently published community snapshot is available at
-<https://jicheng9617.github.io/Auto-Bandit-RL-Proof-In-Sleep-site/>.  Its public
-repository accepts sourced lemma proposals while the upstream research source
-remains private; public packets and core-library integration are therefore
-reported as separate statuses.
+The project website is published at
+<https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/>.  An independently
+generated static mirror can also be published from the allowlisted website
+artifact when a documentation-only snapshot is needed.  Public lemma packets
+and core-library integration remain separate statuses until the full Lean gate
+and maintainer review pass.
 
 ## Harness Profile
 

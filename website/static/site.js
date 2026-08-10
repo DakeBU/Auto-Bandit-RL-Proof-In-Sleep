@@ -18,6 +18,28 @@
     button.addEventListener("click", () => applyTheme(button.dataset.themeChoice));
   });
 
+  const sidebar = document.querySelector("[data-site-sidebar]");
+  const sidebarToggles = [...document.querySelectorAll("[data-sidebar-toggle]")];
+  const sidebarScrim = document.querySelector("[data-sidebar-scrim]");
+  const setSidebarOpen = (open) => {
+    document.body.classList.toggle("sidebar-open", open);
+    sidebarToggles.forEach((button) => button.setAttribute("aria-expanded", String(open)));
+    if (open) sidebar?.querySelector("a, button, input")?.focus();
+  };
+
+  sidebarToggles.forEach((button) => {
+    button.addEventListener("click", () => setSidebarOpen(!document.body.classList.contains("sidebar-open")));
+  });
+  sidebarScrim?.addEventListener("click", () => setSidebarOpen(false));
+  sidebar?.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      if (window.matchMedia("(max-width: 960px)").matches) setSidebarOpen(false);
+    });
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") setSidebarOpen(false);
+  });
+
   const openDeclarationTarget = () => {
     if (!window.location.hash) return;
     const target = document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
@@ -28,6 +50,25 @@
 
   openDeclarationTarget();
   window.addEventListener("hashchange", openDeclarationTarget);
+
+  const tocLinks = [...document.querySelectorAll("[data-toc-link]")];
+  const tocTargets = tocLinks
+    .map((link) => ({ link, target: document.getElementById(decodeURIComponent(link.hash.slice(1))) }))
+    .filter((item) => item.target);
+  if (tocTargets.length && "IntersectionObserver" in window) {
+    const tocObserver = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((left, right) => left.boundingClientRect.top - right.boundingClientRect.top)[0];
+        if (!visible) return;
+        tocLinks.forEach((link) => link.removeAttribute("aria-current"));
+        tocTargets.find((item) => item.target === visible.target)?.link.setAttribute("aria-current", "location");
+      },
+      { rootMargin: "-15% 0px -70% 0px", threshold: 0 },
+    );
+    tocTargets.forEach((item) => tocObserver.observe(item.target));
+  }
 
   const root = document.body.dataset.siteRoot || ".";
   const globalSearch = document.querySelector("[data-global-search]");

@@ -13,6 +13,11 @@ hand-maintained declaration list:
   `content/highlights.json`;
 - theorem-route milestones and honest incomplete/blocked states live in
   `content/results.json`;
+- a responsive side navigation exposes project pages, installation,
+  contribution guidance, every chapter in the ten-part Book Map, and the main
+  Lean library tools from every generated page;
+- contributor credit is maintained in `content/contributors.json` and rendered
+  on both the overview and a dedicated contributor page;
 - Mermaid sources in `diagrams/` remain editable alongside the prose.
 - the Research IDE page adds live MathJax rendering, reviewed LaTeX-to-Lean
   mappings, dependency-tree navigation, an optional local Lean compiler, and a
@@ -143,8 +148,10 @@ site, checks internal links and mapping integrity, and uploads
 the IDE interface and reviewed mappings but no code-execution endpoint.
 Repository maintainers must select
 **GitHub Actions** as the Pages source once in the repository settings.  No
-untrusted Lean code is executed by either Pages workflow.  The independent
-public site is deployed at
+untrusted Lean code is executed by either Pages workflow.  The primary project
+site is deployed at
+<https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/>.  The independently
+generated documentation-only mirror remains available at
 <https://jicheng9617.github.io/Auto-Bandit-RL-Proof-In-Sleep-site/>.
 
 ## Attribution
