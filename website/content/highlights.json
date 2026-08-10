@@ -171,6 +171,36 @@
       ]
     },
     {
+      "full_name": "BanditRLProof.Concentration.measure_iUnion_scheduled_deviation_ge_inter_variance_le_delta_of_fixedTilt_quadratic_tail",
+      "chapter": "probability",
+      "plain": "A countable family of deviation events, each controlled by its own fixed-MGF quadratic tail and confidence share, has total outer probability at most the supplied overall budget.",
+      "math": "\\(E_n=\\{D_n\\ge r_n,\\,V_n\\le v_n\\},\\qquad \\mu(\\bigcup_{n\\ge0}E_n)\\le\\sum_{n\\ge0}\\delta_n\\le\\delta.\\)",
+      "intuition": "Spend a small part of the confidence budget at each index, prove the corresponding one-event tail, and add the possible failures. Countable subadditivity is enough; the events need not form a martingale stopping argument.",
+      "why": "Many all-time algorithm statements need one event covering every deterministic prefix. This theorem turns a reusable fixed-index MGF bound into such a scheduled union without overstating it as Ville, Doob, mixture, optional-stopping, or general Freedman theory.",
+      "position": "It is the generic probability bridge consumed by the new all-positive-prefix EXP3 predictable-variance theorem.",
+      "proof_idea": "Apply the measure-of-countable-union upper bound, instantiate the optimized one-event quadratic fixed-MGF theorem at every index, compare termwise ENNReal bounds, and finish with the caller's total confidence-budget inequality.",
+      "lean_notes": "The conclusion is an outer-measure inequality, so event measurability is not assumed. Positivity of every scale, variance budget, tilt cap, and confidence share is explicit in the signature.",
+      "dependencies": [
+        "BanditRLProof.Concentration.measure_deviation_ge_inter_variance_le_delta_of_fixedTilt_quadratic_tail"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.Exp3.measure_sampledPredictableRealizedDeviationAllTimeFailureSet_le",
+      "chapter": "exp3",
+      "plain": "For one generated EXP3 trajectory, the event that the selected-loss deviation crosses its scheduled predictable-variance radius at any positive prefix while that prefix stays within its variance budget has probability at most delta.",
+      "math": "\\(\\mu\\!\\left(\\exists n\\ge0:\\ D_{n+1}\\ge r(v_n,\\delta/2^{n+1}),\\ V_{n+1}\\le v_n\\right)\\le\\delta.\\)",
+      "intuition": "Every positive prefix receives a geometric share of the failure budget. The shares sum exactly to delta, so the countable union of prefix failures remains controlled.",
+      "why": "This supplies an honest all-time event for the realized-versus-predictable EXP3 variance route, while keeping the precise fixed-trajectory and variance-cap assumptions visible.",
+      "position": "It sits above the fixed-prefix exponential tail, the scheduled quadratic union lemma, and the geometric confidence schedule; later regret theorems may consume the resulting all-time event.",
+      "proof_idea": "Instantiate the generic scheduled-union theorem with unit variance scale and tilt cap, use the generated EXP3 fixed-tilt tail at prefix n+1, and discharge the total budget with the exact ENNReal sum of geometric confidence shares.",
+      "lean_notes": "This is countable outer-measure subadditivity for one generated process. It is not a Ville/Doob maximal inequality, a mixture boundary, optional stopping, a self-normalized theorem, or a general Freedman theorem.",
+      "dependencies": [
+        "BanditRLProof.Concentration.measure_iUnion_scheduled_deviation_ge_inter_variance_le_delta_of_fixedTilt_quadratic_tail",
+        "BanditRLProof.Concentration.tsum_ofReal_geometricConfidenceShare",
+        "BanditRLProof.Exp3.sampledPredictableRealizedDeviation_sum_tail_predictableVariance_fixedTilt"
+      ]
+    },
+    {
       "full_name": "BanditRLProof.Exp3.sampledPredictable_allHorizonDoubleVarianceProbabilisticSparseLossBestArmRealizedRegret_tail_of_sparsityFailure_le",
       "chapter": "exp3",
       "plain": "Under predictable sparse losses, the probability that best-arm realized regret crosses the tuned all-horizon threshold is at most delta plus the supplied sparsity-failure probability.",

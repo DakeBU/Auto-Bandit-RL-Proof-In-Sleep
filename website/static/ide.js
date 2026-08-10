@@ -21,10 +21,14 @@
   const compileButton = document.querySelector("[data-ide-compile]");
   const loadButton = document.querySelector("[data-ide-load]");
   const scaffoldButton = document.querySelector("[data-ide-scaffold]");
+  const exportButton = document.querySelector("[data-ide-export]");
+  const exportNote = document.querySelector("[data-ide-export-note]");
   let items = [];
   let current = null;
   let localLean = false;
   let compileTimer = null;
+  let lastCompiledSource = "";
+  let lastCompileOk = false;
 
   const setMode = (available, detail) => {
     localLean = available;
@@ -94,6 +98,8 @@
     renderMath();
     renderTree(item);
     if (diagnostics) diagnostics.textContent = "Reviewed mapping loaded. Compile locally to ask the pinned Lean toolchain to elaborate the declaration.";
+    lastCompiledSource = "";
+    lastCompileOk = false;
     scheduleCompile();
   };
 
@@ -116,6 +122,8 @@
       translationStatus.className = "status partial";
     }
     if (diagnostics) diagnostics.textContent = "A compiling placeholder scaffold was created, but no mathematical equivalence is claimed. Replace `True` with the reviewed proposition.";
+    lastCompiledSource = "";
+    lastCompileOk = false;
     scheduleCompile();
   };
 
@@ -135,6 +143,8 @@
       diagnostics.classList.toggle("success", Boolean(result.ok));
       diagnostics.classList.toggle("failure", !result.ok);
       duration.textContent = Number.isFinite(result.duration_ms) ? `${result.duration_ms} ms` : "";
+      lastCompiledSource = lean.value;
+      lastCompileOk = Boolean(result.ok);
     } catch (error) {
       diagnostics.textContent = `The local Lean service became unavailable: ${error.message}`;
       diagnostics.classList.add("failure");
@@ -148,6 +158,76 @@
     window.clearTimeout(compileTimer);
     if (!localLean || !autoCompile?.checked) return;
     compileTimer = window.setTimeout(compile, 850);
+  };
+
+  const packetId = () => {
+    const base = current?.name || "community-lemma";
+    return base
+      .replace(/^BanditRLProof\./, "")
+      .replace(/[^A-Za-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "")
+      .toLowerCase()
+      .slice(0, 96) || "community-lemma";
+  };
+
+  const exportPacket = () => {
+    const code = lean?.value || "";
+    const imports = code
+      .split(/\r?\n/)
+      .map((line) => line.match(/^\s*import\s+([A-Za-z0-9_.]+)/)?.[1])
+      .filter(Boolean);
+    const compilerAcceptedCurrentText = lastCompileOk && lastCompiledSource === code;
+    const packet = {
+      schema_version: "1.0",
+      id: packetId(),
+      title: current?.plain || "Community lemma proposal",
+      domain: current?.chapter || "Unclassified",
+      status: compilerAcceptedCurrentText ? "lean-checked" : "proposed",
+      mathematics: {
+        plain: plain?.textContent || "",
+        latex: latex?.value || "",
+      },
+      lean: {
+        imports,
+        code,
+        proposed_name: current?.name || "",
+        dependencies: (current?.dependencies || []).map((dependency) => dependency.name),
+      },
+      provenance: {
+        source: "",
+        locator: "",
+        notes: "",
+      },
+      contributor: {
+        name: "",
+        credit: "",
+        contact: "",
+      },
+      verification: {
+        compiler: compilerAcceptedCurrentText ? "local ABRL Lean toolchain" : "not run or source changed",
+        accepted: compilerAcceptedCurrentText,
+        diagnostics: compilerAcceptedCurrentText ? (diagnostics?.textContent || "Lean accepted the snippet.") : "",
+      },
+      license: {
+        spdx: "MIT",
+        agreed: false,
+      },
+      created_at: new Date().toISOString(),
+      draft_missing_fields: ["provenance.source", "contributor.name", "contributor.credit", "license.agreed"],
+    };
+    const blob = new Blob([`${JSON.stringify(packet, null, 2)}\n`], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `${packet.id}.json`;
+    document.body.append(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+    if (exportNote) {
+      exportNote.classList.add("exported");
+      exportNote.firstElementChild.textContent = "Lemma packet exported.";
+    }
   };
 
   const checkHealth = async () => {
@@ -180,6 +260,7 @@
   select?.addEventListener("change", () => loadMapping(items[Number(select.value)]));
   loadButton?.addEventListener("click", () => current && loadMapping(current));
   scaffoldButton?.addEventListener("click", safeDraftScaffold);
+  exportButton?.addEventListener("click", exportPacket);
   compileButton?.addEventListener("click", compile);
   latex?.addEventListener("input", () => {
     renderMath();
@@ -188,7 +269,10 @@
       translationStatus.className = "status partial";
     }
   });
-  lean?.addEventListener("input", scheduleCompile);
+  lean?.addEventListener("input", () => {
+    lastCompileOk = false;
+    scheduleCompile();
+  });
   autoCompile?.addEventListener("change", scheduleCompile);
   checkHealth();
 })();

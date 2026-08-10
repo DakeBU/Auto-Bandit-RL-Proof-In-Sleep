@@ -410,6 +410,60 @@ h3 {
   margin: 1.4rem 0;
 }
 
+.role-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1.4rem 0;
+}
+
+.role-card {
+  position: relative;
+  min-height: 21rem;
+  padding: clamp(1.2rem, 2.5vw, 1.8rem);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-top: 5px solid var(--accent);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.role-card h3 {
+  max-width: 18ch;
+  margin-top: 0.5rem;
+  font-size: clamp(1.35rem, 2.2vw, 1.8rem);
+}
+
+.role-card p:not(.eyebrow) {
+  color: var(--muted);
+}
+
+.role-card > a {
+  display: inline-block;
+  margin-top: 0.65rem;
+  font-weight: 700;
+}
+
+.role-number {
+  position: absolute;
+  right: 0.8rem;
+  top: -0.75rem;
+  color: color-mix(in srgb, var(--accent) 14%, transparent);
+  font-family: var(--serif);
+  font-size: 6.6rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.browse-role {
+  border-top-color: var(--planned);
+}
+
+.contribute-role {
+  border-top-color: var(--success);
+}
+
 .stat,
 .chapter-card,
 .info-card,
@@ -497,6 +551,93 @@ h3 {
 .status.source {
   background: var(--surface-2);
   color: var(--muted);
+}
+
+.status.integrated {
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+}
+
+.level-label,
+.community-domain {
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.community-statuses {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 1.2rem 0;
+}
+
+.community-statuses > div {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.7rem;
+  align-items: center;
+  padding: 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+}
+
+.contract-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(20rem, 1.1fr);
+  gap: 1rem;
+  align-items: stretch;
+  margin: 1.4rem 0;
+}
+
+.contract-copy,
+.contract-example {
+  margin: 0;
+  padding: clamp(1rem, 2.5vw, 1.5rem);
+  border-radius: var(--radius);
+}
+
+.contract-copy {
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.contract-copy h3 {
+  margin-top: 0;
+}
+
+.contract-example {
+  overflow: auto;
+  background: var(--code-bg);
+  color: var(--code-ink);
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+.community-entry-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: 1rem;
+}
+
+.community-entry-top {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.community-credit {
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.85rem;
+}
+
+.contribution-export-note.exported {
+  border-left-color: var(--success);
 }
 
 .callout {
@@ -1140,6 +1281,11 @@ tbody tr:hover {
   .ide-output-grid {
     grid-template-columns: 1fr;
   }
+
+  .role-grid,
+  .contract-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 760px) {
@@ -1187,6 +1333,10 @@ tbody tr:hover {
 
   .mermaid {
     min-width: 32rem;
+  }
+
+  .community-statuses {
+    grid-template-columns: 1fr;
   }
 }
 

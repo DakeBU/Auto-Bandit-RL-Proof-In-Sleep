@@ -18,6 +18,18 @@ A hierarchical multi-agent harness for building Lean-checked bandit and reinforc
 
 ## News
 
+* **August 10, 2026.** Upgraded the formalization website into the
+  [ABRL Open Formalization Community](https://jicheng9617.github.io/Auto-Bandit-RL-Proof-In-Sleep-site/)
+  with three explicit entry points: a Lean-aligned teaching path for students,
+  an exhaustive declaration catalog for library users, and a public lemma
+  contribution route for domain experts.  The Research IDE now exports a
+  versioned lemma packet carrying the natural-language statement, LaTeX, Lean
+  draft, imports, dependencies, provenance, credit, and honest compiler status.
+  Public issue forms, packet validation, governance, and automated Pages
+  deployment prepare the same contract for a future authenticated
+  LaTeX↔Lean compiler.  The community organization also acknowledges
+  inspiration from [StatsMLlib](https://statsmllib.github.io/) without copying
+  its source or implying participation or endorsement.
 * **August 6, 2026.** Expanded the Blueprint-style site into a first
   researcher-facing IDE prototype.  The new workspace places editable LaTeX,
   reviewed LaTeX-to-Lean mappings, exact Lean declarations, compiler
@@ -96,6 +108,12 @@ gates and deploys the generated artifact with GitHub Pages. Before the first
 public deployment, select **GitHub Actions** as the Pages source in repository
 settings. Detailed maintenance and status-mapping instructions are in
 [`website/README.md`](website/README.md).
+
+The independently published community snapshot is available at
+<https://jicheng9617.github.io/Auto-Bandit-RL-Proof-In-Sleep-site/>.  Its public
+repository accepts sourced lemma proposals while the upstream research source
+remains private; public packets and core-library integration are therefore
+reported as separate statuses.
 
 ## Harness Profile
 

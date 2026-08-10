@@ -39,7 +39,10 @@ class LinkCollector(HTMLParser):
                 self.links.append((attr, values[attr]))
         if "cdn.jsdelivr.net/npm/mathjax" in values.get("src", ""):
             self.mathjax_count += 1
-        if "/blob/main/BanditRLProof" in values.get("href", ""):
+        if (
+            "/blob/main/BanditRLProof" in values.get("href", "")
+            or "/source-access/" in values.get("href", "")
+        ):
             self.source_link_count += 1
 
 
@@ -153,6 +156,36 @@ def check_ide_server() -> list[str]:
     return [f"IDE server missing safety/compile contract: {item}" for item in required if item not in text]
 
 
+def check_community_contract(output: Path, manifest: dict[str, object]) -> list[str]:
+    errors: list[str] = []
+    schema_path = output / "community" / "contribution.schema.json"
+    registry_path = output / "community" / "registry.json"
+    validator_path = output / "scripts" / "build_community_registry.py"
+    workflow_path = output / ".github" / "workflows" / "community-pages.yml"
+    for path in (schema_path, registry_path, validator_path, workflow_path):
+        if not path.exists():
+            errors.append(f"missing public community artifact: {path.relative_to(output)}")
+    if not schema_path.exists() or not registry_path.exists():
+        return errors
+    try:
+        schema = json.loads(schema_path.read_text(encoding="utf-8"))
+        registry = json.loads(registry_path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as error:
+        errors.append(f"invalid community JSON: {error}")
+        return errors
+    if schema.get("properties", {}).get("schema_version", {}).get("const") != "1.0":
+        errors.append("community schema does not declare schema_version 1.0")
+    entries = registry.get("entries")
+    if not isinstance(entries, list):
+        errors.append("community registry entries must be an array")
+    elif len(entries) != manifest.get("community_entry_count"):
+        errors.append(
+            f"community registry count {len(entries)} != manifest community_entry_count "
+            f"{manifest.get('community_entry_count')}"
+        )
+    return errors
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
@@ -179,16 +212,19 @@ def main() -> int:
     errors.extend(check_diagram_sources())
     errors.extend(check_workflow())
     errors.extend(check_ide_server())
+    errors.extend(check_community_contract(output, manifest))
 
     expected_pages = {
         output / "index.html",
         output / "implementation-map" / "index.html",
         output / "declarations" / "index.html",
         output / "ide" / "index.html",
+        output / "community" / "index.html",
         output / "learning" / "index.html",
         output / "roadmap" / "index.html",
         output / "workflow" / "index.html",
         output / "attribution" / "index.html",
+        output / "source-access" / "index.html",
     }
     for expected in expected_pages:
         if not expected.exists():
