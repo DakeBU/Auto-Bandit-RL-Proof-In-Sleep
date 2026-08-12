@@ -27,19 +27,23 @@ probability/filtration/stopping/concentration contracts; canonical stochastic
 and adversarial textbook consumers; OFUL's self-normalized matrix layer; then
 modular RL Bellman, occupancy, confidence, and policy-output interfaces.
 
-The current adversarial frontier is
-`EXP3-REALIZED-REGRET-GEOMETRIC-ALL-TIME-TAIL`. It keeps one generated EXP3
-process and comparator fixed, combines the accepted predictable-regret and
-pure realized-deviation all-time event families with an exact half-confidence
-split, and controls realized selected-loss regret at every positive prefix.
-The next node should aggregate over the finite supported comparator set and
-expose best-arm external regret before opening a horizon-free tuning route.
-This matches the paper's EXP3 engine after importance-weighted moments and
-potential/stability/comparator analysis, but is not yet a Ville/Doob, mixture,
-optional-stopping, self-normalized, general Freedman, horizon-free tuned-
-algorithm, or EXP3.P result. The existing finite-arm sampled UCB
-logarithmic route and EXP3 expected-regret route remain compiled endpoints,
-not reasons to duplicate broad theorem wrappers.
+The Book Map Chapters 7--8 canonical gate now compiles two independent routes.
+Chapter 7 includes potential/Hedge algebra, generated importance-weighted
+moments, horizon-tuned expected regret, a horizon-tuned fixed-window best-arm
+tail, one fixed-process and fixed-comparator all-positive-prefix realized-
+regret event, and a separately labelled sparse extension.  Chapter 8 includes
+half-Tsallis minimizer regularity, the scheduled generated action law, score
+alignment, all-rate expected stability, fixed-gap self-bounding, and a
+finite-arm IID bounded reward-law logarithmic terminal.  The public canary
+keeps every generated measure visible and instantiates the Tsallis terminal
+with a concrete Dirac law.
+
+The next nodes are extensions, not missing canonical prerequisites: aggregate
+the finite supported comparator set on the same fixed EXP3 process, construct
+a horizon-free tuned EXP3 policy, or strengthen Tsallis toward paper-sharp
+best-of-both-worlds/high-probability guarantees.  Ville/Doob, mixtures,
+optional stopping, general Freedman, EXP3.P, observed-reward restart detection,
+and complete Tsallis-INF remain unclaimed.
 
 ## Definition Layer
 
@@ -224,8 +228,8 @@ constants, and literal LML declaration identity remain separate.
 | UCB | positive initial counts, index maximization, good-event pull bound, tail union, regret sum | `TXT-BUBECK-CESABIANCHI-2012`, `TXT-LATTIMORE-SZEPESVARI-2020`, `PPR-AUER-CBF-2002-UCB1`, LML `Bandits.UCB.regret_le` |
 | KL-UCB | Bernoulli KL, confidence inversion, bounded stochastic reward contracts | `PPR-GARIVIER-CAPPE-2011-KLUCB`, `TXT-LATTIMORE-SZEPESVARI-2020` |
 | Thompson sampling | compiled stationary posterior kernel, actual recursive probability matching, comparator decomposition plus explicit mean-optimality contract, clipped confidence, latent-stream support, generated Bayesian regret; broader model/toolchain ports remain open | `TXT-SLIVKINS-2019-2024`, `PPR-AGRAWAL-GOYAL-2011-TS`, LML cards `Bandits.TS.hasCondDistrib_action`, `Bandits.integral_regret_le` |
-| EXP3/adversarial | deterministic Hedge regret, importance-weighted finite-sum moments, one-round conditional transport, bounded-loss/uniform-floor regularity, an exploration-mixed recursive trajectory, concrete sampled importance-weighted history-score recursion, predictable `[0,1]` chosen-coordinate Dirac feedback, global `(Env,prefix,nextPair)` transport, initial/successor observed first/second moments, and finite-horizon integral assembly compiled; sampled-score/potential coupling, exploration bias, and eta/gamma optimization remain | `TXT-BUBECK-CESABIANCHI-2012`, `TXT-LATTIMORE-SZEPESVARI-2020`, `PPR-AUER-CFS-2002-EXP3` |
-| Tsallis-INF/FTRL | generated expected environment regret, refined scheduled stability/penalty assembly, exact predictable fixed-gap self-bounding, concrete square-root schedule, explicit Mathlib-backed logarithmic exact-gap regret, and a bounded `FiniteBanditModel` mean-loss specialization compile; the direct current-FTRL refined average remains refuted by the strict `Fin 2` counterexample; next transport stochastic reward-kernel feedback and its conditional mean into self-bounding; the full paper theorem remains open | `LOCAL-LEAF-TSALLIS-FINITE-BANDIT-MEAN-LOSS`, `LOCAL-LEAF-TSALLIS-SQRT-SCHEDULE-LOG-FIXED-GAP`, `LOCAL-LEAF-TSALLIS-SQRT-SCHEDULE-FIXED-GAP`, `LOCAL-LEAF-TSALLIS-SCHEDULED-REFINED-STABILITY-PENALTY-ASSEMBLY`, `LOCAL-LEAF-TSALLIS-SCHEDULED-FIXED-GAP-SELF-BOUNDING`, `LOCAL-LEAF-TSALLIS-SCHEDULED-SUBOPTIMAL-EXPECTED-BOUND`, `LOCAL-LEAF-TSALLIS-SCHEDULED-EXPECTED-REGRET`, `LOCAL-LEAF-TSALLIS-SCHEDULED-ALL-RATE-EXPECTED-STABILITY`, `LOCAL-LEAF-TSALLIS-SCHEDULED-ALL-TIMES-EXPECTED-STABILITY`, `LOCAL-LEAF-TSALLIS-SCHEDULED-INITIAL-EXPECTED-STABILITY`, `LOCAL-LEAF-TSALLIS-SCHEDULED-SUCCESSOR-EXPECTED-STABILITY`, `LOCAL-LEAF-TSALLIS-SCHEDULED-SCORE-PENALTY-ALIGNMENT`, `LOCAL-LEAF-TSALLIS-SCHEDULED-RECURSIVE-TRAJECTORY`, `LOCAL-LEAF-TSALLIS-TIME-VARYING-PENALTY`, `LOCAL-LEAF-TSALLIS-CONJUGATE-POTENTIAL-FINITE-HORIZON-DECOMPOSITION`, `LOCAL-LEAF-TSALLIS-CONJUGATE-POTENTIAL-STABILITY`, `LOCAL-LEAF-TSALLIS-REFINED-AVERAGED-STABILITY-OBSTRUCTION`, `LOCAL-LEAF-TSALLIS-REFINED-SHIFTED-IW-MOMENT`, `LOCAL-LEAF-TSALLIS-REFINED-ALLARM-TO-SUBOPTIMAL`, `LOCAL-LEAF-TSALLIS-SELF-BOUNDING-CONVERSION`, `LOCAL-LEAF-TSALLIS-ESTIMATED-ENVIRONMENT-REGRET`, `PPR-ZIMMERT-SELDIN-2018-TSALLIS-INF`, `PPR-MASOUDIAN-SELDIN-2021-TSALLIS-INF`, `PPR-KATO-ITO-2024-LC-TSALLIS-INF`, `PPR-ADAPTIVE-LR-FTRL-2024` |
+| EXP3/adversarial | canonical generated route compiled through potential/Hedge, importance-weighted conditional moments, measurable recursive sampling, exploration bias, tuned expected regret, per-horizon best-arm realized tails, a distinct fixed-process all-positive-prefix realized-regret terminal, and an explicit sparse-loss extension; horizon-free tuned EXP3, best-arm aggregation on that one fixed process, and EXP3.P remain extensions | `TXT-BUBECK-CESABIANCHI-2012`, `TXT-LATTIMORE-SZEPESVARI-2020`, `PPR-AUER-CFS-2002-EXP3` |
+| Tsallis-INF/FTRL | canonical generated half-Tsallis route compiled through minimizer regularity, scheduled conditional action law, score alignment, expected stability/penalty, fixed-gap self-bounding, square-root schedule, and a finite-arm IID bounded reward-law logarithmic terminal; corruption, dynamic, and population-oracle restart results compile as labelled extensions, while the strict `Fin 2` refined-average obstruction and paper-sharp complete Tsallis-INF remain visible | `LOCAL-LEAF-TSALLIS-FINITE-BANDIT-MEAN-LOSS`, `LOCAL-LEAF-TSALLIS-SQRT-SCHEDULE-LOG-FIXED-GAP`, `LOCAL-LEAF-TSALLIS-SCHEDULED-FIXED-GAP-SELF-BOUNDING`, `LOCAL-LEAF-TSALLIS-SCHEDULED-EXPECTED-REGRET`, `LOCAL-LEAF-TSALLIS-SCHEDULED-ALL-RATE-EXPECTED-STABILITY`, `PPR-ZIMMERT-SELDIN-2018-TSALLIS-INF`, `PPR-MASOUDIAN-SELDIN-2021-TSALLIS-INF`, `PPR-ADAPTIVE-LR-FTRL-2024` |
 | Linear/OFUL | compiled finite-action scalar route from Gram/determinant and confidence ellipsoid to a horizon-free all-time/all-horizon/stopping policy; horizon-indexed expectation/consistency is separate; contextual/dynamic/Hilbert extensions remain open | `TXT-LATTIMORE-SZEPESVARI-2020`, `PPR-ABBASI-YADKORI-2011-SELF-NORMALIZED`, `PPR-LI-CHU-LANGFORD-SCHAPIRE-2010-LINUCB` |
 | Pure exploration | confidence event, stopping rule, sample complexity, lower-bound change-of-measure | `TXT-LATTIMORE-SZEPESVARI-2020`, `TXT-SLIVKINS-2019-2024` |
 | BwK/resource constraints | budget stopping time, resource consumption, primal-dual comparison | `TXT-SLIVKINS-2019-2024`, `PPR-BADANIDIYURU-KLEINBERG-SLIVKINS-2013-BWK` |

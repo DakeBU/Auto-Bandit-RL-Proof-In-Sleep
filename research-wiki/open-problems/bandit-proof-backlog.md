@@ -1,5 +1,27 @@
 # Bandit And RL Proof Backlog
 
+## Accepted: Book Map Chapters 7--8 canonical completion
+
+- Root: `BOOKMAP-CHAPTERS-7-8-CANONICAL-COMPLETION`, with independent gates
+  `CH7-EXP3-CANONICAL-COMPLETION` and
+  `CH8-TSALLIS-FTRL-CANONICAL-COMPLETION`.
+- Chapter 7 evidence: typed horizon-tuned expected and fixed-window best-arm
+  endpoints; fixed-process predictable/deviation parents, exact decomposition,
+  and all-positive-prefix realized terminal; sparse endpoint with its explicit
+  failure budget.
+- Chapter 8 evidence: half-Tsallis minimizer regularity, scheduled generated
+  action law and score alignment, all-rate expected stability/regret,
+  fixed-gap self-bounding, exact IID mean-gap producer, and a concrete bounded
+  nondegenerate two-arm IID Dirac-law application of the logarithmic generated-
+  regret terminal, including exact means and a positive non-best gap.
+- Boundary: the two chapter gates do not imply each other.  Horizon-free tuned
+  EXP3, same-process best-arm aggregation, EXP3.P, paper-sharp/minimax complete
+  Tsallis-INF, high-probability/realized Tsallis regret, and observed-reward
+  restart detection remain distinct extensions.
+- Acceptance evidence is recorded in
+  `Tests/BookMapChaptersSevenAndEightCanary.lean`, the synchronized task/window/
+  obligation/blueprint, and the repository/site gates.
+
 ## Accepted: Generated EXP3 Realized-Regret Geometric All-Time Tail
 
 - Leaf: `EXP3-REALIZED-REGRET-GEOMETRIC-ALL-TIME-TAIL`.

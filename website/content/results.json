@@ -417,6 +417,19 @@
       "evidence": "BanditRLProof/Exp3ExpectedRegret.lean"
     },
     {
+      "id": "EXP3-BEST-ARM-REALIZED-HIGH-PROBABILITY",
+      "title": "Per-horizon best-arm realized high-probability EXP3",
+      "chapter": "exp3",
+      "status": "compiled",
+      "informal": "For each supplied positive horizon, finite comparator aggregation gives the generated horizon-tuned EXP3 law a best-supported-arm realized-regret tail; changing the horizon changes the parameters and law.",
+      "declarations": ["BanditRLProof.Exp3.sampledPredictable_allHorizonBernsteinSquareBestArmRealizedRegret_tail"],
+      "depends_on": ["BanditRLProof.Exp3.sampledPredictable_allHorizonBernsteinSquareRealizedRegret_tail"],
+      "missing": [
+        "This is not one horizon-free policy with a simultaneous confidence event over all horizons."
+      ],
+      "evidence": "Tests/BookMapChaptersSevenAndEightCanary.lean; BanditRLProof/Exp3MixedSquareBernsteinRealizedBestArmAllHorizon.lean"
+    },
+    {
       "id": "CONCENTRATION-COUNTABLE-SCHEDULED-QUADRATIC-TAIL",
       "title": "Countable scheduled quadratic fixed-MGF tail",
       "chapter": "probability",
@@ -509,9 +522,12 @@
       "status": "compiled",
       "informal": "IID probability arm laws with exact model means and positive non-best gaps yield a logarithmic reciprocal-gap regret bound.",
       "declarations": ["BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisFiniteArmIIDRewardLawRegret_le_log"],
-      "depends_on": ["BanditRLProof.FiniteBanditModel"],
+      "depends_on": [
+        "BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_le_sqrtSchedule_log_iidLossState",
+        "BanditRLProof.Tsallis.iidLossStateMeanGap_finiteArmIIDRewardVectorLoss_eq_gap"
+      ],
       "missing": [],
-      "evidence": "BanditRLProof/TsallisFiniteArmIIDRewardLaw.lean"
+      "evidence": "Tests/BookMapChaptersSevenAndEightCanary.lean; BanditRLProof/TsallisFiniteArmIIDRewardLaw.lean"
     },
     {
       "id": "TSALLIS-HISTORY-ADAPTIVE-CORRUPTION",

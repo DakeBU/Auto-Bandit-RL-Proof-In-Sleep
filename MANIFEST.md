@@ -12997,3 +12997,15 @@ here during local harness runs.
 - `2026-08-12T14:25:03+00:00` `bandit.py memory-refresh` `retrieval-index` `research-wiki/retrieval-index/BOOKMAP-CHAPTERS-5-6-CANONICAL-COMPLETION.json` - BOOKMAP-CHAPTERS-5-6-CANONICAL-COMPLETION
 - `2026-08-12T14:29:50+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/BOOKMAP-CHAPTERS-5-6-CANONICAL-COMPLETION.md` - BOOKMAP-CHAPTERS-5-6-CANONICAL-COMPLETION
 - `2026-08-12T14:29:55+00:00` `bandit.py memory-refresh` `retrieval-index` `research-wiki/retrieval-index/BOOKMAP-CHAPTERS-5-6-CANONICAL-COMPLETION.json` - BOOKMAP-CHAPTERS-5-6-CANONICAL-COMPLETION
+- `2026-08-12T15:37:28+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-12T15:37:28+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-12T15:37:28+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-12T15:37:28+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-12T15:37:28+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-12T15:37:28+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-12T15:37:28+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-12T15:37:28+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-12T15:42:45+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/BOOKMAP-CHAPTERS-7-8-CANONICAL-COMPLETION.md` - BOOKMAP-CHAPTERS-7-8-CANONICAL-COMPLETION
+- `2026-08-12T16:28:55+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/BOOKMAP-CHAPTERS-7-8-CANONICAL-COMPLETION.md` - BOOKMAP-CHAPTERS-7-8-CANONICAL-COMPLETION
+- `2026-08-12T16:29:31+00:00` `bandit.py memory-refresh` `retrieval-index` `research-wiki/retrieval-index/BOOKMAP-CHAPTERS-7-8-CANONICAL-COMPLETION.json` - BOOKMAP-CHAPTERS-7-8-CANONICAL-COMPLETION
+- `2026-08-12T16:35:28+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/BOOKMAP-CHAPTERS-7-8-CANONICAL-COMPLETION.md` - BOOKMAP-CHAPTERS-7-8-CANONICAL-COMPLETION

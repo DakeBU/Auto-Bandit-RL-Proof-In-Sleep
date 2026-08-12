@@ -33,12 +33,26 @@ flowchart TB
   Clipped --> Latent["stationary latent-arm stream"]
   Latent --> TS["generated stationary Bayesian regret"]
 
-  Hedge["EXP3 Hedge potential"] --> EXP3["expected + high-probability regret"]
-  Concentration --> EXP3
-  FTRL["Tsallis FTRL stability"] --> SelfBound["scheduled self-bounding"]
-  Traj --> SelfBound
-  SelfBound --> Dynamic["corruption + dynamic regret"]
-  Dynamic --> Restart["generated population-mean oracle restart"]
+  Hedge["EXP3 potential + Hedge"] --> IW["IW support + conditional moments"]
+  Traj --> IW
+  IW --> EXP3Expected["horizon-tuned expected regret"]
+  IW --> EXP3Window["horizon-tuned best-arm realized tail"]
+  Concentration --> EXP3Window
+  IW --> EXP3Pred["fixed-process predictable all-prefix event"]
+  Concentration --> EXP3Dev["fixed-process realized-deviation all-prefix event"]
+  EXP3Pred --> EXP3All["same-process comparator all-prefix regret"]
+  EXP3Dev --> EXP3All
+  IW --> EXP3Sparse["sparse/variance-sensitive extension"]
+
+  FTRL["half-Tsallis simplex minimizer"] --> FTRLStab["one-step stability + penalty"]
+  Traj --> TsallisGenerated["scheduled generated action law"]
+  FTRLStab --> TsallisGenerated
+  TsallisGenerated --> ScoreAlign["observed IW score alignment"]
+  ScoreAlign --> AllRate["all-rate expected stability/regret"]
+  AllRate --> SelfBound["fixed-gap self-bounding"]
+  SelfBound --> TsallisIID["bounded IID logarithmic regret"]
+  SelfBound --> Dynamic["corruption + dynamic extensions"]
+  Dynamic --> Restart["population-mean oracle restart extension"]
 
   MDP["FiniteHorizonRL.MDP"] --> Bellman["optimal Bellman recursion"]
   Bellman --> Occupancy["expectedRegret_eq_occupancyGapRemaining"]

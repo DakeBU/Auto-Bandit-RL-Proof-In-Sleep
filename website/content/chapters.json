@@ -172,8 +172,8 @@
       "slug": "exp3",
       "title": "7. EXP3 and adversarial concentration",
       "short_title": "EXP3",
-      "status": "partial",
-      "summary": "Exponential-weight potentials, importance weighting, generated trajectories, expected regret, same-process all-positive-prefix realized-regret events, variance-sensitive refinements, and sparse-loss routes.",
+      "status": "compiled",
+      "summary": "The scoped canonical generated EXP3 route compiles from exponential-weight potentials and importance-weighted conditional moments through horizon-tuned expected and best-arm high-probability endpoints, plus a distinct fixed-process all-positive-prefix realized-regret event and a sparse-loss extension.",
       "audience": "Read Foundations first; later sections use the Probability layer heavily.",
       "learning_goals": [
         "Connect the one-step exponential-potential inequality to deterministic Hedge regret.",
@@ -181,24 +181,22 @@
         "Track predictable variance, realized deviation, comparator regret, and sparsity failures into explicit probability events."
       ],
       "module_globs": ["BanditRLProof/Exp3*.lean"],
-      "completion_definition": "The fixed-parameter all-positive-prefix subroute is complete when one generated process and one supported comparator have a predictable-regret event, a pure realized-deviation event, their exact finite-prefix decomposition, and one combined outer-probability terminal. This scoped subroute now compiles. The chapter remains partial because literature-level tuning and several stronger adversarial guarantees are separate targets.",
+      "completion_definition": "Complete in the canonical adversarial finite-arm scope when the exponential-potential and deterministic Hedge route, positive-support importance weighting, conditional first/second moments, measurable recursive generated trajectory, predictable-loss transport, and exploration bias compile; the same public canary must type (i) the horizon-dependent tuned expected bound, (ii) the horizon-dependent fixed-window best-supported-arm realized tail, (iii) one fixed prior/arms/loss/eta/gamma/comparator process with predictable and realized-deviation parents, exact decomposition, and an all-positive-prefix realized-regret outer-probability terminal, and (iv) the separately labelled sparse/variance-sensitive endpoint with its failure budget explicit.",
       "completion_blockers": [
-        "The geometric schedule keeps eta and gamma fixed; it is not a horizon-varying tuned sublinear confidence sequence.",
-        "The terminal fixes one supported comparator rather than minimizing over every arm inside the theorem.",
-        "Ville/Doob or mixture boundaries, optional stopping, ideal EXP3.P, and a single theorem subsuming every existing EXP3 hypothesis regime remain outside this scoped completion."
+        "No remaining blocker inside this canonical scope: Tests/BookMapChaptersSevenAndEightCanary.lean gives full-conclusion applications for the tuned expected, per-horizon best-arm, fixed-process all-prefix, and sparse terminals. The items below are explicit extensions rather than hidden chapter requirements."
       ],
       "open_gaps": [
-        "The same-process geometric chain now compiles from predictable variance through pure realized deviation and predictable regret to an all-positive-prefix realized-regret terminal for one supported comparator.",
-        "Expected, realized, Bernstein, predictable-variance, and sparse-loss endpoints compile under different exact hypotheses; there is no single hypothesis-free EXP3 theorem.",
-        "The declaration catalog, not historical route-card prose, is authoritative for current local code."
+        "The tuned expected and fixed-window best-arm theorems rebuild eta, gamma, and the generated law from the queried horizon; they are not a single horizon-free policy or simultaneous anytime theorem.",
+        "The geometric all-prefix theorem instead fixes eta, gamma, prior, arms, loss, and one supported comparator; its scheduled radius is not a tuned sublinear confidence sequence or a best-arm minimum.",
+        "Ville/Doob or mixture boundaries, optional stopping, ideal EXP3.P, contextual/delayed EXP3, and one universal theorem subsuming every hypothesis regime remain extensions. The sparse theorem retains its supplied sparsity-failure probability."
       ]
     },
     {
       "slug": "tsallis",
       "title": "8. Tsallis-FTRL, corruption, and nonstationarity",
       "short_title": "Tsallis-FTRL",
-      "status": "partial",
-      "summary": "Half-Tsallis stability, generated schedules, self-bounding interpolation, corruption bounds, IID and nonidentical reward laws, dynamic comparators, switch counts, and a generated oracle-restart route.",
+      "status": "compiled",
+      "summary": "The scoped canonical half-Tsallis FTRL route compiles from finite-simplex minimizers and one-step stability through a measurable scheduled generated trajectory, score alignment, expected self-bounding, and a finite-arm IID bounded reward-law logarithmic regret terminal; corruption and nonstationary routes remain labelled extensions.",
       "audience": "This is one of the longest routes; read EXP3 and the Probability layer first.",
       "learning_goals": [
         "Separate deterministic FTRL stability from stochastic law transport.",
@@ -209,9 +207,14 @@
         "BanditRLProof/FTRL*.lean",
         "BanditRLProof/Tsallis*.lean"
       ],
+      "completion_definition": "Complete in the canonical finite-arm scope when half-Tsallis finite-simplex minimizer existence, interiority, uniqueness, and measurability; one-step importance-weighted stability; time-varying potential/penalty algebra; the measurable scheduled selector and recursive generated action law; observed score/probability alignment; initial, successor, all-times, and all-rate expected stability; expected environment-regret transport; fixed-gap self-bounding; square-root-schedule logarithmic optimization; and a concrete finite-arm IID rational reward-law producer all compile. The terminal must use the same let-bound selector, trajectory kernel, and measure, retain probability/a.e.-unit-support/exact-mean/positive-gap contracts, and admit the uncorrupted specialization by setting its explicit nonnegative corruption allowance to zero.",
+      "completion_blockers": [
+        "No remaining blocker inside this canonical scope: Tests/BookMapChaptersSevenAndEightCanary.lean checks the actual generated selector/action-law/stability chain and concretely instantiates the IID logarithmic terminal with two bounded Dirac reward laws of means 3/4 and 1/4 and a proved positive gap. The items below remain distinct research extensions."
+      ],
       "open_gaps": [
-        "Model-specific logarithmic, refined, dynamic, and oracle-restart endpoints compile, but complete literature-level Tsallis-INF with paper-sharp constants is not claimed.",
-        "The oracle restart uses population-mean change points; an observed-reward detector would require a random history-dependent schedule plus concentration for delay and false alarms."
+        "Paper-sharp or minimax-optimal Tsallis-INF constants, a complete best-of-both-worlds theorem, and high-probability or realized-regret guarantees are not claimed by the canonical expected-regret terminal.",
+        "History-adaptive corruption, drifting laws, dynamic comparators, and the population-mean oracle restart compile as separately labelled extensions; an observed-reward detector still needs random history-dependent scheduling plus delay/false-alarm concentration.",
+        "The strict Fin 2 refined-averaged-stability counterexample remains an explicit obstruction; contextual/linear Tsallis-INF and broader adaptive-learning-rate paper routes remain separate."
       ]
     },
     {
