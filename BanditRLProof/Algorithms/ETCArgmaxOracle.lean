@@ -1,5 +1,6 @@
 import Mathlib.Algebra.Order.Field.Rat
 import Mathlib.Data.Fintype.Basic
+import Mathlib.Data.List.MinMax
 import BanditRLProof.Algorithms.ETCMeasurability
 
 /-!
@@ -68,6 +69,27 @@ private theorem score_le_foldl_select
                 simp [next, select, hlt]
           exact le_trans hinit_next ih.2)
 
+private theorem argmax_cons_eq_some_foldl_rat_select
+    {K : Nat} (scores : Fin K -> Rat) (init : Fin K) (l : List (Fin K)) :
+    List.argmax scores (init :: l) =
+      some (l.foldl
+        (fun best arm : Fin K =>
+          if scores best < scores arm then arm else best)
+        init) := by
+  unfold List.argmax
+  simp only [List.foldl_cons, List.argAux]
+  induction l generalizing init with
+  | nil => rfl
+  | cons arm rest ih =>
+      simp only [List.foldl_cons]
+      rw [show List.argAux (fun b c : Fin K => scores c < scores b)
+          (some init) arm =
+          some (if scores init < scores arm then arm else init) by
+        by_cases h : scores init < scores arm
+        case pos => simp [List.argAux, h]
+        case neg => simp [List.argAux, h]]
+      exact ih _
+
 /--
 A concrete ETC commit oracle that selects a score-maximizing arm from `Fin K`.
 
@@ -83,6 +105,46 @@ noncomputable def argmaxCommitOracle
         if scores best < scores arm then arm else best)
       (Fin.mk 0 hK)
   card := "finite_rat_argmax_commit"
+
+/--
+The concrete Rat commit oracle is Mathlib's first-occurrence list argmax.
+
+Because `List.finRange K` is ordered by the canonical `Fin` encoding, this
+identity records the implementation-level tie rule used by the generated ETC
+policy: strict score improvements replace the current arm and equal scores do
+not.
+-/
+theorem argmaxCommitOracle_argmax_finRange
+    {K : Nat} (hK : 0 < K) (scores : Fin K -> Rat) :
+    List.argmax scores (List.finRange K) =
+      some ((ETC.argmaxCommitOracle hK).choose scores) := by
+  cases K with
+  | zero => omega
+  | succ k =>
+      rw [List.finRange_succ]
+      rw [argmax_cons_eq_some_foldl_rat_select]
+      simp [ETC.argmaxCommitOracle, List.finRange_succ]
+
+/--
+Among arms tying the concrete Rat commit oracle's maximal score, the oracle
+chooses the least encoded arm.
+
+This is the public tie-semantics certificate for the canonical generated ETC
+route. It is deterministic and introduces no probability or concentration
+assumption.
+-/
+theorem argmaxCommitOracle_encode_le_of_score_le
+    {K : Nat} (hK : 0 < K) (scores : Fin K -> Rat) (a : Fin K)
+    (hscore :
+      scores ((ETC.argmaxCommitOracle hK).choose scores) <= scores a) :
+    Encodable.encode ((ETC.argmaxCommitOracle hK).choose scores) <=
+      Encodable.encode a := by
+  have harg : Membership.mem (List.argmax scores (List.finRange K))
+      ((ETC.argmaxCommitOracle hK).choose scores) := by
+    rw [ETC.argmaxCommitOracle_argmax_finRange hK scores]
+    simp
+  have hidx := List.index_of_argmax harg (List.mem_finRange a) hscore
+  simpa only [List.idxOf_finRange] using hidx
 
 /--
 The concrete ETC argmax oracle returns an arm whose score dominates every arm.

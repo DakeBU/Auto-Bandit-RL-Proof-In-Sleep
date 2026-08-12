@@ -772,7 +772,7 @@ def build_index(
 <section id="purpose">
   <h2>What this project is building</h2>
   <p>Bandit and reinforcement-learning proofs mix finite combinatorics, probability kernels, conditional expectation, concentration, optimization, and algorithm-specific bookkeeping. ABRL organizes that work into small Lean-checkable leaves. An automated hierarchy proposes and proves leaves; reinforcement-learning ideas help select promising proof routes; bandit objectives allocate effort among those routes; and Lean is the final certificate.</p>
-  <p>The current tree is no longer only a finite-bandit foundation. It contains concrete ETC, UCB, Thompson, EXP3, and Tsallis endpoints; an OFUL chain reaching self-normalized confidence, one-policy all-time events, expected-average consistency, and random-horizon bounds; and a large finite-horizon RL development from Bellman recursion through adaptive empirical confidence, realized behavior consistency, causal laws, and genuine <code>hittingAfter</code> stopping results. Complete UCB-VI, KL-UCB, full BwK, preference, federated, and several modern routes remain partial, planned, or blocked at named interfaces.</p>
+  <p>The current tree is no longer only a finite-bandit foundation. It contains concrete ETC, ordinary UCB, a conservative bounded generated KL-UCB route, Thompson, EXP3, and Tsallis endpoints; an OFUL chain reaching self-normalized confidence, one-policy all-time events, expected-average consistency, and random-horizon bounds; and a large finite-horizon RL development from Bellman recursion through adaptive empirical confidence, realized behavior consistency, causal laws, and genuine <code>hittingAfter</code> stopping results. A complete UCB-VI regret theorem, sharp KL-Chernoff and asymptotically optimal KL-UCB refinements, full BwK, preference, federated, and several modern routes remain partial, planned, or blocked at named interfaces.</p>
   <div class="callout"><strong>Identity boundary.</strong> ABRL is the proving system and research project. BanditRLlib is the verified Lean library, website, formalization workspace, and contribution interface produced by that system.</div>
 </section>
 
@@ -1072,6 +1072,16 @@ def build_chapters(
     for chapter in chapters:
         page_path = f"chapters/{chapter['slug']}/index.html"
         goals = render_list(chapter["learning_goals"])
+        completion_contract = ""
+        if chapter.get("completion_definition"):
+            completion_contract = f"""
+<section id="completion-contract">
+  <h2>Completion contract</h2>
+  <p>{html.escape(chapter['completion_definition'])}</p>
+  <h3>Remaining blockers</h3>
+  {render_list(chapter.get('completion_blockers', []))}
+</section>
+"""
         teaching = "".join(
             render_highlight(page_path, item, decl_by_name[item["full_name"]], verified)
             for item in highlights_by_chapter[chapter["slug"]]
@@ -1109,6 +1119,8 @@ def build_chapters(
   {goals}
 </section>
 
+{completion_contract}
+
 <section id="teaching-notes">
   <h2>Natural-language and Lean side by side</h2>
   <p>The mathematical readings are explanatory summaries. The exact generated Lean statement and its source link remain authoritative for hypotheses, types, constants, and indexing.</p>
@@ -1133,11 +1145,15 @@ def build_chapters(
         toc = [
             ("chapter", "Chapter"),
             ("orientation", "Orientation"),
+        ]
+        if completion_contract:
+            toc.append(("completion-contract", "Completion contract"))
+        toc.extend([
             ("teaching-notes", "Teaching notes"),
             ("milestones", "Status"),
             ("open-gaps", "Open boundaries"),
             ("module-list", "Modules"),
-        ]
+        ])
         write_page(
             output,
             page_path,

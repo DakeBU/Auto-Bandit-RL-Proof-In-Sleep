@@ -20,6 +20,7 @@ This repository has two connected contributions:
 
 ## News
 
+- **2026-08 — Verified frontier refresh.** The public Book Map now records the compiled fixed-policy telescoping anytime-UCB route, a conservative bounded generated KL-UCB route, and the same-process all-positive-prefix EXP3 chain. The adaptive cumulative concentration layer for UCB-VI remains partial; sharp KL-Chernoff/asymptotic KL-UCB results and direct LeanMachineLearning toolchain identity are still explicitly unproved or blocked.
 - **2026-08 — BanditRLlib public community site.** The Blueprint-style site now presents the complete indexed Lean formalization, ten teaching chapters, plain-English theorem explanations, an implementation map, proof dependencies, progress, and contribution routes.
 - **2026-08 — Live Formalization preview.** A provider-independent, retrieval-grounded local adapter can turn LaTeX or natural language into an explicitly unverified Lean candidate, compile it in a temporary file, and export a review packet. Semantic fidelity, compilation, proof completion, and library integration remain separate statuses.
 - **2026-08 — Canonical publication line.** This repository's `main` branch and GitHub Pages workflow are the single maintained public source.
