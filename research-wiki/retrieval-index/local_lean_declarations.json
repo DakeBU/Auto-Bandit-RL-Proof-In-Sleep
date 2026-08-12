@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-10T06:48:45+00:00",
+  "generated": "2026-08-12T14:23:31+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -70,15 +70,31 @@
       "name": "argmaxCommitOracle",
       "full_name": "BanditRLProof.ETC.argmaxCommitOracle",
       "file": "BanditRLProof/Algorithms/ETCArgmaxOracle.lean",
-      "line": 78,
+      "line": 100,
       "statement": "noncomputable def argmaxCommitOracle {K : Nat} (hK : 0 < K) : ETC.CommitOracle K where"
+    },
+    {
+      "kind": "theorem",
+      "name": "argmaxCommitOracle_argmax_finRange",
+      "full_name": "BanditRLProof.ETC.argmaxCommitOracle_argmax_finRange",
+      "file": "BanditRLProof/Algorithms/ETCArgmaxOracle.lean",
+      "line": 117,
+      "statement": "theorem argmaxCommitOracle_argmax_finRange {K : Nat} (hK : 0 < K) (scores : Fin K -> Rat) : List.argmax scores (List.finRange K) = some ((ETC.argmaxCommitOracle hK).choose scores)"
+    },
+    {
+      "kind": "theorem",
+      "name": "argmaxCommitOracle_encode_le_of_score_le",
+      "full_name": "BanditRLProof.ETC.argmaxCommitOracle_encode_le_of_score_le",
+      "file": "BanditRLProof/Algorithms/ETCArgmaxOracle.lean",
+      "line": 136,
+      "statement": "theorem argmaxCommitOracle_encode_le_of_score_le {K : Nat} (hK : 0 < K) (scores : Fin K -> Rat) (a : Fin K) (hscore : scores ((ETC.argmaxCommitOracle hK).choose scores) <= scores a) : Encodable.encode ((ETC.argmaxCommitOracle hK).choose scores) <= Encodable.encode a"
     },
     {
       "kind": "theorem",
       "name": "argmaxCommitOracle_choose_spec",
       "full_name": "BanditRLProof.ETC.argmaxCommitOracle_choose_spec",
       "file": "BanditRLProof/Algorithms/ETCArgmaxOracle.lean",
-      "line": 95,
+      "line": 157,
       "statement": "theorem argmaxCommitOracle_choose_spec {K : Nat} (hK : 0 < K) (scores : Fin K -> Rat) (a : Fin K) : scores a <= scores ((ETC.argmaxCommitOracle hK).choose scores)"
     },
     {
@@ -86,7 +102,7 @@
       "name": "argmaxCommitOracle_eq_arm_subset_empMean_ge_bestArm",
       "full_name": "BanditRLProof.ETC.argmaxCommitOracle_eq_arm_subset_empMean_ge_bestArm",
       "file": "BanditRLProof/Algorithms/ETCArgmaxOracle.lean",
-      "line": 115,
+      "line": 177,
       "statement": "theorem argmaxCommitOracle_eq_arm_subset_empMean_ge_bestArm {Omega : Type u} {K : Nat} (hK : 0 < K) (model : FiniteBanditModel K) (empMean : Omega -> Fin K -> Rat) (a : Fin K) : Set.Subset {omega : Omega | (ETC.argmaxCommitOracle hK).choose (empMean omega) = a} {omega : Omega | empMean omega a >= empMean omega model.bestArm}"
     },
     {
@@ -94,7 +110,7 @@
       "name": "prob_argmaxCommitOracle_eq_arm_le_pairwise_tail",
       "full_name": "BanditRLProof.ETC.prob_argmaxCommitOracle_eq_arm_le_pairwise_tail",
       "file": "BanditRLProof/Algorithms/ETCArgmaxOracle.lean",
-      "line": 139,
+      "line": 201,
       "statement": "theorem prob_argmaxCommitOracle_eq_arm_le_pairwise_tail {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (hK : 0 < K) (mu : MeasureTheory.Measure Omega) (model : FiniteBanditModel K) (empMean : Omega -> Fin K -> Rat) (tail : Fin K -> ENNReal) (a : Fin K) (hpair_tail : mu {omega : Omega | empMean omega a >= empMean omega model.bestArm} <= tail a) : mu {omega : Omega | (ETC.argmaxCommitOracle hK).choose (empMean omega) = a} <= tail a"
     },
     {
@@ -102,7 +118,7 @@
       "name": "wrong_commit_subset_exists_empMean_ge_bestArm_of_argmaxOracle",
       "full_name": "BanditRLProof.ETC.wrong_commit_subset_exists_empMean_ge_bestArm_of_argmaxOracle",
       "file": "BanditRLProof/Algorithms/ETCArgmaxOracle.lean",
-      "line": 168,
+      "line": 230,
       "statement": "theorem wrong_commit_subset_exists_empMean_ge_bestArm_of_argmaxOracle {Omega : Type u} {K : Nat} (hK : 0 < K) (model : FiniteBanditModel K) (empMean : Omega -> Fin K -> Rat) : Set.Subset {omega : Omega | (ETC.argmaxCommitOracle hK).choose (empMean omega) = model.bestArm -> False} {omega : Omega | exists a : Fin K, (a = model.bestArm -> False) /\\ empMean omega a >= empMean omega model.bestArm}"
     },
     {
@@ -110,7 +126,7 @@
       "name": "prob_argmaxCommitOracle_ne_bestArm_le_filtered_sum_pairwise_tail",
       "full_name": "BanditRLProof.ETC.prob_argmaxCommitOracle_ne_bestArm_le_filtered_sum_pairwise_tail",
       "file": "BanditRLProof/Algorithms/ETCArgmaxOracle.lean",
-      "line": 198,
+      "line": 260,
       "statement": "theorem prob_argmaxCommitOracle_ne_bestArm_le_filtered_sum_pairwise_tail {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (hK : 0 < K) (mu : MeasureTheory.Measure Omega) (model : FiniteBanditModel K) (empMean : Omega -> Fin K -> Rat) (tail : Fin K -> ENNReal) (hpair_tail : forall a : Fin K, (a = model.bestArm -> False) -> mu {omega : Omega | empMean omega a >= empMean omega model.bestArm} <= tail a) : mu {omega : Omega | (ETC.argmaxCommitOracle hK).choose (empMean omega) = model.bestArm -> False} <= ((Finset.univ : Finset (Fin K)).filter (fun a : Fin K => a = model.bestArm -> False)).sum tail"
     },
     {
@@ -2634,6 +2650,710 @@
       "statement": "theorem pseudoRegret_actionWithCommit_choice_le_sum_gap_mul_explorationPulls_add_suffix_badGap {Omega : Type u} {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (commit : Omega -> Fin K) (r : Nat) (badGapBound : Rat) (hbadGap : forall a : Fin K, (a = model.bestArm -> False) -> model.gap a <= badGapBound) (omega : Omega) : pseudoRegret model (ETC.actionWithCommit spec (commit omega)) (spec.explorationPulls * K + r) <= ((Finset.univ : Finset (Fin K)).sum (fun a : Fin K => model.gap a)) * (((spec.explorationPulls : Nat) : Rat)) + (((r : Nat) : Rat) * (if commit omega = model.bestArm then 0 else badGapBound))"
     },
     {
+      "kind": "def",
+      "name": "IsBernoulliParameter",
+      "full_name": "BanditRLProof.KLUCB.IsBernoulliParameter",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 23,
+      "statement": "def IsBernoulliParameter (p : Real) : Prop"
+    },
+    {
+      "kind": "def",
+      "name": "bernoulliKLCore",
+      "full_name": "BanditRLProof.KLUCB.bernoulliKLCore",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 32,
+      "statement": "noncomputable def bernoulliKLCore (p q : Real) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "bernoulliKL",
+      "full_name": "BanditRLProof.KLUCB.bernoulliKL",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 43,
+      "statement": "noncomputable def bernoulliKL (p q : Real) : ENNReal"
+    },
+    {
+      "kind": "theorem",
+      "name": "bernoulliKL_nonneg",
+      "full_name": "BanditRLProof.KLUCB.bernoulliKL_nonneg",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 55,
+      "statement": "theorem bernoulliKL_nonneg (p q : Real) : 0 <= bernoulliKL p q"
+    },
+    {
+      "kind": "theorem",
+      "name": "bernoulliKL_eq_top_of_not_left",
+      "full_name": "BanditRLProof.KLUCB.bernoulliKL_eq_top_of_not_left",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 59,
+      "statement": "theorem bernoulliKL_eq_top_of_not_left {p q : Real} (hp : \u00ac IsBernoulliParameter p) : bernoulliKL p q = \u22a4"
+    },
+    {
+      "kind": "theorem",
+      "name": "bernoulliKL_eq_top_of_not_right",
+      "full_name": "BanditRLProof.KLUCB.bernoulliKL_eq_top_of_not_right",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 65,
+      "statement": "theorem bernoulliKL_eq_top_of_not_right {p q : Real} (hq : \u00ac IsBernoulliParameter q) : bernoulliKL p q = \u22a4"
+    },
+    {
+      "kind": "theorem",
+      "name": "bernoulliKL_zero_zero",
+      "full_name": "BanditRLProof.KLUCB.bernoulliKL_zero_zero",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 73,
+      "statement": "theorem bernoulliKL_zero_zero : bernoulliKL 0 0 = 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "bernoulliKL_one_one",
+      "full_name": "BanditRLProof.KLUCB.bernoulliKL_one_one",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 77,
+      "statement": "theorem bernoulliKL_one_one : bernoulliKL 1 1 = 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "bernoulliKL_right_zero",
+      "full_name": "BanditRLProof.KLUCB.bernoulliKL_right_zero",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 81,
+      "statement": "theorem bernoulliKL_right_zero {p : Real} (hp : IsBernoulliParameter p) : bernoulliKL p 0 = if p = 0 then 0 else \u22a4"
+    },
+    {
+      "kind": "theorem",
+      "name": "bernoulliKL_right_one",
+      "full_name": "BanditRLProof.KLUCB.bernoulliKL_right_one",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 88,
+      "statement": "theorem bernoulliKL_right_one {p : Real} (hp : IsBernoulliParameter p) : bernoulliKL p 1 = if p = 1 then 0 else \u22a4"
+    },
+    {
+      "kind": "theorem",
+      "name": "bernoulliKL_eq_top_right_zero",
+      "full_name": "BanditRLProof.KLUCB.bernoulliKL_eq_top_right_zero",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 94,
+      "statement": "theorem bernoulliKL_eq_top_right_zero {p : Real} (hp : IsBernoulliParameter p) (hp0 : p \u2260 0) : bernoulliKL p 0 = \u22a4"
+    },
+    {
+      "kind": "theorem",
+      "name": "bernoulliKL_eq_top_right_one",
+      "full_name": "BanditRLProof.KLUCB.bernoulliKL_eq_top_right_one",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 99,
+      "statement": "theorem bernoulliKL_eq_top_right_one {p : Real} (hp : IsBernoulliParameter p) (hp1 : p \u2260 1) : bernoulliKL p 1 = \u22a4"
+    },
+    {
+      "kind": "theorem",
+      "name": "bernoulliKL_zero_left_of_interior",
+      "full_name": "BanditRLProof.KLUCB.bernoulliKL_zero_left_of_interior",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 104,
+      "statement": "theorem bernoulliKL_zero_left_of_interior {q : Real} (hq0 : 0 < q) (hq1 : q < 1) : bernoulliKL 0 q = ENNReal.ofReal (Real.log (1 / (1 - q)))"
+    },
+    {
+      "kind": "theorem",
+      "name": "bernoulliKL_one_left_of_interior",
+      "full_name": "BanditRLProof.KLUCB.bernoulliKL_one_left_of_interior",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 116,
+      "statement": "theorem bernoulliKL_one_left_of_interior {q : Real} (hq0 : 0 < q) (hq1 : q < 1) : bernoulliKL 1 q = ENNReal.ofReal (Real.log (1 / q))"
+    },
+    {
+      "kind": "theorem",
+      "name": "bernoulliKLCore_self",
+      "full_name": "BanditRLProof.KLUCB.bernoulliKLCore_self",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 129,
+      "statement": "theorem bernoulliKLCore_self {p : Real} (hp0 : p \u2260 0) (hp1 : p \u2260 1) : bernoulliKLCore p p = 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "bernoulliKLCore_eq_klFun",
+      "full_name": "BanditRLProof.KLUCB.bernoulliKLCore_eq_klFun",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 135,
+      "statement": "theorem bernoulliKLCore_eq_klFun {p q : Real} (hq0 : q \u2260 0) (hq1 : q \u2260 1) : bernoulliKLCore p q = q * InformationTheory.klFun (p / q) + (1 - q) * InformationTheory.klFun ((1 - p) / (1 - q))"
+    },
+    {
+      "kind": "theorem",
+      "name": "bernoulliKLCore_nonneg",
+      "full_name": "BanditRLProof.KLUCB.bernoulliKLCore_nonneg",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 148,
+      "statement": "theorem bernoulliKLCore_nonneg {p q : Real} (hp : IsBernoulliParameter p) (hq0 : 0 < q) (hq1 : q < 1) : 0 <= bernoulliKLCore p q"
+    },
+    {
+      "kind": "theorem",
+      "name": "bernoulliKL_eq_of_interior",
+      "full_name": "BanditRLProof.KLUCB.bernoulliKL_eq_of_interior",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 163,
+      "statement": "theorem bernoulliKL_eq_of_interior {p q : Real} (hp : IsBernoulliParameter p) (hq0 : 0 < q) (hq1 : q < 1) : bernoulliKL p q = ENNReal.ofReal (bernoulliKLCore p q)"
+    },
+    {
+      "kind": "def",
+      "name": "bernoulliKLExpanded",
+      "full_name": "BanditRLProof.KLUCB.bernoulliKLExpanded",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 174,
+      "statement": "noncomputable def bernoulliKLExpanded (p q : Real) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "bernoulliKLCore_eq_expanded",
+      "full_name": "BanditRLProof.KLUCB.bernoulliKLCore_eq_expanded",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 179,
+      "statement": "theorem bernoulliKLCore_eq_expanded {p q : Real} (hp0 : p \u2260 0) (hp1 : p \u2260 1) (hq0 : q \u2260 0) (hq1 : q \u2260 1) : bernoulliKLCore p q = bernoulliKLExpanded p q"
+    },
+    {
+      "kind": "theorem",
+      "name": "hasDerivAt_bernoulliKLExpanded_right",
+      "full_name": "BanditRLProof.KLUCB.hasDerivAt_bernoulliKLExpanded_right",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 189,
+      "statement": "theorem hasDerivAt_bernoulliKLExpanded_right (p q : Real) (hq0 : q \u2260 0) (hq1 : q \u2260 1) : HasDerivAt (fun r => bernoulliKLExpanded p r) ((q - p) / (q * (1 - q))) q"
+    },
+    {
+      "kind": "theorem",
+      "name": "half_sq_sub_le_bernoulliKLCore",
+      "full_name": "BanditRLProof.KLUCB.half_sq_sub_le_bernoulliKLCore",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 209,
+      "statement": "theorem half_sq_sub_le_bernoulliKLCore {p q : Real} (hp : IsBernoulliParameter p) (hq0 : 0 < q) (hq1 : q < 1) : (1 / 2 : Real) * (p - q) ^ 2 <= bernoulliKLCore p q"
+    },
+    {
+      "kind": "theorem",
+      "name": "bernoulliKLCore_le_sq_div",
+      "full_name": "BanditRLProof.KLUCB.bernoulliKLCore_le_sq_div",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 305,
+      "statement": "theorem bernoulliKLCore_le_sq_div {p q : Real} (hp : IsBernoulliParameter p) (hq0 : 0 < q) (hq1 : q < 1) : bernoulliKLCore p q <= (p - q) ^ 2 / (q * (1 - q))"
+    },
+    {
+      "kind": "theorem",
+      "name": "ennnreal_half_sq_sub_le_bernoulliKL",
+      "full_name": "BanditRLProof.KLUCB.ennnreal_half_sq_sub_le_bernoulliKL",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 356,
+      "statement": "theorem ennnreal_half_sq_sub_le_bernoulliKL {p q : Real} (hp : IsBernoulliParameter p) (hq0 : 0 < q) (hq1 : q < 1) : ENNReal.ofReal ((1 / 2 : Real) * (p - q) ^ 2) <= bernoulliKL p q"
+    },
+    {
+      "kind": "theorem",
+      "name": "bernoulliKL_le_of_sq_le",
+      "full_name": "BanditRLProof.KLUCB.bernoulliKL_le_of_sq_le",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 363,
+      "statement": "theorem bernoulliKL_le_of_sq_le {p q budget : Real} (hp : IsBernoulliParameter p) (hq0 : 0 < q) (hq1 : q < 1) (hsq : (p - q) ^ 2 / (q * (1 - q)) <= budget) : bernoulliKL p q <= ENNReal.ofReal budget"
+    },
+    {
+      "kind": "theorem",
+      "name": "bernoulliKL_self",
+      "full_name": "BanditRLProof.KLUCB.bernoulliKL_self",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 373,
+      "statement": "theorem bernoulliKL_self {p : Real} (hp : IsBernoulliParameter p) : bernoulliKL p p = 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "continuousAt_bernoulliKLCore_right",
+      "full_name": "BanditRLProof.KLUCB.continuousAt_bernoulliKLCore_right",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 387,
+      "statement": "theorem continuousAt_bernoulliKLCore_right (p q : Real) (hq0 : q \u2260 0) (hq1 : q \u2260 1) : ContinuousAt (fun r => bernoulliKLCore p r) q"
+    },
+    {
+      "kind": "def",
+      "name": "confidenceSet",
+      "full_name": "BanditRLProof.KLUCB.confidenceSet",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 408,
+      "statement": "def confidenceSet (empiricalMean : Real) (count : Nat) (budget : Real) : Set Real"
+    },
+    {
+      "kind": "def",
+      "name": "index",
+      "full_name": "BanditRLProof.KLUCB.index",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 415,
+      "statement": "noncomputable def index (empiricalMean : Real) (count : Nat) (budget : Real) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "confidenceSet_bddAbove",
+      "full_name": "BanditRLProof.KLUCB.confidenceSet_bddAbove",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 419,
+      "statement": "theorem confidenceSet_bddAbove (empiricalMean : Real) (count : Nat) (budget : Real) : BddAbove (confidenceSet empiricalMean count budget)"
+    },
+    {
+      "kind": "theorem",
+      "name": "mem_confidenceSet_self",
+      "full_name": "BanditRLProof.KLUCB.mem_confidenceSet_self",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 426,
+      "statement": "theorem mem_confidenceSet_self {p : Real} (hp : IsBernoulliParameter p) (count : Nat) {budget : Real} (hbudget : 0 <= budget) : p \u2208 confidenceSet p count budget"
+    },
+    {
+      "kind": "theorem",
+      "name": "mem_confidenceSet_of_natCast_mul_core_le",
+      "full_name": "BanditRLProof.KLUCB.mem_confidenceSet_of_natCast_mul_core_le",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 436,
+      "statement": "theorem mem_confidenceSet_of_natCast_mul_core_le {p q budget : Real} {count : Nat} (hp : IsBernoulliParameter p) (hq0 : 0 < q) (hq1 : q < 1) (hbudget : (count : Real) * bernoulliKLCore p q <= budget) : q \u2208 confidenceSet p count budget"
+    },
+    {
+      "kind": "theorem",
+      "name": "natCast_mul_half_sq_sub_le_budget_of_mem",
+      "full_name": "BanditRLProof.KLUCB.natCast_mul_half_sq_sub_le_budget_of_mem",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 448,
+      "statement": "theorem natCast_mul_half_sq_sub_le_budget_of_mem {p q budget : Real} {count : Nat} (hp : IsBernoulliParameter p) (hq0 : 0 < q) (hq1 : q < 1) (hbudget : 0 <= budget) (hmem : q \u2208 confidenceSet p count budget) : (count : Real) * ((1 / 2 : Real) * (p - q) ^ 2) <= budget"
+    },
+    {
+      "kind": "theorem",
+      "name": "confidenceSet_nonempty",
+      "full_name": "BanditRLProof.KLUCB.confidenceSet_nonempty",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 463,
+      "statement": "theorem confidenceSet_nonempty {p : Real} (hp : IsBernoulliParameter p) (count : Nat) {budget : Real} (hbudget : 0 <= budget) : (confidenceSet p count budget).Nonempty"
+    },
+    {
+      "kind": "theorem",
+      "name": "index_le_one",
+      "full_name": "BanditRLProof.KLUCB.index_le_one",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 469,
+      "statement": "theorem index_le_one {p : Real} (hp : IsBernoulliParameter p) (count : Nat) {budget : Real} (hbudget : 0 <= budget) : index p count budget <= 1"
+    },
+    {
+      "kind": "theorem",
+      "name": "index_nonneg",
+      "full_name": "BanditRLProof.KLUCB.index_nonneg",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 477,
+      "statement": "theorem index_nonneg {p : Real} (hp : IsBernoulliParameter p) (count : Nat) {budget : Real} (hbudget : 0 <= budget) : 0 <= index p count budget"
+    },
+    {
+      "kind": "theorem",
+      "name": "index_mem_Icc",
+      "full_name": "BanditRLProof.KLUCB.index_mem_Icc",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 486,
+      "statement": "theorem index_mem_Icc {p : Real} (hp : IsBernoulliParameter p) (count : Nat) {budget : Real} (hbudget : 0 <= budget) : index p count budget \u2208 Set.Icc (0 : Real) 1"
+    },
+    {
+      "kind": "theorem",
+      "name": "mem_confidenceSet_zero_iff",
+      "full_name": "BanditRLProof.KLUCB.mem_confidenceSet_zero_iff",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 494,
+      "statement": "theorem mem_confidenceSet_zero_iff (p q budget : Real) (hbudget : 0 <= budget) : q \u2208 confidenceSet p 0 budget \u2194 IsBernoulliParameter q"
+    },
+    {
+      "kind": "theorem",
+      "name": "index_zero_count",
+      "full_name": "BanditRLProof.KLUCB.index_zero_count",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 499,
+      "statement": "theorem index_zero_count {p : Real} (hp : IsBernoulliParameter p) {budget : Real} (hbudget : 0 <= budget) : index p 0 budget = 1"
+    },
+    {
+      "kind": "theorem",
+      "name": "le_index_of_mem_confidenceSet",
+      "full_name": "BanditRLProof.KLUCB.le_index_of_mem_confidenceSet",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 511,
+      "statement": "theorem le_index_of_mem_confidenceSet {p q : Real} {count : Nat} {budget : Real} (hq : q \u2208 confidenceSet p count budget) : q <= index p count budget"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_mem_confidenceSet_of_lt_index",
+      "full_name": "BanditRLProof.KLUCB.exists_mem_confidenceSet_of_lt_index",
+      "file": "BanditRLProof/Algorithms/KLUCBBernoulli.lean",
+      "line": 520,
+      "statement": "theorem exists_mem_confidenceSet_of_lt_index {p level : Real} {count : Nat} {budget : Real} (hp : IsBernoulliParameter p) (hbudget : 0 <= budget) (hlevel : level < index p count budget) : \u2203 q \u2208 confidenceSet p count budget, level < q"
+    },
+    {
+      "kind": "def",
+      "name": "generatedBudgetAt",
+      "full_name": "BanditRLProof.KLUCB.generatedBudgetAt",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 24,
+      "statement": "def generatedBudgetAt {Omega : Type} {K : Nat} (action : Omega -> ActionTrace (Fin K)) (sigma2 : NNReal) (delta margin : Real) (omega : Omega) (t : Nat) (arm : Fin K) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "generatedBudgetAt_nonneg",
+      "full_name": "BanditRLProof.KLUCB.generatedBudgetAt_nonneg",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 34,
+      "statement": "theorem generatedBudgetAt_nonneg {Omega : Type} {K : Nat} (action : Omega -> ActionTrace (Fin K)) (sigma2 : NNReal) (delta margin : Real) (hmargin0 : 0 < margin) (hmargin1 : margin < 1) (omega : Omega) (t : Nat) (arm : Fin K) : 0 <= generatedBudgetAt action sigma2 delta margin omega t arm"
+    },
+    {
+      "kind": "def",
+      "name": "generatedIndexAt",
+      "full_name": "BanditRLProof.KLUCB.generatedIndexAt",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 46,
+      "statement": "def generatedIndexAt {Omega : Type} {K : Nat} (action : Omega -> ActionTrace (Fin K)) (reward : Omega -> RewardTrace Rat) (sigma2 : NNReal) (delta margin : Real) (omega : Omega) (t : Nat) (arm : Fin K) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "historyIndex",
+      "full_name": "BanditRLProof.KLUCB.historyIndex",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 59,
+      "statement": "def historyIndex {K : Nat} (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (t : Nat) (history : History.FinitePairHistory (Fin K) Rat t) (arm : Fin K) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_historyIndex",
+      "full_name": "BanditRLProof.KLUCB.measurable_historyIndex",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 79,
+      "statement": "theorem measurable_historyIndex {K : Nat} (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (t : Nat) (arm : Fin K) : Measurable (fun history : History.FinitePairHistory (Fin K) Rat t => historyIndex sigma2 delta margin defaultAction t history arm)"
+    },
+    {
+      "kind": "def",
+      "name": "historyNextArm",
+      "full_name": "BanditRLProof.KLUCB.historyNextArm",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 87,
+      "statement": "def historyNextArm {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (t : Nat) (history : History.FinitePairHistory (Fin K) Rat t) : Fin K"
+    },
+    {
+      "kind": "theorem",
+      "name": "historyIndex_le_nextArm_of_K_le",
+      "full_name": "BanditRLProof.KLUCB.historyIndex_le_nextArm_of_K_le",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 95,
+      "statement": "theorem historyIndex_le_nextArm_of_K_le {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (t : Nat) (history : History.FinitePairHistory (Fin K) Rat t) (ht : K <= t) (arm : Fin K) : historyIndex sigma2 delta margin defaultAction t history arm <= historyIndex sigma2 delta margin defaultAction t history (historyNextArm hK sigma2 delta margin defaultAction t history)"
+    },
+    {
+      "kind": "def",
+      "name": "pairHistory",
+      "full_name": "BanditRLProof.KLUCB.pairHistory",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 108,
+      "statement": "def pairHistory {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) : (n : Nat) -> History.FiniteRewardHistory Rat n -> History.FinitePairHistory (Fin K) Rat n | 0, rewardHistory => fun i => (defaultAction, rewardHistory i) | n + 1, rewardHistory => let previousRewardHistory : History.FiniteRewardHistory Rat n := fun i => rewardHistory \u27e8i.1, Finset.mem_Iic.mpr ((Finset.mem_Iic.mp i.2).trans (Nat.le_succ n))\u27e9 let previousHistory := pairHistory hK sigma2 delta margin defaultAction n previousRewardHistory let nextAction := historyNextArm hK sigma2 delta margin defaultAction n previousHistory History.extendPairHistorySucc previousHistory (nextAction, rewardHistory \u27e8n + 1, Finset.mem_Iic.mpr le_rfl\u27e9)"
+    },
+    {
+      "kind": "def",
+      "name": "historyState",
+      "full_name": "BanditRLProof.KLUCB.historyState",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 126,
+      "statement": "def historyState {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (n : Nat) (rewardHistory : History.FiniteRewardHistory Rat n) : UCB.SelectedPolicySuccessorFiniteHistoryState K"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_historyState",
+      "full_name": "BanditRLProof.KLUCB.measurable_historyState",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 133,
+      "statement": "theorem measurable_historyState {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (n : Nat) : Measurable (historyState hK sigma2 delta margin defaultAction n)"
+    },
+    {
+      "kind": "def",
+      "name": "historyPolicy",
+      "full_name": "BanditRLProof.KLUCB.historyPolicy",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 140,
+      "statement": "def historyPolicy {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (_t : Nat) : Policy.MeasurablePolicy (UCB.SelectedPolicySuccessorFiniteHistoryState K) (Fin K) where"
+    },
+    {
+      "kind": "def",
+      "name": "generatedAction",
+      "full_name": "BanditRLProof.KLUCB.generatedAction",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 150,
+      "statement": "def generatedAction {Omega : Type} {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (reward : Omega -> RewardTrace Rat) : Omega -> ActionTrace (Fin K)"
+    },
+    {
+      "kind": "theorem",
+      "name": "generatedAction_succ",
+      "full_name": "BanditRLProof.KLUCB.generatedAction_succ",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 160,
+      "statement": "theorem generatedAction_succ {Omega : Type} {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (reward : Omega -> RewardTrace Rat) (omega : Omega) (t : Nat) : generatedAction hK sigma2 delta margin defaultAction reward omega (t + 1) = historyNextArm hK sigma2 delta margin defaultAction t (pairHistory hK sigma2 delta margin defaultAction t (History.finiteRewardHistoryOfTrace (reward omega) t))"
+    },
+    {
+      "kind": "theorem",
+      "name": "pairHistory_eq_finitePairHistoryOfTrace",
+      "full_name": "BanditRLProof.KLUCB.pairHistory_eq_finitePairHistoryOfTrace",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 172,
+      "statement": "theorem pairHistory_eq_finitePairHistoryOfTrace {Omega : Type} {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (reward : Omega -> RewardTrace Rat) (omega : Omega) (n : Nat) : pairHistory hK sigma2 delta margin defaultAction n (History.finiteRewardHistoryOfTrace (reward omega) n) = History.finitePairHistoryOfTrace (generatedAction hK sigma2 delta margin defaultAction reward omega) (reward omega) n"
+    },
+    {
+      "kind": "theorem",
+      "name": "historyIndex_finitePairHistoryOfTrace",
+      "full_name": "BanditRLProof.KLUCB.historyIndex_finitePairHistoryOfTrace",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 214,
+      "statement": "theorem historyIndex_finitePairHistoryOfTrace {Omega : Type} {K : Nat} (action : Omega -> ActionTrace (Fin K)) (reward : Omega -> RewardTrace Rat) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (omega : Omega) (t : Nat) (arm : Fin K) : historyIndex sigma2 delta margin defaultAction t (History.finitePairHistoryOfTrace (action omega) (reward omega) t) arm = generatedIndexAt action reward sigma2 delta margin omega t arm"
+    },
+    {
+      "kind": "theorem",
+      "name": "generatedIndexAt_le_selected_of_K_le",
+      "full_name": "BanditRLProof.KLUCB.generatedIndexAt_le_selected_of_K_le",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 232,
+      "statement": "theorem generatedIndexAt_le_selected_of_K_le {Omega : Type} {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (reward : Omega -> RewardTrace Rat) (omega : Omega) (t : Nat) (ht : K <= t) (arm : Fin K) : let action := generatedAction hK sigma2 delta margin defaultAction reward generatedIndexAt action reward sigma2 delta margin omega t arm <= generatedIndexAt action reward sigma2 delta margin omega t (action omega (t + 1))"
+    },
+    {
+      "kind": "theorem",
+      "name": "generatedAction_succ_eq_initializationArm_of_lt",
+      "full_name": "BanditRLProof.KLUCB.generatedAction_succ_eq_initializationArm_of_lt",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 266,
+      "statement": "theorem generatedAction_succ_eq_initializationArm_of_lt {Omega : Type} {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (reward : Omega -> RewardTrace Rat) (omega : Omega) (t : Nat) (ht : t < K) : generatedAction hK sigma2 delta margin defaultAction reward omega (t + 1) = UCB.initializationArm hK t"
+    },
+    {
+      "kind": "theorem",
+      "name": "successorArmPullCount_generatedAction_K_add_one_eq_one",
+      "full_name": "BanditRLProof.KLUCB.successorArmPullCount_generatedAction_K_add_one_eq_one",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 275,
+      "statement": "theorem successorArmPullCount_generatedAction_K_add_one_eq_one {Omega : Type} {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (reward : Omega -> RewardTrace Rat) (omega : Omega) (arm : Fin K) : ConditionalExpectationReward.successorArmPullCount (generatedAction hK sigma2 delta margin defaultAction reward omega) arm (K + 1) = 1"
+    },
+    {
+      "kind": "theorem",
+      "name": "successorArmPullCount_generatedAction_pos_of_K_le",
+      "full_name": "BanditRLProof.KLUCB.successorArmPullCount_generatedAction_pos_of_K_le",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 298,
+      "statement": "theorem successorArmPullCount_generatedAction_pos_of_K_le {Omega : Type} {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (reward : Omega -> RewardTrace Rat) (omega : Omega) (arm : Fin K) (t : Nat) (ht : K <= t) : 0 < ConditionalExpectationReward.successorArmPullCount (generatedAction hK sigma2 delta margin defaultAction reward omega) arm (t + 1)"
+    },
+    {
+      "kind": "theorem",
+      "name": "K_le_of_generatedAction_selected_and_count_pos",
+      "full_name": "BanditRLProof.KLUCB.K_le_of_generatedAction_selected_and_count_pos",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 317,
+      "statement": "theorem K_le_of_generatedAction_selected_and_count_pos {Omega : Type} {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (reward : Omega -> RewardTrace Rat) (omega : Omega) (arm : Fin K) (t : Nat) (hselected : generatedAction hK sigma2 delta margin defaultAction reward omega (t + 1) = arm) (hcount : 0 < ConditionalExpectationReward.successorArmPullCount (generatedAction hK sigma2 delta margin defaultAction reward omega) arm (t + 1)) : K <= t"
+    },
+    {
+      "kind": "theorem",
+      "name": "armMean_mem_confidenceSet_of_abs_lt_radius",
+      "full_name": "BanditRLProof.KLUCB.armMean_mem_confidenceSet_of_abs_lt_radius",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 347,
+      "statement": "theorem armMean_mem_confidenceSet_of_abs_lt_radius {Omega : Type} {K : Nat} (action : Omega -> ActionTrace (Fin K)) (reward : Omega -> RewardTrace Rat) (sigma2 : NNReal) (delta margin : Real) (hmargin0 : 0 < margin) (hmarginHalf : margin <= 1 / 2) (armMean : Fin K -> Rat) (omega : Omega) (t : Nat) (arm : Fin K) (hemp : IsBernoulliParameter (UCB.selectedPolicySuccessorEmpiricalMeanAt action reward omega t arm)) (hmean : (armMean arm : Real) \u2208 Set.Icc margin (1 - margin)) (hdev : |UCB.selectedPolicySuccessorEmpiricalMeanAt action reward omega t arm - (armMean arm : Real)| < UCB.selectedPolicySuccessorTelescopingRadiusAt action sigma2 delta omega t arm) : (armMean arm : Real) \u2208 confidenceSet (UCB.selectedPolicySuccessorEmpiricalMeanAt action reward omega t arm) (ConditionalExpectationReward.successorArmPullCount (action omega) arm (t + 1)) (generatedBudgetAt action sigma2 delta margin omega t arm)"
+    },
+    {
+      "kind": "theorem",
+      "name": "armMean_le_generatedIndexAt_of_abs_lt_radius",
+      "full_name": "BanditRLProof.KLUCB.armMean_le_generatedIndexAt_of_abs_lt_radius",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 413,
+      "statement": "theorem armMean_le_generatedIndexAt_of_abs_lt_radius {Omega : Type} {K : Nat} (action : Omega -> ActionTrace (Fin K)) (reward : Omega -> RewardTrace Rat) (sigma2 : NNReal) (delta margin : Real) (hmargin0 : 0 < margin) (hmarginHalf : margin <= 1 / 2) (armMean : Fin K -> Rat) (omega : Omega) (t : Nat) (arm : Fin K) (hemp : IsBernoulliParameter (UCB.selectedPolicySuccessorEmpiricalMeanAt action reward omega t arm)) (hmean : (armMean arm : Real) \u2208 Set.Icc margin (1 - margin)) (hdev : |UCB.selectedPolicySuccessorEmpiricalMeanAt action reward omega t arm - (armMean arm : Real)| < UCB.selectedPolicySuccessorTelescopingRadiusAt action sigma2 delta omega t arm) : (armMean arm : Real) <= generatedIndexAt action reward sigma2 delta margin omega t arm"
+    },
+    {
+      "kind": "theorem",
+      "name": "margin_mul_gap_div_eight_le_radius_of_selected_of_not_badEvent",
+      "full_name": "BanditRLProof.KLUCB.margin_mul_gap_div_eight_le_radius_of_selected_of_not_badEvent",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 438,
+      "statement": "theorem margin_mul_gap_div_eight_le_radius_of_selected_of_not_badEvent {Omega : Type} {K : Nat} (hK : 0 < K) (reward : Omega -> RewardTrace Rat) (armMean : Fin K -> Rat) (sigma2 : NNReal) (delta margin : Real) (hmargin0 : 0 < margin) (hmarginHalf : margin <= 1 / 2) (hmean : forall arm : Fin K, (armMean arm : Real) \u2208 Set.Icc margin (1 - margin)) (defaultAction best : Fin K) (omega : Omega) (t : Nat) (ht : K <= t) (hemp : forall arm : Fin K, IsBernoulliParameter (UCB.selectedPolicySuccessorEmpiricalMeanAt (generatedAction hK sigma2 delta margin defaultAction reward) reward omega t arm)) (hbest : forall arm : Fin K, (armMean arm : Real) <= (armMean best : Real)) (hgap : 0 < UCB.meanGap (fun arm => (armMean arm : Real)) best (generatedAction hK sigma2 delta margin defaultAction reward omega (t + 1))) (hgood : omega \u2209 ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent (generatedAction hK sigma2 delta margin defaultAction reward) reward armMean sigma2 delta) : margin * UCB.meanGap (fun arm => (armMean arm : Real)) best (generatedAction hK sigma2 delta margin defaultAction reward omega (t + 1)) / 8 <= UCB.selectedPolicySuccessorTelescopingRadiusAt (generatedAction hK sigma2 delta margin defaultAction reward) sigma2 delta omega t (generatedAction hK sigma2 delta margin defaultAction reward omega (t + 1))"
+    },
+    {
+      "kind": "def",
+      "name": "pullThreshold",
+      "full_name": "BanditRLProof.KLUCB.pullThreshold",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 610,
+      "statement": "def pullThreshold (K : Nat) (sigma2 : NNReal) (T : Nat) (delta margin gap : Real) : Nat"
+    },
+    {
+      "kind": "theorem",
+      "name": "pullCount_le_of_not_badEvent",
+      "full_name": "BanditRLProof.KLUCB.pullCount_le_of_not_badEvent",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 616,
+      "statement": "theorem pullCount_le_of_not_badEvent {Omega : Type} {K : Nat} (hK : 0 < K) (reward : Omega -> RewardTrace Rat) (armMean : Fin K -> Rat) (sigma2 : NNReal) (delta margin : Real) (hdelta : 0 < delta) (hmargin0 : 0 < margin) (hmarginHalf : margin <= 1 / 2) (hmean : forall arm : Fin K, (armMean arm : Real) \u2208 Set.Icc margin (1 - margin)) (defaultAction best chosen : Fin K) (omega : Omega) (T : Nat) (hbest : forall arm : Fin K, (armMean arm : Real) <= (armMean best : Real)) (hemp : forall t : Nat, forall arm : Fin K, IsBernoulliParameter (UCB.selectedPolicySuccessorEmpiricalMeanAt (generatedAction hK sigma2 delta margin defaultAction reward) reward omega t arm)) (hgap : 0 < UCB.meanGap (fun arm => (armMean arm : Real)) best chosen) (hgood : omega \u2209 ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent (generatedAction hK sigma2 delta margin defaultAction reward) reward armMean sigma2 delta) : ConditionalExpectationReward.successorArmPullCount (generatedAction hK sigma2 delta margin defaultAction reward omega) chosen (T + 1) <= pullThreshold K sigma2 T delta margin (UCB.meanGap (fun arm => (armMean arm : Real)) best chosen)"
+    },
+    {
+      "kind": "theorem",
+      "name": "actionRewardHistoryStepKernelFamily_allTimeConfidence",
+      "full_name": "BanditRLProof.KLUCB.actionRewardHistoryStepKernelFamily_allTimeConfidence",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 708,
+      "statement": "theorem actionRewardHistoryStepKernelFamily_allTimeConfidence {Context : Type} {K : Nat} [MeasurableSpace Context] (hK : 0 < K) (mu0 : Measure (Prod (Fin K) Rat)) [IsProbabilityMeasure mu0] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context (Fin K)) Rat) (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context) (mean : Context -> Fin K -> Rat) (varianceProxy : Context -> Fin K -> NNReal) (defaultAction : Fin K) (armMean : Fin K -> Rat) (sigma2 : NNReal) (delta margin : Real) (hcontext : forall n : Nat, Measurable (context n)) (hmean : Measurable (fun pair : Prod Context (Fin K) => mean pair.1 pair.2)) (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy) (hvariance : forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat), varianceProxy (context i history) ((historyPolicy hK sigma2 delta margin defaultAction i).action (historyState hK sigma2 delta margin defaultAction i history)) <= sigma2) (harmMean : forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat), forall arm : Fin K, mean (context i history) arm = armMean arm) (hsigma2 : 0 < (((sigma2 : NNReal) : Real))) (hdelta : 0 < delta) : let policy := historyPolicy hK sigma2 delta margin defaultAction let state := historyState hK sigma2 delta margin defaultAction let pairContext : (i : Nat) -> ((j : Finset.Iic i) -> Prod (Fin K) Rat) -> Context := fun i history => context i (History.pairHistoryRewardProjection history) let pairState : (i : Nat) -> ((j : Finset.Iic i) -> Prod (Fin K) Rat) -> UCB.SelectedPolicySuccessorFiniteHistoryState K := fun i history => state i (History.pairHistoryRewardProjection history) let hpairContext : forall i : Nat, Measurable (pairContext i) := fun i => (hcontext i).comp (History.measurable_pairHistoryRewardProjection (Action := Fin K) (Reward := Rat) i) let hpairState : forall i : Nat, Measurable (pairState i) := fun i => (measurable_historyState hK sigma2 delta margin defaultAction i).comp (History.measurable_pairHistoryRewardProjection (Action := Fin K) (Reward := Rat) i) let stepKernel := RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy pairContext pairState hpairContext hpairState let mu := ProbabilityTheory.Kernel.trajMeasure (X := fun _ : Nat => Prod (Fin K) Rat) mu0 stepKernel let reward : (Nat -> Prod (Fin K) Rat) -> RewardTrace Rat := fun trajectory t => (trajectory t).2 let generated := generatedAction hK sigma2 delta margin defaultAction reward mu (ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent generated reward armMean sigma2 delta) <= ENNReal.ofReal delta"
+    },
+    {
+      "kind": "def",
+      "name": "generatedKLAllTimeBadEvent",
+      "full_name": "BanditRLProof.KLUCB.generatedKLAllTimeBadEvent",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 839,
+      "statement": "def generatedKLAllTimeBadEvent {Omega : Type} {K : Nat} (action : Omega -> ActionTrace (Fin K)) (reward : Omega -> RewardTrace Rat) (armMean : Fin K -> Rat) (sigma2 : NNReal) (delta margin : Real) : Set Omega"
+    },
+    {
+      "kind": "theorem",
+      "name": "generatedKLAllTimeBadEvent_subset_absBadEvent",
+      "full_name": "BanditRLProof.KLUCB.generatedKLAllTimeBadEvent_subset_absBadEvent",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 855,
+      "statement": "theorem generatedKLAllTimeBadEvent_subset_absBadEvent {Omega : Type} {K : Nat} (action : Omega -> ActionTrace (Fin K)) (reward : Omega -> RewardTrace Rat) (armMean : Fin K -> Rat) (sigma2 : NNReal) (delta margin : Real) (hmargin0 : 0 < margin) (hmarginHalf : margin <= 1 / 2) (hmean : forall arm : Fin K, (armMean arm : Real) \u2208 Set.Icc margin (1 - margin)) (hemp : forall omega t arm, IsBernoulliParameter (UCB.selectedPolicySuccessorEmpiricalMeanAt action reward omega t arm)) : generatedKLAllTimeBadEvent action reward armMean sigma2 delta margin \u2286 ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent action reward armMean sigma2 delta"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_generatedKLAllTimeBadEvent_le",
+      "full_name": "BanditRLProof.KLUCB.measure_generatedKLAllTimeBadEvent_le",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 890,
+      "statement": "theorem measure_generatedKLAllTimeBadEvent_le {Omega : Type} [MeasurableSpace Omega] {K : Nat} (mu : Measure Omega) (action : Omega -> ActionTrace (Fin K)) (reward : Omega -> RewardTrace Rat) (armMean : Fin K -> Rat) (sigma2 : NNReal) (delta margin : Real) (hmargin0 : 0 < margin) (hmarginHalf : margin <= 1 / 2) (hmean : forall arm : Fin K, (armMean arm : Real) \u2208 Set.Icc margin (1 - margin)) (hemp : \u2200\u1d50 omega \u2202mu, forall t arm, IsBernoulliParameter (UCB.selectedPolicySuccessorEmpiricalMeanAt action reward omega t arm)) (hconfidence : mu (ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent action reward armMean sigma2 delta) <= ENNReal.ofReal delta) : mu (generatedKLAllTimeBadEvent action reward armMean sigma2 delta margin) <= ENNReal.ofReal delta"
+    },
+    {
+      "kind": "theorem",
+      "name": "sumRewards_nonneg_of_mem_Icc_zero_one",
+      "full_name": "BanditRLProof.KLUCB.sumRewards_nonneg_of_mem_Icc_zero_one",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 932,
+      "statement": "theorem sumRewards_nonneg_of_mem_Icc_zero_one {Action : Type} [DecidableEq Action] (action : ActionTrace Action) (reward : RewardTrace Real) (arm : Action) (n : Nat) (hraw : forall i, i < n -> reward i \u2208 Set.Icc (0 : Real) 1) : 0 <= sumRewards action reward arm n"
+    },
+    {
+      "kind": "theorem",
+      "name": "sumRewards_le_pullCount_of_mem_Icc_zero_one",
+      "full_name": "BanditRLProof.KLUCB.sumRewards_le_pullCount_of_mem_Icc_zero_one",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 947,
+      "statement": "theorem sumRewards_le_pullCount_of_mem_Icc_zero_one {Action : Type} [DecidableEq Action] (action : ActionTrace Action) (reward : RewardTrace Real) (arm : Action) (n : Nat) (hraw : forall i, i < n -> reward i \u2208 Set.Icc (0 : Real) 1) : sumRewards action reward arm n <= (pullCount action arm n : Real)"
+    },
+    {
+      "kind": "theorem",
+      "name": "successorArmEmpiricalMean_isBernoulliParameter_of_rewards_mem_Icc",
+      "full_name": "BanditRLProof.KLUCB.successorArmEmpiricalMean_isBernoulliParameter_of_rewards_mem_Icc",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 966,
+      "statement": "theorem successorArmEmpiricalMean_isBernoulliParameter_of_rewards_mem_Icc {Action : Type} [DecidableEq Action] (action : ActionTrace Action) (reward : RewardTrace Rat) (arm : Action) (n : Nat) (hcount : 0 < ConditionalExpectationReward.successorArmPullCount action arm n) (hraw : forall i : Nat, (((reward i : Rat) : Real)) \u2208 Set.Icc (0 : Real) 1) : IsBernoulliParameter (ConditionalExpectationReward.successorArmEmpiricalMean action reward arm n)"
+    },
+    {
+      "kind": "theorem",
+      "name": "generatedEmpiricalMean_isBernoulliParameter_of_rewards_mem_Icc",
+      "full_name": "BanditRLProof.KLUCB.generatedEmpiricalMean_isBernoulliParameter_of_rewards_mem_Icc",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 998,
+      "statement": "theorem generatedEmpiricalMean_isBernoulliParameter_of_rewards_mem_Icc {Omega : Type} {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (reward : Omega -> RewardTrace Rat) (omega : Omega) (hraw : forall i : Nat, (((reward omega i : Rat) : Real)) \u2208 Set.Icc (0 : Real) 1) (t : Nat) (ht : K <= t) (arm : Fin K) : IsBernoulliParameter (UCB.selectedPolicySuccessorEmpiricalMeanAt (generatedAction hK sigma2 delta margin defaultAction reward) reward omega t arm)"
+    },
+    {
+      "kind": "theorem",
+      "name": "successorArmEmpiricalMean_isBernoulliParameter_of_rewards_mem_Icc'",
+      "full_name": "BanditRLProof.KLUCB.successorArmEmpiricalMean_isBernoulliParameter_of_rewards_mem_Icc'",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 1013,
+      "statement": "theorem successorArmEmpiricalMean_isBernoulliParameter_of_rewards_mem_Icc' {Action : Type} [DecidableEq Action] (action : ActionTrace Action) (reward : RewardTrace Rat) (arm : Action) (n : Nat) (hraw : forall i : Nat, (((reward i : Rat) : Real)) \u2208 Set.Icc (0 : Real) 1) : IsBernoulliParameter (ConditionalExpectationReward.successorArmEmpiricalMean action reward arm n)"
+    },
+    {
+      "kind": "theorem",
+      "name": "generatedEmpiricalMean_isBernoulliParameter_of_rewards_mem_Icc'",
+      "full_name": "BanditRLProof.KLUCB.generatedEmpiricalMean_isBernoulliParameter_of_rewards_mem_Icc'",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 1027,
+      "statement": "theorem generatedEmpiricalMean_isBernoulliParameter_of_rewards_mem_Icc' {Omega : Type} {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (reward : Omega -> RewardTrace Rat) (omega : Omega) (hraw : forall i : Nat, (((reward omega i : Rat) : Real)) \u2208 Set.Icc (0 : Real) 1) (t : Nat) (arm : Fin K) : IsBernoulliParameter (UCB.selectedPolicySuccessorEmpiricalMeanAt (generatedAction hK sigma2 delta margin defaultAction reward) reward omega t arm)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_pullCount_gt_threshold_le_of_allTimeConfidence",
+      "full_name": "BanditRLProof.KLUCB.measure_pullCount_gt_threshold_le_of_allTimeConfidence",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 1040,
+      "statement": "theorem measure_pullCount_gt_threshold_le_of_allTimeConfidence {Omega : Type} [MeasurableSpace Omega] {K : Nat} (hK : 0 < K) (mu : Measure Omega) (reward : Omega -> RewardTrace Rat) (armMean : Fin K -> Rat) (sigma2 : NNReal) (delta margin : Real) (hdelta : 0 < delta) (hmargin0 : 0 < margin) (hmarginHalf : margin <= 1 / 2) (hmean : forall arm : Fin K, (armMean arm : Real) \u2208 Set.Icc margin (1 - margin)) (hraw : \u2200\u1d50 omega \u2202mu, forall i, (((reward omega i : Rat) : Real)) \u2208 Set.Icc (0 : Real) 1) (defaultAction best chosen : Fin K) (T : Nat) (hbest : forall arm : Fin K, (armMean arm : Real) <= (armMean best : Real)) (hgap : 0 < UCB.meanGap (fun arm => (armMean arm : Real)) best chosen) (hconfidence : mu (ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent (generatedAction hK sigma2 delta margin defaultAction reward) reward armMean sigma2 delta) <= ENNReal.ofReal delta) : mu {omega | pullThreshold K sigma2 T delta margin (UCB.meanGap (fun arm => (armMean arm : Real)) best chosen) < ConditionalExpectationReward.successorArmPullCount (generatedAction hK sigma2 delta margin defaultAction reward omega) chosen (T + 1)} <= ENNReal.ofReal delta"
+    },
+    {
+      "kind": "theorem",
+      "name": "lintegral_pullCount_le_of_allTimeConfidence",
+      "full_name": "BanditRLProof.KLUCB.lintegral_pullCount_le_of_allTimeConfidence",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 1075,
+      "statement": "theorem lintegral_pullCount_le_of_allTimeConfidence {Omega : Type} [MeasurableSpace Omega] {K : Nat} (hK : 0 < K) (mu : Measure Omega) [IsProbabilityMeasure mu] (reward : Omega -> RewardTrace Rat) (hreward : forall t : Nat, Measurable (fun omega : Omega => reward omega t)) (armMean : Fin K -> Rat) (sigma2 : NNReal) (delta margin : Real) (hdelta : 0 < delta) (hmargin0 : 0 < margin) (hmarginHalf : margin <= 1 / 2) (hmean : forall arm : Fin K, (armMean arm : Real) \u2208 Set.Icc margin (1 - margin)) (hraw : \u2200\u1d50 omega \u2202mu, forall i, (((reward omega i : Rat) : Real)) \u2208 Set.Icc (0 : Real) 1) (defaultAction best chosen : Fin K) (T : Nat) (hbest : forall arm : Fin K, (armMean arm : Real) <= (armMean best : Real)) (hgap : 0 < UCB.meanGap (fun arm => (armMean arm : Real)) best chosen) (hconfidence : mu (ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent (generatedAction hK sigma2 delta margin defaultAction reward) reward armMean sigma2 delta) <= ENNReal.ofReal delta) : \u222b\u207b omega, (ConditionalExpectationReward.successorArmPullCount (generatedAction hK sigma2 delta margin defaultAction reward omega) chosen (T + 1) : ENNReal) \u2202mu <= (pullThreshold K sigma2 T delta margin (UCB.meanGap (fun arm => (armMean arm : Real)) best chosen) : ENNReal) + (T : ENNReal) * ENNReal.ofReal delta"
+    },
+    {
+      "kind": "def",
+      "name": "generatedRegretAction",
+      "full_name": "BanditRLProof.KLUCB.generatedRegretAction",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 1132,
+      "statement": "def generatedRegretAction {Omega : Type} {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (reward : Omega -> RewardTrace Rat) : Omega -> ActionTrace (Fin K)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_generatedRegretAction",
+      "full_name": "BanditRLProof.KLUCB.measurable_generatedRegretAction",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 1139,
+      "statement": "theorem measurable_generatedRegretAction {Omega : Type} [MeasurableSpace Omega] {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (reward : Omega -> RewardTrace Rat) (hreward : forall t : Nat, Measurable (fun omega : Omega => reward omega t)) (t : Nat) : Measurable (fun omega => generatedRegretAction hK sigma2 delta margin defaultAction reward omega t)"
+    },
+    {
+      "kind": "theorem",
+      "name": "pullCount_generatedRegretAction_eq",
+      "full_name": "BanditRLProof.KLUCB.pullCount_generatedRegretAction_eq",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 1153,
+      "statement": "theorem pullCount_generatedRegretAction_eq {Omega : Type} {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (reward : Omega -> RewardTrace Rat) (omega : Omega) (arm : Fin K) (T : Nat) : pullCount (generatedRegretAction hK sigma2 delta margin defaultAction reward omega) arm T = ConditionalExpectationReward.successorArmPullCount (generatedAction hK sigma2 delta margin defaultAction reward omega) arm (T + 1)"
+    },
+    {
+      "kind": "theorem",
+      "name": "lintegral_ofReal_pseudoRegret_generatedKLUCBBounded_le",
+      "full_name": "BanditRLProof.KLUCB.lintegral_ofReal_pseudoRegret_generatedKLUCBBounded_le",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 1169,
+      "statement": "theorem lintegral_ofReal_pseudoRegret_generatedKLUCBBounded_le {Omega : Type} [MeasurableSpace Omega] {K : Nat} (mu : Measure Omega) [IsProbabilityMeasure mu] (model : FiniteBanditModel K) (reward : Omega -> RewardTrace Rat) (hreward : forall t : Nat, Measurable (fun omega : Omega => reward omega t)) (sigma2 : NNReal) (delta margin : Real) (hdelta : 0 < delta) (hmargin0 : 0 < margin) (hmarginHalf : margin <= 1 / 2) (hmean : forall arm : Fin K, (model.mean arm : Real) \u2208 Set.Icc margin (1 - margin)) (hraw : \u2200\u1d50 omega \u2202mu, forall i, (((reward omega i : Rat) : Real)) \u2208 Set.Icc (0 : Real) 1) (defaultAction : Fin K) (T : Nat) (hconfidence : mu (ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent (generatedAction model.hK sigma2 delta margin defaultAction reward) reward model.mean sigma2 delta) <= ENNReal.ofReal delta) : \u222b\u207b omega, ENNReal.ofReal (((pseudoRegret model (generatedRegretAction model.hK sigma2 delta margin defaultAction reward omega) T : Rat) : Real)) \u2202mu <= (Finset.univ : Finset (Fin K)).sum (fun arm => ENNReal.ofReal (((model.gap arm : Rat) : Real)) * ((pullThreshold K sigma2 T delta margin (((model.gap arm : Rat) : Real)) : Nat) : ENNReal) + ENNReal.ofReal (((model.gap arm : Rat) : Real)) * ((T : ENNReal) * ENNReal.ofReal delta))"
+    },
+    {
+      "kind": "theorem",
+      "name": "allHorizonPullCount_of_not_badEvent",
+      "full_name": "BanditRLProof.KLUCB.allHorizonPullCount_of_not_badEvent",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 1228,
+      "statement": "theorem allHorizonPullCount_of_not_badEvent {Omega : Type} {K : Nat} (hK : 0 < K) (reward : Omega -> RewardTrace Rat) (armMean : Fin K -> Rat) (sigma2 : NNReal) (delta margin : Real) (hdelta : 0 < delta) (hmargin0 : 0 < margin) (hmarginHalf : margin <= 1 / 2) (hmean : forall arm : Fin K, (armMean arm : Real) \u2208 Set.Icc margin (1 - margin)) (defaultAction best : Fin K) (omega : Omega) (hraw : forall i : Nat, (((reward omega i : Rat) : Real)) \u2208 Set.Icc (0 : Real) 1) (hbest : forall arm : Fin K, (armMean arm : Real) <= (armMean best : Real)) (hgood : omega \u2209 ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent (generatedAction hK sigma2 delta margin defaultAction reward) reward armMean sigma2 delta) : forall T : Nat, forall chosen : Fin K, 0 < UCB.meanGap (fun arm => (armMean arm : Real)) best chosen -> ConditionalExpectationReward.successorArmPullCount (generatedAction hK sigma2 delta margin defaultAction reward omega) chosen (T + 1) <= pullThreshold K sigma2 T delta margin (UCB.meanGap (fun arm => (armMean arm : Real)) best chosen)"
+    },
+    {
+      "kind": "def",
+      "name": "actionRewardTrajMeasure",
+      "full_name": "BanditRLProof.KLUCB.actionRewardTrajMeasure",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 1258,
+      "statement": "def actionRewardTrajMeasure {Context : Type} {K : Nat} [MeasurableSpace Context] (hK : 0 < K) (mu0 : Measure (Prod (Fin K) Rat)) (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context (Fin K)) Rat) (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context) (hcontext : forall n : Nat, Measurable (context n)) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) : Measure (Nat -> Prod (Fin K) Rat)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_allTimeBadEvent_le_trajMeasure",
+      "full_name": "BanditRLProof.KLUCB.measure_allTimeBadEvent_le_trajMeasure",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 1287,
+      "statement": "theorem measure_allTimeBadEvent_le_trajMeasure {Context : Type} {K : Nat} [MeasurableSpace Context] (hK : 0 < K) (mu0 : Measure (Prod (Fin K) Rat)) [IsProbabilityMeasure mu0] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context (Fin K)) Rat) (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context) (mean : Context -> Fin K -> Rat) (varianceProxy : Context -> Fin K -> NNReal) (defaultAction : Fin K) (armMean : Fin K -> Rat) (sigma2 : NNReal) (delta margin : Real) (hcontext : forall n : Nat, Measurable (context n)) (hmean : Measurable (fun pair : Prod Context (Fin K) => mean pair.1 pair.2)) (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy) (hvariance : forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat), varianceProxy (context i history) ((historyPolicy hK sigma2 delta margin defaultAction i).action (historyState hK sigma2 delta margin defaultAction i history)) <= sigma2) (harmMean : forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat), forall arm : Fin K, mean (context i history) arm = armMean arm) (hsigma2 : 0 < (((sigma2 : NNReal) : Real))) (hdelta : 0 < delta) : let mu := actionRewardTrajMeasure hK mu0 rewardKernel context hcontext sigma2 delta margin defaultAction let reward : (Nat -> Prod (Fin K) Rat) -> RewardTrace Rat := fun trajectory t => (trajectory t).2 let action := generatedAction hK sigma2 delta margin defaultAction reward mu (ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent action reward armMean sigma2 delta) <= ENNReal.ofReal delta"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_generatedKLAllTimeBadEvent_le_trajMeasure",
+      "full_name": "BanditRLProof.KLUCB.measure_generatedKLAllTimeBadEvent_le_trajMeasure",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 1321,
+      "statement": "theorem measure_generatedKLAllTimeBadEvent_le_trajMeasure {Context : Type} {K : Nat} [MeasurableSpace Context] (hK : 0 < K) (mu0 : Measure (Prod (Fin K) Rat)) [IsProbabilityMeasure mu0] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context (Fin K)) Rat) (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context) (mean : Context -> Fin K -> Rat) (varianceProxy : Context -> Fin K -> NNReal) (defaultAction : Fin K) (armMean : Fin K -> Rat) (sigma2 : NNReal) (delta margin : Real) (hmargin0 : 0 < margin) (hmarginHalf : margin <= 1 / 2) (harmMargin : forall arm : Fin K, (armMean arm : Real) \u2208 Set.Icc margin (1 - margin)) (hcontext : forall n : Nat, Measurable (context n)) (hraw : \u2200\u1d50 trajectory \u2202(actionRewardTrajMeasure hK mu0 rewardKernel context hcontext sigma2 delta margin defaultAction), forall i : Nat, ((((trajectory i).2 : Rat) : Real)) \u2208 Set.Icc (0 : Real) 1) (hmean : Measurable (fun pair : Prod Context (Fin K) => mean pair.1 pair.2)) (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy) (hvariance : forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat), varianceProxy (context i history) ((historyPolicy hK sigma2 delta margin defaultAction i).action (historyState hK sigma2 delta margin defaultAction i history)) <= sigma2) (harmMean : forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat), forall arm : Fin K, mean (context i history) arm = armMean arm) (hsigma2 : 0 < (((sigma2 : NNReal) : Real))) (hdelta : 0 < delta) : let mu := actionRewardTrajMeasure hK mu0 rewardKernel context hcontext sigma2 delta margin defaultAction let reward : (Nat -> Prod (Fin K) Rat) -> RewardTrace Rat := fun trajectory t => (trajectory t).2 let action := generatedAction hK sigma2 delta margin defaultAction reward mu (generatedKLAllTimeBadEvent action reward armMean sigma2 delta margin) <= ENNReal.ofReal delta"
+    },
+    {
+      "kind": "theorem",
+      "name": "lintegral_ofReal_pseudoRegret_generatedKLUCBBounded_le_trajMeasure",
+      "full_name": "BanditRLProof.KLUCB.lintegral_ofReal_pseudoRegret_generatedKLUCBBounded_le_trajMeasure",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 1380,
+      "statement": "theorem lintegral_ofReal_pseudoRegret_generatedKLUCBBounded_le_trajMeasure {Context : Type} {K : Nat} [MeasurableSpace Context] (model : FiniteBanditModel K) (mu0 : Measure (Prod (Fin K) Rat)) [IsProbabilityMeasure mu0] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context (Fin K)) Rat) (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context) (mean : Context -> Fin K -> Rat) (varianceProxy : Context -> Fin K -> NNReal) (defaultAction : Fin K) (sigma2 : NNReal) (delta margin : Real) (T : Nat) (hdelta : 0 < delta) (hmargin0 : 0 < margin) (hmarginHalf : margin <= 1 / 2) (harmMargin : forall arm : Fin K, (model.mean arm : Real) \u2208 Set.Icc margin (1 - margin)) (hcontext : forall n : Nat, Measurable (context n)) (hraw : \u2200\u1d50 trajectory \u2202(actionRewardTrajMeasure model.hK mu0 rewardKernel context hcontext sigma2 delta margin defaultAction), forall i : Nat, ((((trajectory i).2 : Rat) : Real)) \u2208 Set.Icc (0 : Real) 1) (hmean : Measurable (fun pair : Prod Context (Fin K) => mean pair.1 pair.2)) (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy) (hvariance : forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat), varianceProxy (context i history) ((historyPolicy model.hK sigma2 delta margin defaultAction i).action (historyState model.hK sigma2 delta margin defaultAction i history)) <= sigma2) (harmMean : forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat), forall arm : Fin K, mean (context i history) arm = model.mean arm) (hsigma2 : 0 < (((sigma2 : NNReal) : Real))) : let mu := actionRewardTrajMeasure model.hK mu0 rewardKernel context hcontext sigma2 delta margin defaultAction let reward : (Nat -> Prod (Fin K) Rat) -> RewardTrace Rat := fun trajectory t => (trajectory t).2 let action := generatedRegretAction model.hK sigma2 delta margin defaultAction reward \u222b\u207b trajectory, ENNReal.ofReal (((pseudoRegret model (action trajectory) T : Rat) : Real)) \u2202mu <= (Finset.univ : Finset (Fin K)).sum (fun arm => ENNReal.ofReal (((model.gap arm : Rat) : Real)) * ((pullThreshold K sigma2 T delta margin (((model.gap arm : Rat) : Real)) : Nat) : ENNReal) + ENNReal.ofReal (((model.gap arm : Rat) : Real)) * ((T : ENNReal) * ENNReal.ofReal delta))"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_generatedAction",
+      "full_name": "BanditRLProof.KLUCB.measurable_generatedAction",
+      "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "line": 1442,
+      "statement": "theorem measurable_generatedAction {Omega : Type} [MeasurableSpace Omega] {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (reward : Omega -> RewardTrace Rat) (hreward : forall t : Nat, Measurable (fun omega : Omega => reward omega t)) (t : Nat) : Measurable (fun omega => generatedAction hK sigma2 delta margin defaultAction reward omega t)"
+    },
+    {
       "kind": "structure",
       "name": "PriorSketch",
       "full_name": "BanditRLProof.Thompson.PriorSketch",
@@ -3187,10 +3907,18 @@
     },
     {
       "kind": "def",
+      "name": "IsOptimalMeanSelector",
+      "full_name": "BanditRLProof.Thompson.IsOptimalMeanSelector",
+      "file": "BanditRLProof/Algorithms/ThompsonBayesRegretDecomposition.lean",
+      "line": 341,
+      "statement": "def IsOptimalMeanSelector {Env : Type u} {Action : Type v} (mean : Env -> Action -> Real) (bestAction : Env -> Action) : Prop"
+    },
+    {
+      "kind": "def",
       "name": "trajectoryBayesMeanRegret",
       "full_name": "BanditRLProof.Thompson.trajectoryBayesMeanRegret",
       "file": "BanditRLProof/Algorithms/ThompsonBayesRegretDecomposition.lean",
-      "line": 339,
+      "line": 349,
       "statement": "def trajectoryBayesMeanRegret {Env : Type u} {Action : Type v} {Reward : Type w} (mean : Env -> Action -> Real) (bestAction : Env -> Action) (sample : Env \u00d7 ((n : Nat) -> Action \u00d7 Reward)) (horizon : Nat) : Real"
     },
     {
@@ -3198,7 +3926,7 @@
       "name": "integral_trajectoryBayesMeanRegret_eq_add_historyScore",
       "full_name": "BanditRLProof.Thompson.integral_trajectoryBayesMeanRegret_eq_add_historyScore",
       "file": "BanditRLProof/Algorithms/ThompsonBayesRegretDecomposition.lean",
-      "line": 352,
+      "line": 362,
       "statement": "theorem integral_trajectoryBayesMeanRegret_eq_add_historyScore {Env : Type u} {Action : Type v} {Reward : Type w} [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env] [MeasurableSpace Action] [StandardBorelSpace Action] [Fintype Action] [Nonempty Action] [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward] (prior : Measure Env) [IsProbabilityMeasure prior] (environment : MeasurableHistoryEnvironment Env Action Reward) (bestAction : Env -> Action) (hbestAction : Measurable bestAction) (mean : Env -> Action -> Real) (score : HistoryActionScore Action Reward) (horizon : Nat) (hmeanBest : Integrable (fun sample : Env \u00d7 ((n : Nat) -> Action \u00d7 Reward) => mean sample.1 (bestAction sample.1)) (prior \u2297\u2098 canonicalMeasurableEnvironmentTrajectoryKernel (uniformReferenceThompsonAlgorithm prior environment bestAction hbestAction) environment)) (hmeanAction : forall t : Nat, t < horizon -> Integrable (fun sample : Env \u00d7 ((n : Nat) -> Action \u00d7 Reward) => mean sample.1 (environmentTrajectoryAction sample t)) (prior \u2297\u2098 canonicalMeasurableEnvironmentTrajectoryKernel (uniformReferenceThompsonAlgorithm prior environment bestAction hbestAction) environment)) (hscoreAction : forall t : Nat, t < horizon -> Integrable (fun sample : Env \u00d7 ((n : Nat) -> Action \u00d7 Reward) => trajectoryHistoryScore score sample t) (prior \u2297\u2098 canonicalMeasurableEnvironmentTrajectoryKernel (uniformReferenceThompsonAlgorithm prior environment bestAction hbestAction) environment)) (hscoreBest : forall t : Nat, t < horizon -> Integrable (fun sample : Env \u00d7 ((n : Nat) -> Action \u00d7 Reward) => trajectoryBestHistoryScore score bestAction sample t) (prior \u2297\u2098 canonicalMeasurableEnvironmentTrajectoryKernel (uniformReferenceThompsonAlgorithm prior environment bestAction hbestAction) environment)) : let algorithm := uniformReferenceThompsonAlgorithm prior environment bestAction hbestAction let actualMeasure := prior \u2297\u2098 canonicalMeasurableEnvironmentTrajectoryKernel algorithm environment integral actualMeasure (fun sample => trajectoryBayesMeanRegret mean bestAction sample horizon) = integral actualMeasure (fun sample => \u2211 t \u2208 range horizon, (mean sample.1 (bestAction sample.1) - trajectoryBestHistoryScore score bestAction sample t)) + integral actualMeasure (fun sample => \u2211 t \u2208 range horizon, (trajectoryHistoryScore score sample t - mean sample.1 (environmentTrajectoryAction sample t)))"
     },
     {
@@ -4974,16 +5702,16 @@
       "name": "stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryBayesMeanRegret_le_of_delta",
       "full_name": "BanditRLProof.Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryBayesMeanRegret_le_of_delta",
       "file": "BanditRLProof/Algorithms/ThompsonStationaryReward.lean",
-      "line": 3720,
-      "statement": "theorem stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryBayesMeanRegret_le_of_delta {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env] [NeZero K] (prior : Measure Env) [IsProbabilityMeasure prior] (rewardKernel : Kernel (Env \u00d7 Fin K) Real) [IsMarkovKernel rewardKernel] (bestAction : Env -> Fin K) (hbestAction : Measurable bestAction) (mean : Env -> Fin K -> Real) (hmeas_mean : Measurable (fun input : Env \u00d7 Fin K => mean input.1 input.2)) (l u : Real) (hlu : l <= u) (hmeanMem : forall env arm, mean env arm \u2208 Set.Icc l u) (sigma2 : NNReal) (hsubG : forall env arm, HasSubgaussianMGF (fun reward => reward - mean env arm) sigma2 (rewardKernel (env, arm))) (hsigma2 : sigma2 \u2260 0) (delta : Real) (hdelta : 0 < delta) (hdelta_one : delta <= 1) (n : Nat) : let augmentedPrior := stationaryLatentArmStreamPrior prior rewardKernel let feedbackEnvironment := latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K) let augmentedBestAction := fun envStream : Env \u00d7 UCB.ArmRewardStream K => bestAction envStream.1 let augmentedMean := fun envStream : Env \u00d7 UCB.ArmRewardStream K => fun arm => mean envStream.1 arm let algorithm := uniformReferenceThompsonAlgorithm augmentedPrior feedbackEnvironment augmentedBestAction (hbestAction.comp measurable_fst) integral (stationaryLatentArmStreamCanonicalTrajectoryMeasure prior rewardKernel algorithm) (fun sample => trajectoryBayesMeanRegret augmentedMean augmentedBestAction sample n) <= (u - l) * K + 4 * Real.sqrt (2 * (sigma2 : Real) * Real.log (1 / delta) * K * n) + (u - l) * (K + 1) * (n - 1) * n * delta"
+      "line": 3723,
+      "statement": "theorem stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryBayesMeanRegret_le_of_delta {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env] [NeZero K] (prior : Measure Env) [IsProbabilityMeasure prior] (rewardKernel : Kernel (Env \u00d7 Fin K) Real) [IsMarkovKernel rewardKernel] (bestAction : Env -> Fin K) (hbestAction : Measurable bestAction) (mean : Env -> Fin K -> Real) (hbest : IsOptimalMeanSelector mean bestAction) (hmeas_mean : Measurable (fun input : Env \u00d7 Fin K => mean input.1 input.2)) (l u : Real) (hlu : l <= u) (hmeanMem : forall env arm, mean env arm \u2208 Set.Icc l u) (sigma2 : NNReal) (hsubG : forall env arm, HasSubgaussianMGF (fun reward => reward - mean env arm) sigma2 (rewardKernel (env, arm))) (hsigma2 : sigma2 \u2260 0) (delta : Real) (hdelta : 0 < delta) (hdelta_one : delta <= 1) (n : Nat) : let augmentedPrior := stationaryLatentArmStreamPrior prior rewardKernel let feedbackEnvironment := latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K) let augmentedBestAction := fun envStream : Env \u00d7 UCB.ArmRewardStream K => bestAction envStream.1 let augmentedMean := fun envStream : Env \u00d7 UCB.ArmRewardStream K => fun arm => mean envStream.1 arm let algorithm := uniformReferenceThompsonAlgorithm augmentedPrior feedbackEnvironment augmentedBestAction (hbestAction.comp measurable_fst) integral (stationaryLatentArmStreamCanonicalTrajectoryMeasure prior rewardKernel algorithm) (fun sample => trajectoryBayesMeanRegret augmentedMean augmentedBestAction sample n) <= (u - l) * K + 4 * Real.sqrt (2 * (sigma2 : Real) * Real.log (1 / delta) * K * n) + (u - l) * (K + 1) * (n - 1) * n * delta"
     },
     {
       "kind": "theorem",
       "name": "stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryBayesMeanRegret_le",
       "full_name": "BanditRLProof.Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryBayesMeanRegret_le",
       "file": "BanditRLProof/Algorithms/ThompsonStationaryReward.lean",
-      "line": 3842,
-      "statement": "theorem stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryBayesMeanRegret_le {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env] [NeZero K] (prior : Measure Env) [IsProbabilityMeasure prior] (rewardKernel : Kernel (Env \u00d7 Fin K) Real) [IsMarkovKernel rewardKernel] (bestAction : Env -> Fin K) (hbestAction : Measurable bestAction) (mean : Env -> Fin K -> Real) (hmeas_mean : Measurable (fun input : Env \u00d7 Fin K => mean input.1 input.2)) (l u : Real) (hlu : l <= u) (hmeanMem : forall env arm, mean env arm \u2208 Set.Icc l u) (sigma2 : NNReal) (hsubG : forall env arm, HasSubgaussianMGF (fun reward => reward - mean env arm) sigma2 (rewardKernel (env, arm))) (hsigma2 : sigma2 \u2260 0) (n : Nat) : let augmentedPrior := stationaryLatentArmStreamPrior prior rewardKernel let feedbackEnvironment := latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K) let augmentedBestAction := fun envStream : Env \u00d7 UCB.ArmRewardStream K => bestAction envStream.1 let augmentedMean := fun envStream : Env \u00d7 UCB.ArmRewardStream K => fun arm => mean envStream.1 arm let algorithm := uniformReferenceThompsonAlgorithm augmentedPrior feedbackEnvironment augmentedBestAction (hbestAction.comp measurable_fst) integral (stationaryLatentArmStreamCanonicalTrajectoryMeasure prior rewardKernel algorithm) (fun sample => trajectoryBayesMeanRegret augmentedMean augmentedBestAction sample n) <= (2 * K + 1) * (u - l) + 8 * Real.sqrt ((sigma2 : Real) * K * n * Real.log n)"
+      "line": 3848,
+      "statement": "theorem stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryBayesMeanRegret_le {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env] [NeZero K] (prior : Measure Env) [IsProbabilityMeasure prior] (rewardKernel : Kernel (Env \u00d7 Fin K) Real) [IsMarkovKernel rewardKernel] (bestAction : Env -> Fin K) (hbestAction : Measurable bestAction) (mean : Env -> Fin K -> Real) (hbest : IsOptimalMeanSelector mean bestAction) (hmeas_mean : Measurable (fun input : Env \u00d7 Fin K => mean input.1 input.2)) (l u : Real) (hlu : l <= u) (hmeanMem : forall env arm, mean env arm \u2208 Set.Icc l u) (sigma2 : NNReal) (hsubG : forall env arm, HasSubgaussianMGF (fun reward => reward - mean env arm) sigma2 (rewardKernel (env, arm))) (hsigma2 : sigma2 \u2260 0) (n : Nat) : let augmentedPrior := stationaryLatentArmStreamPrior prior rewardKernel let feedbackEnvironment := latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K) let augmentedBestAction := fun envStream : Env \u00d7 UCB.ArmRewardStream K => bestAction envStream.1 let augmentedMean := fun envStream : Env \u00d7 UCB.ArmRewardStream K => fun arm => mean envStream.1 arm let algorithm := uniformReferenceThompsonAlgorithm augmentedPrior feedbackEnvironment augmentedBestAction (hbestAction.comp measurable_fst) integral (stationaryLatentArmStreamCanonicalTrajectoryMeasure prior rewardKernel algorithm) (fun sample => trajectoryBayesMeanRegret augmentedMean augmentedBestAction sample n) <= (2 * K + 1) * (u - l) + 8 * Real.sqrt ((sigma2 : Real) * K * n * Real.log n)"
     },
     {
       "kind": "structure",
@@ -8723,6 +9451,350 @@
     },
     {
       "kind": "def",
+      "name": "selectedPolicySuccessorTelescopingRadiusAt",
+      "full_name": "BanditRLProof.UCB.selectedPolicySuccessorTelescopingRadiusAt",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 22,
+      "statement": "noncomputable def selectedPolicySuccessorTelescopingRadiusAt {Omega : Type} {K : Nat} (action : Omega -> ActionTrace (Fin K)) (sigma2 : NNReal) (delta : Real) (omega : Omega) (t : Nat) (arm : Fin K) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "selectedPolicySuccessorTelescopingRadiusAt_nonneg",
+      "full_name": "BanditRLProof.UCB.selectedPolicySuccessorTelescopingRadiusAt_nonneg",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 35,
+      "statement": "theorem selectedPolicySuccessorTelescopingRadiusAt_nonneg {Omega : Type} {K : Nat} (action : Omega -> ActionTrace (Fin K)) (sigma2 : NNReal) (delta : Real) (omega : Omega) (t : Nat) (arm : Fin K) : 0 <= selectedPolicySuccessorTelescopingRadiusAt action sigma2 delta omega t arm"
+    },
+    {
+      "kind": "def",
+      "name": "selectedPolicySuccessorTelescopingIndexAt",
+      "full_name": "BanditRLProof.UCB.selectedPolicySuccessorTelescopingIndexAt",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 49,
+      "statement": "noncomputable def selectedPolicySuccessorTelescopingIndexAt {Omega : Type} {K : Nat} (action : Omega -> ActionTrace (Fin K)) (reward : Omega -> RewardTrace Rat) (sigma2 : NNReal) (delta : Real) (omega : Omega) (t : Nat) (arm : Fin K) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "selectedPolicySuccessorTelescopingHistoryIndex",
+      "full_name": "BanditRLProof.UCB.selectedPolicySuccessorTelescopingHistoryIndex",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 64,
+      "statement": "noncomputable def selectedPolicySuccessorTelescopingHistoryIndex {K : Nat} (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (t : Nat) (history : History.FinitePairHistory (Fin K) Rat t) (arm : Fin K) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_selectedPolicySuccessorTelescopingHistoryIndex",
+      "full_name": "BanditRLProof.UCB.measurable_selectedPolicySuccessorTelescopingHistoryIndex",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 87,
+      "statement": "theorem measurable_selectedPolicySuccessorTelescopingHistoryIndex {K : Nat} (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (t : Nat) (arm : Fin K) : Measurable (fun history : History.FinitePairHistory (Fin K) Rat t => selectedPolicySuccessorTelescopingHistoryIndex sigma2 delta defaultAction t history arm)"
+    },
+    {
+      "kind": "def",
+      "name": "selectedPolicySuccessorTelescopingHistoryNextArm",
+      "full_name": "BanditRLProof.UCB.selectedPolicySuccessorTelescopingHistoryNextArm",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 96,
+      "statement": "noncomputable def selectedPolicySuccessorTelescopingHistoryNextArm {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (t : Nat) (history : History.FinitePairHistory (Fin K) Rat t) : Fin K"
+    },
+    {
+      "kind": "theorem",
+      "name": "selectedPolicySuccessorTelescopingHistoryIndex_le_nextArm_of_K_le",
+      "full_name": "BanditRLProof.UCB.selectedPolicySuccessorTelescopingHistoryIndex_le_nextArm_of_K_le",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 108,
+      "statement": "theorem selectedPolicySuccessorTelescopingHistoryIndex_le_nextArm_of_K_le {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (t : Nat) (history : History.FinitePairHistory (Fin K) Rat t) (ht : K <= t) (arm : Fin K) : selectedPolicySuccessorTelescopingHistoryIndex sigma2 delta defaultAction t history arm <= selectedPolicySuccessorTelescopingHistoryIndex sigma2 delta defaultAction t history (selectedPolicySuccessorTelescopingHistoryNextArm hK sigma2 delta defaultAction t history)"
+    },
+    {
+      "kind": "def",
+      "name": "selectedPolicySuccessorTelescopingPairHistory",
+      "full_name": "BanditRLProof.UCB.selectedPolicySuccessorTelescopingPairHistory",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 126,
+      "statement": "noncomputable def selectedPolicySuccessorTelescopingPairHistory {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) : (n : Nat) -> History.FiniteRewardHistory Rat n -> History.FinitePairHistory (Fin K) Rat n | 0, rewardHistory => fun i => (defaultAction, rewardHistory i) | n + 1, rewardHistory => let previousRewardHistory : History.FiniteRewardHistory Rat n := fun i => rewardHistory \u27e8i.1, Finset.mem_Iic.mpr ((Finset.mem_Iic.mp i.2).trans (Nat.le_succ n))\u27e9 let previousHistory := selectedPolicySuccessorTelescopingPairHistory hK sigma2 delta defaultAction n previousRewardHistory let nextAction := selectedPolicySuccessorTelescopingHistoryNextArm hK sigma2 delta defaultAction n previousHistory History.extendPairHistorySucc previousHistory (nextAction, rewardHistory \u27e8n + 1, Finset.mem_Iic.mpr le_rfl\u27e9)"
+    },
+    {
+      "kind": "def",
+      "name": "selectedPolicySuccessorTelescopingHistoryState",
+      "full_name": "BanditRLProof.UCB.selectedPolicySuccessorTelescopingHistoryState",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 149,
+      "statement": "noncomputable def selectedPolicySuccessorTelescopingHistoryState {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (n : Nat) (rewardHistory : History.FiniteRewardHistory Rat n) : SelectedPolicySuccessorFiniteHistoryState K"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_selectedPolicySuccessorTelescopingHistoryState",
+      "full_name": "BanditRLProof.UCB.measurable_selectedPolicySuccessorTelescopingHistoryState",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 159,
+      "statement": "theorem measurable_selectedPolicySuccessorTelescopingHistoryState {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (n : Nat) : Measurable (selectedPolicySuccessorTelescopingHistoryState hK sigma2 delta defaultAction n)"
+    },
+    {
+      "kind": "def",
+      "name": "selectedPolicySuccessorTelescopingHistoryPolicy",
+      "full_name": "BanditRLProof.UCB.selectedPolicySuccessorTelescopingHistoryPolicy",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 168,
+      "statement": "noncomputable def selectedPolicySuccessorTelescopingHistoryPolicy {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (_t : Nat) : Policy.MeasurablePolicy (SelectedPolicySuccessorFiniteHistoryState K) (Fin K) where"
+    },
+    {
+      "kind": "def",
+      "name": "selectedPolicySuccessorTelescopingGeneratedUCBAction",
+      "full_name": "BanditRLProof.UCB.selectedPolicySuccessorTelescopingGeneratedUCBAction",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 180,
+      "statement": "noncomputable def selectedPolicySuccessorTelescopingGeneratedUCBAction {Omega : Type} {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (reward : Omega -> RewardTrace Rat) : Omega -> ActionTrace (Fin K)"
+    },
+    {
+      "kind": "theorem",
+      "name": "selectedPolicySuccessorTelescopingGeneratedUCBAction_succ",
+      "full_name": "BanditRLProof.UCB.selectedPolicySuccessorTelescopingGeneratedUCBAction_succ",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 192,
+      "statement": "theorem selectedPolicySuccessorTelescopingGeneratedUCBAction_succ {Omega : Type} {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (reward : Omega -> RewardTrace Rat) (omega : Omega) (t : Nat) : selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward omega (t + 1) = selectedPolicySuccessorTelescopingHistoryNextArm hK sigma2 delta defaultAction t (selectedPolicySuccessorTelescopingPairHistory hK sigma2 delta defaultAction t (History.finiteRewardHistoryOfTrace (reward omega) t))"
+    },
+    {
+      "kind": "theorem",
+      "name": "selectedPolicySuccessorTelescopingPairHistory_eq_finitePairHistoryOfTrace",
+      "full_name": "BanditRLProof.UCB.selectedPolicySuccessorTelescopingPairHistory_eq_finitePairHistoryOfTrace",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 210,
+      "statement": "theorem selectedPolicySuccessorTelescopingPairHistory_eq_finitePairHistoryOfTrace {Omega : Type} {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (reward : Omega -> RewardTrace Rat) (omega : Omega) (n : Nat) : selectedPolicySuccessorTelescopingPairHistory hK sigma2 delta defaultAction n (History.finiteRewardHistoryOfTrace (reward omega) n) = History.finitePairHistoryOfTrace (selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward omega) (reward omega) n"
+    },
+    {
+      "kind": "theorem",
+      "name": "selectedPolicySuccessorTelescopingHistoryIndex_finitePairHistoryOfTrace",
+      "full_name": "BanditRLProof.UCB.selectedPolicySuccessorTelescopingHistoryIndex_finitePairHistoryOfTrace",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 261,
+      "statement": "theorem selectedPolicySuccessorTelescopingHistoryIndex_finitePairHistoryOfTrace {Omega : Type} {K : Nat} (action : Omega -> ActionTrace (Fin K)) (reward : Omega -> RewardTrace Rat) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (omega : Omega) (t : Nat) (arm : Fin K) : selectedPolicySuccessorTelescopingHistoryIndex sigma2 delta defaultAction t (History.finitePairHistoryOfTrace (action omega) (reward omega) t) arm = selectedPolicySuccessorTelescopingIndexAt action reward sigma2 delta omega t arm"
+    },
+    {
+      "kind": "theorem",
+      "name": "selectedPolicySuccessorTelescopingIndexAt_le_generatedAction_of_K_le",
+      "full_name": "BanditRLProof.UCB.selectedPolicySuccessorTelescopingIndexAt_le_generatedAction_of_K_le",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 283,
+      "statement": "theorem selectedPolicySuccessorTelescopingIndexAt_le_generatedAction_of_K_le {Omega : Type} {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (reward : Omega -> RewardTrace Rat) (omega : Omega) (t : Nat) (ht : K <= t) (arm : Fin K) : let action := selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward selectedPolicySuccessorTelescopingIndexAt action reward sigma2 delta omega t arm <= selectedPolicySuccessorTelescopingIndexAt action reward sigma2 delta omega t (action omega (t + 1))"
+    },
+    {
+      "kind": "theorem",
+      "name": "selectedPolicySuccessorTelescopingGeneratedUCBAction_succ_eq_initializationArm_of_lt",
+      "full_name": "BanditRLProof.UCB.selectedPolicySuccessorTelescopingGeneratedUCBAction_succ_eq_initializationArm_of_lt",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 330,
+      "statement": "theorem selectedPolicySuccessorTelescopingGeneratedUCBAction_succ_eq_initializationArm_of_lt {Omega : Type} {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (reward : Omega -> RewardTrace Rat) (omega : Omega) (t : Nat) (ht : t < K) : selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward omega (t + 1) = initializationArm hK t"
+    },
+    {
+      "kind": "theorem",
+      "name": "successorArmPullCount_selectedPolicySuccessorTelescopingGeneratedUCBAction_K_add_one_eq_one",
+      "full_name": "BanditRLProof.UCB.successorArmPullCount_selectedPolicySuccessorTelescopingGeneratedUCBAction_K_add_one_eq_one",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 341,
+      "statement": "theorem successorArmPullCount_selectedPolicySuccessorTelescopingGeneratedUCBAction_K_add_one_eq_one {Omega : Type} {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (reward : Omega -> RewardTrace Rat) (omega : Omega) (arm : Fin K) : ConditionalExpectationReward.successorArmPullCount (selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward omega) arm (K + 1) = 1"
+    },
+    {
+      "kind": "theorem",
+      "name": "successorArmPullCount_selectedPolicySuccessorTelescopingGeneratedUCBAction_pos_of_K_le",
+      "full_name": "BanditRLProof.UCB.successorArmPullCount_selectedPolicySuccessorTelescopingGeneratedUCBAction_pos_of_K_le",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 369,
+      "statement": "theorem successorArmPullCount_selectedPolicySuccessorTelescopingGeneratedUCBAction_pos_of_K_le {Omega : Type} {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (reward : Omega -> RewardTrace Rat) (omega : Omega) (arm : Fin K) (t : Nat) (ht : K <= t) : 0 < ConditionalExpectationReward.successorArmPullCount (selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward omega) arm (t + 1)"
+    },
+    {
+      "kind": "theorem",
+      "name": "K_le_of_selectedPolicySuccessorTelescopingGeneratedUCBAction_selected_and_count_pos",
+      "full_name": "BanditRLProof.UCB.K_le_of_selectedPolicySuccessorTelescopingGeneratedUCBAction_selected_and_count_pos",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 392,
+      "statement": "theorem K_le_of_selectedPolicySuccessorTelescopingGeneratedUCBAction_selected_and_count_pos {Omega : Type} {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (reward : Omega -> RewardTrace Rat) (omega : Omega) (arm : Fin K) (t : Nat) (hselected : selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward omega (t + 1) = arm) (hcount : 0 < ConditionalExpectationReward.successorArmPullCount (selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward omega) arm (t + 1)) : K <= t"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_selectedPolicySuccessorTelescopingGeneratedUCBAction",
+      "full_name": "BanditRLProof.UCB.measurable_selectedPolicySuccessorTelescopingGeneratedUCBAction",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 426,
+      "statement": "theorem measurable_selectedPolicySuccessorTelescopingGeneratedUCBAction {Omega : Type} [MeasurableSpace Omega] {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (reward : Omega -> RewardTrace Rat) (hreward : forall t : Nat, Measurable (fun omega : Omega => reward omega t)) (t : Nat) : Measurable (fun omega => selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward omega t)"
+    },
+    {
+      "kind": "def",
+      "name": "selectedPolicySuccessorTelescopingLogBudget",
+      "full_name": "BanditRLProof.UCB.selectedPolicySuccessorTelescopingLogBudget",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 448,
+      "statement": "noncomputable def selectedPolicySuccessorTelescopingLogBudget (K n : Nat) (delta : Real) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "selectedPolicySuccessorTelescopingLogBudget_eq",
+      "full_name": "BanditRLProof.UCB.selectedPolicySuccessorTelescopingLogBudget_eq",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 454,
+      "statement": "theorem selectedPolicySuccessorTelescopingLogBudget_eq (K n : Nat) (delta : Real) (hK : 0 < K) (hdelta : 0 < delta) : selectedPolicySuccessorTelescopingLogBudget K n delta = max (Real.log (2 * (K : Real) * ((n + 1 : Nat) : Real) ^ 2 * ((n + 2 : Nat) : Real) / delta)) 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "selectedPolicySuccessorTelescopingLogBudget_mono",
+      "full_name": "BanditRLProof.UCB.selectedPolicySuccessorTelescopingLogBudget_mono",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 468,
+      "statement": "theorem selectedPolicySuccessorTelescopingLogBudget_mono (K n T : Nat) (delta : Real) (hK : 0 < K) (hdelta : 0 < delta) (hnT : n <= T) : selectedPolicySuccessorTelescopingLogBudget K n delta <= selectedPolicySuccessorTelescopingLogBudget K T delta"
+    },
+    {
+      "kind": "theorem",
+      "name": "successorArmEmpiricalMeanTelescopingPeelingRadius_eq",
+      "full_name": "BanditRLProof.UCB.successorArmEmpiricalMeanTelescopingPeelingRadius_eq",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 487,
+      "statement": "theorem successorArmEmpiricalMeanTelescopingPeelingRadius_eq {K : Nat} (sigma2 : NNReal) (k n : Nat) (delta : Real) : ConditionalExpectationReward.successorArmEmpiricalMeanPeelingRadius sigma2 k (n + 1) (Concentration.telescopingConfidenceShare delta n / (K : Real)) = (2 * Real.sqrt ((1 / 2 : Real) * (((sigma2 : NNReal) : Real) * (k : Real)) * selectedPolicySuccessorTelescopingLogBudget K n delta) + selectedPolicySuccessorTelescopingLogBudget K n delta) / (k : Real)"
+    },
+    {
+      "kind": "def",
+      "name": "selectedPolicySuccessorTelescopingRealPullThreshold",
+      "full_name": "BanditRLProof.UCB.selectedPolicySuccessorTelescopingRealPullThreshold",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 507,
+      "statement": "noncomputable def selectedPolicySuccessorTelescopingRealPullThreshold (K : Nat) (sigma2 : NNReal) (T : Nat) (delta gap : Real) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "selectedPolicySuccessorTelescopingPullThreshold",
+      "full_name": "BanditRLProof.UCB.selectedPolicySuccessorTelescopingPullThreshold",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 515,
+      "statement": "noncomputable def selectedPolicySuccessorTelescopingPullThreshold (K : Nat) (sigma2 : NNReal) (T : Nat) (delta gap : Real) : Nat"
+    },
+    {
+      "kind": "theorem",
+      "name": "selectedPolicySuccessorTelescopingPullThreshold_contracts",
+      "full_name": "BanditRLProof.UCB.selectedPolicySuccessorTelescopingPullThreshold_contracts",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 523,
+      "statement": "theorem selectedPolicySuccessorTelescopingPullThreshold_contracts (K : Nat) (sigma2 : NNReal) (T : Nat) (delta gap : Real) (hgap : 0 < gap) : 0 < selectedPolicySuccessorTelescopingPullThreshold K sigma2 T delta gap /\\ 32 * (((sigma2 : NNReal) : Real)) * selectedPolicySuccessorTelescopingLogBudget K T delta < gap ^ 2 * (selectedPolicySuccessorTelescopingPullThreshold K sigma2 T delta gap : Real) /\\ 4 * selectedPolicySuccessorTelescopingLogBudget K T delta < gap * (selectedPolicySuccessorTelescopingPullThreshold K sigma2 T delta gap : Real)"
+    },
+    {
+      "kind": "theorem",
+      "name": "two_mul_successorArmEmpiricalMeanTelescopingPeelingRadius_lt_gap_of_threshold",
+      "full_name": "BanditRLProof.UCB.two_mul_successorArmEmpiricalMeanTelescopingPeelingRadius_lt_gap_of_threshold",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 576,
+      "statement": "theorem two_mul_successorArmEmpiricalMeanTelescopingPeelingRadius_lt_gap_of_threshold {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta gap : Real) (hdelta : 0 < delta) (hgap : 0 < gap) (k n T : Nat) (hk : selectedPolicySuccessorTelescopingPullThreshold K sigma2 T delta gap <= k) (hnT : n <= T) : 2 * ConditionalExpectationReward.successorArmEmpiricalMeanPeelingRadius sigma2 k (n + 1) (Concentration.telescopingConfidenceShare delta n / (K : Real)) < gap"
+    },
+    {
+      "kind": "theorem",
+      "name": "selectedPolicySuccessorTelescoping_meanGap_le_two_radius_of_not_badEvent",
+      "full_name": "BanditRLProof.UCB.selectedPolicySuccessorTelescoping_meanGap_le_two_radius_of_not_badEvent",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 635,
+      "statement": "theorem selectedPolicySuccessorTelescoping_meanGap_le_two_radius_of_not_badEvent {Omega : Type} {K : Nat} (hK : 0 < K) (reward : Omega -> RewardTrace Rat) (armMean : Fin K -> Rat) (sigma2 : NNReal) (delta : Real) (defaultAction best : Fin K) (omega : Omega) (t : Nat) (ht : K <= t) (hgood : omega \u2209 ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent (selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward) reward armMean sigma2 delta) : let action := selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward meanGap (fun arm => (armMean arm : Real)) best (action omega (t + 1)) <= 2 * selectedPolicySuccessorTelescopingRadiusAt action sigma2 delta omega t (action omega (t + 1))"
+    },
+    {
+      "kind": "theorem",
+      "name": "selectedPolicySuccessorTelescoping_pullCount_le_of_not_badEvent",
+      "full_name": "BanditRLProof.UCB.selectedPolicySuccessorTelescoping_pullCount_le_of_not_badEvent",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 712,
+      "statement": "theorem selectedPolicySuccessorTelescoping_pullCount_le_of_not_badEvent {Omega : Type} {K : Nat} (hK : 0 < K) (reward : Omega -> RewardTrace Rat) (armMean : Fin K -> Rat) (sigma2 : NNReal) (delta : Real) (hdelta : 0 < delta) (defaultAction best chosen : Fin K) (omega : Omega) (T : Nat) (hgap : 0 < meanGap (fun arm => (armMean arm : Real)) best chosen) (hgood : omega \u2209 ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent (selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward) reward armMean sigma2 delta) : ConditionalExpectationReward.successorArmPullCount (selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward omega) chosen (T + 1) <= selectedPolicySuccessorTelescopingPullThreshold K sigma2 T delta (meanGap (fun arm => (armMean arm : Real)) best chosen)"
+    },
+    {
+      "kind": "theorem",
+      "name": "actionRewardHistoryStepKernelFamily_selectedPolicySuccessorTelescoping_allTimeConfidence",
+      "full_name": "BanditRLProof.UCB.actionRewardHistoryStepKernelFamily_selectedPolicySuccessorTelescoping_allTimeConfidence",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 790,
+      "statement": "theorem actionRewardHistoryStepKernelFamily_selectedPolicySuccessorTelescoping_allTimeConfidence {Context : Type} {K : Nat} [MeasurableSpace Context] (hK : 0 < K) (mu0 : Measure (Prod (Fin K) Rat)) [IsProbabilityMeasure mu0] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context (Fin K)) Rat) (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context) (mean : Context -> Fin K -> Rat) (varianceProxy : Context -> Fin K -> NNReal) (defaultAction : Fin K) (armMean : Fin K -> Rat) (sigma2 : NNReal) (delta : Real) (hcontext : forall n : Nat, Measurable (context n)) (hmean : Measurable (fun pair : Prod Context (Fin K) => mean pair.1 pair.2)) (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy) (hvariance : forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat), varianceProxy (context i history) ((selectedPolicySuccessorTelescopingHistoryPolicy hK sigma2 delta defaultAction i).action (selectedPolicySuccessorTelescopingHistoryState hK sigma2 delta defaultAction i history)) <= sigma2) (harmMean : forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat), forall arm : Fin K, mean (context i history) arm = armMean arm) (hsigma2 : 0 < (((sigma2 : NNReal) : Real))) (hdelta : 0 < delta) : let policy := selectedPolicySuccessorTelescopingHistoryPolicy hK sigma2 delta defaultAction let state := selectedPolicySuccessorTelescopingHistoryState hK sigma2 delta defaultAction let pairContext : (i : Nat) -> ((j : Finset.Iic i) -> Prod (Fin K) Rat) -> Context := fun i history => context i (History.pairHistoryRewardProjection history) let pairState : (i : Nat) -> ((j : Finset.Iic i) -> Prod (Fin K) Rat) -> SelectedPolicySuccessorFiniteHistoryState K := fun i history => state i (History.pairHistoryRewardProjection history) let hpairContext : forall i : Nat, Measurable (pairContext i) := fun i => (hcontext i).comp (History.measurable_pairHistoryRewardProjection (Action := Fin K) (Reward := Rat) i) let hpairState : forall i : Nat, Measurable (pairState i) := fun i => (measurable_selectedPolicySuccessorTelescopingHistoryState hK sigma2 delta defaultAction i).comp (History.measurable_pairHistoryRewardProjection (Action := Fin K) (Reward := Rat) i) let stepKernel := RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy pairContext pairState hpairContext hpairState let mu := ProbabilityTheory.Kernel.trajMeasure (X := fun _ : Nat => Prod (Fin K) Rat) mu0 stepKernel let reward : (Nat -> Prod (Fin K) Rat) -> RewardTrace Rat := fun trajectory t => (trajectory t).2 let generatedAction := selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward mu (ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent generatedAction reward armMean sigma2 delta) <= ENNReal.ofReal delta"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_selectedPolicySuccessorTelescoping_pullCount_gt_threshold_le_of_allTimeConfidence",
+      "full_name": "BanditRLProof.UCB.measure_selectedPolicySuccessorTelescoping_pullCount_gt_threshold_le_of_allTimeConfidence",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 956,
+      "statement": "theorem measure_selectedPolicySuccessorTelescoping_pullCount_gt_threshold_le_of_allTimeConfidence {Omega : Type} [MeasurableSpace Omega] {K : Nat} (hK : 0 < K) (mu : Measure Omega) (reward : Omega -> RewardTrace Rat) (armMean : Fin K -> Rat) (sigma2 : NNReal) (delta : Real) (hdelta : 0 < delta) (defaultAction best chosen : Fin K) (T : Nat) (hgap : 0 < meanGap (fun arm => (armMean arm : Real)) best chosen) (hconfidence : mu (ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent (selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward) reward armMean sigma2 delta) <= ENNReal.ofReal delta) : mu {omega | selectedPolicySuccessorTelescopingPullThreshold K sigma2 T delta (meanGap (fun arm => (armMean arm : Real)) best chosen) < ConditionalExpectationReward.successorArmPullCount (selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward omega) chosen (T + 1)} <= ENNReal.ofReal delta"
+    },
+    {
+      "kind": "theorem",
+      "name": "lintegral_selectedPolicySuccessorTelescoping_pullCount_le_of_allTimeConfidence",
+      "full_name": "BanditRLProof.UCB.lintegral_selectedPolicySuccessorTelescoping_pullCount_le_of_allTimeConfidence",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 991,
+      "statement": "theorem lintegral_selectedPolicySuccessorTelescoping_pullCount_le_of_allTimeConfidence {Omega : Type} [MeasurableSpace Omega] {K : Nat} (hK : 0 < K) (mu : Measure Omega) [IsProbabilityMeasure mu] (reward : Omega -> RewardTrace Rat) (hreward : forall t : Nat, Measurable (fun omega : Omega => reward omega t)) (armMean : Fin K -> Rat) (sigma2 : NNReal) (delta : Real) (hdelta : 0 < delta) (defaultAction best chosen : Fin K) (T : Nat) (hgap : 0 < meanGap (fun arm => (armMean arm : Real)) best chosen) (hconfidence : mu (ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent (selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward) reward armMean sigma2 delta) <= ENNReal.ofReal delta) : \u222b\u207b omega, (ConditionalExpectationReward.successorArmPullCount (selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward omega) chosen (T + 1) : ENNReal) \u2202mu <= (selectedPolicySuccessorTelescopingPullThreshold K sigma2 T delta (meanGap (fun arm => (armMean arm : Real)) best chosen) : ENNReal) + (T : ENNReal) * ENNReal.ofReal delta"
+    },
+    {
+      "kind": "def",
+      "name": "selectedPolicySuccessorTelescopingGeneratedUCBRegretAction",
+      "full_name": "BanditRLProof.UCB.selectedPolicySuccessorTelescopingGeneratedUCBRegretAction",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 1050,
+      "statement": "noncomputable def selectedPolicySuccessorTelescopingGeneratedUCBRegretAction {Omega : Type} {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (reward : Omega -> RewardTrace Rat) : Omega -> ActionTrace (Fin K)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_selectedPolicySuccessorTelescopingGeneratedUCBRegretAction",
+      "full_name": "BanditRLProof.UCB.measurable_selectedPolicySuccessorTelescopingGeneratedUCBRegretAction",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 1059,
+      "statement": "theorem measurable_selectedPolicySuccessorTelescopingGeneratedUCBRegretAction {Omega : Type} [MeasurableSpace Omega] {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (reward : Omega -> RewardTrace Rat) (hreward : forall t : Nat, Measurable (fun omega : Omega => reward omega t)) (t : Nat) : Measurable (fun omega => selectedPolicySuccessorTelescopingGeneratedUCBRegretAction hK sigma2 delta defaultAction reward omega t)"
+    },
+    {
+      "kind": "theorem",
+      "name": "pullCount_selectedPolicySuccessorTelescopingGeneratedUCBRegretAction_eq",
+      "full_name": "BanditRLProof.UCB.pullCount_selectedPolicySuccessorTelescopingGeneratedUCBRegretAction_eq",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 1072,
+      "statement": "theorem pullCount_selectedPolicySuccessorTelescopingGeneratedUCBRegretAction_eq {Omega : Type} {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (reward : Omega -> RewardTrace Rat) (omega : Omega) (arm : Fin K) (T : Nat) : pullCount (selectedPolicySuccessorTelescopingGeneratedUCBRegretAction hK sigma2 delta defaultAction reward omega) arm T = ConditionalExpectationReward.successorArmPullCount (selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward omega) arm (T + 1)"
+    },
+    {
+      "kind": "theorem",
+      "name": "lintegral_ofReal_pseudoRegret_selectedPolicySuccessorTelescoping_le_of_allTimeConfidence",
+      "full_name": "BanditRLProof.UCB.lintegral_ofReal_pseudoRegret_selectedPolicySuccessorTelescoping_le_of_allTimeConfidence",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 1091,
+      "statement": "theorem lintegral_ofReal_pseudoRegret_selectedPolicySuccessorTelescoping_le_of_allTimeConfidence {Omega : Type} [MeasurableSpace Omega] {K : Nat} (mu : Measure Omega) [IsProbabilityMeasure mu] (model : FiniteBanditModel K) (reward : Omega -> RewardTrace Rat) (hreward : forall t : Nat, Measurable (fun omega : Omega => reward omega t)) (sigma2 : NNReal) (delta : Real) (hdelta : 0 < delta) (defaultAction : Fin K) (T : Nat) (hconfidence : mu (ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent (selectedPolicySuccessorTelescopingGeneratedUCBAction model.hK sigma2 delta defaultAction reward) reward model.mean sigma2 delta) <= ENNReal.ofReal delta) : \u222b\u207b omega, ENNReal.ofReal (((pseudoRegret model (selectedPolicySuccessorTelescopingGeneratedUCBRegretAction model.hK sigma2 delta defaultAction reward omega) T : Rat) : Real)) \u2202mu <= (Finset.univ : Finset (Fin K)).sum (fun arm => ENNReal.ofReal (((model.gap arm : Rat) : Real)) * ((selectedPolicySuccessorTelescopingPullThreshold K sigma2 T delta (((model.gap arm : Rat) : Real)) : Nat) : ENNReal) + ENNReal.ofReal (((model.gap arm : Rat) : Real)) * ((T : ENNReal) * ENNReal.ofReal delta))"
+    },
+    {
+      "kind": "theorem",
+      "name": "selectedPolicySuccessorTelescoping_allHorizonPullCount_of_not_badEvent",
+      "full_name": "BanditRLProof.UCB.selectedPolicySuccessorTelescoping_allHorizonPullCount_of_not_badEvent",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 1151,
+      "statement": "theorem selectedPolicySuccessorTelescoping_allHorizonPullCount_of_not_badEvent {Omega : Type} {K : Nat} (hK : 0 < K) (reward : Omega -> RewardTrace Rat) (armMean : Fin K -> Rat) (sigma2 : NNReal) (delta : Real) (hdelta : 0 < delta) (defaultAction best : Fin K) (omega : Omega) (hgood : omega \u2209 ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent (selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward) reward armMean sigma2 delta) : forall T : Nat, forall chosen : Fin K, 0 < meanGap (fun arm => (armMean arm : Real)) best chosen -> ConditionalExpectationReward.successorArmPullCount (selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward omega) chosen (T + 1) <= selectedPolicySuccessorTelescopingPullThreshold K sigma2 T delta (meanGap (fun arm => (armMean arm : Real)) best chosen)"
+    },
+    {
+      "kind": "def",
+      "name": "selectedPolicySuccessorTelescopingActionRewardTrajMeasure",
+      "full_name": "BanditRLProof.UCB.selectedPolicySuccessorTelescopingActionRewardTrajMeasure",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 1177,
+      "statement": "noncomputable def selectedPolicySuccessorTelescopingActionRewardTrajMeasure {Context : Type} {K : Nat} [MeasurableSpace Context] (hK : 0 < K) (mu0 : Measure (Prod (Fin K) Rat)) (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context (Fin K)) Rat) (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context) (hcontext : forall n : Nat, Measurable (context n)) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) : Measure (Nat -> Prod (Fin K) Rat)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_selectedPolicySuccessorTelescoping_allTimeBadEvent_le_trajMeasure",
+      "full_name": "BanditRLProof.UCB.measure_selectedPolicySuccessorTelescoping_allTimeBadEvent_le_trajMeasure",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 1213,
+      "statement": "theorem measure_selectedPolicySuccessorTelescoping_allTimeBadEvent_le_trajMeasure {Context : Type} {K : Nat} [MeasurableSpace Context] (hK : 0 < K) (mu0 : Measure (Prod (Fin K) Rat)) [IsProbabilityMeasure mu0] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context (Fin K)) Rat) (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context) (mean : Context -> Fin K -> Rat) (varianceProxy : Context -> Fin K -> NNReal) (defaultAction : Fin K) (armMean : Fin K -> Rat) (sigma2 : NNReal) (delta : Real) (hcontext : forall n : Nat, Measurable (context n)) (hmean : Measurable (fun pair : Prod Context (Fin K) => mean pair.1 pair.2)) (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy) (hvariance : forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat), varianceProxy (context i history) ((selectedPolicySuccessorTelescopingHistoryPolicy hK sigma2 delta defaultAction i).action (selectedPolicySuccessorTelescopingHistoryState hK sigma2 delta defaultAction i history)) <= sigma2) (harmMean : forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat), forall arm : Fin K, mean (context i history) arm = armMean arm) (hsigma2 : 0 < (((sigma2 : NNReal) : Real))) (hdelta : 0 < delta) : let mu := selectedPolicySuccessorTelescopingActionRewardTrajMeasure hK mu0 rewardKernel context hcontext sigma2 delta defaultAction let reward : (Nat -> Prod (Fin K) Rat) -> RewardTrace Rat := fun trajectory t => (trajectory t).2 let action := selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward mu (ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent action reward armMean sigma2 delta) <= ENNReal.ofReal delta"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_selectedPolicySuccessorTelescoping_pullCount_gt_threshold_le_trajMeasure",
+      "full_name": "BanditRLProof.UCB.measure_selectedPolicySuccessorTelescoping_pullCount_gt_threshold_le_trajMeasure",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 1257,
+      "statement": "theorem measure_selectedPolicySuccessorTelescoping_pullCount_gt_threshold_le_trajMeasure {Context : Type} {K : Nat} [MeasurableSpace Context] (hK : 0 < K) (mu0 : Measure (Prod (Fin K) Rat)) [IsProbabilityMeasure mu0] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context (Fin K)) Rat) (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context) (mean : Context -> Fin K -> Rat) (varianceProxy : Context -> Fin K -> NNReal) (defaultAction best chosen : Fin K) (armMean : Fin K -> Rat) (sigma2 : NNReal) (delta : Real) (T : Nat) (hcontext : forall n : Nat, Measurable (context n)) (hmean : Measurable (fun pair : Prod Context (Fin K) => mean pair.1 pair.2)) (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy) (hvariance : forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat), varianceProxy (context i history) ((selectedPolicySuccessorTelescopingHistoryPolicy hK sigma2 delta defaultAction i).action (selectedPolicySuccessorTelescopingHistoryState hK sigma2 delta defaultAction i history)) <= sigma2) (harmMean : forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat), forall arm : Fin K, mean (context i history) arm = armMean arm) (hsigma2 : 0 < (((sigma2 : NNReal) : Real))) (hdelta : 0 < delta) (hgap : 0 < meanGap (fun arm => (armMean arm : Real)) best chosen) : let mu := selectedPolicySuccessorTelescopingActionRewardTrajMeasure hK mu0 rewardKernel context hcontext sigma2 delta defaultAction let reward : (Nat -> Prod (Fin K) Rat) -> RewardTrace Rat := fun trajectory t => (trajectory t).2 let action := selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward mu {trajectory | selectedPolicySuccessorTelescopingPullThreshold K sigma2 T delta (meanGap (fun arm => (armMean arm : Real)) best chosen) < ConditionalExpectationReward.successorArmPullCount (action trajectory) chosen (T + 1)} <= ENNReal.ofReal delta"
+    },
+    {
+      "kind": "theorem",
+      "name": "lintegral_ofReal_pseudoRegret_selectedPolicySuccessorTelescoping_le_trajMeasure",
+      "full_name": "BanditRLProof.UCB.lintegral_ofReal_pseudoRegret_selectedPolicySuccessorTelescoping_le_trajMeasure",
+      "file": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "line": 1314,
+      "statement": "theorem lintegral_ofReal_pseudoRegret_selectedPolicySuccessorTelescoping_le_trajMeasure {Context : Type} {K : Nat} [MeasurableSpace Context] (model : FiniteBanditModel K) (mu0 : Measure (Prod (Fin K) Rat)) [IsProbabilityMeasure mu0] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context (Fin K)) Rat) (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context) (mean : Context -> Fin K -> Rat) (varianceProxy : Context -> Fin K -> NNReal) (defaultAction : Fin K) (sigma2 : NNReal) (delta : Real) (T : Nat) (hcontext : forall n : Nat, Measurable (context n)) (hmean : Measurable (fun pair : Prod Context (Fin K) => mean pair.1 pair.2)) (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy) (hvariance : forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat), varianceProxy (context i history) ((selectedPolicySuccessorTelescopingHistoryPolicy model.hK sigma2 delta defaultAction i).action (selectedPolicySuccessorTelescopingHistoryState model.hK sigma2 delta defaultAction i history)) <= sigma2) (harmMean : forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat), forall arm : Fin K, mean (context i history) arm = model.mean arm) (hsigma2 : 0 < (((sigma2 : NNReal) : Real))) (hdelta : 0 < delta) : let mu := selectedPolicySuccessorTelescopingActionRewardTrajMeasure model.hK mu0 rewardKernel context hcontext sigma2 delta defaultAction let reward : (Nat -> Prod (Fin K) Rat) -> RewardTrace Rat := fun trajectory t => (trajectory t).2 let action := selectedPolicySuccessorTelescopingGeneratedUCBRegretAction model.hK sigma2 delta defaultAction reward \u222b\u207b trajectory, ENNReal.ofReal (((pseudoRegret model (action trajectory) T : Rat) : Real)) \u2202mu <= (Finset.univ : Finset (Fin K)).sum (fun arm => ENNReal.ofReal (((model.gap arm : Rat) : Real)) * ((selectedPolicySuccessorTelescopingPullThreshold K sigma2 T delta (((model.gap arm : Rat) : Real)) : Nat) : ENNReal) + ENNReal.ofReal (((model.gap arm : Rat) : Real)) * ((T : ENNReal) * ENNReal.ofReal delta))"
+    },
+    {
+      "kind": "def",
       "name": "realEmpiricalMean",
       "full_name": "BanditRLProof.UCB.realEmpiricalMean",
       "file": "BanditRLProof/Algorithms/UCBRealHistoryIndex.lean",
@@ -9432,6 +10504,102 @@
       "file": "BanditRLProof/ConcentrationConfidenceSchedule.lean",
       "line": 28,
       "statement": "theorem tsum_ofReal_geometricConfidenceShare {delta : Real} (hdelta : 0 <= delta) : \u2211' n, ENNReal.ofReal (geometricConfidenceShare delta n) = ENNReal.ofReal delta"
+    },
+    {
+      "kind": "def",
+      "name": "telescopingConfidenceWeight",
+      "full_name": "BanditRLProof.Concentration.telescopingConfidenceWeight",
+      "file": "BanditRLProof/ConcentrationConfidenceSchedule.lean",
+      "line": 57,
+      "statement": "noncomputable def telescopingConfidenceWeight (n : Nat) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "telescopingConfidenceWeight_eq_sub",
+      "full_name": "BanditRLProof.Concentration.telescopingConfidenceWeight_eq_sub",
+      "file": "BanditRLProof/ConcentrationConfidenceSchedule.lean",
+      "line": 61,
+      "statement": "theorem telescopingConfidenceWeight_eq_sub (n : Nat) : telescopingConfidenceWeight n = 1 / (((n + 1 : Nat) : Real)) - 1 / (((n + 2 : Nat) : Real))"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_range_telescopingConfidenceWeight",
+      "full_name": "BanditRLProof.Concentration.sum_range_telescopingConfidenceWeight",
+      "file": "BanditRLProof/ConcentrationConfidenceSchedule.lean",
+      "line": 70,
+      "statement": "theorem sum_range_telescopingConfidenceWeight (n : Nat) : (Finset.range n).sum telescopingConfidenceWeight = 1 - 1 / (((n + 1 : Nat) : Real))"
+    },
+    {
+      "kind": "theorem",
+      "name": "telescopingConfidenceWeight_nonneg",
+      "full_name": "BanditRLProof.Concentration.telescopingConfidenceWeight_nonneg",
+      "file": "BanditRLProof/ConcentrationConfidenceSchedule.lean",
+      "line": 79,
+      "statement": "theorem telescopingConfidenceWeight_nonneg (n : Nat) : 0 <= telescopingConfidenceWeight n"
+    },
+    {
+      "kind": "theorem",
+      "name": "hasSum_telescopingConfidenceWeight",
+      "full_name": "BanditRLProof.Concentration.hasSum_telescopingConfidenceWeight",
+      "file": "BanditRLProof/ConcentrationConfidenceSchedule.lean",
+      "line": 85,
+      "statement": "theorem hasSum_telescopingConfidenceWeight : HasSum telescopingConfidenceWeight 1"
+    },
+    {
+      "kind": "def",
+      "name": "telescopingConfidenceShare",
+      "full_name": "BanditRLProof.Concentration.telescopingConfidenceShare",
+      "file": "BanditRLProof/ConcentrationConfidenceSchedule.lean",
+      "line": 103,
+      "statement": "noncomputable def telescopingConfidenceShare (delta : Real) (n : Nat) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "telescopingConfidenceShare_eq_div",
+      "full_name": "BanditRLProof.Concentration.telescopingConfidenceShare_eq_div",
+      "file": "BanditRLProof/ConcentrationConfidenceSchedule.lean",
+      "line": 108,
+      "statement": "theorem telescopingConfidenceShare_eq_div (delta : Real) (n : Nat) : telescopingConfidenceShare delta n = delta / (((n + 1 : Nat) : Real) * ((n + 2 : Nat) : Real))"
+    },
+    {
+      "kind": "theorem",
+      "name": "telescopingConfidenceShare_pos",
+      "full_name": "BanditRLProof.Concentration.telescopingConfidenceShare_pos",
+      "file": "BanditRLProof/ConcentrationConfidenceSchedule.lean",
+      "line": 116,
+      "statement": "theorem telescopingConfidenceShare_pos {delta : Real} (hdelta : 0 < delta) (n : Nat) : 0 < telescopingConfidenceShare delta n"
+    },
+    {
+      "kind": "theorem",
+      "name": "tsum_ofReal_telescopingConfidenceShare",
+      "full_name": "BanditRLProof.Concentration.tsum_ofReal_telescopingConfidenceShare",
+      "file": "BanditRLProof/ConcentrationConfidenceSchedule.lean",
+      "line": 124,
+      "statement": "theorem tsum_ofReal_telescopingConfidenceShare {delta : Real} (hdelta : 0 <= delta) : \u2211' n, ENNReal.ofReal (telescopingConfidenceShare delta n) = ENNReal.ofReal delta"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_iUnion_iUnion_fintype_le_tsum_of_uniform",
+      "full_name": "BanditRLProof.Concentration.measure_iUnion_iUnion_fintype_le_tsum_of_uniform",
+      "file": "BanditRLProof/ConcentrationFintypeGeometricAllTime.lean",
+      "line": 24,
+      "statement": "theorem measure_iUnion_iUnion_fintype_le_tsum_of_uniform {Omega : Type u} {Idx : Type v} [MeasurableSpace Omega] [Fintype Idx] [Nonempty Idx] (mu : Measure Omega) (bad : Nat -> Idx -> Set Omega) (deltaAt : Nat -> Real) (hbad : forall n i, mu (bad n i) <= ENNReal.ofReal (deltaAt n / (Fintype.card Idx : Real))) : mu (\u22c3 n, \u22c3 i, bad n i) <= \u2211' n, ENNReal.ofReal (deltaAt n)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_iUnion_iUnion_fintype_le_delta_of_geometricConfidenceShare",
+      "full_name": "BanditRLProof.Concentration.measure_iUnion_iUnion_fintype_le_delta_of_geometricConfidenceShare",
+      "file": "BanditRLProof/ConcentrationFintypeGeometricAllTime.lean",
+      "line": 50,
+      "statement": "theorem measure_iUnion_iUnion_fintype_le_delta_of_geometricConfidenceShare {Omega : Type u} {Idx : Type v} [MeasurableSpace Omega] [Fintype Idx] [Nonempty Idx] (mu : Measure Omega) (bad : Nat -> Idx -> Set Omega) (delta : Real) (hdelta : 0 <= delta) (hbad : forall n i, mu (bad n i) <= ENNReal.ofReal (geometricConfidenceShare delta n / (Fintype.card Idx : Real))) : mu (\u22c3 n, \u22c3 i, bad n i) <= ENNReal.ofReal delta"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_iUnion_iUnion_fintype_le_delta_of_telescopingConfidenceShare",
+      "full_name": "BanditRLProof.Concentration.measure_iUnion_iUnion_fintype_le_delta_of_telescopingConfidenceShare",
+      "file": "BanditRLProof/ConcentrationFintypeTelescopingAllTime.lean",
+      "line": 22,
+      "statement": "theorem measure_iUnion_iUnion_fintype_le_delta_of_telescopingConfidenceShare {Omega : Type u} {Idx : Type v} [MeasurableSpace Omega] [Fintype Idx] [Nonempty Idx] (mu : Measure Omega) (bad : Nat -> Idx -> Set Omega) (delta : Real) (hdelta : 0 <= delta) (hbad : forall n i, mu (bad n i) <= ENNReal.ofReal (telescopingConfidenceShare delta n / (Fintype.card Idx : Real))) : mu (\u22c3 n, \u22c3 i, bad n i) <= ENNReal.ofReal delta"
     },
     {
       "kind": "structure",
@@ -13338,6 +14506,22 @@
       "statement": "theorem centeredRewardSuccProcess_average_abs_tail_ennreal_delta_of_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat) (policy : Nat -> Policy.MeasurablePolicy State Action) (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context) (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State) (mean : Context -> Action -> Rat) (varianceProxy : Context -> Action -> NNReal) (defaultAction : Action) (reward : Omega -> RewardTrace Rat) (hreward : forall t : Nat, Measurable (fun omega : Omega => reward omega t)) (rewardLo rewardHi meanLo meanHi : Nat -> Real) (varianceCeiling : Nat -> NNReal) (hcontext : forall n : Nat, Measurable (context n)) (hstate : forall n : Nat, Measurable (state n)) (hmean : Measurable (fun pair : Prod Context Action => mean pair.1 pair.2)) (hkernel : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy) (hraw : forall i : Nat, forall omega : Omega, Set.Icc (rewardLo i) (rewardHi i) (((reward omega (i + 1) : Rat) : Real))) (hmean_range : forall i : Nat, forall context : Context, forall action : Action, Set.Icc (meanLo i) (meanHi i) (((mean context action : Rat) : Real))) (hvariance : forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat), varianceProxy (context i history) ((policy i).action (state i history)) <= varianceCeiling i) (h_reward_map_eq_policy : forall i : Nat, Filter.Eventually (fun omega : Omega => @MeasureTheory.Measure.map Omega Rat mOmega inferInstance (fun y : Omega => reward y (i + 1)) (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _ ((History.historyFiltrationSucc (generatedActionFromRewardHistory policy state defaultAction reward) reward (generatedActionFromRewardHistory_measurable (policy := policy) (state := state) (defaultAction := defaultAction) (reward := reward) hreward hstate) hreward) i) omega) = RewardKernel.selectedMeasure rewardKernel (context i (History.finiteRewardHistoryOfTrace (reward omega) i)) ((policy i).action (state i (History.finiteRewardHistoryOfTrace (reward omega) i)))) (ae (mu.trim ((History.historyFiltrationSucc (generatedActionFromRewardHistory policy state defaultAction reward) reward (generatedActionFromRewardHistory_measurable (policy := policy) (state := state) (defaultAction := defaultAction) (reward := reward) hreward hstate) hreward).le i)))) (m : Nat) (hm : 0 < m) (htotalVariance : 0 < ((((Finset.range (m + 1)).sum (fun t => match t with | 0 => 0 | i + 1 => varianceCeiling i) : NNReal) : Real))) (delta : Real) (hdelta : 0 < delta) (hdelta_le_one : delta <= 1) : let Y : Nat -> Omega -> Real := fun t omega => match t with"
     },
     {
+      "kind": "def",
+      "name": "successorArmEmpiricalMeanFintypeGeometricAllTimeBadEvent",
+      "full_name": "BanditRLProof.ConditionalExpectationReward.successorArmEmpiricalMeanFintypeGeometricAllTimeBadEvent",
+      "file": "BanditRLProof/ConditionalRewardPartialTrajectoryGeometricAllTime.lean",
+      "line": 29,
+      "statement": "noncomputable def successorArmEmpiricalMeanFintypeGeometricAllTimeBadEvent {Omega : Type u} {Action : Type x} [Fintype Action] [DecidableEq Action] (action : Omega -> ActionTrace Action) (reward : Omega -> RewardTrace Rat) (armMean : Action -> Rat) (sigma2 : NNReal) (delta : Real) : Set Omega"
+    },
+    {
+      "kind": "theorem",
+      "name": "actionRewardHistoryStepKernelFamily_successorArmEmpiricalMean_simultaneous_fintype_geometricAllTime_abs_tail_ennreal_delta_trajMeasure",
+      "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_successorArmEmpiricalMean_simultaneous_fintype_geometricAllTime_abs_tail_ennreal_delta_trajMeasure",
+      "file": "BanditRLProof/ConditionalRewardPartialTrajectoryGeometricAllTime.lean",
+      "line": 49,
+      "statement": "theorem actionRewardHistoryStepKernelFamily_successorArmEmpiricalMean_simultaneous_fintype_geometricAllTime_abs_tail_ennreal_delta_trajMeasure {Context : Type v} {State : Type w} {Action : Type x} [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [StandardBorelSpace Action] [MeasurableSingletonClass Action] [Fintype Action] [Nonempty Action] [DecidableEq Action] (mu0 : Measure (Prod Action Rat)) [IsProbabilityMeasure mu0] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat) (policy : Nat -> Policy.MeasurablePolicy State Action) (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context) (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State) (hcontext : forall n : Nat, Measurable (context n)) (hstate : forall n : Nat, Measurable (state n)) (mean : Context -> Action -> Rat) (varianceProxy : Context -> Action -> NNReal) (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy) (hmean : Measurable (fun pair : Prod Context Action => mean pair.1 pair.2)) (armMean : Action -> Rat) (sigma2 : NNReal) (hvariance : forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat), varianceProxy (context i history) ((policy i).action (state i history)) <= sigma2) (harmMean : forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat), forall arm : Action, mean (context i history) arm = armMean arm) (hsigma2 : 0 < (((sigma2 : NNReal) : Real))) (delta : Real) (hdelta : 0 < delta) : let pairContext : (i : Nat) -> ((j : Finset.Iic i) -> Prod Action Rat) -> Context := fun i history => context i (History.pairHistoryRewardProjection history) let pairState : (i : Nat) -> ((j : Finset.Iic i) -> Prod Action Rat) -> State := fun i history => state i (History.pairHistoryRewardProjection history) let hpairContext : forall i : Nat, Measurable (pairContext i) := fun i => (hcontext i).comp (History.measurable_pairHistoryRewardProjection (Action := Action) (Reward := Rat) i) let hpairState : forall i : Nat, Measurable (pairState i) := fun i => (hstate i).comp (History.measurable_pairHistoryRewardProjection (Action := Action) (Reward := Rat) i) let stepKernel := RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy pairContext pairState hpairContext hpairState let mu := ProbabilityTheory.Kernel.trajMeasure (X := fun _ : Nat => Prod Action Rat) mu0 stepKernel let action : (Nat -> Prod Action Rat) -> ActionTrace Action := fun trajectory t => (trajectory t).1 let reward : (Nat -> Prod Action Rat) -> RewardTrace Rat := fun trajectory t => (trajectory t).2 mu (successorArmEmpiricalMeanFintypeGeometricAllTimeBadEvent action reward armMean sigma2 delta) <= ENNReal.ofReal delta"
+    },
+    {
       "kind": "theorem",
       "name": "historyStepKernelFamily_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_condDistrib",
       "full_name": "BanditRLProof.ConditionalExpectationReward.historyStepKernelFamily_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_condDistrib",
@@ -13448,6 +14632,22 @@
       "file": "BanditRLProof/ConditionalRewardPartialTrajectoryMaskedLaw.lean",
       "line": 956,
       "statement": "theorem actionRewardHistoryStepKernelFamily_successorArmEmpiricalMean_simultaneous_finiteArmTime_abs_tail_ennreal_delta_trajMeasure {Context : Type v} {State : Type w} {Action : Type x} [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [StandardBorelSpace Action] [MeasurableSingletonClass Action] [Countable Action] [Nonempty Action] [DecidableEq Action] (mu0 : Measure (Prod Action Rat)) [IsProbabilityMeasure mu0] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat) (policy : Nat -> Policy.MeasurablePolicy State Action) (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context) (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State) (hcontext : forall n : Nat, Measurable (context n)) (hstate : forall n : Nat, Measurable (state n)) (mean : Context -> Action -> Rat) (varianceProxy : Context -> Action -> NNReal) (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy) (hmean : Measurable (fun pair : Prod Context Action => mean pair.1 pair.2)) (arms : Finset Action) (harms : arms.Nonempty) (armMean : Action -> Rat) (sigma2 : NNReal) (T : Nat) (hvariance : forall i : Nat, i < T - 1 -> forall history : ((j : Finset.Iic i) -> Rat), varianceProxy (context i history) ((policy i).action (state i history)) <= sigma2) (harmMean : forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat), forall arm, arm \u2208 arms -> mean (context i history) arm = armMean arm) (hT : 0 < T) (hsigma2 : 0 < (((sigma2 : NNReal) : Real))) (delta : Real) (hdelta : 0 < delta) : let pairContext : (i : Nat) -> ((j : Finset.Iic i) -> Prod Action Rat) -> Context := fun i history => context i (History.pairHistoryRewardProjection history) let pairState : (i : Nat) -> ((j : Finset.Iic i) -> Prod Action Rat) -> State := fun i history => state i (History.pairHistoryRewardProjection history) let hpairContext : forall i : Nat, Measurable (pairContext i) := fun i => (hcontext i).comp (History.measurable_pairHistoryRewardProjection (Action := Action) (Reward := Rat) i) let hpairState : forall i : Nat, Measurable (pairState i) := fun i => (hstate i).comp (History.measurable_pairHistoryRewardProjection (Action := Action) (Reward := Rat) i) let stepKernel := RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy pairContext pairState hpairContext hpairState let mu := ProbabilityTheory.Kernel.trajMeasure (X := fun _ : Nat => Prod Action Rat) mu0 stepKernel let action : (Nat -> Prod Action Rat) -> ActionTrace Action := fun trajectory t => (trajectory t).1 let reward : (Nat -> Prod Action Rat) -> RewardTrace Rat := fun trajectory t => (trajectory t).2 mu (successorArmEmpiricalMeanFiniteArmTimeBadEvent action reward arms armMean sigma2 T delta) <= ENNReal.ofReal delta"
+    },
+    {
+      "kind": "def",
+      "name": "successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent",
+      "full_name": "BanditRLProof.ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent",
+      "file": "BanditRLProof/ConditionalRewardPartialTrajectoryTelescopingAllTime.lean",
+      "line": 29,
+      "statement": "noncomputable def successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent {Omega : Type u} {Action : Type x} [Fintype Action] [DecidableEq Action] (action : Omega -> ActionTrace Action) (reward : Omega -> RewardTrace Rat) (armMean : Action -> Rat) (sigma2 : NNReal) (delta : Real) : Set Omega"
+    },
+    {
+      "kind": "theorem",
+      "name": "actionRewardHistoryStepKernelFamily_successorArmEmpiricalMean_simultaneous_fintype_telescopingAllTime_abs_tail_ennreal_delta_trajMeasure",
+      "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_successorArmEmpiricalMean_simultaneous_fintype_telescopingAllTime_abs_tail_ennreal_delta_trajMeasure",
+      "file": "BanditRLProof/ConditionalRewardPartialTrajectoryTelescopingAllTime.lean",
+      "line": 49,
+      "statement": "theorem actionRewardHistoryStepKernelFamily_successorArmEmpiricalMean_simultaneous_fintype_telescopingAllTime_abs_tail_ennreal_delta_trajMeasure {Context : Type v} {State : Type w} {Action : Type x} [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [StandardBorelSpace Action] [MeasurableSingletonClass Action] [Fintype Action] [Nonempty Action] [DecidableEq Action] (mu0 : Measure (Prod Action Rat)) [IsProbabilityMeasure mu0] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat) (policy : Nat -> Policy.MeasurablePolicy State Action) (context : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> Context) (state : (n : Nat) -> ((j : Finset.Iic n) -> Rat) -> State) (hcontext : forall n : Nat, Measurable (context n)) (hstate : forall n : Nat, Measurable (state n)) (mean : Context -> Action -> Rat) (varianceProxy : Context -> Action -> NNReal) (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy) (hmean : Measurable (fun pair : Prod Context Action => mean pair.1 pair.2)) (armMean : Action -> Rat) (sigma2 : NNReal) (hvariance : forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat), varianceProxy (context i history) ((policy i).action (state i history)) <= sigma2) (harmMean : forall i : Nat, forall history : ((j : Finset.Iic i) -> Rat), forall arm : Action, mean (context i history) arm = armMean arm) (hsigma2 : 0 < (((sigma2 : NNReal) : Real))) (delta : Real) (hdelta : 0 < delta) : let pairContext : (i : Nat) -> ((j : Finset.Iic i) -> Prod Action Rat) -> Context := fun i history => context i (History.pairHistoryRewardProjection history) let pairState : (i : Nat) -> ((j : Finset.Iic i) -> Prod Action Rat) -> State := fun i history => state i (History.pairHistoryRewardProjection history) let hpairContext : forall i : Nat, Measurable (pairContext i) := fun i => (hcontext i).comp (History.measurable_pairHistoryRewardProjection (Action := Action) (Reward := Rat) i) let hpairState : forall i : Nat, Measurable (pairState i) := fun i => (hstate i).comp (History.measurable_pairHistoryRewardProjection (Action := Action) (Reward := Rat) i) let stepKernel := RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy pairContext pairState hpairContext hpairState let mu := ProbabilityTheory.Kernel.trajMeasure (X := fun _ : Nat => Prod Action Rat) mu0 stepKernel let action : (Nat -> Prod Action Rat) -> ActionTrace Action := fun trajectory t => (trajectory t).1 let reward : (Nat -> Prod Action Rat) -> RewardTrace Rat := fun trajectory t => (trajectory t).2 mu (successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent action reward armMean sigma2 delta) <= ENNReal.ofReal delta"
     },
     {
       "kind": "abbrev",
@@ -30048,6 +31248,294 @@
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeExploratoryBehaviorRegret.lean",
       "line": 635,
       "statement": "theorem exploratorySource_trajectoryMeasure_cumulativeInverseSqrtPathSupport_optimism_and_vanishingDeltaScheduledAverageExploratoryBehaviorExpectedRegret (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] (n : Nat) (visitFloor : Real) [StandardBorelSpace (EpisodeBatch mdp (AdaptiveEpisodeBatchSource.vanishingDeltaScheduledEpisodes mdp n visitFloor))] [StandardBorelSpace (EpisodeBatchTrajectory mdp (AdaptiveEpisodeBatchSource.vanishingDeltaScheduledEpisodes mdp n visitFloor))] (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (explorationRate : NNReal) (hexplorationRate : explorationRate <= 1) (support : ExploratoryPathSupport mdp initialState) (hfloor : ExploratoryPathUniformVisitFloor support explorationRate visitFloor) (hrewardBound : forall state action, |mdp.reward state action| <= 1) (hhorizon : 0 < mdp.horizon) (hvisitFloor : 0 < visitFloor) : let episodes := AdaptiveEpisodeBatchSource.vanishingDeltaScheduledEpisodes mdp n visitFloor let delta := AdaptiveEpisodeBatchSource.vanishingAverageConfidenceDelta n let countRadius := AdaptiveEpisodeBatchSource.normalizedCumulativeInverseSqrtCountRadius mdp (n + 1) delta visitFloor let source := exploratorySource mdp initialState episodes initialTable defaultState countRadius explorationRate hexplorationRate let violationSet := vanishingDeltaScheduledAverageExploratoryBehaviorRegretViolationSet mdp initialState defaultState n visitFloor explorationRate hexplorationRate MeasurableSet (source.adaptiveCumulativeCountBadEvent (n + 1) delta) /\\ source.trajectoryMeasure (source.adaptiveCumulativeCountBadEvent (n + 1) delta) <= ENNReal.ofReal delta /\\ violationSet \u2286 source.adaptiveCumulativeCountBadEvent (n + 1) delta /\\ source.trajectoryMeasure violationSet <= ENNReal.ofReal delta /\\ forall trajectory, trajectory \u2209 source.adaptiveCumulativeCountBadEvent (n + 1) delta -> (forall round : Fin (n + 1), forall state, mdp.optimalValueRemaining mdp.horizon le_rfl state <= (adaptiveCumulativeEmpiricalOptimisticPlanAt trajectory defaultState countRadius round).upperValueRemaining mdp.horizon le_rfl state) /\\ adaptiveCumulativeEmpiricalOptimisticAverageExploratoryBehaviorExpectedRegret (initialState := initialState) trajectory defaultState countRadius explorationRate hexplorationRate (n + 1) <= AdaptiveEpisodeBatchSource.vanishingDeltaScheduledAverageExploratoryBehaviorExpectedRegretBound mdp n visitFloor explorationRate"
+    },
+    {
+      "kind": "abbrev",
+      "name": "RewardSumSummary",
+      "full_name": "BanditRLProof.FiniteHorizonRL.RewardSumSummary",
+      "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
+      "line": 42,
+      "statement": "abbrev RewardSumSummary (mdp : MDP State Action)"
+    },
+    {
+      "kind": "abbrev",
+      "name": "AdaptiveCumulativeEmpiricalModelState",
+      "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeEmpiricalModelState",
+      "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
+      "line": 50,
+      "statement": "abbrev AdaptiveCumulativeEmpiricalModelState (mdp : MDP State Action)"
+    },
+    {
+      "kind": "abbrev",
+      "name": "AggregateVisitCountSummary",
+      "full_name": "BanditRLProof.FiniteHorizonRL.AggregateVisitCountSummary",
+      "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
+      "line": 54,
+      "statement": "abbrev AggregateVisitCountSummary"
+    },
+    {
+      "kind": "def",
+      "name": "aggregateVisitCount",
+      "full_name": "BanditRLProof.FiniteHorizonRL.TransitionCountSummary.aggregateVisitCount",
+      "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
+      "line": 59,
+      "statement": "def aggregateVisitCount {mdp : MDP State Action} (summary : TransitionCountSummary mdp) : AggregateVisitCountSummary (State := State) (Action := Action)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_aggregateVisitCount",
+      "full_name": "BanditRLProof.FiniteHorizonRL.TransitionCountSummary.measurable_aggregateVisitCount",
+      "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
+      "line": 69,
+      "statement": "theorem measurable_aggregateVisitCount {mdp : MDP State Action} : Measurable (aggregateVisitCount : TransitionCountSummary mdp -> AggregateVisitCountSummary (State := State) (Action := Action))"
+    },
+    {
+      "kind": "def",
+      "name": "cumulativeRewardSumSummary",
+      "full_name": "BanditRLProof.FiniteHorizonRL.EpisodeBatchPrefix.cumulativeRewardSumSummary",
+      "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
+      "line": 87,
+      "statement": "def cumulativeRewardSumSummary {mdp : MDP State Action} {episodes n : Nat} (history : EpisodeBatchPrefix mdp episodes n) : RewardSumSummary mdp"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_rewardSum_coordinate",
+      "full_name": "BanditRLProof.FiniteHorizonRL.EpisodeBatchPrefix.measurable_rewardSum_coordinate",
+      "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
+      "line": 97,
+      "statement": "theorem measurable_rewardSum_coordinate {mdp : MDP State Action} {episodes : Nat} (stage : Fin mdp.horizon) (state : State) (action : Action) : Measurable fun batch : EpisodeBatch mdp episodes => batch.rewardSum stage state action"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_cumulativeRewardSumSummary",
+      "full_name": "BanditRLProof.FiniteHorizonRL.EpisodeBatchPrefix.measurable_cumulativeRewardSumSummary",
+      "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
+      "line": 121,
+      "statement": "theorem measurable_cumulativeRewardSumSummary {mdp : MDP State Action} {episodes n : Nat} : Measurable (cumulativeRewardSumSummary : EpisodeBatchPrefix mdp episodes n -> RewardSumSummary mdp)"
+    },
+    {
+      "kind": "def",
+      "name": "cumulativeEmpiricalModelState",
+      "full_name": "BanditRLProof.FiniteHorizonRL.EpisodeBatchPrefix.cumulativeEmpiricalModelState",
+      "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
+      "line": 140,
+      "statement": "def cumulativeEmpiricalModelState {mdp : MDP State Action} {episodes n : Nat} (history : EpisodeBatchPrefix mdp episodes n) : AdaptiveCumulativeEmpiricalModelState mdp"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_cumulativeEmpiricalModelState",
+      "full_name": "BanditRLProof.FiniteHorizonRL.EpisodeBatchPrefix.measurable_cumulativeEmpiricalModelState",
+      "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
+      "line": 149,
+      "statement": "theorem measurable_cumulativeEmpiricalModelState {mdp : MDP State Action} {episodes n : Nat} : Measurable (cumulativeEmpiricalModelState : EpisodeBatchPrefix mdp episodes n -> AdaptiveCumulativeEmpiricalModelState mdp)"
+    },
+    {
+      "kind": "def",
+      "name": "adaptiveCumulativeEmpiricalModelStateAt",
+      "full_name": "BanditRLProof.FiniteHorizonRL.adaptiveCumulativeEmpiricalModelStateAt",
+      "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
+      "line": 160,
+      "statement": "def adaptiveCumulativeEmpiricalModelStateAt {mdp : MDP State Action} {episodes : Nat} (trajectory : EpisodeBatchTrajectory mdp episodes) (round : Nat) : AdaptiveCumulativeEmpiricalModelState mdp"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_adaptiveCumulativeEmpiricalModelStateAt",
+      "full_name": "BanditRLProof.FiniteHorizonRL.measurable_adaptiveCumulativeEmpiricalModelStateAt",
+      "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
+      "line": 169,
+      "statement": "theorem measurable_adaptiveCumulativeEmpiricalModelStateAt {mdp : MDP State Action} {episodes : Nat} (round : Nat) : Measurable fun trajectory : EpisodeBatchTrajectory mdp episodes => adaptiveCumulativeEmpiricalModelStateAt trajectory round"
+    },
+    {
+      "kind": "theorem",
+      "name": "adaptiveCumulativeEmpiricalModelStateAt_transitionCount_succ",
+      "full_name": "BanditRLProof.FiniteHorizonRL.adaptiveCumulativeEmpiricalModelStateAt_transitionCount_succ",
+      "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
+      "line": 179,
+      "statement": "theorem adaptiveCumulativeEmpiricalModelStateAt_transitionCount_succ {mdp : MDP State Action} {episodes : Nat} (trajectory : EpisodeBatchTrajectory mdp episodes) (round : Nat) (stage : Fin mdp.horizon) (state : State) (action : Action) (nextState : State) : (adaptiveCumulativeEmpiricalModelStateAt trajectory (round + 1)).1 stage state action nextState = (adaptiveCumulativeEmpiricalModelStateAt trajectory round).1 stage state action nextState + (trajectory (round + 1)).transitionCount stage state action nextState"
+    },
+    {
+      "kind": "theorem",
+      "name": "adaptiveCumulativeEmpiricalModelStateAt_rewardSum_succ",
+      "full_name": "BanditRLProof.FiniteHorizonRL.adaptiveCumulativeEmpiricalModelStateAt_rewardSum_succ",
+      "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
+      "line": 196,
+      "statement": "theorem adaptiveCumulativeEmpiricalModelStateAt_rewardSum_succ {mdp : MDP State Action} {episodes : Nat} (trajectory : EpisodeBatchTrajectory mdp episodes) (round : Nat) (stage : Fin mdp.horizon) (state : State) (action : Action) : (adaptiveCumulativeEmpiricalModelStateAt trajectory (round + 1)).2 stage state action = (adaptiveCumulativeEmpiricalModelStateAt trajectory round).2 stage state action + (trajectory (round + 1)).rewardSum stage state action"
+    },
+    {
+      "kind": "theorem",
+      "name": "adaptiveCumulativeEmpiricalModelStateAt_visitCount",
+      "full_name": "BanditRLProof.FiniteHorizonRL.adaptiveCumulativeEmpiricalModelStateAt_visitCount",
+      "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
+      "line": 221,
+      "statement": "theorem adaptiveCumulativeEmpiricalModelStateAt_visitCount {mdp : MDP State Action} {episodes : Nat} (trajectory : EpisodeBatchTrajectory mdp episodes) (round : Nat) (stage : Fin mdp.horizon) (state : State) (action : Action) : (adaptiveCumulativeEmpiricalModelStateAt trajectory round).1.visitCount stage state action = \u2211 i : Fin (round + 1), (trajectory i).visitCount stage state action"
+    },
+    {
+      "kind": "def",
+      "name": "adaptiveCumulativeAggregateVisitCountAt",
+      "full_name": "BanditRLProof.FiniteHorizonRL.adaptiveCumulativeAggregateVisitCountAt",
+      "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
+      "line": 235,
+      "statement": "def adaptiveCumulativeAggregateVisitCountAt {mdp : MDP State Action} {episodes : Nat} (trajectory : EpisodeBatchTrajectory mdp episodes) (round : Nat) : AggregateVisitCountSummary (State := State) (Action := Action)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_adaptiveCumulativeAggregateVisitCountAt",
+      "full_name": "BanditRLProof.FiniteHorizonRL.measurable_adaptiveCumulativeAggregateVisitCountAt",
+      "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
+      "line": 243,
+      "statement": "theorem measurable_adaptiveCumulativeAggregateVisitCountAt {mdp : MDP State Action} {episodes : Nat} (round : Nat) : Measurable fun trajectory : EpisodeBatchTrajectory mdp episodes => adaptiveCumulativeAggregateVisitCountAt trajectory round"
+    },
+    {
+      "kind": "theorem",
+      "name": "adaptiveCumulativeAggregateVisitCountAt_eq_sum",
+      "full_name": "BanditRLProof.FiniteHorizonRL.adaptiveCumulativeAggregateVisitCountAt_eq_sum",
+      "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
+      "line": 253,
+      "statement": "theorem adaptiveCumulativeAggregateVisitCountAt_eq_sum {mdp : MDP State Action} {episodes : Nat} (trajectory : EpisodeBatchTrajectory mdp episodes) (round : Nat) (state : State) (action : Action) : adaptiveCumulativeAggregateVisitCountAt trajectory round state action = \u2211 i : Fin (round + 1), \u2211 stage : Fin mdp.horizon, (trajectory i).visitCount stage state action"
+    },
+    {
+      "kind": "theorem",
+      "name": "adaptiveCumulativeAggregateVisitCountAt_succ",
+      "full_name": "BanditRLProof.FiniteHorizonRL.adaptiveCumulativeAggregateVisitCountAt_succ",
+      "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
+      "line": 269,
+      "statement": "theorem adaptiveCumulativeAggregateVisitCountAt_succ {mdp : MDP State Action} {episodes : Nat} (trajectory : EpisodeBatchTrajectory mdp episodes) (round : Nat) (state : State) (action : Action) : adaptiveCumulativeAggregateVisitCountAt trajectory (round + 1) state action = adaptiveCumulativeAggregateVisitCountAt trajectory round state action + \u2211 stage : Fin mdp.horizon, (trajectory (round + 1)).visitCount stage state action"
+    },
+    {
+      "kind": "def",
+      "name": "AdaptiveCumulativeEmpiricalModelState.empiricalReward",
+      "full_name": "AdaptiveCumulativeEmpiricalModelState.empiricalReward",
+      "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
+      "line": 283,
+      "statement": "noncomputable def AdaptiveCumulativeEmpiricalModelState.empiricalReward {mdp : MDP State Action} (model : AdaptiveCumulativeEmpiricalModelState mdp) (stage : Fin mdp.horizon) (state : State) (action : Action) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "AdaptiveCumulativeEmpiricalModelState.empiricalReward_of_visitCount_eq_zero",
+      "full_name": "AdaptiveCumulativeEmpiricalModelState.empiricalReward_of_visitCount_eq_zero",
+      "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
+      "line": 294,
+      "statement": "theorem AdaptiveCumulativeEmpiricalModelState.empiricalReward_of_visitCount_eq_zero {mdp : MDP State Action} (model : AdaptiveCumulativeEmpiricalModelState mdp) (stage : Fin mdp.horizon) (state : State) (action : Action) (hzero : model.1.visitCount stage state action = 0) : model.empiricalReward stage state action = 0"
+    },
+    {
+      "kind": "def",
+      "name": "totalSteps",
+      "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.totalSteps",
+      "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
+      "line": 305,
+      "statement": "def totalSteps (mdp : MDP State Action) (episodes : Nat) : Nat"
+    },
+    {
+      "kind": "def",
+      "name": "confidenceNumerator",
+      "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.confidenceNumerator",
+      "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
+      "line": 309,
+      "statement": "def confidenceNumerator (mdp : MDP State Action) (episodes : Nat) : Nat"
+    },
+    {
+      "kind": "def",
+      "name": "logFactor",
+      "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.logFactor",
+      "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
+      "line": 319,
+      "statement": "noncomputable def logFactor (mdp : MDP State Action) (episodes : Nat) (delta : Real) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "one_le_confidenceNumerator_div",
+      "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.one_le_confidenceNumerator_div",
+      "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
+      "line": 327,
+      "statement": "theorem one_le_confidenceNumerator_div (mdp : MDP State Action) (episodes : Nat) (delta : Real) (hhorizon : 0 < mdp.horizon) (hepisodes : 0 < episodes) (hdelta : 0 < delta) (hdelta_le_one : delta <= 1) : 1 <= ((confidenceNumerator (State := State) (Action := Action) mdp episodes : Nat) : Real) / delta"
+    },
+    {
+      "kind": "theorem",
+      "name": "logFactor_eq_paper",
+      "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.logFactor_eq_paper",
+      "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
+      "line": 349,
+      "statement": "theorem logFactor_eq_paper (mdp : MDP State Action) (episodes : Nat) (delta : Real) (hhorizon : 0 < mdp.horizon) (hepisodes : 0 < episodes) (hdelta : 0 < delta) (hdelta_le_one : delta <= 1) : logFactor (State := State) (Action := Action) mdp episodes delta = Real.log (((confidenceNumerator (State := State) (Action := Action) mdp episodes : Nat) : Real) / delta)"
+    },
+    {
+      "kind": "theorem",
+      "name": "logFactor_nonneg",
+      "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.logFactor_nonneg",
+      "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
+      "line": 365,
+      "statement": "theorem logFactor_nonneg (mdp : MDP State Action) (episodes : Nat) (delta : Real) : 0 <= logFactor (State := State) (Action := Action) mdp episodes delta"
+    },
+    {
+      "kind": "def",
+      "name": "scale",
+      "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.scale",
+      "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
+      "line": 372,
+      "statement": "noncomputable def scale (mdp : MDP State Action) (episodes : Nat) (delta : Real) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "scale_nonneg",
+      "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.scale_nonneg",
+      "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
+      "line": 380,
+      "statement": "theorem scale_nonneg (mdp : MDP State Action) (episodes : Nat) (delta : Real) : 0 <= scale (State := State) (Action := Action) mdp episodes delta"
+    },
+    {
+      "kind": "def",
+      "name": "countRadius",
+      "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.countRadius",
+      "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
+      "line": 392,
+      "statement": "noncomputable def countRadius (mdp : MDP State Action) (episodes : Nat) (delta : Real) : TransitionCountRadius"
+    },
+    {
+      "kind": "theorem",
+      "name": "countRadius_zero",
+      "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.countRadius_zero",
+      "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
+      "line": 404,
+      "statement": "theorem countRadius_zero (mdp : MDP State Action) (episodes : Nat) (delta : Real) : (countRadius (State := State) (Action := Action) mdp episodes delta).radius 0 = (mdp.horizon : Real)"
+    },
+    {
+      "kind": "theorem",
+      "name": "countRadius_of_pos",
+      "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.countRadius_of_pos",
+      "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
+      "line": 413,
+      "statement": "theorem countRadius_of_pos (mdp : MDP State Action) (episodes : Nat) (delta : Real) {count : Nat} (hcount : 0 < count) : (countRadius (State := State) (Action := Action) mdp episodes delta).radius count = min (mdp.horizon : Real) (scale (State := State) (Action := Action) mdp episodes delta / Real.sqrt count)"
+    },
+    {
+      "kind": "def",
+      "name": "source",
+      "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.source",
+      "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
+      "line": 430,
+      "statement": "noncomputable def source (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (episodes : Nat) (delta : Real) : AdaptiveEpisodeBatchSource mdp initialState 1 where"
+    },
+    {
+      "kind": "theorem",
+      "name": "source_successorPolicy_eq_optimisticPolicy",
+      "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.source_successorPolicy_eq_optimisticPolicy",
+      "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
+      "line": 461,
+      "statement": "theorem source_successorPolicy_eq_optimisticPolicy (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (episodes : Nat) (delta : Real) (n : Nat) (history : EpisodeBatchPrefix mdp 1 n) : (source mdp initialState initialTable defaultState episodes delta).successorPolicy n history = (history.cumulativeTransitionCountSummary.countRadiusOptimisticPlan mdp defaultState (countRadius (State := State) (Action := Action) mdp episodes delta) ).optimisticPolicy"
+    },
+    {
+      "kind": "theorem",
+      "name": "source_policyAt_succ_eq_optimisticPolicy",
+      "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.source_policyAt_succ_eq_optimisticPolicy",
+      "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
+      "line": 480,
+      "statement": "theorem source_policyAt_succ_eq_optimisticPolicy (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (episodes : Nat) (delta : Real) (trajectory : EpisodeBatchTrajectory mdp 1) (n : Nat) : (source mdp initialState initialTable defaultState episodes delta).policyAt trajectory (n + 1) = (adaptiveCumulativeEmpiricalOptimisticPlanAt trajectory defaultState (countRadius (State := State) (Action := Action) mdp episodes delta) n ).optimisticPolicy"
+    },
+    {
+      "kind": "theorem",
+      "name": "source_policyAt_succ_eq_modelState_optimisticPolicy",
+      "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.source_policyAt_succ_eq_modelState_optimisticPolicy",
+      "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
+      "line": 495,
+      "statement": "theorem source_policyAt_succ_eq_modelState_optimisticPolicy (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (episodes : Nat) (delta : Real) (trajectory : EpisodeBatchTrajectory mdp 1) (n : Nat) : (source mdp initialState initialTable defaultState episodes delta).policyAt trajectory (n + 1) = ((adaptiveCumulativeEmpiricalModelStateAt trajectory n).1 |>.countRadiusOptimisticPlan mdp defaultState (countRadius (State := State) (Action := Action) mdp episodes delta) |>.optimisticPolicy)"
     },
     {
       "kind": "def",

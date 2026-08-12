@@ -2,7 +2,25 @@
 
 ## Current Book Map Boundary (2026-08-12)
 
-Chapters 2--4 are compiled under the scoped website definitions. The new
+Chapters 2--6 are compiled under independent scoped website definitions.
+Chapter 5 now exposes the complete finite-action, finite-feature scalar OFUL
+route: Gram/determinant geometry, conditional-MGF/self-normalized ridge
+confidence, measurable optimism, a producer-backed generated history law, and
+one horizon-free telescoping policy carrying all-time confidence, all-horizon
+high-probability pseudo-regret, bounded stopping, and square-integrable finite
+stopping conclusions.  Its expected-average consistency result is a distinct
+horizon-indexed fixed-model family and is not attributed to that one policy.
+
+Chapter 6 exposes the stationary finite-arm canonical Thompson route from
+posterior kernels through probability matching on the actual recursive
+trajectory, clipped-score decomposition, stationary latent-stream alignment,
+and the explicit generated-trajectory bound
+`(2K+1)(u-l)+8*sqrt(sigma2*K*n*log n)`.  The terminal now requires the
+pointwise `IsOptimalMeanSelector` contract, so comparator-relative algebra is
+not mislabeled as Bayesian regret.  The public canary proves that contract in
+a concrete `Unit`/`Fin 1` Gaussian Markov source.
+
+Chapters 2--4 remain compiled under their scoped website definitions. The
 integration leaf proves the canonical Rat ETC oracle's first-occurrence and
 least-encoded tie semantics, and
 `Tests/BookMapChaptersTwoToFourCanary.lean` checks the exact Probability, ETC,
@@ -15,6 +33,9 @@ Hoeffding/UCB-VI concentration foundations now compile as well. Fixed-delta
 expected-average consistency, sharp KL-Chernoff and asymptotically optimal
 KL-UCB refinements, direct imported-LML identity, and the complete UCB-VI
 regret theorem remain later work and are not hidden inside these promotions.
+Likewise, contextual/dynamic/Hilbert-space OFUL, universal optional stopping,
+nonstationary/contextual/linear Thompson sampling, PSRL, and sharp Thompson
+constants remain explicit extensions rather than Chapter 5--6 blockers.
 
 ## Paper-Guided Priority Order
 

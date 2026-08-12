@@ -11,14 +11,27 @@ flowchart TB
   Decomp --> UCB["UCB gap-sum + average consistency"]
   Concentration --> UCB
 
-  Ellipse["OFUL log-det + elliptical potential"] --> Ridge["ridge self-normalized confidence"]
-  CondMGF --> Ridge
-  Ridge --> AllTime["one-policy all-time confidence"]
-  AllTime --> OFULRate["expected regret + average consistency"]
-  AllTime --> StopL2["square-integrable random-horizon bounds"]
+  GramDet["OFUL Gram + rank-one determinant"] --> Ellipse["log-det + elliptical potential"]
+  Ellipse --> SelfNorm["conditional-MGF self-normalized confidence"]
+  CondMGF --> SelfNorm
+  SelfNorm --> Ridge["ridge confidence ellipsoid"]
+  Ridge --> Optimistic["measurable optimistic policy"]
+  Optimistic --> AllTime["generated one-policy all-time confidence"]
+  AllTime --> OFULRate["same-policy all-horizon pseudo-regret"]
+  OFULRate --> StopBounded["bounded stopping consumer"]
+  OFULRate --> StopL2["square-integrable stopping consumer"]
+  Ridge --> OFULExpected["separate horizon-indexed expectation + consistency"]
 
-  Posterior["PosteriorKernel conditional-law identity"] --> TS["Thompson stationary Bayes regret"]
-  Traj --> TS
+  Prior["prior"] --> Posterior["posterior kernel"]
+  Likelihood["likelihood kernel"] --> Posterior
+  Posterior --> Match["one-step probability matching"]
+  Match --> RecursiveTS["recursive generated TS trajectory"]
+  Traj --> RecursiveTS
+  RecursiveTS --> BayesDecomp["comparator/Bayesian decomposition"]
+  OptimalSelector["pointwise mean-optimal selector"] --> BayesDecomp
+  BayesDecomp --> Clipped["clipped confidence bridge"]
+  Clipped --> Latent["stationary latent-arm stream"]
+  Latent --> TS["generated stationary Bayesian regret"]
 
   Hedge["EXP3 Hedge potential"] --> EXP3["expected + high-probability regret"]
   Concentration --> EXP3
