@@ -1,6 +1,7 @@
 import BanditRLProof
 import Mathlib.Analysis.Complex.ExponentialBounds
 import Tests.BookMapChaptersFiveAndSixCanary
+import Tests.BookMapChaptersSevenAndEightCanary
 
 namespace BanditRLProof
 

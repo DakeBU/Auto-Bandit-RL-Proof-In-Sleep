@@ -424,6 +424,20 @@
       ]
     },
     {
+      "full_name": "BanditRLProof.Exp3.sampledPredictable_allHorizonBernsteinSquareBestArmRealizedRegret_tail",
+      "chapter": "exp3",
+      "plain": "At any supplied positive horizon, the generated EXP3 process with the theorem's Bernstein-square tuning has a realized-regret tail against the best supported arm obtained by a finite comparator union.",
+      "math": "\\(\\Pr\\{R_T^{\\mathrm{real}}(a_T^\\star)\\ge b(K,T,\\delta)\\}\\le\\delta.\\)",
+      "intuition": "First control regret to each supported comparator at confidence delta divided by the number of arms, then union the finite family and choose the best cumulative-loss arm.",
+      "why": "This is the chapter's fixed-window best-arm endpoint and makes comparator aggregation visible rather than silently replacing a fixed-comparator theorem by a minimum.",
+      "position": "It sits above the fixed-comparator Bernstein-square realized tail and beside, not above, the separate fixed-process all-positive-prefix branch.",
+      "proof_idea": "Set the armwise confidence share, build horizon-dependent eta and gamma, apply the fixed-comparator generated-law tail to every arm, take a finite union, and rewrite the comparator minimum as best supported-arm cumulative loss.",
+      "lean_notes": "The exact statement requires a probability prior, Standard Borel nonempty environment/action, finite nonempty decidable arms with K at least two, predictable unit losses, positive horizon, and 0<delta<=1. The eta, gamma, and trajectory law depend on T. The identifier allHorizon means the theorem can be instantiated at each horizon, not that one fixed policy is simultaneously controlled at all horizons.",
+      "dependencies": [
+        "BanditRLProof.Exp3.sampledPredictable_allHorizonBernsteinSquareRealizedRegret_tail"
+      ]
+    },
+    {
       "full_name": "BanditRLProof.Concentration.measure_iUnion_scheduled_deviation_ge_inter_variance_le_delta_of_fixedTilt_quadratic_tail",
       "chapter": "probability",
       "plain": "A countable family of deviation events, each controlled by its own fixed-MGF quadratic tail and confidence share, has total outer probability at most the supplied overall budget.",
@@ -513,17 +527,34 @@
       "dependencies": []
     },
     {
+      "full_name": "BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_le_allRateBound",
+      "chapter": "tsallis",
+      "plain": "On the canonical scheduled half-Tsallis generated trajectory, expected predictable-environment regret to a supported arm is bounded by the integrated all-rate stability budget plus the exact time-varying potential penalty.",
+      "math": "\\(\\mathbb E R_{0:n}(a^\\star)\\le\\mathbb E\\sum_{t=0}^{n}B_t^{\\mathrm{stab}}+\\Psi(p_0)/\\eta_n-1/\\eta_n.\\)",
+      "intuition": "The deterministic FTRL decomposition already separates stability from regularizer drift; the generated conditional action law turns its importance-weighted scores into the true predictable loss regret.",
+      "why": "It is the algorithm-and-law bridge between measurable generated sampling and the later stochastic self-bounding/logarithmic consumers.",
+      "position": "It follows scheduled score alignment and all-rate expected stability, and precedes fixed-gap self-bounding and the finite-arm IID reward-law terminal.",
+      "proof_idea": "Use the same selector and trajectory measure throughout, identify observed and predictable importance-weighted losses almost everywhere, integrate the pathwise stability-plus-penalty inequality, and dominate each stability term by its refined-or-coarse all-rate bound.",
+      "lean_notes": "The signature retains a probability prior, Standard Borel measurable action/environment contracts, finite nonempty decidable arms, one predictable [0,1] loss vector, a supported comparator, a positive schedule through the horizon, and schedule monotonicity. It is expected predictable regret, not a high-probability, realized, or paper-sharp Tsallis-INF theorem.",
+      "dependencies": [
+        "BanditRLProof.Tsallis.sampledScheduledHalfTsallisEstimatedRegret_pointMass_le_stability_add_penalty",
+        "BanditRLProof.Tsallis.integral_sum_sampledScheduledHalfTsallisPotentialStabilityAtTime_le_allRateBound",
+        "BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisEstimatedRegret_eq_environmentRegret"
+      ]
+    },
+    {
       "full_name": "BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisFiniteArmIIDRewardLawRegret_le_log",
       "chapter": "tsallis",
       "plain": "For independent IID finite-arm reward laws with exact model means and positive non-best gaps, scheduled half-Tsallis FTRL has a logarithmic expected-regret bound in reciprocal gaps.",
       "math": "\\(\\mathbb E R_T\\le(1+\\log(T+1))\\left(1+25\\sum_{a\\ne a^\\star}\\Delta_a^{-1}\\right)+C.\\)",
       "intuition": "The stochastic gap law makes the algorithm's own action probabilities pay for regret, and the half-Tsallis schedule converts that self-bound into logarithmic growth.",
       "why": "This is a model-facing stochastic Tsallis endpoint with no caller-supplied trajectory identification.",
-      "position": "It is the base law theorem reused by corruption and nonstationary extensions.",
-      "proof_idea": "Build IID product reward vectors, prove finite-prefix factorization and independent mean-gap laws, obtain expected gap mass, apply scheduled self-bounding, and close the harmonic/logarithmic schedule.",
-      "lean_notes": "The arm laws, support, exact means, positive gaps, probability instances, and corruption scalar are explicit. Paper cards remain retrieval evidence only.",
+      "position": "It is the canonical Chapter 8 terminal and the base law theorem reused by corruption and nonstationary extensions.",
+      "proof_idea": "Build the infinite IID product of finite reward vectors, use the same measurable scheduled selector and trajectory kernel as the stability theorem, prove exact clipped-reward mean and gap transport, apply fixed-gap self-bounding, and close the square-root schedule by the harmonic/logarithmic optimization.",
+      "lean_notes": "The finite model has positive arm count. Every arm law is a probability measure with a.e. [0,1] support and the exact supplied model mean; every non-best gap is positive. The horizon and nonnegative additive corruption allowance are explicit, and the canonical uncorrupted case sets it to zero. This is expected generated-trajectory regret, not paper-sharp, high-probability, realized, or complete best-of-both-worlds Tsallis-INF.",
       "dependencies": [
-        "BanditRLProof.FiniteBanditModel"
+        "BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_le_sqrtSchedule_log_iidLossState",
+        "BanditRLProof.Tsallis.iidLossStateMeanGap_finiteArmIIDRewardVectorLoss_eq_gap"
       ]
     },
     {

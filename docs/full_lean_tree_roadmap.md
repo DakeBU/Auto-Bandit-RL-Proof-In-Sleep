@@ -94,22 +94,37 @@ Reviewer must reject a UCB proof that hides positivity of logarithms,
 square-root arguments, denominator nonzero facts, or the initial positive-count
 phase.
 
+## EXP3 Canonical Route
+
+The scoped canonical route now compiles potential/Hedge algebra,
+importance-weighted first and second moments on the generated recursive law,
+predictable loss transport, exploration bias, the horizon-tuned expected
+endpoint, a separately horizon-tuned fixed-window best-arm tail, and one fixed
+process/comparator all-positive-prefix realized-regret terminal.  A sparse
+variance-sensitive theorem remains visibly conditional on its sparsity-failure
+budget.  Horizon-free tuned EXP3 and EXP3.P are separate extensions.
+
 ## Tsallis-INF And FTRL Route
 
 ![Tsallis-INF and FTRL route](assets/lean_tree_tsallis_ftrl.png)
 
-The compiled local surface defines finite-simplex FTRL one-step inequalities
-and Tsallis regularizer well-definedness.  This is intentionally below the
-full Tsallis-INF theorem.
+The scoped canonical local surface now compiles finite-simplex minimizer
+existence, interiority, uniqueness, and measurability; half-Tsallis one-step
+stability; a scheduled generated recursive action law; score alignment;
+all-rate expected stability and regret; fixed-gap self-bounding; and a
+finite-arm IID bounded reward-law logarithmic terminal.  Corruption, drifting,
+dynamic, and population-oracle restart routes are labelled extensions.  This
+does not claim paper-sharp or complete best-of-both-worlds Tsallis-INF.
 
 The next Mathlib-ready leaves are:
 
 | Leaf group | Target |
 | --- | --- |
-| Simplex infrastructure | finite-simplex convexity, nonempty feasibility, minimizer/existence contracts |
-| Tsallis algebra | rpow monotonicity, convexity/subgradient shape, stability and penalty terms |
-| Bandit estimator | importance-weighted losses, positivity of sampling probabilities, unbiasedness |
-| BoBW conversion | self-bounding condition, stochastic gap conversion, adversarial regret branch |
+| Simplex infrastructure | compiled finite-simplex feasibility and minimizer regularity |
+| Tsallis algebra | compiled rpow regularizer, stability, and time-varying penalty route |
+| Bandit estimator | compiled importance weighting, generated action law, and score alignment |
+| Canonical stochastic terminal | compiled fixed-gap self-bound and IID logarithmic generated regret |
+| Research extensions | paper-sharp BoBW constants, high-probability/realized regret, contextual/linear models, observed restart detection |
 
 Proof weapons such as Tsallis-INF/FTRL can generate route ideas, but lower
 agents must prove the individual simplex, rpow, FTRL, estimator, and

@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRLProof.Exp3.measure_sampledRealizedRegretGeometricAllTimeFailureSet_le",
+  "file": "BanditRLProof/Exp3RealizedRegretAllTime.lean",
+  "statement": "theorem measure_sampledRealizedRegretGeometricAllTimeFailureSet_le {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsProbabilityMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (heta : 0 < eta) (hgamma_pos : 0 < gamma) (hgamma_lt_one : gamma < 1) (loss : PredictableLossVector Env Action) (comparator : Action) (hcomparator : comparator ∈ arms) (delta : Real) (hdelta : 0 < delta) : let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment mu (sampledRealizedRegretGeometricAllTimeFailureSet arms eta gamma loss comparator delta) <= ENNReal.ofReal delta",
+  "statement_hash": "34d6b6dd7518f9b531186f8db39ab7f52a67b685605a43cc8c5871d3fa295702",
+  "source_assumptions": [],
+  "created_at": "2026-08-12T16:01:30+00:00"
+}

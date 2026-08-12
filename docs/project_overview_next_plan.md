@@ -2,7 +2,25 @@
 
 ## Current Book Map Boundary (2026-08-12)
 
-Chapters 2--6 are compiled under independent scoped website definitions.
+Chapters 2--8 are compiled under independent scoped website definitions.
+Chapter 7 exposes the canonical finite-action generated EXP3 chain from the
+exponential potential and conditional importance-weighted moments through the
+horizon-tuned expected endpoint, a separately horizon-tuned fixed-window
+best-arm realized tail, one fixed-process/supported-comparator
+all-positive-prefix realized-regret event, and the explicitly conditional
+sparse-loss extension.  The two horizon-dependent laws are not described as
+one horizon-free policy or one simultaneous anytime theorem.
+
+Chapter 8 exposes the canonical scheduled half-Tsallis FTRL chain from
+finite-simplex minimizers and measurable generated action laws through score
+alignment, all-rate expected stability, fixed-gap self-bounding, and the
+finite-arm IID bounded rational reward-law logarithmic terminal.  The public
+canary instantiates the terminal with concrete two-arm IID Dirac reward laws
+of means `3/4` and `1/4`, a proved positive gap, and zero corruption allowance.
+Paper-sharp/minimax Tsallis-INF, complete
+best-of-both-worlds, high-probability/realized regret, and observed-reward
+restart detection remain extensions.
+
 Chapter 5 now exposes the complete finite-action, finite-feature scalar OFUL
 route: Gram/determinant geometry, conditional-MGF/self-normalized ridge
 confidence, measurable optimism, a producer-backed generated history law, and
@@ -52,17 +70,15 @@ work now follows the paper's dependency order:
 4. assemble reusable RL Bellman, occupancy, confidence, and policy-output
    interfaces before attempting a complete UCB-VI-style endpoint.
 
-Within item 2, finite-arm sampled UCB already has a compiled logarithmic
-pseudo-regret route and average-regret convergence. EXP3 already has compiled
-expected-regret and several fixed-horizon Bernstein-style confidence routes.
-The concrete geometric schedule, deterministic unit-variance producer,
-same-process predictable-regret event, and pure realized-deviation event now
-feed a compiled all-positive-prefix realized selected-loss regret theorem.
-The next adversarial target is a finite-supported-comparator union and best-arm
-external-regret surface on that same fixed process. This follows the paper's
-EXP3 order: importance-weighted moments, potential/stability/comparator
-analysis, realized-loss composition, then comparator aggregation. Ideal
-Freedman/EXP3.P and a horizon-free tuned algorithm remain open.
+Within item 2, finite-arm sampled UCB has compiled ordinary and conservative
+KL variants.  EXP3 and half-Tsallis now have external Book Map canaries for
+their exact canonical generated-law endpoints.  The next adversarial work
+must therefore be selected from genuine extensions: a finite supported-
+comparator aggregation on the same fixed EXP3 process, a horizon-free tuned
+EXP3 policy, high-probability/realized Tsallis consumers, or a paper-sharp
+best-of-both-worlds route.  Ideal Freedman/EXP3.P and theorem-card language
+remain evidence or future work rather than reasons to reopen the compiled
+canonical chains.
 
 ## Current Lean Frontier: Generated EXP3 Realized-Regret All-Time Tail
 
