@@ -3712,10 +3712,13 @@ theorem stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_sum_clipped
       rw [Nat.cast_sub (Nat.one_le_iff_ne_zero.mpr hn)]
       ring
 
+set_option linter.unusedVariables false in
 /--
 Stationary-reward Thompson Bayesian regret with an explicit confidence
 parameter.  This is the decomposition-facing join of the two pinned-LML
-clipped-UCB expectation bounds.
+clipped-UCB expectation bounds.  The analytic upper bound is in fact
+comparator-uniform, but the public Bayesian-regret endpoint deliberately
+retains `IsOptimalMeanSelector mean bestAction` as an interpretation contract.
 -/
 theorem stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryBayesMeanRegret_le_of_delta
     {Env : Type u} {K : Nat} [MeasurableSpace Env]
@@ -3725,6 +3728,7 @@ theorem stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryB
     [IsMarkovKernel rewardKernel]
     (bestAction : Env -> Fin K) (hbestAction : Measurable bestAction)
     (mean : Env -> Fin K -> Real)
+    (hbest : IsOptimalMeanSelector mean bestAction)
     (hmeas_mean : Measurable (fun input : Env × Fin K =>
       mean input.1 input.2))
     (l u : Real) (hlu : l <= u)
@@ -3837,7 +3841,9 @@ theorem stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryB
 
 /--
 Pinned-LML stationary-reward Thompson Bayesian-regret bound, obtained from
-the explicit-confidence theorem with `delta = 1 / n ^ 2`.
+the explicit-confidence theorem with `delta = 1 / n ^ 2`.  Unlike the
+comparator-relative decomposition, this endpoint explicitly requires the
+selector to maximize the declared mean surface pointwise.
 -/
 theorem stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryBayesMeanRegret_le
     {Env : Type u} {K : Nat} [MeasurableSpace Env]
@@ -3847,6 +3853,7 @@ theorem stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryB
     [IsMarkovKernel rewardKernel]
     (bestAction : Env -> Fin K) (hbestAction : Measurable bestAction)
     (mean : Env -> Fin K -> Real)
+    (hbest : IsOptimalMeanSelector mean bestAction)
     (hmeas_mean : Measurable (fun input : Env × Fin K =>
       mean input.1 input.2))
     (l u : Real) (hlu : l <= u)
@@ -3903,7 +3910,7 @@ theorem stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryB
       (hbestAction.comp measurable_fst)
   have hgeneral :=
     stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryBayesMeanRegret_le_of_delta
-      prior rewardKernel bestAction hbestAction mean hmeas_mean
+      prior rewardKernel bestAction hbestAction mean hbest hmeas_mean
         l u hlu hmeanMem sigma2 hsubG hsigma2
         delta hdelta hdelta_one n
   dsimp only at hgeneral

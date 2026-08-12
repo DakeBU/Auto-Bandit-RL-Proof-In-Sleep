@@ -201,15 +201,32 @@ selected.
 
 ## Algorithm Branches
 
+The Book Map Chapter 5 canonical branch is now compiled through
+`OFUL.finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm`: Gram and
+determinant geometry feed self-normalized ridge confidence, measurable
+optimism, producer-backed all-time confidence, all-horizon regret, and bounded
+plus square-integrable stopping consumers on the same horizon-free generated
+policy.  The compiled expected-average consistency theorem belongs to a
+separate horizon-indexed fixed-model family.  Contextual/dynamic or
+infinite-dimensional OFUL and universal optional-stopping claims remain open.
+
+The Chapter 6 canonical branch is compiled from posterior-kernel correctness
+to actual recursive probability matching, clipped-score decomposition,
+stationary latent-stream support, and the generated Bayesian-regret terminal.
+`Thompson.IsOptimalMeanSelector` is now an explicit premise of that terminal;
+the underlying decomposition alone remains comparator-relative.  Broader
+posterior models, contextual/linear Thompson sampling, PSRL, sharp asymptotic
+constants, and literal LML declaration identity remain separate.
+
 | Branch | Immediate proof leaves | Source cards |
 | --- | --- | --- |
 | ETC | phase-splitting helper, deterministic ETC-only regret extension, commit argmax, wrong-commit probability, pull-count after commit | `TXT-LATTIMORE-SZEPESVARI-2020`, LML `Bandits.ETC.regret_le` |
 | UCB | positive initial counts, index maximization, good-event pull bound, tail union, regret sum | `TXT-BUBECK-CESABIANCHI-2012`, `TXT-LATTIMORE-SZEPESVARI-2020`, `PPR-AUER-CBF-2002-UCB1`, LML `Bandits.UCB.regret_le` |
 | KL-UCB | Bernoulli KL, confidence inversion, bounded stochastic reward contracts | `PPR-GARIVIER-CAPPE-2011-KLUCB`, `TXT-LATTIMORE-SZEPESVARI-2020` |
-| Thompson sampling | posterior action identity, Bayesian regret decomposition, clipped confidence bridge | `TXT-SLIVKINS-2019-2024`, `PPR-AGRAWAL-GOYAL-2011-TS`, LML `Bandits.TS.hasCondDistrib_action`, LML `Bandits.integral_regret_le` |
+| Thompson sampling | compiled stationary posterior kernel, actual recursive probability matching, comparator decomposition plus explicit mean-optimality contract, clipped confidence, latent-stream support, generated Bayesian regret; broader model/toolchain ports remain open | `TXT-SLIVKINS-2019-2024`, `PPR-AGRAWAL-GOYAL-2011-TS`, LML cards `Bandits.TS.hasCondDistrib_action`, `Bandits.integral_regret_le` |
 | EXP3/adversarial | deterministic Hedge regret, importance-weighted finite-sum moments, one-round conditional transport, bounded-loss/uniform-floor regularity, an exploration-mixed recursive trajectory, concrete sampled importance-weighted history-score recursion, predictable `[0,1]` chosen-coordinate Dirac feedback, global `(Env,prefix,nextPair)` transport, initial/successor observed first/second moments, and finite-horizon integral assembly compiled; sampled-score/potential coupling, exploration bias, and eta/gamma optimization remain | `TXT-BUBECK-CESABIANCHI-2012`, `TXT-LATTIMORE-SZEPESVARI-2020`, `PPR-AUER-CFS-2002-EXP3` |
 | Tsallis-INF/FTRL | generated expected environment regret, refined scheduled stability/penalty assembly, exact predictable fixed-gap self-bounding, concrete square-root schedule, explicit Mathlib-backed logarithmic exact-gap regret, and a bounded `FiniteBanditModel` mean-loss specialization compile; the direct current-FTRL refined average remains refuted by the strict `Fin 2` counterexample; next transport stochastic reward-kernel feedback and its conditional mean into self-bounding; the full paper theorem remains open | `LOCAL-LEAF-TSALLIS-FINITE-BANDIT-MEAN-LOSS`, `LOCAL-LEAF-TSALLIS-SQRT-SCHEDULE-LOG-FIXED-GAP`, `LOCAL-LEAF-TSALLIS-SQRT-SCHEDULE-FIXED-GAP`, `LOCAL-LEAF-TSALLIS-SCHEDULED-REFINED-STABILITY-PENALTY-ASSEMBLY`, `LOCAL-LEAF-TSALLIS-SCHEDULED-FIXED-GAP-SELF-BOUNDING`, `LOCAL-LEAF-TSALLIS-SCHEDULED-SUBOPTIMAL-EXPECTED-BOUND`, `LOCAL-LEAF-TSALLIS-SCHEDULED-EXPECTED-REGRET`, `LOCAL-LEAF-TSALLIS-SCHEDULED-ALL-RATE-EXPECTED-STABILITY`, `LOCAL-LEAF-TSALLIS-SCHEDULED-ALL-TIMES-EXPECTED-STABILITY`, `LOCAL-LEAF-TSALLIS-SCHEDULED-INITIAL-EXPECTED-STABILITY`, `LOCAL-LEAF-TSALLIS-SCHEDULED-SUCCESSOR-EXPECTED-STABILITY`, `LOCAL-LEAF-TSALLIS-SCHEDULED-SCORE-PENALTY-ALIGNMENT`, `LOCAL-LEAF-TSALLIS-SCHEDULED-RECURSIVE-TRAJECTORY`, `LOCAL-LEAF-TSALLIS-TIME-VARYING-PENALTY`, `LOCAL-LEAF-TSALLIS-CONJUGATE-POTENTIAL-FINITE-HORIZON-DECOMPOSITION`, `LOCAL-LEAF-TSALLIS-CONJUGATE-POTENTIAL-STABILITY`, `LOCAL-LEAF-TSALLIS-REFINED-AVERAGED-STABILITY-OBSTRUCTION`, `LOCAL-LEAF-TSALLIS-REFINED-SHIFTED-IW-MOMENT`, `LOCAL-LEAF-TSALLIS-REFINED-ALLARM-TO-SUBOPTIMAL`, `LOCAL-LEAF-TSALLIS-SELF-BOUNDING-CONVERSION`, `LOCAL-LEAF-TSALLIS-ESTIMATED-ENVIRONMENT-REGRET`, `PPR-ZIMMERT-SELDIN-2018-TSALLIS-INF`, `PPR-MASOUDIAN-SELDIN-2021-TSALLIS-INF`, `PPR-KATO-ITO-2024-LC-TSALLIS-INF`, `PPR-ADAPTIVE-LR-FTRL-2024` |
-| Linear/OFUL | least-squares estimator, confidence ellipsoid, elliptical potential, optimism | `TXT-LATTIMORE-SZEPESVARI-2020`, `PPR-ABBASI-YADKORI-2011-SELF-NORMALIZED`, `PPR-LI-CHU-LANGFORD-SCHAPIRE-2010-LINUCB` |
+| Linear/OFUL | compiled finite-action scalar route from Gram/determinant and confidence ellipsoid to a horizon-free all-time/all-horizon/stopping policy; horizon-indexed expectation/consistency is separate; contextual/dynamic/Hilbert extensions remain open | `TXT-LATTIMORE-SZEPESVARI-2020`, `PPR-ABBASI-YADKORI-2011-SELF-NORMALIZED`, `PPR-LI-CHU-LANGFORD-SCHAPIRE-2010-LINUCB` |
 | Pure exploration | confidence event, stopping rule, sample complexity, lower-bound change-of-measure | `TXT-LATTIMORE-SZEPESVARI-2020`, `TXT-SLIVKINS-2019-2024` |
 | BwK/resource constraints | budget stopping time, resource consumption, primal-dual comparison | `TXT-SLIVKINS-2019-2024`, `PPR-BADANIDIYURU-KLEINBERG-SLIVKINS-2013-BWK` |
 | Dueling/preference | pairwise preference, Borda/Condorcet winner notions, comparison regret | `PPR-IJCAI-2018-DUELING-SURVEY` |

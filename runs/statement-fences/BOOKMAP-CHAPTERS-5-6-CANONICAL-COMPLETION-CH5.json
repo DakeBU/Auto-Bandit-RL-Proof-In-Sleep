@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRLProof.OFUL.telescopingCanonicalStandardHighProbabilityPseudoRegret_nonneg_and_allHorizon_tail_le_explicitBound_of_linearSubgaussianEnvironment_of_featureBound_le_regularization",
+  "file": "BanditRLProof/OFULScheduledAllHorizonHighProbabilityRegretRate.lean",
+  "statement": "theorem telescopingCanonicalStandardHighProbabilityPseudoRegret_nonneg_and_allHorizon_tail_le_explicitBound_of_linearSubgaussianEnvironment_of_featureBound_le_regularization {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature] (hK : 0 < K) (lambda : Real) (hlambda : 0 < lambda) (thetaStar : Feature -> Real) (actionFeature : Fin K -> Feature -> Real) (R : Real) (hR : 0 < R) (delta : Real) (hdelta : 0 < delta) (hdelta_one : delta <= 1) (S : Real) (hS : 0 <= S) (environment : Thompson.HistoryEnvironment (Fin K) Real) (L2 : Real) (hL2 : 0 <= L2) (hactionFeatureBound : forall action, dotProduct (actionFeature action) (actionFeature action) <= L2) (hL2lambda : L2 <= lambda) (best : Fin K) (hbest : IsOptimalLinearArm thetaStar actionFeature best) (source : CanonicalLinearSubgaussianEnvironmentLaw hK thetaStar actionFeature R S environment) : (forall horizon trajectory, 0 <= canonicalStandardHighProbabilityPseudoRegret thetaStar actionFeature best horizon trajectory) /\\ Thompson.canonicalHistoryTrajectoryMeasure (finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm hK lambda actionFeature R delta S) environment (telescopingCanonicalExplicitHighProbabilityPseudoRegretAllHorizonViolationSet lambda thetaStar actionFeature R delta S L2 best) <= ENNReal.ofReal delta",
+  "statement_hash": "005798f338340aa583560f84e7f6e6d0e6559791511bf7e3af8a1c6b78e0744c",
+  "source_assumptions": [
+    "CanonicalLinearSubgaussianEnvironmentLaw"
+  ],
+  "created_at": "2026-08-12T14:25:17+00:00"
+}

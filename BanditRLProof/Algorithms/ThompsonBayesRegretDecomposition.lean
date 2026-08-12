@@ -335,7 +335,17 @@ theorem uniformReferenceThompsonAlgorithm_integral_historyScore_eq_bestAction
             score.successor n pair.1 pair.2)
           (score.measurable_successor n))
 
-/-- Finite-horizon pseudo-regret under environment-dependent action means. -/
+/-- A selector is mean-optimal when it maximizes the environment-dependent
+action mean pointwise.  This contract separates a genuine best-action regret
+interpretation from the comparator-relative algebra below. -/
+def IsOptimalMeanSelector
+    {Env : Type u} {Action : Type v}
+    (mean : Env -> Action -> Real) (bestAction : Env -> Action) : Prop :=
+  forall env arm, mean env arm <= mean env (bestAction env)
+
+/-- Finite-horizon comparator-relative mean regret.  It is Bayesian
+pseudo-regret when `bestAction` satisfies `IsOptimalMeanSelector mean
+bestAction` and the environment is integrated against a prior. -/
 def trajectoryBayesMeanRegret
     {Env : Type u} {Action : Type v} {Reward : Type w}
     (mean : Env -> Action -> Real) (bestAction : Env -> Action)

@@ -126,9 +126,13 @@
       "slug": "oful",
       "title": "5. OFUL, self-normalized confidence, and stopping times",
       "short_title": "OFUL",
-      "status": "partial",
-      "summary": "Elliptical potential, Gaussian-mixture self-normalization, ridge confidence, strict measurable optimistic selection, finite-window and all-time regret, expected rates, and random-horizon consumers.",
+      "status": "compiled",
+      "summary": "The scoped canonical finite-action linear-bandit route compiles from elliptical potential and self-normalized ridge confidence through one horizon-free generated OFUL policy with all-horizon regret and stopping consumers, plus a separately identified horizon-indexed expected-consistency family.",
       "audience": "Read the Probability layer and UCB chapter before this linear-bandit route.",
+      "completion_definition": "Complete in the canonical textbook scope when finite-dimensional Gram geometry, rank-one determinant and log-determinant arguments, conditional-MGF/self-normalized ridge confidence, regularization bias, measurable finite-action optimism, and a kernel-law-produced generated trajectory compile; one horizon-free telescoping policy must carry all-time confidence, all-horizon high-probability pseudo-regret, and bounded plus square-integrable stopping-time consumers, while the distinct horizon-indexed fixed-model family carries finite-horizon expectation and expected-average consistency. One public external canary must distinguish and type both families.",
+      "completion_blockers": [
+        "No remaining blocker inside this canonical scope: Tests/BookMapChaptersFiveAndSixCanary.lean gives full-conclusion typed applications for the same horizon-free telescoping policy/environment/trajectory chain through all-horizon and both stopping consumers, and separately types the horizon-indexed expected-consistency family. The items below are explicitly out-of-scope extensions."
+      ],
       "learning_goals": [
         "Understand the log-determinant proof of the elliptical-potential inequality.",
         "Follow a conditional MGF source through ridge confidence and optimistic action selection.",
@@ -136,17 +140,22 @@
       ],
       "module_globs": ["BanditRLProof/OFUL*.lean"],
       "open_gaps": [
-        "The repository now contains explicit finite-window expected rates, fixed-model average-regret consistency, one-policy all-time confidence, and stopping-time theorems; broader contextual, dynamic, and minimax claims remain separate.",
-        "Budget-forced schedules compile under explicit contracts, but this is not a full primal-dual Bandits-with-Knapsacks theorem."
+        "Contextual or time-varying action sets, dynamic linear bandits, paper-sharp/minimax constants, uniform-over-parameter guarantees, and infinite-dimensional Hilbert-space OFUL remain extensions.",
+        "Arbitrary history environments without a centered conditional-MGF producer, pathwise/almost-sure/universal optional-stopping consistency, and full primal-dual Bandits-with-Knapsacks remain outside the completed scope.",
+        "Budget-forced schedules compile under explicit contracts, but they are not labeled as a complete BwK theorem."
       ]
     },
     {
       "slug": "thompson",
       "title": "6. Thompson sampling and Bayesian regret",
       "short_title": "Thompson sampling",
-      "status": "partial",
-      "summary": "Posterior kernels, conditional action-law identities, trajectory construction, clipped-UCB decomposition, and stationary latent-arm-stream regret.",
+      "status": "compiled",
+      "summary": "The scoped stationary finite-arm Thompson route compiles from posterior kernels and probability matching on the actual recursive generated history through clipped-UCB decomposition, latent-stream confidence, and an explicit Bayesian regret terminal.",
       "audience": "Best read after the Probability layer.",
+      "completion_definition": "Complete in the stationary canonical textbook scope when a probability prior and likelihood construct the posterior kernel, a measurable selector with the explicit pointwise IsOptimalMeanSelector contract gives posterior best-action pushforward and actual-recursive-trajectory probability matching, score transport yields Bayesian and clipped-UCB decompositions, a stationary Markov reward kernel constructs the augmented latent arm stream with a.e. generated-reward support, upper/lower confidence consumers compile, and the generated trajectory satisfies E[R_n^Bayes] <= (2K+1)(u-l)+8 sqrt(sigma^2 K n log n) under the exact optimality, measurable bounded-mean, and centered sub-Gaussian assumptions.",
+      "completion_blockers": [
+        "No remaining blocker inside this stationary canonical scope: the public canary types probability matching on the actual recursive history and concretely instantiates the final theorem with a one-arm stationary Gaussian Markov source while explicitly proving its mean-optimal selector contract. The items below remain separate extensions."
+      ],
       "learning_goals": [
         "Read a posterior as a kernel from histories to environments.",
         "Transport conditional action-law equality onto the generated trajectory.",
@@ -154,8 +163,9 @@
       ],
       "module_globs": ["BanditRLProof/Algorithms/Thompson*.lean"],
       "open_gaps": [
-        "The stationary latent-arm-stream endpoint is compiled; broader posterior models need their own law producers.",
-        "Exact upstream compatibility remains an independently tracked task."
+        "Arbitrary nonstationary posterior models, contextual or linear Thompson sampling, posterior-sampling RL, and user-supplied posteriors without a law producer remain extensions.",
+        "Sharp problem-dependent or asymptotically optimal constants are not claimed by the compiled stationary terminal.",
+        "Exact LeanMachineLearning declaration/toolchain identity remains independently blocked; LML cards are retrieval evidence, not imported proof terms."
       ]
     },
     {

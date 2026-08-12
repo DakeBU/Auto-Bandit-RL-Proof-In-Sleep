@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRLProof.Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryBayesMeanRegret_le",
+  "file": "BanditRLProof/Algorithms/ThompsonStationaryReward.lean",
+  "statement": "theorem stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryBayesMeanRegret_le {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env] [NeZero K] (prior : Measure Env) [IsProbabilityMeasure prior] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] (bestAction : Env -> Fin K) (hbestAction : Measurable bestAction) (mean : Env -> Fin K -> Real) (hbest : IsOptimalMeanSelector mean bestAction) (hmeas_mean : Measurable (fun input : Env × Fin K => mean input.1 input.2)) (l u : Real) (hlu : l <= u) (hmeanMem : forall env arm, mean env arm ∈ Set.Icc l u) (sigma2 : NNReal) (hsubG : forall env arm, HasSubgaussianMGF (fun reward => reward - mean env arm) sigma2 (rewardKernel (env, arm))) (hsigma2 : sigma2 ≠ 0) (n : Nat) : let augmentedPrior := stationaryLatentArmStreamPrior prior rewardKernel let feedbackEnvironment := latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K) let augmentedBestAction := fun envStream : Env × UCB.ArmRewardStream K => bestAction envStream.1 let augmentedMean := fun envStream : Env × UCB.ArmRewardStream K => fun arm => mean envStream.1 arm let algorithm := uniformReferenceThompsonAlgorithm augmentedPrior feedbackEnvironment augmentedBestAction (hbestAction.comp measurable_fst) integral (stationaryLatentArmStreamCanonicalTrajectoryMeasure prior rewardKernel algorithm) (fun sample => trajectoryBayesMeanRegret augmentedMean augmentedBestAction sample n) <= (2 * K + 1) * (u - l) + 8 * Real.sqrt ((sigma2 : Real) * K * n * Real.log n)",
+  "statement_hash": "a1013843b0b69fc6f14be6c081b402b5699cf81775240e5851ade85a77f7e609",
+  "source_assumptions": [
+    "IsOptimalMeanSelector"
+  ],
+  "created_at": "2026-08-12T14:25:17+00:00"
+}
