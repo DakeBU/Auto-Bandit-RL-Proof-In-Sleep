@@ -67110,4 +67110,54 @@ noncomputable example (scheduleIndex : Nat) :
 
 end FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceAlmostSureConsistencyCanary
 
+namespace ConcentrationFintypeGeometricAllTimeCanary
+
+open MeasureTheory
+open scoped ENNReal
+
+noncomputable example
+    {Omega Idx : Type} [MeasurableSpace Omega] [Fintype Idx] [Nonempty Idx]
+    (mu : Measure Omega) (bad : Nat -> Idx -> Set Omega)
+    (deltaAt : Nat -> Real)
+    (hbad : forall n i,
+      mu (bad n i) <=
+        ENNReal.ofReal (deltaAt n / (Fintype.card Idx : Real))) :
+    mu (⋃ n, ⋃ i, bad n i) <=
+      ∑' n, ENNReal.ofReal (deltaAt n) := by
+  exact Concentration.measure_iUnion_iUnion_fintype_le_tsum_of_uniform
+    mu bad deltaAt hbad
+
+noncomputable example
+    {Omega Idx : Type} [MeasurableSpace Omega] [Fintype Idx] [Nonempty Idx]
+    (mu : Measure Omega) (bad : Nat -> Idx -> Set Omega)
+    (delta : Real) (hdelta : 0 <= delta)
+    (hbad : forall n i,
+      mu (bad n i) <= ENNReal.ofReal
+        (Concentration.geometricConfidenceShare delta n /
+          (Fintype.card Idx : Real))) :
+    mu (⋃ n, ⋃ i, bad n i) <= ENNReal.ofReal delta := by
+  exact
+    Concentration.measure_iUnion_iUnion_fintype_le_delta_of_geometricConfidenceShare
+      mu bad delta hdelta hbad
+
+noncomputable example (delta : Real) (hdelta : 0 <= delta) :
+    (Measure.dirac () : Measure Unit)
+        (⋃ _n : Nat, ⋃ _i : Fin 2, (∅ : Set Unit)) <= ENNReal.ofReal delta := by
+  apply
+    Concentration.measure_iUnion_iUnion_fintype_le_delta_of_geometricConfidenceShare
+      (Measure.dirac () : Measure Unit)
+        (fun _n (_i : Fin 2) => (∅ : Set Unit)) delta hdelta
+  intro n i
+  simp
+
+#print axioms Concentration.measure_iUnion_iUnion_fintype_le_tsum_of_uniform
+#print axioms Concentration.measure_iUnion_iUnion_fintype_le_delta_of_geometricConfidenceShare
+
+#check ConditionalExpectationReward.successorArmEmpiricalMeanFintypeGeometricAllTimeBadEvent
+#check ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_successorArmEmpiricalMean_simultaneous_fintype_geometricAllTime_abs_tail_ennreal_delta_trajMeasure
+#print axioms ConditionalExpectationReward.successorArmEmpiricalMeanFintypeGeometricAllTimeBadEvent
+#print axioms ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_successorArmEmpiricalMean_simultaneous_fintype_geometricAllTime_abs_tail_ennreal_delta_trajMeasure
+
+end ConcentrationFintypeGeometricAllTimeCanary
+
 end BanditRLProof

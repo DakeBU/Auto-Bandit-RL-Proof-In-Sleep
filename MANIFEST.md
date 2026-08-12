@@ -12734,3 +12734,252 @@ here during local harness runs.
 - `2026-08-10T06:48:49+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
 - `2026-08-10T06:48:59+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/EXP3-REALIZED-REGRET-GEOMETRIC-ALL-TIME-TAIL.md` - EXP3-REALIZED-REGRET-GEOMETRIC-ALL-TIME-TAIL
 - `2026-08-10T06:49:09+00:00` `bandit.py memory-refresh` `retrieval-index` `research-wiki/retrieval-index/EXP3-REALIZED-REGRET-GEOMETRIC-ALL-TIME-TAIL.json` - EXP3-REALIZED-REGRET-GEOMETRIC-ALL-TIME-TAIL
+- `2026-08-11T06:10:12+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-11T06:10:12+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-11T06:10:12+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-11T06:10:12+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-11T06:10:12+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-11T06:10:12+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-11T06:10:12+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-11T06:10:12+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-11T06:37:24+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/CONCENTRATION-FINTYPE-GEOMETRIC-ALL-TIME-UNION.md` - CONCENTRATION-FINTYPE-GEOMETRIC-ALL-TIME-UNION
+- `2026-08-11T06:41:56+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-11T06:41:56+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-11T06:41:56+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-11T06:41:56+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-11T06:41:56+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-11T06:41:56+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-11T06:41:56+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-11T06:41:56+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-11T06:42:00+00:00` `bandit.py memory-refresh` `retrieval-index` `research-wiki/retrieval-index/CONCENTRATION-FINTYPE-GEOMETRIC-ALL-TIME-UNION.json` - CONCENTRATION-FINTYPE-GEOMETRIC-ALL-TIME-UNION
+- `2026-08-11T06:42:04+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/CONCENTRATION-FINTYPE-GEOMETRIC-ALL-TIME-UNION.md` - CONCENTRATION-FINTYPE-GEOMETRIC-ALL-TIME-UNION
+- `2026-08-11T09:01:09+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/CONCENTRATION-FINTYPE-GEOMETRIC-ALL-TIME-UNION.md` - CONCENTRATION-FINTYPE-GEOMETRIC-ALL-TIME-UNION
+- `2026-08-11T09:01:14+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-11T09:01:14+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-11T09:01:14+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-11T09:01:14+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-11T09:01:14+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-11T09:01:14+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-11T09:01:14+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-11T09:01:14+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-11T09:01:43+00:00` `bandit.py memory-refresh` `retrieval-index` `research-wiki/retrieval-index/CONCENTRATION-FINTYPE-GEOMETRIC-ALL-TIME-UNION.json` - CONCENTRATION-FINTYPE-GEOMETRIC-ALL-TIME-UNION
+- `2026-08-11T09:05:41+00:00` `bandit.py memory-refresh` `retrieval-index` `research-wiki/retrieval-index/CONCENTRATION-FINTYPE-GEOMETRIC-ALL-TIME-UNION.json` - CONCENTRATION-FINTYPE-GEOMETRIC-ALL-TIME-UNION
+- `2026-08-11T09:07:03+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/CONCENTRATION-FINTYPE-GEOMETRIC-ALL-TIME-UNION.md` - CONCENTRATION-FINTYPE-GEOMETRIC-ALL-TIME-UNION
+- `2026-08-11T09:07:07+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-11T09:07:07+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-11T09:07:07+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-11T09:07:07+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-11T09:07:07+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-11T09:07:07+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-11T09:07:07+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-11T09:07:07+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-11T09:07:12+00:00` `bandit.py memory-refresh` `retrieval-index` `research-wiki/retrieval-index/CONCENTRATION-FINTYPE-GEOMETRIC-ALL-TIME-UNION.json` - CONCENTRATION-FINTYPE-GEOMETRIC-ALL-TIME-UNION
+- `2026-08-11T09:37:15+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-11T09:37:15+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-11T09:37:15+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-11T09:37:15+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-11T09:37:15+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-11T09:37:15+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-11T09:37:15+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-11T09:37:15+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-11T09:41:27+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/CONCENTRATION-GENERATED-FINTYPE-EMPIRICAL-MEAN-GEOMETRIC-ALL-TIME.md` - CONCENTRATION-GENERATED-FINTYPE-EMPIRICAL-MEAN-GEOMETRIC-ALL-TIME
+- `2026-08-11T09:55:49+00:00` `bandit.py export-proof` `proof-export` `paper-notes/problem-exports/CONCENTRATION-GENERATED-FINTYPE-EMPIRICAL-MEAN-GEOMETRIC-ALL-TIME/latest.tex` - CONCENTRATION-GENERATED-FINTYPE-EMPIRICAL-MEAN-GEOMETRIC-ALL-TIME
+- `2026-08-11T10:05:39+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-11T10:05:39+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-11T10:05:39+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-11T10:05:39+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-11T10:05:39+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-11T10:05:39+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-11T10:05:39+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-11T10:05:39+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-11T10:05:45+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/CONCENTRATION-GENERATED-FINTYPE-EMPIRICAL-MEAN-GEOMETRIC-ALL-TIME.md` - CONCENTRATION-GENERATED-FINTYPE-EMPIRICAL-MEAN-GEOMETRIC-ALL-TIME
+- `2026-08-11T10:09:11+00:00` `bandit.py memory-refresh` `retrieval-index` `research-wiki/retrieval-index/CONCENTRATION-GENERATED-FINTYPE-EMPIRICAL-MEAN-GEOMETRIC-ALL-TIME.json` - CONCENTRATION-GENERATED-FINTYPE-EMPIRICAL-MEAN-GEOMETRIC-ALL-TIME
+- `2026-08-11T10:09:56+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/CONCENTRATION-GENERATED-FINTYPE-EMPIRICAL-MEAN-GEOMETRIC-ALL-TIME.md` - CONCENTRATION-GENERATED-FINTYPE-EMPIRICAL-MEAN-GEOMETRIC-ALL-TIME
+- `2026-08-11T10:10:02+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-11T10:10:02+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-11T10:10:02+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-11T10:10:02+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-11T10:10:02+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-11T10:10:02+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-11T10:10:02+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-11T10:10:02+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-11T10:14:13+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-11T10:14:13+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-11T10:14:13+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-11T10:14:13+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-11T10:14:13+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-11T10:14:13+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-11T10:14:13+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-11T10:14:13+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-11T10:18:35+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-11T10:18:35+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-11T10:18:35+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-11T10:18:35+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-11T10:18:35+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-11T10:18:35+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-11T10:18:35+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-11T10:18:35+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-11T10:18:55+00:00` `bandit.py new-task` `task` `tasks/BOOKMAP-CHAPTERS-2-4-CANONICAL-ROUTE-CANARIES.md` - Book Map Chapters 2-4 canonical route completion canaries
+- `2026-08-11T10:44:16+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/BOOKMAP-CHAPTERS-2-4-CANONICAL-ROUTE-CANARIES.md` - BOOKMAP-CHAPTERS-2-4-CANONICAL-ROUTE-CANARIES
+- `2026-08-11T10:44:23+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-11T10:44:23+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-11T10:44:23+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-11T10:44:23+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-11T10:44:23+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-11T10:44:23+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-11T10:44:23+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-11T10:44:23+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-11T10:59:01+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-11T10:59:01+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-11T10:59:01+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-11T10:59:01+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-11T10:59:01+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-11T10:59:01+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-11T10:59:01+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-11T10:59:01+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-11T11:02:47+00:00` `bandit.py memory-refresh` `retrieval-index` `research-wiki/retrieval-index/BOOKMAP-CHAPTERS-2-4-CANONICAL-ROUTE-CANARIES.json` - BOOKMAP-CHAPTERS-2-4-CANONICAL-ROUTE-CANARIES
+- `2026-08-11T11:04:40+00:00` `bandit.py memory-refresh` `retrieval-index` `research-wiki/retrieval-index/BOOKMAP-CHAPTERS-2-4-CANONICAL-ROUTE-CANARIES.json` - BOOKMAP-CHAPTERS-2-4-CANONICAL-ROUTE-CANARIES
+- `2026-08-11T11:05:34+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/BOOKMAP-CHAPTERS-2-4-CANONICAL-ROUTE-CANARIES.md` - BOOKMAP-CHAPTERS-2-4-CANONICAL-ROUTE-CANARIES
+- `2026-08-11T11:41:02+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-11T11:41:02+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-11T11:41:02+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-11T11:41:02+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-11T11:41:02+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-11T11:41:02+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-11T11:41:02+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-11T11:41:02+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-11T11:41:04+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-11T11:41:04+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-11T11:41:04+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-11T11:41:04+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-11T11:41:04+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-11T11:41:04+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-11T11:41:04+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-11T11:41:04+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-11T11:44:50+00:00` `bandit.py new-task` `task` `tasks/CONCENTRATION-GENERATED-FINTYPE-EMPIRICAL-MEAN-TELESCOPING-ALL-TIME.md` - Generated finite-arm empirical-mean telescoping all-time confidence
+- `2026-08-11T11:59:06+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/CONCENTRATION-GENERATED-FINTYPE-EMPIRICAL-MEAN-TELESCOPING-ALL-TIME.md` - CONCENTRATION-GENERATED-FINTYPE-EMPIRICAL-MEAN-TELESCOPING-ALL-TIME
+- `2026-08-11T12:11:47+00:00` `bandit.py memory-refresh` `retrieval-index` `research-wiki/retrieval-index/CONCENTRATION-GENERATED-FINTYPE-EMPIRICAL-MEAN-TELESCOPING-ALL-TIME.json` - CONCENTRATION-GENERATED-FINTYPE-EMPIRICAL-MEAN-TELESCOPING-ALL-TIME
+- `2026-08-11T12:11:51+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/CONCENTRATION-GENERATED-FINTYPE-EMPIRICAL-MEAN-TELESCOPING-ALL-TIME.md` - CONCENTRATION-GENERATED-FINTYPE-EMPIRICAL-MEAN-TELESCOPING-ALL-TIME
+- `2026-08-11T12:11:56+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-11T12:11:56+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-11T12:11:56+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-11T12:11:56+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-11T12:11:56+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-11T12:11:56+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-11T12:11:56+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-11T12:11:56+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-11T12:13:46+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-11T12:13:46+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-11T12:13:46+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-11T12:13:46+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-11T12:13:46+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-11T12:13:46+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-11T12:13:46+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-11T12:13:46+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-11T12:15:40+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/CONCENTRATION-GENERATED-FINTYPE-EMPIRICAL-MEAN-TELESCOPING-ALL-TIME.md` - CONCENTRATION-GENERATED-FINTYPE-EMPIRICAL-MEAN-TELESCOPING-ALL-TIME
+- `2026-08-11T13:03:30+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-11T13:03:30+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-11T13:03:30+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-11T13:03:30+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-11T13:03:30+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-11T13:03:30+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-11T13:03:30+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-11T13:03:30+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-11T13:08:05+00:00` `bandit.py new-task` `task` `tasks/UCB-FIXED-POLICY-TELESCOPING-ANYTIME-REGRET.md` - Fixed-policy telescoping anytime UCB regret
+- `2026-08-11T14:07:10+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/UCB-FIXED-POLICY-TELESCOPING-ANYTIME-REGRET.md` - UCB-FIXED-POLICY-TELESCOPING-ANYTIME-REGRET
+- `2026-08-11T14:07:40+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-11T14:07:40+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-11T14:07:40+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-11T14:07:40+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-11T14:07:40+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-11T14:07:40+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-11T14:07:40+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-11T14:07:40+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-11T14:09:44+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/UCB-FIXED-POLICY-TELESCOPING-ANYTIME-REGRET.md` - UCB-FIXED-POLICY-TELESCOPING-ANYTIME-REGRET
+- `2026-08-11T14:11:18+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-11T14:11:18+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-11T14:11:18+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-11T14:11:18+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-11T14:11:18+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-11T14:11:18+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-11T14:11:18+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-11T14:11:18+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-11T14:12:50+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-11T14:12:50+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-11T14:12:50+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-11T14:12:50+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-11T14:12:50+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-11T14:12:50+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-11T14:12:50+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-11T14:12:50+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-11T14:21:33+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-11T14:21:33+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-11T14:21:33+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-11T14:21:33+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-11T14:21:33+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-11T14:21:33+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-11T14:21:33+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-11T14:21:33+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-11T14:21:33+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/UCB-FIXED-POLICY-TELESCOPING-ANYTIME-REGRET.md` - UCB-FIXED-POLICY-TELESCOPING-ANYTIME-REGRET
+- `2026-08-11T14:24:04+00:00` `bandit.py memory-refresh` `retrieval-index` `research-wiki/retrieval-index/UCB-FIXED-POLICY-TELESCOPING-ANYTIME-REGRET.json` - UCB-FIXED-POLICY-TELESCOPING-ANYTIME-REGRET
+- `2026-08-11T14:25:14+00:00` `bandit.py memory-refresh` `retrieval-index` `research-wiki/retrieval-index/UCB-FIXED-POLICY-TELESCOPING-ANYTIME-REGRET.json` - UCB-FIXED-POLICY-TELESCOPING-ANYTIME-REGRET
+- `2026-08-11T14:35:20+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-11T14:35:20+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-11T14:35:20+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-11T14:35:20+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-11T14:35:20+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-11T14:35:20+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-11T14:35:20+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-11T14:35:20+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-11T14:40:22+00:00` `bandit.py new-task` `task` `tasks/KL-UCB-BOUNDED-GENERATED-REGRET.md` - Generated bounded-reward KL-UCB regret
+- `2026-08-11T14:49:05+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/KL-UCB-BOUNDED-GENERATED-REGRET.md` - KL-UCB-BOUNDED-GENERATED-REGRET
+- `2026-08-11T16:25:36+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/KL-UCB-BOUNDED-GENERATED-REGRET.md` - KL-UCB-BOUNDED-GENERATED-REGRET
+- `2026-08-11T16:25:42+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-11T16:25:42+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-11T16:25:42+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-11T16:25:42+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-11T16:25:42+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-11T16:25:42+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-11T16:25:42+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-11T16:25:42+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-11T16:33:44+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/KL-UCB-BOUNDED-GENERATED-REGRET.md` - KL-UCB-BOUNDED-GENERATED-REGRET
+- `2026-08-11T16:33:50+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-11T16:33:50+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-11T16:33:50+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-11T16:33:50+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-11T16:33:50+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-11T16:33:50+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-11T16:33:50+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-11T16:33:50+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-11T16:47:12+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-11T16:47:12+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-11T16:47:12+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-11T16:47:12+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-11T16:47:12+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-11T16:47:12+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-11T16:47:12+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-11T16:47:12+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-11T17:13:38+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/RL-FINITE-HORIZON-ADAPTIVE-CUMULATIVE-UCBVI-HIGH-PROBABILITY-REGRET.md` - RL-FINITE-HORIZON-ADAPTIVE-CUMULATIVE-UCBVI-HIGH-PROBABILITY-REGRET
+- `2026-08-11T17:24:27+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-11T17:24:27+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-11T17:24:27+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-11T17:24:27+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-11T17:24:27+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-11T17:24:27+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-11T17:24:27+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-11T17:24:27+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-11T17:24:31+00:00` `bandit.py memory-refresh` `retrieval-index` `research-wiki/retrieval-index/RL-FINITE-HORIZON-ADAPTIVE-CUMULATIVE-UCBVI-HIGH-PROBABILITY-REGRET.json` - RL-FINITE-HORIZON-ADAPTIVE-CUMULATIVE-UCBVI-HIGH-PROBABILITY-REGRET
+- `2026-08-11T17:24:35+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/RL-FINITE-HORIZON-ADAPTIVE-CUMULATIVE-UCBVI-HIGH-PROBABILITY-REGRET.md` - RL-FINITE-HORIZON-ADAPTIVE-CUMULATIVE-UCBVI-HIGH-PROBABILITY-REGRET
+- `2026-08-11T17:31:36+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-11T17:31:36+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-11T17:31:36+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-11T17:31:36+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-11T17:31:36+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-11T17:31:36+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-11T17:31:36+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-11T17:31:36+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-11T17:31:40+00:00` `bandit.py memory-refresh` `retrieval-index` `research-wiki/retrieval-index/RL-FINITE-HORIZON-ADAPTIVE-CUMULATIVE-UCBVI-HIGH-PROBABILITY-REGRET.json` - RL-FINITE-HORIZON-ADAPTIVE-CUMULATIVE-UCBVI-HIGH-PROBABILITY-REGRET
+- `2026-08-11T17:31:44+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/RL-FINITE-HORIZON-ADAPTIVE-CUMULATIVE-UCBVI-HIGH-PROBABILITY-REGRET.md` - RL-FINITE-HORIZON-ADAPTIVE-CUMULATIVE-UCBVI-HIGH-PROBABILITY-REGRET
+- `2026-08-12T09:34:07+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/UCB-FIXED-POLICY-TELESCOPING-ANYTIME-REGRET.md` - UCB-FIXED-POLICY-TELESCOPING-ANYTIME-REGRET
+- `2026-08-12T09:34:12+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/KL-UCB-BOUNDED-GENERATED-REGRET.md` - KL-UCB-BOUNDED-GENERATED-REGRET
+- `2026-08-12T09:34:16+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/RL-FINITE-HORIZON-ADAPTIVE-CUMULATIVE-UCBVI-HIGH-PROBABILITY-REGRET.md` - RL-FINITE-HORIZON-ADAPTIVE-CUMULATIVE-UCBVI-HIGH-PROBABILITY-REGRET

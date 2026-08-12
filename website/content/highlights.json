@@ -53,6 +53,84 @@
       "dependencies": []
     },
     {
+      "full_name": "BanditRLProof.Concentration.measure_iUnion_iUnion_fintype_le_delta_of_geometricConfidenceShare",
+      "chapter": "probability",
+      "plain": "A geometric budget over all times can be shared equally across every member of one nonempty finite index type while preserving the total outer confidence budget.",
+      "math": "\\(\\mu(\\bigcup_{n\\ge0}\\bigcup_{i\\in I}E_{n,i})\\le\\delta\\) when \\(\\mu(E_{n,i})\\le\\delta_n/|I|\\) and \\(\\sum_n\\delta_n=\\delta\\).",
+      "intuition": "Use a finite union bound across arms or contexts at each time, then a summable geometric schedule across all times.",
+      "why": "ETC and UCB confidence arguments repeatedly need simultaneous control over a finite family and more than one horizon; this theorem packages only that reusable bookkeeping step.",
+      "position": "It joins the finite outer-union wrapper to the geometric confidence schedule in Chapter 2, before any algorithm-specific tail producer.",
+      "proof_idea": "Apply countable outer-measure subadditivity over time, invoke the compiled equal-share finite-union theorem at each time, compare the ENNReal series termwise, and rewrite the exact geometric total.",
+      "lean_notes": "The exact statement assumes only a measurable ambient space, a nonempty Fintype index, nonnegative delta, and the pointwise outer-measure bounds. It does not require event measurability, a probability measure, independence, filtration, or a concentration producer.",
+      "dependencies": [
+        "BanditRLProof.ProbabilityUnionBound.measure_biUnion_finset_le_of_uniform",
+        "BanditRLProof.Concentration.tsum_ofReal_geometricConfidenceShare"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_successorArmEmpiricalMean_simultaneous_fintype_geometricAllTime_abs_tail_ennreal_delta_trajMeasure",
+      "chapter": "probability",
+      "plain": "One canonical generated action/reward trajectory satisfies the existing random-pull-count empirical-mean confidence radius simultaneously for every finite arm and every positive successor horizon, outside one geometrically budgeted failure event.",
+      "math": "\\(\\mu(\\bigcup_{n\\ge0}\\bigcup_{a\\in A}\\{N_a(n+1)>0,\\ r_{a,n+1}(\\delta_n/|A|)\\le |\\widehat\\mu_a(n+1)-\\mu_a|\\})\\le\\delta.\\)",
+      "intuition": "The fixed-arm tail already adapts to the random number of pulls inside a fixed horizon. This theorem keeps the generated law fixed, shares each time budget across all arms, and then sums the geometric schedule over all horizons.",
+      "why": "It closes the gap between generic confidence-budget bookkeeping and a real finite-arm trajectory-level empirical-mean event needed by UCB-facing work.",
+      "position": "It sits above the canonical random-pull-count tail and finite-index geometric union, and below any UCB score-selection or regret consumer.",
+      "proof_idea": "At each pair (n, arm), instantiate the compiled canonical tail at horizon n+1 and confidence share delta_n divided by the arm count; then apply the accepted finite-index geometric all-time union to the identical trajectory measure.",
+      "lean_notes": "The theorem requires a probability initial pair law, measurable generated context/state, a centered reward-kernel law, a global selected-history variance ceiling, stationary per-arm means, and positive sigma2 and delta. It assumes neither event measurability nor delta at most one, and it proves no maximal inequality or UCB regret bound.",
+      "dependencies": [
+        "BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_successorArmEmpiricalMean_abs_tail_random_pullCount_ennreal_delta_trajMeasure_on_horizon",
+        "BanditRLProof.Concentration.measure_iUnion_iUnion_fintype_le_delta_of_geometricConfidenceShare"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_successorArmEmpiricalMean_simultaneous_fintype_telescopingAllTime_abs_tail_ennreal_delta_trajMeasure",
+      "chapter": "probability",
+      "plain": "One canonical generated action/reward trajectory satisfies the random-pull-count empirical-mean confidence radius for every finite arm and every positive successor horizon under a telescoping confidence schedule.",
+      "math": "\\(\\mu(\\bigcup_{n\\ge0}\\bigcup_{a\\in A}\\{N_a(n+1)>0,\\ r_{a,n+1}(\\delta/(|A|(n+1)(n+2)))\\le|\\widehat\\mu_a-\\mu_a|\\})\\le\\delta.\\)",
+      "intuition": "The shares telescope exactly to delta while their reciprocal grows only polynomially, so logarithmic radii retain logarithmic time growth instead of the linear growth caused by geometric shares.",
+      "why": "This supplies the confidence schedule now consumed by the fixed-policy ordinary-UCB route on the canonical Rat trajectory.",
+      "position": "It sits above the fixed-horizon random-count tail and directly below the compiled same-source scheduled UCB score, policy, all-horizon count, and finite-time expected-regret consumers.",
+      "proof_idea": "Prove the reciprocal telescope, convert its exact Real HasSum to ENNReal, share each time budget across the finite arm type, instantiate the accepted fixed-horizon tail at n+1, and apply countable outer-measure subadditivity without changing trajMeasure.",
+      "lean_notes": "The theorem retains the same probability, measurability, centered-kernel, stationary-mean, variance-ceiling, and positivity contracts as the geometric producer. It adds no independence, event-measurability, optional-stopping, or delta-at-most-one premise.",
+      "dependencies": [
+        "BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_successorArmEmpiricalMean_abs_tail_random_pullCount_ennreal_delta_trajMeasure_on_horizon",
+        "BanditRLProof.Concentration.measure_iUnion_iUnion_fintype_le_delta_of_telescopingConfidenceShare"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.UCB.lintegral_ofReal_pseudoRegret_selectedPolicySuccessorTelescoping_le_trajMeasure",
+      "chapter": "ucb",
+      "plain": "A single horizon-free telescoping-scheduled UCB policy has one all-time confidence event on one generated trajectory measure, simultaneous positive-gap pull-count bounds for all finite horizons, and an explicit finite-time expected pseudo-regret bound.",
+      "math": "\\mu(G^c)\\le\\delta,\\quad G\\Rightarrow\\forall T,a:\\ N_a(T)\\le B_a(T),\\quad \\mathbb E R_T\\le\\sum_a\\Delta_a(B_a(T)+T\\delta).",
+      "intuition": "The policy chooses its round-t bonus from the summable telescoping share assigned to that round, so asking for a later terminal horizon never reconstructs or changes the past policy.",
+      "why": "It closes the semantic gap between an all-time concentration producer and an actual fixed-policy ordinary-UCB regret consumer.",
+      "position": "This is the fixed-policy terminal of Chapter 4. The older horizon-indexed chain remains a separate compiled family and supplies its own expected-average consistency theorem.",
+      "proof_idea": "Reconstruct actions recursively from finite reward histories, prove exact score/count/mean alignment, transport the sampled pair action to the reconstructed action almost everywhere on the same trajectory measure, apply the telescoping all-time event, invert the scheduled radius after initialization, and integrate the finite-horizon count tail.",
+      "lean_notes": "The policy, state, generated action, and trajectory-measure declarations contain no terminal horizon. A horizon appears only in count/regret consumers and deterministic thresholds. The expected theorem retains T times delta, so it is not a fixed-delta average-consistency or almost-sure result.",
+      "dependencies": [
+        "BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_successorArmEmpiricalMean_simultaneous_fintype_telescopingAllTime_abs_tail_ennreal_delta_trajMeasure",
+        "BanditRLProof.UCB.meanGap_le_two_radius_of_confidenceScore_max",
+        "BanditRLProof.pseudoRegret_eq_finset_sum_gap_mul_pullCount"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.KLUCB.lintegral_ofReal_pseudoRegret_generatedKLUCBBounded_le_trajMeasure",
+      "chapter": "ucb",
+      "plain": "A horizon-free generated policy uses the actual Bernoulli-KL confidence-set supremum, aligns it with its own reward history, and has a conservative finite-time expected pseudo-regret bound on the same canonical trajectory measure.",
+      "math": "\\mu(G_{\\mathrm{KL}}^c)\\le\\delta,\\quad G_{\\mathrm{KL}}\\Rightarrow\\forall T,a:\\ N_a(T)\\le B_a^{\\mathrm{KL}}(T),\\quad \\mathbb E R_T\\le\\sum_a\\Delta_a(B_a^{\\mathrm{KL}}(T)+T\\delta).",
+      "intuition": "The optimal mean is feasible in its KL confidence set on the all-time good event. The selected arm has maximal KL index, so a positive-gap arm can keep winning only while its telescoping radius and count remain below an explicit threshold.",
+      "why": "It is the first local KL-UCB terminal that runs on a real generated action/reward trajectory instead of stopping at a scalar KL inequality or reusing an ordinary additive UCB score.",
+      "position": "This is the conservative finite-time endpoint of the generated bounded KL-UCB extension to Chapter 4.",
+      "proof_idea": "Define Bernoulli KL with explicit endpoint semantics and its confidence-set sSup; reconstruct the score from the generated reward history; use an interior KL upper comparison to transport the accepted telescoping empirical-mean event to KL optimism; combine selected-index maximality with the KL lower comparison; invert the radius into all-horizon counts and integrate the finite-arm gap decomposition.",
+      "lean_notes": "The theorem assumes AE rewards in [0,1], stationary means in [margin,1-margin] with 0 < margin <= 1/2, a centered sub-Gaussian kernel law, and positive sigma2 and delta. It retains T times delta and does not claim a sharp KL-Chernoff exponent, the Garivier-Cappe leading constant, or asymptotic optimality.",
+      "dependencies": [
+        "BanditRLProof.KLUCB.bernoulliKLCore_le_sq_div",
+        "BanditRLProof.KLUCB.generatedIndexAt_le_selected_of_K_le",
+        "BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_successorArmEmpiricalMean_simultaneous_fintype_telescopingAllTime_abs_tail_ennreal_delta_trajMeasure",
+        "BanditRLProof.pseudoRegret_eq_finset_sum_gap_mul_pullCount"
+      ]
+    },
+    {
       "full_name": "BanditRLProof.PosteriorKernel.canonicalPosterior_kernel_ae_eq_condDistrib_of_pair_map_eq",
       "chapter": "probability",
       "plain": "If the joint law of environment and history is the canonical prior-likelihood law, the canonical posterior kernel agrees almost everywhere with the conditional distribution of the environment given history.",
@@ -91,13 +169,27 @@
       ]
     },
     {
+      "full_name": "BanditRLProof.ETC.argmaxCommitOracle_encode_le_of_score_le",
+      "chapter": "etc",
+      "plain": "The canonical Rat ETC commit oracle selects the least encoded arm among all arms tying its maximal score.",
+      "math": "s(\\hat a)\\le s(a)\\Longrightarrow \\operatorname{encode}(\\hat a)\\le\\operatorname{encode}(a).",
+      "intuition": "The strict-update fold scans arms in canonical order: a strictly better score replaces the current arm, while an equal score leaves the earlier arm in place.",
+      "why": "The generated ETC policy needs deterministic, explicit tie behavior; maximality alone does not identify which maximizing action is selected.",
+      "position": "This deterministic leaf closes the tie-semantics edge between the concrete Rat commit oracle and the canonical measurable generated ETC route.",
+      "proof_idea": "Identify the fold with Mathlib's first-occurrence List.argmax, compare the selected arm's list index with any tying maximizer using index_of_argmax, and rewrite finRange indices as encodings.",
+      "lean_notes": "The only substantive assumptions are finite Rat scores and 0<K. No measure, independence, MGF, or unique-maximum assumption is introduced.",
+      "dependencies": [
+        "BanditRLProof.ETC.argmaxCommitOracle"
+      ]
+    },
+    {
       "full_name": "BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal",
       "chapter": "etc",
       "plain": "For the generated Explore-Then-Commit policy under finite-arm sub-Gaussian reward laws, expected Real pseudo-regret is bounded by the canonical per-arm exploration-plus-commit expression.",
       "math": "\\(\\mathbb E\\bar R_T\\le R_{\\mathrm{explore}}+\\sum_{a\\ne a^\\star}(T-mK)\\Delta_a\\,p_a^{\\mathrm{tail}}.\\)",
       "intuition": "Exploration pays a deterministic cost; exploitation pays only when empirical noise makes the commit oracle choose the wrong arm.",
       "why": "This is a concrete end-to-end local ETC theorem rather than only a tail lemma or theorem card.",
-      "position": "It closes one finite-arm sub-Gaussian branch of the ETC proof DAG while the broader upstream-compatible task remains partial.",
+      "position": "Together with the generated-law, round-robin, least-tie, and named wrong-commit declarations in the public canary, it closes the scoped local ETC chapter; direct imported-LML identity remains separate.",
       "proof_idea": "Prove empirical-mean measurability, reduce a wrong commit to a pairwise deviation event, apply the sub-Gaussian tail contract, and integrate the deterministic regret split.",
       "lean_notes": "The Real integral is explicit. The bound and every arm-law regularity hypothesis are visible in the Lean statement; no LML theorem card is used as a proof term.",
       "dependencies": [
@@ -111,11 +203,25 @@
       "math": "\\(\\mathbb E\\bar R_T\\le\\sum_{a:\\Delta_a>0}\\Delta_a\\bigl(B_a(T)+T\\delta_a\\bigr),\\quad B_a(T)\\asymp v_a\\log(T/\\delta_a)/\\Delta_a^2.\\)",
       "intuition": "A suboptimal arm can be chosen many times only while it has too few samples or while a confidence event fails.",
       "why": "This is the practical model-facing UCB endpoint that connects arm laws, the generated adaptive trace, confidence widths, pull counts, and regret.",
-      "position": "It is a compiled endpoint inside the still-active exact upstream port route.",
+      "position": "It is the finite-horizon regret node in the compiled horizon-indexed ordinary-UCB chain; the separately compiled fixed-policy anytime route has its own telescoping policy and terminal.",
       "proof_idea": "Construct the finite-arm reward kernel, obtain selected conditional MGF bounds, split selections at an explicit count threshold, sum the failure probabilities, and apply the gap-times-count regret decomposition.",
       "lean_notes": "The suffix without_proxy_positivity matters: the theorem handles the all-zero proxy case separately instead of adding a false global positivity assumption.",
       "dependencies": [
         "BanditRLProof.pseudoRegret_eq_finset_sum_gap_mul_pullCount"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.UCB.selectedPolicySuccessorFiniteArmSubgaussianExpectedAveragePseudoRegret_tendsto_zero",
+      "chapter": "ucb",
+      "plain": "For the canonical finite-arm sub-Gaussian horizon-indexed UCB family, expected pseudo-regret divided by the horizon converges to zero.",
+      "math": "\\mathbb E[\\bar R_T]/(T+1)\\to0.",
+      "intuition": "Choosing the confidence budget as a function of the terminal horizon turns the finite-time confidence/count/regret theorem into a logarithmic envelope, which vanishes after normalization.",
+      "why": "This is the stated asymptotic consumer of the ordinary-UCB Book Map route.",
+      "position": "It terminates the public chain from finite-arm/time confidence through generated score selection, pull counts, finite-arm expected regret, and asymptotic normalization.",
+      "proof_idea": "Specialize the canonical family at delta(T)=1/(T+1), bound expected regret by a fixed model coefficient times 1+log(T+1), prove this is little-o of T+1, and divide.",
+      "lean_notes": "The theorem concerns a horizon-indexed policy/measure family. It is not a single fixed-policy anytime, pathwise, almost-sure, or maximal-confidence result.",
+      "dependencies": [
+        "BanditRLProof.UCB.selectedPolicySuccessorFiniteArmSubgaussianExpectedPseudoRegret_nonneg_and_le"
       ]
     },
     {
@@ -203,28 +309,29 @@
     {
       "full_name": "BanditRLProof.Exp3.measure_sampledRealizedDeviationGeometricAllTimeFailureSet_le",
       "chapter": "exp3",
-      "plain": "For one generated EXP3 trajectory, the realized selected-loss deviation stays below a geometric-share radius at every positive prefix except on a set of outer probability at most delta.",
-      "math": "\\(\\mu\\!\\left(\\exists n\\ge0:\\ D_{n+1}\\ge r(n+1,\\delta/2^{n+1})\\right)\\le\\delta.\\)",
-      "intuition": "Each one-step conditional variance is at most one, so the predictable variance accumulated through prefix n+1 is deterministically at most n+1. This removes the variance-good conjunct from the preceding joint event.",
-      "why": "A realized-regret theorem needs a pure martingale-deviation event that can be combined with the separate predictable-regret event.",
-      "position": "It specializes the generic scheduled quadratic tail and the all-time joint deviation/variance result using the linear deterministic variance budget.",
-      "proof_idea": "Prove that the joint event with variance budget n+1 equals the pure deviation event, using the compiled pathwise sum-of-variances bound, then rewrite the existing outer-measure estimate.",
-      "lean_notes": "The process parameters remain fixed while the prefix index is countable. This is a scheduled union bound, not optional stopping or a general anytime martingale theorem.",
+      "plain": "On one generated EXP3 trajectory, realized selected loss minus predictable selected loss stays below its scheduled radius at every positive prefix, except on a failure event of outer mass at most delta.",
+      "math": "\\(\\mu(\\exists n\\ge0:\\ D_{n+1}\\ge r(n+1,\\delta/2^{n+1}))\\le\\delta.\\)",
+      "intuition": "The selected loss lies in the unit interval, so its one-step centered conditional variance is at most one. Summing that deterministic budget removes the variance-good side condition from the preceding theorem.",
+      "why": "This turns the variance-conditioned all-time deviation statement into the pure realized-versus-predictable deviation event needed by a realized-regret composition.",
+      "position": "It is the second same-process all-positive-prefix node in Chapter 7, above the predictable-variance tail and below the realized-regret terminal.",
+      "proof_idea": "Prove the centered second moment is at most one, sum the bound through prefix n+1, identify the variance-conditioned event with the pure deviation event under this linear budget, and reuse the accepted geometric all-time tail.",
+      "lean_notes": "The fixed eta, gamma, prior, action type, and predictable loss process are shared by every prefix. This is a countable scheduled-union result, not a Ville/Doob maximal inequality, optional-stopping theorem, or general Freedman boundary.",
       "dependencies": [
-        "BanditRLProof.Exp3.measure_sampledPredictableRealizedDeviationAllTimeFailureSet_le",
-        "BanditRLProof.Exp3.sampledPredictableRealizedVariance_sum_le_horizon"
+        "BanditRLProof.Exp3.selectedLossCenteredSecondMoment_le_one",
+        "BanditRLProof.Exp3.sampledPredictableRealizedVariance_sum_le_horizon",
+        "BanditRLProof.Exp3.measure_sampledPredictableRealizedDeviationAllTimeFailureSet_le"
       ]
     },
     {
       "full_name": "BanditRLProof.Exp3.measure_sampledPredictableRegretGeometricAllTimeFailureSet_le",
       "chapter": "exp3",
-      "plain": "Against one supported comparator, the predictable EXP3 regret stays below its scheduled fixed-horizon budget at every positive prefix outside a set of outer probability at most delta.",
-      "math": "\\(\\mu\\!\\left(\\exists n\\ge0:\\ R^{\\mathrm{pred}}_{n+1}\\ge B_{n+1}(\\delta/2^{n+1})\\right)\\le\\delta.\\)",
-      "intuition": "Reuse the already compiled fixed-horizon high-probability theorem once for each prefix and pay for the countable union with a summable geometric confidence schedule.",
-      "why": "This is the predictable half of the final all-positive-prefix realized-regret result.",
-      "position": "It sits above the fixed-horizon EXP3 potential, exploration, comparator-estimator, and tail assembly, but below the realized-regret decomposition.",
-      "proof_idea": "Apply countable outer-measure subadditivity, instantiate the total-delta fixed-prefix theorem at n+1 with the nth confidence share, sum the resulting ENNReal bounds, and use the exact geometric-series identity.",
-      "lean_notes": "The theorem fixes eta, gamma, loss, and comparator across all prefixes. It does not claim a tuned horizon-free learning-rate schedule, Ville/Doob maximal inequality, or general Freedman theorem.",
+      "plain": "For one fixed generated EXP3 process and one supported comparator, predictable regret satisfies its scheduled finite-prefix bound simultaneously at every positive prefix outside one geometrically budgeted failure event.",
+      "math": "\\(\\mu(\\exists n\\ge0:\\ R^{\\mathrm{pred}}_{n+1}(a)\\ge B^{\\mathrm{pred}}_{n})\\le\\delta.\\)",
+      "intuition": "Each finite-prefix potential-and-comparator proof already has a tail bound. Giving prefix n+1 a geometric share makes their countable union affordable without changing the underlying process or comparator.",
+      "why": "Realized regret needs both an algorithmic predictable-regret certificate and a sampling-deviation certificate on the same trajectory. This theorem supplies the first component for every prefix.",
+      "position": "It runs in parallel with the pure realized-deviation node and feeds the Chapter 7 realized-regret terminal.",
+      "proof_idea": "Specialize the compiled fixed-horizon predictable-regret theorem at n+1, retain its internal two-event confidence split, bound the countable union termwise, and close the total outer budget with the exact geometric ENNReal sum.",
+      "lean_notes": "The comparator must have positive prior support, and eta and gamma stay fixed as n varies. The resulting scheduled budget is not advertised as a horizon-tuned sublinear rate or a best-arm minimum.",
       "dependencies": [
         "BanditRLProof.Exp3.sampledPredictable_highProbabilityRegret_tail_total_delta",
         "BanditRLProof.Concentration.tsum_ofReal_geometricConfidenceShare"
@@ -233,13 +340,13 @@
     {
       "full_name": "BanditRLProof.Exp3.measure_sampledRealizedRegretGeometricAllTimeFailureSet_le",
       "chapter": "exp3",
-      "plain": "For one generated EXP3 process and one supported comparator, realized selected-loss regret stays below the sum of scheduled predictable-regret and realized-deviation budgets at every positive prefix, except on a set of outer probability at most delta.",
-      "math": "\\(\\mu\\!\\left(\\exists n\\ge0:\\ R^{\\mathrm{real}}_{n+1}\\ge B^{\\mathrm{pred}}_{n+1}(\\delta/2)+B^{\\mathrm{dev}}_{n+1}(\\delta/2)\\right)\\le\\delta.\\)",
-      "intuition": "Realized regret is predictable regret plus the difference between sampled loss and its predictable conditional mean. If their sum crosses the sum of two budgets, at least one component must cross its own budget.",
-      "why": "This closes the current all-positive-prefix EXP3 chain at a directly observable realized-loss regret event.",
-      "position": "It combines the new predictable-regret and realized-deviation all-time events after the exact finite-prefix algebraic decomposition.",
-      "proof_idea": "Show that the realized crossing set is contained in the union of the two half-budget crossing sets, apply measure monotonicity and the union bound, invoke both compiled all-time estimates, and simplify the two ENNReal half budgets to delta.",
-      "lean_notes": "The exact theorem is an outer-measure statement for fixed process parameters and a fixed comparator. It should not be described as optional stopping, a self-normalized mixture boundary, or a fully tuned horizon-free EXP3 theorem.",
+      "plain": "For one generated EXP3 process and one supported comparator, realized selected-loss regret is below the sum of its predictable-regret and sampling-deviation budgets at every positive prefix, except on an event of outer mass at most delta.",
+      "math": "\\(R^{\\mathrm{real}}_{n+1}(a)=R^{\\mathrm{pred}}_{n+1}(a)+D_{n+1},\\qquad \\mu(\\exists n:\\ R^{\\mathrm{real}}_{n+1}(a)\\ge B^{\\mathrm{pred}}_n+B^{\\mathrm{dev}}_n)\\le\\delta.\\)",
+      "intuition": "Realized regret has two sources: the exponential-weights decision rule can lose against the comparator in predictable loss, and sampled actions can deviate from those predictable losses. If neither component fails, their sum cannot fail.",
+      "why": "This closes the same-process all-positive-prefix realized-regret composition instead of leaving the algorithmic and martingale halves as unrelated confidence statements.",
+      "position": "It is the current fixed-parameter, supported-comparator all-positive-prefix terminal of the EXP3 chapter.",
+      "proof_idea": "Prove the finite-prefix regret decomposition exactly, allocate delta/2 to each accepted all-time event family, include the combined failure set in their union, apply outer-measure monotonicity and subadditivity, and normalize the two half budgets.",
+      "lean_notes": "The theorem keeps one prior, eta, gamma, loss process, generated trajectory law, and comparator across all prefixes. It does not claim horizon-dependent tuning, best-arm minimization, a sublinear confidence sequence, optional stopping, or ideal EXP3.P.",
       "dependencies": [
         "BanditRLProof.Exp3.sampledTrajectoryRealizedRegret_eq_predictableRegret_add_realizedDeviation",
         "BanditRLProof.Exp3.measure_sampledPredictableRegretGeometricAllTimeFailureSet_le",

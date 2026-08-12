@@ -1,1 +1,7 @@
 import Tests.Basic
+import Tests.ConditionalRewardPartialTrajectoryGeometricAllTimeCanary
+import Tests.ConditionalRewardPartialTrajectoryTelescopingAllTimeCanary
+import Tests.UCBFixedPolicyTelescopingAnytimeRegretCanary
+import Tests.KLUCBGeneratedRegretCanary
+import Tests.BookMapChaptersTwoToFourCanary
+import Tests.FiniteHorizonAdaptiveCumulativeHoeffdingUCBVICanary

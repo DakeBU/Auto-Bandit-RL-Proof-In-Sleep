@@ -23,6 +23,103 @@
       "evidence": "BanditRLProof/ConditionalRewardLawSource.lean"
     },
     {
+      "id": "PROBABILITY-FINTYPE-GEOMETRIC-ALL-TIME-UNION",
+      "title": "Finite-index geometric all-time confidence union",
+      "chapter": "probability",
+      "status": "compiled",
+      "informal": "If every index in a nonempty finite family receives an equal geometric confidence share at every time, the outer measure of any time-index failure is at most the total confidence budget.",
+      "declarations": [
+        "BanditRLProof.Concentration.measure_iUnion_iUnion_fintype_le_tsum_of_uniform",
+        "BanditRLProof.Concentration.measure_iUnion_iUnion_fintype_le_delta_of_geometricConfidenceShare"
+      ],
+      "depends_on": [
+        "BanditRLProof.ProbabilityUnionBound.measure_biUnion_finset_le_of_uniform",
+        "BanditRLProof.Concentration.tsum_ofReal_geometricConfidenceShare"
+      ],
+      "missing": [
+        "Each ETC, UCB, or RL consumer must still supply its per-time, per-index tail events and model-specific law assumptions."
+      ],
+      "evidence": "BanditRLProof/ConcentrationFintypeGeometricAllTime.lean"
+    },
+    {
+      "id": "PROBABILITY-GENERATED-FINTYPE-EMPIRICAL-MEAN-GEOMETRIC-ALL-TIME",
+      "title": "Generated finite-arm empirical-mean all-time confidence",
+      "chapter": "probability",
+      "status": "compiled",
+      "informal": "On one canonical generated action/reward trajectory, every finite arm and every positive successor horizon obeys the existing random-pull-count empirical-mean radius outside an event of outer measure at most the total geometric confidence budget.",
+      "declarations": [
+        "BanditRLProof.ConditionalExpectationReward.successorArmEmpiricalMeanFintypeGeometricAllTimeBadEvent",
+        "BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_successorArmEmpiricalMean_simultaneous_fintype_geometricAllTime_abs_tail_ennreal_delta_trajMeasure"
+      ],
+      "depends_on": [
+        "BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_successorArmEmpiricalMean_abs_tail_random_pullCount_ennreal_delta_trajMeasure_on_horizon",
+        "BanditRLProof.Concentration.measure_iUnion_iUnion_fintype_le_delta_of_geometricConfidenceShare"
+      ],
+      "missing": [
+        "The ordinary-UCB chapter uses its exact finite-arm/time confidence producer. A fixed-policy anytime UCB consumer for this stronger geometric event remains a separate extension."
+      ],
+      "evidence": "BanditRLProof/ConditionalRewardPartialTrajectoryGeometricAllTime.lean"
+    },
+    {
+      "id": "PROBABILITY-GENERATED-FINTYPE-EMPIRICAL-MEAN-TELESCOPING-ALL-TIME",
+      "title": "Generated finite-arm telescoping all-time empirical-mean confidence",
+      "chapter": "probability",
+      "status": "compiled",
+      "informal": "On one canonical generated action/reward trajectory, every finite arm and positive successor horizon obeys the existing random-pull-count empirical-mean radius at share delta/((n+1)(n+2))/|A| outside an event of outer measure at most delta.",
+      "declarations": [
+        "BanditRLProof.Concentration.tsum_ofReal_telescopingConfidenceShare",
+        "BanditRLProof.Concentration.measure_iUnion_iUnion_fintype_le_delta_of_telescopingConfidenceShare",
+        "BanditRLProof.ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent",
+        "BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_successorArmEmpiricalMean_simultaneous_fintype_telescopingAllTime_abs_tail_ennreal_delta_trajMeasure"
+      ],
+      "depends_on": [
+        "BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_successorArmEmpiricalMean_abs_tail_random_pullCount_ennreal_delta_trajMeasure_on_horizon",
+        "BanditRLProof.Concentration.measure_iUnion_iUnion_fintype_le_tsum_of_uniform"
+      ],
+      "missing": [],
+      "evidence": "BanditRLProof/ConditionalRewardPartialTrajectoryTelescopingAllTime.lean"
+    },
+    {
+      "id": "UCB-FIXED-POLICY-TELESCOPING-ANYTIME-REGRET",
+      "title": "Fixed-policy telescoping anytime UCB confidence and regret",
+      "chapter": "ucb",
+      "status": "compiled",
+      "informal": "One horizon-free scheduled UCB policy uses the telescoping per-round confidence share on its own generated finite history. On the same canonical action/reward trajectory measure, one all-time confidence event controls every positive-gap arm at every finite horizon, and each finite horizon has an explicit expected pseudo-regret bound.",
+      "declarations": [
+        "BanditRLProof.UCB.selectedPolicySuccessorTelescopingHistoryPolicy",
+        "BanditRLProof.UCB.selectedPolicySuccessorTelescopingPairHistory_eq_finitePairHistoryOfTrace",
+        "BanditRLProof.UCB.measure_selectedPolicySuccessorTelescoping_allTimeBadEvent_le_trajMeasure",
+        "BanditRLProof.UCB.selectedPolicySuccessorTelescoping_allHorizonPullCount_of_not_badEvent",
+        "BanditRLProof.UCB.lintegral_ofReal_pseudoRegret_selectedPolicySuccessorTelescoping_le_trajMeasure"
+      ],
+      "depends_on": [
+        "BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_successorArmEmpiricalMean_simultaneous_fintype_telescopingAllTime_abs_tail_ennreal_delta_trajMeasure",
+        "BanditRLProof.pseudoRegret_eq_finset_sum_gap_mul_pullCount"
+      ],
+      "missing": [
+        "The finite-time expectation keeps the explicit T times delta failure contribution; fixed-delta expected-average consistency is not claimed.",
+        "The compiled bounded KL-UCB extension is mapped separately; literal pinned-LML identity remains cross-toolchain work."
+      ],
+      "evidence": "Tests/UCBFixedPolicyTelescopingAnytimeRegretCanary.lean"
+    },
+    {
+      "id": "PROBABILITY-ETC-UCB-ROUTE-SURFACE",
+      "title": "Probability interfaces used by canonical ETC and ordinary UCB",
+      "chapter": "probability",
+      "status": "compiled",
+      "informal": "The generated-history law, conditional sub-Gaussian MGF, and finite-arm/time empirical-mean event actually required by the scoped ETC and horizon-indexed UCB routes compile through one external Book Map canary; the reusable countable adapter is exposed separately.",
+      "declarations": [
+        "BanditRLProof.ConditionalExpectationReward.historyStepKernelFamily_generatedActionPartialTrajectoryPairLawSource_trajMeasure",
+        "BanditRLProof.ConditionalExpectationReward.historyStepKernelFamily_centeredReward_succ_hasCondSubgaussianMGF_trajMeasure",
+        "BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_successorArmEmpiricalMean_simultaneous_finiteArmTime_abs_tail_ennreal_delta_trajMeasure"
+      ],
+      "depends_on": [
+        "BanditRLProof.RewardKernel.historyStepKernelFamily"
+      ],
+      "missing": [],
+      "evidence": "Tests/BookMapChaptersTwoToFourCanary.lean"
+    },
+    {
       "id": "ETC-CANONICAL-SUBGAUSSIAN-REGRET",
       "title": "Canonical sub-Gaussian ETC expected regret",
       "chapter": "etc",
@@ -34,14 +131,30 @@
       "evidence": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean"
     },
     {
-      "id": "ETC-LML-PORT",
-      "title": "Upstream-compatible ETC theorem route",
+      "id": "ETC-CANONICAL-RAT-LEAST-TIE",
+      "title": "Canonical Rat ETC least-encoded tie rule",
       "chapter": "etc",
-      "status": "partial",
-      "informal": "Concrete local ETC endpoints compile, while exact compatibility with the pinned LML theorem surface is still tracked separately.",
+      "status": "compiled",
+      "informal": "The Rat commit oracle used by the measurable generated ETC policy is Mathlib's first-occurrence argmax on Fin K, hence chooses the least encoded arm among tied maxima.",
+      "declarations": [
+        "BanditRLProof.ETC.argmaxCommitOracle_argmax_finRange",
+        "BanditRLProof.ETC.argmaxCommitOracle_encode_le_of_score_le"
+      ],
+      "depends_on": [
+        "BanditRLProof.ETC.argmaxCommitOracle"
+      ],
+      "missing": [],
+      "evidence": "BanditRLProof/Algorithms/ETCArgmaxOracle.lean"
+    },
+    {
+      "id": "ETC-LML-PORT",
+      "title": "Pinned LML ETC theorem-card route",
+      "chapter": "etc",
+      "status": "compiled",
+      "informal": "The local canonical ETC chapter route compiles; direct identity with the pinned LML declaration remains a separate cross-toolchain theorem-card route and is not claimed here.",
       "declarations": ["BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal"],
       "depends_on": [],
-      "missing": ["Direct LML integration remains cross-toolchain work.", "Some general adaptive-law transports remain separate from the finite-arm endpoint."],
+      "missing": ["Direct imported-LML symbol and toolchain identity remains cross-toolchain work."],
       "evidence": "tasks/BRL-ETC-PORT-001.md"
     },
     {
@@ -67,15 +180,51 @@
       "evidence": "BanditRLProof/Algorithms/UCBFiniteArmSubGaussianSampledAsymptotics.lean"
     },
     {
+      "id": "UCB-HORIZON-INDEXED-CANONICAL-CHAIN",
+      "title": "Canonical horizon-indexed UCB confidence-to-consistency chain",
+      "chapter": "ucb",
+      "status": "compiled",
+      "informal": "For each explicit horizon and confidence budget, one generated pair-trajectory family carries the finite-arm/time confidence event through large-gap and pull-count bounds to finite-arm expected pseudo-regret; the scheduled family has vanishing expected average regret.",
+      "declarations": [
+        "BanditRLProof.UCB.measure_selectedPolicySuccessorLargeGapEvent_generatedUCB_le_ennreal_delta_actionRewardTrajMeasure_centeredKernel",
+        "BanditRLProof.UCB.measure_successorArmPullCount_selectedPolicySuccessorGeneratedUCBAction_gt_explicitPullThreshold_le_ennreal_delta_actionRewardTrajMeasure_centeredKernel",
+        "BanditRLProof.UCB.selectedPolicySuccessorFiniteArmSubgaussianExpectedPseudoRegret_nonneg_and_le",
+        "BanditRLProof.UCB.selectedPolicySuccessorFiniteArmSubgaussianExpectedAveragePseudoRegret_tendsto_zero"
+      ],
+      "depends_on": [
+        "BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_successorArmEmpiricalMean_simultaneous_finiteArmTime_abs_tail_ennreal_delta_trajMeasure"
+      ],
+      "missing": [
+        "This is a horizon-indexed policy family, not a single fixed-policy anytime UCB theorem."
+      ],
+      "evidence": "Tests/BookMapChaptersTwoToFourCanary.lean"
+    },
+    {
       "id": "UCB-LML-PORT",
-      "title": "Pinned LML-compatible UCB port",
+      "title": "Pinned LML UCB theorem-card port",
       "chapter": "ucb",
       "status": "partial",
-      "informal": "Local arm-stream and model-facing UCB results compile, but the exact upstream declaration and dependency ledger remain a separate compatibility gate.",
+      "informal": "Local ordinary-UCB and Real arm-stream one-policy results compile; only literal identity with the pinned upstream declaration remains a separate theorem-card/cross-toolchain gate.",
       "declarations": ["BanditRLProof.UCB.integral_realKernelRegret_armStreamAction_le_lml_sum"],
       "depends_on": [],
-      "missing": ["Close the exact expected pull-count dependency ledger.", "Do not treat the upstream theorem card as a local proof term."],
+      "missing": ["Direct imported-LML symbol and toolchain identity remain cross-toolchain work; the local expected pull-count ledger is already compiled.", "Do not treat the upstream theorem card as a local proof term."],
       "evidence": "tasks/BRL-UCB-PORT-001.md"
+    },
+    {
+      "id": "LML-DIRECT-TOOLCHAIN-IDENTITY",
+      "title": "Direct LeanMachineLearning toolchain identity",
+      "chapter": "frontier",
+      "status": "blocked",
+      "informal": "ABRL has compiled local ETC/UCB theorems shaped against the pinned LeanMachineLearning cards, but it does not import or consume the actual upstream Bandits.ETC.regret_le or Bandits.UCB.regret_le declarations.",
+      "declarations": [],
+      "depends_on": [],
+      "missing": [
+        "Reconcile ABRL's Lean 4.29.1 and Mathlib v4.29.1 environment with the recorded LML seed's newer Lean/Mathlib toolchain in an isolated migration build.",
+        "Add a pinned LML dependency and compile the real LeanMachineLearning.Online.Bandit.Algorithms.ETC and UCB imports.",
+        "Consume the actual upstream symbols in ABRL wrapper theorems without copied or shadow declarations.",
+        "Pass the complete Lean, test, license, notice, attribution, and website gates on the unified toolchain."
+      ],
+      "evidence": "lean-toolchain; lakefile.lean; research-wiki/lml/theorem-cards.md"
     },
     {
       "id": "OFUL-ELLIPTICAL-POTENTIAL",
@@ -185,21 +334,22 @@
       "title": "All-positive-prefix EXP3 realized-deviation tail",
       "chapter": "exp3",
       "status": "compiled",
-      "informal": "The deterministic unit bound on each selected-loss conditional variance discharges the variance-good side condition, yielding a pure realized-deviation crossing event controlled over every positive prefix.",
+      "informal": "On one fixed generated EXP3 process, the realized selected loss minus its predictable counterpart stays below its geometrically scheduled radius at every positive prefix outside one failure event of outer mass at most delta.",
       "declarations": ["BanditRLProof.Exp3.measure_sampledRealizedDeviationGeometricAllTimeFailureSet_le"],
       "depends_on": [
-        "BanditRLProof.Exp3.measure_sampledPredictableRealizedDeviationAllTimeFailureSet_le",
-        "BanditRLProof.Exp3.sampledPredictableRealizedVariance_sum_le_horizon"
+        "BanditRLProof.Exp3.selectedLossCenteredSecondMoment_le_one",
+        "BanditRLProof.Exp3.sampledPredictableRealizedVariance_sum_le_horizon",
+        "BanditRLProof.Exp3.measure_sampledPredictableRealizedDeviationAllTimeFailureSet_le"
       ],
       "missing": [],
       "evidence": "BanditRLProof/Exp3RealizedDeviationAllTime.lean; tasks/EXP3-REALIZED-DEVIATION-GEOMETRIC-ALL-TIME-TAIL.md"
     },
     {
       "id": "EXP3-PREDICTABLE-REGRET-GEOMETRIC-ALL-TIME",
-      "title": "All-positive-prefix predictable EXP3 regret",
+      "title": "All-positive-prefix EXP3 predictable-regret tail",
       "chapter": "exp3",
       "status": "compiled",
-      "informal": "For one fixed generated EXP3 process and one supported comparator, countable subadditivity plus geometric confidence shares controls predictable-regret crossings at every positive prefix.",
+      "informal": "For one fixed generated EXP3 process and one supported comparator, every positive-prefix predictable-regret failure is covered by a single geometrically budgeted event.",
       "declarations": ["BanditRLProof.Exp3.measure_sampledPredictableRegretGeometricAllTimeFailureSet_le"],
       "depends_on": [
         "BanditRLProof.Exp3.sampledPredictable_highProbabilityRegret_tail_total_delta",
@@ -210,18 +360,23 @@
     },
     {
       "id": "EXP3-REALIZED-REGRET-GEOMETRIC-ALL-TIME",
-      "title": "All-positive-prefix realized EXP3 regret",
+      "title": "All-positive-prefix EXP3 realized-regret tail",
       "chapter": "exp3",
       "status": "compiled",
-      "informal": "Realized selected-loss regret decomposes into predictable regret plus realized deviation; splitting the confidence budget between their two all-time events controls the combined crossing event at every positive prefix.",
-      "declarations": ["BanditRLProof.Exp3.measure_sampledRealizedRegretGeometricAllTimeFailureSet_le"],
-      "depends_on": [
+      "informal": "For one generated EXP3 process and one supported comparator, the realized selected-loss regret at every positive prefix is controlled by the sum of the predictable-regret and realized-deviation schedules outside one event of outer mass at most delta.",
+      "declarations": [
         "BanditRLProof.Exp3.sampledTrajectoryRealizedRegret_eq_predictableRegret_add_realizedDeviation",
+        "BanditRLProof.Exp3.measure_sampledRealizedRegretGeometricAllTimeFailureSet_le"
+      ],
+      "depends_on": [
         "BanditRLProof.Exp3.measure_sampledPredictableRegretGeometricAllTimeFailureSet_le",
         "BanditRLProof.Exp3.measure_sampledRealizedDeviationGeometricAllTimeFailureSet_le"
       ],
-      "missing": [],
-      "evidence": "BanditRLProof/Exp3RealizedRegretAllTime.lean; tasks/EXP3-REALIZED-REGRET-GEOMETRIC-ALL-TIME-TAIL.md"
+      "missing": [
+        "The process parameters eta and gamma and the comparator are fixed across prefixes.",
+        "The theorem is not a horizon-varying tuned sublinear all-time guarantee, a best-arm minimum, or an ideal EXP3.P theorem."
+      ],
+      "evidence": "Tests/Basic.lean; BanditRLProof/Exp3RealizedRegretAllTime.lean; tasks/EXP3-REALIZED-REGRET-GEOMETRIC-ALL-TIME-TAIL.md"
     },
     {
       "id": "EXP3-SPARSE-ALL-HORIZON",
@@ -334,15 +489,26 @@
       "evidence": "tasks/RL-FINITE-HORIZON-NATURAL-CAUSAL-INVERSE-SQRT-THRESHOLD-UNBOUNDED-HITTINGAFTER-INTEGRABLE-EXPECTED-UPPER-BOUND.md"
     },
     {
+      "id": "RL-UCBVI-HOEFFDING-GENERATED-FOUNDATION",
+      "title": "Generated adaptive cumulative Hoeffding UCB-VI foundation",
+      "chapter": "finite-horizon-rl",
+      "status": "partial",
+      "informal": "One generated episode process now carries a measurable paired cumulative count/reward state, exact successor updates, the measurable cross-stage paper count N_k(x,a), a totalized UCBVI-CH-shaped log/radius, and a successor policy provably computed from the same trajectory prefix. This is a generated foundation, not the high-probability regret theorem.",
+      "declarations": ["BanditRLProof.FiniteHorizonRL.measurable_adaptiveCumulativeEmpiricalModelStateAt", "BanditRLProof.FiniteHorizonRL.adaptiveCumulativeEmpiricalModelStateAt_rewardSum_succ", "BanditRLProof.FiniteHorizonRL.adaptiveCumulativeAggregateVisitCountAt_succ", "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.logFactor_eq_paper", "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.source_policyAt_succ_eq_modelState_optimisticPolicy"],
+      "depends_on": ["BanditRLProof.FiniteHorizonRL.EpisodeBatchPrefix.measurable_cumulativeTransitionCountSummary", "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeEmpiricalOptimisticSource.measurable_successorTable"],
+      "missing": ["Wire the compiled aggregate N_k(x,a) view into the selected planner.", "Previous-episode min(Q_previous,H,backup) clipped dynamic program.", "Same-source adaptive self-normalized confidence at actual random counts.", "Generated episode-regret decomposition and cumulative bonus/martingale sum.", "Explicit UCBVI-CH high-probability terminal and failure-aware expectation corollary."],
+      "evidence": "tasks/RL-FINITE-HORIZON-ADAPTIVE-CUMULATIVE-UCBVI-HIGH-PROBABILITY-REGRET.md"
+    },
+    {
       "id": "RL-COMPLETE-UCBVI",
       "title": "Complete finite-horizon UCB-VI theorem",
       "chapter": "finite-horizon-rl",
       "status": "partial",
-      "informal": "The local RL tree now reaches empirical-model confidence, adaptive exploration, behavior-regret consistency, and fixed-index stopping results, but these do not yet constitute a full minimax UCB-VI theorem.",
-      "declarations": ["BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeStochasticEmpiricalOptimisticSource.exploratorySource_trajectoryMeasure_projectedCumulativeInverseSqrtPathSupport_decayingExplorationAverageRealizedBehaviorConsistency_allWindows_of_standardBorel"],
-      "depends_on": ["BanditRLProof.FiniteHorizonRL.MDP.expectedRegret_eq_occupancyGap_nonneg_and_optimalPolicy_zero"],
-      "missing": ["Raw-episode and recommended-versus-behavior regret bridge.", "General reachability or a replacement assumption family.", "Minimax bonus/rate assembly and literature-level UCB-VI comparison.", "Optional-stopping or uniform-integrability conclusions are not available."],
-      "evidence": "research-wiki/theory-tree/bandit-theory-tree.md"
+      "informal": "The generated-process foundation now includes exact adaptive cumulative state updates and same-prefix policy/model alignment, but the UCBVI-CH confidence, regret decomposition, bonus sum, and terminal remain open; Bernstein/minimax is a later milestone.",
+      "declarations": ["BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.source_policyAt_succ_eq_modelState_optimisticPolicy", "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeStochasticEmpiricalOptimisticSource.exploratorySource_trajectoryMeasure_projectedCumulativeInverseSqrtPathSupport_decayingExplorationAverageRealizedBehaviorConsistency_allWindows_of_standardBorel"],
+      "depends_on": ["BanditRLProof.FiniteHorizonRL.MDP.expectedRegret_eq_occupancyGap_nonneg_and_optimalPolicy_zero", "BanditRLProof.FiniteHorizonRL.measurable_adaptiveCumulativeEmpiricalModelStateAt"],
+      "missing": ["Integrate the compiled aggregate paper count into a recurrent previous-Q clipped planner.", "Same-source self-normalized reward/transition confidence at actual cumulative counts.", "Raw generated episode-regret decomposition with martingale noise.", "Explicit S-A-H-K-delta Hoeffding bonus sum and UCBVI-CH probability bound.", "Failure-aware expected-regret corollary.", "Bernstein bonus, total-variance route, and minimax leading rate."],
+      "evidence": "tasks/RL-FINITE-HORIZON-ADAPTIVE-CUMULATIVE-UCBVI-HIGH-PROBABILITY-REGRET.md"
     },
     {
       "id": "BWK-STOPPING-FOUNDATION",
@@ -367,15 +533,30 @@
       "evidence": "research-wiki/theory-tree/lean-route-roadmap.json"
     },
     {
-      "id": "KL-UCB",
-      "title": "KL-UCB bounded stochastic regret",
-      "chapter": "frontier",
-      "status": "planned",
-      "informal": "Ordinary finite-arm UCB foundations exist, but Bernoulli-KL confidence inversion and a KL-UCB algorithm/regret route have not been formalized locally.",
-      "declarations": [],
-      "depends_on": [],
-      "missing": ["Bernoulli KL API and confidence-set inversion.", "KL-UCB policy, count threshold, and regret assembly."],
-      "evidence": "research-wiki/theory-tree/lean-route-roadmap.json"
+      "id": "KL-UCB-BOUNDED-GENERATED-REGRET",
+      "title": "Generated bounded-reward KL-UCB confidence and regret",
+      "chapter": "ucb",
+      "status": "compiled",
+      "informal": "One horizon-free measurable policy uses the actual Bernoulli-KL confidence-set supremum on its generated reward history. On the same canonical trajectory measure, a telescoping all-time confidence event controls every positive-gap arm at every finite horizon and yields a conservative finite-time expected pseudo-regret bound.",
+      "declarations": [
+        "BanditRLProof.KLUCB.bernoulliKL",
+        "BanditRLProof.KLUCB.index",
+        "BanditRLProof.KLUCB.historyPolicy",
+        "BanditRLProof.KLUCB.pairHistory_eq_finitePairHistoryOfTrace",
+        "BanditRLProof.KLUCB.generatedIndexAt_le_selected_of_K_le",
+        "BanditRLProof.KLUCB.measure_generatedKLAllTimeBadEvent_le_trajMeasure",
+        "BanditRLProof.KLUCB.allHorizonPullCount_of_not_badEvent",
+        "BanditRLProof.KLUCB.lintegral_ofReal_pseudoRegret_generatedKLUCBBounded_le_trajMeasure"
+      ],
+      "depends_on": [
+        "BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_successorArmEmpiricalMean_simultaneous_fintype_telescopingAllTime_abs_tail_ennreal_delta_trajMeasure",
+        "BanditRLProof.pseudoRegret_eq_finset_sum_gap_mul_pullCount"
+      ],
+      "missing": [
+        "The finite-time conservative route assumes AE [0,1] rewards and means in [margin,1-margin], and retains T times delta.",
+        "Sharp KL-Chernoff concentration, the Garivier-Cappe leading constant, and asymptotic optimality are not claimed."
+      ],
+      "evidence": "Tests/KLUCBGeneratedRegretCanary.lean"
     }
   ]
 }

@@ -1,5 +1,21 @@
 # ABRL Project Overview And Next Plan
 
+## Current Book Map Boundary (2026-08-12)
+
+Chapters 2--4 are compiled under the scoped website definitions. The new
+integration leaf proves the canonical Rat ETC oracle's first-occurrence and
+least-encoded tie semantics, and
+`Tests/BookMapChaptersTwoToFourCanary.lean` checks the exact Probability, ETC,
+and ordinary-UCB surfaces. The telescoping all-time canonical empirical-mean
+producer now feeds a same-source horizon-free scheduled UCB policy, explicit
+generated-history alignment, a simultaneous all-horizon pull-count theorem,
+and finite-time expected pseudo-regret on one trajectory measure. A bounded
+generated KL-UCB extension and reusable finite-horizon adaptive cumulative
+Hoeffding/UCB-VI concentration foundations now compile as well. Fixed-delta
+expected-average consistency, sharp KL-Chernoff and asymptotically optimal
+KL-UCB refinements, direct imported-LML identity, and the complete UCB-VI
+regret theorem remain later work and are not hidden inside these promotions.
+
 ## Paper-Guided Priority Order
 
 The paper's audited focal cases remain the source-shaped ETC expected-regret
