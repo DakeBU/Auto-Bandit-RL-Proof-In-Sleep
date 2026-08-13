@@ -1,6 +1,6 @@
 # Proof Blueprint: BOOKMAP-CHAPTER-9-HOEFFDING-UCBVI-CANONICAL-COMPLETION
 
-Generated: `2026-08-13T20:19:29+00:00`
+Generated: `2026-08-13T21:07:51+00:00`
 
 ## Source Task
 
@@ -10,7 +10,7 @@ Task id: `BOOKMAP-CHAPTER-9-HOEFFDING-UCBVI-CANONICAL-COMPLETION`
 
 Kind: `lean`
 
-Status: `partial`
+Status: `accepted`
 
 Harness: `hierarchical`
 
@@ -126,7 +126,9 @@ an expectation statement.
 12. [x] Independent read-only review with no unresolved P0--P3 finding.
 13. [x] Focused/root/Tests/SafeVerify/site and final
     `python3 tools/bandit.py check` gates (3699 jobs; 42 tests, one skipped).
-14. GitHub PR, Actions, merge, Pages deployment, and live-page verification.
+14. [x] GitHub PR #5, Actions run `31742349947`, merge commit `826ef88`,
+    Pages deployment, and live Chapter 9 verification; final status promotion
+    is delivered by the follow-up PR.
 
 Chapter 9 stays `partial` unless all fourteen gates pass.
 
@@ -269,7 +271,7 @@ Task id: `BOOKMAP-CHAPTER-9-HOEFFDING-UCBVI-CANONICAL-COMPLETION`
 | `CH9-TYPED-CANARY` | fourteen full-conclusion groups and nondegenerate `Fin 2` recurrent terminal instance | `Tests/BookMapChapterNineCanary.lean` | dedicated/root Tests | compiled |
 | `CH9-REVIEW-SYNC` | independent read-only review; task/window/obligation/blueprint/DAG/site/index agreement | harness and website scripts | no unresolved P0--P3 | accepted |
 | `CH9-LOCAL-FULL-GATE` | focused modules, root, Tests, SafeVerify, site and final harness check | `python3 tools/bandit.py check` | deterministic full gate | accepted: 3699 jobs; 42 tests, one skipped; `check passed` |
-| `CH9-REMOTE-DELIVERY` | PR, Actions, merge, Pages and live chapter verification | GitHub/Pages workflow | remote checks | planned |
+| `CH9-REMOTE-DELIVERY` | PR, Actions, merge, Pages and live chapter verification | GitHub/Pages workflow | remote checks | accepted: PR #5; merge `826ef88`; Actions `31742349947`; deployed page HTTP 200 with pending-state terminal content before promotion |
 
 ## Reviewer statement fence
 
@@ -87870,6 +87872,26 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "time": "2026-08-13T20:18:06+00:00",
     "verifier_evidence": [
       "Build completed successfully (3699 jobs); Ran 42 tests; OK (skipped=1); check passed; independent review no P0-P3"
+    ]
+  },
+  {
+    "changed_files": [
+      "website\\content\\chapters.json"
+    ],
+    "kind": "build",
+    "lean": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_trajectoryMeasure_cumulativeEpisodePseudoRegret_gt_canonicalRegretBound_le",
+    "notes": "All fourteen gates accepted: same-source generated Hoeffding UCBVI-CH terminal, expectation consumer, typed canary, independent review, full harness, PR #5, Actions run 31742349947, merge 826ef88, Pages deployment and live HTTP 200 verification.",
+    "parent_id": "",
+    "role": "reviewer",
+    "route_fingerprint": "",
+    "run_id": "bookmap-chapter-9-hoeffding-ucbvi-canonical-completion-2026-08-14",
+    "source": "PPR-AZAR-OSBAND-MUNOS-2017-UCBVI",
+    "statement_hash": "4e8bb0751363c547fea29789b4552b4c23ace927bdc86debdf9bc101ce8054f1",
+    "status": "accepted",
+    "task": "BOOKMAP-CHAPTER-9-HOEFFDING-UCBVI-CANONICAL-COMPLETION",
+    "time": "2026-08-13T21:05:07+00:00",
+    "verifier_evidence": [
+      "Build completed successfully (3699 jobs); 42 tests OK (1 skipped); Actions build/deploy success; live Chapter 9 contains the generated terminal"
     ]
   }
 ]

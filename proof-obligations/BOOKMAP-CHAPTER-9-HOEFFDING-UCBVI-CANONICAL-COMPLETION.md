@@ -19,7 +19,7 @@ Task id: `BOOKMAP-CHAPTER-9-HOEFFDING-UCBVI-CANONICAL-COMPLETION`
 | `CH9-TYPED-CANARY` | fourteen full-conclusion groups and nondegenerate `Fin 2` recurrent terminal instance | `Tests/BookMapChapterNineCanary.lean` | dedicated/root Tests | compiled |
 | `CH9-REVIEW-SYNC` | independent read-only review; task/window/obligation/blueprint/DAG/site/index agreement | harness and website scripts | no unresolved P0--P3 | accepted |
 | `CH9-LOCAL-FULL-GATE` | focused modules, root, Tests, SafeVerify, site and final harness check | `python3 tools/bandit.py check` | deterministic full gate | accepted: 3699 jobs; 42 tests, one skipped; `check passed` |
-| `CH9-REMOTE-DELIVERY` | PR, Actions, merge, Pages and live chapter verification | GitHub/Pages workflow | remote checks | planned |
+| `CH9-REMOTE-DELIVERY` | PR, Actions, merge, Pages and live chapter verification | GitHub/Pages workflow | remote checks | accepted: PR #5; merge `826ef88`; Actions `31742349947`; deployed page HTTP 200 with pending-state terminal content before promotion |
 
 ## Reviewer statement fence
 

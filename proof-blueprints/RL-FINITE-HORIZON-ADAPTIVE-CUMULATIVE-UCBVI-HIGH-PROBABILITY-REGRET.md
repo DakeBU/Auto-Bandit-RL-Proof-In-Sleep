@@ -1,6 +1,6 @@
 # Proof Blueprint: RL-FINITE-HORIZON-ADAPTIVE-CUMULATIVE-UCBVI-HIGH-PROBABILITY-REGRET
 
-Generated: `2026-08-13T20:19:34+00:00`
+Generated: `2026-08-13T21:07:56+00:00`
 
 ## Source Task
 
@@ -8,7 +8,7 @@ Generated: `2026-08-13T20:19:34+00:00`
 
 Task id: `RL-FINITE-HORIZON-ADAPTIVE-CUMULATIVE-UCBVI-HIGH-PROBABILITY-REGRET`  
 Kind: `theoremFormalization`  
-Status: `partial`  
+Status: `accepted`  
 Harness: `hierarchical`
 
 ## Goal
@@ -163,9 +163,9 @@ Target file:
 - [x] Refreshed full `python3 tools/bandit.py check`: 3699 Lean jobs; 42 Python
   tests passed with one expected skip; `check passed`.
 
-The Hoeffding nodes, reviewer, and refreshed full harness gates are closed;
-keep the task lifecycle `partial` only until the GitHub/Pages delivery gate is
-verified. Do not substitute a caller-supplied confidence witness, an offline
+The Hoeffding nodes, reviewer, refreshed full harness, GitHub Actions, merge,
+and Pages gates are closed. Do not substitute a caller-supplied confidence
+witness, an offline
 iid batch, forced-exploration consistency, a batch-average stopping theorem,
 or an expected-regret theorem for the required generated high-probability
 cumulative regret theorem.  Do not label Bernstein/minimax UCB-VI complete
