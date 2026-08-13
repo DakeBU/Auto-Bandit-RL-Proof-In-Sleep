@@ -4,7 +4,7 @@ Task id: `BOOKMAP-CHAPTER-9-HOEFFDING-UCBVI-CANONICAL-COMPLETION`
 
 Kind: `lean`
 
-Status: `partial`
+Status: `accepted`
 
 Harness: `hierarchical`
 
@@ -120,7 +120,9 @@ an expectation statement.
 12. [x] Independent read-only review with no unresolved P0--P3 finding.
 13. [x] Focused/root/Tests/SafeVerify/site and final
     `python3 tools/bandit.py check` gates (3699 jobs; 42 tests, one skipped).
-14. GitHub PR, Actions, merge, Pages deployment, and live-page verification.
+14. [x] GitHub PR #5, Actions run `31742349947`, merge commit `826ef88`,
+    Pages deployment, and live Chapter 9 verification; final status promotion
+    is delivered by the follow-up PR.
 
 Chapter 9 stays `partial` unless all fourteen gates pass.
 
