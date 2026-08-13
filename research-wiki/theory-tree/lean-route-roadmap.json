@@ -667,7 +667,7 @@
     {
       "id": "ROUTE-RL-UCBVI",
       "title": "finite-horizon RL and UCB-VI regret",
-      "priority": "active-next",
+      "priority": "compiled-canonical",
       "scenario_cards": [
         "SCN-RL-MDP"
       ],
@@ -692,14 +692,19 @@
         "optimistic Bellman certificate and true-occupancy bonus regret bound",
         "estimated reward/transition confidence transport, estimated-greedy policy, and factor-two selected-radius single-episode regret bound",
         "finite-state singleton transition-coordinate errors and recursive-tail envelopes transported into Bellman confidence and the optimistic-regret endpoint",
-        "stochastic sampled cumulative return around recursive policy value with exact reward-noise/Bellman split, additive conditional MGF proxy, and fixed-horizon two-sided tail"
+        "stochastic sampled cumulative return around recursive policy value with exact reward-noise/Bellman split, additive conditional MGF proxy, and fixed-horizon two-sided tail",
+        "same-prefix aggregate generated transition numerators and visit denominators with exact row-sum and successor alignment",
+        "previous-Q clipped recurrent known-reward UCBVI-CH planner with optimistic zero count and measurable finite argmax",
+        "joint singleton-Bernstein and normalized optimal-tail confidence on the recurrent source trajectory measure",
+        "all-episode recurrent Bellman optimism and generated raw episode pseudo-regret decomposition",
+        "actual-count charge summation and generated-filtration Bellman innovation tail",
+        "frozen 20/250 high-probability UCBVI-CH terminal and integrable expectation bound plus K H delta"
       ],
       "next_mathlib_ready_leaves": [
-        "transport statewise stochastic sampled-return confidence to an explicit initial-state law or finite iid episode source",
-        "empirical episode-history and visit-count estimators with simultaneous reward and singleton transition-coordinate confidence events",
-        "finite episode family with cross-episode filtration",
-        "episode-indexed bonus and martingale summation",
-        "high-probability cumulative regret assembly"
+        "Bernstein or variance-aware empirical transition confidence and total-variance summation for the separate minimax milestone",
+        "stochastic-reward UCBVI confidence and changed terminal constants",
+        "realized sampled-return high-probability regret on the canonical recurrent source",
+        "posterior-sampling, model-free, or continuous-space RL extensions"
       ],
       "layers": [
         {
@@ -731,7 +736,7 @@
           ]
         }
       ],
-      "reviewer_gate": "Reject if a bandit one-step proof is silently reused for multi-step RL without a Bellman/occupancy bridge."
+      "reviewer_gate": "Canonical Hoeffding route compiled. Reject extensions that conflate policy-value pseudo-regret with realized return, reuse an independent confidence law, omit strict-prefix previous-Q recurrence, or label Bernstein/minimax complete without its own terminal."
     },
     {
       "id": "ROUTE-BWK-RESOURCE",

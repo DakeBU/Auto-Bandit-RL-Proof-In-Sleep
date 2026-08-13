@@ -683,6 +683,145 @@
       ]
     },
     {
+      "full_name": "BanditRLProof.FiniteHorizonRL.sum_adaptiveCumulativeAggregateTransitionCountAt_eq_visitCountAt",
+      "chapter": "finite-horizon-rl",
+      "plain": "For every generated prefix and state-action pair, summing the aggregate transition numerator over next states gives exactly the aggregate visit-count denominator used by UCBVI.",
+      "math": "\\(\\sum_y N_k(x,a,y)=N_k(x,a).\\)",
+      "intuition": "Every recorded visit has exactly one successor state, so the empirical transition row and its denominator count the same observations.",
+      "why": "A normalized model is unsound if its numerator and denominator come from different stages, batches, or samples; this identity locks both to one strict generated prefix.",
+      "position": "This is the aggregate empirical-transition foundation immediately below the recurrent planner and same-source confidence event.",
+      "proof_idea": "Expand both prefix counts as finite sums over earlier episode coordinates and stages, interchange the finite next-state sum, and use the exact one-successor row-sum identity in each generated batch.",
+      "lean_notes": "The zero-count row has an explicit fallback; at positive count, `aggregateEmpiricalTransitionPMF` divides this numerator by this exact denominator and sums to one.",
+      "dependencies": [
+        "BanditRLProof.FiniteHorizonRL.TransitionCountSummary.sum_aggregateTransitionCount_eq_aggregateVisitCount",
+        "BanditRLProof.FiniteHorizonRL.adaptiveCumulativeAggregateTransitionCountAt_eq_sum"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_policyAt_succ",
+      "chapter": "finite-horizon-rl",
+      "plain": "At successor episode k+1, the canonical source selects exactly the measurable greedy policy produced by the previous-Q-clipped UCBVI recurrence from coordinates at most k.",
+      "math": "\\(Q_{k,h}=\\min\\{Q_{k-1,h},H,r+\\widehat P_kV_{k,h+1}+7HL/\\sqrt{N_k}\\},\\quad \\pi_k=\\arg\\max_a Q_{k,h}.\\)",
+      "intuition": "The algorithm never recomputes policy k from future data: its table is a deterministic measurable function of the strict history available before the next batch is generated.",
+      "why": "This is the algorithm-identity bridge between an optimistic dynamic program and the actual policy whose trajectory appears in the regret theorem.",
+      "position": "It consumes the aggregate empirical model and feeds policy alignment, optimism, and generated episode pseudo-regret.",
+      "proof_idea": "Fold the cumulative transition summaries through the recurrent Q update, prove the zero-count value H and positive-count clipped backup equations, establish measurable finite argmax, and unfold the adaptive source's successor kernel selector.",
+      "lean_notes": "The recurrence clips by both the previous Q table and H. `recurrentInitialTable` is canonical, ties are resolved by finite argmax, and no arbitrary initial optimistic table remains in the terminal.",
+      "dependencies": [
+        "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.clippedQRemaining_of_aggregateVisitCount_pos",
+        "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.measurable_clippedPolicyTable",
+        "BanditRLProof.FiniteHorizonRL.sum_adaptiveCumulativeAggregateTransitionCountAt_eq_visitCountAt"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_trajectoryMeasure_simultaneousTransitionFailureEvent_le_fifth",
+      "chapter": "finite-horizon-rl",
+      "plain": "On the recurrent source's own trajectory law, one finite joint event simultaneously controls actual-count singleton transition residuals and the normalized optimal-tail value probe, with mass at most delta/5.",
+      "math": "\\(\\Pr(G_P^c)\\le\\delta/5,\\quad G_P\\Rightarrow |R_{k,x,a,y}|\\le b_{k,x,a,y}\\ \\text{and}\\ |(\\widehat P_k-P)V^*_{h+1}|\\le 2HL/\\sqrt{N_k}.\\)",
+      "intuition": "The confidence variables are generated from the same batches the algorithm counts. A scalar optimal-value probe is proved from the same transition law because singleton bounds alone would lose a square-root state factor.",
+      "why": "It rules out the common semantic gap of proving confidence on an offline or independent sample and applying it to another generated policy trajectory.",
+      "position": "This joint producer sits between strict-prefix trajectory alignment and Bellman optimism; its unused probability budget is combined with the Bellman innovation tail at the terminal.",
+      "proof_idea": "Build predictable selected-transition residuals, prove conditional MGF bounds under the adaptive batch kernel, peel over actual positive visit counts, union over finite episode/state/action/probe indices, and calibrate the paper log factor.",
+      "lean_notes": "The event contains p-sensitive Bernstein singleton coordinates plus a normalized `optimalTailProbe`. The latter is an additional proved projection on the same law, not a caller hypothesis or a logical consequence of singleton radii alone.",
+      "dependencies": [
+        "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.AdaptiveEpisodeBatchSource.trajectoryMeasure_bernsteinCoordinateFailureEvent_le",
+        "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.AdaptiveEpisodeBatchSource.trajectoryMeasure_optimalTailFailureEvent_le",
+        "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_policyAt_succ"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.AdaptiveEpisodeBatchSource.recurrentQTableOfTrajectory_dominatesOptimal",
+      "chapter": "finite-horizon-rl",
+      "plain": "Outside the same-source transition failure event, every recurrent generated Q table dominates the true finite-horizon optimal Q values at every stage, state, and action.",
+      "math": "\\(G_P\\Rightarrow Q_{k,h}(x,a)\\ge Q_h^*(x,a)\\quad\\text{for all }k,h,x,a.\\)",
+      "intuition": "The empirical backup plus bonus covers the true optimal tail; clipping preserves optimism because both the previous table and the horizon cap are already upper bounds.",
+      "why": "Optimism converts the generated policy's greedy choice into a one-sided regret comparison, but only after it is proved for the exact table used by that source.",
+      "position": "It is the Bellman-induction consumer of same-source confidence and the principal premise discharged internally by the episode-regret decomposition.",
+      "proof_idea": "Start from the canonical all-H table, induct over episode summaries, perform backward induction over the horizon, apply the optimal-tail confidence probe at positive count, and handle zero count by the explicit H branch.",
+      "lean_notes": "The theorem quantifies over the recurrent source trajectory and reads the same `simultaneousTransitionFailureEvent`; no abstract `OptimisticBellmanCertificate` is passed to the final regret theorem.",
+      "dependencies": [
+        "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_trajectoryMeasure_simultaneousTransitionFailureEvent_le_fifth",
+        "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.clippedQTable_dominatesOptimal"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.AdaptiveEpisodeBatchSource.recurrentSource_generatedSuccessorPseudoRegret_le_charge_add_innovation",
+      "chapter": "finite-horizon-rl",
+      "plain": "For every aligned successor episode on the good transition event, the generated policy-value pseudo-regret is bounded by an inflated sum of visited local confidence charges plus its generated Bellman innovation.",
+      "math": "\\(\\Delta_{k+1}\\le (32/31)\\,C_{k+1}+M_{k+1}.\\)",
+      "intuition": "Optimism pays for systematic model uncertainty through bonuses; the difference between expected next-state propagation and the actually visited state is isolated as centered noise.",
+      "why": "This is the exact bridge from per-episode Bellman reasoning to the two global sums that can be bounded by counting and martingale concentration.",
+      "position": "It is downstream of strict-prefix action alignment and recurrent optimism, and directly upstream of the high-probability terminal.",
+      "proof_idea": "Recursively compare clipped and true policy values, absorb coordinate model error with a small Bellman inflation, unroll the recursion with bounded weights, and identify the residual with the batch generated under the selected policy.",
+      "lean_notes": "The regret object is raw generated policy-value pseudo-regret at the episode's sampled initial state. It is not behavior expected regret or realized sampled-return regret.",
+      "dependencies": [
+        "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.AdaptiveEpisodeBatchSource.recurrentQTableOfTrajectory_dominatesOptimal",
+        "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_trajectoryMeasure_all_successorBatchAligned_ae"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.totalGeneratedPairCharge_le_explicit",
+      "chapter": "finite-horizon-rl",
+      "plain": "Along every generated path, the total clipped local UCBVI charge paid at actually visited state-action pairs obeys an explicit square-root leading bound plus low-count and harmonic corrections.",
+      "math": "\\(\\sum_{k,h} C_{k,h}\\le\\text{explicit function of }H,S,A,K,L\\),\\quad\\text{using }\\sum 1/\\sqrt{N_{k}^{-}}.\\)",
+      "intuition": "Frequently visited pairs get cheap bonuses; zero and low counts can be expensive only a bounded number of times, while positive reciprocal-square-root charges telescope against count growth.",
+      "why": "The regret rate must come from exact generated counts, not from assuming the desired bonus sum or replacing it with a reachability denominator.",
+      "position": "This deterministic pathwise theorem discharges the charge branch of the episode decomposition before the final probability union.",
+      "proof_idea": "Partition visits into zero/low and positive-count regimes, use the exact batched count successor relation, prove reciprocal-square-root and logarithmic summation inequalities, then sum over the finite state-action type.",
+      "lean_notes": "All Nat-to-Real casts, state/action cardinalities, log positivity, and zero denominators are explicit. The terminal uses a coarser 20/250 envelope after combining this bound with other costs.",
+      "dependencies": [
+        "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.sum_positive_batchedInvSqrt_le",
+        "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.sum_high_batchedRatio_le_log",
+        "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.AdaptiveEpisodeBatchSource.recurrentSource_generatedSuccessorPseudoRegret_le_charge_add_innovation"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_trajectoryMeasure_bellmanInnovation_sum_ge_threshold_le_fifth",
+      "chapter": "finite-horizon-rl",
+      "plain": "The sum of recurrent episode Bellman innovations on the actual generated filtration exceeds its explicit Hoeffding threshold with probability at most delta/5.",
+      "math": "\\(\\Pr\\{\\sum_{k<K}M_k\\ge b_M(H,K,L)\\}\\le\\delta/5.\\)",
+      "intuition": "After each policy is fixed by the strict past, the next generated episode contributes a bounded conditionally centered value-propagation error.",
+      "why": "Pathwise bonus control cannot eliminate stochastic next-state noise; this theorem pays that remaining term without pretending it is a deterministic Bellman residual.",
+      "position": "It is the generated-filtration probability producer parallel to transition confidence and immediately below the final failure-budget union.",
+      "proof_idea": "Express each successor statistic under the source's conditional batch kernel, prove its compensated conditional MGF, package the sequence as strongly adapted, apply the finite-sum exponential tail, and calibrate the threshold by the common log factor.",
+      "lean_notes": "The process uses coordinate zero and successor indices explicitly, reads no future episode, and is distinct from the transition-estimation residual controlled by the confidence event.",
+      "dependencies": [
+        "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.AdaptiveEpisodeBatchSource.recurrentSuccessorBellmanInnovation_compensated_hasCondMGFUpperBoundAt",
+        "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.trajectoryMeasure_recurrentBellmanInnovation_sum_ge_le"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_trajectoryMeasure_cumulativeEpisodePseudoRegret_gt_canonicalRegretBound_le",
+      "chapter": "finite-horizon-rl",
+      "plain": "For one recurrent generated known-reward UCBVI-CH process, raw policy-value pseudo-regret across exactly K episode coordinates exceeds the explicit 20/250 Hoeffding bound with probability at most delta.",
+      "math": "\\(\\Pr\\{R_K>20H\\sqrt H\\,L\\sqrt{SAK}+250H^2S^2AL^2\\}\\le\\delta.\\)",
+      "intuition": "Every ingredient is read from one adaptive history: the policy uses only the strict past, confidence controls that trajectory's aggregate transition rows, and the actual visited counts pay for the bonus.",
+      "why": "A planner or confidence certificate alone is not UCBVI regret; this theorem closes the generated policy-to-regret probability chain.",
+      "position": "This is the canonical Chapter 9 high-probability terminal for finite nonempty State and Action, positive H and K, a probability initial law, 0<delta<=1, and deterministic rewards in [0,1].",
+      "proof_idea": "Use same-law singleton Bernstein and optimal-tail probes for optimism, decompose each successor episode into a weighted local charge and Bellman innovation, sum actual-count charges, pay the initial episode by H, and union the transition, innovation, and null alignment events.",
+      "lean_notes": "The bound is `canonicalRegretBound`. Coordinate zero is included. The failure set is not caller supplied. This is policy-value pseudo-regret, not realized sampled-return regret; Bernstein/minimax UCB-VI is not claimed.",
+      "dependencies": [
+        "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.AdaptiveEpisodeBatchSource.recurrentSource_generatedSuccessorPseudoRegret_le_charge_add_innovation",
+        "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.totalGeneratedPairCharge_le_explicit",
+        "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_trajectoryMeasure_bellmanInnovation_sum_ge_threshold_le_fifth",
+        "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_trajectoryMeasure_simultaneousTransitionFailureEvent_le_fifth"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.integral_cumulativeEpisodePseudoRegret_recurrentSource_le_canonicalRegretBound_add_failure",
+      "chapter": "finite-horizon-rl",
+      "plain": "The same recurrent UCBVI-CH pseudo-regret is integrable, and its expectation is at most the frozen high-probability bound plus the explicit K H delta failure contribution.",
+      "math": "\\(\\mathbb E R_K\\le B_{\\mathrm{CH}}(H,S,A,K,\\delta)+KH\\delta.\\)",
+      "intuition": "On the good event use the compiled UCBVI bound; on its measurable hull use only the deterministic fact that K episodes can lose at most K H.",
+      "why": "A high-probability theorem does not automatically have the same expectation bound. The bad-event mass must be charged explicitly.",
+      "position": "This is the failure-aware expectation consumer immediately downstream of the Chapter 9 high-probability terminal.",
+      "proof_idea": "Prove measurability and integrability of the recurrent policy-value regret, dominate it by the bound plus a K H indicator, integrate the indicator, and apply the proved delta tail.",
+      "lean_notes": "The `K H delta` term is present in the exact Lean conclusion. It does not assert expected-average consistency, realized-return regret, optional stopping, or a stochastic-reward theorem.",
+      "dependencies": [
+        "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_trajectoryMeasure_cumulativeEpisodePseudoRegret_gt_canonicalRegretBound_le"
+      ]
+    },
+    {
       "full_name": "BanditRLProof.Budget.isStoppingTime_budgetExhaustionTime_of_adapted",
       "chapter": "frontier",
       "plain": "The first time an adapted cumulative spending process reaches a fixed budget is a stopping time.",

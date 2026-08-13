@@ -44,14 +44,14 @@ with probability at least `1-delta`.
 | paper-shaped log/radius | `AdaptiveCumulativeHoeffdingUCBVI.logFactor_eq_paper`; `.countRadius_zero`; `.countRadius_of_pos` | compiled |
 | one-episode generated source | `AdaptiveCumulativeHoeffdingUCBVI.source` | compiled foundation |
 | same-prefix source/policy/model | `.source_policyAt_succ_eq_modelState_optimisticPolicy` | compiled foundation |
-| aggregate cross-stage paper count | `TransitionCountSummary.aggregateVisitCount`; `adaptiveCumulativeAggregateVisitCountAt_succ` | compiled; planner integration pending |
-| previous-Q clipped optimistic DP | new recurrent plan state and policy | planned |
-| adaptive same-source confidence | new bad event, measurability and measure bound | planned |
-| generated Bellman optimism | new per-episode certificate | planned |
-| regret decomposition/noise | new same-trajectory pathwise bound | planned |
-| bonus/count summation | new explicit `S,A,H,K,L` inequality | planned |
-| UCBVI-CH terminal | new cumulative high-probability theorem | planned |
-| expected regret | new failure-aware integral corollary | planned |
+| aggregate cross-stage paper count | `sum_adaptiveCumulativeAggregateTransitionCountAt_eq_visitCountAt`; `adaptiveCumulativeAggregateTransitionCountAt_succ` | compiled; same-prefix numerator/denominator and recurrent-planner integration |
+| previous-Q clipped optimistic DP | `AdaptiveCumulativeHoeffdingUCBVI.recurrentQTableOfSummaries`; `.recurrentSource_policyAt_succ` | compiled |
+| adaptive same-source confidence | `.recurrentSource_trajectoryMeasure_simultaneousTransitionFailureEvent_le_fifth` | compiled on the recurrent source law |
+| generated Bellman optimism | `AdaptiveEpisodeBatchSource.recurrentQTableOfTrajectory_dominatesOptimal` | compiled |
+| regret decomposition/noise | `.recurrentSource_generatedSuccessorPseudoRegret_le_charge_add_innovation` | compiled |
+| bonus/count summation | `.totalGeneratedPairCharge_le_explicit` | compiled with explicit `S,A,H,K,L` |
+| UCBVI-CH terminal | `.recurrentSource_trajectoryMeasure_cumulativeEpisodePseudoRegret_gt_canonicalRegretBound_le` | compiled |
+| expected regret | `.integral_cumulativeEpisodePseudoRegret_recurrentSource_le_canonicalRegretBound_add_failure` | compiled; retains `K*H*delta` |
 | Bernstein/minimax | variance-aware second milestone | planned |
 
 ## Assumption ledger
@@ -71,24 +71,25 @@ with probability at least `1-delta`.
 | confidence | reward/transition event on the same trajectory, self-normalized by actual cumulative counts |
 | regret | policy and initial state read from the same episode coordinate; high-probability before expectation |
 
-## Compiled route and exact gap
+## Compiled route and exact remaining gap
 
-The compiled foundation genuinely constructs a paired cumulative state, the
-cross-stage paper-count view with its exact successor update, and a
-history-dependent one-episode source with exact policy/model alignment. It does
-not yet instantiate the paper algorithm: the selected source still passes
-stage-indexed counts to the existing one-model optimistic plan, which has no
-previous-Q clipping.
-The available count-martingale cover is not yet the required adaptive
-self-normalized transition-value confidence, and the natural-causal terminals
-sum normalized batch regrets rather than raw episode regret.  Those differences
-are proof obligations, not documentation details.
+The canonical branch now constructs the aggregate same-prefix count state, a
+strict-prefix recurrent previous-Q-clipped source, the joint singleton
+Bernstein and normalized optimal-tail confidence event on that source's own
+trajectory law, Bellman optimism, raw policy-value pseudo-regret decomposition,
+actual-count charge summation, and the generated-filtration Bellman innovation
+tail.  These nodes close the frozen Hoeffding UCBVI-CH terminal and its
+failure-aware expected consumer. The earlier stage-indexed, offline-batch, and
+natural-causal branches remain separate foundations rather than alternate
+names for this canonical theorem. Bernstein/variance-aware minimax UCB-VI is
+the exact remaining second milestone.
 
 ## Deliberate nonclaims
 
-- No high-probability UCBVI-CH regret theorem is compiled yet.
-- No expected-regret corollary follows until the bad-event contribution is
-  integrated explicitly.
+- No Bernstein/variance-aware minimax UCB-VI theorem is implied by the compiled
+  Hoeffding UCBVI-CH terminal.
+- The expected-regret corollary retains the explicit `K*H*delta` bad-event
+  contribution; no expectation-without-failure-cost claim is made.
 - No stochastic-reward version inherits the known-reward paper constants
   without a new theorem and calibration.
 - No Bernstein bonus, law-of-total-variance argument, minimax leading rate, or
