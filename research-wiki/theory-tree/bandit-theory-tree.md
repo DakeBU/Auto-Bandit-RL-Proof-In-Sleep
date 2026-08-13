@@ -78,17 +78,16 @@ and complete Tsallis-INF remain unclaimed.
 The first dependency-light compiled leaf library is
 `BanditRLProof.LeafLemmas`.  It currently exposes:
 
-The latest finite-horizon RL consumer is
-`RL-FINITE-HORIZON-NATURAL-CAUSAL-INVERSE-SQRT-THRESHOLD-UNBOUNDED-HITTINGAFTER-SQUARE-INTEGRABLE-FINITE-STOPPING-TIME`.
-Under `4 < mdp.horizon`, it compiles seventh-weighted squared fourth-power
-checkpoint crossing tails for the genuine Mathlib `hittingAfter`, proves the
-exact burn-in model-tail plus return budget summable after weighting, and
-converts those tails into fixed-index
-`OFUL.SquareIntegrableFiniteStoppingTime`. The positive-horizon parent remains
-the valid first-moment route for shorter horizons, and the qualitative parent
-still supplies simultaneous a.e. finiteness, eventual exact base stopping,
-and stopped a.e./in-measure convergence. Uniform-in-index moments,
-stopped-process L1 transport, and optional stopping remain unproved.
+The canonical Chapter 9 terminal is now
+`AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_trajectoryMeasure_cumulativeEpisodePseudoRegret_gt_canonicalRegretBound_le`.
+One strict-prefix recurrent source uses aggregate generated transition counts,
+previous-Q clipping, same-law singleton Bernstein and optimal-tail confidence,
+Bellman optimism, actual-count charge summation, and a generated-filtration
+innovation tail to prove the frozen `20/250` UCBVI-CH bound. Its expectation
+consumer retains `K*H*delta`. The natural-causal consistency and genuine
+`hittingAfter` stopping routes remain separately compiled extensions rather
+than aliases of this raw cumulative pseudo-regret theorem. Bernstein/minimax
+and stochastic-reward UCBVI remain open milestones.
 
 - `pullCount_one`;
 - `pullCount_succ_of_eq`;
@@ -880,12 +879,12 @@ zero-count radius. Under one explicit cumulative coordinate-confidence event,
 the route proves roundwise optimism and recommendation regret at most
 `sum round, horizon * (2 * radiusEnvelope round)`.
 
-This closes the accumulated planner/source and regret consumer, not the
-statistical rate. The exact next RL edge is the adaptive cumulative
-conditional-centered count-MGF/martingale producer and its empirical
-coordinate cover. Full predecessor marginal sums, arbitrary-MDP support,
-stochastic rewards, behavior/realized regret, minimax rates, and complete
-UCB-VI remain separate.
+This older radius-contract branch closed its accumulated planner/source and
+regret consumer, but did not itself prove a statistical rate. Its former next
+edge—the adaptive cumulative count-MGF/confidence producer—is now consumed by
+the canonical strict-prefix UCBVI-CH branch above. Full predecessor marginal
+sums outside the canonical assumptions, stochastic rewards, behavior/realized
+regret, and Bernstein/minimax rates remain separate.
 
 The downstream calibration edge
 `RL-FINITE-HORIZON-EXPLORATORY-STATE-REACHABILITY-CALIBRATION` now compiles.
@@ -899,8 +898,9 @@ The state-action margin is therefore reduced to a state-only reachability
 envelope plus exploration. The explicit path-support producer now supplies that
 envelope under true singleton-floor contracts; the explicit scalar count/bonus
 calibration, symbolic episode threshold, and exact fixed-bonus occupancy
-envelope now compile downstream. Accumulated statistics and a shrinking-radius
-sum are the next RL edges. Behavior and realized regret remain separate.
+envelope compile downstream. This older forced-exploration branch itself does
+not contain the later canonical strict-prefix aggregate-count UCBVI-CH theorem.
+Behavior and realized sampled-return regret remain separate.
 
 The population-law branch now includes
 `RL-FINITE-HORIZON-STAGE-VISIT-FACTORIZATION`. At every valid stage, a generated
@@ -911,9 +911,11 @@ integrates over the initial state law. The identity remains true at zero state
 mass.
 
 Together with the exploratory action floor, this creates the algebraic bridge
-needed for a later visit-margin calibration theorem. State reachability itself
-is still an explicit missing premise, as are bonus coverage, accumulated-count
-rates, behavior/realized regret, and complete UCB-VI.
+used by the visit-margin calibration branch. State reachability remains an
+explicit premise of that older exploratory route; the canonical strict-prefix
+UCBVI-CH branch above instead closes its own aggregate-count, bonus, and
+high-probability terminal. Behavior/realized regret and Bernstein/minimax
+UCB-VI remain separate.
 
 ## Finite-Horizon RL Generated Transition-Law Edge
 
@@ -950,9 +952,10 @@ radius based on `expectedCount - countRadius`, proves the noncircular envelope
 coordinate cover to construct the complete empirical-model confidence data.
 Under the mapped iid law this witness exists a.e. off the same global-delta
 event and immediately yields global optimism plus the existing one-episode
-expected-regret occupancy bound. Adaptive cross-episode policy updates,
-cumulative bonus summation, stochastic rewards, anytime confidence, and full
-UCB-VI regret remain downstream.
+expected-regret occupancy bound. This iid branch itself does not provide
+adaptive cross-episode policy updates or cumulative bonus summation; those are
+closed separately by the canonical generated UCBVI-CH branch above. Stochastic
+rewards, anytime confidence, and Bernstein/minimax UCB-VI remain downstream.
 
 The finite-product edge
 `RL-FINITE-HORIZON-IID-MULTIBATCH-CUMULATIVE-CONFIDENCE-REGRET` now compiles.
@@ -992,10 +995,11 @@ comaps the table-indexed iid batch kernel along that selector. Exact selected
 laws, selected-event measurability, next-batch conditional laws, and the
 global-delta adaptive count terminal no longer remain caller premises.
 
-This is a concrete empirical-transition process, but not complete UCB-VI. Its
-bonus is uncalibrated, rewards are known, and prior batches are not accumulated.
-Adaptive reward/model confidence, cumulative bonus control, and realized
-regret remain downstream.
+This older edge is a concrete empirical-transition process, but is not the
+canonical UCBVI-CH source: its bonus is uncalibrated and prior batches are not
+accumulated. The later strict-prefix recurrent branch above closes known-reward
+adaptive confidence and cumulative bonus control. Stochastic reward confidence,
+realized sampled-return regret, and Bernstein/minimax UCB-VI remain downstream.
 
 The downstream edge
 `RL-FINITE-HORIZON-ADAPTIVE-EXPLORATORY-EMPIRICAL-OPTIMISTIC-ALL-COORDINATE-CONFIDENCE-RECOMMENDED-REGRET`
@@ -1005,6 +1009,7 @@ source. Exact empirical-kernel transport, a known-reward value envelope, and
 behavior-policy reachability/bonus-cover contracts produce confidence and
 optimism for every observed plan outside one global event. The expected regrets
 of the optimistic policies recommended by those batches sum below selected-
-radius occupancies. Recommendation regret is not exploratory behavior or
-realized regret; calibration, accumulated statistics, an explicit rate, and
-complete UCB-VI remain downstream.
+radius occupancies. Recommendation regret is not exploratory behavior,
+generated raw policy-value pseudo-regret, or realized regret. This older branch
+did not itself have calibrated accumulated statistics or an explicit UCBVI-CH
+rate; those are supplied by the canonical strict-prefix branch above.

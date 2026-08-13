@@ -56,9 +56,27 @@ flowchart TB
 
   MDP["FiniteHorizonRL.MDP"] --> Bellman["optimal Bellman recursion"]
   Bellman --> Occupancy["expectedRegret_eq_occupancyGapRemaining"]
-  CondMGF --> RLConfidence["adaptive empirical model + return confidence"]
-  Occupancy --> RLConfidence
-  RLConfidence --> Behavior["realized behavior consistency"]
+  GeneratedEpisodes["generated adaptive episode source"] --> CumState["strict-prefix aggregate counts"]
+  CumState --> AggregateP["aggregate empirical transition row"]
+  AggregateP --> RecurrentQ["previous-Q clipped UCBVI-CH planner"]
+  RecurrentQ --> GreedyPolicy["measurable finite argmax policy"]
+  CondMGF --> RLConfidence["same-law singleton + optimal-tail confidence"]
+  CumState --> RLConfidence
+  RLConfidence --> OptimismRL["all-episode Bellman optimism"]
+  RecurrentQ --> OptimismRL
+  Occupancy --> EpisodeRegret["generated episode pseudo-regret"]
+  GreedyPolicy --> EpisodeRegret
+  OptimismRL --> DecompRL["charge + Bellman-innovation decomposition"]
+  EpisodeRegret --> DecompRL
+  CumState --> CountSumRL["actual-count charge summation"]
+  CondMGF --> MartingaleRL["generated-filtration innovation tail"]
+  DecompRL --> UCBVITerminal["20/250 high-probability UCBVI-CH terminal"]
+  CountSumRL --> UCBVITerminal
+  MartingaleRL --> UCBVITerminal
+  UCBVITerminal --> UCBVIExpected["expected regret + K H delta"]
+
+  RLConfidence --> Behavior["natural-causal consistency extension"]
   StopL2 --> Hitting["uncapped inverse-sqrt hittingAfter L2"]
   Behavior --> Hitting
   Hitting --> ExpectedHit["stopped value integrable; expectation ≤ threshold"]
+  UCBVITerminal -. "separate milestone" .-> BernsteinRL["Bernstein/minimax UCB-VI"]

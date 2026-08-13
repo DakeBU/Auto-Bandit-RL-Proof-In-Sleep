@@ -222,19 +222,23 @@
       "title": "9. Finite-horizon reinforcement learning",
       "short_title": "Finite-horizon RL",
       "status": "partial",
-      "summary": "Finite MDPs, Markov policies, Bellman optimality, generated trajectories, occupancy-regret identities, empirical model confidence, adaptive cumulative exploration, realized behavior regret, consistency, stopping times, and the first same-prefix generated Hoeffding UCB-VI foundation.",
+      "summary": "Finite MDPs, Bellman optimality, generated trajectories and occupancy regret, plus a canonical known-reward Hoeffding UCBVI-CH route whose recurrent planner, same-source confidence, optimism, raw cumulative episode pseudo-regret, high-probability terminal, and failure-aware expectation consumer share one adaptive generated process.",
       "audience": "Read Foundations, Probability, UCB, and the OFUL stopping-time material first.",
       "learning_goals": [
         "Build finite-horizon value recursion and prove the optimal policy attains the Bellman optimum.",
         "Rewrite expected policy regret as an occupancy-weighted Bellman gap.",
-        "Follow adaptive empirical confidence through realized behavior consistency and fixed-index stopped expected-regret bounds."
+        "Follow aggregate empirical transitions through previous-Q clipping, same-source confidence, Bellman optimism, counting and martingale terms to generated cumulative pseudo-regret."
       ],
       "module_globs": ["BanditRLProof/RL/*.lean"],
+      "completion_definition": "Complete in the canonical Chapter 9 scope when finite-MDP Bellman and occupancy foundations, a single generated adaptive episode process with known deterministic rewards in [0,1], same-prefix aggregate transition counts, a previous-Q clipped Hoeffding UCBVI-CH planner, same-law confidence and optimism, generated raw cumulative episode pseudo-regret, the explicit 20/250 high-probability terminal, and an integrable failure-aware expected-regret corollary all compile through the public root and a nondegenerate typed canary.",
+      "completion_blockers": [
+        "All local Lean, typed-canary, independent-review, website, and full-harness gates are closed. Public Chapter 9 promotion awaits only the GitHub Actions, merge, Pages deployment, and live-page verification gate."
+      ],
       "open_gaps": [
-        "The RL layer is no longer planned: hundreds of declarations compile, including stochastic reward, adaptive cumulative, causal, consistency, and stopping-time routes.",
-        "The generated Hoeffding UCB-VI foundation now compiles exact cumulative state updates, the cross-stage aggregate paper count and successor update, safe log/radius calibration, and same-prefix policy/model alignment.",
-        "The Hoeffding terminal remains open: the aggregate count is not yet consumed by a recurrent Q-clipped planner, and same-source self-normalized confidence, raw episode-regret decomposition, plus the explicit S-A-H-K-delta bonus/martingale sum are missing.",
-        "Bernstein/variance-aware minimax UCB-VI remains a separate second milestone; the existing natural-causal batch-average and stopping-time results do not close either milestone."
+        "Bernstein/variance-aware minimax UCB-VI and its paper-leading rate remain a separate second milestone.",
+        "Stochastic-reward UCBVI, adversarial or nonstationary initial-state sequences, realized sampled-return high-probability UCBVI, posterior-sampling RL, model-free Q-learning, and infinite or continuous state-action spaces remain extensions.",
+        "Natural-causal consistency and stopping-time RL results are independent extension branches; they are not consequences or aliases of the compiled raw cumulative UCBVI-CH terminal.",
+        "The joint confidence event includes singleton Bernstein coordinates and a same-generated-law optimal-tail scalar probe. It does not claim the sharp scalar bound follows from singleton envelopes alone."
       ]
     },
     {

@@ -12,16 +12,16 @@ Scenario: `SCN-RL-MDP`
 | `ZERO-COUNT` | `AdaptiveCumulativeEmpiricalModelState.empiricalReward_of_visitCount_eq_zero`; `AdaptiveCumulativeHoeffdingUCBVI.countRadius_zero` | no hidden positive denominator | typed canary | compiled |
 | `LOG-RADIUS` | `AdaptiveCumulativeHoeffdingUCBVI.logFactor_eq_paper`; `.countRadius_of_pos` | `T=KH`, `L=log(5HSAT/delta)`, `7HL/sqrt N`, task-domain proofs | focused Lean | compiled |
 | `GENERATED-SOURCE` | `AdaptiveCumulativeHoeffdingUCBVI.source`; `.source_policyAt_succ_eq_modelState_optimisticPolicy` | one adaptive generated process; successor policy reads the same prefix | typed canary | compiled foundation |
-| `AGGREGATE-COUNT` | `TransitionCountSummary.aggregateVisitCount`; `measurable_adaptiveCumulativeAggregateVisitCountAt`; `adaptiveCumulativeAggregateVisitCountAt_eq_sum`; `.succ` | paper count `N_k(x,a)` sums visits across stages and prior episodes; exact same-prefix update | typed canary | compiled; planner integration pending |
-| `CLIPPED-RECURRENT-PLAN` | planned recurrent optimistic plan | `min(Q_previous,H,backup)`, zero-count `H`, finite measurable argmax | focused Lean | planned |
-| `SAME-SOURCE-CONFIDENCE` | planned all-coordinate bad event and trajectory-measure bound | adaptive self-normalized count; same source; reward/transition coordinates; mass `<= delta` | typed canary | planned |
-| `BELLMAN-OPTIMISM` | planned good-event selected-plan certificate | confidence implies optimism for each generated episode plan | focused Lean | planned |
-| `REGRET-DECOMPOSITION` | planned generated cumulative episode-regret decomposition | optimism, occupancy/bonus and martingale-noise terms on one process | focused Lean | planned |
-| `BONUS-SUM` | planned cumulative clipped-radius/count bound | explicit `S,A,H,K,L`; no reachability denominator substituted for actual count | focused Lean | planned |
-| `UCBVI-CH-TERMINAL` | planned same-process high-probability cumulative regret theorem | `20 H^(3/2)L sqrt(SAK) + 250 H^2 S^2 A L^2`; known reward `[0,1]` | root/tests/reviewer | planned |
-| `EXPECTED-COROLLARY` | planned integral/expectation consumer | retains and bounds failure-event contribution | focused Lean | planned |
+| `AGGREGATE-COUNT` | `sum_adaptiveCumulativeAggregateTransitionCountAt_eq_visitCountAt`; `adaptiveCumulativeAggregateTransitionCountAt_succ` | paper count `N_k(x,a)` sums visits across stages and prior episodes; exact same-prefix numerator/denominator | typed canary | compiled |
+| `CLIPPED-RECURRENT-PLAN` | `AdaptiveCumulativeHoeffdingUCBVI.recurrentQTableOfSummaries`; `.recurrentSource_policyAt_succ` | `min(Q_previous,H,backup)`, zero-count `H`, finite measurable argmax | focused Lean | compiled |
+| `SAME-SOURCE-CONFIDENCE` | `.recurrentSource_trajectoryMeasure_simultaneousTransitionFailureEvent_le_fifth` | joint singleton Bernstein and normalized optimal-tail probes; actual adaptive counts; recurrent source law | typed canary | compiled |
+| `BELLMAN-OPTIMISM` | `AdaptiveEpisodeBatchSource.recurrentQTableOfTrajectory_dominatesOptimal` | confidence implies optimism for each generated episode plan | focused Lean | compiled |
+| `REGRET-DECOMPOSITION` | `.recurrentSource_generatedSuccessorPseudoRegret_le_charge_add_innovation` | optimism, weighted local charge and generated Bellman innovation on one process | focused Lean | compiled |
+| `BONUS-SUM` | `.totalGeneratedPairCharge_le_explicit` | explicit `S,A,H,K,L`; actual counts and zero/low-count charge | focused Lean | compiled |
+| `UCBVI-CH-TERMINAL` | `.recurrentSource_trajectoryMeasure_cumulativeEpisodePseudoRegret_gt_canonicalRegretBound_le` | `20 H^(3/2)L sqrt(SAK) + 250 H^2 S^2 A L^2`; known reward `[0,1]` | root/tests/reviewer | compiled; independent review accepted |
+| `EXPECTED-COROLLARY` | `.integral_cumulativeEpisodePseudoRegret_recurrentSource_le_canonicalRegretBound_add_failure` | integrable and retains `K*H*delta` failure contribution | focused Lean | compiled |
 | `BERNSTEIN-MINIMAX` | planned variance-aware route | empirical variance, total variance and paper-leading rate | separate milestone | planned |
-| `ROOT-GATE` | root import, dedicated canary, no placeholders, baseline axioms, synchronized artifacts | no target weakening | full `python3 tools/bandit.py check` | foundation gate passed: 3664 Lean jobs and 43 tests with one expected skip; terminal pending |
+| `ROOT-GATE` | root import, dedicated canary, no placeholders, baseline axioms, synchronized artifacts | no target weakening | full `python3 tools/bandit.py check` | accepted: 3699 jobs; 42 tests, one skipped; `check passed` |
 
 ## Retrieval evidence
 

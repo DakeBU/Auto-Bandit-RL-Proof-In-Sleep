@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.integral_cumulativeEpisodePseudoRegret_recurrentSource_le_canonicalRegretBound_add_failure",
+  "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIExpectedRegret.lean",
+  "statement": "theorem integral_cumulativeEpisodePseudoRegret_recurrentSource_le_canonicalRegretBound_add_failure (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] [StandardBorelSpace (EpisodeBatch mdp 1)] [StandardBorelSpace (EpisodeBatchTrajectory mdp 1)] (defaultState : State) (episodes : Nat) (delta : Real) (hhorizon : 0 < mdp.horizon) (hepisodes : 0 < episodes) (hdelta : 0 < delta) (hdelta_le_one : delta <= 1) (hrewardNonneg : ∀ state action, 0 <= mdp.reward state action) (hrewardOne : ∀ state action, mdp.reward state action <= 1) : let source := recurrentSource mdp initialState defaultState episodes delta ∫ trajectory, cumulativeEpisodePseudoRegret source defaultState episodes trajectory ∂source.trajectoryMeasure <= canonicalRegretBound (State := State) (Action := Action) mdp episodes delta + (episodes : Real) * mdp.horizon * delta",
+  "statement_hash": "f97f6aeb5aecc61d2efbfe332e045fd04935e7e075167934f09cb39aadc88cce",
+  "source_assumptions": [],
+  "created_at": "2026-08-13T20:14:35+00:00"
+}

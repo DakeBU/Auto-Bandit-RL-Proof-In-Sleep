@@ -619,25 +619,25 @@
     },
     {
       "id": "RL-UCBVI-HOEFFDING-GENERATED-FOUNDATION",
-      "title": "Generated adaptive cumulative Hoeffding UCB-VI foundation",
+      "title": "Generated adaptive cumulative Hoeffding UCBVI-CH chain",
       "chapter": "finite-horizon-rl",
-      "status": "partial",
-      "informal": "One generated episode process now carries a measurable paired cumulative count/reward state, exact successor updates, the measurable cross-stage paper count N_k(x,a), a totalized UCBVI-CH-shaped log/radius, and a successor policy provably computed from the same trajectory prefix. This is a generated foundation, not the high-probability regret theorem.",
-      "declarations": ["BanditRLProof.FiniteHorizonRL.measurable_adaptiveCumulativeEmpiricalModelStateAt", "BanditRLProof.FiniteHorizonRL.adaptiveCumulativeEmpiricalModelStateAt_rewardSum_succ", "BanditRLProof.FiniteHorizonRL.adaptiveCumulativeAggregateVisitCountAt_succ", "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.logFactor_eq_paper", "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.source_policyAt_succ_eq_modelState_optimisticPolicy"],
-      "depends_on": ["BanditRLProof.FiniteHorizonRL.EpisodeBatchPrefix.measurable_cumulativeTransitionCountSummary", "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeEmpiricalOptimisticSource.measurable_successorTable"],
-      "missing": ["Wire the compiled aggregate N_k(x,a) view into the selected planner.", "Previous-episode min(Q_previous,H,backup) clipped dynamic program.", "Same-source adaptive self-normalized confidence at actual random counts.", "Generated episode-regret decomposition and cumulative bonus/martingale sum.", "Explicit UCBVI-CH high-probability terminal and failure-aware expectation corollary."],
-      "evidence": "tasks/RL-FINITE-HORIZON-ADAPTIVE-CUMULATIVE-UCBVI-HIGH-PROBABILITY-REGRET.md"
+      "status": "compiled",
+      "informal": "One generated adaptive process now carries exact aggregate transition numerators and visit denominators, a previous-Q clipped recurrent planner, a strict-prefix measurable policy, joint same-source singleton-Bernstein and optimal-tail confidence, Bellman optimism, raw generated episode pseudo-regret, actual-count charge summation, and a generated-filtration Bellman martingale.",
+      "declarations": ["BanditRLProof.FiniteHorizonRL.sum_adaptiveCumulativeAggregateTransitionCountAt_eq_visitCountAt", "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.clippedQRemaining_of_aggregateVisitCount_pos", "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_policyAt_succ", "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_trajectoryMeasure_simultaneousTransitionFailureEvent_le_fifth", "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.AdaptiveEpisodeBatchSource.recurrentQTableOfTrajectory_dominatesOptimal", "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.AdaptiveEpisodeBatchSource.recurrentSource_generatedSuccessorPseudoRegret_le_charge_add_innovation", "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.totalGeneratedPairCharge_le_explicit", "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_trajectoryMeasure_bellmanInnovation_sum_ge_threshold_le_fifth"],
+      "depends_on": ["BanditRLProof.FiniteHorizonRL.measurable_adaptiveCumulativeEmpiricalModelStateAt", "BanditRLProof.FiniteHorizonRL.MDP.expectedRegret_eq_occupancyGap_nonneg_and_optimalPolicy_zero"],
+      "missing": [],
+      "evidence": "Tests/BookMapChapterNineCanary.lean"
     },
     {
-      "id": "RL-COMPLETE-UCBVI",
-      "title": "Complete finite-horizon UCB-VI theorem",
+      "id": "RL-UCBVI-HOEFFDING-CANONICAL-TERMINALS",
+      "title": "Canonical known-reward Hoeffding UCBVI-CH terminals",
       "chapter": "finite-horizon-rl",
-      "status": "partial",
-      "informal": "The generated-process foundation now includes exact adaptive cumulative state updates and same-prefix policy/model alignment, but the UCBVI-CH confidence, regret decomposition, bonus sum, and terminal remain open; Bernstein/minimax is a later milestone.",
-      "declarations": ["BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.source_policyAt_succ_eq_modelState_optimisticPolicy", "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeStochasticEmpiricalOptimisticSource.exploratorySource_trajectoryMeasure_projectedCumulativeInverseSqrtPathSupport_decayingExplorationAverageRealizedBehaviorConsistency_allWindows_of_standardBorel"],
-      "depends_on": ["BanditRLProof.FiniteHorizonRL.MDP.expectedRegret_eq_occupancyGap_nonneg_and_optimalPolicy_zero", "BanditRLProof.FiniteHorizonRL.measurable_adaptiveCumulativeEmpiricalModelStateAt"],
-      "missing": ["Integrate the compiled aggregate paper count into a recurrent previous-Q clipped planner.", "Same-source self-normalized reward/transition confidence at actual cumulative counts.", "Raw generated episode-regret decomposition with martingale noise.", "Explicit S-A-H-K-delta Hoeffding bonus sum and UCBVI-CH probability bound.", "Failure-aware expected-regret corollary.", "Bernstein bonus, total-variance route, and minimax leading rate."],
-      "evidence": "tasks/RL-FINITE-HORIZON-ADAPTIVE-CUMULATIVE-UCBVI-HIGH-PROBABILITY-REGRET.md"
+      "status": "compiled",
+      "informal": "On the recurrent source's own trajectory measure, the probability that raw K-episode policy-value pseudo-regret exceeds 20 H sqrt(H) L sqrt(S A K) + 250 H^2 S^2 A L^2 is at most delta. The matching integrable expectation is at most that bound plus K H delta.",
+      "declarations": ["BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_trajectoryMeasure_cumulativeEpisodePseudoRegret_gt_canonicalRegretBound_le", "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.integral_cumulativeEpisodePseudoRegret_recurrentSource_le_canonicalRegretBound_add_failure"],
+      "depends_on": ["BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.AdaptiveEpisodeBatchSource.recurrentSource_generatedSuccessorPseudoRegret_le_charge_add_innovation", "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.totalGeneratedPairCharge_le_explicit", "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_trajectoryMeasure_bellmanInnovation_sum_ge_threshold_le_fifth", "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_trajectoryMeasure_simultaneousTransitionFailureEvent_le_fifth"],
+      "missing": ["Bernstein/variance-aware minimax UCB-VI leading-rate theorem.", "Stochastic-reward and realized sampled-return UCBVI terminals.", "Posterior-sampling, model-free, and continuous-space RL extensions."],
+      "evidence": "Tests/BookMapChapterNineCanary.lean"
     },
     {
       "id": "BWK-STOPPING-FOUNDATION",
