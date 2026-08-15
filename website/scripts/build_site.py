@@ -41,6 +41,7 @@ PAPER_TITLE = (
 SOURCE_BRANCH = "main"
 PUBLIC_BASE_URL = ""
 SITE_CHAPTERS: list[dict[str, Any]] = []
+SITE_READINGS: dict[str, dict[str, Any]] = {}
 
 STATUS_LABELS = {
     "compiled": "Compiled",
@@ -104,6 +105,46 @@ def module_name(path: Path) -> str:
 def slugify(value: str) -> str:
     value = re.sub(r"[^A-Za-z0-9]+", "-", value).strip("-").lower()
     return value or "item"
+
+
+def module_slug(value: str, max_length: int = 96) -> str:
+    """Return a stable URL slug that stays below Windows path limits."""
+    slug = slugify(value)
+    if len(slug) <= max_length:
+        return slug
+    digest = hashlib.sha1(value.encode("utf-8")).hexdigest()[:12]
+    prefix = slug[: max_length - len(digest) - 1].rstrip("-")
+    return f"{prefix}-{digest}"
+
+
+def normalize_math_source(value: str) -> str:
+    """Give every teaching formula an explicit MathJax delimiter pair."""
+    source = value.strip()
+    if not source:
+        return r"\(\text{No mathematical statement recorded.}\)"
+    inline_open = source.count(r"\(")
+    inline_close = source.count(r"\)")
+    display_open = source.count(r"\[")
+    display_close = source.count(r"\]")
+    if inline_open != inline_close or display_open != display_close:
+        source = re.sub(r"\\[()\[\]]", "", source).strip()
+        return f"\\[{source}\\]"
+    if "\\(" in source or "\\[" in source:
+        return source
+    return f"\\[{source}\\]"
+
+
+def render_math_statement(label: str, source: str, fallback: str) -> str:
+    """Render MathJax progressively and retain readable text if its CDN is unavailable."""
+    normalized = normalize_math_source(source)
+    return (
+        '<div class="math-statement" data-math-statement tabindex="0" '
+        f'role="region" aria-label="{html.escape(label)}">'
+        f'<strong>{html.escape(label)}.</strong> '
+        f'<span class="math-fallback">{html.escape(fallback)}</span>'
+        f'<span class="math-tex" aria-hidden="true">{html.escape(normalized)}</span>'
+        "</div>"
+    )
 
 
 def decl_anchor(full_name: str) -> str:
@@ -303,7 +344,7 @@ def scan_module(path: Path) -> dict[str, Any]:
     return {
         "name": module_name(path),
         "file": rel_source(path),
-        "slug": slugify(module_name(path)),
+        "slug": module_slug(module_name(path)),
         "imports": imports,
         "docstring": module_docstring(text),
         "declarations": declarations,
@@ -480,7 +521,7 @@ def layout(
             f'<span>{index:02d}</span>{html.escape(chapter["short_title"])}</a>'
         )
 
-    book_nav = nav_links([("chapters", "All chapters", "learning/index.html")]) + "".join(
+    book_nav = nav_links([("learning", "All chapters", "learning/index.html")]) + "".join(
         book_link(index, chapter)
         for index, chapter in enumerate(SITE_CHAPTERS, start=1)
     )
@@ -521,7 +562,7 @@ def layout(
   <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the ABRL hierarchical autoformalization harness.">
   <meta name="citation_title" content="{html.escape(PAPER_TITLE)}">
   <title>{html.escape(title)} · BanditRLlib</title>
-  <link rel="stylesheet" href="{root}/static/site.css?v=20260811">
+  <link rel="stylesheet" href="{root}/static/site.css?v=20260815">
   {mathjax}
 </head>
 <body data-site-root="{root}">
@@ -532,16 +573,16 @@ def layout(
   </header>
   <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
     <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
       <a class="brand" href="{href_from(page_path, 'index.html')}">
         <span class="brand-mark" aria-hidden="true">B</span>
         <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
       </a>
-      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
     </div>
     <div class="search-shell sidebar-search">
       <label class="nav-group-title" for="global-search">Search the Lean library</label>
-      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off">
-      <ul class="search-results" data-global-results hidden></ul>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
     </div>
     <nav class="sidebar-nav" aria-label="Primary">
       <div class="nav-group"><strong class="nav-group-title">Start</strong>{start_nav}</div>
@@ -559,7 +600,7 @@ def layout(
       </div>
     </div>
   </aside>
-  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" tabindex="-1"></button>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
   <div class="site-content">
     <div class="verification-strip{verification_class}">{html.escape(verification)}</div>
     <div class="page-shell">
@@ -573,7 +614,7 @@ def layout(
       </div>
     </footer>
   </div>
-  <script src="{root}/static/site.js?v=20260811"></script>{extra_script_tags}
+  <script src="{root}/static/site.js?v=20260815"></script>{extra_script_tags}
 </body>
 </html>
 """
@@ -594,6 +635,25 @@ def render_book_map(
 ) -> str:
     cards = []
     for index, chapter in enumerate(chapters, start=1):
+        reading = SITE_READINGS.get(chapter["slug"], {})
+        primary = reading.get("primary", {})
+        source_line = (
+            f'<span class="book-source">{html.escape(primary.get("sections", ""))} · '
+            f'{html.escape(primary.get("pages", ""))}</span>'
+            if primary
+            else ""
+        )
+        milestone_counts = chapter.get("milestone_counts", {})
+        milestone_line = " · ".join(
+            f"{count} {STATUS_LABELS.get(status, status).lower()}"
+            for status, count in milestone_counts.items()
+            if count
+        )
+        scope_line = (
+            f'<span class="book-scope">Canonical scope {STATUS_LABELS.get(chapter["status"], chapter["status"]).lower()}'
+            + (f" · {html.escape(milestone_line)}" if milestone_line else "")
+            + "</span>"
+        )
         audience = (
             f'<p class="book-audience"><strong>Reader.</strong> {html.escape(chapter["audience"])}</p>'
             if detailed
@@ -606,6 +666,8 @@ def render_book_map(
   <div class="book-chapter-copy">
     <span class="book-chapter-meta">{status_badge(chapter['status'])}</span>
     <strong>{html.escape(chapter['title'])}</strong>
+    {scope_line}
+    {source_line}
     <span class="book-summary">{html.escape(chapter['summary'])}</span>
     {audience}
   </div>
@@ -613,6 +675,58 @@ def render_book_map(
 </a>"""
         )
     return '<div class="book-map-grid">' + "".join(cards) + "</div>"
+
+
+def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[str, Any]) -> str:
+    primary = reading["primary"]
+    companion = reading.get("companion")
+
+    def source_card(source: dict[str, str], label: str) -> str:
+        return f"""
+<article class="source-card">
+  <span class="panel-kicker">{html.escape(label)}</span>
+  <h3>{html.escape(source['title'])}</h3>
+  <p>{html.escape(source['authors'])}</p>
+  <dl><div><dt>Location</dt><dd>{html.escape(source['sections'])}</dd></div><div><dt>Pages</dt><dd>{html.escape(source['pages'])}</dd></div></dl>
+  <a class="button compact" href="{html.escape(source['url'], quote=True)}">Open the source <span aria-hidden="true">↗</span></a>
+</article>"""
+
+    sources = source_card(primary, f"Primary spine · {primary['edition']}")
+    if companion:
+        sources += source_card(companion, "Algorithm-specific companion")
+
+    algorithm = reading["algorithm"]
+    steps = "".join(
+        f'<li><span class="algorithm-step-number" aria-hidden="true">{index:02d}</span>'
+        f'<div><strong>{html.escape(step["title"])}</strong><p>{html.escape(step["detail"])}</p></div></li>'
+        for index, step in enumerate(algorithm["steps"], start=1)
+    )
+    theorem = reading.get("source_theorem")
+    if theorem:
+        theorem_html = f"""
+<article class="source-theorem-card">
+  <div class="source-theorem-heading"><div><span class="panel-kicker">Source theorem · faithful restatement</span><h3>{html.escape(theorem['label'])}</h3></div><a href="{html.escape(theorem['url'], quote=True)}">Original source ↗</a></div>
+  <p>{html.escape(theorem['plain'])}</p>
+  {render_math_statement('Source mathematical statement', theorem['math'], theorem['fallback'])}
+  <p class="source-note"><strong>BanditRLlib relationship.</strong> {html.escape(theorem['relationship'])}</p>
+  <p class="copyright-note">The mathematical content is restated in this site's notation; wording is ours. See {html.escape(theorem['pages'])} in the linked source for the original statement and full assumptions.</p>
+</article>"""
+    else:
+        theorem_html = f"""
+<div class="callout warning source-boundary"><strong>No single source theorem.</strong> {html.escape(reading['source_boundary'])}</div>"""
+
+    return f"""
+<section id="source-guide" class="source-guide">
+  <p class="eyebrow">Textbook crosswalk</p>
+  <h2>Read the mathematics before the Lean interface</h2>
+  <p class="section-intro">The Book Map is a curated formalization curriculum anchored in <em>Bandit Algorithms</em>, not a chapter-for-chapter reproduction of one book. Page numbers below use its free online edition; companion papers cover algorithm-specific results.</p>
+  <div class="source-grid">{sources}</div>
+  <div class="algorithm-panel">
+    <div><span class="panel-kicker">{html.escape(algorithm['kind'])}</span><h3>{html.escape(algorithm['title'])}</h3></div>
+    <ol class="algorithm-flow">{steps}</ol>
+  </div>
+  {theorem_html}
+</section>"""
 
 
 def render_contributor_cards(
@@ -667,12 +781,12 @@ def render_highlight(
     return f"""
 <article class="theorem-panel" id="{declaration['anchor']}-teaching">
   <div class="theorem-header">
-    <h3>{html.escape(declaration['full_name'])}</h3>
+    <div class="declaration-heading"><span class="panel-kicker">Lean declaration</span><h3>{html.escape(declaration['full_name'])}</h3></div>
     {status_badge(status)}
   </div>
   <div class="theorem-body">
     <p><strong>Plain-English statement.</strong> {html.escape(highlight['plain'])}</p>
-    <div class="math-statement"><strong>Mathematical reading.</strong> {highlight['math']}</div>
+    {render_math_statement('Mathematical reading', highlight['math'], highlight['plain'])}
     <dl class="teaching-grid">
       <div><dt>Intuition</dt><dd>{html.escape(highlight['intuition'])}</dd></div>
       <div><dt>Why it is needed</dt><dd>{html.escape(highlight['why'])}</dd></div>
@@ -681,8 +795,10 @@ def render_highlight(
       <div><dt>Lean reading notes</dt><dd>{html.escape(highlight['lean_notes'])}</dd></div>
       <div><dt>Teaching dependencies</dt><dd>{dependencies}</dd></div>
     </dl>
-    <h4>Exact Lean statement</h4>
-    <pre class="lean-code"><code>{highlight_lean(declaration['statement'])}</code></pre>
+    <details class="exact-lean">
+      <summary>Exact Lean statement</summary>
+      <pre class="lean-code" tabindex="0" role="region" aria-label="Exact Lean statement"><code>{highlight_lean(declaration['statement'])}</code></pre>
+    </details>
     <div class="source-links">
       <a href="{declaration_href(page_path, declaration)}">Open in the declaration catalog</a>
       <a href="{source_url(declaration['file'], declaration['line'])}">Open source at line {declaration['line']}</a>
@@ -712,15 +828,14 @@ def build_index(
 <section class="hero" id="overview">
   <p class="eyebrow">Verified bandit and reinforcement-learning theory in Lean</p>
   <h1>BanditRLlib</h1>
-  <p class="lede">A source-synchronized Lean library, learning interface, live formalization workspace, and open contribution path—built by Auto-Bandit-RL-Proof-In-Sleep (ABRL).</p>
+  <p class="lede">Learn bandit and reinforcement-learning theory beside its compiled Lean interfaces, search exact declarations, and contribute one reviewable lemma at a time.</p>
   <p class="paper-title"><strong>Paper.</strong> {html.escape(PAPER_TITLE)}</p>
   <div class="hero-actions">
-    <a class="button primary" href="{href_from(page_path, 'declarations/index.html')}">Explore the Library</a>
-    <a class="button" href="{href_from(page_path, 'ide/index.html')}">Open Live Formalization</a>
-    <a class="button" href="{href_from(page_path, 'learning/index.html')}">Learn Bandit &amp; RL</a>
+    <a class="button primary" href="{href_from(page_path, 'learning/index.html')}">Start the Book Map</a>
+    <a class="button" href="{href_from(page_path, 'declarations/index.html')}">Search Exact Declarations</a>
     <a class="button" href="{href_from(page_path, 'community/index.html')}">Contribute a Lemma</a>
-    <a class="button" href="{GITHUB_REPO}">GitHub ↗</a>
   </div>
+  <p class="hero-secondary-links"><a href="{GITHUB_REPO}">GitHub repository ↗</a><span aria-hidden="true">·</span><a href="{href_from(page_path, 'ide/index.html')}">Local experimental formalization workspace</a></p>
 </section>
 
 <section id="two-systems">
@@ -779,7 +894,7 @@ def build_index(
 <section id="book-map">
   <p class="eyebrow">Formalized textbook map</p>
   <h2>Book map: ten routes through bandits and RL</h2>
-  <p>Open any chapter to move from textbook intuition and mathematical statements to exact Lean declarations, module dependencies, compiled milestones, and explicitly recorded proof gaps.</p>
+  <p class="section-intro">The curriculum is anchored in Lattimore and Szepesvári's <em>Bandit Algorithms</em>, with algorithm-specific papers for OFUL, Tsallis-INF, and UCBVI. It is a source-mapped learning path, not a chapter-for-chapter reproduction of one book. Each card reports online-edition pages and the chapter's canonical compiled boundary.</p>
   {book_map}
 </section>
 
@@ -831,6 +946,7 @@ python3 tools/bandit.py check</code></pre></article>
 <section id="research-workspace">
   <h2>BanditRLlib and Live Formalization share one contribution language</h2>
   <p>The workspace renders editable LaTeX, loads reviewed LaTeX-to-Lean mappings, visualizes declaration dependencies, and can call the pinned Lean compiler through a loopback-only companion server. It can now export a versioned lemma packet for community review; a future authenticated compiler can submit that same packet directly as a proposed contribution.</p>
+  <div class="callout warning"><strong>Static-site boundary.</strong> GitHub Pages does not compile Lean or send source to a hosted proving service. Compilation and provider-backed formalization require the explicitly started loopback-only local companion server.</div>
   <div class="hero-actions"><a class="button primary" href="{href_from(page_path, 'ide/index.html')}">Open Live Formalization</a><a class="button" href="{href_from(page_path, 'community/index.html#machine-contract')}">Inspect the contribution contract</a></div>
 </section>
 """
@@ -873,21 +989,22 @@ def build_implementation_map(
             declaration_links.append(
                 f'<a href="{declaration_href(page_path, decl)}"><code>{html.escape(name)}</code></a>'
             )
-        dependencies = ", ".join(
+        dependencies = "<br>".join(
             f"<code>{html.escape(name)}</code>" for name in result.get("depends_on", [])
-        ) or "—"
-        missing = "<br>".join(html.escape(item) for item in result["missing"]) or "—"
+        ) or "No recorded prerequisite milestone."
+        missing = "<br>".join(html.escape(item) for item in result["missing"]) or "No remaining gap inside this milestone contract."
         chapter = chapter_by_slug[result["chapter"]]
+        search = html.escape(
+            f"{result['id']} {result['title']} {result['informal']} {chapter['short_title']}".lower(),
+            quote=True,
+        )
         result_rows.append(
             f"""
-<tr id="{slugify(result['id'])}">
+<tr id="{slugify(result['id'])}" data-milestone-row data-search="{search}" data-status="{html.escape(result['status'])}" data-chapter="{html.escape(result['chapter'])}">
   <td><a href="#{slugify(result['id'])}">{html.escape(result['title'])}</a><br><code>{html.escape(result['id'])}</code></td>
   <td><a href="{href_from(page_path, f"chapters/{chapter['slug']}/index.html")}">{html.escape(chapter['short_title'])}</a></td>
-  <td>{html.escape(result['informal'])}</td>
-  <td>{"<br>".join(declaration_links) if declaration_links else "No local declaration yet"}</td>
-  <td>{dependencies}</td>
   <td>{status_badge(result['status'])}</td>
-  <td>{missing}</td>
+  <td class="milestone-evidence"><p>{html.escape(result['informal'])}</p><details><summary>Lean evidence and boundary</summary><dl><div><dt>Declarations</dt><dd>{"<br>".join(declaration_links) if declaration_links else "No local declaration yet"}</dd></div><div><dt>Depends on</dt><dd>{dependencies}</dd></div><div><dt>Remaining gap</dt><dd>{missing}</dd></div></dl></details></td>
 </tr>"""
         )
     module_rows = []
@@ -896,7 +1013,7 @@ def build_implementation_map(
         module_status = "stated" if module["placeholder_count"] else ("compiled" if verified else "source")
         module_rows.append(
             f"""
-<tr>
+<tr data-module-row data-search="{html.escape(f'{module["name"]} {chapter["short_title"]} {module["file"]}'.lower(), quote=True)}" data-chapter="{html.escape(module['chapter'])}">
   <td><a href="{module_href(page_path, module)}"><code>{html.escape(module['name'])}</code></a></td>
   <td><a href="{href_from(page_path, f"chapters/{chapter['slug']}/index.html")}">{html.escape(chapter['short_title'])}</a></td>
   <td>{len(module['declarations']):,}</td>
@@ -926,9 +1043,16 @@ def build_implementation_map(
 
 <section id="milestones">
   <h2>Mathematical milestone map</h2>
-  <div class="table-wrap">
+  <p class="section-intro">Start with the mathematical claim and status. Open a row's evidence only when you need exact declarations, dependencies, and the remaining boundary.</p>
+  <div class="filter-bar" data-milestone-filters>
+    <div class="filter-field grow"><label for="milestone-query">Milestone, concept, or chapter</label><input id="milestone-query" data-milestone-query type="search" placeholder="e.g. UCBVI, posterior, all-time"></div>
+    <div class="filter-field"><label for="milestone-status">Status</label><select id="milestone-status" data-milestone-status><option value="">All statuses</option>{''.join(f'<option value="{status}">{STATUS_LABELS.get(status, status.title())}</option>' for status in ('compiled', 'partial', 'planned', 'blocked', 'stated'))}</select></div>
+    <div class="filter-field"><label for="milestone-chapter">Chapter</label><select id="milestone-chapter" data-milestone-chapter><option value="">All chapters</option>{''.join(f'<option value="{chapter["slug"]}">{html.escape(chapter["short_title"])}</option>' for chapter in chapter_by_slug.values())}</select></div>
+  </div>
+  <p class="result-count" data-milestone-count></p>
+  <div class="table-wrap" data-milestone-list tabindex="0" role="region" aria-label="Mathematical milestones">
     <table>
-      <thead><tr><th>Result</th><th>Chapter</th><th>Natural-language statement</th><th>Lean declaration</th><th>Dependencies</th><th>Status</th><th>Missing steps</th></tr></thead>
+      <thead><tr><th>Result</th><th>Chapter</th><th>Status</th><th>Meaning and evidence</th></tr></thead>
       <tbody>{''.join(result_rows)}</tbody>
     </table>
   </div>
@@ -942,13 +1066,17 @@ def build_implementation_map(
 
 <section id="modules">
   <h2>Complete module inventory</h2>
-  <p>Every project module is assigned to a teaching chapter. Open a module to see every indexed declaration, exact statement, docstring when present, source line, imports, and reverse dependencies.</p>
-  <div class="table-wrap">
+  <p>Every project module is assigned to a teaching chapter. This exhaustive inventory is collapsed by default so that the mathematical milestones remain the primary reading surface.</p>
+  <details class="inventory-disclosure"><summary>Open the complete generated module inventory ({len(modules):,} modules)</summary>
+  <div class="filter-bar"><div class="filter-field grow"><label for="module-query">Filter modules</label><input id="module-query" data-module-query type="search" placeholder="Module, chapter, or source path"></div></div>
+  <p class="result-count" data-module-count></p>
+  <div class="table-wrap" data-module-list tabindex="0" role="region" aria-label="Complete Lean module inventory">
     <table>
       <thead><tr><th>Lean module</th><th>Teaching chapter</th><th>Declarations</th><th>Project imports</th><th>Build status</th><th>Source</th></tr></thead>
       <tbody>{''.join(module_rows)}</tbody>
     </table>
   </div>
+  </details>
 </section>
 """
     toc = [
@@ -1072,14 +1200,17 @@ def build_chapters(
     for chapter in chapters:
         page_path = f"chapters/{chapter['slug']}/index.html"
         goals = render_list(chapter["learning_goals"])
+        reading_guide = render_reading_guide(page_path, chapter, SITE_READINGS[chapter["slug"]])
         completion_contract = ""
         if chapter.get("completion_definition"):
             completion_contract = f"""
 <section id="completion-contract">
-  <h2>Completion contract</h2>
-  <p>{html.escape(chapter['completion_definition'])}</p>
-  <h3>Remaining blockers</h3>
-  {render_list(chapter.get('completion_blockers', []))}
+  <h2>Maintainer contract</h2>
+  <details class="maintainer-contract"><summary>Open the canonical completion definition and blockers</summary><div>
+    <p>{html.escape(chapter['completion_definition'])}</p>
+    <h3>Remaining blockers</h3>
+    {render_list(chapter.get('completion_blockers', []))}
+  </div></details>
 </section>
 """
         teaching = "".join(
@@ -1107,7 +1238,7 @@ def build_chapters(
         )
         body = f"""
 <section class="hero" id="chapter">
-  <p class="eyebrow">Teaching chapter · {status_badge(chapter['status'])}</p>
+  <p class="eyebrow">Teaching chapter · canonical scope {status_badge(chapter['status'])}</p>
   <h1 class="page-title">{html.escape(chapter['title'])}</h1>
   <p class="lede">{html.escape(chapter['summary'])}</p>
 </section>
@@ -1119,13 +1250,15 @@ def build_chapters(
   {goals}
 </section>
 
-{completion_contract}
+{reading_guide}
 
 <section id="teaching-notes">
   <h2>Natural-language and Lean side by side</h2>
   <p>The mathematical readings are explanatory summaries. The exact generated Lean statement and its source link remain authoritative for hypotheses, types, constants, and indexing.</p>
   {teaching}
 </section>
+
+{completion_contract}
 
 <section id="milestones">
   <h2>Chapter implementation status</h2>
@@ -1139,17 +1272,18 @@ def build_chapters(
 
 <section id="module-list">
   <h2>All Lean modules in this chapter</h2>
-  <div class="table-wrap"><table><thead><tr><th>Module</th><th>Declarations</th><th>Project imports</th><th>Status</th></tr></thead><tbody>{module_rows}</tbody></table></div>
+  <details class="inventory-disclosure"><summary>Open the complete module list ({len(modules_by_chapter[chapter['slug']]):,} modules)</summary><div class="table-wrap" tabindex="0" role="region" aria-label="Lean modules in this chapter"><table><thead><tr><th>Module</th><th>Declarations</th><th>Project imports</th><th>Status</th></tr></thead><tbody>{module_rows}</tbody></table></div></details>
 </section>
 """
         toc = [
             ("chapter", "Chapter"),
             ("orientation", "Orientation"),
+            ("source-guide", "Source & algorithm"),
+            ("teaching-notes", "Lean teaching notes"),
         ]
         if completion_contract:
-            toc.append(("completion-contract", "Completion contract"))
+            toc.append(("completion-contract", "Maintainer contract"))
         toc.extend([
-            ("teaching-notes", "Teaching notes"),
             ("milestones", "Status"),
             ("open-gaps", "Open boundaries"),
             ("module-list", "Modules"),
@@ -1157,7 +1291,7 @@ def build_chapters(
         write_page(
             output,
             page_path,
-            layout(page_path, chapter["title"], body, toc, "chapters", verified, generated_at),
+            layout(page_path, chapter["title"], body, toc, chapter["slug"], verified, generated_at),
         )
 
 
@@ -1301,7 +1435,7 @@ def build_learning(
 <section id="book-map">
   <p class="eyebrow">Formalized textbook map</p>
   <h2>Book map</h2>
-  <p>Each chapter is a clickable bridge from mathematical exposition to the exact Lean modules and declarations that implement it.</p>
+  <p class="section-intro">The main spine is Lattimore and Szepesvári's <em>Bandit Algorithms</em>. OFUL, Tsallis-INF, and UCBVI add their original papers. Online-edition pages are shown on every chapter card; the source pages themselves explain the exact algorithms and full assumptions.</p>
   {cards}
 </section>
 """
@@ -1309,7 +1443,7 @@ def build_learning(
     write_page(
         output,
         page_path,
-        layout(page_path, "Learning path", body, toc, "chapters", verified, generated_at),
+        layout(page_path, "Learning path", body, toc, "learning", verified, generated_at),
     )
 
 
@@ -1327,7 +1461,7 @@ def build_contributors(
 <section class="hero" id="contributors">
   <p class="eyebrow">Authors and community</p>
   <h1 class="page-title">People behind ABRL and BanditRLlib</h1>
-  <p class="lede">Project authorship and community contribution are different records. The six paper authors are listed in the requested order; future community contributors appear separately with their accepted work and preferred credit.</p>
+  <p class="lede">Project authorship and community contribution are different records. The six paper authors are listed in paper-author order; future community contributors appear separately with their accepted work and preferred credit.</p>
 </section>
 
 <section id="authors">
@@ -1407,6 +1541,7 @@ lake update</code></pre>
   <h2>3. Run the mandatory Lean gate</h2>
   <pre><code>python3 tools/bandit.py check</code></pre>
   <p>On Windows, <code>py -3 tools/bandit.py check</code> is equivalent when the Python launcher is installed. The gate runs <code>lake build</code>, builds <code>Tests</code>, and scans local Lean files for forbidden placeholders.</p>
+  <p><strong>Successful result.</strong> The command exits with status 0 after both Lean build targets and repository integrity checks pass. A first build may be slow while Lake downloads and compiles pinned dependencies.</p>
   <div class="callout warning"><strong>Do not skip this step.</strong> A theorem is marked compiled on the website only after the project gate passes for the source snapshot being published.</div>
 </section>
 
@@ -1416,6 +1551,7 @@ lake update</code></pre>
 python3 website/scripts/check_site.py
 python3 -m http.server 8000 --directory website/_site</code></pre>
   <p>Open <code>http://localhost:8000/</code>. The static Research IDE is at <code>/ide/</code>; local Lean compilation requires the loopback-only companion server documented on that page.</p>
+  <div class="callout"><strong>If dependency downloads fail.</strong> A transient GitHub or Mathlib CDN error is external to the proof tree. Preserve the pinned toolchain, retry after connectivity recovers, and only edit repository configuration when the failure is reproducible.</div>
 </section>
 
 <section id="first-steps">
@@ -1449,7 +1585,7 @@ def build_community(output: Path, verified: bool, generated_at: str) -> None:
   <div class="hero-actions">
     <a class="button primary" href="{PUBLIC_SITE_REPO}/issues/new?template=lemma-proposal.yml">Propose a lemma</a>
     <a class="button" href="{PUBLIC_SITE_REPO}/blob/main/CONTRIBUTING.md">Read the contribution guide</a>
-    <a class="button" href="{href_from(page_path, 'ide/index.html')}">Draft in Live Formalization</a>
+    <a class="button" href="{href_from(page_path, 'ide/index.html')}">Draft in the local experimental workspace</a>
   </div>
 </section>
 
@@ -1554,7 +1690,7 @@ def build_source_access(output: Path, verified: bool, generated_at: str) -> None
 <section class="hero" id="source-access">
   <p class="eyebrow">Canonical source</p>
   <h1 class="page-title">Lean source access</h1>
-  <p class="lede">BanditRLlib is built from the public canonical ABRL repository. Normal declaration links open the exact source on <code>main</code>; documentation-only mirrors may use this page as an explicit snapshot boundary.</p>
+  <p class="lede">BanditRLlib is built from the public canonical ABRL repository. Declaration links are pinned to source snapshot <code>{html.escape(SOURCE_BRANCH[:12])}</code>; <a href="{GITHUB_REPO}/tree/main">current <code>main</code></a> remains available separately.</p>
 </section>
 <section id="available">
   <h2>What is public</h2>
@@ -1941,6 +2077,36 @@ def validate_content(
     return by_name
 
 
+def validate_readings(chapters: list[dict[str, Any]], readings: list[dict[str, Any]]) -> None:
+    chapter_slugs = {chapter["slug"] for chapter in chapters}
+    reading_slugs = [reading.get("slug") for reading in readings]
+    if len(reading_slugs) != len(set(reading_slugs)):
+        raise SystemExit("readings.json contains duplicate chapter slugs")
+    if set(reading_slugs) != chapter_slugs:
+        raise SystemExit(
+            "readings.json must cover exactly the Book Map chapters:\n"
+            + json.dumps(
+                {
+                    "missing": sorted(chapter_slugs - set(reading_slugs)),
+                    "extra": sorted(set(reading_slugs) - chapter_slugs),
+                },
+                indent=2,
+            )
+        )
+    for reading in readings:
+        if not reading.get("primary", {}).get("url"):
+            raise SystemExit(f"reading {reading['slug']} lacks a primary source URL")
+        if not reading.get("algorithm", {}).get("steps"):
+            raise SystemExit(f"reading {reading['slug']} lacks an algorithm or proof flow")
+        theorem = reading.get("source_theorem")
+        if theorem:
+            normalized = normalize_math_source(theorem.get("math", ""))
+            if normalized.count(r"\(") != normalized.count(r"\)") or normalized.count(r"\[") != normalized.count(r"\]"):
+                raise SystemExit(f"reading {reading['slug']} has unbalanced mathematical delimiters")
+        elif not reading.get("source_boundary"):
+            raise SystemExit(f"reading {reading['slug']} needs a source theorem or explicit boundary")
+
+
 def build_search_index(output: Path, declarations: list[dict[str, Any]]) -> None:
     payload = [
         {
@@ -1988,7 +2154,7 @@ def build_public_repository_readme(output: Path, manifest: dict[str, Any]) -> No
         if manifest.get("source_dirty")
         else f"canonical commit `{commit}` after the Lean gate passed"
     )
-    readme = f"""# BanditRLlib
+    readme = f"""# 🌐 BanditRLlib
 
 This generated artifact accompanies the community-facing, textbook-style
 BanditRLlib website produced by the ABRL research project.
@@ -1996,7 +2162,7 @@ BanditRLlib website produced by the ABRL research project.
 Website: <{PUBLIC_SITE_URL}/>
 Canonical repository: <{GITHUB_REPO}>
 
-## Three ways to use BanditRLlib
+## 🧭 Three ways to use BanditRLlib
 
 1. **Learn:** follow a Lean-aligned textbook path through bandit, probability,
    optimization, stopping-time, and finite-horizon RL mathematics.
@@ -2005,7 +2171,7 @@ Canonical repository: <{GITHUB_REPO}>
 3. **Contribute:** propose a sourced result through an issue or versioned lemma
    packet; Live Formalization uses the same machine-readable contract.
 
-## Current snapshot
+## 📍 Current snapshot
 
 The generated site was built from {source_note}. Compiled, partial, planned,
 blocked, and community-proposal states remain distinct. The public repository
@@ -2018,7 +2184,7 @@ Start with [CONTRIBUTING.md](CONTRIBUTING.md), the
 before deployment; only the full upstream project gate can mark a result
 integrated.
 
-## Attribution
+## 🧬 Attribution
 
 The implementation-map organization is inspired by **Sho Sonoda's**
 [Lean-Ridgelet](https://github.com/shosonoda/lean-ridgelet) and its
@@ -2030,7 +2196,7 @@ Both references are attribution for inspiration only and do not imply
 participation, endorsement, or maintenance of BanditRLlib. No template, stylesheet,
 or source file was copied from either project.
 
-## License
+## ⚖️ License
 
 The public website and intentional community contributions are distributed
 under the [MIT License](LICENSE).
@@ -2052,8 +2218,10 @@ def main() -> int:
         help="build a public snapshot whose private source links use the explicit source-access page",
     )
     args = parser.parse_args()
-    global PUBLIC_BASE_URL, SITE_CHAPTERS
+    global PUBLIC_BASE_URL, SITE_CHAPTERS, SITE_READINGS, SOURCE_BRANCH
     PUBLIC_BASE_URL = args.public_base_url.rstrip("/")
+    source_commit, source_dirty = git_source_state()
+    SOURCE_BRANCH = source_commit or "main"
     output = args.output.resolve()
     if output == ROOT.resolve() or ROOT.resolve() not in output.parents:
         raise SystemExit(f"refusing to build outside the repository: {output}")
@@ -2065,6 +2233,15 @@ def main() -> int:
     SITE_CHAPTERS = chapters
     highlights = load_json(CONTENT_DIR / "highlights.json")["highlights"]
     results = load_json(CONTENT_DIR / "results.json")["results"]
+    readings_payload = load_json(CONTENT_DIR / "readings.json")
+    readings = readings_payload["readings"]
+    validate_readings(chapters, readings)
+    SITE_READINGS = {reading["slug"]: reading for reading in readings}
+    milestone_counts_by_chapter: dict[str, Counter[str]] = defaultdict(Counter)
+    for result in results:
+        milestone_counts_by_chapter[result["chapter"]][result["status"]] += 1
+    for chapter in chapters:
+        chapter["milestone_counts"] = dict(milestone_counts_by_chapter[chapter["slug"]])
     roadmap = load_json(ROOT / "research-wiki" / "theory-tree" / "lean-route-roadmap.json")
 
     modules = scan_lean_tree()
@@ -2141,7 +2318,6 @@ def main() -> int:
     build_source_access(output, args.lean_verified, generated_at)
     build_search_index(output, declarations)
 
-    source_commit, source_dirty = git_source_state()
     manifest = {
         "generated_at": generated_at,
         "lean_verified": args.lean_verified,
@@ -2160,6 +2336,9 @@ def main() -> int:
         "milestone_count": len(results),
         "milestone_status_counts": dict(sorted(Counter(result["status"] for result in results).items())),
         "community_entry_count": 0,
+        "reading_count": len(readings),
+        "source_theorem_count": sum(1 for reading in readings if reading.get("source_theorem")),
+        "max_module_slug_length": max(len(module["slug"]) for module in modules),
         "public_snapshot": bool(PUBLIC_BASE_URL),
         "public_base_url": PUBLIC_BASE_URL,
         "source_commit": source_commit,

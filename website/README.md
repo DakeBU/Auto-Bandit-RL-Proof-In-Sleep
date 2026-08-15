@@ -1,4 +1,4 @@
-# BanditRLlib literate formalization website
+# 🌐 BanditRLlib literate formalization website
 
 This directory contains the original static generator for BanditRLlib, the
 public Lean library produced by the ABRL research harness. It is generated from
@@ -22,7 +22,7 @@ The build:
 The generator and checks use the Python standard library. The published static
 site loads MathJax and Mermaid from jsDelivr.
 
-## Build locally
+## 🛠️ Build locally
 
 ```text
 python tools/bandit.py check
@@ -34,7 +34,7 @@ python website/scripts/ide_server.py
 Open `http://127.0.0.1:8000/`; Live Formalization is at `/ide/`. Omitting
 `--lean-verified` creates an explicitly unverified preview.
 
-## Live Formalization boundary
+## 🧪 Live Formalization boundary
 
 The browser always provides formula rendering, reviewed mapping navigation,
 dependency visualization, editing, and packet export. The loopback service adds
@@ -54,7 +54,7 @@ Without a provider, the service reports candidate generation as unavailable.
 With one, it still labels output as a candidate. Semantic review, Lean
 compilation, proof completion, and BanditRLlib integration are separate states.
 
-## Contribution contract
+## 🤝 Contribution contract
 
 `community/contribution.schema.json` is schema version 1.1. It records source,
 plain-English and LaTeX statements, Lean code, BanditRLlib/Mathlib/LML retrieval
@@ -62,13 +62,13 @@ candidates, assumptions, unresolved obligations, independent status fields,
 compiler evidence, and contributor credit. Maintainers assign `integrated` only
 after the full ABRL gate passes and the change is merged to `main`.
 
-## Private static review
+## 🔒 Private static review
 
 `scripts/serve_private.py` serves only generated static files over loopback with
 HTTP Basic Authentication. A temporary tunnel may point to that static server,
 but never to `ide_server.py`.
 
-## Deployment
+## 🚀 Deployment
 
 `.github/workflows/documentation.yml` builds Lean and tests, builds the site,
 checks links and mapping integrity, and deploys `website/_site/` to GitHub Pages:
@@ -79,7 +79,7 @@ The canonical source is:
 
 <https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep>
 
-## Attribution
+## 🧬 Attribution
 
 The implementation-map organization is inspired by **Sho Sonoda's**
 [Lean-Ridgelet](https://github.com/shosonoda/lean-ridgelet) and its

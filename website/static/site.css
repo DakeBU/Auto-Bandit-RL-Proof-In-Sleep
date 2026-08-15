@@ -105,6 +105,12 @@ a:hover {
   color: var(--accent-strong);
 }
 
+:where(a, button, input, select, summary, [tabindex]):focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent) 78%, white);
+  outline-offset: 3px;
+  border-radius: 5px;
+}
+
 code,
 pre {
   font-family: var(--mono);
@@ -363,6 +369,7 @@ code {
 }
 
 .sidebar-heading .brand {
+  order: 1;
   min-width: 0;
   margin: 0;
 }
@@ -389,6 +396,7 @@ code {
 }
 
 .sidebar-close {
+  order: 2;
   display: none;
   margin-left: auto;
   border: 0;
@@ -601,6 +609,31 @@ h3 {
   color: var(--surface);
 }
 
+.button.compact {
+  min-height: 2.35rem;
+  padding: 0.42rem 0.72rem;
+  font-size: 0.86rem;
+}
+
+.hero-secondary-links {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0.9rem 0 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.page-main > section > :is(p, ul, ol):not(.eyebrow, .result-count, .hero-actions) {
+  max-width: 76ch;
+}
+
+.section-intro {
+  color: var(--muted);
+  font-size: 1.03rem;
+}
+
 .stats-grid,
 .chapter-grid,
 .card-grid {
@@ -784,6 +817,20 @@ h3 {
   color: var(--muted);
   font-size: 0.85rem;
   line-height: 1.55;
+}
+
+.book-scope,
+.book-source {
+  display: block;
+  margin-top: 0.4rem;
+  color: var(--muted);
+  font-size: 0.75rem;
+  line-height: 1.45;
+}
+
+.book-scope {
+  color: var(--accent-strong);
+  font-weight: 700;
 }
 
 .book-audience {
@@ -1122,6 +1169,9 @@ td {
 }
 
 th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
   background: var(--surface-2);
   color: var(--muted);
   font-size: 0.76rem;
@@ -1176,6 +1226,210 @@ tbody tr:hover {
   font-size: 0.85rem;
 }
 
+.source-guide {
+  scroll-margin-top: 5rem;
+}
+
+.source-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: 1rem;
+  margin: 1.4rem 0;
+}
+
+.source-card,
+.algorithm-panel,
+.source-theorem-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.source-card {
+  padding: 1.15rem;
+  border-top: 4px solid var(--accent);
+}
+
+.panel-kicker {
+  display: block;
+  color: var(--accent);
+  font-family: var(--sans);
+  font-size: 0.69rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.source-card h3,
+.algorithm-panel h3,
+.source-theorem-heading h3 {
+  margin: 0.4rem 0 0.55rem;
+}
+
+.source-card > p {
+  margin: 0 0 0.8rem;
+  color: var(--muted);
+}
+
+.source-card dl,
+.milestone-evidence dl {
+  display: grid;
+  gap: 0.65rem;
+  margin: 0 0 1rem;
+}
+
+.source-card dl > div,
+.milestone-evidence dl > div {
+  display: grid;
+  grid-template-columns: 5.4rem minmax(0, 1fr);
+  gap: 0.6rem;
+}
+
+.source-card dt,
+.milestone-evidence dt {
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.source-card dd,
+.milestone-evidence dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.algorithm-panel {
+  margin: 1.5rem 0;
+  padding: clamp(1rem, 2.5vw, 1.5rem);
+  overflow: hidden;
+}
+
+.algorithm-flow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+  gap: 0;
+  max-width: none !important;
+  margin: 1.2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.algorithm-flow li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  gap: 0.7rem;
+  min-height: 9rem;
+  padding: 0.95rem;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--accent-soft) 30%, var(--surface));
+}
+
+.algorithm-flow li + li {
+  border-left: 0;
+}
+
+.algorithm-step-number {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--surface);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.algorithm-flow p {
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.source-theorem-card {
+  margin: 1.5rem 0;
+  padding: clamp(1rem, 2.5vw, 1.5rem);
+  border-top: 4px solid var(--success);
+}
+
+.source-theorem-heading {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.source-theorem-heading > a {
+  flex: 0 0 auto;
+  font-size: 0.86rem;
+}
+
+.source-note {
+  padding: 0.8rem 1rem;
+  border-left: 4px solid var(--success);
+  background: color-mix(in srgb, var(--success-bg) 62%, var(--surface));
+}
+
+.copyright-note {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.source-boundary {
+  max-width: none;
+}
+
+.inventory-disclosure,
+.maintainer-contract,
+.exact-lean,
+.milestone-evidence details {
+  margin: 1rem 0;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--surface);
+}
+
+.inventory-disclosure > summary,
+.maintainer-contract > summary,
+.exact-lean > summary,
+.milestone-evidence summary {
+  padding: 0.75rem 0.9rem;
+  color: var(--accent-strong);
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.inventory-disclosure[open] > summary,
+.maintainer-contract[open] > summary,
+.exact-lean[open] > summary,
+.milestone-evidence details[open] > summary {
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-2);
+}
+
+.inventory-disclosure > :not(summary),
+.maintainer-contract > div {
+  margin-inline: 0.9rem;
+}
+
+.milestone-evidence > p {
+  margin-top: 0;
+}
+
+.milestone-evidence details {
+  box-shadow: none;
+}
+
+.milestone-evidence details dl {
+  padding: 0.9rem;
+}
+
 .theorem-panel {
   margin: 1.5rem 0 2.3rem;
   overflow: clip;
@@ -1196,6 +1450,10 @@ tbody tr:hover {
   font-family: var(--mono);
   font-size: 1rem;
   overflow-wrap: anywhere;
+}
+
+.declaration-heading {
+  min-width: 0;
 }
 
 .theorem-body {
@@ -1219,11 +1477,50 @@ tbody tr:hover {
 }
 
 .math-statement {
+  position: relative;
   margin: 1rem 0;
   padding: 0.9rem 1rem;
   border-left: 4px solid var(--accent);
   background: var(--accent-soft);
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+
+.math-fallback {
+  color: var(--ink);
+}
+
+.math-tex {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.math-statement.math-rendered {
   overflow-x: auto;
+}
+
+.math-statement.math-rendered .math-fallback {
+  display: none;
+}
+
+.math-statement.math-rendered .math-tex {
+  position: static;
+  display: inline;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip-path: none;
+  white-space: normal;
+}
+
+.math-statement mjx-container {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .lean-code {
@@ -1257,6 +1554,11 @@ tbody tr:hover {
   gap: 0.75rem;
   flex-wrap: wrap;
   font-size: 0.86rem;
+}
+
+.exact-lean .lean-code {
+  margin: 0;
+  border-radius: 0 0 8px 8px;
 }
 
 .module-meta {
@@ -1797,8 +2099,8 @@ tbody tr:hover {
 
   .sidebar-toggle {
     display: grid;
-    width: 2.2rem;
-    height: 2.2rem;
+    width: 2.75rem;
+    height: 2.75rem;
     place-items: center;
     border: 1px solid var(--line);
     border-radius: 6px;
@@ -1823,6 +2125,8 @@ tbody tr:hover {
 
   .sidebar-close {
     display: block;
+    min-width: 2.75rem;
+    min-height: 2.75rem;
   }
 
   .site-content {
@@ -1857,6 +2161,18 @@ tbody tr:hover {
     opacity: 1;
     pointer-events: auto;
   }
+
+  .sidebar-nav a,
+  .sidebar-footer > a,
+  .theme-switcher button {
+    min-height: 2.75rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .sidebar-nav .book-nav-link {
+    align-items: center;
+  }
 }
 
 @media (max-width: 760px) {
@@ -1887,7 +2203,23 @@ tbody tr:hover {
   }
 
   .side-nav {
-    display: none;
+    display: block;
+    columns: 1;
+    max-width: 100%;
+    padding: 0.65rem 0.8rem;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .side-nav strong {
+    margin-bottom: 0.35rem;
+  }
+
+  .side-nav a {
+    display: inline-flex;
+    min-height: 2.5rem;
+    align-items: center;
+    margin-right: 0.9rem;
   }
 
   .theorem-header {
@@ -1925,6 +2257,41 @@ tbody tr:hover {
     display: none;
   }
 
+  .source-theorem-heading {
+    display: grid;
+  }
+
+  .algorithm-flow {
+    grid-template-columns: 1fr;
+  }
+
+  .algorithm-flow li {
+    min-height: 0;
+  }
+
+  .algorithm-flow li + li {
+    border-left: 1px solid var(--line);
+    border-top: 0;
+  }
+
+  .source-card dl > div,
+  .milestone-evidence dl > div {
+    grid-template-columns: 1fr;
+    gap: 0.15rem;
+  }
+
+  .hero-actions .button {
+    width: 100%;
+    min-height: 2.75rem;
+  }
+
+  .math-statement,
+  .lean-code,
+  .table-wrap,
+  .diagram {
+    scrollbar-width: thin;
+  }
+
   .contribution-steps li:nth-child(n) {
     min-height: 0;
     border: 1px solid var(--line);
@@ -1932,6 +2299,21 @@ tbody tr:hover {
 
   .contribution-steps li + li {
     border-top: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
   }
 }
 
