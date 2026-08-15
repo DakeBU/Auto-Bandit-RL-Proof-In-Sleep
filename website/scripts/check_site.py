@@ -35,12 +35,49 @@ class LinkCollector(HTMLParser):
         self.book_nav_link_count = 0
         self.book_chapter_card_count = 0
         self.contributor_card_count = 0
+        self.theorem_panel_count = 0
+        self.math_statement_count = 0
+        self.math_fallback_count = 0
+        self.math_tex_count = 0
+        self.teaching_grid_count = 0
+        self.lean_code_count = 0
+        self.source_guide_count = 0
+        self.algorithm_flow_count = 0
+        self.source_theorem_card_count = 0
+        self.source_boundary_count = 0
+        self.nested_math_errors = 0
+        self.math_tex_sources: list[str] = []
+        self._stack: list[tuple[str, set[str]]] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         values = {key: value or "" for key, value in attrs}
         if values.get("id"):
             self.ids.add(values["id"])
         classes = set(values.get("class", "").split())
+        if "math-statement" in classes:
+            self.math_statement_count += 1
+        if "math-fallback" in classes:
+            self.math_fallback_count += 1
+        if "math-tex" in classes:
+            self.math_tex_count += 1
+            self.math_tex_sources.append("")
+        if "theorem-panel" in classes:
+            self.theorem_panel_count += 1
+        if "teaching-grid" in classes:
+            self.teaching_grid_count += 1
+        if "lean-code" in classes:
+            self.lean_code_count += 1
+        if "source-guide" in classes:
+            self.source_guide_count += 1
+        if "algorithm-flow" in classes:
+            self.algorithm_flow_count += 1
+        if "source-theorem-card" in classes:
+            self.source_theorem_card_count += 1
+        if "source-boundary" in classes:
+            self.source_boundary_count += 1
+        if any("math-statement" in parent_classes for _parent_tag, parent_classes in self._stack):
+            if "teaching-grid" in classes or "lean-code" in classes:
+                self.nested_math_errors += 1
         if "mermaid" in classes:
             self.mermaid_count += 1
         if "site-sidebar" in classes:
@@ -57,10 +94,22 @@ class LinkCollector(HTMLParser):
         if "cdn.jsdelivr.net/npm/mathjax" in values.get("src", ""):
             self.mathjax_count += 1
         if (
-            "/blob/main/BanditRLProof" in values.get("href", "")
+            ("/blob/" in values.get("href", "") and "/BanditRLProof" in values.get("href", ""))
             or "/source-access/" in values.get("href", "")
         ):
             self.source_link_count += 1
+        if tag not in {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}:
+            self._stack.append((tag, classes))
+
+    def handle_endtag(self, tag: str) -> None:
+        for index in range(len(self._stack) - 1, -1, -1):
+            if self._stack[index][0] == tag:
+                del self._stack[index:]
+                break
+
+    def handle_data(self, data: str) -> None:
+        if self.math_tex_sources and any("math-tex" in classes for _tag, classes in self._stack):
+            self.math_tex_sources[-1] += data
 
 
 def parse_pages(output: Path) -> dict[Path, LinkCollector]:
@@ -325,6 +374,48 @@ def main() -> int:
         )
     if len(chapter_pages) != expected_chapter_count:
         errors.append("chapter-page count does not match chapters.json")
+    chapter_source_theorems = 0
+    chapter_source_boundaries = 0
+    for chapter_page in chapter_pages:
+        collector = pages.get(chapter_page.resolve())
+        if collector is None:
+            continue
+        relative = chapter_page.relative_to(output)
+        if collector.source_guide_count != 1:
+            errors.append(f"{relative}: expected one textbook source guide")
+        if collector.algorithm_flow_count != 1:
+            errors.append(f"{relative}: expected one algorithm or proof flow")
+        if collector.math_statement_count != collector.math_fallback_count or collector.math_statement_count != collector.math_tex_count:
+            errors.append(
+                f"{relative}: every mathematical statement needs one readable fallback and one escaped MathJax source"
+            )
+        if collector.nested_math_errors:
+            errors.append(f"{relative}: a mathematical statement swallowed teaching or Lean content")
+        if collector.theorem_panel_count != collector.teaching_grid_count:
+            errors.append(f"{relative}: theorem panel/teaching-grid structure mismatch")
+        if collector.lean_code_count < collector.theorem_panel_count:
+            errors.append(f"{relative}: theorem panel is missing an exact Lean statement")
+        for source in collector.math_tex_sources:
+            if not source.strip():
+                errors.append(f"{relative}: empty MathJax source")
+                continue
+            if source.count(r"\(") != source.count(r"\)") or source.count(r"\[") != source.count(r"\]"):
+                errors.append(f"{relative}: unbalanced MathJax delimiters in {source[:120]!r}")
+            if not (r"\(" in source or r"\[" in source):
+                errors.append(f"{relative}: mathematical source lacks explicit delimiters")
+        chapter_source_theorems += collector.source_theorem_card_count
+        chapter_source_boundaries += collector.source_boundary_count
+    if chapter_source_theorems != manifest.get("source_theorem_count"):
+        errors.append(
+            f"source theorem cards {chapter_source_theorems} != manifest source_theorem_count "
+            f"{manifest.get('source_theorem_count')}"
+        )
+    if chapter_source_theorems + chapter_source_boundaries != expected_chapter_count:
+        errors.append("every chapter needs either a source theorem card or an explicit source boundary")
+    if manifest.get("reading_count") != expected_chapter_count:
+        errors.append("manifest reading_count does not cover all Book Map chapters")
+    if manifest.get("max_module_slug_length", 10_000) > 96:
+        errors.append("generated module URL exceeds the 96-character slug contract")
 
     search_path = output / "search-index.json"
     search_items = json.loads(search_path.read_text(encoding="utf-8")) if search_path.exists() else []
@@ -400,12 +491,14 @@ def main() -> int:
         f"- declarations: {manifest.get('declaration_count')}\n"
         f"- highlights: {manifest.get('highlight_count')}\n"
         f"- milestones: {manifest.get('milestone_count')}\n"
+        f"- textbook crosswalks: {manifest.get('reading_count')}\n"
+        f"- source theorem restatements: {manifest.get('source_theorem_count')}\n"
         f"- Live Formalization mappings: {manifest.get('ide_mapping_count')}\n"
         f"- Mermaid blocks: {totals['mermaid']}\n"
         f"- Lean source links: {totals['source_links']}\n"
         "- internal links and anchors: valid\n"
         "- README relative links: valid\n"
-        "- MathJax loader: present on every page\n"
+        "- MathJax loader and readable mathematical fallbacks: valid\n"
         "- GitHub Pages workflow: complete"
     )
     return 0

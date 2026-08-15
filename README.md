@@ -1,6 +1,6 @@
-# Auto-Bandit-RL-Proof-In-Sleep
+# 🧭 Auto-Bandit-RL-Proof-In-Sleep
 
-## A Hierarchical Automated Theorem Proving System for Bandit and Reinforcement Learning Theory
+## 🧠 A Hierarchical Automated Theorem Proving System for Bandit and Reinforcement Learning Theory
 
 **Paper:** *ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory*
 
@@ -18,7 +18,7 @@ This repository has two connected contributions:
 
 `BanditRLProof` remains the mature internal Lean namespace. **BanditRLlib** is the public library and website name; renaming the namespace would unnecessarily break existing code.
 
-## News
+## 📰 News
 
 - **2026-08 — Book Map Chapter 9 canonical Hoeffding UCBVI-CH completion.** One strict-prefix recurrent generated source now connects aggregate transition counts, previous-Q clipping, same-law confidence, Bellman optimism, raw cumulative policy-value pseudo-regret, actual-count charge summation, and a generated-filtration innovation tail. The public terminal has the frozen `20/250` high-probability bound, and its integrable expectation consumer retains `K H delta`; GitHub Actions and the Pages deployment were verified before promotion. Bernstein/minimax, stochastic-reward, and realized sampled-return UCBVI remain separate extensions.
 - **2026-08 — Book Map Chapters 7--8 canonical completion.** A six-group public typed canary now verifies the scoped canonical generated EXP3 and half-Tsallis FTRL routes. EXP3 keeps the horizon-tuned expected/fixed-window laws distinct from the fixed-process all-positive-prefix theorem; Tsallis reaches a concrete bounded IID reward-law logarithmic terminal. Horizon-free tuned EXP3, paper-sharp/minimax Tsallis-INF, complete best-of-both-worlds guarantees, and observed-reward restart detection remain explicit extensions.
@@ -28,7 +28,7 @@ This repository has two connected contributions:
 - **2026-08 — Live Formalization preview.** A provider-independent, retrieval-grounded local adapter can turn LaTeX or natural language into an explicitly unverified Lean candidate, compile it in a temporary file, and export a review packet. Semantic fidelity, compilation, proof completion, and library integration remain separate statuses.
 - **2026-08 — Canonical publication line.** This repository's `main` branch and GitHub Pages workflow are the single maintained public source.
 
-## ABRL and BanditRLlib
+## 🔗 ABRL and BanditRLlib
 
 ```mermaid
 flowchart LR
@@ -60,7 +60,7 @@ The website is therefore not only API documentation. It serves three audiences:
 - researchers locating exact declarations, assumptions, files, and dependencies;
 - contributors proposing new lemmas through a reviewable, machine-readable route.
 
-## BanditRLlib website
+## 🌐 BanditRLlib website
 
 The public site provides:
 
@@ -82,7 +82,7 @@ python -m http.server 8000 --directory website/_site
 
 Then open `http://localhost:8000/`.
 
-## Live Formalization
+## 🧪 Live Formalization
 
 The static page previews LaTeX, navigates reviewed mappings, draws dependency trees, and exports draft packets. Local compilation and candidate generation use a loopback-only companion:
 
@@ -109,7 +109,7 @@ A candidate can have four independent statuses:
 
 Compilation alone never means that LaTeX and Lean have the same mathematical meaning.
 
-## Quick start
+## 🚀 Quick start
 
 Prerequisites: Git, Python 3, and [Elan](https://lean-lang.org/install/). The repository pins the Lean toolchain and Mathlib revision.
 
@@ -142,7 +142,7 @@ Core paths:
 - `website/` — literate static site, local compiler service, and integrity checker;
 - `tools/bandit.py` — deterministic harness CLI.
 
-## Contributing
+## 🤝 Contributing
 
 Start with [CONTRIBUTING.md](CONTRIBUTING.md) and open a lemma proposal before a large proof. A useful proposal includes the source, exact assumptions, mathematical statement, intended namespace/module, likely dependencies, and known missing steps.
 
@@ -157,7 +157,7 @@ flowchart LR
 
 Contribution credit records the specific accepted work. It does not automatically imply authorship of the ABRL paper. See [GOVERNANCE.md](GOVERNANCE.md) and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 
-## Related work and design lineage
+## 🧬 Related work and design lineage
 
 | Project | Relevant idea | Relationship here |
 |---|---|---|
@@ -171,7 +171,7 @@ Contribution credit records the specific accepted work. It does not automaticall
 
 The Blueprint website design and organization were inspired by **Sho Sonoda's** [Lean-Ridgelet repository](https://github.com/shosonoda/lean-ridgelet) and [Blueprint website](https://shosonoda.github.io/lean-ridgelet/blueprint/html-multi/overview/). See [NOTICE](NOTICE.md) and [docs/attribution.md](docs/attribution.md). This attribution does not imply Sho Sonoda's participation, endorsement, or maintenance of this project.
 
-## Citation
+## 📚 Citation
 
 ```bibtex
 @software{bu2026abrl,
@@ -182,7 +182,7 @@ The Blueprint website design and organization were inspired by **Sho Sonoda's** 
 }
 ```
 
-## License
+## ⚖️ License
 
 Repository code and documentation are governed by [LICENSE](LICENSE). Third-party inspiration and any reused material are recorded in [NOTICE](NOTICE.md) and [docs/attribution.md](docs/attribution.md).
 

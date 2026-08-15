@@ -1,0 +1,323 @@
+{
+  "edition_note": "Page numbers refer to the free online edition of Lattimore and Szepesvári's Bandit Algorithms. The authors note that its pagination differs from the print edition. Algorithm and theorem text on this site is independently restated; use the source link for the original wording and complete assumptions.",
+  "readings": [
+    {
+      "slug": "foundations",
+      "primary": {
+        "title": "Bandit Algorithms",
+        "authors": "Tor Lattimore and Csaba Szepesvári",
+        "edition": "free online edition",
+        "sections": "Ch. 1 and Ch. 4, especially §4.5",
+        "pages": "online pp. 8–16 and 56–69; regret decomposition pp. 62–63",
+        "url": "https://tor-lattimore.com/downloads/book/book.pdf"
+      },
+      "algorithm": {
+        "title": "From an action trace to a gap sum",
+        "kind": "bookkeeping flow",
+        "steps": [
+          {"title": "Record the trace", "detail": "Write the selected arm A_t at every round t."},
+          {"title": "Count each arm", "detail": "N_a(T) counts how often arm a appears before horizon T."},
+          {"title": "Attach its gap", "detail": "Every occurrence of arm a contributes the same model gap Δ_a."},
+          {"title": "Regroup the sum", "detail": "Replace the sum over time by one gap-times-count term per arm."}
+        ]
+      },
+      "source_theorem": {
+        "label": "Lemma 4.5 (regret decomposition)",
+        "pages": "online pp. 62–63",
+        "url": "https://tor-lattimore.com/downloads/book/book.pdf",
+        "math": "R_n=\\sum_{a=1}^{k}\\Delta_a\\,\\mathbb E[T_a(n)].",
+        "fallback": "Expected regret is the sum, over arms, of each gap times that arm's expected pull count.",
+        "plain": "The standard stochastic-bandit decomposition converts control of suboptimal pull counts into expected regret.",
+        "relationship": "BanditRLlib first proves the pathwise finite-trace identity. Algorithm chapters then integrate that bookkeeping identity under their own generated trajectory laws."
+      }
+    },
+    {
+      "slug": "probability",
+      "primary": {
+        "title": "Bandit Algorithms",
+        "authors": "Tor Lattimore and Csaba Szepesvári",
+        "edition": "free online edition",
+        "sections": "Ch. 2, Ch. 3, and Ch. 5",
+        "pages": "online pp. 18–42, 46–54, and 74–81",
+        "url": "https://tor-lattimore.com/downloads/book/book.pdf"
+      },
+      "algorithm": {
+        "title": "A reusable confidence-event route",
+        "kind": "proof flow",
+        "steps": [
+          {"title": "Model conditional noise", "detail": "State a conditional MGF or bounded-reward assumption on the generated history."},
+          {"title": "Derive one tail bound", "detail": "Convert the MGF bound into a deviation probability at a fixed index."},
+          {"title": "Allocate confidence", "detail": "Assign a finite, geometric, or telescoping share δ_i to every arm and time."},
+          {"title": "Join the events", "detail": "Use a union bound to obtain one good event consumed by an algorithm proof."}
+        ]
+      },
+      "source_theorem": {
+        "label": "Corollary 5.5 (sub-Gaussian tail)",
+        "pages": "online pp. 77–78",
+        "url": "https://tor-lattimore.com/downloads/book/book.pdf",
+        "math": "\\Pr(X\\ge\\varepsilon)\\le\\exp\\!\\left(-\\frac{\\varepsilon^2}{2\\sigma^2}\\right)\\quad\\text{for a zero-mean }\\sigma^2\\text{-sub-Gaussian }X.",
+        "fallback": "A centered sub-Gaussian variable has an exponentially small upper-tail probability.",
+        "plain": "The fixed-index tail estimate is the mathematical atom from which finite and all-time confidence schedules are assembled.",
+        "relationship": "The local library adds measure, kernel, filtration, conditional-law, finite-index, and countable-all-time adapters needed by generated bandit trajectories."
+      }
+    },
+    {
+      "slug": "etc",
+      "primary": {
+        "title": "Bandit Algorithms",
+        "authors": "Tor Lattimore and Csaba Szepesvári",
+        "edition": "free online edition",
+        "sections": "Ch. 6",
+        "pages": "online pp. 91–96",
+        "url": "https://tor-lattimore.com/downloads/book/book.pdf"
+      },
+      "algorithm": {
+        "title": "Explore-Then-Commit",
+        "kind": "algorithm",
+        "steps": [
+          {"title": "Explore", "detail": "Pull every arm m times, usually in round-robin order."},
+          {"title": "Estimate", "detail": "Compute each arm's empirical mean from its exploration samples."},
+          {"title": "Commit", "detail": "Choose an empirical maximizer using a documented tie rule."},
+          {"title": "Exploit", "detail": "Pull that chosen arm for every remaining round."}
+        ]
+      },
+      "source_theorem": {
+        "label": "Theorem 6.1 (ETC regret bound)",
+        "pages": "online pp. 92–93",
+        "url": "https://tor-lattimore.com/downloads/book/book.pdf",
+        "math": "R_n\\le m\\sum_i\\Delta_i+(n-mk)\\sum_i\\Delta_i\\exp\\!\\left(-\\frac{m\\Delta_i^2}{4}\\right).",
+        "fallback": "ETC regret is bounded by the exploration cost plus the remaining horizon times exponentially small wrong-commit probabilities.",
+        "plain": "The theorem exposes the central ETC tradeoff: more exploration costs regret now but reduces the probability of committing to a wrong arm.",
+        "relationship": "The local canonical route constructs a measurable generated ETC law and states explicit tie semantics before deriving bounded and sub-Gaussian expected-regret endpoints."
+      }
+    },
+    {
+      "slug": "ucb",
+      "primary": {
+        "title": "Bandit Algorithms",
+        "authors": "Tor Lattimore and Csaba Szepesvári",
+        "edition": "free online edition",
+        "sections": "Ch. 7; KL-UCB extension in Ch. 10",
+        "pages": "online pp. 102–111; KL-UCB pp. 133–141",
+        "url": "https://tor-lattimore.com/downloads/book/book.pdf"
+      },
+      "algorithm": {
+        "title": "Upper Confidence Bound policy",
+        "kind": "algorithm",
+        "steps": [
+          {"title": "Initialize", "detail": "Pull every arm so that each empirical mean and count is defined."},
+          {"title": "Score every arm", "detail": "Add a confidence bonus to the arm's empirical mean; less data means a wider bonus."},
+          {"title": "Choose optimistically", "detail": "Pull an arm with maximal upper-confidence score."},
+          {"title": "Update and repeat", "detail": "Update that arm's count and empirical mean, then recompute scores next round."},
+          {"title": "Read the proof", "detail": "On the good event, choosing a suboptimal arm forces its count to still be small; sum gap times count to obtain regret."}
+        ]
+      },
+      "source_theorem": {
+        "label": "Theorem 7.2 (finite-time UCB regret)",
+        "pages": "online p. 108",
+        "url": "https://tor-lattimore.com/downloads/book/book.pdf",
+        "math": "R_n\\le 8\\sqrt{nk\\log n}+3\\sum_{i=1}^{k}\\Delta_i.",
+        "fallback": "The textbook UCB policy has a finite-time regret bound with a leading square-root term in horizon, arm count, and log horizon.",
+        "plain": "Confidence validity implies a suboptimal arm can be selected only while its sample count is small enough to keep its bonus competitive.",
+        "relationship": "BanditRLlib's ordinary-UCB route uses an explicit generated trajectory and confidence schedule. Its exact hypotheses, constants, gap-sum form, and Tδ failure term are therefore not presented as a line-for-line formalization of Theorem 7.2; KL-UCB remains a separate extension."
+      }
+    },
+    {
+      "slug": "oful",
+      "primary": {
+        "title": "Bandit Algorithms",
+        "authors": "Tor Lattimore and Csaba Szepesvári",
+        "edition": "free online edition",
+        "sections": "Ch. 19–20; stopping times in §3.3",
+        "pages": "online pp. 238–262; stopping-time basics pp. 50–54",
+        "url": "https://tor-lattimore.com/downloads/book/book.pdf"
+      },
+      "companion": {
+        "title": "Improved Algorithms for Linear Stochastic Bandits",
+        "authors": "Yasin Abbasi-Yadkori, Dávid Pál, and Csaba Szepesvári",
+        "sections": "OFUL algorithm and Theorem 3",
+        "pages": "paper pp. 3–5",
+        "url": "https://proceedings.neurips.cc/paper/2011/file/e1d5be1c7f2f456670de3d53c7b54f4a-Paper.pdf"
+      },
+      "algorithm": {
+        "title": "OFUL confidence-ellipsoid loop",
+        "kind": "algorithm",
+        "steps": [
+          {"title": "Update geometry", "detail": "Accumulate the regularized feature Gram matrix from past actions."},
+          {"title": "Estimate", "detail": "Compute the ridge least-squares parameter estimate."},
+          {"title": "Build confidence", "detail": "Place plausible parameters in an ellipsoid around the estimate."},
+          {"title": "Act optimistically", "detail": "Choose the action and plausible parameter pair with the largest predicted reward."},
+          {"title": "Charge widths", "detail": "Bound regret by confidence widths and use the elliptical-potential sum."}
+        ]
+      },
+      "source_theorem": {
+        "label": "Abbasi-Yadkori–Pál–Szepesvári, Theorem 3",
+        "pages": "paper pp. 4–5",
+        "url": "https://proceedings.neurips.cc/paper/2011/file/e1d5be1c7f2f456670de3d53c7b54f4a-Paper.pdf",
+        "math": "R_n=\\widetilde O\\!\\left(d\\sqrt n\\right)\\quad\\text{under the theorem's bounded-feature and sub-Gaussian assumptions}.",
+        "fallback": "OFUL achieves dimension times square-root-horizon regret, up to logarithmic factors, under the paper's stated assumptions.",
+        "plain": "The paper combines a self-normalized confidence ellipsoid with optimism and an elliptical-potential argument.",
+        "relationship": "The local finite-action scalar route compiles the confidence, optimistic policy, all-time, expected-consistency, and stopping-time interfaces under its own explicit contracts; consult the exact Lean statements for the narrower model."
+      }
+    },
+    {
+      "slug": "thompson",
+      "primary": {
+        "title": "Bandit Algorithms",
+        "authors": "Tor Lattimore and Csaba Szepesvári",
+        "edition": "free online edition",
+        "sections": "Ch. 34 and Ch. 36",
+        "pages": "online pp. 421–436 and 460–475",
+        "url": "https://tor-lattimore.com/downloads/book/book.pdf"
+      },
+      "algorithm": {
+        "title": "Thompson sampling",
+        "kind": "algorithm",
+        "steps": [
+          {"title": "Condition", "detail": "Form the posterior distribution of the unknown environment given observed history."},
+          {"title": "Sample a model", "detail": "Draw one plausible environment from that posterior."},
+          {"title": "Optimize the sample", "detail": "Choose an arm that is best in the sampled environment."},
+          {"title": "Observe and update", "detail": "Record the reward and condition the posterior on the enlarged history."}
+        ]
+      },
+      "source_theorem": {
+        "label": "Theorem 36.1 (Bayesian regret of Thompson sampling)",
+        "pages": "online Ch. 36, pp. 460–475",
+        "url": "https://tor-lattimore.com/downloads/book/book.pdf",
+        "math": "BR_n\\le C\\sqrt{kn\\log n}\\quad\\text{for the theorem's Bayesian finite-armed model and universal }C.",
+        "fallback": "In the stated Bayesian finite-armed setting, Thompson sampling has square-root-horizon Bayesian regret up to a logarithmic factor.",
+        "plain": "Probability matching turns posterior uncertainty about the best arm into an exploration policy.",
+        "relationship": "BanditRLlib constructs a canonical posterior/kernel and generated stationary latent-arm-stream process. Its compiled terminal has explicit bounded-reward and variance terms and is not a blanket frequentist guarantee for all Thompson variants."
+      }
+    },
+    {
+      "slug": "exp3",
+      "primary": {
+        "title": "Bandit Algorithms",
+        "authors": "Tor Lattimore and Csaba Szepesvári",
+        "edition": "free online edition",
+        "sections": "Ch. 11–12",
+        "pages": "online pp. 148–172",
+        "url": "https://tor-lattimore.com/downloads/book/book.pdf"
+      },
+      "algorithm": {
+        "title": "EXP3 with importance-weighted losses",
+        "kind": "algorithm",
+        "steps": [
+          {"title": "Turn weights into probabilities", "detail": "Normalize positive arm weights, with the prescribed exploration or support rule."},
+          {"title": "Sample an arm", "detail": "Draw the current action from that probability vector."},
+          {"title": "Estimate all losses", "detail": "Use the observed loss divided by its sampling probability for the selected arm; use zero for the others."},
+          {"title": "Update exponentially", "detail": "Downweight arms according to their estimated cumulative losses."},
+          {"title": "Separate guarantees", "detail": "Expected, fixed-horizon tail, all-time, and sparse-loss results use distinct concentration interfaces."}
+        ]
+      },
+      "source_theorem": {
+        "label": "Theorem 11.2 (EXP3 expected regret)",
+        "pages": "online p. 156",
+        "url": "https://tor-lattimore.com/downloads/book/book.pdf",
+        "math": "\\eta=\\sqrt{\\frac{2\\log k}{nk}}\\quad\\Longrightarrow\\quad R_n\\le\\sqrt{2nk\\log k}.",
+        "fallback": "With the textbook learning rate, EXP3 has expected adversarial regret at most the square root of two times horizon, arm count, and log arm count.",
+        "plain": "Importance weighting makes the bandit observation unbiased, while exponential weights controls the resulting estimated-loss regret.",
+        "relationship": "The local generated predictable process uses its own tuning constants and also compiles separate fixed-horizon, all-time, realized-regret, and sparse-loss extensions."
+      }
+    },
+    {
+      "slug": "tsallis",
+      "primary": {
+        "title": "Bandit Algorithms",
+        "authors": "Tor Lattimore and Csaba Szepesvári",
+        "edition": "free online edition",
+        "sections": "Ch. 28 (FTRL and mirror-descent foundation)",
+        "pages": "online pp. 327–344",
+        "url": "https://tor-lattimore.com/downloads/book/book.pdf"
+      },
+      "companion": {
+        "title": "Tsallis-INF: An Optimal Algorithm for Stochastic and Adversarial Bandits",
+        "authors": "Julian Zimmert and Yevgeny Seldin",
+        "sections": "Algorithm 1 and Theorem 1",
+        "pages": "paper pp. 7–13",
+        "url": "https://jmlr.csail.mit.edu/papers/volume22/19-753/19-753.pdf"
+      },
+      "algorithm": {
+        "title": "Half-Tsallis FTRL update",
+        "kind": "algorithm",
+        "steps": [
+          {"title": "Estimate bandit losses", "detail": "Construct an importance-weighted or reduced-variance estimate from the selected arm."},
+          {"title": "Accumulate the estimate", "detail": "Add the new estimate to the running loss vector."},
+          {"title": "Regularize with half-Tsallis entropy", "detail": "Choose the next distribution by minimizing estimated loss plus the scheduled Tsallis potential."},
+          {"title": "Sample and adapt", "detail": "Draw the next arm and update the learning-rate schedule; specialized theorems then add self-bounding, corruption, drift, or restart assumptions."}
+        ]
+      },
+      "source_theorem": {
+        "label": "Zimmert–Seldin, Theorem 1 (adversarial regime)",
+        "pages": "paper p. 9",
+        "url": "https://jmlr.csail.mit.edu/papers/volume22/19-753/19-753.pdf",
+        "math": "Reg_T\\le4\\sqrt{KT}+1\\quad\\text{(importance weighting)},\\qquad Reg_T\\le2\\sqrt{KT}+10K\\log T+16\\quad\\text{(reduced variance)}.",
+        "fallback": "The source theorem gives explicit adversarial square-root regret bounds for importance-weighted and reduced-variance Tsallis-INF variants.",
+        "plain": "The half-Tsallis regularizer is designed to retain adversarial robustness while adapting sharply to stochastic self-bounding structure.",
+        "relationship": "BanditRLlib proves a scheduled half-Tsallis route and several IID, corrupted, drifting, and oracle-restart consumers. These are source-aligned local theorems, not a claim that every sharp paper regime has been reproduced verbatim."
+      }
+    },
+    {
+      "slug": "finite-horizon-rl",
+      "primary": {
+        "title": "Bandit Algorithms",
+        "authors": "Tor Lattimore and Csaba Szepesvári",
+        "edition": "free online edition",
+        "sections": "Ch. 38",
+        "pages": "online pp. 512–538",
+        "url": "https://tor-lattimore.com/downloads/book/book.pdf"
+      },
+      "companion": {
+        "title": "Minimax Regret Bounds for Reinforcement Learning",
+        "authors": "Mohammad Gheshlaghi Azar, Ian Osband, and Rémi Munos",
+        "sections": "Algorithms 1–2 and Theorem 1 (UCBVI-CH)",
+        "pages": "paper pp. 3–4",
+        "url": "https://proceedings.mlr.press/v70/azar17a/azar17a.pdf"
+      },
+      "algorithm": {
+        "title": "Known-reward Hoeffding UCBVI-CH",
+        "kind": "algorithm",
+        "steps": [
+          {"title": "Count strict prefixes", "detail": "Before episode k, aggregate visits and next-state transitions from episodes strictly earlier than k."},
+          {"title": "Estimate transitions", "detail": "Normalize transition counts at each state-action pair, with an explicit zero-count convention."},
+          {"title": "Plan backward optimistically", "detail": "Add a Hoeffding bonus, clip against the horizon and previous Q table, and run backward dynamic programming."},
+          {"title": "Execute the greedy policy", "detail": "Generate the next episode with the measurable greedy policy from that recurrent table."},
+          {"title": "Assemble regret", "detail": "Combine confidence and optimism with charge, Bellman-innovation, and low-count bounds on the same process."}
+        ]
+      },
+      "source_theorem": {
+        "label": "Azar–Osband–Munos, Theorem 1 (UCBVI-CH)",
+        "pages": "paper p. 4",
+        "url": "https://proceedings.mlr.press/v70/azar17a/azar17a.pdf",
+        "math": "Regret(K)\\le20H^{3/2}L\\sqrt{SAK}+250H^2S^2AL^2,\\qquad L=\\log\\!\\left(\\frac{5HSAT}{\\delta}\\right),",
+        "fallback": "With high probability, UCBVI-CH regret is bounded by a 20-times square-root leading term plus the explicit 250-times lower-order term.",
+        "plain": "The UCBVI-CH analysis couples empirical-transition concentration, backward optimism, cumulative bonuses, and a martingale innovation term.",
+        "relationship": "The compiled local endpoint is deliberately narrow: finite horizon, known deterministic rewards, the same recurrent generated process, strict-prefix counts, policy-value pseudo-regret, the frozen 20/250 high-probability bound, and an expected consumer with an additional KHδ failure term."
+      }
+    },
+    {
+      "slug": "frontier",
+      "primary": {
+        "title": "Bandit Algorithms",
+        "authors": "Tor Lattimore and Csaba Szepesvári",
+        "edition": "free online edition",
+        "sections": "Parts VII–VIII as a background index",
+        "pages": "online pp. 358–538",
+        "url": "https://tor-lattimore.com/downloads/book/book.pdf"
+      },
+      "algorithm": {
+        "title": "How an open theorem becomes a contribution",
+        "kind": "contribution flow",
+        "steps": [
+          {"title": "Fix the mathematical target", "detail": "Record the exact source, assumptions, constants, and intended Lean signature."},
+          {"title": "Retrieve before proving", "detail": "Search BanditRLlib, Mathlib, LML theorem cards, and paper/textbook evidence without upgrading cards to proofs."},
+          {"title": "Split a proof leaf", "detail": "Choose one narrow obligation with a clear compile gate and explicit dependencies."},
+          {"title": "Compile and review", "detail": "Only a passing local Lean gate plus review can promote the leaf to compiled status."},
+          {"title": "Publish the boundary", "detail": "Synchronize the declaration index, teaching note, dependencies, and remaining gaps."}
+        ]
+      },
+      "source_boundary": "This chapter is a cross-source automation and research frontier, not a completed chapter from one textbook. Compiled infrastructure, blocked algorithm routes, theorem cards, and planned work remain visibly separate."
+    }
+  ]
+}
