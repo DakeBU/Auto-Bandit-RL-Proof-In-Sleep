@@ -38,6 +38,10 @@ PAPER_TITLE = (
     "ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library "
     "for Bandit and Reinforcement Learning Theory"
 )
+PRIMARY_TEXTBOOK_TITLE = "Bandit Algorithms"
+PRIMARY_TEXTBOOK_AUTHORS = "Tor Lattimore and Csaba Szepesvári"
+PRIMARY_TEXTBOOK_URL = "https://tor-lattimore.com/downloads/book/book.pdf"
+ASSET_VERSION = "20260815c"
 SOURCE_BRANCH = "main"
 PUBLIC_BASE_URL = ""
 SITE_CHAPTERS: list[dict[str, Any]] = []
@@ -562,7 +566,7 @@ def layout(
   <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the ABRL hierarchical autoformalization harness.">
   <meta name="citation_title" content="{html.escape(PAPER_TITLE)}">
   <title>{html.escape(title)} · BanditRLlib</title>
-  <link rel="stylesheet" href="{root}/static/site.css?v=20260815">
+  <link rel="stylesheet" href="{root}/static/site.css?v={ASSET_VERSION}">
   {mathjax}
 </head>
 <body data-site-root="{root}">
@@ -614,7 +618,7 @@ def layout(
       </div>
     </footer>
   </div>
-  <script src="{root}/static/site.js?v=20260815"></script>{extra_script_tags}
+  <script src="{root}/static/site.js?v={ASSET_VERSION}"></script>{extra_script_tags}
 </body>
 </html>
 """
@@ -808,6 +812,20 @@ def render_highlight(
 """
 
 
+def render_primary_textbook_banner() -> str:
+    return f"""
+<aside class="primary-textbook-banner" id="primary-textbook" aria-labelledby="primary-textbook-title">
+  <div class="primary-textbook-identity">
+    <span class="primary-textbook-label">Current primary textbook</span>
+    <strong class="primary-textbook-title" id="primary-textbook-title"><cite>{html.escape(PRIMARY_TEXTBOOK_TITLE)}</cite></strong>
+    <span class="primary-textbook-authors">{html.escape(PRIMARY_TEXTBOOK_AUTHORS)} · free online edition</span>
+  </div>
+  <p>The ten-chapter Book Map uses this book as its main mathematical spine. Original papers supplement OFUL, Tsallis-INF, UCBVI, and other source-specific results.</p>
+  <a class="button compact" href="{PRIMARY_TEXTBOOK_URL}">Open the free textbook <span aria-hidden="true">↗</span></a>
+</aside>
+"""
+
+
 def build_index(
     output: Path,
     modules: list[dict[str, Any]],
@@ -824,11 +842,13 @@ def build_index(
     placeholder_count = sum(1 for decl in declarations if decl["placeholder"])
     book_map = render_book_map(page_path, chapters)
     contributor_cards = render_contributor_cards(page_path, authors, include_invitation=False)
+    primary_textbook = render_primary_textbook_banner()
     body = f"""
 <section class="hero" id="overview">
   <p class="eyebrow">Verified bandit and reinforcement-learning theory in Lean</p>
   <h1>BanditRLlib</h1>
   <p class="lede">Learn bandit and reinforcement-learning theory beside its compiled Lean interfaces, search exact declarations, and contribute one reviewable lemma at a time.</p>
+  {primary_textbook}
   <p class="paper-title"><strong>Paper.</strong> {html.escape(PAPER_TITLE)}</p>
   <div class="hero-actions">
     <a class="button primary" href="{href_from(page_path, 'learning/index.html')}">Start the Book Map</a>
@@ -952,6 +972,7 @@ python3 tools/bandit.py check</code></pre></article>
 """
     toc = [
         ("overview", "Overview"),
+        ("primary-textbook", "Primary textbook"),
         ("two-systems", "ABRL + BanditRLlib"),
         ("three-roles", "Three ways to use BanditRLlib"),
         ("live-inventory", "Live inventory"),
@@ -1409,11 +1430,13 @@ def build_learning(
 ) -> None:
     page_path = "learning/index.html"
     cards = render_book_map(page_path, chapters, detailed=True)
+    primary_textbook = render_primary_textbook_banner()
     body = f"""
 <section class="hero" id="learning">
   <p class="eyebrow">A student-first route</p>
   <h1 class="page-title">How to read the formalization</h1>
   <p class="lede">You do not need to read thousands of declarations in source order. Begin with the deterministic language, learn the probability interfaces, then follow one algorithm route from assumptions to a compiled endpoint.</p>
+  {primary_textbook}
 </section>
 
 <section id="path">
@@ -1439,7 +1462,7 @@ def build_learning(
   {cards}
 </section>
 """
-    toc = [("learning", "Reading guide"), ("path", "Recommended path"), ("lean-translation", "Lean ideas"), ("book-map", "Book map")]
+    toc = [("learning", "Reading guide"), ("primary-textbook", "Primary textbook"), ("path", "Recommended path"), ("lean-translation", "Lean ideas"), ("book-map", "Book map")]
     write_page(
         output,
         page_path,

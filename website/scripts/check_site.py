@@ -21,6 +21,8 @@ PAPER_TITLE = (
     "for Bandit and Reinforcement Learning Theory"
 )
 EXPECTED_AUTHORS = ["Dake Bu", "Ji Cheng", "Bo Xue", "Atsushi Nitanda", "Hau-San Wong", "Qingfu Zhang"]
+PRIMARY_TEXTBOOK_TITLE = "Bandit Algorithms"
+PRIMARY_TEXTBOOK_URL = "https://tor-lattimore.com/downloads/book/book.pdf"
 
 
 class LinkCollector(HTMLParser):
@@ -34,6 +36,7 @@ class LinkCollector(HTMLParser):
         self.site_sidebar_count = 0
         self.book_nav_link_count = 0
         self.book_chapter_card_count = 0
+        self.primary_textbook_banner_count = 0
         self.contributor_card_count = 0
         self.theorem_panel_count = 0
         self.math_statement_count = 0
@@ -86,6 +89,8 @@ class LinkCollector(HTMLParser):
             self.book_nav_link_count += 1
         if "book-chapter-card" in classes:
             self.book_chapter_card_count += 1
+        if "primary-textbook-banner" in classes:
+            self.primary_textbook_banner_count += 1
         if "contributor-card" in classes:
             self.contributor_card_count += 1
         for attr in ("href", "src"):
@@ -357,6 +362,14 @@ def main() -> int:
                 f"{relative}: book map has {collector.book_chapter_card_count} chapter cards, "
                 f"expected {expected_chapter_count}"
             )
+        if collector and collector.primary_textbook_banner_count != 1:
+            errors.append(
+                f"{relative}: expected one prominent primary-textbook banner, "
+                f"found {collector.primary_textbook_banner_count}"
+            )
+        page_source = (output / relative).read_text(encoding="utf-8")
+        if PRIMARY_TEXTBOOK_TITLE not in page_source or PRIMARY_TEXTBOOK_URL not in page_source:
+            errors.append(f"{relative}: primary textbook title or free-edition link is missing")
 
     contributor_page = pages.get((output / "contributors" / "index.html").resolve())
     expected_contributors = manifest.get("contributor_count", 0)
