@@ -686,6 +686,52 @@
         "Sharp KL-Chernoff concentration, the Garivier-Cappe leading constant, and asymptotic optimality are not claimed."
       ],
       "evidence": "Tests/KLUCBGeneratedRegretCanary.lean"
+    },
+    {
+      "id": "TEXTBOOK-PART-IV-CH13-BASIC-IDEAS-LEAN-SPINE",
+      "title": "Chapter 13 lower-bound semantic and deterministic spine",
+      "chapter": "foundations",
+      "textbook_spine": "chapter-13-basic-ideas",
+      "status": "compiled",
+      "informal": "The Chapter 13 conversion window compiles explicit ENNReal worst-case/minimax semantics, a source-shaped least-explored alternative-arm theorem from the exact expected pull budget, and quantitative deterministic two-environment regret algebra whose cross-law pull discrepancy remains a visible error premise.",
+      "declarations": [
+        "BanditRLProof.LowerBounds.worstCaseExpectedRegret",
+        "BanditRLProof.LowerBounds.minimaxExpectedRegret",
+        "BanditRLProof.LowerBounds.expectedRegret_le_worstCaseExpectedRegret",
+        "BanditRLProof.LowerBounds.minimaxExpectedRegret_le_worstCaseExpectedRegret",
+        "BanditRLProof.LowerBounds.le_minimaxExpectedRegret",
+        "BanditRLProof.LowerBounds.exists_alternative_le_average",
+        "BanditRLProof.LowerBounds.alternativeExpectedPullBudget_le",
+        "BanditRLProof.LowerBounds.exists_leastExploredAlternative",
+        "BanditRLProof.LowerBounds.baseEnvironmentRegret",
+        "BanditRLProof.LowerBounds.changedEnvironmentRegretLowerBound",
+        "BanditRLProof.LowerBounds.max_base_changed_regretLowerBound_ge_half_sub_error",
+        "BanditRLProof.LowerBounds.max_base_changed_regretLowerBound_ge_half"
+      ],
+      "depends_on": [],
+      "missing": [
+        "The same-policy adaptive history likelihood-ratio and KL chain-rule bridge is planned for Chapter 14.",
+        "The source-stated Gaussian minimax Theorem 13.1 remains planned until its Chapter 15 caller-free terminal compiles."
+      ],
+      "evidence": "BanditRLProof/LowerBounds/BasicIdeas.lean; Tests/TextbookPartIVChapter13Canary.lean"
+    },
+    {
+      "id": "TEXTBOOK-PART-IV-THEOREM-13-1-GAUSSIAN-MINIMAX",
+      "title": "Theorem 13.1 Gaussian finite-arm minimax lower bound",
+      "chapter": "foundations",
+      "textbook_spine": "chapter-13-basic-ideas",
+      "status": "planned",
+      "informal": "For k-armed unit-variance Gaussian bandits with mean vectors in the unit cube, the source states a universal-constant minimax lower bound of order sqrt(k n) for k greater than one and n at least k; the source defers the proof to Chapter 15 and BanditRLlib makes no local compiled-terminal claim yet.",
+      "declarations": [],
+      "depends_on": [
+        "BanditRLProof.LowerBounds.exists_leastExploredAlternative",
+        "BanditRLProof.LowerBounds.max_base_changed_regretLowerBound_ge_half_sub_error"
+      ],
+      "missing": [
+        "Chapter 14 history-law information theory with explicit absolute continuity and KL direction.",
+        "Chapter 15 Gaussian construction, testing inequality, Delta tuning, universal constant, and infimum/supremum extraction."
+      ],
+      "evidence": "tasks/TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE.md"
     }
   ]
 }

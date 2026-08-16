@@ -1,0 +1,184 @@
+{
+  "title": "Textbook Spine / Part IV: Lower Bounds",
+  "summary": "A chapter-by-chapter, source-faithful formalization of finite-armed bandit lower bounds. This layer is separate from the curated ten-chapter Book Map and reports compiled, partial, planned, and blocked evidence without implying that the whole textbook is formalized.",
+  "canonical_source": {
+    "title": "Bandit Algorithms",
+    "authors": "Tor Lattimore and Csaba Szepesvári",
+    "publisher": "Cambridge University Press",
+    "year": 2020,
+    "doi": "10.1017/9781108571401",
+    "doi_url": "https://doi.org/10.1017/9781108571401",
+    "official_url": "https://tor-lattimore.com/downloads/book/book.pdf",
+    "part": "Part IV — Lower Bounds for Bandits with Finitely Many Arms",
+    "edition": "Cambridge University Press 2020; author-hosted formal PDF"
+  },
+  "chapters": [
+    {
+      "number": 13,
+      "slug": "chapter-13-basic-ideas",
+      "title": "Lower Bounds: Basic Ideas",
+      "status": "partial",
+      "status_note": "The Chapter 13 semantic and deterministic slice is compiled. Theorem 13.1 remains planned because the source defers its proof to Chapter 15.",
+      "print_pages": "180–185",
+      "pdf_pages": "189–194",
+      "sections": [
+        "§13.1 Main Ideas Underlying Minimax Lower Bounds (printed pp. 181–182)",
+        "§13.2 Notes (p. 183)",
+        "§13.3 Bibliographic Remarks (p. 184)",
+        "§13.4 Exercises (pp. 184–185)"
+      ],
+      "learning_goals": [
+        "Read worst-case and minimax expected regret as explicit supremum and infimum operations.",
+        "Derive a least-explored alternative arm from the exact expected pull-count budget.",
+        "Separate the deterministic two-environment regret algebra from the missing statistical change-of-measure bridge.",
+        "Understand why Theorem 13.1 is source-stated here but cannot be marked compiled before the Chapter 15 terminal."
+      ],
+      "definitions": [
+        {
+          "name": "Worst-case and minimax expected regret",
+          "math": "R_n^*(\\mathcal E)=\\inf_{\\pi}\\sup_{\\nu\\in\\mathcal E}R_n(\\pi,\\nu).",
+          "fallback": "The minimax value is the infimum over policies of their worst expected regret over the environment class.",
+          "status": "compiled"
+        },
+        {
+          "name": "Least-explored alternative",
+          "math": "\\sum_{a=0}^{m}\\mathbb E[T_a(n)]=n\\Longrightarrow\\exists i\\in\\{1,\\ldots,m\\}:\\mathbb E[T_i(n)]\\le n/m.",
+          "fallback": "Among the m alternatives, at least one is pulled no more than the average n divided by m.",
+          "status": "compiled"
+        },
+        {
+          "name": "Two-environment algebra",
+          "math": "x-y\\le\\varepsilon\\Longrightarrow\\max\\{\\Delta(n-x),\\Delta y\\}\\ge\\tfrac{\\Delta(n-\\varepsilon)}{2}.",
+          "fallback": "A quantitative upper bound on the pull-count discrepancy leaves a matching error term in the two-environment regret lower bound.",
+          "status": "compiled"
+        }
+      ],
+      "flow": {
+        "title": "Minimal source-change proof flow",
+        "kind": "proof pseudocode",
+        "steps": [
+          {"title": "Choose the base instance", "detail": "Give arm zero mean Delta and every alternative mean zero."},
+          {"title": "Find a lightly sampled alternative", "detail": "Use the expected pull budget to choose i.succ with expected count at most n/m."},
+          {"title": "Change one source", "detail": "Raise only that alternative mean to 2 Delta; keep the policy fixed."},
+          {"title": "Write both regret expressions", "detail": "Expose the base identity and changed-environment lower expression without identifying their expectations."},
+          {"title": "Defer indistinguishability", "detail": "A same-policy history-law KL/change-of-measure theorem must supply a quantitative pull-count discrepancy error before the minimax conclusion can follow."}
+        ]
+      },
+      "source_theorem": {
+        "label": "Theorem 13.1 (source statement; proof deferred to Chapter 15)",
+        "status": "planned",
+        "math": "\\exists c>0\\;\\forall k>1\\;\\forall n\\ge k:\\quad R_n^*(\\mathcal E^k)\\ge c\\sqrt{kn},",
+        "fallback": "For unit-variance k-armed Gaussian bandits with means in the unit cube, minimax regret is at least a universal constant times the square root of k times n.",
+        "plain": "The source states the finite-arm Gaussian minimax order here and explicitly postpones its proof to Chapter 15.",
+        "boundary": "No local Lean declaration is presented as Theorem 13.1. The compiled declarations below cover only the Chapter 13 semantic and deterministic conversion window."
+      },
+      "lean_correspondence": [
+        {"name": "BanditRLProof.LowerBounds.worstCaseExpectedRegret", "status": "compiled", "role": "Worst-case ENNReal supremum over an explicit environment class."},
+        {"name": "BanditRLProof.LowerBounds.minimaxExpectedRegret", "status": "compiled", "role": "Minimax ENNReal infimum over an explicit policy class."},
+        {"name": "BanditRLProof.LowerBounds.expectedRegret_le_worstCaseExpectedRegret", "status": "compiled", "role": "One member is below the class supremum."},
+        {"name": "BanditRLProof.LowerBounds.minimaxExpectedRegret_le_worstCaseExpectedRegret", "status": "compiled", "role": "The infimum is below every admissible policy value."},
+        {"name": "BanditRLProof.LowerBounds.le_minimaxExpectedRegret", "status": "compiled", "role": "A uniform policywise lower bound passes through the minimax infimum."},
+        {"name": "BanditRLProof.LowerBounds.exists_alternative_le_average", "status": "compiled", "role": "Reusable finite averaging leaf."},
+        {"name": "BanditRLProof.LowerBounds.alternativeExpectedPullBudget_le", "status": "compiled", "role": "Remove the nonnegative distinguished-arm contribution from the exact total."},
+        {"name": "BanditRLProof.LowerBounds.exists_leastExploredAlternative", "status": "compiled", "role": "Source-shaped Fin.succ alternative-arm conclusion."},
+        {"name": "BanditRLProof.LowerBounds.baseEnvironmentRegret", "status": "compiled", "role": "Equation (13.2) deterministic expression."},
+        {"name": "BanditRLProof.LowerBounds.changedEnvironmentRegretLowerBound", "status": "compiled", "role": "Equation (13.3) lower expression."},
+        {"name": "BanditRLProof.LowerBounds.max_base_changed_regretLowerBound_ge_half_sub_error", "status": "compiled", "role": "Quantitative two-environment algebra with the cross-law pull discrepancy exposed as an error premise."},
+        {"name": "BanditRLProof.LowerBounds.max_base_changed_regretLowerBound_ge_half", "status": "compiled", "role": "Zero-error directional corollary of the quantitative algebra."}
+      ],
+      "dependency_nodes": [
+        {"id": "minimax", "label": "minimax / worst-case semantics", "status": "compiled"},
+        {"id": "budget", "label": "expected pull budget", "status": "compiled"},
+        {"id": "least", "label": "least-explored alternative", "status": "compiled"},
+        {"id": "algebra", "label": "two-environment algebra", "status": "compiled"},
+        {"id": "transport", "label": "same-policy history KL transport", "status": "planned"},
+        {"id": "theorem-13-1", "label": "Gaussian minimax terminal", "status": "planned"}
+      ],
+      "reading_path": [
+        "Read the source statement and its explicit Chapter 15 proof deferral.",
+        "Inspect the minimax definitions before the averaging lemma.",
+        "Check the Fin.succ indexing: source arms 2,…,k become Lean alternatives 0,…,m−1.",
+        "Read the quantitative algebra theorem and locate its visible cross-environment error premise.",
+        "Continue to Chapter 14 for KL and change-of-measure foundations."
+      ],
+      "gaps": [
+        "History-law likelihood ratio under the same adaptive policy.",
+        "Absolute-continuity and KL-direction contracts.",
+        "Event-level testing inequality and Gaussian KL computation.",
+        "Chapter 15 tuning and caller-free Theorem 13.1 terminal."
+      ]
+    },
+    {
+      "number": 14,
+      "slug": "chapter-14-information-theory",
+      "title": "Foundations of Information Theory",
+      "status": "planned",
+      "status_note": "Source audit and exact Lean target freeze begin only after the Chapter 13 gate closes.",
+      "print_pages": "186–197",
+      "pdf_pages": "195–206",
+      "sections": ["§14.1 Entropy and Optimal Coding", "§14.2 Relative Entropy", "§14.3–14.5 notes, bibliography, and exercises"],
+      "learning_goals": ["Define entropy and relative entropy with endpoint conventions.", "Establish direction-correct information inequalities needed by change of measure.", "Record absolute-continuity and measurability assumptions explicitly."],
+      "definitions": [{"name": "Information-theoretic foundation", "math": "D(P\\Vert Q)=\\int \\log\\!\\left(\\frac{dP}{dQ}\\right)dP.", "fallback": "Relative entropy measures the information cost of replacing Q by P when P is absolutely continuous with respect to Q.", "status": "planned"}],
+      "flow": {"title": "Planned information route", "kind": "proof pseudocode", "steps": [{"title": "Freeze definitions", "detail": "Choose exact measure-theoretic entropy and KL surfaces."}, {"title": "Expose regularity", "detail": "State absolute continuity, integrability, and endpoint behavior."}, {"title": "Prove testing adapters", "detail": "Connect measure KL to event-level binary information."}]},
+      "source_boundary": "No Chapter 14 theorem has yet passed a local Lean gate. Existing Bernoulli-KL declarations are reusable evidence, not a completed Chapter 14 formalization.",
+      "lean_correspondence": [],
+      "dependency_nodes": [{"id": "kl", "label": "measure-level KL", "status": "planned"}, {"id": "binary", "label": "binary/event KL", "status": "planned"}, {"id": "history", "label": "history change of measure", "status": "planned"}],
+      "reading_path": ["Audit §14.1–14.2 against current Mathlib APIs.", "Freeze endpoint and absolute-continuity conventions.", "Open the smallest reusable information leaves."],
+      "gaps": ["Exact Mathlib API retrieval is pending.", "No history-law KL chain rule is compiled locally."]
+    },
+    {
+      "number": 15,
+      "slug": "chapter-15-minimax-lower-bounds",
+      "title": "Minimax Lower Bounds",
+      "status": "planned",
+      "status_note": "The chapter will consume Chapters 13–14 only after its own source target and constants are frozen.",
+      "print_pages": "198–205",
+      "pdf_pages": "207–214",
+      "sections": ["§15.1 Relative Entropy Between Bandits", "§15.2 Minimax Lower Bounds", "§15.3–15.5 notes, bibliography, and exercises"],
+      "learning_goals": ["Lift arm-level KL to adaptive bandit histories.", "Construct finite-arm testing instances.", "Close the source-stated Gaussian minimax lower bound without hidden policy changes."],
+      "definitions": [{"name": "Bandit-history divergence", "math": "D(\\mathbb P_{\\nu,\\pi}^{(n)}\\Vert\\mathbb P_{\\nu',\\pi}^{(n)}).", "fallback": "The divergence compares n-round histories generated by the same policy in two environments.", "status": "planned"}],
+      "flow": {"title": "Planned minimax route", "kind": "proof pseudocode", "steps": [{"title": "Choose alternatives", "detail": "Use the Chapter 13 least-explored arm."}, {"title": "Control history divergence", "detail": "Apply the Chapter 14 same-policy KL chain rule."}, {"title": "Test and tune", "detail": "Convert indistinguishability into regret and choose Delta."}]},
+      "source_boundary": "The exact Chapter 15 theorem list and constants have not yet been frozen; Theorem 13.1 remains planned until a caller-free local terminal compiles.",
+      "lean_correspondence": [],
+      "dependency_nodes": [{"id": "ch13", "label": "Chapter 13 deterministic spine", "status": "partial"}, {"id": "ch14", "label": "Chapter 14 information theory", "status": "planned"}, {"id": "minimax", "label": "Gaussian minimax terminal", "status": "planned"}],
+      "reading_path": ["Read §15.1 before §15.2.", "Audit policy consistency and KL direction.", "Verify the exact universal-constant quantifier order."],
+      "gaps": ["Chapter 14 information bridge.", "Gaussian environment construction and tuning.", "Caller-free minimax terminal."]
+    },
+    {
+      "number": 16,
+      "slug": "chapter-16-instance-dependent",
+      "title": "Instance-Dependent Lower Bounds",
+      "status": "planned",
+      "status_note": "No local Chapter 16 endpoint is claimed.",
+      "print_pages": "206–214",
+      "pdf_pages": "215–223",
+      "sections": ["§16.1 Asymptotic Bounds", "§16.2 Finite-Time Bounds", "§16.3–16.5 notes, bibliography, and exercises"],
+      "learning_goals": ["State policy consistency without changing its quantifier strength.", "Derive instance-dependent information constraints.", "Separate asymptotic liminf extraction from finite-time bounds."],
+      "definitions": [{"name": "Asymptotic information constraint", "math": "\\liminf_{n\\to\\infty}\\frac{\\mathbb E_\\nu T_i(n)}{\\log n}\\,D(\\nu_i\\Vert\\nu_i')\\ge 1.", "fallback": "A consistent policy must gather logarithmically growing information against each confusing alternative.", "status": "planned"}],
+      "flow": {"title": "Planned instance-dependent route", "kind": "proof pseudocode", "steps": [{"title": "Choose a confusing alternative", "detail": "Change one suboptimal arm so that it becomes optimal."}, {"title": "Apply information constraints", "detail": "Relate pull counts to the alternative's KL cost."}, {"title": "Extract the regret order", "detail": "Combine counts with gaps and take the required liminf."}]},
+      "source_boundary": "The displayed formula is a route preview, not a frozen local theorem. Exact source theorem numbers, model class, consistency definition, and KL direction require the Chapter 16 audit.",
+      "lean_correspondence": [],
+      "dependency_nodes": [{"id": "consistency", "label": "policy consistency", "status": "planned"}, {"id": "information", "label": "instance information constraints", "status": "planned"}, {"id": "asymptotic", "label": "liminf regret extraction", "status": "planned"}],
+      "reading_path": ["Freeze the source consistency definition.", "Audit all quantifiers over environments and alternatives.", "Separate finite-time and asymptotic terminals."],
+      "gaps": ["Exact consistency interface.", "Asymptotic filter/liminf APIs.", "Finite-time variant."]
+    },
+    {
+      "number": 17,
+      "slug": "chapter-17-high-probability",
+      "title": "High-Probability Lower Bounds",
+      "status": "planned",
+      "status_note": "No local Chapter 17 endpoint is claimed.",
+      "print_pages": "215–221",
+      "pdf_pages": "224–230",
+      "sections": ["§17.1 Stochastic Bandits", "§17.2 Adversarial Bandits", "§17.3–17.5 notes, bibliography, and exercises"],
+      "learning_goals": ["Distinguish expected lower bounds from tail lower bounds.", "Track the probability level and event direction exactly.", "Separate stochastic and adversarial constructions."],
+      "definitions": [{"name": "High-probability regret obstruction", "math": "\\mathbb P_\\nu\\{R_n\\ge b(n,k,\\delta)\\}\\ge\\delta.", "fallback": "A lower-tail theorem exhibits an environment where regret exceeds a threshold with at least the stated probability.", "status": "planned"}],
+      "flow": {"title": "Planned high-probability route", "kind": "proof pseudocode", "steps": [{"title": "Choose the hard family", "detail": "Freeze the stochastic or adversarial construction."}, {"title": "Control testing error", "detail": "Use a direction-correct information or packing inequality."}, {"title": "Translate error to regret", "detail": "Name the regret event and retain the exact probability level."}]},
+      "source_boundary": "The threshold, probability range, and stochastic/adversarial theorem contracts are not yet frozen; the formula is a status-labeled route shape only.",
+      "lean_correspondence": [],
+      "dependency_nodes": [{"id": "testing", "label": "testing/packing", "status": "planned"}, {"id": "stochastic", "label": "stochastic tail lower bound", "status": "planned"}, {"id": "adversarial", "label": "adversarial tail lower bound", "status": "planned"}],
+      "reading_path": ["Audit §17.1 and §17.2 separately.", "Freeze the exact event and probability direction.", "Reuse only compiled Chapter 14–16 leaves."],
+      "gaps": ["Exact source target extraction.", "Testing/packing infrastructure.", "Tail-event and probability calibration."]
+    }
+  ]
+}

@@ -35,6 +35,7 @@ import BanditRLProof.ExpectationSums
 import BanditRLProof.ExpectationBochnerSums
 import BanditRLProof.ExpectationRegretPullCount
 import BanditRLProof.RealMeanRegretPullCount
+import BanditRLProof.LowerBounds.BasicIdeas
 import BanditRLProof.RealKernelRegretPullCount
 import BanditRLProof.ExpectationPullCount
 import BanditRLProof.ExpectationWeightedPullCount

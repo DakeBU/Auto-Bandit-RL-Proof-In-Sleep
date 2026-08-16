@@ -1,0 +1,28 @@
+flowchart LR
+  C13["Chapter 13 · basic ideas<br/>partial: deterministic leaves compiled"]
+  C14["Chapter 14 · information theory<br/>planned"]
+  C15["Chapter 15 · minimax lower bounds<br/>planned"]
+  C16["Chapter 16 · instance-dependent bounds<br/>planned"]
+  C17["Chapter 17 · high-probability bounds<br/>planned"]
+  L13["minimax semantics<br/>least-explored arm<br/>two-environment algebra"]
+  KL["relative entropy<br/>binary/event KL<br/>history change of measure"]
+  MM["testing and tuning<br/>Gaussian minimax terminal"]
+  ASY["policy consistency<br/>liminf extraction"]
+  HP["stochastic/adversarial<br/>tail events"]
+
+  L13 --> C13
+  C13 --> C14
+  C14 --> KL
+  KL --> C15
+  C15 --> MM
+  MM --> C16
+  C16 --> ASY
+  ASY --> C17
+  C17 --> HP
+
+  classDef compiled fill:#dff5e7,stroke:#247249,color:#123b29
+  classDef partial fill:#fff2cc,stroke:#9a6b00,color:#563c00
+  classDef planned fill:#eef2f7,stroke:#64748b,color:#334155
+  class L13 compiled
+  class C13 partial
+  class C14,C15,C16,C17,KL,MM,ASY,HP planned

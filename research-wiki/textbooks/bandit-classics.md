@@ -11,6 +11,26 @@ are source-routing cards, not local proof certificates.
 | `TXT-LATTIMORE-SZEPESVARI-2020` | [Lattimore and Szepesvári, 2020](https://tor-lattimore.com/downloads/book/book.pdf) | Main textbook spine for concentration, finite stochastic bandits, adversarial bandits, lower bounds, contextual and linear bandits. | ETC, UCB, MOSS, KL-UCB, EXP3, LinUCB/OFUL |
 | `TXT-SLIVKINS-2019-2024` | [Slivkins, 2019](https://arxiv.org/abs/1904.07272) | Broad teaching-oriented tree covering IID rewards, Bayesian priors, Lipschitz/contextual/adversarial bandits, knapsacks, and agents. | Bayesian regret, similarity bandits, BwK, incentive-compatible exploration |
 
+## Lattimore--Szepesvári Part IV Source Theorem Cards
+
+Canonical edition for these cards: Tor Lattimore and Csaba Szepesvári,
+*Bandit Algorithms*, Cambridge University Press, 2020,
+[DOI 10.1017/9781108571401](https://doi.org/10.1017/9781108571401),
+[official author PDF](https://tor-lattimore.com/downloads/book/book.pdf). Printed
+and PDF page numbers are recorded separately because the front matter shifts
+the PDF counter. These are source-routing cards, never local proof evidence.
+
+| Card | Exact source window | Conservative target | Local status |
+| --- | --- | --- | --- |
+| `TXT-LS-2020-CH13-MINIMAL-SOURCE-CHANGE` | Ch. 13, §13.1, printed pp. 181--182 / PDF pp. 190--191 | least-explored alternative-arm averaging; base and one-coordinate-changed regret expressions; the cross-law expectations are only heuristically close in this chapter | compiled semantic, averaging, and quantitative error-bearing algebra leaves; no history-law comparison |
+| `TXT-LS-2020-THM-13-1` | Ch. 13, Thm. 13.1, printed p. 180 / PDF p. 189; proof explicitly deferred to Ch. 15 | for `k>1`, `n>=k`, unit-variance Gaussian arms with mean vector in `[0,1]^k`, a universal positive constant gives minimax regret of order at least `sqrt(k n)` | source-stated / planned; no local declaration is presented as this theorem |
+
+The Chapter 13 conversion window is
+[`conversion-windows/TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE.md`](../../conversion-windows/TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE.md).
+Chapters 14--17 receive their own theorem cards only after their exact source
+contracts have been re-read and frozen; the website's future-chapter entries
+are navigation-level planned mappings, not frozen theorem statements.
+
 ## Paper Bridge Layer
 
 Textbooks provide the main spine; individual algorithm and frontier routes use

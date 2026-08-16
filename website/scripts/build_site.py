@@ -41,11 +41,12 @@ PAPER_TITLE = (
 PRIMARY_TEXTBOOK_TITLE = "Bandit Algorithms"
 PRIMARY_TEXTBOOK_AUTHORS = "Tor Lattimore and Csaba Szepesvári"
 PRIMARY_TEXTBOOK_URL = "https://tor-lattimore.com/downloads/book/book.pdf"
-ASSET_VERSION = "20260815c"
+ASSET_VERSION = "20260816a"
 SOURCE_BRANCH = "main"
 PUBLIC_BASE_URL = ""
 SITE_CHAPTERS: list[dict[str, Any]] = []
 SITE_READINGS: dict[str, dict[str, Any]] = {}
+SITE_TEXTBOOK_SPINE: dict[str, Any] = {}
 
 STATUS_LABELS = {
     "compiled": "Compiled",
@@ -529,6 +530,17 @@ def layout(
         book_link(index, chapter)
         for index, chapter in enumerate(SITE_CHAPTERS, start=1)
     )
+    def spine_link(chapter: dict[str, Any]) -> str:
+        target = f"textbook-spine/{chapter['slug']}/index.html"
+        active = ' aria-current="page"' if page_path == target else ""
+        return (
+            f'<a class="spine-nav-link" href="{href_from(page_path, target)}"{active}>'
+            f'<span>{chapter["number"]}</span>{html.escape(chapter["title"])}</a>'
+        )
+
+    spine_nav = nav_links(
+        [("textbook-spine", "Part IV overview", "textbook-spine/index.html")]
+    ) + "".join(spine_link(chapter) for chapter in SITE_TEXTBOOK_SPINE.get("chapters", []))
     toc_html = (
         '<aside class="side-nav" aria-label="On this page"><strong>On this page</strong>'
         + "".join(
@@ -591,6 +603,7 @@ def layout(
     <nav class="sidebar-nav" aria-label="Primary">
       <div class="nav-group"><strong class="nav-group-title">Start</strong>{start_nav}</div>
       <div class="nav-group book-map-nav"><strong class="nav-group-title">Learn · Book map</strong>{book_nav}</div>
+      <div class="nav-group textbook-spine-nav"><strong class="nav-group-title">Textbook spine · Part IV</strong>{spine_nav}</div>
       <div class="nav-group"><strong class="nav-group-title">Library</strong>{library_nav}</div>
       <div class="nav-group"><strong class="nav-group-title">Formalize</strong>{formalize_nav}</div>
       <div class="nav-group"><strong class="nav-group-title">Community</strong>{community_nav}</div>
@@ -679,6 +692,237 @@ def render_book_map(
 </a>"""
         )
     return '<div class="book-map-grid">' + "".join(cards) + "</div>"
+
+
+def effective_evidence_status(status: str, verified: bool) -> str:
+    """Never render a local compiled claim in an unverified preview build."""
+    return status if status != "compiled" or verified else "source"
+
+
+def render_textbook_spine_map(
+    page_path: str,
+    spine: dict[str, Any],
+    verified: bool,
+) -> str:
+    cards = []
+    for chapter in spine["chapters"]:
+        route = f"textbook-spine/{chapter['slug']}/index.html"
+        cards.append(
+            f"""
+<a class="spine-chapter-card" href="{href_from(page_path, route)}">
+  <span class="spine-chapter-number">Chapter {chapter['number']}</span>
+  <span class="spine-chapter-status">{status_badge(effective_evidence_status(chapter['status'], verified))}</span>
+  <strong>{html.escape(chapter['title'])}</strong>
+  <span>{html.escape(chapter['print_pages'])} print · {html.escape(chapter['pdf_pages'])} PDF</span>
+  <p>{html.escape(chapter['status_note'])}</p>
+  <span class="spine-chapter-arrow" aria-hidden="true">→</span>
+</a>"""
+        )
+    return '<div class="textbook-spine-grid">' + "".join(cards) + "</div>"
+
+
+def validate_textbook_spine(
+    spine: dict[str, Any],
+    decl_by_name: dict[str, dict[str, Any]],
+) -> None:
+    source = spine.get("canonical_source", {})
+    if source.get("official_url") != PRIMARY_TEXTBOOK_URL:
+        raise ValueError("textbook spine must use the official author-hosted PDF")
+    if source.get("doi") != "10.1017/9781108571401":
+        raise ValueError("textbook spine DOI is not the canonical CUP identifier")
+    chapters = spine.get("chapters", [])
+    if [chapter.get("number") for chapter in chapters] != list(range(13, 18)):
+        raise ValueError("textbook spine chapters must be ordered exactly 13 through 17")
+    if len({chapter.get("slug") for chapter in chapters}) != len(chapters):
+        raise ValueError("textbook spine chapter slugs must be unique")
+    for chapter in chapters:
+        if chapter.get("status") not in STATUS_LABELS:
+            raise ValueError(f"unknown textbook spine status: {chapter.get('status')}")
+        for item in chapter.get("lean_correspondence", []):
+            if item.get("status") == "compiled" and item.get("name") not in decl_by_name:
+                raise ValueError(
+                    f"compiled textbook spine declaration is not indexed: {item.get('name')}"
+                )
+        if chapter["number"] > 13 and chapter.get("status") == "compiled":
+            raise ValueError("future Part IV chapters cannot be promoted before their gates")
+
+
+def build_textbook_spine(
+    output: Path,
+    spine: dict[str, Any],
+    decl_by_name: dict[str, dict[str, Any]],
+    verified: bool,
+    generated_at: str,
+) -> None:
+    source = spine["canonical_source"]
+    landing_path = "textbook-spine/index.html"
+    landing_body = f"""
+<section class="hero" id="spine">
+  <p class="eyebrow">Canonical textbook sequence</p>
+  <h1 class="page-title">{html.escape(spine['title'])}</h1>
+  <p class="lede">{html.escape(spine['summary'])}</p>
+  <div class="callout warning"><strong>Scope boundary.</strong> This is a separate chapter-by-chapter lower-bound spine. The existing ten-chapter Book Map remains a curated curriculum and is not relabeled as a completed formalization of the entire book.</div>
+</section>
+
+<section id="source">
+  <h2>Canonical source</h2>
+  <article class="source-card spine-source-card">
+    <span class="panel-kicker">{html.escape(source['part'])}</span>
+    <h3>{html.escape(source['title'])}</h3>
+    <p>{html.escape(source['authors'])}</p>
+    <dl>
+      <div><dt>Edition</dt><dd>{html.escape(source['edition'])}</dd></div>
+      <div><dt>Publisher</dt><dd>{html.escape(source['publisher'])}, {source['year']}</dd></div>
+      <div><dt>DOI</dt><dd><a href="{html.escape(source['doi_url'], quote=True)}">{html.escape(source['doi'])}</a></dd></div>
+    </dl>
+    <a class="button compact" href="{html.escape(source['official_url'], quote=True)}">Open the formal PDF <span aria-hidden="true">↗</span></a>
+  </article>
+</section>
+
+<section id="chapters">
+  <h2>Chapters 13–17</h2>
+  <p class="section-intro">Work advances in source order. A chapter can expose compiled leaves while its broader source theorem remains partial or planned.</p>
+  {render_textbook_spine_map(landing_path, spine, verified)}
+</section>
+
+<section id="dependencies">
+  <h2>Part IV dependency spine</h2>
+  <p>The graph is a route map, not proof evidence. Each chapter page names the declarations and missing bridges that determine its status.</p>
+  {render_diagram(landing_path, 'part-iv-lower-bounds.mmd', 'Part IV finite-arm lower-bound dependency spine')}
+</section>
+"""
+    write_page(
+        output,
+        landing_path,
+        layout(
+            landing_path,
+            spine["title"],
+            landing_body,
+            [("spine", "Textbook spine"), ("source", "Canonical source"),
+             ("chapters", "Chapters 13–17"), ("dependencies", "Dependencies")],
+            "textbook-spine",
+            verified,
+            generated_at,
+        ),
+    )
+
+    for chapter in spine["chapters"]:
+        page_path = f"textbook-spine/{chapter['slug']}/index.html"
+        sections = render_list(chapter["sections"])
+        goals = render_list(chapter["learning_goals"])
+        definitions = "".join(
+            f"""
+<article class="spine-definition-card">
+  <div class="spine-card-heading"><h3>{html.escape(item['name'])}</h3>{status_badge(effective_evidence_status(item['status'], verified))}</div>
+  {render_math_statement(item['name'], item['math'], item['fallback'])}
+</article>"""
+            for item in chapter["definitions"]
+        )
+        steps = "".join(
+            f'<li><span class="algorithm-step-number" aria-hidden="true">{index:02d}</span>'
+            f'<div><strong>{html.escape(step["title"])}</strong><p>{html.escape(step["detail"])}</p></div></li>'
+            for index, step in enumerate(chapter["flow"]["steps"], start=1)
+        )
+        source_theorem = chapter.get("source_theorem")
+        if source_theorem:
+            theorem_html = f"""
+<article class="source-theorem-card spine-theorem-card">
+  <div class="source-theorem-heading"><div><span class="panel-kicker">Source theorem · faithful restatement</span><h3>{html.escape(source_theorem['label'])}</h3></div>{status_badge(effective_evidence_status(source_theorem['status'], verified))}</div>
+  <p>{html.escape(source_theorem['plain'])}</p>
+  {render_math_statement(source_theorem['label'], source_theorem['math'], source_theorem['fallback'])}
+  <div class="callout warning"><strong>Lean boundary.</strong> {html.escape(source_theorem['boundary'])}</div>
+</article>"""
+        else:
+            theorem_html = (
+                '<div class="callout warning source-boundary"><strong>Source target pending.</strong> '
+                + html.escape(chapter["source_boundary"])
+                + "</div>"
+            )
+        correspondence_rows = []
+        for item in chapter.get("lean_correspondence", []):
+            declaration = decl_by_name.get(item["name"])
+            name_html = f"<code>{html.escape(item['name'])}</code>"
+            statement_html = "No local declaration is indexed."
+            if declaration:
+                name_html = (
+                    f'<a href="{declaration_href(page_path, declaration)}">'
+                    f'<code>{html.escape(item["name"])}</code></a>'
+                )
+                statement_html = (
+                    '<details><summary>Exact compact Lean statement</summary>'
+                    f'<pre class="lean-code"><code>{html.escape(declaration["statement"])}</code></pre></details>'
+                )
+            correspondence_rows.append(
+                f"""
+<tr><td>{name_html}</td><td>{status_badge(effective_evidence_status(item['status'], verified))}</td><td>{html.escape(item['role'])}{statement_html}</td></tr>"""
+            )
+        correspondence_html = (
+            '<div class="table-wrap" tabindex="0" role="region" aria-label="Lean correspondence">'
+            '<table><thead><tr><th>Lean declaration</th><th>Status</th><th>Role and exact type</th></tr></thead>'
+            f'<tbody>{"".join(correspondence_rows)}</tbody></table></div>'
+            if correspondence_rows
+            else '<p class="empty">No local Lean declaration is claimed for this planned chapter.</p>'
+        )
+        dependency_html = "".join(
+            f'<article class="spine-dependency-node"><code>{html.escape(node["id"])}</code>'
+            f'<strong>{html.escape(node["label"])}</strong>'
+            f'{status_badge(effective_evidence_status(node["status"], verified))}</article>'
+            for node in chapter["dependency_nodes"]
+        )
+        body = f"""
+<section class="hero spine-chapter-hero" id="chapter">
+  <p class="eyebrow">{html.escape(source['part'])}</p>
+  <h1 class="page-title">Chapter {chapter['number']}: {html.escape(chapter['title'])}</h1>
+  <p class="lede">{html.escape(chapter['status_note'])}</p>
+  <div class="spine-chapter-meta">{status_badge(effective_evidence_status(chapter['status'], verified))}<span>Printed pp. {html.escape(chapter['print_pages'])}</span><span>PDF pp. {html.escape(chapter['pdf_pages'])}</span></div>
+</section>
+
+<section id="source">
+  <h2>Source map</h2>
+  <p><cite>{html.escape(source['title'])}</cite>, {html.escape(source['authors'])}, {html.escape(source['publisher'])} ({source['year']}), DOI <a href="{html.escape(source['doi_url'], quote=True)}">{html.escape(source['doi'])}</a>.</p>
+  {sections}
+  <p><a class="button compact" href="{html.escape(source['official_url'], quote=True)}">Open the formal PDF <span aria-hidden="true">↗</span></a></p>
+</section>
+
+<section id="goals"><h2>Learning goals</h2>{goals}</section>
+
+<section id="definitions"><h2>Necessary definitions and statements</h2><div class="spine-definition-grid">{definitions}</div></section>
+
+<section id="flow" class="algorithm-panel">
+  <div><span class="panel-kicker">{html.escape(chapter['flow']['kind'])}</span><h2>{html.escape(chapter['flow']['title'])}</h2></div>
+  <ol class="algorithm-flow">{steps}</ol>
+</section>
+
+<section id="source-theorem"><h2>Key source theorem and boundary</h2>{theorem_html}</section>
+
+<section id="lean"><h2>Lean correspondence</h2><p>Only declarations that exist in the current index and pass the verified build may render as compiled.</p>{correspondence_html}</section>
+
+<section id="dependencies"><h2>Dependency graph</h2><div class="spine-dependency-grid">{dependency_html}</div></section>
+
+<section id="reading"><h2>Reading path</h2>{render_list(chapter['reading_path'])}</section>
+
+<section id="gaps"><h2>Strict status and remaining gaps</h2>{render_list(chapter['gaps'])}</section>
+"""
+        toc = [
+            ("chapter", f"Chapter {chapter['number']}"), ("source", "Source map"),
+            ("goals", "Learning goals"), ("definitions", "Definitions"),
+            ("flow", "Proof flow"), ("source-theorem", "Source theorem"),
+            ("lean", "Lean correspondence"), ("dependencies", "Dependencies"),
+            ("reading", "Reading path"), ("gaps", "Status and gaps"),
+        ]
+        write_page(
+            output,
+            page_path,
+            layout(
+                page_path,
+                f"Chapter {chapter['number']}: {chapter['title']}",
+                body,
+                toc,
+                "textbook-spine",
+                verified,
+                generated_at,
+            ),
+        )
 
 
 def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[str, Any]) -> str:
@@ -841,6 +1085,7 @@ def build_index(
     status_counts = Counter(result["status"] for result in results)
     placeholder_count = sum(1 for decl in declarations if decl["placeholder"])
     book_map = render_book_map(page_path, chapters)
+    textbook_spine_map = render_textbook_spine_map(page_path, SITE_TEXTBOOK_SPINE, verified)
     contributor_cards = render_contributor_cards(page_path, authors, include_invitation=False)
     primary_textbook = render_primary_textbook_banner()
     body = f"""
@@ -918,6 +1163,14 @@ def build_index(
   {book_map}
 </section>
 
+<section id="textbook-spine">
+  <p class="eyebrow">Chapter-by-chapter source spine</p>
+  <h2>Part IV: Lower Bounds</h2>
+  <p class="section-intro">This separate layer follows Chapters 13–17 of <em>Bandit Algorithms</em> in order. It does not change the ten-chapter Book Map or imply that the whole textbook is complete.</p>
+  {textbook_spine_map}
+  <p><a class="button" href="{href_from(page_path, 'textbook-spine/index.html')}">Open the Part IV spine</a></p>
+</section>
+
 <section id="contributors">
   <p class="eyebrow">People behind the project</p>
   <h2>Authors</h2>
@@ -978,6 +1231,7 @@ python3 tools/bandit.py check</code></pre></article>
         ("live-inventory", "Live inventory"),
         ("purpose", "Project purpose"),
         ("book-map", "Book map"),
+        ("textbook-spine", "Part IV spine"),
         ("contributors", "Contributors"),
         ("installation", "Installation"),
         ("how-to-contribute", "How to contribute"),
@@ -1015,6 +1269,22 @@ def build_implementation_map(
         ) or "No recorded prerequisite milestone."
         missing = "<br>".join(html.escape(item) for item in result["missing"]) or "No remaining gap inside this milestone contract."
         chapter = chapter_by_slug[result["chapter"]]
+        chapter_href = href_from(page_path, f"chapters/{chapter['slug']}/index.html")
+        chapter_cell = (
+            f'<a href="{chapter_href}">{html.escape(chapter["short_title"])}</a>'
+        )
+        if result.get("textbook_spine"):
+            spine_chapter = next(
+                item for item in SITE_TEXTBOOK_SPINE["chapters"]
+                if item["slug"] == result["textbook_spine"]
+            )
+            spine_href = href_from(
+                page_path, f"textbook-spine/{spine_chapter['slug']}/index.html"
+            )
+            chapter_cell = (
+                f'<a href="{spine_href}">'
+                f'Part IV · Chapter {spine_chapter["number"]}</a>'
+            )
         search = html.escape(
             f"{result['id']} {result['title']} {result['informal']} {chapter['short_title']}".lower(),
             quote=True,
@@ -1023,7 +1293,7 @@ def build_implementation_map(
             f"""
 <tr id="{slugify(result['id'])}" data-milestone-row data-search="{search}" data-status="{html.escape(result['status'])}" data-chapter="{html.escape(result['chapter'])}">
   <td><a href="#{slugify(result['id'])}">{html.escape(result['title'])}</a><br><code>{html.escape(result['id'])}</code></td>
-  <td><a href="{href_from(page_path, f"chapters/{chapter['slug']}/index.html")}">{html.escape(chapter['short_title'])}</a></td>
+  <td>{chapter_cell}</td>
   <td>{status_badge(result['status'])}</td>
   <td class="milestone-evidence"><p>{html.escape(result['informal'])}</p><details><summary>Lean evidence and boundary</summary><dl><div><dt>Declarations</dt><dd>{"<br>".join(declaration_links) if declaration_links else "No local declaration yet"}</dd></div><div><dt>Depends on</dt><dd>{dependencies}</dd></div><div><dt>Remaining gap</dt><dd>{missing}</dd></div></dl></details></td>
 </tr>"""
@@ -1430,6 +1700,7 @@ def build_learning(
 ) -> None:
     page_path = "learning/index.html"
     cards = render_book_map(page_path, chapters, detailed=True)
+    textbook_spine_map = render_textbook_spine_map(page_path, SITE_TEXTBOOK_SPINE, verified)
     primary_textbook = render_primary_textbook_banner()
     body = f"""
 <section class="hero" id="learning">
@@ -1461,8 +1732,15 @@ def build_learning(
   <p class="section-intro">The main spine is Lattimore and Szepesvári's <em>Bandit Algorithms</em>. OFUL, Tsallis-INF, and UCBVI add their original papers. Online-edition pages are shown on every chapter card; the source pages themselves explain the exact algorithms and full assumptions.</p>
   {cards}
 </section>
+
+<section id="textbook-spine">
+  <p class="eyebrow">Canonical source sequence</p>
+  <h2>Part IV: Lower Bounds</h2>
+  <p class="section-intro">Use this separate spine when you want the exact textbook order and page mapping for Chapters 13–17. Status is per chapter and per Lean declaration.</p>
+  {textbook_spine_map}
+</section>
 """
-    toc = [("learning", "Reading guide"), ("primary-textbook", "Primary textbook"), ("path", "Recommended path"), ("lean-translation", "Lean ideas"), ("book-map", "Book map")]
+    toc = [("learning", "Reading guide"), ("primary-textbook", "Primary textbook"), ("path", "Recommended path"), ("lean-translation", "Lean ideas"), ("book-map", "Book map"), ("textbook-spine", "Part IV spine")]
     write_page(
         output,
         page_path,
@@ -2241,7 +2519,7 @@ def main() -> int:
         help="build a public snapshot whose private source links use the explicit source-access page",
     )
     args = parser.parse_args()
-    global PUBLIC_BASE_URL, SITE_CHAPTERS, SITE_READINGS, SOURCE_BRANCH
+    global PUBLIC_BASE_URL, SITE_CHAPTERS, SITE_READINGS, SITE_TEXTBOOK_SPINE, SOURCE_BRANCH
     PUBLIC_BASE_URL = args.public_base_url.rstrip("/")
     source_commit, source_dirty = git_source_state()
     SOURCE_BRANCH = source_commit or "main"
@@ -2254,6 +2532,8 @@ def main() -> int:
     authors = people["authors"]
     community_contributors = people.get("community_contributors", [])
     SITE_CHAPTERS = chapters
+    textbook_spine = load_json(CONTENT_DIR / "textbook_spine.json")
+    SITE_TEXTBOOK_SPINE = textbook_spine
     highlights = load_json(CONTENT_DIR / "highlights.json")["highlights"]
     results = load_json(CONTENT_DIR / "results.json")["results"]
     readings_payload = load_json(CONTENT_DIR / "readings.json")
@@ -2271,6 +2551,7 @@ def main() -> int:
     assign_chapters(modules, chapters)
     declarations = [decl for module in modules for decl in module["declarations"]]
     decl_by_name = validate_content(declarations, highlights, results)
+    validate_textbook_spine(textbook_spine, decl_by_name)
     module_by_name = {module["name"]: module for module in modules}
     chapter_by_slug = {chapter["slug"]: chapter for chapter in chapters}
     highlights_by_name = {item["full_name"]: item for item in highlights}
@@ -2321,6 +2602,13 @@ def main() -> int:
         args.lean_verified,
         generated_at,
     )
+    build_textbook_spine(
+        output,
+        textbook_spine,
+        decl_by_name,
+        args.lean_verified,
+        generated_at,
+    )
     build_module_pages(
         output,
         modules,
@@ -2361,6 +2649,10 @@ def main() -> int:
         "community_entry_count": 0,
         "reading_count": len(readings),
         "source_theorem_count": sum(1 for reading in readings if reading.get("source_theorem")),
+        "textbook_spine_chapter_count": len(textbook_spine["chapters"]),
+        "textbook_spine_status_counts": dict(
+            sorted(Counter(chapter["status"] for chapter in textbook_spine["chapters"]).items())
+        ),
         "max_module_slug_length": max(len(module["slug"]) for module in modules),
         "public_snapshot": bool(PUBLIC_BASE_URL),
         "public_base_url": PUBLIC_BASE_URL,

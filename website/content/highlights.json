@@ -844,6 +844,64 @@
       "proof_idea": "It is a structure definition. The default Lean gate later instantiates the acceptance condition with the repository's build command.",
       "lean_notes": "Inductive TaskStatus and TaskKind values make invalid status strings unrepresentable inside Lean-side harness data.",
       "dependencies": []
+    },
+    {
+      "full_name": "BanditRLProof.LowerBounds.minimaxExpectedRegret",
+      "chapter": "foundations",
+      "plain": "Minimax expected regret is the infimum, over an explicit policy class, of each policy's supremum expected regret over an explicit environment class.",
+      "math": "R^*(\\mathcal P,\\mathcal E)=\\inf_{\\pi\\in\\mathcal P}\\sup_{\\nu\\in\\mathcal E}R(\\pi,\\nu).",
+      "intuition": "A lower-bound theorem must defeat every admissible policy on at least one admissible environment; the two nested order operations make that quantifier order visible.",
+      "why": "Chapter 13 states its Gaussian theorem in minimax form, so later information-theoretic leaves need a stable semantic endpoint rather than an informal phrase.",
+      "position": "This is the order-theoretic root of the Part IV lower-bound spine and is separate from any Gaussian or KL construction.",
+      "proof_idea": "The definition uses ENNReal complete-lattice infimum and supremum over subtypes for the explicit policy and environment sets.",
+      "lean_notes": "The definitions retain standard empty-class lattice semantics. Intended bandit consumers must prove their policy and environment classes are nonempty; no boundedness assumption is hidden.",
+      "dependencies": [
+        "BanditRLProof.LowerBounds.worstCaseExpectedRegret"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.LowerBounds.exists_leastExploredAlternative",
+      "chapter": "foundations",
+      "plain": "In an m-plus-one-arm problem with arm zero distinguished, nonnegative expected pulls summing exactly to the horizon imply that some alternative arm is pulled no more than the alternative average n divided by m.",
+      "math": "\\sum_{a=0}^{m}\\mathbb E[T_a(n)]=n\\Longrightarrow\\exists i<m:\\mathbb E[T_{i+1}(n)]\\le n/m.",
+      "intuition": "The policy has only n pulls to distribute; after reserving the base arm, not every alternative can exceed the average alternative budget.",
+      "why": "Chapter 13 changes the source distribution of a lightly explored arm, making that change difficult for the policy to detect.",
+      "position": "It is the finite averaging leaf between the exact pull-count identity and the future two-history change-of-measure theorem.",
+      "proof_idea": "Split the full Fin (m+1) sum into arm zero plus the Fin.succ tail, use nonnegativity to bound the tail by n, then apply Mathlib's finite exists-le-average lemma to m copies of n/m.",
+      "lean_notes": "The source's one-based arms 2 through k are represented by i.succ for i : Fin m. The theorem assumes 0 < m, all expected pulls nonnegative, and the exact total identity; no probability law is hidden.",
+      "dependencies": [
+        "BanditRLProof.LowerBounds.exists_alternative_le_average",
+        "BanditRLProof.LowerBounds.alternativeExpectedPullBudget_le"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.LowerBounds.max_base_changed_regretLowerBound_ge_half_sub_error",
+      "chapter": "foundations",
+      "plain": "If the base-environment expected base-arm pulls exceed the changed-environment expectation by at most an explicit error, then one of the two Chapter 13 regret expressions is at least Delta times n minus that error, divided by two.",
+      "math": "x-y\\le\\varepsilon,\\ \\Delta\\ge0\\Longrightarrow\\frac{\\Delta(n-\\varepsilon)}{2}\\le\\max\\{\\Delta(n-x),\\Delta y\\}.",
+      "intuition": "The base environment punishes too few base-arm pulls and the changed environment punishes too many; an information theorem may lose a quantitative error without erasing the deterministic lower-bound structure.",
+      "why": "This matches the source's approximate cross-law comparison without turning approximation into equality or an unjustified direction.",
+      "position": "It is the Chapter 13 algebra interface that later history-law and testing inequalities can consume; the Gaussian minimax terminal remains planned for Chapters 14 and 15.",
+      "proof_idea": "Scale the explicit pull-discrepancy bound by the nonnegative gap, show the two lower expressions sum to at least Delta times n minus the error, and compare their maximum with half their sum.",
+      "lean_notes": "The discrepancy error is a visible Real-valued premise. The declaration proves no absolute continuity, KL bound, testing inequality, or Gaussian construction.",
+      "dependencies": [
+        "BanditRLProof.LowerBounds.baseEnvironmentRegret",
+        "BanditRLProof.LowerBounds.changedEnvironmentRegretLowerBound"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.LowerBounds.max_base_changed_regretLowerBound_ge_half",
+      "chapter": "foundations",
+      "plain": "If the changed-environment expected base-arm pulls are at least the base-environment expectation, then one Chapter 13 regret expression is at least Delta times n over two.",
+      "math": "x\\le y,\\ \\Delta\\ge0\\Longrightarrow\\frac{\\Delta n}{2}\\le\\max\\{\\Delta(n-x),\\Delta y\\}.",
+      "intuition": "This is the zero-error directional endpoint of the quantitative discrepancy theorem.",
+      "why": "It preserves a convenient special case while keeping the more realistic error-bearing bridge canonical.",
+      "position": "It is a corollary, not a change-of-measure theorem and not Theorem 13.1.",
+      "proof_idea": "Apply the quantitative theorem with error zero and rewrite the directional premise as a nonpositive difference.",
+      "lean_notes": "The cross-environment comparison remains an explicit premise; no statistical law comparison is hidden.",
+      "dependencies": [
+        "BanditRLProof.LowerBounds.max_base_changed_regretLowerBound_ge_half_sub_error"
+      ]
     }
   ]
 }
