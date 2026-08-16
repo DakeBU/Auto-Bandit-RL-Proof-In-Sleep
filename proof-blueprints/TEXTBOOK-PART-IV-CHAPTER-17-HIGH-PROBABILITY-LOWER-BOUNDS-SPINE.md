@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-17-HIGH-PROBABILITY-LOWER-BOUNDS-SPINE
 
-Generated: `2026-08-16T21:55:59+00:00`
+Generated: `2026-08-16T22:49:25+00:00`
 
 ## Source Task
 
@@ -10,7 +10,7 @@ Task id: `TEXTBOOK-PART-IV-CHAPTER-17-HIGH-PROBABILITY-LOWER-BOUNDS-SPINE`
 
 Kind: `theoremFormalization`
 
-Status: `partial`
+Status: `accepted`
 
 Harness: `hierarchical`
 
@@ -213,38 +213,16 @@ LowerBounds.clippingCount_ge_quarter_le_claim17_7
 
 The chapter stays `partial`. Claim 17.5 is compiled; Theorem 17.1,
 
-<!-- 3135 characters omitted from the middle of this snapshot. -->
+<!-- 4382 characters omitted from the middle of this snapshot. -->
 
-pseudo-regret into expected regret, or weaken a probability/constant.
-
-## Proof obligations
-
-- [x] Official edition, book/chapter DOI, stable author PDF, section titles,
-  and three-way pagination are recorded.
-- [x] Theorem 17.1, Corollaries 17.2--17.3, Theorem 17.4, Claims 17.5--17.7,
-  and Eq. (17.8) are frozen with exact quantifiers, event directions,
-  constants, and threshold placement.
-- [x] Existing Chapters 14--16 and Mathlib first-moment/outer-measure APIs are
-  audited.
-- [x] Exact tail-event and stochastic/adversarial threshold interfaces compile.
-- [x] Claim 17.5's first-moment content compiles with integrability explicit.
-- [x] The probability subtraction combining Claims 17.6--17.7 compiles.
-- [x] The quarter-horizon algebra following Eq. (17.8) compiles.
-- [ ] Lemma 15.1 or an equivalent source-faithful stochastic history
-  information constraint compiles.
-- [ ] Theorem 17.1 and Corollaries 17.2--17.3 compile.
-- [ ] The clipped-normal hard family, Claim 17.6, Eq. (17.8), Claim 17.7, and
-  Theorem 17.4 compile.
-- [x] Root import, focused module, expanded typed canary, axiom reports,
-  placeholder scan, exports, retrieval indexes, site build/check, desktop
-  browser, and independent read-only review pass locally.
 - [ ] Native Windows full `lake build` / `Tests` / harness pass. The current
   local run is blocked only by MAX_PATH while creating an existing unrelated
   long-named RL `.olean`; authoritative Linux PR CI is the required full gate.
-- [ ] Actual 390px mobile browser review passes. Synthetic local viewport
+- [x] Authoritative Linux PR and main full Lean/Tests/harness gates pass.
+- [x] Actual 390px mobile browser review passes. Synthetic local viewport
   injection was rejected by browser security policy, so this remains a
-  remote/live gate rather than a claimed local pass.
-- [ ] PR, authoritative-main Actions, Pages deployment, and live checks pass.
+  remote/live result rather than a claimed local pass.
+- [x] PR, authoritative-main Actions, Pages deployment, and live checks pass.
 
 ## Local verification evidence
 
@@ -254,7 +232,7 @@ pseudo-regret into expected regret, or weaken a probability/constant.
   `Classical.choice`, and `Quot.sound`.
 - `python3 tools/bandit.py check` reaches the full root build but Windows fails
   to create an existing unrelated long-named RL object file because of
-  MAX_PATH. No Chapter 17 target fails; Linux CI remains pending.
+  MAX_PATH. No Chapter 17 target fails; authoritative Linux CI passed below.
 - `python3 website/scripts/build_site.py --lean-verified`: passed with 563
   modules, 7415 declarations, and zero placeholders.
 - `python3 website/scripts/check_site.py`: passed with 591 pages, 14 Mermaid
@@ -268,9 +246,27 @@ pseudo-regret into expected regret, or weaken a probability/constant.
 
 ## Remote verification evidence
 
-Pending. Local compiled status must not be upgraded to remote acceptance until
-the PR build, authoritative-main build, Pages deployment, and live desktop and
-mobile page have all passed.
+- PR #17 passed `Lean and documentation / build` in run `31975031469`, job
+  `95233089033` (23m13s), and was merged without a direct push to `main`.
+- Merge commit: `eb41d9607cc5a46aa208572e3a6f05f291c82798`.
+- Authoritative-main run `31976153611` passed: build job `95235875154`
+  completed Lean, Tests, the lean-verified site, site checks, and Pages
+  artifact upload in 22m24s; deployment job `95238317293` passed in 12s.
+- Live page:
+  <https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/textbook-spine/chapter-17-high-probability/>.
+  Desktop 1280x720 and native mobile 390x844 inspections confirmed the
+  `2026-08-16T22:44:25+00:00` build, overall `PARTIAL` chapter status, CUP
+  print pp. 185--190 and physical-PDF pp. 224--230, all seven MathJax
+  displays, the compiled Claim 17.5/threshold/event-subtraction/Eq. (17.8)
+  algebra slice, the blocked Theorem 17.1 / Corollaries 17.2--17.3 / Theorem
+  17.4 terminals, and zero broken images. Browser metrics found no
+  document-level horizontal overflow at 390x844 (`375/375` client/scroll
+  width); the mobile TOC/sidebar and long MathJax displays retain intentional
+  local horizontal scrolling.
+
+Remote acceptance applies only to the scoped dependency slice. The chapter
+remains `partial`; the stochastic history-information route and the
+clipped-normal adversarial construction retain their recorded blocked status.
 
 ## Mathlib-ready leaf contract
 
@@ -464,10 +460,10 @@ hard-family averaging:
 | `CH17-EQ-17-8` | pathwise random-regret comparison | clipping construction | reserved terminal | source terminal | focused Lean | blocked |
 | `CH17-CLAIM-17-7` | clipping count tail at most `delta` | clipped Gaussian concentration | reserved terminal | source terminal | focused Lean | blocked |
 | `CH17-THEOREM-17-4` | deterministic adversarial witness | Claims 17.5--17.7 and Eq. (17.8) | reserved terminal | source terminal | focused Lean | blocked |
-| `CH17-TYPED-CANARY` | root-import applications and axiom reports | compiled slice | `Tests/TextbookPartIVChapter17Canary.lean` | project-local | Tests | compiled locally; Linux Tests pending |
-| `CH17-EVIDENCE-SITE` | all artifacts agree on partial/blocked boundary | scoped artifacts | repository artifacts | repository | full/site/browser | site and desktop passed; mobile/Linux pending |
+| `CH17-TYPED-CANARY` | root-import applications and axiom reports | compiled slice | `Tests/TextbookPartIVChapter17Canary.lean` | project-local | Tests | verified on Linux PR/main |
+| `CH17-EVIDENCE-SITE` | all artifacts agree on partial/blocked boundary | scoped artifacts | repository artifacts | repository | full/site/browser | site, desktop/mobile, Linux, and review passed |
 | `CH17-REVIEW` | regret notion/direction/quantifier/constants audit | all artifacts | review record | repository | read-only | passed after two P3 fixes |
-| `CH17-REMOTE` | PR, main Actions, Pages, live page | accepted local slice | pending | repository | deployment | pending |
+| `CH17-REMOTE` | PR, main Actions, Pages, live page | accepted local slice | PR #17; merge `eb41d96`; run `31976153611`; deploy `95238317293`; live desktop/mobile | repository | deployment | verified |
 
 ## Gaps
 
@@ -479,8 +475,8 @@ hard-family averaging:
 - [ ] Claim 17.6, construction-level Eq. (17.8), Claim 17.7, and Theorem 17.4.
 - [x] Focused Lean, root/canary short-path compile, site, desktop browser, and
   independent-review gates.
-- [ ] Full Linux Lean/Tests/harness and actual mobile browser gates.
-- [ ] PR, authoritative-main Actions, Pages deployment, and live-page gates.
+- [x] Full Linux Lean/Tests/harness and actual mobile browser gates.
+- [x] PR, authoritative-main Actions, Pages deployment, and live-page gates.
 
 
 ## Obligation Snapshot
@@ -515,9 +511,9 @@ Scenario cards: `SCN-STOCHASTIC-FINITE`, `SCN-ADVERSARIAL-FINITE`
 | `CH17-EQ-17-8` | construction-level pathwise regret comparison | clipped reward coordinates | finite sums/indicators | textbook/paper route | show chosen arm reward dominates except pull/clipping rounds | exact clipping map | source terminal | reserved | focused Lean | blocked |
 | `CH17-CLAIM-17-7` | clipping count tail at most `delta` | clipped Gaussian tails | concentration/finite union | `MLIB-PROBABILITY-SUBGAUSSIAN` | tail each boundary hit and sum/count | exact constants and horizon condition | missing concentration result | reserved | focused Lean | blocked |
 | `CH17-THM-17-4` | deterministic reward-matrix witness | Claims 17.5--17.7 and Eq. (17.8) | first moment and tuning | source/paper route | good-event subtraction, calibrate `Delta`, extract witness | universal constants and CDF law | source terminal | reserved | focused Lean | blocked |
-| `CH17-CANARY` | root-import typed applications and axiom reports | compiled slice | `BanditRLProof` root | local declarations | instantiate nontrivial threshold and probability leaves | no placeholders | project-local | `Tests/TextbookPartIVChapter17Canary.lean` | Tests | compiled locally; Linux Tests pending |
-| `CH17-SITE-REVIEW` | synchronized evidence/site and independent audit | all above | build/check/browser | repository | compare informal and Lean statements | no terminal promotion | repository | evidence artifacts | full/local | site/desktop/review passed; mobile/Linux pending |
-| `CH17-REMOTE` | PR, authoritative-main Actions, Pages, and live page | accepted local slice | GitHub workflow | repository | merge through PR and inspect deployed artifact | source terminals remain blocked | repository | remote evidence | deployment | pending |
+| `CH17-CANARY` | root-import typed applications and axiom reports | compiled slice | `BanditRLProof` root | local declarations | instantiate nontrivial threshold and probability leaves | no placeholders | project-local | `Tests/TextbookPartIVChapter17Canary.lean` | Tests | verified on Linux PR/main |
+| `CH17-SITE-REVIEW` | synchronized evidence/site and independent audit | all above | build/check/browser | repository | compare informal and Lean statements | no terminal promotion | repository | evidence artifacts | full/local | site, desktop/mobile, Linux, and review passed |
+| `CH17-REMOTE` | PR, authoritative-main Actions, Pages, and live page | accepted local slice | GitHub workflow | repository | merge through PR and inspect deployed artifact | source terminals remain blocked; PR #17; merge `eb41d96`; main run `31976153611`; deploy `95238317293`; live desktop/mobile | repository | remote evidence | deployment | verified |
 
 ## Failure classification
 
