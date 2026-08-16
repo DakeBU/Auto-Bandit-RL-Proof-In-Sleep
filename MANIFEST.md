@@ -13104,3 +13104,7 @@ here during local harness runs.
 - `2026-08-16T12:38:31+00:00` `bandit.py memory-refresh` `retrieval-index` `research-wiki/retrieval-index/TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE.json` - TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 - `2026-08-16T12:49:17+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE.md` - TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 - `2026-08-16T13:50:15+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE.md` - TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
+- `2026-08-16T14:40:48+00:00` `bandit.py new-task` `task` `tasks/TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE.md` - Textbook Part IV Chapter 15 minimax lower-bounds spine
+- `2026-08-16T14:59:44+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE.md` - TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE
+- `2026-08-16T14:59:49+00:00` `bandit.py memory-refresh` `retrieval-index` `research-wiki/retrieval-index/TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE.json` - TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE
+- `2026-08-16T15:00:21+00:00` `bandit.py export-proof` `proof-export` `paper-notes/problem-exports/TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE/latest.tex` - TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE
