@@ -9,11 +9,13 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 ## Source placement and status fence
 
 The canonical source is Lattimore--Szepesvári, *Bandit Algorithms*, CUP 2020,
-Part IV, Chapter 15, printed pp. 198--205 / PDF pp. 207--214. Lemma 15.1 is in
-§15.1, printed pp. 198--199 / PDF pp. 207--208. Theorem 15.2 and its proof are
-in §15.2, printed pp. 199--201 / PDF pp. 208--210. The lower-bound refinements
-in §§15.3--15.5 are mapped but are not silently promoted to the scoped
-Theorem 15.2 terminal.
+Part IV, Chapter 15, CUP print pp. 170--176 / author-online page labels
+198--205 / physical PDF pp. 207--214. Lemma 15.1 is in §15.1, CUP print
+pp. 170--171 / author-online pp. 198--199 / physical PDF pp. 207--208.
+Theorem 15.2 and its proof are in §15.2, CUP print pp. 171--173 /
+author-online pp. 199--201 / physical PDF pp. 208--210. The Notes,
+Bibliographic Remarks, and Exercises in §§15.3--15.5 are mapped but are not
+silently promoted to the scoped Theorem 15.2 terminal.
 
 The current compiled window contains exact Gaussian KL dependency leaves.
 Lemma 15.1 and Theorem 15.2 remain blocked pending the stochastic-policy
@@ -92,9 +94,9 @@ policies and supremum over this environment class.
 | `CH15-LEMMA-15-1` | exact expected-pull divergence decomposition | previous two nodes | reserved terminal | source terminal | focused Lean | blocked |
 | `CH15-TESTING-REGRET` | source event and two-environment regret bridge | Chapter 14 BH, pull identities | none | project-local | focused Lean | blocked |
 | `CH15-THEOREM-15-2` | exact Gaussian `1/27` existence and minimax result | all preceding nodes and tuning | reserved terminals | source terminal | focused Lean | blocked |
-| `CH15-TYPED-CANARY` | root-import applications and axiom reports for compiled slice | Gaussian leaves | future Chapter 15 canary | project-local | Tests | planned |
-| `CH15-EVIDENCE-SITE` | task/DAG/export/index/site agree on partial/blocked boundary | all scoped artifacts | repository artifacts | repository | full/site/browser | planned |
-| `CH15-REVIEW` | independent source/Lean/evidence audit | all artifacts | review record | repository | independent review | planned |
+| `CH15-TYPED-CANARY` | root-import applications and axiom reports for compiled slice | Gaussian leaves | `Tests/TextbookPartIVChapter15Canary.lean` | project-local | Tests | compiled |
+| `CH15-EVIDENCE-SITE` | task/DAG/export/index/site agree on partial/blocked boundary | all scoped artifacts | repository artifacts | repository | full/site/browser | verified locally |
+| `CH15-REVIEW` | independent source/Lean/evidence audit | all artifacts | `reviews/2026-08-17-textbook-part-iv-chapter-15-minimax-lower-bounds-spine.md` | repository | independent review | verified: no unresolved P0--P3 |
 | `CH15-REMOTE` | PR, main Actions, Pages, live desktop/mobile | accepted local partial chapter | GitHub workflow | repository | deployment | planned |
 
 ## Gaps

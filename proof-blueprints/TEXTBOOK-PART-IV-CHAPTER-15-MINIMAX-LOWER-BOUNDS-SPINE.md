@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE
 
-Generated: `2026-08-16T15:15:04+00:00`
+Generated: `2026-08-16T16:11:19+00:00`
 
 ## Source Task
 
@@ -29,18 +29,25 @@ repository has a stochastic-policy history law with the source semantics.
 - Book: *Bandit Algorithms*, Cambridge University Press, 2020.
 - DOI: <https://doi.org/10.1017/9781108571401>.
 - Formal author version: <https://tor-lattimore.com/downloads/book/book.pdf>.
-- Placement: Part IV, Chapter 15, printed pp. 198--205, PDF pp. 207--214.
-- Lemma 15.1: §15.1, printed pp. 198--199 / PDF pp. 207--208, Eq. (15.1).
-- Theorem 15.2: §15.2, printed pp. 199--201 / PDF pp. 208--210.
-- Further source mapping: §15.3 printed pp. 201--203 / PDF pp. 210--212;
-  §15.4 printed p. 203 / PDF p. 212; §15.5 printed pp. 203--205 / PDF
-  pp. 212--214.
+- Placement: Part IV, Chapter 15, CUP print pp. 170--176; author-online
+  page labels 198--205; physical PDF pp. 207--214.
+- Lemma 15.1: §15.1, CUP print pp. 170--171 / author-online pp. 198--199 /
+  physical PDF pp. 207--208, Eq. (15.1).
+- Theorem 15.2: §15.2, CUP print pp. 171--173 / author-online pp. 199--201 /
+  physical PDF pp. 208--210.
+- Further source mapping: §15.3 Notes, CUP print pp. 173--174 /
+  author-online pp. 201--203 / physical PDF pp. 210--212; §15.4
+  Bibliographic Remarks, CUP print p. 174 / author-online p. 203 / physical
+  PDF p. 212; §15.5 Exercises, CUP print pp. 174--176 / author-online
+  pp. 203--205 / physical PDF pp. 212--214.
 - Textbook card: `TXT-LATTIMORE-SZEPESVARI-2020`.
 - Scenario card: `SCN-STOCHASTIC-FINITE`.
 
-The author PDF records that its online edition has the same mathematical
-content as the print edition, apart from corrected typos, typography, and page
-numbering. Both printed and PDF pages are therefore retained above.
+The author PDF records that its free online edition has the same mathematical
+content as the print edition, apart from corrected minor typos and typography,
+and explicitly warns that the page numbers do not match. CUP first-edition
+print pages, author-online page labels, and physical PDF pages are therefore
+recorded separately above.
 
 ## Frozen source targets
 
@@ -155,9 +162,36 @@ the source terminal compiled.
   bound compile as numeric dependency leaves.
 - [ ] Regret/event identities connect the compiled tuning to Theorem 15.2.
 - [ ] The minimax corollary compiles through the Chapter 13 semantic surface.
-- [ ] Root import, focused canary, Tests, scans, full harness, export, evidence
-  indexes, documentation, website, independent review, PR, main Actions,
-  Pages deployment, and live desktop/mobile checks pass.
+- [x] Root import, focused canary, Tests, scans, full harness, export, evidence
+  indexes, documentation, website build/check, and local desktop/mobile checks
+  pass.
+- [x] Independent read-only review passed with no unresolved P0--P3 finding.
+- [ ] PR, main Actions, Pages deployment, and live desktop/mobile checks pass.
+
+## Local verification (2026-08-16)
+
+- `lake build BanditRLProof.LowerBounds.Minimax`: passed, 3452 jobs.
+- `lake build BanditRLProof`: passed, 4181 jobs.
+- `lake build Tests.TextbookPartIVChapter15Canary`: passed, 4181 jobs; public
+  axiom reports contain only `propext`, `Classical.choice`, and `Quot.sound`.
+- `lake build Tests.Basic`: passed, 4183 jobs. Importing the Gaussian module
+  made one old numeric test close earlier and increased typeclass search cost
+  in two old stochastic-trajectory examples; the test-only scripts were made
+  robust without changing any production theorem or lower-bound target.
+- `lake build Tests`: passed, 4194 jobs.
+- `python3 tools/bandit.py check`: passed; 42 Python tests, one expected skip,
+  and the complete Lean gate passed.
+- `python3 website/scripts/build_site.py --lean-verified`: passed with 561
+  modules, 7394 declarations, 74 highlights, 56 milestones, and five Part IV
+  textbook-spine chapters.
+- `python3 website/scripts/check_site.py`: passed across 589 HTML pages, 14
+  Mermaid blocks, 15984 Lean source links, MathJax fallbacks, internal links,
+  anchors, and the Pages workflow.
+- Real-browser review passed at 1280x720 and 390x844. The Chapter 15 page has
+  no document-level horizontal overflow or broken images; its long MathJax
+  theorem is contained by a mobile horizontal scroller. Compiled Gaussian and
+  tuning leaves remain visually distinct from the blocked Lemma 15.1 and
+  Theorem 15.2 terminals.
 
 ## Mathlib-ready leaf contract
 
@@ -215,11 +249,13 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 ## Source placement and status fence
 
 The canonical source is Lattimore--Szepesvári, *Bandit Algorithms*, CUP 2020,
-Part IV, Chapter 15, printed pp. 198--205 / PDF pp. 207--214. Lemma 15.1 is in
-§15.1, printed pp. 198--199 / PDF pp. 207--208. Theorem 15.2 and its proof are
-in §15.2, printed pp. 199--201 / PDF pp. 208--210. The lower-bound refinements
-in §§15.3--15.5 are mapped but are not silently promoted to the scoped
-Theorem 15.2 terminal.
+Part IV, Chapter 15, CUP print pp. 170--176 / author-online page labels
+198--205 / physical PDF pp. 207--214. Lemma 15.1 is in §15.1, CUP print
+pp. 170--171 / author-online pp. 198--199 / physical PDF pp. 207--208.
+Theorem 15.2 and its proof are in §15.2, CUP print pp. 171--173 /
+author-online pp. 199--201 / physical PDF pp. 208--210. The Notes,
+Bibliographic Remarks, and Exercises in §§15.3--15.5 are mapped but are not
+silently promoted to the scoped Theorem 15.2 terminal.
 
 The current compiled window contains exact Gaussian KL dependency leaves.
 Lemma 15.1 and Theorem 15.2 remain blocked pending the stochastic-policy
@@ -298,9 +334,9 @@ policies and supremum over this environment class.
 | `CH15-LEMMA-15-1` | exact expected-pull divergence decomposition | previous two nodes | reserved terminal | source terminal | focused Lean | blocked |
 | `CH15-TESTING-REGRET` | source event and two-environment regret bridge | Chapter 14 BH, pull identities | none | project-local | focused Lean | blocked |
 | `CH15-THEOREM-15-2` | exact Gaussian `1/27` existence and minimax result | all preceding nodes and tuning | reserved terminals | source terminal | focused Lean | blocked |
-| `CH15-TYPED-CANARY` | root-import applications and axiom reports for compiled slice | Gaussian leaves | future Chapter 15 canary | project-local | Tests | planned |
-| `CH15-EVIDENCE-SITE` | task/DAG/export/index/site agree on partial/blocked boundary | all scoped artifacts | repository artifacts | repository | full/site/browser | planned |
-| `CH15-REVIEW` | independent source/Lean/evidence audit | all artifacts | review record | repository | independent review | planned |
+| `CH15-TYPED-CANARY` | root-import applications and axiom reports for compiled slice | Gaussian leaves | `Tests/TextbookPartIVChapter15Canary.lean` | project-local | Tests | compiled |
+| `CH15-EVIDENCE-SITE` | task/DAG/export/index/site agree on partial/blocked boundary | all scoped artifacts | repository artifacts | repository | full/site/browser | verified locally |
+| `CH15-REVIEW` | independent source/Lean/evidence audit | all artifacts | `reviews/2026-08-17-textbook-part-iv-chapter-15-minimax-lower-bounds-spine.md` | repository | independent review | verified: no unresolved P0--P3 |
 | `CH15-REMOTE` | PR, main Actions, Pages, live desktop/mobile | accepted local partial chapter | GitHub workflow | repository | deployment | planned |
 
 ## Gaps
@@ -339,10 +375,10 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH15-TESTING-EVENT` | apply BH to `T_1(n)<=n/2` | measurable pull count and Lemma 15.1 | Chapter 14 `bretagnolleHuber` | compiled local declaration | event-level change of measure | common policy; base/alternative history laws | project-local bridge | none | focused Lean | blocked: connected blocker |
 | `CH15-TUNING` | source choice `Delta=sqrt(m/(4n))`, exact information exponent `1/2`, and `Delta<=1/2` | real sqrt/field inequalities | Mathlib real analysis | source proof | square the gap, normalize the exponent, compare `m/n<=1` | positive real `m,n`; `m<=n`; natural-cast consumer remains explicit | project-local | `gaussianMinimaxGap`, `gaussianMinimaxGap_sq`, `gaussianMinimaxGap_informationExponent_eq_half`, `gaussianMinimaxGap_le_half` | focused Lean | compiled |
 | `CH15-THEOREM-15-2` | every policy has a unit-Gaussian instance with regret at least `sqrt((k-1)n)/27` | all preceding bandit nodes | Chapter 13 minimax surface | textbook card | base/changed instance pair, max-to-exists, minimax inf/sup | exact policy class and unit-cube environment class | source terminal | reserved existence/minimax declarations | focused Lean | blocked: connected blocker |
-| `CH15-TYPED-CANARY` | root-import Gaussian applications and axiom reports | compiled Chapter 15 slice | root import | local declarations | exact nontrivial examples | no `sorry`/new axioms | project-local | `Tests/TextbookPartIVChapter15Canary.lean` | Tests | planned |
-| `CH15-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | deterministic gate suite | distinguish path/tool failures from proof failures | repository | n/a | full check | planned |
-| `CH15-EVIDENCE-SITE` | export/index/results/highlights/readings/map/README/site agree | compiled slice and blockers | harness/site scripts | repository | generated evidence plus maintained content | only gated declarations marked compiled | repository | n/a | site/browser | planned |
-| `CH15-REVIEW` | independent theorem/Lean audit | all artifacts | source, Lean, site | all above | check quantifiers, KL direction, AC, policy consistency, constant/asymptotics | no unresolved P0--P3 | repository | n/a | independent review | planned |
+| `CH15-TYPED-CANARY` | root-import Gaussian applications and axiom reports | compiled Chapter 15 slice | root import | local declarations | exact nontrivial examples | no `sorry`/new axioms | project-local | `Tests/TextbookPartIVChapter15Canary.lean` | Tests | compiled: 4181-job canary, baseline-only axioms |
+| `CH15-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | deterministic gate suite | distinguish path/tool failures from proof failures | repository | n/a | full check | verified: focused 3452, root 4181, Basic 4183, Tests 4194, 42 Python tests with one skip |
+| `CH15-EVIDENCE-SITE` | export/index/results/highlights/readings/map/README/site agree | compiled slice and blockers | harness/site scripts | repository | generated evidence plus maintained content | only gated declarations marked compiled | repository | n/a | site/browser | verified locally: 589 pages; desktop/mobile review passed |
+| `CH15-REVIEW` | independent theorem/Lean audit | all artifacts | source, Lean, site | all above | check quantifiers, KL direction, AC, policy consistency, constant/asymptotics | no unresolved P0--P3 | repository | `reviews/2026-08-17-textbook-part-iv-chapter-15-minimax-lower-bounds-spine.md` | independent review | verified |
 | `CH15-REMOTE` | PR, main Actions, Pages, live Chapter 15 | accepted local partial chapter | GitHub workflow | repository | branch PR, never direct main push | PR/main/deploy/live evidence required | repository | n/a | deployment | planned |
 
 ## Failure classification

@@ -23,18 +23,25 @@ repository has a stochastic-policy history law with the source semantics.
 - Book: *Bandit Algorithms*, Cambridge University Press, 2020.
 - DOI: <https://doi.org/10.1017/9781108571401>.
 - Formal author version: <https://tor-lattimore.com/downloads/book/book.pdf>.
-- Placement: Part IV, Chapter 15, printed pp. 198--205, PDF pp. 207--214.
-- Lemma 15.1: §15.1, printed pp. 198--199 / PDF pp. 207--208, Eq. (15.1).
-- Theorem 15.2: §15.2, printed pp. 199--201 / PDF pp. 208--210.
-- Further source mapping: §15.3 printed pp. 201--203 / PDF pp. 210--212;
-  §15.4 printed p. 203 / PDF p. 212; §15.5 printed pp. 203--205 / PDF
-  pp. 212--214.
+- Placement: Part IV, Chapter 15, CUP print pp. 170--176; author-online
+  page labels 198--205; physical PDF pp. 207--214.
+- Lemma 15.1: §15.1, CUP print pp. 170--171 / author-online pp. 198--199 /
+  physical PDF pp. 207--208, Eq. (15.1).
+- Theorem 15.2: §15.2, CUP print pp. 171--173 / author-online pp. 199--201 /
+  physical PDF pp. 208--210.
+- Further source mapping: §15.3 Notes, CUP print pp. 173--174 /
+  author-online pp. 201--203 / physical PDF pp. 210--212; §15.4
+  Bibliographic Remarks, CUP print p. 174 / author-online p. 203 / physical
+  PDF p. 212; §15.5 Exercises, CUP print pp. 174--176 / author-online
+  pp. 203--205 / physical PDF pp. 212--214.
 - Textbook card: `TXT-LATTIMORE-SZEPESVARI-2020`.
 - Scenario card: `SCN-STOCHASTIC-FINITE`.
 
-The author PDF records that its online edition has the same mathematical
-content as the print edition, apart from corrected typos, typography, and page
-numbering. Both printed and PDF pages are therefore retained above.
+The author PDF records that its free online edition has the same mathematical
+content as the print edition, apart from corrected minor typos and typography,
+and explicitly warns that the page numbers do not match. CUP first-edition
+print pages, author-online page labels, and physical PDF pages are therefore
+recorded separately above.
 
 ## Frozen source targets
 
@@ -149,9 +156,36 @@ the source terminal compiled.
   bound compile as numeric dependency leaves.
 - [ ] Regret/event identities connect the compiled tuning to Theorem 15.2.
 - [ ] The minimax corollary compiles through the Chapter 13 semantic surface.
-- [ ] Root import, focused canary, Tests, scans, full harness, export, evidence
-  indexes, documentation, website, independent review, PR, main Actions,
-  Pages deployment, and live desktop/mobile checks pass.
+- [x] Root import, focused canary, Tests, scans, full harness, export, evidence
+  indexes, documentation, website build/check, and local desktop/mobile checks
+  pass.
+- [x] Independent read-only review passed with no unresolved P0--P3 finding.
+- [ ] PR, main Actions, Pages deployment, and live desktop/mobile checks pass.
+
+## Local verification (2026-08-16)
+
+- `lake build BanditRLProof.LowerBounds.Minimax`: passed, 3452 jobs.
+- `lake build BanditRLProof`: passed, 4181 jobs.
+- `lake build Tests.TextbookPartIVChapter15Canary`: passed, 4181 jobs; public
+  axiom reports contain only `propext`, `Classical.choice`, and `Quot.sound`.
+- `lake build Tests.Basic`: passed, 4183 jobs. Importing the Gaussian module
+  made one old numeric test close earlier and increased typeclass search cost
+  in two old stochastic-trajectory examples; the test-only scripts were made
+  robust without changing any production theorem or lower-bound target.
+- `lake build Tests`: passed, 4194 jobs.
+- `python3 tools/bandit.py check`: passed; 42 Python tests, one expected skip,
+  and the complete Lean gate passed.
+- `python3 website/scripts/build_site.py --lean-verified`: passed with 561
+  modules, 7394 declarations, 74 highlights, 56 milestones, and five Part IV
+  textbook-spine chapters.
+- `python3 website/scripts/check_site.py`: passed across 589 HTML pages, 14
+  Mermaid blocks, 15984 Lean source links, MathJax fallbacks, internal links,
+  anchors, and the Pages workflow.
+- Real-browser review passed at 1280x720 and 390x844. The Chapter 15 page has
+  no document-level horizontal overflow or broken images; its long MathJax
+  theorem is contained by a mobile horizontal scroller. Compiled Gaussian and
+  tuning leaves remain visually distinct from the blocked Lemma 15.1 and
+  Theorem 15.2 terminals.
 
 ## Mathlib-ready leaf contract
 
