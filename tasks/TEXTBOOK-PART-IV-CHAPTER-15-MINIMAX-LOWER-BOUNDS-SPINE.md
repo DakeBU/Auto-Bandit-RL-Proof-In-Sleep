@@ -4,7 +4,7 @@ Task id: `TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE`
 
 Kind: `theoremFormalization`
 
-Status: `partial`
+Status: `accepted`
 
 Harness: `hierarchical`
 
@@ -160,10 +160,15 @@ the source terminal compiled.
   indexes, documentation, website build/check, and local desktop/mobile checks
   pass.
 - [x] Independent read-only review passed with no unresolved P0--P3 finding.
-- [ ] PR, main Actions, Pages deployment, and live desktop/mobile checks pass.
+- [x] PR, main Actions, Pages deployment, and live desktop/mobile checks pass.
 
 ## Local verification (2026-08-16)
 
+- Commit `23120d8` passed the complete harness in detached short-path
+  worktree `C:\abrl-p4-ch15-final-6c8be3d`. The short path is required because
+  Windows cannot create one unrelated existing RL `.olean` under the long
+  Codex worktree path; the Chapter 15 module itself built successfully in both
+  attempts.
 - `lake build BanditRLProof.LowerBounds.Minimax`: passed, 3452 jobs.
 - `lake build BanditRLProof`: passed, 4181 jobs.
 - `lake build Tests.TextbookPartIVChapter15Canary`: passed, 4181 jobs; public
@@ -186,6 +191,27 @@ the source terminal compiled.
   theorem is contained by a mobile horizontal scroller. Compiled Gaussian and
   tuning leaves remain visually distinct from the blocked Lemma 15.1 and
   Theorem 15.2 terminals.
+
+## Remote verification evidence
+
+- PR #13 passed `Lean and documentation / build` in run `31958097793`, job
+  `95191765312` (22m27s), and was merged without a direct push to `main`.
+- Merge commit: `5620329617a573bd59ad18b7988841e58de0f1bd`.
+- Authoritative-main run `31959217761` passed: build job `95194514824`
+  completed Lean, Tests, the lean-verified site, site checks, and Pages
+  artifact upload in 22m38s; deployment job `95197261026` passed in 23s.
+- Live page:
+  <https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/textbook-spine/chapter-15-minimax-lower-bounds/>.
+  Desktop 1280x720 and mobile 390x844 inspections confirmed the new
+  `2026-08-16T17:01:13+00:00` build, overall `PARTIAL` chapter status, the
+  corrected CUP/author-online/PDF page mapping, compiled Gaussian/tuning
+  declarations, blocked Lemma 15.1 and Theorem 15.2 terminals, zero broken
+  images, and no document-level horizontal overflow.
+
+Remote acceptance applies only to the scoped Gaussian KL and tuning dependency
+slice. The chapter remains `partial`, and its exact source terminals remain
+blocked on the conditional kernel-KL integral and stochastic-policy history
+law.
 
 ## Mathlib-ready leaf contract
 
