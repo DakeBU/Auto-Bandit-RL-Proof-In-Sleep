@@ -82,17 +82,21 @@ Lean, evidence, site, review, and remote gates agree.
 
 | Chapter | Current node | Evidence status | Boundary / next dependency |
 | --- | --- | --- | --- |
-| 13, Lower Bounds: Basic Ideas | explicit ENNReal minimax semantics; least-explored alternative averaging; quantitative two-environment algebra with an explicit pull-discrepancy error | local leaves compiled; chapter partial | Theorem 13.1 is only source-stated here and proved in Ch. 15; Ch. 14 must supply same-policy information transport |
-| 14, Foundations of Information Theory | source page map and navigation only | planned | freeze exact entropy/KL/data-processing contracts and absolute-continuity direction before Lean work |
-| 15, Minimax Lower Bounds | source page map and navigation only | planned | consume Ch. 13 algebra plus Ch. 14 testing/change-of-measure leaves; prove the caller-free Gaussian terminal |
+| 13, Lower Bounds: Basic Ideas | explicit ENNReal minimax semantics; least-explored alternative averaging; quantitative two-environment algebra with an explicit pull-discrepancy error | local leaves compiled; chapter partial | Theorem 13.1 is only source-stated here and proved in Ch. 15; use the compiled Ch. 14 event-testing layer and the Ch. 15 history bridge when available |
+| 14, Foundations of Information Theory | extended-real relative entropy, event-level binary data processing, endpoint-complete binary testing, unconditional Bretagnolle--Huber | scoped §14.2 leaves compiled; chapter partial | §14.1 coding and full Exercise 14.10 remain uncompiled; adaptive history KL belongs to Ch. 15 |
+| 15, Minimax Lower Bounds | exact Lemma 15.1/Theorem 15.2 contracts; unit-Gaussian RN, integrability, exact arm KL, changed-arm cost | Gaussian dependency leaves compiled; chapter partial and terminals blocked | prove the conditional composition-product KL integral and canonical stochastic-policy history law before Lemma 15.1 and the `1/27` terminal |
 | 16, Instance-Dependent Lower Bounds | source page map and navigation only | planned | freeze the exact asymptotic policy-consistency and KL constraint before formalization |
 | 17, High-Probability Lower Bounds | source page map and navigation only | planned | freeze the exact event/probability quantifiers and horizon order before formalization |
 
-The Chapter 13 source cards are `TXT-LS-2020-CH13-MINIMAL-SOURCE-CHANGE`
-and `TXT-LS-2020-THM-13-1`. The relevant Mathlib retrieval cards are
-`MLIB-FINSET-SUMS`, `MLIB-FINTYPE-FIN`, and `MLIB-ORDER-ALGEBRA`;
-`WEAPON-KL-CHANGE-OF-MEASURE` is inspiration-only. No LML theorem card is
-treated as a local lower-bound proof.
+The frozen source cards currently run through
+`TXT-LS-2020-CH13-MINIMAL-SOURCE-CHANGE`, `TXT-LS-2020-THM-13-1`, the Chapter
+14 relative-entropy/testing cards, and
+`TXT-LS-2020-LEMMA-15-1-DIVERGENCE-DECOMPOSITION` /
+`TXT-LS-2020-THM-15-2-GAUSSIAN-MINIMAX`. The relevant Mathlib retrieval
+surface includes finite sums, measure KL, Gaussian RN/first-moment APIs, and
+the composition-product chain rule. The missing conditional-KL integral is
+recorded as a blocker; `WEAPON-KL-CHANGE-OF-MEASURE` remains inspiration-only.
+No LML theorem card is treated as a local lower-bound proof.
 
 ## Compiled Local Leaves
 

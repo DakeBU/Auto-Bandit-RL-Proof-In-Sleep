@@ -18,7 +18,7 @@
       "slug": "chapter-13-basic-ideas",
       "title": "Lower Bounds: Basic Ideas",
       "status": "partial",
-      "status_note": "The Chapter 13 semantic and deterministic slice is compiled. Theorem 13.1 remains planned because the source defers its proof to Chapter 15.",
+      "status_note": "The Chapter 13 semantic and deterministic slice is compiled. Theorem 13.1 is now source-frozen in Chapter 15 but remains blocked on the stochastic-policy history KL bridge.",
       "print_pages": "180–185",
       "pdf_pages": "189–194",
       "sections": [
@@ -66,7 +66,7 @@
       },
       "source_theorem": {
         "label": "Theorem 13.1 (source statement; proof deferred to Chapter 15)",
-        "status": "planned",
+        "status": "blocked",
         "math": "\\exists c>0\\;\\forall k>1\\;\\forall n\\ge k:\\quad R_n^*(\\mathcal E^k)\\ge c\\sqrt{kn},",
         "fallback": "For unit-variance k-armed Gaussian bandits with means in the unit cube, minimax regret is at least a universal constant times the square root of k times n.",
         "plain": "The source states the finite-arm Gaussian minimax order here and explicitly postpones its proof to Chapter 15.",
@@ -91,21 +91,20 @@
         {"id": "budget", "label": "expected pull budget", "status": "compiled"},
         {"id": "least", "label": "least-explored alternative", "status": "compiled"},
         {"id": "algebra", "label": "two-environment algebra", "status": "compiled"},
-        {"id": "transport", "label": "same-policy history KL transport", "status": "planned"},
-        {"id": "theorem-13-1", "label": "Gaussian minimax terminal", "status": "planned"}
+        {"id": "transport", "label": "same-policy history KL transport", "status": "blocked"},
+        {"id": "theorem-13-1", "label": "Gaussian minimax terminal", "status": "blocked"}
       ],
       "reading_path": [
         "Read the source statement and its explicit Chapter 15 proof deferral.",
         "Inspect the minimax definitions before the averaging lemma.",
         "Check the Fin.succ indexing: source arms 2,…,k become Lean alternatives 0,…,m−1.",
         "Read the quantitative algebra theorem and locate its visible cross-environment error premise.",
-        "Continue to Chapter 14 for KL and change-of-measure foundations."
+        "Continue through the compiled Chapter 14 event-testing foundation to Chapter 15's compiled Gaussian KL leaves and explicit history-law blocker."
       ],
       "gaps": [
         "History-law likelihood ratio under the same adaptive policy.",
-        "Absolute-continuity and KL-direction contracts.",
-        "Event-level testing inequality and Gaussian KL computation.",
-        "Chapter 15 tuning and caller-free Theorem 13.1 terminal."
+        "The conditional composition-product KL integral and canonical stochastic-policy history law.",
+        "Chapter 15 Lemma 15.1, regret/event bridge, tuning, and caller-free Theorem 13.1 terminal."
       ]
     },
     {
@@ -196,7 +195,7 @@
         {"id": "binary", "label": "binary testing and endpoint analysis", "status": "compiled"},
         {"id": "bh", "label": "measure Bretagnolle–Huber terminal", "status": "compiled"},
         {"id": "coding", "label": "entropy and optimal coding", "status": "planned"},
-        {"id": "history", "label": "same-policy adaptive history KL", "status": "planned"}
+        {"id": "history", "label": "same-policy adaptive history KL", "status": "blocked"}
       ],
       "reading_path": [
         "Read Eq. (14.4), Eq. (14.5), Theorem 14.1, and Eq. (14.6) before the testing theorem.",
@@ -208,26 +207,86 @@
       "gaps": [
         "Entropy, Huffman coding, and optimal source-coding results from §14.1 are not formalized by this lower-bound gate.",
         "Full data processing for an arbitrary sub-sigma-algebra from Exercise 14.10 is not claimed; the compiled leaf is the event/binary specialization.",
-        "Adaptive-bandit history likelihood ratios and KL decomposition belong to Chapter 15 and remain planned until that chapter's gate."
+        "Adaptive-bandit history likelihood ratios and KL decomposition belong to Chapter 15 and are blocked on conditional kernel KL plus a stochastic-policy history law."
       ]
     },
     {
       "number": 15,
       "slug": "chapter-15-minimax-lower-bounds",
       "title": "Minimax Lower Bounds",
-      "status": "planned",
-      "status_note": "The chapter will consume Chapters 13–14 only after its own source target and constants are frozen.",
+      "status": "partial",
+      "status_note": "The exact Lemma 15.1 and Theorem 15.2 contracts are frozen, and the unit-variance Gaussian likelihood-ratio/KL slice compiles. The stochastic-policy history KL decomposition and Gaussian minimax terminal remain blocked.",
       "print_pages": "198–205",
       "pdf_pages": "207–214",
-      "sections": ["§15.1 Relative Entropy Between Bandits", "§15.2 Minimax Lower Bounds", "§15.3–15.5 notes, bibliography, and exercises"],
-      "learning_goals": ["Lift arm-level KL to adaptive bandit histories.", "Construct finite-arm testing instances.", "Close the source-stated Gaussian minimax lower bound without hidden policy changes."],
-      "definitions": [{"name": "Bandit-history divergence", "math": "D(\\mathbb P_{\\nu,\\pi}^{(n)}\\Vert\\mathbb P_{\\nu',\\pi}^{(n)}).", "fallback": "The divergence compares n-round histories generated by the same policy in two environments.", "status": "planned"}],
-      "flow": {"title": "Planned minimax route", "kind": "proof pseudocode", "steps": [{"title": "Choose alternatives", "detail": "Use the compiled Chapter 13 least-explored-arm and deterministic transport leaves."}, {"title": "Construct history laws", "detail": "Build the same-policy adaptive-history KL decomposition in Chapter 15, consuming Chapter 14 measure/event information leaves."}, {"title": "Test and tune", "detail": "Apply the compiled Chapter 14 testing inequality, convert indistinguishability into regret, and choose Delta."}]},
-      "source_boundary": "The exact Chapter 15 theorem list and constants have not yet been frozen; Theorem 13.1 remains planned until a caller-free local terminal compiles.",
-      "lean_correspondence": [],
-      "dependency_nodes": [{"id": "ch13", "label": "Chapter 13 deterministic spine", "status": "partial"}, {"id": "ch14", "label": "Chapter 14 measure/event information spine", "status": "partial"}, {"id": "history", "label": "Chapter 15 same-policy history KL", "status": "planned"}, {"id": "minimax", "label": "Gaussian minimax terminal", "status": "planned"}],
-      "reading_path": ["Read §15.1 before §15.2.", "Audit policy consistency and KL direction.", "Verify the exact universal-constant quantifier order."],
-      "gaps": ["Chapter 15 same-policy adaptive-history likelihood-ratio and KL decomposition.", "Gaussian environment construction and tuning.", "Caller-free minimax terminal."]
+      "sections": [
+        "§15.1 Relative Entropy Between Bandits (printed pp. 198–199 / PDF pp. 207–208; Lemma 15.1 and Eq. (15.1))",
+        "§15.2 Minimax Lower Bounds (printed pp. 199–201 / PDF pp. 208–210; Theorem 15.2)",
+        "§15.3 Minimax Lower Bounds for Bernoulli Bandits (printed pp. 201–203 / PDF pp. 210–212)",
+        "§15.4 Notes and §15.5 Exercises (printed pp. 203–205 / PDF pp. 212–214)"
+      ],
+      "learning_goals": [
+        "Keep Lemma 15.1's KL direction, first-law expectation, and same randomized policy fixed.",
+        "Compute the exact arm-level KL for equal-variance Gaussian alternatives.",
+        "See why conditional kernel KL and a stochastic-policy history law are required before arm KL becomes expected pull-count KL.",
+        "Follow the least-explored-arm, testing-event, and Delta-tuning route to Theorem 15.2 without upgrading blocked nodes."
+      ],
+      "definitions": [
+        {"name": "Bandit-history divergence", "math": "D(\\mathbb P_{\\nu,\\pi}^{(n)}\\Vert\\mathbb P_{\\nu',\\pi}^{(n)}).", "fallback": "The divergence compares n-round action/reward histories generated by the same possibly randomized policy in two environments.", "status": "blocked"},
+        {"name": "Unit-variance Gaussian arm", "math": "\\nu_\\mu=\\mathcal N(\\mu,1).", "fallback": "Each arm is a real Gaussian probability law with the requested mean and variance exactly one.", "status": "compiled"},
+        {"name": "Equal-variance Gaussian KL", "math": "D(\\mathcal N(\\mu,1)\\Vert\\mathcal N(\\nu,1))=\\frac{(\\mu-\\nu)^2}{2}.", "fallback": "The relative entropy between unit-variance Gaussians is one half the squared difference of their means.", "status": "compiled"}
+      ],
+      "flow": {
+        "title": "Minimax lower-bound proof flow",
+        "kind": "proof pseudocode",
+        "steps": [
+          {"title": "Choose the base instance", "detail": "Set the first Gaussian mean to Delta and all other means to zero."},
+          {"title": "Find a least-explored alternative", "detail": "Use the compiled Chapter 13 averaging leaf to choose i>1 with E[T_i(n)] at most n/(k-1)."},
+          {"title": "Change one arm", "detail": "Raise only arm i to mean 2 Delta; its compiled arm-level KL cost is 2 Delta squared."},
+          {"title": "Lift KL to histories", "detail": "Lemma 15.1 must turn arm costs into the first-law expected pull-count sum under one common stochastic policy; this node is blocked."},
+          {"title": "Test and tune", "detail": "Apply Chapter 14 Bretagnolle–Huber to T_1(n) at most n/2, then choose Delta=sqrt((k-1)/(4n)) to obtain the 1/27 lower bound; the terminal remains blocked with its dependency."}
+        ]
+      },
+      "source_theorem": {
+        "label": "Lemma 15.1 / Eq. (15.1) and Theorem 15.2",
+        "status": "blocked",
+        "math": "D(\\mathbb P_{\\nu,\\pi}^{(n)}\\Vert\\mathbb P_{\\nu',\\pi}^{(n)})=\\sum_i\\mathbb E_{\\nu,\\pi}[T_i(n)]D(P_i\\Vert P_i'),\\qquad R_n\\ge\\frac1{27}\\sqrt{(k-1)n}.",
+        "fallback": "History KL is the first-law expected sum of arm KL costs under one common policy; the Gaussian construction then yields regret at least one twenty-seventh times the square root of (k-1)n.",
+        "plain": "The theorem converts indistinguishability of one-coordinate Gaussian alternatives into a finite-arm minimax regret obstruction.",
+        "boundary": "Only the Gaussian arm constructor, log likelihood ratio, integrability, and exact arm-level KL currently compile. Lemma 15.1 and Theorem 15.2 are not local proofs: Mathlib lacks the needed conditional-KL integral, and the current repository policy interface is deterministic rather than the source's randomized policy kernel."
+      },
+      "source_boundary": "The exact targets are frozen from the official author PDF. Compiled Gaussian leaves are dependencies only; the history decomposition and 1/27 minimax terminal remain blocked and are not inferred from theorem cards.",
+      "lean_correspondence": [
+        {"name": "BanditRLProof.LowerBounds.unitGaussianArm", "status": "compiled", "role": "Unit-variance Gaussian reward law."},
+        {"name": "BanditRLProof.LowerBounds.unitGaussianBandit", "status": "compiled", "role": "Finite family of unit-variance Gaussian arms indexed by a mean vector."},
+        {"name": "BanditRLProof.LowerBounds.log_gaussianPDFReal_div_gaussianPDFReal_one", "status": "compiled", "role": "Pointwise affine log-density ratio."},
+        {"name": "BanditRLProof.LowerBounds.llr_gaussianReal_one_ae", "status": "compiled", "role": "First-law almost-everywhere log Radon–Nikodym identity in the source direction."},
+        {"name": "BanditRLProof.LowerBounds.integrable_llr_gaussianReal_one", "status": "compiled", "role": "Integrability gate for the real KL integral."},
+        {"name": "BanditRLProof.LowerBounds.klDiv_gaussianReal_one", "status": "compiled", "role": "Exact KL D(N(mu,1),N(nu,1))=(mu-nu)^2/2."},
+        {"name": "BanditRLProof.LowerBounds.klDiv_unitGaussianArm_zero_two_mul", "status": "compiled", "role": "Source changed-arm cost D(N(0,1),N(2 Delta,1))=2 Delta squared."},
+        {"name": "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum", "status": "blocked", "role": "Reserved exact Lemma 15.1 terminal; no declaration is claimed."},
+        {"name": "BanditRLProof.LowerBounds.exists_gaussianBandit_expectedRegret_ge_one_div_twentySeven", "status": "blocked", "role": "Reserved exact Theorem 15.2 existence terminal; no declaration is claimed."}
+      ],
+      "dependency_nodes": [
+        {"id": "ch13", "label": "Chapter 13 least-explored arm", "status": "compiled"},
+        {"id": "ch14", "label": "Chapter 14 event testing", "status": "compiled"},
+        {"id": "gaussian", "label": "unit-Gaussian RN and arm KL", "status": "compiled"},
+        {"id": "conditional", "label": "conditional composition-product KL integral", "status": "blocked"},
+        {"id": "policy", "label": "stochastic-policy canonical history law", "status": "blocked"},
+        {"id": "history", "label": "Lemma 15.1 same-policy history KL", "status": "blocked"},
+        {"id": "minimax", "label": "Theorem 15.2 Gaussian 1/27 terminal", "status": "blocked"}
+      ],
+      "reading_path": [
+        "Read Lemma 15.1 in §15.1 and verify D(nu,nu-prime), E_nu[T_i], and one common policy.",
+        "Inspect the compiled Gaussian RN and KL leaves before the bandit-history bridge.",
+        "Read Theorem 15.2 in §15.2 and trace the base instance, least-explored alternative, event T_1(n) at most n/2, and Delta tuning.",
+        "Treat the conditional-KL and stochastic-policy nodes as blockers, not as imported proof certificates."
+      ],
+      "gaps": [
+        "A conditional composition-product KL integral with sufficient measurability and regularity.",
+        "A canonical finite history law for possibly randomized nonanticipating policy kernels.",
+        "Lemma 15.1, regret/event identities, Delta tuning, Theorem 15.2, and its minimax corollary.",
+        "The Bernoulli refinement in §15.3 and the stopping-time Exercise 15.7 are outside the current compiled slice."
+      ]
     },
     {
       "number": 16,
