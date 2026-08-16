@@ -50,8 +50,10 @@ SITE_TEXTBOOK_SPINE: dict[str, Any] = {}
 
 STATUS_LABELS = {
     "compiled": "Compiled",
+    "prototype": "Prototype",
     "partial": "Partial",
     "planned": "Planned",
+    "proposed": "Proposed",
     "blocked": "Blocked",
     "stated": "Stated, proof incomplete",
     "source": "Source indexed",
@@ -494,6 +496,7 @@ def layout(
     library_items = [
         ("catalog", "Lean declarations", "declarations/index.html"),
         ("map", "Implementation map", "implementation-map/index.html"),
+        ("proof-lab", "Proof Graph Laboratory", "proof-graph-laboratory/index.html"),
     ]
     formalize_items = [
         ("ide", "Live Formalization", "ide/index.html"),
@@ -2265,6 +2268,150 @@ def build_roadmap(
     )
 
 
+def build_proof_graph_laboratory(
+    output: Path,
+    report: dict[str, Any],
+    novelty: dict[str, Any],
+    candidate_evaluation: dict[str, Any],
+    decl_by_name: dict[str, dict[str, Any]],
+    verified: bool,
+    generated_at: str,
+) -> None:
+    """Render only versioned proof-graph observations; no analysis runs in Pages."""
+
+    page_path = "proof-graph-laboratory/index.html"
+    graph = report["graph"]
+    counts = graph["counts"]
+    shared = report["shared_library"]
+    zdd = report["zdd"]
+    hypergraph = report["hypergraph"]
+    benchmark_cards = []
+    for benchmark in report["benchmarks"]:
+        cost = benchmark["proof_cost_vector"]
+        dag = cost["semantic_dag"]
+        reuse = cost["reuse_coverage"]
+        check_time = cost["lean_check_time"]
+        benchmark_cards.append(
+            f"""
+<article class="info-card">
+  <span class="level-label">{html.escape(benchmark['algorithm'])} · compiled root</span>
+  <h3>{html.escape(benchmark['id'])}</h3>
+  <p>{html.escape(benchmark['target_contract'])}</p>
+  <dl class="teaching-grid">
+    <div><dt>Project support</dt><dd>{reuse['support_declarations']:,} declarations</dd></div>
+    <div><dt>Shared support</dt><dd>{reuse['shared_declarations']:,} ({reuse['ratio']:.1%})</dd></div>
+    <div><dt>Semantic DAG</dt><dd>{dag['components']:,} components · depth {dag['depth']}</dd></div>
+    <div><dt>Proof-term proxy</dt><dd>{cost['proof_term_object_proxy_sum']:,} shared objects</dd></div>
+    <div><dt>Local Lean check</dt><dd>{check_time['seconds']:.6f} seconds · one warm-dependency run</dd></div>
+  </dl>
+</article>"""
+        )
+
+    zdd_rows = "".join(
+        "<tr>"
+        f"<td>{html.escape(order['order'])}</td>"
+        f"<td>{order['nonterminal_nodes']:,}</td>"
+        f"<td>{order['serialized_proxy_bytes']:,}</td>"
+        f"<td>{order['tracemalloc_peak_bytes']:,}</td>"
+        "</tr>"
+        for order in zdd["orders"]
+    )
+    cng = novelty["cng_candidate"]
+    candidate_proxy = candidate_evaluation["fixed_canonicalization_proxy"]
+    candidate_vector = candidate_evaluation["novelty_vector_current_evidence"]
+    cng_links = []
+    for full_name in cng.get("compiled_leaves", []):
+        declaration = decl_by_name.get(full_name)
+        if declaration is None:
+            cng_links.append(f"<code>{html.escape(full_name)}</code>")
+        else:
+            cng_links.append(
+                f'<a href="{declaration_href(page_path, declaration)}"><code>{html.escape(full_name)}</code></a>'
+            )
+    cng_list = "".join(f"<li>{item}</li>" for item in cng_links)
+    neutral_grades = "".join(
+        f"<li><code>{html.escape(label)}</code></li>"
+        for label in novelty["evaluation_design"]["neutral_grades"]
+    )
+    body = f"""
+<section class="hero" id="proof-graph-laboratory">
+  <p class="eyebrow">Auditable proof structure · local prototypes</p>
+  <h1 class="page-title">Proof Graph Laboratory / Mathematical Motifs</h1>
+  <p class="lede">Treat the verified library as an instrument for asking whether a target-faithful proof is a coverage extension, a library consolidation, or evidence of irreducible reusable proof structure.</p>
+  <div class="callout warning"><strong>Evidence boundary.</strong> The graph is environment-extracted from compiled declaration types and values; it is not a kernel trace or an elaborator trace. Proof-cost, ZDD, hypergraph/MIP, and novelty operations are prototypes, not Lean theorems or validated scientific scores.</div>
+</section>
+
+<section id="frozen-graph">
+  <h2>Frozen exact-dependency observation</h2>
+  <p>The baseline is <code>{html.escape(novelty['freeze_library_at_t']['git_commit'])}</code>; the deterministic graph artifact has SHA-256 <code>{html.escape(graph['sha256'])}</code>. Project ownership comes from the loaded Lean environment, with signature/type and value/proof dependencies kept separate.</p>
+  <div class="stats-grid">
+    <div class="stat"><span class="stat-value">{counts['project_nodes']:,}</span><span class="stat-label">project-owned declarations</span></div>
+    <div class="stat"><span class="stat-value">{counts['external_boundary_nodes']:,}</span><span class="stat-label">direct external boundary declarations</span></div>
+    <div class="stat"><span class="stat-value">{counts['edges']:,}</span><span class="stat-label">direct type/value edges</span></div>
+    <div class="stat"><span class="stat-value">{counts['module_imports']:,}</span><span class="stat-label">module import records</span></div>
+  </div>
+</section>
+
+<section id="benchmark">
+  <h2>Fixed compiled benchmark</h2>
+  <p>These terminals are unchanged observations, not claims that each complete algorithm family is formalized. The union charges each compiled declaration once: {shared['standalone_fixed_charge_sum']:,} standalone support memberships compress to {shared['union_fixed_charge']:,} union declarations, with {shared['shared_declaration_count']:,} declarations shared by at least two routes.</p>
+  <div class="info-grid">{"".join(benchmark_cards)}</div>
+</section>
+
+<section id="support-compression">
+  <h2>ZDD support families and hypergraph lower bounds</h2>
+  <p>The ZDD contains only minimal support sets over a fixed declaration universe. Metavariables, tactics, unification constraints, and other dependent proof state remain outside. Local time and <code>tracemalloc</code> values are implementation observations, not universal complexity claims.</p>
+  <div class="table-wrap"><table><thead><tr><th>Variable order</th><th>ZDD nodes</th><th>Serialized proxy bytes</th><th>Local peak bytes</th></tr></thead><tbody>{zdd_rows}</tbody></table></div>
+  <p>The unit-charge hypergraph exact optimum is {hypergraph['unit_fixed_charge_exact_optimum']:,}; both reported admissible lower bounds are {hypergraph['admissible_lower_bounds']['max_single_obligation_min_bundle']:,} on this benchmark. Every concrete completion is tested to map to the relaxation. Pruning is called safe only under the explicit contract <code>LB(s) &lt;= OPT_remaining(s)</code>. The MIP is a library planner/scheduler, not a Lean elaborator.</p>
+</section>
+
+<section id="novelty-vector">
+  <h2>Non-scalar proof-structural novelty audit</h2>
+  <p>Raw new-node count is excluded: helper names and proof splitting can manipulate it. The fixed vector keeps five questions separate: conditional residual signatures with separately audited irreducibility; backward compression; proof-cost Pareto-frontier shift; held-out transfer; and target novelty versus proof novelty.</p>
+  <ol class="contribution-steps">
+    <li><strong>Freeze the library at t.</strong><span>Freeze statements, assumptions, canonicalization, compression, and benchmark roots before comparison.</span></li>
+    <li><strong>Audit residual structure.</strong><span>Compare canonical lemma motifs, support hyperedges, obligation types, and composition constraints—not declaration names.</span></li>
+    <li><strong>Test backward compression and Pareto movement.</strong><span>Report every declared cost dimension, including check time and open obligations, without scalarizing reuse into an unbounded reward.</span></li>
+    <li><strong>Transfer to held-out theorems.</strong><span>Do not use the held-out family to design the abstraction; disclose failures and unlocked obligations.</span></li>
+    <li><strong>Review interpretability.</strong><span>Run ordering/compression ablations and blind human review before assigning a neutral grade.</span></li>
+  </ol>
+  <p>Neutral audit grades:</p><ul>{neutral_grades}</ul>
+</section>
+
+<section id="cng-candidate">
+  <div class="theorem-header"><div><p class="eyebrow">Candidate reusable abstraction</p><h2>Curvature–Noise–Gap finite geometry</h2></div>{status_badge('partial')}</div>
+  <p>{html.escape(cng['current_evidence'])}</p>
+  <p><strong>Current falsification result.</strong> The fixed two-round name-independent proxy finds {candidate_proxy['color_signatures_absent_from_frozen_library']} new neighborhood-color signatures and {candidate_proxy['direct_support_signatures_absent_from_frozen_library']} new direct-support signatures, but explicitly does not establish irreducibility. All frozen benchmark closures are unchanged; there are {candidate_vector['backward_compression_gain']['existing_to_candidate_dependency_edges']} existing-to-CNG dependency edges and {candidate_vector['heldout_transfer_gain']['candidate_declarations_in_heldout_support']} CNG declarations in the held-out OFUL support. Structural discovery remains false.</p>
+  <ul>{cng_list}</ul>
+  <div class="callout"><strong>Falsifiable upgrade rule.</strong> CNG becomes structural-discovery evidence only if it replaces multiple audited route-specific subgraphs, improves the declared cost vector with a reported Pareto relation, and helps a theorem family held out from design or unlocks a blocked obligation. Merely restating a Tsallis-INF derivation does not qualify.</div>
+</section>
+
+<section id="execution-boundary">
+  <h2>Local execution and static Pages boundary</h2>
+  <p>This page renders versioned JSON summaries. Static GitHub Pages does not load a Lean environment, regenerate the graph, execute the ZDD/hypergraph prototype, solve a MIP, or certify novelty. Reproduce those observations locally after the Lean gate:</p>
+  <pre class="lean-code"><code>lake build BanditRLProof
+lake env lean --run tools/ProofGraphExport.lean --compact proof-graph.json
+python tools/proof_graph_lab.py validate-export --graph proof-graph.json
+python tools/proof_graph_lab.py benchmark --graph proof-graph.json --config research-wiki/proof-graph/benchmark_roots.json --measurements research-wiki/proof-graph/benchmark_measurements.json --output benchmark-report.json</code></pre>
+  <p>The laboratory explicitly excludes Chapters 13–17, finite-arm lower bounds, Bernoulli-KL/change-of-measure/minimax/asymptotic lower-bound declarations, their cards/pages, and the lower-bound task's active frontier.</p>
+</section>
+"""
+    toc = [
+        ("proof-graph-laboratory", "Laboratory"),
+        ("frozen-graph", "Frozen graph"),
+        ("benchmark", "Benchmark"),
+        ("support-compression", "ZDD and hypergraph"),
+        ("novelty-vector", "Novelty vector"),
+        ("cng-candidate", "CNG candidate"),
+        ("execution-boundary", "Execution boundary"),
+    ]
+    write_page(
+        output,
+        page_path,
+        layout(page_path, "Proof Graph Laboratory", body, toc, "proof-lab", verified, generated_at),
+    )
+
+
 def build_workflow(output: Path, verified: bool, generated_at: str) -> None:
     page_path = "workflow/index.html"
     body = f"""
@@ -2562,6 +2709,11 @@ def main() -> int:
     for chapter in chapters:
         chapter["milestone_counts"] = dict(milestone_counts_by_chapter[chapter["slug"]])
     roadmap = load_json(ROOT / "research-wiki" / "theory-tree" / "lean-route-roadmap.json")
+    proof_graph_report = load_json(ROOT / "research-wiki" / "proof-graph" / "benchmark_report.json")
+    novelty_audit = load_json(ROOT / "research-wiki" / "proof-graph" / "novelty_audit.json")
+    cng_candidate_evaluation = load_json(
+        ROOT / "research-wiki" / "proof-graph" / "cng_candidate_evaluation.json"
+    )
 
     modules = scan_lean_tree()
     assign_chapters(modules, chapters)
@@ -2640,6 +2792,15 @@ def main() -> int:
     build_community(output, args.lean_verified, generated_at)
     build_research_ide(output, highlights, decl_by_name, args.lean_verified, generated_at)
     build_roadmap(output, results, roadmap, decl_by_name, args.lean_verified, generated_at)
+    build_proof_graph_laboratory(
+        output,
+        proof_graph_report,
+        novelty_audit,
+        cng_candidate_evaluation,
+        decl_by_name,
+        args.lean_verified,
+        generated_at,
+    )
     build_workflow(output, args.lean_verified, generated_at)
     build_attribution(output, args.lean_verified, generated_at)
     build_source_access(output, args.lean_verified, generated_at)
@@ -2674,6 +2835,12 @@ def main() -> int:
         "public_base_url": PUBLIC_BASE_URL,
         "source_commit": source_commit,
         "source_dirty": source_dirty,
+        "proof_graph_benchmark_status": proof_graph_report["status"],
+        "proof_graph_root_count": proof_graph_report["benchmark_contract"]["root_count"],
+        "cng_candidate_status": novelty_audit["cng_candidate"]["status"],
+        "cng_structural_discovery_established": cng_candidate_evaluation[
+            "structural_discovery_established"
+        ],
     }
     write_text_lf(output / "site-manifest.json", json.dumps(manifest, indent=2, ensure_ascii=False) + "\n")
     build_public_repository_readme(output, manifest)
