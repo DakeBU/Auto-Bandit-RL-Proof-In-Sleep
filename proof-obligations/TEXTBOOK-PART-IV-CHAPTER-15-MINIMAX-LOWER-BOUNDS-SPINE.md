@@ -25,7 +25,7 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH15-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | deterministic gate suite | distinguish path/tool failures from proof failures | repository | n/a | full check | verified: focused 3452, root 4181, Basic 4183, Tests 4194, 42 Python tests with one skip |
 | `CH15-EVIDENCE-SITE` | export/index/results/highlights/readings/map/README/site agree | compiled slice and blockers | harness/site scripts | repository | generated evidence plus maintained content | only gated declarations marked compiled | repository | n/a | site/browser | verified locally: 589 pages; desktop/mobile review passed |
 | `CH15-REVIEW` | independent theorem/Lean audit | all artifacts | source, Lean, site | all above | check quantifiers, KL direction, AC, policy consistency, constant/asymptotics | no unresolved P0--P3 | repository | `reviews/2026-08-17-textbook-part-iv-chapter-15-minimax-lower-bounds-spine.md` | independent review | verified |
-| `CH15-REMOTE` | PR, main Actions, Pages, live Chapter 15 | accepted local partial chapter | GitHub workflow | repository | branch PR, never direct main push | PR/main/deploy/live evidence required | repository | n/a | deployment | planned |
+| `CH15-REMOTE` | PR, main Actions, Pages, live Chapter 15 | accepted local partial chapter | GitHub workflow | repository | branch PR, never direct main push | PR #13; merge `5620329`; main run `31959217761`; deploy `95197261026`; live desktop/mobile | repository | n/a | deployment | verified |
 
 ## Failure classification
 

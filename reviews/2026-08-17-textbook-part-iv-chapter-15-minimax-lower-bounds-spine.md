@@ -78,3 +78,21 @@ and physical-PDF page ranges, the §15.3--§15.5 titles, and the retained
 blocked status of Lemma 15.1 and Theorem 15.2. Heavyweight gates were not part
 of that read-only follow-up; the local gate evidence above remains the
 repository's execution record.
+
+## Remote evidence
+
+- PR #13 passed the required build check in run `31958097793`, job
+  `95191765312`, and was merged as
+  `5620329617a573bd59ad18b7988841e58de0f1bd` without a direct push to
+  `main`.
+- Authoritative-main run `31959217761` passed. Build job `95194514824`
+  completed the full Lean/Tests and site gates in 22m38s; Pages deployment
+  job `95197261026` passed in 23s.
+- The live Chapter 15 page was inspected at 1280x720 and 390x844. It serves
+  the `2026-08-16T17:01:13+00:00` build, keeps the chapter `PARTIAL`, renders
+  the corrected three-way source pagination, exposes the compiled Gaussian
+  and tuning leaves, keeps both source terminals blocked, and has zero broken
+  images or document-level horizontal overflow.
+
+This evidence accepts the scoped dependency slice. It does not close or
+weaken the residual mathematical blockers recorded above.

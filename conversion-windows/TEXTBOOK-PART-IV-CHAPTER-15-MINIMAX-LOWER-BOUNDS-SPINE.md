@@ -97,7 +97,7 @@ policies and supremum over this environment class.
 | `CH15-TYPED-CANARY` | root-import applications and axiom reports for compiled slice | Gaussian leaves | `Tests/TextbookPartIVChapter15Canary.lean` | project-local | Tests | compiled |
 | `CH15-EVIDENCE-SITE` | task/DAG/export/index/site agree on partial/blocked boundary | all scoped artifacts | repository artifacts | repository | full/site/browser | verified locally |
 | `CH15-REVIEW` | independent source/Lean/evidence audit | all artifacts | `reviews/2026-08-17-textbook-part-iv-chapter-15-minimax-lower-bounds-spine.md` | repository | independent review | verified: no unresolved P0--P3 |
-| `CH15-REMOTE` | PR, main Actions, Pages, live desktop/mobile | accepted local partial chapter | GitHub workflow | repository | deployment | planned |
+| `CH15-REMOTE` | PR, main Actions, Pages, live desktop/mobile | accepted local partial chapter | PR #13; run `31959217761`; deploy `95197261026`; live desktop/mobile | repository | deployment | verified |
 
 ## Gaps
 

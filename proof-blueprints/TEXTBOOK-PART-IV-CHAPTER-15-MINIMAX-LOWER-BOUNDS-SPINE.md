@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE
 
-Generated: `2026-08-16T16:11:19+00:00`
+Generated: `2026-08-16T17:04:35+00:00`
 
 ## Source Task
 
@@ -10,7 +10,7 @@ Task id: `TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE`
 
 Kind: `theoremFormalization`
 
-Status: `partial`
+Status: `accepted`
 
 Harness: `hierarchical`
 
@@ -166,10 +166,15 @@ the source terminal compiled.
   indexes, documentation, website build/check, and local desktop/mobile checks
   pass.
 - [x] Independent read-only review passed with no unresolved P0--P3 finding.
-- [ ] PR, main Actions, Pages deployment, and live desktop/mobile checks pass.
+- [x] PR, main Actions, Pages deployment, and live desktop/mobile checks pass.
 
 ## Local verification (2026-08-16)
 
+- Commit `23120d8` passed the complete harness in detached short-path
+  worktree `C:\abrl-p4-ch15-final-6c8be3d`. The short path is required because
+  Windows cannot create one unrelated existing RL `.olean` under the long
+  Codex worktree path; the Chapter 15 module itself built successfully in both
+  attempts.
 - `lake build BanditRLProof.LowerBounds.Minimax`: passed, 3452 jobs.
 - `lake build BanditRLProof`: passed, 4181 jobs.
 - `lake build Tests.TextbookPartIVChapter15Canary`: passed, 4181 jobs; public
@@ -192,6 +197,27 @@ the source terminal compiled.
   theorem is contained by a mobile horizontal scroller. Compiled Gaussian and
   tuning leaves remain visually distinct from the blocked Lemma 15.1 and
   Theorem 15.2 terminals.
+
+## Remote verification evidence
+
+- PR #13 passed `Lean and documentation / build` in run `31958097793`, job
+  `95191765312` (22m27s), and was merged without a direct push to `main`.
+- Merge commit: `5620329617a573bd59ad18b7988841e58de0f1bd`.
+- Authoritative-main run `31959217761` passed: build job `95194514824`
+  completed Lean, Tests, the lean-verified site, site checks, and Pages
+  artifact upload in 22m38s; deployment job `95197261026` passed in 23s.
+- Live page:
+  <https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/textbook-spine/chapter-15-minimax-lower-bounds/>.
+  Desktop 1280x720 and mobile 390x844 inspections confirmed the new
+  `2026-08-16T17:01:13+00:00` build, overall `PARTIAL` chapter status, the
+  corrected CUP/author-online/PDF page mapping, compiled Gaussian/tuning
+  declarations, blocked Lemma 15.1 and Theorem 15.2 terminals, zero broken
+  images, and no document-level horizontal overflow.
+
+Remote acceptance applies only to the scoped Gaussian KL and tuning dependency
+slice. The chapter remains `partial`, and its exact source terminals remain
+blocked on the conditional kernel-KL integral and stochastic-policy history
+law.
 
 ## Mathlib-ready leaf contract
 
@@ -337,7 +363,7 @@ policies and supremum over this environment class.
 | `CH15-TYPED-CANARY` | root-import applications and axiom reports for compiled slice | Gaussian leaves | `Tests/TextbookPartIVChapter15Canary.lean` | project-local | Tests | compiled |
 | `CH15-EVIDENCE-SITE` | task/DAG/export/index/site agree on partial/blocked boundary | all scoped artifacts | repository artifacts | repository | full/site/browser | verified locally |
 | `CH15-REVIEW` | independent source/Lean/evidence audit | all artifacts | `reviews/2026-08-17-textbook-part-iv-chapter-15-minimax-lower-bounds-spine.md` | repository | independent review | verified: no unresolved P0--P3 |
-| `CH15-REMOTE` | PR, main Actions, Pages, live desktop/mobile | accepted local partial chapter | GitHub workflow | repository | deployment | planned |
+| `CH15-REMOTE` | PR, main Actions, Pages, live desktop/mobile | accepted local partial chapter | PR #13; run `31959217761`; deploy `95197261026`; live desktop/mobile | repository | deployment | verified |
 
 ## Gaps
 
@@ -379,7 +405,7 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH15-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | deterministic gate suite | distinguish path/tool failures from proof failures | repository | n/a | full check | verified: focused 3452, root 4181, Basic 4183, Tests 4194, 42 Python tests with one skip |
 | `CH15-EVIDENCE-SITE` | export/index/results/highlights/readings/map/README/site agree | compiled slice and blockers | harness/site scripts | repository | generated evidence plus maintained content | only gated declarations marked compiled | repository | n/a | site/browser | verified locally: 589 pages; desktop/mobile review passed |
 | `CH15-REVIEW` | independent theorem/Lean audit | all artifacts | source, Lean, site | all above | check quantifiers, KL direction, AC, policy consistency, constant/asymptotics | no unresolved P0--P3 | repository | `reviews/2026-08-17-textbook-part-iv-chapter-15-minimax-lower-bounds-spine.md` | independent review | verified |
-| `CH15-REMOTE` | PR, main Actions, Pages, live Chapter 15 | accepted local partial chapter | GitHub workflow | repository | branch PR, never direct main push | PR/main/deploy/live evidence required | repository | n/a | deployment | planned |
+| `CH15-REMOTE` | PR, main Actions, Pages, live Chapter 15 | accepted local partial chapter | GitHub workflow | repository | branch PR, never direct main push | PR #13; merge `5620329`; main run `31959217761`; deploy `95197261026`; live desktop/mobile | repository | n/a | deployment | verified |
 
 ## Failure classification
 
