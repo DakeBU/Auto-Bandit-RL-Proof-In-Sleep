@@ -4,7 +4,7 @@ Task id: `TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE`
 
 Kind: `theoremFormalization`
 
-Status: `active`
+Status: `accepted`
 
 Harness: `hierarchical`
 
@@ -88,7 +88,7 @@ Theorem 14.2.
 - [x] Root import, focused build, typed canary, Tests, axiom scan, full harness,
   proof export, evidence indexes, documentation and website pass.
 - [x] Independent read-only review finds no unresolved P0--P3 issue.
-- [ ] PR, authoritative-main Actions, Pages deployment and live desktop/mobile
+- [x] PR, authoritative-main Actions, Pages deployment and live desktop/mobile
   page are verified before this task becomes accepted.
 
 ## Local verification evidence
@@ -109,6 +109,25 @@ Theorem 14.2.
   and singular branches, Bernoulli endpoints, and the Chapter 15 history-law
   nonclaim. See
   `reviews/2026-08-16-textbook-part-iv-chapter-14-information-theory-spine.md`.
+
+## Remote verification evidence
+
+- PR #11 passed `Lean and documentation / build` in run `31948234489`, job
+  `95167560544` (22m25s), and was merged without a direct push to `main`.
+- Merge commit: `194aca91b5d9b50c26fffaf5b02c610112a7daa7`.
+- Authoritative-main run `31949303227` passed: build job `95170181038`
+  completed in 20m56s with Lean, Tests, site generation, site checks, and
+  Pages artifact upload; deployment job `95172626370` completed in 10s.
+- Live page:
+  <https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/textbook-spine/chapter-14-information-theory/>.
+  Desktop 1280px and mobile 390x844 inspections confirmed the verified
+  banner, overall `PARTIAL` chapter status, compiled Theorem 14.2 mapping,
+  Chapter 15 history-KL nonclaim, five MathJax containers, zero broken images,
+  and no document-level horizontal overflow.
+
+Remote acceptance applies to the scoped §14.2 Lean surface. It does not
+promote §14.1 coding results, full Exercise 14.10, or adaptive history KL to
+compiled status.
 
 ## Mathlib-ready leaf contract
 
