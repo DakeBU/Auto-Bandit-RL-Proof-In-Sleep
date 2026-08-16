@@ -38,6 +38,7 @@ import BanditRLProof.RealMeanRegretPullCount
 import BanditRLProof.LowerBounds.BasicIdeas
 import BanditRLProof.LowerBounds.InformationTheory
 import BanditRLProof.LowerBounds.Minimax
+import BanditRLProof.LowerBounds.InstanceDependent
 import BanditRLProof.RealKernelRegretPullCount
 import BanditRLProof.ExpectationPullCount
 import BanditRLProof.ExpectationWeightedPullCount
