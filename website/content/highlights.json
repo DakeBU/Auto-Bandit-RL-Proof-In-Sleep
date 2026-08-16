@@ -1077,6 +1077,44 @@
         "BanditRLProof.LowerBounds.parametricDivergenceInfimum_le",
         "BanditRLProof.LowerBounds.klDiv_gaussianReal_one"
       ]
+    },
+    {
+      "full_name": "BanditRLProof.LowerBounds.exists_cdfTail_ge_of_integral_ge",
+      "chapter": "foundations",
+      "plain": "If the average random-regret tail over a probability law on instances is at least delta, then one deterministic instance has tail probability at least delta.",
+      "math": "\\mathbb E_Q[1-F_X(u)]\\ge\\delta\\;\\Longrightarrow\\;\\exists x:\\;1-F_x(u)\\ge\\delta.",
+      "intuition": "An average cannot exceed every point, so randomizing the hard reward matrix can be converted back into one fixed adversarial sequence.",
+      "why": "This is the exact first-moment content of Claim 17.5, which closes the final probabilistic-method step in the source's adversarial route.",
+      "position": "Claim 17.5 is compiled, but the clipped-normal law and the average-tail lower bound that feed it remain blocked.",
+      "proof_idea": "Apply Mathlib's probability-measure first-moment theorem to the integrable function x maps to one minus F_x(u), then chain the assumed lower bound on its integral.",
+      "lean_notes": "The source suppresses regularity; Lean exposes integrability of the CDF-tail function as a premise. The theorem does not construct the CDF or reward-matrix law.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRLProof.LowerBounds.measureReal_diff_ge_delta",
+      "chapter": "foundations",
+      "plain": "An event with probability at least twice delta still has probability at least delta after removing a bad event of probability at most delta.",
+      "math": "P(A)\\ge2\\delta,\\;P(B)\\le\\delta\\quad\\Longrightarrow\\quad P(A\\setminus B)\\ge\\delta.",
+      "intuition": "The pull-small event can lose all rounds with excessive clipping and still retain the confidence level needed by Theorem 17.4.",
+      "why": "This isolates the exact probability bookkeeping between Claims 17.6 and 17.7 without pretending either claim is available.",
+      "position": "It is a generic outer-measure leaf between the two blocked construction-specific claims.",
+      "proof_idea": "Use Mathlib's lower bound on the real measure of a set difference and finish with linear arithmetic.",
+      "lean_notes": "No measurable-set premise is needed because the measure interface is an outer measure on all sets; finiteness is explicit.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRLProof.LowerBounds.randomRegret_ge_quarter_of_clippingDecomposition",
+      "chapter": "foundations",
+      "plain": "If Eq. (17.8) holds, pulling the hard arm at most half the time and clipping at most a quarter of rounds forces random regret at least gap times horizon over four.",
+      "math": "T_i(n)\\le n/2,\\;C_n\\le n/4,\\;\\widehat R_n\\ge\\Delta(n-T_i(n)-C_n)\\;\\Longrightarrow\\;\\widehat R_n\\ge\\Delta n/4.",
+      "intuition": "After removing the hard-arm pulls and boundary-clipped rounds, at least one quarter of the horizon still contributes the gap.",
+      "why": "This compiles the deterministic end of the source argument while leaving the construction-specific pathwise comparison visible as a premise.",
+      "position": "It does not prove Eq. (17.8), Claim 17.6, Claim 17.7, or Theorem 17.4.",
+      "proof_idea": "Subtract the half-horizon and quarter-horizon count bounds, multiply by a nonnegative gap, and compose with the explicit source comparison.",
+      "lean_notes": "Counts are natural numbers cast to Real. The nonnegative gap and Eq. (17.8) lower comparison are explicit assumptions.",
+      "dependencies": [
+        "BanditRLProof.LowerBounds.adversarialRegretLowerExpression_ge_quarter"
+      ]
     }
   ]
 }
