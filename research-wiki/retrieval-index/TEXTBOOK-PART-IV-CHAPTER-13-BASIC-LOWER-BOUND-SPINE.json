@@ -1,6 +1,6 @@
 {
-  "task": "BOOKMAP-CHAPTER-9-HOEFFDING-UCBVI-CANONICAL-COMPLETION",
-  "generated": "2026-08-16T07:34:19+00:00",
+  "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+  "generated": "2026-08-16T09:10:32+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -51571,6 +51571,102 @@
       "statement": "def lmlBanditDeclarationCards : List RegretBoundCard"
     },
     {
+      "kind": "def",
+      "name": "worstCaseExpectedRegret",
+      "full_name": "BanditRLProof.LowerBounds.worstCaseExpectedRegret",
+      "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+      "line": 35,
+      "statement": "noncomputable def worstCaseExpectedRegret {Policy : Type u} {Environment : Type v} (regret : Policy -> Environment -> ENNReal) (environmentClass : Set Environment) (policy : Policy) : ENNReal"
+    },
+    {
+      "kind": "def",
+      "name": "minimaxExpectedRegret",
+      "full_name": "BanditRLProof.LowerBounds.minimaxExpectedRegret",
+      "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+      "line": 49,
+      "statement": "noncomputable def minimaxExpectedRegret {Policy : Type u} {Environment : Type v} (regret : Policy -> Environment -> ENNReal) (policyClass : Set Policy) (environmentClass : Set Environment) : ENNReal"
+    },
+    {
+      "kind": "theorem",
+      "name": "expectedRegret_le_worstCaseExpectedRegret",
+      "full_name": "BanditRLProof.LowerBounds.expectedRegret_le_worstCaseExpectedRegret",
+      "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+      "line": 58,
+      "statement": "theorem expectedRegret_le_worstCaseExpectedRegret {Policy : Type u} {Environment : Type v} (regret : Policy -> Environment -> ENNReal) (environmentClass : Set Environment) (policy : Policy) (environment : Environment) (henvironment : environment ∈ environmentClass) : regret policy environment ≤ worstCaseExpectedRegret regret environmentClass policy"
+    },
+    {
+      "kind": "theorem",
+      "name": "minimaxExpectedRegret_le_worstCaseExpectedRegret",
+      "full_name": "BanditRLProof.LowerBounds.minimaxExpectedRegret_le_worstCaseExpectedRegret",
+      "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+      "line": 71,
+      "statement": "theorem minimaxExpectedRegret_le_worstCaseExpectedRegret {Policy : Type u} {Environment : Type v} (regret : Policy -> Environment -> ENNReal) (policyClass : Set Policy) (environmentClass : Set Environment) (policy : Policy) (hpolicy : policy ∈ policyClass) : minimaxExpectedRegret regret policyClass environmentClass ≤ worstCaseExpectedRegret regret environmentClass policy"
+    },
+    {
+      "kind": "theorem",
+      "name": "le_minimaxExpectedRegret",
+      "full_name": "BanditRLProof.LowerBounds.le_minimaxExpectedRegret",
+      "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+      "line": 82,
+      "statement": "theorem le_minimaxExpectedRegret {Policy : Type u} {Environment : Type v} (regret : Policy -> Environment -> ENNReal) (policyClass : Set Policy) (environmentClass : Set Environment) (lower : ENNReal) (hlower : ∀ policy : policyClass, lower ≤ worstCaseExpectedRegret regret environmentClass policy.1) : lower ≤ minimaxExpectedRegret regret policyClass environmentClass"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_alternative_le_average",
+      "full_name": "BanditRLProof.LowerBounds.exists_alternative_le_average",
+      "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+      "line": 100,
+      "statement": "theorem exists_alternative_le_average {m : Nat} (hm : 0 < m) (alternativeExpectedPulls : Fin m -> Real) (budget : Real) (hbudget : ∑ i : Fin m, alternativeExpectedPulls i ≤ budget) : ∃ i : Fin m, alternativeExpectedPulls i ≤ budget / (m : Real)"
+    },
+    {
+      "kind": "theorem",
+      "name": "alternativeExpectedPullBudget_le",
+      "full_name": "BanditRLProof.LowerBounds.alternativeExpectedPullBudget_le",
+      "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+      "line": 126,
+      "statement": "theorem alternativeExpectedPullBudget_le {m : Nat} (expectedPulls : Fin (m + 1) -> Real) (budget : Real) (hnonneg : ∀ arm, 0 ≤ expectedPulls arm) (htotal : ∑ arm : Fin (m + 1), expectedPulls arm = budget) : (∑ i : Fin m, expectedPulls i.succ) ≤ budget"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_leastExploredAlternative",
+      "full_name": "BanditRLProof.LowerBounds.exists_leastExploredAlternative",
+      "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+      "line": 143,
+      "statement": "theorem exists_leastExploredAlternative {m : Nat} (hm : 0 < m) (expectedPulls : Fin (m + 1) -> Real) (horizon : Nat) (hnonneg : ∀ arm, 0 ≤ expectedPulls arm) (htotal : ∑ arm : Fin (m + 1), expectedPulls arm = (horizon : Real)) : ∃ i : Fin m, expectedPulls i.succ ≤ (horizon : Real) / (m : Real)"
+    },
+    {
+      "kind": "def",
+      "name": "baseEnvironmentRegret",
+      "full_name": "BanditRLProof.LowerBounds.baseEnvironmentRegret",
+      "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+      "line": 156,
+      "statement": "def baseEnvironmentRegret (horizon : Nat) (gap baseFirstExpectedPulls : Real) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "changedEnvironmentRegretLowerBound",
+      "full_name": "BanditRLProof.LowerBounds.changedEnvironmentRegretLowerBound",
+      "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+      "line": 161,
+      "statement": "def changedEnvironmentRegretLowerBound (gap changedFirstExpectedPulls : Real) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "max_base_changed_regretLowerBound_ge_half_sub_error",
+      "full_name": "BanditRLProof.LowerBounds.max_base_changed_regretLowerBound_ge_half_sub_error",
+      "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+      "line": 173,
+      "statement": "theorem max_base_changed_regretLowerBound_ge_half_sub_error (horizon : Nat) (gap baseFirstExpectedPulls changedFirstExpectedPulls error : Real) (hgap : 0 ≤ gap) (hpullDifference : baseFirstExpectedPulls - changedFirstExpectedPulls ≤ error) : gap * ((horizon : Real) - error) / 2 ≤ max (baseEnvironmentRegret horizon gap baseFirstExpectedPulls) (changedEnvironmentRegretLowerBound gap changedFirstExpectedPulls)"
+    },
+    {
+      "kind": "theorem",
+      "name": "max_base_changed_regretLowerBound_ge_half",
+      "full_name": "BanditRLProof.LowerBounds.max_base_changed_regretLowerBound_ge_half",
+      "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+      "line": 205,
+      "statement": "theorem max_base_changed_regretLowerBound_ge_half (horizon : Nat) (gap baseFirstExpectedPulls changedFirstExpectedPulls : Real) (hgap : 0 ≤ gap) (htransport : baseFirstExpectedPulls ≤ changedFirstExpectedPulls) : gap * (horizon : Real) / 2 ≤ max (baseEnvironmentRegret horizon gap baseFirstExpectedPulls) (changedEnvironmentRegretLowerBound gap changedFirstExpectedPulls)"
+    },
+    {
       "kind": "structure",
       "name": "SuccMartingaleDifference",
       "full_name": "BanditRLProof.MartingaleDiff.SuccMartingaleDifference",
@@ -86995,50 +87091,9 @@
       "statement": "theorem integrable_and_integral_abs_stoppedValue_weight_mul_le {Omega : Type u} [MeasurableSpace Omega] (mu : Measure Omega) [IsFiniteMeasure mu] (tau : Omega -> WithTop Nat) (htau : Measurable tau) (hfinite : ∀ᵐ omega ∂mu, tau omega ≠ ⊤) (process : Nat -> Omega -> Real) (weight : Nat -> Real) (hweightSq : Summable (fun n => weight n ^ 2)) (hstoppedMeasurable : Measurable (stoppedValue (fun n omega => weight n * process n omega) tau)) (secondMomentEnvelope : Real) (hprocessMemLp : forall n, MemLp (process n) 2 mu) (hprocessSecondMoment : forall n, integral mu (fun omega => process n omega ^ 2) <= secondMomentEnvelope) : Integrable (stoppedValue (fun n omega => weight n * process n omega) tau) mu /\\ integral mu (fun omega => |stoppedValue (fun n omega => weight n * process n omega) tau omega|) <= Real.sqrt secondMomentEnvelope * (Real.sqrt (∑' n : Nat, weight n ^ 2) * Real.sqrt (mu.real Set.univ))"
     }
   ],
-  "recent_trials": [
-    {
-      "changed_files": [
-        "BanditRLProof\\RL\\FiniteHorizonAdaptiveCumulativeUCBVITerminal.lean"
-      ],
-      "kind": "build",
-      "lean": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_trajectoryMeasure_cumulativeEpisodePseudoRegret_gt_canonicalRegretBound_le",
-      "notes": "Lean chain, typed canary, website, independent reviewer and local full gate accepted; remote PR/Actions/Pages delivery remains.",
-      "parent_id": "",
-      "role": "reviewer",
-      "route_fingerprint": "",
-      "run_id": "bookmap-chapter-9-hoeffding-ucbvi-canonical-completion-2026-08-14",
-      "source": "PPR-AZAR-OSBAND-MUNOS-2017-UCBVI",
-      "statement_hash": "4e8bb0751363c547fea29789b4552b4c23ace927bdc86debdf9bc101ce8054f1",
-      "status": "compiled",
-      "task": "BOOKMAP-CHAPTER-9-HOEFFDING-UCBVI-CANONICAL-COMPLETION",
-      "time": "2026-08-13T20:18:06+00:00",
-      "verifier_evidence": [
-        "Build completed successfully (3699 jobs); Ran 42 tests; OK (skipped=1); check passed; independent review no P0-P3"
-      ]
-    },
-    {
-      "changed_files": [
-        "website\\content\\chapters.json"
-      ],
-      "kind": "build",
-      "lean": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_trajectoryMeasure_cumulativeEpisodePseudoRegret_gt_canonicalRegretBound_le",
-      "notes": "All fourteen gates accepted: same-source generated Hoeffding UCBVI-CH terminal, expectation consumer, typed canary, independent review, full harness, PR #5, Actions run 31742349947, merge 826ef88, Pages deployment and live HTTP 200 verification.",
-      "parent_id": "",
-      "role": "reviewer",
-      "route_fingerprint": "",
-      "run_id": "bookmap-chapter-9-hoeffding-ucbvi-canonical-completion-2026-08-14",
-      "source": "PPR-AZAR-OSBAND-MUNOS-2017-UCBVI",
-      "statement_hash": "4e8bb0751363c547fea29789b4552b4c23ace927bdc86debdf9bc101ce8054f1",
-      "status": "accepted",
-      "task": "BOOKMAP-CHAPTER-9-HOEFFDING-UCBVI-CANONICAL-COMPLETION",
-      "time": "2026-08-13T21:05:07+00:00",
-      "verifier_evidence": [
-        "Build completed successfully (3699 jobs); 42 tests OK (1 skipped); Actions build/deploy success; live Chapter 9 contains the generated terminal"
-      ]
-    }
-  ],
+  "recent_trials": [],
   "open_memory_files": [
-    "research-wiki/lml/BOOKMAP-CHAPTER-9-HOEFFDING-UCBVI-CANONICAL-COMPLETION.md",
+    "research-wiki/lml/TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE.md",
     "research-wiki/mathlib/theorem-cards.md",
     "research-wiki/textbooks/bandit-classics.md",
     "research-wiki/papers/bandit-frontier-cards.md",
@@ -87053,8 +87108,8 @@
     "docs/adaptive_harness_design.md",
     "docs/proof_export.md",
     "research-wiki/retrieval-index/local_lean_declarations.json",
-    "proof-attempts/BOOKMAP-CHAPTER-9-HOEFFDING-UCBVI-CANONICAL-COMPLETION/",
-    "proof-obligations/BOOKMAP-CHAPTER-9-HOEFFDING-UCBVI-CANONICAL-COMPLETION.md",
-    "conversion-windows/BOOKMAP-CHAPTER-9-HOEFFDING-UCBVI-CANONICAL-COMPLETION.md"
+    "proof-attempts/TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE/",
+    "proof-obligations/TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE.md",
+    "conversion-windows/TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE.md"
   ]
 }

@@ -73,6 +73,27 @@ and complete Tsallis-INF remain unclaimed.
 | Tail inequalities | `MLIB-PROBABILITY-SUBGAUSSIAN`, `MLIB-PROBABILITY-MGF`, `MLIB-PROBABILITY-VARIANCE` | UCB/ETC tails, Chernoff routes, robust/heavy-tailed baselines |
 | Tsallis/FTRL power algebra | `MLIB-REAL-RPOW-TSALLIS`, `MLIB-CONVEX-LINALG`, `MLIB-FINSET-SUMS` | Tsallis-INF, best-of-both-worlds, adaptive FTRL |
 
+## Textbook Spine: Part IV Finite-Arm Lower Bounds
+
+This source-faithful spine is separate from the ten-chapter teaching Book Map.
+Its canonical source is Lattimore--Szepesvári (Cambridge University Press,
+2020), Part IV, Chapters 13--17. A chapter advances only after source mapping,
+Lean, evidence, site, review, and remote gates agree.
+
+| Chapter | Current node | Evidence status | Boundary / next dependency |
+| --- | --- | --- | --- |
+| 13, Lower Bounds: Basic Ideas | explicit ENNReal minimax semantics; least-explored alternative averaging; quantitative two-environment algebra with an explicit pull-discrepancy error | local leaves compiled; chapter partial | Theorem 13.1 is only source-stated here and proved in Ch. 15; Ch. 14 must supply same-policy information transport |
+| 14, Foundations of Information Theory | source page map and navigation only | planned | freeze exact entropy/KL/data-processing contracts and absolute-continuity direction before Lean work |
+| 15, Minimax Lower Bounds | source page map and navigation only | planned | consume Ch. 13 algebra plus Ch. 14 testing/change-of-measure leaves; prove the caller-free Gaussian terminal |
+| 16, Instance-Dependent Lower Bounds | source page map and navigation only | planned | freeze the exact asymptotic policy-consistency and KL constraint before formalization |
+| 17, High-Probability Lower Bounds | source page map and navigation only | planned | freeze the exact event/probability quantifiers and horizon order before formalization |
+
+The Chapter 13 source cards are `TXT-LS-2020-CH13-MINIMAL-SOURCE-CHANGE`
+and `TXT-LS-2020-THM-13-1`. The relevant Mathlib retrieval cards are
+`MLIB-FINSET-SUMS`, `MLIB-FINTYPE-FIN`, and `MLIB-ORDER-ALGEBRA`;
+`WEAPON-KL-CHANGE-OF-MEASURE` is inspiration-only. No LML theorem card is
+treated as a local lower-bound proof.
+
 ## Compiled Local Leaves
 
 The first dependency-light compiled leaf library is

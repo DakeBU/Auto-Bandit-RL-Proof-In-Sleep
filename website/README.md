@@ -9,13 +9,16 @@ The build:
 - indexes every supported declaration under `BanditRLProof/`;
 - preserves exact namespace, statement, module, imports, and source location;
 - maps every declaration into a ten-chapter Book Map;
+- preserves that Book Map while adding a separate, ordered Part IV lower-bound
+  Textbook Spine from `content/textbook_spine.json`;
 - adds reviewed teaching notes from `content/highlights.json`;
 - keeps compiled, partial, stated, planned, and blocked routes distinct through
   `content/results.json`;
 - renders maintainable Mermaid architecture, dependency, progress, learning,
   installation, formalization, and contribution diagrams;
 - exposes installation, contributors, contribution, governance, attribution,
-  roadmap, source-access, declaration, and implementation-map pages;
+  roadmap, source-access, declaration, implementation-map, and textbook-spine
+  pages;
 - supplies a provider-independent local formalization adapter and a versioned
   lemma-packet handoff contract.
 

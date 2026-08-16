@@ -6,5 +6,6 @@ import Tests.KLUCBGeneratedRegretCanary
 import Tests.BookMapChaptersTwoToFourCanary
 import Tests.FiniteHorizonAdaptiveCumulativeHoeffdingUCBVICanary
 import Tests.BookMapChapterNineCanary
+import Tests.TextbookPartIVChapter13Canary
 import Tests.BookMapChaptersFiveAndSixCanary
 import Tests.BookMapChaptersSevenAndEightCanary

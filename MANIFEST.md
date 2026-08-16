@@ -13036,3 +13036,34 @@ here during local harness runs.
 - `2026-08-13T21:07:44+00:00` `bandit.py memory-refresh` `retrieval-index` `research-wiki/retrieval-index/BOOKMAP-CHAPTER-9-HOEFFDING-UCBVI-CANONICAL-COMPLETION.json` - BOOKMAP-CHAPTER-9-HOEFFDING-UCBVI-CANONICAL-COMPLETION
 - `2026-08-13T21:07:56+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/BOOKMAP-CHAPTER-9-HOEFFDING-UCBVI-CANONICAL-COMPLETION.md` - BOOKMAP-CHAPTER-9-HOEFFDING-UCBVI-CANONICAL-COMPLETION
 - `2026-08-13T21:08:01+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/RL-FINITE-HORIZON-ADAPTIVE-CUMULATIVE-UCBVI-HIGH-PROBABILITY-REGRET.md` - RL-FINITE-HORIZON-ADAPTIVE-CUMULATIVE-UCBVI-HIGH-PROBABILITY-REGRET
+- `2026-08-16T07:31:48+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-16T07:31:48+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-16T07:31:48+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-16T07:31:48+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-16T07:31:48+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-16T07:31:48+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-16T07:31:48+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-16T07:31:48+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-16T07:34:00+00:00` `bandit.py memory-refresh` `retrieval-index` `research-wiki/retrieval-index/BOOKMAP-CHAPTER-9-HOEFFDING-UCBVI-CANONICAL-COMPLETION.json` - BOOKMAP-CHAPTER-9-HOEFFDING-UCBVI-CANONICAL-COMPLETION
+- `2026-08-16T07:34:24+00:00` `bandit.py memory-refresh` `retrieval-index` `research-wiki/retrieval-index/BOOKMAP-CHAPTER-9-HOEFFDING-UCBVI-CANONICAL-COMPLETION.json` - BOOKMAP-CHAPTER-9-HOEFFDING-UCBVI-CANONICAL-COMPLETION
+- `2026-08-16T08:33:24+00:00` `bandit.py new-task` `task` `tasks/TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE.md` - Textbook Part IV Chapter 13 lower-bound basic ideas spine
+- `2026-08-16T08:38:42+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE.md` - TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
+- `2026-08-16T08:45:37+00:00` `bandit.py export-proof` `proof-export` `paper-notes/problem-exports/TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE/latest.tex` - TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
+- `2026-08-16T09:08:10+00:00` `bandit.py memory-refresh` `retrieval-index` `research-wiki/retrieval-index/TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE.json` - TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
+- `2026-08-16T09:08:15+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-16T09:08:15+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-16T09:08:15+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-16T09:08:15+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-16T09:08:15+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-16T09:08:15+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-16T09:08:15+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-16T09:08:15+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-16T09:10:31+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-16T09:10:31+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-16T09:10:31+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-16T09:10:31+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-16T09:10:31+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-16T09:10:31+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-16T09:10:31+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-16T09:10:31+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-16T09:10:36+00:00` `bandit.py memory-refresh` `retrieval-index` `research-wiki/retrieval-index/TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE.json` - TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE

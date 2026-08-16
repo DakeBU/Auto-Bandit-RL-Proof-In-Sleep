@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-13T19:54:39+00:00",
+  "generated": "2026-08-16T09:10:27+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -22650,6 +22650,102 @@
       "statement": "def lmlBanditDeclarationCards : List RegretBoundCard"
     },
     {
+      "kind": "def",
+      "name": "worstCaseExpectedRegret",
+      "full_name": "BanditRLProof.LowerBounds.worstCaseExpectedRegret",
+      "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+      "line": 35,
+      "statement": "noncomputable def worstCaseExpectedRegret {Policy : Type u} {Environment : Type v} (regret : Policy -> Environment -> ENNReal) (environmentClass : Set Environment) (policy : Policy) : ENNReal"
+    },
+    {
+      "kind": "def",
+      "name": "minimaxExpectedRegret",
+      "full_name": "BanditRLProof.LowerBounds.minimaxExpectedRegret",
+      "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+      "line": 49,
+      "statement": "noncomputable def minimaxExpectedRegret {Policy : Type u} {Environment : Type v} (regret : Policy -> Environment -> ENNReal) (policyClass : Set Policy) (environmentClass : Set Environment) : ENNReal"
+    },
+    {
+      "kind": "theorem",
+      "name": "expectedRegret_le_worstCaseExpectedRegret",
+      "full_name": "BanditRLProof.LowerBounds.expectedRegret_le_worstCaseExpectedRegret",
+      "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+      "line": 58,
+      "statement": "theorem expectedRegret_le_worstCaseExpectedRegret {Policy : Type u} {Environment : Type v} (regret : Policy -> Environment -> ENNReal) (environmentClass : Set Environment) (policy : Policy) (environment : Environment) (henvironment : environment \u2208 environmentClass) : regret policy environment \u2264 worstCaseExpectedRegret regret environmentClass policy"
+    },
+    {
+      "kind": "theorem",
+      "name": "minimaxExpectedRegret_le_worstCaseExpectedRegret",
+      "full_name": "BanditRLProof.LowerBounds.minimaxExpectedRegret_le_worstCaseExpectedRegret",
+      "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+      "line": 71,
+      "statement": "theorem minimaxExpectedRegret_le_worstCaseExpectedRegret {Policy : Type u} {Environment : Type v} (regret : Policy -> Environment -> ENNReal) (policyClass : Set Policy) (environmentClass : Set Environment) (policy : Policy) (hpolicy : policy \u2208 policyClass) : minimaxExpectedRegret regret policyClass environmentClass \u2264 worstCaseExpectedRegret regret environmentClass policy"
+    },
+    {
+      "kind": "theorem",
+      "name": "le_minimaxExpectedRegret",
+      "full_name": "BanditRLProof.LowerBounds.le_minimaxExpectedRegret",
+      "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+      "line": 82,
+      "statement": "theorem le_minimaxExpectedRegret {Policy : Type u} {Environment : Type v} (regret : Policy -> Environment -> ENNReal) (policyClass : Set Policy) (environmentClass : Set Environment) (lower : ENNReal) (hlower : \u2200 policy : policyClass, lower \u2264 worstCaseExpectedRegret regret environmentClass policy.1) : lower \u2264 minimaxExpectedRegret regret policyClass environmentClass"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_alternative_le_average",
+      "full_name": "BanditRLProof.LowerBounds.exists_alternative_le_average",
+      "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+      "line": 100,
+      "statement": "theorem exists_alternative_le_average {m : Nat} (hm : 0 < m) (alternativeExpectedPulls : Fin m -> Real) (budget : Real) (hbudget : \u2211 i : Fin m, alternativeExpectedPulls i \u2264 budget) : \u2203 i : Fin m, alternativeExpectedPulls i \u2264 budget / (m : Real)"
+    },
+    {
+      "kind": "theorem",
+      "name": "alternativeExpectedPullBudget_le",
+      "full_name": "BanditRLProof.LowerBounds.alternativeExpectedPullBudget_le",
+      "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+      "line": 126,
+      "statement": "theorem alternativeExpectedPullBudget_le {m : Nat} (expectedPulls : Fin (m + 1) -> Real) (budget : Real) (hnonneg : \u2200 arm, 0 \u2264 expectedPulls arm) (htotal : \u2211 arm : Fin (m + 1), expectedPulls arm = budget) : (\u2211 i : Fin m, expectedPulls i.succ) \u2264 budget"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_leastExploredAlternative",
+      "full_name": "BanditRLProof.LowerBounds.exists_leastExploredAlternative",
+      "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+      "line": 143,
+      "statement": "theorem exists_leastExploredAlternative {m : Nat} (hm : 0 < m) (expectedPulls : Fin (m + 1) -> Real) (horizon : Nat) (hnonneg : \u2200 arm, 0 \u2264 expectedPulls arm) (htotal : \u2211 arm : Fin (m + 1), expectedPulls arm = (horizon : Real)) : \u2203 i : Fin m, expectedPulls i.succ \u2264 (horizon : Real) / (m : Real)"
+    },
+    {
+      "kind": "def",
+      "name": "baseEnvironmentRegret",
+      "full_name": "BanditRLProof.LowerBounds.baseEnvironmentRegret",
+      "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+      "line": 156,
+      "statement": "def baseEnvironmentRegret (horizon : Nat) (gap baseFirstExpectedPulls : Real) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "changedEnvironmentRegretLowerBound",
+      "full_name": "BanditRLProof.LowerBounds.changedEnvironmentRegretLowerBound",
+      "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+      "line": 161,
+      "statement": "def changedEnvironmentRegretLowerBound (gap changedFirstExpectedPulls : Real) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "max_base_changed_regretLowerBound_ge_half_sub_error",
+      "full_name": "BanditRLProof.LowerBounds.max_base_changed_regretLowerBound_ge_half_sub_error",
+      "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+      "line": 173,
+      "statement": "theorem max_base_changed_regretLowerBound_ge_half_sub_error (horizon : Nat) (gap baseFirstExpectedPulls changedFirstExpectedPulls error : Real) (hgap : 0 \u2264 gap) (hpullDifference : baseFirstExpectedPulls - changedFirstExpectedPulls \u2264 error) : gap * ((horizon : Real) - error) / 2 \u2264 max (baseEnvironmentRegret horizon gap baseFirstExpectedPulls) (changedEnvironmentRegretLowerBound gap changedFirstExpectedPulls)"
+    },
+    {
+      "kind": "theorem",
+      "name": "max_base_changed_regretLowerBound_ge_half",
+      "full_name": "BanditRLProof.LowerBounds.max_base_changed_regretLowerBound_ge_half",
+      "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+      "line": 205,
+      "statement": "theorem max_base_changed_regretLowerBound_ge_half (horizon : Nat) (gap baseFirstExpectedPulls changedFirstExpectedPulls : Real) (hgap : 0 \u2264 gap) (htransport : baseFirstExpectedPulls \u2264 changedFirstExpectedPulls) : gap * (horizon : Real) / 2 \u2264 max (baseEnvironmentRegret horizon gap baseFirstExpectedPulls) (changedEnvironmentRegretLowerBound gap changedFirstExpectedPulls)"
+    },
+    {
       "kind": "structure",
       "name": "SuccMartingaleDifference",
       "full_name": "BanditRLProof.MartingaleDiff.SuccMartingaleDifference",
@@ -32494,7 +32590,7 @@
       "name": "trajectoryMeasure_condDistrib_historyBatchStatistic",
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.trajectoryMeasure_condDistrib_historyBatchStatistic",
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean",
-      "line": 81,
+      "line": 83,
       "statement": "theorem trajectoryMeasure_condDistrib_historyBatchStatistic {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} [StandardBorelSpace (EpisodeBatch mdp episodes)] (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (n : Nat) (statistic : EpisodeBatchPrefix mdp episodes n \u00d7 EpisodeBatch mdp episodes -> Real) (hstatistic : Measurable statistic) : ProbabilityTheory.condDistrib (fun trajectory : EpisodeBatchTrajectory mdp episodes => statistic (Preorder.frestrictLe n trajectory, trajectory (n + 1))) (Preorder.frestrictLe n) source.trajectoryMeasure =\u1d50[ source.trajectoryMeasure.map (Preorder.frestrictLe n)] ((ProbabilityTheory.Kernel.id \u00d7\u2096 source.batchKernel n).map statistic)"
     },
     {
@@ -32502,7 +32598,7 @@
       "name": "condExpKernel_map_historyBatchStatistic_eq_batchKernel",
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.condExpKernel_map_historyBatchStatistic_eq_batchKernel",
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean",
-      "line": 173,
+      "line": 175,
       "statement": "theorem condExpKernel_map_historyBatchStatistic_eq_batchKernel {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} [StandardBorelSpace (EpisodeBatch mdp episodes)] [StandardBorelSpace (EpisodeBatchTrajectory mdp episodes)] (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (n : Nat) (statistic : EpisodeBatchPrefix mdp episodes n \u00d7 EpisodeBatch mdp episodes -> Real) (hstatistic : Measurable statistic) : Filter.Eventually (fun trajectory : EpisodeBatchTrajectory mdp episodes => Measure.map (fun path : EpisodeBatchTrajectory mdp episodes => statistic (Preorder.frestrictLe n path, path (n + 1))) (ProbabilityTheory.condExpKernel source.trajectoryMeasure ((inferInstance : MeasurableSpace (EpisodeBatchPrefix mdp episodes n)).comap (Preorder.frestrictLe n)) trajectory) = ((ProbabilityTheory.Kernel.id \u00d7\u2096 source.batchKernel n).map statistic) (Preorder.frestrictLe n trajectory)) (ae (source.trajectoryMeasure.trim (Preorder.measurable_frestrictLe n).comap_le))"
     },
     {
@@ -32510,7 +32606,7 @@
       "name": "bellmanInflation",
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.bellmanInflation",
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean",
-      "line": 220,
+      "line": 222,
       "statement": "noncomputable def bellmanInflation (mdp : MDP State Action) : Real"
     },
     {
@@ -32518,7 +32614,7 @@
       "name": "bellmanWeightCap",
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.bellmanWeightCap",
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean",
-      "line": 224,
+      "line": 226,
       "statement": "noncomputable def bellmanWeightCap : Real"
     },
     {
@@ -32526,7 +32622,7 @@
       "name": "bellmanInflation_one_le",
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.bellmanInflation_one_le",
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean",
-      "line": 226,
+      "line": 228,
       "statement": "theorem bellmanInflation_one_le (mdp : MDP State Action) : 1 <= bellmanInflation mdp"
     },
     {
@@ -32534,7 +32630,7 @@
       "name": "bellmanInflation_pow_le_cap",
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.bellmanInflation_pow_le_cap",
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean",
-      "line": 233,
+      "line": 235,
       "statement": "theorem bellmanInflation_pow_le_cap (mdp : MDP State Action) (hhorizon : 0 < mdp.horizon) (remaining : Nat) (hremaining : remaining <= mdp.horizon) : bellmanInflation mdp ^ remaining <= bellmanWeightCap"
     },
     {
@@ -32542,7 +32638,7 @@
       "name": "normalizedBellmanWeight",
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.normalizedBellmanWeight",
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean",
-      "line": 269,
+      "line": 271,
       "statement": "noncomputable def normalizedBellmanWeight (mdp : MDP State Action) (stage : Fin mdp.horizon) : Real"
     },
     {
@@ -32550,7 +32646,7 @@
       "name": "normalizedBellmanChargeWeight",
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.normalizedBellmanChargeWeight",
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean",
-      "line": 274,
+      "line": 276,
       "statement": "noncomputable def normalizedBellmanChargeWeight (mdp : MDP State Action) (stage : Fin mdp.horizon) : Real"
     },
     {
@@ -32558,7 +32654,7 @@
       "name": "normalizedBellmanChargeWeight_mem_Icc",
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.normalizedBellmanChargeWeight_mem_Icc",
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean",
-      "line": 278,
+      "line": 280,
       "statement": "theorem normalizedBellmanChargeWeight_mem_Icc (mdp : MDP State Action) (hhorizon : 0 < mdp.horizon) (stage : Fin mdp.horizon) : normalizedBellmanChargeWeight mdp stage \u2208 Set.Icc (0 : Real) 1"
     },
     {
@@ -32566,7 +32662,7 @@
       "name": "normalizedBellmanChargeWeight_mul_inflation",
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.normalizedBellmanChargeWeight_mul_inflation",
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean",
-      "line": 299,
+      "line": 301,
       "statement": "theorem normalizedBellmanChargeWeight_mul_inflation (mdp : MDP State Action) (stage : Fin mdp.horizon) : normalizedBellmanChargeWeight mdp stage * bellmanInflation mdp = normalizedBellmanWeight mdp stage"
     },
     {
@@ -32574,7 +32670,7 @@
       "name": "normalizedBellmanWeight_mem_Icc",
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.normalizedBellmanWeight_mem_Icc",
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean",
-      "line": 307,
+      "line": 309,
       "statement": "theorem normalizedBellmanWeight_mem_Icc (mdp : MDP State Action) (hhorizon : 0 < mdp.horizon) (stage : Fin mdp.horizon) : normalizedBellmanWeight mdp stage \u2208 Set.Icc (0 : Real) 1"
     },
     {
@@ -32582,7 +32678,7 @@
       "name": "clippedSuccessorGapFeatureOfSummaries",
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.clippedSuccessorGapFeatureOfSummaries",
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean",
-      "line": 331,
+      "line": 333,
       "statement": "noncomputable def clippedSuccessorGapFeatureOfSummaries (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (n : Nat) (summaries : Fin (n + 1) -> TransitionCountSummary mdp) (stage : Fin mdp.horizon) (state : State) : Real"
     },
     {
@@ -32590,7 +32686,7 @@
       "name": "clippedSuccessorGapFeatureOfSummaries_mem_Icc",
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.clippedSuccessorGapFeatureOfSummaries_mem_Icc",
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean",
-      "line": 349,
+      "line": 351,
       "statement": "theorem clippedSuccessorGapFeatureOfSummaries_mem_Icc (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (n : Nat) (summaries : Fin (n + 1) -> TransitionCountSummary mdp) (stage : Fin mdp.horizon) (state : State) : clippedSuccessorGapFeatureOfSummaries mdp defaultState episodes delta n summaries stage state \u2208 Set.Icc (0 : Real) mdp.horizon"
     },
     {
@@ -32598,7 +32694,7 @@
       "name": "successorBellmanStatisticOfSummaries",
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.successorBellmanStatisticOfSummaries",
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean",
-      "line": 376,
+      "line": 378,
       "statement": "noncomputable def successorBellmanStatisticOfSummaries (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (n : Nat) (tilt : Real) (input : (Fin (n + 1) -> TransitionCountSummary mdp) \u00d7 EpisodeBatch mdp 1) : Real"
     },
     {
@@ -32606,7 +32702,7 @@
       "name": "measurable_successorBellmanStatisticOfSummaries",
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.measurable_successorBellmanStatisticOfSummaries",
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean",
-      "line": 390,
+      "line": 392,
       "statement": "theorem measurable_successorBellmanStatisticOfSummaries (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (n : Nat) (tilt : Real) : Measurable (successorBellmanStatisticOfSummaries mdp defaultState episodes delta n tilt)"
     },
     {
@@ -32614,7 +32710,7 @@
       "name": "successorBellmanHistoryBatchStatistic",
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.successorBellmanHistoryBatchStatistic",
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean",
-      "line": 410,
+      "line": 412,
       "statement": "noncomputable def successorBellmanHistoryBatchStatistic (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (n : Nat) (tilt : Real) (input : EpisodeBatchPrefix mdp 1 n \u00d7 EpisodeBatch mdp 1) : Real"
     },
     {
@@ -32622,7 +32718,7 @@
       "name": "measurable_successorBellmanHistoryBatchStatistic",
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.measurable_successorBellmanHistoryBatchStatistic",
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean",
-      "line": 417,
+      "line": 419,
       "statement": "theorem measurable_successorBellmanHistoryBatchStatistic (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (n : Nat) (tilt : Real) : Measurable (successorBellmanHistoryBatchStatistic mdp defaultState episodes delta n tilt)"
     },
     {
@@ -32630,7 +32726,7 @@
       "name": "recurrentSuccessorBellmanInnovation_compensated_hasCondMGFUpperBoundAt",
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.AdaptiveEpisodeBatchSource.recurrentSuccessorBellmanInnovation_compensated_hasCondMGFUpperBoundAt",
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean",
-      "line": 431,
+      "line": 433,
       "statement": "theorem recurrentSuccessorBellmanInnovation_compensated_hasCondMGFUpperBoundAt {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] [StandardBorelSpace (EpisodeBatch mdp 1)] [StandardBorelSpace (EpisodeBatchTrajectory mdp 1)] (defaultState : State) (episodes : Nat) (delta : Real) (hhorizon : 0 < mdp.horizon) (n : Nat) (tilt : Real) : Concentration.HasCondMGFUpperBoundAt (BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.batchPrefixFiltration (mdp := mdp) 1 n) ((BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.batchPrefixFiltration (mdp := mdp) 1).le n) (fun trajectory : EpisodeBatchTrajectory mdp 1 => successorBellmanHistoryBatchStatistic mdp defaultState episodes delta n tilt (Preorder.frestrictLe n trajectory, trajectory (n + 1))) 1 0 (recurrentSource mdp initialState defaultState episodes delta |>.trajectoryMeasure)"
     },
     {
@@ -32638,7 +32734,7 @@
       "name": "successorBellmanInnovationOfSummaries",
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.successorBellmanInnovationOfSummaries",
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean",
-      "line": 579,
+      "line": 581,
       "statement": "noncomputable def successorBellmanInnovationOfSummaries (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (n : Nat) (input : (Fin (n + 1) -> TransitionCountSummary mdp) \u00d7 EpisodeBatch mdp 1) : Real"
     },
     {
@@ -32646,7 +32742,7 @@
       "name": "measurable_successorBellmanInnovationOfSummaries",
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.measurable_successorBellmanInnovationOfSummaries",
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean",
-      "line": 592,
+      "line": 594,
       "statement": "theorem measurable_successorBellmanInnovationOfSummaries (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (n : Nat) : Measurable (successorBellmanInnovationOfSummaries mdp defaultState episodes delta n)"
     },
     {
@@ -32654,7 +32750,7 @@
       "name": "successorBellmanInnovationOfHistoryBatch",
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.successorBellmanInnovationOfHistoryBatch",
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean",
-      "line": 612,
+      "line": 614,
       "statement": "noncomputable def successorBellmanInnovationOfHistoryBatch (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (n : Nat) (input : EpisodeBatchPrefix mdp 1 n \u00d7 EpisodeBatch mdp 1) : Real"
     },
     {
@@ -32662,7 +32758,7 @@
       "name": "measurable_successorBellmanInnovationOfHistoryBatch",
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.measurable_successorBellmanInnovationOfHistoryBatch",
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean",
-      "line": 619,
+      "line": 621,
       "statement": "theorem measurable_successorBellmanInnovationOfHistoryBatch (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (n : Nat) : Measurable (successorBellmanInnovationOfHistoryBatch mdp defaultState episodes delta n)"
     },
     {
@@ -32670,7 +32766,7 @@
       "name": "recurrentBellmanInnovationPrefix",
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentBellmanInnovationPrefix",
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean",
-      "line": 632,
+      "line": 634,
       "statement": "noncomputable def recurrentBellmanInnovationPrefix (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) : (round : Nat) -> EpisodeBatchPrefix mdp 1 round -> Real | 0, _history => 0 | n + 1, history => successorBellmanInnovationOfHistoryBatch mdp defaultState episodes delta n (Preorder.frestrictLe\u2082 (\u03c0 := fun _ : Nat => EpisodeBatch mdp 1) (Nat.le_succ n) history, history \u27e8n + 1, Finset.mem_Iic.mpr le_rfl\u27e9)"
     },
     {
@@ -32678,7 +32774,7 @@
       "name": "measurable_recurrentBellmanInnovationPrefix",
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.measurable_recurrentBellmanInnovationPrefix",
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean",
-      "line": 644,
+      "line": 646,
       "statement": "theorem measurable_recurrentBellmanInnovationPrefix (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (round : Nat) : Measurable (recurrentBellmanInnovationPrefix mdp defaultState episodes delta round)"
     },
     {
@@ -32686,7 +32782,7 @@
       "name": "recurrentBellmanInnovationProcess",
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentBellmanInnovationProcess",
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean",
-      "line": 664,
+      "line": 666,
       "statement": "noncomputable def recurrentBellmanInnovationProcess (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (round : Nat) (trajectory : EpisodeBatchTrajectory mdp 1) : Real"
     },
     {
@@ -32694,7 +32790,7 @@
       "name": "recurrentBellmanInnovationVarianceProcess",
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentBellmanInnovationVarianceProcess",
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean",
-      "line": 673,
+      "line": 675,
       "statement": "noncomputable def recurrentBellmanInnovationVarianceProcess (mdp : MDP State Action) (round : Nat) (_trajectory : EpisodeBatchTrajectory mdp 1) : Real"
     },
     {
@@ -32702,7 +32798,7 @@
       "name": "recurrentBellmanInnovation_compensated_stronglyAdapted",
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentBellmanInnovation_compensated_stronglyAdapted",
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean",
-      "line": 680,
+      "line": 682,
       "statement": "theorem recurrentBellmanInnovation_compensated_stronglyAdapted (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta tilt : Real) : StronglyAdapted (BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.batchPrefixFiltration (mdp := mdp) 1) (fun round trajectory => tilt * recurrentBellmanInnovationProcess mdp defaultState episodes delta round trajectory - (tilt ^ 2 / 8) * recurrentBellmanInnovationVarianceProcess mdp round trajectory)"
     },
     {
@@ -32710,7 +32806,7 @@
       "name": "recurrentBellmanInnovation_zero_compensated_hasMGFUpperBoundAt",
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentBellmanInnovation_zero_compensated_hasMGFUpperBoundAt",
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean",
-      "line": 715,
+      "line": 717,
       "statement": "theorem recurrentBellmanInnovation_zero_compensated_hasMGFUpperBoundAt {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] (defaultState : State) (episodes : Nat) (delta tilt : Real) : Concentration.HasMGFUpperBoundAt (fun trajectory : EpisodeBatchTrajectory mdp 1 => tilt * recurrentBellmanInnovationProcess mdp defaultState episodes delta 0 trajectory - (tilt ^ 2 / 8) * recurrentBellmanInnovationVarianceProcess mdp 0 trajectory) 1 0 (recurrentSource mdp initialState defaultState episodes delta |>.trajectoryMeasure)"
     },
     {
@@ -32718,7 +32814,7 @@
       "name": "trajectoryMeasure_recurrentBellmanInnovation_sum_ge_le",
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.trajectoryMeasure_recurrentBellmanInnovation_sum_ge_le",
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean",
-      "line": 740,
+      "line": 742,
       "statement": "theorem trajectoryMeasure_recurrentBellmanInnovation_sum_ge_le {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] [StandardBorelSpace (EpisodeBatch mdp 1)] [StandardBorelSpace (EpisodeBatchTrajectory mdp 1)] (defaultState : State) (episodes : Nat) (delta : Real) (hhorizon : 0 < mdp.horizon) (tilt threshold : Real) (htilt : 0 < tilt) : let source := recurrentSource mdp initialState defaultState episodes delta source.trajectoryMeasure {trajectory | threshold <= (Finset.range episodes).sum (fun round => recurrentBellmanInnovationProcess mdp defaultState episodes delta round trajectory)} <= ENNReal.ofReal (Real.exp (-tilt * threshold + (tilt ^ 2 / 8) * ((episodes : Real) * ((mdp.horizon : Real) * (mdp.horizon : Real) ^ 2))))"
     },
     {

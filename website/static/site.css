@@ -468,7 +468,8 @@ code {
   color: var(--accent-strong);
 }
 
-.sidebar-nav .book-nav-link {
+.sidebar-nav .book-nav-link,
+.sidebar-nav .spine-nav-link {
   display: grid;
   grid-template-columns: 1.7rem minmax(0, 1fr);
   align-items: start;
@@ -477,7 +478,8 @@ code {
   font-size: 0.78rem;
 }
 
-.book-nav-link span {
+.book-nav-link span,
+.spine-nav-link span {
   color: var(--accent);
   font-family: var(--mono);
   font-size: 0.7rem;
@@ -2096,6 +2098,141 @@ tbody tr:hover {
   white-space: pre-wrap;
 }
 
+.textbook-spine-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: 0.9rem;
+  margin: 1.4rem 0;
+}
+
+.spine-chapter-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.55rem 0.8rem;
+  min-width: 0;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.spine-chapter-card:hover {
+  border-color: var(--accent);
+  color: var(--ink);
+  transform: translateY(-1px);
+}
+
+.spine-chapter-card > strong,
+.spine-chapter-card > p,
+.spine-chapter-card > span:not(.spine-chapter-status):not(.spine-chapter-arrow) {
+  grid-column: 1 / -1;
+}
+
+.spine-chapter-card > strong {
+  font: 700 1.1rem/1.3 var(--serif);
+}
+
+.spine-chapter-card > p,
+.spine-chapter-card > span {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.spine-chapter-number {
+  color: var(--accent-strong) !important;
+  font: 750 0.75rem/1.3 var(--mono) !important;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.spine-chapter-status {
+  justify-self: end;
+}
+
+.spine-chapter-arrow {
+  position: absolute;
+  right: 1rem;
+  bottom: 0.8rem;
+  color: var(--accent) !important;
+}
+
+.spine-source-card {
+  max-width: 52rem;
+}
+
+.spine-chapter-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  align-items: center;
+  margin-top: 1rem;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.spine-definition-grid,
+.spine-dependency-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: 0.9rem;
+  margin: 1rem 0;
+}
+
+.spine-definition-card,
+.spine-dependency-node {
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.spine-card-heading {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: start;
+  justify-content: space-between;
+}
+
+.spine-card-heading h3 {
+  margin: 0;
+}
+
+.spine-dependency-node {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.45rem 0.7rem;
+  align-items: center;
+}
+
+.spine-dependency-node code {
+  grid-column: 1 / -1;
+  overflow-wrap: anywhere;
+}
+
+.spine-dependency-node strong {
+  font-family: var(--serif);
+}
+
+.spine-theorem-card .math-statement,
+.spine-definition-card .math-statement {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.table-wrap .lean-code {
+  max-width: min(78vw, 70rem);
+  overflow: auto;
+}
+
 @media (max-width: 1240px) {
   .contribution-steps {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2234,7 +2371,8 @@ tbody tr:hover {
     align-items: center;
   }
 
-  .sidebar-nav .book-nav-link {
+  .sidebar-nav .book-nav-link,
+  .sidebar-nav .spine-nav-link {
     align-items: center;
   }
 }
@@ -2307,6 +2445,9 @@ tbody tr:hover {
   }
 
   .book-map-grid,
+  .textbook-spine-grid,
+  .spine-definition-grid,
+  .spine-dependency-grid,
   .installation-steps,
   .contribution-steps {
     grid-template-columns: 1fr;

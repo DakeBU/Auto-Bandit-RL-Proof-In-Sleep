@@ -47,6 +47,7 @@ The upper layer protects the intended theorem. The middle layer chooses reusable
 flowchart LR
     B["BanditRLlib Lean declarations"] --> D["Generated declaration catalogue"]
     B --> K["Ten-chapter Book Map"]
+    B --> P["Textbook Spine<br/>Part IV lower bounds"]
     B --> I["Implementation map"]
     B --> F["Live Formalization retrieval"]
     F --> P["Candidate contribution packet"]
@@ -66,6 +67,7 @@ The public site provides:
 
 - an accessible project overview and recommended reading path;
 - a sidebar Book Map with ten mathematical chapters;
+- a separate source-faithful Textbook Spine for Part IV, Chapters 13--17, with per-chapter status and page mapping;
 - an exhaustive generated declaration catalogue;
 - natural-language statements, notation, intuition, proof sketches, and Lean correspondence for selected major interfaces;
 - an implementation map distinguishing compiled, partial, stated, planned, and blocked work;

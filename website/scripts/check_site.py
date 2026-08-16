@@ -36,6 +36,8 @@ class LinkCollector(HTMLParser):
         self.site_sidebar_count = 0
         self.book_nav_link_count = 0
         self.book_chapter_card_count = 0
+        self.spine_nav_link_count = 0
+        self.spine_chapter_card_count = 0
         self.primary_textbook_banner_count = 0
         self.contributor_card_count = 0
         self.theorem_panel_count = 0
@@ -89,6 +91,10 @@ class LinkCollector(HTMLParser):
             self.book_nav_link_count += 1
         if "book-chapter-card" in classes:
             self.book_chapter_card_count += 1
+        if "spine-nav-link" in classes:
+            self.spine_nav_link_count += 1
+        if "spine-chapter-card" in classes:
+            self.spine_chapter_card_count += 1
         if "primary-textbook-banner" in classes:
             self.primary_textbook_banner_count += 1
         if "contributor-card" in classes:
@@ -332,6 +338,7 @@ def main() -> int:
         output / "contributors" / "index.html",
         output / "installation" / "index.html",
         output / "learning" / "index.html",
+        output / "textbook-spine" / "index.html",
         output / "roadmap" / "index.html",
         output / "workflow" / "index.html",
         output / "attribution" / "index.html",
@@ -344,6 +351,12 @@ def main() -> int:
     expected_chapter_count = len(
         json.loads((SITE_DIR / "content" / "chapters.json").read_text(encoding="utf-8"))["chapters"]
     )
+    textbook_spine = json.loads(
+        (SITE_DIR / "content" / "textbook_spine.json").read_text(encoding="utf-8")
+    )
+    expected_spine_count = len(textbook_spine["chapters"])
+    if manifest.get("textbook_spine_chapter_count") != expected_spine_count:
+        errors.append("manifest textbook_spine_chapter_count does not match textbook_spine.json")
     for page, collector in pages.items():
         if collector.site_sidebar_count != 1:
             errors.append(
@@ -353,6 +366,11 @@ def main() -> int:
             errors.append(
                 f"{page.relative_to(output)}: book navigation has {collector.book_nav_link_count} chapter links, "
                 f"expected {expected_chapter_count}"
+            )
+        if collector.spine_nav_link_count != expected_spine_count:
+            errors.append(
+                f"{page.relative_to(output)}: textbook spine navigation has "
+                f"{collector.spine_nav_link_count} chapter links, expected {expected_spine_count}"
             )
 
     for relative in (Path("index.html"), Path("learning/index.html")):
@@ -370,6 +388,11 @@ def main() -> int:
         page_source = (output / relative).read_text(encoding="utf-8")
         if PRIMARY_TEXTBOOK_TITLE not in page_source or PRIMARY_TEXTBOOK_URL not in page_source:
             errors.append(f"{relative}: primary textbook title or free-edition link is missing")
+        if collector and collector.spine_chapter_card_count != expected_spine_count:
+            errors.append(
+                f"{relative}: textbook spine has {collector.spine_chapter_card_count} chapter cards, "
+                f"expected {expected_spine_count}"
+            )
 
     contributor_page = pages.get((output / "contributors" / "index.html").resolve())
     expected_contributors = manifest.get("contributor_count", 0)
@@ -381,12 +404,15 @@ def main() -> int:
 
     module_pages = list((output / "modules").glob("*/index.html"))
     chapter_pages = list((output / "chapters").glob("*/index.html"))
+    spine_pages = list((output / "textbook-spine").glob("*/index.html"))
     if len(module_pages) != manifest.get("module_count"):
         errors.append(
             f"module-page count {len(module_pages)} != manifest module_count {manifest.get('module_count')}"
         )
     if len(chapter_pages) != expected_chapter_count:
         errors.append("chapter-page count does not match chapters.json")
+    if len(spine_pages) != expected_spine_count:
+        errors.append("textbook-spine chapter-page count does not match textbook_spine.json")
     chapter_source_theorems = 0
     chapter_source_boundaries = 0
     for chapter_page in chapter_pages:
@@ -427,6 +453,25 @@ def main() -> int:
         errors.append("every chapter needs either a source theorem card or an explicit source boundary")
     if manifest.get("reading_count") != expected_chapter_count:
         errors.append("manifest reading_count does not cover all Book Map chapters")
+    for spine_page in spine_pages:
+        collector = pages.get(spine_page.resolve())
+        if collector is None:
+            continue
+        relative = spine_page.relative_to(output)
+        if collector.algorithm_flow_count != 1:
+            errors.append(f"{relative}: expected one maintainable proof or algorithm flow")
+        if collector.math_statement_count < 1:
+            errors.append(f"{relative}: expected at least one mathematical statement")
+        if collector.math_statement_count != collector.math_fallback_count or collector.math_statement_count != collector.math_tex_count:
+            errors.append(
+                f"{relative}: every spine mathematical statement needs one fallback and one MathJax source"
+            )
+        if collector.nested_math_errors:
+            errors.append(f"{relative}: a spine mathematical statement swallowed Lean or teaching content")
+        page_source = spine_page.read_text(encoding="utf-8")
+        for required in (PRIMARY_TEXTBOOK_TITLE, PRIMARY_TEXTBOOK_URL, "10.1017/9781108571401"):
+            if required not in page_source:
+                errors.append(f"{relative}: missing canonical textbook metadata {required}")
     if manifest.get("max_module_slug_length", 10_000) > 96:
         errors.append("generated module URL exceeds the 96-character slug contract")
 
