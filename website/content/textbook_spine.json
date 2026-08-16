@@ -299,25 +299,113 @@
       "number": 16,
       "slug": "chapter-16-instance-dependent",
       "title": "Instance-Dependent Lower Bounds",
-      "status": "planned",
-      "status_note": "No local Chapter 16 endpoint is claimed.",
+      "status": "partial",
+      "status_note": "Definition 16.1, Theorem 16.2, Lemma 16.3, and Theorem 16.4 are source-frozen. Generic consistency, d_inf, Gaussian-candidate, eventual power, and eventual log-growth leaves compile; the bandit information, liminf, and finite-time terminals remain blocked.",
       "print_pages": "177–184",
       "pdf_pages": "215–223",
+      "chapter_doi": "10.1017/9781108571401.021",
+      "chapter_doi_url": "https://doi.org/10.1017/9781108571401.021",
+      "chapter_url": "https://www.cambridge.org/core/books/abs/bandit-algorithms/instancedependent-lower-bounds/C6CDB8FD64DF85192F18CC0811667470",
       "sections": [
-        "§16.1 Asymptotic Bounds (CUP pp. 177–180 / author-online pp. 207–209 / PDF pp. 216–218)",
-        "§16.2 Finite-Time Bounds (CUP pp. 180–181 / author-online pp. 209–210 / PDF pp. 218–219)",
-        "§16.3 Notes (CUP p. 181 / author-online pp. 210–211 / PDF pp. 219–220)",
+        "Chapter opening (CUP p. 177 / author-online p. 206 / PDF p. 215)",
+        "§16.1 Asymptotic Bounds (CUP pp. 177–179 / author-online pp. 207–208 / PDF pp. 216–217; Definition 16.1 and Theorem 16.2)",
+        "§16.2 Finite-Time Bounds (CUP p. 180 / author-online pp. 209–210 / PDF pp. 218–219; Lemma 16.3 and Theorem 16.4)",
+        "§16.3 Notes (CUP p. 181 / author-online p. 210 / PDF p. 219)",
         "§16.4 Bibliographic Remarks (CUP p. 181 / author-online p. 211 / PDF p. 220)",
         "§16.5 Exercises (CUP pp. 181–184 / author-online pp. 211–214 / PDF pp. 220–223)"
       ],
-      "learning_goals": ["State policy consistency without changing its quantifier strength.", "Derive instance-dependent information constraints.", "Separate asymptotic liminf extraction from finite-time bounds."],
-      "definitions": [{"name": "Asymptotic information constraint", "math": "\\liminf_{n\\to\\infty}\\frac{\\mathbb E_\\nu T_i(n)}{\\log n}\\,D(\\nu_i\\Vert\\nu_i')\\ge 1.", "fallback": "A consistent policy must gather logarithmically growing information against each confusing alternative.", "status": "planned"}],
-      "flow": {"title": "Planned instance-dependent route", "kind": "proof pseudocode", "steps": [{"title": "Choose a confusing alternative", "detail": "Change one suboptimal arm so that it becomes optimal."}, {"title": "Apply information constraints", "detail": "Relate pull counts to the alternative's KL cost."}, {"title": "Extract the regret order", "detail": "Combine counts with gaps and take the required liminf."}]},
-      "source_boundary": "The displayed formula is a route preview, not a frozen local theorem. Exact source theorem numbers, model class, consistency definition, and KL direction require the Chapter 16 audit.",
-      "lean_correspondence": [],
-      "dependency_nodes": [{"id": "consistency", "label": "policy consistency", "status": "planned"}, {"id": "information", "label": "instance information constraints", "status": "planned"}, {"id": "asymptotic", "label": "liminf regret extraction", "status": "planned"}],
-      "reading_path": ["Freeze the source consistency definition.", "Audit all quantifiers over environments and alternatives.", "Separate finite-time and asymptotic terminals."],
-      "gaps": ["Exact consistency interface.", "Asymptotic filter/liminf APIs.", "Finite-time variant."]
+      "learning_goals": [
+        "Read consistency with its exact quantifier order: every environment and every real exponent p greater than zero.",
+        "Keep d_inf extended-real, the confusing alternative strictly better, and KL directed from the original arm law to the alternative.",
+        "Trace how consistency controls log(R_n(nu)+R_n(nu-prime))/log(n) before the liminf extraction.",
+        "Separate Theorem 16.2's asymptotic product-class result from Lemma 16.3 and Theorem 16.4's finite-time Gaussian route."
+      ],
+      "definitions": [
+        {
+          "name": "Policy consistency (Definition 16.1)",
+          "math": "\\forall \\nu\\in\\mathcal E\\;\\forall p>0:\\quad \\lim_{n\\to\\infty}\\frac{R_n(\\pi,\\nu)}{n^p}=0.",
+          "fallback": "One policy is consistent over the class when its regret is smaller than every positive polynomial order on every environment.",
+          "status": "compiled"
+        },
+        {
+          "name": "Distribution-class information cost",
+          "math": "d_{\\inf}(P,\\mu^*,\\mathcal M)=\\inf\\{D(P\\Vert P'):\\;P'\\in\\mathcal M,\\;\\mu(P')>\\mu^*\\}.",
+          "fallback": "The information cost is the least original-to-alternative KL among laws in the class whose mean is strictly above the target mean.",
+          "status": "compiled"
+        },
+        {
+          "name": "Per-arm asymptotic information constraint",
+          "math": "\\liminf_{n\\to\\infty}\\frac{\\mathbb E_{\\nu,\\pi}[T_i(n)]}{\\log n}\\ge\\frac{1}{d_{\\inf}(P_i,\\mu^*,\\mathcal M_i)}.",
+          "fallback": "A consistent policy must sample each suboptimal arm at a logarithmic rate set by the cheapest confusing alternative.",
+          "status": "blocked"
+        },
+        {
+          "name": "Finite-time Gaussian lower-bound shape",
+          "math": "R_n(\\pi,\\nu)\\ge\\frac{2}{(1+\\varepsilon)^2}\\sum_{i:\\Delta_i>0}\\left(\\frac{(1-p)\\log n+\\log(\\varepsilon\\Delta_i/(8C))}{\\Delta_i}\\right)^+.",
+          "fallback": "Under the local C times n to the p regret envelope, the Gaussian lower bound sums the positive part of one explicit logarithmic term per suboptimal arm.",
+          "status": "blocked"
+        }
+      ],
+      "flow": {
+        "title": "Instance-dependent lower-bound proof flow",
+        "kind": "proof pseudocode",
+        "steps": [
+          {"title": "Freeze consistency", "detail": "Require R_n(pi,nu)/n^p to converge to zero for every environment in the class and every real p>0."},
+          {"title": "Choose a confusing alternative", "detail": "Change one suboptimal arm to a law in its component class whose mean is strictly above the original optimal mean and whose original-to-alternative KL approaches d_inf."},
+          {"title": "Lift arm KL to history KL", "detail": "Use one common randomized nonanticipating policy and Lemma 15.1 to obtain the original-law expected pull-count cost; this node is blocked."},
+          {"title": "Test the pull event", "detail": "Apply Bretagnolle–Huber to A={T_i(n)>n/2}, preserving the event complement and the two environment-specific regrets."},
+          {"title": "Extract the rate", "detail": "Use the compiled consistency power/log leaves, then take the required liminf and sum gap times expected pulls; the bandit terminal remains blocked."},
+          {"title": "Specialize finite time", "detail": "For Theorem 16.4 shift a Gaussian mean by Delta_i(1+epsilon), apply Lemma 16.3, and retain the exact positive part and factor 2/(1+epsilon)^2."}
+        ]
+      },
+      "source_theorem": {
+        "label": "Definition 16.1, Theorem 16.2, Lemma 16.3, and Theorem 16.4",
+        "status": "blocked",
+        "math": "\\liminf_{n\\to\\infty}\\frac{R_n(\\pi,\\nu)}{\\log n}\\ge\\sum_{i:\\Delta_i>0}\\frac{\\Delta_i}{d_{\\inf}(P_i,\\mu^*,\\mathcal M_i)},\\qquad R_n(\\pi,\\nu)\\ge\\frac{2}{(1+\\varepsilon)^2}\\sum_{i:\\Delta_i>0}\\left(\\frac{(1-p)\\log n+\\log(\\varepsilon\\Delta_i/(8C))}{\\Delta_i}\\right)^+.",
+        "fallback": "A consistent policy pays the source d_inf logarithmic constant on every unstructured instance; under the finite-time local Gaussian envelope, an explicit positive-part lower bound holds at every selected horizon.",
+        "plain": "Chapter 16 turns one-arm change of measure into asymptotic and finite-time instance-dependent regret obstructions.",
+        "boundary": "The generic consistency, d_inf, Gaussian-candidate, power, and log-growth leaves compile. The history information constraint, exact d_inf-to-liminf bandit bridge, Lemma 16.3, and both regret terminals do not: they inherit Chapter 15's missing conditional kernel-KL integral and stochastic-policy history law."
+      },
+      "source_boundary": "The exact Chapter 16 targets are frozen from the official author PDF and CUP metadata. Compiled analytic interfaces are dependencies only and are never promoted to Theorem 16.2, Lemma 16.3, or Theorem 16.4.",
+      "lean_correspondence": [
+        {"name": "BanditRLProof.LowerBounds.IsConsistentRegret", "status": "compiled", "role": "Exact scalar every-positive-real-power consistency predicate."},
+        {"name": "BanditRLProof.LowerBounds.IsConsistentPolicyOver", "status": "compiled", "role": "Generic environment-class wrapper preserving the source quantifier order."},
+        {"name": "BanditRLProof.LowerBounds.IsConsistentRegret.add", "status": "compiled", "role": "Closure for the two-environment regret sum used by Theorem 16.2."},
+        {"name": "BanditRLProof.LowerBounds.IsConsistentRegret.eventually_add_le_rpow", "status": "compiled", "role": "Every positive polynomial eventually dominates the regret sum."},
+        {"name": "BanditRLProof.LowerBounds.IsConsistentRegret.eventually_log_add_div_log_le", "status": "compiled", "role": "Direction-correct eventual logarithmic growth bound before the limsup step."},
+        {"name": "BanditRLProof.LowerBounds.divergenceInfimum", "status": "compiled", "role": "Extended-real distribution-class d_inf with strict mean improvement."},
+        {"name": "BanditRLProof.LowerBounds.divergenceInfimum_le", "status": "compiled", "role": "Any confusing alternative upper-bounds d_inf in the original-to-alternative KL direction."},
+        {"name": "BanditRLProof.LowerBounds.parametricDivergenceInfimum", "status": "compiled", "role": "Family-indexed form for parametric law classes."},
+        {"name": "BanditRLProof.LowerBounds.parametricDivergenceInfimum_le", "status": "compiled", "role": "Strictly better parameter candidate inequality."},
+        {"name": "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum", "status": "compiled", "role": "Unit-variance Gaussian parametric d_inf interface."},
+        {"name": "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum_le_perturbed", "status": "compiled", "role": "Exact cost of the candidate mean muStar+epsilon; no exact infimum equality is claimed."},
+        {"name": "BanditRLProof.LowerBounds.consistentPolicy_liminf_expectedRegret_div_log_ge", "status": "blocked", "role": "Reserved exact Theorem 16.2 terminal; no declaration is claimed."},
+        {"name": "BanditRLProof.LowerBounds.expectedPullCount_ge_log_regret_changeOfMeasure", "status": "blocked", "role": "Reserved exact Lemma 16.3 terminal; no declaration is claimed."},
+        {"name": "BanditRLProof.LowerBounds.gaussianExpectedRegret_ge_finiteTimeInstanceDependent", "status": "blocked", "role": "Reserved exact Theorem 16.4 terminal; no declaration is claimed."}
+      ],
+      "dependency_nodes": [
+        {"id": "ch14", "label": "Chapter 14 event testing", "status": "compiled"},
+        {"id": "ch15-gaussian", "label": "Chapter 15 unit-Gaussian arm KL", "status": "compiled"},
+        {"id": "consistency", "label": "Definition 16.1 consistency and log growth", "status": "compiled"},
+        {"id": "dinf", "label": "extended-real d_inf and candidate inequalities", "status": "compiled"},
+        {"id": "gaussian-dinf", "label": "exact Gaussian d_inf equality", "status": "partial"},
+        {"id": "history", "label": "same-policy history information constraint", "status": "blocked"},
+        {"id": "asymptotic", "label": "Theorem 16.2 liminf regret terminal", "status": "blocked"},
+        {"id": "finite", "label": "Lemma 16.3 and Theorem 16.4", "status": "blocked"}
+      ],
+      "reading_path": [
+        "Read Definition 16.1 and verify the order forall environment, forall real p>0.",
+        "Read d_inf and Theorem 16.2 with strict alternative mean, original-to-alternative KL, and an unstructured product class.",
+        "Trace the source event A={T_i(n)>n/2}, the two regret laws, and the compiled subpolynomial log-growth adapter.",
+        "Read Lemma 16.3 before Theorem 16.4 and preserve the unit-Gaussian local class, selected horizon set, constants, and positive part.",
+        "Treat the history, liminf, and finite-time terminals as blockers, not as consequences of the compiled analytic interfaces."
+      ],
+      "gaps": [
+        "The conditional composition-product KL integral and canonical possibly randomized policy history law inherited from Chapter 15.",
+        "The one-arm original-law expected-pull information constraint and measurable event bridge.",
+        "The exact Gaussian d_inf equality with empty, zero, finite, and infinite information branches.",
+        "Theorem 16.2's per-arm and summed liminf terminal, Lemma 16.3, and Theorem 16.4."
+      ]
     },
     {
       "number": 17,

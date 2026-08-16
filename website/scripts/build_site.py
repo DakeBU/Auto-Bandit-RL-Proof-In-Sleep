@@ -808,6 +808,21 @@ def build_textbook_spine(
 
     for chapter in spine["chapters"]:
         page_path = f"textbook-spine/{chapter['slug']}/index.html"
+        chapter_source_html = ""
+        if chapter.get("chapter_doi_url") and chapter.get("chapter_doi"):
+            chapter_source_html = (
+                '<p><strong>Chapter DOI.</strong> '
+                f'<a href="{html.escape(chapter["chapter_doi_url"], quote=True)}">'
+                f'{html.escape(chapter["chapter_doi"])}</a>'
+                + (
+                    ' · <a href="'
+                    + html.escape(chapter["chapter_url"], quote=True)
+                    + '">CUP chapter page</a>'
+                    if chapter.get("chapter_url")
+                    else ""
+                )
+                + "</p>"
+            )
         sections = render_list(chapter["sections"])
         goals = render_list(chapter["learning_goals"])
         definitions = "".join(
@@ -880,6 +895,7 @@ def build_textbook_spine(
 <section id="source">
   <h2>Source map</h2>
   <p><cite>{html.escape(source['title'])}</cite>, {html.escape(source['authors'])}, {html.escape(source['publisher'])} ({source['year']}), DOI <a href="{html.escape(source['doi_url'], quote=True)}">{html.escape(source['doi'])}</a>.</p>
+  {chapter_source_html}
   {sections}
   <p><a class="button compact" href="{html.escape(source['official_url'], quote=True)}">Open the formal PDF <span aria-hidden="true">↗</span></a></p>
 </section>

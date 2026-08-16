@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-16T16:11:28+00:00",
+  "generated": "2026-08-16T18:18:22+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -22888,6 +22888,94 @@
       "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
       "line": 462,
       "statement": "theorem bretagnolleHuber {\u03b1 : Type*} [MeasurableSpace \u03b1] {P Q : Measure \u03b1} [IsProbabilityMeasure P] [IsProbabilityMeasure Q] {A : Set \u03b1} (hA : MeasurableSet A) : bretagnolleHuberScale (relativeEntropy P Q) \u2264 P.real A + Q.real A\u1d9c"
+    },
+    {
+      "kind": "def",
+      "name": "IsConsistentRegret",
+      "full_name": "BanditRLProof.LowerBounds.IsConsistentRegret",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 33,
+      "statement": "def IsConsistentRegret (regret : Nat -> Real) : Prop"
+    },
+    {
+      "kind": "def",
+      "name": "IsConsistentPolicyOver",
+      "full_name": "BanditRLProof.LowerBounds.IsConsistentPolicyOver",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 40,
+      "statement": "def IsConsistentPolicyOver {Policy Environment : Type*} (environmentClass : Set Environment) (regret : Policy -> Environment -> Nat -> Real) (policy : Policy) : Prop"
+    },
+    {
+      "kind": "theorem",
+      "name": "IsConsistentRegret.add",
+      "full_name": "IsConsistentRegret.add",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 51,
+      "statement": "theorem IsConsistentRegret.add {first second : Nat -> Real} (hfirst : IsConsistentRegret first) (hsecond : IsConsistentRegret second) : IsConsistentRegret (fun n => first n + second n)"
+    },
+    {
+      "kind": "theorem",
+      "name": "IsConsistentRegret.eventually_add_le_rpow",
+      "full_name": "IsConsistentRegret.eventually_add_le_rpow",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 62,
+      "statement": "theorem IsConsistentRegret.eventually_add_le_rpow {first second : Nat -> Real} (hfirst : IsConsistentRegret first) (hsecond : IsConsistentRegret second) {p : Real} (hp : 0 < p) : \u2200\u1da0 n : Nat in atTop, first n + second n <= (n : Real) ^ p"
+    },
+    {
+      "kind": "theorem",
+      "name": "IsConsistentRegret.eventually_log_add_div_log_le",
+      "full_name": "IsConsistentRegret.eventually_log_add_div_log_le",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 82,
+      "statement": "theorem IsConsistentRegret.eventually_log_add_div_log_le {first second : Nat -> Real} (hfirst : IsConsistentRegret first) (hsecond : IsConsistentRegret second) (hpositive : \u2200\u1da0 n : Nat in atTop, 0 < first n + second n) {p : Real} (hp : 0 < p) : \u2200\u1da0 n : Nat in atTop, Real.log (first n + second n) / Real.log n <= p"
+    },
+    {
+      "kind": "def",
+      "name": "divergenceInfimum",
+      "full_name": "BanditRLProof.LowerBounds.divergenceInfimum",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 104,
+      "statement": "def divergenceInfimum {Reward : Type*} [MeasurableSpace Reward] (P : Measure Reward) (muStar : Real) (distributionClass : Set (Measure Reward)) (mean : Measure Reward -> Real) : ENNReal"
+    },
+    {
+      "kind": "theorem",
+      "name": "divergenceInfimum_le",
+      "full_name": "BanditRLProof.LowerBounds.divergenceInfimum_le",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 116,
+      "statement": "theorem divergenceInfimum_le {Reward : Type*} [MeasurableSpace Reward] {P P' : Measure Reward} {muStar : Real} {distributionClass : Set (Measure Reward)} {mean : Measure Reward -> Real} (hclass : P' \u2208 distributionClass) (hbetter : muStar < mean P') : divergenceInfimum P muStar distributionClass mean <= relativeEntropy P P'"
+    },
+    {
+      "kind": "def",
+      "name": "parametricDivergenceInfimum",
+      "full_name": "BanditRLProof.LowerBounds.parametricDivergenceInfimum",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 130,
+      "statement": "def parametricDivergenceInfimum {Reward Parameter : Type*} [MeasurableSpace Reward] (law : Parameter -> Measure Reward) (mean : Parameter -> Real) (parameter : Parameter) (muStar : Real) : ENNReal"
+    },
+    {
+      "kind": "theorem",
+      "name": "parametricDivergenceInfimum_le",
+      "full_name": "BanditRLProof.LowerBounds.parametricDivergenceInfimum_le",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 140,
+      "statement": "theorem parametricDivergenceInfimum_le {Reward Parameter : Type*} [MeasurableSpace Reward] {law : Parameter -> Measure Reward} {mean : Parameter -> Real} {parameter alternative : Parameter} {muStar : Real} (hbetter : muStar < mean alternative) : parametricDivergenceInfimum law mean parameter muStar <= relativeEntropy (law parameter) (law alternative)"
+    },
+    {
+      "kind": "abbrev",
+      "name": "unitGaussianDivergenceInfimum",
+      "full_name": "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 151,
+      "statement": "abbrev unitGaussianDivergenceInfimum (mu muStar : Real) : ENNReal"
+    },
+    {
+      "kind": "theorem",
+      "name": "unitGaussianDivergenceInfimum_le_perturbed",
+      "full_name": "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum_le_perturbed",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 157,
+      "statement": "theorem unitGaussianDivergenceInfimum_le_perturbed (mu muStar epsilon : Real) (hepsilon : 0 < epsilon) : unitGaussianDivergenceInfimum mu muStar <= ENNReal.ofReal (((muStar - mu) + epsilon) ^ 2 / 2)"
     },
     {
       "kind": "abbrev",
