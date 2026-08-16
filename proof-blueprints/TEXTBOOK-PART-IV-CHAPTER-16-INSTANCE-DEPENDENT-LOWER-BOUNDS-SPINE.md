@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE
 
-Generated: `2026-08-16T18:18:13+00:00`
+Generated: `2026-08-16T19:02:56+00:00`
 
 ## Source Task
 
@@ -10,7 +10,7 @@ Task id: `TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE`
 
 Kind: `theoremFormalization`
 
-Status: `in_progress`
+Status: `verified_locally`
 
 Harness: `hierarchical`
 
@@ -194,8 +194,9 @@ weaken the source bandit semantics.
   constraint compiles.
 - [ ] Theorem 16.2's per-arm and regret `liminf` terminals compile.
 - [ ] Lemma 16.3 and Theorem 16.4 compile.
-- [ ] Root import, canary, Tests, scans, full harness, exports, indexes, site,
-  browser, independent review, PR, Actions, Pages, and live checks pass.
+- [x] Root import, canary, Tests, scans, full harness, exports, indexes, site,
+  browser, and independent local review pass.
+- [ ] PR, authoritative-main Actions, Pages deployment, and live checks pass.
 
 ## Mathlib-ready leaf contract
 
@@ -258,9 +259,10 @@ pp. 177--184 / author-online labels 206--214 / physical PDF pp. 215--223.
 §16.1 contains Definition 16.1 and Theorem 16.2; §16.2 contains Lemma 16.3
 and Theorem 16.4. Edition-specific pagination is not converted by an offset.
 
-The current compiled window contains generic consistency, `d_inf`, Gaussian
-candidate, and log-growth dependencies. All four source endpoints remain
-uncompiled; the website chapter must remain `partial`.
+The current compiled window contains Definition 16.1's generic consistency
+interface plus `d_inf`, Gaussian-candidate, and log-growth dependencies.
+Theorem 16.2, Lemma 16.3, and Theorem 16.4 remain uncompiled and blocked; the
+website chapter must remain `partial`.
 
 ## Precise restatement
 
@@ -337,9 +339,9 @@ envelope and sums the positive parts to obtain Eq. (16.5).
 | `CH16-THEOREM-16-2` | exact liminf regret bound | previous two analytic/semantic branches | reserved terminal | source terminal | focused Lean | blocked |
 | `CH16-LEMMA-16-3` | exact finite-time pull lower bound | history KL and BH | reserved terminal | source terminal | focused Lean | blocked |
 | `CH16-THEOREM-16-4` | exact Gaussian Eq. (16.5) | Lemma 16.3 and Gaussian KL | reserved terminal | source terminal | focused Lean | blocked |
-| `CH16-TYPED-CANARY` | root-import applications and axiom reports | compiled slice | `Tests/TextbookPartIVChapter16Canary.lean` | project-local | Tests | pending |
-| `CH16-EVIDENCE-SITE` | all artifacts agree on partial/blocked boundary | scoped artifacts | repository artifacts | repository | full/site/browser | pending |
-| `CH16-REVIEW` | direction/quantifier/AC/policy/asymptotic audit | all artifacts | review record | repository | read-only | pending |
+| `CH16-TYPED-CANARY` | root-import applications and axiom reports | compiled slice | `Tests/TextbookPartIVChapter16Canary.lean` | project-local | Tests | verified locally |
+| `CH16-EVIDENCE-SITE` | all artifacts agree on partial/blocked boundary | scoped artifacts | repository artifacts | repository | full/site/browser | verified locally |
+| `CH16-REVIEW` | direction/quantifier/AC/policy/asymptotic audit | all artifacts | review record | repository | read-only | reviewed; P3 corrected |
 | `CH16-REMOTE` | PR, main Actions, Pages, live page | accepted local slice | remote evidence | repository | deployment | pending |
 
 ## Gaps
@@ -350,7 +352,8 @@ envelope and sums the positive parts to obtain Eq. (16.5).
 - [ ] Same-policy stochastic history KL and one-arm information constraint.
 - [ ] Theorem 16.2 `liminf` terminal.
 - [ ] Lemma 16.3 and Theorem 16.4.
-- [ ] Full local/remote/site/review gates.
+- [x] Full local Lean, harness, site, browser, and independent-review gates.
+- [ ] PR, authoritative-main Actions, Pages deployment, and live-page gates.
 
 
 ## Obligation Snapshot
@@ -378,8 +381,9 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH16-THM-16-2` | exact Eq. (16.2) | history, log, dInf | liminf filters | source card | epsilon alternative then liminf | zero/finite/infinite `d_inf` | source terminal | reserved | focused Lean | blocked |
 | `CH16-LEMMA-16-3` | exact Eq. (16.4) | history KL, BH | Ch14/15 | source card | event `T_i(n)>n/2` | positive log terms; finite positive KL branch | source terminal | reserved | focused Lean | blocked |
 | `CH16-THM-16-4` | exact Eq. (16.5) | Lemma 16.3, Gaussian KL, regret decomposition | local Gaussian and sums | source card | shift by `Delta_i(1+epsilon)` and sum positive parts | `N` nonempty, `C>0`, `0<p<1`, `0<epsilon<=1` | source terminal | reserved | focused Lean | blocked |
-| `CH16-CANARY` | root-import typed applications and axiom reports | compiled slice | `BanditRLProof` root | local declarations | instantiate nontrivial Gaussian candidate | no placeholders | project-local | `Tests/TextbookPartIVChapter16Canary.lean` | Tests | pending |
-| `CH16-SITE-REVIEW` | synchronized evidence/site and independent audit | all above | build/check/browser | repository | compare informal and Lean statements | no terminal promotion | repository | evidence artifacts | full/remote | pending |
+| `CH16-CANARY` | root-import typed applications and axiom reports | compiled slice | `BanditRLProof` root | local declarations | instantiate nontrivial Gaussian candidate | no placeholders | project-local | `Tests/TextbookPartIVChapter16Canary.lean` | Tests | verified locally |
+| `CH16-SITE-REVIEW` | synchronized evidence/site and independent audit | all above | build/check/browser | repository | compare informal and Lean statements | no terminal promotion | repository | evidence artifacts | full/local | verified; P3 corrected |
+| `CH16-REMOTE` | PR, authoritative-main Actions, Pages, and live page | accepted local slice | GitHub workflow | repository | merge through PR and inspect deployed artifact | source terminals remain blocked | repository | remote evidence | deployment | pending |
 
 ## Failure classification
 

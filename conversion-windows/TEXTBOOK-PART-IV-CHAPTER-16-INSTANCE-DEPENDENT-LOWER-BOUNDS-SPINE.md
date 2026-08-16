@@ -15,9 +15,10 @@ pp. 177--184 / author-online labels 206--214 / physical PDF pp. 215--223.
 §16.1 contains Definition 16.1 and Theorem 16.2; §16.2 contains Lemma 16.3
 and Theorem 16.4. Edition-specific pagination is not converted by an offset.
 
-The current compiled window contains generic consistency, `d_inf`, Gaussian
-candidate, and log-growth dependencies. All four source endpoints remain
-uncompiled; the website chapter must remain `partial`.
+The current compiled window contains Definition 16.1's generic consistency
+interface plus `d_inf`, Gaussian-candidate, and log-growth dependencies.
+Theorem 16.2, Lemma 16.3, and Theorem 16.4 remain uncompiled and blocked; the
+website chapter must remain `partial`.
 
 ## Precise restatement
 
@@ -94,9 +95,9 @@ envelope and sums the positive parts to obtain Eq. (16.5).
 | `CH16-THEOREM-16-2` | exact liminf regret bound | previous two analytic/semantic branches | reserved terminal | source terminal | focused Lean | blocked |
 | `CH16-LEMMA-16-3` | exact finite-time pull lower bound | history KL and BH | reserved terminal | source terminal | focused Lean | blocked |
 | `CH16-THEOREM-16-4` | exact Gaussian Eq. (16.5) | Lemma 16.3 and Gaussian KL | reserved terminal | source terminal | focused Lean | blocked |
-| `CH16-TYPED-CANARY` | root-import applications and axiom reports | compiled slice | `Tests/TextbookPartIVChapter16Canary.lean` | project-local | Tests | pending |
-| `CH16-EVIDENCE-SITE` | all artifacts agree on partial/blocked boundary | scoped artifacts | repository artifacts | repository | full/site/browser | pending |
-| `CH16-REVIEW` | direction/quantifier/AC/policy/asymptotic audit | all artifacts | review record | repository | read-only | pending |
+| `CH16-TYPED-CANARY` | root-import applications and axiom reports | compiled slice | `Tests/TextbookPartIVChapter16Canary.lean` | project-local | Tests | verified locally |
+| `CH16-EVIDENCE-SITE` | all artifacts agree on partial/blocked boundary | scoped artifacts | repository artifacts | repository | full/site/browser | verified locally |
+| `CH16-REVIEW` | direction/quantifier/AC/policy/asymptotic audit | all artifacts | review record | repository | read-only | reviewed; P3 corrected |
 | `CH16-REMOTE` | PR, main Actions, Pages, live page | accepted local slice | remote evidence | repository | deployment | pending |
 
 ## Gaps
@@ -107,4 +108,5 @@ envelope and sums the positive parts to obtain Eq. (16.5).
 - [ ] Same-policy stochastic history KL and one-arm information constraint.
 - [ ] Theorem 16.2 `liminf` terminal.
 - [ ] Lemma 16.3 and Theorem 16.4.
-- [ ] Full local/remote/site/review gates.
+- [x] Full local Lean, harness, site, browser, and independent-review gates.
+- [ ] PR, authoritative-main Actions, Pages deployment, and live-page gates.

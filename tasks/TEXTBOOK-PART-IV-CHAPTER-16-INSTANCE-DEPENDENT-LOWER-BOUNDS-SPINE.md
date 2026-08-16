@@ -4,7 +4,7 @@ Task id: `TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE`
 
 Kind: `theoremFormalization`
 
-Status: `in_progress`
+Status: `verified_locally`
 
 Harness: `hierarchical`
 
@@ -188,8 +188,9 @@ weaken the source bandit semantics.
   constraint compiles.
 - [ ] Theorem 16.2's per-arm and regret `liminf` terminals compile.
 - [ ] Lemma 16.3 and Theorem 16.4 compile.
-- [ ] Root import, canary, Tests, scans, full harness, exports, indexes, site,
-  browser, independent review, PR, Actions, Pages, and live checks pass.
+- [x] Root import, canary, Tests, scans, full harness, exports, indexes, site,
+  browser, and independent local review pass.
+- [ ] PR, authoritative-main Actions, Pages deployment, and live checks pass.
 
 ## Mathlib-ready leaf contract
 
