@@ -86,14 +86,15 @@ Lean, evidence, site, review, and remote gates agree.
 | 14, Foundations of Information Theory | extended-real relative entropy, event-level binary data processing, endpoint-complete binary testing, unconditional Bretagnolle--Huber | scoped §14.2 leaves compiled; chapter partial | §14.1 coding and full Exercise 14.10 remain uncompiled; adaptive history KL belongs to Ch. 15 |
 | 15, Minimax Lower Bounds | exact Lemma 15.1/Theorem 15.2 contracts; unit-Gaussian RN, exact arm KL, changed-arm cost, source gap and information-exponent tuning | Gaussian/numeric dependency leaves compiled; chapter partial and terminals blocked | prove the conditional composition-product KL integral and canonical stochastic-policy history law before Lemma 15.1 and the `1/27` terminal |
 | 16, Instance-Dependent Lower Bounds | exact Definition 16.1 / Theorem 16.2 / Lemma 16.3 / Theorem 16.4 contracts; generic consistency, `d_inf`, Gaussian-candidate, eventual power, and eventual log-growth leaves | dependency slice compiled; chapter partial and terminals blocked | prove the Chapter 15 same-policy stochastic history KL bridge, exact Gaussian `d_inf`, and liminf extraction before the source terminals |
-| 17, High-Probability Lower Bounds | source page map and navigation only | planned | freeze the exact event/probability quantifiers and horizon order before formalization |
+| 17, High-Probability Lower Bounds | exact Theorem 17.1 / Corollaries 17.2--17.3 / Theorem 17.4 / Claims 17.5--17.7 contracts; three threshold surfaces, Claim 17.5 first moment, event subtraction, and conditional Eq. (17.8) quarter algebra | Claim 17.5 and reusable dependency slice compiled; chapter partial and remaining terminals blocked | prove the Chapter 15 same-policy history KL for the stochastic branch; construct the correlated clipped-normal reward-matrix/history law and exact clipping concentration for the adversarial branch |
 
 The frozen source cards currently run through
 `TXT-LS-2020-CH13-MINIMAL-SOURCE-CHANGE`, `TXT-LS-2020-THM-13-1`, the Chapter
 14 relative-entropy/testing cards, and
 `TXT-LS-2020-LEMMA-15-1-DIVERGENCE-DECOMPOSITION` /
-`TXT-LS-2020-THM-15-2-GAUSSIAN-MINIMAX`, followed by the four Chapter 16
-consistency/asymptotic/finite-time cards. The relevant Mathlib retrieval
+`TXT-LS-2020-THM-15-2-GAUSSIAN-MINIMAX`, the four Chapter 16
+consistency/asymptotic/finite-time cards, and the five Chapter 17 stochastic
+tail, adversarial tail, and claim-group cards. The relevant Mathlib retrieval
 surface includes finite sums, measure KL, Gaussian RN/first-moment APIs, and
 filters, real powers/logarithms, complete-lattice infima, and the
 composition-product chain rule. The missing conditional-KL integral is

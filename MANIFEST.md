@@ -13158,3 +13158,25 @@ here during local harness runs.
 - `2026-08-16T20:01:53+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
 - `2026-08-16T20:01:53+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
 - `2026-08-16T20:01:53+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-16T20:55:11+00:00` `bandit.py new-task` `task` `tasks/TEXTBOOK-PART-IV-CHAPTER-17-HIGH-PROBABILITY-LOWER-BOUNDS-SPINE.md` - Textbook Part IV Chapter 17 high-probability lower-bounds spine
+- `2026-08-16T21:37:24+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/TEXTBOOK-PART-IV-CHAPTER-17-HIGH-PROBABILITY-LOWER-BOUNDS-SPINE.md` - TEXTBOOK-PART-IV-CHAPTER-17-HIGH-PROBABILITY-LOWER-BOUNDS-SPINE
+- `2026-08-16T21:37:36+00:00` `bandit.py memory-refresh` `retrieval-index` `research-wiki/retrieval-index/TEXTBOOK-PART-IV-CHAPTER-17-HIGH-PROBABILITY-LOWER-BOUNDS-SPINE.json` - TEXTBOOK-PART-IV-CHAPTER-17-HIGH-PROBABILITY-LOWER-BOUNDS-SPINE
+- `2026-08-16T21:37:42+00:00` `bandit.py export-proof` `proof-export` `paper-notes/problem-exports/TEXTBOOK-PART-IV-CHAPTER-17-HIGH-PROBABILITY-LOWER-BOUNDS-SPINE/latest.tex` - TEXTBOOK-PART-IV-CHAPTER-17-HIGH-PROBABILITY-LOWER-BOUNDS-SPINE
+- `2026-08-16T21:37:53+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-16T21:37:53+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-16T21:37:53+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-16T21:37:53+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-16T21:37:53+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-16T21:37:53+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-16T21:37:53+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-16T21:37:53+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-16T21:56:03+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/TEXTBOOK-PART-IV-CHAPTER-17-HIGH-PROBABILITY-LOWER-BOUNDS-SPINE.md` - TEXTBOOK-PART-IV-CHAPTER-17-HIGH-PROBABILITY-LOWER-BOUNDS-SPINE
+- `2026-08-16T21:56:08+00:00` `bandit.py memory-refresh` `retrieval-index` `research-wiki/retrieval-index/TEXTBOOK-PART-IV-CHAPTER-17-HIGH-PROBABILITY-LOWER-BOUNDS-SPINE.json` - TEXTBOOK-PART-IV-CHAPTER-17-HIGH-PROBABILITY-LOWER-BOUNDS-SPINE
+- `2026-08-16T21:56:12+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-16T21:56:12+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-16T21:56:12+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-16T21:56:12+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-16T21:56:12+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-16T21:56:12+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-16T21:56:12+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-16T21:56:12+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json

@@ -30,6 +30,7 @@ python3 tools/bandit.py search-memory federated
 | `PPR-ABBASI-YADKORI-2011-SELF-NORMALIZED` | [Abbasi-Yadkori, Pál, and Szepesvári, 2011](https://arxiv.org/abs/1102.2670) | linear/GLM | Gram matrix monotonicity, self-normalized martingale, elliptical potential |
 | `PPR-LI-CHU-LANGFORD-SCHAPIRE-2010-LINUCB` | [Li, Chu, Langford, and Schapire, 2010](https://doi.org/10.1145/1772690.1772758) | contextual, linear, recommender | context-history interface, feature-vector reward, argmax policy |
 | `PPR-AZAR-OSBAND-MUNOS-2017-UCBVI` | [Azar, Osband, and Munos, 2017](https://arxiv.org/abs/1703.05449) | finite-horizon RL/MDP | finite kernels, Bellman recursion, episode regret telescope |
+| `PPR-GERCHINOVITZ-LATTIMORE-2016-REFINED-LOWER-BOUNDS` | [Gerchinovitz and Lattimore, NeurIPS 2016](https://proceedings.neurips.cc/paper/2016/hash/2f37d10131f2a483a8dd005b3d14b0d9-Abstract.html) | adversarial finite, high-probability lower bounds | clipped-normal hard reward matrix, same-policy history information, clipping concentration, deterministic-witness extraction |
 
 ## Frontier Scenario Cards
 

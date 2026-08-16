@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-16T20:01:48+00:00",
+  "generated": "2026-08-16T21:56:08+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -22744,6 +22744,86 @@
       "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
       "line": 205,
       "statement": "theorem max_base_changed_regretLowerBound_ge_half (horizon : Nat) (gap baseFirstExpectedPulls changedFirstExpectedPulls : Real) (hgap : 0 \u2264 gap) (htransport : baseFirstExpectedPulls \u2264 changedFirstExpectedPulls) : gap * (horizon : Real) / 2 \u2264 max (baseEnvironmentRegret horizon gap baseFirstExpectedPulls) (changedEnvironmentRegretLowerBound gap changedFirstExpectedPulls)"
+    },
+    {
+      "kind": "def",
+      "name": "tailAtLeast",
+      "full_name": "BanditRLProof.LowerBounds.tailAtLeast",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 31,
+      "statement": "def tailAtLeast {Omega : Type*} (quantity : Omega -> Real) (threshold : Real) : Set Omega"
+    },
+    {
+      "kind": "def",
+      "name": "stochasticHighProbabilityThreshold",
+      "full_name": "BanditRLProof.LowerBounds.stochasticHighProbabilityThreshold",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 37,
+      "statement": "def stochasticHighProbabilityThreshold (horizon alternativeArms : Nat) (B delta : Real) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "stochasticMinimaxHighProbabilityThreshold",
+      "full_name": "BanditRLProof.LowerBounds.stochasticMinimaxHighProbabilityThreshold",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 46,
+      "statement": "def stochasticMinimaxHighProbabilityThreshold (horizon alternativeArms : Nat) (delta : Real) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialHighProbabilityThreshold",
+      "full_name": "BanditRLProof.LowerBounds.adversarialHighProbabilityThreshold",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 56,
+      "statement": "def adversarialHighProbabilityThreshold (horizon arms : Nat) (c delta : Real) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_tailMass_ge_of_integral_ge",
+      "full_name": "BanditRLProof.LowerBounds.exists_tailMass_ge_of_integral_ge",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 67,
+      "statement": "theorem exists_tailMass_ge_of_integral_ge {Instance : Type*} [MeasurableSpace Instance] (Q : Measure Instance) [IsProbabilityMeasure Q] (tailMass : Instance -> Real) (delta : Real) (hIntegrable : Integrable tailMass Q) (hAverage : delta <= \u222b x, tailMass x \u2202Q) : exists x, delta <= tailMass x"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_cdfTail_ge_of_integral_ge",
+      "full_name": "BanditRLProof.LowerBounds.exists_cdfTail_ge_of_integral_ge",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 78,
+      "statement": "theorem exists_cdfTail_ge_of_integral_ge {Instance : Type*} [MeasurableSpace Instance] (Q : Measure Instance) [IsProbabilityMeasure Q] (cdf : Instance -> Real -> Real) (threshold delta : Real) (hIntegrable : Integrable (fun x => 1 - cdf x threshold) Q) (hAverage : delta <= \u222b x, 1 - cdf x threshold \u2202Q) : exists x, delta <= 1 - cdf x threshold"
+    },
+    {
+      "kind": "theorem",
+      "name": "measureReal_diff_ge_delta",
+      "full_name": "BanditRLProof.LowerBounds.measureReal_diff_ge_delta",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 96,
+      "statement": "theorem measureReal_diff_ge_delta {Omega : Type*} [MeasurableSpace Omega] (P : Measure Omega) [IsFiniteMeasure P] (pullSmall clippingBad : Set Omega) (delta : Real) (hPullSmall : 2 * delta <= P.real pullSmall) (hClippingBad : P.real clippingBad <= delta) : delta <= P.real (pullSmall \\ clippingBad)"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialRegretLowerExpression",
+      "full_name": "BanditRLProof.LowerBounds.adversarialRegretLowerExpression",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 111,
+      "statement": "def adversarialRegretLowerExpression (horizon pullCount clippingCount : Nat) (gap : Real) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialRegretLowerExpression_ge_quarter",
+      "full_name": "BanditRLProof.LowerBounds.adversarialRegretLowerExpression_ge_quarter",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 119,
+      "statement": "theorem adversarialRegretLowerExpression_ge_quarter (horizon pullCount clippingCount : Nat) (gap : Real) (hGap : 0 <= gap) (hPull : (pullCount : Real) <= (horizon : Real) / 2) (hClipping : (clippingCount : Real) <= (horizon : Real) / 4) : gap * ((horizon : Real) / 4) <= adversarialRegretLowerExpression horizon pullCount clippingCount gap"
+    },
+    {
+      "kind": "theorem",
+      "name": "randomRegret_ge_quarter_of_clippingDecomposition",
+      "full_name": "BanditRLProof.LowerBounds.randomRegret_ge_quarter_of_clippingDecomposition",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 133,
+      "statement": "theorem randomRegret_ge_quarter_of_clippingDecomposition (horizon pullCount clippingCount : Nat) (gap randomRegret : Real) (hGap : 0 <= gap) (hPull : (pullCount : Real) <= (horizon : Real) / 2) (hClipping : (clippingCount : Real) <= (horizon : Real) / 4) (hSource : adversarialRegretLowerExpression horizon pullCount clippingCount gap <= randomRegret) : gap * ((horizon : Real) / 4) <= randomRegret"
     },
     {
       "kind": "abbrev",

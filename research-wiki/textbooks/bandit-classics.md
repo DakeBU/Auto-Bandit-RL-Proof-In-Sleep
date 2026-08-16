@@ -33,6 +33,11 @@ the PDF counter. These are source-routing cards, never local proof evidence.
 | `TXT-LS-2020-THM-16-2-ASYMPTOTIC` | Ch. 16, §16.1, Theorem 16.2 / Eq. (16.2), CUP print pp. 177--179 / author-online pp. 207--208 / physical PDF pp. 216--217 | for an unstructured product class and a consistent policy, `liminf R_n/log n` is at least `sum_{i:Delta_i>0} Delta_i/d_inf(P_i,muStar,M_i)` | `d_inf`, candidate, Gaussian perturbation, and consistency analytic leaves compiled; expected-pull information and liminf terminals blocked |
 | `TXT-LS-2020-LEMMA-16-3-FINITE-TIME` | Ch. 16, §16.2, Lemma 16.3 / Eq. (16.4), CUP print p. 180 / author-online p. 209 / physical PDF p. 218 | for a one-arm change making arm `i` uniquely optimal, lower-bound original-law expected pulls using the exact log regret-sum numerator divided by `D(P_i,P_i')` | exact target frozen; blocked on Lemma 15.1's same-policy history KL bridge |
 | `TXT-LS-2020-THM-16-4-GAUSSIAN-FINITE-TIME` | Ch. 16, §16.2, Theorem 16.4 / Eq. (16.5), CUP print p. 180 / author-online pp. 209--210 / physical PDF pp. 218--219 | under the local unit-Gaussian `C n^p` envelope, sum the exact positive-part per-gap terms with factor `2/(1+epsilon)^2` | exact target frozen; Gaussian arm KL available, but Lemma 16.3 and final regret terminal blocked |
+| `TXT-LS-2020-THM-17-1-STOCHASTIC-TAIL` | Ch. 17, §17.1, Theorem 17.1, CUP print pp. 186--187 / author-online pp. 216--217 / physical PDF pp. 225--226 | a uniform `B sqrt((k-1)n)` expected-regret envelope forces random pseudo-regret above `(1/4) min{n,(1/B)sqrt((k-1)n)log(1/(4delta))}` with probability at least `delta` on some Gaussian instance | exact target and threshold compiled; bandit tail terminal blocked on Lemma 15.1's history KL |
+| `TXT-LS-2020-COR-17-2-STOCHASTIC-MINIMAX-TAIL` | Ch. 17, §17.1, Corollary 17.2 / Eqs. (17.6)--(17.7), CUP print p. 187 / author-online p. 217 / physical PDF p. 226 | under the exact horizon-confidence side condition, every policy has a Gaussian instance with the stated outer-quarter minimax random-pseudo-regret tail | exact threshold compiled; expectation contradiction and terminal blocked |
+| `TXT-LS-2020-COR-17-3-UNIFORM-TAIL-IMPOSSIBILITY` | Ch. 17, §17.1, Corollary 17.3, CUP print pp. 187--188 / author-online pp. 217--218 / physical PDF pp. 226--227 | no single policy has strict `<delta` tail at `B sqrt((k-1)n) log(1/delta)^p` for all horizons, confidence levels, and Gaussian environments when `p in (0,1)` | exact target frozen; tail integration and Theorem 17.1 terminal blocked |
+| `TXT-LS-2020-THM-17-4-ADVERSARIAL-TAIL` | Ch. 17, §17.2, Theorem 17.4, CUP print pp. 188--190 / author-online pp. 218--220 / physical PDF pp. 227--229 | under `n>=Ck log(1/(2delta))`, some deterministic bounded reward matrix has random-regret tail at `c sqrt(nk log(1/(2delta)))` at least `delta` | threshold and Claim 17.5 first moment compiled; clipped-normal construction and terminal blocked |
+| `TXT-LS-2020-CLAIMS-17-5-17-7` | Ch. 17, §17.2, Claims 17.5--17.7 and Eq. (17.8), CUP print pp. 189--190 / author-online pp. 219--220 / physical PDF pp. 228--229 | first-moment deterministic witness, clipped-normal pull-small event, pathwise regret comparison, and clipping-count concentration | Claim 17.5 plus event-subtraction/quarter algebra compile; Claims 17.6--17.7 and construction-level Eq. (17.8) blocked |
 
 The Chapter 13 conversion window is
 [`conversion-windows/TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE.md`](../../conversion-windows/TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE.md).
@@ -42,9 +47,9 @@ The Chapter 15 conversion window is
 [`conversion-windows/TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE.md`](../../conversion-windows/TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE.md).
 The Chapter 16 conversion window is
 [`conversion-windows/TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE.md`](../../conversion-windows/TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE.md).
-Chapter 17 receives its own theorem cards only after its exact source contracts
-have been re-read and frozen; its website entry remains a navigation-level
-planned mapping, not a frozen theorem statement. The
+The Chapter 17 conversion window is
+[`conversion-windows/TEXTBOOK-PART-IV-CHAPTER-17-HIGH-PROBABILITY-LOWER-BOUNDS-SPINE.md`](../../conversion-windows/TEXTBOOK-PART-IV-CHAPTER-17-HIGH-PROBABILITY-LOWER-BOUNDS-SPINE.md).
+The
 Chapter 14 kernel chain-rule retrieval candidate remains route evidence: the
 installed Mathlib surface lacks its conditional-KL integral form, and the
 repository's current deterministic policy interface is not Lemma 15.1's
