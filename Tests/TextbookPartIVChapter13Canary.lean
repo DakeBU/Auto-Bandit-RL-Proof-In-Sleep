@@ -32,6 +32,12 @@ example (regret : Fin 2 -> Fin 2 -> ENNReal) :
   exact expectedRegret_le_worstCaseExpectedRegret
     regret Set.univ 0 1 (Set.mem_univ 1)
 
+example (regret : Fin 2 -> Fin 2 -> ENNReal) (lower : ENNReal)
+    (hlower : ∀ policy : (Set.univ : Set (Fin 2)),
+      lower ≤ worstCaseExpectedRegret regret Set.univ policy.1) :
+    lower ≤ minimaxExpectedRegret regret Set.univ Set.univ := by
+  exact le_minimaxExpectedRegret regret Set.univ Set.univ lower hlower
+
 end MinimaxSurface
 
 section LeastExploredAlternative
@@ -74,8 +80,14 @@ end ConditionalTwoEnvironmentAlgebra
 
 #print axioms LowerBounds.worstCaseExpectedRegret
 #print axioms LowerBounds.minimaxExpectedRegret
+#print axioms LowerBounds.expectedRegret_le_worstCaseExpectedRegret
+#print axioms LowerBounds.minimaxExpectedRegret_le_worstCaseExpectedRegret
+#print axioms LowerBounds.le_minimaxExpectedRegret
 #print axioms LowerBounds.exists_alternative_le_average
+#print axioms LowerBounds.alternativeExpectedPullBudget_le
 #print axioms LowerBounds.exists_leastExploredAlternative
+#print axioms LowerBounds.baseEnvironmentRegret
+#print axioms LowerBounds.changedEnvironmentRegretLowerBound
 #print axioms LowerBounds.max_base_changed_regretLowerBound_ge_half_sub_error
 #print axioms LowerBounds.max_base_changed_regretLowerBound_ge_half
 

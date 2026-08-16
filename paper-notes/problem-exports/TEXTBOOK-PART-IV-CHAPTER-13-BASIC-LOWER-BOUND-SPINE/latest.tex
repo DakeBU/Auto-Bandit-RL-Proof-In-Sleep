@@ -1,13 +1,51 @@
-% Auto-generated proof export skeleton for TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
 \section{Chapter 13 Lower-Bound Basic Ideas Spine}
 
 \paragraph{Status.}
-This note is a synchronized natural-language export for task \texttt{TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE}.
-Only Lean declarations that pass \texttt{lake build \&\& lake build Tests} should be
-stated as proved.
+This note is a synchronized natural-language export for task
+\texttt{TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE}.  The semantic
+and deterministic Chapter 13 slice passed its local Lean and repository gates
+at commit \texttt{47ef4fe42679cd53e208aed540b6aa2bdb253aa8}.  It does not
+claim the unit-variance Gaussian minimax lower bound in Theorem~13.1, whose
+proof the source defers to Chapter~15.
 
 \paragraph{Lean declarations.}
-Add theorem names here.
+The compiled public surface consists of
+\texttt{worstCaseExpectedRegret}, \texttt{minimaxExpectedRegret}, their three
+order lemmas, \texttt{exists\_alternative\_le\_average},
+\texttt{alternativeExpectedPullBudget\_le},
+\texttt{exists\_leastExploredAlternative}, the two regret expressions, and
+\texttt{max\_base\_changed\_regretLowerBound\_ge\_half\_sub\_error} with its
+zero-error corollary \texttt{max\_base\_changed\_regretLowerBound\_ge\_half}.
 
 \paragraph{Proof map.}
-Translate the compiled Lean proof into paper-readable mathematics here.
+Let $R(\pi,\nu)$ take values in $[0,\infty]$.  The worst-case value of a policy
+is the supremum over the explicit environment subtype, and the minimax value
+is the infimum of these worst-case values over the explicit policy subtype.
+The order lemmas follow from the corresponding complete-lattice introduction
+and elimination rules.
+
+For $m+1$ arms, split the finite sum at arm zero.  Nonnegativity of its
+expected pull count and the exact total-pull identity imply that the sum over
+the $m$ alternative arms is at most the horizon.  Finite averaging then gives
+an $i\in\mathrm{Fin}(m)$ whose successor arm has expected count at most $n/m$.
+
+For the two-environment algebra, write
+\[
+  B=\Delta(n-x),\qquad C=\Delta y.
+\]
+If $\Delta\geq 0$ and $x-y\leq e$, then
+$B+C\geq\Delta(n-e)$.  Since both $B$ and $C$ are at most
+$\max\{B,C\}$, it follows that
+\[
+  \frac{\Delta(n-e)}{2}\leq\max\{B,C\}.
+\]
+The half-horizon statement is the special case $e=0$ under $x\leq y$.
+The transport comparison is an explicit premise: no likelihood-ratio, KL,
+absolute-continuity, policy-consistency, or Gaussian result is inferred from
+this deterministic theorem.
+
+\paragraph{Verification boundary.}
+The focused module, typed root-import canary, full Tests target, axiom print,
+repository check, lean-verified website build, site checker, and desktop/mobile
+browser inspection passed locally.  Theorem~13.1 remains planned until the
+Chapter~14 history-law bridge and Chapter~15 minimax construction compile.

@@ -35,8 +35,9 @@ For the base mean vector `(Delta,0,...)`, the source writes expected regret as
 `Delta * (n - E_nu[T_0(n)])`. After changing one alternative mean to
 `2*Delta`, it lower-bounds regret by `Delta * E_nu'[T_0(n)]`. The local
 algebra proves that the maximum of these expressions is at least
-`Delta*n/2` if `0 <= Delta` and the missing information bridge supplies
-`E_nu[T_0(n)] <= E_nu'[T_0(n)]`. The premise is deliberately visible.
+`Delta*(n-error)/2` if `0 <= Delta` and the missing information bridge supplies
+`E_nu[T_0(n)]-E_nu'[T_0(n)] <= error`. The premise is deliberately visible;
+the `Delta*n/2` statement is retained only as the zero-error corollary.
 
 ## Lean mapping
 
@@ -86,14 +87,14 @@ algebra proves that the maximum of these expressions is at least
 
 | Node | Interface | Dependencies | Lean declaration | Mathlib status | Gate | Status |
 | --- | --- | --- | --- | --- | --- | --- |
-| `CH13-MINIMAX-SURFACE` | explicit sup/inf expected-regret semantics | complete lattice | `worstCaseExpectedRegret`, `minimaxExpectedRegret` and order leaves | project-local | focused Lean | active |
-| `CH13-ALTERNATIVE-BUDGET` | alternative sum at most total horizon | full expected-pull identity, nonnegativity | internal/public budget lemma | mathlib-composed project leaf | focused Lean | active |
-| `CH13-LEAST-EXPLORED` | some `i.succ` has count at most `n/m` | alternative budget, finite averaging | `exists_leastExploredAlternative` | mathlib-composed project leaf | focused Lean | active |
-| `CH13-TWO-ENV-ALGEBRA` | quantitative `Delta*(n-error)/2` max bound | nonnegative gap, explicit upper bound on the cross-law pull discrepancy | `max_base_changed_regretLowerBound_ge_half_sub_error`; zero-error corollary `max_base_changed_regretLowerBound_ge_half` | project-local | focused Lean | active |
+| `CH13-MINIMAX-SURFACE` | explicit sup/inf expected-regret semantics | complete lattice | `worstCaseExpectedRegret`, `minimaxExpectedRegret` and order leaves | project-local | focused Lean | compiled |
+| `CH13-ALTERNATIVE-BUDGET` | alternative sum at most total horizon | full expected-pull identity, nonnegativity | internal/public budget lemma | mathlib-composed project leaf | focused Lean | compiled |
+| `CH13-LEAST-EXPLORED` | some `i.succ` has count at most `n/m` | alternative budget, finite averaging | `exists_leastExploredAlternative` | mathlib-composed project leaf | focused Lean | compiled |
+| `CH13-TWO-ENV-ALGEBRA` | quantitative `Delta*(n-error)/2` max bound | nonnegative gap, explicit upper bound on the cross-law pull discrepancy | `max_base_changed_regretLowerBound_ge_half_sub_error`; zero-error corollary `max_base_changed_regretLowerBound_ge_half` | project-local | focused Lean | compiled |
 | `CH13-HISTORY-TRANSPORT` | derive cross-law pull/event comparison | same policy/history law, AC, history KL | none | planned generic leaf | Chapter 14 | planned |
 | `CH13-THEOREM-13-1` | universal-constant Gaussian minimax `sqrt(k*n)` lower bound | Chapter 13 leaves plus Chapter 14 information theory and Chapter 15 packing/tuning | none | source theorem | Chapter 15 | planned |
-| `CH13-TYPED-CANARY` | full-conclusion applications and nondegenerate instance | compiled declarations | `Tests/TextbookPartIVChapter13Canary.lean` | project-local | Tests | planned |
-| `CH13-EVIDENCE-SITE` | task/window/DAG/export/index/site agreement | all local gates | repository artifacts | repository | site checks/review | planned |
+| `CH13-TYPED-CANARY` | full-conclusion applications and nondegenerate instance | compiled declarations | `Tests/TextbookPartIVChapter13Canary.lean` | project-local | Tests | verified |
+| `CH13-EVIDENCE-SITE` | task/window/DAG/export/index/site agreement | all local gates | repository artifacts | repository | site checks/review | verified locally |
 | `CH13-REMOTE` | PR, Actions, Pages, live page | accepted local chapter | remote workflow | repository | deployment | planned |
 
 ## Gaps
@@ -103,5 +104,5 @@ algebra proves that the maximum of these expressions is at least
 - [ ] Event-level binary KL or another direction-correct testing inequality.
 - [ ] Unit-variance Gaussian KL computation and `Delta` calibration.
 - [ ] Chapter 15 minimax packing/averaging and universal-constant extraction.
-- [ ] Independent review of quantifier order, KL direction, absolute continuity,
+- [x] Independent review of quantifier order, KL direction, absolute continuity,
   policy consistency, and asymptotic order.

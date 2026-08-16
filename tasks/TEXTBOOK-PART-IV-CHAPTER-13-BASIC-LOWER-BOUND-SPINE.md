@@ -60,8 +60,10 @@ develops before that deferral:
    changed lower-bound expression = Delta * E_nu'[T_0(n)].
    ```
 
-   Prove the half-horizon maximum lower bound only under an explicit
-   cross-environment pull comparison. That comparison is a named missing
+   Prove the quantitative maximum lower bound
+   `Delta * (n - error) / 2` only under the explicit comparison
+   `E_nu[T_0(n)] - E_nu'[T_0(n)] <= error`, and retain the half-horizon
+   statement as its zero-error corollary. The comparison is a named missing
    information-theoretic bridge, not a hidden assumption and not a caller-free
    lower-bound theorem.
 4. Publish the declarations through the root library and a full-typed external
@@ -77,7 +79,9 @@ LowerBounds.worstCaseExpectedRegret
 LowerBounds.minimaxExpectedRegret
 LowerBounds.expectedRegret_le_worstCaseExpectedRegret
 LowerBounds.minimaxExpectedRegret_le_worstCaseExpectedRegret
+LowerBounds.le_minimaxExpectedRegret
 LowerBounds.exists_alternative_le_average
+LowerBounds.alternativeExpectedPullBudget_le
 LowerBounds.exists_leastExploredAlternative
 LowerBounds.baseEnvironmentRegret
 LowerBounds.changedEnvironmentRegretLowerBound
@@ -91,13 +95,13 @@ LowerBounds.max_base_changed_regretLowerBound_ge_half
 - [x] Theorem 13.1 is fenced as source-stated but Chapter-15-proved.
 - [x] The compiled Chapter 13 semantic signature is frozen before tactics.
 - [x] Hidden regularity assumptions are explicit in the conversion window.
-- [ ] Minimax and worst-case definitions and order leaves compile.
-- [ ] Alternative-arm averaging leaves compile from the exact pull budget.
-- [ ] Conditional two-environment algebra leaves compile without a statistical
+- [x] Minimax and worst-case definitions and order leaves compile.
+- [x] Alternative-arm averaging leaves compile from the exact pull budget.
+- [x] Conditional two-environment algebra leaves compile without a statistical
   nonclaim being promoted.
-- [ ] Root import, focused build, typed canary, Tests, axiom scan, full harness
+- [x] Root import, focused build, typed canary, Tests, axiom scan, full harness
   check, proof export, evidence indexes, documentation, and website pass.
-- [ ] Independent read-only review finds no unresolved P0--P3 issue.
+- [x] Independent read-only review finds no unresolved P0--P3 issue.
 - [ ] Branch commit and remote PR/Actions/Pages/live-page gates pass.
 
 ## Mathlib-ready leaf contract

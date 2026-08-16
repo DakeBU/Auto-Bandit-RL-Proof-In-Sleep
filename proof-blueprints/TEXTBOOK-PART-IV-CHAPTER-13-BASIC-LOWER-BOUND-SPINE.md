@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
 
-Generated: `2026-08-16T08:38:36+00:00`
+Generated: `2026-08-16T10:19:41+00:00`
 
 ## Source Task
 
@@ -66,8 +66,10 @@ develops before that deferral:
    changed lower-bound expression = Delta * E_nu'[T_0(n)].
    ```
 
-   Prove the half-horizon maximum lower bound only under an explicit
-   cross-environment pull comparison. That comparison is a named missing
+   Prove the quantitative maximum lower bound
+   `Delta * (n - error) / 2` only under the explicit comparison
+   `E_nu[T_0(n)] - E_nu'[T_0(n)] <= error`, and retain the half-horizon
+   statement as its zero-error corollary. The comparison is a named missing
    information-theoretic bridge, not a hidden assumption and not a caller-free
    lower-bound theorem.
 4. Publish the declarations through the root library and a full-typed external
@@ -83,10 +85,13 @@ LowerBounds.worstCaseExpectedRegret
 LowerBounds.minimaxExpectedRegret
 LowerBounds.expectedRegret_le_worstCaseExpectedRegret
 LowerBounds.minimaxExpectedRegret_le_worstCaseExpectedRegret
+LowerBounds.le_minimaxExpectedRegret
 LowerBounds.exists_alternative_le_average
+LowerBounds.alternativeExpectedPullBudget_le
 LowerBounds.exists_leastExploredAlternative
 LowerBounds.baseEnvironmentRegret
 LowerBounds.changedEnvironmentRegretLowerBound
+LowerBounds.max_base_changed_regretLowerBound_ge_half_sub_error
 LowerBounds.max_base_changed_regretLowerBound_ge_half
 ```
 
@@ -96,13 +101,13 @@ LowerBounds.max_base_changed_regretLowerBound_ge_half
 - [x] Theorem 13.1 is fenced as source-stated but Chapter-15-proved.
 - [x] The compiled Chapter 13 semantic signature is frozen before tactics.
 - [x] Hidden regularity assumptions are explicit in the conversion window.
-- [ ] Minimax and worst-case definitions and order leaves compile.
-- [ ] Alternative-arm averaging leaves compile from the exact pull budget.
-- [ ] Conditional two-environment algebra leaves compile without a statistical
+- [x] Minimax and worst-case definitions and order leaves compile.
+- [x] Alternative-arm averaging leaves compile from the exact pull budget.
+- [x] Conditional two-environment algebra leaves compile without a statistical
   nonclaim being promoted.
-- [ ] Root import, focused build, typed canary, Tests, axiom scan, full harness
+- [x] Root import, focused build, typed canary, Tests, axiom scan, full harness
   check, proof export, evidence indexes, documentation, and website pass.
-- [ ] Independent read-only review finds no unresolved P0--P3 issue.
+- [x] Independent read-only review finds no unresolved P0--P3 issue.
 - [ ] Branch commit and remote PR/Actions/Pages/live-page gates pass.
 
 ## Mathlib-ready leaf contract
@@ -111,7 +116,7 @@ LowerBounds.max_base_changed_regretLowerBound_ge_half
 | --- | --- | --- | --- | --- |
 | minimax surface | `iSup`, `iInf`, `ENNReal`, subtypes | complete-lattice introduction/elimination | explicit policy/environment subsets; nonemptiness only at semantic consumers | project-local |
 | finite average | `Fin.sum_univ_succ`, `Finset.exists_le_of_sum_le`, `Fintype.card_fin` | split arm zero, bound alternative sum, compare with constant average | `0 < m`, every expected pull nonnegative, exact total expected-pull identity | mathlib-composed project leaf |
-| two-environment algebra | ordered-field arithmetic, `max`, `nlinarith` | combine base and changed lower expressions under a named pull-transport inequality | `0 <= Delta`; the cross-law inequality is explicit and remains unproved here | project-local |
+| two-environment algebra | ordered-field arithmetic, `max`, `nlinarith` | combine base and changed lower expressions under a named upper bound on `E_nu[T_0]-E_nu'[T_0]` | `0 <= Delta`; the quantitative cross-law discrepancy is explicit and remains unproved here | project-local |
 | history change of measure | no local terminal yet | Chapter 14 KL/history-law construction | measurability, policy consistency, absolute continuity and finite KL | planned; theorem-card route only |
 | Gaussian minimax terminal | no local terminal yet | Chapter 15 consumption of Chapter 14 information bridge and Chapter 13 algebra | unit variance, means in `[0,1]^k`, `k > 1`, `n >= k` | planned; source theorem only |
 
@@ -145,7 +150,6 @@ bridge, or relabel deterministic scaffolding as the Gaussian minimax theorem.
 On a real block, preserve the exact source target as `planned` and record the
 smallest missing definition, Mathlib API, regularity assumption, and reusable
 leaf before changing route.
-
 
 
 ## Conversion Window Snapshot
@@ -187,8 +191,9 @@ For the base mean vector `(Delta,0,...)`, the source writes expected regret as
 `Delta * (n - E_nu[T_0(n)])`. After changing one alternative mean to
 `2*Delta`, it lower-bounds regret by `Delta * E_nu'[T_0(n)]`. The local
 algebra proves that the maximum of these expressions is at least
-`Delta*n/2` if `0 <= Delta` and the missing information bridge supplies
-`E_nu[T_0(n)] <= E_nu'[T_0(n)]`. The premise is deliberately visible.
+`Delta*(n-error)/2` if `0 <= Delta` and the missing information bridge supplies
+`E_nu[T_0(n)]-E_nu'[T_0(n)] <= error`. The premise is deliberately visible;
+the `Delta*n/2` statement is retained only as the zero-error corollary.
 
 ## Lean mapping
 
@@ -202,7 +207,7 @@ algebra proves that the maximum of these expressions is at least
 | `E_nu[T_i(n)] <= n/(k-1)` | least-explored alternative | `LowerBounds.exists_leastExploredAlternative` | finite averaging theorem | target |
 | equation (13.2) | base regret expression | `LowerBounds.baseEnvironmentRegret` | deterministic real expression | target |
 | equation (13.3) RHS | changed regret lower expression | `LowerBounds.changedEnvironmentRegretLowerBound` | deterministic real expression | target |
-| comparison of `T_0` under `nu,nu'` | statistical indistinguishability bridge | explicit `baseFirstPulls <= changedFirstPulls` premise | bridge contract | planned Ch. 14--15 |
+| comparison of `T_0` under `nu,nu'` | statistical indistinguishability bridge | explicit `baseFirstPulls - changedFirstPulls <= error` premise | quantitative bridge contract | planned Ch. 14--15 |
 | Theorem 13.1 | Gaussian minimax lower bound | no local declaration yet | source terminal | planned Ch. 15 |
 
 ## Semantic signature and assumption ledger
@@ -231,21 +236,21 @@ algebra proves that the maximum of these expressions is at least
 | minimax surface | Mathlib `iSup`, `iInf`, `ENNReal`, subtypes | `MLIB-ORDER-ALGEBRA` | direct complete-lattice definitions and bounds | retain explicit subsets; do not replace sup/inf with finite maxima unless source class is later finite |
 | alternative budget | `Fin.sum_univ_succ`, ordered-field algebra | `MLIB-FINSET-SUMS`, `MLIB-FINTYPE-FIN`, `MLIB-ORDER-ALGEBRA` | split the full finite sum into base plus alternatives | if simplification fails, expose a separate sum-splitting lemma; do not assume the desired alternative bound |
 | finite average | `Finset.exists_le_of_sum_le`, constant finite sum | same Mathlib cards | compare alternative sum to `m` copies of `n/m` | if API mismatch persists, prove by contradiction using `Finset.card_nsmul_le_sum` |
-| algebra reduction | `max`, ordered-field arithmetic, `nlinarith` | `MLIB-ORDER-ALGEBRA` | add the two expressions under the explicit cross-law inequality | split product monotonicity from linear half-max lemma if automation is fragile |
+| algebra reduction | `max`, ordered-field arithmetic, `nlinarith` | `MLIB-ORDER-ALGEBRA` | add the two expressions under an explicit upper bound on the cross-law pull discrepancy | split product monotonicity from linear half-max lemma if automation is fragile |
 | information bridge | no matching local terminal | `WEAPON-KL-CHANGE-OF-MEASURE` only | Chapter 14 history KL/change-of-measure surface | never promote the weapon card; record exact absolute-continuity and KL direction |
 
 ## Proof DAG
 
 | Node | Interface | Dependencies | Lean declaration | Mathlib status | Gate | Status |
 | --- | --- | --- | --- | --- | --- | --- |
-| `CH13-MINIMAX-SURFACE` | explicit sup/inf expected-regret semantics | complete lattice | `worstCaseExpectedRegret`, `minimaxExpectedRegret` and order leaves | project-local | focused Lean | active |
-| `CH13-ALTERNATIVE-BUDGET` | alternative sum at most total horizon | full expected-pull identity, nonnegativity | internal/public budget lemma | mathlib-composed project leaf | focused Lean | active |
-| `CH13-LEAST-EXPLORED` | some `i.succ` has count at most `n/m` | alternative budget, finite averaging | `exists_leastExploredAlternative` | mathlib-composed project leaf | focused Lean | active |
-| `CH13-TWO-ENV-ALGEBRA` | conditional half-horizon max bound | nonnegative gap, explicit cross-law pull comparison | `max_base_changed_regretLowerBound_ge_half` | project-local | focused Lean | active |
+| `CH13-MINIMAX-SURFACE` | explicit sup/inf expected-regret semantics | complete lattice | `worstCaseExpectedRegret`, `minimaxExpectedRegret` and order leaves | project-local | focused Lean | compiled |
+| `CH13-ALTERNATIVE-BUDGET` | alternative sum at most total horizon | full expected-pull identity, nonnegativity | internal/public budget lemma | mathlib-composed project leaf | focused Lean | compiled |
+| `CH13-LEAST-EXPLORED` | some `i.succ` has count at most `n/m` | alternative budget, finite averaging | `exists_leastExploredAlternative` | mathlib-composed project leaf | focused Lean | compiled |
+| `CH13-TWO-ENV-ALGEBRA` | quantitative `Delta*(n-error)/2` max bound | nonnegative gap, explicit upper bound on the cross-law pull discrepancy | `max_base_changed_regretLowerBound_ge_half_sub_error`; zero-error corollary `max_base_changed_regretLowerBound_ge_half` | project-local | focused Lean | compiled |
 | `CH13-HISTORY-TRANSPORT` | derive cross-law pull/event comparison | same policy/history law, AC, history KL | none | planned generic leaf | Chapter 14 | planned |
 | `CH13-THEOREM-13-1` | universal-constant Gaussian minimax `sqrt(k*n)` lower bound | Chapter 13 leaves plus Chapter 14 information theory and Chapter 15 packing/tuning | none | source theorem | Chapter 15 | planned |
-| `CH13-TYPED-CANARY` | full-conclusion applications and nondegenerate instance | compiled declarations | `Tests/TextbookPartIVChapter13Canary.lean` | project-local | Tests | planned |
-| `CH13-EVIDENCE-SITE` | task/window/DAG/export/index/site agreement | all local gates | repository artifacts | repository | site checks/review | planned |
+| `CH13-TYPED-CANARY` | full-conclusion applications and nondegenerate instance | compiled declarations | `Tests/TextbookPartIVChapter13Canary.lean` | project-local | Tests | verified |
+| `CH13-EVIDENCE-SITE` | task/window/DAG/export/index/site agreement | all local gates | repository artifacts | repository | site checks/review | verified locally |
 | `CH13-REMOTE` | PR, Actions, Pages, live page | accepted local chapter | remote workflow | repository | deployment | planned |
 
 ## Gaps
@@ -255,9 +260,8 @@ algebra proves that the maximum of these expressions is at least
 - [ ] Event-level binary KL or another direction-correct testing inequality.
 - [ ] Unit-variance Gaussian KL computation and `Delta` calibration.
 - [ ] Chapter 15 minimax packing/averaging and universal-constant extraction.
-- [ ] Independent review of quantifier order, KL direction, absolute continuity,
+- [x] Independent review of quantifier order, KL direction, absolute continuity,
   policy consistency, and asymptotic order.
-
 
 
 ## Obligation Snapshot
@@ -273,16 +277,16 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | Node | Target | Dependencies | Local APIs/imports | Retrieval cards | Intended proof route | Regularity contracts | Mathlib status | Lean declaration | Gate | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | `CH13-SOURCE-FENCE` | exact Theorem 13.1 and Section 13.1 placement; proof deferral recorded | official author PDF and CUP metadata | task/conversion window | `TXT-LATTIMORE-SZEPESVARI-2020` | conservative paraphrase with page mapping | edition, chapter, section, printed/PDF pages | source evidence | n/a | source review | mapped |
-| `CH13-MINIMAX-SURFACE` | worst-case sup and minimax inf over explicit classes | source semantics | `iSup`, `iInf`, `ENNReal`, subtypes | `MLIB-ORDER-ALGEBRA` | complete-lattice definitions and introduction/elimination bounds | class subsets explicit; meaningful consumers prove nonemptiness | project-local | `LowerBounds.worstCaseExpectedRegret`, `LowerBounds.minimaxExpectedRegret` and order leaves | focused Lean | active |
-| `CH13-ALTERNATIVE-BUDGET` | sum of alternative expected pulls is at most horizon | exact total sum and base nonnegativity | `Fin.sum_univ_succ`, ordered field | `MLIB-FINSET-SUMS`, `MLIB-FINTYPE-FIN` | rewrite the full sum as base plus tail, then linear arithmetic | all expected pulls nonnegative | mathlib-composed project leaf | `LowerBounds.alternativeExpectedPullBudget_le` | focused Lean | active |
-| `CH13-LEAST-EXPLORED` | some alternative has expected pulls at most `n/m` | alternative budget, `0 < m` | `Finset.exists_le_of_sum_le`, constant sum | `MLIB-FINSET-SUMS`, `MLIB-FINTYPE-FIN`, `MLIB-ORDER-ALGEBRA` | finite average comparison | `0 < m`; exact expected-pull total | mathlib-composed project leaf | `LowerBounds.exists_alternative_le_average`, `LowerBounds.exists_leastExploredAlternative` | focused Lean | active |
-| `CH13-TWO-ENV-ALGEBRA` | max of base and changed expressions is at least `Delta*n/2` under explicit pull transport | equations (13.2)--(13.3) expressions | real ordered-field algebra, `max`, `nlinarith` | `MLIB-ORDER-ALGEBRA` | show their sum is at least `Delta*n`, then use max/average | `0 <= Delta`; visible `baseFirstPulls <= changedFirstPulls` bridge | project-local | `LowerBounds.baseEnvironmentRegret`, `LowerBounds.changedEnvironmentRegretLowerBound`, `LowerBounds.max_base_changed_regretLowerBound_ge_half` | focused Lean | active |
+| `CH13-MINIMAX-SURFACE` | worst-case sup and minimax inf over explicit classes | source semantics | `iSup`, `iInf`, `ENNReal`, subtypes | `MLIB-ORDER-ALGEBRA` | complete-lattice definitions and introduction/elimination bounds | class subsets explicit; meaningful consumers prove nonemptiness | project-local | `LowerBounds.worstCaseExpectedRegret`, `LowerBounds.minimaxExpectedRegret` and order leaves | focused Lean | compiled |
+| `CH13-ALTERNATIVE-BUDGET` | sum of alternative expected pulls is at most horizon | exact total sum and base nonnegativity | `Fin.sum_univ_succ`, ordered field | `MLIB-FINSET-SUMS`, `MLIB-FINTYPE-FIN` | rewrite the full sum as base plus tail, then linear arithmetic | all expected pulls nonnegative | mathlib-composed project leaf | `LowerBounds.alternativeExpectedPullBudget_le` | focused Lean | compiled |
+| `CH13-LEAST-EXPLORED` | some alternative has expected pulls at most `n/m` | alternative budget, `0 < m` | `Finset.exists_le_of_sum_le`, constant sum | `MLIB-FINSET-SUMS`, `MLIB-FINTYPE-FIN`, `MLIB-ORDER-ALGEBRA` | finite average comparison | `0 < m`; exact expected-pull total | mathlib-composed project leaf | `LowerBounds.exists_alternative_le_average`, `LowerBounds.exists_leastExploredAlternative` | focused Lean | compiled |
+| `CH13-TWO-ENV-ALGEBRA` | max of base and changed expressions is at least `Delta*(n-error)/2` under an explicit pull-discrepancy bound | equations (13.2)--(13.3) expressions | real ordered-field algebra, `max`, `nlinarith` | `MLIB-ORDER-ALGEBRA` | show their sum is at least `Delta*(n-error)`, then use max/average | `0 <= Delta`; visible `baseFirstPulls-changedFirstPulls <= error` bridge | project-local | `LowerBounds.baseEnvironmentRegret`, `LowerBounds.changedEnvironmentRegretLowerBound`, `LowerBounds.max_base_changed_regretLowerBound_ge_half_sub_error`; zero-error corollary `LowerBounds.max_base_changed_regretLowerBound_ge_half` | focused Lean | compiled |
 | `CH13-HISTORY-TRANSPORT` | same-policy history-law comparison supplies a useful cross-law pull or event inequality | Chapter 14 information theory | no current local terminal | `WEAPON-KL-CHANGE-OF-MEASURE` only | likelihood ratio, KL chain rule, direction-correct event inequality | measurability, policy consistency, absolute continuity, finite KL | planned generic leaf | none | Chapter 14 | planned |
 | `CH13-THEOREM-13-1` | Gaussian finite-arm minimax lower bound `>= c*sqrt(k*n)` | Chapter 13 deterministic leaves, Chapter 14 information theory, Chapter 15 minimax construction | future Gaussian/history-law APIs | source card plus future Mathlib cards | base/changed instances, least arm, testing bound, Delta tuning, inf/sup extraction | unit variance; means in `[0,1]^k`; `k>1`; `n>=k`; universal `c>0` | source theorem only | none | Chapter 15 | planned |
-| `CH13-TYPED-CANARY` | external root-import applications and a three-arm numeric witness | compiled Chapter 13 declarations | root `BanditRLProof` import | local declaration index | exact full-conclusion examples plus `#print axioms` | nonempty policy/environment subsets; nonnegative vector summing to horizon | project-local | `Tests/TextbookPartIVChapter13Canary.lean` | dedicated/root Tests | planned |
-| `CH13-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | deterministic gate suite | Windows long-path workaround must not be mistaken for a Lean proof failure | repository | n/a | `python3 tools/bandit.py check` | planned |
-| `CH13-EVIDENCE-SITE` | proof export, indexes, readings/highlights/results/implementation map/README and Part IV site agree | local full gate | harness and website scripts | repository | generated evidence plus maintained source data | only gate-passing declarations marked compiled | repository | n/a | lean-verified build/site check/browser review | planned |
-| `CH13-REVIEW` | independent read-only theorem/Lean consistency audit | all local artifacts | source, declarations, generated site | all above | check quantifiers, KL direction, AC, policy consistency and order claims | no unresolved P0--P3 | repository | n/a | review | planned |
+| `CH13-TYPED-CANARY` | external root-import applications and a three-arm numeric witness | compiled Chapter 13 declarations | root `BanditRLProof` import | local declaration index | exact full-conclusion examples plus `#print axioms` | nonempty policy/environment subsets; nonnegative vector summing to horizon | project-local | `Tests/TextbookPartIVChapter13Canary.lean` | dedicated/root Tests | verified |
+| `CH13-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | deterministic gate suite | Windows long-path workaround must not be mistaken for a Lean proof failure | repository | n/a | `python3 tools/bandit.py check` | verified |
+| `CH13-EVIDENCE-SITE` | proof export, indexes, readings/highlights/results/implementation map/README and Part IV site agree | local full gate | harness and website scripts | repository | generated evidence plus maintained source data | only gate-passing declarations marked compiled | repository | n/a | lean-verified build/site check/browser review | verified locally |
+| `CH13-REVIEW` | independent read-only theorem/Lean consistency audit | all local artifacts | source, declarations, generated site | all above | check quantifiers, KL direction, AC, policy consistency and order claims | no unresolved P0--P3 | repository | n/a | review | verified |
 | `CH13-REMOTE` | PR, Actions, Pages deployment and live Chapter 13 verification | accepted local chapter | GitHub/Pages workflow | repository | branch PR; never direct push to main | remote state must be current | repository | n/a | remote deployment | planned |
 
 ## Failure classification
@@ -308,9 +312,9 @@ Use exactly one:
   `2,...,k`; no alternative arm is dropped or duplicated.
 - The expected-pull sum is an explicit exact identity, and all nonnegativity
   premises used to remove arm zero are visible.
-- Base and changed expectations are not definitionally identified. Any
-  cross-environment comparison remains a named premise until the Chapter 14
-  history-law theorem produces it for one policy.
+- Base and changed expectations are not definitionally identified. The
+  quantitative discrepancy bound remains a named premise until the Chapter 14
+  history-law theorem produces a usable error for one policy.
 - KL direction, absolute continuity and Gaussian construction cannot be
   inferred from deterministic algebra or a theorem card.
 - Theorem 13.1 remains planned until the Chapter 15 caller-free minimax
@@ -323,7 +327,6 @@ Keep failed proof attempts in
 mathematical route actually fails. Do not log ordinary elaboration iteration
 as a scientific failure. Never weaken the fenced terminal or promote a
 source/retrieval card to certified local memory.
-
 
 
 ## Completion Gap Audit
@@ -52451,6 +52454,102 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/Literature.lean",
     "line": 31,
     "statement": "def lmlBanditDeclarationCards : List RegretBoundCard"
+  },
+  {
+    "kind": "def",
+    "name": "worstCaseExpectedRegret",
+    "full_name": "BanditRLProof.LowerBounds.worstCaseExpectedRegret",
+    "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+    "line": 35,
+    "statement": "noncomputable def worstCaseExpectedRegret {Policy : Type u} {Environment : Type v} (regret : Policy -> Environment -> ENNReal) (environmentClass : Set Environment) (policy : Policy) : ENNReal"
+  },
+  {
+    "kind": "def",
+    "name": "minimaxExpectedRegret",
+    "full_name": "BanditRLProof.LowerBounds.minimaxExpectedRegret",
+    "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+    "line": 49,
+    "statement": "noncomputable def minimaxExpectedRegret {Policy : Type u} {Environment : Type v} (regret : Policy -> Environment -> ENNReal) (policyClass : Set Policy) (environmentClass : Set Environment) : ENNReal"
+  },
+  {
+    "kind": "theorem",
+    "name": "expectedRegret_le_worstCaseExpectedRegret",
+    "full_name": "BanditRLProof.LowerBounds.expectedRegret_le_worstCaseExpectedRegret",
+    "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+    "line": 58,
+    "statement": "theorem expectedRegret_le_worstCaseExpectedRegret {Policy : Type u} {Environment : Type v} (regret : Policy -> Environment -> ENNReal) (environmentClass : Set Environment) (policy : Policy) (environment : Environment) (henvironment : environment \u2208 environmentClass) : regret policy environment \u2264 worstCaseExpectedRegret regret environmentClass policy"
+  },
+  {
+    "kind": "theorem",
+    "name": "minimaxExpectedRegret_le_worstCaseExpectedRegret",
+    "full_name": "BanditRLProof.LowerBounds.minimaxExpectedRegret_le_worstCaseExpectedRegret",
+    "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+    "line": 71,
+    "statement": "theorem minimaxExpectedRegret_le_worstCaseExpectedRegret {Policy : Type u} {Environment : Type v} (regret : Policy -> Environment -> ENNReal) (policyClass : Set Policy) (environmentClass : Set Environment) (policy : Policy) (hpolicy : policy \u2208 policyClass) : minimaxExpectedRegret regret policyClass environmentClass \u2264 worstCaseExpectedRegret regret environmentClass policy"
+  },
+  {
+    "kind": "theorem",
+    "name": "le_minimaxExpectedRegret",
+    "full_name": "BanditRLProof.LowerBounds.le_minimaxExpectedRegret",
+    "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+    "line": 82,
+    "statement": "theorem le_minimaxExpectedRegret {Policy : Type u} {Environment : Type v} (regret : Policy -> Environment -> ENNReal) (policyClass : Set Policy) (environmentClass : Set Environment) (lower : ENNReal) (hlower : \u2200 policy : policyClass, lower \u2264 worstCaseExpectedRegret regret environmentClass policy.1) : lower \u2264 minimaxExpectedRegret regret policyClass environmentClass"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_alternative_le_average",
+    "full_name": "BanditRLProof.LowerBounds.exists_alternative_le_average",
+    "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+    "line": 100,
+    "statement": "theorem exists_alternative_le_average {m : Nat} (hm : 0 < m) (alternativeExpectedPulls : Fin m -> Real) (budget : Real) (hbudget : \u2211 i : Fin m, alternativeExpectedPulls i \u2264 budget) : \u2203 i : Fin m, alternativeExpectedPulls i \u2264 budget / (m : Real)"
+  },
+  {
+    "kind": "theorem",
+    "name": "alternativeExpectedPullBudget_le",
+    "full_name": "BanditRLProof.LowerBounds.alternativeExpectedPullBudget_le",
+    "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+    "line": 126,
+    "statement": "theorem alternativeExpectedPullBudget_le {m : Nat} (expectedPulls : Fin (m + 1) -> Real) (budget : Real) (hnonneg : \u2200 arm, 0 \u2264 expectedPulls arm) (htotal : \u2211 arm : Fin (m + 1), expectedPulls arm = budget) : (\u2211 i : Fin m, expectedPulls i.succ) \u2264 budget"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_leastExploredAlternative",
+    "full_name": "BanditRLProof.LowerBounds.exists_leastExploredAlternative",
+    "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+    "line": 143,
+    "statement": "theorem exists_leastExploredAlternative {m : Nat} (hm : 0 < m) (expectedPulls : Fin (m + 1) -> Real) (horizon : Nat) (hnonneg : \u2200 arm, 0 \u2264 expectedPulls arm) (htotal : \u2211 arm : Fin (m + 1), expectedPulls arm = (horizon : Real)) : \u2203 i : Fin m, expectedPulls i.succ \u2264 (horizon : Real) / (m : Real)"
+  },
+  {
+    "kind": "def",
+    "name": "baseEnvironmentRegret",
+    "full_name": "BanditRLProof.LowerBounds.baseEnvironmentRegret",
+    "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+    "line": 156,
+    "statement": "def baseEnvironmentRegret (horizon : Nat) (gap baseFirstExpectedPulls : Real) : Real"
+  },
+  {
+    "kind": "def",
+    "name": "changedEnvironmentRegretLowerBound",
+    "full_name": "BanditRLProof.LowerBounds.changedEnvironmentRegretLowerBound",
+    "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+    "line": 161,
+    "statement": "def changedEnvironmentRegretLowerBound (gap changedFirstExpectedPulls : Real) : Real"
+  },
+  {
+    "kind": "theorem",
+    "name": "max_base_changed_regretLowerBound_ge_half_sub_error",
+    "full_name": "BanditRLProof.LowerBounds.max_base_changed_regretLowerBound_ge_half_sub_error",
+    "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+    "line": 173,
+    "statement": "theorem max_base_changed_regretLowerBound_ge_half_sub_error (horizon : Nat) (gap baseFirstExpectedPulls changedFirstExpectedPulls error : Real) (hgap : 0 \u2264 gap) (hpullDifference : baseFirstExpectedPulls - changedFirstExpectedPulls \u2264 error) : gap * ((horizon : Real) - error) / 2 \u2264 max (baseEnvironmentRegret horizon gap baseFirstExpectedPulls) (changedEnvironmentRegretLowerBound gap changedFirstExpectedPulls)"
+  },
+  {
+    "kind": "theorem",
+    "name": "max_base_changed_regretLowerBound_ge_half",
+    "full_name": "BanditRLProof.LowerBounds.max_base_changed_regretLowerBound_ge_half",
+    "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+    "line": 205,
+    "statement": "theorem max_base_changed_regretLowerBound_ge_half (horizon : Nat) (gap baseFirstExpectedPulls changedFirstExpectedPulls : Real) (hgap : 0 \u2264 gap) (htransport : baseFirstExpectedPulls \u2264 changedFirstExpectedPulls) : gap * (horizon : Real) / 2 \u2264 max (baseEnvironmentRegret horizon gap baseFirstExpectedPulls) (changedEnvironmentRegretLowerBound gap changedFirstExpectedPulls)"
   },
   {
     "kind": "structure",
