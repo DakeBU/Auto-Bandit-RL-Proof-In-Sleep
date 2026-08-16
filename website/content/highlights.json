@@ -1021,6 +1021,62 @@
       "dependencies": [
         "BanditRLProof.LowerBounds.gaussianMinimaxGap_sq"
       ]
+    },
+    {
+      "full_name": "BanditRLProof.LowerBounds.IsConsistentRegret",
+      "chapter": "foundations",
+      "plain": "A regret sequence is consistent when it divided by n to the p converges to zero for every positive real exponent p.",
+      "math": "\\forall p>0:\\quad R_n/n^p\\to 0.",
+      "intuition": "Consistency excludes a policy that pays polynomial regret on the instance, while still allowing logarithmic and other subpolynomial behavior.",
+      "why": "Definition 16.1 quantifies over every environment and every positive real exponent; the scalar predicate freezes the inner analytic contract exactly.",
+      "position": "It is a generic dependency interface, not proof that a concrete bandit policy is consistent over a concrete class.",
+      "proof_idea": "The declaration directly records a filter limit for each positive real exponent.",
+      "lean_notes": "Regret nonnegativity is deliberately a caller obligation. The base is the natural horizon cast to Real and the exponent is Real.rpow.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRLProof.LowerBounds.IsConsistentRegret.eventually_log_add_div_log_le",
+      "chapter": "foundations",
+      "plain": "The logarithmic growth ratio of a positive sum of two consistent regret sequences is eventually at most every positive exponent.",
+      "math": "\\forall p>0:\\quad \\frac{\\log(R_n+R_n')}{\\log n}\\le p\\quad\\text{eventually}.",
+      "intuition": "Two subpolynomial regrets remain subpolynomial, so their logarithm grows more slowly than any positive multiple of log n.",
+      "why": "This is the direction-correct analytic step used in the source proof before taking the limsup that feeds Theorem 16.2's pull-count liminf.",
+      "position": "It stops before the limsup/liminf and before any bandit history law; those endpoints remain separate obligations.",
+      "proof_idea": "Add the two normalized limits, bound the ratio by one eventually, take monotone logarithms, rewrite log(n^p)=p log n, and divide by positive log n.",
+      "lean_notes": "The sum must be eventually positive and the proof explicitly restricts to horizons greater than one.",
+      "dependencies": [
+        "BanditRLProof.LowerBounds.IsConsistentRegret.add",
+        "BanditRLProof.LowerBounds.IsConsistentRegret.eventually_add_le_rpow"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.LowerBounds.divergenceInfimum",
+      "chapter": "foundations",
+      "plain": "The Chapter 16 information cost is the extended-real infimum of original-to-alternative KL over laws in the class whose mean is strictly above the target mean.",
+      "math": "d_{\\inf}(P,\\mu^*,\\mathcal M)=\\inf_{P'\\in\\mathcal M:\\,\\mu(P')>\\mu^*}D(P\\Vert P').",
+      "intuition": "The easiest law that would make the arm optimal determines how much information a policy must collect to rule out that confusion.",
+      "why": "Keeping the infimum in ENNReal preserves empty alternative sets, support mismatch, zero cost, and infinite cost instead of hiding them behind real defaults.",
+      "position": "This is the exact source-shaped definition. Turning it into expected pulls and regret still requires the blocked history change-of-measure bridge.",
+      "proof_idea": "Define the infimum over a set comprehension and use complete-lattice sInf_le to insert any admissible candidate.",
+      "lean_notes": "The mean functional and distribution class are explicit. The strict comparison and KL direction P to P-prime are visible in the type.",
+      "dependencies": [
+        "BanditRLProof.LowerBounds.relativeEntropy"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum_le_perturbed",
+      "chapter": "foundations",
+      "plain": "For a unit-variance Gaussian arm, changing the mean to mu-star plus a positive epsilon gives an admissible d_inf candidate with its exact squared-distance KL cost.",
+      "math": "d_{\\inf}(\\mathcal N(\\mu,1),\\mu^*)\\le\\frac{(\\mu^*-\\mu+\\varepsilon)^2}{2},\\qquad\\varepsilon>0.",
+      "intuition": "A mean just above the optimal threshold supplies the approaching sequence behind the Gaussian d_inf formula.",
+      "why": "The leaf connects Chapter 16's infimum interface to the compiled Chapter 15 Gaussian KL without pretending the limiting infimum equality is already proved.",
+      "position": "It is the upper-candidate half of Table 16.1's unit-variance Gaussian calculation; the lower bound and epsilon-to-zero extraction remain open.",
+      "proof_idea": "Insert the alternative parameter mu-star plus epsilon, apply the exact Gaussian KL theorem, and normalize the squared displacement.",
+      "lean_notes": "The premise epsilon>0 discharges strict mean improvement. The output stays ENNReal and retains the original-to-alternative orientation.",
+      "dependencies": [
+        "BanditRLProof.LowerBounds.parametricDivergenceInfimum_le",
+        "BanditRLProof.LowerBounds.klDiv_gaussianReal_one"
+      ]
     }
   ]
 }

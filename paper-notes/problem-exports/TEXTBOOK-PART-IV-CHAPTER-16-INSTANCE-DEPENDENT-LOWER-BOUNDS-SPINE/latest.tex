@@ -1,0 +1,40 @@
+% Synchronized partial proof export for
+% TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE
+\section{Chapter 16 consistency and $d_{\inf}$ dependency slice}
+
+\paragraph{Status.}
+The declarations named below compile.  They are dependency leaves, not proofs
+of Theorem~16.2, Lemma~16.3, or Theorem~16.4.
+
+\paragraph{Compiled Lean declarations.}
+\begin{itemize}
+  \item \texttt{LowerBounds.IsConsistentRegret} and
+    \texttt{LowerBounds.IsConsistentPolicyOver};
+  \item \texttt{LowerBounds.IsConsistentRegret.add},
+    \texttt{eventually\_add\_le\_rpow}, and
+    \texttt{eventually\_log\_add\_div\_log\_le};
+  \item \texttt{LowerBounds.divergenceInfimum} and its candidate inequality;
+  \item the parameterized $d_{\inf}$ interface and
+    \texttt{unitGaussianDivergenceInfimum\_le\_perturbed}.
+\end{itemize}
+
+\paragraph{Proof map.}
+For every $p>0$, consistency gives $R_n/n^p\to0$.  Addition preserves this
+limit, so the sum of the original- and alternative-environment regrets is
+eventually at most $n^p$.  When the sum is positive, monotonicity of logarithm
+and $\log(n^p)=p\log n$ give
+\[
+  \frac{\log(R_n+R_n')}{\log n}\le p
+\]
+eventually.  Separately, $d_{\inf}$ is an extended-real infimum of
+$D(P\Vert P')$ over strictly better alternatives.  Inserting any admissible
+alternative therefore upper-bounds the infimum.  For unit-variance Gaussians,
+the mean $\mu^\star+\varepsilon$ is admissible when $\varepsilon>0$, and the
+compiled Gaussian KL identity gives cost
+$(\mu^\star-\mu+\varepsilon)^2/2$.
+
+\paragraph{Boundary.}
+The exact Gaussian infimum equality and the bandit history information
+constraint remain open.  The latter requires the missing conditional
+kernel-KL integral and a canonical history law for one common possibly
+randomized nonanticipating policy.  No Chapter~16 source terminal is claimed.

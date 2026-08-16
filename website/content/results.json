@@ -785,6 +785,58 @@
       "evidence": "BanditRLProof/LowerBounds/Minimax.lean; Tests/TextbookPartIVChapter15Canary.lean; tasks/TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE.md"
     },
     {
+      "id": "TEXTBOOK-PART-IV-CH16-CONSISTENCY-DINF-DEPENDENCY-SLICE",
+      "title": "Chapter 16 consistency, d_inf, and Gaussian-candidate dependency slice",
+      "chapter": "foundations",
+      "textbook_spine": "chapter-16-instance-dependent",
+      "status": "compiled",
+      "informal": "The project states Definition 16.1's every-environment/every-positive-real-power consistency interface, proves closure and eventual power/log-growth consequences for two regret sequences, defines the source extended-real d_inf with strict confusing alternatives in the original-to-alternative KL direction, and computes an exact unit-Gaussian perturbed-alternative upper bound.",
+      "declarations": [
+        "BanditRLProof.LowerBounds.IsConsistentRegret",
+        "BanditRLProof.LowerBounds.IsConsistentPolicyOver",
+        "BanditRLProof.LowerBounds.IsConsistentRegret.add",
+        "BanditRLProof.LowerBounds.IsConsistentRegret.eventually_add_le_rpow",
+        "BanditRLProof.LowerBounds.IsConsistentRegret.eventually_log_add_div_log_le",
+        "BanditRLProof.LowerBounds.divergenceInfimum",
+        "BanditRLProof.LowerBounds.divergenceInfimum_le",
+        "BanditRLProof.LowerBounds.parametricDivergenceInfimum",
+        "BanditRLProof.LowerBounds.parametricDivergenceInfimum_le",
+        "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum",
+        "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum_le_perturbed"
+      ],
+      "depends_on": [
+        "BanditRLProof.LowerBounds.relativeEntropy",
+        "BanditRLProof.LowerBounds.klDiv_gaussianReal_one"
+      ],
+      "missing": [
+        "The exact Gaussian d_inf equality still needs its infimum lower bound, epsilon-to-zero argument, and extended-real branch audit.",
+        "The one-arm expected-pull information constraint inherits Chapter 15's missing conditional kernel-KL integral and stochastic-policy history law.",
+        "Theorem 16.2, Lemma 16.3, and Theorem 16.4 remain blocked; this generic analytic slice does not prove them."
+      ],
+      "evidence": "BanditRLProof/LowerBounds/InstanceDependent.lean; Tests/TextbookPartIVChapter16Canary.lean; tasks/TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE.md"
+    },
+    {
+      "id": "TEXTBOOK-PART-IV-CH16-SOURCE-TERMINALS",
+      "title": "Chapter 16 instance-dependent asymptotic and finite-time source terminals",
+      "chapter": "foundations",
+      "textbook_spine": "chapter-16-instance-dependent",
+      "status": "blocked",
+      "informal": "The source-frozen endpoints are Theorem 16.2's unstructured-class liminf regret constant, Lemma 16.3's one-arm finite-time expected-pull inequality, and Theorem 16.4's unit-Gaussian local-envelope positive-part lower bound. No local declaration is presented as any of these terminals.",
+      "declarations": [],
+      "depends_on": [
+        "BanditRLProof.LowerBounds.IsConsistentRegret.eventually_log_add_div_log_le",
+        "BanditRLProof.LowerBounds.divergenceInfimum",
+        "BanditRLProof.LowerBounds.bretagnolleHuber",
+        "BanditRLProof.LowerBounds.klDiv_gaussianReal_one"
+      ],
+      "missing": [
+        "A canonical same possibly randomized nonanticipating policy history law and Lemma 15.1 history-KL decomposition.",
+        "The exact per-arm information constraint and liminf extraction, with zero, finite, and infinite d_inf branches.",
+        "Lemma 16.3's finite-time event/regret bridge and Theorem 16.4's exact Gaussian aggregation."
+      ],
+      "evidence": "tasks/TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE.md; proof-attempts/TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE/HistoryInformationBlocker.md"
+    },
+    {
       "id": "TEXTBOOK-PART-IV-THEOREM-13-1-GAUSSIAN-MINIMAX",
       "title": "Theorem 13.1 Gaussian finite-arm minimax lower bound",
       "chapter": "foundations",
