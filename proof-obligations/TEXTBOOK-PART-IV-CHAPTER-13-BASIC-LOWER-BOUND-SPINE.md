@@ -19,7 +19,7 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH13-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | deterministic gate suite | Windows long-path workaround must not be mistaken for a Lean proof failure | repository | n/a | `python3 tools/bandit.py check` | verified |
 | `CH13-EVIDENCE-SITE` | proof export, indexes, readings/highlights/results/implementation map/README and Part IV site agree | local full gate | harness and website scripts | repository | generated evidence plus maintained source data | only gate-passing declarations marked compiled | repository | n/a | lean-verified build/site check/browser review | verified locally |
 | `CH13-REVIEW` | independent read-only theorem/Lean consistency audit | all local artifacts | source, declarations, generated site | all above | check quantifiers, KL direction, AC, policy consistency and order claims | no unresolved P0--P3 | repository | n/a | review | verified |
-| `CH13-REMOTE` | PR, Actions, Pages deployment and live Chapter 13 verification | accepted local chapter | GitHub/Pages workflow | repository | branch PR; never direct push to main | remote state must be current | repository | n/a | remote deployment | planned |
+| `CH13-REMOTE` | PR, Actions, Pages deployment and live Chapter 13 verification | accepted local chapter | GitHub/Pages workflow | repository | branch PR; never direct push to main | remote state must be current | repository | n/a | remote deployment | verified |
 
 ## Failure classification
 

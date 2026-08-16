@@ -95,7 +95,7 @@ the `Delta*n/2` statement is retained only as the zero-error corollary.
 | `CH13-THEOREM-13-1` | universal-constant Gaussian minimax `sqrt(k*n)` lower bound | Chapter 13 leaves plus Chapter 14 information theory and Chapter 15 packing/tuning | none | source theorem | Chapter 15 | planned |
 | `CH13-TYPED-CANARY` | full-conclusion applications and nondegenerate instance | compiled declarations | `Tests/TextbookPartIVChapter13Canary.lean` | project-local | Tests | verified |
 | `CH13-EVIDENCE-SITE` | task/window/DAG/export/index/site agreement | all local gates | repository artifacts | repository | site checks/review | verified locally |
-| `CH13-REMOTE` | PR, Actions, Pages, live page | accepted local chapter | remote workflow | repository | deployment | planned |
+| `CH13-REMOTE` | PR, Actions, Pages, live page | accepted local chapter | remote workflow | repository | deployment | verified |
 
 ## Gaps
 

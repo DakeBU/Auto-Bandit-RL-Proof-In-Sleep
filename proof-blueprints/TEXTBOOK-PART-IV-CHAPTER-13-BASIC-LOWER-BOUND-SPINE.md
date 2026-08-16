@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
 
-Generated: `2026-08-16T10:19:41+00:00`
+Generated: `2026-08-16T11:12:52+00:00`
 
 ## Source Task
 
@@ -10,7 +10,7 @@ Task id: `TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE`
 
 Kind: `theoremFormalization`
 
-Status: `active`
+Status: `accepted`
 
 Harness: `hierarchical`
 
@@ -108,7 +108,9 @@ LowerBounds.max_base_changed_regretLowerBound_ge_half
 - [x] Root import, focused build, typed canary, Tests, axiom scan, full harness
   check, proof export, evidence indexes, documentation, and website pass.
 - [x] Independent read-only review finds no unresolved P0--P3 issue.
-- [ ] Branch commit and remote PR/Actions/Pages/live-page gates pass.
+- [x] PR #9, remote Actions run `31942624241`, merge commit `44c3e153`,
+  Pages deployment job `95156292456`, and the live desktop/mobile Chapter 13
+  page pass.
 
 ## Mathlib-ready leaf contract
 
@@ -251,7 +253,7 @@ the `Delta*n/2` statement is retained only as the zero-error corollary.
 | `CH13-THEOREM-13-1` | universal-constant Gaussian minimax `sqrt(k*n)` lower bound | Chapter 13 leaves plus Chapter 14 information theory and Chapter 15 packing/tuning | none | source theorem | Chapter 15 | planned |
 | `CH13-TYPED-CANARY` | full-conclusion applications and nondegenerate instance | compiled declarations | `Tests/TextbookPartIVChapter13Canary.lean` | project-local | Tests | verified |
 | `CH13-EVIDENCE-SITE` | task/window/DAG/export/index/site agreement | all local gates | repository artifacts | repository | site checks/review | verified locally |
-| `CH13-REMOTE` | PR, Actions, Pages, live page | accepted local chapter | remote workflow | repository | deployment | planned |
+| `CH13-REMOTE` | PR, Actions, Pages, live page | accepted local chapter | remote workflow | repository | deployment | verified |
 
 ## Gaps
 
@@ -287,7 +289,7 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH13-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | deterministic gate suite | Windows long-path workaround must not be mistaken for a Lean proof failure | repository | n/a | `python3 tools/bandit.py check` | verified |
 | `CH13-EVIDENCE-SITE` | proof export, indexes, readings/highlights/results/implementation map/README and Part IV site agree | local full gate | harness and website scripts | repository | generated evidence plus maintained source data | only gate-passing declarations marked compiled | repository | n/a | lean-verified build/site check/browser review | verified locally |
 | `CH13-REVIEW` | independent read-only theorem/Lean consistency audit | all local artifacts | source, declarations, generated site | all above | check quantifiers, KL direction, AC, policy consistency and order claims | no unresolved P0--P3 | repository | n/a | review | verified |
-| `CH13-REMOTE` | PR, Actions, Pages deployment and live Chapter 13 verification | accepted local chapter | GitHub/Pages workflow | repository | branch PR; never direct push to main | remote state must be current | repository | n/a | remote deployment | planned |
+| `CH13-REMOTE` | PR, Actions, Pages deployment and live Chapter 13 verification | accepted local chapter | GitHub/Pages workflow | repository | branch PR; never direct push to main | remote state must be current | repository | n/a | remote deployment | verified |
 
 ## Failure classification
 

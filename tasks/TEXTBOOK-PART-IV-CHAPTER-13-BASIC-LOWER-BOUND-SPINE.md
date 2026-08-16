@@ -4,7 +4,7 @@ Task id: `TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE`
 
 Kind: `theoremFormalization`
 
-Status: `active`
+Status: `accepted`
 
 Harness: `hierarchical`
 
@@ -102,7 +102,9 @@ LowerBounds.max_base_changed_regretLowerBound_ge_half
 - [x] Root import, focused build, typed canary, Tests, axiom scan, full harness
   check, proof export, evidence indexes, documentation, and website pass.
 - [x] Independent read-only review finds no unresolved P0--P3 issue.
-- [ ] Branch commit and remote PR/Actions/Pages/live-page gates pass.
+- [x] PR #9, remote Actions run `31942624241`, merge commit `44c3e153`,
+  Pages deployment job `95156292456`, and the live desktop/mobile Chapter 13
+  page pass.
 
 ## Mathlib-ready leaf contract
 
