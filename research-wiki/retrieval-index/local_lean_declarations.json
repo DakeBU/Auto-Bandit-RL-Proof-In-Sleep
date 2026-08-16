@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-16T11:13:01+00:00",
+  "generated": "2026-08-16T16:11:28+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -22744,6 +22744,238 @@
       "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
       "line": 205,
       "statement": "theorem max_base_changed_regretLowerBound_ge_half (horizon : Nat) (gap baseFirstExpectedPulls changedFirstExpectedPulls : Real) (hgap : 0 \u2264 gap) (htransport : baseFirstExpectedPulls \u2264 changedFirstExpectedPulls) : gap * (horizon : Real) / 2 \u2264 max (baseEnvironmentRegret horizon gap baseFirstExpectedPulls) (changedEnvironmentRegretLowerBound gap changedFirstExpectedPulls)"
+    },
+    {
+      "kind": "abbrev",
+      "name": "relativeEntropy",
+      "full_name": "BanditRLProof.LowerBounds.relativeEntropy",
+      "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+      "line": 26,
+      "statement": "abbrev relativeEntropy {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) : ENNReal"
+    },
+    {
+      "kind": "theorem",
+      "name": "relativeEntropy_of_absolutelyContinuous_of_integrable",
+      "full_name": "BanditRLProof.LowerBounds.relativeEntropy_of_absolutelyContinuous_of_integrable",
+      "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+      "line": 32,
+      "statement": "theorem relativeEntropy_of_absolutelyContinuous_of_integrable {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) (hPQ : P \u226a Q) (hInt : Integrable (llr P Q) P) : relativeEntropy P Q = ENNReal.ofReal (\u222b x, llr P Q x \u2202P + Q.real univ - P.real univ)"
+    },
+    {
+      "kind": "theorem",
+      "name": "relativeEntropy_of_probability_absolutelyContinuous_of_integrable",
+      "full_name": "BanditRLProof.LowerBounds.relativeEntropy_of_probability_absolutelyContinuous_of_integrable",
+      "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+      "line": 42,
+      "statement": "theorem relativeEntropy_of_probability_absolutelyContinuous_of_integrable {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] (hPQ : P \u226a Q) (hInt : Integrable (llr P Q) P) : relativeEntropy P Q = ENNReal.ofReal (\u222b x, llr P Q x \u2202P)"
+    },
+    {
+      "kind": "theorem",
+      "name": "relativeEntropy_eq_top_of_not_absolutelyContinuous",
+      "full_name": "BanditRLProof.LowerBounds.relativeEntropy_eq_top_of_not_absolutelyContinuous",
+      "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+      "line": 52,
+      "statement": "theorem relativeEntropy_eq_top_of_not_absolutelyContinuous {\u03b1 : Type*} [MeasurableSpace \u03b1] {P Q : Measure \u03b1} (hPQ : \u00ac P \u226a Q) : relativeEntropy P Q = \u221e"
+    },
+    {
+      "kind": "theorem",
+      "name": "relativeEntropy_ne_top_iff",
+      "full_name": "BanditRLProof.LowerBounds.relativeEntropy_ne_top_iff",
+      "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+      "line": 60,
+      "statement": "theorem relativeEntropy_ne_top_iff {\u03b1 : Type*} [MeasurableSpace \u03b1] {P Q : Measure \u03b1} : relativeEntropy P Q \u2260 \u221e \u2194 P \u226a Q \u2227 Integrable (llr P Q) P"
+    },
+    {
+      "kind": "abbrev",
+      "name": "bernoulliRelativeEntropy",
+      "full_name": "BanditRLProof.LowerBounds.bernoulliRelativeEntropy",
+      "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+      "line": 67,
+      "statement": "abbrev bernoulliRelativeEntropy (p q : Real) : ENNReal"
+    },
+    {
+      "kind": "theorem",
+      "name": "rnDeriv_restrict_restrict",
+      "full_name": "BanditRLProof.LowerBounds.rnDeriv_restrict_restrict",
+      "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+      "line": 72,
+      "statement": "theorem rnDeriv_restrict_restrict {\u03b1 : Type*} [MeasurableSpace \u03b1] {P Q : Measure \u03b1} [SigmaFinite P] [SigmaFinite Q] (hPQ : P \u226a Q) {A : Set \u03b1} (hA : MeasurableSet A) : (P.restrict A).rnDeriv (Q.restrict A) =\u1d50[Q.restrict A] P.rnDeriv Q"
+    },
+    {
+      "kind": "theorem",
+      "name": "relativeEntropy_restrict_add_compl",
+      "full_name": "BanditRLProof.LowerBounds.relativeEntropy_restrict_add_compl",
+      "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+      "line": 88,
+      "statement": "theorem relativeEntropy_restrict_add_compl {\u03b1 : Type*} [MeasurableSpace \u03b1] {P Q : Measure \u03b1} [IsFiniteMeasure P] [IsFiniteMeasure Q] (hPQ : P \u226a Q) {A : Set \u03b1} (hA : MeasurableSet A) : relativeEntropy P Q = relativeEntropy (P.restrict A) (Q.restrict A) + relativeEntropy (P.restrict A\u1d9c) (Q.restrict A\u1d9c)"
+    },
+    {
+      "kind": "theorem",
+      "name": "bernoulliKLCore_event_le",
+      "full_name": "BanditRLProof.LowerBounds.bernoulliKLCore_event_le",
+      "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+      "line": 131,
+      "statement": "theorem bernoulliKLCore_event_le {\u03b1 : Type*} [MeasurableSpace \u03b1] {P Q : Measure \u03b1} [IsProbabilityMeasure P] [IsProbabilityMeasure Q] {A : Set \u03b1} (hA : MeasurableSet A) (hKL : relativeEntropy P Q \u2260 \u221e) (hQ0 : 0 < Q.real A) (hQ1 : Q.real A < 1) : KLUCB.bernoulliKLCore (P.real A) (Q.real A) \u2264 (relativeEntropy P Q).toReal"
+    },
+    {
+      "kind": "theorem",
+      "name": "exp_neg_half_bernoulliKLCore_le_affinity",
+      "full_name": "BanditRLProof.LowerBounds.exp_neg_half_bernoulliKLCore_le_affinity",
+      "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+      "line": 202,
+      "statement": "theorem exp_neg_half_bernoulliKLCore_le_affinity {p q : Real} (hp0 : 0 < p) (hp1 : p < 1) (hq0 : 0 < q) (hq1 : q < 1) : Real.exp (-(KLUCB.bernoulliKLCore p q) / 2) \u2264 Real.sqrt (p * q) + Real.sqrt ((1 - p) * (1 - q))"
+    },
+    {
+      "kind": "theorem",
+      "name": "half_binaryAffinity_sq_le_eventError",
+      "full_name": "BanditRLProof.LowerBounds.half_binaryAffinity_sq_le_eventError",
+      "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+      "line": 270,
+      "statement": "theorem half_binaryAffinity_sq_le_eventError {p q : Real} (hp : KLUCB.IsBernoulliParameter p) (hq : KLUCB.IsBernoulliParameter q) : (1 / 2 : Real) * (Real.sqrt (p * q) + Real.sqrt ((1 - p) * (1 - q))) ^ 2 \u2264 p + (1 - q)"
+    },
+    {
+      "kind": "theorem",
+      "name": "binaryBretagnolleHuberCore",
+      "full_name": "BanditRLProof.LowerBounds.binaryBretagnolleHuberCore",
+      "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+      "line": 305,
+      "statement": "theorem binaryBretagnolleHuberCore {p q : Real} (hp : KLUCB.IsBernoulliParameter p) (hq0 : 0 < q) (hq1 : q < 1) : (1 / 2 : Real) * Real.exp (-KLUCB.bernoulliKLCore p q) \u2264 p + (1 - q)"
+    },
+    {
+      "kind": "def",
+      "name": "bretagnolleHuberScale",
+      "full_name": "BanditRLProof.LowerBounds.bretagnolleHuberScale",
+      "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+      "line": 350,
+      "statement": "noncomputable def bretagnolleHuberScale (d : ENNReal) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "bretagnolleHuberScale_nonneg",
+      "full_name": "BanditRLProof.LowerBounds.bretagnolleHuberScale_nonneg",
+      "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+      "line": 353,
+      "statement": "theorem bretagnolleHuberScale_nonneg (d : ENNReal) : 0 \u2264 bretagnolleHuberScale d"
+    },
+    {
+      "kind": "theorem",
+      "name": "binaryBretagnolleHuber",
+      "full_name": "BanditRLProof.LowerBounds.binaryBretagnolleHuber",
+      "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+      "line": 362,
+      "statement": "theorem binaryBretagnolleHuber {p q : Real} (hp : KLUCB.IsBernoulliParameter p) (hq : KLUCB.IsBernoulliParameter q) : bretagnolleHuberScale (bernoulliRelativeEntropy p q) \u2264 p + (1 - q)"
+    },
+    {
+      "kind": "theorem",
+      "name": "bernoulliRelativeEntropy_event_le",
+      "full_name": "BanditRLProof.LowerBounds.bernoulliRelativeEntropy_event_le",
+      "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+      "line": 395,
+      "statement": "theorem bernoulliRelativeEntropy_event_le {\u03b1 : Type*} [MeasurableSpace \u03b1] {P Q : Measure \u03b1} [IsProbabilityMeasure P] [IsProbabilityMeasure Q] {A : Set \u03b1} (hA : MeasurableSet A) : bernoulliRelativeEntropy (P.real A) (Q.real A) \u2264 relativeEntropy P Q"
+    },
+    {
+      "kind": "theorem",
+      "name": "bretagnolleHuberScale_antitone",
+      "full_name": "BanditRLProof.LowerBounds.bretagnolleHuberScale_antitone",
+      "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+      "line": 443,
+      "statement": "theorem bretagnolleHuberScale_antitone {d D : ENNReal} (h : d \u2264 D) : bretagnolleHuberScale D \u2264 bretagnolleHuberScale d"
+    },
+    {
+      "kind": "theorem",
+      "name": "bretagnolleHuber",
+      "full_name": "BanditRLProof.LowerBounds.bretagnolleHuber",
+      "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+      "line": 462,
+      "statement": "theorem bretagnolleHuber {\u03b1 : Type*} [MeasurableSpace \u03b1] {P Q : Measure \u03b1} [IsProbabilityMeasure P] [IsProbabilityMeasure Q] {A : Set \u03b1} (hA : MeasurableSet A) : bretagnolleHuberScale (relativeEntropy P Q) \u2264 P.real A + Q.real A\u1d9c"
+    },
+    {
+      "kind": "abbrev",
+      "name": "unitGaussianArm",
+      "full_name": "BanditRLProof.LowerBounds.unitGaussianArm",
+      "file": "BanditRLProof/LowerBounds/Minimax.lean",
+      "line": 27,
+      "statement": "abbrev unitGaussianArm (mu : Real) : Measure Real"
+    },
+    {
+      "kind": "abbrev",
+      "name": "unitGaussianBandit",
+      "full_name": "BanditRLProof.LowerBounds.unitGaussianBandit",
+      "file": "BanditRLProof/LowerBounds/Minimax.lean",
+      "line": 31,
+      "statement": "abbrev unitGaussianBandit {k : Nat} (mean : Fin k -> Real) : Fin k -> Measure Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "log_gaussianPDFReal_div_gaussianPDFReal_one",
+      "full_name": "BanditRLProof.LowerBounds.log_gaussianPDFReal_div_gaussianPDFReal_one",
+      "file": "BanditRLProof/LowerBounds/Minimax.lean",
+      "line": 36,
+      "statement": "theorem log_gaussianPDFReal_div_gaussianPDFReal_one (mu nu x : Real) : Real.log (gaussianPDFReal mu (1 : NNReal) x / gaussianPDFReal nu (1 : NNReal) x) = (mu - nu) * x + (nu ^ 2 - mu ^ 2) / 2"
+    },
+    {
+      "kind": "theorem",
+      "name": "llr_gaussianReal_one_ae",
+      "full_name": "BanditRLProof.LowerBounds.llr_gaussianReal_one_ae",
+      "file": "BanditRLProof/LowerBounds/Minimax.lean",
+      "line": 53,
+      "statement": "theorem llr_gaussianReal_one_ae (mu nu : Real) : llr (unitGaussianArm mu) (unitGaussianArm nu) =\u1d50[unitGaussianArm mu] fun x => (mu - nu) * x + (nu ^ 2 - mu ^ 2) / 2"
+    },
+    {
+      "kind": "theorem",
+      "name": "integrable_llr_gaussianReal_one",
+      "full_name": "BanditRLProof.LowerBounds.integrable_llr_gaussianReal_one",
+      "file": "BanditRLProof/LowerBounds/Minimax.lean",
+      "line": 73,
+      "statement": "theorem integrable_llr_gaussianReal_one (mu nu : Real) : Integrable (llr (unitGaussianArm mu) (unitGaussianArm nu)) (unitGaussianArm mu)"
+    },
+    {
+      "kind": "theorem",
+      "name": "klDiv_gaussianReal_one",
+      "full_name": "BanditRLProof.LowerBounds.klDiv_gaussianReal_one",
+      "file": "BanditRLProof/LowerBounds/Minimax.lean",
+      "line": 89,
+      "statement": "theorem klDiv_gaussianReal_one (mu nu : Real) : InformationTheory.klDiv (unitGaussianArm mu) (unitGaussianArm nu) = ENNReal.ofReal ((mu - nu) ^ 2 / 2)"
+    },
+    {
+      "kind": "theorem",
+      "name": "klDiv_unitGaussianArm_zero_two_mul",
+      "full_name": "BanditRLProof.LowerBounds.klDiv_unitGaussianArm_zero_two_mul",
+      "file": "BanditRLProof/LowerBounds/Minimax.lean",
+      "line": 121,
+      "statement": "theorem klDiv_unitGaussianArm_zero_two_mul (gap : Real) : InformationTheory.klDiv (unitGaussianArm 0) (unitGaussianArm (2 * gap)) = ENNReal.ofReal (2 * gap ^ 2)"
+    },
+    {
+      "kind": "def",
+      "name": "gaussianMinimaxGap",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxGap",
+      "file": "BanditRLProof/LowerBounds/Minimax.lean",
+      "line": 131,
+      "statement": "noncomputable def gaussianMinimaxGap (alternativeCount horizon : Real) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianMinimaxGap_sq",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxGap_sq",
+      "file": "BanditRLProof/LowerBounds/Minimax.lean",
+      "line": 136,
+      "statement": "theorem gaussianMinimaxGap_sq {alternativeCount horizon : Real} (halternatives : 0 \u2264 alternativeCount) (hhorizon : 0 \u2264 horizon) : gaussianMinimaxGap alternativeCount horizon ^ 2 = alternativeCount / (4 * horizon)"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianMinimaxGap_informationExponent_eq_half",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxGap_informationExponent_eq_half",
+      "file": "BanditRLProof/LowerBounds/Minimax.lean",
+      "line": 147,
+      "statement": "theorem gaussianMinimaxGap_informationExponent_eq_half {alternativeCount horizon : Real} (halternatives : 0 < alternativeCount) (hhorizon : 0 < horizon) : 2 * horizon * gaussianMinimaxGap alternativeCount horizon ^ 2 / alternativeCount = 1 / 2"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianMinimaxGap_le_half",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxGap_le_half",
+      "file": "BanditRLProof/LowerBounds/Minimax.lean",
+      "line": 159,
+      "statement": "theorem gaussianMinimaxGap_le_half {alternativeCount horizon : Real} (hhorizon : 0 < horizon) (hcount_le : alternativeCount \u2264 horizon) : gaussianMinimaxGap alternativeCount horizon \u2264 1 / 2"
     },
     {
       "kind": "structure",

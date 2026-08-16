@@ -978,6 +978,49 @@
         "BanditRLProof.LowerBounds.bretagnolleHuberScale_antitone",
         "BanditRLProof.LowerBounds.binaryBretagnolleHuber"
       ]
+    },
+    {
+      "full_name": "BanditRLProof.LowerBounds.llr_gaussianReal_one_ae",
+      "chapter": "foundations",
+      "plain": "Under the first unit-variance Gaussian law, the log Radon–Nikodym derivative toward a second unit-variance Gaussian is an affine function of the observation.",
+      "math": "\\log\\frac{d\\mathcal N(\\mu,1)}{d\\mathcal N(\\nu,1)}(x)=(\\mu-\\nu)x+\\frac{\\nu^2-\\mu^2}{2}\\quad\\mathcal N(\\mu,1)\\text{-a.e.}",
+      "intuition": "Equal Gaussian variances cancel their normalizing constants, leaving a difference of two quadratic exponents that simplifies to an affine log likelihood ratio.",
+      "why": "This is the regular analytic leaf needed before Chapter 15 can compute the KL cost of changing one Gaussian arm.",
+      "position": "It is an arm-level dependency, not the adaptive-history likelihood-ratio decomposition of Lemma 15.1.",
+      "proof_idea": "Use absolute continuity in both directions through Lebesgue measure, identify both Radon–Nikodym derivatives with Gaussian densities, cancel the positive normalizer, and expand the squares.",
+      "lean_notes": "The almost-everywhere law is the first Gaussian N(mu,1), preserving the source KL direction. No bandit policy or history law appears.",
+      "dependencies": [
+        "BanditRLProof.LowerBounds.log_gaussianPDFReal_div_gaussianPDFReal_one"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.LowerBounds.klDiv_gaussianReal_one",
+      "chapter": "foundations",
+      "plain": "The relative entropy from a unit-variance Gaussian with mean mu to one with mean nu is one half the squared mean difference.",
+      "math": "D(\\mathcal N(\\mu,1)\\Vert\\mathcal N(\\nu,1))=\\frac{(\\mu-\\nu)^2}{2}.",
+      "intuition": "Integrating the affine log likelihood ratio under N(mu,1) replaces the observation by its mean mu and leaves the squared mean displacement.",
+      "why": "Theorem 15.2 changes one arm from mean zero to 2 Delta, so this leaf supplies its exact information cost 2 Delta squared.",
+      "position": "It is the compiled Gaussian arm-KL dependency. Lemma 15.1 must still lift arm costs to a same-policy history KL before the minimax proof can use it.",
+      "proof_idea": "Prove mutual absolute continuity via Lebesgue measure, establish L1 integrability from the Gaussian first moment, invoke Mathlib's KL integral formula, and normalize the resulting polynomial.",
+      "lean_notes": "The value is symmetric only because both variances are one; the declaration and every downstream contract retain the direction from mu to nu.",
+      "dependencies": [
+        "BanditRLProof.LowerBounds.llr_gaussianReal_one_ae",
+        "BanditRLProof.LowerBounds.integrable_llr_gaussianReal_one"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxGap_informationExponent_eq_half",
+      "chapter": "foundations",
+      "plain": "The Chapter 15 gap choice makes the Gaussian information exponent exactly one half.",
+      "math": "\\Delta=\\sqrt{m/(4n)}\\Longrightarrow 2n\\Delta^2/m=1/2.",
+      "intuition": "Choosing the gap to balance the number of alternatives against the horizon keeps the changed history laws at constant information distance once Lemma 15.1 is available.",
+      "why": "This isolates the source's tuning algebra from the still-blocked stochastic history and regret/event bridge.",
+      "position": "It is a compiled numeric dependency of Theorem 15.2, not a proof that the history divergence has this upper bound.",
+      "proof_idea": "Square the nonnegative real square root and normalize the positive field denominators.",
+      "lean_notes": "The parameters are explicit positive real alternative count and horizon values. Natural-cast and bandit-semantic obligations remain with the source terminal.",
+      "dependencies": [
+        "BanditRLProof.LowerBounds.gaussianMinimaxGap_sq"
+      ]
     }
   ]
 }

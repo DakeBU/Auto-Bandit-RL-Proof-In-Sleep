@@ -34792,8 +34792,6 @@ example :
     normalizedCumulativeInverseSqrtScheduledAverageEnvelope mdp 4 1 = 8 := by
   rw [normalizedCumulativeInverseSqrtScheduledAverageEnvelope]
   norm_num [mdp]
-  rw [show (4 : Real) = 2 ^ 2 by norm_num, Real.sqrt_sq (by norm_num)]
-  norm_num
 
 example :
     Filter.Tendsto
@@ -55813,6 +55811,7 @@ example :
     FiniteHorizonRL.MDP.sampledCumulativeRewardFrom 1 sampledOneTrace = 1 := by
   simp [FiniteHorizonRL.MDP.sampledCumulativeRewardFrom, sampledOneTrace]
 
+set_option synthInstance.maxHeartbeats 100000 in
 theorem symmetricSource_generated_reward_one_mass_eq_half :
     (symmetricSource.stochasticTrajectoryKernelRemaining policy
       mdp.horizon le_rfl ())
@@ -56355,6 +56354,7 @@ example :
     (2 : NNReal) * Concentration.intervalVarianceProxy (-1) 1 = 2 := by
   norm_num [Concentration.intervalVarianceProxy, Real.nnnorm_of_nonneg]
 
+set_option synthInstance.maxHeartbeats 100000 in
 theorem bothRewardsOne_mass_eq_quarter :
     (twoStepSymmetricSource.stochasticTrajectoryKernelRemaining
       twoStepPolicy 2 (by simp [twoStepMDP]) ())
