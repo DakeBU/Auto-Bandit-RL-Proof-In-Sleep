@@ -7,5 +7,6 @@ import Tests.BookMapChaptersTwoToFourCanary
 import Tests.FiniteHorizonAdaptiveCumulativeHoeffdingUCBVICanary
 import Tests.BookMapChapterNineCanary
 import Tests.TextbookPartIVChapter13Canary
+import Tests.TextbookPartIVChapter14Canary
 import Tests.BookMapChaptersFiveAndSixCanary
 import Tests.BookMapChaptersSevenAndEightCanary

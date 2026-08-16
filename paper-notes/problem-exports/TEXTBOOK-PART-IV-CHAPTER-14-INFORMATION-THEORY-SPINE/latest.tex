@@ -1,0 +1,68 @@
+% Synchronized proof export for TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
+\section{Chapter 14 Information-Theory Spine}
+
+\paragraph{Status.}
+This note is a synchronized mathematical export for task
+\texttt{TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE}.  The scoped
+Section~14.2 declaration surface compiles at Lean source commit
+\texttt{10dfd88}.  It covers Eqs.~(14.4)--(14.6), Theorem~14.1, the event
+specialization of Exercise~14.10, and Theorem~14.2.  It does not claim the
+entropy/coding results of Section~14.1, full sub-sigma-algebra data processing,
+or an adaptive bandit-history chain rule.
+
+\paragraph{Lean declarations.}
+The public surface is
+\texttt{relativeEntropy}, its regular, probability, singular, and finiteness
+adapters; \texttt{bernoulliRelativeEntropy}; the RN-restriction and KL-split
+helpers; \texttt{bernoulliKLCore\_event\_le}; the binary affinity and overlap
+lemmas; \texttt{binaryBretagnolleHuberCore};
+\texttt{bretagnolleHuberScale} and its nonnegativity;
+\texttt{binaryBretagnolleHuber};
+\texttt{bernoulliRelativeEntropy\_event\_le}; scale antitonicity; and the
+terminal \texttt{bretagnolleHuber}.
+
+\paragraph{Measure and event reduction.}
+Define $D(P\Vert Q)$ as Mathlib's extended-real KL divergence.  On the regular
+branch $P\ll Q$ with an integrable log likelihood ratio, it is the nonnegative
+extended-real embedding of the RN/log-likelihood integral; the finite-measure
+mass correction vanishes for probability laws.  Failure of absolute
+continuity gives infinity, and finiteness is equivalent to absolute continuity
+plus integrability.
+
+For a measurable event $A$, restrict both laws to $A$ and $A^{\mathrm c}$.
+The restricted RN derivative agrees almost everywhere with the original one,
+so the KL integral splits exactly over the two cells.  Applying the convex
+mass-level \texttt{klFun} bound to both cells gives
+\[
+  d(P(A),Q(A))\leq D(P\Vert Q).
+\]
+The endpoint cases $Q(A)\in\{0,1\}$ use absolute continuity, and the
+infinite-KL case is immediate.  The direction is always $P$ to $Q$.
+
+\paragraph{Binary testing.}
+For interior $q$, concavity of logarithm gives
+\[
+  e^{-d(p,q)/2}
+  \leq \sqrt{pq}+\sqrt{(1-p)(1-q)}.
+\]
+A two-term square-root inequality bounds one half of the squared affinity by
+$p+(1-q)$.  After squaring the exponential inequality,
+\[
+  \frac12e^{-d(p,q)}\leq p+(1-q).
+\]
+The cases $q=0,1$ are discharged through the exact Bernoulli support
+convention.  The real scale is defined as $e^{-d}/2$ for finite extended-real
+$d$ and zero at $d=\infty$; it is nonnegative and antitone.
+
+\paragraph{Source terminal and boundary.}
+Event data processing, scale antitonicity, the endpoint-complete binary
+theorem, and $Q(A^{\mathrm c})=1-Q(A)$ yield
+\[
+  \operatorname{BHScale}(D(P\Vert Q))
+  \leq P(A)+Q(A^{\mathrm c}).
+\]
+This is the unconditional Theorem~14.2 terminal.  It has no finite-KL premise,
+mutual absolute-continuity premise, policy, horizon, filtration, kernel chain
+rule, or stopping-time assumption.  Chapter~15 must still build the
+same-policy adaptive-history laws and divergence decomposition that consume
+this theorem.

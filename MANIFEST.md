@@ -13097,3 +13097,9 @@ here during local harness runs.
 - `2026-08-16T11:13:05+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
 - `2026-08-16T11:13:05+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
 - `2026-08-16T11:13:05+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-16T11:45:08+00:00` `bandit.py new-task` `task` `tasks/TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE.md` - Textbook Part IV Chapter 14 information-theory spine
+- `2026-08-16T11:49:26+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE.md` - TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
+- `2026-08-16T12:24:51+00:00` `bandit.py export-proof` `proof-export` `paper-notes/problem-exports/TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE/latest.tex` - TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
+- `2026-08-16T12:38:26+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE.md` - TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
+- `2026-08-16T12:38:31+00:00` `bandit.py memory-refresh` `retrieval-index` `research-wiki/retrieval-index/TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE.json` - TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
+- `2026-08-16T12:49:17+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE.md` - TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE

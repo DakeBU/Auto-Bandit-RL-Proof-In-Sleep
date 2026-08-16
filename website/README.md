@@ -22,6 +22,12 @@ The build:
 - supplies a provider-independent local formalization adapter and a versioned
   lemma-packet handoff contract.
 
+Within the separate Part IV spine, Chapter 13 is partial with compiled
+semantic/deterministic leaves, and Chapter 14 is partial with a compiled
+§14.2 relative-entropy, event-data-processing, and Bretagnolle--Huber slice.
+The Chapter 13 Gaussian minimax terminal and adaptive-history KL construction
+remain Chapter 15 work; §14.1 coding and full Exercise 14.10 are not promoted.
+
 The generator and checks use the Python standard library. The published static
 site loads MathJax and Mermaid from jsDelivr.
 

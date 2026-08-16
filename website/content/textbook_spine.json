@@ -112,19 +112,104 @@
       "number": 14,
       "slug": "chapter-14-information-theory",
       "title": "Foundations of Information Theory",
-      "status": "planned",
-      "status_note": "Source audit and exact Lean target freeze begin only after the Chapter 13 gate closes.",
+      "status": "partial",
+      "status_note": "The source-faithful §14.2 relative-entropy and Bretagnolle–Huber spine is compiled. Entropy/source coding in §14.1 and full sub-sigma-algebra data processing remain outside this scoped gate.",
       "print_pages": "186–197",
       "pdf_pages": "195–206",
-      "sections": ["§14.1 Entropy and Optimal Coding", "§14.2 Relative Entropy", "§14.3–14.5 notes, bibliography, and exercises"],
-      "learning_goals": ["Define entropy and relative entropy with endpoint conventions.", "Establish direction-correct information inequalities needed by change of measure.", "Record absolute-continuity and measurability assumptions explicitly."],
-      "definitions": [{"name": "Information-theoretic foundation", "math": "D(P\\Vert Q)=\\int \\log\\!\\left(\\frac{dP}{dQ}\\right)dP.", "fallback": "Relative entropy measures the information cost of replacing Q by P when P is absolutely continuous with respect to Q.", "status": "planned"}],
-      "flow": {"title": "Planned information route", "kind": "proof pseudocode", "steps": [{"title": "Freeze definitions", "detail": "Choose exact measure-theoretic entropy and KL surfaces."}, {"title": "Expose regularity", "detail": "State absolute continuity, integrability, and endpoint behavior."}, {"title": "Prove testing adapters", "detail": "Connect measure KL to event-level binary information."}]},
-      "source_boundary": "No Chapter 14 theorem has yet passed a local Lean gate. Existing Bernoulli-KL declarations are reusable evidence, not a completed Chapter 14 formalization.",
-      "lean_correspondence": [],
-      "dependency_nodes": [{"id": "kl", "label": "measure-level KL", "status": "planned"}, {"id": "binary", "label": "binary/event KL", "status": "planned"}, {"id": "history", "label": "history change of measure", "status": "planned"}],
-      "reading_path": ["Audit §14.1–14.2 against current Mathlib APIs.", "Freeze endpoint and absolute-continuity conventions.", "Open the smallest reusable information leaves."],
-      "gaps": ["Exact Mathlib API retrieval is pending.", "No history-law KL chain rule is compiled locally."]
+      "sections": [
+        "§14.1 Entropy and Optimal Coding (printed pp. 186–188 / PDF pp. 195–197; pedagogical mapping only)",
+        "§14.2 Relative Entropy (printed pp. 188–191 / PDF pp. 197–200; formal target window)",
+        "§14.3 Notes (printed pp. 191–192)",
+        "§14.4 Bibliographic Remarks (printed pp. 192–193)",
+        "§14.5 Exercises (printed pp. 193–197)"
+      ],
+      "learning_goals": [
+        "Read relative entropy as an extended-real, direction-sensitive comparison of probability measures.",
+        "Distinguish the absolutely-continuous log-likelihood branch from singular support mismatch.",
+        "Map a measurable event to Bernoulli probabilities without increasing KL.",
+        "Derive the unconditional Bretagnolle–Huber testing bound, including the exp(-infinity)=0 branch.",
+        "Keep general coding theory and adaptive bandit-history decomposition outside the compiled §14.2 window."
+      ],
+      "definitions": [
+        {
+          "name": "Entropy and optimal coding",
+          "math": "H(P)=-\\sum_x P(x)\\log P(x).",
+          "fallback": "Entropy is the expected information content of a discrete outcome and motivates the chapter's coding discussion.",
+          "status": "planned"
+        },
+        {
+          "name": "Extended-real relative entropy",
+          "math": "D(P\\Vert Q)=\\int \\log\\!\\left(\\frac{dP}{dQ}\\right)dP,\\qquad D(P\\Vert Q)=+\\infty\\text{ if }P\\not\\ll Q.",
+          "fallback": "Relative entropy is the expected log likelihood ratio when P is absolutely continuous with respect to Q, and infinity on support mismatch.",
+          "status": "compiled"
+        },
+        {
+          "name": "Bernoulli relative entropy",
+          "math": "d(p,q)=p\\log\\frac pq+(1-p)\\log\\frac{1-p}{1-q},",
+          "fallback": "The two-point specialization uses zero-mass terms equal to zero and infinity when P assigns positive mass where Q assigns none.",
+          "status": "compiled"
+        },
+        {
+          "name": "Bretagnolle–Huber testing scale",
+          "math": "s(D)=\\begin{cases}\\tfrac12 e^{-D},&D<\\infty,\\\\0,&D=\\infty.\\end{cases}",
+          "fallback": "The real-valued scale makes the source convention exponential of negative infinity equals zero explicit.",
+          "status": "compiled"
+        }
+      ],
+      "flow": {
+        "title": "Event-testing proof flow",
+        "kind": "proof pseudocode",
+        "steps": [
+          {"title": "Split the KL branches", "detail": "Use Mathlib's exact absolute-continuity and log-likelihood integrability characterization; retain infinity on support mismatch."},
+          {"title": "Coarsen to one event", "detail": "Restrict both measures to A and its complement and prove d(P(A),Q(A)) is at most D(P,Q)."},
+          {"title": "Prove the binary bound", "detail": "Lower-bound binary likelihood affinity by exp(-d/2), then compare squared affinity with the two testing errors."},
+          {"title": "Restore all endpoints", "detail": "Handle Bernoulli zero/one support cases through the extended-real endpoint convention."},
+          {"title": "Lift to measures", "detail": "Use antitonicity of the testing scale and Q(A complement)=1-Q(A) to obtain the source theorem in the P-to-Q KL direction."}
+        ]
+      },
+      "source_theorem": {
+        "label": "Theorem 14.2 / Eq. (14.7) (Bretagnolle–Huber)",
+        "status": "compiled",
+        "math": "P(A)+Q(A^{\\mathrm c})\\ge\\tfrac12\\exp\\{-D(P\\Vert Q)\\}",
+        "fallback": "For two probability measures and any measurable event, the sum of the P error on A and the Q error on its complement is at least one half times exponential negative relative entropy.",
+        "plain": "Observing an event cannot make two laws easier to distinguish than their full relative entropy permits.",
+        "boundary": "BanditRLProof.LowerBounds.bretagnolleHuber compiles this unconditional measure/event theorem with D(P,Q), Q(A complement), and an explicit zero scale at infinite KL. It does not claim §14.1 source coding, full Exercise 14.10, or the Chapter 15 adaptive-history chain rule."
+      },
+      "lean_correspondence": [
+        {"name": "BanditRLProof.LowerBounds.relativeEntropy", "status": "compiled", "role": "Extended-real alias of Mathlib measure KL in the source direction P to Q."},
+        {"name": "BanditRLProof.LowerBounds.relativeEntropy_of_absolutelyContinuous_of_integrable", "status": "compiled", "role": "Theorem 14.1 regular branch with Mathlib's finite-measure mass correction visible."},
+        {"name": "BanditRLProof.LowerBounds.relativeEntropy_of_probability_absolutelyContinuous_of_integrable", "status": "compiled", "role": "Probability-measure log-likelihood integral specialization."},
+        {"name": "BanditRLProof.LowerBounds.relativeEntropy_eq_top_of_not_absolutelyContinuous", "status": "compiled", "role": "Theorem 14.1 singular branch: support mismatch gives infinity."},
+        {"name": "BanditRLProof.LowerBounds.relativeEntropy_ne_top_iff", "status": "compiled", "role": "Exact absolute-continuity and log-likelihood-integrability finiteness contract."},
+        {"name": "BanditRLProof.LowerBounds.bernoulliRelativeEntropy", "status": "compiled", "role": "Equation (14.4) two-point KL with exact support endpoints."},
+        {"name": "BanditRLProof.LowerBounds.rnDeriv_restrict_restrict", "status": "compiled", "role": "Radon–Nikodym derivative identity after restricting both laws to a measurable cell."},
+        {"name": "BanditRLProof.LowerBounds.relativeEntropy_restrict_add_compl", "status": "compiled", "role": "Exact KL decomposition across an event and its complement."},
+        {"name": "BanditRLProof.LowerBounds.bernoulliRelativeEntropy_event_le", "status": "compiled", "role": "Event-level binary data processing with P(A), Q(A) and D(P,Q)."},
+        {"name": "BanditRLProof.LowerBounds.binaryBretagnolleHuber", "status": "compiled", "role": "Two-atom Bretagnolle–Huber theorem including singular Bernoulli endpoints."},
+        {"name": "BanditRLProof.LowerBounds.bretagnolleHuberScale", "status": "compiled", "role": "Explicit real encoding of one-half exp(-D), with zero at D=infinity."},
+        {"name": "BanditRLProof.LowerBounds.bretagnolleHuberScale_antitone", "status": "compiled", "role": "The testing scale reverses the event data-processing inequality."},
+        {"name": "BanditRLProof.LowerBounds.bretagnolleHuber", "status": "compiled", "role": "Exact unconditional Theorem 14.2 measure/event terminal."}
+      ],
+      "dependency_nodes": [
+        {"id": "kl", "label": "measure KL and RN branches", "status": "compiled"},
+        {"id": "event", "label": "event-level binary data processing", "status": "compiled"},
+        {"id": "binary", "label": "binary testing and endpoint analysis", "status": "compiled"},
+        {"id": "bh", "label": "measure Bretagnolle–Huber terminal", "status": "compiled"},
+        {"id": "coding", "label": "entropy and optimal coding", "status": "planned"},
+        {"id": "history", "label": "same-policy adaptive history KL", "status": "planned"}
+      ],
+      "reading_path": [
+        "Read Eq. (14.4), Eq. (14.5), Theorem 14.1, and Eq. (14.6) before the testing theorem.",
+        "Inspect relativeEntropy_ne_top_iff to see exactly where absolute continuity and integrability enter.",
+        "Follow the event restriction identity into bernoulliRelativeEntropy_event_le and verify the P-to-Q direction.",
+        "Read the binary endpoint theorem before the measure-level bretagnolleHuber terminal.",
+        "Continue to Chapter 15 for adaptive same-policy history divergence and finite-arm minimax construction."
+      ],
+      "gaps": [
+        "Entropy, Huffman coding, and optimal source-coding results from §14.1 are not formalized by this lower-bound gate.",
+        "Full data processing for an arbitrary sub-sigma-algebra from Exercise 14.10 is not claimed; the compiled leaf is the event/binary specialization.",
+        "Adaptive-bandit history likelihood ratios and KL decomposition belong to Chapter 15 and remain planned until that chapter's gate."
+      ]
     },
     {
       "number": 15,

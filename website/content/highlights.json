@@ -902,6 +902,82 @@
       "dependencies": [
         "BanditRLProof.LowerBounds.max_base_changed_regretLowerBound_ge_half_sub_error"
       ]
+    },
+    {
+      "full_name": "BanditRLProof.LowerBounds.relativeEntropy_ne_top_iff",
+      "chapter": "foundations",
+      "plain": "Measure relative entropy is finite exactly when P is absolutely continuous with respect to Q and the P-log-likelihood ratio is integrable.",
+      "math": "D(P\\Vert Q)\\ne\\infty\\iff P\\ll Q\\;\\land\\;\\log(dP/dQ)\\in L^1(P).",
+      "intuition": "The theorem makes the regular finite branch and singular or non-integrable branch visible instead of hiding them behind a real-valued KL convention.",
+      "why": "Every Chapter 14 conversion from extended-real KL to a real analytic inequality must justify that conversion without silently assuming support compatibility.",
+      "position": "This is the regularity gate between Mathlib's measure KL and the event-level data-processing proof.",
+      "proof_idea": "The declaration is a project-facing exact adapter for Mathlib's klDiv finiteness characterization.",
+      "lean_notes": "The KL direction is P to Q. Mutual absolute continuity is neither assumed nor derived, and the theorem works on a common measurable space.",
+      "dependencies": [
+        "BanditRLProof.LowerBounds.relativeEntropy"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.LowerBounds.bernoulliRelativeEntropy_event_le",
+      "chapter": "foundations",
+      "plain": "Replacing a full observation by the one-bit answer to whether it lies in a measurable event cannot increase relative entropy.",
+      "math": "d(P(A),Q(A))\\le D(P\\Vert Q).",
+      "intuition": "Any decision based only on event membership discards information, so its two-point KL cost is no larger than the full-law cost.",
+      "why": "This is the exact bridge from measure-level information to the binary testing inequality used by finite-arm lower bounds.",
+      "position": "It is the compiled event specialization of data processing; it is not the full arbitrary-sub-sigma-algebra Exercise 14.10.",
+      "proof_idea": "Split both measures over A and its complement, identify the restricted Radon–Nikodym derivatives, lower-bound each restricted KL by the corresponding mass-level klFun term, and restore Bernoulli endpoints separately.",
+      "lean_notes": "The parameters are ordered as P(A), Q(A), and the bound uses D(P,Q). Finite KL supplies P absolutely continuous with respect to Q; infinite KL is discharged directly.",
+      "dependencies": [
+        "BanditRLProof.LowerBounds.relativeEntropy_ne_top_iff",
+        "BanditRLProof.LowerBounds.relativeEntropy_restrict_add_compl",
+        "BanditRLProof.LowerBounds.bernoulliKLCore_event_le"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.LowerBounds.binaryBretagnolleHuber",
+      "chapter": "foundations",
+      "plain": "For Bernoulli probabilities p and q, the sum p plus one minus q dominates the extended-real Bretagnolle–Huber testing scale.",
+      "math": "s(d(p,q))\\le p+(1-q),\\qquad s(\\infty)=0.",
+      "intuition": "Two binary laws with small relative entropy cannot simultaneously make both directional testing errors tiny.",
+      "why": "The binary theorem isolates the analytic affinity and endpoint work from the measure-theoretic event reduction.",
+      "position": "It sits between event data processing and the final measure-level Chapter 14 theorem.",
+      "proof_idea": "For interior q, Jensen bounds likelihood affinity below by exp(-d/2), while a two-term square-root inequality bounds half the squared affinity by the testing error. Endpoint support mismatches use infinite KL explicitly.",
+      "lean_notes": "Both p and q carry closed-unit-interval hypotheses. Cases q=0 and q=1 are proved separately, so no interior assumption leaks into the public theorem.",
+      "dependencies": [
+        "BanditRLProof.LowerBounds.binaryBretagnolleHuberCore",
+        "BanditRLProof.LowerBounds.bretagnolleHuberScale"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.LowerBounds.bretagnolleHuberScale_antitone",
+      "chapter": "foundations",
+      "plain": "The real testing scale one-half exponential negative KL decreases as its extended-real information argument increases.",
+      "math": "d\\le D\\Longrightarrow s(D)\\le s(d).",
+      "intuition": "More divergence permits a weaker lower bound on testing error, while infinite divergence gives the zero scale.",
+      "why": "Antitonicity is the order-theoretic adapter that turns event data processing into the correctly oriented testing bound.",
+      "position": "It connects the binary theorem to the full-measure theorem without converting infinity through ENNReal.toReal.",
+      "proof_idea": "Split on whether the larger divergence is infinite; otherwise use monotonicity of toReal and the real exponential after negation.",
+      "lean_notes": "The explicit top branch prevents a hidden finiteness assumption in the final source theorem.",
+      "dependencies": [
+        "BanditRLProof.LowerBounds.bretagnolleHuberScale",
+        "BanditRLProof.LowerBounds.bretagnolleHuberScale_nonneg"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.LowerBounds.bretagnolleHuber",
+      "chapter": "foundations",
+      "plain": "For probability measures P and Q and a measurable event A, the P probability of A plus the Q probability of its complement is bounded below by one half exponential negative D(P,Q), with zero on the infinite-KL branch.",
+      "math": "s(D(P\\Vert Q))\\le P(A)+Q(A^{\\mathrm c}).",
+      "intuition": "A low-information change of law forces at least one of the two directional testing errors to remain appreciable.",
+      "why": "This is the Chapter 14 testing terminal that Chapter 15 can apply to same-policy bandit-history laws after their divergence has been constructed and bounded.",
+      "position": "It is the exact compiled counterpart of Lattimore–Szepesvári Theorem 14.2, not an adaptive-history theorem by itself.",
+      "proof_idea": "Apply event data processing, reverse it through the antitone testing scale, invoke the endpoint-complete binary theorem, and rewrite Q(A complement) as one minus Q(A).",
+      "lean_notes": "The theorem assumes only two probability measures on one measurable space and a measurable event. It does not assume finite KL, mutual absolute continuity, a policy, horizon, filtration, or stopping time.",
+      "dependencies": [
+        "BanditRLProof.LowerBounds.bernoulliRelativeEntropy_event_le",
+        "BanditRLProof.LowerBounds.bretagnolleHuberScale_antitone",
+        "BanditRLProof.LowerBounds.binaryBretagnolleHuber"
+      ]
     }
   ]
 }
