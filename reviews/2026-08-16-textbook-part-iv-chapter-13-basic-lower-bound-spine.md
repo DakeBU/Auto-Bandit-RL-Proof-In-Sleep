@@ -11,7 +11,7 @@ explicitly excluded. This is an independent model review, not a human review.
 
 ## Decision
 
-`ACCEPT LOCALLY`. P0: none. P1: none. P2: none. P3: none unresolved.
+`ACCEPT`. P0: none. P1: none. P2: none. P3: none unresolved.
 
 The source-stated unit-variance Gaussian minimax lower bound in Theorem 13.1
 is not accepted as a local Lean theorem. The accepted scope consists only of
@@ -74,5 +74,22 @@ Read-only review sessions were `01a00a0b-02fc-75c2-a72b-402c3e6d55c9`,
   inspections passed before review closure; both site commands and browser
   checks are repeated against the final committed artifacts.
 
-Remote PR, Actions, Pages deployment, and live-page verification are separate
-acceptance gates and are not implied by this local decision.
+## Remote evidence
+
+- PR #9 passed the required `Lean and documentation / build` check and was
+  merged without a direct push to `main`.
+- Merge commit: `44c3e153f9bc605701cb1b54a499ea995957ebfe`.
+- Authoritative main workflow: run `31942624241`; build job `95153881371`
+  passed in 22m42s, including Lean, site generation, site checks, and Pages
+  artifact upload.
+- Pages deployment job `95156292456` passed in 20s.
+- Live page:
+  <https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/textbook-spine/chapter-13-basic-ideas/>.
+  Desktop and 390px mobile inspections confirmed the lean-verified banner,
+  `Partial` chapter status, official DOI, compiled correspondence including
+  `le_minimaxExpectedRegret`, explicit Theorem 13.1 planned fence, and no
+  document-level horizontal overflow.
+
+The remote evidence promotes the scoped Chapter 13 task to `accepted`; it does
+not change Theorem 13.1 or the Chapter 14--15 information bridge from
+`planned` to `compiled`.

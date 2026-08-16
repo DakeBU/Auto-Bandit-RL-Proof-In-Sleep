@@ -68,3 +68,6 @@ ratio, KL, absolute-continuity, policy-consistency, or Gaussian statement.
   mobile browser views were inspected without document-level overflow.
 - Theorem 13.1 remains `planned` for Chapter 15; Chapters 14--15 must provide
   the same-policy history-law change-of-measure bridge.
+- PR #9, main Actions run `31942624241`, Pages deployment job `95156292456`,
+  and the live desktop/mobile Chapter 13 page passed; the scoped Chapter 13
+  task is therefore `accepted` while the chapter page remains `partial`.
