@@ -78,6 +78,9 @@ LowerBounds.log_gaussianPDFReal_div_gaussianPDFReal_one
 LowerBounds.llr_gaussianReal_one_ae
 LowerBounds.integrable_llr_gaussianReal_one
 LowerBounds.klDiv_gaussianReal_one
+LowerBounds.gaussianMinimaxGap
+LowerBounds.gaussianMinimaxGap_informationExponent_eq_half
+LowerBounds.gaussianMinimaxGap_le_half
 ```
 
 Expected source terminals, whose exact names remain reserved until their
@@ -89,9 +92,9 @@ LowerBounds.exists_gaussianBandit_expectedRegret_ge_one_div_twentySeven
 LowerBounds.gaussianBanditMinimaxExpectedRegret_ge_one_div_twentySeven
 ```
 
-The four Gaussian declarations are compiled dependency leaves only. They do
-not by themselves prove Lemma 15.1 or Theorem 15.2. The chapter stays
-`partial` while the exact terminals remain blocked.
+The Gaussian and numeric tuning declarations are compiled dependency leaves
+only. They do not by themselves prove Lemma 15.1 or Theorem 15.2. The chapter
+stays `partial` while the exact terminals remain blocked.
 
 ## Exact regularity contract
 
@@ -142,7 +145,9 @@ the source terminal compiled.
 - [ ] A canonical stochastic-policy finite-history law and pull-count function
   compile with probability/measurability instances.
 - [ ] Lemma 15.1 compiles for the source policy class.
-- [ ] Regret/event identities and source tuning close Theorem 15.2.
+- [x] The source gap choice, information exponent `1/2`, and unit-cube upper
+  bound compile as numeric dependency leaves.
+- [ ] Regret/event identities connect the compiled tuning to Theorem 15.2.
 - [ ] The minimax corollary compiles through the Chapter 13 semantic surface.
 - [ ] Root import, focused canary, Tests, scans, full harness, export, evidence
   indexes, documentation, website, independent review, PR, main Actions,
@@ -158,6 +163,7 @@ the source terminal compiled.
 | divergence decomposition | conditional kernel KL plus same-policy cancellation | induction over horizon; regroup selected-arm terms into pull counts | KL direction and first-law expectation fixed | blocked source terminal |
 | least-explored arm | `exists_leastExploredAlternative` | reuse Chapter 13 finite averaging | nonnegative pulls, sum equals horizon | compiled dependency |
 | testing step | Chapter 14 `bretagnolleHuber` | apply to `T_1(n)<=n/2` | event measurability and common policy | compiled measure theorem; bandit bridge blocked |
+| source tuning | real square root and field algebra | set `Delta=sqrt(m/(4n))`; prove exponent `1/2` and `Delta<=1/2` | positive real counts/horizon; `m<=n` | compiled project leaf |
 | Gaussian minimax terminal | all above plus regret identities and real algebra | source base/alternative construction and `Delta` tuning | `k>1`, `n>=k-1`, means in unit cube | blocked source terminal |
 
 ## Retrieval cards

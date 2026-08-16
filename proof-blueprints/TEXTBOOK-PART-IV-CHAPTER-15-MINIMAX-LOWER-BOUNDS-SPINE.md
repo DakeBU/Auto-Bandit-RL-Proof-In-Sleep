@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE
 
-Generated: `2026-08-16T14:59:40+00:00`
+Generated: `2026-08-16T15:15:04+00:00`
 
 ## Source Task
 
@@ -84,6 +84,9 @@ LowerBounds.log_gaussianPDFReal_div_gaussianPDFReal_one
 LowerBounds.llr_gaussianReal_one_ae
 LowerBounds.integrable_llr_gaussianReal_one
 LowerBounds.klDiv_gaussianReal_one
+LowerBounds.gaussianMinimaxGap
+LowerBounds.gaussianMinimaxGap_informationExponent_eq_half
+LowerBounds.gaussianMinimaxGap_le_half
 ```
 
 Expected source terminals, whose exact names remain reserved until their
@@ -95,9 +98,9 @@ LowerBounds.exists_gaussianBandit_expectedRegret_ge_one_div_twentySeven
 LowerBounds.gaussianBanditMinimaxExpectedRegret_ge_one_div_twentySeven
 ```
 
-The four Gaussian declarations are compiled dependency leaves only. They do
-not by themselves prove Lemma 15.1 or Theorem 15.2. The chapter stays
-`partial` while the exact terminals remain blocked.
+The Gaussian and numeric tuning declarations are compiled dependency leaves
+only. They do not by themselves prove Lemma 15.1 or Theorem 15.2. The chapter
+stays `partial` while the exact terminals remain blocked.
 
 ## Exact regularity contract
 
@@ -148,7 +151,9 @@ the source terminal compiled.
 - [ ] A canonical stochastic-policy finite-history law and pull-count function
   compile with probability/measurability instances.
 - [ ] Lemma 15.1 compiles for the source policy class.
-- [ ] Regret/event identities and source tuning close Theorem 15.2.
+- [x] The source gap choice, information exponent `1/2`, and unit-cube upper
+  bound compile as numeric dependency leaves.
+- [ ] Regret/event identities connect the compiled tuning to Theorem 15.2.
 - [ ] The minimax corollary compiles through the Chapter 13 semantic surface.
 - [ ] Root import, focused canary, Tests, scans, full harness, export, evidence
   indexes, documentation, website, independent review, PR, main Actions,
@@ -164,6 +169,7 @@ the source terminal compiled.
 | divergence decomposition | conditional kernel KL plus same-policy cancellation | induction over horizon; regroup selected-arm terms into pull counts | KL direction and first-law expectation fixed | blocked source terminal |
 | least-explored arm | `exists_leastExploredAlternative` | reuse Chapter 13 finite averaging | nonnegative pulls, sum equals horizon | compiled dependency |
 | testing step | Chapter 14 `bretagnolleHuber` | apply to `T_1(n)<=n/2` | event measurability and common policy | compiled measure theorem; bandit bridge blocked |
+| source tuning | real square root and field algebra | set `Delta=sqrt(m/(4n))`; prove exponent `1/2` and `Delta<=1/2` | positive real counts/horizon; `m<=n` | compiled project leaf |
 | Gaussian minimax terminal | all above plus regret identities and real algebra | source base/alternative construction and `Delta` tuning | `k>1`, `n>=k-1`, means in unit cube | blocked source terminal |
 
 ## Retrieval cards
@@ -246,6 +252,7 @@ policies and supremum over this environment class.
 | `N(mu,1)` | Gaussian arm law | `gaussianReal mu (1 : NNReal)` | probability measure on `Real` | imported |
 | Gaussian log ratio | affine log RN ratio | `llr_gaussianReal_one_ae` | a.e. identity | compiled |
 | Gaussian KL | `(mu-nu)^2/2` | `klDiv_gaussianReal_one` | exact `ENNReal` equality | compiled dependency |
+| `Delta=sqrt((k-1)/(4n))` | source gap tuning | `gaussianMinimaxGap` and tuning lemmas | real numeric dependency | compiled |
 | least-explored arm | some `i>1` has expected pulls at most `n/(k-1)` | `exists_leastExploredAlternative` | deterministic averaging | compiled Chapter 13 |
 | testing inequality | event error sum lower bound | `bretagnolleHuber` | measure/event theorem | compiled Chapter 14 |
 | Theorem 15.2 | existence of Gaussian instance with regret lower bound | reserved `exists_gaussianBandit_expectedRegret_ge_one_div_twentySeven` | source terminal | blocked |
@@ -276,7 +283,7 @@ policies and supremum over this environment class.
 | policy/history law | `Kernel`, `Measure.compProd`; existing deterministic `Policy.MeasurablePolicy` audit | local declarations | add a distinct stochastic policy-kernel interface and recursive finite history | do not mutate deterministic API semantics or restrict source terminal to it |
 | divergence decomposition | conditional kernel KL plus policy cancellation | source Lemma 15.1 | horizon induction, then regroup indicators as expected pull counts | preserve first-law expectation and KL direction |
 | testing/regret | Chapter 14 BH; Chapter 13 least-explored leaf | compiled local dependencies | event `T_1(n)<=n/2`, base/changed regret inequalities | theorem with regret identities as premises is only a conditional leaf |
-| tuning | real square-root/exponential algebra | source proof | `Delta=sqrt((k-1)/(4n))`, KL exponent `<=1/2`, weaken numeric constant to `1/27` | do not alter constant or mean cube to simplify |
+| tuning | real square-root/field algebra | source proof | `Delta=sqrt((k-1)/(4n))`, exact KL exponent `1/2`, and `Delta<=1/2` compile; final exponential/numeric weakening remains downstream | do not alter constant or mean cube to simplify |
 
 ## Proof DAG
 
@@ -285,6 +292,7 @@ policies and supremum over this environment class.
 | `CH15-SOURCE-FENCE` | exact Lemma 15.1/Theorem 15.2, pages, direction, constant | official PDF/CUP metadata | repository evidence | source evidence | source review | mapped |
 | `CH15-GAUSSIAN-LLR` | unit-variance Gaussian log likelihood ratio | Gaussian RN derivative | `log_gaussianPDFReal_div_gaussianPDFReal_one`, `llr_gaussianReal_one_ae` | project leaf | focused Lean | compiled |
 | `CH15-GAUSSIAN-KL` | `D(N(mu,1),N(nu,1))=(mu-nu)^2/2` | LLR integrability and first moment | `integrable_llr_gaussianReal_one`, `klDiv_gaussianReal_one` | Mathlib-candidate project leaf | focused Lean | compiled |
+| `CH15-TUNING` | source `Delta`, information exponent `1/2`, and unit-cube upper bound | real square-root and field algebra | `gaussianMinimaxGap` and tuning lemmas | project-local | focused Lean | compiled |
 | `CH15-CONDITIONAL-KL` | same-base kernel KL equals expected pointwise KL | composition-product RN/chain rule | none | blocked local/Mathlib candidate | focused Lean | blocked |
 | `CH15-STOCHASTIC-HISTORY` | canonical finite history under a common policy kernel | finite recursive `compProd` law | none | project-local | focused Lean | blocked |
 | `CH15-LEMMA-15-1` | exact expected-pull divergence decomposition | previous two nodes | reserved terminal | source terminal | focused Lean | blocked |
@@ -299,10 +307,11 @@ policies and supremum over this environment class.
 
 - [x] Exact source/page/semantic mapping.
 - [x] Unit-variance Gaussian RN/LLR/integrability/KL leaf.
+- [x] Source gap, exact information exponent, and unit-cube upper-bound leaves.
 - [ ] Conditional composition-product KL integral.
 - [ ] Stochastic nonanticipating policy and canonical history law.
 - [ ] Pull-count expectation identity and Lemma 15.1.
-- [ ] Regret/event bridge, Theorem 15.2, and minimax corollary.
+- [ ] Regret/event bridge, final exponential/constant step, Theorem 15.2, and minimax corollary.
 
 
 ## Obligation Snapshot
@@ -328,7 +337,7 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH15-LEMMA-15-1` | exact expected-pull divergence decomposition | conditional KL and history law | Chapter 14 KL surface | source theorem | induction, same-policy cancellation, indicator regrouping | KL direction and first-law expectation exact | source terminal | reserved `banditHistoryRelativeEntropy_eq_expectedPulls_sum` | focused Lean | blocked: connected blocker |
 | `CH15-LEAST-EXPLORED` | alternative arm with expected pulls at most `n/(k-1)` | pull-count budget | Chapter 13 `exists_leastExploredAlternative` | compiled local declaration | integrate pathwise count sum then average | nonnegative expected pulls; exact total `n` | compiled dependency | `exists_leastExploredAlternative` | root import | compiled |
 | `CH15-TESTING-EVENT` | apply BH to `T_1(n)<=n/2` | measurable pull count and Lemma 15.1 | Chapter 14 `bretagnolleHuber` | compiled local declaration | event-level change of measure | common policy; base/alternative history laws | project-local bridge | none | focused Lean | blocked: connected blocker |
-| `CH15-TUNING` | source choice `Delta=sqrt((k-1)/(4n))`, unit-cube and constant `1/27` | real sqrt/exp inequalities | Mathlib real analysis | source proof | prove exponent at most `1/2`, then weaken numerical constant | `k>1`; `n>=k-1`; natural casts positive | project-local | none | focused Lean | planned |
+| `CH15-TUNING` | source choice `Delta=sqrt(m/(4n))`, exact information exponent `1/2`, and `Delta<=1/2` | real sqrt/field inequalities | Mathlib real analysis | source proof | square the gap, normalize the exponent, compare `m/n<=1` | positive real `m,n`; `m<=n`; natural-cast consumer remains explicit | project-local | `gaussianMinimaxGap`, `gaussianMinimaxGap_sq`, `gaussianMinimaxGap_informationExponent_eq_half`, `gaussianMinimaxGap_le_half` | focused Lean | compiled |
 | `CH15-THEOREM-15-2` | every policy has a unit-Gaussian instance with regret at least `sqrt((k-1)n)/27` | all preceding bandit nodes | Chapter 13 minimax surface | textbook card | base/changed instance pair, max-to-exists, minimax inf/sup | exact policy class and unit-cube environment class | source terminal | reserved existence/minimax declarations | focused Lean | blocked: connected blocker |
 | `CH15-TYPED-CANARY` | root-import Gaussian applications and axiom reports | compiled Chapter 15 slice | root import | local declarations | exact nontrivial examples | no `sorry`/new axioms | project-local | `Tests/TextbookPartIVChapter15Canary.lean` | Tests | planned |
 | `CH15-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | deterministic gate suite | distinguish path/tool failures from proof failures | repository | n/a | full check | planned |
@@ -52788,6 +52797,38 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/LowerBounds/Minimax.lean",
     "line": 121,
     "statement": "theorem klDiv_unitGaussianArm_zero_two_mul (gap : Real) : InformationTheory.klDiv (unitGaussianArm 0) (unitGaussianArm (2 * gap)) = ENNReal.ofReal (2 * gap ^ 2)"
+  },
+  {
+    "kind": "def",
+    "name": "gaussianMinimaxGap",
+    "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxGap",
+    "file": "BanditRLProof/LowerBounds/Minimax.lean",
+    "line": 131,
+    "statement": "noncomputable def gaussianMinimaxGap (alternativeCount horizon : Real) : Real"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussianMinimaxGap_sq",
+    "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxGap_sq",
+    "file": "BanditRLProof/LowerBounds/Minimax.lean",
+    "line": 136,
+    "statement": "theorem gaussianMinimaxGap_sq {alternativeCount horizon : Real} (halternatives : 0 \u2264 alternativeCount) (hhorizon : 0 \u2264 horizon) : gaussianMinimaxGap alternativeCount horizon ^ 2 = alternativeCount / (4 * horizon)"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussianMinimaxGap_informationExponent_eq_half",
+    "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxGap_informationExponent_eq_half",
+    "file": "BanditRLProof/LowerBounds/Minimax.lean",
+    "line": 147,
+    "statement": "theorem gaussianMinimaxGap_informationExponent_eq_half {alternativeCount horizon : Real} (halternatives : 0 < alternativeCount) (hhorizon : 0 < horizon) : 2 * horizon * gaussianMinimaxGap alternativeCount horizon ^ 2 / alternativeCount = 1 / 2"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussianMinimaxGap_le_half",
+    "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxGap_le_half",
+    "file": "BanditRLProof/LowerBounds/Minimax.lean",
+    "line": 159,
+    "statement": "theorem gaussianMinimaxGap_le_half {alternativeCount horizon : Real} (hhorizon : 0 < horizon) (hcount_le : alternativeCount \u2264 horizon) : gaussianMinimaxGap alternativeCount horizon \u2264 1 / 2"
   },
   {
     "kind": "structure",

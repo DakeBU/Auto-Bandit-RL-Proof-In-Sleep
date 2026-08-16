@@ -125,6 +125,55 @@ theorem klDiv_unitGaussianArm_zero_two_mul (gap : Real) :
   congr 1
   ring
 
+/-- The source tuning `Delta=sqrt(m/(4n))`, written for positive real-valued
+alternative count `m` and horizon `n`.  Natural-count consumers must discharge
+their cast and positivity obligations explicitly. -/
+noncomputable def gaussianMinimaxGap
+    (alternativeCount horizon : Real) : Real :=
+  Real.sqrt (alternativeCount / (4 * horizon))
+
+/-- Squared form of the Chapter 15 minimax gap choice. -/
+theorem gaussianMinimaxGap_sq
+    {alternativeCount horizon : Real}
+    (halternatives : 0 ≤ alternativeCount) (hhorizon : 0 ≤ horizon) :
+    gaussianMinimaxGap alternativeCount horizon ^ 2 =
+      alternativeCount / (4 * horizon) := by
+  rw [gaussianMinimaxGap, sq_sqrt]
+  positivity
+
+/-- With the source tuning, the history-KL upper exponent
+`2*n*Delta^2/m` is exactly `1/2`.  This is a numeric dependency only: it does
+not supply the history-KL upper bound itself. -/
+theorem gaussianMinimaxGap_informationExponent_eq_half
+    {alternativeCount horizon : Real}
+    (halternatives : 0 < alternativeCount) (hhorizon : 0 < horizon) :
+    2 * horizon * gaussianMinimaxGap alternativeCount horizon ^ 2 /
+        alternativeCount = 1 / 2 := by
+  rw [gaussianMinimaxGap_sq halternatives.le hhorizon.le]
+  field_simp
+  ring
+
+/-- If the number of alternative arms is at most the horizon, the tuned gap
+is at most one half, so the source means `Delta` and `2*Delta` lie in the unit
+interval after nonnegativity is combined with this leaf. -/
+theorem gaussianMinimaxGap_le_half
+    {alternativeCount horizon : Real}
+    (hhorizon : 0 < horizon) (hcount_le : alternativeCount ≤ horizon) :
+    gaussianMinimaxGap alternativeCount horizon ≤ 1 / 2 := by
+  rw [gaussianMinimaxGap]
+  rw [Real.sqrt_le_iff]
+  constructor
+  · norm_num
+  · have hdiv : alternativeCount / horizon ≤ 1 :=
+      (div_le_one hhorizon).mpr hcount_le
+    have hfour : alternativeCount / (4 * horizon) ≤ 1 / 4 := by
+      calc
+        alternativeCount / (4 * horizon) =
+            (alternativeCount / horizon) / 4 := by field_simp
+        _ ≤ 1 / 4 := by linarith
+    norm_num at hfour ⊢
+    exact hfour
+
 end
 
 end LowerBounds

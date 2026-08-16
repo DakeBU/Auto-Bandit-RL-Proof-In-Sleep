@@ -46,6 +46,7 @@ policies and supremum over this environment class.
 | `N(mu,1)` | Gaussian arm law | `gaussianReal mu (1 : NNReal)` | probability measure on `Real` | imported |
 | Gaussian log ratio | affine log RN ratio | `llr_gaussianReal_one_ae` | a.e. identity | compiled |
 | Gaussian KL | `(mu-nu)^2/2` | `klDiv_gaussianReal_one` | exact `ENNReal` equality | compiled dependency |
+| `Delta=sqrt((k-1)/(4n))` | source gap tuning | `gaussianMinimaxGap` and tuning lemmas | real numeric dependency | compiled |
 | least-explored arm | some `i>1` has expected pulls at most `n/(k-1)` | `exists_leastExploredAlternative` | deterministic averaging | compiled Chapter 13 |
 | testing inequality | event error sum lower bound | `bretagnolleHuber` | measure/event theorem | compiled Chapter 14 |
 | Theorem 15.2 | existence of Gaussian instance with regret lower bound | reserved `exists_gaussianBandit_expectedRegret_ge_one_div_twentySeven` | source terminal | blocked |
@@ -76,7 +77,7 @@ policies and supremum over this environment class.
 | policy/history law | `Kernel`, `Measure.compProd`; existing deterministic `Policy.MeasurablePolicy` audit | local declarations | add a distinct stochastic policy-kernel interface and recursive finite history | do not mutate deterministic API semantics or restrict source terminal to it |
 | divergence decomposition | conditional kernel KL plus policy cancellation | source Lemma 15.1 | horizon induction, then regroup indicators as expected pull counts | preserve first-law expectation and KL direction |
 | testing/regret | Chapter 14 BH; Chapter 13 least-explored leaf | compiled local dependencies | event `T_1(n)<=n/2`, base/changed regret inequalities | theorem with regret identities as premises is only a conditional leaf |
-| tuning | real square-root/exponential algebra | source proof | `Delta=sqrt((k-1)/(4n))`, KL exponent `<=1/2`, weaken numeric constant to `1/27` | do not alter constant or mean cube to simplify |
+| tuning | real square-root/field algebra | source proof | `Delta=sqrt((k-1)/(4n))`, exact KL exponent `1/2`, and `Delta<=1/2` compile; final exponential/numeric weakening remains downstream | do not alter constant or mean cube to simplify |
 
 ## Proof DAG
 
@@ -85,6 +86,7 @@ policies and supremum over this environment class.
 | `CH15-SOURCE-FENCE` | exact Lemma 15.1/Theorem 15.2, pages, direction, constant | official PDF/CUP metadata | repository evidence | source evidence | source review | mapped |
 | `CH15-GAUSSIAN-LLR` | unit-variance Gaussian log likelihood ratio | Gaussian RN derivative | `log_gaussianPDFReal_div_gaussianPDFReal_one`, `llr_gaussianReal_one_ae` | project leaf | focused Lean | compiled |
 | `CH15-GAUSSIAN-KL` | `D(N(mu,1),N(nu,1))=(mu-nu)^2/2` | LLR integrability and first moment | `integrable_llr_gaussianReal_one`, `klDiv_gaussianReal_one` | Mathlib-candidate project leaf | focused Lean | compiled |
+| `CH15-TUNING` | source `Delta`, information exponent `1/2`, and unit-cube upper bound | real square-root and field algebra | `gaussianMinimaxGap` and tuning lemmas | project-local | focused Lean | compiled |
 | `CH15-CONDITIONAL-KL` | same-base kernel KL equals expected pointwise KL | composition-product RN/chain rule | none | blocked local/Mathlib candidate | focused Lean | blocked |
 | `CH15-STOCHASTIC-HISTORY` | canonical finite history under a common policy kernel | finite recursive `compProd` law | none | project-local | focused Lean | blocked |
 | `CH15-LEMMA-15-1` | exact expected-pull divergence decomposition | previous two nodes | reserved terminal | source terminal | focused Lean | blocked |
@@ -99,7 +101,8 @@ policies and supremum over this environment class.
 
 - [x] Exact source/page/semantic mapping.
 - [x] Unit-variance Gaussian RN/LLR/integrability/KL leaf.
+- [x] Source gap, exact information exponent, and unit-cube upper-bound leaves.
 - [ ] Conditional composition-product KL integral.
 - [ ] Stochastic nonanticipating policy and canonical history law.
 - [ ] Pull-count expectation identity and Lemma 15.1.
-- [ ] Regret/event bridge, Theorem 15.2, and minimax corollary.
+- [ ] Regret/event bridge, final exponential/constant step, Theorem 15.2, and minimax corollary.

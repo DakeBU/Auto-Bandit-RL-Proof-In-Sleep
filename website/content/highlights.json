@@ -1007,6 +1007,20 @@
         "BanditRLProof.LowerBounds.llr_gaussianReal_one_ae",
         "BanditRLProof.LowerBounds.integrable_llr_gaussianReal_one"
       ]
+    },
+    {
+      "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxGap_informationExponent_eq_half",
+      "chapter": "foundations",
+      "plain": "The Chapter 15 gap choice makes the Gaussian information exponent exactly one half.",
+      "math": "\\Delta=\\sqrt{m/(4n)}\\Longrightarrow 2n\\Delta^2/m=1/2.",
+      "intuition": "Choosing the gap to balance the number of alternatives against the horizon keeps the changed history laws at constant information distance once Lemma 15.1 is available.",
+      "why": "This isolates the source's tuning algebra from the still-blocked stochastic history and regret/event bridge.",
+      "position": "It is a compiled numeric dependency of Theorem 15.2, not a proof that the history divergence has this upper bound.",
+      "proof_idea": "Square the nonnegative real square root and normalize the positive field denominators.",
+      "lean_notes": "The parameters are explicit positive real alternative count and horizon values. Natural-cast and bandit-semantic obligations remain with the source terminal.",
+      "dependencies": [
+        "BanditRLProof.LowerBounds.gaussianMinimaxGap_sq"
+      ]
     }
   ]
 }
