@@ -20,7 +20,7 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH14-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | deterministic gate suite | path/tooling failures distinguished from proofs | repository | n/a | full check | verified locally |
 | `CH14-EVIDENCE-SITE` | proof export, indexes, results/highlights/readings/maps/README/site agree | compiled chapter surface | harness/site scripts | repository | generated evidence plus maintained content | only compiled/gated declarations labelled compiled | repository | n/a | site/browser | verified locally |
 | `CH14-REVIEW` | independent theorem/Lean audit | all artifacts | source, Lean, site | all above | check KL direction, AC, endpoints, quantifiers | no unresolved P0--P3 | repository | n/a | independent review | verified |
-| `CH14-REMOTE` | PR, main Actions, Pages and live Chapter 14 | accepted local chapter | GitHub workflow | repository | branch PR, never direct main push | current remote evidence | repository | n/a | deployment | planned |
+| `CH14-REMOTE` | PR, main Actions, Pages and live Chapter 14 | accepted local chapter | GitHub workflow | repository | branch PR, never direct main push | PR #11; merge `194aca9`; main run `31949303227`; deploy job `95172626370`; live desktop/mobile | repository | n/a | deployment | verified |
 
 ## Failure classification
 

@@ -13103,3 +13103,4 @@ here during local harness runs.
 - `2026-08-16T12:38:26+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE.md` - TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 - `2026-08-16T12:38:31+00:00` `bandit.py memory-refresh` `retrieval-index` `research-wiki/retrieval-index/TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE.json` - TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 - `2026-08-16T12:49:17+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE.md` - TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
+- `2026-08-16T13:50:15+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE.md` - TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE

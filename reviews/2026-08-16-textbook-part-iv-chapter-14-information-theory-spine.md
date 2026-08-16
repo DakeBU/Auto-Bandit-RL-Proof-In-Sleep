@@ -76,6 +76,20 @@ The reviewer made no edits.
 
 ## Remote evidence
 
-Pending. Local review acceptance does not promote the task to `accepted`.
-That status requires a merged PR, authoritative-main Actions, Pages
-deployment, and live desktop/mobile verification.
+- PR #11 passed the required `Lean and documentation / build` check in run
+  `31948234489`, job `95167560544`, and was merged without a direct push to
+  `main`.
+- Merge commit: `194aca91b5d9b50c26fffaf5b02c610112a7daa7`.
+- Authoritative-main run `31949303227` passed. Build job `95170181038`
+  completed Lean, Tests, the lean-verified site, site checks, and Pages
+  artifact upload in 20m56s. Deployment job `95172626370` passed in 10s.
+- Live page:
+  <https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/textbook-spine/chapter-14-information-theory/>.
+  Desktop 1280px and 390x844 mobile inspection confirmed the verified banner,
+  `PARTIAL` chapter status, compiled Theorem 14.2 correspondence, the Chapter
+  15 adaptive-history boundary, five rendered MathJax containers, zero broken
+  images, and no document-level horizontal overflow.
+
+This evidence promotes the scoped Chapter 14 task to `accepted`; the chapter
+page remains `partial` because §14.1 coding, full Exercise 14.10, and adaptive
+history KL are not local compiled declarations.
