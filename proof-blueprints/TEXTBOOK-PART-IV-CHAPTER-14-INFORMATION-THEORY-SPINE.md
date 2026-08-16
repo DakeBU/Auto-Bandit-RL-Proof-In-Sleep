@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-08-16T12:38:22+00:00`
+Generated: `2026-08-16T12:49:12+00:00`
 
 ## Source Task
 
@@ -91,11 +91,30 @@ Theorem 14.2.
 - [x] Scalar binary Bretagnolle--Huber compiles with endpoint cases.
 - [x] Exact measure-level Theorem 14.2 compiles without a hidden finite-KL
   assumption.
-- [ ] Root import, focused build, typed canary, Tests, axiom scan, full harness,
+- [x] Root import, focused build, typed canary, Tests, axiom scan, full harness,
   proof export, evidence indexes, documentation and website pass.
-- [ ] Independent read-only review finds no unresolved P0--P3 issue.
+- [x] Independent read-only review finds no unresolved P0--P3 issue.
 - [ ] PR, authoritative-main Actions, Pages deployment and live desktop/mobile
   page are verified before this task becomes accepted.
+
+## Local verification evidence
+
+- Commit `5a84d26` passed `python3 tools/bandit.py check` in detached
+  short-path worktree `C:\abrl-p4-ch14-final-5a84d26`: the root library built
+  in 3,690 jobs, `Tests` built in 3,703 jobs, and all 42 Python tests passed
+  with one expected skip.
+- The root-import typed canary covers finite and singular examples. Its axiom
+  reports contain only `propext`, `Classical.choice`, and `Quot.sound`.
+- The lean-verified site build/check passed with 560 modules, 7,383
+  declarations, zero placeholders, and 588 checked pages. Desktop and 390px
+  mobile inspections confirmed rendered MathJax, no broken images, no
+  document-level overflow, and a locally scrollable long table.
+- Independent read-only session
+  `01a00a9a-8d8b-7440-aac3-ad45d1a634f6` found no actionable P0--P3 issue.
+  Its statement audit confirmed KL direction, complement ownership, finite
+  and singular branches, Bernoulli endpoints, and the Chapter 15 history-law
+  nonclaim. See
+  `reviews/2026-08-16-textbook-part-iv-chapter-14-information-theory-spine.md`.
 
 ## Mathlib-ready leaf contract
 
@@ -233,7 +252,9 @@ with `D(Q,P)` is also valid.
 | `CH14-THEOREM-14-2` | exact unconditional event testing inequality | event DPI, binary BH, top/finite split | `bretagnolleHuberScale`, `bretagnolleHuber` | source terminal | focused Lean | compiled |
 | `CH14-HISTORY-KL` | same-policy adaptive history decomposition | kernel chain rule plus policy/history model | none in this chapter | planned Chapter 15 | Chapter 15 | planned |
 | `CH14-TYPED-CANARY` | full conclusions including finite and singular examples | all compiled declarations | `Tests/TextbookPartIVChapter14Canary.lean` | project-local | Tests | verified |
-| `CH14-EVIDENCE-SITE` | task/DAG/export/index/site agreement | all local gates | repository artifacts | repository | lean-verified/site/browser | planned |
+| `CH14-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | full check | verified locally |
+| `CH14-EVIDENCE-SITE` | task/DAG/export/index/site agreement | compiled chapter surface | repository artifacts | repository | lean-verified/site/browser | verified locally |
+| `CH14-REVIEW` | independent source/Lean/evidence audit | all local artifacts | review record | repository | independent review | verified |
 | `CH14-REMOTE` | PR, main Actions, Pages and live page | accepted local chapter | remote workflow | repository | deployment | planned |
 
 ## Gaps
@@ -265,9 +286,9 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH14-THEOREM-14-2` | unconditional `P(A)+Q(Aᶜ) >= scale(D(P,Q))` | event DPI and binary BH | ENNReal finite/top conversions; probability complement | all above | split KL top; finite branch derives AC and converts safely | no hidden finite KL or mutual AC | source terminal | `bretagnolleHuberScale`, `bretagnolleHuber` | focused Lean | compiled |
 | `CH14-HISTORY-KL` | adaptive same-policy history divergence decomposition | Chapter 14 measure leaves and kernel chain rule | future bandit history model | `klDiv_compProd_eq_add` only as route evidence | Chapter 15 iterative construction | policy consistency, measurability, AC | planned | none | Chapter 15 | planned |
 | `CH14-TYPED-CANARY` | root-import applications to finite and singular cases, all axioms printed | compiled Chapter 14 declarations | root import | local declarations | exact full-conclusion examples | explicit probability measures/events | project-local | `Tests/TextbookPartIVChapter14Canary.lean` | Tests | verified |
-| `CH14-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | deterministic gate suite | path/tooling failures distinguished from proofs | repository | n/a | full check | planned |
-| `CH14-EVIDENCE-SITE` | proof export, indexes, results/highlights/readings/maps/README/site agree | local full gate | harness/site scripts | repository | generated evidence plus maintained content | only compiled/gated declarations labelled compiled | repository | n/a | site/browser | planned |
-| `CH14-REVIEW` | independent theorem/Lean audit | all artifacts | source, Lean, site | all above | check KL direction, AC, endpoints, quantifiers | no unresolved P0--P3 | repository | n/a | independent review | planned |
+| `CH14-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | deterministic gate suite | path/tooling failures distinguished from proofs | repository | n/a | full check | verified locally |
+| `CH14-EVIDENCE-SITE` | proof export, indexes, results/highlights/readings/maps/README/site agree | compiled chapter surface | harness/site scripts | repository | generated evidence plus maintained content | only compiled/gated declarations labelled compiled | repository | n/a | site/browser | verified locally |
+| `CH14-REVIEW` | independent theorem/Lean audit | all artifacts | source, Lean, site | all above | check KL direction, AC, endpoints, quantifiers | no unresolved P0--P3 | repository | n/a | independent review | verified |
 | `CH14-REMOTE` | PR, main Actions, Pages and live Chapter 14 | accepted local chapter | GitHub workflow | repository | branch PR, never direct main push | current remote evidence | repository | n/a | deployment | planned |
 
 ## Failure classification

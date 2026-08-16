@@ -85,11 +85,30 @@ Theorem 14.2.
 - [x] Scalar binary Bretagnolle--Huber compiles with endpoint cases.
 - [x] Exact measure-level Theorem 14.2 compiles without a hidden finite-KL
   assumption.
-- [ ] Root import, focused build, typed canary, Tests, axiom scan, full harness,
+- [x] Root import, focused build, typed canary, Tests, axiom scan, full harness,
   proof export, evidence indexes, documentation and website pass.
-- [ ] Independent read-only review finds no unresolved P0--P3 issue.
+- [x] Independent read-only review finds no unresolved P0--P3 issue.
 - [ ] PR, authoritative-main Actions, Pages deployment and live desktop/mobile
   page are verified before this task becomes accepted.
+
+## Local verification evidence
+
+- Commit `5a84d26` passed `python3 tools/bandit.py check` in detached
+  short-path worktree `C:\abrl-p4-ch14-final-5a84d26`: the root library built
+  in 3,690 jobs, `Tests` built in 3,703 jobs, and all 42 Python tests passed
+  with one expected skip.
+- The root-import typed canary covers finite and singular examples. Its axiom
+  reports contain only `propext`, `Classical.choice`, and `Quot.sound`.
+- The lean-verified site build/check passed with 560 modules, 7,383
+  declarations, zero placeholders, and 588 checked pages. Desktop and 390px
+  mobile inspections confirmed rendered MathJax, no broken images, no
+  document-level overflow, and a locally scrollable long table.
+- Independent read-only session
+  `01a00a9a-8d8b-7440-aac3-ad45d1a634f6` found no actionable P0--P3 issue.
+  Its statement audit confirmed KL direction, complement ownership, finite
+  and singular branches, Bernoulli endpoints, and the Chapter 15 history-law
+  nonclaim. See
+  `reviews/2026-08-16-textbook-part-iv-chapter-14-information-theory-spine.md`.
 
 ## Mathlib-ready leaf contract
 

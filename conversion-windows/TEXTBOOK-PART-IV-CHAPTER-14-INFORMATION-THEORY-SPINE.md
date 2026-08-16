@@ -90,7 +90,9 @@ with `D(Q,P)` is also valid.
 | `CH14-THEOREM-14-2` | exact unconditional event testing inequality | event DPI, binary BH, top/finite split | `bretagnolleHuberScale`, `bretagnolleHuber` | source terminal | focused Lean | compiled |
 | `CH14-HISTORY-KL` | same-policy adaptive history decomposition | kernel chain rule plus policy/history model | none in this chapter | planned Chapter 15 | Chapter 15 | planned |
 | `CH14-TYPED-CANARY` | full conclusions including finite and singular examples | all compiled declarations | `Tests/TextbookPartIVChapter14Canary.lean` | project-local | Tests | verified |
+| `CH14-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | full check | verified locally |
 | `CH14-EVIDENCE-SITE` | task/DAG/export/index/site agreement | compiled chapter surface | repository artifacts | repository | lean-verified/site/browser | verified locally |
+| `CH14-REVIEW` | independent source/Lean/evidence audit | all local artifacts | review record | repository | independent review | verified |
 | `CH14-REMOTE` | PR, main Actions, Pages and live page | accepted local chapter | remote workflow | repository | deployment | planned |
 
 ## Gaps
