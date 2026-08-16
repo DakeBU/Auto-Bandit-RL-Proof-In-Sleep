@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE
 
-Generated: `2026-08-16T19:02:56+00:00`
+Generated: `2026-08-16T20:01:39+00:00`
 
 ## Source Task
 
@@ -10,7 +10,7 @@ Task id: `TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE`
 
 Kind: `theoremFormalization`
 
-Status: `verified_locally`
+Status: `accepted`
 
 Harness: `hierarchical`
 
@@ -196,7 +196,30 @@ weaken the source bandit semantics.
 - [ ] Lemma 16.3 and Theorem 16.4 compile.
 - [x] Root import, canary, Tests, scans, full harness, exports, indexes, site,
   browser, and independent local review pass.
-- [ ] PR, authoritative-main Actions, Pages deployment, and live checks pass.
+- [x] PR, authoritative-main Actions, Pages deployment, and live checks pass.
+
+## Remote verification evidence
+
+- PR #15 passed `Lean and documentation / build` in run `31966790756`, job
+  `95213073705` (20m40s), and was merged without a direct push to `main`.
+- Merge commit: `7b3dd86559384f392691b9b4c3ccf85d4b0b1670`.
+- Authoritative-main run `31967845116` passed: build job `95215621768`
+  completed Lean, Tests, the lean-verified site, site checks, and Pages
+  artifact upload in 22m58s; deployment job `95218324472` passed in 9s.
+- Live page:
+  <https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/textbook-spine/chapter-16-instance-dependent/>.
+  Desktop 1280x720 and mobile 390x844 inspections confirmed the
+  `2026-08-16T19:54:25+00:00` build, overall `PARTIAL` chapter status, CUP
+  print pp. 177--184 and physical-PDF pp. 215--223, the compiled consistency
+  and `d_inf` dependency slice, the blocked Theorem 16.2 / Lemma 16.3 /
+  Theorem 16.4 terminals, and zero broken images. Chrome runtime metrics found
+  no document-level horizontal overflow at 390x844 (`390/390` client/scroll
+  width); only the intended local TOC and MathJax containers scroll.
+
+Remote acceptance applies only to the scoped consistency, asymptotic-helper,
+and `d_inf` dependency slice. The chapter remains `partial`; the exact
+Gaussian `d_inf` equality and all three source terminals retain their recorded
+partial/blocked status.
 
 ## Mathlib-ready leaf contract
 
@@ -342,7 +365,7 @@ envelope and sums the positive parts to obtain Eq. (16.5).
 | `CH16-TYPED-CANARY` | root-import applications and axiom reports | compiled slice | `Tests/TextbookPartIVChapter16Canary.lean` | project-local | Tests | verified locally |
 | `CH16-EVIDENCE-SITE` | all artifacts agree on partial/blocked boundary | scoped artifacts | repository artifacts | repository | full/site/browser | verified locally |
 | `CH16-REVIEW` | direction/quantifier/AC/policy/asymptotic audit | all artifacts | review record | repository | read-only | reviewed; P3 corrected |
-| `CH16-REMOTE` | PR, main Actions, Pages, live page | accepted local slice | remote evidence | repository | deployment | pending |
+| `CH16-REMOTE` | PR, main Actions, Pages, live page | accepted local slice | PR #15; merge `7b3dd86`; run `31967845116`; deploy `95218324472`; live desktop/mobile | repository | deployment | verified |
 
 ## Gaps
 
@@ -353,7 +376,7 @@ envelope and sums the positive parts to obtain Eq. (16.5).
 - [ ] Theorem 16.2 `liminf` terminal.
 - [ ] Lemma 16.3 and Theorem 16.4.
 - [x] Full local Lean, harness, site, browser, and independent-review gates.
-- [ ] PR, authoritative-main Actions, Pages deployment, and live-page gates.
+- [x] PR, authoritative-main Actions, Pages deployment, and live-page gates.
 
 
 ## Obligation Snapshot
@@ -383,7 +406,7 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH16-THM-16-4` | exact Eq. (16.5) | Lemma 16.3, Gaussian KL, regret decomposition | local Gaussian and sums | source card | shift by `Delta_i(1+epsilon)` and sum positive parts | `N` nonempty, `C>0`, `0<p<1`, `0<epsilon<=1` | source terminal | reserved | focused Lean | blocked |
 | `CH16-CANARY` | root-import typed applications and axiom reports | compiled slice | `BanditRLProof` root | local declarations | instantiate nontrivial Gaussian candidate | no placeholders | project-local | `Tests/TextbookPartIVChapter16Canary.lean` | Tests | verified locally |
 | `CH16-SITE-REVIEW` | synchronized evidence/site and independent audit | all above | build/check/browser | repository | compare informal and Lean statements | no terminal promotion | repository | evidence artifacts | full/local | verified; P3 corrected |
-| `CH16-REMOTE` | PR, authoritative-main Actions, Pages, and live page | accepted local slice | GitHub workflow | repository | merge through PR and inspect deployed artifact | source terminals remain blocked | repository | remote evidence | deployment | pending |
+| `CH16-REMOTE` | PR, authoritative-main Actions, Pages, and live page | accepted local slice | GitHub workflow | repository | merge through PR and inspect deployed artifact | source terminals remain blocked; PR #15; merge `7b3dd86`; main run `31967845116`; deploy `95218324472`; live desktop/mobile | repository | remote evidence | deployment | verified |
 
 ## Failure classification
 

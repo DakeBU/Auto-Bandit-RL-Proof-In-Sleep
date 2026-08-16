@@ -98,7 +98,7 @@ envelope and sums the positive parts to obtain Eq. (16.5).
 | `CH16-TYPED-CANARY` | root-import applications and axiom reports | compiled slice | `Tests/TextbookPartIVChapter16Canary.lean` | project-local | Tests | verified locally |
 | `CH16-EVIDENCE-SITE` | all artifacts agree on partial/blocked boundary | scoped artifacts | repository artifacts | repository | full/site/browser | verified locally |
 | `CH16-REVIEW` | direction/quantifier/AC/policy/asymptotic audit | all artifacts | review record | repository | read-only | reviewed; P3 corrected |
-| `CH16-REMOTE` | PR, main Actions, Pages, live page | accepted local slice | remote evidence | repository | deployment | pending |
+| `CH16-REMOTE` | PR, main Actions, Pages, live page | accepted local slice | PR #15; merge `7b3dd86`; run `31967845116`; deploy `95218324472`; live desktop/mobile | repository | deployment | verified |
 
 ## Gaps
 
@@ -109,4 +109,4 @@ envelope and sums the positive parts to obtain Eq. (16.5).
 - [ ] Theorem 16.2 `liminf` terminal.
 - [ ] Lemma 16.3 and Theorem 16.4.
 - [x] Full local Lean, harness, site, browser, and independent-review gates.
-- [ ] PR, authoritative-main Actions, Pages deployment, and live-page gates.
+- [x] PR, authoritative-main Actions, Pages deployment, and live-page gates.

@@ -23,7 +23,7 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH16-THM-16-4` | exact Eq. (16.5) | Lemma 16.3, Gaussian KL, regret decomposition | local Gaussian and sums | source card | shift by `Delta_i(1+epsilon)` and sum positive parts | `N` nonempty, `C>0`, `0<p<1`, `0<epsilon<=1` | source terminal | reserved | focused Lean | blocked |
 | `CH16-CANARY` | root-import typed applications and axiom reports | compiled slice | `BanditRLProof` root | local declarations | instantiate nontrivial Gaussian candidate | no placeholders | project-local | `Tests/TextbookPartIVChapter16Canary.lean` | Tests | verified locally |
 | `CH16-SITE-REVIEW` | synchronized evidence/site and independent audit | all above | build/check/browser | repository | compare informal and Lean statements | no terminal promotion | repository | evidence artifacts | full/local | verified; P3 corrected |
-| `CH16-REMOTE` | PR, authoritative-main Actions, Pages, and live page | accepted local slice | GitHub workflow | repository | merge through PR and inspect deployed artifact | source terminals remain blocked | repository | remote evidence | deployment | pending |
+| `CH16-REMOTE` | PR, authoritative-main Actions, Pages, and live page | accepted local slice | GitHub workflow | repository | merge through PR and inspect deployed artifact | source terminals remain blocked; PR #15; merge `7b3dd86`; main run `31967845116`; deploy `95218324472`; live desktop/mobile | repository | remote evidence | deployment | verified |
 
 ## Failure classification
 
