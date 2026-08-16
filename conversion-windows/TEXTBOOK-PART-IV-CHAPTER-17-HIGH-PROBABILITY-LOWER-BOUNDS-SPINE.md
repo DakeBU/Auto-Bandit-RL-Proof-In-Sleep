@@ -140,10 +140,10 @@ hard-family averaging:
 | `CH17-EQ-17-8` | pathwise random-regret comparison | clipping construction | reserved terminal | source terminal | focused Lean | blocked |
 | `CH17-CLAIM-17-7` | clipping count tail at most `delta` | clipped Gaussian concentration | reserved terminal | source terminal | focused Lean | blocked |
 | `CH17-THEOREM-17-4` | deterministic adversarial witness | Claims 17.5--17.7 and Eq. (17.8) | reserved terminal | source terminal | focused Lean | blocked |
-| `CH17-TYPED-CANARY` | root-import applications and axiom reports | compiled slice | `Tests/TextbookPartIVChapter17Canary.lean` | project-local | Tests | compiled locally; Linux Tests pending |
-| `CH17-EVIDENCE-SITE` | all artifacts agree on partial/blocked boundary | scoped artifacts | repository artifacts | repository | full/site/browser | site and desktop passed; mobile/Linux pending |
+| `CH17-TYPED-CANARY` | root-import applications and axiom reports | compiled slice | `Tests/TextbookPartIVChapter17Canary.lean` | project-local | Tests | verified on Linux PR/main |
+| `CH17-EVIDENCE-SITE` | all artifacts agree on partial/blocked boundary | scoped artifacts | repository artifacts | repository | full/site/browser | site, desktop/mobile, Linux, and review passed |
 | `CH17-REVIEW` | regret notion/direction/quantifier/constants audit | all artifacts | review record | repository | read-only | passed after two P3 fixes |
-| `CH17-REMOTE` | PR, main Actions, Pages, live page | accepted local slice | pending | repository | deployment | pending |
+| `CH17-REMOTE` | PR, main Actions, Pages, live page | accepted local slice | PR #17; merge `eb41d96`; run `31976153611`; deploy `95238317293`; live desktop/mobile | repository | deployment | verified |
 
 ## Gaps
 
@@ -155,5 +155,5 @@ hard-family averaging:
 - [ ] Claim 17.6, construction-level Eq. (17.8), Claim 17.7, and Theorem 17.4.
 - [x] Focused Lean, root/canary short-path compile, site, desktop browser, and
   independent-review gates.
-- [ ] Full Linux Lean/Tests/harness and actual mobile browser gates.
-- [ ] PR, authoritative-main Actions, Pages deployment, and live-page gates.
+- [x] Full Linux Lean/Tests/harness and actual mobile browser gates.
+- [x] PR, authoritative-main Actions, Pages deployment, and live-page gates.

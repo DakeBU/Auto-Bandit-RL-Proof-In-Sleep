@@ -80,8 +80,8 @@ two changes.
   document-level horizontal overflow. Long MathJax, table, and Lean-code
   elements have local horizontal scrolling.
 - The browser security policy rejected a synthetic 390px iframe viewport and
-  prohibited an alternate browser workaround. Actual mobile rendering is
-  therefore a pending remote/live gate, not claimed as locally passed.
+  prohibited an alternate browser workaround. Mobile rendering was therefore
+  deferred to the supported native remote/live viewport gate recorded below.
 
 ## Residual boundary
 
@@ -95,6 +95,26 @@ Theorem 17.4 are not local declarations.
 ## Verdict
 
 The local Chapter 17 dependency slice has no unresolved P0--P3 review finding
-and is ready for authoritative Linux PR gates. It is not a source-terminal
-completion, and remote Actions, Pages, and live desktop/mobile evidence are
-still pending.
+and passed authoritative Linux and remote/live gates. It is not a
+source-terminal completion.
+
+## Remote evidence
+
+- PR #17 passed the required build check in run `31975031469`, job
+  `95233089033`, and was merged as
+  `eb41d9607cc5a46aa208572e3a6f05f291c82798` without a direct push to
+  `main`.
+- Authoritative-main run `31976153611` passed. Build job `95235875154`
+  completed the full Lean/Tests and site gates in 22m24s; Pages deployment
+  job `95238317293` passed in 12s.
+- The live Chapter 17 page was inspected at 1280x720 and through the browser's
+  native 390x844 viewport. It serves the `2026-08-16T22:44:25+00:00` build,
+  keeps the chapter `PARTIAL`, renders seven MathJax displays, exposes the
+  compiled Claim 17.5 and reusable dependency leaves, keeps Theorem 17.1,
+  Corollaries 17.2--17.3, and Theorem 17.4 blocked, and has zero broken images
+  or document-level horizontal overflow. At 390x844 the document client and
+  scroll widths are both 375 CSS pixels; the mobile TOC/sidebar and long
+  MathJax displays retain intentional local horizontal scrolling.
+
+This evidence accepts the scoped dependency slice. It does not close or
+weaken the residual mathematical blockers recorded above.

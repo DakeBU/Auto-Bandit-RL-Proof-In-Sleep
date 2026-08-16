@@ -4,7 +4,7 @@ Task id: `TEXTBOOK-PART-IV-CHAPTER-17-HIGH-PROBABILITY-LOWER-BOUNDS-SPINE`
 
 Kind: `theoremFormalization`
 
-Status: `partial`
+Status: `accepted`
 
 Harness: `hierarchical`
 
@@ -286,10 +286,11 @@ pseudo-regret into expected regret, or weaken a probability/constant.
 - [ ] Native Windows full `lake build` / `Tests` / harness pass. The current
   local run is blocked only by MAX_PATH while creating an existing unrelated
   long-named RL `.olean`; authoritative Linux PR CI is the required full gate.
-- [ ] Actual 390px mobile browser review passes. Synthetic local viewport
+- [x] Authoritative Linux PR and main full Lean/Tests/harness gates pass.
+- [x] Actual 390px mobile browser review passes. Synthetic local viewport
   injection was rejected by browser security policy, so this remains a
-  remote/live gate rather than a claimed local pass.
-- [ ] PR, authoritative-main Actions, Pages deployment, and live checks pass.
+  remote/live result rather than a claimed local pass.
+- [x] PR, authoritative-main Actions, Pages deployment, and live checks pass.
 
 ## Local verification evidence
 
@@ -299,7 +300,7 @@ pseudo-regret into expected regret, or weaken a probability/constant.
   `Classical.choice`, and `Quot.sound`.
 - `python3 tools/bandit.py check` reaches the full root build but Windows fails
   to create an existing unrelated long-named RL object file because of
-  MAX_PATH. No Chapter 17 target fails; Linux CI remains pending.
+  MAX_PATH. No Chapter 17 target fails; authoritative Linux CI passed below.
 - `python3 website/scripts/build_site.py --lean-verified`: passed with 563
   modules, 7415 declarations, and zero placeholders.
 - `python3 website/scripts/check_site.py`: passed with 591 pages, 14 Mermaid
@@ -313,9 +314,27 @@ pseudo-regret into expected regret, or weaken a probability/constant.
 
 ## Remote verification evidence
 
-Pending. Local compiled status must not be upgraded to remote acceptance until
-the PR build, authoritative-main build, Pages deployment, and live desktop and
-mobile page have all passed.
+- PR #17 passed `Lean and documentation / build` in run `31975031469`, job
+  `95233089033` (23m13s), and was merged without a direct push to `main`.
+- Merge commit: `eb41d9607cc5a46aa208572e3a6f05f291c82798`.
+- Authoritative-main run `31976153611` passed: build job `95235875154`
+  completed Lean, Tests, the lean-verified site, site checks, and Pages
+  artifact upload in 22m24s; deployment job `95238317293` passed in 12s.
+- Live page:
+  <https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/textbook-spine/chapter-17-high-probability/>.
+  Desktop 1280x720 and native mobile 390x844 inspections confirmed the
+  `2026-08-16T22:44:25+00:00` build, overall `PARTIAL` chapter status, CUP
+  print pp. 185--190 and physical-PDF pp. 224--230, all seven MathJax
+  displays, the compiled Claim 17.5/threshold/event-subtraction/Eq. (17.8)
+  algebra slice, the blocked Theorem 17.1 / Corollaries 17.2--17.3 / Theorem
+  17.4 terminals, and zero broken images. Browser metrics found no
+  document-level horizontal overflow at 390x844 (`375/375` client/scroll
+  width); the mobile TOC/sidebar and long MathJax displays retain intentional
+  local horizontal scrolling.
+
+Remote acceptance applies only to the scoped dependency slice. The chapter
+remains `partial`; the stochastic history-information route and the
+clipped-normal adversarial construction retain their recorded blocked status.
 
 ## Mathlib-ready leaf contract
 
