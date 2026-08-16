@@ -144,6 +144,7 @@ Core paths:
 - `runs/` — attempt, lifecycle, and acceptance evidence;
 - `website/` — literate static site, local compiler service, and integrity checker;
 - `tools/bandit.py` — deterministic harness CLI.
+- [`docs/proof_graph_laboratory.md`](docs/proof_graph_laboratory.md) — compiled-environment dependency export, proof-cost/ZDD/hypergraph prototypes, and the proof-structural novelty audit boundary.
 
 ## 🤝 Contributing
 

@@ -1,4 +1,5 @@
 import Tests.Basic
+import Tests.CurvatureNoiseGapGeometry
 import Tests.ConditionalRewardPartialTrajectoryGeometricAllTimeCanary
 import Tests.ConditionalRewardPartialTrajectoryTelescopingAllTimeCanary
 import Tests.UCBFixedPolicyTelescopingAnytimeRegretCanary
