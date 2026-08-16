@@ -83,6 +83,23 @@ canonical stochastic-policy history law. Theorem 16.2's per-arm and regret
 ## Verdict
 
 The P3 is corrected and no unresolved P0--P3 issue remains in the scoped local
-dependency slice. This accepts the local partial slice only; PR, Actions,
-Pages deployment, and live-page evidence remain pending, and no source
-terminal is promoted.
+dependency slice. No source terminal is promoted.
+
+## Remote evidence
+
+- PR #15 passed the required build check in run `31966790756`, job
+  `95213073705`, and was merged as
+  `7b3dd86559384f392691b9b4c3ccf85d4b0b1670` without a direct push to
+  `main`.
+- Authoritative-main run `31967845116` passed. Build job `95215621768`
+  completed the full Lean/Tests and site gates in 22m58s; Pages deployment
+  job `95218324472` passed in 9s.
+- The live Chapter 16 page was inspected at 1280x720 and 390x844. It serves
+  the `2026-08-16T19:54:25+00:00` build, keeps the chapter `PARTIAL`, renders
+  the three-way source pagination, exposes the compiled consistency and
+  `d_inf` leaves, keeps all three source terminals blocked, and has zero
+  broken images or document-level horizontal overflow. The mobile TOC and
+  long MathJax displays retain intentional local horizontal scrolling.
+
+This evidence accepts the scoped dependency slice. It does not close or
+weaken the residual mathematical blockers recorded above.
