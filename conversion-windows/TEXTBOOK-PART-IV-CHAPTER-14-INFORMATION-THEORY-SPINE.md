@@ -1,0 +1,101 @@
+# Conversion Window: Textbook Part IV Chapter 14 information-theory spine
+
+Task id: `TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE`
+
+Source card: `TXT-LATTIMORE-SZEPESVARI-2020`
+
+Scenario card: `SCN-STOCHASTIC-FINITE`
+
+## Source placement and status fence
+
+The canonical source is Lattimore--Szepesvári, *Bandit Algorithms*, CUP 2020,
+Part IV, Chapter 14, printed pp. 186--197 / PDF pp. 195--206. The formal target
+window is §14.2, printed pp. 188--191 / PDF pp. 197--200. Equation (14.4)
+defines discrete relative entropy, Eq. (14.5) gives the finite-discretisation
+definition on arbitrary measurable spaces, Theorem 14.1 gives the RN/log-
+likelihood representation, Eq. (14.6) gives the common-density formula, and
+Theorem 14.2/Eq. (14.7) is Bretagnolle--Huber.
+
+The entropy/coding discussion in §14.1 remains a pedagogical source mapping.
+The compiled lower-bound spine must not claim a formal Huffman or source-coding
+theorem. Exercise 14.10 is cited for data processing; the local event version
+is labelled as a dependency leaf.
+
+## Precise restatement
+
+For probability measures `P,Q` on `(Ω,F)`, relative entropy is infinite when
+`P` is not absolutely continuous with respect to `Q`. In the finite regular
+branch it is the `P`-integral of the log likelihood ratio. For Bernoulli laws,
+this reduces to `p log(p/q) + (1-p) log((1-p)/(1-q))`, with zero-mass terms
+equal to zero and support mismatch equal to infinity.
+
+For every measurable event `A`, Theorem 14.2 lower-bounds the sum of the two
+hypothesis-testing errors, `P(A)+Q(Aᶜ)`, by one half times the exponential of
+negative `D(P,Q)`. If `D(P,Q)=∞`, the right-hand side is zero. The statement
+is direction-sensitive even though the source notes that a second application
+with `D(Q,P)` is also valid.
+
+## Lean mapping
+
+| Source symbol | Meaning | Lean declaration | Type / role | Status |
+| --- | --- | --- | --- | --- |
+| `D(P,Q)` | extended-real relative entropy | `LowerBounds.relativeEntropy P Q` | `ENNReal`, alias of `InformationTheory.klDiv` | target |
+| `log(dP/dQ)` | log likelihood ratio | `MeasureTheory.llr P Q` | measurable real function | imported |
+| Theorem 14.1 finite branch | RN/LLR integral formula | `relativeEntropy_of_absolutelyContinuous_of_integrable` | equality in `ENNReal` | target |
+| Theorem 14.1 singular branch | non-AC gives infinity | `relativeEntropy_eq_top_of_not_absolutelyContinuous` | endpoint equality | target |
+| finite KL contract | AC and LLR integrability | `relativeEntropy_ne_top_iff` | exact iff | target |
+| `d(p,q)` | Bernoulli relative entropy | `LowerBounds.bernoulliRelativeEntropy` reusing `KLUCB.bernoulliKL` | `ENNReal` with exact endpoints | target adapter |
+| Exercise 14.10 at event sigma-algebra | binary KL cannot exceed measure KL | `bernoulliRelativeEntropy_event_le` | dependency theorem | target leaf |
+| binary testing inequality | two-atom Bretagnolle--Huber | `binaryBretagnolleHuber` | real inequality | target leaf |
+| `exp(-D)/2` including `D=∞` | source RHS | `bretagnolleHuberScale` | real nonnegative scale | target definition |
+| Theorem 14.2 / Eq. (14.7) | `P(A)+Q(Aᶜ)` lower bound | `bretagnolleHuber` | exact measure/event terminal | target |
+| history relative entropy | adaptive bandit history law | no Chapter 14 declaration | Chapter 15 consumer | planned |
+
+## Assumption ledger
+
+| Assumption | Lean status | Purpose | Blocking? |
+| --- | --- | --- | --- |
+| one measurable space for `P,Q` | typed | source comparison domain | no |
+| `IsProbabilityMeasure P,Q` | typeclass premise on event/data-processing/testing terminals | total masses are one and event probabilities lie in `[0,1]` | no |
+| `MeasurableSet A` | explicit | complements and restricted measures are valid events | no |
+| direction `P ≪ Q` | derived from finite KL or explicit on Theorem 14.1 branch | legitimizes RN derivative | no |
+| `Integrable (llr P Q) P` | explicit only on finite integral branch; equivalent to finite KL jointly with AC | Mathlib's real integral convention | no |
+| `D(P,Q)=∞` | explicit branch of `bretagnolleHuberScale` | implements `exp(-∞)=0` | no |
+| mutual AC | absent | not required by source | must remain absent |
+| finite KL premise on Theorem 14.2 | absent | source theorem is unconditional | must remain absent |
+| reversed `D(Q,P)` | absent from main terminal | a separate application, never a silent replacement | no |
+| policy consistency/history adaptation | absent | belongs to Chapter 15 | no |
+| concentration/stopping time | absent | Chapter 14 uses neither | no |
+
+## Local API and proof route
+
+| Leaf | Existing APIs/imports | Retrieval evidence | Intended route | Pivot rule |
+| --- | --- | --- | --- | --- |
+| KL definition/branches | `Mathlib.InformationTheory.KullbackLeibler.Basic` | installed Mathlib source | exact wrappers around `klDiv` branch lemmas | do not invent a second measure KL |
+| Bernoulli KL | `KLUCB.bernoulliKL`, `bernoulliKLCore_eq_klFun`, endpoint lemmas | compiled local declarations | reuse the exact support convention | do not use totalized `Real.log 0` as a finite singular value |
+| event processing | f-divergence integral, restriction/RN uniqueness, convex `klFun` lower bound | installed Mathlib source; no ready-made map theorem found | decompose over `A,Aᶜ`, lower-bound each mass pair and add | if RN restriction identity blocks, extract it as a public/general helper rather than assume data processing |
+| binary BH | log concavity or weighted AM--GM, square-root overlap algebra | source proof, Mathlib real analysis | affinity is at least `exp(-d/2)`; overlap is at least affinity squared over two | separate `p=0,1` and `q=0,1`; never assume interior silently |
+| measure BH | event processing plus binary BH | local compiled leaves | split infinite/finite KL; convert ENNReal inequality to `toReal` only with not-top witnesses | do not weaken terminal to a premise carrying the desired inequality |
+| history chain rule | `klDiv_compProd_eq_add` | imported route evidence | Chapter 15 iterative kernel model | never label imported kernel rule as an adaptive-policy history theorem |
+
+## Proof DAG
+
+| Node | Interface | Dependencies | Lean declaration | Mathlib status | Gate | Status |
+| --- | --- | --- | --- | --- | --- | --- |
+| `CH14-SOURCE-FENCE` | exact Theorems 14.1/14.2, equations and pages | official author PDF/CUP metadata | repository evidence | source evidence | source review | mapped |
+| `CH14-KL-SURFACE` | extended-real KL and finite/singular branch adapters | Mathlib KL/LLR | `relativeEntropy` and three branch lemmas | imported plus project wrappers | focused Lean | planned |
+| `CH14-BERNOULLI-SURFACE` | exact two-atom endpoint convention | existing KLUCB module | `bernoulliRelativeEntropy` plus adapter lemmas | compiled dependency/project adapters | focused Lean | planned |
+| `CH14-EVENT-DPI` | binary/event KL is at most measure KL | RN restriction and f-divergence convexity | `bernoulliRelativeEntropy_event_le` | Mathlib-candidate project leaf | focused Lean | planned |
+| `CH14-BINARY-BH` | two-atom error lower bound | affinity and overlap algebra | `binaryBretagnolleHuber` | project-local | focused Lean | planned |
+| `CH14-THEOREM-14-2` | exact unconditional event testing inequality | event DPI, binary BH, top/finite split | `bretagnolleHuberScale`, `bretagnolleHuber` | source terminal | focused Lean | planned |
+| `CH14-HISTORY-KL` | same-policy adaptive history decomposition | kernel chain rule plus policy/history model | none in this chapter | planned Chapter 15 | Chapter 15 | planned |
+| `CH14-TYPED-CANARY` | full conclusions including finite and singular examples | all compiled declarations | `Tests/TextbookPartIVChapter14Canary.lean` | project-local | Tests | planned |
+| `CH14-EVIDENCE-SITE` | task/DAG/export/index/site agreement | all local gates | repository artifacts | repository | lean-verified/site/browser | planned |
+| `CH14-REMOTE` | PR, main Actions, Pages and live page | accepted local chapter | remote workflow | repository | deployment | planned |
+
+## Gaps
+
+- [ ] Project-local RN restriction identity needed by event data processing.
+- [ ] Binary affinity/Jensen proof with all endpoints.
+- [ ] Exact unconditional measure-level Bretagnolle--Huber terminal.
+- [ ] Chapter 15 same-policy history-law construction and divergence decomposition.
