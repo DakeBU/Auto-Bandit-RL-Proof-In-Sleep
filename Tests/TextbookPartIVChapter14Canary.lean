@@ -20,11 +20,11 @@ section RelativeEntropySurface
 
 example {α : Type*} [MeasurableSpace α] {P Q : Measure α}
     (hPQ : ¬ P ≪ Q) :
-    relativeEntropy P Q = ∞ :=
+    relativeEntropy P Q = (⊤ : ENNReal) :=
   relativeEntropy_eq_top_of_not_absolutelyContinuous hPQ
 
 example {α : Type*} [MeasurableSpace α] {P Q : Measure α} :
-    relativeEntropy P Q ≠ ∞ ↔
+    relativeEntropy P Q ≠ (⊤ : ENNReal) ↔
       P ≪ Q ∧ Integrable (llr P Q) P :=
   relativeEntropy_ne_top_iff
 

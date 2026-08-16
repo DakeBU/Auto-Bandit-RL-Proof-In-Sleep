@@ -80,10 +80,10 @@ Theorem 14.2.
 - [x] Theorem 14.1 and Theorem 14.2 are mapped with exact KL direction and
   extended-real conventions.
 - [x] Existing project Bernoulli KL and installed Mathlib KL APIs are audited.
-- [ ] Relative-entropy definition and Theorem 14.1 branch adapters compile.
-- [ ] Event-level Bernoulli data processing compiles from RN/f-divergence APIs.
-- [ ] Scalar binary Bretagnolle--Huber compiles with endpoint cases.
-- [ ] Exact measure-level Theorem 14.2 compiles without a hidden finite-KL
+- [x] Relative-entropy definition and Theorem 14.1 branch adapters compile.
+- [x] Event-level Bernoulli data processing compiles from RN/f-divergence APIs.
+- [x] Scalar binary Bretagnolle--Huber compiles with endpoint cases.
+- [x] Exact measure-level Theorem 14.2 compiles without a hidden finite-KL
   assumption.
 - [ ] Root import, focused build, typed canary, Tests, axiom scan, full harness,
   proof export, evidence indexes, documentation and website pass.

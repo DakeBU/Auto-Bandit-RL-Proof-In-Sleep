@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-08-16T11:49:21+00:00`
+Generated: `2026-08-16T12:38:22+00:00`
 
 ## Source Task
 
@@ -86,10 +86,10 @@ Theorem 14.2.
 - [x] Theorem 14.1 and Theorem 14.2 are mapped with exact KL direction and
   extended-real conventions.
 - [x] Existing project Bernoulli KL and installed Mathlib KL APIs are audited.
-- [ ] Relative-entropy definition and Theorem 14.1 branch adapters compile.
-- [ ] Event-level Bernoulli data processing compiles from RN/f-divergence APIs.
-- [ ] Scalar binary Bretagnolle--Huber compiles with endpoint cases.
-- [ ] Exact measure-level Theorem 14.2 compiles without a hidden finite-KL
+- [x] Relative-entropy definition and Theorem 14.1 branch adapters compile.
+- [x] Event-level Bernoulli data processing compiles from RN/f-divergence APIs.
+- [x] Scalar binary Bretagnolle--Huber compiles with endpoint cases.
+- [x] Exact measure-level Theorem 14.2 compiles without a hidden finite-KL
   assumption.
 - [ ] Root import, focused build, typed canary, Tests, axiom scan, full harness,
   proof export, evidence indexes, documentation and website pass.
@@ -226,21 +226,21 @@ with `D(Q,P)` is also valid.
 | Node | Interface | Dependencies | Lean declaration | Mathlib status | Gate | Status |
 | --- | --- | --- | --- | --- | --- | --- |
 | `CH14-SOURCE-FENCE` | exact Theorems 14.1/14.2, equations and pages | official author PDF/CUP metadata | repository evidence | source evidence | source review | mapped |
-| `CH14-KL-SURFACE` | extended-real KL and finite/singular branch adapters | Mathlib KL/LLR | `relativeEntropy` and three branch lemmas | imported plus project wrappers | focused Lean | planned |
-| `CH14-BERNOULLI-SURFACE` | exact two-atom endpoint convention | existing KLUCB module | `bernoulliRelativeEntropy` plus adapter lemmas | compiled dependency/project adapters | focused Lean | planned |
-| `CH14-EVENT-DPI` | binary/event KL is at most measure KL | RN restriction and f-divergence convexity | `bernoulliRelativeEntropy_event_le` | Mathlib-candidate project leaf | focused Lean | planned |
-| `CH14-BINARY-BH` | two-atom error lower bound | affinity and overlap algebra | `binaryBretagnolleHuber` | project-local | focused Lean | planned |
-| `CH14-THEOREM-14-2` | exact unconditional event testing inequality | event DPI, binary BH, top/finite split | `bretagnolleHuberScale`, `bretagnolleHuber` | source terminal | focused Lean | planned |
+| `CH14-KL-SURFACE` | extended-real KL and finite/singular branch adapters | Mathlib KL/LLR | `relativeEntropy` and branch lemmas | imported plus project wrappers | focused Lean | compiled |
+| `CH14-BERNOULLI-SURFACE` | exact two-atom endpoint convention | existing KLUCB module | `bernoulliRelativeEntropy` plus adapter lemmas | compiled dependency/project adapters | focused Lean | compiled |
+| `CH14-EVENT-DPI` | binary/event KL is at most measure KL | RN restriction and f-divergence convexity | `bernoulliRelativeEntropy_event_le` | Mathlib-candidate project leaf | focused Lean | compiled |
+| `CH14-BINARY-BH` | two-atom error lower bound | affinity and overlap algebra | `binaryBretagnolleHuber` | project-local | focused Lean | compiled |
+| `CH14-THEOREM-14-2` | exact unconditional event testing inequality | event DPI, binary BH, top/finite split | `bretagnolleHuberScale`, `bretagnolleHuber` | source terminal | focused Lean | compiled |
 | `CH14-HISTORY-KL` | same-policy adaptive history decomposition | kernel chain rule plus policy/history model | none in this chapter | planned Chapter 15 | Chapter 15 | planned |
-| `CH14-TYPED-CANARY` | full conclusions including finite and singular examples | all compiled declarations | `Tests/TextbookPartIVChapter14Canary.lean` | project-local | Tests | planned |
+| `CH14-TYPED-CANARY` | full conclusions including finite and singular examples | all compiled declarations | `Tests/TextbookPartIVChapter14Canary.lean` | project-local | Tests | verified |
 | `CH14-EVIDENCE-SITE` | task/DAG/export/index/site agreement | all local gates | repository artifacts | repository | lean-verified/site/browser | planned |
 | `CH14-REMOTE` | PR, main Actions, Pages and live page | accepted local chapter | remote workflow | repository | deployment | planned |
 
 ## Gaps
 
-- [ ] Project-local RN restriction identity needed by event data processing.
-- [ ] Binary affinity/Jensen proof with all endpoints.
-- [ ] Exact unconditional measure-level Bretagnolle--Huber terminal.
+- [x] Project-local RN restriction identity needed by event data processing.
+- [x] Binary affinity/Jensen proof with all endpoints.
+- [x] Exact unconditional measure-level Bretagnolle--Huber terminal.
 - [ ] Chapter 15 same-policy history-law construction and divergence decomposition.
 
 
@@ -257,14 +257,14 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | Node | Target | Dependencies | Local APIs/imports | Retrieval cards | Intended proof route | Regularity contracts | Mathlib status | Lean declaration | Gate | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | `CH14-SOURCE-FENCE` | Theorem 14.1 RN formula and Theorem 14.2/Eq. (14.7), exact pages/direction | official PDF and CUP metadata | task/window | textbook card | conservative paraphrase | edition, printed/PDF pages, `D(P,Q)` direction | source evidence | n/a | source review | mapped |
-| `CH14-KL-SURFACE` | extended-real measure KL plus singular/finite characterization | Mathlib KL/LLR | `klDiv`, `llr`, branch lemmas | Mathlib source audit | transparent adapters | same space; AC and integrability visible | imported plus wrappers | `relativeEntropy` and branch adapters | focused Lean | planned |
-| `CH14-BERNOULLI-SURFACE` | Eq. (14.4) with support endpoints | existing KLUCB KL | `bernoulliKL`, core and endpoint lemmas | local declaration index | reuse, do not duplicate semantics | `p,q∈[0,1]`; singular support gives `∞` | compiled local dependency | `bernoulliRelativeEntropy` | focused Lean | planned |
-| `CH14-RN-RESTRICT` | RN derivative agrees after restricting both laws to a measurable event | AC and density representation | `withDensity_rnDeriv_eq`, `restrict_withDensity`, `rnDeriv_withDensity` | Mathlib source audit | identify both restricted measures through the original density | finite probability measures; `MeasurableSet A`; `P≪Q` | Mathlib-candidate project leaf | helper in `InformationTheory.lean` | focused Lean | planned |
-| `CH14-EVENT-DPI` | `d(P(A),Q(A)) <= D(P,Q)` | RN restrict helper, f-divergence integral, convex mass lower bound | `klDiv_eq_lintegral_klFun_of_ac`, `mul_klFun_le_toReal_klDiv` | Mathlib source audit | split over event/complement and add | probability laws; measurable event; exact KL direction | Mathlib-candidate project leaf | `bernoulliRelativeEntropy_event_le` | focused Lean | planned |
-| `CH14-BINARY-BH` | `p+(1-q) >= exp(-d(p,q))/2` with exact endpoints | Bernoulli core | real sqrt/log/exp and concavity | source proof | affinity lower bound plus Le Cam overlap algebra | both parameters in unit interval; all endpoints explicit | project-local | `binaryBretagnolleHuber` | focused Lean | planned |
-| `CH14-THEOREM-14-2` | unconditional `P(A)+Q(Aᶜ) >= scale(D(P,Q))` | event DPI and binary BH | ENNReal finite/top conversions; probability complement | all above | split KL top; finite branch derives AC and converts safely | no hidden finite KL or mutual AC | source terminal | `bretagnolleHuberScale`, `bretagnolleHuber` | focused Lean | planned |
+| `CH14-KL-SURFACE` | extended-real measure KL plus singular/finite characterization | Mathlib KL/LLR | `klDiv`, `llr`, branch lemmas | Mathlib source audit | transparent adapters | same space; AC and integrability visible | imported plus wrappers | `relativeEntropy` and branch adapters | focused Lean | compiled |
+| `CH14-BERNOULLI-SURFACE` | Eq. (14.4) with support endpoints | existing KLUCB KL | `bernoulliKL`, core and endpoint lemmas | local declaration index | reuse, do not duplicate semantics | `p,q∈[0,1]`; singular support gives `∞` | compiled local dependency | `bernoulliRelativeEntropy` | focused Lean | compiled |
+| `CH14-RN-RESTRICT` | RN derivative agrees after restricting both laws to a measurable event | AC and density representation | `withDensity_rnDeriv_eq`, `restrict_withDensity`, `rnDeriv_withDensity` | Mathlib source audit | identify both restricted measures through the original density | finite probability measures; `MeasurableSet A`; `P≪Q` | Mathlib-candidate project leaf | `rnDeriv_restrict_restrict` | focused Lean | compiled |
+| `CH14-EVENT-DPI` | `d(P(A),Q(A)) <= D(P,Q)` | RN restrict helper, f-divergence integral, convex mass lower bound | `klDiv_eq_lintegral_klFun_of_ac`, `mul_klFun_le_toReal_klDiv` | Mathlib source audit | split over event/complement and add | probability laws; measurable event; exact KL direction | Mathlib-candidate project leaf | `bernoulliRelativeEntropy_event_le` | focused Lean | compiled |
+| `CH14-BINARY-BH` | `p+(1-q) >= exp(-d(p,q))/2` with exact endpoints | Bernoulli core | real sqrt/log/exp and concavity | source proof | affinity lower bound plus Le Cam overlap algebra | both parameters in unit interval; all endpoints explicit | project-local | `binaryBretagnolleHuber` | focused Lean | compiled |
+| `CH14-THEOREM-14-2` | unconditional `P(A)+Q(Aᶜ) >= scale(D(P,Q))` | event DPI and binary BH | ENNReal finite/top conversions; probability complement | all above | split KL top; finite branch derives AC and converts safely | no hidden finite KL or mutual AC | source terminal | `bretagnolleHuberScale`, `bretagnolleHuber` | focused Lean | compiled |
 | `CH14-HISTORY-KL` | adaptive same-policy history divergence decomposition | Chapter 14 measure leaves and kernel chain rule | future bandit history model | `klDiv_compProd_eq_add` only as route evidence | Chapter 15 iterative construction | policy consistency, measurability, AC | planned | none | Chapter 15 | planned |
-| `CH14-TYPED-CANARY` | root-import applications to finite and singular cases, all axioms printed | compiled Chapter 14 declarations | root import | local declarations | exact full-conclusion examples | explicit probability measures/events | project-local | `Tests/TextbookPartIVChapter14Canary.lean` | Tests | planned |
+| `CH14-TYPED-CANARY` | root-import applications to finite and singular cases, all axioms printed | compiled Chapter 14 declarations | root import | local declarations | exact full-conclusion examples | explicit probability measures/events | project-local | `Tests/TextbookPartIVChapter14Canary.lean` | Tests | verified |
 | `CH14-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | deterministic gate suite | path/tooling failures distinguished from proofs | repository | n/a | full check | planned |
 | `CH14-EVIDENCE-SITE` | proof export, indexes, results/highlights/readings/maps/README/site agree | local full gate | harness/site scripts | repository | generated evidence plus maintained content | only compiled/gated declarations labelled compiled | repository | n/a | site/browser | planned |
 | `CH14-REVIEW` | independent theorem/Lean audit | all artifacts | source, Lean, site | all above | check KL direction, AC, endpoints, quantifiers | no unresolved P0--P3 | repository | n/a | independent review | planned |
@@ -52521,6 +52521,150 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
     "line": 205,
     "statement": "theorem max_base_changed_regretLowerBound_ge_half (horizon : Nat) (gap baseFirstExpectedPulls changedFirstExpectedPulls : Real) (hgap : 0 \u2264 gap) (htransport : baseFirstExpectedPulls \u2264 changedFirstExpectedPulls) : gap * (horizon : Real) / 2 \u2264 max (baseEnvironmentRegret horizon gap baseFirstExpectedPulls) (changedEnvironmentRegretLowerBound gap changedFirstExpectedPulls)"
+  },
+  {
+    "kind": "abbrev",
+    "name": "relativeEntropy",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 26,
+    "statement": "abbrev relativeEntropy {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) : ENNReal"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_of_absolutelyContinuous_of_integrable",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_of_absolutelyContinuous_of_integrable",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 32,
+    "statement": "theorem relativeEntropy_of_absolutelyContinuous_of_integrable {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) (hPQ : P \u226a Q) (hInt : Integrable (llr P Q) P) : relativeEntropy P Q = ENNReal.ofReal (\u222b x, llr P Q x \u2202P + Q.real univ - P.real univ)"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_of_probability_absolutelyContinuous_of_integrable",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_of_probability_absolutelyContinuous_of_integrable",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 42,
+    "statement": "theorem relativeEntropy_of_probability_absolutelyContinuous_of_integrable {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] (hPQ : P \u226a Q) (hInt : Integrable (llr P Q) P) : relativeEntropy P Q = ENNReal.ofReal (\u222b x, llr P Q x \u2202P)"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_eq_top_of_not_absolutelyContinuous",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_eq_top_of_not_absolutelyContinuous",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 52,
+    "statement": "theorem relativeEntropy_eq_top_of_not_absolutelyContinuous {\u03b1 : Type*} [MeasurableSpace \u03b1] {P Q : Measure \u03b1} (hPQ : \u00ac P \u226a Q) : relativeEntropy P Q = \u221e"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_ne_top_iff",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_ne_top_iff",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 60,
+    "statement": "theorem relativeEntropy_ne_top_iff {\u03b1 : Type*} [MeasurableSpace \u03b1] {P Q : Measure \u03b1} : relativeEntropy P Q \u2260 \u221e \u2194 P \u226a Q \u2227 Integrable (llr P Q) P"
+  },
+  {
+    "kind": "abbrev",
+    "name": "bernoulliRelativeEntropy",
+    "full_name": "BanditRLProof.LowerBounds.bernoulliRelativeEntropy",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 67,
+    "statement": "abbrev bernoulliRelativeEntropy (p q : Real) : ENNReal"
+  },
+  {
+    "kind": "theorem",
+    "name": "rnDeriv_restrict_restrict",
+    "full_name": "BanditRLProof.LowerBounds.rnDeriv_restrict_restrict",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 72,
+    "statement": "theorem rnDeriv_restrict_restrict {\u03b1 : Type*} [MeasurableSpace \u03b1] {P Q : Measure \u03b1} [SigmaFinite P] [SigmaFinite Q] (hPQ : P \u226a Q) {A : Set \u03b1} (hA : MeasurableSet A) : (P.restrict A).rnDeriv (Q.restrict A) =\u1d50[Q.restrict A] P.rnDeriv Q"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_restrict_add_compl",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_restrict_add_compl",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 88,
+    "statement": "theorem relativeEntropy_restrict_add_compl {\u03b1 : Type*} [MeasurableSpace \u03b1] {P Q : Measure \u03b1} [IsFiniteMeasure P] [IsFiniteMeasure Q] (hPQ : P \u226a Q) {A : Set \u03b1} (hA : MeasurableSet A) : relativeEntropy P Q = relativeEntropy (P.restrict A) (Q.restrict A) + relativeEntropy (P.restrict A\u1d9c) (Q.restrict A\u1d9c)"
+  },
+  {
+    "kind": "theorem",
+    "name": "bernoulliKLCore_event_le",
+    "full_name": "BanditRLProof.LowerBounds.bernoulliKLCore_event_le",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 131,
+    "statement": "theorem bernoulliKLCore_event_le {\u03b1 : Type*} [MeasurableSpace \u03b1] {P Q : Measure \u03b1} [IsProbabilityMeasure P] [IsProbabilityMeasure Q] {A : Set \u03b1} (hA : MeasurableSet A) (hKL : relativeEntropy P Q \u2260 \u221e) (hQ0 : 0 < Q.real A) (hQ1 : Q.real A < 1) : KLUCB.bernoulliKLCore (P.real A) (Q.real A) \u2264 (relativeEntropy P Q).toReal"
+  },
+  {
+    "kind": "theorem",
+    "name": "exp_neg_half_bernoulliKLCore_le_affinity",
+    "full_name": "BanditRLProof.LowerBounds.exp_neg_half_bernoulliKLCore_le_affinity",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 202,
+    "statement": "theorem exp_neg_half_bernoulliKLCore_le_affinity {p q : Real} (hp0 : 0 < p) (hp1 : p < 1) (hq0 : 0 < q) (hq1 : q < 1) : Real.exp (-(KLUCB.bernoulliKLCore p q) / 2) \u2264 Real.sqrt (p * q) + Real.sqrt ((1 - p) * (1 - q))"
+  },
+  {
+    "kind": "theorem",
+    "name": "half_binaryAffinity_sq_le_eventError",
+    "full_name": "BanditRLProof.LowerBounds.half_binaryAffinity_sq_le_eventError",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 270,
+    "statement": "theorem half_binaryAffinity_sq_le_eventError {p q : Real} (hp : KLUCB.IsBernoulliParameter p) (hq : KLUCB.IsBernoulliParameter q) : (1 / 2 : Real) * (Real.sqrt (p * q) + Real.sqrt ((1 - p) * (1 - q))) ^ 2 \u2264 p + (1 - q)"
+  },
+  {
+    "kind": "theorem",
+    "name": "binaryBretagnolleHuberCore",
+    "full_name": "BanditRLProof.LowerBounds.binaryBretagnolleHuberCore",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 305,
+    "statement": "theorem binaryBretagnolleHuberCore {p q : Real} (hp : KLUCB.IsBernoulliParameter p) (hq0 : 0 < q) (hq1 : q < 1) : (1 / 2 : Real) * Real.exp (-KLUCB.bernoulliKLCore p q) \u2264 p + (1 - q)"
+  },
+  {
+    "kind": "def",
+    "name": "bretagnolleHuberScale",
+    "full_name": "BanditRLProof.LowerBounds.bretagnolleHuberScale",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 350,
+    "statement": "noncomputable def bretagnolleHuberScale (d : ENNReal) : Real"
+  },
+  {
+    "kind": "theorem",
+    "name": "bretagnolleHuberScale_nonneg",
+    "full_name": "BanditRLProof.LowerBounds.bretagnolleHuberScale_nonneg",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 353,
+    "statement": "theorem bretagnolleHuberScale_nonneg (d : ENNReal) : 0 \u2264 bretagnolleHuberScale d"
+  },
+  {
+    "kind": "theorem",
+    "name": "binaryBretagnolleHuber",
+    "full_name": "BanditRLProof.LowerBounds.binaryBretagnolleHuber",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 362,
+    "statement": "theorem binaryBretagnolleHuber {p q : Real} (hp : KLUCB.IsBernoulliParameter p) (hq : KLUCB.IsBernoulliParameter q) : bretagnolleHuberScale (bernoulliRelativeEntropy p q) \u2264 p + (1 - q)"
+  },
+  {
+    "kind": "theorem",
+    "name": "bernoulliRelativeEntropy_event_le",
+    "full_name": "BanditRLProof.LowerBounds.bernoulliRelativeEntropy_event_le",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 395,
+    "statement": "theorem bernoulliRelativeEntropy_event_le {\u03b1 : Type*} [MeasurableSpace \u03b1] {P Q : Measure \u03b1} [IsProbabilityMeasure P] [IsProbabilityMeasure Q] {A : Set \u03b1} (hA : MeasurableSet A) : bernoulliRelativeEntropy (P.real A) (Q.real A) \u2264 relativeEntropy P Q"
+  },
+  {
+    "kind": "theorem",
+    "name": "bretagnolleHuberScale_antitone",
+    "full_name": "BanditRLProof.LowerBounds.bretagnolleHuberScale_antitone",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 443,
+    "statement": "theorem bretagnolleHuberScale_antitone {d D : ENNReal} (h : d \u2264 D) : bretagnolleHuberScale D \u2264 bretagnolleHuberScale d"
+  },
+  {
+    "kind": "theorem",
+    "name": "bretagnolleHuber",
+    "full_name": "BanditRLProof.LowerBounds.bretagnolleHuber",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 462,
+    "statement": "theorem bretagnolleHuber {\u03b1 : Type*} [MeasurableSpace \u03b1] {P Q : Measure \u03b1} [IsProbabilityMeasure P] [IsProbabilityMeasure Q] {A : Set \u03b1} (hA : MeasurableSet A) : bretagnolleHuberScale (relativeEntropy P Q) \u2264 P.real A + Q.real A\u1d9c"
   },
   {
     "kind": "structure",

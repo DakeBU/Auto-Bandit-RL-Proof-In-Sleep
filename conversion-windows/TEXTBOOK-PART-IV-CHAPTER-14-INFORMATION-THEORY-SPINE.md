@@ -83,19 +83,19 @@ with `D(Q,P)` is also valid.
 | Node | Interface | Dependencies | Lean declaration | Mathlib status | Gate | Status |
 | --- | --- | --- | --- | --- | --- | --- |
 | `CH14-SOURCE-FENCE` | exact Theorems 14.1/14.2, equations and pages | official author PDF/CUP metadata | repository evidence | source evidence | source review | mapped |
-| `CH14-KL-SURFACE` | extended-real KL and finite/singular branch adapters | Mathlib KL/LLR | `relativeEntropy` and three branch lemmas | imported plus project wrappers | focused Lean | planned |
-| `CH14-BERNOULLI-SURFACE` | exact two-atom endpoint convention | existing KLUCB module | `bernoulliRelativeEntropy` plus adapter lemmas | compiled dependency/project adapters | focused Lean | planned |
-| `CH14-EVENT-DPI` | binary/event KL is at most measure KL | RN restriction and f-divergence convexity | `bernoulliRelativeEntropy_event_le` | Mathlib-candidate project leaf | focused Lean | planned |
-| `CH14-BINARY-BH` | two-atom error lower bound | affinity and overlap algebra | `binaryBretagnolleHuber` | project-local | focused Lean | planned |
-| `CH14-THEOREM-14-2` | exact unconditional event testing inequality | event DPI, binary BH, top/finite split | `bretagnolleHuberScale`, `bretagnolleHuber` | source terminal | focused Lean | planned |
+| `CH14-KL-SURFACE` | extended-real KL and finite/singular branch adapters | Mathlib KL/LLR | `relativeEntropy` and branch lemmas | imported plus project wrappers | focused Lean | compiled |
+| `CH14-BERNOULLI-SURFACE` | exact two-atom endpoint convention | existing KLUCB module | `bernoulliRelativeEntropy` plus adapter lemmas | compiled dependency/project adapters | focused Lean | compiled |
+| `CH14-EVENT-DPI` | binary/event KL is at most measure KL | RN restriction and f-divergence convexity | `bernoulliRelativeEntropy_event_le` | Mathlib-candidate project leaf | focused Lean | compiled |
+| `CH14-BINARY-BH` | two-atom error lower bound | affinity and overlap algebra | `binaryBretagnolleHuber` | project-local | focused Lean | compiled |
+| `CH14-THEOREM-14-2` | exact unconditional event testing inequality | event DPI, binary BH, top/finite split | `bretagnolleHuberScale`, `bretagnolleHuber` | source terminal | focused Lean | compiled |
 | `CH14-HISTORY-KL` | same-policy adaptive history decomposition | kernel chain rule plus policy/history model | none in this chapter | planned Chapter 15 | Chapter 15 | planned |
-| `CH14-TYPED-CANARY` | full conclusions including finite and singular examples | all compiled declarations | `Tests/TextbookPartIVChapter14Canary.lean` | project-local | Tests | planned |
-| `CH14-EVIDENCE-SITE` | task/DAG/export/index/site agreement | all local gates | repository artifacts | repository | lean-verified/site/browser | planned |
+| `CH14-TYPED-CANARY` | full conclusions including finite and singular examples | all compiled declarations | `Tests/TextbookPartIVChapter14Canary.lean` | project-local | Tests | verified |
+| `CH14-EVIDENCE-SITE` | task/DAG/export/index/site agreement | compiled chapter surface | repository artifacts | repository | lean-verified/site/browser | verified locally |
 | `CH14-REMOTE` | PR, main Actions, Pages and live page | accepted local chapter | remote workflow | repository | deployment | planned |
 
 ## Gaps
 
-- [ ] Project-local RN restriction identity needed by event data processing.
-- [ ] Binary affinity/Jensen proof with all endpoints.
-- [ ] Exact unconditional measure-level Bretagnolle--Huber terminal.
+- [x] Project-local RN restriction identity needed by event data processing.
+- [x] Binary affinity/Jensen proof with all endpoints.
+- [x] Exact unconditional measure-level Bretagnolle--Huber terminal.
 - [ ] Chapter 15 same-policy history-law construction and divergence decomposition.
