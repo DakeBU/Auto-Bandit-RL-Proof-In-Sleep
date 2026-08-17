@@ -22,6 +22,10 @@ def populate_lake_cache(source_lake: Path, workspace: Path) -> None:
     destination.mkdir()
     for source in source_lake.rglob("*"):
         relative = source.relative_to(source_lake)
+        parts = relative.parts
+        if any(parts[index:index + 2] == ("build", "ir")
+               for index in range(max(0, len(parts) - 1))):
+            continue
         target = destination / relative
         if source.is_dir():
             target.mkdir(exist_ok=True)
