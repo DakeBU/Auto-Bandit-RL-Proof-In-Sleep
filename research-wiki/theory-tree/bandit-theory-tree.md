@@ -289,17 +289,20 @@ now includes strict pre-action availability and the one-based/end-of-round
 set-level new-arrival processing; line-15 allocation; the line-7/8 elimination
 snapshot and deterministic optimal-arm-survival core of Lemma D.9; a
 source-shaped good-event projection that derives `muStar <= ucbStar` and
-consumes an externally supplied failure budget; and a causal one-round
+consumes an externally supplied failure budget; the Corollary-D.8 union
+assembly that combines three `1/T^2` and three `1/T` component bounds into the
+source's `9/T` budget and composes it with D.9 survival; and a causal one-round
 probability measure built from the existing finite-action law.
 
-This remains feasibility evidence only.  The complete Definition-D.1 event
-and its D.2--D.8 probability producer, EAP/BSC state preservation, probability banks,
+This remains feasibility evidence only.  The complete Definition-D.1 event,
+the D.2--D.7 component concentration/counting producers, and the proved
+full-event-to-elimination projection, EAP/BSC state preservation, probability banks,
 simultaneous-arrival order, a measurable recursive delayed-history kernel,
 regime laws, external adversarial algorithm, and the same-algorithm Theorems
 4.1/5.1 coupling remain planned.  The compiled Lemma-D.9 layer is an explicit
 deterministic implication under recorded certificate fields, not the full
 probabilistic source lemma.  No external paper endpoint is classified as
-compiled or audited.  The flagship currently contains 75 named
+compiled or audited.  The flagship currently contains 88 named
 source-semantic declarations; the generic multi-regime interface is counted
 separately.
 

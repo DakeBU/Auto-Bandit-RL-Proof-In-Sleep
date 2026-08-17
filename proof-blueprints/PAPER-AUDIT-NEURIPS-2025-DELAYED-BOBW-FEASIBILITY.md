@@ -1,6 +1,6 @@
 # Proof Blueprint: PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY
 
-Generated: `2026-08-17T16:43:46+00:00`
+Generated: `2026-08-17T17:10:08+00:00`
 
 ## Source Task
 
@@ -73,7 +73,13 @@ availability condition `s + delay s < t`.
   D.1 now derives that inequality from both upper-confidence surfaces,
   constructs the survival certificate, and transports any supplied
   complement-good-event bound to an optimal-arm-elimination bound.  The full
-  event and its D.2--D.8 probability producer remain open.
+  event and its D.2--D.7 component probability producers remain open.
+- [x] Compile the exact Corollary-D.8 union assembly.  Six named source
+  components consume the three `1/T^2` and three `1/T` bounds of Lemmas
+  D.2--D.7, prove the paper's loose `9/T` complement-good-event budget, and
+  compose a recorded full-event projection with the D.9 optimal-survival
+  consumer.  The six component concentration proofs and projection remain
+  open upstream obligations.
 - [x] Reuse the existing finite-action law to turn the certified line-15
   vector into a probability measure, and lift causal allocation rules to
   measure-valued rules that remain identical in observation-equivalent hidden
@@ -85,7 +91,7 @@ This task does not compile Theorem 4.1, full Lemma D.9, Lemma 4.2, Theorem
 5.1, Corollary 5.4, Algorithm 5, or a best-of-both-worlds endpoint.  The
 compiled Lemma-D.9 layer is only a one-snapshot deterministic implication plus
 an elimination-event probability-bound consumer.  The full Definition-D.1
-event, the D.2--D.8 producer of its probability bound, and persistence through
+event, the D.2--D.7 component producers and full-event projection, and persistence through
 the recursive algorithm are open.  This task
 does not show that the external paper is correct or audited.  Later promotion requires the same
 algorithm, initialization, tuning, information structure, comparator, and
@@ -223,8 +229,12 @@ Lemma D.9.  `DelayedSAPOSourceConfidenceSnapshot` now makes the next bridge
 explicit: its Definition-D.1 elimination projection derives
 `muStar <= ucbStar` from both source upper-confidence surfaces, constructs the
 certificate, and carries any supplied complement-good-event bound to an
-optimal-arm-elimination bound.  The full event, its D.2--D.8 probability
-producer, and recursive persistence remain open.
+optimal-arm-elimination bound.  `DelayedSAPOGoodEventFailureFamily` now
+formalizes the Corollary-D.8 composition: the three `1/T^2` and three `1/T`
+component bounds imply the source's loose `9/T` failure budget, and an
+explicit full-event projection carries that budget through the compiled D.9
+consumer.  The full event, the six D.2--D.7 component probability proofs, the
+projection, and recursive persistence remain open.
 
 `DelayedSAPOAllocation` retains EAP's still-open nonnegativity and mass
 hypotheses as explicit fields.  Under them, the existing finite-action law
@@ -269,7 +279,8 @@ open.
 | `DELAYED-BOBW-NEWLY-OBSERVED-PROCESSING` | set-level content of Algorithm 5's `B(t) \ S` loop | `Finset.sdiff`, disjointness, monotone finite prefixes; source Algorithm 5 lines 2--4 | prove availability monotonicity and exact update after processing all new arrivals | compiled set invariant; sequence order and BSC updates open |
 | `DELAYED-BOBW-ACTIVE-EQUAL-ALLOCATION` | Algorithm 5 line 15 residual mass divided equally among active arms | finite real sums, active/inactive partition, field normalization | define the full probability vector and prove coordinate nonnegativity plus total mass one | compiled allocation leaf; EAP bounds supplying inactive hypotheses open |
 | `DELAYED-BOBW-OPTIMAL-ARM-SURVIVAL` | Algorithm 5 lines 7--8 and the deterministic core of Lemma D.9: an optimal arm satisfying an explicit confidence certificate is not eliminated | real absolute-value interval, strict line-7 test, finite-set difference; source Lemma D.9 | package the exact elimination snapshot, derive the empirical upper inequality, and prove post-elimination nonemptiness | compiled deterministic implication; recursive full Lemma D.9 open |
-| `DELAYED-BOBW-GOOD-EVENT-D9-PROJECTION` | derive `muStar <= ucbStar` from both source upper-confidence surfaces and bound optimal-arm elimination by the complement of the elimination good event | finite infimum, `min`, event inclusion, measure monotonicity; source Definition D.1 and Lemma D.9 | package the elimination slice, construct the survival certificate, and expose a failure-budget consumer | compiled projection/consumer; full event and D.2--D.8 probability producer open |
+| `DELAYED-BOBW-GOOD-EVENT-D9-PROJECTION` | derive `muStar <= ucbStar` from both source upper-confidence surfaces and bound optimal-arm elimination by the complement of the elimination good event | finite infimum, `min`, event inclusion, measure monotonicity; source Definition D.1 and Lemma D.9 | package the elimination slice, construct the survival certificate, and expose a failure-budget consumer | compiled projection/consumer; full event and D.2--D.7 component producers open |
+| `DELAYED-BOBW-D8-D9-ASSEMBLY` | combine the six D.2--D.7 failure components into Corollary D.8's `9/T` budget and transport it through D.9 survival | finite outer-measure union, explicit `1/T^2` and `1/T` arithmetic, complement inclusion | name the six failure events, prove the union budget, and compose an explicit full-event projection with optimal-arm survival | compiled union/composition; six concentration proofs and semantic projection remain open |
 | `DELAYED-BOBW-CAUSAL-ACTION-MEASURE` | line-15 vector induces a probability measure and a causal measure-valued decision rule | local `Exp3.FiniteActionDistribution`, `finiteActionMeasure`; causal observation equivalence | package explicit EAP premises, reuse the finite-action law, and transport equality through `ActionTimeView` | compiled one-round action law; measurable history kernel and recursive generated trajectory open |
 
 ## Active leaf contract
@@ -45394,8 +45405,112 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "measure_optimalSurvivalEventSet_compl_le_of_goodEvent",
     "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.measure_optimalSurvivalEventSet_compl_le_of_goodEvent",
     "file": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean",
-    "line": 140,
+    "line": 141,
     "statement": "theorem measure_optimalSurvivalEventSet_compl_le_of_goodEvent {\u03a9 : Type*} [MeasurableSpace \u03a9] {K : Nat} [Nonempty (Fin K)] (mu : Measure \u03a9) (snapshot : \u03a9 \u2192 DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K \u2192 \u211d) (optimal : Fin K) (delta : \u211d) (hoptimal : \u2200 i, mean optimal \u2264 mean i) (hactive : \u2200 \u03c9, optimal \u2208 (snapshot \u03c9).active) (hgoodProbability : mu (eliminationGoodEventSet snapshot mean)\u1d9c \u2264 ENNReal.ofReal delta) : mu (optimalSurvivalEventSet snapshot optimal)\u1d9c \u2264 ENNReal.ofReal delta"
+  },
+  {
+    "kind": "inductive",
+    "name": "DelayedSAPOGoodEventComponent",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventComponent",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+    "line": 13,
+    "statement": "inductive DelayedSAPOGoodEventComponent where"
+  },
+  {
+    "kind": "structure",
+    "name": "DelayedSAPOGoodEventFailureFamily",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+    "line": 25,
+    "statement": "structure DelayedSAPOGoodEventFailureFamily (Omega : Type*) where"
+  },
+  {
+    "kind": "def",
+    "name": "componentFailure",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.componentFailure",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+    "line": 36,
+    "statement": "def componentFailure {Omega : Type*} (family : DelayedSAPOGoodEventFailureFamily Omega) : DelayedSAPOGoodEventComponent -> Set Omega | .bscConfidence => family.bscConfidence | .eapConfidence => family.eapConfidence | .pullCount => family.pullCount | .eliminatedDelay => family.eliminatedDelay | .lossDifference => family.lossDifference | .stochasticDelay => family.stochasticDelay"
+  },
+  {
+    "kind": "def",
+    "name": "failureSet",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.failureSet",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+    "line": 47,
+    "statement": "def failureSet {Omega : Type*} (family : DelayedSAPOGoodEventFailureFamily Omega) : Set Omega"
+  },
+  {
+    "kind": "def",
+    "name": "sourceGoodEventSet",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.sourceGoodEventSet",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+    "line": 53,
+    "statement": "def sourceGoodEventSet {Omega : Type*} (family : DelayedSAPOGoodEventFailureFamily Omega) : Set Omega"
+  },
+  {
+    "kind": "theorem",
+    "name": "sourceGoodEventSet_compl",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.sourceGoodEventSet_compl",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+    "line": 59,
+    "statement": "theorem sourceGoodEventSet_compl {Omega : Type*} (family : DelayedSAPOGoodEventFailureFamily Omega) : family.sourceGoodEventSet\u1d9c = family.failureSet"
+  },
+  {
+    "kind": "theorem",
+    "name": "measure_sourceGoodEventSet_compl_le_sum",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.measure_sourceGoodEventSet_compl_le_sum",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+    "line": 65,
+    "statement": "theorem measure_sourceGoodEventSet_compl_le_sum {Omega : Type*} [MeasurableSpace Omega] (mu : Measure Omega) (family : DelayedSAPOGoodEventFailureFamily Omega) : mu family.sourceGoodEventSet\u1d9c <= (Finset.univ : Finset DelayedSAPOGoodEventComponent).sum (fun component => mu (family.componentFailure component))"
+  },
+  {
+    "kind": "def",
+    "name": "quadraticFailureBudget",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.quadraticFailureBudget",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+    "line": 77,
+    "statement": "noncomputable def quadraticFailureBudget (horizon : Nat) : Real"
+  },
+  {
+    "kind": "def",
+    "name": "linearFailureBudget",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.linearFailureBudget",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+    "line": 81,
+    "statement": "noncomputable def linearFailureBudget (horizon : Nat) : Real"
+  },
+  {
+    "kind": "theorem",
+    "name": "quadraticFailureBudget_le_linearFailureBudget",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.quadraticFailureBudget_le_linearFailureBudget",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+    "line": 86,
+    "statement": "theorem quadraticFailureBudget_le_linearFailureBudget (horizon : Nat) (hhorizon : 0 < horizon) : quadraticFailureBudget horizon <= linearFailureBudget horizon"
+  },
+  {
+    "kind": "theorem",
+    "name": "measure_sourceGoodEventSet_compl_le_nine_div",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.measure_sourceGoodEventSet_compl_le_nine_div",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+    "line": 107,
+    "statement": "theorem measure_sourceGoodEventSet_compl_le_nine_div {Omega : Type*} [MeasurableSpace Omega] (mu : Measure Omega) (family : DelayedSAPOGoodEventFailureFamily Omega) (horizon : Nat) (hhorizon : 0 < horizon) (hbsc : mu family.bscConfidence <= ENNReal.ofReal (quadraticFailureBudget horizon)) (heap : mu family.eapConfidence <= ENNReal.ofReal (quadraticFailureBudget horizon)) (hpull : mu family.pullCount <= ENNReal.ofReal (quadraticFailureBudget horizon)) (heliminated : mu family.eliminatedDelay <= ENNReal.ofReal (linearFailureBudget horizon)) (hloss : mu family.lossDifference <= ENNReal.ofReal (linearFailureBudget horizon)) (hdelay : mu family.stochasticDelay <= ENNReal.ofReal (linearFailureBudget horizon)) : mu family.sourceGoodEventSet\u1d9c <= ENNReal.ofReal (9 / (horizon : Real))"
+  },
+  {
+    "kind": "theorem",
+    "name": "measure_eliminationGoodEventSet_compl_le_nine_div",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.measure_eliminationGoodEventSet_compl_le_nine_div",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+    "line": 175,
+    "statement": "theorem measure_eliminationGoodEventSet_compl_le_nine_div {Omega : Type*} [MeasurableSpace Omega] {K : Nat} [Nonempty (Fin K)] (mu : Measure Omega) (family : DelayedSAPOGoodEventFailureFamily Omega) (snapshot : Omega -> DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K -> Real) (horizon : Nat) (hhorizon : 0 < horizon) (hprojection : family.sourceGoodEventSet \u2286 DelayedSAPOSourceConfidenceSnapshot.eliminationGoodEventSet snapshot mean) (hbsc : mu family.bscConfidence <= ENNReal.ofReal (quadraticFailureBudget horizon)) (heap : mu family.eapConfidence <= ENNReal.ofReal (quadraticFailureBudget horizon)) (hpull : mu family.pullCount <= ENNReal.ofReal (quadraticFailureBudget horizon)) (heliminated : mu family.eliminatedDelay <= ENNReal.ofReal (linearFailureBudget horizon)) (hloss : mu family.lossDifference <= ENNReal.ofReal (linearFailureBudget horizon)) (hdelay : mu family.stochasticDelay <= ENNReal.ofReal (linearFailureBudget horizon)) : mu (DelayedSAPOSourceConfidenceSnapshot.eliminationGoodEventSet snapshot mean)\u1d9c <= ENNReal.ofReal (9 / (horizon : Real))"
+  },
+  {
+    "kind": "theorem",
+    "name": "measure_optimalSurvivalEventSet_compl_le_nine_div",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.measure_optimalSurvivalEventSet_compl_le_nine_div",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+    "line": 209,
+    "statement": "theorem measure_optimalSurvivalEventSet_compl_le_nine_div {Omega : Type*} [MeasurableSpace Omega] {K : Nat} [Nonempty (Fin K)] (mu : Measure Omega) (family : DelayedSAPOGoodEventFailureFamily Omega) (snapshot : Omega -> DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K -> Real) (optimal : Fin K) (horizon : Nat) (hhorizon : 0 < horizon) (hoptimal : forall i, mean optimal <= mean i) (hactive : forall omega, optimal \u2208 (snapshot omega).active) (hprojection : family.sourceGoodEventSet \u2286 DelayedSAPOSourceConfidenceSnapshot.eliminationGoodEventSet snapshot mean) (hbsc : mu family.bscConfidence <= ENNReal.ofReal (quadraticFailureBudget horizon)) (heap : mu family.eapConfidence <= ENNReal.ofReal (quadraticFailureBudget horizon)) (hpull : mu family.pullCount <= ENNReal.ofReal (quadraticFailureBudget horizon)) (heliminated : mu family.eliminatedDelay <= ENNReal.ofReal (linearFailureBudget horizon)) (hloss : mu family.lossDifference <= ENNReal.ofReal (linearFailureBudget horizon)) (hdelay : mu family.stochasticDelay <= ENNReal.ofReal (linearFailureBudget horizon)) : mu (DelayedSAPOSourceConfidenceSnapshot.optimalSurvivalEventSet snapshot optimal)\u1d9c <= ENNReal.ofReal (9 / (horizon : Real))"
   },
   {
     "kind": "structure",

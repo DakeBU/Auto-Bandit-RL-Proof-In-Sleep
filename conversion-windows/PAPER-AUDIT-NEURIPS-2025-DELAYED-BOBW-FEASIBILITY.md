@@ -110,8 +110,12 @@ Lemma D.9.  `DelayedSAPOSourceConfidenceSnapshot` now makes the next bridge
 explicit: its Definition-D.1 elimination projection derives
 `muStar <= ucbStar` from both source upper-confidence surfaces, constructs the
 certificate, and carries any supplied complement-good-event bound to an
-optimal-arm-elimination bound.  The full event, its D.2--D.8 probability
-producer, and recursive persistence remain open.
+optimal-arm-elimination bound.  `DelayedSAPOGoodEventFailureFamily` now
+formalizes the Corollary-D.8 composition: the three `1/T^2` and three `1/T`
+component bounds imply the source's loose `9/T` failure budget, and an
+explicit full-event projection carries that budget through the compiled D.9
+consumer.  The full event, the six D.2--D.7 component probability proofs, the
+projection, and recursive persistence remain open.
 
 `DelayedSAPOAllocation` retains EAP's still-open nonnegativity and mass
 hypotheses as explicit fields.  Under them, the existing finite-action law

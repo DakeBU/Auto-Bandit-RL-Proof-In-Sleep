@@ -1,6 +1,6 @@
 {
   "task": "PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY",
-  "generated": "2026-08-17T16:43:58+00:00",
+  "generated": "2026-08-17T17:10:53+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -44513,8 +44513,112 @@
       "name": "measure_optimalSurvivalEventSet_compl_le_of_goodEvent",
       "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.measure_optimalSurvivalEventSet_compl_le_of_goodEvent",
       "file": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean",
-      "line": 140,
+      "line": 141,
       "statement": "theorem measure_optimalSurvivalEventSet_compl_le_of_goodEvent {Ω : Type*} [MeasurableSpace Ω] {K : Nat} [Nonempty (Fin K)] (mu : Measure Ω) (snapshot : Ω → DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K → ℝ) (optimal : Fin K) (delta : ℝ) (hoptimal : ∀ i, mean optimal ≤ mean i) (hactive : ∀ ω, optimal ∈ (snapshot ω).active) (hgoodProbability : mu (eliminationGoodEventSet snapshot mean)ᶜ ≤ ENNReal.ofReal delta) : mu (optimalSurvivalEventSet snapshot optimal)ᶜ ≤ ENNReal.ofReal delta"
+    },
+    {
+      "kind": "inductive",
+      "name": "DelayedSAPOGoodEventComponent",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventComponent",
+      "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+      "line": 13,
+      "statement": "inductive DelayedSAPOGoodEventComponent where"
+    },
+    {
+      "kind": "structure",
+      "name": "DelayedSAPOGoodEventFailureFamily",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily",
+      "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+      "line": 25,
+      "statement": "structure DelayedSAPOGoodEventFailureFamily (Omega : Type*) where"
+    },
+    {
+      "kind": "def",
+      "name": "componentFailure",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.componentFailure",
+      "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+      "line": 36,
+      "statement": "def componentFailure {Omega : Type*} (family : DelayedSAPOGoodEventFailureFamily Omega) : DelayedSAPOGoodEventComponent -> Set Omega | .bscConfidence => family.bscConfidence | .eapConfidence => family.eapConfidence | .pullCount => family.pullCount | .eliminatedDelay => family.eliminatedDelay | .lossDifference => family.lossDifference | .stochasticDelay => family.stochasticDelay"
+    },
+    {
+      "kind": "def",
+      "name": "failureSet",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.failureSet",
+      "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+      "line": 47,
+      "statement": "def failureSet {Omega : Type*} (family : DelayedSAPOGoodEventFailureFamily Omega) : Set Omega"
+    },
+    {
+      "kind": "def",
+      "name": "sourceGoodEventSet",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.sourceGoodEventSet",
+      "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+      "line": 53,
+      "statement": "def sourceGoodEventSet {Omega : Type*} (family : DelayedSAPOGoodEventFailureFamily Omega) : Set Omega"
+    },
+    {
+      "kind": "theorem",
+      "name": "sourceGoodEventSet_compl",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.sourceGoodEventSet_compl",
+      "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+      "line": 59,
+      "statement": "theorem sourceGoodEventSet_compl {Omega : Type*} (family : DelayedSAPOGoodEventFailureFamily Omega) : family.sourceGoodEventSetᶜ = family.failureSet"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_sourceGoodEventSet_compl_le_sum",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.measure_sourceGoodEventSet_compl_le_sum",
+      "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+      "line": 65,
+      "statement": "theorem measure_sourceGoodEventSet_compl_le_sum {Omega : Type*} [MeasurableSpace Omega] (mu : Measure Omega) (family : DelayedSAPOGoodEventFailureFamily Omega) : mu family.sourceGoodEventSetᶜ <= (Finset.univ : Finset DelayedSAPOGoodEventComponent).sum (fun component => mu (family.componentFailure component))"
+    },
+    {
+      "kind": "def",
+      "name": "quadraticFailureBudget",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.quadraticFailureBudget",
+      "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+      "line": 77,
+      "statement": "noncomputable def quadraticFailureBudget (horizon : Nat) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "linearFailureBudget",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.linearFailureBudget",
+      "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+      "line": 81,
+      "statement": "noncomputable def linearFailureBudget (horizon : Nat) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "quadraticFailureBudget_le_linearFailureBudget",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.quadraticFailureBudget_le_linearFailureBudget",
+      "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+      "line": 86,
+      "statement": "theorem quadraticFailureBudget_le_linearFailureBudget (horizon : Nat) (hhorizon : 0 < horizon) : quadraticFailureBudget horizon <= linearFailureBudget horizon"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_sourceGoodEventSet_compl_le_nine_div",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.measure_sourceGoodEventSet_compl_le_nine_div",
+      "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+      "line": 107,
+      "statement": "theorem measure_sourceGoodEventSet_compl_le_nine_div {Omega : Type*} [MeasurableSpace Omega] (mu : Measure Omega) (family : DelayedSAPOGoodEventFailureFamily Omega) (horizon : Nat) (hhorizon : 0 < horizon) (hbsc : mu family.bscConfidence <= ENNReal.ofReal (quadraticFailureBudget horizon)) (heap : mu family.eapConfidence <= ENNReal.ofReal (quadraticFailureBudget horizon)) (hpull : mu family.pullCount <= ENNReal.ofReal (quadraticFailureBudget horizon)) (heliminated : mu family.eliminatedDelay <= ENNReal.ofReal (linearFailureBudget horizon)) (hloss : mu family.lossDifference <= ENNReal.ofReal (linearFailureBudget horizon)) (hdelay : mu family.stochasticDelay <= ENNReal.ofReal (linearFailureBudget horizon)) : mu family.sourceGoodEventSetᶜ <= ENNReal.ofReal (9 / (horizon : Real))"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_eliminationGoodEventSet_compl_le_nine_div",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.measure_eliminationGoodEventSet_compl_le_nine_div",
+      "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+      "line": 175,
+      "statement": "theorem measure_eliminationGoodEventSet_compl_le_nine_div {Omega : Type*} [MeasurableSpace Omega] {K : Nat} [Nonempty (Fin K)] (mu : Measure Omega) (family : DelayedSAPOGoodEventFailureFamily Omega) (snapshot : Omega -> DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K -> Real) (horizon : Nat) (hhorizon : 0 < horizon) (hprojection : family.sourceGoodEventSet ⊆ DelayedSAPOSourceConfidenceSnapshot.eliminationGoodEventSet snapshot mean) (hbsc : mu family.bscConfidence <= ENNReal.ofReal (quadraticFailureBudget horizon)) (heap : mu family.eapConfidence <= ENNReal.ofReal (quadraticFailureBudget horizon)) (hpull : mu family.pullCount <= ENNReal.ofReal (quadraticFailureBudget horizon)) (heliminated : mu family.eliminatedDelay <= ENNReal.ofReal (linearFailureBudget horizon)) (hloss : mu family.lossDifference <= ENNReal.ofReal (linearFailureBudget horizon)) (hdelay : mu family.stochasticDelay <= ENNReal.ofReal (linearFailureBudget horizon)) : mu (DelayedSAPOSourceConfidenceSnapshot.eliminationGoodEventSet snapshot mean)ᶜ <= ENNReal.ofReal (9 / (horizon : Real))"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_optimalSurvivalEventSet_compl_le_nine_div",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.measure_optimalSurvivalEventSet_compl_le_nine_div",
+      "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+      "line": 209,
+      "statement": "theorem measure_optimalSurvivalEventSet_compl_le_nine_div {Omega : Type*} [MeasurableSpace Omega] {K : Nat} [Nonempty (Fin K)] (mu : Measure Omega) (family : DelayedSAPOGoodEventFailureFamily Omega) (snapshot : Omega -> DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K -> Real) (optimal : Fin K) (horizon : Nat) (hhorizon : 0 < horizon) (hoptimal : forall i, mean optimal <= mean i) (hactive : forall omega, optimal ∈ (snapshot omega).active) (hprojection : family.sourceGoodEventSet ⊆ DelayedSAPOSourceConfidenceSnapshot.eliminationGoodEventSet snapshot mean) (hbsc : mu family.bscConfidence <= ENNReal.ofReal (quadraticFailureBudget horizon)) (heap : mu family.eapConfidence <= ENNReal.ofReal (quadraticFailureBudget horizon)) (hpull : mu family.pullCount <= ENNReal.ofReal (quadraticFailureBudget horizon)) (heliminated : mu family.eliminatedDelay <= ENNReal.ofReal (linearFailureBudget horizon)) (hloss : mu family.lossDifference <= ENNReal.ofReal (linearFailureBudget horizon)) (hdelay : mu family.stochasticDelay <= ENNReal.ofReal (linearFailureBudget horizon)) : mu (DelayedSAPOSourceConfidenceSnapshot.optimalSurvivalEventSet snapshot optimal)ᶜ <= ENNReal.ofReal (9 / (horizon : Real))"
     },
     {
       "kind": "structure",

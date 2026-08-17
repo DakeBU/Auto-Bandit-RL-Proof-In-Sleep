@@ -51,7 +51,8 @@ The frozen contract therefore retains:
 | `DELAYED-BOBW-NEWLY-OBSERVED-PROCESSING` | formalize the set-level `B(t) \ S` batch update | compiled monotonicity/disjointness/exact-update layer; simultaneous-arrival order and BSC/EAP state open |
 | `DELAYED-BOBW-ACTIVE-EQUAL-ALLOCATION` | formalize Algorithm 5 line 15's residual equal allocation | compiled nonnegativity and total-mass-one leaf under explicit inactive-mass hypotheses; EAP maintenance and sampling kernel open |
 | `DELAYED-BOBW-OPTIMAL-ARM-SURVIVAL` | connect Algorithm 5 lines 7--8 to the nonempty-active premise in line 15 | compiled deterministic core of source Lemma D.9 under an explicit certificate; full recursive lemma open |
-| `DELAYED-BOBW-GOOD-EVENT-D9-PROJECTION` | derive the certificate from the two source upper-confidence surfaces and carry a supplied event-failure budget to optimal-arm elimination | compiled elimination projection and probability-bound consumer; full Definition D.1 and D.2--D.8 producer open |
+| `DELAYED-BOBW-GOOD-EVENT-D9-PROJECTION` | derive the certificate from the two source upper-confidence surfaces and carry a supplied event-failure budget to optimal-arm elimination | compiled elimination projection and probability-bound consumer; full Definition D.1 and D.2--D.7 component producers open |
+| `DELAYED-BOBW-D8-D9-ASSEMBLY` | union the six D.2--D.7 failure components into Corollary D.8's `9/T` budget and compose it with D.9 survival | compiled outer-measure union and event transport; the six component bounds and full-event projection remain hypotheses |
 | `DELAYED-BOBW-CAUSAL-ACTION-MEASURE` | turn the line-15 vector into a causal one-round randomized law | compiled probability measure and observation-equivalence transport; measurable history kernel and recursive trajectory open |
 
 These leaves are deliberately small but source-semantic: they check the exact
@@ -75,10 +76,11 @@ or best-of-both-worlds performance.
 The current library has rich finite-action, kernel, conditional-MGF, EXP3,
 Tsallis, and adaptive-trajectory infrastructure.  It now also has one
 source-exact elimination snapshot, a source-shaped good-event projection, the
-deterministic optimal-arm survival consumer, and a causal measure-valued
-one-round action rule.  It does not yet
+Corollary-D.8 union assembly, the deterministic optimal-arm survival consumer,
+and a causal measure-valued one-round action rule.  It does not yet
 have the paper's complete delayed SAPO state machine, probability banks,
 measurable recursive sampling kernel, detection/switch semantics, the complete
-Definition-D.1 event and D.2--D.8 probability producer, or the coupled
+Definition-D.1 event, D.2--D.7 component probability producers, a proved
+full-event projection, or the coupled
 terminal.  Full Theorems 4.1 and 5.1
 must remain `planned` until their exact algorithms and proof chains compile.

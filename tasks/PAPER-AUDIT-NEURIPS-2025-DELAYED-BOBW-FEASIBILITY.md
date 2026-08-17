@@ -67,7 +67,13 @@ availability condition `s + delay s < t`.
   D.1 now derives that inequality from both upper-confidence surfaces,
   constructs the survival certificate, and transports any supplied
   complement-good-event bound to an optimal-arm-elimination bound.  The full
-  event and its D.2--D.8 probability producer remain open.
+  event and its D.2--D.7 component probability producers remain open.
+- [x] Compile the exact Corollary-D.8 union assembly.  Six named source
+  components consume the three `1/T^2` and three `1/T` bounds of Lemmas
+  D.2--D.7, prove the paper's loose `9/T` complement-good-event budget, and
+  compose a recorded full-event projection with the D.9 optimal-survival
+  consumer.  The six component concentration proofs and projection remain
+  open upstream obligations.
 - [x] Reuse the existing finite-action law to turn the certified line-15
   vector into a probability measure, and lift causal allocation rules to
   measure-valued rules that remain identical in observation-equivalent hidden
@@ -79,7 +85,7 @@ This task does not compile Theorem 4.1, full Lemma D.9, Lemma 4.2, Theorem
 5.1, Corollary 5.4, Algorithm 5, or a best-of-both-worlds endpoint.  The
 compiled Lemma-D.9 layer is only a one-snapshot deterministic implication plus
 an elimination-event probability-bound consumer.  The full Definition-D.1
-event, the D.2--D.8 producer of its probability bound, and persistence through
+event, the D.2--D.7 component producers and full-event projection, and persistence through
 the recursive algorithm are open.  This task
 does not show that the external paper is correct or audited.  Later promotion requires the same
 algorithm, initialization, tuning, information structure, comparator, and

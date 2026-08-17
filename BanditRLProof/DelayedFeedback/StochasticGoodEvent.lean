@@ -135,8 +135,9 @@ theorem measure_optimalSurvivalEventSet_compl_le
       snapshot mean optimal hoptimal hactive hgood)
 
 /-- Failure-budget consumer for the D.9 projection.  The hypothesis must be
-discharged by the D.2--D.8 concentration/counting development; this theorem
-does not manufacture that probability estimate. -/
+discharged by the D.2--D.7 concentration/counting development and the
+Corollary-D.8 union assembly; this theorem does not manufacture that
+probability estimate. -/
 theorem measure_optimalSurvivalEventSet_compl_le_of_goodEvent
     {Ω : Type*} [MeasurableSpace Ω] {K : Nat} [Nonempty (Fin K)]
     (mu : Measure Ω)
