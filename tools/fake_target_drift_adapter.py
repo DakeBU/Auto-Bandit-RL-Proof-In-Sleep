@@ -16,6 +16,8 @@ import time
 from pathlib import Path
 from typing import Any
 
+import fake_target_drift_cache_prelude as cache_fixture
+
 
 def load(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
@@ -54,6 +56,7 @@ def main() -> None:
     parser.add_argument("--image-digest", required=True)
     parser.add_argument("--budget-attestation", required=True)
     parser.add_argument("--isolation-attestation", required=True)
+    parser.add_argument("--prebuilt-lake", type=Path, required=True)
     args = parser.parse_args()
 
     request = load(args.request)
@@ -61,6 +64,7 @@ def main() -> None:
     workspace = agent / "workspace"
     output = agent / "output"
     output.mkdir()
+    cache_fixture.populate_lake_cache(args.prebuilt_lake.resolve(), workspace)
     root_path = workspace / "BanditRLProof.lean"
     before_root = root_path.read_text(encoding="utf-8")
     import_line = "import BanditRLProof.TargetDriftSmoke\n"
@@ -79,12 +83,6 @@ def main() -> None:
     (output / "lean-diff.patch").write_text(patch, encoding="utf-8")
 
     started = time.monotonic()
-    cache = subprocess.run(
-        ["lake", "exe", "cache", "get"], cwd=workspace,
-        stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True,
-        encoding="utf-8", errors="replace",
-        timeout=int(request["budgets"]["wall_clock_seconds"]), check=False,
-    )
     build = subprocess.run(
         ["lake", "build"], cwd=workspace, stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT, text=True, encoding="utf-8", errors="replace",
@@ -93,7 +91,8 @@ def main() -> None:
     )
     wall = time.monotonic() - started
     (output / "build.log").write_text(
-        "[cache prelude]\n" + cache.stdout + "\n[build]\n" + build.stdout,
+        "[prebuilt cache fixture]\nmaterialized from frozen fixture path\n[build]\n"
+        + build.stdout,
         encoding="utf-8",
     )
 

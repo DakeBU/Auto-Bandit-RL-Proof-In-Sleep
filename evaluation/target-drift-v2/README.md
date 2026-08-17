@@ -112,6 +112,7 @@ python tools/analyze_target_drift_execution.py --pack FROZEN-PACK --grading-pack
 These commands make the interface executable; they do not supply a provider,
 container image, credentials, budget choices, or grader identities.  Those
 remain deliberately unfrozen and no primary run has started.
-`tools/fake_target_drift_adapter.py` is only a deterministic fixture for the
-excluded local plumbing smoke test; it is not a model provider or isolation
-attestation and cannot satisfy the real-execution gate.
+`tools/fake_target_drift_adapter.py` and
+`tools/fake_target_drift_cache_prelude.py` are deterministic fixtures only for
+the excluded local plumbing smoke test; they are not a model provider, sandbox,
+or cache-mount attestation and cannot satisfy the real-execution gate.

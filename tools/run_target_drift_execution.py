@@ -104,9 +104,12 @@ def extract_git_archive(commit: str, paths: list[str], output: Path) -> None:
 def file_manifest(root: Path) -> list[dict[str, Any]]:
     manifest = []
     for path in sorted(item for item in root.rglob("*") if item.is_file()):
+        relative = path.relative_to(root)
+        if ".lake" in relative.parts:
+            continue
         payload = path.read_bytes()
         manifest.append({
-            "path": path.relative_to(root).as_posix(),
+            "path": relative.as_posix(),
             "bytes": len(payload),
             "sha256": hashlib.sha256(payload).hexdigest(),
         })

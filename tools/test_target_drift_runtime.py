@@ -58,6 +58,17 @@ class TargetDriftRuntimeTest(unittest.TestCase):
             hits = runner.scan_forbidden(root, ["DBOBW-01-ALGORITHM-IDENTITY"])
             self.assertEqual(hits[0]["path"], "prompt.md")
 
+    def test_agent_manifest_excludes_infrastructure_lake_cache(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "workspace" / ".lake").mkdir(parents=True)
+            (root / "workspace" / ".lake" / "cache.olean").write_bytes(b"cache")
+            (root / "prompt.md").write_text("prompt", encoding="utf-8")
+            self.assertEqual(
+                [entry["path"] for entry in runner.file_manifest(root)],
+                ["prompt.md"],
+            )
+
     def test_neutral_checker_flags_proof_escape_hatches(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
