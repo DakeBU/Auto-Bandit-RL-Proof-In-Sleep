@@ -352,6 +352,17 @@ def main() -> None:
     replay_workspace = checker_dir / "replay-workspace"
     paths = runner.selected_paths(config["workspace_base_commit"], policy, job["condition"])
     runner.extract_git_archive(config["workspace_base_commit"], paths, replay_workspace)
+    cache_prelude_argv = config["posthoc_checker"]["cache_prelude_argv"]
+    cache_prelude = (
+        run_checked(cache_prelude_argv, replay_workspace, timeout)
+        if cache_prelude_argv else None
+    )
+    if cache_prelude is not None:
+        (checker_dir / "cache-prelude.log").write_text(
+            cache_prelude["output"], encoding="utf-8"
+        )
+        require(cache_prelude["exit_code"] == 0 and not cache_prelude["timed_out"],
+                "checker cache prelude failed")
     baseline_absent = all(
         declaration_absent_in_base(replay_workspace, checker_dir, declaration, timeout)
         for declaration in declarations
@@ -382,15 +393,6 @@ def main() -> None:
     require(result["final_status"] != "compiled" or declarations_appear_in_changes(
         replay_workspace, replay_changed, declarations
     ), "compiled declarations must be introduced by the replayed Lean patch")
-    cache_prelude_argv = config["posthoc_checker"]["cache_prelude_argv"]
-    cache_prelude = (
-        run_checked(cache_prelude_argv, replay_workspace, timeout)
-        if cache_prelude_argv else None
-    )
-    if cache_prelude is not None:
-        (checker_dir / "cache-prelude.log").write_text(
-            cache_prelude["output"], encoding="utf-8"
-        )
     build = run_checked(["lake", "build"], replay_workspace, timeout)
     (checker_dir / "neutral-build.log").write_text(build["output"], encoding="utf-8")
     canary: dict[str, Any] | None = None
