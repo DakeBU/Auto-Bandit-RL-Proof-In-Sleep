@@ -105,8 +105,8 @@ def resolve_repo_path(path_text: str) -> Path:
 
 
 def validate_prompt_templates(config: dict[str, Any], require_hashes: bool) -> None:
-    require(tuple(config["conditions"].keys()) == CONDITIONS,
-            "condition order must remain compile_only, source_aware_blueprint, abrl")
+    require(set(config["conditions"]) == set(CONDITIONS),
+            "condition set must remain compile_only, source_aware_blueprint, abrl")
     for condition in CONDITIONS:
         entry = config["conditions"][condition]
         template_path = resolve_repo_path(entry["prompt_template"])
@@ -127,8 +127,8 @@ def validate_resource_policy(config: dict[str, Any], require_hash: bool) -> dict
     require(policy["suite_id"] == config["suite_id"], "resource policy suite mismatch")
     require(policy["status"] == "policy_frozen_results_absent",
             "resource policy must remain result-free")
-    require(tuple(policy["conditions"].keys()) == CONDITIONS,
-            "resource policy condition order differs from execution conditions")
+    require(set(policy["conditions"]) == set(CONDITIONS),
+            "resource policy condition set differs from execution conditions")
     require(policy["common_isolation"]["attestation_required"] is True,
             "resource policy must require an isolation attestation")
     require(policy["conditions"]["compile_only"]["path_mode"] == "allowlist",

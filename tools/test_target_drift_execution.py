@@ -22,6 +22,15 @@ class TargetDriftExecutionTest(unittest.TestCase):
             ROOT / "evaluation" / "target-drift-v1" / "execution-template.json"
         )
 
+    def test_sorted_json_roundtrip_does_not_change_condition_semantics(self) -> None:
+        config = json.loads(
+            (ROOT / "evaluation" / "target-drift-v2" / "execution-template.json")
+            .read_text(encoding="utf-8")
+        )
+        sorted_roundtrip = json.loads(json.dumps(config, sort_keys=True))
+        prepare.validate_prompt_templates(sorted_roundtrip, require_hashes=False)
+        prepare.validate_resource_policy(sorted_roundtrip, require_hash=False)
+
     def test_unset_paths_excludes_human_readable_ledger(self) -> None:
         value = {
             "model": {"id": "UNSET"},
