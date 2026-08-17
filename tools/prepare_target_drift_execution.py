@@ -357,6 +357,13 @@ def validate_frozen_choices(config: dict[str, Any]) -> None:
     nonempty(adapter["filesystem_network_process_attestation"],
              "execution_adapter.filesystem_network_process_attestation", 20)
 
+    cache_prelude = config["posthoc_checker"]["cache_prelude_argv"]
+    require(isinstance(cache_prelude, list)
+            and all(isinstance(item, str) and item.strip() for item in cache_prelude),
+            "posthoc_checker.cache_prelude_argv must be an argv string list (possibly empty)")
+    require(not any("{{" in item or "}}" in item for item in cache_prelude),
+            "checker cache prelude must not contain unresolved placeholders")
+
     grading = config["grading"]
     require(isinstance(grading["packet_order_seed"], int)
             and not isinstance(grading["packet_order_seed"], bool),

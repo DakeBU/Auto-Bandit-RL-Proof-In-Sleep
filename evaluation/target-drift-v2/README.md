@@ -89,7 +89,9 @@ For each semantic run selected by the operator, the frozen runner prepares an
 opaque view, invokes the configured adapter without a shell, enforces an
 orchestrator process-tree timeout, validates the response/JSONL trace, rejects
 trace accounting beyond the token/tool/build/retry/time/cost budgets, and
-rehashes the completed view.  The
+rehashes the completed view.  A trusted checker-only dependency-cache prelude
+(or an explicitly empty one for a cache-complete image) is frozen as argv and
+included in the seal; it never enters the evaluated agent's resource view.  The
 same sealed pack is then required by the neutral checker:
 
 ```text

@@ -79,13 +79,23 @@ def main() -> None:
     (output / "lean-diff.patch").write_text(patch, encoding="utf-8")
 
     started = time.monotonic()
+    cache = subprocess.run(
+        ["lake", "exe", "cache", "get"], cwd=workspace,
+        stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True,
+        encoding="utf-8", errors="replace",
+        timeout=int(request["budgets"]["wall_clock_seconds"]), check=False,
+    )
     build = subprocess.run(
         ["lake", "build"], cwd=workspace, stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT, text=True, encoding="utf-8", errors="replace",
-        timeout=int(request["budgets"]["wall_clock_seconds"]), check=False,
+        timeout=max(1, int(request["budgets"]["wall_clock_seconds"])
+                    - int(time.monotonic() - started)), check=False,
     )
     wall = time.monotonic() - started
-    (output / "build.log").write_text(build.stdout, encoding="utf-8")
+    (output / "build.log").write_text(
+        "[cache prelude]\n" + cache.stdout + "\n[build]\n" + build.stdout,
+        encoding="utf-8",
+    )
 
     contract = request["result_contract"]
     for name in contract["workflow_evidence_files"]:
