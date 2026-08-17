@@ -1000,7 +1000,7 @@
       "title": "Optimal-arm survival and causal one-round action law",
       "chapter": "frontier",
       "status": "compiled",
-      "informal": "Algorithm 5 lines 7--8 compile as a source-exact elimination snapshot. The deterministic core of Lemma D.9 proves that the optimal arm survives under explicit stochastic-good-event projections, closing the nonempty-active premise for line 15. With EAP's still-explicit nonnegativity and mass premises, the resulting vector induces a genuine one-round probability measure, and every allocation rule typed on the causal view returns the same measure in observation-equivalent hidden worlds. This is not the full lemma, a measurable history kernel, or a regret endpoint.",
+      "informal": "Algorithm 5 lines 7--8 compile as a source-exact elimination snapshot. The deterministic core of Lemma D.9 proves that an explicit optimal-arm-survival certificate closes the nonempty-active premise for line 15. With EAP's still-explicit nonnegativity and mass premises, the resulting vector induces a genuine one-round probability measure, and every allocation rule typed on the causal view returns the same measure in observation-equivalent hidden worlds. The source-shaped good-event projection that constructs the certificate is compiled separately; this milestone is not the full lemma, a measurable history kernel, or a regret endpoint.",
       "declarations": [
         "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot",
         "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.eliminated",
@@ -1029,18 +1029,48 @@
         "BanditRLProof.Exp3.finiteActionMeasure_isProbabilityMeasure"
       ],
       "missing": [
-        "The probability of the Definition-D.1 stochastic good event and full source Lemma D.9.",
+        "The Definition-D.1 count, phase, error, and delay clauses, their probability bound, and full recursive source Lemma D.9.",
         "EAP preservation of its inactive-probability premises.",
         "Coordinate measurability, a Markov kernel over generated histories, and recursive delayed trajectory generation."
       ],
       "evidence": "BanditRLProof/DelayedFeedback/Elimination.lean; BanditRLProof/DelayedFeedback/ActionLaw.lean; Tests/DelayedFeedbackPaperAuditCanary.lean; proof-obligations/PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY.md"
     },
     {
+      "id": "DELAYED-SAPO-GOOD-EVENT-D9-PROJECTION",
+      "title": "Source-shaped good-event projection for optimal-arm survival",
+      "chapter": "frontier",
+      "status": "compiled",
+      "informal": "A source-shaped confidence snapshot defines ucbStar as the finite-arm infimum of the two upper-confidence surfaces used in the paper. Its elimination projection of Definition D.1 derives muStar <= ucbStar rather than assuming that inequality as an independent certificate, constructs the deterministic Lemma-D.9 survival certificate, and transports any externally supplied complement-good-event probability bound to an optimal-arm-elimination bound. The full Definition-D.1 event and the D.2--D.8 concentration/counting producer remain open.",
+      "declarations": [
+        "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.sourceUcbStar",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.EliminationGoodEvent",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.optimalMean_le_ucbStar_of_eliminationGoodEvent",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.optimalArmSurvivalCertificate_of_eliminationGoodEvent",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.optimal_mem_remainingActive_of_eliminationGoodEvent",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.eliminationGoodEventSet",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.optimalSurvivalEventSet",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.eliminationGoodEventSet_subset_optimalSurvivalEventSet",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.measure_optimalSurvivalEventSet_compl_le",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.measure_optimalSurvivalEventSet_compl_le_of_goodEvent"
+      ],
+      "depends_on": [
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.OptimalArmSurvivalCertificate",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.optimal_mem_remainingActive_of_certificate"
+      ],
+      "missing": [
+        "The full Definition D.1 count, phase, error, and delay clauses and their measurable simultaneous event.",
+        "The D.2--D.8 concentration/counting chain that produces the complement-good-event probability bound.",
+        "Persistence across the recursive Delayed SAPO state machine and the stochastic/adversarial regret endpoints."
+      ],
+      "evidence": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean; Tests/DelayedFeedbackPaperAuditCanary.lean; proof-obligations/PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY.md"
+    },
+    {
       "id": "NEURIPS-2025-DELAYED-BOBW-CENTRAL-ENDPOINTS",
       "title": "Source-frozen delayed best-of-both-worlds endpoint audit",
       "chapter": "frontier",
       "status": "partial",
-      "informal": "The exact NeurIPS 2025 source is hash-frozen, a same-algorithm multi-regime contract compiles, and 64 source-semantic accounting, causality, processing, allocation, elimination, and one-round action-law declarations compile. BanditRLlib does not yet implement the full Delayed SAPO trajectory or prove either the stochastic or adversarial regret endpoint.",
+      "informal": "The exact NeurIPS 2025 source is hash-frozen, a same-algorithm multi-regime contract compiles, and 75 source-semantic accounting, causality, processing, allocation, elimination, good-event-projection, and one-round action-law declarations compile. BanditRLlib does not yet implement the full Delayed SAPO trajectory, prove the source good-event probability, or prove either the stochastic or adversarial regret endpoint.",
       "declarations": [
         "BanditRLProof.DelayedFeedback.SameAlgorithmMultiRegimeContract",
         "BanditRLProof.DelayedFeedback.SameAlgorithmMultiRegimeContract.stochasticClaim",
@@ -1054,10 +1084,11 @@
         "BanditRLProof.DelayedFeedback.processAllNew_from_previous_eq_current",
         "BanditRLProof.DelayedFeedback.sum_delayedSAPOProbability_eq_one",
         "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.optimal_mem_remainingActive_of_certificate",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.measure_optimalSurvivalEventSet_compl_le_of_goodEvent",
         "BanditRLProof.DelayedFeedback.causalDelayedSAPOActionMeasureRule_eq_of_observation_equivalent"
       ],
       "missing": [
-        "The Delayed SAPO BSC and EAP state machines, switching rule, and ordered update semantics.",
+        "The complete Definition-D.1 event, its D.2--D.8 probability producer, Delayed SAPO BSC/EAP state machines, switching rule, and ordered update semantics.",
         "A measurable causal randomized sampling kernel and recursively generated delayed-feedback trajectory law; only the one-round measure-valued rule now compiles.",
         "The stochastic-instance and oblivious-adversarial regret endpoints for the same algorithm identity."
       ],

@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "suite_id": "ABRL-TARGET-DRIFT-V1",
+  "execution_status": "template_unfrozen",
+  "repository_commit": "UNSET",
+  "model": {
+    "provider": "UNSET",
+    "model_id": "UNSET",
+    "immutable_version": "UNSET",
+    "api_or_runtime": "UNSET",
+    "temperature": 0.0,
+    "top_p": 1.0
+  },
+  "conditions": {
+    "compile_only": {
+      "prompt_template": "evaluation/target-drift-v1/prompts/compile-only.md",
+      "prompt_sha256": "UNSET",
+      "allowed_repository_resources": [
+        "Lean source tree",
+        "pinned toolchain",
+        "compiler and ordinary shell tools"
+      ]
+    },
+    "source_aware_blueprint": {
+      "prompt_template": "evaluation/target-drift-v1/prompts/source-aware-blueprint.md",
+      "prompt_sha256": "UNSET",
+      "allowed_repository_resources": [
+        "compile_only resources",
+        "source packet",
+        "one source-to-target blueprint record"
+      ]
+    },
+    "abrl": {
+      "prompt_template": "evaluation/target-drift-v1/prompts/abrl.md",
+      "prompt_sha256": "UNSET",
+      "allowed_repository_resources": [
+        "source_aware_blueprint resources",
+        "ABRL target contract",
+        "evidence-typed retrieval and promotion gates",
+        "failure and amendment ledger"
+      ]
+    }
+  },
+  "budgets_per_run": {
+    "maximum_input_tokens": "UNSET",
+    "maximum_output_tokens": "UNSET",
+    "maximum_tool_calls": "UNSET",
+    "maximum_build_attempts": "UNSET",
+    "wall_clock_seconds": "UNSET",
+    "maximum_model_retries": "UNSET",
+    "maximum_cost_usd": "UNSET"
+  },
+  "retry_policy": {
+    "semantic_failure_retries": 0,
+    "infrastructure_failure_definition": "UNSET",
+    "infrastructure_retry_limit": "UNSET",
+    "missing_run_policy": "UNSET"
+  },
+  "randomization": {
+    "paired_seeds": "UNSET",
+    "presentation_order_seed": "UNSET",
+    "condition_labels_hidden_from_graders": true
+  },
+  "source_files_manifest": "evaluation/target-drift-v1/source-files.template.json",
+  "sealed_agent_view": {
+    "materializer": "tools/prepare_target_drift_execution.py",
+    "output_directory": "UNSET",
+    "aggregate_sha256": "UNSET"
+  },
+  "grading": {
+    "rubric": "evaluation/target-drift-v1/grading-rubric.json",
+    "primary_grader_ids": "UNSET",
+    "adjudicator_id": "UNSET",
+    "grader_conflict_policy": "UNSET",
+    "grader_blinding_attestation": "UNSET"
+  },
+  "analysis": {
+    "primary_estimand": "paired risk difference in expert-adjudicated exact contract satisfaction: abrl minus source_aware_blueprint",
+    "primary_interval": "95% cluster bootstrap interval resampling targets within paper-derived and textbook strata while retaining paired conditions and seeds",
+    "primary_success_rule": "lower endpoint above zero and leave-one-paper-out point estimates nonnegative",
+    "secondary_pairwise_test": "two-sided exact McNemar test on paired target-seed outcomes",
+    "secondary_multiplicity": "Benjamini-Hochberg at q=0.05 over the preregistered secondary endpoints",
+    "reporting": "report every run, missingness, disagreement, amendment, cost, and stratum; never treat six probes from one paper as six independent papers"
+  },
+  "unresolved_fields": [
+    "repository_commit",
+    "model.provider",
+    "model.model_id",
+    "model.immutable_version",
+    "model.api_or_runtime",
+    "conditions.*.prompt_sha256",
+    "budgets_per_run.*",
+    "retry_policy.infrastructure_failure_definition",
+    "retry_policy.infrastructure_retry_limit",
+    "retry_policy.missing_run_policy",
+    "randomization.paired_seeds",
+    "randomization.presentation_order_seed",
+    "source_files_manifest local paths and the exact textbook edition hash",
+    "sealed_agent_view.output_directory",
+    "sealed_agent_view.aggregate_sha256",
+    "grading.primary_grader_ids",
+    "grading.adjudicator_id",
+    "grading.grader_conflict_policy",
+    "grading.grader_blinding_attestation"
+  ]
+}

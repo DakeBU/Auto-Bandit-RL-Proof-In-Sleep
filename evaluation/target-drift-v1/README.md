@@ -30,3 +30,33 @@ python tools/validate_target_drift_suite.py
 
 The validator checks allocation, unique identifiers, source hashes, planned
 run arithmetic, and the absence of result-shaped fields.
+
+The execution layer is now explicit but intentionally unfrozen:
+
+- `execution-template.json` lists every model, budget, retry, randomization,
+  sealed-view, and grader choice that must be fixed before the first run;
+- `source-files.template.json` requires a local hash-verified copy of all four
+  sources, including an exact revision/hash for the online textbook;
+- `prompts/` contains matched condition templates whose source/task fields are
+  identical and whose workflow resources differ by condition;
+- `grading-rubric.json` freezes the binary primary endpoint and independent
+  adjudication rule without containing outcomes;
+- `tools/prepare_target_drift_execution.py` validates this template and uses a
+  two-step seal: a hash-complete `preseal_ready` configuration may leave only
+  the aggregate digest unset; after materialization records the digest over
+  `agent_cases.json` and `run_manifest.json`, a `frozen_ready` rerun must
+  reproduce it exactly at the recorded repository commit.
+
+Validate the still-unrun execution template with:
+
+```text
+python tools/prepare_target_drift_execution.py --check-template
+```
+
+Do not set `execution_status` to `preseal_ready` until provider/model version,
+budgets, prompts and hashes, five seeds, failure policy, exact source files,
+and independent grader identities/policy are fixed.  Record the preseal digest,
+then set `execution_status` to `frozen_ready` and reproduce the pack before the
+first run.  The
+materializer strips `faithful_contract`, `expected_affected_fields`,
+`drift_class`, and `stratum` from the evaluated agent view.

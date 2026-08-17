@@ -527,6 +527,7 @@ import BanditRLProof.DelayedFeedback.ActiveAllocation
 import BanditRLProof.DelayedFeedback.ActionLaw
 import BanditRLProof.DelayedFeedback.CausalView
 import BanditRLProof.DelayedFeedback.Elimination
+import BanditRLProof.DelayedFeedback.StochasticGoodEvent
 import BanditRLProof.DelayedFeedback.MultiRegimeContract
 import BanditRLProof.DelayedFeedback.Processing
 import BanditRLProof.Literature

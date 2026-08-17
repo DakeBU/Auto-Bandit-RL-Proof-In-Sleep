@@ -1,6 +1,6 @@
 # Proof Blueprint: PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY
 
-Generated: `2026-08-17T15:40:28+00:00`
+Generated: `2026-08-17T16:43:46+00:00`
 
 ## Source Task
 
@@ -68,6 +68,12 @@ availability condition `s + delay s < t`.
   deterministic core of source Lemma D.9: the optimal arm survives whenever
   the relevant stochastic-good-event confidence and `ucbStar` certificates
   hold.  Consequently the post-elimination active set is nonempty.
+- [x] Replace the independent `muStar <= ucbStar` projection with a
+  source-shaped confidence snapshot.  The elimination slice of Definition
+  D.1 now derives that inequality from both upper-confidence surfaces,
+  constructs the survival certificate, and transports any supplied
+  complement-good-event bound to an optimal-arm-elimination bound.  The full
+  event and its D.2--D.8 probability producer remain open.
 - [x] Reuse the existing finite-action law to turn the certified line-15
   vector into a probability measure, and lift causal allocation rules to
   measure-valued rules that remain identical in observation-equivalent hidden
@@ -77,8 +83,10 @@ availability condition `s + delay s < t`.
 
 This task does not compile Theorem 4.1, full Lemma D.9, Lemma 4.2, Theorem
 5.1, Corollary 5.4, Algorithm 5, or a best-of-both-worlds endpoint.  The
-compiled Lemma-D.9 layer is only its deterministic implication under explicit
-good-event projections; the probability of that event is open.  This task
+compiled Lemma-D.9 layer is only a one-snapshot deterministic implication plus
+an elimination-event probability-bound consumer.  The full Definition-D.1
+event, the D.2--D.8 producer of its probability bound, and persistence through
+the recursive algorithm are open.  This task
 does not show that the external paper is correct or audited.  Later promotion requires the same
 algorithm, initialization, tuning, information structure, comparator, and
 regime endpoints to close in Lean.
@@ -210,7 +218,13 @@ sets use the source's strict test
 deterministic implication in source Lemma D.9: the empirical-confidence and
 `muStar <= ucbStar` projections of the stochastic good event keep the optimal
 arm active.  This supplies the nonempty-active premise used by line 15, but it
-does not prove the probability of the source good event or full Lemma D.9.
+does not by itself prove the probability of the source good event or full
+Lemma D.9.  `DelayedSAPOSourceConfidenceSnapshot` now makes the next bridge
+explicit: its Definition-D.1 elimination projection derives
+`muStar <= ucbStar` from both source upper-confidence surfaces, constructs the
+certificate, and carries any supplied complement-good-event bound to an
+optimal-arm-elimination bound.  The full event, its D.2--D.8 probability
+producer, and recursive persistence remain open.
 
 `DelayedSAPOAllocation` retains EAP's still-open nonnegativity and mass
 hypotheses as explicit fields.  Under them, the existing finite-action law
@@ -254,7 +268,8 @@ open.
 | `DELAYED-BOBW-CAUSAL-ACTION-TIME-VIEW` | expose past actions and only losses satisfying the source strict-availability predicate | local history interfaces; source Section 2 and Algorithm 5 | option-valued pre-action view plus observation-equivalence theorem for every typed decision rule | compiled interface; randomized Delayed SAPO kernel open |
 | `DELAYED-BOBW-NEWLY-OBSERVED-PROCESSING` | set-level content of Algorithm 5's `B(t) \ S` loop | `Finset.sdiff`, disjointness, monotone finite prefixes; source Algorithm 5 lines 2--4 | prove availability monotonicity and exact update after processing all new arrivals | compiled set invariant; sequence order and BSC updates open |
 | `DELAYED-BOBW-ACTIVE-EQUAL-ALLOCATION` | Algorithm 5 line 15 residual mass divided equally among active arms | finite real sums, active/inactive partition, field normalization | define the full probability vector and prove coordinate nonnegativity plus total mass one | compiled allocation leaf; EAP bounds supplying inactive hypotheses open |
-| `DELAYED-BOBW-OPTIMAL-ARM-SURVIVAL` | Algorithm 5 lines 7--8 and the deterministic core of Lemma D.9: an optimal arm satisfying the good-event confidence and `muStar <= ucbStar` projections is not eliminated | real absolute-value interval, strict line-7 test, finite-set difference; source Lemma D.9 | package the exact elimination snapshot, derive the empirical upper inequality, and prove post-elimination nonemptiness | compiled deterministic implication; stochastic good-event probability and full Lemma D.9 open |
+| `DELAYED-BOBW-OPTIMAL-ARM-SURVIVAL` | Algorithm 5 lines 7--8 and the deterministic core of Lemma D.9: an optimal arm satisfying an explicit confidence certificate is not eliminated | real absolute-value interval, strict line-7 test, finite-set difference; source Lemma D.9 | package the exact elimination snapshot, derive the empirical upper inequality, and prove post-elimination nonemptiness | compiled deterministic implication; recursive full Lemma D.9 open |
+| `DELAYED-BOBW-GOOD-EVENT-D9-PROJECTION` | derive `muStar <= ucbStar` from both source upper-confidence surfaces and bound optimal-arm elimination by the complement of the elimination good event | finite infimum, `min`, event inclusion, measure monotonicity; source Definition D.1 and Lemma D.9 | package the elimination slice, construct the survival certificate, and expose a failure-budget consumer | compiled projection/consumer; full event and D.2--D.8 probability producer open |
 | `DELAYED-BOBW-CAUSAL-ACTION-MEASURE` | line-15 vector induces a probability measure and a causal measure-valued decision rule | local `Exp3.FiniteActionDistribution`, `finiteActionMeasure`; causal observation equivalence | package explicit EAP premises, reuse the finite-action law, and transport equality through `ActionTimeView` | compiled one-round action law; measurable history kernel and recursive generated trajectory open |
 
 ## Active leaf contract
@@ -296,8 +311,9 @@ classified as compiled or audited.
 - Mean: armwise stochastic mean `mu_i`; delays remain oblivious-adversarial.
 - Variance/range: losses lie in `[0,1]`; the importance-weighted branch also
   needs the source lower bound on the action probability.
-- Exact event: the Definition-D.1 simultaneous empirical-confidence fields
-  needed by Lemma D.9, including the separate certificate `muStar <= ucbStar`.
+- Exact event: extend the compiled elimination slice to the full Definition-D.1
+  simultaneous count, phase, empirical/error, and delay fields.  The existing
+  slice derives `muStar <= ucbStar`; it is no longer an independent certificate.
 - Source: physical-PDF Appendix D, Definition D.1 and Lemmas D.2--D.3; the
   deterministic consumer is Lemma D.9.
 - Mode: arm-uniform and processed-prefix-uniform, hence union bounded; it is
@@ -45292,6 +45308,94 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/DelayedFeedback/Processing.lean",
     "line": 79,
     "statement": "theorem outstandingAt_disjoint_newlyObservedBefore (delay : Nat \u2192 Nat) (processed : Finset Nat) (t : Nat) : Disjoint (outstandingAt delay t) (newlyObservedBefore delay processed t)"
+  },
+  {
+    "kind": "structure",
+    "name": "DelayedSAPOSourceConfidenceSnapshot",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean",
+    "line": 13,
+    "statement": "structure DelayedSAPOSourceConfidenceSnapshot (K : Nat) extends DelayedSAPOEliminationSnapshot K where"
+  },
+  {
+    "kind": "def",
+    "name": "sourceUcbStar",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.sourceUcbStar",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean",
+    "line": 22,
+    "statement": "noncomputable def sourceUcbStar {K : Nat} [Nonempty (Fin K)] (snapshot : DelayedSAPOSourceConfidenceSnapshot K) : \u211d"
+  },
+  {
+    "kind": "structure",
+    "name": "EliminationGoodEvent",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.EliminationGoodEvent",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean",
+    "line": 31,
+    "statement": "structure EliminationGoodEvent {K : Nat} [Nonempty (Fin K)] (snapshot : DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K \u2192 \u211d) : Prop where"
+  },
+  {
+    "kind": "theorem",
+    "name": "optimalMean_le_ucbStar_of_eliminationGoodEvent",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.optimalMean_le_ucbStar_of_eliminationGoodEvent",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean",
+    "line": 43,
+    "statement": "theorem optimalMean_le_ucbStar_of_eliminationGoodEvent {K : Nat} [Nonempty (Fin K)] (snapshot : DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K \u2192 \u211d) (optimal : Fin K) (hoptimal : \u2200 i, mean optimal \u2264 mean i) (hgood : EliminationGoodEvent snapshot mean) : mean optimal \u2264 snapshot.ucbStar"
+  },
+  {
+    "kind": "theorem",
+    "name": "optimalArmSurvivalCertificate_of_eliminationGoodEvent",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.optimalArmSurvivalCertificate_of_eliminationGoodEvent",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean",
+    "line": 60,
+    "statement": "theorem optimalArmSurvivalCertificate_of_eliminationGoodEvent {K : Nat} [Nonempty (Fin K)] (snapshot : DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K \u2192 \u211d) (optimal : Fin K) (hoptimal : \u2200 i, mean optimal \u2264 mean i) (hactive : optimal \u2208 snapshot.active) (hgood : EliminationGoodEvent snapshot mean) : DelayedSAPOEliminationSnapshot.OptimalArmSurvivalCertificate snapshot.toDelayedSAPOEliminationSnapshot mean optimal where"
+  },
+  {
+    "kind": "theorem",
+    "name": "optimal_mem_remainingActive_of_eliminationGoodEvent",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.optimal_mem_remainingActive_of_eliminationGoodEvent",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean",
+    "line": 80,
+    "statement": "theorem optimal_mem_remainingActive_of_eliminationGoodEvent {K : Nat} [Nonempty (Fin K)] (snapshot : DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K \u2192 \u211d) (optimal : Fin K) (hoptimal : \u2200 i, mean optimal \u2264 mean i) (hactive : optimal \u2208 snapshot.active) (hgood : EliminationGoodEvent snapshot mean) : optimal \u2208 snapshot.remainingActive"
+  },
+  {
+    "kind": "def",
+    "name": "eliminationGoodEventSet",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.eliminationGoodEventSet",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean",
+    "line": 95,
+    "statement": "def eliminationGoodEventSet {\u03a9 : Type*} {K : Nat} [Nonempty (Fin K)] (snapshot : \u03a9 \u2192 DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K \u2192 \u211d) : Set \u03a9"
+  },
+  {
+    "kind": "def",
+    "name": "optimalSurvivalEventSet",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.optimalSurvivalEventSet",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean",
+    "line": 101,
+    "statement": "def optimalSurvivalEventSet {\u03a9 : Type*} {K : Nat} (snapshot : \u03a9 \u2192 DelayedSAPOSourceConfidenceSnapshot K) (optimal : Fin K) : Set \u03a9"
+  },
+  {
+    "kind": "theorem",
+    "name": "eliminationGoodEventSet_subset_optimalSurvivalEventSet",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.eliminationGoodEventSet_subset_optimalSurvivalEventSet",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean",
+    "line": 108,
+    "statement": "theorem eliminationGoodEventSet_subset_optimalSurvivalEventSet {\u03a9 : Type*} {K : Nat} [Nonempty (Fin K)] (snapshot : \u03a9 \u2192 DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K \u2192 \u211d) (optimal : Fin K) (hoptimal : \u2200 i, mean optimal \u2264 mean i) (hactive : \u2200 \u03c9, optimal \u2208 (snapshot \u03c9).active) : eliminationGoodEventSet snapshot mean \u2286 optimalSurvivalEventSet snapshot optimal"
+  },
+  {
+    "kind": "theorem",
+    "name": "measure_optimalSurvivalEventSet_compl_le",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.measure_optimalSurvivalEventSet_compl_le",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean",
+    "line": 122,
+    "statement": "theorem measure_optimalSurvivalEventSet_compl_le {\u03a9 : Type*} [MeasurableSpace \u03a9] {K : Nat} [Nonempty (Fin K)] (mu : Measure \u03a9) (snapshot : \u03a9 \u2192 DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K \u2192 \u211d) (optimal : Fin K) (hoptimal : \u2200 i, mean optimal \u2264 mean i) (hactive : \u2200 \u03c9, optimal \u2208 (snapshot \u03c9).active) : mu (optimalSurvivalEventSet snapshot optimal)\u1d9c \u2264 mu (eliminationGoodEventSet snapshot mean)\u1d9c"
+  },
+  {
+    "kind": "theorem",
+    "name": "measure_optimalSurvivalEventSet_compl_le_of_goodEvent",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.measure_optimalSurvivalEventSet_compl_le_of_goodEvent",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean",
+    "line": 140,
+    "statement": "theorem measure_optimalSurvivalEventSet_compl_le_of_goodEvent {\u03a9 : Type*} [MeasurableSpace \u03a9] {K : Nat} [Nonempty (Fin K)] (mu : Measure \u03a9) (snapshot : \u03a9 \u2192 DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K \u2192 \u211d) (optimal : Fin K) (delta : \u211d) (hoptimal : \u2200 i, mean optimal \u2264 mean i) (hactive : \u2200 \u03c9, optimal \u2208 (snapshot \u03c9).active) (hgoodProbability : mu (eliminationGoodEventSet snapshot mean)\u1d9c \u2264 ENNReal.ofReal delta) : mu (optimalSurvivalEventSet snapshot optimal)\u1d9c \u2264 ENNReal.ofReal delta"
   },
   {
     "kind": "structure",

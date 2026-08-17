@@ -1,6 +1,6 @@
 {
   "task": "PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY",
-  "generated": "2026-08-17T15:40:47+00:00",
+  "generated": "2026-08-17T16:43:58+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -44427,6 +44427,94 @@
       "file": "BanditRLProof/DelayedFeedback/Processing.lean",
       "line": 79,
       "statement": "theorem outstandingAt_disjoint_newlyObservedBefore (delay : Nat → Nat) (processed : Finset Nat) (t : Nat) : Disjoint (outstandingAt delay t) (newlyObservedBefore delay processed t)"
+    },
+    {
+      "kind": "structure",
+      "name": "DelayedSAPOSourceConfidenceSnapshot",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot",
+      "file": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean",
+      "line": 13,
+      "statement": "structure DelayedSAPOSourceConfidenceSnapshot (K : Nat) extends DelayedSAPOEliminationSnapshot K where"
+    },
+    {
+      "kind": "def",
+      "name": "sourceUcbStar",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.sourceUcbStar",
+      "file": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean",
+      "line": 22,
+      "statement": "noncomputable def sourceUcbStar {K : Nat} [Nonempty (Fin K)] (snapshot : DelayedSAPOSourceConfidenceSnapshot K) : ℝ"
+    },
+    {
+      "kind": "structure",
+      "name": "EliminationGoodEvent",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.EliminationGoodEvent",
+      "file": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean",
+      "line": 31,
+      "statement": "structure EliminationGoodEvent {K : Nat} [Nonempty (Fin K)] (snapshot : DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K → ℝ) : Prop where"
+    },
+    {
+      "kind": "theorem",
+      "name": "optimalMean_le_ucbStar_of_eliminationGoodEvent",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.optimalMean_le_ucbStar_of_eliminationGoodEvent",
+      "file": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean",
+      "line": 43,
+      "statement": "theorem optimalMean_le_ucbStar_of_eliminationGoodEvent {K : Nat} [Nonempty (Fin K)] (snapshot : DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K → ℝ) (optimal : Fin K) (hoptimal : ∀ i, mean optimal ≤ mean i) (hgood : EliminationGoodEvent snapshot mean) : mean optimal ≤ snapshot.ucbStar"
+    },
+    {
+      "kind": "theorem",
+      "name": "optimalArmSurvivalCertificate_of_eliminationGoodEvent",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.optimalArmSurvivalCertificate_of_eliminationGoodEvent",
+      "file": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean",
+      "line": 60,
+      "statement": "theorem optimalArmSurvivalCertificate_of_eliminationGoodEvent {K : Nat} [Nonempty (Fin K)] (snapshot : DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K → ℝ) (optimal : Fin K) (hoptimal : ∀ i, mean optimal ≤ mean i) (hactive : optimal ∈ snapshot.active) (hgood : EliminationGoodEvent snapshot mean) : DelayedSAPOEliminationSnapshot.OptimalArmSurvivalCertificate snapshot.toDelayedSAPOEliminationSnapshot mean optimal where"
+    },
+    {
+      "kind": "theorem",
+      "name": "optimal_mem_remainingActive_of_eliminationGoodEvent",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.optimal_mem_remainingActive_of_eliminationGoodEvent",
+      "file": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean",
+      "line": 80,
+      "statement": "theorem optimal_mem_remainingActive_of_eliminationGoodEvent {K : Nat} [Nonempty (Fin K)] (snapshot : DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K → ℝ) (optimal : Fin K) (hoptimal : ∀ i, mean optimal ≤ mean i) (hactive : optimal ∈ snapshot.active) (hgood : EliminationGoodEvent snapshot mean) : optimal ∈ snapshot.remainingActive"
+    },
+    {
+      "kind": "def",
+      "name": "eliminationGoodEventSet",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.eliminationGoodEventSet",
+      "file": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean",
+      "line": 95,
+      "statement": "def eliminationGoodEventSet {Ω : Type*} {K : Nat} [Nonempty (Fin K)] (snapshot : Ω → DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K → ℝ) : Set Ω"
+    },
+    {
+      "kind": "def",
+      "name": "optimalSurvivalEventSet",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.optimalSurvivalEventSet",
+      "file": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean",
+      "line": 101,
+      "statement": "def optimalSurvivalEventSet {Ω : Type*} {K : Nat} (snapshot : Ω → DelayedSAPOSourceConfidenceSnapshot K) (optimal : Fin K) : Set Ω"
+    },
+    {
+      "kind": "theorem",
+      "name": "eliminationGoodEventSet_subset_optimalSurvivalEventSet",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.eliminationGoodEventSet_subset_optimalSurvivalEventSet",
+      "file": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean",
+      "line": 108,
+      "statement": "theorem eliminationGoodEventSet_subset_optimalSurvivalEventSet {Ω : Type*} {K : Nat} [Nonempty (Fin K)] (snapshot : Ω → DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K → ℝ) (optimal : Fin K) (hoptimal : ∀ i, mean optimal ≤ mean i) (hactive : ∀ ω, optimal ∈ (snapshot ω).active) : eliminationGoodEventSet snapshot mean ⊆ optimalSurvivalEventSet snapshot optimal"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_optimalSurvivalEventSet_compl_le",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.measure_optimalSurvivalEventSet_compl_le",
+      "file": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean",
+      "line": 122,
+      "statement": "theorem measure_optimalSurvivalEventSet_compl_le {Ω : Type*} [MeasurableSpace Ω] {K : Nat} [Nonempty (Fin K)] (mu : Measure Ω) (snapshot : Ω → DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K → ℝ) (optimal : Fin K) (hoptimal : ∀ i, mean optimal ≤ mean i) (hactive : ∀ ω, optimal ∈ (snapshot ω).active) : mu (optimalSurvivalEventSet snapshot optimal)ᶜ ≤ mu (eliminationGoodEventSet snapshot mean)ᶜ"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_optimalSurvivalEventSet_compl_le_of_goodEvent",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.measure_optimalSurvivalEventSet_compl_le_of_goodEvent",
+      "file": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean",
+      "line": 140,
+      "statement": "theorem measure_optimalSurvivalEventSet_compl_le_of_goodEvent {Ω : Type*} [MeasurableSpace Ω] {K : Nat} [Nonempty (Fin K)] (mu : Measure Ω) (snapshot : Ω → DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K → ℝ) (optimal : Fin K) (delta : ℝ) (hoptimal : ∀ i, mean optimal ≤ mean i) (hactive : ∀ ω, optimal ∈ (snapshot ω).active) (hgoodProbability : mu (eliminationGoodEventSet snapshot mean)ᶜ ≤ ENNReal.ofReal delta) : mu (optimalSurvivalEventSet snapshot optimal)ᶜ ≤ ENNReal.ofReal delta"
     },
     {
       "kind": "structure",

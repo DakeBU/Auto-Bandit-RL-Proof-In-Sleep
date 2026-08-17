@@ -4,6 +4,8 @@
 from __future__ import annotations
 
 import json
+import subprocess
+import sys
 from collections import Counter
 from pathlib import Path
 
@@ -87,6 +89,22 @@ def main() -> None:
     by_drift = Counter(case["drift_class"] for case in textbook_cases)
     require(set(by_drift) == DRIFT_CLASSES, "textbook controls must cover all six drift classes")
     require(all(count == 2 for count in by_drift.values()), "each textbook drift class must have two controls")
+
+    execution_template = load("execution-template.json")
+    require(execution_template["execution_status"] == "template_unfrozen",
+            "execution template must remain explicitly unfrozen")
+    require(bool(execution_template["unresolved_fields"]),
+            "execution template must enumerate unresolved choices")
+    rubric = load("grading-rubric.json")
+    require(rubric["no_results"] is True, "grading rubric must remain result-free")
+    require(not (SUITE / "results.json").exists(),
+            "results.json is forbidden before the execution freeze and actual runs")
+    subprocess.run(
+        [sys.executable, str(ROOT / "tools" / "prepare_target_drift_execution.py"),
+         "--check-template"],
+        cwd=ROOT,
+        check=True,
+    )
 
     print("target-drift suite valid: 30 authored/unrun cases, 18 paper probes, 12 textbook controls, 450 planned runs")
 

@@ -287,18 +287,21 @@ route is tracked by
 now includes strict pre-action availability and the one-based/end-of-round
 `sigma(t)` bridge; a causal view hiding unknown delays and unobserved losses;
 set-level new-arrival processing; line-15 allocation; the line-7/8 elimination
-snapshot and deterministic optimal-arm-survival core of Lemma D.9; and a
-causal one-round probability measure built from the existing finite-action
-law.
+snapshot and deterministic optimal-arm-survival core of Lemma D.9; a
+source-shaped good-event projection that derives `muStar <= ucbStar` and
+consumes an externally supplied failure budget; and a causal one-round
+probability measure built from the existing finite-action law.
 
-This remains feasibility evidence only.  The stochastic probability of the
-source good event, EAP/BSC state preservation, probability banks,
+This remains feasibility evidence only.  The complete Definition-D.1 event
+and its D.2--D.8 probability producer, EAP/BSC state preservation, probability banks,
 simultaneous-arrival order, a measurable recursive delayed-history kernel,
 regime laws, external adversarial algorithm, and the same-algorithm Theorems
 4.1/5.1 coupling remain planned.  The compiled Lemma-D.9 layer is an explicit
 deterministic implication under recorded certificate fields, not the full
 probabilistic source lemma.  No external paper endpoint is classified as
-compiled or audited.
+compiled or audited.  The flagship currently contains 75 named
+source-semantic declarations; the generic multi-regime interface is counted
+separately.
 
 The machine-readable route atlas is `lean-route-roadmap.json`.  It is the
 handoff contract between upper planning agents and lower Lean agents: each

@@ -105,7 +105,13 @@ sets use the source's strict test
 deterministic implication in source Lemma D.9: the empirical-confidence and
 `muStar <= ucbStar` projections of the stochastic good event keep the optimal
 arm active.  This supplies the nonempty-active premise used by line 15, but it
-does not prove the probability of the source good event or full Lemma D.9.
+does not by itself prove the probability of the source good event or full
+Lemma D.9.  `DelayedSAPOSourceConfidenceSnapshot` now makes the next bridge
+explicit: its Definition-D.1 elimination projection derives
+`muStar <= ucbStar` from both source upper-confidence surfaces, constructs the
+certificate, and carries any supplied complement-good-event bound to an
+optimal-arm-elimination bound.  The full event, its D.2--D.8 probability
+producer, and recursive persistence remain open.
 
 `DelayedSAPOAllocation` retains EAP's still-open nonnegativity and mass
 hypotheses as explicit fields.  Under them, the existing finite-action law
