@@ -29292,6 +29292,11 @@ def cmd_check(_args: argparse.Namespace) -> int:
     code = run(["lake", "build", "Tests"])
     if code != 0:
         return code
+    # Executing the exporter writes a very large graph, but its Lean environment API still needs
+    # an always-on compile gate so upstream Lean changes cannot break a non-default target silently.
+    code = run(["lake", "env", "lean", "tools/ProofGraphExport.lean"])
+    if code != 0:
+        return code
     pattern = r"\b(sorry|admit|axiom|postulate)\b"
     if shutil.which("rg"):
         code, out = run_capture(["rg", "-n", pattern, "BanditRLProof", "Tests"])

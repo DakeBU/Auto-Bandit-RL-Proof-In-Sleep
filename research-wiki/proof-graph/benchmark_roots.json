@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "status": "compiled-roots-for-prototype-benchmark",
+  "benchmarks": [
+    {
+      "id": "exp3_realized_all_time",
+      "algorithm": "EXP3",
+      "root": "BanditRLProof.Exp3.measure_sampledRealizedRegretGeometricAllTimeFailureSet_le",
+      "target_contract": "Existing all-time realized-regret failure-set bound; benchmark only, theorem unchanged."
+    },
+    {
+      "id": "half_tsallis_iid_log",
+      "algorithm": "half-Tsallis",
+      "root": "BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisFiniteArmIIDRewardLawRegret_le_log",
+      "target_contract": "Existing finite-arm IID half-Tsallis logarithmic expected-regret declaration; benchmark only, theorem unchanged."
+    },
+    {
+      "id": "oful_all_time_confidence",
+      "algorithm": "OFUL",
+      "root": "BanditRLProof.OFUL.measure_telescopingCanonicalHistoryTrajectory_allTimeConfidenceFailureSet_le_of_linearSubgaussianEnvironment",
+      "target_contract": "Existing canonical-history all-time confidence failure-set declaration; benchmark only, theorem unchanged."
+    }
+  ],
+  "excluded_scope": [
+    "Lattimore-Szepesvari Chapters 13-17",
+    "finite-arm lower bounds",
+    "Bernoulli-KL and change-of-measure lower bounds",
+    "minimax and asymptotic lower bounds",
+    "the lower-bound task active frontier and its cards/pages"
+  ]
+}

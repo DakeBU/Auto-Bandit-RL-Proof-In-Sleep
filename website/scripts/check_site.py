@@ -340,6 +340,7 @@ def main() -> int:
         output / "learning" / "index.html",
         output / "textbook-spine" / "index.html",
         output / "roadmap" / "index.html",
+        output / "proof-graph-laboratory" / "index.html",
         output / "workflow" / "index.html",
         output / "attribution" / "index.html",
         output / "source-access" / "index.html",
@@ -347,6 +348,28 @@ def main() -> int:
     for expected in expected_pages:
         if not expected.exists():
             errors.append(f"missing required page: {expected.relative_to(output)}")
+
+    proof_lab_path = output / "proof-graph-laboratory" / "index.html"
+    if proof_lab_path.exists():
+        proof_lab = proof_lab_path.read_text(encoding="utf-8")
+        required_boundaries = [
+            "environment-extracted",
+            "not a kernel trace or an elaborator trace",
+            "Static GitHub Pages does not load a Lean environment",
+            "Raw new-node count is excluded",
+            "Merely restating a Tsallis-INF derivation does not qualify",
+            "LB(s) &lt;= OPT_remaining(s)",
+            "Chapters 13–17",
+        ]
+        for boundary in required_boundaries:
+            if boundary not in proof_lab:
+                errors.append(f"proof-graph-laboratory/index.html: missing evidence boundary {boundary!r}")
+        if manifest.get("proof_graph_root_count") != 3:
+            errors.append("site manifest must record exactly three frozen proof-graph benchmark roots")
+        if manifest.get("cng_candidate_status") != "partial":
+            errors.append("site manifest must keep the CNG candidate status partial")
+        if manifest.get("cng_structural_discovery_established") is not False:
+            errors.append("site manifest must not claim CNG structural discovery")
 
     expected_chapter_count = len(
         json.loads((SITE_DIR / "content" / "chapters.json").read_text(encoding="utf-8"))["chapters"]

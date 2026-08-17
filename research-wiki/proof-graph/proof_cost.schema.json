@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://banditrl.example/schemas/library-aware-proof-cost-v1.json",
+  "title": "BanditRLlib library-aware proof cost vector",
+  "type": "object",
+  "required": [
+    "new_declaration_count",
+    "reused_compiled_declaration_count",
+    "shared_fixed_charge_policy",
+    "reuse_coverage",
+    "semantic_dag",
+    "proof_term_object_proxy_sum",
+    "lean_check_time",
+    "open_obligations"
+  ],
+  "properties": {
+    "new_declaration_count": {"type": "integer", "minimum": 0},
+    "reused_compiled_declaration_count": {"type": "integer", "minimum": 0},
+    "shared_fixed_charge_policy": {"const": "charged-once-in-union"},
+    "reuse_coverage": {
+      "type": "object",
+      "required": ["shared_declarations", "support_declarations", "ratio"],
+      "properties": {
+        "shared_declarations": {"type": "integer", "minimum": 0},
+        "support_declarations": {"type": "integer", "minimum": 0},
+        "ratio": {"type": "number", "minimum": 0, "maximum": 1}
+      },
+      "additionalProperties": false
+    },
+    "semantic_dag": {
+      "type": "object",
+      "required": ["raw_nodes", "raw_edges", "components", "component_edges", "cyclic_components", "depth"],
+      "properties": {
+        "raw_nodes": {"type": "integer", "minimum": 0},
+        "raw_edges": {"type": "integer", "minimum": 0},
+        "components": {"type": "integer", "minimum": 0},
+        "component_edges": {"type": "integer", "minimum": 0},
+        "cyclic_components": {"type": "integer", "minimum": 0},
+        "depth": {"type": "integer", "minimum": 0}
+      },
+      "additionalProperties": false
+    },
+    "proof_term_object_proxy_sum": {"type": "integer", "minimum": 0},
+    "lean_check_time": {
+      "type": "object",
+      "required": ["status", "seconds"],
+      "properties": {
+        "status": {"enum": ["measured", "measured-local-wall-clock", "not-measured-by-exporter", "not-measured-for-benchmark"]},
+        "seconds": {"type": ["number", "null"], "minimum": 0},
+        "source": {"type": "string"},
+        "command": {"type": "string"},
+        "repetitions": {"type": "integer", "minimum": 1},
+        "interpretation": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "open_obligations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "status"],
+        "properties": {
+          "id": {"type": "string"},
+          "status": {"enum": ["prototype", "partial", "planned", "blocked"]}
+        }
+      }
+    }
+  },
+  "additionalProperties": false,
+  "description": "A Pareto/vector record. Consumers must not subtract reuse as an unbounded negative reward or collapse the fields to a scalar without an explicit policy."
+}

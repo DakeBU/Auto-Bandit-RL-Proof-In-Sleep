@@ -11,3 +11,8 @@ require mathlib from git
 lean_lib BanditRLProof
 
 lean_lib Tests
+
+/-- Deterministic, environment-backed declaration dependency exporter. -/
+lean_exe proof_graph_export where
+  root := `tools.ProofGraphExport
+  supportInterpreter := true

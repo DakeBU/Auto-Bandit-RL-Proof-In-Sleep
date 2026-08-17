@@ -13191,3 +13191,6 @@ here during local harness runs.
 - `2026-08-16T22:49:38+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
 - `2026-08-16T22:49:38+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
 - `2026-08-16T22:49:38+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-16T09:31:10+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/PROOF-GRAPH-COMPRESSION-STRUCTURAL-NOVELTY-CNG.md` - PROOF-GRAPH-COMPRESSION-STRUCTURAL-NOVELTY-CNG
+- `2026-08-16T09:52:09+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/PROOF-GRAPH-COMPRESSION-STRUCTURAL-NOVELTY-CNG.md` - PROOF-GRAPH-COMPRESSION-STRUCTURAL-NOVELTY-CNG
+- `2026-08-16T09:52:14+00:00` `bandit.py memory-refresh` `retrieval-index` `research-wiki/retrieval-index/PROOF-GRAPH-COMPRESSION-STRUCTURAL-NOVELTY-CNG.json` - PROOF-GRAPH-COMPRESSION-STRUCTURAL-NOVELTY-CNG

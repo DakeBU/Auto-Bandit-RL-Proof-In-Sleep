@@ -5,6 +5,7 @@ import BanditRLProof.ScalarPseudoRegret
 import BanditRLProof.Regret
 import BanditRLProof.LeafLemmas
 import BanditRLProof.MathlibWrappers
+import BanditRLProof.CurvatureNoiseGapGeometry
 import BanditRLProof.PullCountDecomposition
 import BanditRLProof.RegretDecomposition
 import BanditRLProof.RegretCountBounds
