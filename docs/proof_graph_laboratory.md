@@ -66,11 +66,12 @@ python tools/proof_graph_lab.py candidate-audit --frozen frozen.json \
   --output cng-candidate-evaluation.json
 ```
 
-`lake exe proof_graph_export OUTPUT.json` is also configured, but a native executable can compile
-a large native dependency closure; `lean --run` is the focused path.  On Windows with long paths
-disabled, use a genuinely short isolated checkout or a temporary short package build directory.
-Changing a drive letter alone may not help because Lake normalizes workspace paths.  Never reuse a
-different dirty worktree's project `.olean` as evidence.
+`lake exe proof_graph_export OUTPUT.json` is also configured.  The executable dynamically loads the
+compiled `BanditRLProof` environment instead of statically linking the full project dependency
+closure; `lean --run` remains the focused development path.  On Windows with long paths disabled,
+use a genuinely short isolated checkout or a temporary short package build directory.  Changing a
+drive letter alone may not help because Lake normalizes workspace paths.  Never reuse a different
+dirty worktree's project `.olean` as evidence.
 
 The repository/CI check also runs `lake env lean tools/ProofGraphExport.lean`, which elaborates the
 exporter without executing the roughly 155 MB export.

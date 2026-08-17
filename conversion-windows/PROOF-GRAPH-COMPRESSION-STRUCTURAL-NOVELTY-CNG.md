@@ -72,4 +72,3 @@ mathematics, stop and refreeze the target instead of adding an implicit premise.
 This window does not own Chapter 13--17, finite-arm lower bounds,
 Bernoulli-KL/change-of-measure/minimax/asymptotic lower bounds, their cards,
 blueprints, pages, or active frontier.
-

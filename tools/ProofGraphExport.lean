@@ -1,4 +1,3 @@
-import BanditRLProof
 import Lean
 import Lean.DeclarationRange
 import Lean.Util.FoldConsts

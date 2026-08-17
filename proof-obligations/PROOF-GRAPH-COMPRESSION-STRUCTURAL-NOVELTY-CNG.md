@@ -44,4 +44,3 @@ The finite CNG algebra is compiled.  The full calculus, constrained cometric,
 route replacement, Pareto shift, held-out transfer, Tsallis-INF, and any new
 bandit theorem are not complete.  No Chapter 13--17 or lower-bound artifact is
 owned or mutated by this task.
-
