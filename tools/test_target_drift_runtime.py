@@ -51,6 +51,24 @@ class TargetDriftRuntimeTest(unittest.TestCase):
         self.assertNotIn("{{", rendered)
         self.assertIn("CASE-opaque", rendered)
         self.assertIn("preserve the exact target", rendered)
+        self.assertIn(runner.BLIND_GRADING_TEXT_RULE, rendered)
+
+    def test_every_workflow_prompt_appends_blind_grading_text_contract(self) -> None:
+        prompt_root = TOOLS.parent / "evaluation" / "target-drift-v1" / "prompts"
+        for condition in ("compile-only", "source-aware-blueprint", "abrl"):
+            with self.subTest(condition=condition):
+                template = (prompt_root / f"{condition}.md").read_text(encoding="utf-8")
+                rendered = runner.render_prompt(
+                    template,
+                    "CASE-opaque",
+                    "SOURCE-opaque",
+                    "source locator",
+                    Path("source.pdf"),
+                    "preserve the exact target",
+                    Path("workspace"),
+                )
+                self.assertIn("Blind-grading requirement:", rendered)
+                self.assertIn(runner.BLIND_GRADING_TEXT_RULE, rendered)
 
     def test_forbidden_scan_finds_semantic_identifier(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

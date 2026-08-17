@@ -36,6 +36,13 @@ USAGE_FIELDS = (
     "input_tokens", "output_tokens", "tool_calls", "build_attempts",
     "recovery_tool_calls", "infrastructure_retries", "wall_seconds", "cost_usd",
 )
+BLIND_GRADING_TEXT_RULE = (
+    "Write primary_grader_rationale and any source-amendment.md using "
+    "condition-neutral mathematical language. Do not name the assigned workflow, "
+    "its condition label, promotion gate, proof-blueprint, target-contract, failure "
+    "ledger, evidence typing, or bounded proof transaction. These operator-only "
+    "details remain available through the separate workflow-artifact record."
+)
 
 
 def load(path: Path) -> dict[str, Any]:
@@ -185,14 +192,7 @@ def render_prompt(
         rendered = rendered.replace(placeholder, value)
     require(not any(placeholder in rendered for placeholder in prepare.PLACEHOLDERS),
             "rendered prompt still contains a placeholder")
-    return rendered.rstrip() + (
-        "\n\nBlind-grading requirement: write `primary_grader_rationale` and any "
-        "`source-amendment.md` using condition-neutral mathematical language. "
-        "Do not name the assigned workflow, its condition label, promotion gate, "
-        "proof-blueprint, target-contract, failure ledger, evidence typing, or "
-        "bounded proof transaction. These operator-only details remain available "
-        "through the separate workflow-compliance record.\n"
-    )
+    return rendered.rstrip() + "\n\nBlind-grading requirement: " + BLIND_GRADING_TEXT_RULE + "\n"
 
 
 def prepare_run(pack_dir: Path, semantic_run_id: str, output_dir: Path) -> None:
@@ -312,7 +312,8 @@ def prepare_run(pack_dir: Path, semantic_run_id: str, output_dir: Path) -> None:
             "result_required_fields": [
                 "schema_version", "opaque_run_id", "final_status",
                 "public_declarations", "primary_grader_rationale"
-            ]
+            ],
+            "blind_grading_text_rule": BLIND_GRADING_TEXT_RULE,
         },
         "status": "prepared_unrun"
     }

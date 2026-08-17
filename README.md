@@ -150,8 +150,8 @@ Core paths:
   condition views, matched field/value wording with a text-only leakage audit,
   content-addressed seal, frozen-adapter interface, fresh-replay checker code,
   blind grading packets, workflow-artifact hash records, and source/target-aware
-  analysis with secondary multiplicity control.  Eighty repository tests
-  pass, including 22 target-drift component tests, but no test executes the full
+  analysis with secondary multiplicity control.  Eighty-one repository tests
+  pass, including 23 target-drift component tests, but no test executes the full
   real-provider-to-grading chain.  The deterministic fake adapter and fail-closed
   probes are nonexperimental fixtures.  A frozen real provider sandbox, a
   separate checker sandbox, budgets, graders, final seal, the preregistered
