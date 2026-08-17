@@ -4,7 +4,9 @@ Card: `PPR-SCHLISSELBERG-LANCEWICKI-AUER-MANSOUR-2025-DELAYED-BOBW`
 
 Status: `source-frozen; accounting, causal-view, new-arrival-processing,
 active-allocation, optimal-arm-survival, and one-round action-law leaves plus
-a generic multi-regime contract interface compiled; no paper endpoint audited`
+a D.10/D.12 width-direction diagnostic, a conditional gap-ordering consumer,
+and a generic multi-regime contract interface compiled; no paper endpoint
+audited`
 
 ## Frozen source
 
@@ -53,6 +55,7 @@ The frozen contract therefore retains:
 | `DELAYED-BOBW-OPTIMAL-ARM-SURVIVAL` | connect Algorithm 5 lines 7--8 to the nonempty-active premise in line 15 | compiled deterministic core of source Lemma D.9 under an explicit certificate; full recursive lemma open |
 | `DELAYED-BOBW-GOOD-EVENT-D9-PROJECTION` | derive the certificate from the two source upper-confidence surfaces and carry a supplied event-failure budget to optimal-arm elimination | compiled elimination projection and probability-bound consumer; full Definition D.1 and D.2--D.7 component producers open |
 | `DELAYED-BOBW-D8-D9-ASSEMBLY` | union the six D.2--D.7 failure components into Corollary D.8's `9/T` budget and compose it with D.9 survival | compiled outer-measure union and event transport; the six component bounds and full-event projection remain hypotheses |
+| `DELAYED-BOBW-D10-D12-GAP-ORDERING-AUDIT` | audit the prefix/elimination width transport used between Appendix Lemmas D.10 and D.12 | compiled antitone-width diagnostic, exact reverse-direction canary, and conditional four-edge factor-20 consumer; the source lemma remains unresolved pending an endpoint/index repair or clarification |
 | `DELAYED-BOBW-CAUSAL-ACTION-MEASURE` | turn the line-15 vector into a causal one-round randomized law | compiled probability measure and observation-equivalence transport; measurable history kernel and recursive trajectory open |
 
 These leaves are deliberately small but source-semantic: they check the exact
@@ -77,7 +80,10 @@ The current library has rich finite-action, kernel, conditional-MGF, EXP3,
 Tsallis, and adaptive-trajectory infrastructure.  It now also has one
 source-exact elimination snapshot, a source-shaped good-event projection, the
 Corollary-D.8 union assembly, the deterministic optimal-arm survival consumer,
-and a causal measure-valued one-round action rule.  It does not yet
+the D.10/D.12 direction diagnostic and conditional factor-20 consumer, and a
+causal measure-valued one-round action rule.  The diagnostic identifies an
+unjustified displayed direction/indexing edge; it neither verifies nor
+refutes the source lemmas.  The library does not yet
 have the paper's complete delayed SAPO state machine, probability banks,
 measurable recursive sampling kernel, detection/switch semantics, the complete
 Definition-D.1 event, D.2--D.7 component probability producers, a proved

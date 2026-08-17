@@ -125,6 +125,26 @@ observation-equivalent hidden worlds yield the same measure.  Coordinate
 measurability, a Markov kernel over generated histories, action sampling, and
 the recursive delayed trajectory remain open.
 
+## Lemma D.10 to Lemma D.12 audit window
+
+Physical PDF pp. 26--27 use Lemma D.10 to prove the main-text Lemma 4.2
+ordering `Delta_i2 <= 20 * Delta_i1` when arm `i1` is eliminated before arm
+`i2`. The displayed D.12 proof needs exactly four edges: the D.10 upper gap
+bound at `i2`'s elimination, monotonic transport of `i2`'s width back to
+`i1`'s elimination round, D.10's factor-ten width comparison there, and the
+D.10 lower surrogate-gap bound for `i1`.
+
+The source's empirical width is inverse-square-root in the pull count. Under
+the printed prefix condition `n <= |S-tilde_i|`, the displayed D.10 line
+`width_i(S_:n) <= width_i(S-tilde_i)` points opposite to the canonical
+antitone count direction. Algorithm 5 also assigns `S-tilde_i = S` only after
+the current line-7 elimination test, while the proof says the arm was not
+eliminated on the states of `S`. This may be repairable by a different
+endpoint convention or a one-update comparison, but neither repair is stated
+in the frozen camera-ready. Lean work therefore records the direction
+diagnostic and a conditional factor-20 consumer, not an unconditional port of
+Lemma D.10/D.12.
+
 ## Hidden regularity and boundary
 
 The accounting, processing, allocation, and elimination implications are

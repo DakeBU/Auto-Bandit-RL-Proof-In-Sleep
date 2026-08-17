@@ -292,7 +292,10 @@ source-shaped good-event projection that derives `muStar <= ucbStar` and
 consumes an externally supplied failure budget; the Corollary-D.8 union
 assembly that combines three `1/T^2` and three `1/T` component bounds into the
 source's `9/T` budget and composes it with D.9 survival; and a causal one-round
-probability measure built from the existing finite-action law.
+probability measure built from the existing finite-action law.  A separate
+D.10-to-D.12 audit proves the source width's canonical antitonicity, compiles
+an exact reverse-direction canary, and packages the conditional four-edge
+factor-20 consumer over shared processed-prefix indices.
 
 This remains feasibility evidence only.  The complete Definition-D.1 event,
 the D.2--D.7 component concentration/counting producers, and the proved
@@ -302,9 +305,12 @@ regime laws, external adversarial algorithm, and the same-algorithm Theorems
 4.1/5.1 coupling remain planned.  The compiled Lemma-D.9 layer is an explicit
 deterministic implication under recorded certificate fields, not the full
 probabilistic source lemma.  No external paper endpoint is classified as
-compiled or audited.  The flagship currently contains 88 named
-source-semantic declarations; the generic multi-regime interface is counted
-separately.
+compiled or audited.  The flagship currently contains 99 named source-audit
+declarations, including 11 diagnostic/conditional declarations for the
+D.10-to-D.12 bridge; the generic multi-regime interface is counted separately.
+Those 11 declarations neither verify nor refute Lemmas D.10/D.12, main-text
+Lemma 4.2, or Theorem 4.1: the displayed endpoint/index direction still needs
+a source-faithful repair or clarification.
 
 The machine-readable route atlas is `lean-route-roadmap.json`.  It is the
 handoff contract between upper planning agents and lower Lean agents: each

@@ -1098,11 +1098,38 @@
       "evidence": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean; Tests/DelayedFeedbackPaperAuditCanary.lean; proof-obligations/PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY.md"
     },
     {
+      "id": "DELAYED-SAPO-D10-D12-GAP-ORDERING-AUDIT",
+      "title": "Lemma-D.10/D.12 width-direction diagnostic and conditional gap-ordering consumer",
+      "chapter": "frontier",
+      "status": "partial",
+      "informal": "Lean proves that the source inverse-square-root empirical width is antitone in a positive pull count, checks the exact scale-one count-one/count-four direction, and derives the displayed factor-20 D.12 conclusion from an explicit four-edge processed-prefix contract. This diagnoses a direction/indexing edge in the frozen PDF; it neither verifies nor refutes Lemmas D.10/D.12, main-text Lemma 4.2, or Theorem 4.1. A source-faithful endpoint/index repair or author clarification is still required.",
+      "declarations": [
+        "BanditRLProof.DelayedFeedback.sourceEmpiricalWidthScale",
+        "BanditRLProof.DelayedFeedback.sourceEmpiricalWidthScale_antitone",
+        "BanditRLProof.DelayedFeedback.sourceEmpiricalWidthScale_one_one",
+        "BanditRLProof.DelayedFeedback.sourceEmpiricalWidthScale_one_four",
+        "BanditRLProof.DelayedFeedback.not_sourceEmpiricalWidthScale_one_le_four",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.surrogateGap",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.surrogateGap_le_gap",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.gap_le_two_mul_surrogateGap",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.d12_gap_ordering_chain",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.gap_le_twenty_mul_gap_of_eliminationPrefixIndex_le"
+      ],
+      "depends_on": [],
+      "missing": [
+        "A source-faithful endpoint/index repair or author clarification for the displayed D.10 prefix-to-elimination width direction.",
+        "Instantiation of the four-edge contract on the recursive Delayed SAPO trajectory, including the correctly timed factor-ten comparison and gap endpoints.",
+        "Unconditional source Lemmas D.10/D.12, main-text Lemma 4.2, Theorem 4.1, and either regret endpoint."
+      ],
+      "evidence": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean; Tests/DelayedFeedbackPaperAuditCanary.lean; research-wiki/papers/neurips-2025-delayed-bobw-audit.md; proof-obligations/PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY.md"
+    },
+    {
       "id": "NEURIPS-2025-DELAYED-BOBW-CENTRAL-ENDPOINTS",
       "title": "Source-frozen delayed best-of-both-worlds endpoint audit",
       "chapter": "frontier",
       "status": "partial",
-      "informal": "The exact NeurIPS 2025 source is hash-frozen, a same-algorithm multi-regime contract compiles, and 88 source-semantic accounting, causality, processing, allocation, elimination, good-event-projection/union-assembly, and one-round action-law declarations compile. BanditRLlib does not yet implement the full Delayed SAPO trajectory, prove the D.2--D.7 component bounds on that trajectory, or prove either the stochastic or adversarial regret endpoint.",
+      "informal": "The exact NeurIPS 2025 source is hash-frozen, a same-algorithm multi-regime contract compiles, and 99 named source-audit declarations compile across accounting, causality, processing, allocation, elimination, good-event projection/union assembly, the one-round action law, and a D.10/D.12 width-direction diagnostic with a conditional factor-20 consumer. The diagnostic does not verify or refute Lemmas D.10/D.12, main-text Lemma 4.2, or Theorem 4.1; a source-faithful endpoint/index repair or clarification is still required. BanditRLlib does not yet implement the full Delayed SAPO trajectory, prove the D.2--D.7 component bounds on that trajectory, or prove either regret endpoint.",
       "declarations": [
         "BanditRLProof.DelayedFeedback.SameAlgorithmMultiRegimeContract",
         "BanditRLProof.DelayedFeedback.SameAlgorithmMultiRegimeContract.stochasticClaim",
@@ -1118,11 +1145,13 @@
         "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.optimal_mem_remainingActive_of_certificate",
         "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.measure_optimalSurvivalEventSet_compl_le_of_goodEvent",
         "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.measure_optimalSurvivalEventSet_compl_le_nine_div",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.gap_le_twenty_mul_gap_of_eliminationPrefixIndex_le",
         "BanditRLProof.DelayedFeedback.causalDelayedSAPOActionMeasureRule_eq_of_observation_equivalent"
       ],
       "missing": [
         "The complete Definition-D.1 event, its D.2--D.7 component probability producers, Delayed SAPO BSC/EAP state machines, switching rule, and ordered update semantics.",
         "A measurable causal randomized sampling kernel and recursively generated delayed-feedback trajectory law; only the one-round measure-valued rule now compiles.",
+        "A source-faithful repair or clarification of the D.10 prefix/elimination width direction and an unconditional D.12 / main-text Lemma 4.2 bridge.",
         "The stochastic-instance and oblivious-adversarial regret endpoints for the same algorithm identity."
       ],
       "evidence": "research-wiki/papers/prospective-audit-2025-freeze.json; research-wiki/papers/neurips-2025-delayed-bobw-audit.md; proof-obligations/PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY.md"

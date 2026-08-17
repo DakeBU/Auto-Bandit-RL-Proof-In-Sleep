@@ -1,6 +1,6 @@
 # Proof Blueprint: PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY
 
-Generated: `2026-08-17T17:10:08+00:00`
+Generated: `2026-08-17T18:02:10+00:00`
 
 ## Source Task
 
@@ -80,6 +80,12 @@ availability condition `s + delay s < t`.
   compose a recorded full-event projection with the D.9 optimal-survival
   consumer.  The six component concentration proofs and projection remain
   open upstream obligations.
+- [x] Audit the Lemma-D.10-to-D.12 gap-ordering bridge. The frozen PDF's
+  prefix-to-elimination width inequality points opposite to the inverse-square-
+  root width's count monotonicity. Compile the direction diagnostic and the
+  exact conditional factor-20 consumer over a shared processed-prefix index,
+  but keep Lemma 4.2 unverified pending a source-faithful endpoint repair or
+  clarification.
 - [x] Reuse the existing finite-action law to turn the certified line-15
   vector into a probability measure, and lift causal allocation rules to
   measure-valued rules that remain identical in observation-equivalent hidden
@@ -87,7 +93,8 @@ availability condition `s + delay s < t`.
 
 ## Nonclaims
 
-This task does not compile Theorem 4.1, full Lemma D.9, Lemma 4.2, Theorem
+This task does not compile Theorem 4.1, full Lemma D.9, unconditional Lemma
+D.10 or D.12, Lemma 4.2, Theorem
 5.1, Corollary 5.4, Algorithm 5, or a best-of-both-worlds endpoint.  The
 compiled Lemma-D.9 layer is only a one-snapshot deterministic implication plus
 an elimination-event probability-bound consumer.  The full Definition-D.1
@@ -100,6 +107,7 @@ regime endpoints to close in Lean.
 ## Gate
 
 ```bash
+lake env lean BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean
 lake env lean BanditRLProof/DelayedFeedback/Accounting.lean
 lake env lean BanditRLProof/DelayedFeedback/MultiRegimeContract.lean
 lake env lean BanditRLProof/DelayedFeedback/CausalView.lean
@@ -111,8 +119,10 @@ lake env lean Tests/DelayedFeedbackPaperAuditCanary.lean
 python3 tools/bandit.py check
 ```
 
-The full gate passed on 2026-08-17 after the isolated worktree was moved to a
-short Windows path to avoid an unrelated long-path `.olean` creation failure.
+The full 8,838-job Lean gate, proof-graph export, and 62-test Python suite
+passed again on 2026-08-18 after adding the D.10--D.12 audit layer.  The
+isolated worktree remains at a short Windows path to avoid an unrelated
+long-path `.olean` creation failure.
 
 
 ## Conversion Window Snapshot
@@ -244,6 +254,26 @@ observation-equivalent hidden worlds yield the same measure.  Coordinate
 measurability, a Markov kernel over generated histories, action sampling, and
 the recursive delayed trajectory remain open.
 
+## Lemma D.10 to Lemma D.12 audit window
+
+Physical PDF pp. 26--27 use Lemma D.10 to prove the main-text Lemma 4.2
+ordering `Delta_i2 <= 20 * Delta_i1` when arm `i1` is eliminated before arm
+`i2`. The displayed D.12 proof needs exactly four edges: the D.10 upper gap
+bound at `i2`'s elimination, monotonic transport of `i2`'s width back to
+`i1`'s elimination round, D.10's factor-ten width comparison there, and the
+D.10 lower surrogate-gap bound for `i1`.
+
+The source's empirical width is inverse-square-root in the pull count. Under
+the printed prefix condition `n <= |S-tilde_i|`, the displayed D.10 line
+`width_i(S_:n) <= width_i(S-tilde_i)` points opposite to the canonical
+antitone count direction. Algorithm 5 also assigns `S-tilde_i = S` only after
+the current line-7 elimination test, while the proof says the arm was not
+eliminated on the states of `S`. This may be repairable by a different
+endpoint convention or a one-update comparison, but neither repair is stated
+in the frozen camera-ready. Lean work therefore records the direction
+diagnostic and a conditional factor-20 consumer, not an unconditional port of
+Lemma D.10/D.12.
+
 ## Hidden regularity and boundary
 
 The accounting, processing, allocation, and elimination implications are
@@ -281,6 +311,7 @@ open.
 | `DELAYED-BOBW-OPTIMAL-ARM-SURVIVAL` | Algorithm 5 lines 7--8 and the deterministic core of Lemma D.9: an optimal arm satisfying an explicit confidence certificate is not eliminated | real absolute-value interval, strict line-7 test, finite-set difference; source Lemma D.9 | package the exact elimination snapshot, derive the empirical upper inequality, and prove post-elimination nonemptiness | compiled deterministic implication; recursive full Lemma D.9 open |
 | `DELAYED-BOBW-GOOD-EVENT-D9-PROJECTION` | derive `muStar <= ucbStar` from both source upper-confidence surfaces and bound optimal-arm elimination by the complement of the elimination good event | finite infimum, `min`, event inclusion, measure monotonicity; source Definition D.1 and Lemma D.9 | package the elimination slice, construct the survival certificate, and expose a failure-budget consumer | compiled projection/consumer; full event and D.2--D.7 component producers open |
 | `DELAYED-BOBW-D8-D9-ASSEMBLY` | combine the six D.2--D.7 failure components into Corollary D.8's `9/T` budget and transport it through D.9 survival | finite outer-measure union, explicit `1/T^2` and `1/T` arithmetic, complement inclusion | name the six failure events, prove the union budget, and compose an explicit full-event projection with optimal-arm survival | compiled union/composition; six concentration proofs and semantic projection remain open |
+| `DELAYED-BOBW-D10-D12-GAP-ORDERING-AUDIT` | audit the width/gap chain used by Appendix Lemma D.10 and expose the exact four inequalities consumed by Lemma D.12 / main-text Lemma 4.2 | `MLIB-ORDER-ALGEBRA`, `MLIB-REAL-LOG-SQRT`; source empirical-width definition and physical PDF pp. 26--27 | prove the canonical inverse-square-root width is antitone in its count, compile a concrete direction counterexample, and prove the D.12 factor-20 consumer only from the four named edges it consumes | compiled diagnostic and conditional consumer; the PDF's displayed prefix-to-elimination width direction is opposite to the canonical antitone direction, so the source lemma remains unresolved without a repair or clarification |
 | `DELAYED-BOBW-CAUSAL-ACTION-MEASURE` | line-15 vector induces a probability measure and a causal measure-valued decision rule | local `Exp3.FiniteActionDistribution`, `finiteActionMeasure`; causal observation equivalence | package explicit EAP premises, reuse the finite-action law, and transport equality through `ActionTimeView` | compiled one-round action law; measurable history kernel and recursive generated trajectory open |
 
 ## Active leaf contract
@@ -334,6 +365,28 @@ classified as compiled or audited.
 - Mathlib status: martingale and conditional-MGF infrastructure exists locally,
   but no imported theorem currently discharges this exact delayed adaptive
   prefix event.
+
+## Lemma D.10/D.12 source-direction audit
+
+- Source surface: `width_i(S) = min(1, sqrt(2 log(T) / n_i(S)))`, the
+  displayed prefix condition `n <= |S-tilde_i|`, and the D.12 chain on physical
+  PDF pp. 26--27.
+- Local APIs/imports: `Real.sqrt_le_sqrt`, ordered real division,
+  `min_le_min_left`, `linarith`, and `norm_num`.
+- Intended route: first prove the width is antitone as its positive count
+  grows; then isolate a small exact numerical instance showing that the
+  reverse prefix-to-later inequality is not an order consequence. Separately
+  package the four D.12 edges: the later arm's D.10 gap upper bound, width
+  antitonicity across elimination rounds, D.10's factor-ten cross-arm width
+  comparison at the earlier round, and the earlier arm's surrogate-gap lower
+  bound.
+- Hidden regularity: nonnegative width scale, positive counts for division,
+  ordered processed-prefix indices, and the D.10 endpoint inequalities.  The
+  prefix index is not wall-clock action time.
+- Boundary: this audit may compile a conditional D.12 consumer, but it must not
+  classify Lemma D.10, Lemma D.12, Lemma 4.2, or Theorem 4.1 as verified until
+  the prefix/elimination indexing edge is repaired from the algorithm or
+  clarified by the source authors.
 
 
 ## Completion Gap Audit
@@ -45319,6 +45372,94 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/DelayedFeedback/Processing.lean",
     "line": 79,
     "statement": "theorem outstandingAt_disjoint_newlyObservedBefore (delay : Nat \u2192 Nat) (processed : Finset Nat) (t : Nat) : Disjoint (outstandingAt delay t) (newlyObservedBefore delay processed t)"
+  },
+  {
+    "kind": "def",
+    "name": "sourceEmpiricalWidthScale",
+    "full_name": "BanditRLProof.DelayedFeedback.sourceEmpiricalWidthScale",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+    "line": 12,
+    "statement": "noncomputable def sourceEmpiricalWidthScale (scale count : Real) : Real"
+  },
+  {
+    "kind": "theorem",
+    "name": "sourceEmpiricalWidthScale_antitone",
+    "full_name": "BanditRLProof.DelayedFeedback.sourceEmpiricalWidthScale_antitone",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+    "line": 18,
+    "statement": "theorem sourceEmpiricalWidthScale_antitone (scale countEarlier countLater : Real) (hscale : 0 <= scale) (hcountEarlier : 0 < countEarlier) (hcount : countEarlier <= countLater) : sourceEmpiricalWidthScale scale countLater <= sourceEmpiricalWidthScale scale countEarlier"
+  },
+  {
+    "kind": "theorem",
+    "name": "sourceEmpiricalWidthScale_one_one",
+    "full_name": "BanditRLProof.DelayedFeedback.sourceEmpiricalWidthScale_one_one",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+    "line": 34,
+    "statement": "theorem sourceEmpiricalWidthScale_one_one : sourceEmpiricalWidthScale 1 1 = 1"
+  },
+  {
+    "kind": "theorem",
+    "name": "sourceEmpiricalWidthScale_one_four",
+    "full_name": "BanditRLProof.DelayedFeedback.sourceEmpiricalWidthScale_one_four",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+    "line": 41,
+    "statement": "theorem sourceEmpiricalWidthScale_one_four : sourceEmpiricalWidthScale 1 4 = (1 / 2 : Real)"
+  },
+  {
+    "kind": "theorem",
+    "name": "not_sourceEmpiricalWidthScale_one_le_four",
+    "full_name": "BanditRLProof.DelayedFeedback.not_sourceEmpiricalWidthScale_one_le_four",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+    "line": 49,
+    "statement": "theorem not_sourceEmpiricalWidthScale_one_le_four : not (sourceEmpiricalWidthScale 1 1 <= sourceEmpiricalWidthScale 1 4)"
+  },
+  {
+    "kind": "structure",
+    "name": "DelayedSAPOD10D12GapOrderingContract",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+    "line": 59,
+    "statement": "structure DelayedSAPOD10D12GapOrderingContract (K : Nat) where"
+  },
+  {
+    "kind": "def",
+    "name": "surrogateGap",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.surrogateGap",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+    "line": 76,
+    "statement": "noncomputable def surrogateGap {K : Nat} (contract : DelayedSAPOD10D12GapOrderingContract K) (i : Fin K) : Real"
+  },
+  {
+    "kind": "theorem",
+    "name": "surrogateGap_le_gap",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.surrogateGap_le_gap",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+    "line": 82,
+    "statement": "theorem surrogateGap_le_gap {K : Nat} (contract : DelayedSAPOD10D12GapOrderingContract K) (i : Fin K) : contract.surrogateGap i <= contract.gap i"
+  },
+  {
+    "kind": "theorem",
+    "name": "gap_le_two_mul_surrogateGap",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.gap_le_two_mul_surrogateGap",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+    "line": 90,
+    "statement": "theorem gap_le_two_mul_surrogateGap {K : Nat} (contract : DelayedSAPOD10D12GapOrderingContract K) (i : Fin K) : contract.gap i <= 2 * contract.surrogateGap i"
+  },
+  {
+    "kind": "theorem",
+    "name": "d12_gap_ordering_chain",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.d12_gap_ordering_chain",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+    "line": 101,
+    "statement": "theorem d12_gap_ordering_chain {K : Nat} (contract : DelayedSAPOD10D12GapOrderingContract K) (iEarlier iLater : Fin K) (horder : contract.eliminationPrefixIndex iEarlier <= contract.eliminationPrefixIndex iLater) : contract.gap iLater <= 16 * contract.widthAt iLater (contract.eliminationPrefixIndex iLater) /\\ 16 * contract.widthAt iLater (contract.eliminationPrefixIndex iLater) <= 16 * contract.widthAt iLater (contract.eliminationPrefixIndex iEarlier) /\\ 16 * contract.widthAt iLater (contract.eliminationPrefixIndex iEarlier) <= 160 * contract.widthAt iEarlier (contract.eliminationPrefixIndex iEarlier) /\\ 160 * contract.widthAt iEarlier (contract.eliminationPrefixIndex iEarlier) <= 20 * contract.gap iEarlier"
+  },
+  {
+    "kind": "theorem",
+    "name": "gap_le_twenty_mul_gap_of_eliminationPrefixIndex_le",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.gap_le_twenty_mul_gap_of_eliminationPrefixIndex_le",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+    "line": 131,
+    "statement": "theorem gap_le_twenty_mul_gap_of_eliminationPrefixIndex_le {K : Nat} (contract : DelayedSAPOD10D12GapOrderingContract K) (iEarlier iLater : Fin K) (horder : contract.eliminationPrefixIndex iEarlier <= contract.eliminationPrefixIndex iLater) : contract.gap iLater <= 20 * contract.gap iEarlier"
   },
   {
     "kind": "structure",

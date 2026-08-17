@@ -74,6 +74,12 @@ availability condition `s + delay s < t`.
   compose a recorded full-event projection with the D.9 optimal-survival
   consumer.  The six component concentration proofs and projection remain
   open upstream obligations.
+- [x] Audit the Lemma-D.10-to-D.12 gap-ordering bridge. The frozen PDF's
+  prefix-to-elimination width inequality points opposite to the inverse-square-
+  root width's count monotonicity. Compile the direction diagnostic and the
+  exact conditional factor-20 consumer over a shared processed-prefix index,
+  but keep Lemma 4.2 unverified pending a source-faithful endpoint repair or
+  clarification.
 - [x] Reuse the existing finite-action law to turn the certified line-15
   vector into a probability measure, and lift causal allocation rules to
   measure-valued rules that remain identical in observation-equivalent hidden
@@ -81,7 +87,8 @@ availability condition `s + delay s < t`.
 
 ## Nonclaims
 
-This task does not compile Theorem 4.1, full Lemma D.9, Lemma 4.2, Theorem
+This task does not compile Theorem 4.1, full Lemma D.9, unconditional Lemma
+D.10 or D.12, Lemma 4.2, Theorem
 5.1, Corollary 5.4, Algorithm 5, or a best-of-both-worlds endpoint.  The
 compiled Lemma-D.9 layer is only a one-snapshot deterministic implication plus
 an elimination-event probability-bound consumer.  The full Definition-D.1
@@ -94,6 +101,7 @@ regime endpoints to close in Lean.
 ## Gate
 
 ```bash
+lake env lean BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean
 lake env lean BanditRLProof/DelayedFeedback/Accounting.lean
 lake env lean BanditRLProof/DelayedFeedback/MultiRegimeContract.lean
 lake env lean BanditRLProof/DelayedFeedback/CausalView.lean
@@ -105,5 +113,7 @@ lake env lean Tests/DelayedFeedbackPaperAuditCanary.lean
 python3 tools/bandit.py check
 ```
 
-The full gate passed on 2026-08-17 after the isolated worktree was moved to a
-short Windows path to avoid an unrelated long-path `.olean` creation failure.
+The full 8,838-job Lean gate, proof-graph export, and 62-test Python suite
+passed again on 2026-08-18 after adding the D.10--D.12 audit layer.  The
+isolated worktree remains at a short Windows path to avoid an unrelated
+long-path `.olean` creation failure.
