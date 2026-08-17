@@ -58,12 +58,22 @@ availability condition `s + delay s < t`.
 - [x] Compile Algorithm 5 line 15's active-arm allocation.  Given a nonempty
   active set, nonnegative eliminated-arm probabilities, and eliminated mass at
   most one, every coordinate is nonnegative and the full vector sums to one.
+- [x] Compile Algorithm 5 lines 7--8 as an elimination snapshot and close the
+  deterministic core of source Lemma D.9: the optimal arm survives whenever
+  the relevant stochastic-good-event confidence and `ucbStar` certificates
+  hold.  Consequently the post-elimination active set is nonempty.
+- [x] Reuse the existing finite-action law to turn the certified line-15
+  vector into a probability measure, and lift causal allocation rules to
+  measure-valued rules that remain identical in observation-equivalent hidden
+  worlds.  Measurable history kernels and recursive trajectories remain open.
 
 ## Nonclaims
 
-This task does not compile Theorem 4.1, Lemma 4.2, Theorem 5.1, Corollary 5.4,
-Algorithm 5, or a best-of-both-worlds endpoint.  It does not show that the
-external paper is correct or audited.  Later promotion requires the same
+This task does not compile Theorem 4.1, full Lemma D.9, Lemma 4.2, Theorem
+5.1, Corollary 5.4, Algorithm 5, or a best-of-both-worlds endpoint.  The
+compiled Lemma-D.9 layer is only its deterministic implication under explicit
+good-event projections; the probability of that event is open.  This task
+does not show that the external paper is correct or audited.  Later promotion requires the same
 algorithm, initialization, tuning, information structure, comparator, and
 regime endpoints to close in Lean.
 
@@ -75,6 +85,8 @@ lake env lean BanditRLProof/DelayedFeedback/MultiRegimeContract.lean
 lake env lean BanditRLProof/DelayedFeedback/CausalView.lean
 lake env lean BanditRLProof/DelayedFeedback/Processing.lean
 lake env lean BanditRLProof/DelayedFeedback/ActiveAllocation.lean
+lake env lean BanditRLProof/DelayedFeedback/Elimination.lean
+lake env lean BanditRLProof/DelayedFeedback/ActionLaw.lean
 lake env lean Tests/DelayedFeedbackPaperAuditCanary.lean
 python3 tools/bandit.py check
 ```

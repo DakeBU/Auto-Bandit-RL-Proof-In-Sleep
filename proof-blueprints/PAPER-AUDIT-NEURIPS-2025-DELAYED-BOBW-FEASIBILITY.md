@@ -1,6 +1,6 @@
 # Proof Blueprint: PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY
 
-Generated: `2026-08-17T14:40:53+00:00`
+Generated: `2026-08-17T15:40:28+00:00`
 
 ## Source Task
 
@@ -64,12 +64,22 @@ availability condition `s + delay s < t`.
 - [x] Compile Algorithm 5 line 15's active-arm allocation.  Given a nonempty
   active set, nonnegative eliminated-arm probabilities, and eliminated mass at
   most one, every coordinate is nonnegative and the full vector sums to one.
+- [x] Compile Algorithm 5 lines 7--8 as an elimination snapshot and close the
+  deterministic core of source Lemma D.9: the optimal arm survives whenever
+  the relevant stochastic-good-event confidence and `ucbStar` certificates
+  hold.  Consequently the post-elimination active set is nonempty.
+- [x] Reuse the existing finite-action law to turn the certified line-15
+  vector into a probability measure, and lift causal allocation rules to
+  measure-valued rules that remain identical in observation-equivalent hidden
+  worlds.  Measurable history kernels and recursive trajectories remain open.
 
 ## Nonclaims
 
-This task does not compile Theorem 4.1, Lemma 4.2, Theorem 5.1, Corollary 5.4,
-Algorithm 5, or a best-of-both-worlds endpoint.  It does not show that the
-external paper is correct or audited.  Later promotion requires the same
+This task does not compile Theorem 4.1, full Lemma D.9, Lemma 4.2, Theorem
+5.1, Corollary 5.4, Algorithm 5, or a best-of-both-worlds endpoint.  The
+compiled Lemma-D.9 layer is only its deterministic implication under explicit
+good-event projections; the probability of that event is open.  This task
+does not show that the external paper is correct or audited.  Later promotion requires the same
 algorithm, initialization, tuning, information structure, comparator, and
 regime endpoints to close in Lean.
 
@@ -81,6 +91,8 @@ lake env lean BanditRLProof/DelayedFeedback/MultiRegimeContract.lean
 lake env lean BanditRLProof/DelayedFeedback/CausalView.lean
 lake env lean BanditRLProof/DelayedFeedback/Processing.lean
 lake env lean BanditRLProof/DelayedFeedback/ActiveAllocation.lean
+lake env lean BanditRLProof/DelayedFeedback/Elimination.lean
+lake env lean BanditRLProof/DelayedFeedback/ActionLaw.lean
 lake env lean Tests/DelayedFeedbackPaperAuditCanary.lean
 python3 tools/bandit.py check
 ```
@@ -97,8 +109,10 @@ Task: `PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY`
 
 Status: `source-frozen; deterministic availability, action-time count,
 one-based/end-of-round sigma bridge, generic shared-identity interface, causal
-action-time view, and set-level new-arrival processing compiled; Delayed SAPO
-active-arm allocation compiled; Delayed SAPO state and paper endpoints planned`
+action-time view, set-level new-arrival processing, line-7/8 optimal-arm
+survival, line-15 allocation, and a causal one-round action measure compiled;
+full Delayed SAPO state, measurable generated trajectory, and paper endpoints
+planned`
 
 ## Source window
 
@@ -186,11 +200,33 @@ coordinate formulas, nonnegativity under nonnegative eliminated coordinates
 whose sum is at most one, and exact total mass one.  It does not yet prove that
 EAP maintains those hypotheses or construct the sampling kernel.
 
+## Elimination and one-round action law
+
+`DelayedSAPOEliminationSnapshot` is the exact data read by Algorithm 5 line 7,
+not a representation of the full algorithm.  Its eliminated and remaining
+sets use the source's strict test
+`ucbStar < empiricalMean i - 9 * empiricalWidth i`.  The compiled
+`optimal_mem_remainingActive_of_certificate` theorem formalizes the
+deterministic implication in source Lemma D.9: the empirical-confidence and
+`muStar <= ucbStar` projections of the stochastic good event keep the optimal
+arm active.  This supplies the nonempty-active premise used by line 15, but it
+does not prove the probability of the source good event or full Lemma D.9.
+
+`DelayedSAPOAllocation` retains EAP's still-open nonnegativity and mass
+hypotheses as explicit fields.  Under them, the existing finite-action law
+constructs a genuine one-round probability measure.  A causal allocation rule
+can therefore return a probability measure using only `ActionTimeView`, and
+observation-equivalent hidden worlds yield the same measure.  Coordinate
+measurability, a Markov kernel over generated histories, action sampling, and
+the recursive delayed trajectory remain open.
+
 ## Hidden regularity and boundary
 
-The compiled leaves are deterministic and need only natural-valued delays and a
-finite prefix.  It introduces no loss law, probability measure, filtration,
-algorithm, horizon theorem, or regret conclusion.  Subsequent leaves must
+The accounting, processing, allocation, and elimination implications are
+deterministic.  The action-law layer introduces a finite probability measure
+only after explicit line-15 simplex premises; it does not introduce a loss law,
+history measure, filtration, generated algorithm, horizon theorem, or regret
+conclusion.  Subsequent leaves must
 separately encode the source's oblivious delays, unknown-at-action-time
 information constraint, stochastic iid loss regime, adversarial loss regime,
 same-algorithm identity, external `ALG` contract, and expected fixed-arm
@@ -218,6 +254,8 @@ open.
 | `DELAYED-BOBW-CAUSAL-ACTION-TIME-VIEW` | expose past actions and only losses satisfying the source strict-availability predicate | local history interfaces; source Section 2 and Algorithm 5 | option-valued pre-action view plus observation-equivalence theorem for every typed decision rule | compiled interface; randomized Delayed SAPO kernel open |
 | `DELAYED-BOBW-NEWLY-OBSERVED-PROCESSING` | set-level content of Algorithm 5's `B(t) \ S` loop | `Finset.sdiff`, disjointness, monotone finite prefixes; source Algorithm 5 lines 2--4 | prove availability monotonicity and exact update after processing all new arrivals | compiled set invariant; sequence order and BSC updates open |
 | `DELAYED-BOBW-ACTIVE-EQUAL-ALLOCATION` | Algorithm 5 line 15 residual mass divided equally among active arms | finite real sums, active/inactive partition, field normalization | define the full probability vector and prove coordinate nonnegativity plus total mass one | compiled allocation leaf; EAP bounds supplying inactive hypotheses open |
+| `DELAYED-BOBW-OPTIMAL-ARM-SURVIVAL` | Algorithm 5 lines 7--8 and the deterministic core of Lemma D.9: an optimal arm satisfying the good-event confidence and `muStar <= ucbStar` projections is not eliminated | real absolute-value interval, strict line-7 test, finite-set difference; source Lemma D.9 | package the exact elimination snapshot, derive the empirical upper inequality, and prove post-elimination nonemptiness | compiled deterministic implication; stochastic good-event probability and full Lemma D.9 open |
+| `DELAYED-BOBW-CAUSAL-ACTION-MEASURE` | line-15 vector induces a probability measure and a causal measure-valued decision rule | local `Exp3.FiniteActionDistribution`, `finiteActionMeasure`; causal observation equivalence | package explicit EAP premises, reuse the finite-action law, and transport equality through `ActionTimeView` | compiled one-round action law; measurable history kernel and recursive generated trajectory open |
 
 ## Active leaf contract
 
@@ -248,6 +286,27 @@ open.
 
 Until those close, the external audit remains partial and no paper theorem is
 classified as compiled or audited.
+
+## Concentration ledger for the next stochastic leaf
+
+- Random process: armwise empirical losses over processed delayed feedback,
+  together with the importance-weighted estimator used by BSC.
+- Filtration: the pre-action history generated from `ActionTimeView`; sampled
+  actions and newly returned feedback must be adapted to successive histories.
+- Mean: armwise stochastic mean `mu_i`; delays remain oblivious-adversarial.
+- Variance/range: losses lie in `[0,1]`; the importance-weighted branch also
+  needs the source lower bound on the action probability.
+- Exact event: the Definition-D.1 simultaneous empirical-confidence fields
+  needed by Lemma D.9, including the separate certificate `muStar <= ucbStar`.
+- Source: physical-PDF Appendix D, Definition D.1 and Lemmas D.2--D.3; the
+  deterministic consumer is Lemma D.9.
+- Mode: arm-uniform and processed-prefix-uniform, hence union bounded; it is
+  not yet a locally proved anytime confidence theorem.
+- Hidden regularity: measurability, adaptedness, armwise iid stochastic losses,
+  positive sampling probability, boundedness, and integrability remain open.
+- Mathlib status: martingale and conditional-MGF infrastructure exists locally,
+  but no imported theorem currently discharges this exact delayed adaptive
+  prefix event.
 
 
 ## Completion Gap Audit
@@ -44819,6 +44878,86 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "statement": "theorem paperMissingCount_le_paperSigmaMaxThrough (delay : Nat \u2192 Nat) {t horizon : Nat} (ht : t \u2264 horizon) : paperMissingCount delay t \u2264 paperSigmaMaxThrough delay horizon"
   },
   {
+    "kind": "structure",
+    "name": "DelayedSAPOAllocation",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOAllocation",
+    "file": "BanditRLProof/DelayedFeedback/ActionLaw.lean",
+    "line": 13,
+    "statement": "structure DelayedSAPOAllocation (K : Nat) where"
+  },
+  {
+    "kind": "def",
+    "name": "probability",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOAllocation.probability",
+    "file": "BanditRLProof/DelayedFeedback/ActionLaw.lean",
+    "line": 26,
+    "statement": "noncomputable def probability {K : Nat} (allocation : DelayedSAPOAllocation K) (i : Fin K) : \u211d"
+  },
+  {
+    "kind": "theorem",
+    "name": "probability_nonnegative",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOAllocation.probability_nonnegative",
+    "file": "BanditRLProof/DelayedFeedback/ActionLaw.lean",
+    "line": 30,
+    "statement": "theorem probability_nonnegative {K : Nat} (allocation : DelayedSAPOAllocation K) (i : Fin K) : 0 \u2264 allocation.probability i"
+  },
+  {
+    "kind": "theorem",
+    "name": "sum_probability_eq_one",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOAllocation.sum_probability_eq_one",
+    "file": "BanditRLProof/DelayedFeedback/ActionLaw.lean",
+    "line": 37,
+    "statement": "theorem sum_probability_eq_one {K : Nat} (allocation : DelayedSAPOAllocation K) : \u2211 i, allocation.probability i = 1"
+  },
+  {
+    "kind": "theorem",
+    "name": "finiteActionDistribution",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOAllocation.finiteActionDistribution",
+    "file": "BanditRLProof/DelayedFeedback/ActionLaw.lean",
+    "line": 45,
+    "statement": "theorem finiteActionDistribution {K : Nat} (allocation : DelayedSAPOAllocation K) : Exp3.FiniteActionDistribution (Finset.univ : Finset (Fin K)) allocation.probability where"
+  },
+  {
+    "kind": "def",
+    "name": "actionMeasure",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOAllocation.actionMeasure",
+    "file": "BanditRLProof/DelayedFeedback/ActionLaw.lean",
+    "line": 57,
+    "statement": "noncomputable def actionMeasure {K : Nat} (allocation : DelayedSAPOAllocation K) : Measure (Fin K)"
+  },
+  {
+    "kind": "theorem",
+    "name": "actionMeasure_isProbabilityMeasure",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOAllocation.actionMeasure_isProbabilityMeasure",
+    "file": "BanditRLProof/DelayedFeedback/ActionLaw.lean",
+    "line": 61,
+    "statement": "theorem actionMeasure_isProbabilityMeasure {K : Nat} (allocation : DelayedSAPOAllocation K) : IsProbabilityMeasure allocation.actionMeasure"
+  },
+  {
+    "kind": "def",
+    "name": "causalDelayedSAPOActionMeasureRule",
+    "full_name": "BanditRLProof.DelayedFeedback.causalDelayedSAPOActionMeasureRule",
+    "file": "BanditRLProof/DelayedFeedback/ActionLaw.lean",
+    "line": 72,
+    "statement": "noncomputable def causalDelayedSAPOActionMeasureRule {K : Nat} {Loss : Type*} (rule : CausalDecisionRule (Fin K) Loss (DelayedSAPOAllocation K)) : CausalDecisionRule (Fin K) Loss (Measure (Fin K))"
+  },
+  {
+    "kind": "theorem",
+    "name": "causalDelayedSAPOActionMeasureRule_isProbabilityMeasure",
+    "full_name": "BanditRLProof.DelayedFeedback.causalDelayedSAPOActionMeasureRule_isProbabilityMeasure",
+    "file": "BanditRLProof/DelayedFeedback/ActionLaw.lean",
+    "line": 79,
+    "statement": "theorem causalDelayedSAPOActionMeasureRule_isProbabilityMeasure {K : Nat} {Loss : Type*} (rule : CausalDecisionRule (Fin K) Loss (DelayedSAPOAllocation K)) (t : Nat) (view : ActionTimeView (Fin K) Loss) : IsProbabilityMeasure (causalDelayedSAPOActionMeasureRule rule t view)"
+  },
+  {
+    "kind": "theorem",
+    "name": "causalDelayedSAPOActionMeasureRule_eq_of_observation_equivalent",
+    "full_name": "BanditRLProof.DelayedFeedback.causalDelayedSAPOActionMeasureRule_eq_of_observation_equivalent",
+    "file": "BanditRLProof/DelayedFeedback/ActionLaw.lean",
+    "line": 89,
+    "statement": "theorem causalDelayedSAPOActionMeasureRule_eq_of_observation_equivalent {K : Nat} {Loss : Type*} (rule : CausalDecisionRule (Fin K) Loss (DelayedSAPOAllocation K)) (delay\u2081 delay\u2082 : Nat \u2192 Nat) (action\u2081 action\u2082 : Nat \u2192 Fin K) (loss\u2081 loss\u2082 : Nat \u2192 Loss) (t : Nat) (hvisible : observedBefore delay\u2081 t = observedBefore delay\u2082 t) (haction : \u2200 s, s < t \u2192 action\u2081 s = action\u2082 s) (hloss : \u2200 s, s \u2208 observedBefore delay\u2081 t \u2192 loss\u2081 s = loss\u2082 s) : causalDelayedSAPOActionMeasureRule rule t (actionTimeViewAt delay\u2081 action\u2081 loss\u2081 t) = causalDelayedSAPOActionMeasureRule rule t (actionTimeViewAt delay\u2082 action\u2082 loss\u2082 t)"
+  },
+  {
     "kind": "def",
     "name": "inactiveArms",
     "full_name": "BanditRLProof.DelayedFeedback.inactiveArms",
@@ -44969,6 +45108,78 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/DelayedFeedback/CausalView.lean",
     "line": 122,
     "statement": "theorem causalDecision_eq_of_observation_equivalent {Action : Type uAction} {Loss : Type uLoss} {Decision : Type uDecision} (rule : CausalDecisionRule Action Loss Decision) (delay\u2081 delay\u2082 : Nat \u2192 Nat) (action\u2081 action\u2082 : Nat \u2192 Action) (loss\u2081 loss\u2082 : Nat \u2192 Loss) (t : Nat) (hvisible : observedBefore delay\u2081 t = observedBefore delay\u2082 t) (haction : \u2200 s, s < t \u2192 action\u2081 s = action\u2082 s) (hloss : \u2200 s, s \u2208 observedBefore delay\u2081 t \u2192 loss\u2081 s = loss\u2082 s) : rule t (actionTimeViewAt delay\u2081 action\u2081 loss\u2081 t) = rule t (actionTimeViewAt delay\u2082 action\u2082 loss\u2082 t)"
+  },
+  {
+    "kind": "structure",
+    "name": "DelayedSAPOEliminationSnapshot",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot",
+    "file": "BanditRLProof/DelayedFeedback/Elimination.lean",
+    "line": 12,
+    "statement": "structure DelayedSAPOEliminationSnapshot (K : Nat) where"
+  },
+  {
+    "kind": "def",
+    "name": "eliminated",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.eliminated",
+    "file": "BanditRLProof/DelayedFeedback/Elimination.lean",
+    "line": 21,
+    "statement": "noncomputable def eliminated {K : Nat} (snapshot : DelayedSAPOEliminationSnapshot K) : Finset (Fin K)"
+  },
+  {
+    "kind": "def",
+    "name": "remainingActive",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.remainingActive",
+    "file": "BanditRLProof/DelayedFeedback/Elimination.lean",
+    "line": 29,
+    "statement": "noncomputable def remainingActive {K : Nat} (snapshot : DelayedSAPOEliminationSnapshot K) : Finset (Fin K)"
+  },
+  {
+    "kind": "theorem",
+    "name": "mem_eliminated_iff",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.mem_eliminated_iff",
+    "file": "BanditRLProof/DelayedFeedback/Elimination.lean",
+    "line": 35,
+    "statement": "theorem mem_eliminated_iff {K : Nat} (snapshot : DelayedSAPOEliminationSnapshot K) (i : Fin K) : i \u2208 snapshot.eliminated \u2194 i \u2208 snapshot.active \u2227 snapshot.ucbStar < snapshot.empiricalMean i - (9 : \u211d) * snapshot.empiricalWidth i"
+  },
+  {
+    "kind": "theorem",
+    "name": "mem_remainingActive_iff",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.mem_remainingActive_iff",
+    "file": "BanditRLProof/DelayedFeedback/Elimination.lean",
+    "line": 45,
+    "statement": "theorem mem_remainingActive_iff {K : Nat} (snapshot : DelayedSAPOEliminationSnapshot K) (i : Fin K) : i \u2208 snapshot.remainingActive \u2194 i \u2208 snapshot.active \u2227 snapshot.empiricalMean i - (9 : \u211d) * snapshot.empiricalWidth i \u2264 snapshot.ucbStar"
+  },
+  {
+    "kind": "structure",
+    "name": "OptimalArmSurvivalCertificate",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.OptimalArmSurvivalCertificate",
+    "file": "BanditRLProof/DelayedFeedback/Elimination.lean",
+    "line": 61,
+    "statement": "structure OptimalArmSurvivalCertificate {K : Nat} (snapshot : DelayedSAPOEliminationSnapshot K) (mean : Fin K \u2192 \u211d) (optimal : Fin K) : Prop where"
+  },
+  {
+    "kind": "theorem",
+    "name": "optimal_mem_remainingActive_of_certificate",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.optimal_mem_remainingActive_of_certificate",
+    "file": "BanditRLProof/DelayedFeedback/Elimination.lean",
+    "line": 74,
+    "statement": "theorem optimal_mem_remainingActive_of_certificate {K : Nat} (snapshot : DelayedSAPOEliminationSnapshot K) (mean : Fin K \u2192 \u211d) (optimal : Fin K) (certificate : OptimalArmSurvivalCertificate snapshot mean optimal) : optimal \u2208 snapshot.remainingActive"
+  },
+  {
+    "kind": "theorem",
+    "name": "remainingActive_nonempty_of_certificate",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.remainingActive_nonempty_of_certificate",
+    "file": "BanditRLProof/DelayedFeedback/Elimination.lean",
+    "line": 92,
+    "statement": "theorem remainingActive_nonempty_of_certificate {K : Nat} (snapshot : DelayedSAPOEliminationSnapshot K) (mean : Fin K \u2192 \u211d) (optimal : Fin K) (certificate : OptimalArmSurvivalCertificate snapshot mean optimal) : snapshot.remainingActive.Nonempty"
+  },
+  {
+    "kind": "theorem",
+    "name": "sum_delayedSAPOProbability_after_elimination_eq_one",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.sum_delayedSAPOProbability_after_elimination_eq_one",
+    "file": "BanditRLProof/DelayedFeedback/Elimination.lean",
+    "line": 103,
+    "statement": "theorem sum_delayedSAPOProbability_after_elimination_eq_one {K : Nat} (snapshot : DelayedSAPOEliminationSnapshot K) (mean : Fin K \u2192 \u211d) (optimal : Fin K) (certificate : OptimalArmSurvivalCertificate snapshot mean optimal) (inactiveProbability : Fin K \u2192 \u211d) : \u2211 i, delayedSAPOProbability snapshot.remainingActive inactiveProbability i = 1"
   },
   {
     "kind": "structure",

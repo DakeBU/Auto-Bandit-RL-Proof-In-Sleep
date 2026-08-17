@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-17T14:40:49+00:00",
+  "generated": "2026-08-17T15:40:22+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -15002,6 +15002,86 @@
       "statement": "theorem paperMissingCount_le_paperSigmaMaxThrough (delay : Nat \u2192 Nat) {t horizon : Nat} (ht : t \u2264 horizon) : paperMissingCount delay t \u2264 paperSigmaMaxThrough delay horizon"
     },
     {
+      "kind": "structure",
+      "name": "DelayedSAPOAllocation",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOAllocation",
+      "file": "BanditRLProof/DelayedFeedback/ActionLaw.lean",
+      "line": 13,
+      "statement": "structure DelayedSAPOAllocation (K : Nat) where"
+    },
+    {
+      "kind": "def",
+      "name": "probability",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOAllocation.probability",
+      "file": "BanditRLProof/DelayedFeedback/ActionLaw.lean",
+      "line": 26,
+      "statement": "noncomputable def probability {K : Nat} (allocation : DelayedSAPOAllocation K) (i : Fin K) : \u211d"
+    },
+    {
+      "kind": "theorem",
+      "name": "probability_nonnegative",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOAllocation.probability_nonnegative",
+      "file": "BanditRLProof/DelayedFeedback/ActionLaw.lean",
+      "line": 30,
+      "statement": "theorem probability_nonnegative {K : Nat} (allocation : DelayedSAPOAllocation K) (i : Fin K) : 0 \u2264 allocation.probability i"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_probability_eq_one",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOAllocation.sum_probability_eq_one",
+      "file": "BanditRLProof/DelayedFeedback/ActionLaw.lean",
+      "line": 37,
+      "statement": "theorem sum_probability_eq_one {K : Nat} (allocation : DelayedSAPOAllocation K) : \u2211 i, allocation.probability i = 1"
+    },
+    {
+      "kind": "theorem",
+      "name": "finiteActionDistribution",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOAllocation.finiteActionDistribution",
+      "file": "BanditRLProof/DelayedFeedback/ActionLaw.lean",
+      "line": 45,
+      "statement": "theorem finiteActionDistribution {K : Nat} (allocation : DelayedSAPOAllocation K) : Exp3.FiniteActionDistribution (Finset.univ : Finset (Fin K)) allocation.probability where"
+    },
+    {
+      "kind": "def",
+      "name": "actionMeasure",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOAllocation.actionMeasure",
+      "file": "BanditRLProof/DelayedFeedback/ActionLaw.lean",
+      "line": 57,
+      "statement": "noncomputable def actionMeasure {K : Nat} (allocation : DelayedSAPOAllocation K) : Measure (Fin K)"
+    },
+    {
+      "kind": "theorem",
+      "name": "actionMeasure_isProbabilityMeasure",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOAllocation.actionMeasure_isProbabilityMeasure",
+      "file": "BanditRLProof/DelayedFeedback/ActionLaw.lean",
+      "line": 61,
+      "statement": "theorem actionMeasure_isProbabilityMeasure {K : Nat} (allocation : DelayedSAPOAllocation K) : IsProbabilityMeasure allocation.actionMeasure"
+    },
+    {
+      "kind": "def",
+      "name": "causalDelayedSAPOActionMeasureRule",
+      "full_name": "BanditRLProof.DelayedFeedback.causalDelayedSAPOActionMeasureRule",
+      "file": "BanditRLProof/DelayedFeedback/ActionLaw.lean",
+      "line": 72,
+      "statement": "noncomputable def causalDelayedSAPOActionMeasureRule {K : Nat} {Loss : Type*} (rule : CausalDecisionRule (Fin K) Loss (DelayedSAPOAllocation K)) : CausalDecisionRule (Fin K) Loss (Measure (Fin K))"
+    },
+    {
+      "kind": "theorem",
+      "name": "causalDelayedSAPOActionMeasureRule_isProbabilityMeasure",
+      "full_name": "BanditRLProof.DelayedFeedback.causalDelayedSAPOActionMeasureRule_isProbabilityMeasure",
+      "file": "BanditRLProof/DelayedFeedback/ActionLaw.lean",
+      "line": 79,
+      "statement": "theorem causalDelayedSAPOActionMeasureRule_isProbabilityMeasure {K : Nat} {Loss : Type*} (rule : CausalDecisionRule (Fin K) Loss (DelayedSAPOAllocation K)) (t : Nat) (view : ActionTimeView (Fin K) Loss) : IsProbabilityMeasure (causalDelayedSAPOActionMeasureRule rule t view)"
+    },
+    {
+      "kind": "theorem",
+      "name": "causalDelayedSAPOActionMeasureRule_eq_of_observation_equivalent",
+      "full_name": "BanditRLProof.DelayedFeedback.causalDelayedSAPOActionMeasureRule_eq_of_observation_equivalent",
+      "file": "BanditRLProof/DelayedFeedback/ActionLaw.lean",
+      "line": 89,
+      "statement": "theorem causalDelayedSAPOActionMeasureRule_eq_of_observation_equivalent {K : Nat} {Loss : Type*} (rule : CausalDecisionRule (Fin K) Loss (DelayedSAPOAllocation K)) (delay\u2081 delay\u2082 : Nat \u2192 Nat) (action\u2081 action\u2082 : Nat \u2192 Fin K) (loss\u2081 loss\u2082 : Nat \u2192 Loss) (t : Nat) (hvisible : observedBefore delay\u2081 t = observedBefore delay\u2082 t) (haction : \u2200 s, s < t \u2192 action\u2081 s = action\u2082 s) (hloss : \u2200 s, s \u2208 observedBefore delay\u2081 t \u2192 loss\u2081 s = loss\u2082 s) : causalDelayedSAPOActionMeasureRule rule t (actionTimeViewAt delay\u2081 action\u2081 loss\u2081 t) = causalDelayedSAPOActionMeasureRule rule t (actionTimeViewAt delay\u2082 action\u2082 loss\u2082 t)"
+    },
+    {
       "kind": "def",
       "name": "inactiveArms",
       "full_name": "BanditRLProof.DelayedFeedback.inactiveArms",
@@ -15152,6 +15232,78 @@
       "file": "BanditRLProof/DelayedFeedback/CausalView.lean",
       "line": 122,
       "statement": "theorem causalDecision_eq_of_observation_equivalent {Action : Type uAction} {Loss : Type uLoss} {Decision : Type uDecision} (rule : CausalDecisionRule Action Loss Decision) (delay\u2081 delay\u2082 : Nat \u2192 Nat) (action\u2081 action\u2082 : Nat \u2192 Action) (loss\u2081 loss\u2082 : Nat \u2192 Loss) (t : Nat) (hvisible : observedBefore delay\u2081 t = observedBefore delay\u2082 t) (haction : \u2200 s, s < t \u2192 action\u2081 s = action\u2082 s) (hloss : \u2200 s, s \u2208 observedBefore delay\u2081 t \u2192 loss\u2081 s = loss\u2082 s) : rule t (actionTimeViewAt delay\u2081 action\u2081 loss\u2081 t) = rule t (actionTimeViewAt delay\u2082 action\u2082 loss\u2082 t)"
+    },
+    {
+      "kind": "structure",
+      "name": "DelayedSAPOEliminationSnapshot",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot",
+      "file": "BanditRLProof/DelayedFeedback/Elimination.lean",
+      "line": 12,
+      "statement": "structure DelayedSAPOEliminationSnapshot (K : Nat) where"
+    },
+    {
+      "kind": "def",
+      "name": "eliminated",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.eliminated",
+      "file": "BanditRLProof/DelayedFeedback/Elimination.lean",
+      "line": 21,
+      "statement": "noncomputable def eliminated {K : Nat} (snapshot : DelayedSAPOEliminationSnapshot K) : Finset (Fin K)"
+    },
+    {
+      "kind": "def",
+      "name": "remainingActive",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.remainingActive",
+      "file": "BanditRLProof/DelayedFeedback/Elimination.lean",
+      "line": 29,
+      "statement": "noncomputable def remainingActive {K : Nat} (snapshot : DelayedSAPOEliminationSnapshot K) : Finset (Fin K)"
+    },
+    {
+      "kind": "theorem",
+      "name": "mem_eliminated_iff",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.mem_eliminated_iff",
+      "file": "BanditRLProof/DelayedFeedback/Elimination.lean",
+      "line": 35,
+      "statement": "theorem mem_eliminated_iff {K : Nat} (snapshot : DelayedSAPOEliminationSnapshot K) (i : Fin K) : i \u2208 snapshot.eliminated \u2194 i \u2208 snapshot.active \u2227 snapshot.ucbStar < snapshot.empiricalMean i - (9 : \u211d) * snapshot.empiricalWidth i"
+    },
+    {
+      "kind": "theorem",
+      "name": "mem_remainingActive_iff",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.mem_remainingActive_iff",
+      "file": "BanditRLProof/DelayedFeedback/Elimination.lean",
+      "line": 45,
+      "statement": "theorem mem_remainingActive_iff {K : Nat} (snapshot : DelayedSAPOEliminationSnapshot K) (i : Fin K) : i \u2208 snapshot.remainingActive \u2194 i \u2208 snapshot.active \u2227 snapshot.empiricalMean i - (9 : \u211d) * snapshot.empiricalWidth i \u2264 snapshot.ucbStar"
+    },
+    {
+      "kind": "structure",
+      "name": "OptimalArmSurvivalCertificate",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.OptimalArmSurvivalCertificate",
+      "file": "BanditRLProof/DelayedFeedback/Elimination.lean",
+      "line": 61,
+      "statement": "structure OptimalArmSurvivalCertificate {K : Nat} (snapshot : DelayedSAPOEliminationSnapshot K) (mean : Fin K \u2192 \u211d) (optimal : Fin K) : Prop where"
+    },
+    {
+      "kind": "theorem",
+      "name": "optimal_mem_remainingActive_of_certificate",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.optimal_mem_remainingActive_of_certificate",
+      "file": "BanditRLProof/DelayedFeedback/Elimination.lean",
+      "line": 74,
+      "statement": "theorem optimal_mem_remainingActive_of_certificate {K : Nat} (snapshot : DelayedSAPOEliminationSnapshot K) (mean : Fin K \u2192 \u211d) (optimal : Fin K) (certificate : OptimalArmSurvivalCertificate snapshot mean optimal) : optimal \u2208 snapshot.remainingActive"
+    },
+    {
+      "kind": "theorem",
+      "name": "remainingActive_nonempty_of_certificate",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.remainingActive_nonempty_of_certificate",
+      "file": "BanditRLProof/DelayedFeedback/Elimination.lean",
+      "line": 92,
+      "statement": "theorem remainingActive_nonempty_of_certificate {K : Nat} (snapshot : DelayedSAPOEliminationSnapshot K) (mean : Fin K \u2192 \u211d) (optimal : Fin K) (certificate : OptimalArmSurvivalCertificate snapshot mean optimal) : snapshot.remainingActive.Nonempty"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_delayedSAPOProbability_after_elimination_eq_one",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.sum_delayedSAPOProbability_after_elimination_eq_one",
+      "file": "BanditRLProof/DelayedFeedback/Elimination.lean",
+      "line": 103,
+      "statement": "theorem sum_delayedSAPOProbability_after_elimination_eq_one {K : Nat} (snapshot : DelayedSAPOEliminationSnapshot K) (mean : Fin K \u2192 \u211d) (optimal : Fin K) (certificate : OptimalArmSurvivalCertificate snapshot mean optimal) (inactiveProbability : Fin K \u2192 \u211d) : \u2211 i, delayedSAPOProbability snapshot.remainingActive inactiveProbability i = 1"
     },
     {
       "kind": "structure",

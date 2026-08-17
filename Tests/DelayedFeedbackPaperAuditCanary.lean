@@ -1,6 +1,8 @@
 import BanditRLProof.DelayedFeedback.Accounting
 import BanditRLProof.DelayedFeedback.ActiveAllocation
+import BanditRLProof.DelayedFeedback.ActionLaw
 import BanditRLProof.DelayedFeedback.CausalView
+import BanditRLProof.DelayedFeedback.Elimination
 import BanditRLProof.DelayedFeedback.MultiRegimeContract
 import BanditRLProof.DelayedFeedback.Processing
 
@@ -45,6 +47,25 @@ open BanditRLProof
 #check DelayedFeedback.delayedSAPOProbability
 #check DelayedFeedback.delayedSAPOProbability_nonneg
 #check DelayedFeedback.sum_delayedSAPOProbability_eq_one
+#check DelayedFeedback.DelayedSAPOEliminationSnapshot
+#check DelayedFeedback.DelayedSAPOEliminationSnapshot.eliminated
+#check DelayedFeedback.DelayedSAPOEliminationSnapshot.remainingActive
+#check DelayedFeedback.DelayedSAPOEliminationSnapshot.OptimalArmSurvivalCertificate
+#check DelayedFeedback.DelayedSAPOEliminationSnapshot.optimal_mem_remainingActive_of_certificate
+#check DelayedFeedback.DelayedSAPOEliminationSnapshot.remainingActive_nonempty_of_certificate
+#check DelayedFeedback.DelayedSAPOEliminationSnapshot.sum_delayedSAPOProbability_after_elimination_eq_one
+#check DelayedFeedback.DelayedSAPOAllocation
+#check DelayedFeedback.DelayedSAPOAllocation.probability
+#check DelayedFeedback.DelayedSAPOAllocation.finiteActionDistribution
+#check DelayedFeedback.DelayedSAPOAllocation.actionMeasure
+#check DelayedFeedback.DelayedSAPOAllocation.actionMeasure_isProbabilityMeasure
+#check DelayedFeedback.causalDelayedSAPOActionMeasureRule
+#check DelayedFeedback.causalDelayedSAPOActionMeasureRule_isProbabilityMeasure
+#check DelayedFeedback.causalDelayedSAPOActionMeasureRule_eq_of_observation_equivalent
+
+#print axioms DelayedFeedback.DelayedSAPOEliminationSnapshot.optimal_mem_remainingActive_of_certificate
+#print axioms DelayedFeedback.DelayedSAPOAllocation.actionMeasure_isProbabilityMeasure
+#print axioms DelayedFeedback.causalDelayedSAPOActionMeasureRule_eq_of_observation_equivalent
 
 def trivialMultiRegimeContract :
     DelayedFeedback.SameAlgorithmMultiRegimeContract
@@ -137,3 +158,27 @@ example :
         1 := by
   apply DelayedFeedback.sum_delayedSAPOProbability_eq_one
   simp
+
+example :
+    let snapshot :
+        DelayedFeedback.DelayedSAPOEliminationSnapshot 3 := {
+      active := {0, 1, 2}
+      empiricalMean := fun i => if i = 0 then 1 / 4 else 3 / 4
+      empiricalWidth := fun _ => 1 / 20
+      ucbStar := 3 / 10
+    }
+    (0 : Fin 3) ∈ snapshot.remainingActive := by
+  let snapshot : DelayedFeedback.DelayedSAPOEliminationSnapshot 3 := {
+    active := {0, 1, 2}
+    empiricalMean := fun i => if i = 0 then 1 / 4 else 3 / 4
+    empiricalWidth := fun _ => 1 / 20
+    ucbStar := 3 / 10
+  }
+  let mean : Fin 3 → ℝ := fun i => if i = 0 then 1 / 5 else 4 / 5
+  apply DelayedFeedback.DelayedSAPOEliminationSnapshot.optimal_mem_remainingActive_of_certificate
+    snapshot mean 0
+  constructor
+  · simp [snapshot]
+  · norm_num [snapshot]
+  · norm_num [snapshot, mean]
+  · norm_num [snapshot, mean]

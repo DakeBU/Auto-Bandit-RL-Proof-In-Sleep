@@ -936,7 +936,7 @@
       "title": "Causal action-time view and new-feedback processing",
       "chapter": "frontier",
       "status": "compiled",
-      "informal": "The learner view exposes past actions and exactly the losses available before the next action. Observation-equivalent hidden worlds are indistinguishable to any typed causal decision rule, and the set-level update processes precisely the newly observed rounds. The declarations do not yet define a randomized policy kernel or the paper's ordered state updates.",
+      "informal": "The learner view exposes past actions and exactly the losses available before the next action. Observation-equivalent hidden worlds are indistinguishable to any typed causal decision rule, and the set-level update processes precisely the newly observed rounds. A separate downstream layer now constructs a one-round measure-valued rule; a measurable recursive policy kernel and the paper's ordered state updates remain open.",
       "declarations": [
         "BanditRLProof.DelayedFeedback.ActionTimeView",
         "BanditRLProof.DelayedFeedback.ActionTimeView.ext",
@@ -964,7 +964,7 @@
         "BanditRLProof.DelayedFeedback.outstandingAt"
       ],
       "missing": [
-        "A stochastic policy kernel whose generated action law is proved measurable and depends only on this view.",
+        "A measurable stochastic policy kernel and recursively generated action law depending only on this view.",
         "The source's simultaneous-arrival order and BSC/EAP state-transition invariants."
       ],
       "evidence": "BanditRLProof/DelayedFeedback/CausalView.lean; BanditRLProof/DelayedFeedback/Processing.lean; Tests/DelayedFeedbackPaperAuditCanary.lean"
@@ -991,16 +991,56 @@
       ],
       "missing": [
         "A source-faithful EAP state and proof that every update preserves nonnegative inactive mass at most one.",
-        "A sampling kernel using this vector on the generated delayed-feedback history."
+        "A measurable sampling kernel using this vector on the recursively generated delayed-feedback history; the one-round probability measure is compiled downstream."
       ],
       "evidence": "BanditRLProof/DelayedFeedback/ActiveAllocation.lean; Tests/DelayedFeedbackPaperAuditCanary.lean"
+    },
+    {
+      "id": "DELAYED-SAPO-ELIMINATION-ACTION-LAW",
+      "title": "Optimal-arm survival and causal one-round action law",
+      "chapter": "frontier",
+      "status": "compiled",
+      "informal": "Algorithm 5 lines 7--8 compile as a source-exact elimination snapshot. The deterministic core of Lemma D.9 proves that the optimal arm survives under explicit stochastic-good-event projections, closing the nonempty-active premise for line 15. With EAP's still-explicit nonnegativity and mass premises, the resulting vector induces a genuine one-round probability measure, and every allocation rule typed on the causal view returns the same measure in observation-equivalent hidden worlds. This is not the full lemma, a measurable history kernel, or a regret endpoint.",
+      "declarations": [
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.eliminated",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.remainingActive",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.mem_eliminated_iff",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.mem_remainingActive_iff",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.OptimalArmSurvivalCertificate",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.optimal_mem_remainingActive_of_certificate",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.remainingActive_nonempty_of_certificate",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.sum_delayedSAPOProbability_after_elimination_eq_one",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOAllocation",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOAllocation.probability",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOAllocation.probability_nonnegative",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOAllocation.sum_probability_eq_one",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOAllocation.finiteActionDistribution",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOAllocation.actionMeasure",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOAllocation.actionMeasure_isProbabilityMeasure",
+        "BanditRLProof.DelayedFeedback.causalDelayedSAPOActionMeasureRule",
+        "BanditRLProof.DelayedFeedback.causalDelayedSAPOActionMeasureRule_isProbabilityMeasure",
+        "BanditRLProof.DelayedFeedback.causalDelayedSAPOActionMeasureRule_eq_of_observation_equivalent"
+      ],
+      "depends_on": [
+        "BanditRLProof.DelayedFeedback.delayedSAPOProbability_nonneg",
+        "BanditRLProof.DelayedFeedback.sum_delayedSAPOProbability_eq_one",
+        "BanditRLProof.DelayedFeedback.actionTimeViewAt_eq_of_observation_equivalent",
+        "BanditRLProof.Exp3.finiteActionMeasure_isProbabilityMeasure"
+      ],
+      "missing": [
+        "The probability of the Definition-D.1 stochastic good event and full source Lemma D.9.",
+        "EAP preservation of its inactive-probability premises.",
+        "Coordinate measurability, a Markov kernel over generated histories, and recursive delayed trajectory generation."
+      ],
+      "evidence": "BanditRLProof/DelayedFeedback/Elimination.lean; BanditRLProof/DelayedFeedback/ActionLaw.lean; Tests/DelayedFeedbackPaperAuditCanary.lean; proof-obligations/PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY.md"
     },
     {
       "id": "NEURIPS-2025-DELAYED-BOBW-CENTRAL-ENDPOINTS",
       "title": "Source-frozen delayed best-of-both-worlds endpoint audit",
       "chapter": "frontier",
       "status": "partial",
-      "informal": "The exact NeurIPS 2025 source is hash-frozen, a same-algorithm multi-regime contract compiles, and 45 source-semantic accounting, causality, processing, and allocation declarations compile. BanditRLlib does not yet implement Delayed SAPO or prove either the stochastic or adversarial regret endpoint.",
+      "informal": "The exact NeurIPS 2025 source is hash-frozen, a same-algorithm multi-regime contract compiles, and 64 source-semantic accounting, causality, processing, allocation, elimination, and one-round action-law declarations compile. BanditRLlib does not yet implement the full Delayed SAPO trajectory or prove either the stochastic or adversarial regret endpoint.",
       "declarations": [
         "BanditRLProof.DelayedFeedback.SameAlgorithmMultiRegimeContract",
         "BanditRLProof.DelayedFeedback.SameAlgorithmMultiRegimeContract.stochasticClaim",
@@ -1012,11 +1052,13 @@
         "BanditRLProof.DelayedFeedback.paperMissingCount_le_paperSigmaMaxThrough",
         "BanditRLProof.DelayedFeedback.causalDecision_eq_of_observation_equivalent",
         "BanditRLProof.DelayedFeedback.processAllNew_from_previous_eq_current",
-        "BanditRLProof.DelayedFeedback.sum_delayedSAPOProbability_eq_one"
+        "BanditRLProof.DelayedFeedback.sum_delayedSAPOProbability_eq_one",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.optimal_mem_remainingActive_of_certificate",
+        "BanditRLProof.DelayedFeedback.causalDelayedSAPOActionMeasureRule_eq_of_observation_equivalent"
       ],
       "missing": [
         "The Delayed SAPO BSC and EAP state machines, switching rule, and ordered update semantics.",
-        "A causal randomized sampling kernel and generated delayed-feedback trajectory law.",
+        "A measurable causal randomized sampling kernel and recursively generated delayed-feedback trajectory law; only the one-round measure-valued rule now compiles.",
         "The stochastic-instance and oblivious-adversarial regret endpoints for the same algorithm identity."
       ],
       "evidence": "research-wiki/papers/prospective-audit-2025-freeze.json; research-wiki/papers/neurips-2025-delayed-bobw-audit.md; proof-obligations/PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY.md"

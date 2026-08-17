@@ -4,8 +4,10 @@ Task: `PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY`
 
 Status: `source-frozen; deterministic availability, action-time count,
 one-based/end-of-round sigma bridge, generic shared-identity interface, causal
-action-time view, and set-level new-arrival processing compiled; Delayed SAPO
-active-arm allocation compiled; Delayed SAPO state and paper endpoints planned`
+action-time view, set-level new-arrival processing, line-7/8 optimal-arm
+survival, line-15 allocation, and a causal one-round action measure compiled;
+full Delayed SAPO state, measurable generated trajectory, and paper endpoints
+planned`
 
 ## Source window
 
@@ -93,11 +95,33 @@ coordinate formulas, nonnegativity under nonnegative eliminated coordinates
 whose sum is at most one, and exact total mass one.  It does not yet prove that
 EAP maintains those hypotheses or construct the sampling kernel.
 
+## Elimination and one-round action law
+
+`DelayedSAPOEliminationSnapshot` is the exact data read by Algorithm 5 line 7,
+not a representation of the full algorithm.  Its eliminated and remaining
+sets use the source's strict test
+`ucbStar < empiricalMean i - 9 * empiricalWidth i`.  The compiled
+`optimal_mem_remainingActive_of_certificate` theorem formalizes the
+deterministic implication in source Lemma D.9: the empirical-confidence and
+`muStar <= ucbStar` projections of the stochastic good event keep the optimal
+arm active.  This supplies the nonempty-active premise used by line 15, but it
+does not prove the probability of the source good event or full Lemma D.9.
+
+`DelayedSAPOAllocation` retains EAP's still-open nonnegativity and mass
+hypotheses as explicit fields.  Under them, the existing finite-action law
+constructs a genuine one-round probability measure.  A causal allocation rule
+can therefore return a probability measure using only `ActionTimeView`, and
+observation-equivalent hidden worlds yield the same measure.  Coordinate
+measurability, a Markov kernel over generated histories, action sampling, and
+the recursive delayed trajectory remain open.
+
 ## Hidden regularity and boundary
 
-The compiled leaves are deterministic and need only natural-valued delays and a
-finite prefix.  It introduces no loss law, probability measure, filtration,
-algorithm, horizon theorem, or regret conclusion.  Subsequent leaves must
+The accounting, processing, allocation, and elimination implications are
+deterministic.  The action-law layer introduces a finite probability measure
+only after explicit line-15 simplex premises; it does not introduce a loss law,
+history measure, filtration, generated algorithm, horizon theorem, or regret
+conclusion.  Subsequent leaves must
 separately encode the source's oblivious delays, unknown-at-action-time
 information constraint, stochastic iid loss regime, adversarial loss regime,
 same-algorithm identity, external `ALG` contract, and expected fixed-arm

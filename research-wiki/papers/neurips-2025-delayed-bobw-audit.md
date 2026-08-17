@@ -2,9 +2,9 @@
 
 Card: `PPR-SCHLISSELBERG-LANCEWICKI-AUER-MANSOUR-2025-DELAYED-BOBW`
 
-Status: `source-frozen; accounting, causal-view, new-arrival-processing, and
-active-allocation leaves plus a generic multi-regime contract interface
-compiled; no paper theorem audited yet`
+Status: `source-frozen; accounting, causal-view, new-arrival-processing,
+active-allocation, optimal-arm-survival, and one-round action-law leaves plus
+a generic multi-regime contract interface compiled; no paper endpoint audited`
 
 ## Frozen source
 
@@ -50,6 +50,8 @@ The frozen contract therefore retains:
 | `DELAYED-BOBW-CAUSAL-ACTION-TIME-VIEW` | expose past actions and strictly available losses without passing hidden delays or unobserved losses to the decision rule | compiled interface and observation-equivalence theorem; no randomized kernel or Delayed SAPO state |
 | `DELAYED-BOBW-NEWLY-OBSERVED-PROCESSING` | formalize the set-level `B(t) \ S` batch update | compiled monotonicity/disjointness/exact-update layer; simultaneous-arrival order and BSC/EAP state open |
 | `DELAYED-BOBW-ACTIVE-EQUAL-ALLOCATION` | formalize Algorithm 5 line 15's residual equal allocation | compiled nonnegativity and total-mass-one leaf under explicit inactive-mass hypotheses; EAP maintenance and sampling kernel open |
+| `DELAYED-BOBW-OPTIMAL-ARM-SURVIVAL` | connect Algorithm 5 lines 7--8 to the nonempty-active premise in line 15 | compiled deterministic core of source Lemma D.9 under explicit good-event projections; event probability and full lemma open |
+| `DELAYED-BOBW-CAUSAL-ACTION-MEASURE` | turn the line-15 vector into a causal one-round randomized law | compiled probability measure and observation-equivalence transport; measurable history kernel and recursive trajectory open |
 
 These leaves are deliberately small but source-semantic: they check the exact
 meaning of “available at round `t`” before any martingale or regret work.  It
@@ -70,7 +72,10 @@ or best-of-both-worlds performance.
 ## Known technology boundary
 
 The current library has rich finite-action, kernel, conditional-MGF, EXP3,
-Tsallis, and adaptive-trajectory infrastructure.  It does not yet have the
-paper's delayed SAPO state machine, probability banks, detection/switch
-semantics, or the complete coupled terminal.  Full Theorems 4.1 and 5.1 must
-remain `planned` until their exact algorithms and proof chains compile.
+Tsallis, and adaptive-trajectory infrastructure.  It now also has one
+source-exact elimination snapshot, the deterministic optimal-arm survival
+consumer, and a causal measure-valued one-round action rule.  It does not yet
+have the paper's complete delayed SAPO state machine, probability banks,
+measurable recursive sampling kernel, detection/switch semantics, stochastic
+good-event probability, or the coupled terminal.  Full Theorems 4.1 and 5.1
+must remain `planned` until their exact algorithms and proof chains compile.
