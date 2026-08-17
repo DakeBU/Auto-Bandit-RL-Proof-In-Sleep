@@ -24,8 +24,10 @@ bounded proof transactions, and run the promotion gate before reporting a
 compiled/proved result. Preserve partial, blocked, planned, theorem-card, and
 compiled statuses distinctly.
 
-Produce exactly the common deliverables specified by the sealed run manifest:
-the Lean diff, contract/blueprint record, build and gate logs,
-machine-readable final status, source amendment (if any), failure ledger, and
-a concise explanation. Never claim a theorem compiled unless the recorded
-build and promotion gate succeeded.
+Produce exactly the common deliverables specified by the sealed result
+contract: the Lean diff, `target-contract.json`, `blueprint.md`, build log,
+machine-readable final status, `source-amendment.md` if needed,
+`failure-ledger.json`, `promotion-gate.log`, `workflow-compliance.json`, and a
+concise explanation. The compliance record must hash the four ABRL workflow
+artifacts. Never claim a theorem compiled unless the recorded build and
+promotion gate succeeded.

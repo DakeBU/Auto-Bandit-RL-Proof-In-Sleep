@@ -23,7 +23,8 @@ toolchain, compiler, ordinary shell tools, and this blueprint. Do not use
 ABRL's evidence-typed memory, target-contract schema, lifecycle commands, or
 promotion gate.
 
-Produce exactly the common deliverables specified by the sealed run manifest:
-the Lean diff, blueprint, build log, machine-readable final status, source
-amendment (if any), and a concise explanation. Never claim a theorem compiled
-unless the recorded build succeeded.
+Produce exactly the common deliverables specified by the sealed result
+contract: the Lean diff, `blueprint.md`, build log, machine-readable final
+status, `workflow-compliance.json`, source amendment (if any), and a concise
+explanation. The compliance record must hash `blueprint.md`. Never claim a
+theorem compiled unless the recorded build succeeded.

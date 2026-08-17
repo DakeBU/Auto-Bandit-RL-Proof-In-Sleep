@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "suite_id": "ABRL-TARGET-DRIFT-V2",
+  "status": "interface_frozen_results_absent",
+  "invocation": {
+    "mode": "argv_without_shell",
+    "required_placeholders": [
+      "{{REQUEST_PATH}}",
+      "{{RESPONSE_PATH}}",
+      "{{TRACE_PATH}}",
+      "{{AGENT_MOUNT}}"
+    ],
+    "working_directory": "the prepared run directory",
+    "timeout_owner": "the orchestrator terminates the adapter process tree at the frozen per-run wall-clock budget"
+  },
+  "request_schema": {
+    "schema_version": 1,
+    "required": [
+      "opaque_run_id",
+      "agent_mount",
+      "prompt_path",
+      "model",
+      "budgets",
+      "retry_policy",
+      "result_contract"
+    ]
+  },
+  "response_schema": {
+    "schema_version": 1,
+    "required": [
+      "opaque_run_id",
+      "adapter_id",
+      "adapter_version",
+      "model_id",
+      "immutable_model_version",
+      "replicate",
+      "container_or_sandbox_image_digest",
+      "budget_enforcement_attestation",
+      "filesystem_network_process_attestation",
+      "termination",
+      "provider_request_ids",
+      "usage"
+    ],
+    "termination_values": [
+      "completed",
+      "budget_exhausted",
+      "infrastructure_failure"
+    ],
+    "usage_fields": [
+      "input_tokens",
+      "output_tokens",
+      "tool_calls",
+      "build_attempts",
+      "recovery_tool_calls",
+      "infrastructure_retries",
+      "wall_seconds",
+      "cost_usd"
+    ]
+  },
+  "trace_schema": {
+    "format": "UTF-8 JSON Lines",
+    "required_event_fields": ["sequence", "kind"],
+    "required_final_event": "usage_summary",
+    "counted_event_kinds": ["tool_call", "build_attempt", "provider_retry"],
+    "recovery_flag": "recovery_phase"
+  },
+  "audit_rule": "The orchestrator derives event counts from the complete trace, checks them against the response and frozen budgets, hashes request/response/trace/process logs, and rehashes the agent view after execution."
+}

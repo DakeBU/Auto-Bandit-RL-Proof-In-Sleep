@@ -133,6 +133,7 @@ python tools/bandit.py list-lean-decls
 python tools/bandit.py list-lean-decls Exp3 --statement
 python tools/bandit.py route-plan BRL-UCB-PORT-001
 python tools/validate_target_drift_suite.py
+python tools/validate_target_drift_suite_v2.py
 ```
 
 Core paths:
@@ -143,8 +144,16 @@ Core paths:
 - `proof-blueprints/` — proof-graph snapshots;
 - `research-wiki/` — source-aware theorem cards and retrieval indexes;
 - `runs/` — attempt, lifecycle, and acceptance evidence;
-- `evaluation/target-drift-v1/` — frozen 30-case evaluation design; execution
-  has not started and no result is reported;
+- `evaluation/target-drift-v1/` — frozen initial 30-case authoring bank; retained
+  unchanged for provenance, but superseded for execution by v2;
+- `evaluation/target-drift-v2/` — balanced faithful/drift protocol, pre-audit
+  condition views, matched field/value wording with a text-only leakage audit,
+  content-addressed seal, executable frozen-adapter boundary, fresh replay in a
+  hash-bound neutral checker, blind grading packets, workflow-compliance records,
+  and source/target-aware analysis with secondary multiplicity control; these
+  interfaces are unit-tested, while the concrete provider sandbox, budgets,
+  graders, final seal, excluded smoke test, and all 450 primary runs remain
+  unstarted;
 - `website/` — literate static site, local compiler service, and integrity checker;
 - `tools/bandit.py` — deterministic harness CLI.
 - [`docs/proof_graph_laboratory.md`](docs/proof_graph_laboratory.md) — compiled-environment dependency export, proof-cost/ZDD/hypergraph prototypes, and the proof-structural novelty audit boundary.
