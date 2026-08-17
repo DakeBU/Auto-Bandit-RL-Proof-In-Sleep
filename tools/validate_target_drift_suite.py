@@ -22,6 +22,7 @@ PAPER_HASHES = {
     "PPR-ZENG-HONORIO-2025-SUCCINCT-LOWER-BOUNDS": "98e2511709b155e9e032b305c6fb1eb933237508f3ea4db76dbd229b6c5160b8",
     "PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB": "a3aff97fe2179c47fff61cc51453b84a082332e2a205f7fa2268cc68cba73b3d",
 }
+TEXTBOOK_HASH = "b71acb03034d73ca0ea148c9c6a91c34a88dd8c7ab8471af38035b34399bad9f"
 DRIFT_CLASSES = {
     "objective",
     "random_index_information",
@@ -89,6 +90,10 @@ def main() -> None:
     by_drift = Counter(case["drift_class"] for case in textbook_cases)
     require(set(by_drift) == DRIFT_CLASSES, "textbook controls must cover all six drift classes")
     require(all(count == 2 for count in by_drift.values()), "each textbook drift class must have two controls")
+    require(
+        all(case["source_sha256"] == TEXTBOOK_HASH for case in textbook_cases),
+        "every textbook control must carry the exact frozen online-edition SHA-256",
+    )
 
     execution_template = load("execution-template.json")
     require(execution_template["execution_status"] == "template_unfrozen",

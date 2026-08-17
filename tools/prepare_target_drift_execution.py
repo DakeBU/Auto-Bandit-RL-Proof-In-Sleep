@@ -99,6 +99,15 @@ def check_template(config_path: Path) -> None:
     require(sources["status"] == "template_unfrozen",
             "source manifest must remain template_unfrozen")
     require(len(sources["sources"]) == 4, "expected four frozen-source entries")
+    require(
+        all(
+            isinstance(source["sha256"], str)
+            and len(source["sha256"]) == 64
+            and all(character in "0123456789abcdef" for character in source["sha256"])
+            for source in sources["sources"]
+        ),
+        "every source template entry must carry a lowercase SHA-256",
+    )
     rubric = load(resolve_repo_path(config["grading"]["rubric"]))
     require(rubric["no_results"] is True, "grading rubric must remain result-free")
     print(

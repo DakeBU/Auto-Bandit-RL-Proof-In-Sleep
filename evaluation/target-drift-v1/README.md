@@ -35,8 +35,9 @@ The execution layer is now explicit but intentionally unfrozen:
 
 - `execution-template.json` lists every model, budget, retry, randomization,
   sealed-view, and grader choice that must be fixed before the first run;
-- `source-files.template.json` requires a local hash-verified copy of all four
-  sources, including an exact revision/hash for the online textbook;
+- `source-files.template.json` records exact SHA-256 values for all four source
+  PDFs, including the 597-page online textbook retrieved on 2026-08-18, and
+  still requires the executor to supply hash-verified local paths;
 - `prompts/` contains matched condition templates whose source/task fields are
   identical and whose workflow resources differ by condition;
 - `grading-rubric.json` freezes the binary primary endpoint and independent

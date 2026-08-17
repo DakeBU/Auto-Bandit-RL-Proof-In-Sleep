@@ -53,6 +53,16 @@ class TargetDriftExecutionTest(unittest.TestCase):
         self.assertFalse(forbidden & agent_case.keys())
         self.assertEqual(agent_case["proposed_requirement"], case["injected_drift"])
 
+    def test_every_source_revision_has_a_frozen_hash(self) -> None:
+        source_manifest = json.loads(
+            (ROOT / "evaluation" / "target-drift-v1" / "source-files.template.json")
+            .read_text(encoding="utf-8")
+        )
+        for source in source_manifest["sources"]:
+            digest = source["sha256"]
+            self.assertEqual(len(digest), 64)
+            self.assertTrue(all(character in "0123456789abcdef" for character in digest))
+
 
 if __name__ == "__main__":
     unittest.main()
