@@ -148,12 +148,15 @@ Core paths:
   unchanged for provenance, but superseded for execution by v2;
 - `evaluation/target-drift-v2/` — balanced faithful/drift protocol, pre-audit
   condition views, matched field/value wording with a text-only leakage audit,
-  content-addressed seal, executable frozen-adapter boundary, fresh replay in a
-  hash-bound neutral checker, blind grading packets, workflow-compliance records,
-  and source/target-aware analysis with secondary multiplicity control; these
-  interfaces are unit-tested, while the concrete provider sandbox, budgets,
-  graders, final seal, excluded smoke test, and all 450 primary runs remain
-  unstarted;
+  content-addressed seal, frozen-adapter interface, fresh-replay checker code,
+  blind grading packets, workflow-artifact hash records, and source/target-aware
+  analysis with secondary multiplicity control.  Eighty repository tests
+  pass, including 22 target-drift component tests, but no test executes the full
+  real-provider-to-grading chain.  The deterministic fake adapter and fail-closed
+  probes are nonexperimental fixtures.  A frozen real provider sandbox, a
+  separate checker sandbox, budgets, graders, final seal, the preregistered
+  one-case-by-three-condition real-infrastructure smoke, and all 450 primary
+  model runs remain unstarted; no outcome is reported;
 - `website/` — literate static site, local compiler service, and integrity checker;
 - `tools/bandit.py` — deterministic harness CLI.
 - [`docs/proof_graph_laboratory.md`](docs/proof_graph_laboratory.md) — compiled-environment dependency export, proof-cost/ZDD/hypergraph prototypes, and the proof-structural novelty audit boundary.

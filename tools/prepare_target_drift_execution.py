@@ -24,6 +24,21 @@ PLACEHOLDERS = (
     "{{PROPOSED_REQUIREMENT}}",
     "{{WORKSPACE_PATH}}",
 )
+PRIMARY_GRADING_PROVENANCE_MARKERS = (
+    "compile-only condition",
+    "source-aware blueprint condition",
+    "full abrl condition",
+    "condition=compile_only",
+    "condition=source_aware_blueprint",
+    "condition=abrl",
+    "promotion gate",
+    "proof-blueprint",
+    "target-contract",
+    "failure ledger",
+    "evidence-typed",
+    "bounded proof transaction",
+)
+LEAN_PROVENANCE_MARKERS = PRIMARY_GRADING_PROVENANCE_MARKERS[:6]
 
 
 def load(path: Path) -> dict[str, Any]:
@@ -363,6 +378,9 @@ def validate_frozen_choices(config: dict[str, Any]) -> None:
             "posthoc_checker.cache_prelude_argv must be an argv string list (possibly empty)")
     require(not any("{{" in item or "}}" in item for item in cache_prelude),
             "checker cache prelude must not contain unresolved placeholders")
+    if cache_prelude:
+        require(adapter["adapter_id"] == "excluded-local-smoke-fixture",
+                "real executions require an empty prelude in a cache-complete checker sandbox")
 
     grading = config["grading"]
     require(isinstance(grading["packet_order_seed"], int)

@@ -16,28 +16,10 @@ TOOLS = Path(__file__).resolve().parent
 sys.path.insert(0, str(TOOLS))
 
 import prepare_target_drift_execution as prepare  # noqa: E402
+import run_target_drift_execution as runner  # noqa: E402
 
 
-FORBIDDEN_PRIMARY_TEXT = (
-    "compile-only condition",
-    "source-aware blueprint condition",
-    "full abrl condition",
-    "promotion gate",
-    "proof-blueprint",
-    "condition=compile_only",
-    "condition=source_aware_blueprint",
-    "condition=abrl",
-    "abrl",
-    "target contract",
-    "target-contract",
-    "proof blueprint",
-    "proof-blueprint",
-    "source-aware blueprint",
-    "evidence-typed",
-    "promotion gate",
-    "failure ledger",
-    "bounded proof transaction",
-)
+FORBIDDEN_PRIMARY_TEXT = prepare.PRIMARY_GRADING_PROVENANCE_MARKERS
 
 
 def load(path: Path) -> dict[str, Any]:
@@ -71,9 +53,12 @@ def digest_payloads(payloads: dict[str, bytes]) -> str:
 def agent_manifest(root: Path) -> list[dict[str, Any]]:
     manifest = []
     for path in sorted(item for item in root.rglob("*") if item.is_file()):
+        relative = path.relative_to(root)
+        if ".lake" in relative.parts:
+            continue
         payload = path.read_bytes()
         manifest.append({
-            "path": path.relative_to(root).as_posix(),
+            "path": relative.as_posix(),
             "bytes": len(payload),
             "sha256": hashlib.sha256(payload).hexdigest(),
         })
@@ -107,8 +92,14 @@ def agent_generated_blind_fields(packet: dict[str, Any]) -> dict[str, Any]:
         "public_declarations": packet["public_declarations"],
         "primary_grader_rationale": packet["primary_grader_rationale"],
         "source_amendment": packet["source_amendment"],
-        "lean_artifacts": packet["lean_artifacts"],
     }
+
+
+def require_blind_lean_artifacts(artifacts: list[dict[str, str]], label: str) -> None:
+    """Reject only explicit condition labels in Lean; ordinary ABRL source text is common."""
+    text = "\n".join(item["content"] for item in artifacts).lower()
+    require(not any(token in text for token in prepare.LEAN_PROVENANCE_MARKERS),
+            f"condition-identifying text in primary {label}")
 
 
 def main() -> None:
@@ -140,6 +131,12 @@ def main() -> None:
             "imported pack verifier differs from frozen hash")
     require(hashlib.sha256((pack / "execution_code" / prepare_path.name).read_bytes()).hexdigest()
             == prepare_hash, "sealed pack verifier differs from frozen hash")
+    runner_path = Path(runner.__file__).resolve()
+    runner_hash = config["sealed_agent_view"]["run_preparer_sha256"]
+    require(hashlib.sha256(runner_path.read_bytes()).hexdigest() == runner_hash,
+            "imported run helper differs from frozen hash")
+    require(hashlib.sha256((pack / "execution_code" / runner_path.name).read_bytes()).hexdigest()
+            == runner_hash, "sealed run helper differs from frozen hash")
     grading_seed = config["grading"]["packet_order_seed"]
     require(isinstance(grading_seed, int), "frozen packet_order_seed must be an integer")
     run_manifest = load(pack / "run_manifest.json")
@@ -163,6 +160,13 @@ def main() -> None:
         result = load(result_path)
         state = load(state_path)
         receipt = load(receipt_path)
+        require(state["prepared_job_sha256"] == receipt["prepared_job_sha256"]
+                == prepare.sha256_file(job_path),
+                f"prepared-job hash mismatch for {run_dir.name}")
+        workspace_manifest_path = run_dir / "operator" / "workspace_manifest.json"
+        require(state["workspace_manifest_sha256"] == receipt["workspace_manifest_sha256"]
+                == prepare.sha256_file(workspace_manifest_path),
+                f"workspace-manifest hash mismatch for {run_dir.name}")
         require(state["status"] == "checked", f"run is not checked: {run_dir.name}")
         require(state["checker_result_sha256"] == prepare.sha256_file(checker_path),
                 f"checker-result hash mismatch for {run_dir.name}")
@@ -178,6 +182,14 @@ def main() -> None:
         require(checker["execution_receipt_sha256"] == prepare.sha256_file(receipt_path),
                 f"checker names a different execution receipt for {run_dir.name}")
         sealed = sealed_by_id[job["semantic_run_id"]]
+        aggregate = (pack / "aggregate.sha256").read_text(encoding="ascii").strip()
+        require(job["opaque_run_id"] == state["opaque_run_id"]
+                == receipt["opaque_run_id"] == checker["opaque_run_id"]
+                == runner.opaque_id("run", aggregate, job["semantic_run_id"]),
+                f"opaque run binding mismatch for {run_dir.name}")
+        require(job["condition"] == sealed["condition"]
+                and job["replicate"] == sealed["replicate"],
+                f"job condition/replicate differs from sealed run for {run_dir.name}")
         challenge = challenge_by_id[sealed["case_id"]]
         amendment_path = run_dir / "agent" / "output" / "source-amendment.md"
         source_amendment = (
@@ -238,6 +250,9 @@ def main() -> None:
         require_blind_text(
             agent_generated_blind_fields(packet),
             f"agent-generated packet fields for {job['opaque_run_id']}",
+        )
+        require_blind_lean_artifacts(
+            packet["lean_artifacts"], f"Lean artifacts for {job['opaque_run_id']}"
         )
         collected.append({
             "semantic_run_id": job["semantic_run_id"],

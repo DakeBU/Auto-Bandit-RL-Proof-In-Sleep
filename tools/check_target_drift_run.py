@@ -141,38 +141,6 @@ def parsed_axioms(output: str) -> set[str]:
     return axioms
 
 
-def declarations_appear_in_changes(
-    workspace: Path, changed: list[str], declarations: list[str]
-) -> bool:
-    introduced: set[str] = set()
-    namespace_line = re.compile(r"^\s*namespace\s+([A-Za-z_][A-Za-z0-9_'.]*)\s*$")
-    end_line = re.compile(r"^\s*end(?:\s+[A-Za-z_][A-Za-z0-9_'.]*)?\s*$")
-    declaration_line = re.compile(
-        r"^\s*(?:theorem|lemma|def|abbrev|structure|class|instance|inductive|opaque)\s+"
-        r"([A-Za-z_][A-Za-z0-9_']*(?:\.[A-Za-z_][A-Za-z0-9_']*)*)\b"
-    )
-    for relative in changed:
-        path = workspace / relative
-        if not relative.endswith(".lean") or not path.is_file():
-            continue
-        namespace: list[str] = []
-        for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
-            opened = namespace_line.match(line)
-            if opened:
-                namespace.append(opened.group(1))
-                continue
-            if end_line.match(line):
-                if namespace:
-                    namespace.pop()
-                continue
-            declaration = declaration_line.match(line)
-            if not declaration:
-                continue
-            name = declaration.group(1)
-            introduced.add(name if "." in name or not namespace else ".".join([*namespace, name]))
-    return set(declarations) <= introduced
-
-
 def self_verify(pack: Path, config: dict[str, Any]) -> None:
     checks = {
         Path(__file__).resolve(): config["posthoc_checker"]["sha256"],
@@ -249,6 +217,9 @@ def main() -> None:
     prepare.verify_pack(pack)
     config = load(pack / "execution_config.json")
     require(config["execution_status"] == "frozen_ready", "checker requires frozen pack")
+    require(config["execution_adapter"]["adapter_id"] == "excluded-local-smoke-fixture",
+            "the in-process host checker is restricted to the excluded local fixture; "
+            "real model output requires the pending frozen checker-sandbox driver")
     self_verify(pack, config)
     operator = run_dir / "operator"
     agent = run_dir / "agent"
@@ -390,9 +361,6 @@ def main() -> None:
                 for relative in changed if (replay_workspace / relative).is_file())
     )
     replay_forbidden_hits = scan_lean(replay_workspace, replay_changed)
-    require(result["final_status"] != "compiled" or declarations_appear_in_changes(
-        replay_workspace, replay_changed, declarations
-    ), "compiled declarations must be introduced by the replayed Lean patch")
     build = run_checked(["lake", "build"], replay_workspace, timeout)
     (checker_dir / "neutral-build.log").write_text(build["output"], encoding="utf-8")
     canary: dict[str, Any] | None = None

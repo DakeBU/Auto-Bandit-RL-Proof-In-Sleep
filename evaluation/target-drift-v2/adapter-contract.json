@@ -17,6 +17,7 @@
     "schema_version": 1,
     "required": [
       "opaque_run_id",
+      "replicate",
       "agent_mount",
       "prompt_path",
       "model",
@@ -62,6 +63,7 @@
     "required_event_fields": ["sequence", "kind"],
     "required_final_event": "usage_summary",
     "counted_event_kinds": ["tool_call", "build_attempt", "provider_retry"],
+    "provider_retry_reason_values": ["infrastructure", "semantic"],
     "recovery_flag": "recovery_phase"
   },
   "audit_rule": "The orchestrator derives event counts from the complete trace, checks them against the response and frozen budgets, hashes request/response/trace/process logs, and rehashes the agent view after execution."

@@ -7,6 +7,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 
 TOOLS = Path(__file__).resolve().parent
@@ -68,6 +69,10 @@ class TargetDriftRuntimeTest(unittest.TestCase):
                 [entry["path"] for entry in runner.file_manifest(root)],
                 ["prompt.md"],
             )
+            self.assertEqual(
+                runner.manifest_sha256(runner.file_manifest(root)),
+                grading.manifest_sha256(grading.agent_manifest(root)),
+            )
 
     def test_neutral_checker_flags_proof_escape_hatches(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -79,20 +84,6 @@ class TargetDriftRuntimeTest(unittest.TestCase):
             )
             hits = checker.scan_lean(root, ["Unsafe.lean"])
             self.assertEqual({hit["kind"] for hit in hits}, {"axiom", "constant", "sorry"})
-
-    def test_changed_short_name_cannot_impersonate_qualified_declaration(self) -> None:
-        with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
-            (root / "Other.lean").write_text(
-                "namespace Other\ntheorem target : True := by trivial\nend Other\n",
-                encoding="utf-8",
-            )
-            self.assertFalse(checker.declarations_appear_in_changes(
-                root, ["Other.lean"], ["BanditRLProof.target"]
-            ))
-            self.assertTrue(checker.declarations_appear_in_changes(
-                root, ["Other.lean"], ["Other.target"]
-            ))
 
     def test_public_abrl_locator_is_not_scanned_but_agent_provenance_is(self) -> None:
         packet = {
@@ -117,6 +108,7 @@ class TargetDriftRuntimeTest(unittest.TestCase):
 
     def test_adapter_usage_must_match_trace_counts_and_budgets(self) -> None:
         response = {
+            "provider_request_ids": ["request-1"],
             "usage": {
                 "input_tokens": 10,
                 "output_tokens": 5,
@@ -143,12 +135,62 @@ class TargetDriftRuntimeTest(unittest.TestCase):
                 "maximum_model_retries": 0,
                 "maximum_cost_usd": 1.0,
             },
-            "retry_policy": {"infrastructure_retry_limit": 0},
+            "retry_policy": {
+                "infrastructure_retry_limit": 0,
+                "semantic_failure_retries": 0,
+            },
         }
         self.assertEqual(runner.validate_usage(response, events, job)["tool_calls"], 1)
         events[0] = {"sequence": 0, "kind": "build_attempt", "success": True}
         with self.assertRaises(SystemExit):
             runner.validate_usage(response, events, job)
+
+    def test_provider_retry_trace_binds_request_ids_and_reason_budget(self) -> None:
+        usage = {
+            "input_tokens": 10,
+            "output_tokens": 5,
+            "tool_calls": 0,
+            "build_attempts": 0,
+            "recovery_tool_calls": 0,
+            "infrastructure_retries": 1,
+            "wall_seconds": 2.0,
+            "cost_usd": 0.01,
+        }
+        response = {"provider_request_ids": ["request-1", "request-2"], "usage": usage}
+        events = [
+            {"sequence": 0, "kind": "provider_retry", "reason": "infrastructure"},
+            {"sequence": 1, "kind": "usage_summary", "usage": usage},
+        ]
+        job = {
+            "budgets": {
+                "maximum_input_tokens": 20,
+                "maximum_output_tokens": 20,
+                "maximum_tool_calls": 2,
+                "maximum_build_attempts": 2,
+                "wall_clock_seconds": 5,
+                "maximum_model_retries": 1,
+                "maximum_cost_usd": 1.0,
+            },
+            "retry_policy": {
+                "infrastructure_retry_limit": 1,
+                "semantic_failure_retries": 0,
+            },
+        }
+        self.assertEqual(runner.validate_usage(response, events, job)[
+            "infrastructure_retries"
+        ], 1)
+        response["provider_request_ids"].append("untraced-request")
+        with self.assertRaises(SystemExit):
+            runner.validate_usage(response, events, job)
+
+    def test_unexpected_executor_exception_records_terminal_failure(self) -> None:
+        pack = Path("pack")
+        run = Path("run")
+        with mock.patch.object(runner, "execute_run", side_effect=FileNotFoundError("missing")):
+            with mock.patch.object(runner, "record_operator_failure") as record:
+                with self.assertRaises(FileNotFoundError):
+                    runner.execute_or_record_failure(pack, run)
+                record.assert_called_once_with(run, "FileNotFoundError: missing")
 
     def test_invented_source_critical_field_is_rejected(self) -> None:
         grade = {

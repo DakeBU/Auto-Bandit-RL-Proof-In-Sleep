@@ -185,7 +185,14 @@ def render_prompt(
         rendered = rendered.replace(placeholder, value)
     require(not any(placeholder in rendered for placeholder in prepare.PLACEHOLDERS),
             "rendered prompt still contains a placeholder")
-    return rendered
+    return rendered.rstrip() + (
+        "\n\nBlind-grading requirement: write `primary_grader_rationale` and any "
+        "`source-amendment.md` using condition-neutral mathematical language. "
+        "Do not name the assigned workflow, its condition label, promotion gate, "
+        "proof-blueprint, target-contract, failure ledger, evidence typing, or "
+        "bounded proof transaction. These operator-only details remain available "
+        "through the separate workflow-compliance record.\n"
+    )
 
 
 def prepare_run(pack_dir: Path, semantic_run_id: str, output_dir: Path) -> None:
@@ -363,6 +370,16 @@ def validate_usage(
     for field in ("wall_seconds", "cost_usd"):
         require(isinstance(usage[field], (int, float)) and not isinstance(usage[field], bool)
                 and usage[field] >= 0, f"adapter usage {field} must be nonnegative")
+    retry_events = [event for event in events if event["kind"] == "provider_retry"]
+    for event in retry_events:
+        require(event.get("reason") in {"infrastructure", "semantic"},
+                "each provider_retry must record infrastructure or semantic reason")
+    request_ids = response.get("provider_request_ids")
+    require(isinstance(request_ids, list), "provider_request_ids must be a list")
+    require(len(request_ids) == len(set(request_ids)),
+            "provider_request_ids must not contain duplicates")
+    require(len(retry_events) == max(0, len(request_ids) - 1),
+            "provider retry events differ from provider_request_ids")
     derived = {
         "tool_calls": sum(event["kind"] == "tool_call" for event in events),
         "build_attempts": sum(event["kind"] == "build_attempt" for event in events),
@@ -370,7 +387,10 @@ def validate_usage(
             event["kind"] == "tool_call" and event.get("recovery_phase") is True
             for event in events
         ),
-        "infrastructure_retries": sum(event["kind"] == "provider_retry" for event in events),
+        "infrastructure_retries": sum(
+            event["kind"] == "provider_retry" and event.get("reason") == "infrastructure"
+            for event in events
+        ),
     }
     failure_seen = False
     for event in events[:-1]:
@@ -404,8 +424,13 @@ def validate_usage(
         )
         require(usage[field] <= limit, f"adapter exceeded frozen {field} budget")
     require(
-        usage["infrastructure_retries"] <= job["budgets"]["maximum_model_retries"],
+        len(retry_events) <= job["budgets"]["maximum_model_retries"],
         "adapter exceeded frozen maximum_model_retries",
+    )
+    require(
+        sum(event.get("reason") == "semantic" for event in retry_events)
+        <= job["retry_policy"]["semantic_failure_retries"],
+        "adapter exceeded frozen semantic_failure_retries",
     )
     return usage
 
@@ -641,6 +666,18 @@ def record_operator_failure(run_dir: Path, message: str) -> None:
     dump(state_path, state)
 
 
+def execute_or_record_failure(pack_dir: Path, run_dir: Path) -> None:
+    """Execute one run and preserve a terminal receipt for expected or unexpected failures."""
+    try:
+        execute_run(pack_dir, run_dir)
+    except SystemExit as error:
+        record_operator_failure(run_dir, str(error))
+        raise
+    except Exception as error:
+        record_operator_failure(run_dir, f"{type(error).__name__}: {error}")
+        raise
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--pack", type=Path, required=True)
@@ -654,11 +691,7 @@ def main() -> None:
         prepare_run(args.pack.resolve(), args.run_id, args.output.resolve())
     else:
         require(args.output is None, "--output is not used with --execute")
-        try:
-            execute_run(args.pack.resolve(), args.execute.resolve())
-        except SystemExit as error:
-            record_operator_failure(args.execute.resolve(), str(error))
-            raise
+        execute_or_record_failure(args.pack.resolve(), args.execute.resolve())
 
 
 if __name__ == "__main__":

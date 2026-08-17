@@ -2,9 +2,9 @@
 
 Status: `balanced_variants_designed_execution_not_started`
 
-Version 2 preserves the frozen v1 source cases and fixes execution-validity
-problems before any model run.  It does not overwrite v1 and contains no
-outcomes.
+Version 2 preserves the frozen v1 source cases and revises the design to address
+identified execution-validity problems before any model run.  It does not
+overwrite v1 and contains no outcomes.
 
 The 30 base cases, three matched conditions, and five paired replicates still
 yield 450 planned runs.  The sealed materializer assigns one hidden proposed
@@ -25,7 +25,7 @@ Bernoulli-naive-Bayes negative control).  A separate source-absent frozen-model
 audit and an independent blind wording review remain mandatory human fields;
 the diagnostic is not a formalization result.
 
-Every evaluated workspace is built from commit
+The protocol requires every future evaluated workspace to be built from commit
 `d43bfeee56fb0c1c35cf5af9fc1a7fdc3e0c37b9`, the public base immediately
 before the source-frozen paper audit and challenge artifacts.  This prevents
 the common Lean tree or the ABRL overlay from containing case-specific audit
@@ -37,15 +37,16 @@ the complete operator-only challenge ground truth, the v2 protocol, exact
 prompts, paired wording, portable source manifest and all four PDF byte streams,
 grading rubric, resource policy, adapter/grader contracts,
 materializer/runner/checker/grader/analysis code, and their per-file hashes.
-Evaluated agents receive opaque IDs and one requirement.  Primary graders see
+Future evaluated agents will receive opaque IDs and one requirement.  Primary graders will see
 neutralized final artifacts and post-hoc checker evidence, not condition or
 variant labels or condition-specific workflow traces.
 
-Each run must also emit a hash-bound workflow-compliance record.  Compile-only
+Each future run must also emit a hash-bound workflow-artifact record.  Compile-only
 has no condition-specific evidence file, source-aware must retain a run-local
 `blueprint.md`, and ABRL must retain a target contract, blueprint, failure
-ledger, and promotion-gate log.  The neutral checker verifies those files and
-their hashes; primary graders see only the common compliance result.
+ledger, and promotion-gate log.  The current checker verifies only the required
+files, paths, and hashes; it does not prove that the named workflow was actually
+followed.  Primary graders will see only this common artifact-presence result.
 
 Before the 450 runs, the following are mandatory:
 
@@ -53,9 +54,10 @@ Before the 450 runs, the following are mandatory:
 2. materialize and verify a content-addressed sealed pack;
 3. freeze a real adapter command/container and pass forbidden-path/string,
    budget, trace, and sandbox isolation probes;
-4. run one case × three conditions × one replicate as infrastructure-only
-   smoke tests;
-5. verify budget/timeout/retry enforcement and the hash-bound neutral checker;
+4. run three real-provider/real-sandbox runs (one case × three conditions × one
+   replicate) as infrastructure-only smoke tests excluded from the primary 450;
+5. put neutral replay in its own frozen, network/FS/process-restricted checker
+   sandbox, then verify budget/timeout/retry enforcement and hash binding;
 6. materialize blind grader packets and freeze the target-aware analysis code.
 
 The grader-packet materializer and packet-order seed are frozen before model
@@ -85,14 +87,14 @@ python tools/prepare_target_drift_execution.py --verify-pack FROZEN-PACK
 The preseal and frozen configurations normalize to the same digest input; the
 second materialization must reproduce the first aggregate exactly.
 
-For each semantic run selected by the operator, the frozen runner prepares an
+For each future semantic run selected by the operator, the frozen runner code prepares an
 opaque view, invokes the configured adapter without a shell, enforces an
 orchestrator process-tree timeout, validates the response/JSONL trace, rejects
 trace accounting beyond the token/tool/build/retry/time/cost budgets, and
-rehashes the completed view.  A trusted checker-only dependency-cache prelude
-(or an explicitly empty one for a cache-complete image) is frozen as argv and
-included in the seal; it never enters the evaluated agent's resource view.  The
-same sealed pack is then required by the neutral checker:
+rehashes the completed view.  A real run must use an empty prelude inside a
+cache-complete immutable checker image.  The nonempty prelude implemented here
+is restricted to the excluded fake fixture and is not reproducibility or
+security evidence.  The same sealed pack is required by the checker code:
 
 ```text
 python tools/run_target_drift_execution.py --pack FROZEN-PACK --run-id SEMANTIC-RUN-ID --output RUN-DIR
@@ -109,9 +111,14 @@ python tools/assemble_target_drift_grades.py --pack FROZEN-PACK --grading-pack G
 python tools/analyze_target_drift_execution.py --pack FROZEN-PACK --grading-pack GRADING-PACK --grades GRADES.json --output ANALYSIS.json
 ```
 
-These commands make the interface executable; they do not supply a provider,
-container image, credentials, budget choices, or grader identities.  Those
-remain deliberately unfrozen and no primary run has started.
+These commands expose executable code paths; they do not supply a provider,
+agent sandbox, checker sandbox, credentials, budget choices, or grader
+identities.  Component tests cover deterministic assignment, seal hashing,
+opaque prompts, manifest/digest checks, selected fail-closed paths, and
+synthetic 450-record analysis.  The deterministic fake fixture and two local
+fail-closed probes are nonexperimental and do not pass the real-infrastructure
+gate.  No real three-condition smoke, final pack, primary model run, grader
+response, grade ledger, or analysis output exists.
 `tools/fake_target_drift_adapter.py` and
 `tools/fake_target_drift_cache_prelude.py` are deterministic fixtures only for
 the excluded local plumbing smoke test; they are not a model provider, sandbox,
