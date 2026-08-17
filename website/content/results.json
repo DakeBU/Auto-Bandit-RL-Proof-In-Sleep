@@ -901,6 +901,125 @@
         "Chapter 15 regret/event bridge, natural-count connection to the compiled real-valued Delta tuning, exact 1/27 terminal, and infimum/supremum extraction."
       ],
       "evidence": "tasks/TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE.md; tasks/TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE.md"
+    },
+    {
+      "id": "DELAYED-FEEDBACK-SOURCE-ACCOUNTING",
+      "title": "Source-faithful delayed-feedback accounting",
+      "chapter": "frontier",
+      "status": "compiled",
+      "informal": "For the frozen NeurIPS 2025 delayed best-of-both-worlds source, the library formalizes strict pre-action observability, outstanding rounds, their exact finite partition, paper-style end-of-round missing-feedback counts, and the explicit one-based indexing bridge. This is deterministic accounting, not a regret theorem.",
+      "declarations": [
+        "BanditRLProof.DelayedFeedback.observedBefore",
+        "BanditRLProof.DelayedFeedback.outstandingAt",
+        "BanditRLProof.DelayedFeedback.observedBefore_disjoint_outstandingAt",
+        "BanditRLProof.DelayedFeedback.observedBefore_union_outstandingAt",
+        "BanditRLProof.DelayedFeedback.card_observedBefore_add_card_outstandingAt",
+        "BanditRLProof.DelayedFeedback.outstandingCount",
+        "BanditRLProof.DelayedFeedback.maxOutstandingBeforeThrough",
+        "BanditRLProof.DelayedFeedback.outstandingCount_le_round",
+        "BanditRLProof.DelayedFeedback.outstandingCount_le_maxOutstandingBeforeThrough",
+        "BanditRLProof.DelayedFeedback.oneBasedDelayShift",
+        "BanditRLProof.DelayedFeedback.paperMissingAtEnd",
+        "BanditRLProof.DelayedFeedback.paperMissingAtEnd_eq_outstandingAt_oneBasedDelayShift",
+        "BanditRLProof.DelayedFeedback.paperMissingCount",
+        "BanditRLProof.DelayedFeedback.paperMissingCount_eq_outstandingCount_oneBasedDelayShift",
+        "BanditRLProof.DelayedFeedback.paperMissingCount_le_round",
+        "BanditRLProof.DelayedFeedback.paperSigmaMaxThrough",
+        "BanditRLProof.DelayedFeedback.paperMissingCount_le_paperSigmaMaxThrough"
+      ],
+      "depends_on": [],
+      "missing": [],
+      "evidence": "BanditRLProof/DelayedFeedback/Accounting.lean; Tests/DelayedFeedbackPaperAuditCanary.lean; research-wiki/papers/neurips-2025-delayed-bobw-audit.md"
+    },
+    {
+      "id": "DELAYED-FEEDBACK-CAUSAL-PROCESSING",
+      "title": "Causal action-time view and new-feedback processing",
+      "chapter": "frontier",
+      "status": "compiled",
+      "informal": "The learner view exposes past actions and exactly the losses available before the next action. Observation-equivalent hidden worlds are indistinguishable to any typed causal decision rule, and the set-level update processes precisely the newly observed rounds. The declarations do not yet define a randomized policy kernel or the paper's ordered state updates.",
+      "declarations": [
+        "BanditRLProof.DelayedFeedback.ActionTimeView",
+        "BanditRLProof.DelayedFeedback.ActionTimeView.ext",
+        "BanditRLProof.DelayedFeedback.actionTimeViewAt",
+        "BanditRLProof.DelayedFeedback.CausalDecisionRule",
+        "BanditRLProof.DelayedFeedback.actionTimeViewAt_pastAction_of_lt",
+        "BanditRLProof.DelayedFeedback.actionTimeViewAt_pastAction_of_not_lt",
+        "BanditRLProof.DelayedFeedback.actionTimeViewAt_observedLoss_of_mem",
+        "BanditRLProof.DelayedFeedback.actionTimeViewAt_observedLoss_of_not_mem",
+        "BanditRLProof.DelayedFeedback.actionTimeViewAt_outstanding_loss_hidden",
+        "BanditRLProof.DelayedFeedback.actionTimeViewAt_eq_of_observation_equivalent",
+        "BanditRLProof.DelayedFeedback.causalDecision_eq_of_observation_equivalent",
+        "BanditRLProof.DelayedFeedback.newlyObservedBefore",
+        "BanditRLProof.DelayedFeedback.observedBefore_mono",
+        "BanditRLProof.DelayedFeedback.processed_disjoint_newlyObservedBefore",
+        "BanditRLProof.DelayedFeedback.processed_union_newlyObservedBefore",
+        "BanditRLProof.DelayedFeedback.processAllNew",
+        "BanditRLProof.DelayedFeedback.processAllNew_eq_observedBefore",
+        "BanditRLProof.DelayedFeedback.previousObservedBefore_subset_current",
+        "BanditRLProof.DelayedFeedback.processAllNew_from_previous_eq_current",
+        "BanditRLProof.DelayedFeedback.outstandingAt_disjoint_newlyObservedBefore"
+      ],
+      "depends_on": [
+        "BanditRLProof.DelayedFeedback.observedBefore",
+        "BanditRLProof.DelayedFeedback.outstandingAt"
+      ],
+      "missing": [
+        "A stochastic policy kernel whose generated action law is proved measurable and depends only on this view.",
+        "The source's simultaneous-arrival order and BSC/EAP state-transition invariants."
+      ],
+      "evidence": "BanditRLProof/DelayedFeedback/CausalView.lean; BanditRLProof/DelayedFeedback/Processing.lean; Tests/DelayedFeedbackPaperAuditCanary.lean"
+    },
+    {
+      "id": "DELAYED-SAPO-ACTIVE-ALLOCATION",
+      "title": "Delayed SAPO active-arm allocation leaf",
+      "chapter": "frontier",
+      "status": "compiled",
+      "informal": "Algorithm 5's equal residual allocation over a nonempty active set is normalized and coordinatewise nonnegative whenever the inactive coordinates are nonnegative and carry at most unit mass. No claim is made that the unformalized EAP state maintains those premises.",
+      "declarations": [
+        "BanditRLProof.DelayedFeedback.inactiveArms",
+        "BanditRLProof.DelayedFeedback.activeEqualShare",
+        "BanditRLProof.DelayedFeedback.delayedSAPOProbability",
+        "BanditRLProof.DelayedFeedback.delayedSAPOProbability_of_active",
+        "BanditRLProof.DelayedFeedback.delayedSAPOProbability_of_inactive",
+        "BanditRLProof.DelayedFeedback.activeEqualShare_nonneg",
+        "BanditRLProof.DelayedFeedback.delayedSAPOProbability_nonneg",
+        "BanditRLProof.DelayedFeedback.sum_delayedSAPOProbability_eq_one"
+      ],
+      "depends_on": [
+        "BanditRLProof.DelayedFeedback.inactiveArms",
+        "BanditRLProof.DelayedFeedback.activeEqualShare"
+      ],
+      "missing": [
+        "A source-faithful EAP state and proof that every update preserves nonnegative inactive mass at most one.",
+        "A sampling kernel using this vector on the generated delayed-feedback history."
+      ],
+      "evidence": "BanditRLProof/DelayedFeedback/ActiveAllocation.lean; Tests/DelayedFeedbackPaperAuditCanary.lean"
+    },
+    {
+      "id": "NEURIPS-2025-DELAYED-BOBW-CENTRAL-ENDPOINTS",
+      "title": "Source-frozen delayed best-of-both-worlds endpoint audit",
+      "chapter": "frontier",
+      "status": "partial",
+      "informal": "The exact NeurIPS 2025 source is hash-frozen, a same-algorithm multi-regime contract compiles, and 45 source-semantic accounting, causality, processing, and allocation declarations compile. BanditRLlib does not yet implement Delayed SAPO or prove either the stochastic or adversarial regret endpoint.",
+      "declarations": [
+        "BanditRLProof.DelayedFeedback.SameAlgorithmMultiRegimeContract",
+        "BanditRLProof.DelayedFeedback.SameAlgorithmMultiRegimeContract.stochasticClaim",
+        "BanditRLProof.DelayedFeedback.SameAlgorithmMultiRegimeContract.adversarialClaim",
+        "BanditRLProof.DelayedFeedback.SameAlgorithmMultiRegimeContract.stochasticClaim_iff_shared_fields",
+        "BanditRLProof.DelayedFeedback.SameAlgorithmMultiRegimeContract.adversarialClaim_iff_shared_fields"
+      ],
+      "depends_on": [
+        "BanditRLProof.DelayedFeedback.paperMissingCount_le_paperSigmaMaxThrough",
+        "BanditRLProof.DelayedFeedback.causalDecision_eq_of_observation_equivalent",
+        "BanditRLProof.DelayedFeedback.processAllNew_from_previous_eq_current",
+        "BanditRLProof.DelayedFeedback.sum_delayedSAPOProbability_eq_one"
+      ],
+      "missing": [
+        "The Delayed SAPO BSC and EAP state machines, switching rule, and ordered update semantics.",
+        "A causal randomized sampling kernel and generated delayed-feedback trajectory law.",
+        "The stochastic-instance and oblivious-adversarial regret endpoints for the same algorithm identity."
+      ],
+      "evidence": "research-wiki/papers/prospective-audit-2025-freeze.json; research-wiki/papers/neurips-2025-delayed-bobw-audit.md; proof-obligations/PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY.md"
     }
   ]
 }

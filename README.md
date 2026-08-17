@@ -128,10 +128,11 @@ The mandatory check builds the library, builds `Tests`, scans for forbidden plac
 Useful read-only commands:
 
 ```text
-python tools/bandit.py status
+python tools/bandit.py frontier-shadow
 python tools/bandit.py list-lean-decls
 python tools/bandit.py list-lean-decls Exp3 --statement
 python tools/bandit.py route-plan BRL-UCB-PORT-001
+python tools/validate_target_drift_suite.py
 ```
 
 Core paths:
@@ -142,6 +143,8 @@ Core paths:
 - `proof-blueprints/` — proof-graph snapshots;
 - `research-wiki/` — source-aware theorem cards and retrieval indexes;
 - `runs/` — attempt, lifecycle, and acceptance evidence;
+- `evaluation/target-drift-v1/` — frozen 30-case evaluation design; execution
+  has not started and no result is reported;
 - `website/` — literate static site, local compiler service, and integrity checker;
 - `tools/bandit.py` — deterministic harness CLI.
 - [`docs/proof_graph_laboratory.md`](docs/proof_graph_laboratory.md) — compiled-environment dependency export, proof-cost/ZDD/hypergraph prototypes, and the proof-structural novelty audit boundary.

@@ -278,6 +278,25 @@ Watchlist scenarios may still be theorem-card-only.  They should not be used as
 Lean proof targets until a source card, local API, and Mathlib retrieval route
 are recorded.
 
+## Prospective External Audit: Delayed-Feedback BoBW
+
+The source-frozen NeurIPS 2025 delayed-feedback best-of-both-worlds feasibility
+route is tracked by
+`PPR-SCHLISSELBERG-LANCEWICKI-AUER-MANSOUR-2025-DELAYED-BOBW` and
+`PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY`.  Its deterministic
+source-time foundation now compiles in
+`BanditRLProof.DelayedFeedback.Accounting`: strict pre-action availability,
+the complementary outstanding set inside the past prefix, their exact
+partition/cardinality, an action-time outstanding-count surface, and its
+finite-horizon maximum.
+
+This is feasibility evidence only.  The action-time surface has not yet been
+identified with the source's one-based end-of-round `sigma(t)`; delayed SAPO,
+probability banks, causal unknown-delay information, stochastic/adversarial
+regime laws, the external adversarial algorithm, and the same-algorithm
+Theorems 4.1/5.1 coupling remain planned.  No external paper theorem is
+classified as compiled or audited.
+
 The machine-readable route atlas is `lean-route-roadmap.json`.  It is the
 handoff contract between upper planning agents and lower Lean agents: each
 route records the compiled local core, missing Mathlib-grade leaves, intended

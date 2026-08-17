@@ -581,6 +581,7 @@ def layout(
   <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the ABRL hierarchical autoformalization harness.">
   <meta name="citation_title" content="{html.escape(PAPER_TITLE)}">
   <title>{html.escape(title)} · BanditRLlib</title>
+  <link rel="icon" href="{root}/static/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="{root}/static/site.css?v={ASSET_VERSION}">
   {mathjax}
 </head>

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-16T22:49:34+00:00",
+  "generated": "2026-08-17T14:40:49+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -14768,6 +14768,502 @@
       "file": "BanditRLProof/Core.lean",
       "line": 88,
       "statement": "inductive CertificateStatus where"
+    },
+    {
+      "kind": "def",
+      "name": "IsSimplexTangent",
+      "full_name": "BanditRLProof.CurvatureNoiseGap.IsSimplexTangent",
+      "file": "BanditRLProof/CurvatureNoiseGapGeometry.lean",
+      "line": 29,
+      "statement": "def IsSimplexTangent {Index : Type*} [DecidableEq Index] (indices : Finset Index) (direction : Index -> Real) : Prop"
+    },
+    {
+      "kind": "def",
+      "name": "tangentPairing",
+      "full_name": "BanditRLProof.CurvatureNoiseGap.tangentPairing",
+      "file": "BanditRLProof/CurvatureNoiseGapGeometry.lean",
+      "line": 34,
+      "statement": "def tangentPairing {Index : Type*} [DecidableEq Index] (indices : Finset Index) (signal direction : Index -> Real) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "tangentPairing_add_const_of_isSimplexTangent",
+      "full_name": "BanditRLProof.CurvatureNoiseGap.tangentPairing_add_const_of_isSimplexTangent",
+      "file": "BanditRLProof/CurvatureNoiseGapGeometry.lean",
+      "line": 39,
+      "statement": "theorem tangentPairing_add_const_of_isSimplexTangent {Index : Type*} [DecidableEq Index] (indices : Finset Index) (signal direction : Index -> Real) (shift : Real) (hdirection : IsSimplexTangent indices direction) : tangentPairing indices (fun i => signal i + shift) direction = tangentPairing indices signal direction"
+    },
+    {
+      "kind": "def",
+      "name": "weightedShiftEnergy",
+      "full_name": "BanditRLProof.CurvatureNoiseGap.weightedShiftEnergy",
+      "file": "BanditRLProof/CurvatureNoiseGapGeometry.lean",
+      "line": 50,
+      "statement": "def weightedShiftEnergy {Index : Type*} [DecidableEq Index] (indices : Finset Index) (weight signal : Index -> Real) (shift : Real) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "weightedCenter",
+      "full_name": "BanditRLProof.CurvatureNoiseGap.weightedCenter",
+      "file": "BanditRLProof/CurvatureNoiseGapGeometry.lean",
+      "line": 55,
+      "statement": "noncomputable def weightedCenter {Index : Type*} [DecidableEq Index] (indices : Finset Index) (weight signal : Index -> Real) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_weight_mul_sub_weightedCenter_eq_zero",
+      "full_name": "BanditRLProof.CurvatureNoiseGap.sum_weight_mul_sub_weightedCenter_eq_zero",
+      "file": "BanditRLProof/CurvatureNoiseGapGeometry.lean",
+      "line": 60,
+      "statement": "theorem sum_weight_mul_sub_weightedCenter_eq_zero {Index : Type*} [DecidableEq Index] (indices : Finset Index) (weight signal : Index -> Real) (hweightSum : indices.sum weight \u2260 0) : indices.sum (fun i => weight i * (signal i - weightedCenter indices weight signal)) = 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "weightedShiftEnergy_decomposition_of_centered",
+      "full_name": "BanditRLProof.CurvatureNoiseGap.weightedShiftEnergy_decomposition_of_centered",
+      "file": "BanditRLProof/CurvatureNoiseGapGeometry.lean",
+      "line": 73,
+      "statement": "theorem weightedShiftEnergy_decomposition_of_centered {Index : Type*} [DecidableEq Index] (indices : Finset Index) (weight signal : Index -> Real) (center shift : Real) (hcenter : indices.sum (fun i => weight i * (signal i - center)) = 0) : weightedShiftEnergy indices weight signal shift = weightedShiftEnergy indices weight signal center + indices.sum weight * (shift - center) ^ 2"
+    },
+    {
+      "kind": "theorem",
+      "name": "weightedShiftEnergy_decomposition",
+      "full_name": "BanditRLProof.CurvatureNoiseGap.weightedShiftEnergy_decomposition",
+      "file": "BanditRLProof/CurvatureNoiseGapGeometry.lean",
+      "line": 103,
+      "statement": "theorem weightedShiftEnergy_decomposition {Index : Type*} [DecidableEq Index] (indices : Finset Index) (weight signal : Index -> Real) (shift : Real) (hweightSum : indices.sum weight \u2260 0) : weightedShiftEnergy indices weight signal shift = weightedShiftEnergy indices weight signal (weightedCenter indices weight signal) + indices.sum weight * (shift - weightedCenter indices weight signal) ^ 2"
+    },
+    {
+      "kind": "theorem",
+      "name": "weightedShiftEnergy_center_le",
+      "full_name": "BanditRLProof.CurvatureNoiseGap.weightedShiftEnergy_center_le",
+      "file": "BanditRLProof/CurvatureNoiseGapGeometry.lean",
+      "line": 117,
+      "statement": "theorem weightedShiftEnergy_center_le {Index : Type*} [DecidableEq Index] (indices : Finset Index) (weight signal : Index -> Real) (shift : Real) (hweight : forall i, i \u2208 indices -> 0 <= weight i) (hweightSum : 0 < indices.sum weight) : weightedShiftEnergy indices weight signal (weightedCenter indices weight signal) <= weightedShiftEnergy indices weight signal shift"
+    },
+    {
+      "kind": "theorem",
+      "name": "weightedShiftEnergy_eq_center_iff",
+      "full_name": "BanditRLProof.CurvatureNoiseGap.weightedShiftEnergy_eq_center_iff",
+      "file": "BanditRLProof/CurvatureNoiseGapGeometry.lean",
+      "line": 129,
+      "statement": "theorem weightedShiftEnergy_eq_center_iff {Index : Type*} [DecidableEq Index] (indices : Finset Index) (weight signal : Index -> Real) (shift : Real) (hweightSum : 0 < indices.sum weight) : weightedShiftEnergy indices weight signal shift = weightedShiftEnergy indices weight signal (weightedCenter indices weight signal) <-> shift = weightedCenter indices weight signal"
+    },
+    {
+      "kind": "theorem",
+      "name": "weightedShiftEnergy_add_decomposition",
+      "full_name": "BanditRLProof.CurvatureNoiseGap.weightedShiftEnergy_add_decomposition",
+      "file": "BanditRLProof/CurvatureNoiseGapGeometry.lean",
+      "line": 153,
+      "statement": "theorem weightedShiftEnergy_add_decomposition {Index : Type*} [DecidableEq Index] (indices : Finset Index) (weight signal noise : Index -> Real) (signalShift noiseShift : Real) : weightedShiftEnergy indices weight (fun i => signal i + noise i) (signalShift + noiseShift) = weightedShiftEnergy indices weight signal signalShift + weightedShiftEnergy indices weight noise noiseShift + 2 * indices.sum (fun i => weight i * (signal i - signalShift) * (noise i - noiseShift))"
+    },
+    {
+      "kind": "theorem",
+      "name": "weightedShiftEnergy_add_le_two",
+      "full_name": "BanditRLProof.CurvatureNoiseGap.weightedShiftEnergy_add_le_two",
+      "file": "BanditRLProof/CurvatureNoiseGapGeometry.lean",
+      "line": 182,
+      "statement": "theorem weightedShiftEnergy_add_le_two {Index : Type*} [DecidableEq Index] (indices : Finset Index) (weight signal noise : Index -> Real) (signalShift noiseShift : Real) (hweight : forall i, i \u2208 indices -> 0 <= weight i) : weightedShiftEnergy indices weight (fun i => signal i + noise i) (signalShift + noiseShift) <= 2 * weightedShiftEnergy indices weight signal signalShift + 2 * weightedShiftEnergy indices weight noise noiseShift"
+    },
+    {
+      "kind": "def",
+      "name": "observedBefore",
+      "full_name": "BanditRLProof.DelayedFeedback.observedBefore",
+      "file": "BanditRLProof/DelayedFeedback/Accounting.lean",
+      "line": 12,
+      "statement": "def observedBefore (delay : Nat \u2192 Nat) (t : Nat) : Finset Nat"
+    },
+    {
+      "kind": "def",
+      "name": "outstandingAt",
+      "full_name": "BanditRLProof.DelayedFeedback.outstandingAt",
+      "file": "BanditRLProof/DelayedFeedback/Accounting.lean",
+      "line": 18,
+      "statement": "def outstandingAt (delay : Nat \u2192 Nat) (t : Nat) : Finset Nat"
+    },
+    {
+      "kind": "theorem",
+      "name": "observedBefore_disjoint_outstandingAt",
+      "full_name": "BanditRLProof.DelayedFeedback.observedBefore_disjoint_outstandingAt",
+      "file": "BanditRLProof/DelayedFeedback/Accounting.lean",
+      "line": 22,
+      "statement": "theorem observedBefore_disjoint_outstandingAt (delay : Nat \u2192 Nat) (t : Nat) : Disjoint (observedBefore delay t) (outstandingAt delay t)"
+    },
+    {
+      "kind": "theorem",
+      "name": "observedBefore_union_outstandingAt",
+      "full_name": "BanditRLProof.DelayedFeedback.observedBefore_union_outstandingAt",
+      "file": "BanditRLProof/DelayedFeedback/Accounting.lean",
+      "line": 30,
+      "statement": "theorem observedBefore_union_outstandingAt (delay : Nat \u2192 Nat) (t : Nat) : observedBefore delay t \u222a outstandingAt delay t = Finset.range t"
+    },
+    {
+      "kind": "theorem",
+      "name": "card_observedBefore_add_card_outstandingAt",
+      "full_name": "BanditRLProof.DelayedFeedback.card_observedBefore_add_card_outstandingAt",
+      "file": "BanditRLProof/DelayedFeedback/Accounting.lean",
+      "line": 46,
+      "statement": "theorem card_observedBefore_add_card_outstandingAt (delay : Nat \u2192 Nat) (t : Nat) : (observedBefore delay t).card + (outstandingAt delay t).card = t"
+    },
+    {
+      "kind": "def",
+      "name": "outstandingCount",
+      "full_name": "BanditRLProof.DelayedFeedback.outstandingCount",
+      "file": "BanditRLProof/DelayedFeedback/Accounting.lean",
+      "line": 58,
+      "statement": "def outstandingCount (delay : Nat \u2192 Nat) (t : Nat) : Nat"
+    },
+    {
+      "kind": "def",
+      "name": "maxOutstandingBeforeThrough",
+      "full_name": "BanditRLProof.DelayedFeedback.maxOutstandingBeforeThrough",
+      "file": "BanditRLProof/DelayedFeedback/Accounting.lean",
+      "line": 62,
+      "statement": "def maxOutstandingBeforeThrough (delay : Nat \u2192 Nat) (horizon : Nat) : Nat"
+    },
+    {
+      "kind": "theorem",
+      "name": "outstandingCount_le_round",
+      "full_name": "BanditRLProof.DelayedFeedback.outstandingCount_le_round",
+      "file": "BanditRLProof/DelayedFeedback/Accounting.lean",
+      "line": 67,
+      "statement": "theorem outstandingCount_le_round (delay : Nat \u2192 Nat) (t : Nat) : outstandingCount delay t \u2264 t"
+    },
+    {
+      "kind": "theorem",
+      "name": "outstandingCount_le_maxOutstandingBeforeThrough",
+      "full_name": "BanditRLProof.DelayedFeedback.outstandingCount_le_maxOutstandingBeforeThrough",
+      "file": "BanditRLProof/DelayedFeedback/Accounting.lean",
+      "line": 75,
+      "statement": "theorem outstandingCount_le_maxOutstandingBeforeThrough (delay : Nat \u2192 Nat) {t horizon : Nat} (ht : t \u2264 horizon) : outstandingCount delay t \u2264 maxOutstandingBeforeThrough delay horizon"
+    },
+    {
+      "kind": "def",
+      "name": "oneBasedDelayShift",
+      "full_name": "BanditRLProof.DelayedFeedback.oneBasedDelayShift",
+      "file": "BanditRLProof/DelayedFeedback/Accounting.lean",
+      "line": 86,
+      "statement": "def oneBasedDelayShift (delay : Nat \u2192 Nat) (s : Nat) : Nat"
+    },
+    {
+      "kind": "def",
+      "name": "paperMissingAtEnd",
+      "full_name": "BanditRLProof.DelayedFeedback.paperMissingAtEnd",
+      "file": "BanditRLProof/DelayedFeedback/Accounting.lean",
+      "line": 92,
+      "statement": "def paperMissingAtEnd (delay : Nat \u2192 Nat) (t : Nat) : Finset Nat"
+    },
+    {
+      "kind": "theorem",
+      "name": "paperMissingAtEnd_eq_outstandingAt_oneBasedDelayShift",
+      "full_name": "BanditRLProof.DelayedFeedback.paperMissingAtEnd_eq_outstandingAt_oneBasedDelayShift",
+      "file": "BanditRLProof/DelayedFeedback/Accounting.lean",
+      "line": 99,
+      "statement": "theorem paperMissingAtEnd_eq_outstandingAt_oneBasedDelayShift (delay : Nat \u2192 Nat) (t : Nat) : paperMissingAtEnd delay t = outstandingAt (oneBasedDelayShift delay) t"
+    },
+    {
+      "kind": "def",
+      "name": "paperMissingCount",
+      "full_name": "BanditRLProof.DelayedFeedback.paperMissingCount",
+      "file": "BanditRLProof/DelayedFeedback/Accounting.lean",
+      "line": 113,
+      "statement": "def paperMissingCount (delay : Nat \u2192 Nat) (t : Nat) : Nat"
+    },
+    {
+      "kind": "theorem",
+      "name": "paperMissingCount_eq_outstandingCount_oneBasedDelayShift",
+      "full_name": "BanditRLProof.DelayedFeedback.paperMissingCount_eq_outstandingCount_oneBasedDelayShift",
+      "file": "BanditRLProof/DelayedFeedback/Accounting.lean",
+      "line": 117,
+      "statement": "theorem paperMissingCount_eq_outstandingCount_oneBasedDelayShift (delay : Nat \u2192 Nat) (t : Nat) : paperMissingCount delay t = outstandingCount (oneBasedDelayShift delay) t"
+    },
+    {
+      "kind": "theorem",
+      "name": "paperMissingCount_le_round",
+      "full_name": "BanditRLProof.DelayedFeedback.paperMissingCount_le_round",
+      "file": "BanditRLProof/DelayedFeedback/Accounting.lean",
+      "line": 124,
+      "statement": "theorem paperMissingCount_le_round (delay : Nat \u2192 Nat) (t : Nat) : paperMissingCount delay t \u2264 t"
+    },
+    {
+      "kind": "def",
+      "name": "paperSigmaMaxThrough",
+      "full_name": "BanditRLProof.DelayedFeedback.paperSigmaMaxThrough",
+      "file": "BanditRLProof/DelayedFeedback/Accounting.lean",
+      "line": 131,
+      "statement": "def paperSigmaMaxThrough (delay : Nat \u2192 Nat) (horizon : Nat) : Nat"
+    },
+    {
+      "kind": "theorem",
+      "name": "paperMissingCount_le_paperSigmaMaxThrough",
+      "full_name": "BanditRLProof.DelayedFeedback.paperMissingCount_le_paperSigmaMaxThrough",
+      "file": "BanditRLProof/DelayedFeedback/Accounting.lean",
+      "line": 136,
+      "statement": "theorem paperMissingCount_le_paperSigmaMaxThrough (delay : Nat \u2192 Nat) {t horizon : Nat} (ht : t \u2264 horizon) : paperMissingCount delay t \u2264 paperSigmaMaxThrough delay horizon"
+    },
+    {
+      "kind": "def",
+      "name": "inactiveArms",
+      "full_name": "BanditRLProof.DelayedFeedback.inactiveArms",
+      "file": "BanditRLProof/DelayedFeedback/ActiveAllocation.lean",
+      "line": 11,
+      "statement": "def inactiveArms {K : Nat} (active : Finset (Fin K)) : Finset (Fin K)"
+    },
+    {
+      "kind": "def",
+      "name": "activeEqualShare",
+      "full_name": "BanditRLProof.DelayedFeedback.activeEqualShare",
+      "file": "BanditRLProof/DelayedFeedback/ActiveAllocation.lean",
+      "line": 15,
+      "statement": "noncomputable def activeEqualShare {K : Nat} (active : Finset (Fin K)) (inactiveProbability : Fin K \u2192 \u211d) : \u211d"
+    },
+    {
+      "kind": "def",
+      "name": "delayedSAPOProbability",
+      "full_name": "BanditRLProof.DelayedFeedback.delayedSAPOProbability",
+      "file": "BanditRLProof/DelayedFeedback/ActiveAllocation.lean",
+      "line": 22,
+      "statement": "noncomputable def delayedSAPOProbability {K : Nat} (active : Finset (Fin K)) (inactiveProbability : Fin K \u2192 \u211d) (i : Fin K) : \u211d"
+    },
+    {
+      "kind": "theorem",
+      "name": "delayedSAPOProbability_of_active",
+      "full_name": "BanditRLProof.DelayedFeedback.delayedSAPOProbability_of_active",
+      "file": "BanditRLProof/DelayedFeedback/ActiveAllocation.lean",
+      "line": 29,
+      "statement": "theorem delayedSAPOProbability_of_active {K : Nat} (active : Finset (Fin K)) (inactiveProbability : Fin K \u2192 \u211d) {i : Fin K} (hi : i \u2208 active) : delayedSAPOProbability active inactiveProbability i = activeEqualShare active inactiveProbability"
+    },
+    {
+      "kind": "theorem",
+      "name": "delayedSAPOProbability_of_inactive",
+      "full_name": "BanditRLProof.DelayedFeedback.delayedSAPOProbability_of_inactive",
+      "file": "BanditRLProof/DelayedFeedback/ActiveAllocation.lean",
+      "line": 37,
+      "statement": "theorem delayedSAPOProbability_of_inactive {K : Nat} (active : Finset (Fin K)) (inactiveProbability : Fin K \u2192 \u211d) {i : Fin K} (hi : i \u2209 active) : delayedSAPOProbability active inactiveProbability i = inactiveProbability i"
+    },
+    {
+      "kind": "theorem",
+      "name": "activeEqualShare_nonneg",
+      "full_name": "BanditRLProof.DelayedFeedback.activeEqualShare_nonneg",
+      "file": "BanditRLProof/DelayedFeedback/ActiveAllocation.lean",
+      "line": 46,
+      "statement": "theorem activeEqualShare_nonneg {K : Nat} (active : Finset (Fin K)) (inactiveProbability : Fin K \u2192 \u211d) (hmass : (\u2211 i \u2208 inactiveArms active, inactiveProbability i) \u2264 1) : 0 \u2264 activeEqualShare active inactiveProbability"
+    },
+    {
+      "kind": "theorem",
+      "name": "delayedSAPOProbability_nonneg",
+      "full_name": "BanditRLProof.DelayedFeedback.delayedSAPOProbability_nonneg",
+      "file": "BanditRLProof/DelayedFeedback/ActiveAllocation.lean",
+      "line": 54,
+      "statement": "theorem delayedSAPOProbability_nonneg {K : Nat} (active : Finset (Fin K)) (inactiveProbability : Fin K \u2192 \u211d) (hinactive : \u2200 i \u2208 inactiveArms active, 0 \u2264 inactiveProbability i) (hmass : (\u2211 i \u2208 inactiveArms active, inactiveProbability i) \u2264 1) (i : Fin K) : 0 \u2264 delayedSAPOProbability active inactiveProbability i"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_delayedSAPOProbability_eq_one",
+      "full_name": "BanditRLProof.DelayedFeedback.sum_delayedSAPOProbability_eq_one",
+      "file": "BanditRLProof/DelayedFeedback/ActiveAllocation.lean",
+      "line": 68,
+      "statement": "theorem sum_delayedSAPOProbability_eq_one {K : Nat} (active : Finset (Fin K)) (inactiveProbability : Fin K \u2192 \u211d) (hactive : active.Nonempty) : \u2211 i, delayedSAPOProbability active inactiveProbability i = 1"
+    },
+    {
+      "kind": "structure",
+      "name": "ActionTimeView",
+      "full_name": "BanditRLProof.DelayedFeedback.ActionTimeView",
+      "file": "BanditRLProof/DelayedFeedback/CausalView.lean",
+      "line": 16,
+      "statement": "structure ActionTimeView (Action : Type uAction) (Loss : Type uLoss) where"
+    },
+    {
+      "kind": "theorem",
+      "name": "ActionTimeView.ext",
+      "full_name": "ActionTimeView.ext",
+      "file": "BanditRLProof/DelayedFeedback/CausalView.lean",
+      "line": 21,
+      "statement": "theorem ActionTimeView.ext {Action : Type uAction} {Loss : Type uLoss} {left right : ActionTimeView Action Loss} (hpast : left.pastAction = right.pastAction) (hloss : left.observedLoss = right.observedLoss) : left = right"
+    },
+    {
+      "kind": "def",
+      "name": "actionTimeViewAt",
+      "full_name": "BanditRLProof.DelayedFeedback.actionTimeViewAt",
+      "file": "BanditRLProof/DelayedFeedback/CausalView.lean",
+      "line": 36,
+      "statement": "def actionTimeViewAt {Action : Type uAction} {Loss : Type uLoss} (delay : Nat \u2192 Nat) (action : Nat \u2192 Action) (loss : Nat \u2192 Loss) (t : Nat) : ActionTimeView Action Loss where"
+    },
+    {
+      "kind": "abbrev",
+      "name": "CausalDecisionRule",
+      "full_name": "BanditRLProof.DelayedFeedback.CausalDecisionRule",
+      "file": "BanditRLProof/DelayedFeedback/CausalView.lean",
+      "line": 47,
+      "statement": "abbrev CausalDecisionRule (Action : Type uAction) (Loss : Type uLoss) (Decision : Type uDecision)"
+    },
+    {
+      "kind": "theorem",
+      "name": "actionTimeViewAt_pastAction_of_lt",
+      "full_name": "BanditRLProof.DelayedFeedback.actionTimeViewAt_pastAction_of_lt",
+      "file": "BanditRLProof/DelayedFeedback/CausalView.lean",
+      "line": 52,
+      "statement": "theorem actionTimeViewAt_pastAction_of_lt {Action : Type uAction} {Loss : Type uLoss} (delay : Nat \u2192 Nat) (action : Nat \u2192 Action) (loss : Nat \u2192 Loss) {s t : Nat} (hs : s < t) : (actionTimeViewAt delay action loss t).pastAction s = some (action s)"
+    },
+    {
+      "kind": "theorem",
+      "name": "actionTimeViewAt_pastAction_of_not_lt",
+      "full_name": "BanditRLProof.DelayedFeedback.actionTimeViewAt_pastAction_of_not_lt",
+      "file": "BanditRLProof/DelayedFeedback/CausalView.lean",
+      "line": 60,
+      "statement": "theorem actionTimeViewAt_pastAction_of_not_lt {Action : Type uAction} {Loss : Type uLoss} (delay : Nat \u2192 Nat) (action : Nat \u2192 Action) (loss : Nat \u2192 Loss) {s t : Nat} (hs : \u00ac s < t) : (actionTimeViewAt delay action loss t).pastAction s = none"
+    },
+    {
+      "kind": "theorem",
+      "name": "actionTimeViewAt_observedLoss_of_mem",
+      "full_name": "BanditRLProof.DelayedFeedback.actionTimeViewAt_observedLoss_of_mem",
+      "file": "BanditRLProof/DelayedFeedback/CausalView.lean",
+      "line": 68,
+      "statement": "theorem actionTimeViewAt_observedLoss_of_mem {Action : Type uAction} {Loss : Type uLoss} (delay : Nat \u2192 Nat) (action : Nat \u2192 Action) (loss : Nat \u2192 Loss) {s t : Nat} (hs : s \u2208 observedBefore delay t) : (actionTimeViewAt delay action loss t).observedLoss s = some (loss s)"
+    },
+    {
+      "kind": "theorem",
+      "name": "actionTimeViewAt_observedLoss_of_not_mem",
+      "full_name": "BanditRLProof.DelayedFeedback.actionTimeViewAt_observedLoss_of_not_mem",
+      "file": "BanditRLProof/DelayedFeedback/CausalView.lean",
+      "line": 76,
+      "statement": "theorem actionTimeViewAt_observedLoss_of_not_mem {Action : Type uAction} {Loss : Type uLoss} (delay : Nat \u2192 Nat) (action : Nat \u2192 Action) (loss : Nat \u2192 Loss) {s t : Nat} (hs : s \u2209 observedBefore delay t) : (actionTimeViewAt delay action loss t).observedLoss s = none"
+    },
+    {
+      "kind": "theorem",
+      "name": "actionTimeViewAt_outstanding_loss_hidden",
+      "full_name": "BanditRLProof.DelayedFeedback.actionTimeViewAt_outstanding_loss_hidden",
+      "file": "BanditRLProof/DelayedFeedback/CausalView.lean",
+      "line": 84,
+      "statement": "theorem actionTimeViewAt_outstanding_loss_hidden {Action : Type uAction} {Loss : Type uLoss} (delay : Nat \u2192 Nat) (action : Nat \u2192 Action) (loss : Nat \u2192 Loss) {s t : Nat} (hs : s \u2208 outstandingAt delay t) : (actionTimeViewAt delay action loss t).observedLoss s = none"
+    },
+    {
+      "kind": "theorem",
+      "name": "actionTimeViewAt_eq_of_observation_equivalent",
+      "full_name": "BanditRLProof.DelayedFeedback.actionTimeViewAt_eq_of_observation_equivalent",
+      "file": "BanditRLProof/DelayedFeedback/CausalView.lean",
+      "line": 96,
+      "statement": "theorem actionTimeViewAt_eq_of_observation_equivalent {Action : Type uAction} {Loss : Type uLoss} (delay\u2081 delay\u2082 : Nat \u2192 Nat) (action\u2081 action\u2082 : Nat \u2192 Action) (loss\u2081 loss\u2082 : Nat \u2192 Loss) (t : Nat) (hvisible : observedBefore delay\u2081 t = observedBefore delay\u2082 t) (haction : \u2200 s, s < t \u2192 action\u2081 s = action\u2082 s) (hloss : \u2200 s, s \u2208 observedBefore delay\u2081 t \u2192 loss\u2081 s = loss\u2082 s) : actionTimeViewAt delay\u2081 action\u2081 loss\u2081 t = actionTimeViewAt delay\u2082 action\u2082 loss\u2082 t"
+    },
+    {
+      "kind": "theorem",
+      "name": "causalDecision_eq_of_observation_equivalent",
+      "full_name": "BanditRLProof.DelayedFeedback.causalDecision_eq_of_observation_equivalent",
+      "file": "BanditRLProof/DelayedFeedback/CausalView.lean",
+      "line": 122,
+      "statement": "theorem causalDecision_eq_of_observation_equivalent {Action : Type uAction} {Loss : Type uLoss} {Decision : Type uDecision} (rule : CausalDecisionRule Action Loss Decision) (delay\u2081 delay\u2082 : Nat \u2192 Nat) (action\u2081 action\u2082 : Nat \u2192 Action) (loss\u2081 loss\u2082 : Nat \u2192 Loss) (t : Nat) (hvisible : observedBefore delay\u2081 t = observedBefore delay\u2082 t) (haction : \u2200 s, s < t \u2192 action\u2081 s = action\u2082 s) (hloss : \u2200 s, s \u2208 observedBefore delay\u2081 t \u2192 loss\u2081 s = loss\u2082 s) : rule t (actionTimeViewAt delay\u2081 action\u2081 loss\u2081 t) = rule t (actionTimeViewAt delay\u2082 action\u2082 loss\u2082 t)"
+    },
+    {
+      "kind": "structure",
+      "name": "SameAlgorithmMultiRegimeContract",
+      "full_name": "BanditRLProof.DelayedFeedback.SameAlgorithmMultiRegimeContract",
+      "file": "BanditRLProof/DelayedFeedback/MultiRegimeContract.lean",
+      "line": 15,
+      "statement": "structure SameAlgorithmMultiRegimeContract (Algorithm : Type uAlgorithm) (Initialization : Type uInitialization) (Tuning : Type uTuning) (Information : Type uInformation) (Comparator : Type uComparator) (StochasticEnvironment : Type uStochasticEnvironment) (AdversarialEnvironment : Type uAdversarialEnvironment) where"
+    },
+    {
+      "kind": "def",
+      "name": "stochasticClaim",
+      "full_name": "BanditRLProof.DelayedFeedback.SameAlgorithmMultiRegimeContract.stochasticClaim",
+      "file": "BanditRLProof/DelayedFeedback/MultiRegimeContract.lean",
+      "line": 39,
+      "statement": "def stochasticClaim {Algorithm : Type uAlgorithm} {Initialization : Type uInitialization} {Tuning : Type uTuning} {Information : Type uInformation} {Comparator : Type uComparator} {StochasticEnvironment : Type uStochasticEnvironment} {AdversarialEnvironment : Type uAdversarialEnvironment} (contract : SameAlgorithmMultiRegimeContract Algorithm Initialization Tuning Information Comparator StochasticEnvironment AdversarialEnvironment) (environment : StochasticEnvironment) : Prop"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialClaim",
+      "full_name": "BanditRLProof.DelayedFeedback.SameAlgorithmMultiRegimeContract.adversarialClaim",
+      "file": "BanditRLProof/DelayedFeedback/MultiRegimeContract.lean",
+      "line": 56,
+      "statement": "def adversarialClaim {Algorithm : Type uAlgorithm} {Initialization : Type uInitialization} {Tuning : Type uTuning} {Information : Type uInformation} {Comparator : Type uComparator} {StochasticEnvironment : Type uStochasticEnvironment} {AdversarialEnvironment : Type uAdversarialEnvironment} (contract : SameAlgorithmMultiRegimeContract Algorithm Initialization Tuning Information Comparator StochasticEnvironment AdversarialEnvironment) (environment : AdversarialEnvironment) : Prop"
+    },
+    {
+      "kind": "theorem",
+      "name": "stochasticClaim_iff_shared_fields",
+      "full_name": "BanditRLProof.DelayedFeedback.SameAlgorithmMultiRegimeContract.stochasticClaim_iff_shared_fields",
+      "file": "BanditRLProof/DelayedFeedback/MultiRegimeContract.lean",
+      "line": 71,
+      "statement": "theorem stochasticClaim_iff_shared_fields {Algorithm : Type uAlgorithm} {Initialization : Type uInitialization} {Tuning : Type uTuning} {Information : Type uInformation} {Comparator : Type uComparator} {StochasticEnvironment : Type uStochasticEnvironment} {AdversarialEnvironment : Type uAdversarialEnvironment} (contract : SameAlgorithmMultiRegimeContract Algorithm Initialization Tuning Information Comparator StochasticEnvironment AdversarialEnvironment) (environment : StochasticEnvironment) : stochasticClaim contract environment \u2194 contract.stochasticEndpoint contract.algorithm contract.initialization contract.tuning contract.information contract.comparator environment"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialClaim_iff_shared_fields",
+      "full_name": "BanditRLProof.DelayedFeedback.SameAlgorithmMultiRegimeContract.adversarialClaim_iff_shared_fields",
+      "file": "BanditRLProof/DelayedFeedback/MultiRegimeContract.lean",
+      "line": 88,
+      "statement": "theorem adversarialClaim_iff_shared_fields {Algorithm : Type uAlgorithm} {Initialization : Type uInitialization} {Tuning : Type uTuning} {Information : Type uInformation} {Comparator : Type uComparator} {StochasticEnvironment : Type uStochasticEnvironment} {AdversarialEnvironment : Type uAdversarialEnvironment} (contract : SameAlgorithmMultiRegimeContract Algorithm Initialization Tuning Information Comparator StochasticEnvironment AdversarialEnvironment) (environment : AdversarialEnvironment) : adversarialClaim contract environment \u2194 contract.adversarialEndpoint contract.algorithm contract.initialization contract.tuning contract.information contract.comparator environment"
+    },
+    {
+      "kind": "def",
+      "name": "newlyObservedBefore",
+      "full_name": "BanditRLProof.DelayedFeedback.newlyObservedBefore",
+      "file": "BanditRLProof/DelayedFeedback/Processing.lean",
+      "line": 10,
+      "statement": "def newlyObservedBefore (delay : Nat \u2192 Nat) (processed : Finset Nat) (t : Nat) : Finset Nat"
+    },
+    {
+      "kind": "theorem",
+      "name": "observedBefore_mono",
+      "full_name": "BanditRLProof.DelayedFeedback.observedBefore_mono",
+      "file": "BanditRLProof/DelayedFeedback/Processing.lean",
+      "line": 16,
+      "statement": "theorem observedBefore_mono (delay : Nat \u2192 Nat) {t u : Nat} (htu : t \u2264 u) : observedBefore delay t \u2286 observedBefore delay u"
+    },
+    {
+      "kind": "theorem",
+      "name": "processed_disjoint_newlyObservedBefore",
+      "full_name": "BanditRLProof.DelayedFeedback.processed_disjoint_newlyObservedBefore",
+      "file": "BanditRLProof/DelayedFeedback/Processing.lean",
+      "line": 25,
+      "statement": "theorem processed_disjoint_newlyObservedBefore (delay : Nat \u2192 Nat) (processed : Finset Nat) (t : Nat) : Disjoint processed (newlyObservedBefore delay processed t)"
+    },
+    {
+      "kind": "theorem",
+      "name": "processed_union_newlyObservedBefore",
+      "full_name": "BanditRLProof.DelayedFeedback.processed_union_newlyObservedBefore",
+      "file": "BanditRLProof/DelayedFeedback/Processing.lean",
+      "line": 34,
+      "statement": "theorem processed_union_newlyObservedBefore (delay : Nat \u2192 Nat) (processed : Finset Nat) (t : Nat) (hprocessed : processed \u2286 observedBefore delay t) : processed \u222a newlyObservedBefore delay processed t = observedBefore delay t"
+    },
+    {
+      "kind": "def",
+      "name": "processAllNew",
+      "full_name": "BanditRLProof.DelayedFeedback.processAllNew",
+      "file": "BanditRLProof/DelayedFeedback/Processing.lean",
+      "line": 52,
+      "statement": "def processAllNew (delay : Nat \u2192 Nat) (processed : Finset Nat) (t : Nat) : Finset Nat"
+    },
+    {
+      "kind": "theorem",
+      "name": "processAllNew_eq_observedBefore",
+      "full_name": "BanditRLProof.DelayedFeedback.processAllNew_eq_observedBefore",
+      "file": "BanditRLProof/DelayedFeedback/Processing.lean",
+      "line": 56,
+      "statement": "theorem processAllNew_eq_observedBefore (delay : Nat \u2192 Nat) (processed : Finset Nat) (t : Nat) (hprocessed : processed \u2286 observedBefore delay t) : processAllNew delay processed t = observedBefore delay t"
+    },
+    {
+      "kind": "theorem",
+      "name": "previousObservedBefore_subset_current",
+      "full_name": "BanditRLProof.DelayedFeedback.previousObservedBefore_subset_current",
+      "file": "BanditRLProof/DelayedFeedback/Processing.lean",
+      "line": 63,
+      "statement": "theorem previousObservedBefore_subset_current (delay : Nat \u2192 Nat) {t u : Nat} (htu : t \u2264 u) : observedBefore delay t \u2286 observedBefore delay u"
+    },
+    {
+      "kind": "theorem",
+      "name": "processAllNew_from_previous_eq_current",
+      "full_name": "BanditRLProof.DelayedFeedback.processAllNew_from_previous_eq_current",
+      "file": "BanditRLProof/DelayedFeedback/Processing.lean",
+      "line": 70,
+      "statement": "theorem processAllNew_from_previous_eq_current (delay : Nat \u2192 Nat) {t u : Nat} (htu : t \u2264 u) : processAllNew delay (observedBefore delay t) u = observedBefore delay u"
+    },
+    {
+      "kind": "theorem",
+      "name": "outstandingAt_disjoint_newlyObservedBefore",
+      "full_name": "BanditRLProof.DelayedFeedback.outstandingAt_disjoint_newlyObservedBefore",
+      "file": "BanditRLProof/DelayedFeedback/Processing.lean",
+      "line": 79,
+      "statement": "theorem outstandingAt_disjoint_newlyObservedBefore (delay : Nat \u2192 Nat) (processed : Finset Nat) (t : Nat) : Disjoint (outstandingAt delay t) (newlyObservedBefore delay processed t)"
     },
     {
       "kind": "structure",
