@@ -94,7 +94,11 @@ class AnonymousSupplementTests(unittest.TestCase):
         payload = BUILDER.build_payload(allow_missing_graph=True)
         ledger = json.loads(payload["evidence/claim-ledger.json"].decode("utf-8"))
         self.assertEqual(ledger["delayed_feedback"]["implementation_facing_declaration_count"], 88)
-        self.assertEqual(ledger["delayed_feedback"]["diagnostic_conditional_declaration_count"], 11)
+        self.assertEqual(
+            ledger["delayed_feedback"]["diagnostic_conditional_repair_declaration_count"],
+            15,
+        )
+        self.assertEqual(ledger["delayed_feedback"]["source_audit_declaration_count"], 103)
         self.assertFalse(ledger["delayed_feedback"]["paper_endpoint_verified"])
         self.assertEqual(ledger["source_records"][BUILDER.DELAYED_DIAGNOSTIC_ID]["status"], "partial")
         self.assertEqual(

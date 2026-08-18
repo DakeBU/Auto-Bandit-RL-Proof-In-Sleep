@@ -4,9 +4,10 @@ Card: `PPR-SCHLISSELBERG-LANCEWICKI-AUER-MANSOUR-2025-DELAYED-BOBW`
 
 Status: `source-frozen; accounting, causal-view, new-arrival-processing,
 active-allocation, optimal-arm-survival, and one-round action-law leaves plus
-a D.10/D.12 width-direction diagnostic, a conditional gap-ordering consumer,
-and a generic multi-regime contract interface compiled; no paper endpoint
-audited`
+a D.10/D.12 width-direction diagnostic, a conditional same-snapshot repair
+skeleton, a
+conditional gap-ordering consumer, and a generic multi-regime contract
+interface compiled; no paper endpoint audited`
 
 ## Frozen source
 
@@ -17,6 +18,12 @@ audited`
 - SHA-256:
   `525240c98b67616b4918bf5bffb799577f298786fc46538aff91153380ae0f9e`.
 - The 38-page camera-ready includes the appendices used by this audit.
+- Version cross-check on 2026-08-18: the latest listed
+  [arXiv v2](https://arxiv.org/abs/2505.24193) (2025-10-19; downloaded PDF
+  SHA-256 `79326ce5724e1eddea039f221943b6f54dcc3c3e223511de4a130e101b291c31`)
+  and the public OpenReview PDF retain the same displayed D.10/D.12 chain.
+  A targeted proceedings/arXiv/OpenReview/author-page scan found no public
+  erratum; this is a search record, not evidence that none exists.
 
 ## Multi-regime target contract
 
@@ -55,7 +62,7 @@ The frozen contract therefore retains:
 | `DELAYED-BOBW-OPTIMAL-ARM-SURVIVAL` | connect Algorithm 5 lines 7--8 to the nonempty-active premise in line 15 | compiled deterministic core of source Lemma D.9 under an explicit certificate; full recursive lemma open |
 | `DELAYED-BOBW-GOOD-EVENT-D9-PROJECTION` | derive the certificate from the two source upper-confidence surfaces and carry a supplied event-failure budget to optimal-arm elimination | compiled elimination projection and probability-bound consumer; full Definition D.1 and D.2--D.7 component producers open |
 | `DELAYED-BOBW-D8-D9-ASSEMBLY` | union the six D.2--D.7 failure components into Corollary D.8's `9/T` budget and compose it with D.9 survival | compiled outer-measure union and event transport; the six component bounds and full-event projection remain hypotheses |
-| `DELAYED-BOBW-D10-D12-GAP-ORDERING-AUDIT` | audit the prefix/elimination width transport used between Appendix Lemmas D.10 and D.12 | compiled antitone-width diagnostic, exact reverse-direction canary, and conditional four-edge factor-20 consumer; the source lemma remains unresolved pending an endpoint/index repair or clarification |
+| `DELAYED-BOBW-D10-D12-GAP-ORDERING-AUDIT` | audit the prefix/elimination width transport used between Appendix Lemmas D.10 and D.12 | compiled antitone-width diagnostic, a literal `T=4` reverse-direction witness, a line-7 gap lower bound, an active-arm upper bound under explicit current-UCB/factor-three premises, a conditional same-snapshot factor-20 consumer with an explicit factor-ten premise, and the earlier conditional four-edge consumer; source large/small-count and recursive count/width producers remain open, so D.10/D.12 remain unresolved |
 | `DELAYED-BOBW-CAUSAL-ACTION-MEASURE` | turn the line-15 vector into a causal one-round randomized law | compiled probability measure and observation-equivalence transport; measurable history kernel and recursive trajectory open |
 
 These leaves are deliberately small but source-semantic: they check the exact
@@ -80,10 +87,18 @@ The current library has rich finite-action, kernel, conditional-MGF, EXP3,
 Tsallis, and adaptive-trajectory infrastructure.  It now also has one
 source-exact elimination snapshot, a source-shaped good-event projection, the
 Corollary-D.8 union assembly, the deterministic optimal-arm survival consumer,
-the D.10/D.12 direction diagnostic and conditional factor-20 consumer, and a
-causal measure-valued one-round action rule.  The diagnostic identifies an
-unjustified displayed direction/indexing edge; it neither verifies nor
-refutes the source lemmas.  The library does not yet
+the D.10/D.12 direction diagnostic, a conditional same-snapshot factor-20
+consumer,
+the earlier conditional four-edge consumer, and a causal measure-valued
+one-round action rule.  The conditional consumer combines the line-7
+elimination lower gap with an active-arm upper gap at the same processed prefix,
+so it avoids the displayed reverse temporal transport.  That upper gap still
+assumes current-UCB and an optimal-to-later factor-three width edge; the final
+step assumes a later-to-earlier factor-ten edge.  The source large/small-count
+case split and all three premises still have to be derived on the recursive
+Delayed SAPO trajectory.  It therefore neither verifies nor refutes the source
+lemmas.
+The library does not yet
 have the paper's complete delayed SAPO state machine, probability banks,
 measurable recursive sampling kernel, detection/switch semantics, the complete
 Definition-D.1 event, D.2--D.7 component probability producers, a proved

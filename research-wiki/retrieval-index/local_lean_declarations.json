@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-17T18:02:06+00:00",
+  "generated": "2026-08-18T06:17:21+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -15458,11 +15458,43 @@
       "statement": "theorem not_sourceEmpiricalWidthScale_one_le_four : not (sourceEmpiricalWidthScale 1 1 <= sourceEmpiricalWidthScale 1 4)"
     },
     {
+      "kind": "theorem",
+      "name": "not_sourceEmpiricalWidthScale_horizon_four_one_le_four",
+      "full_name": "BanditRLProof.DelayedFeedback.not_sourceEmpiricalWidthScale_horizon_four_one_le_four",
+      "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+      "line": 58,
+      "statement": "theorem not_sourceEmpiricalWidthScale_horizon_four_one_le_four : \u00ac (sourceEmpiricalWidthScale (2 * Real.log 4) 1 <= sourceEmpiricalWidthScale (2 * Real.log 4) 4)"
+    },
+    {
+      "kind": "theorem",
+      "name": "eight_mul_empiricalWidth_lt_gap_of_mem_eliminated",
+      "full_name": "BanditRLProof.DelayedFeedback.eight_mul_empiricalWidth_lt_gap_of_mem_eliminated",
+      "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+      "line": 97,
+      "statement": "theorem eight_mul_empiricalWidth_lt_gap_of_mem_eliminated {K : Nat} [Nonempty (Fin K)] (snapshot : DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K -> Real) (optimal i : Fin K) (hoptimal : forall j, mean optimal <= mean j) (hgood : snapshot.EliminationGoodEvent mean) (hi : i \u2208 snapshot.eliminated) : 8 * snapshot.empiricalWidth i < mean i - mean optimal"
+    },
+    {
+      "kind": "theorem",
+      "name": "gap_le_sixteen_mul_empiricalWidth_of_mem_remainingActive",
+      "full_name": "BanditRLProof.DelayedFeedback.gap_le_sixteen_mul_empiricalWidth_of_mem_remainingActive",
+      "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+      "line": 122,
+      "statement": "theorem gap_le_sixteen_mul_empiricalWidth_of_mem_remainingActive {K : Nat} [Nonempty (Fin K)] (snapshot : DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K -> Real) (optimal i : Fin K) (hgood : snapshot.EliminationGoodEvent mean) (hi : i \u2208 snapshot.remainingActive) (hucbCurrent : snapshot.ucbStar <= snapshot.empiricalMean optimal + snapshot.empiricalWidth optimal) (hoptimalWidth : snapshot.empiricalWidth optimal <= 3 * snapshot.empiricalWidth i) : mean i - mean optimal <= 16 * snapshot.empiricalWidth i"
+    },
+    {
+      "kind": "theorem",
+      "name": "gap_le_twenty_mul_gap_at_earlier_elimination_snapshot",
+      "full_name": "BanditRLProof.DelayedFeedback.gap_le_twenty_mul_gap_at_earlier_elimination_snapshot",
+      "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+      "line": 155,
+      "statement": "theorem gap_le_twenty_mul_gap_at_earlier_elimination_snapshot {K : Nat} [Nonempty (Fin K)] (snapshot : DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K -> Real) (optimal iEarlier iLater : Fin K) (hoptimal : forall j, mean optimal <= mean j) (hgood : snapshot.EliminationGoodEvent mean) (hEarlierEliminated : iEarlier \u2208 snapshot.eliminated) (hLaterRemaining : iLater \u2208 snapshot.remainingActive) (hucbCurrent : snapshot.ucbStar <= snapshot.empiricalMean optimal + snapshot.empiricalWidth optimal) (hoptimalWidth : snapshot.empiricalWidth optimal <= 3 * snapshot.empiricalWidth iLater) (hpairWidth : snapshot.empiricalWidth iLater <= 10 * snapshot.empiricalWidth iEarlier) : mean iLater - mean optimal <= 20 * (mean iEarlier - mean optimal)"
+    },
+    {
       "kind": "structure",
       "name": "DelayedSAPOD10D12GapOrderingContract",
       "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract",
       "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
-      "line": 59,
+      "line": 185,
       "statement": "structure DelayedSAPOD10D12GapOrderingContract (K : Nat) where"
     },
     {
@@ -15470,7 +15502,7 @@
       "name": "surrogateGap",
       "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.surrogateGap",
       "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
-      "line": 76,
+      "line": 202,
       "statement": "noncomputable def surrogateGap {K : Nat} (contract : DelayedSAPOD10D12GapOrderingContract K) (i : Fin K) : Real"
     },
     {
@@ -15478,7 +15510,7 @@
       "name": "surrogateGap_le_gap",
       "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.surrogateGap_le_gap",
       "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
-      "line": 82,
+      "line": 208,
       "statement": "theorem surrogateGap_le_gap {K : Nat} (contract : DelayedSAPOD10D12GapOrderingContract K) (i : Fin K) : contract.surrogateGap i <= contract.gap i"
     },
     {
@@ -15486,7 +15518,7 @@
       "name": "gap_le_two_mul_surrogateGap",
       "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.gap_le_two_mul_surrogateGap",
       "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
-      "line": 90,
+      "line": 216,
       "statement": "theorem gap_le_two_mul_surrogateGap {K : Nat} (contract : DelayedSAPOD10D12GapOrderingContract K) (i : Fin K) : contract.gap i <= 2 * contract.surrogateGap i"
     },
     {
@@ -15494,7 +15526,7 @@
       "name": "d12_gap_ordering_chain",
       "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.d12_gap_ordering_chain",
       "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
-      "line": 101,
+      "line": 227,
       "statement": "theorem d12_gap_ordering_chain {K : Nat} (contract : DelayedSAPOD10D12GapOrderingContract K) (iEarlier iLater : Fin K) (horder : contract.eliminationPrefixIndex iEarlier <= contract.eliminationPrefixIndex iLater) : contract.gap iLater <= 16 * contract.widthAt iLater (contract.eliminationPrefixIndex iLater) /\\ 16 * contract.widthAt iLater (contract.eliminationPrefixIndex iLater) <= 16 * contract.widthAt iLater (contract.eliminationPrefixIndex iEarlier) /\\ 16 * contract.widthAt iLater (contract.eliminationPrefixIndex iEarlier) <= 160 * contract.widthAt iEarlier (contract.eliminationPrefixIndex iEarlier) /\\ 160 * contract.widthAt iEarlier (contract.eliminationPrefixIndex iEarlier) <= 20 * contract.gap iEarlier"
     },
     {
@@ -15502,7 +15534,7 @@
       "name": "gap_le_twenty_mul_gap_of_eliminationPrefixIndex_le",
       "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.gap_le_twenty_mul_gap_of_eliminationPrefixIndex_le",
       "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
-      "line": 131,
+      "line": 257,
       "statement": "theorem gap_le_twenty_mul_gap_of_eliminationPrefixIndex_le {K : Nat} (contract : DelayedSAPOD10D12GapOrderingContract K) (iEarlier iLater : Fin K) (horder : contract.eliminationPrefixIndex iEarlier <= contract.eliminationPrefixIndex iLater) : contract.gap iLater <= 20 * contract.gap iEarlier"
     },
     {

@@ -294,8 +294,11 @@ assembly that combines three `1/T^2` and three `1/T` component bounds into the
 source's `9/T` budget and composes it with D.9 survival; and a causal one-round
 probability measure built from the existing finite-action law.  A separate
 D.10-to-D.12 audit proves the source width's canonical antitonicity, compiles
-an exact reverse-direction canary, and packages the conditional four-edge
-factor-20 consumer over shared processed-prefix indices.
+a literal `T=4` reverse-direction witness, derives the eliminated-arm lower
+gap and a conditional active-arm upper gap from one source-shaped snapshot, and
+proves a conditional same-snapshot factor-20 consumer under explicit
+current-UCB, factor-three, and factor-ten premises.  The earlier conditional four-edge consumer
+remains as a decomposition of the printed route.
 
 This remains feasibility evidence only.  The complete Definition-D.1 event,
 the D.2--D.7 component concentration/counting producers, and the proved
@@ -305,12 +308,14 @@ regime laws, external adversarial algorithm, and the same-algorithm Theorems
 4.1/5.1 coupling remain planned.  The compiled Lemma-D.9 layer is an explicit
 deterministic implication under recorded certificate fields, not the full
 probabilistic source lemma.  No external paper endpoint is classified as
-compiled or audited.  The flagship currently contains 99 named source-audit
-declarations, including 11 diagnostic/conditional declarations for the
+compiled or audited.  The flagship currently contains 103 named source-audit
+declarations, including 15 diagnostic/conditional/repair declarations for the
 D.10-to-D.12 bridge; the generic multi-regime interface is counted separately.
-Those 11 declarations neither verify nor refute Lemmas D.10/D.12, main-text
-Lemma 4.2, or Theorem 4.1: the displayed endpoint/index direction still needs
-a source-faithful repair or clarification.
+Those 15 declarations identify and conditionally bypass the displayed reverse
+transport at the algebraic snapshot level, but they neither verify nor refute
+source Lemmas D.10/D.12, main-text Lemma 4.2, or Theorem 4.1: the source
+large/small-count case split, recursive same-prefix count/width producers, and
+trajectory instantiation remain open.
 
 The machine-readable route atlas is `lean-route-roadmap.json`.  It is the
 handoff contract between upper planning agents and lower Lean agents: each

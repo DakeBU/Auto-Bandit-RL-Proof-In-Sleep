@@ -363,8 +363,10 @@ def validate_delayed_counts(records):
     diagnostic = records[DELAYED_DIAGNOSTIC_ID]
     if implementation_count != 88:
         raise ValueError("delayed implementation count drifted to {}".format(implementation_count))
-    if diagnostic["status"] != "partial" or len(diagnostic["declarations"]) != 11:
-        raise ValueError("D.10--D.12 diagnostic must remain partial with 11 declarations")
+    if diagnostic["status"] != "partial" or len(diagnostic["declarations"]) != 15:
+        raise ValueError(
+            "D.10--D.12 diagnostic/repair record must remain partial with 15 declarations"
+        )
 
 
 def build_claim_ledger(proof_report):
@@ -421,7 +423,7 @@ def build_claim_ledger(proof_report):
                     DELAYED_DIAGNOSTIC_ID,
                     "NEURIPS-2025-DELAYED-BOBW-CENTRAL-ENDPOINTS",
                 ],
-                "boundary": "88 implementation-facing plus 11 diagnostic/conditional declarations; no source-paper regret theorem.",
+                "boundary": "88 implementation-facing plus 15 diagnostic/conditional/repair declarations, including only a conditional same-snapshot factor-20 skeleton; no source-paper regret theorem.",
             },
             {
                 "artifact": "Proof graph / curvature--noise--gap",
@@ -441,7 +443,8 @@ def build_claim_ledger(proof_report):
             "implementation_facing_ids": list(DELAYED_IMPLEMENTATION_IDS),
             "implementation_facing_declaration_count": 88,
             "diagnostic_id": DELAYED_DIAGNOSTIC_ID,
-            "diagnostic_conditional_declaration_count": 11,
+            "diagnostic_conditional_repair_declaration_count": 15,
+            "source_audit_declaration_count": 103,
             "paper_endpoint_verified": False,
         },
         "proof_graph": {

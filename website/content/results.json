@@ -1099,16 +1099,20 @@
     },
     {
       "id": "DELAYED-SAPO-D10-D12-GAP-ORDERING-AUDIT",
-      "title": "Lemma-D.10/D.12 width-direction diagnostic and conditional gap-ordering consumer",
+      "title": "Lemma-D.10/D.12 width-direction diagnostic and conditional same-snapshot skeleton",
       "chapter": "frontier",
       "status": "partial",
-      "informal": "Lean proves that the source inverse-square-root empirical width is antitone in a positive pull count, checks the exact scale-one count-one/count-four direction, and derives the displayed factor-20 D.12 conclusion from an explicit four-edge processed-prefix contract. This diagnoses a direction/indexing edge in the frozen PDF; it neither verifies nor refutes Lemmas D.10/D.12, main-text Lemma 4.2, or Theorem 4.1. A source-faithful endpoint/index repair or author clarification is still required.",
+      "informal": "Lean proves that the source inverse-square-root empirical width is antitone in a positive pull count and gives both a normalized count-one/count-four witness and a literal T=4 witness against the printed reverse transport. It then derives the eliminated arm's lower gap and, under explicit current-UCB and optimal-to-later factor-three width premises, an active-arm upper gap at the same snapshot. Together with an explicit later-to-earlier factor-ten width premise, these yield a conditional factor-20 consumer without transport to a later elimination snapshot. The source large/small-count case split and recursive producers are not encoded. The earlier explicit four-edge consumer remains for comparison. These 15 declarations do not verify or refute source Lemmas D.10/D.12, main-text Lemma 4.2, or Theorem 4.1.",
       "declarations": [
         "BanditRLProof.DelayedFeedback.sourceEmpiricalWidthScale",
         "BanditRLProof.DelayedFeedback.sourceEmpiricalWidthScale_antitone",
         "BanditRLProof.DelayedFeedback.sourceEmpiricalWidthScale_one_one",
         "BanditRLProof.DelayedFeedback.sourceEmpiricalWidthScale_one_four",
         "BanditRLProof.DelayedFeedback.not_sourceEmpiricalWidthScale_one_le_four",
+        "BanditRLProof.DelayedFeedback.not_sourceEmpiricalWidthScale_horizon_four_one_le_four",
+        "BanditRLProof.DelayedFeedback.eight_mul_empiricalWidth_lt_gap_of_mem_eliminated",
+        "BanditRLProof.DelayedFeedback.gap_le_sixteen_mul_empiricalWidth_of_mem_remainingActive",
+        "BanditRLProof.DelayedFeedback.gap_le_twenty_mul_gap_at_earlier_elimination_snapshot",
         "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract",
         "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.surrogateGap",
         "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.surrogateGap_le_gap",
@@ -1118,8 +1122,8 @@
       ],
       "depends_on": [],
       "missing": [
-        "A source-faithful endpoint/index repair or author clarification for the displayed D.10 prefix-to-elimination width direction.",
-        "Instantiation of the four-edge contract on the recursive Delayed SAPO trajectory, including the correctly timed factor-ten comparison and gap endpoints.",
+        "A recursive Delayed SAPO processed trace that instantiates the current-UCB upper surface, the source large/small-count case split, the large-branch optimal-to-later factor-three comparison or small-branch substitute, and the later-to-earlier factor-ten comparison used by the conditional same-snapshot skeleton.",
+        "A source amendment or author clarification for the intended printed D.10 prefix-to-elimination width step; the compiled conditional skeleton bypasses rather than validates that step.",
         "Unconditional source Lemmas D.10/D.12, main-text Lemma 4.2, Theorem 4.1, and either regret endpoint."
       ],
       "evidence": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean; Tests/DelayedFeedbackPaperAuditCanary.lean; research-wiki/papers/neurips-2025-delayed-bobw-audit.md; proof-obligations/PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY.md"
@@ -1129,7 +1133,7 @@
       "title": "Source-frozen delayed best-of-both-worlds endpoint audit",
       "chapter": "frontier",
       "status": "partial",
-      "informal": "The exact NeurIPS 2025 source is hash-frozen, a same-algorithm multi-regime contract compiles, and 99 named source-audit declarations compile across accounting, causality, processing, allocation, elimination, good-event projection/union assembly, the one-round action law, and a D.10/D.12 width-direction diagnostic with a conditional factor-20 consumer. The diagnostic does not verify or refute Lemmas D.10/D.12, main-text Lemma 4.2, or Theorem 4.1; a source-faithful endpoint/index repair or clarification is still required. BanditRLlib does not yet implement the full Delayed SAPO trajectory, prove the D.2--D.7 component bounds on that trajectory, or prove either regret endpoint.",
+      "informal": "The exact NeurIPS 2025 source is hash-frozen, a same-algorithm multi-regime contract compiles, and 103 named source-audit declarations compile across accounting, causality, processing, allocation, elimination, good-event projection/union assembly, the one-round action law, and a 15-declaration D.10/D.12 diagnostic/conditional layer. That layer includes a literal T=4 direction witness and a conditional same-snapshot factor-20 skeleton under explicit current-UCB, factor-three, and factor-ten premises. It does not verify or refute source Lemmas D.10/D.12, main-text Lemma 4.2, or Theorem 4.1 because the source large/small-count case split and recursive same-prefix count/width producers remain open. BanditRLlib does not yet implement the full Delayed SAPO trajectory, prove the D.2--D.7 component bounds on that trajectory, or prove either regret endpoint.",
       "declarations": [
         "BanditRLProof.DelayedFeedback.SameAlgorithmMultiRegimeContract",
         "BanditRLProof.DelayedFeedback.SameAlgorithmMultiRegimeContract.stochasticClaim",
@@ -1145,13 +1149,14 @@
         "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.optimal_mem_remainingActive_of_certificate",
         "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.measure_optimalSurvivalEventSet_compl_le_of_goodEvent",
         "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.measure_optimalSurvivalEventSet_compl_le_nine_div",
+        "BanditRLProof.DelayedFeedback.gap_le_twenty_mul_gap_at_earlier_elimination_snapshot",
         "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.gap_le_twenty_mul_gap_of_eliminationPrefixIndex_le",
         "BanditRLProof.DelayedFeedback.causalDelayedSAPOActionMeasureRule_eq_of_observation_equivalent"
       ],
       "missing": [
         "The complete Definition-D.1 event, its D.2--D.7 component probability producers, Delayed SAPO BSC/EAP state machines, switching rule, and ordered update semantics.",
         "A measurable causal randomized sampling kernel and recursively generated delayed-feedback trajectory law; only the one-round measure-valued rule now compiles.",
-        "A source-faithful repair or clarification of the D.10 prefix/elimination width direction and an unconditional D.12 / main-text Lemma 4.2 bridge.",
+        "The source large/small-count case split and recursive current-UCB/factor-three/factor-ten producers for the conditional D.12 skeleton, a clarification or amendment of the printed D.10 transport, and an unconditional D.12 / main-text Lemma 4.2 bridge.",
         "The stochastic-instance and oblivious-adversarial regret endpoints for the same algorithm identity."
       ],
       "evidence": "research-wiki/papers/prospective-audit-2025-freeze.json; research-wiki/papers/neurips-2025-delayed-bobw-audit.md; proof-obligations/PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY.md"

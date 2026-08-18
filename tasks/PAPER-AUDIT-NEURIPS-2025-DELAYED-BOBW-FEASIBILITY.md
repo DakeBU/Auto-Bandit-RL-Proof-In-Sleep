@@ -76,10 +76,13 @@ availability condition `s + delay s < t`.
   open upstream obligations.
 - [x] Audit the Lemma-D.10-to-D.12 gap-ordering bridge. The frozen PDF's
   prefix-to-elimination width inequality points opposite to the inverse-square-
-  root width's count monotonicity. Compile the direction diagnostic and the
-  exact conditional factor-20 consumer over a shared processed-prefix index,
-  but keep Lemma 4.2 unverified pending a source-faithful endpoint repair or
-  clarification.
+  root width's count monotonicity. Compile the direction diagnostic, the exact
+  conditional four-edge consumer, and a conditional same-snapshot factor-20
+  skeleton.  The latter explicitly assumes the current-UCB surface, the
+  optimal-to-later factor-three width edge, and the later-to-earlier factor-ten
+  width edge; the source's large/small-count case split and recursive producers
+  are not yet encoded.  Keep Lemma 4.2 unverified pending those producers and a
+  source-faithful endpoint repair or clarification.
 - [x] Reuse the existing finite-action law to turn the certified line-15
   vector into a probability measure, and lift causal allocation rules to
   measure-valued rules that remain identical in observation-equivalent hidden
@@ -113,7 +116,7 @@ lake env lean Tests/DelayedFeedbackPaperAuditCanary.lean
 python3 tools/bandit.py check
 ```
 
-The full 8,838-job Lean gate, proof-graph export, and 62-test Python suite
+The full 8,838-job Lean gate, proof-graph export, and 118-test Python suite
 passed again on 2026-08-18 after adding the D.10--D.12 audit layer.  The
 isolated worktree remains at a short Windows path to avoid an unrelated
 long-path `.olean` creation failure.
