@@ -184,8 +184,8 @@ weaken the source bandit semantics.
 - [x] Candidate `d_inf` bounds and the unit-Gaussian perturbed-alternative KL
   cost compile.
 - [ ] Exact Gaussian `d_inf` equality compiles with all infimum branches.
-- [ ] Lemma 15.1 or an equivalent source-faithful history information
-  constraint compiles.
+- [x] Lemma 15.1's source-faithful same-policy history KL identity compiles;
+  the Chapter 16 one-arm information consumer remains open.
 - [ ] Theorem 16.2's per-arm and regret `liminf` terminals compile.
 - [ ] Lemma 16.3 and Theorem 16.4 compile.
 - [x] Root import, canary, Tests, scans, full harness, exports, indexes, site,
@@ -224,7 +224,7 @@ partial/blocked status.
 | distribution-class `d_inf` | complete-lattice `sInf`, Chapter 14 extended-real KL | retain empty, zero, finite, and infinite branches | measurable reward space; explicit mean functional and class membership | compiled project-local interface |
 | parameterized `d_inf` candidate | `sInf_le`, Gaussian arm KL | insert a strictly better alternative and preserve KL direction | strict mean improvement | compiled project-local |
 | Gaussian exact `d_inf` | preceding candidate plus lower bound and limit/infimum approximation | squeeze perturbed alternatives as epsilon tends to zero | original mean below target; extended-real conversion | open Mathlib/project leaf |
-| history information constraint | Chapter 15 conditional kernel KL and stochastic history law | change one arm and apply Lemma 15.1 | same stochastic policy; first-law expectation; finite KL branch | connected blocker |
+| history information constraint | compiled Chapter 15 conditional kernel KL and stochastic history law | instantiate Lemma 15.1 for one changed arm, then connect the Chapter 16 event | same stochastic policy; first-law expectation; finite KL branch | Lemma dependency compiled; Chapter 16 consumer blocked |
 | asymptotic terminal | finite-time information inequality plus consistency log leaf | divide by log horizon and take liminf | positive gap/information; zero/infinite branches | blocked source terminal |
 | finite-time Gaussian terminal | Lemma 16.3, Gaussian KL, regret decomposition | choose mean shift `Delta_i(1+epsilon)`, sum positive parts | exact local class and horizon quantifiers | blocked source terminal |
 
@@ -234,7 +234,9 @@ partial/blocked status.
   `MLIB-EXP-LOG-INEQUALITIES`, `MLIB-ORDER-ALGEBRA`, measure KL and complete
   lattice `sInf` APIs.
 - Local compiled dependencies: Chapter 14 `bretagnolleHuber`; Chapter 15
-  `relativeEntropy`, `klDiv_gaussianReal_one`, and the current Gaussian law.
+  `relativeEntropy`, `klDiv_gaussianReal_one`,
+  `banditHistoryRelativeEntropy_eq_expectedPulls_sum`, and the current
+  Gaussian law.
 - Textbook: `TXT-LATTIMORE-SZEPESVARI-2020`,
   `TXT-LS-2020-DEF-16-1-CONSISTENCY`, `TXT-LS-2020-THM-16-2-ASYMPTOTIC`,
   `TXT-LS-2020-LEMMA-16-3-FINITE-TIME`, and
@@ -248,8 +250,8 @@ partial/blocked status.
 - A generic `Tendsto` or `sInf` leaf is not a bandit lower-bound terminal.
 - The Gaussian perturbed-alternative upper bound is not the exact Gaussian
   `d_inf` equality from Table 16.1.
-- A theorem that assumes the history KL/pull-count inequality is a conditional
-  analytic leaf, not a proof of Lemma 15.1 or Theorem 16.2.
+- Lemma 15.1 is compiled, but a theorem that merely assumes the Chapter 16
+  one-arm event/information inequality is not a proof of Theorem 16.2.
 - Theorem cards and source prose remain route evidence only.
 - If the terminals remain blocked, preserve their exact contracts and publish
   only compiled reusable leaves plus the blockers. Do not restrict the policy

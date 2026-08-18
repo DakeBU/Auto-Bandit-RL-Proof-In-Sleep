@@ -9,6 +9,8 @@ import Tests.FiniteHorizonAdaptiveCumulativeHoeffdingUCBVICanary
 import Tests.BookMapChapterNineCanary
 import Tests.TextbookPartIVChapter13Canary
 import Tests.TextbookPartIVChapter14Canary
+import Tests.TextbookPartIVChapter15Canary
+import Tests.TextbookPartIVChapter16Canary
 import Tests.BookMapChaptersFiveAndSixCanary
 import Tests.BookMapChaptersSevenAndEightCanary
 import Tests.TextbookPartIVChapter17Canary

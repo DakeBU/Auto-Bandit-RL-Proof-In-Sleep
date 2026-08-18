@@ -77,7 +77,7 @@ envelope and sums the positive parts to obtain Eq. (16.5).
 | log growth | `Real.log_le_log`, `Real.log_rpow` | installed Mathlib source | clear positive log denominator after eventual power bound | keep positivity explicit |
 | `d_inf` | complete lattice `sInf`, `ENNReal` | installed Mathlib source | set of original-to-alternative KL values | preserve empty and infinity branches |
 | Gaussian candidate | Chapter 15 exact Gaussian KL | compiled local theorem | insert mean `muStar+epsilon`, normalize the square | do not call this the exact infimum formula |
-| history information | Chapter 14 BH plus Chapter 15 chain route | compiled/blocked local dependencies | prove stochastic history KL, then one-arm reduction | no deterministic-policy substitution |
+| history information | Chapter 14 BH plus compiled Chapter 15 history KL | compiled local dependencies; Chapter 16 consumer open | instantiate the one-arm event/information reduction | no deterministic-policy substitution |
 | asymptotic extraction | eventual log leaf plus liminf | Mathlib filters/liminf audit | handle finite positive `d_inf`, then zero/infinity branches | record exact analytic blocker before pivot |
 | finite-time terminal | Lemma 16.3, Gaussian KL, regret decomposition | source proof | preserve local alternative class and positive part | no constant or horizon-class weakening |
 
@@ -91,7 +91,7 @@ envelope and sums the positive parts to obtain Eq. (16.5).
 | `CH16-DINF` | distribution-set and parameterized infima | `sInf`, Chapter 14 KL | `divergenceInfimum`, `parametricDivergenceInfimum`, candidate lemmas | project-local | focused Lean | compiled |
 | `CH16-GAUSSIAN-CANDIDATE` | perturbed alternative cost | Chapter 15 Gaussian KL | `unitGaussianDivergenceInfimum_le_perturbed` | project-local | focused Lean | compiled |
 | `CH16-GAUSSIAN-DINF-EXACT` | Table 16.1 unit-variance formula | infimum limit/lower bound | none | open candidate | focused Lean | partial |
-| `CH16-HISTORY-INFORMATION` | one-arm expected-pull KL constraint | Chapter 15 Lemma 15.1 | none | connected blocker | focused Lean | blocked |
+| `CH16-HISTORY-INFORMATION` | one-arm expected-pull KL constraint | compiled Chapter 15 Lemma 15.1 | none | downstream consumer | focused Lean | blocked |
 | `CH16-THEOREM-16-2` | exact liminf regret bound | previous two analytic/semantic branches | reserved terminal | source terminal | focused Lean | blocked |
 | `CH16-LEMMA-16-3` | exact finite-time pull lower bound | history KL and BH | reserved terminal | source terminal | focused Lean | blocked |
 | `CH16-THEOREM-16-4` | exact Gaussian Eq. (16.5) | Lemma 16.3 and Gaussian KL | reserved terminal | source terminal | focused Lean | blocked |

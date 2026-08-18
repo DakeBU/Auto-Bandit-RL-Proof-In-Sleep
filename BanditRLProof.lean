@@ -39,6 +39,8 @@ import BanditRLProof.RealMeanRegretPullCount
 import BanditRLProof.LowerBounds.BasicIdeas
 import BanditRLProof.LowerBounds.InformationTheory
 import BanditRLProof.LowerBounds.Minimax
+import BanditRLProof.LowerBounds.ConditionalKernelKL
+import BanditRLProof.LowerBounds.BanditHistoryKL
 import BanditRLProof.LowerBounds.InstanceDependent
 import BanditRLProof.LowerBounds.HighProbability
 import BanditRLProof.RealKernelRegretPullCount

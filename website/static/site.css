@@ -1124,6 +1124,14 @@ h3 {
 .callout {
   padding: 1rem 1.2rem;
   border-left: 5px solid var(--accent);
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.callout code {
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .callout.warning {
@@ -1318,7 +1326,7 @@ tbody tr:hover {
 
 .algorithm-flow {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr));
   gap: 0;
   max-width: none !important;
   margin: 1.2rem 0 0;
@@ -1721,11 +1729,20 @@ tbody tr:hover {
 }
 
 .status-entry {
+  min-width: 0;
+  max-width: 100%;
   padding: 1rem 1.15rem;
   border: 1px solid var(--line);
   border-left: 5px solid var(--line);
   border-radius: var(--radius);
   background: var(--surface);
+  overflow-wrap: anywhere;
+}
+
+.status-entry code,
+.status-entry a {
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .status-entry.compiled {

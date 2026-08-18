@@ -49,7 +49,7 @@ with `D(Q,P)` is also valid.
 | binary testing inequality | two-atom Bretagnolle--Huber | `binaryBretagnolleHuber` | real inequality | target leaf |
 | `exp(-D)/2` including `D=∞` | source RHS | `bretagnolleHuberScale` | real nonnegative scale | target definition |
 | Theorem 14.2 / Eq. (14.7) | `P(A)+Q(Aᶜ)` lower bound | `bretagnolleHuber` | exact measure/event terminal | target |
-| history relative entropy | adaptive bandit history law | no Chapter 14 declaration | Chapter 15 consumer | planned |
+| history relative entropy | adaptive bandit history law | `banditHistoryRelativeEntropy_eq_expectedPulls_sum` | compiled Chapter 15 consumer | compiled outside Chapter 14 gate |
 
 ## Assumption ledger
 
@@ -88,7 +88,7 @@ with `D(Q,P)` is also valid.
 | `CH14-EVENT-DPI` | binary/event KL is at most measure KL | RN restriction and f-divergence convexity | `bernoulliRelativeEntropy_event_le` | Mathlib-candidate project leaf | focused Lean | compiled |
 | `CH14-BINARY-BH` | two-atom error lower bound | affinity and overlap algebra | `binaryBretagnolleHuber` | project-local | focused Lean | compiled |
 | `CH14-THEOREM-14-2` | exact unconditional event testing inequality | event DPI, binary BH, top/finite split | `bretagnolleHuberScale`, `bretagnolleHuber` | source terminal | focused Lean | compiled |
-| `CH14-HISTORY-KL` | same-policy adaptive history decomposition | kernel chain rule plus policy/history model | none in this chapter | planned Chapter 15 | Chapter 15 | planned |
+| `CH14-HISTORY-KL` | same-policy adaptive history decomposition | kernel chain rule plus policy/history model | `banditHistoryRelativeEntropy_eq_expectedPulls_sum` | compiled Chapter 15 | Chapter 15 | compiled outside Chapter 14 gate |
 | `CH14-TYPED-CANARY` | full conclusions including finite and singular examples | all compiled declarations | `Tests/TextbookPartIVChapter14Canary.lean` | project-local | Tests | verified |
 | `CH14-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | full check | verified locally |
 | `CH14-EVIDENCE-SITE` | task/DAG/export/index/site agreement | compiled chapter surface | repository artifacts | repository | lean-verified/site/browser | verified locally |
@@ -100,4 +100,4 @@ with `D(Q,P)` is also valid.
 - [x] Project-local RN restriction identity needed by event data processing.
 - [x] Binary affinity/Jensen proof with all endpoints.
 - [x] Exact unconditional measure-level Bretagnolle--Huber terminal.
-- [ ] Chapter 15 same-policy history-law construction and divergence decomposition.
+- [x] Chapter 15 same-policy history-law construction and divergence decomposition (compiled in its own gate).

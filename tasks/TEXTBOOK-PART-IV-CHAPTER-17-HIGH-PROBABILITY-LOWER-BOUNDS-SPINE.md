@@ -244,11 +244,11 @@ Corollaries 17.2--17.3, Theorem 17.4, and Claims 17.6--17.7 are blocked.
 
 ## Current semantic and analytic blockers
 
-Theorem 17.1 and its corollaries inherit Lemma 15.1's missing same-policy
-adaptive-history divergence decomposition. Installed Mathlib exposes a
-composition-product KL chain rule but not the conditional integral of
-pointwise kernel KL, and the repository still lacks a canonical possibly
-randomized policy-kernel history law.
+Theorem 17.1 and its corollaries can now reuse the compiled same-policy
+adaptive-history divergence decomposition of Lemma 15.1. The remaining
+stochastic blocker is the Chapter 17-specific tail-event and regret consumer:
+instantiate the one-arm Gaussian change, preserve the original-law pull
+expectation, and assemble the exact threshold and constants.
 
 Theorem 17.4 is described only at a high level in the textbook and delegates
 details to Gerchinovitz--Lattimore (2016). A source-faithful proof needs the
@@ -275,8 +275,8 @@ pseudo-regret into expected regret, or weaken a probability/constant.
 - [x] Claim 17.5's first-moment content compiles with integrability explicit.
 - [x] The probability subtraction combining Claims 17.6--17.7 compiles.
 - [x] The quarter-horizon algebra following Eq. (17.8) compiles.
-- [ ] Lemma 15.1 or an equivalent source-faithful stochastic history
-  information constraint compiles.
+- [x] Lemma 15.1's source-faithful stochastic-history information identity
+  compiles; the Chapter 17 tail-event consumer remains open.
 - [ ] Theorem 17.1 and Corollaries 17.2--17.3 compile.
 - [ ] The clipped-normal hard family, Claim 17.6, Eq. (17.8), Claim 17.7, and
   Theorem 17.4 compile.

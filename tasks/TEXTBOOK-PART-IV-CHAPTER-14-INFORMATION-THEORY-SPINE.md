@@ -138,7 +138,7 @@ compiled status.
 | event data processing | `klDiv_eq_lintegral_klFun_of_ac`, `mul_klFun_le_toReal_klDiv`, RN derivative under restriction, measure partition | restrict to `A,Aᶜ`, apply convexity, add the two pieces | `MeasurableSet A`; finite-KL branch supplies AC/integrability | Mathlib-candidate project leaf |
 | binary testing | real log/exp/sqrt, two-point Jensen/AM--GM, Cauchy--Schwarz algebra | source's affinity/overlap proof specialized to two atoms | Bernoulli endpoint cases separated | project-local |
 | source terminal | binary testing plus event data processing | split `klDiv=∞` from finite KL; use `toReal` only in finite branch | probability measures; measurable event; direction `P` to `Q` | project-local source theorem |
-| history KL decomposition | `InformationTheory.klDiv_compProd_eq_add` is retrieval evidence | Chapter 15 iterative same-policy history construction | kernels, measurability, policy consistency | planned Chapter 15; not a Chapter 14 claim |
+| history KL decomposition | Chapter 14 measure KL plus `InformationTheory.klDiv_compProd_eq_add` | compiled Chapter 15 conditional-KL and iterative same-policy history construction | kernels, measurability, common randomized policy, countably generated rewards | compiled Chapter 15 source theorem; not a Chapter 14 claim |
 
 ## Retrieval cards
 

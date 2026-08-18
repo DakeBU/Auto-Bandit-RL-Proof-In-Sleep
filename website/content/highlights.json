@@ -980,6 +980,34 @@
       ]
     },
     {
+      "full_name": "BanditRLProof.LowerBounds.klDiv_compProd_same_left_eq_lintegral_klDiv_of_measurable",
+      "chapter": "foundations",
+      "plain": "When two one-step joint laws share the same first marginal, their relative entropy is the first-law integral of the pointwise relative entropy between their conditional kernels.",
+      "math": "D(\u03bc\u2297\u03ba\\Vert\u03bc\u2297\u03b7)=\u222b D(\u03ba_x\\Vert\u03b7_x)\\,\u03bc(dx).",
+      "intuition": "The shared past contributes no information; only the next conditional observation separates the two laws, and its cost is averaged over histories actually seen under the first law.",
+      "why": "This closes the conditional-kernel chain-rule gap that previously prevented arm-level KL costs from being accumulated along an adaptive bandit history.",
+      "position": "It is the measure-theoretic engine of Chapter 15 Lemma 15.1, before specializing the conditional kernels to one randomized policy and finite arms.",
+      "proof_idea": "Identify the joint Radon\u2013Nikodym derivative fibrewise, integrate its logarithm under the composition product, and preserve the singular branch: positive first-law mass on an infinite-KL fibre makes both sides infinite.",
+      "lean_notes": "The theorem assumes a finite first measure, finite Markov kernels, countably generated target measurable space, and measurability of the pointwise KL function. It does not assume absolute continuity or finite KL.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum",
+      "chapter": "foundations",
+      "plain": "For one common randomized policy in two finite-arm environments, the directed KL between their canonical finite history laws equals the sum of first-environment expected pull counts times the directed KL of each arm law.",
+      "math": "D(\u2119_{\u03bd,\u03c0}^{(n)}\\Vert\u2119_{\u03bd',\u03c0}^{(n)})=\u2211_a \u1d53_{\u03bd,\u03c0}[T_a(n)]D(P_a\\Vert P'_a).",
+      "intuition": "At every round the same policy cancels from the likelihood ratio; an arm pays information only when the policy selects it, so repeated conditional costs regroup into expected pull counts.",
+      "why": "This is the compiled Chapter 15 change-of-environment identity used by minimax, instance-dependent, and high-probability lower-bound routes.",
+      "position": "It is the local source-facing counterpart of Lattimore\u2013Szepesv\u00e1ri Lemma 15.1. Theorem 15.2 and later regret terminals remain separate consumers.",
+      "proof_idea": "Recursively expose the canonical finite history law as a composition product, apply the same-policy conditional KL identity at each successor, sum over finite actions, and identify policy arm masses with lower integrals of realized pull counts.",
+      "lean_notes": "Finite arms and a countably generated reward space are explicit. The equality uses ENNReal KL and lower-integral expected counts, covers singular or infinite arm KL, and uses the first environment in both the history law and expectation. The local lastRound index denotes lastRound+1 observations.",
+      "dependencies": [
+        "BanditRLProof.LowerBounds.klDiv_compProd_same_left_eq_lintegral_klDiv_of_measurable",
+        "BanditRLProof.LowerBounds.klDiv_historyStep_samePolicy_eq_iterated_lintegral_armKL_general",
+        "BanditRLProof.LowerBounds.canonicalRealizedExpectedPullCountThrough_eq_expectedPullCountThrough"
+      ]
+    },
+    {
       "full_name": "BanditRLProof.LowerBounds.llr_gaussianReal_one_ae",
       "chapter": "foundations",
       "plain": "Under the first unit-variance Gaussian law, the log Radon–Nikodym derivative toward a second unit-variance Gaussian is an affine function of the observation.",
@@ -1000,7 +1028,7 @@
       "math": "D(\\mathcal N(\\mu,1)\\Vert\\mathcal N(\\nu,1))=\\frac{(\\mu-\\nu)^2}{2}.",
       "intuition": "Integrating the affine log likelihood ratio under N(mu,1) replaces the observation by its mean mu and leaves the squared mean displacement.",
       "why": "Theorem 15.2 changes one arm from mean zero to 2 Delta, so this leaf supplies its exact information cost 2 Delta squared.",
-      "position": "It is the compiled Gaussian arm-KL dependency. Lemma 15.1 must still lift arm costs to a same-policy history KL before the minimax proof can use it.",
+      "position": "It is the compiled Gaussian arm-KL dependency consumed by the compiled Lemma 15.1 history identity; Theorem 15.2 still needs the regret/event terminal.",
       "proof_idea": "Prove mutual absolute continuity via Lebesgue measure, establish L1 integrability from the Gaussian first moment, invoke Mathlib's KL integral formula, and normalize the resulting polynomial.",
       "lean_notes": "The value is symmetric only because both variances are one; the declaration and every downstream contract retain the direction from mu to nu.",
       "dependencies": [
@@ -1013,8 +1041,8 @@
       "chapter": "foundations",
       "plain": "The Chapter 15 gap choice makes the Gaussian information exponent exactly one half.",
       "math": "\\Delta=\\sqrt{m/(4n)}\\Longrightarrow 2n\\Delta^2/m=1/2.",
-      "intuition": "Choosing the gap to balance the number of alternatives against the horizon keeps the changed history laws at constant information distance once Lemma 15.1 is available.",
-      "why": "This isolates the source's tuning algebra from the still-blocked stochastic history and regret/event bridge.",
+      "intuition": "Choosing the gap to balance the number of alternatives against the horizon keeps the changed history laws at constant information distance after applying Lemma 15.1.",
+      "why": "This isolates the source's tuning algebra from the still-blocked regret/event and constant bridge.",
       "position": "It is a compiled numeric dependency of Theorem 15.2, not a proof that the history divergence has this upper bound.",
       "proof_idea": "Square the nonnegative real square root and normalize the positive field denominators.",
       "lean_notes": "The parameters are explicit positive real alternative count and horizon values. Natural-cast and bandit-semantic obligations remain with the source terminal.",

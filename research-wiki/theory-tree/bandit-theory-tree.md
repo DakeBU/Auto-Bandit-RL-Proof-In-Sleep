@@ -84,9 +84,9 @@ Lean, evidence, site, review, and remote gates agree.
 | --- | --- | --- | --- |
 | 13, Lower Bounds: Basic Ideas | explicit ENNReal minimax semantics; least-explored alternative averaging; quantitative two-environment algebra with an explicit pull-discrepancy error | local leaves compiled; chapter partial | Theorem 13.1 is only source-stated here and proved in Ch. 15; use the compiled Ch. 14 event-testing layer and the Ch. 15 history bridge when available |
 | 14, Foundations of Information Theory | extended-real relative entropy, event-level binary data processing, endpoint-complete binary testing, unconditional Bretagnolle--Huber | scoped §14.2 leaves compiled; chapter partial | §14.1 coding and full Exercise 14.10 remain uncompiled; adaptive history KL belongs to Ch. 15 |
-| 15, Minimax Lower Bounds | exact Lemma 15.1/Theorem 15.2 contracts; unit-Gaussian RN, exact arm KL, changed-arm cost, source gap and information-exponent tuning | Gaussian/numeric dependency leaves compiled; chapter partial and terminals blocked | prove the conditional composition-product KL integral and canonical stochastic-policy history law before Lemma 15.1 and the `1/27` terminal |
-| 16, Instance-Dependent Lower Bounds | exact Definition 16.1 / Theorem 16.2 / Lemma 16.3 / Theorem 16.4 contracts; generic consistency, `d_inf`, Gaussian-candidate, eventual power, and eventual log-growth leaves | dependency slice compiled; chapter partial and terminals blocked | prove the Chapter 15 same-policy stochastic history KL bridge, exact Gaussian `d_inf`, and liminf extraction before the source terminals |
-| 17, High-Probability Lower Bounds | exact Theorem 17.1 / Corollaries 17.2--17.3 / Theorem 17.4 / Claims 17.5--17.7 contracts; three threshold surfaces, Claim 17.5 first moment, event subtraction, and conditional Eq. (17.8) quarter algebra | Claim 17.5 and reusable dependency slice compiled; chapter partial and remaining terminals blocked | prove the Chapter 15 same-policy history KL for the stochastic branch; construct the correlated clipped-normal reward-matrix/history law and exact clipping concentration for the adversarial branch |
+| 15, Minimax Lower Bounds | exact Lemma 15.1/Theorem 15.2 contracts; measurable conditional-kernel KL, canonical randomized-policy histories, realized pull counts, unit-Gaussian RN/KL, changed-arm cost, and source tuning | Lemma 15.1 and dependency leaves compiled; chapter partial because Theorem 15.2 remains blocked | connect the compiled history information identity to the source regret event, least-explored alternative, and caller-free `1/27` terminal |
+| 16, Instance-Dependent Lower Bounds | exact Definition 16.1 / Theorem 16.2 / Lemma 16.3 / Theorem 16.4 contracts; generic consistency, `d_inf`, Gaussian-candidate, eventual power, log growth, and compiled Chapter 15 information identity | dependency slice plus Lemma 15.1 compiled; chapter partial and its own terminals blocked | instantiate the one-arm information constraint, exact Gaussian `d_inf`, and liminf extraction before the source terminals |
+| 17, High-Probability Lower Bounds | exact Theorem 17.1 / Corollaries 17.2--17.3 / Theorem 17.4 / Claims 17.5--17.7 contracts; three threshold surfaces, compiled Chapter 15 information identity, Claim 17.5 first moment, event subtraction, and conditional Eq. (17.8) quarter algebra | reusable dependency slice compiled; chapter partial and remaining terminals blocked | connect Lemma 15.1 to the stochastic tail event; separately construct the correlated clipped-normal reward-matrix/history law and exact clipping concentration for the adversarial branch |
 
 The frozen source cards currently run through
 `TXT-LS-2020-CH13-MINIMAL-SOURCE-CHANGE`, `TXT-LS-2020-THM-13-1`, the Chapter
@@ -97,8 +97,10 @@ consistency/asymptotic/finite-time cards, and the five Chapter 17 stochastic
 tail, adversarial tail, and claim-group cards. The relevant Mathlib retrieval
 surface includes finite sums, measure KL, Gaussian RN/first-moment APIs, and
 filters, real powers/logarithms, complete-lattice infima, and the
-composition-product chain rule. The missing conditional-KL integral is
-recorded as a blocker; `WEAPON-KL-CHANGE-OF-MEASURE` remains inspiration-only.
+composition-product chain rule. The project now supplements that installed
+surface with a measurable conditional-KL integral and canonical randomized
+history construction closing Lemma 15.1; `WEAPON-KL-CHANGE-OF-MEASURE`
+remains inspiration-only for downstream consumers.
 No LML theorem card is treated as a local lower-bound proof.
 
 ## Compiled Local Leaves

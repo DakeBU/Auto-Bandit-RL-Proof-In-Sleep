@@ -17,9 +17,11 @@ author-online pp. 199--201 / physical PDF pp. 208--210. The Notes,
 Bibliographic Remarks, and Exercises in §§15.3--15.5 are mapped but are not
 silently promoted to the scoped Theorem 15.2 terminal.
 
-The current compiled window contains exact Gaussian KL dependency leaves.
-Lemma 15.1 and Theorem 15.2 remain blocked pending the stochastic-policy
-history interface and the conditional composition-product KL integral.
+The current compiled window contains the general finite-arm same-policy
+history divergence decomposition of Lemma 15.1, together with its conditional
+kernel-KL, canonical history-law, realized pull-count, Gaussian KL, and tuning
+dependencies. Theorem 15.2 remains blocked on the downstream regret/event and
+existence bridge.
 
 ## Precise restatement
 
@@ -38,13 +40,13 @@ policies and supremum over this environment class.
 
 | Source symbol | Meaning | Lean declaration | Type / role | Status |
 | --- | --- | --- | --- | --- |
-| `P_i,P'_i` | arm reward laws | future finite-arm environment field | `Measure Reward` | blocked interface |
-| `pi_t(.|H_{t-1})` | common randomized policy | future history-to-action `Kernel` | Markov kernel | blocked interface |
-| `P_nu^pi,P_nu'^pi` | canonical action/reward history laws | future recursive `Measure.compProd` construction | probability measures | blocked interface |
-| `T_i(n)` | number of pulls of arm `i` | future measurable finite-history function | `Nat`/`Real` | blocked interface |
+| `P_i,P'_i` | arm reward laws | `Kernel (Fin K) Reward` arguments | Markov kernels | compiled interface |
+| `pi_t(.|H_{t-1})` | common randomized policy | `Thompson.HistoryAlgorithm.policy` | Markov kernel | compiled interface |
+| `P_nu^pi,P_nu'^pi` | canonical action/reward history laws | `canonicalBanditHistoryMeasure` | probability measures | compiled |
+| `T_i(n)` | realized pulls of arm `i` | `finiteHistoryPullCountENNReal`; `canonicalRealizedExpectedPullCountThrough` | measurable `ENNReal` count and lower integral | compiled |
 | `D(P,Q)` | measure KL in the source direction | `LowerBounds.relativeEntropy P Q` | `ENNReal` | compiled Chapter 14 |
-| conditional chain rule | KL of same-base composition products as an integral | no declaration yet | kernel KL identity | blocked Mathlib/local leaf |
-| Eq. (15.1) | history KL equals expected pull-count-weighted arm KL | reserved `banditHistoryRelativeEntropy_eq_expectedPulls_sum` | source terminal | blocked |
+| conditional chain rule | KL of same-base composition products as an integral | `klDiv_compProd_same_left_eq_lintegral_klDiv_of_measurable` | kernel KL identity, including singular fibres | compiled local/Mathlib candidate |
+| Eq. (15.1) | history KL equals expected pull-count-weighted arm KL | `banditHistoryRelativeEntropy_eq_expectedPulls_sum` | source terminal | compiled |
 | `N(mu,1)` | Gaussian arm law | `gaussianReal mu (1 : NNReal)` | probability measure on `Real` | imported |
 | Gaussian log ratio | affine log RN ratio | `llr_gaussianReal_one_ae` | a.e. identity | compiled |
 | Gaussian KL | `(mu-nu)^2/2` | `klDiv_gaussianReal_one` | exact `ENNReal` equality | compiled dependency |
@@ -60,12 +62,12 @@ policies and supremum over this environment class.
 | --- | --- | --- | --- |
 | finite action type with `k>1` | source target, future typed interface | alternatives and least-explored arm | yes for terminal |
 | deterministic horizon `n>=k-1` | source target | tuning and unit-cube membership | yes for terminal |
-| arm probability laws | future typeclass/structure fields | canonical reward transitions | yes for terminal |
-| stochastic measurable policy kernel | absent from current project policy API | source universal policy class | yes |
-| same policy under both laws | future construction invariant | policy KL cancels | yes |
-| per-arm `P_i ≪ P'_i` / finite KL when used | explicit branch contract | RN/conditional KL | yes |
-| history/event measurability | future construction lemma | apply Chapter 14 testing | yes |
-| pull count sum equals horizon | future pathwise lemma then integral | least-explored arm | yes |
+| arm probability laws | explicit Markov kernels | canonical reward transitions | no for Lemma 15.1; yes for minimax specialization |
+| stochastic measurable policy kernel | `Thompson.HistoryAlgorithm` | source universal policy class | no for Lemma 15.1 |
+| same policy under both laws | one shared algorithm argument | policy KL cancels | no for Lemma 15.1 |
+| singular/infinite per-arm KL | explicit `ENNReal` semantics; no AC premise | general source identity | no |
+| history/event measurability | canonical prefix equivalences and count measurability | source history and later testing | no for Lemma 15.1; testing bridge remains |
+| pull count sum equals horizon | realized count lower integral compiled; least-explored bridge downstream | Theorem 15.2 | yes for minimax terminal |
 | unit Gaussian variance | explicit `(1 : NNReal)` | exact KL value | no for compiled leaf |
 | `mu in [0,1]^k` | future theorem conclusion witness | exact Gaussian class | yes for terminal |
 | stopping time | absent | Exercise 15.7 only | must remain absent |
@@ -75,9 +77,9 @@ policies and supremum over this environment class.
 | Leaf | Existing APIs/imports | Retrieval evidence | Intended route | Pivot rule |
 | --- | --- | --- | --- | --- |
 | Gaussian RN/KL | Mathlib Gaussian density, AC, RN derivative, first moment, `klDiv_of_ac_of_integrable` | installed Mathlib source | exact density-ratio algebra and integration | keep variance explicit; do not cite a formula without proof |
-| conditional kernel KL | `klDiv_compProd_eq_add` and RN `compProd` lemmas | ChainRule source audit | prove conditional-term integral with finite/probability regularity | if fully general identity is too broad, specialize transparently to finite actions/reward kernels; never assume conclusion |
-| policy/history law | `Kernel`, `Measure.compProd`; existing deterministic `Policy.MeasurablePolicy` audit | local declarations | add a distinct stochastic policy-kernel interface and recursive finite history | do not mutate deterministic API semantics or restrict source terminal to it |
-| divergence decomposition | conditional kernel KL plus policy cancellation | source Lemma 15.1 | horizon induction, then regroup indicators as expected pull counts | preserve first-law expectation and KL direction |
+| conditional kernel KL | `klDiv_compProd_eq_add`, kernel RN, `compProd_withDensity` | ChainRule source audit | measurable conditional KL; a.e. AC branch plus singular-fibre infinity branch | compiled; keep countably generated target and measurability visible |
+| policy/history law | existing kernel-valued `Thompson.HistoryAlgorithm`, `trajMeasure`, finite-history equivalences | local declarations | map the canonical infinite trajectory to each finite visible prefix | compiled; do not replace the common randomized kernel by a deterministic selector |
+| divergence decomposition | conditional kernel KL plus policy cancellation | source Lemma 15.1 | horizon induction, finite-arm regrouping, realized-count recurrence | compiled; preserve first-law expectation and KL direction |
 | testing/regret | Chapter 14 BH; Chapter 13 least-explored leaf | compiled local dependencies | event `T_1(n)<=n/2`, base/changed regret inequalities | theorem with regret identities as premises is only a conditional leaf |
 | tuning | real square-root/field algebra | source proof | `Delta=sqrt((k-1)/(4n))`, exact KL exponent `1/2`, and `Delta<=1/2` compile; final exponential/numeric weakening remains downstream | do not alter constant or mean cube to simplify |
 
@@ -89,22 +91,22 @@ policies and supremum over this environment class.
 | `CH15-GAUSSIAN-LLR` | unit-variance Gaussian log likelihood ratio | Gaussian RN derivative | `log_gaussianPDFReal_div_gaussianPDFReal_one`, `llr_gaussianReal_one_ae` | project leaf | focused Lean | compiled |
 | `CH15-GAUSSIAN-KL` | `D(N(mu,1),N(nu,1))=(mu-nu)^2/2` | LLR integrability and first moment | `integrable_llr_gaussianReal_one`, `klDiv_gaussianReal_one` | Mathlib-candidate project leaf | focused Lean | compiled |
 | `CH15-TUNING` | source `Delta`, information exponent `1/2`, and unit-cube upper bound | real square-root and field algebra | `gaussianMinimaxGap` and tuning lemmas | project-local | focused Lean | compiled |
-| `CH15-CONDITIONAL-KL` | same-base kernel KL equals expected pointwise KL | composition-product RN/chain rule | none | blocked local/Mathlib candidate | focused Lean | blocked |
-| `CH15-STOCHASTIC-HISTORY` | canonical finite history under a common policy kernel | finite recursive `compProd` law | none | project-local | focused Lean | blocked |
-| `CH15-LEMMA-15-1` | exact expected-pull divergence decomposition | previous two nodes | reserved terminal | source terminal | focused Lean | blocked |
+| `CH15-CONDITIONAL-KL` | same-base kernel KL equals expected pointwise KL | composition-product RN/chain rule | `klDiv_compProd_same_left_eq_lintegral_klDiv_of_measurable` | local/Mathlib candidate | focused Lean | compiled |
+| `CH15-STOCHASTIC-HISTORY` | canonical finite history under a common policy kernel | `trajMeasure`, measurable zero/successor encodings | `canonicalBanditHistoryMeasure`, `canonicalBanditHistoryMeasure_succ` | project-local | focused Lean | compiled |
+| `CH15-LEMMA-15-1` | exact expected-pull divergence decomposition | previous two nodes and realized count recurrence | `banditHistoryRelativeEntropy_eq_expectedPulls_sum` | source terminal | focused Lean | compiled |
 | `CH15-TESTING-REGRET` | source event and two-environment regret bridge | Chapter 14 BH, pull identities | none | project-local | focused Lean | blocked |
 | `CH15-THEOREM-15-2` | exact Gaussian `1/27` existence and minimax result | all preceding nodes and tuning | reserved terminals | source terminal | focused Lean | blocked |
-| `CH15-TYPED-CANARY` | root-import applications and axiom reports for compiled slice | Gaussian leaves | `Tests/TextbookPartIVChapter15Canary.lean` | project-local | Tests | compiled |
-| `CH15-EVIDENCE-SITE` | task/DAG/export/index/site agree on partial/blocked boundary | all scoped artifacts | repository artifacts | repository | full/site/browser | verified locally |
-| `CH15-REVIEW` | independent source/Lean/evidence audit | all artifacts | `reviews/2026-08-17-textbook-part-iv-chapter-15-minimax-lower-bounds-spine.md` | repository | independent review | verified: no unresolved P0--P3 |
-| `CH15-REMOTE` | PR, main Actions, Pages, live desktop/mobile | accepted local partial chapter | PR #13; run `31959217761`; deploy `95197261026`; live desktop/mobile | repository | deployment | verified |
+| `CH15-TYPED-CANARY` | root-import applications and axiom reports for compiled slice | Gaussian and history-KL leaves | `Tests/TextbookPartIVChapter15Canary.lean` | project-local | Tests | pending current full gate |
+| `CH15-EVIDENCE-SITE` | task/DAG/export/index/site agree on compiled-Lemma/blocked-minimax boundary | all scoped artifacts | repository artifacts | repository | full/site/browser | pending current build |
+| `CH15-REVIEW` | independent source/Lean/evidence audit | all artifacts | current read-only review | repository | independent review | pending |
+| `CH15-REMOTE` | PR, main Actions, Pages, live desktop/mobile | accepted local partial chapter | new PR/run/deploy | repository | deployment | pending |
 
 ## Gaps
 
 - [x] Exact source/page/semantic mapping.
 - [x] Unit-variance Gaussian RN/LLR/integrability/KL leaf.
 - [x] Source gap, exact information exponent, and unit-cube upper-bound leaves.
-- [ ] Conditional composition-product KL integral.
-- [ ] Stochastic nonanticipating policy and canonical history law.
-- [ ] Pull-count expectation identity and Lemma 15.1.
+- [x] Conditional composition-product KL integral.
+- [x] Stochastic nonanticipating policy and canonical history law.
+- [x] Pull-count expectation identity and Lemma 15.1.
 - [ ] Regret/event bridge, final exponential/constant step, Theorem 15.2, and minimax corollary.

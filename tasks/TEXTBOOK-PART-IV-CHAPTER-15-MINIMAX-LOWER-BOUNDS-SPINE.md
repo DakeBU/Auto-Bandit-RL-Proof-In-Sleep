@@ -14,8 +14,10 @@ Formalize the source-faithful finite-armed minimax lower-bound route in
 Lattimore--Szepesvári, *Bandit Algorithms* (2020), Chapter 15. The exact
 terminals are the same-policy adaptive-history divergence decomposition of
 Lemma 15.1 and the unit-variance Gaussian minimax lower bound of Theorem 15.2.
-Compiled dependency leaves must not be reported as those terminals until the
-repository has a stochastic-policy history law with the source semantics.
+Lemma 15.1 now compiles for the repository's kernel-valued randomized history
+policy and canonical trajectory law.  Theorem 15.2 remains a separate target:
+compiled information and Gaussian leaves must not be reported as that minimax
+terminal until its regret/event bridge and final existence statement compile.
 
 ## Source
 
@@ -76,7 +78,11 @@ least-explored arm `i>1` to mean `2*Delta`, applies Theorem 14.2 to
 
 ## Lean target and status fence
 
-Target file: `BanditRLProof/LowerBounds/Minimax.lean`.
+Target files:
+
+- `BanditRLProof/LowerBounds/ConditionalKernelKL.lean`;
+- `BanditRLProof/LowerBounds/BanditHistoryKL.lean`;
+- `BanditRLProof/LowerBounds/Minimax.lean`.
 
 Expected public dependency declarations:
 
@@ -88,32 +94,45 @@ LowerBounds.klDiv_gaussianReal_one
 LowerBounds.gaussianMinimaxGap
 LowerBounds.gaussianMinimaxGap_informationExponent_eq_half
 LowerBounds.gaussianMinimaxGap_le_half
+LowerBounds.klDiv_compProd_same_left_eq_lintegral_klDiv_of_measurable
+LowerBounds.canonicalBanditHistoryMeasure
+LowerBounds.canonicalRealizedExpectedPullCountThrough
+LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum
 ```
 
-Expected source terminals, whose exact names remain reserved until their
-semantic interfaces compile:
+Compiled source terminal:
 
 ```lean
 LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum
+```
+
+Remaining reserved source terminals:
+
+```lean
 LowerBounds.exists_gaussianBandit_expectedRegret_ge_one_div_twentySeven
 LowerBounds.gaussianBanditMinimaxExpectedRegret_ge_one_div_twentySeven
 ```
 
-The Gaussian and numeric tuning declarations are compiled dependency leaves
-only. They do not by themselves prove Lemma 15.1 or Theorem 15.2. The chapter
-stays `partial` while the exact terminals remain blocked.
+The history decomposition is a local proof of Lemma 15.1, not a theorem-card
+adapter. The Gaussian and numeric tuning declarations remain dependency leaves
+only and do not by themselves prove Theorem 15.2. The chapter stays `partial`
+while the minimax existence terminal remains blocked.
 
 ## Exact regularity contract
 
 - `k > 1` and `n >= k - 1` for Theorem 15.2.
 - Each arm law is a probability measure on one measurable reward space.
-- Per-arm absolute continuity and finite KL are explicit wherever the history
-  chain rule needs them; no support condition is silently inferred.
+- The compiled source terminal allows arbitrary Markov arm laws on one
+  countably generated reward space. Singular arms and infinite KL are handled
+  explicitly; zero-probability arms use the standard `ENNReal` convention
+  `0 * infinity = 0`, with no support condition silently inferred.
 - Policies are stochastic kernels from past histories to actions, may use
   private randomization, are measurable/nonanticipating, and are identical
   under `nu` and `nu'`.
-- The canonical history contains actions and observed rewards through round
-  `n`; its indexing must make `T_i(n)` and the terminal event unambiguous.
+- The local `lastRound` index is inclusive, so its history contains
+  `lastRound + 1` action/reward observations.  The source's positive `n`-round
+  display is obtained with `lastRound = n - 1`; this conversion must remain
+  explicit wherever `T_i(n)` is compared with a local pull count.
 - KL direction is `P_nu^pi` to `P_nu'^pi`; expected pulls are under the first
   law. Reversing either is a different statement.
 - Gaussian laws have variance exactly one. Their means lie in `[0,1]` after
@@ -122,22 +141,16 @@ stays `partial` while the exact terminals remain blocked.
 - Lemma 15.1 is a deterministic-horizon identity. Exercise 15.7's stopping-
   time extension is not silently substituted for it.
 
-## Current semantic blocker
+## Current semantic boundary
 
-Installed Mathlib provides `InformationTheory.klDiv_compProd_eq_add`, but its
-conditional term is represented as the KL divergence of two composition-
-product measures. The file does not provide the integral identity
-
-```text
-D(mu tensor kappa, mu tensor eta) = integral D(kappa(x),eta(x)) dmu(x),
-```
-
-needed to iterate Eq. (15.1). The repository's current
-`Policy.MeasurablePolicy` selects a deterministic action map, rather than the
-source's stochastic policy kernel. Therefore the missing bridge is both a
-Mathlib/local conditional-KL leaf and a semantic stochastic-policy/history-law
-interface. Neither may be replaced by a theorem-card assumption while calling
-the source terminal compiled.
+The former Lemma 15.1 blocker is resolved locally.  The project supplements
+`InformationTheory.klDiv_compProd_eq_add` with a measurable conditional-KL
+integral, including singular fibres; instantiates the existing kernel-valued
+`Thompson.HistoryAlgorithm`; builds the canonical finite history law; and proves
+that its policy-mass recurrence is exactly the lower integral of the realized
+pull count.  The remaining Chapter 15 blocker is downstream: connect this
+identity to the least-explored Gaussian alternative, the exact testing event
+and regret identities, and the caller-free `1/27` Theorem 15.2 terminal.
 
 ## Proof obligations
 
@@ -148,21 +161,56 @@ the source terminal compiled.
 - [x] Existing policy/history-law and installed Mathlib KL APIs are audited.
 - [x] Exact unit-variance Gaussian likelihood-ratio, integrability, and KL
   dependency leaves compile.
-- [ ] Conditional composition-product KL integral compiles.
-- [ ] A canonical stochastic-policy finite-history law and pull-count function
+- [x] Conditional composition-product KL integral compiles.
+- [x] A canonical stochastic-policy finite-history law and pull-count function
   compile with probability/measurability instances.
-- [ ] Lemma 15.1 compiles for the source policy class.
+- [x] Lemma 15.1 compiles for the source finite-arm policy class.
 - [x] The source gap choice, information exponent `1/2`, and unit-cube upper
   bound compile as numeric dependency leaves.
 - [ ] Regret/event identities connect the compiled tuning to Theorem 15.2.
 - [ ] The minimax corollary compiles through the Chapter 13 semantic surface.
 - [x] Root import, focused canary, Tests, scans, full harness, export, evidence
-  indexes, documentation, website build/check, and local desktop/mobile checks
-  pass.
-- [x] Independent read-only review passed with no unresolved P0--P3 finding.
-- [x] PR, main Actions, Pages deployment, and live desktop/mobile checks pass.
+  indexes, documentation, and website build/check pass.
+- [x] Local desktop/mobile checks pass for the extension snapshot.
+- [x] Independent read-only mathematical and repository review passed with no
+  unresolved Blocking, High, or Medium finding.
+- [ ] PR, main Actions, Pages deployment, and live desktop/mobile checks pass.
 
-## Local verification (2026-08-16)
+## Lemma 15.1 extension local verification (2026-08-19)
+
+- Two ordinary cold-cache attempts reached Mathlib and then stopped with the
+  Windows infrastructure error `failed to create thread`; neither emitted a
+  Lean source error.  A temporary `weakLeanArgs := #["-j", "1"]` retry in the
+  root and Mathlib package files completed `lake build BanditRLProof Tests`
+  successfully with 8843 jobs.  Both temporary settings were then restored;
+  the root and dependency `lakefile.lean` files have no working or staged diff.
+- After restoration, the focused standard-configuration build of
+  `ConditionalKernelKL`, `BanditHistoryKL`, and the Chapter 15 canary completed
+  successfully with 8824 jobs.
+- `#print axioms` for the source-facing Lemma 15.1 terminal reports only
+  `propext`, `Classical.choice`, and `Quot.sound`.
+- `python tools/bandit.py check` passed: the complete Lean gate rebuilt 8842
+  jobs, ProofGraph export passed, and all 132 tool tests passed with three
+  expected skips.
+- `python website/scripts/build_site.py --lean-verified` passed with 605 HTML
+  pages, 576 modules, 7581 scanner declarations, 83 highlights, and 70
+  milestones.  `python website/scripts/check_site.py` then passed all internal
+  links and anchors, 16397 Lean source links, MathJax readable fallbacks, 14
+  Mermaid blocks, README links, and the Pages workflow.
+- The retrieval index contains 7487 source declarations; the two new modules
+  contribute 42 scanner declarations with unique full names.  All changed JSON
+  sources parse successfully.
+- Independent source/Lean review rechecked the official PDF direction
+  `nu -> nu'`, first-law expectation, shared randomized policy, singular and
+  infinite-KL branches, and the inclusive-index conversion.  It found no
+  unresolved Blocking, High, or Medium issue.  Theorem 15.2 remains blocked.
+- Independent local browser review at 1440x1000 and 390x844 confirmed zero
+  document-level horizontal overflow.  The Chapter 15 callout and Roadmap
+  milestone remain inside the 390px viewport, long declaration names wrap, the
+  formula stays in its scrollable region, the drawer remains keyboard/ARIA
+  operable, and the five-step desktop proof flow uses the available row width.
+
+## Prior dependency-slice verification (2026-08-16)
 
 - Commit `23120d8` passed the complete harness in detached short-path
   worktree `C:\abrl-p4-ch15-final-6c8be3d`. The short path is required because
@@ -208,19 +256,18 @@ the source terminal compiled.
   declarations, blocked Lemma 15.1 and Theorem 15.2 terminals, zero broken
   images, and no document-level horizontal overflow.
 
-Remote acceptance applies only to the scoped Gaussian KL and tuning dependency
-slice. The chapter remains `partial`, and its exact source terminals remain
-blocked on the conditional kernel-KL integral and stochastic-policy history
-law.
+That remote acceptance applies only to the earlier Gaussian KL and tuning
+dependency slice.  The 2026-08-19 Lemma 15.1 extension requires its own local,
+PR, Actions, Pages, and live-page acceptance evidence before it is public.
 
 ## Mathlib-ready leaf contract
 
 | Leaf | Local APIs/imports | Intended proof route | Regularity contracts | Mathlib status |
 | --- | --- | --- | --- | --- |
 | Gaussian unit-variance KL | `gaussianReal`, `rnDeriv_gaussianReal`, `integral_id_gaussianReal`, `klDiv_of_ac_of_integrable` | identify the RN ratio, integrate its affine log | variance `1`; mutual AC via volume | compiled project leaf, Mathlib candidate |
-| conditional kernel KL | `klDiv_compProd_eq_add`, RN derivative for `compProd` | identify the conditional KL term as an integral | finite/probability base law, Markov kernels, AC/integrability branches | blocked local/Mathlib candidate |
-| stochastic history law | `Kernel`, `Measure.compProd`, finite recursive history | policy kernel followed by chosen-arm reward kernel | measurable/nonanticipating common policy; probability kernels | blocked project-local semantic interface |
-| divergence decomposition | conditional kernel KL plus same-policy cancellation | induction over horizon; regroup selected-arm terms into pull counts | KL direction and first-law expectation fixed | blocked source terminal |
+| conditional kernel KL | `klDiv_compProd_eq_add`, kernel RN derivative, `compProd_withDensity` | identify the conditional KL term as an integral; split singular fibres through measurable conditional KL | finite base law, Markov kernels, countably generated target, measurable pointwise KL | compiled local/Mathlib candidate |
+| stochastic history law | `HistoryAlgorithm`, `Kernel`, `trajMeasure`, measurable prefix equivalences | policy kernel followed by chosen-arm reward kernel | measurable/nonanticipating common randomized policy; probability kernels | compiled project-local semantic interface |
+| divergence decomposition | conditional kernel KL plus same-policy cancellation | induction over inclusive history; regroup finite action masses and identify realized pull-count lower integrals | KL direction and first-law expectation fixed; arbitrary Markov arm laws | compiled source terminal, Lemma 15.1 |
 | least-explored arm | `exists_leastExploredAlternative` | reuse Chapter 13 finite averaging | nonnegative pulls, sum equals horizon | compiled dependency |
 | testing step | Chapter 14 `bretagnolleHuber` | apply to `T_1(n)<=n/2` | event measurability and common policy | compiled measure theorem; bandit bridge blocked |
 | source tuning | real square root and field algebra | set `Delta=sqrt(m/(4n))`; prove exponent `1/2` and `Delta<=1/2` | positive real counts/horizon; `m<=n` | compiled project leaf |
@@ -244,13 +291,16 @@ law.
 
 ## Nonclaims and failure policy
 
-- The Gaussian KL leaf is not Lemma 15.1 or Theorem 15.2.
-- A deterministic policy result would not cover the source's universal policy
-  quantifier and must be labelled as a specialization if added.
+- The Gaussian KL leaf alone is not Lemma 15.1 or Theorem 15.2; the separately
+  compiled randomized-history declaration is the Lemma 15.1 evidence.
+- A deterministic policy specialization alone would not cover the source's
+  policy class; the compiled terminal instead uses a common Markov policy
+  kernel on each visible finite history.
 - A theorem carrying Eq. (15.1) as a premise is a conditional algebraic leaf,
   not a compiled proof of Eq. (15.1).
-- The imported Mathlib chain rule is route evidence until the conditional term
-  is reduced to expected per-arm KL and a canonical history law is built.
+- The imported Mathlib chain rule alone is route evidence; the local conditional
+  integral, canonical history recursion, and realized-count bridge provide the
+  compiled source-terminal evidence.
 - If the exact terminal remains blocked, preserve it and publish the smallest
   compiled general leaves plus the exact blocker. Do not weaken KL direction,
   add a deterministic-policy restriction, or conceal regularity assumptions.

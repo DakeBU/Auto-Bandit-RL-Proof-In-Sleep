@@ -19,7 +19,7 @@ Scenario cards: `SCN-STOCHASTIC-FINITE`, `SCN-ADVERSARIAL-FINITE`
 | `CH17-EQ-17-8-EXPRESSION` | exact RHS count expression | natural casts/order | real arithmetic | `MLIB-ORDER-ALGEBRA` | define source lower expression | construction semantics separate | project-local | `adversarialRegretLowerExpression` | focused Lean | compiled |
 | `CH17-EQ-17-8-QUARTER` | count bounds leave `Delta n/4` | previous expression | ordered multiplication | `MLIB-ORDER-ALGEBRA` | subtract half and quarter, multiply by nonnegative gap | nonnegative gap | project-local | `adversarialRegretLowerExpression_ge_quarter` | focused Lean | compiled |
 | `CH17-EQ-17-8-TRANSFER` | source comparison implies random-regret threshold | previous leaf | order transitivity | textbook card | compose with explicit construction premise | Eq. (17.8) remains premise | project-local conditional | `randomRegret_ge_quarter_of_clippingDecomposition` | focused Lean | compiled |
-| `CH17-HISTORY` | original-law expected-pull/history information | Ch15 Lemma 15.1 | stochastic policy/history | KL chain-rule route | change one Gaussian arm | same randomized policy; first-law pulls | connected blocker | none | focused Lean | blocked |
+| `CH17-HISTORY` | original-law expected-pull/history information | compiled Ch15 Lemma 15.1 | compiled stochastic policy/history | Chapter 17 tail-event consumer | change one Gaussian arm and instantiate the history identity | same randomized policy; first-law pulls | connected blocker | none | focused Lean | blocked downstream consumer |
 | `CH17-THM-17-1` | exact stochastic tail lower bound | history, BH, least arm, tuning | Ch13--15 | source card | choose gap, one-arm change, sum two tail events | exact `n,k,B,delta` and class | source terminal | reserved | focused Lean | blocked |
 | `CH17-COR-17-2` | exact Eq. (17.7) | Theorem 17.1 | expectation/tail bound | source card | contradiction and choose source `B` | Eq. (17.6) exact | source terminal | reserved | focused Lean | blocked |
 | `CH17-COR-17-3` | no single all-confidence policy | Theorem 17.1 | layer-cake/tail integral | `MLIB-MEASURE-INTEGRAL` | integrate tail and contradict Theorem 17.1 | real `p in (0,1)`, strict `<delta` | source terminal/local analytic gap | reserved | focused Lean | blocked |
@@ -35,7 +35,8 @@ Scenario cards: `SCN-STOCHASTIC-FINITE`, `SCN-ADVERSARIAL-FINITE`
 ## Failure classification
 
 The stochastic source-terminal failure is a `connected blocker`: Chapter 15's
-conditional kernel-KL integral and canonical stochastic-policy history law are
+conditional kernel-KL integral, canonical stochastic-policy history law, and
+Lemma 15.1 identity now compile, but the Chapter 17 tail-event consumer is
 absent. Corollary 17.3 also has a `local Lean lemma gap` for its exact tail
 integral. The adversarial route has a `semantic interface gap` for the
 clipped-normal reward-matrix/history law and a `missing regularity contract`
