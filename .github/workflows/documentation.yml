@@ -36,31 +36,31 @@ jobs:
 
       - name: Build the literate formalization website
         run: |
-          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            python3 website/scripts/build_site.py --lean-verified
-          else
+          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
             python3 website/scripts/build_site.py \
               --lean-verified \
               --public-snapshot-base-url https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep
+          else
+            python3 website/scripts/build_site.py --lean-verified
           fi
 
       - name: Check links, mappings, formulas, and diagrams
         run: |
-          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            python3 website/scripts/check_site.py
-          else
+          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
             python3 website/scripts/check_site.py \
               --expect-public-base-url https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep
+          else
+            python3 website/scripts/check_site.py
           fi
 
       - name: Upload the Pages artifact
-        if: github.event_name != 'pull_request'
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v4
         with:
           path: website/_site
 
   deploy:
-    if: github.event_name != 'pull_request'
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

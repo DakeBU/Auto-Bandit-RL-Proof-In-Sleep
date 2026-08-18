@@ -221,7 +221,17 @@ def check_workflow() -> list[str]:
         "actions/deploy-pages@",
         "path: website/_site",
     ]
-    return [f"documentation workflow missing: {item}" for item in required if item not in text]
+    errors = [f"documentation workflow missing: {item}" for item in required if item not in text]
+    branch_build_guard = 'if [[ "${{ github.ref }}" == "refs/heads/main" ]]'
+    branch_publish_guard = (
+        "if: github.ref == 'refs/heads/main' && "
+        "github.event_name != 'pull_request'"
+    )
+    if text.count(branch_build_guard) != 2:
+        errors.append("documentation workflow must guard public build and check to main")
+    if text.count(branch_publish_guard) != 2:
+        errors.append("documentation workflow must guard upload and deploy to main")
+    return errors
 
 
 def check_ide_server() -> list[str]:
@@ -587,9 +597,9 @@ def main() -> int:
             errors.append("public snapshot redirects exact source links to source-access")
         if unpinned:
             errors.append("public snapshot contains source links not pinned to source_commit")
-        if len(declaration_links) < manifest.get("declaration_count", 0):
+        if len(set(declaration_links)) != manifest.get("declaration_count", 0):
             errors.append(
-                "public snapshot does not retain one commit-pinned file/line link per declaration"
+                "public snapshot does not retain exactly one unique commit-pinned file/line target per declaration"
             )
     if manifest.get("placeholder_count", 0):
         compiled_text = " ".join(
