@@ -131,6 +131,21 @@ class TargetDriftRuntimeTest(unittest.TestCase):
                 cache_manifest.materialize_internal_file_symlinks(junction)
             with self.assertRaises(SystemExit):
                 cache_manifest.require_plain_tree(junction)
+            cli = subprocess.run(
+                [
+                    sys.executable,
+                    str(TOOLS / "target_drift_checker_cache_manifest.py"),
+                    "materialize-links",
+                    "--root",
+                    str(junction),
+                ],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+                check=False,
+            )
+            self.assertNotEqual(cli.returncode, 0)
+            self.assertIn("linked, or a reparse point", cli.stdout + cli.stderr)
             self.assertEqual((outside / "sentinel").read_bytes(), b"outside")
 
     def test_checker_image_context_is_frozen_to_the_base_commit(self) -> None:

@@ -251,7 +251,12 @@ def main() -> None:
     verify.add_argument("--manifest", type=Path, required=True)
     args = parser.parse_args()
 
-    root = args.root.resolve()
+    # Inspect the caller-supplied path before resolving it.  Resolving first
+    # would erase the evidence that a Windows junction (or a POSIX symlink)
+    # was supplied as the cache root and would let every CLI subcommand walk a
+    # different tree than the caller named.
+    require_plain_root(args.root)
+    root = args.root.resolve(strict=True)
     if args.command == "materialize-links":
         count = materialize_internal_file_symlinks(root)
         print(json.dumps({
