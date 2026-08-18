@@ -110,6 +110,29 @@ class TargetDriftRuntimeTest(unittest.TestCase):
             with self.assertRaises(SystemExit):
                 cache_manifest.materialize_internal_file_symlinks(cache)
 
+    @unittest.skipUnless(os.name == "nt", "Windows junction regression")
+    def test_checker_cache_rejects_junction_root(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            outside = root / "outside"
+            outside.mkdir()
+            (outside / "sentinel").write_bytes(b"outside")
+            junction = root / ".lake"
+            result = subprocess.run(
+                ["cmd", "/c", "mklink", "/J", str(junction), str(outside)],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+                check=False,
+            )
+            if result.returncode != 0:
+                self.skipTest("directory junctions are unavailable")
+            with self.assertRaises(SystemExit):
+                cache_manifest.materialize_internal_file_symlinks(junction)
+            with self.assertRaises(SystemExit):
+                cache_manifest.require_plain_tree(junction)
+            self.assertEqual((outside / "sentinel").read_bytes(), b"outside")
+
     def test_checker_image_context_is_frozen_to_the_base_commit(self) -> None:
         # ABRL contains intentionally descriptive Lean filenames.  Keep the
         # Windows build-context root short enough for non-long-path-aware tools.

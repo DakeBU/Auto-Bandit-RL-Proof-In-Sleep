@@ -136,9 +136,11 @@ The context contains only the allowlisted Lean/Lake base snapshot plus the
 checker recipe/controller/inner checker/cache-manifest generator.  It excludes
 the evaluation bank, condition metadata, operator ground truth, current
 post-base library, Git database, and credentials.  The multi-stage recipe runs
-`lake exe cache get` and `lake build BanditRLProof Tests`, rejects links,
-special files, and multiply linked cache files, and records every final cache
-byte.  The final image does not contain the builder-stage source snapshot.  The
+`lake exe cache get` and `lake build BanditRLProof Tests`, materializes only
+cache-internal symbolic links that resolve to regular files as ordinary bytes,
+then rejects every remaining link, reparse point, special file, and multiply
+linked cache file and records every final cache byte.  The final image does not
+contain the builder-stage source snapshot.  The
 builder then mounts the exact frozen `lean-toolchain` into that final image and,
 with network disabled, the filesystem read-only, and UID/GID `10002:10002`,
 executes a minimal Lean file plus `lean --version` and `lake --version`; the
@@ -146,6 +148,18 @@ reported release must match the pinned toolchain before an SBOM can be emitted.
 The emitted `built_manifest_verified_probe_pending` SBOM is still only an image-construction record:
 it cannot replace the seven production isolation probes, the real one-case by
 three-condition smoke, or any model run.
+
+The first successful result-free Linux candidate build is recorded in
+[`checker-image-candidate-32137509103.json`](checker-image-candidate-32137509103.json).
+GitHub Actions [run 32137509103](https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/actions/runs/32137509103)
+built both Lean targets, produced a 121,277-file byte manifest for the complete
+Lake cache, verified its frozen-source provenance, and passed the final-image
+offline Lean/Lake 4.29.1 probe as UID/GID `10002:10002`.  The resulting image
+digest was local to the ephemeral runner and was not published.  This closes a
+candidate construction/attestation check only; the final production image,
+seven bound isolation probes, real three-condition smoke, and every model run
+remain pending.
+
 The sealed launcher accepts only the allowlisted Docker installation, rechecks the
 executable/signature-or-package ledger plus client/server/daemon identity, and
 constructs the complete argv itself.  Before every probe or replay it uses
@@ -172,7 +186,7 @@ python tools/analyze_target_drift_execution.py --pack FROZEN-PACK --grading-pack
 ```
 
 These commands expose executable code paths; they do not supply a provider,
-agent image, digest-pinned Lean base image, built production checker image,
+agent image, final published production checker image,
 credentials, budget choices, or grader identities.  The current local gate
 includes target-drift component tests covering deterministic assignment, seal hashing,
 opaque prompts, manifest/digest checks, selected fail-closed paths, and

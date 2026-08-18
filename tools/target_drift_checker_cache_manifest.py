@@ -43,6 +43,27 @@ def canonical_json_bytes(value: Any) -> bytes:
     ).encode("utf-8")
 
 
+def require_plain_root(root: Path) -> os.stat_result:
+    """Reject linked/reparse cache roots before resolving or traversing them."""
+    try:
+        root_info = root.lstat()
+    except OSError as error:
+        raise SystemExit(
+            "target-drift checker-cache manifest failed: "
+            f"cache root cannot be inspected: {root}: {error}"
+        )
+    root_reparse = bool(
+        getattr(root_info, "st_file_attributes", 0) & 0x400
+    )
+    require(
+        stat.S_ISDIR(root_info.st_mode)
+        and not stat.S_ISLNK(root_info.st_mode)
+        and not root_reparse,
+        "cache root is missing, linked, or a reparse point",
+    )
+    return root_info
+
+
 def materialize_internal_file_symlinks(root: Path) -> int:
     """Replace safe cache-internal file symlinks with immutable regular bytes.
 
@@ -51,7 +72,7 @@ def materialize_internal_file_symlinks(root: Path) -> int:
     resolved target is a regular file inside the cache are accepted.  Directory
     links, external targets, reparse points, and special files remain fatal.
     """
-    require(root.is_dir() and not root.is_symlink(), "cache root is missing or linked")
+    require_plain_root(root)
     resolved_root = root.resolve(strict=True)
     links: list[Path] = []
     for directory, directory_names, file_names in os.walk(root, followlinks=False):
@@ -97,9 +118,7 @@ def materialize_internal_file_symlinks(root: Path) -> int:
 
 
 def require_plain_tree(root: Path) -> None:
-    require(root.is_dir() and not root.is_symlink(), "cache root is missing or linked")
-    root_info = root.lstat()
-    require(stat.S_ISDIR(root_info.st_mode), "cache root is not a directory")
+    require_plain_root(root)
     for path in root.rglob("*"):
         info = path.lstat()
         reparse = bool(getattr(info, "st_file_attributes", 0) & 0x400)
