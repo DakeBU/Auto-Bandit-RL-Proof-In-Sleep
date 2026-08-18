@@ -14,6 +14,8 @@ from pathlib import Path
 from typing import Any
 
 import launch_target_drift_checker_container as checker_launcher
+import prepare_target_drift_checker_image as checker_image_builder
+import target_drift_checker_cache_manifest as checker_cache_manifest
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -173,9 +175,19 @@ def checker_runtime_config_payload(config: dict[str, Any]) -> dict[str, Any]:
         "checker_image_sbom_sha256": sha256_file(
             resolve_repo_path(entry["checker_image_sbom"])
         ),
-        "controller_entrypoint_sha256": sha256_file(
+        "checker_image_build_input_manifest_sha256": sha256_file(
+            resolve_repo_path(entry["checker_image_build_input_manifest"])
+        ),
+        "checker_cache_manifest_sha256": sha256_file(
+            resolve_repo_path(entry["checker_cache_manifest_artifact"])
+        ),
+        "checker_image_build_log_sha256": sha256_file(
+            resolve_repo_path(entry["checker_image_build_log"])
+        ),
+        "controller_entrypoint_source_sha256": sha256_file(
             resolve_repo_path(entry["controller_entrypoint_source"])
         ),
+        "controller_entrypoint_sha256": entry["controller_entrypoint_sha256"],
         "materializer_sha256": sha256_file(resolve_repo_path(
             config["sealed_agent_view"]["materializer"]
         )),
@@ -297,6 +309,10 @@ def validate_resource_policy(config: dict[str, Any], require_hash: bool) -> dict
             "compile-only repository view must be an allowlist")
     require(policy["conditions"]["source_aware_blueprint"]["path_mode"] == "allowlist",
             "source-aware repository view must be an allowlist")
+    for condition in ("compile_only", "source_aware_blueprint"):
+        require(policy["conditions"][condition]["repository_paths"]
+                == list(checker_image_builder.SOURCE_PATHS),
+                f"{condition} base paths differ from the checker-image baseline")
     require(policy["conditions"]["abrl"]["path_mode"] == "denylist",
             "ABRL repository view must be a denylist")
     require("evaluation" in policy["conditions"]["abrl"]["excluded_repository_paths"],
@@ -461,7 +477,8 @@ def validate_checker_runtime_preflight(config: dict[str, Any]) -> dict[str, Any]
     require(all(resolve_repo_path(entry[field]).is_file() for field in (
         "driver_path", "inner_checker_path", "isolation_probe_runner_path",
         "host_launcher_path", "checker_image_recipe", "checker_image_sbom",
-        "controller_entrypoint_source",
+        "checker_image_build_input_manifest", "checker_cache_manifest_artifact",
+        "checker_image_build_log", "controller_entrypoint_source",
     )), "checker controller/inner/probe-runner file is missing")
     host_python = Path(entry["host_python_executable"])
     require(host_python.resolve() == Path(sys.executable).resolve(),
@@ -489,14 +506,53 @@ def validate_checker_runtime_preflight(config: dict[str, Any]) -> dict[str, Any]
             "Docker client/server version or daemon identity changed")
     recipe_path = resolve_repo_path(entry["checker_image_recipe"])
     sbom_path = resolve_repo_path(entry["checker_image_sbom"])
+    build_input_path = resolve_repo_path(entry["checker_image_build_input_manifest"])
+    cache_manifest_path = resolve_repo_path(entry["checker_cache_manifest_artifact"])
+    build_log_path = resolve_repo_path(entry["checker_image_build_log"])
     controller_path = resolve_repo_path(entry["controller_entrypoint_source"])
     require(entry["checker_image_recipe_sha256"] == sha256_file(recipe_path)
             and entry["checker_image_sbom_sha256"] == sha256_file(sbom_path)
-            and entry["controller_entrypoint_sha256"] == sha256_file(controller_path),
-            "checker image recipe/SBOM/controller hash differs from the seal")
+            and entry["checker_image_build_input_manifest_sha256"]
+            == sha256_file(build_input_path)
+            and entry["checker_cache_manifest_sha256"] == sha256_file(cache_manifest_path)
+            and entry["checker_image_build_log_sha256"] == sha256_file(build_log_path)
+            and entry["controller_entrypoint_source_sha256"]
+            == sha256_file(controller_path),
+            "checker image provenance artifact/controller hash differs from the seal")
     sbom = load(sbom_path)
+    build_input = load(build_input_path)
+    current_orchestrator = subprocess.check_output(
+        ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True
+    ).strip()
+    checker_image_builder.validate_build_input_payload(
+        build_input,
+        expected_workspace_commit=config.get("workspace_base_commit"),
+        expected_orchestrator_commit=current_orchestrator,
+    )
+    cache_payload = checker_cache_manifest.load_manifest(cache_manifest_path)
+    lean_toolchain_sha256 = next(
+        item["sha256"] for item in build_input["source_files"]
+        if item["path"] == "lean-toolchain"
+    )
+    expected_cache_provenance = {
+        "workspace_base_commit": build_input["workspace_base_commit"],
+        "source_files_aggregate_sha256": build_input[
+            "source_files_aggregate_sha256"
+        ],
+        "build_input_manifest_sha256": sha256_file(build_input_path),
+        "checker_image_recipe_sha256": sha256_file(recipe_path),
+        "base_image_digest": build_input["lean_base_image_digest"].split(":", 1)[1],
+        "lean_toolchain_sha256": lean_toolchain_sha256,
+    }
+    require(cache_payload["provenance"] == expected_cache_provenance,
+            "checker cache manifest is not bound to the frozen Git baseline")
     validate_checker_image_sbom(
-        entry, sbom, sha256_file(resolve_repo_path(entry["inner_checker_path"]))
+        entry, sbom, sha256_file(resolve_repo_path(entry["inner_checker_path"])),
+        config.get("workspace_base_commit"), build_input, cache_payload,
+        sha256_file(build_input_path), sha256_file(build_log_path), identity,
+        checker_image_builder.lean_toolchain_release(
+            build_input["workspace_base_commit"]
+        ),
     )
     require(entry["controller_uid"] == "0:0"
             and re.fullmatch(r"[1-9][0-9]*:[1-9][0-9]*", entry["worker_uid"]),
@@ -516,8 +572,29 @@ def validate_checker_runtime_preflight(config: dict[str, Any]) -> dict[str, Any]
 
 
 def validate_checker_image_sbom(
-    entry: dict[str, Any], sbom: dict[str, Any], inner_checker_sha256: str
+    entry: dict[str, Any], sbom: dict[str, Any], inner_checker_sha256: str,
+    workspace_base_commit: str | None = None,
+    build_input: dict[str, Any] | None = None,
+    cache_manifest: dict[str, Any] | None = None,
+    build_input_sha256: str | None = None,
+    build_log_sha256: str | None = None,
+    current_runtime_identity: dict[str, str] | None = None,
+    expected_toolchain_release: str | None = None,
 ) -> None:
+    expected_sbom_fields = {
+        "schema_version", "suite_id", "status", "container_image_digest",
+        "checker_image_recipe_sha256", "controller_entrypoint_sha256",
+        "inner_checker_sha256", "cache_manifest_tool_sha256",
+        "image_context_builder_sha256", "build_input_manifest_sha256",
+        "source_snapshot_manifest_sha256", "workspace_base_commit",
+        "controller_uid", "worker_uid", "base_image_digest", "base_image_reference",
+        "toolchain_release", "offline_toolchain_probe",
+        "toolchain_probe_source_sha256", "lean_version", "lake_version",
+        "python_version",
+        "lake_cache_manifest_sha256", "checker_cache_root",
+        "checker_cache_manifest_path", "docker_executable_sha256",
+        "docker_runtime_identity", "image_build_log_sha256", "nonclaim",
+    }
     required_toolchain = (
         "lean_version", "lake_version", "python_version",
     )
@@ -527,8 +604,44 @@ def validate_checker_image_sbom(
         and "UNSET" not in sbom[name]
         for name in required_toolchain
     )
-    package_manifest = sbom.get("installed_packages_manifest_sha256")
-    require(sbom.get("status") == "built_verified"
+    cache_manifest_sha256 = sbom.get("lake_cache_manifest_sha256")
+    digest_fields = (
+        "cache_manifest_tool_sha256", "image_context_builder_sha256",
+        "build_input_manifest_sha256", "source_snapshot_manifest_sha256",
+        "image_build_log_sha256", "docker_executable_sha256",
+    )
+    provenance_complete = all(
+        isinstance(sbom.get(name), str)
+        and re.fullmatch(r"[0-9a-f]{64}", sbom[name]) is not None
+        for name in digest_fields
+    )
+    base_reference = sbom.get("base_image_reference", "")
+    base_commit = sbom.get("workspace_base_commit", "")
+    build_runtime = sbom.get("docker_runtime_identity")
+    runtime_identity_complete = (
+        isinstance(build_runtime, dict)
+        and set(build_runtime) == {
+            "runtime_id", "runtime_version", "runtime_signature_output_sha256",
+            "runtime_version_output_sha256", "daemon_identity_output_sha256",
+        }
+        and build_runtime.get("runtime_id") == "docker"
+        and isinstance(build_runtime.get("runtime_version"), str)
+        and bool(build_runtime["runtime_version"].strip())
+        and all(
+            isinstance(build_runtime.get(name), str)
+            and re.fullmatch(r"[0-9a-f]{64}", build_runtime[name]) is not None
+            for name in (
+                "runtime_signature_output_sha256", "runtime_version_output_sha256",
+                "daemon_identity_output_sha256",
+            )
+        )
+    )
+    require(set(sbom) == expected_sbom_fields
+            and sbom.get("schema_version") == 1
+            and sbom.get("suite_id") == "ABRL-TARGET-DRIFT-V2"
+            and isinstance(sbom.get("nonclaim"), str)
+            and len(sbom["nonclaim"].strip()) >= 40
+            and sbom.get("status") == "built_manifest_verified_probe_pending"
             and sbom.get("container_image_digest") == entry["container_image_digest"]
             and sbom.get("checker_image_recipe_sha256")
             == entry["checker_image_recipe_sha256"]
@@ -539,15 +652,59 @@ def validate_checker_image_sbom(
             and sbom.get("controller_uid") == entry["controller_uid"]
             and sbom.get("worker_uid") == entry["worker_uid"]
             and re.fullmatch(r"sha256:[0-9a-f]{64}", sbom.get("base_image_digest", ""))
+            and isinstance(base_reference, str)
+            and re.fullmatch(r"[^\s@]+@sha256:[0-9a-f]{64}", base_reference)
+            and base_reference.rsplit("@", 1)[1] == sbom.get("base_image_digest")
+            and re.fullmatch(r"[0-9a-f]{40}", base_commit) is not None
+            and (workspace_base_commit is None or base_commit == workspace_base_commit)
+            and provenance_complete
+            and runtime_identity_complete
+            and sbom.get("cache_manifest_tool_sha256")
+            == sha256_file(ROOT / "tools" / "target_drift_checker_cache_manifest.py")
+            and sbom.get("image_context_builder_sha256")
+            == sha256_file(ROOT / "tools" / "prepare_target_drift_checker_image.py")
+            and (build_input is None
+                 or sbom.get("build_input_manifest_sha256") == build_input_sha256)
+            and (build_input is None
+                 or sbom.get("source_snapshot_manifest_sha256")
+                 == build_input.get("source_files_aggregate_sha256"))
+            and (build_input is None
+                 or sbom.get("base_image_reference") == build_input.get("lean_base_image"))
+            and (cache_manifest is None
+                 or cache_manifest.get("provenance", {}).get(
+                     "build_input_manifest_sha256"
+                 ) == build_input_sha256)
+            and (cache_manifest is None
+                 or sbom.get("lake_cache_manifest_sha256")
+                 == entry.get("checker_cache_manifest_sha256"))
+            and (build_log_sha256 is None
+                 or sbom.get("image_build_log_sha256") == build_log_sha256)
+            and sbom.get("docker_executable_sha256")
+            == entry.get("container_runtime_executable_sha256")
+            and (current_runtime_identity is None
+                 or build_runtime == current_runtime_identity)
+            and (expected_toolchain_release is None
+                 or sbom.get("toolchain_release") == expected_toolchain_release)
+            and sbom.get("offline_toolchain_probe")
+            == "passed_network_none_as_worker"
+            and sbom.get("toolchain_probe_source_sha256")
+            == sha256_bytes(checker_image_builder.TOOLCHAIN_PROBE_SOURCE)
+            and isinstance(sbom.get("toolchain_release"), str)
+            and checker_image_builder.parse_lean_version_output(
+                sbom.get("lean_version", "")
+            ) == sbom["toolchain_release"]
+            and checker_image_builder.parse_lake_lean_version_output(
+                sbom.get("lake_version", "")
+            ) == sbom["toolchain_release"]
             and toolchain_complete
-            and isinstance(package_manifest, str)
-            and re.fullmatch(r"[0-9a-f]{64}", package_manifest)
+            and isinstance(cache_manifest_sha256, str)
+            and re.fullmatch(r"[0-9a-f]{64}", cache_manifest_sha256)
             and sbom.get("checker_cache_root") == entry["checker_cache_root"]
             == checker_launcher.CHECKER_CACHE_ROOT
             and sbom.get("checker_cache_manifest_path")
             == entry["checker_cache_manifest_path"]
             == checker_launcher.CHECKER_CACHE_MANIFEST_PATH
-            and package_manifest == entry["checker_cache_manifest_sha256"],
+            and cache_manifest_sha256 == entry["checker_cache_manifest_sha256"],
             "checker image SBOM does not bind the image recipe/controller/inner checker")
 
 
@@ -756,7 +913,7 @@ def validate_execution_code_hashes(config: dict[str, Any], require_hashes: bool)
             "host_launcher_sha256"
         ],
         "check_target_drift_container_controller.py": config["posthoc_checker"][
-            "controller_entrypoint_sha256"
+            "controller_entrypoint_source_sha256"
         ],
         "prepare_target_drift_grading.py": config["grading"]["packet_materializer_sha256"],
         "assemble_target_drift_grades.py": config["analysis"]["grade_assembler_sha256"],
@@ -774,6 +931,13 @@ def checker_runtime_artifact_paths(config: dict[str, Any]) -> dict[str, Path]:
     return {
         "checker-image.Containerfile": resolve_repo_path(checker["checker_image_recipe"]),
         "checker-image-sbom.json": resolve_repo_path(checker["checker_image_sbom"]),
+        "checker-image-build-input.json": resolve_repo_path(
+            checker["checker_image_build_input_manifest"]
+        ),
+        "checker-cache-manifest.json": resolve_repo_path(
+            checker["checker_cache_manifest_artifact"]
+        ),
+        "checker-image-build.log": resolve_repo_path(checker["checker_image_build_log"]),
     }
 
 
@@ -783,13 +947,22 @@ def validate_checker_runtime_artifacts(config: dict[str, Any]) -> None:
         return
     checker = config["posthoc_checker"]
     require(all(path.is_file() for path in paths.values()),
-            "checker image recipe/SBOM artifact is missing")
+            "checker image provenance artifact is missing")
     require(sha256_file(paths["checker-image.Containerfile"])
             == checker["checker_image_recipe_sha256"],
             "checker image recipe artifact hash differs from config")
     require(sha256_file(paths["checker-image-sbom.json"])
             == checker["checker_image_sbom_sha256"],
             "checker image SBOM artifact hash differs from config")
+    require(sha256_file(paths["checker-image-build-input.json"])
+            == checker["checker_image_build_input_manifest_sha256"],
+            "checker image build-input artifact hash differs from config")
+    require(sha256_file(paths["checker-cache-manifest.json"])
+            == checker["checker_cache_manifest_sha256"],
+            "checker cache-manifest artifact hash differs from config")
+    require(sha256_file(paths["checker-image-build.log"])
+            == checker["checker_image_build_log_sha256"],
+            "checker image build-log artifact hash differs from config")
 
 
 def validate_frozen_choices(config: dict[str, Any]) -> None:
@@ -1478,6 +1651,16 @@ def verify_pack(pack_dir: Path) -> None:
         require(sha256_bytes(packed_runtime_artifacts["checker-image-sbom.json"])
                 == config["posthoc_checker"]["checker_image_sbom_sha256"],
                 "sealed checker image SBOM hash differs from config")
+        require(sha256_bytes(packed_runtime_artifacts["checker-image-build-input.json"])
+                == config["posthoc_checker"][
+                    "checker_image_build_input_manifest_sha256"
+                ], "sealed checker build-input hash differs from config")
+        require(sha256_bytes(packed_runtime_artifacts["checker-cache-manifest.json"])
+                == config["posthoc_checker"]["checker_cache_manifest_sha256"],
+                "sealed checker cache-manifest hash differs from config")
+        require(sha256_bytes(packed_runtime_artifacts["checker-image-build.log"])
+                == config["posthoc_checker"]["checker_image_build_log_sha256"],
+                "sealed checker image build-log hash differs from config")
     require(probe_artifact_manifest(packed_probe_artifacts)
             == packed_probe.get("artifact_manifest"),
             "sealed checker isolation-probe artifacts differ from the report manifest")

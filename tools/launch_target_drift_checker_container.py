@@ -27,10 +27,17 @@ from typing import Any
 
 ABSENT_EXIT_CODE = 3
 MAX_RUNTIME_LEDGER_BYTES = 1024 * 1024
+# A complete Mathlib/Lake cache contains well over 100k files.  Its
+# byte-complete JSON manifest is intentionally much larger than a command or
+# inspect ledger, so it receives a separate hard cap while remaining hash-bound.
+MAX_CACHE_MANIFEST_BYTES = 64 * 1024 * 1024
 INNER_CHECKER_PATH = "/usr/local/lib/abrl/check_target_drift_inner.py"
 CONTROLLER_PATH = "/usr/local/bin/abrl-checker-controller"
 CHECKER_CACHE_ROOT = "/opt/abrl-checker-cache/.lake"
 CHECKER_CACHE_MANIFEST_PATH = "/opt/abrl-checker-cache/cache-manifest.json"
+CHECKER_BUILD_INPUT_MANIFEST_PATH = (
+    "/opt/abrl-checker-cache/build-input-manifest.json"
+)
 
 
 def sha256(path: Path) -> str:
@@ -201,6 +208,9 @@ def common_template(checker: dict[str, Any], launcher_path: Path) -> list[str]:
         "--controller-entrypoint-sha256", checker["controller_entrypoint_sha256"],
         "--inner-checker-sha256", checker["inner_checker_sha256"],
         "--cache-manifest-sha256", checker["checker_cache_manifest_sha256"],
+        "--build-input-manifest-sha256", checker[
+            "checker_image_build_input_manifest_sha256"
+        ],
         "--image-digest", "{{CHECKER_IMAGE_DIGEST}}",
         "--attempt-label", "{{CHECKER_ATTEMPT_LABEL}}",
         "--cidfile", "{{CIDFILE}}",
@@ -300,10 +310,12 @@ def verify_image_contents(runtime: Path, args: argparse.Namespace) -> None:
             controller_copy = root / "controller.py"
             inner_copy = root / "inner.py"
             cache_manifest_copy = root / "cache-manifest.json"
+            build_input_copy = root / "build-input-manifest.json"
             for source, target in (
                 (args.controller_entrypoint, controller_copy),
                 (INNER_CHECKER_PATH, inner_copy),
                 (CHECKER_CACHE_MANIFEST_PATH, cache_manifest_copy),
+                (CHECKER_BUILD_INPUT_MANIFEST_PATH, build_input_copy),
             ):
                 copied = run_checked([str(runtime), "cp", f"{cid}:{source}", str(target)])
                 require(copied.returncode == 0, f"Docker image audit could not extract {source}")
@@ -316,9 +328,13 @@ def verify_image_contents(runtime: Path, args: argparse.Namespace) -> None:
                     and sha256(inner_copy) == args.inner_checker_sha256,
                     "in-image inner-checker bytes differ from the seal")
             require(cache_manifest_copy.is_file()
-                    and cache_manifest_copy.stat().st_size <= MAX_RUNTIME_LEDGER_BYTES
+                    and cache_manifest_copy.stat().st_size <= MAX_CACHE_MANIFEST_BYTES
                     and sha256(cache_manifest_copy) == args.cache_manifest_sha256,
                     "in-image Lake cache manifest differs from the seal")
+            require(build_input_copy.is_file()
+                    and build_input_copy.stat().st_size <= MAX_RUNTIME_LEDGER_BYTES
+                    and sha256(build_input_copy) == args.build_input_manifest_sha256,
+                    "in-image checker build-input manifest differs from the seal")
     except BaseException as error:
         failure = error
     finally:
@@ -374,6 +390,7 @@ def main() -> None:
     parser.add_argument("--controller-entrypoint-sha256", required=True)
     parser.add_argument("--inner-checker-sha256", required=True)
     parser.add_argument("--cache-manifest-sha256", required=True)
+    parser.add_argument("--build-input-manifest-sha256", required=True)
     parser.add_argument("--image-digest", required=True)
     parser.add_argument("--attempt-label", required=True)
     parser.add_argument("--cidfile", type=Path, required=True)

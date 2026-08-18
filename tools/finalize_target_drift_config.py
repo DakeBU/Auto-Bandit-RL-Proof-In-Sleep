@@ -42,6 +42,19 @@ def bind_runtime(draft_path: Path, runtime_executable: Path, output: Path) -> No
     checker = config["posthoc_checker"]
     prepare.require(checker.get("mode") == "production",
                     "runtime binding is only valid for the production checker")
+    build_input_candidate = prepare.resolve_repo_path(
+        checker["checker_image_build_input_manifest"]
+    ).resolve()
+    context_root = build_input_candidate.parent
+    # The image and runtime seal use the canonical LF bytes from the prepared,
+    # Git-validated context, never checkout-dependent CRLF presentations.
+    checker["checker_image_recipe"] = str(context_root / "Containerfile")
+    checker["inner_checker_path"] = str(
+        context_root / "check_target_drift_inner.py"
+    )
+    checker["controller_entrypoint_source"] = str(
+        context_root / "check_target_drift_container_controller.py"
+    )
 
     launcher_path = prepare.resolve_repo_path(checker["host_launcher_path"]).resolve()
     checker["driver_sha256"] = prepare.sha256_file(
@@ -80,18 +93,33 @@ def bind_runtime(draft_path: Path, runtime_executable: Path, output: Path) -> No
     ]
     recipe = prepare.resolve_repo_path(checker["checker_image_recipe"])
     sbom = prepare.resolve_repo_path(checker["checker_image_sbom"])
+    build_input = build_input_candidate
+    cache_manifest = prepare.resolve_repo_path(
+        checker["checker_cache_manifest_artifact"]
+    )
+    build_log = prepare.resolve_repo_path(checker["checker_image_build_log"])
     controller = prepare.resolve_repo_path(checker["controller_entrypoint_source"])
     checker["checker_image_recipe_sha256"] = prepare.sha256_file(recipe)
     checker["checker_image_sbom_sha256"] = prepare.sha256_file(sbom)
-    checker["controller_entrypoint_sha256"] = prepare.sha256_file(controller)
+    checker["checker_image_build_input_manifest_sha256"] = prepare.sha256_file(
+        build_input
+    )
+    checker["checker_image_build_log_sha256"] = prepare.sha256_file(build_log)
+    checker["controller_entrypoint_source_sha256"] = prepare.sha256_file(controller)
     sbom_payload = load(sbom)
+    checker["controller_entrypoint_sha256"] = sbom_payload.get(
+        "controller_entrypoint_sha256", "UNSET"
+    )
     checker["checker_cache_root"] = sbom_payload.get("checker_cache_root", "UNSET")
     checker["checker_cache_manifest_path"] = sbom_payload.get(
         "checker_cache_manifest_path", "UNSET"
     )
     checker["checker_cache_manifest_sha256"] = sbom_payload.get(
-        "installed_packages_manifest_sha256", "UNSET"
+        "lake_cache_manifest_sha256", "UNSET"
     )
+    prepare.require(checker["checker_cache_manifest_sha256"]
+                    == prepare.sha256_file(cache_manifest),
+                    "checker cache-manifest artifact differs from the image SBOM")
     checker["inspect_absent_exit_code"] = checker_launcher.ABSENT_EXIT_CODE
     checker["worker_command_prefix"] = checker_launcher.worker_command_prefix(checker)
     checker.update(checker_launcher.command_templates(checker, launcher_path))
@@ -161,7 +189,7 @@ def prepare_preseal(draft_path: Path, source_manifest_path: Path, output: Path) 
     config["posthoc_checker"]["host_launcher_sha256"] = code_hashes[
         "launch_target_drift_checker_container.py"
     ]
-    config["posthoc_checker"]["controller_entrypoint_sha256"] = code_hashes[
+    config["posthoc_checker"]["controller_entrypoint_source_sha256"] = code_hashes[
         "check_target_drift_container_controller.py"
     ]
     config["grading"]["packet_materializer_sha256"] = code_hashes[

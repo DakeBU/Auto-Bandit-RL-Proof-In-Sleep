@@ -1,4 +1,5 @@
 import importlib.util
+import hashlib
 import json
 import subprocess
 import sys
@@ -6,6 +7,7 @@ import tempfile
 import unittest
 import zipfile
 from pathlib import Path
+from unittest import mock
 
 
 SCRIPT = Path(__file__).resolve().with_name("build_anonymous_iclr_supplement.py")
@@ -36,6 +38,59 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertEqual(self.first.read_bytes(), self.second.read_bytes())
         self.assertEqual(self.first_result["sha256"], self.second_result["sha256"])
 
+    def test_payload_is_stable_under_crlf_checkout_presentation(self):
+        expected = BUILDER.build_payload(allow_missing_graph=True)
+        original_read = BUILDER.read_regular
+
+        def crlf_read(rel):
+            data = original_read(rel)
+            if not BUILDER.is_text_payload_path(rel):
+                return data
+            normalized = data.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+            return normalized.replace(b"\n", b"\r\n")
+
+        with mock.patch.object(BUILDER, "read_regular", side_effect=crlf_read):
+            crlf_payload = BUILDER.build_payload(allow_missing_graph=True)
+        self.assertEqual(expected, crlf_payload)
+        self.assertTrue(all(
+            b"\r" not in data
+            for rel, data in expected.items()
+            if BUILDER.is_text_payload_path(rel)
+        ))
+
+    def test_crlf_proof_graph_report_is_rebound_to_packaged_bytes(self):
+        source_report = json.loads((
+            BUILDER.REPO_ROOT / "research-wiki" / "proof-graph"
+            / "benchmark_report.json"
+        ).read_text(encoding="utf-8"))
+        graph = {
+            "schema_version": 1,
+            "counts": source_report["graph"]["counts"],
+        }
+        graph_bytes = (
+            json.dumps(graph, indent=2, sort_keys=True) + "\n"
+        ).encode("utf-8").replace(b"\n", b"\r\n")
+        graph_path = self.root / "crlf-proof-graph.json"
+        report_path = self.root / "crlf-proof-report.json"
+        graph_path.write_bytes(graph_bytes)
+        source_report["graph"]["sha256"] = hashlib.sha256(graph_bytes).hexdigest()
+        report_path.write_bytes((
+            json.dumps(source_report, indent=2, sort_keys=True) + "\n"
+        ).encode("utf-8").replace(b"\n", b"\r\n"))
+
+        payload = BUILDER.build_payload(graph_path, report_path)
+        packaged_graph = payload[
+            "evidence/proof-graph/current-proof-graph.json"
+        ]
+        packaged_report = json.loads(payload[
+            "evidence/proof-graph/current-benchmark-report.json"
+        ].decode("utf-8"))
+        self.assertNotIn(b"\r", packaged_graph)
+        self.assertEqual(
+            packaged_report["graph"]["sha256"],
+            hashlib.sha256(packaged_graph).hexdigest(),
+        )
+
     def test_archive_has_expected_positive_allowlist(self):
         with zipfile.ZipFile(str(self.first)) as archive:
             names = set(archive.namelist())
@@ -45,6 +100,8 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertIn(prefix + "Tests/DelayedFeedbackPaperAuditCanary.lean", names)
         self.assertIn(prefix + "evidence/claim-ledger.json", names)
         self.assertIn(prefix + "artifact/verify_artifact.py", names)
+        self.assertIn(prefix + "tools/prepare_target_drift_checker_image.py", names)
+        self.assertIn(prefix + "tools/target_drift_checker_cache_manifest.py", names)
         self.assertIn(
             prefix + "research-wiki/proof-graph/benchmark_report.json", names
         )
