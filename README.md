@@ -163,7 +163,8 @@ Core paths:
   ([run 32137509103](https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/actions/runs/32137509103))
   constructed an unpublished cache-complete image from the frozen base snapshot
   and a digest-pinned Lean base, then emitted hash-bound build-input, cache,
-  log, and SBOM evidence after an offline Lean/Lake 4.29.1 worker probe.  The
+  log, and SBOM evidence after an offline Lean 4.29.1 / Lake
+  5.0.0-src+f72c35b worker probe.  The
   candidate is ephemeral, is not the frozen production image, and is not a
   passed isolation result.  A frozen real provider image, final published and
   sealed checker image, and passed seven-probe

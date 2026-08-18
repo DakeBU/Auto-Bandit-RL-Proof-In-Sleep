@@ -154,7 +154,8 @@ The first successful result-free Linux candidate build is recorded in
 GitHub Actions [run 32137509103](https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/actions/runs/32137509103)
 built both Lean targets, produced a 121,277-file byte manifest for the complete
 Lake cache, verified its frozen-source provenance, and passed the final-image
-offline Lean/Lake 4.29.1 probe as UID/GID `10002:10002`.  The resulting image
+offline Lean 4.29.1 / Lake 5.0.0-src+f72c35b probe as UID/GID
+`10002:10002`.  The resulting image
 digest was local to the ephemeral runner and was not published.  This closes a
 candidate construction/attestation check only; the final production image,
 seven bound isolation probes, real three-condition smoke, and every model run
