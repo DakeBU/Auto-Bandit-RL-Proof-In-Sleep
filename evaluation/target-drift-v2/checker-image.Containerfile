@@ -22,6 +22,21 @@ COPY checker-image-build-input.json /build/checker-image-build-input.json
 COPY target_drift_checker_cache_manifest.py \
     /usr/local/lib/abrl/target_drift_checker_cache_manifest.py
 
+# The digest-pinned base supplies elan, Git, and Python, but its rolling default
+# toolchain need not equal the frozen workspace release.  Install the exact
+# lean-toolchain into a neutral, world-readable prefix and carry that prefix
+# into the networkless final image.
+ARG ABRL_ELAN_HOME=/opt/abrl-elan
+ENV ELAN_HOME=${ABRL_ELAN_HOME}
+ENV PATH=${ABRL_ELAN_HOME}/bin:${PATH}
+RUN mkdir -p "${ABRL_ELAN_HOME}/bin" \
+    && cp "$(command -v elan)" "${ABRL_ELAN_HOME}/bin/elan" \
+    && for tool in lean lake leanc leanchecker; do \
+         ln -s elan "${ABRL_ELAN_HOME}/bin/${tool}"; \
+       done \
+    && elan toolchain install "$(cat lean-toolchain)" \
+    && chmod -R a+rX "${ABRL_ELAN_HOME}"
+
 # Network is permitted only while constructing this trusted image.  The
 # resulting image is later executed with --network none and --pull never.
 RUN lake exe cache get \
@@ -40,6 +55,9 @@ RUN lake exe cache get \
 FROM ${LEAN_BASE_IMAGE}
 
 USER root
+ARG ABRL_ELAN_HOME=/opt/abrl-elan
+ENV ELAN_HOME=${ABRL_ELAN_HOME}
+ENV PATH=${ABRL_ELAN_HOME}/bin:${PATH}
 # The final image receives only the compiled cache and its byte-complete
 # manifest, not the frozen source snapshot used in the builder stage.  The
 # trusted controller copies this seed into each tmpfs replay; no host cache is
@@ -50,9 +68,11 @@ COPY --from=cache-builder /build/base/.lake ${ABRL_CHECKER_CACHE_ROOT}
 COPY --from=cache-builder /build/cache-manifest.json ${ABRL_CHECKER_CACHE_MANIFEST}
 COPY --from=cache-builder /build/checker-image-build-input.json \
     /opt/abrl-checker-cache/build-input-manifest.json
+COPY --from=cache-builder ${ABRL_ELAN_HOME} ${ABRL_ELAN_HOME}
 RUN test -d "${ABRL_CHECKER_CACHE_ROOT}" \
     && test -f "${ABRL_CHECKER_CACHE_MANIFEST}" \
-    && chmod -R a+rX /opt/abrl-checker-cache
+    && test -x "${ABRL_ELAN_HOME}/bin/lean" \
+    && chmod -R a+rX /opt/abrl-checker-cache "${ABRL_ELAN_HOME}"
 
 RUN groupadd --gid 10001 abrl-controller \
     && useradd --uid 10001 --gid 10001 --no-create-home abrl-controller \

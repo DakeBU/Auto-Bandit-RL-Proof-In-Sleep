@@ -122,6 +122,13 @@ class TargetDriftRuntimeTest(unittest.TestCase):
         self.assertIn("--workspace-base-commit", recipe)
         self.assertIn("COPY checker-image-build-input.json", recipe)
         self.assertIn("COPY --from=cache-builder /build/base/.lake", recipe)
+        self.assertIn('elan toolchain install "$(cat lean-toolchain)"', recipe)
+        self.assertIn("ENV ELAN_HOME=${ABRL_ELAN_HOME}", recipe)
+        self.assertIn(
+            "COPY --from=cache-builder ${ABRL_ELAN_HOME} ${ABRL_ELAN_HOME}",
+            recipe,
+        )
+        self.assertIn('test -x "${ABRL_ELAN_HOME}/bin/lean"', recipe)
         self.assertGreaterEqual(checker_launcher.MAX_CACHE_MANIFEST_BYTES, 32 * 1024 * 1024)
         self.assertGreater(
             checker_launcher.MAX_CACHE_MANIFEST_BYTES,
