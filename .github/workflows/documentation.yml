@@ -19,6 +19,10 @@ jobs:
     steps:
       - name: Check out the repository
         uses: actions/checkout@v6
+        with:
+          # Target-drift provenance tests reconstruct the frozen pre-audit
+          # workspace commit; a depth-1 PR checkout omits that Git object.
+          fetch-depth: 0
 
       - name: Set up Lean and fetch the Mathlib cache
         uses: leanprover/lean-action@v1

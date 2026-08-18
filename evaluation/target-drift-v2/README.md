@@ -77,8 +77,9 @@ replaced after difficulty is observed.
 
 For the staged seal, edit a copy of `execution-template.json` only at the
 human/provider fields, replace the image-SBOM template with a real
-`built_verified` record for the digest-pinned image, and create a `frozen_ready`
-copy of the source manifest with exact local PDF paths.  Bind the canonical
+`built_manifest_verified_probe_pending` record plus its build-input,
+cache-manifest, and build-log sidecars, and create a `frozen_ready` copy of the
+source manifest with exact local PDF paths.  Bind the canonical
 Docker executable and runtime identity, run the seven-probe recorder using that
 runtime-bound config, and only then preseal:
 
@@ -118,8 +119,34 @@ path and a byte-complete manifest.  The manifest is SBOM/runtime-bound; the
 inner checker verifies every cached file, then directs the already restricted
 worker to copy it into the per-run tmpfs replay before any offline `lake build`.
 No host dependency cache is mounted.
-The
-sealed launcher accepts only the allowlisted Docker installation, rechecks the
+The reproducible recipe can now construct the checker image from the exact
+common pre-audit Git snapshot instead of assuming that an undocumented
+cache-complete base image already exists.  On a short-path, LF-normalized clean checkout (for example
+`C:\abrl-checker-build` on Windows), an operator with the audited Linux Docker
+daemon prepares the minimal context, verifies it, builds the image, and emits
+the image/cache/toolchain SBOM as follows:
+
+```text
+python tools/prepare_target_drift_checker_image.py prepare-context --workspace-base-commit d43bfeee56fb0c1c35cf5af9fc1a7fdc3e0c37b9 --lean-base-image REGISTRY/LEAN@sha256:DIGEST --output C:\abrl-checker-context
+python tools/prepare_target_drift_checker_image.py verify-context --context C:\abrl-checker-context
+python tools/prepare_target_drift_checker_image.py build-image --context C:\abrl-checker-context --image-tag abrl-target-drift-checker:candidate --sbom-output evaluation/target-drift-v2/checker-image-sbom.json --cache-manifest-output evaluation/target-drift-v2/checker-cache-manifest.json --build-log checker-image-build.log
+```
+
+The context contains only the allowlisted Lean/Lake base snapshot plus the
+checker recipe/controller/inner checker/cache-manifest generator.  It excludes
+the evaluation bank, condition metadata, operator ground truth, current
+post-base library, Git database, and credentials.  The multi-stage recipe runs
+`lake exe cache get` and `lake build BanditRLProof Tests`, rejects links,
+special files, and multiply linked cache files, and records every final cache
+byte.  The final image does not contain the builder-stage source snapshot.  The
+builder then mounts the exact frozen `lean-toolchain` into that final image and,
+with network disabled, the filesystem read-only, and UID/GID `10002:10002`,
+executes a minimal Lean file plus `lean --version` and `lake --version`; the
+reported release must match the pinned toolchain before an SBOM can be emitted.
+The emitted `built_manifest_verified_probe_pending` SBOM is still only an image-construction record:
+it cannot replace the seven production isolation probes, the real one-case by
+three-condition smoke, or any model run.
+The sealed launcher accepts only the allowlisted Docker installation, rechecks the
 executable/signature-or-package ledger plus client/server/daemon identity, and
 constructs the complete argv itself.  Before every probe or replay it uses
 non-executing image inspection and extraction to verify the actual in-image
@@ -145,9 +172,9 @@ python tools/analyze_target_drift_execution.py --pack FROZEN-PACK --grading-pack
 ```
 
 These commands expose executable code paths; they do not supply a provider,
-agent image, production checker image, credentials, budget choices, or grader
-identities.  The current local gate passes 109 repository tests (one unrelated
-skip), including 51 target-drift component tests covering deterministic assignment, seal hashing,
+agent image, digest-pinned Lean base image, built production checker image,
+credentials, budget choices, or grader identities.  The current local gate
+includes target-drift component tests covering deterministic assignment, seal hashing,
 opaque prompts, manifest/digest checks, selected fail-closed paths, and
 synthetic 450-record analysis.  The deterministic fake fixture and two local
 fail-closed probes are nonexperimental and do not pass the real-infrastructure

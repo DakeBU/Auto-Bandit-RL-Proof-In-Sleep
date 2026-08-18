@@ -25,9 +25,229 @@ import run_target_drift_execution as runner  # noqa: E402
 import record_target_drift_checker_isolation_probe as isolation_probe  # noqa: E402
 import launch_target_drift_checker_container as checker_launcher  # noqa: E402
 import prepare_target_drift_execution as prepare  # noqa: E402
+import prepare_target_drift_checker_image as checker_image  # noqa: E402
+import target_drift_checker_cache_manifest as cache_manifest  # noqa: E402
 
 
 class TargetDriftRuntimeTest(unittest.TestCase):
+    CACHE_PROVENANCE = {
+        "workspace_base_commit": "1" * 40,
+        "source_files_aggregate_sha256": "2" * 64,
+        "build_input_manifest_sha256": "3" * 64,
+        "checker_image_recipe_sha256": "4" * 64,
+        "base_image_digest": "5" * 64,
+        "lean_toolchain_sha256": "6" * 64,
+    }
+
+    def test_checker_cache_manifest_round_trip_and_tamper_rejection(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            cache = root / ".lake"
+            (cache / "packages" / "mathlib").mkdir(parents=True)
+            (cache / "packages" / "mathlib" / "lakefile.lean").write_text(
+                "package mathlib\n", encoding="utf-8"
+            )
+            (cache / "build" / "lib").mkdir(parents=True)
+            (cache / "build" / "lib" / "BanditRLProof.olean").write_bytes(b"olean")
+            manifest_path = root / "cache-manifest.json"
+            payload = cache_manifest.manifest_for(cache, self.CACHE_PROVENANCE)
+            cache_manifest.write_new(manifest_path, payload)
+            self.assertEqual(cache_manifest.load_manifest(manifest_path), payload)
+            self.assertEqual(
+                cache_manifest.manifest_for(cache, self.CACHE_PROVENANCE), payload
+            )
+            (cache / "build" / "lib" / "BanditRLProof.olean").write_bytes(b"tampered")
+            self.assertNotEqual(
+                cache_manifest.manifest_for(cache, self.CACHE_PROVENANCE), payload
+            )
+
+    def test_checker_cache_manifest_rejects_linked_files(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            cache = root / ".lake"
+            cache.mkdir()
+            source = cache / "source"
+            source.write_bytes(b"cache")
+            linked = cache / "linked"
+            try:
+                os.link(source, linked)
+            except OSError:
+                self.skipTest("hard links are unavailable on this filesystem")
+            with self.assertRaises(SystemExit):
+                cache_manifest.manifest_for(cache, self.CACHE_PROVENANCE)
+
+    def test_checker_image_context_is_frozen_to_the_base_commit(self) -> None:
+        # ABRL contains intentionally descriptive Lean filenames.  Keep the
+        # Windows build-context root short enough for non-long-path-aware tools.
+        temporary_parent = TOOLS.parent.parent if os.name == "nt" else None
+        with tempfile.TemporaryDirectory(dir=temporary_parent) as directory:
+            output = Path(directory) / "checker-context"
+            commit = "d43bfeee56fb0c1c35cf5af9fc1a7fdc3e0c37b9"
+            image = "example.invalid/lean@sha256:" + "a" * 64
+            checker_image.prepare_context(
+                commit, image, output, allow_dirty_test_fixture=True
+            )
+            payload = checker_image.validate_context(output, allow_test_fixture=True)
+            self.assertNotIn(
+                b"\r\n", (output / "checker-image-build-input.json").read_bytes()
+            )
+            self.assertEqual(payload["workspace_base_commit"], commit)
+            self.assertEqual(payload["lean_base_image"], image)
+            paths = {entry["path"] for entry in payload["source_files"]}
+            self.assertIn("BanditRLProof.lean", paths)
+            self.assertIn("Tests.lean", paths)
+            self.assertFalse(any(path.startswith("evaluation/") for path in paths))
+            self.assertFalse(any(".git" in Path(path).parts for path in paths))
+            relabeled = json.loads(
+                (output / "checker-image-build-input.json").read_text(encoding="utf-8")
+            )
+            relabeled["workspace_base_commit"] = subprocess.check_output(
+                ["git", "rev-parse", "HEAD"], cwd=TOOLS.parent, text=True
+            ).strip()
+            with self.assertRaises(SystemExit):
+                checker_image.validate_build_input_payload(relabeled)
+            (output / "checker-base" / "lean-toolchain").write_text(
+                "tampered\n", encoding="utf-8"
+            )
+            with self.assertRaises(SystemExit):
+                checker_image.validate_context(output)
+
+    def test_checker_containerfile_constructs_cache_from_frozen_context(self) -> None:
+        recipe = (TOOLS.parent / "evaluation" / "target-drift-v2"
+                  / "checker-image.Containerfile").read_text(encoding="utf-8")
+        self.assertIn("FROM ${LEAN_BASE_IMAGE} AS cache-builder", recipe)
+        self.assertIn("COPY checker-base/ /build/base/", recipe)
+        self.assertIn("lake build BanditRLProof Tests", recipe)
+        self.assertIn("target_drift_checker_cache_manifest.py create", recipe)
+        self.assertIn("--workspace-base-commit", recipe)
+        self.assertIn("COPY checker-image-build-input.json", recipe)
+        self.assertIn("COPY --from=cache-builder /build/base/.lake", recipe)
+        self.assertGreaterEqual(checker_launcher.MAX_CACHE_MANIFEST_BYTES, 32 * 1024 * 1024)
+        self.assertGreater(
+            checker_launcher.MAX_CACHE_MANIFEST_BYTES,
+            checker_launcher.MAX_RUNTIME_LEDGER_BYTES,
+        )
+        final_stage = recipe.index("FROM ${LEAN_BASE_IMAGE}\n", recipe.index("AS cache-builder"))
+        final_root = recipe.index("USER root", final_stage)
+        final_cache_copy = recipe.index("COPY --from=cache-builder", final_stage)
+        self.assertLess(final_stage, final_root)
+        self.assertLess(final_root, final_cache_copy)
+
+    def test_offline_toolchain_probe_is_networkless_restricted_and_read_only(self) -> None:
+        observed: list[list[str]] = []
+
+        def fake_checked(command: list[str], log: Path | None = None) -> bytes:
+            self.assertIsNone(log)
+            observed.append(command)
+            return b""
+
+        with tempfile.TemporaryDirectory() as directory, mock.patch.object(
+            checker_image, "docker_checked", side_effect=fake_checked
+        ), mock.patch.object(checker_image, "docker_cleanup_absent") as cleanup:
+            checker_image.offline_image_command(
+                Path("docker"), "sha256:" + "f" * 64, Path(directory),
+                "lean", ["ToolchainProbe.lean"],
+            )
+        cleanup.assert_called_once()
+        self.assertEqual(len(observed), 1)
+        command = observed[0]
+        joined = "\0".join(command)
+        for required in (
+            "--network\0none", "--read-only", "--cap-drop\0ALL",
+            "--security-opt\0no-new-privileges=true",
+            "--user\0" + "10002:10002", "--workdir\0/probe",
+            ",dst=/probe,readonly",
+        ):
+            self.assertIn(required, joined)
+        self.assertIn("--pull\0never", joined)
+
+    def test_offline_toolchain_probe_binds_frozen_release(self) -> None:
+        calls: list[tuple[str, tuple[str, ...]]] = []
+
+        def fake_run(
+            runtime: Path, image_digest: str, probe_root: Path,
+            executable: str, arguments: list[str],
+        ) -> bytes:
+            self.assertTrue((probe_root / "lean-toolchain").is_file())
+            self.assertTrue((probe_root / "ToolchainProbe.lean").is_file())
+            if os.name != "nt":
+                self.assertEqual(probe_root.stat().st_mode & 0o777, 0o755)
+                self.assertEqual(
+                    (probe_root / "lean-toolchain").stat().st_mode & 0o777, 0o444
+                )
+            calls.append((executable, tuple(arguments)))
+            versions = {
+                "lean": b"Lean (version 4.19.0, x86_64-unknown-linux-gnu)\n",
+                "lake": b"Lake version 5.0.0 (Lean version 4.19.0)\n",
+                "python3": b"Python 3.11.9\n",
+            }
+            return b"" if arguments == ["ToolchainProbe.lean"] else versions[executable]
+
+        with mock.patch.object(
+            checker_image, "offline_image_command", side_effect=fake_run
+        ):
+            result = checker_image.offline_toolchain_probe(
+                Path("docker"), "sha256:" + "f" * 64,
+                b"leanprover/lean4:v4.19.0\n",
+            )
+        self.assertEqual(result["toolchain_release"], "4.19.0")
+        self.assertEqual(result["offline_toolchain_probe"],
+                         "passed_network_none_as_worker")
+        self.assertEqual(len(calls), 4)
+        self.assertEqual(
+            checker_image.parse_lean_version_output(result["lean_version"]), "4.19.0"
+        )
+        self.assertEqual(
+            checker_image.parse_lake_lean_version_output(result["lake_version"]),
+            "4.19.0",
+        )
+        with self.assertRaises(SystemExit):
+            checker_image.parse_lean_toolchain(b"leanprover/lean4:nightly\n")
+        with self.assertRaises(SystemExit):
+            checker_image.parse_lean_version_output("NOT LEAN; marker 4.19.0")
+        with self.assertRaises(SystemExit):
+            checker_image.parse_lake_lean_version_output("NOT LAKE; marker 4.19.0")
+
+    def test_checker_image_helper_output_cap_fails_closed(self) -> None:
+        with tempfile.TemporaryFile(mode="w+b") as handle:
+            with self.assertRaises(SystemExit):
+                checker_image.run_to_capped_file(
+                    [sys.executable, "-c", "import sys; sys.stdout.write('x' * 4096)"],
+                    handle, timeout_seconds=10, max_bytes=32,
+                )
+
+    def test_image_extract_cleans_known_name_after_bad_create_response(self) -> None:
+        with tempfile.TemporaryDirectory() as directory, mock.patch.object(
+            checker_image, "docker_checked", return_value=b"bad id with spaces\n"
+        ), mock.patch.object(checker_image, "docker_cleanup_absent") as cleanup:
+            with self.assertRaises(SystemExit):
+                checker_image.extract_image_file(
+                    Path("docker"), "sha256:" + "f" * 64,
+                    "/inside", Path(directory) / "output",
+                )
+        cleanup.assert_called_once()
+        self.assertRegex(cleanup.call_args.args[1], r"^abrl-checker-build-audit-")
+
+    def test_checker_image_cleanup_requires_successful_empty_inventory(self) -> None:
+        completed = subprocess.CompletedProcess
+        with mock.patch.object(checker_image.subprocess, "run", side_effect=[
+            completed(["docker", "rm"], 1, b""),
+            completed(["docker", "ps"], 0, b""),
+        ]):
+            checker_image.docker_cleanup_absent(Path("docker"), "audit-name")
+        with mock.patch.object(checker_image.subprocess, "run", side_effect=[
+            completed(["docker", "rm"], 1, b""),
+            completed(["docker", "ps"], 1, b"daemon unavailable"),
+        ]):
+            with self.assertRaises(SystemExit):
+                checker_image.docker_cleanup_absent(Path("docker"), "audit-name")
+        with mock.patch.object(checker_image.subprocess, "run", side_effect=[
+            completed(["docker", "rm"], 0, b""),
+            completed(["docker", "ps"], 0, b"container-id\n"),
+        ]):
+            with self.assertRaises(SystemExit):
+                checker_image.docker_cleanup_absent(Path("docker"), "audit-name")
+
     def test_production_launcher_constructs_fixed_hardening_boundary(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -109,6 +329,7 @@ class TargetDriftRuntimeTest(unittest.TestCase):
             "checker_cache_root": checker_launcher.CHECKER_CACHE_ROOT,
             "checker_cache_manifest_path": checker_launcher.CHECKER_CACHE_MANIFEST_PATH,
             "checker_cache_manifest_sha256": "d" * 64,
+            "container_runtime_executable_sha256": "7" * 64,
         }
         with self.assertRaises(SystemExit):
             prepare.validate_checker_image_sbom(entry, sbom, "c" * 64)
@@ -122,25 +343,74 @@ class TargetDriftRuntimeTest(unittest.TestCase):
             "checker_cache_root": checker_launcher.CHECKER_CACHE_ROOT,
             "checker_cache_manifest_path": checker_launcher.CHECKER_CACHE_MANIFEST_PATH,
             "checker_cache_manifest_sha256": "d" * 64,
+            "container_runtime_executable_sha256": "7" * 64,
         }
         sbom = {
-            "status": "built_verified",
+            "schema_version": 1, "suite_id": "ABRL-TARGET-DRIFT-V2",
+            "status": "built_manifest_verified_probe_pending",
             "container_image_digest": entry["container_image_digest"],
             "checker_image_recipe_sha256": entry["checker_image_recipe_sha256"],
             "controller_entrypoint_sha256": entry["controller_entrypoint_sha256"],
             "inner_checker_sha256": "c" * 64,
             "controller_uid": entry["controller_uid"], "worker_uid": entry["worker_uid"],
             "base_image_digest": "sha256:" + "e" * 64,
+            "base_image_reference": "example.invalid/lean@sha256:" + "e" * 64,
+            "toolchain_release": "4.19.0",
+            "offline_toolchain_probe": "passed_network_none_as_worker",
+            "toolchain_probe_source_sha256": prepare.sha256_bytes(
+                checker_image.TOOLCHAIN_PROBE_SOURCE
+            ),
+            "workspace_base_commit": "1" * 40,
+            "cache_manifest_tool_sha256": prepare.sha256_file(
+                TOOLS / "target_drift_checker_cache_manifest.py"
+            ),
+            "image_context_builder_sha256": prepare.sha256_file(
+                TOOLS / "prepare_target_drift_checker_image.py"
+            ),
+            "build_input_manifest_sha256": "4" * 64,
+            "source_snapshot_manifest_sha256": "5" * 64,
+            "image_build_log_sha256": "6" * 64,
+            "docker_executable_sha256": "7" * 64,
+            "docker_runtime_identity": {
+                "runtime_id": "docker", "runtime_version": "client=1;server=1;os=linux",
+                "runtime_signature_output_sha256": "8" * 64,
+                "runtime_version_output_sha256": "9" * 64,
+                "daemon_identity_output_sha256": "a" * 64,
+            },
             "lean_version": "UNSET", "lake_version": "UNSET", "python_version": "UNSET",
-            "installed_packages_manifest_sha256": "d" * 64,
+            "lake_cache_manifest_sha256": "d" * 64,
             "checker_cache_root": checker_launcher.CHECKER_CACHE_ROOT,
             "checker_cache_manifest_path": checker_launcher.CHECKER_CACHE_MANIFEST_PATH,
+            "nonclaim": (
+                "Component-level image record; production probes and model runs remain absent."
+            ),
         }
         with self.assertRaises(SystemExit):
             prepare.validate_checker_image_sbom(entry, sbom, "c" * 64)
-        sbom.update({"lean_version": "4.19.0", "lake_version": "5.0.0",
-                     "python_version": "3.11.9"})
+        sbom.update({
+            "lean_version": "Lean (version 4.19.0, x86_64-unknown-linux-gnu)",
+            "lake_version": "Lake version 5.0.0 (Lean version 4.19.0)",
+            "python_version": "Python 3.11.9",
+        })
         prepare.validate_checker_image_sbom(entry, sbom, "c" * 64)
+        build_input = {
+            "source_files_aggregate_sha256": "5" * 64,
+            "lean_base_image": sbom["base_image_reference"],
+        }
+        cache_payload = {"provenance": {"build_input_manifest_sha256": "4" * 64}}
+        prepare.validate_checker_image_sbom(
+            entry, sbom, "c" * 64, "1" * 40, build_input, cache_payload,
+            "4" * 64, "6" * 64, sbom["docker_runtime_identity"],
+        )
+        wrong_suite = dict(sbom)
+        wrong_suite["suite_id"] = "OTHER-SUITE"
+        with self.assertRaises(SystemExit):
+            prepare.validate_checker_image_sbom(entry, wrong_suite, "c" * 64)
+        with self.assertRaises(SystemExit):
+            prepare.validate_checker_image_sbom(
+                entry, sbom, "c" * 64, "1" * 40, build_input, cache_payload,
+                "0" * 64, "6" * 64, sbom["docker_runtime_identity"],
+            )
 
     def test_complete_lake_cache_manifest_binds_every_file(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

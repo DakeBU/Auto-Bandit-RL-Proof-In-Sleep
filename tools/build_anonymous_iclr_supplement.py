@@ -15,6 +15,11 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 ARCHIVE_ROOT = "abrl-anonymous-artifact"
 ARCHIVE_NAME = "ABRL-ICLR-2027-anonymous-lean-code.zip"
 FIXED_ZIP_TIME = (2026, 1, 1, 0, 0, 0)
+TEXT_PAYLOAD_SUFFIXES = {
+    ".Containerfile", ".json", ".lean", ".md", ".py", ".sh", ".toml",
+    ".txt", ".yaml", ".yml",
+}
+TEXT_PAYLOAD_NAMES = {"LICENSE", "lean-toolchain"}
 
 BLOCKED_BYTES = (
     b"dakebu",
@@ -81,10 +86,12 @@ TARGET_DRIFT_TOOLS = (
     "tools/fake_target_drift_checker_sandbox.py",
     "tools/finalize_target_drift_config.py",
     "tools/launch_target_drift_checker_container.py",
+    "tools/prepare_target_drift_checker_image.py",
     "tools/prepare_target_drift_execution.py",
     "tools/prepare_target_drift_grading.py",
     "tools/record_target_drift_checker_isolation_probe.py",
     "tools/run_target_drift_execution.py",
+    "tools/target_drift_checker_cache_manifest.py",
     "tools/test_target_drift_analysis.py",
     "tools/test_target_drift_execution.py",
     "tools/test_target_drift_runtime.py",
@@ -176,6 +183,18 @@ PROOF_GRAPH_TEST_EVIDENCE = (
 
 def canonical_json(value):
     return (json.dumps(value, ensure_ascii=False, indent=2, sort_keys=True) + "\n").encode("utf-8")
+
+
+def is_text_payload_path(rel):
+    path = Path(rel)
+    return path.name in TEXT_PAYLOAD_NAMES or path.suffix in TEXT_PAYLOAD_SUFFIXES
+
+
+def canonical_text_bytes(rel, data):
+    if not is_text_payload_path(rel):
+        return data
+    text = data.decode("utf-8")
+    return text.replace("\r\n", "\n").replace("\r", "\n").encode("utf-8")
 
 
 def sha256_bytes(data):
@@ -308,7 +327,9 @@ def anonymous_base_manifest(payload):
 def anonymize_evaluation_bytes(rel, data, anonymous_reference):
     if not rel.endswith((".json", ".md", ".py", ".Containerfile")):
         return data
-    text = data.decode("utf-8")
+    # Normalize before matching the guarded redaction blocks.  add_payload
+    # applies the same canonicalization to every allowlisted text artifact.
+    text = canonical_text_bytes(rel, data).decode("utf-8")
     if rel == "evaluation/target-drift-v2/README.md":
         source_block = (
             "The protocol requires every future evaluated workspace to be built from commit\n"
@@ -471,6 +492,7 @@ def add_payload(payload, rel, data):
     rel = require_safe_relative(rel)
     if rel in payload:
         raise ValueError("duplicate archive path: " + rel)
+    data = canonical_text_bytes(rel, data)
     require_anonymous_bytes(rel, data)
     payload[rel] = data
 
@@ -496,12 +518,20 @@ def proof_report_from_path(path):
 
 def validate_graph_pair(graph_path, report):
     expected = report["graph"].get("sha256")
-    actual = sha256_file(graph_path)
+    raw_graph = graph_path.read_bytes()
+    actual = sha256_bytes(raw_graph)
     if expected != actual:
         raise ValueError("proof graph/report SHA-256 mismatch")
-    counts = load_json(graph_path).get("counts")
+    graph = json.loads(raw_graph.decode("utf-8"))
+    counts = graph.get("counts")
     if counts != report["graph"].get("counts"):
         raise ValueError("proof graph/report count mismatch")
+    # The submitted pair is authenticated in its original byte presentation.
+    # The anonymous archive then stores canonical JSON and rebinds its report
+    # to those exact packaged bytes, avoiding CRLF/LF hash drift.
+    graph_data = canonical_json(graph)
+    report["graph"]["sha256"] = sha256_bytes(graph_data)
+    return graph_data, report
 
 
 def build_payload(proof_graph=None, proof_report_path=None, allow_missing_graph=False):
@@ -550,8 +580,7 @@ def build_payload(proof_graph=None, proof_report_path=None, allow_missing_graph=
         if not proof_report_path.is_file() or proof_report_path.is_symlink():
             raise ValueError("proof graph report is missing or non-regular")
         report = proof_report_from_path(proof_report_path)
-        validate_graph_pair(proof_graph, report)
-        graph_data = proof_graph.read_bytes()
+        graph_data, report = validate_graph_pair(proof_graph, report)
         add_payload(payload, "evidence/proof-graph/current-proof-graph.json", graph_data)
         add_payload(payload, "evidence/proof-graph/current-benchmark-report.json",
                     canonical_json(report))

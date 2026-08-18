@@ -152,13 +152,17 @@ Core paths:
   canonical-Docker-launcher/trusted-controller/restricted-worker sandbox
   contract, non-executing in-image checker/cache-manifest verification, fresh replay,
   blind grading packets, workflow-artifact hash records, and source/target-aware
-  analysis with secondary multiplicity control.  One hundred nine repository
-  tests pass (one unrelated skip), including 51 target-drift component tests,
-  but no test executes the full
+  analysis with secondary multiplicity control.  A provenance-bound multi-stage
+  builder now exports the exact common pre-audit Git snapshot, constructs and
+  byte-manifests the complete Lake cache, keeps that source out of the final
+  image, and can emit an image/toolchain/cache SBOM only after the final image
+  runs the pinned Lean/Lake release offline as the restricted worker.  Component
+  tests pass, but no test executes the full
   real-provider-to-grading chain.  The deterministic fake adapter and fail-closed
-  probes are nonexperimental fixtures.  The launcher, contracts, and image/SBOM
-  templates do not constitute a built cache-complete checker image or passed isolation result.
-  A frozen real provider image, a real checker image and passed seven-probe
+  probes are nonexperimental fixtures.  The builder, launcher, contracts, and
+  image/SBOM template do not constitute a built cache-complete checker image or
+  passed isolation result.  A digest-pinned Lean base image, frozen real provider
+  image, built checker image, and passed seven-probe
   isolation report, budgets, graders, final seal, the preregistered
   one-case-by-three-condition real-infrastructure smoke, and all 450 primary
   model runs remain unstarted; no outcome is reported;
