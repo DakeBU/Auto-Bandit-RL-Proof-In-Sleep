@@ -41,6 +41,8 @@ RUN mkdir -p "${ABRL_ELAN_HOME}/bin" \
 # resulting image is later executed with --network none and --pull never.
 RUN lake exe cache get \
     && lake build BanditRLProof Tests \
+    && python3 /usr/local/lib/abrl/target_drift_checker_cache_manifest.py \
+        materialize-links --root /build/base/.lake \
     && python3 /usr/local/lib/abrl/target_drift_checker_cache_manifest.py create \
         --root /build/base/.lake --output /build/cache-manifest.json \
         --workspace-base-commit "${WORKSPACE_BASE_COMMIT}" \

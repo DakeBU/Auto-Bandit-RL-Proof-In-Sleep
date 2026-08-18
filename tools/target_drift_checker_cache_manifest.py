@@ -43,6 +43,59 @@ def canonical_json_bytes(value: Any) -> bytes:
     ).encode("utf-8")
 
 
+def materialize_internal_file_symlinks(root: Path) -> int:
+    """Replace safe cache-internal file symlinks with immutable regular bytes.
+
+    Lake dependencies may contain documentation symlinks even though the
+    replay cache must be a plain, read-only tree.  Only links whose fully
+    resolved target is a regular file inside the cache are accepted.  Directory
+    links, external targets, reparse points, and special files remain fatal.
+    """
+    require(root.is_dir() and not root.is_symlink(), "cache root is missing or linked")
+    resolved_root = root.resolve(strict=True)
+    links: list[Path] = []
+    for directory, directory_names, file_names in os.walk(root, followlinks=False):
+        parent = Path(directory)
+        for name in [*directory_names, *file_names]:
+            path = parent / name
+            info = path.lstat()
+            reparse = bool(getattr(info, "st_file_attributes", 0) & 0x400)
+            require(not reparse or stat.S_ISLNK(info.st_mode),
+                    f"cache contains a non-symlink reparse point: {path}")
+            if stat.S_ISLNK(info.st_mode):
+                links.append(path)
+
+    for path in sorted(links, key=lambda item: item.as_posix()):
+        try:
+            target = path.resolve(strict=True)
+        except (OSError, RuntimeError) as error:
+            raise SystemExit(
+                f"target-drift checker-cache manifest failed: "
+                f"cache symlink cannot be resolved: {path}: {error}"
+            )
+        require(target.is_relative_to(resolved_root),
+                f"cache symlink escapes the cache root: {path} -> {target}")
+        target_info = target.lstat()
+        target_reparse = bool(
+            getattr(target_info, "st_file_attributes", 0) & 0x400
+        )
+        require(stat.S_ISREG(target_info.st_mode) and not target_reparse,
+                f"cache symlink does not resolve to a plain file: {path} -> {target}")
+        payload = target.read_bytes()
+        mode = stat.S_IMODE(target_info.st_mode) or 0o644
+        path.unlink()
+        descriptor = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, mode)
+        try:
+            with os.fdopen(descriptor, "wb") as handle:
+                handle.write(payload)
+        except BaseException:
+            path.unlink(missing_ok=True)
+            raise
+
+    require_plain_tree(root)
+    return len(links)
+
+
 def require_plain_tree(root: Path) -> None:
     require(root.is_dir() and not root.is_symlink(), "cache root is missing or linked")
     root_info = root.lstat()
@@ -172,12 +225,23 @@ def main() -> None:
     create.add_argument("--checker-image-recipe-sha256", required=True)
     create.add_argument("--base-image-digest", required=True)
     create.add_argument("--lean-toolchain-sha256", required=True)
+    materialize = subparsers.add_parser("materialize-links")
+    materialize.add_argument("--root", type=Path, required=True)
     verify = subparsers.add_parser("verify")
     verify.add_argument("--root", type=Path, required=True)
     verify.add_argument("--manifest", type=Path, required=True)
     args = parser.parse_args()
 
     root = args.root.resolve()
+    if args.command == "materialize-links":
+        count = materialize_internal_file_symlinks(root)
+        print(json.dumps({
+            "status": "materialized",
+            "root": str(root),
+            "links": count,
+        }, sort_keys=True))
+        return
+
     if args.command == "create":
         output = args.output.resolve()
         require(root not in output.parents and output != root,
