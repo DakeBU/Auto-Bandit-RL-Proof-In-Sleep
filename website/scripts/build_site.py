@@ -44,6 +44,7 @@ PRIMARY_TEXTBOOK_URL = "https://tor-lattimore.com/downloads/book/book.pdf"
 ASSET_VERSION = "20260816a"
 SOURCE_BRANCH = "main"
 PUBLIC_BASE_URL = ""
+PUBLIC_SNAPSHOT_BASE_URL = ""
 SITE_CHAPTERS: list[dict[str, Any]] = []
 SITE_READINGS: dict[str, dict[str, Any]] = {}
 SITE_TEXTBOOK_SPINE: dict[str, Any] = {}
@@ -2015,11 +2016,11 @@ def build_source_access(output: Path, verified: bool, generated_at: str) -> None
 </section>
 <section id="available">
   <h2>What is public</h2>
-  <ul><li>the Lean source and exact declaration signatures;</li><li>the searchable BanditRLlib catalog and implementation map;</li><li>student-facing mathematical explanations and honest route status;</li><li>contribution issues, lemma packets, governance, and review history;</li><li>the static workspace and local verified-mode server.</li></ul>
+  <ul><li>the Lean source and exact declaration signatures;</li><li>the searchable BanditRLlib catalog and implementation map;</li><li>student-facing mathematical explanations and honest route status;</li><li>contribution issues, lemma packets, governance, and review history;</li><li>the static workspace and source code for the loopback-only local verified-mode server.</li></ul>
 </section>
 <section id="boundary">
   <h2>Verification and credential boundary</h2>
-  <p>API keys, local editor requests, temporary compilation files, ignored build caches, and regenerable private working artifacts are never embedded in the static Pages output. A proposal becomes integrated only after reviewer approval and the full repository gate on <code>main</code>.</p>
+  <p>API keys, local editor requests, temporary compilation files, ignored build caches, and regenerable private working artifacts are never embedded in the static Pages output. GitHub Pages does not execute Lean and provides no remote compile or formalize service; the verified-mode server is a local experimental tool bound to loopback. A proposal becomes integrated only after reviewer approval and the full repository gate on <code>main</code>.</p>
   <div class="hero-actions"><a class="button primary" href="{GITHUB_REPO}">Open the canonical repository</a><a class="button" href="{href_from(page_path, 'community/index.html')}">Contribute a lemma</a></div>
 </section>
 """
@@ -2682,9 +2683,18 @@ def main() -> int:
         default="",
         help="build a public snapshot whose private source links use the explicit source-access page",
     )
+    parser.add_argument(
+        "--public-snapshot-base-url",
+        default="",
+        help="record public deployment metadata without changing commit-pinned source links",
+    )
     args = parser.parse_args()
-    global PUBLIC_BASE_URL, SITE_CHAPTERS, SITE_READINGS, SITE_TEXTBOOK_SPINE, SOURCE_BRANCH
+    global PUBLIC_BASE_URL, PUBLIC_SNAPSHOT_BASE_URL
+    global SITE_CHAPTERS, SITE_READINGS, SITE_TEXTBOOK_SPINE, SOURCE_BRANCH
     PUBLIC_BASE_URL = args.public_base_url.rstrip("/")
+    PUBLIC_SNAPSHOT_BASE_URL = args.public_snapshot_base_url.rstrip("/")
+    if PUBLIC_BASE_URL and PUBLIC_SNAPSHOT_BASE_URL and PUBLIC_BASE_URL != PUBLIC_SNAPSHOT_BASE_URL:
+        raise SystemExit("public source-access and snapshot base URLs must agree when both are set")
     source_commit, source_dirty = git_source_state()
     SOURCE_BRANCH = source_commit or "main"
     output = args.output.resolve()
@@ -2832,8 +2842,8 @@ def main() -> int:
             sorted(Counter(chapter["status"] for chapter in textbook_spine["chapters"]).items())
         ),
         "max_module_slug_length": max(len(module["slug"]) for module in modules),
-        "public_snapshot": bool(PUBLIC_BASE_URL),
-        "public_base_url": PUBLIC_BASE_URL,
+        "public_snapshot": bool(PUBLIC_SNAPSHOT_BASE_URL or PUBLIC_BASE_URL),
+        "public_base_url": PUBLIC_SNAPSHOT_BASE_URL or PUBLIC_BASE_URL,
         "source_commit": source_commit,
         "source_dirty": source_dirty,
         "proof_graph_benchmark_status": proof_graph_report["status"],

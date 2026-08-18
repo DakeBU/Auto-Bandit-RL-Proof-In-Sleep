@@ -35,13 +35,23 @@ jobs:
         run: python3 tools/bandit.py check
 
       - name: Build the literate formalization website
-        run: >-
-          python3 website/scripts/build_site.py
-          --lean-verified
-          --public-base-url https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep
+        run: |
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            python3 website/scripts/build_site.py --lean-verified
+          else
+            python3 website/scripts/build_site.py \
+              --lean-verified \
+              --public-snapshot-base-url https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep
+          fi
 
       - name: Check links, mappings, formulas, and diagrams
-        run: python3 website/scripts/check_site.py
+        run: |
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            python3 website/scripts/check_site.py
+          else
+            python3 website/scripts/check_site.py \
+              --expect-public-base-url https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep
+          fi
 
       - name: Upload the Pages artifact
         if: github.event_name != 'pull_request'

@@ -23,6 +23,7 @@ PAPER_TITLE = (
 EXPECTED_AUTHORS = ["Dake Bu", "Ji Cheng", "Bo Xue", "Atsushi Nitanda", "Hau-San Wong", "Qingfu Zhang"]
 PRIMARY_TEXTBOOK_TITLE = "Bandit Algorithms"
 PRIMARY_TEXTBOOK_URL = "https://tor-lattimore.com/downloads/book/book.pdf"
+GITHUB_REPO = "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep"
 
 
 class LinkCollector(HTMLParser):
@@ -33,6 +34,7 @@ class LinkCollector(HTMLParser):
         self.mermaid_count = 0
         self.mathjax_count = 0
         self.source_link_count = 0
+        self.source_links: list[str] = []
         self.site_sidebar_count = 0
         self.book_nav_link_count = 0
         self.book_chapter_card_count = 0
@@ -109,6 +111,7 @@ class LinkCollector(HTMLParser):
             or "/source-access/" in values.get("href", "")
         ):
             self.source_link_count += 1
+            self.source_links.append(values["href"])
         if tag not in {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}:
             self._stack.append((tag, classes))
 
@@ -210,7 +213,8 @@ def check_workflow() -> list[str]:
         "python3 tools/bandit.py check",
         "python3 website/scripts/build_site.py",
         "--lean-verified",
-        "--public-base-url https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep",
+        "--public-snapshot-base-url https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep",
+        "--expect-public-base-url https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep",
         "python3 website/scripts/check_site.py",
         "actions/configure-pages@",
         "actions/upload-pages-artifact@",
@@ -306,6 +310,11 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--allow-unverified", action="store_true")
+    parser.add_argument(
+        "--expect-public-base-url",
+        default="",
+        help="require exact public-deployment metadata and commit-pinned source links",
+    )
     args = parser.parse_args()
     output = args.output.resolve()
     if not output.exists():
@@ -320,6 +329,18 @@ def main() -> int:
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     if not args.allow_unverified and not manifest.get("lean_verified"):
         errors.append("site was not built with --lean-verified")
+    expected_public_base_url = args.expect_public_base_url.rstrip("/")
+    if expected_public_base_url:
+        if manifest.get("public_snapshot") is not True:
+            errors.append("site manifest is not marked as a public snapshot")
+        if manifest.get("public_base_url") != expected_public_base_url:
+            errors.append(
+                "site manifest public_base_url differs from --expect-public-base-url"
+            )
+        if manifest.get("source_dirty") is not False:
+            errors.append("public snapshot must be built from a clean source tree")
+        if re.fullmatch(r"[0-9a-f]{40}", str(manifest.get("source_commit", ""))) is None:
+            errors.append("public snapshot source_commit is not a full Git commit")
 
     pages = parse_pages(output)
     errors.extend(check_internal_links(output, pages))
@@ -535,10 +556,12 @@ def main() -> int:
             errors.append(f"IDE compile source lacks a project import: {item.get('name')}")
 
     totals = Counter()
+    source_links: list[str] = []
     for collector in pages.values():
         totals["mermaid"] += collector.mermaid_count
         totals["mathjax"] += collector.mathjax_count
         totals["source_links"] += collector.source_link_count
+        source_links.extend(collector.source_links)
     if totals["mermaid"] < 7:
         errors.append(f"expected at least 7 rendered Mermaid blocks, found {totals['mermaid']}")
     if totals["mathjax"] != len(pages):
@@ -547,6 +570,27 @@ def main() -> int:
         errors.append(
             f"expected at least one source link per declaration; found {totals['source_links']} for {manifest.get('declaration_count')}"
         )
+    if expected_public_base_url:
+        source_commit = manifest.get("source_commit", "")
+        expected_source_prefix = f"{GITHUB_REPO}/blob/{source_commit}/BanditRLProof"
+        redirected = [value for value in source_links if "/source-access/" in value]
+        unpinned = [
+            value for value in source_links
+            if not value.startswith(expected_source_prefix)
+        ]
+        declaration_links = [
+            value for value in source_links
+            if value.startswith(expected_source_prefix)
+            and re.search(r"#L[1-9][0-9]*$", value)
+        ]
+        if redirected:
+            errors.append("public snapshot redirects exact source links to source-access")
+        if unpinned:
+            errors.append("public snapshot contains source links not pinned to source_commit")
+        if len(declaration_links) < manifest.get("declaration_count", 0):
+            errors.append(
+                "public snapshot does not retain one commit-pinned file/line link per declaration"
+            )
     if manifest.get("placeholder_count", 0):
         compiled_text = " ".join(
             path.read_text(encoding="utf-8")
