@@ -9,8 +9,11 @@ import json
 import random
 import re
 import subprocess
+import sys
 from pathlib import Path
 from typing import Any
+
+import launch_target_drift_checker_container as checker_launcher
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -117,6 +120,150 @@ def unset_paths(value: Any, prefix: str = "") -> list[str]:
 def resolve_repo_path(path_text: str) -> Path:
     path = Path(path_text)
     return path if path.is_absolute() else ROOT / path
+
+
+def checker_runtime_config_payload(config: dict[str, Any]) -> dict[str, Any]:
+    """Return the complete, non-self-referential checker runtime boundary.
+
+    The isolation report binds this payload rather than a hand-written subset.
+    Derived hashes are read from the current files so the payload can be
+    computed before preseal fills the corresponding config fields.
+    """
+    entry = config["posthoc_checker"]
+    if entry.get("mode") == "excluded_fixture":
+        return {
+            "schema_version": 1,
+            "suite_id": config["suite_id"],
+            "checker_id": entry["checker_id"],
+            "checker_version": entry["checker_version"],
+            "mode": "excluded_fixture",
+            "runtime_id": entry["runtime_id"],
+            "runtime_version": entry["runtime_version"],
+            "sandbox_command_argv": entry["sandbox_command_argv"],
+            "sandbox_cleanup_argv": entry["sandbox_cleanup_argv"],
+            "sandbox_inspect_argv": entry["sandbox_inspect_argv"],
+            "sandbox_cleanup_by_label_argv": entry["sandbox_cleanup_by_label_argv"],
+            "sandbox_inspect_by_label_argv": entry["sandbox_inspect_by_label_argv"],
+            "inspect_absent_exit_code": entry["inspect_absent_exit_code"],
+            "container_image_digest": entry["container_image_digest"],
+            "budgets": entry["budgets"],
+            "worker_command_prefix": entry["worker_command_prefix"],
+            "cache_prelude_argv": entry["cache_prelude_argv"],
+            "driver_sha256": sha256_file(resolve_repo_path(entry["driver_path"])),
+            "inner_checker_sha256": sha256_file(
+                resolve_repo_path(entry["inner_checker_path"])
+            ),
+            "contract_sha256": sha256_file(resolve_repo_path(entry["contract"])),
+        }
+    launcher_path = resolve_repo_path(entry["host_launcher_path"])
+    commands = checker_launcher.command_templates(entry, launcher_path)
+    code = {
+        "driver_sha256": sha256_file(resolve_repo_path(entry["driver_path"])),
+        "inner_checker_sha256": sha256_file(
+            resolve_repo_path(entry["inner_checker_path"])
+        ),
+        "isolation_probe_runner_sha256": sha256_file(
+            resolve_repo_path(entry["isolation_probe_runner_path"])
+        ),
+        "contract_sha256": sha256_file(resolve_repo_path(entry["contract"])),
+        "host_launcher_sha256": sha256_file(launcher_path),
+        "checker_image_recipe_sha256": sha256_file(
+            resolve_repo_path(entry["checker_image_recipe"])
+        ),
+        "checker_image_sbom_sha256": sha256_file(
+            resolve_repo_path(entry["checker_image_sbom"])
+        ),
+        "controller_entrypoint_sha256": sha256_file(
+            resolve_repo_path(entry["controller_entrypoint_source"])
+        ),
+        "materializer_sha256": sha256_file(resolve_repo_path(
+            config["sealed_agent_view"]["materializer"]
+        )),
+        "run_preparer_sha256": sha256_file(resolve_repo_path(
+            config["sealed_agent_view"]["run_preparer"]
+        )),
+    }
+    return {
+        "schema_version": 1,
+        "suite_id": config["suite_id"],
+        "checker_id": entry["checker_id"],
+        "checker_version": entry["checker_version"],
+        "mode": entry["mode"],
+        "runtime_id": entry["runtime_id"],
+        "runtime_version": entry["runtime_version"],
+        **commands,
+        "host_python_executable": entry["host_python_executable"],
+        "host_python_executable_sha256": entry["host_python_executable_sha256"],
+        "container_runtime_kind": entry["container_runtime_kind"],
+        "container_runtime_executable": entry["container_runtime_executable"],
+        "container_runtime_executable_sha256": entry[
+            "container_runtime_executable_sha256"
+        ],
+        "runtime_version_output_sha256": entry["runtime_version_output_sha256"],
+        "runtime_signature_output_sha256": entry[
+            "runtime_signature_output_sha256"
+        ],
+        "daemon_identity_output_sha256": entry["daemon_identity_output_sha256"],
+        "controller_entrypoint": entry["controller_entrypoint"],
+        "controller_uid": entry["controller_uid"],
+        "worker_uid": entry["worker_uid"],
+        "inspect_absent_exit_code": entry["inspect_absent_exit_code"],
+        "container_image_digest": entry["container_image_digest"],
+        "filesystem_network_process_attestation": entry[
+            "filesystem_network_process_attestation"
+        ],
+        "controller_worker_separation_attestation": entry[
+            "controller_worker_separation_attestation"
+        ],
+        "checker_cache_root": entry["checker_cache_root"],
+        "checker_cache_manifest_path": entry["checker_cache_manifest_path"],
+        "checker_cache_manifest_sha256": entry["checker_cache_manifest_sha256"],
+        "budgets": entry["budgets"],
+        "worker_command_prefix": entry["worker_command_prefix"],
+        "cache_prelude_argv": entry["cache_prelude_argv"],
+        **code,
+    }
+
+
+def checker_runtime_config_sha256(config: dict[str, Any]) -> str:
+    return sha256_bytes(canonical_json_bytes(checker_runtime_config_payload(config)))
+
+
+def rendered_argv_matches_template(template: list[str], rendered: list[str]) -> bool:
+    if len(template) != len(rendered):
+        return False
+    for source, actual in zip(template, rendered):
+        pattern = re.escape(source)
+        pattern = re.sub(r"\\\{\\\{[A-Z0-9_]+\\\}\\\}", r".+", pattern)
+        if re.fullmatch(pattern, actual) is None:
+            return False
+    return True
+
+
+def probe_artifact_bytes(root: Path) -> dict[str, bytes]:
+    require(root.is_dir(), "checker isolation-probe artifact directory is missing")
+    payloads: dict[str, bytes] = {}
+    for path in sorted(root.rglob("*")):
+        relative = path.relative_to(root).as_posix()
+        info = path.lstat()
+        reparse = bool(getattr(info, "st_file_attributes", 0) & 0x400)
+        require(not path.is_symlink() and not reparse,
+                f"checker isolation-probe artifact is linked: {relative}")
+        require(path.is_dir() or path.is_file(),
+                f"checker isolation-probe artifact is special: {relative}")
+        if path.is_file():
+            require(info.st_nlink == 1,
+                    f"checker isolation-probe artifact is multiply linked: {relative}")
+            payloads[relative] = path.read_bytes()
+    require(payloads, "checker isolation-probe artifact directory is empty")
+    return payloads
+
+
+def probe_artifact_manifest(payloads: dict[str, bytes]) -> list[dict[str, Any]]:
+    return [
+        {"path": name, "bytes": len(payload), "sha256": sha256_bytes(payload)}
+        for name, payload in sorted(payloads.items())
+    ]
 
 
 def validate_prompt_templates(config: dict[str, Any], require_hashes: bool) -> None:
@@ -236,6 +383,309 @@ def validate_adapter_contract(config: dict[str, Any], require_hash: bool) -> dic
     return contract
 
 
+def validate_checker_runtime_preflight(config: dict[str, Any]) -> dict[str, Any]:
+    """Validate the executable checker boundary before any probe is launched."""
+    entry = config["posthoc_checker"]
+    contract_path = resolve_repo_path(entry["contract"])
+    require(contract_path.is_file(), "missing checker-sandbox contract")
+    contract = load(contract_path)
+    require(contract.get("suite_id") == config["suite_id"]
+            and contract.get("status") == "interface_frozen_results_absent",
+            "checker-sandbox contract identity/status mismatch")
+    if entry.get("mode") == "excluded_fixture":
+        for field in (
+            "sandbox_command_argv", "sandbox_cleanup_argv", "sandbox_inspect_argv",
+            "sandbox_cleanup_by_label_argv", "sandbox_inspect_by_label_argv",
+        ):
+            require(isinstance(entry[field], list) and entry[field]
+                    and all(isinstance(item, str) and item for item in entry[field]),
+                    f"excluded fixture {field} must be a nonempty argv")
+        return contract
+    require(entry.get("mode") == "production",
+            "checker mode must be production or excluded_fixture")
+    launcher_path = resolve_repo_path(entry["host_launcher_path"])
+    require(launcher_path.is_file()
+            and entry["host_launcher_sha256"] == sha256_file(launcher_path),
+            "checker host launcher is missing or differs from the seal")
+    generated_commands = checker_launcher.command_templates(entry, launcher_path)
+    command_fields = (
+        "sandbox_command_argv", "sandbox_cleanup_argv", "sandbox_inspect_argv",
+        "sandbox_cleanup_by_label_argv", "sandbox_inspect_by_label_argv",
+    )
+    for field in command_fields:
+        argv = entry[field]
+        require(isinstance(argv, list) and argv
+                and all(isinstance(item, str) and item for item in argv),
+                f"posthoc_checker.{field} must be a nonempty argv")
+        require(argv == generated_commands[field],
+                f"posthoc_checker.{field} is not the sealed launcher template")
+    joined = "\0".join(entry["sandbox_command_argv"])
+    for placeholder in contract["invocation"]["required_placeholders"]:
+        require(placeholder in joined,
+                f"checker sandbox command omits required placeholder {placeholder}")
+    route_placeholders = (
+        ("sandbox_cleanup_argv", "cleanup_required_placeholder"),
+        ("sandbox_inspect_argv", "inspect_required_placeholder"),
+        ("sandbox_cleanup_by_label_argv", "label_cleanup_required_placeholder"),
+        ("sandbox_inspect_by_label_argv", "label_inspect_required_placeholder"),
+    )
+    for field, contract_field in route_placeholders:
+        require(contract["invocation"][contract_field] in "\0".join(entry[field]),
+                f"checker lifecycle route omits {contract['invocation'][contract_field]}")
+    require(not any(
+        token == "-d" or token == "--detach" or token.startswith("--detach=")
+        for token in entry["sandbox_command_argv"]
+    ), "checker sandbox command contains detached mode")
+    require(entry["mode"] in {"production", "excluded_fixture"},
+            "checker mode must be production or excluded_fixture")
+    require(re.fullmatch(r"sha256:[0-9a-f]{64}", entry["container_image_digest"])
+            is not None, "checker image digest is not immutable")
+    require(isinstance(entry["inspect_absent_exit_code"], int)
+            and not isinstance(entry["inspect_absent_exit_code"], bool)
+            and 0 <= entry["inspect_absent_exit_code"] <= 255,
+            "checker absent exit code is invalid")
+    require(entry["inspect_absent_exit_code"] == checker_launcher.ABSENT_EXIT_CODE,
+            "checker absent exit code differs from the sealed launcher")
+    for field in (
+        "wall_clock_seconds", "memory_mb", "pids_limit", "maximum_output_bytes",
+        "maximum_response_bytes",
+    ):
+        require(isinstance(entry["budgets"][field], int)
+                and not isinstance(entry["budgets"][field], bool)
+                and entry["budgets"][field] > 0,
+                f"posthoc_checker.budgets.{field} must be positive")
+    require(isinstance(entry["budgets"]["cpus"], (int, float))
+            and not isinstance(entry["budgets"]["cpus"], bool)
+            and entry["budgets"]["cpus"] > 0,
+            "posthoc_checker.budgets.cpus must be positive")
+    require(all(resolve_repo_path(entry[field]).is_file() for field in (
+        "driver_path", "inner_checker_path", "isolation_probe_runner_path",
+        "host_launcher_path", "checker_image_recipe", "checker_image_sbom",
+        "controller_entrypoint_source",
+    )), "checker controller/inner/probe-runner file is missing")
+    host_python = Path(entry["host_python_executable"])
+    require(host_python.resolve() == Path(sys.executable).resolve(),
+            "checker host Python differs from the invoking interpreter")
+    checker_launcher.regular_executable(
+        host_python.resolve(), entry["host_python_executable_sha256"], "host Python"
+    )
+    runtime = checker_launcher.regular_executable(
+        Path(entry["container_runtime_executable"]),
+        entry["container_runtime_executable_sha256"], "Docker runtime",
+    )
+    require(entry["container_runtime_kind"] == "docker",
+            "production checker supports only the sealed Docker launcher")
+    require(runtime.resolve() == checker_launcher.canonical_docker_executable(),
+            "Docker runtime differs from the canonical audited executable")
+    identity = checker_launcher.runtime_identity(runtime)
+    require(entry["runtime_id"] == identity["runtime_id"]
+            and entry["runtime_version"] == identity["runtime_version"]
+            and entry["runtime_signature_output_sha256"]
+            == identity["runtime_signature_output_sha256"]
+            and identity["runtime_version_output_sha256"]
+            == entry["runtime_version_output_sha256"]
+            and identity["daemon_identity_output_sha256"]
+            == entry["daemon_identity_output_sha256"],
+            "Docker client/server version or daemon identity changed")
+    recipe_path = resolve_repo_path(entry["checker_image_recipe"])
+    sbom_path = resolve_repo_path(entry["checker_image_sbom"])
+    controller_path = resolve_repo_path(entry["controller_entrypoint_source"])
+    require(entry["checker_image_recipe_sha256"] == sha256_file(recipe_path)
+            and entry["checker_image_sbom_sha256"] == sha256_file(sbom_path)
+            and entry["controller_entrypoint_sha256"] == sha256_file(controller_path),
+            "checker image recipe/SBOM/controller hash differs from the seal")
+    sbom = load(sbom_path)
+    validate_checker_image_sbom(
+        entry, sbom, sha256_file(resolve_repo_path(entry["inner_checker_path"]))
+    )
+    require(entry["controller_uid"] == "0:0"
+            and re.fullmatch(r"[1-9][0-9]*:[1-9][0-9]*", entry["worker_uid"]),
+            "checker requires the sealed root controller and a positive worker UID:GID")
+    require(entry["controller_entrypoint"] == checker_launcher.CONTROLLER_PATH,
+            "checker controller entrypoint differs from the sealed image path")
+    if entry["mode"] == "production":
+        require(entry["cache_prelude_argv"] == [],
+                "production checker cache prelude must be empty")
+        require(entry["worker_command_prefix"]
+                == checker_launcher.worker_command_prefix(entry),
+                "production worker prefix is not the sealed UID/GID transition")
+    if entry.get("contract_sha256") != "UNSET":
+        require(entry["contract_sha256"] == sha256_file(contract_path),
+                "checker contract hash is stale")
+    return contract
+
+
+def validate_checker_image_sbom(
+    entry: dict[str, Any], sbom: dict[str, Any], inner_checker_sha256: str
+) -> None:
+    required_toolchain = (
+        "lean_version", "lake_version", "python_version",
+    )
+    toolchain_complete = all(
+        isinstance(sbom.get(name), str)
+        and bool(sbom[name].strip())
+        and "UNSET" not in sbom[name]
+        for name in required_toolchain
+    )
+    package_manifest = sbom.get("installed_packages_manifest_sha256")
+    require(sbom.get("status") == "built_verified"
+            and sbom.get("container_image_digest") == entry["container_image_digest"]
+            and sbom.get("checker_image_recipe_sha256")
+            == entry["checker_image_recipe_sha256"]
+            and sbom.get("controller_entrypoint_sha256")
+            == entry["controller_entrypoint_sha256"]
+            and sbom.get("inner_checker_sha256")
+            == inner_checker_sha256
+            and sbom.get("controller_uid") == entry["controller_uid"]
+            and sbom.get("worker_uid") == entry["worker_uid"]
+            and re.fullmatch(r"sha256:[0-9a-f]{64}", sbom.get("base_image_digest", ""))
+            and toolchain_complete
+            and isinstance(package_manifest, str)
+            and re.fullmatch(r"[0-9a-f]{64}", package_manifest)
+            and sbom.get("checker_cache_root") == entry["checker_cache_root"]
+            == checker_launcher.CHECKER_CACHE_ROOT
+            and sbom.get("checker_cache_manifest_path")
+            == entry["checker_cache_manifest_path"]
+            == checker_launcher.CHECKER_CACHE_MANIFEST_PATH
+            and package_manifest == entry["checker_cache_manifest_sha256"],
+            "checker image SBOM does not bind the image recipe/controller/inner checker")
+
+
+def validate_checker_contract(config: dict[str, Any], require_hashes: bool) -> dict[str, Any]:
+    entry = config["posthoc_checker"]
+    if require_hashes:
+        validate_checker_runtime_preflight(config)
+    contract_path = resolve_repo_path(entry["contract"])
+    require(contract_path.is_file(), "missing checker-sandbox contract")
+    contract = load(contract_path)
+    require(contract["suite_id"] == config["suite_id"],
+            "checker-sandbox contract suite mismatch")
+    require(contract["status"] == "interface_frozen_results_absent",
+            "checker-sandbox contract must remain result-free")
+    command = entry["sandbox_command_argv"]
+    cleanup = entry["sandbox_cleanup_argv"]
+    inspect = entry["sandbox_inspect_argv"]
+    cleanup_by_label = entry["sandbox_cleanup_by_label_argv"]
+    inspect_by_label = entry["sandbox_inspect_by_label_argv"]
+    require(isinstance(command, list) and command
+            and all(isinstance(item, str) and item for item in command),
+            "checker sandbox_command_argv must be a nonempty string list")
+    require(isinstance(cleanup, list) and cleanup
+            and all(isinstance(item, str) and item for item in cleanup),
+            "checker sandbox_cleanup_argv must be a nonempty string list")
+    require(isinstance(inspect, list) and inspect
+            and all(isinstance(item, str) and item for item in inspect),
+            "checker sandbox_inspect_argv must be a nonempty string list")
+    require(isinstance(cleanup_by_label, list) and cleanup_by_label
+            and all(isinstance(item, str) and item for item in cleanup_by_label),
+            "checker sandbox_cleanup_by_label_argv must be a nonempty string list")
+    require(isinstance(inspect_by_label, list) and inspect_by_label
+            and all(isinstance(item, str) and item for item in inspect_by_label),
+            "checker sandbox_inspect_by_label_argv must be a nonempty string list")
+    if not require_hashes:
+        return contract
+    require(entry["contract_sha256"] == sha256_file(contract_path),
+            "checker-sandbox contract hash does not match")
+    joined = "\0".join(command)
+    for placeholder in contract["invocation"]["required_placeholders"]:
+        require(placeholder in joined,
+                f"checker sandbox command omits required placeholder {placeholder}")
+    require(contract["invocation"]["cleanup_required_placeholder"]
+            in "\0".join(cleanup), "checker cleanup command must bind the cidfile")
+    require(contract["invocation"]["inspect_required_placeholder"]
+            in "\0".join(inspect), "checker inspect command must bind the cidfile")
+    require(contract["invocation"]["label_cleanup_required_placeholder"]
+            in "\0".join(cleanup_by_label),
+            "checker label cleanup command must bind the attempt label")
+    require(contract["invocation"]["label_inspect_required_placeholder"]
+            in "\0".join(inspect_by_label),
+            "checker label inspect command must bind the attempt label")
+    forbidden_detach = any(
+        token == "-d" or token == "--detach" or token.startswith("--detach=")
+        for token in command
+    )
+    require(not forbidden_detach,
+            "checker sandbox command contains a forbidden detached-mode token")
+    runtime_sha256 = checker_runtime_config_sha256(config)
+    require(entry["runtime_config_sha256"] == runtime_sha256,
+            "checker runtime-config digest does not match the complete runtime boundary")
+    probe_path = resolve_repo_path(entry["isolation_probe_report"])
+    require(probe_path.is_file(), "checker isolation-probe report is missing")
+    require(entry["isolation_probe_report_sha256"] == sha256_file(probe_path),
+            "checker isolation-probe report hash does not match")
+    probe = load(probe_path)
+    require(probe.get("suite_id") == config["suite_id"],
+            "checker isolation-probe suite mismatch")
+    require(probe.get("container_image_digest") == entry["container_image_digest"],
+            "checker isolation-probe image differs from frozen config")
+    require(probe.get("checker_runtime_config_sha256") == runtime_sha256,
+            "checker isolation-probe does not bind the frozen runtime config")
+    command_template_sha256 = sha256_bytes(canonical_json_bytes(command))
+    require(probe.get("runtime_command_template_sha256") == command_template_sha256,
+            "checker isolation-probe does not bind the sandbox command template")
+    require(probe.get("probe_runner_sha256")
+            == entry["isolation_probe_runner_sha256"],
+            "checker isolation-probe does not bind the sealed probe runner")
+    probe_artifacts = probe.get("artifact_manifest")
+    require(isinstance(probe_artifacts, list) and probe_artifacts,
+            "checker isolation-probe artifact manifest is empty")
+    require(all(
+        isinstance(item, dict)
+        and set(item) == {"path", "bytes", "sha256"}
+        and isinstance(item["path"], str)
+        and isinstance(item["bytes"], int)
+        and re.fullmatch(r"[0-9a-f]{64}", item["sha256"]) is not None
+        for item in probe_artifacts
+    ), "checker isolation-probe artifact manifest is malformed")
+    artifact_root = resolve_repo_path(entry["isolation_probe_artifacts_dir"])
+    artifact_payloads = probe_artifact_bytes(artifact_root)
+    require(probe_artifact_manifest(artifact_payloads) == probe_artifacts,
+            "checker isolation-probe artifact bytes differ from the report manifest")
+    require(probe.get("checker_id") == entry["checker_id"]
+            and probe.get("checker_version") == entry["checker_version"],
+            "checker isolation-probe identity differs from frozen config")
+    if entry["mode"] == "production":
+        require(probe.get("status") == "passed",
+                "production checker requires a passed isolation-probe report")
+        require(probe.get("controller_entrypoint_sha256")
+                == entry["controller_entrypoint_sha256"],
+                "production probe does not bind the in-image controller bytes")
+        required_probes = {
+            "network_denied", "host_sentinel_protected", "operator_ground_truth_absent",
+            "checker_outputs_not_worker_writable",
+            "patched_source_and_controller_input_read_only",
+            "mounted_inputs_and_cidfile_protected", "background_process_reaped",
+        }
+        results = probe.get("probes", {})
+        require(required_probes == set(results)
+                and all(results[name] is True for name in required_probes),
+                "production checker isolation probes are incomplete or failed")
+        nonce = probe.get("probe_nonce")
+        attempt_label = probe.get("checker_attempt_label")
+        require(isinstance(nonce, str) and re.fullmatch(r"[0-9a-f]{48}", nonce)
+                and attempt_label == f"ABRL-PROBE-{nonce}",
+                "production checker isolation probe nonce/label is malformed")
+        require("host-observations.json" in artifact_payloads,
+                "production checker probe omits host observations")
+        host_observations = json.loads(artifact_payloads["host-observations.json"])
+        require(host_observations.get("probe_nonce") == nonce
+                and host_observations.get("checker_attempt_label") == attempt_label
+                and host_observations.get("checker_runtime_config_sha256") == runtime_sha256
+                and host_observations.get("container_image_digest")
+                == entry["container_image_digest"]
+                and host_observations.get("derived_probes") == results,
+                "probe report differs from sealed host observations")
+        require(rendered_argv_matches_template(
+            command, host_observations.get("rendered_sandbox_argv", [])
+        ), "probe host ledger did not execute the frozen sandbox argv template")
+    else:
+        require(entry["mode"] == "excluded_fixture",
+                "checker mode must be production or excluded_fixture")
+        require(probe.get("status") == "excluded_fixture_nonexperimental",
+                "fixture checker requires a nonexperimental probe record")
+    return contract
+
+
 def validate_auxiliary_prompts(config: dict[str, Any], require_hashes: bool) -> None:
     entries = (
         (config["grading"]["grader_prompt"], config["grading"]["grader_prompt_sha256"],
@@ -258,7 +708,21 @@ def execution_code_paths(config: dict[str, Any]) -> dict[str, Path]:
         "run_target_drift_execution.py": resolve_repo_path(
             config["sealed_agent_view"]["run_preparer"]
         ),
-        "check_target_drift_run.py": resolve_repo_path(config["posthoc_checker"]["path"]),
+        "check_target_drift_run.py": resolve_repo_path(
+            config["posthoc_checker"]["driver_path"]
+        ),
+        "check_target_drift_inner.py": resolve_repo_path(
+            config["posthoc_checker"]["inner_checker_path"]
+        ),
+        "record_target_drift_checker_isolation_probe.py": resolve_repo_path(
+            config["posthoc_checker"]["isolation_probe_runner_path"]
+        ),
+        "launch_target_drift_checker_container.py": resolve_repo_path(
+            config["posthoc_checker"]["host_launcher_path"]
+        ),
+        "check_target_drift_container_controller.py": resolve_repo_path(
+            config["posthoc_checker"]["controller_entrypoint_source"]
+        ),
         "prepare_target_drift_grading.py": resolve_repo_path(
             config["grading"]["packet_materializer"]
         ),
@@ -283,7 +747,17 @@ def validate_execution_code_hashes(config: dict[str, Any], require_hashes: bool)
     expected = {
         "prepare_target_drift_execution.py": config["sealed_agent_view"]["materializer_sha256"],
         "run_target_drift_execution.py": config["sealed_agent_view"]["run_preparer_sha256"],
-        "check_target_drift_run.py": config["posthoc_checker"]["sha256"],
+        "check_target_drift_run.py": config["posthoc_checker"]["driver_sha256"],
+        "check_target_drift_inner.py": config["posthoc_checker"]["inner_checker_sha256"],
+        "record_target_drift_checker_isolation_probe.py": config["posthoc_checker"][
+            "isolation_probe_runner_sha256"
+        ],
+        "launch_target_drift_checker_container.py": config["posthoc_checker"][
+            "host_launcher_sha256"
+        ],
+        "check_target_drift_container_controller.py": config["posthoc_checker"][
+            "controller_entrypoint_sha256"
+        ],
         "prepare_target_drift_grading.py": config["grading"]["packet_materializer_sha256"],
         "assemble_target_drift_grades.py": config["analysis"]["grade_assembler_sha256"],
         "analyze_target_drift_execution.py": config["analysis"]["script_sha256"],
@@ -291,6 +765,31 @@ def validate_execution_code_hashes(config: dict[str, Any], require_hashes: bool)
     }
     for name, path in paths.items():
         require(expected[name] == sha256_file(path), f"execution-code hash mismatch for {name}")
+
+
+def checker_runtime_artifact_paths(config: dict[str, Any]) -> dict[str, Path]:
+    checker = config["posthoc_checker"]
+    if checker.get("mode") != "production":
+        return {}
+    return {
+        "checker-image.Containerfile": resolve_repo_path(checker["checker_image_recipe"]),
+        "checker-image-sbom.json": resolve_repo_path(checker["checker_image_sbom"]),
+    }
+
+
+def validate_checker_runtime_artifacts(config: dict[str, Any]) -> None:
+    paths = checker_runtime_artifact_paths(config)
+    if not paths:
+        return
+    checker = config["posthoc_checker"]
+    require(all(path.is_file() for path in paths.values()),
+            "checker image recipe/SBOM artifact is missing")
+    require(sha256_file(paths["checker-image.Containerfile"])
+            == checker["checker_image_recipe_sha256"],
+            "checker image recipe artifact hash differs from config")
+    require(sha256_file(paths["checker-image-sbom.json"])
+            == checker["checker_image_sbom_sha256"],
+            "checker image SBOM artifact hash differs from config")
 
 
 def validate_frozen_choices(config: dict[str, Any]) -> None:
@@ -372,15 +871,58 @@ def validate_frozen_choices(config: dict[str, Any]) -> None:
     nonempty(adapter["filesystem_network_process_attestation"],
              "execution_adapter.filesystem_network_process_attestation", 20)
 
-    cache_prelude = config["posthoc_checker"]["cache_prelude_argv"]
+    checker = config["posthoc_checker"]
+    for field in ("checker_id", "checker_version", "runtime_id", "runtime_version"):
+        nonempty(checker[field], f"posthoc_checker.{field}")
+    require(checker["mode"] in {"production", "excluded_fixture"},
+            "posthoc_checker.mode must be production or excluded_fixture")
+    require(re.fullmatch(r"sha256:[0-9a-f]{64}", checker["container_image_digest"])
+            is not None, "checker image digest must be sha256:<64 lowercase hex>")
+    require(re.fullmatch(r"[0-9a-f]{64}", checker["runtime_config_sha256"])
+            is not None, "checker runtime_config_sha256 must be a lowercase SHA-256")
+    require(isinstance(checker["inspect_absent_exit_code"], int)
+            and not isinstance(checker["inspect_absent_exit_code"], bool)
+            and 0 <= checker["inspect_absent_exit_code"] <= 255,
+            "posthoc_checker.inspect_absent_exit_code must be an exit-code integer")
+    nonempty(checker["filesystem_network_process_attestation"],
+             "posthoc_checker.filesystem_network_process_attestation", 20)
+    nonempty(checker["controller_worker_separation_attestation"],
+             "posthoc_checker.controller_worker_separation_attestation", 20)
+    checker_budgets = checker["budgets"]
+    for field in (
+        "wall_clock_seconds", "memory_mb", "pids_limit", "maximum_output_bytes",
+        "maximum_response_bytes",
+    ):
+        require(isinstance(checker_budgets[field], int)
+                and not isinstance(checker_budgets[field], bool)
+                and checker_budgets[field] > 0,
+                f"posthoc_checker.budgets.{field} must be a positive integer")
+    require(isinstance(checker_budgets["cpus"], (int, float))
+            and not isinstance(checker_budgets["cpus"], bool)
+            and checker_budgets["cpus"] > 0,
+            "posthoc_checker.budgets.cpus must be positive")
+    worker_prefix = checker["worker_command_prefix"]
+    require(isinstance(worker_prefix, list)
+            and all(isinstance(item, str) and item.strip() for item in worker_prefix),
+            "posthoc_checker.worker_command_prefix must be a string list")
+    cache_prelude = checker["cache_prelude_argv"]
     require(isinstance(cache_prelude, list)
             and all(isinstance(item, str) and item.strip() for item in cache_prelude),
             "posthoc_checker.cache_prelude_argv must be an argv string list (possibly empty)")
     require(not any("{{" in item or "}}" in item for item in cache_prelude),
             "checker cache prelude must not contain unresolved placeholders")
-    if cache_prelude:
-        require(adapter["adapter_id"] == "excluded-local-smoke-fixture",
-                "real executions require an empty prelude in a cache-complete checker sandbox")
+    if checker["mode"] == "production":
+        require(not cache_prelude,
+                "production checker cache must come from the immutable image")
+        require(bool(worker_prefix),
+                "production checker requires a controller/worker command prefix")
+        joined_identity = (checker["checker_id"] + " " + checker["checker_version"]).lower()
+        require(not any(marker in joined_identity for marker in ("fake", "fixture", "excluded")),
+                "production checker identity must not name a fixture")
+    else:
+        require("fixture" in checker["checker_id"].lower()
+                or "excluded" in checker["checker_id"].lower(),
+                "excluded checker mode requires an explicit fixture identity")
 
     grading = config["grading"]
     require(isinstance(grading["packet_order_seed"], int)
@@ -420,6 +962,10 @@ def digest_components(
     rubric_bytes: bytes,
     resource_policy_bytes: bytes,
     adapter_contract_bytes: bytes,
+    checker_contract_bytes: bytes,
+    checker_probe_bytes: bytes,
+    checker_probe_artifact_bytes: dict[str, bytes],
+    checker_runtime_artifact_bytes: dict[str, bytes],
     grader_prompt_bytes: bytes,
     text_only_prompt_bytes: bytes,
     prompt_bytes: dict[str, bytes],
@@ -438,9 +984,19 @@ def digest_components(
         "grading_rubric.json": rubric_bytes,
         "resource_policy.json": resource_policy_bytes,
         "adapter_contract.json": adapter_contract_bytes,
+        "checker_sandbox_contract.json": checker_contract_bytes,
+        "checker_isolation_probe.json": checker_probe_bytes,
         "grader_prompt.md": grader_prompt_bytes,
         "text_only_audit_prompt.md": text_only_prompt_bytes,
     }
+    components.update({
+        f"checker_isolation_probe_artifacts/{name}": payload
+        for name, payload in checker_probe_artifact_bytes.items()
+    })
+    components.update({
+        f"checker_runtime_artifacts/{name}": payload
+        for name, payload in checker_runtime_artifact_bytes.items()
+    })
     components.update({
         f"source_packets/{name}": payload
         for name, payload in source_packet_bytes.items()
@@ -470,6 +1026,7 @@ def check_template(config_path: Path) -> None:
         validate_resource_policy(config, require_hash=False)
         validate_paired_requirements(config)
         validate_adapter_contract(config, require_hash=False)
+        validate_checker_contract(config, require_hashes=False)
         validate_auxiliary_prompts(config, require_hashes=False)
         validate_execution_code_hashes(config, require_hashes=False)
     else:
@@ -571,6 +1128,7 @@ def materialize(config_path: Path, output_dir: Path) -> None:
             "legacy v1 template cannot be materialized by the strengthened sealer; use v2")
     validate_resource_policy(config, require_hash=True)
     validate_adapter_contract(config, require_hash=True)
+    validate_checker_contract(config, require_hashes=True)
     validate_auxiliary_prompts(config, require_hashes=True)
     validate_execution_code_hashes(config, require_hashes=True)
 
@@ -698,6 +1256,11 @@ def materialize(config_path: Path, output_dir: Path) -> None:
     rubric_path = resolve_repo_path(config["grading"]["rubric"])
     resource_policy_path = resolve_repo_path(config["resource_policy"])
     adapter_contract_path = resolve_repo_path(config["execution_adapter"]["contract"])
+    checker_contract_path = resolve_repo_path(config["posthoc_checker"]["contract"])
+    checker_probe_path = resolve_repo_path(config["posthoc_checker"]["isolation_probe_report"])
+    checker_probe_artifact_root = resolve_repo_path(
+        config["posthoc_checker"]["isolation_probe_artifacts_dir"]
+    )
     grader_prompt_path = resolve_repo_path(config["grading"]["grader_prompt"])
     text_only_prompt_path = resolve_repo_path(config["wording_audit"]["text_only_prompt"])
     prompt_paths = {
@@ -725,6 +1288,14 @@ def materialize(config_path: Path, output_dir: Path) -> None:
     rubric_bytes = rubric_path.read_bytes()
     resource_policy_bytes = resource_policy_path.read_bytes()
     adapter_contract_bytes = adapter_contract_path.read_bytes()
+    checker_contract_bytes = checker_contract_path.read_bytes()
+    checker_probe_bytes = checker_probe_path.read_bytes()
+    checker_probe_artifacts = probe_artifact_bytes(checker_probe_artifact_root)
+    validate_checker_runtime_artifacts(config)
+    checker_runtime_artifacts = {
+        name: path.read_bytes()
+        for name, path in checker_runtime_artifact_paths(config).items()
+    }
     grader_prompt_bytes = grader_prompt_path.read_bytes()
     text_only_prompt_bytes = text_only_prompt_path.read_bytes()
     prompt_bytes = {condition: path.read_bytes() for condition, path in prompt_paths.items()}
@@ -744,6 +1315,10 @@ def materialize(config_path: Path, output_dir: Path) -> None:
         rubric_bytes,
         resource_policy_bytes,
         adapter_contract_bytes,
+        checker_contract_bytes,
+        checker_probe_bytes,
+        checker_probe_artifacts,
+        checker_runtime_artifacts,
         grader_prompt_bytes,
         text_only_prompt_bytes,
         prompt_bytes,
@@ -766,6 +1341,18 @@ def materialize(config_path: Path, output_dir: Path) -> None:
     (output_dir / "grading_rubric.json").write_bytes(rubric_bytes)
     (output_dir / "resource_policy.json").write_bytes(resource_policy_bytes)
     (output_dir / "adapter_contract.json").write_bytes(adapter_contract_bytes)
+    (output_dir / "checker_sandbox_contract.json").write_bytes(checker_contract_bytes)
+    (output_dir / "checker_isolation_probe.json").write_bytes(checker_probe_bytes)
+    probe_output = output_dir / "checker_isolation_probe_artifacts"
+    probe_output.mkdir()
+    for name, payload in checker_probe_artifacts.items():
+        target = probe_output / name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(payload)
+    runtime_artifact_output = output_dir / "checker_runtime_artifacts"
+    runtime_artifact_output.mkdir()
+    for name, payload in checker_runtime_artifacts.items():
+        (runtime_artifact_output / name).write_bytes(payload)
     (output_dir / "grader_prompt.md").write_bytes(grader_prompt_bytes)
     (output_dir / "text_only_audit_prompt.md").write_bytes(text_only_prompt_bytes)
     prompt_output = output_dir / "prompt_templates"
@@ -830,6 +1417,16 @@ def verify_pack(pack_dir: Path) -> None:
         "sealed adapter-contract hash mismatch",
     )
     require(
+        config["posthoc_checker"]["contract_sha256"]
+        == sha256_bytes((pack_dir / "checker_sandbox_contract.json").read_bytes()),
+        "sealed checker-sandbox contract hash mismatch",
+    )
+    require(
+        config["posthoc_checker"]["isolation_probe_report_sha256"]
+        == sha256_bytes((pack_dir / "checker_isolation_probe.json").read_bytes()),
+        "sealed checker isolation-probe hash mismatch",
+    )
+    require(
         config["grading"]["grader_prompt_sha256"]
         == sha256_bytes((pack_dir / "grader_prompt.md").read_bytes()),
         "sealed grader-prompt hash mismatch",
@@ -861,6 +1458,29 @@ def verify_pack(pack_dir: Path) -> None:
         for path in sorted((pack_dir / "source_packets").iterdir())
         if path.is_file()
     }
+    packed_probe = load(pack_dir / "checker_isolation_probe.json")
+    packed_probe_artifacts = probe_artifact_bytes(
+        pack_dir / "checker_isolation_probe_artifacts"
+    )
+    packed_runtime_artifact_root = pack_dir / "checker_runtime_artifacts"
+    packed_runtime_artifacts = {
+        path.name: path.read_bytes()
+        for path in sorted(packed_runtime_artifact_root.iterdir())
+        if path.is_file()
+    }
+    expected_runtime_artifacts = checker_runtime_artifact_paths(config)
+    require(set(packed_runtime_artifacts) == set(expected_runtime_artifacts),
+            "sealed checker runtime-artifact set differs from frozen config")
+    if expected_runtime_artifacts:
+        require(sha256_bytes(packed_runtime_artifacts["checker-image.Containerfile"])
+                == config["posthoc_checker"]["checker_image_recipe_sha256"],
+                "sealed checker image recipe hash differs from config")
+        require(sha256_bytes(packed_runtime_artifacts["checker-image-sbom.json"])
+                == config["posthoc_checker"]["checker_image_sbom_sha256"],
+                "sealed checker image SBOM hash differs from config")
+    require(probe_artifact_manifest(packed_probe_artifacts)
+            == packed_probe.get("artifact_manifest"),
+            "sealed checker isolation-probe artifacts differ from the report manifest")
     require(set(source_packet_bytes) == expected_source_names,
             "sealed source-packet file set differs from source manifest")
     require(all(
@@ -890,6 +1510,10 @@ def verify_pack(pack_dir: Path) -> None:
         (pack_dir / "grading_rubric.json").read_bytes(),
         (pack_dir / "resource_policy.json").read_bytes(),
         (pack_dir / "adapter_contract.json").read_bytes(),
+        (pack_dir / "checker_sandbox_contract.json").read_bytes(),
+        (pack_dir / "checker_isolation_probe.json").read_bytes(),
+        packed_probe_artifacts,
+        packed_runtime_artifacts,
         (pack_dir / "grader_prompt.md").read_bytes(),
         (pack_dir / "text_only_audit_prompt.md").read_bytes(),
         prompt_bytes,
@@ -910,7 +1534,17 @@ def verify_pack(pack_dir: Path) -> None:
     expected_code_hashes = {
         "prepare_target_drift_execution.py": config["sealed_agent_view"]["materializer_sha256"],
         "run_target_drift_execution.py": config["sealed_agent_view"]["run_preparer_sha256"],
-        "check_target_drift_run.py": config["posthoc_checker"]["sha256"],
+        "check_target_drift_run.py": config["posthoc_checker"]["driver_sha256"],
+        "check_target_drift_inner.py": config["posthoc_checker"]["inner_checker_sha256"],
+        "record_target_drift_checker_isolation_probe.py": config["posthoc_checker"][
+            "isolation_probe_runner_sha256"
+        ],
+        "launch_target_drift_checker_container.py": config["posthoc_checker"][
+            "host_launcher_sha256"
+        ],
+        "check_target_drift_container_controller.py": config["posthoc_checker"][
+            "controller_entrypoint_sha256"
+        ],
         "prepare_target_drift_grading.py": config["grading"]["packet_materializer_sha256"],
         "assemble_target_drift_grades.py": config["analysis"]["grade_assembler_sha256"],
         "analyze_target_drift_execution.py": config["analysis"]["script_sha256"],

@@ -6,6 +6,10 @@ from __future__ import annotations
 import sys
 import tempfile
 import unittest
+import json
+import os
+import argparse
+import subprocess
 from pathlib import Path
 from unittest import mock
 
@@ -13,13 +17,182 @@ from unittest import mock
 TOOLS = Path(__file__).resolve().parent
 sys.path.insert(0, str(TOOLS))
 
-import check_target_drift_run as checker  # noqa: E402
+import check_target_drift_inner as checker_inner  # noqa: E402
+import check_target_drift_run as checker_controller  # noqa: E402
 import assemble_target_drift_grades as assembler  # noqa: E402
 import prepare_target_drift_grading as grading  # noqa: E402
 import run_target_drift_execution as runner  # noqa: E402
+import record_target_drift_checker_isolation_probe as isolation_probe  # noqa: E402
+import launch_target_drift_checker_container as checker_launcher  # noqa: E402
+import prepare_target_drift_execution as prepare  # noqa: E402
 
 
 class TargetDriftRuntimeTest(unittest.TestCase):
+    def test_production_launcher_constructs_fixed_hardening_boundary(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for name in ("request.json", "submission.patch"):
+                (root / name).write_text("{}\n", encoding="utf-8")
+            (root / "base").mkdir()
+            (root / "output").mkdir()
+            (root / "response").mkdir()
+            args = argparse.Namespace(
+                response=root / "response" / "response.json",
+                request=root / "request.json", base_snapshot=root / "base",
+                patch=root / "submission.patch", output=root / "output",
+                cidfile=root / "container.cid", attempt_label="CHK-opaque-01",
+                controller_uid="0:0", pids_limit=32, memory_mb=256, cpus=1.0,
+                controller_entrypoint="/usr/local/bin/abrl-checker-controller",
+                image_digest="sha256:" + "f" * 64,
+            )
+            command = checker_launcher.docker_run_command(args, Path("docker"))
+            joined = "\0".join(command)
+            for required in (
+                "--read-only", "--network\0none", "--cap-drop\0ALL",
+                "--cap-add\0SETUID", "--cap-add\0SETGID",
+                "--security-opt\0no-new-privileges=true", "--user\0" + "0:0",
+                ",dst=/input/request.json,readonly",
+                ",dst=/input/base,readonly", ",dst=/input/submission.patch,readonly",
+            ):
+                self.assertIn(required, joined)
+            self.assertNotIn("--privileged", command)
+            self.assertNotIn("--detach", command)
+
+    def test_worker_prefix_is_exact_irreversible_uid_transition(self) -> None:
+        checker = {
+            "controller_entrypoint": "/usr/local/bin/abrl-checker-controller",
+            "worker_uid": "10002:10002",
+        }
+        prefix = checker_launcher.worker_command_prefix(checker)
+        self.assertEqual(prefix, [
+            "/usr/local/bin/abrl-checker-controller", "--worker-exec",
+            "--uid", "10002", "--gid", "10002", "--",
+        ])
+
+    def test_runtime_executable_bytes_are_rechecked(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            runtime = Path(directory) / ("docker.exe" if os.name == "nt" else "docker")
+            runtime.write_bytes(b"sealed-runtime")
+            if os.name != "nt":
+                runtime.chmod(0o755)
+            digest = prepare.sha256_file(runtime)
+            self.assertEqual(
+                checker_launcher.regular_executable(runtime.resolve(), digest, "runtime"),
+                runtime.resolve(),
+            )
+            runtime.write_bytes(b"mutated-runtime")
+            if os.name != "nt":
+                runtime.chmod(0o755)
+            with self.assertRaises(SystemExit):
+                checker_launcher.regular_executable(runtime.resolve(), digest, "runtime")
+
+    def test_temporary_path_fake_docker_is_not_an_allowlisted_runtime(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            fake = Path(directory) / ("docker.exe" if os.name == "nt" else "docker")
+            fake.write_bytes(b"fabricated-runtime")
+            if os.name != "nt":
+                fake.chmod(0o755)
+            with mock.patch.object(checker_launcher.shutil, "which", return_value=str(fake)):
+                with self.assertRaises(SystemExit):
+                    checker_launcher.canonical_docker_executable()
+
+    def test_unbuilt_checker_sbom_is_rejected(self) -> None:
+        sbom = json.loads(
+            (TOOLS.parent / "evaluation" / "target-drift-v2"
+             / "checker-image-sbom.template.json").read_text(encoding="utf-8")
+        )
+        entry = {
+            "container_image_digest": "sha256:" + "f" * 64,
+            "checker_image_recipe_sha256": "a" * 64,
+            "controller_entrypoint_sha256": "b" * 64,
+            "controller_uid": "0:0", "worker_uid": "10002:10002",
+            "checker_cache_root": checker_launcher.CHECKER_CACHE_ROOT,
+            "checker_cache_manifest_path": checker_launcher.CHECKER_CACHE_MANIFEST_PATH,
+            "checker_cache_manifest_sha256": "d" * 64,
+        }
+        with self.assertRaises(SystemExit):
+            prepare.validate_checker_image_sbom(entry, sbom, "c" * 64)
+
+    def test_built_checker_sbom_rejects_unset_toolchain_or_cache_fields(self) -> None:
+        entry = {
+            "container_image_digest": "sha256:" + "f" * 64,
+            "checker_image_recipe_sha256": "a" * 64,
+            "controller_entrypoint_sha256": "b" * 64,
+            "controller_uid": "0:0", "worker_uid": "10002:10002",
+            "checker_cache_root": checker_launcher.CHECKER_CACHE_ROOT,
+            "checker_cache_manifest_path": checker_launcher.CHECKER_CACHE_MANIFEST_PATH,
+            "checker_cache_manifest_sha256": "d" * 64,
+        }
+        sbom = {
+            "status": "built_verified",
+            "container_image_digest": entry["container_image_digest"],
+            "checker_image_recipe_sha256": entry["checker_image_recipe_sha256"],
+            "controller_entrypoint_sha256": entry["controller_entrypoint_sha256"],
+            "inner_checker_sha256": "c" * 64,
+            "controller_uid": entry["controller_uid"], "worker_uid": entry["worker_uid"],
+            "base_image_digest": "sha256:" + "e" * 64,
+            "lean_version": "UNSET", "lake_version": "UNSET", "python_version": "UNSET",
+            "installed_packages_manifest_sha256": "d" * 64,
+            "checker_cache_root": checker_launcher.CHECKER_CACHE_ROOT,
+            "checker_cache_manifest_path": checker_launcher.CHECKER_CACHE_MANIFEST_PATH,
+        }
+        with self.assertRaises(SystemExit):
+            prepare.validate_checker_image_sbom(entry, sbom, "c" * 64)
+        sbom.update({"lean_version": "4.19.0", "lake_version": "5.0.0",
+                     "python_version": "3.11.9"})
+        prepare.validate_checker_image_sbom(entry, sbom, "c" * 64)
+
+    def test_complete_lake_cache_manifest_binds_every_file(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "packages" / "mathlib").mkdir(parents=True)
+            target = root / "packages" / "mathlib" / "lake-manifest.json"
+            target.write_text("{}\n", encoding="utf-8")
+            entries = checker_inner.complete_cache_manifest(root)
+            digest = checker_inner.cache_manifest_aggregate(entries)
+            target.write_text('{"changed":true}\n', encoding="utf-8")
+            changed = checker_inner.complete_cache_manifest(root)
+            self.assertNotEqual(entries, changed)
+            self.assertNotEqual(digest, checker_inner.cache_manifest_aggregate(changed))
+
+    def test_cache_seed_copy_is_performed_by_the_worker_process(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / "image-cache"
+            target = root / "replay" / ".lake"
+            (source / "packages" / "mathlib").mkdir(parents=True)
+            (source / "packages" / "mathlib" / "cache.olean").write_bytes(b"olean")
+            target.mkdir(parents=True)
+            target.chmod(0o777)
+            outcome = subprocess.run(
+                [sys.executable, "-c", checker_inner.CACHE_COPY_SCRIPT,
+                 str(source), str(target)],
+                stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=False,
+            )
+            self.assertEqual(outcome.returncode, 0, outcome.stdout.decode(errors="replace"))
+            self.assertEqual(
+                checker_inner.complete_cache_manifest(source),
+                checker_inner.complete_cache_manifest(target),
+            )
+
+    def test_image_inspection_binds_digest_entrypoint_and_root_controller(self) -> None:
+        digest = "sha256:" + "f" * 64
+        payload = {
+            "Id": digest,
+            "Config": {
+                "Entrypoint": [checker_launcher.CONTROLLER_PATH],
+                "User": "0:0",
+            },
+        }
+        checker_launcher.validate_image_inspect(
+            payload, digest, checker_launcher.CONTROLLER_PATH
+        )
+        payload["Config"]["Entrypoint"] = ["/unsealed/controller"]
+        with self.assertRaises(SystemExit):
+            checker_launcher.validate_image_inspect(
+                payload, digest, checker_launcher.CONTROLLER_PATH
+            )
+
     def test_opaque_ids_are_deterministic_and_do_not_echo_semantics(self) -> None:
         semantic = "DBOBW-01-ALGORITHM-IDENTITY--abrl--replicate-7"
         first = runner.opaque_id("run", "a" * 64, semantic)
@@ -100,7 +273,7 @@ class TargetDriftRuntimeTest(unittest.TestCase):
                 "axiom bad : False\nconstant hidden : False\ntheorem t : True := by sorry\n",
                 encoding="utf-8",
             )
-            hits = checker.scan_lean(root, ["Unsafe.lean"])
+            hits = checker_inner.scan_lean(root, ["Unsafe.lean"])
             self.assertEqual({hit["kind"] for hit in hits}, {"axiom", "constant", "sorry"})
 
     def test_public_abrl_locator_is_not_scanned_but_agent_provenance_is(self) -> None:
@@ -120,9 +293,300 @@ class TargetDriftRuntimeTest(unittest.TestCase):
     def test_axiom_parser_distinguishes_kernel_axioms_from_new_constants(self) -> None:
         output = "t depends on axioms: [propext, Classical.choice, hiddenProof]"
         self.assertEqual(
-            checker.parsed_axioms(output),
+            checker_inner.parsed_axioms(output),
             {"propext", "Classical.choice", "hiddenProof"},
         )
+
+    def test_checker_sandbox_command_renders_windows_paths_without_a_shell(self) -> None:
+        command = checker_controller.render_command(
+            ["fixture.exe", "--request", "{{CHECKER_REQUEST_PATH}}", "--cid", "{{CIDFILE}}"],
+            {
+                "{{CHECKER_REQUEST_PATH}}": r"C:\path with spaces\request.json",
+                "{{CIDFILE}}": r"C:\path with spaces\container.cid",
+            },
+        )
+        self.assertEqual(command[2], r"C:\path with spaces\request.json")
+        self.assertEqual(command[4], r"C:\path with spaces\container.cid")
+
+    def test_checker_sandbox_command_rejects_unresolved_placeholders(self) -> None:
+        with self.assertRaises(checker_controller.CheckerFailure):
+            checker_controller.render_command(
+                ["fixture.exe", "{{MISSING}}"], {"{{OTHER}}": "value"}
+            )
+
+    def test_checker_attempt_ids_bind_attempt_number(self) -> None:
+        first = checker_controller.checker_attempt_id(
+            "a" * 64, "RUN-opaque", "b" * 64, "c" * 64, "d" * 64,
+            "e" * 64, 1
+        )
+        second = checker_controller.checker_attempt_id(
+            "a" * 64, "RUN-opaque", "b" * 64, "c" * 64, "d" * 64,
+            "e" * 64, 2
+        )
+        self.assertNotEqual(first, second)
+        self.assertTrue(first.endswith("-01"))
+
+    def test_checker_preflight_exception_records_single_terminal_attempt(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            pack = root / "pack"
+            operator = root / "run" / "operator"
+            pack.mkdir()
+            operator.mkdir(parents=True)
+            config = {"posthoc_checker": {
+                "driver_sha256": "a" * 64,
+                "inner_checker_sha256": "b" * 64,
+                "runtime_config_sha256": "c" * 64,
+            }}
+            (pack / "execution_config.json").write_text(
+                json.dumps(config), encoding="utf-8"
+            )
+            (pack / "aggregate.sha256").write_text("d" * 64 + "\n", encoding="ascii")
+            (operator / "job.json").write_text(
+                json.dumps({"opaque_run_id": "RUN-opaque"}), encoding="utf-8"
+            )
+            (operator / "run_state.json").write_text(json.dumps({
+                "status": "executed_unchecked", "opaque_run_id": "RUN-opaque",
+                "execution_receipt_sha256": "e" * 64,
+            }), encoding="utf-8")
+            with mock.patch.object(
+                checker_controller, "preflight", side_effect=KeyError("public_declarations")
+            ):
+                with self.assertRaises(checker_controller.CheckerFailure):
+                    checker_controller.execute(pack, root / "run")
+            state = json.loads((operator / "run_state.json").read_text(encoding="utf-8"))
+            self.assertEqual(state["status"], "checker_terminal_failure")
+            failures = list((operator / "checker-attempts").glob("*/terminal-failure.json"))
+            self.assertEqual(len(failures), 1)
+            with self.assertRaises(checker_controller.CheckerFailure):
+                checker_controller.execute(pack, root / "run")
+    def test_checker_artifact_manifest_is_hash_bound(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "checker-result.json").write_text("{}\n", encoding="utf-8")
+            manifest = checker_controller.regular_artifact_manifest(root, 1024)
+            digest = checker_controller.artifact_aggregate(manifest)
+            (root / "checker-result.json").write_text('{"changed":true}\n', encoding="utf-8")
+            changed = checker_controller.regular_artifact_manifest(root, 1024)
+            self.assertNotEqual(digest, checker_controller.artifact_aggregate(changed))
+
+    def test_checker_lifecycle_is_inspected_cleaned_and_absent(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            cidfile = root / "container.cid"
+            active = root / "container.active"
+            run_code = (
+                "from pathlib import Path; "
+                f"Path({str(cidfile)!r}).write_text('container-123\\n'); "
+                f"Path({str(active)!r}).write_text('active')"
+            )
+            inspect_code = (
+                "from pathlib import Path; import sys; "
+                f"sys.exit(0 if Path({str(active)!r}).exists() else 3)"
+            )
+            cleanup_code = f"from pathlib import Path; Path({str(active)!r}).unlink(missing_ok=True)"
+            outcome = checker_controller.run_sandbox(
+                [sys.executable, "-c", run_code],
+                [sys.executable, "-c", cleanup_code],
+                [sys.executable, "-c", inspect_code],
+                [sys.executable, "-c", cleanup_code],
+                [sys.executable, "-c", inspect_code],
+                root, 10, 4096, cidfile, 3,
+            )
+            self.assertTrue(outcome["lifecycle_verified_absent"])
+            self.assertEqual(outcome["lifecycle"]["cid"]["inspect_before"]["exit_code"], 0)
+            self.assertEqual(outcome["lifecycle"]["cid"]["inspect_after"]["exit_code"], 3)
+
+    def test_checker_stdout_is_hard_capped(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            outcome = checker_controller.run_capped_process(
+                [sys.executable, "-c", "import sys; sys.stdout.write('x' * 1000000)"],
+                root, 10, 1024,
+            )
+            self.assertTrue(outcome["output_limit_exceeded"])
+            self.assertLessEqual(len(outcome["output"].encode("utf-8")), 1024)
+
+    def test_checker_monitor_exception_still_runs_dual_cleanup(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            cidfile = root / "container.cid"
+            outcomes = [0, 0, 3, 0, 0, 3]
+
+            def fake_run(command, cwd, timeout, maximum):
+                if command == ["launch"]:
+                    cidfile.write_text("container-123\n", encoding="ascii")
+                    raise OSError("monitor failed after launch")
+                code = outcomes.pop(0)
+                return {
+                    "command": command, "exit_code": code, "timed_out": False,
+                    "output_limit_exceeded": False, "wall_seconds": 0.0, "output": "",
+                }
+
+            with mock.patch.object(
+                checker_controller, "run_capped_process", side_effect=fake_run
+            ) as invoked:
+                with self.assertRaises(checker_controller.CheckerFailure):
+                    checker_controller.run_sandbox(
+                        ["launch"], ["cid-clean"], ["cid-inspect"],
+                        ["label-clean"], ["label-inspect"], root, 10, 1024, cidfile, 3,
+                    )
+            self.assertEqual(invoked.call_count, 7)
+            self.assertFalse(outcomes)
+
+    def test_checker_response_is_bounded_regular_json(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "response.json"
+            path.write_text('{"ok": true}\n', encoding="utf-8")
+            self.assertEqual(
+                checker_controller.load_bounded_regular_json(path, 64, "response"),
+                {"ok": True},
+            )
+            with self.assertRaises(checker_controller.CheckerFailure):
+                checker_controller.load_bounded_regular_json(path, 4, "response")
+
+    def test_checker_artifact_manifest_rejects_hardlinks(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            first = root / "first.json"
+            second = root / "second.json"
+            first.write_text("{}\n", encoding="utf-8")
+            try:
+                os.link(first, second)
+            except OSError:
+                self.skipTest("hard links unavailable on this filesystem")
+            with self.assertRaises(checker_controller.CheckerFailure):
+                checker_controller.regular_artifact_manifest(root, 1024)
+
+    def test_checker_result_rejects_string_false(self) -> None:
+        request = {
+            "sealed_pack_sha256": "a" * 64,
+            "execution_receipt_sha256": "b" * 64,
+            "completed_agent_manifest_sha256": "c" * 64,
+            "final_status": "partial",
+            "public_declarations": [],
+            "inner_checker_sha256": "d" * 64,
+            "checker_contract_sha256": "e" * 64,
+            "container_image_digest": "sha256:" + "f" * 64,
+            "checker_runtime_config_sha256": "1" * 64,
+        }
+        result = {
+            "schema_version": 1, "opaque_run_id": "RUN", "checker_attempt_id": "ATT",
+            "checker_pass": "false", "changed_files": [], "deleted_files": [],
+            "forbidden_lean_hits": [], "replay_forbidden_lean_hits": [],
+            "replay_changed_files": [], "replay_deleted_files": [],
+            "patch_check": {}, "patch_apply": {},
+            "replayed_content_matches_completed_workspace": False,
+            "post_worker_content_unchanged": False,
+            "public_declarations_absent_from_frozen_base": False,
+            "cache_prelude": None, "neutral_build": {}, "neutral_canary": None,
+            "public_declarations": [], "axiom_dependencies": [], "unexpected_axioms": [],
+            "artifact_replay_success": False, "workflow_compliance_pass": True,
+            "execution_usage": {}, "sealed_pack_sha256": request["sealed_pack_sha256"],
+            "execution_receipt_sha256": request["execution_receipt_sha256"],
+            "completed_agent_manifest_sha256": request["completed_agent_manifest_sha256"],
+            "agent_claimed_status": "partial", "claim_consistent_with_checker": True,
+            "inner_checker_sha256": request["inner_checker_sha256"],
+            "checker_contract_sha256": request["checker_contract_sha256"],
+            "container_image_digest": request["container_image_digest"],
+            "checker_runtime_config_sha256": request["checker_runtime_config_sha256"],
+        }
+        with self.assertRaises(checker_controller.CheckerFailure):
+            checker_controller.validate_checker_result(result, request, "RUN", "ATT")
+
+    def test_compiled_checker_result_requires_successful_declaration_canary(self) -> None:
+        request = {
+            "sealed_pack_sha256": "a" * 64, "execution_receipt_sha256": "b" * 64,
+            "completed_agent_manifest_sha256": "c" * 64, "final_status": "compiled",
+            "public_declarations": ["BanditRLProof.X"], "inner_checker_sha256": "d" * 64,
+            "checker_contract_sha256": "e" * 64,
+            "container_image_digest": "sha256:" + "f" * 64,
+            "checker_runtime_config_sha256": "1" * 64,
+            "worker_command_prefix": ["worker"], "cache_prelude_argv": [],
+            "allowed_axioms": ["Classical.choice", "Quot.sound", "propext"],
+        }
+        patch_check = {"command": ["git", "apply", "--check", "patch"], "exit_code": 0,
+                       "timed_out": False, "wall_seconds": 0.1}
+        patch_apply = {"command": ["git", "apply", "patch"], "exit_code": 0,
+                       "timed_out": False, "wall_seconds": 0.1}
+        result = {
+            "schema_version": 1, "opaque_run_id": "RUN", "checker_attempt_id": "ATT",
+            "checker_pass": True, "changed_files": ["X.lean"], "deleted_files": [],
+            "forbidden_lean_hits": [], "replay_forbidden_lean_hits": [],
+            "replay_changed_files": ["X.lean"], "replay_deleted_files": [],
+            "patch_check": patch_check, "patch_apply": patch_apply,
+            "replayed_content_matches_completed_workspace": True,
+            "post_worker_content_unchanged": True,
+            "public_declarations_absent_from_frozen_base": True,
+            "cache_prelude": None,
+            "neutral_build": {**patch_apply, "command": ["worker", "lake", "build"]},
+            "neutral_canary": None, "public_declarations": ["BanditRLProof.X"],
+            "axiom_dependencies": [], "unexpected_axioms": [],
+            "artifact_replay_success": True, "workflow_compliance_pass": True,
+            "execution_usage": {}, "sealed_pack_sha256": request["sealed_pack_sha256"],
+            "execution_receipt_sha256": request["execution_receipt_sha256"],
+            "completed_agent_manifest_sha256": request["completed_agent_manifest_sha256"],
+            "agent_claimed_status": "compiled", "claim_consistent_with_checker": True,
+            "inner_checker_sha256": request["inner_checker_sha256"],
+            "checker_contract_sha256": request["checker_contract_sha256"],
+            "container_image_digest": request["container_image_digest"],
+            "checker_runtime_config_sha256": request["checker_runtime_config_sha256"],
+        }
+        with self.assertRaises(checker_controller.CheckerFailure):
+            checker_controller.validate_checker_result(result, request, "RUN", "ATT")
+
+    def test_formal_grading_rejects_excluded_checker_fixture(self) -> None:
+        config = json.loads(
+            (TOOLS.parent / "evaluation" / "target-drift-v2" / "execution-template.json")
+            .read_text(encoding="utf-8")
+        )
+        config["posthoc_checker"]["mode"] = "excluded_fixture"
+        with self.assertRaises(SystemExit):
+            grading.require_production_checker(config, {})
+
+    def test_patch_link_mode_is_rejected_before_replay(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            patch = Path(directory) / "link.patch"
+            patch.write_text(
+                "diff --git a/link b/link\nnew file mode 120000\nindex 0000000..1234567\n",
+                encoding="utf-8",
+            )
+            with self.assertRaises(SystemExit):
+                checker_inner.require_patch_has_no_link_mode(patch)
+
+    def test_isolation_probe_response_requires_complete_typed_write_observations(self) -> None:
+        nonce = "a" * 48
+        label = f"ABRL-PROBE-{nonce}"
+        response = {
+            "schema_version": 1, "mode": "checker_isolation_probe",
+            "probe_nonce": nonce, "checker_attempt_label": label,
+            "checker_runtime_config_sha256": "b" * 64,
+            "container_image_digest": "sha256:" + "c" * 64,
+            "controller_entrypoint_sha256": "d" * 64,
+            "process_exit_code": 0,
+            "observations": {
+                "network_request_succeeded": False,
+                "host_sentinel_visible": False,
+                "operator_ground_truth_visible": False,
+                "background_probe_started": True,
+                "worker_write_succeeded": {
+                    key: False for key in isolation_probe.WORKER_WRITE_KEYS
+                },
+            },
+        }
+        self.assertEqual(
+            isolation_probe.strict_probe_response(
+                response, nonce, label, "b" * 64, "sha256:" + "c" * 64,
+                "d" * 64,
+            )["network_request_succeeded"],
+            False,
+        )
+        response["observations"]["worker_write_succeeded"].pop("checker_response")
+        with self.assertRaises(SystemExit):
+            isolation_probe.strict_probe_response(
+                response, nonce, label, "b" * 64, "sha256:" + "c" * 64,
+                "d" * 64,
+            )
 
     def test_adapter_usage_must_match_trace_counts_and_budgets(self) -> None:
         response = {

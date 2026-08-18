@@ -479,6 +479,22 @@ def main() -> None:
         config["grading"]["grader_prompt_sha256"],
     )
     grades = load(args.grades)
+    runtime_sha256 = prepare.checker_runtime_config_sha256(config)
+    require(config["posthoc_checker"]["mode"] == "production"
+            and grading_pack_manifest.get("result_eligible") is True
+            and grading_pack_manifest.get("checker_mode") == "production"
+            and grades.get("result_eligible") is True
+            and grades.get("checker_mode") == "production",
+            "analysis rejects nonproduction or fixture-derived results")
+    require(grading_pack_manifest.get("checker_runtime_config_sha256")
+            == grades.get("checker_runtime_config_sha256")
+            == config["posthoc_checker"]["runtime_config_sha256"]
+            == runtime_sha256,
+            "analysis checker runtime binding mismatch")
+    require(grading_pack_manifest.get("isolation_probe_report_sha256")
+            == grades.get("isolation_probe_report_sha256")
+            == config["posthoc_checker"]["isolation_probe_report_sha256"],
+            "analysis checker isolation-probe binding mismatch")
     require(grades.get("sealed_pack_sha256")
             == sealed_pack_sha256,
             "grade ledger names a different sealed pack")
@@ -494,6 +510,12 @@ def main() -> None:
     result["sealed_pack_sha256"] = sealed_pack_sha256
     result["grading_pack_sha256"] = grading_pack_manifest["aggregate_sha256"]
     result["grade_ledger_sha256"] = prepare.sha256_file(args.grades.resolve())
+    result["result_eligible"] = True
+    result["checker_mode"] = "production"
+    result["checker_runtime_config_sha256"] = runtime_sha256
+    result["isolation_probe_report_sha256"] = config["posthoc_checker"][
+        "isolation_probe_report_sha256"
+    ]
     dump(args.output, result)
     print(
         "target-drift analysis complete: "

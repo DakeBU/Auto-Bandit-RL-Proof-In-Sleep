@@ -168,6 +168,16 @@ def main() -> None:
             "grading pack names a different sealed execution pack")
     require(packet_manifest["grader_prompt_sha256"] == config["grading"]["grader_prompt_sha256"],
             "grading pack names a different frozen grader prompt")
+    runtime_sha256 = prepare.checker_runtime_config_sha256(config)
+    require(config["posthoc_checker"]["mode"] == "production"
+            and packet_manifest.get("result_eligible") is True
+            and packet_manifest.get("checker_mode") == "production",
+            "grade assembly requires production-result-eligible checker records")
+    require(packet_manifest.get("checker_runtime_config_sha256") == runtime_sha256
+            == config["posthoc_checker"]["runtime_config_sha256"]
+            and packet_manifest.get("isolation_probe_report_sha256")
+            == config["posthoc_checker"]["isolation_probe_report_sha256"],
+            "grading pack checker runtime/probe binding differs from frozen config")
     require(packet_manifest["grading_seed"] == config["grading"]["packet_order_seed"],
             "grading packet seed differs from frozen config")
     mapping_path = grading_pack / "operator-mapping.json"
@@ -310,6 +320,12 @@ def main() -> None:
         "suite_id": config["suite_id"],
         "sealed_pack_sha256": sealed_pack_sha256,
         "grading_pack_sha256": packet_manifest["aggregate_sha256"],
+        "result_eligible": True,
+        "checker_mode": "production",
+        "checker_runtime_config_sha256": runtime_sha256,
+        "isolation_probe_report_sha256": config["posthoc_checker"][
+            "isolation_probe_report_sha256"
+        ],
         "grading_summary": {
             "primary_grader_ids": response_ids,
             "adjudicator_id": adjudication["adjudicator_id"],

@@ -35,8 +35,10 @@ allowlist; the ABRL condition uses the same base with `evaluation/` removed.
 The execution seal must cover the normalized config, balanced assignments,
 the complete operator-only challenge ground truth, the v2 protocol, exact
 prompts, paired wording, portable source manifest and all four PDF byte streams,
-grading rubric, resource policy, adapter/grader contracts,
-materializer/runner/checker/grader/analysis code, and their per-file hashes.
+grading rubric, resource policy, agent/checker/grader contracts, checker
+isolation-probe report, the canonical Docker launcher, image recipe and verified
+SBOM, materializer/runner/host-controller/container-controller/inner-checker/
+grader/analysis code, and their per-file hashes.
 Future evaluated agents will receive opaque IDs and one requirement.  Primary graders will see
 neutralized final artifacts and post-hoc checker evidence, not condition or
 variant labels or condition-specific workflow traces.
@@ -56,8 +58,9 @@ Before the 450 runs, the following are mandatory:
    budget, trace, and sandbox isolation probes;
 4. run three real-provider/real-sandbox runs (one case × three conditions × one
    replicate) as infrastructure-only smoke tests excluded from the primary 450;
-5. put neutral replay in its own frozen, network/FS/process-restricted checker
-   sandbox, then verify budget/timeout/retry enforcement and hash binding;
+5. freeze a digest-pinned checker image and canonical launcher implementing the
+   tracked controller/worker-separation contract, then pass all seven isolation
+   probes;
 6. materialize blind grader packets and freeze the target-aware analysis code.
 
 The grader-packet materializer and packet-order seed are frozen before model
@@ -72,12 +75,17 @@ to the preregistered secondary endpoints.
 No pilot output may enter the final result set, and no challenge may be
 replaced after difficulty is observed.
 
-For the two-stage seal, edit a copy of `execution-template.json` only at the
-human/provider fields and create a `frozen_ready` copy of the source manifest
-with exact local PDF paths.  Then run:
+For the staged seal, edit a copy of `execution-template.json` only at the
+human/provider fields, replace the image-SBOM template with a real
+`built_verified` record for the digest-pinned image, and create a `frozen_ready`
+copy of the source manifest with exact local PDF paths.  Bind the canonical
+Docker executable and runtime identity, run the seven-probe recorder using that
+runtime-bound config, and only then preseal:
 
 ```text
-python tools/finalize_target_drift_config.py preseal --draft HUMAN-DRAFT.json --source-manifest SOURCES.json --output PRESEAL.json
+python tools/finalize_target_drift_config.py bind-runtime --draft HUMAN-DRAFT.json --runtime-executable ABSOLUTE-DOCKER-PATH --output RUNTIME-BOUND.json
+python tools/record_target_drift_checker_isolation_probe.py --config RUNTIME-BOUND.json --work-dir FRESH-PROBE-WORK --output CONFIGURED-PROBE-REPORT.json --probe-commit FULL-GIT-COMMIT --host-platform HOST-DESCRIPTION
+python tools/finalize_target_drift_config.py preseal --draft RUNTIME-BOUND.json --source-manifest SOURCES.json --output PRESEAL.json
 python tools/prepare_target_drift_execution.py --config PRESEAL.json --materialize PRESEAL-PACK
 python tools/finalize_target_drift_config.py freeze --preseal-config PRESEAL.json --preseal-pack PRESEAL-PACK --output FROZEN.json
 python tools/prepare_target_drift_execution.py --config FROZEN.json --materialize FROZEN-PACK
@@ -91,10 +99,35 @@ For each future semantic run selected by the operator, the frozen runner code pr
 opaque view, invokes the configured adapter without a shell, enforces an
 orchestrator process-tree timeout, validates the response/JSONL trace, rejects
 trace accounting beyond the token/tool/build/retry/time/cost budgets, and
-rehashes the completed view.  A real run must use an empty prelude inside a
-cache-complete immutable checker image.  The nonempty prelude implemented here
-is restricted to the excluded fake fixture and is not reproducibility or
-security evidence.  The same sealed pack is required by the checker code:
+rehashes the completed view.  The checker host controller then verifies the
+pack/run chain without executing Lean, reconstructs a pristine condition-view
+snapshot, and emits a sanitized request containing only the base, submitted
+patch, public declaration names, expected file hashes, and opaque/hash
+bindings.  The sandbox never receives the complete pack, operator directory,
+challenge ground truth, source bank, semantic ID, condition label, requirement
+variant, current Git checkout, credentials, or container socket.  The inner
+checker performs patch replay, build, canary, axiom, and post-worker source-hash
+checks.  Only a hash- and identity-validated artifact bundle is atomically
+published and allowed to enter blind grading.
+
+A real checker must use an immutable cache-complete image, an empty prelude,
+read-only request/base/patch mounts, no network, a read-only root filesystem,
+resource limits, and separate trusted-controller/Lean-worker identities.  The
+image must expose the complete `.lake` dependency seed at the fixed in-image
+path and a byte-complete manifest.  The manifest is SBOM/runtime-bound; the
+inner checker verifies every cached file, then directs the already restricted
+worker to copy it into the per-run tmpfs replay before any offline `lake build`.
+No host dependency cache is mounted.
+The
+sealed launcher accepts only the allowlisted Docker installation, rechecks the
+executable/signature-or-package ledger plus client/server/daemon identity, and
+constructs the complete argv itself.  Before every probe or replay it uses
+non-executing image inspection and extraction to verify the actual in-image
+controller, inner-checker, and cache-manifest bytes.  The exact image,
+recipe/SBOM, argv,
+attestations, and passed isolation-probe report are sealed.  The same sealed
+pack is required by the host controller but is never mounted into the
+untrusted Lean sandbox:
 
 ```text
 python tools/run_target_drift_execution.py --pack FROZEN-PACK --run-id SEMANTIC-RUN-ID --output RUN-DIR
@@ -112,14 +145,17 @@ python tools/analyze_target_drift_execution.py --pack FROZEN-PACK --grading-pack
 ```
 
 These commands expose executable code paths; they do not supply a provider,
-agent sandbox, checker sandbox, credentials, budget choices, or grader
-identities.  Component tests cover deterministic assignment, seal hashing,
+agent image, production checker image, credentials, budget choices, or grader
+identities.  The current local gate passes 109 repository tests (one unrelated
+skip), including 51 target-drift component tests covering deterministic assignment, seal hashing,
 opaque prompts, manifest/digest checks, selected fail-closed paths, and
 synthetic 450-record analysis.  The deterministic fake fixture and two local
 fail-closed probes are nonexperimental and do not pass the real-infrastructure
 gate.  No real three-condition smoke, final pack, primary model run, grader
 response, grade ledger, or analysis output exists.
 `tools/fake_target_drift_adapter.py` and
-`tools/fake_target_drift_cache_prelude.py` are deterministic fixtures only for
-the excluded local plumbing smoke test; they are not a model provider, sandbox,
-or cache-mount attestation and cannot satisfy the real-execution gate.
+`tools/fake_target_drift_cache_prelude.py`, and
+`tools/fake_target_drift_checker_sandbox.py` are deterministic fixture helpers
+for local plumbing experiments; no tracked full-chain smoke is claimed.  They
+are not a model provider, sandbox, or cache-image attestation and cannot satisfy
+the real-execution gate.

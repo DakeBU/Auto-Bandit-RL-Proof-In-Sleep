@@ -102,6 +102,21 @@ def require_blind_lean_artifacts(artifacts: list[dict[str, str]], label: str) ->
             f"condition-identifying text in primary {label}")
 
 
+def require_production_checker(config: dict[str, Any], probe: dict[str, Any]) -> str:
+    checker = config["posthoc_checker"]
+    require(checker["mode"] == "production",
+            "formal grading rejects excluded checker fixtures")
+    runtime_sha256 = prepare.checker_runtime_config_sha256(config)
+    require(checker["runtime_config_sha256"] == runtime_sha256,
+            "grading checker runtime digest differs from frozen config")
+    require(probe.get("status") == "passed"
+            and probe.get("checker_runtime_config_sha256") == runtime_sha256
+            and probe.get("probe_runner_sha256")
+            == checker["isolation_probe_runner_sha256"],
+            "formal grading requires the runtime-bound passed isolation probe")
+    return runtime_sha256
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--pack", type=Path, required=True)
@@ -118,6 +133,9 @@ def main() -> None:
     config = load(pack / "execution_config.json")
     require(config["suite_id"] == "ABRL-TARGET-DRIFT-V2", "grading requires v2 pack")
     require(config["execution_status"] == "frozen_ready", "grading requires frozen_ready pack")
+    checker_config = config["posthoc_checker"]
+    probe = load(pack / "checker_isolation_probe.json")
+    runtime_sha256 = require_production_checker(config, probe)
     current = Path(__file__).resolve()
     expected_hash = config["grading"]["packet_materializer_sha256"]
     require(hashlib.sha256(current.read_bytes()).hexdigest() == expected_hash,
@@ -151,8 +169,13 @@ def main() -> None:
         result_path = run_dir / "agent" / "output" / "result.json"
         state_path = run_dir / "operator" / "run_state.json"
         receipt_path = run_dir / "operator" / "execution-receipt.json"
+        checker_receipt_path = (
+            run_dir / "operator" / "checker" / "checker-execution-receipt.json"
+        )
+        checker_response_path = run_dir / "operator" / "checker" / "sandbox-response.json"
         if not all(path.is_file() for path in (
-            job_path, checker_path, result_path, state_path, receipt_path
+            job_path, checker_path, result_path, state_path, receipt_path,
+            checker_receipt_path, checker_response_path,
         )):
             continue
         job = load(job_path)
@@ -160,6 +183,8 @@ def main() -> None:
         result = load(result_path)
         state = load(state_path)
         receipt = load(receipt_path)
+        checker_receipt = load(checker_receipt_path)
+        checker_response = load(checker_response_path)
         require(state["prepared_job_sha256"] == receipt["prepared_job_sha256"]
                 == prepare.sha256_file(job_path),
                 f"prepared-job hash mismatch for {run_dir.name}")
@@ -168,8 +193,70 @@ def main() -> None:
                 == prepare.sha256_file(workspace_manifest_path),
                 f"workspace-manifest hash mismatch for {run_dir.name}")
         require(state["status"] == "checked", f"run is not checked: {run_dir.name}")
+        require(state.get("result_eligible") is True
+                and state.get("checker_mode") == "production",
+                f"run is not production-result-eligible: {run_dir.name}")
+        require(state.get("checker_runtime_config_sha256") == runtime_sha256
+                and state.get("isolation_probe_report_sha256")
+                == checker_config["isolation_probe_report_sha256"],
+                f"run checker runtime/probe binding mismatch: {run_dir.name}")
         require(state["checker_result_sha256"] == prepare.sha256_file(checker_path),
                 f"checker-result hash mismatch for {run_dir.name}")
+        require(state["checker_execution_receipt_sha256"]
+                == prepare.sha256_file(checker_receipt_path),
+                f"checker-execution-receipt hash mismatch for {run_dir.name}")
+        require(state["sandbox_response_sha256"]
+                == prepare.sha256_file(checker_response_path),
+                f"checker sandbox-response hash mismatch for {run_dir.name}")
+        checker_request_path = (
+            run_dir / "operator" / "checker-attempts"
+            / state["checker_attempt_id"] / "request.json"
+        )
+        require(checker_request_path.is_file()
+                and state["checker_request_sha256"]
+                == checker_receipt["checker_request_sha256"]
+                == checker_response["request_sha256"]
+                == prepare.sha256_file(checker_request_path),
+                f"checker sanitized-request hash mismatch for {run_dir.name}")
+        require(checker_receipt["sandbox_response_sha256"]
+                == state["sandbox_response_sha256"],
+                f"checker response/receipt chain mismatch for {run_dir.name}")
+        require(checker_receipt["checker_result_sha256"]
+                == state["checker_result_sha256"]
+                == checker_response["checker_result_sha256"],
+                f"checker result/receipt chain mismatch for {run_dir.name}")
+        require(checker_receipt["checker_artifact_aggregate_sha256"]
+                == state["checker_artifact_aggregate_sha256"]
+                == checker_response["artifact_aggregate_sha256"],
+                f"checker artifact aggregate mismatch for {run_dir.name}")
+        require(checker_response["container_image_digest"]
+                == checker_config["container_image_digest"],
+                f"checker image differs from frozen config for {run_dir.name}")
+        expected_checker_response = {
+            "checker_attempt_label": state["checker_attempt_id"],
+            "checker_id": checker_config["checker_id"],
+            "checker_version": checker_config["checker_version"],
+            "inner_checker_sha256": checker_config["inner_checker_sha256"],
+            "checker_contract_sha256": checker_config["contract_sha256"],
+            "checker_runtime_config_sha256": runtime_sha256,
+            "filesystem_network_process_attestation": checker_config[
+                "filesystem_network_process_attestation"
+            ],
+            "controller_worker_separation_attestation": checker_config[
+                "controller_worker_separation_attestation"
+            ],
+        }
+        for key, value in expected_checker_response.items():
+            require(checker_response.get(key) == value,
+                    f"checker response differs from frozen {key}: {run_dir.name}")
+        require(checker_receipt.get("checker_mode") == "production"
+                and checker_receipt.get("result_eligible") is True
+                and checker_receipt.get("checker_runtime_config_sha256") == runtime_sha256
+                and checker_receipt.get("isolation_probe_report_sha256")
+                == checker_config["isolation_probe_report_sha256"],
+                f"checker receipt is not production eligible: {run_dir.name}")
+        require(checker.get("checker_runtime_config_sha256") == runtime_sha256,
+                f"checker result names a different runtime: {run_dir.name}")
         require(state["execution_receipt_sha256"] == prepare.sha256_file(receipt_path),
                 f"execution-receipt hash mismatch for {run_dir.name}")
         require(checker["sealed_pack_sha256"] == receipt["sealed_pack_sha256"]
@@ -304,6 +391,12 @@ def main() -> None:
         "sealed_pack_sha256": (pack / "aggregate.sha256").read_text(encoding="ascii").strip(),
         "grader_prompt_sha256": config["grading"]["grader_prompt_sha256"],
         "primary_packets_exclude_condition_and_variant_labels": True,
+        "result_eligible": True,
+        "checker_mode": "production",
+        "checker_runtime_config_sha256": runtime_sha256,
+        "isolation_probe_report_sha256": checker_config[
+            "isolation_probe_report_sha256"
+        ],
         "packet_aggregate_sha256": packet_aggregate,
         "operator_mapping_sha256": hashlib.sha256(mapping_payload).hexdigest(),
         "aggregate_sha256": digest_payloads(combined_payloads),
