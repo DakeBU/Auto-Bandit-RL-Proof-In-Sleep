@@ -62,7 +62,7 @@ The frozen contract therefore retains:
 | `DELAYED-BOBW-OPTIMAL-ARM-SURVIVAL` | connect Algorithm 5 lines 7--8 to the nonempty-active premise in line 15 | compiled deterministic core of source Lemma D.9 under an explicit certificate; full recursive lemma open |
 | `DELAYED-BOBW-GOOD-EVENT-D9-PROJECTION` | derive the certificate from the two source upper-confidence surfaces and carry a supplied event-failure budget to optimal-arm elimination | compiled elimination projection and probability-bound consumer; full Definition D.1 and D.2--D.7 component producers open |
 | `DELAYED-BOBW-D8-D9-ASSEMBLY` | union the six D.2--D.7 failure components into Corollary D.8's `9/T` budget and compose it with D.9 survival | compiled outer-measure union and event transport; the six component bounds and full-event projection remain hypotheses |
-| `DELAYED-BOBW-D10-D12-GAP-ORDERING-AUDIT` | audit the prefix/elimination width transport used between Appendix Lemmas D.10 and D.12 | compiled antitone-width diagnostic, a literal `T=4` reverse-direction witness, a line-7 gap lower bound, an active-arm upper bound under explicit current-UCB/factor-three premises, a conditional same-snapshot factor-20 consumer with an explicit factor-ten premise, and the earlier conditional four-edge consumer; source large/small-count and recursive count/width producers remain open, so D.10/D.12 remain unresolved |
+| `DELAYED-BOBW-D10-D12-GAP-ORDERING-AUDIT` | audit the prefix/elimination width transport used between Appendix Lemmas D.10 and D.12 | compiled antitone-width diagnostic, a literal `T=4` reverse-direction witness, a line-7 gap lower bound, the exact small-count scalar implication, a large/small-count active-arm consumer, a conditional same-snapshot factor-20 consumer with an explicit factor-ten premise, and the earlier conditional four-edge consumer; recursive branch/count/width producers remain open, so D.10/D.12 remain unresolved |
 | `DELAYED-BOBW-CAUSAL-ACTION-MEASURE` | turn the line-15 vector into a causal one-round randomized law | compiled probability measure and observation-equivalence transport; measurable history kernel and recursive trajectory open |
 
 These leaves are deliberately small but source-semantic: they check the exact
@@ -87,17 +87,14 @@ The current library has rich finite-action, kernel, conditional-MGF, EXP3,
 Tsallis, and adaptive-trajectory infrastructure.  It now also has one
 source-exact elimination snapshot, a source-shaped good-event projection, the
 Corollary-D.8 union assembly, the deterministic optimal-arm survival consumer,
-the D.10/D.12 direction diagnostic, a conditional same-snapshot factor-20
-consumer,
-the earlier conditional four-edge consumer, and a causal measure-valued
-one-round action rule.  The conditional consumer combines the line-7
-elimination lower gap with an active-arm upper gap at the same processed prefix,
-so it avoids the displayed reverse temporal transport.  That upper gap still
-assumes current-UCB and an optimal-to-later factor-three width edge; the final
-step assumes a later-to-earlier factor-ten edge.  The source large/small-count
-case split and all three premises still have to be derived on the recursive
-Delayed SAPO trajectory.  It therefore neither verifies nor refutes the source
-lemmas.
+the D.10/D.12 direction diagnostic, the exact small-count width lower bound, a
+large/small-count active-arm consumer, a conditional same-snapshot factor-20
+consumer, the earlier conditional four-edge consumer, and a causal
+measure-valued one-round action rule.  The branched consumer avoids imposing
+the large-branch factor-three edge on the small-count branch.  It still accepts
+rather than recursively derives the actual branch/count/width certificate,
+and the final step still assumes a later-to-earlier factor-ten edge.  It
+therefore neither verifies nor refutes the source lemmas.
 The library does not yet
 have the paper's complete delayed SAPO state machine, probability banks,
 measurable recursive sampling kernel, detection/switch semantics, the complete

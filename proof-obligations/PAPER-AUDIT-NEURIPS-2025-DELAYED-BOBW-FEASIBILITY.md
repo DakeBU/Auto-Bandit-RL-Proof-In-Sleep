@@ -12,7 +12,7 @@
 | `DELAYED-BOBW-OPTIMAL-ARM-SURVIVAL` | Algorithm 5 lines 7--8 and the deterministic core of Lemma D.9: an optimal arm satisfying an explicit confidence certificate is not eliminated | real absolute-value interval, strict line-7 test, finite-set difference; source Lemma D.9 | package the exact elimination snapshot, derive the empirical upper inequality, and prove post-elimination nonemptiness | compiled deterministic implication; recursive full Lemma D.9 open |
 | `DELAYED-BOBW-GOOD-EVENT-D9-PROJECTION` | derive `muStar <= ucbStar` from both source upper-confidence surfaces and bound optimal-arm elimination by the complement of the elimination good event | finite infimum, `min`, event inclusion, measure monotonicity; source Definition D.1 and Lemma D.9 | package the elimination slice, construct the survival certificate, and expose a failure-budget consumer | compiled projection/consumer; full event and D.2--D.7 component producers open |
 | `DELAYED-BOBW-D8-D9-ASSEMBLY` | combine the six D.2--D.7 failure components into Corollary D.8's `9/T` budget and transport it through D.9 survival | finite outer-measure union, explicit `1/T^2` and `1/T` arithmetic, complement inclusion | name the six failure events, prove the union budget, and compose an explicit full-event projection with optimal-arm survival | compiled union/composition; six concentration proofs and semantic projection remain open |
-| `DELAYED-BOBW-D10-D12-GAP-ORDERING-AUDIT` | audit the width/gap chain used by Appendix Lemma D.10 and expose both the displayed four-edge route and a conditional same-snapshot factor-20 skeleton for Lemma D.12 / main-text Lemma 4.2 | `MLIB-ORDER-ALGEBRA`, `MLIB-REAL-LOG-SQRT`; source empirical-width definition, Algorithm 5 line-7 snapshot, and physical PDF pp. 26--27 | prove width antitonicity and a literal `T=4` reverse-direction witness; derive the eliminated-arm lower gap; derive the active-arm upper gap under explicit current-UCB and factor-three premises; consume an explicit same-prefix factor-ten edge; retain the conditional four-edge consumer for comparison | compiled diagnostic and two conditional consumers; the source large/small-count case split, recursive count/width producers, and unconditional D.10/D.12 remain open |
+| `DELAYED-BOBW-D10-D12-GAP-ORDERING-AUDIT` | audit the width/gap chain used by Appendix Lemma D.10 and expose both the displayed four-edge route and a conditional same-snapshot factor-20 skeleton for Lemma D.12 / main-text Lemma 4.2 | `MLIB-ORDER-ALGEBRA`, `MLIB-REAL-LOG-SQRT`; source empirical-width definition, Algorithm 5 line-7 snapshot, and physical PDF pp. 26--27 | prove width antitonicity and a literal `T=4` reverse-direction witness; derive the eliminated-arm lower gap; prove the exact small-count width lower bound; consume a large/small-count branch certificate and an explicit same-prefix factor-ten edge; retain the conditional four-edge consumer for comparison | compiled diagnostic and conditional consumers; recursive branch/count/width producers and unconditional D.10/D.12 remain open |
 | `DELAYED-BOBW-CAUSAL-ACTION-MEASURE` | line-15 vector induces a probability measure and a causal measure-valued decision rule | local `Exp3.FiniteActionDistribution`, `finiteActionMeasure`; causal observation equivalence | package explicit EAP premises, reuse the finite-action law, and transport equality through `ActionTimeView` | compiled one-round action law; measurable history kernel and recursive generated trajectory open |
 
 ## Active leaf contract
@@ -78,25 +78,26 @@ classified as compiled or audited.
   normalized count-one/count-four witness and a literal source-domain `T=4`
   theorem both show that the printed reverse prefix-to-later inequality is not
   a generic consequence of count growth.
-- Compiled conditional repair skeleton: at the snapshot where `iEarlier` is eliminated,
-  derive `8 w_earlier < gap_earlier` from the actual strict line-7 test and
-  good-event projection.  For `iLater`, the theorem additionally assumes the
-  current-UCB surface and `w_optimal <= 3 w_later` to derive
-  `gap_later <= 16 w_later`, then assumes the same-prefix comparison
-  `w_later <= 10 w_earlier`.  These premises imply
-  `gap_later <= 20 gap_earlier` without transporting a width to the later
-  elimination snapshot.
+- Compiled conditional repair skeleton: at the snapshot where `iEarlier` is
+  eliminated, derive `8 w_earlier < gap_earlier` from the actual strict line-7
+  test and good-event projection.  For `iLater`, the large branch consumes the
+  current-UCB surface and `w_optimal <= 3 w_later`; the small branch consumes
+  an exact source-width equality and `count <= 96 * scale`, using the compiled
+  implication `1 <= 10 w_later`.  Either branch gives
+  `gap_later <= 16 w_later`; the explicit same-prefix comparison
+  `w_later <= 10 w_earlier` then gives `gap_later <= 20 gap_earlier` without
+  transporting a width to the later elimination snapshot.
 - Comparison route: the explicit four-edge contract remains compiled to show
   exactly what the printed D.12 chain would require if its D.10 endpoint were
   supplied.
 - Hidden regularity: nonnegative width scale, positive counts for division,
   ordered processed-prefix indices, and the D.10 endpoint inequalities.  The
   prefix index is not wall-clock action time.
-- Remaining producers: the current-UCB upper surface, the source large/small-
-  count case split (factor-three in the large-count branch and its separate
-  small-count bound), the later-to-earlier same-prefix factor-ten comparison,
-  the ordered processed trace, and their probability/recursive trajectory
-  instantiation.
+- Remaining producers: the recursive source large/small-count branch
+  certificate, the actual source-width/count equality in the small branch, the
+  current-UCB and factor-three edges in the large branch, the later-to-earlier
+  same-prefix factor-ten comparison, the ordered processed trace, and their
+  probability/recursive trajectory instantiation.
 - Boundary: the same-snapshot algebraic skeleton is a conditional consumer,
   not a complete repair.  Lemma D.10, Lemma D.12, Lemma 4.2, and Theorem 4.1
   remain unverified until the source branch producers are instantiated.  Author

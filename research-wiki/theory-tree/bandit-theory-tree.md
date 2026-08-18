@@ -308,14 +308,15 @@ regime laws, external adversarial algorithm, and the same-algorithm Theorems
 4.1/5.1 coupling remain planned.  The compiled Lemma-D.9 layer is an explicit
 deterministic implication under recorded certificate fields, not the full
 probabilistic source lemma.  No external paper endpoint is classified as
-compiled or audited.  The flagship currently contains 103 named source-audit
-declarations, including 15 diagnostic/conditional/repair declarations for the
+compiled or audited.  The flagship currently contains 107 named source-audit
+declarations, including 19 diagnostic/conditional/repair declarations for the
 D.10-to-D.12 bridge; the generic multi-regime interface is counted separately.
-Those 15 declarations identify and conditionally bypass the displayed reverse
-transport at the algebraic snapshot level, but they neither verify nor refute
-source Lemmas D.10/D.12, main-text Lemma 4.2, or Theorem 4.1: the source
-large/small-count case split, recursive same-prefix count/width producers, and
-trajectory instantiation remain open.
+Those 19 declarations identify and conditionally bypass the displayed reverse
+transport, prove the exact source-shaped small-count scalar implication, and
+compile a large/small-count consumer at one algebraic snapshot.  They neither
+verify nor refute source Lemmas D.10/D.12, main-text Lemma 4.2, or Theorem 4.1:
+the recursive branch/count/width producers, same-prefix factor-ten comparison,
+and trajectory instantiation remain open.
 
 The machine-readable route atlas is `lean-route-roadmap.json`.  It is the
 handoff contract between upper planning agents and lower Lean agents: each

@@ -28,6 +28,42 @@ theorem sourceEmpiricalWidthScale_antitone
   apply Real.sqrt_le_sqrt
   exact div_le_div_of_nonneg_left hscale hcountEarlier hcount
 
+/-- The small-count branch used in the source proof of Lemma D.10.  If the
+count is at most `96 * scale`, then the capped inverse-square-root width is at
+least one tenth.  For the printed choice `scale = 2 * log T`, this is exactly
+the implication from `count <= 192 * log T` to `1 <= 10 * width`. -/
+theorem one_le_ten_mul_sourceEmpiricalWidthScale_of_count_le_96_mul_scale
+    (scale count : Real) (hscale : 0 < scale)
+    (hcount : count <= 96 * scale) :
+    1 <= 10 * sourceEmpiricalWidthScale scale count := by
+  by_cases hcountNonpositive : count <= 0
+  · rw [sourceEmpiricalWidthScale, if_pos hcountNonpositive]
+    norm_num
+  · have hcountPositive : 0 < count := lt_of_not_ge hcountNonpositive
+    rw [sourceEmpiricalWidthScale, if_neg hcountNonpositive]
+    have hratioNonnegative : 0 <= scale / count :=
+      div_nonneg hscale.le hcountPositive.le
+    have hsquare : ((1 / 10 : Real) ^ 2) <= scale / count := by
+      rw [le_div_iff₀ hcountPositive]
+      norm_num at hcount ⊢
+      linarith
+    have hsqrt : (1 / 10 : Real) <= Real.sqrt (scale / count) :=
+      (Real.le_sqrt (by norm_num) hratioNonnegative).2 hsquare
+    have hwidth : (1 / 10 : Real) <=
+        min 1 (Real.sqrt (scale / count)) :=
+      (le_min_iff).2 ⟨by norm_num, hsqrt⟩
+    nlinarith
+
+/-- Source-parameter specialization of the preceding small-count lemma. -/
+theorem one_le_ten_mul_sourceEmpiricalWidthScale_two_log_of_small_count
+    (horizon count : Real) (hhorizon : 1 < horizon)
+    (hcount : count <= 192 * Real.log horizon) :
+    1 <= 10 * sourceEmpiricalWidthScale (2 * Real.log horizon) count := by
+  apply one_le_ten_mul_sourceEmpiricalWidthScale_of_count_le_96_mul_scale
+  · have hlog : 0 < Real.log horizon := Real.log_pos hhorizon
+    linarith
+  · nlinarith
+
 /-- Exact small instance used to audit the direction of the displayed D.10
 prefix-to-elimination inequality. -/
 @[simp]
@@ -145,6 +181,44 @@ theorem gap_le_sixteen_mul_empiricalWidth_of_mem_remainingActive
     linarith
   linarith [hnotEliminated.2]
 
+/-- Source-faithful case split behind the D.10 active-arm upper endpoint.
+The large-count branch supplies the current-UCB and factor-three width edges.
+The small-count branch supplies the printed width formula together with
+`count <= 96 * scale`; bounded losses then give `gap <= 1 <= 10 * width`.
+This removes the unconditional factor-three assumption from the combined
+consumer while leaving the recursive count and width-shape producers explicit.
+-/
+theorem gap_le_sixteen_mul_empiricalWidth_of_mem_remainingActive_of_large_or_small_count
+    {K : Nat} [Nonempty (Fin K)]
+    (snapshot : DelayedSAPOSourceConfidenceSnapshot K)
+    (mean : Fin K -> Real) (optimal i : Fin K)
+    (hmeanBounds : forall j, mean j ∈ Set.Icc (0 : Real) 1)
+    (hgood : snapshot.EliminationGoodEvent mean)
+    (hi : i ∈ snapshot.remainingActive)
+    (hbranch :
+      (snapshot.ucbStar <=
+          snapshot.empiricalMean optimal + snapshot.empiricalWidth optimal /\
+        snapshot.empiricalWidth optimal <=
+          3 * snapshot.empiricalWidth i) \/
+      (exists scale count : Real,
+        0 < scale /\ count <= 96 * scale /\
+        snapshot.empiricalWidth i =
+          sourceEmpiricalWidthScale scale count)) :
+    mean i - mean optimal <= 16 * snapshot.empiricalWidth i := by
+  rcases hbranch with hlarge | hsmall
+  · exact gap_le_sixteen_mul_empiricalWidth_of_mem_remainingActive
+      snapshot mean optimal i hgood hi hlarge.1 hlarge.2
+  · rcases hsmall with ⟨scale, count, hscale, hcount, hwidth⟩
+    have hwidthLower : 1 <= 10 * snapshot.empiricalWidth i := by
+      rw [hwidth]
+      exact one_le_ten_mul_sourceEmpiricalWidthScale_of_count_le_96_mul_scale
+        scale count hscale hcount
+    have hgapUpper : mean i - mean optimal <= 1 := by
+      have hiUpper := (hmeanBounds i).2
+      have hoptimalLower := (hmeanBounds optimal).1
+      linarith
+    linarith
+
 /-- Same-snapshot repair of the displayed D.12 / main-text Lemma 4.2 chain.
 When `iEarlier` is eliminated and `iLater` remains active in that very update,
 the active-prefix D.10 gap upper bound can be consumed before any later
@@ -173,6 +247,42 @@ theorem gap_le_twenty_mul_gap_at_earlier_elimination_snapshot
       20 * (mean iEarlier - mean optimal) := by
   have hlater := gap_le_sixteen_mul_empiricalWidth_of_mem_remainingActive
     snapshot mean optimal iLater hgood hLaterRemaining hucbCurrent hoptimalWidth
+  have hearlier := eight_mul_empiricalWidth_lt_gap_of_mem_eliminated
+    snapshot mean optimal iEarlier hoptimal hgood hEarlierEliminated
+  linarith
+
+/-- The same-snapshot factor-twenty consumer with the source's large/small-
+count split exposed.  In the small-count branch the factor-three premise is
+replaced by bounded means and the exact source-width lower bound.  The theorem
+still requires a recursive producer for the selected branch and the same-
+prefix factor-ten comparison; it is not an unconditional port of D.10/D.12.
+-/
+theorem gap_le_twenty_mul_gap_at_earlier_elimination_snapshot_of_large_or_small_count
+    {K : Nat} [Nonempty (Fin K)]
+    (snapshot : DelayedSAPOSourceConfidenceSnapshot K)
+    (mean : Fin K -> Real) (optimal iEarlier iLater : Fin K)
+    (hoptimal : forall j, mean optimal <= mean j)
+    (hmeanBounds : forall j, mean j ∈ Set.Icc (0 : Real) 1)
+    (hgood : snapshot.EliminationGoodEvent mean)
+    (hEarlierEliminated : iEarlier ∈ snapshot.eliminated)
+    (hLaterRemaining : iLater ∈ snapshot.remainingActive)
+    (hbranch :
+      (snapshot.ucbStar <=
+          snapshot.empiricalMean optimal + snapshot.empiricalWidth optimal /\
+        snapshot.empiricalWidth optimal <=
+          3 * snapshot.empiricalWidth iLater) \/
+      (exists scale count : Real,
+        0 < scale /\ count <= 96 * scale /\
+        snapshot.empiricalWidth iLater =
+          sourceEmpiricalWidthScale scale count))
+    (hpairWidth :
+      snapshot.empiricalWidth iLater <=
+        10 * snapshot.empiricalWidth iEarlier) :
+    mean iLater - mean optimal <=
+      20 * (mean iEarlier - mean optimal) := by
+  have hlater :=
+    gap_le_sixteen_mul_empiricalWidth_of_mem_remainingActive_of_large_or_small_count
+      snapshot mean optimal iLater hmeanBounds hgood hLaterRemaining hbranch
   have hearlier := eight_mul_empiricalWidth_lt_gap_of_mem_eliminated
     snapshot mean optimal iEarlier hoptimal hgood hEarlierEliminated
   linarith

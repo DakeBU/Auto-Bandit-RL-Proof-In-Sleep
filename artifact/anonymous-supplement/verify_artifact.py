@@ -133,10 +133,10 @@ def verify_claim_ledger():
     if impl_count != 88:
         fail("delayed implementation count is {}, expected 88".format(impl_count))
     diagnostic = records[diagnostic_id]
-    if diagnostic["status"] != "partial" or len(diagnostic["declarations"]) != 15:
+    if diagnostic["status"] != "partial" or len(diagnostic["declarations"]) != 19:
         fail("D.10--D.12 diagnostic boundary drift")
     delayed = ledger["delayed_feedback"]
-    if delayed.get("diagnostic_conditional_repair_declaration_count") != 15:
+    if delayed.get("diagnostic_conditional_repair_declaration_count") != 19:
         fail("D.10--D.12 diagnostic/repair count drift")
     if delayed.get("source_audit_declaration_count") != impl_count + len(diagnostic["declarations"]):
         fail("delayed source-audit total drift")

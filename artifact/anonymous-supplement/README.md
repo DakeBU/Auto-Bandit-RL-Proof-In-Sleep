@@ -31,11 +31,11 @@ repository.
   run, grade, analysis result, or numerical outcome is included or claimed.
 
 The delayed-feedback flagship contains 88 implementation-facing compiled
-declarations and 15 separately counted diagnostic/conditional/repair
+declarations and 19 separately counted diagnostic/conditional/repair
 declarations.  The latter diagnose the printed D.10--D.12 direction/indexing
-obligation and compile a conditional same-snapshot factor-20 skeleton under
-explicit current-UCB, factor-three, and factor-ten width premises.  The source
-large/small-count case split and recursive count/width producers remain open;
+obligation, prove the source-shaped small-count width lower bound, and compile
+a large/small-count conditional same-snapshot factor-20 skeleton.  Recursive
+branch/count/width producers and the same-prefix factor-ten edge remain open;
 these declarations do not verify or refute the source lemmas or the paper-level
 regret theorem.  Textbook Chapters 13--17 contain
 compiled dependency spines, while

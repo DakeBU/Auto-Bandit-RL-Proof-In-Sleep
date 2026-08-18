@@ -1,6 +1,6 @@
 # Proof Blueprint: PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY
 
-Generated: `2026-08-18T06:17:26+00:00`
+Generated: `2026-08-18T07:25:46+00:00`
 
 ## Source Task
 
@@ -83,12 +83,14 @@ availability condition `s + delay s < t`.
 - [x] Audit the Lemma-D.10-to-D.12 gap-ordering bridge. The frozen PDF's
   prefix-to-elimination width inequality points opposite to the inverse-square-
   root width's count monotonicity. Compile the direction diagnostic, the exact
-  conditional four-edge consumer, and a conditional same-snapshot factor-20
-  skeleton.  The latter explicitly assumes the current-UCB surface, the
-  optimal-to-later factor-three width edge, and the later-to-earlier factor-ten
-  width edge; the source's large/small-count case split and recursive producers
-  are not yet encoded.  Keep Lemma 4.2 unverified pending those producers and a
-  source-faithful endpoint repair or clarification.
+  conditional four-edge consumer, and conditional same-snapshot factor-20
+  skeletons.  Lean now also proves the exact small-count scalar implication
+  `count <= 192 * log T -> 1 <= 10 * width` and consumes the source-shaped
+  large/small-count disjunction without imposing factor three on the small
+  branch.  The recursive Delayed SAPO trace still has to produce the actual
+  count/width equality, the large-branch current-UCB/factor-three certificate,
+  and the same-prefix factor-ten edge.  Keep Lemma 4.2 unverified pending those
+  producers and a source-faithful endpoint repair or clarification.
 - [x] Reuse the existing finite-action law to turn the certified line-15
   vector into a probability measure, and lift causal allocation rules to
   measure-valued rules that remain identical in observation-equivalent hidden
@@ -277,15 +279,16 @@ in the frozen camera-ready. Lean work therefore records the direction
 diagnostic and a conditional factor-20 consumer, not an unconditional port of
 Lemma D.10/D.12.
 
-A second compiled consumer stays at the earlier elimination snapshot and thus
-avoids the disputed temporal transport.  It derives the strict eliminated-arm
-lower gap from line 7, but its active-arm upper gap explicitly assumes the
-current-UCB surface and `width_optimal <= 3 * width_later`; the final factor-20
-step also assumes `width_later <= 10 * width_earlier`.  The source proof obtains
-the factor-three edge only in its large-count branch and uses a separate
-small-count bound otherwise.  That case split and its recursive same-prefix
-count/width producers are not encoded.  This theorem is therefore a
-conditional same-snapshot repair skeleton, not a completed source repair.
+A second compiled route stays at the earlier elimination snapshot and thus
+avoids the disputed temporal transport.  Lean proves the source's exact
+small-count scalar implication `count <= 192 * log T -> 1 <= 10 * width` and a
+branched active-arm upper-gap consumer: the large branch accepts the
+current-UCB and `width_optimal <= 3 * width_later` edges, while the small branch
+accepts the source-width equality and count threshold and uses bounded means.
+The factor-20 endpoint still assumes `width_later <= 10 * width_earlier`.
+The recursive trace does not yet produce the branch certificate, source-width
+equality, or factor-ten edge.  This is therefore a conditional same-snapshot
+repair skeleton, not a completed source repair.
 
 ## Hidden regularity and boundary
 
@@ -324,7 +327,7 @@ open.
 | `DELAYED-BOBW-OPTIMAL-ARM-SURVIVAL` | Algorithm 5 lines 7--8 and the deterministic core of Lemma D.9: an optimal arm satisfying an explicit confidence certificate is not eliminated | real absolute-value interval, strict line-7 test, finite-set difference; source Lemma D.9 | package the exact elimination snapshot, derive the empirical upper inequality, and prove post-elimination nonemptiness | compiled deterministic implication; recursive full Lemma D.9 open |
 | `DELAYED-BOBW-GOOD-EVENT-D9-PROJECTION` | derive `muStar <= ucbStar` from both source upper-confidence surfaces and bound optimal-arm elimination by the complement of the elimination good event | finite infimum, `min`, event inclusion, measure monotonicity; source Definition D.1 and Lemma D.9 | package the elimination slice, construct the survival certificate, and expose a failure-budget consumer | compiled projection/consumer; full event and D.2--D.7 component producers open |
 | `DELAYED-BOBW-D8-D9-ASSEMBLY` | combine the six D.2--D.7 failure components into Corollary D.8's `9/T` budget and transport it through D.9 survival | finite outer-measure union, explicit `1/T^2` and `1/T` arithmetic, complement inclusion | name the six failure events, prove the union budget, and compose an explicit full-event projection with optimal-arm survival | compiled union/composition; six concentration proofs and semantic projection remain open |
-| `DELAYED-BOBW-D10-D12-GAP-ORDERING-AUDIT` | audit the width/gap chain used by Appendix Lemma D.10 and expose both the displayed four-edge route and a conditional same-snapshot factor-20 skeleton for Lemma D.12 / main-text Lemma 4.2 | `MLIB-ORDER-ALGEBRA`, `MLIB-REAL-LOG-SQRT`; source empirical-width definition, Algorithm 5 line-7 snapshot, and physical PDF pp. 26--27 | prove width antitonicity and a literal `T=4` reverse-direction witness; derive the eliminated-arm lower gap; derive the active-arm upper gap under explicit current-UCB and factor-three premises; consume an explicit same-prefix factor-ten edge; retain the conditional four-edge consumer for comparison | compiled diagnostic and two conditional consumers; the source large/small-count case split, recursive count/width producers, and unconditional D.10/D.12 remain open |
+| `DELAYED-BOBW-D10-D12-GAP-ORDERING-AUDIT` | audit the width/gap chain used by Appendix Lemma D.10 and expose both the displayed four-edge route and a conditional same-snapshot factor-20 skeleton for Lemma D.12 / main-text Lemma 4.2 | `MLIB-ORDER-ALGEBRA`, `MLIB-REAL-LOG-SQRT`; source empirical-width definition, Algorithm 5 line-7 snapshot, and physical PDF pp. 26--27 | prove width antitonicity and a literal `T=4` reverse-direction witness; derive the eliminated-arm lower gap; prove the exact small-count width lower bound; consume a large/small-count branch certificate and an explicit same-prefix factor-ten edge; retain the conditional four-edge consumer for comparison | compiled diagnostic and conditional consumers; recursive branch/count/width producers and unconditional D.10/D.12 remain open |
 | `DELAYED-BOBW-CAUSAL-ACTION-MEASURE` | line-15 vector induces a probability measure and a causal measure-valued decision rule | local `Exp3.FiniteActionDistribution`, `finiteActionMeasure`; causal observation equivalence | package explicit EAP premises, reuse the finite-action law, and transport equality through `ActionTimeView` | compiled one-round action law; measurable history kernel and recursive generated trajectory open |
 
 ## Active leaf contract
@@ -390,25 +393,26 @@ classified as compiled or audited.
   normalized count-one/count-four witness and a literal source-domain `T=4`
   theorem both show that the printed reverse prefix-to-later inequality is not
   a generic consequence of count growth.
-- Compiled conditional repair skeleton: at the snapshot where `iEarlier` is eliminated,
-  derive `8 w_earlier < gap_earlier` from the actual strict line-7 test and
-  good-event projection.  For `iLater`, the theorem additionally assumes the
-  current-UCB surface and `w_optimal <= 3 w_later` to derive
-  `gap_later <= 16 w_later`, then assumes the same-prefix comparison
-  `w_later <= 10 w_earlier`.  These premises imply
-  `gap_later <= 20 gap_earlier` without transporting a width to the later
-  elimination snapshot.
+- Compiled conditional repair skeleton: at the snapshot where `iEarlier` is
+  eliminated, derive `8 w_earlier < gap_earlier` from the actual strict line-7
+  test and good-event projection.  For `iLater`, the large branch consumes the
+  current-UCB surface and `w_optimal <= 3 w_later`; the small branch consumes
+  an exact source-width equality and `count <= 96 * scale`, using the compiled
+  implication `1 <= 10 w_later`.  Either branch gives
+  `gap_later <= 16 w_later`; the explicit same-prefix comparison
+  `w_later <= 10 w_earlier` then gives `gap_later <= 20 gap_earlier` without
+  transporting a width to the later elimination snapshot.
 - Comparison route: the explicit four-edge contract remains compiled to show
   exactly what the printed D.12 chain would require if its D.10 endpoint were
   supplied.
 - Hidden regularity: nonnegative width scale, positive counts for division,
   ordered processed-prefix indices, and the D.10 endpoint inequalities.  The
   prefix index is not wall-clock action time.
-- Remaining producers: the current-UCB upper surface, the source large/small-
-  count case split (factor-three in the large-count branch and its separate
-  small-count bound), the later-to-earlier same-prefix factor-ten comparison,
-  the ordered processed trace, and their probability/recursive trajectory
-  instantiation.
+- Remaining producers: the recursive source large/small-count branch
+  certificate, the actual source-width/count equality in the small branch, the
+  current-UCB and factor-three edges in the large branch, the later-to-earlier
+  same-prefix factor-ten comparison, the ordered processed trace, and their
+  probability/recursive trajectory instantiation.
 - Boundary: the same-snapshot algebraic skeleton is a conditional consumer,
   not a complete repair.  Lemma D.10, Lemma D.12, Lemma 4.2, and Theorem 4.1
   remain unverified until the source branch producers are instantiated.  Author
@@ -45417,10 +45421,26 @@ These cards are planning inspiration only.  They do not certify any theorem.
   },
   {
     "kind": "theorem",
+    "name": "one_le_ten_mul_sourceEmpiricalWidthScale_of_count_le_96_mul_scale",
+    "full_name": "BanditRLProof.DelayedFeedback.one_le_ten_mul_sourceEmpiricalWidthScale_of_count_le_96_mul_scale",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+    "line": 35,
+    "statement": "theorem one_le_ten_mul_sourceEmpiricalWidthScale_of_count_le_96_mul_scale (scale count : Real) (hscale : 0 < scale) (hcount : count <= 96 * scale) : 1 <= 10 * sourceEmpiricalWidthScale scale count"
+  },
+  {
+    "kind": "theorem",
+    "name": "one_le_ten_mul_sourceEmpiricalWidthScale_two_log_of_small_count",
+    "full_name": "BanditRLProof.DelayedFeedback.one_le_ten_mul_sourceEmpiricalWidthScale_two_log_of_small_count",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+    "line": 58,
+    "statement": "theorem one_le_ten_mul_sourceEmpiricalWidthScale_two_log_of_small_count (horizon count : Real) (hhorizon : 1 < horizon) (hcount : count <= 192 * Real.log horizon) : 1 <= 10 * sourceEmpiricalWidthScale (2 * Real.log horizon) count"
+  },
+  {
+    "kind": "theorem",
     "name": "sourceEmpiricalWidthScale_one_one",
     "full_name": "BanditRLProof.DelayedFeedback.sourceEmpiricalWidthScale_one_one",
     "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
-    "line": 34,
+    "line": 70,
     "statement": "theorem sourceEmpiricalWidthScale_one_one : sourceEmpiricalWidthScale 1 1 = 1"
   },
   {
@@ -45428,7 +45448,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "sourceEmpiricalWidthScale_one_four",
     "full_name": "BanditRLProof.DelayedFeedback.sourceEmpiricalWidthScale_one_four",
     "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
-    "line": 41,
+    "line": 77,
     "statement": "theorem sourceEmpiricalWidthScale_one_four : sourceEmpiricalWidthScale 1 4 = (1 / 2 : Real)"
   },
   {
@@ -45436,7 +45456,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "not_sourceEmpiricalWidthScale_one_le_four",
     "full_name": "BanditRLProof.DelayedFeedback.not_sourceEmpiricalWidthScale_one_le_four",
     "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
-    "line": 49,
+    "line": 85,
     "statement": "theorem not_sourceEmpiricalWidthScale_one_le_four : not (sourceEmpiricalWidthScale 1 1 <= sourceEmpiricalWidthScale 1 4)"
   },
   {
@@ -45444,7 +45464,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "not_sourceEmpiricalWidthScale_horizon_four_one_le_four",
     "full_name": "BanditRLProof.DelayedFeedback.not_sourceEmpiricalWidthScale_horizon_four_one_le_four",
     "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
-    "line": 58,
+    "line": 94,
     "statement": "theorem not_sourceEmpiricalWidthScale_horizon_four_one_le_four : \u00ac (sourceEmpiricalWidthScale (2 * Real.log 4) 1 <= sourceEmpiricalWidthScale (2 * Real.log 4) 4)"
   },
   {
@@ -45452,7 +45472,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "eight_mul_empiricalWidth_lt_gap_of_mem_eliminated",
     "full_name": "BanditRLProof.DelayedFeedback.eight_mul_empiricalWidth_lt_gap_of_mem_eliminated",
     "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
-    "line": 97,
+    "line": 133,
     "statement": "theorem eight_mul_empiricalWidth_lt_gap_of_mem_eliminated {K : Nat} [Nonempty (Fin K)] (snapshot : DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K -> Real) (optimal i : Fin K) (hoptimal : forall j, mean optimal <= mean j) (hgood : snapshot.EliminationGoodEvent mean) (hi : i \u2208 snapshot.eliminated) : 8 * snapshot.empiricalWidth i < mean i - mean optimal"
   },
   {
@@ -45460,23 +45480,39 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "gap_le_sixteen_mul_empiricalWidth_of_mem_remainingActive",
     "full_name": "BanditRLProof.DelayedFeedback.gap_le_sixteen_mul_empiricalWidth_of_mem_remainingActive",
     "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
-    "line": 122,
+    "line": 158,
     "statement": "theorem gap_le_sixteen_mul_empiricalWidth_of_mem_remainingActive {K : Nat} [Nonempty (Fin K)] (snapshot : DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K -> Real) (optimal i : Fin K) (hgood : snapshot.EliminationGoodEvent mean) (hi : i \u2208 snapshot.remainingActive) (hucbCurrent : snapshot.ucbStar <= snapshot.empiricalMean optimal + snapshot.empiricalWidth optimal) (hoptimalWidth : snapshot.empiricalWidth optimal <= 3 * snapshot.empiricalWidth i) : mean i - mean optimal <= 16 * snapshot.empiricalWidth i"
+  },
+  {
+    "kind": "theorem",
+    "name": "gap_le_sixteen_mul_empiricalWidth_of_mem_remainingActive_of_large_or_small_count",
+    "full_name": "BanditRLProof.DelayedFeedback.gap_le_sixteen_mul_empiricalWidth_of_mem_remainingActive_of_large_or_small_count",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+    "line": 191,
+    "statement": "theorem gap_le_sixteen_mul_empiricalWidth_of_mem_remainingActive_of_large_or_small_count {K : Nat} [Nonempty (Fin K)] (snapshot : DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K -> Real) (optimal i : Fin K) (hmeanBounds : forall j, mean j \u2208 Set.Icc (0 : Real) 1) (hgood : snapshot.EliminationGoodEvent mean) (hi : i \u2208 snapshot.remainingActive) (hbranch : (snapshot.ucbStar <= snapshot.empiricalMean optimal + snapshot.empiricalWidth optimal /\\ snapshot.empiricalWidth optimal <= 3 * snapshot.empiricalWidth i) \\/ (exists scale count : Real, 0 < scale /\\ count <= 96 * scale /\\ snapshot.empiricalWidth i = sourceEmpiricalWidthScale scale count)) : mean i - mean optimal <= 16 * snapshot.empiricalWidth i"
   },
   {
     "kind": "theorem",
     "name": "gap_le_twenty_mul_gap_at_earlier_elimination_snapshot",
     "full_name": "BanditRLProof.DelayedFeedback.gap_le_twenty_mul_gap_at_earlier_elimination_snapshot",
     "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
-    "line": 155,
+    "line": 229,
     "statement": "theorem gap_le_twenty_mul_gap_at_earlier_elimination_snapshot {K : Nat} [Nonempty (Fin K)] (snapshot : DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K -> Real) (optimal iEarlier iLater : Fin K) (hoptimal : forall j, mean optimal <= mean j) (hgood : snapshot.EliminationGoodEvent mean) (hEarlierEliminated : iEarlier \u2208 snapshot.eliminated) (hLaterRemaining : iLater \u2208 snapshot.remainingActive) (hucbCurrent : snapshot.ucbStar <= snapshot.empiricalMean optimal + snapshot.empiricalWidth optimal) (hoptimalWidth : snapshot.empiricalWidth optimal <= 3 * snapshot.empiricalWidth iLater) (hpairWidth : snapshot.empiricalWidth iLater <= 10 * snapshot.empiricalWidth iEarlier) : mean iLater - mean optimal <= 20 * (mean iEarlier - mean optimal)"
+  },
+  {
+    "kind": "theorem",
+    "name": "gap_le_twenty_mul_gap_at_earlier_elimination_snapshot_of_large_or_small_count",
+    "full_name": "BanditRLProof.DelayedFeedback.gap_le_twenty_mul_gap_at_earlier_elimination_snapshot_of_large_or_small_count",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+    "line": 260,
+    "statement": "theorem gap_le_twenty_mul_gap_at_earlier_elimination_snapshot_of_large_or_small_count {K : Nat} [Nonempty (Fin K)] (snapshot : DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K -> Real) (optimal iEarlier iLater : Fin K) (hoptimal : forall j, mean optimal <= mean j) (hmeanBounds : forall j, mean j \u2208 Set.Icc (0 : Real) 1) (hgood : snapshot.EliminationGoodEvent mean) (hEarlierEliminated : iEarlier \u2208 snapshot.eliminated) (hLaterRemaining : iLater \u2208 snapshot.remainingActive) (hbranch : (snapshot.ucbStar <= snapshot.empiricalMean optimal + snapshot.empiricalWidth optimal /\\ snapshot.empiricalWidth optimal <= 3 * snapshot.empiricalWidth iLater) \\/ (exists scale count : Real, 0 < scale /\\ count <= 96 * scale /\\ snapshot.empiricalWidth iLater = sourceEmpiricalWidthScale scale count)) (hpairWidth : snapshot.empiricalWidth iLater <= 10 * snapshot.empiricalWidth iEarlier) : mean iLater - mean optimal <= 20 * (mean iEarlier - mean optimal)"
   },
   {
     "kind": "structure",
     "name": "DelayedSAPOD10D12GapOrderingContract",
     "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract",
     "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
-    "line": 185,
+    "line": 295,
     "statement": "structure DelayedSAPOD10D12GapOrderingContract (K : Nat) where"
   },
   {
@@ -45484,7 +45520,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "surrogateGap",
     "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.surrogateGap",
     "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
-    "line": 202,
+    "line": 312,
     "statement": "noncomputable def surrogateGap {K : Nat} (contract : DelayedSAPOD10D12GapOrderingContract K) (i : Fin K) : Real"
   },
   {
@@ -45492,7 +45528,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "surrogateGap_le_gap",
     "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.surrogateGap_le_gap",
     "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
-    "line": 208,
+    "line": 318,
     "statement": "theorem surrogateGap_le_gap {K : Nat} (contract : DelayedSAPOD10D12GapOrderingContract K) (i : Fin K) : contract.surrogateGap i <= contract.gap i"
   },
   {
@@ -45500,7 +45536,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "gap_le_two_mul_surrogateGap",
     "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.gap_le_two_mul_surrogateGap",
     "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
-    "line": 216,
+    "line": 326,
     "statement": "theorem gap_le_two_mul_surrogateGap {K : Nat} (contract : DelayedSAPOD10D12GapOrderingContract K) (i : Fin K) : contract.gap i <= 2 * contract.surrogateGap i"
   },
   {
@@ -45508,7 +45544,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "d12_gap_ordering_chain",
     "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.d12_gap_ordering_chain",
     "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
-    "line": 227,
+    "line": 337,
     "statement": "theorem d12_gap_ordering_chain {K : Nat} (contract : DelayedSAPOD10D12GapOrderingContract K) (iEarlier iLater : Fin K) (horder : contract.eliminationPrefixIndex iEarlier <= contract.eliminationPrefixIndex iLater) : contract.gap iLater <= 16 * contract.widthAt iLater (contract.eliminationPrefixIndex iLater) /\\ 16 * contract.widthAt iLater (contract.eliminationPrefixIndex iLater) <= 16 * contract.widthAt iLater (contract.eliminationPrefixIndex iEarlier) /\\ 16 * contract.widthAt iLater (contract.eliminationPrefixIndex iEarlier) <= 160 * contract.widthAt iEarlier (contract.eliminationPrefixIndex iEarlier) /\\ 160 * contract.widthAt iEarlier (contract.eliminationPrefixIndex iEarlier) <= 20 * contract.gap iEarlier"
   },
   {
@@ -45516,7 +45552,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "gap_le_twenty_mul_gap_of_eliminationPrefixIndex_le",
     "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.gap_le_twenty_mul_gap_of_eliminationPrefixIndex_le",
     "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
-    "line": 257,
+    "line": 367,
     "statement": "theorem gap_le_twenty_mul_gap_of_eliminationPrefixIndex_le {K : Nat} (contract : DelayedSAPOD10D12GapOrderingContract K) (iEarlier iLater : Fin K) (horder : contract.eliminationPrefixIndex iEarlier <= contract.eliminationPrefixIndex iLater) : contract.gap iLater <= 20 * contract.gap iEarlier"
   },
   {

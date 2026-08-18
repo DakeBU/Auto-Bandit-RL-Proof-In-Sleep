@@ -145,15 +145,16 @@ in the frozen camera-ready. Lean work therefore records the direction
 diagnostic and a conditional factor-20 consumer, not an unconditional port of
 Lemma D.10/D.12.
 
-A second compiled consumer stays at the earlier elimination snapshot and thus
-avoids the disputed temporal transport.  It derives the strict eliminated-arm
-lower gap from line 7, but its active-arm upper gap explicitly assumes the
-current-UCB surface and `width_optimal <= 3 * width_later`; the final factor-20
-step also assumes `width_later <= 10 * width_earlier`.  The source proof obtains
-the factor-three edge only in its large-count branch and uses a separate
-small-count bound otherwise.  That case split and its recursive same-prefix
-count/width producers are not encoded.  This theorem is therefore a
-conditional same-snapshot repair skeleton, not a completed source repair.
+A second compiled route stays at the earlier elimination snapshot and thus
+avoids the disputed temporal transport.  Lean proves the source's exact
+small-count scalar implication `count <= 192 * log T -> 1 <= 10 * width` and a
+branched active-arm upper-gap consumer: the large branch accepts the
+current-UCB and `width_optimal <= 3 * width_later` edges, while the small branch
+accepts the source-width equality and count threshold and uses bounded means.
+The factor-20 endpoint still assumes `width_later <= 10 * width_earlier`.
+The recursive trace does not yet produce the branch certificate, source-width
+equality, or factor-ten edge.  This is therefore a conditional same-snapshot
+repair skeleton, not a completed source repair.
 
 ## Hidden regularity and boundary
 

@@ -77,12 +77,14 @@ availability condition `s + delay s < t`.
 - [x] Audit the Lemma-D.10-to-D.12 gap-ordering bridge. The frozen PDF's
   prefix-to-elimination width inequality points opposite to the inverse-square-
   root width's count monotonicity. Compile the direction diagnostic, the exact
-  conditional four-edge consumer, and a conditional same-snapshot factor-20
-  skeleton.  The latter explicitly assumes the current-UCB surface, the
-  optimal-to-later factor-three width edge, and the later-to-earlier factor-ten
-  width edge; the source's large/small-count case split and recursive producers
-  are not yet encoded.  Keep Lemma 4.2 unverified pending those producers and a
-  source-faithful endpoint repair or clarification.
+  conditional four-edge consumer, and conditional same-snapshot factor-20
+  skeletons.  Lean now also proves the exact small-count scalar implication
+  `count <= 192 * log T -> 1 <= 10 * width` and consumes the source-shaped
+  large/small-count disjunction without imposing factor three on the small
+  branch.  The recursive Delayed SAPO trace still has to produce the actual
+  count/width equality, the large-branch current-UCB/factor-three certificate,
+  and the same-prefix factor-ten edge.  Keep Lemma 4.2 unverified pending those
+  producers and a source-faithful endpoint repair or clarification.
 - [x] Reuse the existing finite-action law to turn the certified line-15
   vector into a probability measure, and lift causal allocation rules to
   measure-valued rules that remain identical in observation-equivalent hidden
