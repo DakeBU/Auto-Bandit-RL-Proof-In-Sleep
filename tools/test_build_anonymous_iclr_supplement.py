@@ -103,6 +103,11 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertIn(prefix + "tools/prepare_target_drift_checker_image.py", names)
         self.assertIn(prefix + "tools/target_drift_checker_cache_manifest.py", names)
         self.assertIn(
+            prefix + "evaluation/target-drift-v2/checker-image-candidate-record.json",
+            names,
+        )
+        self.assertFalse(any("32137509103" in name for name in names))
+        self.assertIn(
             prefix + "research-wiki/proof-graph/benchmark_report.json", names
         )
         self.assertIn(
@@ -178,6 +183,17 @@ class AnonymousSupplementTests(unittest.TestCase):
         readme = payload["evaluation/target-drift-v2/README.md"].decode("utf-8")
         self.assertIn("non-Git", readme)
         self.assertNotIn("the public base immediately", readme)
+        self.assertNotIn(BUILDER.PUBLIC_CANDIDATE_RUN_ID, readme)
+        candidate = json.loads(payload[
+            "evaluation/target-drift-v2/checker-image-candidate-record.json"
+        ].decode("utf-8"))
+        self.assertEqual(
+            candidate["workflow_run"]["id"], "<redacted-public-run-id>"
+        )
+        self.assertEqual(
+            candidate["workflow_run"]["head_commit"],
+            "<anonymous-builder-snapshot>",
+        )
 
     def test_result_free_evaluation_allowlist_is_closed(self):
         tracked = BUILDER.git_tracked_files()

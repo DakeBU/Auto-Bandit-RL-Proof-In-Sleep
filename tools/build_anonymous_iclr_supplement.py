@@ -42,6 +42,17 @@ WINDOWS_PATH = re.compile(
 HOST_HOME = re.compile(br"(?i)/(?:home|users)/[^/\s]+/")
 EMAIL = re.compile(br"(?i)\b[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}\b")
 PUBLIC_WORKSPACE_BASE_COMMIT = "d43bfeee56fb0c1c35cf5af9fc1a7fdc3e0c37b9"
+PUBLIC_CANDIDATE_RUN_ID = "32137509103"
+PUBLIC_CANDIDATE_RUN_URL = (
+    "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/"
+    "actions/runs/32137509103"
+)
+PUBLIC_CANDIDATE_RECORD = (
+    "evaluation/target-drift-v2/checker-image-candidate-32137509103.json"
+)
+ANONYMOUS_CANDIDATE_RECORD = (
+    "evaluation/target-drift-v2/checker-image-candidate-record.json"
+)
 
 DELAYED_IMPLEMENTATION_IDS = (
     "DELAYED-FEEDBACK-SOURCE-ACCOUNTING",
@@ -114,6 +125,7 @@ TARGET_DRIFT_PROTOCOL_FILES = (
     "evaluation/target-drift-v1/source-files.template.json",
     "evaluation/target-drift-v2/README.md",
     "evaluation/target-drift-v2/adapter-contract.json",
+    PUBLIC_CANDIDATE_RECORD,
     "evaluation/target-drift-v2/checker-image-sbom.template.json",
     "evaluation/target-drift-v2/checker-image.Containerfile",
     "evaluation/target-drift-v2/checker-isolation-probe.excluded-fixture.json",
@@ -350,6 +362,29 @@ def anonymize_evaluation_bytes(rel, data, anonymous_reference):
         if source_block not in text:
             raise ValueError("target-drift README base-commit paragraph changed")
         text = text.replace(source_block, anonymous_block)
+        text = text.replace(
+            "GitHub Actions [run {}]({})".format(
+                PUBLIC_CANDIDATE_RUN_ID, PUBLIC_CANDIDATE_RUN_URL
+            ),
+            "A public result-free CI candidate build (run metadata redacted)",
+        )
+        text = text.replace(
+            "checker-image-candidate-32137509103.json",
+            "checker-image-candidate-record.json",
+        )
+    if rel == PUBLIC_CANDIDATE_RECORD:
+        candidate = json.loads(text)
+        workflow_run = candidate.get("workflow_run")
+        if not isinstance(workflow_run, dict):
+            raise ValueError("candidate build record is missing workflow metadata")
+        if str(workflow_run.get("id")) != PUBLIC_CANDIDATE_RUN_ID:
+            raise ValueError("candidate build run identifier changed")
+        if workflow_run.get("url") != PUBLIC_CANDIDATE_RUN_URL:
+            raise ValueError("candidate build run URL changed")
+        workflow_run["id"] = "<redacted-public-run-id>"
+        workflow_run["url"] = "<redacted-public-run-url>"
+        workflow_run["head_commit"] = "<anonymous-builder-snapshot>"
+        text = canonical_json(candidate).decode("utf-8")
     text = text.replace(PUBLIC_WORKSPACE_BASE_COMMIT, anonymous_reference)
     return text.encode("utf-8")
 
@@ -555,7 +590,11 @@ def build_payload(proof_graph=None, proof_report_path=None, allow_missing_graph=
                 canonical_json(base_manifest))
     for rel in evaluation_files(tracked):
         data = anonymize_evaluation_bytes(rel, read_regular(rel), anonymous_reference)
-        add_payload(payload, rel, data)
+        destination = (
+            ANONYMOUS_CANDIDATE_RECORD
+            if rel == PUBLIC_CANDIDATE_RECORD else rel
+        )
+        add_payload(payload, destination, data)
     for rel in TARGET_DRIFT_TOOLS:
         if rel not in tracked:
             raise ValueError("untracked or missing target-drift tool: " + rel)

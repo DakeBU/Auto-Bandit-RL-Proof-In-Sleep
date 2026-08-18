@@ -1,0 +1,66 @@
+name: Target-drift checker image
+
+on:
+  workflow_dispatch:
+    inputs:
+      workspace_base_commit:
+        description: Frozen pre-audit workspace commit
+        required: true
+        default: d43bfeee56fb0c1c35cf5af9fc1a7fdc3e0c37b9
+      lean_base_image:
+        description: Digest-pinned trusted builder/runtime base
+        required: true
+        default: ghcr.io/leanprover-community/mathlib4/gitpod@sha256:3fd7d678a320db6a6a919ab909fe3dea8e7e92ff0ea5678681ae8cbc490d5e9e
+
+permissions:
+  contents: read
+
+concurrency:
+  group: target-drift-checker-image-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      WORKSPACE_BASE_COMMIT: ${{ inputs.workspace_base_commit || 'd43bfeee56fb0c1c35cf5af9fc1a7fdc3e0c37b9' }}
+      LEAN_BASE_IMAGE: ${{ inputs.lean_base_image || 'ghcr.io/leanprover-community/mathlib4/gitpod@sha256:3fd7d678a320db6a6a919ab909fe3dea8e7e92ff0ea5678681ae8cbc490d5e9e' }}
+    steps:
+      - name: Check out the complete repository history
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Validate the checker-image component gate
+        run: python3 -m unittest tools.test_target_drift_runtime
+
+      - name: Prepare the frozen image context
+        run: |
+          python3 tools/prepare_target_drift_checker_image.py prepare-context \
+            --workspace-base-commit "${WORKSPACE_BASE_COMMIT}" \
+            --lean-base-image "${LEAN_BASE_IMAGE}" \
+            --output "${RUNNER_TEMP}/abrl-checker-context"
+          python3 tools/prepare_target_drift_checker_image.py verify-context \
+            --context "${RUNNER_TEMP}/abrl-checker-context"
+
+      - name: Build and attest the candidate image
+        run: |
+          mkdir -p "${RUNNER_TEMP}/abrl-checker-artifacts"
+          python3 tools/prepare_target_drift_checker_image.py build-image \
+            --context "${RUNNER_TEMP}/abrl-checker-context" \
+            --image-tag "abrl-target-drift-checker:${GITHUB_RUN_ID}" \
+            --sbom-output "${RUNNER_TEMP}/abrl-checker-artifacts/checker-image-sbom.json" \
+            --cache-manifest-output "${RUNNER_TEMP}/abrl-checker-artifacts/checker-cache-manifest.json" \
+            --build-log "${RUNNER_TEMP}/abrl-checker-artifacts/checker-image-build.log"
+          cp "${RUNNER_TEMP}/abrl-checker-context/checker-image-build-input.json" \
+            "${RUNNER_TEMP}/abrl-checker-artifacts/checker-image-build-input.json"
+
+      - name: Upload the result-free build evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: target-drift-checker-image-${{ github.run_id }}
+          path: ${{ runner.temp }}/abrl-checker-artifacts
+          if-no-files-found: warn
+          retention-days: 14

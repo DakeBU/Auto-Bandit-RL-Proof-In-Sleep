@@ -76,6 +76,78 @@ class TargetDriftRuntimeTest(unittest.TestCase):
             with self.assertRaises(SystemExit):
                 cache_manifest.manifest_for(cache, self.CACHE_PROVENANCE)
 
+    def test_checker_cache_materializes_safe_internal_file_symlinks(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            cache = Path(directory) / ".lake"
+            target = cache / "packages" / "batteries" / "README.md"
+            target.parent.mkdir(parents=True)
+            target.write_bytes(b"trusted documentation\n")
+            linked = target.parent / "docs" / "README.md"
+            linked.parent.mkdir()
+            try:
+                linked.symlink_to(Path("..") / "README.md")
+            except OSError:
+                self.skipTest("symbolic links are unavailable on this filesystem")
+            self.assertEqual(
+                cache_manifest.materialize_internal_file_symlinks(cache), 1
+            )
+            self.assertFalse(linked.is_symlink())
+            self.assertEqual(linked.read_bytes(), target.read_bytes())
+            cache_manifest.manifest_for(cache, self.CACHE_PROVENANCE)
+
+    def test_checker_cache_rejects_external_symlink_materialization(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            cache = root / ".lake"
+            cache.mkdir()
+            outside = root / "outside"
+            outside.write_bytes(b"outside")
+            linked = cache / "escape"
+            try:
+                linked.symlink_to(outside)
+            except OSError:
+                self.skipTest("symbolic links are unavailable on this filesystem")
+            with self.assertRaises(SystemExit):
+                cache_manifest.materialize_internal_file_symlinks(cache)
+
+    @unittest.skipUnless(os.name == "nt", "Windows junction regression")
+    def test_checker_cache_rejects_junction_root(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            outside = root / "outside"
+            outside.mkdir()
+            (outside / "sentinel").write_bytes(b"outside")
+            junction = root / ".lake"
+            result = subprocess.run(
+                ["cmd", "/c", "mklink", "/J", str(junction), str(outside)],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+                check=False,
+            )
+            if result.returncode != 0:
+                self.skipTest("directory junctions are unavailable")
+            with self.assertRaises(SystemExit):
+                cache_manifest.materialize_internal_file_symlinks(junction)
+            with self.assertRaises(SystemExit):
+                cache_manifest.require_plain_tree(junction)
+            cli = subprocess.run(
+                [
+                    sys.executable,
+                    str(TOOLS / "target_drift_checker_cache_manifest.py"),
+                    "materialize-links",
+                    "--root",
+                    str(junction),
+                ],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+                check=False,
+            )
+            self.assertNotEqual(cli.returncode, 0)
+            self.assertIn("linked, or a reparse point", cli.stdout + cli.stderr)
+            self.assertEqual((outside / "sentinel").read_bytes(), b"outside")
+
     def test_checker_image_context_is_frozen_to_the_base_commit(self) -> None:
         # ABRL contains intentionally descriptive Lean filenames.  Keep the
         # Windows build-context root short enough for non-long-path-aware tools.
@@ -119,9 +191,17 @@ class TargetDriftRuntimeTest(unittest.TestCase):
         self.assertIn("COPY checker-base/ /build/base/", recipe)
         self.assertIn("lake build BanditRLProof Tests", recipe)
         self.assertIn("target_drift_checker_cache_manifest.py create", recipe)
+        self.assertIn("materialize-links --root /build/base/.lake", recipe)
         self.assertIn("--workspace-base-commit", recipe)
         self.assertIn("COPY checker-image-build-input.json", recipe)
         self.assertIn("COPY --from=cache-builder /build/base/.lake", recipe)
+        self.assertIn('elan toolchain install "$(cat lean-toolchain)"', recipe)
+        self.assertIn("ENV ELAN_HOME=${ABRL_ELAN_HOME}", recipe)
+        self.assertIn(
+            "COPY --from=cache-builder ${ABRL_ELAN_HOME} ${ABRL_ELAN_HOME}",
+            recipe,
+        )
+        self.assertIn('test -x "${ABRL_ELAN_HOME}/bin/lean"', recipe)
         self.assertGreaterEqual(checker_launcher.MAX_CACHE_MANIFEST_BYTES, 32 * 1024 * 1024)
         self.assertGreater(
             checker_launcher.MAX_CACHE_MANIFEST_BYTES,
