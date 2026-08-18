@@ -22,14 +22,15 @@ The build:
 - supplies a provider-independent local formalization adapter and a versioned
   lemma-packet handoff contract.
 
-Within the separate Part IV spine, Chapter 13 is partial with compiled
-semantic/deterministic leaves, Chapter 14 is partial with a compiled §14.2
-relative-entropy, event-data-processing, and Bretagnolle--Huber slice, and
-Chapter 15 is partial with compiled unit-Gaussian likelihood-ratio, arm-KL,
-and exact gap/exponent tuning leaves. Lemma 15.1 and the Gaussian `1/27`
-minimax terminal remain blocked on the conditional-kernel KL integral and
-stochastic-policy history-law bridge; §14.1 coding and full Exercise 14.10 are
-not promoted.
+Within the separate Part IV spine, Chapters 13--17 expose compiled semantic,
+information-theoretic, Gaussian-KL, consistency, and tail-event dependency
+slices while keeping their source terminal theorems blocked where the adaptive
+history-law or construction bridge is absent. The website also exposes a
+source-frozen NeurIPS 2025 delayed best-of-both-worlds audit: 45 named
+accounting, causal-view, new-arrival processing, and active-allocation
+declarations compile, but the Delayed SAPO state machine, sampling kernel, and
+stochastic/adversarial regret endpoints do not. A compiled dependency slice is
+never presented as a completed source theorem.
 
 The generator and checks use the Python standard library. The published static
 site loads MathJax and Mermaid from jsDelivr.

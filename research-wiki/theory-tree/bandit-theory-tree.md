@@ -278,6 +278,46 @@ Watchlist scenarios may still be theorem-card-only.  They should not be used as
 Lean proof targets until a source card, local API, and Mathlib retrieval route
 are recorded.
 
+## Prospective External Audit: Delayed-Feedback BoBW
+
+The source-frozen NeurIPS 2025 delayed-feedback best-of-both-worlds feasibility
+route is tracked by
+`PPR-SCHLISSELBERG-LANCEWICKI-AUER-MANSOUR-2025-DELAYED-BOBW` and
+`PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY`.  Its compiled foundation
+now includes strict pre-action availability and the one-based/end-of-round
+`sigma(t)` bridge; a causal view hiding unknown delays and unobserved losses;
+set-level new-arrival processing; line-15 allocation; the line-7/8 elimination
+snapshot and deterministic optimal-arm-survival core of Lemma D.9; a
+source-shaped good-event projection that derives `muStar <= ucbStar` and
+consumes an externally supplied failure budget; the Corollary-D.8 union
+assembly that combines three `1/T^2` and three `1/T` component bounds into the
+source's `9/T` budget and composes it with D.9 survival; and a causal one-round
+probability measure built from the existing finite-action law.  A separate
+D.10-to-D.12 audit proves the source width's canonical antitonicity, compiles
+a literal `T=4` reverse-direction witness, derives the eliminated-arm lower
+gap and a conditional active-arm upper gap from one source-shaped snapshot, and
+proves a conditional same-snapshot factor-20 consumer under explicit
+current-UCB, factor-three, and factor-ten premises.  The earlier conditional four-edge consumer
+remains as a decomposition of the printed route.
+
+This remains feasibility evidence only.  The complete Definition-D.1 event,
+the D.2--D.7 component concentration/counting producers, and the proved
+full-event-to-elimination projection, EAP/BSC state preservation, probability banks,
+simultaneous-arrival order, a measurable recursive delayed-history kernel,
+regime laws, external adversarial algorithm, and the same-algorithm Theorems
+4.1/5.1 coupling remain planned.  The compiled Lemma-D.9 layer is an explicit
+deterministic implication under recorded certificate fields, not the full
+probabilistic source lemma.  No external paper endpoint is classified as
+compiled or audited.  The flagship currently contains 107 named source-audit
+declarations, including 19 diagnostic/conditional/repair declarations for the
+D.10-to-D.12 bridge; the generic multi-regime interface is counted separately.
+Those 19 declarations identify and conditionally bypass the displayed reverse
+transport, prove the exact source-shaped small-count scalar implication, and
+compile a large/small-count consumer at one algebraic snapshot.  They neither
+verify nor refute source Lemmas D.10/D.12, main-text Lemma 4.2, or Theorem 4.1:
+the recursive branch/count/width producers, same-prefix factor-ten comparison,
+and trajectory instantiation remain open.
+
 The machine-readable route atlas is `lean-route-roadmap.json`.  It is the
 handoff contract between upper planning agents and lower Lean agents: each
 route records the compiled local core, missing Mathlib-grade leaves, intended

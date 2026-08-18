@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "suite_id": "ABRL-TARGET-DRIFT-V1",
+  "frozen_on": "2026-08-17",
+  "execution_status": "challenge_bank_frozen_execution_not_started",
+  "challenge_count": 30,
+  "paper_derived_count": 18,
+  "textbook_control_count": 12,
+  "conditions": ["compile_only", "source_aware_blueprint", "abrl"],
+  "paired_seeds_per_condition": 5,
+  "planned_run_count": 450,
+  "primary_endpoint": "expert_adjudicated_exact_contract_satisfaction",
+  "secondary_endpoints": [
+    "faithful_formal_completion",
+    "drift_detection_precision_recall",
+    "unsupported_evidence_claim_rate",
+    "recovery_cost",
+    "wall_time",
+    "model_tokens",
+    "tool_calls",
+    "build_attempts",
+    "artifact_replay_success"
+  ],
+  "analysis_unit": "target_seed_pair",
+  "dependence_plan": "Report each source paper and textbook stratum separately; use paired target-seed comparisons and leave-one-paper-out sensitivity.",
+  "replacement_policy": "Never replace a challenge after observing workflow difficulty or failure.",
+  "blinding_boundary": "Evaluated agents do not receive expected_affected_fields. Challenge authors, workflow operators, and semantic graders use separated identities where feasible.",
+  "must_freeze_before_execution": [
+    "model_provider_and_version",
+    "complete_prompt_templates",
+    "token_tool_and_wall_clock_budgets",
+    "retry_and_infrastructure_failure_policy",
+    "seed_generation_and_presentation_order",
+    "sealed_agent_view_digest",
+    "expert_grading_rubric_and_adjudication_policy"
+  ]
+}

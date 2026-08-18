@@ -901,6 +901,286 @@
         "Chapter 15 regret/event bridge, natural-count connection to the compiled real-valued Delta tuning, exact 1/27 terminal, and infimum/supremum extraction."
       ],
       "evidence": "tasks/TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE.md; tasks/TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE.md"
+    },
+    {
+      "id": "DELAYED-FEEDBACK-SOURCE-ACCOUNTING",
+      "title": "Source-faithful delayed-feedback accounting",
+      "chapter": "frontier",
+      "status": "compiled",
+      "informal": "For the frozen NeurIPS 2025 delayed best-of-both-worlds source, the library formalizes strict pre-action observability, outstanding rounds, their exact finite partition, paper-style end-of-round missing-feedback counts, and the explicit one-based indexing bridge. This is deterministic accounting, not a regret theorem.",
+      "declarations": [
+        "BanditRLProof.DelayedFeedback.observedBefore",
+        "BanditRLProof.DelayedFeedback.outstandingAt",
+        "BanditRLProof.DelayedFeedback.observedBefore_disjoint_outstandingAt",
+        "BanditRLProof.DelayedFeedback.observedBefore_union_outstandingAt",
+        "BanditRLProof.DelayedFeedback.card_observedBefore_add_card_outstandingAt",
+        "BanditRLProof.DelayedFeedback.outstandingCount",
+        "BanditRLProof.DelayedFeedback.maxOutstandingBeforeThrough",
+        "BanditRLProof.DelayedFeedback.outstandingCount_le_round",
+        "BanditRLProof.DelayedFeedback.outstandingCount_le_maxOutstandingBeforeThrough",
+        "BanditRLProof.DelayedFeedback.oneBasedDelayShift",
+        "BanditRLProof.DelayedFeedback.paperMissingAtEnd",
+        "BanditRLProof.DelayedFeedback.paperMissingAtEnd_eq_outstandingAt_oneBasedDelayShift",
+        "BanditRLProof.DelayedFeedback.paperMissingCount",
+        "BanditRLProof.DelayedFeedback.paperMissingCount_eq_outstandingCount_oneBasedDelayShift",
+        "BanditRLProof.DelayedFeedback.paperMissingCount_le_round",
+        "BanditRLProof.DelayedFeedback.paperSigmaMaxThrough",
+        "BanditRLProof.DelayedFeedback.paperMissingCount_le_paperSigmaMaxThrough"
+      ],
+      "depends_on": [],
+      "missing": [],
+      "evidence": "BanditRLProof/DelayedFeedback/Accounting.lean; Tests/DelayedFeedbackPaperAuditCanary.lean; research-wiki/papers/neurips-2025-delayed-bobw-audit.md"
+    },
+    {
+      "id": "DELAYED-FEEDBACK-CAUSAL-PROCESSING",
+      "title": "Causal action-time view and new-feedback processing",
+      "chapter": "frontier",
+      "status": "compiled",
+      "informal": "The learner view exposes past actions and exactly the losses available before the next action. Observation-equivalent hidden worlds are indistinguishable to any typed causal decision rule, and the set-level update processes precisely the newly observed rounds. A separate downstream layer now constructs a one-round measure-valued rule; a measurable recursive policy kernel and the paper's ordered state updates remain open.",
+      "declarations": [
+        "BanditRLProof.DelayedFeedback.ActionTimeView",
+        "BanditRLProof.DelayedFeedback.ActionTimeView.ext",
+        "BanditRLProof.DelayedFeedback.actionTimeViewAt",
+        "BanditRLProof.DelayedFeedback.CausalDecisionRule",
+        "BanditRLProof.DelayedFeedback.actionTimeViewAt_pastAction_of_lt",
+        "BanditRLProof.DelayedFeedback.actionTimeViewAt_pastAction_of_not_lt",
+        "BanditRLProof.DelayedFeedback.actionTimeViewAt_observedLoss_of_mem",
+        "BanditRLProof.DelayedFeedback.actionTimeViewAt_observedLoss_of_not_mem",
+        "BanditRLProof.DelayedFeedback.actionTimeViewAt_outstanding_loss_hidden",
+        "BanditRLProof.DelayedFeedback.actionTimeViewAt_eq_of_observation_equivalent",
+        "BanditRLProof.DelayedFeedback.causalDecision_eq_of_observation_equivalent",
+        "BanditRLProof.DelayedFeedback.newlyObservedBefore",
+        "BanditRLProof.DelayedFeedback.observedBefore_mono",
+        "BanditRLProof.DelayedFeedback.processed_disjoint_newlyObservedBefore",
+        "BanditRLProof.DelayedFeedback.processed_union_newlyObservedBefore",
+        "BanditRLProof.DelayedFeedback.processAllNew",
+        "BanditRLProof.DelayedFeedback.processAllNew_eq_observedBefore",
+        "BanditRLProof.DelayedFeedback.previousObservedBefore_subset_current",
+        "BanditRLProof.DelayedFeedback.processAllNew_from_previous_eq_current",
+        "BanditRLProof.DelayedFeedback.outstandingAt_disjoint_newlyObservedBefore"
+      ],
+      "depends_on": [
+        "BanditRLProof.DelayedFeedback.observedBefore",
+        "BanditRLProof.DelayedFeedback.outstandingAt"
+      ],
+      "missing": [
+        "A measurable stochastic policy kernel and recursively generated action law depending only on this view.",
+        "The source's simultaneous-arrival order and BSC/EAP state-transition invariants."
+      ],
+      "evidence": "BanditRLProof/DelayedFeedback/CausalView.lean; BanditRLProof/DelayedFeedback/Processing.lean; Tests/DelayedFeedbackPaperAuditCanary.lean"
+    },
+    {
+      "id": "DELAYED-SAPO-ACTIVE-ALLOCATION",
+      "title": "Delayed SAPO active-arm allocation leaf",
+      "chapter": "frontier",
+      "status": "compiled",
+      "informal": "Algorithm 5's equal residual allocation over a nonempty active set is normalized and coordinatewise nonnegative whenever the inactive coordinates are nonnegative and carry at most unit mass. No claim is made that the unformalized EAP state maintains those premises.",
+      "declarations": [
+        "BanditRLProof.DelayedFeedback.inactiveArms",
+        "BanditRLProof.DelayedFeedback.activeEqualShare",
+        "BanditRLProof.DelayedFeedback.delayedSAPOProbability",
+        "BanditRLProof.DelayedFeedback.delayedSAPOProbability_of_active",
+        "BanditRLProof.DelayedFeedback.delayedSAPOProbability_of_inactive",
+        "BanditRLProof.DelayedFeedback.activeEqualShare_nonneg",
+        "BanditRLProof.DelayedFeedback.delayedSAPOProbability_nonneg",
+        "BanditRLProof.DelayedFeedback.sum_delayedSAPOProbability_eq_one"
+      ],
+      "depends_on": [
+        "BanditRLProof.DelayedFeedback.inactiveArms",
+        "BanditRLProof.DelayedFeedback.activeEqualShare"
+      ],
+      "missing": [
+        "A source-faithful EAP state and proof that every update preserves nonnegative inactive mass at most one.",
+        "A measurable sampling kernel using this vector on the recursively generated delayed-feedback history; the one-round probability measure is compiled downstream."
+      ],
+      "evidence": "BanditRLProof/DelayedFeedback/ActiveAllocation.lean; Tests/DelayedFeedbackPaperAuditCanary.lean"
+    },
+    {
+      "id": "DELAYED-SAPO-ELIMINATION-ACTION-LAW",
+      "title": "Optimal-arm survival and causal one-round action law",
+      "chapter": "frontier",
+      "status": "compiled",
+      "informal": "Algorithm 5 lines 7--8 compile as a source-exact elimination snapshot. The deterministic core of Lemma D.9 proves that an explicit optimal-arm-survival certificate closes the nonempty-active premise for line 15. With EAP's still-explicit nonnegativity and mass premises, the resulting vector induces a genuine one-round probability measure, and every allocation rule typed on the causal view returns the same measure in observation-equivalent hidden worlds. The source-shaped good-event projection that constructs the certificate is compiled separately; this milestone is not the full lemma, a measurable history kernel, or a regret endpoint.",
+      "declarations": [
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.eliminated",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.remainingActive",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.mem_eliminated_iff",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.mem_remainingActive_iff",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.OptimalArmSurvivalCertificate",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.optimal_mem_remainingActive_of_certificate",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.remainingActive_nonempty_of_certificate",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.sum_delayedSAPOProbability_after_elimination_eq_one",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOAllocation",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOAllocation.probability",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOAllocation.probability_nonnegative",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOAllocation.sum_probability_eq_one",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOAllocation.finiteActionDistribution",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOAllocation.actionMeasure",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOAllocation.actionMeasure_isProbabilityMeasure",
+        "BanditRLProof.DelayedFeedback.causalDelayedSAPOActionMeasureRule",
+        "BanditRLProof.DelayedFeedback.causalDelayedSAPOActionMeasureRule_isProbabilityMeasure",
+        "BanditRLProof.DelayedFeedback.causalDelayedSAPOActionMeasureRule_eq_of_observation_equivalent"
+      ],
+      "depends_on": [
+        "BanditRLProof.DelayedFeedback.delayedSAPOProbability_nonneg",
+        "BanditRLProof.DelayedFeedback.sum_delayedSAPOProbability_eq_one",
+        "BanditRLProof.DelayedFeedback.actionTimeViewAt_eq_of_observation_equivalent",
+        "BanditRLProof.Exp3.finiteActionMeasure_isProbabilityMeasure"
+      ],
+      "missing": [
+        "The Definition-D.1 count, phase, error, and delay clauses, their probability bound, and full recursive source Lemma D.9.",
+        "EAP preservation of its inactive-probability premises.",
+        "Coordinate measurability, a Markov kernel over generated histories, and recursive delayed trajectory generation."
+      ],
+      "evidence": "BanditRLProof/DelayedFeedback/Elimination.lean; BanditRLProof/DelayedFeedback/ActionLaw.lean; Tests/DelayedFeedbackPaperAuditCanary.lean; proof-obligations/PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY.md"
+    },
+    {
+      "id": "DELAYED-SAPO-GOOD-EVENT-D9-PROJECTION",
+      "title": "Source-shaped good-event projection for optimal-arm survival",
+      "chapter": "frontier",
+      "status": "compiled",
+      "informal": "A source-shaped confidence snapshot defines ucbStar as the finite-arm infimum of the two upper-confidence surfaces used in the paper. Its elimination projection of Definition D.1 derives muStar <= ucbStar rather than assuming that inequality as an independent certificate, constructs the deterministic Lemma-D.9 survival certificate, and transports any externally supplied complement-good-event probability bound to an optimal-arm-elimination bound. Corollary D.8's six-event union assembly is compiled separately; the full Definition-D.1 event and the D.2--D.7 component concentration/counting producers remain open.",
+      "declarations": [
+        "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.sourceUcbStar",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.EliminationGoodEvent",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.optimalMean_le_ucbStar_of_eliminationGoodEvent",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.optimalArmSurvivalCertificate_of_eliminationGoodEvent",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.optimal_mem_remainingActive_of_eliminationGoodEvent",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.eliminationGoodEventSet",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.optimalSurvivalEventSet",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.eliminationGoodEventSet_subset_optimalSurvivalEventSet",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.measure_optimalSurvivalEventSet_compl_le",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.measure_optimalSurvivalEventSet_compl_le_of_goodEvent"
+      ],
+      "depends_on": [
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.OptimalArmSurvivalCertificate",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.optimal_mem_remainingActive_of_certificate"
+      ],
+      "missing": [
+        "The full Definition D.1 count, phase, error, and delay clauses and their measurable simultaneous event.",
+        "The D.2--D.7 concentration/counting lemmas that produce the six component probability bounds.",
+        "Persistence across the recursive Delayed SAPO state machine and the stochastic/adversarial regret endpoints."
+      ],
+      "evidence": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean; Tests/DelayedFeedbackPaperAuditCanary.lean; proof-obligations/PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY.md"
+    },
+    {
+      "id": "DELAYED-SAPO-D8-D9-ASSEMBLY",
+      "title": "Corollary-D.8 union assembly to D.9 survival",
+      "chapter": "frontier",
+      "status": "compiled",
+      "informal": "Six explicitly named failure components represent the clauses discharged by source Lemmas D.2--D.7. The compiled Corollary-D.8 layer proves that three 1/T^2 budgets and three 1/T budgets combine into the paper's deliberately loose 9/T complement-good-event bound, then transports a recorded full-event-to-elimination projection through the compiled D.9 consumer to bound optimal-arm elimination. The six concentration/counting bounds and the semantic projection are hypotheses, not claimed source theorems.",
+      "declarations": [
+        "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventComponent",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.componentFailure",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.failureSet",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.sourceGoodEventSet",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.sourceGoodEventSet_compl",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.measure_sourceGoodEventSet_compl_le_sum",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.quadraticFailureBudget",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.linearFailureBudget",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.quadraticFailureBudget_le_linearFailureBudget",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.measure_sourceGoodEventSet_compl_le_nine_div",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.measure_eliminationGoodEventSet_compl_le_nine_div",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.measure_optimalSurvivalEventSet_compl_le_nine_div"
+      ],
+      "depends_on": [
+        "BanditRLProof.ProbabilityUnionBound.measure_iUnion_fintype_le_sum",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.measure_optimalSurvivalEventSet_compl_le"
+      ],
+      "missing": [
+        "Source-faithful random variables, events, and proofs of Lemmas D.2--D.7 on one generated Delayed SAPO law.",
+        "A proved projection from the complete Definition-D.1 event to the compiled elimination slice.",
+        "Recursive optimal-arm persistence and either paper-level regret endpoint."
+      ],
+      "evidence": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean; Tests/DelayedFeedbackPaperAuditCanary.lean; proof-obligations/PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY.md"
+    },
+    {
+      "id": "DELAYED-SAPO-D10-D12-GAP-ORDERING-AUDIT",
+      "title": "Lemma-D.10/D.12 width-direction diagnostic and conditional same-snapshot skeleton",
+      "chapter": "frontier",
+      "status": "partial",
+      "informal": "Lean proves that the source inverse-square-root empirical width is antitone in a positive pull count and gives both a normalized count-one/count-four witness and a literal T=4 witness against the printed reverse transport. It also proves the exact source-shaped small-count implication count <= 192 log T -> 1 <= 10 width. A branched active-arm consumer uses current-UCB and the optimal-to-later factor-three edge only in the large-count branch, while the small-count branch uses bounded means plus an explicit source-width/count certificate. Together with an explicit later-to-earlier factor-ten width premise, this yields a conditional same-snapshot factor-20 consumer without transport to a later elimination snapshot. The recursive trajectory does not yet produce the branch, source-width/count, or factor-ten certificates. The earlier explicit four-edge consumer remains for comparison. These 19 declarations do not verify or refute source Lemmas D.10/D.12, main-text Lemma 4.2, or Theorem 4.1.",
+      "declarations": [
+        "BanditRLProof.DelayedFeedback.sourceEmpiricalWidthScale",
+        "BanditRLProof.DelayedFeedback.sourceEmpiricalWidthScale_antitone",
+        "BanditRLProof.DelayedFeedback.one_le_ten_mul_sourceEmpiricalWidthScale_of_count_le_96_mul_scale",
+        "BanditRLProof.DelayedFeedback.one_le_ten_mul_sourceEmpiricalWidthScale_two_log_of_small_count",
+        "BanditRLProof.DelayedFeedback.sourceEmpiricalWidthScale_one_one",
+        "BanditRLProof.DelayedFeedback.sourceEmpiricalWidthScale_one_four",
+        "BanditRLProof.DelayedFeedback.not_sourceEmpiricalWidthScale_one_le_four",
+        "BanditRLProof.DelayedFeedback.not_sourceEmpiricalWidthScale_horizon_four_one_le_four",
+        "BanditRLProof.DelayedFeedback.eight_mul_empiricalWidth_lt_gap_of_mem_eliminated",
+        "BanditRLProof.DelayedFeedback.gap_le_sixteen_mul_empiricalWidth_of_mem_remainingActive",
+        "BanditRLProof.DelayedFeedback.gap_le_sixteen_mul_empiricalWidth_of_mem_remainingActive_of_large_or_small_count",
+        "BanditRLProof.DelayedFeedback.gap_le_twenty_mul_gap_at_earlier_elimination_snapshot",
+        "BanditRLProof.DelayedFeedback.gap_le_twenty_mul_gap_at_earlier_elimination_snapshot_of_large_or_small_count",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.surrogateGap",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.surrogateGap_le_gap",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.gap_le_two_mul_surrogateGap",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.d12_gap_ordering_chain",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.gap_le_twenty_mul_gap_of_eliminationPrefixIndex_le"
+      ],
+      "depends_on": [],
+      "missing": [
+        "A recursive Delayed SAPO processed trace that produces the actual large/small-count branch certificate, the source-width/count equality in the small branch, the current-UCB and optimal-to-later factor-three edges in the large branch, and the later-to-earlier factor-ten comparison used by the conditional same-snapshot skeleton.",
+        "A source amendment or author clarification for the intended printed D.10 prefix-to-elimination width step; the compiled conditional skeleton bypasses rather than validates that step.",
+        "Unconditional source Lemmas D.10/D.12, main-text Lemma 4.2, Theorem 4.1, and either regret endpoint."
+      ],
+      "evidence": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean; Tests/DelayedFeedbackPaperAuditCanary.lean; research-wiki/papers/neurips-2025-delayed-bobw-audit.md; proof-obligations/PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY.md"
+    },
+    {
+      "id": "NEURIPS-2025-DELAYED-BOBW-CENTRAL-ENDPOINTS",
+      "title": "Source-frozen delayed best-of-both-worlds endpoint audit",
+      "chapter": "frontier",
+      "status": "partial",
+      "informal": "The exact NeurIPS 2025 source is hash-frozen, a same-algorithm multi-regime contract compiles, and 107 named source-audit declarations compile across accounting, causality, processing, allocation, elimination, good-event projection/union assembly, the one-round action law, and a 19-declaration D.10/D.12 diagnostic/conditional/repair layer. That layer includes a literal T=4 direction witness, the exact source-shaped small-count scalar implication, and a large/small-count conditional same-snapshot factor-20 skeleton. It does not verify or refute source Lemmas D.10/D.12, main-text Lemma 4.2, or Theorem 4.1 because the recursive branch/count/width producers and same-prefix factor-ten comparison remain open. BanditRLlib does not yet implement the full Delayed SAPO trajectory, prove the D.2--D.7 component bounds on that trajectory, or prove either regret endpoint.",
+      "declarations": [
+        "BanditRLProof.DelayedFeedback.SameAlgorithmMultiRegimeContract",
+        "BanditRLProof.DelayedFeedback.SameAlgorithmMultiRegimeContract.stochasticClaim",
+        "BanditRLProof.DelayedFeedback.SameAlgorithmMultiRegimeContract.adversarialClaim",
+        "BanditRLProof.DelayedFeedback.SameAlgorithmMultiRegimeContract.stochasticClaim_iff_shared_fields",
+        "BanditRLProof.DelayedFeedback.SameAlgorithmMultiRegimeContract.adversarialClaim_iff_shared_fields"
+      ],
+      "depends_on": [
+        "BanditRLProof.DelayedFeedback.paperMissingCount_le_paperSigmaMaxThrough",
+        "BanditRLProof.DelayedFeedback.causalDecision_eq_of_observation_equivalent",
+        "BanditRLProof.DelayedFeedback.processAllNew_from_previous_eq_current",
+        "BanditRLProof.DelayedFeedback.sum_delayedSAPOProbability_eq_one",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.optimal_mem_remainingActive_of_certificate",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.measure_optimalSurvivalEventSet_compl_le_of_goodEvent",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.measure_optimalSurvivalEventSet_compl_le_nine_div",
+        "BanditRLProof.DelayedFeedback.gap_le_twenty_mul_gap_at_earlier_elimination_snapshot",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.gap_le_twenty_mul_gap_of_eliminationPrefixIndex_le",
+        "BanditRLProof.DelayedFeedback.causalDelayedSAPOActionMeasureRule_eq_of_observation_equivalent"
+      ],
+      "missing": [
+        "The complete Definition-D.1 event, its D.2--D.7 component probability producers, Delayed SAPO BSC/EAP state machines, switching rule, and ordered update semantics.",
+        "A measurable causal randomized sampling kernel and recursively generated delayed-feedback trajectory law; only the one-round measure-valued rule now compiles.",
+        "Recursive branch/count/width producers for the large/small-count conditional D.12 skeleton, the same-prefix factor-ten comparison, a clarification or amendment of the printed D.10 transport, and an unconditional D.12 / main-text Lemma 4.2 bridge.",
+        "The stochastic-instance and oblivious-adversarial regret endpoints for the same algorithm identity."
+      ],
+      "evidence": "research-wiki/papers/prospective-audit-2025-freeze.json; research-wiki/papers/neurips-2025-delayed-bobw-audit.md; proof-obligations/PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY.md"
+    },
+    {
+      "id": "TARGET-DRIFT-V2-CONTROLLED-EVALUATION",
+      "title": "Balanced target-drift controlled evaluation",
+      "chapter": "frontier",
+      "status": "planned",
+      "informal": "Version 2 reuses 30 frozen source cases while balancing 75 source-faithful and 75 injected-drift target-replicate triplets across compile-only, source-aware blueprint, and full ABRL conditions. Both variants use one matched field/value template, with a frozen text-only leakage diagnostic. The result-free protocol and component-tested code specify a pre-audit common workspace, opaque identifiers, content-addressed sealing, an agent-adapter interface, workflow-artifact presence/hash records, blind grading packets, and source/target-aware analysis with multiplicity-controlled secondary endpoints. Neutral replay is split into a host controller that never executes Lean, a canonical Docker launcher, a trusted in-image controller, and a restricted Lean worker. The sandbox receives only a pristine base snapshot, submitted patch, public declaration names, expected file hashes, and opaque/hash bindings; the complete sealed pack, operator metadata, source bank, condition, variant, and ground truth are excluded. Runtime binding covers the allowlisted Docker executable, version/daemon/signature-or-package ledger, image recipe/SBOM, exact argv, and actual launcher/controller/inner bytes. The immutable image must also expose a complete Lake dependency seed and byte-complete manifest; the launcher verifies the manifest extracted from the digest-pinned image, the inner checker verifies every cached file, and the already restricted worker copies the seed into the per-run tmpfs replay. These are result-free interfaces and component tests, not isolation evidence. Real provider and cache-complete checker images, a passed seven-probe checker isolation report, final seal, preregistered real-infrastructure smoke, and all primary runs remain pending; no model run or formalization outcome is reported.",
+      "declarations": [],
+      "depends_on": [],
+      "missing": [
+        "Freeze the provider, immutable model version, replicate semantics, token/tool/build/time/cost budgets, retry and missing-run policies.",
+        "Freeze concrete provider and checker images and commands. For the checker, pass all seven bound checks: network denial, host-sentinel protection, operator-ground-truth absence, controller/worker output protection, patched-source/controller-input read-only enforcement, mounted-input/cidfile protection, and background-process reaping under the exact digest-pinned image.",
+        "Pass the preregistered real-provider/real-sandbox one-case-by-three-condition smoke, excluded only from the primary analysis.",
+        "Complete the frozen-model source-absent wording control and independent blind wording review; freeze hash-verified source paths, grader identities, the sealed pack digest, and blind-packet procedure.",
+        "Execute and neutrally check all 450 matched runs, complete independent grading, and analyze the frozen target-level endpoints."
+      ],
+      "evidence": "evaluation/target-drift-v2/protocol.json; evaluation/target-drift-v2/paired-requirements.json; evaluation/target-drift-v2/adapter-contract.json; evaluation/target-drift-v2/checker-sandbox-contract.json; evaluation/target-drift-v2/checker-isolation-probe.template.json; evaluation/target-drift-v2/checker-image.Containerfile; evaluation/target-drift-v2/checker-image-sbom.template.json; evaluation/target-drift-v2/execution-template.json; tools/audit_target_drift_wording.py; tools/validate_target_drift_suite_v2.py; tools/finalize_target_drift_config.py; tools/run_target_drift_execution.py; tools/check_target_drift_run.py; tools/launch_target_drift_checker_container.py; tools/check_target_drift_container_controller.py; tools/check_target_drift_inner.py; tools/record_target_drift_checker_isolation_probe.py; tools/prepare_target_drift_grading.py; tools/assemble_target_drift_grades.py; tools/analyze_target_drift_execution.py"
     }
   ]
 }

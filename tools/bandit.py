@@ -690,6 +690,36 @@ BANDIT_PAPER_CARDS = [
         "lean_leaf_families": ["model-selection action space", "prompt-policy context contract", "human-feedback/logged-feedback bridge"],
         "memory_status": "survey-card",
     },
+    {
+        "id": "PPR-SCHLISSELBERG-LANCEWICKI-AUER-MANSOUR-2025-DELAYED-BOBW",
+        "title": "Improved Best-of-Both-Worlds Regret for Bandits with Delayed Feedback",
+        "authors": "Ofir Schlisselberg; Tal Lancewicki; Peter Auer; Yishay Mansour",
+        "source": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/02f0ac0a323dc17d964d4bbf8a62e01b-Abstract-Conference.html",
+        "scenarios": ["SCN-DELAYED-BOBW", "SCN-DELAYED-BATCHED", "SCN-BOBW-ADAPTIVE"],
+        "proof_roots": ["Delayed SAPO", "delayed stochastic regret", "delayed adversarial regret", "same-algorithm multi-regime coupling"],
+        "lean_leaf_families": ["feedback-availability partition", "outstanding-count surface", "delayed causal history", "regime contract"],
+        "memory_status": "source-frozen-feasibility",
+    },
+    {
+        "id": "PPR-ZENG-HONORIO-2025-SUCCINCT-LOWER-BOUNDS",
+        "title": "A Novel General Framework for Sharp Lower Bounds in Succinct Stochastic Bandits",
+        "authors": "Guo Zeng; Jean Honorio",
+        "source": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/26407588dfb08e48c459c074ab6adb7d-Abstract-Conference.html",
+        "scenarios": ["SCN-LINEAR-GLM", "SCN-STOCHASTIC-FINITE"],
+        "proof_roots": ["succinct support", "information-regret trade-off", "minimax lower bound"],
+        "lean_leaf_families": ["succinct-support algebra", "dual seminorms", "change of measure", "minimax quantifier order"],
+        "memory_status": "source-frozen-not-started",
+    },
+    {
+        "id": "PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB",
+        "title": "Does Stochastic Gradient really succeed for Bandits?",
+        "authors": "Dorian Baudry; Emmeran Johnson; Simon Vary; Ciara Pike-Burke; Patrick Rebeschini",
+        "source": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/a4e683f0ce6b91e7fbdae9d32642d88f-Abstract-Conference.html",
+        "scenarios": ["SCN-STOCHASTIC-FINITE"],
+        "proof_roots": ["stochastic gradient bandit", "learning-rate threshold", "logarithmic/polynomial regret regimes"],
+        "lean_leaf_families": ["softmax policy update", "expected parameter increment", "failure-regret decomposition", "learning-rate regime contract"],
+        "memory_status": "source-frozen-reserve",
+    },
 ]
 
 BANDIT_SCENARIO_CARDS = [
@@ -830,6 +860,18 @@ BANDIT_SCENARIO_CARDS = [
         "mathlib_needs": ["MLIB-FINSET-SUMS", "MLIB-MARTINGALE-STOCHASTIC", "MLIB-CONDITIONAL-EXPECTATION"],
         "source_cards": ["TXT-BUBECK-CESABIANCHI-2012"],
         "status": "planned",
+    },
+    {
+        "id": "SCN-DELAYED-BOBW",
+        "name": "delayed best-of-both-worlds bandits",
+        "core_algorithms": ["Delayed SAPO with a post-detection adversarial algorithm"],
+        "leaf_families": ["source-time feedback queues", "unknown-at-action-time delays", "same-algorithm regime coupling", "stochastic/adversarial expected regret"],
+        "mathlib_needs": ["MLIB-FINSET-SUMS", "MLIB-MARTINGALE-STOCHASTIC", "MLIB-CONDITIONAL-EXPECTATION"],
+        "source_cards": [
+            "PPR-SCHLISSELBERG-LANCEWICKI-AUER-MANSOUR-2025-DELAYED-BOBW",
+            "PPR-ZIMMERT-SELDIN-2018-TSALLIS-INF",
+        ],
+        "status": "source-frozen-feasibility",
     },
     {
         "id": "SCN-CONSTRAINTS",

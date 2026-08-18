@@ -12,3 +12,4 @@ import Tests.TextbookPartIVChapter14Canary
 import Tests.BookMapChaptersFiveAndSixCanary
 import Tests.BookMapChaptersSevenAndEightCanary
 import Tests.TextbookPartIVChapter17Canary
+import Tests.DelayedFeedbackPaperAuditCanary

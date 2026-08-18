@@ -46,6 +46,19 @@ python3 tools/bandit.py search-memory federated
 | `PPR-EMNLP-2024-LLM-PRIOR-BANDITS` | [Jump Starting Bandits with LLM-Generated Prior Knowledge, 2024](https://arxiv.org/abs/2406.19317) | LLM priors, contextual | prior-quality contract, logged-data positivity, warm-start comparison |
 | `PPR-BOUNEFFOUF-FERAUD-2025-MAB-LLM` | [Bouneffouf and Feraud, 2025](https://arxiv.org/abs/2505.13355) | LLM/recommender/model-selection bandits | model-selection action space, prompt-policy context contract, feedback bridge |
 
+## Prospective External Theory-Audit Cards
+
+These cards are frozen before Lean proof search and remain source evidence,
+not local proof certificates.  Selection, source hashes, and exclusion rules
+are recorded in
+[`prospective-audit-2025-freeze.json`](prospective-audit-2025-freeze.json).
+
+| Card | Source | Audit role | First exact leaves |
+| --- | --- | --- | --- |
+| `PPR-SCHLISSELBERG-LANCEWICKI-AUER-MANSOUR-2025-DELAYED-BOBW` | [Schlisselberg, Lancewicki, Auer, and Mansour, NeurIPS 2025](https://proceedings.neurips.cc/paper_files/paper/2025/hash/02f0ac0a323dc17d964d4bbf8a62e01b-Abstract-Conference.html) | flagship feasibility audit for one delayed SAPO algorithm across stochastic and adversarial losses | feedback-availability partition, outstanding-count surface, source-shaped elimination good-event projection, Corollary-D.8 union assembly, optimal-arm-survival core, D.10/D.12 width-direction diagnostic, conditional same-snapshot factor-20 skeleton and conditional printed-chain consumer, causal one-round action law, same-algorithm multi-regime contract |
+| `PPR-ZENG-HONORIO-2025-SUCCINCT-LOWER-BOUNDS` | [Zeng and Honorio, NeurIPS 2025](https://proceedings.neurips.cc/paper_files/paper/2025/hash/26407588dfb08e48c459c074ab6adb7d-Abstract-Conference.html) | bounded replication candidate aligned with the partial Part IV lower-bound spine | succinct-support definitions, two seminorm leaves, one information--regret specialization |
+| `PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB` | [Baudry et al., NeurIPS 2025](https://proceedings.neurips.cc/paper_files/paper/2025/hash/a4e683f0ce6b91e7fbdae9d32642d88f-Abstract-Conference.html) | reserve feasibility audit for learning-rate regime fidelity | softmax policy update, exact expected-increment identity, learning-rate/gap regime contract |
+
 ## Use Rule
 
 Every paper card used in a task must be paired with:

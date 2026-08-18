@@ -1,0 +1,86 @@
+{
+  "schema_version": 2,
+  "suite_id": "ABRL-TARGET-DRIFT-V2",
+  "status": "policy_frozen_results_absent",
+  "workspace_base_commit": "d43bfeee56fb0c1c35cf5af9fc1a7fdc3e0c37b9",
+  "workspace_base_requirement": "The same pre-audit commit is used for all conditions; no DelayedFeedback audit declaration, target-drift manifest, or case-specific memory exists in the base.",
+  "common_isolation": {
+    "fresh_workspace_per_run": true,
+    "cross_run_state": "forbidden except the pinned read-only toolchain and dependency cache",
+    "source_packet_mount": "one hash-verified PDF copied read-only into the run directory",
+    "host_filesystem_visibility": "forbidden outside the prepared run directory and pinned read-only toolchain/dependency mounts",
+    "network_policy": "the evaluated agent has no general network access; only the model adapter may reach its configured provider",
+    "process_policy": "fresh adapter process and context per run with enforced process-tree timeout",
+    "git_metadata": "excluded from every evaluated workspace",
+    "attestation_required": true
+  },
+  "conditions": {
+    "compile_only": {
+      "path_mode": "allowlist",
+      "repository_paths": [
+        "BanditRLProof",
+        "BanditRLProof.lean",
+        "Tests",
+        "Tests.lean",
+        "lake-manifest.json",
+        "lakefile.lean",
+        "lean-toolchain",
+        "LICENSE"
+      ],
+      "forbidden_resources": [
+        "ABRL target contracts or blueprints",
+        "retrieval indexes or typed memory",
+        "failure/amendment ledgers",
+        "challenge adjudication fields"
+      ]
+    },
+    "source_aware_blueprint": {
+      "path_mode": "allowlist",
+      "repository_paths": [
+        "BanditRLProof",
+        "BanditRLProof.lean",
+        "Tests",
+        "Tests.lean",
+        "lake-manifest.json",
+        "lakefile.lean",
+        "lean-toolchain",
+        "LICENSE"
+      ],
+      "additional_writable_outputs": [
+        "one run-local source-to-target blueprint authored during the run"
+      ],
+      "forbidden_resources": [
+        "pre-existing ABRL target contracts",
+        "retrieval indexes or typed memory",
+        "failure/amendment ledgers",
+        "challenge adjudication fields"
+      ]
+    },
+    "abrl": {
+      "path_mode": "denylist",
+      "excluded_repository_paths": [
+        "evaluation"
+      ],
+      "additional_writable_outputs": [
+        "run-local ABRL contract, blueprint, retrieval, failure, and promotion records"
+      ],
+      "forbidden_resources": [
+        "case-specific artifacts created after the workspace base commit",
+        "challenge adjudication fields",
+        "other runs' prompts, workspaces, or outputs"
+      ]
+    }
+  },
+  "required_preflight": [
+    "content-addressed file manifest for every condition view",
+    "semantic case/source identifiers absent from the rendered agent prompt and workspace",
+    "evaluation, .git, host paths, sibling runs, and general network inaccessible",
+    "one-case three-condition infrastructure smoke run excluded from results"
+  ],
+  "grader_boundary": {
+    "condition_label_removed": true,
+    "requirement_variant_label_removed": true,
+    "presentation_order_removed": true,
+    "condition-specific process artifacts_excluded_from_primary_packet": true
+  }
+}

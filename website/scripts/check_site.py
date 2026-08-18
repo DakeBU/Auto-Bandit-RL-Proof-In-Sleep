@@ -380,7 +380,11 @@ def main() -> int:
     expected_spine_count = len(textbook_spine["chapters"])
     if manifest.get("textbook_spine_chapter_count") != expected_spine_count:
         errors.append("manifest textbook_spine_chapter_count does not match textbook_spine.json")
+    if not (output / "static" / "favicon.svg").exists():
+        errors.append("missing generated SVG favicon")
     for page, collector in pages.items():
+        if 'rel="icon"' not in page.read_text(encoding="utf-8"):
+            errors.append(f"{page.relative_to(output)}: missing favicon link")
         if collector.site_sidebar_count != 1:
             errors.append(
                 f"{page.relative_to(output)}: expected one site sidebar, found {collector.site_sidebar_count}"
