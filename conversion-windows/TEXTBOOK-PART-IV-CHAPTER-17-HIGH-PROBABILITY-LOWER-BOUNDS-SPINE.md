@@ -116,7 +116,7 @@ hard-family averaging:
 | Claim 17.5 | `MeasureTheory.exists_integral_le` | installed Mathlib source | apply first moment to `1-F_x(u)` | retain explicit integrability |
 | good-event subtraction | `le_measureReal_diff` | installed Mathlib source | subtract clipping-bad from pull-small | do not add unnecessary measurability |
 | Eq. (17.8) algebra | ordered-field multiplication | `MLIB-ORDER-ALGEBRA` | leave a quarter horizon after the two count bounds | construction inequality remains explicit premise |
-| stochastic history information | Chapter 14 BH plus Chapter 15 blocker | local cards | prove same-policy history KL, then change one arm | no deterministic-policy substitution |
+| stochastic history information | Chapter 14 BH plus compiled Chapter 15 Lemma 15.1 | local declarations | instantiate the one-arm history identity, then prove the tail-event comparison | no deterministic-policy substitution |
 | Corollary 17.3 integration | layer-cake/tail APIs | `MLIB-MEASURE-INTEGRAL` | integrate the all-confidence tail and contradict Theorem 17.1 | keep real exponent and all quantifiers |
 | clipped-normal construction | Gaussian distribution, maps, kernels | Mathlib distribution/kernel cards | construct Borel reward-matrix law and interaction history | preserve across-arm dependence |
 | clipping concentration | Gaussian tails and finite union/count | concentration cards | prove Claim 17.7 with exact constants | no asymptotic-only replacement |
@@ -131,7 +131,7 @@ hard-family averaging:
 | `CH17-CLAIM-17-5` | average CDF tail gives deterministic witness | probability first moment | `exists_cdfTail_ge_of_integral_ge` | Mathlib-composed | focused Lean | compiled |
 | `CH17-EVENT-SUBTRACTION` | `2delta-delta>=delta` good event | measure difference | `measureReal_diff_ge_delta` | Mathlib-composed | focused Lean | compiled |
 | `CH17-EQ-17-8-ALGEBRA` | count bounds plus source comparison imply `Delta n/4` | ordered-field algebra | two adversarial-regret declarations | project-local | focused Lean | compiled |
-| `CH17-HISTORY-INFORMATION` | stochastic one-arm tail comparison | Chapter 15 Lemma 15.1 | none | connected blocker | focused Lean | blocked |
+| `CH17-HISTORY-INFORMATION` | stochastic one-arm tail comparison | compiled Chapter 15 Lemma 15.1 | none | downstream consumer | focused Lean | blocked |
 | `CH17-THEOREM-17-1` | exact stochastic tail | history information and tuning | reserved terminal | source terminal | focused Lean | blocked |
 | `CH17-COROLLARY-17-2` | exact minimax stochastic tail | Theorem 17.1 and expectation contradiction | reserved terminal | source terminal | focused Lean | blocked |
 | `CH17-COROLLARY-17-3` | exact all-confidence impossibility | Theorem 17.1 and tail integration | reserved terminal | source terminal | focused Lean | blocked |
@@ -149,7 +149,8 @@ hard-family averaging:
 
 - [x] Exact source/page/semantic mapping.
 - [x] Threshold, Claim 17.5, event subtraction, and Eq. (17.8) algebra leaves.
-- [ ] Same-policy stochastic history KL and Theorem 17.1.
+- [x] Same-policy stochastic history KL identity (Chapter 15 Lemma 15.1).
+- [ ] Chapter 17 tail-event consumer and Theorem 17.1.
 - [ ] Corollary 17.2 expectation contradiction and Corollary 17.3 tail integral.
 - [ ] Clipped-normal reward-matrix/history law.
 - [ ] Claim 17.6, construction-level Eq. (17.8), Claim 17.7, and Theorem 17.4.

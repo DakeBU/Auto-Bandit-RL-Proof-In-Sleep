@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
 
-Generated: `2026-08-16T11:12:52+00:00`
+Generated: `2026-08-18T18:18:09+00:00`
 
 ## Source Task
 
@@ -119,7 +119,7 @@ LowerBounds.max_base_changed_regretLowerBound_ge_half
 | minimax surface | `iSup`, `iInf`, `ENNReal`, subtypes | complete-lattice introduction/elimination | explicit policy/environment subsets; nonemptiness only at semantic consumers | project-local |
 | finite average | `Fin.sum_univ_succ`, `Finset.exists_le_of_sum_le`, `Fintype.card_fin` | split arm zero, bound alternative sum, compare with constant average | `0 < m`, every expected pull nonnegative, exact total expected-pull identity | mathlib-composed project leaf |
 | two-environment algebra | ordered-field arithmetic, `max`, `nlinarith` | combine base and changed lower expressions under a named upper bound on `E_nu[T_0]-E_nu'[T_0]` | `0 <= Delta`; the quantitative cross-law discrepancy is explicit and remains unproved here | project-local |
-| history change of measure | no local terminal yet | Chapter 14 KL/history-law construction | measurability, policy consistency, absolute continuity and finite KL | planned; theorem-card route only |
+| history change of measure | compiled Chapter 15 Lemma 15.1 | Chapter 14 KL plus the Chapter 15 randomized-history construction | measurability, common randomized policy, countably generated rewards | compiled downstream dependency; Chapter 13 terminal still open |
 | Gaussian minimax terminal | no local terminal yet | Chapter 15 consumption of Chapter 14 information bridge and Chapter 13 algebra | unit variance, means in `[0,1]^k`, `k > 1`, `n >= k` | planned; source theorem only |
 
 ## Retrieval cards
@@ -2692,6 +2692,73 @@ gap audit in `docs/completion_gap_audit.md`.
       "human-feedback/logged-feedback bridge"
     ],
     "memory_status": "survey-card"
+  },
+  {
+    "id": "PPR-SCHLISSELBERG-LANCEWICKI-AUER-MANSOUR-2025-DELAYED-BOBW",
+    "title": "Improved Best-of-Both-Worlds Regret for Bandits with Delayed Feedback",
+    "authors": "Ofir Schlisselberg; Tal Lancewicki; Peter Auer; Yishay Mansour",
+    "source": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/02f0ac0a323dc17d964d4bbf8a62e01b-Abstract-Conference.html",
+    "scenarios": [
+      "SCN-DELAYED-BOBW",
+      "SCN-DELAYED-BATCHED",
+      "SCN-BOBW-ADAPTIVE"
+    ],
+    "proof_roots": [
+      "Delayed SAPO",
+      "delayed stochastic regret",
+      "delayed adversarial regret",
+      "same-algorithm multi-regime coupling"
+    ],
+    "lean_leaf_families": [
+      "feedback-availability partition",
+      "outstanding-count surface",
+      "delayed causal history",
+      "regime contract"
+    ],
+    "memory_status": "source-frozen-feasibility"
+  },
+  {
+    "id": "PPR-ZENG-HONORIO-2025-SUCCINCT-LOWER-BOUNDS",
+    "title": "A Novel General Framework for Sharp Lower Bounds in Succinct Stochastic Bandits",
+    "authors": "Guo Zeng; Jean Honorio",
+    "source": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/26407588dfb08e48c459c074ab6adb7d-Abstract-Conference.html",
+    "scenarios": [
+      "SCN-LINEAR-GLM",
+      "SCN-STOCHASTIC-FINITE"
+    ],
+    "proof_roots": [
+      "succinct support",
+      "information-regret trade-off",
+      "minimax lower bound"
+    ],
+    "lean_leaf_families": [
+      "succinct-support algebra",
+      "dual seminorms",
+      "change of measure",
+      "minimax quantifier order"
+    ],
+    "memory_status": "source-frozen-not-started"
+  },
+  {
+    "id": "PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB",
+    "title": "Does Stochastic Gradient really succeed for Bandits?",
+    "authors": "Dorian Baudry; Emmeran Johnson; Simon Vary; Ciara Pike-Burke; Patrick Rebeschini",
+    "source": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/a4e683f0ce6b91e7fbdae9d32642d88f-Abstract-Conference.html",
+    "scenarios": [
+      "SCN-STOCHASTIC-FINITE"
+    ],
+    "proof_roots": [
+      "stochastic gradient bandit",
+      "learning-rate threshold",
+      "logarithmic/polynomial regret regimes"
+    ],
+    "lean_leaf_families": [
+      "softmax policy update",
+      "expected parameter increment",
+      "failure-regret decomposition",
+      "learning-rate regime contract"
+    ],
+    "memory_status": "source-frozen-reserve"
   }
 ]
 ```
@@ -3056,6 +3123,29 @@ gap audit in `docs/completion_gap_audit.md`.
       "TXT-BUBECK-CESABIANCHI-2012"
     ],
     "status": "planned"
+  },
+  {
+    "id": "SCN-DELAYED-BOBW",
+    "name": "delayed best-of-both-worlds bandits",
+    "core_algorithms": [
+      "Delayed SAPO with a post-detection adversarial algorithm"
+    ],
+    "leaf_families": [
+      "source-time feedback queues",
+      "unknown-at-action-time delays",
+      "same-algorithm regime coupling",
+      "stochastic/adversarial expected regret"
+    ],
+    "mathlib_needs": [
+      "MLIB-FINSET-SUMS",
+      "MLIB-MARTINGALE-STOCHASTIC",
+      "MLIB-CONDITIONAL-EXPECTATION"
+    ],
+    "source_cards": [
+      "PPR-SCHLISSELBERG-LANCEWICKI-AUER-MANSOUR-2025-DELAYED-BOBW",
+      "PPR-ZIMMERT-SELDIN-2018-TSALLIS-INF"
+    ],
+    "status": "source-frozen-feasibility"
   },
   {
     "id": "SCN-CONSTRAINTS",
@@ -44578,6 +44668,998 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "statement": "inductive CertificateStatus where"
   },
   {
+    "kind": "def",
+    "name": "IsSimplexTangent",
+    "full_name": "BanditRLProof.CurvatureNoiseGap.IsSimplexTangent",
+    "file": "BanditRLProof/CurvatureNoiseGapGeometry.lean",
+    "line": 29,
+    "statement": "def IsSimplexTangent {Index : Type*} [DecidableEq Index] (indices : Finset Index) (direction : Index -> Real) : Prop"
+  },
+  {
+    "kind": "def",
+    "name": "tangentPairing",
+    "full_name": "BanditRLProof.CurvatureNoiseGap.tangentPairing",
+    "file": "BanditRLProof/CurvatureNoiseGapGeometry.lean",
+    "line": 34,
+    "statement": "def tangentPairing {Index : Type*} [DecidableEq Index] (indices : Finset Index) (signal direction : Index -> Real) : Real"
+  },
+  {
+    "kind": "theorem",
+    "name": "tangentPairing_add_const_of_isSimplexTangent",
+    "full_name": "BanditRLProof.CurvatureNoiseGap.tangentPairing_add_const_of_isSimplexTangent",
+    "file": "BanditRLProof/CurvatureNoiseGapGeometry.lean",
+    "line": 39,
+    "statement": "theorem tangentPairing_add_const_of_isSimplexTangent {Index : Type*} [DecidableEq Index] (indices : Finset Index) (signal direction : Index -> Real) (shift : Real) (hdirection : IsSimplexTangent indices direction) : tangentPairing indices (fun i => signal i + shift) direction = tangentPairing indices signal direction"
+  },
+  {
+    "kind": "def",
+    "name": "weightedShiftEnergy",
+    "full_name": "BanditRLProof.CurvatureNoiseGap.weightedShiftEnergy",
+    "file": "BanditRLProof/CurvatureNoiseGapGeometry.lean",
+    "line": 50,
+    "statement": "def weightedShiftEnergy {Index : Type*} [DecidableEq Index] (indices : Finset Index) (weight signal : Index -> Real) (shift : Real) : Real"
+  },
+  {
+    "kind": "def",
+    "name": "weightedCenter",
+    "full_name": "BanditRLProof.CurvatureNoiseGap.weightedCenter",
+    "file": "BanditRLProof/CurvatureNoiseGapGeometry.lean",
+    "line": 55,
+    "statement": "noncomputable def weightedCenter {Index : Type*} [DecidableEq Index] (indices : Finset Index) (weight signal : Index -> Real) : Real"
+  },
+  {
+    "kind": "theorem",
+    "name": "sum_weight_mul_sub_weightedCenter_eq_zero",
+    "full_name": "BanditRLProof.CurvatureNoiseGap.sum_weight_mul_sub_weightedCenter_eq_zero",
+    "file": "BanditRLProof/CurvatureNoiseGapGeometry.lean",
+    "line": 60,
+    "statement": "theorem sum_weight_mul_sub_weightedCenter_eq_zero {Index : Type*} [DecidableEq Index] (indices : Finset Index) (weight signal : Index -> Real) (hweightSum : indices.sum weight \u2260 0) : indices.sum (fun i => weight i * (signal i - weightedCenter indices weight signal)) = 0"
+  },
+  {
+    "kind": "theorem",
+    "name": "weightedShiftEnergy_decomposition_of_centered",
+    "full_name": "BanditRLProof.CurvatureNoiseGap.weightedShiftEnergy_decomposition_of_centered",
+    "file": "BanditRLProof/CurvatureNoiseGapGeometry.lean",
+    "line": 73,
+    "statement": "theorem weightedShiftEnergy_decomposition_of_centered {Index : Type*} [DecidableEq Index] (indices : Finset Index) (weight signal : Index -> Real) (center shift : Real) (hcenter : indices.sum (fun i => weight i * (signal i - center)) = 0) : weightedShiftEnergy indices weight signal shift = weightedShiftEnergy indices weight signal center + indices.sum weight * (shift - center) ^ 2"
+  },
+  {
+    "kind": "theorem",
+    "name": "weightedShiftEnergy_decomposition",
+    "full_name": "BanditRLProof.CurvatureNoiseGap.weightedShiftEnergy_decomposition",
+    "file": "BanditRLProof/CurvatureNoiseGapGeometry.lean",
+    "line": 103,
+    "statement": "theorem weightedShiftEnergy_decomposition {Index : Type*} [DecidableEq Index] (indices : Finset Index) (weight signal : Index -> Real) (shift : Real) (hweightSum : indices.sum weight \u2260 0) : weightedShiftEnergy indices weight signal shift = weightedShiftEnergy indices weight signal (weightedCenter indices weight signal) + indices.sum weight * (shift - weightedCenter indices weight signal) ^ 2"
+  },
+  {
+    "kind": "theorem",
+    "name": "weightedShiftEnergy_center_le",
+    "full_name": "BanditRLProof.CurvatureNoiseGap.weightedShiftEnergy_center_le",
+    "file": "BanditRLProof/CurvatureNoiseGapGeometry.lean",
+    "line": 117,
+    "statement": "theorem weightedShiftEnergy_center_le {Index : Type*} [DecidableEq Index] (indices : Finset Index) (weight signal : Index -> Real) (shift : Real) (hweight : forall i, i \u2208 indices -> 0 <= weight i) (hweightSum : 0 < indices.sum weight) : weightedShiftEnergy indices weight signal (weightedCenter indices weight signal) <= weightedShiftEnergy indices weight signal shift"
+  },
+  {
+    "kind": "theorem",
+    "name": "weightedShiftEnergy_eq_center_iff",
+    "full_name": "BanditRLProof.CurvatureNoiseGap.weightedShiftEnergy_eq_center_iff",
+    "file": "BanditRLProof/CurvatureNoiseGapGeometry.lean",
+    "line": 129,
+    "statement": "theorem weightedShiftEnergy_eq_center_iff {Index : Type*} [DecidableEq Index] (indices : Finset Index) (weight signal : Index -> Real) (shift : Real) (hweightSum : 0 < indices.sum weight) : weightedShiftEnergy indices weight signal shift = weightedShiftEnergy indices weight signal (weightedCenter indices weight signal) <-> shift = weightedCenter indices weight signal"
+  },
+  {
+    "kind": "theorem",
+    "name": "weightedShiftEnergy_add_decomposition",
+    "full_name": "BanditRLProof.CurvatureNoiseGap.weightedShiftEnergy_add_decomposition",
+    "file": "BanditRLProof/CurvatureNoiseGapGeometry.lean",
+    "line": 153,
+    "statement": "theorem weightedShiftEnergy_add_decomposition {Index : Type*} [DecidableEq Index] (indices : Finset Index) (weight signal noise : Index -> Real) (signalShift noiseShift : Real) : weightedShiftEnergy indices weight (fun i => signal i + noise i) (signalShift + noiseShift) = weightedShiftEnergy indices weight signal signalShift + weightedShiftEnergy indices weight noise noiseShift + 2 * indices.sum (fun i => weight i * (signal i - signalShift) * (noise i - noiseShift))"
+  },
+  {
+    "kind": "theorem",
+    "name": "weightedShiftEnergy_add_le_two",
+    "full_name": "BanditRLProof.CurvatureNoiseGap.weightedShiftEnergy_add_le_two",
+    "file": "BanditRLProof/CurvatureNoiseGapGeometry.lean",
+    "line": 182,
+    "statement": "theorem weightedShiftEnergy_add_le_two {Index : Type*} [DecidableEq Index] (indices : Finset Index) (weight signal noise : Index -> Real) (signalShift noiseShift : Real) (hweight : forall i, i \u2208 indices -> 0 <= weight i) : weightedShiftEnergy indices weight (fun i => signal i + noise i) (signalShift + noiseShift) <= 2 * weightedShiftEnergy indices weight signal signalShift + 2 * weightedShiftEnergy indices weight noise noiseShift"
+  },
+  {
+    "kind": "def",
+    "name": "observedBefore",
+    "full_name": "BanditRLProof.DelayedFeedback.observedBefore",
+    "file": "BanditRLProof/DelayedFeedback/Accounting.lean",
+    "line": 12,
+    "statement": "def observedBefore (delay : Nat \u2192 Nat) (t : Nat) : Finset Nat"
+  },
+  {
+    "kind": "def",
+    "name": "outstandingAt",
+    "full_name": "BanditRLProof.DelayedFeedback.outstandingAt",
+    "file": "BanditRLProof/DelayedFeedback/Accounting.lean",
+    "line": 18,
+    "statement": "def outstandingAt (delay : Nat \u2192 Nat) (t : Nat) : Finset Nat"
+  },
+  {
+    "kind": "theorem",
+    "name": "observedBefore_disjoint_outstandingAt",
+    "full_name": "BanditRLProof.DelayedFeedback.observedBefore_disjoint_outstandingAt",
+    "file": "BanditRLProof/DelayedFeedback/Accounting.lean",
+    "line": 22,
+    "statement": "theorem observedBefore_disjoint_outstandingAt (delay : Nat \u2192 Nat) (t : Nat) : Disjoint (observedBefore delay t) (outstandingAt delay t)"
+  },
+  {
+    "kind": "theorem",
+    "name": "observedBefore_union_outstandingAt",
+    "full_name": "BanditRLProof.DelayedFeedback.observedBefore_union_outstandingAt",
+    "file": "BanditRLProof/DelayedFeedback/Accounting.lean",
+    "line": 30,
+    "statement": "theorem observedBefore_union_outstandingAt (delay : Nat \u2192 Nat) (t : Nat) : observedBefore delay t \u222a outstandingAt delay t = Finset.range t"
+  },
+  {
+    "kind": "theorem",
+    "name": "card_observedBefore_add_card_outstandingAt",
+    "full_name": "BanditRLProof.DelayedFeedback.card_observedBefore_add_card_outstandingAt",
+    "file": "BanditRLProof/DelayedFeedback/Accounting.lean",
+    "line": 46,
+    "statement": "theorem card_observedBefore_add_card_outstandingAt (delay : Nat \u2192 Nat) (t : Nat) : (observedBefore delay t).card + (outstandingAt delay t).card = t"
+  },
+  {
+    "kind": "def",
+    "name": "outstandingCount",
+    "full_name": "BanditRLProof.DelayedFeedback.outstandingCount",
+    "file": "BanditRLProof/DelayedFeedback/Accounting.lean",
+    "line": 58,
+    "statement": "def outstandingCount (delay : Nat \u2192 Nat) (t : Nat) : Nat"
+  },
+  {
+    "kind": "def",
+    "name": "maxOutstandingBeforeThrough",
+    "full_name": "BanditRLProof.DelayedFeedback.maxOutstandingBeforeThrough",
+    "file": "BanditRLProof/DelayedFeedback/Accounting.lean",
+    "line": 62,
+    "statement": "def maxOutstandingBeforeThrough (delay : Nat \u2192 Nat) (horizon : Nat) : Nat"
+  },
+  {
+    "kind": "theorem",
+    "name": "outstandingCount_le_round",
+    "full_name": "BanditRLProof.DelayedFeedback.outstandingCount_le_round",
+    "file": "BanditRLProof/DelayedFeedback/Accounting.lean",
+    "line": 67,
+    "statement": "theorem outstandingCount_le_round (delay : Nat \u2192 Nat) (t : Nat) : outstandingCount delay t \u2264 t"
+  },
+  {
+    "kind": "theorem",
+    "name": "outstandingCount_le_maxOutstandingBeforeThrough",
+    "full_name": "BanditRLProof.DelayedFeedback.outstandingCount_le_maxOutstandingBeforeThrough",
+    "file": "BanditRLProof/DelayedFeedback/Accounting.lean",
+    "line": 75,
+    "statement": "theorem outstandingCount_le_maxOutstandingBeforeThrough (delay : Nat \u2192 Nat) {t horizon : Nat} (ht : t \u2264 horizon) : outstandingCount delay t \u2264 maxOutstandingBeforeThrough delay horizon"
+  },
+  {
+    "kind": "def",
+    "name": "oneBasedDelayShift",
+    "full_name": "BanditRLProof.DelayedFeedback.oneBasedDelayShift",
+    "file": "BanditRLProof/DelayedFeedback/Accounting.lean",
+    "line": 86,
+    "statement": "def oneBasedDelayShift (delay : Nat \u2192 Nat) (s : Nat) : Nat"
+  },
+  {
+    "kind": "def",
+    "name": "paperMissingAtEnd",
+    "full_name": "BanditRLProof.DelayedFeedback.paperMissingAtEnd",
+    "file": "BanditRLProof/DelayedFeedback/Accounting.lean",
+    "line": 92,
+    "statement": "def paperMissingAtEnd (delay : Nat \u2192 Nat) (t : Nat) : Finset Nat"
+  },
+  {
+    "kind": "theorem",
+    "name": "paperMissingAtEnd_eq_outstandingAt_oneBasedDelayShift",
+    "full_name": "BanditRLProof.DelayedFeedback.paperMissingAtEnd_eq_outstandingAt_oneBasedDelayShift",
+    "file": "BanditRLProof/DelayedFeedback/Accounting.lean",
+    "line": 99,
+    "statement": "theorem paperMissingAtEnd_eq_outstandingAt_oneBasedDelayShift (delay : Nat \u2192 Nat) (t : Nat) : paperMissingAtEnd delay t = outstandingAt (oneBasedDelayShift delay) t"
+  },
+  {
+    "kind": "def",
+    "name": "paperMissingCount",
+    "full_name": "BanditRLProof.DelayedFeedback.paperMissingCount",
+    "file": "BanditRLProof/DelayedFeedback/Accounting.lean",
+    "line": 113,
+    "statement": "def paperMissingCount (delay : Nat \u2192 Nat) (t : Nat) : Nat"
+  },
+  {
+    "kind": "theorem",
+    "name": "paperMissingCount_eq_outstandingCount_oneBasedDelayShift",
+    "full_name": "BanditRLProof.DelayedFeedback.paperMissingCount_eq_outstandingCount_oneBasedDelayShift",
+    "file": "BanditRLProof/DelayedFeedback/Accounting.lean",
+    "line": 117,
+    "statement": "theorem paperMissingCount_eq_outstandingCount_oneBasedDelayShift (delay : Nat \u2192 Nat) (t : Nat) : paperMissingCount delay t = outstandingCount (oneBasedDelayShift delay) t"
+  },
+  {
+    "kind": "theorem",
+    "name": "paperMissingCount_le_round",
+    "full_name": "BanditRLProof.DelayedFeedback.paperMissingCount_le_round",
+    "file": "BanditRLProof/DelayedFeedback/Accounting.lean",
+    "line": 124,
+    "statement": "theorem paperMissingCount_le_round (delay : Nat \u2192 Nat) (t : Nat) : paperMissingCount delay t \u2264 t"
+  },
+  {
+    "kind": "def",
+    "name": "paperSigmaMaxThrough",
+    "full_name": "BanditRLProof.DelayedFeedback.paperSigmaMaxThrough",
+    "file": "BanditRLProof/DelayedFeedback/Accounting.lean",
+    "line": 131,
+    "statement": "def paperSigmaMaxThrough (delay : Nat \u2192 Nat) (horizon : Nat) : Nat"
+  },
+  {
+    "kind": "theorem",
+    "name": "paperMissingCount_le_paperSigmaMaxThrough",
+    "full_name": "BanditRLProof.DelayedFeedback.paperMissingCount_le_paperSigmaMaxThrough",
+    "file": "BanditRLProof/DelayedFeedback/Accounting.lean",
+    "line": 136,
+    "statement": "theorem paperMissingCount_le_paperSigmaMaxThrough (delay : Nat \u2192 Nat) {t horizon : Nat} (ht : t \u2264 horizon) : paperMissingCount delay t \u2264 paperSigmaMaxThrough delay horizon"
+  },
+  {
+    "kind": "structure",
+    "name": "DelayedSAPOAllocation",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOAllocation",
+    "file": "BanditRLProof/DelayedFeedback/ActionLaw.lean",
+    "line": 13,
+    "statement": "structure DelayedSAPOAllocation (K : Nat) where"
+  },
+  {
+    "kind": "def",
+    "name": "probability",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOAllocation.probability",
+    "file": "BanditRLProof/DelayedFeedback/ActionLaw.lean",
+    "line": 26,
+    "statement": "noncomputable def probability {K : Nat} (allocation : DelayedSAPOAllocation K) (i : Fin K) : \u211d"
+  },
+  {
+    "kind": "theorem",
+    "name": "probability_nonnegative",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOAllocation.probability_nonnegative",
+    "file": "BanditRLProof/DelayedFeedback/ActionLaw.lean",
+    "line": 30,
+    "statement": "theorem probability_nonnegative {K : Nat} (allocation : DelayedSAPOAllocation K) (i : Fin K) : 0 \u2264 allocation.probability i"
+  },
+  {
+    "kind": "theorem",
+    "name": "sum_probability_eq_one",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOAllocation.sum_probability_eq_one",
+    "file": "BanditRLProof/DelayedFeedback/ActionLaw.lean",
+    "line": 37,
+    "statement": "theorem sum_probability_eq_one {K : Nat} (allocation : DelayedSAPOAllocation K) : \u2211 i, allocation.probability i = 1"
+  },
+  {
+    "kind": "theorem",
+    "name": "finiteActionDistribution",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOAllocation.finiteActionDistribution",
+    "file": "BanditRLProof/DelayedFeedback/ActionLaw.lean",
+    "line": 45,
+    "statement": "theorem finiteActionDistribution {K : Nat} (allocation : DelayedSAPOAllocation K) : Exp3.FiniteActionDistribution (Finset.univ : Finset (Fin K)) allocation.probability where"
+  },
+  {
+    "kind": "def",
+    "name": "actionMeasure",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOAllocation.actionMeasure",
+    "file": "BanditRLProof/DelayedFeedback/ActionLaw.lean",
+    "line": 57,
+    "statement": "noncomputable def actionMeasure {K : Nat} (allocation : DelayedSAPOAllocation K) : Measure (Fin K)"
+  },
+  {
+    "kind": "theorem",
+    "name": "actionMeasure_isProbabilityMeasure",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOAllocation.actionMeasure_isProbabilityMeasure",
+    "file": "BanditRLProof/DelayedFeedback/ActionLaw.lean",
+    "line": 61,
+    "statement": "theorem actionMeasure_isProbabilityMeasure {K : Nat} (allocation : DelayedSAPOAllocation K) : IsProbabilityMeasure allocation.actionMeasure"
+  },
+  {
+    "kind": "def",
+    "name": "causalDelayedSAPOActionMeasureRule",
+    "full_name": "BanditRLProof.DelayedFeedback.causalDelayedSAPOActionMeasureRule",
+    "file": "BanditRLProof/DelayedFeedback/ActionLaw.lean",
+    "line": 72,
+    "statement": "noncomputable def causalDelayedSAPOActionMeasureRule {K : Nat} {Loss : Type*} (rule : CausalDecisionRule (Fin K) Loss (DelayedSAPOAllocation K)) : CausalDecisionRule (Fin K) Loss (Measure (Fin K))"
+  },
+  {
+    "kind": "theorem",
+    "name": "causalDelayedSAPOActionMeasureRule_isProbabilityMeasure",
+    "full_name": "BanditRLProof.DelayedFeedback.causalDelayedSAPOActionMeasureRule_isProbabilityMeasure",
+    "file": "BanditRLProof/DelayedFeedback/ActionLaw.lean",
+    "line": 79,
+    "statement": "theorem causalDelayedSAPOActionMeasureRule_isProbabilityMeasure {K : Nat} {Loss : Type*} (rule : CausalDecisionRule (Fin K) Loss (DelayedSAPOAllocation K)) (t : Nat) (view : ActionTimeView (Fin K) Loss) : IsProbabilityMeasure (causalDelayedSAPOActionMeasureRule rule t view)"
+  },
+  {
+    "kind": "theorem",
+    "name": "causalDelayedSAPOActionMeasureRule_eq_of_observation_equivalent",
+    "full_name": "BanditRLProof.DelayedFeedback.causalDelayedSAPOActionMeasureRule_eq_of_observation_equivalent",
+    "file": "BanditRLProof/DelayedFeedback/ActionLaw.lean",
+    "line": 89,
+    "statement": "theorem causalDelayedSAPOActionMeasureRule_eq_of_observation_equivalent {K : Nat} {Loss : Type*} (rule : CausalDecisionRule (Fin K) Loss (DelayedSAPOAllocation K)) (delay\u2081 delay\u2082 : Nat \u2192 Nat) (action\u2081 action\u2082 : Nat \u2192 Fin K) (loss\u2081 loss\u2082 : Nat \u2192 Loss) (t : Nat) (hvisible : observedBefore delay\u2081 t = observedBefore delay\u2082 t) (haction : \u2200 s, s < t \u2192 action\u2081 s = action\u2082 s) (hloss : \u2200 s, s \u2208 observedBefore delay\u2081 t \u2192 loss\u2081 s = loss\u2082 s) : causalDelayedSAPOActionMeasureRule rule t (actionTimeViewAt delay\u2081 action\u2081 loss\u2081 t) = causalDelayedSAPOActionMeasureRule rule t (actionTimeViewAt delay\u2082 action\u2082 loss\u2082 t)"
+  },
+  {
+    "kind": "def",
+    "name": "inactiveArms",
+    "full_name": "BanditRLProof.DelayedFeedback.inactiveArms",
+    "file": "BanditRLProof/DelayedFeedback/ActiveAllocation.lean",
+    "line": 11,
+    "statement": "def inactiveArms {K : Nat} (active : Finset (Fin K)) : Finset (Fin K)"
+  },
+  {
+    "kind": "def",
+    "name": "activeEqualShare",
+    "full_name": "BanditRLProof.DelayedFeedback.activeEqualShare",
+    "file": "BanditRLProof/DelayedFeedback/ActiveAllocation.lean",
+    "line": 15,
+    "statement": "noncomputable def activeEqualShare {K : Nat} (active : Finset (Fin K)) (inactiveProbability : Fin K \u2192 \u211d) : \u211d"
+  },
+  {
+    "kind": "def",
+    "name": "delayedSAPOProbability",
+    "full_name": "BanditRLProof.DelayedFeedback.delayedSAPOProbability",
+    "file": "BanditRLProof/DelayedFeedback/ActiveAllocation.lean",
+    "line": 22,
+    "statement": "noncomputable def delayedSAPOProbability {K : Nat} (active : Finset (Fin K)) (inactiveProbability : Fin K \u2192 \u211d) (i : Fin K) : \u211d"
+  },
+  {
+    "kind": "theorem",
+    "name": "delayedSAPOProbability_of_active",
+    "full_name": "BanditRLProof.DelayedFeedback.delayedSAPOProbability_of_active",
+    "file": "BanditRLProof/DelayedFeedback/ActiveAllocation.lean",
+    "line": 29,
+    "statement": "theorem delayedSAPOProbability_of_active {K : Nat} (active : Finset (Fin K)) (inactiveProbability : Fin K \u2192 \u211d) {i : Fin K} (hi : i \u2208 active) : delayedSAPOProbability active inactiveProbability i = activeEqualShare active inactiveProbability"
+  },
+  {
+    "kind": "theorem",
+    "name": "delayedSAPOProbability_of_inactive",
+    "full_name": "BanditRLProof.DelayedFeedback.delayedSAPOProbability_of_inactive",
+    "file": "BanditRLProof/DelayedFeedback/ActiveAllocation.lean",
+    "line": 37,
+    "statement": "theorem delayedSAPOProbability_of_inactive {K : Nat} (active : Finset (Fin K)) (inactiveProbability : Fin K \u2192 \u211d) {i : Fin K} (hi : i \u2209 active) : delayedSAPOProbability active inactiveProbability i = inactiveProbability i"
+  },
+  {
+    "kind": "theorem",
+    "name": "activeEqualShare_nonneg",
+    "full_name": "BanditRLProof.DelayedFeedback.activeEqualShare_nonneg",
+    "file": "BanditRLProof/DelayedFeedback/ActiveAllocation.lean",
+    "line": 46,
+    "statement": "theorem activeEqualShare_nonneg {K : Nat} (active : Finset (Fin K)) (inactiveProbability : Fin K \u2192 \u211d) (hmass : (\u2211 i \u2208 inactiveArms active, inactiveProbability i) \u2264 1) : 0 \u2264 activeEqualShare active inactiveProbability"
+  },
+  {
+    "kind": "theorem",
+    "name": "delayedSAPOProbability_nonneg",
+    "full_name": "BanditRLProof.DelayedFeedback.delayedSAPOProbability_nonneg",
+    "file": "BanditRLProof/DelayedFeedback/ActiveAllocation.lean",
+    "line": 54,
+    "statement": "theorem delayedSAPOProbability_nonneg {K : Nat} (active : Finset (Fin K)) (inactiveProbability : Fin K \u2192 \u211d) (hinactive : \u2200 i \u2208 inactiveArms active, 0 \u2264 inactiveProbability i) (hmass : (\u2211 i \u2208 inactiveArms active, inactiveProbability i) \u2264 1) (i : Fin K) : 0 \u2264 delayedSAPOProbability active inactiveProbability i"
+  },
+  {
+    "kind": "theorem",
+    "name": "sum_delayedSAPOProbability_eq_one",
+    "full_name": "BanditRLProof.DelayedFeedback.sum_delayedSAPOProbability_eq_one",
+    "file": "BanditRLProof/DelayedFeedback/ActiveAllocation.lean",
+    "line": 68,
+    "statement": "theorem sum_delayedSAPOProbability_eq_one {K : Nat} (active : Finset (Fin K)) (inactiveProbability : Fin K \u2192 \u211d) (hactive : active.Nonempty) : \u2211 i, delayedSAPOProbability active inactiveProbability i = 1"
+  },
+  {
+    "kind": "structure",
+    "name": "ActionTimeView",
+    "full_name": "BanditRLProof.DelayedFeedback.ActionTimeView",
+    "file": "BanditRLProof/DelayedFeedback/CausalView.lean",
+    "line": 16,
+    "statement": "structure ActionTimeView (Action : Type uAction) (Loss : Type uLoss) where"
+  },
+  {
+    "kind": "theorem",
+    "name": "ActionTimeView.ext",
+    "full_name": "ActionTimeView.ext",
+    "file": "BanditRLProof/DelayedFeedback/CausalView.lean",
+    "line": 21,
+    "statement": "theorem ActionTimeView.ext {Action : Type uAction} {Loss : Type uLoss} {left right : ActionTimeView Action Loss} (hpast : left.pastAction = right.pastAction) (hloss : left.observedLoss = right.observedLoss) : left = right"
+  },
+  {
+    "kind": "def",
+    "name": "actionTimeViewAt",
+    "full_name": "BanditRLProof.DelayedFeedback.actionTimeViewAt",
+    "file": "BanditRLProof/DelayedFeedback/CausalView.lean",
+    "line": 36,
+    "statement": "def actionTimeViewAt {Action : Type uAction} {Loss : Type uLoss} (delay : Nat \u2192 Nat) (action : Nat \u2192 Action) (loss : Nat \u2192 Loss) (t : Nat) : ActionTimeView Action Loss where"
+  },
+  {
+    "kind": "abbrev",
+    "name": "CausalDecisionRule",
+    "full_name": "BanditRLProof.DelayedFeedback.CausalDecisionRule",
+    "file": "BanditRLProof/DelayedFeedback/CausalView.lean",
+    "line": 47,
+    "statement": "abbrev CausalDecisionRule (Action : Type uAction) (Loss : Type uLoss) (Decision : Type uDecision)"
+  },
+  {
+    "kind": "theorem",
+    "name": "actionTimeViewAt_pastAction_of_lt",
+    "full_name": "BanditRLProof.DelayedFeedback.actionTimeViewAt_pastAction_of_lt",
+    "file": "BanditRLProof/DelayedFeedback/CausalView.lean",
+    "line": 52,
+    "statement": "theorem actionTimeViewAt_pastAction_of_lt {Action : Type uAction} {Loss : Type uLoss} (delay : Nat \u2192 Nat) (action : Nat \u2192 Action) (loss : Nat \u2192 Loss) {s t : Nat} (hs : s < t) : (actionTimeViewAt delay action loss t).pastAction s = some (action s)"
+  },
+  {
+    "kind": "theorem",
+    "name": "actionTimeViewAt_pastAction_of_not_lt",
+    "full_name": "BanditRLProof.DelayedFeedback.actionTimeViewAt_pastAction_of_not_lt",
+    "file": "BanditRLProof/DelayedFeedback/CausalView.lean",
+    "line": 60,
+    "statement": "theorem actionTimeViewAt_pastAction_of_not_lt {Action : Type uAction} {Loss : Type uLoss} (delay : Nat \u2192 Nat) (action : Nat \u2192 Action) (loss : Nat \u2192 Loss) {s t : Nat} (hs : \u00ac s < t) : (actionTimeViewAt delay action loss t).pastAction s = none"
+  },
+  {
+    "kind": "theorem",
+    "name": "actionTimeViewAt_observedLoss_of_mem",
+    "full_name": "BanditRLProof.DelayedFeedback.actionTimeViewAt_observedLoss_of_mem",
+    "file": "BanditRLProof/DelayedFeedback/CausalView.lean",
+    "line": 68,
+    "statement": "theorem actionTimeViewAt_observedLoss_of_mem {Action : Type uAction} {Loss : Type uLoss} (delay : Nat \u2192 Nat) (action : Nat \u2192 Action) (loss : Nat \u2192 Loss) {s t : Nat} (hs : s \u2208 observedBefore delay t) : (actionTimeViewAt delay action loss t).observedLoss s = some (loss s)"
+  },
+  {
+    "kind": "theorem",
+    "name": "actionTimeViewAt_observedLoss_of_not_mem",
+    "full_name": "BanditRLProof.DelayedFeedback.actionTimeViewAt_observedLoss_of_not_mem",
+    "file": "BanditRLProof/DelayedFeedback/CausalView.lean",
+    "line": 76,
+    "statement": "theorem actionTimeViewAt_observedLoss_of_not_mem {Action : Type uAction} {Loss : Type uLoss} (delay : Nat \u2192 Nat) (action : Nat \u2192 Action) (loss : Nat \u2192 Loss) {s t : Nat} (hs : s \u2209 observedBefore delay t) : (actionTimeViewAt delay action loss t).observedLoss s = none"
+  },
+  {
+    "kind": "theorem",
+    "name": "actionTimeViewAt_outstanding_loss_hidden",
+    "full_name": "BanditRLProof.DelayedFeedback.actionTimeViewAt_outstanding_loss_hidden",
+    "file": "BanditRLProof/DelayedFeedback/CausalView.lean",
+    "line": 84,
+    "statement": "theorem actionTimeViewAt_outstanding_loss_hidden {Action : Type uAction} {Loss : Type uLoss} (delay : Nat \u2192 Nat) (action : Nat \u2192 Action) (loss : Nat \u2192 Loss) {s t : Nat} (hs : s \u2208 outstandingAt delay t) : (actionTimeViewAt delay action loss t).observedLoss s = none"
+  },
+  {
+    "kind": "theorem",
+    "name": "actionTimeViewAt_eq_of_observation_equivalent",
+    "full_name": "BanditRLProof.DelayedFeedback.actionTimeViewAt_eq_of_observation_equivalent",
+    "file": "BanditRLProof/DelayedFeedback/CausalView.lean",
+    "line": 96,
+    "statement": "theorem actionTimeViewAt_eq_of_observation_equivalent {Action : Type uAction} {Loss : Type uLoss} (delay\u2081 delay\u2082 : Nat \u2192 Nat) (action\u2081 action\u2082 : Nat \u2192 Action) (loss\u2081 loss\u2082 : Nat \u2192 Loss) (t : Nat) (hvisible : observedBefore delay\u2081 t = observedBefore delay\u2082 t) (haction : \u2200 s, s < t \u2192 action\u2081 s = action\u2082 s) (hloss : \u2200 s, s \u2208 observedBefore delay\u2081 t \u2192 loss\u2081 s = loss\u2082 s) : actionTimeViewAt delay\u2081 action\u2081 loss\u2081 t = actionTimeViewAt delay\u2082 action\u2082 loss\u2082 t"
+  },
+  {
+    "kind": "theorem",
+    "name": "causalDecision_eq_of_observation_equivalent",
+    "full_name": "BanditRLProof.DelayedFeedback.causalDecision_eq_of_observation_equivalent",
+    "file": "BanditRLProof/DelayedFeedback/CausalView.lean",
+    "line": 122,
+    "statement": "theorem causalDecision_eq_of_observation_equivalent {Action : Type uAction} {Loss : Type uLoss} {Decision : Type uDecision} (rule : CausalDecisionRule Action Loss Decision) (delay\u2081 delay\u2082 : Nat \u2192 Nat) (action\u2081 action\u2082 : Nat \u2192 Action) (loss\u2081 loss\u2082 : Nat \u2192 Loss) (t : Nat) (hvisible : observedBefore delay\u2081 t = observedBefore delay\u2082 t) (haction : \u2200 s, s < t \u2192 action\u2081 s = action\u2082 s) (hloss : \u2200 s, s \u2208 observedBefore delay\u2081 t \u2192 loss\u2081 s = loss\u2082 s) : rule t (actionTimeViewAt delay\u2081 action\u2081 loss\u2081 t) = rule t (actionTimeViewAt delay\u2082 action\u2082 loss\u2082 t)"
+  },
+  {
+    "kind": "structure",
+    "name": "DelayedSAPOEliminationSnapshot",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot",
+    "file": "BanditRLProof/DelayedFeedback/Elimination.lean",
+    "line": 12,
+    "statement": "structure DelayedSAPOEliminationSnapshot (K : Nat) where"
+  },
+  {
+    "kind": "def",
+    "name": "eliminated",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.eliminated",
+    "file": "BanditRLProof/DelayedFeedback/Elimination.lean",
+    "line": 21,
+    "statement": "noncomputable def eliminated {K : Nat} (snapshot : DelayedSAPOEliminationSnapshot K) : Finset (Fin K)"
+  },
+  {
+    "kind": "def",
+    "name": "remainingActive",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.remainingActive",
+    "file": "BanditRLProof/DelayedFeedback/Elimination.lean",
+    "line": 29,
+    "statement": "noncomputable def remainingActive {K : Nat} (snapshot : DelayedSAPOEliminationSnapshot K) : Finset (Fin K)"
+  },
+  {
+    "kind": "theorem",
+    "name": "mem_eliminated_iff",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.mem_eliminated_iff",
+    "file": "BanditRLProof/DelayedFeedback/Elimination.lean",
+    "line": 35,
+    "statement": "theorem mem_eliminated_iff {K : Nat} (snapshot : DelayedSAPOEliminationSnapshot K) (i : Fin K) : i \u2208 snapshot.eliminated \u2194 i \u2208 snapshot.active \u2227 snapshot.ucbStar < snapshot.empiricalMean i - (9 : \u211d) * snapshot.empiricalWidth i"
+  },
+  {
+    "kind": "theorem",
+    "name": "mem_remainingActive_iff",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.mem_remainingActive_iff",
+    "file": "BanditRLProof/DelayedFeedback/Elimination.lean",
+    "line": 45,
+    "statement": "theorem mem_remainingActive_iff {K : Nat} (snapshot : DelayedSAPOEliminationSnapshot K) (i : Fin K) : i \u2208 snapshot.remainingActive \u2194 i \u2208 snapshot.active \u2227 snapshot.empiricalMean i - (9 : \u211d) * snapshot.empiricalWidth i \u2264 snapshot.ucbStar"
+  },
+  {
+    "kind": "structure",
+    "name": "OptimalArmSurvivalCertificate",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.OptimalArmSurvivalCertificate",
+    "file": "BanditRLProof/DelayedFeedback/Elimination.lean",
+    "line": 61,
+    "statement": "structure OptimalArmSurvivalCertificate {K : Nat} (snapshot : DelayedSAPOEliminationSnapshot K) (mean : Fin K \u2192 \u211d) (optimal : Fin K) : Prop where"
+  },
+  {
+    "kind": "theorem",
+    "name": "optimal_mem_remainingActive_of_certificate",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.optimal_mem_remainingActive_of_certificate",
+    "file": "BanditRLProof/DelayedFeedback/Elimination.lean",
+    "line": 74,
+    "statement": "theorem optimal_mem_remainingActive_of_certificate {K : Nat} (snapshot : DelayedSAPOEliminationSnapshot K) (mean : Fin K \u2192 \u211d) (optimal : Fin K) (certificate : OptimalArmSurvivalCertificate snapshot mean optimal) : optimal \u2208 snapshot.remainingActive"
+  },
+  {
+    "kind": "theorem",
+    "name": "remainingActive_nonempty_of_certificate",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.remainingActive_nonempty_of_certificate",
+    "file": "BanditRLProof/DelayedFeedback/Elimination.lean",
+    "line": 92,
+    "statement": "theorem remainingActive_nonempty_of_certificate {K : Nat} (snapshot : DelayedSAPOEliminationSnapshot K) (mean : Fin K \u2192 \u211d) (optimal : Fin K) (certificate : OptimalArmSurvivalCertificate snapshot mean optimal) : snapshot.remainingActive.Nonempty"
+  },
+  {
+    "kind": "theorem",
+    "name": "sum_delayedSAPOProbability_after_elimination_eq_one",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.sum_delayedSAPOProbability_after_elimination_eq_one",
+    "file": "BanditRLProof/DelayedFeedback/Elimination.lean",
+    "line": 103,
+    "statement": "theorem sum_delayedSAPOProbability_after_elimination_eq_one {K : Nat} (snapshot : DelayedSAPOEliminationSnapshot K) (mean : Fin K \u2192 \u211d) (optimal : Fin K) (certificate : OptimalArmSurvivalCertificate snapshot mean optimal) (inactiveProbability : Fin K \u2192 \u211d) : \u2211 i, delayedSAPOProbability snapshot.remainingActive inactiveProbability i = 1"
+  },
+  {
+    "kind": "structure",
+    "name": "SameAlgorithmMultiRegimeContract",
+    "full_name": "BanditRLProof.DelayedFeedback.SameAlgorithmMultiRegimeContract",
+    "file": "BanditRLProof/DelayedFeedback/MultiRegimeContract.lean",
+    "line": 15,
+    "statement": "structure SameAlgorithmMultiRegimeContract (Algorithm : Type uAlgorithm) (Initialization : Type uInitialization) (Tuning : Type uTuning) (Information : Type uInformation) (Comparator : Type uComparator) (StochasticEnvironment : Type uStochasticEnvironment) (AdversarialEnvironment : Type uAdversarialEnvironment) where"
+  },
+  {
+    "kind": "def",
+    "name": "stochasticClaim",
+    "full_name": "BanditRLProof.DelayedFeedback.SameAlgorithmMultiRegimeContract.stochasticClaim",
+    "file": "BanditRLProof/DelayedFeedback/MultiRegimeContract.lean",
+    "line": 39,
+    "statement": "def stochasticClaim {Algorithm : Type uAlgorithm} {Initialization : Type uInitialization} {Tuning : Type uTuning} {Information : Type uInformation} {Comparator : Type uComparator} {StochasticEnvironment : Type uStochasticEnvironment} {AdversarialEnvironment : Type uAdversarialEnvironment} (contract : SameAlgorithmMultiRegimeContract Algorithm Initialization Tuning Information Comparator StochasticEnvironment AdversarialEnvironment) (environment : StochasticEnvironment) : Prop"
+  },
+  {
+    "kind": "def",
+    "name": "adversarialClaim",
+    "full_name": "BanditRLProof.DelayedFeedback.SameAlgorithmMultiRegimeContract.adversarialClaim",
+    "file": "BanditRLProof/DelayedFeedback/MultiRegimeContract.lean",
+    "line": 56,
+    "statement": "def adversarialClaim {Algorithm : Type uAlgorithm} {Initialization : Type uInitialization} {Tuning : Type uTuning} {Information : Type uInformation} {Comparator : Type uComparator} {StochasticEnvironment : Type uStochasticEnvironment} {AdversarialEnvironment : Type uAdversarialEnvironment} (contract : SameAlgorithmMultiRegimeContract Algorithm Initialization Tuning Information Comparator StochasticEnvironment AdversarialEnvironment) (environment : AdversarialEnvironment) : Prop"
+  },
+  {
+    "kind": "theorem",
+    "name": "stochasticClaim_iff_shared_fields",
+    "full_name": "BanditRLProof.DelayedFeedback.SameAlgorithmMultiRegimeContract.stochasticClaim_iff_shared_fields",
+    "file": "BanditRLProof/DelayedFeedback/MultiRegimeContract.lean",
+    "line": 71,
+    "statement": "theorem stochasticClaim_iff_shared_fields {Algorithm : Type uAlgorithm} {Initialization : Type uInitialization} {Tuning : Type uTuning} {Information : Type uInformation} {Comparator : Type uComparator} {StochasticEnvironment : Type uStochasticEnvironment} {AdversarialEnvironment : Type uAdversarialEnvironment} (contract : SameAlgorithmMultiRegimeContract Algorithm Initialization Tuning Information Comparator StochasticEnvironment AdversarialEnvironment) (environment : StochasticEnvironment) : stochasticClaim contract environment \u2194 contract.stochasticEndpoint contract.algorithm contract.initialization contract.tuning contract.information contract.comparator environment"
+  },
+  {
+    "kind": "theorem",
+    "name": "adversarialClaim_iff_shared_fields",
+    "full_name": "BanditRLProof.DelayedFeedback.SameAlgorithmMultiRegimeContract.adversarialClaim_iff_shared_fields",
+    "file": "BanditRLProof/DelayedFeedback/MultiRegimeContract.lean",
+    "line": 88,
+    "statement": "theorem adversarialClaim_iff_shared_fields {Algorithm : Type uAlgorithm} {Initialization : Type uInitialization} {Tuning : Type uTuning} {Information : Type uInformation} {Comparator : Type uComparator} {StochasticEnvironment : Type uStochasticEnvironment} {AdversarialEnvironment : Type uAdversarialEnvironment} (contract : SameAlgorithmMultiRegimeContract Algorithm Initialization Tuning Information Comparator StochasticEnvironment AdversarialEnvironment) (environment : AdversarialEnvironment) : adversarialClaim contract environment \u2194 contract.adversarialEndpoint contract.algorithm contract.initialization contract.tuning contract.information contract.comparator environment"
+  },
+  {
+    "kind": "def",
+    "name": "newlyObservedBefore",
+    "full_name": "BanditRLProof.DelayedFeedback.newlyObservedBefore",
+    "file": "BanditRLProof/DelayedFeedback/Processing.lean",
+    "line": 10,
+    "statement": "def newlyObservedBefore (delay : Nat \u2192 Nat) (processed : Finset Nat) (t : Nat) : Finset Nat"
+  },
+  {
+    "kind": "theorem",
+    "name": "observedBefore_mono",
+    "full_name": "BanditRLProof.DelayedFeedback.observedBefore_mono",
+    "file": "BanditRLProof/DelayedFeedback/Processing.lean",
+    "line": 16,
+    "statement": "theorem observedBefore_mono (delay : Nat \u2192 Nat) {t u : Nat} (htu : t \u2264 u) : observedBefore delay t \u2286 observedBefore delay u"
+  },
+  {
+    "kind": "theorem",
+    "name": "processed_disjoint_newlyObservedBefore",
+    "full_name": "BanditRLProof.DelayedFeedback.processed_disjoint_newlyObservedBefore",
+    "file": "BanditRLProof/DelayedFeedback/Processing.lean",
+    "line": 25,
+    "statement": "theorem processed_disjoint_newlyObservedBefore (delay : Nat \u2192 Nat) (processed : Finset Nat) (t : Nat) : Disjoint processed (newlyObservedBefore delay processed t)"
+  },
+  {
+    "kind": "theorem",
+    "name": "processed_union_newlyObservedBefore",
+    "full_name": "BanditRLProof.DelayedFeedback.processed_union_newlyObservedBefore",
+    "file": "BanditRLProof/DelayedFeedback/Processing.lean",
+    "line": 34,
+    "statement": "theorem processed_union_newlyObservedBefore (delay : Nat \u2192 Nat) (processed : Finset Nat) (t : Nat) (hprocessed : processed \u2286 observedBefore delay t) : processed \u222a newlyObservedBefore delay processed t = observedBefore delay t"
+  },
+  {
+    "kind": "def",
+    "name": "processAllNew",
+    "full_name": "BanditRLProof.DelayedFeedback.processAllNew",
+    "file": "BanditRLProof/DelayedFeedback/Processing.lean",
+    "line": 52,
+    "statement": "def processAllNew (delay : Nat \u2192 Nat) (processed : Finset Nat) (t : Nat) : Finset Nat"
+  },
+  {
+    "kind": "theorem",
+    "name": "processAllNew_eq_observedBefore",
+    "full_name": "BanditRLProof.DelayedFeedback.processAllNew_eq_observedBefore",
+    "file": "BanditRLProof/DelayedFeedback/Processing.lean",
+    "line": 56,
+    "statement": "theorem processAllNew_eq_observedBefore (delay : Nat \u2192 Nat) (processed : Finset Nat) (t : Nat) (hprocessed : processed \u2286 observedBefore delay t) : processAllNew delay processed t = observedBefore delay t"
+  },
+  {
+    "kind": "theorem",
+    "name": "previousObservedBefore_subset_current",
+    "full_name": "BanditRLProof.DelayedFeedback.previousObservedBefore_subset_current",
+    "file": "BanditRLProof/DelayedFeedback/Processing.lean",
+    "line": 63,
+    "statement": "theorem previousObservedBefore_subset_current (delay : Nat \u2192 Nat) {t u : Nat} (htu : t \u2264 u) : observedBefore delay t \u2286 observedBefore delay u"
+  },
+  {
+    "kind": "theorem",
+    "name": "processAllNew_from_previous_eq_current",
+    "full_name": "BanditRLProof.DelayedFeedback.processAllNew_from_previous_eq_current",
+    "file": "BanditRLProof/DelayedFeedback/Processing.lean",
+    "line": 70,
+    "statement": "theorem processAllNew_from_previous_eq_current (delay : Nat \u2192 Nat) {t u : Nat} (htu : t \u2264 u) : processAllNew delay (observedBefore delay t) u = observedBefore delay u"
+  },
+  {
+    "kind": "theorem",
+    "name": "outstandingAt_disjoint_newlyObservedBefore",
+    "full_name": "BanditRLProof.DelayedFeedback.outstandingAt_disjoint_newlyObservedBefore",
+    "file": "BanditRLProof/DelayedFeedback/Processing.lean",
+    "line": 79,
+    "statement": "theorem outstandingAt_disjoint_newlyObservedBefore (delay : Nat \u2192 Nat) (processed : Finset Nat) (t : Nat) : Disjoint (outstandingAt delay t) (newlyObservedBefore delay processed t)"
+  },
+  {
+    "kind": "def",
+    "name": "sourceEmpiricalWidthScale",
+    "full_name": "BanditRLProof.DelayedFeedback.sourceEmpiricalWidthScale",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+    "line": 12,
+    "statement": "noncomputable def sourceEmpiricalWidthScale (scale count : Real) : Real"
+  },
+  {
+    "kind": "theorem",
+    "name": "sourceEmpiricalWidthScale_antitone",
+    "full_name": "BanditRLProof.DelayedFeedback.sourceEmpiricalWidthScale_antitone",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+    "line": 18,
+    "statement": "theorem sourceEmpiricalWidthScale_antitone (scale countEarlier countLater : Real) (hscale : 0 <= scale) (hcountEarlier : 0 < countEarlier) (hcount : countEarlier <= countLater) : sourceEmpiricalWidthScale scale countLater <= sourceEmpiricalWidthScale scale countEarlier"
+  },
+  {
+    "kind": "theorem",
+    "name": "one_le_ten_mul_sourceEmpiricalWidthScale_of_count_le_96_mul_scale",
+    "full_name": "BanditRLProof.DelayedFeedback.one_le_ten_mul_sourceEmpiricalWidthScale_of_count_le_96_mul_scale",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+    "line": 35,
+    "statement": "theorem one_le_ten_mul_sourceEmpiricalWidthScale_of_count_le_96_mul_scale (scale count : Real) (hscale : 0 < scale) (hcount : count <= 96 * scale) : 1 <= 10 * sourceEmpiricalWidthScale scale count"
+  },
+  {
+    "kind": "theorem",
+    "name": "one_le_ten_mul_sourceEmpiricalWidthScale_two_log_of_small_count",
+    "full_name": "BanditRLProof.DelayedFeedback.one_le_ten_mul_sourceEmpiricalWidthScale_two_log_of_small_count",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+    "line": 58,
+    "statement": "theorem one_le_ten_mul_sourceEmpiricalWidthScale_two_log_of_small_count (horizon count : Real) (hhorizon : 1 < horizon) (hcount : count <= 192 * Real.log horizon) : 1 <= 10 * sourceEmpiricalWidthScale (2 * Real.log horizon) count"
+  },
+  {
+    "kind": "theorem",
+    "name": "sourceEmpiricalWidthScale_one_one",
+    "full_name": "BanditRLProof.DelayedFeedback.sourceEmpiricalWidthScale_one_one",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+    "line": 70,
+    "statement": "theorem sourceEmpiricalWidthScale_one_one : sourceEmpiricalWidthScale 1 1 = 1"
+  },
+  {
+    "kind": "theorem",
+    "name": "sourceEmpiricalWidthScale_one_four",
+    "full_name": "BanditRLProof.DelayedFeedback.sourceEmpiricalWidthScale_one_four",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+    "line": 77,
+    "statement": "theorem sourceEmpiricalWidthScale_one_four : sourceEmpiricalWidthScale 1 4 = (1 / 2 : Real)"
+  },
+  {
+    "kind": "theorem",
+    "name": "not_sourceEmpiricalWidthScale_one_le_four",
+    "full_name": "BanditRLProof.DelayedFeedback.not_sourceEmpiricalWidthScale_one_le_four",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+    "line": 85,
+    "statement": "theorem not_sourceEmpiricalWidthScale_one_le_four : not (sourceEmpiricalWidthScale 1 1 <= sourceEmpiricalWidthScale 1 4)"
+  },
+  {
+    "kind": "theorem",
+    "name": "not_sourceEmpiricalWidthScale_horizon_four_one_le_four",
+    "full_name": "BanditRLProof.DelayedFeedback.not_sourceEmpiricalWidthScale_horizon_four_one_le_four",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+    "line": 94,
+    "statement": "theorem not_sourceEmpiricalWidthScale_horizon_four_one_le_four : \u00ac (sourceEmpiricalWidthScale (2 * Real.log 4) 1 <= sourceEmpiricalWidthScale (2 * Real.log 4) 4)"
+  },
+  {
+    "kind": "theorem",
+    "name": "eight_mul_empiricalWidth_lt_gap_of_mem_eliminated",
+    "full_name": "BanditRLProof.DelayedFeedback.eight_mul_empiricalWidth_lt_gap_of_mem_eliminated",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+    "line": 133,
+    "statement": "theorem eight_mul_empiricalWidth_lt_gap_of_mem_eliminated {K : Nat} [Nonempty (Fin K)] (snapshot : DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K -> Real) (optimal i : Fin K) (hoptimal : forall j, mean optimal <= mean j) (hgood : snapshot.EliminationGoodEvent mean) (hi : i \u2208 snapshot.eliminated) : 8 * snapshot.empiricalWidth i < mean i - mean optimal"
+  },
+  {
+    "kind": "theorem",
+    "name": "gap_le_sixteen_mul_empiricalWidth_of_mem_remainingActive",
+    "full_name": "BanditRLProof.DelayedFeedback.gap_le_sixteen_mul_empiricalWidth_of_mem_remainingActive",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+    "line": 158,
+    "statement": "theorem gap_le_sixteen_mul_empiricalWidth_of_mem_remainingActive {K : Nat} [Nonempty (Fin K)] (snapshot : DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K -> Real) (optimal i : Fin K) (hgood : snapshot.EliminationGoodEvent mean) (hi : i \u2208 snapshot.remainingActive) (hucbCurrent : snapshot.ucbStar <= snapshot.empiricalMean optimal + snapshot.empiricalWidth optimal) (hoptimalWidth : snapshot.empiricalWidth optimal <= 3 * snapshot.empiricalWidth i) : mean i - mean optimal <= 16 * snapshot.empiricalWidth i"
+  },
+  {
+    "kind": "theorem",
+    "name": "gap_le_sixteen_mul_empiricalWidth_of_mem_remainingActive_of_large_or_small_count",
+    "full_name": "BanditRLProof.DelayedFeedback.gap_le_sixteen_mul_empiricalWidth_of_mem_remainingActive_of_large_or_small_count",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+    "line": 191,
+    "statement": "theorem gap_le_sixteen_mul_empiricalWidth_of_mem_remainingActive_of_large_or_small_count {K : Nat} [Nonempty (Fin K)] (snapshot : DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K -> Real) (optimal i : Fin K) (hmeanBounds : forall j, mean j \u2208 Set.Icc (0 : Real) 1) (hgood : snapshot.EliminationGoodEvent mean) (hi : i \u2208 snapshot.remainingActive) (hbranch : (snapshot.ucbStar <= snapshot.empiricalMean optimal + snapshot.empiricalWidth optimal /\\ snapshot.empiricalWidth optimal <= 3 * snapshot.empiricalWidth i) \\/ (exists scale count : Real, 0 < scale /\\ count <= 96 * scale /\\ snapshot.empiricalWidth i = sourceEmpiricalWidthScale scale count)) : mean i - mean optimal <= 16 * snapshot.empiricalWidth i"
+  },
+  {
+    "kind": "theorem",
+    "name": "gap_le_twenty_mul_gap_at_earlier_elimination_snapshot",
+    "full_name": "BanditRLProof.DelayedFeedback.gap_le_twenty_mul_gap_at_earlier_elimination_snapshot",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+    "line": 229,
+    "statement": "theorem gap_le_twenty_mul_gap_at_earlier_elimination_snapshot {K : Nat} [Nonempty (Fin K)] (snapshot : DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K -> Real) (optimal iEarlier iLater : Fin K) (hoptimal : forall j, mean optimal <= mean j) (hgood : snapshot.EliminationGoodEvent mean) (hEarlierEliminated : iEarlier \u2208 snapshot.eliminated) (hLaterRemaining : iLater \u2208 snapshot.remainingActive) (hucbCurrent : snapshot.ucbStar <= snapshot.empiricalMean optimal + snapshot.empiricalWidth optimal) (hoptimalWidth : snapshot.empiricalWidth optimal <= 3 * snapshot.empiricalWidth iLater) (hpairWidth : snapshot.empiricalWidth iLater <= 10 * snapshot.empiricalWidth iEarlier) : mean iLater - mean optimal <= 20 * (mean iEarlier - mean optimal)"
+  },
+  {
+    "kind": "theorem",
+    "name": "gap_le_twenty_mul_gap_at_earlier_elimination_snapshot_of_large_or_small_count",
+    "full_name": "BanditRLProof.DelayedFeedback.gap_le_twenty_mul_gap_at_earlier_elimination_snapshot_of_large_or_small_count",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+    "line": 260,
+    "statement": "theorem gap_le_twenty_mul_gap_at_earlier_elimination_snapshot_of_large_or_small_count {K : Nat} [Nonempty (Fin K)] (snapshot : DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K -> Real) (optimal iEarlier iLater : Fin K) (hoptimal : forall j, mean optimal <= mean j) (hmeanBounds : forall j, mean j \u2208 Set.Icc (0 : Real) 1) (hgood : snapshot.EliminationGoodEvent mean) (hEarlierEliminated : iEarlier \u2208 snapshot.eliminated) (hLaterRemaining : iLater \u2208 snapshot.remainingActive) (hbranch : (snapshot.ucbStar <= snapshot.empiricalMean optimal + snapshot.empiricalWidth optimal /\\ snapshot.empiricalWidth optimal <= 3 * snapshot.empiricalWidth iLater) \\/ (exists scale count : Real, 0 < scale /\\ count <= 96 * scale /\\ snapshot.empiricalWidth iLater = sourceEmpiricalWidthScale scale count)) (hpairWidth : snapshot.empiricalWidth iLater <= 10 * snapshot.empiricalWidth iEarlier) : mean iLater - mean optimal <= 20 * (mean iEarlier - mean optimal)"
+  },
+  {
+    "kind": "structure",
+    "name": "DelayedSAPOD10D12GapOrderingContract",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+    "line": 295,
+    "statement": "structure DelayedSAPOD10D12GapOrderingContract (K : Nat) where"
+  },
+  {
+    "kind": "def",
+    "name": "surrogateGap",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.surrogateGap",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+    "line": 312,
+    "statement": "noncomputable def surrogateGap {K : Nat} (contract : DelayedSAPOD10D12GapOrderingContract K) (i : Fin K) : Real"
+  },
+  {
+    "kind": "theorem",
+    "name": "surrogateGap_le_gap",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.surrogateGap_le_gap",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+    "line": 318,
+    "statement": "theorem surrogateGap_le_gap {K : Nat} (contract : DelayedSAPOD10D12GapOrderingContract K) (i : Fin K) : contract.surrogateGap i <= contract.gap i"
+  },
+  {
+    "kind": "theorem",
+    "name": "gap_le_two_mul_surrogateGap",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.gap_le_two_mul_surrogateGap",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+    "line": 326,
+    "statement": "theorem gap_le_two_mul_surrogateGap {K : Nat} (contract : DelayedSAPOD10D12GapOrderingContract K) (i : Fin K) : contract.gap i <= 2 * contract.surrogateGap i"
+  },
+  {
+    "kind": "theorem",
+    "name": "d12_gap_ordering_chain",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.d12_gap_ordering_chain",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+    "line": 337,
+    "statement": "theorem d12_gap_ordering_chain {K : Nat} (contract : DelayedSAPOD10D12GapOrderingContract K) (iEarlier iLater : Fin K) (horder : contract.eliminationPrefixIndex iEarlier <= contract.eliminationPrefixIndex iLater) : contract.gap iLater <= 16 * contract.widthAt iLater (contract.eliminationPrefixIndex iLater) /\\ 16 * contract.widthAt iLater (contract.eliminationPrefixIndex iLater) <= 16 * contract.widthAt iLater (contract.eliminationPrefixIndex iEarlier) /\\ 16 * contract.widthAt iLater (contract.eliminationPrefixIndex iEarlier) <= 160 * contract.widthAt iEarlier (contract.eliminationPrefixIndex iEarlier) /\\ 160 * contract.widthAt iEarlier (contract.eliminationPrefixIndex iEarlier) <= 20 * contract.gap iEarlier"
+  },
+  {
+    "kind": "theorem",
+    "name": "gap_le_twenty_mul_gap_of_eliminationPrefixIndex_le",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.gap_le_twenty_mul_gap_of_eliminationPrefixIndex_le",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean",
+    "line": 367,
+    "statement": "theorem gap_le_twenty_mul_gap_of_eliminationPrefixIndex_le {K : Nat} (contract : DelayedSAPOD10D12GapOrderingContract K) (iEarlier iLater : Fin K) (horder : contract.eliminationPrefixIndex iEarlier <= contract.eliminationPrefixIndex iLater) : contract.gap iLater <= 20 * contract.gap iEarlier"
+  },
+  {
+    "kind": "structure",
+    "name": "DelayedSAPOSourceConfidenceSnapshot",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean",
+    "line": 13,
+    "statement": "structure DelayedSAPOSourceConfidenceSnapshot (K : Nat) extends DelayedSAPOEliminationSnapshot K where"
+  },
+  {
+    "kind": "def",
+    "name": "sourceUcbStar",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.sourceUcbStar",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean",
+    "line": 22,
+    "statement": "noncomputable def sourceUcbStar {K : Nat} [Nonempty (Fin K)] (snapshot : DelayedSAPOSourceConfidenceSnapshot K) : \u211d"
+  },
+  {
+    "kind": "structure",
+    "name": "EliminationGoodEvent",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.EliminationGoodEvent",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean",
+    "line": 31,
+    "statement": "structure EliminationGoodEvent {K : Nat} [Nonempty (Fin K)] (snapshot : DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K \u2192 \u211d) : Prop where"
+  },
+  {
+    "kind": "theorem",
+    "name": "optimalMean_le_ucbStar_of_eliminationGoodEvent",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.optimalMean_le_ucbStar_of_eliminationGoodEvent",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean",
+    "line": 43,
+    "statement": "theorem optimalMean_le_ucbStar_of_eliminationGoodEvent {K : Nat} [Nonempty (Fin K)] (snapshot : DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K \u2192 \u211d) (optimal : Fin K) (hoptimal : \u2200 i, mean optimal \u2264 mean i) (hgood : EliminationGoodEvent snapshot mean) : mean optimal \u2264 snapshot.ucbStar"
+  },
+  {
+    "kind": "theorem",
+    "name": "optimalArmSurvivalCertificate_of_eliminationGoodEvent",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.optimalArmSurvivalCertificate_of_eliminationGoodEvent",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean",
+    "line": 60,
+    "statement": "theorem optimalArmSurvivalCertificate_of_eliminationGoodEvent {K : Nat} [Nonempty (Fin K)] (snapshot : DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K \u2192 \u211d) (optimal : Fin K) (hoptimal : \u2200 i, mean optimal \u2264 mean i) (hactive : optimal \u2208 snapshot.active) (hgood : EliminationGoodEvent snapshot mean) : DelayedSAPOEliminationSnapshot.OptimalArmSurvivalCertificate snapshot.toDelayedSAPOEliminationSnapshot mean optimal where"
+  },
+  {
+    "kind": "theorem",
+    "name": "optimal_mem_remainingActive_of_eliminationGoodEvent",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.optimal_mem_remainingActive_of_eliminationGoodEvent",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean",
+    "line": 80,
+    "statement": "theorem optimal_mem_remainingActive_of_eliminationGoodEvent {K : Nat} [Nonempty (Fin K)] (snapshot : DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K \u2192 \u211d) (optimal : Fin K) (hoptimal : \u2200 i, mean optimal \u2264 mean i) (hactive : optimal \u2208 snapshot.active) (hgood : EliminationGoodEvent snapshot mean) : optimal \u2208 snapshot.remainingActive"
+  },
+  {
+    "kind": "def",
+    "name": "eliminationGoodEventSet",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.eliminationGoodEventSet",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean",
+    "line": 95,
+    "statement": "def eliminationGoodEventSet {\u03a9 : Type*} {K : Nat} [Nonempty (Fin K)] (snapshot : \u03a9 \u2192 DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K \u2192 \u211d) : Set \u03a9"
+  },
+  {
+    "kind": "def",
+    "name": "optimalSurvivalEventSet",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.optimalSurvivalEventSet",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean",
+    "line": 101,
+    "statement": "def optimalSurvivalEventSet {\u03a9 : Type*} {K : Nat} (snapshot : \u03a9 \u2192 DelayedSAPOSourceConfidenceSnapshot K) (optimal : Fin K) : Set \u03a9"
+  },
+  {
+    "kind": "theorem",
+    "name": "eliminationGoodEventSet_subset_optimalSurvivalEventSet",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.eliminationGoodEventSet_subset_optimalSurvivalEventSet",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean",
+    "line": 108,
+    "statement": "theorem eliminationGoodEventSet_subset_optimalSurvivalEventSet {\u03a9 : Type*} {K : Nat} [Nonempty (Fin K)] (snapshot : \u03a9 \u2192 DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K \u2192 \u211d) (optimal : Fin K) (hoptimal : \u2200 i, mean optimal \u2264 mean i) (hactive : \u2200 \u03c9, optimal \u2208 (snapshot \u03c9).active) : eliminationGoodEventSet snapshot mean \u2286 optimalSurvivalEventSet snapshot optimal"
+  },
+  {
+    "kind": "theorem",
+    "name": "measure_optimalSurvivalEventSet_compl_le",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.measure_optimalSurvivalEventSet_compl_le",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean",
+    "line": 122,
+    "statement": "theorem measure_optimalSurvivalEventSet_compl_le {\u03a9 : Type*} [MeasurableSpace \u03a9] {K : Nat} [Nonempty (Fin K)] (mu : Measure \u03a9) (snapshot : \u03a9 \u2192 DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K \u2192 \u211d) (optimal : Fin K) (hoptimal : \u2200 i, mean optimal \u2264 mean i) (hactive : \u2200 \u03c9, optimal \u2208 (snapshot \u03c9).active) : mu (optimalSurvivalEventSet snapshot optimal)\u1d9c \u2264 mu (eliminationGoodEventSet snapshot mean)\u1d9c"
+  },
+  {
+    "kind": "theorem",
+    "name": "measure_optimalSurvivalEventSet_compl_le_of_goodEvent",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.measure_optimalSurvivalEventSet_compl_le_of_goodEvent",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEvent.lean",
+    "line": 141,
+    "statement": "theorem measure_optimalSurvivalEventSet_compl_le_of_goodEvent {\u03a9 : Type*} [MeasurableSpace \u03a9] {K : Nat} [Nonempty (Fin K)] (mu : Measure \u03a9) (snapshot : \u03a9 \u2192 DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K \u2192 \u211d) (optimal : Fin K) (delta : \u211d) (hoptimal : \u2200 i, mean optimal \u2264 mean i) (hactive : \u2200 \u03c9, optimal \u2208 (snapshot \u03c9).active) (hgoodProbability : mu (eliminationGoodEventSet snapshot mean)\u1d9c \u2264 ENNReal.ofReal delta) : mu (optimalSurvivalEventSet snapshot optimal)\u1d9c \u2264 ENNReal.ofReal delta"
+  },
+  {
+    "kind": "inductive",
+    "name": "DelayedSAPOGoodEventComponent",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventComponent",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+    "line": 13,
+    "statement": "inductive DelayedSAPOGoodEventComponent where"
+  },
+  {
+    "kind": "structure",
+    "name": "DelayedSAPOGoodEventFailureFamily",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+    "line": 25,
+    "statement": "structure DelayedSAPOGoodEventFailureFamily (Omega : Type*) where"
+  },
+  {
+    "kind": "def",
+    "name": "componentFailure",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.componentFailure",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+    "line": 36,
+    "statement": "def componentFailure {Omega : Type*} (family : DelayedSAPOGoodEventFailureFamily Omega) : DelayedSAPOGoodEventComponent -> Set Omega | .bscConfidence => family.bscConfidence | .eapConfidence => family.eapConfidence | .pullCount => family.pullCount | .eliminatedDelay => family.eliminatedDelay | .lossDifference => family.lossDifference | .stochasticDelay => family.stochasticDelay"
+  },
+  {
+    "kind": "def",
+    "name": "failureSet",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.failureSet",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+    "line": 47,
+    "statement": "def failureSet {Omega : Type*} (family : DelayedSAPOGoodEventFailureFamily Omega) : Set Omega"
+  },
+  {
+    "kind": "def",
+    "name": "sourceGoodEventSet",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.sourceGoodEventSet",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+    "line": 53,
+    "statement": "def sourceGoodEventSet {Omega : Type*} (family : DelayedSAPOGoodEventFailureFamily Omega) : Set Omega"
+  },
+  {
+    "kind": "theorem",
+    "name": "sourceGoodEventSet_compl",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.sourceGoodEventSet_compl",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+    "line": 59,
+    "statement": "theorem sourceGoodEventSet_compl {Omega : Type*} (family : DelayedSAPOGoodEventFailureFamily Omega) : family.sourceGoodEventSet\u1d9c = family.failureSet"
+  },
+  {
+    "kind": "theorem",
+    "name": "measure_sourceGoodEventSet_compl_le_sum",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.measure_sourceGoodEventSet_compl_le_sum",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+    "line": 65,
+    "statement": "theorem measure_sourceGoodEventSet_compl_le_sum {Omega : Type*} [MeasurableSpace Omega] (mu : Measure Omega) (family : DelayedSAPOGoodEventFailureFamily Omega) : mu family.sourceGoodEventSet\u1d9c <= (Finset.univ : Finset DelayedSAPOGoodEventComponent).sum (fun component => mu (family.componentFailure component))"
+  },
+  {
+    "kind": "def",
+    "name": "quadraticFailureBudget",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.quadraticFailureBudget",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+    "line": 77,
+    "statement": "noncomputable def quadraticFailureBudget (horizon : Nat) : Real"
+  },
+  {
+    "kind": "def",
+    "name": "linearFailureBudget",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.linearFailureBudget",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+    "line": 81,
+    "statement": "noncomputable def linearFailureBudget (horizon : Nat) : Real"
+  },
+  {
+    "kind": "theorem",
+    "name": "quadraticFailureBudget_le_linearFailureBudget",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.quadraticFailureBudget_le_linearFailureBudget",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+    "line": 86,
+    "statement": "theorem quadraticFailureBudget_le_linearFailureBudget (horizon : Nat) (hhorizon : 0 < horizon) : quadraticFailureBudget horizon <= linearFailureBudget horizon"
+  },
+  {
+    "kind": "theorem",
+    "name": "measure_sourceGoodEventSet_compl_le_nine_div",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.measure_sourceGoodEventSet_compl_le_nine_div",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+    "line": 107,
+    "statement": "theorem measure_sourceGoodEventSet_compl_le_nine_div {Omega : Type*} [MeasurableSpace Omega] (mu : Measure Omega) (family : DelayedSAPOGoodEventFailureFamily Omega) (horizon : Nat) (hhorizon : 0 < horizon) (hbsc : mu family.bscConfidence <= ENNReal.ofReal (quadraticFailureBudget horizon)) (heap : mu family.eapConfidence <= ENNReal.ofReal (quadraticFailureBudget horizon)) (hpull : mu family.pullCount <= ENNReal.ofReal (quadraticFailureBudget horizon)) (heliminated : mu family.eliminatedDelay <= ENNReal.ofReal (linearFailureBudget horizon)) (hloss : mu family.lossDifference <= ENNReal.ofReal (linearFailureBudget horizon)) (hdelay : mu family.stochasticDelay <= ENNReal.ofReal (linearFailureBudget horizon)) : mu family.sourceGoodEventSet\u1d9c <= ENNReal.ofReal (9 / (horizon : Real))"
+  },
+  {
+    "kind": "theorem",
+    "name": "measure_eliminationGoodEventSet_compl_le_nine_div",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.measure_eliminationGoodEventSet_compl_le_nine_div",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+    "line": 175,
+    "statement": "theorem measure_eliminationGoodEventSet_compl_le_nine_div {Omega : Type*} [MeasurableSpace Omega] {K : Nat} [Nonempty (Fin K)] (mu : Measure Omega) (family : DelayedSAPOGoodEventFailureFamily Omega) (snapshot : Omega -> DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K -> Real) (horizon : Nat) (hhorizon : 0 < horizon) (hprojection : family.sourceGoodEventSet \u2286 DelayedSAPOSourceConfidenceSnapshot.eliminationGoodEventSet snapshot mean) (hbsc : mu family.bscConfidence <= ENNReal.ofReal (quadraticFailureBudget horizon)) (heap : mu family.eapConfidence <= ENNReal.ofReal (quadraticFailureBudget horizon)) (hpull : mu family.pullCount <= ENNReal.ofReal (quadraticFailureBudget horizon)) (heliminated : mu family.eliminatedDelay <= ENNReal.ofReal (linearFailureBudget horizon)) (hloss : mu family.lossDifference <= ENNReal.ofReal (linearFailureBudget horizon)) (hdelay : mu family.stochasticDelay <= ENNReal.ofReal (linearFailureBudget horizon)) : mu (DelayedSAPOSourceConfidenceSnapshot.eliminationGoodEventSet snapshot mean)\u1d9c <= ENNReal.ofReal (9 / (horizon : Real))"
+  },
+  {
+    "kind": "theorem",
+    "name": "measure_optimalSurvivalEventSet_compl_le_nine_div",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.measure_optimalSurvivalEventSet_compl_le_nine_div",
+    "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+    "line": 209,
+    "statement": "theorem measure_optimalSurvivalEventSet_compl_le_nine_div {Omega : Type*} [MeasurableSpace Omega] {K : Nat} [Nonempty (Fin K)] (mu : Measure Omega) (family : DelayedSAPOGoodEventFailureFamily Omega) (snapshot : Omega -> DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K -> Real) (optimal : Fin K) (horizon : Nat) (hhorizon : 0 < horizon) (hoptimal : forall i, mean optimal <= mean i) (hactive : forall omega, optimal \u2208 (snapshot omega).active) (hprojection : family.sourceGoodEventSet \u2286 DelayedSAPOSourceConfidenceSnapshot.eliminationGoodEventSet snapshot mean) (hbsc : mu family.bscConfidence <= ENNReal.ofReal (quadraticFailureBudget horizon)) (heap : mu family.eapConfidence <= ENNReal.ofReal (quadraticFailureBudget horizon)) (hpull : mu family.pullCount <= ENNReal.ofReal (quadraticFailureBudget horizon)) (heliminated : mu family.eliminatedDelay <= ENNReal.ofReal (linearFailureBudget horizon)) (hloss : mu family.lossDifference <= ENNReal.ofReal (linearFailureBudget horizon)) (hdelay : mu family.stochasticDelay <= ENNReal.ofReal (linearFailureBudget horizon)) : mu (DelayedSAPOSourceConfidenceSnapshot.optimalSurvivalEventSet snapshot optimal)\u1d9c <= ENNReal.ofReal (9 / (horizon : Real))"
+  },
+  {
     "kind": "structure",
     "name": "MeasurableFiniteActionDistribution",
     "full_name": "BanditRLProof.Exp3.MeasurableFiniteActionDistribution",
@@ -52459,6 +53541,262 @@ These cards are planning inspiration only.  They do not certify any theorem.
   },
   {
     "kind": "def",
+    "name": "pairHistoryZeroMeasurableEquiv",
+    "full_name": "BanditRLProof.LowerBounds.pairHistoryZeroMeasurableEquiv",
+    "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+    "line": 24,
+    "statement": "def pairHistoryZeroMeasurableEquiv (Action : Type u) (Reward : Type v) [MeasurableSpace Action] [MeasurableSpace Reward] : (Action \u00d7 Reward) \u2243\u1d50 History.FinitePairHistory Action Reward 0 where"
+  },
+  {
+    "kind": "def",
+    "name": "pairHistorySuccMeasurableEquiv",
+    "full_name": "BanditRLProof.LowerBounds.pairHistorySuccMeasurableEquiv",
+    "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+    "line": 43,
+    "statement": "def pairHistorySuccMeasurableEquiv (Action : Type u) (Reward : Type v) [MeasurableSpace Action] [MeasurableSpace Reward] (n : Nat) : (History.FinitePairHistory Action Reward n \u00d7 (Action \u00d7 Reward)) \u2243\u1d50 History.FinitePairHistory Action Reward (n + 1)"
+  },
+  {
+    "kind": "theorem",
+    "name": "pairHistoryZeroMeasurableEquiv_apply",
+    "full_name": "BanditRLProof.LowerBounds.pairHistoryZeroMeasurableEquiv_apply",
+    "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+    "line": 56,
+    "statement": "theorem pairHistoryZeroMeasurableEquiv_apply {Action : Type u} {Reward : Type v} [MeasurableSpace Action] [MeasurableSpace Reward] (pair : Action \u00d7 Reward) : pairHistoryZeroMeasurableEquiv Action Reward pair = Thompson.singletonPairHistory pair"
+  },
+  {
+    "kind": "theorem",
+    "name": "pairHistorySuccMeasurableEquiv_apply",
+    "full_name": "BanditRLProof.LowerBounds.pairHistorySuccMeasurableEquiv_apply",
+    "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+    "line": 67,
+    "statement": "theorem pairHistorySuccMeasurableEquiv_apply {Action : Type u} {Reward : Type v} [MeasurableSpace Action] [MeasurableSpace Reward] (n : Nat) (input : History.FinitePairHistory Action Reward n \u00d7 (Action \u00d7 Reward)) : pairHistorySuccMeasurableEquiv Action Reward n input = History.extendPairHistorySucc input.1 input.2"
+  },
+  {
+    "kind": "def",
+    "name": "stationaryBanditHistoryEnvironment",
+    "full_name": "BanditRLProof.LowerBounds.stationaryBanditHistoryEnvironment",
+    "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+    "line": 89,
+    "statement": "noncomputable def stationaryBanditHistoryEnvironment {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] : Thompson.HistoryEnvironment (Fin K) Reward where"
+  },
+  {
+    "kind": "theorem",
+    "name": "stationaryBanditHistoryEnvironment_initialFeedback",
+    "full_name": "BanditRLProof.LowerBounds.stationaryBanditHistoryEnvironment_initialFeedback",
+    "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+    "line": 98,
+    "statement": "theorem stationaryBanditHistoryEnvironment_initialFeedback {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] : (stationaryBanditHistoryEnvironment armLaw).initialFeedback = armLaw"
+  },
+  {
+    "kind": "theorem",
+    "name": "stationaryBanditHistoryEnvironment_feedback_apply",
+    "full_name": "BanditRLProof.LowerBounds.stationaryBanditHistoryEnvironment_feedback_apply",
+    "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+    "line": 105,
+    "statement": "theorem stationaryBanditHistoryEnvironment_feedback_apply {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (n : Nat) (history : History.FinitePairHistory (Fin K) Reward n) (arm : Fin K) : (stationaryBanditHistoryEnvironment armLaw).feedback n (history, arm) = armLaw arm"
+  },
+  {
+    "kind": "def",
+    "name": "canonicalBanditHistoryMeasure",
+    "full_name": "BanditRLProof.LowerBounds.canonicalBanditHistoryMeasure",
+    "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+    "line": 116,
+    "statement": "noncomputable def canonicalBanditHistoryMeasure {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (n : Nat) : Measure (History.FinitePairHistory (Fin K) Reward n)"
+  },
+  {
+    "kind": "theorem",
+    "name": "canonicalBanditHistoryMeasure_zero",
+    "full_name": "BanditRLProof.LowerBounds.canonicalBanditHistoryMeasure_zero",
+    "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+    "line": 138,
+    "statement": "theorem canonicalBanditHistoryMeasure_zero {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] : canonicalBanditHistoryMeasure algorithm armLaw 0 = (algorithm.initialAction \u2297\u2098 armLaw).map (pairHistoryZeroMeasurableEquiv (Fin K) Reward)"
+  },
+  {
+    "kind": "theorem",
+    "name": "canonicalBanditHistoryMeasure_succ",
+    "full_name": "BanditRLProof.LowerBounds.canonicalBanditHistoryMeasure_succ",
+    "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+    "line": 181,
+    "statement": "theorem canonicalBanditHistoryMeasure_succ {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (n : Nat) : canonicalBanditHistoryMeasure algorithm armLaw (n + 1) = (canonicalBanditHistoryMeasure algorithm armLaw n \u2297\u2098 Thompson.historyStepKernel algorithm (stationaryBanditHistoryEnvironment armLaw) n).map (pairHistorySuccMeasurableEquiv (Fin K) Reward n)"
+  },
+  {
+    "kind": "theorem",
+    "name": "klDiv_canonicalBanditHistoryMeasure_zero",
+    "full_name": "BanditRLProof.LowerBounds.klDiv_canonicalBanditHistoryMeasure_zero",
+    "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+    "line": 240,
+    "statement": "theorem klDiv_canonicalBanditHistoryMeasure_zero {K : Nat} {Reward : Type v} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] (h_ac : \u2200 arm, armLaw arm \u226a referenceArmLaw arm) : InformationTheory.klDiv (canonicalBanditHistoryMeasure algorithm armLaw 0) (canonicalBanditHistoryMeasure algorithm referenceArmLaw 0) = \u222b\u207b arm, InformationTheory.klDiv (armLaw arm) (referenceArmLaw arm) \u2202algorithm.initialAction"
+  },
+  {
+    "kind": "theorem",
+    "name": "klDiv_canonicalBanditHistoryMeasure_succ",
+    "full_name": "BanditRLProof.LowerBounds.klDiv_canonicalBanditHistoryMeasure_succ",
+    "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+    "line": 263,
+    "statement": "theorem klDiv_canonicalBanditHistoryMeasure_succ {K : Nat} {Reward : Type v} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] (h_ac : \u2200 arm, armLaw arm \u226a referenceArmLaw arm) (n : Nat) : InformationTheory.klDiv (canonicalBanditHistoryMeasure algorithm armLaw (n + 1)) (canonicalBanditHistoryMeasure algorithm referenceArmLaw (n + 1)) = InformationTheory.klDiv (canonicalBanditHistoryMeasure algorithm armLaw n) (canonicalBanditHistoryMeasure algorithm referenceArmLaw n) + \u222b\u207b history, \u222b\u207b arm, InformationTheory.klDiv (armLaw arm) (referenceArmLaw arm) \u2202algorithm.policy n history \u2202canonicalBanditHistoryMeasure algorithm armLaw n"
+  },
+  {
+    "kind": "def",
+    "name": "canonicalPolicyArmMass",
+    "full_name": "BanditRLProof.LowerBounds.canonicalPolicyArmMass",
+    "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+    "line": 294,
+    "statement": "noncomputable def canonicalPolicyArmMass {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (n : Nat) (arm : Fin K) : ENNReal"
+  },
+  {
+    "kind": "def",
+    "name": "canonicalExpectedPullCountThrough",
+    "full_name": "BanditRLProof.LowerBounds.canonicalExpectedPullCountThrough",
+    "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+    "line": 310,
+    "statement": "noncomputable def canonicalExpectedPullCountThrough {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (n : Nat) (arm : Fin K) : ENNReal"
+  },
+  {
+    "kind": "theorem",
+    "name": "canonicalExpectedPullCountThrough_zero",
+    "full_name": "BanditRLProof.LowerBounds.canonicalExpectedPullCountThrough_zero",
+    "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+    "line": 321,
+    "statement": "theorem canonicalExpectedPullCountThrough_zero {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (arm : Fin K) : canonicalExpectedPullCountThrough algorithm armLaw 0 arm = algorithm.initialAction ({arm} : Set (Fin K))"
+  },
+  {
+    "kind": "theorem",
+    "name": "canonicalExpectedPullCountThrough_succ",
+    "full_name": "BanditRLProof.LowerBounds.canonicalExpectedPullCountThrough_succ",
+    "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+    "line": 331,
+    "statement": "theorem canonicalExpectedPullCountThrough_succ {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (n : Nat) (arm : Fin K) : canonicalExpectedPullCountThrough algorithm armLaw (n + 1) arm = canonicalExpectedPullCountThrough algorithm armLaw n arm + canonicalPolicyArmMass algorithm armLaw n arm"
+  },
+  {
+    "kind": "theorem",
+    "name": "lintegral_lintegral_fin_eq_sum_armMass_mul",
+    "full_name": "BanditRLProof.LowerBounds.lintegral_lintegral_fin_eq_sum_armMass_mul",
+    "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+    "line": 344,
+    "statement": "theorem lintegral_lintegral_fin_eq_sum_armMass_mul {K : Nat} {History : Type*} [MeasurableSpace History] (historyLaw : Measure History) (policy : Kernel History (Fin K)) [IsMarkovKernel policy] (cost : Fin K \u2192 ENNReal) : (\u222b\u207b history, \u222b\u207b arm, cost arm \u2202policy history \u2202historyLaw) = \u2211 arm : Fin K, (\u222b\u207b history, policy history ({arm} : Set (Fin K)) \u2202historyLaw) * cost arm"
+  },
+  {
+    "kind": "theorem",
+    "name": "klDiv_canonicalBanditHistoryMeasure_eq_sum_expectedPullCount_mul_armKL",
+    "full_name": "BanditRLProof.LowerBounds.klDiv_canonicalBanditHistoryMeasure_eq_sum_expectedPullCount_mul_armKL",
+    "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+    "line": 367,
+    "statement": "theorem klDiv_canonicalBanditHistoryMeasure_eq_sum_expectedPullCount_mul_armKL {K : Nat} {Reward : Type v} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] (h_ac : \u2200 arm, armLaw arm \u226a referenceArmLaw arm) (n : Nat) : InformationTheory.klDiv (canonicalBanditHistoryMeasure algorithm armLaw n) (canonicalBanditHistoryMeasure algorithm referenceArmLaw n) = \u2211 arm : Fin K, canonicalExpectedPullCountThrough algorithm armLaw n arm * InformationTheory.klDiv (armLaw arm) (referenceArmLaw arm)"
+  },
+  {
+    "kind": "def",
+    "name": "finiteHistoryPullCountENNReal",
+    "full_name": "BanditRLProof.LowerBounds.finiteHistoryPullCountENNReal",
+    "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+    "line": 401,
+    "statement": "noncomputable def finiteHistoryPullCountENNReal {K : Nat} {Reward : Type v} : (n : Nat) \u2192 History.FinitePairHistory (Fin K) Reward n \u2192 Fin K \u2192 ENNReal | 0, history, arm => if (history \u27e80, Finset.mem_Iic.mpr le_rfl\u27e9).1 = arm then 1 else 0 | n + 1, history, arm => finiteHistoryPullCountENNReal n (Thompson.pairHistoryPrefix history) arm + if (Thompson.pairHistoryLast history).1 = arm then 1 else 0"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurable_finiteHistoryPullCountENNReal",
+    "full_name": "BanditRLProof.LowerBounds.measurable_finiteHistoryPullCountENNReal",
+    "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+    "line": 410,
+    "statement": "theorem measurable_finiteHistoryPullCountENNReal {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (n : Nat) (arm : Fin K) : Measurable (fun history : History.FinitePairHistory (Fin K) Reward n => finiteHistoryPullCountENNReal n history arm)"
+  },
+  {
+    "kind": "theorem",
+    "name": "finiteHistoryPullCountENNReal_pairHistoryZeroMeasurableEquiv",
+    "full_name": "BanditRLProof.LowerBounds.finiteHistoryPullCountENNReal_pairHistoryZeroMeasurableEquiv",
+    "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+    "line": 431,
+    "statement": "theorem finiteHistoryPullCountENNReal_pairHistoryZeroMeasurableEquiv {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (pair : Fin K \u00d7 Reward) (arm : Fin K) : finiteHistoryPullCountENNReal 0 (pairHistoryZeroMeasurableEquiv (Fin K) Reward pair) arm = if pair.1 = arm then 1 else 0"
+  },
+  {
+    "kind": "theorem",
+    "name": "finiteHistoryPullCountENNReal_pairHistorySuccMeasurableEquiv",
+    "full_name": "BanditRLProof.LowerBounds.finiteHistoryPullCountENNReal_pairHistorySuccMeasurableEquiv",
+    "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+    "line": 443,
+    "statement": "theorem finiteHistoryPullCountENNReal_pairHistorySuccMeasurableEquiv {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (n : Nat) (input : History.FinitePairHistory (Fin K) Reward n \u00d7 (Fin K \u00d7 Reward)) (arm : Fin K) : finiteHistoryPullCountENNReal (n + 1) (pairHistorySuccMeasurableEquiv (Fin K) Reward n input) arm = finiteHistoryPullCountENNReal n input.1 arm + if input.2.1 = arm then 1 else 0"
+  },
+  {
+    "kind": "def",
+    "name": "canonicalRealizedExpectedPullCountThrough",
+    "full_name": "BanditRLProof.LowerBounds.canonicalRealizedExpectedPullCountThrough",
+    "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+    "line": 457,
+    "statement": "noncomputable def canonicalRealizedExpectedPullCountThrough {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (n : Nat) (arm : Fin K) : ENNReal"
+  },
+  {
+    "kind": "theorem",
+    "name": "lintegral_historyStepKernel_armIndicator_eq_policy_mass",
+    "full_name": "BanditRLProof.LowerBounds.lintegral_historyStepKernel_armIndicator_eq_policy_mass",
+    "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+    "line": 468,
+    "statement": "theorem lintegral_historyStepKernel_armIndicator_eq_policy_mass {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (environment : Thompson.HistoryEnvironment (Fin K) Reward) (n : Nat) (history : History.FinitePairHistory (Fin K) Reward n) (arm : Fin K) : (\u222b\u207b pair, ({arm} : Set (Fin K)).indicator (fun _ => (1 : ENNReal)) pair.1 \u2202Thompson.historyStepKernel algorithm environment n history) = algorithm.policy n history ({arm} : Set (Fin K))"
+  },
+  {
+    "kind": "theorem",
+    "name": "canonicalRealizedExpectedPullCountThrough_zero",
+    "full_name": "BanditRLProof.LowerBounds.canonicalRealizedExpectedPullCountThrough_zero",
+    "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+    "line": 505,
+    "statement": "theorem canonicalRealizedExpectedPullCountThrough_zero {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (arm : Fin K) : canonicalRealizedExpectedPullCountThrough algorithm armLaw 0 arm = algorithm.initialAction ({arm} : Set (Fin K))"
+  },
+  {
+    "kind": "theorem",
+    "name": "canonicalRealizedExpectedPullCountThrough_succ",
+    "full_name": "BanditRLProof.LowerBounds.canonicalRealizedExpectedPullCountThrough_succ",
+    "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+    "line": 538,
+    "statement": "theorem canonicalRealizedExpectedPullCountThrough_succ {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (n : Nat) (arm : Fin K) : canonicalRealizedExpectedPullCountThrough algorithm armLaw (n + 1) arm = canonicalRealizedExpectedPullCountThrough algorithm armLaw n arm + canonicalPolicyArmMass algorithm armLaw n arm"
+  },
+  {
+    "kind": "theorem",
+    "name": "canonicalRealizedExpectedPullCountThrough_eq_expectedPullCountThrough",
+    "full_name": "BanditRLProof.LowerBounds.canonicalRealizedExpectedPullCountThrough_eq_expectedPullCountThrough",
+    "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+    "line": 597,
+    "statement": "theorem canonicalRealizedExpectedPullCountThrough_eq_expectedPullCountThrough {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (n : Nat) (arm : Fin K) : canonicalRealizedExpectedPullCountThrough algorithm armLaw n arm = canonicalExpectedPullCountThrough algorithm armLaw n arm"
+  },
+  {
+    "kind": "theorem",
+    "name": "klDiv_canonicalBanditHistoryMeasure_zero_general",
+    "full_name": "BanditRLProof.LowerBounds.klDiv_canonicalBanditHistoryMeasure_zero_general",
+    "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+    "line": 614,
+    "statement": "theorem klDiv_canonicalBanditHistoryMeasure_zero_general {K : Nat} {Reward : Type v} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] : InformationTheory.klDiv (canonicalBanditHistoryMeasure algorithm armLaw 0) (canonicalBanditHistoryMeasure algorithm referenceArmLaw 0) = \u222b\u207b arm, InformationTheory.klDiv (armLaw arm) (referenceArmLaw arm) \u2202algorithm.initialAction"
+  },
+  {
+    "kind": "theorem",
+    "name": "klDiv_canonicalBanditHistoryMeasure_succ_general",
+    "full_name": "BanditRLProof.LowerBounds.klDiv_canonicalBanditHistoryMeasure_succ_general",
+    "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+    "line": 632,
+    "statement": "theorem klDiv_canonicalBanditHistoryMeasure_succ_general {K : Nat} {Reward : Type v} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] (n : Nat) : InformationTheory.klDiv (canonicalBanditHistoryMeasure algorithm armLaw (n + 1)) (canonicalBanditHistoryMeasure algorithm referenceArmLaw (n + 1)) = InformationTheory.klDiv (canonicalBanditHistoryMeasure algorithm armLaw n) (canonicalBanditHistoryMeasure algorithm referenceArmLaw n) + \u222b\u207b history, \u222b\u207b arm, InformationTheory.klDiv (armLaw arm) (referenceArmLaw arm) \u2202algorithm.policy n history \u2202canonicalBanditHistoryMeasure algorithm armLaw n"
+  },
+  {
+    "kind": "theorem",
+    "name": "klDiv_canonicalBanditHistoryMeasure_eq_sum_expectedPullCount_mul_armKL_general",
+    "full_name": "BanditRLProof.LowerBounds.klDiv_canonicalBanditHistoryMeasure_eq_sum_expectedPullCount_mul_armKL_general",
+    "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+    "line": 662,
+    "statement": "theorem klDiv_canonicalBanditHistoryMeasure_eq_sum_expectedPullCount_mul_armKL_general {K : Nat} {Reward : Type v} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] (n : Nat) : InformationTheory.klDiv (canonicalBanditHistoryMeasure algorithm armLaw n) (canonicalBanditHistoryMeasure algorithm referenceArmLaw n) = \u2211 arm : Fin K, canonicalExpectedPullCountThrough algorithm armLaw n arm * InformationTheory.klDiv (armLaw arm) (referenceArmLaw arm)"
+  },
+  {
+    "kind": "theorem",
+    "name": "klDiv_canonicalBanditHistoryMeasure_eq_sum_realizedExpectedPullCount_mul_armKL",
+    "full_name": "BanditRLProof.LowerBounds.klDiv_canonicalBanditHistoryMeasure_eq_sum_realizedExpectedPullCount_mul_armKL",
+    "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+    "line": 702,
+    "statement": "theorem klDiv_canonicalBanditHistoryMeasure_eq_sum_realizedExpectedPullCount_mul_armKL {K : Nat} {Reward : Type v} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] (n : Nat) : InformationTheory.klDiv (canonicalBanditHistoryMeasure algorithm armLaw n) (canonicalBanditHistoryMeasure algorithm referenceArmLaw n) = \u2211 arm : Fin K, canonicalRealizedExpectedPullCountThrough algorithm armLaw n arm * InformationTheory.klDiv (armLaw arm) (referenceArmLaw arm)"
+  },
+  {
+    "kind": "theorem",
+    "name": "banditHistoryRelativeEntropy_eq_expectedPulls_sum",
+    "full_name": "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum",
+    "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+    "line": 726,
+    "statement": "theorem banditHistoryRelativeEntropy_eq_expectedPulls_sum {K : Nat} {Reward : Type v} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] (lastRound : Nat) : InformationTheory.klDiv (canonicalBanditHistoryMeasure algorithm armLaw lastRound) (canonicalBanditHistoryMeasure algorithm referenceArmLaw lastRound) = \u2211 arm : Fin K, canonicalRealizedExpectedPullCountThrough algorithm armLaw lastRound arm * InformationTheory.klDiv (armLaw arm) (referenceArmLaw arm)"
+  },
+  {
+    "kind": "def",
     "name": "worstCaseExpectedRegret",
     "full_name": "BanditRLProof.LowerBounds.worstCaseExpectedRegret",
     "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
@@ -52552,6 +53890,486 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
     "line": 205,
     "statement": "theorem max_base_changed_regretLowerBound_ge_half (horizon : Nat) (gap baseFirstExpectedPulls changedFirstExpectedPulls : Real) (hgap : 0 \u2264 gap) (htransport : baseFirstExpectedPulls \u2264 changedFirstExpectedPulls) : gap * (horizon : Real) / 2 \u2264 max (baseEnvironmentRegret horizon gap baseFirstExpectedPulls) (changedEnvironmentRegretLowerBound gap changedFirstExpectedPulls)"
+  },
+  {
+    "kind": "theorem",
+    "name": "klDiv_compProd_same_left_eq_lintegral_kernelRN_ae",
+    "full_name": "BanditRLProof.LowerBounds.klDiv_compProd_same_left_eq_lintegral_kernelRN_ae",
+    "file": "BanditRLProof/LowerBounds/ConditionalKernelKL.lean",
+    "line": 35,
+    "statement": "theorem klDiv_compProd_same_left_eq_lintegral_kernelRN_ae {Base Target : Type*} [MeasurableSpace Base] [MeasurableSpace Target] [MeasurableSpace.CountablyGenerated Target] (mu : Measure Base) [IsFiniteMeasure mu] (kappa eta : Kernel Base Target) [IsMarkovKernel kappa] [IsMarkovKernel eta] (h_ac : \u2200\u1d50 base \u2202mu, kappa base \u226a eta base) : InformationTheory.klDiv (mu \u2297\u2098 kappa) (mu \u2297\u2098 eta) = \u222b\u207b x, \u222b\u207b y, ENNReal.ofReal (InformationTheory.klFun ((kappa.rnDeriv eta x y).toReal)) \u2202eta x \u2202mu"
+  },
+  {
+    "kind": "theorem",
+    "name": "klDiv_compProd_same_left_eq_lintegral_kernelRN",
+    "full_name": "BanditRLProof.LowerBounds.klDiv_compProd_same_left_eq_lintegral_kernelRN",
+    "file": "BanditRLProof/LowerBounds/ConditionalKernelKL.lean",
+    "line": 98,
+    "statement": "theorem klDiv_compProd_same_left_eq_lintegral_kernelRN {Base Target : Type*} [MeasurableSpace Base] [MeasurableSpace Target] [MeasurableSpace.CountablyGenerated Target] (mu : Measure Base) [IsFiniteMeasure mu] (kappa eta : Kernel Base Target) [IsMarkovKernel kappa] [IsMarkovKernel eta] (h_ac : forall base, kappa base \u226a eta base) : InformationTheory.klDiv (mu \u2297\u2098 kappa) (mu \u2297\u2098 eta) = \u222b\u207b x, \u222b\u207b y, ENNReal.ofReal (InformationTheory.klFun ((kappa.rnDeriv eta x y).toReal)) \u2202eta x \u2202mu"
+  },
+  {
+    "kind": "theorem",
+    "name": "klDiv_compProd_same_left_eq_lintegral_klDiv",
+    "full_name": "BanditRLProof.LowerBounds.klDiv_compProd_same_left_eq_lintegral_klDiv",
+    "file": "BanditRLProof/LowerBounds/ConditionalKernelKL.lean",
+    "line": 120,
+    "statement": "theorem klDiv_compProd_same_left_eq_lintegral_klDiv {Base Target : Type*} [MeasurableSpace Base] [MeasurableSpace Target] [MeasurableSpace.CountablyGenerated Target] (mu : Measure Base) [IsFiniteMeasure mu] (kappa eta : Kernel Base Target) [IsMarkovKernel kappa] [IsMarkovKernel eta] (h_ac : forall base, kappa base \u226a eta base) : InformationTheory.klDiv (mu \u2297\u2098 kappa) (mu \u2297\u2098 eta) = \u222b\u207b base, InformationTheory.klDiv (kappa base) (eta base) \u2202mu"
+  },
+  {
+    "kind": "theorem",
+    "name": "klDiv_compProd_same_left_eq_lintegral_klDiv_ae",
+    "full_name": "BanditRLProof.LowerBounds.klDiv_compProd_same_left_eq_lintegral_klDiv_ae",
+    "file": "BanditRLProof/LowerBounds/ConditionalKernelKL.lean",
+    "line": 155,
+    "statement": "theorem klDiv_compProd_same_left_eq_lintegral_klDiv_ae {Base Target : Type*} [MeasurableSpace Base] [MeasurableSpace Target] [MeasurableSpace.CountablyGenerated Target] (mu : Measure Base) [IsFiniteMeasure mu] (kappa eta : Kernel Base Target) [IsMarkovKernel kappa] [IsMarkovKernel eta] (h_ac : \u2200\u1d50 base \u2202mu, kappa base \u226a eta base) : InformationTheory.klDiv (mu \u2297\u2098 kappa) (mu \u2297\u2098 eta) = \u222b\u207b base, InformationTheory.klDiv (kappa base) (eta base) \u2202mu"
+  },
+  {
+    "kind": "theorem",
+    "name": "klDiv_compProd_same_left_eq_lintegral_klDiv_of_measurable",
+    "full_name": "BanditRLProof.LowerBounds.klDiv_compProd_same_left_eq_lintegral_klDiv_of_measurable",
+    "file": "BanditRLProof/LowerBounds/ConditionalKernelKL.lean",
+    "line": 195,
+    "statement": "theorem klDiv_compProd_same_left_eq_lintegral_klDiv_of_measurable {Base Target : Type*} [MeasurableSpace Base] [MeasurableSpace Target] [MeasurableSpace.CountablyGenerated Target] (mu : Measure Base) [IsFiniteMeasure mu] (kappa eta : Kernel Base Target) [IsMarkovKernel kappa] [IsMarkovKernel eta] (hmeasurable : Measurable (fun base => InformationTheory.klDiv (kappa base) (eta base))) : InformationTheory.klDiv (mu \u2297\u2098 kappa) (mu \u2297\u2098 eta) = \u222b\u207b base, InformationTheory.klDiv (kappa base) (eta base) \u2202mu"
+  },
+  {
+    "kind": "theorem",
+    "name": "klDiv_map_measurableEquiv",
+    "full_name": "BanditRLProof.LowerBounds.klDiv_map_measurableEquiv",
+    "file": "BanditRLProof/LowerBounds/ConditionalKernelKL.lean",
+    "line": 227,
+    "statement": "theorem klDiv_map_measurableEquiv {Source Target : Type*} [MeasurableSpace Source] [MeasurableSpace Target] (mu nu : Measure Source) [IsFiniteMeasure mu] [IsFiniteMeasure nu] (equiv : Source \u2243\u1d50 Target) : InformationTheory.klDiv (mu.map equiv) (nu.map equiv) = InformationTheory.klDiv mu nu"
+  },
+  {
+    "kind": "theorem",
+    "name": "klDiv_historyStep_samePolicy_eq_iterated_lintegral_armKL",
+    "full_name": "BanditRLProof.LowerBounds.klDiv_historyStep_samePolicy_eq_iterated_lintegral_armKL",
+    "file": "BanditRLProof/LowerBounds/ConditionalKernelKL.lean",
+    "line": 290,
+    "statement": "theorem klDiv_historyStep_samePolicy_eq_iterated_lintegral_armKL {History Action Reward : Type*} [MeasurableSpace History] [MeasurableSpace Action] [MeasurableSpace.CountablyGenerated Action] [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (historyLaw : Measure History) [IsFiniteMeasure historyLaw] (policy : Kernel History Action) [IsMarkovKernel policy] (armLaw referenceArmLaw : Kernel Action Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] (h_ac : forall arm, armLaw arm \u226a referenceArmLaw arm) : InformationTheory.klDiv (historyLaw \u2297\u2098 (policy \u2297\u2096 armLaw.comap Prod.snd measurable_snd)) (historyLaw \u2297\u2098 (policy \u2297\u2096 referenceArmLaw.comap Prod.snd measurable_snd)) = \u222b\u207b history, \u222b\u207b arm, InformationTheory.klDiv (armLaw arm) (referenceArmLaw arm) \u2202policy history \u2202historyLaw"
+  },
+  {
+    "kind": "theorem",
+    "name": "klDiv_finiteAction_compProd_eq_lintegral_armKL",
+    "full_name": "BanditRLProof.LowerBounds.klDiv_finiteAction_compProd_eq_lintegral_armKL",
+    "file": "BanditRLProof/LowerBounds/ConditionalKernelKL.lean",
+    "line": 341,
+    "statement": "theorem klDiv_finiteAction_compProd_eq_lintegral_armKL {K : Nat} {Reward : Type*} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (actionLaw : Measure (Fin K)) [IsFiniteMeasure actionLaw] (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] : InformationTheory.klDiv (actionLaw \u2297\u2098 armLaw) (actionLaw \u2297\u2098 referenceArmLaw) = \u222b\u207b arm, InformationTheory.klDiv (armLaw arm) (referenceArmLaw arm) \u2202actionLaw"
+  },
+  {
+    "kind": "theorem",
+    "name": "klDiv_finiteAction_compProd_eq_sum_mass_mul_armKL",
+    "full_name": "BanditRLProof.LowerBounds.klDiv_finiteAction_compProd_eq_sum_mass_mul_armKL",
+    "file": "BanditRLProof/LowerBounds/ConditionalKernelKL.lean",
+    "line": 356,
+    "statement": "theorem klDiv_finiteAction_compProd_eq_sum_mass_mul_armKL {K : Nat} {Reward : Type*} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (actionLaw : Measure (Fin K)) [IsFiniteMeasure actionLaw] (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] : InformationTheory.klDiv (actionLaw \u2297\u2098 armLaw) (actionLaw \u2297\u2098 referenceArmLaw) = \u2211 arm : Fin K, actionLaw ({arm} : Set (Fin K)) * InformationTheory.klDiv (armLaw arm) (referenceArmLaw arm)"
+  },
+  {
+    "kind": "theorem",
+    "name": "klDiv_historyStep_samePolicy_eq_iterated_lintegral_armKL_general",
+    "full_name": "BanditRLProof.LowerBounds.klDiv_historyStep_samePolicy_eq_iterated_lintegral_armKL_general",
+    "file": "BanditRLProof/LowerBounds/ConditionalKernelKL.lean",
+    "line": 379,
+    "statement": "theorem klDiv_historyStep_samePolicy_eq_iterated_lintegral_armKL_general {History Reward : Type*} {K : Nat} [MeasurableSpace History] [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (historyLaw : Measure History) [IsFiniteMeasure historyLaw] (policy : Kernel History (Fin K)) [IsMarkovKernel policy] (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] : InformationTheory.klDiv (historyLaw \u2297\u2098 (policy \u2297\u2096 armLaw.comap Prod.snd measurable_snd)) (historyLaw \u2297\u2098 (policy \u2297\u2096 referenceArmLaw.comap Prod.snd measurable_snd)) = \u222b\u207b history, \u222b\u207b arm, InformationTheory.klDiv (armLaw arm) (referenceArmLaw arm) \u2202policy history \u2202historyLaw"
+  },
+  {
+    "kind": "def",
+    "name": "tailAtLeast",
+    "full_name": "BanditRLProof.LowerBounds.tailAtLeast",
+    "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+    "line": 31,
+    "statement": "def tailAtLeast {Omega : Type*} (quantity : Omega -> Real) (threshold : Real) : Set Omega"
+  },
+  {
+    "kind": "def",
+    "name": "stochasticHighProbabilityThreshold",
+    "full_name": "BanditRLProof.LowerBounds.stochasticHighProbabilityThreshold",
+    "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+    "line": 37,
+    "statement": "def stochasticHighProbabilityThreshold (horizon alternativeArms : Nat) (B delta : Real) : Real"
+  },
+  {
+    "kind": "def",
+    "name": "stochasticMinimaxHighProbabilityThreshold",
+    "full_name": "BanditRLProof.LowerBounds.stochasticMinimaxHighProbabilityThreshold",
+    "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+    "line": 46,
+    "statement": "def stochasticMinimaxHighProbabilityThreshold (horizon alternativeArms : Nat) (delta : Real) : Real"
+  },
+  {
+    "kind": "def",
+    "name": "adversarialHighProbabilityThreshold",
+    "full_name": "BanditRLProof.LowerBounds.adversarialHighProbabilityThreshold",
+    "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+    "line": 56,
+    "statement": "def adversarialHighProbabilityThreshold (horizon arms : Nat) (c delta : Real) : Real"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_tailMass_ge_of_integral_ge",
+    "full_name": "BanditRLProof.LowerBounds.exists_tailMass_ge_of_integral_ge",
+    "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+    "line": 67,
+    "statement": "theorem exists_tailMass_ge_of_integral_ge {Instance : Type*} [MeasurableSpace Instance] (Q : Measure Instance) [IsProbabilityMeasure Q] (tailMass : Instance -> Real) (delta : Real) (hIntegrable : Integrable tailMass Q) (hAverage : delta <= \u222b x, tailMass x \u2202Q) : exists x, delta <= tailMass x"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_cdfTail_ge_of_integral_ge",
+    "full_name": "BanditRLProof.LowerBounds.exists_cdfTail_ge_of_integral_ge",
+    "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+    "line": 78,
+    "statement": "theorem exists_cdfTail_ge_of_integral_ge {Instance : Type*} [MeasurableSpace Instance] (Q : Measure Instance) [IsProbabilityMeasure Q] (cdf : Instance -> Real -> Real) (threshold delta : Real) (hIntegrable : Integrable (fun x => 1 - cdf x threshold) Q) (hAverage : delta <= \u222b x, 1 - cdf x threshold \u2202Q) : exists x, delta <= 1 - cdf x threshold"
+  },
+  {
+    "kind": "theorem",
+    "name": "measureReal_diff_ge_delta",
+    "full_name": "BanditRLProof.LowerBounds.measureReal_diff_ge_delta",
+    "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+    "line": 96,
+    "statement": "theorem measureReal_diff_ge_delta {Omega : Type*} [MeasurableSpace Omega] (P : Measure Omega) [IsFiniteMeasure P] (pullSmall clippingBad : Set Omega) (delta : Real) (hPullSmall : 2 * delta <= P.real pullSmall) (hClippingBad : P.real clippingBad <= delta) : delta <= P.real (pullSmall \\ clippingBad)"
+  },
+  {
+    "kind": "def",
+    "name": "adversarialRegretLowerExpression",
+    "full_name": "BanditRLProof.LowerBounds.adversarialRegretLowerExpression",
+    "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+    "line": 111,
+    "statement": "def adversarialRegretLowerExpression (horizon pullCount clippingCount : Nat) (gap : Real) : Real"
+  },
+  {
+    "kind": "theorem",
+    "name": "adversarialRegretLowerExpression_ge_quarter",
+    "full_name": "BanditRLProof.LowerBounds.adversarialRegretLowerExpression_ge_quarter",
+    "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+    "line": 119,
+    "statement": "theorem adversarialRegretLowerExpression_ge_quarter (horizon pullCount clippingCount : Nat) (gap : Real) (hGap : 0 <= gap) (hPull : (pullCount : Real) <= (horizon : Real) / 2) (hClipping : (clippingCount : Real) <= (horizon : Real) / 4) : gap * ((horizon : Real) / 4) <= adversarialRegretLowerExpression horizon pullCount clippingCount gap"
+  },
+  {
+    "kind": "theorem",
+    "name": "randomRegret_ge_quarter_of_clippingDecomposition",
+    "full_name": "BanditRLProof.LowerBounds.randomRegret_ge_quarter_of_clippingDecomposition",
+    "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+    "line": 133,
+    "statement": "theorem randomRegret_ge_quarter_of_clippingDecomposition (horizon pullCount clippingCount : Nat) (gap randomRegret : Real) (hGap : 0 <= gap) (hPull : (pullCount : Real) <= (horizon : Real) / 2) (hClipping : (clippingCount : Real) <= (horizon : Real) / 4) (hSource : adversarialRegretLowerExpression horizon pullCount clippingCount gap <= randomRegret) : gap * ((horizon : Real) / 4) <= randomRegret"
+  },
+  {
+    "kind": "abbrev",
+    "name": "relativeEntropy",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 26,
+    "statement": "abbrev relativeEntropy {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) : ENNReal"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_of_absolutelyContinuous_of_integrable",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_of_absolutelyContinuous_of_integrable",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 32,
+    "statement": "theorem relativeEntropy_of_absolutelyContinuous_of_integrable {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) (hPQ : P \u226a Q) (hInt : Integrable (llr P Q) P) : relativeEntropy P Q = ENNReal.ofReal (\u222b x, llr P Q x \u2202P + Q.real univ - P.real univ)"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_of_probability_absolutelyContinuous_of_integrable",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_of_probability_absolutelyContinuous_of_integrable",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 42,
+    "statement": "theorem relativeEntropy_of_probability_absolutelyContinuous_of_integrable {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] (hPQ : P \u226a Q) (hInt : Integrable (llr P Q) P) : relativeEntropy P Q = ENNReal.ofReal (\u222b x, llr P Q x \u2202P)"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_eq_top_of_not_absolutelyContinuous",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_eq_top_of_not_absolutelyContinuous",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 52,
+    "statement": "theorem relativeEntropy_eq_top_of_not_absolutelyContinuous {\u03b1 : Type*} [MeasurableSpace \u03b1] {P Q : Measure \u03b1} (hPQ : \u00ac P \u226a Q) : relativeEntropy P Q = \u221e"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_ne_top_iff",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_ne_top_iff",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 60,
+    "statement": "theorem relativeEntropy_ne_top_iff {\u03b1 : Type*} [MeasurableSpace \u03b1] {P Q : Measure \u03b1} : relativeEntropy P Q \u2260 \u221e \u2194 P \u226a Q \u2227 Integrable (llr P Q) P"
+  },
+  {
+    "kind": "abbrev",
+    "name": "bernoulliRelativeEntropy",
+    "full_name": "BanditRLProof.LowerBounds.bernoulliRelativeEntropy",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 67,
+    "statement": "abbrev bernoulliRelativeEntropy (p q : Real) : ENNReal"
+  },
+  {
+    "kind": "theorem",
+    "name": "rnDeriv_restrict_restrict",
+    "full_name": "BanditRLProof.LowerBounds.rnDeriv_restrict_restrict",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 72,
+    "statement": "theorem rnDeriv_restrict_restrict {\u03b1 : Type*} [MeasurableSpace \u03b1] {P Q : Measure \u03b1} [SigmaFinite P] [SigmaFinite Q] (hPQ : P \u226a Q) {A : Set \u03b1} (hA : MeasurableSet A) : (P.restrict A).rnDeriv (Q.restrict A) =\u1d50[Q.restrict A] P.rnDeriv Q"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_restrict_add_compl",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_restrict_add_compl",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 88,
+    "statement": "theorem relativeEntropy_restrict_add_compl {\u03b1 : Type*} [MeasurableSpace \u03b1] {P Q : Measure \u03b1} [IsFiniteMeasure P] [IsFiniteMeasure Q] (hPQ : P \u226a Q) {A : Set \u03b1} (hA : MeasurableSet A) : relativeEntropy P Q = relativeEntropy (P.restrict A) (Q.restrict A) + relativeEntropy (P.restrict A\u1d9c) (Q.restrict A\u1d9c)"
+  },
+  {
+    "kind": "theorem",
+    "name": "bernoulliKLCore_event_le",
+    "full_name": "BanditRLProof.LowerBounds.bernoulliKLCore_event_le",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 131,
+    "statement": "theorem bernoulliKLCore_event_le {\u03b1 : Type*} [MeasurableSpace \u03b1] {P Q : Measure \u03b1} [IsProbabilityMeasure P] [IsProbabilityMeasure Q] {A : Set \u03b1} (hA : MeasurableSet A) (hKL : relativeEntropy P Q \u2260 \u221e) (hQ0 : 0 < Q.real A) (hQ1 : Q.real A < 1) : KLUCB.bernoulliKLCore (P.real A) (Q.real A) \u2264 (relativeEntropy P Q).toReal"
+  },
+  {
+    "kind": "theorem",
+    "name": "exp_neg_half_bernoulliKLCore_le_affinity",
+    "full_name": "BanditRLProof.LowerBounds.exp_neg_half_bernoulliKLCore_le_affinity",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 202,
+    "statement": "theorem exp_neg_half_bernoulliKLCore_le_affinity {p q : Real} (hp0 : 0 < p) (hp1 : p < 1) (hq0 : 0 < q) (hq1 : q < 1) : Real.exp (-(KLUCB.bernoulliKLCore p q) / 2) \u2264 Real.sqrt (p * q) + Real.sqrt ((1 - p) * (1 - q))"
+  },
+  {
+    "kind": "theorem",
+    "name": "half_binaryAffinity_sq_le_eventError",
+    "full_name": "BanditRLProof.LowerBounds.half_binaryAffinity_sq_le_eventError",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 270,
+    "statement": "theorem half_binaryAffinity_sq_le_eventError {p q : Real} (hp : KLUCB.IsBernoulliParameter p) (hq : KLUCB.IsBernoulliParameter q) : (1 / 2 : Real) * (Real.sqrt (p * q) + Real.sqrt ((1 - p) * (1 - q))) ^ 2 \u2264 p + (1 - q)"
+  },
+  {
+    "kind": "theorem",
+    "name": "binaryBretagnolleHuberCore",
+    "full_name": "BanditRLProof.LowerBounds.binaryBretagnolleHuberCore",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 305,
+    "statement": "theorem binaryBretagnolleHuberCore {p q : Real} (hp : KLUCB.IsBernoulliParameter p) (hq0 : 0 < q) (hq1 : q < 1) : (1 / 2 : Real) * Real.exp (-KLUCB.bernoulliKLCore p q) \u2264 p + (1 - q)"
+  },
+  {
+    "kind": "def",
+    "name": "bretagnolleHuberScale",
+    "full_name": "BanditRLProof.LowerBounds.bretagnolleHuberScale",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 350,
+    "statement": "noncomputable def bretagnolleHuberScale (d : ENNReal) : Real"
+  },
+  {
+    "kind": "theorem",
+    "name": "bretagnolleHuberScale_nonneg",
+    "full_name": "BanditRLProof.LowerBounds.bretagnolleHuberScale_nonneg",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 353,
+    "statement": "theorem bretagnolleHuberScale_nonneg (d : ENNReal) : 0 \u2264 bretagnolleHuberScale d"
+  },
+  {
+    "kind": "theorem",
+    "name": "binaryBretagnolleHuber",
+    "full_name": "BanditRLProof.LowerBounds.binaryBretagnolleHuber",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 362,
+    "statement": "theorem binaryBretagnolleHuber {p q : Real} (hp : KLUCB.IsBernoulliParameter p) (hq : KLUCB.IsBernoulliParameter q) : bretagnolleHuberScale (bernoulliRelativeEntropy p q) \u2264 p + (1 - q)"
+  },
+  {
+    "kind": "theorem",
+    "name": "bernoulliRelativeEntropy_event_le",
+    "full_name": "BanditRLProof.LowerBounds.bernoulliRelativeEntropy_event_le",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 395,
+    "statement": "theorem bernoulliRelativeEntropy_event_le {\u03b1 : Type*} [MeasurableSpace \u03b1] {P Q : Measure \u03b1} [IsProbabilityMeasure P] [IsProbabilityMeasure Q] {A : Set \u03b1} (hA : MeasurableSet A) : bernoulliRelativeEntropy (P.real A) (Q.real A) \u2264 relativeEntropy P Q"
+  },
+  {
+    "kind": "theorem",
+    "name": "bretagnolleHuberScale_antitone",
+    "full_name": "BanditRLProof.LowerBounds.bretagnolleHuberScale_antitone",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 443,
+    "statement": "theorem bretagnolleHuberScale_antitone {d D : ENNReal} (h : d \u2264 D) : bretagnolleHuberScale D \u2264 bretagnolleHuberScale d"
+  },
+  {
+    "kind": "theorem",
+    "name": "bretagnolleHuber",
+    "full_name": "BanditRLProof.LowerBounds.bretagnolleHuber",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 462,
+    "statement": "theorem bretagnolleHuber {\u03b1 : Type*} [MeasurableSpace \u03b1] {P Q : Measure \u03b1} [IsProbabilityMeasure P] [IsProbabilityMeasure Q] {A : Set \u03b1} (hA : MeasurableSet A) : bretagnolleHuberScale (relativeEntropy P Q) \u2264 P.real A + Q.real A\u1d9c"
+  },
+  {
+    "kind": "def",
+    "name": "IsConsistentRegret",
+    "full_name": "BanditRLProof.LowerBounds.IsConsistentRegret",
+    "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+    "line": 33,
+    "statement": "def IsConsistentRegret (regret : Nat -> Real) : Prop"
+  },
+  {
+    "kind": "def",
+    "name": "IsConsistentPolicyOver",
+    "full_name": "BanditRLProof.LowerBounds.IsConsistentPolicyOver",
+    "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+    "line": 40,
+    "statement": "def IsConsistentPolicyOver {Policy Environment : Type*} (environmentClass : Set Environment) (regret : Policy -> Environment -> Nat -> Real) (policy : Policy) : Prop"
+  },
+  {
+    "kind": "theorem",
+    "name": "IsConsistentRegret.add",
+    "full_name": "IsConsistentRegret.add",
+    "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+    "line": 51,
+    "statement": "theorem IsConsistentRegret.add {first second : Nat -> Real} (hfirst : IsConsistentRegret first) (hsecond : IsConsistentRegret second) : IsConsistentRegret (fun n => first n + second n)"
+  },
+  {
+    "kind": "theorem",
+    "name": "IsConsistentRegret.eventually_add_le_rpow",
+    "full_name": "IsConsistentRegret.eventually_add_le_rpow",
+    "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+    "line": 62,
+    "statement": "theorem IsConsistentRegret.eventually_add_le_rpow {first second : Nat -> Real} (hfirst : IsConsistentRegret first) (hsecond : IsConsistentRegret second) {p : Real} (hp : 0 < p) : \u2200\u1da0 n : Nat in atTop, first n + second n <= (n : Real) ^ p"
+  },
+  {
+    "kind": "theorem",
+    "name": "IsConsistentRegret.eventually_log_add_div_log_le",
+    "full_name": "IsConsistentRegret.eventually_log_add_div_log_le",
+    "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+    "line": 82,
+    "statement": "theorem IsConsistentRegret.eventually_log_add_div_log_le {first second : Nat -> Real} (hfirst : IsConsistentRegret first) (hsecond : IsConsistentRegret second) (hpositive : \u2200\u1da0 n : Nat in atTop, 0 < first n + second n) {p : Real} (hp : 0 < p) : \u2200\u1da0 n : Nat in atTop, Real.log (first n + second n) / Real.log n <= p"
+  },
+  {
+    "kind": "def",
+    "name": "divergenceInfimum",
+    "full_name": "BanditRLProof.LowerBounds.divergenceInfimum",
+    "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+    "line": 104,
+    "statement": "def divergenceInfimum {Reward : Type*} [MeasurableSpace Reward] (P : Measure Reward) (muStar : Real) (distributionClass : Set (Measure Reward)) (mean : Measure Reward -> Real) : ENNReal"
+  },
+  {
+    "kind": "theorem",
+    "name": "divergenceInfimum_le",
+    "full_name": "BanditRLProof.LowerBounds.divergenceInfimum_le",
+    "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+    "line": 116,
+    "statement": "theorem divergenceInfimum_le {Reward : Type*} [MeasurableSpace Reward] {P P' : Measure Reward} {muStar : Real} {distributionClass : Set (Measure Reward)} {mean : Measure Reward -> Real} (hclass : P' \u2208 distributionClass) (hbetter : muStar < mean P') : divergenceInfimum P muStar distributionClass mean <= relativeEntropy P P'"
+  },
+  {
+    "kind": "def",
+    "name": "parametricDivergenceInfimum",
+    "full_name": "BanditRLProof.LowerBounds.parametricDivergenceInfimum",
+    "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+    "line": 130,
+    "statement": "def parametricDivergenceInfimum {Reward Parameter : Type*} [MeasurableSpace Reward] (law : Parameter -> Measure Reward) (mean : Parameter -> Real) (parameter : Parameter) (muStar : Real) : ENNReal"
+  },
+  {
+    "kind": "theorem",
+    "name": "parametricDivergenceInfimum_le",
+    "full_name": "BanditRLProof.LowerBounds.parametricDivergenceInfimum_le",
+    "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+    "line": 140,
+    "statement": "theorem parametricDivergenceInfimum_le {Reward Parameter : Type*} [MeasurableSpace Reward] {law : Parameter -> Measure Reward} {mean : Parameter -> Real} {parameter alternative : Parameter} {muStar : Real} (hbetter : muStar < mean alternative) : parametricDivergenceInfimum law mean parameter muStar <= relativeEntropy (law parameter) (law alternative)"
+  },
+  {
+    "kind": "abbrev",
+    "name": "unitGaussianDivergenceInfimum",
+    "full_name": "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum",
+    "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+    "line": 151,
+    "statement": "abbrev unitGaussianDivergenceInfimum (mu muStar : Real) : ENNReal"
+  },
+  {
+    "kind": "theorem",
+    "name": "unitGaussianDivergenceInfimum_le_perturbed",
+    "full_name": "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum_le_perturbed",
+    "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+    "line": 157,
+    "statement": "theorem unitGaussianDivergenceInfimum_le_perturbed (mu muStar epsilon : Real) (hepsilon : 0 < epsilon) : unitGaussianDivergenceInfimum mu muStar <= ENNReal.ofReal (((muStar - mu) + epsilon) ^ 2 / 2)"
+  },
+  {
+    "kind": "abbrev",
+    "name": "unitGaussianArm",
+    "full_name": "BanditRLProof.LowerBounds.unitGaussianArm",
+    "file": "BanditRLProof/LowerBounds/Minimax.lean",
+    "line": 27,
+    "statement": "abbrev unitGaussianArm (mu : Real) : Measure Real"
+  },
+  {
+    "kind": "abbrev",
+    "name": "unitGaussianBandit",
+    "full_name": "BanditRLProof.LowerBounds.unitGaussianBandit",
+    "file": "BanditRLProof/LowerBounds/Minimax.lean",
+    "line": 31,
+    "statement": "abbrev unitGaussianBandit {k : Nat} (mean : Fin k -> Real) : Fin k -> Measure Real"
+  },
+  {
+    "kind": "theorem",
+    "name": "log_gaussianPDFReal_div_gaussianPDFReal_one",
+    "full_name": "BanditRLProof.LowerBounds.log_gaussianPDFReal_div_gaussianPDFReal_one",
+    "file": "BanditRLProof/LowerBounds/Minimax.lean",
+    "line": 36,
+    "statement": "theorem log_gaussianPDFReal_div_gaussianPDFReal_one (mu nu x : Real) : Real.log (gaussianPDFReal mu (1 : NNReal) x / gaussianPDFReal nu (1 : NNReal) x) = (mu - nu) * x + (nu ^ 2 - mu ^ 2) / 2"
+  },
+  {
+    "kind": "theorem",
+    "name": "llr_gaussianReal_one_ae",
+    "full_name": "BanditRLProof.LowerBounds.llr_gaussianReal_one_ae",
+    "file": "BanditRLProof/LowerBounds/Minimax.lean",
+    "line": 53,
+    "statement": "theorem llr_gaussianReal_one_ae (mu nu : Real) : llr (unitGaussianArm mu) (unitGaussianArm nu) =\u1d50[unitGaussianArm mu] fun x => (mu - nu) * x + (nu ^ 2 - mu ^ 2) / 2"
+  },
+  {
+    "kind": "theorem",
+    "name": "integrable_llr_gaussianReal_one",
+    "full_name": "BanditRLProof.LowerBounds.integrable_llr_gaussianReal_one",
+    "file": "BanditRLProof/LowerBounds/Minimax.lean",
+    "line": 73,
+    "statement": "theorem integrable_llr_gaussianReal_one (mu nu : Real) : Integrable (llr (unitGaussianArm mu) (unitGaussianArm nu)) (unitGaussianArm mu)"
+  },
+  {
+    "kind": "theorem",
+    "name": "klDiv_gaussianReal_one",
+    "full_name": "BanditRLProof.LowerBounds.klDiv_gaussianReal_one",
+    "file": "BanditRLProof/LowerBounds/Minimax.lean",
+    "line": 89,
+    "statement": "theorem klDiv_gaussianReal_one (mu nu : Real) : InformationTheory.klDiv (unitGaussianArm mu) (unitGaussianArm nu) = ENNReal.ofReal ((mu - nu) ^ 2 / 2)"
+  },
+  {
+    "kind": "theorem",
+    "name": "klDiv_unitGaussianArm_zero_two_mul",
+    "full_name": "BanditRLProof.LowerBounds.klDiv_unitGaussianArm_zero_two_mul",
+    "file": "BanditRLProof/LowerBounds/Minimax.lean",
+    "line": 121,
+    "statement": "theorem klDiv_unitGaussianArm_zero_two_mul (gap : Real) : InformationTheory.klDiv (unitGaussianArm 0) (unitGaussianArm (2 * gap)) = ENNReal.ofReal (2 * gap ^ 2)"
+  },
+  {
+    "kind": "def",
+    "name": "gaussianMinimaxGap",
+    "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxGap",
+    "file": "BanditRLProof/LowerBounds/Minimax.lean",
+    "line": 131,
+    "statement": "noncomputable def gaussianMinimaxGap (alternativeCount horizon : Real) : Real"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussianMinimaxGap_sq",
+    "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxGap_sq",
+    "file": "BanditRLProof/LowerBounds/Minimax.lean",
+    "line": 136,
+    "statement": "theorem gaussianMinimaxGap_sq {alternativeCount horizon : Real} (halternatives : 0 \u2264 alternativeCount) (hhorizon : 0 \u2264 horizon) : gaussianMinimaxGap alternativeCount horizon ^ 2 = alternativeCount / (4 * horizon)"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussianMinimaxGap_informationExponent_eq_half",
+    "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxGap_informationExponent_eq_half",
+    "file": "BanditRLProof/LowerBounds/Minimax.lean",
+    "line": 147,
+    "statement": "theorem gaussianMinimaxGap_informationExponent_eq_half {alternativeCount horizon : Real} (halternatives : 0 < alternativeCount) (hhorizon : 0 < horizon) : 2 * horizon * gaussianMinimaxGap alternativeCount horizon ^ 2 / alternativeCount = 1 / 2"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussianMinimaxGap_le_half",
+    "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxGap_le_half",
+    "file": "BanditRLProof/LowerBounds/Minimax.lean",
+    "line": 159,
+    "statement": "theorem gaussianMinimaxGap_le_half {alternativeCount horizon : Real} (hhorizon : 0 < horizon) (hcount_le : alternativeCount \u2264 horizon) : gaussianMinimaxGap alternativeCount horizon \u2264 1 / 2"
   },
   {
     "kind": "structure",

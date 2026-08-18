@@ -18,7 +18,7 @@
       "slug": "chapter-13-basic-ideas",
       "title": "Lower Bounds: Basic Ideas",
       "status": "partial",
-      "status_note": "The Chapter 13 semantic and deterministic slice is compiled. Theorem 13.1 is now source-frozen in Chapter 15 but remains blocked on the stochastic-policy history KL bridge.",
+      "status_note": "The Chapter 13 semantic and deterministic slice and Chapter 15 same-policy history KL bridge are compiled. Theorem 13.1 remains blocked on the Gaussian regret/event and caller-free minimax terminal.",
       "print_pages": "155–159",
       "pdf_pages": "189–194",
       "sections": [
@@ -91,7 +91,7 @@
         {"id": "budget", "label": "expected pull budget", "status": "compiled"},
         {"id": "least", "label": "least-explored alternative", "status": "compiled"},
         {"id": "algebra", "label": "two-environment algebra", "status": "compiled"},
-        {"id": "transport", "label": "same-policy history KL transport", "status": "blocked"},
+        {"id": "transport", "label": "same-policy history KL transport", "status": "compiled"},
         {"id": "theorem-13-1", "label": "Gaussian minimax terminal", "status": "blocked"}
       ],
       "reading_path": [
@@ -99,12 +99,11 @@
         "Inspect the minimax definitions before the averaging lemma.",
         "Check the Fin.succ indexing: source arms 2,…,k become Lean alternatives 0,…,m−1.",
         "Read the quantitative algebra theorem and locate its visible cross-environment error premise.",
-        "Continue through the compiled Chapter 14 event-testing foundation to Chapter 15's compiled Gaussian KL leaves and explicit history-law blocker."
+        "Continue through the compiled Chapter 14 event-testing foundation and Chapter 15 history identity to the still-open Gaussian regret/event terminal."
       ],
       "gaps": [
-        "History-law likelihood ratio under the same adaptive policy.",
-        "The conditional composition-product KL integral and canonical stochastic-policy history law.",
-        "Chapter 15 Lemma 15.1, regret/event bridge, tuning, and caller-free Theorem 13.1 terminal."
+        "The Chapter 15 regret/event bridge from the compiled same-policy history KL identity.",
+        "The source-specific Gaussian constant assembly and caller-free Theorem 13.1 terminal."
       ]
     },
     {
@@ -195,7 +194,7 @@
         {"id": "binary", "label": "binary testing and endpoint analysis", "status": "compiled"},
         {"id": "bh", "label": "measure Bretagnolle–Huber terminal", "status": "compiled"},
         {"id": "coding", "label": "entropy and optimal coding", "status": "planned"},
-        {"id": "history", "label": "same-policy adaptive history KL", "status": "blocked"}
+        {"id": "history", "label": "same-policy adaptive history KL (compiled in Chapter 15)", "status": "compiled"}
       ],
       "reading_path": [
         "Read Eq. (14.4), Eq. (14.5), Theorem 14.1, and Eq. (14.6) before the testing theorem.",
@@ -207,7 +206,7 @@
       "gaps": [
         "Entropy, Huffman coding, and optimal source-coding results from §14.1 are not formalized by this lower-bound gate.",
         "Full data processing for an arbitrary sub-sigma-algebra from Exercise 14.10 is not claimed; the compiled leaf is the event/binary specialization.",
-        "Adaptive-bandit history likelihood ratios and KL decomposition belong to Chapter 15 and are blocked on conditional kernel KL plus a stochastic-policy history law."
+        "Adaptive-bandit history likelihood ratios and KL decomposition belong to Chapter 15; the scoped finite-arm same-policy identity now compiles there."
       ]
     },
     {
@@ -215,7 +214,7 @@
       "slug": "chapter-15-minimax-lower-bounds",
       "title": "Minimax Lower Bounds",
       "status": "partial",
-      "status_note": "The exact Lemma 15.1 and Theorem 15.2 contracts are frozen; the unit-variance Gaussian likelihood-ratio/KL slice and source gap/exponent tuning compile. The stochastic-policy history KL decomposition and Gaussian minimax terminal remain blocked.",
+      "status_note": "Lemma 15.1 now compiles for finite arms, a countably generated reward space, arbitrary Markov arm laws, and one common randomized history policy. The unit-Gaussian dependency slice also compiles; Theorem 15.2 and the 1/27 minimax terminal remain blocked.",
       "print_pages": "170–176",
       "pdf_pages": "207–214",
       "sections": [
@@ -228,11 +227,11 @@
       "learning_goals": [
         "Keep Lemma 15.1's KL direction, first-law expectation, and same randomized policy fixed.",
         "Compute the exact arm-level KL for equal-variance Gaussian alternatives.",
-        "See why conditional kernel KL and a stochastic-policy history law are required before arm KL becomes expected pull-count KL.",
+        "Follow the compiled conditional-kernel chain rule and canonical randomized-policy history recursion that turn arm KL into first-law expected pull-count KL.",
         "Follow the least-explored-arm, testing-event, and Delta-tuning route to Theorem 15.2 without upgrading blocked nodes."
       ],
       "definitions": [
-        {"name": "Bandit-history divergence", "math": "D(\\mathbb P_{\\nu,\\pi}^{(n)}\\Vert\\mathbb P_{\\nu',\\pi}^{(n)}).", "fallback": "The divergence compares n-round action/reward histories generated by the same possibly randomized policy in two environments.", "status": "blocked"},
+        {"name": "Bandit-history divergence", "math": "D(\\mathbb P_{\\nu,\\pi}^{(n)}\\Vert\\mathbb P_{\\nu',\\pi}^{(n)}).", "fallback": "The divergence compares finite action/reward histories generated by the same possibly randomized policy in two environments.", "status": "compiled"},
         {"name": "Unit-variance Gaussian arm", "math": "\\nu_\\mu=\\mathcal N(\\mu,1).", "fallback": "Each arm is a real Gaussian probability law with the requested mean and variance exactly one.", "status": "compiled"},
         {"name": "Equal-variance Gaussian KL", "math": "D(\\mathcal N(\\mu,1)\\Vert\\mathcal N(\\nu,1))=\\frac{(\\mu-\\nu)^2}{2}.", "fallback": "The relative entropy between unit-variance Gaussians is one half the squared difference of their means.", "status": "compiled"},
         {"name": "Source minimax gap", "math": "\\Delta=\\sqrt{\\frac{k-1}{4n}},\\qquad\\frac{2n\\Delta^2}{k-1}=\\frac12.", "fallback": "The tuned gap makes the information exponent exactly one half and is at most one half when k-1 is at most n.", "status": "compiled"}
@@ -244,20 +243,24 @@
           {"title": "Choose the base instance", "detail": "Set the first Gaussian mean to Delta and all other means to zero."},
           {"title": "Find a least-explored alternative", "detail": "Use the compiled Chapter 13 averaging leaf to choose i>1 with E[T_i(n)] at most n/(k-1)."},
           {"title": "Change one arm", "detail": "Raise only arm i to mean 2 Delta; its compiled arm-level KL cost is 2 Delta squared."},
-          {"title": "Lift KL to histories", "detail": "Lemma 15.1 must turn arm costs into the first-law expected pull-count sum under one common stochastic policy; this node is blocked."},
-          {"title": "Test and tune", "detail": "Apply Chapter 14 Bretagnolle–Huber to T_1(n) at most n/2, then choose Delta=sqrt((k-1)/(4n)) to obtain the 1/27 lower bound; the terminal remains blocked with its dependency."}
+          {"title": "Lift KL to histories", "detail": "The compiled Lemma 15.1 route recursively applies the same-policy conditional-kernel chain rule and rewrites policy-arm masses as lower integrals of realized pull counts."},
+          {"title": "Test and tune", "detail": "Apply Chapter 14 Bretagnolle–Huber to T_1(n) at most n/2, then choose Delta=sqrt((k-1)/(4n)); this source-specific regret/event and constant assembly remains blocked."}
         ]
       },
       "source_theorem": {
         "label": "Lemma 15.1 / Eq. (15.1) and Theorem 15.2",
-        "status": "blocked",
+        "status": "partial",
         "math": "D(\\mathbb P_{\\nu,\\pi}^{(n)}\\Vert\\mathbb P_{\\nu',\\pi}^{(n)})=\\sum_i\\mathbb E_{\\nu,\\pi}[T_i(n)]D(P_i\\Vert P_i'),\\qquad R_n\\ge\\frac1{27}\\sqrt{(k-1)n}.",
         "fallback": "History KL is the first-law expected sum of arm KL costs under one common policy; the Gaussian construction then yields regret at least one twenty-seventh times the square root of (k-1)n.",
         "plain": "The theorem converts indistinguishability of one-coordinate Gaussian alternatives into a finite-arm minimax regret obstruction.",
-        "boundary": "Only the Gaussian arm constructor, log likelihood ratio, integrability, and exact arm-level KL currently compile. Lemma 15.1 and Theorem 15.2 are not local proofs: Mathlib lacks the needed conditional-KL integral, and the current repository policy interface is deterministic rather than the source's randomized policy kernel."
+        "boundary": "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum compiles the Lemma 15.1 identity in the source KL direction and with first-law realized expected pulls, under explicit finite-arm/countably-generated regularity and the repository's arbitrary randomized HistoryAlgorithm. The local inclusive lastRound contains lastRound+1 observations, so the source's positive n-round form uses lastRound=n-1. No local declaration is presented as Theorem 15.2 or its 1/27 terminal."
       },
-      "source_boundary": "The exact targets are frozen from the official author PDF. Compiled Gaussian leaves are dependencies only; the history decomposition and 1/27 minimax terminal remain blocked and are not inferred from theorem cards.",
+      "source_boundary": "The exact targets are frozen from the official author PDF. Lemma 15.1 is a compiled local theorem under explicit regularity; the 1/27 minimax terminal remains blocked and is not inferred from that identity, theorem cards, or arm-level Gaussian leaves.",
       "lean_correspondence": [
+        {"name": "BanditRLProof.LowerBounds.klDiv_compProd_same_left_eq_lintegral_klDiv_of_measurable", "status": "compiled", "role": "General same-left composition-product KL chain rule, including singular fibres and infinite KL."},
+        {"name": "BanditRLProof.LowerBounds.klDiv_historyStep_samePolicy_eq_iterated_lintegral_armKL_general", "status": "compiled", "role": "One randomized policy step contributes the first-law integral of the selected arm KL."},
+        {"name": "BanditRLProof.LowerBounds.canonicalBanditHistoryMeasure", "status": "compiled", "role": "Canonical finite action/reward history law for one randomized HistoryAlgorithm and stationary arm kernels."},
+        {"name": "BanditRLProof.LowerBounds.canonicalRealizedExpectedPullCountThrough", "status": "compiled", "role": "First-law lower integral of the realized finite-history pull count."},
         {"name": "BanditRLProof.LowerBounds.unitGaussianArm", "status": "compiled", "role": "Unit-variance Gaussian reward law."},
         {"name": "BanditRLProof.LowerBounds.unitGaussianBandit", "status": "compiled", "role": "Finite family of unit-variance Gaussian arms indexed by a mean vector."},
         {"name": "BanditRLProof.LowerBounds.log_gaussianPDFReal_div_gaussianPDFReal_one", "status": "compiled", "role": "Pointwise affine log-density ratio."},
@@ -269,7 +272,7 @@
         {"name": "BanditRLProof.LowerBounds.gaussianMinimaxGap_sq", "status": "compiled", "role": "Squared source gap identity under nonnegative parameters."},
         {"name": "BanditRLProof.LowerBounds.gaussianMinimaxGap_informationExponent_eq_half", "status": "compiled", "role": "Exact information exponent 2n Delta squared divided by m equals one half."},
         {"name": "BanditRLProof.LowerBounds.gaussianMinimaxGap_le_half", "status": "compiled", "role": "The horizon condition m at most n keeps Delta at most one half."},
-        {"name": "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum", "status": "blocked", "role": "Reserved exact Lemma 15.1 terminal; no declaration is claimed."},
+        {"name": "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum", "status": "compiled", "role": "Source-facing Lemma 15.1 identity: history KL equals the sum of first-law realized expected pulls times directed arm KL."},
         {"name": "BanditRLProof.LowerBounds.exists_gaussianBandit_expectedRegret_ge_one_div_twentySeven", "status": "blocked", "role": "Reserved exact Theorem 15.2 existence terminal; no declaration is claimed."}
       ],
       "dependency_nodes": [
@@ -277,21 +280,20 @@
         {"id": "ch14", "label": "Chapter 14 event testing", "status": "compiled"},
         {"id": "gaussian", "label": "unit-Gaussian RN and arm KL", "status": "compiled"},
         {"id": "tuning", "label": "source gap and information exponent", "status": "compiled"},
-        {"id": "conditional", "label": "conditional composition-product KL integral", "status": "blocked"},
-        {"id": "policy", "label": "stochastic-policy canonical history law", "status": "blocked"},
-        {"id": "history", "label": "Lemma 15.1 same-policy history KL", "status": "blocked"},
+        {"id": "conditional", "label": "conditional composition-product KL integral", "status": "compiled"},
+        {"id": "policy", "label": "stochastic-policy canonical history law", "status": "compiled"},
+        {"id": "history", "label": "Lemma 15.1 same-policy history KL", "status": "compiled"},
         {"id": "minimax", "label": "Theorem 15.2 Gaussian 1/27 terminal", "status": "blocked"}
       ],
       "reading_path": [
         "Read Lemma 15.1 in §15.1 and verify D(nu,nu-prime), E_nu[T_i], and one common policy.",
-        "Inspect the compiled Gaussian RN and KL leaves before the bandit-history bridge.",
+        "Inspect the conditional-kernel chain rule, canonical history recursion, and realized-count bridge before the source-facing Lemma 15.1 alias.",
         "Read Theorem 15.2 in §15.2 and trace the base instance, least-explored alternative, event T_1(n) at most n/2, and Delta tuning.",
-        "Treat the conditional-KL and stochastic-policy nodes as blockers, not as imported proof certificates."
+        "Treat Lemma 15.1 as a compiled dependency, then keep the source-specific regret event and Theorem 15.2 constant assembly visibly open."
       ],
       "gaps": [
-        "A conditional composition-product KL integral with sufficient measurability and regularity.",
-        "A canonical finite history law for possibly randomized nonanticipating policy kernels.",
-        "Lemma 15.1, regret/event identities, final exponential/constant step, Theorem 15.2, and its minimax corollary.",
+        "Theorem 15.2's base/alternative regret event identities and the bridge from the compiled ENNReal history KL to the source testing event.",
+        "The final exponential/constant calculation, caller-free 1/27 existence terminal, and its minimax corollary.",
         "The Bernoulli refinement discussed in the §15.3 Notes and the stopping-time Exercise 15.7 are outside the current compiled slice."
       ]
     },
@@ -352,7 +354,7 @@
         "steps": [
           {"title": "Freeze consistency", "detail": "Require R_n(pi,nu)/n^p to converge to zero for every environment in the class and every real p>0."},
           {"title": "Choose a confusing alternative", "detail": "Change one suboptimal arm to a law in its component class whose mean is strictly above the original optimal mean and whose original-to-alternative KL approaches d_inf."},
-          {"title": "Lift arm KL to history KL", "detail": "Use one common randomized nonanticipating policy and Lemma 15.1 to obtain the original-law expected pull-count cost; this node is blocked."},
+          {"title": "Lift arm KL to history KL", "detail": "Use the compiled one-common-policy Lemma 15.1 identity to obtain the original-law realized expected pull-count cost."},
           {"title": "Test the pull event", "detail": "Apply Bretagnolle–Huber to A={T_i(n)>n/2}, preserving the event complement and the two environment-specific regrets."},
           {"title": "Extract the rate", "detail": "Use the compiled consistency power/log leaves, then take the required liminf and sum gap times expected pulls; the bandit terminal remains blocked."},
           {"title": "Specialize finite time", "detail": "For Theorem 16.4 shift a Gaussian mean by Delta_i(1+epsilon), apply Lemma 16.3, and retain the exact positive part and factor 2/(1+epsilon)^2."}
@@ -364,7 +366,7 @@
         "math": "\\liminf_{n\\to\\infty}\\frac{R_n(\\pi,\\nu)}{\\log n}\\ge\\sum_{i:\\Delta_i>0}\\frac{\\Delta_i}{d_{\\inf}(P_i,\\mu^*,\\mathcal M_i)},\\qquad R_n(\\pi,\\nu)\\ge\\frac{2}{(1+\\varepsilon)^2}\\sum_{i:\\Delta_i>0}\\left(\\frac{(1-p)\\log n+\\log(\\varepsilon\\Delta_i/(8C))}{\\Delta_i}\\right)^+.",
         "fallback": "A consistent policy pays the source d_inf logarithmic constant on every unstructured instance; under the finite-time local Gaussian envelope, an explicit positive-part lower bound holds at every selected horizon.",
         "plain": "Chapter 16 turns one-arm change of measure into asymptotic and finite-time instance-dependent regret obstructions.",
-        "boundary": "The generic consistency, d_inf, Gaussian-candidate, power, and log-growth leaves compile. The history information constraint, exact d_inf-to-liminf bandit bridge, Lemma 16.3, and both regret terminals do not: they inherit Chapter 15's missing conditional kernel-KL integral and stochastic-policy history law."
+        "boundary": "The generic consistency, d_inf, Gaussian-candidate, power, log-growth, and Chapter 15 history-KL leaves compile. The Chapter 16 one-arm information consumer, exact d_inf-to-liminf bandit bridge, Lemma 16.3, and both regret terminals do not."
       },
       "source_boundary": "The exact Chapter 16 targets are frozen from the official author PDF and CUP metadata. Compiled analytic interfaces are dependencies only and are never promoted to Theorem 16.2, Lemma 16.3, or Theorem 16.4.",
       "lean_correspondence": [
@@ -389,7 +391,7 @@
         {"id": "consistency", "label": "Definition 16.1 consistency and log growth", "status": "compiled"},
         {"id": "dinf", "label": "extended-real d_inf and candidate inequalities", "status": "compiled"},
         {"id": "gaussian-dinf", "label": "exact Gaussian d_inf equality", "status": "partial"},
-        {"id": "history", "label": "same-policy history information constraint", "status": "blocked"},
+        {"id": "history", "label": "same-policy history KL identity", "status": "compiled"},
         {"id": "asymptotic", "label": "Theorem 16.2 liminf regret terminal", "status": "blocked"},
         {"id": "finite", "label": "Lemma 16.3 and Theorem 16.4", "status": "blocked"}
       ],
@@ -398,11 +400,10 @@
         "Read d_inf and Theorem 16.2 with strict alternative mean, original-to-alternative KL, and an unstructured product class.",
         "Trace the source event A={T_i(n)>n/2}, the two regret laws, and the compiled subpolynomial log-growth adapter.",
         "Read Lemma 16.3 before Theorem 16.4 and preserve the unit-Gaussian local class, selected horizon set, constants, and positive part.",
-        "Treat the history, liminf, and finite-time terminals as blockers, not as consequences of the compiled analytic interfaces."
+        "Treat the Chapter 16 one-arm history-information consumer, liminf, and finite-time terminals as blockers, not as consequences of the compiled Chapter 15 identity or analytic interfaces."
       ],
       "gaps": [
-        "The conditional composition-product KL integral and canonical possibly randomized policy history law inherited from Chapter 15.",
-        "The one-arm original-law expected-pull information constraint and measurable event bridge.",
+        "The Chapter 16 one-arm original-law expected-pull information consumer and measurable event bridge built from the compiled Chapter 15 identity.",
         "The exact Gaussian d_inf equality with empty, zero, finite, and infinite information branches.",
         "Theorem 16.2's per-arm and summed liminf terminal, Lemma 16.3, and Theorem 16.4."
       ]
@@ -474,7 +475,7 @@
         "kind": "proof pseudocode",
         "steps": [
           {"title": "Stochastic: select the least-pulled alternative arm", "detail": "Use the uniform expected-regret envelope to control one arm among i>1, then raise only its Gaussian mean by 2Δ."},
-          {"title": "Stochastic: compare the two history laws", "detail": "Apply Bretagnolle–Huber with original-to-alternative history KL from the same randomized policy; this history decomposition is still blocked."},
+          {"title": "Stochastic: compare the two history laws", "detail": "Apply Bretagnolle–Huber with the compiled original-to-alternative history KL identity under the same randomized policy; the Chapter 17 tail-event consumer remains open."},
           {"title": "Stochastic: calibrate Δ and preserve the tail event", "detail": "Choose the exact minimum in the source and keep the outer quarter, log(1/(4δ)), and probability at least δ."},
           {"title": "Adversarial: sample a correlated clipped-normal reward matrix", "detail": "Share one Gaussian noise variable across arms at each round, while keeping each arm IID across time; do not assume within-round independence."},
           {"title": "Adversarial: combine pull and clipping events", "detail": "Claim 17.6 supplies probability 2δ, Claim 17.7 removes at most δ, and Eq. (17.8) leaves regret at least nΔ/4."},
@@ -487,7 +488,7 @@
         "plain": "A policy whose expected regret is uniformly at most B times the square root of (k−1)n over the Gaussian class must have, on some instance, random pseudo-regret above the exact confidence threshold with probability at least delta.",
         "math": "\\sup_{\\nu\\in\\mathcal E^k}R_n(\\pi,\\nu)\\le B\\sqrt{(k-1)n}\\;\\Longrightarrow\\;\\exists\\nu\\in\\mathcal E^k:\\;\\mathbb P_\\nu^\\pi\\!\\left(\\bar R_n\\ge\\frac14\\min\\left\\{n,\\frac1B\\sqrt{(k-1)n}\\log\\frac1{4\\delta}\\right\\}\\right)\\ge\\delta.",
         "fallback": "The uniform expected-regret premise forces an exact random-pseudo-regret tail obstruction on some unit-Gaussian instance.",
-        "boundary": "The threshold definition compiles, but the theorem does not: the same-policy adaptive-history KL decomposition of Lemma 15.1 is still absent. Corollaries 17.2–17.3 and Theorem 17.4 are also blocked and are not implied by the compiled leaves."
+        "boundary": "The threshold definition and Lemma 15.1 same-policy history KL identity compile, but the theorem does not: its stochastic tail-event consumer and constant assembly remain absent. Corollaries 17.2–17.3 and Theorem 17.4 are also blocked and are not implied by the compiled leaves."
       },
       "source_boundary": "Claim 17.5 is compiled with its suppressed integrability premise explicit. All other source terminals remain blocked; threshold definitions and conditional algebra are not tail theorems.",
       "lean_correspondence": [
@@ -510,7 +511,7 @@
         {"id": "ch15-arm", "label": "unit-Gaussian arm KL", "status": "compiled"},
         {"id": "thresholds", "label": "exact Chapter 17 thresholds", "status": "compiled"},
         {"id": "claim17-5", "label": "Claim 17.5 first-moment witness", "status": "compiled"},
-        {"id": "history", "label": "same-policy adaptive-history KL", "status": "blocked"},
+        {"id": "history", "label": "same-policy adaptive-history KL", "status": "compiled"},
         {"id": "stochastic", "label": "Theorem 17.1 and Corollaries 17.2–17.3", "status": "blocked"},
         {"id": "clipped-law", "label": "correlated clipped-normal reward-matrix law", "status": "blocked"},
         {"id": "claim17-6", "label": "Claim 17.6 pull-small event", "status": "blocked"},
@@ -526,7 +527,7 @@
         "Finish with Claims 17.6–17.7 and Eq. (17.8), treating the compiled probability and algebra leaves as dependencies rather than terminal proofs."
       ],
       "gaps": [
-        "The conditional composition-product KL integral and canonical possibly randomized policy history law inherited from Chapter 15.",
+        "The Chapter 17 stochastic tail-event consumer built from the compiled Chapter 15 identity.",
         "Theorem 17.1, Corollary 17.2's expectation contradiction, and Corollary 17.3's exact tail integration.",
         "The Borel clipped-normal reward-matrix law with within-round arm dependence and across-time IID.",
         "Claim 17.6's information calculation, construction-level Eq. (17.8), Claim 17.7's exact clipping concentration, and Theorem 17.4."

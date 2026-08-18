@@ -13376,3 +13376,61 @@ here during local harness runs.
 - `2026-08-18T07:25:29+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
 - `2026-08-18T07:25:29+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
 - `2026-08-18T07:25:50+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY.md` - PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY
+- `2026-08-18T17:50:20+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-18T17:50:20+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-18T17:50:20+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-18T17:50:20+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-18T17:50:20+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-18T17:50:20+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-18T17:50:20+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-18T17:50:20+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-18T17:50:53+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE.md` - TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE
+- `2026-08-18T17:51:31+00:00` `bandit.py memory-refresh` `retrieval-index` `research-wiki/retrieval-index/TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE.json` - TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE
+- `2026-08-18T17:51:44+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-18T17:51:44+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-18T17:51:44+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-18T17:51:44+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-18T17:51:44+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-18T17:51:44+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-18T17:51:44+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-18T17:51:44+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-18T18:15:21+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-18T18:15:21+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-18T18:15:21+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-18T18:15:21+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-18T18:15:21+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-18T18:15:21+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-18T18:15:21+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-18T18:15:21+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-18T18:16:42+00:00` `bandit.py memory-refresh` `retrieval-index` `research-wiki/retrieval-index/TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE.json` - TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE
+- `2026-08-18T18:16:54+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-18T18:16:54+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-18T18:16:54+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-18T18:16:54+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-18T18:16:54+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-18T18:16:54+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-18T18:16:54+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-18T18:16:54+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-18T18:18:22+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE.md` - TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
+- `2026-08-18T18:18:35+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE.md` - TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
+- `2026-08-18T18:18:49+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE.md` - TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE
+- `2026-08-18T18:19:01+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE.md` - TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE
+- `2026-08-18T18:19:14+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/TEXTBOOK-PART-IV-CHAPTER-17-HIGH-PROBABILITY-LOWER-BOUNDS-SPINE.md` - TEXTBOOK-PART-IV-CHAPTER-17-HIGH-PROBABILITY-LOWER-BOUNDS-SPINE
+- `2026-08-18T18:19:47+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-18T18:19:47+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-18T18:19:47+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-18T18:19:47+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-18T18:19:47+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-18T18:19:47+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-18T18:19:47+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-18T18:19:47+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-18T19:17:12+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE.md` - TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE
+- `2026-08-18T19:17:17+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-08-18T19:17:17+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-08-18T19:17:17+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-08-18T19:17:17+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-08-18T19:17:17+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-08-18T19:17:17+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-08-18T19:17:17+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-08-18T19:17:17+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-08-18T19:27:24+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE.md` - TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE

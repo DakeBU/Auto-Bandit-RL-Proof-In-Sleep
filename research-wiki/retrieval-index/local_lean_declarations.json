@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-18T07:25:25+00:00",
+  "generated": "2026-08-18T19:17:12+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -23643,6 +23643,262 @@
     },
     {
       "kind": "def",
+      "name": "pairHistoryZeroMeasurableEquiv",
+      "full_name": "BanditRLProof.LowerBounds.pairHistoryZeroMeasurableEquiv",
+      "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+      "line": 24,
+      "statement": "def pairHistoryZeroMeasurableEquiv (Action : Type u) (Reward : Type v) [MeasurableSpace Action] [MeasurableSpace Reward] : (Action \u00d7 Reward) \u2243\u1d50 History.FinitePairHistory Action Reward 0 where"
+    },
+    {
+      "kind": "def",
+      "name": "pairHistorySuccMeasurableEquiv",
+      "full_name": "BanditRLProof.LowerBounds.pairHistorySuccMeasurableEquiv",
+      "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+      "line": 43,
+      "statement": "def pairHistorySuccMeasurableEquiv (Action : Type u) (Reward : Type v) [MeasurableSpace Action] [MeasurableSpace Reward] (n : Nat) : (History.FinitePairHistory Action Reward n \u00d7 (Action \u00d7 Reward)) \u2243\u1d50 History.FinitePairHistory Action Reward (n + 1)"
+    },
+    {
+      "kind": "theorem",
+      "name": "pairHistoryZeroMeasurableEquiv_apply",
+      "full_name": "BanditRLProof.LowerBounds.pairHistoryZeroMeasurableEquiv_apply",
+      "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+      "line": 56,
+      "statement": "theorem pairHistoryZeroMeasurableEquiv_apply {Action : Type u} {Reward : Type v} [MeasurableSpace Action] [MeasurableSpace Reward] (pair : Action \u00d7 Reward) : pairHistoryZeroMeasurableEquiv Action Reward pair = Thompson.singletonPairHistory pair"
+    },
+    {
+      "kind": "theorem",
+      "name": "pairHistorySuccMeasurableEquiv_apply",
+      "full_name": "BanditRLProof.LowerBounds.pairHistorySuccMeasurableEquiv_apply",
+      "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+      "line": 67,
+      "statement": "theorem pairHistorySuccMeasurableEquiv_apply {Action : Type u} {Reward : Type v} [MeasurableSpace Action] [MeasurableSpace Reward] (n : Nat) (input : History.FinitePairHistory Action Reward n \u00d7 (Action \u00d7 Reward)) : pairHistorySuccMeasurableEquiv Action Reward n input = History.extendPairHistorySucc input.1 input.2"
+    },
+    {
+      "kind": "def",
+      "name": "stationaryBanditHistoryEnvironment",
+      "full_name": "BanditRLProof.LowerBounds.stationaryBanditHistoryEnvironment",
+      "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+      "line": 89,
+      "statement": "noncomputable def stationaryBanditHistoryEnvironment {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] : Thompson.HistoryEnvironment (Fin K) Reward where"
+    },
+    {
+      "kind": "theorem",
+      "name": "stationaryBanditHistoryEnvironment_initialFeedback",
+      "full_name": "BanditRLProof.LowerBounds.stationaryBanditHistoryEnvironment_initialFeedback",
+      "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+      "line": 98,
+      "statement": "theorem stationaryBanditHistoryEnvironment_initialFeedback {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] : (stationaryBanditHistoryEnvironment armLaw).initialFeedback = armLaw"
+    },
+    {
+      "kind": "theorem",
+      "name": "stationaryBanditHistoryEnvironment_feedback_apply",
+      "full_name": "BanditRLProof.LowerBounds.stationaryBanditHistoryEnvironment_feedback_apply",
+      "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+      "line": 105,
+      "statement": "theorem stationaryBanditHistoryEnvironment_feedback_apply {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (n : Nat) (history : History.FinitePairHistory (Fin K) Reward n) (arm : Fin K) : (stationaryBanditHistoryEnvironment armLaw).feedback n (history, arm) = armLaw arm"
+    },
+    {
+      "kind": "def",
+      "name": "canonicalBanditHistoryMeasure",
+      "full_name": "BanditRLProof.LowerBounds.canonicalBanditHistoryMeasure",
+      "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+      "line": 116,
+      "statement": "noncomputable def canonicalBanditHistoryMeasure {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (n : Nat) : Measure (History.FinitePairHistory (Fin K) Reward n)"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonicalBanditHistoryMeasure_zero",
+      "full_name": "BanditRLProof.LowerBounds.canonicalBanditHistoryMeasure_zero",
+      "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+      "line": 138,
+      "statement": "theorem canonicalBanditHistoryMeasure_zero {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] : canonicalBanditHistoryMeasure algorithm armLaw 0 = (algorithm.initialAction \u2297\u2098 armLaw).map (pairHistoryZeroMeasurableEquiv (Fin K) Reward)"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonicalBanditHistoryMeasure_succ",
+      "full_name": "BanditRLProof.LowerBounds.canonicalBanditHistoryMeasure_succ",
+      "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+      "line": 181,
+      "statement": "theorem canonicalBanditHistoryMeasure_succ {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (n : Nat) : canonicalBanditHistoryMeasure algorithm armLaw (n + 1) = (canonicalBanditHistoryMeasure algorithm armLaw n \u2297\u2098 Thompson.historyStepKernel algorithm (stationaryBanditHistoryEnvironment armLaw) n).map (pairHistorySuccMeasurableEquiv (Fin K) Reward n)"
+    },
+    {
+      "kind": "theorem",
+      "name": "klDiv_canonicalBanditHistoryMeasure_zero",
+      "full_name": "BanditRLProof.LowerBounds.klDiv_canonicalBanditHistoryMeasure_zero",
+      "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+      "line": 240,
+      "statement": "theorem klDiv_canonicalBanditHistoryMeasure_zero {K : Nat} {Reward : Type v} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] (h_ac : \u2200 arm, armLaw arm \u226a referenceArmLaw arm) : InformationTheory.klDiv (canonicalBanditHistoryMeasure algorithm armLaw 0) (canonicalBanditHistoryMeasure algorithm referenceArmLaw 0) = \u222b\u207b arm, InformationTheory.klDiv (armLaw arm) (referenceArmLaw arm) \u2202algorithm.initialAction"
+    },
+    {
+      "kind": "theorem",
+      "name": "klDiv_canonicalBanditHistoryMeasure_succ",
+      "full_name": "BanditRLProof.LowerBounds.klDiv_canonicalBanditHistoryMeasure_succ",
+      "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+      "line": 263,
+      "statement": "theorem klDiv_canonicalBanditHistoryMeasure_succ {K : Nat} {Reward : Type v} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] (h_ac : \u2200 arm, armLaw arm \u226a referenceArmLaw arm) (n : Nat) : InformationTheory.klDiv (canonicalBanditHistoryMeasure algorithm armLaw (n + 1)) (canonicalBanditHistoryMeasure algorithm referenceArmLaw (n + 1)) = InformationTheory.klDiv (canonicalBanditHistoryMeasure algorithm armLaw n) (canonicalBanditHistoryMeasure algorithm referenceArmLaw n) + \u222b\u207b history, \u222b\u207b arm, InformationTheory.klDiv (armLaw arm) (referenceArmLaw arm) \u2202algorithm.policy n history \u2202canonicalBanditHistoryMeasure algorithm armLaw n"
+    },
+    {
+      "kind": "def",
+      "name": "canonicalPolicyArmMass",
+      "full_name": "BanditRLProof.LowerBounds.canonicalPolicyArmMass",
+      "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+      "line": 294,
+      "statement": "noncomputable def canonicalPolicyArmMass {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (n : Nat) (arm : Fin K) : ENNReal"
+    },
+    {
+      "kind": "def",
+      "name": "canonicalExpectedPullCountThrough",
+      "full_name": "BanditRLProof.LowerBounds.canonicalExpectedPullCountThrough",
+      "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+      "line": 310,
+      "statement": "noncomputable def canonicalExpectedPullCountThrough {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (n : Nat) (arm : Fin K) : ENNReal"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonicalExpectedPullCountThrough_zero",
+      "full_name": "BanditRLProof.LowerBounds.canonicalExpectedPullCountThrough_zero",
+      "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+      "line": 321,
+      "statement": "theorem canonicalExpectedPullCountThrough_zero {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (arm : Fin K) : canonicalExpectedPullCountThrough algorithm armLaw 0 arm = algorithm.initialAction ({arm} : Set (Fin K))"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonicalExpectedPullCountThrough_succ",
+      "full_name": "BanditRLProof.LowerBounds.canonicalExpectedPullCountThrough_succ",
+      "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+      "line": 331,
+      "statement": "theorem canonicalExpectedPullCountThrough_succ {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (n : Nat) (arm : Fin K) : canonicalExpectedPullCountThrough algorithm armLaw (n + 1) arm = canonicalExpectedPullCountThrough algorithm armLaw n arm + canonicalPolicyArmMass algorithm armLaw n arm"
+    },
+    {
+      "kind": "theorem",
+      "name": "lintegral_lintegral_fin_eq_sum_armMass_mul",
+      "full_name": "BanditRLProof.LowerBounds.lintegral_lintegral_fin_eq_sum_armMass_mul",
+      "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+      "line": 344,
+      "statement": "theorem lintegral_lintegral_fin_eq_sum_armMass_mul {K : Nat} {History : Type*} [MeasurableSpace History] (historyLaw : Measure History) (policy : Kernel History (Fin K)) [IsMarkovKernel policy] (cost : Fin K \u2192 ENNReal) : (\u222b\u207b history, \u222b\u207b arm, cost arm \u2202policy history \u2202historyLaw) = \u2211 arm : Fin K, (\u222b\u207b history, policy history ({arm} : Set (Fin K)) \u2202historyLaw) * cost arm"
+    },
+    {
+      "kind": "theorem",
+      "name": "klDiv_canonicalBanditHistoryMeasure_eq_sum_expectedPullCount_mul_armKL",
+      "full_name": "BanditRLProof.LowerBounds.klDiv_canonicalBanditHistoryMeasure_eq_sum_expectedPullCount_mul_armKL",
+      "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+      "line": 367,
+      "statement": "theorem klDiv_canonicalBanditHistoryMeasure_eq_sum_expectedPullCount_mul_armKL {K : Nat} {Reward : Type v} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] (h_ac : \u2200 arm, armLaw arm \u226a referenceArmLaw arm) (n : Nat) : InformationTheory.klDiv (canonicalBanditHistoryMeasure algorithm armLaw n) (canonicalBanditHistoryMeasure algorithm referenceArmLaw n) = \u2211 arm : Fin K, canonicalExpectedPullCountThrough algorithm armLaw n arm * InformationTheory.klDiv (armLaw arm) (referenceArmLaw arm)"
+    },
+    {
+      "kind": "def",
+      "name": "finiteHistoryPullCountENNReal",
+      "full_name": "BanditRLProof.LowerBounds.finiteHistoryPullCountENNReal",
+      "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+      "line": 401,
+      "statement": "noncomputable def finiteHistoryPullCountENNReal {K : Nat} {Reward : Type v} : (n : Nat) \u2192 History.FinitePairHistory (Fin K) Reward n \u2192 Fin K \u2192 ENNReal | 0, history, arm => if (history \u27e80, Finset.mem_Iic.mpr le_rfl\u27e9).1 = arm then 1 else 0 | n + 1, history, arm => finiteHistoryPullCountENNReal n (Thompson.pairHistoryPrefix history) arm + if (Thompson.pairHistoryLast history).1 = arm then 1 else 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_finiteHistoryPullCountENNReal",
+      "full_name": "BanditRLProof.LowerBounds.measurable_finiteHistoryPullCountENNReal",
+      "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+      "line": 410,
+      "statement": "theorem measurable_finiteHistoryPullCountENNReal {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (n : Nat) (arm : Fin K) : Measurable (fun history : History.FinitePairHistory (Fin K) Reward n => finiteHistoryPullCountENNReal n history arm)"
+    },
+    {
+      "kind": "theorem",
+      "name": "finiteHistoryPullCountENNReal_pairHistoryZeroMeasurableEquiv",
+      "full_name": "BanditRLProof.LowerBounds.finiteHistoryPullCountENNReal_pairHistoryZeroMeasurableEquiv",
+      "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+      "line": 431,
+      "statement": "theorem finiteHistoryPullCountENNReal_pairHistoryZeroMeasurableEquiv {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (pair : Fin K \u00d7 Reward) (arm : Fin K) : finiteHistoryPullCountENNReal 0 (pairHistoryZeroMeasurableEquiv (Fin K) Reward pair) arm = if pair.1 = arm then 1 else 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "finiteHistoryPullCountENNReal_pairHistorySuccMeasurableEquiv",
+      "full_name": "BanditRLProof.LowerBounds.finiteHistoryPullCountENNReal_pairHistorySuccMeasurableEquiv",
+      "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+      "line": 443,
+      "statement": "theorem finiteHistoryPullCountENNReal_pairHistorySuccMeasurableEquiv {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (n : Nat) (input : History.FinitePairHistory (Fin K) Reward n \u00d7 (Fin K \u00d7 Reward)) (arm : Fin K) : finiteHistoryPullCountENNReal (n + 1) (pairHistorySuccMeasurableEquiv (Fin K) Reward n input) arm = finiteHistoryPullCountENNReal n input.1 arm + if input.2.1 = arm then 1 else 0"
+    },
+    {
+      "kind": "def",
+      "name": "canonicalRealizedExpectedPullCountThrough",
+      "full_name": "BanditRLProof.LowerBounds.canonicalRealizedExpectedPullCountThrough",
+      "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+      "line": 457,
+      "statement": "noncomputable def canonicalRealizedExpectedPullCountThrough {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (n : Nat) (arm : Fin K) : ENNReal"
+    },
+    {
+      "kind": "theorem",
+      "name": "lintegral_historyStepKernel_armIndicator_eq_policy_mass",
+      "full_name": "BanditRLProof.LowerBounds.lintegral_historyStepKernel_armIndicator_eq_policy_mass",
+      "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+      "line": 468,
+      "statement": "theorem lintegral_historyStepKernel_armIndicator_eq_policy_mass {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (environment : Thompson.HistoryEnvironment (Fin K) Reward) (n : Nat) (history : History.FinitePairHistory (Fin K) Reward n) (arm : Fin K) : (\u222b\u207b pair, ({arm} : Set (Fin K)).indicator (fun _ => (1 : ENNReal)) pair.1 \u2202Thompson.historyStepKernel algorithm environment n history) = algorithm.policy n history ({arm} : Set (Fin K))"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonicalRealizedExpectedPullCountThrough_zero",
+      "full_name": "BanditRLProof.LowerBounds.canonicalRealizedExpectedPullCountThrough_zero",
+      "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+      "line": 505,
+      "statement": "theorem canonicalRealizedExpectedPullCountThrough_zero {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (arm : Fin K) : canonicalRealizedExpectedPullCountThrough algorithm armLaw 0 arm = algorithm.initialAction ({arm} : Set (Fin K))"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonicalRealizedExpectedPullCountThrough_succ",
+      "full_name": "BanditRLProof.LowerBounds.canonicalRealizedExpectedPullCountThrough_succ",
+      "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+      "line": 538,
+      "statement": "theorem canonicalRealizedExpectedPullCountThrough_succ {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (n : Nat) (arm : Fin K) : canonicalRealizedExpectedPullCountThrough algorithm armLaw (n + 1) arm = canonicalRealizedExpectedPullCountThrough algorithm armLaw n arm + canonicalPolicyArmMass algorithm armLaw n arm"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonicalRealizedExpectedPullCountThrough_eq_expectedPullCountThrough",
+      "full_name": "BanditRLProof.LowerBounds.canonicalRealizedExpectedPullCountThrough_eq_expectedPullCountThrough",
+      "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+      "line": 597,
+      "statement": "theorem canonicalRealizedExpectedPullCountThrough_eq_expectedPullCountThrough {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (n : Nat) (arm : Fin K) : canonicalRealizedExpectedPullCountThrough algorithm armLaw n arm = canonicalExpectedPullCountThrough algorithm armLaw n arm"
+    },
+    {
+      "kind": "theorem",
+      "name": "klDiv_canonicalBanditHistoryMeasure_zero_general",
+      "full_name": "BanditRLProof.LowerBounds.klDiv_canonicalBanditHistoryMeasure_zero_general",
+      "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+      "line": 614,
+      "statement": "theorem klDiv_canonicalBanditHistoryMeasure_zero_general {K : Nat} {Reward : Type v} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] : InformationTheory.klDiv (canonicalBanditHistoryMeasure algorithm armLaw 0) (canonicalBanditHistoryMeasure algorithm referenceArmLaw 0) = \u222b\u207b arm, InformationTheory.klDiv (armLaw arm) (referenceArmLaw arm) \u2202algorithm.initialAction"
+    },
+    {
+      "kind": "theorem",
+      "name": "klDiv_canonicalBanditHistoryMeasure_succ_general",
+      "full_name": "BanditRLProof.LowerBounds.klDiv_canonicalBanditHistoryMeasure_succ_general",
+      "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+      "line": 632,
+      "statement": "theorem klDiv_canonicalBanditHistoryMeasure_succ_general {K : Nat} {Reward : Type v} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] (n : Nat) : InformationTheory.klDiv (canonicalBanditHistoryMeasure algorithm armLaw (n + 1)) (canonicalBanditHistoryMeasure algorithm referenceArmLaw (n + 1)) = InformationTheory.klDiv (canonicalBanditHistoryMeasure algorithm armLaw n) (canonicalBanditHistoryMeasure algorithm referenceArmLaw n) + \u222b\u207b history, \u222b\u207b arm, InformationTheory.klDiv (armLaw arm) (referenceArmLaw arm) \u2202algorithm.policy n history \u2202canonicalBanditHistoryMeasure algorithm armLaw n"
+    },
+    {
+      "kind": "theorem",
+      "name": "klDiv_canonicalBanditHistoryMeasure_eq_sum_expectedPullCount_mul_armKL_general",
+      "full_name": "BanditRLProof.LowerBounds.klDiv_canonicalBanditHistoryMeasure_eq_sum_expectedPullCount_mul_armKL_general",
+      "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+      "line": 662,
+      "statement": "theorem klDiv_canonicalBanditHistoryMeasure_eq_sum_expectedPullCount_mul_armKL_general {K : Nat} {Reward : Type v} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] (n : Nat) : InformationTheory.klDiv (canonicalBanditHistoryMeasure algorithm armLaw n) (canonicalBanditHistoryMeasure algorithm referenceArmLaw n) = \u2211 arm : Fin K, canonicalExpectedPullCountThrough algorithm armLaw n arm * InformationTheory.klDiv (armLaw arm) (referenceArmLaw arm)"
+    },
+    {
+      "kind": "theorem",
+      "name": "klDiv_canonicalBanditHistoryMeasure_eq_sum_realizedExpectedPullCount_mul_armKL",
+      "full_name": "BanditRLProof.LowerBounds.klDiv_canonicalBanditHistoryMeasure_eq_sum_realizedExpectedPullCount_mul_armKL",
+      "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+      "line": 702,
+      "statement": "theorem klDiv_canonicalBanditHistoryMeasure_eq_sum_realizedExpectedPullCount_mul_armKL {K : Nat} {Reward : Type v} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] (n : Nat) : InformationTheory.klDiv (canonicalBanditHistoryMeasure algorithm armLaw n) (canonicalBanditHistoryMeasure algorithm referenceArmLaw n) = \u2211 arm : Fin K, canonicalRealizedExpectedPullCountThrough algorithm armLaw n arm * InformationTheory.klDiv (armLaw arm) (referenceArmLaw arm)"
+    },
+    {
+      "kind": "theorem",
+      "name": "banditHistoryRelativeEntropy_eq_expectedPulls_sum",
+      "full_name": "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum",
+      "file": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+      "line": 726,
+      "statement": "theorem banditHistoryRelativeEntropy_eq_expectedPulls_sum {K : Nat} {Reward : Type v} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] (lastRound : Nat) : InformationTheory.klDiv (canonicalBanditHistoryMeasure algorithm armLaw lastRound) (canonicalBanditHistoryMeasure algorithm referenceArmLaw lastRound) = \u2211 arm : Fin K, canonicalRealizedExpectedPullCountThrough algorithm armLaw lastRound arm * InformationTheory.klDiv (armLaw arm) (referenceArmLaw arm)"
+    },
+    {
+      "kind": "def",
       "name": "worstCaseExpectedRegret",
       "full_name": "BanditRLProof.LowerBounds.worstCaseExpectedRegret",
       "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
@@ -23736,6 +23992,86 @@
       "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
       "line": 205,
       "statement": "theorem max_base_changed_regretLowerBound_ge_half (horizon : Nat) (gap baseFirstExpectedPulls changedFirstExpectedPulls : Real) (hgap : 0 \u2264 gap) (htransport : baseFirstExpectedPulls \u2264 changedFirstExpectedPulls) : gap * (horizon : Real) / 2 \u2264 max (baseEnvironmentRegret horizon gap baseFirstExpectedPulls) (changedEnvironmentRegretLowerBound gap changedFirstExpectedPulls)"
+    },
+    {
+      "kind": "theorem",
+      "name": "klDiv_compProd_same_left_eq_lintegral_kernelRN_ae",
+      "full_name": "BanditRLProof.LowerBounds.klDiv_compProd_same_left_eq_lintegral_kernelRN_ae",
+      "file": "BanditRLProof/LowerBounds/ConditionalKernelKL.lean",
+      "line": 35,
+      "statement": "theorem klDiv_compProd_same_left_eq_lintegral_kernelRN_ae {Base Target : Type*} [MeasurableSpace Base] [MeasurableSpace Target] [MeasurableSpace.CountablyGenerated Target] (mu : Measure Base) [IsFiniteMeasure mu] (kappa eta : Kernel Base Target) [IsMarkovKernel kappa] [IsMarkovKernel eta] (h_ac : \u2200\u1d50 base \u2202mu, kappa base \u226a eta base) : InformationTheory.klDiv (mu \u2297\u2098 kappa) (mu \u2297\u2098 eta) = \u222b\u207b x, \u222b\u207b y, ENNReal.ofReal (InformationTheory.klFun ((kappa.rnDeriv eta x y).toReal)) \u2202eta x \u2202mu"
+    },
+    {
+      "kind": "theorem",
+      "name": "klDiv_compProd_same_left_eq_lintegral_kernelRN",
+      "full_name": "BanditRLProof.LowerBounds.klDiv_compProd_same_left_eq_lintegral_kernelRN",
+      "file": "BanditRLProof/LowerBounds/ConditionalKernelKL.lean",
+      "line": 98,
+      "statement": "theorem klDiv_compProd_same_left_eq_lintegral_kernelRN {Base Target : Type*} [MeasurableSpace Base] [MeasurableSpace Target] [MeasurableSpace.CountablyGenerated Target] (mu : Measure Base) [IsFiniteMeasure mu] (kappa eta : Kernel Base Target) [IsMarkovKernel kappa] [IsMarkovKernel eta] (h_ac : forall base, kappa base \u226a eta base) : InformationTheory.klDiv (mu \u2297\u2098 kappa) (mu \u2297\u2098 eta) = \u222b\u207b x, \u222b\u207b y, ENNReal.ofReal (InformationTheory.klFun ((kappa.rnDeriv eta x y).toReal)) \u2202eta x \u2202mu"
+    },
+    {
+      "kind": "theorem",
+      "name": "klDiv_compProd_same_left_eq_lintegral_klDiv",
+      "full_name": "BanditRLProof.LowerBounds.klDiv_compProd_same_left_eq_lintegral_klDiv",
+      "file": "BanditRLProof/LowerBounds/ConditionalKernelKL.lean",
+      "line": 120,
+      "statement": "theorem klDiv_compProd_same_left_eq_lintegral_klDiv {Base Target : Type*} [MeasurableSpace Base] [MeasurableSpace Target] [MeasurableSpace.CountablyGenerated Target] (mu : Measure Base) [IsFiniteMeasure mu] (kappa eta : Kernel Base Target) [IsMarkovKernel kappa] [IsMarkovKernel eta] (h_ac : forall base, kappa base \u226a eta base) : InformationTheory.klDiv (mu \u2297\u2098 kappa) (mu \u2297\u2098 eta) = \u222b\u207b base, InformationTheory.klDiv (kappa base) (eta base) \u2202mu"
+    },
+    {
+      "kind": "theorem",
+      "name": "klDiv_compProd_same_left_eq_lintegral_klDiv_ae",
+      "full_name": "BanditRLProof.LowerBounds.klDiv_compProd_same_left_eq_lintegral_klDiv_ae",
+      "file": "BanditRLProof/LowerBounds/ConditionalKernelKL.lean",
+      "line": 155,
+      "statement": "theorem klDiv_compProd_same_left_eq_lintegral_klDiv_ae {Base Target : Type*} [MeasurableSpace Base] [MeasurableSpace Target] [MeasurableSpace.CountablyGenerated Target] (mu : Measure Base) [IsFiniteMeasure mu] (kappa eta : Kernel Base Target) [IsMarkovKernel kappa] [IsMarkovKernel eta] (h_ac : \u2200\u1d50 base \u2202mu, kappa base \u226a eta base) : InformationTheory.klDiv (mu \u2297\u2098 kappa) (mu \u2297\u2098 eta) = \u222b\u207b base, InformationTheory.klDiv (kappa base) (eta base) \u2202mu"
+    },
+    {
+      "kind": "theorem",
+      "name": "klDiv_compProd_same_left_eq_lintegral_klDiv_of_measurable",
+      "full_name": "BanditRLProof.LowerBounds.klDiv_compProd_same_left_eq_lintegral_klDiv_of_measurable",
+      "file": "BanditRLProof/LowerBounds/ConditionalKernelKL.lean",
+      "line": 195,
+      "statement": "theorem klDiv_compProd_same_left_eq_lintegral_klDiv_of_measurable {Base Target : Type*} [MeasurableSpace Base] [MeasurableSpace Target] [MeasurableSpace.CountablyGenerated Target] (mu : Measure Base) [IsFiniteMeasure mu] (kappa eta : Kernel Base Target) [IsMarkovKernel kappa] [IsMarkovKernel eta] (hmeasurable : Measurable (fun base => InformationTheory.klDiv (kappa base) (eta base))) : InformationTheory.klDiv (mu \u2297\u2098 kappa) (mu \u2297\u2098 eta) = \u222b\u207b base, InformationTheory.klDiv (kappa base) (eta base) \u2202mu"
+    },
+    {
+      "kind": "theorem",
+      "name": "klDiv_map_measurableEquiv",
+      "full_name": "BanditRLProof.LowerBounds.klDiv_map_measurableEquiv",
+      "file": "BanditRLProof/LowerBounds/ConditionalKernelKL.lean",
+      "line": 227,
+      "statement": "theorem klDiv_map_measurableEquiv {Source Target : Type*} [MeasurableSpace Source] [MeasurableSpace Target] (mu nu : Measure Source) [IsFiniteMeasure mu] [IsFiniteMeasure nu] (equiv : Source \u2243\u1d50 Target) : InformationTheory.klDiv (mu.map equiv) (nu.map equiv) = InformationTheory.klDiv mu nu"
+    },
+    {
+      "kind": "theorem",
+      "name": "klDiv_historyStep_samePolicy_eq_iterated_lintegral_armKL",
+      "full_name": "BanditRLProof.LowerBounds.klDiv_historyStep_samePolicy_eq_iterated_lintegral_armKL",
+      "file": "BanditRLProof/LowerBounds/ConditionalKernelKL.lean",
+      "line": 290,
+      "statement": "theorem klDiv_historyStep_samePolicy_eq_iterated_lintegral_armKL {History Action Reward : Type*} [MeasurableSpace History] [MeasurableSpace Action] [MeasurableSpace.CountablyGenerated Action] [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (historyLaw : Measure History) [IsFiniteMeasure historyLaw] (policy : Kernel History Action) [IsMarkovKernel policy] (armLaw referenceArmLaw : Kernel Action Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] (h_ac : forall arm, armLaw arm \u226a referenceArmLaw arm) : InformationTheory.klDiv (historyLaw \u2297\u2098 (policy \u2297\u2096 armLaw.comap Prod.snd measurable_snd)) (historyLaw \u2297\u2098 (policy \u2297\u2096 referenceArmLaw.comap Prod.snd measurable_snd)) = \u222b\u207b history, \u222b\u207b arm, InformationTheory.klDiv (armLaw arm) (referenceArmLaw arm) \u2202policy history \u2202historyLaw"
+    },
+    {
+      "kind": "theorem",
+      "name": "klDiv_finiteAction_compProd_eq_lintegral_armKL",
+      "full_name": "BanditRLProof.LowerBounds.klDiv_finiteAction_compProd_eq_lintegral_armKL",
+      "file": "BanditRLProof/LowerBounds/ConditionalKernelKL.lean",
+      "line": 341,
+      "statement": "theorem klDiv_finiteAction_compProd_eq_lintegral_armKL {K : Nat} {Reward : Type*} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (actionLaw : Measure (Fin K)) [IsFiniteMeasure actionLaw] (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] : InformationTheory.klDiv (actionLaw \u2297\u2098 armLaw) (actionLaw \u2297\u2098 referenceArmLaw) = \u222b\u207b arm, InformationTheory.klDiv (armLaw arm) (referenceArmLaw arm) \u2202actionLaw"
+    },
+    {
+      "kind": "theorem",
+      "name": "klDiv_finiteAction_compProd_eq_sum_mass_mul_armKL",
+      "full_name": "BanditRLProof.LowerBounds.klDiv_finiteAction_compProd_eq_sum_mass_mul_armKL",
+      "file": "BanditRLProof/LowerBounds/ConditionalKernelKL.lean",
+      "line": 356,
+      "statement": "theorem klDiv_finiteAction_compProd_eq_sum_mass_mul_armKL {K : Nat} {Reward : Type*} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (actionLaw : Measure (Fin K)) [IsFiniteMeasure actionLaw] (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] : InformationTheory.klDiv (actionLaw \u2297\u2098 armLaw) (actionLaw \u2297\u2098 referenceArmLaw) = \u2211 arm : Fin K, actionLaw ({arm} : Set (Fin K)) * InformationTheory.klDiv (armLaw arm) (referenceArmLaw arm)"
+    },
+    {
+      "kind": "theorem",
+      "name": "klDiv_historyStep_samePolicy_eq_iterated_lintegral_armKL_general",
+      "full_name": "BanditRLProof.LowerBounds.klDiv_historyStep_samePolicy_eq_iterated_lintegral_armKL_general",
+      "file": "BanditRLProof/LowerBounds/ConditionalKernelKL.lean",
+      "line": 379,
+      "statement": "theorem klDiv_historyStep_samePolicy_eq_iterated_lintegral_armKL_general {History Reward : Type*} {K : Nat} [MeasurableSpace History] [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (historyLaw : Measure History) [IsFiniteMeasure historyLaw] (policy : Kernel History (Fin K)) [IsMarkovKernel policy] (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] : InformationTheory.klDiv (historyLaw \u2297\u2098 (policy \u2297\u2096 armLaw.comap Prod.snd measurable_snd)) (historyLaw \u2297\u2098 (policy \u2297\u2096 referenceArmLaw.comap Prod.snd measurable_snd)) = \u222b\u207b history, \u222b\u207b arm, InformationTheory.klDiv (armLaw arm) (referenceArmLaw arm) \u2202policy history \u2202historyLaw"
     },
     {
       "kind": "def",

@@ -15,7 +15,7 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH14-EVENT-DPI` | `d(P(A),Q(A)) <= D(P,Q)` | RN restrict helper, f-divergence integral, convex mass lower bound | `klDiv_eq_lintegral_klFun_of_ac`, `mul_klFun_le_toReal_klDiv` | Mathlib source audit | split over event/complement and add | probability laws; measurable event; exact KL direction | Mathlib-candidate project leaf | `bernoulliRelativeEntropy_event_le` | focused Lean | compiled |
 | `CH14-BINARY-BH` | `p+(1-q) >= exp(-d(p,q))/2` with exact endpoints | Bernoulli core | real sqrt/log/exp and concavity | source proof | affinity lower bound plus Le Cam overlap algebra | both parameters in unit interval; all endpoints explicit | project-local | `binaryBretagnolleHuber` | focused Lean | compiled |
 | `CH14-THEOREM-14-2` | unconditional `P(A)+Q(Aᶜ) >= scale(D(P,Q))` | event DPI and binary BH | ENNReal finite/top conversions; probability complement | all above | split KL top; finite branch derives AC and converts safely | no hidden finite KL or mutual AC | source terminal | `bretagnolleHuberScale`, `bretagnolleHuber` | focused Lean | compiled |
-| `CH14-HISTORY-KL` | adaptive same-policy history divergence decomposition | Chapter 14 measure leaves and kernel chain rule | future bandit history model | `klDiv_compProd_eq_add` only as route evidence | Chapter 15 iterative construction | policy consistency, measurability, AC | planned | none | Chapter 15 | planned |
+| `CH14-HISTORY-KL` | adaptive same-policy history divergence decomposition | Chapter 14 measure leaves and kernel chain rule | Chapter 15 bandit history model | compiled Chapter 15 conditional-KL theorem | Chapter 15 iterative construction | common randomized policy, measurability, countably generated rewards | downstream source theorem | `banditHistoryRelativeEntropy_eq_expectedPulls_sum` | Chapter 15 | compiled outside Chapter 14 gate |
 | `CH14-TYPED-CANARY` | root-import applications to finite and singular cases, all axioms printed | compiled Chapter 14 declarations | root import | local declarations | exact full-conclusion examples | explicit probability measures/events | project-local | `Tests/TextbookPartIVChapter14Canary.lean` | Tests | verified |
 | `CH14-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | deterministic gate suite | path/tooling failures distinguished from proofs | repository | n/a | full check | verified locally |
 | `CH14-EVIDENCE-SITE` | proof export, indexes, results/highlights/readings/maps/README/site agree | compiled chapter surface | harness/site scripts | repository | generated evidence plus maintained content | only compiled/gated declarations labelled compiled | repository | n/a | site/browser | verified locally |
@@ -41,8 +41,8 @@ dynamic leaf; connected blocker; Windows path-length/build-artifact failure.
 - The complement is evaluated under `Q`; replacing it by `P`, or reversing KL,
   changes the theorem.
 - The event data-processing leaf is not the full Exercise 14.10.
-- No kernel chain rule is yet an adaptive-bandit, same-policy history theorem;
-  that construction belongs to Chapter 15.
+- The adaptive-bandit, same-policy history theorem now compiles in Chapter 15;
+  it is not retroactively a Chapter 14 source claim.
 
 ## Failure policy
 

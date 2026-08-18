@@ -17,7 +17,7 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH16-PARAMETRIC-DINF` | family-indexed infimum/candidate | previous node | `sInf_le` | Mathlib source | insert any strictly better parameter | strict mean inequality | project-local | `parametricDivergenceInfimum`; `parametricDivergenceInfimum_le` | focused Lean | compiled |
 | `CH16-GAUSSIAN-PERTURB` | cost at `muStar+epsilon` | Chapter 15 Gaussian KL | `klDiv_gaussianReal_one` | local compiled card | insert alternative and normalize square | `epsilon>0`; direction fixed | project-local | `unitGaussianDivergenceInfimum_le_perturbed` | focused Lean | compiled |
 | `CH16-GAUSSIAN-DINF` | exact `gap^2/2` infimum | preceding candidate | limit/infimum/order APIs | `MLIB-ASYMPTOTICS` | prove lower bound, then squeeze epsilon to zero | `mu<muStar`; ENNReal branches | Mathlib candidate | none | focused Lean | partial |
-| `CH16-HISTORY` | original-law expected-pull information inequality | Ch15 Lemma 15.1 | stochastic policy/history | KL chain-rule route | change one arm | same policy; first-law expectation | connected blocker | none | focused Lean | blocked |
+| `CH16-HISTORY` | original-law expected-pull information inequality | compiled Ch15 Lemma 15.1 | compiled stochastic policy/history | Chapter 16 event consumer | change one arm and instantiate the history identity | same policy; first-law expectation | connected blocker | none | focused Lean | blocked downstream consumer |
 | `CH16-THM-16-2` | exact Eq. (16.2) | history, log, dInf | liminf filters | source card | epsilon alternative then liminf | zero/finite/infinite `d_inf` | source terminal | reserved | focused Lean | blocked |
 | `CH16-LEMMA-16-3` | exact Eq. (16.4) | history KL, BH | Ch14/15 | source card | event `T_i(n)>n/2` | positive log terms; finite positive KL branch | source terminal | reserved | focused Lean | blocked |
 | `CH16-THM-16-4` | exact Eq. (16.5) | Lemma 16.3, Gaussian KL, regret decomposition | local Gaussian and sums | source card | shift by `Delta_i(1+epsilon)` and sum positive parts | `N` nonempty, `C>0`, `0<p<1`, `0<epsilon<=1` | source terminal | reserved | focused Lean | blocked |
@@ -28,8 +28,9 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 ## Failure classification
 
 The current source-terminal failure is a `connected blocker`: Chapter 15's
-conditional kernel-KL integral and stochastic-policy history law are absent.
-The exact Gaussian `d_inf` equality and final liminf manipulation are separate
+conditional kernel-KL integral, stochastic-policy history law, and Lemma 15.1
+identity now compile, but Chapter 16 has not instantiated them into the exact
+one-arm event/information inequality. The exact Gaussian `d_inf` equality and final liminf manipulation are separate
 `local Lean lemma gap` obligations. No theorem target is weakened in response.
 
 ## Reviewer notes

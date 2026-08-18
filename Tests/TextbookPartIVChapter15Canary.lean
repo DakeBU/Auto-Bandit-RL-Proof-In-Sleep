@@ -4,10 +4,9 @@ import Mathlib.Tactic.NormNum
 /-!
 # Textbook Part IV Chapter 15 public canary
 
-This root-import canary exercises only the compiled Gaussian dependency slice
-of Chapter 15.  It does not claim the adaptive-history divergence decomposition
-of Lemma 15.1 or the minimax lower bound of Theorem 15.2; both remain blocked
-on the stochastic-policy history and conditional-kernel KL bridge.
+This root-import canary exercises the compiled Gaussian dependency slice and
+the adaptive same-policy divergence decomposition of Lemma 15.1.  The Gaussian
+minimax lower bound of Theorem 15.2 remains a separate open terminal.
 -/
 
 namespace BanditRLProof.TextbookPartIVChapter15Canary
@@ -43,6 +42,16 @@ example :
 example : gaussianMinimaxGap 2 8 ≤ (1 / 2 : Real) := by
   exact gaussianMinimaxGap_le_half (by norm_num) (by norm_num)
 
+#check LowerBounds.klDiv_compProd_same_left_eq_lintegral_klDiv_of_measurable
+#check LowerBounds.klDiv_finiteAction_compProd_eq_lintegral_armKL
+#check LowerBounds.klDiv_historyStep_samePolicy_eq_iterated_lintegral_armKL_general
+#check LowerBounds.canonicalBanditHistoryMeasure
+#check LowerBounds.canonicalRealizedExpectedPullCountThrough
+#check LowerBounds.canonicalRealizedExpectedPullCountThrough_eq_expectedPullCountThrough
+#check LowerBounds.klDiv_canonicalBanditHistoryMeasure_succ_general
+#check LowerBounds.klDiv_canonicalBanditHistoryMeasure_eq_sum_realizedExpectedPullCount_mul_armKL
+#check LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum
+
 #print axioms LowerBounds.log_gaussianPDFReal_div_gaussianPDFReal_one
 #print axioms LowerBounds.llr_gaussianReal_one_ae
 #print axioms LowerBounds.integrable_llr_gaussianReal_one
@@ -51,5 +60,10 @@ example : gaussianMinimaxGap 2 8 ≤ (1 / 2 : Real) := by
 #print axioms LowerBounds.gaussianMinimaxGap_sq
 #print axioms LowerBounds.gaussianMinimaxGap_informationExponent_eq_half
 #print axioms LowerBounds.gaussianMinimaxGap_le_half
+#print axioms LowerBounds.klDiv_compProd_same_left_eq_lintegral_klDiv_of_measurable
+#print axioms LowerBounds.klDiv_historyStep_samePolicy_eq_iterated_lintegral_armKL_general
+#print axioms LowerBounds.canonicalRealizedExpectedPullCountThrough_eq_expectedPullCountThrough
+#print axioms LowerBounds.klDiv_canonicalBanditHistoryMeasure_eq_sum_realizedExpectedPullCount_mul_armKL
+#print axioms LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum
 
 end BanditRLProof.TextbookPartIVChapter15Canary

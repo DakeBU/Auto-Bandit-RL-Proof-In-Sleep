@@ -710,8 +710,8 @@
       ],
       "depends_on": [],
       "missing": [
-        "The Chapter 14 event-testing foundation is compiled; the same-policy adaptive history likelihood-ratio and KL chain-rule bridge is planned for Chapter 15.",
-        "The source-stated Gaussian minimax Theorem 13.1 is target-frozen but remains blocked until its Chapter 15 same-policy history KL and caller-free terminal compile."
+        "The Chapter 14 event-testing foundation and Chapter 15 same-policy adaptive-history KL identity compile.",
+        "The source-stated Gaussian minimax Theorem 13.1 remains blocked on the Chapter 15 regret/event consumer, constant assembly, and caller-free terminal."
       ],
       "evidence": "BanditRLProof/LowerBounds/BasicIdeas.lean; Tests/TextbookPartIVChapter13Canary.lean"
     },
@@ -778,11 +778,36 @@
         "BanditRLProof.LowerBounds.unitGaussianArm"
       ],
       "missing": [
-        "Mathlib's installed chain rule leaves conditional KL as a composition-product divergence; its own TODO records the missing integral of pointwise kernel KL.",
-        "The repository does not yet have the source's possibly randomized nonanticipating policy-kernel history law.",
-        "Lemma 15.1, Theorem 15.2, the 1/27 minimax terminal, and the minimax corollary remain blocked; this compiled arm-level slice does not prove them."
+        "Theorem 15.2's regret/event bridge, caller-free 1/27 minimax terminal, and minimax corollary remain blocked; this compiled arm-level slice does not prove them."
       ],
       "evidence": "BanditRLProof/LowerBounds/Minimax.lean; Tests/TextbookPartIVChapter15Canary.lean; tasks/TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE.md"
+    },
+    {
+      "id": "TEXTBOOK-PART-IV-CH15-SAME-POLICY-HISTORY-KL-DECOMPOSITION",
+      "title": "Chapter 15 same-policy adaptive-history KL decomposition",
+      "chapter": "foundations",
+      "textbook_spine": "chapter-15-minimax-lower-bounds",
+      "status": "compiled",
+      "informal": "For finite arms, a countably generated reward space, arbitrary stationary Markov arm laws, and one common randomized history policy, the directed KL between the two canonical finite history laws equals the finite sum of first-law realized expected pull counts times the corresponding directed arm KL. The proof includes singular fibres and infinite arm KL through an extended-real conditional-kernel chain rule.",
+      "declarations": [
+        "BanditRLProof.LowerBounds.klDiv_compProd_same_left_eq_lintegral_klDiv_of_measurable",
+        "BanditRLProof.LowerBounds.klDiv_historyStep_samePolicy_eq_iterated_lintegral_armKL_general",
+        "BanditRLProof.LowerBounds.canonicalBanditHistoryMeasure",
+        "BanditRLProof.LowerBounds.canonicalBanditHistoryMeasure_succ",
+        "BanditRLProof.LowerBounds.finiteHistoryPullCountENNReal",
+        "BanditRLProof.LowerBounds.canonicalRealizedExpectedPullCountThrough",
+        "BanditRLProof.LowerBounds.canonicalRealizedExpectedPullCountThrough_eq_expectedPullCountThrough",
+        "BanditRLProof.LowerBounds.klDiv_canonicalBanditHistoryMeasure_eq_sum_realizedExpectedPullCount_mul_armKL",
+        "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum"
+      ],
+      "depends_on": [
+        "BanditRLProof.LowerBounds.relativeEntropy"
+      ],
+      "missing": [
+        "The local inclusive-round index lastRound represents lastRound+1 observations; later source consumers must preserve that convention explicitly.",
+        "This identity does not prove the Gaussian regret event, the 1/27 constant assembly, Theorem 15.2, or later Chapter 16–17 terminals."
+      ],
+      "evidence": "BanditRLProof/LowerBounds/ConditionalKernelKL.lean; BanditRLProof/LowerBounds/BanditHistoryKL.lean; Tests/TextbookPartIVChapter15Canary.lean"
     },
     {
       "id": "TEXTBOOK-PART-IV-CH16-CONSISTENCY-DINF-DEPENDENCY-SLICE",
@@ -806,11 +831,12 @@
       ],
       "depends_on": [
         "BanditRLProof.LowerBounds.relativeEntropy",
-        "BanditRLProof.LowerBounds.klDiv_gaussianReal_one"
+        "BanditRLProof.LowerBounds.klDiv_gaussianReal_one",
+        "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum"
       ],
       "missing": [
         "The exact Gaussian d_inf equality still needs its infimum lower bound, epsilon-to-zero argument, and extended-real branch audit.",
-        "The one-arm expected-pull information constraint inherits Chapter 15's missing conditional kernel-KL integral and stochastic-policy history law.",
+        "The one-arm expected-pull information constraint must instantiate the compiled Chapter 15 history identity in Chapter 16's event and asymptotic route.",
         "Theorem 16.2, Lemma 16.3, and Theorem 16.4 remain blocked; this generic analytic slice does not prove them."
       ],
       "evidence": "BanditRLProof/LowerBounds/InstanceDependent.lean; Tests/TextbookPartIVChapter16Canary.lean; tasks/TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE.md"
@@ -827,10 +853,11 @@
         "BanditRLProof.LowerBounds.IsConsistentRegret.eventually_log_add_div_log_le",
         "BanditRLProof.LowerBounds.divergenceInfimum",
         "BanditRLProof.LowerBounds.bretagnolleHuber",
-        "BanditRLProof.LowerBounds.klDiv_gaussianReal_one"
+        "BanditRLProof.LowerBounds.klDiv_gaussianReal_one",
+        "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum"
       ],
       "missing": [
-        "A canonical same possibly randomized nonanticipating policy history law and Lemma 15.1 history-KL decomposition.",
+        "A Chapter 16 one-arm event/information consumer of the compiled Lemma 15.1 history-KL decomposition.",
         "The exact per-arm information constraint and liminf extraction, with zero, finite, and infinite d_inf branches.",
         "Lemma 16.3's finite-time event/regret bridge and Theorem 16.4's exact Gaussian aggregation."
       ],
@@ -855,9 +882,11 @@
         "BanditRLProof.LowerBounds.adversarialRegretLowerExpression_ge_quarter",
         "BanditRLProof.LowerBounds.randomRegret_ge_quarter_of_clippingDecomposition"
       ],
-      "depends_on": [],
+      "depends_on": [
+        "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum"
+      ],
       "missing": [
-        "The stochastic threshold definitions do not supply the same-policy adaptive-history KL decomposition needed by Theorem 17.1.",
+        "The stochastic threshold definitions and compiled same-policy adaptive-history KL identity do not yet supply Theorem 17.1's tail-event consumer.",
         "The event and deterministic algebra leaves do not construct the clipped-normal reward-matrix law or prove Claims 17.6–17.7 or Eq. (17.8).",
         "Only Claim 17.5's first-moment content is a compiled source claim; all other Chapter 17 source terminals remain blocked."
       ],
@@ -875,10 +904,11 @@
         "BanditRLProof.LowerBounds.exists_leastExploredAlternative",
         "BanditRLProof.LowerBounds.bretagnolleHuber",
         "BanditRLProof.LowerBounds.klDiv_gaussianReal_one",
-        "BanditRLProof.LowerBounds.exists_cdfTail_ge_of_integral_ge"
+        "BanditRLProof.LowerBounds.exists_cdfTail_ge_of_integral_ge",
+        "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum"
       ],
       "missing": [
-        "A canonical same possibly randomized nonanticipating policy history law and Lemma 15.1 history-KL decomposition for the stochastic branch.",
+        "The stochastic branch's tail-event and regret consumer of the compiled Lemma 15.1 history-KL decomposition.",
         "The exact Corollary 17.3 tail integral with its one-policy/all-horizon/all-confidence quantifiers.",
         "The correlated clipped-normal reward-matrix law, Claim 17.6 information calculation, pathwise Eq. (17.8), Claim 17.7 concentration, and Theorem 17.4 assembly."
       ],
@@ -894,11 +924,11 @@
       "declarations": [],
       "depends_on": [
         "BanditRLProof.LowerBounds.exists_leastExploredAlternative",
-        "BanditRLProof.LowerBounds.max_base_changed_regretLowerBound_ge_half_sub_error"
+        "BanditRLProof.LowerBounds.max_base_changed_regretLowerBound_ge_half_sub_error",
+        "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum"
       ],
       "missing": [
-        "Chapter 15 same-policy stochastic history-law construction and conditional-KL integral needed for Lemma 15.1.",
-        "Chapter 15 regret/event bridge, natural-count connection to the compiled real-valued Delta tuning, exact 1/27 terminal, and infimum/supremum extraction."
+        "Chapter 15 regret/event bridge from the compiled same-policy history-KL identity, natural-count connection to the real-valued Delta tuning, exact 1/27 terminal, and infimum/supremum extraction."
       ],
       "evidence": "tasks/TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE.md; tasks/TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE.md"
     },
