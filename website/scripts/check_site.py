@@ -208,7 +208,9 @@ def check_workflow() -> list[str]:
     text = path.read_text(encoding="utf-8")
     required = [
         "python3 tools/bandit.py check",
-        "python3 website/scripts/build_site.py --lean-verified",
+        "python3 website/scripts/build_site.py",
+        "--lean-verified",
+        "--public-base-url https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep",
         "python3 website/scripts/check_site.py",
         "actions/configure-pages@",
         "actions/upload-pages-artifact@",

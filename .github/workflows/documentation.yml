@@ -35,7 +35,10 @@ jobs:
         run: python3 tools/bandit.py check
 
       - name: Build the literate formalization website
-        run: python3 website/scripts/build_site.py --lean-verified
+        run: >-
+          python3 website/scripts/build_site.py
+          --lean-verified
+          --public-base-url https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep
 
       - name: Check links, mappings, formulas, and diagrams
         run: python3 website/scripts/check_site.py
