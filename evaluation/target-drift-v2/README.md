@@ -200,9 +200,22 @@ Lake cache, verified its frozen-source provenance, and passed the final-image
 offline Lean 4.29.1 / Lake 5.0.0-src+f72c35b probe as UID/GID
 `10002:10002`.  The resulting image
 digest was local to the ephemeral runner and was not published.  This closes a
-candidate construction/attestation check only; the final production image,
-seven bound isolation probes, real three-condition smoke, and every model run
-remain pending.
+  candidate construction/attestation check only; the final production image,
+  real three-condition smoke, and every model run remain pending.
+
+A later result-free candidate build and isolation run is recorded in
+[`checker-image-candidate-32419343467.json`](checker-image-candidate-32419343467.json).
+GitHub Actions [run 32419343467](https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/actions/runs/32419343467)
+rebuilt one unpublished cache-complete image, bound the exact Docker
+client/server/daemon and command boundary, and passed all seven candidate
+isolation probes.  The worker reported `CapEff=0000000000000000`; every probed
+write to protected input/output paths failed; request/base/patch/host sentinels
+were unchanged; and cid- plus label-indexed inspection proved cleanup.  The
+downloaded artifact manifest and image/cache/build/runtime hash chain were
+independently recomputed.  This closes the result-free candidate-probe gate for
+that ephemeral digest only.  It does not publish or freeze the final production
+checker, instantiate the production agent sandbox, satisfy the real
+one-case-by-three-condition smoke, or report a model/formalization outcome.
 
 The sealed launcher accepts only the allowlisted Docker installation, rechecks the
 executable/signature-or-package ledger plus client/server/daemon identity, and

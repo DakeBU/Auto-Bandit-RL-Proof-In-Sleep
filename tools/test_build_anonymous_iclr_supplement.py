@@ -109,7 +109,12 @@ class AnonymousSupplementTests(unittest.TestCase):
             prefix + "evaluation/target-drift-v2/checker-image-candidate-record.json",
             names,
         )
+        self.assertIn(
+            prefix + "evaluation/target-drift-v2/checker-image-isolation-candidate-record.json",
+            names,
+        )
         self.assertFalse(any("32137509103" in name for name in names))
+        self.assertFalse(any("32419343467" in name for name in names))
         self.assertIn(
             prefix + "research-wiki/proof-graph/benchmark_report.json", names
         )
@@ -201,6 +206,7 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertIn("non-Git", readme)
         self.assertNotIn("the public base immediately", readme)
         self.assertNotIn(BUILDER.PUBLIC_CANDIDATE_RUN_ID, readme)
+        self.assertNotIn(BUILDER.PUBLIC_ISOLATION_CANDIDATE_RUN_ID, readme)
         candidate = json.loads(payload[
             "evaluation/target-drift-v2/checker-image-candidate-record.json"
         ].decode("utf-8"))
@@ -209,6 +215,21 @@ class AnonymousSupplementTests(unittest.TestCase):
         )
         self.assertEqual(
             candidate["workflow_run"]["head_commit"],
+            "<anonymous-builder-snapshot>",
+        )
+        isolation_candidate = json.loads(payload[
+            "evaluation/target-drift-v2/checker-image-isolation-candidate-record.json"
+        ].decode("utf-8"))
+        self.assertEqual(
+            isolation_candidate["workflow_run"]["id"],
+            "<redacted-public-run-id>",
+        )
+        self.assertEqual(
+            isolation_candidate["workflow_run"]["url"],
+            "<redacted-public-run-url>",
+        )
+        self.assertEqual(
+            isolation_candidate["workflow_run"]["head_commit"],
             "<anonymous-builder-snapshot>",
         )
 
