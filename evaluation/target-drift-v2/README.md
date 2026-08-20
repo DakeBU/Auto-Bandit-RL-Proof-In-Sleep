@@ -38,7 +38,9 @@ prompts, paired wording, portable source manifest and all four PDF byte streams,
 grading rubric, resource policy, agent/checker/grader contracts, checker
 isolation-probe report, the canonical Docker launcher, image recipe and verified
 SBOM, materializer/runner/host-controller/container-controller/inner-checker/
-grader/analysis code, and their per-file hashes.
+grader/analysis code, the actual adapter entrypoint, its absolute host runtime,
+and their per-file hashes.  The runner substitutes only the entrypoint copy
+inside the sealed pack and rejects a changed runtime executable before launch.
 Future evaluated agents will receive opaque IDs and one requirement.  Primary graders will see
 neutralized final artifacts and post-hoc checker evidence, not condition or
 variant labels or condition-specific workflow traces.
@@ -54,7 +56,8 @@ Before the 450 runs, the following are mandatory:
 
 1. fill and freeze every field in `execution-template.json`;
 2. materialize and verify a content-addressed sealed pack;
-3. freeze a real adapter command/container and pass forbidden-path/string,
+3. freeze a real adapter command/container, its entrypoint and host-runtime
+   bytes, and pass forbidden-path/string,
    budget, trace, and sandbox isolation probes;
 4. run three real-provider/real-sandbox runs (one case × three conditions × one
    replicate) as infrastructure-only smoke tests excluded from the primary 450;
@@ -100,7 +103,10 @@ For each future semantic run selected by the operator, the frozen runner code pr
 opaque view, invokes the configured adapter without a shell, enforces an
 orchestrator process-tree timeout, validates the response/JSONL trace, rejects
 trace accounting beyond the token/tool/build/retry/time/cost budgets, and
-rehashes the completed view.  The checker host controller then verifies the
+rehashes the completed view.  The adapter command receives the entrypoint only
+through `{{ADAPTER_ENTRYPOINT_PATH}}`, resolved to the content-addressed pack;
+the frozen absolute runtime is checked as one regular, unlinked executable.
+The checker host controller then verifies the
 pack/run chain without executing Lean, reconstructs a pristine condition-view
 snapshot, and emits a sanitized request containing only the base, submitted
 patch, public declaration names, expected file hashes, and opaque/hash

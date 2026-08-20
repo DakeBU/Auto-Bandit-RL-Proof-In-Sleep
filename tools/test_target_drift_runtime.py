@@ -3,13 +3,14 @@
 
 from __future__ import annotations
 
+import argparse
+import hashlib
+import json
+import os
+import subprocess
 import sys
 import tempfile
 import unittest
-import json
-import os
-import argparse
-import subprocess
 from pathlib import Path
 from unittest import mock
 
@@ -976,6 +977,36 @@ class TargetDriftRuntimeTest(unittest.TestCase):
         events[0] = {"sequence": 0, "kind": "build_attempt", "success": True}
         with self.assertRaises(SystemExit):
             runner.validate_usage(response, events, job)
+
+    def test_runner_executes_only_hash_bound_pack_adapter(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            pack = Path(directory) / "pack"
+            code = pack / "execution_code"
+            code.mkdir(parents=True)
+            run_bytes = Path(runner.__file__).read_bytes()
+            prepare_bytes = Path(prepare.__file__).read_bytes()
+            adapter_bytes = b"print('sealed adapter')\n"
+            (code / Path(runner.__file__).name).write_bytes(run_bytes)
+            (code / Path(prepare.__file__).name).write_bytes(prepare_bytes)
+            sealed_adapter = code / "execution_adapter_entrypoint"
+            sealed_adapter.write_bytes(adapter_bytes)
+            runtime = Path(sys.executable).resolve()
+            config = {
+                "sealed_agent_view": {
+                    "run_preparer_sha256": hashlib.sha256(run_bytes).hexdigest(),
+                    "materializer_sha256": hashlib.sha256(prepare_bytes).hexdigest(),
+                },
+                "execution_adapter": {
+                    "entrypoint_sha256": hashlib.sha256(adapter_bytes).hexdigest(),
+                    "runtime_executable": str(runtime),
+                    "runtime_executable_sha256": prepare.sha256_file(runtime),
+                    "command_argv": [str(runtime), "{{ADAPTER_ENTRYPOINT_PATH}}"],
+                },
+            }
+            runner.self_verify(pack, config)
+            sealed_adapter.write_bytes(b"print('changed')\n")
+            with self.assertRaises(SystemExit):
+                runner.self_verify(pack, config)
 
     def test_provider_retry_trace_binds_request_ids_and_reason_budget(self) -> None:
         usage = {

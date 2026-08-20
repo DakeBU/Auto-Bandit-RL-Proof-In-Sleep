@@ -171,6 +171,17 @@ def prepare_preseal(draft_path: Path, source_manifest_path: Path, output: Path) 
         name: prepare.sha256_file(path)
         for name, path in prepare.execution_code_paths(config).items()
     }
+    adapter = config["execution_adapter"]
+    adapter["entrypoint_sha256"] = code_hashes["execution_adapter_entrypoint"]
+    runtime_text = adapter["runtime_executable"]
+    prepare.require(isinstance(runtime_text, str) and Path(runtime_text).is_absolute(),
+                    "execution adapter runtime must be an absolute path")
+    runtime = prepare.regular_unlinked_file(
+        Path(runtime_text).resolve(), "execution adapter runtime"
+    )
+    prepare.require(Path(runtime_text) == runtime,
+                    "execution adapter runtime path must already be canonical")
+    adapter["runtime_executable_sha256"] = prepare.sha256_file(runtime)
     config["sealed_agent_view"]["materializer_sha256"] = code_hashes[
         "prepare_target_drift_execution.py"
     ]

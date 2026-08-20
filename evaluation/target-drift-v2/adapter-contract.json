@@ -8,8 +8,11 @@
       "{{REQUEST_PATH}}",
       "{{RESPONSE_PATH}}",
       "{{TRACE_PATH}}",
-      "{{AGENT_MOUNT}}"
+      "{{AGENT_MOUNT}}",
+      "{{ADAPTER_ENTRYPOINT_PATH}}"
     ],
+    "sealed_entrypoint": "The adapter entrypoint is copied into the content-addressed pack and the runner substitutes only that sealed path.",
+    "runtime_binding": "The first argv token is an absolute regular executable whose bytes are hash-bound in the frozen config.",
     "working_directory": "the prepared run directory",
     "timeout_owner": "the orchestrator terminates the adapter process tree at the frozen per-run wall-clock budget"
   },
