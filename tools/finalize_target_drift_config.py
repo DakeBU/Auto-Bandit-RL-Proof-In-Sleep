@@ -159,6 +159,8 @@ def prepare_preseal(draft_path: Path, source_manifest_path: Path, output: Path) 
         config["conditions"][condition]["prompt_sha256"] = prepare.sha256_file(prompt)
     policy = prepare.resolve_repo_path(config["resource_policy"])
     config["resource_policy_sha256"] = prepare.sha256_file(policy)
+    missing_policy = prepare.resolve_repo_path(config["missing_run_policy"]["policy_path"])
+    config["missing_run_policy"]["policy_sha256"] = prepare.sha256_file(missing_policy)
     adapter_contract = prepare.resolve_repo_path(config["execution_adapter"]["contract"])
     config["execution_adapter"]["contract_sha256"] = prepare.sha256_file(adapter_contract)
     checker_contract = prepare.resolve_repo_path(config["posthoc_checker"]["contract"])
@@ -222,6 +224,12 @@ def prepare_preseal(draft_path: Path, source_manifest_path: Path, output: Path) 
     ]
     config["wording_audit"]["script_sha256"] = code_hashes[
         "audit_target_drift_wording.py"
+    ]
+    config["missing_run_policy"]["completion_ledger_builder_sha256"] = code_hashes[
+        "build_target_drift_completion_ledger.py"
+    ]
+    config["missing_run_policy"]["schedule_runner_sha256"] = code_hashes[
+        "run_target_drift_schedule.py"
     ]
     config["posthoc_checker"]["runtime_config_sha256"] = (
         prepare.checker_runtime_config_sha256(config)

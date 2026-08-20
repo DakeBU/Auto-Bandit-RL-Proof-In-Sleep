@@ -337,6 +337,7 @@ class TargetDriftExecutionTest(unittest.TestCase):
             b"challenges",
             b"paired requirements",
             b"protocol",
+            b"missing-run policy",
             b"sources",
             {"source.pdf": b"pdf"},
             b"rubric",

@@ -34,10 +34,12 @@ def main() -> None:
     sources = load(V2 / "source-files.template.json")
     rubric = load(V2 / "grading-rubric.json")
     policy = load(V2 / "resource-policy.json")
+    missing_policy = load(V2 / "missing-run-policy.json")
     paired = load(V2 / "paired-requirements.json")
 
     require(protocol["suite_id"] == config["suite_id"] == rubric["suite_id"]
-            == policy["suite_id"] == sources["suite_id"] == "ABRL-TARGET-DRIFT-V2",
+            == policy["suite_id"] == missing_policy["suite_id"]
+            == sources["suite_id"] == "ABRL-TARGET-DRIFT-V2",
             "suite identifiers differ")
     require(prepare.resolve_repo_path(config["protocol"]) == V2 / "protocol.json",
             "execution config must pin the v2 protocol path")
@@ -48,6 +50,14 @@ def main() -> None:
     require(len(challenges) == protocol["base_challenge_count"] == 30,
             "v2 must reuse exactly thirty frozen v1 cases")
     require(protocol["planned_run_count"] == 450, "planned run count must be 450")
+    require(missing_policy["policy_id"] == config["retry_policy"]["missing_run_policy"]
+            == config["missing_run_policy"]["policy_id"]
+            == "complete_450_no_replacement_no_imputation_v1",
+            "missing-run policy ID differs across protocol inputs")
+    require(missing_policy["planned_run_count"] == 450
+            and missing_policy["replacement_runs"] == "forbidden"
+            and missing_policy["outcome_imputation"] == "forbidden",
+            "missing-run policy weakens the exact 450-run gate")
     variants = [
         prepare.requirement_variant(case_index, replicate_index)
         for case_index in range(30)

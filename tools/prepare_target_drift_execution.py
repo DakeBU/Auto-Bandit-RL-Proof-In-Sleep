@@ -375,6 +375,64 @@ def validate_resource_policy(config: dict[str, Any], require_hash: bool) -> dict
     return policy
 
 
+def validate_missing_run_policy(config: dict[str, Any], require_hash: bool) -> dict[str, Any]:
+    entry = config["missing_run_policy"]
+    policy_path = resolve_repo_path(entry["policy_path"])
+    require(policy_path.is_file(), "missing-run policy file is missing")
+    policy = load(policy_path)
+    policy_id = "complete_450_no_replacement_no_imputation_v1"
+    require(policy.get("schema_version") == 1, "missing-run policy schema_version must be 1")
+    require(policy.get("suite_id") == config["suite_id"], "missing-run policy suite mismatch")
+    require(policy.get("policy_id") == entry.get("policy_id")
+            == config["retry_policy"].get("missing_run_policy") == policy_id,
+            "missing-run policy ID mismatch")
+    require(policy.get("planned_run_count") == 450,
+            "missing-run policy must cover exactly 450 planned runs")
+    require(policy.get("schedule_order") == "sealed_presentation_order",
+            "missing-run policy must use the sealed presentation order")
+    require(policy.get("continuation_after_individual_failure")
+            == "continue_remaining_preregistered_runs",
+            "missing-run policy must continue the preregistered schedule")
+    require(policy.get("automatic_retry_after_terminal_state") == "forbidden",
+            "missing-run policy must forbid terminal-state retries")
+    require(policy.get("replacement_runs") == "forbidden",
+            "missing-run policy must forbid replacement runs")
+    require(policy.get("outcome_imputation") == "forbidden",
+            "missing-run policy must forbid outcome imputation")
+    require(policy.get("result_eligible_state") == {
+        "status": "checked", "result_eligible": True, "checker_mode": "production",
+    }, "missing-run policy result-eligible state differs")
+    require(policy.get("primary_analysis_gate")
+            == "exactly_450_result_eligible_graded_records_and_zero_missing_runs",
+            "missing-run policy has an unsupported analysis gate")
+    require(policy.get("incomplete_run_action")
+            == "write_hash_bound_completion_ledger_and_refuse_grading_and_inferential_analysis",
+            "missing-run policy incomplete-run action differs")
+    require(policy.get("incomplete_analysis_output")
+            == "missingness_counts_only_no_effect_estimate_interval_pvalue_or_success_claim",
+            "missing-run policy incomplete-analysis output differs")
+    require(policy.get("missingness_dimensions") == [
+        "state_status", "missing_reason", "condition", "requirement_variant",
+    ], "missing-run policy missingness dimensions differ")
+    require(set(policy.get("terminal_state_categories", {})) == {
+        "not_materialized", "prepared_unrun", "terminal_operator_failure",
+        "executed_unchecked", "checker_terminal_failure",
+        "checked_fixture_nonexperimental", "integrity_failure", "checked",
+    }, "missing-run policy terminal-state categories differ")
+    builder = resolve_repo_path(entry["completion_ledger_builder"])
+    require(builder.is_file(), "completion-ledger builder is missing")
+    schedule_runner = resolve_repo_path(entry["schedule_runner"])
+    require(schedule_runner.is_file(), "target-drift schedule runner is missing")
+    if require_hash:
+        require(entry["policy_sha256"] == sha256_file(policy_path),
+                "missing-run policy hash does not match")
+        require(entry["completion_ledger_builder_sha256"] == sha256_file(builder),
+                "completion-ledger builder hash does not match")
+        require(entry["schedule_runner_sha256"] == sha256_file(schedule_runner),
+                "schedule-runner hash does not match")
+    return policy
+
+
 def validate_paired_requirements(
     config: dict[str, Any], challenges: list[dict[str, Any]] | None = None
 ) -> dict[str, Any]:
@@ -1075,6 +1133,12 @@ def execution_code_paths(config: dict[str, Any]) -> dict[str, Path]:
         "audit_target_drift_wording.py": resolve_repo_path(
             config["wording_audit"]["script"]
         ),
+        "build_target_drift_completion_ledger.py": resolve_repo_path(
+            config["missing_run_policy"]["completion_ledger_builder"]
+        ),
+        "run_target_drift_schedule.py": resolve_repo_path(
+            config["missing_run_policy"]["schedule_runner"]
+        ),
     }
     if config["execution_adapter"].get("entrypoint_path") != "UNSET":
         paths["execution_adapter_entrypoint"] = adapter_entrypoint_path(config)
@@ -1105,6 +1169,12 @@ def validate_execution_code_hashes(config: dict[str, Any], require_hashes: bool)
         "assemble_target_drift_grades.py": config["analysis"]["grade_assembler_sha256"],
         "analyze_target_drift_execution.py": config["analysis"]["script_sha256"],
         "audit_target_drift_wording.py": config["wording_audit"]["script_sha256"],
+        "build_target_drift_completion_ledger.py": config["missing_run_policy"][
+            "completion_ledger_builder_sha256"
+        ],
+        "run_target_drift_schedule.py": config["missing_run_policy"][
+            "schedule_runner_sha256"
+        ],
     }
     if "execution_adapter_entrypoint" in paths:
         expected["execution_adapter_entrypoint"] = config["execution_adapter"][
@@ -1213,7 +1283,9 @@ def validate_frozen_choices(config: dict[str, Any]) -> None:
             "infrastructure retry limit exceeds the model-retry budget")
     nonempty(retry["infrastructure_failure_definition"],
              "retry_policy.infrastructure_failure_definition", 20)
-    nonempty(retry["missing_run_policy"], "retry_policy.missing_run_policy", 20)
+    require(retry["missing_run_policy"]
+            == "complete_450_no_replacement_no_imputation_v1",
+            "retry_policy.missing_run_policy must use the frozen no-imputation policy")
 
     randomization = config["randomization"]
     replicates = randomization["paired_replicates"]
@@ -1349,6 +1421,7 @@ def digest_components(
     challenges_bytes: bytes,
     paired_requirements_bytes: bytes,
     protocol_bytes: bytes,
+    missing_run_policy_bytes: bytes,
     source_manifest_bytes: bytes,
     source_packet_bytes: dict[str, bytes],
     rubric_bytes: bytes,
@@ -1372,6 +1445,7 @@ def digest_components(
         "operator_challenges.json": challenges_bytes,
         "paired_requirements.json": paired_requirements_bytes,
         "protocol.json": protocol_bytes,
+        "missing-run-policy.json": missing_run_policy_bytes,
         "source_manifest.json": source_manifest_bytes,
         "grading_rubric.json": rubric_bytes,
         "resource_policy.json": resource_policy_bytes,
@@ -1416,6 +1490,7 @@ def check_template(config_path: Path) -> None:
     validate_prompt_templates(config, require_hashes=False)
     if "resource_policy" in config:
         validate_resource_policy(config, require_hash=False)
+        validate_missing_run_policy(config, require_hash=False)
         validate_paired_requirements(config)
         validate_adapter_contract(config, require_hash=False)
         validate_checker_contract(config, require_hashes=False)
@@ -1519,6 +1594,7 @@ def materialize(config_path: Path, output_dir: Path) -> None:
     require("resource_policy" in config,
             "legacy v1 template cannot be materialized by the strengthened sealer; use v2")
     validate_resource_policy(config, require_hash=True)
+    validate_missing_run_policy(config, require_hash=True)
     validate_adapter_contract(config, require_hash=True)
     validate_checker_contract(config, require_hashes=True)
     validate_auxiliary_prompts(config, require_hashes=True)
@@ -1645,6 +1721,7 @@ def materialize(config_path: Path, output_dir: Path) -> None:
     source_manifest_path = resolve_repo_path(config["source_files_manifest"])
     protocol_path = resolve_repo_path(config["protocol"])
     require(protocol_path.is_file(), "missing v2 protocol")
+    missing_run_policy_path = resolve_repo_path(config["missing_run_policy"]["policy_path"])
     rubric_path = resolve_repo_path(config["grading"]["rubric"])
     resource_policy_path = resolve_repo_path(config["resource_policy"])
     adapter_contract_path = resolve_repo_path(config["execution_adapter"]["contract"])
@@ -1677,6 +1754,7 @@ def materialize(config_path: Path, output_dir: Path) -> None:
         for source_id, source in sources.items()
     }
     protocol_bytes = protocol_path.read_bytes()
+    missing_run_policy_bytes = missing_run_policy_path.read_bytes()
     rubric_bytes = rubric_path.read_bytes()
     resource_policy_bytes = resource_policy_path.read_bytes()
     adapter_contract_bytes = adapter_contract_path.read_bytes()
@@ -1702,6 +1780,7 @@ def materialize(config_path: Path, output_dir: Path) -> None:
         challenges_bytes,
         paired_requirements_bytes,
         protocol_bytes,
+        missing_run_policy_bytes,
         source_manifest_bytes,
         source_packet_bytes,
         rubric_bytes,
@@ -1725,6 +1804,7 @@ def materialize(config_path: Path, output_dir: Path) -> None:
     (output_dir / "operator_challenges.json").write_bytes(challenges_bytes)
     (output_dir / "paired_requirements.json").write_bytes(paired_requirements_bytes)
     (output_dir / "protocol.json").write_bytes(protocol_bytes)
+    (output_dir / "missing-run-policy.json").write_bytes(missing_run_policy_bytes)
     (output_dir / "source_manifest.json").write_bytes(source_manifest_bytes)
     source_output = output_dir / "source_packets"
     source_output.mkdir()
@@ -1804,6 +1884,11 @@ def verify_pack(pack_dir: Path) -> None:
         "sealed resource-policy hash mismatch",
     )
     require(
+        config["missing_run_policy"]["policy_sha256"]
+        == sha256_bytes((pack_dir / "missing-run-policy.json").read_bytes()),
+        "sealed missing-run policy hash mismatch",
+    )
+    require(
         config["execution_adapter"]["contract_sha256"]
         == sha256_bytes((pack_dir / "adapter_contract.json").read_bytes()),
         "sealed adapter-contract hash mismatch",
@@ -1838,12 +1923,14 @@ def verify_pack(pack_dir: Path) -> None:
     challenges = load(pack_dir / "operator_challenges.json")
     paired_requirements = load(pack_dir / "paired_requirements.json")
     protocol = load(pack_dir / "protocol.json")
+    missing_run_policy = load(pack_dir / "missing-run-policy.json")
     source_manifest = load(pack_dir / "source_manifest.json")
     rubric = load(pack_dir / "grading_rubric.json")
     require(
         all(
             value["suite_id"] == config["suite_id"]
-            for value in (agent_cases, run_manifest, protocol, source_manifest, rubric, paired_requirements)
+            for value in (agent_cases, run_manifest, protocol, missing_run_policy,
+                          source_manifest, rubric, paired_requirements)
         ),
         "sealed component suite identifiers differ",
     )
@@ -1914,6 +2001,7 @@ def verify_pack(pack_dir: Path) -> None:
         (pack_dir / "operator_challenges.json").read_bytes(),
         (pack_dir / "paired_requirements.json").read_bytes(),
         (pack_dir / "protocol.json").read_bytes(),
+        (pack_dir / "missing-run-policy.json").read_bytes(),
         (pack_dir / "source_manifest.json").read_bytes(),
         source_packet_bytes,
         (pack_dir / "grading_rubric.json").read_bytes(),
@@ -1958,6 +2046,12 @@ def verify_pack(pack_dir: Path) -> None:
         "assemble_target_drift_grades.py": config["analysis"]["grade_assembler_sha256"],
         "analyze_target_drift_execution.py": config["analysis"]["script_sha256"],
         "audit_target_drift_wording.py": config["wording_audit"]["script_sha256"],
+        "build_target_drift_completion_ledger.py": config["missing_run_policy"][
+            "completion_ledger_builder_sha256"
+        ],
+        "run_target_drift_schedule.py": config["missing_run_policy"][
+            "schedule_runner_sha256"
+        ],
     }
     if config["execution_status"] == "frozen_ready":
         for name, expected in expected_code_hashes.items():

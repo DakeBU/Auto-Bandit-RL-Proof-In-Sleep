@@ -17,6 +17,7 @@ sys.path.insert(0, str(TOOLS))
 
 import prepare_target_drift_execution as prepare  # noqa: E402
 import run_target_drift_execution as runner  # noqa: E402
+import build_target_drift_completion_ledger as completion  # noqa: E402
 
 
 FORBIDDEN_PRIMARY_TEXT = prepare.PRIMARY_GRADING_PROVENANCE_MARKERS
@@ -121,6 +122,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--pack", type=Path, required=True)
     parser.add_argument("--runs-root", type=Path, required=True)
+    parser.add_argument("--completion-ledger", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--expected-count", type=int, default=450)
     args = parser.parse_args()
@@ -133,6 +135,14 @@ def main() -> None:
     config = load(pack / "execution_config.json")
     require(config["suite_id"] == "ABRL-TARGET-DRIFT-V2", "grading requires v2 pack")
     require(config["execution_status"] == "frozen_ready", "grading requires frozen_ready pack")
+    completion.self_verify(pack, config)
+    completion_ledger_path = args.completion_ledger.resolve()
+    completion_ledger = load(completion_ledger_path)
+    completion.validate_ledger_against_runs(
+        pack, runs_root, completion_ledger, require_complete=True,
+    )
+    completion_ledger_bytes = completion_ledger_path.read_bytes()
+    completion_ledger_sha256 = hashlib.sha256(completion_ledger_bytes).hexdigest()
     checker_config = config["posthoc_checker"]
     probe = load(pack / "checker_isolation_probe.json")
     runtime_sha256 = require_production_checker(config, probe)
@@ -382,13 +392,20 @@ def main() -> None:
         }, indent=2, sort_keys=True, ensure_ascii=False) + "\n"
     ).encode("utf-8")
     packet_aggregate = digest_payloads(payloads)
-    combined_payloads = {**payloads, "operator-mapping.json": mapping_payload}
+    combined_payloads = {
+        **payloads,
+        "operator-mapping.json": mapping_payload,
+        "completion-ledger.json": completion_ledger_bytes,
+    }
     manifest = {
         "schema_version": 1,
         "suite_id": config["suite_id"],
         "packet_count": len(collected),
         "grading_seed": grading_seed,
         "sealed_pack_sha256": (pack / "aggregate.sha256").read_text(encoding="ascii").strip(),
+        "completion_ledger_sha256": completion_ledger_sha256,
+        "missing_run_policy_id": completion_ledger["missing_run_policy_id"],
+        "missing_run_policy_sha256": completion_ledger["missing_run_policy_sha256"],
         "grader_prompt_sha256": config["grading"]["grader_prompt_sha256"],
         "primary_packets_exclude_condition_and_variant_labels": True,
         "result_eligible": True,
@@ -406,6 +423,7 @@ def main() -> None:
     }
     dump(output / "packet-manifest.json", manifest)
     (output / "operator-mapping.json").write_bytes(mapping_payload)
+    (output / "completion-ledger.json").write_bytes(completion_ledger_bytes)
     print(
         f"materialized {len(collected)} blind grading packets, sha256={manifest['aggregate_sha256']}"
     )

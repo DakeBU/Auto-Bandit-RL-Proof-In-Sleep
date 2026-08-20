@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "suite_id": "ABRL-TARGET-DRIFT-V2",
+  "policy_id": "complete_450_no_replacement_no_imputation_v1",
+  "planned_run_count": 450,
+  "continuation_after_individual_failure": "continue_remaining_preregistered_runs",
+  "schedule_order": "sealed_presentation_order",
+  "automatic_retry_after_terminal_state": "forbidden",
+  "replacement_runs": "forbidden",
+  "outcome_imputation": "forbidden",
+  "result_eligible_state": {
+    "status": "checked",
+    "result_eligible": true,
+    "checker_mode": "production"
+  },
+  "primary_analysis_gate": "exactly_450_result_eligible_graded_records_and_zero_missing_runs",
+  "incomplete_run_action": "write_hash_bound_completion_ledger_and_refuse_grading_and_inferential_analysis",
+  "incomplete_analysis_output": "missingness_counts_only_no_effect_estimate_interval_pvalue_or_success_claim",
+  "missingness_dimensions": [
+    "state_status",
+    "missing_reason",
+    "condition",
+    "requirement_variant"
+  ],
+  "terminal_state_categories": {
+    "not_materialized": "planned run directory is absent",
+    "prepared_unrun": "run was prepared but the model adapter was not completed",
+    "terminal_operator_failure": "adapter, budget, runtime, or operator failure has a terminal receipt",
+    "executed_unchecked": "adapter execution has a receipt but the isolated checker has no terminal result",
+    "checker_terminal_failure": "isolated checker attempt failed closed",
+    "checked_fixture_nonexperimental": "local fixture output is permanently ineligible",
+    "integrity_failure": "run directory or terminal evidence is unreadable, malformed, or hash-inconsistent",
+    "checked": "production checker completed; eligible only when result_eligible is literal true"
+  },
+  "reporting_boundary": "The completion ledger is operator-visible missingness evidence, not a formalization outcome. Incomplete execution cannot yield the preregistered primary or secondary inferential results."
+}

@@ -35,7 +35,8 @@ allowlist; the ABRL condition uses the same base with `evaluation/` removed.
 The execution seal must cover the normalized config, balanced assignments,
 the complete operator-only challenge ground truth, the v2 protocol, exact
 prompts, paired wording, portable source manifest and all four PDF byte streams,
-grading rubric, resource policy, agent/checker/grader contracts, checker
+grading rubric, resource policy, exact no-replacement/no-imputation policy,
+   completion-ledger builder, agent/checker/grader contracts, checker
 isolation-probe report, the canonical Docker launcher, image recipe and verified
 SBOM, materializer/runner/host-controller/container-controller/inner-checker/
 grader/analysis code, the actual adapter entrypoint, its absolute host runtime,
@@ -66,7 +67,9 @@ Before the 450 runs, the following are mandatory:
 5. freeze a digest-pinned checker image and canonical launcher implementing the
    tracked controller/worker-separation contract, then pass all seven isolation
    probes;
-6. materialize blind grader packets and freeze the target-aware analysis code.
+6. hash-seal `complete_450_no_replacement_no_imputation_v1` and its completion-
+   ledger builder, then materialize the 450-ID completion ledger;
+7. materialize blind grader packets and freeze the target-aware analysis code.
 
 The grader-packet materializer and packet-order seed are frozen before model
 execution.  Packet contents and their aggregate digest are produced only after
@@ -79,6 +82,15 @@ to the preregistered secondary endpoints.
 
 No pilot output may enter the final result set, and no challenge may be
 replaced after difficulty is observed.
+
+The missing-run policy is now executable but still result-free.  After an
+individual adapter or checker failure, the remaining preregistered runs continue;
+the failed run is never replaced and its outcome is never imputed.  The operator
+ledger covers all 450 semantic run IDs and reports missingness by terminal state,
+reason, condition, and requirement variant.  Only a literal 450/450 set of
+production-result-eligible checked records may enter blind grading or inferential
+analysis.  Otherwise the analysis command emits only missingness counts and
+omits every effect estimate, interval, p-value, q-value, and success claim.
 
 For the staged seal, edit a copy of `execution-template.json` only at the
 human/provider fields, replace the image-SBOM template with a real
@@ -194,21 +206,44 @@ python tools/run_target_drift_execution.py --pack FROZEN-PACK --execute RUN-DIR
 python tools/check_target_drift_run.py --pack FROZEN-PACK --run-dir RUN-DIR
 ```
 
-After all 450 runs have terminal checked records, the blind grading and
-digest-bound analysis chain is:
+The schedule runner executes runs in sealed presentation order, never revisits a
+terminal state, and continues with the remaining preregistered IDs after a
+run-level failure.  It writes the completion ledger and exits nonzero when fewer
+than 450 runs are production-result-eligible:
 
 ```text
-python tools/prepare_target_drift_grading.py --pack FROZEN-PACK --runs-root RUNS --output GRADING-PACK
+python tools/run_target_drift_schedule.py --pack FROZEN-PACK --runs-root RUNS --completion-ledger COMPLETION-LEDGER.json
+```
+
+The ledger may also be rebuilt read-only from an already attempted run root:
+
+```text
+python tools/build_target_drift_completion_ledger.py --pack FROZEN-PACK --runs-root RUNS --output COMPLETION-LEDGER.json
+```
+
+For an incomplete ledger, do not create grader packets.  The only permitted
+analysis output is the non-inferential missingness report (also exit-nonzero):
+
+```text
+python tools/analyze_target_drift_execution.py --pack FROZEN-PACK --runs-root RUNS --completion-ledger COMPLETION-LEDGER.json --output INCOMPLETE-ANALYSIS.json
+```
+
+Only after the ledger certifies all 450 runs may the blind grading and
+digest-bound inferential chain run:
+
+```text
+python tools/prepare_target_drift_grading.py --pack FROZEN-PACK --runs-root RUNS --completion-ledger COMPLETION-LEDGER.json --output GRADING-PACK
 python tools/assemble_target_drift_grades.py --pack FROZEN-PACK --grading-pack GRADING-PACK --grader-response GRADER-A.json --grader-response GRADER-B.json --adjudication ADJUDICATION.json --output GRADES.json
-python tools/analyze_target_drift_execution.py --pack FROZEN-PACK --grading-pack GRADING-PACK --grades GRADES.json --output ANALYSIS.json
+python tools/analyze_target_drift_execution.py --pack FROZEN-PACK --runs-root RUNS --completion-ledger COMPLETION-LEDGER.json --grading-pack GRADING-PACK --grades GRADES.json --output ANALYSIS.json
 ```
 
 These commands expose executable code paths; they do not supply a provider,
 agent image, final published production checker image,
 credentials, budget choices, or grader identities.  The current local gate
 includes target-drift component tests covering deterministic assignment, seal hashing,
-opaque prompts, manifest/digest checks, selected fail-closed paths, and
-synthetic 450-record analysis.  The deterministic fake fixture and two local
+opaque prompts, manifest/digest checks, selected fail-closed paths, a synthetic
+450-record analysis, and complete/incomplete/tampered completion-ledger cases.
+The deterministic fake fixture and two local
 fail-closed probes are nonexperimental and do not pass the real-infrastructure
 gate.  No real three-condition smoke, final pack, primary model run, grader
 response, grade ledger, or analysis output exists.
@@ -226,8 +261,9 @@ invocation. Provider-client-internal retries remain outside the observable
 adapter trace and must be separately frozen or disclosed before execution.
 Its machine failure definition treats a nonzero CLI exit, missing thread or
 terminal usage, observable runtime error, forbidden-tool event, or ambiguous
-multi-build accounting as a retained `infrastructure_failure` to be governed by
-the separately frozen missing-run policy. The recovery metric observes only a
+multi-build accounting as a retained `infrastructure_failure` governed by the
+hash-sealed no-replacement/no-imputation policy and 450-ID completion ledger.
+The recovery metric observes only a
 direct `lake build` or `lake env lean` invocation at command start or after a
 frozen shell separator; command text that merely mentions a build is excluded.
 These are code-level constraints, not a passed production isolation probe. It

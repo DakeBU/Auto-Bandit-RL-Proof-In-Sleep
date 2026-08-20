@@ -56,7 +56,16 @@
     "semantic_failure_retries": 0,
     "infrastructure_failure_definition": "UNSET",
     "infrastructure_retry_limit": "UNSET",
-    "missing_run_policy": "UNSET"
+    "missing_run_policy": "complete_450_no_replacement_no_imputation_v1"
+  },
+  "missing_run_policy": {
+    "policy_id": "complete_450_no_replacement_no_imputation_v1",
+    "policy_path": "evaluation/target-drift-v2/missing-run-policy.json",
+    "policy_sha256": "UNSET",
+    "schedule_runner": "tools/run_target_drift_schedule.py",
+    "schedule_runner_sha256": "UNSET",
+    "completion_ledger_builder": "tools/build_target_drift_completion_ledger.py",
+    "completion_ledger_builder_sha256": "UNSET"
   },
   "randomization": {
     "paired_replicates": "UNSET",
@@ -213,7 +222,8 @@
     "execution_adapter.command_argv",
     "execution_adapter.provider_runtime.*",
     "budgets_per_run.*",
-    "retry_policy.* except semantic_failure_retries",
+    "retry_policy.infrastructure_failure_definition and infrastructure_retry_limit",
+    "missing_run_policy.policy_sha256, schedule_runner_sha256, and completion_ledger_builder_sha256",
     "randomization.paired_replicates",
     "randomization.presentation_order_seed",
     "wording_audit.* except script/freeze_rule",
