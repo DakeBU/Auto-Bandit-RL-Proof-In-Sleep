@@ -6,8 +6,10 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import random
 import re
+import stat
 import subprocess
 import sys
 from pathlib import Path
@@ -122,6 +124,52 @@ def unset_paths(value: Any, prefix: str = "") -> list[str]:
 def resolve_repo_path(path_text: str) -> Path:
     path = Path(path_text)
     return path if path.is_absolute() else ROOT / path
+
+
+def adapter_entrypoint_path(config: dict[str, Any]) -> Path:
+    text = config["execution_adapter"]["entrypoint_path"]
+    require(isinstance(text, str) and text and text != "UNSET",
+            "execution adapter entrypoint path is unresolved")
+    relative = Path(text)
+    require(not relative.is_absolute(),
+            "execution adapter entrypoint must be a repository-relative path")
+    root = ROOT.resolve()
+    require(relative.parts and all(part not in {"", ".", ".."} for part in relative.parts),
+            "execution adapter entrypoint contains a traversal component")
+    current = root
+    for index, part in enumerate(relative.parts):
+        current = current / part
+        require(current.exists() and not current.is_symlink(),
+                "execution adapter entrypoint path is missing or linked")
+        info = current.lstat()
+        reparse = bool(getattr(info, "st_file_attributes", 0) & 0x400)
+        require(not reparse, "execution adapter entrypoint crosses a reparse point")
+        if index < len(relative.parts) - 1:
+            require(stat.S_ISDIR(info.st_mode),
+                    "execution adapter entrypoint parent is not a directory")
+        else:
+            require(stat.S_ISREG(info.st_mode) and info.st_nlink == 1,
+                    "execution adapter entrypoint must be one unlinked regular file")
+    resolved = current.resolve()
+    try:
+        resolved.relative_to(root)
+    except ValueError:
+        require(False, "execution adapter entrypoint escapes the repository")
+    return resolved
+
+
+def regular_unlinked_file(
+    path: Path, label: str, *, require_executable: bool = True,
+) -> Path:
+    require(path.is_absolute() and path.exists() and not path.is_symlink(),
+            f"{label} must be an existing absolute nonlink path")
+    info = path.lstat()
+    reparse = bool(getattr(info, "st_file_attributes", 0) & 0x400)
+    require(stat.S_ISREG(info.st_mode) and not reparse and info.st_nlink == 1,
+            f"{label} must be one unlinked regular file")
+    if require_executable and os.name != "nt":
+        require(os.access(path, os.X_OK), f"{label} is not executable")
+    return path
 
 
 def checker_runtime_config_payload(config: dict[str, Any]) -> dict[str, Any]:
@@ -390,6 +438,22 @@ def validate_adapter_contract(config: dict[str, Any], require_hash: bool) -> dic
     if require_hash:
         require(entry["contract_sha256"] == sha256_file(path),
                 "adapter-contract hash does not match")
+        entrypoint = adapter_entrypoint_path(config)
+        require(entrypoint.is_file() and not entrypoint.is_symlink(),
+                "execution adapter entrypoint is missing or linked")
+        require(entry["entrypoint_sha256"] == sha256_file(entrypoint),
+                "execution adapter entrypoint hash does not match")
+        runtime_text = entry["runtime_executable"]
+        require(isinstance(runtime_text, str) and Path(runtime_text).is_absolute(),
+                "execution adapter runtime must be an absolute path")
+        runtime = regular_unlinked_file(Path(runtime_text).resolve(),
+                                        "execution adapter runtime")
+        require(Path(runtime_text) == runtime,
+                "execution adapter runtime path must already be canonical")
+        require(entry["runtime_executable_sha256"] == sha256_file(runtime),
+                "execution adapter runtime hash does not match")
+        require(command[0] == runtime_text,
+                "execution adapter command must begin with the frozen runtime")
         joined = "\0".join(command)
         for placeholder in contract["invocation"]["required_placeholders"]:
             require(placeholder in joined,
@@ -858,7 +922,7 @@ def validate_auxiliary_prompts(config: dict[str, Any], require_hashes: bool) -> 
 
 
 def execution_code_paths(config: dict[str, Any]) -> dict[str, Path]:
-    return {
+    paths = {
         "prepare_target_drift_execution.py": resolve_repo_path(
             config["sealed_agent_view"]["materializer"]
         ),
@@ -893,6 +957,9 @@ def execution_code_paths(config: dict[str, Any]) -> dict[str, Path]:
             config["wording_audit"]["script"]
         ),
     }
+    if config["execution_adapter"].get("entrypoint_path") != "UNSET":
+        paths["execution_adapter_entrypoint"] = adapter_entrypoint_path(config)
+    return paths
 
 
 def validate_execution_code_hashes(config: dict[str, Any], require_hashes: bool) -> None:
@@ -920,6 +987,10 @@ def validate_execution_code_hashes(config: dict[str, Any], require_hashes: bool)
         "analyze_target_drift_execution.py": config["analysis"]["script_sha256"],
         "audit_target_drift_wording.py": config["wording_audit"]["script_sha256"],
     }
+    if "execution_adapter_entrypoint" in paths:
+        expected["execution_adapter_entrypoint"] = config["execution_adapter"][
+            "entrypoint_sha256"
+        ]
     for name, path in paths.items():
         require(expected[name] == sha256_file(path), f"execution-code hash mismatch for {name}")
 
@@ -1588,6 +1659,13 @@ def verify_pack(pack_dir: Path) -> None:
         config["execution_adapter"]["contract_sha256"]
         == sha256_bytes((pack_dir / "adapter_contract.json").read_bytes()),
         "sealed adapter-contract hash mismatch",
+    )
+    require(
+        config["execution_adapter"]["entrypoint_sha256"]
+        == sha256_bytes(
+            (pack_dir / "execution_code" / "execution_adapter_entrypoint").read_bytes()
+        ),
+        "sealed execution-adapter entrypoint hash mismatch",
     )
     require(
         config["posthoc_checker"]["contract_sha256"]

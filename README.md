@@ -148,7 +148,8 @@ Core paths:
   unchanged for provenance, but superseded for execution by v2;
 - `evaluation/target-drift-v2/` — balanced faithful/drift protocol, pre-audit
   condition views, matched field/value wording with a text-only leakage audit,
-  content-addressed seal, frozen-adapter interface, sanitized outer-controller/
+  content-addressed seal, frozen adapter contract plus sealed entrypoint and
+  absolute host-runtime bytes, sanitized outer-controller/
   canonical-Docker-launcher/trusted-controller/restricted-worker sandbox
   contract, non-executing in-image checker/cache-manifest verification, fresh replay,
   blind grading packets, workflow-artifact hash records, and source/target-aware

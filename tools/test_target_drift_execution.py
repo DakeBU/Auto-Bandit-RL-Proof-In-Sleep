@@ -16,6 +16,7 @@ sys.path.insert(0, str(TOOLS))
 
 import prepare_target_drift_execution as prepare  # noqa: E402
 import launch_target_drift_checker_container as checker_launcher  # noqa: E402
+import run_target_drift_execution as runner  # noqa: E402
 
 
 class TargetDriftExecutionTest(unittest.TestCase):
@@ -43,6 +44,50 @@ class TargetDriftExecutionTest(unittest.TestCase):
             prepare.unset_paths(value),
             ["model.id", "sealed_agent_view.aggregate_sha256"],
         )
+
+    def test_adapter_contract_binds_runtime_and_sealed_entrypoint(self) -> None:
+        config = json.loads(
+            (ROOT / "evaluation" / "target-drift-v2" / "execution-template.json")
+            .read_text(encoding="utf-8")
+        )
+        adapter = config["execution_adapter"]
+        contract = ROOT / adapter["contract"]
+        entrypoint = ROOT / "tools" / "fake_target_drift_adapter.py"
+        runtime = Path(sys.executable).resolve()
+        image_digest = "sha256:" + "a" * 64
+        adapter.update({
+            "contract_sha256": prepare.sha256_file(contract),
+            "entrypoint_path": "tools/fake_target_drift_adapter.py",
+            "entrypoint_sha256": prepare.sha256_file(entrypoint),
+            "runtime_executable": str(runtime),
+            "runtime_executable_sha256": prepare.sha256_file(runtime),
+            "container_or_sandbox_image_digest": image_digest,
+            "command_argv": [
+                str(runtime), "{{ADAPTER_ENTRYPOINT_PATH}}",
+                "{{REQUEST_PATH}}", "{{RESPONSE_PATH}}", "{{TRACE_PATH}}",
+                "{{AGENT_MOUNT}}", image_digest,
+            ],
+        })
+        prepare.validate_adapter_contract(config, require_hash=True)
+        self.assertEqual(
+            prepare.execution_code_paths(config)["execution_adapter_entrypoint"],
+            entrypoint.resolve(),
+        )
+        rendered = runner.render_adapter_command(adapter["command_argv"], {
+            "{{ADAPTER_ENTRYPOINT_PATH}}": "C:/sealed/adapter",
+            "{{REQUEST_PATH}}": "C:/run/request.json",
+            "{{RESPONSE_PATH}}": "C:/run/response.json",
+            "{{TRACE_PATH}}": "C:/run/trace.jsonl",
+            "{{AGENT_MOUNT}}": "C:/run/agent",
+        })
+        self.assertEqual(rendered[1], "C:/sealed/adapter")
+        adapter["entrypoint_sha256"] = "b" * 64
+        with self.assertRaises(SystemExit):
+            prepare.validate_adapter_contract(config, require_hash=True)
+        adapter["entrypoint_sha256"] = prepare.sha256_file(entrypoint)
+        adapter["runtime_executable_sha256"] = "c" * 64
+        with self.assertRaises(SystemExit):
+            prepare.validate_adapter_contract(config, require_hash=True)
 
     def test_agent_case_strips_adjudication_keys(self) -> None:
         challenges = json.loads(

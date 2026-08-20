@@ -154,6 +154,26 @@ def self_verify(pack_dir: Path, config: dict[str, Any]) -> None:
                 f"invoked execution code differs from frozen hash: {current.name}")
         require(hashlib.sha256(sealed.read_bytes()).hexdigest() == expected,
                 f"sealed execution code differs from frozen hash: {current.name}")
+    adapter = config["execution_adapter"]
+    sealed_entrypoint = pack_dir / "execution_code" / "execution_adapter_entrypoint"
+    require(sealed_entrypoint.is_file() and not sealed_entrypoint.is_symlink(),
+            "sealed execution-adapter entrypoint is missing or linked")
+    require(hashlib.sha256(sealed_entrypoint.read_bytes()).hexdigest()
+            == adapter["entrypoint_sha256"],
+            "sealed execution-adapter entrypoint differs from frozen hash")
+    runtime_text = adapter["runtime_executable"]
+    require(isinstance(runtime_text, str) and Path(runtime_text).is_absolute(),
+            "frozen execution-adapter runtime is not absolute")
+    runtime = prepare.regular_unlinked_file(
+        Path(runtime_text).resolve(), "execution adapter runtime"
+    )
+    require(Path(runtime_text) == runtime,
+            "execution-adapter runtime path is not canonical")
+    require(hashlib.sha256(runtime.read_bytes()).hexdigest()
+            == adapter["runtime_executable_sha256"],
+            "execution-adapter runtime differs from frozen hash")
+    require(adapter["command_argv"][0] == runtime_text,
+            "execution-adapter command does not begin with the frozen runtime")
 
 
 def scan_forbidden(root: Path, forbidden: list[str]) -> list[dict[str, str]]:
@@ -506,6 +526,9 @@ def execute_run(pack_dir: Path, run_dir: Path) -> None:
             "{{RESPONSE_PATH}}": str(response_path.resolve()),
             "{{TRACE_PATH}}": str(trace_path.resolve()),
             "{{AGENT_MOUNT}}": str(agent.resolve()),
+            "{{ADAPTER_ENTRYPOINT_PATH}}": str(
+                (pack_dir / "execution_code" / "execution_adapter_entrypoint").resolve()
+            ),
         },
     )
     process_kwargs: dict[str, Any] = {}
