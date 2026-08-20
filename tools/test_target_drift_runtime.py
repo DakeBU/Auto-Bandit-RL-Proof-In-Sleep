@@ -616,6 +616,19 @@ class TargetDriftRuntimeTest(unittest.TestCase):
                 grading.manifest_sha256(grading.agent_manifest(root)),
             )
 
+    def test_agent_manifest_rejects_model_created_hardlinks(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / "source.txt"
+            linked = root / "linked.txt"
+            source.write_text("model output", encoding="utf-8")
+            try:
+                os.link(source, linked)
+            except OSError:
+                self.skipTest("hard links are unavailable on this filesystem")
+            with self.assertRaises(SystemExit):
+                runner.file_manifest(root)
+
     def test_neutral_checker_flags_proof_escape_hatches(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -941,16 +954,23 @@ class TargetDriftRuntimeTest(unittest.TestCase):
 
     def test_adapter_usage_must_match_trace_counts_and_budgets(self) -> None:
         response = {
-            "provider_request_ids": ["request-1"],
+            "model_invocations": [{
+                "attempt": 1, "transport": "codex_cli",
+                "observable_id_kind": "codex_thread", "observable_id": "thread-1",
+                "process_exit_code": 0, "wall_seconds": 1.0, "usage_observed": True,
+            }],
             "usage": {
                 "input_tokens": 10,
+                "cached_input_tokens": 0,
+                "cache_write_input_tokens": 2,
                 "output_tokens": 5,
+                "reasoning_output_tokens": 1,
                 "tool_calls": 1,
                 "build_attempts": 1,
                 "recovery_tool_calls": 1,
                 "infrastructure_retries": 0,
                 "wall_seconds": 2.0,
-                "cost_usd": 0.01,
+                "cost_usd": 0.0095,
             }
         }
         events = [
@@ -959,6 +979,11 @@ class TargetDriftRuntimeTest(unittest.TestCase):
             {"sequence": 2, "kind": "usage_summary", "usage": response["usage"]},
         ]
         job = {
+            "pricing": {
+                "input_tokens": 500.0, "cached_input_tokens": 100.0,
+                "cache_write_input_tokens": 250.0,
+                "output_tokens": 1000.0,
+            },
             "budgets": {
                 "maximum_input_tokens": 20,
                 "maximum_output_tokens": 20,
@@ -1000,6 +1025,16 @@ class TargetDriftRuntimeTest(unittest.TestCase):
                     "entrypoint_sha256": hashlib.sha256(adapter_bytes).hexdigest(),
                     "runtime_executable": str(runtime),
                     "runtime_executable_sha256": prepare.sha256_file(runtime),
+                    "provider_runtime": {
+                        "kind": "excluded_fixture", "executable": str(runtime),
+                        "executable_sha256": prepare.sha256_file(runtime),
+                        "version": prepare.provider_runtime_version_output(runtime).decode(
+                            "utf-8"
+                        ).strip(),
+                        "version_output_sha256": prepare.sha256_bytes(
+                            prepare.provider_runtime_version_output(runtime)
+                        ),
+                    },
                     "command_argv": [str(runtime), "{{ADAPTER_ENTRYPOINT_PATH}}"],
                 },
             }
@@ -1008,10 +1043,13 @@ class TargetDriftRuntimeTest(unittest.TestCase):
             with self.assertRaises(SystemExit):
                 runner.self_verify(pack, config)
 
-    def test_provider_retry_trace_binds_request_ids_and_reason_budget(self) -> None:
+    def test_model_retry_trace_binds_observable_invocations_and_reason_budget(self) -> None:
         usage = {
             "input_tokens": 10,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
             "output_tokens": 5,
+            "reasoning_output_tokens": 1,
             "tool_calls": 0,
             "build_attempts": 0,
             "recovery_tool_calls": 0,
@@ -1019,12 +1057,24 @@ class TargetDriftRuntimeTest(unittest.TestCase):
             "wall_seconds": 2.0,
             "cost_usd": 0.01,
         }
-        response = {"provider_request_ids": ["request-1", "request-2"], "usage": usage}
+        response = {"model_invocations": [
+            {"attempt": 1, "transport": "codex_cli",
+             "observable_id_kind": "codex_thread", "observable_id": "thread-1",
+             "process_exit_code": 1, "wall_seconds": 0.5, "usage_observed": True},
+            {"attempt": 2, "transport": "codex_cli",
+             "observable_id_kind": "codex_thread", "observable_id": "thread-2",
+             "process_exit_code": 0, "wall_seconds": 1.5, "usage_observed": True},
+        ], "usage": usage}
         events = [
-            {"sequence": 0, "kind": "provider_retry", "reason": "infrastructure"},
+            {"sequence": 0, "kind": "model_invocation_retry", "reason": "infrastructure"},
             {"sequence": 1, "kind": "usage_summary", "usage": usage},
         ]
         job = {
+            "pricing": {
+                "input_tokens": 500.0, "cached_input_tokens": 100.0,
+                "cache_write_input_tokens": 250.0,
+                "output_tokens": 1000.0,
+            },
             "budgets": {
                 "maximum_input_tokens": 20,
                 "maximum_output_tokens": 20,
@@ -1042,7 +1092,11 @@ class TargetDriftRuntimeTest(unittest.TestCase):
         self.assertEqual(runner.validate_usage(response, events, job)[
             "infrastructure_retries"
         ], 1)
-        response["provider_request_ids"].append("untraced-request")
+        response["model_invocations"].append({
+            "attempt": 3, "transport": "codex_cli",
+            "observable_id_kind": "codex_thread", "observable_id": "thread-3",
+            "process_exit_code": 0, "wall_seconds": 1.0, "usage_observed": True,
+        })
         with self.assertRaises(SystemExit):
             runner.validate_usage(response, events, job)
 
@@ -1054,6 +1108,37 @@ class TargetDriftRuntimeTest(unittest.TestCase):
                 with self.assertRaises(FileNotFoundError):
                     runner.execute_or_record_failure(pack, run)
                 record.assert_called_once_with(run, "FileNotFoundError: missing")
+
+    def test_linked_agent_failure_still_records_a_terminal_receipt(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            run = Path(directory)
+            operator = run / "operator"
+            adapter_dir = operator / "adapter"
+            agent = run / "agent"
+            output = agent / "output"
+            adapter_dir.mkdir(parents=True)
+            output.mkdir(parents=True)
+            prompt = agent / "prompt.md"
+            prompt.write_text("protected\n", encoding="utf-8")
+            os.link(prompt, output / "lean-diff.patch")
+            runner.dump(operator / "run_state.json", {
+                "status": "prepared_unrun",
+                "opaque_run_id": "opaque",
+                "sealed_pack_sha256": "a" * 64,
+                "prepared_job_sha256": "b" * 64,
+                "workspace_manifest_sha256": "c" * 64,
+            })
+            runner.record_operator_failure(run, "linked model output")
+            receipt = json.loads(
+                (operator / "operator-failure-receipt.json").read_text(encoding="utf-8")
+            )
+            state = json.loads(
+                (operator / "run_state.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(receipt["status"], "terminal_operator_failure")
+            self.assertIsNone(receipt["agent_manifest_at_failure_sha256"])
+            self.assertIn("linked", receipt["agent_manifest_at_failure_error"])
+            self.assertEqual(state["status"], "terminal_operator_failure")
 
     def test_invented_source_critical_field_is_rejected(self) -> None:
         grade = {

@@ -39,8 +39,10 @@ grading rubric, resource policy, agent/checker/grader contracts, checker
 isolation-probe report, the canonical Docker launcher, image recipe and verified
 SBOM, materializer/runner/host-controller/container-controller/inner-checker/
 grader/analysis code, the actual adapter entrypoint, its absolute host runtime,
+the separately invoked Codex CLI client executable and exact `--version` output,
 and their per-file hashes.  The runner substitutes only the entrypoint copy
-inside the sealed pack and rejects a changed runtime executable before launch.
+inside the sealed pack and rejects a changed adapter or provider-client executable
+before launch.
 Future evaluated agents will receive opaque IDs and one requirement.  Primary graders will see
 neutralized final artifacts and post-hoc checker evidence, not condition or
 variant labels or condition-specific workflow traces.
@@ -106,6 +108,15 @@ trace accounting beyond the token/tool/build/retry/time/cost budgets, and
 rehashes the completed view.  The adapter command receives the entrypoint only
 through `{{ADAPTER_ENTRYPOINT_PATH}}`, resolved to the content-addressed pack;
 the frozen absolute runtime is checked as one regular, unlinked executable.
+The v2 adapter contract records adapter-level `model_invocations`, not invented
+HTTP request IDs: the Codex CLI exposes a task/thread ID and turn-level usage,
+but not provider-internal request or retry identities. The local Codex CLI
+client is hash-bound and rechecked; the remote model version is a frozen
+provider/operator attestation, not a fact derived from JSONL. Cache-read,
+cache-write, and reasoning-output tokens are retained as observable categories;
+cost is recomputed
+from separately frozen dated USD-per-million-token rates rather than trusted
+from adapter prose.
 The checker host controller then verifies the
 pack/run chain without executing Lean, reconstructs a pristine condition-view
 snapshot, and emits a sanitized request containing only the base, submitted
@@ -201,6 +212,28 @@ synthetic 450-record analysis.  The deterministic fake fixture and two local
 fail-closed probes are nonexperimental and do not pass the real-infrastructure
 gate.  No real three-condition smoke, final pack, primary model run, grader
 response, grade ledger, or analysis output exists.
+`tools/codex_target_drift_adapter.py` is a result-free candidate adapter. Its
+component tests cover the supported Codex JSONL schema (including item updates,
+errors, and fail-closed forbidden-tool events), observable task/thread identity,
+cache-read/cache-write/reasoning token accounting, build/recovery boundaries,
+Lean patch construction, protected-output link rejection, process-failure
+terminal evidence, frozen-price cost reconstruction, and unknown-event
+rejection. The candidate explicitly disables web search, MCP/plugin/app,
+collaboration, browser/computer/image, skill-discovery, and related tool
+surfaces; copies one auth file into a fresh disposable `CODEX_HOME`; gives model-spawned commands
+only a frozen allowlisted environment; and launches no automatic second CLI
+invocation. Provider-client-internal retries remain outside the observable
+adapter trace and must be separately frozen or disclosed before execution.
+Its machine failure definition treats a nonzero CLI exit, missing thread or
+terminal usage, observable runtime error, forbidden-tool event, or ambiguous
+multi-build accounting as a retained `infrastructure_failure` to be governed by
+the separately frozen missing-run policy. The recovery metric observes only a
+direct `lake build` or `lake env lean` invocation at command start or after a
+frozen shell separator; command text that merely mentions a build is excluded.
+These are code-level constraints, not a passed production isolation probe. It
+does not make the current host a production agent sandbox: the exact provider
+client, remote-model attestation, agent image, visibility/network/process probes, prices,
+budgets, and three-condition smoke remain unfrozen and unrun.
 `tools/fake_target_drift_adapter.py` and
 `tools/fake_target_drift_cache_prelude.py`, and
 `tools/fake_target_drift_checker_sandbox.py` are deterministic fixture helpers

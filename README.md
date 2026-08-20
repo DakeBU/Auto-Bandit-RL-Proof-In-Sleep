@@ -148,8 +148,21 @@ Core paths:
   unchanged for provenance, but superseded for execution by v2;
 - `evaluation/target-drift-v2/` — balanced faithful/drift protocol, pre-audit
   condition views, matched field/value wording with a text-only leakage audit,
-  content-addressed seal, frozen adapter contract plus sealed entrypoint and
-  absolute host-runtime bytes, sanitized outer-controller/
+  content-addressed seal, frozen adapter contract plus sealed entrypoint,
+  absolute host-runtime bytes, and a result-free Codex CLI adapter candidate
+  that hash-binds and rechecks the separately invoked Codex CLI client, translates raw JSONL,
+  preserves observable task/thread identity without calling it a provider
+  request, accounts for cache-read/cache-write/reasoning token categories, and
+  recomputes cost from frozen dated rates. The remote model version remains a
+  provider/operator attestation rather than a claim derived from JSONL. The
+  candidate disables nonexperimental web/MCP/plugin/collaboration surfaces,
+  copies one auth file into a fresh disposable `CODEX_HOME` plus a frozen shell-environment
+  allowlist, and deliberately launches no automatic second CLI invocation, so
+  an unobserved failed attempt cannot be relabeled as zero-cost evidence. Any
+  provider-client-internal retry remains outside the observable adapter trace.
+  This candidate is
+  component-tested but is not a production
+  agent sandbox.  The sanitized outer-controller/
   canonical-Docker-launcher/trusted-controller/restricted-worker sandbox
   contract, non-executing in-image checker/cache-manifest verification, fresh replay,
   blind grading packets, workflow-artifact hash records, and source/target-aware

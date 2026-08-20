@@ -135,13 +135,19 @@ def main() -> None:
 
     usage = {
         "input_tokens": 32,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
         "output_tokens": 32,
+        "reasoning_output_tokens": 0,
         "tool_calls": 1,
         "build_attempts": 1,
         "recovery_tool_calls": 0,
         "infrastructure_retries": 0,
         "wall_seconds": round(wall, 6),
-        "cost_usd": 0.0,
+        "cost_usd": round((
+            32 * request["pricing"]["input_tokens"]
+            + 32 * request["pricing"]["output_tokens"]
+        ) / 1_000_000, 12),
     }
     trace = [
         {"sequence": 0, "kind": "tool_call", "recovery_phase": False},
@@ -164,7 +170,15 @@ def main() -> None:
         "budget_enforcement_attestation": args.budget_attestation,
         "filesystem_network_process_attestation": args.isolation_attestation,
         "termination": "completed",
-        "provider_request_ids": ["excluded-local-smoke-fixture"],
+        "model_invocations": [{
+            "attempt": 1,
+            "transport": "excluded_fixture",
+            "observable_id_kind": "fixture",
+            "observable_id": "excluded-local-smoke-fixture",
+            "process_exit_code": 0,
+            "wall_seconds": round(wall, 6),
+            "usage_observed": True
+        }],
         "usage": usage,
     })
 

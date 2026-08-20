@@ -9,6 +9,7 @@ import json
 import os
 import shutil
 import signal
+import stat
 import subprocess
 import sys
 import tarfile
@@ -33,9 +34,11 @@ WORKFLOW_EVIDENCE = {
     ],
 }
 USAGE_FIELDS = (
-    "input_tokens", "output_tokens", "tool_calls", "build_attempts",
+    "input_tokens", "cached_input_tokens", "cache_write_input_tokens", "output_tokens",
+    "reasoning_output_tokens", "tool_calls", "build_attempts",
     "recovery_tool_calls", "infrastructure_retries", "wall_seconds", "cost_usd",
 )
+INTEGER_USAGE_FIELDS = USAGE_FIELDS[:-2]
 BLIND_GRADING_TEXT_RULE = (
     "Write primary_grader_rationale and any source-amendment.md using "
     "condition-neutral mathematical language. Do not name the assigned workflow, "
@@ -110,16 +113,46 @@ def extract_git_archive(commit: str, paths: list[str], output: Path) -> None:
 
 def file_manifest(root: Path) -> list[dict[str, Any]]:
     manifest = []
-    for path in sorted(item for item in root.rglob("*") if item.is_file()):
-        relative = path.relative_to(root)
-        if ".lake" in relative.parts:
+    root_metadata = root.lstat()
+    root_attributes = getattr(root_metadata, "st_file_attributes", 0)
+    require(root.is_dir() and not root.is_symlink()
+            and not (root_attributes & getattr(stat, "FILE_ATTRIBUTE_REPARSE_POINT", 0x400)),
+            "manifest root is linked, reparsed, or not a directory")
+    for current_text, directories, files in os.walk(root, followlinks=False):
+        current = Path(current_text)
+        relative_directory = current.relative_to(root)
+        if ".lake" in relative_directory.parts:
+            directories[:] = []
             continue
-        payload = path.read_bytes()
-        manifest.append({
-            "path": relative.as_posix(),
-            "bytes": len(payload),
-            "sha256": hashlib.sha256(payload).hexdigest(),
-        })
+        kept_directories = []
+        for name in directories:
+            path = current / name
+            if name == ".lake":
+                continue
+            metadata = path.lstat()
+            attributes = getattr(metadata, "st_file_attributes", 0)
+            require(path.is_dir() and not path.is_symlink()
+                    and not (attributes & getattr(
+                        stat, "FILE_ATTRIBUTE_REPARSE_POINT", 0x400
+                    )), f"manifest directory is linked or reparsed: {path}")
+            kept_directories.append(name)
+        directories[:] = kept_directories
+        for name in sorted(files):
+            path = current / name
+            metadata = path.lstat()
+            attributes = getattr(metadata, "st_file_attributes", 0)
+            require(stat.S_ISREG(metadata.st_mode) and not path.is_symlink()
+                    and not (attributes & getattr(
+                        stat, "FILE_ATTRIBUTE_REPARSE_POINT", 0x400
+                    )) and metadata.st_nlink == 1,
+                    f"manifest file is linked, reparsed, or non-regular: {path}")
+            payload = path.read_bytes()
+            manifest.append({
+                "path": path.relative_to(root).as_posix(),
+                "bytes": len(payload),
+                "sha256": hashlib.sha256(payload).hexdigest(),
+            })
+    manifest.sort(key=lambda entry: entry["path"])
     return manifest
 
 
@@ -174,6 +207,7 @@ def self_verify(pack_dir: Path, config: dict[str, Any]) -> None:
             "execution-adapter runtime differs from frozen hash")
     require(adapter["command_argv"][0] == runtime_text,
             "execution-adapter command does not begin with the frozen runtime")
+    prepare.validate_provider_runtime(adapter["provider_runtime"], require_hash=True)
 
 
 def scan_forbidden(root: Path, forbidden: list[str]) -> list[dict[str, str]]:
@@ -307,9 +341,11 @@ def prepare_run(pack_dir: Path, semantic_run_id: str, output_dir: Path) -> None:
         "source_sha256": case["source_sha256"],
         "workspace_base_commit": commit,
         "model": config["model"],
+        "pricing": config["pricing"],
         "budgets": config["budgets_per_run"],
         "retry_policy": config["retry_policy"],
         "adapter_contract_sha256": config["execution_adapter"]["contract_sha256"],
+        "provider_runtime": config["execution_adapter"]["provider_runtime"],
         "required_adapter_attestations": [
             "fresh model context and process",
             "only agent_mount plus pinned read-only toolchain/dependency cache visible",
@@ -384,23 +420,59 @@ def validate_usage(
     usage = response.get("usage")
     require(isinstance(usage, dict), "adapter response usage must be an object")
     require(set(usage) == set(USAGE_FIELDS), "adapter usage field set differs from contract")
-    integer_fields = USAGE_FIELDS[:-2]
-    for field in integer_fields:
+    for field in INTEGER_USAGE_FIELDS:
         require(isinstance(usage[field], int) and not isinstance(usage[field], bool)
                 and usage[field] >= 0, f"adapter usage {field} must be a nonnegative integer")
     for field in ("wall_seconds", "cost_usd"):
         require(isinstance(usage[field], (int, float)) and not isinstance(usage[field], bool)
                 and usage[field] >= 0, f"adapter usage {field} must be nonnegative")
-    retry_events = [event for event in events if event["kind"] == "provider_retry"]
+    require(usage["cached_input_tokens"] + usage["cache_write_input_tokens"]
+            <= usage["input_tokens"],
+            "cached and cache-write input tokens exceed total input_tokens")
+    require(usage["reasoning_output_tokens"] <= usage["output_tokens"],
+            "reasoning_output_tokens exceeds total output_tokens")
+    retry_events = [
+        event for event in events if event["kind"] == "model_invocation_retry"
+    ]
     for event in retry_events:
         require(event.get("reason") in {"infrastructure", "semantic"},
-                "each provider_retry must record infrastructure or semantic reason")
-    request_ids = response.get("provider_request_ids")
-    require(isinstance(request_ids, list), "provider_request_ids must be a list")
-    require(len(request_ids) == len(set(request_ids)),
-            "provider_request_ids must not contain duplicates")
-    require(len(retry_events) == max(0, len(request_ids) - 1),
-            "provider retry events differ from provider_request_ids")
+                "each model_invocation_retry must record infrastructure or semantic reason")
+    invocations = response.get("model_invocations")
+    require(isinstance(invocations, list), "model_invocations must be a list")
+    observed_ids = []
+    for attempt, invocation in enumerate(invocations, 1):
+        require(isinstance(invocation, dict)
+                and set(invocation) == {
+                    "attempt", "transport", "observable_id_kind", "observable_id",
+                    "process_exit_code", "wall_seconds", "usage_observed",
+                }, "each model invocation must use the exact observable schema")
+        require(invocation["attempt"] == attempt,
+                "model invocation attempts must be consecutive and one-indexed")
+        require(invocation["transport"] in {"codex_cli", "excluded_fixture"},
+                "unknown model invocation transport")
+        require(isinstance(invocation["process_exit_code"], int)
+                and not isinstance(invocation["process_exit_code"], bool),
+                "model invocation process_exit_code must be an integer")
+        require(isinstance(invocation["wall_seconds"], (int, float))
+                and not isinstance(invocation["wall_seconds"], bool)
+                and invocation["wall_seconds"] >= 0,
+                "model invocation wall_seconds must be nonnegative")
+        require(isinstance(invocation["usage_observed"], bool),
+                "model invocation usage_observed must be boolean")
+        require(invocation["observable_id_kind"] in {"codex_thread", "fixture", "none"},
+                "unknown model invocation observable ID kind")
+        observable = invocation["observable_id"]
+        if invocation["observable_id_kind"] == "none":
+            require(observable is None,
+                    "unobserved model invocation must use a null observable ID")
+        else:
+            require(isinstance(observable, str) and observable,
+                    "observed model invocation needs a nonempty ID")
+            observed_ids.append(observable)
+    require(len(observed_ids) == len(set(observed_ids)),
+            "observable model invocation IDs must not contain duplicates")
+    require(len(retry_events) == max(0, len(invocations) - 1),
+            "model retry events differ from model invocation attempts")
     derived = {
         "tool_calls": sum(event["kind"] == "tool_call" for event in events),
         "build_attempts": sum(event["kind"] == "build_attempt" for event in events),
@@ -409,7 +481,8 @@ def validate_usage(
             for event in events
         ),
         "infrastructure_retries": sum(
-            event["kind"] == "provider_retry" and event.get("reason") == "infrastructure"
+            event["kind"] == "model_invocation_retry"
+            and event.get("reason") == "infrastructure"
             for event in events
         ),
     }
@@ -428,6 +501,17 @@ def validate_usage(
             "adapter usage counters differ from complete trace events")
     summary = events[-1].get("usage")
     require(summary == usage, "final trace usage summary differs from adapter response")
+    pricing = job["pricing"]
+    expected_cost = round((
+        (usage["input_tokens"] - usage["cached_input_tokens"]
+         - usage["cache_write_input_tokens"])
+        * pricing["input_tokens"]
+        + usage["cached_input_tokens"] * pricing["cached_input_tokens"]
+        + usage["cache_write_input_tokens"] * pricing["cache_write_input_tokens"]
+        + usage["output_tokens"] * pricing["output_tokens"]
+    ) / 1_000_000, 12)
+    require(abs(float(usage["cost_usd"]) - expected_cost) <= 1e-12,
+            "adapter cost differs from frozen token prices")
     budgets = job["budgets"]
     limits = {
         "input_tokens": "maximum_input_tokens",
@@ -453,6 +537,10 @@ def validate_usage(
         <= job["retry_policy"]["semantic_failure_retries"],
         "adapter exceeded frozen semantic_failure_retries",
     )
+    if response.get("termination") == "completed":
+        require(bool(invocations) and all(
+            invocation["usage_observed"] for invocation in invocations
+        ), "completed adapter response requires observed usage for every invocation")
     return usage
 
 
@@ -494,6 +582,10 @@ def execute_run(pack_dir: Path, run_dir: Path) -> None:
             == prepare.sha256_file(operator / "workspace_manifest.json"),
             "workspace manifest changed before execution")
     require(job["model"] == config["model"], "prepared job model differs from frozen config")
+    require(job["pricing"] == config["pricing"],
+            "prepared job pricing differs from frozen config")
+    require(job["provider_runtime"] == config["execution_adapter"]["provider_runtime"],
+            "prepared job provider runtime differs from frozen config")
     require(job["budgets"] == config["budgets_per_run"],
             "prepared job budgets differ from frozen config")
     require(job["retry_policy"] == config["retry_policy"],
@@ -514,9 +606,11 @@ def execute_run(pack_dir: Path, run_dir: Path) -> None:
         "prompt_path": str((agent / "prompt.md").resolve()),
         "replicate": job["replicate"],
         "model": job["model"],
+        "pricing": job["pricing"],
         "budgets": job["budgets"],
         "retry_policy": job["retry_policy"],
         "result_contract": job["result_contract"],
+        "provider_runtime": job["provider_runtime"],
     }
     dump(request_path, request)
     command = render_adapter_command(
@@ -585,11 +679,11 @@ def execute_run(pack_dir: Path, run_dir: Path) -> None:
     require(response.get("termination") in {
         "completed", "budget_exhausted", "infrastructure_failure"
     }, "unknown adapter termination")
-    request_ids = response.get("provider_request_ids")
-    require(isinstance(request_ids, list) and all(isinstance(item, str) and item for item in request_ids),
-            "provider_request_ids must be a string list")
-    require(response["termination"] == "infrastructure_failure" or bool(request_ids),
-            "completed/budget-exhausted adapter response needs a provider request ID")
+    invocations = response.get("model_invocations")
+    require(isinstance(invocations, list),
+            "model_invocations must be a list")
+    require(response["termination"] == "infrastructure_failure" or bool(invocations),
+            "completed/budget-exhausted response needs a model invocation")
     events = parse_trace(trace_path)
     usage = validate_usage(response, events, job)
     require(orchestrator_wall <= timeout + 1.0,
@@ -601,13 +695,10 @@ def execute_run(pack_dir: Path, run_dir: Path) -> None:
     require(all((output_dir / name).is_file() for name in required_outputs),
             "adapter omitted one or more required output files")
     after_manifest = file_manifest(agent)
-    receipt_payloads = {
-        "request.json": request_path.read_bytes(),
-        "response.json": response_path.read_bytes(),
-        "trace.jsonl": trace_path.read_bytes(),
-        "process.stdout.log": (adapter_dir / "process.stdout.log").read_bytes(),
-        "process.stderr.log": (adapter_dir / "process.stderr.log").read_bytes(),
-    }
+    adapter_files = sorted(adapter_dir.iterdir(), key=lambda path: path.name)
+    require(all(path.is_file() and not path.is_symlink() for path in adapter_files),
+            "adapter artifact directory contains a non-regular or linked entry")
+    receipt_payloads = {path.name: path.read_bytes() for path in adapter_files}
     receipt = {
         "schema_version": 1,
         "opaque_run_id": job["opaque_run_id"],
@@ -659,11 +750,22 @@ def record_operator_failure(run_dir: Path, message: str) -> None:
     if state.get("status") != "prepared_unrun":
         return
     adapter = operator / "adapter"
-    artifacts = {
-        path.relative_to(adapter).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
-        for path in sorted(adapter.rglob("*"))
-        if adapter.is_dir() and path.is_file()
-    }
+    artifacts = {}
+    adapter_artifact_error = None
+    if adapter.is_dir():
+        try:
+            artifacts = {
+                entry["path"]: entry["sha256"] for entry in file_manifest(adapter)
+            }
+        except (SystemExit, OSError, UnicodeError) as error:
+            adapter_artifact_error = str(error)
+    failure_manifest_sha256 = None
+    failure_manifest_error = None
+    if agent.is_dir():
+        try:
+            failure_manifest_sha256 = manifest_sha256(file_manifest(agent))
+        except (SystemExit, OSError, UnicodeError) as error:
+            failure_manifest_error = str(error)
     receipt = {
         "schema_version": 1,
         "opaque_run_id": state["opaque_run_id"],
@@ -673,9 +775,9 @@ def record_operator_failure(run_dir: Path, message: str) -> None:
         "status": "terminal_operator_failure",
         "failure_message": message,
         "adapter_artifact_sha256": artifacts,
-        "agent_manifest_at_failure_sha256": (
-            manifest_sha256(file_manifest(agent)) if agent.is_dir() else None
-        ),
+        "adapter_artifact_error": adapter_artifact_error,
+        "agent_manifest_at_failure_sha256": failure_manifest_sha256,
+        "agent_manifest_at_failure_error": failure_manifest_error,
         "retry_disposition": (
             "fail closed; a separately prepared retry may be scheduled only under the "
             "frozen infrastructure retry policy and must not replace this record"

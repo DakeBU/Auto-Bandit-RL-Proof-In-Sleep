@@ -46,7 +46,10 @@ class TargetDriftAnalysisTest(unittest.TestCase):
                         "artifact_replay_success": True,
                         "execution_metrics": {
                             "input_tokens": 10,
+                            "cached_input_tokens": 2,
+                            "cache_write_input_tokens": 1,
                             "output_tokens": 5,
+                            "reasoning_output_tokens": 1,
                             "tool_calls": 2,
                             "build_attempts": 1,
                             "recovery_tool_calls": 0,

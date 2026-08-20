@@ -14,8 +14,20 @@
     "immutable_version": "UNSET",
     "api_or_runtime": "UNSET",
     "seed_semantics": "UNSET",
-    "temperature": 0.0,
-    "top_p": 1.0
+    "reasoning_effort": "UNSET",
+    "service_tier": "UNSET",
+    "sampling_control_semantics": "UNSET"
+  },
+  "pricing": {
+    "currency": "USD",
+    "unit": "per_million_tokens",
+    "input_tokens": "UNSET",
+    "cached_input_tokens": "UNSET",
+    "cache_write_input_tokens": "UNSET",
+    "output_tokens": "UNSET",
+    "source_url": "UNSET",
+    "effective_date": "UNSET",
+    "output_includes_reasoning_tokens": "UNSET"
   },
   "conditions": {
     "compile_only": {
@@ -76,6 +88,17 @@
     "entrypoint_sha256": "UNSET",
     "runtime_executable": "UNSET",
     "runtime_executable_sha256": "UNSET",
+    "provider_runtime": {
+      "kind": "UNSET",
+      "executable": "UNSET",
+      "executable_sha256": "UNSET",
+      "version": "UNSET",
+      "version_output_sha256": "UNSET",
+      "auth_source_path": "UNSET",
+      "fresh_codex_home_attestation": "UNSET",
+      "process_environment": "UNSET",
+      "shell_environment": "UNSET"
+    },
     "command_argv": ["UNSET"],
     "container_or_sandbox_image_digest": "UNSET",
     "budget_enforcement_attestation": "UNSET",
@@ -183,10 +206,12 @@
   },
   "unresolved_fields": [
     "orchestrator_commit",
-    "model.* except temperature/top_p",
+    "model.*",
+    "pricing.* except currency/unit",
     "conditions.*.prompt_sha256",
     "execution_adapter.contract_sha256",
     "execution_adapter.command_argv",
+    "execution_adapter.provider_runtime.*",
     "budgets_per_run.*",
     "retry_policy.* except semantic_failure_retries",
     "randomization.paired_replicates",
