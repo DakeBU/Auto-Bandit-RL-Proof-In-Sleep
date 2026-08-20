@@ -251,6 +251,7 @@ def main() -> None:
     inspect_label = controller.render_command(
         checker["sandbox_inspect_by_label_argv"], replacements
     )
+    outcome: dict[str, Any] | None = None
     try:
         outcome = controller.run_sandbox(
             command, cleanup, inspect, cleanup_label, inspect_label, work,
@@ -258,6 +259,17 @@ def main() -> None:
             int(checker["budgets"]["maximum_output_bytes"]), cidfile,
             int(checker["inspect_absent_exit_code"]),
         )
+        launch_output = str(outcome.get("output", ""))
+        if len(launch_output) > 8192:
+            launch_output = launch_output[-8192:]
+        prepare.require(outcome["exit_code"] == 0 and not outcome["timed_out"]
+                        and not outcome["output_limit_exceeded"]
+                        and outcome["lifecycle_verified_absent"] is True,
+                        "checker isolation-probe runtime did not close cleanly: "
+                        f"exit={outcome.get('exit_code')}, "
+                        f"timed_out={outcome.get('timed_out')}, "
+                        f"output_limit_exceeded={outcome.get('output_limit_exceeded')}, "
+                        f"output={launch_output!r}")
     except BaseException as error:
         # This result-free ledger is intentionally written outside the sandbox
         # work tree so that the workflow's `if: always()` upload preserves the
@@ -275,16 +287,22 @@ def main() -> None:
             "checker_attempt_label": attempt_label,
             "error_type": type(error).__name__,
             "error": str(error),
+            "sandbox_outcome": None if outcome is None else {
+                "exit_code": outcome.get("exit_code"),
+                "timed_out": outcome.get("timed_out"),
+                "output_limit_exceeded": outcome.get("output_limit_exceeded"),
+                "wall_seconds": outcome.get("wall_seconds"),
+                "output": str(outcome.get("output", ""))[-8192:],
+                "cidfile_container_id": outcome.get("cidfile_container_id"),
+                "lifecycle_verified_absent": outcome.get("lifecycle_verified_absent"),
+                "lifecycle": outcome.get("lifecycle"),
+            },
             "nonclaim": (
                 "This is a result-free failed candidate isolation attempt, not "
                 "a production seal, model run, or formalization outcome."
             ),
         })
         raise
-    prepare.require(outcome["exit_code"] == 0 and not outcome["timed_out"]
-                    and not outcome["output_limit_exceeded"]
-                    and outcome["lifecycle_verified_absent"] is True,
-                    "checker isolation-probe runtime did not close cleanly")
     protected_after = {
         "request_sha256": controller.regular_file_sha256(
             request_path, protected_limit, "probe request after sandbox"
