@@ -166,7 +166,9 @@ Core paths:
   canonical-Docker-launcher/trusted-controller/restricted-worker sandbox
   contract, non-executing in-image checker/cache-manifest verification, fresh replay,
   blind grading packets, workflow-artifact hash records, and source/target-aware
-  analysis with secondary multiplicity control.  A provenance-bound multi-stage
+  analysis with secondary multiplicity control, plus an exact 450-ID completion
+  ledger that forbids replacement and imputation and suppresses every inferential
+  result whenever any preregistered run is missing.  A provenance-bound multi-stage
   builder now exports the exact common pre-audit Git snapshot, constructs and
   byte-manifests the complete Lake cache, keeps that source out of the final
   image, and can emit an image/toolchain/cache SBOM only after the final image

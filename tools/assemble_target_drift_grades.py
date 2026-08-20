@@ -26,6 +26,7 @@ TOOLS = Path(__file__).resolve().parent
 sys.path.insert(0, str(TOOLS))
 
 import prepare_target_drift_execution as prepare  # noqa: E402
+import build_target_drift_completion_ledger as completion  # noqa: E402
 
 
 def load(path: Path) -> dict[str, Any]:
@@ -182,6 +183,20 @@ def main() -> None:
             "grading packet seed differs from frozen config")
     mapping_path = grading_pack / "operator-mapping.json"
     mapping_payload = mapping_path.read_bytes()
+    completion_path = grading_pack / "completion-ledger.json"
+    require(completion_path.is_file(), "grading pack completion ledger is missing")
+    completion_payload = completion_path.read_bytes()
+    require(hashlib.sha256(completion_payload).hexdigest()
+            == packet_manifest.get("completion_ledger_sha256"),
+            "grading completion-ledger hash differs from manifest")
+    completion_ledger = json.loads(completion_payload.decode("utf-8"))
+    completion.self_verify(pack, config)
+    completion.validate_ledger(pack, completion_ledger, require_complete=True)
+    require(packet_manifest.get("missing_run_policy_id")
+            == completion_ledger["missing_run_policy_id"]
+            and packet_manifest.get("missing_run_policy_sha256")
+            == completion_ledger["missing_run_policy_sha256"],
+            "grading pack missing-run policy binding mismatch")
     mapping = json.loads(mapping_payload.decode("utf-8"))["mapping"]
     packet_payloads = {
         f"packets/{path.name}": path.read_bytes()
@@ -214,7 +229,11 @@ def main() -> None:
             "operator mapping hash differs from manifest")
     require(
         packet_manifest["aggregate_sha256"]
-        == digest_payloads({**packet_payloads, "operator-mapping.json": mapping_payload}),
+        == digest_payloads({
+            **packet_payloads,
+            "operator-mapping.json": mapping_payload,
+            "completion-ledger.json": completion_payload,
+        }),
         "combined grading-pack aggregate differs from manifest",
     )
     packet_ids = {item["grade_id"] for item in mapping}
@@ -320,6 +339,9 @@ def main() -> None:
         "suite_id": config["suite_id"],
         "sealed_pack_sha256": sealed_pack_sha256,
         "grading_pack_sha256": packet_manifest["aggregate_sha256"],
+        "completion_ledger_sha256": packet_manifest["completion_ledger_sha256"],
+        "missing_run_policy_id": packet_manifest["missing_run_policy_id"],
+        "missing_run_policy_sha256": packet_manifest["missing_run_policy_sha256"],
         "result_eligible": True,
         "checker_mode": "production",
         "checker_runtime_config_sha256": runtime_sha256,

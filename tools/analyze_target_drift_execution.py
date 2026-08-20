@@ -20,6 +20,7 @@ TOOLS = Path(__file__).resolve().parent
 sys.path.insert(0, str(TOOLS))
 
 import prepare_target_drift_execution as prepare  # noqa: E402
+import build_target_drift_completion_ledger as completion  # noqa: E402
 
 
 def load(path: Path) -> dict[str, Any]:
@@ -51,7 +52,8 @@ def digest_payloads(payloads: dict[str, bytes]) -> str:
 
 
 def verify_grading_pack(grading_pack: Path, sealed_pack_sha256: str,
-                        grader_prompt_sha256: str) -> dict[str, Any]:
+                        grader_prompt_sha256: str,
+                        completion_ledger_sha256: str) -> dict[str, Any]:
     manifest_path = grading_pack / "packet-manifest.json"
     mapping_path = grading_pack / "operator-mapping.json"
     require(manifest_path.is_file() and mapping_path.is_file(),
@@ -62,6 +64,12 @@ def verify_grading_pack(grading_pack: Path, sealed_pack_sha256: str,
     require(manifest.get("grader_prompt_sha256") == grader_prompt_sha256,
             "grading pack names a different grader prompt")
     mapping_payload = mapping_path.read_bytes()
+    completion_path = grading_pack / "completion-ledger.json"
+    require(completion_path.is_file(), "grading-pack completion ledger is missing")
+    completion_payload = completion_path.read_bytes()
+    require(hashlib.sha256(completion_payload).hexdigest() == completion_ledger_sha256
+            == manifest.get("completion_ledger_sha256"),
+            "grading-pack completion ledger hash mismatch")
     require(hashlib.sha256(mapping_payload).hexdigest()
             == manifest.get("operator_mapping_sha256"),
             "grading-pack operator mapping hash mismatch")
@@ -78,10 +86,43 @@ def verify_grading_pack(grading_pack: Path, sealed_pack_sha256: str,
         payloads[name] = payload
     require(digest_payloads(payloads) == manifest.get("packet_aggregate_sha256"),
             "grading packet aggregate mismatch")
-    require(digest_payloads({**payloads, "operator-mapping.json": mapping_payload})
+    require(digest_payloads({
+        **payloads,
+        "operator-mapping.json": mapping_payload,
+        "completion-ledger.json": completion_payload,
+    })
             == manifest.get("aggregate_sha256"),
             "grading-pack aggregate mismatch")
     return manifest
+
+
+def incomplete_analysis(ledger: dict[str, Any]) -> dict[str, Any]:
+    """Return a non-inferential report; deliberately omit every numeric effect field."""
+    return {
+        "schema_version": 1,
+        "suite_id": "ABRL-TARGET-DRIFT-V2",
+        "analysis_status": "not_estimable_incomplete_preregistered_run_universe",
+        "result_eligible": False,
+        "primary_analysis_permitted": False,
+        "planned_run_count": ledger["planned_run_count"],
+        "result_eligible_run_count": ledger["summary"]["result_eligible_count"],
+        "missing_run_count": ledger["summary"]["missing_count"],
+        "missingness": {
+            key: value for key, value in ledger["summary"].items()
+            if key not in {"result_eligible_count", "missing_count"}
+        },
+        "replacement_runs_permitted": False,
+        "outcome_imputation_permitted": False,
+        "primary": {
+            "status": "not_reported",
+            "reason": "the frozen policy requires 450/450 production-result-eligible graded records",
+        },
+        "secondary_endpoints": {
+            "status": "not_reported",
+            "reason": "incomplete execution cannot enter the preregistered inferential family",
+        },
+        "reporting_boundary": "No point estimate, interval, p-value, q-value, or success claim is produced from an incomplete run universe.",
+    }
 
 
 def percentile(values: list[float], probability: float) -> float:
@@ -467,8 +508,10 @@ def analyze(data: dict[str, Any], seed: int, bootstrap_replicates: int, permutat
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--pack", type=Path, required=True)
-    parser.add_argument("--grading-pack", type=Path, required=True)
-    parser.add_argument("--grades", type=Path, required=True)
+    parser.add_argument("--runs-root", type=Path, required=True)
+    parser.add_argument("--completion-ledger", type=Path, required=True)
+    parser.add_argument("--grading-pack", type=Path)
+    parser.add_argument("--grades", type=Path)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     require(not args.output.exists(), "analysis output already exists")
@@ -491,9 +534,34 @@ def main() -> None:
             == prepare_hash, "sealed pack verifier differs from frozen hash")
     analysis_config = config["analysis"]
     sealed_pack_sha256 = (pack / "aggregate.sha256").read_text(encoding="ascii").strip()
+    completion.self_verify(pack, config)
+    completion_path = args.completion_ledger.resolve()
+    completion_ledger = load(completion_path)
+    completion.validate_ledger_against_runs(
+        pack, args.runs_root.resolve(), completion_ledger, require_complete=False,
+    )
+    completion_ledger_sha256 = prepare.sha256_file(completion_path)
+    if not completion_ledger["primary_analysis_permitted"]:
+        require(args.grading_pack is None and args.grades is None,
+                "incomplete analysis must not receive grades or a grading pack")
+        result = incomplete_analysis(completion_ledger)
+        result["sealed_pack_sha256"] = sealed_pack_sha256
+        result["completion_ledger_sha256"] = completion_ledger_sha256
+        result["missing_run_policy_id"] = completion_ledger["missing_run_policy_id"]
+        result["missing_run_policy_sha256"] = completion_ledger["missing_run_policy_sha256"]
+        dump(args.output, result)
+        print(
+            "target-drift inferential analysis refused: "
+            f"eligible={result['result_eligible_run_count']}/450, "
+            f"missing={result['missing_run_count']}"
+        )
+        raise SystemExit(2)
+    require(args.grading_pack is not None and args.grades is not None,
+            "complete analysis requires --grading-pack and --grades")
     grading_pack_manifest = verify_grading_pack(
         args.grading_pack.resolve(), sealed_pack_sha256,
         config["grading"]["grader_prompt_sha256"],
+        completion_ledger_sha256,
     )
     grades = load(args.grades)
     runtime_sha256 = prepare.checker_runtime_config_sha256(config)
@@ -518,6 +586,16 @@ def main() -> None:
     require(grades.get("grading_pack_sha256")
             == grading_pack_manifest["aggregate_sha256"],
             "grade ledger names a different grading pack")
+    require(grades.get("completion_ledger_sha256") == completion_ledger_sha256
+            == grading_pack_manifest.get("completion_ledger_sha256"),
+            "analysis completion-ledger binding mismatch")
+    require(grades.get("missing_run_policy_id")
+            == grading_pack_manifest.get("missing_run_policy_id")
+            == completion_ledger["missing_run_policy_id"]
+            and grades.get("missing_run_policy_sha256")
+            == grading_pack_manifest.get("missing_run_policy_sha256")
+            == completion_ledger["missing_run_policy_sha256"],
+            "analysis missing-run policy binding mismatch")
     result = analyze(
         grades,
         analysis_config["bootstrap_seed"],
@@ -527,6 +605,9 @@ def main() -> None:
     result["sealed_pack_sha256"] = sealed_pack_sha256
     result["grading_pack_sha256"] = grading_pack_manifest["aggregate_sha256"]
     result["grade_ledger_sha256"] = prepare.sha256_file(args.grades.resolve())
+    result["completion_ledger_sha256"] = completion_ledger_sha256
+    result["missing_run_policy_id"] = completion_ledger["missing_run_policy_id"]
+    result["missing_run_policy_sha256"] = completion_ledger["missing_run_policy_sha256"]
     result["result_eligible"] = True
     result["checker_mode"] = "production"
     result["checker_runtime_config_sha256"] = runtime_sha256
