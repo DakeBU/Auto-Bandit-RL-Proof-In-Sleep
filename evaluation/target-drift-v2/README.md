@@ -101,7 +101,8 @@ Docker executable and runtime identity, run the seven-probe recorder using that
 runtime-bound config, and only then preseal:
 
 ```text
-python tools/finalize_target_drift_config.py bind-runtime --draft HUMAN-DRAFT.json --runtime-executable ABSOLUTE-DOCKER-PATH --output RUNTIME-BOUND.json
+python tools/prepare_target_drift_checker_probe_config.py --template evaluation/target-drift-v2/execution-template.json --context CHECKER-CONTEXT --artifact-dir CHECKER-BUILD-ARTIFACTS --probe-report CONFIGURED-PROBE-REPORT.json --probe-artifacts-dir FRESH-PROBE-ARTIFACTS --output CHECKER-PROBE-DRAFT.json
+python tools/finalize_target_drift_config.py bind-runtime --draft CHECKER-PROBE-DRAFT.json --runtime-executable ABSOLUTE-DOCKER-PATH --output RUNTIME-BOUND.json
 python tools/record_target_drift_checker_isolation_probe.py --config RUNTIME-BOUND.json --work-dir FRESH-PROBE-WORK --output CONFIGURED-PROBE-REPORT.json --probe-commit FULL-GIT-COMMIT --host-platform HOST-DESCRIPTION
 python tools/finalize_target_drift_config.py preseal --draft RUNTIME-BOUND.json --source-manifest SOURCES.json --output PRESEAL.json
 python tools/prepare_target_drift_execution.py --config PRESEAL.json --materialize PRESEAL-PACK
@@ -177,6 +178,19 @@ reported release must match the pinned toolchain before an SBOM can be emitted.
 The emitted `built_manifest_verified_probe_pending` SBOM is still only an image-construction record:
 it cannot replace the seven production isolation probes, the real one-case by
 three-condition smoke, or any model run.
+
+The manual `target-drift-checker-image.yml` workflow now closes the former
+human-copy gap for a candidate: after building on one Docker daemon, it
+materializes a checker-only draft from the verified SBOM and sidecars, binds
+that exact daemon/runtime, and executes the sealed seven-probe recorder.  Its
+`if: always()` upload step preserves whatever evidence was produced.  Once the
+recorder starts, its pipefail/tee attempt log is preserved; a passed run
+additionally contains the sealed probe report and raw probe artifacts.  An
+earlier materialization or runtime-binding failure may contain only the sidecars
+produced before that failure.  Any failed probe fails the job.  This is still
+result-free candidate evidence: the ephemeral
+image is not published, a successful candidate probe is not a final production
+seal, and the workflow never invokes a model.
 
 The first successful result-free Linux candidate build is recorded in
 [`checker-image-candidate-32137509103.json`](checker-image-candidate-32137509103.json).

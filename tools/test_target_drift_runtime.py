@@ -27,6 +27,7 @@ import record_target_drift_checker_isolation_probe as isolation_probe  # noqa: E
 import launch_target_drift_checker_container as checker_launcher  # noqa: E402
 import prepare_target_drift_execution as prepare  # noqa: E402
 import prepare_target_drift_checker_image as checker_image  # noqa: E402
+import prepare_target_drift_checker_probe_config as checker_probe_config  # noqa: E402
 import target_drift_checker_cache_manifest as cache_manifest  # noqa: E402
 
 
@@ -39,6 +40,134 @@ class TargetDriftRuntimeTest(unittest.TestCase):
         "base_image_digest": "5" * 64,
         "lean_toolchain_sha256": "6" * 64,
     }
+
+    def test_checker_probe_config_binds_only_result_free_candidate_inputs(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            context = root / "context"
+            artifacts = root / "artifacts"
+            context.mkdir()
+            artifacts.mkdir()
+            build_input = {"workspace_base_commit": "1" * 40}
+            (context / "checker-image-build-input.json").write_text(
+                json.dumps(build_input) + "\n", encoding="utf-8"
+            )
+            for name, payload in (
+                ("Containerfile", b"FROM scratch\n"),
+                ("check_target_drift_container_controller.py", b"controller\n"),
+                ("check_target_drift_inner.py", b"inner\n"),
+            ):
+                (context / name).write_bytes(payload)
+            (artifacts / "checker-cache-manifest.json").write_bytes(b"{}\n")
+            (artifacts / "checker-image-build.log").write_bytes(b"build\n")
+            sbom = {
+                "schema_version": 1,
+                "suite_id": "ABRL-TARGET-DRIFT-V2",
+                "status": "built_manifest_verified_probe_pending",
+                "container_image_digest": "sha256:" + "f" * 64,
+                "workspace_base_commit": "1" * 40,
+                "build_input_manifest_sha256": prepare.sha256_file(
+                    context / "checker-image-build-input.json"
+                ),
+                "checker_image_recipe_sha256": prepare.sha256_file(
+                    context / "Containerfile"
+                ),
+                "controller_entrypoint_sha256": prepare.sha256_file(
+                    context / "check_target_drift_container_controller.py"
+                ),
+                "inner_checker_sha256": prepare.sha256_file(
+                    context / "check_target_drift_inner.py"
+                ),
+                "lake_cache_manifest_sha256": prepare.sha256_file(
+                    artifacts / "checker-cache-manifest.json"
+                ),
+                "image_build_log_sha256": prepare.sha256_file(
+                    artifacts / "checker-image-build.log"
+                ),
+            }
+            (artifacts / "checker-image-sbom.json").write_text(
+                json.dumps(sbom) + "\n", encoding="utf-8"
+            )
+            template = TOOLS.parent / "evaluation" / "target-drift-v2" / "execution-template.json"
+            output = root / "probe-draft.json"
+            budgets = {
+                "wall_clock_seconds": 60,
+                "memory_mb": 512,
+                "pids_limit": 32,
+                "cpus": 1.0,
+                "maximum_output_bytes": 4096,
+                "maximum_response_bytes": 2048,
+            }
+            with mock.patch.object(
+                checker_probe_config.checker_image, "validate_context",
+                return_value=build_input,
+            ), mock.patch.object(
+                checker_probe_config, "current_commit", return_value="2" * 40
+            ):
+                config = checker_probe_config.materialize(
+                    template, context, artifacts,
+                    artifacts / "checker-isolation-probe.json",
+                    artifacts / "checker-isolation-probe-artifacts",
+                    output, budgets,
+                )
+            self.assertEqual(config["execution_status"], "template_unfrozen")
+            self.assertEqual(config["workspace_base_commit"], "1" * 40)
+            checker = config["posthoc_checker"]
+            self.assertEqual(checker["mode"], "production")
+            self.assertEqual(checker["checker_version"], "candidate-" + "2" * 40)
+            self.assertEqual(checker["container_image_digest"], "sha256:" + "f" * 64)
+            self.assertEqual(checker["budgets"], budgets)
+            self.assertEqual(config["model"]["provider"], "UNSET")
+            self.assertIn("model.provider", config["unresolved_fields"])
+            self.assertNotIn(b"\r\n", output.read_bytes())
+            with self.assertRaises(SystemExit):
+                checker_probe_config.materialize(
+                    template, context, artifacts,
+                    artifacts / "checker-isolation-probe.json",
+                    artifacts / "checker-isolation-probe-artifacts",
+                    output, budgets,
+                )
+
+    def test_checker_probe_config_rejects_noncandidate_sbom(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            context = root / "context"
+            artifacts = root / "artifacts"
+            context.mkdir()
+            artifacts.mkdir()
+            build_input = {"workspace_base_commit": "1" * 40}
+            for name in (
+                "checker-image-build-input.json", "Containerfile",
+                "check_target_drift_container_controller.py",
+                "check_target_drift_inner.py",
+            ):
+                (context / name).write_text("{}\n", encoding="utf-8")
+            for name in ("checker-cache-manifest.json", "checker-image-build.log"):
+                (artifacts / name).write_text("{}\n", encoding="utf-8")
+            sbom = {
+                "schema_version": 1,
+                "suite_id": "ABRL-TARGET-DRIFT-V2",
+                "status": "unbuilt_template",
+            }
+            (artifacts / "checker-image-sbom.json").write_text(
+                json.dumps(sbom) + "\n", encoding="utf-8"
+            )
+            with mock.patch.object(
+                checker_probe_config.checker_image, "validate_context",
+                return_value=build_input,
+            ), self.assertRaises(SystemExit):
+                checker_probe_config.materialize(
+                    TOOLS.parent / "evaluation" / "target-drift-v2"
+                    / "execution-template.json",
+                    context, artifacts, artifacts / "probe.json",
+                    artifacts / "probe-artifacts", root / "draft.json",
+                    {
+                        "wall_clock_seconds": 60, "memory_mb": 512,
+                        "pids_limit": 32, "cpus": 1.0,
+                        "maximum_output_bytes": 4096,
+                        "maximum_response_bytes": 2048,
+                    },
+                )
 
     def test_checker_cache_manifest_round_trip_and_tamper_rejection(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -150,6 +279,8 @@ class TargetDriftRuntimeTest(unittest.TestCase):
             self.assertEqual((outside / "sentinel").read_bytes(), b"outside")
 
     def test_checker_image_context_is_frozen_to_the_base_commit(self) -> None:
+        if not (TOOLS.parent / ".git").exists():
+            self.skipTest("requires the authoring checkout Git object database")
         # ABRL contains intentionally descriptive Lean filenames.  Keep the
         # Windows build-context root short enough for non-long-path-aware tools.
         temporary_parent = TOOLS.parent.parent if os.name == "nt" else None

@@ -103,6 +103,7 @@ TARGET_DRIFT_TOOLS = (
     "tools/finalize_target_drift_config.py",
     "tools/launch_target_drift_checker_container.py",
     "tools/prepare_target_drift_checker_image.py",
+    "tools/prepare_target_drift_checker_probe_config.py",
     "tools/prepare_target_drift_execution.py",
     "tools/prepare_target_drift_grading.py",
     "tools/record_target_drift_checker_isolation_probe.py",

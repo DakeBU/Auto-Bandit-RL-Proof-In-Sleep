@@ -1,5 +1,5 @@
-import importlib.util
 import hashlib
+import importlib.util
 import json
 import subprocess
 import sys
@@ -101,6 +101,9 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertIn(prefix + "evidence/claim-ledger.json", names)
         self.assertIn(prefix + "artifact/verify_artifact.py", names)
         self.assertIn(prefix + "tools/prepare_target_drift_checker_image.py", names)
+        self.assertIn(
+            prefix + "tools/prepare_target_drift_checker_probe_config.py", names
+        )
         self.assertIn(prefix + "tools/target_drift_checker_cache_manifest.py", names)
         self.assertIn(
             prefix + "evaluation/target-drift-v2/checker-image-candidate-record.json",
@@ -223,6 +226,39 @@ class AnonymousSupplementTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             BUILDER.require_anonymous_bytes("bad.txt", b"person@example.edu")
         BUILDER.require_anonymous_bytes("good.txt", b"https://example.org/paper.pdf")
+
+    def test_packaged_verifier_does_not_embed_identity_membership_oracle(self):
+        verifier_path = (
+            BUILDER.REPO_ROOT / "artifact" / "anonymous-supplement"
+            / "verify_artifact.py"
+        )
+        source = verifier_path.read_bytes().lower()
+        for exposed_fragment in (
+            b"dake" + b"bu", b"ji" + b" cheng",
+            b"city university" + b" of hong kong",
+            b"git." + b"overleaf.com",
+            b"6a3f743d1f1f53f9" + b"6990c557",
+        ):
+            self.assertNotIn(exposed_fragment, source)
+        self.assertNotIn(b"blocked_identity_digests", source)
+        self.assertNotIn(b"contains_blocked_identity", source)
+        self.assertIn(b"windows_path", source)
+        self.assertIn(b"email", source)
+
+    def test_authoring_workflow_binds_and_runs_the_seven_probe_candidate(self):
+        workflow = (
+            BUILDER.REPO_ROOT / ".github" / "workflows"
+            / "target-drift-checker-image.yml"
+        ).read_text(encoding="utf-8")
+        self.assertIn("prepare_target_drift_checker_probe_config.py", workflow)
+        self.assertIn("finalize_target_drift_config.py bind-runtime", workflow)
+        self.assertIn("record_target_drift_checker_isolation_probe.py", workflow)
+        self.assertIn('--probe-commit "${GITHUB_SHA}"', workflow)
+        self.assertIn('--host-platform "$(uname -srmo)"', workflow)
+        self.assertIn("set -o pipefail", workflow)
+        self.assertIn("checker-isolation-probe-attempt.log", workflow)
+        self.assertIn("Upload the result-free build and isolation evidence", workflow)
+        self.assertIn("if: always()", workflow)
 
     def test_cli_requires_a_bound_graph_and_report(self):
         with self.assertRaises(ValueError):

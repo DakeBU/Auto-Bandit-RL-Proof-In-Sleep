@@ -7,6 +7,14 @@ focused canaries, declaration/status evidence, proof-graph tooling and frozen
 result-free evaluation protocol.  It is not a mirror of the authoring
 repository.
 
+The archive is produced by a positive allowlist plus a private, producer-side
+identity scan before its byte manifest is written.  The private blacklist is
+not embedded as readable strings, unsalted digests, or a membership oracle in
+the anonymous ZIP.  The packaged verifier independently checks every manifest
+hash and generic email/absolute-host-path leaks, so mutation relative to the
+supplied manifest is detected without revealing who or which private endpoints
+were screened.
+
 ## What the artifact establishes
 
 - The pinned Lean 4 and Mathlib environment is recorded by `lean-toolchain`,

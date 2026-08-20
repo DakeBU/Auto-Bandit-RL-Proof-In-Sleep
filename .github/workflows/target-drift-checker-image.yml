@@ -56,7 +56,35 @@ jobs:
           cp "${RUNNER_TEMP}/abrl-checker-context/checker-image-build-input.json" \
             "${RUNNER_TEMP}/abrl-checker-artifacts/checker-image-build-input.json"
 
-      - name: Upload the result-free build evidence
+      - name: Bind the candidate runtime and pass all seven isolation probes
+        run: |
+          set -o pipefail
+          python3 tools/prepare_target_drift_checker_probe_config.py \
+            --template evaluation/target-drift-v2/execution-template.json \
+            --context "${RUNNER_TEMP}/abrl-checker-context" \
+            --artifact-dir "${RUNNER_TEMP}/abrl-checker-artifacts" \
+            --probe-report "${RUNNER_TEMP}/abrl-checker-artifacts/checker-isolation-probe.json" \
+            --probe-artifacts-dir "${RUNNER_TEMP}/abrl-checker-artifacts/checker-isolation-probe-artifacts" \
+            --output "${RUNNER_TEMP}/abrl-checker-artifacts/checker-probe-draft.json" \
+            --wall-clock-seconds 900 \
+            --memory-mb 8192 \
+            --pids-limit 256 \
+            --cpus 2 \
+            --maximum-output-bytes 16777216 \
+            --maximum-response-bytes 4194304
+          python3 tools/finalize_target_drift_config.py bind-runtime \
+            --draft "${RUNNER_TEMP}/abrl-checker-artifacts/checker-probe-draft.json" \
+            --runtime-executable "$(command -v docker)" \
+            --output "${RUNNER_TEMP}/abrl-checker-artifacts/checker-runtime-bound.json"
+          python3 tools/record_target_drift_checker_isolation_probe.py \
+            --config "${RUNNER_TEMP}/abrl-checker-artifacts/checker-runtime-bound.json" \
+            --work-dir "${RUNNER_TEMP}/abrl-checker-probe-work" \
+            --output "${RUNNER_TEMP}/abrl-checker-artifacts/checker-isolation-probe.json" \
+            --probe-commit "${GITHUB_SHA}" \
+            --host-platform "$(uname -srmo)" \
+            2>&1 | tee "${RUNNER_TEMP}/abrl-checker-artifacts/checker-isolation-probe-attempt.log"
+
+      - name: Upload the result-free build and isolation evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
