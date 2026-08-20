@@ -4,10 +4,12 @@
 from __future__ import annotations
 
 import json
+import subprocess
 import sys
 import unittest
 import tempfile
 from pathlib import Path
+from unittest import mock
 
 
 TOOLS = Path(__file__).resolve().parent
@@ -20,6 +22,42 @@ import run_target_drift_execution as runner  # noqa: E402
 
 
 class TargetDriftExecutionTest(unittest.TestCase):
+    def test_codex_configuration_probe_rejects_an_invalid_tier(self) -> None:
+        provider = {
+            "executable": str(Path(sys.executable).resolve()),
+            "process_environment": {},
+        }
+        model = {"reasoning_effort": "high", "service_tier": "invalid"}
+        completed = subprocess.CompletedProcess([], 2, stdout=b"invalid tier")
+        with mock.patch.object(prepare.subprocess, "run", return_value=completed):
+            with self.assertRaises(SystemExit):
+                prepare.validate_codex_cli_configuration(provider, model)
+
+    def test_codex_provider_runtime_requires_an_auth_only_source_and_frozen_path(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            auth_source = Path(directory).resolve()
+            (auth_source / "auth.json").write_text("{}\n", encoding="utf-8")
+            runtime = Path(sys.executable).resolve()
+            output = prepare.provider_runtime_version_output(runtime)
+            provider = {
+                "kind": "codex_cli", "executable": str(runtime),
+                "executable_sha256": prepare.sha256_file(runtime),
+                "version": output.decode("utf-8").strip(),
+                "version_output_sha256": prepare.sha256_bytes(output),
+                "auth_source_path": str(auth_source),
+                "fresh_codex_home_attestation": (
+                    "One auth file is copied into a new disposable home per invocation."
+                ),
+                "process_environment": {},
+                "shell_environment": {"PATH": "frozen-path"},
+            }
+            self.assertEqual(
+                prepare.validate_provider_runtime(provider, require_hash=True), runtime
+            )
+            (auth_source / "config.toml").write_text("[features]\n", encoding="utf-8")
+            with self.assertRaises(SystemExit):
+                prepare.validate_provider_runtime(provider, require_hash=True)
+
     def test_template_and_prompts_validate_while_unfrozen(self) -> None:
         prepare.check_template(
             ROOT / "evaluation" / "target-drift-v1" / "execution-template.json"
@@ -61,6 +99,17 @@ class TargetDriftExecutionTest(unittest.TestCase):
             "entrypoint_sha256": prepare.sha256_file(entrypoint),
             "runtime_executable": str(runtime),
             "runtime_executable_sha256": prepare.sha256_file(runtime),
+            "provider_runtime": {
+                "kind": "excluded_fixture",
+                "executable": str(runtime),
+                "executable_sha256": prepare.sha256_file(runtime),
+                "version": prepare.provider_runtime_version_output(runtime).decode(
+                    "utf-8"
+                ).strip(),
+                "version_output_sha256": prepare.sha256_bytes(
+                    prepare.provider_runtime_version_output(runtime)
+                ),
+            },
             "container_or_sandbox_image_digest": image_digest,
             "command_argv": [
                 str(runtime), "{{ADAPTER_ENTRYPOINT_PATH}}",

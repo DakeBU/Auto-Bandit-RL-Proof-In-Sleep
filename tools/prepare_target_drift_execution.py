@@ -12,6 +12,7 @@ import re
 import stat
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 from typing import Any
 
@@ -429,9 +430,24 @@ def validate_adapter_contract(config: dict[str, Any], require_hash: bool) -> dic
     path = resolve_repo_path(entry["contract"])
     require(path.is_file(), "missing execution-adapter contract")
     contract = load(path)
+    require(contract.get("schema_version") == 3,
+            "adapter contract schema must be version 3")
     require(contract["suite_id"] == config["suite_id"], "adapter-contract suite mismatch")
     require(contract["status"] == "interface_frozen_results_absent",
             "adapter contract must remain result-free")
+    require(set(contract["request_schema"]["required"]) == {
+        "opaque_run_id", "replicate", "agent_mount", "prompt_path", "model",
+        "pricing", "budgets", "retry_policy", "result_contract", "provider_runtime",
+    }, "adapter request schema differs from the runner request")
+    require(set(contract["response_schema"]["usage_fields"]) == {
+        "input_tokens", "cached_input_tokens", "cache_write_input_tokens", "output_tokens",
+        "reasoning_output_tokens", "tool_calls", "build_attempts",
+        "recovery_tool_calls", "infrastructure_retries", "wall_seconds", "cost_usd",
+    }, "adapter usage schema differs from the runner accounting")
+    require(set(contract["response_schema"]["model_invocation_fields"]) == {
+        "attempt", "transport", "observable_id_kind", "observable_id",
+        "process_exit_code", "wall_seconds", "usage_observed",
+    }, "adapter model-invocation schema differs from the runner accounting")
     command = entry["command_argv"]
     require(isinstance(command, list) and command and all(isinstance(item, str) for item in command),
             "execution adapter command_argv must be a nonempty string list")
@@ -452,6 +468,7 @@ def validate_adapter_contract(config: dict[str, Any], require_hash: bool) -> dic
                 "execution adapter runtime path must already be canonical")
         require(entry["runtime_executable_sha256"] == sha256_file(runtime),
                 "execution adapter runtime hash does not match")
+        validate_provider_runtime(entry["provider_runtime"], require_hash=True)
         require(command[0] == runtime_text,
                 "execution adapter command must begin with the frozen runtime")
         joined = "\0".join(command)
@@ -461,6 +478,105 @@ def validate_adapter_contract(config: dict[str, Any], require_hash: bool) -> dic
         require(entry["container_or_sandbox_image_digest"] in joined,
                 "adapter command must literally bind the frozen sandbox image digest")
     return contract
+
+
+def provider_runtime_version_output(executable: Path) -> bytes:
+    process = subprocess.run(
+        [str(executable), "--version"], stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT, check=False,
+    )
+    require(process.returncode == 0,
+            "provider runtime --version command failed")
+    require(bool(process.stdout.strip()),
+            "provider runtime --version output is empty")
+    return process.stdout
+
+
+def validate_provider_runtime(
+    provider: dict[str, Any], require_hash: bool
+) -> Path | None:
+    require(isinstance(provider, dict),
+            "execution_adapter.provider_runtime must be an object")
+    require(provider.get("kind") in {"codex_cli", "excluded_fixture"},
+            "provider runtime kind must be codex_cli or excluded_fixture")
+    executable_text = provider.get("executable")
+    if not require_hash and executable_text == "UNSET":
+        return None
+    require(isinstance(executable_text, str) and Path(executable_text).is_absolute(),
+            "provider runtime executable must be an absolute path")
+    executable = regular_unlinked_file(
+        Path(executable_text).resolve(), "provider runtime executable"
+    )
+    require(Path(executable_text) == executable,
+            "provider runtime executable path must already be canonical")
+    if require_hash:
+        require(provider.get("executable_sha256") == sha256_file(executable),
+                "provider runtime executable hash does not match")
+        output = provider_runtime_version_output(executable)
+        require(provider.get("version_output_sha256") == sha256_bytes(output),
+                "provider runtime version output hash does not match")
+        observed = output.decode("utf-8", errors="strict").strip()
+        require(provider.get("version") == observed,
+                "provider runtime version text does not match")
+        if provider["kind"] == "codex_cli":
+            auth_source_text = provider.get("auth_source_path")
+            require(isinstance(auth_source_text, str)
+                    and Path(auth_source_text).is_absolute(),
+                    "Codex provider auth source must be an absolute path")
+            auth_source = Path(auth_source_text)
+            require(auth_source.resolve() == auth_source,
+                    "Codex provider auth source path must already be canonical")
+            home_info = auth_source.lstat() if auth_source.exists() else None
+            require(auth_source.is_dir() and not auth_source.is_symlink()
+                    and home_info is not None
+                    and not bool(getattr(home_info, "st_file_attributes", 0) & 0x400),
+                    "Codex provider auth source must be a plain directory")
+            children = list(auth_source.iterdir())
+            require({child.name for child in children} == {"auth.json"},
+                    "Codex provider auth source must contain only auth.json")
+            regular_unlinked_file(auth_source / "auth.json", "Codex provider auth.json")
+            attestation = provider.get("fresh_codex_home_attestation")
+            require(isinstance(attestation, str) and len(attestation.strip()) >= 20,
+                    "Codex provider fresh auth-only CODEX_HOME needs an attestation")
+            safe_names = {
+                "LANG", "LC_ALL", "PATH", "SYSTEMROOT", "SystemRoot", "TEMP", "TMP",
+            }
+            for field in ("process_environment", "shell_environment"):
+                environment = provider.get(field)
+                require(isinstance(environment, dict),
+                        f"Codex provider {field} must be an object")
+                lowered = set()
+                for name, value in environment.items():
+                    require(isinstance(name, str) and name in safe_names,
+                            f"Codex provider {field} has a non-allowlisted name")
+                    require(name.lower() not in lowered,
+                            f"Codex provider {field} repeats a name by case")
+                    require(isinstance(value, str) and bool(value),
+                            f"Codex provider {field}.{name} must be nonempty")
+                    lowered.add(name.lower())
+            require("path" in {
+                name.lower() for name in provider["shell_environment"]
+            }, "Codex provider shell_environment must freeze PATH")
+    return executable
+
+
+def validate_codex_cli_configuration(
+    provider: dict[str, Any], model: dict[str, Any]
+) -> None:
+    """Require the frozen CLI to parse the selected reasoning/tier configuration."""
+    executable = Path(provider["executable"])
+    environment = dict(provider["process_environment"])
+    with tempfile.TemporaryDirectory(prefix="abrl-codex-config-probe-") as directory:
+        environment["CODEX_HOME"] = directory
+        process = subprocess.run([
+            str(executable),
+            "--config", f"model_reasoning_effort={json.dumps(model['reasoning_effort'])}",
+            "--config", f"service_tier={json.dumps(model['service_tier'])}",
+            "features", "list",
+        ], cwd=ROOT, env=environment, stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT, check=False, timeout=30)
+    require(process.returncode == 0,
+            "frozen Codex CLI rejects the selected reasoning effort or service tier")
 
 
 def validate_checker_runtime_preflight(config: dict[str, Any]) -> dict[str, Any]:
@@ -1045,14 +1161,27 @@ def validate_frozen_choices(config: dict[str, Any]) -> None:
     require(isinstance(commit, str) and re.fullmatch(r"[0-9a-f]{40}", commit) is not None,
             "orchestrator_commit must be a lowercase full Git commit")
     model = config["model"]
-    for field in ("provider", "model_id", "immutable_version", "api_or_runtime", "seed_semantics"):
+    for field in (
+        "provider", "model_id", "immutable_version", "api_or_runtime",
+        "seed_semantics", "reasoning_effort", "service_tier",
+        "sampling_control_semantics",
+    ):
         nonempty(model[field], f"model.{field}")
-    require(isinstance(model["temperature"], (int, float))
-            and not isinstance(model["temperature"], bool)
-            and 0 <= model["temperature"] <= 2,
-            "model.temperature must lie in [0,2]")
-    require(isinstance(model["top_p"], (int, float)) and not isinstance(model["top_p"], bool)
-            and 0 < model["top_p"] <= 1, "model.top_p must lie in (0,1]")
+    pricing = config["pricing"]
+    require(pricing.get("currency") == "USD"
+            and pricing.get("unit") == "per_million_tokens",
+            "pricing must use USD per million tokens")
+    for field in (
+        "input_tokens", "cached_input_tokens", "cache_write_input_tokens",
+        "output_tokens",
+    ):
+        require(isinstance(pricing[field], (int, float))
+                and not isinstance(pricing[field], bool) and pricing[field] >= 0,
+                f"pricing.{field} must be a nonnegative number")
+    nonempty(pricing["source_url"], "pricing.source_url")
+    nonempty(pricing["effective_date"], "pricing.effective_date")
+    require(pricing["output_includes_reasoning_tokens"] is True,
+            "pricing must explicitly count reasoning tokens inside output tokens")
 
     budgets = config["budgets_per_run"]
     for field in (
@@ -1114,6 +1243,22 @@ def validate_frozen_choices(config: dict[str, Any]) -> None:
              "execution_adapter.budget_enforcement_attestation", 20)
     nonempty(adapter["filesystem_network_process_attestation"],
              "execution_adapter.filesystem_network_process_attestation", 20)
+    validate_provider_runtime(adapter["provider_runtime"], require_hash=True)
+    adapter_identity = (adapter["adapter_id"] + " " + adapter["adapter_version"]).lower()
+    if adapter["provider_runtime"]["kind"] == "excluded_fixture":
+        require(any(marker in adapter_identity for marker in ("fixture", "excluded")),
+                "excluded provider runtime requires an explicit fixture adapter identity")
+    else:
+        require(not any(marker in adapter_identity for marker in ("fixture", "excluded")),
+                "codex_cli provider runtime cannot use a fixture adapter identity")
+        require(retry["infrastructure_retry_limit"] == 0
+                and budgets["maximum_model_retries"] == 0,
+                "Codex CLI candidate requires zero adapter-level automatic CLI retries")
+        require(retry["infrastructure_failure_definition"] == (
+            "codex_cli_nonzero_exit_or_missing_thread_or_missing_terminal_usage_or_"
+            "runtime_error_or_forbidden_tool_or_ambiguous_build_accounting"
+        ), "Codex CLI infrastructure-failure definition must match the adapter enum")
+        validate_codex_cli_configuration(adapter["provider_runtime"], model)
 
     checker = config["posthoc_checker"]
     for field in ("checker_id", "checker_version", "runtime_id", "runtime_version"):

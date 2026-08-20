@@ -182,6 +182,14 @@ def prepare_preseal(draft_path: Path, source_manifest_path: Path, output: Path) 
     prepare.require(Path(runtime_text) == runtime,
                     "execution adapter runtime path must already be canonical")
     adapter["runtime_executable_sha256"] = prepare.sha256_file(runtime)
+    provider = adapter["provider_runtime"]
+    provider_runtime = prepare.validate_provider_runtime(provider, require_hash=False)
+    prepare.require(provider_runtime is not None,
+                    "provider runtime must be selected before preseal")
+    provider["executable_sha256"] = prepare.sha256_file(provider_runtime)
+    provider_version_output = prepare.provider_runtime_version_output(provider_runtime)
+    provider["version_output_sha256"] = prepare.sha256_bytes(provider_version_output)
+    provider["version"] = provider_version_output.decode("utf-8", errors="strict").strip()
     config["sealed_agent_view"]["materializer_sha256"] = code_hashes[
         "prepare_target_drift_execution.py"
     ]

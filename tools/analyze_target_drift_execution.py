@@ -283,6 +283,23 @@ def secondary_analyses(
             lambda record: True,
             "lower_is_better",
         ),
+        "uncached_input_tokens": (
+            lambda record: record["execution_metrics"]["input_tokens"]
+            - record["execution_metrics"]["cached_input_tokens"]
+            - record["execution_metrics"]["cache_write_input_tokens"],
+            lambda record: True,
+            "lower_is_better",
+        ),
+        "cache_write_input_tokens": (
+            lambda record: record["execution_metrics"]["cache_write_input_tokens"],
+            lambda record: True,
+            "lower_is_better",
+        ),
+        "reasoning_output_tokens": (
+            lambda record: record["execution_metrics"]["reasoning_output_tokens"],
+            lambda record: True,
+            "lower_is_better",
+        ),
         "tool_calls": (
             lambda record: record["execution_metrics"]["tool_calls"],
             lambda record: True,
