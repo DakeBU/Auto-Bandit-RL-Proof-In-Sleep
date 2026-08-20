@@ -231,6 +231,22 @@ def run_sandbox(
 
     lifecycle: dict[str, Any] = {}
 
+    def bounded_diagnostic(record: dict[str, Any] | None, label: str) -> str:
+        if record is None:
+            return f"{label}: no process record"
+        output = str(record.get("output", ""))
+        # The process reader has already enforced the configured byte cap.  Keep
+        # the exception itself small as well so that an always-uploaded attempt
+        # log remains useful without becoming another unbounded artifact.
+        if len(output) > 2048:
+            output = output[-2048:]
+        return (
+            f"{label}: exit={record.get('exit_code')}, "
+            f"timed_out={record.get('timed_out')}, "
+            f"output_limit_exceeded={record.get('output_limit_exceeded')}, "
+            f"output={output!r}"
+        )
+
     def close_route(name: str, inspect_argv: list[str], cleanup_argv: list[str]) -> None:
         before = lifecycle_command(inspect_argv, f"{name} pre-cleanup inspect")
         present = before["exit_code"] == 0
@@ -267,7 +283,21 @@ def run_sandbox(
         lifecycle_errors.append(
             f"checker launch/monitor failed: {type(launch_error).__name__}: {launch_error}"
         )
-    require(not lifecycle_errors, "; ".join(lifecycle_errors))
+    if lifecycle_errors:
+        diagnostics = [bounded_diagnostic(process, "launch")]
+        for route, records in lifecycle.items():
+            diagnostics.append(bounded_diagnostic(
+                records.get("inspect_before"), f"{route} inspect-before"
+            ))
+            diagnostics.append(bounded_diagnostic(
+                records.get("cleanup"), f"{route} cleanup"
+            ))
+            diagnostics.append(bounded_diagnostic(
+                records.get("inspect_after"), f"{route} inspect-after"
+            ))
+        raise CheckerFailure(
+            "; ".join(lifecycle_errors) + "\n" + "\n".join(diagnostics)
+        )
     require(process is not None, "checker sandbox process record is missing")
     return {
         **process,

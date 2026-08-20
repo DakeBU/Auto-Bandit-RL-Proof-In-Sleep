@@ -49,16 +49,21 @@ def require(condition: bool, message: str) -> None:
         raise SystemExit(f"checker container launcher failed: {message}")
 
 
-def regular_executable(path: Path, expected_sha256: str, label: str) -> Path:
+def regular_protected_file(path: Path, expected_sha256: str, label: str) -> Path:
     require(path.is_absolute() and path.exists() and not path.is_symlink(),
             f"{label} must be an existing absolute nonlink path")
     info = path.lstat()
     reparse = bool(getattr(info, "st_file_attributes", 0) & 0x400)
     require(stat.S_ISREG(info.st_mode) and not reparse and info.st_nlink == 1,
             f"{label} must be one unlinked regular file")
+    require(sha256(path) == expected_sha256, f"{label} hash differs from the seal")
+    return path
+
+
+def regular_executable(path: Path, expected_sha256: str, label: str) -> Path:
+    path = regular_protected_file(path, expected_sha256, label)
     if os.name != "nt":
         require(os.access(path, os.X_OK), f"{label} is not executable")
-    require(sha256(path) == expected_sha256, f"{label} hash differs from the seal")
     return path
 
 
@@ -168,7 +173,11 @@ def runtime_identity(runtime: Path) -> dict[str, str]:
 
 
 def verify_runtime(args: argparse.Namespace) -> Path:
-    regular_executable(
+    # The launcher is interpreted by the separately sealed Python executable;
+    # it is intentionally tracked as an ordinary 100644 source file.  Requiring
+    # a POSIX execute bit here rejects a clean Git checkout before Docker can
+    # create a cidfile, even though the file is never execve'd directly.
+    regular_protected_file(
         Path(__file__).resolve(), args.launcher_sha256, "checker host launcher"
     )
     regular_executable(
@@ -352,10 +361,13 @@ def docker_run_command(args: argparse.Namespace, runtime: Path) -> list[str]:
     return [
         str(runtime), "run", "--pull", "never", "--init", "--read-only",
         "--network", "none", "--cap-drop", "ALL",
-        # The trusted root controller needs only these capabilities to drop each
-        # Lean/Lake child to the sealed worker UID/GID.  Model-authored code is
-        # never executed before that irreversible transition.
+        # The trusted root controller needs SETUID/SETGID to enter the sealed
+        # worker identity.  FOWNER/DAC_OVERRIDE let that trusted controller seal
+        # the runner-owned output/response bind mounts before the transition.
+        # Model-authored code is never executed before setuid/setgid clear the
+        # effective capability set; the seven-probe response measures CapEff=0.
         "--cap-add", "SETUID", "--cap-add", "SETGID",
+        "--cap-add", "FOWNER", "--cap-add", "DAC_OVERRIDE",
         "--security-opt", "no-new-privileges=true", "--user", args.controller_uid,
         "--pids-limit", str(args.pids_limit), "--memory", f"{args.memory_mb}m",
         "--cpus", str(args.cpus), "--cidfile", str(args.cidfile.resolve()),

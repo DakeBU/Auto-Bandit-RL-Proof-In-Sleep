@@ -27,6 +27,7 @@ import record_target_drift_checker_isolation_probe as isolation_probe  # noqa: E
 import launch_target_drift_checker_container as checker_launcher  # noqa: E402
 import prepare_target_drift_execution as prepare  # noqa: E402
 import prepare_target_drift_checker_image as checker_image  # noqa: E402
+import prepare_target_drift_checker_probe_config as checker_probe_config  # noqa: E402
 import target_drift_checker_cache_manifest as cache_manifest  # noqa: E402
 
 
@@ -39,6 +40,134 @@ class TargetDriftRuntimeTest(unittest.TestCase):
         "base_image_digest": "5" * 64,
         "lean_toolchain_sha256": "6" * 64,
     }
+
+    def test_checker_probe_config_binds_only_result_free_candidate_inputs(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            context = root / "context"
+            artifacts = root / "artifacts"
+            context.mkdir()
+            artifacts.mkdir()
+            build_input = {"workspace_base_commit": "1" * 40}
+            (context / "checker-image-build-input.json").write_text(
+                json.dumps(build_input) + "\n", encoding="utf-8"
+            )
+            for name, payload in (
+                ("Containerfile", b"FROM scratch\n"),
+                ("check_target_drift_container_controller.py", b"controller\n"),
+                ("check_target_drift_inner.py", b"inner\n"),
+            ):
+                (context / name).write_bytes(payload)
+            (artifacts / "checker-cache-manifest.json").write_bytes(b"{}\n")
+            (artifacts / "checker-image-build.log").write_bytes(b"build\n")
+            sbom = {
+                "schema_version": 1,
+                "suite_id": "ABRL-TARGET-DRIFT-V2",
+                "status": "built_manifest_verified_probe_pending",
+                "container_image_digest": "sha256:" + "f" * 64,
+                "workspace_base_commit": "1" * 40,
+                "build_input_manifest_sha256": prepare.sha256_file(
+                    context / "checker-image-build-input.json"
+                ),
+                "checker_image_recipe_sha256": prepare.sha256_file(
+                    context / "Containerfile"
+                ),
+                "controller_entrypoint_sha256": prepare.sha256_file(
+                    context / "check_target_drift_container_controller.py"
+                ),
+                "inner_checker_sha256": prepare.sha256_file(
+                    context / "check_target_drift_inner.py"
+                ),
+                "lake_cache_manifest_sha256": prepare.sha256_file(
+                    artifacts / "checker-cache-manifest.json"
+                ),
+                "image_build_log_sha256": prepare.sha256_file(
+                    artifacts / "checker-image-build.log"
+                ),
+            }
+            (artifacts / "checker-image-sbom.json").write_text(
+                json.dumps(sbom) + "\n", encoding="utf-8"
+            )
+            template = TOOLS.parent / "evaluation" / "target-drift-v2" / "execution-template.json"
+            output = root / "probe-draft.json"
+            budgets = {
+                "wall_clock_seconds": 60,
+                "memory_mb": 512,
+                "pids_limit": 32,
+                "cpus": 1.0,
+                "maximum_output_bytes": 4096,
+                "maximum_response_bytes": 2048,
+            }
+            with mock.patch.object(
+                checker_probe_config.checker_image, "validate_context",
+                return_value=build_input,
+            ), mock.patch.object(
+                checker_probe_config, "current_commit", return_value="2" * 40
+            ):
+                config = checker_probe_config.materialize(
+                    template, context, artifacts,
+                    artifacts / "checker-isolation-probe.json",
+                    artifacts / "checker-isolation-probe-artifacts",
+                    output, budgets,
+                )
+            self.assertEqual(config["execution_status"], "template_unfrozen")
+            self.assertEqual(config["workspace_base_commit"], "1" * 40)
+            checker = config["posthoc_checker"]
+            self.assertEqual(checker["mode"], "production")
+            self.assertEqual(checker["checker_version"], "candidate-" + "2" * 40)
+            self.assertEqual(checker["container_image_digest"], "sha256:" + "f" * 64)
+            self.assertEqual(checker["budgets"], budgets)
+            self.assertEqual(config["model"]["provider"], "UNSET")
+            self.assertIn("model.provider", config["unresolved_fields"])
+            self.assertNotIn(b"\r\n", output.read_bytes())
+            with self.assertRaises(SystemExit):
+                checker_probe_config.materialize(
+                    template, context, artifacts,
+                    artifacts / "checker-isolation-probe.json",
+                    artifacts / "checker-isolation-probe-artifacts",
+                    output, budgets,
+                )
+
+    def test_checker_probe_config_rejects_noncandidate_sbom(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            context = root / "context"
+            artifacts = root / "artifacts"
+            context.mkdir()
+            artifacts.mkdir()
+            build_input = {"workspace_base_commit": "1" * 40}
+            for name in (
+                "checker-image-build-input.json", "Containerfile",
+                "check_target_drift_container_controller.py",
+                "check_target_drift_inner.py",
+            ):
+                (context / name).write_text("{}\n", encoding="utf-8")
+            for name in ("checker-cache-manifest.json", "checker-image-build.log"):
+                (artifacts / name).write_text("{}\n", encoding="utf-8")
+            sbom = {
+                "schema_version": 1,
+                "suite_id": "ABRL-TARGET-DRIFT-V2",
+                "status": "unbuilt_template",
+            }
+            (artifacts / "checker-image-sbom.json").write_text(
+                json.dumps(sbom) + "\n", encoding="utf-8"
+            )
+            with mock.patch.object(
+                checker_probe_config.checker_image, "validate_context",
+                return_value=build_input,
+            ), self.assertRaises(SystemExit):
+                checker_probe_config.materialize(
+                    TOOLS.parent / "evaluation" / "target-drift-v2"
+                    / "execution-template.json",
+                    context, artifacts, artifacts / "probe.json",
+                    artifacts / "probe-artifacts", root / "draft.json",
+                    {
+                        "wall_clock_seconds": 60, "memory_mb": 512,
+                        "pids_limit": 32, "cpus": 1.0,
+                        "maximum_output_bytes": 4096,
+                        "maximum_response_bytes": 2048,
+                    },
+                )
 
     def test_checker_cache_manifest_round_trip_and_tamper_rejection(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -150,6 +279,8 @@ class TargetDriftRuntimeTest(unittest.TestCase):
             self.assertEqual((outside / "sentinel").read_bytes(), b"outside")
 
     def test_checker_image_context_is_frozen_to_the_base_commit(self) -> None:
+        if not (TOOLS.parent / ".git").exists():
+            self.skipTest("requires the authoring checkout Git object database")
         # ABRL contains intentionally descriptive Lean filenames.  Keep the
         # Windows build-context root short enough for non-long-path-aware tools.
         temporary_parent = TOOLS.parent.parent if os.name == "nt" else None
@@ -351,11 +482,16 @@ class TargetDriftRuntimeTest(unittest.TestCase):
             for required in (
                 "--read-only", "--network\0none", "--cap-drop\0ALL",
                 "--cap-add\0SETUID", "--cap-add\0SETGID",
+                "--cap-add\0FOWNER", "--cap-add\0DAC_OVERRIDE",
                 "--security-opt\0no-new-privileges=true", "--user\0" + "0:0",
                 ",dst=/input/request.json,readonly",
                 ",dst=/input/base,readonly", ",dst=/input/submission.patch,readonly",
             ):
                 self.assertIn(required, joined)
+            self.assertEqual(
+                [command[index + 1] for index, token in enumerate(command) if token == "--cap-add"],
+                ["SETUID", "SETGID", "FOWNER", "DAC_OVERRIDE"],
+            )
             self.assertNotIn("--privileged", command)
             self.assertNotIn("--detach", command)
 
@@ -386,6 +522,24 @@ class TargetDriftRuntimeTest(unittest.TestCase):
                 runtime.chmod(0o755)
             with self.assertRaises(SystemExit):
                 checker_launcher.regular_executable(runtime.resolve(), digest, "runtime")
+
+    @unittest.skipIf(os.name == "nt", "POSIX execute bits are not available on Windows")
+    def test_interpreted_launcher_is_hash_bound_without_requiring_execute_bit(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            launcher = Path(directory) / "launcher.py"
+            launcher.write_text("print('sealed')\n", encoding="utf-8")
+            launcher.chmod(0o644)
+            digest = prepare.sha256_file(launcher)
+            self.assertEqual(
+                checker_launcher.regular_protected_file(
+                    launcher.resolve(), digest, "launcher"
+                ),
+                launcher.resolve(),
+            )
+            with self.assertRaises(SystemExit):
+                checker_launcher.regular_executable(
+                    launcher.resolve(), digest, "launcher"
+                )
 
     def test_temporary_path_fake_docker_is_not_an_allowlisted_runtime(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -798,6 +952,52 @@ class TargetDriftRuntimeTest(unittest.TestCase):
             self.assertEqual(invoked.call_count, 7)
             self.assertFalse(outcomes)
 
+    def test_checker_lifecycle_failure_preserves_bounded_process_diagnostics(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            cidfile = root / "container.cid"
+            records = {
+                "launch": {
+                    "command": ["launch"], "exit_code": 17, "timed_out": False,
+                    "output_limit_exceeded": False, "wall_seconds": 0.1,
+                    "output": "sealed runtime mismatch\n",
+                },
+                "inspect": {
+                    "command": ["inspect"], "exit_code": 9, "timed_out": False,
+                    "output_limit_exceeded": False, "wall_seconds": 0.1,
+                    "output": "inspect diagnostic\n",
+                },
+                "cleanup": {
+                    "command": ["cleanup"], "exit_code": 8, "timed_out": False,
+                    "output_limit_exceeded": False, "wall_seconds": 0.1,
+                    "output": "cleanup diagnostic\n",
+                },
+            }
+
+            def fake_run(command, cwd, timeout, maximum):
+                if command == ["launch"]:
+                    return records["launch"]
+                if "cleanup" in command[0]:
+                    return records["cleanup"]
+                return records["inspect"]
+
+            with mock.patch.object(
+                checker_controller, "run_capped_process", side_effect=fake_run
+            ):
+                with self.assertRaises(checker_controller.CheckerFailure) as raised:
+                    checker_controller.run_sandbox(
+                        ["launch"], ["cid-cleanup"], ["cid-inspect"],
+                        ["label-cleanup"], ["label-inspect"], root, 10, 4096,
+                        cidfile, 3,
+                    )
+            message = str(raised.exception)
+            self.assertIn("launch: exit=17", message)
+            self.assertIn("sealed runtime mismatch", message)
+            self.assertIn("cid inspect-before: exit=9", message)
+            self.assertIn("inspect diagnostic", message)
+            self.assertIn("label cleanup: exit=8", message)
+            self.assertIn("cleanup diagnostic", message)
+
     def test_checker_response_is_bounded_regular_json(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "response.json"
@@ -933,6 +1133,7 @@ class TargetDriftRuntimeTest(unittest.TestCase):
                 "host_sentinel_visible": False,
                 "operator_ground_truth_visible": False,
                 "background_probe_started": True,
+                "worker_effective_capabilities_hex": "0000000000000000",
                 "worker_write_succeeded": {
                     key: False for key in isolation_probe.WORKER_WRITE_KEYS
                 },
@@ -951,6 +1152,33 @@ class TargetDriftRuntimeTest(unittest.TestCase):
                 response, nonce, label, "b" * 64, "sha256:" + "c" * 64,
                 "d" * 64,
             )
+        response["observations"]["worker_write_succeeded"]["checker_response"] = False
+        response["observations"]["worker_effective_capabilities_hex"] = "not-zero"
+        with self.assertRaises(SystemExit):
+            isolation_probe.strict_probe_response(
+                response, nonce, label, "b" * 64, "sha256:" + "c" * 64,
+                "d" * 64,
+            )
+
+    def test_isolation_probe_nonzero_worker_capability_is_derived_failure(self) -> None:
+        observations = {
+            "network_request_succeeded": False,
+            "host_sentinel_visible": False,
+            "operator_ground_truth_visible": False,
+            "background_probe_started": True,
+            "worker_effective_capabilities_hex": "0000000000000001",
+            "worker_write_succeeded": {
+                key: False for key in isolation_probe.WORKER_WRITE_KEYS
+            },
+        }
+        results = isolation_probe.derive_probe_results(
+            observations, {"lifecycle_verified_absent": True}
+        )
+        self.assertFalse(results["checker_outputs_not_worker_writable"])
+        self.assertTrue(all(
+            value for name, value in results.items()
+            if name != "checker_outputs_not_worker_writable"
+        ))
 
     def test_adapter_usage_must_match_trace_counts_and_budgets(self) -> None:
         response = {

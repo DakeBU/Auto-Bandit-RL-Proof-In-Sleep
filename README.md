@@ -175,18 +175,24 @@ Core paths:
   runs the pinned Lean/Lake release offline as the restricted worker.  Component
   tests pass, but no test executes the full
   real-provider-to-grading chain.  The deterministic fake adapter and fail-closed
-  probes are nonexperimental fixtures.  A result-free Linux CI candidate build
+  probes are nonexperimental fixtures.  A first result-free Linux CI candidate build
   ([run 32137509103](https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/actions/runs/32137509103))
   constructed an unpublished cache-complete image from the frozen base snapshot
   and a digest-pinned Lean base, then emitted hash-bound build-input, cache,
   log, and SBOM evidence after an offline Lean 4.29.1 / Lake
   5.0.0-src+f72c35b worker probe.  The
-  candidate is ephemeral, is not the frozen production image, and is not a
-  passed isolation result.  A frozen real provider image, final published and
-  sealed checker image, and passed seven-probe
-  isolation report, budgets, graders, final seal, the preregistered
+  candidate was ephemeral and is not the frozen production image.  A later
+  result-free candidate build and isolation run
+  ([run 32419343467](https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/actions/runs/32419343467))
+  bound one unpublished image to the exact Docker runtime and passed all seven
+  candidate probes, including `CapEff=0`, protected inputs/outputs, and
+  cid/label cleanup; its evidence is recorded in
+  `evaluation/target-drift-v2/checker-image-candidate-32419343467.json`.
+  That ephemeral candidate result is not a published production checker, a
+  production agent sandbox, or a final experiment seal.  A frozen real provider
+  image, final published and sealed checker image, budgets, graders, final seal, the preregistered
   one-case-by-three-condition real-infrastructure smoke, and all 450 primary
-  model runs remain unstarted; no outcome is reported;
+  model runs remain unstarted; no model or formalization outcome is reported;
 - `website/` — literate static site, local compiler service, and integrity checker;
 - `tools/bandit.py` — deterministic harness CLI.
 - [`docs/proof_graph_laboratory.md`](docs/proof_graph_laboratory.md) — compiled-environment dependency export, proof-cost/ZDD/hypergraph prototypes, and the proof-structural novelty audit boundary.

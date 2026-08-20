@@ -101,7 +101,8 @@ Docker executable and runtime identity, run the seven-probe recorder using that
 runtime-bound config, and only then preseal:
 
 ```text
-python tools/finalize_target_drift_config.py bind-runtime --draft HUMAN-DRAFT.json --runtime-executable ABSOLUTE-DOCKER-PATH --output RUNTIME-BOUND.json
+python tools/prepare_target_drift_checker_probe_config.py --template evaluation/target-drift-v2/execution-template.json --context CHECKER-CONTEXT --artifact-dir CHECKER-BUILD-ARTIFACTS --probe-report CONFIGURED-PROBE-REPORT.json --probe-artifacts-dir FRESH-PROBE-ARTIFACTS --output CHECKER-PROBE-DRAFT.json
+python tools/finalize_target_drift_config.py bind-runtime --draft CHECKER-PROBE-DRAFT.json --runtime-executable ABSOLUTE-DOCKER-PATH --output RUNTIME-BOUND.json
 python tools/record_target_drift_checker_isolation_probe.py --config RUNTIME-BOUND.json --work-dir FRESH-PROBE-WORK --output CONFIGURED-PROBE-REPORT.json --probe-commit FULL-GIT-COMMIT --host-platform HOST-DESCRIPTION
 python tools/finalize_target_drift_config.py preseal --draft RUNTIME-BOUND.json --source-manifest SOURCES.json --output PRESEAL.json
 python tools/prepare_target_drift_execution.py --config PRESEAL.json --materialize PRESEAL-PACK
@@ -178,6 +179,19 @@ The emitted `built_manifest_verified_probe_pending` SBOM is still only an image-
 it cannot replace the seven production isolation probes, the real one-case by
 three-condition smoke, or any model run.
 
+The manual `target-drift-checker-image.yml` workflow now closes the former
+human-copy gap for a candidate: after building on one Docker daemon, it
+materializes a checker-only draft from the verified SBOM and sidecars, binds
+that exact daemon/runtime, and executes the sealed seven-probe recorder.  Its
+`if: always()` upload step preserves whatever evidence was produced.  Once the
+recorder starts, its pipefail/tee attempt log is preserved; a passed run
+additionally contains the sealed probe report and raw probe artifacts.  An
+earlier materialization or runtime-binding failure may contain only the sidecars
+produced before that failure.  Any failed probe fails the job.  This is still
+result-free candidate evidence: the ephemeral
+image is not published, a successful candidate probe is not a final production
+seal, and the workflow never invokes a model.
+
 The first successful result-free Linux candidate build is recorded in
 [`checker-image-candidate-32137509103.json`](checker-image-candidate-32137509103.json).
 GitHub Actions [run 32137509103](https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/actions/runs/32137509103)
@@ -186,9 +200,22 @@ Lake cache, verified its frozen-source provenance, and passed the final-image
 offline Lean 4.29.1 / Lake 5.0.0-src+f72c35b probe as UID/GID
 `10002:10002`.  The resulting image
 digest was local to the ephemeral runner and was not published.  This closes a
-candidate construction/attestation check only; the final production image,
-seven bound isolation probes, real three-condition smoke, and every model run
-remain pending.
+  candidate construction/attestation check only; the final production image,
+  real three-condition smoke, and every model run remain pending.
+
+A later result-free candidate build and isolation run is recorded in
+[`checker-image-candidate-32419343467.json`](checker-image-candidate-32419343467.json).
+GitHub Actions [run 32419343467](https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/actions/runs/32419343467)
+rebuilt one unpublished cache-complete image, bound the exact Docker
+client/server/daemon and command boundary, and passed all seven candidate
+isolation probes.  The worker reported `CapEff=0000000000000000`; every probed
+write to protected input/output paths failed; request/base/patch/host sentinels
+were unchanged; and cid- plus label-indexed inspection proved cleanup.  The
+downloaded artifact manifest and image/cache/build/runtime hash chain were
+independently recomputed.  This closes the result-free candidate-probe gate for
+that ephemeral digest only.  It does not publish or freeze the final production
+checker, instantiate the production agent sandbox, satisfy the real
+one-case-by-three-condition smoke, or report a model/formalization outcome.
 
 The sealed launcher accepts only the allowlisted Docker installation, rechecks the
 executable/signature-or-package ledger plus client/server/daemon identity, and

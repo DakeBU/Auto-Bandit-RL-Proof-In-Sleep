@@ -7,6 +7,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import shutil
 import socket
 import stat
@@ -92,6 +93,22 @@ def worker_attempt(prefix: list[str], path: Path) -> bool:
     return outcome.returncode == 0
 
 
+def worker_effective_capabilities(prefix: list[str]) -> str:
+    script = (
+        "from pathlib import Path; "
+        "line=next(x for x in Path('/proc/self/status').read_text().splitlines() "
+        "if x.startswith('CapEff:')); print(line.split(':',1)[1].strip())"
+    )
+    outcome = subprocess.run(
+        [*prefix, sys.executable, "-c", script],
+        stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True, check=False,
+    )
+    value = outcome.stdout.strip().lower()
+    require(outcome.returncode == 0 and re.fullmatch(r"[0-9a-f]{16}", value) is not None,
+            "worker effective-capability observation failed")
+    return value
+
+
 def validate_worker_prefix(prefix: Any) -> list[str]:
     require(isinstance(prefix, list) and len(prefix) == 7
             and all(isinstance(item, str) and item for item in prefix),
@@ -173,6 +190,7 @@ def run_probe(request: dict[str, Any], base: Path, patch: Path,
         "checker_output": worker_attempt(prefix, output / "worker-write"),
         "checker_response": worker_attempt(prefix, response),
     }
+    worker_cap_eff = worker_effective_capabilities(prefix)
     network_succeeded = False
     network_script = (
         "import socket; socket.create_connection(('example.com',443),timeout=3)"
@@ -204,6 +222,7 @@ def run_probe(request: dict[str, Any], base: Path, patch: Path,
                 contract["forbidden_operator_ground_truth_filename"]
             ),
             "worker_write_succeeded": writes,
+            "worker_effective_capabilities_hex": worker_cap_eff,
             "background_probe_started": True,
         },
     })
