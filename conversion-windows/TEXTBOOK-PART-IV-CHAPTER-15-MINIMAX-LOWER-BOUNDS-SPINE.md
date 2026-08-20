@@ -17,11 +17,12 @@ author-online pp. 199--201 / physical PDF pp. 208--210. The Notes,
 Bibliographic Remarks, and Exercises in §§15.3--15.5 are mapped but are not
 silently promoted to the scoped Theorem 15.2 terminal.
 
-The current compiled window contains the general finite-arm same-policy
-history divergence decomposition of Lemma 15.1, together with its conditional
+The compiled window contains the general finite-arm same-policy history
+divergence decomposition of Lemma 15.1, together with its conditional
 kernel-KL, canonical history-law, realized pull-count, Gaussian KL, and tuning
-dependencies. Theorem 15.2 remains blocked on the downstream regret/event and
-existence bridge.
+dependencies.  It also contains the exact downstream regret/event bridge,
+caller-free Theorem 15.2 environment witness, and worst-case/minimax
+consequences.
 
 ## Precise restatement
 
@@ -53,23 +54,26 @@ policies and supremum over this environment class.
 | `Delta=sqrt((k-1)/(4n))` | source gap tuning | `gaussianMinimaxGap` and tuning lemmas | real numeric dependency | compiled |
 | least-explored arm | some `i>1` has expected pulls at most `n/(k-1)` | `exists_leastExploredAlternative` | deterministic averaging | compiled Chapter 13 |
 | testing inequality | event error sum lower bound | `bretagnolleHuber` | measure/event theorem | compiled Chapter 14 |
-| Theorem 15.2 | existence of Gaussian instance with regret lower bound | reserved `exists_gaussianBandit_expectedRegret_ge_one_div_twentySeven` | source terminal | blocked |
-| minimax consequence | inf-policy/sup-environment lower bound | reserved `gaussianBanditMinimaxExpectedRegret_ge_one_div_twentySeven` | source terminal | blocked |
+| source event | `{T_0(n) <= n/2}` under the base law | `gaussianMinimaxBaseSmallPullEvent` | measurable history event | compiled |
+| base/changed event regret | event-wise regret lower bounds | `base_event_probability_lower_bound`; `changed_complement_probability_lower_bound` | lower-integral probability consumers | compiled |
+| source history-KL cap | chosen alternative has base-to-changed history KL at most `1/2` | `exists_gaussianMinimax_historyKL_le_half` | exact same-policy information bound | compiled |
+| Theorem 15.2 | existence of Gaussian instance with regret lower bound | `finiteArmedGaussianMinimaxLowerBound` | source terminal | compiled |
+| minimax consequence | inf-policy/sup-environment lower bound | `unitGaussianMinimaxExpectedPseudoRegret_ge` | source consequence | compiled |
 
 ## Assumption ledger
 
 | Assumption | Lean status | Purpose | Blocking? |
 | --- | --- | --- | --- |
-| finite action type with `k>1` | source target, future typed interface | alternatives and least-explored arm | yes for terminal |
-| deterministic horizon `n>=k-1` | source target | tuning and unit-cube membership | yes for terminal |
-| arm probability laws | explicit Markov kernels | canonical reward transitions | no for Lemma 15.1; yes for minimax specialization |
+| finite action type with `k>1` | explicit endpoint premise | alternatives and least-explored arm | no |
+| deterministic horizon `n>=k-1` | explicit endpoint premise | tuning and unit-cube membership | no |
+| arm probability laws | explicit Markov kernels and unit-Gaussian specialization | canonical reward transitions | no |
 | stochastic measurable policy kernel | `Thompson.HistoryAlgorithm` | source universal policy class | no for Lemma 15.1 |
 | same policy under both laws | one shared algorithm argument | policy KL cancels | no for Lemma 15.1 |
 | singular/infinite per-arm KL | explicit `ENNReal` semantics; no AC premise | general source identity | no |
-| history/event measurability | canonical prefix equivalences and count measurability | source history and later testing | no for Lemma 15.1; testing bridge remains |
-| pull count sum equals horizon | realized count lower integral compiled; least-explored bridge downstream | Theorem 15.2 | yes for minimax terminal |
+| history/event measurability | canonical prefix equivalences and count measurability | source history and testing event | no |
+| pull count sum equals horizon | realized count lower integral and least-explored bridge | Theorem 15.2 | no |
 | unit Gaussian variance | explicit `(1 : NNReal)` | exact KL value | no for compiled leaf |
-| `mu in [0,1]^k` | future theorem conclusion witness | exact Gaussian class | yes for terminal |
+| `mu in [0,1]^k` | fields of `UnitGaussianBanditEnvironment` | exact Gaussian class | no |
 | stopping time | absent | Exercise 15.7 only | must remain absent |
 
 ## Local API and proof route
@@ -80,8 +84,8 @@ policies and supremum over this environment class.
 | conditional kernel KL | `klDiv_compProd_eq_add`, kernel RN, `compProd_withDensity` | ChainRule source audit | measurable conditional KL; a.e. AC branch plus singular-fibre infinity branch | compiled; keep countably generated target and measurability visible |
 | policy/history law | existing kernel-valued `Thompson.HistoryAlgorithm`, `trajMeasure`, finite-history equivalences | local declarations | map the canonical infinite trajectory to each finite visible prefix | compiled; do not replace the common randomized kernel by a deterministic selector |
 | divergence decomposition | conditional kernel KL plus policy cancellation | source Lemma 15.1 | horizon induction, finite-arm regrouping, realized-count recurrence | compiled; preserve first-law expectation and KL direction |
-| testing/regret | Chapter 14 BH; Chapter 13 least-explored leaf | compiled local dependencies | event `T_1(n)<=n/2`, base/changed regret inequalities | theorem with regret identities as premises is only a conditional leaf |
-| tuning | real square-root/field algebra | source proof | `Delta=sqrt((k-1)/(4n))`, exact KL exponent `1/2`, and `Delta<=1/2` compile; final exponential/numeric weakening remains downstream | do not alter constant or mean cube to simplify |
+| testing/regret | Chapter 14 BH; Chapter 13 least-explored leaf | compiled local dependencies | event `T_1(n)<=n/2`, base/changed regret inequalities | compiled in `GaussianMinimax.lean`; keep event law/direction explicit |
+| tuning | real square-root/field algebra | source proof | `Delta=sqrt((k-1)/(4n))`, exact KL exponent `1/2`, `Delta<=1/2`, and `16/27 <= exp(-1/2)` | compiled; do not alter constant or mean cube to simplify |
 
 ## Proof DAG
 
@@ -94,11 +98,11 @@ policies and supremum over this environment class.
 | `CH15-CONDITIONAL-KL` | same-base kernel KL equals expected pointwise KL | composition-product RN/chain rule | `klDiv_compProd_same_left_eq_lintegral_klDiv_of_measurable` | local/Mathlib candidate | focused Lean | compiled |
 | `CH15-STOCHASTIC-HISTORY` | canonical finite history under a common policy kernel | `trajMeasure`, measurable zero/successor encodings | `canonicalBanditHistoryMeasure`, `canonicalBanditHistoryMeasure_succ` | project-local | focused Lean | compiled |
 | `CH15-LEMMA-15-1` | exact expected-pull divergence decomposition | previous two nodes and realized count recurrence | `banditHistoryRelativeEntropy_eq_expectedPulls_sum` | source terminal | focused Lean | compiled |
-| `CH15-TESTING-REGRET` | source event and two-environment regret bridge | Chapter 14 BH, pull identities | none | project-local | focused Lean | blocked |
-| `CH15-THEOREM-15-2` | exact Gaussian `1/27` existence and minimax result | all preceding nodes and tuning | reserved terminals | source terminal | focused Lean | blocked |
-| `CH15-TYPED-CANARY` | root-import applications and axiom reports for compiled slice | Gaussian and history-KL leaves | `Tests/TextbookPartIVChapter15Canary.lean` | project-local | Tests | pending current full gate |
-| `CH15-EVIDENCE-SITE` | task/DAG/export/index/site agree on compiled-Lemma/blocked-minimax boundary | all scoped artifacts | repository artifacts | repository | full/site/browser | pending current build |
-| `CH15-REVIEW` | independent source/Lean/evidence audit | all artifacts | current read-only review | repository | independent review | pending |
+| `CH15-TESTING-REGRET` | source event and two-environment regret bridge | Chapter 14 BH, pull identities | `base_event_probability_lower_bound`, `changed_complement_probability_lower_bound` | project-local | focused Lean | compiled |
+| `CH15-THEOREM-15-2` | exact Gaussian `1/27` existence and minimax result | all preceding nodes and tuning | `finiteArmedGaussianMinimaxLowerBound`, `unitGaussianMinimaxExpectedPseudoRegret_ge` | source terminal | focused Lean | compiled |
+| `CH15-TYPED-CANARY` | root-import applications and axiom reports for compiled slice | Gaussian and history-KL leaves | `Tests/TextbookPartIVChapter15Canary.lean` | project-local | Tests | verified locally in the 8,843-job Tests gate; named theorem axioms are `propext`, `Classical.choice`, and `Quot.sound` only |
+| `CH15-EVIDENCE-SITE` | task/DAG/export/index/site agree on both compiled source terminals | all scoped artifacts | repository artifacts | repository | full/site/browser | verified locally: Lean-verified site build and site/browser checks passed |
+| `CH15-REVIEW` | independent source/Lean/evidence audit | all artifacts | current read-only review | repository | independent review | passed with no remaining blocking/high/medium finding after status reconciliation |
 | `CH15-REMOTE` | PR, main Actions, Pages, live desktop/mobile | accepted local partial chapter | new PR/run/deploy | repository | deployment | pending |
 
 ## Gaps
@@ -109,4 +113,4 @@ policies and supremum over this environment class.
 - [x] Conditional composition-product KL integral.
 - [x] Stochastic nonanticipating policy and canonical history law.
 - [x] Pull-count expectation identity and Lemma 15.1.
-- [ ] Regret/event bridge, final exponential/constant step, Theorem 15.2, and minimax corollary.
+- [x] Regret/event bridge, final exponential/constant step, Theorem 15.2, and minimax corollary.

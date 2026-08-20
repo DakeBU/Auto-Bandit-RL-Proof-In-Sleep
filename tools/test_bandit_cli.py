@@ -68,9 +68,9 @@ class LongPathIoTests(unittest.TestCase):
             try:
                 path = (
                     Path(tmp)
-                    / ("route-" + "a" * 70)
-                    / ("leaf-" + "b" * 70)
-                    / ("index-" + "c" * 70)
+                    / ("route-" + "a" * 90)
+                    / ("leaf-" + "b" * 90)
+                    / ("index-" + "c" * 90)
                     / "card.json"
                 )
                 self.assertGreater(len(str(path.resolve())), 260)

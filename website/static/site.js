@@ -22,17 +22,27 @@
   const sidebarToggles = [...document.querySelectorAll("[data-sidebar-toggle]")];
   const sidebarScrim = document.querySelector("[data-sidebar-scrim]");
   const siteContent = document.querySelector(".site-content");
+  const sidebarMedia = window.matchMedia("(max-width: 960px)");
   let sidebarTrigger = null;
   const sidebarFocusable = () =>
     [...(sidebar?.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])') || [])]
       .filter((element) => !element.hidden && element.getClientRects().length);
+  const syncSidebarAccessibility = (open) => {
+    const sidebarUnavailable = sidebarMedia.matches && !open;
+    if (sidebar) {
+      if ("inert" in sidebar) sidebar.inert = sidebarUnavailable;
+      if (sidebarUnavailable) sidebar.setAttribute("aria-hidden", "true");
+      else sidebar.removeAttribute("aria-hidden");
+    }
+    if (siteContent && "inert" in siteContent) siteContent.inert = sidebarMedia.matches && open;
+  };
   const setSidebarOpen = (open, trigger = null) => {
     const wasOpen = document.body.classList.contains("sidebar-open");
     if (open && trigger) sidebarTrigger = trigger;
     document.body.classList.toggle("sidebar-open", open);
     sidebarToggles.forEach((button) => button.setAttribute("aria-expanded", String(open)));
     sidebarScrim?.setAttribute("aria-hidden", String(!open));
-    if (siteContent && "inert" in siteContent) siteContent.inert = open;
+    syncSidebarAccessibility(open);
     if (open) {
       sidebar?.querySelector(".sidebar-close")?.focus();
     } else if (wasOpen) {
@@ -78,10 +88,13 @@
     }
   });
   window.addEventListener("resize", () => {
-    if (!window.matchMedia("(max-width: 960px)").matches && document.body.classList.contains("sidebar-open")) {
+    if (!sidebarMedia.matches && document.body.classList.contains("sidebar-open")) {
       setSidebarOpen(false);
+    } else {
+      syncSidebarAccessibility(document.body.classList.contains("sidebar-open"));
     }
   });
+  syncSidebarAccessibility(false);
 
   const openDeclarationTarget = () => {
     if (!window.location.hash) return;

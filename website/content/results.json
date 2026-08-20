@@ -711,7 +711,7 @@
       "depends_on": [],
       "missing": [
         "The Chapter 14 event-testing foundation and Chapter 15 same-policy adaptive-history KL identity compile.",
-        "The source-stated Gaussian minimax Theorem 13.1 remains blocked on the Chapter 15 regret/event consumer, constant assembly, and caller-free terminal."
+        "The separate compiled Chapter 15 consumer now closes the source-stated Gaussian minimax Theorem 13.1 order with explicit universal constant 1/54; optional Chapter 13 notes and exercises remain outside this foundational milestone."
       ],
       "evidence": "BanditRLProof/LowerBounds/BasicIdeas.lean; Tests/TextbookPartIVChapter13Canary.lean"
     },
@@ -778,7 +778,7 @@
         "BanditRLProof.LowerBounds.unitGaussianArm"
       ],
       "missing": [
-        "Theorem 15.2's regret/event bridge, caller-free 1/27 minimax terminal, and minimax corollary remain blocked; this compiled arm-level slice does not prove them."
+        "This milestone is intentionally arm-local; the separate compiled Theorem 15.2 milestone consumes it together with Lemma 15.1 and Chapter 14 event testing."
       ],
       "evidence": "BanditRLProof/LowerBounds/Minimax.lean; Tests/TextbookPartIVChapter15Canary.lean; tasks/TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE.md"
     },
@@ -805,9 +805,42 @@
       ],
       "missing": [
         "The local inclusive-round index lastRound represents lastRound+1 observations; later source consumers must preserve that convention explicitly.",
-        "This identity does not prove the Gaussian regret event, the 1/27 constant assembly, Theorem 15.2, or later Chapter 16–17 terminals."
+        "The compiled Theorem 15.2 milestone consumes this identity, but later Chapter 16–17 terminals remain separate and are not consequences of Lemma 15.1 alone."
       ],
       "evidence": "BanditRLProof/LowerBounds/ConditionalKernelKL.lean; BanditRLProof/LowerBounds/BanditHistoryKL.lean; Tests/TextbookPartIVChapter15Canary.lean"
+    },
+    {
+      "id": "TEXTBOOK-PART-IV-CH15-GAUSSIAN-MINIMAX-LOWER-BOUND",
+      "title": "Chapter 15 finite-armed Gaussian minimax lower bound",
+      "chapter": "foundations",
+      "textbook_spine": "chapter-15-minimax-lower-bounds",
+      "status": "compiled",
+      "informal": "For every possibly randomized nonanticipating finite-history policy, every k greater than one, and every horizon n at least k-1, the library constructs a unit-cube mean vector for a k-armed unit-variance Gaussian bandit whose expected pseudo-regret is at least sqrt((k-1)n)/27. The proof uses the actual canonical history law, least-explored arm, source event T_0(n) at most n/2, Lemma 15.1 in the first-environment KL direction, Bretagnolle–Huber, the exact source gap, and an explicit worst-case/minimax lattice layer.",
+      "declarations": [
+        "BanditRLProof.LowerBounds.UnitGaussianBanditEnvironment",
+        "BanditRLProof.LowerBounds.gaussianExpectedPseudoRegret",
+        "BanditRLProof.LowerBounds.sum_canonicalRealizedExpectedPullCountThrough",
+        "BanditRLProof.LowerBounds.exists_gaussianMinimax_leastExploredAlternative",
+        "BanditRLProof.LowerBounds.base_event_probability_lower_bound",
+        "BanditRLProof.LowerBounds.changed_complement_probability_lower_bound",
+        "BanditRLProof.LowerBounds.klDiv_gaussianMinimax_base_changed_history",
+        "BanditRLProof.LowerBounds.exists_gaussianMinimax_historyKL_le_half",
+        "BanditRLProof.LowerBounds.sixteen_div_twentySeven_le_exp_neg_half",
+        "BanditRLProof.LowerBounds.finiteArmedGaussianMinimaxLowerBound",
+        "BanditRLProof.LowerBounds.unitGaussianWorstCaseExpectedPseudoRegret_ge",
+        "BanditRLProof.LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge"
+      ],
+      "depends_on": [
+        "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum",
+        "BanditRLProof.LowerBounds.bretagnolleHuber",
+        "BanditRLProof.LowerBounds.klDiv_unitGaussianArm_zero_two_mul",
+        "BanditRLProof.LowerBounds.exists_leastExploredAlternative"
+      ],
+      "missing": [
+        "The Bernoulli refinement in the Chapter 15 notes and the chapter exercise set are outside this compiled main-theorem milestone.",
+        "Chapter 16 and Chapter 17 lower-bound terminals remain separate consumers and are not promoted by this result."
+      ],
+      "evidence": "BanditRLProof/LowerBounds/GaussianMinimax.lean; Tests/TextbookPartIVChapter15Canary.lean; tasks/TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE.md"
     },
     {
       "id": "TEXTBOOK-PART-IV-CH16-CONSISTENCY-DINF-DEPENDENCY-SLICE",
@@ -919,18 +952,20 @@
       "title": "Theorem 13.1 Gaussian finite-arm minimax lower bound",
       "chapter": "foundations",
       "textbook_spine": "chapter-13-basic-ideas",
-      "status": "blocked",
-      "informal": "For k-armed unit-variance Gaussian bandits with mean vectors in the unit cube, the source states a universal-constant minimax lower bound of order sqrt(k n) for k greater than one and n at least k; Chapter 15 now freezes the exact proof target and compiles the Gaussian arm KL dependency, but BanditRLlib makes no local compiled-terminal claim.",
-      "declarations": [],
+      "status": "compiled",
+      "informal": "For k-armed unit-variance Gaussian bandits with mean vectors in the unit cube, the source's universal-constant minimax lower bound of order sqrt(k n) now compiles locally. The exact Chapter 15 theorem yields the explicit admissible constant c=1/54 whenever k is greater than one and n is at least k.",
+      "declarations": [
+        "BanditRLProof.LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt"
+      ],
       "depends_on": [
         "BanditRLProof.LowerBounds.exists_leastExploredAlternative",
         "BanditRLProof.LowerBounds.max_base_changed_regretLowerBound_ge_half_sub_error",
         "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum"
       ],
       "missing": [
-        "Chapter 15 regret/event bridge from the compiled same-policy history-KL identity, natural-count connection to the real-valued Delta tuning, exact 1/27 terminal, and infimum/supremum extraction."
+        "The Chapter 13 notes and exercises are not implied by this compiled main order theorem."
       ],
-      "evidence": "tasks/TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE.md; tasks/TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE.md"
+      "evidence": "BanditRLProof/LowerBounds/GaussianMinimax.lean; Tests/TextbookPartIVChapter15Canary.lean; tasks/TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE.md; tasks/TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE.md"
     },
     {
       "id": "DELAYED-FEEDBACK-SOURCE-ACCOUNTING",
