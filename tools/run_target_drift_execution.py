@@ -46,6 +46,9 @@ BLIND_GRADING_TEXT_RULE = (
     "ledger, evidence typing, or bounded proof transaction. These operator-only "
     "details remain available through the separate workflow-artifact record."
 )
+PRIMARY_EXECUTION_PURPOSE = "primary_evaluation"
+SMOKE_EXECUTION_PURPOSE = "real_infrastructure_smoke"
+EXECUTION_PURPOSES = (PRIMARY_EXECUTION_PURPOSE, SMOKE_EXECUTION_PURPOSE)
 
 
 def load(path: Path) -> dict[str, Any]:
@@ -229,9 +232,9 @@ def render_prompt(
     opaque_case: str,
     opaque_source: str,
     source_locator: str,
-    source_path: Path,
+    source_path: str | Path,
     requirement: str,
-    workspace_path: Path,
+    workspace_path: str | Path,
 ) -> str:
     replacements = {
         "{{CASE_ID}}": opaque_case,
@@ -249,7 +252,16 @@ def render_prompt(
     return rendered.rstrip() + "\n\nBlind-grading requirement: " + BLIND_GRADING_TEXT_RULE + "\n"
 
 
-def prepare_run(pack_dir: Path, semantic_run_id: str, output_dir: Path) -> None:
+def prepare_run(
+    pack_dir: Path,
+    semantic_run_id: str,
+    output_dir: Path,
+    *,
+    source_semantic_run_id: str | None = None,
+    execution_purpose: str = PRIMARY_EXECUTION_PURPOSE,
+    primary_result_eligible: bool = True,
+    smoke_plan_sha256: str | None = None,
+) -> None:
     prepare.verify_pack(pack_dir)
     config = load(pack_dir / "execution_config.json")
     require(config["suite_id"] == "ABRL-TARGET-DRIFT-V2", "runner requires v2 pack")
@@ -257,8 +269,28 @@ def prepare_run(pack_dir: Path, semantic_run_id: str, output_dir: Path) -> None:
     self_verify(pack_dir, config)
     require(not output_dir.exists(), "run output directory already exists")
 
+    require(execution_purpose in EXECUTION_PURPOSES, "unknown execution purpose")
+    source_run_id = source_semantic_run_id or semantic_run_id
+    if execution_purpose == PRIMARY_EXECUTION_PURPOSE:
+        require(source_run_id == semantic_run_id,
+                "primary evaluation cannot derive from a different run id")
+        require(primary_result_eligible is True,
+                "primary evaluation must begin primary-result-eligible")
+        require(smoke_plan_sha256 is None, "primary evaluation cannot name a smoke plan")
+    else:
+        require(source_semantic_run_id is not None and source_run_id != semantic_run_id,
+                "smoke run requires a distinct source primary run id")
+        require(primary_result_eligible is False,
+                "real-infrastructure smoke is permanently primary-result-ineligible")
+        require(isinstance(smoke_plan_sha256, str) and len(smoke_plan_sha256) == 64
+                and all(character in "0123456789abcdef" for character in smoke_plan_sha256),
+                "smoke run requires a lowercase SHA-256 plan binding")
+
     run_manifest = load(pack_dir / "run_manifest.json")
-    matching = [run for run in run_manifest["runs"] if run["run_id"] == semantic_run_id]
+    require(not any(run["run_id"] == semantic_run_id for run in run_manifest["runs"])
+            or execution_purpose == PRIMARY_EXECUTION_PURPOSE,
+            "smoke run id collides with a sealed primary run id")
+    matching = [run for run in run_manifest["runs"] if run["run_id"] == source_run_id]
     require(len(matching) == 1, "semantic run id not found or duplicated")
     run = matching[0]
     require(run["status"] == "sealed_unrun", "run is not sealed_unrun")
@@ -304,15 +336,16 @@ def prepare_run(pack_dir: Path, semantic_run_id: str, output_dir: Path) -> None:
         opaque_case,
         opaque_source,
         case["source_locator"],
-        source_copy,
+        "source/source.pdf",
         run["proposed_requirement"],
-        workspace_dir,
+        "workspace",
     )
     prompt_path = agent_dir / "prompt.md"
     prompt_path.write_text(rendered, encoding="utf-8")
 
     forbidden_values = [
         semantic_run_id,
+        source_run_id,
         run["case_id"],
         *[entry["case_id"] for entry in case_bank["cases"]],
     ]
@@ -333,6 +366,10 @@ def prepare_run(pack_dir: Path, semantic_run_id: str, output_dir: Path) -> None:
         "suite_id": config["suite_id"],
         "opaque_run_id": opaque_run,
         "semantic_run_id": semantic_run_id,
+        "source_primary_run_id": source_run_id,
+        "execution_purpose": execution_purpose,
+        "primary_result_eligible": primary_result_eligible,
+        "smoke_plan_sha256": smoke_plan_sha256,
         "condition": condition,
         "replicate": run["replicate"],
         "agent_mount": str(agent_dir.resolve()),
@@ -379,6 +416,9 @@ def prepare_run(pack_dir: Path, semantic_run_id: str, output_dir: Path) -> None:
         "schema_version": 1,
         "opaque_run_id": opaque_run,
         "status": "prepared_unrun",
+        "execution_purpose": execution_purpose,
+        "primary_result_eligible": primary_result_eligible,
+        "smoke_plan_sha256": smoke_plan_sha256,
         "sealed_pack_sha256": aggregate,
         "agent_view_file_count": len(initial_manifest),
         "prepared_agent_manifest_sha256": manifest_sha256(initial_manifest),
@@ -559,6 +599,23 @@ def render_adapter_command(command: list[str], replacements: dict[str, str]) -> 
     return rendered
 
 
+def adapter_request(job: dict[str, Any], agent: Path) -> dict[str, Any]:
+    """Build the agent-visible request; operator execution purpose stays hidden."""
+    return {
+        "schema_version": 1,
+        "opaque_run_id": job["opaque_run_id"],
+        "agent_mount": str(agent.resolve()),
+        "prompt_path": str((agent / "prompt.md").resolve()),
+        "replicate": job["replicate"],
+        "model": job["model"],
+        "pricing": job["pricing"],
+        "budgets": job["budgets"],
+        "retry_policy": job["retry_policy"],
+        "result_contract": job["result_contract"],
+        "provider_runtime": job["provider_runtime"],
+    }
+
+
 def execute_run(pack_dir: Path, run_dir: Path) -> None:
     prepare.verify_pack(pack_dir)
     config = load(pack_dir / "execution_config.json")
@@ -576,6 +633,12 @@ def execute_run(pack_dir: Path, run_dir: Path) -> None:
     ).strip(), "run state names a different sealed pack")
     job = load(operator / "job.json")
     require(job["opaque_run_id"] == state["opaque_run_id"], "job/run-state ID mismatch")
+    require(job.get("execution_purpose") in EXECUTION_PURPOSES
+            and state.get("execution_purpose") == job["execution_purpose"],
+            "job/run-state execution-purpose mismatch")
+    require(isinstance(job.get("primary_result_eligible"), bool)
+            and state.get("primary_result_eligible") is job["primary_result_eligible"],
+            "job/run-state primary-result eligibility mismatch")
     require(state["prepared_job_sha256"] == prepare.sha256_file(operator / "job.json"),
             "prepared job changed before execution")
     require(state["workspace_manifest_sha256"]
@@ -599,19 +662,7 @@ def execute_run(pack_dir: Path, run_dir: Path) -> None:
     request_path = adapter_dir / "request.json"
     response_path = adapter_dir / "response.json"
     trace_path = adapter_dir / "trace.jsonl"
-    request = {
-        "schema_version": 1,
-        "opaque_run_id": job["opaque_run_id"],
-        "agent_mount": str(agent.resolve()),
-        "prompt_path": str((agent / "prompt.md").resolve()),
-        "replicate": job["replicate"],
-        "model": job["model"],
-        "pricing": job["pricing"],
-        "budgets": job["budgets"],
-        "retry_policy": job["retry_policy"],
-        "result_contract": job["result_contract"],
-        "provider_runtime": job["provider_runtime"],
-    }
+    request = adapter_request(job, agent)
     dump(request_path, request)
     command = render_adapter_command(
         config["execution_adapter"]["command_argv"],
@@ -702,6 +753,9 @@ def execute_run(pack_dir: Path, run_dir: Path) -> None:
     receipt = {
         "schema_version": 1,
         "opaque_run_id": job["opaque_run_id"],
+        "execution_purpose": job["execution_purpose"],
+        "primary_result_eligible": job["primary_result_eligible"],
+        "smoke_plan_sha256": job.get("smoke_plan_sha256"),
         "sealed_pack_sha256": state["sealed_pack_sha256"],
         "prepared_agent_manifest_sha256": state["prepared_agent_manifest_sha256"],
         "prepared_job_sha256": state["prepared_job_sha256"],
@@ -728,6 +782,7 @@ def execute_run(pack_dir: Path, run_dir: Path) -> None:
     dump(operator / "execution-receipt.json", receipt)
     state.update({
         "status": "executed_unchecked",
+        "result_eligible": False,
         "completed_agent_manifest_sha256": receipt["completed_agent_manifest_sha256"],
         "execution_receipt_sha256": prepare.sha256_file(operator / "execution-receipt.json"),
     })

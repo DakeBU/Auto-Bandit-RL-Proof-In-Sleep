@@ -582,6 +582,26 @@ def record_terminal_failure(
     dump_atomic(state_path, state)
 
 
+def checked_state_for(job: dict[str, Any], checker_mode: str) -> tuple[str, bool]:
+    """Classify a successful checker run without promoting smoke data to results."""
+    purpose = job.get("execution_purpose")
+    declared_eligible = job.get("primary_result_eligible")
+    require(purpose in runner.EXECUTION_PURPOSES, "unknown job execution purpose")
+    require(isinstance(declared_eligible, bool),
+            "job primary-result eligibility must be literal boolean")
+    if checker_mode != "production":
+        require(purpose == runner.PRIMARY_EXECUTION_PURPOSE,
+                "excluded fixture is reserved for primary plumbing checks")
+        return "checked_fixture_nonexperimental", False
+    if purpose == runner.SMOKE_EXECUTION_PURPOSE:
+        require(declared_eligible is False,
+                "smoke job cannot declare primary-result eligibility")
+        return "checked_smoke_nonexperimental", False
+    require(declared_eligible is True,
+            "primary job must declare primary-result eligibility")
+    return "checked", True
+
+
 def preflight(pack: Path, run_dir: Path) -> dict[str, Any]:
     prepare.verify_pack(pack)
     config = load(pack / "execution_config.json")
@@ -605,6 +625,16 @@ def preflight(pack: Path, run_dir: Path) -> dict[str, Any]:
             "run artifacts name different sealed packs")
     require(job["opaque_run_id"] == state["opaque_run_id"] == receipt["opaque_run_id"],
             "opaque run identifiers differ")
+    require(job.get("execution_purpose") == state.get("execution_purpose")
+            == receipt.get("execution_purpose"),
+            "execution-purpose bindings differ")
+    require(job.get("primary_result_eligible")
+            is state.get("primary_result_eligible")
+            is receipt.get("primary_result_eligible"),
+            "primary-result eligibility bindings differ")
+    require(job.get("smoke_plan_sha256") == state.get("smoke_plan_sha256")
+            == receipt.get("smoke_plan_sha256"),
+            "smoke-plan bindings differ")
     require(state["execution_receipt_sha256"] == sha256(receipt_path),
             "execution receipt hash mismatch")
     require(state["prepared_job_sha256"] == receipt["prepared_job_sha256"] == sha256(job_path),
@@ -956,6 +986,9 @@ def execute(pack: Path, run_dir: Path) -> bool:
             require(not temporary_publish.exists(), "temporary checker publish path exists")
             copy_artifacts(output_path, temporary_publish, artifacts)
             shutil.copyfile(response_path, temporary_publish / "sandbox-response.json")
+            checked_status, result_eligible = checked_state_for(
+                context["job"], checker["mode"]
+            )
             checker_receipt = {
                 "schema_version": 1,
                 "opaque_run_id": context["job"]["opaque_run_id"],
@@ -969,7 +1002,8 @@ def execute(pack: Path, run_dir: Path) -> bool:
                     "isolation_probe_report_sha256"
                 ],
                 "checker_mode": checker["mode"],
-                "result_eligible": checker["mode"] == "production",
+                "execution_purpose": context["job"]["execution_purpose"],
+                "result_eligible": result_eligible,
                 "process": {key: value for key, value in process.items() if key != "output"},
             }
             dump(temporary_publish / "checker-execution-receipt.json", checker_receipt)
@@ -978,11 +1012,8 @@ def execute(pack: Path, run_dir: Path) -> bool:
             published_result = published / "checker-result.json"
             published_receipt = published / "checker-execution-receipt.json"
             context["state"].update({
-                "status": (
-                    "checked" if checker["mode"] == "production"
-                    else "checked_fixture_nonexperimental"
-                ),
-                "result_eligible": checker["mode"] == "production",
+                "status": checked_status,
+                "result_eligible": result_eligible,
                 "checker_mode": checker["mode"],
                 "checker_runtime_config_sha256": checker["runtime_config_sha256"],
                 "isolation_probe_report_sha256": checker[

@@ -118,6 +118,12 @@ def require_production_checker(config: dict[str, Any], probe: dict[str, Any]) ->
     return runtime_sha256
 
 
+def require_primary_job(job: dict[str, Any], label: str) -> None:
+    require(job.get("execution_purpose") == runner.PRIMARY_EXECUTION_PURPOSE
+            and job.get("primary_result_eligible") is True,
+            f"grading rejects non-primary or smoke run: {label}")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--pack", type=Path, required=True)
@@ -195,6 +201,7 @@ def main() -> None:
         receipt = load(receipt_path)
         checker_receipt = load(checker_receipt_path)
         checker_response = load(checker_response_path)
+        require_primary_job(job, run_dir.name)
         require(state["prepared_job_sha256"] == receipt["prepared_job_sha256"]
                 == prepare.sha256_file(job_path),
                 f"prepared-job hash mismatch for {run_dir.name}")

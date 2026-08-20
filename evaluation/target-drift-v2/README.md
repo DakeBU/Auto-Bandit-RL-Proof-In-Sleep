@@ -272,8 +272,38 @@ opaque prompts, manifest/digest checks, selected fail-closed paths, a synthetic
 450-record analysis, and complete/incomplete/tampered completion-ledger cases.
 The deterministic fake fixture and two local
 fail-closed probes are nonexperimental and do not pass the real-infrastructure
-gate.  No real three-condition smoke, final pack, primary model run, grader
-response, grade ledger, or analysis output exists.
+gate.  `tools/prepare_target_drift_smoke.py` and
+`tools/run_target_drift_smoke.py` provide a separate operator-only lane for the
+preregistered one-case-by-three-condition check.  The plan binds one matched
+case/replicate/requirement triplet and both tool hashes; the runner withholds the
+smoke purpose from the agent request and records every successful production
+checker run as `checked_smoke_nonexperimental` with
+`result_eligible=false`.  `tools/prepare_target_drift_grading.py` independently
+rejects this execution purpose.  Thus even a passed smoke cannot enter the 450,
+blind grading, or inferential analysis.
+
+After a final pack exists, the intended operator commands are:
+
+```text
+python tools/prepare_target_drift_smoke.py --pack FROZEN-PACK --run-id ONE-PRIMARY-RUN-ID --output SMOKE-PLAN.json
+python tools/run_target_drift_smoke.py --pack FROZEN-PACK --plan SMOKE-PLAN.json --ledger SMOKE-LEDGER.json
+```
+
+The runner accepts no execution-root override.  Production smoke orchestration
+is fail-closed on Windows until a tested private DACL and job-object boundary is
+implemented; on POSIX it creates an owner-only `0700`
+`/tmp/.abrl-runs/RUNS-<opaque>` root and requires the opaque basename recorded in
+the plan.  Prompt source/workspace locations are relative to the common agent
+root.  This removes operator-supplied smoke markers from the model-visible
+current working directory and prompt paths.  A final production agent sandbox
+with a fixed in-container mount remains required before the real smoke runs.
+That launcher must also provide a parent-death, job-object, cgroup, or container
+lifecycle proof that a controller crash cannot leave a provider child consuming
+budget or mutating the resumable attempt.
+
+This lane is implemented and component-tested, but it has not been run with a
+real provider/agent sandbox.  No real three-condition smoke, final pack, primary
+model run, grader response, grade ledger, or analysis output exists.
 `tools/codex_target_drift_adapter.py` is a result-free candidate adapter. Its
 component tests cover the supported Codex JSONL schema (including item updates,
 errors, and fail-closed forbidden-tool events), observable task/thread identity,
