@@ -49,16 +49,21 @@ def require(condition: bool, message: str) -> None:
         raise SystemExit(f"checker container launcher failed: {message}")
 
 
-def regular_executable(path: Path, expected_sha256: str, label: str) -> Path:
+def regular_protected_file(path: Path, expected_sha256: str, label: str) -> Path:
     require(path.is_absolute() and path.exists() and not path.is_symlink(),
             f"{label} must be an existing absolute nonlink path")
     info = path.lstat()
     reparse = bool(getattr(info, "st_file_attributes", 0) & 0x400)
     require(stat.S_ISREG(info.st_mode) and not reparse and info.st_nlink == 1,
             f"{label} must be one unlinked regular file")
+    require(sha256(path) == expected_sha256, f"{label} hash differs from the seal")
+    return path
+
+
+def regular_executable(path: Path, expected_sha256: str, label: str) -> Path:
+    path = regular_protected_file(path, expected_sha256, label)
     if os.name != "nt":
         require(os.access(path, os.X_OK), f"{label} is not executable")
-    require(sha256(path) == expected_sha256, f"{label} hash differs from the seal")
     return path
 
 
@@ -168,7 +173,11 @@ def runtime_identity(runtime: Path) -> dict[str, str]:
 
 
 def verify_runtime(args: argparse.Namespace) -> Path:
-    regular_executable(
+    # The launcher is interpreted by the separately sealed Python executable;
+    # it is intentionally tracked as an ordinary 100644 source file.  Requiring
+    # a POSIX execute bit here rejects a clean Git checkout before Docker can
+    # create a cidfile, even though the file is never execve'd directly.
+    regular_protected_file(
         Path(__file__).resolve(), args.launcher_sha256, "checker host launcher"
     )
     regular_executable(

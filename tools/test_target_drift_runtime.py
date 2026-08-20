@@ -518,6 +518,24 @@ class TargetDriftRuntimeTest(unittest.TestCase):
             with self.assertRaises(SystemExit):
                 checker_launcher.regular_executable(runtime.resolve(), digest, "runtime")
 
+    @unittest.skipIf(os.name == "nt", "POSIX execute bits are not available on Windows")
+    def test_interpreted_launcher_is_hash_bound_without_requiring_execute_bit(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            launcher = Path(directory) / "launcher.py"
+            launcher.write_text("print('sealed')\n", encoding="utf-8")
+            launcher.chmod(0o644)
+            digest = prepare.sha256_file(launcher)
+            self.assertEqual(
+                checker_launcher.regular_protected_file(
+                    launcher.resolve(), digest, "launcher"
+                ),
+                launcher.resolve(),
+            )
+            with self.assertRaises(SystemExit):
+                checker_launcher.regular_executable(
+                    launcher.resolve(), digest, "launcher"
+                )
+
     def test_temporary_path_fake_docker_is_not_an_allowlisted_runtime(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             fake = Path(directory) / ("docker.exe" if os.name == "nt" else "docker")
