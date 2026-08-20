@@ -167,6 +167,20 @@ class AnonymousSupplementTests(unittest.TestCase):
             ledger["source_records"]["TARGET-DRIFT-V2-CONTROLLED-EVALUATION"]["status"],
             "planned",
         )
+        direct_textbook_records = {
+            "TEXTBOOK-PART-IV-THEOREM-13-1-GAUSSIAN-MINIMAX",
+            "TEXTBOOK-PART-IV-CH15-SAME-POLICY-HISTORY-KL-DECOMPOSITION",
+            "TEXTBOOK-PART-IV-CH15-GAUSSIAN-MINIMAX-LOWER-BOUND",
+        }
+        textbook_row = next(
+            row for row in ledger["table_rows"]
+            if row["artifact"] == "Textbook Chapters 13--17"
+        )
+        self.assertTrue(
+            direct_textbook_records.issubset(set(textbook_row["source_record_ids"]))
+        )
+        for record_id in direct_textbook_records:
+            self.assertEqual(ledger["source_records"][record_id]["status"], "compiled")
 
     def test_public_base_is_replaced_by_anonymous_tree_binding(self):
         payload = BUILDER.build_payload(allow_missing_graph=True)
