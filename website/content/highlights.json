@@ -881,7 +881,7 @@
       "math": "x-y\\le\\varepsilon,\\ \\Delta\\ge0\\Longrightarrow\\frac{\\Delta(n-\\varepsilon)}{2}\\le\\max\\{\\Delta(n-x),\\Delta y\\}.",
       "intuition": "The base environment punishes too few base-arm pulls and the changed environment punishes too many; an information theorem may lose a quantitative error without erasing the deterministic lower-bound structure.",
       "why": "This matches the source's approximate cross-law comparison without turning approximation into equality or an unjustified direction.",
-      "position": "It is the Chapter 13 algebra interface that later history-law and testing inequalities can consume; the Gaussian minimax terminal remains planned for Chapters 14 and 15.",
+      "position": "It is the Chapter 13 algebra interface consumed by the compiled Chapter 14–15 history-law and testing route; the resulting Gaussian minimax endpoint gives the source-order statement with c=1/54.",
       "proof_idea": "Scale the explicit pull-discrepancy bound by the nonnegative gap, show the two lower expressions sum to at least Delta times n minus the error, and compare their maximum with half their sum.",
       "lean_notes": "The discrepancy error is a visible Real-valued premise. The declaration proves no absolute continuity, KL bound, testing inequality, or Gaussian construction.",
       "dependencies": [
@@ -998,7 +998,7 @@
       "math": "D(\u2119_{\u03bd,\u03c0}^{(n)}\\Vert\u2119_{\u03bd',\u03c0}^{(n)})=\u2211_a \u1d53_{\u03bd,\u03c0}[T_a(n)]D(P_a\\Vert P'_a).",
       "intuition": "At every round the same policy cancels from the likelihood ratio; an arm pays information only when the policy selects it, so repeated conditional costs regroup into expected pull counts.",
       "why": "This is the compiled Chapter 15 change-of-environment identity used by minimax, instance-dependent, and high-probability lower-bound routes.",
-      "position": "It is the local source-facing counterpart of Lattimore\u2013Szepesv\u00e1ri Lemma 15.1. Theorem 15.2 and later regret terminals remain separate consumers.",
+      "position": "It is the local source-facing counterpart of Lattimore\u2013Szepesv\u00e1ri Lemma 15.1. The compiled Theorem 15.2 consumes it; later Chapter 16\u201317 terminals remain separate.",
       "proof_idea": "Recursively expose the canonical finite history law as a composition product, apply the same-policy conditional KL identity at each successor, sum over finite actions, and identify policy arm masses with lower integrals of realized pull counts.",
       "lean_notes": "Finite arms and a countably generated reward space are explicit. The equality uses ENNReal KL and lower-integral expected counts, covers singular or infinite arm KL, and uses the first environment in both the history law and expectation. The local lastRound index denotes lastRound+1 observations.",
       "dependencies": [
@@ -1028,7 +1028,7 @@
       "math": "D(\\mathcal N(\\mu,1)\\Vert\\mathcal N(\\nu,1))=\\frac{(\\mu-\\nu)^2}{2}.",
       "intuition": "Integrating the affine log likelihood ratio under N(mu,1) replaces the observation by its mean mu and leaves the squared mean displacement.",
       "why": "Theorem 15.2 changes one arm from mean zero to 2 Delta, so this leaf supplies its exact information cost 2 Delta squared.",
-      "position": "It is the compiled Gaussian arm-KL dependency consumed by the compiled Lemma 15.1 history identity; Theorem 15.2 still needs the regret/event terminal.",
+      "position": "It is the compiled Gaussian arm-KL dependency consumed by Lemma 15.1 and the now-compiled Theorem 15.2 history/event assembly.",
       "proof_idea": "Prove mutual absolute continuity via Lebesgue measure, establish L1 integrability from the Gaussian first moment, invoke Mathlib's KL integral formula, and normalize the resulting polynomial.",
       "lean_notes": "The value is symmetric only because both variances are one; the declaration and every downstream contract retain the direction from mu to nu.",
       "dependencies": [
@@ -1042,12 +1042,31 @@
       "plain": "The Chapter 15 gap choice makes the Gaussian information exponent exactly one half.",
       "math": "\\Delta=\\sqrt{m/(4n)}\\Longrightarrow 2n\\Delta^2/m=1/2.",
       "intuition": "Choosing the gap to balance the number of alternatives against the horizon keeps the changed history laws at constant information distance after applying Lemma 15.1.",
-      "why": "This isolates the source's tuning algebra from the still-blocked regret/event and constant bridge.",
-      "position": "It is a compiled numeric dependency of Theorem 15.2, not a proof that the history divergence has this upper bound.",
+      "why": "This isolates the source's tuning algebra before the compiled history-KL and event-testing assembly.",
+      "position": "It is a numeric dependency consumed by the compiled Theorem 15.2, while its statement alone does not bound history divergence.",
       "proof_idea": "Square the nonnegative real square root and normalize the positive field denominators.",
-      "lean_notes": "The parameters are explicit positive real alternative count and horizon values. Natural-cast and bandit-semantic obligations remain with the source terminal.",
+      "lean_notes": "The parameters are explicit positive real alternative count and horizon values. The source terminal discharges the natural-cast and bandit-semantic obligations explicitly.",
       "dependencies": [
         "BanditRLProof.LowerBounds.gaussianMinimaxGap_sq"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.LowerBounds.finiteArmedGaussianMinimaxLowerBound",
+      "chapter": "foundations",
+      "plain": "For every randomized finite-history policy, k greater than one, and n at least k minus one, some k-armed unit-variance Gaussian bandit with means in the unit cube has expected pseudo-regret at least one twenty-seventh times the square root of (k minus one) times n.",
+      "math": "\\forall \\pi,\\ k>1,\\ n\\ge k-1:\\quad \\exists \\mu\\in[0,1]^k,\\quad R_n^{\\mathrm{pseudo}}(\\pi,\\mu)\\ge\\frac{1}{27}\\sqrt{(k-1)n}.",
+      "intuition": "A policy cannot explore every alternative often under the base instance. Raising one lightly sampled arm creates a competing environment that stays close in history KL, so the policy must incur substantial regret in at least one of the two worlds.",
+      "why": "This is the first complete source-facing textbook minimax theorem in the Part IV spine: it joins reusable probability, history-law, Gaussian, event, and lattice layers into the exact external endpoint.",
+      "position": "It is the compiled counterpart of Lattimore\u2013Szepesv\u00e1ri Theorem 15.2 and implies the coarser Chapter 13 order statement with c=1/54. It does not promote the Bernoulli notes, exercises, or Chapter 16\u201317 terminals.",
+      "proof_idea": "Give the source's first arm (Lean Fin 0) mean Delta, select a least-explored alternative under the base law, raise only that arm to 2 Delta, use Lemma 15.1 to bound the directed history KL by one half, apply Bretagnolle\u2013Huber to the source event T_1(n) at most n/2 (Lean T_0), and tune Delta so the exponential constant yields 1/27.",
+      "lean_notes": "The policy is an arbitrary randomized HistoryAlgorithm used unchanged in both environments. Expected pseudo-regret is an ENNReal lower integral on the actual canonical history measure and is the source's standard Lemma 4.5-equivalent form; no separate reward-sum regret bridge is claimed here. lastRound=n-1 encodes exactly n observations. The environment witness certifies every mean lies in [0,1] and identifies an optimal arm.",
+      "dependencies": [
+        "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum",
+        "BanditRLProof.LowerBounds.exists_gaussianMinimax_historyKL_le_half",
+        "BanditRLProof.LowerBounds.bretagnolleHuber",
+        "BanditRLProof.LowerBounds.klDiv_unitGaussianArm_zero_two_mul",
+        "BanditRLProof.LowerBounds.gaussianMinimaxGap_informationExponent_eq_half",
+        "BanditRLProof.LowerBounds.sixteen_div_twentySeven_le_exp_neg_half"
       ]
     },
     {

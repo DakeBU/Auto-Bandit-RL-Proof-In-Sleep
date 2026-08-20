@@ -4,9 +4,9 @@ import Mathlib.Tactic.NormNum
 /-!
 # Textbook Part IV Chapter 15 public canary
 
-This root-import canary exercises the compiled Gaussian dependency slice and
-the adaptive same-policy divergence decomposition of Lemma 15.1.  The Gaussian
-minimax lower bound of Theorem 15.2 remains a separate open terminal.
+This root-import canary exercises the compiled Gaussian dependency slice,
+the adaptive same-policy divergence decomposition of Lemma 15.1, and the
+finite-armed Gaussian minimax lower bound of Theorem 15.2.
 -/
 
 namespace BanditRLProof.TextbookPartIVChapter15Canary
@@ -51,6 +51,16 @@ example : gaussianMinimaxGap 2 8 ≤ (1 / 2 : Real) := by
 #check LowerBounds.klDiv_canonicalBanditHistoryMeasure_succ_general
 #check LowerBounds.klDiv_canonicalBanditHistoryMeasure_eq_sum_realizedExpectedPullCount_mul_armKL
 #check LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum
+#check LowerBounds.UnitGaussianBanditEnvironment
+#check LowerBounds.gaussianExpectedPseudoRegret
+#check LowerBounds.finiteArmedGaussianMinimaxLowerBound
+#check LowerBounds.unitGaussianWorstCaseExpectedPseudoRegret_ge
+#check LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge
+#check LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt
+
+/-- The exact rational constant used to recover the source factor `1/27`. -/
+example : (16 / 27 : Real) ≤ Real.exp (-(1 / 2 : Real)) :=
+  sixteen_div_twentySeven_le_exp_neg_half
 
 #print axioms LowerBounds.log_gaussianPDFReal_div_gaussianPDFReal_one
 #print axioms LowerBounds.llr_gaussianReal_one_ae
@@ -65,5 +75,9 @@ example : gaussianMinimaxGap 2 8 ≤ (1 / 2 : Real) := by
 #print axioms LowerBounds.canonicalRealizedExpectedPullCountThrough_eq_expectedPullCountThrough
 #print axioms LowerBounds.klDiv_canonicalBanditHistoryMeasure_eq_sum_realizedExpectedPullCount_mul_armKL
 #print axioms LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum
+#print axioms LowerBounds.exists_gaussianMinimax_historyKL_le_half
+#print axioms LowerBounds.finiteArmedGaussianMinimaxLowerBound
+#print axioms LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge
+#print axioms LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt
 
 end BanditRLProof.TextbookPartIVChapter15Canary

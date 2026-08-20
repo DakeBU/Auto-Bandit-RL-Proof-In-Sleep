@@ -5,14 +5,10 @@ import Mathlib.Tactic
 /-!
 # Finite-armed minimax lower-bound dependencies
 
-This file starts the source-faithful Chapter 15 spine for Lattimore--Szepesvári,
-*Bandit Algorithms* (2020).  The compiled surface currently proves the exact
-unit-variance Gaussian likelihood ratio and KL formula used in Theorem 15.2.
-
-It deliberately does **not** claim Lemma 15.1's adaptive-history divergence
-decomposition or Theorem 15.2.  Those terminals require a common stochastic
-policy-kernel history law and a conditional composition-product KL integral;
-the repository currently has neither complete interface.
+This file provides the unit-Gaussian analytic leaves for the source-faithful
+Chapter 15 spine of Lattimore--Szepesvári, *Bandit Algorithms* (2020).  The
+adaptive-history decomposition is proved in `BanditHistoryKL`; the complete
+finite-armed Gaussian minimax endpoint is assembled in `GaussianMinimax`.
 -/
 
 namespace BanditRLProof

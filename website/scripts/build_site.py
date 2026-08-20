@@ -743,11 +743,21 @@ def validate_textbook_spine(
     for chapter in chapters:
         if chapter.get("status") not in STATUS_LABELS:
             raise ValueError(f"unknown textbook spine status: {chapter.get('status')}")
+        if chapter.get("core_status") and chapter.get("core_status") not in STATUS_LABELS:
+            raise ValueError(f"unknown textbook spine core status: {chapter.get('core_status')}")
+        for section in chapter.get("section_coverage", []):
+            if section.get("status") not in STATUS_LABELS:
+                raise ValueError(
+                    f"unknown textbook section status: {section.get('status')}"
+                )
         for item in chapter.get("lean_correspondence", []):
             if item.get("status") == "compiled" and item.get("name") not in decl_by_name:
                 raise ValueError(
                     f"compiled textbook spine declaration is not indexed: {item.get('name')}"
                 )
+        for name in chapter.get("primary_declarations", []):
+            if name not in decl_by_name:
+                raise ValueError(f"primary textbook declaration is not indexed: {name}")
         if chapter["number"] > 13 and chapter.get("status") == "compiled":
             raise ValueError("future Part IV chapters cannot be promoted before their gates")
 
@@ -830,6 +840,29 @@ def build_textbook_spine(
             )
         sections = render_list(chapter["sections"])
         goals = render_list(chapter["learning_goals"])
+        status_summary_html = ""
+        chapter_meta_status = status_badge(effective_evidence_status(chapter['status'], verified))
+        if chapter.get("core_status"):
+            status_summary_html = f"""
+  <div class="spine-status-summary" aria-label="Chapter status at two scopes">
+    <article><span>{html.escape(chapter.get('core_status_label', 'Core theorem spine'))}</span>{status_badge(effective_evidence_status(chapter['core_status'], verified))}</article>
+    <article><span>{html.escape(chapter.get('chapter_status_label', 'Whole chapter coverage'))}</span>{status_badge(effective_evidence_status(chapter['status'], verified))}</article>
+  </div>"""
+            chapter_meta_status = ""
+        section_coverage_html = ""
+        if chapter.get("section_coverage"):
+            coverage_rows = "".join(
+                f'<tr><th scope="row">{html.escape(item["section"])}</th>'
+                f'<td>{status_badge(effective_evidence_status(item["status"], verified))}</td>'
+                f'<td>{html.escape(item["scope"])}</td></tr>'
+                for item in chapter["section_coverage"]
+            )
+            section_coverage_html = (
+                '<h3>Section coverage</h3><div class="table-wrap" tabindex="0" '
+                'role="region" aria-label="Textbook section coverage"><table>'
+                '<thead><tr><th>Section</th><th>Status</th><th>Formalization boundary</th></tr></thead>'
+                f'<tbody>{coverage_rows}</tbody></table></div>'
+            )
         definitions = "".join(
             f"""
 <article class="spine-definition-card">
@@ -845,11 +878,34 @@ def build_textbook_spine(
         )
         source_theorem = chapter.get("source_theorem")
         if source_theorem:
+            quantifier_html = ""
+            if chapter.get("quantifier_contract"):
+                quantifier_html = (
+                    '<div class="spine-quantifier-contract"><strong>Quantifier contract.</strong>'
+                    + render_list(chapter["quantifier_contract"])
+                    + '</div>'
+                )
+            primary_declarations_html = ""
+            if chapter.get("primary_declarations"):
+                primary_declarations_html = (
+                    '<div class="spine-primary-declarations"><strong>Direct Lean endpoints.</strong><ul>'
+                    + "".join(
+                        '<li><a href="'
+                        + declaration_href(page_path, decl_by_name[name])
+                        + '"><code>'
+                        + html.escape(name)
+                        + '</code></a></li>'
+                        for name in chapter["primary_declarations"]
+                    )
+                    + '</ul></div>'
+                )
             theorem_html = f"""
 <article class="source-theorem-card spine-theorem-card">
   <div class="source-theorem-heading"><div><span class="panel-kicker">Source theorem · faithful restatement</span><h3>{html.escape(source_theorem['label'])}</h3></div>{status_badge(effective_evidence_status(source_theorem['status'], verified))}</div>
   <p>{html.escape(source_theorem['plain'])}</p>
   {render_math_statement(source_theorem['label'], source_theorem['math'], source_theorem['fallback'])}
+  {quantifier_html}
+  {primary_declarations_html}
   <div class="callout warning"><strong>Lean boundary.</strong> {html.escape(source_theorem['boundary'])}</div>
 </article>"""
         else:
@@ -894,7 +950,8 @@ def build_textbook_spine(
   <p class="eyebrow">{html.escape(source['part'])}</p>
   <h1 class="page-title">Chapter {chapter['number']}: {html.escape(chapter['title'])}</h1>
   <p class="lede">{html.escape(chapter['status_note'])}</p>
-  <div class="spine-chapter-meta">{status_badge(effective_evidence_status(chapter['status'], verified))}<span>Printed pp. {html.escape(chapter['print_pages'])}</span><span>PDF pp. {html.escape(chapter['pdf_pages'])}</span></div>
+  {status_summary_html}
+  <div class="spine-chapter-meta">{chapter_meta_status}<span>Printed pp. {html.escape(chapter['print_pages'])}</span><span>PDF pp. {html.escape(chapter['pdf_pages'])}</span></div>
 </section>
 
 <section id="source">
@@ -902,6 +959,7 @@ def build_textbook_spine(
   <p><cite>{html.escape(source['title'])}</cite>, {html.escape(source['authors'])}, {html.escape(source['publisher'])} ({source['year']}), DOI <a href="{html.escape(source['doi_url'], quote=True)}">{html.escape(source['doi'])}</a>.</p>
   {chapter_source_html}
   {sections}
+  {section_coverage_html}
   <p><a class="button compact" href="{html.escape(source['official_url'], quote=True)}">Open the formal PDF <span aria-hidden="true">↗</span></a></p>
 </section>
 

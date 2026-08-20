@@ -18,7 +18,7 @@
       "slug": "chapter-13-basic-ideas",
       "title": "Lower Bounds: Basic Ideas",
       "status": "partial",
-      "status_note": "The Chapter 13 semantic and deterministic slice and Chapter 15 same-policy history KL bridge are compiled. Theorem 13.1 remains blocked on the Gaussian regret/event and caller-free minimax terminal.",
+      "status_note": "The Chapter 13 semantic and deterministic slice now feeds a compiled Chapter 15 Gaussian minimax theorem. The source's Theorem 13.1 order statement follows locally with the explicit universal constant 1/54; the chapter remains partial only because its notes and exercise set are not a completion target.",
       "print_pages": "155–159",
       "pdf_pages": "189–194",
       "sections": [
@@ -30,8 +30,8 @@
       "learning_goals": [
         "Read worst-case and minimax expected regret as explicit supremum and infimum operations.",
         "Derive a least-explored alternative arm from the exact expected pull-count budget.",
-        "Separate the deterministic two-environment regret algebra from the missing statistical change-of-measure bridge.",
-        "Understand why Theorem 13.1 is source-stated here but cannot be marked compiled before the Chapter 15 terminal."
+        "Separate the deterministic two-environment regret algebra from the statistical change-of-measure bridge supplied in Chapters 14–15.",
+        "Trace how the exact Chapter 15 factor 1/27 yields Theorem 13.1 with the explicit universal constant 1/54."
       ],
       "definitions": [
         {
@@ -61,16 +61,16 @@
           {"title": "Find a lightly sampled alternative", "detail": "Use the expected pull budget to choose i.succ with expected count at most n/m."},
           {"title": "Change one source", "detail": "Raise only that alternative mean to 2 Delta; keep the policy fixed."},
           {"title": "Write both regret expressions", "detail": "Expose the base identity and changed-environment lower expression without identifying their expectations."},
-          {"title": "Defer indistinguishability", "detail": "A same-policy history-law KL/change-of-measure theorem must supply a quantitative pull-count discrepancy error before the minimax conclusion can follow."}
+          {"title": "Apply indistinguishability", "detail": "The compiled Chapter 15 history KL and Chapter 14 Bretagnolle–Huber theorem turn the lightly sampled alternative into a quantitative minimax conclusion."}
         ]
       },
       "source_theorem": {
         "label": "Theorem 13.1 (source statement; proof deferred to Chapter 15)",
-        "status": "blocked",
+        "status": "compiled",
         "math": "\\exists c>0\\;\\forall k>1\\;\\forall n\\ge k:\\quad R_n^*(\\mathcal E^k)\\ge c\\sqrt{kn},",
         "fallback": "For unit-variance k-armed Gaussian bandits with means in the unit cube, minimax regret is at least a universal constant times the square root of k times n.",
         "plain": "The source states the finite-arm Gaussian minimax order here and explicitly postpones its proof to Chapter 15.",
-        "boundary": "No local Lean declaration is presented as Theorem 13.1. The compiled declarations below cover only the Chapter 13 semantic and deterministic conversion window."
+        "boundary": "BanditRLProof.LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt compiles the source order statement for the same unit-cube, unit-variance Gaussian environment class with the explicit positive constant c=1/54. The local expected regret is an ENNReal lower integral on the canonical n-observation history law."
       },
       "lean_correspondence": [
         {"name": "BanditRLProof.LowerBounds.worstCaseExpectedRegret", "status": "compiled", "role": "Worst-case ENNReal supremum over an explicit environment class."},
@@ -84,7 +84,8 @@
         {"name": "BanditRLProof.LowerBounds.baseEnvironmentRegret", "status": "compiled", "role": "Equation (13.2) deterministic expression."},
         {"name": "BanditRLProof.LowerBounds.changedEnvironmentRegretLowerBound", "status": "compiled", "role": "Equation (13.3) lower expression."},
         {"name": "BanditRLProof.LowerBounds.max_base_changed_regretLowerBound_ge_half_sub_error", "status": "compiled", "role": "Quantitative two-environment algebra with the cross-law pull discrepancy exposed as an error premise."},
-        {"name": "BanditRLProof.LowerBounds.max_base_changed_regretLowerBound_ge_half", "status": "compiled", "role": "Zero-error directional corollary of the quantitative algebra."}
+        {"name": "BanditRLProof.LowerBounds.max_base_changed_regretLowerBound_ge_half", "status": "compiled", "role": "Zero-error directional corollary of the quantitative algebra."},
+        {"name": "BanditRLProof.LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt", "status": "compiled", "role": "Chapter 13 source-order terminal, derived from the exact Chapter 15 theorem with c=1/54."}
       ],
       "dependency_nodes": [
         {"id": "minimax", "label": "minimax / worst-case semantics", "status": "compiled"},
@@ -92,18 +93,17 @@
         {"id": "least", "label": "least-explored alternative", "status": "compiled"},
         {"id": "algebra", "label": "two-environment algebra", "status": "compiled"},
         {"id": "transport", "label": "same-policy history KL transport", "status": "compiled"},
-        {"id": "theorem-13-1", "label": "Gaussian minimax terminal", "status": "blocked"}
+        {"id": "theorem-13-1", "label": "Gaussian minimax terminal", "status": "compiled"}
       ],
       "reading_path": [
         "Read the source statement and its explicit Chapter 15 proof deferral.",
         "Inspect the minimax definitions before the averaging lemma.",
         "Check the Fin.succ indexing: source arms 2,…,k become Lean alternatives 0,…,m−1.",
         "Read the quantitative algebra theorem and locate its visible cross-environment error premise.",
-        "Continue through the compiled Chapter 14 event-testing foundation and Chapter 15 history identity to the still-open Gaussian regret/event terminal."
+        "Continue through the compiled Chapter 14 event-testing foundation and Chapter 15 Gaussian theorem, then inspect the c=1/54 order corollary."
       ],
       "gaps": [
-        "The Chapter 15 regret/event bridge from the compiled same-policy history KL identity.",
-        "The source-specific Gaussian constant assembly and caller-free Theorem 13.1 terminal."
+        "The optional notes and Chapter 13 exercise set are not formalized by this main-theorem gate."
       ]
     },
     {
@@ -214,7 +214,10 @@
       "slug": "chapter-15-minimax-lower-bounds",
       "title": "Minimax Lower Bounds",
       "status": "partial",
-      "status_note": "Lemma 15.1 now compiles for finite arms, a countably generated reward space, arbitrary Markov arm laws, and one common randomized history policy. The unit-Gaussian dependency slice also compiles; Theorem 15.2 and the 1/27 minimax terminal remain blocked.",
+      "core_status": "compiled",
+      "core_status_label": "Core theorem spine",
+      "chapter_status_label": "Whole chapter coverage",
+      "status_note": "Lemma 15.1 and Theorem 15.2 now compile on the canonical finite-history law for one arbitrary randomized HistoryAlgorithm. The exact unit-Gaussian construction, event bridge, 1/27 constant, worst-case supremum, and minimax infimum are all checked; the chapter remains partial only because §15.3 notes and §15.5 exercises are outside this main-theorem gate.",
       "print_pages": "170–176",
       "pdf_pages": "207–214",
       "sections": [
@@ -224,11 +227,18 @@
         "§15.4 Bibliographic Remarks (CUP p. 174 / author-online p. 203 / PDF p. 212)",
         "§15.5 Exercises (CUP pp. 174–176 / author-online pp. 203–205 / PDF pp. 212–214)"
       ],
+      "section_coverage": [
+        {"section": "§15.1 Relative Entropy Between Bandits", "status": "compiled", "scope": "Lemma 15.1 and its same-policy adaptive-history KL decomposition compile."},
+        {"section": "§15.2 Minimax Lower Bounds", "status": "compiled", "scope": "The exact unit-Gaussian Theorem 15.2 existence and minimax chain compile with constant 1/27."},
+        {"section": "§15.3 Notes", "status": "partial", "scope": "Source mapping is present; the Bernoulli refinement is not formalized."},
+        {"section": "§15.4 Bibliographic Remarks", "status": "source", "scope": "Mapped for reading context; it is not a Lean theorem target."},
+        {"section": "§15.5 Exercises", "status": "planned", "scope": "The exercise set, including Exercise 15.7's stopping-time extension, is not formalized."}
+      ],
       "learning_goals": [
         "Keep Lemma 15.1's KL direction, first-law expectation, and same randomized policy fixed.",
         "Compute the exact arm-level KL for equal-variance Gaussian alternatives.",
         "Follow the compiled conditional-kernel chain rule and canonical randomized-policy history recursion that turn arm KL into first-law expected pull-count KL.",
-        "Follow the least-explored-arm, testing-event, and Delta-tuning route to Theorem 15.2 without upgrading blocked nodes."
+        "Follow the compiled least-explored-arm, testing-event, and Delta-tuning route through the exact 1/27 Theorem 15.2 terminal."
       ],
       "definitions": [
         {"name": "Bandit-history divergence", "math": "D(\\mathbb P_{\\nu,\\pi}^{(n)}\\Vert\\mathbb P_{\\nu',\\pi}^{(n)}).", "fallback": "The divergence compares finite action/reward histories generated by the same possibly randomized policy in two environments.", "status": "compiled"},
@@ -244,18 +254,29 @@
           {"title": "Find a least-explored alternative", "detail": "Use the compiled Chapter 13 averaging leaf to choose i>1 with E[T_i(n)] at most n/(k-1)."},
           {"title": "Change one arm", "detail": "Raise only arm i to mean 2 Delta; its compiled arm-level KL cost is 2 Delta squared."},
           {"title": "Lift KL to histories", "detail": "The compiled Lemma 15.1 route recursively applies the same-policy conditional-kernel chain rule and rewrites policy-arm masses as lower integrals of realized pull counts."},
-          {"title": "Test and tune", "detail": "Apply Chapter 14 Bretagnolle–Huber to T_1(n) at most n/2, then choose Delta=sqrt((k-1)/(4n)); this source-specific regret/event and constant assembly remains blocked."}
+          {"title": "Test and tune", "detail": "Apply Chapter 14 Bretagnolle–Huber to the source event T_1(n) at most n/2 (Lean's zero-based Fin 0 / T_0), choose Delta=sqrt((k-1)/(4n)), and use exp(-1/2) at least 16/27 to recover the exact 1/27 terminal."}
         ]
       },
       "source_theorem": {
         "label": "Lemma 15.1 / Eq. (15.1) and Theorem 15.2",
-        "status": "partial",
+        "status": "compiled",
         "math": "D(\\mathbb P_{\\nu,\\pi}^{(n)}\\Vert\\mathbb P_{\\nu',\\pi}^{(n)})=\\sum_i\\mathbb E_{\\nu,\\pi}[T_i(n)]D(P_i\\Vert P_i'),\\qquad R_n\\ge\\frac1{27}\\sqrt{(k-1)n}.",
         "fallback": "History KL is the first-law expected sum of arm KL costs under one common policy; the Gaussian construction then yields regret at least one twenty-seventh times the square root of (k-1)n.",
         "plain": "The theorem converts indistinguishability of one-coordinate Gaussian alternatives into a finite-arm minimax regret obstruction.",
-        "boundary": "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum compiles the Lemma 15.1 identity in the source KL direction and with first-law realized expected pulls, under explicit finite-arm/countably-generated regularity and the repository's arbitrary randomized HistoryAlgorithm. The local inclusive lastRound contains lastRound+1 observations, so the source's positive n-round form uses lastRound=n-1. No local declaration is presented as Theorem 15.2 or its 1/27 terminal."
+        "boundary": "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum compiles Lemma 15.1 in the source KL direction with first-law realized expected pulls. BanditRLProof.LowerBounds.finiteArmedGaussianMinimaxLowerBound then compiles Theorem 15.2 for every randomized HistoryAlgorithm, k>1, and n at least k-1, returning a unit-cube mean vector and expected pseudo-regret at least sqrt((k-1)n)/27. The local inclusive lastRound contains lastRound+1 observations, so the n-round theorem uses lastRound=n-1."
       },
-      "source_boundary": "The exact targets are frozen from the official author PDF. Lemma 15.1 is a compiled local theorem under explicit regularity; the 1/27 minimax terminal remains blocked and is not inferred from that identity, theorem cards, or arm-level Gaussian leaves.",
+      "source_boundary": "The exact targets are frozen from the official author PDF. Lemma 15.1 and the main Theorem 15.2 Gaussian minimax terminal compile locally; the proof uses the actual canonical history law, realized pull counts, Chapter 14 Bretagnolle–Huber testing, and an explicit ENNReal worst-case/minimax layer. This does not claim the optional notes, Bernoulli refinement, or exercise set.",
+      "quantifier_contract": [
+        "For every measurable, possibly randomized nonanticipating finite-history policy, there exists a unit-variance Gaussian environment.",
+        "Every environment mean lies in the unit cube [0,1]^k, with k>1 and n at least k-1.",
+        "The result bounds actual ENNReal expected pseudo-regret on the canonical generated history law; it is the standard Lemma 4.5-equivalent regret form used by the source.",
+        "Lean's inclusive lastRound contains lastRound+1 observations, so the n-round theorem is instantiated at lastRound=n-1."
+      ],
+      "primary_declarations": [
+        "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum",
+        "BanditRLProof.LowerBounds.finiteArmedGaussianMinimaxLowerBound",
+        "BanditRLProof.LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge"
+      ],
       "lean_correspondence": [
         {"name": "BanditRLProof.LowerBounds.klDiv_compProd_same_left_eq_lintegral_klDiv_of_measurable", "status": "compiled", "role": "General same-left composition-product KL chain rule, including singular fibres and infinite KL."},
         {"name": "BanditRLProof.LowerBounds.klDiv_historyStep_samePolicy_eq_iterated_lintegral_armKL_general", "status": "compiled", "role": "One randomized policy step contributes the first-law integral of the selected arm KL."},
@@ -273,7 +294,14 @@
         {"name": "BanditRLProof.LowerBounds.gaussianMinimaxGap_informationExponent_eq_half", "status": "compiled", "role": "Exact information exponent 2n Delta squared divided by m equals one half."},
         {"name": "BanditRLProof.LowerBounds.gaussianMinimaxGap_le_half", "status": "compiled", "role": "The horizon condition m at most n keeps Delta at most one half."},
         {"name": "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum", "status": "compiled", "role": "Source-facing Lemma 15.1 identity: history KL equals the sum of first-law realized expected pulls times directed arm KL."},
-        {"name": "BanditRLProof.LowerBounds.exists_gaussianBandit_expectedRegret_ge_one_div_twentySeven", "status": "blocked", "role": "Reserved exact Theorem 15.2 existence terminal; no declaration is claimed."}
+        {"name": "BanditRLProof.LowerBounds.UnitGaussianBanditEnvironment", "status": "compiled", "role": "Unit-cube mean vector with a certified optimal arm; its kernel is the unit-variance Gaussian family."},
+        {"name": "BanditRLProof.LowerBounds.gaussianExpectedPseudoRegret", "status": "compiled", "role": "Actual ENNReal expected pseudo-regret on the canonical generated history law."},
+        {"name": "BanditRLProof.LowerBounds.exists_gaussianMinimax_historyKL_le_half", "status": "compiled", "role": "Least-explored changed arm and Lemma 15.1 give history KL at most one half."},
+        {"name": "BanditRLProof.LowerBounds.base_event_probability_lower_bound", "status": "compiled", "role": "The source event T_0(n) at most n/2 forces base-environment expected regret."},
+        {"name": "BanditRLProof.LowerBounds.changed_complement_probability_lower_bound", "status": "compiled", "role": "The complementary source event forces changed-environment expected regret."},
+        {"name": "BanditRLProof.LowerBounds.sixteen_div_twentySeven_le_exp_neg_half", "status": "compiled", "role": "Rigorous exponential constant bound used to recover 1/27."},
+        {"name": "BanditRLProof.LowerBounds.finiteArmedGaussianMinimaxLowerBound", "status": "compiled", "role": "Source-facing Theorem 15.2 existence theorem for every randomized history policy."},
+        {"name": "BanditRLProof.LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge", "status": "compiled", "role": "Worst-case supremum and policy infimum form of the exact 1/27 theorem."}
       ],
       "dependency_nodes": [
         {"id": "ch13", "label": "Chapter 13 least-explored arm", "status": "compiled"},
@@ -283,17 +311,15 @@
         {"id": "conditional", "label": "conditional composition-product KL integral", "status": "compiled"},
         {"id": "policy", "label": "stochastic-policy canonical history law", "status": "compiled"},
         {"id": "history", "label": "Lemma 15.1 same-policy history KL", "status": "compiled"},
-        {"id": "minimax", "label": "Theorem 15.2 Gaussian 1/27 terminal", "status": "blocked"}
+        {"id": "minimax", "label": "Theorem 15.2 Gaussian 1/27 terminal", "status": "compiled"}
       ],
       "reading_path": [
         "Read Lemma 15.1 in §15.1 and verify D(nu,nu-prime), E_nu[T_i], and one common policy.",
         "Inspect the conditional-kernel chain rule, canonical history recursion, and realized-count bridge before the source-facing Lemma 15.1 alias.",
-        "Read Theorem 15.2 in §15.2 and trace the base instance, least-explored alternative, event T_1(n) at most n/2, and Delta tuning.",
-        "Treat Lemma 15.1 as a compiled dependency, then keep the source-specific regret event and Theorem 15.2 constant assembly visibly open."
+        "Read Theorem 15.2 in §15.2 and trace the base instance, least-explored alternative, source event T_1(n) at most n/2 (Lean Fin 0 / T_0), and Delta tuning.",
+        "Inspect the compiled event lower bounds, history-KL half bound, exponential constant, environment witness, and minimax corollary in that order."
       ],
       "gaps": [
-        "Theorem 15.2's base/alternative regret event identities and the bridge from the compiled ENNReal history KL to the source testing event.",
-        "The final exponential/constant calculation, caller-free 1/27 existence terminal, and its minimax corollary.",
         "The Bernoulli refinement discussed in the §15.3 Notes and the stopping-time Exercise 15.7 are outside the current compiled slice."
       ]
     },

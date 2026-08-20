@@ -37,9 +37,11 @@ obligation, prove the source-shaped small-count width lower bound, and compile
 a large/small-count conditional same-snapshot factor-20 skeleton.  Recursive
 branch/count/width producers and the same-prefix factor-ten edge remain open;
 these declarations do not verify or refute the source lemmas or the paper-level
-regret theorem.  Textbook Chapters 13--17 contain
-compiled dependency spines, while
-their named terminal lower-bound theorems remain partial or blocked.  The
+regret theorem.  Across Textbook Chapters 13--17, Chapter 15 Lemma 15.1 and
+the exact Theorem 15.2 Gaussian expected-pseudo-regret/minimax terminals
+compile, and Chapter 13 has a compiled constant-`1/54` downstream consumer.
+Whole-chapter Notes/Exercises and the Chapter 16--17 terminals remain open, so
+the multi-chapter spine stays partial.  The
 proof-graph and CNG material is a prototype measurement study, not evidence of
 search acceleration or a new general bandit calculus.
 

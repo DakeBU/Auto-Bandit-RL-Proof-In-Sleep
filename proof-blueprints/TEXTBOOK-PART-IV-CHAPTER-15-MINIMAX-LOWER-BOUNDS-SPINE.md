@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE
 
-Generated: `2026-08-18T19:27:19+00:00`
+Generated: `2026-08-20T05:48:02+00:00`
 
 ## Source Task
 
@@ -20,10 +20,13 @@ Formalize the source-faithful finite-armed minimax lower-bound route in
 Lattimore--Szepesvári, *Bandit Algorithms* (2020), Chapter 15. The exact
 terminals are the same-policy adaptive-history divergence decomposition of
 Lemma 15.1 and the unit-variance Gaussian minimax lower bound of Theorem 15.2.
-Lemma 15.1 now compiles for the repository's kernel-valued randomized history
-policy and canonical trajectory law.  Theorem 15.2 remains a separate target:
-compiled information and Gaussian leaves must not be reported as that minimax
-terminal until its regret/event bridge and final existence statement compile.
+Lemma 15.1 compiles for the repository's kernel-valued randomized history
+policy and canonical trajectory law.  Theorem 15.2 now consumes that identity
+through a source-faithful Gaussian base/changed-environment construction, the
+testing event, exact tuning, and the caller-free existence and minimax
+statements.  The chapter remains `partial` only beyond these scoped main
+terminals: the Notes, Bibliographic Remarks, Exercises, and later Chapter
+16--17 consumers are separate targets.
 
 ## Source
 
@@ -88,7 +91,8 @@ Target files:
 
 - `BanditRLProof/LowerBounds/ConditionalKernelKL.lean`;
 - `BanditRLProof/LowerBounds/BanditHistoryKL.lean`;
-- `BanditRLProof/LowerBounds/Minimax.lean`.
+- `BanditRLProof/LowerBounds/Minimax.lean`;
+- `BanditRLProof/LowerBounds/GaussianMinimax.lean`.
 
 Expected public dependency declarations:
 
@@ -104,25 +108,28 @@ LowerBounds.klDiv_compProd_same_left_eq_lintegral_klDiv_of_measurable
 LowerBounds.canonicalBanditHistoryMeasure
 LowerBounds.canonicalRealizedExpectedPullCountThrough
 LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum
+LowerBounds.UnitGaussianBanditEnvironment
+LowerBounds.gaussianExpectedPseudoRegret
+LowerBounds.exists_gaussianMinimax_historyKL_le_half
+LowerBounds.finiteArmedGaussianMinimaxLowerBound
+LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge
+LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt
 ```
 
-Compiled source terminal:
+Compiled source terminals:
 
 ```lean
 LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum
-```
-
-Remaining reserved source terminals:
-
-```lean
-LowerBounds.exists_gaussianBandit_expectedRegret_ge_one_div_twentySeven
-LowerBounds.gaussianBanditMinimaxExpectedRegret_ge_one_div_twentySeven
+LowerBounds.finiteArmedGaussianMinimaxLowerBound
+LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge
 ```
 
 The history decomposition is a local proof of Lemma 15.1, not a theorem-card
-adapter. The Gaussian and numeric tuning declarations remain dependency leaves
-only and do not by themselves prove Theorem 15.2. The chapter stays `partial`
-while the minimax existence terminal remains blocked.
+adapter. The Gaussian and numeric tuning declarations alone are dependency
+leaves; the separately compiled `finiteArmedGaussianMinimaxLowerBound` is the
+Theorem 15.2 evidence.  Its worst-case and infimum-over-policies consumer is
+`unitGaussianMinimaxExpectedPseudoRegret_ge`.  Chapter 13's coarser
+`sqrt(k*n)` order follows with explicit constant `1/54`.
 
 ## Exact regularity contract
 
@@ -149,27 +156,13 @@ while the minimax existence terminal remains blocked.
 
 ## Current semantic boundary
 
-The former Lemma 15.1 blocker is resolved locally.  The project supplements
+The former Lemma 15.1 and Theorem 15.2 blockers are resolved locally.  The project supplements
 `InformationTheory.klDiv_compProd_eq_add` with a measurable conditional-KL
 integral, including singular fibres; instantiates the existing kernel-valued
-`Thompson.HistoryAlgorithm`; builds the canonical finite history law; and proves
-that its policy-mass recurrence is exactly the lower integral of the realized
-pull count.  The remaining Chapter 15 blocker is downstream: connect this
-identity to the least-explored Gaussian alternative, the exact testing event
-and regret identities, and the caller-free `1/27` Theorem 15.2 terminal.
 
-## Proof obligations
+<!-- 5846 characters omitted from the middle of this snapshot. -->
 
-- [x] Official edition, DOI, stable author PDF, chapter/section and dual page
-  references are recorded.
-- [x] Lemma 15.1 and Theorem 15.2 are conservatively restated with direction,
-  quantifiers, Gaussian class, constant, and horizon/arm conditions.
-
-<!-- 2881 characters omitted from the middle of this snapshot. -->
-
-unresolved Blocking, High, or Medium issue.  Theorem 15.2 remains blocked.
-- Independent local browser review at 1440x1000 and 390x844 confirmed zero
-  document-level horizontal overflow.  The Chapter 15 callout and Roadmap
+document-level horizontal overflow.  The Chapter 15 callout and Roadmap
   milestone remain inside the 390px viewport, long declaration names wrap, the
   formula stays in its scrollable region, the drawer remains keyboard/ARIA
   operable, and the five-step desktop proof flow uses the available row width.
@@ -204,7 +197,7 @@ unresolved Blocking, High, or Medium issue.  Theorem 15.2 remains blocked.
   tuning leaves remain visually distinct from the blocked Lemma 15.1 and
   Theorem 15.2 terminals.
 
-## Remote verification evidence
+## Remote verification evidence (superseded dependency snapshot)
 
 - PR #13 passed `Lean and documentation / build` in run `31958097793`, job
   `95191765312` (22m27s), and was merged without a direct push to `main`.
@@ -221,7 +214,7 @@ unresolved Blocking, High, or Medium issue.  Theorem 15.2 remains blocked.
   images, and no document-level horizontal overflow.
 
 That remote acceptance applies only to the earlier Gaussian KL and tuning
-dependency slice.  The 2026-08-19 Lemma 15.1 extension requires its own local,
+dependency slice.  The current Theorem 15.2 extension requires its own local,
 PR, Actions, Pages, and live-page acceptance evidence before it is public.
 
 ## Mathlib-ready leaf contract
@@ -233,9 +226,9 @@ PR, Actions, Pages, and live-page acceptance evidence before it is public.
 | stochastic history law | `HistoryAlgorithm`, `Kernel`, `trajMeasure`, measurable prefix equivalences | policy kernel followed by chosen-arm reward kernel | measurable/nonanticipating common randomized policy; probability kernels | compiled project-local semantic interface |
 | divergence decomposition | conditional kernel KL plus same-policy cancellation | induction over inclusive history; regroup finite action masses and identify realized pull-count lower integrals | KL direction and first-law expectation fixed; arbitrary Markov arm laws | compiled source terminal, Lemma 15.1 |
 | least-explored arm | `exists_leastExploredAlternative` | reuse Chapter 13 finite averaging | nonnegative pulls, sum equals horizon | compiled dependency |
-| testing step | Chapter 14 `bretagnolleHuber` | apply to `T_1(n)<=n/2` | event measurability and common policy | compiled measure theorem; bandit bridge blocked |
+| testing step | Chapter 14 `bretagnolleHuber` | apply to `T_1(n)<=n/2` | event measurability and common policy | compiled measure theorem and compiled bandit bridge |
 | source tuning | real square root and field algebra | set `Delta=sqrt(m/(4n))`; prove exponent `1/2` and `Delta<=1/2` | positive real counts/horizon; `m<=n` | compiled project leaf |
-| Gaussian minimax terminal | all above plus regret identities and real algebra | source base/alternative construction and `Delta` tuning | `k>1`, `n>=k-1`, means in unit cube | blocked source terminal |
+| Gaussian minimax terminal | all above plus regret identities and real algebra | source base/alternative construction and `Delta` tuning | `k>1`, `n>=k-1`, means in unit cube | compiled source terminal and minimax consumer |
 
 ## Retrieval cards
 
@@ -255,8 +248,9 @@ PR, Actions, Pages, and live-page acceptance evidence before it is public.
 
 ## Nonclaims and failure policy
 
-- The Gaussian KL leaf alone is not Lemma 15.1 or Theorem 15.2; the separately
-  compiled randomized-history declaration is the Lemma 15.1 evidence.
+- The Gaussian KL leaf alone is not Lemma 15.1 or Theorem 15.2.  The separately
+  compiled randomized-history declaration is the Lemma 15.1 evidence, and
+  `finiteArmedGaussianMinimaxLowerBound` is the Theorem 15.2 evidence.
 - A deterministic policy specialization alone would not cover the source's
   policy class; the compiled terminal instead uses a common Markov policy
   kernel on each visible finite history.
@@ -265,9 +259,10 @@ PR, Actions, Pages, and live-page acceptance evidence before it is public.
 - The imported Mathlib chain rule alone is route evidence; the local conditional
   integral, canonical history recursion, and realized-count bridge provide the
   compiled source-terminal evidence.
-- If the exact terminal remains blocked, preserve it and publish the smallest
-  compiled general leaves plus the exact blocker. Do not weaken KL direction,
-  add a deterministic-policy restriction, or conceal regularity assumptions.
+- This route does not compile the optional Notes/Exercises or the Chapter
+  16--17 terminals. Do not infer those results from the Chapter 15 endpoint,
+  weaken KL direction, add a deterministic-policy restriction, or conceal
+  regularity assumptions.
 
 
 ## Conversion Window Snapshot
@@ -291,11 +286,12 @@ author-online pp. 199--201 / physical PDF pp. 208--210. The Notes,
 Bibliographic Remarks, and Exercises in §§15.3--15.5 are mapped but are not
 silently promoted to the scoped Theorem 15.2 terminal.
 
-The current compiled window contains the general finite-arm same-policy
-history divergence decomposition of Lemma 15.1, together with its conditional
+The compiled window contains the general finite-arm same-policy history
+divergence decomposition of Lemma 15.1, together with its conditional
 kernel-KL, canonical history-law, realized pull-count, Gaussian KL, and tuning
-dependencies. Theorem 15.2 remains blocked on the downstream regret/event and
-existence bridge.
+dependencies.  It also contains the exact downstream regret/event bridge,
+caller-free Theorem 15.2 environment witness, and worst-case/minimax
+consequences.
 
 ## Precise restatement
 
@@ -327,23 +323,26 @@ policies and supremum over this environment class.
 | `Delta=sqrt((k-1)/(4n))` | source gap tuning | `gaussianMinimaxGap` and tuning lemmas | real numeric dependency | compiled |
 | least-explored arm | some `i>1` has expected pulls at most `n/(k-1)` | `exists_leastExploredAlternative` | deterministic averaging | compiled Chapter 13 |
 | testing inequality | event error sum lower bound | `bretagnolleHuber` | measure/event theorem | compiled Chapter 14 |
-| Theorem 15.2 | existence of Gaussian instance with regret lower bound | reserved `exists_gaussianBandit_expectedRegret_ge_one_div_twentySeven` | source terminal | blocked |
-| minimax consequence | inf-policy/sup-environment lower bound | reserved `gaussianBanditMinimaxExpectedRegret_ge_one_div_twentySeven` | source terminal | blocked |
+| source event | `{T_0(n) <= n/2}` under the base law | `gaussianMinimaxBaseSmallPullEvent` | measurable history event | compiled |
+| base/changed event regret | event-wise regret lower bounds | `base_event_probability_lower_bound`; `changed_complement_probability_lower_bound` | lower-integral probability consumers | compiled |
+| source history-KL cap | chosen alternative has base-to-changed history KL at most `1/2` | `exists_gaussianMinimax_historyKL_le_half` | exact same-policy information bound | compiled |
+| Theorem 15.2 | existence of Gaussian instance with regret lower bound | `finiteArmedGaussianMinimaxLowerBound` | source terminal | compiled |
+| minimax consequence | inf-policy/sup-environment lower bound | `unitGaussianMinimaxExpectedPseudoRegret_ge` | source consequence | compiled |
 
 ## Assumption ledger
 
 | Assumption | Lean status | Purpose | Blocking? |
 | --- | --- | --- | --- |
-| finite action type with `k>1` | source target, future typed interface | alternatives and least-explored arm | yes for terminal |
-| deterministic horizon `n>=k-1` | source target | tuning and unit-cube membership | yes for terminal |
-| arm probability laws | explicit Markov kernels | canonical reward transitions | no for Lemma 15.1; yes for minimax specialization |
+| finite action type with `k>1` | explicit endpoint premise | alternatives and least-explored arm | no |
+| deterministic horizon `n>=k-1` | explicit endpoint premise | tuning and unit-cube membership | no |
+| arm probability laws | explicit Markov kernels and unit-Gaussian specialization | canonical reward transitions | no |
 | stochastic measurable policy kernel | `Thompson.HistoryAlgorithm` | source universal policy class | no for Lemma 15.1 |
 | same policy under both laws | one shared algorithm argument | policy KL cancels | no for Lemma 15.1 |
 | singular/infinite per-arm KL | explicit `ENNReal` semantics; no AC premise | general source identity | no |
-| history/event measurability | canonical prefix equivalences and count measurability | source history and later testing | no for Lemma 15.1; testing bridge remains |
-| pull count sum equals horizon | realized count lower integral compiled; least-explored bridge downstream | Theorem 15.2 | yes for minimax terminal |
+| history/event measurability | canonical prefix equivalences and count measurability | source history and testing event | no |
+| pull count sum equals horizon | realized count lower integral and least-explored bridge | Theorem 15.2 | no |
 | unit Gaussian variance | explicit `(1 : NNReal)` | exact KL value | no for compiled leaf |
-| `mu in [0,1]^k` | future theorem conclusion witness | exact Gaussian class | yes for terminal |
+| `mu in [0,1]^k` | fields of `UnitGaussianBanditEnvironment` | exact Gaussian class | no |
 | stopping time | absent | Exercise 15.7 only | must remain absent |
 
 ## Local API and proof route
@@ -354,8 +353,8 @@ policies and supremum over this environment class.
 | conditional kernel KL | `klDiv_compProd_eq_add`, kernel RN, `compProd_withDensity` | ChainRule source audit | measurable conditional KL; a.e. AC branch plus singular-fibre infinity branch | compiled; keep countably generated target and measurability visible |
 | policy/history law | existing kernel-valued `Thompson.HistoryAlgorithm`, `trajMeasure`, finite-history equivalences | local declarations | map the canonical infinite trajectory to each finite visible prefix | compiled; do not replace the common randomized kernel by a deterministic selector |
 | divergence decomposition | conditional kernel KL plus policy cancellation | source Lemma 15.1 | horizon induction, finite-arm regrouping, realized-count recurrence | compiled; preserve first-law expectation and KL direction |
-| testing/regret | Chapter 14 BH; Chapter 13 least-explored leaf | compiled local dependencies | event `T_1(n)<=n/2`, base/changed regret inequalities | theorem with regret identities as premises is only a conditional leaf |
-| tuning | real square-root/field algebra | source proof | `Delta=sqrt((k-1)/(4n))`, exact KL exponent `1/2`, and `Delta<=1/2` compile; final exponential/numeric weakening remains downstream | do not alter constant or mean cube to simplify |
+| testing/regret | Chapter 14 BH; Chapter 13 least-explored leaf | compiled local dependencies | event `T_1(n)<=n/2`, base/changed regret inequalities | compiled in `GaussianMinimax.lean`; keep event law/direction explicit |
+| tuning | real square-root/field algebra | source proof | `Delta=sqrt((k-1)/(4n))`, exact KL exponent `1/2`, `Delta<=1/2`, and `16/27 <= exp(-1/2)` | compiled; do not alter constant or mean cube to simplify |
 
 ## Proof DAG
 
@@ -368,11 +367,11 @@ policies and supremum over this environment class.
 | `CH15-CONDITIONAL-KL` | same-base kernel KL equals expected pointwise KL | composition-product RN/chain rule | `klDiv_compProd_same_left_eq_lintegral_klDiv_of_measurable` | local/Mathlib candidate | focused Lean | compiled |
 | `CH15-STOCHASTIC-HISTORY` | canonical finite history under a common policy kernel | `trajMeasure`, measurable zero/successor encodings | `canonicalBanditHistoryMeasure`, `canonicalBanditHistoryMeasure_succ` | project-local | focused Lean | compiled |
 | `CH15-LEMMA-15-1` | exact expected-pull divergence decomposition | previous two nodes and realized count recurrence | `banditHistoryRelativeEntropy_eq_expectedPulls_sum` | source terminal | focused Lean | compiled |
-| `CH15-TESTING-REGRET` | source event and two-environment regret bridge | Chapter 14 BH, pull identities | none | project-local | focused Lean | blocked |
-| `CH15-THEOREM-15-2` | exact Gaussian `1/27` existence and minimax result | all preceding nodes and tuning | reserved terminals | source terminal | focused Lean | blocked |
-| `CH15-TYPED-CANARY` | root-import applications and axiom reports for compiled slice | Gaussian and history-KL leaves | `Tests/TextbookPartIVChapter15Canary.lean` | project-local | Tests | pending current full gate |
-| `CH15-EVIDENCE-SITE` | task/DAG/export/index/site agree on compiled-Lemma/blocked-minimax boundary | all scoped artifacts | repository artifacts | repository | full/site/browser | pending current build |
-| `CH15-REVIEW` | independent source/Lean/evidence audit | all artifacts | current read-only review | repository | independent review | pending |
+| `CH15-TESTING-REGRET` | source event and two-environment regret bridge | Chapter 14 BH, pull identities | `base_event_probability_lower_bound`, `changed_complement_probability_lower_bound` | project-local | focused Lean | compiled |
+| `CH15-THEOREM-15-2` | exact Gaussian `1/27` existence and minimax result | all preceding nodes and tuning | `finiteArmedGaussianMinimaxLowerBound`, `unitGaussianMinimaxExpectedPseudoRegret_ge` | source terminal | focused Lean | compiled |
+| `CH15-TYPED-CANARY` | root-import applications and axiom reports for compiled slice | Gaussian and history-KL leaves | `Tests/TextbookPartIVChapter15Canary.lean` | project-local | Tests | verified locally in the 8,843-job Tests gate; named theorem axioms are `propext`, `Classical.choice`, and `Quot.sound` only |
+| `CH15-EVIDENCE-SITE` | task/DAG/export/index/site agree on both compiled source terminals | all scoped artifacts | repository artifacts | repository | full/site/browser | verified locally: Lean-verified site build and site/browser checks passed |
+| `CH15-REVIEW` | independent source/Lean/evidence audit | all artifacts | current read-only review | repository | independent review | passed with no remaining blocking/high/medium finding after status reconciliation |
 | `CH15-REMOTE` | PR, main Actions, Pages, live desktop/mobile | accepted local partial chapter | new PR/run/deploy | repository | deployment | pending |
 
 ## Gaps
@@ -383,7 +382,7 @@ policies and supremum over this environment class.
 - [x] Conditional composition-product KL integral.
 - [x] Stochastic nonanticipating policy and canonical history law.
 - [x] Pull-count expectation identity and Lemma 15.1.
-- [ ] Regret/event bridge, final exponential/constant step, Theorem 15.2, and minimax corollary.
+- [x] Regret/event bridge, final exponential/constant step, Theorem 15.2, and minimax corollary.
 
 
 ## Obligation Snapshot
@@ -408,13 +407,13 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH15-HISTORY-LAW` | recursive canonical action/reward law and measurable pull count | stochastic policy plus arm kernels | `trajMeasure`, `Measure.compProd`, measurable prefix equivalences | repository/Mathlib audit | map one infinite canonical trajectory to exact finite prefixes | probability instances; observed reward only; inclusive last-round indexing | project-local | `canonicalBanditHistoryMeasure`; `finiteHistoryPullCountENNReal` | focused Lean | compiled |
 | `CH15-LEMMA-15-1` | exact expected-pull divergence decomposition | conditional KL, history law, realized-count recurrence | Chapter 14 KL surface | source theorem | induction, same-policy cancellation, finite-arm regrouping | KL direction and first-law expectation exact; arbitrary Markov arm laws | source terminal | `banditHistoryRelativeEntropy_eq_expectedPulls_sum` | focused Lean | compiled |
 | `CH15-LEAST-EXPLORED` | alternative arm with expected pulls at most `n/(k-1)` | pull-count budget | Chapter 13 `exists_leastExploredAlternative` | compiled local declaration | integrate pathwise count sum then average | nonnegative expected pulls; exact total `n` | compiled dependency | `exists_leastExploredAlternative` | root import | compiled |
-| `CH15-TESTING-EVENT` | apply BH to `T_1(n)<=n/2` | measurable pull count and compiled Lemma 15.1 | Chapter 14 `bretagnolleHuber` | compiled local declaration | event-level change of measure | common policy; base/alternative history laws | project-local bridge | none | focused Lean | blocked: downstream bridge |
+| `CH15-TESTING-EVENT` | apply BH to `T_1(n)<=n/2` | measurable pull count and compiled Lemma 15.1 | Chapter 14 `bretagnolleHuber` | compiled local declaration | event-level change of measure | common policy; base/alternative history laws | project-local bridge | `base_event_probability_lower_bound`; `changed_complement_probability_lower_bound` | focused Lean | compiled |
 | `CH15-TUNING` | source choice `Delta=sqrt(m/(4n))`, exact information exponent `1/2`, and `Delta<=1/2` | real sqrt/field inequalities | Mathlib real analysis | source proof | square the gap, normalize the exponent, compare `m/n<=1` | positive real `m,n`; `m<=n`; natural-cast consumer remains explicit | project-local | `gaussianMinimaxGap`, `gaussianMinimaxGap_sq`, `gaussianMinimaxGap_informationExponent_eq_half`, `gaussianMinimaxGap_le_half` | focused Lean | compiled |
-| `CH15-THEOREM-15-2` | every policy has a unit-Gaussian instance with regret at least `sqrt((k-1)n)/27` | all preceding bandit nodes | Chapter 13 minimax surface | textbook card | base/changed instance pair, max-to-exists, minimax inf/sup | exact policy class and unit-cube environment class | source terminal | reserved existence/minimax declarations | focused Lean | blocked: connected blocker |
-| `CH15-TYPED-CANARY` | root-import Gaussian/history applications and axiom reports | compiled Chapter 15 slice | root import | local declarations | exact nontrivial examples and source-terminal checks | no `sorry`/new axioms | project-local | `Tests/TextbookPartIVChapter15Canary.lean` | Tests | pending current full gate |
-| `CH15-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | deterministic gate suite | distinguish path/tool failures from proof failures | repository | n/a | full check | pending current Lemma 15.1 extension; prior Gaussian slice verified separately |
-| `CH15-EVIDENCE-SITE` | export/index/results/highlights/readings/map/README/site agree | compiled Lemma 15.1 and blocked minimax terminal | harness/site scripts | repository | generated evidence plus maintained content | only gated declarations marked compiled | repository | n/a | site/browser | pending current build |
-| `CH15-REVIEW` | independent theorem/Lean audit | all artifacts | source, Lean, site | all above | check quantifiers, KL direction, singular fibres, policy consistency, indexing | no unresolved P0--P3 | repository | current review | independent review | pending |
+| `CH15-THEOREM-15-2` | every policy has a unit-Gaussian instance with regret at least `sqrt((k-1)n)/27` | all preceding bandit nodes | Chapter 13 minimax surface | textbook card | base/changed instance pair, max-to-exists, minimax inf/sup | exact policy class and unit-cube environment class | source terminal | `finiteArmedGaussianMinimaxLowerBound`; `unitGaussianMinimaxExpectedPseudoRegret_ge` | focused Lean | compiled |
+| `CH15-TYPED-CANARY` | root-import Gaussian/history applications and axiom reports | compiled Chapter 15 slice | root import | local declarations | exact nontrivial examples and source-terminal checks | no `sorry`/new axioms | project-local | `Tests/TextbookPartIVChapter15Canary.lean` | Tests | verified locally |
+| `CH15-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | deterministic gate suite | distinguish path/tool failures from proof failures | repository | n/a | full check | verified locally |
+| `CH15-EVIDENCE-SITE` | export/index/results/highlights/readings/map/README/site agree | compiled Lemma 15.1 and Theorem 15.2 terminals | harness/site scripts | repository | generated evidence plus maintained content | only gated declarations marked compiled | repository | n/a | site/browser | verified locally |
+| `CH15-REVIEW` | independent theorem/Lean audit | all artifacts | source, Lean, site | all above | check quantifiers, KL direction, singular fibres, policy consistency, indexing | no unresolved P0--P3 | repository | current review | independent review | verified |
 | `CH15-REMOTE` | PR, main Actions, Pages, live Chapter 15 | accepted local partial chapter | GitHub workflow | repository | branch PR, never direct main push | new PR/run/deploy | repository | n/a | deployment | pending |
 
 ## Failure classification
@@ -54090,6 +54089,414 @@ These cards are planning inspiration only.  They do not certify any theorem.
   },
   {
     "kind": "def",
+    "name": "finiteHistoryPullCountReal",
+    "full_name": "BanditRLProof.LowerBounds.finiteHistoryPullCountReal",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 25,
+    "statement": "noncomputable def finiteHistoryPullCountReal {K : Nat} {Reward : Type*} (n : Nat) (history : History.FinitePairHistory (Fin K) Reward n) (arm : Fin K) : Real"
+  },
+  {
+    "kind": "theorem",
+    "name": "finiteHistoryPullCountENNReal_ne_top",
+    "full_name": "BanditRLProof.LowerBounds.finiteHistoryPullCountENNReal_ne_top",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 31,
+    "statement": "theorem finiteHistoryPullCountENNReal_ne_top {K : Nat} {Reward : Type*} (n : Nat) (history : History.FinitePairHistory (Fin K) Reward n) (arm : Fin K) : finiteHistoryPullCountENNReal n history arm \u2260 \u221e"
+  },
+  {
+    "kind": "theorem",
+    "name": "sum_finiteHistoryPullCountENNReal",
+    "full_name": "BanditRLProof.LowerBounds.sum_finiteHistoryPullCountENNReal",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 45,
+    "statement": "theorem sum_finiteHistoryPullCountENNReal {K : Nat} {Reward : Type*} (n : Nat) (history : History.FinitePairHistory (Fin K) Reward n) : \u2211 arm : Fin K, finiteHistoryPullCountENNReal n history arm = n + 1"
+  },
+  {
+    "kind": "theorem",
+    "name": "sum_finiteHistoryPullCountReal",
+    "full_name": "BanditRLProof.LowerBounds.sum_finiteHistoryPullCountReal",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 66,
+    "statement": "theorem sum_finiteHistoryPullCountReal {K : Nat} {Reward : Type*} (n : Nat) (history : History.FinitePairHistory (Fin K) Reward n) : \u2211 arm : Fin K, finiteHistoryPullCountReal n history arm = n + 1"
+  },
+  {
+    "kind": "theorem",
+    "name": "finiteHistoryPullCountReal_nonneg",
+    "full_name": "BanditRLProof.LowerBounds.finiteHistoryPullCountReal_nonneg",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 78,
+    "statement": "theorem finiteHistoryPullCountReal_nonneg {K : Nat} {Reward : Type*} (n : Nat) (history : History.FinitePairHistory (Fin K) Reward n) (arm : Fin K) : 0 \u2264 finiteHistoryPullCountReal n history arm"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurable_finiteHistoryPullCountReal",
+    "full_name": "BanditRLProof.LowerBounds.measurable_finiteHistoryPullCountReal",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 85,
+    "statement": "theorem measurable_finiteHistoryPullCountReal {K : Nat} {Reward : Type*} [MeasurableSpace Reward] (n : Nat) (arm : Fin K) : Measurable (fun history : History.FinitePairHistory (Fin K) Reward n => finiteHistoryPullCountReal n history arm)"
+  },
+  {
+    "kind": "theorem",
+    "name": "ofReal_mul_probReal_le_lintegral_of_event",
+    "full_name": "BanditRLProof.LowerBounds.ofReal_mul_probReal_le_lintegral_of_event",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 94,
+    "statement": "theorem ofReal_mul_probReal_le_lintegral_of_event {alpha : Type*} [MeasurableSpace alpha] {mu : Measure alpha} [IsFiniteMeasure mu] {A : Set alpha} (hA : MeasurableSet A) {c : Real} (hc : 0 \u2264 c) {f : alpha -> ENNReal} (hf : forall x, x \u2208 A -> ENNReal.ofReal c \u2264 f x) : ENNReal.ofReal (c * mu.real A) \u2264 \u222b\u207b x, f x \u2202mu"
+  },
+  {
+    "kind": "theorem",
+    "name": "sixteen_div_twentySeven_le_exp_neg_half",
+    "full_name": "BanditRLProof.LowerBounds.sixteen_div_twentySeven_le_exp_neg_half",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 116,
+    "statement": "theorem sixteen_div_twentySeven_le_exp_neg_half : (16 / 27 : Real) \u2264 Real.exp (-(1 / 2 : Real))"
+  },
+  {
+    "kind": "structure",
+    "name": "UnitGaussianBanditEnvironment",
+    "full_name": "BanditRLProof.LowerBounds.UnitGaussianBanditEnvironment",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 135,
+    "statement": "structure UnitGaussianBanditEnvironment (K : Nat) where"
+  },
+  {
+    "kind": "abbrev",
+    "name": "unitGaussianKernel",
+    "full_name": "BanditRLProof.LowerBounds.unitGaussianKernel",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 143,
+    "statement": "noncomputable abbrev unitGaussianKernel {K : Nat} (mean : Fin K -> Real) : Kernel (Fin K) Real"
+  },
+  {
+    "kind": "theorem",
+    "name": "unitGaussianKernel_apply",
+    "full_name": "BanditRLProof.LowerBounds.unitGaussianKernel_apply",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 148,
+    "statement": "theorem unitGaussianKernel_apply {K : Nat} (mean : Fin K -> Real) (arm : Fin K) : unitGaussianKernel mean arm = unitGaussianArm (mean arm)"
+  },
+  {
+    "kind": "def",
+    "name": "finiteHistoryGaussianPseudoRegret",
+    "full_name": "BanditRLProof.LowerBounds.finiteHistoryGaussianPseudoRegret",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 160,
+    "statement": "noncomputable def finiteHistoryGaussianPseudoRegret {K : Nat} (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) (history : History.FinitePairHistory (Fin K) Real lastRound) : ENNReal"
+  },
+  {
+    "kind": "def",
+    "name": "gaussianExpectedPseudoRegret",
+    "full_name": "BanditRLProof.LowerBounds.gaussianExpectedPseudoRegret",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 173,
+    "statement": "noncomputable def gaussianExpectedPseudoRegret {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) : ENNReal"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurable_finiteHistoryGaussianPseudoRegret",
+    "full_name": "BanditRLProof.LowerBounds.measurable_finiteHistoryGaussianPseudoRegret",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 182,
+    "statement": "theorem measurable_finiteHistoryGaussianPseudoRegret {K : Nat} (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) : Measurable (finiteHistoryGaussianPseudoRegret environment lastRound)"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussianExpectedPseudoRegret_eq_sum_expectedPulls",
+    "full_name": "BanditRLProof.LowerBounds.gaussianExpectedPseudoRegret_eq_sum_expectedPulls",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 193,
+    "statement": "theorem gaussianExpectedPseudoRegret_eq_sum_expectedPulls {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) : gaussianExpectedPseudoRegret algorithm environment lastRound = \u2211 arm : Fin K, ENNReal.ofReal (environment.mean environment.bestArm - environment.mean arm) * canonicalRealizedExpectedPullCountThrough algorithm (unitGaussianKernel environment.mean) lastRound arm"
+  },
+  {
+    "kind": "theorem",
+    "name": "sum_canonicalRealizedExpectedPullCountThrough",
+    "full_name": "BanditRLProof.LowerBounds.sum_canonicalRealizedExpectedPullCountThrough",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 217,
+    "statement": "theorem sum_canonicalRealizedExpectedPullCountThrough {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (mean : Fin K -> Real) (lastRound : Nat) : \u2211 arm : Fin K, canonicalRealizedExpectedPullCountThrough algorithm (unitGaussianKernel mean) lastRound arm = lastRound + 1"
+  },
+  {
+    "kind": "def",
+    "name": "gaussianExpectedPullCountReal",
+    "full_name": "BanditRLProof.LowerBounds.gaussianExpectedPullCountReal",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 232,
+    "statement": "noncomputable def gaussianExpectedPullCountReal {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (mean : Fin K -> Real) (lastRound : Nat) (arm : Fin K) : Real"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussianExpectedPullCountReal_nonneg",
+    "full_name": "BanditRLProof.LowerBounds.gaussianExpectedPullCountReal_nonneg",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 238,
+    "statement": "theorem gaussianExpectedPullCountReal_nonneg {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (mean : Fin K -> Real) (lastRound : Nat) (arm : Fin K) : 0 \u2264 gaussianExpectedPullCountReal algorithm mean lastRound arm"
+  },
+  {
+    "kind": "theorem",
+    "name": "sum_gaussianExpectedPullCountReal",
+    "full_name": "BanditRLProof.LowerBounds.sum_gaussianExpectedPullCountReal",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 245,
+    "statement": "theorem sum_gaussianExpectedPullCountReal {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (mean : Fin K -> Real) (lastRound : Nat) : \u2211 arm : Fin K, gaussianExpectedPullCountReal algorithm mean lastRound arm = lastRound + 1"
+  },
+  {
+    "kind": "def",
+    "name": "gaussianMinimaxBaseMean",
+    "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxBaseMean",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 271,
+    "statement": "def gaussianMinimaxBaseMean {m : Nat} (gap : Real) : Fin (m + 1) -> Real"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussianMinimaxBaseMean_zero",
+    "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxBaseMean_zero",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 275,
+    "statement": "theorem gaussianMinimaxBaseMean_zero {m : Nat} (gap : Real) : gaussianMinimaxBaseMean (m := m) gap 0 = gap"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussianMinimaxBaseMean_succ",
+    "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxBaseMean_succ",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 280,
+    "statement": "theorem gaussianMinimaxBaseMean_succ {m : Nat} (gap : Real) (i : Fin m) : gaussianMinimaxBaseMean (m := m) gap i.succ = 0"
+  },
+  {
+    "kind": "def",
+    "name": "gaussianMinimaxChangedMean",
+    "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxChangedMean",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 286,
+    "statement": "def gaussianMinimaxChangedMean {m : Nat} (gap : Real) (i : Fin m) : Fin (m + 1) -> Real"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussianMinimaxChangedMean_selected",
+    "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxChangedMean_selected",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 292,
+    "statement": "theorem gaussianMinimaxChangedMean_selected {m : Nat} (gap : Real) (i : Fin m) : gaussianMinimaxChangedMean gap i i.succ = 2 * gap"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussianMinimaxChangedMean_zero",
+    "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxChangedMean_zero",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 298,
+    "statement": "theorem gaussianMinimaxChangedMean_zero {m : Nat} (gap : Real) (i : Fin m) : gaussianMinimaxChangedMean gap i 0 = gap"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussianMinimaxChangedMean_other",
+    "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxChangedMean_other",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 305,
+    "statement": "theorem gaussianMinimaxChangedMean_other {m : Nat} (gap : Real) {i j : Fin m} (hji : j \u2260 i) : gaussianMinimaxChangedMean gap i j.succ = 0"
+  },
+  {
+    "kind": "def",
+    "name": "gaussianMinimaxBaseEnvironment",
+    "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxBaseEnvironment",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 311,
+    "statement": "noncomputable def gaussianMinimaxBaseEnvironment {m : Nat} (gap : Real) (hgap : 0 \u2264 gap) (hgap_le : gap \u2264 1 / 2) : UnitGaussianBanditEnvironment (m + 1) where"
+  },
+  {
+    "kind": "def",
+    "name": "gaussianMinimaxChangedEnvironment",
+    "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxChangedEnvironment",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 329,
+    "statement": "noncomputable def gaussianMinimaxChangedEnvironment {m : Nat} (gap : Real) (i : Fin m) (hgap : 0 \u2264 gap) (hgap_le : gap \u2264 1 / 2) : UnitGaussianBanditEnvironment (m + 1) where"
+  },
+  {
+    "kind": "theorem",
+    "name": "finiteHistoryGaussianPseudoRegret_ne_top",
+    "full_name": "BanditRLProof.LowerBounds.finiteHistoryGaussianPseudoRegret_ne_top",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 358,
+    "statement": "theorem finiteHistoryGaussianPseudoRegret_ne_top {K : Nat} (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) (history : History.FinitePairHistory (Fin K) Real lastRound) : finiteHistoryGaussianPseudoRegret environment lastRound history \u2260 \u221e"
+  },
+  {
+    "kind": "theorem",
+    "name": "finiteHistoryGaussianPseudoRegret_toReal",
+    "full_name": "BanditRLProof.LowerBounds.finiteHistoryGaussianPseudoRegret_toReal",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 369,
+    "statement": "theorem finiteHistoryGaussianPseudoRegret_toReal {K : Nat} (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) (history : History.FinitePairHistory (Fin K) Real lastRound) : (finiteHistoryGaussianPseudoRegret environment lastRound history).toReal = \u2211 arm : Fin K, (environment.mean environment.bestArm - environment.mean arm) * finiteHistoryPullCountReal lastRound history arm"
+  },
+  {
+    "kind": "def",
+    "name": "gaussianMinimaxBaseSmallPullEvent",
+    "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxBaseSmallPullEvent",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 391,
+    "statement": "def gaussianMinimaxBaseSmallPullEvent {m : Nat} (lastRound : Nat) : Set (History.FinitePairHistory (Fin (m + 1)) Real lastRound)"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurableSet_gaussianMinimaxBaseSmallPullEvent",
+    "full_name": "BanditRLProof.LowerBounds.measurableSet_gaussianMinimaxBaseSmallPullEvent",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 397,
+    "statement": "theorem measurableSet_gaussianMinimaxBaseSmallPullEvent {m : Nat} (lastRound : Nat) : MeasurableSet (gaussianMinimaxBaseSmallPullEvent (m := m) lastRound)"
+  },
+  {
+    "kind": "theorem",
+    "name": "finiteHistoryGaussianPseudoRegret_base_toReal",
+    "full_name": "BanditRLProof.LowerBounds.finiteHistoryGaussianPseudoRegret_base_toReal",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 405,
+    "statement": "theorem finiteHistoryGaussianPseudoRegret_base_toReal {m : Nat} (gap : Real) (hgap : 0 \u2264 gap) (hgap_le : gap \u2264 1 / 2) (lastRound : Nat) (history : History.FinitePairHistory (Fin (m + 1)) Real lastRound) : (finiteHistoryGaussianPseudoRegret (gaussianMinimaxBaseEnvironment gap hgap hgap_le) lastRound history).toReal = gap * ((lastRound + 1 : Nat) - finiteHistoryPullCountReal lastRound history 0)"
+  },
+  {
+    "kind": "theorem",
+    "name": "finiteHistoryGaussianPseudoRegret_changed_toReal_lower",
+    "full_name": "BanditRLProof.LowerBounds.finiteHistoryGaussianPseudoRegret_changed_toReal_lower",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 431,
+    "statement": "theorem finiteHistoryGaussianPseudoRegret_changed_toReal_lower {m : Nat} (gap : Real) (i : Fin m) (hgap : 0 \u2264 gap) (hgap_le : gap \u2264 1 / 2) (lastRound : Nat) (history : History.FinitePairHistory (Fin (m + 1)) Real lastRound) : gap * finiteHistoryPullCountReal lastRound history 0 \u2264 (finiteHistoryGaussianPseudoRegret (gaussianMinimaxChangedEnvironment gap i hgap hgap_le) lastRound history).toReal"
+  },
+  {
+    "kind": "theorem",
+    "name": "base_event_forces_gaussianPseudoRegret",
+    "full_name": "BanditRLProof.LowerBounds.base_event_forces_gaussianPseudoRegret",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 457,
+    "statement": "theorem base_event_forces_gaussianPseudoRegret {m : Nat} (gap : Real) (hgap : 0 \u2264 gap) (hgap_le : gap \u2264 1 / 2) (lastRound : Nat) (history : History.FinitePairHistory (Fin (m + 1)) Real lastRound) (hA : history \u2208 gaussianMinimaxBaseSmallPullEvent (m := m) lastRound) : ENNReal.ofReal (((lastRound + 1 : Nat) : Real) * gap / 2) \u2264 finiteHistoryGaussianPseudoRegret (gaussianMinimaxBaseEnvironment gap hgap hgap_le) lastRound history"
+  },
+  {
+    "kind": "theorem",
+    "name": "changed_complement_forces_gaussianPseudoRegret",
+    "full_name": "BanditRLProof.LowerBounds.changed_complement_forces_gaussianPseudoRegret",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 473,
+    "statement": "theorem changed_complement_forces_gaussianPseudoRegret {m : Nat} (gap : Real) (i : Fin m) (hgap : 0 \u2264 gap) (hgap_le : gap \u2264 1 / 2) (lastRound : Nat) (history : History.FinitePairHistory (Fin (m + 1)) Real lastRound) (hAc : history \u2208 (gaussianMinimaxBaseSmallPullEvent (m := m) lastRound)\u1d9c) : ENNReal.ofReal (((lastRound + 1 : Nat) : Real) * gap / 2) \u2264 finiteHistoryGaussianPseudoRegret (gaussianMinimaxChangedEnvironment gap i hgap hgap_le) lastRound history"
+  },
+  {
+    "kind": "theorem",
+    "name": "base_event_probability_lower_bound",
+    "full_name": "BanditRLProof.LowerBounds.base_event_probability_lower_bound",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 493,
+    "statement": "theorem base_event_probability_lower_bound {m : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) (gap : Real) (hgap : 0 \u2264 gap) (hgap_le : gap \u2264 1 / 2) (lastRound : Nat) : ENNReal.ofReal ((((lastRound + 1 : Nat) : Real) * gap / 2) * (canonicalBanditHistoryMeasure algorithm (unitGaussianKernel (gaussianMinimaxBaseMean gap)) lastRound).real (gaussianMinimaxBaseSmallPullEvent (m := m) lastRound)) \u2264 gaussianExpectedPseudoRegret algorithm (gaussianMinimaxBaseEnvironment gap hgap hgap_le) lastRound"
+  },
+  {
+    "kind": "theorem",
+    "name": "changed_complement_probability_lower_bound",
+    "full_name": "BanditRLProof.LowerBounds.changed_complement_probability_lower_bound",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 510,
+    "statement": "theorem changed_complement_probability_lower_bound {m : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) (gap : Real) (i : Fin m) (hgap : 0 \u2264 gap) (hgap_le : gap \u2264 1 / 2) (lastRound : Nat) : ENNReal.ofReal ((((lastRound + 1 : Nat) : Real) * gap / 2) * (canonicalBanditHistoryMeasure algorithm (unitGaussianKernel (gaussianMinimaxChangedMean gap i)) lastRound).real (gaussianMinimaxBaseSmallPullEvent (m := m) lastRound)\u1d9c) \u2264 gaussianExpectedPseudoRegret algorithm (gaussianMinimaxChangedEnvironment gap i hgap hgap_le) lastRound"
+  },
+  {
+    "kind": "theorem",
+    "name": "klDiv_unitGaussianKernel_base_changed",
+    "full_name": "BanditRLProof.LowerBounds.klDiv_unitGaussianKernel_base_changed",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 529,
+    "statement": "theorem klDiv_unitGaussianKernel_base_changed {m : Nat} (gap : Real) (i j : Fin m) : InformationTheory.klDiv (unitGaussianKernel (gaussianMinimaxBaseMean gap) j.succ) (unitGaussianKernel (gaussianMinimaxChangedMean gap i) j.succ) = if j = i then ENNReal.ofReal (2 * gap ^ 2) else 0"
+  },
+  {
+    "kind": "theorem",
+    "name": "klDiv_gaussianMinimax_base_changed_history",
+    "full_name": "BanditRLProof.LowerBounds.klDiv_gaussianMinimax_base_changed_history",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 547,
+    "statement": "theorem klDiv_gaussianMinimax_base_changed_history {m : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) (gap : Real) (i : Fin m) (lastRound : Nat) : InformationTheory.klDiv (canonicalBanditHistoryMeasure algorithm (unitGaussianKernel (gaussianMinimaxBaseMean gap)) lastRound) (canonicalBanditHistoryMeasure algorithm (unitGaussianKernel (gaussianMinimaxChangedMean gap i)) lastRound) = canonicalRealizedExpectedPullCountThrough algorithm (unitGaussianKernel (gaussianMinimaxBaseMean gap)) lastRound i.succ * ENNReal.ofReal (2 * gap ^ 2)"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_gaussianMinimax_leastExploredAlternative",
+    "full_name": "BanditRLProof.LowerBounds.exists_gaussianMinimax_leastExploredAlternative",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 572,
+    "statement": "theorem exists_gaussianMinimax_leastExploredAlternative {m : Nat} (hm : 0 < m) (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) (gap : Real) (lastRound : Nat) : \u2203 i : Fin m, gaussianExpectedPullCountReal algorithm (gaussianMinimaxBaseMean gap) lastRound i.succ \u2264 ((lastRound + 1 : Nat) : Real) / (m : Real)"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_gaussianMinimax_historyKL_le_half",
+    "full_name": "BanditRLProof.LowerBounds.exists_gaussianMinimax_historyKL_le_half",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 592,
+    "statement": "theorem exists_gaussianMinimax_historyKL_le_half {m horizon : Nat} (hm : 0 < m) (hmhorizon : m \u2264 horizon) (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) : let gap := gaussianMinimaxGap (m : Real) (horizon : Real) \u2203 i : Fin m, InformationTheory.klDiv (canonicalBanditHistoryMeasure algorithm (unitGaussianKernel (gaussianMinimaxBaseMean gap)) (horizon - 1)) (canonicalBanditHistoryMeasure algorithm (unitGaussianKernel (gaussianMinimaxChangedMean gap i)) (horizon - 1)) \u2264 ENNReal.ofReal (1 / 2 : Real)"
+  },
+  {
+    "kind": "theorem",
+    "name": "horizon_mul_gaussianMinimaxGap_eq_half_sqrt",
+    "full_name": "BanditRLProof.LowerBounds.horizon_mul_gaussianMinimaxGap_eq_half_sqrt",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 675,
+    "statement": "theorem horizon_mul_gaussianMinimaxGap_eq_half_sqrt {alternativeCount horizon : Real} (halternatives : 0 \u2264 alternativeCount) (hhorizon : 0 < horizon) : horizon * gaussianMinimaxGap alternativeCount horizon = Real.sqrt (alternativeCount * horizon) / 2"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_unitGaussianBandit_expectedPseudoRegret_ge_sqrt_div_twentySeven",
+    "full_name": "BanditRLProof.LowerBounds.exists_unitGaussianBandit_expectedPseudoRegret_ge_sqrt_div_twentySeven",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 710,
+    "statement": "theorem exists_unitGaussianBandit_expectedPseudoRegret_ge_sqrt_div_twentySeven {m horizon : Nat} (hm : 0 < m) (hmhorizon : m \u2264 horizon) (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) : let gap := gaussianMinimaxGap (m : Real) (horizon : Real) \u2203 i : Fin m, ENNReal.ofReal ((1 / 27 : Real) * Real.sqrt ((m : Real) * (horizon : Real))) \u2264 max (gaussianExpectedPseudoRegret algorithm (gaussianMinimaxBaseEnvironment gap (show 0 \u2264 gaussianMinimaxGap (m : Real) (horizon : Real) from Real.sqrt_nonneg _) (gaussianMinimaxGap_le_half (show (0 : Real) < (horizon : Real) by exact_mod_cast lt_of_lt_of_le hm hmhorizon) (by exact_mod_cast hmhorizon))) (horizon - 1)) (gaussianExpectedPseudoRegret algorithm (gaussianMinimaxChangedEnvironment gap i (show 0 \u2264 gaussianMinimaxGap (m : Real) (horizon : Real) from Real.sqrt_nonneg _) (gaussianMinimaxGap_le_half (show (0 : Real) < (horizon : Real) by exact_mod_cast lt_of_lt_of_le hm hmhorizon) (by exact_mod_cast hmhorizon))) (horizon - 1))"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_unitGaussianBanditEnvironment_expectedPseudoRegret_ge",
+    "full_name": "BanditRLProof.LowerBounds.exists_unitGaussianBanditEnvironment_expectedPseudoRegret_ge",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 834,
+    "statement": "theorem exists_unitGaussianBanditEnvironment_expectedPseudoRegret_ge {m horizon : Nat} (hm : 0 < m) (hmhorizon : m \u2264 horizon) (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) : \u2203 environment : UnitGaussianBanditEnvironment (m + 1), ENNReal.ofReal ((1 / 27 : Real) * Real.sqrt ((m : Real) * (horizon : Real))) \u2264 gaussianExpectedPseudoRegret algorithm environment (horizon - 1)"
+  },
+  {
+    "kind": "theorem",
+    "name": "finiteArmedGaussianMinimaxLowerBound",
+    "full_name": "BanditRLProof.LowerBounds.finiteArmedGaussianMinimaxLowerBound",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 864,
+    "statement": "theorem finiteArmedGaussianMinimaxLowerBound {k horizon : Nat} (hk : 1 < k) (hkhorizon : k - 1 \u2264 horizon) (algorithm : Thompson.HistoryAlgorithm (Fin k) Real) : \u2203 environment : UnitGaussianBanditEnvironment k, ENNReal.ofReal ((1 / 27 : Real) * Real.sqrt (((k - 1 : Nat) : Real) * (horizon : Real))) \u2264 gaussianExpectedPseudoRegret algorithm environment (horizon - 1)"
+  },
+  {
+    "kind": "def",
+    "name": "unitGaussianWorstCaseExpectedPseudoRegret",
+    "full_name": "BanditRLProof.LowerBounds.unitGaussianWorstCaseExpectedPseudoRegret",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 882,
+    "statement": "noncomputable def unitGaussianWorstCaseExpectedPseudoRegret (K : Nat) (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (lastRound : Nat) : ENNReal"
+  },
+  {
+    "kind": "def",
+    "name": "unitGaussianMinimaxExpectedPseudoRegret",
+    "full_name": "BanditRLProof.LowerBounds.unitGaussianMinimaxExpectedPseudoRegret",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 889,
+    "statement": "noncomputable def unitGaussianMinimaxExpectedPseudoRegret (K lastRound : Nat) : ENNReal"
+  },
+  {
+    "kind": "theorem",
+    "name": "unitGaussianWorstCaseExpectedPseudoRegret_ge",
+    "full_name": "BanditRLProof.LowerBounds.unitGaussianWorstCaseExpectedPseudoRegret_ge",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 894,
+    "statement": "theorem unitGaussianWorstCaseExpectedPseudoRegret_ge {k horizon : Nat} (hk : 1 < k) (hkhorizon : k - 1 \u2264 horizon) (algorithm : Thompson.HistoryAlgorithm (Fin k) Real) : ENNReal.ofReal ((1 / 27 : Real) * Real.sqrt (((k - 1 : Nat) : Real) * (horizon : Real))) \u2264 unitGaussianWorstCaseExpectedPseudoRegret k algorithm (horizon - 1)"
+  },
+  {
+    "kind": "theorem",
+    "name": "unitGaussianMinimaxExpectedPseudoRegret_ge",
+    "full_name": "BanditRLProof.LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 909,
+    "statement": "theorem unitGaussianMinimaxExpectedPseudoRegret_ge {k horizon : Nat} (hk : 1 < k) (hkhorizon : k - 1 \u2264 horizon) : ENNReal.ofReal ((1 / 27 : Real) * Real.sqrt (((k - 1 : Nat) : Real) * (horizon : Real))) \u2264 unitGaussianMinimaxExpectedPseudoRegret k (horizon - 1)"
+  },
+  {
+    "kind": "theorem",
+    "name": "unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt",
+    "full_name": "BanditRLProof.LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt",
+    "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+    "line": 922,
+    "statement": "theorem unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt {k horizon : Nat} (hk : 1 < k) (hkhorizon : k \u2264 horizon) : ENNReal.ofReal ((1 / 54 : Real) * Real.sqrt ((k : Real) * (horizon : Real))) \u2264 unitGaussianMinimaxExpectedPseudoRegret k (horizon - 1)"
+  },
+  {
+    "kind": "def",
     "name": "tailAtLeast",
     "full_name": "BanditRLProof.LowerBounds.tailAtLeast",
     "file": "BanditRLProof/LowerBounds/HighProbability.lean",
@@ -54405,7 +54812,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "unitGaussianArm",
     "full_name": "BanditRLProof.LowerBounds.unitGaussianArm",
     "file": "BanditRLProof/LowerBounds/Minimax.lean",
-    "line": 27,
+    "line": 23,
     "statement": "abbrev unitGaussianArm (mu : Real) : Measure Real"
   },
   {
@@ -54413,7 +54820,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "unitGaussianBandit",
     "full_name": "BanditRLProof.LowerBounds.unitGaussianBandit",
     "file": "BanditRLProof/LowerBounds/Minimax.lean",
-    "line": 31,
+    "line": 27,
     "statement": "abbrev unitGaussianBandit {k : Nat} (mean : Fin k -> Real) : Fin k -> Measure Real"
   },
   {
@@ -54421,7 +54828,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "log_gaussianPDFReal_div_gaussianPDFReal_one",
     "full_name": "BanditRLProof.LowerBounds.log_gaussianPDFReal_div_gaussianPDFReal_one",
     "file": "BanditRLProof/LowerBounds/Minimax.lean",
-    "line": 36,
+    "line": 32,
     "statement": "theorem log_gaussianPDFReal_div_gaussianPDFReal_one (mu nu x : Real) : Real.log (gaussianPDFReal mu (1 : NNReal) x / gaussianPDFReal nu (1 : NNReal) x) = (mu - nu) * x + (nu ^ 2 - mu ^ 2) / 2"
   },
   {
@@ -54429,7 +54836,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "llr_gaussianReal_one_ae",
     "full_name": "BanditRLProof.LowerBounds.llr_gaussianReal_one_ae",
     "file": "BanditRLProof/LowerBounds/Minimax.lean",
-    "line": 53,
+    "line": 49,
     "statement": "theorem llr_gaussianReal_one_ae (mu nu : Real) : llr (unitGaussianArm mu) (unitGaussianArm nu) =\u1d50[unitGaussianArm mu] fun x => (mu - nu) * x + (nu ^ 2 - mu ^ 2) / 2"
   },
   {
@@ -54437,7 +54844,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "integrable_llr_gaussianReal_one",
     "full_name": "BanditRLProof.LowerBounds.integrable_llr_gaussianReal_one",
     "file": "BanditRLProof/LowerBounds/Minimax.lean",
-    "line": 73,
+    "line": 69,
     "statement": "theorem integrable_llr_gaussianReal_one (mu nu : Real) : Integrable (llr (unitGaussianArm mu) (unitGaussianArm nu)) (unitGaussianArm mu)"
   },
   {
@@ -54445,7 +54852,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "klDiv_gaussianReal_one",
     "full_name": "BanditRLProof.LowerBounds.klDiv_gaussianReal_one",
     "file": "BanditRLProof/LowerBounds/Minimax.lean",
-    "line": 89,
+    "line": 85,
     "statement": "theorem klDiv_gaussianReal_one (mu nu : Real) : InformationTheory.klDiv (unitGaussianArm mu) (unitGaussianArm nu) = ENNReal.ofReal ((mu - nu) ^ 2 / 2)"
   },
   {
@@ -54453,7 +54860,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "klDiv_unitGaussianArm_zero_two_mul",
     "full_name": "BanditRLProof.LowerBounds.klDiv_unitGaussianArm_zero_two_mul",
     "file": "BanditRLProof/LowerBounds/Minimax.lean",
-    "line": 121,
+    "line": 117,
     "statement": "theorem klDiv_unitGaussianArm_zero_two_mul (gap : Real) : InformationTheory.klDiv (unitGaussianArm 0) (unitGaussianArm (2 * gap)) = ENNReal.ofReal (2 * gap ^ 2)"
   },
   {
@@ -54461,7 +54868,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "gaussianMinimaxGap",
     "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxGap",
     "file": "BanditRLProof/LowerBounds/Minimax.lean",
-    "line": 131,
+    "line": 127,
     "statement": "noncomputable def gaussianMinimaxGap (alternativeCount horizon : Real) : Real"
   },
   {
@@ -54469,7 +54876,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "gaussianMinimaxGap_sq",
     "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxGap_sq",
     "file": "BanditRLProof/LowerBounds/Minimax.lean",
-    "line": 136,
+    "line": 132,
     "statement": "theorem gaussianMinimaxGap_sq {alternativeCount horizon : Real} (halternatives : 0 \u2264 alternativeCount) (hhorizon : 0 \u2264 horizon) : gaussianMinimaxGap alternativeCount horizon ^ 2 = alternativeCount / (4 * horizon)"
   },
   {
@@ -54477,7 +54884,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "gaussianMinimaxGap_informationExponent_eq_half",
     "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxGap_informationExponent_eq_half",
     "file": "BanditRLProof/LowerBounds/Minimax.lean",
-    "line": 147,
+    "line": 143,
     "statement": "theorem gaussianMinimaxGap_informationExponent_eq_half {alternativeCount horizon : Real} (halternatives : 0 < alternativeCount) (hhorizon : 0 < horizon) : 2 * horizon * gaussianMinimaxGap alternativeCount horizon ^ 2 / alternativeCount = 1 / 2"
   },
   {
@@ -54485,7 +54892,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "gaussianMinimaxGap_le_half",
     "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxGap_le_half",
     "file": "BanditRLProof/LowerBounds/Minimax.lean",
-    "line": 159,
+    "line": 155,
     "statement": "theorem gaussianMinimaxGap_le_half {alternativeCount horizon : Real} (hhorizon : 0 < horizon) (hcount_le : alternativeCount \u2264 horizon) : gaussianMinimaxGap alternativeCount horizon \u2264 1 / 2"
   },
   {

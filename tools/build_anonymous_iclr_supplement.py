@@ -470,7 +470,7 @@ def build_claim_ledger(proof_report):
                 "artifact": "Textbook Chapters 13--17",
                 "status": "partial",
                 "source_record_ids": [item for item in SOURCE_RESULT_IDS if item.startswith("TEXTBOOK-PART-IV-")],
-                "boundary": "Dependency spines compile; named original lower-bound terminals remain partial or blocked.",
+                "boundary": "Chapter 15 Lemma 15.1 and the exact Theorem 15.2 expected-pseudo-regret/minimax terminals compile, with a Chapter 13 constant-1/54 consumer; whole-chapter Notes/Exercises and Chapter 16--17 terminals remain open.",
             },
             {
                 "artifact": "Delayed best-of-both-worlds audit",
