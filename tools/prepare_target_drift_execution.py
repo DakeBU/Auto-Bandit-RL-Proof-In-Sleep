@@ -534,7 +534,10 @@ def validate_provider_runtime(
             children = list(auth_source.iterdir())
             require({child.name for child in children} == {"auth.json"},
                     "Codex provider auth source must contain only auth.json")
-            regular_unlinked_file(auth_source / "auth.json", "Codex provider auth.json")
+            regular_unlinked_file(
+                auth_source / "auth.json", "Codex provider auth.json",
+                require_executable=False,
+            )
             attestation = provider.get("fresh_codex_home_attestation")
             require(isinstance(attestation, str) and len(attestation.strip()) >= 20,
                     "Codex provider fresh auth-only CODEX_HOME needs an attestation")
