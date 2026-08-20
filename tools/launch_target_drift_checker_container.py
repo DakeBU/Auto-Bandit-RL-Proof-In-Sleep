@@ -362,8 +362,8 @@ def docker_run_command(args: argparse.Namespace, runtime: Path) -> list[str]:
         str(runtime), "run", "--pull", "never", "--init", "--read-only",
         "--network", "none", "--cap-drop", "ALL",
         # The trusted root controller needs SETUID/SETGID to enter the sealed
-        # worker identity.  FOWNER/DAC_OVERRIDE are restricted to sealing the
-        # runner-owned output/response bind mounts before that transition.
+        # worker identity.  FOWNER/DAC_OVERRIDE let that trusted controller seal
+        # the runner-owned output/response bind mounts before the transition.
         # Model-authored code is never executed before setuid/setgid clear the
         # effective capability set; the seven-probe response measures CapEff=0.
         "--cap-add", "SETUID", "--cap-add", "SETGID",

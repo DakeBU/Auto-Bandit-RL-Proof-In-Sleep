@@ -1160,6 +1160,26 @@ class TargetDriftRuntimeTest(unittest.TestCase):
                 "d" * 64,
             )
 
+    def test_isolation_probe_nonzero_worker_capability_is_derived_failure(self) -> None:
+        observations = {
+            "network_request_succeeded": False,
+            "host_sentinel_visible": False,
+            "operator_ground_truth_visible": False,
+            "background_probe_started": True,
+            "worker_effective_capabilities_hex": "0000000000000001",
+            "worker_write_succeeded": {
+                key: False for key in isolation_probe.WORKER_WRITE_KEYS
+            },
+        }
+        results = isolation_probe.derive_probe_results(
+            observations, {"lifecycle_verified_absent": True}
+        )
+        self.assertFalse(results["checker_outputs_not_worker_writable"])
+        self.assertTrue(all(
+            value for name, value in results.items()
+            if name != "checker_outputs_not_worker_writable"
+        ))
+
     def test_adapter_usage_must_match_trace_counts_and_budgets(self) -> None:
         response = {
             "model_invocations": [{

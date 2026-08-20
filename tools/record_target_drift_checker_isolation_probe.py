@@ -139,6 +139,31 @@ def strict_probe_response(
     return observations
 
 
+def derive_probe_results(
+    observations: dict[str, Any], outcome: dict[str, Any]
+) -> dict[str, bool]:
+    writes = observations["worker_write_succeeded"]
+    return {
+        "network_denied": observations["network_request_succeeded"] is False,
+        "host_sentinel_protected": observations["host_sentinel_visible"] is False,
+        "operator_ground_truth_absent": observations["operator_ground_truth_visible"] is False,
+        "checker_outputs_not_worker_writable": (
+            writes["checker_output"] is False and writes["checker_response"] is False
+            and observations["worker_effective_capabilities_hex"] == "0000000000000000"
+        ),
+        "patched_source_and_controller_input_read_only": (
+            writes["patched_source"] is False and writes["controller_input"] is False
+        ),
+        "mounted_inputs_and_cidfile_protected": all(
+            writes[name] is False for name in ("request", "base_snapshot", "patch", "cidfile")
+        ),
+        "background_process_reaped": (
+            observations["background_probe_started"] is True
+            and outcome["lifecycle_verified_absent"] is True
+        ),
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", type=Path, required=True)
@@ -260,6 +285,10 @@ def main() -> None:
         checker["sandbox_inspect_by_label_argv"], replacements
     )
     outcome: dict[str, Any] | None = None
+    response: dict[str, Any] | None = None
+    observations: dict[str, Any] | None = None
+    results: dict[str, bool] | None = None
+    protected_after: dict[str, Any] | None = None
     try:
         outcome = controller.run_sandbox(
             command, cleanup, inspect, cleanup_label, inspect_label, work,
@@ -278,11 +307,49 @@ def main() -> None:
                         f"timed_out={outcome.get('timed_out')}, "
                         f"output_limit_exceeded={outcome.get('output_limit_exceeded')}, "
                         f"output={launch_output!r}")
+        protected_after = {
+            "request_sha256": controller.regular_file_sha256(
+                request_path, protected_limit, "probe request after sandbox"
+            ),
+            "base_manifest": tree_manifest(base_snapshot),
+            "patch_sha256": controller.regular_file_sha256(
+                patch_path, protected_limit, "probe patch after sandbox"
+            ),
+            "host_sentinel_sha256": controller.regular_file_sha256(
+                host_sentinel, protected_limit, "host sentinel after sandbox"
+            ),
+            "operator_sentinel_sha256": controller.regular_file_sha256(
+                operator_sentinel, protected_limit, "operator sentinel after sandbox"
+            ),
+        }
+        prepare.require(protected_after == protected_before,
+                        "probe runtime mutated a protected host input")
+        response = controller.load_bounded_regular_json(
+            response_path, int(checker["budgets"]["maximum_response_bytes"]),
+            "checker isolation-probe response",
+        )
+        observations = strict_probe_response(
+            response, nonce, attempt_label, runtime_sha256,
+            checker["container_image_digest"], checker["controller_entrypoint_sha256"],
+        )
+        results = derive_probe_results(observations, outcome)
+        prepare.require(set(results) == set(PROBES) and all(results.values()),
+                        "one or more checker isolation probes failed")
     except BaseException as error:
         # This result-free ledger is intentionally written outside the sandbox
         # work tree so that the workflow's `if: always()` upload preserves the
         # first failing candidate attempt.  It contains no source case,
         # condition, requirement variant, ground truth, or model output.
+        response_tail: str | None = None
+        if response is None and response_path.exists():
+            try:
+                response_tail = controller.regular_file_bytes(
+                    response_path,
+                    int(checker["budgets"]["maximum_response_bytes"]),
+                    "failed checker isolation-probe response",
+                ).decode("utf-8", errors="replace")[-8192:]
+            except BaseException as response_error:
+                response_tail = f"<unavailable: {type(response_error).__name__}: {response_error}>"
         dump(artifact_root / "probe-failure.json", {
             "schema_version": 1,
             "suite_id": config["suite_id"],
@@ -305,59 +372,20 @@ def main() -> None:
                 "lifecycle_verified_absent": outcome.get("lifecycle_verified_absent"),
                 "lifecycle": outcome.get("lifecycle"),
             },
+            "protected_after": protected_after,
+            "sandbox_response": response,
+            "sandbox_response_tail": response_tail,
+            "observations": observations,
+            "derived_probes": results,
             "nonclaim": (
                 "This is a result-free failed candidate isolation attempt, not "
                 "a production seal, model run, or formalization outcome."
             ),
         })
         raise
-    protected_after = {
-        "request_sha256": controller.regular_file_sha256(
-            request_path, protected_limit, "probe request after sandbox"
-        ),
-        "base_manifest": tree_manifest(base_snapshot),
-        "patch_sha256": controller.regular_file_sha256(
-            patch_path, protected_limit, "probe patch after sandbox"
-        ),
-        "host_sentinel_sha256": controller.regular_file_sha256(
-            host_sentinel, protected_limit, "host sentinel after sandbox"
-        ),
-        "operator_sentinel_sha256": controller.regular_file_sha256(
-            operator_sentinel, protected_limit, "operator sentinel after sandbox"
-        ),
-    }
-    prepare.require(protected_after == protected_before,
-                    "probe runtime mutated a protected host input")
-    response = controller.load_bounded_regular_json(
-        response_path, int(checker["budgets"]["maximum_response_bytes"]),
-        "checker isolation-probe response",
-    )
-    observations = strict_probe_response(
-        response, nonce, attempt_label, runtime_sha256, checker["container_image_digest"],
-        checker["controller_entrypoint_sha256"],
-    )
-    writes = observations["worker_write_succeeded"]
-    results = {
-        "network_denied": observations["network_request_succeeded"] is False,
-        "host_sentinel_protected": observations["host_sentinel_visible"] is False,
-        "operator_ground_truth_absent": observations["operator_ground_truth_visible"] is False,
-        "checker_outputs_not_worker_writable": (
-            writes["checker_output"] is False and writes["checker_response"] is False
-            and observations["worker_effective_capabilities_hex"] == "0000000000000000"
-        ),
-        "patched_source_and_controller_input_read_only": (
-            writes["patched_source"] is False and writes["controller_input"] is False
-        ),
-        "mounted_inputs_and_cidfile_protected": all(
-            writes[name] is False for name in ("request", "base_snapshot", "patch", "cidfile")
-        ),
-        "background_process_reaped": (
-            observations["background_probe_started"] is True
-            and outcome["lifecycle_verified_absent"] is True
-        ),
-    }
-    prepare.require(set(results) == set(PROBES) and all(results.values()),
-                    "one or more checker isolation probes failed")
+
+    assert outcome is not None and observations is not None and results is not None
+    assert protected_after is not None and response is not None
 
     dump(artifact_root / "host-observations.json", {
         "schema_version": 1,
