@@ -251,12 +251,36 @@ def main() -> None:
     inspect_label = controller.render_command(
         checker["sandbox_inspect_by_label_argv"], replacements
     )
-    outcome = controller.run_sandbox(
-        command, cleanup, inspect, cleanup_label, inspect_label, work,
-        int(checker["budgets"]["wall_clock_seconds"]),
-        int(checker["budgets"]["maximum_output_bytes"]), cidfile,
-        int(checker["inspect_absent_exit_code"]),
-    )
+    try:
+        outcome = controller.run_sandbox(
+            command, cleanup, inspect, cleanup_label, inspect_label, work,
+            int(checker["budgets"]["wall_clock_seconds"]),
+            int(checker["budgets"]["maximum_output_bytes"]), cidfile,
+            int(checker["inspect_absent_exit_code"]),
+        )
+    except BaseException as error:
+        # This result-free ledger is intentionally written outside the sandbox
+        # work tree so that the workflow's `if: always()` upload preserves the
+        # first failing candidate attempt.  It contains no source case,
+        # condition, requirement variant, ground truth, or model output.
+        dump(artifact_root / "probe-failure.json", {
+            "schema_version": 1,
+            "suite_id": config["suite_id"],
+            "status": "candidate_probe_failed",
+            "checker_runtime_config_sha256": runtime_sha256,
+            "container_image_digest": checker["container_image_digest"],
+            "probe_commit": args.probe_commit,
+            "host_platform": args.host_platform,
+            "probe_nonce": nonce,
+            "checker_attempt_label": attempt_label,
+            "error_type": type(error).__name__,
+            "error": str(error),
+            "nonclaim": (
+                "This is a result-free failed candidate isolation attempt, not "
+                "a production seal, model run, or formalization outcome."
+            ),
+        })
+        raise
     prepare.require(outcome["exit_code"] == 0 and not outcome["timed_out"]
                     and not outcome["output_limit_exceeded"]
                     and outcome["lifecycle_verified_absent"] is True,

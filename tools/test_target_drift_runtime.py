@@ -929,6 +929,52 @@ class TargetDriftRuntimeTest(unittest.TestCase):
             self.assertEqual(invoked.call_count, 7)
             self.assertFalse(outcomes)
 
+    def test_checker_lifecycle_failure_preserves_bounded_process_diagnostics(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            cidfile = root / "container.cid"
+            records = {
+                "launch": {
+                    "command": ["launch"], "exit_code": 17, "timed_out": False,
+                    "output_limit_exceeded": False, "wall_seconds": 0.1,
+                    "output": "sealed runtime mismatch\n",
+                },
+                "inspect": {
+                    "command": ["inspect"], "exit_code": 9, "timed_out": False,
+                    "output_limit_exceeded": False, "wall_seconds": 0.1,
+                    "output": "inspect diagnostic\n",
+                },
+                "cleanup": {
+                    "command": ["cleanup"], "exit_code": 8, "timed_out": False,
+                    "output_limit_exceeded": False, "wall_seconds": 0.1,
+                    "output": "cleanup diagnostic\n",
+                },
+            }
+
+            def fake_run(command, cwd, timeout, maximum):
+                if command == ["launch"]:
+                    return records["launch"]
+                if "cleanup" in command[0]:
+                    return records["cleanup"]
+                return records["inspect"]
+
+            with mock.patch.object(
+                checker_controller, "run_capped_process", side_effect=fake_run
+            ):
+                with self.assertRaises(checker_controller.CheckerFailure) as raised:
+                    checker_controller.run_sandbox(
+                        ["launch"], ["cid-cleanup"], ["cid-inspect"],
+                        ["label-cleanup"], ["label-inspect"], root, 10, 4096,
+                        cidfile, 3,
+                    )
+            message = str(raised.exception)
+            self.assertIn("launch: exit=17", message)
+            self.assertIn("sealed runtime mismatch", message)
+            self.assertIn("cid inspect-before: exit=9", message)
+            self.assertIn("inspect diagnostic", message)
+            self.assertIn("label cleanup: exit=8", message)
+            self.assertIn("cleanup diagnostic", message)
+
     def test_checker_response_is_bounded_regular_json(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "response.json"
