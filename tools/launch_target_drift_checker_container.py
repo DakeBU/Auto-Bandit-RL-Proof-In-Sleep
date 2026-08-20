@@ -361,10 +361,13 @@ def docker_run_command(args: argparse.Namespace, runtime: Path) -> list[str]:
     return [
         str(runtime), "run", "--pull", "never", "--init", "--read-only",
         "--network", "none", "--cap-drop", "ALL",
-        # The trusted root controller needs only these capabilities to drop each
-        # Lean/Lake child to the sealed worker UID/GID.  Model-authored code is
-        # never executed before that irreversible transition.
+        # The trusted root controller needs SETUID/SETGID to enter the sealed
+        # worker identity.  FOWNER/DAC_OVERRIDE are restricted to sealing the
+        # runner-owned output/response bind mounts before that transition.
+        # Model-authored code is never executed before setuid/setgid clear the
+        # effective capability set; the seven-probe response measures CapEff=0.
         "--cap-add", "SETUID", "--cap-add", "SETGID",
+        "--cap-add", "FOWNER", "--cap-add", "DAC_OVERRIDE",
         "--security-opt", "no-new-privileges=true", "--user", args.controller_uid,
         "--pids-limit", str(args.pids_limit), "--memory", f"{args.memory_mb}m",
         "--cpus", str(args.cpus), "--cidfile", str(args.cidfile.resolve()),

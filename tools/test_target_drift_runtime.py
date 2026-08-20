@@ -482,11 +482,16 @@ class TargetDriftRuntimeTest(unittest.TestCase):
             for required in (
                 "--read-only", "--network\0none", "--cap-drop\0ALL",
                 "--cap-add\0SETUID", "--cap-add\0SETGID",
+                "--cap-add\0FOWNER", "--cap-add\0DAC_OVERRIDE",
                 "--security-opt\0no-new-privileges=true", "--user\0" + "0:0",
                 ",dst=/input/request.json,readonly",
                 ",dst=/input/base,readonly", ",dst=/input/submission.patch,readonly",
             ):
                 self.assertIn(required, joined)
+            self.assertEqual(
+                [command[index + 1] for index, token in enumerate(command) if token == "--cap-add"],
+                ["SETUID", "SETGID", "FOWNER", "DAC_OVERRIDE"],
+            )
             self.assertNotIn("--privileged", command)
             self.assertNotIn("--detach", command)
 
@@ -1128,6 +1133,7 @@ class TargetDriftRuntimeTest(unittest.TestCase):
                 "host_sentinel_visible": False,
                 "operator_ground_truth_visible": False,
                 "background_probe_started": True,
+                "worker_effective_capabilities_hex": "0000000000000000",
                 "worker_write_succeeded": {
                     key: False for key in isolation_probe.WORKER_WRITE_KEYS
                 },
@@ -1141,6 +1147,13 @@ class TargetDriftRuntimeTest(unittest.TestCase):
             False,
         )
         response["observations"]["worker_write_succeeded"].pop("checker_response")
+        with self.assertRaises(SystemExit):
+            isolation_probe.strict_probe_response(
+                response, nonce, label, "b" * 64, "sha256:" + "c" * 64,
+                "d" * 64,
+            )
+        response["observations"]["worker_write_succeeded"]["checker_response"] = False
+        response["observations"]["worker_effective_capabilities_hex"] = "not-zero"
         with self.assertRaises(SystemExit):
             isolation_probe.strict_probe_response(
                 response, nonce, label, "b" * 64, "sha256:" + "c" * 64,

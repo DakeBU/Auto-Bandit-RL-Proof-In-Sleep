@@ -27,11 +27,11 @@
     "image_reference": "immutable digest only",
     "network": "none",
     "root_filesystem": "read-only",
-    "capabilities": "drop all, then add only SETUID and SETGID to the trusted root controller so each Lean/Lake child can irreversibly enter the sealed worker UID/GID",
+    "capabilities": "drop all, then add only SETUID, SETGID, FOWNER, and DAC_OVERRIDE to the trusted root controller; FOWNER/DAC_OVERRIDE seal runner-owned output/response bind mounts, SETUID/SETGID irreversibly enter the worker UID/GID, and the bound probe requires worker CapEff=0",
     "no_new_privileges": true,
     "host_mounts": "request/base/patch read-only; separate empty output and response directories writable only by the trusted controller; cidfile host-only",
     "resource_limits": ["wall_clock_seconds", "memory_mb", "pids_limit", "cpus", "maximum_output_bytes"],
-    "controller_worker_separation": "A trusted root controller applies the patch and writes output. It retains only SETUID/SETGID, and every Lean/Lake child irreversibly drops to a distinct sealed worker UID/GID that cannot write the controller response/output or host mounts; patched source is read-only to that worker except for an isolated build cache.",
+    "controller_worker_separation": "A trusted root controller applies the patch and writes output. It retains only SETUID/SETGID plus FOWNER/DAC_OVERRIDE for runner-owned output/response bind-mount sealing; every Lean/Lake child irreversibly drops to a distinct sealed worker UID/GID with zero effective capabilities and cannot write the controller response/output or host mounts; patched source is read-only to that worker except for an isolated build cache.",
     "cache": "Production constructs a complete .lake dependency seed from the exact common pre-audit Git snapshot inside a digest-pinned multi-stage image build. The minimal build context excludes evaluation/operator data and the final image excludes the builder source snapshot. A byte-complete manifest at /opt/abrl-checker-cache/cache-manifest.json is SBOM- and runtime-bound; the inner checker verifies every cached file, then the already restricted worker copies the seed from /opt/abrl-checker-cache/.lake into the per-run tmpfs replay. Arbitrary cache-prelude commands and host cache mounts are forbidden.",
     "post_run": "All worker processes must terminate before the controller atomically writes response.json."
   },

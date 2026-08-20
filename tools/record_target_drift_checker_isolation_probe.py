@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import secrets
 import shutil
 import stat
@@ -114,7 +115,7 @@ def strict_probe_response(
     expected_observations = {
         "network_request_succeeded", "host_sentinel_visible",
         "operator_ground_truth_visible", "worker_write_succeeded",
-        "background_probe_started",
+        "worker_effective_capabilities_hex", "background_probe_started",
     }
     prepare.require(isinstance(observations, dict)
                     and set(observations) == expected_observations,
@@ -128,6 +129,13 @@ def strict_probe_response(
     prepare.require(isinstance(writes, dict) and set(writes) == set(WORKER_WRITE_KEYS)
                     and all(type(writes[key]) is bool for key in WORKER_WRITE_KEYS),
                     "worker write-protection observations are incomplete")
+    prepare.require(
+        isinstance(observations["worker_effective_capabilities_hex"], str)
+        and re.fullmatch(
+            r"[0-9a-f]{16}", observations["worker_effective_capabilities_hex"]
+        ) is not None,
+        "worker effective-capability observation is malformed",
+    )
     return observations
 
 
@@ -335,6 +343,7 @@ def main() -> None:
         "operator_ground_truth_absent": observations["operator_ground_truth_visible"] is False,
         "checker_outputs_not_worker_writable": (
             writes["checker_output"] is False and writes["checker_response"] is False
+            and observations["worker_effective_capabilities_hex"] == "0000000000000000"
         ),
         "patched_source_and_controller_input_read_only": (
             writes["patched_source"] is False and writes["controller_input"] is False
