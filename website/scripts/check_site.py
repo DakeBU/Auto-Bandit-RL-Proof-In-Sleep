@@ -552,6 +552,22 @@ def main() -> int:
         if collector is None or split.fragment not in collector.ids:
             errors.append(f"search index points to missing declaration anchor: {target_value}")
 
+    succinct_declaration = (
+        "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem."
+        "IsSuccinctSupport.sourceQ_supportCombination_eq"
+    )
+    succinct_items = [item for item in search_items if item.get("name") == succinct_declaration]
+    if len(succinct_items) != 1 or succinct_items[0].get("chapter") != "Frontier":
+        errors.append("succinct geometry declarations must resolve to the Frontier chapter")
+    frontier_source = (output / "chapters" / "frontier" / "index.html").read_text(encoding="utf-8")
+    for required in (
+        "A Novel General Framework for Sharp Lower Bounds in Succinct Stochastic Bandits",
+        "physical PDF pp. 4–5",
+        "Definitions 3.1–3.2 and Lemmas 3.1–3.2",
+    ):
+        if required not in frontier_source:
+            errors.append(f"Frontier reading guide is missing succinct source metadata: {required}")
+
     ide_data_path = output / "ide-data.json"
     ide_items = json.loads(ide_data_path.read_text(encoding="utf-8")).get("items", []) if ide_data_path.exists() else []
     if len(ide_items) != manifest.get("ide_mapping_count"):
