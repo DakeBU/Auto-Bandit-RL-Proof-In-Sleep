@@ -23,6 +23,7 @@ SCHEMA_VERSION = 1
 SUITE_ID = "ABRL-TARGET-DRIFT-V2"
 CONTROLLER = "/usr/local/bin/abrl-agent-pid1"
 MAX_LEDGER_BYTES = 4 * 1024 * 1024
+ROOT = Path(__file__).resolve().parents[1]
 
 
 def require(condition: bool, message: str) -> None:
@@ -48,6 +49,16 @@ def dump_atomic(path: Path, value: Any) -> None:
     with temporary.open("w", encoding="utf-8", newline="\n") as stream:
         json.dump(value, stream, indent=2, sort_keys=True)
         stream.write("\n")
+        stream.flush()
+        os.fsync(stream.fileno())
+    os.replace(temporary, path)
+
+
+def write_atomic(path: Path, payload: bytes) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_name(path.name + ".tmp")
+    with temporary.open("xb") as stream:
+        stream.write(payload)
         stream.flush()
         os.fsync(stream.fileno())
     os.replace(temporary, path)
@@ -84,7 +95,7 @@ def checked(command: list[str], timeout: int = 30,
     return result
 
 
-def docker_identity(runtime: Path) -> dict[str, Any]:
+def docker_identity(runtime: Path, output: Path) -> dict[str, Any]:
     version = checked([str(runtime), "version", "--format", "{{json .}}"])
     require(version.returncode == 0, "Docker version query failed")
     daemon = checked([
@@ -92,11 +103,40 @@ def docker_identity(runtime: Path) -> dict[str, Any]:
         "{{json .ID}}|{{json .Driver}}|{{json .SecurityOptions}}",
     ])
     require(daemon.returncode == 0, "Docker daemon query failed")
+    version_path = output / "docker-version.json"
+    daemon_path = output / "docker-daemon-identity.txt"
+    write_atomic(version_path, version.stdout)
+    write_atomic(daemon_path, daemon.stdout)
+    try:
+        version_payload = json.loads(version.stdout.decode("utf-8"))
+        daemon_id, storage_driver, security_options = (
+            json.loads(part) for part in daemon.stdout.decode("utf-8").strip().split("|", 2)
+        )
+        client_version = version_payload["Client"]["Version"]
+        server_version = version_payload["Server"]["Version"]
+        server_os = version_payload["Server"]["Os"]
+    except (UnicodeDecodeError, json.JSONDecodeError, KeyError, ValueError) as error:
+        raise SystemExit(
+            f"target-drift agent lifecycle probe failed: malformed Docker identity: {error}"
+        )
+    require(all(isinstance(value, str) and value for value in (
+        daemon_id, storage_driver, client_version, server_version, server_os,
+    )) and isinstance(security_options, list), "Docker identity fields are malformed")
     return {
         "runtime_executable": str(runtime),
         "runtime_executable_sha256": sha256(runtime),
         "runtime_version_output_sha256": sha256_bytes(version.stdout),
         "daemon_identity_output_sha256": sha256_bytes(daemon.stdout),
+        "client_version": client_version,
+        "server_version": server_version,
+        "server_os": server_os,
+        "daemon_id": daemon_id,
+        "storage_driver": storage_driver,
+        "security_options": security_options,
+        "raw_ledgers": {
+            "docker-version.json": sha256(version_path),
+            "docker-daemon-identity.txt": sha256(daemon_path),
+        },
     }
 
 
@@ -165,9 +205,7 @@ def wait_file(path: Path, deadline: float) -> None:
 
 def run_probe(runtime: Path, image_digest: str, controller_sha256: str,
               output: Path) -> dict[str, Any]:
-    output.mkdir(parents=True)
-    if os.name != "nt":
-        output.chmod(0o777)
+    require(output.is_dir(), "probe output directory was not prepared")
     label = f"lifecycle-{uuid.uuid4().hex}"
     cidfile = output / "container.cid"
     ready = output / "controller-ready.json"
@@ -236,6 +274,7 @@ def run_probe(runtime: Path, image_digest: str, controller_sha256: str,
             "attempt_label": label,
             "container_id": cid,
             "command_sha256": sha256_bytes(canonical_bytes(command)),
+            "command_argv": command,
             "controller_observation": ready_payload,
             "controller_exit_observation": exit_payload,
             "fixture_observation": fixture_payload,
@@ -273,8 +312,11 @@ def main() -> None:
     args = parser.parse_args()
     require(sys.platform.startswith("linux"), "probe requires a Linux Docker host")
     controller = regular_file(args.controller_source.resolve(), "controller source")
+    require(not args.output_dir.exists(), "probe output directory already exists")
+    args.output_dir.mkdir(parents=True)
+    args.output_dir.chmod(0o777)
     runtime = docker_executable()
-    identity = docker_identity(runtime)
+    identity = docker_identity(runtime, args.output_dir)
     image = image_identity(
         runtime, args.image_digest, args.base_image, sha256(controller)
     )
@@ -283,6 +325,22 @@ def main() -> None:
         **probe,
         "runtime": identity,
         "image": image,
+        "source_bindings": {
+            "probe_runner_sha256": sha256(Path(__file__).resolve()),
+            "controller_source_sha256": sha256(controller),
+            "containerfile_sha256": sha256(regular_file(
+                ROOT / "evaluation/target-drift-v2/agent-lifecycle.Containerfile",
+                "agent lifecycle Containerfile",
+            )),
+            "contract_sha256": sha256(regular_file(
+                ROOT / "evaluation/target-drift-v2/agent-sandbox-contract.json",
+                "agent sandbox contract",
+            )),
+            "workflow_sha256": sha256(regular_file(
+                ROOT / ".github/workflows/target-drift-agent-lifecycle.yml",
+                "agent lifecycle workflow",
+            )),
+        },
         "nonclaims": [
             "This result-free probe is not a provider or model invocation.",
             "It does not freeze the final provider-capable agent image or experiment seal.",
