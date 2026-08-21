@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "suite_id": "ABRL-TARGET-DRIFT-V2",
+  "status": "result_free_lifecycle_component",
+  "controller": {
+    "entrypoint": ["python3", "/usr/local/bin/abrl-agent-pid1"],
+    "pid_namespace_requirement": "controller is PID 1; --init is forbidden",
+    "control_channel": "Docker stdin remains open for the adapter lifetime",
+    "control_loss_action": "PID 1 terminates the direct child and exits",
+    "kernel_boundary": "Linux removes all remaining processes in a PID namespace when PID 1 exits"
+  },
+  "required_probe": {
+    "id": "host_control_loss_reaps_pid_namespace_v1",
+    "attack": "the adapter fixture creates a new session and process group, then the host Docker client is killed without graceful cleanup",
+    "success": "the labeled container disappears and the escaped descendant heartbeat stops",
+    "binding": "report hashes the Docker executable/identity, image digest, in-image controller bytes, and exact run command"
+  },
+  "production_nonclaims": [
+    "A lifecycle candidate does not freeze the final provider-capable agent image.",
+    "Network, filesystem, auth, provider-client, toolchain, and budget isolation require their own final-image probes and attestations.",
+    "No lifecycle probe is a model run or formalization outcome."
+  ]
+}
