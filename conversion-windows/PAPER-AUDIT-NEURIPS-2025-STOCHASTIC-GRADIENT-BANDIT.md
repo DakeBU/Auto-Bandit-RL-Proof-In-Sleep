@@ -42,11 +42,11 @@ maximum-gap envelope and the identity
 | nonempty finite action set | typeclasses | Algorithm 1 / Eq. (3) | no |
 | softmax denominator | explicit positive finite sum | Eq. (3) | no |
 | sampling mass sums to one | theorem | Eq. (3) | no |
-| reward conditional mean depends on selected arm | finite-mean interface | Eq. (5) | no for algebra; yes for trajectory lift |
+| reward conditional mean depends on selected arm | pointwise kernel-integral interface | Eq. (5) | no for the compiled trajectory bridge; a uniform source-assumption producer remains downstream |
 | gaps satisfy `gap k = bestMean - mean k` | explicit equality | Eq. (5) | no |
 | unique best arm and positive minimum gap | explicit hypotheses | Eq. (6) | no |
 | maximum-gap envelope | explicit hypotheses | Eqs. (2), (7) | no |
-| history measurability and conditional reward kernel | not constructed | Algorithm 1 | yes for trajectory lift |
+| history measurability and conditional reward kernel | recursive policy, canonical trajectory, and pointwise kernel-integral bridge compiled | Algorithm 1 / Eq. (5) | no for the process bridge; source-specific uniform regularity remains downstream |
 | learning-rate threshold and failure probability | not attempted | Theorems 1--4 | yes for paper endpoints |
 
 ## Local API and proof route
@@ -59,6 +59,10 @@ maximum-gap envelope and the identity
 | Eq. (5) gap form | mean-gap equality and normalization | `MLIB-ORDER-ALGEBRA` | rewrite weighted means through common best mean | retain exact direction |
 | Eq. (6) | nonnegative finite sums | `MLIB-FINSET-SUMS`, `MLIB-ORDER-ALGEBRA` | pointwise gap lower bound then sum | do not introduce stochastic independence |
 | Eq. (7) | gap envelope, Eq. (6), scalar identity | `MLIB-ORDER-ALGEBRA` | split failure mass and divide by positive `eta*Delta` | leave rate estimates open |
+| recursive parameter state | `History.FinitePairHistory`, measurable finite sums | `MLIB-FINSET-SUMS` | recurse over inclusive histories and reuse `sourceIncrement` coordinatewise | keep the exact selected/nonselected source signs and fixed learning-rate scale |
+| history policy | `Exp3.finiteActionKernel`, `Exp3.finiteActionMeasure`, `Thompson.HistoryAlgorithm` | `MLIB-PROBABILITY-KERNEL` | package the recursive softmax vector as the initial and successor Markov laws | do not assume a policy oracle or an external trajectory law |
+| generated pair trajectory | `Thompson.MeasurableHistoryEnvironment`, `canonicalMeasurableEnvironmentTrajectoryKernel`, `canonicalMeasurableEnvironmentTrajectoryKernel_condDistrib_succ` | `MLIB-PROBABILITY-KERNEL` | reuse the repository's canonical action/reward trajectory constructor | retain the inclusive-history indexing and environment input explicitly |
+| Equation-(5) process bridge | `historyStepKernel`, finite-action kernel integration, arm-reward integral hypotheses | `MLIB-CONDITIONAL-EXPECTATION`, `MLIB-MEASURE-INTEGRAL`, `MLIB-FINSET-SUMS` | integrate `sourceIncrement` against the generated next-pair law, then rewrite by the compiled finite mean/gap identity | if full `condexp` syntax is brittle, first expose the exact conditional-kernel integral; do not relabel a marginal expectation as conditional expectation |
 
 ## Proof DAG
 
@@ -70,14 +74,26 @@ maximum-gap envelope and the identity
 | SGB-5B | expected increment, gap form | SGB-5A | `expectedSourceIncrement_eq_gapCoordinate` | focused Lean | compiled |
 | SGB-6 | best-coordinate cumulative lower bound | SGB-5B | `bestParameterIncrementSum_ge` | focused Lean | compiled |
 | SGB-7 | regret decomposition | SGB-6 | `sourceRegretDecomposition_le` | focused Lean | compiled |
-| SGB-HISTORY | recursive history policy and conditional expectation | SGB-3--7 plus kernels/measurability | reserved | full trajectory gate | blocked |
+| SGB-HISTORY-STATE | recursive parameter state and measurability | SGB-3--5 | `historyParameter`, `measurable_historyParameter` | focused Lean | compiled |
+| SGB-HISTORY-POLICY | initial/successor softmax Markov laws | SGB-HISTORY-STATE plus finite-action kernels | `historyAlgorithm`, `trajectoryMeasure_condDistrib_action_zero_given_environment`, `trajectoryMeasure_condDistrib_action` | focused Lean | compiled |
+| SGB-HISTORY-TRAJECTORY | generated successor action/pair conditional laws | SGB-HISTORY-POLICY plus canonical trajectory kernel | `trajectoryKernel`, `trajectoryMeasure_condDistrib_nextPair_given_environment_prefix` | focused Lean | compiled |
+| SGB-EQ5-COND-MEAN | generated conditional-kernel integral equals Equation (5) | SGB-HISTORY-TRAJECTORY plus coordinate-update integrability and arm-reward integral equalities | `integral_measurableEnvironmentHistoryStepKernel_sourceIncrement_eq_gapCoordinate` | full trajectory gate | compiled with those hypotheses explicit |
 | SGB-RATES | Theorems 1--4 | SGB-HISTORY plus failure-regret analysis | reserved | paper endpoint | blocked |
+
+The process API permits an arbitrary `initialTheta`; the paper's Algorithm 1
+is recovered by the specialization `initialTheta := fun _ => 0`.
 
 ## Gaps
 
-- [ ] Construct the full history-dependent SGB parameter state and action
-  kernel.
-- [ ] Prove that the finite expected-increment sum is the corresponding
-  conditional expectation on that trajectory.
+- [x] Compile the recursive parameter state, its measurability, and the
+  initial/successor softmax action kernels.
+- [x] Instantiate the canonical generated action/reward trajectory and prove
+  its successor action/pair conditional laws.
+- [x] Prove that the finite expected-increment sum is the corresponding
+  conditional-kernel integral on that trajectory under explicit coordinate-
+  update integrability and arm-reward integral equalities.
+- [ ] Package the source paper's reward assumptions as a uniform producer of
+  those hypotheses across the generated history, including the stronger
+  arm-reward regularity from which update integrability should follow.
 - [ ] Prove any logarithmic or polynomial regret regime.
 - [ ] Verify the two-arm sharp threshold or the general-`K` threshold.

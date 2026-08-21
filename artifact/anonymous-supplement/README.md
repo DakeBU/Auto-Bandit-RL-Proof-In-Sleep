@@ -65,15 +65,19 @@ outside the atom-generated directions.  This is a regularity/codomain
 obligation, not a source-error claim; the global Lemmas 3.5--3.6, Assumption
 3.7, Theorem 3.8, and every regret endpoint remain outside the compiled slice.
 
-The independent stochastic-gradient-bandit audit contains 26 named
-declarations for the finite-action, history-conditioned algebra underlying
+The independent stochastic-gradient-bandit audit contains 44 named
+declarations.  Its first 26 compile the finite-action algebra underlying
 Algorithm 1 and Equations (3)--(7): softmax normalization, the zero-sum
-parameter update, the exact
-finite conditional-mean increment, the best-coordinate minimum-gap lower
-bound, and the post-convergence/failure-mass decomposition.  This is the
-source algebra after fixing a pre-action history, not a recursive stochastic
-history or conditional-expectation theorem.  The learning-rate regimes and
-Theorems 1--4 remain outside the compiled slice.
+parameter update, the exact finite conditional-mean increment, the
+best-coordinate minimum-gap lower bound, and the
+post-convergence/failure-mass decomposition.  A separate 18-declaration layer
+constructs the recursive measurable softmax state, canonical generated
+action/reward trajectory, initial and successor conditional laws, and
+Equation-(5) history-step-kernel integrals under explicit coordinate-update
+integrability and arm-reward integral equalities.  It does not provide the
+source paper's uniform reward-regularity producer for those hypotheses.  The
+learning-rate regimes and Theorems
+1--4 remain outside the compiled slice.
 
 ## Quick verification
 

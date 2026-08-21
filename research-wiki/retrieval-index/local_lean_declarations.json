@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-21T21:35:10+00:00",
+  "generated": "2026-08-21T23:39:35+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -3560,6 +3560,150 @@
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean",
       "line": 302,
       "statement": "theorem sourceRegretDecomposition_le (eta Delta DeltaMax : Real) (p : Nat -> Action -> Real) (gap : Action -> Real) (best : Action) (horizon : Nat) (heta : 0 < eta) (hDelta : 0 < Delta) (hDeltaMax : 0 <= DeltaMax) (hp : \u2200 t, \u2211 a, p t a = 1) (hp_nonneg : \u2200 t a, 0 <= p t a) (hgap_best : gap best = 0) (hgap_min : \u2200 a, a \u2260 best -> Delta <= gap a) (hgap_max : \u2200 a, a \u2260 best -> gap a <= DeltaMax) : sourceExpectedPseudoRegret p gap horizon <= (DeltaMax / (eta * Delta)) * bestParameterIncrementSum eta p gap best horizon + DeltaMax * (\u2211 t \u2208 Finset.range horizon, (1 - p t best) ^ 2)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_softmaxProbability",
+      "full_name": "BanditRLProof.StochasticGradientBandit.measurable_softmaxProbability",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "line": 30,
+      "statement": "theorem measurable_softmaxProbability [Fintype Action] {History : Type*} [MeasurableSpace History] (theta : History -> Action -> Real) (htheta : forall action, Measurable (fun history => theta history action)) (action : Action) : Measurable (fun history => softmaxProbability (theta history) action)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_sourceIncrement",
+      "full_name": "BanditRLProof.StochasticGradientBandit.measurable_sourceIncrement",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "line": 43,
+      "statement": "theorem measurable_sourceIncrement [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] {History : Type*} [MeasurableSpace History] (prob : History -> Action -> Real) (reward : History -> Real) (selected : History -> Action) (coordinate : Action) (hprob : Measurable (fun history => prob history coordinate)) (hreward : Measurable reward) (hselected : Measurable selected) : Measurable (fun history => sourceIncrement (prob history) (reward history) (selected history) coordinate)"
+    },
+    {
+      "kind": "def",
+      "name": "historyParameter",
+      "full_name": "BanditRLProof.StochasticGradientBandit.historyParameter",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "line": 66,
+      "statement": "noncomputable def historyParameter [Fintype Action] [DecidableEq Action] (initialTheta : Action -> Real) (eta : Real) : (n : Nat) -> History.FinitePairHistory Action Real n -> Action -> Real | 0, history, coordinate => initialTheta coordinate + eta * sourceIncrement (softmaxProbability initialTheta) (history \u27e80, Finset.mem_Iic.mpr le_rfl\u27e9).2 (history \u27e80, Finset.mem_Iic.mpr le_rfl\u27e9).1 coordinate | n + 1, history, coordinate => let previous := Exp3.previousPairHistory history historyParameter initialTheta eta n previous coordinate + eta * sourceIncrement (softmaxProbability (historyParameter initialTheta eta n previous)) (history \u27e8n + 1, Finset.mem_Iic.mpr le_rfl\u27e9).2 (history \u27e8n + 1, Finset.mem_Iic.mpr le_rfl\u27e9).1 coordinate @[simp]"
+    },
+    {
+      "kind": "theorem",
+      "name": "historyParameter_zero",
+      "full_name": "BanditRLProof.StochasticGradientBandit.historyParameter_zero",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "line": 84,
+      "statement": "theorem historyParameter_zero [Fintype Action] [DecidableEq Action] (initialTheta : Action -> Real) (eta : Real) (history : History.FinitePairHistory Action Real 0) (coordinate : Action) : historyParameter initialTheta eta 0 history coordinate = initialTheta coordinate + eta * sourceIncrement (softmaxProbability initialTheta) (history \u27e80, Finset.mem_Iic.mpr le_rfl\u27e9).2 (history \u27e80, Finset.mem_Iic.mpr le_rfl\u27e9).1 coordinate"
+    },
+    {
+      "kind": "theorem",
+      "name": "historyParameter_succ",
+      "full_name": "BanditRLProof.StochasticGradientBandit.historyParameter_succ",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "line": 97,
+      "statement": "theorem historyParameter_succ [Fintype Action] [DecidableEq Action] (initialTheta : Action -> Real) (eta : Real) (n : Nat) (history : History.FinitePairHistory Action Real (n + 1)) (coordinate : Action) : historyParameter initialTheta eta (n + 1) history coordinate = historyParameter initialTheta eta n (Exp3.previousPairHistory history) coordinate + eta * sourceIncrement (softmaxProbability (historyParameter initialTheta eta n (Exp3.previousPairHistory history))) (history \u27e8n + 1, Finset.mem_Iic.mpr le_rfl\u27e9).2 (history \u27e8n + 1, Finset.mem_Iic.mpr le_rfl\u27e9).1 coordinate"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_historyParameter",
+      "full_name": "BanditRLProof.StochasticGradientBandit.measurable_historyParameter",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "line": 117,
+      "statement": "theorem measurable_historyParameter (initialTheta : Action -> Real) (eta : Real) : forall n coordinate, Measurable (fun history : History.FinitePairHistory Action Real n => historyParameter initialTheta eta n history coordinate)"
+    },
+    {
+      "kind": "def",
+      "name": "softmaxFiniteActionDistribution",
+      "full_name": "BanditRLProof.StochasticGradientBandit.softmaxFiniteActionDistribution",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "line": 184,
+      "statement": "def softmaxFiniteActionDistribution (theta : Action -> Real) : Exp3.FiniteActionDistribution (Finset.univ : Finset Action) (softmaxProbability theta) where"
+    },
+    {
+      "kind": "def",
+      "name": "historySoftmaxDistributionSource",
+      "full_name": "BanditRLProof.StochasticGradientBandit.historySoftmaxDistributionSource",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "line": 191,
+      "statement": "def historySoftmaxDistributionSource (initialTheta : Action -> Real) (eta : Real) (n : Nat) : Exp3.MeasurableFiniteActionDistribution (Finset.univ : Finset Action) (fun history : History.FinitePairHistory Action Real n => softmaxProbability (historyParameter initialTheta eta n history)) where"
+    },
+    {
+      "kind": "def",
+      "name": "historyAlgorithm",
+      "full_name": "BanditRLProof.StochasticGradientBandit.historyAlgorithm",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "line": 206,
+      "statement": "noncomputable def historyAlgorithm (initialTheta : Action -> Real) (eta : Real) : Thompson.HistoryAlgorithm Action Real where"
+    },
+    {
+      "kind": "theorem",
+      "name": "historyAlgorithm_policy",
+      "full_name": "BanditRLProof.StochasticGradientBandit.historyAlgorithm_policy",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "line": 226,
+      "statement": "theorem historyAlgorithm_policy (initialTheta : Action -> Real) (eta : Real) (n : Nat) : (historyAlgorithm initialTheta eta).policy n = Exp3.finiteActionKernel (Finset.univ : Finset Action) (fun history : History.FinitePairHistory Action Real n => softmaxProbability (historyParameter initialTheta eta n history)) (historySoftmaxDistributionSource initialTheta eta n)"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_measurableEnvironmentInitialPairKernel_sourceIncrement_eq_expectedSourceIncrement",
+      "full_name": "BanditRLProof.StochasticGradientBandit.integral_measurableEnvironmentInitialPairKernel_sourceIncrement_eq_expectedSourceIncrement",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "line": 236,
+      "statement": "theorem integral_measurableEnvironmentInitialPairKernel_sourceIncrement_eq_expectedSourceIncrement {Env : Type v} [MeasurableSpace Env] (initialTheta : Action -> Real) (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env Action Real) (env : Env) (mean : Action -> Real) (coordinate : Action) (hIntegrable : Integrable (fun pair : Action \u00d7 Real => sourceIncrement (softmaxProbability initialTheta) pair.2 pair.1 coordinate) (Thompson.measurableEnvironmentInitialPairKernel (historyAlgorithm initialTheta eta) environment env)) (hmean : forall selected, integral (environment.initialFeedback (env, selected)) id = mean selected) : integral (Thompson.measurableEnvironmentInitialPairKernel (historyAlgorithm initialTheta eta) environment env) (fun pair : Action \u00d7 Real => sourceIncrement (softmaxProbability initialTheta) pair.2 pair.1 coordinate) = expectedSourceIncrement (softmaxProbability initialTheta) mean coordinate"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_historyStepKernel_sourceIncrement_eq_expectedSourceIncrement",
+      "full_name": "BanditRLProof.StochasticGradientBandit.integral_historyStepKernel_sourceIncrement_eq_expectedSourceIncrement",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "line": 311,
+      "statement": "theorem integral_historyStepKernel_sourceIncrement_eq_expectedSourceIncrement (initialTheta : Action -> Real) (eta : Real) (environment : Thompson.HistoryEnvironment Action Real) (n : Nat) (history : History.FinitePairHistory Action Real n) (mean : Action -> Real) (coordinate : Action) (hIntegrable : Integrable (fun pair : Action \u00d7 Real => sourceIncrement (softmaxProbability (historyParameter initialTheta eta n history)) pair.2 pair.1 coordinate) (Thompson.historyStepKernel (historyAlgorithm initialTheta eta) environment n history)) (hmean : forall selected, integral (environment.feedback n (history, selected)) id = mean selected) : integral (Thompson.historyStepKernel (historyAlgorithm initialTheta eta) environment n history) (fun pair : Action \u00d7 Real => sourceIncrement (softmaxProbability (historyParameter initialTheta eta n history)) pair.2 pair.1 coordinate) = expectedSourceIncrement (softmaxProbability (historyParameter initialTheta eta n history)) mean coordinate"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_measurableEnvironmentHistoryStepKernel_sourceIncrement_eq_expectedSourceIncrement",
+      "full_name": "BanditRLProof.StochasticGradientBandit.integral_measurableEnvironmentHistoryStepKernel_sourceIncrement_eq_expectedSourceIncrement",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "line": 396,
+      "statement": "theorem integral_measurableEnvironmentHistoryStepKernel_sourceIncrement_eq_expectedSourceIncrement {Env : Type v} [MeasurableSpace Env] (initialTheta : Action -> Real) (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env Action Real) (n : Nat) (env : Env) (history : History.FinitePairHistory Action Real n) (mean : Action -> Real) (coordinate : Action) (hIntegrable : Integrable (fun pair : Action \u00d7 Real => sourceIncrement (softmaxProbability (historyParameter initialTheta eta n history)) pair.2 pair.1 coordinate) (Thompson.measurableEnvironmentHistoryStepKernel (historyAlgorithm initialTheta eta) environment n (env, history))) (hmean : forall selected, integral (environment.feedback n (env, (history, selected))) id = mean selected) : integral (Thompson.measurableEnvironmentHistoryStepKernel (historyAlgorithm initialTheta eta) environment n (env, history)) (fun pair : Action \u00d7 Real => sourceIncrement (softmaxProbability (historyParameter initialTheta eta n history)) pair.2 pair.1 coordinate) = expectedSourceIncrement (softmaxProbability (historyParameter initialTheta eta n history)) mean coordinate"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_measurableEnvironmentHistoryStepKernel_sourceIncrement_eq_gapCoordinate",
+      "full_name": "BanditRLProof.StochasticGradientBandit.integral_measurableEnvironmentHistoryStepKernel_sourceIncrement_eq_gapCoordinate",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "line": 433,
+      "statement": "theorem integral_measurableEnvironmentHistoryStepKernel_sourceIncrement_eq_gapCoordinate {Env : Type v} [MeasurableSpace Env] (initialTheta : Action -> Real) (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env Action Real) (n : Nat) (env : Env) (history : History.FinitePairHistory Action Real n) (mean gap : Action -> Real) (bestMean : Real) (coordinate : Action) (hIntegrable : Integrable (fun pair : Action \u00d7 Real => sourceIncrement (softmaxProbability (historyParameter initialTheta eta n history)) pair.2 pair.1 coordinate) (Thompson.measurableEnvironmentHistoryStepKernel (historyAlgorithm initialTheta eta) environment n (env, history))) (hmean : forall selected, integral (environment.feedback n (env, (history, selected))) id = mean selected) (hgap : forall action, gap action = bestMean - mean action) : integral (Thompson.measurableEnvironmentHistoryStepKernel (historyAlgorithm initialTheta eta) environment n (env, history)) (fun pair : Action \u00d7 Real => sourceIncrement (softmaxProbability (historyParameter initialTheta eta n history)) pair.2 pair.1 coordinate) = softmaxProbability (historyParameter initialTheta eta n history) coordinate * (instantaneousGap (softmaxProbability (historyParameter initialTheta eta n history)) gap - gap coordinate)"
+    },
+    {
+      "kind": "def",
+      "name": "trajectoryKernel",
+      "full_name": "BanditRLProof.StochasticGradientBandit.trajectoryKernel",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "line": 471,
+      "statement": "noncomputable def trajectoryKernel {Env : Type v} [MeasurableSpace Env] (initialTheta : Action -> Real) (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env Action Real) : Kernel Env ((n : Nat) -> Action \u00d7 Real)"
+    },
+    {
+      "kind": "theorem",
+      "name": "trajectoryMeasure_condDistrib_action_zero_given_environment",
+      "full_name": "BanditRLProof.StochasticGradientBandit.trajectoryMeasure_condDistrib_action_zero_given_environment",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "line": 488,
+      "statement": "theorem trajectoryMeasure_condDistrib_action_zero_given_environment {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Action] (prior : Measure Env) [IsFiniteMeasure prior] (initialTheta : Action -> Real) (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env Action Real) : condDistrib (fun sample : Env \u00d7 ((k : Nat) -> Action \u00d7 Real) => (sample.2 0).1) (fun sample : Env \u00d7 ((k : Nat) -> Action \u00d7 Real) => sample.1) (prior \u2297\u2098 trajectoryKernel initialTheta eta environment) =\u1d50[ (prior \u2297\u2098 trajectoryKernel initialTheta eta environment).map (fun sample : Env \u00d7 ((k : Nat) -> Action \u00d7 Real) => sample.1)] Kernel.const Env (Exp3.finiteActionMeasure (Finset.univ : Finset Action) (softmaxProbability initialTheta))"
+    },
+    {
+      "kind": "theorem",
+      "name": "trajectoryMeasure_condDistrib_action",
+      "full_name": "BanditRLProof.StochasticGradientBandit.trajectoryMeasure_condDistrib_action",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "line": 509,
+      "statement": "theorem trajectoryMeasure_condDistrib_action {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [StandardBorelSpace Action] (prior : Measure Env) [IsFiniteMeasure prior] (initialTheta : Action -> Real) (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env Action Real) (n : Nat) : condDistrib (fun sample : Env \u00d7 ((k : Nat) -> Action \u00d7 Real) => (sample.2 (n + 1)).1) (fun sample => Preorder.frestrictLe n sample.2) (prior \u2297\u2098 trajectoryKernel initialTheta eta environment) =\u1d50[ (prior \u2297\u2098 trajectoryKernel initialTheta eta environment).map (fun sample => Preorder.frestrictLe n sample.2)] Exp3.finiteActionKernel (Finset.univ : Finset Action) (fun history : History.FinitePairHistory Action Real n => softmaxProbability (historyParameter initialTheta eta n history)) (historySoftmaxDistributionSource initialTheta eta n)"
+    },
+    {
+      "kind": "theorem",
+      "name": "trajectoryMeasure_condDistrib_nextPair_given_environment_prefix",
+      "full_name": "BanditRLProof.StochasticGradientBandit.trajectoryMeasure_condDistrib_nextPair_given_environment_prefix",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "line": 535,
+      "statement": "theorem trajectoryMeasure_condDistrib_nextPair_given_environment_prefix {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [StandardBorelSpace Action] (prior : Measure Env) [IsFiniteMeasure prior] (initialTheta : Action -> Real) (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env Action Real) (n : Nat) : condDistrib (fun sample : Env \u00d7 ((k : Nat) -> Action \u00d7 Real) => sample.2 (n + 1)) (fun sample : Env \u00d7 ((k : Nat) -> Action \u00d7 Real) => (sample.1, Preorder.frestrictLe n sample.2)) (prior \u2297\u2098 trajectoryKernel initialTheta eta environment) =\u1d50[ (prior \u2297\u2098 trajectoryKernel initialTheta eta environment).map (fun sample : Env \u00d7 ((k : Nat) -> Action \u00d7 Real) => (sample.1, Preorder.frestrictLe n sample.2))] Thompson.measurableEnvironmentHistoryStepKernel (historyAlgorithm initialTheta eta) environment n"
     },
     {
       "kind": "structure",

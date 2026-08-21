@@ -1305,7 +1305,7 @@
       "title": "Source-frozen stochastic-gradient-bandit mechanism audit",
       "chapter": "frontier",
       "status": "partial",
-      "informal": "The exact Baudry--Johnson--Vary--Pike-Burke--Rebeschini NeurIPS 2025 source is hash-frozen. Twenty-six named declarations compile the finite-action, history-conditioned algebra underlying Algorithm 1 and Equations (3)--(7): softmax positivity and normalization, the selected/nonselected parameter update, its zero-sum invariant, the exact finite conditional-mean increment in policy-value and gap coordinates, the best-arm cumulative minimum-gap lower bound, and the post-convergence plus squared-failure-mass regret decomposition. The finite weighted sum is the source algebra after fixing a pre-action history; it is not a recursive stochastic history or conditional-expectation theorem. The SGB trajectory kernel, reward-law measurability, learning-rate thresholds, and Theorems 1--4 remain uncompiled.",
+      "informal": "The exact Baudry--Johnson--Vary--Pike-Burke--Rebeschini NeurIPS 2025 source is hash-frozen. Forty-four named declarations compile two evidence layers: 26 for the finite-action algebra underlying Algorithm 1 and Equations (3)--(7), and 18 for the inclusive recursive parameter state, its measurable softmax history policy, a canonical generated action/reward trajectory, initial and successor conditional laws, and Equation-(5) history-step-kernel integrals under explicit coordinate-update integrability and arm-reward integral equalities. The latter identifies the finite mean/gap expression with the actual generated next-pair kernel calculation; it does not produce those hypotheses from the paper's source-specific reward regularity or prove any learning-rate/failure-probability rate. Theorems 1--4 remain uncompiled and the audit remains partial.",
       "declarations": [
         "BanditRLProof.StochasticGradientBandit.softmaxDenominator",
         "BanditRLProof.StochasticGradientBandit.softmaxProbability",
@@ -1332,15 +1332,32 @@
         "BanditRLProof.StochasticGradientBandit.sourceExpectedPseudoRegret",
         "BanditRLProof.StochasticGradientBandit.instantaneousGap_le_maxGap_mul_failureMass",
         "BanditRLProof.StochasticGradientBandit.failureMass_eq_successFailure_add_sq",
-        "BanditRLProof.StochasticGradientBandit.sourceRegretDecomposition_le"
+        "BanditRLProof.StochasticGradientBandit.sourceRegretDecomposition_le",
+        "BanditRLProof.StochasticGradientBandit.measurable_softmaxProbability",
+        "BanditRLProof.StochasticGradientBandit.measurable_sourceIncrement",
+        "BanditRLProof.StochasticGradientBandit.historyParameter",
+        "BanditRLProof.StochasticGradientBandit.historyParameter_zero",
+        "BanditRLProof.StochasticGradientBandit.historyParameter_succ",
+        "BanditRLProof.StochasticGradientBandit.measurable_historyParameter",
+        "BanditRLProof.StochasticGradientBandit.softmaxFiniteActionDistribution",
+        "BanditRLProof.StochasticGradientBandit.historySoftmaxDistributionSource",
+        "BanditRLProof.StochasticGradientBandit.historyAlgorithm",
+        "BanditRLProof.StochasticGradientBandit.historyAlgorithm_policy",
+        "BanditRLProof.StochasticGradientBandit.integral_measurableEnvironmentInitialPairKernel_sourceIncrement_eq_expectedSourceIncrement",
+        "BanditRLProof.StochasticGradientBandit.integral_historyStepKernel_sourceIncrement_eq_expectedSourceIncrement",
+        "BanditRLProof.StochasticGradientBandit.integral_measurableEnvironmentHistoryStepKernel_sourceIncrement_eq_expectedSourceIncrement",
+        "BanditRLProof.StochasticGradientBandit.integral_measurableEnvironmentHistoryStepKernel_sourceIncrement_eq_gapCoordinate",
+        "BanditRLProof.StochasticGradientBandit.trajectoryKernel",
+        "BanditRLProof.StochasticGradientBandit.trajectoryMeasure_condDistrib_action_zero_given_environment",
+        "BanditRLProof.StochasticGradientBandit.trajectoryMeasure_condDistrib_action",
+        "BanditRLProof.StochasticGradientBandit.trajectoryMeasure_condDistrib_nextPair_given_environment_prefix"
       ],
       "depends_on": [],
       "missing": [
-        "A recursive history-dependent SGB parameter state and measurable softmax action kernel on one generated trajectory law.",
-        "The conditional-reward-mean bridge identifying the compiled finite sum with the history conditional expectation.",
+        "A paper-specific uniform reward-regularity source producing the coordinate-update integrability and arm-reward integral equalities across every generated history.",
         "The two-arm and general-K learning-rate thresholds, failure-probability analysis, and every logarithmic or polynomial regret endpoint in Theorems 1--4."
       ],
-      "evidence": "BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean; Tests/StochasticGradientBanditPaperAuditCanary.lean; tasks/PAPER-AUDIT-NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT.md; proof-obligations/PAPER-AUDIT-NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT.md"
+      "evidence": "BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean; BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean; Tests/StochasticGradientBanditPaperAuditCanary.lean; tasks/PAPER-AUDIT-NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT.md; proof-obligations/PAPER-AUDIT-NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT.md"
     },
     {
       "id": "TARGET-DRIFT-V2-CONTROLLED-EVALUATION",

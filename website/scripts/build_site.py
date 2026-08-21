@@ -125,6 +125,23 @@ def module_slug(value: str, max_length: int = 96) -> str:
     return f"{prefix}-{digest}"
 
 
+def breakable_identifier(value: str) -> str:
+    """Escape an identifier and add visual wrap opportunities without changing copied text."""
+    pieces: list[str] = []
+    for index, char in enumerate(value):
+        previous = value[index - 1] if index else ""
+        following = value[index + 1] if index + 1 < len(value) else ""
+        camel_boundary = char.isupper() and (
+            previous.islower() or (previous.isupper() and following.islower())
+        )
+        if camel_boundary:
+            pieces.append("<wbr>")
+        pieces.append(html.escape(char))
+        if char in "._/":
+            pieces.append("<wbr>")
+    return "".join(pieces)
+
+
 def normalize_math_source(value: str) -> str:
     """Give every teaching formula an explicit MathJax delimiter pair."""
     source = value.strip()
@@ -1746,7 +1763,7 @@ def build_module_pages(
         body = f"""
 <section class="hero" id="module">
   <p class="eyebrow">Lean module · {html.escape(chapter['short_title'])}</p>
-  <h1 class="page-title">{html.escape(module['name'])}</h1>
+  <h1 class="page-title identifier-title">{breakable_identifier(module['name'])}</h1>
   <p class="lede">{html.escape(module['docstring']) if module['docstring'] else 'Generated source map for this Lean module.'}</p>
 </section>
 
