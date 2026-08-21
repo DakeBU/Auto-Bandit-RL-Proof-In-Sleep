@@ -124,11 +124,13 @@ TARGET_DRIFT_TOOLS = (
     "tools/fake_target_drift_checker_sandbox.py",
     "tools/finalize_target_drift_config.py",
     "tools/launch_target_drift_checker_container.py",
+    "tools/prepare_target_drift_agent_image.py",
     "tools/prepare_target_drift_checker_image.py",
     "tools/prepare_target_drift_checker_probe_config.py",
     "tools/prepare_target_drift_execution.py",
     "tools/prepare_target_drift_grading.py",
     "tools/prepare_target_drift_smoke.py",
+    "tools/record_target_drift_agent_image_probe.py",
     "tools/record_target_drift_agent_lifecycle_probe.py",
     "tools/record_target_drift_checker_isolation_probe.py",
     "tools/run_target_drift_execution.py",
@@ -136,6 +138,7 @@ TARGET_DRIFT_TOOLS = (
     "tools/run_target_drift_smoke.py",
     "tools/target_drift_checker_cache_manifest.py",
     "tools/target_drift_agent_pid1.py",
+    "tools/test_target_drift_agent_image.py",
     "tools/test_target_drift_analysis.py",
     "tools/test_target_drift_agent_lifecycle.py",
     "tools/test_target_drift_completion_ledger.py",
@@ -162,6 +165,8 @@ TARGET_DRIFT_PROTOCOL_FILES = (
     "evaluation/target-drift-v1/source-files.template.json",
     "evaluation/target-drift-v2/README.md",
     "evaluation/target-drift-v2/adapter-contract.json",
+    "evaluation/target-drift-v2/agent-image-sources.json",
+    "evaluation/target-drift-v2/agent-image.Containerfile",
     "evaluation/target-drift-v2/agent-lifecycle.Containerfile",
     "evaluation/target-drift-v2/agent-sandbox-contract.json",
     PUBLIC_CANDIDATE_RECORD,
@@ -184,6 +189,7 @@ TARGET_DRIFT_PROTOCOL_FILES = (
 )
 
 TARGET_DRIFT_WORKFLOW_FILES = (
+    ".github/workflows/target-drift-agent-image.yml",
     ".github/workflows/target-drift-agent-lifecycle.yml",
 )
 
@@ -383,7 +389,7 @@ def anonymous_base_manifest(payload):
 
 
 def anonymize_evaluation_bytes(rel, data, anonymous_reference):
-    if not rel.endswith((".json", ".md", ".py", ".Containerfile")):
+    if not rel.endswith((".json", ".md", ".py", ".yml", ".Containerfile")):
         return data
     # Normalize before matching the guarded redaction blocks.  add_payload
     # applies the same canonicalization to every allowlisted text artifact.
