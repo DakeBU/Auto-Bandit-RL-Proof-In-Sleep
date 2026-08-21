@@ -53,14 +53,16 @@ the multi-chapter spine stays partial.  The
 proof-graph and CNG material is a prototype measurement study, not evidence of
 search acceleration or a new general bandit calculus.
 
-The independent succinct stochastic-bandit audit contains 36 named
+The independent succinct stochastic-bandit audit contains 54 named
 declarations for the source-shaped unit-atom system, succinct-support contract,
-support orthogonality, and Lemmas 3.1--3.2 on succinct combinations.  A
-separate compiled diagnostic records that the globally real-valued `R`
-candidate set can be unbounded outside the atom-generated directions.  This is
-a regularity/codomain obligation, not a source-error claim; Definition 3.3,
-Lemmas 3.3--3.6, Assumption 3.7, Theorem 3.8, and every regret endpoint remain
-outside the compiled slice.
+Definitions 3.1--3.3, and Lemmas 3.1--3.4.  The strict-support route converts
+local `R` equality into unit correlations and applies finite Bessel to prove,
+for the same vector, strict representation-size minimality and uniqueness.  A
+separate compiled diagnostic
+records that the globally real-valued `R` candidate set can be unbounded
+outside the atom-generated directions.  This is a regularity/codomain
+obligation, not a source-error claim; the global Lemmas 3.5--3.6, Assumption
+3.7, Theorem 3.8, and every regret endpoint remain outside the compiled slice.
 
 ## Quick verification
 

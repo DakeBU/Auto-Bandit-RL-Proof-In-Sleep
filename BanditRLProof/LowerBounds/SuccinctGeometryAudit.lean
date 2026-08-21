@@ -1,4 +1,5 @@
 import Mathlib.Analysis.InnerProductSpace.Basic
+import Mathlib.Analysis.InnerProductSpace.Orthonormal
 import Mathlib.Order.ConditionallyCompleteLattice.Basic
 import Mathlib.Tactic
 
@@ -6,15 +7,17 @@ import Mathlib.Tactic
 # Succinct-support geometry audit
 
 This module formalizes the first geometric layer of Zeng--Honorio (NeurIPS
-2025), Definitions 3.1--3.2 and Lemmas 3.1--3.2.  It keeps the atom set
+2025), Definitions 3.1--3.3 and Lemmas 3.1--3.4.  It keeps the atom set
 possibly infinite and makes every boundedness premise for real `sSup`
 explicit.
 
 The final diagnostic records a source boundary rather than a source theorem:
 if the atoms do not span the ambient inner-product space, the candidate set
 defining the paper's globally real-valued `R` can be unbounded.  Later source
-lemmas therefore remain outside this module until a spanning, extended-real,
-or span/quotient repair is chosen explicitly.
+lemmas that consume global `R` therefore remain outside this module until a
+spanning, extended-real, or span/quotient repair is chosen explicitly.  The
+local Lemma-3.2 identities suffice for Lemmas 3.3--3.4 and do not assume such a
+repair.
 -/
 
 namespace BanditRLProof
@@ -194,6 +197,13 @@ theorem inner_basis_basis (support : IsSuccinctSupport system basis)
         (fun k _hk => abs_nonneg ⟪basis i, basis k⟫_ℝ)).mp herase_zero j hjmem
     exact abs_eq_zero.mp hjzero
 
+/-- A source succinct support is an orthonormal family.  This is the Mathlib
+interface consumed by the finite Bessel step in source Lemma 3.3. -/
+theorem orthonormal (support : IsSuccinctSupport system basis) :
+    Orthonormal ℝ basis := by
+  classical
+  exact orthonormal_iff_ite.mpr support.inner_basis_basis
+
 /-- The finite maximum appearing in source Lemma 3.1. -/
 def maxAbsCoefficient [Nonempty (Fin s)] (a : Fin s → ℝ) : ℝ :=
   (Finset.univ : Finset (Fin s)).sup' Finset.univ_nonempty (fun i => |a i|)
@@ -306,6 +316,18 @@ theorem coefficientSign_mul (coefficient : ℝ) :
   · have hneg : coefficient < 0 := lt_of_not_ge h
     simp [coefficientSign, h, abs_of_neg hneg]
 
+@[simp]
+theorem coefficientSign_coefficientSign (coefficient : ℝ) :
+    coefficientSign (coefficientSign coefficient) = coefficientSign coefficient := by
+  by_cases h : 0 ≤ coefficient
+  · simp [coefficientSign, h]
+  · simp [coefficientSign, h]
+
+@[simp]
+theorem coefficientSign_mul_self (coefficient : ℝ) :
+    coefficientSign coefficient * coefficientSign coefficient = 1 := by
+  by_cases h : 0 ≤ coefficient <;> simp [coefficientSign, h]
+
 def supportSignCombination (basis : Fin s → V) (a : Fin s → ℝ) : V :=
   supportCombination basis (fun i => coefficientSign (a i))
 
@@ -318,6 +340,21 @@ theorem sourceQ_supportSignCombination [Nonempty (Fin s)]
     system.sourceQ (supportSignCombination basis a) = 1 := by
   rw [supportSignCombination, support.sourceQ_supportCombination_eq,
     maxAbsCoefficient_coefficientSign]
+
+/-- The sign sum used in Appendix A.3 has squared norm equal to the support
+size. -/
+theorem norm_sq_supportSignCombination [Nonempty (Fin s)]
+    (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) :
+    ‖supportSignCombination basis a‖ ^ 2 = (s : ℝ) := by
+  rw [← real_inner_self_eq_norm_sq]
+  have hinner := support.orthonormal.inner_sum
+      (fun i => coefficientSign (a i)) (fun i => coefficientSign (a i))
+      (Finset.univ : Finset (Fin s))
+  calc
+    ⟪supportSignCombination basis a, supportSignCombination basis a⟫_ℝ =
+        ∑ i : Fin s, coefficientSign (a i) * coefficientSign (a i) := by
+      simpa [supportSignCombination, supportCombination] using hinner
+    _ = (s : ℝ) := by simp
 
 theorem inner_supportCombination_supportSignCombination
     (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) :
@@ -404,6 +441,221 @@ theorem sourceR_supportCombination_eq [Nonempty (Fin s)]
           ⟨supportSignCombination basis a, hwitness, rfl⟩
 
 end IsSuccinctSupport
+
+/-- Source Definition 3.3, represented with its witness data exposed.  The
+positive support-size premise is recorded explicitly. -/
+structure SuccinctRepresentation (system : SuccinctUnitSystem V) (x : V)
+    (s : Nat) where
+  size_pos : 0 < s
+  basis : Fin s → V
+  coefficients : Fin s → ℝ
+  support : IsSuccinctSupport system basis
+  eq_combination : x = IsSuccinctSupport.supportCombination basis coefficients
+
+/-- The strict clause in source Definition 3.3: every coefficient in the
+chosen succinct representation is nonzero. -/
+structure StrictSuccinctRepresentation (system : SuccinctUnitSystem V) (x : V)
+    (s : Nat) extends SuccinctRepresentation system x s where
+  coefficients_ne_zero : ∀ i, toSuccinctRepresentation.coefficients i ≠ 0
+
+/-- Proposition-level source wording: `x` admits an `s`-succinct
+representation. -/
+def IsSuccinctAt (system : SuccinctUnitSystem V) (x : V) (s : Nat) : Prop :=
+  Nonempty (SuccinctRepresentation system x s)
+
+/-- Proposition-level source wording: `x` admits a strictly `s`-succinct
+representation. -/
+def IsStrictlySuccinctAt (system : SuccinctUnitSystem V) (x : V) (s : Nat) : Prop :=
+  Nonempty (StrictSuccinctRepresentation system x s)
+
+namespace SuccinctRepresentation
+
+variable {system : SuccinctUnitSystem V} {x : V} {s z : Nat}
+
+theorem sourceR_eq_sumAbs (representation : SuccinctRepresentation system x s) :
+    system.sourceR x = ∑ i, |representation.coefficients i| := by
+  letI : Nonempty (Fin s) := ⟨⟨0, representation.size_pos⟩⟩
+  calc
+    system.sourceR x = system.sourceR
+        (IsSuccinctSupport.supportCombination representation.basis
+          representation.coefficients) :=
+      congrArg system.sourceR representation.eq_combination
+    _ = ∑ i, |representation.coefficients i| :=
+      representation.support.sourceR_supportCombination_eq representation.coefficients
+
+theorem inner_supportSignCombination_eq_sumAbs
+    (representation : SuccinctRepresentation system x s) :
+    ⟪x, IsSuccinctSupport.supportSignCombination representation.basis
+      representation.coefficients⟫_ℝ =
+        ∑ i, |representation.coefficients i| := by
+  calc
+    ⟪x, IsSuccinctSupport.supportSignCombination representation.basis
+        representation.coefficients⟫_ℝ =
+        ⟪IsSuccinctSupport.supportCombination representation.basis
+            representation.coefficients,
+          IsSuccinctSupport.supportSignCombination representation.basis
+            representation.coefficients⟫_ℝ :=
+      congrArg (fun value => ⟪value,
+        IsSuccinctSupport.supportSignCombination representation.basis
+          representation.coefficients⟫_ℝ) representation.eq_combination
+    _ = ∑ i, |representation.coefficients i| :=
+      representation.support.inner_supportCombination_supportSignCombination
+        representation.coefficients
+
+theorem sourceQ_supportSignCombination_eq_one
+    (representation : SuccinctRepresentation system x s) :
+    system.sourceQ (IsSuccinctSupport.supportSignCombination representation.basis
+      representation.coefficients) = 1 := by
+  letI : Nonempty (Fin s) := ⟨⟨0, representation.size_pos⟩⟩
+  exact representation.support.sourceQ_supportSignCombination representation.coefficients
+
+theorem norm_sq_supportSignCombination_eq_size
+    (representation : SuccinctRepresentation system x s) :
+    ‖IsSuccinctSupport.supportSignCombination representation.basis
+      representation.coefficients‖ ^ 2 = (s : ℝ) := by
+  letI : Nonempty (Fin s) := ⟨⟨0, representation.size_pos⟩⟩
+  exact representation.support.norm_sq_supportSignCombination representation.coefficients
+
+/-- The two local Lemma-3.2 identities give equality of coefficient `l1`
+sums for any two succinct representations of the same vector. -/
+theorem sumAbs_eq (first : SuccinctRepresentation system x s)
+    (second : SuccinctRepresentation system x z) :
+    (∑ i, |first.coefficients i|) = ∑ j, |second.coefficients j| := by
+  calc
+    (∑ i, |first.coefficients i|) = system.sourceR x :=
+      first.sourceR_eq_sumAbs.symm
+    _ = ∑ j, |second.coefficients j| := second.sourceR_eq_sumAbs
+
+/-- Appendix A.3 equality case: if the second representation is strict,
+every second-support atom has unit absolute correlation with the sign sum of
+the first support. -/
+theorem abs_inner_strictBasis_supportSignCombination_eq_one
+    (first : SuccinctRepresentation system x s)
+    (second : StrictSuccinctRepresentation system x z) (j : Fin z) :
+    |⟪second.toSuccinctRepresentation.basis j,
+      IsSuccinctSupport.supportSignCombination first.basis first.coefficients⟫_ℝ| = 1 := by
+  let secondRep := second.toSuccinctRepresentation
+  let y := IsSuccinctSupport.supportSignCombination first.basis first.coefficients
+  have hcorr_le (i : Fin z) : |⟪secondRep.basis i, y⟫_ℝ| ≤ 1 := by
+    have h := system.abs_inner_le_sourceQ_of_mem
+      (x := y) (secondRep.support.mem_atoms i)
+    rw [first.sourceQ_supportSignCombination_eq_one] at h
+    simpa [real_inner_comm] using h
+  have hterm_le (i : Fin z) :
+      |secondRep.coefficients i| * |⟪secondRep.basis i, y⟫_ℝ| ≤
+        |secondRep.coefficients i| := by
+    calc
+      |secondRep.coefficients i| * |⟪secondRep.basis i, y⟫_ℝ| ≤
+          |secondRep.coefficients i| * 1 :=
+        mul_le_mul_of_nonneg_left (hcorr_le i) (abs_nonneg _)
+      _ = |secondRep.coefficients i| := mul_one _
+  have hweighted_le :
+      (∑ i, |secondRep.coefficients i| * |⟪secondRep.basis i, y⟫_ℝ|) ≤
+        ∑ i, |secondRep.coefficients i| := by
+    apply Finset.sum_le_sum
+    intro i _hi
+    exact hterm_le i
+  have hlower :
+      (∑ i, |secondRep.coefficients i|) ≤
+        ∑ i, |secondRep.coefficients i| * |⟪secondRep.basis i, y⟫_ℝ| := by
+    calc
+      (∑ i, |secondRep.coefficients i|) =
+          ∑ i, |first.coefficients i| :=
+        (first.sumAbs_eq secondRep).symm
+      _ = ⟪x, y⟫_ℝ := first.inner_supportSignCombination_eq_sumAbs.symm
+      _ = ∑ i, secondRep.coefficients i * ⟪secondRep.basis i, y⟫_ℝ := by
+        calc
+          ⟪x, y⟫_ℝ =
+              ⟪IsSuccinctSupport.supportCombination secondRep.basis
+                  secondRep.coefficients, y⟫_ℝ :=
+            congrArg (fun value => ⟪value, y⟫_ℝ) secondRep.eq_combination
+          _ = ∑ i, secondRep.coefficients i * ⟪secondRep.basis i, y⟫_ℝ := by
+            simp [IsSuccinctSupport.supportCombination, sum_inner, inner_smul_left]
+      _ ≤ |∑ i, secondRep.coefficients i * ⟪secondRep.basis i, y⟫_ℝ| :=
+        le_abs_self _
+      _ ≤ ∑ i, |secondRep.coefficients i * ⟪secondRep.basis i, y⟫_ℝ| :=
+        Finset.abs_sum_le_sum_abs _ _
+      _ = ∑ i, |secondRep.coefficients i| * |⟪secondRep.basis i, y⟫_ℝ| := by
+        apply Finset.sum_congr rfl
+        intro i _hi
+        rw [abs_mul]
+  have hweighted_eq :
+      (∑ i, |secondRep.coefficients i| * |⟪secondRep.basis i, y⟫_ℝ|) =
+        ∑ i, |secondRep.coefficients i| :=
+    le_antisymm hweighted_le hlower
+  have hterms := (Finset.sum_eq_sum_iff_of_le
+      (s := (Finset.univ : Finset (Fin z)))
+      (fun i _hi => hterm_le i)).mp (by simpa using hweighted_eq)
+  have hj := hterms j (Finset.mem_univ j)
+  have hbpos : 0 < |secondRep.coefficients j| :=
+    abs_pos.mpr (second.coefficients_ne_zero j)
+  change |⟪secondRep.basis j, y⟫_ℝ| = 1
+  nlinarith [abs_nonneg ⟪secondRep.basis j, y⟫_ℝ]
+
+/-- Source Lemma 3.3 on explicit witnesses: if the same vector has an
+`s`-succinct representation and a strictly `z`-succinct representation, then
+`z <= s`. -/
+theorem strictSize_le (first : SuccinctRepresentation system x s)
+    (second : StrictSuccinctRepresentation system x z) : z ≤ s := by
+  let secondRep := second.toSuccinctRepresentation
+  let y := IsSuccinctSupport.supportSignCombination first.basis first.coefficients
+  have hbessel := secondRep.support.orthonormal.sum_inner_products_le
+    (s := (Finset.univ : Finset (Fin z))) y
+  have hunit (i : Fin z) : |⟪secondRep.basis i, y⟫_ℝ| = 1 := by
+    change |⟪secondRep.basis i,
+      IsSuccinctSupport.supportSignCombination first.basis first.coefficients⟫_ℝ| = 1
+    exact first.abs_inner_strictBasis_supportSignCombination_eq_one second i
+  have hcast : (z : ℝ) ≤ (s : ℝ) := by
+    calc
+      (z : ℝ) =
+          ∑ i : Fin z, ‖⟪secondRep.basis i, y⟫_ℝ‖ ^ 2 := by
+        symm
+        calc
+          (∑ i : Fin z, ‖⟪secondRep.basis i, y⟫_ℝ‖ ^ 2) =
+              ∑ i : Fin z, |⟪secondRep.basis i, y⟫_ℝ| ^ 2 := by
+            simp [Real.norm_eq_abs]
+          _ = ∑ _i : Fin z, (1 : ℝ) ^ 2 := by
+            apply Finset.sum_congr rfl
+            intro i _hi
+            rw [hunit i]
+          _ = (z : ℝ) := by simp
+      _ ≤ ‖y‖ ^ 2 := hbessel
+      _ = (s : ℝ) := first.norm_sq_supportSignCombination_eq_size
+  exact Nat.cast_le.mp hcast
+
+end SuccinctRepresentation
+
+namespace StrictSuccinctRepresentation
+
+variable {system : SuccinctUnitSystem V} {x : V} {s : Nat}
+
+theorem abs_coefficient_pos (representation : StrictSuccinctRepresentation system x s)
+    (i : Fin s) :
+    0 < |representation.toSuccinctRepresentation.coefficients i| :=
+  abs_pos.mpr (representation.coefficients_ne_zero i)
+
+end StrictSuccinctRepresentation
+
+/-- Source Lemma 3.3 in proposition-level Definition-3.3 wording. -/
+theorem succinctSize_ge_strictSize {system : SuccinctUnitSystem V} {x : V}
+    {s z : Nat} (hs : IsSuccinctAt system x s)
+    (hz : IsStrictlySuccinctAt system x z) : z ≤ s := by
+  rcases hs with ⟨first⟩
+  rcases hz with ⟨second⟩
+  exact first.strictSize_le second
+
+/-- Source Lemma 3.4: two strict succinct representations of the same vector
+have the same size. -/
+theorem strictlySuccinctSize_unique {system : SuccinctUnitSystem V} {x : V}
+    {s z : Nat} (hs : IsStrictlySuccinctAt system x s)
+    (hz : IsStrictlySuccinctAt system x z) : s = z := by
+  apply Nat.le_antisymm
+  · exact succinctSize_ge_strictSize
+      (show IsSuccinctAt system x z from hz.map
+        StrictSuccinctRepresentation.toSuccinctRepresentation) hs
+  · exact succinctSize_ge_strictSize
+      (show IsSuccinctAt system x s from hs.map
+        StrictSuccinctRepresentation.toSuccinctRepresentation) hz
 end SuccinctUnitSystem
 
 end

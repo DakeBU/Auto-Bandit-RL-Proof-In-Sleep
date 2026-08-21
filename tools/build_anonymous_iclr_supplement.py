@@ -807,9 +807,9 @@ def validate_delayed_counts(records):
 
 def validate_succinct_count(records):
     succinct = records[SUCCINCT_AUDIT_ID]
-    if succinct["status"] != "partial" or len(succinct["declarations"]) != 36:
+    if succinct["status"] != "partial" or len(succinct["declarations"]) != 54:
         raise ValueError(
-            "succinct geometry audit must remain partial with 36 declarations"
+            "succinct geometry audit must remain partial with 54 declarations"
         )
 
 
@@ -874,7 +874,7 @@ def build_claim_ledger(proof_report):
                 "artifact": "Succinct geometry audit",
                 "status": "partial",
                 "source_record_ids": [SUCCINCT_AUDIT_ID],
-                "boundary": "36 declarations compile the source support contract and Lemmas 3.1--3.2; a global R boundedness obligation is explicit; no Theorem 3.8 or regret endpoint.",
+                "boundary": "54 declarations compile Definitions 3.1--3.3 and Lemmas 3.1--3.4, including finite-Bessel strict representation-size minimality and uniqueness for the same vector; a global R boundedness obligation is explicit; no Lemma 3.5--3.6, Theorem 3.8, or regret endpoint.",
             },
             {
                 "artifact": "Proof graph / curvature--noise--gap",
@@ -900,7 +900,7 @@ def build_claim_ledger(proof_report):
         },
         "succinct_geometry": {
             "source_record_id": SUCCINCT_AUDIT_ID,
-            "declaration_count": 36,
+            "declaration_count": 54,
             "paper_endpoint_verified": False,
         },
         "proof_graph": {

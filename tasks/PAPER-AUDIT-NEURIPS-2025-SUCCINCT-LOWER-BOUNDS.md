@@ -49,6 +49,21 @@ regularity in the paper's globally defined dual quantity `R`.
    `R (sum i, a i • E i) = sum_i |a i|`.
 6. Diagnose the global Definition-3.2 boundary: a nonzero vector orthogonal to
    every atom makes the real-valued `R` candidate set unbounded.
+7. Encode source Definition 3.3 as an exact finite representation predicate,
+   with a strict variant requiring every coefficient to be nonzero and the
+   source positivity contract `0 < s` recorded explicitly.
+8. Compile source Lemma 3.3: an `s`-succinct representation and a strictly
+   `z`-succinct representation of the same vector imply `z <= s`.
+9. Compile source Lemma 3.4 by applying Lemma 3.3 in both directions: two
+   strict succinct representations of the same vector have equal sizes.
+
+The active Appendix-A.3 route has three leaves: the sign sum of the first
+support has squared norm `s`; equality of the two local Lemma-3.2 `R`
+formulas plus strict positivity forces every second-support correlation with
+that sign sum to have absolute value one; Mathlib's finite Bessel inequality
+then gives `z <= s`.  This route consumes `sourceR_supportCombination_eq` only
+on the two succinct combinations, so it does not assume or repair a global
+finite value for `R`.
 
 ## Hidden regularity decision
 
@@ -68,7 +83,7 @@ No such repair is silently inserted into Theorem 3.8.
 
 ## Nonclaims
 
-This task does not compile Lemmas 3.3--3.6, Assumption 3.7, Theorem 3.8, any
+This task does not compile Lemmas 3.5--3.6, Assumption 3.7, Theorem 3.8, any
 application theorem in Section 4, or a stochastic-bandit regret endpoint.  It
 does not claim that the source is incorrect: it records an explicit codomain
 and boundedness obligation that must be resolved before the later global
@@ -88,21 +103,28 @@ python tools/bandit.py check
 - [x] The official PDF is hash-frozen at the SHA-256 above.
 - [x] `BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean` compiles.
 - [x] Axiom 3.1, the source-shaped `Q`/`R` definitions, support
-  orthogonality, Lemmas 3.1--3.2 on succinct combinations, and the global
-  `R` boundedness diagnostic have compiled declarations.
-- [x] `Tests/SuccinctLowerBoundPaperAuditCanary.lean` compiles and the four
+  orthogonality, Definition 3.3, Lemmas 3.1--3.4, and the global `R`
+  boundedness diagnostic have 54 compiled named declarations.
+- [x] `Tests/SuccinctLowerBoundPaperAuditCanary.lean` compiles and the seven
   representative theorem prints use only `propext`, `Classical.choice`, and
   `Quot.sound`.
-- [x] `lake build BanditRLProof Tests` completed successfully with 8,846
-  jobs in this isolated worktree.
+- [x] The current 54-declaration extension passed `lake build BanditRLProof
+  Tests` with 8,846 jobs in this isolated worktree.
 - [x] `python tools/bandit.py check` passed after the new files entered the
   candidate Git index; its Python phase ran 196 tests with four platform skips.
 - [x] `python website/scripts/build_site.py --lean-verified` and
-  `python website/scripts/check_site.py` passed with 578 modules, 7,668
-  website-scanner declarations, 85 highlights, and 72 milestones.
-- [ ] Lemmas 3.3--3.6, Assumption 3.7, Theorem 3.8, and every paper-level
+  `python website/scripts/check_site.py` passed with 578 modules, 7,686
+  website-scanner declarations, 86 highlights, and 72 milestones.
+- [ ] Lemmas 3.5--3.6, Assumption 3.7, Theorem 3.8, and every paper-level
   stochastic-bandit regret endpoint remain outside the compiled scope.
 
-The task therefore remains `activePort`: its first geometric slice is
-compiled, while the paper-level lower-bound theorem is blocked on the
+## Completed Definition-3.3 / Lemma-3.3--3.4 leaf
+
+- [x] Definition 3.3 representation and strict-representation predicates.
+- [x] Appendix-A.3 unit-correlation and finite-Bessel cardinality leaf.
+- [x] Lemmas 3.3--3.4 terminal declarations and canary coverage.
+- [ ] Lemmas 3.5--3.6 remain blocked on the separate global-`R` repair.
+
+The task therefore remains `activePort`: Definitions 3.1--3.3 and Lemmas
+3.1--3.4 compile, while the paper-level lower-bound theorem is blocked on the
 explicit global-`R` regularity decision and the later source construction.
