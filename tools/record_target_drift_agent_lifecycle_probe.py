@@ -203,6 +203,26 @@ def wait_file(path: Path, deadline: float) -> None:
     require(False, f"timed out waiting for {path.name}")
 
 
+def read_heartbeat_counter(path: Path) -> int:
+    try:
+        payload = path.read_text(encoding="ascii").strip()
+    except (OSError, UnicodeError):
+        return -1
+    if re.fullmatch(r"[1-9][0-9]*", payload) is None:
+        return -1
+    return int(payload)
+
+
+def wait_heartbeat_increase(path: Path, previous: int, deadline: float) -> int:
+    while time.monotonic() < deadline:
+        current = read_heartbeat_counter(path)
+        if current > previous:
+            return current
+        time.sleep(0.02)
+    require(False, "escaped descendant heartbeat did not increase before control loss")
+    return -1
+
+
 def run_probe(runtime: Path, image_digest: str, controller_sha256: str,
               output: Path) -> dict[str, Any]:
     require(output.is_dir(), "probe output directory was not prepared")
@@ -238,7 +258,11 @@ def run_probe(runtime: Path, image_digest: str, controller_sha256: str,
         cid = cidfile.read_text(encoding="ascii").strip()
         require(re.fullmatch(r"[0-9a-f]{12,64}", cid) is not None,
                 "cidfile contains an invalid container ID")
-        before = heartbeat.read_text(encoding="ascii")
+        first_heartbeat = read_heartbeat_counter(heartbeat)
+        require(first_heartbeat > 0, "escaped descendant heartbeat is malformed")
+        second_heartbeat = wait_heartbeat_increase(
+            heartbeat, first_heartbeat, time.monotonic() + 2,
+        )
         # Abruptly lose the host-side controller/client.  Docker stdin closes;
         # the in-image PID 1 observes EOF and exits, so the namespace must die.
         os.kill(docker.pid, signal.SIGKILL)
@@ -249,11 +273,10 @@ def run_probe(runtime: Path, image_digest: str, controller_sha256: str,
         require(not label_ids(runtime, label),
                 "container survived loss of the host control channel")
         time.sleep(0.3)
-        after = heartbeat.read_text(encoding="ascii")
-        require(after == before or int(after) >= int(before), "heartbeat is malformed")
-        frozen = after
+        frozen = read_heartbeat_counter(heartbeat)
+        require(frozen >= second_heartbeat, "heartbeat regressed or became malformed")
         time.sleep(0.3)
-        require(heartbeat.read_text(encoding="ascii") == frozen,
+        require(read_heartbeat_counter(heartbeat) == frozen,
                 "escaped descendant continued after container removal")
         wait_file(exit_record, time.monotonic() + 2)
         ready_payload = json.loads(ready.read_text(encoding="utf-8"))
@@ -278,6 +301,10 @@ def run_probe(runtime: Path, image_digest: str, controller_sha256: str,
             "controller_observation": ready_payload,
             "controller_exit_observation": exit_payload,
             "fixture_observation": fixture_payload,
+            "pre_crash_heartbeat_observations": [
+                first_heartbeat, second_heartbeat,
+            ],
+            "post_cleanup_heartbeat_observation": frozen,
             "escaped_descendant_heartbeat_frozen": True,
             "container_absent_after_control_loss": True,
             "measured_wall_seconds": round(time.monotonic() - started, 6),

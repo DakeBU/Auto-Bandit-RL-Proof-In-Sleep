@@ -171,6 +171,10 @@ TARGET_DRIFT_PROTOCOL_FILES = (
     "evaluation/target-drift-v2/text-only-audit-prompt.md",
 )
 
+TARGET_DRIFT_WORKFLOW_FILES = (
+    ".github/workflows/target-drift-agent-lifecycle.yml",
+)
+
 EXPLICIT_COPIES = {
     "lean-toolchain": "lean-toolchain",
     "lakefile.lean": "lakefile.lean",
@@ -643,6 +647,11 @@ def build_payload(proof_graph=None, proof_report_path=None, allow_missing_graph=
         elif rel == PUBLIC_ISOLATION_CANDIDATE_RECORD:
             destination = ANONYMOUS_ISOLATION_CANDIDATE_RECORD
         add_payload(payload, destination, data)
+    for rel in TARGET_DRIFT_WORKFLOW_FILES:
+        if rel not in tracked:
+            raise ValueError("untracked or missing target-drift workflow: " + rel)
+        data = anonymize_evaluation_bytes(rel, read_regular(rel), anonymous_reference)
+        add_payload(payload, rel, data)
     for rel in TARGET_DRIFT_TOOLS:
         if rel not in tracked:
             raise ValueError("untracked or missing target-drift tool: " + rel)

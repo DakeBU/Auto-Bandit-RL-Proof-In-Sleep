@@ -3,6 +3,8 @@ from __future__ import annotations
 import json
 import os
 import tempfile
+import threading
+import time
 import unittest
 from pathlib import Path
 
@@ -45,6 +47,23 @@ class TargetDriftAgentLifecycleTest(unittest.TestCase):
             payload = path.read_bytes()
             self.assertNotIn(b"\r\n", payload)
             self.assertEqual(json.loads(payload)["status"], "passed")
+
+    def test_heartbeat_requires_strict_pre_crash_progress(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            heartbeat = Path(directory) / "heartbeat.txt"
+            heartbeat.write_text("1", encoding="ascii")
+
+            def advance() -> None:
+                time.sleep(0.03)
+                heartbeat.write_text("2", encoding="ascii")
+
+            writer = threading.Thread(target=advance)
+            writer.start()
+            observed = probe.wait_heartbeat_increase(
+                heartbeat, 1, time.monotonic() + 1,
+            )
+            writer.join(timeout=1)
+            self.assertEqual(observed, 2)
 
     def test_containerfile_keeps_controller_as_pid1(self) -> None:
         recipe = (

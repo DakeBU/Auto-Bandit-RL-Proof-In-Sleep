@@ -206,6 +206,9 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertIn("tools/target_drift_agent_pid1.py", payload)
         self.assertIn("tools/record_target_drift_agent_lifecycle_probe.py", payload)
         self.assertIn("tools/test_target_drift_agent_lifecycle.py", payload)
+        self.assertIn(
+            ".github/workflows/target-drift-agent-lifecycle.yml", payload
+        )
         self.assertIn("evaluation/target-drift-v2/agent-sandbox-contract.json", payload)
         self.assertIn("evaluation/target-drift-v2/agent-lifecycle.Containerfile", payload)
         self.assertIn("non-Git", readme)
