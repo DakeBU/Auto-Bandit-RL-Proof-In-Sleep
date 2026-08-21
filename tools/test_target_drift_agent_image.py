@@ -127,12 +127,17 @@ class TargetDriftAgentImageTest(unittest.TestCase):
         for marker in (
             "workspace_write_succeeded", "provider_auth_unreadable",
             "persistent_outside_workspace_write_denied", "network_denied",
-            "network_error_errno", "openai_api_key_absent", "fresh_pid_namespace",
+            "network_denial_stage", "network_error_errno",
+            "openai_api_key_absent", "fresh_pid_namespace",
             "codex_apparmor_profile_attached",
         ):
             self.assertIn(marker, source)
         self.assertIn("203.0.113.7", source)
+        self.assertIn("errno.EPERM", source)
+        self.assertIn("errno.EACCES", source)
         self.assertIn("errno.ENETUNREACH", source)
+        self.assertIn('network_denial_stage = "socket_create"', source)
+        self.assertIn('network_denial_stage = "connect"', source)
         self.assertEqual(probe.NETWORK_CONTROL_PORT, 443)
 
     def test_apparmor_current_parser_requires_exact_profile_and_mode(self) -> None:
@@ -158,6 +163,35 @@ class TargetDriftAgentImageTest(unittest.TestCase):
         source = probe.probe_source("203.0.113.7").decode("utf-8")
         self.assertIn('apparmor_mode in ("", "unconfined")', source)
         self.assertNotIn("startswith(", source)
+
+    def test_network_denial_accepts_only_explicit_kernel_failures(self) -> None:
+        self.assertTrue(probe.explicit_network_denial(
+            "socket_create", probe.errno.EPERM
+        ))
+        self.assertTrue(probe.explicit_network_denial(
+            "socket_create", probe.errno.EACCES
+        ))
+        self.assertTrue(probe.explicit_network_denial(
+            "connect", probe.errno.ENETUNREACH
+        ))
+        self.assertTrue(probe.explicit_network_denial(
+            "connect", probe.errno.EHOSTUNREACH
+        ))
+        self.assertFalse(probe.explicit_network_denial(
+            "socket_create", probe.errno.ETIMEDOUT
+        ))
+        self.assertFalse(probe.explicit_network_denial(
+            "connect", probe.errno.ETIMEDOUT
+        ))
+        self.assertFalse(probe.explicit_network_denial(
+            "connect", probe.errno.EPERM
+        ))
+        self.assertFalse(probe.explicit_network_denial(
+            "socket_create", probe.errno.ENETUNREACH
+        ))
+        self.assertFalse(probe.explicit_network_denial("socket_create", True))
+        self.assertFalse(probe.explicit_network_denial("connect", -2))
+        self.assertFalse(probe.explicit_network_denial("", None))
 
     def test_probe_uses_exact_codex_workspace_profile_and_private_home(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

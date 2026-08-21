@@ -91,6 +91,17 @@ def docker_run(command: list[str], timeout: int = 120) -> bytes:
     return outcome.stdout
 
 
+def explicit_network_denial(stage: object, error_number: object) -> bool:
+    if type(error_number) is not int:
+        return False
+    return (
+        stage == "socket_create" and error_number in {errno.EPERM, errno.EACCES}
+    ) or (
+        stage == "connect"
+        and error_number in {errno.ENETUNREACH, errno.EHOSTUNREACH}
+    )
+
+
 def probe_source(network_control_ipv4: str) -> bytes:
     ipaddress.IPv4Address(network_control_ipv4)
     template = '''\
@@ -114,19 +125,28 @@ try:
 except OSError as error:
     outside_write_errno = error.errno
 network_denied = False
+network_denial_stage = ""
 network_error_errno = None
 network_error_name = ""
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.settimeout(1.0)
 network_started = time.monotonic()
 try:
-    sock.connect(("__ABRL_CONTROL_IPV4__", __ABRL_CONTROL_PORT__))
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 except OSError as error:
     network_error_errno = error.errno
     network_error_name = errno.errorcode.get(error.errno, type(error).__name__)
-    network_denied = error.errno in {errno.ENETUNREACH, errno.EHOSTUNREACH}
-finally:
-    sock.close()
+    network_denial_stage = "socket_create"
+    network_denied = error.errno in {errno.EPERM, errno.EACCES}
+else:
+    sock.settimeout(1.0)
+    try:
+        sock.connect(("__ABRL_CONTROL_IPV4__", __ABRL_CONTROL_PORT__))
+    except OSError as error:
+        network_error_errno = error.errno
+        network_error_name = errno.errorcode.get(error.errno, type(error).__name__)
+        network_denial_stage = "connect"
+        network_denied = error.errno in {errno.ENETUNREACH, errno.EHOSTUNREACH}
+    finally:
+        sock.close()
 network_elapsed_seconds = time.monotonic() - network_started
 proc_ids = sorted(name for name in os.listdir("/proc") if name.isdigit())
 apparmor_profile_raw = pathlib.Path("/proc/self/attr/current").read_text(
@@ -141,6 +161,7 @@ payload = {
     ),
     "persistent_outside_workspace_write_errno": outside_write_errno,
     "network_denied": network_denied,
+    "network_denial_stage": network_denial_stage,
     "network_error_errno": network_error_errno,
     "network_error_name": network_error_name,
     "network_elapsed_seconds": network_elapsed_seconds,
@@ -255,9 +276,12 @@ def run_inner_sandbox_probe(
     }
     require(all(observation.get(field) is True for field in expected_true),
             "one or more inner-sandbox observations failed")
-    require(observation.get("network_error_errno") in {
-        errno.ENETUNREACH, errno.EHOSTUNREACH,
-    }, "inner-sandbox network failure was not an explicit route denial")
+    denial_stage = observation.get("network_denial_stage")
+    denial_errno = observation.get("network_error_errno")
+    require(
+        explicit_network_denial(denial_stage, denial_errno),
+        "inner-sandbox network failure was not an explicit kernel denial",
+    )
     return (
         observation, command, output, control_command, control_output,
         network_control_ipv4,
