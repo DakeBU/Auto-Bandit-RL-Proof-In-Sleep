@@ -197,9 +197,18 @@ Core paths:
   smoke purpose from the agent request, and forces even a production-checker
   success to `checked_smoke_nonexperimental` with `result_eligible=false`, so it
   cannot enter blind grading or the primary analysis.  This lane is implemented
-  and component-tested but has not been run; a production agent lifecycle that
-  proves no provider child survives controller failure is still required, and
-  no model or formalization outcome is reported;
+  and component-tested but has not been run.  A separate result-free Linux
+  lifecycle candidate
+  ([run 32436339541](https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/actions/runs/32436339541))
+  bound an ephemeral image, Docker runtime, PID-1 controller, and exact command,
+  then observed a setsid descendant heartbeat increase before abrupt host-client
+  loss and freeze after the PID namespace disappeared.  Its evidence is recorded
+  in `evaluation/target-drift-v2/agent-lifecycle-candidate-32436339541.json`.
+  This closes only that generic lifecycle-component check.  The controller must
+  still be incorporated into, rebuilt with, and reprobed on the final
+  provider-capable agent image after its auth, visibility, network/tool, and
+  active-budget boundaries are frozen.  The real smoke and all 450 model runs
+  remain unstarted; no model or formalization outcome is reported;
 - `website/` — literate static site, local compiler service, and integrity checker;
 - `tools/bandit.py` — deterministic harness CLI.
 - [`docs/proof_graph_laboratory.md`](docs/proof_graph_laboratory.md) — compiled-environment dependency export, proof-cost/ZDD/hypergraph prototypes, and the proof-structural novelty audit boundary.

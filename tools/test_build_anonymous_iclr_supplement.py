@@ -203,10 +203,19 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertFalse(base["git_object_database_included"])
         self.assertFalse(base["materializable_by_target_drift_runner"])
         readme = payload["evaluation/target-drift-v2/README.md"].decode("utf-8")
+        self.assertIn("tools/target_drift_agent_pid1.py", payload)
+        self.assertIn("tools/record_target_drift_agent_lifecycle_probe.py", payload)
+        self.assertIn("tools/test_target_drift_agent_lifecycle.py", payload)
+        self.assertIn(
+            ".github/workflows/target-drift-agent-lifecycle.yml", payload
+        )
+        self.assertIn("evaluation/target-drift-v2/agent-sandbox-contract.json", payload)
+        self.assertIn("evaluation/target-drift-v2/agent-lifecycle.Containerfile", payload)
         self.assertIn("non-Git", readme)
         self.assertNotIn("the public base immediately", readme)
         self.assertNotIn(BUILDER.PUBLIC_CANDIDATE_RUN_ID, readme)
         self.assertNotIn(BUILDER.PUBLIC_ISOLATION_CANDIDATE_RUN_ID, readme)
+        self.assertNotIn(BUILDER.PUBLIC_AGENT_LIFECYCLE_RUN_ID, readme)
         candidate = json.loads(payload[
             "evaluation/target-drift-v2/checker-image-candidate-record.json"
         ].decode("utf-8"))
@@ -220,6 +229,17 @@ class AnonymousSupplementTests(unittest.TestCase):
         isolation_candidate = json.loads(payload[
             "evaluation/target-drift-v2/checker-image-isolation-candidate-record.json"
         ].decode("utf-8"))
+        lifecycle_candidate = json.loads(payload[
+            "evaluation/target-drift-v2/agent-lifecycle-candidate-record.json"
+        ].decode("utf-8"))
+        self.assertEqual(
+            lifecycle_candidate["workflow_run"]["id"],
+            "<redacted-public-run-id>",
+        )
+        self.assertEqual(
+            lifecycle_candidate["workflow_run"]["head_commit"],
+            "<anonymous-builder-snapshot>",
+        )
         self.assertEqual(
             isolation_candidate["workflow_run"]["id"],
             "<redacted-public-run-id>",

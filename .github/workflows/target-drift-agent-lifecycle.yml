@@ -1,0 +1,64 @@
+name: Target-drift agent lifecycle
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: target-drift-agent-lifecycle-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  result-free-lifecycle-probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v6
+
+      - name: Run component tests
+        run: python3 -m unittest discover -s tools -p "test_target_drift_agent_lifecycle.py"
+
+      - name: Build the digest-recorded lifecycle image
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "${RUNNER_TEMP}/abrl-agent-lifecycle-artifacts"
+          docker pull python:3.11-slim-bookworm
+          BASE_IMAGE="$(docker image inspect python:3.11-slim-bookworm --format '{{index .RepoDigests 0}}')"
+          test -n "${BASE_IMAGE}"
+          printf '%s\n' "${BASE_IMAGE}" > "${RUNNER_TEMP}/abrl-agent-lifecycle-artifacts/base-image.txt"
+          docker build \
+            --build-arg "PYTHON_BASE_IMAGE=${BASE_IMAGE}" \
+            --file evaluation/target-drift-v2/agent-lifecycle.Containerfile \
+            --tag "abrl-target-drift-agent-lifecycle:${GITHUB_RUN_ID}" . \
+            2>&1 | tee "${RUNNER_TEMP}/abrl-agent-lifecycle-artifacts/image-build.log"
+          IMAGE_DIGEST="$(docker image inspect "abrl-target-drift-agent-lifecycle:${GITHUB_RUN_ID}" --format '{{.Id}}')"
+          printf '%s\n' "${IMAGE_DIGEST}" > "${RUNNER_TEMP}/abrl-agent-lifecycle-artifacts/image-digest.txt"
+
+      - name: Kill the host controller and prove namespace cleanup
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE_IMAGE="$(cat "${RUNNER_TEMP}/abrl-agent-lifecycle-artifacts/base-image.txt")"
+          IMAGE_DIGEST="$(cat "${RUNNER_TEMP}/abrl-agent-lifecycle-artifacts/image-digest.txt")"
+          python3 tools/record_target_drift_agent_lifecycle_probe.py \
+            --image-digest "${IMAGE_DIGEST}" \
+            --base-image "${BASE_IMAGE}" \
+            --controller-source tools/target_drift_agent_pid1.py \
+            --output-dir "${RUNNER_TEMP}/abrl-agent-lifecycle-artifacts/probe" \
+            --report "${RUNNER_TEMP}/abrl-agent-lifecycle-artifacts/agent-lifecycle-probe.json"
+
+      - name: Upload result-free lifecycle evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: target-drift-agent-lifecycle-${{ github.run_id }}
+          path: ${{ runner.temp }}/abrl-agent-lifecycle-artifacts
+          if-no-files-found: error
+          retention-days: 14
