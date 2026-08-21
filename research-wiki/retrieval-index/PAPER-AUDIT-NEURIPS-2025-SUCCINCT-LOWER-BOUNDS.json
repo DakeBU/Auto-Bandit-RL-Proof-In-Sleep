@@ -1,6 +1,6 @@
 {
   "task": "PAPER-AUDIT-NEURIPS-2025-SUCCINCT-LOWER-BOUNDS",
-  "generated": "2026-08-21T17:08:21+00:00",
+  "generated": "2026-08-21T19:09:43+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -53897,7 +53897,7 @@
       "name": "SuccinctUnitSystem",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-      "line": 30,
+      "line": 33,
       "statement": "structure SuccinctUnitSystem (V : Type*) [NormedAddCommGroup V] [InnerProductSpace ℝ V] where"
     },
     {
@@ -53905,7 +53905,7 @@
       "name": "sourceQ",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.sourceQ",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-      "line": 42,
+      "line": 45,
       "statement": "def sourceQ (system : SuccinctUnitSystem V) (x : V) : ℝ"
     },
     {
@@ -53913,7 +53913,7 @@
       "name": "sourceQSet_bddAbove",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.sourceQSet_bddAbove",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-      "line": 45,
+      "line": 48,
       "statement": "theorem sourceQSet_bddAbove (system : SuccinctUnitSystem V) (x : V) : BddAbove ((fun e : V => ⟪x, e⟫_ℝ) '' system.atoms)"
     },
     {
@@ -53921,7 +53921,7 @@
       "name": "le_sourceQ_of_mem",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.le_sourceQ_of_mem",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-      "line": 54,
+      "line": 57,
       "statement": "theorem le_sourceQ_of_mem (system : SuccinctUnitSystem V) {x e : V} (he : e ∈ system.atoms) : ⟪x, e⟫_ℝ ≤ system.sourceQ x"
     },
     {
@@ -53929,7 +53929,7 @@
       "name": "sourceQ_le_norm",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.sourceQ_le_norm",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-      "line": 59,
+      "line": 62,
       "statement": "theorem sourceQ_le_norm (system : SuccinctUnitSystem V) (x : V) : system.sourceQ x ≤ ‖x‖"
     },
     {
@@ -53937,7 +53937,7 @@
       "name": "sourceQ_nonneg",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.sourceQ_nonneg",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-      "line": 69,
+      "line": 72,
       "statement": "theorem sourceQ_nonneg (system : SuccinctUnitSystem V) (x : V) : 0 ≤ system.sourceQ x"
     },
     {
@@ -53945,7 +53945,7 @@
       "name": "sourceQ_zero",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.sourceQ_zero",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-      "line": 80,
+      "line": 83,
       "statement": "theorem sourceQ_zero (system : SuccinctUnitSystem V) : system.sourceQ 0 = 0"
     },
     {
@@ -53953,7 +53953,7 @@
       "name": "abs_inner_le_sourceQ_of_mem",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.abs_inner_le_sourceQ_of_mem",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-      "line": 85,
+      "line": 88,
       "statement": "theorem abs_inner_le_sourceQ_of_mem (system : SuccinctUnitSystem V) {x e : V} (he : e ∈ system.atoms) : |⟪x, e⟫_ℝ| ≤ system.sourceQ x"
     },
     {
@@ -53961,7 +53961,7 @@
       "name": "sourceQ_eq_zero_of_atom_orthogonal",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.sourceQ_eq_zero_of_atom_orthogonal",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-      "line": 95,
+      "line": 98,
       "statement": "theorem sourceQ_eq_zero_of_atom_orthogonal (system : SuccinctUnitSystem V) {x : V} (horthogonal : ∀ e ∈ system.atoms, ⟪x, e⟫_ℝ = 0) : system.sourceQ x = 0"
     },
     {
@@ -53969,7 +53969,7 @@
       "name": "sourceR",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.sourceR",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-      "line": 107,
+      "line": 110,
       "statement": "def sourceR (system : SuccinctUnitSystem V) (x : V) : ℝ"
     },
     {
@@ -53977,7 +53977,7 @@
       "name": "sourceRSet_not_bddAbove_of_nonzero_atom_orthogonal",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.sourceRSet_not_bddAbove_of_nonzero_atom_orthogonal",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-      "line": 113,
+      "line": 116,
       "statement": "theorem sourceRSet_not_bddAbove_of_nonzero_atom_orthogonal (system : SuccinctUnitSystem V) {x : V} (hx : x ≠ 0) (horthogonal : ∀ e ∈ system.atoms, ⟪x, e⟫_ℝ = 0) : ¬ BddAbove ((fun y : V => ⟪x, y⟫_ℝ) '' {y | system.sourceQ y ≤ 1})"
     },
     {
@@ -53985,7 +53985,7 @@
       "name": "IsSuccinctSupport",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-      "line": 139,
+      "line": 142,
       "statement": "structure IsSuccinctSupport (system : SuccinctUnitSystem V) {s : Nat} (basis : Fin s → V) : Prop where"
     },
     {
@@ -53993,7 +53993,7 @@
       "name": "correlationSum_le_one",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.correlationSum_le_one",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-      "line": 151,
+      "line": 154,
       "statement": "theorem correlationSum_le_one (support : IsSuccinctSupport system basis) {e : V} (he : e ∈ system.atoms) : (∑ i, |⟪e, basis i⟫_ℝ|) ≤ 1"
     },
     {
@@ -54001,15 +54001,23 @@
       "name": "inner_basis_basis",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.inner_basis_basis",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-      "line": 161,
+      "line": 164,
       "statement": "theorem inner_basis_basis (support : IsSuccinctSupport system basis) (i j : Fin s) : ⟪basis i, basis j⟫_ℝ = if i = j then 1 else 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "orthonormal",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.orthonormal",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 202,
+      "statement": "theorem orthonormal (support : IsSuccinctSupport system basis) : Orthonormal ℝ basis"
     },
     {
       "kind": "def",
       "name": "maxAbsCoefficient",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.maxAbsCoefficient",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-      "line": 198,
+      "line": 208,
       "statement": "def maxAbsCoefficient [Nonempty (Fin s)] (a : Fin s → ℝ) : ℝ"
     },
     {
@@ -54017,7 +54025,7 @@
       "name": "abs_le_maxAbsCoefficient",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.abs_le_maxAbsCoefficient",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-      "line": 201,
+      "line": 211,
       "statement": "theorem abs_le_maxAbsCoefficient [Nonempty (Fin s)] (a : Fin s → ℝ) (i : Fin s) : |a i| ≤ maxAbsCoefficient a"
     },
     {
@@ -54025,7 +54033,7 @@
       "name": "maxAbsCoefficient_nonneg",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.maxAbsCoefficient_nonneg",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-      "line": 205,
+      "line": 215,
       "statement": "theorem maxAbsCoefficient_nonneg [Nonempty (Fin s)] (a : Fin s → ℝ) : 0 ≤ maxAbsCoefficient a"
     },
     {
@@ -54033,7 +54041,7 @@
       "name": "exists_abs_eq_maxAbsCoefficient",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.exists_abs_eq_maxAbsCoefficient",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-      "line": 210,
+      "line": 220,
       "statement": "theorem exists_abs_eq_maxAbsCoefficient [Nonempty (Fin s)] (a : Fin s → ℝ) : ∃ i : Fin s, |a i| = maxAbsCoefficient a"
     },
     {
@@ -54041,7 +54049,7 @@
       "name": "supportCombination",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.supportCombination",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-      "line": 217,
+      "line": 227,
       "statement": "def supportCombination (basis : Fin s → V) (a : Fin s → ℝ) : V"
     },
     {
@@ -54049,7 +54057,7 @@
       "name": "signedSupportAtom",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.signedSupportAtom",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-      "line": 220,
+      "line": 230,
       "statement": "def signedSupportAtom (coefficient : ℝ) (atom : V) : V"
     },
     {
@@ -54057,7 +54065,7 @@
       "name": "signedSupportAtom_mem",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.signedSupportAtom_mem",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-      "line": 223,
+      "line": 233,
       "statement": "theorem signedSupportAtom_mem (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) (i : Fin s) : signedSupportAtom (a i) (basis i) ∈ system.atoms"
     },
     {
@@ -54065,7 +54073,7 @@
       "name": "sourceQ_supportCombination_le",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.sourceQ_supportCombination_le",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-      "line": 230,
+      "line": 240,
       "statement": "theorem sourceQ_supportCombination_le [Nonempty (Fin s)] (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) : system.sourceQ (supportCombination basis a) ≤ maxAbsCoefficient a"
     },
     {
@@ -54073,7 +54081,7 @@
       "name": "inner_supportCombination_basis",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.inner_supportCombination_basis",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-      "line": 258,
+      "line": 268,
       "statement": "theorem inner_supportCombination_basis (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) (m : Fin s) : ⟪supportCombination basis a, basis m⟫_ℝ = a m"
     },
     {
@@ -54081,7 +54089,7 @@
       "name": "inner_supportCombination_signedSupportAtom",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.inner_supportCombination_signedSupportAtom",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-      "line": 271,
+      "line": 281,
       "statement": "theorem inner_supportCombination_signedSupportAtom (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) (m : Fin s) : ⟪supportCombination basis a, signedSupportAtom (a m) (basis m)⟫_ℝ = |a m|"
     },
     {
@@ -54089,7 +54097,7 @@
       "name": "sourceQ_supportCombination_eq",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.sourceQ_supportCombination_eq",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-      "line": 282,
+      "line": 292,
       "statement": "theorem sourceQ_supportCombination_eq [Nonempty (Fin s)] (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) : system.sourceQ (supportCombination basis a) = maxAbsCoefficient a"
     },
     {
@@ -54097,7 +54105,7 @@
       "name": "coefficientSign",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.coefficientSign",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-      "line": 295,
+      "line": 305,
       "statement": "def coefficientSign (coefficient : ℝ) : ℝ"
     },
     {
@@ -54105,7 +54113,7 @@
       "name": "abs_coefficientSign",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.abs_coefficientSign",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-      "line": 299,
+      "line": 309,
       "statement": "theorem abs_coefficientSign (coefficient : ℝ) : |coefficientSign coefficient| = 1"
     },
     {
@@ -54113,15 +54121,31 @@
       "name": "coefficientSign_mul",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.coefficientSign_mul",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-      "line": 302,
+      "line": 312,
       "statement": "theorem coefficientSign_mul (coefficient : ℝ) : coefficientSign coefficient * coefficient = |coefficient|"
+    },
+    {
+      "kind": "theorem",
+      "name": "coefficientSign_coefficientSign",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.coefficientSign_coefficientSign",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 320,
+      "statement": "theorem coefficientSign_coefficientSign (coefficient : ℝ) : coefficientSign (coefficientSign coefficient) = coefficientSign coefficient"
+    },
+    {
+      "kind": "theorem",
+      "name": "coefficientSign_mul_self",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.coefficientSign_mul_self",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 327,
+      "statement": "theorem coefficientSign_mul_self (coefficient : ℝ) : coefficientSign coefficient * coefficientSign coefficient = 1"
     },
     {
       "kind": "def",
       "name": "supportSignCombination",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.supportSignCombination",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-      "line": 309,
+      "line": 331,
       "statement": "def supportSignCombination (basis : Fin s → V) (a : Fin s → ℝ) : V"
     },
     {
@@ -54129,7 +54153,7 @@
       "name": "maxAbsCoefficient_coefficientSign",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.maxAbsCoefficient_coefficientSign",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-      "line": 312,
+      "line": 334,
       "statement": "theorem maxAbsCoefficient_coefficientSign [Nonempty (Fin s)] (a : Fin s → ℝ) : maxAbsCoefficient (fun i => coefficientSign (a i)) = 1"
     },
     {
@@ -54137,15 +54161,23 @@
       "name": "sourceQ_supportSignCombination",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.sourceQ_supportSignCombination",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-      "line": 316,
+      "line": 338,
       "statement": "theorem sourceQ_supportSignCombination [Nonempty (Fin s)] (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) : system.sourceQ (supportSignCombination basis a) = 1"
+    },
+    {
+      "kind": "theorem",
+      "name": "norm_sq_supportSignCombination",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.norm_sq_supportSignCombination",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 346,
+      "statement": "theorem norm_sq_supportSignCombination [Nonempty (Fin s)] (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) : ‖supportSignCombination basis a‖ ^ 2 = (s : ℝ)"
     },
     {
       "kind": "theorem",
       "name": "inner_supportCombination_supportSignCombination",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.inner_supportCombination_supportSignCombination",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-      "line": 322,
+      "line": 359,
       "statement": "theorem inner_supportCombination_supportSignCombination (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) : ⟪supportCombination basis a, supportSignCombination basis a⟫_ℝ = ∑ i, |a i|"
     },
     {
@@ -54153,7 +54185,7 @@
       "name": "inner_supportCombination_le_sumAbs_mul_sourceQ",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.inner_supportCombination_le_sumAbs_mul_sourceQ",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-      "line": 341,
+      "line": 378,
       "statement": "theorem inner_supportCombination_le_sumAbs_mul_sourceQ (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) (y : V) : |⟪supportCombination basis a, y⟫_ℝ| ≤ (∑ i, |a i|) * system.sourceQ y"
     },
     {
@@ -54161,7 +54193,7 @@
       "name": "inner_supportCombination_le_sumAbs_of_sourceQ_le_one",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.inner_supportCombination_le_sumAbs_of_sourceQ_le_one",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-      "line": 363,
+      "line": 400,
       "statement": "theorem inner_supportCombination_le_sumAbs_of_sourceQ_le_one (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) {y : V} (hy : system.sourceQ y ≤ 1) : ⟪supportCombination basis a, y⟫_ℝ ≤ ∑ i, |a i|"
     },
     {
@@ -54169,7 +54201,7 @@
       "name": "sourceRSet_bddAbove",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.sourceRSet_bddAbove",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-      "line": 376,
+      "line": 413,
       "statement": "theorem sourceRSet_bddAbove (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) : BddAbove ((fun y : V => ⟪supportCombination basis a, y⟫_ℝ) '' {y | system.sourceQ y ≤ 1})"
     },
     {
@@ -54177,8 +54209,120 @@
       "name": "sourceR_supportCombination_eq",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.sourceR_supportCombination_eq",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-      "line": 386,
+      "line": 423,
       "statement": "theorem sourceR_supportCombination_eq [Nonempty (Fin s)] (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) : system.sourceR (supportCombination basis a) = ∑ i, |a i|"
+    },
+    {
+      "kind": "structure",
+      "name": "SuccinctRepresentation",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.SuccinctRepresentation",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 447,
+      "statement": "structure SuccinctRepresentation (system : SuccinctUnitSystem V) (x : V) (s : Nat) where"
+    },
+    {
+      "kind": "structure",
+      "name": "StrictSuccinctRepresentation",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.StrictSuccinctRepresentation",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 457,
+      "statement": "structure StrictSuccinctRepresentation (system : SuccinctUnitSystem V) (x : V) (s : Nat) extends SuccinctRepresentation system x s where"
+    },
+    {
+      "kind": "def",
+      "name": "IsSuccinctAt",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctAt",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 463,
+      "statement": "def IsSuccinctAt (system : SuccinctUnitSystem V) (x : V) (s : Nat) : Prop"
+    },
+    {
+      "kind": "def",
+      "name": "IsStrictlySuccinctAt",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsStrictlySuccinctAt",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 468,
+      "statement": "def IsStrictlySuccinctAt (system : SuccinctUnitSystem V) (x : V) (s : Nat) : Prop"
+    },
+    {
+      "kind": "theorem",
+      "name": "sourceR_eq_sumAbs",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.SuccinctRepresentation.sourceR_eq_sumAbs",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 475,
+      "statement": "theorem sourceR_eq_sumAbs (representation : SuccinctRepresentation system x s) : system.sourceR x = ∑ i, |representation.coefficients i|"
+    },
+    {
+      "kind": "theorem",
+      "name": "inner_supportSignCombination_eq_sumAbs",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.SuccinctRepresentation.inner_supportSignCombination_eq_sumAbs",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 486,
+      "statement": "theorem inner_supportSignCombination_eq_sumAbs (representation : SuccinctRepresentation system x s) : ⟪x, IsSuccinctSupport.supportSignCombination representation.basis representation.coefficients⟫_ℝ = ∑ i, |representation.coefficients i|"
+    },
+    {
+      "kind": "theorem",
+      "name": "sourceQ_supportSignCombination_eq_one",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.SuccinctRepresentation.sourceQ_supportSignCombination_eq_one",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 505,
+      "statement": "theorem sourceQ_supportSignCombination_eq_one (representation : SuccinctRepresentation system x s) : system.sourceQ (IsSuccinctSupport.supportSignCombination representation.basis representation.coefficients) = 1"
+    },
+    {
+      "kind": "theorem",
+      "name": "norm_sq_supportSignCombination_eq_size",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.SuccinctRepresentation.norm_sq_supportSignCombination_eq_size",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 512,
+      "statement": "theorem norm_sq_supportSignCombination_eq_size (representation : SuccinctRepresentation system x s) : ‖IsSuccinctSupport.supportSignCombination representation.basis representation.coefficients‖ ^ 2 = (s : ℝ)"
+    },
+    {
+      "kind": "theorem",
+      "name": "sumAbs_eq",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.SuccinctRepresentation.sumAbs_eq",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 521,
+      "statement": "theorem sumAbs_eq (first : SuccinctRepresentation system x s) (second : SuccinctRepresentation system x z) : (∑ i, |first.coefficients i|) = ∑ j, |second.coefficients j|"
+    },
+    {
+      "kind": "theorem",
+      "name": "abs_inner_strictBasis_supportSignCombination_eq_one",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.SuccinctRepresentation.abs_inner_strictBasis_supportSignCombination_eq_one",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 532,
+      "statement": "theorem abs_inner_strictBasis_supportSignCombination_eq_one (first : SuccinctRepresentation system x s) (second : StrictSuccinctRepresentation system x z) (j : Fin z) : |⟪second.toSuccinctRepresentation.basis j, IsSuccinctSupport.supportSignCombination first.basis first.coefficients⟫_ℝ| = 1"
+    },
+    {
+      "kind": "theorem",
+      "name": "strictSize_le",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.SuccinctRepresentation.strictSize_le",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 598,
+      "statement": "theorem strictSize_le (first : SuccinctRepresentation system x s) (second : StrictSuccinctRepresentation system x z) : z ≤ s"
+    },
+    {
+      "kind": "theorem",
+      "name": "abs_coefficient_pos",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.StrictSuccinctRepresentation.abs_coefficient_pos",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 632,
+      "statement": "theorem abs_coefficient_pos (representation : StrictSuccinctRepresentation system x s) (i : Fin s) : 0 < |representation.toSuccinctRepresentation.coefficients i|"
+    },
+    {
+      "kind": "theorem",
+      "name": "succinctSize_ge_strictSize",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.succinctSize_ge_strictSize",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 640,
+      "statement": "theorem succinctSize_ge_strictSize {system : SuccinctUnitSystem V} {x : V} {s z : Nat} (hs : IsSuccinctAt system x s) (hz : IsStrictlySuccinctAt system x z) : z ≤ s"
+    },
+    {
+      "kind": "theorem",
+      "name": "strictlySuccinctSize_unique",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.strictlySuccinctSize_unique",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 649,
+      "statement": "theorem strictlySuccinctSize_unique {system : SuccinctUnitSystem V} {x : V} {s z : Nat} (hs : IsStrictlySuccinctAt system x s) (hz : IsStrictlySuccinctAt system x z) : s = z"
     },
     {
       "kind": "structure",

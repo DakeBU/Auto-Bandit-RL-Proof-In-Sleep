@@ -1,6 +1,6 @@
 # Proof Blueprint: PAPER-AUDIT-NEURIPS-2025-SUCCINCT-LOWER-BOUNDS
 
-Generated: `2026-08-21T17:08:26+00:00`
+Generated: `2026-08-21T19:09:52+00:00`
 
 ## Source Task
 
@@ -55,6 +55,21 @@ regularity in the paper's globally defined dual quantity `R`.
    `R (sum i, a i • E i) = sum_i |a i|`.
 6. Diagnose the global Definition-3.2 boundary: a nonzero vector orthogonal to
    every atom makes the real-valued `R` candidate set unbounded.
+7. Encode source Definition 3.3 as an exact finite representation predicate,
+   with a strict variant requiring every coefficient to be nonzero and the
+   source positivity contract `0 < s` recorded explicitly.
+8. Compile source Lemma 3.3: an `s`-succinct representation and a strictly
+   `z`-succinct representation of the same vector imply `z <= s`.
+9. Compile source Lemma 3.4 by applying Lemma 3.3 in both directions: two
+   strict succinct representations of the same vector have equal sizes.
+
+The active Appendix-A.3 route has three leaves: the sign sum of the first
+support has squared norm `s`; equality of the two local Lemma-3.2 `R`
+formulas plus strict positivity forces every second-support correlation with
+that sign sum to have absolute value one; Mathlib's finite Bessel inequality
+then gives `z <= s`.  This route consumes `sourceR_supportCombination_eq` only
+on the two succinct combinations, so it does not assume or repair a global
+finite value for `R`.
 
 ## Hidden regularity decision
 
@@ -74,7 +89,7 @@ No such repair is silently inserted into Theorem 3.8.
 
 ## Nonclaims
 
-This task does not compile Lemmas 3.3--3.6, Assumption 3.7, Theorem 3.8, any
+This task does not compile Lemmas 3.5--3.6, Assumption 3.7, Theorem 3.8, any
 application theorem in Section 4, or a stochastic-bandit regret endpoint.  It
 does not claim that the source is incorrect: it records an explicit codomain
 and boundedness obligation that must be resolved before the later global
@@ -94,23 +109,30 @@ python tools/bandit.py check
 - [x] The official PDF is hash-frozen at the SHA-256 above.
 - [x] `BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean` compiles.
 - [x] Axiom 3.1, the source-shaped `Q`/`R` definitions, support
-  orthogonality, Lemmas 3.1--3.2 on succinct combinations, and the global
-  `R` boundedness diagnostic have compiled declarations.
-- [x] `Tests/SuccinctLowerBoundPaperAuditCanary.lean` compiles and the four
+  orthogonality, Definition 3.3, Lemmas 3.1--3.4, and the global `R`
+  boundedness diagnostic have 54 compiled named declarations.
+- [x] `Tests/SuccinctLowerBoundPaperAuditCanary.lean` compiles and the seven
   representative theorem prints use only `propext`, `Classical.choice`, and
   `Quot.sound`.
-- [x] `lake build BanditRLProof Tests` completed successfully with 8,846
-  jobs in this isolated worktree.
+- [x] The current 54-declaration extension passed `lake build BanditRLProof
+  Tests` with 8,846 jobs in this isolated worktree.
 - [x] `python tools/bandit.py check` passed after the new files entered the
   candidate Git index; its Python phase ran 196 tests with four platform skips.
 - [x] `python website/scripts/build_site.py --lean-verified` and
-  `python website/scripts/check_site.py` passed with 578 modules, 7,668
-  website-scanner declarations, 85 highlights, and 72 milestones.
-- [ ] Lemmas 3.3--3.6, Assumption 3.7, Theorem 3.8, and every paper-level
+  `python website/scripts/check_site.py` passed with 578 modules, 7,686
+  website-scanner declarations, 86 highlights, and 72 milestones.
+- [ ] Lemmas 3.5--3.6, Assumption 3.7, Theorem 3.8, and every paper-level
   stochastic-bandit regret endpoint remain outside the compiled scope.
 
-The task therefore remains `activePort`: its first geometric slice is
-compiled, while the paper-level lower-bound theorem is blocked on the
+## Completed Definition-3.3 / Lemma-3.3--3.4 leaf
+
+- [x] Definition 3.3 representation and strict-representation predicates.
+- [x] Appendix-A.3 unit-correlation and finite-Bessel cardinality leaf.
+- [x] Lemmas 3.3--3.4 terminal declarations and canary coverage.
+- [ ] Lemmas 3.5--3.6 remain blocked on the separate global-`R` repair.
+
+The task therefore remains `activePort`: Definitions 3.1--3.3 and Lemmas
+3.1--3.4 compile, while the paper-level lower-bound theorem is blocked on the
 explicit global-`R` regularity decision and the later source construction.
 
 
@@ -172,6 +194,24 @@ is bounded above by the coefficient `l1` sum when paired with a succinct
 vector.  The signed sum of support atoms has `Q=1` by Lemma 3.1 and reaches the
 same `l1` sum.
 
+### Definition 3.3 and Lemmas 3.3--3.4
+
+An `s`-succinct representation carries a positive size, an `s`-indexed
+succinct support, coefficients, and an exact equality with the corresponding
+support combination.  The strict form additionally records that every
+coefficient is nonzero.  Distinct strict and non-strict representations may
+use different supports.
+
+For source Lemma 3.3, let `Y` be the sign sum of the `s`-support.  The first
+support's orthonormality gives `‖Y‖^2=s`.  The two local Lemma-3.2 formulas for
+the same vector show equality of the two coefficient `l1` sums.  Since each
+second-support correlation with `Y` is at most one in absolute value, strict
+positivity and equality force every one of them to equal one.  Mathlib's
+`Orthonormal.sum_inner_products_le` then gives `z <= ‖Y‖^2=s`.  Lemma 3.4 is
+the antisymmetric application of this comparison to two strict
+representations.  No ambient spanning or global-`R` finiteness assumption is
+introduced by this route.
+
 ## Global `R` diagnostic
 
 For a nonzero `X` orthogonal to all atoms, Lean proves `Q(r X)=0` for every
@@ -182,18 +222,18 @@ the paper's informal claim that `R` is a globally real-valued seminorm.
 
 ## Compiled local slice
 
-The isolated full gate now compiles the source-shaped atom system, `sourceQ`,
-`sourceR`, the literal succinct-support contract, support orthogonality,
-Lemma 3.1, Lemma 3.2 for succinct combinations together with its local
-boundedness witness, and the nonzero-orthogonal-vector unboundedness
-diagnostic.  These declarations establish only the geometric window above;
-they do not instantiate the paper's stochastic-bandit construction or its
-lower-bound endpoint.
+The isolated gate now compiles 54 named declarations: the source-shaped atom
+system, `sourceQ`, `sourceR`, the literal succinct-support contract, support
+orthogonality, Lemmas 3.1--3.2 for succinct combinations together with the
+local boundedness witness, Definition 3.3's representation predicates,
+Lemmas 3.3--3.4 via the finite Bessel route, and the
+nonzero-orthogonal-vector unboundedness diagnostic.  These declarations
+establish only the geometric window above; they do not instantiate the
+paper's stochastic-bandit construction or its lower-bound endpoint.
 
 ## Remaining source obligations
 
 - choose and justify a global repair for `R` before Lemmas 3.5--3.6;
-- formalize strict-support minimality in Lemmas 3.3--3.4;
 - encode the grouped supports and `Phi_G` geometry of Assumption 3.7;
 - construct the action set and parameter family of Theorem 3.8;
 - instantiate the same-policy history-KL and testing lower-bound chain;
@@ -211,14 +251,18 @@ lower-bound endpoint.
 | `SUCCINCT-LEMMA-3-1-Q-LINF` | `Q(sum a_i E_i)=max |a_i|` | finite `sup'`, triangle inequality, signed atom witness | Appendix A.1 upper bound plus attained maximum | compiled |
 | `SUCCINCT-LEMMA-3-2-R-L1` | `R(sum a_i E_i)=sum |a_i|` | Lemma 3.1, atom symmetry, finite sum algebra | prove the relevant `R` set bounded, then use the signed support sum as a witness | compiled |
 | `SUCCINCT-R-CODOMAIN-DIAGNOSTIC` | expose when the global real-valued `R` set is unbounded | `BddAbove`, scalar multiples, positive real inner self-product | a nonzero vector orthogonal to all atoms gives feasible multiples with unbounded pairing | compiled |
-| `SUCCINCT-LEMMAS-3-3-3-4` | strict-support minimality and uniqueness | orthogonal projection, Cauchy--Schwarz, Lemmas 3.1--3.2 | source Appendix A.3--A.4 after representation API stabilizes | planned |
+| `SUCCINCT-DEFINITION-3-3-REPRESENTATION` | exact `s`-succinct and strict `s`-succinct representations | `MLIB-FINSET-SUMS`, `MLIB-FINTYPE-FIN` | package positive size, support, coefficients, exact combination equality, and coefficient nonvanishing | compiled |
+| `SUCCINCT-LEMMA-3-3-UNIT-CORRELATIONS` | strict second representation forces unit correlations with the first support's sign sum | local Lemma 3.2 twice, strict coefficient positivity, finite nonnegative sum equality | follow Appendix A.3 without consuming global `R` | compiled |
+| `SUCCINCT-LEMMA-3-3-BESSEL` | `s`-succinct plus strictly `z`-succinct implies `z <= s` | `MLIB-CONVEX-LINALG`, `Orthonormal.sum_inner_products_le`, sign-sum norm identity | finite Bessel inequality on the strict support | compiled |
+| `SUCCINCT-LEMMA-3-4-UNIQUENESS` | two strict succinct representations have equal sizes | Lemma 3.3 in both directions | antisymmetry | compiled |
 | `SUCCINCT-LEMMAS-3-5-3-6` | primal/dual inequalities and dual recovery | global `R` repair plus Lemmas 3.1--3.2 | require spanning, extended-real, or span/quotient decision first | blocked |
 | `SUCCINCT-THEOREM-3-8` | general two-regime minimax lower bound | Assumption 3.7 groups, same-policy history KL, testing and regret assembly | exact source construction and constants | blocked |
 
 ## Active leaf contract
 
-- Local APIs/imports: `Mathlib.Analysis.InnerProductSpace.Basic`, real
-  conditionally complete `sSup`, `Finset.sup'`, finite sums, absolute values.
+- Local APIs/imports: `Mathlib.Analysis.InnerProductSpace.Basic`,
+  `Mathlib.Analysis.InnerProductSpace.Orthonormal`, real conditionally complete
+  `sSup`, `Finset.sup'`, finite sums, absolute values.
 - Intended route: preserve the possibly infinite atom set and the paper's exact
   support supremum; prove boundedness wherever `sSup` is consumed.
 - Hidden regularity: the source's displayed real supremum presupposes
@@ -230,15 +274,30 @@ lower-bound endpoint.
 - Mathlib candidacy: the resulting declarations are paper-specific wrappers;
   generic `sSup` and inner-product facts already belong to Mathlib.
 
+### Active Lemma-3.3 leaf contract
+
+- Representation leaf: exact equality to `supportCombination`, `0 < s`, and
+  pointwise coefficient nonvanishing for the strict predicate.
+- Equality leaf: use `sourceR_supportCombination_eq` for each local succinct
+  combination; do not infer a global norm law for `sourceR`.
+- Geometric leaf: derive `Orthonormal ℝ basis` from
+  `inner_basis_basis`, prove the sign-sum squared norm is `s`, and apply
+  `Orthonormal.sum_inner_products_le` to the second support.
+- Terminal leaf: export source-shaped Lemmas 3.3 and 3.4 with distinct support
+  families and explicit size positivity.
+
 ## Verification snapshot
 
 - `lake env lean BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean`: pass.
 - `lake env lean Tests/SuccinctLowerBoundPaperAuditCanary.lean`: pass.
-- `lake build BanditRLProof Tests`: pass, 8,846 jobs.
+- `lake build BanditRLProof Tests`: pass, 8,846 jobs in the current extension
+  worktree.
+- Definition 3.3 and Lemmas 3.3--3.4 add 18 named declarations, taking this
+  module from 36 to 54 declarations in the refreshed local index.
 - Representative theorem axiom reports: `propext`, `Classical.choice`, and
   `Quot.sound` only.
-- Overall paper-audit status: partial.  The five compiled rows above do not
-  promote Lemmas 3.3--3.6 or Theorem 3.8.
+- Overall paper-audit status: partial.  The nine compiled rows above do not
+  promote Lemmas 3.5--3.6 or Theorem 3.8.
 
 
 ## Completion Gap Audit
@@ -54694,7 +54753,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "SuccinctUnitSystem",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-    "line": 30,
+    "line": 33,
     "statement": "structure SuccinctUnitSystem (V : Type*) [NormedAddCommGroup V] [InnerProductSpace \u211d V] where"
   },
   {
@@ -54702,7 +54761,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "sourceQ",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.sourceQ",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-    "line": 42,
+    "line": 45,
     "statement": "def sourceQ (system : SuccinctUnitSystem V) (x : V) : \u211d"
   },
   {
@@ -54710,7 +54769,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "sourceQSet_bddAbove",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.sourceQSet_bddAbove",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-    "line": 45,
+    "line": 48,
     "statement": "theorem sourceQSet_bddAbove (system : SuccinctUnitSystem V) (x : V) : BddAbove ((fun e : V => \u27eax, e\u27eb_\u211d) '' system.atoms)"
   },
   {
@@ -54718,7 +54777,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "le_sourceQ_of_mem",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.le_sourceQ_of_mem",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-    "line": 54,
+    "line": 57,
     "statement": "theorem le_sourceQ_of_mem (system : SuccinctUnitSystem V) {x e : V} (he : e \u2208 system.atoms) : \u27eax, e\u27eb_\u211d \u2264 system.sourceQ x"
   },
   {
@@ -54726,7 +54785,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "sourceQ_le_norm",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.sourceQ_le_norm",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-    "line": 59,
+    "line": 62,
     "statement": "theorem sourceQ_le_norm (system : SuccinctUnitSystem V) (x : V) : system.sourceQ x \u2264 \u2016x\u2016"
   },
   {
@@ -54734,7 +54793,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "sourceQ_nonneg",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.sourceQ_nonneg",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-    "line": 69,
+    "line": 72,
     "statement": "theorem sourceQ_nonneg (system : SuccinctUnitSystem V) (x : V) : 0 \u2264 system.sourceQ x"
   },
   {
@@ -54742,7 +54801,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "sourceQ_zero",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.sourceQ_zero",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-    "line": 80,
+    "line": 83,
     "statement": "theorem sourceQ_zero (system : SuccinctUnitSystem V) : system.sourceQ 0 = 0"
   },
   {
@@ -54750,7 +54809,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "abs_inner_le_sourceQ_of_mem",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.abs_inner_le_sourceQ_of_mem",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-    "line": 85,
+    "line": 88,
     "statement": "theorem abs_inner_le_sourceQ_of_mem (system : SuccinctUnitSystem V) {x e : V} (he : e \u2208 system.atoms) : |\u27eax, e\u27eb_\u211d| \u2264 system.sourceQ x"
   },
   {
@@ -54758,7 +54817,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "sourceQ_eq_zero_of_atom_orthogonal",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.sourceQ_eq_zero_of_atom_orthogonal",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-    "line": 95,
+    "line": 98,
     "statement": "theorem sourceQ_eq_zero_of_atom_orthogonal (system : SuccinctUnitSystem V) {x : V} (horthogonal : \u2200 e \u2208 system.atoms, \u27eax, e\u27eb_\u211d = 0) : system.sourceQ x = 0"
   },
   {
@@ -54766,7 +54825,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "sourceR",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.sourceR",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-    "line": 107,
+    "line": 110,
     "statement": "def sourceR (system : SuccinctUnitSystem V) (x : V) : \u211d"
   },
   {
@@ -54774,7 +54833,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "sourceRSet_not_bddAbove_of_nonzero_atom_orthogonal",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.sourceRSet_not_bddAbove_of_nonzero_atom_orthogonal",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-    "line": 113,
+    "line": 116,
     "statement": "theorem sourceRSet_not_bddAbove_of_nonzero_atom_orthogonal (system : SuccinctUnitSystem V) {x : V} (hx : x \u2260 0) (horthogonal : \u2200 e \u2208 system.atoms, \u27eax, e\u27eb_\u211d = 0) : \u00ac BddAbove ((fun y : V => \u27eax, y\u27eb_\u211d) '' {y | system.sourceQ y \u2264 1})"
   },
   {
@@ -54782,7 +54841,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "IsSuccinctSupport",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-    "line": 139,
+    "line": 142,
     "statement": "structure IsSuccinctSupport (system : SuccinctUnitSystem V) {s : Nat} (basis : Fin s \u2192 V) : Prop where"
   },
   {
@@ -54790,7 +54849,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "correlationSum_le_one",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.correlationSum_le_one",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-    "line": 151,
+    "line": 154,
     "statement": "theorem correlationSum_le_one (support : IsSuccinctSupport system basis) {e : V} (he : e \u2208 system.atoms) : (\u2211 i, |\u27eae, basis i\u27eb_\u211d|) \u2264 1"
   },
   {
@@ -54798,15 +54857,23 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "inner_basis_basis",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.inner_basis_basis",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-    "line": 161,
+    "line": 164,
     "statement": "theorem inner_basis_basis (support : IsSuccinctSupport system basis) (i j : Fin s) : \u27eabasis i, basis j\u27eb_\u211d = if i = j then 1 else 0"
+  },
+  {
+    "kind": "theorem",
+    "name": "orthonormal",
+    "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.orthonormal",
+    "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+    "line": 202,
+    "statement": "theorem orthonormal (support : IsSuccinctSupport system basis) : Orthonormal \u211d basis"
   },
   {
     "kind": "def",
     "name": "maxAbsCoefficient",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.maxAbsCoefficient",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-    "line": 198,
+    "line": 208,
     "statement": "def maxAbsCoefficient [Nonempty (Fin s)] (a : Fin s \u2192 \u211d) : \u211d"
   },
   {
@@ -54814,7 +54881,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "abs_le_maxAbsCoefficient",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.abs_le_maxAbsCoefficient",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-    "line": 201,
+    "line": 211,
     "statement": "theorem abs_le_maxAbsCoefficient [Nonempty (Fin s)] (a : Fin s \u2192 \u211d) (i : Fin s) : |a i| \u2264 maxAbsCoefficient a"
   },
   {
@@ -54822,7 +54889,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "maxAbsCoefficient_nonneg",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.maxAbsCoefficient_nonneg",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-    "line": 205,
+    "line": 215,
     "statement": "theorem maxAbsCoefficient_nonneg [Nonempty (Fin s)] (a : Fin s \u2192 \u211d) : 0 \u2264 maxAbsCoefficient a"
   },
   {
@@ -54830,7 +54897,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "exists_abs_eq_maxAbsCoefficient",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.exists_abs_eq_maxAbsCoefficient",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-    "line": 210,
+    "line": 220,
     "statement": "theorem exists_abs_eq_maxAbsCoefficient [Nonempty (Fin s)] (a : Fin s \u2192 \u211d) : \u2203 i : Fin s, |a i| = maxAbsCoefficient a"
   },
   {
@@ -54838,7 +54905,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "supportCombination",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.supportCombination",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-    "line": 217,
+    "line": 227,
     "statement": "def supportCombination (basis : Fin s \u2192 V) (a : Fin s \u2192 \u211d) : V"
   },
   {
@@ -54846,7 +54913,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "signedSupportAtom",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.signedSupportAtom",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-    "line": 220,
+    "line": 230,
     "statement": "def signedSupportAtom (coefficient : \u211d) (atom : V) : V"
   },
   {
@@ -54854,7 +54921,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "signedSupportAtom_mem",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.signedSupportAtom_mem",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-    "line": 223,
+    "line": 233,
     "statement": "theorem signedSupportAtom_mem (support : IsSuccinctSupport system basis) (a : Fin s \u2192 \u211d) (i : Fin s) : signedSupportAtom (a i) (basis i) \u2208 system.atoms"
   },
   {
@@ -54862,7 +54929,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "sourceQ_supportCombination_le",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.sourceQ_supportCombination_le",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-    "line": 230,
+    "line": 240,
     "statement": "theorem sourceQ_supportCombination_le [Nonempty (Fin s)] (support : IsSuccinctSupport system basis) (a : Fin s \u2192 \u211d) : system.sourceQ (supportCombination basis a) \u2264 maxAbsCoefficient a"
   },
   {
@@ -54870,7 +54937,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "inner_supportCombination_basis",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.inner_supportCombination_basis",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-    "line": 258,
+    "line": 268,
     "statement": "theorem inner_supportCombination_basis (support : IsSuccinctSupport system basis) (a : Fin s \u2192 \u211d) (m : Fin s) : \u27easupportCombination basis a, basis m\u27eb_\u211d = a m"
   },
   {
@@ -54878,7 +54945,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "inner_supportCombination_signedSupportAtom",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.inner_supportCombination_signedSupportAtom",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-    "line": 271,
+    "line": 281,
     "statement": "theorem inner_supportCombination_signedSupportAtom (support : IsSuccinctSupport system basis) (a : Fin s \u2192 \u211d) (m : Fin s) : \u27easupportCombination basis a, signedSupportAtom (a m) (basis m)\u27eb_\u211d = |a m|"
   },
   {
@@ -54886,7 +54953,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "sourceQ_supportCombination_eq",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.sourceQ_supportCombination_eq",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-    "line": 282,
+    "line": 292,
     "statement": "theorem sourceQ_supportCombination_eq [Nonempty (Fin s)] (support : IsSuccinctSupport system basis) (a : Fin s \u2192 \u211d) : system.sourceQ (supportCombination basis a) = maxAbsCoefficient a"
   },
   {
@@ -54894,7 +54961,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "coefficientSign",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.coefficientSign",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-    "line": 295,
+    "line": 305,
     "statement": "def coefficientSign (coefficient : \u211d) : \u211d"
   },
   {
@@ -54902,7 +54969,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "abs_coefficientSign",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.abs_coefficientSign",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-    "line": 299,
+    "line": 309,
     "statement": "theorem abs_coefficientSign (coefficient : \u211d) : |coefficientSign coefficient| = 1"
   },
   {
@@ -54910,15 +54977,31 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "coefficientSign_mul",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.coefficientSign_mul",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-    "line": 302,
+    "line": 312,
     "statement": "theorem coefficientSign_mul (coefficient : \u211d) : coefficientSign coefficient * coefficient = |coefficient|"
+  },
+  {
+    "kind": "theorem",
+    "name": "coefficientSign_coefficientSign",
+    "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.coefficientSign_coefficientSign",
+    "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+    "line": 320,
+    "statement": "theorem coefficientSign_coefficientSign (coefficient : \u211d) : coefficientSign (coefficientSign coefficient) = coefficientSign coefficient"
+  },
+  {
+    "kind": "theorem",
+    "name": "coefficientSign_mul_self",
+    "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.coefficientSign_mul_self",
+    "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+    "line": 327,
+    "statement": "theorem coefficientSign_mul_self (coefficient : \u211d) : coefficientSign coefficient * coefficientSign coefficient = 1"
   },
   {
     "kind": "def",
     "name": "supportSignCombination",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.supportSignCombination",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-    "line": 309,
+    "line": 331,
     "statement": "def supportSignCombination (basis : Fin s \u2192 V) (a : Fin s \u2192 \u211d) : V"
   },
   {
@@ -54926,7 +55009,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "maxAbsCoefficient_coefficientSign",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.maxAbsCoefficient_coefficientSign",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-    "line": 312,
+    "line": 334,
     "statement": "theorem maxAbsCoefficient_coefficientSign [Nonempty (Fin s)] (a : Fin s \u2192 \u211d) : maxAbsCoefficient (fun i => coefficientSign (a i)) = 1"
   },
   {
@@ -54934,15 +55017,23 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "sourceQ_supportSignCombination",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.sourceQ_supportSignCombination",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-    "line": 316,
+    "line": 338,
     "statement": "theorem sourceQ_supportSignCombination [Nonempty (Fin s)] (support : IsSuccinctSupport system basis) (a : Fin s \u2192 \u211d) : system.sourceQ (supportSignCombination basis a) = 1"
+  },
+  {
+    "kind": "theorem",
+    "name": "norm_sq_supportSignCombination",
+    "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.norm_sq_supportSignCombination",
+    "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+    "line": 346,
+    "statement": "theorem norm_sq_supportSignCombination [Nonempty (Fin s)] (support : IsSuccinctSupport system basis) (a : Fin s \u2192 \u211d) : \u2016supportSignCombination basis a\u2016 ^ 2 = (s : \u211d)"
   },
   {
     "kind": "theorem",
     "name": "inner_supportCombination_supportSignCombination",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.inner_supportCombination_supportSignCombination",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-    "line": 322,
+    "line": 359,
     "statement": "theorem inner_supportCombination_supportSignCombination (support : IsSuccinctSupport system basis) (a : Fin s \u2192 \u211d) : \u27easupportCombination basis a, supportSignCombination basis a\u27eb_\u211d = \u2211 i, |a i|"
   },
   {
@@ -54950,7 +55041,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "inner_supportCombination_le_sumAbs_mul_sourceQ",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.inner_supportCombination_le_sumAbs_mul_sourceQ",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-    "line": 341,
+    "line": 378,
     "statement": "theorem inner_supportCombination_le_sumAbs_mul_sourceQ (support : IsSuccinctSupport system basis) (a : Fin s \u2192 \u211d) (y : V) : |\u27easupportCombination basis a, y\u27eb_\u211d| \u2264 (\u2211 i, |a i|) * system.sourceQ y"
   },
   {
@@ -54958,7 +55049,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "inner_supportCombination_le_sumAbs_of_sourceQ_le_one",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.inner_supportCombination_le_sumAbs_of_sourceQ_le_one",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-    "line": 363,
+    "line": 400,
     "statement": "theorem inner_supportCombination_le_sumAbs_of_sourceQ_le_one (support : IsSuccinctSupport system basis) (a : Fin s \u2192 \u211d) {y : V} (hy : system.sourceQ y \u2264 1) : \u27easupportCombination basis a, y\u27eb_\u211d \u2264 \u2211 i, |a i|"
   },
   {
@@ -54966,7 +55057,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "sourceRSet_bddAbove",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.sourceRSet_bddAbove",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-    "line": 376,
+    "line": 413,
     "statement": "theorem sourceRSet_bddAbove (support : IsSuccinctSupport system basis) (a : Fin s \u2192 \u211d) : BddAbove ((fun y : V => \u27easupportCombination basis a, y\u27eb_\u211d) '' {y | system.sourceQ y \u2264 1})"
   },
   {
@@ -54974,8 +55065,120 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "sourceR_supportCombination_eq",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.sourceR_supportCombination_eq",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
-    "line": 386,
+    "line": 423,
     "statement": "theorem sourceR_supportCombination_eq [Nonempty (Fin s)] (support : IsSuccinctSupport system basis) (a : Fin s \u2192 \u211d) : system.sourceR (supportCombination basis a) = \u2211 i, |a i|"
+  },
+  {
+    "kind": "structure",
+    "name": "SuccinctRepresentation",
+    "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.SuccinctRepresentation",
+    "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+    "line": 447,
+    "statement": "structure SuccinctRepresentation (system : SuccinctUnitSystem V) (x : V) (s : Nat) where"
+  },
+  {
+    "kind": "structure",
+    "name": "StrictSuccinctRepresentation",
+    "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.StrictSuccinctRepresentation",
+    "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+    "line": 457,
+    "statement": "structure StrictSuccinctRepresentation (system : SuccinctUnitSystem V) (x : V) (s : Nat) extends SuccinctRepresentation system x s where"
+  },
+  {
+    "kind": "def",
+    "name": "IsSuccinctAt",
+    "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctAt",
+    "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+    "line": 463,
+    "statement": "def IsSuccinctAt (system : SuccinctUnitSystem V) (x : V) (s : Nat) : Prop"
+  },
+  {
+    "kind": "def",
+    "name": "IsStrictlySuccinctAt",
+    "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsStrictlySuccinctAt",
+    "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+    "line": 468,
+    "statement": "def IsStrictlySuccinctAt (system : SuccinctUnitSystem V) (x : V) (s : Nat) : Prop"
+  },
+  {
+    "kind": "theorem",
+    "name": "sourceR_eq_sumAbs",
+    "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.SuccinctRepresentation.sourceR_eq_sumAbs",
+    "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+    "line": 475,
+    "statement": "theorem sourceR_eq_sumAbs (representation : SuccinctRepresentation system x s) : system.sourceR x = \u2211 i, |representation.coefficients i|"
+  },
+  {
+    "kind": "theorem",
+    "name": "inner_supportSignCombination_eq_sumAbs",
+    "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.SuccinctRepresentation.inner_supportSignCombination_eq_sumAbs",
+    "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+    "line": 486,
+    "statement": "theorem inner_supportSignCombination_eq_sumAbs (representation : SuccinctRepresentation system x s) : \u27eax, IsSuccinctSupport.supportSignCombination representation.basis representation.coefficients\u27eb_\u211d = \u2211 i, |representation.coefficients i|"
+  },
+  {
+    "kind": "theorem",
+    "name": "sourceQ_supportSignCombination_eq_one",
+    "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.SuccinctRepresentation.sourceQ_supportSignCombination_eq_one",
+    "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+    "line": 505,
+    "statement": "theorem sourceQ_supportSignCombination_eq_one (representation : SuccinctRepresentation system x s) : system.sourceQ (IsSuccinctSupport.supportSignCombination representation.basis representation.coefficients) = 1"
+  },
+  {
+    "kind": "theorem",
+    "name": "norm_sq_supportSignCombination_eq_size",
+    "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.SuccinctRepresentation.norm_sq_supportSignCombination_eq_size",
+    "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+    "line": 512,
+    "statement": "theorem norm_sq_supportSignCombination_eq_size (representation : SuccinctRepresentation system x s) : \u2016IsSuccinctSupport.supportSignCombination representation.basis representation.coefficients\u2016 ^ 2 = (s : \u211d)"
+  },
+  {
+    "kind": "theorem",
+    "name": "sumAbs_eq",
+    "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.SuccinctRepresentation.sumAbs_eq",
+    "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+    "line": 521,
+    "statement": "theorem sumAbs_eq (first : SuccinctRepresentation system x s) (second : SuccinctRepresentation system x z) : (\u2211 i, |first.coefficients i|) = \u2211 j, |second.coefficients j|"
+  },
+  {
+    "kind": "theorem",
+    "name": "abs_inner_strictBasis_supportSignCombination_eq_one",
+    "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.SuccinctRepresentation.abs_inner_strictBasis_supportSignCombination_eq_one",
+    "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+    "line": 532,
+    "statement": "theorem abs_inner_strictBasis_supportSignCombination_eq_one (first : SuccinctRepresentation system x s) (second : StrictSuccinctRepresentation system x z) (j : Fin z) : |\u27easecond.toSuccinctRepresentation.basis j, IsSuccinctSupport.supportSignCombination first.basis first.coefficients\u27eb_\u211d| = 1"
+  },
+  {
+    "kind": "theorem",
+    "name": "strictSize_le",
+    "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.SuccinctRepresentation.strictSize_le",
+    "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+    "line": 598,
+    "statement": "theorem strictSize_le (first : SuccinctRepresentation system x s) (second : StrictSuccinctRepresentation system x z) : z \u2264 s"
+  },
+  {
+    "kind": "theorem",
+    "name": "abs_coefficient_pos",
+    "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.StrictSuccinctRepresentation.abs_coefficient_pos",
+    "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+    "line": 632,
+    "statement": "theorem abs_coefficient_pos (representation : StrictSuccinctRepresentation system x s) (i : Fin s) : 0 < |representation.toSuccinctRepresentation.coefficients i|"
+  },
+  {
+    "kind": "theorem",
+    "name": "succinctSize_ge_strictSize",
+    "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.succinctSize_ge_strictSize",
+    "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+    "line": 640,
+    "statement": "theorem succinctSize_ge_strictSize {system : SuccinctUnitSystem V} {x : V} {s z : Nat} (hs : IsSuccinctAt system x s) (hz : IsStrictlySuccinctAt system x z) : z \u2264 s"
+  },
+  {
+    "kind": "theorem",
+    "name": "strictlySuccinctSize_unique",
+    "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.strictlySuccinctSize_unique",
+    "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+    "line": 649,
+    "statement": "theorem strictlySuccinctSize_unique {system : SuccinctUnitSystem V} {x : V} {s z : Nat} (hs : IsStrictlySuccinctAt system x s) (hz : IsStrictlySuccinctAt system x z) : s = z"
   },
   {
     "kind": "structure",

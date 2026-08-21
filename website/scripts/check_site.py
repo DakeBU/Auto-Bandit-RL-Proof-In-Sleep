@@ -563,7 +563,7 @@ def main() -> int:
     for required in (
         "A Novel General Framework for Sharp Lower Bounds in Succinct Stochastic Bandits",
         "physical PDF pp. 4–5",
-        "Definitions 3.1–3.2 and Lemmas 3.1–3.2",
+        "Definitions 3.1–3.3 and Lemmas 3.1–3.4",
     ):
         if required not in frontier_source:
             errors.append(f"Frontier reading guide is missing succinct source metadata: {required}")

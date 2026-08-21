@@ -195,7 +195,7 @@ class AnonymousSupplementTests(unittest.TestCase):
         )
         self.assertEqual(succinct_row["status"], "partial")
         self.assertEqual(succinct_row["source_record_ids"], [BUILDER.SUCCINCT_AUDIT_ID])
-        self.assertEqual(ledger["succinct_geometry"]["declaration_count"], 36)
+        self.assertEqual(ledger["succinct_geometry"]["declaration_count"], 54)
         self.assertFalse(ledger["succinct_geometry"]["paper_endpoint_verified"])
         self.assertEqual(
             ledger["source_records"][BUILDER.SUCCINCT_AUDIT_ID]["status"],

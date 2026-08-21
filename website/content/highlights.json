@@ -1166,6 +1166,23 @@
       ]
     },
     {
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.succinctSize_ge_strictSize",
+      "chapter": "frontier",
+      "plain": "If one representation of X uses s succinct atoms and another is strictly z-succinct, then z is at most s.",
+      "math": "\\(X\\text{ is }s\\text{-succinct and strictly }z\\text{-succinct}\\Longrightarrow z\\le s.\\)",
+      "intuition": "Strict nonzero coefficients prevent any direction in the second support from being hidden. Equality of the local R values forces unit correlations with one signed support combination, and finite Bessel bounds how many orthonormal strict-support atoms can all attain correlation one.",
+      "why": "This is the compiled source-shaped content of Zeng--Honorio Lemma 3.3. Together with its two-direction consumer for Lemma 3.4, it makes strict succinct representation size intrinsic.",
+      "position": "Definitions 3.1--3.3 and Lemmas 3.1--3.4 now compile. The result does not repair the paper's globally real-valued R interface or prove Lemmas 3.5--3.6, Assumption 3.7, Theorem 3.8, or a regret bound.",
+      "proof_idea": "Build the signed support combination for the first representation, identify its squared norm with s, show every strict-support basis vector has absolute inner product one, and apply the finite Bessel inequality to obtain z <= s.",
+      "lean_notes": "The proof uses Mathlib's finite Orthonormal.sum_inner_products_le. It needs neither a spanning assumption nor an ambient dimension bound because the argument is confined to two finite representations.",
+      "dependencies": [
+        "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.SuccinctRepresentation.sumAbs_eq",
+        "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.SuccinctRepresentation.abs_inner_strictBasis_supportSignCombination_eq_one",
+        "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.orthonormal",
+        "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.SuccinctRepresentation.norm_sq_supportSignCombination_eq_size"
+      ]
+    },
+    {
       "full_name": "BanditRLProof.LowerBounds.randomRegret_ge_quarter_of_clippingDecomposition",
       "chapter": "foundations",
       "plain": "If Eq. (17.8) holds, pulling the hard arm at most half the time and clipping at most a quarter of rounds forces random regret at least gap times horizon over four.",
