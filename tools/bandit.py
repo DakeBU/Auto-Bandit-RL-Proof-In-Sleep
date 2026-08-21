@@ -718,7 +718,7 @@ BANDIT_PAPER_CARDS = [
         "scenarios": ["SCN-STOCHASTIC-FINITE"],
         "proof_roots": ["stochastic gradient bandit", "learning-rate threshold", "logarithmic/polynomial regret regimes"],
         "lean_leaf_families": ["softmax policy update", "expected parameter increment", "failure-regret decomposition", "learning-rate regime contract"],
-        "memory_status": "source-frozen-reserve",
+        "memory_status": "source-frozen-partial",
     },
 ]
 

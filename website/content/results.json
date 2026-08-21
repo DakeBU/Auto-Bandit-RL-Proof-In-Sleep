@@ -1301,6 +1301,48 @@
       "evidence": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean; Tests/SuccinctLowerBoundPaperAuditCanary.lean; tasks/PAPER-AUDIT-NEURIPS-2025-SUCCINCT-LOWER-BOUNDS.md; proof-obligations/PAPER-AUDIT-NEURIPS-2025-SUCCINCT-LOWER-BOUNDS.md"
     },
     {
+      "id": "NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT-MECHANISM-AUDIT",
+      "title": "Source-frozen stochastic-gradient-bandit mechanism audit",
+      "chapter": "frontier",
+      "status": "partial",
+      "informal": "The exact Baudry--Johnson--Vary--Pike-Burke--Rebeschini NeurIPS 2025 source is hash-frozen. Twenty-six named declarations compile the finite-action, history-conditioned algebra underlying Algorithm 1 and Equations (3)--(7): softmax positivity and normalization, the selected/nonselected parameter update, its zero-sum invariant, the exact finite conditional-mean increment in policy-value and gap coordinates, the best-arm cumulative minimum-gap lower bound, and the post-convergence plus squared-failure-mass regret decomposition. The finite weighted sum is the source algebra after fixing a pre-action history; it is not a recursive stochastic history or conditional-expectation theorem. The SGB trajectory kernel, reward-law measurability, learning-rate thresholds, and Theorems 1--4 remain uncompiled.",
+      "declarations": [
+        "BanditRLProof.StochasticGradientBandit.softmaxDenominator",
+        "BanditRLProof.StochasticGradientBandit.softmaxProbability",
+        "BanditRLProof.StochasticGradientBandit.softmaxDenominator_pos",
+        "BanditRLProof.StochasticGradientBandit.softmaxProbability_pos",
+        "BanditRLProof.StochasticGradientBandit.softmaxProbability_nonneg",
+        "BanditRLProof.StochasticGradientBandit.softmaxProbability_sum",
+        "BanditRLProof.StochasticGradientBandit.softmaxProbability_le_one",
+        "BanditRLProof.StochasticGradientBandit.sourceIncrement",
+        "BanditRLProof.StochasticGradientBandit.sourceIncrement_eq_indicator",
+        "BanditRLProof.StochasticGradientBandit.sum_sourceIncrement",
+        "BanditRLProof.StochasticGradientBandit.policyValue",
+        "BanditRLProof.StochasticGradientBandit.expectedSourceIncrement",
+        "BanditRLProof.StochasticGradientBandit.expectedSourceIncrement_eq_gradientCoordinate",
+        "BanditRLProof.StochasticGradientBandit.instantaneousGap",
+        "BanditRLProof.StochasticGradientBandit.instantaneousGap_eq_bestMean_sub_policyValue",
+        "BanditRLProof.StochasticGradientBandit.expectedSourceIncrement_eq_gapCoordinate",
+        "BanditRLProof.StochasticGradientBandit.gapExpectedIncrement",
+        "BanditRLProof.StochasticGradientBandit.expectedSourceIncrement_eq_gapExpectedIncrement",
+        "BanditRLProof.StochasticGradientBandit.instantaneousGap_ge_minGap_mul_failureMass",
+        "BanditRLProof.StochasticGradientBandit.gapExpectedIncrement_best_ge",
+        "BanditRLProof.StochasticGradientBandit.bestParameterIncrementSum",
+        "BanditRLProof.StochasticGradientBandit.bestParameterIncrementSum_ge",
+        "BanditRLProof.StochasticGradientBandit.sourceExpectedPseudoRegret",
+        "BanditRLProof.StochasticGradientBandit.instantaneousGap_le_maxGap_mul_failureMass",
+        "BanditRLProof.StochasticGradientBandit.failureMass_eq_successFailure_add_sq",
+        "BanditRLProof.StochasticGradientBandit.sourceRegretDecomposition_le"
+      ],
+      "depends_on": [],
+      "missing": [
+        "A recursive history-dependent SGB parameter state and measurable softmax action kernel on one generated trajectory law.",
+        "The conditional-reward-mean bridge identifying the compiled finite sum with the history conditional expectation.",
+        "The two-arm and general-K learning-rate thresholds, failure-probability analysis, and every logarithmic or polynomial regret endpoint in Theorems 1--4."
+      ],
+      "evidence": "BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean; Tests/StochasticGradientBanditPaperAuditCanary.lean; tasks/PAPER-AUDIT-NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT.md; proof-obligations/PAPER-AUDIT-NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT.md"
+    },
+    {
       "id": "TARGET-DRIFT-V2-CONTROLLED-EVALUATION",
       "title": "Balanced target-drift controlled evaluation",
       "chapter": "frontier",

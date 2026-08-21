@@ -1183,6 +1183,37 @@
       ]
     },
     {
+      "full_name": "BanditRLProof.StochasticGradientBandit.expectedSourceIncrement_eq_gapCoordinate",
+      "chapter": "frontier",
+      "plain": "After fixing the pre-action history, the expected SGB update of coordinate k is its sampling probability times instantaneous expected gap minus that arm's gap.",
+      "math": "\\(\\mathbb E_t[\\delta\\theta_{k,t}]=p_{k,t}(\\mathbb E_t[\\Delta_{A_t}]-\\Delta_k).\\)",
+      "intuition": "A coordinate grows only when its arm's gap is smaller than the policy's current average gap. The softmax probability scales how strongly that comparison affects the coordinate.",
+      "why": "This is Equation (5), the main bridge from Algorithm 1's reward update to the regret-oriented analysis used throughout the paper.",
+      "position": "The finite conditional-mean algebra is compiled. Constructing the recursive history law and proving the corresponding conditional-expectation identity on that law remain open.",
+      "proof_idea": "Split the finite expectation over the selected arm, simplify the selected and nonselected update cases, and rewrite weighted arm means using gap_k = bestMean - mean_k and total probability one.",
+      "lean_notes": "The declaration deliberately consumes a finite probability vector, arm means, and an explicit mean-gap equality. It neither assumes nor constructs an SGB trajectory kernel.",
+      "dependencies": [
+        "BanditRLProof.StochasticGradientBandit.expectedSourceIncrement_eq_gradientCoordinate",
+        "BanditRLProof.StochasticGradientBandit.instantaneousGap_eq_bestMean_sub_policyValue"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.StochasticGradientBandit.sourceRegretDecomposition_le",
+      "chapter": "frontier",
+      "plain": "Under explicit positive minimum-gap and maximum-gap envelopes, finite expected pseudo-regret is bounded by a best-parameter post-convergence term plus squared failure mass.",
+      "math": "\\(R_T\\le \\frac{\\Delta_{\\max}}{\\eta\\Delta}\\,\\Theta_{1,T+1}+\\Delta_{\\max}\\sum_{t<T}(1-p_{1,t})^2.\\)",
+      "intuition": "The identity 1-p = p(1-p)+(1-p)^2 separates rounds where the best coordinate can accumulate useful drift from trajectories that keep too much probability away from the best arm.",
+      "why": "This is the deterministic mechanism behind Equation (7) and makes the paper's later learning-rate question visible as a separate failure-mass problem.",
+      "position": "The source-shaped finite decomposition compiles. No bound on the squared failure mass, no logarithmic or polynomial rate, and none of Theorems 1--4 is claimed.",
+      "proof_idea": "Upper-bound each instantaneous gap by DeltaMax times failure mass, lower-bound the best-coordinate increment using the minimum gap, split failure mass algebraically, and divide only after proving eta*Delta positive.",
+      "lean_notes": "Theta is represented by the finite sum of history-conditioned expected best-coordinate increments. A later trajectory theorem must identify it with the actual expected recursive parameter.",
+      "dependencies": [
+        "BanditRLProof.StochasticGradientBandit.bestParameterIncrementSum_ge",
+        "BanditRLProof.StochasticGradientBandit.instantaneousGap_le_maxGap_mul_failureMass",
+        "BanditRLProof.StochasticGradientBandit.failureMass_eq_successFailure_add_sq"
+      ]
+    },
+    {
       "full_name": "BanditRLProof.LowerBounds.randomRegret_ge_quarter_of_clippingDecomposition",
       "chapter": "foundations",
       "plain": "If Eq. (17.8) holds, pulling the hard arm at most half the time and clipping at most a quarter of rounds forces random regret at least gap times horizon over four.",

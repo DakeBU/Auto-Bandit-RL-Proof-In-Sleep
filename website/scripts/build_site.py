@@ -41,7 +41,7 @@ PAPER_TITLE = (
 PRIMARY_TEXTBOOK_TITLE = "Bandit Algorithms"
 PRIMARY_TEXTBOOK_AUTHORS = "Tor Lattimore and Csaba Szepesvári"
 PRIMARY_TEXTBOOK_URL = "https://tor-lattimore.com/downloads/book/book.pdf"
-ASSET_VERSION = "20260816a"
+ASSET_VERSION = "20260822a"
 SOURCE_BRANCH = "main"
 PUBLIC_BASE_URL = ""
 PUBLIC_SNAPSHOT_BASE_URL = ""
@@ -1013,6 +1013,7 @@ def build_textbook_spine(
 def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[str, Any]) -> str:
     primary = reading["primary"]
     companion = reading.get("companion")
+    companions = ([companion] if companion else []) + reading.get("companions", [])
 
     def source_card(source: dict[str, str], label: str) -> str:
         return f"""
@@ -1025,8 +1026,8 @@ def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[
 </article>"""
 
     sources = source_card(primary, f"Primary spine · {primary['edition']}")
-    if companion:
-        sources += source_card(companion, "Algorithm-specific companion")
+    for companion_source in companions:
+        sources += source_card(companion_source, "Algorithm-specific companion")
 
     algorithm = reading["algorithm"]
     steps = "".join(
@@ -1053,7 +1054,7 @@ def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[
   <p class="eyebrow">Textbook crosswalk</p>
   <h2>Read the mathematics before the Lean interface</h2>
   <p class="section-intro">The Book Map is a curated formalization curriculum anchored in <em>Bandit Algorithms</em>, not a chapter-for-chapter reproduction of one book. Page numbers below use its free online edition; companion papers cover algorithm-specific results.</p>
-  <div class="source-grid">{sources}</div>
+  <div class="source-grid source-grid-{len(companions) + 1}">{sources}</div>
   <div class="algorithm-panel">
     <div><span class="panel-kicker">{html.escape(algorithm['kind'])}</span><h3>{html.escape(algorithm['title'])}</h3></div>
     <ol class="algorithm-flow">{steps}</ol>
@@ -2626,6 +2627,9 @@ def validate_readings(chapters: list[dict[str, Any]], readings: list[dict[str, A
     for reading in readings:
         if not reading.get("primary", {}).get("url"):
             raise SystemExit(f"reading {reading['slug']} lacks a primary source URL")
+        companions = ([reading["companion"]] if reading.get("companion") else []) + reading.get("companions", [])
+        if any(not source.get("url") for source in companions):
+            raise SystemExit(f"reading {reading['slug']} has a companion without a source URL")
         if not reading.get("algorithm", {}).get("steps"):
             raise SystemExit(f"reading {reading['slug']} lacks an algorithm or proof flow")
         theorem = reading.get("source_theorem")

@@ -320,15 +320,24 @@
         "pages": "physical PDF pp. 4–5 and 11–12",
         "url": "https://proceedings.neurips.cc/paper_files/paper/2025/file/26407588dfb08e48c459c074ab6adb7d-Paper-Conference.pdf"
       },
+      "companions": [
+        {
+          "title": "Does Stochastic Gradient really succeed for Bandits?",
+          "authors": "Dorian Baudry, Emmeran Johnson, Simon Vary, Ciara Pike-Burke, and Patrick Rebeschini",
+          "sections": "Section 1.2, Equations (3)--(7), and Appendix A.1",
+          "pages": "physical PDF pp. 2--3 and 22",
+          "url": "https://proceedings.neurips.cc/paper_files/paper/2025/file/a4e683f0ce6b91e7fbdae9d32642d88f-Paper-Conference.pdf"
+        }
+      ],
       "algorithm": {
-        "title": "How an open theorem becomes a contribution",
-        "kind": "contribution flow",
+        "title": "Stochastic Gradient Bandit (Algorithm 1)",
+        "kind": "source algorithm",
         "steps": [
-          {"title": "Fix the mathematical target", "detail": "Record the exact source, assumptions, constants, and intended Lean signature."},
-          {"title": "Retrieve before proving", "detail": "Search BanditRLlib, Mathlib, LML theorem cards, and paper/textbook evidence without upgrading cards to proofs."},
-          {"title": "Split a proof leaf", "detail": "Choose one narrow obligation with a clear compile gate and explicit dependencies."},
-          {"title": "Compile and review", "detail": "Only a passing local Lean gate plus review can promote the leaf to compiled status."},
-          {"title": "Publish the boundary", "detail": "Synchronize the declaration index, teaching note, dependencies, and remaining gaps."}
+          {"title": "Initialize θ", "detail": "Set θₖ,₁ = 0; the initial action law is uniform."},
+          {"title": "Softmax law", "detail": "Set pₖ,ₜ proportional to exp(θₖ,ₜ) over the finite arms."},
+          {"title": "Sample reward", "detail": "Draw Aₜ from pₜ and observe the selected arm's reward rₜ."},
+          {"title": "Update θ", "detail": "Add η rₜ(1{Aₜ = k} − pₖ,ₜ) to every coordinate."},
+          {"title": "Split regret", "detail": "Expected gap increments plus failure mass yield the finite-horizon bound."}
         ]
       },
       "source_theorem": {

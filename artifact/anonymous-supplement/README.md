@@ -21,7 +21,8 @@ were screened.
   `lakefile.lean`, and `lake-manifest.json`.
 - `BanditRLProof/` and `BanditRLProof.lean` contain the submitted Lean library.
 - `Tests/` contains focused public canaries, including the delayed-feedback,
-  textbook lower-bound, random-time RL, ETC, and curvature--noise--gap routes.
+  succinct-support, stochastic-gradient-bandit, textbook lower-bound,
+  random-time RL, ETC, and curvature--noise--gap routes.
 - `evidence/claim-ledger.json` records compiled, partial, blocked, prototype,
   and planned boundaries without promoting an open theorem.
 - `evidence/local_lean_declarations.json` is the packaged declaration index.
@@ -64,6 +65,16 @@ outside the atom-generated directions.  This is a regularity/codomain
 obligation, not a source-error claim; the global Lemmas 3.5--3.6, Assumption
 3.7, Theorem 3.8, and every regret endpoint remain outside the compiled slice.
 
+The independent stochastic-gradient-bandit audit contains 26 named
+declarations for the finite-action, history-conditioned algebra underlying
+Algorithm 1 and Equations (3)--(7): softmax normalization, the zero-sum
+parameter update, the exact
+finite conditional-mean increment, the best-coordinate minimum-gap lower
+bound, and the post-convergence/failure-mass decomposition.  This is the
+source algebra after fixing a pre-action history, not a recursive stochastic
+history or conditional-expectation theorem.  The learning-rate regimes and
+Theorems 1--4 remain outside the compiled slice.
+
 ## Quick verification
 
 Use a short extraction path on Windows.  Network access is needed only on the
@@ -82,6 +93,7 @@ lake env lean Tests/TextbookPartIVChapter15Canary.lean
 lake env lean Tests/TextbookPartIVChapter16Canary.lean
 lake env lean Tests/TextbookPartIVChapter17Canary.lean
 lake env lean Tests/SuccinctLowerBoundPaperAuditCanary.lean
+lake env lean Tests/StochasticGradientBanditPaperAuditCanary.lean
 python -m unittest tools/test_proof_graph_lab.py
 ```
 
