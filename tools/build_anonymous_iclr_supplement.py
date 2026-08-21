@@ -52,17 +52,28 @@ PUBLIC_ISOLATION_CANDIDATE_RUN_URL = (
     "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/"
     "actions/runs/32419343467"
 )
+PUBLIC_AGENT_LIFECYCLE_RUN_ID = "32436339541"
+PUBLIC_AGENT_LIFECYCLE_RUN_URL = (
+    "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/"
+    "actions/runs/32436339541"
+)
 PUBLIC_CANDIDATE_RECORD = (
     "evaluation/target-drift-v2/checker-image-candidate-32137509103.json"
 )
 PUBLIC_ISOLATION_CANDIDATE_RECORD = (
     "evaluation/target-drift-v2/checker-image-candidate-32419343467.json"
 )
+PUBLIC_AGENT_LIFECYCLE_RECORD = (
+    "evaluation/target-drift-v2/agent-lifecycle-candidate-32436339541.json"
+)
 ANONYMOUS_CANDIDATE_RECORD = (
     "evaluation/target-drift-v2/checker-image-candidate-record.json"
 )
 ANONYMOUS_ISOLATION_CANDIDATE_RECORD = (
     "evaluation/target-drift-v2/checker-image-isolation-candidate-record.json"
+)
+ANONYMOUS_AGENT_LIFECYCLE_RECORD = (
+    "evaluation/target-drift-v2/agent-lifecycle-candidate-record.json"
 )
 
 DELAYED_IMPLEMENTATION_IDS = (
@@ -155,6 +166,7 @@ TARGET_DRIFT_PROTOCOL_FILES = (
     "evaluation/target-drift-v2/agent-sandbox-contract.json",
     PUBLIC_CANDIDATE_RECORD,
     PUBLIC_ISOLATION_CANDIDATE_RECORD,
+    PUBLIC_AGENT_LIFECYCLE_RECORD,
     "evaluation/target-drift-v2/checker-image-sbom.template.json",
     "evaluation/target-drift-v2/checker-image.Containerfile",
     "evaluation/target-drift-v2/checker-isolation-probe.excluded-fixture.json",
@@ -418,16 +430,36 @@ def anonymize_evaluation_bytes(rel, data, anonymous_reference):
             "checker-image-candidate-32419343467.json",
             "checker-image-isolation-candidate-record.json",
         )
-    if rel in (PUBLIC_CANDIDATE_RECORD, PUBLIC_ISOLATION_CANDIDATE_RECORD):
+        text = text.replace(
+            "GitHub Actions [run {}]({})".format(
+                PUBLIC_AGENT_LIFECYCLE_RUN_ID,
+                PUBLIC_AGENT_LIFECYCLE_RUN_URL,
+            ),
+            "A public result-free agent lifecycle candidate run "
+            "(run metadata redacted)",
+        )
+        text = text.replace(
+            "agent-lifecycle-candidate-32436339541.json",
+            "agent-lifecycle-candidate-record.json",
+        )
+    candidate_records = {
+        PUBLIC_CANDIDATE_RECORD: (
+            PUBLIC_CANDIDATE_RUN_ID, PUBLIC_CANDIDATE_RUN_URL,
+        ),
+        PUBLIC_ISOLATION_CANDIDATE_RECORD: (
+            PUBLIC_ISOLATION_CANDIDATE_RUN_ID,
+            PUBLIC_ISOLATION_CANDIDATE_RUN_URL,
+        ),
+        PUBLIC_AGENT_LIFECYCLE_RECORD: (
+            PUBLIC_AGENT_LIFECYCLE_RUN_ID, PUBLIC_AGENT_LIFECYCLE_RUN_URL,
+        ),
+    }
+    if rel in candidate_records:
         candidate = json.loads(text)
         workflow_run = candidate.get("workflow_run")
         if not isinstance(workflow_run, dict):
             raise ValueError("candidate build record is missing workflow metadata")
-        expected_run_id, expected_run_url = (
-            (PUBLIC_CANDIDATE_RUN_ID, PUBLIC_CANDIDATE_RUN_URL)
-            if rel == PUBLIC_CANDIDATE_RECORD else
-            (PUBLIC_ISOLATION_CANDIDATE_RUN_ID, PUBLIC_ISOLATION_CANDIDATE_RUN_URL)
-        )
+        expected_run_id, expected_run_url = candidate_records[rel]
         if str(workflow_run.get("id")) != expected_run_id:
             raise ValueError("candidate build run identifier changed")
         if workflow_run.get("url") != expected_run_url:
@@ -646,6 +678,8 @@ def build_payload(proof_graph=None, proof_report_path=None, allow_missing_graph=
             destination = ANONYMOUS_CANDIDATE_RECORD
         elif rel == PUBLIC_ISOLATION_CANDIDATE_RECORD:
             destination = ANONYMOUS_ISOLATION_CANDIDATE_RECORD
+        elif rel == PUBLIC_AGENT_LIFECYCLE_RECORD:
+            destination = ANONYMOUS_AGENT_LIFECYCLE_RECORD
         add_payload(payload, destination, data)
     for rel in TARGET_DRIFT_WORKFLOW_FILES:
         if rel not in tracked:

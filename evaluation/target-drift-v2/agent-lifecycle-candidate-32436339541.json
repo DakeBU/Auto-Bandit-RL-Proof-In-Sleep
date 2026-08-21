@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "suite_id": "ABRL-TARGET-DRIFT-V2",
+  "evidence_type": "result_free_agent_pid1_lifecycle_candidate",
+  "recorded_at_utc": "2026-08-21T01:27:38Z",
+  "workflow_run": {
+    "id": 32436339541,
+    "url": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/actions/runs/32436339541",
+    "head_commit": "f912969b1daca11001bfb6a2ae07cb2422f0a2e9",
+    "conclusion": "success",
+    "job_duration": "23s",
+    "artifact_retention_days": 14
+  },
+  "candidate": {
+    "status": "passed_exact_image_runtime_command_lifecycle_candidate",
+    "base_image_reference": "python@sha256:2e32f7d302adc1c37428355c1e646897c0c53f4fd60b6a551245fb90ee129f91",
+    "container_image_digest": "sha256:583ec1d5fa535f661e360275aff8f69e7db4140b839a1a04fd44adca9b261200",
+    "published": false,
+    "controller_pid": 1,
+    "direct_child_pid": 7,
+    "escaped_descendant_pid": 9,
+    "escaped_descendant_process_group": 9,
+    "control_loss_reason": "control_channel_eof",
+    "direct_child_return_code": -15,
+    "pre_crash_heartbeat_observations": [1, 2],
+    "post_cleanup_heartbeat_observation": 2,
+    "escaped_descendant_heartbeat_frozen": true,
+    "container_absent_after_control_loss": true,
+    "command_sha256": "b7fd8e303831535c306d2610fc5aa3fba5746cd7e512ca157549a8991d5bd4a2",
+    "measured_wall_seconds": 1.223556
+  },
+  "runtime": {
+    "runtime_executable": "/usr/bin/docker",
+    "runtime_executable_sha256": "6435ff9214bf8e0931078fb0980809728cac0a54a526d4f28a26d3e48132b58d",
+    "client_version": "28.0.4",
+    "server_version": "28.0.4",
+    "server_os": "linux",
+    "storage_driver": "overlay2",
+    "daemon_id": "49fbd9fe-ba53-4f4b-b058-8c240f21fa06",
+    "security_options": [
+      "name=apparmor",
+      "name=seccomp,profile=builtin",
+      "name=cgroupns"
+    ]
+  },
+  "source_bindings": {
+    "containerfile_sha256": "10a8cc08ca86db6357b454fe3b014028d680907ef61c38e069c9dec19147e703",
+    "contract_sha256": "3bb64c5f50d91950c7534594b7e92617998e85c4c202c089a6c676cc19fc331d",
+    "controller_source_sha256": "1c5846871e88f53994fb00faf6b35cbf9fcc970f28c3b7bcdbed0973db44f546",
+    "probe_runner_sha256": "7126c19eaf429e218c6785dc5ed3d5e84d98d48336c854fe3aa9a2ed4eb94d9a",
+    "workflow_sha256": "a3f993b0e32e576926c179325da2569a94b14bef5db1fda826c3b289a1e840c1"
+  },
+  "artifacts": [
+    {
+      "path": "agent-lifecycle-probe.json",
+      "bytes": 4254,
+      "sha256": "8bc6006b43d2748d119c21e6fea884d1b43eca6e3a8eb5b74fe73c66e2bf25e0"
+    },
+    {
+      "path": "base-image.txt",
+      "bytes": 79,
+      "sha256": "346e2825da16ad2297ed86239246a80b61ae18cd41e45bd1ebf85e4c87ea690d"
+    },
+    {
+      "path": "image-build.log",
+      "bytes": 1352,
+      "sha256": "7ea19d6ab2f7c2bd5c2867ceb08fdc0255a4a0f8d9113e57b95887f051b1a9af"
+    },
+    {
+      "path": "image-digest.txt",
+      "bytes": 72,
+      "sha256": "17b1faf442b36a6a8774274e703b305dc507765b6d7d4c17fbaff7969b0a3b60"
+    },
+    {
+      "path": "probe/container.cid",
+      "bytes": 64,
+      "sha256": "a007713e73b8ad6bc654835afa8d596491c6e49ae16f8ea768bc8eae85023c7c"
+    },
+    {
+      "path": "probe/controller-exit.json",
+      "bytes": 207,
+      "sha256": "b019e9432719a5af5f40c451eac7f5d9bc832e8dc72b8d70a5bd6a12b2fcac61"
+    },
+    {
+      "path": "probe/controller-ready.json",
+      "bytes": 158,
+      "sha256": "e999c082302b5bcff09db6535a5e90276d7fdc43d51920685ef59c27abaf37b0"
+    },
+    {
+      "path": "probe/docker-daemon-identity.txt",
+      "bytes": 115,
+      "sha256": "f8abf83b02f2009a46623b1b6ba500961e1659ced3ada41d10c1b724dacaec29"
+    },
+    {
+      "path": "probe/docker-version.json",
+      "bytes": 1079,
+      "sha256": "451ee7ebc40fd9dffe9210d818a34cec3cfbcf604121b2a4517dbd9c8d7fe1a8"
+    },
+    {
+      "path": "probe/escape-heartbeat.txt",
+      "bytes": 1,
+      "sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"
+    },
+    {
+      "path": "probe/fixture.json",
+      "bytes": 104,
+      "sha256": "a9382ae4ec2bc1a821bef3fe2c1953c520772cc88ee12bd1563fccea42f11c95"
+    }
+  ],
+  "hash_chain_checks": {
+    "workflow_head_matches_recorded_commit": true,
+    "source_bindings_match_head_bytes": true,
+    "in_image_controller_matches_bound_source": true,
+    "command_canonical_sha256_recomputed": true,
+    "raw_runtime_ledgers_recomputed": true,
+    "raw_ready_exit_fixture_and_cid_match_report": true,
+    "pre_crash_heartbeat_strictly_increased": true,
+    "post_cleanup_heartbeat_frozen": true,
+    "container_absent_by_attempt_label": true
+  },
+  "nonclaims": [
+    "The lifecycle candidate image was ephemeral and was not published or frozen as the final provider-capable agent image.",
+    "The probe establishes only the recorded Linux PID-namespace, runtime, command, and control-channel lifecycle boundary.",
+    "The final provider client, authentication boundary, model-visible filesystem, network and tool allowlist, active budget enforcement, and production image remain unfrozen.",
+    "No real one-case-by-three-condition smoke, primary model run, grading record, analysis, numerical result, or formalization outcome is reported."
+  ]
+}

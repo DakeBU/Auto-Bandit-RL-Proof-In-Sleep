@@ -217,6 +217,25 @@ that ephemeral digest only.  It does not publish or freeze the final production
 checker, instantiate the production agent sandbox, satisfy the real
 one-case-by-three-condition smoke, or report a model/formalization outcome.
 
+A separate result-free agent lifecycle candidate is recorded in
+[`agent-lifecycle-candidate-32436339541.json`](agent-lifecycle-candidate-32436339541.json).
+GitHub Actions [run 32436339541](https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/actions/runs/32436339541)
+built one unpublished digest-recorded image whose controller was PID 1, launched
+a fixture that escaped the direct child's session and process group, and then
+abruptly killed the host Docker client.  Before that crash the escaped
+descendant's heartbeat strictly increased from `1` to `2`; after Docker stdin
+closed, the controller recorded `control_channel_eof`, its direct child returned
+`-15`, the labeled container disappeared, and the heartbeat remained frozen at
+`2`.  The downloaded report independently matches the exact command digest,
+five source/workflow bindings, two raw Docker runtime ledgers, image/base
+digests, and raw ready/exit/fixture/cid artifacts.  This closes only the recorded
+Linux PID-namespace lifecycle component for that ephemeral image/runtime/command.
+It is not the final provider-capable agent image and does not instantiate its
+authentication, model-visible filesystem, network/tool, or active-budget
+boundaries.  The PID-1 controller must be incorporated into the final agent
+image and the same destructive probe must be rerun on that final digest before
+the real smoke.
+
 The sealed launcher accepts only the allowlisted Docker installation, rechecks the
 executable/signature-or-package ledger plus client/server/daemon identity, and
 constructs the complete argv itself.  Before every probe or replay it uses
@@ -297,9 +316,11 @@ the plan.  Prompt source/workspace locations are relative to the common agent
 root.  This removes operator-supplied smoke markers from the model-visible
 current working directory and prompt paths.  A final production agent sandbox
 with a fixed in-container mount remains required before the real smoke runs.
-That launcher must also provide a parent-death, job-object, cgroup, or container
-lifecycle proof that a controller crash cannot leave a provider child consuming
-budget or mutating the resumable attempt.
+The generic result-free PID-1 lifecycle candidate above demonstrates the
+required parent-death/container mechanism only for its exact ephemeral image.
+The final provider-capable agent image must incorporate that controller and pass
+the same destructive lifecycle probe so that a controller crash cannot leave a
+provider child consuming budget or mutating the resumable attempt.
 
 This lane is implemented and component-tested, but it has not been run with a
 real provider/agent sandbox.  No real three-condition smoke, final pack, primary

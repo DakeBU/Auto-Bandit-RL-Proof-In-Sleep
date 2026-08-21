@@ -215,6 +215,7 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertNotIn("the public base immediately", readme)
         self.assertNotIn(BUILDER.PUBLIC_CANDIDATE_RUN_ID, readme)
         self.assertNotIn(BUILDER.PUBLIC_ISOLATION_CANDIDATE_RUN_ID, readme)
+        self.assertNotIn(BUILDER.PUBLIC_AGENT_LIFECYCLE_RUN_ID, readme)
         candidate = json.loads(payload[
             "evaluation/target-drift-v2/checker-image-candidate-record.json"
         ].decode("utf-8"))
@@ -228,6 +229,17 @@ class AnonymousSupplementTests(unittest.TestCase):
         isolation_candidate = json.loads(payload[
             "evaluation/target-drift-v2/checker-image-isolation-candidate-record.json"
         ].decode("utf-8"))
+        lifecycle_candidate = json.loads(payload[
+            "evaluation/target-drift-v2/agent-lifecycle-candidate-record.json"
+        ].decode("utf-8"))
+        self.assertEqual(
+            lifecycle_candidate["workflow_run"]["id"],
+            "<redacted-public-run-id>",
+        )
+        self.assertEqual(
+            lifecycle_candidate["workflow_run"]["head_commit"],
+            "<anonymous-builder-snapshot>",
+        )
         self.assertEqual(
             isolation_candidate["workflow_run"]["id"],
             "<redacted-public-run-id>",
