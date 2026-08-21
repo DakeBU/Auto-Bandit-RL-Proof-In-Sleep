@@ -1,0 +1,11 @@
+abi <abi/4.0>,
+
+# Ubuntu restricts unprivileged user namespaces even for otherwise unconfined
+# processes. Docker attaches this profile to the entire non-root agent-container
+# process tree. Its only rule lets the trusted native Codex client create the
+# user, PID, and network namespaces used by its bundled bubblewrap. Docker still
+# supplies the read-only root, capability, resource, no-new-privileges, and
+# outer-network boundaries.
+profile abrl-target-drift-codex flags=(unconfined) {
+  userns,
+}

@@ -219,6 +219,7 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertIn("evaluation/target-drift-v2/agent-lifecycle.Containerfile", payload)
         self.assertIn("evaluation/target-drift-v2/agent-image.Containerfile", payload)
         self.assertIn("evaluation/target-drift-v2/agent-image-sources.json", payload)
+        self.assertIn("evaluation/target-drift-v2/agent-codex-native.apparmor", payload)
         self.assertIn("non-Git", readme)
         self.assertNotIn("the public base immediately", readme)
         self.assertNotIn(BUILDER.PUBLIC_CANDIDATE_RUN_ID, readme)

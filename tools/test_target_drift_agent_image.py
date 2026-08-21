@@ -128,11 +128,36 @@ class TargetDriftAgentImageTest(unittest.TestCase):
             "workspace_write_succeeded", "provider_auth_unreadable",
             "persistent_outside_workspace_write_denied", "network_denied",
             "network_error_errno", "openai_api_key_absent", "fresh_pid_namespace",
+            "codex_apparmor_profile_attached",
         ):
             self.assertIn(marker, source)
         self.assertIn("203.0.113.7", source)
         self.assertIn("errno.ENETUNREACH", source)
         self.assertEqual(probe.NETWORK_CONTROL_PORT, 443)
+
+    def test_apparmor_current_parser_requires_exact_profile_and_mode(self) -> None:
+        namespace = {}
+        exec(probe.APPARMOR_CURRENT_PARSER_SOURCE, namespace)
+        parse = namespace["parse_apparmor_current"]
+        self.assertEqual(
+            parse("abrl-target-drift-codex\n"),
+            ("abrl-target-drift-codex", ""),
+        )
+        self.assertEqual(
+            parse("abrl-target-drift-codex (unconfined)\n"),
+            ("abrl-target-drift-codex", "unconfined"),
+        )
+        self.assertNotEqual(
+            parse("abrl-target-drift-codex-extra (unconfined)\n")[0],
+            probe.CODEX_APPARMOR_PROFILE,
+        )
+        self.assertEqual(
+            parse("abrl-target-drift-codex (enforce)\n"),
+            ("abrl-target-drift-codex", "enforce"),
+        )
+        source = probe.probe_source("203.0.113.7").decode("utf-8")
+        self.assertIn('apparmor_mode in ("", "unconfined")', source)
+        self.assertNotIn("startswith(", source)
 
     def test_probe_uses_exact_codex_workspace_profile_and_private_home(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -150,6 +175,7 @@ class TargetDriftAgentImageTest(unittest.TestCase):
         self.assertNotIn('sandbox_mode="workspace-write"', command)
         self.assertIn("--cd", command)
         self.assertEqual(command[command.index("--cd") + 1], "/workspace")
+        self.assertIn("apparmor=abrl-target-drift-codex", command)
         self.assertIn("CODEX_HOME=/codex-home", command)
         self.assertIn(
             "/codex-home:rw,nosuid,nodev,noexec,size=16m,"
@@ -226,10 +252,28 @@ class TargetDriftAgentImageTest(unittest.TestCase):
             "--checker-build-input",
             "--containerfile-source evaluation/target-drift-v2/agent-image.Containerfile",
             "--workflow-source .github/workflows/target-drift-agent-image.yml",
+            "conv=excl",
+            'apparmor_parser -r "${PROFILE_ARTIFACT}"',
+            'grep -Fx "abrl-target-drift-codex (unconfined)"',
+            '--apparmor-profile "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-codex-native.apparmor"',
+            'apparmor_parser -R "${PROFILE_ARTIFACT}"',
         ):
             self.assertIn(marker, workflow)
         self.assertNotIn("secrets.", workflow)
         self.assertIn("if: always()", workflow)
+
+    def test_codex_apparmor_profile_grants_only_user_namespaces(self) -> None:
+        profile = (
+            ROOT / "evaluation/target-drift-v2/agent-codex-native.apparmor"
+        ).read_text(encoding="utf-8")
+        self.assertIn("profile abrl-target-drift-codex flags=(unconfined)", profile)
+        self.assertNotIn("tunables/global", profile)
+        body = profile.split("{", 1)[1].rsplit("}", 1)[0]
+        directives = [
+            line.strip() for line in body.splitlines()
+            if line.strip() and not line.lstrip().startswith("#")
+        ]
+        self.assertEqual(directives, ["userns,"])
 
 
 if __name__ == "__main__":

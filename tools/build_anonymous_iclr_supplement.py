@@ -16,7 +16,7 @@ ARCHIVE_ROOT = "abrl-anonymous-artifact"
 ARCHIVE_NAME = "ABRL-ICLR-2027-anonymous-lean-code.zip"
 FIXED_ZIP_TIME = (2026, 1, 1, 0, 0, 0)
 TEXT_PAYLOAD_SUFFIXES = {
-    ".Containerfile", ".json", ".lean", ".md", ".py", ".sh", ".toml",
+    ".Containerfile", ".apparmor", ".json", ".lean", ".md", ".py", ".sh", ".toml",
     ".txt", ".yaml", ".yml",
 }
 TEXT_PAYLOAD_NAMES = {"LICENSE", "lean-toolchain"}
@@ -167,6 +167,7 @@ TARGET_DRIFT_PROTOCOL_FILES = (
     "evaluation/target-drift-v2/adapter-contract.json",
     "evaluation/target-drift-v2/agent-image-sources.json",
     "evaluation/target-drift-v2/agent-image.Containerfile",
+    "evaluation/target-drift-v2/agent-codex-native.apparmor",
     "evaluation/target-drift-v2/agent-lifecycle.Containerfile",
     "evaluation/target-drift-v2/agent-sandbox-contract.json",
     PUBLIC_CANDIDATE_RECORD,

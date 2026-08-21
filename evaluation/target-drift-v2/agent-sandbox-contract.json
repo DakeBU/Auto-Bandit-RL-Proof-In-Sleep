@@ -19,8 +19,10 @@
     "base": "the exact cache-complete checker image built from the common pre-audit workspace",
     "source_lock": "the native Linux Codex registry package is version-, URL-, SRI-, and SHA-512-locked, then reduced to four regular allowlisted members before Docker sees it",
     "contents": "the inherited offline Lean toolchain/cache, exact Codex executable/bundled bwrap/rg, the target-drift adapter, and the PID-1 controller",
+    "host_user_namespace_boundary": "Docker applies the hash-bound abrl-target-drift-codex AppArmor profile to the entire non-root agent-container process tree. Its sole AppArmor rule grants userns so the trusted native Codex client can launch its nested bubblewrap user, PID, and network namespaces; it supplies no Linux capability, while Docker still enforces its read-only root, capability drop, no-new-privileges, resource, and outer-network boundaries",
     "required_result_free_probes": [
       "in-image Codex/Lean/Lake/cache/controller/adapter bytes match their build ledgers",
+      "the evaluated child reports the exact abrl-target-drift-codex AppArmor profile inherited by the non-root agent-container process tree before any workspace, network, or credential observation is accepted",
       "the evaluated command can write its workspace, cannot persist a write outside it, receives an explicit IPv4 route denial to the same endpoint reached by the outer control, and cannot read the outer credential sentinel",
       "the exact final candidate digest passes host-control-loss PID-namespace reaping"
     ],

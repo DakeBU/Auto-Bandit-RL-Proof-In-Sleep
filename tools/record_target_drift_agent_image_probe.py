@@ -34,6 +34,21 @@ NETWORK_CONTROL_HOST = "registry.npmjs.org"
 NETWORK_CONTROL_PORT = 443
 CODEX_WORKSPACE_PERMISSION_PROFILE = ":workspace"
 CODEX_HOME_MOUNT = "/codex-home"
+CODEX_APPARMOR_PROFILE = "abrl-target-drift-codex"
+CODEX_APPARMOR_SOURCE = (
+    ROOT / "evaluation" / "target-drift-v2" / "agent-codex-native.apparmor"
+)
+APPARMOR_CURRENT_PARSER_SOURCE = '''\
+def parse_apparmor_current(value):
+    if value.endswith("\\n"):
+        value = value[:-1]
+    if "\\n" in value or "\\r" in value:
+        return value, "invalid"
+    if value.endswith(")") and " (" in value:
+        label, raw_mode = value.rsplit(" (", 1)
+        return label, raw_mode[:-1]
+    return value, ""
+'''
 
 
 def require(condition: bool, message: str) -> None:
@@ -81,6 +96,8 @@ def probe_source(network_control_ipv4: str) -> bytes:
     template = '''\
 import errno, json, os, pathlib, socket, time
 
+__ABRL_APPARMOR_CURRENT_PARSER__
+
 root = pathlib.Path("/workspace")
 allowed = root / "workspace-write-ok.txt"
 allowed.write_text("ok\\n", encoding="utf-8")
@@ -112,6 +129,10 @@ finally:
     sock.close()
 network_elapsed_seconds = time.monotonic() - network_started
 proc_ids = sorted(name for name in os.listdir("/proc") if name.isdigit())
+apparmor_profile_raw = pathlib.Path("/proc/self/attr/current").read_text(
+    encoding="utf-8"
+)
+apparmor_profile, apparmor_mode = parse_apparmor_current(apparmor_profile_raw)
 payload = {
     "workspace_write_succeeded": allowed.read_text(encoding="utf-8") == "ok\\n",
     "provider_auth_unreadable": not secret_readable,
@@ -126,15 +147,26 @@ payload = {
     "openai_api_key_absent": "OPENAI_API_KEY" not in os.environ,
     "fresh_pid_namespace": "1" in proc_ids and len(proc_ids) <= 8,
     "observed_proc_ids": proc_ids,
+    "codex_apparmor_profile_raw": apparmor_profile_raw,
+    "codex_apparmor_profile": apparmor_profile,
+    "codex_apparmor_mode": apparmor_mode,
+    "codex_apparmor_profile_attached": (
+        apparmor_profile == "__ABRL_APPARMOR_PROFILE__"
+        and apparmor_mode in ("", "unconfined")
+    ),
 }
 (root / "probe-observation.json").write_text(
     json.dumps(payload, sort_keys=True) + "\\n", encoding="utf-8"
 )
 '''
     return template.replace(
+        "__ABRL_APPARMOR_CURRENT_PARSER__", APPARMOR_CURRENT_PARSER_SOURCE
+    ).replace(
         "__ABRL_CONTROL_IPV4__", network_control_ipv4
     ).replace(
         "__ABRL_CONTROL_PORT__", str(NETWORK_CONTROL_PORT)
+    ).replace(
+        "__ABRL_APPARMOR_PROFILE__", CODEX_APPARMOR_PROFILE
     ).encode("utf-8")
 
 
@@ -160,7 +192,7 @@ def inner_sandbox_command(
         "--network", "bridge", "--cap-drop", "ALL",
         "--security-opt", "no-new-privileges=true",
         "--security-opt", "seccomp=unconfined",
-        "--security-opt", "apparmor=unconfined",
+        "--security-opt", f"apparmor={CODEX_APPARMOR_PROFILE}",
         "--user", "10002:10002", "--pids-limit", "64", "--memory", "512m",
         "--cpus", "1", "--tmpfs", "/tmp:rw,nosuid,nodev,size=64m,mode=1777",
         "--tmpfs",
@@ -219,7 +251,7 @@ def run_inner_sandbox_probe(
     expected_true = {
         "workspace_write_succeeded", "provider_auth_unreadable", "network_denied",
         "persistent_outside_workspace_write_denied", "openai_api_key_absent",
-        "fresh_pid_namespace",
+        "fresh_pid_namespace", "codex_apparmor_profile_attached",
     }
     require(all(observation.get(field) is True for field in expected_true),
             "one or more inner-sandbox observations failed")
@@ -237,12 +269,23 @@ def main() -> None:
     parser.add_argument("--image-sbom", type=Path, required=True)
     parser.add_argument("--work-dir", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--apparmor-profile", type=Path, required=True)
     parser.add_argument("--probe-commit", required=True)
     args = parser.parse_args()
     require(sys.platform.startswith("linux"), "agent-image probe requires Linux")
     require(re.fullmatch(r"[0-9a-f]{40}", args.probe_commit) is not None,
             "probe commit must be a full lowercase Git commit")
     sbom_path = regular_file(args.image_sbom.resolve(), "agent image SBOM")
+    apparmor_source = regular_file(
+        CODEX_APPARMOR_SOURCE.resolve(), "Codex AppArmor profile source"
+    )
+    apparmor_artifact = regular_file(
+        args.apparmor_profile.resolve(), "frozen Codex AppArmor profile artifact"
+    )
+    require(
+        apparmor_artifact.read_bytes() == apparmor_source.read_bytes(),
+        "frozen Codex AppArmor profile differs from the repository source",
+    )
     sbom = json.loads(sbom_path.read_text(encoding="utf-8"))
     require(sbom.get("schema_version") == 1
             and sbom.get("suite_id") == SUITE_ID
@@ -284,6 +327,10 @@ def main() -> None:
         "lean_version": sbom["lean_version"],
         "lake_version": sbom["lake_version"],
         "checker_cache_manifest_sha256": sbom["checker_cache_manifest_sha256"],
+        "codex_apparmor_profile": CODEX_APPARMOR_PROFILE,
+        "codex_apparmor_profile_source": CODEX_APPARMOR_SOURCE.relative_to(ROOT).as_posix(),
+        "codex_apparmor_profile_artifact": apparmor_artifact.name,
+        "codex_apparmor_profile_sha256": sha256_file(apparmor_artifact),
         "runtime": identity,
         "sandbox_command_argv": command,
         "sandbox_command_sha256": hashlib.sha256(
@@ -322,6 +369,7 @@ def main() -> None:
             "agent_sandbox_contract_sha256": sha256_file(
                 ROOT / "evaluation/target-drift-v2/agent-sandbox-contract.json"
             ),
+            "codex_apparmor_profile_sha256": sha256_file(apparmor_artifact),
             "agent_image_workflow_sha256": sha256_file(
                 ROOT / ".github/workflows/target-drift-agent-image.yml"
             ),

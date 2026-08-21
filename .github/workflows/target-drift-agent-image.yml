@@ -15,6 +15,7 @@ on:
     paths:
       - ".github/workflows/target-drift-agent-image.yml"
       - "evaluation/target-drift-v2/agent-image*"
+      - "evaluation/target-drift-v2/agent-codex-native.apparmor"
       - "tools/codex_target_drift_adapter.py"
       - "tools/prepare_target_drift_agent_image.py"
       - "tools/prepare_target_drift_checker_image.py"
@@ -53,6 +54,16 @@ jobs:
           python3 -m unittest discover -s tools -p "test_target_drift_agent_image.py"
           python3 -m unittest discover -s tools -p "test_target_drift_agent_lifecycle.py"
           python3 -m unittest tools.test_target_drift_runtime
+
+      - name: Load the exact Codex user-namespace AppArmor profile
+        run: |
+          PROFILE_ARTIFACT="${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-codex-native.apparmor"
+          dd if=evaluation/target-drift-v2/agent-codex-native.apparmor \
+            of="${PROFILE_ARTIFACT}" conv=excl status=none
+          chmod 0444 "${PROFILE_ARTIFACT}"
+          sudo apparmor_parser -r "${PROFILE_ARTIFACT}"
+          sudo grep -Fx "abrl-target-drift-codex (unconfined)" \
+            /sys/kernel/security/apparmor/profiles
 
       - name: Build the cache-complete checker base
         run: |
@@ -106,6 +117,7 @@ jobs:
             --image-sbom "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-image-sbom.json" \
             --work-dir "${RUNNER_TEMP}/abrl-agent-image-probe-work" \
             --output "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-image-isolation-probe.json" \
+            --apparmor-profile "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-codex-native.apparmor" \
             --probe-commit "${GITHUB_SHA}" 2>&1 | \
             tee "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-image-isolation-probe-attempt.log"
 
@@ -123,6 +135,14 @@ jobs:
             --output-dir "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-lifecycle-probe-artifacts" \
             --report "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-lifecycle-probe.json" 2>&1 | \
             tee "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-lifecycle-probe-attempt.log"
+
+      - name: Unload the exact Codex user-namespace AppArmor profile
+        if: always()
+        run: |
+          PROFILE_ARTIFACT="${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-codex-native.apparmor"
+          if [[ -f "${PROFILE_ARTIFACT}" ]]; then
+            sudo apparmor_parser -R "${PROFILE_ARTIFACT}"
+          fi
 
       - name: Upload result-free build and probe evidence
         if: always()
