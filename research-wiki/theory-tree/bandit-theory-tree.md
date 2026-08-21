@@ -104,6 +104,19 @@ compiled exact Gaussian Theorem 15.2 route. `WEAPON-KL-CHANGE-OF-MEASURE`
 remains inspiration-only for the distinct downstream Chapter 16--17 consumers.
 No LML theorem card is treated as a local lower-bound proof.
 
+The source-frozen Zeng--Honorio NeurIPS 2025 audit adds a second organization
+of lower-bound geometry beyond the chapter order.  Thirty-six named local
+declarations compile the nonempty symmetric unit-atom system, the literal
+succinct-support correlation contract, mutual orthogonality, the source-shaped
+`Q` and `R`, Lemma 3.1's coefficient-`linf` identity, and Lemma 3.2's
+coefficient-`l1` identity for succinct combinations.  Lean also proves that a
+nonzero vector orthogonal to every atom makes the candidate set defining the
+paper's real-valued global `R` unbounded.  This is a regularity/codomain
+obligation, not a claim that the paper is incorrect: Lemmas 3.3--3.6,
+Assumption 3.7, Theorem 3.8, and its regret endpoints remain outside the
+compiled slice until a source-faithful spanning, extended-real, or
+span/quotient decision is made.
+
 ## Compiled Local Leaves
 
 The first dependency-light compiled leaf library is

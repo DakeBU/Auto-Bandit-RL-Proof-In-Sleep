@@ -1150,6 +1150,22 @@
       "dependencies": []
     },
     {
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.sourceQ_supportCombination_eq",
+      "chapter": "frontier",
+      "plain": "On a succinct support, the paper's Q quantity of a finite support combination is exactly the largest absolute coefficient.",
+      "math": "\\(Q(\\sum_i a_i E_i)=\\max_i |a_i|\\).",
+      "intuition": "The support contract makes the chosen support atoms orthogonal. Every atom in the source atom set correlates with the combination by at most the largest coefficient, while a signed maximizing support atom reaches that value.",
+      "why": "This is Zeng--Honorio Lemma 3.1 and the reusable coefficient geometry needed before the paper's information--regret construction.",
+      "position": "The identity is compiled. It does not imply that Q separates all ambient vectors or that the globally defined real-valued R is finite everywhere.",
+      "proof_idea": "Use the support correlation-sum bound for the upper inequality, derive mutual orthogonality, choose an index attaining the finite maximum, and use the positive or negative maximizing atom as the lower-bound witness.",
+      "lean_notes": "The atom set remains an arbitrary Set, the support size is finite and nonempty, and the literal real sSup contract is retained. A separate compiled diagnostic shows why global R needs additional regularity outside the succinct span.",
+      "dependencies": [
+        "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.correlationSum_le_one",
+        "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.inner_basis_basis",
+        "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.exists_abs_eq_maxAbsCoefficient"
+      ]
+    },
+    {
       "full_name": "BanditRLProof.LowerBounds.randomRegret_ge_quarter_of_clippingDecomposition",
       "chapter": "foundations",
       "plain": "If Eq. (17.8) holds, pulling the hard arm at most half the time and clipping at most a quarter of rounds forces random regret at least gap times horizon over four.",

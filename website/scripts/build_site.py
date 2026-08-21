@@ -371,10 +371,16 @@ def scan_lean_tree() -> list[dict[str, Any]]:
 def assign_chapters(modules: list[dict[str, Any]], chapters: list[dict[str, Any]]) -> None:
     for module in modules:
         assigned = None
+        assigned_specificity = (-1, -1)
         for chapter in chapters:
-            if any(fnmatch.fnmatch(module["file"], pattern) for pattern in chapter["module_globs"]):
-                assigned = chapter
-                break
+            for pattern in chapter["module_globs"]:
+                if not fnmatch.fnmatch(module["file"], pattern):
+                    continue
+                has_glob = any(token in pattern for token in "*?[")
+                specificity = (0 if has_glob else 1, sum(token not in "*?[]" for token in pattern))
+                if specificity > assigned_specificity:
+                    assigned = chapter
+                    assigned_specificity = specificity
         if assigned is None:
             assigned = chapters[0]
         module["chapter"] = assigned["slug"]

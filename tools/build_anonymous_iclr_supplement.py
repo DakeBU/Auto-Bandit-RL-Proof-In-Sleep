@@ -96,6 +96,7 @@ DELAYED_IMPLEMENTATION_IDS = (
     "DELAYED-SAPO-D8-D9-ASSEMBLY",
 )
 DELAYED_DIAGNOSTIC_ID = "DELAYED-SAPO-D10-D12-GAP-ORDERING-AUDIT"
+SUCCINCT_AUDIT_ID = "NEURIPS-2025-SUCCINCT-LOWER-BOUND-GEOMETRY-AUDIT"
 EXPECTED_INDEX_EXCEPTIONS = (
     "BanditRLProof.DelayedFeedback.ActionTimeView.ext",
     "BanditRLProof.LowerBounds.IsConsistentRegret.add",
@@ -118,6 +119,7 @@ SOURCE_RESULT_IDS = (
 ) + DELAYED_IMPLEMENTATION_IDS + (
     DELAYED_DIAGNOSTIC_ID,
     "NEURIPS-2025-DELAYED-BOBW-CENTRAL-ENDPOINTS",
+    SUCCINCT_AUDIT_ID,
     "TARGET-DRIFT-V2-CONTROLLED-EVALUATION",
 )
 
@@ -803,9 +805,18 @@ def validate_delayed_counts(records):
         )
 
 
+def validate_succinct_count(records):
+    succinct = records[SUCCINCT_AUDIT_ID]
+    if succinct["status"] != "partial" or len(succinct["declarations"]) != 36:
+        raise ValueError(
+            "succinct geometry audit must remain partial with 36 declarations"
+        )
+
+
 def build_claim_ledger(proof_report):
     records = selected_source_records()
     validate_delayed_counts(records)
+    validate_succinct_count(records)
     index = load_json(REPO_ROOT / "research-wiki" / "retrieval-index" /
                       "local_lean_declarations.json")
     index_names = {row["full_name"] for row in index["declarations"]}
@@ -860,6 +871,12 @@ def build_claim_ledger(proof_report):
                 "boundary": "88 implementation-facing plus 19 diagnostic/conditional/repair declarations, including an exact small-count scalar bound and only a conditional same-snapshot factor-20 skeleton; no source-paper regret theorem.",
             },
             {
+                "artifact": "Succinct geometry audit",
+                "status": "partial",
+                "source_record_ids": [SUCCINCT_AUDIT_ID],
+                "boundary": "36 declarations compile the source support contract and Lemmas 3.1--3.2; a global R boundedness obligation is explicit; no Theorem 3.8 or regret endpoint.",
+            },
+            {
                 "artifact": "Proof graph / curvature--noise--gap",
                 "status": "prototype",
                 "source_record_ids": [],
@@ -879,6 +896,11 @@ def build_claim_ledger(proof_report):
             "diagnostic_id": DELAYED_DIAGNOSTIC_ID,
             "diagnostic_conditional_repair_declaration_count": 19,
             "source_audit_declaration_count": 107,
+            "paper_endpoint_verified": False,
+        },
+        "succinct_geometry": {
+            "source_record_id": SUCCINCT_AUDIT_ID,
+            "declaration_count": 36,
             "paper_endpoint_verified": False,
         },
         "proof_graph": {

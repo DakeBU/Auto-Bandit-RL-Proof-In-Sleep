@@ -189,6 +189,18 @@ class AnonymousSupplementTests(unittest.TestCase):
         )
         for record_id in direct_textbook_records:
             self.assertEqual(ledger["source_records"][record_id]["status"], "compiled")
+        succinct_row = next(
+            row for row in ledger["table_rows"]
+            if row["artifact"] == "Succinct geometry audit"
+        )
+        self.assertEqual(succinct_row["status"], "partial")
+        self.assertEqual(succinct_row["source_record_ids"], [BUILDER.SUCCINCT_AUDIT_ID])
+        self.assertEqual(ledger["succinct_geometry"]["declaration_count"], 36)
+        self.assertFalse(ledger["succinct_geometry"]["paper_endpoint_verified"])
+        self.assertEqual(
+            ledger["source_records"][BUILDER.SUCCINCT_AUDIT_ID]["status"],
+            "partial",
+        )
 
     def test_public_base_is_replaced_by_anonymous_tree_binding(self):
         payload = BUILDER.build_payload(allow_missing_graph=True)

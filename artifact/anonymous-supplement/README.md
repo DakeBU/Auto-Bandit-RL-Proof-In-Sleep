@@ -53,6 +53,15 @@ the multi-chapter spine stays partial.  The
 proof-graph and CNG material is a prototype measurement study, not evidence of
 search acceleration or a new general bandit calculus.
 
+The independent succinct stochastic-bandit audit contains 36 named
+declarations for the source-shaped unit-atom system, succinct-support contract,
+support orthogonality, and Lemmas 3.1--3.2 on succinct combinations.  A
+separate compiled diagnostic records that the globally real-valued `R`
+candidate set can be unbounded outside the atom-generated directions.  This is
+a regularity/codomain obligation, not a source-error claim; Definition 3.3,
+Lemmas 3.3--3.6, Assumption 3.7, Theorem 3.8, and every regret endpoint remain
+outside the compiled slice.
+
 ## Quick verification
 
 Use a short extraction path on Windows.  Network access is needed only on the
@@ -70,6 +79,7 @@ lake env lean Tests/TextbookPartIVChapter14Canary.lean
 lake env lean Tests/TextbookPartIVChapter15Canary.lean
 lake env lean Tests/TextbookPartIVChapter16Canary.lean
 lake env lean Tests/TextbookPartIVChapter17Canary.lean
+lake env lean Tests/SuccinctLowerBoundPaperAuditCanary.lean
 python -m unittest tools/test_proof_graph_lab.py
 ```
 

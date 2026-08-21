@@ -708,7 +708,7 @@ BANDIT_PAPER_CARDS = [
         "scenarios": ["SCN-LINEAR-GLM", "SCN-STOCHASTIC-FINITE"],
         "proof_roots": ["succinct support", "information-regret trade-off", "minimax lower bound"],
         "lean_leaf_families": ["succinct-support algebra", "dual seminorms", "change of measure", "minimax quantifier order"],
-        "memory_status": "source-frozen-not-started",
+        "memory_status": "source-frozen-partial",
     },
     {
         "id": "PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB",
