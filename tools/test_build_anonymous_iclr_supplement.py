@@ -206,16 +206,26 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertIn("tools/target_drift_agent_pid1.py", payload)
         self.assertIn("tools/record_target_drift_agent_lifecycle_probe.py", payload)
         self.assertIn("tools/test_target_drift_agent_lifecycle.py", payload)
+        self.assertIn("tools/prepare_target_drift_agent_image.py", payload)
+        self.assertIn("tools/record_target_drift_agent_image_probe.py", payload)
+        self.assertIn("tools/test_target_drift_agent_image.py", payload)
         self.assertIn(
             ".github/workflows/target-drift-agent-lifecycle.yml", payload
         )
+        self.assertIn(
+            ".github/workflows/target-drift-agent-image.yml", payload
+        )
         self.assertIn("evaluation/target-drift-v2/agent-sandbox-contract.json", payload)
         self.assertIn("evaluation/target-drift-v2/agent-lifecycle.Containerfile", payload)
+        self.assertIn("evaluation/target-drift-v2/agent-image.Containerfile", payload)
+        self.assertIn("evaluation/target-drift-v2/agent-image-sources.json", payload)
+        self.assertIn("evaluation/target-drift-v2/agent-codex-native.apparmor", payload)
         self.assertIn("non-Git", readme)
         self.assertNotIn("the public base immediately", readme)
         self.assertNotIn(BUILDER.PUBLIC_CANDIDATE_RUN_ID, readme)
         self.assertNotIn(BUILDER.PUBLIC_ISOLATION_CANDIDATE_RUN_ID, readme)
         self.assertNotIn(BUILDER.PUBLIC_AGENT_LIFECYCLE_RUN_ID, readme)
+        self.assertNotIn(BUILDER.PUBLIC_AGENT_IMAGE_RUN_ID, readme)
         candidate = json.loads(payload[
             "evaluation/target-drift-v2/checker-image-candidate-record.json"
         ].decode("utf-8"))
@@ -232,6 +242,9 @@ class AnonymousSupplementTests(unittest.TestCase):
         lifecycle_candidate = json.loads(payload[
             "evaluation/target-drift-v2/agent-lifecycle-candidate-record.json"
         ].decode("utf-8"))
+        agent_image_candidate = json.loads(payload[
+            "evaluation/target-drift-v2/agent-image-candidate-record.json"
+        ].decode("utf-8"))
         self.assertEqual(
             lifecycle_candidate["workflow_run"]["id"],
             "<redacted-public-run-id>",
@@ -240,6 +253,102 @@ class AnonymousSupplementTests(unittest.TestCase):
             lifecycle_candidate["workflow_run"]["head_commit"],
             "<anonymous-builder-snapshot>",
         )
+        self.assertEqual(
+            agent_image_candidate["workflow_run"]["id"],
+            "<redacted-public-run-id>",
+        )
+        self.assertEqual(
+            agent_image_candidate["workflow_run"]["url"],
+            "<redacted-public-run-url>",
+        )
+        self.assertEqual(
+            agent_image_candidate["workflow_run"]["head_commit"],
+            "<anonymous-builder-snapshot>",
+        )
+        self.assertEqual(
+            agent_image_candidate["recorded_at_utc"],
+            "<redacted-public-run-time>",
+        )
+        self.assertEqual(
+            agent_image_candidate["workflow_run"]["job_duration"],
+            "<redacted-public-run-duration>",
+        )
+        self.assertNotIn("artifacts", agent_image_candidate)
+        self.assertNotIn(
+            "container_image_digest", agent_image_candidate["candidate"]
+        )
+        self.assertNotIn(
+            "command_sha256", agent_image_candidate["lifecycle_probe"]
+        )
+        public_agent_record = json.loads(
+            (BUILDER.REPO_ROOT / BUILDER.PUBLIC_AGENT_IMAGE_RECORD).read_text(
+                encoding="utf-8"
+            )
+        )
+        anonymous_agent_bytes = payload[
+            "evaluation/target-drift-v2/agent-image-candidate-record.json"
+        ]
+        public_fingerprints = (
+            public_agent_record["recorded_at_utc"],
+            public_agent_record["workflow_run"]["job_duration"],
+            public_agent_record["candidate"]["container_image_digest"],
+            public_agent_record["candidate"]["checker_base_image_digest"],
+            public_agent_record["sandbox_probe"]["sandbox_command_sha256"],
+            public_agent_record["lifecycle_probe"]["command_sha256"],
+            public_agent_record["artifacts"][0]["sha256"],
+        )
+        for fingerprint in public_fingerprints:
+            self.assertNotIn(fingerprint.encode("utf-8"), anonymous_agent_bytes)
+        anonymous_records = {
+            BUILDER.PUBLIC_CANDIDATE_RECORD:
+                "evaluation/target-drift-v2/checker-image-candidate-record.json",
+            BUILDER.PUBLIC_ISOLATION_CANDIDATE_RECORD:
+                "evaluation/target-drift-v2/checker-image-isolation-candidate-record.json",
+            BUILDER.PUBLIC_AGENT_LIFECYCLE_RECORD:
+                "evaluation/target-drift-v2/agent-lifecycle-candidate-record.json",
+            BUILDER.PUBLIC_AGENT_IMAGE_RECORD:
+                "evaluation/target-drift-v2/agent-image-candidate-record.json",
+        }
+        anonymous_payload = b"\n".join(payload.values()).lower()
+        for public_rel, anonymous_rel in anonymous_records.items():
+            public_record = json.loads(
+                (BUILDER.REPO_ROOT / public_rel).read_text(encoding="utf-8")
+            )
+            anonymous_record = json.loads(payload[anonymous_rel].decode("utf-8"))
+            self.assertEqual(
+                anonymous_record["recorded_at_utc"],
+                "<redacted-public-run-time>",
+            )
+            self.assertEqual(
+                anonymous_record["workflow_run"]["job_duration"],
+                "<redacted-public-run-duration>",
+            )
+            self.assertNotIn("artifacts", anonymous_record)
+            anonymous_record_bytes = payload[anonymous_rel].lower()
+            low_entropy_run_values = [
+                public_record["recorded_at_utc"],
+                public_record["workflow_run"]["job_duration"],
+            ]
+            for value in low_entropy_run_values:
+                self.assertFalse(
+                    value.lower().encode("utf-8") in anonymous_record_bytes,
+                    "public run timing remained in " + anonymous_rel,
+                )
+            unique_values = []
+            container_digest = public_record.get("candidate", {}).get(
+                "container_image_digest"
+            )
+            if container_digest:
+                unique_values.append(container_digest)
+            unique_values.extend(
+                item["sha256"] for item in public_record.get("artifacts", [])
+                if item.get("sha256") != hashlib.sha256(b"").hexdigest()
+            )
+            for value in unique_values:
+                self.assertFalse(
+                    value.lower().encode("utf-8") in anonymous_payload,
+                    "public run fingerprint remained in anonymous payload",
+                )
         self.assertEqual(
             isolation_candidate["workflow_run"]["id"],
             "<redacted-public-run-id>",

@@ -1,0 +1,154 @@
+name: Target-drift provider-client agent image
+
+on:
+  workflow_dispatch:
+    inputs:
+      workspace_base_commit:
+        description: Frozen pre-audit workspace commit
+        required: true
+        default: d43bfeee56fb0c1c35cf5af9fc1a7fdc3e0c37b9
+      lean_base_image:
+        description: Digest-pinned trusted Lean builder/runtime base
+        required: true
+        default: ghcr.io/leanprover-community/mathlib4/gitpod@sha256:3fd7d678a320db6a6a919ab909fe3dea8e7e92ff0ea5678681ae8cbc490d5e9e
+  pull_request:
+    paths:
+      - ".github/workflows/target-drift-agent-image.yml"
+      - "evaluation/target-drift-v2/agent-image*"
+      - "evaluation/target-drift-v2/agent-codex-native.apparmor"
+      - "tools/codex_target_drift_adapter.py"
+      - "tools/prepare_target_drift_agent_image.py"
+      - "tools/prepare_target_drift_checker_image.py"
+      - "tools/record_target_drift_agent_image_probe.py"
+      - "tools/record_target_drift_agent_lifecycle_probe.py"
+      - "tools/target_drift_agent_pid1.py"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: target-drift-agent-image-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-probe-result-free-candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      WORKSPACE_BASE_COMMIT: ${{ inputs.workspace_base_commit || 'd43bfeee56fb0c1c35cf5af9fc1a7fdc3e0c37b9' }}
+      LEAN_BASE_IMAGE: ${{ inputs.lean_base_image || 'ghcr.io/leanprover-community/mathlib4/gitpod@sha256:3fd7d678a320db6a6a919ab909fe3dea8e7e92ff0ea5678681ae8cbc490d5e9e' }}
+      CODEX_PACKAGE_URL: https://registry.npmjs.org/@openai/codex/-/codex-0.130.0-linux-x64.tgz
+    steps:
+      - name: Check out the complete repository history
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Initialize result-free attempt evidence
+        run: |
+          mkdir -p "${RUNNER_TEMP}/abrl-agent-image-artifacts"
+          python3 -c 'import json,os,pathlib; p=pathlib.Path(os.environ["RUNNER_TEMP"])/"abrl-agent-image-artifacts"/"attempt-started.json"; p.write_text(json.dumps({"schema_version":1,"suite_id":"ABRL-TARGET-DRIFT-V2","status":"attempt_started_result_free","github_run_id":os.environ["GITHUB_RUN_ID"],"github_sha":os.environ["GITHUB_SHA"]},sort_keys=True)+"\n",encoding="utf-8")'
+
+      - name: Validate result-free agent-image components
+        run: |
+          python3 -m unittest discover -s tools -p "test_target_drift_agent_image.py"
+          python3 -m unittest discover -s tools -p "test_target_drift_agent_lifecycle.py"
+          python3 -m unittest tools.test_target_drift_runtime
+
+      - name: Load the exact Codex user-namespace AppArmor profile
+        run: |
+          PROFILE_ARTIFACT="${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-codex-native.apparmor"
+          dd if=evaluation/target-drift-v2/agent-codex-native.apparmor \
+            of="${PROFILE_ARTIFACT}" conv=excl status=none
+          chmod 0444 "${PROFILE_ARTIFACT}"
+          sudo apparmor_parser -r "${PROFILE_ARTIFACT}"
+          sudo grep -Fx "abrl-target-drift-codex (unconfined)" \
+            /sys/kernel/security/apparmor/profiles
+
+      - name: Build the cache-complete checker base
+        run: |
+          python3 tools/prepare_target_drift_checker_image.py prepare-context \
+            --workspace-base-commit "${WORKSPACE_BASE_COMMIT}" \
+            --lean-base-image "${LEAN_BASE_IMAGE}" \
+            --output "${RUNNER_TEMP}/abrl-agent-checker-context"
+          python3 tools/prepare_target_drift_checker_image.py verify-context \
+            --context "${RUNNER_TEMP}/abrl-agent-checker-context"
+          python3 tools/prepare_target_drift_checker_image.py build-image \
+            --context "${RUNNER_TEMP}/abrl-agent-checker-context" \
+            --image-tag "abrl-target-drift-agent-checker-base:${GITHUB_RUN_ID}" \
+            --sbom-output "${RUNNER_TEMP}/abrl-agent-image-artifacts/checker-base-sbom.json" \
+            --cache-manifest-output "${RUNNER_TEMP}/abrl-agent-image-artifacts/checker-cache-manifest.json" \
+            --build-log "${RUNNER_TEMP}/abrl-agent-image-artifacts/checker-base-build.log"
+          cp "${RUNNER_TEMP}/abrl-agent-checker-context/checker-image-build-input.json" \
+            "${RUNNER_TEMP}/abrl-agent-image-artifacts/checker-image-build-input.json"
+
+      - name: Fetch and verify the frozen Codex native package
+        run: |
+          curl --fail --location --proto '=https' --tlsv1.2 \
+            "${CODEX_PACKAGE_URL}" \
+            --output "${RUNNER_TEMP}/abrl-codex-0.130.0-linux-x64.tgz"
+          python3 -c 'import hashlib,json,pathlib; p=pathlib.Path("evaluation/target-drift-v2/agent-image-sources.json"); lock=json.loads(p.read_text())["codex_cli"]; a=pathlib.Path("'"${RUNNER_TEMP}"'/abrl-codex-0.130.0-linux-x64.tgz"); assert hashlib.sha512(a.read_bytes()).hexdigest()==lock["sha512_hex"]'
+
+      - name: Build the provider-client-capable agent candidate
+        run: |
+          CHECKER_DIGEST="$(python3 -c 'import json; print(json.load(open("'"${RUNNER_TEMP}"'/abrl-agent-image-artifacts/checker-base-sbom.json"))["container_image_digest"])')"
+          python3 tools/prepare_target_drift_agent_image.py prepare-context \
+            --checker-image-reference "abrl-target-drift-agent-checker-base:${GITHUB_RUN_ID}" \
+            --checker-image-digest "${CHECKER_DIGEST}" \
+            --checker-sbom "${RUNNER_TEMP}/abrl-agent-image-artifacts/checker-base-sbom.json" \
+            --checker-cache-manifest "${RUNNER_TEMP}/abrl-agent-image-artifacts/checker-cache-manifest.json" \
+            --checker-build-input "${RUNNER_TEMP}/abrl-agent-image-artifacts/checker-image-build-input.json" \
+            --codex-package "${RUNNER_TEMP}/abrl-codex-0.130.0-linux-x64.tgz" \
+            --output "${RUNNER_TEMP}/abrl-agent-image-context"
+          python3 tools/prepare_target_drift_agent_image.py verify-context \
+            --context "${RUNNER_TEMP}/abrl-agent-image-context"
+          python3 tools/prepare_target_drift_agent_image.py build-image \
+            --context "${RUNNER_TEMP}/abrl-agent-image-context" \
+            --image-tag "abrl-target-drift-agent:${GITHUB_RUN_ID}" \
+            --sbom-output "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-image-sbom.json" \
+            --build-log "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-image-build.log"
+          cp "${RUNNER_TEMP}/abrl-agent-image-context/agent-image-build-input.json" \
+            "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-image-build-input.json"
+
+      - name: Probe the exact offline Codex sandbox
+        run: |
+          set -o pipefail
+          python3 tools/record_target_drift_agent_image_probe.py \
+            --image-sbom "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-image-sbom.json" \
+            --work-dir "${RUNNER_TEMP}/abrl-agent-image-probe-work" \
+            --output "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-image-isolation-probe.json" \
+            --apparmor-profile "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-codex-native.apparmor" \
+            --probe-commit "${GITHUB_SHA}" 2>&1 | \
+            tee "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-image-isolation-probe-attempt.log"
+
+      - name: Re-run destructive PID-1 lifecycle probe on the exact agent image
+        run: |
+          set -o pipefail
+          AGENT_DIGEST="$(python3 -c 'import json; print(json.load(open("'"${RUNNER_TEMP}"'/abrl-agent-image-artifacts/agent-image-sbom.json"))["container_image_digest"])')"
+          CHECKER_DIGEST="$(python3 -c 'import json; print(json.load(open("'"${RUNNER_TEMP}"'/abrl-agent-image-artifacts/checker-base-sbom.json"))["container_image_digest"])')"
+          python3 tools/record_target_drift_agent_lifecycle_probe.py \
+            --image-digest "${AGENT_DIGEST}" \
+            --base-image "local/abrl-checker@${CHECKER_DIGEST}" \
+            --controller-source tools/target_drift_agent_pid1.py \
+            --containerfile-source evaluation/target-drift-v2/agent-image.Containerfile \
+            --workflow-source .github/workflows/target-drift-agent-image.yml \
+            --output-dir "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-lifecycle-probe-artifacts" \
+            --report "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-lifecycle-probe.json" 2>&1 | \
+            tee "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-lifecycle-probe-attempt.log"
+
+      - name: Unload the exact Codex user-namespace AppArmor profile
+        if: always()
+        run: |
+          PROFILE_ARTIFACT="${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-codex-native.apparmor"
+          if [[ -f "${PROFILE_ARTIFACT}" ]]; then
+            sudo apparmor_parser -R "${PROFILE_ARTIFACT}"
+          fi
+
+      - name: Upload result-free build and probe evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: target-drift-agent-image-${{ github.run_id }}
+          path: ${{ runner.temp }}/abrl-agent-image-artifacts
+          if-no-files-found: warn
+          retention-days: 14

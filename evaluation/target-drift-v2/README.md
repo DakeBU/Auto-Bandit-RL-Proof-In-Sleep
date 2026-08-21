@@ -236,6 +236,37 @@ boundaries.  The PID-1 controller must be incorporated into the final agent
 image and the same destructive probe must be rerun on that final digest before
 the real smoke.
 
+The combined result-free lane is implemented as
+`.github/workflows/target-drift-agent-image.yml`.  It first rebuilds the
+cache-complete checker base from the common pre-audit Git snapshot.  It then
+verifies the exact registry SRI and SHA-512 in
+`agent-image-sources.json`, extracts only the native Linux Codex executable,
+bundled `bwrap`, bundled `rg`, and package identity, and layers those bytes with
+the adapter and PID-1 controller onto that Lean base.  The agent context also
+copies and cross-checks the checker SBOM, raw build-input manifest, and cache
+manifest, so the inherited workspace/source provenance is not a free-standing
+hash claim.  Its two probes are provider-free: one observes workspace
+write, persistent-write denial outside the workspace, an explicit kernel
+socket-creation or route denial while the outer control reaches the same
+resolved IPv4 endpoint, inability to read the outer credential sentinel, exact
+AppArmor profile inheritance, fresh PID visibility, and
+Codex/Lean/Lake/cache byte bindings; the other kills
+the host Docker client and requires namespace reaping on the same final digest.
+After checkout, the lane initializes a result-free attempt ledger and its
+`always()` upload step attempts to retain every artifact produced before a
+failure; an earlier checkout/platform failure may remain visible only in the
+Actions log.  GitHub Actions
+[run 32464814750](https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/actions/runs/32464814750)
+completed both probes on one exact unpublished image digest.  The downloaded
+23-artifact set was independently checked against every recorded byte count and
+SHA-256, the report/SBOM/cache/source bindings, the outer-reachable and
+inner-`socket_create`/`EPERM` network observations, the lifecycle report and
+runtime ledgers, and the final heartbeat artifact.  The durable metadata is recorded in
+[`agent-image-candidate-32464814750.json`](agent-image-candidate-32464814750.json).
+This is an unpublished provider-client-capable result-free candidate, not a
+credential-bearing production run, a real smoke, or a model/formalization
+outcome.
+
 The sealed launcher accepts only the allowlisted Docker installation, rechecks the
 executable/signature-or-package ledger plus client/server/daemon identity, and
 constructs the complete argv itself.  Before every probe or replay it uses
@@ -315,12 +346,14 @@ implemented; on POSIX it creates an owner-only `0700`
 the plan.  Prompt source/workspace locations are relative to the common agent
 root.  This removes operator-supplied smoke markers from the model-visible
 current working directory and prompt paths.  A final production agent sandbox
-with a fixed in-container mount remains required before the real smoke runs.
-The generic result-free PID-1 lifecycle candidate above demonstrates the
-required parent-death/container mechanism only for its exact ephemeral image.
-The final provider-capable agent image must incorporate that controller and pass
-the same destructive lifecycle probe so that a controller crash cannot leave a
-provider child consuming budget or mutating the resumable attempt.
+with a fixed in-container mount and a sealed outer launcher remains required
+before the real smoke runs.  The result-free agent-image workflow is designed
+to combine the exact provider client, offline Lean cache, adapter, and PID-1
+controller and to rerun the destructive lifecycle probe, but it supplies no
+credential and makes no model call.  A passing candidate must still be
+extended with the root-only control/credential boundary and reprobed before a
+controller crash can be claimed not to leave a real provider child consuming
+budget or mutating the resumable attempt.
 
 This lane is implemented and component-tested, but it has not been run with a
 real provider/agent sandbox.  No real three-condition smoke, final pack, primary

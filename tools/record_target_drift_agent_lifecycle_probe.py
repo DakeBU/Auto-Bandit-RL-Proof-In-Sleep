@@ -72,6 +72,13 @@ def regular_file(path: Path, label: str) -> Path:
     return path
 
 
+def source_label(path: Path) -> str:
+    try:
+        return path.relative_to(ROOT).as_posix()
+    except ValueError:
+        return path.name
+
+
 def docker_executable() -> Path:
     text = shutil.which("docker")
     require(text is not None, "Docker CLI is unavailable")
@@ -334,11 +341,25 @@ def main() -> None:
     parser.add_argument("--image-digest", required=True)
     parser.add_argument("--base-image", required=True)
     parser.add_argument("--controller-source", type=Path, required=True)
+    parser.add_argument(
+        "--containerfile-source", type=Path,
+        default=ROOT / "evaluation/target-drift-v2/agent-lifecycle.Containerfile",
+    )
+    parser.add_argument(
+        "--workflow-source", type=Path,
+        default=ROOT / ".github/workflows/target-drift-agent-lifecycle.yml",
+    )
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--report", type=Path, required=True)
     args = parser.parse_args()
     require(sys.platform.startswith("linux"), "probe requires a Linux Docker host")
     controller = regular_file(args.controller_source.resolve(), "controller source")
+    containerfile = regular_file(
+        args.containerfile_source.resolve(), "agent lifecycle Containerfile source"
+    )
+    workflow = regular_file(
+        args.workflow_source.resolve(), "agent lifecycle workflow source"
+    )
     require(not args.output_dir.exists(), "probe output directory already exists")
     args.output_dir.mkdir(parents=True)
     args.output_dir.chmod(0o777)
@@ -355,18 +376,14 @@ def main() -> None:
         "source_bindings": {
             "probe_runner_sha256": sha256(Path(__file__).resolve()),
             "controller_source_sha256": sha256(controller),
-            "containerfile_sha256": sha256(regular_file(
-                ROOT / "evaluation/target-drift-v2/agent-lifecycle.Containerfile",
-                "agent lifecycle Containerfile",
-            )),
+            "containerfile_source": source_label(containerfile),
+            "containerfile_sha256": sha256(containerfile),
             "contract_sha256": sha256(regular_file(
                 ROOT / "evaluation/target-drift-v2/agent-sandbox-contract.json",
                 "agent sandbox contract",
             )),
-            "workflow_sha256": sha256(regular_file(
-                ROOT / ".github/workflows/target-drift-agent-lifecycle.yml",
-                "agent lifecycle workflow",
-            )),
+            "workflow_source": source_label(workflow),
+            "workflow_sha256": sha256(workflow),
         },
         "nonclaims": [
             "This result-free probe is not a provider or model invocation.",

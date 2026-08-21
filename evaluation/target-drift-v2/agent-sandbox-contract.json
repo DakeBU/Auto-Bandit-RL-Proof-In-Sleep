@@ -1,7 +1,7 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "suite_id": "ABRL-TARGET-DRIFT-V2",
-  "status": "result_free_lifecycle_component",
+  "status": "result_free_agent_image_components",
   "controller": {
     "entrypoint": ["python3", "/usr/local/bin/abrl-agent-pid1"],
     "pid_namespace_requirement": "controller is PID 1; --init is forbidden",
@@ -15,6 +15,25 @@
     "success": "the labeled container disappears and the escaped descendant heartbeat stops",
     "binding": "report hashes the Docker executable/identity, image digest, in-image controller bytes, and exact run command"
   },
+  "provider_client_image_candidate": {
+    "base": "the exact cache-complete checker image built from the common pre-audit workspace",
+    "source_lock": "the native Linux Codex registry package is version-, URL-, SRI-, and SHA-512-locked, then reduced to four regular allowlisted members before Docker sees it",
+    "contents": "the inherited offline Lean toolchain/cache, exact Codex executable/bundled bwrap/rg, the target-drift adapter, and the PID-1 controller",
+    "host_user_namespace_boundary": "Docker applies the hash-bound abrl-target-drift-codex AppArmor profile to the entire non-root agent-container process tree. Its sole AppArmor rule grants userns so the trusted native Codex client can launch its nested bubblewrap user, PID, and network namespaces; it supplies no Linux capability, while Docker still enforces its read-only root, capability drop, no-new-privileges, resource, and outer-network boundaries",
+    "required_result_free_probes": [
+      "in-image Codex/Lean/Lake/cache/controller/adapter bytes match their build ledgers",
+      "the evaluated child reports the exact abrl-target-drift-codex AppArmor profile inherited by the non-root agent-container process tree before any workspace, network, or credential observation is accepted",
+      "the evaluated command can write its workspace, cannot persist a write outside it, receives either an explicit kernel socket-creation denial or an IPv4 route denial while the outer control reaches the same frozen endpoint, and cannot read the outer credential sentinel",
+      "the exact final candidate digest passes host-control-loss PID-namespace reaping"
+    ],
+    "credential_boundary": "the candidate build and probes contain no provider credential and make no model call"
+  },
+  "production_gate": [
+    "replace the result-free probe with a sealed outer launcher that gives the adapter root-only control state and the evaluated Codex child a non-root tmpfs workspace",
+    "mount one provider credential through the frozen credential boundary without exposing it to model-spawned commands",
+    "freeze the exact provider/model/settings/prices/budgets and publish the final image digest plus all final-image probes",
+    "pass the permanently result-ineligible one-case-by-three-condition real-infrastructure smoke before any primary run"
+  ],
   "production_nonclaims": [
     "A lifecycle candidate does not freeze the final provider-capable agent image.",
     "Network, filesystem, auth, provider-client, toolchain, and budget isolation require their own final-image probes and attestations.",
