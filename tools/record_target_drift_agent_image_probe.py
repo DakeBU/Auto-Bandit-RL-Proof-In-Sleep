@@ -32,6 +32,8 @@ SUITE_ID = "ABRL-TARGET-DRIFT-V2"
 MAX_OUTPUT_BYTES = 4 * 1024 * 1024
 NETWORK_CONTROL_HOST = "registry.npmjs.org"
 NETWORK_CONTROL_PORT = 443
+CODEX_WORKSPACE_PERMISSION_PROFILE = ":workspace"
+CODEX_HOME_MOUNT = "/codex-home"
 
 
 def require(condition: bool, message: str) -> None:
@@ -149,6 +151,35 @@ def resolve_control_ipv4() -> str:
     return value
 
 
+def inner_sandbox_command(
+    runtime: Path, image_digest: str, workspace: Path, secret: Path,
+) -> list[str]:
+    """Construct the exact provider-free Codex 0.130.0 sandbox probe argv."""
+    return [
+        str(runtime), "run", "--rm", "--pull", "never", "--read-only",
+        "--network", "bridge", "--cap-drop", "ALL",
+        "--security-opt", "no-new-privileges=true",
+        "--security-opt", "seccomp=unconfined",
+        "--security-opt", "apparmor=unconfined",
+        "--user", "10002:10002", "--pids-limit", "64", "--memory", "512m",
+        "--cpus", "1", "--tmpfs", "/tmp:rw,nosuid,nodev,size=64m,mode=1777",
+        "--tmpfs",
+        f"{CODEX_HOME_MOUNT}:rw,nosuid,nodev,noexec,size=16m,"
+        "mode=0700,uid=10002,gid=10002",
+        "--env", "HOME=/tmp", "--env", f"CODEX_HOME={CODEX_HOME_MOUNT}",
+        "--mount", f"type=bind,src={workspace.resolve()},dst=/workspace",
+        "--mount",
+        f"type=bind,src={secret.resolve()},dst=/run/secrets/provider-auth,readonly",
+        "--entrypoint", "/usr/local/bin/codex", image_digest,
+        "sandbox", "linux", "--permissions-profile",
+        CODEX_WORKSPACE_PERMISSION_PROFILE,
+        "--config", "sandbox_workspace_write.network_access=false",
+        "--config", 'shell_environment_policy.inherit="none"',
+        "--config", "allow_login_shell=false", "--cd", "/workspace", "--",
+        "/usr/bin/python3", "/workspace/probe.py",
+    ]
+
+
 def run_inner_sandbox_probe(
     runtime: Path, image_digest: str, work_dir: Path,
 ) -> tuple[dict[str, Any], list[str], bytes, list[str], bytes, str]:
@@ -179,24 +210,7 @@ def run_inner_sandbox_probe(
     control_output = docker_run(control_command)
     require(control_output.strip() == b"outer-network-control-ok",
             "outer container network control did not reach the frozen endpoint")
-    command = [
-        str(runtime), "run", "--rm", "--pull", "never", "--read-only",
-        "--network", "bridge", "--cap-drop", "ALL",
-        "--security-opt", "no-new-privileges=true",
-        "--security-opt", "seccomp=unconfined",
-        "--security-opt", "apparmor=unconfined",
-        "--user", "10002:10002", "--pids-limit", "64", "--memory", "512m",
-        "--cpus", "1", "--tmpfs", "/tmp:rw,nosuid,nodev,size=64m,mode=1777",
-        "--env", "HOME=/tmp", "--env", "CODEX_HOME=/tmp/codex-home",
-        "--mount", f"type=bind,src={workspace.resolve()},dst=/workspace",
-        "--mount", f"type=bind,src={secret.resolve()},dst=/run/secrets/provider-auth,readonly",
-        "--entrypoint", "/usr/local/bin/codex", image_digest,
-        "sandbox", "linux", "--config", 'sandbox_mode="workspace-write"',
-        "--config", "sandbox_workspace_write.network_access=false",
-        "--config", 'shell_environment_policy.inherit="none"',
-        "--config", "allow_login_shell=false", "-C", "/workspace", "--",
-        "python3", "/workspace/probe.py",
-    ]
+    command = inner_sandbox_command(runtime, image_digest, workspace, secret)
     output = docker_run(command)
     observation_path = regular_file(
         workspace / "probe-observation.json", "inner-sandbox observation"

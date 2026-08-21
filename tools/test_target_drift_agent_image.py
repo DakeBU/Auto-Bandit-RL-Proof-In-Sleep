@@ -134,6 +134,30 @@ class TargetDriftAgentImageTest(unittest.TestCase):
         self.assertIn("errno.ENETUNREACH", source)
         self.assertEqual(probe.NETWORK_CONTROL_PORT, 443)
 
+    def test_probe_uses_exact_codex_workspace_profile_and_private_home(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            workspace = root / "workspace"
+            secret = root / "provider-auth"
+            workspace.mkdir()
+            secret.write_text("sentinel\n", encoding="utf-8")
+            command = probe.inner_sandbox_command(
+                Path("docker"), "sha256:" + "a" * 64, workspace, secret,
+            )
+        self.assertIn("--permissions-profile", command)
+        profile_index = command.index("--permissions-profile")
+        self.assertEqual(command[profile_index + 1], ":workspace")
+        self.assertNotIn('sandbox_mode="workspace-write"', command)
+        self.assertIn("--cd", command)
+        self.assertEqual(command[command.index("--cd") + 1], "/workspace")
+        self.assertIn("CODEX_HOME=/codex-home", command)
+        self.assertIn(
+            "/codex-home:rw,nosuid,nodev,noexec,size=16m,"
+            "mode=0700,uid=10002,gid=10002",
+            command,
+        )
+        self.assertEqual(command[-2:], ["/usr/bin/python3", "/workspace/probe.py"])
+
     def test_checker_evidence_cross_binds_raw_sidecars(self) -> None:
         digest = "sha256:" + "1" * 64
         build_payload = {
