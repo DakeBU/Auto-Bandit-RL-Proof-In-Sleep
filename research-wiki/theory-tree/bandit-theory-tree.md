@@ -275,6 +275,7 @@ constants, and literal LML declaration identity remain separate.
 | Thompson sampling | compiled stationary posterior kernel, actual recursive probability matching, comparator decomposition plus explicit mean-optimality contract, clipped confidence, latent-stream support, generated Bayesian regret; broader model/toolchain ports remain open | `TXT-SLIVKINS-2019-2024`, `PPR-AGRAWAL-GOYAL-2011-TS`, LML cards `Bandits.TS.hasCondDistrib_action`, `Bandits.integral_regret_le` |
 | EXP3/adversarial | canonical generated route compiled through potential/Hedge, importance-weighted conditional moments, measurable recursive sampling, exploration bias, tuned expected regret, per-horizon best-arm realized tails, a distinct fixed-process all-positive-prefix realized-regret terminal, and an explicit sparse-loss extension; horizon-free tuned EXP3, best-arm aggregation on that one fixed process, and EXP3.P remain extensions | `TXT-BUBECK-CESABIANCHI-2012`, `TXT-LATTIMORE-SZEPESVARI-2020`, `PPR-AUER-CFS-2002-EXP3` |
 | Tsallis-INF/FTRL | canonical generated half-Tsallis route compiled through minimizer regularity, scheduled conditional action law, score alignment, expected stability/penalty, fixed-gap self-bounding, square-root schedule, and a finite-arm IID bounded reward-law logarithmic terminal; corruption, dynamic, and population-oracle restart results compile as labelled extensions, while the strict `Fin 2` refined-average obstruction and paper-sharp complete Tsallis-INF remain visible | `LOCAL-LEAF-TSALLIS-FINITE-BANDIT-MEAN-LOSS`, `LOCAL-LEAF-TSALLIS-SQRT-SCHEDULE-LOG-FIXED-GAP`, `LOCAL-LEAF-TSALLIS-SCHEDULED-FIXED-GAP-SELF-BOUNDING`, `LOCAL-LEAF-TSALLIS-SCHEDULED-EXPECTED-REGRET`, `LOCAL-LEAF-TSALLIS-SCHEDULED-ALL-RATE-EXPECTED-STABILITY`, `PPR-ZIMMERT-SELDIN-2018-TSALLIS-INF`, `PPR-MASOUDIAN-SELDIN-2021-TSALLIS-INF`, `PPR-ADAPTIVE-LR-FTRL-2024` |
+| Stochastic-gradient bandit | compiled source-facing finite-action mechanism for softmax normalization, zero-sum reward updates, the conditional-mean gap coordinate, and the post-convergence/failure-mass split; recursive history law and all rate regimes remain open | `PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB`, `PAPER-AUDIT-NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT` |
 | Linear/OFUL | compiled finite-action scalar route from Gram/determinant and confidence ellipsoid to a horizon-free all-time/all-horizon/stopping policy; horizon-indexed expectation/consistency is separate; contextual/dynamic/Hilbert extensions remain open | `TXT-LATTIMORE-SZEPESVARI-2020`, `PPR-ABBASI-YADKORI-2011-SELF-NORMALIZED`, `PPR-LI-CHU-LANGFORD-SCHAPIRE-2010-LINUCB` |
 | Pure exploration | confidence event, stopping rule, sample complexity, lower-bound change-of-measure | `TXT-LATTIMORE-SZEPESVARI-2020`, `TXT-SLIVKINS-2019-2024` |
 | BwK/resource constraints | budget stopping time, resource consumption, primal-dual comparison | `TXT-SLIVKINS-2019-2024`, `PPR-BADANIDIYURU-KLEINBERG-SLIVKINS-2013-BWK` |
@@ -335,6 +336,28 @@ compile a large/small-count consumer at one algebraic snapshot.  They neither
 verify nor refute source Lemmas D.10/D.12, main-text Lemma 4.2, or Theorem 4.1:
 the recursive branch/count/width producers, same-prefix factor-ten comparison,
 and trajectory instantiation remain open.
+
+## Prospective External Audit: Stochastic Gradient Bandits
+
+The source-frozen Baudry--Johnson--Vary--Pike-Burke--Rebeschini NeurIPS 2025
+audit is tracked by
+`PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB` and
+`PAPER-AUDIT-NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT`.  Its first 26 named
+declarations compile Algorithm 1 and Equations (3)--(7) at a fixed pre-action
+history: the softmax weights form a strictly positive probability vector; the
+selected/nonselected update sums to zero; the finite conditional-mean update
+equals both the policy-value gradient coordinate and the instantaneous-gap
+coordinate; and the minimum/maximum gap envelopes yield the finite-horizon
+best-parameter lower bound and post-convergence plus squared-failure-mass
+decomposition.
+
+This remains a partial mechanism audit.  The finite weighted mean is not yet
+identified with a conditional expectation on a recursive SGB history kernel.
+The measurable parameter recursion, reward-law bridge, bounds on failure
+mass, two-arm sharp threshold, general-`K` learning-rate scaling, and every
+Theorem 1--4 regret endpoint remain blocked.  The source freeze records the
+initial reserve/not-started state; the current paper card and generated task
+memory record the later partial compiled status.
 
 The machine-readable route atlas is `lean-route-roadmap.json`.  It is the
 handoff contract between upper planning agents and lower Lean agents: each

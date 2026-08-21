@@ -201,6 +201,18 @@ class AnonymousSupplementTests(unittest.TestCase):
             ledger["source_records"][BUILDER.SUCCINCT_AUDIT_ID]["status"],
             "partial",
         )
+        sgb_row = next(
+            row for row in ledger["table_rows"]
+            if row["artifact"] == "Stochastic-gradient-bandit mechanism audit"
+        )
+        self.assertEqual(sgb_row["status"], "partial")
+        self.assertEqual(sgb_row["source_record_ids"], [BUILDER.SGB_AUDIT_ID])
+        self.assertEqual(ledger["stochastic_gradient_bandit"]["declaration_count"], 26)
+        self.assertFalse(ledger["stochastic_gradient_bandit"]["paper_endpoint_verified"])
+        self.assertEqual(
+            ledger["source_records"][BUILDER.SGB_AUDIT_ID]["status"],
+            "partial",
+        )
 
     def test_public_base_is_replaced_by_anonymous_tree_binding(self):
         payload = BUILDER.build_payload(allow_missing_graph=True)

@@ -97,6 +97,7 @@ DELAYED_IMPLEMENTATION_IDS = (
 )
 DELAYED_DIAGNOSTIC_ID = "DELAYED-SAPO-D10-D12-GAP-ORDERING-AUDIT"
 SUCCINCT_AUDIT_ID = "NEURIPS-2025-SUCCINCT-LOWER-BOUND-GEOMETRY-AUDIT"
+SGB_AUDIT_ID = "NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT-MECHANISM-AUDIT"
 EXPECTED_INDEX_EXCEPTIONS = (
     "BanditRLProof.DelayedFeedback.ActionTimeView.ext",
     "BanditRLProof.LowerBounds.IsConsistentRegret.add",
@@ -120,6 +121,7 @@ SOURCE_RESULT_IDS = (
     DELAYED_DIAGNOSTIC_ID,
     "NEURIPS-2025-DELAYED-BOBW-CENTRAL-ENDPOINTS",
     SUCCINCT_AUDIT_ID,
+    SGB_AUDIT_ID,
     "TARGET-DRIFT-V2-CONTROLLED-EVALUATION",
 )
 
@@ -813,10 +815,19 @@ def validate_succinct_count(records):
         )
 
 
+def validate_sgb_count(records):
+    sgb = records[SGB_AUDIT_ID]
+    if sgb["status"] != "partial" or len(sgb["declarations"]) != 26:
+        raise ValueError(
+            "stochastic-gradient-bandit audit must remain partial with 26 declarations"
+        )
+
+
 def build_claim_ledger(proof_report):
     records = selected_source_records()
     validate_delayed_counts(records)
     validate_succinct_count(records)
+    validate_sgb_count(records)
     index = load_json(REPO_ROOT / "research-wiki" / "retrieval-index" /
                       "local_lean_declarations.json")
     index_names = {row["full_name"] for row in index["declarations"]}
@@ -877,6 +888,12 @@ def build_claim_ledger(proof_report):
                 "boundary": "54 declarations compile Definitions 3.1--3.3 and Lemmas 3.1--3.4, including finite-Bessel strict representation-size minimality and uniqueness for the same vector; a global R boundedness obligation is explicit; no Lemma 3.5--3.6, Theorem 3.8, or regret endpoint.",
             },
             {
+                "artifact": "Stochastic-gradient-bandit mechanism audit",
+                "status": "partial",
+                "source_record_ids": [SGB_AUDIT_ID],
+                "boundary": "26 declarations compile the finite-action, history-conditioned algebra underlying Algorithm 1 and Equations (3)--(7); no recursive history kernel, conditional-expectation lift, learning-rate regime, or Theorem 1--4 endpoint.",
+            },
+            {
                 "artifact": "Proof graph / curvature--noise--gap",
                 "status": "prototype",
                 "source_record_ids": [],
@@ -901,6 +918,11 @@ def build_claim_ledger(proof_report):
         "succinct_geometry": {
             "source_record_id": SUCCINCT_AUDIT_ID,
             "declaration_count": 54,
+            "paper_endpoint_verified": False,
+        },
+        "stochastic_gradient_bandit": {
+            "source_record_id": SGB_AUDIT_ID,
+            "declaration_count": 26,
             "paper_endpoint_verified": False,
         },
         "proof_graph": {
