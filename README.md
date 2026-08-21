@@ -192,7 +192,14 @@ Core paths:
   production agent sandbox, or a final experiment seal.  A frozen real provider
   image, final published and sealed checker image, budgets, graders, final seal, the preregistered
   one-case-by-three-condition real-infrastructure smoke, and all 450 primary
-  model runs remain unstarted; no model or formalization outcome is reported;
+  model runs remain unstarted.  The smoke now has a separate hash-bound
+  materializer/runner: it derives one matched three-condition block, hides the
+  smoke purpose from the agent request, and forces even a production-checker
+  success to `checked_smoke_nonexperimental` with `result_eligible=false`, so it
+  cannot enter blind grading or the primary analysis.  This lane is implemented
+  and component-tested but has not been run; a production agent lifecycle that
+  proves no provider child survives controller failure is still required, and
+  no model or formalization outcome is reported;
 - `website/` — literate static site, local compiler service, and integrity checker;
 - `tools/bandit.py` — deterministic harness CLI.
 - [`docs/proof_graph_laboratory.md`](docs/proof_graph_laboratory.md) — compiled-environment dependency export, proof-cost/ZDD/hypergraph prototypes, and the proof-structural novelty audit boundary.
