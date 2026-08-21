@@ -204,17 +204,21 @@ Core paths:
   then observed a setsid descendant heartbeat increase before abrupt host-client
   loss and freeze after the PID namespace disappeared.  Its evidence is recorded
   in `evaluation/target-drift-v2/agent-lifecycle-candidate-32436339541.json`.
-  This closes only that generic lifecycle-component check.  A separate
-  result-free image lane now layers the exact SRI/SHA-512-locked Linux Codex
+  This closes only that generic lifecycle-component check.  A later combined
+  result-free agent-image run
+  ([run 32464814750](https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/actions/runs/32464814750))
+  layered the exact SRI/SHA-512-locked Linux Codex
   `0.130.0` client, bundled `bwrap`/`rg`, adapter, and PID-1 controller onto the
-  cache-complete Lean image, then requires byte/toolchain checks and an offline
-  probe showing workspace write, persistent-write denial outside the workspace,
-  explicit same-IPv4 route denial, and outer credential-sentinel unreadability,
-  followed by the same destructive lifecycle probe on the exact resulting
-  digest.  The workflow and component
-  tests are present; no passing agent-image candidate is claimed until that
-  Linux workflow completes and its downloaded ledgers are independently
-  checked.  Even then, a final credential-bearing outer launcher, remote-model
+  cache-complete Lean image.  On the exact unpublished digest it passed
+  byte/toolchain checks, workspace-write and persistent-outside-write boundaries,
+  AppArmor profile inheritance, outer credential-sentinel unreadability, an
+  outer-reachable/inner-`EPERM` same-IPv4 network check, and the destructive
+  PID-1 lifecycle probe.  All 23 downloaded artifact bytes and hashes, plus the
+  available report/SBOM/cache/runtime/source/lifecycle cross-file bindings,
+  were independently recomputed; the public record is
+  `evaluation/target-drift-v2/agent-image-candidate-32464814750.json`.  This is
+  result-free candidate evidence, not a production agent sandbox or experiment
+  result.  A final credential-bearing outer launcher, remote-model
   attestation, prices, active-budget boundary, final seal, and real smoke remain
   separate gates.  The real smoke and all 450 model runs
   remain unstarted; no model or formalization outcome is reported;

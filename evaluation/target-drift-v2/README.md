@@ -236,7 +236,7 @@ boundaries.  The PID-1 controller must be incorporated into the final agent
 image and the same destructive probe must be rerun on that final digest before
 the real smoke.
 
-The next result-free lane is now executable as
+The combined result-free lane is implemented as
 `.github/workflows/target-drift-agent-image.yml`.  It first rebuilds the
 cache-complete checker base from the common pre-audit Git snapshot.  It then
 verifies the exact registry SRI and SHA-512 in
@@ -245,19 +245,27 @@ bundled `bwrap`, bundled `rg`, and package identity, and layers those bytes with
 the adapter and PID-1 controller onto that Lean base.  The agent context also
 copies and cross-checks the checker SBOM, raw build-input manifest, and cache
 manifest, so the inherited workspace/source provenance is not a free-standing
-hash claim.  Its two probes are still provider-free: one observes workspace
-write, persistent-write denial outside the workspace, an explicit route denial
-to the same resolved IPv4 endpoint reached by the outer control, inability to
-read the outer credential sentinel, fresh PID visibility, and
+hash claim.  Its two probes are provider-free: one observes workspace
+write, persistent-write denial outside the workspace, an explicit kernel
+socket-creation or route denial while the outer control reaches the same
+resolved IPv4 endpoint, inability to read the outer credential sentinel, exact
+AppArmor profile inheritance, fresh PID visibility, and
 Codex/Lean/Lake/cache byte bindings; the other kills
 the host Docker client and requires namespace reaping on the same final digest.
 After checkout, the lane initializes a result-free attempt ledger and its
 `always()` upload step attempts to retain every artifact produced before a
 failure; an earlier checkout/platform failure may remain visible only in the
-Actions log.  Before a successful workflow and
-independent artifact audit, this is implemented build/probe code only, not a
-passing image claim.  After such a pass it would still be an unpublished
-provider-client-capable candidate, not a credential-bearing production run.
+Actions log.  GitHub Actions
+[run 32464814750](https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/actions/runs/32464814750)
+completed both probes on one exact unpublished image digest.  The downloaded
+23-artifact set was independently checked against every recorded byte count and
+SHA-256, the report/SBOM/cache/source bindings, the outer-reachable and
+inner-`socket_create`/`EPERM` network observations, the lifecycle report and
+runtime ledgers, and the final heartbeat artifact.  The durable metadata is recorded in
+[`agent-image-candidate-32464814750.json`](agent-image-candidate-32464814750.json).
+This is an unpublished provider-client-capable result-free candidate, not a
+credential-bearing production run, a real smoke, or a model/formalization
+outcome.
 
 The sealed launcher accepts only the allowlisted Docker installation, rechecks the
 executable/signature-or-package ledger plus client/server/daemon identity, and

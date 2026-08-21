@@ -57,6 +57,11 @@ PUBLIC_AGENT_LIFECYCLE_RUN_URL = (
     "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/"
     "actions/runs/32436339541"
 )
+PUBLIC_AGENT_IMAGE_RUN_ID = "32464814750"
+PUBLIC_AGENT_IMAGE_RUN_URL = (
+    "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/"
+    "actions/runs/32464814750"
+)
 PUBLIC_CANDIDATE_RECORD = (
     "evaluation/target-drift-v2/checker-image-candidate-32137509103.json"
 )
@@ -66,6 +71,9 @@ PUBLIC_ISOLATION_CANDIDATE_RECORD = (
 PUBLIC_AGENT_LIFECYCLE_RECORD = (
     "evaluation/target-drift-v2/agent-lifecycle-candidate-32436339541.json"
 )
+PUBLIC_AGENT_IMAGE_RECORD = (
+    "evaluation/target-drift-v2/agent-image-candidate-32464814750.json"
+)
 ANONYMOUS_CANDIDATE_RECORD = (
     "evaluation/target-drift-v2/checker-image-candidate-record.json"
 )
@@ -74,6 +82,9 @@ ANONYMOUS_ISOLATION_CANDIDATE_RECORD = (
 )
 ANONYMOUS_AGENT_LIFECYCLE_RECORD = (
     "evaluation/target-drift-v2/agent-lifecycle-candidate-record.json"
+)
+ANONYMOUS_AGENT_IMAGE_RECORD = (
+    "evaluation/target-drift-v2/agent-image-candidate-record.json"
 )
 
 DELAYED_IMPLEMENTATION_IDS = (
@@ -173,6 +184,7 @@ TARGET_DRIFT_PROTOCOL_FILES = (
     PUBLIC_CANDIDATE_RECORD,
     PUBLIC_ISOLATION_CANDIDATE_RECORD,
     PUBLIC_AGENT_LIFECYCLE_RECORD,
+    PUBLIC_AGENT_IMAGE_RECORD,
     "evaluation/target-drift-v2/checker-image-sbom.template.json",
     "evaluation/target-drift-v2/checker-image.Containerfile",
     "evaluation/target-drift-v2/checker-isolation-probe.excluded-fixture.json",
@@ -389,6 +401,261 @@ def anonymous_base_manifest(payload):
     }
 
 
+def anonymous_agent_image_candidate(candidate, anonymous_reference):
+    """Keep only self-contained qualitative evidence from the public CI run.
+
+    Public-run timestamps, durations, image/source digests, and the downloaded
+    artifact inventory are useful in the public repository but are unique
+    linkage fingerprints in a double-blind archive.  The anonymous supplement
+    therefore uses a positive allowlist and retains only claims that can be
+    interpreted without locating the public workflow run.
+    """
+    def require_dict(parent, key):
+        value = parent.get(key)
+        if not isinstance(value, dict):
+            raise ValueError("combined agent-image candidate is missing " + key)
+        return value
+
+    def pick(parent, keys, label):
+        missing = [key for key in keys if key not in parent]
+        if missing:
+            raise ValueError(
+                "combined agent-image candidate is missing {} fields: {}".format(
+                    label, ", ".join(missing)
+                )
+            )
+        return {key: parent[key] for key in keys}
+
+    workflow = require_dict(candidate, "workflow_run")
+    public_candidate = require_dict(candidate, "candidate")
+    sandbox = require_dict(candidate, "sandbox_probe")
+    lifecycle = require_dict(candidate, "lifecycle_probe")
+    checks = require_dict(candidate, "hash_chain_checks")
+    if not checks or any(type(value) is not bool for value in checks.values()):
+        raise ValueError("combined agent-image hash checks must be literal booleans")
+    nonclaims = candidate.get("nonclaims")
+    if not isinstance(nonclaims, list) or not all(
+        isinstance(value, str) for value in nonclaims
+    ):
+        raise ValueError("combined agent-image nonclaims must be a string list")
+
+    anonymous_candidate = {
+        **pick(candidate, ("schema_version", "suite_id", "evidence_type"), "top-level"),
+        "recorded_at_utc": "<redacted-public-run-time>",
+        "workflow_run": {
+            "id": "<redacted-public-run-id>",
+            "url": "<redacted-public-run-url>",
+            "head_commit": "<anonymous-builder-snapshot>",
+            **pick(
+                workflow,
+                ("conclusion", "artifact_retention_days"),
+                "workflow",
+            ),
+            "job_duration": "<redacted-public-run-duration>",
+        },
+        "candidate": {
+            **pick(
+                public_candidate,
+                (
+                    "status",
+                    "published",
+                    "codex_version",
+                    "toolchain_release",
+                    "lean_version",
+                    "lake_version",
+                    "offline_toolchain_probe",
+                    "runtime",
+                    "apparmor_profile",
+                ),
+                "candidate",
+            ),
+            "workspace_base_commit": anonymous_reference,
+        },
+        "sandbox_probe": pick(
+            sandbox,
+            (
+                "status",
+                "workspace_write_succeeded",
+                "persistent_outside_workspace_write_denied",
+                "provider_auth_unreadable",
+                "openai_api_key_absent",
+                "outer_same_ipv4_endpoint_reachable",
+                "inner_network_denied",
+                "inner_network_denial_stage",
+                "inner_network_errno",
+                "inner_network_error_name",
+                "fresh_pid_namespace",
+                "observed_apparmor_profile",
+                "observed_apparmor_mode",
+                "apparmor_profile_attached",
+            ),
+            "sandbox probe",
+        ),
+        "lifecycle_probe": pick(
+            lifecycle,
+            (
+                "status",
+                "controller_pid",
+                "pre_crash_heartbeat_observations",
+                "post_cleanup_heartbeat_observation",
+                "escaped_descendant_heartbeat_frozen",
+                "container_absent_after_control_loss",
+                "controller_exit_reason",
+                "direct_child_return_code",
+            ),
+            "lifecycle probe",
+        ),
+        "hash_chain_checks": dict(checks),
+        "nonclaims": list(nonclaims),
+    }
+    return anonymous_candidate
+
+
+def anonymous_checker_image_candidate(candidate, anonymous_reference):
+    """Remove public-run linkage fields from a checker-image candidate record."""
+    workflow = candidate.get("workflow_run")
+    public_candidate = candidate.get("candidate")
+    checks = candidate.get("hash_chain_checks")
+    nonclaims = candidate.get("nonclaims")
+    if not isinstance(workflow, dict) or not isinstance(public_candidate, dict):
+        raise ValueError("checker-image candidate structure changed")
+    if not isinstance(checks, dict) or not checks or any(
+        type(value) is not bool for value in checks.values()
+    ):
+        raise ValueError("checker-image hash checks must be literal booleans")
+    if not isinstance(nonclaims, list) or not all(
+        isinstance(value, str) for value in nonclaims
+    ):
+        raise ValueError("checker-image nonclaims must be a string list")
+
+    def pick(parent, keys, label):
+        missing = [key for key in keys if key not in parent]
+        if missing:
+            raise ValueError(
+                "checker-image candidate is missing {} fields: {}".format(
+                    label, ", ".join(missing)
+                )
+            )
+        return {key: parent[key] for key in keys}
+
+    candidate_fields = (
+        "status",
+        "published",
+        "toolchain_release",
+        "lean_version",
+        "lake_version",
+        "offline_toolchain_probe",
+        "worker_uid",
+    )
+    result = {
+        **pick(candidate, ("schema_version", "suite_id", "evidence_type"), "top-level"),
+        "recorded_at_utc": "<redacted-public-run-time>",
+        "workflow_run": {
+            "id": "<redacted-public-run-id>",
+            "url": "<redacted-public-run-url>",
+            "head_commit": "<anonymous-builder-snapshot>",
+            **pick(
+                workflow,
+                ("conclusion", "artifact_retention_days"),
+                "workflow",
+            ),
+            "job_duration": "<redacted-public-run-duration>",
+        },
+        "candidate": {
+            **pick(public_candidate, candidate_fields, "candidate"),
+            "workspace_base_commit": anonymous_reference,
+        },
+        "hash_chain_checks": dict(checks),
+        "nonclaims": list(nonclaims),
+    }
+    isolation = candidate.get("isolation_probes")
+    if isolation is not None:
+        if not isinstance(isolation, dict) or not isolation or any(
+            type(value) is not bool for value in isolation.values()
+        ):
+            raise ValueError("checker isolation probes must be literal booleans")
+        result["candidate"].update(pick(
+            public_candidate,
+            ("worker_effective_capabilities_hex", "runtime"),
+            "isolation candidate",
+        ))
+        result["isolation_probes"] = dict(isolation)
+    return result
+
+
+def anonymous_agent_lifecycle_candidate(candidate):
+    """Retain the lifecycle result without its public workflow fingerprint."""
+    workflow = candidate.get("workflow_run")
+    public_candidate = candidate.get("candidate")
+    runtime = candidate.get("runtime")
+    checks = candidate.get("hash_chain_checks")
+    nonclaims = candidate.get("nonclaims")
+    if not all(isinstance(value, dict) for value in (
+        workflow, public_candidate, runtime, checks
+    )):
+        raise ValueError("agent lifecycle candidate structure changed")
+    if not checks or any(type(value) is not bool for value in checks.values()):
+        raise ValueError("agent lifecycle hash checks must be literal booleans")
+    if not isinstance(nonclaims, list) or not all(
+        isinstance(value, str) for value in nonclaims
+    ):
+        raise ValueError("agent lifecycle nonclaims must be a string list")
+
+    def pick(parent, keys, label):
+        missing = [key for key in keys if key not in parent]
+        if missing:
+            raise ValueError(
+                "agent lifecycle candidate is missing {} fields: {}".format(
+                    label, ", ".join(missing)
+                )
+            )
+        return {key: parent[key] for key in keys}
+
+    return {
+        **pick(candidate, ("schema_version", "suite_id", "evidence_type"), "top-level"),
+        "recorded_at_utc": "<redacted-public-run-time>",
+        "workflow_run": {
+            "id": "<redacted-public-run-id>",
+            "url": "<redacted-public-run-url>",
+            "head_commit": "<anonymous-builder-snapshot>",
+            **pick(
+                workflow,
+                ("conclusion", "artifact_retention_days"),
+                "workflow",
+            ),
+            "job_duration": "<redacted-public-run-duration>",
+        },
+        "candidate": pick(
+            public_candidate,
+            (
+                "status",
+                "published",
+                "controller_pid",
+                "control_loss_reason",
+                "direct_child_return_code",
+                "pre_crash_heartbeat_observations",
+                "post_cleanup_heartbeat_observation",
+                "escaped_descendant_heartbeat_frozen",
+                "container_absent_after_control_loss",
+            ),
+            "candidate",
+        ),
+        "runtime": pick(
+            runtime,
+            (
+                "client_version",
+                "server_version",
+                "server_os",
+                "storage_driver",
+                "security_options",
+            ),
+            "runtime",
+        ),
+        "hash_chain_checks": dict(checks),
+        "nonclaims": list(nonclaims),
+    }
+
+
 def anonymize_evaluation_bytes(rel, data, anonymous_reference):
     if not rel.endswith((".json", ".md", ".py", ".yml", ".Containerfile")):
         return data
@@ -449,6 +716,17 @@ def anonymize_evaluation_bytes(rel, data, anonymous_reference):
             "agent-lifecycle-candidate-32436339541.json",
             "agent-lifecycle-candidate-record.json",
         )
+        text = text.replace(
+            "[run {}]({})".format(
+                PUBLIC_AGENT_IMAGE_RUN_ID, PUBLIC_AGENT_IMAGE_RUN_URL,
+            ),
+            "a public result-free combined agent-image run "
+            "(run metadata redacted)",
+        )
+        text = text.replace(
+            "agent-image-candidate-32464814750.json",
+            "agent-image-candidate-record.json",
+        )
     candidate_records = {
         PUBLIC_CANDIDATE_RECORD: (
             PUBLIC_CANDIDATE_RUN_ID, PUBLIC_CANDIDATE_RUN_URL,
@@ -459,6 +737,9 @@ def anonymize_evaluation_bytes(rel, data, anonymous_reference):
         ),
         PUBLIC_AGENT_LIFECYCLE_RECORD: (
             PUBLIC_AGENT_LIFECYCLE_RUN_ID, PUBLIC_AGENT_LIFECYCLE_RUN_URL,
+        ),
+        PUBLIC_AGENT_IMAGE_RECORD: (
+            PUBLIC_AGENT_IMAGE_RUN_ID, PUBLIC_AGENT_IMAGE_RUN_URL,
         ),
     }
     if rel in candidate_records:
@@ -471,9 +752,16 @@ def anonymize_evaluation_bytes(rel, data, anonymous_reference):
             raise ValueError("candidate build run identifier changed")
         if workflow_run.get("url") != expected_run_url:
             raise ValueError("candidate build run URL changed")
-        workflow_run["id"] = "<redacted-public-run-id>"
-        workflow_run["url"] = "<redacted-public-run-url>"
-        workflow_run["head_commit"] = "<anonymous-builder-snapshot>"
+        if rel in (PUBLIC_CANDIDATE_RECORD, PUBLIC_ISOLATION_CANDIDATE_RECORD):
+            candidate = anonymous_checker_image_candidate(
+                candidate, anonymous_reference
+            )
+        elif rel == PUBLIC_AGENT_LIFECYCLE_RECORD:
+            candidate = anonymous_agent_lifecycle_candidate(candidate)
+        elif rel == PUBLIC_AGENT_IMAGE_RECORD:
+            candidate = anonymous_agent_image_candidate(
+                candidate, anonymous_reference
+            )
         text = canonical_json(candidate).decode("utf-8")
     text = text.replace(PUBLIC_WORKSPACE_BASE_COMMIT, anonymous_reference)
     return text.encode("utf-8")
@@ -687,6 +975,8 @@ def build_payload(proof_graph=None, proof_report_path=None, allow_missing_graph=
             destination = ANONYMOUS_ISOLATION_CANDIDATE_RECORD
         elif rel == PUBLIC_AGENT_LIFECYCLE_RECORD:
             destination = ANONYMOUS_AGENT_LIFECYCLE_RECORD
+        elif rel == PUBLIC_AGENT_IMAGE_RECORD:
+            destination = ANONYMOUS_AGENT_IMAGE_RECORD
         add_payload(payload, destination, data)
     for rel in TARGET_DRIFT_WORKFLOW_FILES:
         if rel not in tracked:
