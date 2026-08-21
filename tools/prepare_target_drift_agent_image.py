@@ -94,6 +94,18 @@ def write_new_json(path: Path, value: Any) -> None:
         raise
 
 
+def write_new_bytes(path: Path, value: bytes) -> None:
+    require(not path.exists(), f"refusing to overwrite {path}")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    descriptor = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o644)
+    try:
+        with os.fdopen(descriptor, "wb") as stream:
+            stream.write(value)
+    except BaseException:
+        path.unlink(missing_ok=True)
+        raise
+
+
 def validate_source_lock(payload: Any) -> dict[str, Any]:
     require(isinstance(payload, dict)
             and payload.get("schema_version") == 1
@@ -408,6 +420,31 @@ def docker_output(command: list[str], *, timeout: int = 120) -> bytes:
     return process.stdout
 
 
+def validate_codex_version_output(payload: bytes, expected_version: str) -> str:
+    """Require one exact Codex version line in bounded Docker output.
+
+    Docker writes daemon notices to stderr, and ``docker_output`` deliberately
+    preserves stderr together with stdout for the evidence boundary.  Those
+    notices must not make the source-locked client version look different, but
+    neither may an absent or duplicated version observation pass.
+    """
+    try:
+        text = payload.decode("utf-8", errors="strict")
+    except UnicodeDecodeError as exc:
+        raise SystemExit(
+            "target-drift agent-image preparation failed: "
+            "in-image Codex version output is not UTF-8"
+        ) from exc
+    expected = f"codex-cli {expected_version}"
+    identity_lines = [
+        line for line in text.splitlines()
+        if re.fullmatch(r"codex-cli\s+\S+", line) is not None
+    ]
+    require(identity_lines == [expected],
+            "in-image Codex version differs from the source lock")
+    return expected
+
+
 def extract_image(runtime: Path, image_digest: str, source: str) -> bytes:
     with tempfile.TemporaryDirectory(prefix="abrl-agent-image-extract-") as directory:
         target = Path(directory) / "artifact"
@@ -424,7 +461,11 @@ def build_image(
     source_manifest = validate_context(source_context)
     sbom_output = sbom_output.resolve()
     build_log = build_log.resolve()
-    require(not sbom_output.exists() and not build_log.exists(),
+    codex_version_output_path = sbom_output.with_name(
+        "agent-codex-version-output.log"
+    )
+    require(not sbom_output.exists() and not build_log.exists()
+            and not codex_version_output_path.exists(),
             "agent-image output already exists")
     runtime = checker_launcher.canonical_docker_executable()
     identity = checker_launcher.runtime_identity(runtime)
@@ -492,14 +533,16 @@ def build_image(
             == manifest["checker_cache_manifest_sha256"],
             "agent image inherited a different Lean cache manifest")
 
-    codex_version = docker_output([
+    codex_version_output = docker_output([
         str(runtime), "run", "--rm", "--pull", "never", "--network", "none",
         "--read-only", "--cap-drop", "ALL", "--security-opt",
         "no-new-privileges=true", "--entrypoint", "/usr/local/bin/codex",
         image_digest, "--version",
-    ]).decode("utf-8", errors="strict").strip()
-    require(codex_version == f"codex-cli {manifest['codex_version']}",
-            "in-image Codex version differs from the source lock")
+    ])
+    codex_version = validate_codex_version_output(
+        codex_version_output, manifest["codex_version"]
+    )
+    write_new_bytes(codex_version_output_path, codex_version_output)
     lean_version = docker_output([
         str(runtime), "run", "--rm", "--pull", "never", "--network", "none",
         "--read-only", "--cap-drop", "ALL", "--security-opt",
@@ -534,6 +577,10 @@ def build_image(
         "codex_package_sha512": manifest["codex_package_sha512"],
         "codex_executable_sha256": hashlib.sha256(extracted["codex"]).hexdigest(),
         "codex_version": codex_version,
+        "codex_version_output_artifact": codex_version_output_path.name,
+        "codex_version_output_sha256": hashlib.sha256(
+            codex_version_output
+        ).hexdigest(),
         "bundled_bwrap_sha256": hashlib.sha256(extracted["bwrap"]).hexdigest(),
         "bundled_rg_sha256": hashlib.sha256(extracted["rg"]).hexdigest(),
         "controller_sha256": hashlib.sha256(extracted["controller"]).hexdigest(),

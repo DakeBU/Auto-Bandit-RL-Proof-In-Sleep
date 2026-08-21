@@ -96,6 +96,32 @@ class TargetDriftAgentImageTest(unittest.TestCase):
         self.assertNotIn("curl ", recipe)
         self.assertNotIn("npm ", recipe)
 
+    def test_codex_version_observation_allows_daemon_notice(self) -> None:
+        payload = (
+            b"WARNING: daemon emitted a bounded platform notice\n"
+            b"codex-cli 0.130.0\n"
+        )
+        self.assertEqual(
+            image.validate_codex_version_output(payload, "0.130.0"),
+            "codex-cli 0.130.0",
+        )
+        with self.assertRaisesRegex(SystemExit, "differs from the source lock"):
+            image.validate_codex_version_output(
+                b"codex-cli 0.129.0\n", "0.130.0"
+            )
+        with self.assertRaisesRegex(SystemExit, "differs from the source lock"):
+            image.validate_codex_version_output(
+                b"codex-cli 0.130.0\ncodex-cli 0.130.0\n", "0.130.0"
+            )
+        with self.assertRaisesRegex(SystemExit, "differs from the source lock"):
+            image.validate_codex_version_output(
+                b"codex-cli 0.129.0\ncodex-cli 0.130.0\n", "0.130.0"
+            )
+        with self.assertRaisesRegex(SystemExit, "differs from the source lock"):
+            image.validate_codex_version_output(
+                b" codex-cli 0.130.0 \n", "0.130.0"
+            )
+
     def test_probe_checks_write_network_auth_env_and_pid_boundaries(self) -> None:
         source = probe.probe_source("203.0.113.7").decode("utf-8")
         for marker in (
