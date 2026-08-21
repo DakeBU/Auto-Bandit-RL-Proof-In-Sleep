@@ -266,6 +266,36 @@ def prepare_context(
         checker_digest, checker_sbom, checker_cache_manifest, checker_build_input,
         expected_orchestrator_commit=commit,
     )
+    lean_toolchain_record = next(
+        item for item in checker_build_payload["source_files"]
+        if item["path"] == "lean-toolchain"
+    )
+    lean_toolchain_bytes = checker_image.git(
+        "cat-file", "blob", lean_toolchain_record["git_object"], text=False
+    )
+    assert isinstance(lean_toolchain_bytes, bytes)
+    require(
+        hashlib.sha256(lean_toolchain_bytes).hexdigest()
+        == lean_toolchain_record["sha256"]
+        and checker_image.git_blob_sha1(lean_toolchain_bytes)
+        == lean_toolchain_record["git_object"],
+        "checker lean-toolchain Git object differs from the raw build input",
+    )
+    checker_toolchain_release = checker_image.parse_lean_toolchain(
+        lean_toolchain_bytes
+    )
+    require(
+        checker_payload.get("toolchain_release") == checker_toolchain_release
+        and checker_image.parse_lean_version_output(
+            checker_payload.get("lean_version", "")
+        ) == checker_toolchain_release
+        and checker_image.parse_lake_lean_version_output(
+            checker_payload.get("lake_version", "")
+        ) == checker_toolchain_release
+        and checker_payload.get("offline_toolchain_probe")
+        == "passed_network_none_as_worker",
+        "checker SBOM toolchain evidence differs from the frozen Git object",
+    )
     lock = validate_source_lock(load(SOURCE_LOCK))
     package_members = verify_codex_package(codex_package.resolve(), lock)
     provenance, inputs = committed_context_inputs(commit)
@@ -287,6 +317,7 @@ def prepare_context(
             "checker-image-build-input.json": checker_build_input,
         }.items():
             (checker_dir / name).write_bytes(source.read_bytes())
+        (checker_dir / "lean-toolchain").write_bytes(lean_toolchain_bytes)
         codex_dir = temporary / "codex"
         codex_dir.mkdir()
         for name, payload in package_members.items():
@@ -309,6 +340,10 @@ def prepare_context(
             "checker_source_snapshot_manifest_sha256": checker_payload[
                 "source_snapshot_manifest_sha256"
             ],
+            "checker_toolchain_release": checker_toolchain_release,
+            "checker_lean_version": checker_payload["lean_version"],
+            "checker_lake_version": checker_payload["lake_version"],
+            "checker_python_version": checker_payload["python_version"],
             "source_lock_sha256": sha256_file(SOURCE_LOCK),
             "codex_version": lock["codex_cli"]["version"],
             "codex_package": lock["codex_cli"]["package"],
@@ -369,6 +404,9 @@ def validate_context(context: Path, *, current_provenance: bool = True) -> dict[
         checker_dir / "checker-image-build-input.json",
         "context checker image build input",
     )
+    lean_toolchain = regular_file(
+        checker_dir / "lean-toolchain", "context checker lean-toolchain"
+    )
     checker_payload, _, checker_build_payload = validate_checker_evidence(
         payload["checker_image_digest"], checker_sbom, checker_cache,
         checker_build_input,
@@ -384,6 +422,35 @@ def validate_context(context: Path, *, current_provenance: bool = True) -> dict[
         and payload.get("checker_source_snapshot_manifest_sha256")
         == checker_payload["source_snapshot_manifest_sha256"],
         "agent-image checker evidence binding differs",
+    )
+    lean_toolchain_record = next(
+        item for item in checker_build_payload["source_files"]
+        if item["path"] == "lean-toolchain"
+    )
+    lean_toolchain_bytes = lean_toolchain.read_bytes()
+    checker_toolchain_release = checker_image.parse_lean_toolchain(
+        lean_toolchain_bytes
+    )
+    require(
+        hashlib.sha256(lean_toolchain_bytes).hexdigest()
+        == lean_toolchain_record["sha256"]
+        and checker_image.git_blob_sha1(lean_toolchain_bytes)
+        == lean_toolchain_record["git_object"]
+        and payload.get("checker_toolchain_release")
+        == checker_toolchain_release
+        and payload.get("checker_lean_version") == checker_payload.get("lean_version")
+        and payload.get("checker_lake_version") == checker_payload.get("lake_version")
+        and payload.get("checker_python_version")
+        == checker_payload.get("python_version")
+        and checker_image.parse_lean_version_output(
+            checker_payload.get("lean_version", "")
+        ) == checker_toolchain_release
+        and checker_image.parse_lake_lean_version_output(
+            checker_payload.get("lake_version", "")
+        ) == checker_toolchain_release
+        and checker_payload.get("offline_toolchain_probe")
+        == "passed_network_none_as_worker",
+        "agent-image checker toolchain binding differs",
     )
     files = checker_image.file_manifest(
         context, excluded={"agent-image-build-input.json"}
@@ -543,16 +610,23 @@ def build_image(
         codex_version_output, manifest["codex_version"]
     )
     write_new_bytes(codex_version_output_path, codex_version_output)
-    lean_version = docker_output([
-        str(runtime), "run", "--rm", "--pull", "never", "--network", "none",
-        "--read-only", "--cap-drop", "ALL", "--security-opt",
-        "no-new-privileges=true", "--entrypoint", "lean", image_digest, "--version",
-    ]).decode("utf-8", errors="strict").strip()
-    lake_version = docker_output([
-        str(runtime), "run", "--rm", "--pull", "never", "--network", "none",
-        "--read-only", "--cap-drop", "ALL", "--security-opt",
-        "no-new-privileges=true", "--entrypoint", "lake", image_digest, "--version",
-    ]).decode("utf-8", errors="strict").strip()
+    toolchain_probe = checker_image.offline_toolchain_probe(
+        runtime, image_digest,
+        regular_file(
+            context / "checker-evidence" / "lean-toolchain",
+            "private checker lean-toolchain",
+        ).read_bytes(),
+    )
+    require(
+        toolchain_probe["toolchain_release"]
+        == manifest["checker_toolchain_release"]
+        and toolchain_probe["lean_version"] == manifest["checker_lean_version"]
+        and toolchain_probe["lake_version"] == manifest["checker_lake_version"]
+        and toolchain_probe["python_version"] == manifest["checker_python_version"],
+        "agent image changed the inherited offline toolchain",
+    )
+    lean_version = toolchain_probe["lean_version"]
+    lake_version = toolchain_probe["lake_version"]
 
     sbom = {
         "schema_version": 1,
@@ -587,6 +661,12 @@ def build_image(
         "adapter_sha256": hashlib.sha256(extracted["adapter"]).hexdigest(),
         "lean_version": lean_version,
         "lake_version": lake_version,
+        "python_version": toolchain_probe["python_version"],
+        "toolchain_release": toolchain_probe["toolchain_release"],
+        "offline_toolchain_probe": toolchain_probe["offline_toolchain_probe"],
+        "toolchain_probe_source_sha256": toolchain_probe[
+            "toolchain_probe_source_sha256"
+        ],
         "docker_executable_sha256": sha256_file(runtime),
         "docker_runtime_identity": identity,
         "image_build_log_sha256": sha256_file(build_log),
