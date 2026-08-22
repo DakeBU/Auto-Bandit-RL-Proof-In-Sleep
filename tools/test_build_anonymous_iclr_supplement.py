@@ -207,12 +207,47 @@ class AnonymousSupplementTests(unittest.TestCase):
         )
         self.assertEqual(sgb_row["status"], "partial")
         self.assertEqual(sgb_row["source_record_ids"], [BUILDER.SGB_AUDIT_ID])
-        self.assertEqual(ledger["stochastic_gradient_bandit"]["declaration_count"], 26)
+        self.assertEqual(ledger["stochastic_gradient_bandit"]["declaration_count"], 44)
+        self.assertEqual(
+            ledger["stochastic_gradient_bandit"]["finite_algebra_declaration_count"],
+            26,
+        )
+        self.assertEqual(
+            ledger["stochastic_gradient_bandit"]["generated_history_declaration_count"],
+            18,
+        )
+        self.assertTrue(
+            ledger["stochastic_gradient_bandit"]["generated_trajectory_compiled"]
+        )
+        self.assertTrue(
+            ledger["stochastic_gradient_bandit"]["conditional_law_bridge_compiled"]
+        )
+        self.assertFalse(
+            ledger["stochastic_gradient_bandit"]["uniform_reward_regularities_verified"]
+        )
+        self.assertFalse(
+            ledger["stochastic_gradient_bandit"]["learning_rate_regime_verified"]
+        )
         self.assertFalse(ledger["stochastic_gradient_bandit"]["paper_endpoint_verified"])
         self.assertEqual(
             ledger["source_records"][BUILDER.SGB_AUDIT_ID]["status"],
             "partial",
         )
+
+    def test_sgb_required_bridge_names_are_frozen(self):
+        records = json.loads(json.dumps(BUILDER.selected_source_records()))
+        index = BUILDER.load_json(
+            BUILDER.REPO_ROOT / "research-wiki" / "retrieval-index" /
+            "local_lean_declarations.json"
+        )
+        victim = next(iter(BUILDER.SGB_CONDITIONAL_LAW_BRIDGE_DECLARATIONS))
+        replacement = victim + "_drifted"
+        declarations = records[BUILDER.SGB_AUDIT_ID]["declarations"]
+        declarations[declarations.index(victim)] = replacement
+        row = next(row for row in index["declarations"] if row["full_name"] == victim)
+        row["full_name"] = replacement
+        with self.assertRaisesRegex(ValueError, "26 finite-algebra and 18 generated-history"):
+            BUILDER.validate_sgb_count(records, index)
 
     def test_public_base_is_replaced_by_anonymous_tree_binding(self):
         payload = BUILDER.build_payload(allow_missing_graph=True)

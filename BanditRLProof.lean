@@ -44,6 +44,7 @@ import BanditRLProof.LowerBounds.BanditHistoryKL
 import BanditRLProof.LowerBounds.GaussianMinimax
 import BanditRLProof.LowerBounds.SuccinctGeometryAudit
 import BanditRLProof.Algorithms.StochasticGradientBanditAudit
+import BanditRLProof.Algorithms.StochasticGradientBanditTrajectoryAudit
 import BanditRLProof.LowerBounds.InstanceDependent
 import BanditRLProof.LowerBounds.HighProbability
 import BanditRLProof.RealKernelRegretPullCount

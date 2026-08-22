@@ -1189,12 +1189,28 @@
       "math": "\\(\\mathbb E_t[\\delta\\theta_{k,t}]=p_{k,t}(\\mathbb E_t[\\Delta_{A_t}]-\\Delta_k).\\)",
       "intuition": "A coordinate grows only when its arm's gap is smaller than the policy's current average gap. The softmax probability scales how strongly that comparison affects the coordinate.",
       "why": "This is Equation (5), the main bridge from Algorithm 1's reward update to the regret-oriented analysis used throughout the paper.",
-      "position": "The finite conditional-mean algebra is compiled. Constructing the recursive history law and proving the corresponding conditional-expectation identity on that law remain open.",
+      "position": "This finite conditional-mean algebra is the deterministic consumer. A separate compiled process theorem now constructs the recursive history policy and identifies this expression with the generated next-pair history-step-kernel integral under explicit coordinate-update integrability and arm-reward integral equalities.",
       "proof_idea": "Split the finite expectation over the selected arm, simplify the selected and nonselected update cases, and rewrite weighted arm means using gap_k = bestMean - mean_k and total probability one.",
-      "lean_notes": "The declaration deliberately consumes a finite probability vector, arm means, and an explicit mean-gap equality. It neither assumes nor constructs an SGB trajectory kernel.",
+      "lean_notes": "This declaration deliberately consumes a finite probability vector, arm means, and an explicit mean-gap equality. The trajectory module reuses it after separately constructing the SGB state, softmax Markov law, and canonical action/reward trajectory.",
       "dependencies": [
         "BanditRLProof.StochasticGradientBandit.expectedSourceIncrement_eq_gradientCoordinate",
         "BanditRLProof.StochasticGradientBandit.instantaneousGap_eq_bestMean_sub_policyValue"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.StochasticGradientBandit.integral_measurableEnvironmentHistoryStepKernel_sourceIncrement_eq_gapCoordinate",
+      "chapter": "frontier",
+      "plain": "For the canonical generated SGB process, the conditional next-pair kernel integral of the coordinate update equals that coordinate's softmax probability times current expected gap minus the arm's own gap.",
+      "math": "\\(\\int \\delta\\theta_k(a,r)\\,K_t(d a,d r\\mid e,h)=p_k(h)\\bigl(\\sum_a p_a(h)\\Delta_a-\\Delta_k\\bigr).\\)",
+      "intuition": "The static finite sum from Equation (5) is now attached to the actual recursive policy state: the generated softmax law selects the arm, the explicit reward kernel supplies its mean, and the kernel integral performs the conditioning step.",
+      "why": "This closes the main process boundary left by the first audit. It lets later rate arguments consume a generated-history Equation-(5) identity instead of assuming that a deterministic probability vector came from Algorithm 1.",
+      "position": "The recursive state, measurable initial/successor policies, canonical pair trajectory, conditional laws, and pointwise Equation-(5) kernel calculation compile. A source-specific uniform reward-law producer of the explicit hypotheses, failure-mass estimates, learning-rate thresholds, and Theorems 1--4 remain open.",
+      "proof_idea": "Integrate the exact selected/nonselected update through the history-step comp-product kernel, rewrite each reward integral by the selected arm's explicit mean hypothesis, reduce the finite action measure to a softmax-weighted sum, and invoke the compiled gap-coordinate identity.",
+      "lean_notes": "Coordinate-update integrability and arm-reward integral equalities are explicit hypotheses. The theorem is an exact conditional-kernel integral at an environment/history input; it does not silently claim a paper-wide rate or replace the remaining uniform regularity proof.",
+      "dependencies": [
+        "BanditRLProof.StochasticGradientBandit.measurable_historyParameter",
+        "BanditRLProof.StochasticGradientBandit.trajectoryMeasure_condDistrib_nextPair_given_environment_prefix",
+        "BanditRLProof.StochasticGradientBandit.expectedSourceIncrement_eq_gapCoordinate"
       ]
     },
     {

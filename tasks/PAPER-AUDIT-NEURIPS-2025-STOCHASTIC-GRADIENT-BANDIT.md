@@ -10,8 +10,9 @@ Harness: `hierarchical`
 
 ## Goal
 
-Compile the finite-action algebra underlying Algorithm 1 and Equations
-(3)--(7) of Baudry, Johnson, Vary, Pike-Burke, and Rebeschini, *Does
+Compile the finite-action algebra and generated-history Equation-(5) bridge
+underlying Algorithm 1 and Equations (3)--(7) of Baudry, Johnson, Vary,
+Pike-Burke, and Rebeschini, *Does
 Stochastic Gradient really succeed for Bandits?* (NeurIPS 2025). The audit
 separates the reusable softmax/update/regret mechanism from the paper's later
 learning-rate-dependent stochastic arguments.
@@ -57,22 +58,50 @@ learning-rate-dependent stochastic arguments.
 6. Record the source learning-rate regimes separately; do not claim Theorems
    1--4 or the stochastic history/kernel bridge in this first audit.
 
+## Active process-level extension
+
+The next non-overlapping target is the generated-history bridge for Equation
+(5).  It is deliberately narrower than the paper's rate theorems:
+
+1. Define the recursive parameter vector after an inclusive finite
+   action/reward history, with the exact Algorithm-1 update and a fixed
+   learning rate.
+2. Prove that this state is measurable and induces a measurable finite-action
+   softmax policy, including the initial softmax law.
+3. Instantiate the repository's `Thompson.HistoryAlgorithm` and canonical
+   measurable-environment trajectory kernel with that policy.
+4. Identify the generated successor action law and the successor pair law
+   given the observed prefix.
+5. Under explicit coordinate-update integrability and arm-reward integral
+   equalities, prove that the
+   conditional one-step source increment agrees with the already compiled
+   finite Equation-(5) mean/gap expression.
+
+This extension promotes `SGB-HISTORY` from `blocked` to `partial`: the
+recursive process and its Equation-(5) conditional-kernel integrals now
+compile, while the source-specific reward regularity and all rate arguments
+remain downstream.  It cannot promote `SGB-RATES`, Lemmas 2--3, or Theorems
+1--4.  The Lean process accepts a general `initialTheta`; Algorithm 1's source
+initialization is the specialization `initialTheta := fun _ => 0`.
+
 ## Semantic boundary
 
 The finite sum over the selected arm is the exact algebra obtained after
 conditioning on the pre-action history and replacing the reward by its arm
-mean. It is not itself a construction of the paper's full history process or
-conditional-expectation kernel. Promotion to the trajectory level requires
-an SGB history policy, measurability of its softmax action law, conditional arm
-reward means, and a recursive parameter-state equality.
+mean.  The process extension constructs the recursive SGB state, measurable
+softmax policy, canonical action/reward trajectory, initial and successor
+conditional laws, and the corresponding history-step-kernel integrals under
+explicit coordinate-update integrability and arm-reward integral equalities.
+It does not package the paper's source-specific reward regularity as a uniform
+producer of those hypotheses or prove a learning-rate rate.
 
 ## Nonclaims
 
 This task does not compile Theorems 1--4, Lemmas 2--3, any logarithmic or
-polynomial regret rate, the sharp two-arm threshold, the `K`-dependent
-learning-rate threshold, or a stochastic-process realization of Algorithm 1.
-It does not claim the external paper is verified. It compiles the local
-finite-action mechanism consumed by those results and leaves every
+polynomial regret rate, the sharp two-arm threshold, or the `K`-dependent
+learning-rate threshold.  It does not claim the external paper is verified.
+It compiles the local finite-action mechanism and a generated process-level
+Equation-(5) bridge consumed by those results, while leaving every
 learning-rate/failure-probability endpoint open.
 
 ## Lean target
@@ -84,14 +113,20 @@ BanditRLProof.StochasticGradientBandit.expectedSourceIncrement_eq_gradientCoordi
 BanditRLProof.StochasticGradientBandit.expectedSourceIncrement_eq_gapCoordinate
 BanditRLProof.StochasticGradientBandit.bestParameterIncrementSum_ge
 BanditRLProof.StochasticGradientBandit.sourceRegretDecomposition_le
+BanditRLProof.StochasticGradientBandit.historyParameter
+BanditRLProof.StochasticGradientBandit.trajectoryMeasure_condDistrib_action
+BanditRLProof.StochasticGradientBandit.trajectoryMeasure_condDistrib_nextPair_given_environment_prefix
+BanditRLProof.StochasticGradientBandit.integral_measurableEnvironmentHistoryStepKernel_sourceIncrement_eq_gapCoordinate
 ```
 
-Target file: `BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean`
+Target files: `BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean`
+and `BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean`.
 
 ## Gate
 
 ```bash
 lake env lean BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean
+lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean
 lake env lean Tests/StochasticGradientBanditPaperAuditCanary.lean
 python tools/bandit.py check
 ```
@@ -101,8 +136,15 @@ python tools/bandit.py check
 - [x] The official PDF is hash-frozen at the SHA-256 above.
 - [x] The source equations, pseudo-code, page windows, and scope boundary are
   mapped before Lean proof search.
-- [x] The source-audit Lean module compiles with 26 named declarations.
-- [x] The typed canary compiles; four representative theorem prints use only
+- [x] The finite source-audit module compiles with 26 named declarations.
+- [x] The generated-history extension compiles with 18 named declarations:
+  recursive state/measurability, initial and successor softmax laws, the
+  canonical pair trajectory, and Equation-(5) history-step-kernel integrals.
+- [x] The typed canary compiles; nine representative theorem prints use only
   `propext`, `Classical.choice`, and `Quot.sound`.
-- [x] The reference index, proof Blueprint, website, and paper table agree.
-- [x] Full Lean/tests/site gates and independent review pass.
+- [x] The reference index, proof Blueprint, website, anonymous claim ledger,
+  and paper table agree on the 26-plus-18 declaration split and its boundary.
+- [x] Full Lean/tests/site gates pass (`8848` Lean jobs; `197` Python tests,
+  `4` platform skips; Lean-verified site build/check).
+- [x] Independent source/claim review finds no blocking, high, or medium issue.
+- [x] The process-level extension above is implemented and compiled.

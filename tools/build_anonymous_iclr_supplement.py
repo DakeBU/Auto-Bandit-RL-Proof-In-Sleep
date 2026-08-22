@@ -98,6 +98,24 @@ DELAYED_IMPLEMENTATION_IDS = (
 DELAYED_DIAGNOSTIC_ID = "DELAYED-SAPO-D10-D12-GAP-ORDERING-AUDIT"
 SUCCINCT_AUDIT_ID = "NEURIPS-2025-SUCCINCT-LOWER-BOUND-GEOMETRY-AUDIT"
 SGB_AUDIT_ID = "NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT-MECHANISM-AUDIT"
+SGB_FINITE_ALGEBRA_FILE = "BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean"
+SGB_GENERATED_HISTORY_FILE = (
+    "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean"
+)
+SGB_FINITE_ALGEBRA_DECLARATION_COUNT = 26
+SGB_GENERATED_HISTORY_DECLARATION_COUNT = 18
+SGB_GENERATED_TRAJECTORY_DECLARATIONS = frozenset({
+    "BanditRLProof.StochasticGradientBandit.trajectoryKernel",
+    "BanditRLProof.StochasticGradientBandit.trajectoryMeasure_condDistrib_action_zero_given_environment",
+    "BanditRLProof.StochasticGradientBandit.trajectoryMeasure_condDistrib_action",
+    "BanditRLProof.StochasticGradientBandit.trajectoryMeasure_condDistrib_nextPair_given_environment_prefix",
+})
+SGB_CONDITIONAL_LAW_BRIDGE_DECLARATIONS = frozenset({
+    "BanditRLProof.StochasticGradientBandit.integral_measurableEnvironmentInitialPairKernel_sourceIncrement_eq_expectedSourceIncrement",
+    "BanditRLProof.StochasticGradientBandit.integral_historyStepKernel_sourceIncrement_eq_expectedSourceIncrement",
+    "BanditRLProof.StochasticGradientBandit.integral_measurableEnvironmentHistoryStepKernel_sourceIncrement_eq_expectedSourceIncrement",
+    "BanditRLProof.StochasticGradientBandit.integral_measurableEnvironmentHistoryStepKernel_sourceIncrement_eq_gapCoordinate",
+})
 EXPECTED_INDEX_EXCEPTIONS = (
     "BanditRLProof.DelayedFeedback.ActionTimeView.ext",
     "BanditRLProof.LowerBounds.IsConsistentRegret.add",
@@ -815,21 +833,50 @@ def validate_succinct_count(records):
         )
 
 
-def validate_sgb_count(records):
+def validate_sgb_count(records, index):
     sgb = records[SGB_AUDIT_ID]
-    if sgb["status"] != "partial" or len(sgb["declarations"]) != 26:
+    declaration_list = sgb["declarations"]
+    declarations = set(declaration_list)
+    rows = {
+        row["full_name"]: row for row in index["declarations"]
+        if row["full_name"] in declarations
+    }
+    finite_count = sum(
+        row["file"] == SGB_FINITE_ALGEBRA_FILE for row in rows.values()
+    )
+    generated_history_count = sum(
+        row["file"] == SGB_GENERATED_HISTORY_FILE for row in rows.values()
+    )
+    if (
+        sgb["status"] != "partial"
+        or len(declaration_list) != len(declarations)
+        or len(declarations) != 44
+        or set(rows) != declarations
+        or finite_count != SGB_FINITE_ALGEBRA_DECLARATION_COUNT
+        or generated_history_count != SGB_GENERATED_HISTORY_DECLARATION_COUNT
+        or finite_count + generated_history_count != len(declarations)
+        or not SGB_GENERATED_TRAJECTORY_DECLARATIONS.issubset(declarations)
+        or not SGB_CONDITIONAL_LAW_BRIDGE_DECLARATIONS.issubset(declarations)
+    ):
         raise ValueError(
-            "stochastic-gradient-bandit audit must remain partial with 26 declarations"
+            "stochastic-gradient-bandit audit must remain partial with exactly "
+            "26 finite-algebra and 18 generated-history declarations"
         )
+    return {
+        "generated_trajectory_compiled":
+            SGB_GENERATED_TRAJECTORY_DECLARATIONS.issubset(declarations),
+        "conditional_law_bridge_compiled":
+            SGB_CONDITIONAL_LAW_BRIDGE_DECLARATIONS.issubset(declarations),
+    }
 
 
 def build_claim_ledger(proof_report):
     records = selected_source_records()
-    validate_delayed_counts(records)
-    validate_succinct_count(records)
-    validate_sgb_count(records)
     index = load_json(REPO_ROOT / "research-wiki" / "retrieval-index" /
                       "local_lean_declarations.json")
+    validate_delayed_counts(records)
+    validate_succinct_count(records)
+    sgb_evidence = validate_sgb_count(records, index)
     index_names = {row["full_name"] for row in index["declarations"]}
     referenced = {
         name for record in records.values() for name in record["declarations"]
@@ -891,7 +938,7 @@ def build_claim_ledger(proof_report):
                 "artifact": "Stochastic-gradient-bandit mechanism audit",
                 "status": "partial",
                 "source_record_ids": [SGB_AUDIT_ID],
-                "boundary": "26 declarations compile the finite-action, history-conditioned algebra underlying Algorithm 1 and Equations (3)--(7); no recursive history kernel, conditional-expectation lift, learning-rate regime, or Theorem 1--4 endpoint.",
+                "boundary": "44 declarations compile the 26-declaration finite-action algebra plus an 18-declaration generated-history layer: recursive measurable softmax state, canonical action/reward trajectory, initial/successor conditional laws, and Equation-(5) history-step-kernel integrals under explicit coordinate-update integrability and arm-reward integral equalities. Source-specific uniform reward regularity, including a producer of the required hypotheses, every learning-rate regime, and Theorems 1--4 remain open.",
             },
             {
                 "artifact": "Proof graph / curvature--noise--gap",
@@ -922,7 +969,15 @@ def build_claim_ledger(proof_report):
         },
         "stochastic_gradient_bandit": {
             "source_record_id": SGB_AUDIT_ID,
-            "declaration_count": 26,
+            "declaration_count": 44,
+            "finite_algebra_declaration_count": SGB_FINITE_ALGEBRA_DECLARATION_COUNT,
+            "generated_history_declaration_count": SGB_GENERATED_HISTORY_DECLARATION_COUNT,
+            "generated_trajectory_compiled":
+                sgb_evidence["generated_trajectory_compiled"],
+            "conditional_law_bridge_compiled":
+                sgb_evidence["conditional_law_bridge_compiled"],
+            "uniform_reward_regularities_verified": False,
+            "learning_rate_regime_verified": False,
             "paper_endpoint_verified": False,
         },
         "proof_graph": {

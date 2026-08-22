@@ -469,6 +469,12 @@ def main() -> int:
         errors.append(
             f"module-page count {len(module_pages)} != manifest module_count {manifest.get('module_count')}"
         )
+    for module_page in module_pages:
+        module_html = module_page.read_text(encoding="utf-8")
+        title_start = module_html.find('<h1 class="page-title identifier-title">')
+        title_end = module_html.find("</h1>", title_start)
+        if title_start < 0 or title_end < 0 or "<wbr>" not in module_html[title_start:title_end]:
+            errors.append(f"{module_page.relative_to(output)}: module title lacks identifier wrap points")
     if len(chapter_pages) != expected_chapter_count:
         errors.append("chapter-page count does not match chapters.json")
     if len(spine_pages) != expected_spine_count:
