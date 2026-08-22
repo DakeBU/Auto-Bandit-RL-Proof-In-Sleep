@@ -257,14 +257,31 @@ arm-law means before the reserved Lemma 16.3 terminal can compile.
 - [x] The preceding twenty-declaration Gaussian-equality and one-arm
   event-information extension passed PR #38, authoritative-main Actions,
   Pages deployment, and live desktop/mobile checks.
-- [ ] The current fifteen-declaration gap-event/regret extension passes PR,
-  authoritative-main Actions, Pages deployment, and live checks.
+- [x] The current fifteen-declaration gap-event/regret extension passed PR #40,
+  authoritative-main Actions run `32554151109`, Pages deployment, and live
+  checks at merge `08c1470`.
 
 ## Remote verification evidence
 
-The evidence below is the verified twenty-declaration predecessor. It does not
-yet remotely validate the current fifteen-declaration gap-event/regret
-extension.
+The current fifteen-declaration extension is remotely verified without
+promoting the blocked source terminals.
+
+- PR #40 passed `Lean and documentation / build` in run `32553086838` and the
+  result-free lifecycle probe in run `32553086905`; it was merged through the
+  PR without a direct push to `main`.
+- Merge commit: `08c147088c9ae77f3487b6a01fb46637798b2742`.
+- Authoritative-main run `32554151109` passed: build job `96985590260`
+  completed Lean, Tests, the lean-verified site, site checks, and Pages artifact
+  upload; deployment job `96987991435` passed.
+- The live manifest is clean, public, and Lean-verified at the same commit:
+  580 modules, 7,754 scanner declarations, zero placeholders, and 74
+  milestones (63 compiled, 6 partial, 4 blocked, 1 planned).
+- The live Chapter 16 page shows the fifteen compiled gap-event/regret
+  declarations, retains Lemma 16.3 and Theorems 16.2/16.4 as blocked, and links
+  `expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed` to the
+  merge-pinned source at `BanditRLProof/LowerBounds/InstanceDependent.lean#L721`.
+
+### Verified twenty-declaration predecessor
 
 - PR #38 passed `Lean and documentation / build` in run `32545603658`, job
   `96963381949` (25m12s), and the result-free lifecycle probe in run

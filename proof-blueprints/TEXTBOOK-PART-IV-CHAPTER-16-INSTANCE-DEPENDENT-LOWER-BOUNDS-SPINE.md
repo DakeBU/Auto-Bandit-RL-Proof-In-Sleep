@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE
 
-Generated: `2026-08-22T04:45:40+00:00`
+Generated: `2026-08-22T05:49:39+00:00`
 
 ## Source Task
 
@@ -172,13 +172,12 @@ general dependency leaves; they are not Theorem 16.2, Lemma 16.3, or Theorem
   a fixed exponent or a natural number.
 - Regret is expected pseudo-regret and is nonnegative. The generic compiled
 
-<!-- 5542 characters omitted from the middle of this snapshot. -->
+<!-- 6541 characters omitted from the middle of this snapshot. -->
 
-## Remote verification evidence
+`expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed` to the
+  merge-pinned source at `BanditRLProof/LowerBounds/InstanceDependent.lean#L721`.
 
-The evidence below is the verified twenty-declaration predecessor. It does not
-yet remotely validate the current fifteen-declaration gap-event/regret
-extension.
+### Verified twenty-declaration predecessor
 
 - PR #38 passed `Lean and documentation / build` in run `32545603658`, job
   `96963381949` (25m12s), and the result-free lifecycle probe in run
@@ -389,7 +388,7 @@ envelope and sums the positive parts to obtain Eq. (16.5).
 | `CH16-TYPED-CANARY` | root-import applications and axiom reports | compiled slice | `Tests/TextbookPartIVChapter16Canary.lean` | project-local | Tests | verified locally |
 | `CH16-EVIDENCE-SITE` | all artifacts agree on partial/blocked boundary | scoped artifacts | repository artifacts | repository | full/site/browser | verified locally for the fifteen-declaration extension |
 | `CH16-REVIEW` | direction/quantifier/AC/policy/asymptotic audit | all artifacts | `reviews/2026-08-22-textbook-part-iv-chapter-16-event-regret-extension.md` | repository | read-only | verified for current extension; no unresolved Blocking/High/Medium finding |
-| `CH16-REMOTE` | PR, main Actions, Pages, live page | preceding 20-declaration slice | PR #38; merge `359fb6a`; authoritative-main run `32546802426`; clean live manifest and desktop/mobile page checks | repository | deployment | verified for predecessor; current extension pending |
+| `CH16-REMOTE` | PR, main Actions, Pages, live page | current 20+15 declaration slice | PR #40; merge `08c1470`; authoritative-main run `32554151109`; clean live manifest and Chapter 16 page/source-link checks | repository | deployment | verified for current extension; source terminals remain blocked |
 
 ## Gaps
 
@@ -408,8 +407,8 @@ envelope and sums the positive parts to obtain Eq. (16.5).
   independent-review gates.
 - [x] Preceding twenty-declaration slice: PR, authoritative-main Actions,
   Pages deployment, and live-page gates.
-- [ ] Current extension: PR, authoritative-main Actions, Pages deployment, and
-  live-page gates.
+- [x] Current extension: PR #40, authoritative-main Actions run `32554151109`,
+  Pages deployment, and live-page gates at merge `08c1470`.
 
 
 ## Obligation Snapshot
@@ -442,7 +441,7 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH16-THM-16-4` | exact Eq. (16.5) | Lemma 16.3, Gaussian KL, regret decomposition | local Gaussian and sums | source card | shift by `Delta_i(1+epsilon)` and sum positive parts | `N` nonempty, `C>0`, `0<p<1`, `0<epsilon<=1` | source terminal | reserved | focused Lean | blocked |
 | `CH16-CANARY` | root-import typed applications and axiom reports | compiled slice | `BanditRLProof` root | local declarations | instantiate nontrivial Gaussian candidate | no placeholders | project-local | `Tests/TextbookPartIVChapter16Canary.lean` | Tests | verified locally |
 | `CH16-SITE-REVIEW` | synchronized evidence/site and independent audit | all above | build/check/browser | repository | compare informal and Lean statements | no terminal promotion | repository | `reviews/2026-08-22-textbook-part-iv-chapter-16-event-regret-extension.md` | full/local | verified locally for current extension |
-| `CH16-REMOTE` | PR, authoritative-main Actions, Pages, and live page | preceding 20-declaration slice | GitHub workflow | repository | merge through PR and inspect deployed artifact | PR #38; merge `359fb6a`; authoritative-main run `32546802426`; live manifest/page/source-link checks | repository | remote evidence | deployment | verified for predecessor; current extension pending |
+| `CH16-REMOTE` | PR, authoritative-main Actions, Pages, and live page | current 20+15 declaration slice | GitHub workflow | repository | merge through PR and inspect deployed artifact | PR #40; merge `08c1470`; authoritative-main run `32554151109`; clean live manifest and Chapter 16 page/source-link checks | repository | remote evidence | deployment | verified for current extension; source terminals remain blocked |
 
 ## Failure classification
 

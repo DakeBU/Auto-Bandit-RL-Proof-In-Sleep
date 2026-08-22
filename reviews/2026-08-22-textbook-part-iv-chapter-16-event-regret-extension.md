@@ -78,6 +78,9 @@ pp. 216--219: <https://tor-lattimore.com/downloads/book/book.pdf>.
 
 The finite arm-law mean/optimal-arm-to-gap producer, the full source-general
 Lemma 16.3 statement, Theorem 16.2's extended-real and liminf branches, and
-Theorem 16.4 remain blocked. The current extension has not yet passed a PR,
-authoritative-main Actions, Pages deployment, or live-page check; those remote
-gates must be recorded only after the branch is merged.
+Theorem 16.4 remain blocked. The extension subsequently passed PR #40,
+authoritative-main Actions run `32554151109`, Pages deployment, and
+live-page/source-link checks at merge
+`08c147088c9ae77f3487b6a01fb46637798b2742`. These remote gates validate the
+compiled 20+15 declaration slice only; they do not close those source
+terminals.
