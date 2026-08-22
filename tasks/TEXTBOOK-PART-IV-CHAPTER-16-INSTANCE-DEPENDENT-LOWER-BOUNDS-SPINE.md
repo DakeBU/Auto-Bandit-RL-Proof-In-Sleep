@@ -14,9 +14,11 @@ Formalize the source-faithful instance-dependent lower-bound route in
 Lattimore--Szepesvári, *Bandit Algorithms* (2020), Chapter 16. The exact
 terminals are Definition 16.1, Theorem 16.2, Lemma 16.3, and Theorem 16.4.
 The compiled first slice freezes the consistency quantifiers, the extended-real
-`d_inf` interface, candidate inequalities in the original-to-alternative KL
-direction, the unit-Gaussian perturbed-alternative cost, and the subpolynomial
-log-growth step. It must not be reported as any blocked source terminal.
+`d_inf` interface, the exact unit-Gaussian Table 16.1 formula, and the
+subpolynomial log-growth step. It also compiles the same-policy one-arm
+history-KL specialization, the measurable majority event, its
+Bretagnolle--Huber information inequality, and the finite-KL scalar
+logarithmic assembly. It must not be reported as any blocked source terminal.
 
 ## Source
 
@@ -115,6 +117,15 @@ LowerBounds.parametricDivergenceInfimum
 LowerBounds.parametricDivergenceInfimum_le
 LowerBounds.unitGaussianDivergenceInfimum
 LowerBounds.unitGaussianDivergenceInfimum_le_perturbed
+LowerBounds.unitGaussianDivergenceInfimum_ge
+LowerBounds.unitGaussianDivergenceInfimum_eq
+LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_mul_of_only_arm_changed
+LowerBounds.oneArmMajorityPullEvent
+LowerBounds.measurableSet_oneArmMajorityPullEvent
+LowerBounds.bretagnolleHuberScale_expectedPulls_mul_armKL_le_majorityErrors
+LowerBounds.bretagnolleHuberScale_mul_eq_exp
+LowerBounds.exp_testing_bound_of_majority_regret_bounds
+LowerBounds.expectedPullCount_ge_log_regret_of_exp_testing_bound
 ```
 
 Reserved source terminals, with no declaration claimed:
@@ -158,17 +169,18 @@ general dependency leaves; they are not Theorem 16.2, Lemma 16.3, or Theorem
 
 ## Current semantic blocker
 
-Theorem 16.2 and Lemma 16.3 require Lemma 15.1's same-policy adaptive-history
-divergence decomposition. Installed Mathlib exposes a composition-product KL
-chain rule but not the conditional integral of pointwise kernel KL, and the
-repository has no canonical possibly randomized policy-kernel history law.
-Therefore neither the event bridge nor the bandit pull-count KL constraint can
-compile yet. Theorem 16.4 inherits that blocker through Lemma 16.3.
+The compiled layer now instantiates Lemma 15.1 for a same randomized policy
+and two stationary environments that differ at only one arm. It also freezes
+the exact majority event, applies Bretagnolle--Huber, evaluates the finite KL
+scale, and proves the scalar logarithmic rearrangement used in Eq. (16.4).
 
-The remaining Chapter 16-specific analytic leaves are the exact `d_inf`
-Gaussian infimum formula, extended-real zero/infinity branches, and the final
-`liminf` extraction. These are independent proof obligations, not reasons to
-weaken the source bandit semantics.
+The remaining Lemma 16.3 bridge is source-semantic: the current general
+stochastic-environment interface still needs two producers that upper-bound
+the majority-event errors by the original- and changed-environment expected
+pseudo-regrets with the exact gap factors. Theorem 16.2 additionally needs the
+zero/finite/infinite `d_inf` branches and final `liminf` extraction; Theorem
+16.4 inherits the unresolved full Lemma 16.3 consumer. These are explicit
+proof obligations, not reasons to weaken the source bandit semantics.
 
 ## Proof obligations
 
@@ -183,14 +195,18 @@ weaken the source bandit semantics.
   dependency leaves compile.
 - [x] Candidate `d_inf` bounds and the unit-Gaussian perturbed-alternative KL
   cost compile.
-- [ ] Exact Gaussian `d_inf` equality compiles with all infimum branches.
+- [x] Exact Gaussian `d_inf` equality compiles for the source's strictly
+  suboptimal unit-variance Gaussian branch.
 - [x] Lemma 15.1's source-faithful same-policy history KL identity compiles;
-  the Chapter 16 one-arm information consumer remains open.
+  the Chapter 16 one-arm KL specialization, measurable majority event,
+  Bretagnolle--Huber information inequality, and scalar log assembly compile.
 - [ ] Theorem 16.2's per-arm and regret `liminf` terminals compile.
 - [ ] Lemma 16.3 and Theorem 16.4 compile.
 - [x] Root import, canary, Tests, scans, full harness, exports, indexes, site,
-  browser, and independent local review pass.
-- [x] PR, authoritative-main Actions, Pages deployment, and live checks pass.
+  browser, and the 2026-08-22 independent local review pass.
+- [ ] The current Gaussian-equality and one-arm event-information extension
+  passes a new PR, authoritative-main Actions run, Pages deployment, and live
+  checks. The evidence below covers only the older dependency slice.
 
 ## Remote verification evidence
 
@@ -210,10 +226,11 @@ weaken the source bandit semantics.
   no document-level horizontal overflow at 390x844 (`390/390` client/scroll
   width); only the intended local TOC and MathJax containers scroll.
 
-Remote acceptance applies only to the scoped consistency, asymptotic-helper,
-and `d_inf` dependency slice. The chapter remains `partial`; the exact
-Gaussian `d_inf` equality and all three source terminals retain their recorded
-partial/blocked status.
+That remote acceptance applies only to the older consistency,
+asymptotic-helper, and candidate-`d_inf` slice. The exact Gaussian equality and
+one-arm event-information extension in this task require a new PR,
+authoritative-main run, and Pages verification. The chapter remains `partial`,
+and all three source terminals retain their blocked status.
 
 ## Mathlib-ready leaf contract
 
@@ -223,8 +240,9 @@ partial/blocked status.
 | log-growth adapter | `Real.log_le_log`, `Real.log_rpow`, positive division | convert eventual power domination into an eventual log-ratio inequality | positive regret sum; horizon greater than one | compiled project-local |
 | distribution-class `d_inf` | complete-lattice `sInf`, Chapter 14 extended-real KL | retain empty, zero, finite, and infinite branches | measurable reward space; explicit mean functional and class membership | compiled project-local interface |
 | parameterized `d_inf` candidate | `sInf_le`, Gaussian arm KL | insert a strictly better alternative and preserve KL direction | strict mean improvement | compiled project-local |
-| Gaussian exact `d_inf` | preceding candidate plus lower bound and limit/infimum approximation | squeeze perturbed alternatives as epsilon tends to zero | original mean below target; extended-real conversion | open Mathlib/project leaf |
-| history information constraint | compiled Chapter 15 conditional kernel KL and stochastic history law | instantiate Lemma 15.1 for one changed arm, then connect the Chapter 16 event | same stochastic policy; first-law expectation; finite KL branch | Lemma dependency compiled; Chapter 16 consumer blocked |
+| Gaussian exact `d_inf` | preceding candidate plus lower bound and limit/infimum approximation | squeeze positive perturbations to the strict boundary | original mean below target; extended-real conversion | compiled project-local |
+| history information constraint | compiled Chapter 15 history law and Chapter 14 BH | specialize Lemma 15.1 to one changed arm and the exact majority event | same stochastic policy; first-law expectation | compiled project-local |
+| event-to-regret producers | stochastic environment means and expected pseudo-regret | bound the original and changed majority-event errors by exact regret charges | finite means, positive gaps, source horizon convention | open source-semantic bridge |
 | asymptotic terminal | finite-time information inequality plus consistency log leaf | divide by log horizon and take liminf | positive gap/information; zero/infinite branches | blocked source terminal |
 | finite-time Gaussian terminal | Lemma 16.3, Gaussian KL, regret decomposition | choose mean shift `Delta_i(1+epsilon)`, sum positive parts | exact local class and horizon quantifiers | blocked source terminal |
 
@@ -248,10 +266,11 @@ partial/blocked status.
 ## Nonclaims and failure policy
 
 - A generic `Tendsto` or `sInf` leaf is not a bandit lower-bound terminal.
-- The Gaussian perturbed-alternative upper bound is not the exact Gaussian
-  `d_inf` equality from Table 16.1.
-- Lemma 15.1 is compiled, but a theorem that merely assumes the Chapter 16
-  one-arm event/information inequality is not a proof of Theorem 16.2.
+- The exact Gaussian `d_inf` row is a parametric distribution-level theorem,
+  not Theorem 16.2's full bandit `liminf` conclusion.
+- The one-arm history/event information inequality and scalar rearrangement do
+  not supply the two expected-pseudo-regret event bounds required for Lemma
+  16.3 and therefore do not prove Theorem 16.2.
 - Theorem cards and source prose remain route evidence only.
 - If the terminals remain blocked, preserve their exact contracts and publish
   only compiled reusable leaves plus the blockers. Do not restrict the policy

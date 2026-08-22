@@ -956,7 +956,7 @@ def build_textbook_spine(
 <tr><td>{name_html}</td><td>{status_badge(effective_evidence_status(item['status'], verified))}</td><td>{html.escape(item['role'])}{statement_html}</td></tr>"""
             )
         correspondence_html = (
-            '<div class="table-wrap" tabindex="0" role="region" aria-label="Lean correspondence">'
+            '<div class="table-wrap lean-correspondence-table" tabindex="0" role="region" aria-label="Lean correspondence">'
             '<table><thead><tr><th>Lean declaration</th><th>Status</th><th>Role and exact type</th></tr></thead>'
             f'<tbody>{"".join(correspondence_rows)}</tbody></table></div>'
             if correspondence_rows

@@ -116,6 +116,30 @@ SGB_CONDITIONAL_LAW_BRIDGE_DECLARATIONS = frozenset({
     "BanditRLProof.StochasticGradientBandit.integral_measurableEnvironmentHistoryStepKernel_sourceIncrement_eq_expectedSourceIncrement",
     "BanditRLProof.StochasticGradientBandit.integral_measurableEnvironmentHistoryStepKernel_sourceIncrement_eq_gapCoordinate",
 })
+CH16_COMPILED_ID = "TEXTBOOK-PART-IV-CH16-CONSISTENCY-DINF-DEPENDENCY-SLICE"
+CH16_TERMINAL_ID = "TEXTBOOK-PART-IV-CH16-SOURCE-TERMINALS"
+CH16_COMPILED_DECLARATIONS = frozenset({
+    "BanditRLProof.LowerBounds.IsConsistentRegret",
+    "BanditRLProof.LowerBounds.IsConsistentPolicyOver",
+    "BanditRLProof.LowerBounds.IsConsistentRegret.add",
+    "BanditRLProof.LowerBounds.IsConsistentRegret.eventually_add_le_rpow",
+    "BanditRLProof.LowerBounds.IsConsistentRegret.eventually_log_add_div_log_le",
+    "BanditRLProof.LowerBounds.divergenceInfimum",
+    "BanditRLProof.LowerBounds.divergenceInfimum_le",
+    "BanditRLProof.LowerBounds.parametricDivergenceInfimum",
+    "BanditRLProof.LowerBounds.parametricDivergenceInfimum_le",
+    "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum",
+    "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum_le_perturbed",
+    "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum_ge",
+    "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum_eq",
+    "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_mul_of_only_arm_changed",
+    "BanditRLProof.LowerBounds.oneArmMajorityPullEvent",
+    "BanditRLProof.LowerBounds.measurableSet_oneArmMajorityPullEvent",
+    "BanditRLProof.LowerBounds.bretagnolleHuberScale_expectedPulls_mul_armKL_le_majorityErrors",
+    "BanditRLProof.LowerBounds.bretagnolleHuberScale_mul_eq_exp",
+    "BanditRLProof.LowerBounds.exp_testing_bound_of_majority_regret_bounds",
+    "BanditRLProof.LowerBounds.expectedPullCount_ge_log_regret_of_exp_testing_bound",
+})
 EXPECTED_INDEX_EXCEPTIONS = (
     "BanditRLProof.DelayedFeedback.ActionTimeView.ext",
     "BanditRLProof.LowerBounds.IsConsistentRegret.add",
@@ -870,6 +894,30 @@ def validate_sgb_count(records, index):
     }
 
 
+def validate_ch16_boundary(records):
+    compiled = records[CH16_COMPILED_ID]
+    compiled_list = compiled["declarations"]
+    compiled_names = set(compiled_list)
+    terminal = records[CH16_TERMINAL_ID]
+    if (
+        compiled["status"] != "compiled"
+        or len(compiled_list) != len(compiled_names)
+        or compiled_names != CH16_COMPILED_DECLARATIONS
+    ):
+        raise ValueError(
+            "Chapter 16 dependency slice must remain compiled with exactly "
+            "the frozen 20 unique declarations"
+        )
+    if terminal["status"] != "blocked" or terminal["declarations"]:
+        raise ValueError(
+            "Chapter 16 source terminals must remain blocked and declaration-free"
+        )
+    return {
+        "dependency_declaration_count": len(compiled_names),
+        "source_terminals_verified": False,
+    }
+
+
 def build_claim_ledger(proof_report):
     records = selected_source_records()
     index = load_json(REPO_ROOT / "research-wiki" / "retrieval-index" /
@@ -877,6 +925,7 @@ def build_claim_ledger(proof_report):
     validate_delayed_counts(records)
     validate_succinct_count(records)
     sgb_evidence = validate_sgb_count(records, index)
+    ch16_evidence = validate_ch16_boundary(records)
     index_names = {row["full_name"] for row in index["declarations"]}
     referenced = {
         name for record in records.values() for name in record["declarations"]
@@ -917,7 +966,7 @@ def build_claim_ledger(proof_report):
                 "artifact": "Textbook Chapters 13--17",
                 "status": "partial",
                 "source_record_ids": [item for item in SOURCE_RESULT_IDS if item.startswith("TEXTBOOK-PART-IV-")],
-                "boundary": "Chapter 15 Lemma 15.1 and the exact Theorem 15.2 expected-pseudo-regret/minimax terminals compile, with a Chapter 13 constant-1/54 consumer; whole-chapter Notes/Exercises and Chapter 16--17 terminals remain open.",
+                "boundary": "Chapter 15 Lemma 15.1 and the exact Theorem 15.2 expected-pseudo-regret/minimax terminals compile, with a Chapter 13 constant-1/54 consumer. Chapter 16 additionally compiles the exact unit-Gaussian d_inf row and one-arm event-information/scalar dependency layer; its source event-to-regret producers and all Chapter 16--17 terminals remain open.",
             },
             {
                 "artifact": "Delayed best-of-both-worlds audit",
@@ -979,6 +1028,14 @@ def build_claim_ledger(proof_report):
             "uniform_reward_regularities_verified": False,
             "learning_rate_regime_verified": False,
             "paper_endpoint_verified": False,
+        },
+        "textbook_chapter_16": {
+            "compiled_source_record_id": CH16_COMPILED_ID,
+            "blocked_terminal_record_id": CH16_TERMINAL_ID,
+            "dependency_declaration_count":
+                ch16_evidence["dependency_declaration_count"],
+            "source_terminals_verified":
+                ch16_evidence["source_terminals_verified"],
         },
         "proof_graph": {
             "status": "prototype",
