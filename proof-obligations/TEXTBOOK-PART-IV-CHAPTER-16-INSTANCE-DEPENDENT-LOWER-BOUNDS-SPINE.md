@@ -25,7 +25,7 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH16-THM-16-4` | exact Eq. (16.5) | Lemma 16.3, Gaussian KL, regret decomposition | local Gaussian and sums | source card | shift by `Delta_i(1+epsilon)` and sum positive parts | `N` nonempty, `C>0`, `0<p<1`, `0<epsilon<=1` | source terminal | reserved | focused Lean | blocked |
 | `CH16-CANARY` | root-import typed applications and axiom reports | compiled slice | `BanditRLProof` root | local declarations | instantiate nontrivial Gaussian candidate | no placeholders | project-local | `Tests/TextbookPartIVChapter16Canary.lean` | Tests | verified locally |
 | `CH16-SITE-REVIEW` | synchronized evidence/site and independent audit | all above | build/check/browser | repository | compare informal and Lean statements | no terminal promotion | repository | `reviews/2026-08-22-textbook-part-iv-chapter-16-instance-dependent-extension.md` | full/local | verified locally; no unresolved Blocking/High/Medium |
-| `CH16-REMOTE` | PR, authoritative-main Actions, Pages, and live page | current 20-declaration slice | GitHub workflow | repository | merge through PR and inspect deployed artifact | PR #15 / merge `7b3dd86` cover only the older dependency slice; current extension and all blocked source terminals require fresh evidence | repository | remote evidence | deployment | pending |
+| `CH16-REMOTE` | PR, authoritative-main Actions, Pages, and live page | current 20-declaration slice | GitHub workflow | repository | merge through PR and inspect deployed artifact | PR #38; merge `359fb6a`; authoritative-main run `32546802426`; live manifest/page/source-link checks | repository | remote evidence | deployment | verified |
 
 ## Failure classification
 

@@ -204,11 +204,33 @@ proof obligations, not reasons to weaken the source bandit semantics.
 - [ ] Lemma 16.3 and Theorem 16.4 compile.
 - [x] Root import, canary, Tests, scans, full harness, exports, indexes, site,
   browser, and the 2026-08-22 independent local review pass.
-- [ ] The current Gaussian-equality and one-arm event-information extension
-  passes a new PR, authoritative-main Actions run, Pages deployment, and live
-  checks. The evidence below covers only the older dependency slice.
+- [x] The current Gaussian-equality and one-arm event-information extension
+  passes PR #38, the authoritative-main Actions run, Pages deployment, and
+  live desktop/mobile checks.
 
 ## Remote verification evidence
+
+- PR #38 passed `Lean and documentation / build` in run `32545603658`, job
+  `96963381949` (25m12s), and the result-free lifecycle probe in run
+  `32545603656`, job `96963381807` (19s). It was merged through the PR without
+  a direct push to `main`.
+- Merge commit: `359fb6a2b8a85854cb9228f3f459568e62ae47b1`.
+- Authoritative-main run `32546802426` passed: build job `96966584799`
+  completed Lean, Tests, the lean-verified site, site checks, and Pages
+  artifact upload in 24m42s; deployment job `96969660988` passed in 9s.
+- The live manifest is clean, public, and Lean-verified at the same commit:
+  580 modules, 7,739 scanner declarations, zero placeholders, and 73
+  milestones (62 compiled, 6 partial, 4 blocked, 1 planned).
+- Live page:
+  <https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/textbook-spine/chapter-16-instance-dependent/>.
+  Desktop and 390x844 checks found no document-level horizontal overflow; the
+  704px Lean correspondence table scrolls only inside its labelled 341px
+  region. The page shows twenty compiled dependency declarations and retains
+  Lemma 16.3 and Theorems 16.2/16.4 as blocked. The compiled
+  `unitGaussianDivergenceInfimum_eq` card links to the merge-pinned source at
+  `BanditRLProof/LowerBounds/InstanceDependent.lean#L202`.
+
+### Historical verification for the older slice
 
 - PR #15 passed `Lean and documentation / build` in run `31966790756`, job
   `95213073705` (20m40s), and was merged without a direct push to `main`.
@@ -226,11 +248,10 @@ proof obligations, not reasons to weaken the source bandit semantics.
   no document-level horizontal overflow at 390x844 (`390/390` client/scroll
   width); only the intended local TOC and MathJax containers scroll.
 
-That remote acceptance applies only to the older consistency,
-asymptotic-helper, and candidate-`d_inf` slice. The exact Gaussian equality and
-one-arm event-information extension in this task require a new PR,
-authoritative-main run, and Pages verification. The chapter remains `partial`,
-and all three source terminals retain their blocked status.
+That earlier remote acceptance applies only to the older consistency,
+asymptotic-helper, and candidate-`d_inf` slice. PR #38 and authoritative-main
+run `32546802426` verify the current 20-declaration extension. The chapter
+remains `partial`, and all three source terminals retain their blocked status.
 
 ## Mathlib-ready leaf contract
 

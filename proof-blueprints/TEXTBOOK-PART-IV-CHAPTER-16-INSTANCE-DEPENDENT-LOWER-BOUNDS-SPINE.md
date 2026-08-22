@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE
 
-Generated: `2026-08-22T02:04:50+00:00`
+Generated: `2026-08-22T03:15:08+00:00`
 
 ## Source Task
 
@@ -170,41 +170,41 @@ general dependency leaves; they are not Theorem 16.2, Lemma 16.3, or Theorem
 - Lemma 16.3's logarithm arguments are positive because the original gap and
   the alternative optimality margin are positive. A real-valued division
 
-<!-- 683 characters omitted from the middle of this snapshot. -->
+<!-- 1913 characters omitted from the middle of this snapshot. -->
 
-the majority-event errors by the original- and changed-environment expected
-pseudo-regrets with the exact gap factors. Theorem 16.2 additionally needs the
-zero/finite/infinite `d_inf` branches and final `liminf` extraction; Theorem
-16.4 inherits the unresolved full Lemma 16.3 consumer. These are explicit
-proof obligations, not reasons to weaken the source bandit semantics.
-
-## Proof obligations
-
-- [x] Official edition, book/chapter DOI, stable author PDF, section titles,
-  and three-way pagination are recorded.
-- [x] Definition 16.1, Theorem 16.2, Lemma 16.3, and Theorem 16.4 are frozen
-  with exact quantifiers, KL direction, event orientation, constants, and
-  positive-part placement.
-- [x] Existing Chapter 14--15 and Mathlib asymptotic/infimum APIs are audited.
-- [x] Exact generic consistency and `d_inf` interfaces compile.
-- [x] Sum closure, eventual every-power domination, and eventual log-ratio
-  dependency leaves compile.
-- [x] Candidate `d_inf` bounds and the unit-Gaussian perturbed-alternative KL
-  cost compile.
-- [x] Exact Gaussian `d_inf` equality compiles for the source's strictly
-  suboptimal unit-variance Gaussian branch.
-- [x] Lemma 15.1's source-faithful same-policy history KL identity compiles;
-  the Chapter 16 one-arm KL specialization, measurable majority event,
+the Chapter 16 one-arm KL specialization, measurable majority event,
   Bretagnolle--Huber information inequality, and scalar log assembly compile.
 - [ ] Theorem 16.2's per-arm and regret `liminf` terminals compile.
 - [ ] Lemma 16.3 and Theorem 16.4 compile.
 - [x] Root import, canary, Tests, scans, full harness, exports, indexes, site,
   browser, and the 2026-08-22 independent local review pass.
-- [ ] The current Gaussian-equality and one-arm event-information extension
-  passes a new PR, authoritative-main Actions run, Pages deployment, and live
-  checks. The evidence below covers only the older dependency slice.
+- [x] The current Gaussian-equality and one-arm event-information extension
+  passes PR #38, the authoritative-main Actions run, Pages deployment, and
+  live desktop/mobile checks.
 
 ## Remote verification evidence
+
+- PR #38 passed `Lean and documentation / build` in run `32545603658`, job
+  `96963381949` (25m12s), and the result-free lifecycle probe in run
+  `32545603656`, job `96963381807` (19s). It was merged through the PR without
+  a direct push to `main`.
+- Merge commit: `359fb6a2b8a85854cb9228f3f459568e62ae47b1`.
+- Authoritative-main run `32546802426` passed: build job `96966584799`
+  completed Lean, Tests, the lean-verified site, site checks, and Pages
+  artifact upload in 24m42s; deployment job `96969660988` passed in 9s.
+- The live manifest is clean, public, and Lean-verified at the same commit:
+  580 modules, 7,739 scanner declarations, zero placeholders, and 73
+  milestones (62 compiled, 6 partial, 4 blocked, 1 planned).
+- Live page:
+  <https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/textbook-spine/chapter-16-instance-dependent/>.
+  Desktop and 390x844 checks found no document-level horizontal overflow; the
+  704px Lean correspondence table scrolls only inside its labelled 341px
+  region. The page shows twenty compiled dependency declarations and retains
+  Lemma 16.3 and Theorems 16.2/16.4 as blocked. The compiled
+  `unitGaussianDivergenceInfimum_eq` card links to the merge-pinned source at
+  `BanditRLProof/LowerBounds/InstanceDependent.lean#L202`.
+
+### Historical verification for the older slice
 
 - PR #15 passed `Lean and documentation / build` in run `31966790756`, job
   `95213073705` (20m40s), and was merged without a direct push to `main`.
@@ -222,11 +222,10 @@ proof obligations, not reasons to weaken the source bandit semantics.
   no document-level horizontal overflow at 390x844 (`390/390` client/scroll
   width); only the intended local TOC and MathJax containers scroll.
 
-That remote acceptance applies only to the older consistency,
-asymptotic-helper, and candidate-`d_inf` slice. The exact Gaussian equality and
-one-arm event-information extension in this task require a new PR,
-authoritative-main run, and Pages verification. The chapter remains `partial`,
-and all three source terminals retain their blocked status.
+That earlier remote acceptance applies only to the older consistency,
+asymptotic-helper, and candidate-`d_inf` slice. PR #38 and authoritative-main
+run `32546802426` verify the current 20-declaration extension. The chapter
+remains `partial`, and all three source terminals retain their blocked status.
 
 ## Mathlib-ready leaf contract
 
@@ -386,7 +385,7 @@ envelope and sums the positive parts to obtain Eq. (16.5).
 | `CH16-TYPED-CANARY` | root-import applications and axiom reports | compiled slice | `Tests/TextbookPartIVChapter16Canary.lean` | project-local | Tests | verified locally |
 | `CH16-EVIDENCE-SITE` | all artifacts agree on partial/blocked boundary | scoped artifacts | repository artifacts | repository | full/site/browser | verified locally |
 | `CH16-REVIEW` | direction/quantifier/AC/policy/asymptotic audit | all artifacts | `reviews/2026-08-22-textbook-part-iv-chapter-16-instance-dependent-extension.md` | repository | read-only | verified locally; no unresolved Blocking/High/Medium |
-| `CH16-REMOTE` | PR, main Actions, Pages, live page | current 20-declaration slice | PR #15 / merge `7b3dd86` verify only the older dependency slice; the present extension awaits a new PR, authoritative-main run, and live Pages check | repository | deployment | pending |
+| `CH16-REMOTE` | PR, main Actions, Pages, live page | current 20-declaration slice | PR #38; merge `359fb6a`; authoritative-main run `32546802426`; clean live manifest and desktop/mobile page checks | repository | deployment | verified |
 
 ## Gaps
 
@@ -431,7 +430,7 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH16-THM-16-4` | exact Eq. (16.5) | Lemma 16.3, Gaussian KL, regret decomposition | local Gaussian and sums | source card | shift by `Delta_i(1+epsilon)` and sum positive parts | `N` nonempty, `C>0`, `0<p<1`, `0<epsilon<=1` | source terminal | reserved | focused Lean | blocked |
 | `CH16-CANARY` | root-import typed applications and axiom reports | compiled slice | `BanditRLProof` root | local declarations | instantiate nontrivial Gaussian candidate | no placeholders | project-local | `Tests/TextbookPartIVChapter16Canary.lean` | Tests | verified locally |
 | `CH16-SITE-REVIEW` | synchronized evidence/site and independent audit | all above | build/check/browser | repository | compare informal and Lean statements | no terminal promotion | repository | `reviews/2026-08-22-textbook-part-iv-chapter-16-instance-dependent-extension.md` | full/local | verified locally; no unresolved Blocking/High/Medium |
-| `CH16-REMOTE` | PR, authoritative-main Actions, Pages, and live page | current 20-declaration slice | GitHub workflow | repository | merge through PR and inspect deployed artifact | PR #15 / merge `7b3dd86` cover only the older dependency slice; current extension and all blocked source terminals require fresh evidence | repository | remote evidence | deployment | pending |
+| `CH16-REMOTE` | PR, authoritative-main Actions, Pages, and live page | current 20-declaration slice | GitHub workflow | repository | merge through PR and inspect deployed artifact | PR #38; merge `359fb6a`; authoritative-main run `32546802426`; live manifest/page/source-link checks | repository | remote evidence | deployment | verified |
 
 ## Failure classification
 

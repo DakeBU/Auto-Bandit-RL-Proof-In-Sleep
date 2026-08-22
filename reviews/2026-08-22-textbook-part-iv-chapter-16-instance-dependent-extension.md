@@ -80,6 +80,10 @@ pp. 216--219): <https://tor-lattimore.com/downloads/book/book.pdf>.
 The source-general event-to-regret producers, finite-time Lemma 16.3 terminal,
 Theorem 16.2 zero/finite/infinite-`d_inf` and `liminf` branches, and Theorem
 16.4 aggregation remain open. The current extension has no unresolved local
-Blocking, High, or Medium review finding. Remote acceptance for this extension
-is still pending a new PR, authoritative-main Actions run, Pages deployment,
-and live-page inspection.
+Blocking, High, or Medium review finding. PR #38 passed its Lean/documentation
+and lifecycle checks and merged as `359fb6a`; authoritative-main run
+`32546802426` passed Lean, Tests, the site build/check, artifact upload, and
+Pages deployment. The live manifest points to the same clean Lean-verified
+commit, and desktop/mobile plus merge-pinned source-link checks passed. These
+remote gates verify the bounded dependency slice only and do not promote any
+of the three blocked source terminals.
