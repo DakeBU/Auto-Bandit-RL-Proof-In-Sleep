@@ -844,11 +844,11 @@
     },
     {
       "id": "TEXTBOOK-PART-IV-CH16-CONSISTENCY-DINF-DEPENDENCY-SLICE",
-      "title": "Chapter 16 consistency, d_inf, and Gaussian-candidate dependency slice",
+      "title": "Chapter 16 exact Gaussian d_inf and one-arm information dependency slice",
       "chapter": "foundations",
       "textbook_spine": "chapter-16-instance-dependent",
       "status": "compiled",
-      "informal": "The project states Definition 16.1's every-environment/every-positive-real-power consistency interface, proves closure and eventual power/log-growth consequences for two regret sequences, defines the source extended-real d_inf with strict confusing alternatives in the original-to-alternative KL direction, and computes an exact unit-Gaussian perturbed-alternative upper bound.",
+      "informal": "Twenty named Chapter 16 dependencies compile: Definition 16.1's consistency interface and power/log-growth consequences; the extended-real d_inf interface and exact unit-Gaussian Table 16.1 row; the same-policy one-arm history-KL identity; the measurable majority event and Bretagnolle--Huber information inequality; and the finite-KL scalar regret/log assembly. The source-general event-to-expected-pseudo-regret producers and all three chapter terminals remain separate.",
       "declarations": [
         "BanditRLProof.LowerBounds.IsConsistentRegret",
         "BanditRLProof.LowerBounds.IsConsistentPolicyOver",
@@ -860,17 +860,27 @@
         "BanditRLProof.LowerBounds.parametricDivergenceInfimum",
         "BanditRLProof.LowerBounds.parametricDivergenceInfimum_le",
         "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum",
-        "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum_le_perturbed"
+        "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum_le_perturbed",
+        "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum_ge",
+        "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum_eq",
+        "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_mul_of_only_arm_changed",
+        "BanditRLProof.LowerBounds.oneArmMajorityPullEvent",
+        "BanditRLProof.LowerBounds.measurableSet_oneArmMajorityPullEvent",
+        "BanditRLProof.LowerBounds.bretagnolleHuberScale_expectedPulls_mul_armKL_le_majorityErrors",
+        "BanditRLProof.LowerBounds.bretagnolleHuberScale_mul_eq_exp",
+        "BanditRLProof.LowerBounds.exp_testing_bound_of_majority_regret_bounds",
+        "BanditRLProof.LowerBounds.expectedPullCount_ge_log_regret_of_exp_testing_bound"
       ],
       "depends_on": [
         "BanditRLProof.LowerBounds.relativeEntropy",
         "BanditRLProof.LowerBounds.klDiv_gaussianReal_one",
-        "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum"
+        "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum",
+        "BanditRLProof.LowerBounds.bretagnolleHuber"
       ],
       "missing": [
-        "The exact Gaussian d_inf equality still needs its infimum lower bound, epsilon-to-zero argument, and extended-real branch audit.",
-        "The one-arm expected-pull information constraint must instantiate the compiled Chapter 15 history identity in Chapter 16's event and asymptotic route.",
-        "Theorem 16.2, Lemma 16.3, and Theorem 16.4 remain blocked; this generic analytic slice does not prove them."
+        "The source-general original- and changed-environment producers relating the two majority-event probabilities to exact expected pseudo-regret are not yet compiled.",
+        "Theorem 16.2 still needs its per-arm information-to-liminf extraction, including the zero, finite, and infinite d_inf branches.",
+        "Lemma 16.3 and Theorem 16.4 remain blocked; the compiled information and scalar layers are not presented as either terminal."
       ],
       "evidence": "BanditRLProof/LowerBounds/InstanceDependent.lean; Tests/TextbookPartIVChapter16Canary.lean; tasks/TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE.md"
     },
@@ -887,10 +897,12 @@
         "BanditRLProof.LowerBounds.divergenceInfimum",
         "BanditRLProof.LowerBounds.bretagnolleHuber",
         "BanditRLProof.LowerBounds.klDiv_gaussianReal_one",
-        "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum"
+        "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum_eq",
+        "BanditRLProof.LowerBounds.bretagnolleHuberScale_expectedPulls_mul_armKL_le_majorityErrors",
+        "BanditRLProof.LowerBounds.expectedPullCount_ge_log_regret_of_exp_testing_bound"
       ],
       "missing": [
-        "A Chapter 16 one-arm event/information consumer of the compiled Lemma 15.1 history-KL decomposition.",
+        "Source-general regret decomposition theorems that upper-bound both majority-event errors by the original- and changed-environment expected pseudo-regrets with exact gap factors.",
         "The exact per-arm information constraint and liminf extraction, with zero, finite, and infinite d_inf branches.",
         "Lemma 16.3's finite-time event/regret bridge and Theorem 16.4's exact Gaussian aggregation."
       ],

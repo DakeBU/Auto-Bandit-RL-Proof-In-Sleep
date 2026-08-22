@@ -328,7 +328,7 @@
       "slug": "chapter-16-instance-dependent",
       "title": "Instance-Dependent Lower Bounds",
       "status": "partial",
-      "status_note": "Definition 16.1, Theorem 16.2, Lemma 16.3, and Theorem 16.4 are source-frozen. Generic consistency, d_inf, Gaussian-candidate, eventual power, and eventual log-growth leaves compile; the bandit information, liminf, and finite-time terminals remain blocked.",
+      "status_note": "Definition 16.1, Theorem 16.2, Lemma 16.3, and Theorem 16.4 are source-frozen. Twenty dependency declarations compile, including exact unit-Gaussian d_inf and the one-arm history/event-information plus scalar layers; the source event-to-regret producers, liminf extraction, and finite-time terminals remain blocked.",
       "print_pages": "177–184",
       "pdf_pages": "215–223",
       "chapter_doi": "10.1017/9781108571401.021",
@@ -380,8 +380,8 @@
         "steps": [
           {"title": "Freeze consistency", "detail": "Require R_n(pi,nu)/n^p to converge to zero for every environment in the class and every real p>0."},
           {"title": "Choose a confusing alternative", "detail": "Change one suboptimal arm to a law in its component class whose mean is strictly above the original optimal mean and whose original-to-alternative KL approaches d_inf."},
-          {"title": "Lift arm KL to history KL", "detail": "Use the compiled one-common-policy Lemma 15.1 identity to obtain the original-law realized expected pull-count cost."},
-          {"title": "Test the pull event", "detail": "Apply Bretagnolle–Huber to A={T_i(n)>n/2}, preserving the event complement and the two environment-specific regrets."},
+          {"title": "Lift arm KL to history KL", "detail": "Use the compiled one-arm specialization of the one-common-policy Lemma 15.1 identity to obtain the original-law realized expected pull-count cost."},
+          {"title": "Test the pull event", "detail": "Use the compiled measurable event A={T_i(n)>n/2} and Bretagnolle–Huber information inequality; the two source event-to-regret bounds remain the next bridge."},
           {"title": "Extract the rate", "detail": "Use the compiled consistency power/log leaves, then take the required liminf and sum gap times expected pulls; the bandit terminal remains blocked."},
           {"title": "Specialize finite time", "detail": "For Theorem 16.4 shift a Gaussian mean by Delta_i(1+epsilon), apply Lemma 16.3, and retain the exact positive part and factor 2/(1+epsilon)^2."}
         ]
@@ -392,7 +392,7 @@
         "math": "\\liminf_{n\\to\\infty}\\frac{R_n(\\pi,\\nu)}{\\log n}\\ge\\sum_{i:\\Delta_i>0}\\frac{\\Delta_i}{d_{\\inf}(P_i,\\mu^*,\\mathcal M_i)},\\qquad R_n(\\pi,\\nu)\\ge\\frac{2}{(1+\\varepsilon)^2}\\sum_{i:\\Delta_i>0}\\left(\\frac{(1-p)\\log n+\\log(\\varepsilon\\Delta_i/(8C))}{\\Delta_i}\\right)^+.",
         "fallback": "A consistent policy pays the source d_inf logarithmic constant on every unstructured instance; under the finite-time local Gaussian envelope, an explicit positive-part lower bound holds at every selected horizon.",
         "plain": "Chapter 16 turns one-arm change of measure into asymptotic and finite-time instance-dependent regret obstructions.",
-        "boundary": "The generic consistency, d_inf, Gaussian-candidate, power, log-growth, and Chapter 15 history-KL leaves compile. The Chapter 16 one-arm information consumer, exact d_inf-to-liminf bandit bridge, Lemma 16.3, and both regret terminals do not."
+        "boundary": "The generic consistency and power/log-growth leaves, exact unit-Gaussian d_inf row, same-policy one-arm history KL, measurable majority event, Bretagnolle--Huber information inequality, and scalar log assembly compile. The source-general event-to-regret producers, exact d_inf-to-liminf bandit bridge, Lemma 16.3, and both regret terminals do not."
       },
       "source_boundary": "The exact Chapter 16 targets are frozen from the official author PDF and CUP metadata. Compiled analytic interfaces are dependencies only and are never promoted to Theorem 16.2, Lemma 16.3, or Theorem 16.4.",
       "lean_correspondence": [
@@ -406,7 +406,12 @@
         {"name": "BanditRLProof.LowerBounds.parametricDivergenceInfimum", "status": "compiled", "role": "Family-indexed form for parametric law classes."},
         {"name": "BanditRLProof.LowerBounds.parametricDivergenceInfimum_le", "status": "compiled", "role": "Strictly better parameter candidate inequality."},
         {"name": "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum", "status": "compiled", "role": "Unit-variance Gaussian parametric d_inf interface."},
-        {"name": "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum_le_perturbed", "status": "compiled", "role": "Exact cost of the candidate mean muStar+epsilon; no exact infimum equality is claimed."},
+        {"name": "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum_le_perturbed", "status": "compiled", "role": "Exact cost of the candidate mean muStar+epsilon."},
+        {"name": "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum_eq", "status": "compiled", "role": "Exact unit-variance Gaussian Table 16.1 d_inf formula on the strict suboptimal branch."},
+        {"name": "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_mul_of_only_arm_changed", "status": "compiled", "role": "One-arm specialization of Lemma 15.1 with original-law expected pulls."},
+        {"name": "BanditRLProof.LowerBounds.oneArmMajorityPullEvent", "status": "compiled", "role": "Exact source majority event under the inclusive lastRound convention."},
+        {"name": "BanditRLProof.LowerBounds.bretagnolleHuberScale_expectedPulls_mul_armKL_le_majorityErrors", "status": "compiled", "role": "Bretagnolle--Huber information constraint for the two majority-event errors."},
+        {"name": "BanditRLProof.LowerBounds.expectedPullCount_ge_log_regret_of_exp_testing_bound", "status": "compiled", "role": "Scalar logarithmic rearrangement used after the source regret/error producers."},
         {"name": "BanditRLProof.LowerBounds.consistentPolicy_liminf_expectedRegret_div_log_ge", "status": "blocked", "role": "Reserved exact Theorem 16.2 terminal; no declaration is claimed."},
         {"name": "BanditRLProof.LowerBounds.expectedPullCount_ge_log_regret_changeOfMeasure", "status": "blocked", "role": "Reserved exact Lemma 16.3 terminal; no declaration is claimed."},
         {"name": "BanditRLProof.LowerBounds.gaussianExpectedRegret_ge_finiteTimeInstanceDependent", "status": "blocked", "role": "Reserved exact Theorem 16.4 terminal; no declaration is claimed."}
@@ -416,8 +421,10 @@
         {"id": "ch15-gaussian", "label": "Chapter 15 unit-Gaussian arm KL", "status": "compiled"},
         {"id": "consistency", "label": "Definition 16.1 consistency and log growth", "status": "compiled"},
         {"id": "dinf", "label": "extended-real d_inf and candidate inequalities", "status": "compiled"},
-        {"id": "gaussian-dinf", "label": "exact Gaussian d_inf equality", "status": "partial"},
-        {"id": "history", "label": "same-policy history KL identity", "status": "compiled"},
+        {"id": "gaussian-dinf", "label": "exact Gaussian d_inf equality", "status": "compiled"},
+        {"id": "history", "label": "one-arm history KL and majority-event information", "status": "compiled"},
+        {"id": "scalar", "label": "finite-KL and scalar log assembly", "status": "compiled"},
+        {"id": "event-regret", "label": "source expected-pseudo-regret bounds for both event errors", "status": "blocked"},
         {"id": "asymptotic", "label": "Theorem 16.2 liminf regret terminal", "status": "blocked"},
         {"id": "finite", "label": "Lemma 16.3 and Theorem 16.4", "status": "blocked"}
       ],
@@ -426,11 +433,11 @@
         "Read d_inf and Theorem 16.2 with strict alternative mean, original-to-alternative KL, and an unstructured product class.",
         "Trace the source event A={T_i(n)>n/2}, the two regret laws, and the compiled subpolynomial log-growth adapter.",
         "Read Lemma 16.3 before Theorem 16.4 and preserve the unit-Gaussian local class, selected horizon set, constants, and positive part.",
-        "Treat the Chapter 16 one-arm history-information consumer, liminf, and finite-time terminals as blockers, not as consequences of the compiled Chapter 15 identity or analytic interfaces."
+        "Inspect the compiled one-arm history/event information and scalar layers, then keep the source event-to-regret producers, liminf extraction, and finite-time terminals explicitly blocked."
       ],
       "gaps": [
-        "The Chapter 16 one-arm original-law expected-pull information consumer and measurable event bridge built from the compiled Chapter 15 identity.",
-        "The exact Gaussian d_inf equality with empty, zero, finite, and infinite information branches.",
+        "The source-general original- and changed-environment expected-pseudo-regret bounds for the two majority-event errors.",
+        "Theorem 16.2's zero, finite, and infinite d_inf-to-liminf bandit branches.",
         "Theorem 16.2's per-arm and summed liminf terminal, Lemma 16.3, and Theorem 16.4."
       ]
     },

@@ -189,6 +189,25 @@ class AnonymousSupplementTests(unittest.TestCase):
         )
         for record_id in direct_textbook_records:
             self.assertEqual(ledger["source_records"][record_id]["status"], "compiled")
+        self.assertEqual(
+            ledger["textbook_chapter_16"]["dependency_declaration_count"],
+            20,
+        )
+        self.assertFalse(
+            ledger["textbook_chapter_16"]["source_terminals_verified"]
+        )
+        self.assertEqual(
+            ledger["source_records"][BUILDER.CH16_COMPILED_ID]["status"],
+            "compiled",
+        )
+        self.assertEqual(
+            ledger["source_records"][BUILDER.CH16_TERMINAL_ID]["status"],
+            "blocked",
+        )
+        self.assertEqual(
+            ledger["source_records"][BUILDER.CH16_TERMINAL_ID]["declarations"],
+            [],
+        )
         succinct_row = next(
             row for row in ledger["table_rows"]
             if row["artifact"] == "Succinct geometry audit"
@@ -248,6 +267,20 @@ class AnonymousSupplementTests(unittest.TestCase):
         row["full_name"] = replacement
         with self.assertRaisesRegex(ValueError, "26 finite-algebra and 18 generated-history"):
             BUILDER.validate_sgb_count(records, index)
+
+    def test_ch16_dependency_names_and_blocked_terminals_are_frozen(self):
+        records = json.loads(json.dumps(BUILDER.selected_source_records()))
+        declarations = records[BUILDER.CH16_COMPILED_ID]["declarations"]
+        declarations[-1] = declarations[-1] + "_drifted"
+        with self.assertRaisesRegex(ValueError, "frozen 20 unique declarations"):
+            BUILDER.validate_ch16_boundary(records)
+
+        records = json.loads(json.dumps(BUILDER.selected_source_records()))
+        records[BUILDER.CH16_TERMINAL_ID]["declarations"] = [
+            "BanditRLProof.LowerBounds.uncompiledChapter16Terminal"
+        ]
+        with self.assertRaisesRegex(ValueError, "blocked and declaration-free"):
+            BUILDER.validate_ch16_boundary(records)
 
     def test_public_base_is_replaced_by_anonymous_tree_binding(self):
         payload = BUILDER.build_payload(allow_missing_graph=True)

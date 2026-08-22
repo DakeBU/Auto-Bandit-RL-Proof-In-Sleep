@@ -1111,18 +1111,35 @@
       ]
     },
     {
-      "full_name": "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum_le_perturbed",
+      "full_name": "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum_eq",
       "chapter": "foundations",
-      "plain": "For a unit-variance Gaussian arm, changing the mean to mu-star plus a positive epsilon gives an admissible d_inf candidate with its exact squared-distance KL cost.",
-      "math": "d_{\\inf}(\\mathcal N(\\mu,1),\\mu^*)\\le\\frac{(\\mu^*-\\mu+\\varepsilon)^2}{2},\\qquad\\varepsilon>0.",
-      "intuition": "A mean just above the optimal threshold supplies the approaching sequence behind the Gaussian d_inf formula.",
-      "why": "The leaf connects Chapter 16's infimum interface to the compiled Chapter 15 Gaussian KL without pretending the limiting infimum equality is already proved.",
-      "position": "It is the upper-candidate half of Table 16.1's unit-variance Gaussian calculation; the lower bound and epsilon-to-zero extraction remain open.",
-      "proof_idea": "Insert the alternative parameter mu-star plus epsilon, apply the exact Gaussian KL theorem, and normalize the squared displacement.",
-      "lean_notes": "The premise epsilon>0 discharges strict mean improvement. The output stays ENNReal and retains the original-to-alternative orientation.",
+      "plain": "For a suboptimal unit-variance Gaussian arm, the Chapter 16 information infimum is exactly one half of the squared gap to the optimal mean.",
+      "math": "d_{\\inf}(\\mathcal N(\\mu,1),\\mu^*)=\\frac{(\\mu^*-\\mu)^2}{2},\\qquad\\mu<\\mu^*.",
+      "intuition": "Every strictly better Gaussian alternative is at least the boundary distance away, while alternatives just above the boundary approach that cost.",
+      "why": "This closes the unit-Gaussian row of Table 16.1 instead of recording only one perturbed candidate.",
+      "position": "It is an exact distribution-level dependency; the source's per-arm liminf information constraint and regret terminal remain blocked.",
+      "proof_idea": "Use monotonicity of squared distance for the lower bound, then squeeze positive 1/(n+1) perturbations to zero for the upper bound.",
+      "lean_notes": "The strict premise mu<muStar keeps the boundary gap positive. The value stays ENNReal and preserves original-to-alternative KL.",
       "dependencies": [
-        "BanditRLProof.LowerBounds.parametricDivergenceInfimum_le",
+        "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum_ge",
+        "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum_le_perturbed",
         "BanditRLProof.LowerBounds.klDiv_gaussianReal_one"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.LowerBounds.bretagnolleHuberScale_expectedPulls_mul_armKL_le_majorityErrors",
+      "chapter": "foundations",
+      "plain": "When only one arm law changes, the original-law expected pulls times that arm's KL controls the sum of the two majority-event errors under one common randomized policy.",
+      "math": "\\tfrac12\\exp(-\\mathbb E_\\nu[T_i(n)]D(P_i\\Vert P_i'))\\le P_\\nu(A)+P_{\\nu'}(A^c),\\quad A=\\{T_i(n)>n/2\\}.",
+      "intuition": "If the policy almost never pulls the changed arm, the two history laws remain hard to distinguish, so the majority decision must fail in at least one environment.",
+      "why": "This is the exact one-arm event-information layer reused by Lemma 16.3 and the asymptotic route.",
+      "position": "The history KL and event inequality compile; the two source expected-pseudo-regret bounds for the event errors still do not.",
+      "proof_idea": "Specialize Lemma 15.1 to environments equal off arm i, prove the pull-count majority event measurable, and apply Bretagnolle--Huber.",
+      "lean_notes": "Both history measures use the same possibly randomized HistoryAlgorithm. Pull expectation and KL direction are under the first environment.",
+      "dependencies": [
+        "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_mul_of_only_arm_changed",
+        "BanditRLProof.LowerBounds.measurableSet_oneArmMajorityPullEvent",
+        "BanditRLProof.LowerBounds.bretagnolleHuber"
       ]
     },
     {

@@ -1,6 +1,6 @@
 {
   "task": "TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE",
-  "generated": "2026-08-18T18:16:29+00:00",
+  "generated": "2026-08-22T02:04:44+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -910,7 +910,7 @@
         "change of measure",
         "minimax quantifier order"
       ],
-      "memory_status": "source-frozen-not-started"
+      "memory_status": "source-frozen-partial"
     },
     {
       "id": "PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB",
@@ -931,7 +931,7 @@
         "failure-regret decomposition",
         "learning-rate regime contract"
       ],
-      "memory_status": "source-frozen-reserve"
+      "memory_status": "source-frozen-partial"
     }
   ],
   "scenario_cards": [
@@ -32365,6 +32365,358 @@
       "statement": "theorem measurable_generatedAction {Omega : Type} [MeasurableSpace Omega] {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (reward : Omega -> RewardTrace Rat) (hreward : forall t : Nat, Measurable (fun omega : Omega => reward omega t)) (t : Nat) : Measurable (fun omega => generatedAction hK sigma2 delta margin defaultAction reward omega t)"
     },
     {
+      "kind": "def",
+      "name": "softmaxDenominator",
+      "full_name": "BanditRLProof.StochasticGradientBandit.softmaxDenominator",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean",
+      "line": 27,
+      "statement": "def softmaxDenominator (theta : Action -> Real) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "softmaxProbability",
+      "full_name": "BanditRLProof.StochasticGradientBandit.softmaxProbability",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean",
+      "line": 31,
+      "statement": "def softmaxProbability (theta : Action -> Real) (a : Action) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "softmaxDenominator_pos",
+      "full_name": "BanditRLProof.StochasticGradientBandit.softmaxDenominator_pos",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean",
+      "line": 35,
+      "statement": "theorem softmaxDenominator_pos [Nonempty Action] (theta : Action -> Real) : 0 < softmaxDenominator theta"
+    },
+    {
+      "kind": "theorem",
+      "name": "softmaxProbability_pos",
+      "full_name": "BanditRLProof.StochasticGradientBandit.softmaxProbability_pos",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean",
+      "line": 43,
+      "statement": "theorem softmaxProbability_pos [Nonempty Action] (theta : Action -> Real) (a : Action) : 0 < softmaxProbability theta a"
+    },
+    {
+      "kind": "theorem",
+      "name": "softmaxProbability_nonneg",
+      "full_name": "BanditRLProof.StochasticGradientBandit.softmaxProbability_nonneg",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean",
+      "line": 48,
+      "statement": "theorem softmaxProbability_nonneg [Nonempty Action] (theta : Action -> Real) (a : Action) : 0 <= softmaxProbability theta a"
+    },
+    {
+      "kind": "theorem",
+      "name": "softmaxProbability_sum",
+      "full_name": "BanditRLProof.StochasticGradientBandit.softmaxProbability_sum",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean",
+      "line": 54,
+      "statement": "theorem softmaxProbability_sum [Nonempty Action] (theta : Action -> Real) : ∑ a, softmaxProbability theta a = 1"
+    },
+    {
+      "kind": "theorem",
+      "name": "softmaxProbability_le_one",
+      "full_name": "BanditRLProof.StochasticGradientBandit.softmaxProbability_le_one",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean",
+      "line": 61,
+      "statement": "theorem softmaxProbability_le_one [Nonempty Action] (theta : Action -> Real) (a : Action) : softmaxProbability theta a <= 1"
+    },
+    {
+      "kind": "def",
+      "name": "sourceIncrement",
+      "full_name": "BanditRLProof.StochasticGradientBandit.sourceIncrement",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean",
+      "line": 72,
+      "statement": "def sourceIncrement (p : Action -> Real) (reward : Real) (selected k : Action) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "sourceIncrement_eq_indicator",
+      "full_name": "BanditRLProof.StochasticGradientBandit.sourceIncrement_eq_indicator",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean",
+      "line": 77,
+      "statement": "theorem sourceIncrement_eq_indicator (p : Action -> Real) (reward : Real) (selected k : Action) : sourceIncrement p reward selected k = reward * ((if selected = k then 1 else 0) - p k)"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_sourceIncrement",
+      "full_name": "BanditRLProof.StochasticGradientBandit.sum_sourceIncrement",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean",
+      "line": 84,
+      "statement": "theorem sum_sourceIncrement (p : Action -> Real) (reward : Real) (selected : Action) (hp : ∑ k, p k = 1) : ∑ k, sourceIncrement p reward selected k = 0"
+    },
+    {
+      "kind": "def",
+      "name": "policyValue",
+      "full_name": "BanditRLProof.StochasticGradientBandit.policyValue",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean",
+      "line": 98,
+      "statement": "def policyValue (p mean : Action -> Real) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "expectedSourceIncrement",
+      "full_name": "BanditRLProof.StochasticGradientBandit.expectedSourceIncrement",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean",
+      "line": 102,
+      "statement": "def expectedSourceIncrement (p mean : Action -> Real) (k : Action) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "expectedSourceIncrement_eq_gradientCoordinate",
+      "full_name": "BanditRLProof.StochasticGradientBandit.expectedSourceIncrement_eq_gradientCoordinate",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean",
+      "line": 106,
+      "statement": "theorem expectedSourceIncrement_eq_gradientCoordinate (p mean : Action -> Real) (k : Action) : expectedSourceIncrement p mean k = p k * (mean k - policyValue p mean)"
+    },
+    {
+      "kind": "def",
+      "name": "instantaneousGap",
+      "full_name": "BanditRLProof.StochasticGradientBandit.instantaneousGap",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean",
+      "line": 129,
+      "statement": "def instantaneousGap (p gap : Action -> Real) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "instantaneousGap_eq_bestMean_sub_policyValue",
+      "full_name": "BanditRLProof.StochasticGradientBandit.instantaneousGap_eq_bestMean_sub_policyValue",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean",
+      "line": 133,
+      "statement": "theorem instantaneousGap_eq_bestMean_sub_policyValue (p mean gap : Action -> Real) (bestMean : Real) (hp : ∑ a, p a = 1) (hgap : ∀ a, gap a = bestMean - mean a) : instantaneousGap p gap = bestMean - policyValue p mean"
+    },
+    {
+      "kind": "theorem",
+      "name": "expectedSourceIncrement_eq_gapCoordinate",
+      "full_name": "BanditRLProof.StochasticGradientBandit.expectedSourceIncrement_eq_gapCoordinate",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean",
+      "line": 155,
+      "statement": "theorem expectedSourceIncrement_eq_gapCoordinate (p mean gap : Action -> Real) (bestMean : Real) (k : Action) (hp : ∑ a, p a = 1) (hgap : ∀ a, gap a = bestMean - mean a) : expectedSourceIncrement p mean k = p k * (instantaneousGap p gap - gap k)"
+    },
+    {
+      "kind": "def",
+      "name": "gapExpectedIncrement",
+      "full_name": "BanditRLProof.StochasticGradientBandit.gapExpectedIncrement",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean",
+      "line": 167,
+      "statement": "def gapExpectedIncrement (p gap : Action -> Real) (k : Action) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "expectedSourceIncrement_eq_gapExpectedIncrement",
+      "full_name": "BanditRLProof.StochasticGradientBandit.expectedSourceIncrement_eq_gapExpectedIncrement",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean",
+      "line": 170,
+      "statement": "theorem expectedSourceIncrement_eq_gapExpectedIncrement (p mean gap : Action -> Real) (bestMean : Real) (k : Action) (hp : ∑ a, p a = 1) (hgap : ∀ a, gap a = bestMean - mean a) : expectedSourceIncrement p mean k = gapExpectedIncrement p gap k"
+    },
+    {
+      "kind": "theorem",
+      "name": "instantaneousGap_ge_minGap_mul_failureMass",
+      "full_name": "BanditRLProof.StochasticGradientBandit.instantaneousGap_ge_minGap_mul_failureMass",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean",
+      "line": 177,
+      "statement": "theorem instantaneousGap_ge_minGap_mul_failureMass (p gap : Action -> Real) (best : Action) (Delta : Real) (hp : ∑ a, p a = 1) (hp_nonneg : ∀ a, 0 <= p a) (hgap_best : gap best = 0) (hgap_min : ∀ a, a ≠ best -> Delta <= gap a) : Delta * (1 - p best) <= instantaneousGap p gap"
+    },
+    {
+      "kind": "theorem",
+      "name": "gapExpectedIncrement_best_ge",
+      "full_name": "BanditRLProof.StochasticGradientBandit.gapExpectedIncrement_best_ge",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean",
+      "line": 214,
+      "statement": "theorem gapExpectedIncrement_best_ge (p gap : Action -> Real) (best : Action) (Delta : Real) (hp : ∑ a, p a = 1) (hp_nonneg : ∀ a, 0 <= p a) (hgap_best : gap best = 0) (hgap_min : ∀ a, a ≠ best -> Delta <= gap a) : Delta * (p best * (1 - p best)) <= gapExpectedIncrement p gap best"
+    },
+    {
+      "kind": "def",
+      "name": "bestParameterIncrementSum",
+      "full_name": "BanditRLProof.StochasticGradientBandit.bestParameterIncrementSum",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean",
+      "line": 229,
+      "statement": "def bestParameterIncrementSum (eta : Real) (p : Nat -> Action -> Real) (gap : Action -> Real) (best : Action) (horizon : Nat) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "bestParameterIncrementSum_ge",
+      "full_name": "BanditRLProof.StochasticGradientBandit.bestParameterIncrementSum_ge",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean",
+      "line": 234,
+      "statement": "theorem bestParameterIncrementSum_ge (eta Delta : Real) (p : Nat -> Action -> Real) (gap : Action -> Real) (best : Action) (horizon : Nat) (heta : 0 <= eta) (hp : ∀ t, ∑ a, p t a = 1) (hp_nonneg : ∀ t a, 0 <= p t a) (hgap_best : gap best = 0) (hgap_min : ∀ a, a ≠ best -> Delta <= gap a) : eta * Delta * (∑ t ∈ Finset.range horizon, p t best * (1 - p t best)) <= bestParameterIncrementSum eta p gap best horizon"
+    },
+    {
+      "kind": "def",
+      "name": "sourceExpectedPseudoRegret",
+      "full_name": "BanditRLProof.StochasticGradientBandit.sourceExpectedPseudoRegret",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean",
+      "line": 257,
+      "statement": "def sourceExpectedPseudoRegret (p : Nat -> Action -> Real) (gap : Action -> Real) (horizon : Nat) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "instantaneousGap_le_maxGap_mul_failureMass",
+      "full_name": "BanditRLProof.StochasticGradientBandit.instantaneousGap_le_maxGap_mul_failureMass",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean",
+      "line": 261,
+      "statement": "theorem instantaneousGap_le_maxGap_mul_failureMass (p gap : Action -> Real) (best : Action) (DeltaMax : Real) (hp : ∑ a, p a = 1) (hp_nonneg : ∀ a, 0 <= p a) (hgap_best : gap best = 0) (hgap_max : ∀ a, a ≠ best -> gap a <= DeltaMax) : instantaneousGap p gap <= DeltaMax * (1 - p best)"
+    },
+    {
+      "kind": "theorem",
+      "name": "failureMass_eq_successFailure_add_sq",
+      "full_name": "BanditRLProof.StochasticGradientBandit.failureMass_eq_successFailure_add_sq",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean",
+      "line": 297,
+      "statement": "theorem failureMass_eq_successFailure_add_sq (x : Real) : 1 - x = x * (1 - x) + (1 - x) ^ 2"
+    },
+    {
+      "kind": "theorem",
+      "name": "sourceRegretDecomposition_le",
+      "full_name": "BanditRLProof.StochasticGradientBandit.sourceRegretDecomposition_le",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean",
+      "line": 302,
+      "statement": "theorem sourceRegretDecomposition_le (eta Delta DeltaMax : Real) (p : Nat -> Action -> Real) (gap : Action -> Real) (best : Action) (horizon : Nat) (heta : 0 < eta) (hDelta : 0 < Delta) (hDeltaMax : 0 <= DeltaMax) (hp : ∀ t, ∑ a, p t a = 1) (hp_nonneg : ∀ t a, 0 <= p t a) (hgap_best : gap best = 0) (hgap_min : ∀ a, a ≠ best -> Delta <= gap a) (hgap_max : ∀ a, a ≠ best -> gap a <= DeltaMax) : sourceExpectedPseudoRegret p gap horizon <= (DeltaMax / (eta * Delta)) * bestParameterIncrementSum eta p gap best horizon + DeltaMax * (∑ t ∈ Finset.range horizon, (1 - p t best) ^ 2)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_softmaxProbability",
+      "full_name": "BanditRLProof.StochasticGradientBandit.measurable_softmaxProbability",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "line": 30,
+      "statement": "theorem measurable_softmaxProbability [Fintype Action] {History : Type*} [MeasurableSpace History] (theta : History -> Action -> Real) (htheta : forall action, Measurable (fun history => theta history action)) (action : Action) : Measurable (fun history => softmaxProbability (theta history) action)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_sourceIncrement",
+      "full_name": "BanditRLProof.StochasticGradientBandit.measurable_sourceIncrement",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "line": 43,
+      "statement": "theorem measurable_sourceIncrement [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] {History : Type*} [MeasurableSpace History] (prob : History -> Action -> Real) (reward : History -> Real) (selected : History -> Action) (coordinate : Action) (hprob : Measurable (fun history => prob history coordinate)) (hreward : Measurable reward) (hselected : Measurable selected) : Measurable (fun history => sourceIncrement (prob history) (reward history) (selected history) coordinate)"
+    },
+    {
+      "kind": "def",
+      "name": "historyParameter",
+      "full_name": "BanditRLProof.StochasticGradientBandit.historyParameter",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "line": 66,
+      "statement": "noncomputable def historyParameter [Fintype Action] [DecidableEq Action] (initialTheta : Action -> Real) (eta : Real) : (n : Nat) -> History.FinitePairHistory Action Real n -> Action -> Real | 0, history, coordinate => initialTheta coordinate + eta * sourceIncrement (softmaxProbability initialTheta) (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).2 (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).1 coordinate | n + 1, history, coordinate => let previous := Exp3.previousPairHistory history historyParameter initialTheta eta n previous coordinate + eta * sourceIncrement (softmaxProbability (historyParameter initialTheta eta n previous)) (history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩).2 (history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩).1 coordinate @[simp]"
+    },
+    {
+      "kind": "theorem",
+      "name": "historyParameter_zero",
+      "full_name": "BanditRLProof.StochasticGradientBandit.historyParameter_zero",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "line": 84,
+      "statement": "theorem historyParameter_zero [Fintype Action] [DecidableEq Action] (initialTheta : Action -> Real) (eta : Real) (history : History.FinitePairHistory Action Real 0) (coordinate : Action) : historyParameter initialTheta eta 0 history coordinate = initialTheta coordinate + eta * sourceIncrement (softmaxProbability initialTheta) (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).2 (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).1 coordinate"
+    },
+    {
+      "kind": "theorem",
+      "name": "historyParameter_succ",
+      "full_name": "BanditRLProof.StochasticGradientBandit.historyParameter_succ",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "line": 97,
+      "statement": "theorem historyParameter_succ [Fintype Action] [DecidableEq Action] (initialTheta : Action -> Real) (eta : Real) (n : Nat) (history : History.FinitePairHistory Action Real (n + 1)) (coordinate : Action) : historyParameter initialTheta eta (n + 1) history coordinate = historyParameter initialTheta eta n (Exp3.previousPairHistory history) coordinate + eta * sourceIncrement (softmaxProbability (historyParameter initialTheta eta n (Exp3.previousPairHistory history))) (history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩).2 (history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩).1 coordinate"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_historyParameter",
+      "full_name": "BanditRLProof.StochasticGradientBandit.measurable_historyParameter",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "line": 117,
+      "statement": "theorem measurable_historyParameter (initialTheta : Action -> Real) (eta : Real) : forall n coordinate, Measurable (fun history : History.FinitePairHistory Action Real n => historyParameter initialTheta eta n history coordinate)"
+    },
+    {
+      "kind": "def",
+      "name": "softmaxFiniteActionDistribution",
+      "full_name": "BanditRLProof.StochasticGradientBandit.softmaxFiniteActionDistribution",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "line": 184,
+      "statement": "def softmaxFiniteActionDistribution (theta : Action -> Real) : Exp3.FiniteActionDistribution (Finset.univ : Finset Action) (softmaxProbability theta) where"
+    },
+    {
+      "kind": "def",
+      "name": "historySoftmaxDistributionSource",
+      "full_name": "BanditRLProof.StochasticGradientBandit.historySoftmaxDistributionSource",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "line": 191,
+      "statement": "def historySoftmaxDistributionSource (initialTheta : Action -> Real) (eta : Real) (n : Nat) : Exp3.MeasurableFiniteActionDistribution (Finset.univ : Finset Action) (fun history : History.FinitePairHistory Action Real n => softmaxProbability (historyParameter initialTheta eta n history)) where"
+    },
+    {
+      "kind": "def",
+      "name": "historyAlgorithm",
+      "full_name": "BanditRLProof.StochasticGradientBandit.historyAlgorithm",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "line": 206,
+      "statement": "noncomputable def historyAlgorithm (initialTheta : Action -> Real) (eta : Real) : Thompson.HistoryAlgorithm Action Real where"
+    },
+    {
+      "kind": "theorem",
+      "name": "historyAlgorithm_policy",
+      "full_name": "BanditRLProof.StochasticGradientBandit.historyAlgorithm_policy",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "line": 226,
+      "statement": "theorem historyAlgorithm_policy (initialTheta : Action -> Real) (eta : Real) (n : Nat) : (historyAlgorithm initialTheta eta).policy n = Exp3.finiteActionKernel (Finset.univ : Finset Action) (fun history : History.FinitePairHistory Action Real n => softmaxProbability (historyParameter initialTheta eta n history)) (historySoftmaxDistributionSource initialTheta eta n)"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_measurableEnvironmentInitialPairKernel_sourceIncrement_eq_expectedSourceIncrement",
+      "full_name": "BanditRLProof.StochasticGradientBandit.integral_measurableEnvironmentInitialPairKernel_sourceIncrement_eq_expectedSourceIncrement",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "line": 236,
+      "statement": "theorem integral_measurableEnvironmentInitialPairKernel_sourceIncrement_eq_expectedSourceIncrement {Env : Type v} [MeasurableSpace Env] (initialTheta : Action -> Real) (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env Action Real) (env : Env) (mean : Action -> Real) (coordinate : Action) (hIntegrable : Integrable (fun pair : Action × Real => sourceIncrement (softmaxProbability initialTheta) pair.2 pair.1 coordinate) (Thompson.measurableEnvironmentInitialPairKernel (historyAlgorithm initialTheta eta) environment env)) (hmean : forall selected, integral (environment.initialFeedback (env, selected)) id = mean selected) : integral (Thompson.measurableEnvironmentInitialPairKernel (historyAlgorithm initialTheta eta) environment env) (fun pair : Action × Real => sourceIncrement (softmaxProbability initialTheta) pair.2 pair.1 coordinate) = expectedSourceIncrement (softmaxProbability initialTheta) mean coordinate"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_historyStepKernel_sourceIncrement_eq_expectedSourceIncrement",
+      "full_name": "BanditRLProof.StochasticGradientBandit.integral_historyStepKernel_sourceIncrement_eq_expectedSourceIncrement",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "line": 311,
+      "statement": "theorem integral_historyStepKernel_sourceIncrement_eq_expectedSourceIncrement (initialTheta : Action -> Real) (eta : Real) (environment : Thompson.HistoryEnvironment Action Real) (n : Nat) (history : History.FinitePairHistory Action Real n) (mean : Action -> Real) (coordinate : Action) (hIntegrable : Integrable (fun pair : Action × Real => sourceIncrement (softmaxProbability (historyParameter initialTheta eta n history)) pair.2 pair.1 coordinate) (Thompson.historyStepKernel (historyAlgorithm initialTheta eta) environment n history)) (hmean : forall selected, integral (environment.feedback n (history, selected)) id = mean selected) : integral (Thompson.historyStepKernel (historyAlgorithm initialTheta eta) environment n history) (fun pair : Action × Real => sourceIncrement (softmaxProbability (historyParameter initialTheta eta n history)) pair.2 pair.1 coordinate) = expectedSourceIncrement (softmaxProbability (historyParameter initialTheta eta n history)) mean coordinate"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_measurableEnvironmentHistoryStepKernel_sourceIncrement_eq_expectedSourceIncrement",
+      "full_name": "BanditRLProof.StochasticGradientBandit.integral_measurableEnvironmentHistoryStepKernel_sourceIncrement_eq_expectedSourceIncrement",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "line": 396,
+      "statement": "theorem integral_measurableEnvironmentHistoryStepKernel_sourceIncrement_eq_expectedSourceIncrement {Env : Type v} [MeasurableSpace Env] (initialTheta : Action -> Real) (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env Action Real) (n : Nat) (env : Env) (history : History.FinitePairHistory Action Real n) (mean : Action -> Real) (coordinate : Action) (hIntegrable : Integrable (fun pair : Action × Real => sourceIncrement (softmaxProbability (historyParameter initialTheta eta n history)) pair.2 pair.1 coordinate) (Thompson.measurableEnvironmentHistoryStepKernel (historyAlgorithm initialTheta eta) environment n (env, history))) (hmean : forall selected, integral (environment.feedback n (env, (history, selected))) id = mean selected) : integral (Thompson.measurableEnvironmentHistoryStepKernel (historyAlgorithm initialTheta eta) environment n (env, history)) (fun pair : Action × Real => sourceIncrement (softmaxProbability (historyParameter initialTheta eta n history)) pair.2 pair.1 coordinate) = expectedSourceIncrement (softmaxProbability (historyParameter initialTheta eta n history)) mean coordinate"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_measurableEnvironmentHistoryStepKernel_sourceIncrement_eq_gapCoordinate",
+      "full_name": "BanditRLProof.StochasticGradientBandit.integral_measurableEnvironmentHistoryStepKernel_sourceIncrement_eq_gapCoordinate",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "line": 433,
+      "statement": "theorem integral_measurableEnvironmentHistoryStepKernel_sourceIncrement_eq_gapCoordinate {Env : Type v} [MeasurableSpace Env] (initialTheta : Action -> Real) (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env Action Real) (n : Nat) (env : Env) (history : History.FinitePairHistory Action Real n) (mean gap : Action -> Real) (bestMean : Real) (coordinate : Action) (hIntegrable : Integrable (fun pair : Action × Real => sourceIncrement (softmaxProbability (historyParameter initialTheta eta n history)) pair.2 pair.1 coordinate) (Thompson.measurableEnvironmentHistoryStepKernel (historyAlgorithm initialTheta eta) environment n (env, history))) (hmean : forall selected, integral (environment.feedback n (env, (history, selected))) id = mean selected) (hgap : forall action, gap action = bestMean - mean action) : integral (Thompson.measurableEnvironmentHistoryStepKernel (historyAlgorithm initialTheta eta) environment n (env, history)) (fun pair : Action × Real => sourceIncrement (softmaxProbability (historyParameter initialTheta eta n history)) pair.2 pair.1 coordinate) = softmaxProbability (historyParameter initialTheta eta n history) coordinate * (instantaneousGap (softmaxProbability (historyParameter initialTheta eta n history)) gap - gap coordinate)"
+    },
+    {
+      "kind": "def",
+      "name": "trajectoryKernel",
+      "full_name": "BanditRLProof.StochasticGradientBandit.trajectoryKernel",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "line": 471,
+      "statement": "noncomputable def trajectoryKernel {Env : Type v} [MeasurableSpace Env] (initialTheta : Action -> Real) (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env Action Real) : Kernel Env ((n : Nat) -> Action × Real)"
+    },
+    {
+      "kind": "theorem",
+      "name": "trajectoryMeasure_condDistrib_action_zero_given_environment",
+      "full_name": "BanditRLProof.StochasticGradientBandit.trajectoryMeasure_condDistrib_action_zero_given_environment",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "line": 488,
+      "statement": "theorem trajectoryMeasure_condDistrib_action_zero_given_environment {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Action] (prior : Measure Env) [IsFiniteMeasure prior] (initialTheta : Action -> Real) (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env Action Real) : condDistrib (fun sample : Env × ((k : Nat) -> Action × Real) => (sample.2 0).1) (fun sample : Env × ((k : Nat) -> Action × Real) => sample.1) (prior ⊗ₘ trajectoryKernel initialTheta eta environment) =ᵐ[ (prior ⊗ₘ trajectoryKernel initialTheta eta environment).map (fun sample : Env × ((k : Nat) -> Action × Real) => sample.1)] Kernel.const Env (Exp3.finiteActionMeasure (Finset.univ : Finset Action) (softmaxProbability initialTheta))"
+    },
+    {
+      "kind": "theorem",
+      "name": "trajectoryMeasure_condDistrib_action",
+      "full_name": "BanditRLProof.StochasticGradientBandit.trajectoryMeasure_condDistrib_action",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "line": 509,
+      "statement": "theorem trajectoryMeasure_condDistrib_action {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [StandardBorelSpace Action] (prior : Measure Env) [IsFiniteMeasure prior] (initialTheta : Action -> Real) (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env Action Real) (n : Nat) : condDistrib (fun sample : Env × ((k : Nat) -> Action × Real) => (sample.2 (n + 1)).1) (fun sample => Preorder.frestrictLe n sample.2) (prior ⊗ₘ trajectoryKernel initialTheta eta environment) =ᵐ[ (prior ⊗ₘ trajectoryKernel initialTheta eta environment).map (fun sample => Preorder.frestrictLe n sample.2)] Exp3.finiteActionKernel (Finset.univ : Finset Action) (fun history : History.FinitePairHistory Action Real n => softmaxProbability (historyParameter initialTheta eta n history)) (historySoftmaxDistributionSource initialTheta eta n)"
+    },
+    {
+      "kind": "theorem",
+      "name": "trajectoryMeasure_condDistrib_nextPair_given_environment_prefix",
+      "full_name": "BanditRLProof.StochasticGradientBandit.trajectoryMeasure_condDistrib_nextPair_given_environment_prefix",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "line": 535,
+      "statement": "theorem trajectoryMeasure_condDistrib_nextPair_given_environment_prefix {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [StandardBorelSpace Action] (prior : Measure Env) [IsFiniteMeasure prior] (initialTheta : Action -> Real) (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env Action Real) (n : Nat) : condDistrib (fun sample : Env × ((k : Nat) -> Action × Real) => sample.2 (n + 1)) (fun sample : Env × ((k : Nat) -> Action × Real) => (sample.1, Preorder.frestrictLe n sample.2)) (prior ⊗ₘ trajectoryKernel initialTheta eta environment) =ᵐ[ (prior ⊗ₘ trajectoryKernel initialTheta eta environment).map (fun sample : Env × ((k : Nat) -> Action × Real) => (sample.1, Preorder.frestrictLe n sample.2))] Thompson.measurableEnvironmentHistoryStepKernel (historyAlgorithm initialTheta eta) environment n"
+    },
+    {
       "kind": "structure",
       "name": "PriorSketch",
       "full_name": "BanditRLProof.Thompson.PriorSketch",
@@ -53086,6 +53438,414 @@
     },
     {
       "kind": "def",
+      "name": "finiteHistoryPullCountReal",
+      "full_name": "BanditRLProof.LowerBounds.finiteHistoryPullCountReal",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 25,
+      "statement": "noncomputable def finiteHistoryPullCountReal {K : Nat} {Reward : Type*} (n : Nat) (history : History.FinitePairHistory (Fin K) Reward n) (arm : Fin K) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "finiteHistoryPullCountENNReal_ne_top",
+      "full_name": "BanditRLProof.LowerBounds.finiteHistoryPullCountENNReal_ne_top",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 31,
+      "statement": "theorem finiteHistoryPullCountENNReal_ne_top {K : Nat} {Reward : Type*} (n : Nat) (history : History.FinitePairHistory (Fin K) Reward n) (arm : Fin K) : finiteHistoryPullCountENNReal n history arm ≠ ∞"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_finiteHistoryPullCountENNReal",
+      "full_name": "BanditRLProof.LowerBounds.sum_finiteHistoryPullCountENNReal",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 45,
+      "statement": "theorem sum_finiteHistoryPullCountENNReal {K : Nat} {Reward : Type*} (n : Nat) (history : History.FinitePairHistory (Fin K) Reward n) : ∑ arm : Fin K, finiteHistoryPullCountENNReal n history arm = n + 1"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_finiteHistoryPullCountReal",
+      "full_name": "BanditRLProof.LowerBounds.sum_finiteHistoryPullCountReal",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 66,
+      "statement": "theorem sum_finiteHistoryPullCountReal {K : Nat} {Reward : Type*} (n : Nat) (history : History.FinitePairHistory (Fin K) Reward n) : ∑ arm : Fin K, finiteHistoryPullCountReal n history arm = n + 1"
+    },
+    {
+      "kind": "theorem",
+      "name": "finiteHistoryPullCountReal_nonneg",
+      "full_name": "BanditRLProof.LowerBounds.finiteHistoryPullCountReal_nonneg",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 78,
+      "statement": "theorem finiteHistoryPullCountReal_nonneg {K : Nat} {Reward : Type*} (n : Nat) (history : History.FinitePairHistory (Fin K) Reward n) (arm : Fin K) : 0 ≤ finiteHistoryPullCountReal n history arm"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_finiteHistoryPullCountReal",
+      "full_name": "BanditRLProof.LowerBounds.measurable_finiteHistoryPullCountReal",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 85,
+      "statement": "theorem measurable_finiteHistoryPullCountReal {K : Nat} {Reward : Type*} [MeasurableSpace Reward] (n : Nat) (arm : Fin K) : Measurable (fun history : History.FinitePairHistory (Fin K) Reward n => finiteHistoryPullCountReal n history arm)"
+    },
+    {
+      "kind": "theorem",
+      "name": "ofReal_mul_probReal_le_lintegral_of_event",
+      "full_name": "BanditRLProof.LowerBounds.ofReal_mul_probReal_le_lintegral_of_event",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 94,
+      "statement": "theorem ofReal_mul_probReal_le_lintegral_of_event {alpha : Type*} [MeasurableSpace alpha] {mu : Measure alpha} [IsFiniteMeasure mu] {A : Set alpha} (hA : MeasurableSet A) {c : Real} (hc : 0 ≤ c) {f : alpha -> ENNReal} (hf : forall x, x ∈ A -> ENNReal.ofReal c ≤ f x) : ENNReal.ofReal (c * mu.real A) ≤ ∫⁻ x, f x ∂mu"
+    },
+    {
+      "kind": "theorem",
+      "name": "sixteen_div_twentySeven_le_exp_neg_half",
+      "full_name": "BanditRLProof.LowerBounds.sixteen_div_twentySeven_le_exp_neg_half",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 116,
+      "statement": "theorem sixteen_div_twentySeven_le_exp_neg_half : (16 / 27 : Real) ≤ Real.exp (-(1 / 2 : Real))"
+    },
+    {
+      "kind": "structure",
+      "name": "UnitGaussianBanditEnvironment",
+      "full_name": "BanditRLProof.LowerBounds.UnitGaussianBanditEnvironment",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 135,
+      "statement": "structure UnitGaussianBanditEnvironment (K : Nat) where"
+    },
+    {
+      "kind": "abbrev",
+      "name": "unitGaussianKernel",
+      "full_name": "BanditRLProof.LowerBounds.unitGaussianKernel",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 143,
+      "statement": "noncomputable abbrev unitGaussianKernel {K : Nat} (mean : Fin K -> Real) : Kernel (Fin K) Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "unitGaussianKernel_apply",
+      "full_name": "BanditRLProof.LowerBounds.unitGaussianKernel_apply",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 148,
+      "statement": "theorem unitGaussianKernel_apply {K : Nat} (mean : Fin K -> Real) (arm : Fin K) : unitGaussianKernel mean arm = unitGaussianArm (mean arm)"
+    },
+    {
+      "kind": "def",
+      "name": "finiteHistoryGaussianPseudoRegret",
+      "full_name": "BanditRLProof.LowerBounds.finiteHistoryGaussianPseudoRegret",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 160,
+      "statement": "noncomputable def finiteHistoryGaussianPseudoRegret {K : Nat} (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) (history : History.FinitePairHistory (Fin K) Real lastRound) : ENNReal"
+    },
+    {
+      "kind": "def",
+      "name": "gaussianExpectedPseudoRegret",
+      "full_name": "BanditRLProof.LowerBounds.gaussianExpectedPseudoRegret",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 173,
+      "statement": "noncomputable def gaussianExpectedPseudoRegret {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) : ENNReal"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_finiteHistoryGaussianPseudoRegret",
+      "full_name": "BanditRLProof.LowerBounds.measurable_finiteHistoryGaussianPseudoRegret",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 182,
+      "statement": "theorem measurable_finiteHistoryGaussianPseudoRegret {K : Nat} (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) : Measurable (finiteHistoryGaussianPseudoRegret environment lastRound)"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianExpectedPseudoRegret_eq_sum_expectedPulls",
+      "full_name": "BanditRLProof.LowerBounds.gaussianExpectedPseudoRegret_eq_sum_expectedPulls",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 193,
+      "statement": "theorem gaussianExpectedPseudoRegret_eq_sum_expectedPulls {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) : gaussianExpectedPseudoRegret algorithm environment lastRound = ∑ arm : Fin K, ENNReal.ofReal (environment.mean environment.bestArm - environment.mean arm) * canonicalRealizedExpectedPullCountThrough algorithm (unitGaussianKernel environment.mean) lastRound arm"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_canonicalRealizedExpectedPullCountThrough",
+      "full_name": "BanditRLProof.LowerBounds.sum_canonicalRealizedExpectedPullCountThrough",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 217,
+      "statement": "theorem sum_canonicalRealizedExpectedPullCountThrough {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (mean : Fin K -> Real) (lastRound : Nat) : ∑ arm : Fin K, canonicalRealizedExpectedPullCountThrough algorithm (unitGaussianKernel mean) lastRound arm = lastRound + 1"
+    },
+    {
+      "kind": "def",
+      "name": "gaussianExpectedPullCountReal",
+      "full_name": "BanditRLProof.LowerBounds.gaussianExpectedPullCountReal",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 232,
+      "statement": "noncomputable def gaussianExpectedPullCountReal {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (mean : Fin K -> Real) (lastRound : Nat) (arm : Fin K) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianExpectedPullCountReal_nonneg",
+      "full_name": "BanditRLProof.LowerBounds.gaussianExpectedPullCountReal_nonneg",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 238,
+      "statement": "theorem gaussianExpectedPullCountReal_nonneg {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (mean : Fin K -> Real) (lastRound : Nat) (arm : Fin K) : 0 ≤ gaussianExpectedPullCountReal algorithm mean lastRound arm"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_gaussianExpectedPullCountReal",
+      "full_name": "BanditRLProof.LowerBounds.sum_gaussianExpectedPullCountReal",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 245,
+      "statement": "theorem sum_gaussianExpectedPullCountReal {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (mean : Fin K -> Real) (lastRound : Nat) : ∑ arm : Fin K, gaussianExpectedPullCountReal algorithm mean lastRound arm = lastRound + 1"
+    },
+    {
+      "kind": "def",
+      "name": "gaussianMinimaxBaseMean",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxBaseMean",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 271,
+      "statement": "def gaussianMinimaxBaseMean {m : Nat} (gap : Real) : Fin (m + 1) -> Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianMinimaxBaseMean_zero",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxBaseMean_zero",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 275,
+      "statement": "theorem gaussianMinimaxBaseMean_zero {m : Nat} (gap : Real) : gaussianMinimaxBaseMean (m := m) gap 0 = gap"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianMinimaxBaseMean_succ",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxBaseMean_succ",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 280,
+      "statement": "theorem gaussianMinimaxBaseMean_succ {m : Nat} (gap : Real) (i : Fin m) : gaussianMinimaxBaseMean (m := m) gap i.succ = 0"
+    },
+    {
+      "kind": "def",
+      "name": "gaussianMinimaxChangedMean",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxChangedMean",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 286,
+      "statement": "def gaussianMinimaxChangedMean {m : Nat} (gap : Real) (i : Fin m) : Fin (m + 1) -> Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianMinimaxChangedMean_selected",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxChangedMean_selected",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 292,
+      "statement": "theorem gaussianMinimaxChangedMean_selected {m : Nat} (gap : Real) (i : Fin m) : gaussianMinimaxChangedMean gap i i.succ = 2 * gap"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianMinimaxChangedMean_zero",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxChangedMean_zero",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 298,
+      "statement": "theorem gaussianMinimaxChangedMean_zero {m : Nat} (gap : Real) (i : Fin m) : gaussianMinimaxChangedMean gap i 0 = gap"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianMinimaxChangedMean_other",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxChangedMean_other",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 305,
+      "statement": "theorem gaussianMinimaxChangedMean_other {m : Nat} (gap : Real) {i j : Fin m} (hji : j ≠ i) : gaussianMinimaxChangedMean gap i j.succ = 0"
+    },
+    {
+      "kind": "def",
+      "name": "gaussianMinimaxBaseEnvironment",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxBaseEnvironment",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 311,
+      "statement": "noncomputable def gaussianMinimaxBaseEnvironment {m : Nat} (gap : Real) (hgap : 0 ≤ gap) (hgap_le : gap ≤ 1 / 2) : UnitGaussianBanditEnvironment (m + 1) where"
+    },
+    {
+      "kind": "def",
+      "name": "gaussianMinimaxChangedEnvironment",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxChangedEnvironment",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 329,
+      "statement": "noncomputable def gaussianMinimaxChangedEnvironment {m : Nat} (gap : Real) (i : Fin m) (hgap : 0 ≤ gap) (hgap_le : gap ≤ 1 / 2) : UnitGaussianBanditEnvironment (m + 1) where"
+    },
+    {
+      "kind": "theorem",
+      "name": "finiteHistoryGaussianPseudoRegret_ne_top",
+      "full_name": "BanditRLProof.LowerBounds.finiteHistoryGaussianPseudoRegret_ne_top",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 358,
+      "statement": "theorem finiteHistoryGaussianPseudoRegret_ne_top {K : Nat} (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) (history : History.FinitePairHistory (Fin K) Real lastRound) : finiteHistoryGaussianPseudoRegret environment lastRound history ≠ ∞"
+    },
+    {
+      "kind": "theorem",
+      "name": "finiteHistoryGaussianPseudoRegret_toReal",
+      "full_name": "BanditRLProof.LowerBounds.finiteHistoryGaussianPseudoRegret_toReal",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 369,
+      "statement": "theorem finiteHistoryGaussianPseudoRegret_toReal {K : Nat} (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) (history : History.FinitePairHistory (Fin K) Real lastRound) : (finiteHistoryGaussianPseudoRegret environment lastRound history).toReal = ∑ arm : Fin K, (environment.mean environment.bestArm - environment.mean arm) * finiteHistoryPullCountReal lastRound history arm"
+    },
+    {
+      "kind": "def",
+      "name": "gaussianMinimaxBaseSmallPullEvent",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxBaseSmallPullEvent",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 391,
+      "statement": "def gaussianMinimaxBaseSmallPullEvent {m : Nat} (lastRound : Nat) : Set (History.FinitePairHistory (Fin (m + 1)) Real lastRound)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurableSet_gaussianMinimaxBaseSmallPullEvent",
+      "full_name": "BanditRLProof.LowerBounds.measurableSet_gaussianMinimaxBaseSmallPullEvent",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 397,
+      "statement": "theorem measurableSet_gaussianMinimaxBaseSmallPullEvent {m : Nat} (lastRound : Nat) : MeasurableSet (gaussianMinimaxBaseSmallPullEvent (m := m) lastRound)"
+    },
+    {
+      "kind": "theorem",
+      "name": "finiteHistoryGaussianPseudoRegret_base_toReal",
+      "full_name": "BanditRLProof.LowerBounds.finiteHistoryGaussianPseudoRegret_base_toReal",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 405,
+      "statement": "theorem finiteHistoryGaussianPseudoRegret_base_toReal {m : Nat} (gap : Real) (hgap : 0 ≤ gap) (hgap_le : gap ≤ 1 / 2) (lastRound : Nat) (history : History.FinitePairHistory (Fin (m + 1)) Real lastRound) : (finiteHistoryGaussianPseudoRegret (gaussianMinimaxBaseEnvironment gap hgap hgap_le) lastRound history).toReal = gap * ((lastRound + 1 : Nat) - finiteHistoryPullCountReal lastRound history 0)"
+    },
+    {
+      "kind": "theorem",
+      "name": "finiteHistoryGaussianPseudoRegret_changed_toReal_lower",
+      "full_name": "BanditRLProof.LowerBounds.finiteHistoryGaussianPseudoRegret_changed_toReal_lower",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 431,
+      "statement": "theorem finiteHistoryGaussianPseudoRegret_changed_toReal_lower {m : Nat} (gap : Real) (i : Fin m) (hgap : 0 ≤ gap) (hgap_le : gap ≤ 1 / 2) (lastRound : Nat) (history : History.FinitePairHistory (Fin (m + 1)) Real lastRound) : gap * finiteHistoryPullCountReal lastRound history 0 ≤ (finiteHistoryGaussianPseudoRegret (gaussianMinimaxChangedEnvironment gap i hgap hgap_le) lastRound history).toReal"
+    },
+    {
+      "kind": "theorem",
+      "name": "base_event_forces_gaussianPseudoRegret",
+      "full_name": "BanditRLProof.LowerBounds.base_event_forces_gaussianPseudoRegret",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 457,
+      "statement": "theorem base_event_forces_gaussianPseudoRegret {m : Nat} (gap : Real) (hgap : 0 ≤ gap) (hgap_le : gap ≤ 1 / 2) (lastRound : Nat) (history : History.FinitePairHistory (Fin (m + 1)) Real lastRound) (hA : history ∈ gaussianMinimaxBaseSmallPullEvent (m := m) lastRound) : ENNReal.ofReal (((lastRound + 1 : Nat) : Real) * gap / 2) ≤ finiteHistoryGaussianPseudoRegret (gaussianMinimaxBaseEnvironment gap hgap hgap_le) lastRound history"
+    },
+    {
+      "kind": "theorem",
+      "name": "changed_complement_forces_gaussianPseudoRegret",
+      "full_name": "BanditRLProof.LowerBounds.changed_complement_forces_gaussianPseudoRegret",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 473,
+      "statement": "theorem changed_complement_forces_gaussianPseudoRegret {m : Nat} (gap : Real) (i : Fin m) (hgap : 0 ≤ gap) (hgap_le : gap ≤ 1 / 2) (lastRound : Nat) (history : History.FinitePairHistory (Fin (m + 1)) Real lastRound) (hAc : history ∈ (gaussianMinimaxBaseSmallPullEvent (m := m) lastRound)ᶜ) : ENNReal.ofReal (((lastRound + 1 : Nat) : Real) * gap / 2) ≤ finiteHistoryGaussianPseudoRegret (gaussianMinimaxChangedEnvironment gap i hgap hgap_le) lastRound history"
+    },
+    {
+      "kind": "theorem",
+      "name": "base_event_probability_lower_bound",
+      "full_name": "BanditRLProof.LowerBounds.base_event_probability_lower_bound",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 493,
+      "statement": "theorem base_event_probability_lower_bound {m : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) (gap : Real) (hgap : 0 ≤ gap) (hgap_le : gap ≤ 1 / 2) (lastRound : Nat) : ENNReal.ofReal ((((lastRound + 1 : Nat) : Real) * gap / 2) * (canonicalBanditHistoryMeasure algorithm (unitGaussianKernel (gaussianMinimaxBaseMean gap)) lastRound).real (gaussianMinimaxBaseSmallPullEvent (m := m) lastRound)) ≤ gaussianExpectedPseudoRegret algorithm (gaussianMinimaxBaseEnvironment gap hgap hgap_le) lastRound"
+    },
+    {
+      "kind": "theorem",
+      "name": "changed_complement_probability_lower_bound",
+      "full_name": "BanditRLProof.LowerBounds.changed_complement_probability_lower_bound",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 510,
+      "statement": "theorem changed_complement_probability_lower_bound {m : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) (gap : Real) (i : Fin m) (hgap : 0 ≤ gap) (hgap_le : gap ≤ 1 / 2) (lastRound : Nat) : ENNReal.ofReal ((((lastRound + 1 : Nat) : Real) * gap / 2) * (canonicalBanditHistoryMeasure algorithm (unitGaussianKernel (gaussianMinimaxChangedMean gap i)) lastRound).real (gaussianMinimaxBaseSmallPullEvent (m := m) lastRound)ᶜ) ≤ gaussianExpectedPseudoRegret algorithm (gaussianMinimaxChangedEnvironment gap i hgap hgap_le) lastRound"
+    },
+    {
+      "kind": "theorem",
+      "name": "klDiv_unitGaussianKernel_base_changed",
+      "full_name": "BanditRLProof.LowerBounds.klDiv_unitGaussianKernel_base_changed",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 529,
+      "statement": "theorem klDiv_unitGaussianKernel_base_changed {m : Nat} (gap : Real) (i j : Fin m) : InformationTheory.klDiv (unitGaussianKernel (gaussianMinimaxBaseMean gap) j.succ) (unitGaussianKernel (gaussianMinimaxChangedMean gap i) j.succ) = if j = i then ENNReal.ofReal (2 * gap ^ 2) else 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "klDiv_gaussianMinimax_base_changed_history",
+      "full_name": "BanditRLProof.LowerBounds.klDiv_gaussianMinimax_base_changed_history",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 547,
+      "statement": "theorem klDiv_gaussianMinimax_base_changed_history {m : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) (gap : Real) (i : Fin m) (lastRound : Nat) : InformationTheory.klDiv (canonicalBanditHistoryMeasure algorithm (unitGaussianKernel (gaussianMinimaxBaseMean gap)) lastRound) (canonicalBanditHistoryMeasure algorithm (unitGaussianKernel (gaussianMinimaxChangedMean gap i)) lastRound) = canonicalRealizedExpectedPullCountThrough algorithm (unitGaussianKernel (gaussianMinimaxBaseMean gap)) lastRound i.succ * ENNReal.ofReal (2 * gap ^ 2)"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_gaussianMinimax_leastExploredAlternative",
+      "full_name": "BanditRLProof.LowerBounds.exists_gaussianMinimax_leastExploredAlternative",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 572,
+      "statement": "theorem exists_gaussianMinimax_leastExploredAlternative {m : Nat} (hm : 0 < m) (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) (gap : Real) (lastRound : Nat) : ∃ i : Fin m, gaussianExpectedPullCountReal algorithm (gaussianMinimaxBaseMean gap) lastRound i.succ ≤ ((lastRound + 1 : Nat) : Real) / (m : Real)"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_gaussianMinimax_historyKL_le_half",
+      "full_name": "BanditRLProof.LowerBounds.exists_gaussianMinimax_historyKL_le_half",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 592,
+      "statement": "theorem exists_gaussianMinimax_historyKL_le_half {m horizon : Nat} (hm : 0 < m) (hmhorizon : m ≤ horizon) (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) : let gap := gaussianMinimaxGap (m : Real) (horizon : Real) ∃ i : Fin m, InformationTheory.klDiv (canonicalBanditHistoryMeasure algorithm (unitGaussianKernel (gaussianMinimaxBaseMean gap)) (horizon - 1)) (canonicalBanditHistoryMeasure algorithm (unitGaussianKernel (gaussianMinimaxChangedMean gap i)) (horizon - 1)) ≤ ENNReal.ofReal (1 / 2 : Real)"
+    },
+    {
+      "kind": "theorem",
+      "name": "horizon_mul_gaussianMinimaxGap_eq_half_sqrt",
+      "full_name": "BanditRLProof.LowerBounds.horizon_mul_gaussianMinimaxGap_eq_half_sqrt",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 675,
+      "statement": "theorem horizon_mul_gaussianMinimaxGap_eq_half_sqrt {alternativeCount horizon : Real} (halternatives : 0 ≤ alternativeCount) (hhorizon : 0 < horizon) : horizon * gaussianMinimaxGap alternativeCount horizon = Real.sqrt (alternativeCount * horizon) / 2"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_unitGaussianBandit_expectedPseudoRegret_ge_sqrt_div_twentySeven",
+      "full_name": "BanditRLProof.LowerBounds.exists_unitGaussianBandit_expectedPseudoRegret_ge_sqrt_div_twentySeven",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 710,
+      "statement": "theorem exists_unitGaussianBandit_expectedPseudoRegret_ge_sqrt_div_twentySeven {m horizon : Nat} (hm : 0 < m) (hmhorizon : m ≤ horizon) (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) : let gap := gaussianMinimaxGap (m : Real) (horizon : Real) ∃ i : Fin m, ENNReal.ofReal ((1 / 27 : Real) * Real.sqrt ((m : Real) * (horizon : Real))) ≤ max (gaussianExpectedPseudoRegret algorithm (gaussianMinimaxBaseEnvironment gap (show 0 ≤ gaussianMinimaxGap (m : Real) (horizon : Real) from Real.sqrt_nonneg _) (gaussianMinimaxGap_le_half (show (0 : Real) < (horizon : Real) by exact_mod_cast lt_of_lt_of_le hm hmhorizon) (by exact_mod_cast hmhorizon))) (horizon - 1)) (gaussianExpectedPseudoRegret algorithm (gaussianMinimaxChangedEnvironment gap i (show 0 ≤ gaussianMinimaxGap (m : Real) (horizon : Real) from Real.sqrt_nonneg _) (gaussianMinimaxGap_le_half (show (0 : Real) < (horizon : Real) by exact_mod_cast lt_of_lt_of_le hm hmhorizon) (by exact_mod_cast hmhorizon))) (horizon - 1))"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_unitGaussianBanditEnvironment_expectedPseudoRegret_ge",
+      "full_name": "BanditRLProof.LowerBounds.exists_unitGaussianBanditEnvironment_expectedPseudoRegret_ge",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 834,
+      "statement": "theorem exists_unitGaussianBanditEnvironment_expectedPseudoRegret_ge {m horizon : Nat} (hm : 0 < m) (hmhorizon : m ≤ horizon) (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) : ∃ environment : UnitGaussianBanditEnvironment (m + 1), ENNReal.ofReal ((1 / 27 : Real) * Real.sqrt ((m : Real) * (horizon : Real))) ≤ gaussianExpectedPseudoRegret algorithm environment (horizon - 1)"
+    },
+    {
+      "kind": "theorem",
+      "name": "finiteArmedGaussianMinimaxLowerBound",
+      "full_name": "BanditRLProof.LowerBounds.finiteArmedGaussianMinimaxLowerBound",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 864,
+      "statement": "theorem finiteArmedGaussianMinimaxLowerBound {k horizon : Nat} (hk : 1 < k) (hkhorizon : k - 1 ≤ horizon) (algorithm : Thompson.HistoryAlgorithm (Fin k) Real) : ∃ environment : UnitGaussianBanditEnvironment k, ENNReal.ofReal ((1 / 27 : Real) * Real.sqrt (((k - 1 : Nat) : Real) * (horizon : Real))) ≤ gaussianExpectedPseudoRegret algorithm environment (horizon - 1)"
+    },
+    {
+      "kind": "def",
+      "name": "unitGaussianWorstCaseExpectedPseudoRegret",
+      "full_name": "BanditRLProof.LowerBounds.unitGaussianWorstCaseExpectedPseudoRegret",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 882,
+      "statement": "noncomputable def unitGaussianWorstCaseExpectedPseudoRegret (K : Nat) (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (lastRound : Nat) : ENNReal"
+    },
+    {
+      "kind": "def",
+      "name": "unitGaussianMinimaxExpectedPseudoRegret",
+      "full_name": "BanditRLProof.LowerBounds.unitGaussianMinimaxExpectedPseudoRegret",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 889,
+      "statement": "noncomputable def unitGaussianMinimaxExpectedPseudoRegret (K lastRound : Nat) : ENNReal"
+    },
+    {
+      "kind": "theorem",
+      "name": "unitGaussianWorstCaseExpectedPseudoRegret_ge",
+      "full_name": "BanditRLProof.LowerBounds.unitGaussianWorstCaseExpectedPseudoRegret_ge",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 894,
+      "statement": "theorem unitGaussianWorstCaseExpectedPseudoRegret_ge {k horizon : Nat} (hk : 1 < k) (hkhorizon : k - 1 ≤ horizon) (algorithm : Thompson.HistoryAlgorithm (Fin k) Real) : ENNReal.ofReal ((1 / 27 : Real) * Real.sqrt (((k - 1 : Nat) : Real) * (horizon : Real))) ≤ unitGaussianWorstCaseExpectedPseudoRegret k algorithm (horizon - 1)"
+    },
+    {
+      "kind": "theorem",
+      "name": "unitGaussianMinimaxExpectedPseudoRegret_ge",
+      "full_name": "BanditRLProof.LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 909,
+      "statement": "theorem unitGaussianMinimaxExpectedPseudoRegret_ge {k horizon : Nat} (hk : 1 < k) (hkhorizon : k - 1 ≤ horizon) : ENNReal.ofReal ((1 / 27 : Real) * Real.sqrt (((k - 1 : Nat) : Real) * (horizon : Real))) ≤ unitGaussianMinimaxExpectedPseudoRegret k (horizon - 1)"
+    },
+    {
+      "kind": "theorem",
+      "name": "unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt",
+      "full_name": "BanditRLProof.LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt",
+      "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
+      "line": 922,
+      "statement": "theorem unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt {k horizon : Nat} (hk : 1 < k) (hkhorizon : k ≤ horizon) : ENNReal.ofReal ((1 / 54 : Real) * Real.sqrt ((k : Real) * (horizon : Real))) ≤ unitGaussianMinimaxExpectedPseudoRegret k (horizon - 1)"
+    },
+    {
+      "kind": "def",
       "name": "tailAtLeast",
       "full_name": "BanditRLProof.LowerBounds.tailAtLeast",
       "file": "BanditRLProof/LowerBounds/HighProbability.lean",
@@ -53313,7 +54073,7 @@
       "name": "IsConsistentRegret",
       "full_name": "BanditRLProof.LowerBounds.IsConsistentRegret",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 33,
+      "line": 36,
       "statement": "def IsConsistentRegret (regret : Nat -> Real) : Prop"
     },
     {
@@ -53321,7 +54081,7 @@
       "name": "IsConsistentPolicyOver",
       "full_name": "BanditRLProof.LowerBounds.IsConsistentPolicyOver",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 40,
+      "line": 43,
       "statement": "def IsConsistentPolicyOver {Policy Environment : Type*} (environmentClass : Set Environment) (regret : Policy -> Environment -> Nat -> Real) (policy : Policy) : Prop"
     },
     {
@@ -53329,7 +54089,7 @@
       "name": "IsConsistentRegret.add",
       "full_name": "IsConsistentRegret.add",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 51,
+      "line": 54,
       "statement": "theorem IsConsistentRegret.add {first second : Nat -> Real} (hfirst : IsConsistentRegret first) (hsecond : IsConsistentRegret second) : IsConsistentRegret (fun n => first n + second n)"
     },
     {
@@ -53337,7 +54097,7 @@
       "name": "IsConsistentRegret.eventually_add_le_rpow",
       "full_name": "IsConsistentRegret.eventually_add_le_rpow",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 62,
+      "line": 65,
       "statement": "theorem IsConsistentRegret.eventually_add_le_rpow {first second : Nat -> Real} (hfirst : IsConsistentRegret first) (hsecond : IsConsistentRegret second) {p : Real} (hp : 0 < p) : ∀ᶠ n : Nat in atTop, first n + second n <= (n : Real) ^ p"
     },
     {
@@ -53345,7 +54105,7 @@
       "name": "IsConsistentRegret.eventually_log_add_div_log_le",
       "full_name": "IsConsistentRegret.eventually_log_add_div_log_le",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 82,
+      "line": 85,
       "statement": "theorem IsConsistentRegret.eventually_log_add_div_log_le {first second : Nat -> Real} (hfirst : IsConsistentRegret first) (hsecond : IsConsistentRegret second) (hpositive : ∀ᶠ n : Nat in atTop, 0 < first n + second n) {p : Real} (hp : 0 < p) : ∀ᶠ n : Nat in atTop, Real.log (first n + second n) / Real.log n <= p"
     },
     {
@@ -53353,7 +54113,7 @@
       "name": "divergenceInfimum",
       "full_name": "BanditRLProof.LowerBounds.divergenceInfimum",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 104,
+      "line": 107,
       "statement": "def divergenceInfimum {Reward : Type*} [MeasurableSpace Reward] (P : Measure Reward) (muStar : Real) (distributionClass : Set (Measure Reward)) (mean : Measure Reward -> Real) : ENNReal"
     },
     {
@@ -53361,7 +54121,7 @@
       "name": "divergenceInfimum_le",
       "full_name": "BanditRLProof.LowerBounds.divergenceInfimum_le",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 116,
+      "line": 119,
       "statement": "theorem divergenceInfimum_le {Reward : Type*} [MeasurableSpace Reward] {P P' : Measure Reward} {muStar : Real} {distributionClass : Set (Measure Reward)} {mean : Measure Reward -> Real} (hclass : P' ∈ distributionClass) (hbetter : muStar < mean P') : divergenceInfimum P muStar distributionClass mean <= relativeEntropy P P'"
     },
     {
@@ -53369,7 +54129,7 @@
       "name": "parametricDivergenceInfimum",
       "full_name": "BanditRLProof.LowerBounds.parametricDivergenceInfimum",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 130,
+      "line": 133,
       "statement": "def parametricDivergenceInfimum {Reward Parameter : Type*} [MeasurableSpace Reward] (law : Parameter -> Measure Reward) (mean : Parameter -> Real) (parameter : Parameter) (muStar : Real) : ENNReal"
     },
     {
@@ -53377,7 +54137,7 @@
       "name": "parametricDivergenceInfimum_le",
       "full_name": "BanditRLProof.LowerBounds.parametricDivergenceInfimum_le",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 140,
+      "line": 143,
       "statement": "theorem parametricDivergenceInfimum_le {Reward Parameter : Type*} [MeasurableSpace Reward] {law : Parameter -> Measure Reward} {mean : Parameter -> Real} {parameter alternative : Parameter} {muStar : Real} (hbetter : muStar < mean alternative) : parametricDivergenceInfimum law mean parameter muStar <= relativeEntropy (law parameter) (law alternative)"
     },
     {
@@ -53385,7 +54145,7 @@
       "name": "unitGaussianDivergenceInfimum",
       "full_name": "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 151,
+      "line": 154,
       "statement": "abbrev unitGaussianDivergenceInfimum (mu muStar : Real) : ENNReal"
     },
     {
@@ -53393,15 +54153,87 @@
       "name": "unitGaussianDivergenceInfimum_le_perturbed",
       "full_name": "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum_le_perturbed",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 157,
+      "line": 160,
       "statement": "theorem unitGaussianDivergenceInfimum_le_perturbed (mu muStar epsilon : Real) (hepsilon : 0 < epsilon) : unitGaussianDivergenceInfimum mu muStar <= ENNReal.ofReal (((muStar - mu) + epsilon) ^ 2 / 2)"
+    },
+    {
+      "kind": "theorem",
+      "name": "unitGaussianDivergenceInfimum_ge",
+      "full_name": "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum_ge",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 178,
+      "statement": "theorem unitGaussianDivergenceInfimum_ge (mu muStar : Real) (hmu : mu < muStar) : ENNReal.ofReal ((muStar - mu) ^ 2 / 2) <= unitGaussianDivergenceInfimum mu muStar"
+    },
+    {
+      "kind": "theorem",
+      "name": "unitGaussianDivergenceInfimum_eq",
+      "full_name": "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum_eq",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 202,
+      "statement": "theorem unitGaussianDivergenceInfimum_eq (mu muStar : Real) (hmu : mu < muStar) : unitGaussianDivergenceInfimum mu muStar = ENNReal.ofReal ((muStar - mu) ^ 2 / 2)"
+    },
+    {
+      "kind": "theorem",
+      "name": "banditHistoryRelativeEntropy_eq_expectedPulls_mul_of_only_arm_changed",
+      "full_name": "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_mul_of_only_arm_changed",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 233,
+      "statement": "theorem banditHistoryRelativeEntropy_eq_expectedPulls_mul_of_only_arm_changed {K : Nat} {Reward : Type*} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] (changedArm : Fin K) (lastRound : Nat) (hsame : forall arm, arm ≠ changedArm -> armLaw arm = referenceArmLaw arm) : InformationTheory.klDiv (canonicalBanditHistoryMeasure algorithm armLaw lastRound) (canonicalBanditHistoryMeasure algorithm referenceArmLaw lastRound) = canonicalRealizedExpectedPullCountThrough algorithm armLaw lastRound changedArm * InformationTheory.klDiv (armLaw changedArm) (referenceArmLaw changedArm)"
+    },
+    {
+      "kind": "def",
+      "name": "oneArmMajorityPullEvent",
+      "full_name": "BanditRLProof.LowerBounds.oneArmMajorityPullEvent",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 258,
+      "statement": "def oneArmMajorityPullEvent {K : Nat} {Reward : Type*} (changedArm : Fin K) (lastRound : Nat) : Set (History.FinitePairHistory (Fin K) Reward lastRound)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurableSet_oneArmMajorityPullEvent",
+      "full_name": "BanditRLProof.LowerBounds.measurableSet_oneArmMajorityPullEvent",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 266,
+      "statement": "theorem measurableSet_oneArmMajorityPullEvent {K : Nat} {Reward : Type*} [MeasurableSpace Reward] (changedArm : Fin K) (lastRound : Nat) : MeasurableSet (oneArmMajorityPullEvent (Reward := Reward) changedArm lastRound)"
+    },
+    {
+      "kind": "theorem",
+      "name": "bretagnolleHuberScale_expectedPulls_mul_armKL_le_majorityErrors",
+      "full_name": "BanditRLProof.LowerBounds.bretagnolleHuberScale_expectedPulls_mul_armKL_le_majorityErrors",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 279,
+      "statement": "theorem bretagnolleHuberScale_expectedPulls_mul_armKL_le_majorityErrors {K : Nat} {Reward : Type*} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] (changedArm : Fin K) (lastRound : Nat) (hsame : forall arm, arm ≠ changedArm -> armLaw arm = referenceArmLaw arm) : bretagnolleHuberScale (canonicalRealizedExpectedPullCountThrough algorithm armLaw lastRound changedArm * InformationTheory.klDiv (armLaw changedArm) (referenceArmLaw changedArm)) <= (canonicalBanditHistoryMeasure algorithm armLaw lastRound).real (oneArmMajorityPullEvent (Reward := Reward) changedArm lastRound) + (canonicalBanditHistoryMeasure algorithm referenceArmLaw lastRound).real (oneArmMajorityPullEvent (Reward := Reward) changedArm lastRound)ᶜ"
+    },
+    {
+      "kind": "theorem",
+      "name": "bretagnolleHuberScale_mul_eq_exp",
+      "full_name": "BanditRLProof.LowerBounds.bretagnolleHuberScale_mul_eq_exp",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 315,
+      "statement": "theorem bretagnolleHuberScale_mul_eq_exp {expectedPull armInformation : ENNReal} (hpull : expectedPull ≠ ∞) (hinformation : armInformation ≠ ∞) : bretagnolleHuberScale (expectedPull * armInformation) = (1 / 2 : Real) * Real.exp (-(expectedPull.toReal * armInformation.toReal))"
+    },
+    {
+      "kind": "theorem",
+      "name": "exp_testing_bound_of_majority_regret_bounds",
+      "full_name": "BanditRLProof.LowerBounds.exp_testing_bound_of_majority_regret_bounds",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 327,
+      "statement": "theorem exp_testing_bound_of_majority_regret_bounds (expectedPull information gap changedMargin horizon originalError changedError originalRegret changedRegret : Real) (hgap : 0 < gap) (hmargin : 0 < changedMargin) (hhorizon : 0 < horizon) (horiginalError : 0 <= originalError) (hchangedError : 0 <= changedError) (htesting : (1 / 2 : Real) * Real.exp (-(expectedPull * information)) <= originalError + changedError) (horiginalRegret : horizon * gap / 2 * originalError <= originalRegret) (hchangedRegret : horizon * changedMargin / 2 * changedError <= changedRegret) : horizon * min gap changedMargin / 4 * Real.exp (-(expectedPull * information)) <= originalRegret + changedRegret"
+    },
+    {
+      "kind": "theorem",
+      "name": "expectedPullCount_ge_log_regret_of_exp_testing_bound",
+      "full_name": "BanditRLProof.LowerBounds.expectedPullCount_ge_log_regret_of_exp_testing_bound",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 365,
+      "statement": "theorem expectedPullCount_ge_log_regret_of_exp_testing_bound (expectedPull information gap changedMargin horizon regretSum : Real) (hinformation : 0 < information) (hgap : 0 < gap) (hmargin : 0 < changedMargin) (hhorizon : 0 < horizon) (htesting : horizon * min gap changedMargin / 4 * Real.exp (-(expectedPull * information)) <= regretSum) : (Real.log (min gap changedMargin / 4) + Real.log horizon - Real.log regretSum) / information <= expectedPull"
     },
     {
       "kind": "abbrev",
       "name": "unitGaussianArm",
       "full_name": "BanditRLProof.LowerBounds.unitGaussianArm",
       "file": "BanditRLProof/LowerBounds/Minimax.lean",
-      "line": 27,
+      "line": 23,
       "statement": "abbrev unitGaussianArm (mu : Real) : Measure Real"
     },
     {
@@ -53409,7 +54241,7 @@
       "name": "unitGaussianBandit",
       "full_name": "BanditRLProof.LowerBounds.unitGaussianBandit",
       "file": "BanditRLProof/LowerBounds/Minimax.lean",
-      "line": 31,
+      "line": 27,
       "statement": "abbrev unitGaussianBandit {k : Nat} (mean : Fin k -> Real) : Fin k -> Measure Real"
     },
     {
@@ -53417,7 +54249,7 @@
       "name": "log_gaussianPDFReal_div_gaussianPDFReal_one",
       "full_name": "BanditRLProof.LowerBounds.log_gaussianPDFReal_div_gaussianPDFReal_one",
       "file": "BanditRLProof/LowerBounds/Minimax.lean",
-      "line": 36,
+      "line": 32,
       "statement": "theorem log_gaussianPDFReal_div_gaussianPDFReal_one (mu nu x : Real) : Real.log (gaussianPDFReal mu (1 : NNReal) x / gaussianPDFReal nu (1 : NNReal) x) = (mu - nu) * x + (nu ^ 2 - mu ^ 2) / 2"
     },
     {
@@ -53425,7 +54257,7 @@
       "name": "llr_gaussianReal_one_ae",
       "full_name": "BanditRLProof.LowerBounds.llr_gaussianReal_one_ae",
       "file": "BanditRLProof/LowerBounds/Minimax.lean",
-      "line": 53,
+      "line": 49,
       "statement": "theorem llr_gaussianReal_one_ae (mu nu : Real) : llr (unitGaussianArm mu) (unitGaussianArm nu) =ᵐ[unitGaussianArm mu] fun x => (mu - nu) * x + (nu ^ 2 - mu ^ 2) / 2"
     },
     {
@@ -53433,7 +54265,7 @@
       "name": "integrable_llr_gaussianReal_one",
       "full_name": "BanditRLProof.LowerBounds.integrable_llr_gaussianReal_one",
       "file": "BanditRLProof/LowerBounds/Minimax.lean",
-      "line": 73,
+      "line": 69,
       "statement": "theorem integrable_llr_gaussianReal_one (mu nu : Real) : Integrable (llr (unitGaussianArm mu) (unitGaussianArm nu)) (unitGaussianArm mu)"
     },
     {
@@ -53441,7 +54273,7 @@
       "name": "klDiv_gaussianReal_one",
       "full_name": "BanditRLProof.LowerBounds.klDiv_gaussianReal_one",
       "file": "BanditRLProof/LowerBounds/Minimax.lean",
-      "line": 89,
+      "line": 85,
       "statement": "theorem klDiv_gaussianReal_one (mu nu : Real) : InformationTheory.klDiv (unitGaussianArm mu) (unitGaussianArm nu) = ENNReal.ofReal ((mu - nu) ^ 2 / 2)"
     },
     {
@@ -53449,7 +54281,7 @@
       "name": "klDiv_unitGaussianArm_zero_two_mul",
       "full_name": "BanditRLProof.LowerBounds.klDiv_unitGaussianArm_zero_two_mul",
       "file": "BanditRLProof/LowerBounds/Minimax.lean",
-      "line": 121,
+      "line": 117,
       "statement": "theorem klDiv_unitGaussianArm_zero_two_mul (gap : Real) : InformationTheory.klDiv (unitGaussianArm 0) (unitGaussianArm (2 * gap)) = ENNReal.ofReal (2 * gap ^ 2)"
     },
     {
@@ -53457,7 +54289,7 @@
       "name": "gaussianMinimaxGap",
       "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxGap",
       "file": "BanditRLProof/LowerBounds/Minimax.lean",
-      "line": 131,
+      "line": 127,
       "statement": "noncomputable def gaussianMinimaxGap (alternativeCount horizon : Real) : Real"
     },
     {
@@ -53465,7 +54297,7 @@
       "name": "gaussianMinimaxGap_sq",
       "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxGap_sq",
       "file": "BanditRLProof/LowerBounds/Minimax.lean",
-      "line": 136,
+      "line": 132,
       "statement": "theorem gaussianMinimaxGap_sq {alternativeCount horizon : Real} (halternatives : 0 ≤ alternativeCount) (hhorizon : 0 ≤ horizon) : gaussianMinimaxGap alternativeCount horizon ^ 2 = alternativeCount / (4 * horizon)"
     },
     {
@@ -53473,7 +54305,7 @@
       "name": "gaussianMinimaxGap_informationExponent_eq_half",
       "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxGap_informationExponent_eq_half",
       "file": "BanditRLProof/LowerBounds/Minimax.lean",
-      "line": 147,
+      "line": 143,
       "statement": "theorem gaussianMinimaxGap_informationExponent_eq_half {alternativeCount horizon : Real} (halternatives : 0 < alternativeCount) (hhorizon : 0 < horizon) : 2 * horizon * gaussianMinimaxGap alternativeCount horizon ^ 2 / alternativeCount = 1 / 2"
     },
     {
@@ -53481,8 +54313,440 @@
       "name": "gaussianMinimaxGap_le_half",
       "full_name": "BanditRLProof.LowerBounds.gaussianMinimaxGap_le_half",
       "file": "BanditRLProof/LowerBounds/Minimax.lean",
-      "line": 159,
+      "line": 155,
       "statement": "theorem gaussianMinimaxGap_le_half {alternativeCount horizon : Real} (hhorizon : 0 < horizon) (hcount_le : alternativeCount ≤ horizon) : gaussianMinimaxGap alternativeCount horizon ≤ 1 / 2"
+    },
+    {
+      "kind": "structure",
+      "name": "SuccinctUnitSystem",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 33,
+      "statement": "structure SuccinctUnitSystem (V : Type*) [NormedAddCommGroup V] [InnerProductSpace ℝ V] where"
+    },
+    {
+      "kind": "def",
+      "name": "sourceQ",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.sourceQ",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 45,
+      "statement": "def sourceQ (system : SuccinctUnitSystem V) (x : V) : ℝ"
+    },
+    {
+      "kind": "theorem",
+      "name": "sourceQSet_bddAbove",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.sourceQSet_bddAbove",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 48,
+      "statement": "theorem sourceQSet_bddAbove (system : SuccinctUnitSystem V) (x : V) : BddAbove ((fun e : V => ⟪x, e⟫_ℝ) '' system.atoms)"
+    },
+    {
+      "kind": "theorem",
+      "name": "le_sourceQ_of_mem",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.le_sourceQ_of_mem",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 57,
+      "statement": "theorem le_sourceQ_of_mem (system : SuccinctUnitSystem V) {x e : V} (he : e ∈ system.atoms) : ⟪x, e⟫_ℝ ≤ system.sourceQ x"
+    },
+    {
+      "kind": "theorem",
+      "name": "sourceQ_le_norm",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.sourceQ_le_norm",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 62,
+      "statement": "theorem sourceQ_le_norm (system : SuccinctUnitSystem V) (x : V) : system.sourceQ x ≤ ‖x‖"
+    },
+    {
+      "kind": "theorem",
+      "name": "sourceQ_nonneg",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.sourceQ_nonneg",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 72,
+      "statement": "theorem sourceQ_nonneg (system : SuccinctUnitSystem V) (x : V) : 0 ≤ system.sourceQ x"
+    },
+    {
+      "kind": "theorem",
+      "name": "sourceQ_zero",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.sourceQ_zero",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 83,
+      "statement": "theorem sourceQ_zero (system : SuccinctUnitSystem V) : system.sourceQ 0 = 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "abs_inner_le_sourceQ_of_mem",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.abs_inner_le_sourceQ_of_mem",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 88,
+      "statement": "theorem abs_inner_le_sourceQ_of_mem (system : SuccinctUnitSystem V) {x e : V} (he : e ∈ system.atoms) : |⟪x, e⟫_ℝ| ≤ system.sourceQ x"
+    },
+    {
+      "kind": "theorem",
+      "name": "sourceQ_eq_zero_of_atom_orthogonal",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.sourceQ_eq_zero_of_atom_orthogonal",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 98,
+      "statement": "theorem sourceQ_eq_zero_of_atom_orthogonal (system : SuccinctUnitSystem V) {x : V} (horthogonal : ∀ e ∈ system.atoms, ⟪x, e⟫_ℝ = 0) : system.sourceQ x = 0"
+    },
+    {
+      "kind": "def",
+      "name": "sourceR",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.sourceR",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 110,
+      "statement": "def sourceR (system : SuccinctUnitSystem V) (x : V) : ℝ"
+    },
+    {
+      "kind": "theorem",
+      "name": "sourceRSet_not_bddAbove_of_nonzero_atom_orthogonal",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.sourceRSet_not_bddAbove_of_nonzero_atom_orthogonal",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 116,
+      "statement": "theorem sourceRSet_not_bddAbove_of_nonzero_atom_orthogonal (system : SuccinctUnitSystem V) {x : V} (hx : x ≠ 0) (horthogonal : ∀ e ∈ system.atoms, ⟪x, e⟫_ℝ = 0) : ¬ BddAbove ((fun y : V => ⟪x, y⟫_ℝ) '' {y | system.sourceQ y ≤ 1})"
+    },
+    {
+      "kind": "structure",
+      "name": "IsSuccinctSupport",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 142,
+      "statement": "structure IsSuccinctSupport (system : SuccinctUnitSystem V) {s : Nat} (basis : Fin s → V) : Prop where"
+    },
+    {
+      "kind": "theorem",
+      "name": "correlationSum_le_one",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.correlationSum_le_one",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 154,
+      "statement": "theorem correlationSum_le_one (support : IsSuccinctSupport system basis) {e : V} (he : e ∈ system.atoms) : (∑ i, |⟪e, basis i⟫_ℝ|) ≤ 1"
+    },
+    {
+      "kind": "theorem",
+      "name": "inner_basis_basis",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.inner_basis_basis",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 164,
+      "statement": "theorem inner_basis_basis (support : IsSuccinctSupport system basis) (i j : Fin s) : ⟪basis i, basis j⟫_ℝ = if i = j then 1 else 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "orthonormal",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.orthonormal",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 202,
+      "statement": "theorem orthonormal (support : IsSuccinctSupport system basis) : Orthonormal ℝ basis"
+    },
+    {
+      "kind": "def",
+      "name": "maxAbsCoefficient",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.maxAbsCoefficient",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 208,
+      "statement": "def maxAbsCoefficient [Nonempty (Fin s)] (a : Fin s → ℝ) : ℝ"
+    },
+    {
+      "kind": "theorem",
+      "name": "abs_le_maxAbsCoefficient",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.abs_le_maxAbsCoefficient",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 211,
+      "statement": "theorem abs_le_maxAbsCoefficient [Nonempty (Fin s)] (a : Fin s → ℝ) (i : Fin s) : |a i| ≤ maxAbsCoefficient a"
+    },
+    {
+      "kind": "theorem",
+      "name": "maxAbsCoefficient_nonneg",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.maxAbsCoefficient_nonneg",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 215,
+      "statement": "theorem maxAbsCoefficient_nonneg [Nonempty (Fin s)] (a : Fin s → ℝ) : 0 ≤ maxAbsCoefficient a"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_abs_eq_maxAbsCoefficient",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.exists_abs_eq_maxAbsCoefficient",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 220,
+      "statement": "theorem exists_abs_eq_maxAbsCoefficient [Nonempty (Fin s)] (a : Fin s → ℝ) : ∃ i : Fin s, |a i| = maxAbsCoefficient a"
+    },
+    {
+      "kind": "def",
+      "name": "supportCombination",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.supportCombination",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 227,
+      "statement": "def supportCombination (basis : Fin s → V) (a : Fin s → ℝ) : V"
+    },
+    {
+      "kind": "def",
+      "name": "signedSupportAtom",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.signedSupportAtom",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 230,
+      "statement": "def signedSupportAtom (coefficient : ℝ) (atom : V) : V"
+    },
+    {
+      "kind": "theorem",
+      "name": "signedSupportAtom_mem",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.signedSupportAtom_mem",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 233,
+      "statement": "theorem signedSupportAtom_mem (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) (i : Fin s) : signedSupportAtom (a i) (basis i) ∈ system.atoms"
+    },
+    {
+      "kind": "theorem",
+      "name": "sourceQ_supportCombination_le",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.sourceQ_supportCombination_le",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 240,
+      "statement": "theorem sourceQ_supportCombination_le [Nonempty (Fin s)] (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) : system.sourceQ (supportCombination basis a) ≤ maxAbsCoefficient a"
+    },
+    {
+      "kind": "theorem",
+      "name": "inner_supportCombination_basis",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.inner_supportCombination_basis",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 268,
+      "statement": "theorem inner_supportCombination_basis (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) (m : Fin s) : ⟪supportCombination basis a, basis m⟫_ℝ = a m"
+    },
+    {
+      "kind": "theorem",
+      "name": "inner_supportCombination_signedSupportAtom",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.inner_supportCombination_signedSupportAtom",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 281,
+      "statement": "theorem inner_supportCombination_signedSupportAtom (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) (m : Fin s) : ⟪supportCombination basis a, signedSupportAtom (a m) (basis m)⟫_ℝ = |a m|"
+    },
+    {
+      "kind": "theorem",
+      "name": "sourceQ_supportCombination_eq",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.sourceQ_supportCombination_eq",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 292,
+      "statement": "theorem sourceQ_supportCombination_eq [Nonempty (Fin s)] (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) : system.sourceQ (supportCombination basis a) = maxAbsCoefficient a"
+    },
+    {
+      "kind": "def",
+      "name": "coefficientSign",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.coefficientSign",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 305,
+      "statement": "def coefficientSign (coefficient : ℝ) : ℝ"
+    },
+    {
+      "kind": "theorem",
+      "name": "abs_coefficientSign",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.abs_coefficientSign",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 309,
+      "statement": "theorem abs_coefficientSign (coefficient : ℝ) : |coefficientSign coefficient| = 1"
+    },
+    {
+      "kind": "theorem",
+      "name": "coefficientSign_mul",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.coefficientSign_mul",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 312,
+      "statement": "theorem coefficientSign_mul (coefficient : ℝ) : coefficientSign coefficient * coefficient = |coefficient|"
+    },
+    {
+      "kind": "theorem",
+      "name": "coefficientSign_coefficientSign",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.coefficientSign_coefficientSign",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 320,
+      "statement": "theorem coefficientSign_coefficientSign (coefficient : ℝ) : coefficientSign (coefficientSign coefficient) = coefficientSign coefficient"
+    },
+    {
+      "kind": "theorem",
+      "name": "coefficientSign_mul_self",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.coefficientSign_mul_self",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 327,
+      "statement": "theorem coefficientSign_mul_self (coefficient : ℝ) : coefficientSign coefficient * coefficientSign coefficient = 1"
+    },
+    {
+      "kind": "def",
+      "name": "supportSignCombination",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.supportSignCombination",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 331,
+      "statement": "def supportSignCombination (basis : Fin s → V) (a : Fin s → ℝ) : V"
+    },
+    {
+      "kind": "theorem",
+      "name": "maxAbsCoefficient_coefficientSign",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.maxAbsCoefficient_coefficientSign",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 334,
+      "statement": "theorem maxAbsCoefficient_coefficientSign [Nonempty (Fin s)] (a : Fin s → ℝ) : maxAbsCoefficient (fun i => coefficientSign (a i)) = 1"
+    },
+    {
+      "kind": "theorem",
+      "name": "sourceQ_supportSignCombination",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.sourceQ_supportSignCombination",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 338,
+      "statement": "theorem sourceQ_supportSignCombination [Nonempty (Fin s)] (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) : system.sourceQ (supportSignCombination basis a) = 1"
+    },
+    {
+      "kind": "theorem",
+      "name": "norm_sq_supportSignCombination",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.norm_sq_supportSignCombination",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 346,
+      "statement": "theorem norm_sq_supportSignCombination [Nonempty (Fin s)] (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) : ‖supportSignCombination basis a‖ ^ 2 = (s : ℝ)"
+    },
+    {
+      "kind": "theorem",
+      "name": "inner_supportCombination_supportSignCombination",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.inner_supportCombination_supportSignCombination",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 359,
+      "statement": "theorem inner_supportCombination_supportSignCombination (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) : ⟪supportCombination basis a, supportSignCombination basis a⟫_ℝ = ∑ i, |a i|"
+    },
+    {
+      "kind": "theorem",
+      "name": "inner_supportCombination_le_sumAbs_mul_sourceQ",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.inner_supportCombination_le_sumAbs_mul_sourceQ",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 378,
+      "statement": "theorem inner_supportCombination_le_sumAbs_mul_sourceQ (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) (y : V) : |⟪supportCombination basis a, y⟫_ℝ| ≤ (∑ i, |a i|) * system.sourceQ y"
+    },
+    {
+      "kind": "theorem",
+      "name": "inner_supportCombination_le_sumAbs_of_sourceQ_le_one",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.inner_supportCombination_le_sumAbs_of_sourceQ_le_one",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 400,
+      "statement": "theorem inner_supportCombination_le_sumAbs_of_sourceQ_le_one (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) {y : V} (hy : system.sourceQ y ≤ 1) : ⟪supportCombination basis a, y⟫_ℝ ≤ ∑ i, |a i|"
+    },
+    {
+      "kind": "theorem",
+      "name": "sourceRSet_bddAbove",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.sourceRSet_bddAbove",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 413,
+      "statement": "theorem sourceRSet_bddAbove (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) : BddAbove ((fun y : V => ⟪supportCombination basis a, y⟫_ℝ) '' {y | system.sourceQ y ≤ 1})"
+    },
+    {
+      "kind": "theorem",
+      "name": "sourceR_supportCombination_eq",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.sourceR_supportCombination_eq",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 423,
+      "statement": "theorem sourceR_supportCombination_eq [Nonempty (Fin s)] (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) : system.sourceR (supportCombination basis a) = ∑ i, |a i|"
+    },
+    {
+      "kind": "structure",
+      "name": "SuccinctRepresentation",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.SuccinctRepresentation",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 447,
+      "statement": "structure SuccinctRepresentation (system : SuccinctUnitSystem V) (x : V) (s : Nat) where"
+    },
+    {
+      "kind": "structure",
+      "name": "StrictSuccinctRepresentation",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.StrictSuccinctRepresentation",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 457,
+      "statement": "structure StrictSuccinctRepresentation (system : SuccinctUnitSystem V) (x : V) (s : Nat) extends SuccinctRepresentation system x s where"
+    },
+    {
+      "kind": "def",
+      "name": "IsSuccinctAt",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctAt",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 463,
+      "statement": "def IsSuccinctAt (system : SuccinctUnitSystem V) (x : V) (s : Nat) : Prop"
+    },
+    {
+      "kind": "def",
+      "name": "IsStrictlySuccinctAt",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsStrictlySuccinctAt",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 468,
+      "statement": "def IsStrictlySuccinctAt (system : SuccinctUnitSystem V) (x : V) (s : Nat) : Prop"
+    },
+    {
+      "kind": "theorem",
+      "name": "sourceR_eq_sumAbs",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.SuccinctRepresentation.sourceR_eq_sumAbs",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 475,
+      "statement": "theorem sourceR_eq_sumAbs (representation : SuccinctRepresentation system x s) : system.sourceR x = ∑ i, |representation.coefficients i|"
+    },
+    {
+      "kind": "theorem",
+      "name": "inner_supportSignCombination_eq_sumAbs",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.SuccinctRepresentation.inner_supportSignCombination_eq_sumAbs",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 486,
+      "statement": "theorem inner_supportSignCombination_eq_sumAbs (representation : SuccinctRepresentation system x s) : ⟪x, IsSuccinctSupport.supportSignCombination representation.basis representation.coefficients⟫_ℝ = ∑ i, |representation.coefficients i|"
+    },
+    {
+      "kind": "theorem",
+      "name": "sourceQ_supportSignCombination_eq_one",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.SuccinctRepresentation.sourceQ_supportSignCombination_eq_one",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 505,
+      "statement": "theorem sourceQ_supportSignCombination_eq_one (representation : SuccinctRepresentation system x s) : system.sourceQ (IsSuccinctSupport.supportSignCombination representation.basis representation.coefficients) = 1"
+    },
+    {
+      "kind": "theorem",
+      "name": "norm_sq_supportSignCombination_eq_size",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.SuccinctRepresentation.norm_sq_supportSignCombination_eq_size",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 512,
+      "statement": "theorem norm_sq_supportSignCombination_eq_size (representation : SuccinctRepresentation system x s) : ‖IsSuccinctSupport.supportSignCombination representation.basis representation.coefficients‖ ^ 2 = (s : ℝ)"
+    },
+    {
+      "kind": "theorem",
+      "name": "sumAbs_eq",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.SuccinctRepresentation.sumAbs_eq",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 521,
+      "statement": "theorem sumAbs_eq (first : SuccinctRepresentation system x s) (second : SuccinctRepresentation system x z) : (∑ i, |first.coefficients i|) = ∑ j, |second.coefficients j|"
+    },
+    {
+      "kind": "theorem",
+      "name": "abs_inner_strictBasis_supportSignCombination_eq_one",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.SuccinctRepresentation.abs_inner_strictBasis_supportSignCombination_eq_one",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 532,
+      "statement": "theorem abs_inner_strictBasis_supportSignCombination_eq_one (first : SuccinctRepresentation system x s) (second : StrictSuccinctRepresentation system x z) (j : Fin z) : |⟪second.toSuccinctRepresentation.basis j, IsSuccinctSupport.supportSignCombination first.basis first.coefficients⟫_ℝ| = 1"
+    },
+    {
+      "kind": "theorem",
+      "name": "strictSize_le",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.SuccinctRepresentation.strictSize_le",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 598,
+      "statement": "theorem strictSize_le (first : SuccinctRepresentation system x s) (second : StrictSuccinctRepresentation system x z) : z ≤ s"
+    },
+    {
+      "kind": "theorem",
+      "name": "abs_coefficient_pos",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.StrictSuccinctRepresentation.abs_coefficient_pos",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 632,
+      "statement": "theorem abs_coefficient_pos (representation : StrictSuccinctRepresentation system x s) (i : Fin s) : 0 < |representation.toSuccinctRepresentation.coefficients i|"
+    },
+    {
+      "kind": "theorem",
+      "name": "succinctSize_ge_strictSize",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.succinctSize_ge_strictSize",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 640,
+      "statement": "theorem succinctSize_ge_strictSize {system : SuccinctUnitSystem V} {x : V} {s z : Nat} (hs : IsSuccinctAt system x s) (hz : IsStrictlySuccinctAt system x z) : z ≤ s"
+    },
+    {
+      "kind": "theorem",
+      "name": "strictlySuccinctSize_unique",
+      "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.strictlySuccinctSize_unique",
+      "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+      "line": 649,
+      "statement": "theorem strictlySuccinctSize_unique {system : SuccinctUnitSystem V} {x : V} {s z : Nat} (hs : IsStrictlySuccinctAt system x s) (hz : IsStrictlySuccinctAt system x z) : s = z"
     },
     {
       "kind": "structure",
