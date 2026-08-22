@@ -848,7 +848,7 @@
       "chapter": "foundations",
       "textbook_spine": "chapter-16-instance-dependent",
       "status": "compiled",
-      "informal": "Twenty named Chapter 16 dependencies compile: Definition 16.1's consistency interface and power/log-growth consequences; the extended-real d_inf interface and exact unit-Gaussian Table 16.1 row; the same-policy one-arm history-KL identity; the measurable majority event and Bretagnolle--Huber information inequality; and the finite-KL scalar regret/log assembly. The source-general event-to-expected-pseudo-regret producers and all three chapter terminals remain separate.",
+      "informal": "Twenty named Chapter 16 dependencies compile: Definition 16.1's consistency interface and power/log-growth consequences; the extended-real d_inf interface and exact unit-Gaussian Table 16.1 row; the same-policy one-arm history-KL identity; the measurable majority event and Bretagnolle--Huber information inequality; and the finite-KL scalar regret/log assembly. The separate compiled event-to-regret record now consumes this layer without changing the scope of these twenty declarations.",
       "declarations": [
         "BanditRLProof.LowerBounds.IsConsistentRegret",
         "BanditRLProof.LowerBounds.IsConsistentPolicyOver",
@@ -878,9 +878,46 @@
         "BanditRLProof.LowerBounds.bretagnolleHuber"
       ],
       "missing": [
-        "The source-general original- and changed-environment producers relating the two majority-event probabilities to exact expected pseudo-regret are not yet compiled.",
+        "The source-environment layer identifying abstract nonnegative gap vectors with finite arm-law means is not part of this dependency record.",
         "Theorem 16.2 still needs its per-arm information-to-liminf extraction, including the zero, finite, and infinite d_inf branches.",
         "Lemma 16.3 and Theorem 16.4 remain blocked; the compiled information and scalar layers are not presented as either terminal."
+      ],
+      "evidence": "BanditRLProof/LowerBounds/InstanceDependent.lean; Tests/TextbookPartIVChapter16Canary.lean; tasks/TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE.md"
+    },
+    {
+      "id": "TEXTBOOK-PART-IV-CH16-EVENT-REGRET-PRODUCERS",
+      "title": "Chapter 16 majority-event expected-pseudo-regret producers",
+      "chapter": "foundations",
+      "textbook_spine": "chapter-16-instance-dependent",
+      "status": "compiled",
+      "informal": "Fifteen named declarations now define canonical gap-times-pull-count pseudo-regret for an arbitrary finite-arm Markov reward kernel, prove its measurability, finite expected-pull decomposition, and finiteness, charge the majority event and its complement to the original and changed expected pseudo-regrets with the exact half-horizon gap factors, and combine those charges with the existing one-arm KL/Bretagnolle--Huber layer into the exact factor-one-quarter logarithmic gap-vector consumer. The consumer does not yet identify the gap vectors with the integral means of a source finite-mean environment, so it is not presented as Lemma 16.3.",
+      "declarations": [
+        "BanditRLProof.LowerBounds.finiteHistoryGapPseudoRegret",
+        "BanditRLProof.LowerBounds.canonicalGapExpectedPseudoRegret",
+        "BanditRLProof.LowerBounds.measurable_finiteHistoryGapPseudoRegret",
+        "BanditRLProof.LowerBounds.finiteHistoryGapPseudoRegret_ne_top",
+        "BanditRLProof.LowerBounds.finiteHistoryGapPseudoRegret_toReal",
+        "BanditRLProof.LowerBounds.sum_canonicalRealizedExpectedPullCountThrough_general",
+        "BanditRLProof.LowerBounds.canonicalRealizedExpectedPullCountThrough_ne_top",
+        "BanditRLProof.LowerBounds.canonicalGapExpectedPseudoRegret_eq_sum_expectedPulls",
+        "BanditRLProof.LowerBounds.canonicalGapExpectedPseudoRegret_ne_top",
+        "BanditRLProof.LowerBounds.canonicalGapExpectedPseudoRegretReal",
+        "BanditRLProof.LowerBounds.oneArmMajority_forces_gapPseudoRegret",
+        "BanditRLProof.LowerBounds.oneArmMajority_compl_forces_gapPseudoRegret",
+        "BanditRLProof.LowerBounds.oneArmMajority_probability_charge_le_expectedPseudoRegret",
+        "BanditRLProof.LowerBounds.oneArmMajority_compl_probability_charge_le_expectedPseudoRegret",
+        "BanditRLProof.LowerBounds.expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed"
+      ],
+      "depends_on": [
+        "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_mul_of_only_arm_changed",
+        "BanditRLProof.LowerBounds.bretagnolleHuberScale_expectedPulls_mul_armKL_le_majorityErrors",
+        "BanditRLProof.LowerBounds.exp_testing_bound_of_majority_regret_bounds",
+        "BanditRLProof.LowerBounds.expectedPullCount_ge_log_regret_of_exp_testing_bound"
+      ],
+      "missing": [
+        "A source-environment producer must still tie each explicit gap vector to the integral means of finite-mean arm laws and the certified original/changed optima.",
+        "The finite-positive arm-KL branch is explicit in the conditional consumer; zero and infinite information cases are not silently coerced to Real.",
+        "Lemma 16.3, Theorem 16.2, and Theorem 16.4 remain blocked source terminals with no declaration claimed."
       ],
       "evidence": "BanditRLProof/LowerBounds/InstanceDependent.lean; Tests/TextbookPartIVChapter16Canary.lean; tasks/TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE.md"
     },
@@ -899,12 +936,13 @@
         "BanditRLProof.LowerBounds.klDiv_gaussianReal_one",
         "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum_eq",
         "BanditRLProof.LowerBounds.bretagnolleHuberScale_expectedPulls_mul_armKL_le_majorityErrors",
-        "BanditRLProof.LowerBounds.expectedPullCount_ge_log_regret_of_exp_testing_bound"
+        "BanditRLProof.LowerBounds.expectedPullCount_ge_log_regret_of_exp_testing_bound",
+        "BanditRLProof.LowerBounds.expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed"
       ],
       "missing": [
-        "Source-general regret decomposition theorems that upper-bound both majority-event errors by the original- and changed-environment expected pseudo-regrets with exact gap factors.",
+        "A finite-mean source-environment bridge identifying the compiled nonnegative gap vectors with the original and changed arm-law means and optimal arms.",
         "The exact per-arm information constraint and liminf extraction, with zero, finite, and infinite d_inf branches.",
-        "Lemma 16.3's finite-time event/regret bridge and Theorem 16.4's exact Gaussian aggregation."
+        "Lemma 16.3's environment-level finite-time terminal and Theorem 16.4's exact Gaussian aggregation."
       ],
       "evidence": "tasks/TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE.md; proof-attempts/TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE/HistoryInformationBlocker.md"
     },

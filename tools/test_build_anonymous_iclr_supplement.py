@@ -193,11 +193,22 @@ class AnonymousSupplementTests(unittest.TestCase):
             ledger["textbook_chapter_16"]["dependency_declaration_count"],
             20,
         )
+        self.assertEqual(
+            ledger["textbook_chapter_16"]["event_regret_declaration_count"],
+            15,
+        )
+        self.assertFalse(
+            ledger["textbook_chapter_16"]["finite_mean_gap_bridge_verified"]
+        )
         self.assertFalse(
             ledger["textbook_chapter_16"]["source_terminals_verified"]
         )
         self.assertEqual(
             ledger["source_records"][BUILDER.CH16_COMPILED_ID]["status"],
+            "compiled",
+        )
+        self.assertEqual(
+            ledger["source_records"][BUILDER.CH16_EVENT_REGRET_ID]["status"],
             "compiled",
         )
         self.assertEqual(
@@ -273,6 +284,12 @@ class AnonymousSupplementTests(unittest.TestCase):
         declarations = records[BUILDER.CH16_COMPILED_ID]["declarations"]
         declarations[-1] = declarations[-1] + "_drifted"
         with self.assertRaisesRegex(ValueError, "frozen 20 unique declarations"):
+            BUILDER.validate_ch16_boundary(records)
+
+        records = json.loads(json.dumps(BUILDER.selected_source_records()))
+        declarations = records[BUILDER.CH16_EVENT_REGRET_ID]["declarations"]
+        declarations[-1] = declarations[-1] + "_drifted"
+        with self.assertRaisesRegex(ValueError, "frozen 15 unique declarations"):
             BUILDER.validate_ch16_boundary(records)
 
         records = json.loads(json.dumps(BUILDER.selected_source_records()))

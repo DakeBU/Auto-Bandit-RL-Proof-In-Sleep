@@ -42,11 +42,45 @@ example {K : Nat} {Reward : Type*} [MeasurableSpace Reward]
       (oneArmMajorityPullEvent (Reward := Reward) changedArm lastRound) :=
   measurableSet_oneArmMajorityPullEvent changedArm lastRound
 
+example {K : Nat} {Reward : Type*}
+    (gap : Fin K -> Real) (hgap : forall arm, 0 <= gap arm)
+    (changedArm : Fin K) (hchanged : 0 < gap changedArm)
+    (lastRound : Nat)
+    (history : History.FinitePairHistory (Fin K) Reward lastRound)
+    (hA : history ∈ oneArmMajorityPullEvent
+      (Reward := Reward) changedArm lastRound) :
+    ENNReal.ofReal
+        (((lastRound + 1 : Nat) : Real) * gap changedArm / 2) <=
+      finiteHistoryGapPseudoRegret gap lastRound history :=
+  oneArmMajority_forces_gapPseudoRegret
+    gap hgap changedArm hchanged lastRound history hA
+
+example {K : Nat} {Reward : Type*}
+    (gap : Fin K -> Real) (hgap : forall arm, 0 <= gap arm)
+    (changedArm : Fin K) (changedMargin : Real)
+    (hmargin : 0 < changedMargin)
+    (hother : forall arm, arm ≠ changedArm -> changedMargin <= gap arm)
+    (lastRound : Nat)
+    (history : History.FinitePairHistory (Fin K) Reward lastRound)
+    (hAc : history ∈ (oneArmMajorityPullEvent
+      (Reward := Reward) changedArm lastRound)ᶜ) :
+    ENNReal.ofReal
+        (((lastRound + 1 : Nat) : Real) * changedMargin / 2) <=
+      finiteHistoryGapPseudoRegret gap lastRound history :=
+  oneArmMajority_compl_forces_gapPseudoRegret
+    gap hgap changedArm changedMargin hmargin hother lastRound history hAc
+
 #check banditHistoryRelativeEntropy_eq_expectedPulls_mul_of_only_arm_changed
+#check finiteHistoryGapPseudoRegret
+#check canonicalGapExpectedPseudoRegret
+#check canonicalGapExpectedPseudoRegret_eq_sum_expectedPulls
+#check oneArmMajority_probability_charge_le_expectedPseudoRegret
+#check oneArmMajority_compl_probability_charge_le_expectedPseudoRegret
 #check bretagnolleHuberScale_expectedPulls_mul_armKL_le_majorityErrors
 #check bretagnolleHuberScale_mul_eq_exp
 #check exp_testing_bound_of_majority_regret_bounds
 #check expectedPullCount_ge_log_regret_of_exp_testing_bound
+#check expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed
 
 #print axioms LowerBounds.IsConsistentRegret.add
 #print axioms LowerBounds.IsConsistentRegret.eventually_add_le_rpow
@@ -58,10 +92,16 @@ example {K : Nat} {Reward : Type*} [MeasurableSpace Reward]
 #print axioms LowerBounds.unitGaussianDivergenceInfimum_eq
 #print axioms LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_mul_of_only_arm_changed
 #print axioms LowerBounds.measurableSet_oneArmMajorityPullEvent
+#print axioms LowerBounds.canonicalGapExpectedPseudoRegret_eq_sum_expectedPulls
+#print axioms LowerBounds.oneArmMajority_forces_gapPseudoRegret
+#print axioms LowerBounds.oneArmMajority_compl_forces_gapPseudoRegret
+#print axioms LowerBounds.oneArmMajority_probability_charge_le_expectedPseudoRegret
+#print axioms LowerBounds.oneArmMajority_compl_probability_charge_le_expectedPseudoRegret
 #print axioms LowerBounds.bretagnolleHuberScale_expectedPulls_mul_armKL_le_majorityErrors
 #print axioms LowerBounds.bretagnolleHuberScale_mul_eq_exp
 #print axioms LowerBounds.exp_testing_bound_of_majority_regret_bounds
 #print axioms LowerBounds.expectedPullCount_ge_log_regret_of_exp_testing_bound
+#print axioms LowerBounds.expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed
 
 end LowerBounds
 end BanditRLProof

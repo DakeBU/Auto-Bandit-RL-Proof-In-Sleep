@@ -1133,13 +1133,30 @@
       "math": "\\tfrac12\\exp(-\\mathbb E_\\nu[T_i(n)]D(P_i\\Vert P_i'))\\le P_\\nu(A)+P_{\\nu'}(A^c),\\quad A=\\{T_i(n)>n/2\\}.",
       "intuition": "If the policy almost never pulls the changed arm, the two history laws remain hard to distinguish, so the majority decision must fail in at least one environment.",
       "why": "This is the exact one-arm event-information layer reused by Lemma 16.3 and the asymptotic route.",
-      "position": "The history KL and event inequality compile; the two source expected-pseudo-regret bounds for the event errors still do not.",
+      "position": "The history KL and event inequality compile and now feed two canonical gap-pseudo-regret event charges; the finite arm-law mean-to-gap identification and source Lemma 16.3 terminal remain separate.",
       "proof_idea": "Specialize Lemma 15.1 to environments equal off arm i, prove the pull-count majority event measurable, and apply Bretagnolle--Huber.",
       "lean_notes": "Both history measures use the same possibly randomized HistoryAlgorithm. Pull expectation and KL direction are under the first environment.",
       "dependencies": [
         "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_mul_of_only_arm_changed",
         "BanditRLProof.LowerBounds.measurableSet_oneArmMajorityPullEvent",
         "BanditRLProof.LowerBounds.bretagnolleHuber"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.LowerBounds.expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed",
+      "chapter": "foundations",
+      "plain": "For two finite-arm history laws that differ only at one arm, the compiled majority-event charges turn the directed arm KL into the exact logarithmic lower bound on the original-law expected pull count for explicit nonnegative gap vectors.",
+      "math": "\\mathbb E_{\\nu}[T_i(n)]\\ge\\frac{\\log(\\min\\{\\Delta_i,\\Delta_i'\\}/4)+\\log n-\\log(R_n+R_n')}{D(P_i\\Vert P_i')}.",
+      "intuition": "The policy cannot simultaneously avoid the changed arm, keep both expected gap regrets small, and distinguish the two environments. The two event errors are each paid for by an actual gap-times-pull-count expectation.",
+      "why": "This closes the common-policy information, exact half-horizon charges, factor-one-quarter assembly, and logarithmic algebra that sit immediately below Lemma 16.3.",
+      "position": "It is a compiled conditional consumer for explicit gap vectors, not the source theorem: Lean still needs an environment contract proving that the vectors are induced by the finite arm-law means and certified optimal arms.",
+      "proof_idea": "Regroup canonical gap pseudo-regret by expected pulls, lower-bound it pathwise on the majority event and its complement, integrate both inequalities, combine with Bretagnolle--Huber, and rearrange the finite positive KL branch.",
+      "lean_notes": "The theorem preserves one randomized HistoryAlgorithm, original-to-alternative KL, first-law expected pulls, the inclusive n=lastRound+1 convention, explicit KL finiteness/positivity, and nonnegative gaps.",
+      "dependencies": [
+        "BanditRLProof.LowerBounds.bretagnolleHuberScale_expectedPulls_mul_armKL_le_majorityErrors",
+        "BanditRLProof.LowerBounds.oneArmMajority_probability_charge_le_expectedPseudoRegret",
+        "BanditRLProof.LowerBounds.oneArmMajority_compl_probability_charge_le_expectedPseudoRegret",
+        "BanditRLProof.LowerBounds.expectedPullCount_ge_log_regret_of_exp_testing_bound"
       ]
     },
     {
