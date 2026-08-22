@@ -108,7 +108,7 @@ envelope and sums the positive parts to obtain Eq. (16.5).
 | `CH16-TYPED-CANARY` | root-import applications and axiom reports | compiled slice | `Tests/TextbookPartIVChapter16Canary.lean` | project-local | Tests | verified locally |
 | `CH16-EVIDENCE-SITE` | all artifacts agree on partial/blocked boundary | scoped artifacts | repository artifacts | repository | full/site/browser | verified locally |
 | `CH16-REVIEW` | direction/quantifier/AC/policy/asymptotic audit | all artifacts | `reviews/2026-08-22-textbook-part-iv-chapter-16-instance-dependent-extension.md` | repository | read-only | verified locally; no unresolved Blocking/High/Medium |
-| `CH16-REMOTE` | PR, main Actions, Pages, live page | current 20-declaration slice | PR #15 / merge `7b3dd86` verify only the older dependency slice; the present extension awaits a new PR, authoritative-main run, and live Pages check | repository | deployment | pending |
+| `CH16-REMOTE` | PR, main Actions, Pages, live page | current 20-declaration slice | PR #38; merge `359fb6a`; authoritative-main run `32546802426`; clean live manifest and desktop/mobile page checks | repository | deployment | verified |
 
 ## Gaps
 
