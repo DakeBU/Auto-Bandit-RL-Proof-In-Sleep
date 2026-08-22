@@ -126,6 +126,21 @@ LowerBounds.bretagnolleHuberScale_expectedPulls_mul_armKL_le_majorityErrors
 LowerBounds.bretagnolleHuberScale_mul_eq_exp
 LowerBounds.exp_testing_bound_of_majority_regret_bounds
 LowerBounds.expectedPullCount_ge_log_regret_of_exp_testing_bound
+LowerBounds.finiteHistoryGapPseudoRegret
+LowerBounds.canonicalGapExpectedPseudoRegret
+LowerBounds.measurable_finiteHistoryGapPseudoRegret
+LowerBounds.finiteHistoryGapPseudoRegret_ne_top
+LowerBounds.finiteHistoryGapPseudoRegret_toReal
+LowerBounds.sum_canonicalRealizedExpectedPullCountThrough_general
+LowerBounds.canonicalRealizedExpectedPullCountThrough_ne_top
+LowerBounds.canonicalGapExpectedPseudoRegret_eq_sum_expectedPulls
+LowerBounds.canonicalGapExpectedPseudoRegret_ne_top
+LowerBounds.canonicalGapExpectedPseudoRegretReal
+LowerBounds.oneArmMajority_forces_gapPseudoRegret
+LowerBounds.oneArmMajority_compl_forces_gapPseudoRegret
+LowerBounds.oneArmMajority_probability_charge_le_expectedPseudoRegret
+LowerBounds.oneArmMajority_compl_probability_charge_le_expectedPseudoRegret
+LowerBounds.expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed
 ```
 
 Reserved source terminals, with no declaration claimed:
@@ -174,13 +189,39 @@ and two stationary environments that differ at only one arm. It also freezes
 the exact majority event, applies Bretagnolle--Huber, evaluates the finite KL
 scale, and proves the scalar logarithmic rearrangement used in Eq. (16.4).
 
-The remaining Lemma 16.3 bridge is source-semantic: the current general
-stochastic-environment interface still needs two producers that upper-bound
-the majority-event errors by the original- and changed-environment expected
-pseudo-regrets with the exact gap factors. Theorem 16.2 additionally needs the
-zero/finite/infinite `d_inf` branches and final `liminf` extraction; Theorem
-16.4 inherits the unresolved full Lemma 16.3 consumer. These are explicit
-proof obligations, not reasons to weaken the source bandit semantics.
+The canonical gap-vector layer now supplies both pathwise majority-event
+charges, integrates them under the original and changed history laws, and
+feeds the exact factor-one-quarter logarithmic consumer. The remaining Lemma
+16.3 bridge is source-semantic: a finite-mean stochastic environment must
+identify those explicit gap vectors with arm-law integral means and certified
+optimal arms. Theorem 16.2 additionally needs the zero/finite/infinite `d_inf`
+branches and final `liminf` extraction; Theorem 16.4 inherits the unresolved
+source-environment Lemma 16.3 consumer. These are explicit proof obligations,
+not reasons to weaken the source bandit semantics.
+
+## Compiled event-to-regret implementation contract
+
+The compiled production leaf is not an assumed scalar regret. It uses the
+canonical finite-history law together with a nonnegative per-arm gap vector,
+defines realized pseudo-regret as the finite sum of `gap * pullCount`, and
+defines expected pseudo-regret by a lower integral under the same arm kernel
+and randomized history policy. The two pathwise and integrated producers are:
+
+- on `oneArmMajorityPullEvent`, the original environment pays at least
+  `(lastRound + 1) * gap(changedArm) / 2` pathwise;
+- on its complement, an alternative for which every non-changed arm has gap
+  at least `changedMargin` pays at least
+  `(lastRound + 1) * changedMargin / 2` pathwise.
+
+`sum_finiteHistoryPullCountReal`,
+`ofReal_mul_probReal_le_lintegral_of_event`, and the canonical realized
+expected-pull interface are the local APIs. The proofs expose gap
+nonnegativity, positive original gap, positive changed margin, the same history
+event, and the exact inclusive horizon. The combined theorem
+`expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed` then discharges
+the finite-positive-KL scalar route with the exact factor `1/4`. A later
+source-environment bridge must still identify these gap vectors with finite
+arm-law means before the reserved Lemma 16.3 terminal can compile.
 
 ## Proof obligations
 
@@ -200,15 +241,30 @@ proof obligations, not reasons to weaken the source bandit semantics.
 - [x] Lemma 15.1's source-faithful same-policy history KL identity compiles;
   the Chapter 16 one-arm KL specialization, measurable majority event,
   Bretagnolle--Huber information inequality, and scalar log assembly compile.
+- [x] Canonical gap-times-pull-count expected pseudo-regret, both exact
+  majority-event charges, and the finite-positive-KL factor-`1/4` conditional
+  logarithmic consumer compile.
+- [ ] Finite arm-law integral means and certified optima are identified with
+  the compiled original/changed gap vectors.
 - [ ] Theorem 16.2's per-arm and regret `liminf` terminals compile.
 - [ ] Lemma 16.3 and Theorem 16.4 compile.
-- [x] Root import, canary, Tests, scans, full harness, exports, indexes, site,
-  browser, and the 2026-08-22 independent local review pass.
-- [x] The current Gaussian-equality and one-arm event-information extension
-  passes PR #38, the authoritative-main Actions run, Pages deployment, and
-  live desktop/mobile checks.
+- [x] The focused Chapter 16 canary compiles the new gap-event/regret slice and
+  representative axiom reports use only the baseline logical axioms.
+- [x] The current fifteen-declaration extension passes refreshed root imports,
+  Tests, scans, full harness, exports, indexes, site, browser, and the scoped
+  independent review recorded in
+  `reviews/2026-08-22-textbook-part-iv-chapter-16-event-regret-extension.md`.
+- [x] The preceding twenty-declaration Gaussian-equality and one-arm
+  event-information extension passed PR #38, authoritative-main Actions,
+  Pages deployment, and live desktop/mobile checks.
+- [ ] The current fifteen-declaration gap-event/regret extension passes PR,
+  authoritative-main Actions, Pages deployment, and live checks.
 
 ## Remote verification evidence
+
+The evidence below is the verified twenty-declaration predecessor. It does not
+yet remotely validate the current fifteen-declaration gap-event/regret
+extension.
 
 - PR #38 passed `Lean and documentation / build` in run `32545603658`, job
   `96963381949` (25m12s), and the result-free lifecycle probe in run
@@ -250,7 +306,7 @@ proof obligations, not reasons to weaken the source bandit semantics.
 
 That earlier remote acceptance applies only to the older consistency,
 asymptotic-helper, and candidate-`d_inf` slice. PR #38 and authoritative-main
-run `32546802426` verify the current 20-declaration extension. The chapter
+run `32546802426` verify the then-current 20-declaration extension. The chapter
 remains `partial`, and all three source terminals retain their blocked status.
 
 ## Mathlib-ready leaf contract
@@ -263,7 +319,8 @@ remains `partial`, and all three source terminals retain their blocked status.
 | parameterized `d_inf` candidate | `sInf_le`, Gaussian arm KL | insert a strictly better alternative and preserve KL direction | strict mean improvement | compiled project-local |
 | Gaussian exact `d_inf` | preceding candidate plus lower bound and limit/infimum approximation | squeeze positive perturbations to the strict boundary | original mean below target; extended-real conversion | compiled project-local |
 | history information constraint | compiled Chapter 15 history law and Chapter 14 BH | specialize Lemma 15.1 to one changed arm and the exact majority event | same stochastic policy; first-law expectation | compiled project-local |
-| event-to-regret producers | stochastic environment means and expected pseudo-regret | bound the original and changed majority-event errors by exact regret charges | finite means, positive gaps, source horizon convention | open source-semantic bridge |
+| event-to-regret producers | canonical finite-history law and gap-times-pull-count pseudo-regret | bound the original and changed majority-event errors by exact charges and apply the factor-`1/4` logarithmic consumer | nonnegative gap vectors, positive original gap and changed margin, source horizon convention | compiled project-local conditional interface |
+| source mean-to-gap bridge | finite arm-law integral means and certified optima | identify the canonical gap vectors with the source environments' actual mean gaps | finite means; original/changed optimal-arm certificates | open source-semantic bridge |
 | asymptotic terminal | finite-time information inequality plus consistency log leaf | divide by log horizon and take liminf | positive gap/information; zero/infinite branches | blocked source terminal |
 | finite-time Gaussian terminal | Lemma 16.3, Gaussian KL, regret decomposition | choose mean shift `Delta_i(1+epsilon)`, sum positive parts | exact local class and horizon quantifiers | blocked source terminal |
 

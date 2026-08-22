@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE
 
-Generated: `2026-08-22T03:15:08+00:00`
+Generated: `2026-08-22T04:45:40+00:00`
 
 ## Source Task
 
@@ -132,6 +132,21 @@ LowerBounds.bretagnolleHuberScale_expectedPulls_mul_armKL_le_majorityErrors
 LowerBounds.bretagnolleHuberScale_mul_eq_exp
 LowerBounds.exp_testing_bound_of_majority_regret_bounds
 LowerBounds.expectedPullCount_ge_log_regret_of_exp_testing_bound
+LowerBounds.finiteHistoryGapPseudoRegret
+LowerBounds.canonicalGapExpectedPseudoRegret
+LowerBounds.measurable_finiteHistoryGapPseudoRegret
+LowerBounds.finiteHistoryGapPseudoRegret_ne_top
+LowerBounds.finiteHistoryGapPseudoRegret_toReal
+LowerBounds.sum_canonicalRealizedExpectedPullCountThrough_general
+LowerBounds.canonicalRealizedExpectedPullCountThrough_ne_top
+LowerBounds.canonicalGapExpectedPseudoRegret_eq_sum_expectedPulls
+LowerBounds.canonicalGapExpectedPseudoRegret_ne_top
+LowerBounds.canonicalGapExpectedPseudoRegretReal
+LowerBounds.oneArmMajority_forces_gapPseudoRegret
+LowerBounds.oneArmMajority_compl_forces_gapPseudoRegret
+LowerBounds.oneArmMajority_probability_charge_le_expectedPseudoRegret
+LowerBounds.oneArmMajority_compl_probability_charge_le_expectedPseudoRegret
+LowerBounds.expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed
 ```
 
 Reserved source terminals, with no declaration claimed:
@@ -156,33 +171,14 @@ general dependency leaves; they are not Theorem 16.2, Lemma 16.3, or Theorem
 - Consistency quantifiers are `forall nu in E, forall p>0`; `p` is real, not
   a fixed exponent or a natural number.
 - Regret is expected pseudo-regret and is nonnegative. The generic compiled
-  consistency predicate does not hide nonnegativity as a field.
-- `d_inf` is extended-real. Empty confusing-alternative sets yield `infinity`;
-  zero and infinite information costs require explicit branches before real
-  division or reciprocal manipulation.
-- Confusing alternatives have mean strictly greater than `muStar`, not merely
-  greater than or equal to it.
-- KL direction is original `P_i` to alternative `P_i'`; expectations in the
-  pull constraint are under the original environment.
-- The history laws use the same possibly randomized nonanticipating policy.
-- Theorem 16.2 uses a `liminf`; the proof's log-growth step must not be
-  replaced by convergence without proving it.
-- Lemma 16.3's logarithm arguments are positive because the original gap and
-  the alternative optimality margin are positive. A real-valued division
 
-<!-- 1913 characters omitted from the middle of this snapshot. -->
-
-the Chapter 16 one-arm KL specialization, measurable majority event,
-  Bretagnolle--Huber information inequality, and scalar log assembly compile.
-- [ ] Theorem 16.2's per-arm and regret `liminf` terminals compile.
-- [ ] Lemma 16.3 and Theorem 16.4 compile.
-- [x] Root import, canary, Tests, scans, full harness, exports, indexes, site,
-  browser, and the 2026-08-22 independent local review pass.
-- [x] The current Gaussian-equality and one-arm event-information extension
-  passes PR #38, the authoritative-main Actions run, Pages deployment, and
-  live desktop/mobile checks.
+<!-- 5542 characters omitted from the middle of this snapshot. -->
 
 ## Remote verification evidence
+
+The evidence below is the verified twenty-declaration predecessor. It does not
+yet remotely validate the current fifteen-declaration gap-event/regret
+extension.
 
 - PR #38 passed `Lean and documentation / build` in run `32545603658`, job
   `96963381949` (25m12s), and the result-free lifecycle probe in run
@@ -224,7 +220,7 @@ the Chapter 16 one-arm KL specialization, measurable majority event,
 
 That earlier remote acceptance applies only to the older consistency,
 asymptotic-helper, and candidate-`d_inf` slice. PR #38 and authoritative-main
-run `32546802426` verify the current 20-declaration extension. The chapter
+run `32546802426` verify the then-current 20-declaration extension. The chapter
 remains `partial`, and all three source terminals retain their blocked status.
 
 ## Mathlib-ready leaf contract
@@ -237,7 +233,8 @@ remains `partial`, and all three source terminals retain their blocked status.
 | parameterized `d_inf` candidate | `sInf_le`, Gaussian arm KL | insert a strictly better alternative and preserve KL direction | strict mean improvement | compiled project-local |
 | Gaussian exact `d_inf` | preceding candidate plus lower bound and limit/infimum approximation | squeeze positive perturbations to the strict boundary | original mean below target; extended-real conversion | compiled project-local |
 | history information constraint | compiled Chapter 15 history law and Chapter 14 BH | specialize Lemma 15.1 to one changed arm and the exact majority event | same stochastic policy; first-law expectation | compiled project-local |
-| event-to-regret producers | stochastic environment means and expected pseudo-regret | bound the original and changed majority-event errors by exact regret charges | finite means, positive gaps, source horizon convention | open source-semantic bridge |
+| event-to-regret producers | canonical finite-history law and gap-times-pull-count pseudo-regret | bound the original and changed majority-event errors by exact charges and apply the factor-`1/4` logarithmic consumer | nonnegative gap vectors, positive original gap and changed margin, source horizon convention | compiled project-local conditional interface |
+| source mean-to-gap bridge | finite arm-law integral means and certified optima | identify the canonical gap vectors with the source environments' actual mean gaps | finite means; original/changed optimal-arm certificates | open source-semantic bridge |
 | asymptotic terminal | finite-time information inequality plus consistency log leaf | divide by log horizon and take liminf | positive gap/information; zero/infinite branches | blocked source terminal |
 | finite-time Gaussian terminal | Lemma 16.3, Gaussian KL, regret decomposition | choose mean shift `Delta_i(1+epsilon)`, sum positive parts | exact local class and horizon quantifiers | blocked source terminal |
 
@@ -293,8 +290,9 @@ pp. 177--184 / author-online labels 206--214 / physical PDF pp. 215--223.
 and Theorem 16.4. Edition-specific pagination is not converted by an offset.
 
 The current compiled window contains Definition 16.1's generic consistency
-interface, the exact unit-Gaussian `d_inf` row, log-growth dependencies, and
-the one-arm history/event information plus scalar logarithmic assembly.
+interface, the exact unit-Gaussian `d_inf` row, log-growth dependencies, the
+one-arm history/event information layer, and canonical gap-vector
+event-to-regret producers plus their scalar logarithmic consumer.
 Theorem 16.2, Lemma 16.3, and Theorem 16.4 remain uncompiled and blocked; the
 website chapter must remain `partial`.
 
@@ -331,6 +329,9 @@ envelope and sums the positive parts to obtain Eq. (16.5).
 | majority event | `A={T_i(n)>n/2}` | `oneArmMajorityPullEvent`; `measurableSet_oneArmMajorityPullEvent` | inclusive-horizon measurable event | compiled |
 | event information | BH on the majority event | `bretagnolleHuberScale_expectedPulls_mul_armKL_le_majorityErrors` | exact error-sum lower bound | compiled |
 | scalar Eq. (16.4) layer | finite-KL exponential scale and log rearrangement | `bretagnolleHuberScale_mul_eq_exp`; `exp_testing_bound_of_majority_regret_bounds`; `expectedPullCount_ge_log_regret_of_exp_testing_bound` | deterministic consumer only | compiled |
+| canonical expected pseudo-regret | finite sum of explicit gap times pull count under the canonical history law | `finiteHistoryGapPseudoRegret`; `canonicalGapExpectedPseudoRegret_eq_sum_expectedPulls` | exact finite-history identity | compiled |
+| majority-event regret charges | original event and changed complement | `oneArmMajority_probability_charge_le_expectedPseudoRegret`; `oneArmMajority_compl_probability_charge_le_expectedPseudoRegret` | exact gap-vector producers | compiled |
+| conditional Eq. (16.4) consumer | one-arm KL plus both gap charges | `expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed` | exact factor `1/4`; source mean-to-gap bridge still required | compiled dependency |
 | Eq. (16.2) | instance-dependent asymptotic regret lower bound | reserved terminal | bandit theorem | blocked |
 | Eq. (16.4) | finite-time pull-count lower bound | reserved terminal | bandit theorem | blocked |
 | Eq. (16.5) | Gaussian finite-time regret lower bound | reserved terminal | bandit theorem | blocked |
@@ -348,7 +349,8 @@ envelope and sums the positive parts to obtain Eq. (16.5).
 | original-to-alternative KL | explicit declarations | source information direction | no |
 | same stochastic nonanticipating policy | explicit compiled history interface | cancel policy KL | no for information layer |
 | event `T_i(n)>n/2` measurable | explicit compiled event | Bretagnolle--Huber | no |
-| event errors bounded by expected pseudo-regrets | missing stochastic-environment producers | supply the two exact gap charges | yes for Lemma 16.3 |
+| event errors bounded by expected pseudo-regrets | compiled canonical gap-vector producers | supply the two exact gap charges and the factor-`1/4` conditional consumer | no at the explicit gap-vector layer; yes for the source-environment terminal |
+| finite arm-law means identified with source gaps | missing source-environment producer | connect integral means and optimal-arm certificates to both gap vectors | yes for Lemma 16.3 |
 | positive finite KL for real division | explicit future branch | Eq. (16.4) manipulation | yes |
 | unit Gaussian variance | inherited compiled arm law | Theorem 16.4 | no at arm level |
 | nonempty `N`, `C>0`, `0<p<1`, `0<epsilon<=1` | frozen target | finite-time calibration | yes for terminal |
@@ -362,7 +364,8 @@ envelope and sums the positive parts to obtain Eq. (16.5).
 | `d_inf` | complete lattice `sInf`, `ENNReal` | installed Mathlib source | set of original-to-alternative KL values | preserve empty and infinity branches |
 | Gaussian `d_inf` | Chapter 15 exact Gaussian KL plus order/limit APIs | compiled local theorem | prove the lower bound and squeeze positive perturbations | keep the strict-alternative boundary visible |
 | history information | Chapter 14 BH plus compiled Chapter 15 history KL | compiled local theorem | specialize to one changed arm and the exact majority event | no deterministic-policy substitution |
-| event-to-regret bridge | stochastic environment means and expected pseudo-regret | missing source-semantic producers | upper-bound both event errors by exact regret charges | do not replace expected pseudo-regret by an assumed scalar |
+| event-to-regret bridge | canonical history law, finite pull-count sum, and gap-times-pull-count expected pseudo-regret | compiled project-local conditional route | both pathwise majority-event charges, their integrated forms, and the exact factor-`1/4` logarithmic consumer | do not replace expected pseudo-regret by an assumed scalar; retain the later finite-mean gap identification |
+| source mean-to-gap bridge | finite arm-law integral means and optimal-arm certificates | active source-semantic route | instantiate original and changed gap vectors from the two stochastic environments | preserve the source's finite-mean and optimality assumptions |
 | asymptotic extraction | eventual log leaf plus liminf | Mathlib filters/liminf audit | handle finite positive `d_inf`, then zero/infinity branches | record exact analytic blocker before pivot |
 | finite-time terminal | Lemma 16.3, Gaussian KL, regret decomposition | source proof | preserve local alternative class and positive part | no constant or horizon-class weakening |
 
@@ -378,14 +381,15 @@ envelope and sums the positive parts to obtain Eq. (16.5).
 | `CH16-GAUSSIAN-DINF-EXACT` | Table 16.1 unit-variance formula | infimum limit/lower bound | `unitGaussianDivergenceInfimum_ge`; `unitGaussianDivergenceInfimum_eq` | project-local | focused Lean | compiled |
 | `CH16-HISTORY-INFORMATION` | one-arm expected-pull KL and majority-event constraint | compiled Chapter 15 Lemma 15.1 and Chapter 14 BH | one-arm KL, event measurability, and BH declarations | project-local | focused Lean | compiled |
 | `CH16-SCALAR-ASSEMBLY` | finite-KL scale, regret-charge algebra, and log rearrangement | previous node plus real exp/log | three scalar declarations | project-local | focused Lean | compiled |
-| `CH16-EVENT-REGRET` | source expected-pseudo-regret bounds for both majority errors | stochastic means/gaps/history laws | none | source-semantic producer | focused Lean | blocked |
+| `CH16-EVENT-REGRET` | canonical gap-times-pull-count expected pseudo-regret and both majority-error charges | canonical history law and explicit nonnegative gap vectors | `finiteHistoryGapPseudoRegret`; `canonicalGapExpectedPseudoRegret_eq_sum_expectedPulls`; `oneArmMajority_probability_charge_le_expectedPseudoRegret`; `oneArmMajority_compl_probability_charge_le_expectedPseudoRegret`; `expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed` | project-local conditional producer | focused Lean | compiled |
+| `CH16-MEAN-GAP` | finite arm-law means and certified optima induce the source gap vectors | stochastic environments and the compiled conditional producer | none | source-semantic producer | focused Lean | blocked |
 | `CH16-THEOREM-16-2` | exact liminf regret bound | previous two analytic/semantic branches | reserved terminal | source terminal | focused Lean | blocked |
 | `CH16-LEMMA-16-3` | exact finite-time pull lower bound | history KL and BH | reserved terminal | source terminal | focused Lean | blocked |
 | `CH16-THEOREM-16-4` | exact Gaussian Eq. (16.5) | Lemma 16.3 and Gaussian KL | reserved terminal | source terminal | focused Lean | blocked |
 | `CH16-TYPED-CANARY` | root-import applications and axiom reports | compiled slice | `Tests/TextbookPartIVChapter16Canary.lean` | project-local | Tests | verified locally |
-| `CH16-EVIDENCE-SITE` | all artifacts agree on partial/blocked boundary | scoped artifacts | repository artifacts | repository | full/site/browser | verified locally |
-| `CH16-REVIEW` | direction/quantifier/AC/policy/asymptotic audit | all artifacts | `reviews/2026-08-22-textbook-part-iv-chapter-16-instance-dependent-extension.md` | repository | read-only | verified locally; no unresolved Blocking/High/Medium |
-| `CH16-REMOTE` | PR, main Actions, Pages, live page | current 20-declaration slice | PR #38; merge `359fb6a`; authoritative-main run `32546802426`; clean live manifest and desktop/mobile page checks | repository | deployment | verified |
+| `CH16-EVIDENCE-SITE` | all artifacts agree on partial/blocked boundary | scoped artifacts | repository artifacts | repository | full/site/browser | verified locally for the fifteen-declaration extension |
+| `CH16-REVIEW` | direction/quantifier/AC/policy/asymptotic audit | all artifacts | `reviews/2026-08-22-textbook-part-iv-chapter-16-event-regret-extension.md` | repository | read-only | verified for current extension; no unresolved Blocking/High/Medium finding |
+| `CH16-REMOTE` | PR, main Actions, Pages, live page | preceding 20-declaration slice | PR #38; merge `359fb6a`; authoritative-main run `32546802426`; clean live manifest and desktop/mobile page checks | repository | deployment | verified for predecessor; current extension pending |
 
 ## Gaps
 
@@ -394,11 +398,18 @@ envelope and sums the positive parts to obtain Eq. (16.5).
 - [x] Exact unit-Gaussian `d_inf` equality on the strict source branch.
 - [x] Same-policy one-arm history KL, measurable majority event, BH information
   constraint, finite-KL evaluation, and scalar log assembly.
-- [ ] Original/changed expected-pseudo-regret bounds for the two event errors.
+- [x] Canonical gap-vector expected-pseudo-regret bounds for both event errors
+  and their finite-positive-KL factor-`1/4` conditional consumer.
+- [ ] Finite arm-law integral means and certified optima instantiate the source
+  original/changed gap vectors.
 - [ ] Theorem 16.2 `liminf` terminal.
 - [ ] Lemma 16.3 and Theorem 16.4.
-- [x] Full local Lean, harness, site, browser, and independent-review gates.
-- [x] PR, authoritative-main Actions, Pages deployment, and live-page gates.
+- [x] Current extension: full local Lean, harness, site, browser, and
+  independent-review gates.
+- [x] Preceding twenty-declaration slice: PR, authoritative-main Actions,
+  Pages deployment, and live-page gates.
+- [ ] Current extension: PR, authoritative-main Actions, Pages deployment, and
+  live-page gates.
 
 
 ## Obligation Snapshot
@@ -424,23 +435,25 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH16-GAUSSIAN-DINF` | exact `gap^2/2` infimum | preceding candidate | limit/infimum/order APIs | `MLIB-ASYMPTOTICS` | prove lower bound, then squeeze epsilon to zero | `mu<muStar`; strict alternatives | project-local | `unitGaussianDivergenceInfimum_ge`; `unitGaussianDivergenceInfimum_eq` | focused Lean | compiled |
 | `CH16-HISTORY` | original-law expected-pull information inequality | compiled Ch15 Lemma 15.1 and Ch14 BH | compiled stochastic policy/history | Chapter 16 event consumer | change one arm, instantiate history KL, and use the measurable majority event | same policy; first-law expectation | project-local | `banditHistoryRelativeEntropy_eq_expectedPulls_mul_of_only_arm_changed`; `bretagnolleHuberScale_expectedPulls_mul_armKL_le_majorityErrors` | focused Lean | compiled |
 | `CH16-SCALAR` | finite-information scale and exact scalar log rearrangement | history information | real exp/log/order | `MLIB-EXP-LOG-INEQUALITIES` | evaluate finite ENNReal KL and rearrange the testing bound | finite positive KL and positive gaps | project-local | `bretagnolleHuberScale_mul_eq_exp`; `exp_testing_bound_of_majority_regret_bounds`; `expectedPullCount_ge_log_regret_of_exp_testing_bound` | focused Lean | compiled |
-| `CH16-EVENT-REGRET` | bound both majority errors by exact expected pseudo-regrets | stochastic environment means/gaps | history event probabilities and regret decomposition | source proof | produce original- and changed-law regret charges | finite means; positive original gap and changed margin | connected blocker | none | focused Lean | blocked |
+| `CH16-EVENT-REGRET` | bound both majority errors by exact expected pseudo-regrets | canonical history laws and explicit nonnegative gap vectors | finite pull-count decomposition and event integration | project-local compiled route | produce original- and changed-law regret charges and the factor-`1/4` logarithmic consumer | positive original gap, positive changed margin, finite positive arm KL | project-local | `finiteHistoryGapPseudoRegret`; `canonicalGapExpectedPseudoRegret_eq_sum_expectedPulls`; `oneArmMajority_probability_charge_le_expectedPseudoRegret`; `oneArmMajority_compl_probability_charge_le_expectedPseudoRegret`; `expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed` | focused Lean | compiled |
+| `CH16-MEAN-GAP` | identify explicit gap vectors with finite arm-law integral means and certified optima | stochastic source environments | source gap definitions | source proof | instantiate the compiled conditional consumer from the original and changed environments | finite means; original/changed optimal-arm certificates | connected blocker | none | focused Lean | blocked |
 | `CH16-THM-16-2` | exact Eq. (16.2) | history, log, dInf | liminf filters | source card | epsilon alternative then liminf | zero/finite/infinite `d_inf` | source terminal | reserved | focused Lean | blocked |
 | `CH16-LEMMA-16-3` | exact Eq. (16.4) | history KL, BH | Ch14/15 | source card | event `T_i(n)>n/2` | positive log terms; finite positive KL branch | source terminal | reserved | focused Lean | blocked |
 | `CH16-THM-16-4` | exact Eq. (16.5) | Lemma 16.3, Gaussian KL, regret decomposition | local Gaussian and sums | source card | shift by `Delta_i(1+epsilon)` and sum positive parts | `N` nonempty, `C>0`, `0<p<1`, `0<epsilon<=1` | source terminal | reserved | focused Lean | blocked |
 | `CH16-CANARY` | root-import typed applications and axiom reports | compiled slice | `BanditRLProof` root | local declarations | instantiate nontrivial Gaussian candidate | no placeholders | project-local | `Tests/TextbookPartIVChapter16Canary.lean` | Tests | verified locally |
-| `CH16-SITE-REVIEW` | synchronized evidence/site and independent audit | all above | build/check/browser | repository | compare informal and Lean statements | no terminal promotion | repository | `reviews/2026-08-22-textbook-part-iv-chapter-16-instance-dependent-extension.md` | full/local | verified locally; no unresolved Blocking/High/Medium |
-| `CH16-REMOTE` | PR, authoritative-main Actions, Pages, and live page | current 20-declaration slice | GitHub workflow | repository | merge through PR and inspect deployed artifact | PR #38; merge `359fb6a`; authoritative-main run `32546802426`; live manifest/page/source-link checks | repository | remote evidence | deployment | verified |
+| `CH16-SITE-REVIEW` | synchronized evidence/site and independent audit | all above | build/check/browser | repository | compare informal and Lean statements | no terminal promotion | repository | `reviews/2026-08-22-textbook-part-iv-chapter-16-event-regret-extension.md` | full/local | verified locally for current extension |
+| `CH16-REMOTE` | PR, authoritative-main Actions, Pages, and live page | preceding 20-declaration slice | GitHub workflow | repository | merge through PR and inspect deployed artifact | PR #38; merge `359fb6a`; authoritative-main run `32546802426`; live manifest/page/source-link checks | repository | remote evidence | deployment | verified for predecessor; current extension pending |
 
 ## Failure classification
 
 The exact Gaussian `d_inf`, same-policy one-arm history KL, measurable majority
-event, Bretagnolle--Huber information inequality, finite-KL evaluation, and
-scalar log rearrangement now compile. The current `connected blocker` is the
-source-general pair of producers relating the two majority-event errors to the
-original- and changed-environment expected pseudo-regrets with exact gap
-factors. Theorem 16.2 separately retains zero/finite/infinite information
-branches and final `liminf` extraction. No theorem target is weakened.
+event, Bretagnolle--Huber information inequality, canonical gap-vector regret
+charges, finite-KL evaluation, and scalar log rearrangement now compile. The
+current `connected blocker` is the source-semantic producer that identifies
+the explicit original/changed gap vectors with finite arm-law integral means
+and certified optimal arms. Theorem 16.2 separately retains
+zero/finite/infinite information branches and final `liminf` extraction. No
+theorem target is weakened.
 
 ## Reviewer notes
 
@@ -55082,7 +55095,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "IsConsistentRegret",
     "full_name": "BanditRLProof.LowerBounds.IsConsistentRegret",
     "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-    "line": 36,
+    "line": 38,
     "statement": "def IsConsistentRegret (regret : Nat -> Real) : Prop"
   },
   {
@@ -55090,7 +55103,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "IsConsistentPolicyOver",
     "full_name": "BanditRLProof.LowerBounds.IsConsistentPolicyOver",
     "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-    "line": 43,
+    "line": 45,
     "statement": "def IsConsistentPolicyOver {Policy Environment : Type*} (environmentClass : Set Environment) (regret : Policy -> Environment -> Nat -> Real) (policy : Policy) : Prop"
   },
   {
@@ -55098,7 +55111,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "IsConsistentRegret.add",
     "full_name": "IsConsistentRegret.add",
     "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-    "line": 54,
+    "line": 56,
     "statement": "theorem IsConsistentRegret.add {first second : Nat -> Real} (hfirst : IsConsistentRegret first) (hsecond : IsConsistentRegret second) : IsConsistentRegret (fun n => first n + second n)"
   },
   {
@@ -55106,7 +55119,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "IsConsistentRegret.eventually_add_le_rpow",
     "full_name": "IsConsistentRegret.eventually_add_le_rpow",
     "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-    "line": 65,
+    "line": 67,
     "statement": "theorem IsConsistentRegret.eventually_add_le_rpow {first second : Nat -> Real} (hfirst : IsConsistentRegret first) (hsecond : IsConsistentRegret second) {p : Real} (hp : 0 < p) : \u2200\u1da0 n : Nat in atTop, first n + second n <= (n : Real) ^ p"
   },
   {
@@ -55114,7 +55127,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "IsConsistentRegret.eventually_log_add_div_log_le",
     "full_name": "IsConsistentRegret.eventually_log_add_div_log_le",
     "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-    "line": 85,
+    "line": 87,
     "statement": "theorem IsConsistentRegret.eventually_log_add_div_log_le {first second : Nat -> Real} (hfirst : IsConsistentRegret first) (hsecond : IsConsistentRegret second) (hpositive : \u2200\u1da0 n : Nat in atTop, 0 < first n + second n) {p : Real} (hp : 0 < p) : \u2200\u1da0 n : Nat in atTop, Real.log (first n + second n) / Real.log n <= p"
   },
   {
@@ -55122,7 +55135,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "divergenceInfimum",
     "full_name": "BanditRLProof.LowerBounds.divergenceInfimum",
     "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-    "line": 107,
+    "line": 109,
     "statement": "def divergenceInfimum {Reward : Type*} [MeasurableSpace Reward] (P : Measure Reward) (muStar : Real) (distributionClass : Set (Measure Reward)) (mean : Measure Reward -> Real) : ENNReal"
   },
   {
@@ -55130,7 +55143,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "divergenceInfimum_le",
     "full_name": "BanditRLProof.LowerBounds.divergenceInfimum_le",
     "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-    "line": 119,
+    "line": 121,
     "statement": "theorem divergenceInfimum_le {Reward : Type*} [MeasurableSpace Reward] {P P' : Measure Reward} {muStar : Real} {distributionClass : Set (Measure Reward)} {mean : Measure Reward -> Real} (hclass : P' \u2208 distributionClass) (hbetter : muStar < mean P') : divergenceInfimum P muStar distributionClass mean <= relativeEntropy P P'"
   },
   {
@@ -55138,7 +55151,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "parametricDivergenceInfimum",
     "full_name": "BanditRLProof.LowerBounds.parametricDivergenceInfimum",
     "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-    "line": 133,
+    "line": 135,
     "statement": "def parametricDivergenceInfimum {Reward Parameter : Type*} [MeasurableSpace Reward] (law : Parameter -> Measure Reward) (mean : Parameter -> Real) (parameter : Parameter) (muStar : Real) : ENNReal"
   },
   {
@@ -55146,7 +55159,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "parametricDivergenceInfimum_le",
     "full_name": "BanditRLProof.LowerBounds.parametricDivergenceInfimum_le",
     "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-    "line": 143,
+    "line": 145,
     "statement": "theorem parametricDivergenceInfimum_le {Reward Parameter : Type*} [MeasurableSpace Reward] {law : Parameter -> Measure Reward} {mean : Parameter -> Real} {parameter alternative : Parameter} {muStar : Real} (hbetter : muStar < mean alternative) : parametricDivergenceInfimum law mean parameter muStar <= relativeEntropy (law parameter) (law alternative)"
   },
   {
@@ -55154,7 +55167,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "unitGaussianDivergenceInfimum",
     "full_name": "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum",
     "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-    "line": 154,
+    "line": 156,
     "statement": "abbrev unitGaussianDivergenceInfimum (mu muStar : Real) : ENNReal"
   },
   {
@@ -55162,7 +55175,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "unitGaussianDivergenceInfimum_le_perturbed",
     "full_name": "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum_le_perturbed",
     "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-    "line": 160,
+    "line": 162,
     "statement": "theorem unitGaussianDivergenceInfimum_le_perturbed (mu muStar epsilon : Real) (hepsilon : 0 < epsilon) : unitGaussianDivergenceInfimum mu muStar <= ENNReal.ofReal (((muStar - mu) + epsilon) ^ 2 / 2)"
   },
   {
@@ -55170,7 +55183,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "unitGaussianDivergenceInfimum_ge",
     "full_name": "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum_ge",
     "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-    "line": 178,
+    "line": 180,
     "statement": "theorem unitGaussianDivergenceInfimum_ge (mu muStar : Real) (hmu : mu < muStar) : ENNReal.ofReal ((muStar - mu) ^ 2 / 2) <= unitGaussianDivergenceInfimum mu muStar"
   },
   {
@@ -55178,7 +55191,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "unitGaussianDivergenceInfimum_eq",
     "full_name": "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum_eq",
     "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-    "line": 202,
+    "line": 204,
     "statement": "theorem unitGaussianDivergenceInfimum_eq (mu muStar : Real) (hmu : mu < muStar) : unitGaussianDivergenceInfimum mu muStar = ENNReal.ofReal ((muStar - mu) ^ 2 / 2)"
   },
   {
@@ -55186,7 +55199,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "banditHistoryRelativeEntropy_eq_expectedPulls_mul_of_only_arm_changed",
     "full_name": "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_mul_of_only_arm_changed",
     "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-    "line": 233,
+    "line": 235,
     "statement": "theorem banditHistoryRelativeEntropy_eq_expectedPulls_mul_of_only_arm_changed {K : Nat} {Reward : Type*} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] (changedArm : Fin K) (lastRound : Nat) (hsame : forall arm, arm \u2260 changedArm -> armLaw arm = referenceArmLaw arm) : InformationTheory.klDiv (canonicalBanditHistoryMeasure algorithm armLaw lastRound) (canonicalBanditHistoryMeasure algorithm referenceArmLaw lastRound) = canonicalRealizedExpectedPullCountThrough algorithm armLaw lastRound changedArm * InformationTheory.klDiv (armLaw changedArm) (referenceArmLaw changedArm)"
   },
   {
@@ -55194,7 +55207,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "oneArmMajorityPullEvent",
     "full_name": "BanditRLProof.LowerBounds.oneArmMajorityPullEvent",
     "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-    "line": 258,
+    "line": 260,
     "statement": "def oneArmMajorityPullEvent {K : Nat} {Reward : Type*} (changedArm : Fin K) (lastRound : Nat) : Set (History.FinitePairHistory (Fin K) Reward lastRound)"
   },
   {
@@ -55202,15 +55215,127 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "measurableSet_oneArmMajorityPullEvent",
     "full_name": "BanditRLProof.LowerBounds.measurableSet_oneArmMajorityPullEvent",
     "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-    "line": 266,
+    "line": 268,
     "statement": "theorem measurableSet_oneArmMajorityPullEvent {K : Nat} {Reward : Type*} [MeasurableSpace Reward] (changedArm : Fin K) (lastRound : Nat) : MeasurableSet (oneArmMajorityPullEvent (Reward := Reward) changedArm lastRound)"
+  },
+  {
+    "kind": "def",
+    "name": "finiteHistoryGapPseudoRegret",
+    "full_name": "BanditRLProof.LowerBounds.finiteHistoryGapPseudoRegret",
+    "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+    "line": 280,
+    "statement": "noncomputable def finiteHistoryGapPseudoRegret {K : Nat} {Reward : Type*} (gap : Fin K -> Real) (lastRound : Nat) (history : History.FinitePairHistory (Fin K) Reward lastRound) : ENNReal"
+  },
+  {
+    "kind": "def",
+    "name": "canonicalGapExpectedPseudoRegret",
+    "full_name": "BanditRLProof.LowerBounds.canonicalGapExpectedPseudoRegret",
+    "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+    "line": 290,
+    "statement": "noncomputable def canonicalGapExpectedPseudoRegret {K : Nat} {Reward : Type*} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (gap : Fin K -> Real) (lastRound : Nat) : ENNReal"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurable_finiteHistoryGapPseudoRegret",
+    "full_name": "BanditRLProof.LowerBounds.measurable_finiteHistoryGapPseudoRegret",
+    "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+    "line": 300,
+    "statement": "theorem measurable_finiteHistoryGapPseudoRegret {K : Nat} {Reward : Type*} [MeasurableSpace Reward] (gap : Fin K -> Real) (lastRound : Nat) : Measurable (finiteHistoryGapPseudoRegret (Reward := Reward) gap lastRound)"
+  },
+  {
+    "kind": "theorem",
+    "name": "finiteHistoryGapPseudoRegret_ne_top",
+    "full_name": "BanditRLProof.LowerBounds.finiteHistoryGapPseudoRegret_ne_top",
+    "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+    "line": 311,
+    "statement": "theorem finiteHistoryGapPseudoRegret_ne_top {K : Nat} {Reward : Type*} (gap : Fin K -> Real) (lastRound : Nat) (history : History.FinitePairHistory (Fin K) Reward lastRound) : finiteHistoryGapPseudoRegret gap lastRound history \u2260 \u221e"
+  },
+  {
+    "kind": "theorem",
+    "name": "finiteHistoryGapPseudoRegret_toReal",
+    "full_name": "BanditRLProof.LowerBounds.finiteHistoryGapPseudoRegret_toReal",
+    "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+    "line": 322,
+    "statement": "theorem finiteHistoryGapPseudoRegret_toReal {K : Nat} {Reward : Type*} (gap : Fin K -> Real) (lastRound : Nat) (history : History.FinitePairHistory (Fin K) Reward lastRound) (hgap : forall arm, 0 <= gap arm) : (finiteHistoryGapPseudoRegret gap lastRound history).toReal = \u2211 arm : Fin K, gap arm * finiteHistoryPullCountReal lastRound history arm"
+  },
+  {
+    "kind": "theorem",
+    "name": "sum_canonicalRealizedExpectedPullCountThrough_general",
+    "full_name": "BanditRLProof.LowerBounds.sum_canonicalRealizedExpectedPullCountThrough_general",
+    "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+    "line": 343,
+    "statement": "theorem sum_canonicalRealizedExpectedPullCountThrough_general {K : Nat} {Reward : Type*} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (lastRound : Nat) : \u2211 arm : Fin K, canonicalRealizedExpectedPullCountThrough algorithm armLaw lastRound arm = lastRound + 1"
+  },
+  {
+    "kind": "theorem",
+    "name": "canonicalRealizedExpectedPullCountThrough_ne_top",
+    "full_name": "BanditRLProof.LowerBounds.canonicalRealizedExpectedPullCountThrough_ne_top",
+    "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+    "line": 360,
+    "statement": "theorem canonicalRealizedExpectedPullCountThrough_ne_top {K : Nat} {Reward : Type*} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (lastRound : Nat) (arm : Fin K) : canonicalRealizedExpectedPullCountThrough algorithm armLaw lastRound arm \u2260 \u221e"
+  },
+  {
+    "kind": "theorem",
+    "name": "canonicalGapExpectedPseudoRegret_eq_sum_expectedPulls",
+    "full_name": "BanditRLProof.LowerBounds.canonicalGapExpectedPseudoRegret_eq_sum_expectedPulls",
+    "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+    "line": 377,
+    "statement": "theorem canonicalGapExpectedPseudoRegret_eq_sum_expectedPulls {K : Nat} {Reward : Type*} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (gap : Fin K -> Real) (lastRound : Nat) : canonicalGapExpectedPseudoRegret algorithm armLaw gap lastRound = \u2211 arm : Fin K, ENNReal.ofReal (gap arm) * canonicalRealizedExpectedPullCountThrough algorithm armLaw lastRound arm"
+  },
+  {
+    "kind": "theorem",
+    "name": "canonicalGapExpectedPseudoRegret_ne_top",
+    "full_name": "BanditRLProof.LowerBounds.canonicalGapExpectedPseudoRegret_ne_top",
+    "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+    "line": 400,
+    "statement": "theorem canonicalGapExpectedPseudoRegret_ne_top {K : Nat} {Reward : Type*} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (gap : Fin K -> Real) (lastRound : Nat) : canonicalGapExpectedPseudoRegret algorithm armLaw gap lastRound \u2260 \u221e"
+  },
+  {
+    "kind": "def",
+    "name": "canonicalGapExpectedPseudoRegretReal",
+    "full_name": "BanditRLProof.LowerBounds.canonicalGapExpectedPseudoRegretReal",
+    "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+    "line": 415,
+    "statement": "noncomputable def canonicalGapExpectedPseudoRegretReal {K : Nat} {Reward : Type*} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (gap : Fin K -> Real) (lastRound : Nat) : Real"
+  },
+  {
+    "kind": "theorem",
+    "name": "oneArmMajority_forces_gapPseudoRegret",
+    "full_name": "BanditRLProof.LowerBounds.oneArmMajority_forces_gapPseudoRegret",
+    "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+    "line": 425,
+    "statement": "theorem oneArmMajority_forces_gapPseudoRegret {K : Nat} {Reward : Type*} (gap : Fin K -> Real) (hgap : forall arm, 0 <= gap arm) (changedArm : Fin K) (hchanged : 0 < gap changedArm) (lastRound : Nat) (history : History.FinitePairHistory (Fin K) Reward lastRound) (hA : history \u2208 oneArmMajorityPullEvent (Reward := Reward) changedArm lastRound) : ENNReal.ofReal (((lastRound + 1 : Nat) : Real) * gap changedArm / 2) <= finiteHistoryGapPseudoRegret gap lastRound history"
+  },
+  {
+    "kind": "theorem",
+    "name": "oneArmMajority_compl_forces_gapPseudoRegret",
+    "full_name": "BanditRLProof.LowerBounds.oneArmMajority_compl_forces_gapPseudoRegret",
+    "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+    "line": 458,
+    "statement": "theorem oneArmMajority_compl_forces_gapPseudoRegret {K : Nat} {Reward : Type*} (gap : Fin K -> Real) (hgap : forall arm, 0 <= gap arm) (changedArm : Fin K) (changedMargin : Real) (hmargin : 0 < changedMargin) (hother : forall arm, arm \u2260 changedArm -> changedMargin <= gap arm) (lastRound : Nat) (history : History.FinitePairHistory (Fin K) Reward lastRound) (hAc : history \u2208 (oneArmMajorityPullEvent (Reward := Reward) changedArm lastRound)\u1d9c) : ENNReal.ofReal (((lastRound + 1 : Nat) : Real) * changedMargin / 2) <= finiteHistoryGapPseudoRegret gap lastRound history"
+  },
+  {
+    "kind": "theorem",
+    "name": "oneArmMajority_probability_charge_le_expectedPseudoRegret",
+    "full_name": "BanditRLProof.LowerBounds.oneArmMajority_probability_charge_le_expectedPseudoRegret",
+    "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+    "line": 524,
+    "statement": "theorem oneArmMajority_probability_charge_le_expectedPseudoRegret {K : Nat} {Reward : Type*} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (gap : Fin K -> Real) (hgap : forall arm, 0 <= gap arm) (changedArm : Fin K) (hchanged : 0 < gap changedArm) (lastRound : Nat) : ((lastRound + 1 : Nat) : Real) * gap changedArm / 2 * (canonicalBanditHistoryMeasure algorithm armLaw lastRound).real (oneArmMajorityPullEvent (Reward := Reward) changedArm lastRound) <= canonicalGapExpectedPseudoRegretReal algorithm armLaw gap lastRound"
+  },
+  {
+    "kind": "theorem",
+    "name": "oneArmMajority_compl_probability_charge_le_expectedPseudoRegret",
+    "full_name": "BanditRLProof.LowerBounds.oneArmMajority_compl_probability_charge_le_expectedPseudoRegret",
+    "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+    "line": 559,
+    "statement": "theorem oneArmMajority_compl_probability_charge_le_expectedPseudoRegret {K : Nat} {Reward : Type*} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (gap : Fin K -> Real) (hgap : forall arm, 0 <= gap arm) (changedArm : Fin K) (changedMargin : Real) (hmargin : 0 < changedMargin) (hother : forall arm, arm \u2260 changedArm -> changedMargin <= gap arm) (lastRound : Nat) : ((lastRound + 1 : Nat) : Real) * changedMargin / 2 * (canonicalBanditHistoryMeasure algorithm armLaw lastRound).real (oneArmMajorityPullEvent (Reward := Reward) changedArm lastRound)\u1d9c <= canonicalGapExpectedPseudoRegretReal algorithm armLaw gap lastRound"
   },
   {
     "kind": "theorem",
     "name": "bretagnolleHuberScale_expectedPulls_mul_armKL_le_majorityErrors",
     "full_name": "BanditRLProof.LowerBounds.bretagnolleHuberScale_expectedPulls_mul_armKL_le_majorityErrors",
     "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-    "line": 279,
+    "line": 598,
     "statement": "theorem bretagnolleHuberScale_expectedPulls_mul_armKL_le_majorityErrors {K : Nat} {Reward : Type*} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] (changedArm : Fin K) (lastRound : Nat) (hsame : forall arm, arm \u2260 changedArm -> armLaw arm = referenceArmLaw arm) : bretagnolleHuberScale (canonicalRealizedExpectedPullCountThrough algorithm armLaw lastRound changedArm * InformationTheory.klDiv (armLaw changedArm) (referenceArmLaw changedArm)) <= (canonicalBanditHistoryMeasure algorithm armLaw lastRound).real (oneArmMajorityPullEvent (Reward := Reward) changedArm lastRound) + (canonicalBanditHistoryMeasure algorithm referenceArmLaw lastRound).real (oneArmMajorityPullEvent (Reward := Reward) changedArm lastRound)\u1d9c"
   },
   {
@@ -55218,7 +55343,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "bretagnolleHuberScale_mul_eq_exp",
     "full_name": "BanditRLProof.LowerBounds.bretagnolleHuberScale_mul_eq_exp",
     "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-    "line": 315,
+    "line": 634,
     "statement": "theorem bretagnolleHuberScale_mul_eq_exp {expectedPull armInformation : ENNReal} (hpull : expectedPull \u2260 \u221e) (hinformation : armInformation \u2260 \u221e) : bretagnolleHuberScale (expectedPull * armInformation) = (1 / 2 : Real) * Real.exp (-(expectedPull.toReal * armInformation.toReal))"
   },
   {
@@ -55226,7 +55351,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "exp_testing_bound_of_majority_regret_bounds",
     "full_name": "BanditRLProof.LowerBounds.exp_testing_bound_of_majority_regret_bounds",
     "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-    "line": 327,
+    "line": 646,
     "statement": "theorem exp_testing_bound_of_majority_regret_bounds (expectedPull information gap changedMargin horizon originalError changedError originalRegret changedRegret : Real) (hgap : 0 < gap) (hmargin : 0 < changedMargin) (hhorizon : 0 < horizon) (horiginalError : 0 <= originalError) (hchangedError : 0 <= changedError) (htesting : (1 / 2 : Real) * Real.exp (-(expectedPull * information)) <= originalError + changedError) (horiginalRegret : horizon * gap / 2 * originalError <= originalRegret) (hchangedRegret : horizon * changedMargin / 2 * changedError <= changedRegret) : horizon * min gap changedMargin / 4 * Real.exp (-(expectedPull * information)) <= originalRegret + changedRegret"
   },
   {
@@ -55234,8 +55359,16 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "expectedPullCount_ge_log_regret_of_exp_testing_bound",
     "full_name": "BanditRLProof.LowerBounds.expectedPullCount_ge_log_regret_of_exp_testing_bound",
     "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-    "line": 365,
+    "line": 684,
     "statement": "theorem expectedPullCount_ge_log_regret_of_exp_testing_bound (expectedPull information gap changedMargin horizon regretSum : Real) (hinformation : 0 < information) (hgap : 0 < gap) (hmargin : 0 < changedMargin) (hhorizon : 0 < horizon) (htesting : horizon * min gap changedMargin / 4 * Real.exp (-(expectedPull * information)) <= regretSum) : (Real.log (min gap changedMargin / 4) + Real.log horizon - Real.log regretSum) / information <= expectedPull"
+  },
+  {
+    "kind": "theorem",
+    "name": "expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed",
+    "full_name": "BanditRLProof.LowerBounds.expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed",
+    "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+    "line": 721,
+    "statement": "theorem expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed {K : Nat} {Reward : Type*} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] (originalGap referenceGap : Fin K -> Real) (horiginalGap : forall arm, 0 <= originalGap arm) (hreferenceGap : forall arm, 0 <= referenceGap arm) (changedArm : Fin K) (changedMargin : Real) (hchangedGap : 0 < originalGap changedArm) (hmargin : 0 < changedMargin) (hother : forall arm, arm \u2260 changedArm -> changedMargin <= referenceGap arm) (lastRound : Nat) (hsame : forall arm, arm \u2260 changedArm -> armLaw arm = referenceArmLaw arm) (hinformation_ne_top : InformationTheory.klDiv (armLaw changedArm) (referenceArmLaw changedArm) \u2260 \u221e) (hinformation_pos : 0 < (InformationTheory.klDiv (armLaw changedArm) (referenceArmLaw changedArm)).toReal) : (Real.log (min (originalGap changedArm) changedMargin / 4) + Real.log ((lastRound + 1 : Nat) : Real) - Real.log (canonicalGapExpectedPseudoRegretReal algorithm armLaw originalGap lastRound + canonicalGapExpectedPseudoRegretReal algorithm referenceArmLaw referenceGap lastRound)) / (InformationTheory.klDiv (armLaw changedArm) (referenceArmLaw changedArm)).toReal <= (canonicalRealizedExpectedPullCountThrough algorithm armLaw lastRound changedArm).toReal"
   },
   {
     "kind": "abbrev",

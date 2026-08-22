@@ -19,23 +19,25 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH16-GAUSSIAN-DINF` | exact `gap^2/2` infimum | preceding candidate | limit/infimum/order APIs | `MLIB-ASYMPTOTICS` | prove lower bound, then squeeze epsilon to zero | `mu<muStar`; strict alternatives | project-local | `unitGaussianDivergenceInfimum_ge`; `unitGaussianDivergenceInfimum_eq` | focused Lean | compiled |
 | `CH16-HISTORY` | original-law expected-pull information inequality | compiled Ch15 Lemma 15.1 and Ch14 BH | compiled stochastic policy/history | Chapter 16 event consumer | change one arm, instantiate history KL, and use the measurable majority event | same policy; first-law expectation | project-local | `banditHistoryRelativeEntropy_eq_expectedPulls_mul_of_only_arm_changed`; `bretagnolleHuberScale_expectedPulls_mul_armKL_le_majorityErrors` | focused Lean | compiled |
 | `CH16-SCALAR` | finite-information scale and exact scalar log rearrangement | history information | real exp/log/order | `MLIB-EXP-LOG-INEQUALITIES` | evaluate finite ENNReal KL and rearrange the testing bound | finite positive KL and positive gaps | project-local | `bretagnolleHuberScale_mul_eq_exp`; `exp_testing_bound_of_majority_regret_bounds`; `expectedPullCount_ge_log_regret_of_exp_testing_bound` | focused Lean | compiled |
-| `CH16-EVENT-REGRET` | bound both majority errors by exact expected pseudo-regrets | stochastic environment means/gaps | history event probabilities and regret decomposition | source proof | produce original- and changed-law regret charges | finite means; positive original gap and changed margin | connected blocker | none | focused Lean | blocked |
+| `CH16-EVENT-REGRET` | bound both majority errors by exact expected pseudo-regrets | canonical history laws and explicit nonnegative gap vectors | finite pull-count decomposition and event integration | project-local compiled route | produce original- and changed-law regret charges and the factor-`1/4` logarithmic consumer | positive original gap, positive changed margin, finite positive arm KL | project-local | `finiteHistoryGapPseudoRegret`; `canonicalGapExpectedPseudoRegret_eq_sum_expectedPulls`; `oneArmMajority_probability_charge_le_expectedPseudoRegret`; `oneArmMajority_compl_probability_charge_le_expectedPseudoRegret`; `expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed` | focused Lean | compiled |
+| `CH16-MEAN-GAP` | identify explicit gap vectors with finite arm-law integral means and certified optima | stochastic source environments | source gap definitions | source proof | instantiate the compiled conditional consumer from the original and changed environments | finite means; original/changed optimal-arm certificates | connected blocker | none | focused Lean | blocked |
 | `CH16-THM-16-2` | exact Eq. (16.2) | history, log, dInf | liminf filters | source card | epsilon alternative then liminf | zero/finite/infinite `d_inf` | source terminal | reserved | focused Lean | blocked |
 | `CH16-LEMMA-16-3` | exact Eq. (16.4) | history KL, BH | Ch14/15 | source card | event `T_i(n)>n/2` | positive log terms; finite positive KL branch | source terminal | reserved | focused Lean | blocked |
 | `CH16-THM-16-4` | exact Eq. (16.5) | Lemma 16.3, Gaussian KL, regret decomposition | local Gaussian and sums | source card | shift by `Delta_i(1+epsilon)` and sum positive parts | `N` nonempty, `C>0`, `0<p<1`, `0<epsilon<=1` | source terminal | reserved | focused Lean | blocked |
 | `CH16-CANARY` | root-import typed applications and axiom reports | compiled slice | `BanditRLProof` root | local declarations | instantiate nontrivial Gaussian candidate | no placeholders | project-local | `Tests/TextbookPartIVChapter16Canary.lean` | Tests | verified locally |
-| `CH16-SITE-REVIEW` | synchronized evidence/site and independent audit | all above | build/check/browser | repository | compare informal and Lean statements | no terminal promotion | repository | `reviews/2026-08-22-textbook-part-iv-chapter-16-instance-dependent-extension.md` | full/local | verified locally; no unresolved Blocking/High/Medium |
-| `CH16-REMOTE` | PR, authoritative-main Actions, Pages, and live page | current 20-declaration slice | GitHub workflow | repository | merge through PR and inspect deployed artifact | PR #38; merge `359fb6a`; authoritative-main run `32546802426`; live manifest/page/source-link checks | repository | remote evidence | deployment | verified |
+| `CH16-SITE-REVIEW` | synchronized evidence/site and independent audit | all above | build/check/browser | repository | compare informal and Lean statements | no terminal promotion | repository | `reviews/2026-08-22-textbook-part-iv-chapter-16-event-regret-extension.md` | full/local | verified locally for current extension |
+| `CH16-REMOTE` | PR, authoritative-main Actions, Pages, and live page | preceding 20-declaration slice | GitHub workflow | repository | merge through PR and inspect deployed artifact | PR #38; merge `359fb6a`; authoritative-main run `32546802426`; live manifest/page/source-link checks | repository | remote evidence | deployment | verified for predecessor; current extension pending |
 
 ## Failure classification
 
 The exact Gaussian `d_inf`, same-policy one-arm history KL, measurable majority
-event, Bretagnolle--Huber information inequality, finite-KL evaluation, and
-scalar log rearrangement now compile. The current `connected blocker` is the
-source-general pair of producers relating the two majority-event errors to the
-original- and changed-environment expected pseudo-regrets with exact gap
-factors. Theorem 16.2 separately retains zero/finite/infinite information
-branches and final `liminf` extraction. No theorem target is weakened.
+event, Bretagnolle--Huber information inequality, canonical gap-vector regret
+charges, finite-KL evaluation, and scalar log rearrangement now compile. The
+current `connected blocker` is the source-semantic producer that identifies
+the explicit original/changed gap vectors with finite arm-law integral means
+and certified optimal arms. Theorem 16.2 separately retains
+zero/finite/infinite information branches and final `liminf` extraction. No
+theorem target is weakened.
 
 ## Reviewer notes
 
