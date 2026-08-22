@@ -115,7 +115,7 @@ envelope and sums the positive parts to obtain Eq. (16.5).
 | `CH16-TYPED-CANARY` | root-import applications and axiom reports | compiled slice | `Tests/TextbookPartIVChapter16Canary.lean` | project-local | Tests | verified locally |
 | `CH16-EVIDENCE-SITE` | all artifacts agree on partial/blocked boundary | scoped artifacts | repository artifacts | repository | full/site/browser | verified locally for the fifteen-declaration extension |
 | `CH16-REVIEW` | direction/quantifier/AC/policy/asymptotic audit | all artifacts | `reviews/2026-08-22-textbook-part-iv-chapter-16-event-regret-extension.md` | repository | read-only | verified for current extension; no unresolved Blocking/High/Medium finding |
-| `CH16-REMOTE` | PR, main Actions, Pages, live page | preceding 20-declaration slice | PR #38; merge `359fb6a`; authoritative-main run `32546802426`; clean live manifest and desktop/mobile page checks | repository | deployment | verified for predecessor; current extension pending |
+| `CH16-REMOTE` | PR, main Actions, Pages, live page | current 20+15 declaration slice | PR #40; merge `08c1470`; authoritative-main run `32554151109`; clean live manifest and Chapter 16 page/source-link checks | repository | deployment | verified for current extension; source terminals remain blocked |
 
 ## Gaps
 
@@ -134,5 +134,5 @@ envelope and sums the positive parts to obtain Eq. (16.5).
   independent-review gates.
 - [x] Preceding twenty-declaration slice: PR, authoritative-main Actions,
   Pages deployment, and live-page gates.
-- [ ] Current extension: PR, authoritative-main Actions, Pages deployment, and
-  live-page gates.
+- [x] Current extension: PR #40, authoritative-main Actions run `32554151109`,
+  Pages deployment, and live-page gates at merge `08c1470`.
