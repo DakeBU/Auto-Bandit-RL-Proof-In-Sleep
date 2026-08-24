@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-24T17:08:50+00:00",
+  "generated": "2026-08-24T19:41:02+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -652,7 +652,7 @@
     {
       "kind": "theorem",
       "name": "ETC.pullCount_exploreArm_K_eq_one",
-      "full_name": "ETC.pullCount_exploreArm_K_eq_one",
+      "full_name": "BanditRLProof.ETC.pullCount_exploreArm_K_eq_one",
       "file": "BanditRLProof/Algorithms/ETCCountLemmas.lean",
       "line": 22,
       "statement": "theorem ETC.pullCount_exploreArm_K_eq_one {K : Nat} (spec : ETC.Spec K) (a : Fin K) : pullCount (ETC.exploreArm spec) a K = 1"
@@ -660,7 +660,7 @@
     {
       "kind": "theorem",
       "name": "ETC.pullCount_exploreArm_add_K_eq_add_one",
-      "full_name": "ETC.pullCount_exploreArm_add_K_eq_add_one",
+      "full_name": "BanditRLProof.ETC.pullCount_exploreArm_add_K_eq_add_one",
       "file": "BanditRLProof/Algorithms/ETCCountLemmas.lean",
       "line": 58,
       "statement": "theorem ETC.pullCount_exploreArm_add_K_eq_add_one {K : Nat} (spec : ETC.Spec K) (a : Fin K) (t : Nat) : pullCount (ETC.exploreArm spec) a (t + K) = pullCount (ETC.exploreArm spec) a t + 1"
@@ -668,7 +668,7 @@
     {
       "kind": "theorem",
       "name": "ETC.pullCount_exploreArm_mul_K_eq",
-      "full_name": "ETC.pullCount_exploreArm_mul_K_eq",
+      "full_name": "BanditRLProof.ETC.pullCount_exploreArm_mul_K_eq",
       "file": "BanditRLProof/Algorithms/ETCCountLemmas.lean",
       "line": 86,
       "statement": "theorem ETC.pullCount_exploreArm_mul_K_eq {K : Nat} (spec : ETC.Spec K) (a : Fin K) (m : Nat) : pullCount (ETC.exploreArm spec) a (m * K) = m"
@@ -676,7 +676,7 @@
     {
       "kind": "theorem",
       "name": "ETC.pullCount_exploreArm_explorationPulls_mul_K_eq",
-      "full_name": "ETC.pullCount_exploreArm_explorationPulls_mul_K_eq",
+      "full_name": "BanditRLProof.ETC.pullCount_exploreArm_explorationPulls_mul_K_eq",
       "file": "BanditRLProof/Algorithms/ETCCountLemmas.lean",
       "line": 105,
       "statement": "theorem ETC.pullCount_exploreArm_explorationPulls_mul_K_eq {K : Nat} (spec : ETC.Spec K) (a : Fin K) : pullCount (ETC.exploreArm spec) a (spec.explorationPulls * K) = spec.explorationPulls"
@@ -2420,7 +2420,7 @@
     {
       "kind": "theorem",
       "name": "ETC.pseudoRegret_exploreArm_explorationPulls_mul_K_le_sum_gap_mul_explorationPulls",
-      "full_name": "ETC.pseudoRegret_exploreArm_explorationPulls_mul_K_le_sum_gap_mul_explorationPulls",
+      "full_name": "BanditRLProof.ETC.pseudoRegret_exploreArm_explorationPulls_mul_K_le_sum_gap_mul_explorationPulls",
       "file": "BanditRLProof/Algorithms/ETCRegretLemmas.lean",
       "line": 22,
       "statement": "theorem ETC.pseudoRegret_exploreArm_explorationPulls_mul_K_le_sum_gap_mul_explorationPulls {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) : pseudoRegret model (ETC.exploreArm spec) (spec.explorationPulls * K) <= ((Finset.univ : Finset (Fin K)).sum (fun a : Fin K => model.gap a)) * (((spec.explorationPulls : Nat) : Rat))"
@@ -2428,7 +2428,7 @@
     {
       "kind": "theorem",
       "name": "ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_le_sum_gap_mul_explorationPulls",
-      "full_name": "ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_le_sum_gap_mul_explorationPulls",
+      "full_name": "BanditRLProof.ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_le_sum_gap_mul_explorationPulls",
       "file": "BanditRLProof/Algorithms/ETCRegretLemmas.lean",
       "line": 48,
       "statement": "theorem ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_le_sum_gap_mul_explorationPulls {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) : pseudoRegret model (ETC.actionWithCommit spec commitArm) (spec.explorationPulls * K) <= ((Finset.univ : Finset (Fin K)).sum (fun a : Fin K => model.gap a)) * (((spec.explorationPulls : Nat) : Rat))"
@@ -2436,7 +2436,7 @@
     {
       "kind": "theorem",
       "name": "ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_suffix_count_budget",
-      "full_name": "ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_suffix_count_budget",
+      "full_name": "BanditRLProof.ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_suffix_count_budget",
       "file": "BanditRLProof/Algorithms/ETCRegretLemmas.lean",
       "line": 79,
       "statement": "theorem ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_suffix_count_budget {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (r : Nat) : pseudoRegret model (ETC.actionWithCommit spec commitArm) (spec.explorationPulls * K + r) <= (Finset.univ : Finset (Fin K)).sum (fun a : Fin K => model.gap a * (((spec.explorationPulls + (if commitArm = a then r else 0) : Nat) : Rat)))"
@@ -2444,7 +2444,7 @@
     {
       "kind": "theorem",
       "name": "ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_explorationPulls_add_suffix",
-      "full_name": "ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_explorationPulls_add_suffix",
+      "full_name": "BanditRLProof.ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_explorationPulls_add_suffix",
       "file": "BanditRLProof/Algorithms/ETCRegretLemmas.lean",
       "line": 114,
       "statement": "theorem ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_explorationPulls_add_suffix {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (r : Nat) : pseudoRegret model (ETC.actionWithCommit spec commitArm) (spec.explorationPulls * K + r) <= ((Finset.univ : Finset (Fin K)).sum (fun a : Fin K => model.gap a)) * ((((spec.explorationPulls + r : Nat) : Rat)))"
@@ -2452,7 +2452,7 @@
     {
       "kind": "theorem",
       "name": "ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_eq_add_suffix_gap",
-      "full_name": "ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_eq_add_suffix_gap",
+      "full_name": "BanditRLProof.ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_eq_add_suffix_gap",
       "file": "BanditRLProof/Algorithms/ETCRegretLemmas.lean",
       "line": 149,
       "statement": "theorem ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_eq_add_suffix_gap {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (r : Nat) : pseudoRegret model (ETC.actionWithCommit spec commitArm) (spec.explorationPulls * K + r) = pseudoRegret model (ETC.actionWithCommit spec commitArm) (spec.explorationPulls * K) + (((r : Nat) : Rat) * model.gap commitArm)"
@@ -2460,7 +2460,7 @@
     {
       "kind": "theorem",
       "name": "ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_eq_of_commitArm_eq_bestArm",
-      "full_name": "ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_eq_of_commitArm_eq_bestArm",
+      "full_name": "BanditRLProof.ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_eq_of_commitArm_eq_bestArm",
       "file": "BanditRLProof/Algorithms/ETCRegretLemmas.lean",
       "line": 184,
       "statement": "theorem ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_eq_of_commitArm_eq_bestArm {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (r : Nat) (hcommit : commitArm = model.bestArm) : pseudoRegret model (ETC.actionWithCommit spec commitArm) (spec.explorationPulls * K + r) = pseudoRegret model (ETC.actionWithCommit spec commitArm) (spec.explorationPulls * K)"
@@ -2468,7 +2468,7 @@
     {
       "kind": "theorem",
       "name": "ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_explorationPulls_of_commitArm_eq_bestArm",
-      "full_name": "ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_explorationPulls_of_commitArm_eq_bestArm",
+      "full_name": "BanditRLProof.ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_explorationPulls_of_commitArm_eq_bestArm",
       "file": "BanditRLProof/Algorithms/ETCRegretLemmas.lean",
       "line": 209,
       "statement": "theorem ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_explorationPulls_of_commitArm_eq_bestArm {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (r : Nat) (hcommit : commitArm = model.bestArm) : pseudoRegret model (ETC.actionWithCommit spec commitArm) (spec.explorationPulls * K + r) <= ((Finset.univ : Finset (Fin K)).sum (fun a : Fin K => model.gap a)) * (((spec.explorationPulls : Nat) : Rat))"
@@ -2476,7 +2476,7 @@
     {
       "kind": "theorem",
       "name": "ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_explorationPulls_add_suffix_gap",
-      "full_name": "ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_explorationPulls_add_suffix_gap",
+      "full_name": "BanditRLProof.ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_explorationPulls_add_suffix_gap",
       "file": "BanditRLProof/Algorithms/ETCRegretLemmas.lean",
       "line": 239,
       "statement": "theorem ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_explorationPulls_add_suffix_gap {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (r : Nat) : pseudoRegret model (ETC.actionWithCommit spec commitArm) (spec.explorationPulls * K + r) <= ((Finset.univ : Finset (Fin K)).sum (fun a : Fin K => model.gap a)) * (((spec.explorationPulls : Nat) : Rat)) + (((r : Nat) : Rat) * model.gap commitArm)"
@@ -2564,7 +2564,7 @@
     {
       "kind": "theorem",
       "name": "ETC.pullCount_actionWithCommit_eq_pullCount_exploreArm_of_le",
-      "full_name": "ETC.pullCount_actionWithCommit_eq_pullCount_exploreArm_of_le",
+      "full_name": "BanditRLProof.ETC.pullCount_actionWithCommit_eq_pullCount_exploreArm_of_le",
       "file": "BanditRLProof/Algorithms/ETCTraceCountLemmas.lean",
       "line": 23,
       "statement": "theorem ETC.pullCount_actionWithCommit_eq_pullCount_exploreArm_of_le {K : Nat} (spec : ETC.Spec K) (commitArm a : Fin K) (n : Nat) (hn : n <= spec.explorationPulls * K) : pullCount (ETC.actionWithCommit spec commitArm) a n = pullCount (ETC.exploreArm spec) a n"
@@ -2572,7 +2572,7 @@
     {
       "kind": "theorem",
       "name": "ETC.pullCount_actionWithCommit_explorationPulls_mul_K_eq",
-      "full_name": "ETC.pullCount_actionWithCommit_explorationPulls_mul_K_eq",
+      "full_name": "BanditRLProof.ETC.pullCount_actionWithCommit_explorationPulls_mul_K_eq",
       "file": "BanditRLProof/Algorithms/ETCTraceCountLemmas.lean",
       "line": 53,
       "statement": "theorem ETC.pullCount_actionWithCommit_explorationPulls_mul_K_eq {K : Nat} (spec : ETC.Spec K) (commitArm a : Fin K) : pullCount (ETC.actionWithCommit spec commitArm) a (spec.explorationPulls * K) = spec.explorationPulls"
@@ -2580,7 +2580,7 @@
     {
       "kind": "theorem",
       "name": "ETC.pullCount_actionWithCommit_explorationPulls_mul_K_pos",
-      "full_name": "ETC.pullCount_actionWithCommit_explorationPulls_mul_K_pos",
+      "full_name": "BanditRLProof.ETC.pullCount_actionWithCommit_explorationPulls_mul_K_pos",
       "file": "BanditRLProof/Algorithms/ETCTraceCountLemmas.lean",
       "line": 76,
       "statement": "theorem ETC.pullCount_actionWithCommit_explorationPulls_mul_K_pos {K : Nat} (spec : ETC.Spec K) (commitArm a : Fin K) (hexplorationPulls_pos : 0 < spec.explorationPulls) : 0 < pullCount (ETC.actionWithCommit spec commitArm) a (spec.explorationPulls * K)"
@@ -2588,7 +2588,7 @@
     {
       "kind": "theorem",
       "name": "ETC.ratCast_pullCount_actionWithCommit_explorationPulls_mul_K_pos",
-      "full_name": "ETC.ratCast_pullCount_actionWithCommit_explorationPulls_mul_K_pos",
+      "full_name": "BanditRLProof.ETC.ratCast_pullCount_actionWithCommit_explorationPulls_mul_K_pos",
       "file": "BanditRLProof/Algorithms/ETCTraceCountLemmas.lean",
       "line": 96,
       "statement": "theorem ETC.ratCast_pullCount_actionWithCommit_explorationPulls_mul_K_pos {K : Nat} (spec : ETC.Spec K) (commitArm a : Fin K) (hexplorationPulls_pos : 0 < spec.explorationPulls) : (0 : Rat) < (pullCount (ETC.actionWithCommit spec commitArm) a (spec.explorationPulls * K) : Rat)"
@@ -2596,7 +2596,7 @@
     {
       "kind": "theorem",
       "name": "ETC.ratCast_pullCount_actionWithCommit_explorationPulls_mul_K_ne_zero",
-      "full_name": "ETC.ratCast_pullCount_actionWithCommit_explorationPulls_mul_K_ne_zero",
+      "full_name": "BanditRLProof.ETC.ratCast_pullCount_actionWithCommit_explorationPulls_mul_K_ne_zero",
       "file": "BanditRLProof/Algorithms/ETCTraceCountLemmas.lean",
       "line": 115,
       "statement": "theorem ETC.ratCast_pullCount_actionWithCommit_explorationPulls_mul_K_ne_zero {K : Nat} (spec : ETC.Spec K) (commitArm a : Fin K) (hexplorationPulls_pos : 0 < spec.explorationPulls) : Not ((pullCount (ETC.actionWithCommit spec commitArm) a (spec.explorationPulls * K) : Rat) = 0)"
@@ -2604,7 +2604,7 @@
     {
       "kind": "theorem",
       "name": "ETC.pullCount_actionWithCommit_succ_eq_add_if_commitArm_of_ge",
-      "full_name": "ETC.pullCount_actionWithCommit_succ_eq_add_if_commitArm_of_ge",
+      "full_name": "BanditRLProof.ETC.pullCount_actionWithCommit_succ_eq_add_if_commitArm_of_ge",
       "file": "BanditRLProof/Algorithms/ETCTraceCountLemmas.lean",
       "line": 135,
       "statement": "theorem ETC.pullCount_actionWithCommit_succ_eq_add_if_commitArm_of_ge {K : Nat} (spec : ETC.Spec K) (commitArm a : Fin K) {t : Nat} (ht : spec.explorationPulls * K <= t) : pullCount (ETC.actionWithCommit spec commitArm) a (Nat.succ t) = pullCount (ETC.actionWithCommit spec commitArm) a t + if commitArm = a then 1 else 0"
@@ -2612,7 +2612,7 @@
     {
       "kind": "theorem",
       "name": "ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq",
-      "full_name": "ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq",
+      "full_name": "BanditRLProof.ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq",
       "file": "BanditRLProof/Algorithms/ETCTraceCountLemmas.lean",
       "line": 155,
       "statement": "theorem ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq {K : Nat} (spec : ETC.Spec K) (commitArm a : Fin K) (r : Nat) : pullCount (ETC.actionWithCommit spec commitArm) a (spec.explorationPulls * K + r) = spec.explorationPulls + (if commitArm = a then r else 0)"
@@ -2620,7 +2620,7 @@
     {
       "kind": "theorem",
       "name": "ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq_of_ne",
-      "full_name": "ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq_of_ne",
+      "full_name": "BanditRLProof.ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq_of_ne",
       "file": "BanditRLProof/Algorithms/ETCTraceCountLemmas.lean",
       "line": 193,
       "statement": "theorem ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq_of_ne {K : Nat} (spec : ETC.Spec K) {commitArm a : Fin K} (hne : commitArm \u2260 a) (r : Nat) : pullCount (ETC.actionWithCommit spec commitArm) a (spec.explorationPulls * K + r) = spec.explorationPulls"
@@ -2628,7 +2628,7 @@
     {
       "kind": "theorem",
       "name": "ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq_commitArm",
-      "full_name": "ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq_commitArm",
+      "full_name": "BanditRLProof.ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq_commitArm",
       "file": "BanditRLProof/Algorithms/ETCTraceCountLemmas.lean",
       "line": 210,
       "statement": "theorem ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq_commitArm {K : Nat} (spec : ETC.Spec K) (commitArm : Fin K) (r : Nat) : pullCount (ETC.actionWithCommit spec commitArm) commitArm (spec.explorationPulls * K + r) = spec.explorationPulls + r"
@@ -4508,7 +4508,7 @@
     {
       "kind": "def",
       "name": "HistoryAlgorithmEnvironmentSplitSource.toSequence",
-      "full_name": "HistoryAlgorithmEnvironmentSplitSource.toSequence",
+      "full_name": "BanditRLProof.Thompson.HistoryAlgorithmEnvironmentSplitSource.toSequence",
       "file": "BanditRLProof/Algorithms/ThompsonCanonicalTrajectory.lean",
       "line": 374,
       "statement": "noncomputable def HistoryAlgorithmEnvironmentSplitSource.toSequence {Omega : Type w} {Action : Type u} {Reward : Type v} [MeasurableSpace Omega] [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action] [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward] (mu : Measure Omega) [IsFiniteMeasure mu] (action : Omega -> ActionTrace Action) (reward : Omega -> RewardTrace Reward) (algorithm : HistoryAlgorithm Action Reward) (environment : HistoryEnvironment Action Reward) (source : HistoryAlgorithmEnvironmentSplitSource mu action reward algorithm environment) : IsHistoryAlgorithmEnvironmentSequence mu action reward algorithm environment"
@@ -4796,7 +4796,7 @@
     {
       "kind": "def",
       "name": "MeasurableHistoryEnvironment.at",
-      "full_name": "MeasurableHistoryEnvironment.at",
+      "full_name": "BanditRLProof.Thompson.MeasurableHistoryEnvironment.at",
       "file": "BanditRLProof/Algorithms/ThompsonMeasurableTrajectory.lean",
       "line": 52,
       "statement": "noncomputable def MeasurableHistoryEnvironment.at {Env : Type u} {Action : Type v} {Reward : Type w} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSpace Reward] (environment : MeasurableHistoryEnvironment Env Action Reward) (env : Env) : HistoryEnvironment Action Reward where"
@@ -8764,7 +8764,7 @@
     {
       "kind": "theorem",
       "name": "SelectedPolicySuccessorInitializedScoreMaxSource.meanGap_le_two_radius_of_not_badEvent",
-      "full_name": "SelectedPolicySuccessorInitializedScoreMaxSource.meanGap_le_two_radius_of_not_badEvent",
+      "full_name": "BanditRLProof.UCB.SelectedPolicySuccessorInitializedScoreMaxSource.meanGap_le_two_radius_of_not_badEvent",
       "file": "BanditRLProof/Algorithms/UCBConditionalRewardLaw.lean",
       "line": 106,
       "statement": "theorem SelectedPolicySuccessorInitializedScoreMaxSource.meanGap_le_two_radius_of_not_badEvent {Omega : Type u} {Action : Type} [DecidableEq Action] {action : Omega -> ActionTrace Action} {reward : Omega -> RewardTrace Rat} {arms : Finset Action} {armMean : Action -> Rat} {sigma2 : NNReal} {T : Nat} {delta : Real} (source : SelectedPolicySuccessorInitializedScoreMaxSource action reward arms armMean sigma2 T delta) (omega : Omega) (t : Nat) (ht : t \u2208 source.times) (hgood : omega \u2209 ConditionalExpectationReward.successorArmEmpiricalMeanFiniteArmTimeBadEvent action reward arms armMean sigma2 T delta) : meanGap (fun arm => (armMean arm : Real)) source.best (source.chosen omega t) <= 2 * selectedPolicySuccessorRadiusAt action sigma2 arms T delta omega t (source.chosen omega t)"
@@ -9772,7 +9772,7 @@
     {
       "kind": "theorem",
       "name": "FixedArmPrefixSource.measurable_armStream",
-      "full_name": "FixedArmPrefixSource.measurable_armStream",
+      "full_name": "BanditRLProof.UCB.FixedArmPrefixSource.measurable_armStream",
       "file": "BanditRLProof/Algorithms/UCBFixedCountPeeling.lean",
       "line": 57,
       "statement": "theorem FixedArmPrefixSource.measurable_armStream {Omega : Type u} {K : Nat} [MeasurableSpace Omega] {action : Omega -> ActionTrace (Fin K)} {reward : Omega -> RewardTrace Real} (source : FixedArmPrefixSource action reward) : Measurable source.armStream"
@@ -9780,7 +9780,7 @@
     {
       "kind": "theorem",
       "name": "FixedArmPrefixSource.measurable_armPrefixSum",
-      "full_name": "FixedArmPrefixSource.measurable_armPrefixSum",
+      "full_name": "BanditRLProof.UCB.FixedArmPrefixSource.measurable_armPrefixSum",
       "file": "BanditRLProof/Algorithms/UCBFixedCountPeeling.lean",
       "line": 68,
       "statement": "theorem FixedArmPrefixSource.measurable_armPrefixSum {Omega : Type u} {K : Nat} [MeasurableSpace Omega] {action : Omega -> ActionTrace (Fin K)} {reward : Omega -> RewardTrace Real} (source : FixedArmPrefixSource action reward) (arm : Fin K) (k : Nat) : Measurable (fun omega => UCB.armPrefixSum arm k (source.armStream omega))"
@@ -11004,7 +11004,7 @@
     {
       "kind": "theorem",
       "name": "HasMGFUpperBoundAt.sum_of_hasCondMGFUpperBoundAt",
-      "full_name": "HasMGFUpperBoundAt.sum_of_hasCondMGFUpperBoundAt",
+      "full_name": "BanditRLProof.Concentration.HasMGFUpperBoundAt.sum_of_hasCondMGFUpperBoundAt",
       "file": "BanditRLProof/ConcentrationFixedMGF.lean",
       "line": 290,
       "statement": "theorem HasMGFUpperBoundAt.sum_of_hasCondMGFUpperBoundAt [IsZeroOrProbabilityMeasure \u03bc] (h_adapted : StronglyAdapted \u2131 Y) (h0 : HasMGFUpperBoundAt (Y 0) t (\u03c8Y 0) \u03bc) (n : \u2115) (h_mgf : \u2200 i < n - 1, HasCondMGFUpperBoundAt (\u2131 i) (\u2131.le i) (Y (i + 1)) t (\u03c8Y (i + 1)) \u03bc) : HasMGFUpperBoundAt (fun \u03c9 \u21a6 \u2211 i \u2208 Finset.range n, Y i \u03c9) t (\u2211 i \u2208 Finset.range n, \u03c8Y i) \u03bc"
@@ -11092,7 +11092,7 @@
     {
       "kind": "theorem",
       "name": "HasCondSubgaussianMGF.of_measurableSpace_eq",
-      "full_name": "HasCondSubgaussianMGF.of_measurableSpace_eq",
+      "full_name": "ProbabilityTheory.HasCondSubgaussianMGF.of_measurableSpace_eq",
       "file": "BanditRLProof/ConcentrationSubGaussian.lean",
       "line": 17,
       "statement": "theorem HasCondSubgaussianMGF.of_measurableSpace_eq {Omega : Type u} {m0 m1 mOmega : MeasurableSpace Omega} [StandardBorelSpace Omega] {mu : MeasureTheory.Measure Omega} [MeasureTheory.IsFiniteMeasure mu] {X : Omega -> Real} {c : NNReal} (hm0 : m0 <= mOmega) (hm1 : m1 <= mOmega) (hm : m0 = m1) (hX : HasCondSubgaussianMGF m0 hm0 X c mu) : HasCondSubgaussianMGF m1 hm1 X c mu"
@@ -11100,7 +11100,7 @@
     {
       "kind": "theorem",
       "name": "HasCondSubgaussianMGF.integrable",
-      "full_name": "HasCondSubgaussianMGF.integrable",
+      "full_name": "ProbabilityTheory.HasCondSubgaussianMGF.integrable",
       "file": "BanditRLProof/ConcentrationSubGaussian.lean",
       "line": 37,
       "statement": "theorem HasCondSubgaussianMGF.integrable {Omega : Type u} {m mOmega : MeasurableSpace Omega} [StandardBorelSpace Omega] {mu : MeasureTheory.Measure Omega} [MeasureTheory.IsFiniteMeasure mu] {X : Omega -> Real} {c : NNReal} (hm : m <= mOmega) (hX : HasCondSubgaussianMGF m hm X c mu) : MeasureTheory.Integrable X mu"
@@ -11108,7 +11108,7 @@
     {
       "kind": "theorem",
       "name": "HasCondSubgaussianMGF.indicator",
-      "full_name": "HasCondSubgaussianMGF.indicator",
+      "full_name": "ProbabilityTheory.HasCondSubgaussianMGF.indicator",
       "file": "BanditRLProof/ConcentrationSubGaussian.lean",
       "line": 73,
       "statement": "theorem HasCondSubgaussianMGF.indicator {Omega : Type u} {m mOmega : MeasurableSpace Omega} [StandardBorelSpace Omega] {mu : MeasureTheory.Measure Omega} [MeasureTheory.IsProbabilityMeasure mu] {X : Omega -> Real} {c : NNReal} (hm : m <= mOmega) (hX : HasCondSubgaussianMGF m hm X c mu) {s : Set Omega} (hs : @MeasurableSet Omega m s) : HasCondSubgaussianMGF m hm (s.indicator X) c mu"
@@ -11116,7 +11116,7 @@
     {
       "kind": "theorem",
       "name": "HasCondSubgaussianMGF.indicator_compensated_hasCondMGFUpperBoundAt",
-      "full_name": "HasCondSubgaussianMGF.indicator_compensated_hasCondMGFUpperBoundAt",
+      "full_name": "ProbabilityTheory.HasCondSubgaussianMGF.indicator_compensated_hasCondMGFUpperBoundAt",
       "file": "BanditRLProof/ConcentrationSubGaussian.lean",
       "line": 171,
       "statement": "theorem HasCondSubgaussianMGF.indicator_compensated_hasCondMGFUpperBoundAt {Omega : Type u} {m mOmega : MeasurableSpace Omega} [StandardBorelSpace Omega] {mu : MeasureTheory.Measure Omega} [MeasureTheory.IsProbabilityMeasure mu] {X : Omega -> Real} {c : NNReal} (hm : m <= mOmega) (hX : HasCondSubgaussianMGF m hm X c mu) {s : Set Omega} (hs : @MeasurableSet Omega m s) (tilt : Real) : BanditRLProof.Concentration.HasCondMGFUpperBoundAt m hm (fun omega => tilt * s.indicator X omega - (((c : NNReal) : Real) * tilt ^ 2 / 2) * s.indicator (fun _ : Omega => (1 : Real)) omega) 1 0 mu"
@@ -15508,7 +15508,7 @@
     {
       "kind": "theorem",
       "name": "ActionTimeView.ext",
-      "full_name": "ActionTimeView.ext",
+      "full_name": "BanditRLProof.DelayedFeedback.ActionTimeView.ext",
       "file": "BanditRLProof/DelayedFeedback/CausalView.lean",
       "line": 21,
       "statement": "theorem ActionTimeView.ext {Action : Type uAction} {Loss : Type uLoss} {left right : ActionTimeView Action Loss} (hpast : left.pastAction = right.pastAction) (hloss : left.observedLoss = right.observedLoss) : left = right"
@@ -15898,6 +15898,78 @@
       "statement": "theorem outstandingAt_disjoint_newlyObservedBefore (delay : Nat \u2192 Nat) (processed : Finset Nat) (t : Nat) : Disjoint (outstandingAt delay t) (newlyObservedBefore delay processed t)"
     },
     {
+      "kind": "structure",
+      "name": "DelayedSAPOProcessedTraceSummary",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedTraceSummary",
+      "file": "BanditRLProof/DelayedFeedback/RecursiveProcessedState.lean",
+      "line": 42,
+      "statement": "structure DelayedSAPOProcessedTraceSummary (K : Nat) where"
+    },
+    {
+      "kind": "def",
+      "name": "toProcessedPrefix",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedTraceSummary.toProcessedPrefix",
+      "file": "BanditRLProof/DelayedFeedback/RecursiveProcessedState.lean",
+      "line": 65,
+      "statement": "def toProcessedPrefix {K : Nat} (state : DelayedSAPOProcessedTraceSummary K) : DelayedSAPOProcessedPrefix K where"
+    },
+    {
+      "kind": "def",
+      "name": "empiricalWidthAt",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedTraceSummary.empiricalWidthAt",
+      "file": "BanditRLProof/DelayedFeedback/RecursiveProcessedState.lean",
+      "line": 76,
+      "statement": "noncomputable def empiricalWidthAt {K : Nat} (state : DelayedSAPOProcessedTraceSummary K) (horizon : Nat) (i : Fin K) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "empiricalUpperAt",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedTraceSummary.empiricalUpperAt",
+      "file": "BanditRLProof/DelayedFeedback/RecursiveProcessedState.lean",
+      "line": 84,
+      "statement": "noncomputable def empiricalUpperAt {K : Nat} (state : DelayedSAPOProcessedTraceSummary K) (horizon : Nat) (i : Fin K) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "toConfidenceSnapshot",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedTraceSummary.toConfidenceSnapshot",
+      "file": "BanditRLProof/DelayedFeedback/RecursiveProcessedState.lean",
+      "line": 93,
+      "statement": "noncomputable def toConfidenceSnapshot {K : Nat} (state : DelayedSAPOProcessedTraceSummary K) (horizon : Nat) : DelayedSAPOSourceConfidenceSnapshot K where"
+    },
+    {
+      "kind": "structure",
+      "name": "D4CountClause",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedTraceSummary.D4CountClause",
+      "file": "BanditRLProof/DelayedFeedback/RecursiveProcessedState.lean",
+      "line": 107,
+      "statement": "structure D4CountClause {K : Nat} (state : DelayedSAPOProcessedTraceSummary K) (horizon : Nat) : Prop where"
+    },
+    {
+      "kind": "theorem",
+      "name": "currentActive_subset_activeAt_sourceIndex",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedTraceSummary.currentActive_subset_activeAt_sourceIndex",
+      "file": "BanditRLProof/DelayedFeedback/RecursiveProcessedState.lean",
+      "line": 122,
+      "statement": "theorem currentActive_subset_activeAt_sourceIndex {K : Nat} (state : DelayedSAPOProcessedTraceSummary K) (q : Fin state.length) : state.currentActive <= state.activeAtSourceRound (state.sourceIndex q)"
+    },
+    {
+      "kind": "theorem",
+      "name": "toProcessedPrefixCountCertificate",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedTraceSummary.toProcessedPrefixCountCertificate",
+      "file": "BanditRLProof/DelayedFeedback/RecursiveProcessedState.lean",
+      "line": 133,
+      "statement": "theorem toProcessedPrefixCountCertificate {K : Nat} [Nonempty (Fin K)] (state : DelayedSAPOProcessedTraceSummary K) (horizon : Nat) (hD4 : state.D4CountClause horizon) : DelayedSAPOProcessedPrefixCountCertificate (state.toConfidenceSnapshot horizon) state.toProcessedPrefix horizon where"
+    },
+    {
+      "kind": "theorem",
+      "name": "gap_le_twenty_mul_gap_at_earlier_elimination_snapshot_of_traceSummary",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedTraceSummary.gap_le_twenty_mul_gap_at_earlier_elimination_snapshot_of_traceSummary",
+      "file": "BanditRLProof/DelayedFeedback/RecursiveProcessedState.lean",
+      "line": 157,
+      "statement": "theorem gap_le_twenty_mul_gap_at_earlier_elimination_snapshot_of_traceSummary {K : Nat} [Nonempty (Fin K)] (state : DelayedSAPOProcessedTraceSummary K) (horizon : Nat) (hD4 : state.D4CountClause horizon) (hhorizon : 1 < horizon) (mean : Fin K -> Real) (optimal iEarlier iLater : Fin K) (hoptimal : forall j, mean optimal <= mean j) (hmeanBounds : forall j, mean j \u2208 Set.Icc (0 : Real) 1) (hgood : (state.toConfidenceSnapshot horizon).EliminationGoodEvent mean) (hoptimalActive : optimal \u2208 (state.toConfidenceSnapshot horizon).active) (hEarlierEliminated : iEarlier \u2208 (state.toConfidenceSnapshot horizon).eliminated) (hLaterRemaining : iLater \u2208 (state.toConfidenceSnapshot horizon).remainingActive) : mean iLater - mean optimal <= 20 * (mean iEarlier - mean optimal)"
+    },
+    {
       "kind": "def",
       "name": "sourceEmpiricalWidthScale",
       "full_name": "BanditRLProof.DelayedFeedback.sourceEmpiricalWidthScale",
@@ -16238,7 +16310,7 @@
       "name": "measure_eliminationGoodEventSet_compl_le_nine_div",
       "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.measure_eliminationGoodEventSet_compl_le_nine_div",
       "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
-      "line": 170,
+      "line": 169,
       "statement": "theorem measure_eliminationGoodEventSet_compl_le_nine_div {Omega : Type*} [MeasurableSpace Omega] {K : Nat} [Nonempty (Fin K)] (mu : Measure Omega) (family : DelayedSAPOGoodEventFailureFamily Omega) (snapshot : Omega -> DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K -> Real) (horizon : Nat) (hhorizon : 0 < horizon) (hprojection : family.sourceGoodEventSet \u2286 DelayedSAPOSourceConfidenceSnapshot.eliminationGoodEventSet snapshot mean) (hbsc : mu family.bscConfidence <= ENNReal.ofReal (doubleLinearFailureBudget horizon)) (heap : mu family.eapConfidence <= ENNReal.ofReal (doubleLinearFailureBudget horizon)) (hpull : mu family.pullCount <= ENNReal.ofReal (doubleLinearFailureBudget horizon)) (heliminated : mu family.eliminatedDelay <= ENNReal.ofReal (linearFailureBudget horizon)) (hloss : mu family.lossDifference <= ENNReal.ofReal (linearFailureBudget horizon)) (hdelay : mu family.stochasticDelay <= ENNReal.ofReal (linearFailureBudget horizon)) : mu (DelayedSAPOSourceConfidenceSnapshot.eliminationGoodEventSet snapshot mean)\u1d9c <= ENNReal.ofReal (9 / (horizon : Real))"
     },
     {
@@ -16246,7 +16318,7 @@
       "name": "measure_optimalSurvivalEventSet_compl_le_nine_div",
       "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.measure_optimalSurvivalEventSet_compl_le_nine_div",
       "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
-      "line": 204,
+      "line": 203,
       "statement": "theorem measure_optimalSurvivalEventSet_compl_le_nine_div {Omega : Type*} [MeasurableSpace Omega] {K : Nat} [Nonempty (Fin K)] (mu : Measure Omega) (family : DelayedSAPOGoodEventFailureFamily Omega) (snapshot : Omega -> DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K -> Real) (optimal : Fin K) (horizon : Nat) (hhorizon : 0 < horizon) (hoptimal : forall i, mean optimal <= mean i) (hactive : forall omega, optimal \u2208 (snapshot omega).active) (hprojection : family.sourceGoodEventSet \u2286 DelayedSAPOSourceConfidenceSnapshot.eliminationGoodEventSet snapshot mean) (hbsc : mu family.bscConfidence <= ENNReal.ofReal (doubleLinearFailureBudget horizon)) (heap : mu family.eapConfidence <= ENNReal.ofReal (doubleLinearFailureBudget horizon)) (hpull : mu family.pullCount <= ENNReal.ofReal (doubleLinearFailureBudget horizon)) (heliminated : mu family.eliminatedDelay <= ENNReal.ofReal (linearFailureBudget horizon)) (hloss : mu family.lossDifference <= ENNReal.ofReal (linearFailureBudget horizon)) (hdelay : mu family.stochasticDelay <= ENNReal.ofReal (linearFailureBudget horizon)) : mu (DelayedSAPOSourceConfidenceSnapshot.optimalSurvivalEventSet snapshot optimal)\u1d9c <= ENNReal.ofReal (9 / (horizon : Real))"
     },
     {
@@ -20508,7 +20580,7 @@
     {
       "kind": "def",
       "name": "PredictableLossVector.environment",
-      "full_name": "PredictableLossVector.environment",
+      "full_name": "BanditRLProof.Exp3.PredictableLossVector.environment",
       "file": "BanditRLProof/Exp3PredictableAdversary.lean",
       "line": 43,
       "statement": "noncomputable def PredictableLossVector.environment {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] (loss : PredictableLossVector Env Action) : Thompson.MeasurableHistoryEnvironment Env Action Real where"
@@ -20516,7 +20588,7 @@
     {
       "kind": "theorem",
       "name": "PredictableLossVector.environment_initialFeedback_apply",
-      "full_name": "PredictableLossVector.environment_initialFeedback_apply",
+      "full_name": "BanditRLProof.Exp3.PredictableLossVector.environment_initialFeedback_apply",
       "file": "BanditRLProof/Exp3PredictableAdversary.lean",
       "line": 57,
       "statement": "theorem PredictableLossVector.environment_initialFeedback_apply {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] (loss : PredictableLossVector Env Action) (env : Env) (action : Action) : loss.environment.initialFeedback (env, action) = Measure.dirac (loss.initial env action)"
@@ -20524,7 +20596,7 @@
     {
       "kind": "theorem",
       "name": "PredictableLossVector.environment_feedback_apply",
-      "full_name": "PredictableLossVector.environment_feedback_apply",
+      "full_name": "BanditRLProof.Exp3.PredictableLossVector.environment_feedback_apply",
       "file": "BanditRLProof/Exp3PredictableAdversary.lean",
       "line": 66,
       "statement": "theorem PredictableLossVector.environment_feedback_apply {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] (loss : PredictableLossVector Env Action) (n : Nat) (env : Env) (history : History.FinitePairHistory Action Real n) (action : Action) : loss.environment.feedback n (env, (history, action)) = Measure.dirac (loss.successor n env history action)"
@@ -20532,7 +20604,7 @@
     {
       "kind": "theorem",
       "name": "PredictableLossVector.initial_mem_unitInterval",
-      "full_name": "PredictableLossVector.initial_mem_unitInterval",
+      "full_name": "BanditRLProof.Exp3.PredictableLossVector.initial_mem_unitInterval",
       "file": "BanditRLProof/Exp3PredictableAdversary.lean",
       "line": 76,
       "statement": "theorem PredictableLossVector.initial_mem_unitInterval {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] (loss : PredictableLossVector Env Action) (env : Env) (action : Action) : loss.initial env action \u2208 Set.Icc (0 : Real) 1"
@@ -20540,7 +20612,7 @@
     {
       "kind": "theorem",
       "name": "PredictableLossVector.successor_mem_unitInterval",
-      "full_name": "PredictableLossVector.successor_mem_unitInterval",
+      "full_name": "BanditRLProof.Exp3.PredictableLossVector.successor_mem_unitInterval",
       "file": "BanditRLProof/Exp3PredictableAdversary.lean",
       "line": 83,
       "statement": "theorem PredictableLossVector.successor_mem_unitInterval {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] (loss : PredictableLossVector Env Action) (n : Nat) (env : Env) (history : History.FinitePairHistory Action Real n) (action : Action) : loss.successor n env history action \u2208 Set.Icc (0 : Real) 1"
@@ -22740,7 +22812,7 @@
     {
       "kind": "theorem",
       "name": "BoundedMeasurableLossWithProbabilityFloor.prob_pos",
-      "full_name": "BoundedMeasurableLossWithProbabilityFloor.prob_pos",
+      "full_name": "BanditRLProof.Exp3.BoundedMeasurableLossWithProbabilityFloor.prob_pos",
       "file": "BanditRLProof/Exp3ScoreRegularity.lean",
       "line": 33,
       "statement": "theorem BoundedMeasurableLossWithProbabilityFloor.prob_pos {History : Type u} {Action : Type v} [MeasurableSpace History] {arms : Finset Action} {prob loss : History -> Action -> Real} {epsilon : Real} (regularity : BoundedMeasurableLossWithProbabilityFloor arms prob loss epsilon) (history : History) (action : Action) (haction : action \u2208 arms) : 0 < prob history action"
@@ -23780,7 +23852,7 @@
     {
       "kind": "theorem",
       "name": "IndepFun.comp_of_map",
-      "full_name": "IndepFun.comp_of_map",
+      "full_name": "BanditRLProof.IndepFun.comp_of_map",
       "file": "BanditRLProof/KernelIndependentExtension.lean",
       "line": 19,
       "statement": "theorem IndepFun.comp_of_map {Omega Sample X Y : Type*} [MeasurableSpace Omega] [MeasurableSpace Sample] [MeasurableSpace X] [MeasurableSpace Y] {mu : Measure Omega} {z : Omega -> Sample} {x : Sample -> X} {y : Sample -> Y} (hz : Measurable z) (hx : Measurable x) (hy : Measurable y) (hindep : IndepFun x y (mu.map z)) : IndepFun (x \u2218 z) (y \u2218 z) mu"
@@ -25212,7 +25284,7 @@
     {
       "kind": "theorem",
       "name": "IsConsistentRegret.add",
-      "full_name": "IsConsistentRegret.add",
+      "full_name": "BanditRLProof.LowerBounds.IsConsistentRegret.add",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
       "line": 56,
       "statement": "theorem IsConsistentRegret.add {first second : Nat -> Real} (hfirst : IsConsistentRegret first) (hsecond : IsConsistentRegret second) : IsConsistentRegret (fun n => first n + second n)"
@@ -25220,7 +25292,7 @@
     {
       "kind": "theorem",
       "name": "IsConsistentRegret.eventually_add_le_rpow",
-      "full_name": "IsConsistentRegret.eventually_add_le_rpow",
+      "full_name": "BanditRLProof.LowerBounds.IsConsistentRegret.eventually_add_le_rpow",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
       "line": 67,
       "statement": "theorem IsConsistentRegret.eventually_add_le_rpow {first second : Nat -> Real} (hfirst : IsConsistentRegret first) (hsecond : IsConsistentRegret second) {p : Real} (hp : 0 < p) : \u2200\u1da0 n : Nat in atTop, first n + second n <= (n : Real) ^ p"
@@ -25228,7 +25300,7 @@
     {
       "kind": "theorem",
       "name": "IsConsistentRegret.eventually_log_add_div_log_le",
-      "full_name": "IsConsistentRegret.eventually_log_add_div_log_le",
+      "full_name": "BanditRLProof.LowerBounds.IsConsistentRegret.eventually_log_add_div_log_le",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
       "line": 87,
       "statement": "theorem IsConsistentRegret.eventually_log_add_div_log_le {first second : Nat -> Real} (hfirst : IsConsistentRegret first) (hsecond : IsConsistentRegret second) (hpositive : \u2200\u1da0 n : Nat in atTop, 0 < first n + second n) {p : Real} (hp : 0 < p) : \u2200\u1da0 n : Nat in atTop, Real.log (first n + second n) / Real.log n <= p"
@@ -31460,7 +31532,7 @@
     {
       "kind": "theorem",
       "name": "SquareIntegrableFiniteStoppingTime.toIntegrableFiniteStoppingTime",
-      "full_name": "SquareIntegrableFiniteStoppingTime.toIntegrableFiniteStoppingTime",
+      "full_name": "BanditRLProof.OFUL.SquareIntegrableFiniteStoppingTime.toIntegrableFiniteStoppingTime",
       "file": "BanditRLProof/OFULScheduledUnboundedStoppingTimeExpectedRegretRate.lean",
       "line": 33,
       "statement": "theorem SquareIntegrableFiniteStoppingTime.toIntegrableFiniteStoppingTime {Omega : Type v} [MeasurableSpace Omega] (mu : Measure Omega) [IsFiniteMeasure mu] (tau : Omega -> WithTop Nat) (hstop : SquareIntegrableFiniteStoppingTime mu tau) : IntegrableFiniteStoppingTime mu tau"
@@ -31604,7 +31676,7 @@
     {
       "kind": "theorem",
       "name": "HasCondSubgaussianMGF.predictable_mul_compensated_hasCondMGFUpperBoundAt",
-      "full_name": "HasCondSubgaussianMGF.predictable_mul_compensated_hasCondMGFUpperBoundAt",
+      "full_name": "ProbabilityTheory.HasCondSubgaussianMGF.predictable_mul_compensated_hasCondMGFUpperBoundAt",
       "file": "BanditRLProof/OFULSelfNormalizedConfidence.lean",
       "line": 31,
       "statement": "theorem HasCondSubgaussianMGF.predictable_mul_compensated_hasCondMGFUpperBoundAt {Omega : Type u} {m mOmega : MeasurableSpace Omega} [StandardBorelSpace Omega] {mu : Measure Omega} [IsProbabilityMeasure mu] {X A : Omega -> Real} {c : NNReal} (hm : m <= mOmega) (hX : HasCondSubgaussianMGF m hm X c mu) (hA : @Measurable Omega Real m inferInstance A) (hintegrable : forall s : Real, Integrable (fun omega => Real.exp (s * (A omega * X omega - (((c : NNReal) : Real) * A omega ^ 2 / 2)))) mu) : BanditRLProof.Concentration.HasCondMGFUpperBoundAt m hm (fun omega => A omega * X omega - (((c : NNReal) : Real) * A omega ^ 2 / 2)) 1 0 mu"
@@ -31612,7 +31684,7 @@
     {
       "kind": "theorem",
       "name": "HasCondSubgaussianMGF.integrable_exp_mul_predictable_mul_compensated_of_abs_le",
-      "full_name": "HasCondSubgaussianMGF.integrable_exp_mul_predictable_mul_compensated_of_abs_le",
+      "full_name": "ProbabilityTheory.HasCondSubgaussianMGF.integrable_exp_mul_predictable_mul_compensated_of_abs_le",
       "file": "BanditRLProof/OFULSelfNormalizedConfidence.lean",
       "line": 134,
       "statement": "theorem HasCondSubgaussianMGF.integrable_exp_mul_predictable_mul_compensated_of_abs_le {Omega : Type u} {m mOmega : MeasurableSpace Omega} [StandardBorelSpace Omega] {mu : Measure Omega} [IsProbabilityMeasure mu] {X A : Omega -> Real} {c : NNReal} (hm : m <= mOmega) (hX : HasCondSubgaussianMGF m hm X c mu) (hA : @Measurable Omega Real m inferInstance A) (B : Real) (hB : 0 <= B) (hAbound : forall omega, |A omega| <= B) : forall s : Real, Integrable (fun omega => Real.exp (s * (A omega * X omega - (((c : NNReal) : Real) * A omega ^ 2 / 2)))) mu"
@@ -31620,7 +31692,7 @@
     {
       "kind": "theorem",
       "name": "HasCondSubgaussianMGF.predictable_mul_compensated_hasCondMGFUpperBoundAt_of_abs_le",
-      "full_name": "HasCondSubgaussianMGF.predictable_mul_compensated_hasCondMGFUpperBoundAt_of_abs_le",
+      "full_name": "ProbabilityTheory.HasCondSubgaussianMGF.predictable_mul_compensated_hasCondMGFUpperBoundAt_of_abs_le",
       "file": "BanditRLProof/OFULSelfNormalizedConfidence.lean",
       "line": 221,
       "statement": "theorem HasCondSubgaussianMGF.predictable_mul_compensated_hasCondMGFUpperBoundAt_of_abs_le {Omega : Type u} {m mOmega : MeasurableSpace Omega} [StandardBorelSpace Omega] {mu : Measure Omega} [IsProbabilityMeasure mu] {X A : Omega -> Real} {c : NNReal} (hm : m <= mOmega) (hX : HasCondSubgaussianMGF m hm X c mu) (hA : @Measurable Omega Real m inferInstance A) (B : Real) (hB : 0 <= B) (hAbound : forall omega, |A omega| <= B) : BanditRLProof.Concentration.HasCondMGFUpperBoundAt m hm (fun omega => A omega * X omega - (((c : NNReal) : Real) * A omega ^ 2 / 2)) 1 0 mu"
@@ -33316,7 +33388,7 @@
     {
       "kind": "theorem",
       "name": "ExploratoryPathUniformVisitFloor.scale_explorationRate",
-      "full_name": "ExploratoryPathUniformVisitFloor.scale_explorationRate",
+      "full_name": "BanditRLProof.FiniteHorizonRL.ExploratoryPathUniformVisitFloor.scale_explorationRate",
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeDecayingExplorationBehaviorConsistency.lean",
       "line": 96,
       "statement": "theorem ExploratoryPathUniformVisitFloor.scale_explorationRate {mdp : MDP State Action} {initialState : Measure State} (support : ExploratoryPathSupport mdp initialState) {baseVisitFloor : Real} (hfloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor) (explorationRate : NNReal) (hexplorationRate : explorationRate <= 1) : ExploratoryPathUniformVisitFloor support explorationRate (baseVisitFloor * (explorationRate : Real) ^ mdp.horizon)"
@@ -33716,7 +33788,7 @@
     {
       "kind": "theorem",
       "name": "TransitionCountRadius.radius_cumulativeVisitCount_succ_le",
-      "full_name": "TransitionCountRadius.radius_cumulativeVisitCount_succ_le",
+      "full_name": "BanditRLProof.FiniteHorizonRL.TransitionCountRadius.radius_cumulativeVisitCount_succ_le",
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeEmpiricalOptimisticRegret.lean",
       "line": 159,
       "statement": "theorem TransitionCountRadius.radius_cumulativeVisitCount_succ_le {mdp : MDP State Action} {episodes : Nat} (countRadius : TransitionCountRadius) (trajectory : EpisodeBatchTrajectory mdp episodes) (round : Nat) (stage : Fin mdp.horizon) (state : State) (action : Action) : countRadius.radius ((cumulativeTransitionCountSummaryAt trajectory (round + 1)).visitCount stage state action) <= countRadius.radius ((cumulativeTransitionCountSummaryAt trajectory round).visitCount stage state action)"
@@ -33828,7 +33900,7 @@
     {
       "kind": "theorem",
       "name": "AdaptiveCumulativeCoordinateConfidenceContract.trajectoryMeasure_optimism_and_explicitRecommendedExpectedRegret",
-      "full_name": "AdaptiveCumulativeCoordinateConfidenceContract.trajectoryMeasure_optimism_and_explicitRecommendedExpectedRegret",
+      "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeCoordinateConfidenceContract.trajectoryMeasure_optimism_and_explicitRecommendedExpectedRegret",
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeEmpiricalOptimisticRegret.lean",
       "line": 485,
       "statement": "theorem AdaptiveCumulativeCoordinateConfidenceContract.trajectoryMeasure_optimism_and_explicitRecommendedExpectedRegret {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes rounds : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (defaultState : State) (countRadius : TransitionCountRadius) (delta : Real) (contract : AdaptiveCumulativeCoordinateConfidenceContract source defaultState countRadius rounds delta) (radiusEnvelope : Fin rounds -> Real) (hradius : forall trajectory, trajectory \u2209 contract.badEvent -> forall (round : Fin rounds) (remaining : Nat) (hremaining : remaining + 1 <= mdp.horizon) (state : State), (adaptiveCumulativeEmpiricalOptimisticPlanAt trajectory defaultState countRadius round).selectedRadiusRemaining remaining hremaining state <= radiusEnvelope round) : MeasurableSet contract.badEvent /\\ source.trajectoryMeasure contract.badEvent <= ENNReal.ofReal delta /\\ forall trajectory, trajectory \u2209 contract.badEvent -> (forall round : Fin rounds, forall state, mdp.optimalValueRemaining mdp.horizon le_rfl state <= (adaptiveCumulativeEmpiricalOptimisticPlanAt trajectory defaultState countRadius round).upperValueRemaining mdp.horizon le_rfl state) /\\ adaptiveCumulativeEmpiricalOptimisticRecommendedExpectedRegret (initialState := initialState) trajectory defaultState countRadius rounds <= \u2211 round : Fin rounds, (mdp.horizon : Real) * (2 * radiusEnvelope round)"
@@ -34748,7 +34820,7 @@
     {
       "kind": "def",
       "name": "AdaptiveCumulativeEmpiricalModelState.empiricalReward",
-      "full_name": "AdaptiveCumulativeEmpiricalModelState.empiricalReward",
+      "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeEmpiricalModelState.empiricalReward",
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
       "line": 283,
       "statement": "noncomputable def AdaptiveCumulativeEmpiricalModelState.empiricalReward {mdp : MDP State Action} (model : AdaptiveCumulativeEmpiricalModelState mdp) (stage : Fin mdp.horizon) (state : State) (action : Action) : Real"
@@ -34756,7 +34828,7 @@
     {
       "kind": "theorem",
       "name": "AdaptiveCumulativeEmpiricalModelState.empiricalReward_of_visitCount_eq_zero",
-      "full_name": "AdaptiveCumulativeEmpiricalModelState.empiricalReward_of_visitCount_eq_zero",
+      "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeEmpiricalModelState.empiricalReward_of_visitCount_eq_zero",
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
       "line": 294,
       "statement": "theorem AdaptiveCumulativeEmpiricalModelState.empiricalReward_of_visitCount_eq_zero {mdp : MDP State Action} (model : AdaptiveCumulativeEmpiricalModelState mdp) (stage : Fin mdp.horizon) (state : State) (action : Action) (hzero : model.1.visitCount stage state action = 0) : model.empiricalReward stage state action = 0"
@@ -38596,7 +38668,7 @@
     {
       "kind": "theorem",
       "name": "MarkovPolicy.occupancySumRemaining_const",
-      "full_name": "MarkovPolicy.occupancySumRemaining_const",
+      "full_name": "BanditRLProof.FiniteHorizonRL.MarkovPolicy.occupancySumRemaining_const",
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveEmpiricalOptimisticOccupancyEnvelope.lean",
       "line": 33,
       "statement": "theorem MarkovPolicy.occupancySumRemaining_const {mdp : MDP State Action} (policy : MarkovPolicy mdp) (c : Real) (remaining : Nat) (hremaining : remaining <= mdp.horizon) (mu : Measure State) [IsProbabilityMeasure mu] : policy.occupancySumRemaining (fun _remaining _hremaining _state => c) remaining hremaining mu = (remaining : Real) * c"
@@ -42220,7 +42292,7 @@
     {
       "kind": "theorem",
       "name": "MDP.stochasticAllCoordinateEmpiricalFiniteBatchModel_occupancySelectedRadiusRemaining_eq",
-      "full_name": "MDP.stochasticAllCoordinateEmpiricalFiniteBatchModel_occupancySelectedRadiusRemaining_eq",
+      "full_name": "BanditRLProof.FiniteHorizonRL.MDP.stochasticAllCoordinateEmpiricalFiniteBatchModel_occupancySelectedRadiusRemaining_eq",
       "file": "BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalRealizedSuccessorRegret.lean",
       "line": 458,
       "statement": "theorem MDP.stochasticAllCoordinateEmpiricalFiniteBatchModel_occupancySelectedRadiusRemaining_eq {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (batch : EpisodeBatch mdp episodes) (defaultState : State) (rewardBudget transitionBudget : Real) : let model := mdp.stochasticAllCoordinateEmpiricalFiniteBatchModel episodes batch defaultState rewardBudget transitionBudget model.plan.optimisticPolicy.occupancySumRemaining (fun remaining hremaining state => 2 * model.plan.selectedRadiusRemaining remaining hremaining state) mdp.horizon le_rfl initialState = (mdp.horizon : Real) * (2 * (rewardBudget + transitionBudget))"
@@ -43676,7 +43748,7 @@
     {
       "kind": "theorem",
       "name": "CoordinateConfidence.transitionError_le_radius",
-      "full_name": "CoordinateConfidence.transitionError_le_radius",
+      "full_name": "BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.CoordinateConfidence.transitionError_le_radius",
       "file": "BanditRLProof/RL/FiniteHorizonCoordinateModelConfidence.lean",
       "line": 116,
       "statement": "theorem CoordinateConfidence.transitionError_le_radius {mdp : MDP State Action} {plan : EstimatedModelPlan mdp} (confidence : plan.CoordinateConfidence) (remaining : Nat) (hremaining : remaining + 1 <= mdp.horizon) (state : State) (action : Action) : |plan.transitionValue (mdp.decisionStageRemaining remaining hremaining) (plan.upperValueRemaining remaining (by omega)) state action - mdp.transitionValue (plan.upperValueRemaining remaining (by omega)) state action| <= plan.transitionRadius (mdp.decisionStageRemaining remaining hremaining) state action"
@@ -43684,7 +43756,7 @@
     {
       "kind": "def",
       "name": "CoordinateConfidence.toConfidence",
-      "full_name": "CoordinateConfidence.toConfidence",
+      "full_name": "BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.CoordinateConfidence.toConfidence",
       "file": "BanditRLProof/RL/FiniteHorizonCoordinateModelConfidence.lean",
       "line": 144,
       "statement": "def CoordinateConfidence.toConfidence {mdp : MDP State Action} {plan : EstimatedModelPlan mdp} (confidence : plan.CoordinateConfidence) : plan.Confidence where"
@@ -43692,7 +43764,7 @@
     {
       "kind": "theorem",
       "name": "CoordinateConfidence.optimism_and_expectedRegret_le_two_occupancySelectedRadiusRemaining",
-      "full_name": "CoordinateConfidence.optimism_and_expectedRegret_le_two_occupancySelectedRadiusRemaining",
+      "full_name": "BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.CoordinateConfidence.optimism_and_expectedRegret_le_two_occupancySelectedRadiusRemaining",
       "file": "BanditRLProof/RL/FiniteHorizonCoordinateModelConfidence.lean",
       "line": 154,
       "statement": "theorem CoordinateConfidence.optimism_and_expectedRegret_le_two_occupancySelectedRadiusRemaining {mdp : MDP State Action} {plan : EstimatedModelPlan mdp} (confidence : plan.CoordinateConfidence) (initialState : Measure State) [IsProbabilityMeasure initialState] : (forall state, mdp.optimalValueRemaining mdp.horizon le_rfl state <= plan.upperValueRemaining mdp.horizon le_rfl state) /\\ plan.optimisticPolicy.expectedRegret initialState <= plan.optimisticPolicy.occupancySumRemaining (fun remaining hremaining state => 2 * plan.selectedRadiusRemaining remaining hremaining state) mdp.horizon le_rfl initialState"
@@ -43884,7 +43956,7 @@
     {
       "kind": "def",
       "name": "Confidence.toCoordinateConfidence",
-      "full_name": "Confidence.toCoordinateConfidence",
+      "full_name": "BanditRLProof.FiniteHorizonRL.MDP.FiniteBatchModel.Confidence.toCoordinateConfidence",
       "file": "BanditRLProof/RL/FiniteHorizonEmpiricalModel.lean",
       "line": 362,
       "statement": "noncomputable def Confidence.toCoordinateConfidence {mdp : MDP State Action} {episodes : Nat} {model : FiniteBatchModel mdp episodes} (confidence : model.Confidence) : model.plan.CoordinateConfidence where"
@@ -43892,7 +43964,7 @@
     {
       "kind": "theorem",
       "name": "Confidence.optimism_and_expectedRegret_le_two_occupancySelectedRadiusRemaining",
-      "full_name": "Confidence.optimism_and_expectedRegret_le_two_occupancySelectedRadiusRemaining",
+      "full_name": "BanditRLProof.FiniteHorizonRL.MDP.FiniteBatchModel.Confidence.optimism_and_expectedRegret_le_two_occupancySelectedRadiusRemaining",
       "file": "BanditRLProof/RL/FiniteHorizonEmpiricalModel.lean",
       "line": 392,
       "statement": "theorem Confidence.optimism_and_expectedRegret_le_two_occupancySelectedRadiusRemaining {mdp : MDP State Action} {episodes : Nat} {model : FiniteBatchModel mdp episodes} (confidence : model.Confidence) (initialState : Measure State) [IsProbabilityMeasure initialState] : (forall state, mdp.optimalValueRemaining mdp.horizon le_rfl state <= model.plan.upperValueRemaining mdp.horizon le_rfl state) /\\ model.plan.optimisticPolicy.expectedRegret initialState <= model.plan.optimisticPolicy.occupancySumRemaining (fun remaining hremaining state => 2 * model.plan.selectedRadiusRemaining remaining hremaining state) mdp.horizon le_rfl initialState"
@@ -44044,7 +44116,7 @@
     {
       "kind": "theorem",
       "name": "Confidence.trueBellmanQ_le_optimisticQ",
-      "full_name": "Confidence.trueBellmanQ_le_optimisticQ",
+      "full_name": "BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.Confidence.trueBellmanQ_le_optimisticQ",
       "file": "BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean",
       "line": 213,
       "statement": "theorem Confidence.trueBellmanQ_le_optimisticQ {mdp : MDP State Action} {plan : EstimatedModelPlan mdp} (confidence : plan.Confidence) (remaining : Nat) (hremaining : remaining + 1 <= mdp.horizon) (state : State) (action : Action) : mdp.bellmanQ (plan.upperValueRemaining remaining (by omega)) state action <= plan.optimisticQ (mdp.decisionStageRemaining remaining hremaining) (plan.upperValueRemaining remaining (by omega)) state action"
@@ -44060,7 +44132,7 @@
     {
       "kind": "theorem",
       "name": "Confidence.optimalValueRemaining_le_upperValueRemaining",
-      "full_name": "Confidence.optimalValueRemaining_le_upperValueRemaining",
+      "full_name": "BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.Confidence.optimalValueRemaining_le_upperValueRemaining",
       "file": "BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean",
       "line": 258,
       "statement": "theorem Confidence.optimalValueRemaining_le_upperValueRemaining {mdp : MDP State Action} {plan : EstimatedModelPlan mdp} (confidence : plan.Confidence) (remaining : Nat) (hremaining : remaining <= mdp.horizon) (state : State) : mdp.optimalValueRemaining remaining hremaining state <= plan.upperValueRemaining remaining hremaining state"
@@ -44116,7 +44188,7 @@
     {
       "kind": "theorem",
       "name": "Confidence.selectedRadiusRemaining_nonneg",
-      "full_name": "Confidence.selectedRadiusRemaining_nonneg",
+      "full_name": "BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.Confidence.selectedRadiusRemaining_nonneg",
       "file": "BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean",
       "line": 336,
       "statement": "theorem Confidence.selectedRadiusRemaining_nonneg {mdp : MDP State Action} {plan : EstimatedModelPlan mdp} (confidence : plan.Confidence) (remaining : Nat) (hremaining : remaining + 1 <= mdp.horizon) (state : State) : 0 <= plan.selectedRadiusRemaining remaining hremaining state"
@@ -44124,7 +44196,7 @@
     {
       "kind": "theorem",
       "name": "Confidence.policyBellmanResidual_le_two_selectedRadiusRemaining",
-      "full_name": "Confidence.policyBellmanResidual_le_two_selectedRadiusRemaining",
+      "full_name": "BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.Confidence.policyBellmanResidual_le_two_selectedRadiusRemaining",
       "file": "BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean",
       "line": 357,
       "statement": "theorem Confidence.policyBellmanResidual_le_two_selectedRadiusRemaining {mdp : MDP State Action} {plan : EstimatedModelPlan mdp} (confidence : plan.Confidence) (remaining : Nat) (hremaining : remaining + 1 <= mdp.horizon) (state : State) : (plan.certificate confidence).policyBellmanResidual plan.optimisticPolicy remaining hremaining state <= 2 * plan.selectedRadiusRemaining remaining hremaining state"
@@ -44132,7 +44204,7 @@
     {
       "kind": "theorem",
       "name": "Confidence.expectedRegret_le_two_occupancySelectedRadiusRemaining",
-      "full_name": "Confidence.expectedRegret_le_two_occupancySelectedRadiusRemaining",
+      "full_name": "BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.Confidence.expectedRegret_le_two_occupancySelectedRadiusRemaining",
       "file": "BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean",
       "line": 392,
       "statement": "theorem Confidence.expectedRegret_le_two_occupancySelectedRadiusRemaining {mdp : MDP State Action} {plan : EstimatedModelPlan mdp} (confidence : plan.Confidence) (initialState : Measure State) [IsProbabilityMeasure initialState] : 0 <= (plan.certificate confidence).residualOccupancyRemaining plan.optimisticPolicy mdp.horizon le_rfl initialState /\\ plan.optimisticPolicy.expectedRegret initialState <= (plan.certificate confidence).residualOccupancyRemaining plan.optimisticPolicy mdp.horizon le_rfl initialState /\\ (plan.certificate confidence).residualOccupancyRemaining plan.optimisticPolicy mdp.horizon le_rfl initialState <= plan.optimisticPolicy.occupancySumRemaining (fun remaining hremaining state => 2 * plan.selectedRadiusRemaining remaining hremaining state) mdp.horizon le_rfl initialState /\\ plan.optimisticPolicy.expectedRegret initialState <= plan.optimisticPolicy.occupancySumRemaining (fun remaining hremaining state => 2 * plan.selectedRadiusRemaining remaining hremaining state) mdp.horizon le_rfl initialState"
@@ -44140,7 +44212,7 @@
     {
       "kind": "theorem",
       "name": "Confidence.optimism_and_expectedRegret_le_two_occupancySelectedRadiusRemaining",
-      "full_name": "Confidence.optimism_and_expectedRegret_le_two_occupancySelectedRadiusRemaining",
+      "full_name": "BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.Confidence.optimism_and_expectedRegret_le_two_occupancySelectedRadiusRemaining",
       "file": "BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean",
       "line": 425,
       "statement": "theorem Confidence.optimism_and_expectedRegret_le_two_occupancySelectedRadiusRemaining {mdp : MDP State Action} {plan : EstimatedModelPlan mdp} (confidence : plan.Confidence) (initialState : Measure State) [IsProbabilityMeasure initialState] : (forall state, mdp.optimalValueRemaining mdp.horizon le_rfl state <= plan.upperValueRemaining mdp.horizon le_rfl state) /\\ plan.optimisticPolicy.expectedRegret initialState <= plan.optimisticPolicy.occupancySumRemaining (fun remaining hremaining state => 2 * plan.selectedRadiusRemaining remaining hremaining state) mdp.horizon le_rfl initialState"
@@ -44244,7 +44316,7 @@
     {
       "kind": "theorem",
       "name": "ExploratoryPathUniformVisitFloor.exploratoryStateCountMargin",
-      "full_name": "ExploratoryPathUniformVisitFloor.exploratoryStateCountMargin",
+      "full_name": "BanditRLProof.FiniteHorizonRL.ExploratoryPathUniformVisitFloor.exploratoryStateCountMargin",
       "file": "BanditRLProof/RL/FiniteHorizonExploratoryPathSupportExplicitCalibration.lean",
       "line": 107,
       "statement": "theorem ExploratoryPathUniformVisitFloor.exploratoryStateCountMargin {mdp : MDP State Action} {initialState : Measure State} {episodes : Nat} {delta : Real} (support : ExploratoryPathSupport mdp initialState) (explorationRate : NNReal) (visitFloor : Real) (hfloor : ExploratoryPathUniformVisitFloor support explorationRate visitFloor) (hmargin : simultaneousCountConfidenceRadius mdp episodes delta < (episodes : Real) * visitFloor) : ExploratoryStateCountMargin mdp episodes delta explorationRate (exploratoryPathStateLower support explorationRate)"
@@ -55364,7 +55436,7 @@
     {
       "kind": "def",
       "name": "FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime",
-      "full_name": "FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime",
+      "full_name": "BanditRLProof.Tsallis.FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime",
       "file": "BanditRLProof/TsallisFiniteArmIIDHorizonHistoryAdaptiveExpectedCorruptedRewardLaw.lean",
       "line": 115,
       "statement": "noncomputable def FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime {K horizon : Nat} (source : FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource K horizon) : FiniteArmIIDHistoryAdaptiveRewardShiftSource K where"
@@ -55372,7 +55444,7 @@
     {
       "kind": "theorem",
       "name": "FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_initial",
-      "full_name": "FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_initial",
+      "full_name": "BanditRLProof.Tsallis.FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_initial",
       "file": "BanditRLProof/TsallisFiniteArmIIDHorizonHistoryAdaptiveExpectedCorruptedRewardLaw.lean",
       "line": 163,
       "statement": "theorem FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_initial {K horizon : Nat} (source : FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource K horizon) (arm : Fin K) : source.toAllTime.initial arm = source.initial arm"
@@ -55380,7 +55452,7 @@
     {
       "kind": "theorem",
       "name": "FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_successor_of_lt",
-      "full_name": "FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_successor_of_lt",
+      "full_name": "BanditRLProof.Tsallis.FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_successor_of_lt",
       "file": "BanditRLProof/TsallisFiniteArmIIDHorizonHistoryAdaptiveExpectedCorruptedRewardLaw.lean",
       "line": 170,
       "statement": "theorem FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_successor_of_lt {K horizon : Nat} (source : FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource K horizon) (n : Nat) (hn : n < horizon) (history : History.FinitePairHistory (Fin K) Real n) (arm : Fin K) : source.toAllTime.successor n history arm = source.successor \u27e8n, hn\u27e9 history arm"
@@ -55388,7 +55460,7 @@
     {
       "kind": "theorem",
       "name": "FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_successor_of_le",
-      "full_name": "FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_successor_of_le",
+      "full_name": "BanditRLProof.Tsallis.FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_successor_of_le",
       "file": "BanditRLProof/TsallisFiniteArmIIDHorizonHistoryAdaptiveExpectedCorruptedRewardLaw.lean",
       "line": 181,
       "statement": "theorem FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_successor_of_le {K horizon : Nat} (source : FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource K horizon) (n : Nat) (hn : horizon <= n) (history : History.FinitePairHistory (Fin K) Real n) (arm : Fin K) : source.toAllTime.successor n history arm = 0"
@@ -55396,7 +55468,7 @@
     {
       "kind": "theorem",
       "name": "FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_envelope_zero",
-      "full_name": "FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_envelope_zero",
+      "full_name": "BanditRLProof.Tsallis.FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_envelope_zero",
       "file": "BanditRLProof/TsallisFiniteArmIIDHorizonHistoryAdaptiveExpectedCorruptedRewardLaw.lean",
       "line": 191,
       "statement": "theorem FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_envelope_zero {K horizon : Nat} (source : FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource K horizon) (arm : Fin K) : source.toAllTime.envelope 0 arm = source.initialEnvelope arm"
@@ -55404,7 +55476,7 @@
     {
       "kind": "theorem",
       "name": "FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_envelope_succ_of_lt",
-      "full_name": "FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_envelope_succ_of_lt",
+      "full_name": "BanditRLProof.Tsallis.FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_envelope_succ_of_lt",
       "file": "BanditRLProof/TsallisFiniteArmIIDHorizonHistoryAdaptiveExpectedCorruptedRewardLaw.lean",
       "line": 199,
       "statement": "theorem FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_envelope_succ_of_lt {K horizon : Nat} (source : FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource K horizon) (n : Nat) (hn : n < horizon) (arm : Fin K) : source.toAllTime.envelope (Nat.succ n) arm = source.successorEnvelope \u27e8n, hn\u27e9 arm"
@@ -55412,7 +55484,7 @@
     {
       "kind": "theorem",
       "name": "FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_envelope_succ_of_le",
-      "full_name": "FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_envelope_succ_of_le",
+      "full_name": "BanditRLProof.Tsallis.FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_envelope_succ_of_le",
       "file": "BanditRLProof/TsallisFiniteArmIIDHorizonHistoryAdaptiveExpectedCorruptedRewardLaw.lean",
       "line": 209,
       "statement": "theorem FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_envelope_succ_of_le {K horizon : Nat} (source : FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource K horizon) (n : Nat) (hn : horizon <= n) (arm : Fin K) : source.toAllTime.envelope (Nat.succ n) arm = 0"
@@ -58492,7 +58564,7 @@
     {
       "kind": "theorem",
       "name": "OracleRestartSchedule.start_succ_le_of_ne",
-      "full_name": "OracleRestartSchedule.start_succ_le_of_ne",
+      "full_name": "BanditRLProof.Tsallis.OracleRestartSchedule.start_succ_le_of_ne",
       "file": "BanditRLProof/TsallisOracleRestartGeneratedTrajectory.lean",
       "line": 42,
       "statement": "theorem OracleRestartSchedule.start_succ_le_of_ne (schedule : OracleRestartSchedule) (n : Nat) (hboundary : schedule.start (n + 1) \u2260 n + 1) : schedule.start (n + 1) <= n"
@@ -58980,7 +59052,7 @@
     {
       "kind": "theorem",
       "name": "OracleRestartSchedule.monotone_start",
-      "full_name": "OracleRestartSchedule.monotone_start",
+      "full_name": "BanditRLProof.Tsallis.OracleRestartSchedule.monotone_start",
       "file": "BanditRLProof/TsallisOracleRestartScoreAlignment.lean",
       "line": 41,
       "statement": "theorem OracleRestartSchedule.monotone_start (schedule : OracleRestartSchedule) : Monotone schedule.start"
@@ -58988,7 +59060,7 @@
     {
       "kind": "theorem",
       "name": "OracleRestartSchedule.start_start",
-      "full_name": "OracleRestartSchedule.start_start",
+      "full_name": "BanditRLProof.Tsallis.OracleRestartSchedule.start_start",
       "file": "BanditRLProof/TsallisOracleRestartScoreAlignment.lean",
       "line": 54,
       "statement": "theorem OracleRestartSchedule.start_start (schedule : OracleRestartSchedule) (t : Nat) : schedule.start (schedule.start t) = schedule.start t"
@@ -58996,7 +59068,7 @@
     {
       "kind": "theorem",
       "name": "OracleRestartSchedule.start_eq_of_between",
-      "full_name": "OracleRestartSchedule.start_eq_of_between",
+      "full_name": "BanditRLProof.Tsallis.OracleRestartSchedule.start_eq_of_between",
       "file": "BanditRLProof/TsallisOracleRestartScoreAlignment.lean",
       "line": 65,
       "statement": "theorem OracleRestartSchedule.start_eq_of_between (schedule : OracleRestartSchedule) {epoch localTime t : Nat} (ht : schedule.start t = epoch) (hepoch : epoch <= localTime) (hlocalTime : localTime <= t) : schedule.start localTime = epoch"

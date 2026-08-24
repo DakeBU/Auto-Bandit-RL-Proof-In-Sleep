@@ -1242,7 +1242,7 @@
       ],
       "depends_on": [],
       "missing": [
-        "A full recursive Delayed SAPO state-to-ledger projection that establishes active persistence, the D.1 count clause, source widths, and recursive UCBs on each relevant processed prefix.",
+        "A measurable generated Delayed-SAPO trajectory, its Algorithm-5 transition-and-invariant-to-summary producer, and the D.4 simultaneous probability producer for the two count inequalities consumed by the compiled trace-summary adapter.",
         "A source amendment or author clarification for the intended printed D.10 prefix-to-elimination width step; the compiled conditional skeleton bypasses rather than validates that step.",
         "Unconditional source Lemmas D.10/D.12, main-text Lemma 4.2, Theorem 4.1, and either regret endpoint."
       ],
@@ -1253,7 +1253,7 @@
       "title": "Definition-D.1 active-count to same-prefix width producer",
       "chapter": "frontier",
       "status": "compiled",
-      "informal": "An ordered source-time ledger records each processed round's chosen arm, active set, and line-15 allocation, together with the prior-prefix empirical-UCB vector. For arms active throughout the prefix, Lean derives equal cumulative pull mass directly from Algorithm 5's equal active allocation. The exact D.1 lower and upper count clauses then imply n_j >= n_i/4 - 6 log T. Splitting at 192 log T produces the large-branch factor-three width comparison and the branch-free, certificate-level same-prefix factor-ten comparison; the recursive UCB definition supplies the current-UCB edge. These producers remove the manually supplied branch and pair-width premises from the repaired same-snapshot factor-20 gap theorem. The certificate is not yet constructed from a full recursive Delayed SAPO trajectory, and the D.4 probability bound is not proved.",
+      "informal": "An ordered source-time ledger records each processed round's chosen arm, active set, and line-15 allocation, together with the prior-prefix empirical-UCB vector. For arms active throughout the prefix, Lean derives equal cumulative pull mass directly from Algorithm 5's equal active allocation. The exact D.1 lower and upper count clauses then imply n_j >= n_i/4 - 6 log T. Splitting at 192 log T produces the large-branch factor-three width comparison and the branch-free, certificate-level same-prefix factor-ten comparison; the recursive UCB definition supplies the current-UCB edge. These producers remove the manually supplied branch and pair-width premises from the repaired same-snapshot factor-20 gap theorem. A separate compiled trace-summary adapter now constructs this certificate from distinct, strictly available source-indexed data and the explicit D.4 count clause; producing that summary from Algorithm 5 and proving the clause with probability 1 - 2/T remain open.",
       "declarations": [
         "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedPrefix",
         "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedPrefix.processedPullCount",
@@ -1278,18 +1278,46 @@
         "BanditRLProof.DelayedFeedback.gap_le_twenty_mul_gap_at_earlier_elimination_snapshot_of_large_or_small_count"
       ],
       "missing": [
-        "A concrete recursive Algorithm-5 state and ordered processing rule that produce the source-time ledger and active-persistence projection.",
+        "A measurable randomized Algorithm-5 trajectory and transition-and-invariant-to-summary producer for the compiled processed trace summary and its processing order.",
         "Lemma D.4's simultaneous probability bound for the D.1 count clause on the generated trajectory.",
         "An ordered elimination-snapshot wrapper and the remaining D.13--D.21 regret chain."
       ],
-      "evidence": "BanditRLProof/DelayedFeedback/ProcessedPrefixCounts.lean; Tests/DelayedFeedbackProcessedPrefixCountsCanary.lean; research-wiki/papers/neurips-2025-delayed-bobw-audit.md; proof-obligations/PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY.md"
+      "evidence": "BanditRLProof/DelayedFeedback/ProcessedPrefixCounts.lean; BanditRLProof/DelayedFeedback/RecursiveProcessedState.lean; Tests/DelayedFeedbackProcessedPrefixCountsCanary.lean; Tests/DelayedFeedbackRecursiveProcessedStateCanary.lean; research-wiki/papers/neurips-2025-delayed-bobw-audit.md; proof-obligations/PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY.md"
+    },
+    {
+      "id": "DELAYED-SAPO-PROCESSED-TRACE-SUMMARY-ADAPTER",
+      "title": "Processed trace summary to source-time ledger",
+      "chapter": "frontier",
+      "status": "compiled",
+      "informal": "A deterministic trace summary records distinct source indices for processed feedback items without requiring chronological source order and carries the strict source availability condition s + d_s < t. Its ledger reads the chosen action, source-round active set, and line-15 allocation at each source index rather than reconstructing them from later data. The intra-round current active set is kept separate from the antitone source-round trace, and current-to-source containment is an explicit summary invariant rather than a generated result. The projected confidence snapshot defines the source inverse-square-root width and recursive empirical UCB directly. Given only the two displayed D.4 count inequalities, Lean constructs the existing processed-prefix certificate and reaches the conditional same-snapshot factor-20 gap consumer. This is a deterministic adapter, not an Algorithm-5 transition/invariant producer, D.4 probability theorem, or full Delayed-SAPO trajectory.",
+      "declarations": [
+        "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedTraceSummary",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedTraceSummary.toProcessedPrefix",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedTraceSummary.empiricalWidthAt",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedTraceSummary.empiricalUpperAt",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedTraceSummary.toConfidenceSnapshot",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedTraceSummary.D4CountClause",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedTraceSummary.currentActive_subset_activeAt_sourceIndex",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedTraceSummary.toProcessedPrefixCountCertificate",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedTraceSummary.gap_le_twenty_mul_gap_at_earlier_elimination_snapshot_of_traceSummary"
+      ],
+      "depends_on": [
+        "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedPrefixCountCertificate",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedPrefixCountCertificate.gap_le_twenty_mul_gap_at_earlier_elimination_snapshot_of_countCertificate"
+      ],
+      "missing": [
+        "A measurable causal randomized Delayed-SAPO kernel and generated trajectory whose Algorithm-5 transitions produce this summary and its active-set invariants.",
+        "Lemma D.4's simultaneous 2/T probability bound for the two count inequalities over the source's processed-prefix family.",
+        "An ordered elimination-snapshot bridge and the remaining source regret chain."
+      ],
+      "evidence": "BanditRLProof/DelayedFeedback/RecursiveProcessedState.lean; Tests/DelayedFeedbackRecursiveProcessedStateCanary.lean; conversion-windows/PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY.md; proof-obligations/PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY.md"
     },
     {
       "id": "NEURIPS-2025-DELAYED-BOBW-CENTRAL-ENDPOINTS",
       "title": "Source-frozen delayed best-of-both-worlds endpoint audit",
       "chapter": "frontier",
       "status": "partial",
-      "informal": "The exact NeurIPS 2025 source is hash-frozen, a same-algorithm multi-regime contract compiles, and 124 named source-audit declarations compile across accounting, causality, processing, allocation, elimination, source-corrected good-event projection/union assembly, the one-round action law, the 19-declaration D.10/D.12 diagnostic layer, and a 16-declaration processed-prefix count-to-width producer. The producer derives the exact n_j >= n_i/4 - 6 log T comparison, large/small width branches, recursive-UCB edge, same-prefix factor-ten edge, and conditional factor-20 gap theorem. It does not verify or refute source Lemmas D.10/D.12, main-text Lemma 4.2, or Theorem 4.1 because the full recursive state-to-ledger projection, D.4 probability bound, ordered elimination trajectory, and terminal regret chain remain open. BanditRLlib does not yet implement the full Delayed SAPO trajectory, prove the D.2--D.7 component bounds on that trajectory, or prove either regret endpoint.",
+      "informal": "The exact NeurIPS 2025 source is hash-frozen, a same-algorithm multi-regime contract compiles, and 133 named source-audit declarations compile across accounting, causality, processing, allocation, elimination, source-corrected good-event projection/union assembly, the one-round action law, the 19-declaration D.10/D.12 diagnostic layer, a 16-declaration processed-prefix count-to-width producer, and a 9-declaration processed-trace-summary adapter. The adapter permits nonchronological processing, preserves source-time allocations, separates intra-round from source-round activity, records current-to-source containment explicitly, and constructs the count certificate from only the explicit D.4 count clause. It does not generate the summary or its invariants from Algorithm 5 or verify or refute source Lemmas D.4, D.10/D.12, main-text Lemma 4.2, or Theorem 4.1 because a measurable generated trajectory, D.4's simultaneous 2/T probability bound, ordered elimination trajectory, and terminal regret chain remain open. BanditRLlib does not yet implement the full Delayed SAPO trajectory, prove the D.2--D.7 component bounds on that trajectory, or prove either regret endpoint.",
       "declarations": [
         "BanditRLProof.DelayedFeedback.SameAlgorithmMultiRegimeContract",
         "BanditRLProof.DelayedFeedback.SameAlgorithmMultiRegimeContract.stochasticClaim",
@@ -1306,6 +1334,8 @@
         "BanditRLProof.DelayedFeedback.DelayedSAPOSourceConfidenceSnapshot.measure_optimalSurvivalEventSet_compl_le_of_goodEvent",
         "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.measure_optimalSurvivalEventSet_compl_le_nine_div",
         "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedPrefixCountCertificate.gap_le_twenty_mul_gap_at_earlier_elimination_snapshot_of_countCertificate",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedTraceSummary.toProcessedPrefixCountCertificate",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedTraceSummary.gap_le_twenty_mul_gap_at_earlier_elimination_snapshot_of_traceSummary",
         "BanditRLProof.DelayedFeedback.gap_le_twenty_mul_gap_at_earlier_elimination_snapshot",
         "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.gap_le_twenty_mul_gap_of_eliminationPrefixIndex_le",
         "BanditRLProof.DelayedFeedback.causalDelayedSAPOActionMeasureRule_eq_of_observation_equivalent"
@@ -1313,7 +1343,7 @@
       "missing": [
         "The complete Definition-D.1 event, its D.2--D.7 component probability producers, Delayed SAPO BSC/EAP state machines, switching rule, and ordered update semantics.",
         "A measurable causal randomized sampling kernel and recursively generated delayed-feedback trajectory law; only the one-round measure-valued rule now compiles.",
-        "A recursive state-to-ledger/count-event projection, D.4 probability proof, ordered elimination trace, a clarification or amendment of the printed D.10 transport, and an unconditional D.12 / main-text Lemma 4.2 bridge.",
+        "A measurable generated-state trajectory and Algorithm-5 transition-and-invariant-to-summary producer, D.4 probability proof, ordered elimination trace, a clarification or amendment of the printed D.10 transport, and an unconditional D.12 / main-text Lemma 4.2 bridge.",
         "The stochastic-instance and oblivious-adversarial regret endpoints for the same algorithm identity."
       ],
       "evidence": "research-wiki/papers/prospective-audit-2025-freeze.json; research-wiki/papers/neurips-2025-delayed-bobw-audit.md; proof-obligations/PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY.md"

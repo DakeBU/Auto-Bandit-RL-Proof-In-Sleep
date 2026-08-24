@@ -115,6 +115,8 @@ DELAYED_IMPLEMENTATION_IDS = (
 )
 DELAYED_DIAGNOSTIC_ID = "DELAYED-SAPO-D10-D12-GAP-ORDERING-AUDIT"
 DELAYED_PROCESSED_PREFIX_ID = "DELAYED-SAPO-D1-ACTIVE-COUNT-WIDTH-PRODUCER"
+DELAYED_TRACE_SUMMARY_ID = "DELAYED-SAPO-PROCESSED-TRACE-SUMMARY-ADAPTER"
+DELAYED_CENTRAL_ENDPOINT_ID = "NEURIPS-2025-DELAYED-BOBW-CENTRAL-ENDPOINTS"
 SUCCINCT_AUDIT_ID = "NEURIPS-2025-SUCCINCT-LOWER-BOUND-GEOMETRY-AUDIT"
 SGB_AUDIT_ID = "NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT-MECHANISM-AUDIT"
 SGB_FINITE_ALGEBRA_FILE = "BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean"
@@ -177,12 +179,7 @@ CH16_EVENT_REGRET_DECLARATIONS = frozenset({
     "BanditRLProof.LowerBounds.oneArmMajority_compl_probability_charge_le_expectedPseudoRegret",
     "BanditRLProof.LowerBounds.expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed",
 })
-EXPECTED_INDEX_EXCEPTIONS = (
-    "BanditRLProof.DelayedFeedback.ActionTimeView.ext",
-    "BanditRLProof.LowerBounds.IsConsistentRegret.add",
-    "BanditRLProof.LowerBounds.IsConsistentRegret.eventually_add_le_rpow",
-    "BanditRLProof.LowerBounds.IsConsistentRegret.eventually_log_add_div_log_le",
-)
+EXPECTED_INDEX_EXCEPTIONS = ()
 SOURCE_RESULT_IDS = (
     "RL-UNBOUNDED-HITTINGAFTER-EXPECTED-UPPER-BOUND",
     "ETC-CANONICAL-SUBGAUSSIAN-REGRET",
@@ -200,7 +197,8 @@ SOURCE_RESULT_IDS = (
 ) + DELAYED_IMPLEMENTATION_IDS + (
     DELAYED_DIAGNOSTIC_ID,
     DELAYED_PROCESSED_PREFIX_ID,
-    "NEURIPS-2025-DELAYED-BOBW-CENTRAL-ENDPOINTS",
+    DELAYED_TRACE_SUMMARY_ID,
+    DELAYED_CENTRAL_ENDPOINT_ID,
     SUCCINCT_AUDIT_ID,
     SGB_AUDIT_ID,
     "TARGET-DRIFT-V2-CONTROLLED-EVALUATION",
@@ -1162,6 +1160,8 @@ def validate_delayed_counts(records):
     )
     diagnostic = records[DELAYED_DIAGNOSTIC_ID]
     processed_prefix = records[DELAYED_PROCESSED_PREFIX_ID]
+    trace_summary = records[DELAYED_TRACE_SUMMARY_ID]
+    central_endpoint = records[DELAYED_CENTRAL_ENDPOINT_ID]
     if implementation_count != 89:
         raise ValueError("delayed implementation count drifted to {}".format(implementation_count))
     if diagnostic["status"] != "partial" or len(diagnostic["declarations"]) != 19:
@@ -1172,6 +1172,12 @@ def validate_delayed_counts(records):
         raise ValueError(
             "D.1 processed-prefix producer must remain compiled with 16 declarations"
         )
+    if trace_summary["status"] != "compiled" or len(trace_summary["declarations"]) != 9:
+        raise ValueError(
+            "processed-trace-summary adapter must remain compiled with 9 declarations"
+        )
+    if central_endpoint["status"] != "partial":
+        raise ValueError("delayed central endpoint must remain partial")
 
 
 def validate_succinct_count(records):
@@ -1270,8 +1276,12 @@ def build_claim_ledger(proof_report):
         name for record in records.values() for name in record["declarations"]
     }
     missing = sorted(referenced - index_names)
-    if missing != sorted(EXPECTED_INDEX_EXCEPTIONS):
-        raise ValueError("unexpected result/index mismatch: " + ", ".join(missing[:8]))
+    expected_missing = sorted(EXPECTED_INDEX_EXCEPTIONS)
+    if missing != expected_missing:
+        raise ValueError(
+            "unexpected result/index mismatch: "
+            f"actual_missing={missing[:8]!r}; expected_exceptions={expected_missing[:8]!r}"
+        )
 
     cng = load_json(REPO_ROOT / "research-wiki" / "proof-graph" /
                     "cng_candidate_evaluation.json")
@@ -1313,9 +1323,10 @@ def build_claim_ledger(proof_report):
                 "source_record_ids": list(DELAYED_IMPLEMENTATION_IDS) + [
                     DELAYED_DIAGNOSTIC_ID,
                     DELAYED_PROCESSED_PREFIX_ID,
-                    "NEURIPS-2025-DELAYED-BOBW-CENTRAL-ENDPOINTS",
+                    DELAYED_TRACE_SUMMARY_ID,
+                    DELAYED_CENTRAL_ENDPOINT_ID,
                 ],
-                "boundary": "89 implementation-facing, 19 diagnostic/conditional/repair, and 16 processed-prefix declarations; the factor-20 result remains certificate-level conditional, and no source-paper regret theorem is verified.",
+                "boundary": "89 implementation-facing, 19 diagnostic/conditional/repair, 16 processed-prefix, and 9 processed-trace-summary adapter declarations. The adapter consumes an explicit D.4 count clause but is not generated from Algorithm 5; the factor-20 result remains certificate-level conditional, and no source-paper regret theorem is verified.",
             },
             {
                 "artifact": "Succinct geometry audit",
@@ -1350,7 +1361,10 @@ def build_claim_ledger(proof_report):
             "diagnostic_conditional_repair_declaration_count": 19,
             "processed_prefix_id": DELAYED_PROCESSED_PREFIX_ID,
             "processed_prefix_declaration_count": 16,
-            "source_audit_declaration_count": 124,
+            "processed_trace_summary_id": DELAYED_TRACE_SUMMARY_ID,
+            "processed_trace_summary_declaration_count": 9,
+            "central_endpoint_id": DELAYED_CENTRAL_ENDPOINT_ID,
+            "source_audit_declaration_count": 133,
             "paper_endpoint_verified": False,
         },
         "succinct_geometry": {

@@ -7,9 +7,10 @@ one-based/end-of-round sigma bridge, generic shared-identity interface, causal
 action-time view, set-level new-arrival processing, line-7/8 optimal-arm
 survival, line-15 allocation, a causal one-round action measure, source-exact
 D.2--D.8 budget assembly, and a processed-prefix D.1 count-to-width producer
-compiled; full Delayed SAPO state-to-ledger projection, D.2--D.7 probability
-producers, measurable generated trajectory, ordered elimination, and paper
-endpoints remain open`
+plus its deterministic processed-trace-summary adapter compiled; the D.4 count
+clause is still conditional, and the D.2--D.7 probability producers,
+measurable generated trajectory, ordered elimination, and paper endpoints
+remain open`
 
 ## Source window
 
@@ -159,11 +160,21 @@ large-count factor-three width comparison and the unconditional same-prefix
 factor-ten comparison; the source recursive minimum produces the current-UCB
 edge.  The resulting factor-20 theorem therefore no longer assumes a branch or
 pair-width premise.  It still consumes a
-`DelayedSAPOProcessedPrefixCountCertificate` that has not been constructed from
-a full recursive Delayed SAPO state, and the D.4 probability bound, ordered
-elimination trace, and terminal regret chain remain open.  This is a compiled
-deterministic producer and conditional same-snapshot repair route, not a
-completed source repair or source theorem.
+  `DelayedSAPOProcessedPrefixCountCertificate`.  A deterministic processed
+  trace summary now constructs that certificate: its ordered ledger stores
+  distinct source indices (without assuming chronological source order),
+  carries each exact `s + d_s < t` availability witness, reads the chosen action
+  and line-15 allocation at that source index, and keeps the intra-round active
+  set separate from the antitone source-round active trace and records their
+  containment as an explicit summary invariant.  It defines the
+  current width and recursive empirical UCB from the projected summary.  The
+  remaining certificate input is the pair of displayed D.4 count inequalities.
+  Constructing the summary from the measurable randomized Algorithm-5
+  transition system, proving the inequalities' simultaneous `2/T` probability,
+  and closing the ordered elimination and terminal regret chains remain open.
+  This is a compiled deterministic adapter and conditional same-snapshot repair
+  route, not an actual recursive-state producer, source repair, or source
+  theorem.
 
 ## Hidden regularity and boundary
 

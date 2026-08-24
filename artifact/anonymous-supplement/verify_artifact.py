@@ -167,8 +167,22 @@ def verify_claim_ledger():
         fail("D.1 processed-prefix producer boundary drift")
     if delayed.get("processed_prefix_declaration_count") != 16:
         fail("D.1 processed-prefix producer count drift")
+    trace_summary_id = delayed.get("processed_trace_summary_id")
+    trace_summary = records.get(trace_summary_id, {})
+    if trace_summary.get("status") != "compiled" or len(trace_summary.get("declarations", [])) != 9:
+        fail("processed-trace-summary adapter boundary drift")
+    if delayed.get("processed_trace_summary_declaration_count") != 9:
+        fail("processed-trace-summary adapter count drift")
+    central_endpoint = records.get(delayed.get("central_endpoint_id"), {})
+    if central_endpoint.get("status") != "partial":
+        fail("delayed central endpoint status drift")
+    if delayed.get("paper_endpoint_verified") is not False:
+        fail("delayed paper endpoint verification flag drift")
     if delayed.get("source_audit_declaration_count") != (
-        impl_count + len(diagnostic["declarations"]) + len(processed_prefix["declarations"])
+        impl_count
+        + len(diagnostic["declarations"])
+        + len(processed_prefix["declarations"])
+        + len(trace_summary["declarations"])
     ):
         fail("delayed source-audit total drift")
 
