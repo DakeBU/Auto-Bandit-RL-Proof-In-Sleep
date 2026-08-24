@@ -20,6 +20,17 @@ import target_drift_agent_model_probe as model_probe
 
 
 class AgentOuterBoundaryTest(unittest.TestCase):
+    def test_workflow_supplies_canonical_fake_auth_basename(self) -> None:
+        workflow = (
+            launcher.ROOT / ".github" / "workflows" /
+            "target-drift-agent-image.yml"
+        ).read_text(encoding="utf-8")
+        canonical = '${RUNNER_TEMP}/abrl-agent-outer-auth/auth.json'
+        self.assertEqual(workflow.count(canonical), 3)
+        self.assertNotIn(
+            '${RUNNER_TEMP}/abrl-agent-outer-auth.json', workflow
+        )
+
     def test_canonical_command_has_fixed_root_and_worker_boundary(self) -> None:
         command = launcher.docker_command(
             Path("/usr/bin/docker"), "sha256:" + "a" * 64,

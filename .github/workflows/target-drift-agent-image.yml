@@ -132,17 +132,18 @@ jobs:
       - name: Probe the result-free canonical outer boundary
         run: |
           mkdir -p "${RUNNER_TEMP}/abrl-agent-outer-input"
+          mkdir -p "${RUNNER_TEMP}/abrl-agent-outer-auth"
           mkdir -p "${RUNNER_TEMP}/abrl-agent-outer-control"
           printf 'RESULT_FREE_AGENT_INPUT\n' > \
             "${RUNNER_TEMP}/abrl-agent-outer-input/input.txt"
           printf 'RESULT_FREE_SENTINEL_DO_NOT_USE\n' > \
-            "${RUNNER_TEMP}/abrl-agent-outer-auth.json"
+            "${RUNNER_TEMP}/abrl-agent-outer-auth/auth.json"
           chmod 0444 "${RUNNER_TEMP}/abrl-agent-outer-input/input.txt"
-          chmod 0400 "${RUNNER_TEMP}/abrl-agent-outer-auth.json"
+          chmod 0400 "${RUNNER_TEMP}/abrl-agent-outer-auth/auth.json"
           python3 tools/launch_target_drift_agent_container.py \
             --image-sbom "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-image-sbom.json" \
             --agent-input "${RUNNER_TEMP}/abrl-agent-outer-input" \
-            --auth-sentinel "${RUNNER_TEMP}/abrl-agent-outer-auth.json" \
+            --auth-sentinel "${RUNNER_TEMP}/abrl-agent-outer-auth/auth.json" \
             --control-output "${RUNNER_TEMP}/abrl-agent-outer-control" \
             --apparmor-source "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-codex-native.apparmor" \
             --report "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-outer-boundary-probe.json" \
