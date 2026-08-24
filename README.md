@@ -235,11 +235,19 @@ Core paths:
   checks a one-time root-open, read-only fake-auth descriptor handoff that is
   consumed and closed before the nested command sandbox starts; the nested
   shell must still receive a real permission denial on the existing auth mount.
-  This is not the real Codex provider-auth path.  The component has no
-  credential-bearing/model action and has not yet produced a tracked CI
-  attestation.  A reviewed real-execution action, remote-model
-  attestation, prices, active-budget boundary, final seal, and real smoke remain
-  separate gates.  The real smoke and all 450 model runs
+  This is not the real Codex provider-auth path.  A result-free Linux run
+  ([run 32735680163](https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/actions/runs/32735680163))
+  exercised this fake-only component on the same unpublished digest as its
+  offline-isolation and destructive-lifecycle probes.  Independent review of
+  the 29-file artifact found exactly the four expected root-control files,
+  `EACCES` on the existing auth and control paths, zero worker and nested
+  effective capabilities, and no broker environment marker or auth-targeting
+  descriptor.  The durable metadata is recorded in
+  `evaluation/target-drift-v2/agent-outer-boundary-candidate-32735680163.json`.
+  No real credential or remote model was used.  A reviewed production
+  execution/authentication path, remote-model attestation, prices,
+  active-budget boundary, final images and resealed probes, final seal, and
+  real smoke remain separate gates.  The real smoke and all 450 model runs
   remain unstarted; no model or formalization outcome is reported;
   `evaluation/target-drift-v2/external-comparator-plan.json` independently pins
   LeanFlow as a current public end-to-end comparator and specifies a 30-run

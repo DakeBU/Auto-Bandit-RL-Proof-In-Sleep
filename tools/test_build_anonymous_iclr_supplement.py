@@ -113,8 +113,13 @@ class AnonymousSupplementTests(unittest.TestCase):
             prefix + "evaluation/target-drift-v2/checker-image-isolation-candidate-record.json",
             names,
         )
+        self.assertIn(
+            prefix + "evaluation/target-drift-v2/agent-outer-boundary-candidate-record.json",
+            names,
+        )
         self.assertFalse(any("32137509103" in name for name in names))
         self.assertFalse(any("32419343467" in name for name in names))
+        self.assertFalse(any("32735680163" in name for name in names))
         self.assertIn(
             prefix + "research-wiki/proof-graph/benchmark_report.json", names
         )
@@ -368,6 +373,7 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertNotIn(BUILDER.PUBLIC_ISOLATION_CANDIDATE_RUN_ID, readme)
         self.assertNotIn(BUILDER.PUBLIC_AGENT_LIFECYCLE_RUN_ID, readme)
         self.assertNotIn(BUILDER.PUBLIC_AGENT_IMAGE_RUN_ID, readme)
+        self.assertNotIn(BUILDER.PUBLIC_AGENT_OUTER_BOUNDARY_RUN_ID, readme)
         candidate = json.loads(payload[
             "evaluation/target-drift-v2/checker-image-candidate-record.json"
         ].decode("utf-8"))
@@ -386,6 +392,9 @@ class AnonymousSupplementTests(unittest.TestCase):
         ].decode("utf-8"))
         agent_image_candidate = json.loads(payload[
             "evaluation/target-drift-v2/agent-image-candidate-record.json"
+        ].decode("utf-8"))
+        outer_candidate = json.loads(payload[
+            "evaluation/target-drift-v2/agent-outer-boundary-candidate-record.json"
         ].decode("utf-8"))
         self.assertEqual(
             lifecycle_candidate["workflow_run"]["id"],
@@ -422,6 +431,83 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertNotIn(
             "command_sha256", agent_image_candidate["lifecycle_probe"]
         )
+        self.assertEqual(
+            outer_candidate["workflow_run"]["id"],
+            "<redacted-public-run-id>",
+        )
+        self.assertEqual(
+            outer_candidate["workflow_run"]["head_commit"],
+            "<anonymous-builder-snapshot>",
+        )
+        self.assertTrue(outer_candidate["probe_checkout"]["trees_identical"])
+        self.assertEqual(
+            outer_candidate["candidate"]["workspace_base_commit"],
+            json.loads(payload["evidence/anonymous-base-manifest.json"])[
+                "schema_compatibility_reference"
+            ],
+        )
+        self.assertNotIn("artifacts", outer_candidate)
+        self.assertNotIn("source_bindings", outer_candidate)
+        self.assertNotIn("container_image_digest", outer_candidate["candidate"])
+        self.assertNotIn(
+            "container_image_digest", outer_candidate["cross_probe_bindings"]
+        )
+        outer_component = outer_candidate["outer_boundary_component"]
+        self.assertEqual(
+            [item["path"] for item in outer_component["control_evidence"]["files"]],
+            [
+                "controller-report.json",
+                "pid1-exit.json",
+                "pid1-ready.json",
+                "root-only-sentinel",
+            ],
+        )
+        self.assertEqual(
+            outer_component["worker_boundary"]["effective_capabilities_hex"],
+            "0000000000000000",
+        )
+        nested = outer_component["nested_codex_sandbox_observation"]
+        self.assertEqual(nested["outer_auth_mount_read_error_name"], "EACCES")
+        self.assertEqual(nested["root_control_output_read_error_name"], "EACCES")
+        self.assertTrue(nested["trusted_auth_fd_env_absent"])
+        self.assertTrue(nested["trusted_auth_fd_target_absent"])
+        self.assertEqual(nested["effective_capabilities_hex"], "0000000000000000")
+        self.assertEqual(outer_component["pid1_observation"]["controller_pid"], 1)
+        self.assertEqual(outer_component["pid1_observation"]["child_return_code"], 0)
+        self.assertTrue(
+            outer_component["pid1_observation"][
+                "interpreter_shutdown_fatal_absent_from_captured_log"
+            ]
+        )
+        public_outer_record = json.loads(
+            (BUILDER.REPO_ROOT / BUILDER.PUBLIC_AGENT_OUTER_BOUNDARY_RECORD).read_text(
+                encoding="utf-8"
+            )
+        )
+        anonymous_outer_bytes = payload[
+            "evaluation/target-drift-v2/agent-outer-boundary-candidate-record.json"
+        ]
+        public_outer_fingerprints = {
+            public_outer_record["recorded_at_utc"],
+            public_outer_record["workflow_run"]["job_duration"],
+            public_outer_record["workflow_run"]["head_commit"],
+            public_outer_record["probe_checkout"]["pull_request_merge_commit"],
+            public_outer_record["probe_checkout"]["pull_request_merge_tree"],
+            public_outer_record["candidate"]["container_image_digest"],
+            public_outer_record["candidate"]["checker_base_image_digest"],
+            public_outer_record["outer_boundary_component"][
+                "trusted_client_fake_auth_handoff"
+            ]["sha256"],
+        }
+        public_outer_fingerprints.update(
+            item["sha256"] for item in public_outer_record["artifacts"]
+            if item["sha256"] != hashlib.sha256(b"").hexdigest()
+        )
+        public_outer_fingerprints.update(
+            item["sha256"] for item in public_outer_record["source_bindings"]
+        )
+        for fingerprint in public_outer_fingerprints:
+            self.assertNotIn(fingerprint.encode("utf-8"), anonymous_outer_bytes)
         public_agent_record = json.loads(
             (BUILDER.REPO_ROOT / BUILDER.PUBLIC_AGENT_IMAGE_RECORD).read_text(
                 encoding="utf-8"
@@ -450,6 +536,8 @@ class AnonymousSupplementTests(unittest.TestCase):
                 "evaluation/target-drift-v2/agent-lifecycle-candidate-record.json",
             BUILDER.PUBLIC_AGENT_IMAGE_RECORD:
                 "evaluation/target-drift-v2/agent-image-candidate-record.json",
+            BUILDER.PUBLIC_AGENT_OUTER_BOUNDARY_RECORD:
+                "evaluation/target-drift-v2/agent-outer-boundary-candidate-record.json",
         }
         anonymous_payload = b"\n".join(payload.values()).lower()
         for public_rel, anonymous_rel in anonymous_records.items():
