@@ -151,7 +151,7 @@ def main() -> None:
         "worker_uid": os.geteuid(),
         "worker_gid": os.getegid(),
         "worker_effective_capabilities_hex": effective_caps,
-        "trusted_client_auth_readable": True,
+        "trusted_worker_consumed_fixed_fake_auth": True,
         "trusted_client_fake_auth_handoff": auth_handoff,
         "model_shell": model_observation,
         "sandbox_command_argv": command,

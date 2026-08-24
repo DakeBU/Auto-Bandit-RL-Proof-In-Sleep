@@ -151,6 +151,29 @@ class AgentOuterBoundaryTest(unittest.TestCase):
                 os.fstat(descriptor)
             self.assertEqual(closed.exception.errno, errno.EBADF)
 
+    def test_root_parent_closes_auth_fd_immediately_after_spawn(self) -> None:
+        process = mock.Mock()
+        process.returncode = 0
+        close_observed: list[int] = []
+
+        def communicate(*, timeout: int):
+            self.assertEqual(timeout, 45)
+            self.assertEqual(close_observed, [9])
+            return b"worker-output", None
+
+        process.communicate.side_effect = communicate
+        with mock.patch.object(
+            controller.subprocess, "Popen", return_value=process
+        ) as popen, mock.patch.object(
+            controller.os, "close", side_effect=close_observed.append
+        ):
+            outcome = controller.run_worker_with_brokered_auth(
+                9, {controller.AUTH_FD_ENV: "9"}
+            )
+        self.assertEqual(outcome.returncode, 0)
+        self.assertEqual(outcome.stdout, b"worker-output")
+        self.assertEqual(popen.call_args.kwargs["pass_fds"], (9,))
+
     def test_sbom_must_bind_checked_out_outer_sources(self) -> None:
         payload = {
             "schema_version": 1,
