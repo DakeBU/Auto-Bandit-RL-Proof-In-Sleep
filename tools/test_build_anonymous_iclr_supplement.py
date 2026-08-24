@@ -65,7 +65,23 @@ class AnonymousSupplementTests(unittest.TestCase):
         ).read_text(encoding="utf-8"))
         graph = {
             "schema_version": 1,
-            "counts": source_report["graph"]["counts"],
+            "extraction": {
+                "source": "compiled-environment",
+                "dependency_semantics": "direct-constant-occurrence",
+                "deterministic": True,
+            },
+            "status_vocabulary": [
+                "compiled", "prototype", "partial", "planned", "blocked",
+            ],
+            "nodes": [],
+            "edges": [],
+            "module_imports": [],
+            "counts": {
+                "project_nodes": 0,
+                "external_boundary_nodes": 0,
+                "edges": 0,
+                "module_imports": 0,
+            },
         }
         graph_bytes = (
             json.dumps(graph, indent=2, sort_keys=True) + "\n"
@@ -73,6 +89,7 @@ class AnonymousSupplementTests(unittest.TestCase):
         graph_path = self.root / "crlf-proof-graph.json"
         report_path = self.root / "crlf-proof-report.json"
         graph_path.write_bytes(graph_bytes)
+        source_report["graph"]["counts"] = graph["counts"]
         source_report["graph"]["sha256"] = hashlib.sha256(graph_bytes).hexdigest()
         report_path.write_bytes((
             json.dumps(source_report, indent=2, sort_keys=True) + "\n"
@@ -106,6 +123,22 @@ class AnonymousSupplementTests(unittest.TestCase):
                 BUILDER.ARCHIVE_ROOT + "/ARTIFACT_MANIFEST.json"
             ))
         self.assertTrue(manifest["proof_graph"]["included"])
+        destination = self.root / "graph-included-extracted"
+        with zipfile.ZipFile(str(first_archive)) as archive:
+            archive.extractall(str(destination))
+        artifact = destination / BUILDER.ARCHIVE_ROOT
+        verification = subprocess.run(
+            [sys.executable, "artifact/verify_artifact.py"],
+            cwd=str(artifact),
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            encoding="utf-8",
+        )
+        self.assertEqual(
+            verification.returncode, 0,
+            msg=verification.stdout + verification.stderr,
+        )
+        self.assertTrue(json.loads(verification.stdout)["proof_graph_included"])
 
     def test_archive_has_expected_positive_allowlist(self):
         with zipfile.ZipFile(str(self.first)) as archive:

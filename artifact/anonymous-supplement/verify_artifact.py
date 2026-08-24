@@ -62,6 +62,8 @@ def verify_manifest():
     entries = manifest.get("files")
     if not isinstance(entries, list) or not entries:
         fail("manifest has no payload files")
+    if manifest.get("file_count") != len(entries):
+        fail("manifest file_count does not match payload inventory")
     seen = set()
     tree_digest = hashlib.sha256()
     for entry in entries:
@@ -98,6 +100,40 @@ def verify_manifest():
     if missing:
         fail("manifested file is absent: " + ", ".join(missing[:8]))
     return manifest
+
+
+def verify_proof_graph(manifest):
+    binding = manifest.get("proof_graph")
+    if not isinstance(binding, dict) or type(binding.get("included")) is not bool:
+        fail("manifest proof-graph inclusion flag is missing")
+    graph_path = ROOT / "evidence" / "proof-graph" / "current-proof-graph.json"
+    report_path = ROOT / "evidence" / "proof-graph" / "current-benchmark-report.json"
+    if not binding["included"]:
+        if graph_path.exists() or report_path.exists():
+            fail("current proof-graph files exist while manifest marks them absent")
+        return
+    if not graph_path.is_file() or not report_path.is_file():
+        fail("manifest marks current proof graph included but files are absent")
+
+    graph = load_json(graph_path)
+    report = load_json(report_path)
+    sys.path.insert(0, str(ROOT))
+    try:
+        from tools.proof_graph_lab import validate_export
+        validate_export(graph)
+    except (ImportError, KeyError, TypeError, ValueError) as exc:
+        fail("invalid current proof graph: {}".format(exc))
+    finally:
+        if sys.path and sys.path[0] == str(ROOT):
+            sys.path.pop(0)
+
+    report_graph = report.get("graph")
+    if not isinstance(report_graph, dict):
+        fail("current proof-graph report has no graph binding")
+    if report_graph.get("sha256") != sha256(graph_path):
+        fail("current proof-graph report SHA-256 mismatch")
+    if report_graph.get("counts") != graph.get("counts"):
+        fail("current proof-graph report count mismatch")
 
 
 def verify_claim_ledger():
@@ -199,6 +235,7 @@ def main():
     verify_claim_ledger()
     verify_source_freeze()
     verify_anonymous_base(manifest)
+    verify_proof_graph(manifest)
     print(json.dumps({
         "artifact_verified": True,
         "file_count": len(manifest["files"]),
