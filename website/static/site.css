@@ -2605,6 +2605,1355 @@ tbody tr:hover {
   }
 }
 
+/* Progressive Lean Graph -------------------------------------------------- */
+
+.lean-graph-hero .callout {
+  margin-top: 1.4rem;
+}
+
+.page-shell.wide-page {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 1680px;
+}
+
+.lean-graph-stats {
+  margin-top: 1.5rem;
+}
+
+.lean-graph-app {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: calc(var(--radius) + 4px);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.lean-graph-toolbar {
+  position: relative;
+  z-index: 8;
+  display: grid;
+  grid-template-columns: minmax(18rem, auto) minmax(18rem, 1fr) auto;
+  gap: 1rem;
+  align-items: end;
+  padding: 1rem;
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface) 94%, var(--accent-soft));
+}
+
+.lean-graph-views {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.42rem;
+}
+
+.lean-graph-views button,
+.lean-graph-actions button,
+.lean-graph-actions select {
+  min-height: 2.55rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink);
+  font: 700 0.78rem/1 var(--sans);
+}
+
+.lean-graph-views button,
+.lean-graph-actions button {
+  padding: 0.72rem 0.88rem;
+  cursor: pointer;
+}
+
+.lean-graph-views button:hover,
+.lean-graph-actions button:hover,
+.lean-graph-views button[aria-pressed="true"] {
+  border-color: var(--accent);
+  color: var(--accent-strong);
+  background: var(--accent-soft);
+}
+
+.lean-graph-views button[aria-pressed="true"] {
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.lean-graph-search-shell {
+  position: relative;
+  min-width: 0;
+}
+
+.lean-graph-search-shell label,
+.lean-graph-actions label {
+  display: block;
+  margin-bottom: 0.3rem;
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.lean-graph-search-shell input {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.72rem 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+}
+
+.lean-graph-search-shell ul {
+  position: absolute;
+  top: calc(100% + 0.45rem);
+  right: 0;
+  left: 0;
+  z-index: 30;
+  max-height: 26rem;
+  margin: 0;
+  padding: 0.35rem;
+  overflow-y: auto;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: 0 20px 42px rgba(18, 33, 42, 0.18);
+  list-style: none;
+}
+
+.lean-graph-search-shell li + li {
+  margin-top: 0.2rem;
+}
+
+.lean-graph-search-shell li button {
+  display: grid;
+  width: 100%;
+  gap: 0.08rem;
+  padding: 0.65rem 0.72rem;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+
+.lean-graph-search-shell li button:hover,
+.lean-graph-search-shell li button:focus-visible {
+  background: var(--accent-soft);
+}
+
+.lean-graph-search-shell li strong,
+.lean-graph-search-shell li span,
+.lean-graph-search-shell li small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lean-graph-search-shell li span {
+  color: var(--accent-strong);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.lean-graph-search-shell li small {
+  color: var(--muted);
+}
+
+.lean-graph-no-result {
+  padding: 0.75rem;
+  color: var(--muted);
+}
+
+.lean-graph-actions {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 0.42rem;
+  align-items: end;
+}
+
+.lean-graph-actions label {
+  grid-column: 1;
+  margin: 0;
+  align-self: center;
+}
+
+.lean-graph-actions select {
+  grid-column: 1;
+  min-width: 4.8rem;
+  padding: 0.5rem 0.72rem;
+}
+
+.lean-graph-actions [data-graph-count] {
+  grid-column: 1 / -1;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.lean-graph-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1.85fr) minmax(20rem, 0.9fr);
+  min-height: 43rem;
+}
+
+.lean-graph-canvas {
+  position: relative;
+  min-width: 0;
+  min-height: 43rem;
+  overflow: hidden;
+  border-right: 1px solid var(--line);
+  background-color: color-mix(in srgb, var(--surface) 92%, var(--accent-soft));
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--line) 44%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--line) 44%, transparent) 1px, transparent 1px);
+  background-size: 28px 28px;
+  touch-action: none;
+  cursor: grab;
+}
+
+.lean-graph-canvas.is-panning {
+  cursor: grabbing;
+}
+
+.lean-graph-canvas > small {
+  position: absolute;
+  right: 0.75rem;
+  bottom: 0.6rem;
+  left: 0.75rem;
+  color: var(--muted);
+  font-size: 0.7rem;
+  text-align: center;
+  pointer-events: none;
+}
+
+.lean-graph-canvas svg {
+  display: block;
+  width: 100%;
+  height: calc(43rem - 1.8rem);
+  overflow: hidden;
+}
+
+.lean-graph-viewport {
+  transform-origin: 0 0;
+}
+
+.lean-graph-edge {
+  fill: none;
+  stroke: color-mix(in srgb, var(--muted) 50%, transparent);
+  stroke-width: 1.35;
+  vector-effect: non-scaling-stroke;
+  pointer-events: none;
+}
+
+.lean-graph-edge.relation-contains {
+  stroke-dasharray: 4 5;
+  stroke: color-mix(in srgb, var(--muted) 38%, transparent);
+}
+
+.lean-graph-edge.relation-imports,
+.lean-graph-edge.relation-teaching-prerequisite,
+.lean-graph-edge.relation-milestone-prerequisite {
+  stroke: color-mix(in srgb, var(--accent) 72%, var(--line));
+}
+
+.lean-graph-edge.relation-certifies,
+.lean-graph-edge.relation-maps-to-source,
+.lean-graph-edge.relation-benchmarked-in,
+.lean-graph-edge.relation-audited-in {
+  stroke: color-mix(in srgb, var(--success) 72%, var(--line));
+}
+
+.lean-graph-edge.is-related {
+  stroke-width: 2.5;
+  stroke: var(--accent-strong);
+}
+
+.lean-graph-arrow {
+  fill: var(--muted);
+}
+
+.lean-graph-edge-label {
+  fill: var(--accent-strong);
+  font: 800 9px/1 var(--sans);
+  paint-order: stroke;
+  stroke: var(--surface);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+.lean-graph-node {
+  cursor: pointer;
+}
+
+.lean-graph-node rect {
+  fill: var(--surface);
+  stroke: var(--line);
+  stroke-width: 1.4;
+  vector-effect: non-scaling-stroke;
+  filter: drop-shadow(0 5px 8px rgba(18, 33, 42, 0.08));
+}
+
+.lean-graph-node:hover rect,
+.lean-graph-node:focus-visible rect,
+.lean-graph-node.is-selected rect {
+  stroke: var(--accent-strong);
+  stroke-width: 3;
+}
+
+.lean-graph-node.status-compiled rect {
+  fill: color-mix(in srgb, var(--success-bg) 74%, var(--surface));
+  stroke: color-mix(in srgb, var(--success) 64%, var(--line));
+}
+
+.lean-graph-node.status-partial rect {
+  fill: color-mix(in srgb, var(--warning-bg) 70%, var(--surface));
+  stroke: color-mix(in srgb, var(--warning) 60%, var(--line));
+}
+
+.lean-graph-node.status-blocked rect {
+  fill: color-mix(in srgb, var(--blocked-bg) 75%, var(--surface));
+  stroke: color-mix(in srgb, var(--blocked) 64%, var(--line));
+}
+
+.lean-graph-node.status-planned rect,
+.lean-graph-node.status-proposed rect {
+  fill: color-mix(in srgb, var(--planned-bg) 74%, var(--surface));
+  stroke: color-mix(in srgb, var(--planned) 60%, var(--line));
+}
+
+.lean-graph-node.status-stated rect {
+  fill: color-mix(in srgb, var(--stated-bg) 74%, var(--surface));
+  stroke: color-mix(in srgb, var(--stated) 60%, var(--line));
+}
+
+.lean-graph-node.status-prototype rect {
+  fill: color-mix(in srgb, var(--accent-soft) 72%, var(--surface));
+  stroke: color-mix(in srgb, var(--accent) 60%, var(--line));
+}
+
+.lean-graph-node-kind,
+.lean-graph-node-status,
+.lean-graph-node-count {
+  fill: var(--muted);
+  font: 800 9px/1 var(--sans);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lean-graph-node-label {
+  fill: var(--ink);
+  font: 800 13px/1.15 var(--sans);
+}
+
+.lean-graph-node-count {
+  text-anchor: end;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.lean-graph-detail {
+  min-width: 0;
+  max-height: 43rem;
+  padding: 1.25rem;
+  overflow-y: auto;
+  background: var(--surface);
+  scrollbar-width: thin;
+}
+
+.lean-graph-placeholder {
+  display: grid;
+  min-height: 20rem;
+  align-content: center;
+  color: var(--muted);
+}
+
+.lean-graph-placeholder span,
+.lean-graph-kind {
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.lean-graph-placeholder h2,
+.lean-graph-detail h2 {
+  margin: 0.35rem 0 0.55rem;
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 2.2vw, 2.3rem);
+  line-height: 1.04;
+  overflow-wrap: anywhere;
+}
+
+.lean-graph-detail-header {
+  display: flex;
+  gap: 0.8rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.lean-graph-detail-header .status {
+  flex: 0 0 auto;
+}
+
+.lean-graph-subtitle {
+  margin: 0.9rem 0 0;
+  color: var(--accent-strong);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  overflow-wrap: anywhere;
+}
+
+.lean-graph-description {
+  margin: 0.8rem 0;
+}
+
+.lean-graph-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.lean-graph-meta div {
+  min-width: 0;
+  padding: 0.62rem;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--surface-2) 55%, var(--surface));
+}
+
+.lean-graph-meta dt {
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.lean-graph-meta dd {
+  margin: 0.2rem 0 0;
+  font-weight: 750;
+  overflow-wrap: anywhere;
+}
+
+.lean-graph-statement,
+.lean-graph-gaps {
+  margin: 0.8rem 0;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--surface-2) 40%, var(--surface));
+}
+
+.lean-graph-statement summary,
+.lean-graph-gaps summary {
+  padding: 0.7rem 0.8rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.lean-graph-statement .lean-code {
+  max-height: 18rem;
+  margin: 0;
+  border-radius: 0 0 8px 8px;
+}
+
+.lean-graph-gaps ul {
+  margin: 0;
+  padding: 0.2rem 1.3rem 1rem 2rem;
+}
+
+.lean-graph-detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.lean-graph-detail-actions .button {
+  min-height: 2.55rem;
+}
+
+.lean-graph-neighbors {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.lean-graph-neighbors h3 {
+  margin: 0 0 0.7rem;
+  font-size: 0.88rem;
+  letter-spacing: 0.04em;
+}
+
+.lean-graph-neighbor-list {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.lean-graph-neighbor {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.05rem;
+  width: 100%;
+  min-width: 0;
+  padding: 0.62rem 0.68rem;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--surface);
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+
+.lean-graph-neighbor:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.lean-graph-neighbor-relation {
+  color: var(--accent);
+  font-size: 0.64rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lean-graph-neighbor strong,
+.lean-graph-neighbor small {
+  overflow-wrap: anywhere;
+}
+
+.lean-graph-neighbor small,
+.lean-graph-overflow {
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
+.lean-graph-empty {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: min(28rem, 80%);
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--muted);
+  text-align: center;
+  transform: translate(-50%, -50%);
+}
+
+.lean-graph-explainers .level-label {
+  color: var(--accent);
+}
+
+.reference-note {
+  margin-top: 1.2rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  align-items: center;
+  margin-top: 1.2rem;
+}
+
+.hero-actions > span {
+  flex: 1 1 24rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+@media (max-width: 1280px) {
+  .lean-graph-toolbar {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .lean-graph-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+  }
+
+  .lean-graph-actions label {
+    margin: 0;
+  }
+
+  .lean-graph-actions [data-graph-count] {
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 1020px) {
+  .lean-graph-stage {
+    grid-template-columns: 1fr;
+  }
+
+  .lean-graph-canvas {
+    min-height: 34rem;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .lean-graph-canvas svg {
+    height: calc(34rem - 1.8rem);
+  }
+
+  .lean-graph-detail {
+    max-height: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .lean-graph-toolbar {
+    grid-template-columns: 1fr;
+    padding: 0.75rem;
+  }
+
+  .lean-graph-search-shell,
+  .lean-graph-actions {
+    grid-column: 1;
+  }
+
+  .lean-graph-views {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lean-graph-views button {
+    width: 100%;
+  }
+
+  .lean-graph-actions {
+    display: grid;
+    grid-template-columns: auto 1fr 1fr;
+  }
+
+  .lean-graph-actions label,
+  .lean-graph-actions select {
+    grid-column: 1;
+  }
+
+  .lean-graph-actions [data-graph-count] {
+    grid-column: 1 / -1;
+    margin-left: 0;
+    text-align: left;
+  }
+
+  .lean-graph-canvas {
+    min-height: 28rem;
+  }
+
+  .lean-graph-canvas svg {
+    height: calc(28rem - 1.8rem);
+  }
+
+  .lean-graph-detail {
+    padding: 1rem;
+  }
+
+  .lean-graph-meta {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* BanditRLwiki: assumption-indexed literature and formalization atlas. */
+.wiki-hero {
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent-soft) 82%, transparent), transparent 68%),
+    var(--surface);
+}
+
+.wiki-hero::after {
+  content: "upper  ↔  lower  ↔  Lean";
+  position: absolute;
+  right: 1.5rem;
+  top: 1.2rem;
+  color: color-mix(in srgb, var(--accent) 42%, transparent);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.wiki-stats {
+  margin-top: 1.4rem;
+}
+
+.wiki-status-contract,
+.wiki-family-grid,
+.wiki-paper-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.wiki-source-port-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.wiki-status-contract article,
+.wiki-family-card,
+.wiki-paper-card,
+.wiki-source-port-card {
+  min-width: 0;
+  padding: 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--ink) 6%, transparent);
+}
+
+.wiki-status-contract h3,
+.wiki-family-card h3,
+.wiki-paper-card h3,
+.wiki-source-port-card h3 {
+  margin: 0.15rem 0 0.45rem;
+}
+
+.wiki-family-card {
+  display: flex;
+  flex-direction: column;
+  color: var(--ink);
+  text-decoration: none;
+  transition: transform 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.wiki-family-card:hover {
+  color: var(--ink);
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  box-shadow: var(--shadow);
+}
+
+.wiki-family-card > span:last-child {
+  margin-top: auto;
+  color: var(--link);
+  font-weight: 700;
+}
+
+.wiki-family-count,
+.wiki-case-id {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.wiki-filter-bar {
+  position: sticky;
+  top: 0.75rem;
+  z-index: 8;
+  display: grid;
+  grid-template-columns: minmax(15rem, 1.6fr) repeat(3, minmax(9.5rem, 0.75fr)) auto;
+  gap: 0.7rem;
+  align-items: end;
+  margin: 1rem 0 0;
+  padding: 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
+}
+
+.wiki-check {
+  display: flex;
+  gap: 0.55rem;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.45rem 0.65rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-2);
+  white-space: nowrap;
+}
+
+.wiki-check input {
+  width: 1.1rem;
+  height: 1.1rem;
+  accent-color: var(--accent);
+}
+
+.wiki-filter-status {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.75rem 0.2rem;
+  color: var(--muted);
+}
+
+.wiki-filter-status > span:last-child {
+  display: flex;
+  gap: 0.45rem;
+}
+
+.wiki-filter-status button {
+  min-height: 44px;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.wiki-case-list {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.wiki-case-card,
+.frontier-case-card,
+.wiki-progress-family {
+  overflow: clip;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: 0 7px 22px color-mix(in srgb, var(--ink) 5%, transparent);
+}
+
+.wiki-case-card[hidden] {
+  display: none;
+}
+
+.wiki-case-card > summary,
+.frontier-case-card > summary,
+.wiki-progress-family > summary {
+  display: grid;
+  grid-template-columns: minmax(7rem, 0.35fr) minmax(18rem, 1.8fr) minmax(15rem, auto);
+  gap: 0.9rem;
+  align-items: center;
+  min-height: 64px;
+  padding: 0.9rem 1rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.wiki-case-card > summary::-webkit-details-marker,
+.frontier-case-card > summary::-webkit-details-marker,
+.wiki-progress-family > summary::-webkit-details-marker {
+  display: none;
+}
+
+.wiki-case-card > summary::after,
+.frontier-case-card > summary::after,
+.wiki-progress-family > summary::after {
+  content: "+";
+  grid-column: 4;
+  grid-row: 1;
+  color: var(--accent);
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.wiki-case-card[open] > summary::after,
+.frontier-case-card[open] > summary::after,
+.wiki-progress-family[open] > summary::after {
+  content: "−";
+}
+
+.wiki-case-card[open] > summary {
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--accent-soft) 35%, var(--surface));
+}
+
+.wiki-case-summary-copy {
+  display: grid;
+  gap: 0.22rem;
+  min-width: 0;
+}
+
+.wiki-case-summary-copy > strong {
+  font-family: var(--serif);
+  font-size: 1.08rem;
+}
+
+.wiki-case-summary-copy > span {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.wiki-case-statuses {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.35rem;
+}
+
+.wiki-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.65rem;
+  padding: 0.18rem 0.52rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 750;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+
+.wiki-badge.literature.minimax-matched,
+.wiki-badge.literature.asymptotic-matched,
+.wiki-badge.lean.compiled,
+.wiki-badge.source.exact-source-theorem {
+  color: var(--success);
+  background: var(--success-bg);
+}
+
+.wiki-badge.literature.near-minimax,
+.wiki-badge.literature.closest-known,
+.wiki-badge.lean.partial,
+.wiki-badge.source.faithful-restatement,
+.wiki-badge.source.normalized-comparison {
+  color: var(--warning);
+  background: var(--warning-bg);
+}
+
+.wiki-badge.literature.source-audit-pending,
+.wiki-badge.literature.upper-only,
+.wiki-badge.literature.lower-only,
+.wiki-badge.lean.planned,
+.wiki-badge.lean.not-mapped,
+.wiki-badge.source.primary-reference-pending {
+  color: var(--planned);
+  background: var(--planned-bg);
+}
+
+.wiki-badge.literature.literature-open,
+.wiki-badge.lean.blocked,
+.wiki-badge.lean.stated {
+  color: var(--blocked);
+  background: var(--blocked-bg);
+}
+
+.wiki-case-body {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.wiki-case-actions,
+.wiki-filter-status {
+  display: flex;
+  justify-content: space-between;
+}
+
+.wiki-case-actions {
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.wiki-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.wiki-tags span {
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.wiki-signature {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.6rem;
+  margin: 0;
+}
+
+.wiki-signature > div {
+  min-width: 0;
+  padding: 0.7rem;
+  border-left: 3px solid var(--accent);
+  background: var(--surface-2);
+}
+
+.wiki-signature dt {
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 750;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.wiki-signature dd {
+  margin: 0.25rem 0 0;
+  font-size: 0.9rem;
+}
+
+.wiki-signature-list {
+  columns: 2;
+  column-gap: 2.2rem;
+}
+
+.wiki-signature-list li {
+  break-inside: avoid;
+  margin-bottom: 0.7rem;
+}
+
+.wiki-comparison,
+.wiki-bound-grid,
+.wiki-lean-evidence {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.wiki-comparison > div,
+.wiki-bound,
+.wiki-lean-evidence > div,
+.wiki-frontier-note {
+  min-width: 0;
+  padding: 0.95rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--surface) 82%, var(--surface-2));
+}
+
+.wiki-comparison h3,
+.wiki-bound h3,
+.wiki-lean-evidence h3,
+.wiki-frontier-note h3 {
+  margin: 0.1rem 0 0.45rem;
+}
+
+.wiki-bound-grid {
+  align-items: stretch;
+}
+
+.wiki-bound {
+  display: flex;
+  flex-direction: column;
+}
+
+.wiki-bound .math-statement {
+  margin: 0.55rem 0;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.wiki-bound > a {
+  margin-top: auto;
+}
+
+.wiki-source-meta {
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+.wiki-paper-title {
+  margin: 0.15rem 0;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.empty-bound {
+  border-style: dashed;
+}
+
+.wiki-lean-evidence ul,
+.wiki-frontier-note ul,
+.wiki-paper-card ul {
+  margin-bottom: 0;
+}
+
+.wiki-frontier-note {
+  border-left: 5px solid var(--warning);
+  background: var(--warning-bg);
+}
+
+.frontier-case-card,
+.wiki-progress-family {
+  margin-bottom: 0.75rem;
+}
+
+.frontier-case-card > summary {
+  grid-template-columns: minmax(8rem, 0.4fr) minmax(18rem, 1.8fr) auto;
+}
+
+.frontier-case-card > div,
+.wiki-progress-family > div {
+  padding: 0 1rem 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.wiki-paper-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.wiki-paper-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.wiki-source-port-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.wiki-source-port-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+.wiki-source-port-heading .status-badge {
+  flex: 0 0 auto;
+}
+
+.wiki-source-port-count {
+  margin: 0;
+}
+
+.wiki-source-port-count strong {
+  margin-right: 0.2rem;
+  color: var(--accent);
+  font-family: var(--serif);
+  font-size: 1.7rem;
+}
+
+.wiki-source-port-card details {
+  margin-top: 0.2rem;
+  padding: 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-2);
+}
+
+.wiki-source-port-card details summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.wiki-source-port-card details ul {
+  margin-bottom: 0;
+}
+
+.wiki-source-port-card > a {
+  margin-top: auto;
+}
+
+.wiki-paper-card > a {
+  margin-top: auto;
+}
+
+.wiki-paper-card h4 {
+  margin: 0.9rem 0 0.35rem;
+  font-size: 0.88rem;
+}
+
+.wiki-theorem-surface-list,
+.wiki-paper-case-list,
+.frontier-leaf-id-list {
+  display: grid;
+  gap: 0.45rem;
+  padding-left: 0;
+  list-style: none;
+}
+
+.wiki-theorem-surface {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.2rem 0.55rem;
+  padding: 0.65rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-2);
+}
+
+.wiki-theorem-surface > span {
+  grid-row: 1 / span 2;
+  align-self: start;
+  padding: 0.18rem 0.38rem;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+}
+
+.wiki-theorem-surface small {
+  color: var(--muted);
+}
+
+.frontier-leaf-label {
+  margin-bottom: 0.35rem;
+  font-weight: 700;
+}
+
+.frontier-named-leaf,
+.frontier-related-leaf {
+  min-width: 0;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-2);
+}
+
+.frontier-named-leaf {
+  scroll-margin-top: 8rem;
+}
+
+.frontier-named-leaf:target {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+.frontier-named-leaf code,
+.frontier-related-leaf code {
+  overflow-wrap: anywhere;
+}
+
+.wiki-ledger-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 0.75rem;
+}
+
+.wiki-ledger-grid article {
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+}
+
+.wiki-ledger-grid strong {
+  color: var(--accent);
+  font-family: var(--serif);
+  font-size: 1.8rem;
+}
+
+.wiki-progress-family > summary {
+  grid-template-columns: 1fr auto;
+}
+
+.wiki-empty {
+  padding: 1.2rem;
+  text-align: center;
+}
+
+@media (max-width: 1180px) {
+  .wiki-filter-bar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .wiki-filter-bar .grow {
+    grid-column: 1 / -1;
+  }
+
+  .wiki-status-contract,
+  .wiki-family-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .wiki-signature {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .wiki-hero::after {
+    display: none;
+  }
+
+  .wiki-status-contract,
+  .wiki-family-grid,
+  .wiki-paper-grid,
+  .wiki-source-port-grid,
+  .wiki-comparison,
+  .wiki-bound-grid,
+  .wiki-lean-evidence,
+  .wiki-signature {
+    grid-template-columns: 1fr;
+  }
+
+  .wiki-filter-bar {
+    position: static;
+    grid-template-columns: 1fr;
+  }
+
+  .wiki-filter-bar .grow {
+    grid-column: 1;
+  }
+
+  .wiki-case-card > summary,
+  .frontier-case-card > summary,
+  .wiki-progress-family > summary {
+    grid-template-columns: 1fr auto;
+    gap: 0.45rem;
+  }
+
+  .wiki-case-card > summary::after,
+  .frontier-case-card > summary::after,
+  .wiki-progress-family > summary::after {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .wiki-case-id,
+  .wiki-case-summary-copy,
+  .wiki-case-statuses {
+    grid-column: 1;
+  }
+
+  .wiki-case-summary-copy {
+    grid-row: 2;
+  }
+
+  .wiki-case-statuses {
+    grid-row: 3;
+    justify-content: flex-start;
+  }
+
+  .wiki-signature-list {
+    columns: 1;
+  }
+
+  .wiki-filter-status,
+  .wiki-case-actions {
+    align-items: flex-start;
+  }
+
+  .wiki-filter-status > span:last-child {
+    width: 100%;
+  }
+
+  .wiki-filter-status button {
+    flex: 1;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

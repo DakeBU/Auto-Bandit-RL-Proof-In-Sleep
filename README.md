@@ -7,6 +7,8 @@
 **Authors:** Dake Bu · Ji Cheng · Bo Xue · Atsushi Nitanda · Hau-San Wong · Qingfu Zhang
 
 [BanditRLlib website](https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/) ·
+[BanditRLwiki](https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/banditrlwiki/) ·
+[Frontier](https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/banditrlwiki/frontier/) ·
 [Live Formalization](https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/ide/) ·
 [Lean declarations](https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/declarations/) ·
 [How to contribute](CONTRIBUTING.md)
@@ -20,6 +22,7 @@ This repository has two connected contributions:
 
 ## 📰 News
 
+- **2026-08 — BanditRLwiki and assumption-indexed frontier.** The website now compares 13 upper/lower-bound cases across seven finite-bandit, adversarial, linear/contextual, finite-horizon RL, delayed/nonstationary, pure-exploration, and distributional-lower-bound families. Every case fixes its assumptions and regret criterion, separates 19 primary-paper titles from 27 indexed theorem surfaces, and reports literature optimality, source-audit fidelity, and local Lean evidence independently. The separate Frontier distinguishes audited literature-open cases (currently none), one source-audit queue item, and 39 named formalization leaves across 13 open cases; it incorporates the latest Chapter 16 majority-event/gap-regret chain without promoting Theorem 16.2, Lemma 16.3, Theorem 16.4, or Chapter 17 tail terminals. It also surfaces the 54-declaration succinct-lower-bound and 44-declaration stochastic-gradient-bandit ports in a separate source-frozen lane, without counting either as a matched-bound case or a paper-level terminal. The setting → case → frontier organization is design inspiration from Samplinglib's public SampleWiki/Frontier; BanditRLlib's data, generator, pages, styles, and interaction code are independently implemented.
 - **2026-08 — Third source-frozen external theorem audit.** The Baudry--Johnson--Vary--Pike-Burke--Rebeschini NeurIPS 2025 stochastic-gradient-bandit audit now compiles 44 named declarations: 26 for the finite-action algebra underlying Algorithm 1 and Equations (3)--(7), plus 18 for the recursive parameter state, its measurable softmax history policy, a canonical generated action/reward trajectory, initial and successor conditional laws, and Equation-(5) history-step-kernel integrals under explicit coordinate-update integrability and arm-reward integral equalities. This process bridge does not produce those hypotheses from the paper's source-specific reward regularity, or prove its learning-rate thresholds, failure-probability estimates, or Theorems 1--4; the audit remains partial.
 - **2026-08 — Second source-frozen external theorem audit.** The Zeng--Honorio NeurIPS 2025 succinct stochastic-bandit audit now compiles 54 named declarations for the symmetric unit-atom system, the literal succinct-support contract, the source-shaped `Q` and `R`, Definitions 3.1--3.3, and Lemmas 3.1--3.4. For the same vector, the new finite-Bessel route proves that a strict succinct representation has no more atoms than any succinct representation, and that two strict representation sizes agree. A compiled diagnostic separately shows that the globally real-valued `R` candidate set is unbounded when a nonzero ambient vector is orthogonal to every atom. This records a regularity/codomain obligation rather than declaring the source incorrect; the global Lemmas 3.5--3.6, Assumption 3.7, Theorem 3.8, and its regret endpoints remain uncompiled.
 - **2026-08 — Part IV Chapters 13--17 lower-bound spine.** The separate source-faithful textbook layer compiles Chapter 13 minimax semantics, least-explored-arm and error-bearing two-environment algebra; Chapter 14 extended-real relative entropy, event-level binary data processing, endpoint-complete testing, and unconditional Bretagnolle--Huber; and Chapter 15's general finite-arm, same-randomized-policy history KL decomposition (Lemma 15.1) together with the exact unit-Gaussian Theorem 15.2 existence and minimax chain, including the `1/27` constant. This also yields Chapter 13's source-order statement with explicit universal constant `1/54`. Chapter 16 now compiles exact consistency/`d_inf` interfaces, the unit-Gaussian Table 16.1 equality, subpolynomial power/log-growth dependencies, the one-arm same-policy history-KL/majority-event information layer, canonical gap-times-pull-count expected pseudo-regret, both exact majority-event charges, and a factor-`1/4` finite-KL logarithmic consumer for explicit gap vectors. The finite arm-law mean-to-gap identification and Theorem 16.2/Lemma 16.3/Theorem 16.4 remain blocked. Chapter 17's threshold surfaces, Claim 17.5 first-moment witness, event subtraction, and deterministic Eq. (17.8) quarter-horizon algebra compile while its tail terminals remain blocked. Chapter 15's optional notes/exercises are not claimed complete, and compiled dependencies are never reported as later Chapter 16--17 source terminals.
@@ -69,6 +72,9 @@ The website is therefore not only API documentation. It serves three audiences:
 The public site provides:
 
 - an accessible project overview and recommended reading path;
+- BanditRLwiki, with 13 assumption-compatible upper/lower comparisons, stable
+  case pages, a primary-paper index, independent literature/source/Lean status,
+  audit progress, and explicit frontier leaves;
 - a sidebar Book Map with ten mathematical chapters;
 - a separate source-faithful Textbook Spine for Part IV, Chapters 13--17, with per-chapter status and page mapping;
 - an exhaustive generated declaration catalogue;
@@ -239,7 +245,7 @@ Core paths:
   original 450-run protocol bytes and causal mechanism estimand unchanged; an
   adjacent seal binds both files by SHA-256.  The comparator calibration is
   planned and unrun, so it supports no numerical or superiority claim;
-- `website/` — literate static site, local compiler service, and integrity checker;
+- `website/` — literate static site, BanditRLwiki, progressive chapter → module → declaration Lean Graph, local compiler service, and integrity checker;
 - `tools/bandit.py` — deterministic harness CLI.
 - [`docs/proof_graph_laboratory.md`](docs/proof_graph_laboratory.md) — compiled-environment dependency export, proof-cost/ZDD/hypergraph prototypes, and the proof-structural novelty audit boundary.
 
@@ -269,6 +275,7 @@ Contribution credit records the specific accepted work. It does not automaticall
 | [ABEIS][abeis] | Hierarchical proof harness | Inspiration for ABRL upper/middle/lower/reviewer organization |
 | [ARIS][aris] | Plain-file autonomous research workflow | Inspiration for inspectable tasks, reviews, and run logs |
 | [StatsMLlib][statsmllib] | Open statistical ML library and teaching navigation | Inspiration for the community-facing sidebar and Book Map |
+| [Samplinglib Lean Graph][samplinglib-graph] and [SampleWiki][samplinglib-wiki] | Interactive formal-library topology and setting-to-frontier atlas | Design inspiration only; BanditRLlib independently implements the graph, theorem data, generator, styles, and interaction code |
 
 The Blueprint website design and organization were inspired by **Sho Sonoda's** [Lean-Ridgelet repository](https://github.com/shosonoda/lean-ridgelet) and [Blueprint website](https://shosonoda.github.io/lean-ridgelet/blueprint/html-multi/overview/). See [NOTICE](NOTICE.md) and [docs/attribution.md](docs/attribution.md). This attribution does not imply Sho Sonoda's participation, endorsement, or maintenance of this project.
 
@@ -294,3 +301,5 @@ Repository code and documentation are governed by [LICENSE](LICENSE). Third-part
 [lean-stat]: https://github.com/leanprover-community/lean-stat-learning-theory
 [mathlib]: https://github.com/leanprover-community/mathlib4
 [statsmllib]: https://statsmllib.github.io/
+[samplinglib-graph]: https://dakebu.github.io/Auto-Sampling-Theory-In-Sleep/lean-foundations.html
+[samplinglib-wiki]: https://dakebu.github.io/Auto-Sampling-Theory-In-Sleep/example-cases/samplewiki.html
