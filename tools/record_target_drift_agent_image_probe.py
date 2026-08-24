@@ -403,6 +403,18 @@ def main() -> None:
             "adapter_source_sha256": sha256_file(
                 TOOLS / "codex_target_drift_adapter.py"
             ),
+            "outer_launcher_source_sha256": sha256_file(
+                TOOLS / "launch_target_drift_agent_container.py"
+            ),
+            "outer_controller_source_sha256": sha256_file(
+                TOOLS / "target_drift_agent_outer_controller.py"
+            ),
+            "outer_probe_source_sha256": sha256_file(
+                TOOLS / "target_drift_agent_outer_probe.py"
+            ),
+            "model_probe_source_sha256": sha256_file(
+                TOOLS / "target_drift_agent_model_probe.py"
+            ),
         },
         "nonclaims": [
             "No provider credential was supplied and no model invocation occurred.",

@@ -1,5 +1,5 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "suite_id": "ABRL-TARGET-DRIFT-V2",
   "status": "result_free_agent_image_components",
   "controller": {
@@ -28,9 +28,17 @@
     ],
     "credential_boundary": "the candidate build and probes contain no provider credential and make no model call"
   },
+  "result_free_outer_boundary_candidate": {
+    "launcher": "tools/launch_target_drift_agent_container.py exposes only one fixed result-free component probe; it accepts an exact local image digest through the image SBOM, the hash-observed canonical Docker runtime, the frozen AppArmor source, one fixed fake auth.json, one fixed read-only agent input, and one initially empty root-control output directory",
+    "docker_boundary": "the canonical argv uses a read-only root filesystem, the abrl-target-drift-codex AppArmor profile, no-new-privileges, a private PID namespace with abrl-agent-pid1 as PID 1, fixed CPU/memory/PID ceilings, all capabilities dropped except SETUID, SETGID, CHOWN, DAC_OVERRIDE, and FOWNER for the trusted root controller, and no Docker init shim",
+    "root_controller": "the in-image root controller accepts no caller command; it validates the read-only single-file fake auth and agent input, copies them into disposable tmpfs mounts, chowns only those copies, and irreversibly transitions its fixed child to numeric uid/gid 10002",
+    "model_shell_boundary": "the trusted provider-client identity can read the disposable auth copy, while the fixed offline codex sandbox probe observes the auth source, disposable auth copy, and root control output as unreadable; both the outer worker and the nested shell independently read /proc/self/status and must report CapEff=0, while the nested shell has a writable tmpfs workspace, immutable original input, and denied network",
+    "persistent_output": "before the worker starts, root creates a fixed 0400 sentinel in the 0700 root-control bind; the nested shell must receive EACCES or EPERM, not ENOENT, when reading that existing sentinel. Only the sentinel, PID-1 ledgers, and root controller report cross the bind, and the report binds the sentinel path/mode/uid/gid/bytes/SHA-256",
+    "evidence_status": "component candidate only: CI uses a literal fake sentinel, performs no provider request or model invocation, and neither publishes nor freezes a production image"
+  },
   "production_gate": [
-    "replace the result-free probe with a sealed outer launcher that gives the adapter root-only control state and the evaluated Codex child a non-root tmpfs workspace",
-    "mount one provider credential through the frozen credential boundary without exposing it to model-spawned commands",
+    "replace the fixed component-probe action with a separately reviewed execution action that gives the real adapter the same root-only control state and non-root tmpfs workspace without accepting caller-controlled container argv",
+    "mount one real provider credential through the frozen single-file boundary and rerun the full final-image credential-visibility probe without recording secret bytes or a secret-derived digest",
     "freeze the exact provider/model/settings/prices/budgets and publish the final image digest plus all final-image probes",
     "pass the permanently result-ineligible one-case-by-three-condition real-infrastructure smoke before any primary run"
   ],

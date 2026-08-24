@@ -136,6 +136,7 @@ python tools/bandit.py list-lean-decls Exp3 --statement
 python tools/bandit.py route-plan BRL-UCB-PORT-001
 python tools/validate_target_drift_suite.py
 python tools/validate_target_drift_suite_v2.py
+python tools/validate_target_drift_external_comparator.py
 ```
 
 Core paths:
@@ -220,10 +221,24 @@ Core paths:
   were independently recomputed; the public record is
   `evaluation/target-drift-v2/agent-image-candidate-32464814750.json`.  This is
   result-free candidate evidence, not a production agent sandbox or experiment
-  result.  A final credential-bearing outer launcher, remote-model
+  result.  The source tree now also contains a canonical, result-free-only
+  outer-launcher candidate: it runs the exact local digest with a root PID-1
+  control plane, fixed AppArmor/resource/capability policy, one read-only fake
+  `auth.json`, a read-only agent input, disposable non-root tmpfs workspace and
+  `CODEX_HOME`, and root-only persistent control output.  Its offline probe
+  checks that the trusted client identity can read the disposable fake auth
+  while the nested command sandbox cannot.  This new component has no
+  credential-bearing/model action and has not yet produced a tracked CI
+  attestation.  A reviewed real-execution action, remote-model
   attestation, prices, active-budget boundary, final seal, and real smoke remain
   separate gates.  The real smoke and all 450 model runs
   remain unstarted; no model or formalization outcome is reported;
+  `evaluation/target-drift-v2/external-comparator-plan.json` independently pins
+  LeanFlow as a current public end-to-end comparator and specifies a 30-run
+  descriptive calibration after its own result-ineligible smoke.  It leaves the
+  original 450-run protocol bytes and causal mechanism estimand unchanged; an
+  adjacent seal binds both files by SHA-256.  The comparator calibration is
+  planned and unrun, so it supports no numerical or superiority claim;
 - `website/` — literate static site, local compiler service, and integrity checker;
 - `tools/bandit.py` — deterministic harness CLI.
 - [`docs/proof_graph_laboratory.md`](docs/proof_graph_laboratory.md) — compiled-environment dependency export, proof-cost/ZDD/hypergraph prototypes, and the proof-structural novelty audit boundary.

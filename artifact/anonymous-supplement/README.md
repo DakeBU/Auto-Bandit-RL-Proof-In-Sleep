@@ -38,6 +38,13 @@ were screened.
   materializer is not runnable from this archive; the protocol and component
   code are supplied for inspection and component tests only.  No provider
   run, grade, analysis result, or numerical outcome is included or claimed.
+  The producer first verifies the public external-comparator plan and seal
+  against the original primary-protocol bytes.  It then rebinds their SHA-256
+  fields to the redacted protocol and canonical plan bytes packaged in this
+  derivative archive.  The retained `sealed_on` date records when the
+  result-free design was frozen; it is not a claim that the anonymized byte
+  presentation existed unchanged on that date.  The packaged validator checks
+  this derivative hash chain directly.
 
 The delayed-feedback flagship contains 88 implementation-facing compiled
 declarations and 19 separately counted diagnostic/conditional/repair
@@ -99,6 +106,7 @@ lake env lean Tests/TextbookPartIVChapter17Canary.lean
 lake env lean Tests/SuccinctLowerBoundPaperAuditCanary.lean
 lake env lean Tests/StochasticGradientBanditPaperAuditCanary.lean
 python -m unittest tools/test_proof_graph_lab.py
+python tools/validate_target_drift_external_comparator.py
 ```
 
 `lake build` is the full kernel/build gate.  The focused commands make the

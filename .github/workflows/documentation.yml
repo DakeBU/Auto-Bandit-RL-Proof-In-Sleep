@@ -34,6 +34,11 @@ jobs:
       - name: Build the Lean library and tests
         run: python3 tools/bandit.py check
 
+      - name: Validate result-free evaluation protocols
+        run: |
+          python3 tools/validate_target_drift_suite_v2.py
+          python3 tools/validate_target_drift_external_comparator.py
+
       - name: Build the literate formalization website
         run: |
           if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
