@@ -16,6 +16,13 @@ The build:
   `content/results.json`;
 - renders maintainable Mermaid architecture, dependency, progress, learning,
   installation, formalization, and contribution diagrams;
+- generates an interactive Lean Graph over all current modules and declarations,
+  with progressive chapter/module/declaration expansion, search, status-aware
+  branch inspection, and reviewed prerequisite/consumer edges;
+- generates BanditRLwiki from `content/banditrlwiki.json`: an
+  assumption-indexed upper/lower-bound atlas with primary-paper theorem links,
+  independent literature/source-audit/Lean status, stable case pages, a paper
+  index, audit progress, and explicit frontier leaves;
 - exposes installation, contributors, contribution, governance, attribution,
   roadmap, source-access, declaration, implementation-map, and textbook-spine
   pages;
@@ -34,6 +41,15 @@ never presented as a completed source theorem.
 
 The generator and checks use the Python standard library. The published static
 site loads MathJax and Mermaid from jsDelivr.
+
+BanditRLwiki currently covers 13 comparison cases in seven assumption families,
+19 primary papers, and 27 separately indexed theorem surfaces. It deliberately
+reports zero `literature-open` cases until a scoped primary-source audit supports
+such a claim; one case remains in the source-audit queue, while the 13
+formalization-open cases expose 39 stable named leaves. Two additional
+source-frozen ports—the 54-declaration succinct-lower-bound audit and the
+44-declaration stochastic-gradient-bandit audit—are displayed outside that
+comparison ledger until their paper-level terminal contracts are frozen.
 
 ## 🛠️ Build locally
 
@@ -102,3 +118,12 @@ sidebar and book-to-library organization are inspired by
 JavaScript, diagrams, and prose here are original; no source file or template
 was copied from either project. Attribution does not imply participation,
 endorsement, review, or maintenance by those projects or authors.
+
+The progressive graph interaction is also informed by Samplinglib's public
+[Underlying Lean Graph of Libraries](https://dakebu.github.io/Auto-Sampling-Theory-In-Sleep/lean-foundations.html).
+BanditRLwiki's setting-to-case-to-frontier organization is informed by its
+[SampleWiki](https://dakebu.github.io/Auto-Sampling-Theory-In-Sleep/example-cases/samplewiki.html)
+and [Frontier](https://dakebu.github.io/Auto-Sampling-Theory-In-Sleep/example-cases/samplewiki/frontier.html).
+BanditRLlib's graph model, theorem data, generated HTML, CSS, and JavaScript are
+independently implemented; no Samplinglib source, graph or theorem data,
+template, stylesheet, or prose is copied.

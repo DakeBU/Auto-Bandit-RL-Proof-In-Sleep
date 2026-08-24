@@ -31,6 +31,7 @@ class LinkCollector(HTMLParser):
         super().__init__(convert_charrefs=True)
         self.links: list[tuple[str, str]] = []
         self.ids: set[str] = set()
+        self.id_counts: Counter[str] = Counter()
         self.mermaid_count = 0
         self.mathjax_count = 0
         self.source_link_count = 0
@@ -52,6 +53,17 @@ class LinkCollector(HTMLParser):
         self.algorithm_flow_count = 0
         self.source_theorem_card_count = 0
         self.source_boundary_count = 0
+        self.wiki_case_count = 0
+        self.wiki_family_card_count = 0
+        self.wiki_paper_card_count = 0
+        self.wiki_source_port_count = 0
+        self.wiki_theorem_surface_count = 0
+        self.wiki_paper_case_link_count = 0
+        self.wiki_literature_badge_count = 0
+        self.wiki_source_badge_count = 0
+        self.wiki_lean_badge_count = 0
+        self.frontier_case_count = 0
+        self.frontier_named_leaf_count = 0
         self.nested_math_errors = 0
         self.math_tex_sources: list[str] = []
         self._stack: list[tuple[str, set[str]]] = []
@@ -60,6 +72,7 @@ class LinkCollector(HTMLParser):
         values = {key: value or "" for key, value in attrs}
         if values.get("id"):
             self.ids.add(values["id"])
+            self.id_counts[values["id"]] += 1
         classes = set(values.get("class", "").split())
         if "math-statement" in classes:
             self.math_statement_count += 1
@@ -82,6 +95,28 @@ class LinkCollector(HTMLParser):
             self.source_theorem_card_count += 1
         if "source-boundary" in classes:
             self.source_boundary_count += 1
+        if "wiki-case-card" in classes:
+            self.wiki_case_count += 1
+        if "wiki-family-card" in classes:
+            self.wiki_family_card_count += 1
+        if "wiki-paper-card" in classes:
+            self.wiki_paper_card_count += 1
+        if "wiki-source-port-card" in classes:
+            self.wiki_source_port_count += 1
+        if "wiki-theorem-surface" in classes:
+            self.wiki_theorem_surface_count += 1
+        if "wiki-paper-case-link" in classes:
+            self.wiki_paper_case_link_count += 1
+        if values.get("data-wiki-literature-status"):
+            self.wiki_literature_badge_count += 1
+        if values.get("data-wiki-source-status"):
+            self.wiki_source_badge_count += 1
+        if values.get("data-wiki-lean-status"):
+            self.wiki_lean_badge_count += 1
+        if "frontier-case-card" in classes:
+            self.frontier_case_count += 1
+        if "frontier-named-leaf" in classes and "data-frontier-leaf" in values:
+            self.frontier_named_leaf_count += 1
         if any("math-statement" in parent_classes for _parent_tag, parent_classes in self._stack):
             if "teaching-grid" in classes or "lean-code" in classes:
                 self.nested_math_errors += 1
@@ -373,6 +408,11 @@ def main() -> int:
         output / "learning" / "index.html",
         output / "textbook-spine" / "index.html",
         output / "roadmap" / "index.html",
+        output / "lean-graph" / "index.html",
+        output / "banditrlwiki" / "index.html",
+        output / "banditrlwiki" / "frontier" / "index.html",
+        output / "banditrlwiki" / "papers" / "index.html",
+        output / "banditrlwiki" / "progress" / "index.html",
         output / "proof-graph-laboratory" / "index.html",
         output / "workflow" / "index.html",
         output / "attribution" / "index.html",
@@ -403,6 +443,319 @@ def main() -> int:
             errors.append("site manifest must keep the CNG candidate status partial")
         if manifest.get("cng_structural_discovery_established") is not False:
             errors.append("site manifest must not claim CNG structural discovery")
+
+    lean_graph_path = output / "lean-graph" / "index.html"
+    lean_graph_data_path = output / "lean-graph" / "graph.json"
+    lean_graph_script_path = output / "static" / "lean-graph.js"
+    for required_path in (lean_graph_data_path, lean_graph_script_path):
+        if not required_path.exists():
+            errors.append(f"missing Lean Graph artifact: {required_path.relative_to(output)}")
+    if lean_graph_path.exists():
+        lean_graph_html = lean_graph_path.read_text(encoding="utf-8")
+        for required_text in (
+            "Underlying Lean Graph of BanditRLlib",
+            "progressive disclosure",
+            "not a kernel trace",
+            "Whole-chapter status and individual compiled declarations remain separate",
+            "Auto-Sampling-Theory-In-Sleep/lean-foundations.html",
+        ):
+            if required_text not in lean_graph_html:
+                errors.append(f"lean-graph/index.html: missing graph boundary {required_text!r}")
+    if lean_graph_data_path.exists():
+        try:
+            lean_graph = json.loads(lean_graph_data_path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as error:
+            errors.append(f"lean-graph/graph.json: invalid JSON: {error}")
+            lean_graph = {}
+        graph_nodes = lean_graph.get("nodes", [])
+        graph_edges = lean_graph.get("edges", [])
+        graph_node_ids = [node.get("id") for node in graph_nodes if isinstance(node, dict)]
+        graph_node_id_set = set(graph_node_ids)
+        if len(graph_node_ids) != len(graph_node_id_set):
+            errors.append("lean-graph/graph.json: duplicate node ids")
+        if lean_graph.get("root") not in graph_node_id_set:
+            errors.append("lean-graph/graph.json: root does not name a graph node")
+        for required_node in (
+            "library:banditrl",
+            "group:book-map",
+            "group:textbook-spine",
+            "group:milestones",
+            "group:proof-laboratory",
+        ):
+            if required_node not in graph_node_id_set:
+                errors.append(f"lean-graph/graph.json: missing required node {required_node}")
+        for edge in graph_edges:
+            if edge.get("source") not in graph_node_id_set or edge.get("target") not in graph_node_id_set:
+                errors.append("lean-graph/graph.json: edge references a missing node")
+                break
+        if manifest.get("lean_graph_node_count") != len(graph_nodes):
+            errors.append("manifest lean_graph_node_count does not match lean-graph/graph.json")
+        if manifest.get("lean_graph_edge_count") != len(graph_edges):
+            errors.append("manifest lean_graph_edge_count does not match lean-graph/graph.json")
+        declaration_node_count = sum(
+            1 for node in graph_nodes if isinstance(node, dict) and node.get("kind") in {
+                "definition", "abbreviation", "structure", "typeclass", "inductive type",
+                "theorem", "lemma", "axiom", "opaque declaration"
+            }
+        )
+        if declaration_node_count != manifest.get("declaration_count"):
+            errors.append("Lean Graph declaration nodes do not match the generated declaration inventory")
+
+    wiki_source_path = SITE_DIR / "content" / "banditrlwiki.json"
+    wiki_script_path = output / "static" / "banditrlwiki.js"
+    if not wiki_source_path.exists():
+        errors.append("missing website/content/banditrlwiki.json")
+        wiki = {"families": [], "cases": []}
+    else:
+        wiki = json.loads(wiki_source_path.read_text(encoding="utf-8"))
+    milestone_source = json.loads(
+        (SITE_DIR / "content" / "results.json").read_text(encoding="utf-8")
+    )
+    milestone_by_id = {
+        milestone.get("id"): milestone for milestone in milestone_source.get("results", [])
+    }
+    if not wiki_script_path.exists():
+        errors.append("missing generated BanditRLwiki interaction script")
+    wiki_families = wiki.get("families", [])
+    wiki_cases = wiki.get("cases", [])
+    wiki_active_source_audits = wiki.get("active_source_audits", [])
+    family_ids = [family.get("id") for family in wiki_families]
+    case_ids = [case.get("id") for case in wiki_cases]
+    if len(family_ids) != len(set(family_ids)):
+        errors.append("BanditRLwiki family ids are not unique")
+    if len(case_ids) != len(set(case_ids)):
+        errors.append("BanditRLwiki case ids are not unique")
+    if manifest.get("banditrlwiki_family_count") != len(wiki_families):
+        errors.append("manifest BanditRLwiki family count does not match source data")
+    if manifest.get("banditrlwiki_case_count") != len(wiki_cases):
+        errors.append("manifest BanditRLwiki case count does not match source data")
+    if manifest.get("banditrlwiki_active_source_audit_count") != len(wiki_active_source_audits):
+        errors.append("manifest BanditRLwiki active-source-audit count does not match source data")
+    active_source_audit_ids = [audit.get("id") for audit in wiki_active_source_audits]
+    if len(active_source_audit_ids) != len(set(active_source_audit_ids)):
+        errors.append("BanditRLwiki active source-audit ids are not unique")
+    for audit in wiki_active_source_audits:
+        required = (
+            "id", "title", "paper_title", "authors", "year", "url", "milestone_id", "lean_status",
+            "compiled_declaration_count", "scope", "boundary", "representative_declarations",
+        )
+        if not all(audit.get(key) for key in required):
+            errors.append(f"BanditRLwiki active source audit {audit.get('id')} is incomplete")
+        if audit.get("lean_status") != "partial":
+            errors.append(f"BanditRLwiki active source audit {audit.get('id')} must remain partial")
+        if not isinstance(audit.get("compiled_declaration_count"), int) or audit.get("compiled_declaration_count", 0) <= 0:
+            errors.append(f"BanditRLwiki active source audit {audit.get('id')} has an invalid declaration count")
+        milestone = milestone_by_id.get(audit.get("milestone_id"))
+        if milestone is None:
+            errors.append(f"BanditRLwiki active source audit {audit.get('id')} names a missing milestone")
+        else:
+            milestone_declarations = set(milestone.get("declarations", []))
+            if len(milestone_declarations) != audit.get("compiled_declaration_count"):
+                errors.append(
+                    f"BanditRLwiki active source audit {audit.get('id')} declaration count drifts from its milestone"
+                )
+            if milestone.get("status") != audit.get("lean_status"):
+                errors.append(
+                    f"BanditRLwiki active source audit {audit.get('id')} status drifts from its milestone"
+                )
+            if not set(audit.get("representative_declarations", [])).issubset(milestone_declarations):
+                errors.append(
+                    f"BanditRLwiki active source audit {audit.get('id')} cites a declaration outside its milestone"
+                )
+        if "not" not in audit.get("boundary", "").lower() and "remain" not in audit.get("boundary", "").lower():
+            errors.append(f"BanditRLwiki active source audit {audit.get('id')} does not state its nonclaim")
+        if "�" in json.dumps(audit, ensure_ascii=False):
+            errors.append(f"BanditRLwiki active source audit {audit.get('id')} contains a Unicode replacement character")
+    literature_status_counts = Counter(
+        case.get("comparison", {}).get("status") for case in wiki_cases
+    )
+    lean_status_counts = Counter(case.get("lean", {}).get("status") for case in wiki_cases)
+    if manifest.get("banditrlwiki_literature_status_counts") != dict(sorted(literature_status_counts.items())):
+        errors.append("manifest BanditRLwiki literature-status ledger does not match source data")
+    if manifest.get("banditrlwiki_lean_status_counts") != dict(sorted(lean_status_counts.items())):
+        errors.append("manifest BanditRLwiki Lean-status ledger does not match source data")
+    literature_open_cases = [
+        case for case in wiki_cases if case.get("frontier", {}).get("literature_open")
+    ]
+    formalization_open_cases = [
+        case for case in wiki_cases if case.get("frontier", {}).get("formalization_open")
+    ]
+    formalization_leaf_ids = [
+        leaf_id
+        for case in formalization_open_cases
+        for leaf_id in case.get("frontier", {}).get("leaf_ids", [])
+    ]
+    source_audit_cases = [
+        case for case in wiki_cases
+        if case.get("comparison", {}).get("status") == "source-audit-pending"
+    ]
+    paper_urls: set[str] = set()
+    paper_case_pairs: set[tuple[str, str]] = set()
+    paper_titles_by_url: dict[str, str] = {}
+    theorem_surface_count = 0
+    for case in wiki_cases:
+        for side in ("upper", "lower"):
+            for record in case.get(side, []):
+                theorem_surface_count += 1
+                url = record.get("url", "")
+                paper_urls.add(url)
+                paper_case_pairs.add((url, case.get("id", "")))
+                required = ("paper_title", "result_title", "url", "theorem", "math", "plain")
+                if not all(record.get(key) for key in required):
+                    errors.append(
+                        f"BanditRLwiki case {case.get('id')} has an incomplete {side} theorem surface"
+                    )
+                if "title" in record:
+                    errors.append(
+                        f"BanditRLwiki case {case.get('id')} does not separate paper_title/result_title"
+                    )
+                paper_title = record.get("paper_title", "")
+                known_title = paper_titles_by_url.setdefault(url, paper_title)
+                if known_title != paper_title:
+                    errors.append(f"BanditRLwiki source {url} has inconsistent paper titles")
+                if case.get("source_status") == "exact-source-theorem" and not re.search(
+                    r"\b(?:Theorem|Lemma|Corollary)\s+[0-9]", record.get("theorem", "")
+                ):
+                    errors.append(
+                        f"BanditRLwiki exact-source case {case.get('id')} lacks a numbered theorem locator"
+                    )
+    if manifest.get("banditrlwiki_literature_open_count") != len(literature_open_cases):
+        errors.append("manifest BanditRLwiki literature-open count does not match source data")
+    if manifest.get("banditrlwiki_formalization_open_case_count") != len(formalization_open_cases):
+        errors.append("manifest BanditRLwiki formalization-open case count does not match source data")
+    if manifest.get("banditrlwiki_formalization_leaf_count") != len(formalization_leaf_ids):
+        errors.append("manifest BanditRLwiki named-leaf count does not match source data")
+    if manifest.get("banditrlwiki_paper_count") != len(paper_urls):
+        errors.append("manifest BanditRLwiki paper count does not match unique primary URLs")
+    if manifest.get("banditrlwiki_theorem_surface_count") != theorem_surface_count:
+        errors.append("manifest BanditRLwiki theorem-surface count does not match source data")
+    if manifest.get("banditrlwiki_paper_case_link_count") != len(paper_case_pairs):
+        errors.append("manifest BanditRLwiki paper/case link count does not match source data")
+    if len(formalization_leaf_ids) != len(set(formalization_leaf_ids)):
+        errors.append("BanditRLwiki named frontier leaf ids are not unique")
+    for case in wiki_cases:
+        literature_status = case.get("comparison", {}).get("status")
+        lean_status = case.get("lean", {}).get("status")
+        if literature_status == "literature-open" and not case.get("frontier", {}).get("literature_open"):
+            errors.append(f"BanditRLwiki case {case.get('id')} merges literature-open with another status")
+        if literature_status == "source-audit-pending" and case.get("frontier", {}).get("literature_open"):
+            errors.append(f"BanditRLwiki case {case.get('id')} treats a pending audit as literature-open")
+        if lean_status == "compiled" and not case.get("lean", {}).get("declarations"):
+            errors.append(f"BanditRLwiki case {case.get('id')} marks Lean compiled without declarations")
+        if case.get("frontier", {}).get("formalization_open") and not case.get("frontier", {}).get("leaf_ids"):
+            errors.append(f"BanditRLwiki case {case.get('id')} is open without named frontier leaves")
+        for leaf_id in case.get("frontier", {}).get("leaf_ids", []):
+            if not re.fullmatch(r"[A-Z0-9][A-Z0-9-]*", leaf_id):
+                errors.append(f"BanditRLwiki case {case.get('id')} has malformed leaf id {leaf_id}")
+        if "�" in json.dumps(case, ensure_ascii=False):
+            errors.append(f"BanditRLwiki case {case.get('id')} contains a Unicode replacement character")
+    wiki_index_path = output / "banditrlwiki" / "index.html"
+    wiki_frontier_path = output / "banditrlwiki" / "frontier" / "index.html"
+    wiki_papers_path = output / "banditrlwiki" / "papers" / "index.html"
+    wiki_index_collector = pages.get(wiki_index_path.resolve())
+    if wiki_index_collector:
+        if wiki_index_collector.wiki_case_count != len(wiki_cases):
+            errors.append("BanditRLwiki overview case-card count does not match source data")
+        if wiki_index_collector.wiki_family_card_count != len(wiki_families):
+            errors.append("BanditRLwiki overview family-card count does not match source data")
+        if wiki_index_collector.wiki_source_port_count != len(wiki_active_source_audits):
+            errors.append("BanditRLwiki overview active-source-port count does not match source data")
+        for label, count in (
+            ("literature", wiki_index_collector.wiki_literature_badge_count),
+            ("source", wiki_index_collector.wiki_source_badge_count),
+            ("Lean", wiki_index_collector.wiki_lean_badge_count),
+        ):
+            if count != len(wiki_cases):
+                errors.append(
+                    f"BanditRLwiki overview has {count} {label} badges for {len(wiki_cases)} cases"
+                )
+        wiki_index_source = wiki_index_path.read_text(encoding="utf-8")
+        for boundary in (
+            "Read three statuses, never one blended badge",
+            "Open does not mean missing from this list.",
+            "Published optimality, theorem-level source audit, and local Lean compilation",
+        ):
+            if boundary not in wiki_index_source:
+                errors.append(f"BanditRLwiki overview is missing status boundary {boundary!r}")
+    if wiki_frontier_path.exists():
+        frontier_source = wiki_frontier_path.read_text(encoding="utf-8")
+        for boundary in (
+            "A mathematical literature gap is not the same as a missing source audit",
+            "They are not labeled literature-open.",
+            "The mathematics may already be known",
+            "remain outside the minimax ledger",
+        ):
+            if boundary not in frontier_source:
+                errors.append(f"BanditRLwiki frontier is missing status boundary {boundary!r}")
+        literature_section = frontier_source.split(
+            '<section id="literature-frontier">', 1
+        )[-1].split('<section id="source-audit-queue">', 1)[0]
+        source_queue_section = frontier_source.split(
+            '<section id="source-audit-queue">', 1
+        )[-1].split('<section id="formalization-frontier">', 1)[0]
+        for case in source_audit_cases:
+            if case["id"] in literature_section:
+                errors.append(f"pending source audit {case['id']} appears in literature-open section")
+            if case["id"] not in source_queue_section:
+                errors.append(f"pending source audit {case['id']} is absent from source-audit queue")
+        frontier_collector = pages.get(wiki_frontier_path.resolve())
+        expected_frontier_cards = (
+            len(literature_open_cases) + len(source_audit_cases) + len(formalization_open_cases)
+        )
+        if frontier_collector:
+            if frontier_collector.frontier_case_count != expected_frontier_cards:
+                errors.append("BanditRLwiki frontier case-card count does not match independent ledgers")
+            if frontier_collector.frontier_named_leaf_count != len(formalization_leaf_ids):
+                errors.append("BanditRLwiki rendered named-leaf count does not match source data")
+            if frontier_collector.wiki_source_port_count != len(wiki_active_source_audits):
+                errors.append("BanditRLwiki frontier active-source-port count does not match source data")
+            for leaf_id in formalization_leaf_ids:
+                if f"leaf-{leaf_id.lower()}" not in frontier_collector.ids:
+                    errors.append(f"BanditRLwiki frontier is missing named leaf anchor {leaf_id}")
+        if "static/banditrlwiki.js?v=" not in frontier_source:
+            errors.append("BanditRLwiki frontier is missing hash-reveal interaction script")
+    if wiki_papers_path.exists():
+        paper_collector = pages.get(wiki_papers_path.resolve())
+        if paper_collector:
+            if paper_collector.wiki_paper_card_count != manifest.get("banditrlwiki_paper_count"):
+                errors.append("BanditRLwiki paper-card count does not match manifest")
+            if paper_collector.wiki_theorem_surface_count != theorem_surface_count:
+                errors.append("BanditRLwiki paper index drops or duplicates theorem surfaces")
+            if paper_collector.wiki_paper_case_link_count != len(paper_case_pairs):
+                errors.append("BanditRLwiki paper index duplicates or drops paper/case links")
+        paper_source = wiki_papers_path.read_text(encoding="utf-8")
+        for case in wiki_cases:
+            if case["id"] not in paper_source:
+                errors.append(f"BanditRLwiki paper index does not link back to case {case['id']}")
+    setting_pages = list((output / "banditrlwiki" / "settings").glob("*/index.html"))
+    case_pages = list((output / "banditrlwiki" / "cases").glob("*/index.html"))
+    if len(setting_pages) != len(wiki_families):
+        errors.append("BanditRLwiki setting-page count does not match source data")
+    if len(case_pages) != len(wiki_cases):
+        errors.append("BanditRLwiki case-page count does not match source data")
+    for wiki_page in list((output / "banditrlwiki").rglob("*.html")):
+        collector = pages.get(wiki_page.resolve())
+        if collector is None:
+            continue
+        relative = wiki_page.relative_to(output)
+        duplicate_ids = [value for value, count in collector.id_counts.items() if count > 1]
+        if duplicate_ids:
+            errors.append(f"{relative}: duplicate HTML ids {duplicate_ids}")
+        if collector.math_statement_count != collector.math_fallback_count or collector.math_statement_count != collector.math_tex_count:
+            errors.append(f"{relative}: every Wiki formula needs one fallback and one MathJax source")
+        if "�" in wiki_page.read_text(encoding="utf-8"):
+            errors.append(f"{relative}: contains a Unicode replacement character")
+    attribution_path = output / "attribution" / "index.html"
+    if attribution_path.exists():
+        attribution_source = attribution_path.read_text(encoding="utf-8")
+        for boundary in (
+            "example-cases/samplewiki.html",
+            "example-cases/samplewiki/frontier.html",
+            "did not expose a repository license file",
+            "No Samplinglib source file, graph or theorem data",
+        ):
+            if boundary not in attribution_source:
+                errors.append(f"attribution/index.html: missing Samplinglib boundary {boundary!r}")
 
     expected_chapter_count = len(
         json.loads((SITE_DIR / "content" / "chapters.json").read_text(encoding="utf-8"))["chapters"]
@@ -656,6 +1009,16 @@ def main() -> int:
         f"- milestones: {manifest.get('milestone_count')}\n"
         f"- textbook crosswalks: {manifest.get('reading_count')}\n"
         f"- source theorem restatements: {manifest.get('source_theorem_count')}\n"
+        f"- BanditRLwiki settings/cases/papers: {manifest.get('banditrlwiki_family_count')}/"
+        f"{manifest.get('banditrlwiki_case_count')}/{manifest.get('banditrlwiki_paper_count')}\n"
+        f"- BanditRLwiki theorem surfaces: {manifest.get('banditrlwiki_theorem_surface_count')}\n"
+        f"- BanditRLwiki literature-open/formalization-open cases: "
+        f"{manifest.get('banditrlwiki_literature_open_count')}/"
+        f"{manifest.get('banditrlwiki_formalization_open_case_count')}\n"
+        f"- BanditRLwiki named formalization leaves: "
+        f"{manifest.get('banditrlwiki_formalization_leaf_count')}\n"
+        f"- BanditRLwiki active source-frozen ports: "
+        f"{manifest.get('banditrlwiki_active_source_audit_count')}\n"
         f"- Live Formalization mappings: {manifest.get('ide_mapping_count')}\n"
         f"- Mermaid blocks: {totals['mermaid']}\n"
         f"- Lean source links: {totals['source_links']}\n"

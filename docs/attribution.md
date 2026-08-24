@@ -63,6 +63,23 @@ StatsMLlib source file is copied. This attribution does not imply participation,
 endorsement, review, or maintenance by StatsMLlib, Lean-MoDS, or their
 contributors.
 
+BanditRLlib's progressive graph explorer is also informed by Samplinglib's
+public [Underlying Lean Graph of
+Libraries](https://dakebu.github.io/Auto-Sampling-Theory-In-Sleep/lean-foundations.html)
+in [Auto-Sampling-Theory-In-Sleep](https://github.com/DakeBU/Auto-Sampling-Theory-In-Sleep).
+BanditRLwiki's assumption-setting, theorem-case, and frontier organization is
+also informed by the public
+[SampleWiki](https://dakebu.github.io/Auto-Sampling-Theory-In-Sleep/example-cases/samplewiki.html)
+and [Sampling Frontier](https://dakebu.github.io/Auto-Sampling-Theory-In-Sleep/example-cases/samplewiki/frontier.html).
+The audited Samplinglib default branch did not expose a repository license file
+on 2026-08-22. BanditRLlib therefore treats these pages as design inspiration
+only and independently implements the graph model, theorem data, generated
+HTML, CSS, JavaScript, progressive branch limits, filters, status semantics,
+and accessibility behavior. No Samplinglib source file, graph or theorem data,
+template, stylesheet, or prose is copied. This reference does not imply shared
+verification status, shared maintainers, endorsement, review, or
+responsibility for BanditRLlib.
+
 ## Lean And Learning-Theory References
 
 - [lean-stat-learning-theory](https://github.com/YuanheZ/lean-stat-learning-theory).

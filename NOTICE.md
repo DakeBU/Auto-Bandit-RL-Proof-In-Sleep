@@ -35,6 +35,22 @@ lean-stat-learning-theory source code.
   template, stylesheet, prose, or configuration file is copied, and this
   reference does not imply participation, endorsement, review, or maintenance
   by StatsMLlib, Lean-MoDS, its organizers, or its contributors.
+- Auto-Sampling-Theory-In-Sleep / Samplinglib,
+  https://github.com/DakeBU/Auto-Sampling-Theory-In-Sleep, with its public
+  Underlying Lean Graph at
+  https://dakebu.github.io/Auto-Sampling-Theory-In-Sleep/lean-foundations.html,
+  SampleWiki at
+  https://dakebu.github.io/Auto-Sampling-Theory-In-Sleep/example-cases/samplewiki.html,
+  and Sampling Frontier at
+  https://dakebu.github.io/Auto-Sampling-Theory-In-Sleep/example-cases/samplewiki/frontier.html.
+  BanditRLlib's progressive Lean Graph and setting-to-case-to-frontier
+  organization are conceptually informed by those public pages. The audited
+  default branch did not expose a license file on 2026-08-22, so BanditRLlib
+  treats them as design inspiration only and independently implements its
+  model, theorem data, generated HTML, CSS, JavaScript, filtering, status
+  semantics, and accessibility behavior. No Samplinglib source, graph or
+  theorem data, template, stylesheet, or prose is copied, and no shared
+  verification status, endorsement, review, or maintenance is implied.
 - Bubeck and Cesa-Bianchi, Regret Analysis of Stochastic and Nonstochastic
   Multi-armed Bandit Problems, https://arxiv.org/abs/1204.5721.
 - Lattimore and Szepesvári, Bandit Algorithms,
