@@ -62,6 +62,11 @@ PUBLIC_AGENT_IMAGE_RUN_URL = (
     "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/"
     "actions/runs/32464814750"
 )
+PUBLIC_AGENT_OUTER_BOUNDARY_RUN_ID = "32735680163"
+PUBLIC_AGENT_OUTER_BOUNDARY_RUN_URL = (
+    "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/"
+    "actions/runs/32735680163"
+)
 PUBLIC_CANDIDATE_RECORD = (
     "evaluation/target-drift-v2/checker-image-candidate-32137509103.json"
 )
@@ -73,6 +78,9 @@ PUBLIC_AGENT_LIFECYCLE_RECORD = (
 )
 PUBLIC_AGENT_IMAGE_RECORD = (
     "evaluation/target-drift-v2/agent-image-candidate-32464814750.json"
+)
+PUBLIC_AGENT_OUTER_BOUNDARY_RECORD = (
+    "evaluation/target-drift-v2/agent-outer-boundary-candidate-32735680163.json"
 )
 TARGET_DRIFT_V2_PROTOCOL = "evaluation/target-drift-v2/protocol.json"
 EXTERNAL_COMPARATOR_PLAN = (
@@ -92,6 +100,9 @@ ANONYMOUS_AGENT_LIFECYCLE_RECORD = (
 )
 ANONYMOUS_AGENT_IMAGE_RECORD = (
     "evaluation/target-drift-v2/agent-image-candidate-record.json"
+)
+ANONYMOUS_AGENT_OUTER_BOUNDARY_RECORD = (
+    "evaluation/target-drift-v2/agent-outer-boundary-candidate-record.json"
 )
 
 DELAYED_IMPLEMENTATION_IDS = (
@@ -263,6 +274,7 @@ TARGET_DRIFT_PROTOCOL_FILES = (
     PUBLIC_ISOLATION_CANDIDATE_RECORD,
     PUBLIC_AGENT_LIFECYCLE_RECORD,
     PUBLIC_AGENT_IMAGE_RECORD,
+    PUBLIC_AGENT_OUTER_BOUNDARY_RECORD,
     "evaluation/target-drift-v2/checker-image-sbom.template.json",
     "evaluation/target-drift-v2/checker-image.Containerfile",
     "evaluation/target-drift-v2/checker-isolation-probe.excluded-fixture.json",
@@ -591,6 +603,208 @@ def anonymous_agent_image_candidate(candidate, anonymous_reference):
     return anonymous_candidate
 
 
+def anonymous_agent_outer_boundary_candidate(candidate, anonymous_reference):
+    """Retain qualitative fake-only evidence without public-run fingerprints."""
+    def require_dict(parent, key):
+        value = parent.get(key)
+        if not isinstance(value, dict):
+            raise ValueError("agent outer-boundary candidate is missing " + key)
+        return value
+
+    def pick(parent, keys, label):
+        missing = [key for key in keys if key not in parent]
+        if missing:
+            raise ValueError(
+                "agent outer-boundary candidate is missing {} fields: {}".format(
+                    label, ", ".join(missing)
+                )
+            )
+        return {key: parent[key] for key in keys}
+
+    workflow = require_dict(candidate, "workflow_run")
+    checkout = require_dict(candidate, "probe_checkout")
+    public_candidate = require_dict(candidate, "candidate")
+    cross_probe = require_dict(candidate, "cross_probe_bindings")
+    outer = require_dict(candidate, "outer_boundary_component")
+    control = require_dict(outer, "control_evidence")
+    fake_handoff = require_dict(outer, "trusted_client_fake_auth_handoff")
+    worker = require_dict(outer, "worker_boundary")
+    nested = require_dict(outer, "nested_codex_sandbox_observation")
+    pid1 = require_dict(outer, "pid1_observation")
+    checks = require_dict(candidate, "hash_chain_checks")
+    if not checks or any(type(value) is not bool for value in checks.values()):
+        raise ValueError("agent outer-boundary hash checks must be literal booleans")
+    if not all(checks.values()):
+        raise ValueError("agent outer-boundary hash checks must all pass")
+    nonclaims = candidate.get("nonclaims")
+    if not isinstance(nonclaims, list) or not all(
+        isinstance(value, str) for value in nonclaims
+    ):
+        raise ValueError("agent outer-boundary nonclaims must be a string list")
+    artifacts = candidate.get("artifacts")
+    if not isinstance(artifacts, list) or len(artifacts) != 29:
+        raise ValueError("agent outer-boundary artifact inventory must have 29 files")
+    source_bindings = candidate.get("source_bindings")
+    expected_source_binding_paths = (
+        ".github/workflows/target-drift-agent-image.yml",
+        "evaluation/target-drift-v2/agent-codex-native.apparmor",
+        "evaluation/target-drift-v2/agent-image-sources.json",
+        "evaluation/target-drift-v2/agent-image.Containerfile",
+        "evaluation/target-drift-v2/agent-sandbox-contract.json",
+        "tools/codex_target_drift_adapter.py",
+        "tools/prepare_target_drift_agent_image.py",
+        "tools/target_drift_agent_pid1.py",
+        "tools/target_drift_agent_model_probe.py",
+        "tools/target_drift_agent_outer_controller.py",
+        "tools/target_drift_agent_outer_probe.py",
+        "tools/launch_target_drift_agent_container.py",
+        "tools/record_target_drift_agent_image_probe.py",
+        "tools/record_target_drift_agent_lifecycle_probe.py",
+    )
+    if not isinstance(source_bindings, list) or tuple(
+        item.get("path") if isinstance(item, dict) else None
+        for item in source_bindings
+    ) != expected_source_binding_paths:
+        raise ValueError("agent outer-boundary source bindings must match 14 reviewed files")
+    if workflow.get("conclusion") != "success":
+        raise ValueError("agent outer-boundary workflow must have succeeded")
+    expected_false_candidate_flags = (
+        "published",
+        "production_sealed",
+        "provider_credential_used",
+        "provider_request_or_model_invocation_occurred",
+    )
+    if any(public_candidate.get(key) is not False
+           for key in expected_false_candidate_flags):
+        raise ValueError(
+            "agent outer-boundary record must remain unpublished, unsealed, and provider-free"
+        )
+    control_files = control.get("files")
+    expected_control_files = (
+        "controller-report.json",
+        "pid1-exit.json",
+        "pid1-ready.json",
+        "root-only-sentinel",
+    )
+    if not isinstance(control_files, list) or tuple(
+        item.get("path") if isinstance(item, dict) else None
+        for item in control_files
+    ) != expected_control_files:
+        raise ValueError("agent outer-boundary control inventory changed")
+
+    return {
+        **pick(candidate, ("schema_version", "suite_id", "evidence_type"), "top-level"),
+        "recorded_at_utc": "<redacted-public-run-time>",
+        "workflow_run": {
+            "id": "<redacted-public-run-id>",
+            "url": "<redacted-public-run-url>",
+            "head_commit": "<anonymous-builder-snapshot>",
+            **pick(
+                workflow,
+                ("event", "conclusion", "artifact_retention_days"),
+                "workflow",
+            ),
+            "job_duration": "<redacted-public-run-duration>",
+        },
+        "probe_checkout": {
+            "pull_request_merge_commit": "<redacted-public-probe-commit>",
+            "pull_request_head_commit": "<anonymous-builder-snapshot>",
+            "pull_request_merge_tree": "<redacted-public-tree>",
+            "pull_request_head_tree": "<redacted-public-tree>",
+            **pick(checkout, ("trees_identical", "interpretation"), "probe checkout"),
+        },
+        "candidate": {
+            **pick(
+                public_candidate,
+                (
+                    "status",
+                    "codex_version",
+                    "toolchain_release",
+                    "published",
+                    "production_sealed",
+                    "provider_credential_used",
+                    "provider_request_or_model_invocation_occurred",
+                ),
+                "candidate",
+            ),
+            "workspace_base_commit": anonymous_reference,
+        },
+        "cross_probe_bindings": pick(
+            cross_probe,
+            (
+                "same_container_image_across_sbom_isolation_outer_and_lifecycle",
+                "offline_isolation_status",
+                "outer_launcher_status",
+                "destructive_lifecycle_status",
+            ),
+            "cross-probe bindings",
+        ),
+        "outer_boundary_component": {
+            **pick(outer, ("status",), "outer boundary"),
+            "control_evidence": {
+                **pick(
+                    control,
+                    ("expected_file_count", "observed_file_count", "exact_expected_files"),
+                    "control evidence",
+                ),
+                "files": [{"path": item["path"]} for item in control_files],
+            },
+            "trusted_client_fake_auth_handoff": pick(
+                fake_handoff,
+                (
+                    "fixed_fake_sentinel_only",
+                    "bytes",
+                    "read_only_descriptor",
+                    "trusted_worker_consumed_fixed_fake_auth",
+                    "descriptor_closed_before_sandbox",
+                    "environment_marker_removed_before_sandbox",
+                ),
+                "fake-auth handoff",
+            ),
+            "worker_boundary": pick(
+                worker, ("uid", "gid", "effective_capabilities_hex"), "worker boundary"
+            ),
+            "nested_codex_sandbox_observation": pick(
+                nested,
+                (
+                    "uid",
+                    "gid",
+                    "effective_capabilities_hex",
+                    "outer_auth_mount_unreadable",
+                    "outer_auth_mount_read_errno",
+                    "outer_auth_mount_read_error_name",
+                    "root_control_output_unreadable",
+                    "root_control_output_read_errno",
+                    "root_control_output_read_error_name",
+                    "trusted_auth_fd_env_absent",
+                    "trusted_auth_fd_target_absent",
+                    "network_denied",
+                    "network_errno",
+                    "network_error_name",
+                    "copied_agent_input_readable",
+                    "read_only_agent_input_immutable",
+                    "workspace_write_succeeded",
+                ),
+                "nested sandbox observation",
+            ),
+            "pid1_observation": pick(
+                pid1,
+                (
+                    "controller_pid",
+                    "control_channel",
+                    "exit_reason",
+                    "child_return_code",
+                    "container_log_bytes",
+                    "interpreter_shutdown_fatal_absent_from_captured_log",
+                ),
+                "PID-1 observation",
+            ),
+        },
+        "hash_chain_checks": dict(checks),
+        "nonclaims": list(nonclaims),
+    }
+
+
 def anonymous_checker_image_candidate(candidate, anonymous_reference):
     """Remove public-run linkage fields from a checker-image candidate record."""
     workflow = candidate.get("workflow_run")
@@ -807,6 +1021,18 @@ def anonymize_evaluation_bytes(rel, data, anonymous_reference):
             "agent-image-candidate-32464814750.json",
             "agent-image-candidate-record.json",
         )
+        text = text.replace(
+            "[run {}]({})".format(
+                PUBLIC_AGENT_OUTER_BOUNDARY_RUN_ID,
+                PUBLIC_AGENT_OUTER_BOUNDARY_RUN_URL,
+            ),
+            "a public result-free fake-only outer-boundary component run "
+            "(run metadata redacted)",
+        )
+        text = text.replace(
+            "agent-outer-boundary-candidate-32735680163.json",
+            "agent-outer-boundary-candidate-record.json",
+        )
     candidate_records = {
         PUBLIC_CANDIDATE_RECORD: (
             PUBLIC_CANDIDATE_RUN_ID, PUBLIC_CANDIDATE_RUN_URL,
@@ -820,6 +1046,10 @@ def anonymize_evaluation_bytes(rel, data, anonymous_reference):
         ),
         PUBLIC_AGENT_IMAGE_RECORD: (
             PUBLIC_AGENT_IMAGE_RUN_ID, PUBLIC_AGENT_IMAGE_RUN_URL,
+        ),
+        PUBLIC_AGENT_OUTER_BOUNDARY_RECORD: (
+            PUBLIC_AGENT_OUTER_BOUNDARY_RUN_ID,
+            PUBLIC_AGENT_OUTER_BOUNDARY_RUN_URL,
         ),
     }
     if rel in candidate_records:
@@ -840,6 +1070,10 @@ def anonymize_evaluation_bytes(rel, data, anonymous_reference):
             candidate = anonymous_agent_lifecycle_candidate(candidate)
         elif rel == PUBLIC_AGENT_IMAGE_RECORD:
             candidate = anonymous_agent_image_candidate(
+                candidate, anonymous_reference
+            )
+        elif rel == PUBLIC_AGENT_OUTER_BOUNDARY_RECORD:
+            candidate = anonymous_agent_outer_boundary_candidate(
                 candidate, anonymous_reference
             )
         text = canonical_json(candidate).decode("utf-8")
@@ -1236,6 +1470,8 @@ def build_payload(proof_graph=None, proof_report_path=None, allow_missing_graph=
             destination = ANONYMOUS_AGENT_LIFECYCLE_RECORD
         elif rel == PUBLIC_AGENT_IMAGE_RECORD:
             destination = ANONYMOUS_AGENT_IMAGE_RECORD
+        elif rel == PUBLIC_AGENT_OUTER_BOUNDARY_RECORD:
+            destination = ANONYMOUS_AGENT_OUTER_BOUNDARY_RECORD
         add_payload(payload, destination, data)
     rebind_anonymous_external_comparator(payload)
     for rel in TARGET_DRIFT_WORKFLOW_FILES:

@@ -1,0 +1,364 @@
+{
+  "schema_version": 1,
+  "suite_id": "ABRL-TARGET-DRIFT-V2",
+  "evidence_type": "result_free_fake_only_agent_outer_boundary_component_candidate",
+  "recorded_at_utc": "2026-08-24T14:40:11Z",
+  "workflow_run": {
+    "id": 32735680163,
+    "url": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/actions/runs/32735680163",
+    "event": "pull_request",
+    "head_commit": "e775166ca0b659787ccf0d9107ae746b26f75bdb",
+    "conclusion": "success",
+    "job_started_at_utc": "2026-08-24T13:57:14Z",
+    "job_completed_at_utc": "2026-08-24T14:25:43Z",
+    "job_duration": "28m29s",
+    "artifact_retention_days": 14
+  },
+  "probe_checkout": {
+    "pull_request_merge_commit": "51888a6a972f90458694079877c482c4a9a2f22f",
+    "pull_request_head_commit": "e775166ca0b659787ccf0d9107ae746b26f75bdb",
+    "pull_request_merge_tree": "fc27daa02e23202bbc4c4f0c30a0770b8b6887c1",
+    "pull_request_head_tree": "fc27daa02e23202bbc4c4f0c30a0770b8b6887c1",
+    "trees_identical": true,
+    "interpretation": "The pull-request workflow reported the head commit while actions/checkout materialized the synthetic merge commit. Their identical Git trees bind the probe to the reviewed head bytes without treating the synthetic merge SHA as a different source snapshot."
+  },
+  "candidate": {
+    "status": "passed_result_free_fake_only_outer_boundary_component_candidate",
+    "workspace_base_commit": "d43bfeee56fb0c1c35cf5af9fc1a7fdc3e0c37b9",
+    "container_image_digest": "sha256:080b84eed2e96f8864989f33627b6d9750b5b1984a13593023ffaae19765d73d",
+    "checker_base_image_digest": "sha256:cfe0b79e26fb54cfaade49975070127fe848b73f864035938ebc480366af2df9",
+    "codex_version": "codex-cli 0.130.0",
+    "toolchain_release": "4.29.1",
+    "published": false,
+    "production_sealed": false,
+    "provider_credential_used": false,
+    "provider_request_or_model_invocation_occurred": false
+  },
+  "cross_probe_bindings": {
+    "same_container_image_across_sbom_isolation_outer_and_lifecycle": true,
+    "container_image_digest": "sha256:080b84eed2e96f8864989f33627b6d9750b5b1984a13593023ffaae19765d73d",
+    "image_sbom_sha256": "935c6606f3e0ad247abe7d211ddc8a91a192419d95f72c162cbae5cfb5dc1d2f",
+    "offline_isolation_status": "passed_result_free_candidate",
+    "outer_launcher_status": "passed_result_free_outer_launcher_component_candidate",
+    "destructive_lifecycle_status": "passed",
+    "outer_controller_report_sha256": "b8aee4c5a8c2fed805284d00e04f2b74df1202caf2c53d8cc94862afb3fb1a3f"
+  },
+  "outer_boundary_component": {
+    "status": "passed_result_free_outer_boundary_component",
+    "control_evidence": {
+      "expected_file_count": 4,
+      "observed_file_count": 4,
+      "exact_expected_files": true,
+      "files": [
+        {
+          "path": "controller-report.json",
+          "bytes": 3049,
+          "sha256": "b8aee4c5a8c2fed805284d00e04f2b74df1202caf2c53d8cc94862afb3fb1a3f"
+        },
+        {
+          "path": "pid1-exit.json",
+          "bytes": 198,
+          "sha256": "1d5a99ab567ea2b7278d6bb94ee176ad1237386756fab4656f2d71a98cf437ba"
+        },
+        {
+          "path": "pid1-ready.json",
+          "bytes": 158,
+          "sha256": "e999c082302b5bcff09db6535a5e90276d7fdc43d51920685ef59c27abaf37b0"
+        },
+        {
+          "path": "root-only-sentinel",
+          "bytes": 34,
+          "sha256": "ee58a727101adab576272c2d2460d7efd6696e36bc4049a46a5864192c753afc"
+        }
+      ]
+    },
+    "trusted_client_fake_auth_handoff": {
+      "fixed_fake_sentinel_only": true,
+      "bytes": 32,
+      "sha256": "b24fcc3574da8f1e7d1f356807ae6f41c2cb9e6402533d4c2f720ccd7e1113bc",
+      "read_only_descriptor": true,
+      "trusted_worker_consumed_fixed_fake_auth": true,
+      "descriptor_closed_before_sandbox": true,
+      "environment_marker_removed_before_sandbox": true
+    },
+    "worker_boundary": {
+      "uid": 10002,
+      "gid": 10002,
+      "effective_capabilities_hex": "0000000000000000"
+    },
+    "nested_codex_sandbox_observation": {
+      "uid": 10002,
+      "gid": 10002,
+      "effective_capabilities_hex": "0000000000000000",
+      "outer_auth_mount_unreadable": true,
+      "outer_auth_mount_read_errno": 13,
+      "outer_auth_mount_read_error_name": "EACCES",
+      "root_control_output_unreadable": true,
+      "root_control_output_read_errno": 13,
+      "root_control_output_read_error_name": "EACCES",
+      "trusted_auth_fd_env_absent": true,
+      "trusted_auth_fd_target_absent": true,
+      "network_denied": true,
+      "network_errno": 1,
+      "network_error_name": "EPERM",
+      "copied_agent_input_readable": true,
+      "read_only_agent_input_immutable": true,
+      "workspace_write_succeeded": true
+    },
+    "pid1_observation": {
+      "controller_pid": 1,
+      "control_channel": "docker_stdin",
+      "exit_reason": "child_exited",
+      "child_return_code": 0,
+      "container_log_bytes": 0,
+      "container_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "interpreter_shutdown_fatal_absent_from_captured_log": true
+    }
+  },
+  "source_bindings": [
+    {
+      "path": ".github/workflows/target-drift-agent-image.yml",
+      "bytes": 11225,
+      "sha256": "e3c6e9fb298b8c97c2de8f256de968adef368dad606e94cdbf81bdca76b83d84"
+    },
+    {
+      "path": "evaluation/target-drift-v2/agent-codex-native.apparmor",
+      "bytes": 503,
+      "sha256": "b065779fafc709ab60cff848c98a8567a4b2ffa09967e95dabb81ed3a9e25710"
+    },
+    {
+      "path": "evaluation/target-drift-v2/agent-image-sources.json",
+      "bytes": 1204,
+      "sha256": "4aeb75744d30c941be152bd085a717d5ec9b61ee892a7f32ac06749aead30c68"
+    },
+    {
+      "path": "evaluation/target-drift-v2/agent-image.Containerfile",
+      "bytes": 2021,
+      "sha256": "c547a0c4be2eeeba36171063a3d1cae00296e0650fe4c6e3fbd865f932e8922f"
+    },
+    {
+      "path": "evaluation/target-drift-v2/agent-sandbox-contract.json",
+      "bytes": 6381,
+      "sha256": "3a52216c246f2b7da8737e7f23e632406cd53d97b98ecad137023277b6a26b2f"
+    },
+    {
+      "path": "tools/codex_target_drift_adapter.py",
+      "bytes": 26507,
+      "sha256": "0e6b0b5499525c025e7aef9c8fff4907a3afe6359e18eac1a5e53d74842d4cb0"
+    },
+    {
+      "path": "tools/prepare_target_drift_agent_image.py",
+      "bytes": 35901,
+      "sha256": "b59e68903b5799f63cf22fde1d817e47e0bf7bda85726ecb68b9838838a918b0"
+    },
+    {
+      "path": "tools/target_drift_agent_pid1.py",
+      "bytes": 5933,
+      "sha256": "eef620d75a0bfd55475ffdaff5f9d37f9567470f6b5102b2cdd390e1e16cda8e"
+    },
+    {
+      "path": "tools/target_drift_agent_model_probe.py",
+      "bytes": 3849,
+      "sha256": "ae48aadd481264e72e1beee1ff071c033187f6bf59b43ba3bb3f27fa5e6b568c"
+    },
+    {
+      "path": "tools/target_drift_agent_outer_controller.py",
+      "bytes": 11876,
+      "sha256": "2030f9f188e8de16841960038e53d709d7391c1ea85024635983ed7bcd9e66ac"
+    },
+    {
+      "path": "tools/target_drift_agent_outer_probe.py",
+      "bytes": 6198,
+      "sha256": "b11547437e99f15c94bb8e86dce7f251549215a7eca6559f2d434c9ffad1cacf"
+    },
+    {
+      "path": "tools/launch_target_drift_agent_container.py",
+      "bytes": 18171,
+      "sha256": "e129b552c15e3bf4d733159297dff18518f88ec432bab401f693dd6ebee022bf"
+    },
+    {
+      "path": "tools/record_target_drift_agent_image_probe.py",
+      "bytes": 17640,
+      "sha256": "2b570b620eab51ae91241b3cecf70450ec21af6c2f79441237b524793c7ce996"
+    },
+    {
+      "path": "tools/record_target_drift_agent_lifecycle_probe.py",
+      "bytes": 16341,
+      "sha256": "c092f4e8ef5295df1d948cc037bcf34956743065e79f8a85a77c274e0ac6ccf9"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "agent-codex-native.apparmor",
+      "bytes": 503,
+      "sha256": "b065779fafc709ab60cff848c98a8567a4b2ffa09967e95dabb81ed3a9e25710"
+    },
+    {
+      "path": "agent-codex-version-output.log",
+      "bytes": 113,
+      "sha256": "741391a2020f9f90ee7816f9f5f17ec0ee8e01a6538d632ace00c7eb24e28477"
+    },
+    {
+      "path": "agent-image-build-input.json",
+      "bytes": 6388,
+      "sha256": "0fc4694a800784012925534c14bae8fd8e0ebb88575946b358096da8ce92dac4"
+    },
+    {
+      "path": "agent-image-build.log",
+      "bytes": 2321,
+      "sha256": "cd91dd9bf24d3f6bb27b49ba11d856605b2f3d61be41818f61cac02a8bd4c071"
+    },
+    {
+      "path": "agent-image-isolation-probe-attempt.log",
+      "bytes": 6590,
+      "sha256": "4c7d9f5f77c8afadd87998db1f05489c3980cbc3d0aa5ae44151e08dcee28d46"
+    },
+    {
+      "path": "agent-image-isolation-probe-network-control.log",
+      "bytes": 25,
+      "sha256": "c4735c02c562e39995cf238c2f8a9b4f0ba08dd8149c8314d10a68b5710c6bbf"
+    },
+    {
+      "path": "agent-image-isolation-probe-stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "agent-image-isolation-probe.json",
+      "bytes": 6590,
+      "sha256": "4c7d9f5f77c8afadd87998db1f05489c3980cbc3d0aa5ae44151e08dcee28d46"
+    },
+    {
+      "path": "agent-image-sbom.json",
+      "bytes": 3800,
+      "sha256": "935c6606f3e0ad247abe7d211ddc8a91a192419d95f72c162cbae5cfb5dc1d2f"
+    },
+    {
+      "path": "agent-lifecycle-probe-artifacts/container.cid",
+      "bytes": 64,
+      "sha256": "2add08f91311b6de20368ad5e652f48998d13335fad71cd073aa6711552aee23"
+    },
+    {
+      "path": "agent-lifecycle-probe-artifacts/controller-exit.json",
+      "bytes": 207,
+      "sha256": "66fbd57cf8efec3cf7fb9e7b1ad2948ee798b3b8c3688d6f27150ebf2c28d27b"
+    },
+    {
+      "path": "agent-lifecycle-probe-artifacts/controller-ready.json",
+      "bytes": 158,
+      "sha256": "e999c082302b5bcff09db6535a5e90276d7fdc43d51920685ef59c27abaf37b0"
+    },
+    {
+      "path": "agent-lifecycle-probe-artifacts/docker-daemon-identity.txt",
+      "bytes": 115,
+      "sha256": "f8abf83b02f2009a46623b1b6ba500961e1659ced3ada41d10c1b724dacaec29"
+    },
+    {
+      "path": "agent-lifecycle-probe-artifacts/docker-version.json",
+      "bytes": 1079,
+      "sha256": "451ee7ebc40fd9dffe9210d818a34cec3cfbcf604121b2a4517dbd9c8d7fe1a8"
+    },
+    {
+      "path": "agent-lifecycle-probe-artifacts/escape-heartbeat.txt",
+      "bytes": 1,
+      "sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"
+    },
+    {
+      "path": "agent-lifecycle-probe-artifacts/fixture.json",
+      "bytes": 104,
+      "sha256": "a9382ae4ec2bc1a821bef3fe2c1953c520772cc88ee12bd1563fccea42f11c95"
+    },
+    {
+      "path": "agent-lifecycle-probe-attempt.log",
+      "bytes": 4467,
+      "sha256": "f64fa1086b17993f052f623a80cc8e95398dd13d08e4974c6b95dc9730234147"
+    },
+    {
+      "path": "agent-lifecycle-probe.json",
+      "bytes": 4467,
+      "sha256": "f64fa1086b17993f052f623a80cc8e95398dd13d08e4974c6b95dc9730234147"
+    },
+    {
+      "path": "agent-outer-boundary-probe-container.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "agent-outer-boundary-probe.json",
+      "bytes": 6993,
+      "sha256": "4bfce73e9d9b270ad36d252d41121c25e8982d11a41a15aea4beccdef0082e71"
+    },
+    {
+      "path": "agent-outer-control-evidence-copy/controller-report.json",
+      "bytes": 3049,
+      "sha256": "b8aee4c5a8c2fed805284d00e04f2b74df1202caf2c53d8cc94862afb3fb1a3f"
+    },
+    {
+      "path": "agent-outer-control-evidence-copy/pid1-exit.json",
+      "bytes": 198,
+      "sha256": "1d5a99ab567ea2b7278d6bb94ee176ad1237386756fab4656f2d71a98cf437ba"
+    },
+    {
+      "path": "agent-outer-control-evidence-copy/pid1-ready.json",
+      "bytes": 158,
+      "sha256": "e999c082302b5bcff09db6535a5e90276d7fdc43d51920685ef59c27abaf37b0"
+    },
+    {
+      "path": "agent-outer-control-evidence-copy/root-only-sentinel",
+      "bytes": 34,
+      "sha256": "ee58a727101adab576272c2d2460d7efd6696e36bc4049a46a5864192c753afc"
+    },
+    {
+      "path": "attempt-started.json",
+      "bytes": 189,
+      "sha256": "2d9a24c857e923939d4aa3084c4e842504cc3e1489a6cf209eb8dc5815810226"
+    },
+    {
+      "path": "checker-base-build.log",
+      "bytes": 2392316,
+      "sha256": "c6be4705626e80cf62770d8c85bee84c2d275f486d892add5b925dfb164228de"
+    },
+    {
+      "path": "checker-base-sbom.json",
+      "bytes": 2851,
+      "sha256": "785bfe53137a3f7f3afb2ecd3ad0de4ec50212675fa06d9aba1b3175a23a05d4"
+    },
+    {
+      "path": "checker-cache-manifest.json",
+      "bytes": 26382776,
+      "sha256": "d66a892dc21bf60a792e191cf972c302219e915c3d16ba6720a7dc4818a7d858"
+    },
+    {
+      "path": "checker-image-build-input.json",
+      "bytes": 300142,
+      "sha256": "2835a2656e8c60a6ddb89ea011398b4218bea38aa08abfdd7cd46aafaa1d81bb"
+    }
+  ],
+  "hash_chain_checks": {
+    "workflow_head_and_probe_checkout_have_identical_git_trees": true,
+    "attempt_run_id_and_probe_commit_match_workflow_and_checkout": true,
+    "downloaded_artifact_inventory_has_exactly_29_regular_files": true,
+    "all_29_artifact_byte_counts_and_sha256_values_recomputed": true,
+    "same_image_digest_in_sbom_isolation_outer_and_lifecycle_reports": true,
+    "sbom_build_input_log_version_and_checker_evidence_bindings_match": true,
+    "all_recorded_source_bindings_match_workflow_head_bytes": true,
+    "outer_control_directory_has_exactly_the_four_expected_files": true,
+    "outer_report_embeds_the_exact_raw_controller_report": true,
+    "fake_auth_handoff_matches_controller_and_worker_observations": true,
+    "nested_auth_and_root_control_reads_fail_with_eacces": true,
+    "nested_auth_descriptor_environment_and_target_are_absent": true,
+    "worker_and_nested_effective_capabilities_are_zero": true,
+    "pid1_reports_controller_pid_one_and_clean_child_exit": true,
+    "captured_outer_container_log_is_empty_without_interpreter_shutdown_fatal": true,
+    "destructive_lifecycle_runtime_ledgers_and_cleanup_observations_match": true
+  },
+  "nonclaims": [
+    "The mounted auth.json was a fixed fake sentinel; no provider credential was supplied or tested.",
+    "The one-time root-open read-only descriptor handoff is a narrowly scoped component probe, not the Codex provider authentication path.",
+    "Codex sandbox was exercised offline; no provider request or remote-model invocation occurred.",
+    "The digest existed only as an unpublished result-free candidate and is not a production image or final seal.",
+    "The result-ineligible one-case-by-three-condition real-infrastructure smoke and all 450 primary runs remain unrun.",
+    "No grade, analysis, numerical model result, proof-generation result, or formalization outcome is reported.",
+    "Production authentication, remote-model attestation, active budget enforcement, final published images with resealed probes, and the final evaluation seal remain pending."
+  ]
+}

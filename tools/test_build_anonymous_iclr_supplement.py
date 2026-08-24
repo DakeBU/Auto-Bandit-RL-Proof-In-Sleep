@@ -65,7 +65,23 @@ class AnonymousSupplementTests(unittest.TestCase):
         ).read_text(encoding="utf-8"))
         graph = {
             "schema_version": 1,
-            "counts": source_report["graph"]["counts"],
+            "extraction": {
+                "source": "compiled-environment",
+                "dependency_semantics": "direct-constant-occurrence",
+                "deterministic": True,
+            },
+            "status_vocabulary": [
+                "compiled", "prototype", "partial", "planned", "blocked",
+            ],
+            "nodes": [],
+            "edges": [],
+            "module_imports": [],
+            "counts": {
+                "project_nodes": 0,
+                "external_boundary_nodes": 0,
+                "edges": 0,
+                "module_imports": 0,
+            },
         }
         graph_bytes = (
             json.dumps(graph, indent=2, sort_keys=True) + "\n"
@@ -73,6 +89,7 @@ class AnonymousSupplementTests(unittest.TestCase):
         graph_path = self.root / "crlf-proof-graph.json"
         report_path = self.root / "crlf-proof-report.json"
         graph_path.write_bytes(graph_bytes)
+        source_report["graph"]["counts"] = graph["counts"]
         source_report["graph"]["sha256"] = hashlib.sha256(graph_bytes).hexdigest()
         report_path.write_bytes((
             json.dumps(source_report, indent=2, sort_keys=True) + "\n"
@@ -90,6 +107,38 @@ class AnonymousSupplementTests(unittest.TestCase):
             packaged_report["graph"]["sha256"],
             hashlib.sha256(packaged_graph).hexdigest(),
         )
+
+        first_archive = self.root / "graph-included-first.zip"
+        second_archive = self.root / "graph-included-second.zip"
+        first_result = BUILDER.build_archive(
+            first_archive, graph_path, report_path
+        )
+        second_result = BUILDER.build_archive(
+            second_archive, graph_path, report_path
+        )
+        self.assertEqual(first_archive.read_bytes(), second_archive.read_bytes())
+        self.assertEqual(first_result["sha256"], second_result["sha256"])
+        with zipfile.ZipFile(str(first_archive)) as archive:
+            manifest = json.loads(archive.read(
+                BUILDER.ARCHIVE_ROOT + "/ARTIFACT_MANIFEST.json"
+            ))
+        self.assertTrue(manifest["proof_graph"]["included"])
+        destination = self.root / "graph-included-extracted"
+        with zipfile.ZipFile(str(first_archive)) as archive:
+            archive.extractall(str(destination))
+        artifact = destination / BUILDER.ARCHIVE_ROOT
+        verification = subprocess.run(
+            [sys.executable, "artifact/verify_artifact.py"],
+            cwd=str(artifact),
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            encoding="utf-8",
+        )
+        self.assertEqual(
+            verification.returncode, 0,
+            msg=verification.stdout + verification.stderr,
+        )
+        self.assertTrue(json.loads(verification.stdout)["proof_graph_included"])
 
     def test_archive_has_expected_positive_allowlist(self):
         with zipfile.ZipFile(str(self.first)) as archive:
@@ -113,8 +162,13 @@ class AnonymousSupplementTests(unittest.TestCase):
             prefix + "evaluation/target-drift-v2/checker-image-isolation-candidate-record.json",
             names,
         )
+        self.assertIn(
+            prefix + "evaluation/target-drift-v2/agent-outer-boundary-candidate-record.json",
+            names,
+        )
         self.assertFalse(any("32137509103" in name for name in names))
         self.assertFalse(any("32419343467" in name for name in names))
+        self.assertFalse(any("32735680163" in name for name in names))
         self.assertIn(
             prefix + "research-wiki/proof-graph/benchmark_report.json", names
         )
@@ -368,6 +422,7 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertNotIn(BUILDER.PUBLIC_ISOLATION_CANDIDATE_RUN_ID, readme)
         self.assertNotIn(BUILDER.PUBLIC_AGENT_LIFECYCLE_RUN_ID, readme)
         self.assertNotIn(BUILDER.PUBLIC_AGENT_IMAGE_RUN_ID, readme)
+        self.assertNotIn(BUILDER.PUBLIC_AGENT_OUTER_BOUNDARY_RUN_ID, readme)
         candidate = json.loads(payload[
             "evaluation/target-drift-v2/checker-image-candidate-record.json"
         ].decode("utf-8"))
@@ -386,6 +441,9 @@ class AnonymousSupplementTests(unittest.TestCase):
         ].decode("utf-8"))
         agent_image_candidate = json.loads(payload[
             "evaluation/target-drift-v2/agent-image-candidate-record.json"
+        ].decode("utf-8"))
+        outer_candidate = json.loads(payload[
+            "evaluation/target-drift-v2/agent-outer-boundary-candidate-record.json"
         ].decode("utf-8"))
         self.assertEqual(
             lifecycle_candidate["workflow_run"]["id"],
@@ -422,6 +480,83 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertNotIn(
             "command_sha256", agent_image_candidate["lifecycle_probe"]
         )
+        self.assertEqual(
+            outer_candidate["workflow_run"]["id"],
+            "<redacted-public-run-id>",
+        )
+        self.assertEqual(
+            outer_candidate["workflow_run"]["head_commit"],
+            "<anonymous-builder-snapshot>",
+        )
+        self.assertTrue(outer_candidate["probe_checkout"]["trees_identical"])
+        self.assertEqual(
+            outer_candidate["candidate"]["workspace_base_commit"],
+            json.loads(payload["evidence/anonymous-base-manifest.json"])[
+                "schema_compatibility_reference"
+            ],
+        )
+        self.assertNotIn("artifacts", outer_candidate)
+        self.assertNotIn("source_bindings", outer_candidate)
+        self.assertNotIn("container_image_digest", outer_candidate["candidate"])
+        self.assertNotIn(
+            "container_image_digest", outer_candidate["cross_probe_bindings"]
+        )
+        outer_component = outer_candidate["outer_boundary_component"]
+        self.assertEqual(
+            [item["path"] for item in outer_component["control_evidence"]["files"]],
+            [
+                "controller-report.json",
+                "pid1-exit.json",
+                "pid1-ready.json",
+                "root-only-sentinel",
+            ],
+        )
+        self.assertEqual(
+            outer_component["worker_boundary"]["effective_capabilities_hex"],
+            "0000000000000000",
+        )
+        nested = outer_component["nested_codex_sandbox_observation"]
+        self.assertEqual(nested["outer_auth_mount_read_error_name"], "EACCES")
+        self.assertEqual(nested["root_control_output_read_error_name"], "EACCES")
+        self.assertTrue(nested["trusted_auth_fd_env_absent"])
+        self.assertTrue(nested["trusted_auth_fd_target_absent"])
+        self.assertEqual(nested["effective_capabilities_hex"], "0000000000000000")
+        self.assertEqual(outer_component["pid1_observation"]["controller_pid"], 1)
+        self.assertEqual(outer_component["pid1_observation"]["child_return_code"], 0)
+        self.assertTrue(
+            outer_component["pid1_observation"][
+                "interpreter_shutdown_fatal_absent_from_captured_log"
+            ]
+        )
+        public_outer_record = json.loads(
+            (BUILDER.REPO_ROOT / BUILDER.PUBLIC_AGENT_OUTER_BOUNDARY_RECORD).read_text(
+                encoding="utf-8"
+            )
+        )
+        anonymous_outer_bytes = payload[
+            "evaluation/target-drift-v2/agent-outer-boundary-candidate-record.json"
+        ]
+        public_outer_fingerprints = {
+            public_outer_record["recorded_at_utc"],
+            public_outer_record["workflow_run"]["job_duration"],
+            public_outer_record["workflow_run"]["head_commit"],
+            public_outer_record["probe_checkout"]["pull_request_merge_commit"],
+            public_outer_record["probe_checkout"]["pull_request_merge_tree"],
+            public_outer_record["candidate"]["container_image_digest"],
+            public_outer_record["candidate"]["checker_base_image_digest"],
+            public_outer_record["outer_boundary_component"][
+                "trusted_client_fake_auth_handoff"
+            ]["sha256"],
+        }
+        public_outer_fingerprints.update(
+            item["sha256"] for item in public_outer_record["artifacts"]
+            if item["sha256"] != hashlib.sha256(b"").hexdigest()
+        )
+        public_outer_fingerprints.update(
+            item["sha256"] for item in public_outer_record["source_bindings"]
+        )
+        for fingerprint in public_outer_fingerprints:
+            self.assertNotIn(fingerprint.encode("utf-8"), anonymous_outer_bytes)
         public_agent_record = json.loads(
             (BUILDER.REPO_ROOT / BUILDER.PUBLIC_AGENT_IMAGE_RECORD).read_text(
                 encoding="utf-8"
@@ -450,6 +585,8 @@ class AnonymousSupplementTests(unittest.TestCase):
                 "evaluation/target-drift-v2/agent-lifecycle-candidate-record.json",
             BUILDER.PUBLIC_AGENT_IMAGE_RECORD:
                 "evaluation/target-drift-v2/agent-image-candidate-record.json",
+            BUILDER.PUBLIC_AGENT_OUTER_BOUNDARY_RECORD:
+                "evaluation/target-drift-v2/agent-outer-boundary-candidate-record.json",
         }
         anonymous_payload = b"\n".join(payload.values()).lower()
         for public_rel, anonymous_rel in anonymous_records.items():
@@ -509,6 +646,67 @@ class AnonymousSupplementTests(unittest.TestCase):
         tracked.add("evaluation/target-drift-v2/run-result.json")
         with self.assertRaisesRegex(ValueError, "unreviewed evaluation file"):
             BUILDER.evaluation_files(tracked)
+
+    def test_outer_candidate_fail_closed_evidence_gates(self):
+        source = json.loads((
+            BUILDER.REPO_ROOT / BUILDER.PUBLIC_AGENT_OUTER_BOUNDARY_RECORD
+        ).read_text(encoding="utf-8"))
+        mutations = {
+            "failed hash check": (
+                lambda record: record["hash_chain_checks"].update({
+                    next(iter(record["hash_chain_checks"])): False
+                }),
+                "hash checks must all pass",
+            ),
+            "missing source binding": (
+                lambda record: record["source_bindings"].pop(),
+                "source bindings must match 14 reviewed files",
+            ),
+            "changed source binding": (
+                lambda record: record["source_bindings"][0].update({
+                    "path": "tools/unreviewed.py"
+                }),
+                "source bindings must match 14 reviewed files",
+            ),
+            "failed workflow": (
+                lambda record: record["workflow_run"].update({
+                    "conclusion": "failure"
+                }),
+                "workflow must have succeeded",
+            ),
+            "provider invocation": (
+                lambda record: record["candidate"].update({
+                    "provider_request_or_model_invocation_occurred": True
+                }),
+                "must remain unpublished, unsealed, and provider-free",
+            ),
+            "provider credential": (
+                lambda record: record["candidate"].update({
+                    "provider_credential_used": True
+                }),
+                "must remain unpublished, unsealed, and provider-free",
+            ),
+            "production seal": (
+                lambda record: record["candidate"].update({
+                    "production_sealed": True
+                }),
+                "must remain unpublished, unsealed, and provider-free",
+            ),
+            "published record": (
+                lambda record: record["candidate"].update({
+                    "published": True
+                }),
+                "must remain unpublished, unsealed, and provider-free",
+            ),
+        }
+        for label, (mutate, error) in mutations.items():
+            with self.subTest(label=label):
+                candidate = json.loads(json.dumps(source))
+                mutate(candidate)
+                with self.assertRaisesRegex(ValueError, error):
+                    BUILDER.anonymous_agent_outer_boundary_candidate(
+                        candidate, "0" * 40
+                    )
 
     def test_identity_and_host_path_markers_are_rejected(self):
         with self.assertRaises(ValueError):

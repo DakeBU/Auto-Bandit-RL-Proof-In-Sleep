@@ -279,10 +279,21 @@ closes that descriptor before launching the offline Codex sandbox.  The nested
 probe requires zero capabilities, denied network, immutable original input, a
 writable copied workspace, EACCES/EPERM on the existing auth/control paths, and
 no auth descriptor or broker environment marker.  This one-time fake handoff is
-not the real Codex provider authentication path.  The agent-image
-workflow is wired to run this result-free probe, but no tracked workflow run has
-yet attested the new component.  It does not publish a production image or
-satisfy the real credential/model/smoke gates.
+not the real Codex provider authentication path.  GitHub Actions
+[run 32735680163](https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/actions/runs/32735680163)
+exercised the fake-only component on the same unpublished image digest as the
+offline-isolation and destructive-lifecycle probes.  Independent review of all
+29 artifact files checked 116 hash, schema, source-binding, and boundary
+conditions with no error.  The raw control directory contained exactly
+`controller-report.json`, `pid1-ready.json`, `pid1-exit.json`, and the
+root-only sentinel; the nested sandbox recorded `EACCES` on both existing auth
+and control paths, no broker environment marker or auth-targeting descriptor,
+and zero worker and nested effective capabilities.  The durable public record
+is
+[`agent-outer-boundary-candidate-32735680163.json`](agent-outer-boundary-candidate-32735680163.json).
+No real credential or remote model was used.  The record closes only this
+result-free fake-only component gate; it does not publish a production image or
+satisfy the real credential/model/budget/smoke gates.
 
 The sealed launcher accepts only the allowlisted Docker installation, rechecks the
 executable/signature-or-package ledger plus client/server/daemon identity, and
