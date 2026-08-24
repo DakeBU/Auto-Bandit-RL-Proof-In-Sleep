@@ -148,12 +148,17 @@ jobs:
             --apparmor-source "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-codex-native.apparmor" \
             --report "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-outer-boundary-probe.json" \
             --probe-commit "${GITHUB_SHA}"
-          sudo cp -a "${RUNNER_TEMP}/abrl-agent-outer-control" \
-            "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-outer-control-evidence-copy"
-          sudo chown -R "$(id -u):$(id -g)" \
-            "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-outer-control-evidence-copy"
-          chmod -R u+rwX,go+rX \
-            "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-outer-control-evidence-copy"
+
+      - name: Preserve canonical outer-boundary raw control evidence
+        if: always()
+        run: |
+          SOURCE="${RUNNER_TEMP}/abrl-agent-outer-control"
+          TARGET="${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-outer-control-evidence-copy"
+          if [[ -d "${SOURCE}" ]]; then
+            sudo cp -a "${SOURCE}" "${TARGET}"
+            sudo chown -R "$(id -u):$(id -g)" "${TARGET}"
+            chmod -R u+rwX,go+rX "${TARGET}"
+          fi
 
       - name: Re-run destructive PID-1 lifecycle probe on the exact agent image
         run: |

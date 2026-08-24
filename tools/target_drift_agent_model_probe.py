@@ -46,6 +46,16 @@ def effective_capabilities_hex() -> str:
     )
 
 
+def open_fd_targets() -> list[str]:
+    targets: list[str] = []
+    for descriptor in Path("/proc/self/fd").iterdir():
+        try:
+            targets.append(os.readlink(descriptor))
+        except OSError:
+            pass
+    return targets
+
+
 def main() -> None:
     workspace = Path("/agent")
     copied_input = workspace / "input" / "input.txt"
@@ -70,11 +80,11 @@ def main() -> None:
             }
         finally:
             sock.close()
-    disposable_auth_errno = read_denial_errno(Path("/codex-home/auth.json"))
     outer_auth_errno = read_denial_errno(Path("/run/secrets/provider-auth"))
     root_control_errno = read_denial_errno(
         Path("/control/root-only-sentinel")
     )
+    descriptor_targets = open_fd_targets()
     observation = {
         "uid": os.geteuid(),
         "gid": os.getegid(),
@@ -85,9 +95,16 @@ def main() -> None:
         "workspace_write_succeeded": workspace_write.read_text(
             encoding="utf-8"
         ) == "ok\n",
-        "disposable_auth_unreadable": disposable_auth_errno is not None,
-        "disposable_auth_read_errno": disposable_auth_errno,
-        "outer_auth_mount_unreadable": outer_auth_errno is not None,
+        "trusted_auth_fd_env_absent": (
+            "ABRL_RESULT_FREE_AUTH_FD" not in os.environ
+        ),
+        "trusted_auth_fd_target_absent": not any(
+            target == "/run/secrets/provider-auth"
+            for target in descriptor_targets
+        ),
+        "outer_auth_mount_unreadable": outer_auth_errno in {
+            errno.EACCES, errno.EPERM,
+        },
         "outer_auth_mount_read_errno": outer_auth_errno,
         "root_control_output_unreadable": root_control_errno in {
             errno.EACCES, errno.EPERM,

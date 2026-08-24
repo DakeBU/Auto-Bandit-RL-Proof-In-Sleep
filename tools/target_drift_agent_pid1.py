@@ -63,7 +63,11 @@ def kill_process_group(process: subprocess.Popen[bytes], grace_seconds: float = 
 
 def control_channel(events: "queue.Queue[str]") -> None:
     try:
-        while sys.stdin.buffer.read(65536):
+        # Use the raw file descriptor.  A daemon thread blocked inside the
+        # buffered ``sys.stdin`` reader can hold its internal lock while PID 1
+        # exits after a child failure, which makes CPython abort during
+        # interpreter finalization instead of emitting the exit ledger.
+        while os.read(0, 65536):
             pass
     finally:
         events.put(CONTROL_CHANNEL_EOF)

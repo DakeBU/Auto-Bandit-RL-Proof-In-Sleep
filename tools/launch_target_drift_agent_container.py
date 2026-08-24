@@ -10,6 +10,7 @@ a root PID-1 control plane and a capability-free uid/gid 10002 worker.
 from __future__ import annotations
 
 import argparse
+import errno
 import hashlib
 import json
 import os
@@ -307,10 +308,27 @@ def main() -> None:
             "controller report does not bind the root-to-worker transition")
     model_observation = worker_observation.get("model_shell", {})
     require(isinstance(model_observation, dict)
+            and model_observation.get("trusted_auth_fd_env_absent") is True
+            and model_observation.get("trusted_auth_fd_target_absent") is True
+            and model_observation.get("outer_auth_mount_unreadable") is True
+            and model_observation.get("outer_auth_mount_read_errno")
+            in {errno.EACCES, errno.EPERM}
+            and model_observation.get("root_control_output_unreadable") is True
+            and model_observation.get("root_control_output_read_errno")
+            in {errno.EACCES, errno.EPERM}
             and int(model_observation.get(
                 "effective_capabilities_hex", "1"
             ), 16) == 0,
-            "nested command sandbox retained an effective capability")
+            "nested command sandbox did not prove the auth/control boundary")
+    handoff = worker_observation.get("trusted_client_fake_auth_handoff", {})
+    require(isinstance(handoff, dict)
+            and handoff.get("bytes") == len(EXPECTED_AUTH)
+            and handoff.get("sha256")
+            == hashlib.sha256(EXPECTED_AUTH).hexdigest()
+            and handoff.get("read_only_descriptor") is True
+            and handoff.get("descriptor_closed_before_sandbox") is True
+            and handoff.get("environment_marker_removed_before_sandbox") is True,
+            "trusted worker did not prove the one-time fake-auth handoff")
     sentinel = controller_report.get("root_control_sentinel", {})
     require(isinstance(sentinel, dict)
             and sentinel.get("path") == "/control/root-only-sentinel"
@@ -355,6 +373,7 @@ def main() -> None:
         "container_log_sha256": sha256(log),
         "nonclaims": [
             "The mounted auth.json was a fixed fake sentinel, not a provider credential.",
+            "The one-time descriptor handoff is not the Codex provider authentication path.",
             "No provider request or model invocation occurred.",
             "The image is local and unpublished; this is not a production seal or real smoke."
         ],

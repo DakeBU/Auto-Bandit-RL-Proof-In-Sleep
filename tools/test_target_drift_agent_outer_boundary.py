@@ -3,7 +3,9 @@
 
 from __future__ import annotations
 
+import contextlib
 import hashlib
+import io
 import json
 import errno
 import os
@@ -17,6 +19,7 @@ import launch_target_drift_agent_container as launcher
 import prepare_target_drift_agent_image as image_builder
 import target_drift_agent_outer_controller as controller
 import target_drift_agent_model_probe as model_probe
+import target_drift_agent_outer_probe as worker_probe
 
 
 class AgentOuterBoundaryTest(unittest.TestCase):
@@ -100,6 +103,53 @@ class AgentOuterBoundaryTest(unittest.TestCase):
                 "sha256": hashlib.sha256(payload).hexdigest(),
             }])
             self.assertEqual((target / "input.txt").read_bytes(), payload)
+
+    def test_worker_failure_diagnostic_is_bounded_and_redacted(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            control = Path(directory)
+            output = (
+                b"prefix RESULT_FREE_SENTINEL_DO_NOT_USE "
+                b"RESULT_FREE_AGENT_INPUT\n"
+            )
+            with contextlib.redirect_stderr(io.StringIO()):
+                controller.persist_worker_failure(control, 17, output)
+            payload = json.loads((
+                control / "worker-probe-failure.json"
+            ).read_text(encoding="utf-8"))
+            self.assertEqual(payload["return_code"], 17)
+            self.assertEqual(payload["stdout_bytes"], len(output))
+            self.assertEqual(
+                payload["stdout_sha256"], hashlib.sha256(output).hexdigest()
+            )
+            self.assertNotIn(
+                "RESULT_FREE_SENTINEL_DO_NOT_USE",
+                payload["diagnostic_tail"],
+            )
+            self.assertNotIn(
+                "RESULT_FREE_AGENT_INPUT", payload["diagnostic_tail"]
+            )
+
+    def test_worker_consumes_and_closes_read_only_fake_auth_fd(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            auth = Path(directory) / "auth.json"
+            auth.write_bytes(worker_probe.EXPECTED_AUTH)
+            descriptor = os.open(auth, os.O_RDONLY)
+            with mock.patch.dict(
+                os.environ,
+                {worker_probe.AUTH_FD_ENV: str(descriptor)},
+                clear=False,
+            ):
+                handoff = worker_probe.consume_brokered_fake_auth()
+                self.assertNotIn(worker_probe.AUTH_FD_ENV, os.environ)
+            self.assertTrue(handoff["read_only_descriptor"])
+            self.assertTrue(handoff["descriptor_closed_before_sandbox"])
+            self.assertEqual(
+                handoff["sha256"],
+                hashlib.sha256(worker_probe.EXPECTED_AUTH).hexdigest(),
+            )
+            with self.assertRaises(OSError) as closed:
+                os.fstat(descriptor)
+            self.assertEqual(closed.exception.errno, errno.EBADF)
 
     def test_sbom_must_bind_checked_out_outer_sources(self) -> None:
         payload = {

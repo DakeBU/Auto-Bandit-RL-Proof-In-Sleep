@@ -272,11 +272,14 @@ candidate in `tools/launch_target_drift_agent_container.py`.  It intentionally
 has no production or provider action.  Its only command verifies the local
 image digest and in-image controller/probe bytes, then mounts a literal fake
 `auth.json` and fake agent input read-only under a root PID-1 controller.  The
-controller copies them into disposable tmpfs, drops its fixed child
-irreversibly to uid/gid 10002, and persists only root-control ledgers.  The
-offline nested Codex-sandbox probe requires zero worker capabilities, denied
-network, immutable original input, a writable copied workspace, and
-unreadability of both auth locations and root control output.  The agent-image
+controller copies only the input into disposable tmpfs, opens the fixed fake
+auth once as a read-only descriptor, passes it to the irreversibly dropped
+uid/gid 10002 worker, and closes its copy.  The worker exactly consumes and
+closes that descriptor before launching the offline Codex sandbox.  The nested
+probe requires zero capabilities, denied network, immutable original input, a
+writable copied workspace, EACCES/EPERM on the existing auth/control paths, and
+no auth descriptor or broker environment marker.  This one-time fake handoff is
+not the real Codex provider authentication path.  The agent-image
 workflow is wired to run this result-free probe, but no tracked workflow run has
 yet attested the new component.  It does not publish a production image or
 satisfy the real credential/model/smoke gates.

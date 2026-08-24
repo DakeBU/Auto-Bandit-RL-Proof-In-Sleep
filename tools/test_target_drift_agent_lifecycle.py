@@ -2,11 +2,13 @@ from __future__ import annotations
 
 import json
 import os
+import queue
 import tempfile
 import threading
 import time
 import unittest
 from pathlib import Path
+from unittest import mock
 
 import record_target_drift_agent_lifecycle_probe as probe
 import target_drift_agent_pid1 as controller
@@ -16,6 +18,18 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class TargetDriftAgentLifecycleTest(unittest.TestCase):
+    def test_control_channel_uses_raw_fd_and_reports_eof(self) -> None:
+        events: "queue.Queue[str]" = queue.Queue()
+        with mock.patch.object(
+            controller.os, "read", side_effect=[b"host-control", b""]
+        ) as read:
+            controller.control_channel(events)
+        self.assertEqual(
+            read.call_args_list,
+            [mock.call(0, 65536), mock.call(0, 65536)],
+        )
+        self.assertEqual(events.get_nowait(), controller.CONTROL_CHANNEL_EOF)
+
     def test_contract_requires_pid1_and_records_nonclaims(self) -> None:
         contract = json.loads((
             ROOT / "evaluation/target-drift-v2/agent-sandbox-contract.json"

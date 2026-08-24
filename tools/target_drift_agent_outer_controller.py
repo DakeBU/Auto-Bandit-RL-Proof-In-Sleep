@@ -16,6 +16,7 @@ import os
 import shutil
 import stat
 import subprocess
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -32,6 +33,8 @@ MAX_INPUT_BYTES = 4 * 1024 * 1024
 WORKER_PROBE = "/usr/local/lib/abrl/target_drift_agent_outer_probe.py"
 CONTROL_SENTINEL = CONTROL / "root-only-sentinel"
 CONTROL_SENTINEL_BYTES = b"RESULT_FREE_ROOT_CONTROL_SENTINEL\n"
+MAX_DIAGNOSTIC_BYTES = 8192
+AUTH_FD_ENV = "ABRL_RESULT_FREE_AUTH_FD"
 
 
 def require(condition: bool, message: str) -> None:
@@ -112,6 +115,32 @@ def dump_atomic(path: Path, payload: Any) -> None:
     os.replace(temporary, path)
 
 
+def persist_worker_failure(
+    control: Path, return_code: int, output: bytes,
+) -> None:
+    """Persist bounded result-free diagnostics without echoing fake inputs."""
+    require(len(output) <= 1024 * 1024, "worker output is oversized")
+    diagnostic = output[-MAX_DIAGNOSTIC_BYTES:].decode(
+        "utf-8", errors="backslashreplace"
+    ).replace(
+        "RESULT_FREE_SENTINEL_DO_NOT_USE", "<fixed-fake-auth-sentinel>"
+    ).replace(
+        "RESULT_FREE_AGENT_INPUT", "<fixed-fake-agent-input>"
+    )
+    payload = {
+        "schema_version": 1,
+        "suite_id": "ABRL-TARGET-DRIFT-V2",
+        "status": "failed_result_free_worker_component",
+        "return_code": return_code,
+        "stdout_bytes": len(output),
+        "stdout_sha256": hashlib.sha256(output).hexdigest(),
+        "diagnostic_tail": diagnostic,
+    }
+    dump_atomic(control / "worker-probe-failure.json", payload)
+    sys.stderr.write("result-free worker diagnostic tail:\n" + diagnostic + "\n")
+    sys.stderr.flush()
+
+
 def run_component_probe() -> None:
     require(os.geteuid() == 0 and os.getegid() == 0,
             "controller must start as root")
@@ -139,21 +168,25 @@ def run_component_probe() -> None:
             and stat.S_IMODE(control_sentinel_info.st_mode) == 0o400,
             "root control sentinel identity or mode differs")
     copied_records = copy_agent_input(INPUT_ROOT, WORKSPACE / "input")
-    disposable_auth = CODEX_HOME / "auth.json"
-    with disposable_auth.open("xb") as stream:
-        stream.write(auth.read_bytes())
-        stream.flush()
-        os.fsync(stream.fileno())
-    os.chown(disposable_auth, WORKER_UID, WORKER_GID)
-    os.chmod(disposable_auth, 0o600)
     for path in [WORKSPACE, *(WORKSPACE.rglob("*"))]:
         os.chown(path, WORKER_UID, WORKER_GID)
-    outcome = subprocess.run(
-        ["/usr/bin/python3", WORKER_PROBE], preexec_fn=drop_worker,
-        stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-        check=False, timeout=45,
+    auth_descriptor = os.open(
+        auth, os.O_RDONLY | getattr(os, "O_CLOEXEC", 0)
     )
+    worker_environment = os.environ.copy()
+    worker_environment[AUTH_FD_ENV] = str(auth_descriptor)
+    try:
+        outcome = subprocess.run(
+            ["/usr/bin/python3", WORKER_PROBE], preexec_fn=drop_worker,
+            pass_fds=(auth_descriptor,), env=worker_environment,
+            stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+            check=False, timeout=45,
+        )
+    finally:
+        os.close(auth_descriptor)
     require(len(outcome.stdout) <= 1024 * 1024, "worker output is oversized")
+    if outcome.returncode != 0:
+        persist_worker_failure(CONTROL, outcome.returncode, outcome.stdout)
     require(outcome.returncode == 0,
             f"fixed worker probe failed with exit {outcome.returncode}")
     observation_path = regular_single_file(
@@ -167,8 +200,11 @@ def run_component_probe() -> None:
             "worker observation does not prove the fixed privilege boundary")
     model = observation.get("model_shell", {})
     require(isinstance(model, dict)
-            and model.get("disposable_auth_unreadable") is True
+            and model.get("trusted_auth_fd_env_absent") is True
+            and model.get("trusted_auth_fd_target_absent") is True
             and model.get("outer_auth_mount_unreadable") is True
+            and model.get("outer_auth_mount_read_errno")
+            in {errno.EACCES, errno.EPERM}
             and model.get("root_control_output_unreadable") is True
             and model.get("root_control_output_read_errno")
             in {errno.EACCES, errno.EPERM}
@@ -194,10 +230,14 @@ def run_component_probe() -> None:
             "sha256": hashlib.sha256(CONTROL_SENTINEL_BYTES).hexdigest(),
         },
         "disposable_codex_home": str(CODEX_HOME),
+        "trusted_client_fake_auth_handoff": observation.get(
+            "trusted_client_fake_auth_handoff"
+        ),
         "disposable_agent_workspace": str(WORKSPACE),
         "worker_observation": observation,
         "nonclaims": [
             "The auth file is a fixed fake sentinel; no provider credential was used.",
+            "The one-time read-only file-descriptor handoff is a component probe, not the Codex provider authentication path.",
             "Codex sandbox was exercised offline; no model invocation occurred.",
             "This component probe does not publish or seal a production agent image."
         ],
