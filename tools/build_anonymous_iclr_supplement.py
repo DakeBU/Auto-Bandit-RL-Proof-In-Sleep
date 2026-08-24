@@ -634,6 +634,8 @@ def anonymous_agent_outer_boundary_candidate(candidate, anonymous_reference):
     checks = require_dict(candidate, "hash_chain_checks")
     if not checks or any(type(value) is not bool for value in checks.values()):
         raise ValueError("agent outer-boundary hash checks must be literal booleans")
+    if not all(checks.values()):
+        raise ValueError("agent outer-boundary hash checks must all pass")
     nonclaims = candidate.get("nonclaims")
     if not isinstance(nonclaims, list) or not all(
         isinstance(value, str) for value in nonclaims
@@ -643,8 +645,40 @@ def anonymous_agent_outer_boundary_candidate(candidate, anonymous_reference):
     if not isinstance(artifacts, list) or len(artifacts) != 29:
         raise ValueError("agent outer-boundary artifact inventory must have 29 files")
     source_bindings = candidate.get("source_bindings")
-    if not isinstance(source_bindings, list) or not source_bindings:
-        raise ValueError("agent outer-boundary source bindings are missing")
+    expected_source_binding_paths = (
+        ".github/workflows/target-drift-agent-image.yml",
+        "evaluation/target-drift-v2/agent-codex-native.apparmor",
+        "evaluation/target-drift-v2/agent-image-sources.json",
+        "evaluation/target-drift-v2/agent-image.Containerfile",
+        "evaluation/target-drift-v2/agent-sandbox-contract.json",
+        "tools/codex_target_drift_adapter.py",
+        "tools/prepare_target_drift_agent_image.py",
+        "tools/target_drift_agent_pid1.py",
+        "tools/target_drift_agent_model_probe.py",
+        "tools/target_drift_agent_outer_controller.py",
+        "tools/target_drift_agent_outer_probe.py",
+        "tools/launch_target_drift_agent_container.py",
+        "tools/record_target_drift_agent_image_probe.py",
+        "tools/record_target_drift_agent_lifecycle_probe.py",
+    )
+    if not isinstance(source_bindings, list) or tuple(
+        item.get("path") if isinstance(item, dict) else None
+        for item in source_bindings
+    ) != expected_source_binding_paths:
+        raise ValueError("agent outer-boundary source bindings must match 14 reviewed files")
+    if workflow.get("conclusion") != "success":
+        raise ValueError("agent outer-boundary workflow must have succeeded")
+    expected_false_candidate_flags = (
+        "published",
+        "production_sealed",
+        "provider_credential_used",
+        "provider_request_or_model_invocation_occurred",
+    )
+    if any(public_candidate.get(key) is not False
+           for key in expected_false_candidate_flags):
+        raise ValueError(
+            "agent outer-boundary record must remain unpublished, unsealed, and provider-free"
+        )
     control_files = control.get("files")
     expected_control_files = (
         "controller-report.json",

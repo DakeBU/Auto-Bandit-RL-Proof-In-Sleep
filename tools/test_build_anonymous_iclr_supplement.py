@@ -91,6 +91,22 @@ class AnonymousSupplementTests(unittest.TestCase):
             hashlib.sha256(packaged_graph).hexdigest(),
         )
 
+        first_archive = self.root / "graph-included-first.zip"
+        second_archive = self.root / "graph-included-second.zip"
+        first_result = BUILDER.build_archive(
+            first_archive, graph_path, report_path
+        )
+        second_result = BUILDER.build_archive(
+            second_archive, graph_path, report_path
+        )
+        self.assertEqual(first_archive.read_bytes(), second_archive.read_bytes())
+        self.assertEqual(first_result["sha256"], second_result["sha256"])
+        with zipfile.ZipFile(str(first_archive)) as archive:
+            manifest = json.loads(archive.read(
+                BUILDER.ARCHIVE_ROOT + "/ARTIFACT_MANIFEST.json"
+            ))
+        self.assertTrue(manifest["proof_graph"]["included"])
+
     def test_archive_has_expected_positive_allowlist(self):
         with zipfile.ZipFile(str(self.first)) as archive:
             names = set(archive.namelist())
@@ -597,6 +613,67 @@ class AnonymousSupplementTests(unittest.TestCase):
         tracked.add("evaluation/target-drift-v2/run-result.json")
         with self.assertRaisesRegex(ValueError, "unreviewed evaluation file"):
             BUILDER.evaluation_files(tracked)
+
+    def test_outer_candidate_fail_closed_evidence_gates(self):
+        source = json.loads((
+            BUILDER.REPO_ROOT / BUILDER.PUBLIC_AGENT_OUTER_BOUNDARY_RECORD
+        ).read_text(encoding="utf-8"))
+        mutations = {
+            "failed hash check": (
+                lambda record: record["hash_chain_checks"].update({
+                    next(iter(record["hash_chain_checks"])): False
+                }),
+                "hash checks must all pass",
+            ),
+            "missing source binding": (
+                lambda record: record["source_bindings"].pop(),
+                "source bindings must match 14 reviewed files",
+            ),
+            "changed source binding": (
+                lambda record: record["source_bindings"][0].update({
+                    "path": "tools/unreviewed.py"
+                }),
+                "source bindings must match 14 reviewed files",
+            ),
+            "failed workflow": (
+                lambda record: record["workflow_run"].update({
+                    "conclusion": "failure"
+                }),
+                "workflow must have succeeded",
+            ),
+            "provider invocation": (
+                lambda record: record["candidate"].update({
+                    "provider_request_or_model_invocation_occurred": True
+                }),
+                "must remain unpublished, unsealed, and provider-free",
+            ),
+            "provider credential": (
+                lambda record: record["candidate"].update({
+                    "provider_credential_used": True
+                }),
+                "must remain unpublished, unsealed, and provider-free",
+            ),
+            "production seal": (
+                lambda record: record["candidate"].update({
+                    "production_sealed": True
+                }),
+                "must remain unpublished, unsealed, and provider-free",
+            ),
+            "published record": (
+                lambda record: record["candidate"].update({
+                    "published": True
+                }),
+                "must remain unpublished, unsealed, and provider-free",
+            ),
+        }
+        for label, (mutate, error) in mutations.items():
+            with self.subTest(label=label):
+                candidate = json.loads(json.dumps(source))
+                mutate(candidate)
+                with self.assertRaisesRegex(ValueError, error):
+                    BUILDER.anonymous_agent_outer_boundary_candidate(
+                        candidate, "0" * 40
+                    )
 
     def test_identity_and_host_path_markers_are_rejected(self):
         with self.assertRaises(ValueError):
