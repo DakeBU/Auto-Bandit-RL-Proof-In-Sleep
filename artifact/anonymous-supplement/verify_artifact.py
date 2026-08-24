@@ -153,15 +153,23 @@ def verify_claim_ledger():
     if any(records[item]["status"] != "compiled" for item in impl_ids):
         fail("implementation-facing delayed status is not compiled")
     impl_count = sum(len(records[item]["declarations"]) for item in impl_ids)
-    if impl_count != 88:
-        fail("delayed implementation count is {}, expected 88".format(impl_count))
+    if impl_count != 89:
+        fail("delayed implementation count is {}, expected 89".format(impl_count))
     diagnostic = records[diagnostic_id]
     if diagnostic["status"] != "partial" or len(diagnostic["declarations"]) != 19:
         fail("D.10--D.12 diagnostic boundary drift")
     delayed = ledger["delayed_feedback"]
     if delayed.get("diagnostic_conditional_repair_declaration_count") != 19:
         fail("D.10--D.12 diagnostic/repair count drift")
-    if delayed.get("source_audit_declaration_count") != impl_count + len(diagnostic["declarations"]):
+    processed_prefix_id = delayed.get("processed_prefix_id")
+    processed_prefix = records.get(processed_prefix_id, {})
+    if processed_prefix.get("status") != "compiled" or len(processed_prefix.get("declarations", [])) != 16:
+        fail("D.1 processed-prefix producer boundary drift")
+    if delayed.get("processed_prefix_declaration_count") != 16:
+        fail("D.1 processed-prefix producer count drift")
+    if delayed.get("source_audit_declaration_count") != (
+        impl_count + len(diagnostic["declarations"]) + len(processed_prefix["declarations"])
+    ):
         fail("delayed source-audit total drift")
 
     missing_names = []

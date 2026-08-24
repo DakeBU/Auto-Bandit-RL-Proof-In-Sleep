@@ -114,6 +114,7 @@ DELAYED_IMPLEMENTATION_IDS = (
     "DELAYED-SAPO-D8-D9-ASSEMBLY",
 )
 DELAYED_DIAGNOSTIC_ID = "DELAYED-SAPO-D10-D12-GAP-ORDERING-AUDIT"
+DELAYED_PROCESSED_PREFIX_ID = "DELAYED-SAPO-D1-ACTIVE-COUNT-WIDTH-PRODUCER"
 SUCCINCT_AUDIT_ID = "NEURIPS-2025-SUCCINCT-LOWER-BOUND-GEOMETRY-AUDIT"
 SGB_AUDIT_ID = "NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT-MECHANISM-AUDIT"
 SGB_FINITE_ALGEBRA_FILE = "BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean"
@@ -198,6 +199,7 @@ SOURCE_RESULT_IDS = (
     "TEXTBOOK-PART-IV-CH17-SOURCE-TERMINALS",
 ) + DELAYED_IMPLEMENTATION_IDS + (
     DELAYED_DIAGNOSTIC_ID,
+    DELAYED_PROCESSED_PREFIX_ID,
     "NEURIPS-2025-DELAYED-BOBW-CENTRAL-ENDPOINTS",
     SUCCINCT_AUDIT_ID,
     SGB_AUDIT_ID,
@@ -1159,11 +1161,16 @@ def validate_delayed_counts(records):
         len(records[item]["declarations"]) for item in DELAYED_IMPLEMENTATION_IDS
     )
     diagnostic = records[DELAYED_DIAGNOSTIC_ID]
-    if implementation_count != 88:
+    processed_prefix = records[DELAYED_PROCESSED_PREFIX_ID]
+    if implementation_count != 89:
         raise ValueError("delayed implementation count drifted to {}".format(implementation_count))
     if diagnostic["status"] != "partial" or len(diagnostic["declarations"]) != 19:
         raise ValueError(
             "D.10--D.12 diagnostic/repair record must remain partial with 19 declarations"
+        )
+    if processed_prefix["status"] != "compiled" or len(processed_prefix["declarations"]) != 16:
+        raise ValueError(
+            "D.1 processed-prefix producer must remain compiled with 16 declarations"
         )
 
 
@@ -1305,9 +1312,10 @@ def build_claim_ledger(proof_report):
                 "status": "partial",
                 "source_record_ids": list(DELAYED_IMPLEMENTATION_IDS) + [
                     DELAYED_DIAGNOSTIC_ID,
+                    DELAYED_PROCESSED_PREFIX_ID,
                     "NEURIPS-2025-DELAYED-BOBW-CENTRAL-ENDPOINTS",
                 ],
-                "boundary": "88 implementation-facing plus 19 diagnostic/conditional/repair declarations, including an exact small-count scalar bound and only a conditional same-snapshot factor-20 skeleton; no source-paper regret theorem.",
+                "boundary": "89 implementation-facing, 19 diagnostic/conditional/repair, and 16 processed-prefix declarations; the factor-20 result remains certificate-level conditional, and no source-paper regret theorem is verified.",
             },
             {
                 "artifact": "Succinct geometry audit",
@@ -1337,10 +1345,12 @@ def build_claim_ledger(proof_report):
         "source_records": records,
         "delayed_feedback": {
             "implementation_facing_ids": list(DELAYED_IMPLEMENTATION_IDS),
-            "implementation_facing_declaration_count": 88,
+            "implementation_facing_declaration_count": 89,
             "diagnostic_id": DELAYED_DIAGNOSTIC_ID,
             "diagnostic_conditional_repair_declaration_count": 19,
-            "source_audit_declaration_count": 107,
+            "processed_prefix_id": DELAYED_PROCESSED_PREFIX_ID,
+            "processed_prefix_declaration_count": 16,
+            "source_audit_declaration_count": 124,
             "paper_endpoint_verified": False,
         },
         "succinct_geometry": {

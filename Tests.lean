@@ -15,5 +15,6 @@ import Tests.BookMapChaptersFiveAndSixCanary
 import Tests.BookMapChaptersSevenAndEightCanary
 import Tests.TextbookPartIVChapter17Canary
 import Tests.DelayedFeedbackPaperAuditCanary
+import Tests.DelayedFeedbackProcessedPrefixCountsCanary
 import Tests.SuccinctLowerBoundPaperAuditCanary
 import Tests.StochasticGradientBanditPaperAuditCanary

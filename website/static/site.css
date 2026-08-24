@@ -1205,6 +1205,63 @@ tr:last-child td {
   border-bottom: 0;
 }
 
+.chapter-milestone-table table {
+  width: 100%;
+  min-width: 100%;
+  table-layout: fixed;
+}
+
+.chapter-milestone-table th:nth-child(1) {
+  width: 22%;
+}
+
+.chapter-milestone-table th:nth-child(2) {
+  width: 15%;
+}
+
+.chapter-milestone-table th:nth-child(3) {
+  width: 34%;
+}
+
+.chapter-milestone-table th:nth-child(4) {
+  width: 29%;
+}
+
+.chapter-milestone-table th,
+.chapter-milestone-table td {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.chapter-milestone-declarations > a,
+.chapter-milestone-more > div > a {
+  display: block;
+  margin-bottom: 0.45rem;
+}
+
+.chapter-milestone-declarations code {
+  overflow-wrap: anywhere;
+}
+
+.chapter-milestone-more {
+  margin-top: 0.55rem;
+  border-top: 1px solid var(--line);
+  padding-top: 0.5rem;
+}
+
+.chapter-milestone-more summary {
+  min-height: 2.25rem;
+  color: var(--accent);
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 750;
+}
+
+.chapter-milestone-more > div {
+  margin-top: 0.55rem;
+}
+
 tbody tr:hover {
   background: color-mix(in srgb, var(--accent-soft) 38%, transparent);
 }
@@ -2570,6 +2627,62 @@ tbody tr:hover {
   .milestone-evidence dl > div {
     grid-template-columns: 1fr;
     gap: 0.15rem;
+  }
+
+  .chapter-milestone-table {
+    overflow: visible;
+    border: 0;
+    background: transparent;
+  }
+
+  .chapter-milestone-table table {
+    display: block;
+    min-width: 0;
+  }
+
+  .chapter-milestone-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .chapter-milestone-table tbody {
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .chapter-milestone-table tr {
+    display: grid;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+  }
+
+  .chapter-milestone-table td {
+    display: grid;
+    grid-template-columns: 6.4rem minmax(0, 1fr);
+    gap: 0.75rem;
+    padding: 0.75rem;
+  }
+
+  .chapter-milestone-table td::before {
+    content: attr(data-label);
+    color: var(--muted);
+    font-family: var(--sans);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.045em;
+    text-transform: uppercase;
+  }
+
+  .chapter-milestone-table td:last-child {
+    border-bottom: 0;
   }
 
   .hero-actions .button {

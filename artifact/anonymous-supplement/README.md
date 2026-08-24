@@ -46,14 +46,14 @@ were screened.
   presentation existed unchanged on that date.  The packaged validator checks
   this derivative hash chain directly.
 
-The delayed-feedback flagship contains 88 implementation-facing compiled
-declarations and 19 separately counted diagnostic/conditional/repair
-declarations.  The latter diagnose the printed D.10--D.12 direction/indexing
-obligation, prove the source-shaped small-count width lower bound, and compile
-a large/small-count conditional same-snapshot factor-20 skeleton.  Recursive
-branch/count/width producers and the same-prefix factor-ten edge remain open;
-these declarations do not verify or refute the source lemmas or the paper-level
-regret theorem.  Across Textbook Chapters 13--17, Chapter 15 Lemma 15.1 and
+The delayed-feedback flagship contains 89 implementation-facing compiled
+declarations, 19 separately counted diagnostic/conditional/repair declarations,
+and a 16-declaration processed-prefix producer.  The producer derives D.1 count,
+factor-three/factor-ten width, and recursive-UCB inputs for a conditional
+same-snapshot factor-20 result.  Constructing its certificate and D.4 probability
+from the recursive Delayed SAPO trajectory, ordered elimination, and the terminal
+regret chain remain open; these declarations do not verify or refute the source
+lemmas or paper-level theorem.  Across Textbook Chapters 13--17, Chapter 15 Lemma 15.1 and
 the exact Theorem 15.2 Gaussian expected-pseudo-regret/minimax terminals
 compile, and Chapter 13 has a compiled constant-`1/54` downstream consumer.
 Whole-chapter Notes/Exercises and the Chapter 16--17 terminals remain open, so

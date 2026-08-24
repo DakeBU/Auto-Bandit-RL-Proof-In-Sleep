@@ -69,8 +69,8 @@ availability condition `s + delay s < t`.
   complement-good-event bound to an optimal-arm-elimination bound.  The full
   event and its D.2--D.7 component probability producers remain open.
 - [x] Compile the exact Corollary-D.8 union assembly.  Six named source
-  components consume the three `1/T^2` and three `1/T` bounds of Lemmas
-  D.2--D.7, prove the paper's loose `9/T` complement-good-event budget, and
+  components consume the source-exact three `2/T` and three `1/T` bounds of
+  Lemmas D.2--D.7, prove the paper's `9/T` complement-good-event budget, and
   compose a recorded full-event projection with the D.9 optimal-survival
   consumer.  The six component concentration proofs and projection remain
   open upstream obligations.
@@ -81,10 +81,20 @@ availability condition `s + delay s < t`.
   skeletons.  Lean now also proves the exact small-count scalar implication
   `count <= 192 * log T -> 1 <= 10 * width` and consumes the source-shaped
   large/small-count disjunction without imposing factor three on the small
-  branch.  The recursive Delayed SAPO trace still has to produce the actual
-  count/width equality, the large-branch current-UCB/factor-three certificate,
-  and the same-prefix factor-ten edge.  Keep Lemma 4.2 unverified pending those
-  producers and a source-faithful endpoint repair or clarification.
+  branch.  The downstream processed-prefix producer now supplies those
+  algebraic inputs from a source-time ledger and D.1 count certificate.  Keep
+  Lemma 4.2 unverified pending the recursive state-to-ledger projection, D.4
+  probability proof, ordered elimination trace, and a source-faithful endpoint
+  repair or clarification.
+- [x] Compile the source-time processed-prefix count producer.  The ledger
+  records the chosen arm and line-15 allocation at each source round, derives
+  equal cumulative pull mass for arms that remain active, and combines the
+  exact D.1 count inequalities with the source width and recursive-UCB
+  definitions.  It produces the large/small branch, the same-prefix
+  factor-ten width edge, and a conditional same-snapshot factor-20 gap theorem
+  without accepting either target edge as a premise.  Constructing the ledger
+  and its active-persistence/count certificate from the full recursive
+  Delayed SAPO state, and proving the D.4 probability bound, remain open.
 - [x] Reuse the existing finite-action law to turn the certified line-15
   vector into a probability measure, and lift causal allocation rules to
   measure-valued rules that remain identical in observation-equivalent hidden
@@ -107,6 +117,7 @@ regime endpoints to close in Lean.
 
 ```bash
 lake env lean BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean
+lake env lean BanditRLProof/DelayedFeedback/ProcessedPrefixCounts.lean
 lake env lean BanditRLProof/DelayedFeedback/Accounting.lean
 lake env lean BanditRLProof/DelayedFeedback/MultiRegimeContract.lean
 lake env lean BanditRLProof/DelayedFeedback/CausalView.lean
@@ -115,6 +126,7 @@ lake env lean BanditRLProof/DelayedFeedback/ActiveAllocation.lean
 lake env lean BanditRLProof/DelayedFeedback/Elimination.lean
 lake env lean BanditRLProof/DelayedFeedback/ActionLaw.lean
 lake env lean Tests/DelayedFeedbackPaperAuditCanary.lean
+lake env lean Tests/DelayedFeedbackProcessedPrefixCountsCanary.lean
 python3 tools/bandit.py check
 ```
 
