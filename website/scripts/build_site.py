@@ -1677,10 +1677,27 @@ def build_chapters(
                 f'<a href="{declaration_href(page_path, decl_by_name[name])}"><code>{html.escape(name)}</code></a>'
                 for name in result["declarations"]
             ]
+            if len(links) > 3:
+                declaration_cell = (
+                    '<div class="chapter-milestone-declarations">'
+                    + "".join(links[:3])
+                    + '<details class="chapter-milestone-more"><summary>'
+                    + f'Open {len(links) - 3} more declarations'
+                    + '</summary><div>'
+                    + "".join(links[3:])
+                    + '</div></details></div>'
+                )
+            else:
+                declaration_cell = (
+                    '<div class="chapter-milestone-declarations">'
+                    + ("".join(links) if links else "No local declaration yet")
+                    + '</div>'
+                )
             result_rows.append(
-                f"<tr><td>{html.escape(result['title'])}</td><td>{status_badge(result['status'])}</td>"
-                f"<td>{'<br>'.join(links) if links else 'No local declaration yet'}</td>"
-                f"<td>{'<br>'.join(html.escape(item) for item in result['missing']) or '—'}</td></tr>"
+                f"<tr><td data-label=\"Milestone\">{html.escape(result['title'])}</td>"
+                f"<td data-label=\"Status\">{status_badge(result['status'])}</td>"
+                f"<td data-label=\"Lean evidence\">{declaration_cell}</td>"
+                f"<td data-label=\"Remaining gap\">{'<br>'.join(html.escape(item) for item in result['missing']) or '—'}</td></tr>"
             )
         module_rows = "".join(
             f"<tr><td><a href=\"{module_href(page_path, module)}\"><code>{html.escape(module['name'])}</code></a></td>"
@@ -1714,7 +1731,8 @@ def build_chapters(
 
 <section id="milestones">
   <h2>Chapter implementation status</h2>
-  <div class="table-wrap"><table><thead><tr><th>Milestone</th><th>Status</th><th>Lean declaration</th><th>Remaining gap</th></tr></thead><tbody>{''.join(result_rows)}</tbody></table></div>
+  <p class="section-intro">Each row shows three representative declarations. Open the disclosure for the complete, source-linked list.</p>
+  <div class="table-wrap chapter-milestone-table" tabindex="0" role="region" aria-label="Chapter implementation milestones"><table><thead><tr><th>Milestone</th><th>Status</th><th>Lean declaration</th><th>Remaining gap</th></tr></thead><tbody>{''.join(result_rows)}</tbody></table></div>
 </section>
 
 <section id="open-gaps">

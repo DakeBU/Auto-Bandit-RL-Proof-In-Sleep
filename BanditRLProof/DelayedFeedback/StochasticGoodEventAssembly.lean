@@ -73,32 +73,40 @@ theorem measure_sourceGoodEventSet_compl_le_sum
   exact ProbabilityUnionBound.measure_iUnion_fintype_le_sum
     mu family.componentFailure
 
-/-- The source `1 / T^2` budget used for Lemmas D.2--D.4. -/
-noncomputable def quadraticFailureBudget (horizon : Nat) : Real :=
-  (1 / (horizon : Real)) ^ 2
-
 /-- The source `1 / T` budget used for Lemmas D.5--D.7. -/
 noncomputable def linearFailureBudget (horizon : Nat) : Real :=
   1 / (horizon : Real)
 
-/-- For a nonzero horizon, every quadratic source share is bounded by its
-linear relaxation. -/
-theorem quadraticFailureBudget_le_linearFailureBudget
-    (horizon : Nat) (hhorizon : 0 < horizon) :
-    quadraticFailureBudget horizon <= linearFailureBudget horizon := by
-  let x : Real := 1 / (horizon : Real)
-  have hhorizonReal : 1 <= (horizon : Real) := by
-    exact_mod_cast hhorizon
-  have hx_nonneg : 0 <= x := by
-    dsimp [x]
-    positivity
-  have hx_le_one : x <= 1 := by
-    dsimp [x]
-    exact (div_le_one (by positivity)).2 hhorizonReal
-  have hproduct : 0 <= x * (1 - x) :=
-    mul_nonneg hx_nonneg (sub_nonneg.mpr hx_le_one)
-  dsimp [quadraticFailureBudget, linearFailureBudget, x] at *
-  nlinarith
+/-- The source `2 / T` budget used for Lemmas D.2--D.4. -/
+noncomputable def doubleLinearFailureBudget (horizon : Nat) : Real :=
+  2 / (horizon : Real)
+
+/-- The source-exact failure share assigned to each clause in Corollary D.8:
+D.2--D.4 contribute `2 / T` each and D.5--D.7 contribute `1 / T` each. -/
+noncomputable def sourceComponentFailureBudget (horizon : Nat) :
+    DelayedSAPOGoodEventComponent -> Real
+  | .bscConfidence => doubleLinearFailureBudget horizon
+  | .eapConfidence => doubleLinearFailureBudget horizon
+  | .pullCount => doubleLinearFailureBudget horizon
+  | .eliminatedDelay => linearFailureBudget horizon
+  | .lossDifference => linearFailureBudget horizon
+  | .stochasticDelay => linearFailureBudget horizon
+
+/-- The six source-exact shares in Corollary D.8 sum to `9 / T`. -/
+theorem sum_sourceComponentFailureBudget_eq_nine_div
+    (horizon : Nat) :
+    (Finset.univ : Finset DelayedSAPOGoodEventComponent).sum
+        (sourceComponentFailureBudget horizon) =
+      9 / (horizon : Real) := by
+  have huniv :
+      (Finset.univ : Finset DelayedSAPOGoodEventComponent) =
+        {.bscConfidence, .eapConfidence, .pullCount, .eliminatedDelay,
+          .lossDifference, .stochasticDelay} := by
+    decide
+  rw [huniv]
+  simp [sourceComponentFailureBudget, doubleLinearFailureBudget,
+    linearFailureBudget]
+  ring
 
 /-- Corollary-D.8 union assembly.  The six hypotheses are precisely the
 probability-producing obligations of Lemmas D.2--D.7.  This theorem combines
@@ -110,11 +118,11 @@ theorem measure_sourceGoodEventSet_compl_le_nine_div
     (family : DelayedSAPOGoodEventFailureFamily Omega)
     (horizon : Nat) (hhorizon : 0 < horizon)
     (hbsc : mu family.bscConfidence <=
-      ENNReal.ofReal (quadraticFailureBudget horizon))
+      ENNReal.ofReal (doubleLinearFailureBudget horizon))
     (heap : mu family.eapConfidence <=
-      ENNReal.ofReal (quadraticFailureBudget horizon))
+      ENNReal.ofReal (doubleLinearFailureBudget horizon))
     (hpull : mu family.pullCount <=
-      ENNReal.ofReal (quadraticFailureBudget horizon))
+      ENNReal.ofReal (doubleLinearFailureBudget horizon))
     (heliminated : mu family.eliminatedDelay <=
       ENNReal.ofReal (linearFailureBudget horizon))
     (hloss : mu family.lossDifference <=
@@ -123,52 +131,38 @@ theorem measure_sourceGoodEventSet_compl_le_nine_div
       ENNReal.ofReal (linearFailureBudget horizon)) :
     mu family.sourceGoodEventSetᶜ <=
       ENNReal.ofReal (9 / (horizon : Real)) := by
-  have hquadratic := quadraticFailureBudget_le_linearFailureBudget
-    horizon hhorizon
   have hcomponent : forall component,
       mu (family.componentFailure component) <=
-        ENNReal.ofReal (linearFailureBudget horizon) := by
+        ENNReal.ofReal (sourceComponentFailureBudget horizon component) := by
     intro component
     cases component with
-    | bscConfidence =>
-        exact hbsc.trans (ENNReal.ofReal_le_ofReal hquadratic)
-    | eapConfidence =>
-        exact heap.trans (ENNReal.ofReal_le_ofReal hquadratic)
-    | pullCount =>
-        exact hpull.trans (ENNReal.ofReal_le_ofReal hquadratic)
+    | bscConfidence => exact hbsc
+    | eapConfidence => exact heap
+    | pullCount => exact hpull
     | eliminatedDelay => exact heliminated
     | lossDifference => exact hloss
     | stochasticDelay => exact hdelay
   have hsum := family.measure_sourceGoodEventSet_compl_le_sum mu
-  have hlinear_nonneg : 0 <= linearFailureBudget horizon := by
-    dsimp [linearFailureBudget]
-    positivity
-  have hcomponent_card : Fintype.card DelayedSAPOGoodEventComponent = 6 := by
-    decide
   have hsumBudget :
       (Finset.univ : Finset DelayedSAPOGoodEventComponent).sum
           (fun component => mu (family.componentFailure component)) <=
-        ENNReal.ofReal (6 * linearFailureBudget horizon) := by
+        ENNReal.ofReal (9 / (horizon : Real)) := by
     calc
       _ <= (Finset.univ : Finset DelayedSAPOGoodEventComponent).sum
-          (fun _component => ENNReal.ofReal (linearFailureBudget horizon)) := by
+          (fun component => ENNReal.ofReal
+            (sourceComponentFailureBudget horizon component)) := by
         exact Finset.sum_le_sum fun component _ => hcomponent component
-      _ = 6 * ENNReal.ofReal (linearFailureBudget horizon) := by
-        rw [Finset.sum_const, Finset.card_univ, hcomponent_card]
-        simp [nsmul_eq_mul]
-      _ = ENNReal.ofReal (6 * linearFailureBudget horizon) := by
-        rw [ENNReal.ofReal_mul (by norm_num : (0 : Real) <= 6)]
-        norm_num
-  have hreal :
-      6 * linearFailureBudget horizon <= 9 / (horizon : Real) := by
-    dsimp [linearFailureBudget]
-    have hinv : 0 <= 1 / (horizon : Real) := by positivity
-    calc
-      6 * (1 / (horizon : Real)) <= 9 * (1 / (horizon : Real)) := by
-        gcongr
-        norm_num
-      _ = 9 / (horizon : Real) := by ring
-  exact hsum.trans (hsumBudget.trans (ENNReal.ofReal_le_ofReal hreal))
+      _ = ENNReal.ofReal
+          ((Finset.univ : Finset DelayedSAPOGoodEventComponent).sum
+            (sourceComponentFailureBudget horizon)) := by
+        rw [ENNReal.ofReal_sum_of_nonneg]
+        intro component _hcomponent
+        cases component <;>
+          simp [sourceComponentFailureBudget, doubleLinearFailureBudget,
+            linearFailureBudget] <;> positivity
+      _ = ENNReal.ofReal (9 / (horizon : Real)) := by
+        rw [sum_sourceComponentFailureBudget_eq_nine_div]
+  exact hsum.trans hsumBudget
 
 /-- The full source good event implies the already compiled elimination slice
 when the projection relation is recorded explicitly. -/
@@ -183,11 +177,11 @@ theorem measure_eliminationGoodEventSet_compl_le_nine_div
     (hprojection : family.sourceGoodEventSet ⊆
       DelayedSAPOSourceConfidenceSnapshot.eliminationGoodEventSet snapshot mean)
     (hbsc : mu family.bscConfidence <=
-      ENNReal.ofReal (quadraticFailureBudget horizon))
+      ENNReal.ofReal (doubleLinearFailureBudget horizon))
     (heap : mu family.eapConfidence <=
-      ENNReal.ofReal (quadraticFailureBudget horizon))
+      ENNReal.ofReal (doubleLinearFailureBudget horizon))
     (hpull : mu family.pullCount <=
-      ENNReal.ofReal (quadraticFailureBudget horizon))
+      ENNReal.ofReal (doubleLinearFailureBudget horizon))
     (heliminated : mu family.eliminatedDelay <=
       ENNReal.ofReal (linearFailureBudget horizon))
     (hloss : mu family.lossDifference <=
@@ -219,11 +213,11 @@ theorem measure_optimalSurvivalEventSet_compl_le_nine_div
     (hprojection : family.sourceGoodEventSet ⊆
       DelayedSAPOSourceConfidenceSnapshot.eliminationGoodEventSet snapshot mean)
     (hbsc : mu family.bscConfidence <=
-      ENNReal.ofReal (quadraticFailureBudget horizon))
+      ENNReal.ofReal (doubleLinearFailureBudget horizon))
     (heap : mu family.eapConfidence <=
-      ENNReal.ofReal (quadraticFailureBudget horizon))
+      ENNReal.ofReal (doubleLinearFailureBudget horizon))
     (hpull : mu family.pullCount <=
-      ENNReal.ofReal (quadraticFailureBudget horizon))
+      ENNReal.ofReal (doubleLinearFailureBudget horizon))
     (heliminated : mu family.eliminatedDelay <=
       ENNReal.ofReal (linearFailureBudget horizon))
     (hloss : mu family.lossDifference <=

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-22T04:27:59+00:00",
+  "generated": "2026-08-24T17:08:50+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -15698,6 +15698,134 @@
       "statement": "theorem adversarialClaim_iff_shared_fields {Algorithm : Type uAlgorithm} {Initialization : Type uInitialization} {Tuning : Type uTuning} {Information : Type uInformation} {Comparator : Type uComparator} {StochasticEnvironment : Type uStochasticEnvironment} {AdversarialEnvironment : Type uAdversarialEnvironment} (contract : SameAlgorithmMultiRegimeContract Algorithm Initialization Tuning Information Comparator StochasticEnvironment AdversarialEnvironment) (environment : AdversarialEnvironment) : adversarialClaim contract environment \u2194 contract.adversarialEndpoint contract.algorithm contract.initialization contract.tuning contract.information contract.comparator environment"
     },
     {
+      "kind": "structure",
+      "name": "DelayedSAPOProcessedPrefix",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedPrefix",
+      "file": "BanditRLProof/DelayedFeedback/ProcessedPrefixCounts.lean",
+      "line": 14,
+      "statement": "structure DelayedSAPOProcessedPrefix (K : Nat) where"
+    },
+    {
+      "kind": "def",
+      "name": "processedPullCount",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedPrefix.processedPullCount",
+      "file": "BanditRLProof/DelayedFeedback/ProcessedPrefixCounts.lean",
+      "line": 24,
+      "statement": "def processedPullCount {K : Nat} (ledger : DelayedSAPOProcessedPrefix K) (i : Fin K) : Nat"
+    },
+    {
+      "kind": "def",
+      "name": "expectedPullMass",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedPrefix.expectedPullMass",
+      "file": "BanditRLProof/DelayedFeedback/ProcessedPrefixCounts.lean",
+      "line": 29,
+      "statement": "noncomputable def expectedPullMass {K : Nat} (ledger : DelayedSAPOProcessedPrefix K) (i : Fin K) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "expectedPullMass_eq_of_active_throughout",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedPrefix.expectedPullMass_eq_of_active_throughout",
+      "file": "BanditRLProof/DelayedFeedback/ProcessedPrefixCounts.lean",
+      "line": 37,
+      "statement": "theorem expectedPullMass_eq_of_active_throughout {K : Nat} (ledger : DelayedSAPOProcessedPrefix K) (i j : Fin K) (hi : forall s, i \u2208 ledger.activeAtSource s) (hj : forall s, j \u2208 ledger.activeAtSource s) : ledger.expectedPullMass i = ledger.expectedPullMass j"
+    },
+    {
+      "kind": "structure",
+      "name": "DelayedSAPOProcessedPrefixCountCertificate",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedPrefixCountCertificate",
+      "file": "BanditRLProof/DelayedFeedback/ProcessedPrefixCounts.lean",
+      "line": 61,
+      "statement": "structure DelayedSAPOProcessedPrefixCountCertificate {K : Nat} [Nonempty (Fin K)] (snapshot : DelayedSAPOSourceConfidenceSnapshot K) (ledger : DelayedSAPOProcessedPrefix K) (horizon : Nat) : Prop where"
+    },
+    {
+      "kind": "theorem",
+      "name": "sourceEmpiricalWidthScale_nonneg",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedPrefixCountCertificate.sourceEmpiricalWidthScale_nonneg",
+      "file": "BanditRLProof/DelayedFeedback/ProcessedPrefixCounts.lean",
+      "line": 86,
+      "statement": "theorem sourceEmpiricalWidthScale_nonneg (scale count : Real) : 0 <= sourceEmpiricalWidthScale scale count"
+    },
+    {
+      "kind": "theorem",
+      "name": "sourceEmpiricalWidthScale_le_one",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedPrefixCountCertificate.sourceEmpiricalWidthScale_le_one",
+      "file": "BanditRLProof/DelayedFeedback/ProcessedPrefixCounts.lean",
+      "line": 94,
+      "statement": "theorem sourceEmpiricalWidthScale_le_one (scale count : Real) : sourceEmpiricalWidthScale scale count <= 1"
+    },
+    {
+      "kind": "theorem",
+      "name": "sourceEmpiricalWidthScale_le_three_of_count_le_eight_mul",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedPrefixCountCertificate.sourceEmpiricalWidthScale_le_three_of_count_le_eight_mul",
+      "file": "BanditRLProof/DelayedFeedback/ProcessedPrefixCounts.lean",
+      "line": 104,
+      "statement": "theorem sourceEmpiricalWidthScale_le_three_of_count_le_eight_mul (scale countReference countOther : Real) (hscale : 0 <= scale) (hreference : 0 < countReference) (hcount : countReference <= 8 * countOther) : sourceEmpiricalWidthScale scale countOther <= 3 * sourceEmpiricalWidthScale scale countReference"
+    },
+    {
+      "kind": "theorem",
+      "name": "expectedPullMass_eq_of_mem_active",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedPrefixCountCertificate.expectedPullMass_eq_of_mem_active",
+      "file": "BanditRLProof/DelayedFeedback/ProcessedPrefixCounts.lean",
+      "line": 148,
+      "statement": "theorem expectedPullMass_eq_of_mem_active {K : Nat} [Nonempty (Fin K)] {snapshot : DelayedSAPOSourceConfidenceSnapshot K} {ledger : DelayedSAPOProcessedPrefix K} {horizon : Nat} (certificate : DelayedSAPOProcessedPrefixCountCertificate snapshot ledger horizon) {i j : Fin K} (hi : i \u2208 snapshot.active) (hj : j \u2208 snapshot.active) : ledger.expectedPullMass i = ledger.expectedPullMass j"
+    },
+    {
+      "kind": "theorem",
+      "name": "quarter_count_sub_six_log_le_count_of_mem_active",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedPrefixCountCertificate.quarter_count_sub_six_log_le_count_of_mem_active",
+      "file": "BanditRLProof/DelayedFeedback/ProcessedPrefixCounts.lean",
+      "line": 164,
+      "statement": "theorem quarter_count_sub_six_log_le_count_of_mem_active {K : Nat} [Nonempty (Fin K)] {snapshot : DelayedSAPOSourceConfidenceSnapshot K} {ledger : DelayedSAPOProcessedPrefix K} {horizon : Nat} (certificate : DelayedSAPOProcessedPrefixCountCertificate snapshot ledger horizon) {i j : Fin K} (hi : i \u2208 snapshot.active) (hj : j \u2208 snapshot.active) : (ledger.processedPullCount i : Real) / 4 - 6 * Real.log (horizon : Real) <= (ledger.processedPullCount j : Real)"
+    },
+    {
+      "kind": "theorem",
+      "name": "eighth_count_le_count_of_large_count",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedPrefixCountCertificate.eighth_count_le_count_of_large_count",
+      "file": "BanditRLProof/DelayedFeedback/ProcessedPrefixCounts.lean",
+      "line": 181,
+      "statement": "theorem eighth_count_le_count_of_large_count {K : Nat} [Nonempty (Fin K)] {snapshot : DelayedSAPOSourceConfidenceSnapshot K} {ledger : DelayedSAPOProcessedPrefix K} {horizon : Nat} (certificate : DelayedSAPOProcessedPrefixCountCertificate snapshot ledger horizon) (hhorizon : 1 < horizon) {i j : Fin K} (hi : i \u2208 snapshot.active) (hj : j \u2208 snapshot.active) (hlarge : 192 * Real.log (horizon : Real) < (ledger.processedPullCount i : Real)) : (ledger.processedPullCount i : Real) / 8 <= (ledger.processedPullCount j : Real)"
+    },
+    {
+      "kind": "theorem",
+      "name": "empiricalWidth_le_three_of_large_count",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedPrefixCountCertificate.empiricalWidth_le_three_of_large_count",
+      "file": "BanditRLProof/DelayedFeedback/ProcessedPrefixCounts.lean",
+      "line": 200,
+      "statement": "theorem empiricalWidth_le_three_of_large_count {K : Nat} [Nonempty (Fin K)] {snapshot : DelayedSAPOSourceConfidenceSnapshot K} {ledger : DelayedSAPOProcessedPrefix K} {horizon : Nat} (certificate : DelayedSAPOProcessedPrefixCountCertificate snapshot ledger horizon) (hhorizon : 1 < horizon) {iReference iOther : Fin K} (hreferenceActive : iReference \u2208 snapshot.active) (hotherActive : iOther \u2208 snapshot.active) (hlarge : 192 * Real.log (horizon : Real) < (ledger.processedPullCount iReference : Real)) : snapshot.empiricalWidth iOther <= 3 * snapshot.empiricalWidth iReference"
+    },
+    {
+      "kind": "theorem",
+      "name": "empiricalWidth_le_ten_of_mem_active",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedPrefixCountCertificate.empiricalWidth_le_ten_of_mem_active",
+      "file": "BanditRLProof/DelayedFeedback/ProcessedPrefixCounts.lean",
+      "line": 230,
+      "statement": "theorem empiricalWidth_le_ten_of_mem_active {K : Nat} [Nonempty (Fin K)] {snapshot : DelayedSAPOSourceConfidenceSnapshot K} {ledger : DelayedSAPOProcessedPrefix K} {horizon : Nat} (certificate : DelayedSAPOProcessedPrefixCountCertificate snapshot ledger horizon) (hhorizon : 1 < horizon) {iReference iOther : Fin K} (hreferenceActive : iReference \u2208 snapshot.active) (hotherActive : iOther \u2208 snapshot.active) : snapshot.empiricalWidth iOther <= 10 * snapshot.empiricalWidth iReference"
+    },
+    {
+      "kind": "theorem",
+      "name": "ucbStar_le_empiricalMean_add_width",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedPrefixCountCertificate.ucbStar_le_empiricalMean_add_width",
+      "file": "BanditRLProof/DelayedFeedback/ProcessedPrefixCounts.lean",
+      "line": 266,
+      "statement": "theorem ucbStar_le_empiricalMean_add_width {K : Nat} [Nonempty (Fin K)] {snapshot : DelayedSAPOSourceConfidenceSnapshot K} {ledger : DelayedSAPOProcessedPrefix K} {horizon : Nat} (certificate : DelayedSAPOProcessedPrefixCountCertificate snapshot ledger horizon) (mean : Fin K -> Real) (hgood : snapshot.EliminationGoodEvent mean) (i : Fin K) : snapshot.ucbStar <= snapshot.empiricalMean i + snapshot.empiricalWidth i"
+    },
+    {
+      "kind": "theorem",
+      "name": "activeArmGapBranch",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedPrefixCountCertificate.activeArmGapBranch",
+      "file": "BanditRLProof/DelayedFeedback/ProcessedPrefixCounts.lean",
+      "line": 289,
+      "statement": "theorem activeArmGapBranch {K : Nat} [Nonempty (Fin K)] {snapshot : DelayedSAPOSourceConfidenceSnapshot K} {ledger : DelayedSAPOProcessedPrefix K} {horizon : Nat} (certificate : DelayedSAPOProcessedPrefixCountCertificate snapshot ledger horizon) (hhorizon : 1 < horizon) (mean : Fin K -> Real) (hgood : snapshot.EliminationGoodEvent mean) {optimal i : Fin K} (hoptimalActive : optimal \u2208 snapshot.active) (hiActive : i \u2208 snapshot.active) : (snapshot.ucbStar <= snapshot.empiricalMean optimal + snapshot.empiricalWidth optimal /\\ snapshot.empiricalWidth optimal <= 3 * snapshot.empiricalWidth i) \\/ (exists scale count : Real, 0 < scale /\\ count <= 96 * scale /\\ snapshot.empiricalWidth i = sourceEmpiricalWidthScale scale count)"
+    },
+    {
+      "kind": "theorem",
+      "name": "gap_le_twenty_mul_gap_at_earlier_elimination_snapshot_of_countCertificate",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedPrefixCountCertificate.gap_le_twenty_mul_gap_at_earlier_elimination_snapshot_of_countCertificate",
+      "file": "BanditRLProof/DelayedFeedback/ProcessedPrefixCounts.lean",
+      "line": 329,
+      "statement": "theorem gap_le_twenty_mul_gap_at_earlier_elimination_snapshot_of_countCertificate {K : Nat} [Nonempty (Fin K)] (snapshot : DelayedSAPOSourceConfidenceSnapshot K) (ledger : DelayedSAPOProcessedPrefix K) (horizon : Nat) (certificate : DelayedSAPOProcessedPrefixCountCertificate snapshot ledger horizon) (hhorizon : 1 < horizon) (mean : Fin K -> Real) (optimal iEarlier iLater : Fin K) (hoptimal : forall j, mean optimal <= mean j) (hmeanBounds : forall j, mean j \u2208 Set.Icc (0 : Real) 1) (hgood : snapshot.EliminationGoodEvent mean) (hoptimalActive : optimal \u2208 snapshot.active) (hEarlierEliminated : iEarlier \u2208 snapshot.eliminated) (hLaterRemaining : iLater \u2208 snapshot.remainingActive) : mean iLater - mean optimal <= 20 * (mean iEarlier - mean optimal)"
+    },
+    {
       "kind": "def",
       "name": "newlyObservedBefore",
       "full_name": "BanditRLProof.DelayedFeedback.newlyObservedBefore",
@@ -16067,51 +16195,59 @@
     },
     {
       "kind": "def",
-      "name": "quadraticFailureBudget",
-      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.quadraticFailureBudget",
-      "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
-      "line": 77,
-      "statement": "noncomputable def quadraticFailureBudget (horizon : Nat) : Real"
-    },
-    {
-      "kind": "def",
       "name": "linearFailureBudget",
       "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.linearFailureBudget",
       "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
-      "line": 81,
+      "line": 77,
       "statement": "noncomputable def linearFailureBudget (horizon : Nat) : Real"
     },
     {
-      "kind": "theorem",
-      "name": "quadraticFailureBudget_le_linearFailureBudget",
-      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.quadraticFailureBudget_le_linearFailureBudget",
+      "kind": "def",
+      "name": "doubleLinearFailureBudget",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.doubleLinearFailureBudget",
+      "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+      "line": 81,
+      "statement": "noncomputable def doubleLinearFailureBudget (horizon : Nat) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "sourceComponentFailureBudget",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.sourceComponentFailureBudget",
       "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
       "line": 86,
-      "statement": "theorem quadraticFailureBudget_le_linearFailureBudget (horizon : Nat) (hhorizon : 0 < horizon) : quadraticFailureBudget horizon <= linearFailureBudget horizon"
+      "statement": "noncomputable def sourceComponentFailureBudget (horizon : Nat) : DelayedSAPOGoodEventComponent -> Real | .bscConfidence => doubleLinearFailureBudget horizon | .eapConfidence => doubleLinearFailureBudget horizon | .pullCount => doubleLinearFailureBudget horizon | .eliminatedDelay => linearFailureBudget horizon | .lossDifference => linearFailureBudget horizon | .stochasticDelay => linearFailureBudget horizon"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_sourceComponentFailureBudget_eq_nine_div",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.sum_sourceComponentFailureBudget_eq_nine_div",
+      "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+      "line": 96,
+      "statement": "theorem sum_sourceComponentFailureBudget_eq_nine_div (horizon : Nat) : (Finset.univ : Finset DelayedSAPOGoodEventComponent).sum (sourceComponentFailureBudget horizon) = 9 / (horizon : Real)"
     },
     {
       "kind": "theorem",
       "name": "measure_sourceGoodEventSet_compl_le_nine_div",
       "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.measure_sourceGoodEventSet_compl_le_nine_div",
       "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
-      "line": 107,
-      "statement": "theorem measure_sourceGoodEventSet_compl_le_nine_div {Omega : Type*} [MeasurableSpace Omega] (mu : Measure Omega) (family : DelayedSAPOGoodEventFailureFamily Omega) (horizon : Nat) (hhorizon : 0 < horizon) (hbsc : mu family.bscConfidence <= ENNReal.ofReal (quadraticFailureBudget horizon)) (heap : mu family.eapConfidence <= ENNReal.ofReal (quadraticFailureBudget horizon)) (hpull : mu family.pullCount <= ENNReal.ofReal (quadraticFailureBudget horizon)) (heliminated : mu family.eliminatedDelay <= ENNReal.ofReal (linearFailureBudget horizon)) (hloss : mu family.lossDifference <= ENNReal.ofReal (linearFailureBudget horizon)) (hdelay : mu family.stochasticDelay <= ENNReal.ofReal (linearFailureBudget horizon)) : mu family.sourceGoodEventSet\u1d9c <= ENNReal.ofReal (9 / (horizon : Real))"
+      "line": 115,
+      "statement": "theorem measure_sourceGoodEventSet_compl_le_nine_div {Omega : Type*} [MeasurableSpace Omega] (mu : Measure Omega) (family : DelayedSAPOGoodEventFailureFamily Omega) (horizon : Nat) (hhorizon : 0 < horizon) (hbsc : mu family.bscConfidence <= ENNReal.ofReal (doubleLinearFailureBudget horizon)) (heap : mu family.eapConfidence <= ENNReal.ofReal (doubleLinearFailureBudget horizon)) (hpull : mu family.pullCount <= ENNReal.ofReal (doubleLinearFailureBudget horizon)) (heliminated : mu family.eliminatedDelay <= ENNReal.ofReal (linearFailureBudget horizon)) (hloss : mu family.lossDifference <= ENNReal.ofReal (linearFailureBudget horizon)) (hdelay : mu family.stochasticDelay <= ENNReal.ofReal (linearFailureBudget horizon)) : mu family.sourceGoodEventSet\u1d9c <= ENNReal.ofReal (9 / (horizon : Real))"
     },
     {
       "kind": "theorem",
       "name": "measure_eliminationGoodEventSet_compl_le_nine_div",
       "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.measure_eliminationGoodEventSet_compl_le_nine_div",
       "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
-      "line": 175,
-      "statement": "theorem measure_eliminationGoodEventSet_compl_le_nine_div {Omega : Type*} [MeasurableSpace Omega] {K : Nat} [Nonempty (Fin K)] (mu : Measure Omega) (family : DelayedSAPOGoodEventFailureFamily Omega) (snapshot : Omega -> DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K -> Real) (horizon : Nat) (hhorizon : 0 < horizon) (hprojection : family.sourceGoodEventSet \u2286 DelayedSAPOSourceConfidenceSnapshot.eliminationGoodEventSet snapshot mean) (hbsc : mu family.bscConfidence <= ENNReal.ofReal (quadraticFailureBudget horizon)) (heap : mu family.eapConfidence <= ENNReal.ofReal (quadraticFailureBudget horizon)) (hpull : mu family.pullCount <= ENNReal.ofReal (quadraticFailureBudget horizon)) (heliminated : mu family.eliminatedDelay <= ENNReal.ofReal (linearFailureBudget horizon)) (hloss : mu family.lossDifference <= ENNReal.ofReal (linearFailureBudget horizon)) (hdelay : mu family.stochasticDelay <= ENNReal.ofReal (linearFailureBudget horizon)) : mu (DelayedSAPOSourceConfidenceSnapshot.eliminationGoodEventSet snapshot mean)\u1d9c <= ENNReal.ofReal (9 / (horizon : Real))"
+      "line": 170,
+      "statement": "theorem measure_eliminationGoodEventSet_compl_le_nine_div {Omega : Type*} [MeasurableSpace Omega] {K : Nat} [Nonempty (Fin K)] (mu : Measure Omega) (family : DelayedSAPOGoodEventFailureFamily Omega) (snapshot : Omega -> DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K -> Real) (horizon : Nat) (hhorizon : 0 < horizon) (hprojection : family.sourceGoodEventSet \u2286 DelayedSAPOSourceConfidenceSnapshot.eliminationGoodEventSet snapshot mean) (hbsc : mu family.bscConfidence <= ENNReal.ofReal (doubleLinearFailureBudget horizon)) (heap : mu family.eapConfidence <= ENNReal.ofReal (doubleLinearFailureBudget horizon)) (hpull : mu family.pullCount <= ENNReal.ofReal (doubleLinearFailureBudget horizon)) (heliminated : mu family.eliminatedDelay <= ENNReal.ofReal (linearFailureBudget horizon)) (hloss : mu family.lossDifference <= ENNReal.ofReal (linearFailureBudget horizon)) (hdelay : mu family.stochasticDelay <= ENNReal.ofReal (linearFailureBudget horizon)) : mu (DelayedSAPOSourceConfidenceSnapshot.eliminationGoodEventSet snapshot mean)\u1d9c <= ENNReal.ofReal (9 / (horizon : Real))"
     },
     {
       "kind": "theorem",
       "name": "measure_optimalSurvivalEventSet_compl_le_nine_div",
       "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.measure_optimalSurvivalEventSet_compl_le_nine_div",
       "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
-      "line": 209,
-      "statement": "theorem measure_optimalSurvivalEventSet_compl_le_nine_div {Omega : Type*} [MeasurableSpace Omega] {K : Nat} [Nonempty (Fin K)] (mu : Measure Omega) (family : DelayedSAPOGoodEventFailureFamily Omega) (snapshot : Omega -> DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K -> Real) (optimal : Fin K) (horizon : Nat) (hhorizon : 0 < horizon) (hoptimal : forall i, mean optimal <= mean i) (hactive : forall omega, optimal \u2208 (snapshot omega).active) (hprojection : family.sourceGoodEventSet \u2286 DelayedSAPOSourceConfidenceSnapshot.eliminationGoodEventSet snapshot mean) (hbsc : mu family.bscConfidence <= ENNReal.ofReal (quadraticFailureBudget horizon)) (heap : mu family.eapConfidence <= ENNReal.ofReal (quadraticFailureBudget horizon)) (hpull : mu family.pullCount <= ENNReal.ofReal (quadraticFailureBudget horizon)) (heliminated : mu family.eliminatedDelay <= ENNReal.ofReal (linearFailureBudget horizon)) (hloss : mu family.lossDifference <= ENNReal.ofReal (linearFailureBudget horizon)) (hdelay : mu family.stochasticDelay <= ENNReal.ofReal (linearFailureBudget horizon)) : mu (DelayedSAPOSourceConfidenceSnapshot.optimalSurvivalEventSet snapshot optimal)\u1d9c <= ENNReal.ofReal (9 / (horizon : Real))"
+      "line": 204,
+      "statement": "theorem measure_optimalSurvivalEventSet_compl_le_nine_div {Omega : Type*} [MeasurableSpace Omega] {K : Nat} [Nonempty (Fin K)] (mu : Measure Omega) (family : DelayedSAPOGoodEventFailureFamily Omega) (snapshot : Omega -> DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K -> Real) (optimal : Fin K) (horizon : Nat) (hhorizon : 0 < horizon) (hoptimal : forall i, mean optimal <= mean i) (hactive : forall omega, optimal \u2208 (snapshot omega).active) (hprojection : family.sourceGoodEventSet \u2286 DelayedSAPOSourceConfidenceSnapshot.eliminationGoodEventSet snapshot mean) (hbsc : mu family.bscConfidence <= ENNReal.ofReal (doubleLinearFailureBudget horizon)) (heap : mu family.eapConfidence <= ENNReal.ofReal (doubleLinearFailureBudget horizon)) (hpull : mu family.pullCount <= ENNReal.ofReal (doubleLinearFailureBudget horizon)) (heliminated : mu family.eliminatedDelay <= ENNReal.ofReal (linearFailureBudget horizon)) (hloss : mu family.lossDifference <= ENNReal.ofReal (linearFailureBudget horizon)) (hdelay : mu family.stochasticDelay <= ENNReal.ofReal (linearFailureBudget horizon)) : mu (DelayedSAPOSourceConfidenceSnapshot.optimalSurvivalEventSet snapshot optimal)\u1d9c <= ENNReal.ofReal (9 / (horizon : Real))"
     },
     {
       "kind": "structure",

@@ -5,9 +5,11 @@ Task: `PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY`
 Status: `source-frozen; deterministic availability, action-time count,
 one-based/end-of-round sigma bridge, generic shared-identity interface, causal
 action-time view, set-level new-arrival processing, line-7/8 optimal-arm
-survival, line-15 allocation, and a causal one-round action measure compiled;
-full Delayed SAPO state, measurable generated trajectory, and paper endpoints
-planned`
+survival, line-15 allocation, a causal one-round action measure, source-exact
+D.2--D.8 budget assembly, and a processed-prefix D.1 count-to-width producer
+compiled; full Delayed SAPO state-to-ledger projection, D.2--D.7 probability
+producers, measurable generated trajectory, ordered elimination, and paper
+endpoints remain open`
 
 ## Source window
 
@@ -111,11 +113,13 @@ explicit: its Definition-D.1 elimination projection derives
 `muStar <= ucbStar` from both source upper-confidence surfaces, constructs the
 certificate, and carries any supplied complement-good-event bound to an
 optimal-arm-elimination bound.  `DelayedSAPOGoodEventFailureFamily` now
-formalizes the Corollary-D.8 composition: the three `1/T^2` and three `1/T`
-component bounds imply the source's loose `9/T` failure budget, and an
-explicit full-event projection carries that budget through the compiled D.9
-consumer.  The full event, the six D.2--D.7 component probability proofs, the
-projection, and recursive persistence remain open.
+formalizes the source-exact Corollary-D.8 composition: the D.2--D.4 component
+bounds contribute `2/T` each and D.5--D.7 contribute `1/T` each, for exactly
+`9/T`.  This replaces an earlier local `1/T^2` encoding of D.2--D.4 that did
+not match the frozen source.  An explicit full-event projection carries that
+budget through the compiled D.9 consumer.  The full event, the six D.2--D.7
+component probability proofs, the projection, and recursive persistence remain
+open.
 
 `DelayedSAPOAllocation` retains EAP's still-open nonnegativity and mass
 hypotheses as explicit fields.  Under them, the existing finite-action law
@@ -145,16 +149,21 @@ in the frozen camera-ready. Lean work therefore records the direction
 diagnostic and a conditional factor-20 consumer, not an unconditional port of
 Lemma D.10/D.12.
 
-A second compiled route stays at the earlier elimination snapshot and thus
-avoids the disputed temporal transport.  Lean proves the source's exact
-small-count scalar implication `count <= 192 * log T -> 1 <= 10 * width` and a
-branched active-arm upper-gap consumer: the large branch accepts the
-current-UCB and `width_optimal <= 3 * width_later` edges, while the small branch
-accepts the source-width equality and count threshold and uses bounded means.
-The factor-20 endpoint still assumes `width_later <= 10 * width_earlier`.
-The recursive trace does not yet produce the branch certificate, source-width
-equality, or factor-ten edge.  This is therefore a conditional same-snapshot
-repair skeleton, not a completed source repair.
+A second compiled route stays at one elimination snapshot and thus avoids the
+disputed temporal transport.  Its ordered processed-source ledger records the
+chosen arm, source-time line-15 allocation, active set, and previous recursive
+empirical UCB.  For arms active throughout the prefix, equal allocation and the
+exact D.1 count clauses derive
+`n_j(S) >= n_i(S) / 4 - 6 * log T`.  Splitting at `192 * log T` produces the
+large-count factor-three width comparison and the unconditional same-prefix
+factor-ten comparison; the source recursive minimum produces the current-UCB
+edge.  The resulting factor-20 theorem therefore no longer assumes a branch or
+pair-width premise.  It still consumes a
+`DelayedSAPOProcessedPrefixCountCertificate` that has not been constructed from
+a full recursive Delayed SAPO state, and the D.4 probability bound, ordered
+elimination trace, and terminal regret chain remain open.  This is a compiled
+deterministic producer and conditional same-snapshot repair route, not a
+completed source repair or source theorem.
 
 ## Hidden regularity and boundary
 
