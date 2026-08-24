@@ -1,6 +1,6 @@
 # Proof Blueprint: PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY
 
-Generated: `2026-08-24T17:22:03+00:00`
+Generated: `2026-08-24T19:45:45+00:00`
 
 ## Source Task
 
@@ -89,18 +89,31 @@ availability condition `s + delay s < t`.
   large/small-count disjunction without imposing factor three on the small
   branch.  The downstream processed-prefix producer now supplies those
   algebraic inputs from a source-time ledger and D.1 count certificate.  Keep
-  Lemma 4.2 unverified pending the recursive state-to-ledger projection, D.4
+  Lemma 4.2 unverified pending the generated-trajectory construction, D.4
   probability proof, ordered elimination trace, and a source-faithful endpoint
-  repair or clarification.
+  repair or clarification; the deterministic processed-trace-summary adapter
+  is now compiled below.
 - [x] Compile the source-time processed-prefix count producer.  The ledger
   records the chosen arm and line-15 allocation at each source round, derives
   equal cumulative pull mass for arms that remain active, and combines the
   exact D.1 count inequalities with the source width and recursive-UCB
   definitions.  It produces the large/small branch, the same-prefix
   factor-ten width edge, and a conditional same-snapshot factor-20 gap theorem
-  without accepting either target edge as a premise.  Constructing the ledger
-  and its active-persistence/count certificate from the full recursive
-  Delayed SAPO state, and proving the D.4 probability bound, remain open.
+  without accepting either target edge as a premise.
+- [x] Compile the deterministic processed-trace-summary adapter.  The summary
+  records distinct source indices for processed items, permits
+  nonchronological processing order, carries the exact strict availability
+  witness `s + d_s < t`, and reads actions and line-15 allocations at each
+  source index.  It keeps the intra-round active set separate from the
+  antitone source-round trace and records current-to-source containment as an
+  explicit summary invariant.  A future Algorithm-5 producer must prove both
+  that invariant and source-trace antitonicity.  Source width and recursive empirical UCB are
+  definitions of the projected snapshot rather than certificate premises.
+  Given the two explicit D.4 count inequalities, the adapter constructs the
+  existing count certificate and reaches the conditional same-snapshot
+  factor-20 theorem.  Constructing this summary from the full randomized
+  Algorithm-5 transition system and proving D.4's simultaneous `2/T`
+  probability bound remain open.
 - [x] Reuse the existing finite-action law to turn the certified line-15
   vector into a probability measure, and lift causal allocation rules to
   measure-valued rules that remain identical in observation-equivalent hidden
@@ -124,6 +137,7 @@ regime endpoints to close in Lean.
 ```bash
 lake env lean BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean
 lake env lean BanditRLProof/DelayedFeedback/ProcessedPrefixCounts.lean
+lake env lean BanditRLProof/DelayedFeedback/RecursiveProcessedState.lean
 lake env lean BanditRLProof/DelayedFeedback/Accounting.lean
 lake env lean BanditRLProof/DelayedFeedback/MultiRegimeContract.lean
 lake env lean BanditRLProof/DelayedFeedback/CausalView.lean
@@ -133,6 +147,7 @@ lake env lean BanditRLProof/DelayedFeedback/Elimination.lean
 lake env lean BanditRLProof/DelayedFeedback/ActionLaw.lean
 lake env lean Tests/DelayedFeedbackPaperAuditCanary.lean
 lake env lean Tests/DelayedFeedbackProcessedPrefixCountsCanary.lean
+lake env lean Tests/DelayedFeedbackRecursiveProcessedStateCanary.lean
 python3 tools/bandit.py check
 ```
 
@@ -140,6 +155,22 @@ The full 8,838-job Lean gate, proof-graph export, and 118-test Python suite
 passed again on 2026-08-18 after adding the D.10--D.12 audit layer.  The
 isolated worktree remains at a short Windows path to avoid an unrelated
 long-path `.olean` creation failure.
+
+On 2026-08-25, after adding the deterministic processed-trace-summary adapter,
+`python -B tools/bandit.py check` passed the complete current gate: the root
+Lean build completed 8,830 jobs, the `Tests` build completed 8,852 jobs, the
+proof-graph exporter ran, and all 217 Python tests passed (6 skipped).  The
+focused trace-summary module and canary also compile, and their reported axioms
+are limited to `propext`, `Classical.choice`, and `Quot.sound`.  The target-drift
+v2 and external-comparator validators pass structurally while continuing to
+report their 450-run and 30-case studies as planned and unrun.  A read-only
+frontier shadow reports no lifecycle mismatch.
+
+This verification promotes exactly nine additional source-audit declarations,
+for a delayed-feedback total of 133.  It does not promote the Algorithm-5
+transition-and-invariant-to-summary producer, a measurable generated Delayed
+SAPO trajectory, the simultaneous D.4 probability bound, ordered elimination,
+or any terminal regret theorem; those obligations remain open.
 
 
 ## Conversion Window Snapshot
@@ -153,9 +184,10 @@ one-based/end-of-round sigma bridge, generic shared-identity interface, causal
 action-time view, set-level new-arrival processing, line-7/8 optimal-arm
 survival, line-15 allocation, a causal one-round action measure, source-exact
 D.2--D.8 budget assembly, and a processed-prefix D.1 count-to-width producer
-compiled; full Delayed SAPO state-to-ledger projection, D.2--D.7 probability
-producers, measurable generated trajectory, ordered elimination, and paper
-endpoints remain open`
+plus its deterministic processed-trace-summary adapter compiled; the D.4 count
+clause is still conditional, and the D.2--D.7 probability producers,
+measurable generated trajectory, ordered elimination, and paper endpoints
+remain open`
 
 ## Source window
 
@@ -305,11 +337,21 @@ large-count factor-three width comparison and the unconditional same-prefix
 factor-ten comparison; the source recursive minimum produces the current-UCB
 edge.  The resulting factor-20 theorem therefore no longer assumes a branch or
 pair-width premise.  It still consumes a
-`DelayedSAPOProcessedPrefixCountCertificate` that has not been constructed from
-a full recursive Delayed SAPO state, and the D.4 probability bound, ordered
-elimination trace, and terminal regret chain remain open.  This is a compiled
-deterministic producer and conditional same-snapshot repair route, not a
-completed source repair or source theorem.
+  `DelayedSAPOProcessedPrefixCountCertificate`.  A deterministic processed
+  trace summary now constructs that certificate: its ordered ledger stores
+  distinct source indices (without assuming chronological source order),
+  carries each exact `s + d_s < t` availability witness, reads the chosen action
+  and line-15 allocation at that source index, and keeps the intra-round active
+  set separate from the antitone source-round active trace and records their
+  containment as an explicit summary invariant.  It defines the
+  current width and recursive empirical UCB from the projected summary.  The
+  remaining certificate input is the pair of displayed D.4 count inequalities.
+  Constructing the summary from the measurable randomized Algorithm-5
+  transition system, proving the inequalities' simultaneous `2/T` probability,
+  and closing the ordered elimination and terminal regret chains remain open.
+  This is a compiled deterministic adapter and conditional same-snapshot repair
+  route, not an actual recursive-state producer, source repair, or source
+  theorem.
 
 ## Hidden regularity and boundary
 
@@ -348,32 +390,43 @@ open.
 | `DELAYED-BOBW-OPTIMAL-ARM-SURVIVAL` | Algorithm 5 lines 7--8 and the deterministic core of Lemma D.9: an optimal arm satisfying an explicit confidence certificate is not eliminated | real absolute-value interval, strict line-7 test, finite-set difference; source Lemma D.9 | package the exact elimination snapshot, derive the empirical upper inequality, and prove post-elimination nonemptiness | compiled deterministic implication; recursive full Lemma D.9 open |
 | `DELAYED-BOBW-GOOD-EVENT-D9-PROJECTION` | derive `muStar <= ucbStar` from both source upper-confidence surfaces and bound optimal-arm elimination by the complement of the elimination good event | finite infimum, `min`, event inclusion, measure monotonicity; source Definition D.1 and Lemma D.9 | package the elimination slice, construct the survival certificate, and expose a failure-budget consumer | compiled projection/consumer; full event and D.2--D.7 component producers open |
 | `DELAYED-BOBW-D8-D9-ASSEMBLY` | combine the six D.2--D.7 failure components into Corollary D.8's `9/T` budget and transport it through D.9 survival | finite outer-measure union, source-exact three `2/T` and three `1/T` shares, complement inclusion | name the six failure events, prove the exact source budget sum, and compose an explicit full-event projection with optimal-arm survival | compiled union/composition; six concentration proofs and semantic projection remain open |
-| `DELAYED-BOBW-D10-D12-GAP-ORDERING-AUDIT` | audit the width/gap chain used by Appendix Lemma D.10 and expose both the displayed four-edge route and a conditional same-snapshot factor-20 skeleton for Lemma D.12 / main-text Lemma 4.2 | `MLIB-ORDER-ALGEBRA`, `MLIB-REAL-LOG-SQRT`; source empirical-width definition, Algorithm 5 line-7 snapshot, and physical PDF pp. 26--27 | prove width antitonicity and a literal `T=4` reverse-direction witness; derive the eliminated-arm lower gap; prove the exact small-count width lower bound; consume a large/small-count branch certificate and an explicit same-prefix factor-ten edge; retain the conditional four-edge consumer for comparison | compiled diagnostic and conditional consumers; a downstream D.1 processed-prefix producer now supplies their algebraic inputs, but the recursive state projection and unconditional D.10/D.12 remain open |
-| `DELAYED-BOBW-D1-ACTIVE-COUNT-TO-WIDTH-PRODUCER` | derive the same-prefix D.10 width inputs and repaired D.12 factor-20 conclusion from Algorithm 5 line-15 source-time allocations plus the exact D.1 count clause | `delayedSAPOProbability_of_active`; source width; finite sums; real log/sqrt; recursive empirical UCB definition | record an ordered source-time allocation/action ledger; derive equal active-arm pull mass; prove `n_j >= n_i/4 - 6 log T`; split at `192 log T`; produce factor three, factor ten, current-UCB, and the existing same-snapshot consumer inputs | compiled deterministic producer and conditional gap theorem; recursive ledger projection and D.4 probability remain open, so D.10/D.12/Lemma 4.2 are not complete |
+| `DELAYED-BOBW-D10-D12-GAP-ORDERING-AUDIT` | audit the width/gap chain used by Appendix Lemma D.10 and expose both the displayed four-edge route and a conditional same-snapshot factor-20 skeleton for Lemma D.12 / main-text Lemma 4.2 | `MLIB-ORDER-ALGEBRA`, `MLIB-REAL-LOG-SQRT`; source empirical-width definition, Algorithm 5 line-7 snapshot, and physical PDF pp. 26--27 | prove width antitonicity and a literal `T=4` reverse-direction witness; derive the eliminated-arm lower gap; prove the exact small-count width lower bound; consume a large/small-count branch certificate and an explicit same-prefix factor-ten edge; retain the conditional four-edge consumer for comparison | compiled diagnostic and conditional consumers; a downstream D.1 processed-prefix producer and trace-summary adapter supply algebraic inputs conditionally, while the generated state and unconditional D.10/D.12 remain open |
+| `DELAYED-BOBW-D1-ACTIVE-COUNT-TO-WIDTH-PRODUCER` | derive the same-prefix D.10 width inputs and repaired D.12 factor-20 conclusion from Algorithm 5 line-15 source-time allocations plus the exact D.1 count clause | `delayedSAPOProbability_of_active`; source width; finite sums; real log/sqrt; recursive empirical UCB definition | record an ordered source-time allocation/action ledger; derive equal active-arm pull mass; prove `n_j >= n_i/4 - 6 log T`; split at `192 log T`; produce factor three, factor ten, current-UCB, and the existing same-snapshot consumer inputs | compiled deterministic producer and conditional gap theorem; a trace-summary adapter now constructs the ledger certificate, but Algorithm-5 generation and D.4 probability remain open, so D.10/D.12/Lemma 4.2 are not complete |
+| `DELAYED-BOBW-PROCESSED-TRACE-SUMMARY-ADAPTER` | construct the processed-prefix certificate from a source-shaped trace summary without assuming chronological processing order or width/gap conclusions | distinct source indices; strict `s + d_s < t` availability; separate intra-round and source-round active sets; `DelayedSAPOProcessedPrefixCountCertificate`; source D.4 count clause | read chosen actions and line-15 allocations at stored source indices; consume explicit current-to-source containment; record source-trace antitonicity separately; define source width and recursive empirical UCB; consume only the two D.4 count inequalities | compiled deterministic adapter and conditional factor-20 consumer; Algorithm-5 transition-and-invariant-to-summary producer, D.4 `2/T` probability, and generated trajectory remain open |
 | `DELAYED-BOBW-CAUSAL-ACTION-MEASURE` | line-15 vector induces a probability measure and a causal measure-valued decision rule | local `Exp3.FiniteActionDistribution`, `finiteActionMeasure`; causal observation equivalence | package explicit EAP premises, reuse the finite-action law, and transport equality through `ActionTimeView` | compiled one-round action law; measurable history kernel and recursive generated trajectory open |
 
 ## Active leaf contract
 
-- Local APIs/imports: `Mathlib.Data.Finset.Card`, `Finset.range`,
-  `Finset.filter`, complement/disjoint/cardinality lemmas.
-- Intended proof route: define the source predicate once; use its Boolean
-  complement inside the finite prefix; prove disjointness, union, then card
-  addition.
-- Hidden regularity: none beyond `delay : Nat -> Nat` and `t : Nat`.
-- Mathlib candidacy: the generic filter partition already belongs in Mathlib;
-  these declarations are thin project-local wrappers that preserve paper
-  indexing.
-- Failure policy: do not change strict `< t` to `<= t`, extend beyond
-  `Finset.range t`, or smuggle future delay knowledge into the algorithm.  If
-  an off-by-one mismatch appears, update the conversion window before tactics.
+- Next target: the source D.4 simultaneous count probability producer on a
+  measurable generated Delayed-SAPO action trajectory.
+- Compiled deterministic input: `RecursiveProcessedState.lean` now produces
+  the exact processed-prefix certificate from a source-shaped trace summary and
+  a `D4CountClause`; it neither generates that summary from Algorithm 5 nor
+  proves the clause probabilistically.
+- Random process: for each arm, the sampled action indicator minus its
+  source-history conditional probability, accumulated over the relevant
+  processed-source family.
+- Required filtration and measurability: the pre-action history must generate
+  each line-15 allocation; the sampled action is the successor coordinate;
+  processed-prefix selection must be justified by a predictable or anytime
+  event rather than an arbitrary data-dependent subsequence.
+- Intended route: first construct a measurable recursive action kernel and
+  prove its conditional finite-action law; then prove an adaptive Bernoulli
+  count inequality strong enough for the exact lower/upper constants; finally
+  justify the union over the source's random sequence family.
+- Failure policy: do not assume a count certificate, conditional-mean identity,
+  adaptedness, width comparison, or gap conclusion inside the probability
+  producer.  Do not identify processing order with source-round order.
 
 ## Paper-level blockers
 
 - delayed SAPO state and probability-bank data structures;
-- randomized Delayed SAPO kernel instantiated on the compiled causal view;
+- measurable randomized Delayed SAPO kernel instantiated on the compiled
+  causal view and its generated trajectory law;
 - exact source detection/switch state machine;
 - source-faithful ordering of simultaneous arrivals and recursive confidence
-  updates after each processed item;
+  updates after each processed item (the new state permits, but does not choose,
+  a nonchronological order);
 - stochastic good-event and delayed concentration chain;
 - external adversarial `ALG` theorem contract;
 - Delayed SAPO instantiation of the compiled generic shared-identity interface,
@@ -435,10 +488,14 @@ classified as compiled or audited.
   edge, and later-to-earlier factor-ten edge from an explicit source-time
   allocation/action ledger and the exact D.1 count/width/recursive-UCB
   projection.  It then invokes the existing same-snapshot consumer.
-- Remaining producers: construct that ledger and its active-persistence,
-  count-event, width, and recursive-UCB projection from the full recursive
-  Algorithm-5 state; prove D.4's probability statement; connect ordered
-  elimination snapshots across the generated trajectory.
+- Compiled trace-summary adapter: `RecursiveProcessedState.lean` constructs the
+  source-indexed ledger from distinct strictly available entries, derives
+  active persistence without conflating intra-round and action-round state,
+  and defines the width and recursive-UCB surfaces.  It consumes only the two
+  D.4 count inequalities.
+- Remaining producers: generate that summary from the measurable randomized
+  Algorithm-5 trajectory; prove D.4's simultaneous `2/T` probability statement;
+  connect ordered elimination snapshots across the generated trajectory.
 - Boundary: the same-snapshot algebraic skeleton is a conditional consumer,
   not a complete repair.  Lemma D.10, Lemma D.12, Lemma 4.2, and Theorem 4.1
   remain unverified until the source branch producers are instantiated.  Author
@@ -30664,7 +30721,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "ETC.pullCount_exploreArm_K_eq_one",
-    "full_name": "ETC.pullCount_exploreArm_K_eq_one",
+    "full_name": "BanditRLProof.ETC.pullCount_exploreArm_K_eq_one",
     "file": "BanditRLProof/Algorithms/ETCCountLemmas.lean",
     "line": 22,
     "statement": "theorem ETC.pullCount_exploreArm_K_eq_one {K : Nat} (spec : ETC.Spec K) (a : Fin K) : pullCount (ETC.exploreArm spec) a K = 1"
@@ -30672,7 +30729,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "ETC.pullCount_exploreArm_add_K_eq_add_one",
-    "full_name": "ETC.pullCount_exploreArm_add_K_eq_add_one",
+    "full_name": "BanditRLProof.ETC.pullCount_exploreArm_add_K_eq_add_one",
     "file": "BanditRLProof/Algorithms/ETCCountLemmas.lean",
     "line": 58,
     "statement": "theorem ETC.pullCount_exploreArm_add_K_eq_add_one {K : Nat} (spec : ETC.Spec K) (a : Fin K) (t : Nat) : pullCount (ETC.exploreArm spec) a (t + K) = pullCount (ETC.exploreArm spec) a t + 1"
@@ -30680,7 +30737,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "ETC.pullCount_exploreArm_mul_K_eq",
-    "full_name": "ETC.pullCount_exploreArm_mul_K_eq",
+    "full_name": "BanditRLProof.ETC.pullCount_exploreArm_mul_K_eq",
     "file": "BanditRLProof/Algorithms/ETCCountLemmas.lean",
     "line": 86,
     "statement": "theorem ETC.pullCount_exploreArm_mul_K_eq {K : Nat} (spec : ETC.Spec K) (a : Fin K) (m : Nat) : pullCount (ETC.exploreArm spec) a (m * K) = m"
@@ -30688,7 +30745,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "ETC.pullCount_exploreArm_explorationPulls_mul_K_eq",
-    "full_name": "ETC.pullCount_exploreArm_explorationPulls_mul_K_eq",
+    "full_name": "BanditRLProof.ETC.pullCount_exploreArm_explorationPulls_mul_K_eq",
     "file": "BanditRLProof/Algorithms/ETCCountLemmas.lean",
     "line": 105,
     "statement": "theorem ETC.pullCount_exploreArm_explorationPulls_mul_K_eq {K : Nat} (spec : ETC.Spec K) (a : Fin K) : pullCount (ETC.exploreArm spec) a (spec.explorationPulls * K) = spec.explorationPulls"
@@ -32432,7 +32489,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "ETC.pseudoRegret_exploreArm_explorationPulls_mul_K_le_sum_gap_mul_explorationPulls",
-    "full_name": "ETC.pseudoRegret_exploreArm_explorationPulls_mul_K_le_sum_gap_mul_explorationPulls",
+    "full_name": "BanditRLProof.ETC.pseudoRegret_exploreArm_explorationPulls_mul_K_le_sum_gap_mul_explorationPulls",
     "file": "BanditRLProof/Algorithms/ETCRegretLemmas.lean",
     "line": 22,
     "statement": "theorem ETC.pseudoRegret_exploreArm_explorationPulls_mul_K_le_sum_gap_mul_explorationPulls {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) : pseudoRegret model (ETC.exploreArm spec) (spec.explorationPulls * K) <= ((Finset.univ : Finset (Fin K)).sum (fun a : Fin K => model.gap a)) * (((spec.explorationPulls : Nat) : Rat))"
@@ -32440,7 +32497,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_le_sum_gap_mul_explorationPulls",
-    "full_name": "ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_le_sum_gap_mul_explorationPulls",
+    "full_name": "BanditRLProof.ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_le_sum_gap_mul_explorationPulls",
     "file": "BanditRLProof/Algorithms/ETCRegretLemmas.lean",
     "line": 48,
     "statement": "theorem ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_le_sum_gap_mul_explorationPulls {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) : pseudoRegret model (ETC.actionWithCommit spec commitArm) (spec.explorationPulls * K) <= ((Finset.univ : Finset (Fin K)).sum (fun a : Fin K => model.gap a)) * (((spec.explorationPulls : Nat) : Rat))"
@@ -32448,7 +32505,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_suffix_count_budget",
-    "full_name": "ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_suffix_count_budget",
+    "full_name": "BanditRLProof.ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_suffix_count_budget",
     "file": "BanditRLProof/Algorithms/ETCRegretLemmas.lean",
     "line": 79,
     "statement": "theorem ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_suffix_count_budget {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (r : Nat) : pseudoRegret model (ETC.actionWithCommit spec commitArm) (spec.explorationPulls * K + r) <= (Finset.univ : Finset (Fin K)).sum (fun a : Fin K => model.gap a * (((spec.explorationPulls + (if commitArm = a then r else 0) : Nat) : Rat)))"
@@ -32456,7 +32513,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_explorationPulls_add_suffix",
-    "full_name": "ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_explorationPulls_add_suffix",
+    "full_name": "BanditRLProof.ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_explorationPulls_add_suffix",
     "file": "BanditRLProof/Algorithms/ETCRegretLemmas.lean",
     "line": 114,
     "statement": "theorem ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_explorationPulls_add_suffix {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (r : Nat) : pseudoRegret model (ETC.actionWithCommit spec commitArm) (spec.explorationPulls * K + r) <= ((Finset.univ : Finset (Fin K)).sum (fun a : Fin K => model.gap a)) * ((((spec.explorationPulls + r : Nat) : Rat)))"
@@ -32464,7 +32521,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_eq_add_suffix_gap",
-    "full_name": "ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_eq_add_suffix_gap",
+    "full_name": "BanditRLProof.ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_eq_add_suffix_gap",
     "file": "BanditRLProof/Algorithms/ETCRegretLemmas.lean",
     "line": 149,
     "statement": "theorem ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_eq_add_suffix_gap {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (r : Nat) : pseudoRegret model (ETC.actionWithCommit spec commitArm) (spec.explorationPulls * K + r) = pseudoRegret model (ETC.actionWithCommit spec commitArm) (spec.explorationPulls * K) + (((r : Nat) : Rat) * model.gap commitArm)"
@@ -32472,7 +32529,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_eq_of_commitArm_eq_bestArm",
-    "full_name": "ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_eq_of_commitArm_eq_bestArm",
+    "full_name": "BanditRLProof.ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_eq_of_commitArm_eq_bestArm",
     "file": "BanditRLProof/Algorithms/ETCRegretLemmas.lean",
     "line": 184,
     "statement": "theorem ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_eq_of_commitArm_eq_bestArm {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (r : Nat) (hcommit : commitArm = model.bestArm) : pseudoRegret model (ETC.actionWithCommit spec commitArm) (spec.explorationPulls * K + r) = pseudoRegret model (ETC.actionWithCommit spec commitArm) (spec.explorationPulls * K)"
@@ -32480,7 +32537,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_explorationPulls_of_commitArm_eq_bestArm",
-    "full_name": "ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_explorationPulls_of_commitArm_eq_bestArm",
+    "full_name": "BanditRLProof.ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_explorationPulls_of_commitArm_eq_bestArm",
     "file": "BanditRLProof/Algorithms/ETCRegretLemmas.lean",
     "line": 209,
     "statement": "theorem ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_explorationPulls_of_commitArm_eq_bestArm {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (r : Nat) (hcommit : commitArm = model.bestArm) : pseudoRegret model (ETC.actionWithCommit spec commitArm) (spec.explorationPulls * K + r) <= ((Finset.univ : Finset (Fin K)).sum (fun a : Fin K => model.gap a)) * (((spec.explorationPulls : Nat) : Rat))"
@@ -32488,7 +32545,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_explorationPulls_add_suffix_gap",
-    "full_name": "ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_explorationPulls_add_suffix_gap",
+    "full_name": "BanditRLProof.ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_explorationPulls_add_suffix_gap",
     "file": "BanditRLProof/Algorithms/ETCRegretLemmas.lean",
     "line": 239,
     "statement": "theorem ETC.pseudoRegret_actionWithCommit_explorationPulls_mul_K_add_le_sum_gap_mul_explorationPulls_add_suffix_gap {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (r : Nat) : pseudoRegret model (ETC.actionWithCommit spec commitArm) (spec.explorationPulls * K + r) <= ((Finset.univ : Finset (Fin K)).sum (fun a : Fin K => model.gap a)) * (((spec.explorationPulls : Nat) : Rat)) + (((r : Nat) : Rat) * model.gap commitArm)"
@@ -32576,7 +32633,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "ETC.pullCount_actionWithCommit_eq_pullCount_exploreArm_of_le",
-    "full_name": "ETC.pullCount_actionWithCommit_eq_pullCount_exploreArm_of_le",
+    "full_name": "BanditRLProof.ETC.pullCount_actionWithCommit_eq_pullCount_exploreArm_of_le",
     "file": "BanditRLProof/Algorithms/ETCTraceCountLemmas.lean",
     "line": 23,
     "statement": "theorem ETC.pullCount_actionWithCommit_eq_pullCount_exploreArm_of_le {K : Nat} (spec : ETC.Spec K) (commitArm a : Fin K) (n : Nat) (hn : n <= spec.explorationPulls * K) : pullCount (ETC.actionWithCommit spec commitArm) a n = pullCount (ETC.exploreArm spec) a n"
@@ -32584,7 +32641,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "ETC.pullCount_actionWithCommit_explorationPulls_mul_K_eq",
-    "full_name": "ETC.pullCount_actionWithCommit_explorationPulls_mul_K_eq",
+    "full_name": "BanditRLProof.ETC.pullCount_actionWithCommit_explorationPulls_mul_K_eq",
     "file": "BanditRLProof/Algorithms/ETCTraceCountLemmas.lean",
     "line": 53,
     "statement": "theorem ETC.pullCount_actionWithCommit_explorationPulls_mul_K_eq {K : Nat} (spec : ETC.Spec K) (commitArm a : Fin K) : pullCount (ETC.actionWithCommit spec commitArm) a (spec.explorationPulls * K) = spec.explorationPulls"
@@ -32592,7 +32649,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "ETC.pullCount_actionWithCommit_explorationPulls_mul_K_pos",
-    "full_name": "ETC.pullCount_actionWithCommit_explorationPulls_mul_K_pos",
+    "full_name": "BanditRLProof.ETC.pullCount_actionWithCommit_explorationPulls_mul_K_pos",
     "file": "BanditRLProof/Algorithms/ETCTraceCountLemmas.lean",
     "line": 76,
     "statement": "theorem ETC.pullCount_actionWithCommit_explorationPulls_mul_K_pos {K : Nat} (spec : ETC.Spec K) (commitArm a : Fin K) (hexplorationPulls_pos : 0 < spec.explorationPulls) : 0 < pullCount (ETC.actionWithCommit spec commitArm) a (spec.explorationPulls * K)"
@@ -32600,7 +32657,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "ETC.ratCast_pullCount_actionWithCommit_explorationPulls_mul_K_pos",
-    "full_name": "ETC.ratCast_pullCount_actionWithCommit_explorationPulls_mul_K_pos",
+    "full_name": "BanditRLProof.ETC.ratCast_pullCount_actionWithCommit_explorationPulls_mul_K_pos",
     "file": "BanditRLProof/Algorithms/ETCTraceCountLemmas.lean",
     "line": 96,
     "statement": "theorem ETC.ratCast_pullCount_actionWithCommit_explorationPulls_mul_K_pos {K : Nat} (spec : ETC.Spec K) (commitArm a : Fin K) (hexplorationPulls_pos : 0 < spec.explorationPulls) : (0 : Rat) < (pullCount (ETC.actionWithCommit spec commitArm) a (spec.explorationPulls * K) : Rat)"
@@ -32608,7 +32665,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "ETC.ratCast_pullCount_actionWithCommit_explorationPulls_mul_K_ne_zero",
-    "full_name": "ETC.ratCast_pullCount_actionWithCommit_explorationPulls_mul_K_ne_zero",
+    "full_name": "BanditRLProof.ETC.ratCast_pullCount_actionWithCommit_explorationPulls_mul_K_ne_zero",
     "file": "BanditRLProof/Algorithms/ETCTraceCountLemmas.lean",
     "line": 115,
     "statement": "theorem ETC.ratCast_pullCount_actionWithCommit_explorationPulls_mul_K_ne_zero {K : Nat} (spec : ETC.Spec K) (commitArm a : Fin K) (hexplorationPulls_pos : 0 < spec.explorationPulls) : Not ((pullCount (ETC.actionWithCommit spec commitArm) a (spec.explorationPulls * K) : Rat) = 0)"
@@ -32616,7 +32673,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "ETC.pullCount_actionWithCommit_succ_eq_add_if_commitArm_of_ge",
-    "full_name": "ETC.pullCount_actionWithCommit_succ_eq_add_if_commitArm_of_ge",
+    "full_name": "BanditRLProof.ETC.pullCount_actionWithCommit_succ_eq_add_if_commitArm_of_ge",
     "file": "BanditRLProof/Algorithms/ETCTraceCountLemmas.lean",
     "line": 135,
     "statement": "theorem ETC.pullCount_actionWithCommit_succ_eq_add_if_commitArm_of_ge {K : Nat} (spec : ETC.Spec K) (commitArm a : Fin K) {t : Nat} (ht : spec.explorationPulls * K <= t) : pullCount (ETC.actionWithCommit spec commitArm) a (Nat.succ t) = pullCount (ETC.actionWithCommit spec commitArm) a t + if commitArm = a then 1 else 0"
@@ -32624,7 +32681,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq",
-    "full_name": "ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq",
+    "full_name": "BanditRLProof.ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq",
     "file": "BanditRLProof/Algorithms/ETCTraceCountLemmas.lean",
     "line": 155,
     "statement": "theorem ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq {K : Nat} (spec : ETC.Spec K) (commitArm a : Fin K) (r : Nat) : pullCount (ETC.actionWithCommit spec commitArm) a (spec.explorationPulls * K + r) = spec.explorationPulls + (if commitArm = a then r else 0)"
@@ -32632,7 +32689,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq_of_ne",
-    "full_name": "ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq_of_ne",
+    "full_name": "BanditRLProof.ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq_of_ne",
     "file": "BanditRLProof/Algorithms/ETCTraceCountLemmas.lean",
     "line": 193,
     "statement": "theorem ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq_of_ne {K : Nat} (spec : ETC.Spec K) {commitArm a : Fin K} (hne : commitArm \u2260 a) (r : Nat) : pullCount (ETC.actionWithCommit spec commitArm) a (spec.explorationPulls * K + r) = spec.explorationPulls"
@@ -32640,7 +32697,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq_commitArm",
-    "full_name": "ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq_commitArm",
+    "full_name": "BanditRLProof.ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq_commitArm",
     "file": "BanditRLProof/Algorithms/ETCTraceCountLemmas.lean",
     "line": 210,
     "statement": "theorem ETC.pullCount_actionWithCommit_explorationPulls_mul_K_add_eq_commitArm {K : Nat} (spec : ETC.Spec K) (commitArm : Fin K) (r : Nat) : pullCount (ETC.actionWithCommit spec commitArm) commitArm (spec.explorationPulls * K + r) = spec.explorationPulls + r"
@@ -34520,7 +34577,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "def",
     "name": "HistoryAlgorithmEnvironmentSplitSource.toSequence",
-    "full_name": "HistoryAlgorithmEnvironmentSplitSource.toSequence",
+    "full_name": "BanditRLProof.Thompson.HistoryAlgorithmEnvironmentSplitSource.toSequence",
     "file": "BanditRLProof/Algorithms/ThompsonCanonicalTrajectory.lean",
     "line": 374,
     "statement": "noncomputable def HistoryAlgorithmEnvironmentSplitSource.toSequence {Omega : Type w} {Action : Type u} {Reward : Type v} [MeasurableSpace Omega] [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action] [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward] (mu : Measure Omega) [IsFiniteMeasure mu] (action : Omega -> ActionTrace Action) (reward : Omega -> RewardTrace Reward) (algorithm : HistoryAlgorithm Action Reward) (environment : HistoryEnvironment Action Reward) (source : HistoryAlgorithmEnvironmentSplitSource mu action reward algorithm environment) : IsHistoryAlgorithmEnvironmentSequence mu action reward algorithm environment"
@@ -34808,7 +34865,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "def",
     "name": "MeasurableHistoryEnvironment.at",
-    "full_name": "MeasurableHistoryEnvironment.at",
+    "full_name": "BanditRLProof.Thompson.MeasurableHistoryEnvironment.at",
     "file": "BanditRLProof/Algorithms/ThompsonMeasurableTrajectory.lean",
     "line": 52,
     "statement": "noncomputable def MeasurableHistoryEnvironment.at {Env : Type u} {Action : Type v} {Reward : Type w} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSpace Reward] (environment : MeasurableHistoryEnvironment Env Action Reward) (env : Env) : HistoryEnvironment Action Reward where"
@@ -38776,7 +38833,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "SelectedPolicySuccessorInitializedScoreMaxSource.meanGap_le_two_radius_of_not_badEvent",
-    "full_name": "SelectedPolicySuccessorInitializedScoreMaxSource.meanGap_le_two_radius_of_not_badEvent",
+    "full_name": "BanditRLProof.UCB.SelectedPolicySuccessorInitializedScoreMaxSource.meanGap_le_two_radius_of_not_badEvent",
     "file": "BanditRLProof/Algorithms/UCBConditionalRewardLaw.lean",
     "line": 106,
     "statement": "theorem SelectedPolicySuccessorInitializedScoreMaxSource.meanGap_le_two_radius_of_not_badEvent {Omega : Type u} {Action : Type} [DecidableEq Action] {action : Omega -> ActionTrace Action} {reward : Omega -> RewardTrace Rat} {arms : Finset Action} {armMean : Action -> Rat} {sigma2 : NNReal} {T : Nat} {delta : Real} (source : SelectedPolicySuccessorInitializedScoreMaxSource action reward arms armMean sigma2 T delta) (omega : Omega) (t : Nat) (ht : t \u2208 source.times) (hgood : omega \u2209 ConditionalExpectationReward.successorArmEmpiricalMeanFiniteArmTimeBadEvent action reward arms armMean sigma2 T delta) : meanGap (fun arm => (armMean arm : Real)) source.best (source.chosen omega t) <= 2 * selectedPolicySuccessorRadiusAt action sigma2 arms T delta omega t (source.chosen omega t)"
@@ -39784,7 +39841,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "FixedArmPrefixSource.measurable_armStream",
-    "full_name": "FixedArmPrefixSource.measurable_armStream",
+    "full_name": "BanditRLProof.UCB.FixedArmPrefixSource.measurable_armStream",
     "file": "BanditRLProof/Algorithms/UCBFixedCountPeeling.lean",
     "line": 57,
     "statement": "theorem FixedArmPrefixSource.measurable_armStream {Omega : Type u} {K : Nat} [MeasurableSpace Omega] {action : Omega -> ActionTrace (Fin K)} {reward : Omega -> RewardTrace Real} (source : FixedArmPrefixSource action reward) : Measurable source.armStream"
@@ -39792,7 +39849,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "FixedArmPrefixSource.measurable_armPrefixSum",
-    "full_name": "FixedArmPrefixSource.measurable_armPrefixSum",
+    "full_name": "BanditRLProof.UCB.FixedArmPrefixSource.measurable_armPrefixSum",
     "file": "BanditRLProof/Algorithms/UCBFixedCountPeeling.lean",
     "line": 68,
     "statement": "theorem FixedArmPrefixSource.measurable_armPrefixSum {Omega : Type u} {K : Nat} [MeasurableSpace Omega] {action : Omega -> ActionTrace (Fin K)} {reward : Omega -> RewardTrace Real} (source : FixedArmPrefixSource action reward) (arm : Fin K) (k : Nat) : Measurable (fun omega => UCB.armPrefixSum arm k (source.armStream omega))"
@@ -41016,7 +41073,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "HasMGFUpperBoundAt.sum_of_hasCondMGFUpperBoundAt",
-    "full_name": "HasMGFUpperBoundAt.sum_of_hasCondMGFUpperBoundAt",
+    "full_name": "BanditRLProof.Concentration.HasMGFUpperBoundAt.sum_of_hasCondMGFUpperBoundAt",
     "file": "BanditRLProof/ConcentrationFixedMGF.lean",
     "line": 290,
     "statement": "theorem HasMGFUpperBoundAt.sum_of_hasCondMGFUpperBoundAt [IsZeroOrProbabilityMeasure \u03bc] (h_adapted : StronglyAdapted \u2131 Y) (h0 : HasMGFUpperBoundAt (Y 0) t (\u03c8Y 0) \u03bc) (n : \u2115) (h_mgf : \u2200 i < n - 1, HasCondMGFUpperBoundAt (\u2131 i) (\u2131.le i) (Y (i + 1)) t (\u03c8Y (i + 1)) \u03bc) : HasMGFUpperBoundAt (fun \u03c9 \u21a6 \u2211 i \u2208 Finset.range n, Y i \u03c9) t (\u2211 i \u2208 Finset.range n, \u03c8Y i) \u03bc"
@@ -41104,7 +41161,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "HasCondSubgaussianMGF.of_measurableSpace_eq",
-    "full_name": "HasCondSubgaussianMGF.of_measurableSpace_eq",
+    "full_name": "ProbabilityTheory.HasCondSubgaussianMGF.of_measurableSpace_eq",
     "file": "BanditRLProof/ConcentrationSubGaussian.lean",
     "line": 17,
     "statement": "theorem HasCondSubgaussianMGF.of_measurableSpace_eq {Omega : Type u} {m0 m1 mOmega : MeasurableSpace Omega} [StandardBorelSpace Omega] {mu : MeasureTheory.Measure Omega} [MeasureTheory.IsFiniteMeasure mu] {X : Omega -> Real} {c : NNReal} (hm0 : m0 <= mOmega) (hm1 : m1 <= mOmega) (hm : m0 = m1) (hX : HasCondSubgaussianMGF m0 hm0 X c mu) : HasCondSubgaussianMGF m1 hm1 X c mu"
@@ -41112,7 +41169,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "HasCondSubgaussianMGF.integrable",
-    "full_name": "HasCondSubgaussianMGF.integrable",
+    "full_name": "ProbabilityTheory.HasCondSubgaussianMGF.integrable",
     "file": "BanditRLProof/ConcentrationSubGaussian.lean",
     "line": 37,
     "statement": "theorem HasCondSubgaussianMGF.integrable {Omega : Type u} {m mOmega : MeasurableSpace Omega} [StandardBorelSpace Omega] {mu : MeasureTheory.Measure Omega} [MeasureTheory.IsFiniteMeasure mu] {X : Omega -> Real} {c : NNReal} (hm : m <= mOmega) (hX : HasCondSubgaussianMGF m hm X c mu) : MeasureTheory.Integrable X mu"
@@ -41120,7 +41177,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "HasCondSubgaussianMGF.indicator",
-    "full_name": "HasCondSubgaussianMGF.indicator",
+    "full_name": "ProbabilityTheory.HasCondSubgaussianMGF.indicator",
     "file": "BanditRLProof/ConcentrationSubGaussian.lean",
     "line": 73,
     "statement": "theorem HasCondSubgaussianMGF.indicator {Omega : Type u} {m mOmega : MeasurableSpace Omega} [StandardBorelSpace Omega] {mu : MeasureTheory.Measure Omega} [MeasureTheory.IsProbabilityMeasure mu] {X : Omega -> Real} {c : NNReal} (hm : m <= mOmega) (hX : HasCondSubgaussianMGF m hm X c mu) {s : Set Omega} (hs : @MeasurableSet Omega m s) : HasCondSubgaussianMGF m hm (s.indicator X) c mu"
@@ -41128,7 +41185,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "HasCondSubgaussianMGF.indicator_compensated_hasCondMGFUpperBoundAt",
-    "full_name": "HasCondSubgaussianMGF.indicator_compensated_hasCondMGFUpperBoundAt",
+    "full_name": "ProbabilityTheory.HasCondSubgaussianMGF.indicator_compensated_hasCondMGFUpperBoundAt",
     "file": "BanditRLProof/ConcentrationSubGaussian.lean",
     "line": 171,
     "statement": "theorem HasCondSubgaussianMGF.indicator_compensated_hasCondMGFUpperBoundAt {Omega : Type u} {m mOmega : MeasurableSpace Omega} [StandardBorelSpace Omega] {mu : MeasureTheory.Measure Omega} [MeasureTheory.IsProbabilityMeasure mu] {X : Omega -> Real} {c : NNReal} (hm : m <= mOmega) (hX : HasCondSubgaussianMGF m hm X c mu) {s : Set Omega} (hs : @MeasurableSet Omega m s) (tilt : Real) : BanditRLProof.Concentration.HasCondMGFUpperBoundAt m hm (fun omega => tilt * s.indicator X omega - (((c : NNReal) : Real) * tilt ^ 2 / 2) * s.indicator (fun _ : Omega => (1 : Real)) omega) 1 0 mu"
@@ -45520,7 +45577,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "ActionTimeView.ext",
-    "full_name": "ActionTimeView.ext",
+    "full_name": "BanditRLProof.DelayedFeedback.ActionTimeView.ext",
     "file": "BanditRLProof/DelayedFeedback/CausalView.lean",
     "line": 21,
     "statement": "theorem ActionTimeView.ext {Action : Type uAction} {Loss : Type uLoss} {left right : ActionTimeView Action Loss} (hpast : left.pastAction = right.pastAction) (hloss : left.observedLoss = right.observedLoss) : left = right"
@@ -45910,6 +45967,78 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "statement": "theorem outstandingAt_disjoint_newlyObservedBefore (delay : Nat \u2192 Nat) (processed : Finset Nat) (t : Nat) : Disjoint (outstandingAt delay t) (newlyObservedBefore delay processed t)"
   },
   {
+    "kind": "structure",
+    "name": "DelayedSAPOProcessedTraceSummary",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedTraceSummary",
+    "file": "BanditRLProof/DelayedFeedback/RecursiveProcessedState.lean",
+    "line": 42,
+    "statement": "structure DelayedSAPOProcessedTraceSummary (K : Nat) where"
+  },
+  {
+    "kind": "def",
+    "name": "toProcessedPrefix",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedTraceSummary.toProcessedPrefix",
+    "file": "BanditRLProof/DelayedFeedback/RecursiveProcessedState.lean",
+    "line": 65,
+    "statement": "def toProcessedPrefix {K : Nat} (state : DelayedSAPOProcessedTraceSummary K) : DelayedSAPOProcessedPrefix K where"
+  },
+  {
+    "kind": "def",
+    "name": "empiricalWidthAt",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedTraceSummary.empiricalWidthAt",
+    "file": "BanditRLProof/DelayedFeedback/RecursiveProcessedState.lean",
+    "line": 76,
+    "statement": "noncomputable def empiricalWidthAt {K : Nat} (state : DelayedSAPOProcessedTraceSummary K) (horizon : Nat) (i : Fin K) : Real"
+  },
+  {
+    "kind": "def",
+    "name": "empiricalUpperAt",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedTraceSummary.empiricalUpperAt",
+    "file": "BanditRLProof/DelayedFeedback/RecursiveProcessedState.lean",
+    "line": 84,
+    "statement": "noncomputable def empiricalUpperAt {K : Nat} (state : DelayedSAPOProcessedTraceSummary K) (horizon : Nat) (i : Fin K) : Real"
+  },
+  {
+    "kind": "def",
+    "name": "toConfidenceSnapshot",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedTraceSummary.toConfidenceSnapshot",
+    "file": "BanditRLProof/DelayedFeedback/RecursiveProcessedState.lean",
+    "line": 93,
+    "statement": "noncomputable def toConfidenceSnapshot {K : Nat} (state : DelayedSAPOProcessedTraceSummary K) (horizon : Nat) : DelayedSAPOSourceConfidenceSnapshot K where"
+  },
+  {
+    "kind": "structure",
+    "name": "D4CountClause",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedTraceSummary.D4CountClause",
+    "file": "BanditRLProof/DelayedFeedback/RecursiveProcessedState.lean",
+    "line": 107,
+    "statement": "structure D4CountClause {K : Nat} (state : DelayedSAPOProcessedTraceSummary K) (horizon : Nat) : Prop where"
+  },
+  {
+    "kind": "theorem",
+    "name": "currentActive_subset_activeAt_sourceIndex",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedTraceSummary.currentActive_subset_activeAt_sourceIndex",
+    "file": "BanditRLProof/DelayedFeedback/RecursiveProcessedState.lean",
+    "line": 122,
+    "statement": "theorem currentActive_subset_activeAt_sourceIndex {K : Nat} (state : DelayedSAPOProcessedTraceSummary K) (q : Fin state.length) : state.currentActive <= state.activeAtSourceRound (state.sourceIndex q)"
+  },
+  {
+    "kind": "theorem",
+    "name": "toProcessedPrefixCountCertificate",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedTraceSummary.toProcessedPrefixCountCertificate",
+    "file": "BanditRLProof/DelayedFeedback/RecursiveProcessedState.lean",
+    "line": 133,
+    "statement": "theorem toProcessedPrefixCountCertificate {K : Nat} [Nonempty (Fin K)] (state : DelayedSAPOProcessedTraceSummary K) (horizon : Nat) (hD4 : state.D4CountClause horizon) : DelayedSAPOProcessedPrefixCountCertificate (state.toConfidenceSnapshot horizon) state.toProcessedPrefix horizon where"
+  },
+  {
+    "kind": "theorem",
+    "name": "gap_le_twenty_mul_gap_at_earlier_elimination_snapshot_of_traceSummary",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedTraceSummary.gap_le_twenty_mul_gap_at_earlier_elimination_snapshot_of_traceSummary",
+    "file": "BanditRLProof/DelayedFeedback/RecursiveProcessedState.lean",
+    "line": 157,
+    "statement": "theorem gap_le_twenty_mul_gap_at_earlier_elimination_snapshot_of_traceSummary {K : Nat} [Nonempty (Fin K)] (state : DelayedSAPOProcessedTraceSummary K) (horizon : Nat) (hD4 : state.D4CountClause horizon) (hhorizon : 1 < horizon) (mean : Fin K -> Real) (optimal iEarlier iLater : Fin K) (hoptimal : forall j, mean optimal <= mean j) (hmeanBounds : forall j, mean j \u2208 Set.Icc (0 : Real) 1) (hgood : (state.toConfidenceSnapshot horizon).EliminationGoodEvent mean) (hoptimalActive : optimal \u2208 (state.toConfidenceSnapshot horizon).active) (hEarlierEliminated : iEarlier \u2208 (state.toConfidenceSnapshot horizon).eliminated) (hLaterRemaining : iLater \u2208 (state.toConfidenceSnapshot horizon).remainingActive) : mean iLater - mean optimal <= 20 * (mean iEarlier - mean optimal)"
+  },
+  {
     "kind": "def",
     "name": "sourceEmpiricalWidthScale",
     "full_name": "BanditRLProof.DelayedFeedback.sourceEmpiricalWidthScale",
@@ -46250,7 +46379,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "measure_eliminationGoodEventSet_compl_le_nine_div",
     "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.measure_eliminationGoodEventSet_compl_le_nine_div",
     "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
-    "line": 170,
+    "line": 169,
     "statement": "theorem measure_eliminationGoodEventSet_compl_le_nine_div {Omega : Type*} [MeasurableSpace Omega] {K : Nat} [Nonempty (Fin K)] (mu : Measure Omega) (family : DelayedSAPOGoodEventFailureFamily Omega) (snapshot : Omega -> DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K -> Real) (horizon : Nat) (hhorizon : 0 < horizon) (hprojection : family.sourceGoodEventSet \u2286 DelayedSAPOSourceConfidenceSnapshot.eliminationGoodEventSet snapshot mean) (hbsc : mu family.bscConfidence <= ENNReal.ofReal (doubleLinearFailureBudget horizon)) (heap : mu family.eapConfidence <= ENNReal.ofReal (doubleLinearFailureBudget horizon)) (hpull : mu family.pullCount <= ENNReal.ofReal (doubleLinearFailureBudget horizon)) (heliminated : mu family.eliminatedDelay <= ENNReal.ofReal (linearFailureBudget horizon)) (hloss : mu family.lossDifference <= ENNReal.ofReal (linearFailureBudget horizon)) (hdelay : mu family.stochasticDelay <= ENNReal.ofReal (linearFailureBudget horizon)) : mu (DelayedSAPOSourceConfidenceSnapshot.eliminationGoodEventSet snapshot mean)\u1d9c <= ENNReal.ofReal (9 / (horizon : Real))"
   },
   {
@@ -46258,7 +46387,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "measure_optimalSurvivalEventSet_compl_le_nine_div",
     "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.measure_optimalSurvivalEventSet_compl_le_nine_div",
     "file": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
-    "line": 204,
+    "line": 203,
     "statement": "theorem measure_optimalSurvivalEventSet_compl_le_nine_div {Omega : Type*} [MeasurableSpace Omega] {K : Nat} [Nonempty (Fin K)] (mu : Measure Omega) (family : DelayedSAPOGoodEventFailureFamily Omega) (snapshot : Omega -> DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K -> Real) (optimal : Fin K) (horizon : Nat) (hhorizon : 0 < horizon) (hoptimal : forall i, mean optimal <= mean i) (hactive : forall omega, optimal \u2208 (snapshot omega).active) (hprojection : family.sourceGoodEventSet \u2286 DelayedSAPOSourceConfidenceSnapshot.eliminationGoodEventSet snapshot mean) (hbsc : mu family.bscConfidence <= ENNReal.ofReal (doubleLinearFailureBudget horizon)) (heap : mu family.eapConfidence <= ENNReal.ofReal (doubleLinearFailureBudget horizon)) (hpull : mu family.pullCount <= ENNReal.ofReal (doubleLinearFailureBudget horizon)) (heliminated : mu family.eliminatedDelay <= ENNReal.ofReal (linearFailureBudget horizon)) (hloss : mu family.lossDifference <= ENNReal.ofReal (linearFailureBudget horizon)) (hdelay : mu family.stochasticDelay <= ENNReal.ofReal (linearFailureBudget horizon)) : mu (DelayedSAPOSourceConfidenceSnapshot.optimalSurvivalEventSet snapshot optimal)\u1d9c <= ENNReal.ofReal (9 / (horizon : Real))"
   },
   {
@@ -50520,7 +50649,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "def",
     "name": "PredictableLossVector.environment",
-    "full_name": "PredictableLossVector.environment",
+    "full_name": "BanditRLProof.Exp3.PredictableLossVector.environment",
     "file": "BanditRLProof/Exp3PredictableAdversary.lean",
     "line": 43,
     "statement": "noncomputable def PredictableLossVector.environment {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] (loss : PredictableLossVector Env Action) : Thompson.MeasurableHistoryEnvironment Env Action Real where"
@@ -50528,7 +50657,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "PredictableLossVector.environment_initialFeedback_apply",
-    "full_name": "PredictableLossVector.environment_initialFeedback_apply",
+    "full_name": "BanditRLProof.Exp3.PredictableLossVector.environment_initialFeedback_apply",
     "file": "BanditRLProof/Exp3PredictableAdversary.lean",
     "line": 57,
     "statement": "theorem PredictableLossVector.environment_initialFeedback_apply {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] (loss : PredictableLossVector Env Action) (env : Env) (action : Action) : loss.environment.initialFeedback (env, action) = Measure.dirac (loss.initial env action)"
@@ -50536,7 +50665,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "PredictableLossVector.environment_feedback_apply",
-    "full_name": "PredictableLossVector.environment_feedback_apply",
+    "full_name": "BanditRLProof.Exp3.PredictableLossVector.environment_feedback_apply",
     "file": "BanditRLProof/Exp3PredictableAdversary.lean",
     "line": 66,
     "statement": "theorem PredictableLossVector.environment_feedback_apply {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] (loss : PredictableLossVector Env Action) (n : Nat) (env : Env) (history : History.FinitePairHistory Action Real n) (action : Action) : loss.environment.feedback n (env, (history, action)) = Measure.dirac (loss.successor n env history action)"
@@ -50544,7 +50673,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "PredictableLossVector.initial_mem_unitInterval",
-    "full_name": "PredictableLossVector.initial_mem_unitInterval",
+    "full_name": "BanditRLProof.Exp3.PredictableLossVector.initial_mem_unitInterval",
     "file": "BanditRLProof/Exp3PredictableAdversary.lean",
     "line": 76,
     "statement": "theorem PredictableLossVector.initial_mem_unitInterval {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] (loss : PredictableLossVector Env Action) (env : Env) (action : Action) : loss.initial env action \u2208 Set.Icc (0 : Real) 1"
@@ -50552,7 +50681,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "PredictableLossVector.successor_mem_unitInterval",
-    "full_name": "PredictableLossVector.successor_mem_unitInterval",
+    "full_name": "BanditRLProof.Exp3.PredictableLossVector.successor_mem_unitInterval",
     "file": "BanditRLProof/Exp3PredictableAdversary.lean",
     "line": 83,
     "statement": "theorem PredictableLossVector.successor_mem_unitInterval {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] (loss : PredictableLossVector Env Action) (n : Nat) (env : Env) (history : History.FinitePairHistory Action Real n) (action : Action) : loss.successor n env history action \u2208 Set.Icc (0 : Real) 1"
@@ -52752,7 +52881,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "BoundedMeasurableLossWithProbabilityFloor.prob_pos",
-    "full_name": "BoundedMeasurableLossWithProbabilityFloor.prob_pos",
+    "full_name": "BanditRLProof.Exp3.BoundedMeasurableLossWithProbabilityFloor.prob_pos",
     "file": "BanditRLProof/Exp3ScoreRegularity.lean",
     "line": 33,
     "statement": "theorem BoundedMeasurableLossWithProbabilityFloor.prob_pos {History : Type u} {Action : Type v} [MeasurableSpace History] {arms : Finset Action} {prob loss : History -> Action -> Real} {epsilon : Real} (regularity : BoundedMeasurableLossWithProbabilityFloor arms prob loss epsilon) (history : History) (action : Action) (haction : action \u2208 arms) : 0 < prob history action"
@@ -53792,7 +53921,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "IndepFun.comp_of_map",
-    "full_name": "IndepFun.comp_of_map",
+    "full_name": "BanditRLProof.IndepFun.comp_of_map",
     "file": "BanditRLProof/KernelIndependentExtension.lean",
     "line": 19,
     "statement": "theorem IndepFun.comp_of_map {Omega Sample X Y : Type*} [MeasurableSpace Omega] [MeasurableSpace Sample] [MeasurableSpace X] [MeasurableSpace Y] {mu : Measure Omega} {z : Omega -> Sample} {x : Sample -> X} {y : Sample -> Y} (hz : Measurable z) (hx : Measurable x) (hy : Measurable y) (hindep : IndepFun x y (mu.map z)) : IndepFun (x \u2218 z) (y \u2218 z) mu"
@@ -55224,7 +55353,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "IsConsistentRegret.add",
-    "full_name": "IsConsistentRegret.add",
+    "full_name": "BanditRLProof.LowerBounds.IsConsistentRegret.add",
     "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
     "line": 56,
     "statement": "theorem IsConsistentRegret.add {first second : Nat -> Real} (hfirst : IsConsistentRegret first) (hsecond : IsConsistentRegret second) : IsConsistentRegret (fun n => first n + second n)"
@@ -55232,7 +55361,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "IsConsistentRegret.eventually_add_le_rpow",
-    "full_name": "IsConsistentRegret.eventually_add_le_rpow",
+    "full_name": "BanditRLProof.LowerBounds.IsConsistentRegret.eventually_add_le_rpow",
     "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
     "line": 67,
     "statement": "theorem IsConsistentRegret.eventually_add_le_rpow {first second : Nat -> Real} (hfirst : IsConsistentRegret first) (hsecond : IsConsistentRegret second) {p : Real} (hp : 0 < p) : \u2200\u1da0 n : Nat in atTop, first n + second n <= (n : Real) ^ p"
@@ -55240,7 +55369,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "IsConsistentRegret.eventually_log_add_div_log_le",
-    "full_name": "IsConsistentRegret.eventually_log_add_div_log_le",
+    "full_name": "BanditRLProof.LowerBounds.IsConsistentRegret.eventually_log_add_div_log_le",
     "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
     "line": 87,
     "statement": "theorem IsConsistentRegret.eventually_log_add_div_log_le {first second : Nat -> Real} (hfirst : IsConsistentRegret first) (hsecond : IsConsistentRegret second) (hpositive : \u2200\u1da0 n : Nat in atTop, 0 < first n + second n) {p : Real} (hp : 0 < p) : \u2200\u1da0 n : Nat in atTop, Real.log (first n + second n) / Real.log n <= p"
@@ -61472,7 +61601,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "SquareIntegrableFiniteStoppingTime.toIntegrableFiniteStoppingTime",
-    "full_name": "SquareIntegrableFiniteStoppingTime.toIntegrableFiniteStoppingTime",
+    "full_name": "BanditRLProof.OFUL.SquareIntegrableFiniteStoppingTime.toIntegrableFiniteStoppingTime",
     "file": "BanditRLProof/OFULScheduledUnboundedStoppingTimeExpectedRegretRate.lean",
     "line": 33,
     "statement": "theorem SquareIntegrableFiniteStoppingTime.toIntegrableFiniteStoppingTime {Omega : Type v} [MeasurableSpace Omega] (mu : Measure Omega) [IsFiniteMeasure mu] (tau : Omega -> WithTop Nat) (hstop : SquareIntegrableFiniteStoppingTime mu tau) : IntegrableFiniteStoppingTime mu tau"
@@ -61616,7 +61745,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "HasCondSubgaussianMGF.predictable_mul_compensated_hasCondMGFUpperBoundAt",
-    "full_name": "HasCondSubgaussianMGF.predictable_mul_compensated_hasCondMGFUpperBoundAt",
+    "full_name": "ProbabilityTheory.HasCondSubgaussianMGF.predictable_mul_compensated_hasCondMGFUpperBoundAt",
     "file": "BanditRLProof/OFULSelfNormalizedConfidence.lean",
     "line": 31,
     "statement": "theorem HasCondSubgaussianMGF.predictable_mul_compensated_hasCondMGFUpperBoundAt {Omega : Type u} {m mOmega : MeasurableSpace Omega} [StandardBorelSpace Omega] {mu : Measure Omega} [IsProbabilityMeasure mu] {X A : Omega -> Real} {c : NNReal} (hm : m <= mOmega) (hX : HasCondSubgaussianMGF m hm X c mu) (hA : @Measurable Omega Real m inferInstance A) (hintegrable : forall s : Real, Integrable (fun omega => Real.exp (s * (A omega * X omega - (((c : NNReal) : Real) * A omega ^ 2 / 2)))) mu) : BanditRLProof.Concentration.HasCondMGFUpperBoundAt m hm (fun omega => A omega * X omega - (((c : NNReal) : Real) * A omega ^ 2 / 2)) 1 0 mu"
@@ -61624,7 +61753,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "HasCondSubgaussianMGF.integrable_exp_mul_predictable_mul_compensated_of_abs_le",
-    "full_name": "HasCondSubgaussianMGF.integrable_exp_mul_predictable_mul_compensated_of_abs_le",
+    "full_name": "ProbabilityTheory.HasCondSubgaussianMGF.integrable_exp_mul_predictable_mul_compensated_of_abs_le",
     "file": "BanditRLProof/OFULSelfNormalizedConfidence.lean",
     "line": 134,
     "statement": "theorem HasCondSubgaussianMGF.integrable_exp_mul_predictable_mul_compensated_of_abs_le {Omega : Type u} {m mOmega : MeasurableSpace Omega} [StandardBorelSpace Omega] {mu : Measure Omega} [IsProbabilityMeasure mu] {X A : Omega -> Real} {c : NNReal} (hm : m <= mOmega) (hX : HasCondSubgaussianMGF m hm X c mu) (hA : @Measurable Omega Real m inferInstance A) (B : Real) (hB : 0 <= B) (hAbound : forall omega, |A omega| <= B) : forall s : Real, Integrable (fun omega => Real.exp (s * (A omega * X omega - (((c : NNReal) : Real) * A omega ^ 2 / 2)))) mu"
@@ -61632,7 +61761,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "HasCondSubgaussianMGF.predictable_mul_compensated_hasCondMGFUpperBoundAt_of_abs_le",
-    "full_name": "HasCondSubgaussianMGF.predictable_mul_compensated_hasCondMGFUpperBoundAt_of_abs_le",
+    "full_name": "ProbabilityTheory.HasCondSubgaussianMGF.predictable_mul_compensated_hasCondMGFUpperBoundAt_of_abs_le",
     "file": "BanditRLProof/OFULSelfNormalizedConfidence.lean",
     "line": 221,
     "statement": "theorem HasCondSubgaussianMGF.predictable_mul_compensated_hasCondMGFUpperBoundAt_of_abs_le {Omega : Type u} {m mOmega : MeasurableSpace Omega} [StandardBorelSpace Omega] {mu : Measure Omega} [IsProbabilityMeasure mu] {X A : Omega -> Real} {c : NNReal} (hm : m <= mOmega) (hX : HasCondSubgaussianMGF m hm X c mu) (hA : @Measurable Omega Real m inferInstance A) (B : Real) (hB : 0 <= B) (hAbound : forall omega, |A omega| <= B) : BanditRLProof.Concentration.HasCondMGFUpperBoundAt m hm (fun omega => A omega * X omega - (((c : NNReal) : Real) * A omega ^ 2 / 2)) 1 0 mu"
@@ -63328,7 +63457,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "ExploratoryPathUniformVisitFloor.scale_explorationRate",
-    "full_name": "ExploratoryPathUniformVisitFloor.scale_explorationRate",
+    "full_name": "BanditRLProof.FiniteHorizonRL.ExploratoryPathUniformVisitFloor.scale_explorationRate",
     "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeDecayingExplorationBehaviorConsistency.lean",
     "line": 96,
     "statement": "theorem ExploratoryPathUniformVisitFloor.scale_explorationRate {mdp : MDP State Action} {initialState : Measure State} (support : ExploratoryPathSupport mdp initialState) {baseVisitFloor : Real} (hfloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor) (explorationRate : NNReal) (hexplorationRate : explorationRate <= 1) : ExploratoryPathUniformVisitFloor support explorationRate (baseVisitFloor * (explorationRate : Real) ^ mdp.horizon)"
@@ -63728,7 +63857,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "TransitionCountRadius.radius_cumulativeVisitCount_succ_le",
-    "full_name": "TransitionCountRadius.radius_cumulativeVisitCount_succ_le",
+    "full_name": "BanditRLProof.FiniteHorizonRL.TransitionCountRadius.radius_cumulativeVisitCount_succ_le",
     "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeEmpiricalOptimisticRegret.lean",
     "line": 159,
     "statement": "theorem TransitionCountRadius.radius_cumulativeVisitCount_succ_le {mdp : MDP State Action} {episodes : Nat} (countRadius : TransitionCountRadius) (trajectory : EpisodeBatchTrajectory mdp episodes) (round : Nat) (stage : Fin mdp.horizon) (state : State) (action : Action) : countRadius.radius ((cumulativeTransitionCountSummaryAt trajectory (round + 1)).visitCount stage state action) <= countRadius.radius ((cumulativeTransitionCountSummaryAt trajectory round).visitCount stage state action)"
@@ -63840,7 +63969,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "AdaptiveCumulativeCoordinateConfidenceContract.trajectoryMeasure_optimism_and_explicitRecommendedExpectedRegret",
-    "full_name": "AdaptiveCumulativeCoordinateConfidenceContract.trajectoryMeasure_optimism_and_explicitRecommendedExpectedRegret",
+    "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeCoordinateConfidenceContract.trajectoryMeasure_optimism_and_explicitRecommendedExpectedRegret",
     "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeEmpiricalOptimisticRegret.lean",
     "line": 485,
     "statement": "theorem AdaptiveCumulativeCoordinateConfidenceContract.trajectoryMeasure_optimism_and_explicitRecommendedExpectedRegret {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes rounds : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (defaultState : State) (countRadius : TransitionCountRadius) (delta : Real) (contract : AdaptiveCumulativeCoordinateConfidenceContract source defaultState countRadius rounds delta) (radiusEnvelope : Fin rounds -> Real) (hradius : forall trajectory, trajectory \u2209 contract.badEvent -> forall (round : Fin rounds) (remaining : Nat) (hremaining : remaining + 1 <= mdp.horizon) (state : State), (adaptiveCumulativeEmpiricalOptimisticPlanAt trajectory defaultState countRadius round).selectedRadiusRemaining remaining hremaining state <= radiusEnvelope round) : MeasurableSet contract.badEvent /\\ source.trajectoryMeasure contract.badEvent <= ENNReal.ofReal delta /\\ forall trajectory, trajectory \u2209 contract.badEvent -> (forall round : Fin rounds, forall state, mdp.optimalValueRemaining mdp.horizon le_rfl state <= (adaptiveCumulativeEmpiricalOptimisticPlanAt trajectory defaultState countRadius round).upperValueRemaining mdp.horizon le_rfl state) /\\ adaptiveCumulativeEmpiricalOptimisticRecommendedExpectedRegret (initialState := initialState) trajectory defaultState countRadius rounds <= \u2211 round : Fin rounds, (mdp.horizon : Real) * (2 * radiusEnvelope round)"
@@ -64760,7 +64889,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "def",
     "name": "AdaptiveCumulativeEmpiricalModelState.empiricalReward",
-    "full_name": "AdaptiveCumulativeEmpiricalModelState.empiricalReward",
+    "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeEmpiricalModelState.empiricalReward",
     "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
     "line": 283,
     "statement": "noncomputable def AdaptiveCumulativeEmpiricalModelState.empiricalReward {mdp : MDP State Action} (model : AdaptiveCumulativeEmpiricalModelState mdp) (stage : Fin mdp.horizon) (state : State) (action : Action) : Real"
@@ -64768,7 +64897,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "AdaptiveCumulativeEmpiricalModelState.empiricalReward_of_visitCount_eq_zero",
-    "full_name": "AdaptiveCumulativeEmpiricalModelState.empiricalReward_of_visitCount_eq_zero",
+    "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeEmpiricalModelState.empiricalReward_of_visitCount_eq_zero",
     "file": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean",
     "line": 294,
     "statement": "theorem AdaptiveCumulativeEmpiricalModelState.empiricalReward_of_visitCount_eq_zero {mdp : MDP State Action} (model : AdaptiveCumulativeEmpiricalModelState mdp) (stage : Fin mdp.horizon) (state : State) (action : Action) (hzero : model.1.visitCount stage state action = 0) : model.empiricalReward stage state action = 0"
@@ -68608,7 +68737,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "MarkovPolicy.occupancySumRemaining_const",
-    "full_name": "MarkovPolicy.occupancySumRemaining_const",
+    "full_name": "BanditRLProof.FiniteHorizonRL.MarkovPolicy.occupancySumRemaining_const",
     "file": "BanditRLProof/RL/FiniteHorizonAdaptiveEmpiricalOptimisticOccupancyEnvelope.lean",
     "line": 33,
     "statement": "theorem MarkovPolicy.occupancySumRemaining_const {mdp : MDP State Action} (policy : MarkovPolicy mdp) (c : Real) (remaining : Nat) (hremaining : remaining <= mdp.horizon) (mu : Measure State) [IsProbabilityMeasure mu] : policy.occupancySumRemaining (fun _remaining _hremaining _state => c) remaining hremaining mu = (remaining : Real) * c"
@@ -72232,7 +72361,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "MDP.stochasticAllCoordinateEmpiricalFiniteBatchModel_occupancySelectedRadiusRemaining_eq",
-    "full_name": "MDP.stochasticAllCoordinateEmpiricalFiniteBatchModel_occupancySelectedRadiusRemaining_eq",
+    "full_name": "BanditRLProof.FiniteHorizonRL.MDP.stochasticAllCoordinateEmpiricalFiniteBatchModel_occupancySelectedRadiusRemaining_eq",
     "file": "BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalRealizedSuccessorRegret.lean",
     "line": 458,
     "statement": "theorem MDP.stochasticAllCoordinateEmpiricalFiniteBatchModel_occupancySelectedRadiusRemaining_eq {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (batch : EpisodeBatch mdp episodes) (defaultState : State) (rewardBudget transitionBudget : Real) : let model := mdp.stochasticAllCoordinateEmpiricalFiniteBatchModel episodes batch defaultState rewardBudget transitionBudget model.plan.optimisticPolicy.occupancySumRemaining (fun remaining hremaining state => 2 * model.plan.selectedRadiusRemaining remaining hremaining state) mdp.horizon le_rfl initialState = (mdp.horizon : Real) * (2 * (rewardBudget + transitionBudget))"
@@ -73688,7 +73817,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "CoordinateConfidence.transitionError_le_radius",
-    "full_name": "CoordinateConfidence.transitionError_le_radius",
+    "full_name": "BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.CoordinateConfidence.transitionError_le_radius",
     "file": "BanditRLProof/RL/FiniteHorizonCoordinateModelConfidence.lean",
     "line": 116,
     "statement": "theorem CoordinateConfidence.transitionError_le_radius {mdp : MDP State Action} {plan : EstimatedModelPlan mdp} (confidence : plan.CoordinateConfidence) (remaining : Nat) (hremaining : remaining + 1 <= mdp.horizon) (state : State) (action : Action) : |plan.transitionValue (mdp.decisionStageRemaining remaining hremaining) (plan.upperValueRemaining remaining (by omega)) state action - mdp.transitionValue (plan.upperValueRemaining remaining (by omega)) state action| <= plan.transitionRadius (mdp.decisionStageRemaining remaining hremaining) state action"
@@ -73696,7 +73825,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "def",
     "name": "CoordinateConfidence.toConfidence",
-    "full_name": "CoordinateConfidence.toConfidence",
+    "full_name": "BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.CoordinateConfidence.toConfidence",
     "file": "BanditRLProof/RL/FiniteHorizonCoordinateModelConfidence.lean",
     "line": 144,
     "statement": "def CoordinateConfidence.toConfidence {mdp : MDP State Action} {plan : EstimatedModelPlan mdp} (confidence : plan.CoordinateConfidence) : plan.Confidence where"
@@ -73704,7 +73833,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "CoordinateConfidence.optimism_and_expectedRegret_le_two_occupancySelectedRadiusRemaining",
-    "full_name": "CoordinateConfidence.optimism_and_expectedRegret_le_two_occupancySelectedRadiusRemaining",
+    "full_name": "BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.CoordinateConfidence.optimism_and_expectedRegret_le_two_occupancySelectedRadiusRemaining",
     "file": "BanditRLProof/RL/FiniteHorizonCoordinateModelConfidence.lean",
     "line": 154,
     "statement": "theorem CoordinateConfidence.optimism_and_expectedRegret_le_two_occupancySelectedRadiusRemaining {mdp : MDP State Action} {plan : EstimatedModelPlan mdp} (confidence : plan.CoordinateConfidence) (initialState : Measure State) [IsProbabilityMeasure initialState] : (forall state, mdp.optimalValueRemaining mdp.horizon le_rfl state <= plan.upperValueRemaining mdp.horizon le_rfl state) /\\ plan.optimisticPolicy.expectedRegret initialState <= plan.optimisticPolicy.occupancySumRemaining (fun remaining hremaining state => 2 * plan.selectedRadiusRemaining remaining hremaining state) mdp.horizon le_rfl initialState"
@@ -73896,7 +74025,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "def",
     "name": "Confidence.toCoordinateConfidence",
-    "full_name": "Confidence.toCoordinateConfidence",
+    "full_name": "BanditRLProof.FiniteHorizonRL.MDP.FiniteBatchModel.Confidence.toCoordinateConfidence",
     "file": "BanditRLProof/RL/FiniteHorizonEmpiricalModel.lean",
     "line": 362,
     "statement": "noncomputable def Confidence.toCoordinateConfidence {mdp : MDP State Action} {episodes : Nat} {model : FiniteBatchModel mdp episodes} (confidence : model.Confidence) : model.plan.CoordinateConfidence where"
@@ -73904,7 +74033,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "Confidence.optimism_and_expectedRegret_le_two_occupancySelectedRadiusRemaining",
-    "full_name": "Confidence.optimism_and_expectedRegret_le_two_occupancySelectedRadiusRemaining",
+    "full_name": "BanditRLProof.FiniteHorizonRL.MDP.FiniteBatchModel.Confidence.optimism_and_expectedRegret_le_two_occupancySelectedRadiusRemaining",
     "file": "BanditRLProof/RL/FiniteHorizonEmpiricalModel.lean",
     "line": 392,
     "statement": "theorem Confidence.optimism_and_expectedRegret_le_two_occupancySelectedRadiusRemaining {mdp : MDP State Action} {episodes : Nat} {model : FiniteBatchModel mdp episodes} (confidence : model.Confidence) (initialState : Measure State) [IsProbabilityMeasure initialState] : (forall state, mdp.optimalValueRemaining mdp.horizon le_rfl state <= model.plan.upperValueRemaining mdp.horizon le_rfl state) /\\ model.plan.optimisticPolicy.expectedRegret initialState <= model.plan.optimisticPolicy.occupancySumRemaining (fun remaining hremaining state => 2 * model.plan.selectedRadiusRemaining remaining hremaining state) mdp.horizon le_rfl initialState"
@@ -74056,7 +74185,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "Confidence.trueBellmanQ_le_optimisticQ",
-    "full_name": "Confidence.trueBellmanQ_le_optimisticQ",
+    "full_name": "BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.Confidence.trueBellmanQ_le_optimisticQ",
     "file": "BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean",
     "line": 213,
     "statement": "theorem Confidence.trueBellmanQ_le_optimisticQ {mdp : MDP State Action} {plan : EstimatedModelPlan mdp} (confidence : plan.Confidence) (remaining : Nat) (hremaining : remaining + 1 <= mdp.horizon) (state : State) (action : Action) : mdp.bellmanQ (plan.upperValueRemaining remaining (by omega)) state action <= plan.optimisticQ (mdp.decisionStageRemaining remaining hremaining) (plan.upperValueRemaining remaining (by omega)) state action"
@@ -74072,7 +74201,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "Confidence.optimalValueRemaining_le_upperValueRemaining",
-    "full_name": "Confidence.optimalValueRemaining_le_upperValueRemaining",
+    "full_name": "BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.Confidence.optimalValueRemaining_le_upperValueRemaining",
     "file": "BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean",
     "line": 258,
     "statement": "theorem Confidence.optimalValueRemaining_le_upperValueRemaining {mdp : MDP State Action} {plan : EstimatedModelPlan mdp} (confidence : plan.Confidence) (remaining : Nat) (hremaining : remaining <= mdp.horizon) (state : State) : mdp.optimalValueRemaining remaining hremaining state <= plan.upperValueRemaining remaining hremaining state"
@@ -74128,7 +74257,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "Confidence.selectedRadiusRemaining_nonneg",
-    "full_name": "Confidence.selectedRadiusRemaining_nonneg",
+    "full_name": "BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.Confidence.selectedRadiusRemaining_nonneg",
     "file": "BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean",
     "line": 336,
     "statement": "theorem Confidence.selectedRadiusRemaining_nonneg {mdp : MDP State Action} {plan : EstimatedModelPlan mdp} (confidence : plan.Confidence) (remaining : Nat) (hremaining : remaining + 1 <= mdp.horizon) (state : State) : 0 <= plan.selectedRadiusRemaining remaining hremaining state"
@@ -74136,7 +74265,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "Confidence.policyBellmanResidual_le_two_selectedRadiusRemaining",
-    "full_name": "Confidence.policyBellmanResidual_le_two_selectedRadiusRemaining",
+    "full_name": "BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.Confidence.policyBellmanResidual_le_two_selectedRadiusRemaining",
     "file": "BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean",
     "line": 357,
     "statement": "theorem Confidence.policyBellmanResidual_le_two_selectedRadiusRemaining {mdp : MDP State Action} {plan : EstimatedModelPlan mdp} (confidence : plan.Confidence) (remaining : Nat) (hremaining : remaining + 1 <= mdp.horizon) (state : State) : (plan.certificate confidence).policyBellmanResidual plan.optimisticPolicy remaining hremaining state <= 2 * plan.selectedRadiusRemaining remaining hremaining state"
@@ -74144,7 +74273,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "Confidence.expectedRegret_le_two_occupancySelectedRadiusRemaining",
-    "full_name": "Confidence.expectedRegret_le_two_occupancySelectedRadiusRemaining",
+    "full_name": "BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.Confidence.expectedRegret_le_two_occupancySelectedRadiusRemaining",
     "file": "BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean",
     "line": 392,
     "statement": "theorem Confidence.expectedRegret_le_two_occupancySelectedRadiusRemaining {mdp : MDP State Action} {plan : EstimatedModelPlan mdp} (confidence : plan.Confidence) (initialState : Measure State) [IsProbabilityMeasure initialState] : 0 <= (plan.certificate confidence).residualOccupancyRemaining plan.optimisticPolicy mdp.horizon le_rfl initialState /\\ plan.optimisticPolicy.expectedRegret initialState <= (plan.certificate confidence).residualOccupancyRemaining plan.optimisticPolicy mdp.horizon le_rfl initialState /\\ (plan.certificate confidence).residualOccupancyRemaining plan.optimisticPolicy mdp.horizon le_rfl initialState <= plan.optimisticPolicy.occupancySumRemaining (fun remaining hremaining state => 2 * plan.selectedRadiusRemaining remaining hremaining state) mdp.horizon le_rfl initialState /\\ plan.optimisticPolicy.expectedRegret initialState <= plan.optimisticPolicy.occupancySumRemaining (fun remaining hremaining state => 2 * plan.selectedRadiusRemaining remaining hremaining state) mdp.horizon le_rfl initialState"
@@ -74152,7 +74281,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "Confidence.optimism_and_expectedRegret_le_two_occupancySelectedRadiusRemaining",
-    "full_name": "Confidence.optimism_and_expectedRegret_le_two_occupancySelectedRadiusRemaining",
+    "full_name": "BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.Confidence.optimism_and_expectedRegret_le_two_occupancySelectedRadiusRemaining",
     "file": "BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean",
     "line": 425,
     "statement": "theorem Confidence.optimism_and_expectedRegret_le_two_occupancySelectedRadiusRemaining {mdp : MDP State Action} {plan : EstimatedModelPlan mdp} (confidence : plan.Confidence) (initialState : Measure State) [IsProbabilityMeasure initialState] : (forall state, mdp.optimalValueRemaining mdp.horizon le_rfl state <= plan.upperValueRemaining mdp.horizon le_rfl state) /\\ plan.optimisticPolicy.expectedRegret initialState <= plan.optimisticPolicy.occupancySumRemaining (fun remaining hremaining state => 2 * plan.selectedRadiusRemaining remaining hremaining state) mdp.horizon le_rfl initialState"
@@ -74256,7 +74385,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "ExploratoryPathUniformVisitFloor.exploratoryStateCountMargin",
-    "full_name": "ExploratoryPathUniformVisitFloor.exploratoryStateCountMargin",
+    "full_name": "BanditRLProof.FiniteHorizonRL.ExploratoryPathUniformVisitFloor.exploratoryStateCountMargin",
     "file": "BanditRLProof/RL/FiniteHorizonExploratoryPathSupportExplicitCalibration.lean",
     "line": 107,
     "statement": "theorem ExploratoryPathUniformVisitFloor.exploratoryStateCountMargin {mdp : MDP State Action} {initialState : Measure State} {episodes : Nat} {delta : Real} (support : ExploratoryPathSupport mdp initialState) (explorationRate : NNReal) (visitFloor : Real) (hfloor : ExploratoryPathUniformVisitFloor support explorationRate visitFloor) (hmargin : simultaneousCountConfidenceRadius mdp episodes delta < (episodes : Real) * visitFloor) : ExploratoryStateCountMargin mdp episodes delta explorationRate (exploratoryPathStateLower support explorationRate)"
@@ -85376,7 +85505,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "def",
     "name": "FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime",
-    "full_name": "FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime",
+    "full_name": "BanditRLProof.Tsallis.FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime",
     "file": "BanditRLProof/TsallisFiniteArmIIDHorizonHistoryAdaptiveExpectedCorruptedRewardLaw.lean",
     "line": 115,
     "statement": "noncomputable def FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime {K horizon : Nat} (source : FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource K horizon) : FiniteArmIIDHistoryAdaptiveRewardShiftSource K where"
@@ -85384,7 +85513,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_initial",
-    "full_name": "FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_initial",
+    "full_name": "BanditRLProof.Tsallis.FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_initial",
     "file": "BanditRLProof/TsallisFiniteArmIIDHorizonHistoryAdaptiveExpectedCorruptedRewardLaw.lean",
     "line": 163,
     "statement": "theorem FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_initial {K horizon : Nat} (source : FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource K horizon) (arm : Fin K) : source.toAllTime.initial arm = source.initial arm"
@@ -85392,7 +85521,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_successor_of_lt",
-    "full_name": "FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_successor_of_lt",
+    "full_name": "BanditRLProof.Tsallis.FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_successor_of_lt",
     "file": "BanditRLProof/TsallisFiniteArmIIDHorizonHistoryAdaptiveExpectedCorruptedRewardLaw.lean",
     "line": 170,
     "statement": "theorem FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_successor_of_lt {K horizon : Nat} (source : FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource K horizon) (n : Nat) (hn : n < horizon) (history : History.FinitePairHistory (Fin K) Real n) (arm : Fin K) : source.toAllTime.successor n history arm = source.successor \u27e8n, hn\u27e9 history arm"
@@ -85400,7 +85529,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_successor_of_le",
-    "full_name": "FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_successor_of_le",
+    "full_name": "BanditRLProof.Tsallis.FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_successor_of_le",
     "file": "BanditRLProof/TsallisFiniteArmIIDHorizonHistoryAdaptiveExpectedCorruptedRewardLaw.lean",
     "line": 181,
     "statement": "theorem FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_successor_of_le {K horizon : Nat} (source : FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource K horizon) (n : Nat) (hn : horizon <= n) (history : History.FinitePairHistory (Fin K) Real n) (arm : Fin K) : source.toAllTime.successor n history arm = 0"
@@ -85408,7 +85537,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_envelope_zero",
-    "full_name": "FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_envelope_zero",
+    "full_name": "BanditRLProof.Tsallis.FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_envelope_zero",
     "file": "BanditRLProof/TsallisFiniteArmIIDHorizonHistoryAdaptiveExpectedCorruptedRewardLaw.lean",
     "line": 191,
     "statement": "theorem FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_envelope_zero {K horizon : Nat} (source : FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource K horizon) (arm : Fin K) : source.toAllTime.envelope 0 arm = source.initialEnvelope arm"
@@ -85416,7 +85545,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_envelope_succ_of_lt",
-    "full_name": "FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_envelope_succ_of_lt",
+    "full_name": "BanditRLProof.Tsallis.FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_envelope_succ_of_lt",
     "file": "BanditRLProof/TsallisFiniteArmIIDHorizonHistoryAdaptiveExpectedCorruptedRewardLaw.lean",
     "line": 199,
     "statement": "theorem FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_envelope_succ_of_lt {K horizon : Nat} (source : FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource K horizon) (n : Nat) (hn : n < horizon) (arm : Fin K) : source.toAllTime.envelope (Nat.succ n) arm = source.successorEnvelope \u27e8n, hn\u27e9 arm"
@@ -85424,7 +85553,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_envelope_succ_of_le",
-    "full_name": "FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_envelope_succ_of_le",
+    "full_name": "BanditRLProof.Tsallis.FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_envelope_succ_of_le",
     "file": "BanditRLProof/TsallisFiniteArmIIDHorizonHistoryAdaptiveExpectedCorruptedRewardLaw.lean",
     "line": 209,
     "statement": "theorem FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource.toAllTime_envelope_succ_of_le {K horizon : Nat} (source : FiniteArmIIDHorizonHistoryAdaptiveRewardShiftSource K horizon) (n : Nat) (hn : horizon <= n) (arm : Fin K) : source.toAllTime.envelope (Nat.succ n) arm = 0"
@@ -88504,7 +88633,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "OracleRestartSchedule.start_succ_le_of_ne",
-    "full_name": "OracleRestartSchedule.start_succ_le_of_ne",
+    "full_name": "BanditRLProof.Tsallis.OracleRestartSchedule.start_succ_le_of_ne",
     "file": "BanditRLProof/TsallisOracleRestartGeneratedTrajectory.lean",
     "line": 42,
     "statement": "theorem OracleRestartSchedule.start_succ_le_of_ne (schedule : OracleRestartSchedule) (n : Nat) (hboundary : schedule.start (n + 1) \u2260 n + 1) : schedule.start (n + 1) <= n"
@@ -88992,7 +89121,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "OracleRestartSchedule.monotone_start",
-    "full_name": "OracleRestartSchedule.monotone_start",
+    "full_name": "BanditRLProof.Tsallis.OracleRestartSchedule.monotone_start",
     "file": "BanditRLProof/TsallisOracleRestartScoreAlignment.lean",
     "line": 41,
     "statement": "theorem OracleRestartSchedule.monotone_start (schedule : OracleRestartSchedule) : Monotone schedule.start"
@@ -89000,7 +89129,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "OracleRestartSchedule.start_start",
-    "full_name": "OracleRestartSchedule.start_start",
+    "full_name": "BanditRLProof.Tsallis.OracleRestartSchedule.start_start",
     "file": "BanditRLProof/TsallisOracleRestartScoreAlignment.lean",
     "line": 54,
     "statement": "theorem OracleRestartSchedule.start_start (schedule : OracleRestartSchedule) (t : Nat) : schedule.start (schedule.start t) = schedule.start t"
@@ -89008,7 +89137,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
   {
     "kind": "theorem",
     "name": "OracleRestartSchedule.start_eq_of_between",
-    "full_name": "OracleRestartSchedule.start_eq_of_between",
+    "full_name": "BanditRLProof.Tsallis.OracleRestartSchedule.start_eq_of_between",
     "file": "BanditRLProof/TsallisOracleRestartScoreAlignment.lean",
     "line": 65,
     "statement": "theorem OracleRestartSchedule.start_eq_of_between (schedule : OracleRestartSchedule) {epoch localTime t : Nat} (ht : schedule.start t = epoch) (hepoch : epoch <= localTime) (hlocalTime : localTime <= t) : schedule.start localTime = epoch"

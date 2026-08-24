@@ -83,18 +83,31 @@ availability condition `s + delay s < t`.
   large/small-count disjunction without imposing factor three on the small
   branch.  The downstream processed-prefix producer now supplies those
   algebraic inputs from a source-time ledger and D.1 count certificate.  Keep
-  Lemma 4.2 unverified pending the recursive state-to-ledger projection, D.4
+  Lemma 4.2 unverified pending the generated-trajectory construction, D.4
   probability proof, ordered elimination trace, and a source-faithful endpoint
-  repair or clarification.
+  repair or clarification; the deterministic processed-trace-summary adapter
+  is now compiled below.
 - [x] Compile the source-time processed-prefix count producer.  The ledger
   records the chosen arm and line-15 allocation at each source round, derives
   equal cumulative pull mass for arms that remain active, and combines the
   exact D.1 count inequalities with the source width and recursive-UCB
   definitions.  It produces the large/small branch, the same-prefix
   factor-ten width edge, and a conditional same-snapshot factor-20 gap theorem
-  without accepting either target edge as a premise.  Constructing the ledger
-  and its active-persistence/count certificate from the full recursive
-  Delayed SAPO state, and proving the D.4 probability bound, remain open.
+  without accepting either target edge as a premise.
+- [x] Compile the deterministic processed-trace-summary adapter.  The summary
+  records distinct source indices for processed items, permits
+  nonchronological processing order, carries the exact strict availability
+  witness `s + d_s < t`, and reads actions and line-15 allocations at each
+  source index.  It keeps the intra-round active set separate from the
+  antitone source-round trace and records current-to-source containment as an
+  explicit summary invariant.  A future Algorithm-5 producer must prove both
+  that invariant and source-trace antitonicity.  Source width and recursive empirical UCB are
+  definitions of the projected snapshot rather than certificate premises.
+  Given the two explicit D.4 count inequalities, the adapter constructs the
+  existing count certificate and reaches the conditional same-snapshot
+  factor-20 theorem.  Constructing this summary from the full randomized
+  Algorithm-5 transition system and proving D.4's simultaneous `2/T`
+  probability bound remain open.
 - [x] Reuse the existing finite-action law to turn the certified line-15
   vector into a probability measure, and lift causal allocation rules to
   measure-valued rules that remain identical in observation-equivalent hidden
@@ -118,6 +131,7 @@ regime endpoints to close in Lean.
 ```bash
 lake env lean BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean
 lake env lean BanditRLProof/DelayedFeedback/ProcessedPrefixCounts.lean
+lake env lean BanditRLProof/DelayedFeedback/RecursiveProcessedState.lean
 lake env lean BanditRLProof/DelayedFeedback/Accounting.lean
 lake env lean BanditRLProof/DelayedFeedback/MultiRegimeContract.lean
 lake env lean BanditRLProof/DelayedFeedback/CausalView.lean
@@ -127,6 +141,7 @@ lake env lean BanditRLProof/DelayedFeedback/Elimination.lean
 lake env lean BanditRLProof/DelayedFeedback/ActionLaw.lean
 lake env lean Tests/DelayedFeedbackPaperAuditCanary.lean
 lake env lean Tests/DelayedFeedbackProcessedPrefixCountsCanary.lean
+lake env lean Tests/DelayedFeedbackRecursiveProcessedStateCanary.lean
 python3 tools/bandit.py check
 ```
 
@@ -134,3 +149,19 @@ The full 8,838-job Lean gate, proof-graph export, and 118-test Python suite
 passed again on 2026-08-18 after adding the D.10--D.12 audit layer.  The
 isolated worktree remains at a short Windows path to avoid an unrelated
 long-path `.olean` creation failure.
+
+On 2026-08-25, after adding the deterministic processed-trace-summary adapter,
+`python -B tools/bandit.py check` passed the complete current gate: the root
+Lean build completed 8,830 jobs, the `Tests` build completed 8,852 jobs, the
+proof-graph exporter ran, and all 217 Python tests passed (6 skipped).  The
+focused trace-summary module and canary also compile, and their reported axioms
+are limited to `propext`, `Classical.choice`, and `Quot.sound`.  The target-drift
+v2 and external-comparator validators pass structurally while continuing to
+report their 450-run and 30-case studies as planned and unrun.  A read-only
+frontier shadow reports no lifecycle mismatch.
+
+This verification promotes exactly nine additional source-audit declarations,
+for a delayed-feedback total of 133.  It does not promote the Algorithm-5
+transition-and-invariant-to-summary producer, a measurable generated Delayed
+SAPO trajectory, the simultaneous D.4 probability bound, ordered elimination,
+or any terminal regret theorem; those obligations remain open.

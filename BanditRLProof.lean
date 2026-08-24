@@ -537,6 +537,7 @@ import BanditRLProof.DelayedFeedback.StochasticGoodEvent
 import BanditRLProof.DelayedFeedback.StochasticGoodEventAssembly
 import BanditRLProof.DelayedFeedback.StochasticGapOrderingAudit
 import BanditRLProof.DelayedFeedback.ProcessedPrefixCounts
+import BanditRLProof.DelayedFeedback.RecursiveProcessedState
 import BanditRLProof.DelayedFeedback.MultiRegimeContract
 import BanditRLProof.DelayedFeedback.Processing
 import BanditRLProof.Literature

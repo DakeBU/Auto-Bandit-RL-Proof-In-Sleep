@@ -256,9 +256,21 @@ class AnonymousSupplementTests(unittest.TestCase):
             19,
         )
         self.assertEqual(ledger["delayed_feedback"]["processed_prefix_declaration_count"], 16)
-        self.assertEqual(ledger["delayed_feedback"]["source_audit_declaration_count"], 124)
+        self.assertEqual(
+            ledger["delayed_feedback"]["processed_trace_summary_declaration_count"],
+            9,
+        )
+        self.assertEqual(ledger["delayed_feedback"]["source_audit_declaration_count"], 133)
         self.assertFalse(ledger["delayed_feedback"]["paper_endpoint_verified"])
         self.assertEqual(ledger["source_records"][BUILDER.DELAYED_DIAGNOSTIC_ID]["status"], "partial")
+        self.assertEqual(
+            ledger["source_records"][BUILDER.DELAYED_TRACE_SUMMARY_ID]["status"],
+            "compiled",
+        )
+        self.assertEqual(
+            ledger["source_records"][BUILDER.DELAYED_CENTRAL_ENDPOINT_ID]["status"],
+            "partial",
+        )
         self.assertEqual(
             ledger["source_records"]["TARGET-DRIFT-V2-CONTROLLED-EVALUATION"]["status"],
             "planned",

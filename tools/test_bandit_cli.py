@@ -323,6 +323,40 @@ class ReviewStatusCliTests(unittest.TestCase):
         finally:
             bandit.ROOT = original_root
 
+    def test_scan_lean_declarations_qualifies_dotted_relative_names(self) -> None:
+        bandit = load_bandit_module()
+        original_root = bandit.ROOT
+        try:
+            with tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                source_dir = root / "BanditRLProof"
+                source_dir.mkdir()
+                (source_dir / "RelativeDotted.lean").write_text(
+                    "namespace BanditRLProof\n"
+                    "namespace DelayedFeedback\n"
+                    "structure View where\n"
+                    "  marker : Nat\n"
+                    "theorem View.ext (left right : View) "
+                    "(h : left.marker = right.marker) : left = right := by\n"
+                    "  cases left\n"
+                    "  cases right\n"
+                    "  simp_all\n"
+                    "end DelayedFeedback\n"
+                    "end BanditRLProof\n",
+                    encoding="utf-8",
+                )
+                bandit.ROOT = root
+
+                declarations = bandit.scan_lean_declarations()
+                names = [declaration["full_name"] for declaration in declarations]
+
+                self.assertEqual(names, [
+                    "BanditRLProof.DelayedFeedback.View",
+                    "BanditRLProof.DelayedFeedback.View.ext",
+                ])
+        finally:
+            bandit.ROOT = original_root
+
     def test_run_cycle_review_gate_stops_when_response_missing(self) -> None:
         status_proc = self.run_bandit("review-status", "--json")
         payload = json.loads(status_proc.stdout)

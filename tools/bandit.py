@@ -26657,11 +26657,11 @@ def scan_lean_declarations(include_tests: bool = False) -> list[dict[str, str | 
                     name_match = decl_name_re.match(line)
                     if name_match:
                         name = name_match.group(1)
-                        full_name = (
-                            name
-                            if "." in name
-                            else ".".join(namespace_stack + [name])
-                        )
+                        # Lean treats a dotted declaration name as relative to
+                        # the open namespace stack.  For example, `View.ext`
+                        # inside `BanditRLProof.DelayedFeedback` denotes
+                        # `BanditRLProof.DelayedFeedback.View.ext`.
+                        full_name = ".".join(namespace_stack + [name])
                         decls.append({
                             "kind": kind,
                             "name": name,
@@ -26694,7 +26694,7 @@ def scan_lean_declarations(include_tests: bool = False) -> list[dict[str, str | 
                         pending_decl = (decl_head_match.group(1), lineno)
                     continue
                 kind, name = decl_match.groups()
-                full_name = name if "." in name else ".".join(namespace_stack + [name])
+                full_name = ".".join(namespace_stack + [name])
                 decls.append({
                     "kind": kind,
                     "name": name,

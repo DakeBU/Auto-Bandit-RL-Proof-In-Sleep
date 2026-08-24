@@ -12,32 +12,43 @@
 | `DELAYED-BOBW-OPTIMAL-ARM-SURVIVAL` | Algorithm 5 lines 7--8 and the deterministic core of Lemma D.9: an optimal arm satisfying an explicit confidence certificate is not eliminated | real absolute-value interval, strict line-7 test, finite-set difference; source Lemma D.9 | package the exact elimination snapshot, derive the empirical upper inequality, and prove post-elimination nonemptiness | compiled deterministic implication; recursive full Lemma D.9 open |
 | `DELAYED-BOBW-GOOD-EVENT-D9-PROJECTION` | derive `muStar <= ucbStar` from both source upper-confidence surfaces and bound optimal-arm elimination by the complement of the elimination good event | finite infimum, `min`, event inclusion, measure monotonicity; source Definition D.1 and Lemma D.9 | package the elimination slice, construct the survival certificate, and expose a failure-budget consumer | compiled projection/consumer; full event and D.2--D.7 component producers open |
 | `DELAYED-BOBW-D8-D9-ASSEMBLY` | combine the six D.2--D.7 failure components into Corollary D.8's `9/T` budget and transport it through D.9 survival | finite outer-measure union, source-exact three `2/T` and three `1/T` shares, complement inclusion | name the six failure events, prove the exact source budget sum, and compose an explicit full-event projection with optimal-arm survival | compiled union/composition; six concentration proofs and semantic projection remain open |
-| `DELAYED-BOBW-D10-D12-GAP-ORDERING-AUDIT` | audit the width/gap chain used by Appendix Lemma D.10 and expose both the displayed four-edge route and a conditional same-snapshot factor-20 skeleton for Lemma D.12 / main-text Lemma 4.2 | `MLIB-ORDER-ALGEBRA`, `MLIB-REAL-LOG-SQRT`; source empirical-width definition, Algorithm 5 line-7 snapshot, and physical PDF pp. 26--27 | prove width antitonicity and a literal `T=4` reverse-direction witness; derive the eliminated-arm lower gap; prove the exact small-count width lower bound; consume a large/small-count branch certificate and an explicit same-prefix factor-ten edge; retain the conditional four-edge consumer for comparison | compiled diagnostic and conditional consumers; a downstream D.1 processed-prefix producer now supplies their algebraic inputs, but the recursive state projection and unconditional D.10/D.12 remain open |
-| `DELAYED-BOBW-D1-ACTIVE-COUNT-TO-WIDTH-PRODUCER` | derive the same-prefix D.10 width inputs and repaired D.12 factor-20 conclusion from Algorithm 5 line-15 source-time allocations plus the exact D.1 count clause | `delayedSAPOProbability_of_active`; source width; finite sums; real log/sqrt; recursive empirical UCB definition | record an ordered source-time allocation/action ledger; derive equal active-arm pull mass; prove `n_j >= n_i/4 - 6 log T`; split at `192 log T`; produce factor three, factor ten, current-UCB, and the existing same-snapshot consumer inputs | compiled deterministic producer and conditional gap theorem; recursive ledger projection and D.4 probability remain open, so D.10/D.12/Lemma 4.2 are not complete |
+| `DELAYED-BOBW-D10-D12-GAP-ORDERING-AUDIT` | audit the width/gap chain used by Appendix Lemma D.10 and expose both the displayed four-edge route and a conditional same-snapshot factor-20 skeleton for Lemma D.12 / main-text Lemma 4.2 | `MLIB-ORDER-ALGEBRA`, `MLIB-REAL-LOG-SQRT`; source empirical-width definition, Algorithm 5 line-7 snapshot, and physical PDF pp. 26--27 | prove width antitonicity and a literal `T=4` reverse-direction witness; derive the eliminated-arm lower gap; prove the exact small-count width lower bound; consume a large/small-count branch certificate and an explicit same-prefix factor-ten edge; retain the conditional four-edge consumer for comparison | compiled diagnostic and conditional consumers; a downstream D.1 processed-prefix producer and trace-summary adapter supply algebraic inputs conditionally, while the generated state and unconditional D.10/D.12 remain open |
+| `DELAYED-BOBW-D1-ACTIVE-COUNT-TO-WIDTH-PRODUCER` | derive the same-prefix D.10 width inputs and repaired D.12 factor-20 conclusion from Algorithm 5 line-15 source-time allocations plus the exact D.1 count clause | `delayedSAPOProbability_of_active`; source width; finite sums; real log/sqrt; recursive empirical UCB definition | record an ordered source-time allocation/action ledger; derive equal active-arm pull mass; prove `n_j >= n_i/4 - 6 log T`; split at `192 log T`; produce factor three, factor ten, current-UCB, and the existing same-snapshot consumer inputs | compiled deterministic producer and conditional gap theorem; a trace-summary adapter now constructs the ledger certificate, but Algorithm-5 generation and D.4 probability remain open, so D.10/D.12/Lemma 4.2 are not complete |
+| `DELAYED-BOBW-PROCESSED-TRACE-SUMMARY-ADAPTER` | construct the processed-prefix certificate from a source-shaped trace summary without assuming chronological processing order or width/gap conclusions | distinct source indices; strict `s + d_s < t` availability; separate intra-round and source-round active sets; `DelayedSAPOProcessedPrefixCountCertificate`; source D.4 count clause | read chosen actions and line-15 allocations at stored source indices; consume explicit current-to-source containment; record source-trace antitonicity separately; define source width and recursive empirical UCB; consume only the two D.4 count inequalities | compiled deterministic adapter and conditional factor-20 consumer; Algorithm-5 transition-and-invariant-to-summary producer, D.4 `2/T` probability, and generated trajectory remain open |
 | `DELAYED-BOBW-CAUSAL-ACTION-MEASURE` | line-15 vector induces a probability measure and a causal measure-valued decision rule | local `Exp3.FiniteActionDistribution`, `finiteActionMeasure`; causal observation equivalence | package explicit EAP premises, reuse the finite-action law, and transport equality through `ActionTimeView` | compiled one-round action law; measurable history kernel and recursive generated trajectory open |
 
 ## Active leaf contract
 
-- Local APIs/imports: `Mathlib.Data.Finset.Card`, `Finset.range`,
-  `Finset.filter`, complement/disjoint/cardinality lemmas.
-- Intended proof route: define the source predicate once; use its Boolean
-  complement inside the finite prefix; prove disjointness, union, then card
-  addition.
-- Hidden regularity: none beyond `delay : Nat -> Nat` and `t : Nat`.
-- Mathlib candidacy: the generic filter partition already belongs in Mathlib;
-  these declarations are thin project-local wrappers that preserve paper
-  indexing.
-- Failure policy: do not change strict `< t` to `<= t`, extend beyond
-  `Finset.range t`, or smuggle future delay knowledge into the algorithm.  If
-  an off-by-one mismatch appears, update the conversion window before tactics.
+- Next target: the source D.4 simultaneous count probability producer on a
+  measurable generated Delayed-SAPO action trajectory.
+- Compiled deterministic input: `RecursiveProcessedState.lean` now produces
+  the exact processed-prefix certificate from a source-shaped trace summary and
+  a `D4CountClause`; it neither generates that summary from Algorithm 5 nor
+  proves the clause probabilistically.
+- Random process: for each arm, the sampled action indicator minus its
+  source-history conditional probability, accumulated over the relevant
+  processed-source family.
+- Required filtration and measurability: the pre-action history must generate
+  each line-15 allocation; the sampled action is the successor coordinate;
+  processed-prefix selection must be justified by a predictable or anytime
+  event rather than an arbitrary data-dependent subsequence.
+- Intended route: first construct a measurable recursive action kernel and
+  prove its conditional finite-action law; then prove an adaptive Bernoulli
+  count inequality strong enough for the exact lower/upper constants; finally
+  justify the union over the source's random sequence family.
+- Failure policy: do not assume a count certificate, conditional-mean identity,
+  adaptedness, width comparison, or gap conclusion inside the probability
+  producer.  Do not identify processing order with source-round order.
 
 ## Paper-level blockers
 
 - delayed SAPO state and probability-bank data structures;
-- randomized Delayed SAPO kernel instantiated on the compiled causal view;
+- measurable randomized Delayed SAPO kernel instantiated on the compiled
+  causal view and its generated trajectory law;
 - exact source detection/switch state machine;
 - source-faithful ordering of simultaneous arrivals and recursive confidence
-  updates after each processed item;
+  updates after each processed item (the new state permits, but does not choose,
+  a nonchronological order);
 - stochastic good-event and delayed concentration chain;
 - external adversarial `ALG` theorem contract;
 - Delayed SAPO instantiation of the compiled generic shared-identity interface,
@@ -99,10 +110,14 @@ classified as compiled or audited.
   edge, and later-to-earlier factor-ten edge from an explicit source-time
   allocation/action ledger and the exact D.1 count/width/recursive-UCB
   projection.  It then invokes the existing same-snapshot consumer.
-- Remaining producers: construct that ledger and its active-persistence,
-  count-event, width, and recursive-UCB projection from the full recursive
-  Algorithm-5 state; prove D.4's probability statement; connect ordered
-  elimination snapshots across the generated trajectory.
+- Compiled trace-summary adapter: `RecursiveProcessedState.lean` constructs the
+  source-indexed ledger from distinct strictly available entries, derives
+  active persistence without conflating intra-round and action-round state,
+  and defines the width and recursive-UCB surfaces.  It consumes only the two
+  D.4 count inequalities.
+- Remaining producers: generate that summary from the measurable randomized
+  Algorithm-5 trajectory; prove D.4's simultaneous `2/T` probability statement;
+  connect ordered elimination snapshots across the generated trajectory.
 - Boundary: the same-snapshot algebraic skeleton is a conditional consumer,
   not a complete repair.  Lemma D.10, Lemma D.12, Lemma 4.2, and Theorem 4.1
   remain unverified until the source branch producers are instantiated.  Author

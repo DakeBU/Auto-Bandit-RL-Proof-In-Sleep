@@ -6,7 +6,8 @@ Status: `source-frozen; accounting, causal-view, new-arrival-processing,
 active-allocation, optimal-arm-survival, and one-round action-law leaves plus
 a D.10/D.12 width-direction diagnostic, a conditional same-snapshot repair
 skeleton, a
-conditional gap-ordering consumer, and a generic multi-regime contract
+conditional gap-ordering consumer, a deterministic processed-trace-summary
+adapter, and a generic multi-regime contract
 interface compiled; no paper endpoint audited`
 
 ## Frozen source
@@ -62,8 +63,9 @@ The frozen contract therefore retains:
 | `DELAYED-BOBW-OPTIMAL-ARM-SURVIVAL` | connect Algorithm 5 lines 7--8 to the nonempty-active premise in line 15 | compiled deterministic core of source Lemma D.9 under an explicit certificate; full recursive lemma open |
 | `DELAYED-BOBW-GOOD-EVENT-D9-PROJECTION` | derive the certificate from the two source upper-confidence surfaces and carry a supplied event-failure budget to optimal-arm elimination | compiled elimination projection and probability-bound consumer; full Definition D.1 and D.2--D.7 component producers open |
 | `DELAYED-BOBW-D8-D9-ASSEMBLY` | union the six D.2--D.7 failure components into Corollary D.8's `9/T` budget and compose it with D.9 survival | compiled outer-measure union and event transport; the six component bounds and full-event projection remain hypotheses |
-| `DELAYED-BOBW-D10-D12-GAP-ORDERING-AUDIT` | audit the prefix/elimination width transport used between Appendix Lemmas D.10 and D.12 | compiled antitone-width diagnostic, a literal `T=4` reverse-direction witness, a line-7 gap lower bound, the exact small-count scalar implication, a large/small-count active-arm consumer, a conditional same-snapshot factor-20 consumer, and the earlier conditional four-edge consumer; a downstream D.1 producer now supplies the algebraic branch/width inputs, while recursive state projection remains open, so D.10/D.12 remain unresolved |
-| `DELAYED-BOBW-D1-ACTIVE-COUNT-TO-WIDTH-PRODUCER` | turn Algorithm 5 line-15 source-time allocations and the exact D.1 count clause into the missing same-prefix D.10/D.12 inputs | compiled processed-prefix action/allocation ledger, equal active-arm pull-mass theorem, exact `n_j >= n_i/4 - 6 log T` comparison, large/small width producers, recursive-UCB edge, unconditional same-prefix factor-ten theorem, and conditional factor-20 gap theorem; recursive state projection and D.4 probability remain open |
+| `DELAYED-BOBW-D10-D12-GAP-ORDERING-AUDIT` | audit the prefix/elimination width transport used between Appendix Lemmas D.10 and D.12 | compiled antitone-width diagnostic, a literal `T=4` reverse-direction witness, a line-7 gap lower bound, the exact small-count scalar implication, a large/small-count active-arm consumer, a conditional same-snapshot factor-20 consumer, and the earlier conditional four-edge consumer; downstream D.1 and trace-summary layers now supply algebraic inputs conditionally, while D.4 probability remains open, so D.10/D.12 remain unresolved |
+| `DELAYED-BOBW-D1-ACTIVE-COUNT-TO-WIDTH-PRODUCER` | turn Algorithm 5 line-15 source-time allocations and the exact D.1 count clause into the missing same-prefix D.10/D.12 inputs | compiled processed-prefix action/allocation ledger, equal active-arm pull-mass theorem, exact `n_j >= n_i/4 - 6 log T` comparison, large/small width producers, recursive-UCB edge, unconditional same-prefix factor-ten theorem, and conditional factor-20 gap theorem; the compiled trace-summary adapter constructs its certificate, while Algorithm-5 generation and D.4 probability remain open |
+| `DELAYED-BOBW-PROCESSED-TRACE-SUMMARY-ADAPTER` | construct the count certificate from a source-shaped trace summary without conflating processing order, source round, and intra-round active state | compiled distinct source-index ledger, strict-availability witnesses, separate intra-round/source-round active surfaces, explicit current-to-source containment invariant, definitionally generated source width/recursive UCB, D.4 count-clause boundary, certificate producer, and conditional factor-20 consumer; Algorithm-5 generation/invariant production and D.4's `2/T` bound remain open |
 | `DELAYED-BOBW-CAUSAL-ACTION-MEASURE` | turn the line-15 vector into a causal one-round randomized law | compiled probability measure and observation-equivalence transport; measurable history kernel and recursive trajectory open |
 
 These leaves are deliberately small but source-semantic: they check the exact
@@ -91,12 +93,20 @@ Corollary-D.8 union assembly, the deterministic optimal-arm survival consumer,
 the D.10/D.12 direction diagnostic, the exact small-count width lower bound, a
 source-time processed-prefix ledger, D.1 count-to-width producers, a
 conditional same-snapshot factor-20 theorem, the earlier conditional four-edge
-consumer, and a causal measure-valued one-round action rule.  The new producer
+consumer, a causal measure-valued one-round action rule, and a deterministic
+processed-trace-summary adapter.  The adapter records distinct, strictly
+available, possibly nonchronological source indices; reads each action and
+allocation at source time; and keeps the intra-round active set separate from
+the antitone source-round trace while recording containment explicitly.  It
+does not construct these fields or invariants from the
+Algorithm-5 transition system.  The
+count-to-width producer
 derives rather than assumes the large/small branch, recursive-UCB edge, and
-same-prefix factor-ten comparison.  Its remaining boundary is the projection
-from the full recursive Delayed SAPO state into the ledger/count certificate
-and the D.4 probability proof.  It therefore still neither verifies nor
-refutes the source lemmas.
+same-prefix factor-ten comparison.  Its remaining stochastic boundary is a
+  measurable generated Delayed-SAPO trajectory, a producer from that trajectory
+  to the summary, and the D.4 simultaneous `2/T`
+probability proof for the two count inequalities.  It therefore still neither
+verifies nor refutes the source lemmas.
 The library does not yet
 have the paper's complete delayed SAPO state machine, probability banks,
 measurable recursive sampling kernel, detection/switch semantics, the complete
