@@ -108,6 +108,17 @@ availability condition `s + delay s < t`.
   factor-20 theorem.  Constructing this summary from the full randomized
   Algorithm-5 transition system and proving D.4's simultaneous `2/T`
   probability bound remain open.
+- [x] Compile one ordered no-switch processing step for Algorithm 5 lines
+  3--4 and 7--8.  `OrderedProcessingTransition.lean` keeps the paper sequence
+  as a duplicate-free list, accepts an arbitrary member of `B(t) \ S`, and
+  appends it without sorting before producing the line-7 summary.  Lean derives
+  source-index injectivity, the exact strict `s + d_s < t` witness, and
+  current-to-source activity containment from an antitone source trace and a
+  round-start invariant.  The line-8 successor uses the exact
+  `remainingActive` set and preserves that invariant.  A canary processes
+  source round one after source round three.  The numerical BSC/EAP updates,
+  generated trajectory, D.4 probability theorem, switch path, and every regret
+  endpoint remain open.
 - [x] Reuse the existing finite-action law to turn the certified line-15
   vector into a probability measure, and lift causal allocation rules to
   measure-valued rules that remain identical in observation-equivalent hidden
@@ -132,6 +143,7 @@ regime endpoints to close in Lean.
 lake env lean BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean
 lake env lean BanditRLProof/DelayedFeedback/ProcessedPrefixCounts.lean
 lake env lean BanditRLProof/DelayedFeedback/RecursiveProcessedState.lean
+lake env lean BanditRLProof/DelayedFeedback/OrderedProcessingTransition.lean
 lake env lean BanditRLProof/DelayedFeedback/Accounting.lean
 lake env lean BanditRLProof/DelayedFeedback/MultiRegimeContract.lean
 lake env lean BanditRLProof/DelayedFeedback/CausalView.lean
@@ -142,6 +154,7 @@ lake env lean BanditRLProof/DelayedFeedback/ActionLaw.lean
 lake env lean Tests/DelayedFeedbackPaperAuditCanary.lean
 lake env lean Tests/DelayedFeedbackProcessedPrefixCountsCanary.lean
 lake env lean Tests/DelayedFeedbackRecursiveProcessedStateCanary.lean
+lake env lean Tests/DelayedFeedbackOrderedProcessingTransitionCanary.lean
 python3 tools/bandit.py check
 ```
 
@@ -165,3 +178,11 @@ for a delayed-feedback total of 133.  It does not promote the Algorithm-5
 transition-and-invariant-to-summary producer, a measurable generated Delayed
 SAPO trajectory, the simultaneous D.4 probability bound, ordered elimination,
 or any terminal regret theorem; those obligations remain open.
+
+On 2026-08-25, the focused ordered-processing module and its nonchronological
+canary compile.  Their five representative axiom reports contain only
+`propext`, `Classical.choice`, and `Quot.sound`.  This structural slice contains
+15 named declarations, so the delayed-feedback source-audit total becomes 148
+once the current repository-wide gate is recorded.  It does not promote the
+numeric BSC/EAP transition, a generated trajectory, D.4, a switch decision, an
+ordered multi-snapshot theorem, or a regret endpoint.

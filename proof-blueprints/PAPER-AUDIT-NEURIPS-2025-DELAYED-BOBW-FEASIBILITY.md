@@ -1,6 +1,6 @@
 # Proof Blueprint: PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY
 
-Generated: `2026-08-24T19:45:45+00:00`
+Generated: `2026-08-24T21:32:53+00:00`
 
 ## Source Task
 
@@ -114,6 +114,17 @@ availability condition `s + delay s < t`.
   factor-20 theorem.  Constructing this summary from the full randomized
   Algorithm-5 transition system and proving D.4's simultaneous `2/T`
   probability bound remain open.
+- [x] Compile one ordered no-switch processing step for Algorithm 5 lines
+  3--4 and 7--8.  `OrderedProcessingTransition.lean` keeps the paper sequence
+  as a duplicate-free list, accepts an arbitrary member of `B(t) \ S`, and
+  appends it without sorting before producing the line-7 summary.  Lean derives
+  source-index injectivity, the exact strict `s + d_s < t` witness, and
+  current-to-source activity containment from an antitone source trace and a
+  round-start invariant.  The line-8 successor uses the exact
+  `remainingActive` set and preserves that invariant.  A canary processes
+  source round one after source round three.  The numerical BSC/EAP updates,
+  generated trajectory, D.4 probability theorem, switch path, and every regret
+  endpoint remain open.
 - [x] Reuse the existing finite-action law to turn the certified line-15
   vector into a probability measure, and lift causal allocation rules to
   measure-valued rules that remain identical in observation-equivalent hidden
@@ -138,6 +149,7 @@ regime endpoints to close in Lean.
 lake env lean BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean
 lake env lean BanditRLProof/DelayedFeedback/ProcessedPrefixCounts.lean
 lake env lean BanditRLProof/DelayedFeedback/RecursiveProcessedState.lean
+lake env lean BanditRLProof/DelayedFeedback/OrderedProcessingTransition.lean
 lake env lean BanditRLProof/DelayedFeedback/Accounting.lean
 lake env lean BanditRLProof/DelayedFeedback/MultiRegimeContract.lean
 lake env lean BanditRLProof/DelayedFeedback/CausalView.lean
@@ -148,6 +160,7 @@ lake env lean BanditRLProof/DelayedFeedback/ActionLaw.lean
 lake env lean Tests/DelayedFeedbackPaperAuditCanary.lean
 lake env lean Tests/DelayedFeedbackProcessedPrefixCountsCanary.lean
 lake env lean Tests/DelayedFeedbackRecursiveProcessedStateCanary.lean
+lake env lean Tests/DelayedFeedbackOrderedProcessingTransitionCanary.lean
 python3 tools/bandit.py check
 ```
 
@@ -172,6 +185,14 @@ transition-and-invariant-to-summary producer, a measurable generated Delayed
 SAPO trajectory, the simultaneous D.4 probability bound, ordered elimination,
 or any terminal regret theorem; those obligations remain open.
 
+On 2026-08-25, the focused ordered-processing module and its nonchronological
+canary compile.  Their five representative axiom reports contain only
+`propext`, `Classical.choice`, and `Quot.sound`.  This structural slice contains
+15 named declarations, so the delayed-feedback source-audit total becomes 148
+once the current repository-wide gate is recorded.  It does not promote the
+numeric BSC/EAP transition, a generated trajectory, D.4, a switch decision, an
+ordered multi-snapshot theorem, or a regret endpoint.
+
 
 ## Conversion Window Snapshot
 
@@ -183,8 +204,9 @@ Status: `source-frozen; deterministic availability, action-time count,
 one-based/end-of-round sigma bridge, generic shared-identity interface, causal
 action-time view, set-level new-arrival processing, line-7/8 optimal-arm
 survival, line-15 allocation, a causal one-round action measure, source-exact
-D.2--D.8 budget assembly, and a processed-prefix D.1 count-to-width producer
-plus its deterministic processed-trace-summary adapter compiled; the D.4 count
+  D.2--D.8 budget assembly, a processed-prefix D.1 count-to-width producer,
+  its deterministic processed-trace-summary adapter, and one ordered
+  no-switch Algorithm-5 structural processing step compiled; the D.4 count
 clause is still conditional, and the D.2--D.7 probability producers,
 measurable generated trajectory, ordered elimination, and paper endpoints
 remain open`
@@ -275,6 +297,29 @@ coordinate formulas, nonnegativity under nonnegative eliminated coordinates
 whose sum is at most one, and exact total mass one.  It does not yet prove that
 EAP maintains those hypotheses or construct the sampling kernel.
 
+## Ordered no-switch processing step
+
+Physical PDF page 22, Algorithm 5 lines 3--4 choose an arbitrary
+`s in B(t) \ S` and append it to the processed sequence; lines 7--8 test and
+remove arms after the confidence surfaces for that appended prefix are formed.
+`DelayedSAPONoSwitchProcessOne` refines the set-level `B(t) \ S` operation by
+retaining Algorithm 5's ordered sequence as a duplicate-free `List Nat`.  One
+step accepts any newly observed source round and appends it to the list without
+sorting, so simultaneous arrivals remain intentionally nondeterministic.  The
+compiled transition builds the line-7 `DelayedSAPOProcessedTraceSummary` only
+after this append, derives source-index injectivity and strict
+`s + d_s < t` availability, and derives current-to-source active-set
+containment from a round-start invariant plus an antitone source-round trace.
+Its line-8 successor uses the exact `remainingActive` set and preserves the
+round-start invariant.  The focused canary processes source round one after
+source round three.
+
+This is a structural no-switch step.  The empirical means, confidence bounds,
+and inactive-arm probabilities are explicit inputs; Lean does not claim that
+BSC or EAP generated them.  The switch branch, round finalization, measurable
+recursive sampling law, D.4 count probability, multi-snapshot elimination
+route, and regret endpoints remain open.
+
 ## Elimination and one-round action law
 
 `DelayedSAPOEliminationSnapshot` is the exact data read by Algorithm 5 line 7,
@@ -346,8 +391,11 @@ pair-width premise.  It still consumes a
   containment as an explicit summary invariant.  It defines the
   current width and recursive empirical UCB from the projected summary.  The
   remaining certificate input is the pair of displayed D.4 count inequalities.
-  Constructing the summary from the measurable randomized Algorithm-5
-  transition system, proving the inequalities' simultaneous `2/T` probability,
+  The compiled ordered no-switch step now constructs one such summary from an
+  explicit structural round state and preserves its active-set invariant.  It
+  does not generate the numerical BSC/EAP fields or the random round state.
+  Constructing those fields on a measurable randomized Algorithm-5 trajectory,
+  proving the inequalities' simultaneous `2/T` probability,
   and closing the ordered elimination and terminal regret chains remain open.
   This is a compiled deterministic adapter and conditional same-snapshot repair
   route, not an actual recursive-state producer, source repair, or source
@@ -393,30 +441,38 @@ open.
 | `DELAYED-BOBW-D10-D12-GAP-ORDERING-AUDIT` | audit the width/gap chain used by Appendix Lemma D.10 and expose both the displayed four-edge route and a conditional same-snapshot factor-20 skeleton for Lemma D.12 / main-text Lemma 4.2 | `MLIB-ORDER-ALGEBRA`, `MLIB-REAL-LOG-SQRT`; source empirical-width definition, Algorithm 5 line-7 snapshot, and physical PDF pp. 26--27 | prove width antitonicity and a literal `T=4` reverse-direction witness; derive the eliminated-arm lower gap; prove the exact small-count width lower bound; consume a large/small-count branch certificate and an explicit same-prefix factor-ten edge; retain the conditional four-edge consumer for comparison | compiled diagnostic and conditional consumers; a downstream D.1 processed-prefix producer and trace-summary adapter supply algebraic inputs conditionally, while the generated state and unconditional D.10/D.12 remain open |
 | `DELAYED-BOBW-D1-ACTIVE-COUNT-TO-WIDTH-PRODUCER` | derive the same-prefix D.10 width inputs and repaired D.12 factor-20 conclusion from Algorithm 5 line-15 source-time allocations plus the exact D.1 count clause | `delayedSAPOProbability_of_active`; source width; finite sums; real log/sqrt; recursive empirical UCB definition | record an ordered source-time allocation/action ledger; derive equal active-arm pull mass; prove `n_j >= n_i/4 - 6 log T`; split at `192 log T`; produce factor three, factor ten, current-UCB, and the existing same-snapshot consumer inputs | compiled deterministic producer and conditional gap theorem; a trace-summary adapter now constructs the ledger certificate, but Algorithm-5 generation and D.4 probability remain open, so D.10/D.12/Lemma 4.2 are not complete |
 | `DELAYED-BOBW-PROCESSED-TRACE-SUMMARY-ADAPTER` | construct the processed-prefix certificate from a source-shaped trace summary without assuming chronological processing order or width/gap conclusions | distinct source indices; strict `s + d_s < t` availability; separate intra-round and source-round active sets; `DelayedSAPOProcessedPrefixCountCertificate`; source D.4 count clause | read chosen actions and line-15 allocations at stored source indices; consume explicit current-to-source containment; record source-trace antitonicity separately; define source width and recursive empirical UCB; consume only the two D.4 count inequalities | compiled deterministic adapter and conditional factor-20 consumer; Algorithm-5 transition-and-invariant-to-summary producer, D.4 `2/T` probability, and generated trajectory remain open |
-| `DELAYED-BOBW-CAUSAL-ACTION-MEASURE` | line-15 vector induces a probability measure and a causal measure-valued decision rule | local `Exp3.FiniteActionDistribution`, `finiteActionMeasure`; causal observation equivalence | package explicit EAP premises, reuse the finite-action law, and transport equality through `ActionTimeView` | compiled one-round action law; measurable history kernel and recursive generated trajectory open |
+
+<!-- 1477 characters omitted from the middle of this snapshot. -->
 
 ## Active leaf contract
 
-- Next target: the source D.4 simultaneous count probability producer on a
-  measurable generated Delayed-SAPO action trajectory.
-- Compiled deterministic input: `RecursiveProcessedState.lean` now produces
-  the exact processed-prefix certificate from a source-shaped trace summary and
-  a `D4CountClause`; it neither generates that summary from Algorithm 5 nor
-  proves the clause probabilistically.
-- Random process: for each arm, the sampled action indicator minus its
-  source-history conditional probability, accumulated over the relevant
-  processed-source family.
-- Required filtration and measurability: the pre-action history must generate
-  each line-15 allocation; the sampled action is the successor coordinate;
-  processed-prefix selection must be justified by a predictable or anytime
-  event rather than an arbitrary data-dependent subsequence.
-- Intended route: first construct a measurable recursive action kernel and
-  prove its conditional finite-action law; then prove an adaptive Bernoulli
-  count inequality strong enough for the exact lower/upper constants; finally
-  justify the union over the source's random sequence family.
-- Failure policy: do not assume a count certificate, conditional-mean identity,
-  adaptedness, width comparison, or gap conclusion inside the probability
-  producer.  Do not identify processing order with source-round order.
+- Compiled target: `DELAYED-BOBW-ORDERED-NO-SWITCH-PROCESS-ONE`, the deterministic
+  no-switch transition from one valid member of `B(t) \ S` to the line-7
+  trace summary and then the line-8 active-set successor.
+- Local APIs/imports: `Processing.lean` for `newlyObservedBefore` and strict
+  availability; `Elimination.lean` for exact line-7/8 sets;
+  `RecursiveProcessedState.lean` for the summary adapter; Mathlib list
+  nodup/get/concat lemmas and `Finset.sdiff_subset`.
+- Intended proof route: represent the paper sequence `S` as a duplicate-free
+  `List Nat`; append an arbitrary newly observed source before building the
+  line-7 summary; derive source-index injectivity from list nodup, strict
+  availability from membership in `observedBefore`, and current-to-source
+  containment from `currentActive <= A(t-1)` plus source-trace antitonicity;
+  set the successor active set to the summary snapshot's `remainingActive` and
+  use set-difference monotonicity to preserve the round-start invariant.
+- Hidden regularity: `0 < t` for the `t-1` boundary, duplicate-free processed
+  order, strict source availability, and an antitone line-15 source-round
+  active trace.  The numerical confidence surfaces at the line-7 snapshot are
+  explicit structural inputs until their recursive update is formalized.
+- Failure policy: do not sort simultaneous arrivals, append after elimination,
+  replace strict `<` by `<=`, identify the intra-round active set with final
+  line-15 `A(t)`, or claim that BSC succeeds.  This leaf must not introduce a
+  probability law, D.4 premise/proof, ordered multi-snapshot gap theorem, or
+  regret endpoint.
+- Next boundary, not attempted here: construct the numerical BSC/EAP update and
+  the round-to-round generated state that discharge the structural inputs of
+  this leaf.  The measurable trajectory and D.4 probability producer remain
+  independent later obligations.
 
 ## Paper-level blockers
 
@@ -45765,6 +45821,126 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/DelayedFeedback/MultiRegimeContract.lean",
     "line": 88,
     "statement": "theorem adversarialClaim_iff_shared_fields {Algorithm : Type uAlgorithm} {Initialization : Type uInitialization} {Tuning : Type uTuning} {Information : Type uInformation} {Comparator : Type uComparator} {StochasticEnvironment : Type uStochasticEnvironment} {AdversarialEnvironment : Type uAdversarialEnvironment} (contract : SameAlgorithmMultiRegimeContract Algorithm Initialization Tuning Information Comparator StochasticEnvironment AdversarialEnvironment) (environment : AdversarialEnvironment) : adversarialClaim contract environment \u2194 contract.adversarialEndpoint contract.algorithm contract.initialization contract.tuning contract.information contract.comparator environment"
+  },
+  {
+    "kind": "structure",
+    "name": "DelayedSAPOStructuralRoundState",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOStructuralRoundState",
+    "file": "BanditRLProof/DelayedFeedback/OrderedProcessingTransition.lean",
+    "line": 33,
+    "statement": "structure DelayedSAPOStructuralRoundState (K : Nat) where"
+  },
+  {
+    "kind": "theorem",
+    "name": "source_le_roundStart",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOStructuralRoundState.source_le_roundStart",
+    "file": "BanditRLProof/DelayedFeedback/OrderedProcessingTransition.lean",
+    "line": 53,
+    "statement": "theorem source_le_roundStart {K : Nat} (state : DelayedSAPOStructuralRoundState K) {s : Nat} (hs : s \u2208 state.processedOrder) : s <= state.currentActionRound - 1"
+  },
+  {
+    "kind": "theorem",
+    "name": "currentActive_subset_activeAtSourceRound",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOStructuralRoundState.currentActive_subset_activeAtSourceRound",
+    "file": "BanditRLProof/DelayedFeedback/OrderedProcessingTransition.lean",
+    "line": 62,
+    "statement": "theorem currentActive_subset_activeAtSourceRound {K : Nat} (state : DelayedSAPOStructuralRoundState K) {s : Nat} (hs : s \u2208 state.processedOrder) : state.currentActive <= state.activeAtSourceRound s"
+  },
+  {
+    "kind": "structure",
+    "name": "DelayedSAPONoSwitchProcessOne",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchProcessOne",
+    "file": "BanditRLProof/DelayedFeedback/OrderedProcessingTransition.lean",
+    "line": 75,
+    "statement": "structure DelayedSAPONoSwitchProcessOne {K : Nat} (state : DelayedSAPOStructuralRoundState K) where"
+  },
+  {
+    "kind": "def",
+    "name": "extendedOrder",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchProcessOne.extendedOrder",
+    "file": "BanditRLProof/DelayedFeedback/OrderedProcessingTransition.lean",
+    "line": 89,
+    "statement": "def extendedOrder {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) : List Nat"
+  },
+  {
+    "kind": "theorem",
+    "name": "sourceRound_not_mem",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchProcessOne.sourceRound_not_mem",
+    "file": "BanditRLProof/DelayedFeedback/OrderedProcessingTransition.lean",
+    "line": 94,
+    "statement": "theorem sourceRound_not_mem {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) : step.sourceRound \u2209 state.processedOrder"
+  },
+  {
+    "kind": "theorem",
+    "name": "extendedOrder_nodup",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchProcessOne.extendedOrder_nodup",
+    "file": "BanditRLProof/DelayedFeedback/OrderedProcessingTransition.lean",
+    "line": 102,
+    "statement": "theorem extendedOrder_nodup {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) : step.extendedOrder.Nodup"
+  },
+  {
+    "kind": "theorem",
+    "name": "extendedOrder_available",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchProcessOne.extendedOrder_available",
+    "file": "BanditRLProof/DelayedFeedback/OrderedProcessingTransition.lean",
+    "line": 111,
+    "statement": "theorem extendedOrder_available {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) {s : Nat} (hs : s \u2208 step.extendedOrder) : s + state.delayAt s < state.currentActionRound"
+  },
+  {
+    "kind": "theorem",
+    "name": "extendedSource_le_roundStart",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchProcessOne.extendedSource_le_roundStart",
+    "file": "BanditRLProof/DelayedFeedback/OrderedProcessingTransition.lean",
+    "line": 124,
+    "statement": "theorem extendedSource_le_roundStart {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) {s : Nat} (hs : s \u2208 step.extendedOrder) : s <= state.currentActionRound - 1"
+  },
+  {
+    "kind": "theorem",
+    "name": "currentActive_subset_extendedSourceActive",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchProcessOne.currentActive_subset_extendedSourceActive",
+    "file": "BanditRLProof/DelayedFeedback/OrderedProcessingTransition.lean",
+    "line": 134,
+    "statement": "theorem currentActive_subset_extendedSourceActive {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) {s : Nat} (hs : s \u2208 step.extendedOrder) : state.currentActive <= state.activeAtSourceRound s"
+  },
+  {
+    "kind": "def",
+    "name": "toPreEliminationSummary",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchProcessOne.toPreEliminationSummary",
+    "file": "BanditRLProof/DelayedFeedback/OrderedProcessingTransition.lean",
+    "line": 145,
+    "statement": "def toPreEliminationSummary {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) : DelayedSAPOProcessedTraceSummary K where"
+  },
+  {
+    "kind": "theorem",
+    "name": "line8RemainingActive_subset_currentActive",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchProcessOne.line8RemainingActive_subset_currentActive",
+    "file": "BanditRLProof/DelayedFeedback/OrderedProcessingTransition.lean",
+    "line": 173,
+    "statement": "theorem line8RemainingActive_subset_currentActive {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) : (step.toPreEliminationSummary.toConfidenceSnapshot horizon).remainingActive <= state.currentActive"
+  },
+  {
+    "kind": "def",
+    "name": "afterLine8",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchProcessOne.afterLine8",
+    "file": "BanditRLProof/DelayedFeedback/OrderedProcessingTransition.lean",
+    "line": 189,
+    "statement": "noncomputable def afterLine8 {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) : DelayedSAPOStructuralRoundState K where"
+  },
+  {
+    "kind": "theorem",
+    "name": "afterLine8_currentActive_subset_before",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchProcessOne.afterLine8_currentActive_subset_before",
+    "file": "BanditRLProof/DelayedFeedback/OrderedProcessingTransition.lean",
+    "line": 212,
+    "statement": "theorem afterLine8_currentActive_subset_before {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) : (step.afterLine8 horizon).currentActive <= state.currentActive"
+  },
+  {
+    "kind": "theorem",
+    "name": "afterLine8_preserves_roundStart",
+    "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchProcessOne.afterLine8_preserves_roundStart",
+    "file": "BanditRLProof/DelayedFeedback/OrderedProcessingTransition.lean",
+    "line": 220,
+    "statement": "theorem afterLine8_preserves_roundStart {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) : (step.afterLine8 horizon).currentActive <= state.activeAtSourceRound (state.currentActionRound - 1)"
   },
   {
     "kind": "structure",

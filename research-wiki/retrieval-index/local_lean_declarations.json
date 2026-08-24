@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-24T19:41:02+00:00",
+  "generated": "2026-08-24T21:26:09+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -15696,6 +15696,126 @@
       "file": "BanditRLProof/DelayedFeedback/MultiRegimeContract.lean",
       "line": 88,
       "statement": "theorem adversarialClaim_iff_shared_fields {Algorithm : Type uAlgorithm} {Initialization : Type uInitialization} {Tuning : Type uTuning} {Information : Type uInformation} {Comparator : Type uComparator} {StochasticEnvironment : Type uStochasticEnvironment} {AdversarialEnvironment : Type uAdversarialEnvironment} (contract : SameAlgorithmMultiRegimeContract Algorithm Initialization Tuning Information Comparator StochasticEnvironment AdversarialEnvironment) (environment : AdversarialEnvironment) : adversarialClaim contract environment \u2194 contract.adversarialEndpoint contract.algorithm contract.initialization contract.tuning contract.information contract.comparator environment"
+    },
+    {
+      "kind": "structure",
+      "name": "DelayedSAPOStructuralRoundState",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOStructuralRoundState",
+      "file": "BanditRLProof/DelayedFeedback/OrderedProcessingTransition.lean",
+      "line": 33,
+      "statement": "structure DelayedSAPOStructuralRoundState (K : Nat) where"
+    },
+    {
+      "kind": "theorem",
+      "name": "source_le_roundStart",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOStructuralRoundState.source_le_roundStart",
+      "file": "BanditRLProof/DelayedFeedback/OrderedProcessingTransition.lean",
+      "line": 53,
+      "statement": "theorem source_le_roundStart {K : Nat} (state : DelayedSAPOStructuralRoundState K) {s : Nat} (hs : s \u2208 state.processedOrder) : s <= state.currentActionRound - 1"
+    },
+    {
+      "kind": "theorem",
+      "name": "currentActive_subset_activeAtSourceRound",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOStructuralRoundState.currentActive_subset_activeAtSourceRound",
+      "file": "BanditRLProof/DelayedFeedback/OrderedProcessingTransition.lean",
+      "line": 62,
+      "statement": "theorem currentActive_subset_activeAtSourceRound {K : Nat} (state : DelayedSAPOStructuralRoundState K) {s : Nat} (hs : s \u2208 state.processedOrder) : state.currentActive <= state.activeAtSourceRound s"
+    },
+    {
+      "kind": "structure",
+      "name": "DelayedSAPONoSwitchProcessOne",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchProcessOne",
+      "file": "BanditRLProof/DelayedFeedback/OrderedProcessingTransition.lean",
+      "line": 75,
+      "statement": "structure DelayedSAPONoSwitchProcessOne {K : Nat} (state : DelayedSAPOStructuralRoundState K) where"
+    },
+    {
+      "kind": "def",
+      "name": "extendedOrder",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchProcessOne.extendedOrder",
+      "file": "BanditRLProof/DelayedFeedback/OrderedProcessingTransition.lean",
+      "line": 89,
+      "statement": "def extendedOrder {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) : List Nat"
+    },
+    {
+      "kind": "theorem",
+      "name": "sourceRound_not_mem",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchProcessOne.sourceRound_not_mem",
+      "file": "BanditRLProof/DelayedFeedback/OrderedProcessingTransition.lean",
+      "line": 94,
+      "statement": "theorem sourceRound_not_mem {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) : step.sourceRound \u2209 state.processedOrder"
+    },
+    {
+      "kind": "theorem",
+      "name": "extendedOrder_nodup",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchProcessOne.extendedOrder_nodup",
+      "file": "BanditRLProof/DelayedFeedback/OrderedProcessingTransition.lean",
+      "line": 102,
+      "statement": "theorem extendedOrder_nodup {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) : step.extendedOrder.Nodup"
+    },
+    {
+      "kind": "theorem",
+      "name": "extendedOrder_available",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchProcessOne.extendedOrder_available",
+      "file": "BanditRLProof/DelayedFeedback/OrderedProcessingTransition.lean",
+      "line": 111,
+      "statement": "theorem extendedOrder_available {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) {s : Nat} (hs : s \u2208 step.extendedOrder) : s + state.delayAt s < state.currentActionRound"
+    },
+    {
+      "kind": "theorem",
+      "name": "extendedSource_le_roundStart",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchProcessOne.extendedSource_le_roundStart",
+      "file": "BanditRLProof/DelayedFeedback/OrderedProcessingTransition.lean",
+      "line": 124,
+      "statement": "theorem extendedSource_le_roundStart {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) {s : Nat} (hs : s \u2208 step.extendedOrder) : s <= state.currentActionRound - 1"
+    },
+    {
+      "kind": "theorem",
+      "name": "currentActive_subset_extendedSourceActive",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchProcessOne.currentActive_subset_extendedSourceActive",
+      "file": "BanditRLProof/DelayedFeedback/OrderedProcessingTransition.lean",
+      "line": 134,
+      "statement": "theorem currentActive_subset_extendedSourceActive {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) {s : Nat} (hs : s \u2208 step.extendedOrder) : state.currentActive <= state.activeAtSourceRound s"
+    },
+    {
+      "kind": "def",
+      "name": "toPreEliminationSummary",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchProcessOne.toPreEliminationSummary",
+      "file": "BanditRLProof/DelayedFeedback/OrderedProcessingTransition.lean",
+      "line": 145,
+      "statement": "def toPreEliminationSummary {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) : DelayedSAPOProcessedTraceSummary K where"
+    },
+    {
+      "kind": "theorem",
+      "name": "line8RemainingActive_subset_currentActive",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchProcessOne.line8RemainingActive_subset_currentActive",
+      "file": "BanditRLProof/DelayedFeedback/OrderedProcessingTransition.lean",
+      "line": 173,
+      "statement": "theorem line8RemainingActive_subset_currentActive {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) : (step.toPreEliminationSummary.toConfidenceSnapshot horizon).remainingActive <= state.currentActive"
+    },
+    {
+      "kind": "def",
+      "name": "afterLine8",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchProcessOne.afterLine8",
+      "file": "BanditRLProof/DelayedFeedback/OrderedProcessingTransition.lean",
+      "line": 189,
+      "statement": "noncomputable def afterLine8 {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) : DelayedSAPOStructuralRoundState K where"
+    },
+    {
+      "kind": "theorem",
+      "name": "afterLine8_currentActive_subset_before",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchProcessOne.afterLine8_currentActive_subset_before",
+      "file": "BanditRLProof/DelayedFeedback/OrderedProcessingTransition.lean",
+      "line": 212,
+      "statement": "theorem afterLine8_currentActive_subset_before {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) : (step.afterLine8 horizon).currentActive <= state.currentActive"
+    },
+    {
+      "kind": "theorem",
+      "name": "afterLine8_preserves_roundStart",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchProcessOne.afterLine8_preserves_roundStart",
+      "file": "BanditRLProof/DelayedFeedback/OrderedProcessingTransition.lean",
+      "line": 220,
+      "statement": "theorem afterLine8_preserves_roundStart {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) : (step.afterLine8 horizon).currentActive <= state.activeAtSourceRound (state.currentActionRound - 1)"
     },
     {
       "kind": "structure",

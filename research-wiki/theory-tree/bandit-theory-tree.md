@@ -324,27 +324,31 @@ four-edge consumer remains as a decomposition of the printed route.  A
   nonchronological source indices; reads each action/allocation at source time;
   keeps the intra-round active set separate from the antitone source-round
   trace; records their containment as an explicit invariant; and consumes the
-  two D.4 count inequalities.  Producing this summary and its invariants from
-  Algorithm-5 transitions is a separate open boundary.
+  two D.4 count inequalities.  A 15-declaration ordered no-switch transition
+  now appends an arbitrary member of `B(t) \ S`, produces this structural
+  summary, applies exact line-8 active-set removal, and preserves the
+  round-start invariant.  Numerical BSC/EAP state generation and measurable
+  round-to-round recursion remain separate open boundaries.
 
 This remains feasibility evidence only.  The complete Definition-D.1 event,
 the D.2--D.7 component concentration/counting producers, and the proved
 full-event-to-elimination projection, EAP/BSC state preservation, probability banks,
-simultaneous-arrival order, a measurable recursive delayed-history kernel,
+  a deterministic rule selecting among simultaneous arrivals, a measurable recursive delayed-history kernel,
 regime laws, external adversarial algorithm, and the same-algorithm Theorems
 4.1/5.1 coupling remain planned.  The compiled Lemma-D.9 layer is an explicit
 deterministic implication under recorded certificate fields, not the full
 probabilistic source lemma.  No external paper endpoint is classified as
-compiled or audited.  The flagship currently contains 133 named source-audit
+  compiled or audited.  The flagship currently contains 148 named source-audit
 declarations, including the original 19 diagnostic/conditional/repair declarations
-and the processed-prefix count-to-width plus trace-summary adapter
+  and the processed-prefix count-to-width, trace-summary adapter, and ordered
+  no-switch structural transition
 producers; the generic multi-regime
 interface is counted separately.  These declarations identify and
 conditionally bypass the displayed reverse transport, prove the exact
 source-shaped small-count scalar implication, and compile a source-ledger
 large/small-count producer at one snapshot.  They neither
 verify nor refute source Lemmas D.10/D.12, main-text Lemma 4.2, or Theorem 4.1:
-the measurable generated-trajectory producer, D.4 probability proof, ordered
+  the numerical/generated-trajectory producer, D.4 probability proof, ordered
 elimination trajectory, and terminal regret chain remain open.
 
 ## Prospective External Audit: Stochastic Gradient Bandits

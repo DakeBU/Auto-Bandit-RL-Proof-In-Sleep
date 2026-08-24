@@ -89,6 +89,24 @@ EXTERNAL_COMPARATOR_PLAN = (
 EXTERNAL_COMPARATOR_SEAL = (
     "evaluation/target-drift-v2/external-comparator-plan.seal.json"
 )
+LEANFLOW_ADAPTER_CONTRACT = (
+    "evaluation/target-drift-v2/leanflow-adapter-contract.json"
+)
+LEANFLOW_EXTERNAL_SCHEDULE = (
+    "evaluation/target-drift-v2/leanflow-external-schedule.json"
+)
+LEANFLOW_FIXTURE_REQUEST = (
+    "evaluation/target-drift-v2/leanflow-excluded-fixture-request.json"
+)
+LEANFLOW_LEDGER_CONTRACT = (
+    "evaluation/target-drift-v2/leanflow-external-completion-ledger-contract.json"
+)
+LEANFLOW_PLUMBING_SEAL = (
+    "evaluation/target-drift-v2/leanflow-external-plumbing.seal.json"
+)
+LEANFLOW_FAKE_ADAPTER = "tools/fake_leanflow_target_drift_adapter.py"
+LEANFLOW_SCHEDULE_BUILDER = "tools/build_leanflow_target_drift_schedule.py"
+LEANFLOW_LEDGER_BUILDER = "tools/build_leanflow_target_drift_completion_ledger.py"
 ANONYMOUS_CANDIDATE_RECORD = (
     "evaluation/target-drift-v2/checker-image-candidate-record.json"
 )
@@ -116,9 +134,21 @@ DELAYED_IMPLEMENTATION_IDS = (
 DELAYED_DIAGNOSTIC_ID = "DELAYED-SAPO-D10-D12-GAP-ORDERING-AUDIT"
 DELAYED_PROCESSED_PREFIX_ID = "DELAYED-SAPO-D1-ACTIVE-COUNT-WIDTH-PRODUCER"
 DELAYED_TRACE_SUMMARY_ID = "DELAYED-SAPO-PROCESSED-TRACE-SUMMARY-ADAPTER"
+DELAYED_ORDERED_TRANSITION_ID = "DELAYED-SAPO-ORDERED-NO-SWITCH-PROCESS-ONE"
 DELAYED_CENTRAL_ENDPOINT_ID = "NEURIPS-2025-DELAYED-BOBW-CENTRAL-ENDPOINTS"
 SUCCINCT_AUDIT_ID = "NEURIPS-2025-SUCCINCT-LOWER-BOUND-GEOMETRY-AUDIT"
 SGB_AUDIT_ID = "NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT-MECHANISM-AUDIT"
+CH15_SCOPED_ENDPOINT_ID = "TEXTBOOK-PART-IV-CH15-GAUSSIAN-MINIMAX-LOWER-BOUND"
+THEOREM_AUDIT_COMPARISON_SOURCE = (
+    "research-wiki/papers/theorem-audit-comparison.json"
+)
+THEOREM_AUDIT_COMPARISON_DESTINATION = "evidence/theorem-audit-comparison.json"
+THEOREM_AUDIT_ROW_IDS = (
+    "textbook-chapter-15-scoped-positive-control",
+    "delayed-bobw-source-frozen-audit",
+    "succinct-lower-bound-source-frozen-audit",
+    "stochastic-gradient-bandit-source-frozen-audit",
+)
 SGB_FINITE_ALGEBRA_FILE = "BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean"
 SGB_GENERATED_HISTORY_FILE = (
     "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean"
@@ -188,7 +218,7 @@ SOURCE_RESULT_IDS = (
     "TEXTBOOK-PART-IV-CH14-INFORMATION-THEORY-LEAN-SPINE",
     "TEXTBOOK-PART-IV-CH15-GAUSSIAN-KL-DEPENDENCY-SLICE",
     "TEXTBOOK-PART-IV-CH15-SAME-POLICY-HISTORY-KL-DECOMPOSITION",
-    "TEXTBOOK-PART-IV-CH15-GAUSSIAN-MINIMAX-LOWER-BOUND",
+    CH15_SCOPED_ENDPOINT_ID,
     "TEXTBOOK-PART-IV-CH16-CONSISTENCY-DINF-DEPENDENCY-SLICE",
     "TEXTBOOK-PART-IV-CH16-EVENT-REGRET-PRODUCERS",
     "TEXTBOOK-PART-IV-CH16-SOURCE-TERMINALS",
@@ -198,6 +228,7 @@ SOURCE_RESULT_IDS = (
     DELAYED_DIAGNOSTIC_ID,
     DELAYED_PROCESSED_PREFIX_ID,
     DELAYED_TRACE_SUMMARY_ID,
+    DELAYED_ORDERED_TRANSITION_ID,
     DELAYED_CENTRAL_ENDPOINT_ID,
     SUCCINCT_AUDIT_ID,
     SGB_AUDIT_ID,
@@ -245,6 +276,10 @@ TARGET_DRIFT_TOOLS = (
     "tools/test_target_drift_execution.py",
     "tools/test_target_drift_runtime.py",
     "tools/test_target_drift_smoke.py",
+    LEANFLOW_SCHEDULE_BUILDER,
+    LEANFLOW_LEDGER_BUILDER,
+    LEANFLOW_FAKE_ADAPTER,
+    "tools/test_target_drift_external_comparator.py",
     "tools/validate_target_drift_suite.py",
     "tools/validate_target_drift_suite_v2.py",
     "tools/validate_target_drift_external_comparator.py",
@@ -283,6 +318,11 @@ TARGET_DRIFT_PROTOCOL_FILES = (
     "evaluation/target-drift-v2/execution-template.json",
     "evaluation/target-drift-v2/external-comparator-plan.json",
     "evaluation/target-drift-v2/external-comparator-plan.seal.json",
+    LEANFLOW_ADAPTER_CONTRACT,
+    LEANFLOW_EXTERNAL_SCHEDULE,
+    LEANFLOW_FIXTURE_REQUEST,
+    LEANFLOW_LEDGER_CONTRACT,
+    LEANFLOW_PLUMBING_SEAL,
     "evaluation/target-drift-v2/grader-prompt.md",
     "evaluation/target-drift-v2/grading-rubric.json",
     "evaluation/target-drift-v2/missing-run-policy.json",
@@ -317,9 +357,15 @@ EXPLICIT_COPIES = {
         "evidence/delayed-feedback-audit.md",
     "proof-obligations/PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY.md":
         "evidence/delayed-feedback-proof-obligations.md",
+    "proof-obligations/PAPER-AUDIT-NEURIPS-2025-SUCCINCT-LOWER-BOUNDS.md":
+        "evidence/succinct-lower-bound-proof-obligations.md",
+    "proof-obligations/PAPER-AUDIT-NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT.md":
+        "evidence/stochastic-gradient-bandit-proof-obligations.md",
 }
 
 EVIDENCE_JSON = {
+    THEOREM_AUDIT_COMPARISON_SOURCE:
+        THEOREM_AUDIT_COMPARISON_DESTINATION,
     "research-wiki/papers/prospective-audit-2025-freeze.json":
         "evidence/source-freeze.json",
     "research-wiki/proof-graph/benchmark_measurements.json":
@@ -1082,11 +1128,21 @@ def anonymize_evaluation_bytes(rel, data, anonymous_reference):
 
 
 def rebind_anonymous_external_comparator(payload):
-    """Bind the packaged plan/seal to the anonymized primary protocol bytes."""
+    """Bind comparator plans and result-free plumbing to packaged bytes."""
     required = (
         TARGET_DRIFT_V2_PROTOCOL,
         EXTERNAL_COMPARATOR_PLAN,
         EXTERNAL_COMPARATOR_SEAL,
+        LEANFLOW_ADAPTER_CONTRACT,
+        LEANFLOW_EXTERNAL_SCHEDULE,
+        LEANFLOW_FIXTURE_REQUEST,
+        LEANFLOW_LEDGER_CONTRACT,
+        LEANFLOW_PLUMBING_SEAL,
+        LEANFLOW_FAKE_ADAPTER,
+        LEANFLOW_SCHEDULE_BUILDER,
+        LEANFLOW_LEDGER_BUILDER,
+        "evaluation/target-drift-v1/challenges.json",
+        "evaluation/target-drift-v2/paired-requirements.json",
     )
     missing = [rel for rel in required if rel not in payload]
     if missing:
@@ -1130,6 +1186,131 @@ def rebind_anonymous_external_comparator(payload):
     require_anonymous_bytes(EXTERNAL_COMPARATOR_SEAL, seal_data)
     payload[EXTERNAL_COMPARATOR_SEAL] = seal_data
 
+    source_schedule_sha = sha256_file(REPO_ROOT / LEANFLOW_EXTERNAL_SCHEDULE)
+    source_challenges_sha = sha256_file(
+        REPO_ROOT / "evaluation/target-drift-v1/challenges.json"
+    )
+    source_paired_sha = sha256_file(
+        REPO_ROOT / "evaluation/target-drift-v2/paired-requirements.json"
+    )
+    schedule = json.loads(payload[LEANFLOW_EXTERNAL_SCHEDULE].decode("utf-8"))
+    if (
+        schedule.get("external_comparator_plan_sha256") != source_plan_sha
+        or schedule.get("challenge_manifest_sha256") != source_challenges_sha
+        or schedule.get("paired_requirements_sha256") != source_paired_sha
+        or schedule.get("outcomes_observed") is not False
+        or schedule.get("provider_execution_enabled") is not False
+        or schedule.get("planned_run_count") != 30
+    ):
+        raise ValueError("source LeanFlow schedule binding changed")
+    schedule["external_comparator_plan_sha256"] = sha256_bytes(plan_data)
+    schedule["challenge_manifest_sha256"] = sha256_bytes(
+        payload["evaluation/target-drift-v1/challenges.json"]
+    )
+    schedule["paired_requirements_sha256"] = sha256_bytes(
+        payload["evaluation/target-drift-v2/paired-requirements.json"]
+    )
+    schedule_data = canonical_json(schedule)
+    require_anonymous_bytes(LEANFLOW_EXTERNAL_SCHEDULE, schedule_data)
+    payload[LEANFLOW_EXTERNAL_SCHEDULE] = schedule_data
+
+    source_contract_sha = sha256_file(REPO_ROOT / LEANFLOW_ADAPTER_CONTRACT)
+    source_fixture_adapter_sha = sha256_file(REPO_ROOT / LEANFLOW_FAKE_ADAPTER)
+    contract = json.loads(payload[LEANFLOW_ADAPTER_CONTRACT].decode("utf-8"))
+    if (
+        contract.get("external_comparator_plan_sha256") != source_plan_sha
+        or contract.get("schedule_sha256") != source_schedule_sha
+        or contract.get("fixture_entrypoint_sha256") != source_fixture_adapter_sha
+        or contract.get("status") != "provider_disabled_result_free_fixture_only"
+    ):
+        raise ValueError("source LeanFlow adapter-contract binding changed")
+    contract["external_comparator_plan_sha256"] = sha256_bytes(plan_data)
+    contract["schedule_sha256"] = sha256_bytes(schedule_data)
+    contract["fixture_entrypoint_sha256"] = sha256_bytes(
+        payload[LEANFLOW_FAKE_ADAPTER]
+    )
+    contract_data = canonical_json(contract)
+    require_anonymous_bytes(LEANFLOW_ADAPTER_CONTRACT, contract_data)
+    payload[LEANFLOW_ADAPTER_CONTRACT] = contract_data
+
+    source_fixture_request_sha = sha256_file(REPO_ROOT / LEANFLOW_FIXTURE_REQUEST)
+    fixture_request = json.loads(payload[LEANFLOW_FIXTURE_REQUEST].decode("utf-8"))
+    if (
+        fixture_request.get("schedule_sha256") != source_schedule_sha
+        or fixture_request.get("adapter_contract_sha256") != source_contract_sha
+        or fixture_request.get("provider_mode") != "disabled"
+        or fixture_request.get("model_invocations_allowed") != 0
+        or fixture_request.get("result_eligible") is not False
+    ):
+        raise ValueError("source LeanFlow fixture-request binding changed")
+    packaged_schedule_sha = sha256_bytes(schedule_data)
+    fixture_request["schedule_sha256"] = packaged_schedule_sha
+    fixture_request["adapter_contract_sha256"] = sha256_bytes(contract_data)
+    fixture_request["opaque_run_id"] = sha256_bytes((
+        "leanflow-excluded-fixture:{}:{}".format(
+            packaged_schedule_sha, fixture_request["semantic_run_id"]
+        )
+    ).encode("utf-8"))
+    fixture_request_data = canonical_json(fixture_request)
+    require_anonymous_bytes(LEANFLOW_FIXTURE_REQUEST, fixture_request_data)
+    payload[LEANFLOW_FIXTURE_REQUEST] = fixture_request_data
+
+    source_ledger_contract_sha = sha256_file(REPO_ROOT / LEANFLOW_LEDGER_CONTRACT)
+    source_ledger_builder_sha = sha256_file(REPO_ROOT / LEANFLOW_LEDGER_BUILDER)
+    ledger_contract = json.loads(payload[LEANFLOW_LEDGER_CONTRACT].decode("utf-8"))
+    if (
+        ledger_contract.get("schedule_sha256") != source_schedule_sha
+        or ledger_contract.get("builder_sha256") != source_ledger_builder_sha
+        or ledger_contract.get("status") != "schema_frozen_results_absent"
+        or ledger_contract.get("results_must_be_absent") is not True
+    ):
+        raise ValueError("source LeanFlow completion-ledger binding changed")
+    ledger_contract["schedule_sha256"] = packaged_schedule_sha
+    ledger_contract["builder_sha256"] = sha256_bytes(payload[LEANFLOW_LEDGER_BUILDER])
+    ledger_contract_data = canonical_json(ledger_contract)
+    require_anonymous_bytes(LEANFLOW_LEDGER_CONTRACT, ledger_contract_data)
+    payload[LEANFLOW_LEDGER_CONTRACT] = ledger_contract_data
+
+    source_plumbing_seal = json.loads(
+        canonical_text_bytes(
+            LEANFLOW_PLUMBING_SEAL, read_regular(LEANFLOW_PLUMBING_SEAL)
+        ).decode("utf-8")
+    )
+    expected_source_bindings = {
+        "external_comparator_plan_sha256": source_plan_sha,
+        "adapter_contract_sha256": source_contract_sha,
+        "schedule_sha256": source_schedule_sha,
+        "fixture_request_sha256": source_fixture_request_sha,
+        "completion_ledger_contract_sha256": source_ledger_contract_sha,
+        "fixture_entrypoint_sha256": source_fixture_adapter_sha,
+        "schedule_builder_sha256": sha256_file(REPO_ROOT / LEANFLOW_SCHEDULE_BUILDER),
+        "completion_ledger_builder_sha256": source_ledger_builder_sha,
+    }
+    if (
+        any(source_plumbing_seal.get(key) != value
+            for key, value in expected_source_bindings.items())
+        or source_plumbing_seal.get("provider_calls_observed_at_seal") is not False
+        or source_plumbing_seal.get("formalization_outcomes_observed_at_seal") is not False
+        or source_plumbing_seal.get("results_and_completion_ledger_must_be_absent") is not True
+    ):
+        raise ValueError("source LeanFlow plumbing seal binding changed")
+    plumbing_seal = json.loads(payload[LEANFLOW_PLUMBING_SEAL].decode("utf-8"))
+    plumbing_seal.update({
+        "external_comparator_plan_sha256": sha256_bytes(plan_data),
+        "adapter_contract_sha256": sha256_bytes(contract_data),
+        "schedule_sha256": packaged_schedule_sha,
+        "fixture_request_sha256": sha256_bytes(fixture_request_data),
+        "completion_ledger_contract_sha256": sha256_bytes(ledger_contract_data),
+        "fixture_entrypoint_sha256": sha256_bytes(payload[LEANFLOW_FAKE_ADAPTER]),
+        "schedule_builder_sha256": sha256_bytes(payload[LEANFLOW_SCHEDULE_BUILDER]),
+        "completion_ledger_builder_sha256": sha256_bytes(
+            payload[LEANFLOW_LEDGER_BUILDER]
+        ),
+    })
+    plumbing_seal_data = canonical_json(plumbing_seal)
+    require_anonymous_bytes(LEANFLOW_PLUMBING_SEAL, plumbing_seal_data)
+    payload[LEANFLOW_PLUMBING_SEAL] = plumbing_seal_data
+
 
 def selected_source_records():
     raw = load_json(REPO_ROOT / "website" / "content" / "results.json")
@@ -1161,6 +1342,7 @@ def validate_delayed_counts(records):
     diagnostic = records[DELAYED_DIAGNOSTIC_ID]
     processed_prefix = records[DELAYED_PROCESSED_PREFIX_ID]
     trace_summary = records[DELAYED_TRACE_SUMMARY_ID]
+    ordered_transition = records[DELAYED_ORDERED_TRANSITION_ID]
     central_endpoint = records[DELAYED_CENTRAL_ENDPOINT_ID]
     if implementation_count != 89:
         raise ValueError("delayed implementation count drifted to {}".format(implementation_count))
@@ -1175,6 +1357,13 @@ def validate_delayed_counts(records):
     if trace_summary["status"] != "compiled" or len(trace_summary["declarations"]) != 9:
         raise ValueError(
             "processed-trace-summary adapter must remain compiled with 9 declarations"
+        )
+    if (
+        ordered_transition["status"] != "compiled"
+        or len(ordered_transition["declarations"]) != 15
+    ):
+        raise ValueError(
+            "ordered no-switch transition must remain compiled with 15 declarations"
         )
     if central_endpoint["status"] != "partial":
         raise ValueError("delayed central endpoint must remain partial")
@@ -1225,6 +1414,137 @@ def validate_sgb_count(records, index):
     }
 
 
+def validate_theorem_audit_comparison(records, index, comparison=None,
+                                      source_freeze=None):
+    if comparison is None:
+        comparison = load_json(REPO_ROOT / THEOREM_AUDIT_COMPARISON_SOURCE)
+    if source_freeze is None:
+        source_freeze = load_json(
+            REPO_ROOT / "research-wiki" / "papers" /
+            "prospective-audit-2025-freeze.json"
+        )
+    rows = comparison.get("rows")
+    if comparison.get("schema_version") != 1 or not isinstance(rows, list):
+        raise ValueError("theorem-audit comparison schema is invalid")
+    if tuple(row.get("id") for row in rows) != THEOREM_AUDIT_ROW_IDS:
+        raise ValueError("theorem-audit comparison row inventory/order drifted")
+    by_id = {row["id"]: row for row in rows}
+    if len(by_id) != len(rows):
+        raise ValueError("theorem-audit comparison row IDs must be unique")
+
+    freeze_cards = {
+        row.get("card_id") for row in source_freeze.get("papers", [])
+    }
+    expected_freeze_cards = {
+        "PPR-SCHLISSELBERG-LANCEWICKI-AUER-MANSOUR-2025-DELAYED-BOBW",
+        "PPR-ZENG-HONORIO-2025-SUCCINCT-LOWER-BOUNDS",
+        "PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB",
+    }
+    if freeze_cards != expected_freeze_cards:
+        raise ValueError("theorem-audit comparison source-freeze inventory drifted")
+
+    delayed_ids = list(DELAYED_IMPLEMENTATION_IDS) + [
+        DELAYED_DIAGNOSTIC_ID,
+        DELAYED_PROCESSED_PREFIX_ID,
+        DELAYED_TRACE_SUMMARY_ID,
+        DELAYED_ORDERED_TRANSITION_ID,
+    ]
+    specs = {
+        "textbook-chapter-15-scoped-positive-control": {
+            "role": "scoped_positive_control",
+            "evidence_record_ids": [CH15_SCOPED_ENDPOINT_ID],
+            "central_endpoint_record_id": CH15_SCOPED_ENDPOINT_ID,
+            "promotion_status": "compiled",
+            "compiled_declaration_count": 12,
+            "scoped_endpoint_verified": True,
+        },
+        "delayed-bobw-source-frozen-audit": {
+            "role": "source_frozen_external_audit",
+            "source_freeze_card_id":
+                "PPR-SCHLISSELBERG-LANCEWICKI-AUER-MANSOUR-2025-DELAYED-BOBW",
+            "evidence_record_ids": delayed_ids,
+            "central_endpoint_record_id": DELAYED_CENTRAL_ENDPOINT_ID,
+            "promotion_status": "partial",
+            "compiled_declaration_count": 148,
+            "declaration_count_breakdown": {
+                "implementation_facing": 89,
+                "diagnostic_conditional_repair": 19,
+                "processed_prefix": 16,
+                "processed_trace_summary_adapter": 9,
+                "ordered_no_switch_transition": 15,
+            },
+        },
+        "succinct-lower-bound-source-frozen-audit": {
+            "role": "source_frozen_external_audit",
+            "source_freeze_card_id":
+                "PPR-ZENG-HONORIO-2025-SUCCINCT-LOWER-BOUNDS",
+            "evidence_record_ids": [SUCCINCT_AUDIT_ID],
+            "central_endpoint_record_id": SUCCINCT_AUDIT_ID,
+            "promotion_status": "partial",
+            "compiled_declaration_count": 54,
+        },
+        "stochastic-gradient-bandit-source-frozen-audit": {
+            "role": "source_frozen_external_audit",
+            "source_freeze_card_id":
+                "PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB",
+            "evidence_record_ids": [SGB_AUDIT_ID],
+            "central_endpoint_record_id": SGB_AUDIT_ID,
+            "promotion_status": "partial",
+            "compiled_declaration_count": 44,
+            "declaration_count_breakdown": {
+                "finite_action_algebra": SGB_FINITE_ALGEBRA_DECLARATION_COUNT,
+                "generated_history_and_kernel_bridge":
+                    SGB_GENERATED_HISTORY_DECLARATION_COUNT,
+            },
+        },
+    }
+    index_names = {row.get("full_name") for row in index.get("declarations", [])}
+    for row_id, spec in specs.items():
+        row = by_id[row_id]
+        for key, expected in spec.items():
+            if row.get(key) != expected:
+                raise ValueError(
+                    "theorem-audit comparison {} drift for {}".format(key, row_id)
+                )
+        if not isinstance(row.get("contract_stress"), list) or not row["contract_stress"]:
+            raise ValueError("theorem-audit comparison stress list is empty for " + row_id)
+        if not isinstance(row.get("strongest_compiled_bridge"), str) or not row["strongest_compiled_bridge"]:
+            raise ValueError("theorem-audit comparison bridge is empty for " + row_id)
+        if not isinstance(row.get("scope_boundary"), str) or not row["scope_boundary"]:
+            raise ValueError("theorem-audit comparison scope boundary is empty for " + row_id)
+        evidence_records = [records[item] for item in spec["evidence_record_ids"]]
+        evidence_count = sum(len(record["declarations"]) for record in evidence_records)
+        if evidence_count != spec["compiled_declaration_count"]:
+            raise ValueError("theorem-audit comparison declaration count drift for " + row_id)
+        evidence_names = {
+            name for record in evidence_records for name in record["declarations"]
+        }
+        if len(evidence_names) != spec["compiled_declaration_count"]:
+            raise ValueError("theorem-audit comparison declaration overlap drift for " + row_id)
+        if not evidence_names.issubset(index_names):
+            raise ValueError("theorem-audit comparison references an unindexed declaration")
+        central = records[spec["central_endpoint_record_id"]]
+        if spec["role"] == "source_frozen_external_audit":
+            if (
+                row.get("source_freeze_card_id") not in freeze_cards
+                or central["status"] != "partial"
+                or row.get("paper_endpoint_verified") is not False
+                or not isinstance(row.get("blocking_obligations"), list)
+                or not row["blocking_obligations"]
+            ):
+                raise ValueError(
+                    "external theorem-audit endpoint boundary drift for " + row_id
+                )
+        elif (
+            central["status"] != "compiled"
+            or row.get("scoped_endpoint_verified") is not True
+            or row.get("blocking_obligations") != []
+            or "paper_endpoint_verified" in row
+        ):
+            raise ValueError("Chapter 15 scoped positive-control boundary drift")
+    return sanitize_json(comparison)
+
+
 def validate_ch16_boundary(records):
     compiled = records[CH16_COMPILED_ID]
     compiled_list = compiled["declarations"]
@@ -1270,6 +1590,7 @@ def build_claim_ledger(proof_report):
     validate_delayed_counts(records)
     validate_succinct_count(records)
     sgb_evidence = validate_sgb_count(records, index)
+    theorem_audit_comparison = validate_theorem_audit_comparison(records, index)
     ch16_evidence = validate_ch16_boundary(records)
     index_names = {row["full_name"] for row in index["declarations"]}
     referenced = {
@@ -1324,9 +1645,10 @@ def build_claim_ledger(proof_report):
                     DELAYED_DIAGNOSTIC_ID,
                     DELAYED_PROCESSED_PREFIX_ID,
                     DELAYED_TRACE_SUMMARY_ID,
+                    DELAYED_ORDERED_TRANSITION_ID,
                     DELAYED_CENTRAL_ENDPOINT_ID,
                 ],
-                "boundary": "89 implementation-facing, 19 diagnostic/conditional/repair, 16 processed-prefix, and 9 processed-trace-summary adapter declarations. The adapter consumes an explicit D.4 count clause but is not generated from Algorithm 5; the factor-20 result remains certificate-level conditional, and no source-paper regret theorem is verified.",
+                "boundary": "148 = 89 implementation-facing + 19 diagnostic/conditional/repair + 16 processed-prefix + 9 processed-trace-summary adapter + 15 ordered no-switch transition declarations. The last slice compiles one structural Algorithm-5 lines 3--4/7--8 step with explicit numerical inputs; BSC/EAP, generated trajectory, D.4 probability, ordered multi-snapshot elimination, and every source-paper regret endpoint remain open.",
             },
             {
                 "artifact": "Succinct geometry audit",
@@ -1354,6 +1676,7 @@ def build_claim_ledger(proof_report):
             },
         ],
         "source_records": records,
+        "theorem_audit_comparison": theorem_audit_comparison,
         "delayed_feedback": {
             "implementation_facing_ids": list(DELAYED_IMPLEMENTATION_IDS),
             "implementation_facing_declaration_count": 89,
@@ -1363,8 +1686,10 @@ def build_claim_ledger(proof_report):
             "processed_prefix_declaration_count": 16,
             "processed_trace_summary_id": DELAYED_TRACE_SUMMARY_ID,
             "processed_trace_summary_declaration_count": 9,
+            "ordered_no_switch_transition_id": DELAYED_ORDERED_TRANSITION_ID,
+            "ordered_no_switch_transition_declaration_count": 15,
             "central_endpoint_id": DELAYED_CENTRAL_ENDPOINT_ID,
-            "source_audit_declaration_count": 133,
+            "source_audit_declaration_count": 148,
             "paper_endpoint_verified": False,
         },
         "succinct_geometry": {
@@ -1497,7 +1822,6 @@ def build_payload(proof_graph=None, proof_report_path=None, allow_missing_graph=
         elif rel == PUBLIC_AGENT_OUTER_BOUNDARY_RECORD:
             destination = ANONYMOUS_AGENT_OUTER_BOUNDARY_RECORD
         add_payload(payload, destination, data)
-    rebind_anonymous_external_comparator(payload)
     for rel in TARGET_DRIFT_WORKFLOW_FILES:
         if rel not in tracked:
             raise ValueError("untracked or missing target-drift workflow: " + rel)
@@ -1508,6 +1832,7 @@ def build_payload(proof_graph=None, proof_report_path=None, allow_missing_graph=
             raise ValueError("untracked or missing target-drift tool: " + rel)
         data = anonymize_evaluation_bytes(rel, read_regular(rel), anonymous_reference)
         add_payload(payload, rel, data)
+    rebind_anonymous_external_comparator(payload)
     for source, destination in sorted(EVIDENCE_JSON.items()):
         value = sanitize_json(load_json(REPO_ROOT / source))
         add_payload(payload, destination, canonical_json(value))

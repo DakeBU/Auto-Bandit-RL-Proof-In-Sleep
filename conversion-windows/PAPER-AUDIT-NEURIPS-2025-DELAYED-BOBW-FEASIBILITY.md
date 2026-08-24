@@ -6,8 +6,9 @@ Status: `source-frozen; deterministic availability, action-time count,
 one-based/end-of-round sigma bridge, generic shared-identity interface, causal
 action-time view, set-level new-arrival processing, line-7/8 optimal-arm
 survival, line-15 allocation, a causal one-round action measure, source-exact
-D.2--D.8 budget assembly, and a processed-prefix D.1 count-to-width producer
-plus its deterministic processed-trace-summary adapter compiled; the D.4 count
+  D.2--D.8 budget assembly, a processed-prefix D.1 count-to-width producer,
+  its deterministic processed-trace-summary adapter, and one ordered
+  no-switch Algorithm-5 structural processing step compiled; the D.4 count
 clause is still conditional, and the D.2--D.7 probability producers,
 measurable generated trajectory, ordered elimination, and paper endpoints
 remain open`
@@ -98,6 +99,29 @@ coordinate formulas, nonnegativity under nonnegative eliminated coordinates
 whose sum is at most one, and exact total mass one.  It does not yet prove that
 EAP maintains those hypotheses or construct the sampling kernel.
 
+## Ordered no-switch processing step
+
+Physical PDF page 22, Algorithm 5 lines 3--4 choose an arbitrary
+`s in B(t) \ S` and append it to the processed sequence; lines 7--8 test and
+remove arms after the confidence surfaces for that appended prefix are formed.
+`DelayedSAPONoSwitchProcessOne` refines the set-level `B(t) \ S` operation by
+retaining Algorithm 5's ordered sequence as a duplicate-free `List Nat`.  One
+step accepts any newly observed source round and appends it to the list without
+sorting, so simultaneous arrivals remain intentionally nondeterministic.  The
+compiled transition builds the line-7 `DelayedSAPOProcessedTraceSummary` only
+after this append, derives source-index injectivity and strict
+`s + d_s < t` availability, and derives current-to-source active-set
+containment from a round-start invariant plus an antitone source-round trace.
+Its line-8 successor uses the exact `remainingActive` set and preserves the
+round-start invariant.  The focused canary processes source round one after
+source round three.
+
+This is a structural no-switch step.  The empirical means, confidence bounds,
+and inactive-arm probabilities are explicit inputs; Lean does not claim that
+BSC or EAP generated them.  The switch branch, round finalization, measurable
+recursive sampling law, D.4 count probability, multi-snapshot elimination
+route, and regret endpoints remain open.
+
 ## Elimination and one-round action law
 
 `DelayedSAPOEliminationSnapshot` is the exact data read by Algorithm 5 line 7,
@@ -169,8 +193,11 @@ pair-width premise.  It still consumes a
   containment as an explicit summary invariant.  It defines the
   current width and recursive empirical UCB from the projected summary.  The
   remaining certificate input is the pair of displayed D.4 count inequalities.
-  Constructing the summary from the measurable randomized Algorithm-5
-  transition system, proving the inequalities' simultaneous `2/T` probability,
+  The compiled ordered no-switch step now constructs one such summary from an
+  explicit structural round state and preserves its active-set invariant.  It
+  does not generate the numerical BSC/EAP fields or the random round state.
+  Constructing those fields on a measurable randomized Algorithm-5 trajectory,
+  proving the inequalities' simultaneous `2/T` probability,
   and closing the ordered elimination and terminal regret chains remain open.
   This is a compiled deterministic adapter and conditional same-snapshot repair
   route, not an actual recursive-state producer, source repair, or source

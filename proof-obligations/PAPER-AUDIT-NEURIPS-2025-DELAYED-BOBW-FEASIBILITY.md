@@ -15,30 +15,38 @@
 | `DELAYED-BOBW-D10-D12-GAP-ORDERING-AUDIT` | audit the width/gap chain used by Appendix Lemma D.10 and expose both the displayed four-edge route and a conditional same-snapshot factor-20 skeleton for Lemma D.12 / main-text Lemma 4.2 | `MLIB-ORDER-ALGEBRA`, `MLIB-REAL-LOG-SQRT`; source empirical-width definition, Algorithm 5 line-7 snapshot, and physical PDF pp. 26--27 | prove width antitonicity and a literal `T=4` reverse-direction witness; derive the eliminated-arm lower gap; prove the exact small-count width lower bound; consume a large/small-count branch certificate and an explicit same-prefix factor-ten edge; retain the conditional four-edge consumer for comparison | compiled diagnostic and conditional consumers; a downstream D.1 processed-prefix producer and trace-summary adapter supply algebraic inputs conditionally, while the generated state and unconditional D.10/D.12 remain open |
 | `DELAYED-BOBW-D1-ACTIVE-COUNT-TO-WIDTH-PRODUCER` | derive the same-prefix D.10 width inputs and repaired D.12 factor-20 conclusion from Algorithm 5 line-15 source-time allocations plus the exact D.1 count clause | `delayedSAPOProbability_of_active`; source width; finite sums; real log/sqrt; recursive empirical UCB definition | record an ordered source-time allocation/action ledger; derive equal active-arm pull mass; prove `n_j >= n_i/4 - 6 log T`; split at `192 log T`; produce factor three, factor ten, current-UCB, and the existing same-snapshot consumer inputs | compiled deterministic producer and conditional gap theorem; a trace-summary adapter now constructs the ledger certificate, but Algorithm-5 generation and D.4 probability remain open, so D.10/D.12/Lemma 4.2 are not complete |
 | `DELAYED-BOBW-PROCESSED-TRACE-SUMMARY-ADAPTER` | construct the processed-prefix certificate from a source-shaped trace summary without assuming chronological processing order or width/gap conclusions | distinct source indices; strict `s + d_s < t` availability; separate intra-round and source-round active sets; `DelayedSAPOProcessedPrefixCountCertificate`; source D.4 count clause | read chosen actions and line-15 allocations at stored source indices; consume explicit current-to-source containment; record source-trace antitonicity separately; define source width and recursive empirical UCB; consume only the two D.4 count inequalities | compiled deterministic adapter and conditional factor-20 consumer; Algorithm-5 transition-and-invariant-to-summary producer, D.4 `2/T` probability, and generated trajectory remain open |
+| `DELAYED-BOBW-ORDERED-NO-SWITCH-PROCESS-ONE` | compile one source-faithful no-switch iteration of physical PDF page 22, Algorithm 5 lines 3--4 and 7--8, with the line-7 summary formed after appending the newly observed source and the line-8 successor formed by active-set removal | `newlyObservedBefore`; `observedBefore`; `DelayedSAPOEliminationSnapshot.remainingActive`; `DelayedSAPOProcessedTraceSummary`; `List.Nodup.injective_get`; `List.nodup_concat`; `Finset.sdiff_subset` | keep the paper sequence as a duplicate-free `List Nat`; accept an arbitrary member of `B(t) \ S`; append it without sorting; derive strict availability, source-index injectivity, and current-to-source containment from a round-start invariant and an antitone source-round active trace; then preserve the invariant through exact line-8 removal | compiled 15-declaration structural leaf and focused nonchronological canary; BSC/EAP, numeric state generation, round finalization, trajectory measurability, D.4 probability, and every paper endpoint remain open |
 | `DELAYED-BOBW-CAUSAL-ACTION-MEASURE` | line-15 vector induces a probability measure and a causal measure-valued decision rule | local `Exp3.FiniteActionDistribution`, `finiteActionMeasure`; causal observation equivalence | package explicit EAP premises, reuse the finite-action law, and transport equality through `ActionTimeView` | compiled one-round action law; measurable history kernel and recursive generated trajectory open |
 
 ## Active leaf contract
 
-- Next target: the source D.4 simultaneous count probability producer on a
-  measurable generated Delayed-SAPO action trajectory.
-- Compiled deterministic input: `RecursiveProcessedState.lean` now produces
-  the exact processed-prefix certificate from a source-shaped trace summary and
-  a `D4CountClause`; it neither generates that summary from Algorithm 5 nor
-  proves the clause probabilistically.
-- Random process: for each arm, the sampled action indicator minus its
-  source-history conditional probability, accumulated over the relevant
-  processed-source family.
-- Required filtration and measurability: the pre-action history must generate
-  each line-15 allocation; the sampled action is the successor coordinate;
-  processed-prefix selection must be justified by a predictable or anytime
-  event rather than an arbitrary data-dependent subsequence.
-- Intended route: first construct a measurable recursive action kernel and
-  prove its conditional finite-action law; then prove an adaptive Bernoulli
-  count inequality strong enough for the exact lower/upper constants; finally
-  justify the union over the source's random sequence family.
-- Failure policy: do not assume a count certificate, conditional-mean identity,
-  adaptedness, width comparison, or gap conclusion inside the probability
-  producer.  Do not identify processing order with source-round order.
+- Compiled target: `DELAYED-BOBW-ORDERED-NO-SWITCH-PROCESS-ONE`, the deterministic
+  no-switch transition from one valid member of `B(t) \ S` to the line-7
+  trace summary and then the line-8 active-set successor.
+- Local APIs/imports: `Processing.lean` for `newlyObservedBefore` and strict
+  availability; `Elimination.lean` for exact line-7/8 sets;
+  `RecursiveProcessedState.lean` for the summary adapter; Mathlib list
+  nodup/get/concat lemmas and `Finset.sdiff_subset`.
+- Intended proof route: represent the paper sequence `S` as a duplicate-free
+  `List Nat`; append an arbitrary newly observed source before building the
+  line-7 summary; derive source-index injectivity from list nodup, strict
+  availability from membership in `observedBefore`, and current-to-source
+  containment from `currentActive <= A(t-1)` plus source-trace antitonicity;
+  set the successor active set to the summary snapshot's `remainingActive` and
+  use set-difference monotonicity to preserve the round-start invariant.
+- Hidden regularity: `0 < t` for the `t-1` boundary, duplicate-free processed
+  order, strict source availability, and an antitone line-15 source-round
+  active trace.  The numerical confidence surfaces at the line-7 snapshot are
+  explicit structural inputs until their recursive update is formalized.
+- Failure policy: do not sort simultaneous arrivals, append after elimination,
+  replace strict `<` by `<=`, identify the intra-round active set with final
+  line-15 `A(t)`, or claim that BSC succeeds.  This leaf must not introduce a
+  probability law, D.4 premise/proof, ordered multi-snapshot gap theorem, or
+  regret endpoint.
+- Next boundary, not attempted here: construct the numerical BSC/EAP update and
+  the round-to-round generated state that discharge the structural inputs of
+  this leaf.  The measurable trajectory and D.4 probability producer remain
+  independent later obligations.
 
 ## Paper-level blockers
 

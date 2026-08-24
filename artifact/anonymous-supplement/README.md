@@ -25,9 +25,15 @@ were screened.
   random-time RL, ETC, and curvature--noise--gap routes.
 - `evidence/claim-ledger.json` records compiled, partial, blocked, prototype,
   and planned boundaries without promoting an open theorem.
+- `evidence/theorem-audit-comparison.json` is the claim-ledger-backed outcome
+  matrix for the scoped Chapter 15 positive control and the three source-frozen
+  external audits.  It separates contract stress, strongest compiled bridge,
+  blocking obligations, and promotion status.
 - `evidence/local_lean_declarations.json` is the packaged declaration index.
 - `evidence/source-freeze.json` records the three-paper portfolio, official
   URLs, SHA-256 digests, page counts, theorem windows, and pre-search statuses.
+- `evidence/*-proof-obligations.md` records the open delayed-feedback,
+  succinct-geometry, and stochastic-gradient-bandit dependency boundaries.
 - `evidence/proof-graph/` contains the current environment export and report,
   the frozen benchmark configuration, and the conservative CNG audit reports.
 - `evaluation/` and the matching tools specify a **result-free** target-drift
@@ -46,14 +52,23 @@ were screened.
   presentation existed unchanged on that date.  The packaged validator checks
   this derivative hash chain directly.
 
-The delayed-feedback flagship contains 89 implementation-facing compiled
-declarations, 19 separately counted diagnostic/conditional/repair declarations,
-and a 16-declaration processed-prefix producer.  The producer derives D.1 count,
-factor-three/factor-ten width, and recursive-UCB inputs for a conditional
-same-snapshot factor-20 result.  Constructing its certificate and D.4 probability
-from the recursive Delayed SAPO trajectory, ordered elimination, and the terminal
-regret chain remain open; these declarations do not verify or refute the source
-lemmas or paper-level theorem.  Across Textbook Chapters 13--17, Chapter 15 Lemma 15.1 and
+The delayed-feedback flagship contains 148 compiled source-audit declarations:
+89 implementation-facing declarations, 19 separately counted
+diagnostic/conditional/repair declarations, a 16-declaration processed-prefix
+producer, a 9-declaration deterministic processed-trace-summary adapter, and a
+15-declaration ordered no-switch structural transition.
+The processed-prefix layer derives D.1 count, factor-three/factor-ten width, and
+recursive-UCB inputs for a conditional same-snapshot factor-20 result from an
+explicit certificate.  The adapter constructs that certificate only
+conditional on the explicit D.4 count clause.  The 15-declaration layer compiles
+one no-switch Algorithm-5 lines 3--4/7--8 step: append an arbitrary newly
+observed source before forming the line-7 summary, then preserve the round-start
+active-set invariant through exact line-8 removal.  Its numerical confidence
+surfaces are explicit inputs.  A complete numerical-state/BSC/EAP/round-loop
+producer, the measurable Delayed SAPO trajectory, simultaneous D.4 `2/T`
+probability bound, ordered multi-snapshot elimination, and terminal regret chain
+remain open.  These declarations do not verify or refute the source lemmas or
+paper-level theorem.  Across Textbook Chapters 13--17, Chapter 15 Lemma 15.1 and
 the exact Theorem 15.2 Gaussian expected-pseudo-regret/minimax terminals
 compile, and Chapter 13 has a compiled constant-`1/54` downstream consumer.
 Whole-chapter Notes/Exercises and the Chapter 16--17 terminals remain open, so
