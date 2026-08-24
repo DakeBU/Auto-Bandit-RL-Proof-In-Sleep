@@ -74,6 +74,13 @@ PUBLIC_AGENT_LIFECYCLE_RECORD = (
 PUBLIC_AGENT_IMAGE_RECORD = (
     "evaluation/target-drift-v2/agent-image-candidate-32464814750.json"
 )
+TARGET_DRIFT_V2_PROTOCOL = "evaluation/target-drift-v2/protocol.json"
+EXTERNAL_COMPARATOR_PLAN = (
+    "evaluation/target-drift-v2/external-comparator-plan.json"
+)
+EXTERNAL_COMPARATOR_SEAL = (
+    "evaluation/target-drift-v2/external-comparator-plan.seal.json"
+)
 ANONYMOUS_CANDIDATE_RECORD = (
     "evaluation/target-drift-v2/checker-image-candidate-record.json"
 )
@@ -200,6 +207,7 @@ TARGET_DRIFT_TOOLS = (
     "tools/fake_target_drift_checker_sandbox.py",
     "tools/finalize_target_drift_config.py",
     "tools/launch_target_drift_checker_container.py",
+    "tools/launch_target_drift_agent_container.py",
     "tools/prepare_target_drift_agent_image.py",
     "tools/prepare_target_drift_checker_image.py",
     "tools/prepare_target_drift_checker_probe_config.py",
@@ -214,7 +222,11 @@ TARGET_DRIFT_TOOLS = (
     "tools/run_target_drift_smoke.py",
     "tools/target_drift_checker_cache_manifest.py",
     "tools/target_drift_agent_pid1.py",
+    "tools/target_drift_agent_outer_controller.py",
+    "tools/target_drift_agent_outer_probe.py",
+    "tools/target_drift_agent_model_probe.py",
     "tools/test_target_drift_agent_image.py",
+    "tools/test_target_drift_agent_outer_boundary.py",
     "tools/test_target_drift_analysis.py",
     "tools/test_target_drift_agent_lifecycle.py",
     "tools/test_target_drift_completion_ledger.py",
@@ -224,6 +236,7 @@ TARGET_DRIFT_TOOLS = (
     "tools/test_target_drift_smoke.py",
     "tools/validate_target_drift_suite.py",
     "tools/validate_target_drift_suite_v2.py",
+    "tools/validate_target_drift_external_comparator.py",
 )
 
 # The evaluation layer is result-free by construction.  New tracked files must
@@ -256,6 +269,8 @@ TARGET_DRIFT_PROTOCOL_FILES = (
     "evaluation/target-drift-v2/checker-isolation-probe.template.json",
     "evaluation/target-drift-v2/checker-sandbox-contract.json",
     "evaluation/target-drift-v2/execution-template.json",
+    "evaluation/target-drift-v2/external-comparator-plan.json",
+    "evaluation/target-drift-v2/external-comparator-plan.seal.json",
     "evaluation/target-drift-v2/grader-prompt.md",
     "evaluation/target-drift-v2/grading-rubric.json",
     "evaluation/target-drift-v2/missing-run-policy.json",
@@ -832,6 +847,56 @@ def anonymize_evaluation_bytes(rel, data, anonymous_reference):
     return text.encode("utf-8")
 
 
+def rebind_anonymous_external_comparator(payload):
+    """Bind the packaged plan/seal to the anonymized primary protocol bytes."""
+    required = (
+        TARGET_DRIFT_V2_PROTOCOL,
+        EXTERNAL_COMPARATOR_PLAN,
+        EXTERNAL_COMPARATOR_SEAL,
+    )
+    missing = [rel for rel in required if rel not in payload]
+    if missing:
+        raise ValueError(
+            "anonymous comparator rebinding is missing: " + ", ".join(missing)
+        )
+
+    source_protocol_sha = sha256_bytes(canonical_text_bytes(
+        TARGET_DRIFT_V2_PROTOCOL, read_regular(TARGET_DRIFT_V2_PROTOCOL)
+    ))
+    source_plan_sha = sha256_bytes(canonical_text_bytes(
+        EXTERNAL_COMPARATOR_PLAN, read_regular(EXTERNAL_COMPARATOR_PLAN)
+    ))
+    packaged_protocol_sha = sha256_bytes(payload[TARGET_DRIFT_V2_PROTOCOL])
+    plan = json.loads(payload[EXTERNAL_COMPARATOR_PLAN].decode("utf-8"))
+    if (
+        plan.get("primary_protocol") != TARGET_DRIFT_V2_PROTOCOL
+        or plan.get("primary_protocol_sha256") != source_protocol_sha
+        or plan.get("primary_outcomes_observed_at_freeze") is not False
+        or plan.get("comparator_outcomes_observed_at_freeze") is not False
+    ):
+        raise ValueError("source external-comparator plan binding changed")
+    plan["primary_protocol_sha256"] = packaged_protocol_sha
+    plan_data = canonical_json(plan)
+    require_anonymous_bytes(EXTERNAL_COMPARATOR_PLAN, plan_data)
+    payload[EXTERNAL_COMPARATOR_PLAN] = plan_data
+
+    seal = json.loads(payload[EXTERNAL_COMPARATOR_SEAL].decode("utf-8"))
+    if (
+        seal.get("plan_path") != EXTERNAL_COMPARATOR_PLAN
+        or seal.get("primary_protocol_path") != TARGET_DRIFT_V2_PROTOCOL
+        or seal.get("plan_sha256") != source_plan_sha
+        or seal.get("primary_protocol_sha256") != source_protocol_sha
+        or seal.get("primary_outcomes_observed_at_seal") is not False
+        or seal.get("comparator_outcomes_observed_at_seal") is not False
+    ):
+        raise ValueError("source external-comparator seal binding changed")
+    seal["plan_sha256"] = sha256_bytes(plan_data)
+    seal["primary_protocol_sha256"] = packaged_protocol_sha
+    seal_data = canonical_json(seal)
+    require_anonymous_bytes(EXTERNAL_COMPARATOR_SEAL, seal_data)
+    payload[EXTERNAL_COMPARATOR_SEAL] = seal_data
+
+
 def selected_source_records():
     raw = load_json(REPO_ROOT / "website" / "content" / "results.json")
     by_id = {row["id"]: row for row in raw["results"]}
@@ -1172,6 +1237,7 @@ def build_payload(proof_graph=None, proof_report_path=None, allow_missing_graph=
         elif rel == PUBLIC_AGENT_IMAGE_RECORD:
             destination = ANONYMOUS_AGENT_IMAGE_RECORD
         add_payload(payload, destination, data)
+    rebind_anonymous_external_comparator(payload)
     for rel in TARGET_DRIFT_WORKFLOW_FILES:
         if rel not in tracked:
             raise ValueError("untracked or missing target-drift workflow: " + rel)

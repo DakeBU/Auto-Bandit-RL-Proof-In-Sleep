@@ -121,6 +121,8 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertIn(
             prefix + "research-wiki/proof-graph/proof_cost.schema.json", names
         )
+        self.assertIn(prefix + BUILDER.EXTERNAL_COMPARATOR_PLAN, names)
+        self.assertIn(prefix + BUILDER.EXTERNAL_COMPARATOR_SEAL, names)
         self.assertFalse(any("website/_site" in name for name in names))
         self.assertFalse(any("contributors.json" in name for name in names))
         self.assertFalse(any(name.endswith(".pdf") for name in names))
@@ -142,6 +144,37 @@ class AnonymousSupplementTests(unittest.TestCase):
         report = json.loads(result.stdout)
         self.assertTrue(report["artifact_verified"])
         self.assertFalse(report["target_drift_results_present"])
+
+    def test_extracted_external_comparator_validator_passes(self):
+        destination = self.root / "external-comparator"
+        with zipfile.ZipFile(str(self.first)) as archive:
+            archive.extractall(str(destination))
+        artifact = destination / BUILDER.ARCHIVE_ROOT
+        result = subprocess.run(
+            [sys.executable, "tools/validate_target_drift_external_comparator.py"],
+            cwd=str(artifact),
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            encoding="utf-8",
+        )
+        self.assertEqual(result.returncode, 0, msg=result.stdout + result.stderr)
+        self.assertIn("external comparator plan valid and unrun", result.stdout)
+
+    def test_anonymous_external_comparator_rebinds_primary_bytes(self):
+        payload = BUILDER.build_payload(allow_missing_graph=True)
+        protocol_sha = hashlib.sha256(
+            payload[BUILDER.TARGET_DRIFT_V2_PROTOCOL]
+        ).hexdigest()
+        plan_data = payload[BUILDER.EXTERNAL_COMPARATOR_PLAN]
+        plan = json.loads(plan_data.decode("utf-8"))
+        seal = json.loads(
+            payload[BUILDER.EXTERNAL_COMPARATOR_SEAL].decode("utf-8")
+        )
+        self.assertEqual(plan["primary_protocol_sha256"], protocol_sha)
+        self.assertEqual(seal["primary_protocol_sha256"], protocol_sha)
+        self.assertEqual(
+            seal["plan_sha256"], hashlib.sha256(plan_data).hexdigest()
+        )
 
     def test_extracted_verifier_rejects_unmanifested_file(self):
         # Keep the path short enough for the longest Lean module on Windows.

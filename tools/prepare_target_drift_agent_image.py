@@ -41,12 +41,20 @@ CONTEXT_INPUTS = {
     "Containerfile": ROOT / "evaluation/target-drift-v2/agent-image.Containerfile",
     "target_drift_agent_pid1.py": TOOLS / "target_drift_agent_pid1.py",
     "codex_target_drift_adapter.py": TOOLS / "codex_target_drift_adapter.py",
+    "target_drift_agent_outer_controller.py": (
+        TOOLS / "target_drift_agent_outer_controller.py"
+    ),
+    "target_drift_agent_outer_probe.py": TOOLS / "target_drift_agent_outer_probe.py",
+    "target_drift_agent_model_probe.py": TOOLS / "target_drift_agent_model_probe.py",
     "agent-image-sources.json": SOURCE_LOCK,
 }
 BUILDER_PATH = Path(__file__).resolve()
 CODEX_INSTALL_ROOT = "/opt/abrl-codex"
 CONTROLLER_PATH = "/usr/local/bin/abrl-agent-pid1"
 ADAPTER_PATH = "/usr/local/lib/abrl/codex_target_drift_adapter.py"
+OUTER_CONTROLLER_PATH = "/usr/local/lib/abrl/target_drift_agent_outer_controller.py"
+OUTER_PROBE_PATH = "/usr/local/lib/abrl/target_drift_agent_outer_probe.py"
+MODEL_PROBE_PATH = "/usr/local/lib/abrl/target_drift_agent_model_probe.py"
 CODEX_PATH = "/opt/abrl-codex/codex"
 MAX_PACKAGE_BYTES = 128 * 1024 * 1024
 
@@ -583,6 +591,11 @@ def build_image(
         ),
         "controller": extract_image(runtime, image_digest, CONTROLLER_PATH),
         "adapter": extract_image(runtime, image_digest, ADAPTER_PATH),
+        "outer_controller": extract_image(
+            runtime, image_digest, OUTER_CONTROLLER_PATH
+        ),
+        "outer_probe": extract_image(runtime, image_digest, OUTER_PROBE_PATH),
+        "model_probe": extract_image(runtime, image_digest, MODEL_PROBE_PATH),
         "cache_manifest": extract_image(
             runtime, image_digest, checker_launcher.CHECKER_CACHE_MANIFEST_PATH
         ),
@@ -596,6 +609,15 @@ def build_image(
             and hashlib.sha256(extracted["adapter"]).hexdigest()
             == sha256_file(context / "codex_target_drift_adapter.py"),
             "in-image controller or adapter differs from the context")
+    require(
+        hashlib.sha256(extracted["outer_controller"]).hexdigest()
+        == sha256_file(context / "target_drift_agent_outer_controller.py")
+        and hashlib.sha256(extracted["outer_probe"]).hexdigest()
+        == sha256_file(context / "target_drift_agent_outer_probe.py")
+        and hashlib.sha256(extracted["model_probe"]).hexdigest()
+        == sha256_file(context / "target_drift_agent_model_probe.py"),
+        "in-image outer-boundary components differ from the context",
+    )
     require(hashlib.sha256(extracted["cache_manifest"]).hexdigest()
             == manifest["checker_cache_manifest_sha256"],
             "agent image inherited a different Lean cache manifest")
@@ -659,6 +681,11 @@ def build_image(
         "bundled_rg_sha256": hashlib.sha256(extracted["rg"]).hexdigest(),
         "controller_sha256": hashlib.sha256(extracted["controller"]).hexdigest(),
         "adapter_sha256": hashlib.sha256(extracted["adapter"]).hexdigest(),
+        "outer_controller_sha256": hashlib.sha256(
+            extracted["outer_controller"]
+        ).hexdigest(),
+        "outer_probe_sha256": hashlib.sha256(extracted["outer_probe"]).hexdigest(),
+        "model_probe_sha256": hashlib.sha256(extracted["model_probe"]).hexdigest(),
         "lean_version": lean_version,
         "lake_version": lake_version,
         "python_version": toolchain_probe["python_version"],

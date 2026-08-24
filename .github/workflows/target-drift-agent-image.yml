@@ -15,13 +15,20 @@ on:
     paths:
       - ".github/workflows/target-drift-agent-image.yml"
       - "evaluation/target-drift-v2/agent-image*"
+      - "evaluation/target-drift-v2/agent-sandbox-contract.json"
       - "evaluation/target-drift-v2/agent-codex-native.apparmor"
       - "tools/codex_target_drift_adapter.py"
       - "tools/prepare_target_drift_agent_image.py"
       - "tools/prepare_target_drift_checker_image.py"
+      - "tools/launch_target_drift_checker_container.py"
       - "tools/record_target_drift_agent_image_probe.py"
       - "tools/record_target_drift_agent_lifecycle_probe.py"
       - "tools/target_drift_agent_pid1.py"
+      - "tools/launch_target_drift_agent_container.py"
+      - "tools/target_drift_agent_outer_controller.py"
+      - "tools/target_drift_agent_outer_probe.py"
+      - "tools/target_drift_agent_model_probe.py"
+      - "tools/test_target_drift_agent_outer_boundary.py"
 
 permissions:
   contents: read
@@ -53,6 +60,7 @@ jobs:
         run: |
           python3 -m unittest discover -s tools -p "test_target_drift_agent_image.py"
           python3 -m unittest discover -s tools -p "test_target_drift_agent_lifecycle.py"
+          python3 -m unittest discover -s tools -p "test_target_drift_agent_outer_boundary.py"
           python3 -m unittest tools.test_target_drift_runtime
 
       - name: Load the exact Codex user-namespace AppArmor profile
@@ -120,6 +128,37 @@ jobs:
             --apparmor-profile "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-codex-native.apparmor" \
             --probe-commit "${GITHUB_SHA}" 2>&1 | \
             tee "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-image-isolation-probe-attempt.log"
+
+      - name: Probe the result-free canonical outer boundary
+        run: |
+          mkdir -p "${RUNNER_TEMP}/abrl-agent-outer-input"
+          mkdir -p "${RUNNER_TEMP}/abrl-agent-outer-auth"
+          mkdir -p "${RUNNER_TEMP}/abrl-agent-outer-control"
+          printf 'RESULT_FREE_AGENT_INPUT\n' > \
+            "${RUNNER_TEMP}/abrl-agent-outer-input/input.txt"
+          printf 'RESULT_FREE_SENTINEL_DO_NOT_USE\n' > \
+            "${RUNNER_TEMP}/abrl-agent-outer-auth/auth.json"
+          chmod 0444 "${RUNNER_TEMP}/abrl-agent-outer-input/input.txt"
+          chmod 0400 "${RUNNER_TEMP}/abrl-agent-outer-auth/auth.json"
+          python3 tools/launch_target_drift_agent_container.py \
+            --image-sbom "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-image-sbom.json" \
+            --agent-input "${RUNNER_TEMP}/abrl-agent-outer-input" \
+            --auth-sentinel "${RUNNER_TEMP}/abrl-agent-outer-auth/auth.json" \
+            --control-output "${RUNNER_TEMP}/abrl-agent-outer-control" \
+            --apparmor-source "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-codex-native.apparmor" \
+            --report "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-outer-boundary-probe.json" \
+            --probe-commit "${GITHUB_SHA}"
+
+      - name: Preserve canonical outer-boundary raw control evidence
+        if: always()
+        run: |
+          SOURCE="${RUNNER_TEMP}/abrl-agent-outer-control"
+          TARGET="${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-outer-control-evidence-copy"
+          if [[ -d "${SOURCE}" ]]; then
+            sudo cp -a "${SOURCE}" "${TARGET}"
+            sudo chown -R "$(id -u):$(id -g)" "${TARGET}"
+            chmod -R u+rwX,go+rX "${TARGET}"
+          fi
 
       - name: Re-run destructive PID-1 lifecycle probe on the exact agent image
         run: |

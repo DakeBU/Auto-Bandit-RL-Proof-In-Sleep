@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "suite_id": "ABRL-TARGET-DRIFT-V2",
+  "frozen_on": "2026-08-24",
+  "status": "planned_unrun_result_free",
+  "purpose": "external_system_calibration_not_primary_causal_condition",
+  "primary_protocol": "evaluation/target-drift-v2/protocol.json",
+  "primary_protocol_sha256": "9bf6de81cc2541217d71d34be8f88bcff67e3467af19383c8dc89ff4321b5d61",
+  "primary_outcomes_observed_at_freeze": false,
+  "comparator_outcomes_observed_at_freeze": false,
+  "rationale": "The three-condition 450-run study isolates ABRL workflow mechanisms under one common runner. It is not, by itself, a comparison with a current end-to-end autoformalization system. This separate calibration tests contact with a pinned public workflow while preserving the original primary-protocol bytes and estimand.",
+  "system": {
+    "name": "LeanFlow",
+    "paper_title": "LeanFlow: A Case Study in Workflow-Driven Lean Autoformalization",
+    "paper_url": "https://arxiv.org/abs/2607.20503",
+    "paper_pdf_url": "https://arxiv.org/pdf/2607.20503",
+    "paper_pdf_sha256_observed_2026_08_24": "ecbef983673f1d560b8b8f6950d7cf177200ba2437a700b4e2a1a0c8effc9653",
+    "repository_url": "https://github.com/epfl-lara/LeanFlow",
+    "repository_commit": "72a58a5ffe3d26710e8e0a5d0f4e9bcaab3fed4d",
+    "repository_commit_time_utc": "2026-08-11T02:39:36Z",
+    "repository_ref_observed_on": "2026-08-24",
+    "license": "Apache-2.0"
+  },
+  "design": {
+    "stage_0_result_free": "Audit the pinned system interface, source and blueprint inputs, provider adapter, completion rule, logs, and build gate. Record every incompatibility with the ABRL challenge contract before making a model call.",
+    "stage_1_real_infrastructure_smoke": "Run exactly one source-faithful case with the same frozen provider, model, toolchain, common task and source bytes, pre-audit workspace base, checker, and wall and cost ceilings. LeanFlow may receive only its pinned system-general workflow assets; mark the smoke permanently result-ineligible.",
+    "stage_2_external_calibration": "If stage 1 passes, freeze a separate schedule over the same 30 challenge cases at replicate index zero. Reuse the hidden requirement assignment, neutral post-hoc checker, expert rubric, and blinded artifact normalization. Do not pool these runs into the 450-run primary analysis.",
+    "planned_external_run_count": 30,
+    "primary_study_run_count_unchanged": 450,
+    "comparison_role": "secondary_descriptive_external_calibration",
+    "selected_replicate_index": 0,
+    "selected_replicate_rule": "replicate index zero is shared across all 30 cases and was fixed before any primary-study or LeanFlow model outcome was observed",
+    "hidden_variant_balance": {
+      "source_faithful": 15,
+      "injected_drift": 15,
+      "assignment": "the primary suite parity rule evaluated at replicate index zero"
+    },
+    "external_condition_id": "leanflow_external",
+    "run_identity_rule": "Each external semantic run is identified by (case_id, leanflow_external, replicate_index=0) and is disjoint from every three-condition primary semantic run ID.",
+    "prespecified_contrasts": [
+      "leanflow_external minus abrl at replicate index zero, reported by hidden variant and stratum as a system-level descriptive contrast",
+      "leanflow_external minus source_aware_blueprint at replicate index zero, reported by hidden variant and stratum as a system-level descriptive contrast"
+    ],
+    "forbidden_contrast_selection": "Do not compare only against the post-hoc best or worst internal condition, and do not select a headline contrast after observing either study.",
+    "missing_run_policy": "No replacement and no outcome imputation. Paired descriptive differences require 30/30 externally checked runs and their 60 matched internal records; otherwise report only run-level artifacts and missingness by cause, condition, hidden variant, paper cluster, and textbook target.",
+    "required_fairness_bindings": [
+      "same provider, immutable model attestation, reasoning effort, and service tier",
+      "same pre-audit workspace base and source PDF bytes",
+      "same per-run wall-clock and maximum-cost ceilings",
+      "same hidden source-faithful and injected-drift requirement bodies",
+      "same neutral checker, exact-contract rubric, grader blinding, and missing-run disclosure",
+      "exact LeanFlow workflow command and mode, with research, web, and public-repository search disabled",
+      "single agent, no human review, and fresh user, project, and checkpoint state for every run with no cross-run resume",
+      "one frozen provider, model, and settings tuple for every foreground, manager, planner, advisor, and compression invocation",
+      "same Lean, Lake, Mathlib, cache, CPU, memory, PID, concurrency, retry, replacement, and imputation boundaries",
+      "explicit accounting for project initialization, REPL, MCP, LeanExplore, and every bootstrap surface",
+      "same common task, source bytes, proposed requirement body, pre-audit workspace base, checker, and resource ceilings across systems",
+      "each system may use only its own system-general workflow assets frozen before the challenge; case-specific and cross-system assets are forbidden, and system-specific repository views and theorem-card availability are disclosed rather than claimed equal",
+      "separate reporting of framework-native API and tool calls whose semantics are not interchangeable",
+      "all provider calls, including auxiliary framework roles, count toward the same token and dated-price cost ledger"
+    ],
+    "reported_endpoints": [
+      "exact contract satisfaction",
+      "faithful formal completion",
+      "injected-drift detection sensitivity",
+      "faithful-request specificity",
+      "artifact replay success",
+      "wall time",
+      "input and output tokens when exposed by the provider client",
+      "model cost under one dated price schedule",
+      "framework-native API and build counts, reported without relabeling them as ABRL tool calls"
+    ],
+    "dependence_boundary": "The 30 cases comprise eighteen probes clustered within three paper sources and twelve textbook targets; they are not 30 independent sources or papers.",
+    "analysis_boundary": "Report exact run-level outcomes, stratum counts, and the two pre-specified paired descriptive differences only after the complete-run gate. The contrasts compare complete systems under common tasks and resource ceilings; they are not mechanism-level resource-equated comparisons because system-general workflow assets and repository views may differ. This single-replicate calibration is exploratory: no p-value, winner/rank, bold-best table, superiority, equivalence, noninferiority, powered comparison, or selective headline is permitted. Do not combine it with the primary interval or p-values and do not reinterpret framework-specific event counts as identical measurements.",
+    "extension_rule": "Any multi-replicate confirmatory LeanFlow comparison requires a new frozen protocol and budget before observing stage-2 outcomes. It cannot be added selectively after favorable or unfavorable results."
+  },
+  "execution_gate": [
+    "pin and archive the exact LeanFlow source tree and dependency lock",
+    "complete the result-free interface and fairness audit",
+    "freeze an adapter that preserves LeanFlow-native evidence without granting extra source or network access",
+    "pass the permanently result-ineligible real-infrastructure smoke",
+    "freeze the 30-run schedule, prices, budgets, image digests, graders, and analysis script"
+  ],
+  "nonclaims": [
+    "No LeanFlow model run has been executed for ABRL.",
+    "No numerical comparison with LeanFlow is reported.",
+    "This plan does not reproduce or re-estimate the numerical results in the LeanFlow paper; it targets the pinned public repository commit under the ABRL challenge contract.",
+    "The plan does not establish that ABRL outperforms LeanFlow or any other system.",
+    "The planned external calibration does not replace the unrun 450-run mechanism study."
+  ]
+}

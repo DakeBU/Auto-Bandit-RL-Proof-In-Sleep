@@ -267,6 +267,23 @@ This is an unpublished provider-client-capable result-free candidate, not a
 credential-bearing production run, a real smoke, or a model/formalization
 outcome.
 
+The current source additionally defines a narrowly scoped outer-boundary
+candidate in `tools/launch_target_drift_agent_container.py`.  It intentionally
+has no production or provider action.  Its only command verifies the local
+image digest and in-image controller/probe bytes, then mounts a literal fake
+`auth.json` and fake agent input read-only under a root PID-1 controller.  The
+controller copies only the input into disposable tmpfs, opens the fixed fake
+auth once as a read-only descriptor, passes it to the irreversibly dropped
+uid/gid 10002 worker, and closes its copy.  The worker exactly consumes and
+closes that descriptor before launching the offline Codex sandbox.  The nested
+probe requires zero capabilities, denied network, immutable original input, a
+writable copied workspace, EACCES/EPERM on the existing auth/control paths, and
+no auth descriptor or broker environment marker.  This one-time fake handoff is
+not the real Codex provider authentication path.  The agent-image
+workflow is wired to run this result-free probe, but no tracked workflow run has
+yet attested the new component.  It does not publish a production image or
+satisfy the real credential/model/smoke gates.
+
 The sealed launcher accepts only the allowlisted Docker installation, rechecks the
 executable/signature-or-package ledger plus client/server/daemon identity, and
 constructs the complete argv itself.  Before every probe or replay it uses
@@ -346,18 +363,37 @@ implemented; on POSIX it creates an owner-only `0700`
 the plan.  Prompt source/workspace locations are relative to the common agent
 root.  This removes operator-supplied smoke markers from the model-visible
 current working directory and prompt paths.  A final production agent sandbox
-with a fixed in-container mount and a sealed outer launcher remains required
-before the real smoke runs.  The result-free agent-image workflow is designed
+with a reviewed real-execution action derived from the result-free-only outer
+launcher remains required before the real smoke runs.  The result-free
+agent-image workflow is designed
 to combine the exact provider client, offline Lean cache, adapter, and PID-1
 controller and to rerun the destructive lifecycle probe, but it supplies no
-credential and makes no model call.  A passing candidate must still be
-extended with the root-only control/credential boundary and reprobed before a
+credential and makes no model call.  The source-level outer-boundary candidate
+adds root-only control, a fake single-file credential, and a disposable
+non-root workspace, but has no real adapter execution action.  A passing
+candidate must still be extended with that fixed real execution path and
+reprobed on the published final digest before a
 controller crash can be claimed not to leave a real provider child consuming
 budget or mutating the resumable attempt.
 
 This lane is implemented and component-tested, but it has not been run with a
 real provider/agent sandbox.  No real three-condition smoke, final pack, primary
 model run, grader response, grade ledger, or analysis output exists.
+
+The primary three-condition study is a controlled mechanism comparison, not a
+claim that ABRL has already been compared with a current public end-to-end
+autoformalization workflow.  [`external-comparator-plan.json`](external-comparator-plan.json)
+therefore independently pins LeanFlow's paper, public repository commit, and license and
+defines a separate 30-run descriptive calibration after a result-ineligible
+smoke.  Replicate index zero, the 15/15 hidden-variant balance, two allowed
+contrasts, and a no-inference/no-ranking boundary are fixed before any primary
+or comparator outcome.  It reuses the frozen cases, hidden requirements, checker, and expert
+rubric while preserving framework-native event semantics.  Those runs are not
+part of the 450-run primary estimand, have not started, and currently support no
+numerical or superiority claim.
+The adjacent `external-comparator-plan.seal.json` content-addresses both this
+plan and the unchanged 18 August primary protocol; the independent validator
+rejects any byte drift or prematurely created comparator-results file.
 `tools/codex_target_drift_adapter.py` is a result-free candidate adapter. Its
 component tests cover the supported Codex JSONL schema (including item updates,
 errors, and fail-closed forbidden-tool events), observable task/thread identity,
