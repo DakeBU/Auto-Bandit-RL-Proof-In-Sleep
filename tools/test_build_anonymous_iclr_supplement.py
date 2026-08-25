@@ -686,6 +686,8 @@ class AnonymousSupplementTests(unittest.TestCase):
         )
         self.assertIn("tools/leanflow_target_drift_adapter.py", payload)
         self.assertIn("tools/test_leanflow_target_drift_adapter.py", payload)
+        self.assertIn("tools/fetch_target_drift_sources.py", payload)
+        self.assertIn("tools/test_fetch_target_drift_sources.py", payload)
         self.assertIn("tools/test_target_drift_wording_record.py", payload)
         self.assertIn("non-Git", readme)
         self.assertNotIn("the public base immediately", readme)
