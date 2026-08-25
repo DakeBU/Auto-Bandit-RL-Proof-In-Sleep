@@ -1,0 +1,194 @@
+{
+  "schema_version": 1,
+  "audit_id": "ABRL-PAPER-SOURCE-CONTRACT-PREAUDIT-V1",
+  "adjudicator_id": "primary-ai-assisted-adjudicator",
+  "human": false,
+  "independent_human_expert": false,
+  "source_pdf_reinspection": true,
+  "evaluated_outcomes_observed": false,
+  "cases": [
+    {
+      "case_id": "DBOBW-01-ALGORITHM-IDENTITY",
+      "faithful_contract_original": "match",
+      "injected_drift": "source_critical_change",
+      "source_locator_original": "correct",
+      "source_anchor": "Section 3 Algorithm 2, page 5; Theorems 4.1 and 5.1, pages 7 and 8",
+      "rationale": "Both endpoints follow one initialized Delayed SAPO policy and its shared monitoring and switch mechanism.",
+      "amendment_actions": []
+    },
+    {
+      "case_id": "DBOBW-02-INFORMATION-TIMING",
+      "faithful_contract_original": "match",
+      "injected_drift": "source_critical_change",
+      "source_locator_original": "correct",
+      "source_anchor": "Section 2 and Protocol 1, page 4",
+      "rationale": "The delay is unknown at action choice and the source availability set uses a strict inequality.",
+      "amendment_actions": []
+    },
+    {
+      "case_id": "DBOBW-03-ADVERSARY-SCOPE",
+      "faithful_contract_original": "match",
+      "injected_drift": "source_critical_change",
+      "source_locator_original": "correct",
+      "source_anchor": "Section 2 regime definitions, page 4",
+      "rationale": "The source fixes adversarial losses and all delays obliviously, while stochastic arm losses are iid.",
+      "amendment_actions": []
+    },
+    {
+      "case_id": "DBOBW-04-COMPARATOR",
+      "faithful_contract_original": "match",
+      "injected_drift": "source_critical_change",
+      "source_locator_original": "correct",
+      "source_anchor": "Section 2 regret definition, page 4",
+      "rationale": "The objective is expected regret against the best fixed arm, not a dynamic or pathwise comparator.",
+      "amendment_actions": []
+    },
+    {
+      "case_id": "DBOBW-05-DELAY-SURFACE",
+      "faithful_contract_original": "unclear",
+      "injected_drift": "source_critical_change",
+      "source_locator_original": "imprecise",
+      "source_anchor": "Section 2 additional notation, page 4; Theorem 4.1 and Lemma 4.2, page 7",
+      "rationale": "The original wording sounded like two delay statistics, but the source defines sigma_max as the time maximum of one outstanding-feedback count sigma(t).",
+      "amendment_actions": [
+        "faithful_contract",
+        "source_locator",
+        "paired_requirement_source_faithful_value"
+      ]
+    },
+    {
+      "case_id": "DBOBW-06-MAIN-VS-APPENDIX",
+      "faithful_contract_original": "match",
+      "injected_drift": "source_critical_change",
+      "source_locator_original": "correct",
+      "source_anchor": "Theorem 4.1, page 7; Appendix F Algorithm 8, pages 36--37",
+      "rationale": "Removing log K uses a distinct appendix modification and cannot be transferred to the main algorithm unchanged.",
+      "amendment_actions": []
+    },
+    {
+      "case_id": "SLB-01-MINIMAX-ORDER",
+      "faithful_contract_original": "match",
+      "injected_drift": "source_critical_change",
+      "source_locator_original": "correct",
+      "source_anchor": "Section 3.2 Theorem 3.8, pages 5--6",
+      "rationale": "The hard parameter may depend on the universally quantified policy; exchanging that order strengthens the theorem.",
+      "amendment_actions": []
+    },
+    {
+      "case_id": "SLB-02-Q-R-BOUNDEDNESS",
+      "faithful_contract_original": "match",
+      "injected_drift": "source_critical_change",
+      "source_locator_original": "correct",
+      "source_anchor": "Definitions 3.1--3.3 and Theorem 3.8, pages 4--6",
+      "rationale": "The Q and R bounds are explicit theorem assumptions tied to the support geometry.",
+      "amendment_actions": []
+    },
+    {
+      "case_id": "SLB-03-SUCCINCTNESS-MODE",
+      "faithful_contract_original": "match",
+      "injected_drift": "source_critical_change",
+      "source_locator_original": "correct",
+      "source_anchor": "Definition 3.3, page 5",
+      "rationale": "The faithful contract was sound, but the injected-drift contrast incorrectly summarized the source as globally at-most-s rather than an s-unit support representation that permits zero coefficients.",
+      "amendment_actions": [
+        "injected_drift",
+        "paired_requirement_source_faithful_value",
+        "paired_requirement_injected_drift_value"
+      ]
+    },
+    {
+      "case_id": "SLB-04-CARDINALITY-REGIME",
+      "faithful_contract_original": "mismatch",
+      "injected_drift": "source_critical_change",
+      "source_locator_original": "imprecise",
+      "source_anchor": "Assumption 3.7 and Theorem 3.8, pages 5--6",
+      "rationale": "The original contract called p and q cardinalities, but the source makes them positive real parameters controlling Phi bounds; only k and s describe support/group counts.",
+      "amendment_actions": [
+        "faithful_contract",
+        "source_locator"
+      ]
+    },
+    {
+      "case_id": "SLB-05-RATE-DEPENDENCE",
+      "faithful_contract_original": "match",
+      "injected_drift": "source_critical_change",
+      "source_locator_original": "correct",
+      "source_anchor": "Theorem 3.8, pages 5--6",
+      "rationale": "The two lower-bound branches use p and q in different stated roles and retain the q^(1/3) factor.",
+      "amendment_actions": []
+    },
+    {
+      "case_id": "SLB-06-COROLLARY-PROMOTION",
+      "faithful_contract_original": "match",
+      "injected_drift": "source_critical_change",
+      "source_locator_original": "imprecise",
+      "source_anchor": "Theorem 3.8 and Corollaries 4.1--4.3, pages 5--6 and 8--9",
+      "rationale": "Each application supplies a specific action geometry and embedding; the original locator did not identify the corollaries or pages.",
+      "amendment_actions": [
+        "source_locator"
+      ]
+    },
+    {
+      "case_id": "SGB-01-UPDATE-SEMANTICS",
+      "faithful_contract_original": "unclear",
+      "injected_drift": "source_critical_change",
+      "source_locator_original": "correct",
+      "source_anchor": "Equations (3)--(7), pages 2--3; Algorithm 1, page 22",
+      "rationale": "The source specifies a raw-reward softmax-gradient update but does not introduce a separately named reward baseline, so the original baseline phrase was ambiguous.",
+      "amendment_actions": [
+        "faithful_contract",
+        "paired_requirement_source_faithful_value"
+      ]
+    },
+    {
+      "case_id": "SGB-02-INITIALIZATION",
+      "faithful_contract_original": "match",
+      "injected_drift": "source_critical_change",
+      "source_locator_original": "correct",
+      "source_anchor": "Section 1.2, page 3; Algorithm 1, page 22",
+      "rationale": "Every score starts at zero and the policy uses the fixed source learning-rate convention.",
+      "amendment_actions": []
+    },
+    {
+      "case_id": "SGB-03-TWO-ARM-SCOPE",
+      "faithful_contract_original": "match",
+      "injected_drift": "source_critical_change",
+      "source_locator_original": "correct",
+      "source_anchor": "Section 2.1 Theorem 1, pages 4--5",
+      "rationale": "Theorem 1 is explicitly two-armed and the general K-arm analysis is separate and incomplete in general.",
+      "amendment_actions": []
+    },
+    {
+      "case_id": "SGB-04-REWARD-SUPPORT",
+      "faithful_contract_original": "match",
+      "injected_drift": "source_critical_change",
+      "source_locator_original": "imprecise",
+      "source_anchor": "Reward-family definition, page 1; Theorem 1 and Equation (8), pages 4--5",
+      "rationale": "Theorem 1 imports bounded support through membership in F, whose definition appears on page 1 rather than in the theorem text alone.",
+      "amendment_actions": [
+        "source_locator",
+        "paired_requirement_source_faithful_value"
+      ]
+    },
+    {
+      "case_id": "SGB-05-LEARNING-RATE-THRESHOLD",
+      "faithful_contract_original": "match",
+      "injected_drift": "source_critical_change",
+      "source_locator_original": "correct",
+      "source_anchor": "Theorems 1 and 2, pages 4--6",
+      "rationale": "The upper and lower results have different threshold constants, directions, and scopes.",
+      "amendment_actions": []
+    },
+    {
+      "case_id": "SGB-06-IDENTICAL-GAPS",
+      "faithful_contract_original": "match",
+      "injected_drift": "source_critical_change",
+      "source_locator_original": "imprecise",
+      "source_anchor": "Theorem 2, page 6; Theorem 3 and conjecture discussion, pages 7--8; Theorem 4, page 9",
+      "rationale": "The positive K-arm result is the identical-gap Theorem 4, while the Delta/K threshold remains conjectural and is motivated by Theorems 2 and 3.",
+      "amendment_actions": [
+        "source_locator"
+      ]
+    }
+  ]
+}

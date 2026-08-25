@@ -81,10 +81,13 @@ The next non-overlapping target is the generated-history bridge for Equation
    conditional one-step source increment agrees with the already compiled
    finite Equation-(5) mean/gap expression.
 
-This extension promotes `SGB-HISTORY` from `blocked` to `partial`: the
-recursive process and its Equation-(5) conditional-kernel integrals now
-compile, while the source-specific reward regularity and all rate arguments
-remain downstream.  It cannot promote `SGB-RATES`, Lemmas 2--3, or Theorems
+This extension promoted `SGB-HISTORY` from `blocked` to `partial`: the
+recursive process and its Equation-(5) conditional-kernel integrals compile.
+The fixed-IID source-contract layer below now closes the fixed two-arm law-to-
+environment-contract producer, while the generated-history
+`Integrable sourceIncrement` bridge and all rate arguments remain downstream.
+It cannot promote
+`SGB-RATES`, Lemmas 2--3, or Theorems
 1--4.  The Lean process accepts a general `initialTheta`; Algorithm 1's source
 initialization is the specialization `initialTheta := fun _ => 0`.
 
@@ -151,9 +154,10 @@ Twenty-five declarations package a
 potentials and bounds, the canonical two-arm trajectory and prefix
 filtration, and almost-everywhere conditional-distribution transports for both
 successor recurrences.  The contract fixes support in `[-1,1]` and the two arm
-means at every initial/successor fiber.  It covers the fixed-iid source model
-as a specialization but is not an equivalent fixed-`nu` encoding: it also
-permits history-varying conditional laws with the same support and means.
+means at every initial/successor fiber.  The fixed-IID adapter below realizes
+the source model as a specialization, but this is not an equivalent fixed-`nu`
+encoding: the broader contract also permits history-varying conditional laws
+with the same support and means.
 
 For a general prior, the prefix used here contains the latent environment, so
 the filtration is environment-revealed.  A fixed/Dirac environment recovers
@@ -172,6 +176,24 @@ This closes the fixed-horizon integrability and one-step conditional-
 expectation boundary.  It does not perform the global tower iteration, sum the
 expected squared failure mass, assemble Equation (7), or prove Theorem 1.
 
+## Active fixed-IID source-contract extension
+
+Eight declarations (two definitions and six theorems) now realize the fixed
+two-arm source assumptions as a stationary history environment over `Unit`.
+They define the arm-indexed reward kernel and environment, identify every
+initial and successor feedback fiber with the selected arm law, supply reward
+measurability, and prove
+`twoArmFixedIIDEnvironment_contract`.  The final theorem maps probability
+laws with a.e. support in `[-1,1]` and the stated integral means into the
+existing `TwoArmBoundedFixedMeanEnvironmentContract`.
+
+This is a one-way source-law-to-contract bridge.  It neither states nor proves
+that every history-dependent environment satisfying the broader contract is
+fixed IID.  Its reward-identity `AEStronglyMeasurable` theorem also does not
+prove Equation-(5)'s `Integrable sourceIncrement` premise along generated
+histories.  That integrability bridge, the iterated conditional recurrences,
+and every regret endpoint remain open.
+
 ## Semantic boundary
 
 The finite sum over the selected arm is the exact algebra obtained after
@@ -183,9 +205,12 @@ explicit coordinate-update integrability and arm-reward integral equalities.
 It also exposes the source zero-initialized two-arm parameter/probability
 process and exact Equation-(11) odds identity. Separately, it compiles the
 source-exact `C_eta` and Equation-(8) inequality for a generic bounded reward
-law. The new bounded fixed-mean contract packages, but does not derive from an
-equivalent fixed-iid-law interface, the uniform reward assumptions used by the
-generated Equation-(8) and recurrence layers.  The generated-kernel,
+law. The fixed-IID source adapter now derives the existing bounded fixed-mean
+contract from fixed two-arm probability laws with support and integral-mean
+hypotheses; the bridge is deliberately one-way rather than an equivalence.
+It does not close the separate generated-history `Integrable sourceIncrement`
+premise required by the Equation-(5) kernel calculation.
+The generated-kernel,
 fixed-history, measurable-trajectory, fixed-horizon integrability, and
 tower-ready one-step conditional-expectation statements now compile.  They do
 not prove a global iterated recurrence, failure-mass estimate, or learning-rate
@@ -200,8 +225,10 @@ It compiles the local finite-action mechanism, the generated process-level
 Equation-(5)/(8) bridges, the pathwise Equation-(9)/(11) two-arm structure,
 initial and fixed-history recurrence inequalities, their measurable
 conditional-distribution transport, and fixed-horizon integrable
-conditional-expectation forms.  Global tower iteration, the expected squared
-failure-mass estimate, Equation-(7) terminal assembly, and every paper-level
+conditional-expectation forms, together with the fixed-IID source-law-to-
+environment-contract bridge.  Global tower iteration, the expected squared
+failure-mass estimate, Equation-(7) terminal assembly, the Equation-(5)
+generated-history `Integrable sourceIncrement` bridge, and every paper-level
 rate endpoint remain open.
 
 ## Lean target
@@ -239,6 +266,14 @@ BanditRLProof.StochasticGradientBandit.integrable_twoArmForwardTrajectorySuccess
 BanditRLProof.StochasticGradientBandit.integrable_twoArmInverseTrajectorySuccessorPotential
 BanditRLProof.StochasticGradientBandit.twoArmForwardTrajectorySuccessor_condExp_le_recurrenceBound
 BanditRLProof.StochasticGradientBandit.twoArmInverseTrajectorySuccessor_condExp_le_recurrenceBound
+BanditRLProof.StochasticGradientBandit.twoArmFixedIIDRewardKernel
+BanditRLProof.StochasticGradientBandit.twoArmFixedIIDRewardKernel_apply
+BanditRLProof.StochasticGradientBandit.twoArmFixedIIDRewardKernel_isMarkov
+BanditRLProof.StochasticGradientBandit.twoArmFixedIIDEnvironment
+BanditRLProof.StochasticGradientBandit.twoArmFixedIIDEnvironment_initialFeedback_apply
+BanditRLProof.StochasticGradientBandit.twoArmFixedIIDEnvironment_feedback_apply
+BanditRLProof.StochasticGradientBandit.twoArmFixedIIDReward_aestronglyMeasurable
+BanditRLProof.StochasticGradientBandit.twoArmFixedIIDEnvironment_contract
 ```
 
 Target files: `BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean`,
@@ -249,8 +284,9 @@ Target files: `BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean`,
 `BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRecurrence.lean`,
 `BanditRLProof/Algorithms/StochasticGradientBanditTwoArmInitialRecurrence.lean`,
 `BanditRLProof/Algorithms/StochasticGradientBanditTwoArmMeasurableRecurrence.lean`,
+`BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean`,
 and
-`BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean`.
+`BanditRLProof/Algorithms/StochasticGradientBanditTwoArmFixedIID.lean`.
 
 ## Gate
 
@@ -264,12 +300,14 @@ lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRecurrence.
 lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTwoArmInitialRecurrence.lean
 lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTwoArmMeasurableRecurrence.lean
 lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean
+lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTwoArmFixedIID.lean
 lake env lean Tests/StochasticGradientBanditPaperAuditCanary.lean
 lake env lean Tests/StochasticGradientBanditConditionalExponentialAuditCanary.lean
 lake env lean Tests/StochasticGradientBanditTwoArmRecurrenceCanary.lean
 lake env lean Tests/StochasticGradientBanditTwoArmInitialRecurrenceCanary.lean
 lake env lean Tests/StochasticGradientBanditTwoArmMeasurableRecurrenceCanary.lean
 lake env lean Tests/StochasticGradientBanditTwoArmPathIntegrabilityCanary.lean
+lake env lean Tests/StochasticGradientBanditTwoArmFixedIIDCanary.lean
 python tools/bandit.py check
 ```
 
@@ -301,10 +339,16 @@ python tools/bandit.py check
   bounds, 1 history-parameter envelope, 2 potential identities, 2 fixed-horizon
   integrability theorems, 2 conditional-expectation/conditional-distribution
   identities, and 2 tower-ready conditional recurrence bounds.
-- [x] The nine compiled layers contain 135 named declarations in the exact
-  `26+18+18+14+4+10+3+25+17` split.
+- [x] The fixed-IID source-contract extension compiles with 8 named
+  declarations: 2 definitions and 6 theorems, ending in the one-way
+  `twoArmFixedIIDEnvironment_contract` bridge.
+- [ ] Prove that the fixed-IID construction discharges Equation-(5)'s
+  generated-history `Integrable sourceIncrement` premise; reward-identity
+  `AEStronglyMeasurable` alone is not this result.
+- [x] The ten compiled layers contain 143 named declarations in the exact
+  `26+18+18+14+4+10+3+25+17+8` split.
 - [ ] Refresh the declaration indexes, proof Blueprint, website build, and
-  anonymous claim ledger to the 135-declaration boundary.
+  anonymous claim ledger to the 143-declaration boundary.
 - [ ] Refresh the separate paper repository's arXiv and ICLR audit tables and
   rebuild both PDFs.
 - [ ] Re-run the repository-wide Lean, harness, website, and anonymous-artifact

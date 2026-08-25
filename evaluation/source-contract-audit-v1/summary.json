@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "audit_id": "ABRL-PAPER-SOURCE-CONTRACT-PREAUDIT-V1",
+  "status": "ai_assisted_pre_audit_complete_human_expert_validation_pending",
+  "case_count": 18,
+  "source_count": 3,
+  "reviewer_counts": {
+    "reviewer_a": {
+      "faithful_contract": {
+        "match": 18,
+        "mismatch": 0,
+        "unclear": 0
+      },
+      "injected_drift": {
+        "source_critical_change": 18,
+        "not_critical": 0,
+        "unclear": 0
+      },
+      "source_locator": {
+        "correct": 15,
+        "imprecise": 3,
+        "wrong": 0
+      }
+    },
+    "reviewer_b": {
+      "faithful_contract": {
+        "match": 15,
+        "mismatch": 1,
+        "unclear": 2
+      },
+      "injected_drift": {
+        "source_critical_change": 18,
+        "not_critical": 0,
+        "unclear": 0
+      },
+      "source_locator": {
+        "correct": 16,
+        "imprecise": 2,
+        "wrong": 0
+      }
+    }
+  },
+  "agreement": {
+    "faithful_contract": {
+      "agreement_count": 15,
+      "raw_agreement": 0.8333333333333334,
+      "cohen_kappa": null,
+      "cohen_kappa_reason": "Reviewer A used only the match category, so kappa is not treated as interpretable.",
+      "gwet_ac1": 0.8192468619246863,
+      "positive_agreement_match": 0.9090909090909091,
+      "negative_agreement_nonmatch": 0.0
+    },
+    "injected_drift": {
+      "agreement_count": 18,
+      "raw_agreement": 1.0,
+      "cohen_kappa": null,
+      "cohen_kappa_reason": "Both reviewers used only the source_critical_change category.",
+      "gwet_ac1": 1.0,
+      "positive_agreement_source_critical_change": 1.0,
+      "negative_agreement_other": null
+    },
+    "source_locator": {
+      "agreement_count": 13,
+      "raw_agreement": 0.7222222222222222,
+      "cohen_kappa": -0.15384615384615355,
+      "gwet_ac1": 0.684487291849255,
+      "positive_agreement_correct": 0.8387096774193549,
+      "negative_agreement_noncorrect": 0.0
+    },
+    "case_level_any_dimension_disagreement_count": 6,
+    "case_level_any_dimension_disagreement_rate": 0.3333333333333333,
+    "disagreement_case_ids": [
+      "DBOBW-05-DELAY-SURFACE",
+      "SLB-04-CARDINALITY-REGIME",
+      "SLB-06-COROLLARY-PROMOTION",
+      "SGB-01-UPDATE-SEMANTICS",
+      "SGB-04-REWARD-SUPPORT",
+      "SGB-06-IDENTICAL-GAPS"
+    ]
+  },
+  "adjudicated_original_contracts": {
+    "faithful_contract": {
+      "match": 15,
+      "mismatch": 1,
+      "unclear": 2
+    },
+    "injected_drift": {
+      "source_critical_change": 18,
+      "not_critical": 0,
+      "unclear": 0
+    },
+    "source_locator": {
+      "correct": 13,
+      "imprecise": 5,
+      "wrong": 0
+    }
+  },
+  "per_source_adjudicated_original": [
+    {
+      "source_prefix": "DBOBW",
+      "source_id": "PPR-SCHLISSELBERG-LANCEWICKI-AUER-MANSOUR-2025-DELAYED-BOBW",
+      "case_count": 6,
+      "faithful_match": 5,
+      "faithful_mismatch": 0,
+      "faithful_unclear": 1,
+      "injected_source_critical_change": 6,
+      "injected_not_critical": 0,
+      "injected_unclear": 0,
+      "locator_correct": 5,
+      "locator_imprecise": 1,
+      "locator_wrong": 0
+    },
+    {
+      "source_prefix": "SLB",
+      "source_id": "PPR-ZENG-HONORIO-2025-SUCCINCT-LOWER-BOUNDS",
+      "case_count": 6,
+      "faithful_match": 5,
+      "faithful_mismatch": 1,
+      "faithful_unclear": 0,
+      "injected_source_critical_change": 6,
+      "injected_not_critical": 0,
+      "injected_unclear": 0,
+      "locator_correct": 4,
+      "locator_imprecise": 2,
+      "locator_wrong": 0
+    },
+    {
+      "source_prefix": "SGB",
+      "source_id": "PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB",
+      "case_count": 6,
+      "faithful_match": 5,
+      "faithful_mismatch": 0,
+      "faithful_unclear": 1,
+      "injected_source_critical_change": 6,
+      "injected_not_critical": 0,
+      "injected_unclear": 0,
+      "locator_correct": 4,
+      "locator_imprecise": 2,
+      "locator_wrong": 0
+    }
+  ],
+  "pre_execution_amendment": {
+    "amended_case_count": 7,
+    "amended_case_rate": 0.3888888888888889,
+    "case_ids": [
+      "DBOBW-05-DELAY-SURFACE",
+      "SLB-03-SUCCINCTNESS-MODE",
+      "SLB-04-CARDINALITY-REGIME",
+      "SLB-06-COROLLARY-PROMOTION",
+      "SGB-01-UPDATE-SEMANTICS",
+      "SGB-04-REWARD-SUPPORT",
+      "SGB-06-IDENTICAL-GAPS"
+    ],
+    "outcomes_observed_before_amendment": false
+  },
+  "claim_boundary": {
+    "human_expert_validation_complete": false,
+    "benchmark_execution_complete": false,
+    "workflow_effectiveness_supported": false
+  }
+}

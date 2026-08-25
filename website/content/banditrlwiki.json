@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated": "2026-08-24",
+  "updated": "2026-08-26",
   "title": "BanditRLwiki",
   "scope": "A curated, assumption-indexed atlas of upper bounds, lower bounds, optimality gaps, primary sources, and local BanditRLlib evidence. It is not an exhaustive claim about all bandit or reinforcement-learning literature.",
   "active_source_audits": [
@@ -32,9 +32,9 @@
       "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/a4e683f0ce6b91e7fbdae9d32642d88f-Abstract-Conference.html",
       "milestone_id": "NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT-MECHANISM-AUDIT",
       "lean_status": "partial",
-      "compiled_declaration_count": 135,
-      "scope": "Nine evidence layers compile in the exact 26+18+18+14+4+10+3+25+17 split: finite Algorithm-1/Equations-(3)–(7) algebra; recursive-history and Equation-(5) kernels; pathwise two-arm Equation-(9)/(11); standalone C-eta/Equation (8); generated-kernel Equation (8); fixed-history successor recurrences; source-initial recurrences; measurable contract/trajectory/conditional-distribution transport; and fixed-horizon path integrability with tower-ready conditional recurrence bounds.",
-      "boundary": "This is a source-frozen partial port, not a proof of Theorems 1–4. The bounded fixed-mean contract is not claimed equivalent to a fixed-iid reward law; with a general prior the prefix reveals the latent environment, while a fixed/Dirac environment recovers the fixed-instance reading. Global tower iteration, expected squared failure-mass control, Equation-(7) assembly, the exact Theorem-1 endpoint, and all Theorems 2–4 learning-rate rates remain open.",
+      "compiled_declaration_count": 143,
+      "scope": "Ten evidence layers compile in the exact 26+18+18+14+4+10+3+25+17+8 split: finite Algorithm-1/Equations-(3)–(7) algebra; recursive-history and Equation-(5) kernels; pathwise two-arm Equation-(9)/(11); standalone C-eta/Equation (8); generated-kernel Equation (8); fixed-history successor recurrences; source-initial recurrences; measurable contract/trajectory/conditional-distribution transport; fixed-horizon path integrability with tower-ready conditional recurrence bounds; and a fixed-IID source-law adapter with two definitions and six theorems.",
+      "boundary": "This is a source-frozen partial port, not a proof of Theorems 1–4. The compiled twoArmFixedIIDEnvironment_contract is a one-way bridge from fixed two-arm probability laws with bounded support and stated means to the existing bounded fixed-mean contract; it is not an equivalence and does not prove Equation-(5)'s generated-history Integrable sourceIncrement premise. That integrability bridge, global tower iteration, expected squared failure-mass control, Equation-(7) assembly, the exact Theorem-1 endpoint, and all Theorems 2–4 learning-rate endpoints remain open.",
       "representative_declarations": [
         "BanditRLProof.StochasticGradientBandit.softmaxProbability_sum",
         "BanditRLProof.StochasticGradientBandit.expectedSourceIncrement_eq_gapCoordinate",
@@ -48,7 +48,8 @@
         "BanditRLProof.StochasticGradientBandit.TwoArmBoundedFixedMeanEnvironmentContract",
         "BanditRLProof.StochasticGradientBandit.trajectoryPrefix_condDistrib_integral_forwardSuccessor_le",
         "BanditRLProof.StochasticGradientBandit.integrable_twoArmForwardTrajectorySuccessorPotential",
-        "BanditRLProof.StochasticGradientBandit.twoArmForwardTrajectorySuccessor_condExp_le_recurrenceBound"
+        "BanditRLProof.StochasticGradientBandit.twoArmForwardTrajectorySuccessor_condExp_le_recurrenceBound",
+        "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDEnvironment_contract"
       ]
     }
   ],

@@ -79,6 +79,45 @@ exporter without executing the roughly 155 MB export.
 The full JSON is intentionally a local artifact.  The versioned
 `research-wiki/proof-graph/benchmark_report.json` contains its hash and compact results.
 
+## Cross-version fixed-support replication
+
+On 2026-08-26 the unchanged benchmark configuration was rerun against an audited local graph.
+The committed compact evidence is `research-wiki/proof-graph/benchmark_replication.json`; the
+155 MB graph remains local and is bound by SHA-256 rather than a machine-specific path.
+
+| Graph | SHA-256 | project nodes | external boundary | edges | imports |
+| --- | --- | ---: | ---: | ---: | ---: |
+| frozen | `177233bc84b7f18928f66b1bf95545095d7dd1373f32d7dd2ed286c46bc520c9` | 13,512 | 4,309 | 664,837 | 2,237 |
+| current | `126e92a6006f55c5da42cd40cc84aef176d23ade6d796591b78d3e27b116ec56` | 14,761 | 4,557 | 713,742 | 2,385 |
+
+Despite the distinct graph hashes and larger current graph, the exact project-support digest and
+the selected deterministic metrics remained unchanged for every frozen root:
+
+| root family | support declarations | DAG depth | proof-term object proxy |
+| --- | ---: | ---: | ---: |
+| EXP3 realized all-time | 421 | 23 | 238,985 |
+| half-Tsallis finite-arm IID log | 505 | 30 | 341,127 |
+| OFUL all-time confidence | 312 | 26 | 188,840 |
+
+The fixed support family's ZDD structures also remained exact: lexical `1238 / 55872`,
+frequency-descending `1163 / 52367`, frequency-ascending `1173 / 52881`, and first-seen
+`1238 / 55882`, where each pair is `nonterminal nodes / serialized proxy bytes`.
+Machine-local build seconds, `tracemalloc` peaks, and Lean check times are excluded from equality.
+
+The source-bound check is:
+
+```text
+python tools/proof_graph_lab.py validate-replication \
+  --artifact research-wiki/proof-graph/benchmark_replication.json \
+  --frozen-report research-wiki/proof-graph/benchmark_report.json \
+  --current-graph <path-to-current-proof-graph.json> \
+  --config research-wiki/proof-graph/benchmark_roots.json
+```
+
+This evidence is labeled **deterministic fixed-support replication**.  It shows reproducibility of
+the selected outputs under the fixed-root protocol; it does not establish search acceleration,
+semantic novelty, or irreducibility.
+
 ## External tool and license review
 
 The implementation was designed after a read-only review of:

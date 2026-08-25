@@ -180,8 +180,18 @@ class AnonymousSupplementTests(unittest.TestCase):
             prefix + "research-wiki/proof-graph/benchmark_report.json", names
         )
         self.assertIn(
+            prefix + "research-wiki/proof-graph/benchmark_replication.json", names
+        )
+        self.assertIn(
+            prefix + "evidence/proof-graph/benchmark_replication.json", names
+        )
+        self.assertIn(
             prefix + "research-wiki/proof-graph/proof_cost.schema.json", names
         )
+        for rel in BUILDER.SOURCE_CONTRACT_AUDIT_FILES:
+            self.assertIn(prefix + rel, names)
+        for rel in BUILDER.SOURCE_CONTRACT_AUDIT_TOOLS:
+            self.assertIn(prefix + rel, names)
         self.assertIn(prefix + BUILDER.EXTERNAL_COMPARATOR_PLAN, names)
         self.assertIn(prefix + BUILDER.EXTERNAL_COMPARATOR_SEAL, names)
         self.assertIn(prefix + BUILDER.LEANFLOW_ADAPTER_CONTRACT, names)
@@ -223,6 +233,40 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertTrue(report["artifact_verified"])
         self.assertTrue(report["theorem_audit_comparison_verified"])
         self.assertFalse(report["target_drift_results_present"])
+        source_audit = subprocess.run(
+            [sys.executable, "tools/validate_source_contract_audit.py"],
+            cwd=str(artifact),
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            encoding="utf-8",
+        )
+        self.assertEqual(
+            source_audit.returncode, 0,
+            msg=source_audit.stdout + source_audit.stderr,
+        )
+
+    def test_source_contract_audit_removes_authoring_git_fingerprints(self):
+        payload = BUILDER.build_payload(allow_missing_graph=True)
+        forbidden = (
+            BUILDER.SOURCE_AUDIT_PUBLIC_BASE_COMMIT.encode("ascii"),
+            *(item.encode("ascii") for item in BUILDER.SOURCE_AUDIT_PUBLIC_BLOB_IDS),
+        )
+        for rel in BUILDER.SOURCE_CONTRACT_AUDIT_FILES + BUILDER.SOURCE_CONTRACT_AUDIT_TOOLS:
+            with self.subTest(path=rel):
+                self.assertFalse(any(item in payload[rel] for item in forbidden))
+        base = json.loads(
+            payload[BUILDER.SOURCE_AUDIT_BASE_MANIFEST].decode("utf-8")
+        )
+        anonymous_base = json.loads(
+            payload["evidence/anonymous-base-manifest.json"].decode("utf-8")
+        )
+        self.assertEqual(
+            base["base_git_commit"],
+            anonymous_base["schema_compatibility_reference"],
+        )
+        for row in base["snapshots"].values():
+            self.assertNotIn("git_blob_sha1", row)
+            self.assertRegex(row["snapshot_binding_sha1"], r"^[0-9a-f]{40}$")
 
     def test_extracted_external_comparator_validator_passes(self):
         destination = self.root / "external-comparator"
@@ -443,7 +487,7 @@ class AnonymousSupplementTests(unittest.TestCase):
         )
         self.assertEqual(sgb_row["status"], "partial")
         self.assertEqual(sgb_row["source_record_ids"], [BUILDER.SGB_AUDIT_ID])
-        self.assertEqual(ledger["stochastic_gradient_bandit"]["declaration_count"], 135)
+        self.assertEqual(ledger["stochastic_gradient_bandit"]["declaration_count"], 143)
         self.assertEqual(
             ledger["stochastic_gradient_bandit"]["finite_algebra_declaration_count"],
             26,
@@ -480,6 +524,10 @@ class AnonymousSupplementTests(unittest.TestCase):
             ledger["stochastic_gradient_bandit"]["path_integrability_declaration_count"],
             17,
         )
+        self.assertEqual(
+            ledger["stochastic_gradient_bandit"]["fixed_iid_declaration_count"],
+            8,
+        )
         self.assertTrue(
             ledger["stochastic_gradient_bandit"]["generated_trajectory_compiled"]
         )
@@ -499,8 +547,14 @@ class AnonymousSupplementTests(unittest.TestCase):
             "trajectory_cond_distrib_recurrence_compiled",
             "path_integrability_compiled",
             "conditional_expectation_one_step_recurrence_compiled",
+            "fixed_iid_contract_compiled",
         ):
             self.assertTrue(ledger["stochastic_gradient_bandit"][flag])
+        self.assertFalse(
+            ledger["stochastic_gradient_bandit"][
+                "coordinate_update_integrability_verified"
+            ]
+        )
         self.assertFalse(
             ledger["stochastic_gradient_bandit"]["uniform_reward_regularities_verified"]
         )
@@ -559,7 +613,7 @@ class AnonymousSupplementTests(unittest.TestCase):
         succinct = rows["succinct-lower-bound-source-frozen-audit"]
         self.assertEqual(succinct["compiled_declaration_count"], 54)
         sgb = rows["stochastic-gradient-bandit-source-frozen-audit"]
-        self.assertEqual(sgb["compiled_declaration_count"], 135)
+        self.assertEqual(sgb["compiled_declaration_count"], 143)
         self.assertEqual(
             sgb["declaration_count_breakdown"],
             {
@@ -572,6 +626,7 @@ class AnonymousSupplementTests(unittest.TestCase):
                 "two_arm_initial_recurrence": 3,
                 "measurable_contract_and_cond_distrib_transport": 25,
                 "path_integrability_and_conditional_recurrence": 17,
+                "fixed_iid_source_contract_bridge": 8,
             },
         )
         for row in (delayed, succinct, sgb):
@@ -649,6 +704,7 @@ class AnonymousSupplementTests(unittest.TestCase):
             BUILDER.SGB_TRAJECTORY_COND_DISTRIB_RECURRENCE_DECLARATIONS,
             BUILDER.SGB_PATH_INTEGRABILITY_DECLARATIONS,
             BUILDER.SGB_CONDITIONAL_RECURRENCE_DECLARATIONS,
+            BUILDER.SGB_FIXED_IID_DECLARATIONS,
         )
         for required in required_sets:
             with self.subTest(victim_set=sorted(required)):
@@ -668,7 +724,7 @@ class AnonymousSupplementTests(unittest.TestCase):
                 row["full_name"] = replacement
                 with self.assertRaisesRegex(
                     ValueError,
-                    "135 declarations across the frozen",
+                    "143 declarations across the frozen",
                 ):
                     BUILDER.validate_sgb_count(records, index)
 

@@ -22,6 +22,28 @@ from typing import Any, Iterable, Mapping, Sequence
 
 
 STATUS_VOCABULARY = ("compiled", "prototype", "partial", "planned", "blocked")
+FIXED_SUPPORT_REPLICATION_LABEL = "deterministic fixed-support replication"
+FIXED_SUPPORT_NON_CLAIMS = (
+    "search acceleration",
+    "semantic novelty",
+    "irreducibility",
+)
+FIXED_SUPPORT_ESTABLISHES = (
+    "The same frozen roots and analyzer yield identical selected support, depth, "
+    "proof-term-proxy, and ZDD serialized-structure metrics on two distinct graph exports."
+)
+FIXED_SUPPORT_METRIC_NAMES = (
+    "project_support_digest",
+    "support_declarations",
+    "semantic_dag_depth",
+    "proof_term_object_proxy_sum",
+)
+FIXED_SUPPORT_ZDD_FIELDS = ("nonterminal_nodes", "serialized_proxy_bytes")
+FIXED_SUPPORT_EXCLUDED_FIELDS = (
+    "build_seconds",
+    "tracemalloc_peak_bytes",
+    "lean_check_time",
+)
 
 
 def _canonical_json_bytes(value: Any) -> bytes:
@@ -1054,6 +1076,304 @@ def benchmark_report(
     }
 
 
+def _fixed_support_benchmark_projection(
+    report: Mapping[str, Any],
+) -> dict[str, dict[str, Any]]:
+    rows: dict[str, dict[str, Any]] = {}
+    for benchmark in report.get("benchmarks", []):
+        benchmark_id = benchmark["id"]
+        if benchmark_id in rows:
+            raise ValueError(f"duplicate fixed-support benchmark id: {benchmark_id}")
+        cost = benchmark["proof_cost_vector"]
+        rows[benchmark_id] = {
+            "root": benchmark["root"],
+            "project_support_digest": benchmark["project_support_digest"],
+            "support_declarations": int(cost["reused_compiled_declaration_count"]),
+            "semantic_dag_depth": int(cost["semantic_dag"]["depth"]),
+            "proof_term_object_proxy_sum": int(cost["proof_term_object_proxy_sum"]),
+        }
+    if not rows:
+        raise ValueError("fixed-support report has no benchmarks")
+    return rows
+
+
+def _fixed_support_zdd_projection(
+    report: Mapping[str, Any],
+) -> dict[str, dict[str, int]]:
+    rows: dict[str, dict[str, int]] = {}
+    for order in report.get("zdd", {}).get("orders", []):
+        order_name = order["order"]
+        if order_name in rows:
+            raise ValueError(f"duplicate ZDD order: {order_name}")
+        rows[order_name] = {
+            "nonterminal_nodes": int(order["nonterminal_nodes"]),
+            "serialized_proxy_bytes": int(order["serialized_proxy_bytes"]),
+        }
+    if not rows:
+        raise ValueError("fixed-support report has no ZDD ordering results")
+    return rows
+
+
+def fixed_support_replication_report(
+    frozen_report: Mapping[str, Any], current_report: Mapping[str, Any]
+) -> dict[str, Any]:
+    """Compare deterministic support/ZDD projections across two graph exports.
+
+    The comparison deliberately excludes timings, memory peaks, and build seconds.  Those fields
+    are machine-local observations rather than deterministic fixed-support outputs.
+    """
+
+    frozen_graph = frozen_report["graph"]
+    current_graph = current_report["graph"]
+    frozen_counts = {key: int(value) for key, value in frozen_graph["counts"].items()}
+    current_counts = {key: int(value) for key, value in current_graph["counts"].items()}
+    if set(frozen_counts) != set(current_counts):
+        raise ValueError("graph count fields differ between frozen and current reports")
+
+    frozen_benchmarks = _fixed_support_benchmark_projection(frozen_report)
+    current_benchmarks = _fixed_support_benchmark_projection(current_report)
+    if set(frozen_benchmarks) != set(current_benchmarks):
+        raise ValueError("fixed-support benchmark ids differ across reports")
+
+    benchmark_rows: list[dict[str, Any]] = []
+    for benchmark_id in frozen_benchmarks:
+        frozen = frozen_benchmarks[benchmark_id]
+        current = current_benchmarks[benchmark_id]
+        if frozen["root"] != current["root"]:
+            raise ValueError(f"fixed-support root drift for {benchmark_id}")
+        equality = {
+            name: frozen[name] == current[name] for name in FIXED_SUPPORT_METRIC_NAMES
+        }
+        benchmark_rows.append(
+            {
+                "id": benchmark_id,
+                "root": frozen["root"],
+                "frozen": {name: frozen[name] for name in FIXED_SUPPORT_METRIC_NAMES},
+                "current": {name: current[name] for name in FIXED_SUPPORT_METRIC_NAMES},
+                "equality": equality,
+                "unchanged": all(equality.values()),
+            }
+        )
+
+    frozen_zdd = _fixed_support_zdd_projection(frozen_report)
+    current_zdd = _fixed_support_zdd_projection(current_report)
+    if set(frozen_zdd) != set(current_zdd):
+        raise ValueError("ZDD order ids differ across reports")
+    order_alias = {
+        "frequency_desc": "freq_desc",
+        "frequency_asc": "freq_asc",
+    }
+    zdd_rows: list[dict[str, Any]] = []
+    for order_name in frozen_zdd:
+        frozen = frozen_zdd[order_name]
+        current = current_zdd[order_name]
+        equality = {name: frozen[name] == current[name] for name in frozen}
+        zdd_rows.append(
+            {
+                "order": order_name,
+                "display_order": order_alias.get(order_name, order_name),
+                "frozen": frozen,
+                "current": current,
+                "equality": equality,
+                "unchanged": all(equality.values()),
+            }
+        )
+
+    graph_hash_changed = frozen_graph["sha256"].lower() != current_graph["sha256"].lower()
+    graph_count_delta = {
+        key: current_counts[key] - frozen_counts[key] for key in sorted(frozen_counts)
+    }
+    benchmarks_unchanged = all(row["unchanged"] for row in benchmark_rows)
+    zdd_unchanged = all(row["unchanged"] for row in zdd_rows)
+    return {
+        "schema_version": 1,
+        "status": "replicated",
+        "evidence_label": FIXED_SUPPORT_REPLICATION_LABEL,
+        "claim_boundary": {
+            "establishes": FIXED_SUPPORT_ESTABLISHES,
+            "does_not_establish": list(FIXED_SUPPORT_NON_CLAIMS),
+        },
+        "protocol": {
+            "root_contract": "same benchmark ids and exact declaration roots",
+            "deterministic_fields": list(FIXED_SUPPORT_METRIC_NAMES),
+            "zdd_fields": list(FIXED_SUPPORT_ZDD_FIELDS),
+            "excluded_nondeterministic_fields": list(FIXED_SUPPORT_EXCLUDED_FIELDS),
+        },
+        "graph_change": {
+            "frozen": {
+                "sha256": frozen_graph["sha256"].lower(),
+                "counts": frozen_counts,
+            },
+            "current": {
+                "sha256": current_graph["sha256"].lower(),
+                "counts": current_counts,
+            },
+            "sha256_changed": graph_hash_changed,
+            "count_delta": graph_count_delta,
+        },
+        "benchmarks": benchmark_rows,
+        "zdd_orders": zdd_rows,
+        "conclusion": {
+            "distinct_graph_exports": graph_hash_changed,
+            "all_fixed_support_metrics_unchanged": benchmarks_unchanged,
+            "all_zdd_structure_metrics_unchanged": zdd_unchanged,
+            "replication_passed": graph_hash_changed and benchmarks_unchanged and zdd_unchanged,
+        },
+    }
+
+
+def validate_fixed_support_replication(
+    artifact: Mapping[str, Any],
+    frozen_report: Mapping[str, Any] | None = None,
+    current_report: Mapping[str, Any] | None = None,
+) -> None:
+    """Fail closed on an internally inconsistent or source-inconsistent replication artifact."""
+
+    expected_top_level = {
+        "schema_version",
+        "status",
+        "evidence_label",
+        "claim_boundary",
+        "protocol",
+        "graph_change",
+        "benchmarks",
+        "zdd_orders",
+        "conclusion",
+    }
+    if set(artifact) != expected_top_level:
+        raise ValueError("fixed-support replication top-level fields drift")
+    if artifact.get("schema_version") != 1:
+        raise ValueError("unsupported fixed-support replication schema_version")
+    if artifact.get("status") != "replicated":
+        raise ValueError("fixed-support replication status is not replicated")
+    if artifact.get("evidence_label") != FIXED_SUPPORT_REPLICATION_LABEL:
+        raise ValueError("fixed-support replication evidence label drift")
+    expected_claim_boundary = {
+        "establishes": FIXED_SUPPORT_ESTABLISHES,
+        "does_not_establish": list(FIXED_SUPPORT_NON_CLAIMS),
+    }
+    if artifact.get("claim_boundary") != expected_claim_boundary:
+        raise ValueError("fixed-support replication claim boundary drift")
+    expected_protocol = {
+        "root_contract": "same benchmark ids and exact declaration roots",
+        "deterministic_fields": list(FIXED_SUPPORT_METRIC_NAMES),
+        "zdd_fields": list(FIXED_SUPPORT_ZDD_FIELDS),
+        "excluded_nondeterministic_fields": list(FIXED_SUPPORT_EXCLUDED_FIELDS),
+    }
+    if artifact.get("protocol") != expected_protocol:
+        raise ValueError("fixed-support replication protocol drift")
+
+    graph_change = artifact.get("graph_change", {})
+    if set(graph_change) != {"frozen", "current", "sha256_changed", "count_delta"}:
+        raise ValueError("fixed-support replication graph-change fields drift")
+    frozen_graph = graph_change.get("frozen", {})
+    current_graph = graph_change.get("current", {})
+    if set(frozen_graph) != {"sha256", "counts"} or set(current_graph) != {
+        "sha256",
+        "counts",
+    }:
+        raise ValueError("fixed-support replication graph fields drift")
+    frozen_counts = frozen_graph.get("counts", {})
+    current_counts = current_graph.get("counts", {})
+    required_count_fields = {
+        "project_nodes",
+        "external_boundary_nodes",
+        "edges",
+        "module_imports",
+    }
+    if set(frozen_counts) != required_count_fields or set(current_counts) != required_count_fields:
+        raise ValueError("fixed-support replication graph count fields are invalid")
+    for graph_label, graph_row in (("frozen", frozen_graph), ("current", current_graph)):
+        digest = str(graph_row.get("sha256", ""))
+        try:
+            digest_is_valid = len(digest) == 64 and int(digest, 16) >= 0
+        except ValueError:
+            digest_is_valid = False
+        if not digest_is_valid:
+            raise ValueError(f"fixed-support replication {graph_label} SHA-256 is invalid")
+    expected_delta = {
+        key: int(current_counts[key]) - int(frozen_counts[key])
+        for key in sorted(frozen_counts)
+    }
+    if graph_change.get("count_delta") != expected_delta:
+        raise ValueError("fixed-support replication graph count delta mismatch")
+    expected_hash_changed = str(frozen_graph.get("sha256", "")).lower() != str(
+        current_graph.get("sha256", "")
+    ).lower()
+    if graph_change.get("sha256_changed") is not expected_hash_changed:
+        raise ValueError("fixed-support replication graph hash-change flag mismatch")
+
+    benchmarks = artifact.get("benchmarks", [])
+    if not benchmarks or len({row.get("id") for row in benchmarks}) != len(benchmarks):
+        raise ValueError("fixed-support replication benchmarks are absent or duplicated")
+    for row in benchmarks:
+        if set(row) != {"id", "root", "frozen", "current", "equality", "unchanged"}:
+            raise ValueError(f"fixed-support benchmark fields drift for {row.get('id')}")
+        frozen = row.get("frozen", {})
+        current = row.get("current", {})
+        if (
+            set(frozen) != set(FIXED_SUPPORT_METRIC_NAMES)
+            or set(current) != set(FIXED_SUPPORT_METRIC_NAMES)
+        ):
+            raise ValueError(f"fixed-support metric fields drift for {row.get('id')}")
+        if not isinstance(row.get("root"), str) or not row["root"]:
+            raise ValueError(f"fixed-support root is absent for {row.get('id')}")
+        equality = {key: frozen[key] == current[key] for key in frozen}
+        if row.get("equality") != equality or row.get("unchanged") is not all(equality.values()):
+            raise ValueError(f"fixed-support equality flags drift for {row.get('id')}")
+
+    zdd_orders = artifact.get("zdd_orders", [])
+    if not zdd_orders or len({row.get("order") for row in zdd_orders}) != len(zdd_orders):
+        raise ValueError("fixed-support replication ZDD orders are absent or duplicated")
+    for row in zdd_orders:
+        if set(row) != {
+            "order",
+            "display_order",
+            "frozen",
+            "current",
+            "equality",
+            "unchanged",
+        }:
+            raise ValueError(f"ZDD row fields drift for {row.get('order')}")
+        frozen = row.get("frozen", {})
+        current = row.get("current", {})
+        if (
+            set(frozen) != set(FIXED_SUPPORT_ZDD_FIELDS)
+            or set(current) != set(FIXED_SUPPORT_ZDD_FIELDS)
+        ):
+            raise ValueError(f"ZDD structure fields drift for {row.get('order')}")
+        expected_display_order = {
+            "frequency_desc": "freq_desc",
+            "frequency_asc": "freq_asc",
+        }.get(row.get("order"), row.get("order"))
+        if row.get("display_order") != expected_display_order:
+            raise ValueError(f"ZDD display order drift for {row.get('order')}")
+        equality = {key: frozen[key] == current[key] for key in frozen}
+        if row.get("equality") != equality or row.get("unchanged") is not all(equality.values()):
+            raise ValueError(f"ZDD equality flags drift for {row.get('order')}")
+
+    conclusion = artifact.get("conclusion", {})
+    benchmarks_unchanged = all(row["unchanged"] for row in benchmarks)
+    zdd_unchanged = all(row["unchanged"] for row in zdd_orders)
+    expected_conclusion = {
+        "distinct_graph_exports": expected_hash_changed,
+        "all_fixed_support_metrics_unchanged": benchmarks_unchanged,
+        "all_zdd_structure_metrics_unchanged": zdd_unchanged,
+        "replication_passed": expected_hash_changed and benchmarks_unchanged and zdd_unchanged,
+    }
+    if conclusion != expected_conclusion:
+        raise ValueError("fixed-support replication conclusion mismatch")
+    if conclusion["replication_passed"] is not True:
+        raise ValueError("fixed-support replication did not pass")
+
+    if (frozen_report is None) != (current_report is None):
+        raise ValueError("both frozen and current reports are required for source validation")
+    if frozen_report is not None and current_report is not None:
+        expected_artifact = fixed_support_replication_report(frozen_report, current_report)
+        if _canonical_json_bytes(artifact) != _canonical_json_bytes(expected_artifact):
+            raise ValueError("fixed-support replication artifact does not match source reports")
+
+
 def _command_validate(args: argparse.Namespace) -> int:
     raw = load_json(args.graph)
     validate_export(raw)
@@ -1099,6 +1419,60 @@ def _command_candidate_audit(args: argparse.Namespace) -> int:
     return 0
 
 
+def _current_benchmark_report_from_graph(args: argparse.Namespace) -> dict[str, Any]:
+    graph_path = args.current_graph.resolve()
+    graph = ProofGraph.from_json(load_json(graph_path))
+    return benchmark_report(graph, load_json(args.config), graph_path, measurements=None)
+
+
+def _command_replication_audit(args: argparse.Namespace) -> int:
+    frozen_report = load_json(args.frozen_report)
+    current_report = _current_benchmark_report_from_graph(args)
+    artifact = fixed_support_replication_report(frozen_report, current_report)
+    validate_fixed_support_replication(artifact, frozen_report, current_report)
+    write_json(args.output, artifact)
+    print(
+        json.dumps(
+            {
+                "ok": True,
+                "output": str(args.output),
+                "evidence_label": artifact["evidence_label"],
+                "replication_passed": artifact["conclusion"]["replication_passed"],
+            },
+            sort_keys=True,
+        )
+    )
+    return 0
+
+
+def _command_validate_replication(args: argparse.Namespace) -> int:
+    artifact = load_json(args.artifact)
+    source_args = (args.frozen_report, args.current_graph, args.config)
+    if any(value is not None for value in source_args) and not all(
+        value is not None for value in source_args
+    ):
+        raise ValueError(
+            "--frozen-report, --current-graph, and --config must be supplied together"
+        )
+    if args.current_graph is not None:
+        frozen_report = load_json(args.frozen_report)
+        current_report = _current_benchmark_report_from_graph(args)
+        validate_fixed_support_replication(artifact, frozen_report, current_report)
+    else:
+        validate_fixed_support_replication(artifact)
+    print(
+        json.dumps(
+            {
+                "ok": True,
+                "evidence_label": artifact["evidence_label"],
+                "replication_passed": artifact["conclusion"]["replication_passed"],
+            },
+            sort_keys=True,
+        )
+    )
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -1130,6 +1504,24 @@ def build_parser() -> argparse.ArgumentParser:
     candidate.add_argument("--candidate-config", type=Path, required=True)
     candidate.add_argument("--output", type=Path, required=True)
     candidate.set_defaults(handler=_command_candidate_audit)
+    replication = subparsers.add_parser(
+        "replication-audit",
+        help="compare a current graph with the frozen fixed-support benchmark",
+    )
+    replication.add_argument("--frozen-report", type=Path, required=True)
+    replication.add_argument("--current-graph", type=Path, required=True)
+    replication.add_argument("--config", type=Path, required=True)
+    replication.add_argument("--output", type=Path, required=True)
+    replication.set_defaults(handler=_command_replication_audit)
+    validate_replication = subparsers.add_parser(
+        "validate-replication",
+        help="validate a fixed-support replication artifact, optionally against a current graph",
+    )
+    validate_replication.add_argument("--artifact", type=Path, required=True)
+    validate_replication.add_argument("--frozen-report", type=Path)
+    validate_replication.add_argument("--current-graph", type=Path)
+    validate_replication.add_argument("--config", type=Path)
+    validate_replication.set_defaults(handler=_command_validate_replication)
     return parser
 
 

@@ -1,17 +1,24 @@
 # Target-drift suite v1
 
-Status: `challenge_bank_frozen_execution_not_started`
+Status: `challenge_bank_amended_pre_execution_execution_not_started`
 
 This directory freezes the first controlled target-drift suite for the ABRL
 evaluation.  It contains 30 authored cases:
 
 - 18 recent-paper-derived probes, six for each source-frozen NeurIPS 2025
   paper;
-- 12 textbook controls, two for each of six drift classes;
+- 12 controls in the historical `textbook_control` stratum, comprising ten
+  textbook-derived probes and two ABRL evidence-policy controls;
 - three matched workflow conditions and five paired seeds, yielding 450
   planned runs.
 
-The suite is a preregistration artifact, not a result.  Every case is marked
+The suite is a preregistration artifact, not a result.  A source-contract
+pre-audit on 2026-08-26 identified one incorrect contract phrase, two ambiguous
+phrases, and five imprecise locators among the 18 paper-derived cases.  Because
+no model outcome had been observed, those fields were corrected in a versioned
+pre-execution amendment under `evaluation/source-contract-audit-v1/`.  The
+amendment binds the before/after hashes and is not evaluation evidence.  Every
+case remains marked
 `authored_unrun`; there are no outcome, score, or effect-size fields.  Model
 version, prompts, budgets, retry policy, randomized presentation order, and
 expert-grading identities must be appended and frozen before execution.

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-25T17:53:14+00:00",
+  "generated": "2026-08-25T21:14:18+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -3848,6 +3848,70 @@
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
       "line": 535,
       "statement": "theorem trajectoryMeasure_condDistrib_nextPair_given_environment_prefix {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [StandardBorelSpace Action] (prior : Measure Env) [IsFiniteMeasure prior] (initialTheta : Action -> Real) (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env Action Real) (n : Nat) : condDistrib (fun sample : Env \u00d7 ((k : Nat) -> Action \u00d7 Real) => sample.2 (n + 1)) (fun sample : Env \u00d7 ((k : Nat) -> Action \u00d7 Real) => (sample.1, Preorder.frestrictLe n sample.2)) (prior \u2297\u2098 trajectoryKernel initialTheta eta environment) =\u1d50[ (prior \u2297\u2098 trajectoryKernel initialTheta eta environment).map (fun sample : Env \u00d7 ((k : Nat) -> Action \u00d7 Real) => (sample.1, Preorder.frestrictLe n sample.2))] Thompson.measurableEnvironmentHistoryStepKernel (historyAlgorithm initialTheta eta) environment n"
+    },
+    {
+      "kind": "def",
+      "name": "twoArmFixedIIDRewardKernel",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDRewardKernel",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmFixedIID.lean",
+      "line": 30,
+      "statement": "noncomputable def twoArmFixedIIDRewardKernel (armLaw : Fin 2 -> Measure Real) : Kernel (Unit \u00d7 Fin 2) Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmFixedIIDRewardKernel_apply",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDRewardKernel_apply",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmFixedIID.lean",
+      "line": 35,
+      "statement": "theorem twoArmFixedIIDRewardKernel_apply (armLaw : Fin 2 -> Measure Real) (env : Unit) (arm : Fin 2) : twoArmFixedIIDRewardKernel armLaw (env, arm) = armLaw arm"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmFixedIIDRewardKernel_isMarkov",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDRewardKernel_isMarkov",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmFixedIID.lean",
+      "line": 42,
+      "statement": "theorem twoArmFixedIIDRewardKernel_isMarkov (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) : IsMarkovKernel (twoArmFixedIIDRewardKernel armLaw)"
+    },
+    {
+      "kind": "def",
+      "name": "twoArmFixedIIDEnvironment",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDEnvironment",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmFixedIID.lean",
+      "line": 55,
+      "statement": "noncomputable def twoArmFixedIIDEnvironment (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) : Thompson.MeasurableHistoryEnvironment Unit (Fin 2) Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmFixedIIDEnvironment_initialFeedback_apply",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDEnvironment_initialFeedback_apply",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmFixedIID.lean",
+      "line": 65,
+      "statement": "theorem twoArmFixedIIDEnvironment_initialFeedback_apply (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (env : Unit) (arm : Fin 2) : (twoArmFixedIIDEnvironment armLaw hprob).initialFeedback (env, arm) = armLaw arm"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmFixedIIDEnvironment_feedback_apply",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDEnvironment_feedback_apply",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmFixedIID.lean",
+      "line": 74,
+      "statement": "theorem twoArmFixedIIDEnvironment_feedback_apply (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (n : Nat) (env : Unit) (history : History.FinitePairHistory (Fin 2) Real n) (arm : Fin 2) : (twoArmFixedIIDEnvironment armLaw hprob).feedback n (env, (history, arm)) = armLaw arm"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmFixedIIDReward_aestronglyMeasurable",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDReward_aestronglyMeasurable",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmFixedIID.lean",
+      "line": 85,
+      "statement": "theorem twoArmFixedIIDReward_aestronglyMeasurable (armLaw : Fin 2 -> Measure Real) (arm : Fin 2) : AEStronglyMeasurable (fun reward : Real => reward) (armLaw arm)"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmFixedIIDEnvironment_contract",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDEnvironment_contract",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmFixedIID.lean",
+      "line": 95,
+      "statement": "theorem twoArmFixedIIDEnvironment_contract (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (mean : Fin 2 -> Real) (hbound : forall arm, \u2200\u1d50 reward \u2202armLaw arm, |reward| <= 1) (hmean : forall arm, integral (armLaw arm) id = mean arm) : TwoArmBoundedFixedMeanEnvironmentContract (twoArmFixedIIDEnvironment armLaw hprob) mean"
     },
     {
       "kind": "theorem",

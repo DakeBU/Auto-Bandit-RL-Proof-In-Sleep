@@ -6,6 +6,7 @@ from tools.proof_graph_lab import (
     backward_compression_gain,
     canonical_motif_colors,
     conditional_residual_vector,
+    fixed_support_replication_report,
     heldout_transfer_gain,
     HypergraphRelaxation,
     lean_check_time_record,
@@ -16,6 +17,7 @@ from tools.proof_graph_lab import (
     minimal_support_family,
     semantic_dag_metrics,
     validate_export,
+    validate_fixed_support_replication,
 )
 
 
@@ -322,6 +324,86 @@ class ProofGraphTests(unittest.TestCase):
             proxy["direct_support_signatures_absent_from_frozen_library"],
             novelty_proxy["new_direct_support_signatures"],
         )
+
+    def test_versioned_fixed_support_replication_artifact_is_consistent(self):
+        root = Path(__file__).resolve().parents[1]
+        artifact_dir = root / "research-wiki/proof-graph"
+        frozen_report = json.loads(
+            (artifact_dir / "benchmark_report.json").read_text(encoding="utf-8")
+        )
+        replication = json.loads(
+            (artifact_dir / "benchmark_replication.json").read_text(encoding="utf-8")
+        )
+
+        validate_fixed_support_replication(replication)
+        self.assertEqual(
+            replication["graph_change"]["frozen"],
+            {
+                "sha256": frozen_report["graph"]["sha256"].lower(),
+                "counts": frozen_report["graph"]["counts"],
+            },
+        )
+        self.assertEqual(
+            replication["graph_change"]["current"],
+            {
+                "sha256": "126e92a6006f55c5da42cd40cc84aef176d23ade6d796591b78d3e27b116ec56",
+                "counts": {
+                    "project_nodes": 14761,
+                    "external_boundary_nodes": 4557,
+                    "edges": 713742,
+                    "module_imports": 2385,
+                },
+            },
+        )
+        self.assertEqual(
+            [
+                (
+                    row["id"],
+                    row["current"]["support_declarations"],
+                    row["current"]["semantic_dag_depth"],
+                    row["current"]["proof_term_object_proxy_sum"],
+                )
+                for row in replication["benchmarks"]
+            ],
+            [
+                ("exp3_realized_all_time", 421, 23, 238985),
+                ("half_tsallis_iid_log", 505, 30, 341127),
+                ("oful_all_time_confidence", 312, 26, 188840),
+            ],
+        )
+        self.assertEqual(
+            [
+                (
+                    row["display_order"],
+                    row["current"]["nonterminal_nodes"],
+                    row["current"]["serialized_proxy_bytes"],
+                )
+                for row in replication["zdd_orders"]
+            ],
+            [
+                ("lexical", 1238, 55872),
+                ("freq_desc", 1163, 52367),
+                ("freq_asc", 1173, 52881),
+                ("first_seen", 1238, 55882),
+            ],
+        )
+
+    def test_fixed_support_replication_fails_closed_on_metric_drift(self):
+        root = Path(__file__).resolve().parents[1]
+        frozen = json.loads(
+            (root / "research-wiki/proof-graph/benchmark_report.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        current = __import__("copy").deepcopy(frozen)
+        current["graph"]["sha256"] = "f" * 64
+        current["graph"]["counts"]["project_nodes"] += 1
+        artifact = fixed_support_replication_report(frozen, current)
+        validate_fixed_support_replication(artifact, frozen, current)
+
+        artifact["benchmarks"][0]["current"]["support_declarations"] += 1
+        with self.assertRaisesRegex(ValueError, "equality flags drift"):
+            validate_fixed_support_replication(artifact)
 
     def test_neutral_grade_requires_transfer_for_reusable_abstraction(self):
         self.assertEqual(

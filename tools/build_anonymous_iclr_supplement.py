@@ -136,6 +136,16 @@ ANONYMOUS_AGENT_IMAGE_RECORD = (
 ANONYMOUS_AGENT_OUTER_BOUNDARY_RECORD = (
     "evaluation/target-drift-v2/agent-outer-boundary-candidate-record.json"
 )
+SOURCE_AUDIT_PUBLIC_BASE_COMMIT = "705dfe1ab1b8e0d318097981a7322336686dd5c8"
+SOURCE_AUDIT_PUBLIC_BLOB_IDS = (
+    "0537c8e69233b46c27233323815d782962fef392",
+    "18181fcdebff02bf840485004a8289cf12e140f9",
+)
+SOURCE_AUDIT_BASE_MANIFEST = (
+    "evaluation/source-contract-audit-v1/pre-amendment/base.json"
+)
+SOURCE_AUDIT_AMENDMENT = "evaluation/source-contract-audit-v1/amendment.json"
+SOURCE_AUDIT_VALIDATOR = "tools/validate_source_contract_audit.py"
 
 DELAYED_IMPLEMENTATION_IDS = (
     "DELAYED-FEEDBACK-SOURCE-ACCOUNTING",
@@ -191,6 +201,9 @@ SGB_MEASURABLE_RECURRENCE_FILE = (
 SGB_PATH_INTEGRABILITY_FILE = (
     "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean"
 )
+SGB_FIXED_IID_FILE = (
+    "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmFixedIID.lean"
+)
 SGB_FINITE_ALGEBRA_DECLARATION_COUNT = 26
 SGB_GENERATED_HISTORY_DECLARATION_COUNT = 18
 SGB_TWO_ARM_RATE_DECLARATION_COUNT = 18
@@ -200,7 +213,8 @@ SGB_SUCCESSOR_RECURRENCE_DECLARATION_COUNT = 10
 SGB_INITIAL_RECURRENCE_DECLARATION_COUNT = 3
 SGB_MEASURABLE_RECURRENCE_DECLARATION_COUNT = 25
 SGB_PATH_INTEGRABILITY_DECLARATION_COUNT = 17
-SGB_TOTAL_DECLARATION_COUNT = 135
+SGB_FIXED_IID_DECLARATION_COUNT = 8
+SGB_TOTAL_DECLARATION_COUNT = 143
 SGB_GENERATED_TRAJECTORY_DECLARATIONS = frozenset({
     "BanditRLProof.StochasticGradientBandit.trajectoryKernel",
     "BanditRLProof.StochasticGradientBandit.trajectoryMeasure_condDistrib_action_zero_given_environment",
@@ -255,6 +269,16 @@ SGB_PATH_INTEGRABILITY_DECLARATIONS = frozenset({
 SGB_CONDITIONAL_RECURRENCE_DECLARATIONS = frozenset({
     "BanditRLProof.StochasticGradientBandit.twoArmForwardTrajectorySuccessor_condExp_le_recurrenceBound",
     "BanditRLProof.StochasticGradientBandit.twoArmInverseTrajectorySuccessor_condExp_le_recurrenceBound",
+})
+SGB_FIXED_IID_DECLARATIONS = frozenset({
+    "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDRewardKernel",
+    "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDRewardKernel_apply",
+    "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDRewardKernel_isMarkov",
+    "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDEnvironment",
+    "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDEnvironment_initialFeedback_apply",
+    "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDEnvironment_feedback_apply",
+    "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDReward_aestronglyMeasurable",
+    "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDEnvironment_contract",
 })
 CH16_COMPILED_ID = "TEXTBOOK-PART-IV-CH16-CONSISTENCY-DINF-DEPENDENCY-SLICE"
 CH16_EVENT_REGRET_ID = "TEXTBOOK-PART-IV-CH16-EVENT-REGRET-PRODUCERS"
@@ -440,6 +464,24 @@ TARGET_DRIFT_WORKFLOW_FILES = (
     ".github/workflows/target-drift-agent-lifecycle.yml",
 )
 
+SOURCE_CONTRACT_AUDIT_FILES = (
+    "evaluation/source-contract-audit-v1/README.md",
+    "evaluation/source-contract-audit-v1/protocol.json",
+    "evaluation/source-contract-audit-v1/reviewer-a.json",
+    "evaluation/source-contract-audit-v1/reviewer-b.json",
+    "evaluation/source-contract-audit-v1/adjudication.json",
+    "evaluation/source-contract-audit-v1/summary.json",
+    "evaluation/source-contract-audit-v1/amendment.json",
+    "evaluation/source-contract-audit-v1/pre-amendment/base.json",
+    "evaluation/source-contract-audit-v1/pre-amendment/target-drift-v1-challenges.json",
+    "evaluation/source-contract-audit-v1/pre-amendment/target-drift-v2-paired-requirements.json",
+)
+
+SOURCE_CONTRACT_AUDIT_TOOLS = (
+    "tools/validate_source_contract_audit.py",
+    "tools/test_source_contract_audit.py",
+)
+
 EXPLICIT_COPIES = {
     ".gitattributes": ".gitattributes",
     "lean-toolchain": "lean-toolchain",
@@ -475,6 +517,8 @@ EVIDENCE_JSON = {
         "evidence/proof-graph/historical-local-measurements.json",
     "research-wiki/proof-graph/benchmark_roots.json":
         "evidence/proof-graph/benchmark_roots.json",
+    "research-wiki/proof-graph/benchmark_replication.json":
+        "evidence/proof-graph/benchmark_replication.json",
     "research-wiki/proof-graph/cng_candidate_evaluation.json":
         "evidence/proof-graph/cng_candidate_evaluation.json",
     "research-wiki/proof-graph/cng_candidate_roots.json":
@@ -491,6 +535,7 @@ EVIDENCE_JSON = {
 # evidence entrypoints.
 PROOF_GRAPH_TEST_EVIDENCE = (
     "research-wiki/proof-graph/benchmark_report.json",
+    "research-wiki/proof-graph/benchmark_replication.json",
     "research-wiki/proof-graph/benchmark_roots.json",
     "research-wiki/proof-graph/cng_candidate_evaluation.json",
     "research-wiki/proof-graph/cng_candidate_roots.json",
@@ -1478,6 +1523,127 @@ def rebind_anonymous_external_comparator(payload):
     payload[LEANFLOW_PLUMBING_SEAL] = plumbing_seal_data
 
 
+def anonymous_snapshot_binding(data):
+    """Return a domain-separated non-Git binding for one packaged snapshot."""
+    return hashlib.sha1(b"anonymous-source-audit-snapshot\0" + data).hexdigest()
+
+
+def rebind_anonymous_source_contract_audit(payload, anonymous_reference):
+    """Remove authoring-repository fingerprints while preserving audit checks."""
+    required = set(SOURCE_CONTRACT_AUDIT_FILES + SOURCE_CONTRACT_AUDIT_TOOLS)
+    missing = sorted(required - set(payload))
+    if missing:
+        raise ValueError(
+            "anonymous source-contract audit rebinding is missing: "
+            + ", ".join(missing)
+        )
+
+    base = json.loads(payload[SOURCE_AUDIT_BASE_MANIFEST].decode("utf-8"))
+    if base.get("base_git_commit") != SOURCE_AUDIT_PUBLIC_BASE_COMMIT:
+        raise ValueError("source-contract audit base commit changed")
+    snapshots = base.get("snapshots", {})
+    if set(snapshots) != {"challenge_manifest", "paired_requirements"}:
+        raise ValueError("source-contract audit snapshot set changed")
+    public_blob_ids = set(SOURCE_AUDIT_PUBLIC_BLOB_IDS)
+    observed_blob_ids = {
+        row.get("git_blob_sha1") for row in snapshots.values()
+        if isinstance(row, dict)
+    }
+    if observed_blob_ids != public_blob_ids:
+        raise ValueError("source-contract audit Git-blob bindings changed")
+    base["base_git_commit"] = anonymous_reference
+    anonymous_blob_bindings = {}
+    for label, row in snapshots.items():
+        snapshot_path = row.get("snapshot_path")
+        if snapshot_path not in payload:
+            raise ValueError("source-contract audit snapshot payload is missing")
+        snapshot_data = payload[snapshot_path]
+        if row.get("sha256") != sha256_bytes(snapshot_data):
+            raise ValueError("source-contract audit snapshot SHA-256 changed")
+        row.pop("git_blob_sha1")
+        binding = anonymous_snapshot_binding(snapshot_data)
+        row["snapshot_binding_sha1"] = binding
+        anonymous_blob_bindings[label] = binding
+    base_data = canonical_json(base)
+    require_anonymous_bytes(SOURCE_AUDIT_BASE_MANIFEST, base_data)
+    payload[SOURCE_AUDIT_BASE_MANIFEST] = base_data
+
+    amendment = json.loads(payload[SOURCE_AUDIT_AMENDMENT].decode("utf-8"))
+    base_ref = amendment.get("pre_amendment_base", {})
+    if base_ref.get("base_git_commit") != SOURCE_AUDIT_PUBLIC_BASE_COMMIT:
+        raise ValueError("source-contract amendment base commit changed")
+    base_ref["base_git_commit"] = anonymous_reference
+    base_ref["manifest_sha256"] = sha256_bytes(base_data)
+    primary_inputs = amendment.get("primary_inputs", {})
+    primary_paths = {
+        "challenge_manifest": "evaluation/target-drift-v1/challenges.json",
+        "paired_requirements": "evaluation/target-drift-v2/paired-requirements.json",
+    }
+    if set(primary_inputs) != set(primary_paths):
+        raise ValueError("source-contract amendment primary inputs changed")
+    for label, path in primary_paths.items():
+        if primary_inputs[label].get("path") != path or path not in payload:
+            raise ValueError("source-contract amendment primary path changed")
+        primary_inputs[label]["after_sha256"] = sha256_bytes(payload[path])
+    derived = amendment.get("derived_bindings_after", {})
+    if not isinstance(derived, dict) or not derived:
+        raise ValueError("source-contract amendment derived bindings are absent")
+    for row in derived.values():
+        path = row.get("path") if isinstance(row, dict) else None
+        if path not in payload:
+            raise ValueError("source-contract amendment derived payload is missing")
+        key = "after_sha256" if "after_sha256" in row else "sha256"
+        row[key] = sha256_bytes(payload[path])
+    amendment_data = canonical_json(amendment)
+    require_anonymous_bytes(SOURCE_AUDIT_AMENDMENT, amendment_data)
+    payload[SOURCE_AUDIT_AMENDMENT] = amendment_data
+
+    validator = payload[SOURCE_AUDIT_VALIDATOR].decode("utf-8")
+    public_function = (
+        "def git_blob_sha1(path: Path) -> str:\n"
+        "    payload = path.read_bytes()\n"
+        "    header = f\"blob {len(payload)}\\0\".encode(\"ascii\")\n"
+        "    return hashlib.sha1(header + payload).hexdigest()"
+    )
+    anonymous_function = (
+        "def snapshot_binding_sha1(path: Path) -> str:\n"
+        "    payload = path.read_bytes()\n"
+        "    return hashlib.sha1(\n"
+        "        b\"anonymous-source-audit-snapshot\\0\" + payload\n"
+        "    ).hexdigest()"
+    )
+    if public_function not in validator:
+        raise ValueError("source-contract validator Git-blob helper changed")
+    validator = validator.replace(public_function, anonymous_function)
+    validator = validator.replace("git_blob_sha1", "snapshot_binding_sha1")
+    validator = validator.replace(
+        SOURCE_AUDIT_PUBLIC_BASE_COMMIT, anonymous_reference
+    )
+    for public_blob, binding in zip(
+        SOURCE_AUDIT_PUBLIC_BLOB_IDS,
+        (
+            anonymous_blob_bindings["challenge_manifest"],
+            anonymous_blob_bindings["paired_requirements"],
+        ),
+    ):
+        validator = validator.replace(public_blob, binding)
+    validator_data = validator.encode("utf-8")
+    require_anonymous_bytes(SOURCE_AUDIT_VALIDATOR, validator_data)
+    payload[SOURCE_AUDIT_VALIDATOR] = validator_data
+
+    forbidden = (
+        SOURCE_AUDIT_PUBLIC_BASE_COMMIT.encode("ascii"),
+        *(item.encode("ascii") for item in SOURCE_AUDIT_PUBLIC_BLOB_IDS),
+    )
+    for rel in required:
+        lowered = payload[rel].lower()
+        if any(item in lowered for item in forbidden):
+            raise ValueError(
+                "authoring Git fingerprint remains in anonymous source-contract audit: "
+                + rel
+            )
+
+
 def selected_source_records():
     raw = load_json(REPO_ROOT / "website" / "content" / "results.json")
     by_id = {row["id"]: row for row in raw["results"]}
@@ -1596,6 +1762,9 @@ def validate_sgb_count(records, index):
     path_integrability_count = sum(
         row["file"] == SGB_PATH_INTEGRABILITY_FILE for row in rows.values()
     )
+    fixed_iid_count = sum(
+        row["file"] == SGB_FIXED_IID_FILE for row in rows.values()
+    )
     layer_counts = (
         finite_count,
         generated_history_count,
@@ -1606,6 +1775,7 @@ def validate_sgb_count(records, index):
         initial_recurrence_count,
         measurable_recurrence_count,
         path_integrability_count,
+        fixed_iid_count,
     )
     expected_layer_counts = (
         SGB_FINITE_ALGEBRA_DECLARATION_COUNT,
@@ -1617,6 +1787,7 @@ def validate_sgb_count(records, index):
         SGB_INITIAL_RECURRENCE_DECLARATION_COUNT,
         SGB_MEASURABLE_RECURRENCE_DECLARATION_COUNT,
         SGB_PATH_INTEGRABILITY_DECLARATION_COUNT,
+        SGB_FIXED_IID_DECLARATION_COUNT,
     )
     if (
         sgb["status"] != "partial"
@@ -1637,10 +1808,11 @@ def validate_sgb_count(records, index):
         )
         or not SGB_PATH_INTEGRABILITY_DECLARATIONS.issubset(declarations)
         or not SGB_CONDITIONAL_RECURRENCE_DECLARATIONS.issubset(declarations)
+        or not SGB_FIXED_IID_DECLARATIONS.issubset(declarations)
     ):
         raise ValueError(
             "stochastic-gradient-bandit audit must remain partial with exactly "
-            "135 declarations across the frozen 26/18/18/14/4/10/3/25/17 "
+            "143 declarations across the frozen 26/18/18/14/4/10/3/25/17/8 "
             "evidence layers"
         )
     return {
@@ -1666,6 +1838,8 @@ def validate_sgb_count(records, index):
             SGB_PATH_INTEGRABILITY_DECLARATIONS.issubset(declarations),
         "conditional_expectation_one_step_recurrence_compiled":
             SGB_CONDITIONAL_RECURRENCE_DECLARATIONS.issubset(declarations),
+        "fixed_iid_contract_compiled":
+            SGB_FIXED_IID_DECLARATIONS.issubset(declarations),
     }
 
 
@@ -1791,6 +1965,8 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
                     SGB_MEASURABLE_RECURRENCE_DECLARATION_COUNT,
                 "path_integrability_and_conditional_recurrence":
                     SGB_PATH_INTEGRABILITY_DECLARATION_COUNT,
+                "fixed_iid_source_contract_bridge":
+                    SGB_FIXED_IID_DECLARATION_COUNT,
             },
         },
     }
@@ -1987,7 +2163,7 @@ def build_claim_ledger(proof_report):
                 "artifact": "Stochastic-gradient-bandit mechanism audit",
                 "status": "partial",
                 "source_record_ids": [SGB_AUDIT_ID],
-                "boundary": "135 declarations compile the original 76-declaration algebra/history/two-arm/source-Equation-(8) audit plus generated-kernel Equation (8), zero-initial and fixed-history forward/inverse recurrence inequalities, measurable canonical-trajectory conditional-distribution transport, fixed-time path integrability, conditional-expectation representations, and one-step conditional recurrence bounds. This is a partial audit route, not Theorem 1: global tower iteration, expected squared failure-mass control, Equation-(7) regret assembly, every learning-rate regime, and Theorems 1--4 remain open. The bounded fixed-mean fiber contract is not an equivalence proof for a fixed-iid reward law, and a general prior leaves the latent environment visible in the current prefix filtration.",
+                "boundary": "143 declarations compile the original 76-declaration algebra/history/two-arm/source-Equation-(8) audit plus generated-kernel Equation (8), zero-initial and fixed-history forward/inverse recurrence inequalities, measurable canonical-trajectory conditional-distribution transport, fixed-time path integrability, conditional-expectation representations, one-step conditional recurrence bounds, and an eight-declaration one-way adapter from fixed-IID two-arm reward laws to the bounded fixed-mean environment contract. This is a partial audit route, not Theorem 1: the generated-history Equation-(5) Integrable sourceIncrement bridge, global tower iteration, expected squared failure-mass control, Equation-(7) regret assembly, every learning-rate regime, and Theorems 1--4 remain open. The adapter does not prove the converse equivalence, and a general prior leaves the latent environment visible in the current prefix filtration.",
             },
             {
                 "artifact": "Proof graph / curvature--noise--gap",
@@ -2050,6 +2226,8 @@ def build_claim_ledger(proof_report):
                 SGB_MEASURABLE_RECURRENCE_DECLARATION_COUNT,
             "path_integrability_declaration_count":
                 SGB_PATH_INTEGRABILITY_DECLARATION_COUNT,
+            "fixed_iid_declaration_count":
+                SGB_FIXED_IID_DECLARATION_COUNT,
             "generated_trajectory_compiled":
                 sgb_evidence["generated_trajectory_compiled"],
             "conditional_law_bridge_compiled":
@@ -2072,6 +2250,9 @@ def build_claim_ledger(proof_report):
                 sgb_evidence[
                     "conditional_expectation_one_step_recurrence_compiled"
                 ],
+            "fixed_iid_contract_compiled":
+                sgb_evidence["fixed_iid_contract_compiled"],
+            "coordinate_update_integrability_verified": False,
             "uniform_reward_regularities_verified": False,
             "learning_rate_regime_verified": False,
             "global_tower_iteration_verified": False,
@@ -2200,7 +2381,13 @@ def build_payload(proof_graph=None, proof_report_path=None, allow_missing_graph=
             raise ValueError("untracked or missing target-drift tool: " + rel)
         data = anonymize_evaluation_bytes(rel, read_regular(rel), anonymous_reference)
         add_payload(payload, rel, data)
+    for rel in SOURCE_CONTRACT_AUDIT_FILES + SOURCE_CONTRACT_AUDIT_TOOLS:
+        if rel not in tracked:
+            raise ValueError("untracked or missing source-contract audit evidence: " + rel)
+        data = anonymize_evaluation_bytes(rel, read_regular(rel), anonymous_reference)
+        add_payload(payload, rel, data)
     rebind_anonymous_external_comparator(payload)
+    rebind_anonymous_source_contract_audit(payload, anonymous_reference)
     for source, destination in sorted(EVIDENCE_JSON.items()):
         value = sanitize_json(load_json(REPO_ROOT / source))
         add_payload(payload, destination, canonical_json(value))

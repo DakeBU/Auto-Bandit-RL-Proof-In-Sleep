@@ -1,6 +1,6 @@
 # Target-drift suite v2
 
-Status: `balanced_variants_designed_execution_not_started`
+Status: `balanced_variants_amended_pre_execution_execution_not_started`
 
 Version 2 preserves the frozen v1 source cases and revises the design to address
 identified execution-validity problems before any model run.  It does not
@@ -20,8 +20,10 @@ are aggregated within target before primary paired inference.
 
 Both variants now use exactly the same frozen field/value sentence template.
 The validator rejects legacy variant-specific style markers and freezes a
-leave-one-pair-out text-only diagnostic (currently 0.633 for the deterministic
-Bernoulli-naive-Bayes negative control).  A separate source-absent frozen-model
+leave-one-pair-out text-only diagnostic.  It was 0.633 before the source-contract
+pre-audit amendments and is 0.533 on the amended, resealed requirement bank for
+the deterministic Bernoulli-naive-Bayes negative control.  A separate
+source-absent frozen-model
 audit and an independent blind wording review remain mandatory human fields;
 the diagnostic is not a formalization result.
 The checked-in `wording-negative-control-record.json` binds that deterministic

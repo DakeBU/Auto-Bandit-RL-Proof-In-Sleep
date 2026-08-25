@@ -441,8 +441,10 @@ def validate_paired_requirements(
     payload = load(path)
     require(payload["suite_id"] == config["suite_id"],
             "paired-requirement suite mismatch")
-    require(payload["status"] == "paired_wording_frozen_results_absent",
-            "paired-requirement bank must remain result-free")
+    require(
+        payload["status"] == "paired_wording_amended_pre_execution_results_absent",
+        "paired-requirement bank must remain result-free and record the amendment",
+    )
     template = payload.get("common_template")
     require(isinstance(template, str) and len(template.split()) >= 12,
             "paired requirements need one substantive common template")

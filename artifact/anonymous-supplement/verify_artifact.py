@@ -416,7 +416,7 @@ def verify_theorem_audit_comparison():
             "central_endpoint_record_id":
                 "NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT-MECHANISM-AUDIT",
             "promotion_status": "partial",
-            "compiled_declaration_count": 135,
+            "compiled_declaration_count": 143,
             "declaration_count_breakdown": {
                 "finite_action_algebra": 26,
                 "generated_history_and_kernel_bridge": 18,
@@ -427,6 +427,7 @@ def verify_theorem_audit_comparison():
                 "two_arm_initial_recurrence": 3,
                 "measurable_contract_and_cond_distrib_transport": 25,
                 "path_integrability_and_conditional_recurrence": 17,
+                "fixed_iid_source_contract_bridge": 8,
             },
         },
     }
