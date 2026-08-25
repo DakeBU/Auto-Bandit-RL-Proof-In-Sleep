@@ -443,7 +443,7 @@ class AnonymousSupplementTests(unittest.TestCase):
         )
         self.assertEqual(sgb_row["status"], "partial")
         self.assertEqual(sgb_row["source_record_ids"], [BUILDER.SGB_AUDIT_ID])
-        self.assertEqual(ledger["stochastic_gradient_bandit"]["declaration_count"], 76)
+        self.assertEqual(ledger["stochastic_gradient_bandit"]["declaration_count"], 135)
         self.assertEqual(
             ledger["stochastic_gradient_bandit"]["finite_algebra_declaration_count"],
             26,
@@ -460,6 +460,26 @@ class AnonymousSupplementTests(unittest.TestCase):
             ledger["stochastic_gradient_bandit"]["exponential_audit_declaration_count"],
             14,
         )
+        self.assertEqual(
+            ledger["stochastic_gradient_bandit"]["generated_equation_8_declaration_count"],
+            4,
+        )
+        self.assertEqual(
+            ledger["stochastic_gradient_bandit"]["successor_recurrence_declaration_count"],
+            10,
+        )
+        self.assertEqual(
+            ledger["stochastic_gradient_bandit"]["initial_recurrence_declaration_count"],
+            3,
+        )
+        self.assertEqual(
+            ledger["stochastic_gradient_bandit"]["measurable_recurrence_declaration_count"],
+            25,
+        )
+        self.assertEqual(
+            ledger["stochastic_gradient_bandit"]["path_integrability_declaration_count"],
+            17,
+        )
         self.assertTrue(
             ledger["stochastic_gradient_bandit"]["generated_trajectory_compiled"]
         )
@@ -472,11 +492,26 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertTrue(
             ledger["stochastic_gradient_bandit"]["source_equation_8_compiled"]
         )
+        for flag in (
+            "generated_equation_8_kernel_bridge_compiled",
+            "two_arm_initial_recurrence_compiled",
+            "fixed_history_successor_recurrence_compiled",
+            "trajectory_cond_distrib_recurrence_compiled",
+            "path_integrability_compiled",
+            "conditional_expectation_one_step_recurrence_compiled",
+        ):
+            self.assertTrue(ledger["stochastic_gradient_bandit"][flag])
         self.assertFalse(
             ledger["stochastic_gradient_bandit"]["uniform_reward_regularities_verified"]
         )
         self.assertFalse(
             ledger["stochastic_gradient_bandit"]["learning_rate_regime_verified"]
+        )
+        self.assertFalse(
+            ledger["stochastic_gradient_bandit"]["global_tower_iteration_verified"]
+        )
+        self.assertFalse(
+            ledger["stochastic_gradient_bandit"]["expected_failure_mass_verified"]
         )
         self.assertFalse(ledger["stochastic_gradient_bandit"]["paper_endpoint_verified"])
         self.assertEqual(
@@ -524,7 +559,7 @@ class AnonymousSupplementTests(unittest.TestCase):
         succinct = rows["succinct-lower-bound-source-frozen-audit"]
         self.assertEqual(succinct["compiled_declaration_count"], 54)
         sgb = rows["stochastic-gradient-bandit-source-frozen-audit"]
-        self.assertEqual(sgb["compiled_declaration_count"], 76)
+        self.assertEqual(sgb["compiled_declaration_count"], 135)
         self.assertEqual(
             sgb["declaration_count_breakdown"],
             {
@@ -532,6 +567,11 @@ class AnonymousSupplementTests(unittest.TestCase):
                 "generated_history_and_kernel_bridge": 18,
                 "two_arm_zero_sum_and_equation_11": 18,
                 "source_c_and_equation_8": 14,
+                "generated_equation_8_kernel_bridge": 4,
+                "fixed_history_successor_recurrence": 10,
+                "two_arm_initial_recurrence": 3,
+                "measurable_contract_and_cond_distrib_transport": 25,
+                "path_integrability_and_conditional_recurrence": 17,
             },
         )
         for row in (delayed, succinct, sgb):
@@ -603,6 +643,12 @@ class AnonymousSupplementTests(unittest.TestCase):
             BUILDER.SGB_CONDITIONAL_LAW_BRIDGE_DECLARATIONS,
             BUILDER.SGB_TWO_ARM_RATE_DECLARATIONS,
             BUILDER.SGB_EXPONENTIAL_AUDIT_DECLARATIONS,
+            BUILDER.SGB_GENERATED_EQUATION_8_DECLARATIONS,
+            BUILDER.SGB_INITIAL_RECURRENCE_DECLARATIONS,
+            BUILDER.SGB_SUCCESSOR_RECURRENCE_DECLARATIONS,
+            BUILDER.SGB_TRAJECTORY_COND_DISTRIB_RECURRENCE_DECLARATIONS,
+            BUILDER.SGB_PATH_INTEGRABILITY_DECLARATIONS,
+            BUILDER.SGB_CONDITIONAL_RECURRENCE_DECLARATIONS,
         )
         for required in required_sets:
             with self.subTest(victim_set=sorted(required)):
@@ -622,7 +668,7 @@ class AnonymousSupplementTests(unittest.TestCase):
                 row["full_name"] = replacement
                 with self.assertRaisesRegex(
                     ValueError,
-                    "26 finite-algebra, 18 generated-history",
+                    "135 declarations across the frozen",
                 ):
                     BUILDER.validate_sgb_count(records, index)
 
@@ -671,6 +717,10 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertIn(
             ".github/workflows/target-drift-agent-image.yml", payload
         )
+        self.assertIn(
+            ".github/workflows/leanflow-source-preflight.yml", payload
+        )
+        self.assertIn(".gitattributes", payload)
         self.assertIn("evaluation/target-drift-v2/agent-sandbox-contract.json", payload)
         self.assertIn("evaluation/target-drift-v2/agent-lifecycle.Containerfile", payload)
         self.assertIn("evaluation/target-drift-v2/agent-image.Containerfile", payload)
@@ -686,6 +736,27 @@ class AnonymousSupplementTests(unittest.TestCase):
         )
         self.assertIn("tools/leanflow_target_drift_adapter.py", payload)
         self.assertIn("tools/test_leanflow_target_drift_adapter.py", payload)
+        self.assertIn("tools/validate_leanflow_source_preflight.py", payload)
+        self.assertIn("tools/test_leanflow_source_preflight.py", payload)
+        anonymous_workflow = payload[
+            ".github/workflows/leanflow-source-preflight.yml"
+        ]
+        anonymous_workflow_sha256 = hashlib.sha256(anonymous_workflow).hexdigest()
+        anonymous_validator = payload[
+            "tools/validate_leanflow_source_preflight.py"
+        ]
+        self.assertIn(
+            (
+                'EXPECTED_WORKFLOW_SHA256 = "{}"'.format(
+                    anonymous_workflow_sha256
+                )
+            ).encode("ascii"),
+            anonymous_validator,
+        )
+        self.assertIn(b"anonymous/abrl-artifact", anonymous_workflow)
+        self.assertIn(b"anonymous/abrl-artifact", anonymous_validator)
+        self.assertNotIn(b"dakebu", anonymous_workflow.lower())
+        self.assertNotIn(b"dakebu", anonymous_validator.lower())
         self.assertIn("tools/fetch_target_drift_sources.py", payload)
         self.assertIn("tools/test_fetch_target_drift_sources.py", payload)
         self.assertIn("tools/test_target_drift_wording_record.py", payload)

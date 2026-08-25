@@ -33,8 +33,13 @@ series
 `C_eta = 2 * sum_{n>=0} (2*eta)^n/(n+2)!` yields Equation (8),
 `E[exp(q*r)] <= 1 + q*E[r] + q^2/2*C_(|q|/2)`.  The compiled integral form
 derives integrability from almost-everywhere measurability and bounded
-support, but has not yet been instantiated inside the generated conditional
-reward kernels.
+support.  Separate generated-kernel declarations now instantiate this bound
+at the initial and successor reward laws under explicit support and mean
+contracts.  The two-arm initial and fixed-history forward/inverse recurrences,
+their a.e. conditional-distribution transport, fixed-horizon path
+integrability, and tower-ready one-step conditional-expectation forms also
+compile.  Global tower iteration and the expected squared failure-mass
+argument remain downstream.
 
 ## Lean mapping
 
@@ -54,7 +59,12 @@ reward kernels.
 | `p_{.,t}` | source two-arm pre-action law | `twoArmProbabilityAt eta trace (t-1)` | softmax of the fenced parameter | compiled with fence |
 | `p_{1,t}/(1-p_{1,t})=exp(2 theta_{1,t})` | source Equation (11) | `twoArmProbabilityAt_zero_div_failure_eq_exp_two_mul` | exact printed odds form; Lean arm zero is source arm one | compiled |
 | `C_eta` | shifted exponential-series constant | `sourceC eta`, `sourceC_mono` | exact series plus nonnegative-parameter monotonicity | compiled |
-| `E[exp(qr)]` second-order bound | source Equation (8) | `integral_exp_mul_le_sourceEqEight_of_ae_abs_le_one` | generic probability integral under a.e. measurable `|r| <= 1` | compiled with generated-kernel composition open |
+| `E[exp(qr)]` second-order bound | source Equation (8) | `integral_exp_mul_le_sourceEqEight_of_ae_abs_le_one` | generic probability integral under a.e. measurable `|r| <= 1` | compiled standalone |
+| generated conditional Equation (8) | source Equation (8) at the Algorithm-1 reward law | `integral_measurableEnvironmentHistoryStepKernel_exp_actionReward_le_sourceEqEight_of_mean` | initial/successor generated kernels with explicit support and fixed-mean hypotheses | compiled |
+| forward/inverse successor recurrences | Theorem 1 proof, Appendix A.2 | `integral_twoArmHistoryStepKernel_exp_forwardSuccessor_le_add_success_sq`, `integral_twoArmHistoryStepKernel_exp_inverseSuccessor_le_sub_failure_sq` | fixed-history integral inequalities | compiled |
+| time-one recurrences | Theorem 1 initialization | `integral_twoArmInitialPairKernel_exp_forwardIncrement_le`, `integral_twoArmInitialPairKernel_exp_inverseIncrement_le` | source zero initialization and `p_1=1/2` | compiled |
+| trajectory recurrence transport | conditional recurrence step | `trajectoryPrefix_condDistrib_integral_forwardSuccessor_le`, `trajectoryPrefix_condDistrib_integral_inverseSuccessor_le` | a.e. prefixwise conditional-distribution integrals | compiled |
+| fixed-horizon conditional expectation | tower-ready recurrence step | `twoArmForwardTrajectorySuccessor_condExp_le_recurrenceBound`, `twoArmInverseTrajectorySuccessor_condExp_le_recurrenceBound` | integrable potentials and conditional expectation on the canonical trajectory | compiled |
 
 ## Assumption ledger
 
@@ -69,8 +79,11 @@ reward kernels.
 | maximum-gap envelope | explicit hypotheses | Eqs. (2), (7) | no |
 | history measurability and conditional reward kernel | recursive policy, canonical trajectory, and pointwise kernel-integral bridge compiled | Algorithm 1 / Eq. (5) | no for the process bridge; source-specific uniform regularity remains downstream |
 | source zero initialization and `K=2` | explicit source-time specialization | Algorithm 1 / Eqs. (9)--(11) | no for the compiled pathwise structure |
-| `C_eta` and bounded-reward exponential moment | compiled standalone | Eq. (8) / Theorem 1 | no for the analytic inequality; generated conditional composition remains blocking |
-| generated conditional recurrences and expected squared failure mass | not compiled | Theorem 1 proof | yes for Theorem 1 |
+| `C_eta` and bounded-reward exponential moment | compiled standalone and on generated initial/successor kernels | Eq. (8) / Theorem 1 | no for the analytic or generated-kernel inequality |
+| bounded two-arm fixed-mean environment contract | explicit initial/successor fiber support and mean fields | Theorem 1 reward model | no for the compiled recurrence route; an equivalent fixed-iid-law/source-assumption producer is not claimed |
+| initial, fixed-history, and a.e. conditional-distribution recurrences | compiled | Theorem 1 proof | no for the one-step recurrence layer |
+| fixed-horizon path integrability and conditional-expectation recurrence | compiled | Theorem 1 proof | no for the one-step tower-ready layer |
+| global tower iteration and expected squared failure mass | not compiled | Theorem 1 proof | yes for Theorem 1 |
 | other learning-rate thresholds | not attempted | Theorems 2--4 | yes for those paper endpoints |
 
 ## Local API and proof route
@@ -91,6 +104,10 @@ reward kernels.
 | source-time fence | `Preorder.frestrictLe`, `historyParameter` | `MLIB-FINSET-SUMS` | time zero is untouched; time `n+1` consumes prefix through `n` | do not shift the first update into source time one |
 | Equation (11) | `Fin.sum_univ_two`, `Real.exp_sub`, softmax positivity | `MLIB-EXP-LOG-INEQUALITIES`, `MLIB-ORDER-ALGEBRA` | turn the zero-sum invariant into opposite coordinates and cancel the positive softmax denominator | retain the exact odds direction and Lean/source arm mapping |
 | `C_eta` and Equation (8) | `Real.summable_pow_div_factorial`, shifted `tsum`, `integral_mono_ae` | `MLIB-EXP-LOG-INEQUALITIES`, `MLIB-MEASURE-INTEGRAL` | split the exponential series after degree one, dominate the tail using bounded support, then integrate | do not relabel the generic probability integral as a generated conditional theorem |
+| generated Equation (8) | initial/history-step comp-product kernels and finite-action integration | `MLIB-PROBABILITY-KERNEL`, `MLIB-MEASURE-INTEGRAL` | expose the action-dependent exponential coefficient, integrate armwise, and invoke the standalone Equation-(8) theorem | keep support and fixed-mean hypotheses explicit |
+| two-arm one-step recurrences | Equation-(11) consumers, `sourceC_mono`, generated Equation (8) | `MLIB-EXP-LOG-INEQUALITIES`, `MLIB-ORDER-ALGEBRA` | identify the forward/inverse coefficients and isolate the success/failure-square remainder | preserve the source-time fence and signs |
+| measurable trajectory transport | canonical trajectory `condDistrib`, prefix filtration, measurable potentials | `MLIB-CONDITIONAL-EXPECTATION`, `MLIB-PROBABILITY-KERNEL` | transport the fixed-history integral inequalities to a.e. generated prefixes | do not call this a global iterated recurrence |
+| path integrability and conditional expectation | pathwise reward support, recursive parameter envelope, `condexp`/`condDistrib` identity | `MLIB-CONDITIONAL-EXPECTATION`, `MLIB-MEASURE-INTEGRAL` | prove fixed-horizon exponential integrability, identify one-step condexp, then expose tower-ready bounds | do not infer the finite-horizon tower sum or failure-mass bound |
 
 ## Proof DAG
 
@@ -109,7 +126,13 @@ reward kernels.
 | SGB-9 | generated pathwise zero-sum and source-time fence | SGB-3--4 and SGB-HISTORY-STATE | `historyParameter_sum_eq_initial`, `twoArmParameterAt_sum_eq_zero` | focused Lean plus indexing canary | compiled |
 | SGB-11 | exact two-arm softmax odds consumers | SGB-9 plus finite softmax algebra | `softmaxProbability_zero_div_one`, `twoArmProbabilityAt_exp_two_mul_failure_eq_success` | focused Lean | compiled |
 | SGB-8 | source `C_eta` and bounded-reward exponential-moment inequality | exponential-series summability plus a.e. support in `[-1,1]` | `sourceC_le_exp_two_mul`, `integral_exp_mul_le_sourceEqEight_of_ae_abs_le_one` | focused Lean | compiled standalone |
-| SGB-RATES | Theorems 1--4 | SGB-HISTORY, SGB-11, SGB-8, reward regularity, conditional recurrences, and expected failure-mass analysis | reserved | paper endpoint | blocked |
+| SGB-EQ8-GENERATED | Equation (8) on initial/successor generated kernels | SGB-HISTORY, SGB-8, explicit support and fixed means | `integral_measurableEnvironmentHistoryStepKernel_exp_actionReward_le_sourceEqEight_of_mean` | focused Lean | compiled |
+| SGB-RECURRENCE-SUCCESSOR | forward/inverse fixed-history recurrence inequalities | SGB-EQ8-GENERATED, SGB-11, `sourceC_mono` | `integral_twoArmHistoryStepKernel_exp_forwardSuccessor_le_add_success_sq`, `integral_twoArmHistoryStepKernel_exp_inverseSuccessor_le_sub_failure_sq` | focused Lean | compiled |
+| SGB-RECURRENCE-INITIAL | source-zero time-one recurrence inequalities | SGB-EQ8-GENERATED and uniform initial law | `integral_twoArmInitialPairKernel_exp_forwardIncrement_le`, `integral_twoArmInitialPairKernel_exp_inverseIncrement_le` | focused Lean | compiled |
+| SGB-RECURRENCE-COND-DISTRIB | measurable contract, canonical trajectory, filtration, and a.e. recurrence transport | SGB-HISTORY-TRAJECTORY and SGB-RECURRENCE-SUCCESSOR | `TwoArmBoundedFixedMeanEnvironmentContract`, `trajectoryPrefix_condDistrib_integral_forwardSuccessor_le`, `trajectoryPrefix_condDistrib_integral_inverseSuccessor_le` | trajectory gate | compiled |
+| SGB-PATH-INTEGRABILITY | finite-prefix support, potential integrability, condexp/condDistrib identity, and tower-ready recurrence | SGB-RECURRENCE-COND-DISTRIB | `integrable_twoArmForwardTrajectorySuccessorPotential`, `twoArmForwardTrajectorySuccessor_condExp_le_recurrenceBound`, inverse analogues | trajectory gate | compiled |
+| SGB-THEOREM-1 | exact two-arm finite regret terminal | SGB-PATH-INTEGRABILITY plus global tower iteration, expected failure-mass control, and Equation-(7) assembly | reserved | paper endpoint | blocked |
+| SGB-THEOREMS-2-4 | remaining learning-rate regimes | source-specific general-`K` and sharp-rate arguments | reserved | paper endpoint | blocked |
 
 The process API permits an arbitrary `initialTheta`; the paper's Algorithm 1
 is recovered by the specialization `initialTheta := fun _ => 0`.
@@ -130,10 +153,17 @@ is recovered by the specialization `initialTheta := fun _ => 0`.
       arm-reward regularity from which update integrability should follow.
 - [x] Compile the source-exact `C_eta` and Equation-(8) bounded-reward
   exponential-moment inequality on a generic probability measure.
-- [ ] Instantiate Equation (8) on each generated conditional reward kernel,
-  use the compiled `C_eta` monotonicity, and compile both two-arm
-  conditional recurrences.
-- [ ] Bound the expected squared failure mass and assemble Theorem 1's exact
-  finite regret inequality.
+- [x] Instantiate Equation (8) on the generated initial/successor kernels and
+  compile the fixed-history forward/inverse two-arm recurrence inequalities.
+- [x] Compile the zero-initial time-one recurrence bounds.
+- [x] Package the explicit bounded fixed-mean environment contract, canonical
+  trajectory/filtration, and a.e. conditional-distribution recurrence
+  transports.  This contract is not claimed equivalent to a fixed-iid law.
+- [x] Transport reward support to finite prefixes, prove both fixed-horizon
+  potentials integrable, identify condexp with the conditional-distribution
+  integral, and compile tower-ready one-step recurrence bounds.
+- [ ] Iterate the recurrences globally, bound the expected squared failure
+  mass, and assemble Theorem 1's exact finite regret inequality through
+  Equation (7).
 - [ ] Prove any logarithmic or polynomial regret regime.
 - [ ] Verify the two-arm sharp threshold or the general-`K` threshold.

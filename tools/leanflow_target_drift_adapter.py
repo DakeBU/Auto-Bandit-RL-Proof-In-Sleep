@@ -75,7 +75,7 @@ EXPECTED_CLEAN_ROOM_AUDIT = {
         "README.md lines 104-107 state that --clean-room retains general web and paper search.",
         "core/toolsets.py lines 151-159 include the web toolset in leanflow-prove-worker.",
         (
-            "leanflow_cli/workflow.py lines 637-644 set solution-research denial but not "
+            "leanflow_cli/workflow.py lines 762-766 set solution-research denial but not "
             "repository-research denial."
         ),
         (

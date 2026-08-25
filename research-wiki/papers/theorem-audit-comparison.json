@@ -121,21 +121,26 @@
         "uniform reward regularity",
         "learning-rate-dependent logarithmic and polynomial regret regimes"
       ],
-      "strongest_compiled_bridge": "Seventy-six declarations combine four disjoint layers: 26 finite-action algebra declarations, 18 recursive-policy/generated-trajectory/Equation-(5) kernel declarations, 18 pathwise two-arm Equation-(9)/(11) declarations, and 14 source-exact C-eta/Equation-(8) exponential-moment declarations including C-eta monotonicity.",
-      "compiled_declaration_count": 76,
+      "strongest_compiled_bridge": "One hundred thirty-five declarations combine nine disjoint layers: finite-action algebra; recursive-policy/generated-trajectory/Equation-(5) kernels; pathwise two-arm Equation-(9)/(11); source-exact C-eta/Equation-(8); generated-kernel Equation (8); fixed-history successor recurrences; source-initial recurrences; measurable contract/trajectory/conditional-distribution transport; and fixed-horizon path integrability with tower-ready conditional recurrence bounds.",
+      "compiled_declaration_count": 135,
       "declaration_count_breakdown": {
         "finite_action_algebra": 26,
         "generated_history_and_kernel_bridge": 18,
         "two_arm_zero_sum_and_equation_11": 18,
-        "source_c_and_equation_8": 14
+        "source_c_and_equation_8": 14,
+        "generated_equation_8_kernel_bridge": 4,
+        "fixed_history_successor_recurrence": 10,
+        "two_arm_initial_recurrence": 3,
+        "measurable_contract_and_cond_distrib_transport": 25,
+        "path_integrability_and_conditional_recurrence": 17
       },
       "blocking_obligations": [
-        "uniform reward-regularity producer for the explicit integral hypotheses",
-        "generated-kernel instantiation of Equation (8), both conditional exponential recurrences, and expected squared failure-mass control",
+        "paper-specific fixed-iid reward-law producer for the explicit integral hypotheses; the compiled bounded fixed-mean contract is not claimed equivalent",
+        "global tower iteration, expected squared failure-mass control, and Equation-(7) terminal assembly",
         "learning-rate-dependent regret rates",
         "Theorems 1--4"
       ],
-      "scope_boundary": "Generated Equation-(5) conditional-law bridges compile under explicit integrability and arm-reward integral equalities, while Equation (8) compiles separately for bounded rewards; the two have not yet been composed into the paper's conditional recurrences or any theorem endpoint.",
+      "scope_boundary": "Generated Equation-(5)/(8) kernel bridges, initial and fixed-history forward/inverse recurrences, a.e. conditional-distribution transport, fixed-horizon potential integrability, and tower-ready one-step conditional-expectation bounds compile under explicit bounded fixed-mean contracts. A general prior reveals the latent environment, while a fixed/Dirac environment gives the fixed-instance reading. No global iterated recurrence, failure-mass bound, Equation-(7) assembly, or paper endpoint is compiled.",
       "promotion_status": "partial",
       "paper_endpoint_verified": false
     }

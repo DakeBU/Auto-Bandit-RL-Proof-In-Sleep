@@ -472,9 +472,26 @@ changing or resealing that frozen result-free plumbing.  The candidate contract
 `leanflow-real-adapter-contract.json` pins LeanFlow commit
 `72a58a5ffe3d26710e8e0a5d0f4e9bcaab3fed4d`, its Git tree, release `0.3.0`,
 `uv.lock`, license, project metadata, and the source bytes that expose the
-current clean-room/toolset policy.  Given a local checkout at that exact
-commit, the command below performs only two allowlisted local `git rev-parse`
-queries and byte checks:
+current clean-room/toolset policy.  The pinned file hashes are the canonical LF
+Git blob bytes.  A fresh local source tree can be materialized without
+platform CRLF conversion as follows (the target directory must not exist):
+
+```bash
+LEANFLOW_SOURCE_ROOT=/absolute/new/leanflow-pinned-source
+git init "${LEANFLOW_SOURCE_ROOT}"
+git -C "${LEANFLOW_SOURCE_ROOT}" remote add origin https://github.com/epfl-lara/LeanFlow
+GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=/dev/null GIT_TERMINAL_PROMPT=0 \
+  git -c credential.helper= -c core.askPass= -c submodule.recurse=false \
+  -C "${LEANFLOW_SOURCE_ROOT}" fetch --no-tags --depth=1 origin \
+  72a58a5ffe3d26710e8e0a5d0f4e9bcaab3fed4d
+git -c core.autocrlf=false -c core.hooksPath=/dev/null \
+  -c submodule.recurse=false -C "${LEANFLOW_SOURCE_ROOT}" \
+  checkout --detach --force 72a58a5ffe3d26710e8e0a5d0f4e9bcaab3fed4d
+git -C "${LEANFLOW_SOURCE_ROOT}" remote remove origin
+```
+
+Given that exact canonical checkout, the command below performs only two
+allowlisted local `git rev-parse` queries and byte checks:
 
 ```text
 python tools/leanflow_target_drift_adapter.py --mode result-free-preflight --contract evaluation/target-drift-v2/leanflow-real-adapter-contract.json --source-root ABSOLUTE-PINNED-LEANFLOW-CHECKOUT --response FRESH-PREFLIGHT-RESPONSE.json --trace FRESH-PREFLIGHT-TRACE.jsonl
@@ -493,6 +510,91 @@ public-repository search to be disabled.  A disclosed no-web upstream interface
 or audited overlay plus provider-only network containment remains mandatory
 before a real, permanently result-ineligible smoke.  Passing this preflight is
 not a LeanFlow run or comparison result.
+
+The earlier source inventory used platform-transformed CRLF working-tree bytes
+(including obsolete `uv.lock` SHA-256
+`1239513509ee29a580c3f3f293e86dd16f77c298dbe9a99cba6aaaf93a1b0dd5`).
+Those hashes and every response, trace, or attestation bound to that obsolete
+inventory are invalid as source-preflight artifacts.  They must not be cited
+or mixed with the canonical-LF contract.
+
+The tracked GitHub Actions workflow
+`.github/workflows/leanflow-source-preflight.yml` makes that same boundary
+reproducible on an Ubuntu runner.  It is named **LeanFlow pinned-source
+preflight (result-free, not results)** and performs these operations only:
+
+1. check out ABRL with credential persistence disabled and run the adapter and
+   independent-validator component tests;
+2. initialize an empty Git repository, fetch exactly public LeanFlow commit
+   `72a58a5ffe3d26710e8e0a5d0f4e9bcaab3fed4d` with terminal prompting and
+   credential helpers disabled, materialize the canonical LF Git bytes with
+   `core.autocrlf=false`, detach at that commit, and remove the remote;
+3. run the existing adapter in `result-free-preflight` mode, then independently
+   validate the response/trace schemas, commit, tree, lock, pinned-file count,
+   cross-file hashes, ordered events, zero model calls, and every false
+   eligibility/execution/outcome flag; and
+4. only when `github.repository` is exactly
+   `DakeBU/Auto-Bandit-RL-Proof-In-Sleep` and the event is a `push` to
+   `refs/heads/main`, upload the response, trace, and validation attestation
+   under an artifact name containing
+   `source-preflight-not-results`; pull requests and manual dispatches run the
+   same checks but upload no artifact.
+
+The workflow never installs or starts LeanFlow, invokes a model/provider,
+reads a provider credential, or runs a general network client.  Its only
+command-step source acquisition is the exact public Git fetch; the ABRL
+checkout and main-push-only artifact upload remain explicit GitHub control-plane
+actions.  Checkout is pinned to
+`actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803` (v6) and upload
+to `actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02`
+(v4); those action commits are distinct from the pinned LeanFlow source
+commit.  The uploaded files contain no Lean proof, score, cost, checker
+outcome, or comparison result.  The validator itself imports neither
+`subprocess` nor a provider/network client.  It first requires the entire
+workflow byte stream to match SHA-256
+`69cb85f9cb19135890f50bdf5e82fbc80740b0b779162f9abf178824c0961323`;
+therefore any additional job, step, environment field, or run command changes
+the hash and fails closed.  Structural checks and negative tests additionally
+cover dotted and bracket-form secret references, `github.token`, inline
+`python -c`/`urllib`, general downloaders, dependency runners, LeanFlow
+commands, privileged pull-request triggers, extra source URLs, changed action
+SHAs, and a changed LeanFlow object ID.
+`.gitattributes` fixes this workflow path to `text eol=lf`; tests require that
+Git attribute, reject CRLF-transformed workflow bytes, and verify that the
+expected SHA-256 is computed over the same canonical bytes accepted by Git's
+clean filter and used by an Ubuntu checkout.
+
+This exact-byte validator is a drift check against the currently reviewed
+trusted-main workflow bytes, not an unforgeable provenance mechanism.  A pull
+request can modify the workflow, validator, tests, and expected hash together;
+therefore a green pull-request check or a locally generated attestation is not
+CI evidence by itself.  The attestation records either explicit
+`local_non_evidence` provenance or the GitHub Actions `github.sha`, `run_id`,
+`run_attempt`, event, ref, workflow name/ref, repository, and run URL.  Even on
+a main push it keeps `ci_evidence_eligible=false` internally because that file
+is not self-authenticating.  Treat a run as CI source-preflight evidence only
+after independently confirming all of the following:
+
+- the run URL belongs to the trusted repository and its protected `main` push;
+- `github.sha` contains the reviewed workflow and validator bytes;
+- the run used the two pinned action commits above; and
+- the artifact digest is the `artifact-digest` emitted by that run's pinned
+  upload action.  The job summary records the trusted-main run URL and digest.
+
+Pull-request, manual-dispatch, and local outputs remain check-only non-evidence
+and are never promoted by copying their JSON files elsewhere.  A fork
+repository slug is rejected by the provenance validator and its main push is
+ineligible for the upload step.  This source
+preflight deliberately adds no no-web overlay: that
+production gate remains false and still precedes any real-infrastructure
+smoke or 30-run calibration.
+
+The result-free workflow boundary and artifact grammar can be checked locally
+without acquiring LeanFlow source:
+
+```text
+python -m unittest tools.test_leanflow_target_drift_adapter tools.test_leanflow_source_preflight -v
+```
 
 `tools/codex_target_drift_adapter.py` is a result-free candidate adapter. Its
 component tests cover the supported Codex JSONL schema (including item updates,

@@ -96,17 +96,21 @@ outside the atom-generated directions.  This is a regularity/codomain
 obligation, not a source-error claim; the global Lemmas 3.5--3.6, Assumption
 3.7, Theorem 3.8, and every regret endpoint remain outside the compiled slice.
 
-The independent stochastic-gradient-bandit audit contains 76 named
-declarations in four disjoint layers: 26 finite Algorithm-1/Equations-(3)--(7)
-declarations; 18 recursive-state, generated-trajectory, conditional-law, and
-Equation-(5) kernel declarations; 18 pathwise two-arm Equation-(9)/(11)
-zero-sum, source-time, initialization, and softmax-odds declarations; and 14
-source-exact `C_eta`/Equation-(8) exponential-moment declarations, including
-nonnegative-parameter monotonicity, for rewards
-supported on `[-1,1]`.  Equation (8) is not yet instantiated on the generated
-conditional reward kernels.  Both conditional exponential recurrences,
-expected squared failure-mass control, all learning-rate-dependent rates, and
-Theorems 1--4 remain outside the compiled slice.
+The independent stochastic-gradient-bandit audit contains 135 named
+declarations.  Its original 76 declarations cover finite
+Algorithm-1/Equations-(3)--(7) algebra, recursive generated histories and
+Equation-(5) kernels, pathwise two-arm Equation-(9)/(11) structure, and the
+source-exact `C_eta`/Equation-(8) exponential-moment inequality.  Fifty-nine
+additional declarations instantiate Equation (8) on generated kernels, prove
+the zero-initial and fixed-history forward/inverse recurrence inequalities,
+transport them almost everywhere through the canonical trajectory, establish
+fixed-time path integrability and conditional-expectation representations, and
+derive one-step conditional recurrence bounds.  This is a partial audit route,
+not Theorem 1: global tower iteration, expected squared failure-mass control,
+Equation-(7) regret assembly, every learning-rate-dependent rate, and Theorems
+1--4 remain outside the compiled slice.  The bounded fixed-mean fiber contract
+is not an equivalence proof for a fixed-iid reward law; with a general prior,
+the current prefix filtration reveals the latent environment.
 
 ## Quick verification
 
