@@ -48,7 +48,7 @@ reports zero `literature-open` cases until a scoped primary-source audit support
 such a claim; one case remains in the source-audit queue, while the 13
 formalization-open cases expose 39 stable named leaves. Two additional
 source-frozen ports—the 54-declaration succinct-lower-bound audit and the
-135-declaration stochastic-gradient-bandit audit—are displayed outside that
+143-declaration stochastic-gradient-bandit audit—are displayed outside that
 comparison ledger; neither is promoted to a compiled paper-level terminal.
 
 ## 🛠️ Build locally

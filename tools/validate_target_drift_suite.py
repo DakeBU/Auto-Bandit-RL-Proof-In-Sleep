@@ -60,7 +60,19 @@ def main() -> None:
     manifest = load("challenges.json")
     cases = manifest["cases"]
 
-    require(protocol["execution_status"] == "challenge_bank_frozen_execution_not_started", "execution status must remain unrun")
+    require(
+        protocol["execution_status"]
+        == "challenge_bank_amended_pre_execution_execution_not_started",
+        "execution status must record the result-free pre-execution amendment",
+    )
+    require(
+        protocol.get("pre_execution_amendment_on") == "2026-08-26"
+        and protocol.get("pre_execution_amendment_path")
+        == "evaluation/source-contract-audit-v1/amendment.json"
+        and protocol.get("outcomes_observed_before_amendment") is False
+        and (ROOT / protocol["pre_execution_amendment_path"]).is_file(),
+        "pre-execution amendment binding is missing or overstates outcomes",
+    )
     require(len(cases) == protocol["challenge_count"] == 30, "expected 30 challenges")
     require(len(set(protocol["conditions"])) == 3, "expected three unique conditions")
     require(protocol["paired_seeds_per_condition"] == 5, "expected five paired seeds")
@@ -77,6 +89,11 @@ def main() -> None:
 
     by_stratum = Counter(case["stratum"] for case in cases)
     require(by_stratum == {"paper_derived": 18, "textbook_control": 12}, "stratum allocation must be 18/12")
+    require(
+        protocol.get("textbook_derived_control_count") == 10
+        and protocol.get("internal_evidence_policy_control_count") == 2,
+        "the historical textbook-control stratum must disclose its 10/2 origin split",
+    )
     paper_cases = [case for case in cases if case["stratum"] == "paper_derived"]
     by_paper = Counter(case["source_id"] for case in paper_cases)
     require(set(by_paper) == PAPER_SOURCES, "paper-derived source set differs from the frozen portfolio")
@@ -111,7 +128,7 @@ def main() -> None:
         check=True,
     )
 
-    print("target-drift suite valid: 30 authored/unrun cases, 18 paper probes, 12 textbook controls, 450 planned runs")
+    print("target-drift suite valid: 30 authored/unrun cases, pre-execution source amendment bound, 450 planned runs")
 
 
 if __name__ == "__main__":

@@ -145,8 +145,24 @@ def main() -> None:
             "suite identifiers differ")
     require(prepare.resolve_repo_path(config["protocol"]) == V2 / "protocol.json",
             "execution config must pin the v2 protocol path")
-    require(protocol["execution_status"] == "balanced_variants_designed_execution_not_started",
-            "v2 protocol must remain unrun")
+    require(
+        protocol["execution_status"]
+        == "balanced_variants_amended_pre_execution_execution_not_started",
+        "v2 protocol must record the result-free pre-execution amendment",
+    )
+    require(
+        protocol.get("pre_execution_amendment_on") == "2026-08-26"
+        and protocol.get("pre_execution_amendment_path")
+        == "evaluation/source-contract-audit-v1/amendment.json"
+        and protocol.get("outcomes_observed_before_amendment") is False
+        and (ROOT / protocol["pre_execution_amendment_path"]).is_file(),
+        "v2 pre-execution amendment binding is missing or overstates outcomes",
+    )
+    require(
+        protocol.get("textbook_derived_control_count") == 10
+        and protocol.get("internal_evidence_policy_control_count") == 2,
+        "v2 control-stratum 10/2 origin split differs",
+    )
     require(config["execution_status"] == "template_unfrozen",
             "v2 execution template must remain unfrozen")
     require(len(challenges) == protocol["base_challenge_count"] == 30,

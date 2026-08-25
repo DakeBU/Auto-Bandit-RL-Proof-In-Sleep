@@ -178,6 +178,7 @@ def validate_provider_disabled_plumbing(plan: dict) -> None:
         "suite_id": "ABRL-TARGET-DRIFT-V2",
         "comparator_id": "leanflow_external",
         "sealed_on": "2026-08-25",
+        "amended_pre_execution_on": "2026-08-26",
         "status": "sealed_result_free_provider_disabled_fixture_plumbing",
         "external_comparator_plan_path": (
             "evaluation/target-drift-v2/external-comparator-plan.json"
@@ -223,6 +224,7 @@ def main() -> None:
             and plan["suite_id"] == primary["suite_id"]
             == "ABRL-TARGET-DRIFT-V2", "suite identity differs")
     require(plan["frozen_on"] == "2026-08-24"
+            and plan["amended_pre_execution_on"] == "2026-08-26"
             and plan["status"] == "planned_unrun_result_free"
             and plan["purpose"]
             == "external_system_calibration_not_primary_causal_condition",
@@ -232,11 +234,12 @@ def main() -> None:
             and plan["primary_protocol_sha256"] == sha256(PRIMARY)
             and plan["primary_outcomes_observed_at_freeze"] is False
             and plan["comparator_outcomes_observed_at_freeze"] is False,
-            "plan does not preserve the original primary-protocol boundary")
+            "plan does not preserve the versioned pre-execution protocol boundary")
     require(seal == {
         "schema_version": 1,
         "suite_id": "ABRL-TARGET-DRIFT-V2",
         "sealed_on": "2026-08-24",
+        "amended_pre_execution_on": "2026-08-26",
         "status": "frozen_result_free_external_comparator_plan",
         "plan_path": "evaluation/target-drift-v2/external-comparator-plan.json",
         "plan_sha256": sha256(PLAN),

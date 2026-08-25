@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "amendment_id": "ABRL-TARGET-DRIFT-PREEXEC-SOURCE-CONTRACT-AMENDMENT-2026-08-26",
+  "amended_on": "2026-08-26",
+  "reason": "A dual-instance AI-assisted paper-source pre-audit found one incorrect faithful-contract phrase, two ambiguous faithful-contract phrases, five imprecise source locators, and one imprecise succinctness contrast before any evaluated outcome was observed.",
+  "timing_and_claim_boundary": {
+    "primary_model_outcomes_observed": false,
+    "external_comparator_outcomes_observed": false,
+    "provider_calls_for_evaluation_observed": false,
+    "human_expert_validation_complete": false,
+    "amendment_is_evaluation_result": false
+  },
+  "pre_amendment_base": {
+    "manifest_path": "evaluation/source-contract-audit-v1/pre-amendment/base.json",
+    "manifest_sha256": "2ab9fcd8001f8338cf1ed6e8cbc8425fcb279245d04b2b993365424f136fbe63",
+    "base_git_commit": "705dfe1ab1b8e0d318097981a7322336686dd5c8"
+  },
+  "primary_inputs": {
+    "challenge_manifest": {
+      "path": "evaluation/target-drift-v1/challenges.json",
+      "before_sha256": "ce9b7b00941e5ffdc70ada3c6104d20cef446e70c1bfa162bb1b79e37d830fc6",
+      "after_sha256": "89de6b5d4be6efad32d8c43353869ec93b9e8275fdce622f11a35d78873a887a"
+    },
+    "paired_requirements": {
+      "path": "evaluation/target-drift-v2/paired-requirements.json",
+      "before_sha256": "be11f20759eed85492a20c1a16b20f7317210494ed141b4d151ba7ee323e2bcd",
+      "after_sha256": "4d0b3a4c8971999ca15d244b60733c55a21b48edef78849dd6bb54c64a2a5b6a"
+    }
+  },
+  "metadata_changes": [
+    {
+      "field": "paired_requirements.status",
+      "before": "paired_wording_frozen_results_absent",
+      "after": "paired_wording_amended_pre_execution_results_absent"
+    }
+  ],
+  "case_changes": [
+    {
+      "case_id": "DBOBW-05-DELAY-SURFACE",
+      "fields": [
+        "challenges.source_locator",
+        "challenges.faithful_contract",
+        "paired_requirements.source_faithful_value"
+      ],
+      "change_summary": "Bind sigma_max to max_t sigma(t), state the additive sigma_max * Delta_avg * log K term, and add the page-4 definition."
+    },
+    {
+      "case_id": "SLB-03-SUCCINCTNESS-MODE",
+      "fields": [
+        "challenges.injected_drift",
+        "paired_requirements.source_faithful_value",
+        "paired_requirements.injected_drift_value"
+      ],
+      "change_summary": "Replace the at-most-s shorthand by an s-unit support representation permitting zero coefficients, contrasted with exactly-s nonzero fixed-coordinate sparsity."
+    },
+    {
+      "case_id": "SLB-04-CARDINALITY-REGIME",
+      "fields": [
+        "challenges.source_locator",
+        "challenges.faithful_contract"
+      ],
+      "change_summary": "Separate support/group cardinalities k,s from positive real geometry parameters p,q and add Theorem 3.8 to the locator."
+    },
+    {
+      "case_id": "SLB-06-COROLLARY-PROMOTION",
+      "fields": [
+        "challenges.source_locator"
+      ],
+      "change_summary": "Name Corollaries 4.1--4.3 and their physical pages."
+    },
+    {
+      "case_id": "SGB-01-UPDATE-SEMANTICS",
+      "fields": [
+        "challenges.faithful_contract",
+        "paired_requirements.source_faithful_value"
+      ],
+      "change_summary": "Replace ambiguous baseline semantics by the exact raw-reward softmax stochastic-gradient update in Equation (4)."
+    },
+    {
+      "case_id": "SGB-04-REWARD-SUPPORT",
+      "fields": [
+        "challenges.source_locator",
+        "paired_requirements.source_faithful_value"
+      ],
+      "change_summary": "Add the page-1 definition of F and state support in [-1,1]."
+    },
+    {
+      "case_id": "SGB-06-IDENTICAL-GAPS",
+      "fields": [
+        "challenges.source_locator"
+      ],
+      "change_summary": "Locate the proved identical-gap endpoint and the separate Delta/K conjecture discussion using Theorems 2--4."
+    }
+  ],
+  "derived_bindings_after": {
+    "target_drift_v1_protocol": {
+      "path": "evaluation/target-drift-v1/protocol.json",
+      "sha256": "0d1534fdb637f90d056fa3e2f1f91c3fbb25bd94aca0574e36ff9cdb5365a372"
+    },
+    "target_drift_v2_protocol": {
+      "path": "evaluation/target-drift-v2/protocol.json",
+      "sha256": "9bcc8d7f4342ea6b49c328735eacbd1f2a6c920a93c68d20c6514dde454fd369"
+    },
+    "external_comparator_plan": {
+      "path": "evaluation/target-drift-v2/external-comparator-plan.json",
+      "sha256": "d87e144e738c274b241f7064e3a5d78fb81c5900dcea1a322d2c82c43a8472b5"
+    },
+    "external_comparator_plan_seal": {
+      "path": "evaluation/target-drift-v2/external-comparator-plan.seal.json",
+      "sha256": "05b5ab401b87616fdc28fc35462bf9e1db0bc83a9b2849678013f8ca65481632"
+    },
+    "leanflow_schedule": {
+      "path": "evaluation/target-drift-v2/leanflow-external-schedule.json",
+      "before_sha256": "436855ad499975cda42bd6d6ce379e1b7b2742f504d852f97a32a2a4f05b1713",
+      "after_sha256": "a3f86d670ddb41a27ea1291cde05b10e4a37b432c7582c2b81483829e7c03531"
+    },
+    "leanflow_adapter_contract": {
+      "path": "evaluation/target-drift-v2/leanflow-adapter-contract.json",
+      "sha256": "63fd811182013841a46ae94a263659609753504527e29530a410f52c01c189b0"
+    },
+    "leanflow_fixture_request": {
+      "path": "evaluation/target-drift-v2/leanflow-excluded-fixture-request.json",
+      "sha256": "eb09dcac686ccb3a96dce9723f8e2c5263ae2b0415a60da44fbab04d1c11243f"
+    },
+    "leanflow_completion_ledger_contract": {
+      "path": "evaluation/target-drift-v2/leanflow-external-completion-ledger-contract.json",
+      "sha256": "7b20e232f1c2ad4a5e369fecd752b2a3f15170719653846f07224e32a18836fd"
+    },
+    "leanflow_plumbing_seal": {
+      "path": "evaluation/target-drift-v2/leanflow-external-plumbing.seal.json",
+      "sha256": "bbbfd63f6741c887288b7f55bf50d255343ffc1f45b3e3892130460756b54ab2"
+    },
+    "wording_negative_control_record": {
+      "path": "evaluation/target-drift-v2/wording-negative-control-record.json",
+      "sha256": "d4d48050231ed5b8230cebc8583fb4605237255c2e4e6ad0324e16afc097a91b",
+      "deterministic_accuracy_before": 0.6333333333333333,
+      "deterministic_accuracy_after": 0.5333333333333333,
+      "result_eligible": false
+    }
+  }
+}

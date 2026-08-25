@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "audit_id": "ABRL-PAPER-SOURCE-CONTRACT-PREAUDIT-V1",
+  "conducted_on": "2026-08-26",
+  "status": "ai_assisted_pre_audit_complete_human_expert_validation_pending",
+  "protocol_timing": "post_hoc_record_of_the_completed_pre_audit_not_a_preregistration",
+  "scope": {
+    "challenge_manifest_path": "evaluation/target-drift-v1/challenges.json",
+    "challenge_manifest_before_sha256": "ce9b7b00941e5ffdc70ada3c6104d20cef446e70c1bfa162bb1b79e37d830fc6",
+    "stratum": "paper_derived",
+    "case_count": 18,
+    "source_count": 3
+  },
+  "sources": [
+    {
+      "source_id": "PPR-SCHLISSELBERG-LANCEWICKI-AUER-MANSOUR-2025-DELAYED-BOBW",
+      "sha256": "525240c98b67616b4918bf5bffb799577f298786fc46538aff91153380ae0f9e",
+      "case_count": 6
+    },
+    {
+      "source_id": "PPR-ZENG-HONORIO-2025-SUCCINCT-LOWER-BOUNDS",
+      "sha256": "98e2511709b155e9e032b305c6fb1eb933237508f3ea4db76dbd229b6c5160b8",
+      "case_count": 6
+    },
+    {
+      "source_id": "PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB",
+      "sha256": "a3aff97fe2179c47fff61cc51453b84a082332e2a205f7fa2268cc68cba73b3d",
+      "case_count": 6
+    }
+  ],
+  "review_design": {
+    "reviewer_count": 2,
+    "reviewer_ids": [
+      "ai-reviewer-a",
+      "ai-reviewer-b"
+    ],
+    "reviewer_type": "isolated_ai_reviewer_instances",
+    "same_system_class": true,
+    "reviewers_blind_to_each_other": true,
+    "external_provider_called": false,
+    "human_expert_reviewer_count": 0,
+    "dimensions": [
+      "faithful_contract",
+      "injected_drift",
+      "source_locator"
+    ],
+    "confidence_scale": {
+      "1": "low",
+      "2": "moderate",
+      "3": "high"
+    }
+  },
+  "adjudication_design": {
+    "adjudicator_type": "primary_ai_assisted_agent",
+    "source_pdf_reinspection": true,
+    "voting_rule": "none; every disagreement is resolved against the frozen source",
+    "outcomes_observed_before_adjudication": false
+  },
+  "claim_boundary": {
+    "independent_human_expert_validation_complete": false,
+    "evaluation_outcomes_present": false,
+    "may_be_described_as": "dual-instance AI-assisted paper-source pre-audit",
+    "must_not_be_described_as": [
+      "independent expert validation",
+      "human validation",
+      "target-drift benchmark result",
+      "workflow effectiveness evidence"
+    ]
+  },
+  "required_human_followup": "Two independent human bandit-theory reviewers should audit all 18 contracts, followed by a third human adjudicator for disagreements."
+}
