@@ -405,6 +405,30 @@ numerical or superiority claim.
 The adjacent `external-comparator-plan.seal.json` content-addresses both this
 plan and the unchanged 18 August primary protocol; the independent validator
 rejects any byte drift or prematurely created comparator-results file.
+The separate LeanFlow plumbing seal now additionally binds a deterministic
+30-ID `leanflow_external` schedule, an exact completion-ledger schema, and one
+excluded-fixture request.  The fixture entrypoint is deliberately incapable of
+running LeanFlow: its contract requires provider mode, network, credential
+access, subprocess use, repository execution, and model-call budget all to be
+disabled.  It emits only a zero-usage, result-ineligible plumbing receipt and
+fails closed on unknown fields or production-result filenames.  The tracked
+`external-comparator-results.json` and
+`leanflow-external-completion-ledger.json` files remain absent.  This is not the
+real-infrastructure smoke required by the external-comparator plan.
+The result-free ledger template carries each run's source and stratum and
+reports missingness by cause, condition, hidden requirement variant, paper
+source cluster, and individual textbook target; it still permits no effect
+estimate while any external run is unmaterialized.
+
+The result-free lane can be checked without credentials, network, a LeanFlow
+checkout, or a model invocation:
+
+```text
+python tools/build_leanflow_target_drift_schedule.py --check evaluation/target-drift-v2/leanflow-external-schedule.json
+python tools/validate_target_drift_external_comparator.py
+python -m unittest tools.test_target_drift_external_comparator -v
+```
+
 `tools/codex_target_drift_adapter.py` is a result-free candidate adapter. Its
 component tests cover the supported Codex JSONL schema (including item updates,
 errors, and fail-closed forbidden-tool events), observable task/thread identity,

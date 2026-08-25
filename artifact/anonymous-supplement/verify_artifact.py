@@ -173,6 +173,15 @@ def verify_claim_ledger():
         fail("processed-trace-summary adapter boundary drift")
     if delayed.get("processed_trace_summary_declaration_count") != 9:
         fail("processed-trace-summary adapter count drift")
+    ordered_transition_id = delayed.get("ordered_no_switch_transition_id")
+    ordered_transition = records.get(ordered_transition_id, {})
+    if (
+        ordered_transition.get("status") != "compiled"
+        or len(ordered_transition.get("declarations", [])) != 15
+    ):
+        fail("ordered no-switch transition boundary drift")
+    if delayed.get("ordered_no_switch_transition_declaration_count") != 15:
+        fail("ordered no-switch transition count drift")
     central_endpoint = records.get(delayed.get("central_endpoint_id"), {})
     if central_endpoint.get("status") != "partial":
         fail("delayed central endpoint status drift")
@@ -183,6 +192,7 @@ def verify_claim_ledger():
         + len(diagnostic["declarations"])
         + len(processed_prefix["declarations"])
         + len(trace_summary["declarations"])
+        + len(ordered_transition["declarations"])
     ):
         fail("delayed source-audit total drift")
 
@@ -211,6 +221,155 @@ def verify_claim_ledger():
     for key, value in expected.items():
         if graph.get(key) != value:
             fail("proof-graph evidence drift for {}".format(key))
+
+
+def verify_theorem_audit_comparison():
+    comparison = load_json(ROOT / "evidence" / "theorem-audit-comparison.json")
+    ledger = load_json(ROOT / "evidence" / "claim-ledger.json")
+    if comparison != ledger.get("theorem_audit_comparison"):
+        fail("theorem-audit comparison/claim-ledger mismatch")
+    rows = comparison.get("rows")
+    expected_ids = [
+        "textbook-chapter-15-scoped-positive-control",
+        "delayed-bobw-source-frozen-audit",
+        "succinct-lower-bound-source-frozen-audit",
+        "stochastic-gradient-bandit-source-frozen-audit",
+    ]
+    if (
+        comparison.get("schema_version") != 1
+        or not isinstance(rows, list)
+        or [row.get("id") for row in rows] != expected_ids
+    ):
+        fail("theorem-audit comparison row inventory/order drift")
+    by_id = {row["id"]: row for row in rows}
+    if len(by_id) != len(rows):
+        fail("theorem-audit comparison row IDs are not unique")
+
+    records = ledger.get("source_records", {})
+    delayed = ledger.get("delayed_feedback", {})
+    delayed_ids = delayed.get("implementation_facing_ids", []) + [
+        delayed.get("diagnostic_id"),
+        delayed.get("processed_prefix_id"),
+        delayed.get("processed_trace_summary_id"),
+        delayed.get("ordered_no_switch_transition_id"),
+    ]
+    specs = {
+        expected_ids[0]: {
+            "role": "scoped_positive_control",
+            "evidence_record_ids": [
+                "TEXTBOOK-PART-IV-CH15-GAUSSIAN-MINIMAX-LOWER-BOUND"
+            ],
+            "central_endpoint_record_id":
+                "TEXTBOOK-PART-IV-CH15-GAUSSIAN-MINIMAX-LOWER-BOUND",
+            "promotion_status": "compiled",
+            "compiled_declaration_count": 12,
+            "scoped_endpoint_verified": True,
+        },
+        expected_ids[1]: {
+            "role": "source_frozen_external_audit",
+            "source_freeze_card_id":
+                "PPR-SCHLISSELBERG-LANCEWICKI-AUER-MANSOUR-2025-DELAYED-BOBW",
+            "evidence_record_ids": delayed_ids,
+            "central_endpoint_record_id": delayed.get("central_endpoint_id"),
+            "promotion_status": "partial",
+            "compiled_declaration_count": 148,
+            "declaration_count_breakdown": {
+                "implementation_facing": 89,
+                "diagnostic_conditional_repair": 19,
+                "processed_prefix": 16,
+                "processed_trace_summary_adapter": 9,
+                "ordered_no_switch_transition": 15,
+            },
+        },
+        expected_ids[2]: {
+            "role": "source_frozen_external_audit",
+            "source_freeze_card_id":
+                "PPR-ZENG-HONORIO-2025-SUCCINCT-LOWER-BOUNDS",
+            "evidence_record_ids": [
+                "NEURIPS-2025-SUCCINCT-LOWER-BOUND-GEOMETRY-AUDIT"
+            ],
+            "central_endpoint_record_id":
+                "NEURIPS-2025-SUCCINCT-LOWER-BOUND-GEOMETRY-AUDIT",
+            "promotion_status": "partial",
+            "compiled_declaration_count": 54,
+        },
+        expected_ids[3]: {
+            "role": "source_frozen_external_audit",
+            "source_freeze_card_id":
+                "PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB",
+            "evidence_record_ids": [
+                "NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT-MECHANISM-AUDIT"
+            ],
+            "central_endpoint_record_id":
+                "NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT-MECHANISM-AUDIT",
+            "promotion_status": "partial",
+            "compiled_declaration_count": 44,
+            "declaration_count_breakdown": {
+                "finite_action_algebra": 26,
+                "generated_history_and_kernel_bridge": 18,
+            },
+        },
+    }
+    freeze = load_json(ROOT / "evidence" / "source-freeze.json")
+    freeze_cards = {row.get("card_id") for row in freeze.get("papers", [])}
+    index = load_json(ROOT / "evidence" / "local_lean_declarations.json")
+    index_names = {
+        row.get("full_name") for row in index.get("declarations", [])
+    }
+    for row_id, spec in specs.items():
+        row = by_id[row_id]
+        for key, expected in spec.items():
+            if row.get(key) != expected:
+                fail("theorem-audit comparison {} drift for {}".format(key, row_id))
+        if (
+            not isinstance(row.get("contract_stress"), list)
+            or not row["contract_stress"]
+            or not isinstance(row.get("strongest_compiled_bridge"), str)
+            or not row["strongest_compiled_bridge"]
+            or not isinstance(row.get("scope_boundary"), str)
+            or not row["scope_boundary"]
+        ):
+            fail("theorem-audit comparison has an empty evidence field for " + row_id)
+        try:
+            evidence_records = [records[item] for item in spec["evidence_record_ids"]]
+            central = records[spec["central_endpoint_record_id"]]
+        except (KeyError, TypeError):
+            fail("theorem-audit comparison references a missing source record")
+        if sum(len(record.get("declarations", [])) for record in evidence_records) != spec["compiled_declaration_count"]:
+            fail("theorem-audit comparison declaration count drift for " + row_id)
+        evidence_names = [
+            name
+            for record in evidence_records
+            for name in record.get("declarations", [])
+        ]
+        if len(set(evidence_names)) != spec["compiled_declaration_count"]:
+            fail("theorem-audit comparison declaration overlap drift for " + row_id)
+        if any(name not in index_names for name in evidence_names):
+            fail("theorem-audit comparison references an unindexed declaration")
+        if spec["role"] == "source_frozen_external_audit":
+            if (
+                row.get("source_freeze_card_id") not in freeze_cards
+                or central.get("status") != "partial"
+                or row.get("paper_endpoint_verified") is not False
+                or not isinstance(row.get("blocking_obligations"), list)
+                or not row["blocking_obligations"]
+            ):
+                fail("external theorem-audit endpoint boundary drift for " + row_id)
+        elif (
+            central.get("status") != "compiled"
+            or row.get("scoped_endpoint_verified") is not True
+            or row.get("blocking_obligations") != []
+            or "paper_endpoint_verified" in row
+        ):
+            fail("Chapter 15 scoped positive-control boundary drift")
+
+    for rel in (
+        "evidence/delayed-feedback-proof-obligations.md",
+        "evidence/succinct-lower-bound-proof-obligations.md",
+        "evidence/stochastic-gradient-bandit-proof-obligations.md",
+    ):
+        if not (ROOT / rel).is_file():
+            fail("missing theorem-audit proof-obligation ledger: " + rel)
 
 
 def verify_source_freeze():
@@ -256,6 +415,7 @@ def main():
     manifest = verify_manifest()
     verify_claim_ledger()
     verify_source_freeze()
+    verify_theorem_audit_comparison()
     verify_anonymous_base(manifest)
     verify_proof_graph(manifest)
     print(json.dumps({
@@ -263,6 +423,7 @@ def main():
         "file_count": len(manifest["files"]),
         "source_tree_digest": manifest["source_tree_digest"],
         "proof_graph_included": manifest["proof_graph"]["included"],
+        "theorem_audit_comparison_verified": True,
         "target_drift_results_present": False,
     }, sort_keys=True))
     return 0

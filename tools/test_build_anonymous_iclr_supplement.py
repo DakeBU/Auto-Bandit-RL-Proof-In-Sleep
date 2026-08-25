@@ -148,6 +148,13 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertIn(prefix + "Tests.lean", names)
         self.assertIn(prefix + "Tests/DelayedFeedbackPaperAuditCanary.lean", names)
         self.assertIn(prefix + "evidence/claim-ledger.json", names)
+        self.assertIn(prefix + "evidence/theorem-audit-comparison.json", names)
+        self.assertIn(prefix + "evidence/delayed-feedback-proof-obligations.md", names)
+        self.assertIn(prefix + "evidence/succinct-lower-bound-proof-obligations.md", names)
+        self.assertIn(
+            prefix + "evidence/stochastic-gradient-bandit-proof-obligations.md",
+            names,
+        )
         self.assertIn(prefix + "artifact/verify_artifact.py", names)
         self.assertIn(prefix + "tools/prepare_target_drift_checker_image.py", names)
         self.assertIn(
@@ -177,6 +184,23 @@ class AnonymousSupplementTests(unittest.TestCase):
         )
         self.assertIn(prefix + BUILDER.EXTERNAL_COMPARATOR_PLAN, names)
         self.assertIn(prefix + BUILDER.EXTERNAL_COMPARATOR_SEAL, names)
+        self.assertIn(prefix + BUILDER.LEANFLOW_ADAPTER_CONTRACT, names)
+        self.assertIn(prefix + BUILDER.LEANFLOW_EXTERNAL_SCHEDULE, names)
+        self.assertIn(prefix + BUILDER.LEANFLOW_FIXTURE_REQUEST, names)
+        self.assertIn(prefix + BUILDER.LEANFLOW_LEDGER_CONTRACT, names)
+        self.assertIn(prefix + BUILDER.LEANFLOW_PLUMBING_SEAL, names)
+        self.assertIn(prefix + BUILDER.LEANFLOW_FAKE_ADAPTER, names)
+        self.assertIn(prefix + BUILDER.LEANFLOW_SCHEDULE_BUILDER, names)
+        self.assertIn(prefix + BUILDER.LEANFLOW_LEDGER_BUILDER, names)
+        self.assertNotIn(
+            prefix + "evaluation/target-drift-v2/external-comparator-results.json",
+            names,
+        )
+        self.assertNotIn(
+            prefix
+            + "evaluation/target-drift-v2/leanflow-external-completion-ledger.json",
+            names,
+        )
         self.assertFalse(any("website/_site" in name for name in names))
         self.assertFalse(any("contributors.json" in name for name in names))
         self.assertFalse(any(name.endswith(".pdf") for name in names))
@@ -197,6 +221,7 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, msg=result.stdout + result.stderr)
         report = json.loads(result.stdout)
         self.assertTrue(report["artifact_verified"])
+        self.assertTrue(report["theorem_audit_comparison_verified"])
         self.assertFalse(report["target_drift_results_present"])
 
     def test_extracted_external_comparator_validator_passes(self):
@@ -260,11 +285,19 @@ class AnonymousSupplementTests(unittest.TestCase):
             ledger["delayed_feedback"]["processed_trace_summary_declaration_count"],
             9,
         )
-        self.assertEqual(ledger["delayed_feedback"]["source_audit_declaration_count"], 133)
+        self.assertEqual(
+            ledger["delayed_feedback"]["ordered_no_switch_transition_declaration_count"],
+            15,
+        )
+        self.assertEqual(ledger["delayed_feedback"]["source_audit_declaration_count"], 148)
         self.assertFalse(ledger["delayed_feedback"]["paper_endpoint_verified"])
         self.assertEqual(ledger["source_records"][BUILDER.DELAYED_DIAGNOSTIC_ID]["status"], "partial")
         self.assertEqual(
             ledger["source_records"][BUILDER.DELAYED_TRACE_SUMMARY_ID]["status"],
+            "compiled",
+        )
+        self.assertEqual(
+            ledger["source_records"][BUILDER.DELAYED_ORDERED_TRANSITION_ID]["status"],
             "compiled",
         )
         self.assertEqual(
@@ -363,6 +396,79 @@ class AnonymousSupplementTests(unittest.TestCase):
             ledger["source_records"][BUILDER.SGB_AUDIT_ID]["status"],
             "partial",
         )
+
+    def test_theorem_audit_comparison_is_claim_ledger_backed(self):
+        payload = BUILDER.build_payload(allow_missing_graph=True)
+        comparison = json.loads(payload[
+            BUILDER.THEOREM_AUDIT_COMPARISON_DESTINATION
+        ].decode("utf-8"))
+        ledger = json.loads(payload["evidence/claim-ledger.json"].decode("utf-8"))
+        self.assertEqual(comparison, ledger["theorem_audit_comparison"])
+        self.assertEqual(
+            [row["id"] for row in comparison["rows"]],
+            list(BUILDER.THEOREM_AUDIT_ROW_IDS),
+        )
+        rows = {row["id"]: row for row in comparison["rows"]}
+        chapter15 = rows["textbook-chapter-15-scoped-positive-control"]
+        self.assertEqual(chapter15["promotion_status"], "compiled")
+        self.assertEqual(chapter15["compiled_declaration_count"], 12)
+        self.assertTrue(chapter15["scoped_endpoint_verified"])
+        self.assertNotIn("paper_endpoint_verified", chapter15)
+
+        delayed = rows["delayed-bobw-source-frozen-audit"]
+        self.assertEqual(delayed["compiled_declaration_count"], 148)
+        self.assertEqual(
+            delayed["declaration_count_breakdown"],
+            {
+                "implementation_facing": 89,
+                "diagnostic_conditional_repair": 19,
+                "processed_prefix": 16,
+                "processed_trace_summary_adapter": 9,
+                "ordered_no_switch_transition": 15,
+            },
+        )
+        self.assertIn(
+            "simultaneous D.4 2/T probability bound",
+            delayed["blocking_obligations"],
+        )
+        succinct = rows["succinct-lower-bound-source-frozen-audit"]
+        self.assertEqual(succinct["compiled_declaration_count"], 54)
+        sgb = rows["stochastic-gradient-bandit-source-frozen-audit"]
+        self.assertEqual(sgb["compiled_declaration_count"], 44)
+        self.assertEqual(
+            sgb["declaration_count_breakdown"],
+            {
+                "finite_action_algebra": 26,
+                "generated_history_and_kernel_bridge": 18,
+            },
+        )
+        for row in (delayed, succinct, sgb):
+            self.assertEqual(row["promotion_status"], "partial")
+            self.assertFalse(row["paper_endpoint_verified"])
+            self.assertTrue(row["blocking_obligations"])
+
+    def test_theorem_audit_comparison_rejects_status_and_count_drift(self):
+        records = BUILDER.selected_source_records()
+        index = BUILDER.load_json(
+            BUILDER.REPO_ROOT / "research-wiki" / "retrieval-index" /
+            "local_lean_declarations.json"
+        )
+        source = BUILDER.load_json(
+            BUILDER.REPO_ROOT / BUILDER.THEOREM_AUDIT_COMPARISON_SOURCE
+        )
+        status_drift = json.loads(json.dumps(source))
+        status_drift["rows"][1]["promotion_status"] = "compiled"
+        with self.assertRaisesRegex(ValueError, "promotion_status drift"):
+            BUILDER.validate_theorem_audit_comparison(
+                records, index, comparison=status_drift
+            )
+
+        count_drift = json.loads(json.dumps(source))
+        count_drift["rows"][1]["compiled_declaration_count"] = 147
+        with self.assertRaisesRegex(ValueError, "compiled_declaration_count drift"):
+            BUILDER.validate_theorem_audit_comparison(
+                records, index, comparison=count_drift
+            )
 
     def test_sgb_required_bridge_names_are_frozen(self):
         records = json.loads(json.dumps(BUILDER.selected_source_records()))

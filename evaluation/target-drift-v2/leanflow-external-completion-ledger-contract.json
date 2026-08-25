@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "suite_id": "ABRL-TARGET-DRIFT-V2",
+  "comparator_id": "leanflow_external",
+  "status": "schema_frozen_results_absent",
+  "policy_id": "complete_30_no_replacement_no_imputation_external_v1",
+  "schedule_path": "evaluation/target-drift-v2/leanflow-external-schedule.json",
+  "schedule_sha256": "436855ad499975cda42bd6d6ce379e1b7b2742f504d852f97a32a2a4f05b1713",
+  "builder_path": "tools/build_leanflow_target_drift_completion_ledger.py",
+  "builder_sha256": "2d5ea5bc3540a07050665e2c67df9e6dd0243c5bace009561f882457bdbb0b24",
+  "planned_run_count": 30,
+  "replacement_runs": "forbidden",
+  "outcome_imputation": "forbidden",
+  "schedule_order": "sealed_presentation_order",
+  "current_materialization_capability": "result_free_template_only",
+  "current_record_state": {
+    "state_status": "not_materialized",
+    "result_eligible": false,
+    "missing_reason": "external_run_not_executed",
+    "evidence_sha256": {}
+  },
+  "record_required_fields": [
+    "semantic_run_id",
+    "case_id",
+    "source_id",
+    "stratum",
+    "condition",
+    "replicate_index",
+    "requirement_variant",
+    "presentation_order",
+    "state_status",
+    "result_eligible",
+    "missing_reason",
+    "evidence_sha256"
+  ],
+  "future_result_eligible_state_not_enabled_by_this_contract": {
+    "state_status": "checked",
+    "result_eligible": true,
+    "checker_mode": "production"
+  },
+  "complete_analysis_gate": "exactly_30_result_eligible_checked_and_graded_records_plus_60_matched_internal_records_and_zero_missing_runs",
+  "incomplete_run_action": "missingness_only_no_effect_estimate_interval_pvalue_rank_or_success_claim",
+  "missingness_dimensions": [
+    "state_status",
+    "missing_reason",
+    "condition",
+    "requirement_variant",
+    "stratum",
+    "paper_cluster",
+    "textbook_target"
+  ],
+  "completion_ledger_path": "evaluation/target-drift-v2/leanflow-external-completion-ledger.json",
+  "results_path": "evaluation/target-drift-v2/external-comparator-results.json",
+  "tracked_completion_ledger_must_be_absent": true,
+  "results_must_be_absent": true
+}

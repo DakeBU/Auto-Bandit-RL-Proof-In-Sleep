@@ -6,8 +6,8 @@ Status: `source-frozen; accounting, causal-view, new-arrival-processing,
 active-allocation, optimal-arm-survival, and one-round action-law leaves plus
 a D.10/D.12 width-direction diagnostic, a conditional same-snapshot repair
 skeleton, a
-conditional gap-ordering consumer, a deterministic processed-trace-summary
-adapter, and a generic multi-regime contract
+  conditional gap-ordering consumer, a deterministic processed-trace-summary
+  adapter, one ordered no-switch structural processing step, and a generic multi-regime contract
 interface compiled; no paper endpoint audited`
 
 ## Frozen source
@@ -66,6 +66,7 @@ The frozen contract therefore retains:
 | `DELAYED-BOBW-D10-D12-GAP-ORDERING-AUDIT` | audit the prefix/elimination width transport used between Appendix Lemmas D.10 and D.12 | compiled antitone-width diagnostic, a literal `T=4` reverse-direction witness, a line-7 gap lower bound, the exact small-count scalar implication, a large/small-count active-arm consumer, a conditional same-snapshot factor-20 consumer, and the earlier conditional four-edge consumer; downstream D.1 and trace-summary layers now supply algebraic inputs conditionally, while D.4 probability remains open, so D.10/D.12 remain unresolved |
 | `DELAYED-BOBW-D1-ACTIVE-COUNT-TO-WIDTH-PRODUCER` | turn Algorithm 5 line-15 source-time allocations and the exact D.1 count clause into the missing same-prefix D.10/D.12 inputs | compiled processed-prefix action/allocation ledger, equal active-arm pull-mass theorem, exact `n_j >= n_i/4 - 6 log T` comparison, large/small width producers, recursive-UCB edge, unconditional same-prefix factor-ten theorem, and conditional factor-20 gap theorem; the compiled trace-summary adapter constructs its certificate, while Algorithm-5 generation and D.4 probability remain open |
 | `DELAYED-BOBW-PROCESSED-TRACE-SUMMARY-ADAPTER` | construct the count certificate from a source-shaped trace summary without conflating processing order, source round, and intra-round active state | compiled distinct source-index ledger, strict-availability witnesses, separate intra-round/source-round active surfaces, explicit current-to-source containment invariant, definitionally generated source width/recursive UCB, D.4 count-clause boundary, certificate producer, and conditional factor-20 consumer; Algorithm-5 generation/invariant production and D.4's `2/T` bound remain open |
+| `DELAYED-BOBW-ORDERED-NO-SWITCH-PROCESS-ONE` | refine one Algorithm 5 lines 3--4 and 7--8 iteration without imposing chronological order | compiled 15-declaration structural transition: append an arbitrary member of `B(t) \ S`, preserve duplicate-freedom, derive strict availability and source-index injectivity, build the line-7 summary, use exact line-8 `remainingActive`, and preserve the round-start active-set invariant; numeric BSC/EAP generation, switch logic, measurable recursion, D.4, and endpoints remain open |
 | `DELAYED-BOBW-CAUSAL-ACTION-MEASURE` | turn the line-15 vector into a causal one-round randomized law | compiled probability measure and observation-equivalence transport; measurable history kernel and recursive trajectory open |
 
 These leaves are deliberately small but source-semantic: they check the exact
@@ -94,17 +95,21 @@ the D.10/D.12 direction diagnostic, the exact small-count width lower bound, a
 source-time processed-prefix ledger, D.1 count-to-width producers, a
 conditional same-snapshot factor-20 theorem, the earlier conditional four-edge
 consumer, a causal measure-valued one-round action rule, and a deterministic
-processed-trace-summary adapter.  The adapter records distinct, strictly
+  processed-trace-summary adapter and one ordered no-switch processing step.
+  The adapter records distinct, strictly
 available, possibly nonchronological source indices; reads each action and
 allocation at source time; and keeps the intra-round active set separate from
 the antitone source-round trace while recording containment explicitly.  It
-does not construct these fields or invariants from the
-Algorithm-5 transition system.  The
+  The one-step structural transition now constructs those fields and proves
+  containment for an explicit round state after appending an arbitrary newly
+  observed source, and preserves the invariant through exact line-8 removal.
+  It does not construct the numerical BSC/EAP surfaces, a random state, or a
+  round-to-round measurable Algorithm-5 trajectory.  The
 count-to-width producer
 derives rather than assumes the large/small branch, recursive-UCB edge, and
 same-prefix factor-ten comparison.  Its remaining stochastic boundary is a
-  measurable generated Delayed-SAPO trajectory, a producer from that trajectory
-  to the summary, and the D.4 simultaneous `2/T`
+  measurable generated Delayed-SAPO trajectory, its numerical transition into
+  the structural state, and the D.4 simultaneous `2/T`
 probability proof for the two count inequalities.  It therefore still neither
 verifies nor refutes the source lemmas.
 The library does not yet
