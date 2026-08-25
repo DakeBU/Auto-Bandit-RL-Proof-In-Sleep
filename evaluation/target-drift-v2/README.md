@@ -115,7 +115,26 @@ For the staged seal, edit a copy of `execution-template.json` only at the
 human/provider fields, replace the image-SBOM template with a real
 `built_manifest_verified_probe_pending` record plus its build-input,
 cache-manifest, and build-log sidecars, and create a `frozen_ready` copy of the
-source manifest with exact local PDF paths.  Bind the canonical
+source manifest with exact local PDF paths.  The result-free source helper can
+perform that last acquisition step from the four checked-in HTTPS URLs:
+
+```text
+python tools/fetch_target_drift_sources.py --cache-root ABSOLUTE-EXTERNAL-CACHE --output-manifest ABSOLUTE-EXTERNAL-SOURCES.json
+python tools/fetch_target_drift_sources.py --cache-root ABSOLUTE-EXTERNAL-CACHE --output-manifest ANOTHER-ABSOLUTE-EXTERNAL-SOURCES.json --offline
+```
+
+The helper cross-checks every expected digest against the frozen challenge
+bank, accepts only HTTPS and `application/pdf`, bounds the response size,
+checks the PDF header and EOF marker, verifies SHA-256 before atomically
+publishing `sha256/<prefix>/<digest>.pdf`, and refuses to place either the
+cache or the generated machine-local manifest inside the Git repository.  It
+never commits or redistributes the PDFs.  The offline form performs no network
+request and verifies an existing cache from bytes.  A successful helper run
+only prepares operator-local source inputs; it does not freeze the execution
+configuration, run a model, satisfy the real smoke, or close any of the 450
+production runs.
+
+Bind the canonical
 Docker executable and runtime identity, run the seven-probe recorder using that
 runtime-bound config, and only then preseal:
 
