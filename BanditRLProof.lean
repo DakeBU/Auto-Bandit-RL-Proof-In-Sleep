@@ -540,6 +540,8 @@ import BanditRLProof.DelayedFeedback.ProcessedPrefixCounts
 import BanditRLProof.DelayedFeedback.RecursiveProcessedState
 import BanditRLProof.DelayedFeedback.OrderedProcessingTransition
 import BanditRLProof.DelayedFeedback.OrderedNoSwitchTrace
+import BanditRLProof.DelayedFeedback.StochasticGapHalfSet
+import BanditRLProof.DelayedFeedback.EliminatedArmInitialization
 import BanditRLProof.DelayedFeedback.MultiRegimeContract
 import BanditRLProof.DelayedFeedback.Processing
 import BanditRLProof.Literature

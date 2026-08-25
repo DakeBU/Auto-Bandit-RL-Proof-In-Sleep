@@ -126,6 +126,24 @@ availability condition `s + delay s < t`.
   D.4-conditional factor-20 consumer.  The 12-declaration module does not
   accept that temporal premise as an input and does not promote BSC/EAP
   generation, a probability law, D.4, a switch path, or any regret endpoint.
+- [x] Audit and compile the deterministic core of Appendix Lemma D.11 on the
+  nonnegative stochastic-loss-gap domain used by the Markov step.  The
+  six-declaration `StochasticGapHalfSet.lean` leaf states that premise
+  explicitly, handles the empty and zero-average cases, and specializes it to
+  source stochastic loss gaps using only optimal-arm minimality.  The
+  unrestricted real-valued formulation is not promoted; a signed regression
+  canary guards that premise boundary without claiming a source correction.
+  Lemma D.13 and the stochastic regret endpoint remain open.
+- [x] Compile Algorithm 5 line 10's newly eliminated-arm initializer.
+  `EliminatedArmInitialization.lean` freezes the line-4 processed order and
+  empirical mean, and defines the literal source values
+  `p_i^1 = 1/(2K) + n_i(S)/(2T)`, `Delta-tilde_i = 8 width_i(S)`, and
+  `N_i^1 = 1280/(p_i^1 * Delta-tilde_i^2)`.  Its 31 declarations update only
+  the line-7 eliminated set, preserve surviving-arm bank entries, and prove
+  positivity under the explicit nontrivial-horizon boundary `1 < T`.  A
+  concrete two-arm canary checks one eliminated and one surviving arm.  This
+  is an initialization producer only: EAP phase transitions, BSC, sampling,
+  the generated trajectory, and both regret endpoints remain open.
 - [x] Reuse the existing finite-action law to turn the certified line-15
   vector into a probability measure, and lift causal allocation rules to
   measure-valued rules that remain identical in observation-equivalent hidden
@@ -134,7 +152,7 @@ availability condition `s + delay s < t`.
 ## Nonclaims
 
 This task does not compile Theorem 4.1, full Lemma D.9, unconditional Lemma
-D.10 or D.12, Lemma 4.2, Theorem
+D.10 or D.12, Lemma D.13, Lemma 4.2, Theorem
 5.1, Corollary 5.4, Algorithm 5, or a best-of-both-worlds endpoint.  The
 compiled Lemma-D.9 layer is only a one-snapshot deterministic implication plus
 an elimination-event probability-bound consumer.  The full Definition-D.1
@@ -152,6 +170,8 @@ lake env lean BanditRLProof/DelayedFeedback/ProcessedPrefixCounts.lean
 lake env lean BanditRLProof/DelayedFeedback/RecursiveProcessedState.lean
 lake env lean BanditRLProof/DelayedFeedback/OrderedProcessingTransition.lean
 lake env lean BanditRLProof/DelayedFeedback/OrderedNoSwitchTrace.lean
+lake env lean BanditRLProof/DelayedFeedback/StochasticGapHalfSet.lean
+lake env lean BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean
 lake env lean BanditRLProof/DelayedFeedback/Accounting.lean
 lake env lean BanditRLProof/DelayedFeedback/MultiRegimeContract.lean
 lake env lean BanditRLProof/DelayedFeedback/CausalView.lean
@@ -164,6 +184,8 @@ lake env lean Tests/DelayedFeedbackProcessedPrefixCountsCanary.lean
 lake env lean Tests/DelayedFeedbackRecursiveProcessedStateCanary.lean
 lake env lean Tests/DelayedFeedbackOrderedProcessingTransitionCanary.lean
 lake env lean Tests/DelayedFeedbackOrderedNoSwitchTraceCanary.lean
+lake env lean Tests/DelayedFeedbackStochasticGapHalfSetCanary.lean
+lake env lean Tests/DelayedFeedbackEliminatedArmInitializationCanary.lean
 python3 tools/bandit.py check
 ```
 
@@ -214,3 +236,24 @@ and all 231 Python tests passed with 6 expected skips.  The target-drift
 execution template remains structurally valid but deliberately not ready:
 26 machine fields and named human/provenance choices are unset, so no
 450-primary or 30-external result is claimed.
+
+On 2026-08-25, the focused D.11 domain leaf and Algorithm-5 line-10 initializer,
+together with their two canaries, compile in the isolated worktree.  The
+former contributes six and the latter 31 named source-audit declarations,
+bringing the inventory from 160 to 197.  Representative axiom reports contain
+only `propext`, `Classical.choice`, and `Quot.sound`.  After staging the four
+new Lean files so the anonymous-supplement inventory could see them and using
+the real Python executable rather than the WindowsApps alias, the repository
+gate `python -B tools/bandit.py check` passed: the root Lean build completed
+8,834 jobs, the `Tests` target completed 8,860 jobs, proof-graph export
+succeeded, and all 231 Python tests passed with 6 expected skips.  The
+target-drift execution template remains structurally valid but deliberately
+`prepared_unbuilt`: 26 machine fields and the named human/provenance choices
+remain unset, so no execution result is claimed.
+
+The Lean-verified site build and checker also passed on this checkout.  The
+generated site contains 640 HTML pages, 586 modules, 7,844 declarations, 80
+milestones, 14 Mermaid blocks, and 16,951 Lean source links; internal links and
+anchors, README-relative links, MathJax fallbacks, and the Pages workflow all
+validate.  This verification still does not promote D.13, EAP/BSC transitions,
+D.4, a generated law, or either endpoint.

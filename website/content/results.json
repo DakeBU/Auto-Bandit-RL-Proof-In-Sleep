@@ -1380,11 +1380,84 @@
       "evidence": "BanditRLProof/DelayedFeedback/OrderedNoSwitchTrace.lean; Tests/DelayedFeedbackOrderedNoSwitchTraceCanary.lean; conversion-windows/PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY.md; proof-obligations/PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY.md"
     },
     {
+      "id": "DELAYED-SAPO-D11-NONNEGATIVE-GAP-HALF-SET",
+      "title": "Appendix D.11 nonnegative-gap half-set core",
+      "chapter": "frontier",
+      "status": "compiled",
+      "informal": "Lean promotes the Markov-style counting step on exactly the nonnegative domain used by stochastic loss gaps: for any finite nonnegative gap family, at most half the arms lie strictly above twice the average. Empty and zero-average families are covered explicitly, and optimal-arm minimality produces nonnegative source loss gaps. The unrestricted real-valued formulation is not promoted; a signed regression canary guards the premise boundary without claiming a source correction. This six-declaration leaf closes only the deterministic D.11 counting fact; it does not prove D.13 or a stochastic regret endpoint.",
+      "declarations": [
+        "BanditRLProof.DelayedFeedback.finiteAverageGap",
+        "BanditRLProof.DelayedFeedback.aboveTwiceAverageGap",
+        "BanditRLProof.DelayedFeedback.two_mul_card_aboveTwiceAverageGap_le",
+        "BanditRLProof.DelayedFeedback.sourceStochasticLossGap",
+        "BanditRLProof.DelayedFeedback.sourceStochasticLossGap_nonneg",
+        "BanditRLProof.DelayedFeedback.two_mul_card_sourceStochasticLossGap_aboveTwiceAverage_le"
+      ],
+      "depends_on": [
+        "BanditRLProof.DelayedFeedback.sourceStochasticLossGap_nonneg"
+      ],
+      "missing": [
+        "A source-faithful Lemma D.13 statement resolving the printed witness/index mismatch and half-active-set convention.",
+        "The generated stochastic Delayed-SAPO process and its regret endpoint."
+      ],
+      "evidence": "BanditRLProof/DelayedFeedback/StochasticGapHalfSet.lean; Tests/DelayedFeedbackStochasticGapHalfSetCanary.lean; research-wiki/papers/neurips-2025-delayed-bobw-audit.md; proof-obligations/PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY.md"
+    },
+    {
+      "id": "DELAYED-SAPO-LINE10-ELIMINATED-ARM-INITIALIZATION",
+      "title": "Algorithm 5 line-10 eliminated-arm initialization",
+      "chapter": "frontier",
+      "status": "compiled",
+      "informal": "A 31-declaration producer constructs the literal state assigned to each arm selected by Algorithm 5 line 7: the elimination round, frozen processed order and empirical mean, p_i^1 = 1/(2K) + n_i(S)/(2T), surrogate gap 8 width_i(S), real-valued first phase target 1280/(p_i^1 Delta-tilde_i^2), zero error count, phase one, and empty sample/confidence sets. The bank update changes only the current eliminated set, preserves surviving arms, and proves positive probability, surrogate gap, and phase target under the explicit nontrivial-horizon boundary 1 < T. A concrete two-arm canary exercises both the eliminated and surviving branches. This initializes EAP data but does not execute EAP or BSC, construct a randomized trajectory, prove D.4, or reach either paper endpoint.",
+      "declarations": [
+        "BanditRLProof.DelayedFeedback.delayedSAPOInitialEliminatedProbability",
+        "BanditRLProof.DelayedFeedback.delayedSAPOInitialPhaseTarget",
+        "BanditRLProof.DelayedFeedback.sourceEmpiricalWidthScale_pos",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmBank",
+        "BanditRLProof.DelayedFeedback.ActiveArmsUninitialized",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.ofProcessOne",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initializeIfEliminated",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initializeNewlyEliminated",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initializeIfEliminated_eq_some_iff",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initializeIfEliminated_eq_none_iff",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initializeNewlyEliminated_of_mem",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initializeNewlyEliminated_of_not_mem",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.mem_eliminated_of_initializeNewlyEliminated_ne_prior",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initializeNewlyEliminated_eq_prior_of_mem_remainingActive",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.prior_eq_none_of_mem_eliminated",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.remainingActive_uninitialized_after_initialize",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.ofProcessOne_arm",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.ofProcessOne_eliminationRound",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.ofProcessOne_eliminationProcessedOrder",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.ofProcessOne_errorCount",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.ofProcessOne_phaseIndex",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.ofProcessOne_phaseSamples",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.ofProcessOne_processedAtProbabilityLevel",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initialProbability_pos",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initialProbability_le_one",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.surrogateGap_nonneg",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.surrogateGap_pos",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initialPhaseTarget_nonneg",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initialPhaseTarget_pos",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initializeNewlyEliminated_spec_of_mem"
+      ],
+      "depends_on": [
+        "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchProcessOne.toPreEliminationSummary",
+        "BanditRLProof.DelayedFeedback.sourceEmpiricalWidthScale",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot.eliminated"
+      ],
+      "missing": [
+        "The source EAP phase transition, integer stopping rule, sample/confidence-set evolution, and recursive probability bank.",
+        "BSC, the measurable generated Delayed-SAPO trajectory, D.4's simultaneous probability theorem, and both regret endpoints."
+      ],
+      "evidence": "BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean; Tests/DelayedFeedbackEliminatedArmInitializationCanary.lean; conversion-windows/PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY.md; proof-obligations/PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY.md"
+    },
+    {
       "id": "NEURIPS-2025-DELAYED-BOBW-CENTRAL-ENDPOINTS",
       "title": "Source-frozen delayed best-of-both-worlds endpoint audit",
       "chapter": "frontier",
       "status": "partial",
-      "informal": "The exact NeurIPS 2025 source is hash-frozen, a same-algorithm multi-regime contract compiles, and 160 named source-audit declarations compile across accounting, causality, processing, allocation, elimination, source-corrected good-event projection/union assembly, the one-round action law, the 19-declaration D.10/D.12 diagnostic layer, a 16-declaration processed-prefix count-to-width producer, a 9-declaration processed-trace-summary adapter, a 15-declaration ordered no-switch structural transition, and a 12-declaration ordered trace layer. The trace proves active-set monotonicity across exact processing and exhausted-round advances and derives later-arm survival at an earlier elimination snapshot before invoking the existing D.4-conditional factor-20 consumer. The numerical confidence surfaces remain explicit inputs: BanditRLlib does not implement BSC/EAP, generate a measurable randomized trajectory, prove D.4's simultaneous 2/T probability bound, cover the switch branch, or reach a regret endpoint. It therefore neither verifies nor refutes source Lemmas D.4, D.10/D.12, main-text Lemma 4.2, or Theorem 4.1, and it does not yet prove the D.2--D.7 component bounds on a generated trajectory or either regret endpoint.",
+      "informal": "The exact NeurIPS 2025 source is hash-frozen, a same-algorithm multi-regime contract compiles, and 197 named source-audit declarations compile across accounting, causality, processing, allocation, elimination, source-scoped good-event projection/union assembly, the one-round action law, the 19-declaration D.10/D.12 diagnostic layer, a 16-declaration processed-prefix count-to-width producer, a 9-declaration processed-trace-summary adapter, a 15-declaration ordered no-switch structural transition, a 12-declaration ordered trace, a six-declaration nonnegative-domain D.11 counting core, and a 31-declaration Algorithm-5 line-10 initializer. The trace proves active-set monotonicity and the temporal factor-20 premise; the new numerical producer initializes only the first eliminated-arm EAP state. BanditRLlib still does not execute EAP/BSC, generate a measurable randomized trajectory, prove D.4's simultaneous 2/T probability bound, cover the switch branch, resolve D.13, or reach a regret endpoint. It therefore does not promote source Lemmas D.4, D.10/D.12, D.13, main-text Lemma 4.2, or Theorem 4.1, and it does not yet prove the D.2--D.7 component bounds on a generated trajectory or either regret endpoint.",
       "declarations": [
         "BanditRLProof.DelayedFeedback.SameAlgorithmMultiRegimeContract",
         "BanditRLProof.DelayedFeedback.SameAlgorithmMultiRegimeContract.stochasticClaim",
@@ -1407,12 +1480,14 @@
         "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchProcessOne.afterLine8_preserves_roundStart",
         "BanditRLProof.DelayedFeedback.mem_earlierRemainingActive_of_laterEliminated",
         "BanditRLProof.DelayedFeedback.gap_le_twenty_mul_gap_of_ordered_no_switch_eliminations",
+        "BanditRLProof.DelayedFeedback.two_mul_card_sourceStochasticLossGap_aboveTwiceAverage_le",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initializeNewlyEliminated_spec_of_mem",
         "BanditRLProof.DelayedFeedback.gap_le_twenty_mul_gap_at_earlier_elimination_snapshot",
         "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.gap_le_twenty_mul_gap_of_eliminationPrefixIndex_le",
         "BanditRLProof.DelayedFeedback.causalDelayedSAPOActionMeasureRule_eq_of_observation_equivalent"
       ],
       "missing": [
-        "The complete Definition-D.1 event, its D.2--D.7 component probability producers, Delayed SAPO BSC/EAP state machines, switching rule, and ordered update semantics.",
+        "The complete Definition-D.1 event, its D.2--D.7 component probability producers, Delayed SAPO BSC/EAP phase transitions beyond the line-10 initializer, switching rule, and ordered update semantics.",
         "A measurable causal randomized sampling kernel and recursively generated delayed-feedback trajectory law; only the one-round measure-valued rule now compiles.",
         "A measurable generated-state trajectory and numerical BSC/EAP producer for the structural steps, the D.4 probability proof, a clarification or amendment of the printed D.10 transport, and an unconditional generated-trajectory D.12 / main-text Lemma 4.2 bridge.",
         "The stochastic-instance and oblivious-adversarial regret endpoints for the same algorithm identity."

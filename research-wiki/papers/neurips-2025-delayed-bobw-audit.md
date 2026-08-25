@@ -8,7 +8,8 @@ a D.10/D.12 width-direction diagnostic, a conditional same-snapshot repair
 skeleton, a
   conditional gap-ordering consumer, a deterministic processed-trace-summary
   adapter, one ordered no-switch structural processing step, a finite
-  ordered no-switch trace, and a generic multi-regime contract
+  ordered no-switch trace, the nonnegative-domain core of Lemma D.11,
+  Algorithm 5 line-10 eliminated-arm initialization, and a generic multi-regime contract
 interface compiled; no paper endpoint audited`
 
 ## Frozen source
@@ -69,6 +70,8 @@ The frozen contract therefore retains:
 | `DELAYED-BOBW-PROCESSED-TRACE-SUMMARY-ADAPTER` | construct the count certificate from a source-shaped trace summary without conflating processing order, source round, and intra-round active state | compiled distinct source-index ledger, strict-availability witnesses, separate intra-round/source-round active surfaces, explicit current-to-source containment invariant, definitionally generated source width/recursive UCB, D.4 count-clause boundary, certificate producer, and conditional factor-20 consumer; Algorithm-5 generation/invariant production and D.4's `2/T` bound remain open |
 | `DELAYED-BOBW-ORDERED-NO-SWITCH-PROCESS-ONE` | refine one Algorithm 5 lines 3--4 and 7--8 iteration without imposing chronological order | compiled 15-declaration structural transition: append an arbitrary member of `B(t) \ S`, preserve duplicate-freedom, derive strict availability and source-index injectivity, build the line-7 summary, use exact line-8 `remainingActive`, and preserve the round-start active-set invariant; numeric BSC/EAP generation, switch logic, measurable recursion, D.4, and endpoints remain open |
 | `DELAYED-BOBW-ORDERED-NO-SWITCH-TRACE-ORDERING` | derive later-arm survival at an earlier elimination snapshot from exact structural steps instead of accepting it as a premise | compiled 12-declaration deterministic trace: explicit exhausted-round close/advance, reflexive-transitive processing reachability, active-set monotonicity, temporal membership transport, and the D.4-conditional factor-20 consumer; numerical BSC/EAP generation, a stochastic trajectory, D.4 probability, switch logic, and endpoints remain open |
+| `DELAYED-BOBW-D11-NONNEGATIVE-GAP-HALF-SET` | audit the Markov/counting fact used by Appendix Lemma D.11 | compiled six-declaration nonnegative-domain core: finite nonnegative gaps, empty/zero-average cases, and the stochastic loss-gap specialization from optimal-arm minimality; the unrestricted real-valued formulation is not promoted, and a signed canary guards the premise boundary without claiming a source correction; D.13 remains open |
+| `DELAYED-BOBW-ALGORITHM5-LINE10-ELIMINATED-ARM-INITIALIZATION` | construct the exact newly eliminated-arm state before EAP | compiled 31-declaration producer for `p_i^1`, frozen processed order/mean, `8 width_i(S)`, `N_i^1`, zero error count, phase one, and empty phase/confidence sets; only the current eliminated set changes, with explicit `1 < T` positivity boundary; EAP/BSC transitions, D.4, generated law, and endpoints remain open |
 | `DELAYED-BOBW-CAUSAL-ACTION-MEASURE` | turn the line-15 vector into a causal one-round randomized law | compiled probability measure and observation-equivalence transport; measurable history kernel and recursive trajectory open |
 
 These leaves are deliberately small but source-semantic: they check the exact
@@ -98,7 +101,8 @@ source-time processed-prefix ledger, D.1 count-to-width producers, a
 conditional same-snapshot factor-20 theorem, the earlier conditional four-edge
 consumer, a causal measure-valued one-round action rule, and a deterministic
   processed-trace-summary adapter, one ordered no-switch processing step, and
-  a 12-declaration ordered no-switch trace.  The adapter records distinct, strictly
+  a 12-declaration ordered no-switch trace, a six-declaration nonnegative-gap
+  D.11 core, and a 31-declaration line-10 initializer.  The adapter records distinct, strictly
 available, possibly nonchronological source indices; reads each action and
 allocation at source time; and keeps the intra-round active set separate from
 the antitone source-round trace while recording containment explicitly.  It
@@ -108,8 +112,10 @@ the antitone source-round trace while recording containment explicitly.  It
   observed source, and preserves the invariant through exact line-8 removal.
   The trace composes this exact step with certified exhausted-round advances,
   proves that active sets shrink, and derives the temporal survival premise
-  needed by the factor-20 consumer.  These layers do not construct the
-  numerical BSC/EAP surfaces, a random state, or a round-to-round measurable
+  needed by the factor-20 consumer.  The line-10 producer now constructs the
+  first eliminated-arm numerical bank state, but it does not execute EAP or
+  BSC.  These layers do not construct the remaining numerical confidence
+  updates, a random state, or a round-to-round measurable
   Algorithm-5 trajectory.  The
 count-to-width producer
 derives rather than assumes the large/small branch, recursive-UCB edge, and
@@ -118,15 +124,21 @@ same-prefix factor-ten comparison.  Its remaining stochastic boundary is a
   the structural state, and the D.4 simultaneous `2/T`
 probability proof for the two count inequalities.  It therefore still neither
 verifies nor refutes the source lemmas.
-The source-audit inventory now contains 160 named declarations:
+The source-audit inventory now contains 197 named declarations:
 89 implementation-facing, 19 diagnostic/conditional/repair, 16
 processed-prefix, 9 processed-trace-summary, 15 one-step transition, and 12
-trace-ordering declarations.  This is an audit-slice inventory, not a theorem
+trace-ordering declarations, plus six for the nonnegative-domain D.11 core and 31 for
+line-10 initialization.  This is an audit-slice inventory, not a theorem
 coverage score.
 The library does not yet
-have the paper's complete delayed SAPO state machine, probability banks,
+have the paper's complete delayed SAPO state machine, EAP phase/bank evolution,
 measurable recursive sampling kernel, detection/switch semantics, the complete
 Definition-D.1 event, D.2--D.7 component probability producers, a proved
 full-event projection, or the coupled
 terminal.  Full Theorems 4.1 and 5.1
 must remain `planned` until their exact algorithms and proof chains compile.
+
+The D.11 scope refinement is deliberately local.  The printed D.13 existence argument
+quantifies an outside-set arm `j` while its displayed concluding gap uses
+`Delta_i`; BanditRLlib does not silently choose an intended index or promote
+D.13 without a source-faithful statement or clarification.

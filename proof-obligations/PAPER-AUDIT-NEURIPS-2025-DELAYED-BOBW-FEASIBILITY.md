@@ -17,41 +17,41 @@
 | `DELAYED-BOBW-PROCESSED-TRACE-SUMMARY-ADAPTER` | construct the processed-prefix certificate from a source-shaped trace summary without assuming chronological processing order or width/gap conclusions | distinct source indices; strict `s + d_s < t` availability; separate intra-round and source-round active sets; `DelayedSAPOProcessedPrefixCountCertificate`; source D.4 count clause | read chosen actions and line-15 allocations at stored source indices; consume explicit current-to-source containment; record source-trace antitonicity separately; define source width and recursive empirical UCB; consume only the two D.4 count inequalities | compiled deterministic adapter and conditional factor-20 consumer; Algorithm-5 transition-and-invariant-to-summary producer, D.4 `2/T` probability, and generated trajectory remain open |
 | `DELAYED-BOBW-ORDERED-NO-SWITCH-PROCESS-ONE` | compile one source-faithful no-switch iteration of physical PDF page 22, Algorithm 5 lines 3--4 and 7--8, with the line-7 summary formed after appending the newly observed source and the line-8 successor formed by active-set removal | `newlyObservedBefore`; `observedBefore`; `DelayedSAPOEliminationSnapshot.remainingActive`; `DelayedSAPOProcessedTraceSummary`; `List.Nodup.injective_get`; `List.nodup_concat`; `Finset.sdiff_subset` | keep the paper sequence as a duplicate-free `List Nat`; accept an arbitrary member of `B(t) \ S`; append it without sorting; derive strict availability, source-index injectivity, and current-to-source containment from a round-start invariant and an antitone source-round active trace; then preserve the invariant through exact line-8 removal | compiled 15-declaration structural leaf and focused nonchronological canary; BSC/EAP, numeric state generation, round finalization, trajectory measurability, D.4 probability, and every paper endpoint remain open |
 | `DELAYED-BOBW-ORDERED-NO-SWITCH-TRACE-ORDERING` | derive the temporal premise for the repaired factor-20 gap consumer from an exact finite no-switch structural trace rather than accepting that a later-eliminated arm remained active at an earlier snapshot | `DelayedSAPONoSwitchProcessOne.afterLine8`; `newlyObservedBefore`; `observedBefore`; `DelayedSAPOProcessedTraceSummary.gap_le_twenty_mul_gap_at_earlier_elimination_snapshot_of_traceSummary`; `Relation.ReflTransGen`; `Finset.sdiff_eq_empty_iff_subset` | add an explicit round-close certificate, a round-advance state, and the reflexive-transitive closure of processing/advance steps; prove current-active monotonicity along the trace; transport later elimination membership back to the earlier line-8 remaining set; invoke the existing D.4-conditional trace-summary consumer | compiled 12-declaration deterministic trace and conditional factor-20 consumer; no numeric BSC/EAP producer, generated law, D.4 probability, switch path, unconditional source lemma, or regret endpoint |
+| `DELAYED-BOBW-D11-NONNEGATIVE-GAP-HALF-SET` | recover the deterministic counting fact used by Appendix Lemma D.11 on the nonnegative stochastic-loss-gap domain | finite sums/cardinality; nonnegative gaps; optimal-arm minimality; source Appendix Lemma D.11 | state nonnegativity explicitly, split empty/zero-average cases, sum the strict-above-threshold subset, and specialize to stochastic loss gaps | compiled six-declaration domain core and signed premise-boundary canary; no source correction is claimed; Lemma D.13 and the stochastic endpoint remain open |
+| `DELAYED-BOBW-ALGORITHM5-LINE10-ELIMINATED-ARM-INITIALIZATION` | construct the literal Algorithm 5 line-10 state for exactly the arms selected by line 7 | `DelayedSAPONoSwitchProcessOne.toPreEliminationSummary`; source empirical width; `DelayedSAPOEliminationSnapshot.eliminated`; real positivity/division | freeze `S`, empirical mean, `p_i^1`, `8 width_i(S)`, and `N_i^1`; update only eliminated bank entries; preserve surviving/active entries; expose `1 < T` for positive width/target | compiled 31-declaration initialization producer and concrete two-arm canary; EAP transitions, confidence-set evolution, BSC, generated law, D.4, and endpoints remain open |
 | `DELAYED-BOBW-CAUSAL-ACTION-MEASURE` | line-15 vector induces a probability measure and a causal measure-valued decision rule | local `Exp3.FiniteActionDistribution`, `finiteActionMeasure`; causal observation equivalence | package explicit EAP premises, reuse the finite-action law, and transport equality through `ActionTimeView` | compiled one-round action law; measurable history kernel and recursive generated trajectory open |
 
-## Compiled leaf contract
+## Current compiled leaf contract
 
-- Compiled target: `DELAYED-BOBW-ORDERED-NO-SWITCH-TRACE-ORDERING`, the
-  deterministic temporal bridge from exact line-8 removal and round close to
-  the repaired factor-20 consumer.
-- Local APIs/imports: `OrderedProcessingTransition.lean` for the exact
-  processing successor; `Processing.lean` for `B(t) \ S` exhaustion;
-  `RecursiveProcessedState.lean` for the existing D.4-conditional factor-20
-  consumer; Mathlib `Relation.ReflTransGen`, finite-set difference/subset, and
-  natural successor arithmetic.
-- Intended proof route: certify that no new item remains at round close and
-  identify the intra-round active set with the source-round line-15 set;
-  advance the action round without changing the active set; form the
-  reflexive-transitive closure of exact processing and round-advance steps;
-  prove current-active monotonicity by relation induction; derive that an arm
-  eliminated by a later step belongs to the earlier line-8 remaining set; then
-  call the existing trace-summary factor-20 theorem.
-- Hidden regularity: the whole path stays in the no-switch branch; round close
-  includes both `B(t) \ S = empty` and the line-15/source-trace consistency
-  equation; the antitone source-round active trace remains an explicit state
-  contract; the earlier snapshot retains its explicit D.4 count clause and
-  elimination-good projection.
-- Failure policy: do not encode the factor-20 conclusion in the trace, assume
-  later-arm activity at the earlier snapshot, treat an arbitrary snapshot list
-  as a generated algorithm, or promote BSC/EAP, D.4 probability, a switch
-  decision, or regret.
-- Next boundaries, not attempted here: generate the numerical BSC/EAP fields,
-  construct a measurable randomized Delayed-SAPO trajectory, and prove D.4's
-  simultaneous `2/T` event on that law.
+- Compiled target pair:
+  `DELAYED-BOBW-D11-NONNEGATIVE-GAP-HALF-SET` and
+  `DELAYED-BOBW-ALGORITHM5-LINE10-ELIMINATED-ARM-INITIALIZATION`.
+- Local APIs/imports: finite sums and filtered-cardinality algebra for D.11;
+  `OrderedProcessingTransition.lean`, the exact line-7 eliminated set, and the
+  source width for line 10.
+- Intended D.11 route: require the nonnegative gap property used by Markov's
+  inequality, prove that a strict-above-twice-average set has cardinality at
+  most half, then instantiate gaps as `mean i - mean optimal`.
+- Intended line-10 route: read the post-append processed count and width from
+  the exact no-switch step; construct the printed real-valued initializer;
+  update only arms in the line-7 eliminated set; preserve surviving arms and
+  prove positivity without hiding the `T = 1` totalized-division edge case.
+- Hidden regularity: D.11 needs nonnegative values, which the source stochastic
+  gaps obtain from optimal-arm minimality.  Strict positivity of the line-10
+  surrogate gap and phase target needs `1 < T`; an upper bound on `p_i^1`
+  separately needs `n_i(S) <= T`.
+- Failure policy: do not compile the unrestricted signed D.11 statement,
+  silently round `N_i^1`, initialize arms outside the current eliminated set,
+  or treat the bank initializer as an EAP/BSC transition or generated process.
+- Next boundaries, not attempted here: formalize the EAP phase transition and
+  confidence-set evolution, reconcile the exact D.13 witness/index statement,
+  construct the measurable randomized trajectory, and prove D.4's simultaneous
+  `2/T` event on that law.
 
 ## Paper-level blockers
 
-- delayed SAPO state and probability-bank data structures;
+- EAP phase transitions and recursive probability-bank evolution beyond the
+  compiled line-10 initializer;
 - measurable randomized Delayed SAPO kernel instantiated on the compiled
   causal view and its generated trajectory law;
 - exact source detection/switch state machine;
@@ -132,3 +132,19 @@ classified as compiled or audited.
   not a complete repair.  Lemma D.10, Lemma D.12, Lemma 4.2, and Theorem 4.1
   remain unverified until the source branch producers are instantiated.  Author
   clarification remains useful for the intended printed proof.
+
+## Lemma D.11/D.13 counting audit
+
+- Printed D.11 surface: a finite set of reals with average `mu` has at most half
+  its elements strictly above `2 * mu`.
+- Promoted domain: nonnegative stochastic loss gaps, obtained because the
+  chosen optimal arm minimizes the mean loss.  The unrestricted real-valued
+  formulation is not promoted, and the signed canary only guards this premise
+  boundary; no source correction is claimed.
+- Compiled leaf: `StochasticGapHalfSet.lean` proves the finite nonnegative
+  theorem, empty/zero-average boundaries, and the source gap specialization.
+- D.13 boundary: the printed existence step quantifies an arm `j` outside the
+  selected half-set but writes the concluding bound with `Delta_i`.  The exact
+  witness/index bridge and the source's half-active-set convention are not
+  repaired or promoted here; D.13 remains open pending a source-faithful
+  statement or clarification.

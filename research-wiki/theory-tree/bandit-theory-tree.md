@@ -331,23 +331,31 @@ four-edge consumer remains as a decomposition of the printed route.  A
   processing with certified exhausted-round advances, proves active-set
   monotonicity along the reflexive-transitive path, and derives later-arm
   survival at an earlier line-8 snapshot before calling the existing
-  D.4-conditional factor-20 consumer.  Numerical BSC/EAP state generation and
-  measurable round-to-round recursion remain separate open boundaries.
+  D.4-conditional factor-20 consumer.  A six-declaration audit of Appendix
+  Lemma D.11 now proves the nonnegative finite-gap half-set fact and specializes
+  it to stochastic loss gaps; an unrestricted signed generalization is not
+  promoted, and a canary guards that premise boundary.  A separate
+  31-declaration Algorithm-5 line-10 producer initializes
+  exactly the newly eliminated-arm bank entries with the printed probability,
+  frozen order/mean, surrogate gap, and first phase target.  EAP/BSC phase
+  transitions and measurable round-to-round recursion remain open boundaries.
 
 This remains feasibility evidence only.  The complete Definition-D.1 event,
-the D.2--D.7 component concentration/counting producers, and the proved
-full-event-to-elimination projection, EAP/BSC state preservation, probability banks,
-  a deterministic rule selecting among simultaneous arrivals, a measurable recursive delayed-history kernel,
-regime laws, external adversarial algorithm, and the same-algorithm Theorems
+the D.2--D.7 component concentration/counting producers, the proved
+full-event-to-elimination projection, EAP/BSC phase evolution beyond the
+compiled line-10 initializer, a deterministic rule selecting among
+simultaneous arrivals, a measurable recursive delayed-history kernel, regime
+laws, an external adversarial algorithm, and the same-algorithm Theorems
 4.1/5.1 coupling remain planned.  The compiled Lemma-D.9 layer is an explicit
 deterministic implication under recorded certificate fields, not the full
 probabilistic source lemma.  No external paper endpoint is classified as
-  compiled or audited.  The flagship currently contains 160 named source-audit
-declarations, including the original 19 diagnostic/conditional/repair declarations
-  and the processed-prefix count-to-width, trace-summary adapter, and ordered
-  no-switch structural transition and trace-ordering
-producers; the generic multi-regime
-interface is counted separately.  These declarations identify and
+compiled or audited.  The flagship currently contains 197 named source-audit
+declarations, including the original 19 diagnostic/conditional/repair
+declarations; the processed-prefix count-to-width, trace-summary adapter, and
+ordered no-switch structural transition and trace-ordering producers; and the
+six D.11 plus 31 line-10 initialization declarations.  The exact Lemma D.13
+witness/index bridge remains open; the generic multi-regime interface is
+counted separately.  These declarations identify and
 conditionally bypass the displayed reverse transport, prove the exact
 source-shaped small-count scalar implication, and compile a source-ledger
 large/small-count producer at one snapshot.  They neither
