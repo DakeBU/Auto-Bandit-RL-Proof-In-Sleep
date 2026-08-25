@@ -135,6 +135,7 @@ DELAYED_DIAGNOSTIC_ID = "DELAYED-SAPO-D10-D12-GAP-ORDERING-AUDIT"
 DELAYED_PROCESSED_PREFIX_ID = "DELAYED-SAPO-D1-ACTIVE-COUNT-WIDTH-PRODUCER"
 DELAYED_TRACE_SUMMARY_ID = "DELAYED-SAPO-PROCESSED-TRACE-SUMMARY-ADAPTER"
 DELAYED_ORDERED_TRANSITION_ID = "DELAYED-SAPO-ORDERED-NO-SWITCH-PROCESS-ONE"
+DELAYED_ORDERED_TRACE_ID = "DELAYED-SAPO-ORDERED-NO-SWITCH-TRACE-ORDERING"
 DELAYED_CENTRAL_ENDPOINT_ID = "NEURIPS-2025-DELAYED-BOBW-CENTRAL-ENDPOINTS"
 SUCCINCT_AUDIT_ID = "NEURIPS-2025-SUCCINCT-LOWER-BOUND-GEOMETRY-AUDIT"
 SGB_AUDIT_ID = "NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT-MECHANISM-AUDIT"
@@ -229,6 +230,7 @@ SOURCE_RESULT_IDS = (
     DELAYED_PROCESSED_PREFIX_ID,
     DELAYED_TRACE_SUMMARY_ID,
     DELAYED_ORDERED_TRANSITION_ID,
+    DELAYED_ORDERED_TRACE_ID,
     DELAYED_CENTRAL_ENDPOINT_ID,
     SUCCINCT_AUDIT_ID,
     SGB_AUDIT_ID,
@@ -1343,6 +1345,7 @@ def validate_delayed_counts(records):
     processed_prefix = records[DELAYED_PROCESSED_PREFIX_ID]
     trace_summary = records[DELAYED_TRACE_SUMMARY_ID]
     ordered_transition = records[DELAYED_ORDERED_TRANSITION_ID]
+    ordered_trace = records[DELAYED_ORDERED_TRACE_ID]
     central_endpoint = records[DELAYED_CENTRAL_ENDPOINT_ID]
     if implementation_count != 89:
         raise ValueError("delayed implementation count drifted to {}".format(implementation_count))
@@ -1364,6 +1367,10 @@ def validate_delayed_counts(records):
     ):
         raise ValueError(
             "ordered no-switch transition must remain compiled with 15 declarations"
+        )
+    if ordered_trace["status"] != "compiled" or len(ordered_trace["declarations"]) != 12:
+        raise ValueError(
+            "ordered no-switch trace must remain compiled with 12 declarations"
         )
     if central_endpoint["status"] != "partial":
         raise ValueError("delayed central endpoint must remain partial")
@@ -1448,6 +1455,7 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
         DELAYED_PROCESSED_PREFIX_ID,
         DELAYED_TRACE_SUMMARY_ID,
         DELAYED_ORDERED_TRANSITION_ID,
+        DELAYED_ORDERED_TRACE_ID,
     ]
     specs = {
         "textbook-chapter-15-scoped-positive-control": {
@@ -1465,13 +1473,14 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
             "evidence_record_ids": delayed_ids,
             "central_endpoint_record_id": DELAYED_CENTRAL_ENDPOINT_ID,
             "promotion_status": "partial",
-            "compiled_declaration_count": 148,
+            "compiled_declaration_count": 160,
             "declaration_count_breakdown": {
                 "implementation_facing": 89,
                 "diagnostic_conditional_repair": 19,
                 "processed_prefix": 16,
                 "processed_trace_summary_adapter": 9,
                 "ordered_no_switch_transition": 15,
+                "ordered_no_switch_trace_ordering": 12,
             },
         },
         "succinct-lower-bound-source-frozen-audit": {
@@ -1646,9 +1655,10 @@ def build_claim_ledger(proof_report):
                     DELAYED_PROCESSED_PREFIX_ID,
                     DELAYED_TRACE_SUMMARY_ID,
                     DELAYED_ORDERED_TRANSITION_ID,
+                    DELAYED_ORDERED_TRACE_ID,
                     DELAYED_CENTRAL_ENDPOINT_ID,
                 ],
-                "boundary": "148 = 89 implementation-facing + 19 diagnostic/conditional/repair + 16 processed-prefix + 9 processed-trace-summary adapter + 15 ordered no-switch transition declarations. The last slice compiles one structural Algorithm-5 lines 3--4/7--8 step with explicit numerical inputs; BSC/EAP, generated trajectory, D.4 probability, ordered multi-snapshot elimination, and every source-paper regret endpoint remain open.",
+                "boundary": "160 = 89 implementation-facing + 19 diagnostic/conditional/repair + 16 processed-prefix + 9 processed-trace-summary adapter + 15 ordered no-switch transition + 12 ordered trace declarations. The final slice proves active-set monotonicity and later-arm survival across exact no-switch structural steps, then calls a D.4-conditional factor-20 consumer; BSC/EAP, generated trajectory, D.4 probability, switch logic, an unconditional source elimination theorem, and every source-paper regret endpoint remain open.",
             },
             {
                 "artifact": "Succinct geometry audit",
@@ -1688,8 +1698,10 @@ def build_claim_ledger(proof_report):
             "processed_trace_summary_declaration_count": 9,
             "ordered_no_switch_transition_id": DELAYED_ORDERED_TRANSITION_ID,
             "ordered_no_switch_transition_declaration_count": 15,
+            "ordered_no_switch_trace_id": DELAYED_ORDERED_TRACE_ID,
+            "ordered_no_switch_trace_declaration_count": 12,
             "central_endpoint_id": DELAYED_CENTRAL_ENDPOINT_ID,
-            "source_audit_declaration_count": 148,
+            "source_audit_declaration_count": 160,
             "paper_endpoint_verified": False,
         },
         "succinct_geometry": {

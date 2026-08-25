@@ -1308,7 +1308,7 @@
       "missing": [
         "A measurable causal randomized Delayed-SAPO kernel and numerical BSC/EAP transition that supply the explicit round state and confidence surfaces consumed by the compiled structural processing step.",
         "Lemma D.4's simultaneous 2/T probability bound for the two count inequalities over the source's processed-prefix family.",
-        "An ordered elimination-snapshot bridge and the remaining source regret chain."
+        "The switch branch, an unconditional generated-trajectory D.12 / main-text Lemma 4.2 theorem, and the remaining source regret chain."
       ],
       "evidence": "BanditRLProof/DelayedFeedback/RecursiveProcessedState.lean; Tests/DelayedFeedbackRecursiveProcessedStateCanary.lean; conversion-windows/PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY.md; proof-obligations/PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY.md"
     },
@@ -1317,7 +1317,7 @@
       "title": "One ordered no-switch Algorithm-5 processing step",
       "chapter": "frontier",
       "status": "compiled",
-      "informal": "A 15-declaration structural transition refines one iteration of Algorithm 5 lines 3--4 and 7--8. It keeps the paper sequence S as a duplicate-free list, accepts an arbitrary newly observed source in B(t) minus S, and appends it without imposing chronological order. Lean derives source-index injectivity, the exact strict availability condition s + d_s < t, and current-to-source active-set containment before constructing the line-7 processed trace summary. The line-8 successor uses the exact remainingActive set and preserves the round-start active-set invariant, so another arbitrary new arrival can be processed. A focused canary processes source round one after source round three. This is a deterministic no-switch structural step: its numerical confidence surfaces are explicit inputs, and it does not implement BSC, EAP, a generated trajectory, D.4, a switch path, ordered multi-snapshot elimination, or a regret endpoint.",
+      "informal": "A 15-declaration structural transition refines one iteration of Algorithm 5 lines 3--4 and 7--8. It keeps the paper sequence S as a duplicate-free list, accepts an arbitrary newly observed source in B(t) minus S, and appends it without imposing chronological order. Lean derives source-index injectivity, the exact strict availability condition s + d_s < t, and current-to-source active-set containment before constructing the line-7 processed trace summary. The line-8 successor uses the exact remainingActive set and preserves the round-start active-set invariant, so another arbitrary new arrival can be processed. A focused canary processes source round one after source round three. This is a deterministic no-switch structural step: its numerical confidence surfaces are explicit inputs, and it does not implement BSC, EAP, a generated trajectory, D.4, a switch path, or a regret endpoint.",
       "declarations": [
         "BanditRLProof.DelayedFeedback.DelayedSAPOStructuralRoundState",
         "BanditRLProof.DelayedFeedback.DelayedSAPOStructuralRoundState.source_le_roundStart",
@@ -1343,16 +1343,48 @@
       "missing": [
         "The numerical BSC/EAP update that constructs the empirical and importance-weighted confidence surfaces read by this structural step.",
         "Round finalization, the switch branch, and a measurable randomized recursive Delayed-SAPO trajectory.",
-        "Lemma D.4's simultaneous probability bound, an ordered multi-snapshot elimination theorem, and every paper regret endpoint."
+        "Lemma D.4's simultaneous probability bound, the generated-trajectory version of the multi-snapshot elimination argument, and every paper regret endpoint."
       ],
       "evidence": "BanditRLProof/DelayedFeedback/OrderedProcessingTransition.lean; Tests/DelayedFeedbackOrderedProcessingTransitionCanary.lean; conversion-windows/PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY.md; proof-obligations/PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY.md"
+    },
+    {
+      "id": "DELAYED-SAPO-ORDERED-NO-SWITCH-TRACE-ORDERING",
+      "title": "Ordered no-switch trace closes the temporal elimination premise",
+      "chapter": "frontier",
+      "status": "compiled",
+      "informal": "A 12-declaration deterministic trace layer composes exact no-switch processing steps with explicit exhausted-round advances. Lean proves that active sets can only shrink along the reflexive-transitive trace, then derives that an arm eliminated by a later step was still present in the earlier line-8 remaining set. This discharges the previously caller-supplied temporal premise of the repaired factor-20 consumer. The final theorem still consumes the earlier snapshot's explicit D.4 count clause and elimination-good projection; it is not a generated stochastic trajectory, a proof of D.4, or a source-paper regret theorem.",
+      "declarations": [
+        "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchRoundClose",
+        "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchRoundClose.processedOrder_toFinset_eq_observedBefore",
+        "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchRoundClose.nextRoundState",
+        "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchRoundClose.nextRoundState_currentActionRound",
+        "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchRoundClose.nextRoundState_processedOrder",
+        "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchRoundClose.nextRoundState_currentActive",
+        "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchStructuralStep",
+        "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchStructuralReachable",
+        "BanditRLProof.DelayedFeedback.currentActive_subset_of_structuralStep",
+        "BanditRLProof.DelayedFeedback.currentActive_subset_of_structuralReachable",
+        "BanditRLProof.DelayedFeedback.mem_earlierRemainingActive_of_laterEliminated",
+        "BanditRLProof.DelayedFeedback.gap_le_twenty_mul_gap_of_ordered_no_switch_eliminations"
+      ],
+      "depends_on": [
+        "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchProcessOne.afterLine8",
+        "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchProcessOne.afterLine8_currentActive_subset_before",
+        "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedTraceSummary.gap_le_twenty_mul_gap_at_earlier_elimination_snapshot_of_traceSummary"
+      ],
+      "missing": [
+        "Numerical BSC/EAP production and a measurable randomized Delayed-SAPO trajectory that generate the structural states and confidence surfaces.",
+        "Lemma D.4's simultaneous 2/T probability bound and the Definition-D.1 good-event producer.",
+        "The switch branch, an unconditional source Lemma D.12 / main-text Lemma 4.2 theorem, and both regret endpoints."
+      ],
+      "evidence": "BanditRLProof/DelayedFeedback/OrderedNoSwitchTrace.lean; Tests/DelayedFeedbackOrderedNoSwitchTraceCanary.lean; conversion-windows/PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY.md; proof-obligations/PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY.md"
     },
     {
       "id": "NEURIPS-2025-DELAYED-BOBW-CENTRAL-ENDPOINTS",
       "title": "Source-frozen delayed best-of-both-worlds endpoint audit",
       "chapter": "frontier",
       "status": "partial",
-      "informal": "The exact NeurIPS 2025 source is hash-frozen, a same-algorithm multi-regime contract compiles, and 148 named source-audit declarations compile across accounting, causality, processing, allocation, elimination, source-corrected good-event projection/union assembly, the one-round action law, the 19-declaration D.10/D.12 diagnostic layer, a 16-declaration processed-prefix count-to-width producer, a 9-declaration processed-trace-summary adapter, and a 15-declaration ordered no-switch structural transition. The new step permits nonchronological processing, appends before forming the line-7 summary, derives strict availability and active-set containment, and preserves the round-start invariant through exact line-8 removal. Its confidence surfaces remain explicit numerical inputs: it does not implement BSC/EAP, generate a measurable randomized trajectory, prove D.4's simultaneous 2/T probability bound, close ordered elimination, or reach a regret endpoint. BanditRLlib therefore neither verifies nor refutes source Lemmas D.4, D.10/D.12, main-text Lemma 4.2, or Theorem 4.1, and it does not yet prove the D.2--D.7 component bounds on a generated trajectory or either regret endpoint.",
+      "informal": "The exact NeurIPS 2025 source is hash-frozen, a same-algorithm multi-regime contract compiles, and 160 named source-audit declarations compile across accounting, causality, processing, allocation, elimination, source-corrected good-event projection/union assembly, the one-round action law, the 19-declaration D.10/D.12 diagnostic layer, a 16-declaration processed-prefix count-to-width producer, a 9-declaration processed-trace-summary adapter, a 15-declaration ordered no-switch structural transition, and a 12-declaration ordered trace layer. The trace proves active-set monotonicity across exact processing and exhausted-round advances and derives later-arm survival at an earlier elimination snapshot before invoking the existing D.4-conditional factor-20 consumer. The numerical confidence surfaces remain explicit inputs: BanditRLlib does not implement BSC/EAP, generate a measurable randomized trajectory, prove D.4's simultaneous 2/T probability bound, cover the switch branch, or reach a regret endpoint. It therefore neither verifies nor refutes source Lemmas D.4, D.10/D.12, main-text Lemma 4.2, or Theorem 4.1, and it does not yet prove the D.2--D.7 component bounds on a generated trajectory or either regret endpoint.",
       "declarations": [
         "BanditRLProof.DelayedFeedback.SameAlgorithmMultiRegimeContract",
         "BanditRLProof.DelayedFeedback.SameAlgorithmMultiRegimeContract.stochasticClaim",
@@ -1373,6 +1405,8 @@
         "BanditRLProof.DelayedFeedback.DelayedSAPOProcessedTraceSummary.gap_le_twenty_mul_gap_at_earlier_elimination_snapshot_of_traceSummary",
         "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchProcessOne.toPreEliminationSummary",
         "BanditRLProof.DelayedFeedback.DelayedSAPONoSwitchProcessOne.afterLine8_preserves_roundStart",
+        "BanditRLProof.DelayedFeedback.mem_earlierRemainingActive_of_laterEliminated",
+        "BanditRLProof.DelayedFeedback.gap_le_twenty_mul_gap_of_ordered_no_switch_eliminations",
         "BanditRLProof.DelayedFeedback.gap_le_twenty_mul_gap_at_earlier_elimination_snapshot",
         "BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.gap_le_twenty_mul_gap_of_eliminationPrefixIndex_le",
         "BanditRLProof.DelayedFeedback.causalDelayedSAPOActionMeasureRule_eq_of_observation_equivalent"
@@ -1380,7 +1414,7 @@
       "missing": [
         "The complete Definition-D.1 event, its D.2--D.7 component probability producers, Delayed SAPO BSC/EAP state machines, switching rule, and ordered update semantics.",
         "A measurable causal randomized sampling kernel and recursively generated delayed-feedback trajectory law; only the one-round measure-valued rule now compiles.",
-        "A measurable generated-state trajectory and numerical BSC/EAP producer for the structural step, D.4 probability proof, ordered elimination trace, a clarification or amendment of the printed D.10 transport, and an unconditional D.12 / main-text Lemma 4.2 bridge.",
+        "A measurable generated-state trajectory and numerical BSC/EAP producer for the structural steps, the D.4 probability proof, a clarification or amendment of the printed D.10 transport, and an unconditional generated-trajectory D.12 / main-text Lemma 4.2 bridge.",
         "The stochastic-instance and oblivious-adversarial regret endpoints for the same algorithm identity."
       ],
       "evidence": "research-wiki/papers/prospective-audit-2025-freeze.json; research-wiki/papers/neurips-2025-delayed-bobw-audit.md; proof-obligations/PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY.md"

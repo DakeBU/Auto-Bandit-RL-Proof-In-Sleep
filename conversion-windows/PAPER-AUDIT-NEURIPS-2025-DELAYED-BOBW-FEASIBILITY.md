@@ -8,9 +8,11 @@ action-time view, set-level new-arrival processing, line-7/8 optimal-arm
 survival, line-15 allocation, a causal one-round action measure, source-exact
   D.2--D.8 budget assembly, a processed-prefix D.1 count-to-width producer,
   its deterministic processed-trace-summary adapter, and one ordered
-  no-switch Algorithm-5 structural processing step compiled; the D.4 count
+  no-switch Algorithm-5 structural processing step plus its finite trace
+  ordering layer compiled; the D.4 count
 clause is still conditional, and the D.2--D.7 probability producers,
-measurable generated trajectory, ordered elimination, and paper endpoints
+measurable generated trajectory, unconditional source elimination theorem,
+and paper endpoints
 remain open`
 
 ## Source window
@@ -120,7 +122,24 @@ This is a structural no-switch step.  The empirical means, confidence bounds,
 and inactive-arm probabilities are explicit inputs; Lean does not claim that
 BSC or EAP generated them.  The switch branch, round finalization, measurable
 recursive sampling law, D.4 count probability, multi-snapshot elimination
-route, and regret endpoints remain open.
+on the generated trajectory, and regret endpoints remain open.
+
+## Ordered no-switch trace ordering
+
+`DelayedSAPONoSwitchStructuralStep` retains exactly two structural edges: the
+line-8 successor of a verified processing step and an action-round advance
+whose inner loop is certified exhausted.  Its reflexive-transitive closure is
+not called a generated stochastic trajectory.  The compiled trace proves that
+the current active set can only shrink, so membership in a later step's
+eliminated set transports back to the earlier line-8 `remainingActive` set.
+This removes the temporal survival premise previously supplied by the caller
+of the repaired factor-20 theorem.
+
+The trace layer has 12 named declarations.  Its final theorem still consumes
+the earlier snapshot's explicit D.4 count clause and elimination-good
+projection.  It does not generate the numerical BSC/EAP state, prove D.4's
+probability, cover the switch branch, or establish an unconditional source
+Lemma D.12 / main-text Lemma 4.2 or regret endpoint.
 
 ## Elimination and one-round action law
 
@@ -196,9 +215,12 @@ pair-width premise.  It still consumes a
   The compiled ordered no-switch step now constructs one such summary from an
   explicit structural round state and preserves its active-set invariant.  It
   does not generate the numerical BSC/EAP fields or the random round state.
-  Constructing those fields on a measurable randomized Algorithm-5 trajectory,
-  proving the inequalities' simultaneous `2/T` probability,
-  and closing the ordered elimination and terminal regret chains remain open.
+  The compiled ordered no-switch trace now derives the later-arm-remains
+  premise across exact processing and exhausted-round advances, and then calls
+  the same D.4-conditional factor-20 consumer.  Constructing the numerical
+  fields on a measurable randomized Algorithm-5 trajectory, proving the
+  inequalities' simultaneous `2/T` probability, and closing an unconditional
+  source elimination theorem and the terminal regret chains remain open.
   This is a compiled deterministic adapter and conditional same-snapshot repair
   route, not an actual recursive-state producer, source repair, or source
   theorem.
@@ -222,3 +244,9 @@ The action-time `outstandingCount` is not identified with the paper's
 `not (s + oneBasedDelayShift delay s < t)`.  This closes the deterministic
 indexing obligation while leaving all algorithmic and probabilistic claims
 open.
+
+The source-audit inventory contains 160 named declarations: 89
+implementation-facing, 19 diagnostic/conditional/repair, 16 processed-prefix,
+9 processed-trace-summary, 15 ordered one-step transition, and 12 trace-ordering
+declarations.  The count records the audited Lean slice; it is not a coverage
+percentage and does not promote a paper endpoint.
