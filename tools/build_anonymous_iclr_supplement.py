@@ -136,6 +136,8 @@ DELAYED_PROCESSED_PREFIX_ID = "DELAYED-SAPO-D1-ACTIVE-COUNT-WIDTH-PRODUCER"
 DELAYED_TRACE_SUMMARY_ID = "DELAYED-SAPO-PROCESSED-TRACE-SUMMARY-ADAPTER"
 DELAYED_ORDERED_TRANSITION_ID = "DELAYED-SAPO-ORDERED-NO-SWITCH-PROCESS-ONE"
 DELAYED_ORDERED_TRACE_ID = "DELAYED-SAPO-ORDERED-NO-SWITCH-TRACE-ORDERING"
+DELAYED_D11_DOMAIN_ID = "DELAYED-SAPO-D11-NONNEGATIVE-GAP-HALF-SET"
+DELAYED_LINE10_INITIALIZATION_ID = "DELAYED-SAPO-LINE10-ELIMINATED-ARM-INITIALIZATION"
 DELAYED_CENTRAL_ENDPOINT_ID = "NEURIPS-2025-DELAYED-BOBW-CENTRAL-ENDPOINTS"
 SUCCINCT_AUDIT_ID = "NEURIPS-2025-SUCCINCT-LOWER-BOUND-GEOMETRY-AUDIT"
 SGB_AUDIT_ID = "NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT-MECHANISM-AUDIT"
@@ -231,6 +233,8 @@ SOURCE_RESULT_IDS = (
     DELAYED_TRACE_SUMMARY_ID,
     DELAYED_ORDERED_TRANSITION_ID,
     DELAYED_ORDERED_TRACE_ID,
+    DELAYED_D11_DOMAIN_ID,
+    DELAYED_LINE10_INITIALIZATION_ID,
     DELAYED_CENTRAL_ENDPOINT_ID,
     SUCCINCT_AUDIT_ID,
     SGB_AUDIT_ID,
@@ -1346,6 +1350,8 @@ def validate_delayed_counts(records):
     trace_summary = records[DELAYED_TRACE_SUMMARY_ID]
     ordered_transition = records[DELAYED_ORDERED_TRANSITION_ID]
     ordered_trace = records[DELAYED_ORDERED_TRACE_ID]
+    d11_domain = records[DELAYED_D11_DOMAIN_ID]
+    line10_initialization = records[DELAYED_LINE10_INITIALIZATION_ID]
     central_endpoint = records[DELAYED_CENTRAL_ENDPOINT_ID]
     if implementation_count != 89:
         raise ValueError("delayed implementation count drifted to {}".format(implementation_count))
@@ -1371,6 +1377,17 @@ def validate_delayed_counts(records):
     if ordered_trace["status"] != "compiled" or len(ordered_trace["declarations"]) != 12:
         raise ValueError(
             "ordered no-switch trace must remain compiled with 12 declarations"
+        )
+    if d11_domain["status"] != "compiled" or len(d11_domain["declarations"]) != 6:
+        raise ValueError(
+            "D.11 nonnegative-gap domain must remain compiled with 6 declarations"
+        )
+    if (
+        line10_initialization["status"] != "compiled"
+        or len(line10_initialization["declarations"]) != 31
+    ):
+        raise ValueError(
+            "Algorithm 5 line-10 initialization must remain compiled with 31 declarations"
         )
     if central_endpoint["status"] != "partial":
         raise ValueError("delayed central endpoint must remain partial")
@@ -1456,6 +1473,8 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
         DELAYED_TRACE_SUMMARY_ID,
         DELAYED_ORDERED_TRANSITION_ID,
         DELAYED_ORDERED_TRACE_ID,
+        DELAYED_D11_DOMAIN_ID,
+        DELAYED_LINE10_INITIALIZATION_ID,
     ]
     specs = {
         "textbook-chapter-15-scoped-positive-control": {
@@ -1473,7 +1492,7 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
             "evidence_record_ids": delayed_ids,
             "central_endpoint_record_id": DELAYED_CENTRAL_ENDPOINT_ID,
             "promotion_status": "partial",
-            "compiled_declaration_count": 160,
+            "compiled_declaration_count": 197,
             "declaration_count_breakdown": {
                 "implementation_facing": 89,
                 "diagnostic_conditional_repair": 19,
@@ -1481,6 +1500,8 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
                 "processed_trace_summary_adapter": 9,
                 "ordered_no_switch_transition": 15,
                 "ordered_no_switch_trace_ordering": 12,
+                "nonnegative_gap_d11_domain": 6,
+                "line10_eliminated_arm_initialization": 31,
             },
         },
         "succinct-lower-bound-source-frozen-audit": {
@@ -1532,6 +1553,21 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
             raise ValueError("theorem-audit comparison declaration overlap drift for " + row_id)
         if not evidence_names.issubset(index_names):
             raise ValueError("theorem-audit comparison references an unindexed declaration")
+        if row_id == "delayed-bobw-source-frozen-audit":
+            expected_delayed_names = {
+                index_row["full_name"]
+                for index_row in index.get("declarations", [])
+                if str(index_row.get("file", "")).startswith(
+                    "BanditRLProof/DelayedFeedback/"
+                )
+                and index_row.get("file")
+                != "BanditRLProof/DelayedFeedback/MultiRegimeContract.lean"
+            }
+            if evidence_names != expected_delayed_names:
+                raise ValueError(
+                    "delayed theorem-audit declarations must equal the exact "
+                    "non-generic DelayedFeedback declaration set"
+                )
         central = records[spec["central_endpoint_record_id"]]
         if spec["role"] == "source_frozen_external_audit":
             if (
@@ -1602,6 +1638,19 @@ def build_claim_ledger(proof_report):
     theorem_audit_comparison = validate_theorem_audit_comparison(records, index)
     ch16_evidence = validate_ch16_boundary(records)
     index_names = {row["full_name"] for row in index["declarations"]}
+    delayed_directory_rows = [
+        row for row in index["declarations"]
+        if str(row.get("file", "")).startswith("BanditRLProof/DelayedFeedback/")
+    ]
+    delayed_generic_rows = [
+        row for row in delayed_directory_rows
+        if row.get("file") == "BanditRLProof/DelayedFeedback/MultiRegimeContract.lean"
+    ]
+    if len(delayed_directory_rows) != 202 or len(delayed_generic_rows) != 5:
+        raise ValueError(
+            "DelayedFeedback directory boundary must remain 197 source-audit "
+            "+ 5 generic declarations"
+        )
     referenced = {
         name for record in records.values() for name in record["declarations"]
     }
@@ -1656,9 +1705,11 @@ def build_claim_ledger(proof_report):
                     DELAYED_TRACE_SUMMARY_ID,
                     DELAYED_ORDERED_TRANSITION_ID,
                     DELAYED_ORDERED_TRACE_ID,
+                    DELAYED_D11_DOMAIN_ID,
+                    DELAYED_LINE10_INITIALIZATION_ID,
                     DELAYED_CENTRAL_ENDPOINT_ID,
                 ],
-                "boundary": "160 = 89 implementation-facing + 19 diagnostic/conditional/repair + 16 processed-prefix + 9 processed-trace-summary adapter + 15 ordered no-switch transition + 12 ordered trace declarations. The final slice proves active-set monotonicity and later-arm survival across exact no-switch structural steps, then calls a D.4-conditional factor-20 consumer; BSC/EAP, generated trajectory, D.4 probability, switch logic, an unconditional source elimination theorem, and every source-paper regret endpoint remain open.",
+                "boundary": "197 = 89 implementation-facing + 19 diagnostic/conditional/repair + 16 processed-prefix + 9 processed-trace-summary adapter + 15 ordered no-switch transition + 12 ordered trace + 6 nonnegative-gap D.11-domain + 31 Algorithm-5 line-10 initialization declarations. The D.11 leaf is restricted to nonnegative stochastic loss gaps, and line 10 is only an initializer. D.13, EAP/BSC evolution beyond initialization, a generated trajectory, D.4 probability, switch logic, an unconditional source elimination theorem, and every source-paper regret endpoint remain open.",
             },
             {
                 "artifact": "Succinct geometry audit",
@@ -1700,8 +1751,14 @@ def build_claim_ledger(proof_report):
             "ordered_no_switch_transition_declaration_count": 15,
             "ordered_no_switch_trace_id": DELAYED_ORDERED_TRACE_ID,
             "ordered_no_switch_trace_declaration_count": 12,
+            "d11_domain_id": DELAYED_D11_DOMAIN_ID,
+            "d11_domain_declaration_count": 6,
+            "line10_initialization_id": DELAYED_LINE10_INITIALIZATION_ID,
+            "line10_initialization_declaration_count": 31,
             "central_endpoint_id": DELAYED_CENTRAL_ENDPOINT_ID,
-            "source_audit_declaration_count": 160,
+            "source_audit_declaration_count": 197,
+            "generic_multiregime_contract_declaration_count": 5,
+            "directory_declaration_count": 202,
             "paper_endpoint_verified": False,
         },
         "succinct_geometry": {

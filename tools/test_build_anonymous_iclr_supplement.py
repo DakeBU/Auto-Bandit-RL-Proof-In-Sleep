@@ -272,6 +272,53 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("unmanifested extracted file", result.stdout + result.stderr)
 
+    def test_extracted_verifier_rejects_delayed_record_id_drift(self):
+        destination = self.root / "delayed-record-id-drift"
+        with zipfile.ZipFile(str(self.first)) as archive:
+            archive.extractall(str(destination))
+        artifact = destination / BUILDER.ARCHIVE_ROOT
+        ledger_path = artifact / "evidence" / "claim-ledger.json"
+        ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+        fake_id = "FAKE-DIAGNOSTIC-RECORD"
+        source = dict(ledger["source_records"][BUILDER.DELAYED_DIAGNOSTIC_ID])
+        source["id"] = fake_id
+        ledger["source_records"][fake_id] = source
+        ledger["delayed_feedback"]["diagnostic_id"] = fake_id
+        ledger_path.write_text(
+            json.dumps(ledger, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+
+        manifest_path = artifact / "ARTIFACT_MANIFEST.json"
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        tree_digest = hashlib.sha256()
+        for entry in manifest["files"]:
+            path = artifact / entry["path"]
+            data = path.read_bytes()
+            entry["bytes"] = len(data)
+            entry["sha256"] = hashlib.sha256(data).hexdigest()
+            tree_digest.update(entry["path"].encode("utf-8") + b"\0")
+            tree_digest.update(entry["sha256"].encode("ascii") + b"\0")
+            tree_digest.update(str(entry["bytes"]).encode("ascii") + b"\n")
+        manifest["source_tree_digest"] = tree_digest.hexdigest()
+        manifest_path.write_text(
+            json.dumps(manifest, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+
+        result = subprocess.run(
+            [sys.executable, "artifact/verify_artifact.py"],
+            cwd=str(artifact),
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            encoding="utf-8",
+        )
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(
+            "record binding drift for diagnostic_id",
+            result.stdout + result.stderr,
+        )
+
     def test_claim_ledger_has_conservative_counts(self):
         payload = BUILDER.build_payload(allow_missing_graph=True)
         ledger = json.loads(payload["evidence/claim-ledger.json"].decode("utf-8"))
@@ -293,7 +340,17 @@ class AnonymousSupplementTests(unittest.TestCase):
             ledger["delayed_feedback"]["ordered_no_switch_trace_declaration_count"],
             12,
         )
-        self.assertEqual(ledger["delayed_feedback"]["source_audit_declaration_count"], 160)
+        self.assertEqual(ledger["delayed_feedback"]["d11_domain_declaration_count"], 6)
+        self.assertEqual(
+            ledger["delayed_feedback"]["line10_initialization_declaration_count"],
+            31,
+        )
+        self.assertEqual(ledger["delayed_feedback"]["source_audit_declaration_count"], 197)
+        self.assertEqual(
+            ledger["delayed_feedback"]["generic_multiregime_contract_declaration_count"],
+            5,
+        )
+        self.assertEqual(ledger["delayed_feedback"]["directory_declaration_count"], 202)
         self.assertFalse(ledger["delayed_feedback"]["paper_endpoint_verified"])
         self.assertEqual(ledger["source_records"][BUILDER.DELAYED_DIAGNOSTIC_ID]["status"], "partial")
         self.assertEqual(
@@ -306,6 +363,14 @@ class AnonymousSupplementTests(unittest.TestCase):
         )
         self.assertEqual(
             ledger["source_records"][BUILDER.DELAYED_ORDERED_TRACE_ID]["status"],
+            "compiled",
+        )
+        self.assertEqual(
+            ledger["source_records"][BUILDER.DELAYED_D11_DOMAIN_ID]["status"],
+            "compiled",
+        )
+        self.assertEqual(
+            ledger["source_records"][BUILDER.DELAYED_LINE10_INITIALIZATION_ID]["status"],
             "compiled",
         )
         self.assertEqual(
@@ -424,7 +489,7 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertNotIn("paper_endpoint_verified", chapter15)
 
         delayed = rows["delayed-bobw-source-frozen-audit"]
-        self.assertEqual(delayed["compiled_declaration_count"], 160)
+        self.assertEqual(delayed["compiled_declaration_count"], 197)
         self.assertEqual(
             delayed["declaration_count_breakdown"],
             {
@@ -434,6 +499,8 @@ class AnonymousSupplementTests(unittest.TestCase):
                 "processed_trace_summary_adapter": 9,
                 "ordered_no_switch_transition": 15,
                 "ordered_no_switch_trace_ordering": 12,
+                "nonnegative_gap_d11_domain": 6,
+                "line10_eliminated_arm_initialization": 31,
             },
         )
         self.assertIn(
@@ -477,6 +544,17 @@ class AnonymousSupplementTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "compiled_declaration_count drift"):
             BUILDER.validate_theorem_audit_comparison(
                 records, index, comparison=count_drift
+            )
+
+        declaration_drift_records = json.loads(json.dumps(records))
+        declaration_drift_records[BUILDER.DELAYED_D11_DOMAIN_ID]["declarations"][0] = (
+            "BanditRLProof.ETC.Spec"
+        )
+        with self.assertRaisesRegex(
+            ValueError, "exact non-generic DelayedFeedback declaration set"
+        ):
+            BUILDER.validate_theorem_audit_comparison(
+                declaration_drift_records, index, comparison=source
             )
 
     def test_sgb_required_bridge_names_are_frozen(self):
