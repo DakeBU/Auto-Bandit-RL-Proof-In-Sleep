@@ -443,7 +443,7 @@ class AnonymousSupplementTests(unittest.TestCase):
         )
         self.assertEqual(sgb_row["status"], "partial")
         self.assertEqual(sgb_row["source_record_ids"], [BUILDER.SGB_AUDIT_ID])
-        self.assertEqual(ledger["stochastic_gradient_bandit"]["declaration_count"], 44)
+        self.assertEqual(ledger["stochastic_gradient_bandit"]["declaration_count"], 76)
         self.assertEqual(
             ledger["stochastic_gradient_bandit"]["finite_algebra_declaration_count"],
             26,
@@ -452,11 +452,25 @@ class AnonymousSupplementTests(unittest.TestCase):
             ledger["stochastic_gradient_bandit"]["generated_history_declaration_count"],
             18,
         )
+        self.assertEqual(
+            ledger["stochastic_gradient_bandit"]["two_arm_rate_declaration_count"],
+            18,
+        )
+        self.assertEqual(
+            ledger["stochastic_gradient_bandit"]["exponential_audit_declaration_count"],
+            14,
+        )
         self.assertTrue(
             ledger["stochastic_gradient_bandit"]["generated_trajectory_compiled"]
         )
         self.assertTrue(
             ledger["stochastic_gradient_bandit"]["conditional_law_bridge_compiled"]
+        )
+        self.assertTrue(
+            ledger["stochastic_gradient_bandit"]["two_arm_equation_11_compiled"]
+        )
+        self.assertTrue(
+            ledger["stochastic_gradient_bandit"]["source_equation_8_compiled"]
         )
         self.assertFalse(
             ledger["stochastic_gradient_bandit"]["uniform_reward_regularities_verified"]
@@ -510,12 +524,14 @@ class AnonymousSupplementTests(unittest.TestCase):
         succinct = rows["succinct-lower-bound-source-frozen-audit"]
         self.assertEqual(succinct["compiled_declaration_count"], 54)
         sgb = rows["stochastic-gradient-bandit-source-frozen-audit"]
-        self.assertEqual(sgb["compiled_declaration_count"], 44)
+        self.assertEqual(sgb["compiled_declaration_count"], 76)
         self.assertEqual(
             sgb["declaration_count_breakdown"],
             {
                 "finite_action_algebra": 26,
                 "generated_history_and_kernel_bridge": 18,
+                "two_arm_zero_sum_and_equation_11": 18,
+                "source_c_and_equation_8": 14,
             },
         )
         for row in (delayed, succinct, sgb):
@@ -583,19 +599,32 @@ class AnonymousSupplementTests(unittest.TestCase):
             )
 
     def test_sgb_required_bridge_names_are_frozen(self):
-        records = json.loads(json.dumps(BUILDER.selected_source_records()))
-        index = BUILDER.load_json(
-            BUILDER.REPO_ROOT / "research-wiki" / "retrieval-index" /
-            "local_lean_declarations.json"
+        required_sets = (
+            BUILDER.SGB_CONDITIONAL_LAW_BRIDGE_DECLARATIONS,
+            BUILDER.SGB_TWO_ARM_RATE_DECLARATIONS,
+            BUILDER.SGB_EXPONENTIAL_AUDIT_DECLARATIONS,
         )
-        victim = next(iter(BUILDER.SGB_CONDITIONAL_LAW_BRIDGE_DECLARATIONS))
-        replacement = victim + "_drifted"
-        declarations = records[BUILDER.SGB_AUDIT_ID]["declarations"]
-        declarations[declarations.index(victim)] = replacement
-        row = next(row for row in index["declarations"] if row["full_name"] == victim)
-        row["full_name"] = replacement
-        with self.assertRaisesRegex(ValueError, "26 finite-algebra and 18 generated-history"):
-            BUILDER.validate_sgb_count(records, index)
+        for required in required_sets:
+            with self.subTest(victim_set=sorted(required)):
+                records = json.loads(json.dumps(BUILDER.selected_source_records()))
+                index = BUILDER.load_json(
+                    BUILDER.REPO_ROOT / "research-wiki" / "retrieval-index" /
+                    "local_lean_declarations.json"
+                )
+                victim = next(iter(required))
+                replacement = victim + "_drifted"
+                declarations = records[BUILDER.SGB_AUDIT_ID]["declarations"]
+                declarations[declarations.index(victim)] = replacement
+                row = next(
+                    row for row in index["declarations"]
+                    if row["full_name"] == victim
+                )
+                row["full_name"] = replacement
+                with self.assertRaisesRegex(
+                    ValueError,
+                    "26 finite-algebra, 18 generated-history",
+                ):
+                    BUILDER.validate_sgb_count(records, index)
 
     def test_ch16_dependency_names_and_blocked_terminals_are_frozen(self):
         records = json.loads(json.dumps(BUILDER.selected_source_records()))
