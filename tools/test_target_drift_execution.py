@@ -4,10 +4,12 @@
 from __future__ import annotations
 
 import json
+import io
 import subprocess
 import sys
 import unittest
 import tempfile
+from contextlib import redirect_stdout
 from pathlib import Path
 from unittest import mock
 
@@ -62,6 +64,48 @@ class TargetDriftExecutionTest(unittest.TestCase):
         prepare.check_template(
             ROOT / "evaluation" / "target-drift-v1" / "execution-template.json"
         )
+
+    def test_v1_and_v2_readiness_reports_cannot_be_conflated(self) -> None:
+        expected = {
+            "target-drift-v1": ("ABRL-TARGET-DRIFT-V1", 26),
+            "target-drift-v2": ("ABRL-TARGET-DRIFT-V2", 122),
+        }
+        for directory, (suite_id, unresolved_count) in expected.items():
+            config_path = ROOT / "evaluation" / directory / "execution-template.json"
+            config = json.loads(config_path.read_text(encoding="utf-8"))
+            self.assertEqual(config["suite_id"], suite_id)
+            self.assertEqual(len(prepare.unset_paths(config)), unresolved_count)
+            output = io.StringIO()
+            with redirect_stdout(output):
+                prepare.check_template(config_path)
+            report = output.getvalue()
+            self.assertIn(suite_id, report)
+            self.assertIn(
+                f"{unresolved_count} unresolved placeholders across machine, human, "
+                "and provenance fields",
+                report,
+            )
+
+    def test_unqualified_cli_readiness_check_still_targets_v1(self) -> None:
+        completed = subprocess.run(
+            [
+                sys.executable,
+                str(TOOLS / "prepare_target_drift_execution.py"),
+                "--check-template",
+            ],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        report = completed.stdout + completed.stderr
+        self.assertEqual(completed.returncode, 0)
+        self.assertIn("ABRL-TARGET-DRIFT-V1", report)
+        self.assertIn(
+            "26 unresolved placeholders across machine, human, and provenance fields",
+            report,
+        )
+        self.assertNotIn("ABRL-TARGET-DRIFT-V2", report)
 
     def test_sorted_json_roundtrip_does_not_change_condition_semantics(self) -> None:
         config = json.loads(

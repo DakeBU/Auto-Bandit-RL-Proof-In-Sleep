@@ -302,11 +302,14 @@ TARGET_DRIFT_TOOLS = (
     "tools/test_target_drift_completion_ledger.py",
     "tools/test_codex_target_drift_adapter.py",
     "tools/test_target_drift_execution.py",
+    "tools/test_target_drift_wording_record.py",
     "tools/test_target_drift_runtime.py",
     "tools/test_target_drift_smoke.py",
     LEANFLOW_SCHEDULE_BUILDER,
     LEANFLOW_LEDGER_BUILDER,
     LEANFLOW_FAKE_ADAPTER,
+    "tools/leanflow_target_drift_adapter.py",
+    "tools/test_leanflow_target_drift_adapter.py",
     "tools/test_target_drift_external_comparator.py",
     "tools/validate_target_drift_suite.py",
     "tools/validate_target_drift_suite_v2.py",
@@ -347,6 +350,7 @@ TARGET_DRIFT_PROTOCOL_FILES = (
     "evaluation/target-drift-v2/external-comparator-plan.json",
     "evaluation/target-drift-v2/external-comparator-plan.seal.json",
     LEANFLOW_ADAPTER_CONTRACT,
+    "evaluation/target-drift-v2/leanflow-real-adapter-contract.json",
     LEANFLOW_EXTERNAL_SCHEDULE,
     LEANFLOW_FIXTURE_REQUEST,
     LEANFLOW_LEDGER_CONTRACT,
@@ -359,6 +363,7 @@ TARGET_DRIFT_PROTOCOL_FILES = (
     "evaluation/target-drift-v2/resource-policy.json",
     "evaluation/target-drift-v2/source-files.template.json",
     "evaluation/target-drift-v2/text-only-audit-prompt.md",
+    "evaluation/target-drift-v2/wording-negative-control-record.json",
 )
 
 TARGET_DRIFT_WORKFLOW_FILES = (

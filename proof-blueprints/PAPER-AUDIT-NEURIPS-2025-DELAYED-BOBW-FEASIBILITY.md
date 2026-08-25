@@ -222,7 +222,8 @@ The repository-wide gate then passed on the same checkout: `lake build` and
 the root `Tests` target completed 8,856 jobs, proof-graph export succeeded,
 and all 231 Python tests passed with 6 expected skips.  The target-drift
 execution template remains structurally valid but deliberately not ready:
-26 machine fields and named human/provenance choices are unset, so no
+the explicit v2 check reports 122 unresolved placeholders across machine,
+human, and provenance fields, so no
 450-primary or 30-external result is claimed.
 
 On 2026-08-25, the focused D.11 domain leaf and Algorithm-5 line-10 initializer,
@@ -236,8 +237,12 @@ gate `python -B tools/bandit.py check` passed: the root Lean build completed
 8,834 jobs, the `Tests` target completed 8,860 jobs, proof-graph export
 succeeded, and all 231 Python tests passed with 6 expected skips.  The
 target-drift execution template remains structurally valid but deliberately
-`prepared_unbuilt`: 26 machine fields and the named human/provenance choices
-remain unset, so no execution result is claimed.
+`template_unfrozen`: the explicit command
+`python tools/prepare_target_drift_execution.py --config
+evaluation/target-drift-v2/execution-template.json --check-template` reports
+122 unresolved placeholders across machine, human, and provenance fields, so no
+execution result is claimed.  The unqualified command targets the preserved
+v1 template and its smaller count must not be used as v2 readiness evidence.
 
 The Lean-verified site build and checker also passed on this checkout.  The
 generated site contains 640 HTML pages, 586 modules, 7,844 declarations, 80

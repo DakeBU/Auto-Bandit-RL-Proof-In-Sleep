@@ -24,6 +24,12 @@ leave-one-pair-out text-only diagnostic (currently 0.633 for the deterministic
 Bernoulli-naive-Bayes negative control).  A separate source-absent frozen-model
 audit and an independent blind wording review remain mandatory human fields;
 the diagnostic is not a formalization result.
+The checked-in `wording-negative-control-record.json` binds that deterministic
+value to the exact paired-requirement bank and audit-script bytes; the v2
+validator requires the exact top-level and nested schemas, schema version, and
+recorded audit command before recomputing all three bindings.  Extra result or
+claim fields are rejected.  The record is result-ineligible and does not
+replace either mandatory leakage review.
 
 The protocol requires every future evaluated workspace to be built from commit
 `d43bfeee56fb0c1c35cf5af9fc1a7fdc3e0c37b9`, the public base immediately
@@ -70,6 +76,19 @@ Before the 450 runs, the following are mandatory:
 6. hash-seal `complete_450_no_replacement_no_imputation_v1` and its completion-
    ledger builder, then materialize the 450-ID completion ledger;
 7. materialize blind grader packets and freeze the target-aware analysis code.
+
+The current v2 readiness check is explicit because the preserved v1 suite has
+a different template and a different unresolved-field count:
+
+```text
+python tools/prepare_target_drift_execution.py --config evaluation/target-drift-v2/execution-template.json --check-template
+```
+
+At this checkpoint the template status remains `template_unfrozen`; the
+command reports `ABRL-TARGET-DRIFT-V2` and 122 unresolved placeholders across
+machine, human, and provenance fields.  The unqualified command intentionally checks v1;
+its 26-field report is not evidence that v2 is closer to execution.  No
+primary or external model run has been performed.
 
 The grader-packet materializer and packet-order seed are frozen before model
 execution.  Packet contents and their aggregate digest are produced only after
@@ -428,6 +447,33 @@ python tools/build_leanflow_target_drift_schedule.py --check evaluation/target-d
 python tools/validate_target_drift_external_comparator.py
 python -m unittest tools.test_target_drift_external_comparator -v
 ```
+
+An adjacent real-checkout preflight candidate is now implemented without
+changing or resealing that frozen result-free plumbing.  The candidate contract
+`leanflow-real-adapter-contract.json` pins LeanFlow commit
+`72a58a5ffe3d26710e8e0a5d0f4e9bcaab3fed4d`, its Git tree, release `0.3.0`,
+`uv.lock`, license, project metadata, and the source bytes that expose the
+current clean-room/toolset policy.  Given a local checkout at that exact
+commit, the command below performs only two allowlisted local `git rev-parse`
+queries and byte checks:
+
+```text
+python tools/leanflow_target_drift_adapter.py --mode result-free-preflight --contract evaluation/target-drift-v2/leanflow-real-adapter-contract.json --source-root ABSOLUTE-PINNED-LEANFLOW-CHECKOUT --response FRESH-PREFLIGHT-RESPONSE.json --trace FRESH-PREFLIGHT-TRACE.jsonl
+```
+
+The Python adapter has no credential-reading path and imports or calls no
+network or provider client.  It does start the locally resolved Git executable
+for the two identity queries; its SHA-256 is recorded but not pre-frozen, and
+neither that executable's OS-level behavior nor OS-level network isolation is
+attested.  It does not start LeanFlow or formalization, and `--mode execute`
+fails before reading the contract, source checkout, or output paths.  The
+preflight deliberately reports the production gate closed: pinned LeanFlow's
+`--clean-room` retains general web/paper search and its proving toolset contains
+web access, while the external comparison requires research, web, and
+public-repository search to be disabled.  A disclosed no-web upstream interface
+or audited overlay plus provider-only network containment remains mandatory
+before a real, permanently result-ineligible smoke.  Passing this preflight is
+not a LeanFlow run or comparison result.
 
 `tools/codex_target_drift_adapter.py` is a result-free candidate adapter. Its
 component tests cover the supported Codex JSONL schema (including item updates,

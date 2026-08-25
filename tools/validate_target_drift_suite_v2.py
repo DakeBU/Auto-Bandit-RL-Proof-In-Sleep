@@ -7,6 +7,7 @@ import json
 import subprocess
 import sys
 from pathlib import Path
+from typing import Any
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -18,6 +19,30 @@ import prepare_target_drift_execution as prepare  # noqa: E402
 import audit_target_drift_wording as wording  # noqa: E402
 
 
+WORDING_RECORD_SCHEMA_VERSION = 1
+WORDING_AUDIT_SCHEMA_VERSION = 1
+WORDING_SUITE_ID = "ABRL-TARGET-DRIFT-V2"
+WORDING_RECORD_COMMAND = (
+    "python tools/audit_target_drift_wording.py "
+    "--bank evaluation/target-drift-v2/paired-requirements.json"
+)
+WORDING_RECORD_KEYS = frozenset({
+    "schema_version", "suite_id", "status", "result_eligible", "command",
+    "input", "script", "audit",
+})
+WORDING_BINDING_KEYS = frozenset({"path", "sha256"})
+WORDING_AUDIT_KEYS = frozenset({
+    "schema_version",
+    "suite_id",
+    "paired_case_count",
+    "rendered_requirement_count",
+    "identical_template",
+    "legacy_style_marker_hits",
+    "deterministic_leave_one_pair_out_bernoulli_nb_accuracy",
+    "interpretation",
+})
+
+
 def load(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
@@ -25,6 +50,82 @@ def load(path: Path) -> dict:
 def require(condition: bool, message: str) -> None:
     if not condition:
         raise SystemExit(f"target-drift v2 validation failed: {message}")
+
+
+def require_exact_keys(value: Any, expected: frozenset[str], label: str) -> None:
+    require(isinstance(value, dict), f"{label} must be an object")
+    actual = set(value)
+    missing = expected - actual
+    extra = actual - expected
+    require(
+        not missing and not extra,
+        f"{label} keys differ; missing={sorted(map(str, missing))}, "
+        f"extra={sorted(map(str, extra))}",
+    )
+
+
+def validate_wording_negative_control_record(
+    record: dict[str, Any],
+    wording_result: dict[str, Any],
+    *,
+    protocol_suite_id: str,
+    paired_path: Path,
+    wording_script: Path,
+) -> None:
+    """Validate the checked-in result-ineligible wording record fail-closed."""
+    require_exact_keys(record, WORDING_RECORD_KEYS, "wording negative-control record")
+    require_exact_keys(record["input"], WORDING_BINDING_KEYS, "wording record input")
+    require_exact_keys(record["script"], WORDING_BINDING_KEYS, "wording record script")
+    require_exact_keys(record["audit"], WORDING_AUDIT_KEYS, "wording record audit")
+    require_exact_keys(wording_result, WORDING_AUDIT_KEYS, "recomputed wording audit")
+
+    require(
+        type(record["schema_version"]) is int
+        and record["schema_version"] == WORDING_RECORD_SCHEMA_VERSION,
+        f"wording record schema_version must be {WORDING_RECORD_SCHEMA_VERSION}",
+    )
+    require(
+        type(record["audit"]["schema_version"]) is int
+        and record["audit"]["schema_version"] == WORDING_AUDIT_SCHEMA_VERSION,
+        f"wording record audit schema_version must be {WORDING_AUDIT_SCHEMA_VERSION}",
+    )
+    require(
+        type(wording_result["schema_version"]) is int
+        and wording_result["schema_version"] == WORDING_AUDIT_SCHEMA_VERSION,
+        f"recomputed wording audit schema_version must be {WORDING_AUDIT_SCHEMA_VERSION}",
+    )
+    require(
+        protocol_suite_id == WORDING_SUITE_ID
+        and record["suite_id"] == WORDING_SUITE_ID
+        and record["audit"]["suite_id"] == WORDING_SUITE_ID
+        and wording_result["suite_id"] == WORDING_SUITE_ID,
+        "wording negative-control suite identifier differs",
+    )
+    require(
+        record["status"] == "deterministic_result_free_negative_control"
+        and record["result_eligible"] is False,
+        "wording negative-control record has the wrong authority or status",
+    )
+    require(
+        type(record["command"]) is str
+        and record["command"] == WORDING_RECORD_COMMAND,
+        "wording negative-control command differs from the frozen command",
+    )
+    require(
+        record["input"]["path"]
+        == "evaluation/target-drift-v2/paired-requirements.json"
+        and record["input"]["sha256"] == prepare.sha256_file(paired_path),
+        "wording negative-control input binding is stale",
+    )
+    require(
+        record["script"]["path"] == "tools/audit_target_drift_wording.py"
+        and record["script"]["sha256"] == prepare.sha256_file(wording_script),
+        "wording negative-control script binding is stale",
+    )
+    require(
+        record["audit"] == wording_result,
+        "wording negative-control result does not reproduce",
+    )
 
 
 def main() -> None:
@@ -36,6 +137,7 @@ def main() -> None:
     policy = load(V2 / "resource-policy.json")
     missing_policy = load(V2 / "missing-run-policy.json")
     paired = load(V2 / "paired-requirements.json")
+    wording_record = load(V2 / "wording-negative-control-record.json")
 
     require(protocol["suite_id"] == config["suite_id"] == rubric["suite_id"]
             == policy["suite_id"] == missing_policy["suite_id"]
@@ -74,6 +176,14 @@ def main() -> None:
     require(
         wording_result["deterministic_leave_one_pair_out_bernoulli_nb_accuracy"] <= 2 / 3,
         "deterministic text-only diagnostic exceeds the frozen two-thirds gate",
+    )
+    wording_script = ROOT / "tools" / "audit_target_drift_wording.py"
+    validate_wording_negative_control_record(
+        wording_record,
+        wording_result,
+        protocol_suite_id=protocol["suite_id"],
+        paired_path=V2 / "paired-requirements.json",
+        wording_script=wording_script,
     )
 
     base = protocol["workspace_base_commit"]

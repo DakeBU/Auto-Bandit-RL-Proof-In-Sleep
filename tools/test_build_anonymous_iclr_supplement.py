@@ -676,6 +676,17 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertIn("evaluation/target-drift-v2/agent-image.Containerfile", payload)
         self.assertIn("evaluation/target-drift-v2/agent-image-sources.json", payload)
         self.assertIn("evaluation/target-drift-v2/agent-codex-native.apparmor", payload)
+        self.assertIn(
+            "evaluation/target-drift-v2/wording-negative-control-record.json",
+            payload,
+        )
+        self.assertIn(
+            "evaluation/target-drift-v2/leanflow-real-adapter-contract.json",
+            payload,
+        )
+        self.assertIn("tools/leanflow_target_drift_adapter.py", payload)
+        self.assertIn("tools/test_leanflow_target_drift_adapter.py", payload)
+        self.assertIn("tools/test_target_drift_wording_record.py", payload)
         self.assertIn("non-Git", readme)
         self.assertNotIn("the public base immediately", readme)
         self.assertNotIn(BUILDER.PUBLIC_CANDIDATE_RUN_ID, readme)
