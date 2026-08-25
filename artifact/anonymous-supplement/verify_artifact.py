@@ -23,6 +23,24 @@ WINDOWS_PATH = re.compile(
 )
 HOST_HOME = re.compile(br"(?i)/(?:home|users)/[^/\s]+/")
 EMAIL = re.compile(br"(?i)\b[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}\b")
+DELAYED_IMPLEMENTATION_IDS = (
+    "DELAYED-FEEDBACK-SOURCE-ACCOUNTING",
+    "DELAYED-FEEDBACK-CAUSAL-PROCESSING",
+    "DELAYED-SAPO-ACTIVE-ALLOCATION",
+    "DELAYED-SAPO-ELIMINATION-ACTION-LAW",
+    "DELAYED-SAPO-GOOD-EVENT-D9-PROJECTION",
+    "DELAYED-SAPO-D8-D9-ASSEMBLY",
+)
+DELAYED_DIAGNOSTIC_ID = "DELAYED-SAPO-D10-D12-GAP-ORDERING-AUDIT"
+DELAYED_PROCESSED_PREFIX_ID = "DELAYED-SAPO-D1-ACTIVE-COUNT-WIDTH-PRODUCER"
+DELAYED_TRACE_SUMMARY_ID = "DELAYED-SAPO-PROCESSED-TRACE-SUMMARY-ADAPTER"
+DELAYED_ORDERED_TRANSITION_ID = "DELAYED-SAPO-ORDERED-NO-SWITCH-PROCESS-ONE"
+DELAYED_ORDERED_TRACE_ID = "DELAYED-SAPO-ORDERED-NO-SWITCH-TRACE-ORDERING"
+DELAYED_D11_DOMAIN_ID = "DELAYED-SAPO-D11-NONNEGATIVE-GAP-HALF-SET"
+DELAYED_LINE10_INITIALIZATION_ID = (
+    "DELAYED-SAPO-LINE10-ELIMINATED-ARM-INITIALIZATION"
+)
+DELAYED_CENTRAL_ENDPOINT_ID = "NEURIPS-2025-DELAYED-BOBW-CENTRAL-ENDPOINTS"
 
 
 def fail(message):
@@ -150,6 +168,25 @@ def verify_claim_ledger():
     records = ledger.get("source_records", {})
     impl_ids = ledger["delayed_feedback"]["implementation_facing_ids"]
     diagnostic_id = ledger["delayed_feedback"]["diagnostic_id"]
+    delayed = ledger["delayed_feedback"]
+    expected_record_bindings = {
+        "diagnostic_id": DELAYED_DIAGNOSTIC_ID,
+        "processed_prefix_id": DELAYED_PROCESSED_PREFIX_ID,
+        "processed_trace_summary_id": DELAYED_TRACE_SUMMARY_ID,
+        "ordered_no_switch_transition_id": DELAYED_ORDERED_TRANSITION_ID,
+        "ordered_no_switch_trace_id": DELAYED_ORDERED_TRACE_ID,
+        "d11_domain_id": DELAYED_D11_DOMAIN_ID,
+        "line10_initialization_id": DELAYED_LINE10_INITIALIZATION_ID,
+        "central_endpoint_id": DELAYED_CENTRAL_ENDPOINT_ID,
+    }
+    if tuple(impl_ids) != DELAYED_IMPLEMENTATION_IDS:
+        fail("delayed implementation-facing record inventory drift")
+    for field, expected_id in expected_record_bindings.items():
+        if delayed.get(field) != expected_id:
+            fail("delayed record binding drift for " + field)
+    for record_id in DELAYED_IMPLEMENTATION_IDS + tuple(expected_record_bindings.values()):
+        if records.get(record_id, {}).get("id") != record_id:
+            fail("delayed source record self-ID drift for " + record_id)
     if any(records[item]["status"] != "compiled" for item in impl_ids):
         fail("implementation-facing delayed status is not compiled")
     impl_count = sum(len(records[item]["declarations"]) for item in impl_ids)
@@ -158,7 +195,6 @@ def verify_claim_ledger():
     diagnostic = records[diagnostic_id]
     if diagnostic["status"] != "partial" or len(diagnostic["declarations"]) != 19:
         fail("D.10--D.12 diagnostic boundary drift")
-    delayed = ledger["delayed_feedback"]
     if delayed.get("diagnostic_conditional_repair_declaration_count") != 19:
         fail("D.10--D.12 diagnostic/repair count drift")
     processed_prefix_id = delayed.get("processed_prefix_id")
@@ -191,6 +227,28 @@ def verify_claim_ledger():
         fail("ordered no-switch trace boundary drift")
     if delayed.get("ordered_no_switch_trace_declaration_count") != 12:
         fail("ordered no-switch trace count drift")
+    d11_domain_id = delayed.get("d11_domain_id")
+    if d11_domain_id != DELAYED_D11_DOMAIN_ID:
+        fail("D.11 nonnegative-gap domain record ID drift")
+    d11_domain = records.get(d11_domain_id, {})
+    if (
+        d11_domain.get("status") != "compiled"
+        or len(d11_domain.get("declarations", [])) != 6
+    ):
+        fail("D.11 nonnegative-gap domain boundary drift")
+    if delayed.get("d11_domain_declaration_count") != 6:
+        fail("D.11 nonnegative-gap domain count drift")
+    line10_initialization_id = delayed.get("line10_initialization_id")
+    if line10_initialization_id != DELAYED_LINE10_INITIALIZATION_ID:
+        fail("Algorithm 5 line-10 initialization record ID drift")
+    line10_initialization = records.get(line10_initialization_id, {})
+    if (
+        line10_initialization.get("status") != "compiled"
+        or len(line10_initialization.get("declarations", [])) != 31
+    ):
+        fail("Algorithm 5 line-10 initialization boundary drift")
+    if delayed.get("line10_initialization_declaration_count") != 31:
+        fail("Algorithm 5 line-10 initialization count drift")
     central_endpoint = records.get(delayed.get("central_endpoint_id"), {})
     if central_endpoint.get("status") != "partial":
         fail("delayed central endpoint status drift")
@@ -203,8 +261,47 @@ def verify_claim_ledger():
         + len(trace_summary["declarations"])
         + len(ordered_transition["declarations"])
         + len(ordered_trace["declarations"])
+        + len(d11_domain["declarations"])
+        + len(line10_initialization["declarations"])
     ):
         fail("delayed source-audit total drift")
+    delayed_directory_rows = [
+        row for row in declarations
+        if str(row.get("file", "")).startswith("BanditRLProof/DelayedFeedback/")
+    ]
+    delayed_generic_rows = [
+        row for row in delayed_directory_rows
+        if row.get("file") == "BanditRLProof/DelayedFeedback/MultiRegimeContract.lean"
+    ]
+    if (
+        delayed.get("generic_multiregime_contract_declaration_count") != 5
+        or len(delayed_generic_rows) != 5
+    ):
+        fail("DelayedFeedback generic multi-regime count drift")
+    if delayed.get("directory_declaration_count") != 202 or len(delayed_directory_rows) != 202:
+        fail("DelayedFeedback directory count drift")
+    source_audit_ids = impl_ids + [
+        diagnostic_id,
+        processed_prefix_id,
+        trace_summary_id,
+        ordered_transition_id,
+        ordered_trace_id,
+        d11_domain_id,
+        line10_initialization_id,
+    ]
+    source_audit_names = {
+        name
+        for record_id in source_audit_ids
+        for name in records[record_id].get("declarations", [])
+    }
+    expected_source_audit_names = {
+        row.get("full_name")
+        for row in delayed_directory_rows
+        if row.get("file")
+        != "BanditRLProof/DelayedFeedback/MultiRegimeContract.lean"
+    }
+    if source_audit_names != expected_source_audit_names:
+        fail("delayed source-audit declaration set drift")
 
     missing_names = []
     for record in records.values():
@@ -263,6 +360,8 @@ def verify_theorem_audit_comparison():
         delayed.get("processed_trace_summary_id"),
         delayed.get("ordered_no_switch_transition_id"),
         delayed.get("ordered_no_switch_trace_id"),
+        delayed.get("d11_domain_id"),
+        delayed.get("line10_initialization_id"),
     ]
     specs = {
         expected_ids[0]: {
@@ -283,7 +382,7 @@ def verify_theorem_audit_comparison():
             "evidence_record_ids": delayed_ids,
             "central_endpoint_record_id": delayed.get("central_endpoint_id"),
             "promotion_status": "partial",
-            "compiled_declaration_count": 160,
+            "compiled_declaration_count": 197,
             "declaration_count_breakdown": {
                 "implementation_facing": 89,
                 "diagnostic_conditional_repair": 19,
@@ -291,6 +390,8 @@ def verify_theorem_audit_comparison():
                 "processed_trace_summary_adapter": 9,
                 "ordered_no_switch_transition": 15,
                 "ordered_no_switch_trace_ordering": 12,
+                "nonnegative_gap_d11_domain": 6,
+                "line10_eliminated_arm_initialization": 31,
             },
         },
         expected_ids[2]: {
@@ -389,6 +490,27 @@ def verify_source_freeze():
     papers = freeze.get("papers", [])
     if len(papers) != 3:
         fail("source freeze must contain exactly three papers")
+    if freeze.get("selection_status") != (
+        "source_locked_with_record_specific_timing"
+    ):
+        fail("source-lock portfolio timing status drift")
+    expected_timing = {
+        "PPR-SCHLISSELBERG-LANCEWICKI-AUER-MANSOUR-2025-DELAYED-BOBW":
+            "co_published_with_initial_feasibility_slice",
+        "PPR-ZENG-HONORIO-2025-SUCCINCT-LOWER-BOUNDS":
+            "locked_before_case_specific_lean_slice",
+        "PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB":
+            "locked_before_case_specific_lean_slice",
+    }
+    timing = {
+        row.get("card_id"): row.get("selection_timing") for row in papers
+    }
+    if timing != expected_timing:
+        fail("source-lock case-specific timing drift")
+    if "does not assert that every case was frozen" not in freeze.get(
+        "timing_note", ""
+    ):
+        fail("source-lock timing limitation is missing")
     statuses = {row.get("initial_status") for row in papers}
     if "source_frozen_not_started" not in statuses or "source_frozen_reserve_not_started" not in statuses:
         fail("source-freeze non-completion statuses are missing")

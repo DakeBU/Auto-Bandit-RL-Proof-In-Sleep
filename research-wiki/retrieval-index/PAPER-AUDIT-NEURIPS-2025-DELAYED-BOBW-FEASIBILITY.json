@@ -1,6 +1,6 @@
 {
   "task": "PAPER-AUDIT-NEURIPS-2025-DELAYED-BOBW-FEASIBILITY",
-  "generated": "2026-08-25T02:35:22+00:00",
+  "generated": "2026-08-25T05:01:47+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -44597,6 +44597,254 @@
       "statement": "theorem causalDecision_eq_of_observation_equivalent {Action : Type uAction} {Loss : Type uLoss} {Decision : Type uDecision} (rule : CausalDecisionRule Action Loss Decision) (delay₁ delay₂ : Nat → Nat) (action₁ action₂ : Nat → Action) (loss₁ loss₂ : Nat → Loss) (t : Nat) (hvisible : observedBefore delay₁ t = observedBefore delay₂ t) (haction : ∀ s, s < t → action₁ s = action₂ s) (hloss : ∀ s, s ∈ observedBefore delay₁ t → loss₁ s = loss₂ s) : rule t (actionTimeViewAt delay₁ action₁ loss₁ t) = rule t (actionTimeViewAt delay₂ action₂ loss₂ t)"
     },
     {
+      "kind": "def",
+      "name": "delayedSAPOInitialEliminatedProbability",
+      "full_name": "BanditRLProof.DelayedFeedback.delayedSAPOInitialEliminatedProbability",
+      "file": "BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean",
+      "line": 27,
+      "statement": "noncomputable def delayedSAPOInitialEliminatedProbability (armCount horizon pullCount : Nat) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "delayedSAPOInitialPhaseTarget",
+      "full_name": "BanditRLProof.DelayedFeedback.delayedSAPOInitialPhaseTarget",
+      "file": "BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean",
+      "line": 34,
+      "statement": "noncomputable def delayedSAPOInitialPhaseTarget (probability surrogateGap : Real) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "sourceEmpiricalWidthScale_pos",
+      "full_name": "BanditRLProof.DelayedFeedback.sourceEmpiricalWidthScale_pos",
+      "file": "BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean",
+      "line": 40,
+      "statement": "theorem sourceEmpiricalWidthScale_pos (scale count : Real) (hscale : 0 < scale) : 0 < sourceEmpiricalWidthScale scale count"
+    },
+    {
+      "kind": "structure",
+      "name": "DelayedSAPOEliminatedArmInitialization",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization",
+      "file": "BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean",
+      "line": 55,
+      "statement": "structure DelayedSAPOEliminatedArmInitialization (K : Nat) where"
+    },
+    {
+      "kind": "abbrev",
+      "name": "DelayedSAPOEliminatedArmBank",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmBank",
+      "file": "BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean",
+      "line": 70,
+      "statement": "abbrev DelayedSAPOEliminatedArmBank (K : Nat)"
+    },
+    {
+      "kind": "def",
+      "name": "ActiveArmsUninitialized",
+      "full_name": "BanditRLProof.DelayedFeedback.ActiveArmsUninitialized",
+      "file": "BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean",
+      "line": 75,
+      "statement": "def ActiveArmsUninitialized {K : Nat} (state : DelayedSAPOStructuralRoundState K) (bank : DelayedSAPOEliminatedArmBank K) : Prop"
+    },
+    {
+      "kind": "def",
+      "name": "ofProcessOne",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.ofProcessOne",
+      "file": "BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean",
+      "line": 85,
+      "statement": "noncomputable def ofProcessOne {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (i : Fin K) : DelayedSAPOEliminatedArmInitialization K"
+    },
+    {
+      "kind": "def",
+      "name": "initializeIfEliminated",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initializeIfEliminated",
+      "file": "BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean",
+      "line": 112,
+      "statement": "noncomputable def initializeIfEliminated {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (i : Fin K) : Option (DelayedSAPOEliminatedArmInitialization K)"
+    },
+    {
+      "kind": "def",
+      "name": "initializeNewlyEliminated",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initializeNewlyEliminated",
+      "file": "BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean",
+      "line": 124,
+      "statement": "noncomputable def initializeNewlyEliminated {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (prior : DelayedSAPOEliminatedArmBank K) : DelayedSAPOEliminatedArmBank K"
+    },
+    {
+      "kind": "theorem",
+      "name": "initializeIfEliminated_eq_some_iff",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initializeIfEliminated_eq_some_iff",
+      "file": "BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean",
+      "line": 136,
+      "statement": "theorem initializeIfEliminated_eq_some_iff {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (i : Fin K) : initializeIfEliminated step horizon i = some (ofProcessOne step horizon i) <-> i ∈ (step.toPreEliminationSummary.toConfidenceSnapshot horizon).eliminated"
+    },
+    {
+      "kind": "theorem",
+      "name": "initializeIfEliminated_eq_none_iff",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initializeIfEliminated_eq_none_iff",
+      "file": "BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean",
+      "line": 159,
+      "statement": "theorem initializeIfEliminated_eq_none_iff {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (i : Fin K) : initializeIfEliminated step horizon i = none <-> i ∉ (step.toPreEliminationSummary.toConfidenceSnapshot horizon).eliminated"
+    },
+    {
+      "kind": "theorem",
+      "name": "initializeNewlyEliminated_of_mem",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initializeNewlyEliminated_of_mem",
+      "file": "BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean",
+      "line": 181,
+      "statement": "theorem initializeNewlyEliminated_of_mem {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (prior : Fin K -> Option (DelayedSAPOEliminatedArmInitialization K)) (i : Fin K) (hi : i ∈ (step.toPreEliminationSummary.toConfidenceSnapshot horizon).eliminated) : initializeNewlyEliminated step horizon prior i = some (ofProcessOne step horizon i)"
+    },
+    {
+      "kind": "theorem",
+      "name": "initializeNewlyEliminated_of_not_mem",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initializeNewlyEliminated_of_not_mem",
+      "file": "BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean",
+      "line": 194,
+      "statement": "theorem initializeNewlyEliminated_of_not_mem {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (prior : Fin K -> Option (DelayedSAPOEliminatedArmInitialization K)) (i : Fin K) (hi : i ∉ (step.toPreEliminationSummary.toConfidenceSnapshot horizon).eliminated) : initializeNewlyEliminated step horizon prior i = prior i"
+    },
+    {
+      "kind": "theorem",
+      "name": "mem_eliminated_of_initializeNewlyEliminated_ne_prior",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.mem_eliminated_of_initializeNewlyEliminated_ne_prior",
+      "file": "BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean",
+      "line": 207,
+      "statement": "theorem mem_eliminated_of_initializeNewlyEliminated_ne_prior {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (prior : Fin K -> Option (DelayedSAPOEliminatedArmInitialization K)) (i : Fin K) (hchanged : initializeNewlyEliminated step horizon prior i ≠ prior i) : i ∈ (step.toPreEliminationSummary.toConfidenceSnapshot horizon).eliminated"
+    },
+    {
+      "kind": "theorem",
+      "name": "initializeNewlyEliminated_eq_prior_of_mem_remainingActive",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initializeNewlyEliminated_eq_prior_of_mem_remainingActive",
+      "file": "BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean",
+      "line": 220,
+      "statement": "theorem initializeNewlyEliminated_eq_prior_of_mem_remainingActive {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (prior : Fin K -> Option (DelayedSAPOEliminatedArmInitialization K)) (i : Fin K) (hi : i ∈ (step.toPreEliminationSummary.toConfidenceSnapshot horizon).remainingActive) : initializeNewlyEliminated step horizon prior i = prior i"
+    },
+    {
+      "kind": "theorem",
+      "name": "prior_eq_none_of_mem_eliminated",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.prior_eq_none_of_mem_eliminated",
+      "file": "BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean",
+      "line": 236,
+      "statement": "theorem prior_eq_none_of_mem_eliminated {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (prior : DelayedSAPOEliminatedArmBank K) (hprior : ActiveArmsUninitialized state prior) (i : Fin K) (hi : i ∈ (step.toPreEliminationSummary.toConfidenceSnapshot horizon).eliminated) : prior i = none"
+    },
+    {
+      "kind": "theorem",
+      "name": "remainingActive_uninitialized_after_initialize",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.remainingActive_uninitialized_after_initialize",
+      "file": "BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean",
+      "line": 254,
+      "statement": "theorem remainingActive_uninitialized_after_initialize {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (prior : DelayedSAPOEliminatedArmBank K) (hprior : ActiveArmsUninitialized state prior) (i : Fin K) (hi : i ∈ (step.toPreEliminationSummary.toConfidenceSnapshot horizon).remainingActive) : initializeNewlyEliminated step horizon prior i = none"
+    },
+    {
+      "kind": "theorem",
+      "name": "ofProcessOne_arm",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.ofProcessOne_arm",
+      "file": "BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean",
+      "line": 273,
+      "statement": "theorem ofProcessOne_arm {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (i : Fin K) : (ofProcessOne step horizon i).arm = i"
+    },
+    {
+      "kind": "theorem",
+      "name": "ofProcessOne_eliminationRound",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.ofProcessOne_eliminationRound",
+      "file": "BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean",
+      "line": 280,
+      "statement": "theorem ofProcessOne_eliminationRound {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (i : Fin K) : (ofProcessOne step horizon i).eliminationRound = state.currentActionRound"
+    },
+    {
+      "kind": "theorem",
+      "name": "ofProcessOne_eliminationProcessedOrder",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.ofProcessOne_eliminationProcessedOrder",
+      "file": "BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean",
+      "line": 288,
+      "statement": "theorem ofProcessOne_eliminationProcessedOrder {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (i : Fin K) : (ofProcessOne step horizon i).eliminationProcessedOrder = step.extendedOrder"
+    },
+    {
+      "kind": "theorem",
+      "name": "ofProcessOne_errorCount",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.ofProcessOne_errorCount",
+      "file": "BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean",
+      "line": 296,
+      "statement": "theorem ofProcessOne_errorCount {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (i : Fin K) : (ofProcessOne step horizon i).errorCount = 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "ofProcessOne_phaseIndex",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.ofProcessOne_phaseIndex",
+      "file": "BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean",
+      "line": 303,
+      "statement": "theorem ofProcessOne_phaseIndex {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (i : Fin K) : (ofProcessOne step horizon i).phaseIndex = 1"
+    },
+    {
+      "kind": "theorem",
+      "name": "ofProcessOne_phaseSamples",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.ofProcessOne_phaseSamples",
+      "file": "BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean",
+      "line": 310,
+      "statement": "theorem ofProcessOne_phaseSamples {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (i : Fin K) : (ofProcessOne step horizon i).phaseSamples = []"
+    },
+    {
+      "kind": "theorem",
+      "name": "ofProcessOne_processedAtProbabilityLevel",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.ofProcessOne_processedAtProbabilityLevel",
+      "file": "BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean",
+      "line": 317,
+      "statement": "theorem ofProcessOne_processedAtProbabilityLevel {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (i : Fin K) (j : Nat) : (ofProcessOne step horizon i).processedAtProbabilityLevel j = {}"
+    },
+    {
+      "kind": "theorem",
+      "name": "initialProbability_pos",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initialProbability_pos",
+      "file": "BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean",
+      "line": 326,
+      "statement": "theorem initialProbability_pos {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (i : Fin K) : 0 < (ofProcessOne step horizon i).initialProbability"
+    },
+    {
+      "kind": "theorem",
+      "name": "initialProbability_le_one",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initialProbability_le_one",
+      "file": "BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean",
+      "line": 347,
+      "statement": "theorem initialProbability_le_one {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (i : Fin K) (hhorizon : 0 < horizon) (hcount : step.toPreEliminationSummary.toProcessedPrefix.processedPullCount i <= horizon) : (ofProcessOne step horizon i).initialProbability <= 1"
+    },
+    {
+      "kind": "theorem",
+      "name": "surrogateGap_nonneg",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.surrogateGap_nonneg",
+      "file": "BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean",
+      "line": 378,
+      "statement": "theorem surrogateGap_nonneg {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (i : Fin K) : 0 <= (ofProcessOne step horizon i).surrogateGap"
+    },
+    {
+      "kind": "theorem",
+      "name": "surrogateGap_pos",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.surrogateGap_pos",
+      "file": "BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean",
+      "line": 390,
+      "statement": "theorem surrogateGap_pos {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (i : Fin K) (hhorizon : 1 < horizon) : 0 < (ofProcessOne step horizon i).surrogateGap"
+    },
+    {
+      "kind": "theorem",
+      "name": "initialPhaseTarget_nonneg",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initialPhaseTarget_nonneg",
+      "file": "BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean",
+      "line": 408,
+      "statement": "theorem initialPhaseTarget_nonneg {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (i : Fin K) : 0 <= (ofProcessOne step horizon i).initialPhaseTarget"
+    },
+    {
+      "kind": "theorem",
+      "name": "initialPhaseTarget_pos",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initialPhaseTarget_pos",
+      "file": "BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean",
+      "line": 421,
+      "statement": "theorem initialPhaseTarget_pos {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (i : Fin K) (hhorizon : 1 < horizon) : 0 < (ofProcessOne step horizon i).initialPhaseTarget"
+    },
+    {
+      "kind": "theorem",
+      "name": "initializeNewlyEliminated_spec_of_mem",
+      "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initializeNewlyEliminated_spec_of_mem",
+      "file": "BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean",
+      "line": 436,
+      "statement": "theorem initializeNewlyEliminated_spec_of_mem {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (hhorizon : 1 < horizon) (prior : Fin K -> Option (DelayedSAPOEliminatedArmInitialization K)) (i : Fin K) (hi : i ∈ (step.toPreEliminationSummary.toConfidenceSnapshot horizon).eliminated) : initializeNewlyEliminated step horizon prior i = some (ofProcessOne step horizon i) ∧ 0 < (ofProcessOne step horizon i).initialProbability ∧ 0 < (ofProcessOne step horizon i).surrogateGap ∧ 0 < (ofProcessOne step horizon i).initialPhaseTarget"
+    },
+    {
       "kind": "structure",
       "name": "DelayedSAPOEliminationSnapshot",
       "full_name": "BanditRLProof.DelayedFeedback.DelayedSAPOEliminationSnapshot",
@@ -45195,6 +45443,54 @@
       "file": "BanditRLProof/DelayedFeedback/RecursiveProcessedState.lean",
       "line": 157,
       "statement": "theorem gap_le_twenty_mul_gap_at_earlier_elimination_snapshot_of_traceSummary {K : Nat} [Nonempty (Fin K)] (state : DelayedSAPOProcessedTraceSummary K) (horizon : Nat) (hD4 : state.D4CountClause horizon) (hhorizon : 1 < horizon) (mean : Fin K -> Real) (optimal iEarlier iLater : Fin K) (hoptimal : forall j, mean optimal <= mean j) (hmeanBounds : forall j, mean j ∈ Set.Icc (0 : Real) 1) (hgood : (state.toConfidenceSnapshot horizon).EliminationGoodEvent mean) (hoptimalActive : optimal ∈ (state.toConfidenceSnapshot horizon).active) (hEarlierEliminated : iEarlier ∈ (state.toConfidenceSnapshot horizon).eliminated) (hLaterRemaining : iLater ∈ (state.toConfidenceSnapshot horizon).remainingActive) : mean iLater - mean optimal <= 20 * (mean iEarlier - mean optimal)"
+    },
+    {
+      "kind": "def",
+      "name": "finiteAverageGap",
+      "full_name": "BanditRLProof.DelayedFeedback.finiteAverageGap",
+      "file": "BanditRLProof/DelayedFeedback/StochasticGapHalfSet.lean",
+      "line": 26,
+      "statement": "noncomputable def finiteAverageGap {K : Nat} (gap : Fin K -> Real) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "aboveTwiceAverageGap",
+      "full_name": "BanditRLProof.DelayedFeedback.aboveTwiceAverageGap",
+      "file": "BanditRLProof/DelayedFeedback/StochasticGapHalfSet.lean",
+      "line": 31,
+      "statement": "noncomputable def aboveTwiceAverageGap {K : Nat} (gap : Fin K -> Real) : Finset (Fin K)"
+    },
+    {
+      "kind": "theorem",
+      "name": "two_mul_card_aboveTwiceAverageGap_le",
+      "full_name": "BanditRLProof.DelayedFeedback.two_mul_card_aboveTwiceAverageGap_le",
+      "file": "BanditRLProof/DelayedFeedback/StochasticGapHalfSet.lean",
+      "line": 41,
+      "statement": "theorem two_mul_card_aboveTwiceAverageGap_le {K : Nat} (gap : Fin K -> Real) (hgap : forall i, 0 <= gap i) : 2 * (aboveTwiceAverageGap gap).card <= K"
+    },
+    {
+      "kind": "def",
+      "name": "sourceStochasticLossGap",
+      "full_name": "BanditRLProof.DelayedFeedback.sourceStochasticLossGap",
+      "file": "BanditRLProof/DelayedFeedback/StochasticGapHalfSet.lean",
+      "line": 110,
+      "statement": "def sourceStochasticLossGap {K : Nat} (mean : Fin K -> Real) (optimal i : Fin K) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "sourceStochasticLossGap_nonneg",
+      "full_name": "BanditRLProof.DelayedFeedback.sourceStochasticLossGap_nonneg",
+      "file": "BanditRLProof/DelayedFeedback/StochasticGapHalfSet.lean",
+      "line": 115,
+      "statement": "theorem sourceStochasticLossGap_nonneg {K : Nat} (mean : Fin K -> Real) (optimal : Fin K) (hoptimal : forall i, mean optimal <= mean i) (i : Fin K) : 0 <= sourceStochasticLossGap mean optimal i"
+    },
+    {
+      "kind": "theorem",
+      "name": "two_mul_card_sourceStochasticLossGap_aboveTwiceAverage_le",
+      "full_name": "BanditRLProof.DelayedFeedback.two_mul_card_sourceStochasticLossGap_aboveTwiceAverage_le",
+      "file": "BanditRLProof/DelayedFeedback/StochasticGapHalfSet.lean",
+      "line": 128,
+      "statement": "theorem two_mul_card_sourceStochasticLossGap_aboveTwiceAverage_le {K : Nat} (mean : Fin K -> Real) (optimal : Fin K) (hoptimal : forall i, mean optimal <= mean i) : 2 * (aboveTwiceAverageGap (sourceStochasticLossGap mean optimal)).card <= K"
     },
     {
       "kind": "def",

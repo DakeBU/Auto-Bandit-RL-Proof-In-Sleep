@@ -31,7 +31,9 @@ were screened.
   blocking obligations, and promotion status.
 - `evidence/local_lean_declarations.json` is the packaged declaration index.
 - `evidence/source-freeze.json` records the three-paper portfolio, official
-  URLs, SHA-256 digests, page counts, theorem windows, and pre-search statuses.
+  URLs, SHA-256 digests, page counts, theorem windows, and case-specific
+  source-lock timing.  The delayed lock and its initial feasibility slice were
+  co-published; the other two locks preceded their case-specific Lean slices.
 - `evidence/*-proof-obligations.md` records the open delayed-feedback,
   succinct-geometry, and stochastic-gradient-bandit dependency boundaries.
 - `evidence/proof-graph/` contains the current environment export and report,
@@ -52,11 +54,16 @@ were screened.
   presentation existed unchanged on that date.  The packaged validator checks
   this derivative hash chain directly.
 
-The delayed-feedback flagship contains 148 compiled source-audit declarations:
+The delayed-feedback flagship contains 197 compiled source-audit declarations:
 89 implementation-facing declarations, 19 separately counted
 diagnostic/conditional/repair declarations, a 16-declaration processed-prefix
 producer, a 9-declaration deterministic processed-trace-summary adapter, and a
-15-declaration ordered no-switch structural transition.
+15-declaration ordered no-switch structural transition, a 12-declaration
+ordered trace layer, a 6-declaration nonnegative-gap D.11 domain leaf, and a
+31-declaration Algorithm-5 line-10 initializer.
+Five generic multi-regime contract declarations are counted separately, so the
+`BanditRLProof/DelayedFeedback` directory contains 202 declarations in total;
+those five generic declarations are not evidence for a Delayed SAPO endpoint.
 The processed-prefix layer derives D.1 count, factor-three/factor-ten width, and
 recursive-UCB inputs for a conditional same-snapshot factor-20 result from an
 explicit certificate.  The adapter constructs that certificate only
@@ -64,11 +71,13 @@ conditional on the explicit D.4 count clause.  The 15-declaration layer compiles
 one no-switch Algorithm-5 lines 3--4/7--8 step: append an arbitrary newly
 observed source before forming the line-7 summary, then preserve the round-start
 active-set invariant through exact line-8 removal.  Its numerical confidence
-surfaces are explicit inputs.  A complete numerical-state/BSC/EAP/round-loop
-producer, the measurable Delayed SAPO trajectory, simultaneous D.4 `2/T`
-probability bound, ordered multi-snapshot elimination, and terminal regret chain
-remain open.  These declarations do not verify or refute the source lemmas or
-paper-level theorem.  Across Textbook Chapters 13--17, Chapter 15 Lemma 15.1 and
+surfaces are explicit inputs.  The D.11 leaf is restricted to the nonnegative
+stochastic-loss-gap domain, and line 10 initializes only newly eliminated arms.
+Lemma D.13, EAP/BSC evolution beyond initialization, the measurable Delayed SAPO
+trajectory, simultaneous D.4 `2/T` probability bound, ordered multi-snapshot
+elimination, and the terminal regret chain remain open.  These declarations do
+not verify or refute the source lemmas or paper-level theorem.  Across Textbook
+Chapters 13--17, Chapter 15 Lemma 15.1 and
 the exact Theorem 15.2 Gaussian expected-pseudo-regret/minimax terminals
 compile, and Chapter 13 has a compiled constant-`1/54` downstream consumer.
 Whole-chapter Notes/Exercises and the Chapter 16--17 terminals remain open, so

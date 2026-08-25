@@ -9,7 +9,8 @@ survival, line-15 allocation, a causal one-round action measure, source-exact
   D.2--D.8 budget assembly, a processed-prefix D.1 count-to-width producer,
   its deterministic processed-trace-summary adapter, and one ordered
   no-switch Algorithm-5 structural processing step plus its finite trace
-  ordering layer compiled; the D.4 count
+  ordering layer, the nonnegative-gap core of Lemma D.11, and Algorithm 5
+  line-10 eliminated-arm initialization compiled; the D.4 count
 clause is still conditional, and the D.2--D.7 probability producers,
 measurable generated trajectory, unconditional source elimination theorem,
 and paper endpoints
@@ -141,6 +142,50 @@ projection.  It does not generate the numerical BSC/EAP state, prove D.4's
 probability, cover the switch branch, or establish an unconditional source
 Lemma D.12 / main-text Lemma 4.2 or regret endpoint.
 
+## Appendix Lemma D.11: nonnegative-gap half set
+
+Appendix Lemma D.11 applies a Markov-style counting argument to a finite set
+whose elements exceed twice their average.  BanditRLlib promotes exactly the
+nonnegative stochastic-loss-gap domain used by that argument: the elements are
+loss gaps from a minimum-mean arm and are therefore nonnegative.  The
+unrestricted real-valued formulation is not promoted; a signed regression
+canary guards the premise boundary without claiming a source correction.
+
+`StochasticGapHalfSet.lean` compiles that source-faithful domain core in six
+named declarations.  It proves that at most half of a finite nonnegative gap
+family lies strictly above twice its average, including the empty and
+zero-average cases, then derives the stochastic-loss-gap specialization from
+optimal-arm minimality.  This closes the deterministic counting fact only; it
+does not prove Lemma D.13, select the source subset used there, or establish a
+regret theorem.
+
+## Algorithm 5 line-10 eliminated-arm initialization
+
+Physical PDF page 22 initializes each arm selected by line 7 before EAP is
+called.  `EliminatedArmInitialization.lean` records the exact source values
+
+```text
+p_i^1 = 1/(2K) + n_i(S)/(2T)
+Delta-tilde_i = 8 width_i(S)
+N_i^1 = 1280/(p_i^1 * Delta-tilde_i^2),
+```
+
+along with the elimination round, frozen processed order and empirical mean,
+zero error count, phase index one, empty phase samples, and empty confidence
+sets.  Its pointwise bank update changes only the current line-7 elimination
+set, preserves every surviving arm, and retains the invariant that active arms
+are uninitialized.  The source probability is positive for any inhabited arm
+type; the surrogate gap and first phase target are strictly positive under the
+explicit nontrivial-horizon condition `1 < T`.  This condition matters because
+Lean's real division is total and the literal `T = 1` formula can have zero
+width and denominator.
+
+The 31-declaration module and a concrete two-arm canary compile.  The target
+`N_i^1` remains real-valued exactly as printed; rounding belongs to the later
+EAP procedure.  The module does not execute EAP, maintain phase/confidence
+sets, run BSC, select an action, construct a random trajectory, or prove D.4 or
+either regret endpoint.
+
 ## Elimination and one-round action law
 
 `DelayedSAPOEliminationSnapshot` is the exact data read by Algorithm 5 line 7,
@@ -245,8 +290,9 @@ The action-time `outstandingCount` is not identified with the paper's
 indexing obligation while leaving all algorithmic and probabilistic claims
 open.
 
-The source-audit inventory contains 160 named declarations: 89
+The source-audit inventory contains 197 named declarations: 89
 implementation-facing, 19 diagnostic/conditional/repair, 16 processed-prefix,
 9 processed-trace-summary, 15 ordered one-step transition, and 12 trace-ordering
-declarations.  The count records the audited Lean slice; it is not a coverage
+declarations, plus six for the nonnegative-domain D.11 core and 31 for line-10
+initialization.  The count records the audited Lean slice; it is not a coverage
 percentage and does not promote a paper endpoint.
