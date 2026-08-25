@@ -182,6 +182,15 @@ def verify_claim_ledger():
         fail("ordered no-switch transition boundary drift")
     if delayed.get("ordered_no_switch_transition_declaration_count") != 15:
         fail("ordered no-switch transition count drift")
+    ordered_trace_id = delayed.get("ordered_no_switch_trace_id")
+    ordered_trace = records.get(ordered_trace_id, {})
+    if (
+        ordered_trace.get("status") != "compiled"
+        or len(ordered_trace.get("declarations", [])) != 12
+    ):
+        fail("ordered no-switch trace boundary drift")
+    if delayed.get("ordered_no_switch_trace_declaration_count") != 12:
+        fail("ordered no-switch trace count drift")
     central_endpoint = records.get(delayed.get("central_endpoint_id"), {})
     if central_endpoint.get("status") != "partial":
         fail("delayed central endpoint status drift")
@@ -193,6 +202,7 @@ def verify_claim_ledger():
         + len(processed_prefix["declarations"])
         + len(trace_summary["declarations"])
         + len(ordered_transition["declarations"])
+        + len(ordered_trace["declarations"])
     ):
         fail("delayed source-audit total drift")
 
@@ -252,6 +262,7 @@ def verify_theorem_audit_comparison():
         delayed.get("processed_prefix_id"),
         delayed.get("processed_trace_summary_id"),
         delayed.get("ordered_no_switch_transition_id"),
+        delayed.get("ordered_no_switch_trace_id"),
     ]
     specs = {
         expected_ids[0]: {
@@ -272,13 +283,14 @@ def verify_theorem_audit_comparison():
             "evidence_record_ids": delayed_ids,
             "central_endpoint_record_id": delayed.get("central_endpoint_id"),
             "promotion_status": "partial",
-            "compiled_declaration_count": 148,
+            "compiled_declaration_count": 160,
             "declaration_count_breakdown": {
                 "implementation_facing": 89,
                 "diagnostic_conditional_repair": 19,
                 "processed_prefix": 16,
                 "processed_trace_summary_adapter": 9,
                 "ordered_no_switch_transition": 15,
+                "ordered_no_switch_trace_ordering": 12,
             },
         },
         expected_ids[2]: {

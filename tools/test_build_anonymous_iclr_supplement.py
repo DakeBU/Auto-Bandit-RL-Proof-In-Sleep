@@ -289,7 +289,11 @@ class AnonymousSupplementTests(unittest.TestCase):
             ledger["delayed_feedback"]["ordered_no_switch_transition_declaration_count"],
             15,
         )
-        self.assertEqual(ledger["delayed_feedback"]["source_audit_declaration_count"], 148)
+        self.assertEqual(
+            ledger["delayed_feedback"]["ordered_no_switch_trace_declaration_count"],
+            12,
+        )
+        self.assertEqual(ledger["delayed_feedback"]["source_audit_declaration_count"], 160)
         self.assertFalse(ledger["delayed_feedback"]["paper_endpoint_verified"])
         self.assertEqual(ledger["source_records"][BUILDER.DELAYED_DIAGNOSTIC_ID]["status"], "partial")
         self.assertEqual(
@@ -298,6 +302,10 @@ class AnonymousSupplementTests(unittest.TestCase):
         )
         self.assertEqual(
             ledger["source_records"][BUILDER.DELAYED_ORDERED_TRANSITION_ID]["status"],
+            "compiled",
+        )
+        self.assertEqual(
+            ledger["source_records"][BUILDER.DELAYED_ORDERED_TRACE_ID]["status"],
             "compiled",
         )
         self.assertEqual(
@@ -416,7 +424,7 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertNotIn("paper_endpoint_verified", chapter15)
 
         delayed = rows["delayed-bobw-source-frozen-audit"]
-        self.assertEqual(delayed["compiled_declaration_count"], 148)
+        self.assertEqual(delayed["compiled_declaration_count"], 160)
         self.assertEqual(
             delayed["declaration_count_breakdown"],
             {
@@ -425,10 +433,11 @@ class AnonymousSupplementTests(unittest.TestCase):
                 "processed_prefix": 16,
                 "processed_trace_summary_adapter": 9,
                 "ordered_no_switch_transition": 15,
+                "ordered_no_switch_trace_ordering": 12,
             },
         )
         self.assertIn(
-            "simultaneous D.4 2/T probability bound",
+            "simultaneous D.4 2/T probability bound and full good-event projection",
             delayed["blocking_obligations"],
         )
         succinct = rows["succinct-lower-bound-source-frozen-audit"]

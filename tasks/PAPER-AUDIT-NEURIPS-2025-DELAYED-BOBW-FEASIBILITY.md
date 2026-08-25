@@ -84,7 +84,7 @@ availability condition `s + delay s < t`.
   branch.  The downstream processed-prefix producer now supplies those
   algebraic inputs from a source-time ledger and D.1 count certificate.  Keep
   Lemma 4.2 unverified pending the generated-trajectory construction, D.4
-  probability proof, ordered elimination trace, and a source-faithful endpoint
+  probability proof, unconditional source endpoint,
   repair or clarification; the deterministic processed-trace-summary adapter
   is now compiled below.
 - [x] Compile the source-time processed-prefix count producer.  The ledger
@@ -119,6 +119,13 @@ availability condition `s + delay s < t`.
   source round one after source round three.  The numerical BSC/EAP updates,
   generated trajectory, D.4 probability theorem, switch path, and every regret
   endpoint remain open.
+- [x] Compile the finite ordered no-switch structural trace.  The trace
+  combine exact line-8 processing steps with an explicit exhausted-round
+  advance, prove active-set monotonicity along the reflexive-transitive path,
+  and derive the later-arm-remains premise needed by the existing
+  D.4-conditional factor-20 consumer.  The 12-declaration module does not
+  accept that temporal premise as an input and does not promote BSC/EAP
+  generation, a probability law, D.4, a switch path, or any regret endpoint.
 - [x] Reuse the existing finite-action law to turn the certified line-15
   vector into a probability measure, and lift causal allocation rules to
   measure-valued rules that remain identical in observation-equivalent hidden
@@ -144,6 +151,7 @@ lake env lean BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean
 lake env lean BanditRLProof/DelayedFeedback/ProcessedPrefixCounts.lean
 lake env lean BanditRLProof/DelayedFeedback/RecursiveProcessedState.lean
 lake env lean BanditRLProof/DelayedFeedback/OrderedProcessingTransition.lean
+lake env lean BanditRLProof/DelayedFeedback/OrderedNoSwitchTrace.lean
 lake env lean BanditRLProof/DelayedFeedback/Accounting.lean
 lake env lean BanditRLProof/DelayedFeedback/MultiRegimeContract.lean
 lake env lean BanditRLProof/DelayedFeedback/CausalView.lean
@@ -155,6 +163,7 @@ lake env lean Tests/DelayedFeedbackPaperAuditCanary.lean
 lake env lean Tests/DelayedFeedbackProcessedPrefixCountsCanary.lean
 lake env lean Tests/DelayedFeedbackRecursiveProcessedStateCanary.lean
 lake env lean Tests/DelayedFeedbackOrderedProcessingTransitionCanary.lean
+lake env lean Tests/DelayedFeedbackOrderedNoSwitchTraceCanary.lean
 python3 tools/bandit.py check
 ```
 
@@ -183,6 +192,25 @@ On 2026-08-25, the focused ordered-processing module and its nonchronological
 canary compile.  Their five representative axiom reports contain only
 `propext`, `Classical.choice`, and `Quot.sound`.  This structural slice contains
 15 named declarations, so the delayed-feedback source-audit total becomes 148
-once the current repository-wide gate is recorded.  It does not promote the
+at that checkpoint.  The one-step leaf by itself does not promote the
 numeric BSC/EAP transition, a generated trajectory, D.4, a switch decision, an
-ordered multi-snapshot theorem, or a regret endpoint.
+ordered multi-snapshot theorem, or a regret endpoint; the next trace leaf
+closes only the deterministic temporal premise.
+
+On 2026-08-25, the focused ordered no-switch trace module and canary compile.
+An independent semantic review verified the direction of active-set
+monotonicity, the round-close/advance index alignment, and the temporal
+membership transport, with no P0--P2 finding.  Four representative axiom
+reports contain only `propext`, `Classical.choice`, and `Quot.sound`.  The
+module contributes 12 named declarations, bringing the delayed-feedback
+source-audit inventory to 160.  The final factor-20 theorem remains explicitly
+conditional on the earlier D.4 count clause and elimination-good projection;
+numeric BSC/EAP generation, the randomized trajectory, D.4 probability,
+switching, and both regret endpoints remain open.
+
+The repository-wide gate then passed on the same checkout: `lake build` and
+the root `Tests` target completed 8,856 jobs, proof-graph export succeeded,
+and all 231 Python tests passed with 6 expected skips.  The target-drift
+execution template remains structurally valid but deliberately not ready:
+26 machine fields and named human/provenance choices are unset, so no
+450-primary or 30-external result is claimed.
