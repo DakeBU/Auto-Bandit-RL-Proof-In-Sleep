@@ -46,11 +46,13 @@ python3 tools/bandit.py search-memory federated
 | `PPR-EMNLP-2024-LLM-PRIOR-BANDITS` | [Jump Starting Bandits with LLM-Generated Prior Knowledge, 2024](https://arxiv.org/abs/2406.19317) | LLM priors, contextual | prior-quality contract, logged-data positivity, warm-start comparison |
 | `PPR-BOUNEFFOUF-FERAUD-2025-MAB-LLM` | [Bouneffouf and Feraud, 2025](https://arxiv.org/abs/2505.13355) | LLM/recommender/model-selection bandits | model-selection action space, prompt-policy context contract, feedback bridge |
 
-## Prospective External Theory-Audit Cards
+## Source-Locked External Theory-Audit Cards
 
-These cards are frozen before Lean proof search and remain source evidence,
-not local proof certificates.  Selection, source hashes, and exclusion rules
-are recorded in
+These cards are immutable source evidence after publication, not local proof
+certificates.  The delayed lock and its initial feasibility slice were first
+published together; the succinct and stochastic-gradient-bandit locks preceded
+their case-specific Lean slices.  Selection, source hashes, timing, and
+exclusion rules are recorded in
 [`prospective-audit-2025-freeze.json`](prospective-audit-2025-freeze.json).
 
 | Card | Source | Audit role | First exact leaves |

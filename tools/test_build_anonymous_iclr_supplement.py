@@ -557,6 +557,31 @@ class AnonymousSupplementTests(unittest.TestCase):
                 declaration_drift_records, index, comparison=source
             )
 
+        source_freeze = BUILDER.load_json(
+            BUILDER.REPO_ROOT / "research-wiki" / "papers" /
+            "prospective-audit-2025-freeze.json"
+        )
+        timing_drift = json.loads(json.dumps(source_freeze))
+        timing_drift["selection_status"] = "frozen_before_lean_proof_search"
+        with self.assertRaisesRegex(
+            ValueError, "source-lock portfolio timing status drifted"
+        ):
+            BUILDER.validate_theorem_audit_comparison(
+                records, index, comparison=source, source_freeze=timing_drift
+            )
+
+        case_timing_drift = json.loads(json.dumps(source_freeze))
+        case_timing_drift["papers"][0]["selection_timing"] = (
+            "locked_before_case_specific_lean_slice"
+        )
+        with self.assertRaisesRegex(
+            ValueError, "source-lock case-specific timing drifted"
+        ):
+            BUILDER.validate_theorem_audit_comparison(
+                records, index, comparison=source,
+                source_freeze=case_timing_drift
+            )
+
     def test_sgb_required_bridge_names_are_frozen(self):
         records = json.loads(json.dumps(BUILDER.selected_source_records()))
         index = BUILDER.load_json(

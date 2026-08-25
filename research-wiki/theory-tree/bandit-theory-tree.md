@@ -297,7 +297,7 @@ Watchlist scenarios may still be theorem-card-only.  They should not be used as
 Lean proof targets until a source card, local API, and Mathlib retrieval route
 are recorded.
 
-## Prospective External Audit: Delayed-Feedback BoBW
+## Source-Locked External Audit: Delayed-Feedback BoBW
 
 The source-frozen NeurIPS 2025 delayed-feedback best-of-both-worlds feasibility
 route is tracked by
@@ -364,7 +364,7 @@ verify nor refute source Lemmas D.10/D.12, main-text Lemma 4.2, or Theorem 4.1:
 unconditional generated-trajectory elimination theorem, switch path, and
 terminal regret chain remain open.
 
-## Prospective External Audit: Stochastic Gradient Bandits
+## Source-Locked External Audit: Stochastic Gradient Bandits
 
 The source-frozen Baudry--Johnson--Vary--Pike-Burke--Rebeschini NeurIPS 2025
 audit is tracked by

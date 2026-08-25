@@ -490,6 +490,27 @@ def verify_source_freeze():
     papers = freeze.get("papers", [])
     if len(papers) != 3:
         fail("source freeze must contain exactly three papers")
+    if freeze.get("selection_status") != (
+        "source_locked_with_record_specific_timing"
+    ):
+        fail("source-lock portfolio timing status drift")
+    expected_timing = {
+        "PPR-SCHLISSELBERG-LANCEWICKI-AUER-MANSOUR-2025-DELAYED-BOBW":
+            "co_published_with_initial_feasibility_slice",
+        "PPR-ZENG-HONORIO-2025-SUCCINCT-LOWER-BOUNDS":
+            "locked_before_case_specific_lean_slice",
+        "PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB":
+            "locked_before_case_specific_lean_slice",
+    }
+    timing = {
+        row.get("card_id"): row.get("selection_timing") for row in papers
+    }
+    if timing != expected_timing:
+        fail("source-lock case-specific timing drift")
+    if "does not assert that every case was frozen" not in freeze.get(
+        "timing_note", ""
+    ):
+        fail("source-lock timing limitation is missing")
     statuses = {row.get("initial_status") for row in papers}
     if "source_frozen_not_started" not in statuses or "source_frozen_reserve_not_started" not in statuses:
         fail("source-freeze non-completion statuses are missing")

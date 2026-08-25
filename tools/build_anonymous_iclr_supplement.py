@@ -1466,6 +1466,27 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
     }
     if freeze_cards != expected_freeze_cards:
         raise ValueError("theorem-audit comparison source-freeze inventory drifted")
+    if source_freeze.get("selection_status") != (
+        "source_locked_with_record_specific_timing"
+    ):
+        raise ValueError("source-lock portfolio timing status drifted")
+    expected_freeze_timing = {
+        "PPR-SCHLISSELBERG-LANCEWICKI-AUER-MANSOUR-2025-DELAYED-BOBW":
+            "co_published_with_initial_feasibility_slice",
+        "PPR-ZENG-HONORIO-2025-SUCCINCT-LOWER-BOUNDS":
+            "locked_before_case_specific_lean_slice",
+        "PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB":
+            "locked_before_case_specific_lean_slice",
+    }
+    freeze_timing = {
+        row.get("card_id"): row.get("selection_timing")
+        for row in source_freeze.get("papers", [])
+    }
+    if freeze_timing != expected_freeze_timing:
+        raise ValueError("source-lock case-specific timing drifted")
+    timing_note = source_freeze.get("timing_note", "")
+    if "does not assert that every case was frozen" not in timing_note:
+        raise ValueError("source-lock timing limitation is missing")
 
     delayed_ids = list(DELAYED_IMPLEMENTATION_IDS) + [
         DELAYED_DIAGNOSTIC_ID,

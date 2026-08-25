@@ -31,7 +31,9 @@ were screened.
   blocking obligations, and promotion status.
 - `evidence/local_lean_declarations.json` is the packaged declaration index.
 - `evidence/source-freeze.json` records the three-paper portfolio, official
-  URLs, SHA-256 digests, page counts, theorem windows, and pre-search statuses.
+  URLs, SHA-256 digests, page counts, theorem windows, and case-specific
+  source-lock timing.  The delayed lock and its initial feasibility slice were
+  co-published; the other two locks preceded their case-specific Lean slices.
 - `evidence/*-proof-obligations.md` records the open delayed-feedback,
   succinct-geometry, and stochastic-gradient-bandit dependency boundaries.
 - `evidence/proof-graph/` contains the current environment export and report,
