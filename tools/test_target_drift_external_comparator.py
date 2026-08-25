@@ -73,6 +73,34 @@ class LeanFlowExternalComparatorTests(unittest.TestCase):
             for run in runs
         ))
 
+    def test_schedule_hash_inputs_are_pinned_to_lf(self) -> None:
+        if not (ROOT / ".git").exists():
+            self.skipTest("Git metadata is not shipped in the anonymous artifact")
+        inputs = (
+            "evaluation/target-drift-v2/external-comparator-plan.json",
+            "evaluation/target-drift-v1/challenges.json",
+            "evaluation/target-drift-v2/paired-requirements.json",
+        )
+        try:
+            completed = subprocess.run(
+                ["git", "check-attr", "eol", "--", *inputs],
+                cwd=str(ROOT),
+                check=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                encoding="utf-8",
+            )
+        except (FileNotFoundError, subprocess.CalledProcessError) as error:
+            self.skipTest(f"Git attribute check unavailable: {error}")
+        observed = {
+            line.split(": ", 2)[0]: line.split(": ", 2)[2]
+            for line in completed.stdout.splitlines()
+            if line.count(": ") >= 2
+        }
+        self.assertEqual(observed, {path: "lf" for path in inputs})
+        for path in inputs:
+            self.assertNotIn(b"\r", (ROOT / path).read_bytes())
+
     def test_fixture_request_is_bound_to_first_scheduled_id(self) -> None:
         first = self.schedule["runs"][0]
         expected_opaque = hashlib.sha256((
