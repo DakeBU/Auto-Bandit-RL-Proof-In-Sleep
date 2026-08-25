@@ -1248,6 +1248,37 @@
       ]
     },
     {
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmProbabilityAt_zero_div_failure_eq_exp_two_mul",
+      "chapter": "frontier",
+      "plain": "At every finite source-time prefix of the zero-initialized two-arm SGB process, the best-arm softmax odds equal the exponential of twice its parameter.",
+      "math": "\\(p_{1,t}/(1-p_{1,t})=e^{2\\theta_{1,t}}.\\)",
+      "intuition": "The Algorithm-1 updates preserve the sum of the two parameters. Starting from zero therefore makes the coordinates opposites, so the two-arm softmax ratio collapses to one exponential coordinate.",
+      "why": "This is the printed Equation (11) used to turn exponential-parameter recurrences into probability statements in the proof of Theorem 1.",
+      "position": "The exact pathwise odds identity and its multiplication forms compile. No conditional exponential recurrence, expected squared failure-mass bound, or Theorem-1 regret inequality follows from this identity alone.",
+      "proof_idea": "Prove the recursive parameter-sum invariant on inclusive histories, specialize zero initialization, identify the two coordinates as negatives, and cancel the positive softmax denominator.",
+      "lean_notes": "Lean time zero is source time one before any update; Lean time n+1 consumes exactly trace pair n. Lean arm zero corresponds to source arm one.",
+      "dependencies": [
+        "BanditRLProof.StochasticGradientBandit.twoArmParameterAt_sum_eq_zero",
+        "BanditRLProof.StochasticGradientBandit.softmaxProbability_zero_div_one_sub_zero_eq_exp_two_mul"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.StochasticGradientBandit.integral_exp_mul_le_sourceEqEight_of_ae_abs_le_one",
+      "chapter": "frontier",
+      "plain": "For any probability law and almost-everywhere measurable reward supported on [-1, 1], its exponential moment obeys the source's exact second-order C-eta bound.",
+      "math": "\\(\\mathbb E[e^{qR}]\\le 1+q\\mathbb E[R]+\\tfrac{q^2}{2}C_{|q|/2}.\\)",
+      "intuition": "After the constant and linear terms, every higher Taylor coefficient is controlled by replacing the bounded reward with its absolute worst case. The shifted exponential series is exactly the paper's C-eta constant.",
+      "why": "This compiles Equation (8), the moment-generating-function estimate that drives both conditional exponential recurrences in the two-arm Theorem-1 proof.",
+      "position": "The source-exact inequality compiles on an arbitrary probability measure. It has not yet been instantiated on each generated conditional reward kernel, and neither recurrence nor the expected squared failure-mass terminal is claimed.",
+      "proof_idea": "Split the exponential series into constant, linear, and degree-at-least-two terms; dominate the tail using |qR| <= |q|; then integrate the pointwise bound and derive integrability from measurability and bounded support.",
+      "lean_notes": "The theorem requires only a probability measure, almost-everywhere strong measurability, and |R| <= 1 almost everywhere. Independence is not needed for Equation (8); it enters only through later trajectory/kernel instantiation.",
+      "dependencies": [
+        "BanditRLProof.StochasticGradientBandit.sourceC_terms_summable",
+        "BanditRLProof.StochasticGradientBandit.sq_div_two_mul_sourceC_abs_div_two",
+        "BanditRLProof.StochasticGradientBandit.exp_mul_le_sourceEqEight"
+      ]
+    },
+    {
       "full_name": "BanditRLProof.StochasticGradientBandit.sourceRegretDecomposition_le",
       "chapter": "frontier",
       "plain": "Under explicit positive minimum-gap and maximum-gap envelopes, finite expected pseudo-regret is bounded by a best-parameter post-convergence term plus squared failure mass.",

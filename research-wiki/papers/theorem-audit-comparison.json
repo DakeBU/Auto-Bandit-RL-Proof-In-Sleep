@@ -121,18 +121,21 @@
         "uniform reward regularity",
         "learning-rate-dependent logarithmic and polynomial regret regimes"
       ],
-      "strongest_compiled_bridge": "Forty-four declarations combine 26 finite-action algebra declarations with an 18-declaration recursive-policy, generated-trajectory, conditional-law, and Equation-(5) kernel-integral layer.",
-      "compiled_declaration_count": 44,
+      "strongest_compiled_bridge": "Seventy-six declarations combine four disjoint layers: 26 finite-action algebra declarations, 18 recursive-policy/generated-trajectory/Equation-(5) kernel declarations, 18 pathwise two-arm Equation-(9)/(11) declarations, and 14 source-exact C-eta/Equation-(8) exponential-moment declarations including C-eta monotonicity.",
+      "compiled_declaration_count": 76,
       "declaration_count_breakdown": {
         "finite_action_algebra": 26,
-        "generated_history_and_kernel_bridge": 18
+        "generated_history_and_kernel_bridge": 18,
+        "two_arm_zero_sum_and_equation_11": 18,
+        "source_c_and_equation_8": 14
       },
       "blocking_obligations": [
         "uniform reward-regularity producer for the explicit integral hypotheses",
-        "learning-rate and failure-probability rates",
+        "generated-kernel instantiation of Equation (8), both conditional exponential recurrences, and expected squared failure-mass control",
+        "learning-rate-dependent regret rates",
         "Theorems 1--4"
       ],
-      "scope_boundary": "Generated conditional-law bridges compile under explicit integrability and arm-reward integral equalities; the source assumptions are not yet proved to produce them uniformly.",
+      "scope_boundary": "Generated Equation-(5) conditional-law bridges compile under explicit integrability and arm-reward integral equalities, while Equation (8) compiles separately for bounded rewards; the two have not yet been composed into the paper's conditional recurrences or any theorem endpoint.",
       "promotion_status": "partial",
       "paper_endpoint_verified": false
     }

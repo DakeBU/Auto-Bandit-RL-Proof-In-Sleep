@@ -48,8 +48,8 @@ reports zero `literature-open` cases until a scoped primary-source audit support
 such a claim; one case remains in the source-audit queue, while the 13
 formalization-open cases expose 39 stable named leaves. Two additional
 source-frozen ports—the 54-declaration succinct-lower-bound audit and the
-44-declaration stochastic-gradient-bandit audit—are displayed outside that
-comparison ledger until their paper-level terminal contracts are frozen.
+76-declaration stochastic-gradient-bandit audit—are displayed outside that
+comparison ledger; neither is promoted to a compiled paper-level terminal.
 
 ## 🛠️ Build locally
 

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-25T05:01:41+00:00",
+  "generated": "2026-08-25T07:59:56+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -3563,6 +3563,118 @@
     },
     {
       "kind": "theorem",
+      "name": "two_mul_abs_pow_div_factorial_add_two_le",
+      "full_name": "BanditRLProof.StochasticGradientBandit.two_mul_abs_pow_div_factorial_add_two_le",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditExponentialAudit.lean",
+      "line": 26,
+      "statement": "theorem two_mul_abs_pow_div_factorial_add_two_le (x : Real) (n : Nat) : 2 * |x| ^ n / ((n + 2).factorial : Real) <= |x| ^ n / (n.factorial : Real)"
+    },
+    {
+      "kind": "def",
+      "name": "sourceC",
+      "full_name": "BanditRLProof.StochasticGradientBandit.sourceC",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditExponentialAudit.lean",
+      "line": 45,
+      "statement": "noncomputable def sourceC (eta : Real) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "sourceC_terms_summable",
+      "full_name": "BanditRLProof.StochasticGradientBandit.sourceC_terms_summable",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditExponentialAudit.lean",
+      "line": 48,
+      "statement": "theorem sourceC_terms_summable (eta : Real) : Summable (fun n : Nat => (2 * eta) ^ n / ((n + 2).factorial : Real))"
+    },
+    {
+      "kind": "theorem",
+      "name": "sourceC_nonneg",
+      "full_name": "BanditRLProof.StochasticGradientBandit.sourceC_nonneg",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditExponentialAudit.lean",
+      "line": 65,
+      "statement": "theorem sourceC_nonneg (eta : Real) (heta : 0 <= eta) : 0 <= sourceC eta"
+    },
+    {
+      "kind": "theorem",
+      "name": "sourceC_mono",
+      "full_name": "BanditRLProof.StochasticGradientBandit.sourceC_mono",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditExponentialAudit.lean",
+      "line": 72,
+      "statement": "theorem sourceC_mono {eta eta' : Real} (heta : 0 <= eta) (hle : eta <= eta') : sourceC eta <= sourceC eta'"
+    },
+    {
+      "kind": "theorem",
+      "name": "sourceC_le_exp_two_mul",
+      "full_name": "BanditRLProof.StochasticGradientBandit.sourceC_le_exp_two_mul",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditExponentialAudit.lean",
+      "line": 84,
+      "statement": "theorem sourceC_le_exp_two_mul (eta : Real) (heta : 0 <= eta) : sourceC eta <= Real.exp (2 * eta)"
+    },
+    {
+      "kind": "def",
+      "name": "expTailTwo",
+      "full_name": "BanditRLProof.StochasticGradientBandit.expTailTwo",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditExponentialAudit.lean",
+      "line": 102,
+      "statement": "noncomputable def expTailTwo (x : Real) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "expTailTwo_terms_summable",
+      "full_name": "BanditRLProof.StochasticGradientBandit.expTailTwo_terms_summable",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditExponentialAudit.lean",
+      "line": 105,
+      "statement": "theorem expTailTwo_terms_summable (x : Real) : Summable (fun n : Nat => x ^ (n + 2) / ((n + 2).factorial : Real))"
+    },
+    {
+      "kind": "theorem",
+      "name": "exp_eq_one_add_self_add_expTailTwo",
+      "full_name": "BanditRLProof.StochasticGradientBandit.exp_eq_one_add_self_add_expTailTwo",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditExponentialAudit.lean",
+      "line": 111,
+      "statement": "theorem exp_eq_one_add_self_add_expTailTwo (x : Real) : Real.exp x = 1 + x + expTailTwo x"
+    },
+    {
+      "kind": "theorem",
+      "name": "expTailTwo_le_of_abs_le",
+      "full_name": "BanditRLProof.StochasticGradientBandit.expTailTwo_le_of_abs_le",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditExponentialAudit.lean",
+      "line": 119,
+      "statement": "theorem expTailTwo_le_of_abs_le {x y : Real} (hxy : |x| <= y) : expTailTwo x <= expTailTwo y"
+    },
+    {
+      "kind": "theorem",
+      "name": "sq_div_two_mul_sourceC_abs_div_two",
+      "full_name": "BanditRLProof.StochasticGradientBandit.sq_div_two_mul_sourceC_abs_div_two",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditExponentialAudit.lean",
+      "line": 132,
+      "statement": "theorem sq_div_two_mul_sourceC_abs_div_two (q : Real) : q ^ 2 / 2 * sourceC (|q| / 2) = expTailTwo |q|"
+    },
+    {
+      "kind": "theorem",
+      "name": "exp_mul_le_sourceEqEight",
+      "full_name": "BanditRLProof.StochasticGradientBandit.exp_mul_le_sourceEqEight",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditExponentialAudit.lean",
+      "line": 150,
+      "statement": "theorem exp_mul_le_sourceEqEight (q reward : Real) (hreward : |reward| <= 1) : Real.exp (q * reward) <= 1 + q * reward + q ^ 2 / 2 * sourceC (|q| / 2)"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_exp_mul_le_sourceEqEight",
+      "full_name": "BanditRLProof.StochasticGradientBandit.integral_exp_mul_le_sourceEqEight",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditExponentialAudit.lean",
+      "line": 162,
+      "statement": "theorem integral_exp_mul_le_sourceEqEight {Omega : Type*} [MeasurableSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (q : Real) (reward : Omega -> Real) (hrewardIntegrable : MeasureTheory.Integrable reward mu) (hexpIntegrable : MeasureTheory.Integrable (fun omega => Real.exp (q * reward omega)) mu) (hreward : \u2200\u1d50 omega \u2202mu, |reward omega| <= 1) : (\u222b omega, Real.exp (q * reward omega) \u2202mu) <= 1 + q * (\u222b omega, reward omega \u2202mu) + q ^ 2 / 2 * sourceC (|q| / 2)"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_exp_mul_le_sourceEqEight_of_ae_abs_le_one",
+      "full_name": "BanditRLProof.StochasticGradientBandit.integral_exp_mul_le_sourceEqEight_of_ae_abs_le_one",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditExponentialAudit.lean",
+      "line": 193,
+      "statement": "theorem integral_exp_mul_le_sourceEqEight_of_ae_abs_le_one {Omega : Type*} [MeasurableSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (q : Real) (reward : Omega -> Real) (hrewardMeasurable : MeasureTheory.AEStronglyMeasurable reward mu) (hreward : \u2200\u1d50 omega \u2202mu, |reward omega| <= 1) : (\u222b omega, Real.exp (q * reward omega) \u2202mu) <= 1 + q * (\u222b omega, reward omega \u2202mu) + q ^ 2 / 2 * sourceC (|q| / 2)"
+    },
+    {
+      "kind": "theorem",
       "name": "measurable_softmaxProbability",
       "full_name": "BanditRLProof.StochasticGradientBandit.measurable_softmaxProbability",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
@@ -3704,6 +3816,150 @@
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
       "line": 535,
       "statement": "theorem trajectoryMeasure_condDistrib_nextPair_given_environment_prefix {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [StandardBorelSpace Action] (prior : Measure Env) [IsFiniteMeasure prior] (initialTheta : Action -> Real) (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env Action Real) (n : Nat) : condDistrib (fun sample : Env \u00d7 ((k : Nat) -> Action \u00d7 Real) => sample.2 (n + 1)) (fun sample : Env \u00d7 ((k : Nat) -> Action \u00d7 Real) => (sample.1, Preorder.frestrictLe n sample.2)) (prior \u2297\u2098 trajectoryKernel initialTheta eta environment) =\u1d50[ (prior \u2297\u2098 trajectoryKernel initialTheta eta environment).map (fun sample : Env \u00d7 ((k : Nat) -> Action \u00d7 Real) => (sample.1, Preorder.frestrictLe n sample.2))] Thompson.measurableEnvironmentHistoryStepKernel (historyAlgorithm initialTheta eta) environment n"
+    },
+    {
+      "kind": "theorem",
+      "name": "historyParameter_sum_eq_initial",
+      "full_name": "BanditRLProof.StochasticGradientBandit.historyParameter_sum_eq_initial",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRate.lean",
+      "line": 28,
+      "statement": "theorem historyParameter_sum_eq_initial {Action : Type u} [Fintype Action] [DecidableEq Action] [Nonempty Action] (initialTheta : Action -> Real) (eta : Real) : forall n (history : History.FinitePairHistory Action Real n), (\u2211 coordinate, historyParameter initialTheta eta n history coordinate) = \u2211 coordinate, initialTheta coordinate"
+    },
+    {
+      "kind": "theorem",
+      "name": "historyParameter_zeroInitialization_sum",
+      "full_name": "BanditRLProof.StochasticGradientBandit.historyParameter_zeroInitialization_sum",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRate.lean",
+      "line": 77,
+      "statement": "theorem historyParameter_zeroInitialization_sum {Action : Type u} [Fintype Action] [DecidableEq Action] [Nonempty Action] (eta : Real) (n : Nat) (history : History.FinitePairHistory Action Real n) : \u2211 coordinate, historyParameter (fun _ : Action => 0) eta n history coordinate = 0"
+    },
+    {
+      "kind": "def",
+      "name": "twoArmParameterAt",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmParameterAt",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRate.lean",
+      "line": 90,
+      "statement": "noncomputable def twoArmParameterAt (eta : Real) (trace : Nat -> Fin 2 \u00d7 Real) : Nat -> Fin 2 -> Real | 0 => fun _ => 0 | n + 1 => historyParameter (fun _ : Fin 2 => 0) eta n (Preorder.frestrictLe n trace)"
+    },
+    {
+      "kind": "def",
+      "name": "twoArmProbabilityAt",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmProbabilityAt",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRate.lean",
+      "line": 98,
+      "statement": "def twoArmProbabilityAt (eta : Real) (trace : Nat -> Fin 2 \u00d7 Real) (time : Nat) : Fin 2 -> Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmParameterAt_zero",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmParameterAt_zero",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRate.lean",
+      "line": 103,
+      "statement": "theorem twoArmParameterAt_zero (eta : Real) (trace : Nat -> Fin 2 \u00d7 Real) (arm : Fin 2) : twoArmParameterAt eta trace 0 arm = 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmParameterAt_succ",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmParameterAt_succ",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRate.lean",
+      "line": 108,
+      "statement": "theorem twoArmParameterAt_succ (eta : Real) (trace : Nat -> Fin 2 \u00d7 Real) (n : Nat) (arm : Fin 2) : twoArmParameterAt eta trace (n + 1) arm = historyParameter (fun _ : Fin 2 => 0) eta n (Preorder.frestrictLe n trace) arm"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmParameterAt_sum_eq_zero",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmParameterAt_sum_eq_zero",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRate.lean",
+      "line": 115,
+      "statement": "theorem twoArmParameterAt_sum_eq_zero (eta : Real) (trace : Nat -> Fin 2 \u00d7 Real) (time : Nat) : \u2211 arm, twoArmParameterAt eta trace time arm = 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmParameterAt_one_eq_neg_zero",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmParameterAt_one_eq_neg_zero",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRate.lean",
+      "line": 125,
+      "statement": "theorem twoArmParameterAt_one_eq_neg_zero (eta : Real) (trace : Nat -> Fin 2 \u00d7 Real) (time : Nat) : twoArmParameterAt eta trace time 1 = -twoArmParameterAt eta trace time 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmProbabilityAt_zero",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmProbabilityAt_zero",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRate.lean",
+      "line": 136,
+      "statement": "theorem twoArmProbabilityAt_zero (eta : Real) (trace : Nat -> Fin 2 \u00d7 Real) (arm : Fin 2) : twoArmProbabilityAt eta trace 0 arm = 1 / 2"
+    },
+    {
+      "kind": "theorem",
+      "name": "softmaxProbability_one_eq_one_sub_zero",
+      "full_name": "BanditRLProof.StochasticGradientBandit.softmaxProbability_one_eq_one_sub_zero",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRate.lean",
+      "line": 145,
+      "statement": "theorem softmaxProbability_one_eq_one_sub_zero (theta : Fin 2 -> Real) : softmaxProbability theta 1 = 1 - softmaxProbability theta 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "softmaxProbability_zero_div_one",
+      "full_name": "BanditRLProof.StochasticGradientBandit.softmaxProbability_zero_div_one",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRate.lean",
+      "line": 152,
+      "statement": "theorem softmaxProbability_zero_div_one (theta : Fin 2 -> Real) : softmaxProbability theta 0 / softmaxProbability theta 1 = Real.exp (theta 0 - theta 1)"
+    },
+    {
+      "kind": "theorem",
+      "name": "finTwo_one_eq_neg_zero_of_sum_eq_zero",
+      "full_name": "BanditRLProof.StochasticGradientBandit.finTwo_one_eq_neg_zero_of_sum_eq_zero",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRate.lean",
+      "line": 166,
+      "statement": "theorem finTwo_one_eq_neg_zero_of_sum_eq_zero (theta : Fin 2 -> Real) (hsum : \u2211 coordinate, theta coordinate = 0) : theta 1 = -theta 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "softmaxProbability_zero_div_one_sub_zero_eq_exp_two_mul",
+      "full_name": "BanditRLProof.StochasticGradientBandit.softmaxProbability_zero_div_one_sub_zero_eq_exp_two_mul",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRate.lean",
+      "line": 174,
+      "statement": "theorem softmaxProbability_zero_div_one_sub_zero_eq_exp_two_mul (theta : Fin 2 -> Real) (hsum : \u2211 coordinate, theta coordinate = 0) : softmaxProbability theta 0 / (1 - softmaxProbability theta 0) = Real.exp (2 * theta 0)"
+    },
+    {
+      "kind": "theorem",
+      "name": "exp_two_mul_zero_mul_one_sub_softmaxProbability_zero",
+      "full_name": "BanditRLProof.StochasticGradientBandit.exp_two_mul_zero_mul_one_sub_softmaxProbability_zero",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRate.lean",
+      "line": 185,
+      "statement": "theorem exp_two_mul_zero_mul_one_sub_softmaxProbability_zero (theta : Fin 2 -> Real) (hsum : \u2211 coordinate, theta coordinate = 0) : Real.exp (2 * theta 0) * (1 - softmaxProbability theta 0) = softmaxProbability theta 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "exp_neg_two_mul_zero_mul_softmaxProbability_zero",
+      "full_name": "BanditRLProof.StochasticGradientBandit.exp_neg_two_mul_zero_mul_softmaxProbability_zero",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRate.lean",
+      "line": 199,
+      "statement": "theorem exp_neg_two_mul_zero_mul_softmaxProbability_zero (theta : Fin 2 -> Real) (hsum : \u2211 coordinate, theta coordinate = 0) : Real.exp (-2 * theta 0) * softmaxProbability theta 0 = 1 - softmaxProbability theta 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmProbabilityAt_exp_two_mul_failure_eq_success",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmProbabilityAt_exp_two_mul_failure_eq_success",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRate.lean",
+      "line": 212,
+      "statement": "theorem twoArmProbabilityAt_exp_two_mul_failure_eq_success (eta : Real) (trace : Nat -> Fin 2 \u00d7 Real) (time : Nat) : Real.exp (2 * twoArmParameterAt eta trace time 0) * (1 - twoArmProbabilityAt eta trace time 0) = twoArmProbabilityAt eta trace time 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmProbabilityAt_zero_div_failure_eq_exp_two_mul",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmProbabilityAt_zero_div_failure_eq_exp_two_mul",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRate.lean",
+      "line": 222,
+      "statement": "theorem twoArmProbabilityAt_zero_div_failure_eq_exp_two_mul (eta : Real) (trace : Nat -> Fin 2 \u00d7 Real) (time : Nat) : twoArmProbabilityAt eta trace time 0 / (1 - twoArmProbabilityAt eta trace time 0) = Real.exp (2 * twoArmParameterAt eta trace time 0)"
+    },
+    {
+      "kind": "theorem",
+      "name": "historyParameter_exp_two_mul_zero_eq_odds",
+      "full_name": "BanditRLProof.StochasticGradientBandit.historyParameter_exp_two_mul_zero_eq_odds",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRate.lean",
+      "line": 233,
+      "statement": "theorem historyParameter_exp_two_mul_zero_eq_odds (eta : Real) (n : Nat) (history : History.FinitePairHistory (Fin 2) Real n) : Real.exp (2 * historyParameter (fun _ : Fin 2 => 0) eta n history 0) * (1 - softmaxProbability (historyParameter (fun _ : Fin 2 => 0) eta n history) 0) = softmaxProbability (historyParameter (fun _ : Fin 2 => 0) eta n history) 0"
     },
     {
       "kind": "structure",

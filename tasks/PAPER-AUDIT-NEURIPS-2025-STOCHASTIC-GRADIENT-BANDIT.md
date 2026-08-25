@@ -10,12 +10,15 @@ Harness: `hierarchical`
 
 ## Goal
 
-Compile the finite-action algebra and generated-history Equation-(5) bridge
-underlying Algorithm 1 and Equations (3)--(7) of Baudry, Johnson, Vary,
+Compile the finite-action algebra, generated-history Equation-(5) bridge,
+source-exact two-arm rate identities, and bounded-reward exponential-moment
+layer underlying Algorithm 1 and
+Equations (3)--(11) of Baudry, Johnson, Vary,
 Pike-Burke, and Rebeschini, *Does
 Stochastic Gradient really succeed for Bandits?* (NeurIPS 2025). The audit
-separates the reusable softmax/update/regret mechanism from the paper's later
-learning-rate-dependent stochastic arguments.
+separates the reusable softmax/update/regret mechanism, pathwise zero-sum/odds
+structure, and Equation-(8) analytic inequality from the paper's still-open
+conditional recurrences and learning-rate-dependent stochastic arguments.
 
 ## Frozen source
 
@@ -27,8 +30,8 @@ learning-rate-dependent stochastic arguments.
 - Official PDF SHA-256:
   `a3aff97fe2179c47fff61cc51453b84a082332e2a205f7fa2268cc68cba73b3d`.
 - Source windows: problem and regret on physical PDF p. 1; SGB policy and
-  Equations (3)--(7) on pp. 2--3; Algorithm 1 and its gradient verification
-  on p. 22.
+  Equations (3)--(8) on pp. 2--4; Algorithm 1 and its gradient verification
+  on p. 22; Appendix A.2 Equations (9)--(11) on pp. 22--23.
 
 ## Placement
 
@@ -84,6 +87,48 @@ remain downstream.  It cannot promote `SGB-RATES`, Lemmas 2--3, or Theorems
 1--4.  The Lean process accepts a general `initialTheta`; Algorithm 1's source
 initialization is the specialization `initialTheta := fun _ => 0`.
 
+## Active two-arm rate-structure extension
+
+The first non-overlapping slice toward Theorem 1 is now compiled without
+promoting the theorem endpoint:
+
+1. Prove pathwise that the recursive Algorithm-1 parameter sum equals the
+   initial parameter sum on every inclusive finite history.
+2. Specialize the source zero initialization and define an explicit
+   source-time adapter: Lean time `0` is source `theta_{.,1}`, while Lean time
+   `n+1` is the parameter after consuming trace pair `n`.
+3. For `Fin 2`, prove that the two coordinates are negatives, the initial law
+   is uniform, and the second-arm probability is the complement of the first.
+4. Compile the exact softmax odds and its two multiplicative consumers from
+   Appendix A.2 Equation (11), both on finite histories and the source-time
+   trace adapter.
+
+This closes the pathwise Equation-(9)/(11) structure used at the start of the
+Theorem 1 proof. It does not by itself compile either conditional exponential
+recurrence, the expected squared failure-mass bound, or the final regret
+inequality.
+
+## Active bounded-reward exponential-moment extension
+
+The next independent analytic slice now compiles the exact source constant
+and Equation (8), without relabelling a standalone probability integral as a
+generated-history conditional theorem:
+
+1. Define `C_eta = 2 * sum_{n >= 0} (2*eta)^n/(n+2)!` and prove the shifted
+   series summable.
+2. Prove monotonicity of `C_eta` on nonnegative parameters and the source
+   comparison `C_eta <= exp(2*eta)`.
+3. Split the exponential series after its linear term and identify the tail
+   with `q^2/2 * C_(|q|/2)`.
+4. Prove the pointwise Equation-(8) inequality for `|reward| <= 1`.
+5. Lift it to a probability integral, deriving both reward and exponential
+   integrability from almost-everywhere measurability and support in `[-1,1]`.
+
+This closes the source-exact analytic inequality and the monotonicity bridge
+needed to compare the varying `C_(a_t/2)` and `C_(b_t/2)` with `C_eta`.
+Instantiating Equation (8) on each conditional reward kernel and deriving both
+exponential recurrences remain separate obligations.
+
 ## Semantic boundary
 
 The finite sum over the selected arm is the exact algebra obtained after
@@ -92,8 +137,12 @@ mean.  The process extension constructs the recursive SGB state, measurable
 softmax policy, canonical action/reward trajectory, initial and successor
 conditional laws, and the corresponding history-step-kernel integrals under
 explicit coordinate-update integrability and arm-reward integral equalities.
-It does not package the paper's source-specific reward regularity as a uniform
-producer of those hypotheses or prove a learning-rate rate.
+It also exposes the source zero-initialized two-arm parameter/probability
+process and exact Equation-(11) odds identity. Separately, it compiles the
+source-exact `C_eta` and Equation-(8) inequality for a generic bounded reward
+law. It does not package the paper's source-specific reward regularity as a
+uniform producer of the Equation-(5) kernel hypotheses, compose Equation (8)
+with the generated conditional kernels, or prove a learning-rate rate.
 
 ## Nonclaims
 
@@ -101,8 +150,10 @@ This task does not compile Theorems 1--4, Lemmas 2--3, any logarithmic or
 polynomial regret rate, the sharp two-arm threshold, or the `K`-dependent
 learning-rate threshold.  It does not claim the external paper is verified.
 It compiles the local finite-action mechanism and a generated process-level
-Equation-(5) bridge consumed by those results, while leaving every
-learning-rate/failure-probability endpoint open.
+Equation-(5) bridge, the pathwise Equation-(9)/(11) two-arm structure, and the
+standalone bounded-reward Equation-(8) inequality consumed by those results.
+The source's conditional recurrences and expected squared
+failure-mass estimates and every paper-level rate endpoint remain open.
 
 ## Lean target
 
@@ -117,16 +168,30 @@ BanditRLProof.StochasticGradientBandit.historyParameter
 BanditRLProof.StochasticGradientBandit.trajectoryMeasure_condDistrib_action
 BanditRLProof.StochasticGradientBandit.trajectoryMeasure_condDistrib_nextPair_given_environment_prefix
 BanditRLProof.StochasticGradientBandit.integral_measurableEnvironmentHistoryStepKernel_sourceIncrement_eq_gapCoordinate
+BanditRLProof.StochasticGradientBandit.historyParameter_sum_eq_initial
+BanditRLProof.StochasticGradientBandit.twoArmParameterAt_sum_eq_zero
+BanditRLProof.StochasticGradientBandit.twoArmProbabilityAt_zero
+BanditRLProof.StochasticGradientBandit.softmaxProbability_zero_div_one
+BanditRLProof.StochasticGradientBandit.twoArmProbabilityAt_zero_div_failure_eq_exp_two_mul
+BanditRLProof.StochasticGradientBandit.twoArmProbabilityAt_exp_two_mul_failure_eq_success
+BanditRLProof.StochasticGradientBandit.sourceC
+BanditRLProof.StochasticGradientBandit.sourceC_le_exp_two_mul
+BanditRLProof.StochasticGradientBandit.exp_mul_le_sourceEqEight
+BanditRLProof.StochasticGradientBandit.integral_exp_mul_le_sourceEqEight_of_ae_abs_le_one
 ```
 
-Target files: `BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean`
-and `BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean`.
+Target files: `BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean`,
+`BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean`,
+`BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRate.lean`, and
+`BanditRLProof/Algorithms/StochasticGradientBanditExponentialAudit.lean`.
 
 ## Gate
 
 ```bash
 lake env lean BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean
 lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean
+lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRate.lean
+lake env lean BanditRLProof/Algorithms/StochasticGradientBanditExponentialAudit.lean
 lake env lean Tests/StochasticGradientBanditPaperAuditCanary.lean
 python tools/bandit.py check
 ```
@@ -140,11 +205,27 @@ python tools/bandit.py check
 - [x] The generated-history extension compiles with 18 named declarations:
   recursive state/measurability, initial and successor softmax laws, the
   canonical pair trajectory, and Equation-(5) history-step-kernel integrals.
-- [x] The typed canary compiles; nine representative theorem prints use only
+- [x] The two-arm rate-structure extension compiles with 18 named
+  declarations: the pathwise parameter-sum invariant, explicit source-time
+  adapter, zero initialization, initial uniform law, and Equation-(11)
+  softmax-odds identities and consumers.
+- [x] The exponential-moment extension compiles with 14 named declarations:
+  the source `C_eta`, summability, monotonicity and exponential comparison, the exact
+  Equation-(8) tail identity, and pointwise/integral bounded-reward forms.
+- [x] The typed canary compiles; twenty representative theorem prints use only
   `propext`, `Classical.choice`, and `Quot.sound`.
-- [x] The reference index, proof Blueprint, website, anonymous claim ledger,
-  and paper table agree on the 26-plus-18 declaration split and its boundary.
-- [x] Full Lean/tests/site gates pass (`8848` Lean jobs; `197` Python tests,
-  `4` platform skips; Lean-verified site build/check).
-- [x] Independent source/claim review finds no blocking, high, or medium issue.
+- [x] Refresh the reference index, proof Blueprint, website, and anonymous
+  claim ledger to agree on the 26-plus-18-plus-18-plus-14 declaration split
+  and its boundary.
+- [x] Refresh the separate paper repository's arXiv and ICLR audit tables,
+  abstracts, evidence summaries, and limitations to the same 76-declaration,
+  four-layer boundary; both PDFs and curated source-package tests pass.
+- [x] Re-run the full gates after the new layer and evidence refresh:
+  `lake build` completed 8,836 jobs, `lake build Tests` completed 8,862 jobs,
+  `python tools/bandit.py check` passed 232 tests with 6 designed skips, and
+  the Lean-verified site/check covered 642 pages, 7,876 declarations, 17,021
+  Lean source links, 14 Mermaid blocks, and valid internal links, anchors,
+  formula fallbacks, and deployment workflow.
+- [x] Independent source/claim reviews of both the two-arm and Equation-(8)
+  layers find no blocking, high, or medium issue.
 - [x] The process-level extension above is implemented and compiled.

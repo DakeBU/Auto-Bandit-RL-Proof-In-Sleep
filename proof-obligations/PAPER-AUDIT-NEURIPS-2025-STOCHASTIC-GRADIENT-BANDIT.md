@@ -13,13 +13,15 @@ Task id: `PAPER-AUDIT-NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT`
 | SGB-HISTORY-POLICY | initial/successor finite softmax Markov laws | compiled | generated from the recursive state, not assumed |
 | SGB-HISTORY-TRAJECTORY | canonical pair trajectory and successor conditional laws | compiled | uses an explicit measurable history environment |
 | SGB-EQ5-COND-MEAN | conditional-kernel integral of the generated source increment | compiled | coordinate-update integrability and arm-reward integral equalities remain explicit |
-| SGB-RATES paper endpoints | Theorems 1--4 | blocked | learning-rate/failure-probability analysis absent |
+| SGB-TWO-ARM-STRUCTURE | pathwise Equation (9), source-time adapter, uniform initialization, and Equation (11) odds | compiled | `Fin 2`, source zero initialization, and exact trace-time fence explicit |
+| SGB-EQ8-EXPONENTIAL-MOMENT | source-exact `C_eta`, its monotonicity, `C_eta <= exp(2 eta)`, and Equation (8) | compiled | generic probability law with a.e. measurable reward supported on `[-1,1]`; not yet a generated conditional-kernel statement |
+| SGB-RATES paper endpoints | Theorems 1--4 | blocked | generated-kernel Equation-(8) instantiation, conditional recurrences, expected squared failure-mass control, and terminal assembly absent |
 | SGB-CANARY | typed checks and representative axiom prints | compiled | baseline axioms only |
-| SGB-EVIDENCE-SITE | reference index, Blueprint, website source links, anonymous ledger | compiled | 26 finite-algebra plus 18 process declarations agree across generated evidence |
-| SGB-REVIEW | independent source/claim review | compiled | no blocking, high, or medium source/claim issue after evidence refresh |
+| SGB-EVIDENCE-SITE | reference index, Blueprint, website source links, anonymous ledger | compiled | refreshed and checked at 26 plus 18 plus 18 plus 14 declarations; 642 generated pages and 17,021 Lean source links pass the site gate |
+| SGB-REVIEW | independent source/claim review | compiled | two-arm and Equation-(8) layers independently reviewed; no blocking, high, or medium issue |
 
 No obligation may be promoted because a prose theorem card exists. Only the
 focused Lean module, canary, full gate, and generated evidence may move the
-finite algebra or process rows to `compiled`; the overall audit remains
-`partial`, and the rate row remains `blocked`, because none of the source
-learning-rate/failure-probability endpoints follows from these declarations.
+finite algebra, process, two-arm structure, or Equation-(8) rows to `compiled`; the overall
+audit remains `partial`, and the rate row remains `blocked`, because none of
+the source learning-rate endpoints follows from these declarations.
