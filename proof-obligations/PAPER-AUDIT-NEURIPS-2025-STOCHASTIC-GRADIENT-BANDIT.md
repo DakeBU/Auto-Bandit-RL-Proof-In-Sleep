@@ -14,14 +14,24 @@ Task id: `PAPER-AUDIT-NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT`
 | SGB-HISTORY-TRAJECTORY | canonical pair trajectory and successor conditional laws | compiled | uses an explicit measurable history environment |
 | SGB-EQ5-COND-MEAN | conditional-kernel integral of the generated source increment | compiled | coordinate-update integrability and arm-reward integral equalities remain explicit |
 | SGB-TWO-ARM-STRUCTURE | pathwise Equation (9), source-time adapter, uniform initialization, and Equation (11) odds | compiled | `Fin 2`, source zero initialization, and exact trace-time fence explicit |
-| SGB-EQ8-EXPONENTIAL-MOMENT | source-exact `C_eta`, its monotonicity, `C_eta <= exp(2 eta)`, and Equation (8) | compiled | generic probability law with a.e. measurable reward supported on `[-1,1]`; not yet a generated conditional-kernel statement |
-| SGB-RATES paper endpoints | Theorems 1--4 | blocked | generated-kernel Equation-(8) instantiation, conditional recurrences, expected squared failure-mass control, and terminal assembly absent |
+| SGB-EQ8-EXPONENTIAL-MOMENT | source-exact `C_eta`, its monotonicity, `C_eta <= exp(2 eta)`, and Equation (8) | compiled | generic probability law with a.e. measurable reward supported on `[-1,1]`; retained as a standalone analytic theorem |
+| SGB-EQ8-GENERATED-KERNEL | Equation (8) on the generated initial and successor reward kernels | compiled | 4 declarations; armwise support and fixed means remain explicit |
+| SGB-TWO-ARM-SUCCESSOR-RECURRENCE | forward/inverse fixed-history successor recurrence inequalities | compiled | 10 declarations; generated-kernel Equation (8), exact signs, and success/failure-square remainders |
+| SGB-TWO-ARM-INITIAL-RECURRENCE | uniform source initialization and both time-one recurrence inequalities | compiled | 3 declarations; zero initialization gives `p_1=1/2` |
+| SGB-MEASURABLE-RECURRENCE | measurable bounded fixed-mean contract, trajectory, filtration, and a.e. conditional-distribution transport | compiled | 25 declarations; general prior reveals latent `Env`, while a fixed/Dirac environment gives the fixed-instance reading |
+| SGB-PATH-INTEGRABILITY | finite-prefix reward support, source-parameter envelope, potential identities/integrability, condexp identities, and tower-ready recurrence bounds | compiled | 17 declarations in the exact 2+4+2+1+2+2+2+2 split; no global tower iteration is claimed |
+| SGB-THEOREM-1 | exact two-arm finite-regret endpoint | blocked | global tower iteration, expected squared failure-mass control, and Equation-(7) terminal assembly absent |
+| SGB-THEOREMS-2-4 | logarithmic/polynomial and general-`K` learning-rate endpoints | blocked | source-specific rate arguments uncompiled |
 | SGB-CANARY | typed checks and representative axiom prints | compiled | baseline axioms only |
-| SGB-EVIDENCE-SITE | reference index, Blueprint, website source links, anonymous ledger | compiled | refreshed and checked at 26 plus 18 plus 18 plus 14 declarations; 642 generated pages and 17,021 Lean source links pass the site gate |
-| SGB-REVIEW | independent source/claim review | compiled | two-arm and Equation-(8) layers independently reviewed; no blocking, high, or medium issue |
+| SGB-EVIDENCE-SITE | reference index, Blueprint, website source links, anonymous ledger | pending refresh | maintained sources now target 135 declarations in the `26+18+18+14+4+10+3+25+17` split; generated evidence must be rebuilt and checked |
+| SGB-REVIEW | independent source/claim review | partial | earlier two-arm/Equation-(8) layers reviewed; final path-integrability and synchronized-claim review remains required |
 
 No obligation may be promoted because a prose theorem card exists. Only the
 focused Lean module, canary, full gate, and generated evidence may move the
-finite algebra, process, two-arm structure, or Equation-(8) rows to `compiled`; the overall
-audit remains `partial`, and the rate row remains `blocked`, because none of
-the source learning-rate endpoints follows from these declarations.
+finite algebra, process, generated Equation-(8), recurrence, or path-
+integrability rows to `compiled`; the overall audit remains `partial`, and the
+Theorem-1 and Theorems-2--4 rows remain `blocked`, because global recurrence
+iteration, expected failure-mass control, Equation-(7) assembly, and every
+source learning-rate endpoint remain absent.  The bounded fixed-mean contract
+is not an equivalent fixed-iid-law encoding and does not discharge a separate
+source-assumption producer obligation.

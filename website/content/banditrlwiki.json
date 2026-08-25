@@ -32,16 +32,23 @@
       "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/a4e683f0ce6b91e7fbdae9d32642d88f-Abstract-Conference.html",
       "milestone_id": "NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT-MECHANISM-AUDIT",
       "lean_status": "partial",
-      "compiled_declaration_count": 76,
-      "scope": "Four evidence layers compile: twenty-six finite Algorithm-1/Equations-(3)–(7) declarations, eighteen recursive-history and Equation-(5) kernel declarations, eighteen pathwise two-arm Equation-(9)/(11) declarations, and fourteen source-exact C-eta/Equation-(8) exponential-moment declarations, including C-eta monotonicity.",
-      "boundary": "This is a source-frozen partial port, not a proof of Theorems 1–4. Equation (8) is not yet instantiated on the generated conditional kernels; both conditional recurrences, expected squared failure-mass control, learning-rate thresholds, and all paper-level regret rates remain open.",
+      "compiled_declaration_count": 135,
+      "scope": "Nine evidence layers compile in the exact 26+18+18+14+4+10+3+25+17 split: finite Algorithm-1/Equations-(3)–(7) algebra; recursive-history and Equation-(5) kernels; pathwise two-arm Equation-(9)/(11); standalone C-eta/Equation (8); generated-kernel Equation (8); fixed-history successor recurrences; source-initial recurrences; measurable contract/trajectory/conditional-distribution transport; and fixed-horizon path integrability with tower-ready conditional recurrence bounds.",
+      "boundary": "This is a source-frozen partial port, not a proof of Theorems 1–4. The bounded fixed-mean contract is not claimed equivalent to a fixed-iid reward law; with a general prior the prefix reveals the latent environment, while a fixed/Dirac environment recovers the fixed-instance reading. Global tower iteration, expected squared failure-mass control, Equation-(7) assembly, the exact Theorem-1 endpoint, and all Theorems 2–4 learning-rate rates remain open.",
       "representative_declarations": [
         "BanditRLProof.StochasticGradientBandit.softmaxProbability_sum",
         "BanditRLProof.StochasticGradientBandit.expectedSourceIncrement_eq_gapCoordinate",
         "BanditRLProof.StochasticGradientBandit.trajectoryMeasure_condDistrib_nextPair_given_environment_prefix",
         "BanditRLProof.StochasticGradientBandit.integral_measurableEnvironmentHistoryStepKernel_sourceIncrement_eq_gapCoordinate",
         "BanditRLProof.StochasticGradientBandit.twoArmProbabilityAt_zero_div_failure_eq_exp_two_mul",
-        "BanditRLProof.StochasticGradientBandit.integral_exp_mul_le_sourceEqEight_of_ae_abs_le_one"
+        "BanditRLProof.StochasticGradientBandit.integral_exp_mul_le_sourceEqEight_of_ae_abs_le_one",
+        "BanditRLProof.StochasticGradientBandit.integral_measurableEnvironmentHistoryStepKernel_exp_actionReward_le_sourceEqEight_of_mean",
+        "BanditRLProof.StochasticGradientBandit.integral_twoArmHistoryStepKernel_exp_forwardSuccessor_le_add_success_sq",
+        "BanditRLProof.StochasticGradientBandit.integral_twoArmInitialPairKernel_exp_inverseIncrement_le",
+        "BanditRLProof.StochasticGradientBandit.TwoArmBoundedFixedMeanEnvironmentContract",
+        "BanditRLProof.StochasticGradientBandit.trajectoryPrefix_condDistrib_integral_forwardSuccessor_le",
+        "BanditRLProof.StochasticGradientBandit.integrable_twoArmForwardTrajectorySuccessorPotential",
+        "BanditRLProof.StochasticGradientBandit.twoArmForwardTrajectorySuccessor_condExp_le_recurrenceBound"
       ]
     }
   ],

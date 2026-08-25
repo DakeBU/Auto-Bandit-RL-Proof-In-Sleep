@@ -1269,13 +1269,45 @@
       "math": "\\(\\mathbb E[e^{qR}]\\le 1+q\\mathbb E[R]+\\tfrac{q^2}{2}C_{|q|/2}.\\)",
       "intuition": "After the constant and linear terms, every higher Taylor coefficient is controlled by replacing the bounded reward with its absolute worst case. The shifted exponential series is exactly the paper's C-eta constant.",
       "why": "This compiles Equation (8), the moment-generating-function estimate that drives both conditional exponential recurrences in the two-arm Theorem-1 proof.",
-      "position": "The source-exact inequality compiles on an arbitrary probability measure. It has not yet been instantiated on each generated conditional reward kernel, and neither recurrence nor the expected squared failure-mass terminal is claimed.",
+      "position": "This remains the standalone generic probability-law layer. Separate compiled declarations now instantiate it on the generated initial/successor reward kernels and feed the two-arm recurrence route; the generic theorem itself is not relabelled as a trajectory theorem.",
       "proof_idea": "Split the exponential series into constant, linear, and degree-at-least-two terms; dominate the tail using |qR| <= |q|; then integrate the pointwise bound and derive integrability from measurability and bounded support.",
       "lean_notes": "The theorem requires only a probability measure, almost-everywhere strong measurability, and |R| <= 1 almost everywhere. Independence is not needed for Equation (8); it enters only through later trajectory/kernel instantiation.",
       "dependencies": [
         "BanditRLProof.StochasticGradientBandit.sourceC_terms_summable",
         "BanditRLProof.StochasticGradientBandit.sq_div_two_mul_sourceC_abs_div_two",
         "BanditRLProof.StochasticGradientBandit.exp_mul_le_sourceEqEight"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.StochasticGradientBandit.trajectoryPrefix_condDistrib_integral_forwardSuccessor_le",
+      "chapter": "frontier",
+      "plain": "Along the canonical two-arm SGB trajectory, the conditional-distribution integral of the next forward exponential potential obeys the source-shaped one-step recurrence at almost every observed prefix.",
+      "math": "\\(\\int e^{2\\theta_{1,t+1}}\\,dK_t\\le e^{2\\theta_{1,t}}+2p_t^2(\\eta\\Delta+\\eta^2C_\\eta).\\)",
+      "intuition": "Equation (8) is now attached to the actual generated next-pair law. The softmax update determines the exponential coefficient, while bounded support and fixed arm means control the reward moment.",
+      "why": "This is the measurable trajectory bridge between the fixed-history recurrence algebra and a conditional-expectation argument on the generated process.",
+      "position": "The forward and inverse a.e. conditional-distribution transports compile under the explicit bounded fixed-mean environment contract. With a general prior the prefix reveals the latent environment; a fixed/Dirac environment gives the fixed-instance reading.",
+      "proof_idea": "Prove the fixed-history kernel inequality, identify the canonical successor conditional distribution at the environment/prefix input, and transport the integral inequality almost everywhere.",
+      "lean_notes": "The contract fixes support in [-1,1] and arm means at every fiber, but is not an equivalent encoding of a fixed-iid reward law. No global tower iteration or failure-mass sum is claimed.",
+      "dependencies": [
+        "BanditRLProof.StochasticGradientBandit.TwoArmBoundedFixedMeanEnvironmentContract",
+        "BanditRLProof.StochasticGradientBandit.integral_measurableTwoArmHistoryStepKernel_forwardSuccessor_le_of_contract",
+        "BanditRLProof.StochasticGradientBandit.trajectoryMeasure_condDistrib_nextPair_given_environment_prefix"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmForwardTrajectorySuccessor_condExp_le_recurrenceBound",
+      "chapter": "frontier",
+      "plain": "For each fixed finite time, the forward exponential potential is integrable and its conditional expectation is bounded by the measurable source recurrence bound.",
+      "math": "\\(\\mathbb E[e^{2\\theta_{1,t+1}}\\mid\\mathcal F_t]\\le e^{2\\theta_{1,t}}+2p_t^2(\\eta\\Delta+\\eta^2C_\\eta)\\quad\\text{a.e.}\\)",
+      "intuition": "Finite-prefix reward support bounds every recursive parameter, which makes the exponential potential integrable. Conditional-distribution uniqueness then turns the compiled kernel integral into a genuine one-step conditional expectation.",
+      "why": "This closes the fixed-horizon integrability and condexp boundary needed before a tower argument can iterate the recurrence.",
+      "position": "Forward and inverse tower-ready one-step bounds compile. The global iteration, expected squared failure-mass control, Equation-(7) assembly, and Theorem 1 remain blocked.",
+      "proof_idea": "Transport bounded rewards to every prefix, bound the history parameter by the accumulated reward magnitudes, prove exponential integrability, identify condexp with the conditional-distribution integral, and apply the a.e. recurrence transport.",
+      "lean_notes": "The theorem is fixed-time and one-step. It does not sum the recurrence over horizons or establish any logarithmic or polynomial regret rate.",
+      "dependencies": [
+        "BanditRLProof.StochasticGradientBandit.integrable_twoArmForwardTrajectorySuccessorPotential",
+        "BanditRLProof.StochasticGradientBandit.twoArmForwardTrajectorySuccessor_condExp_ae_eq_integral_condDistrib",
+        "BanditRLProof.StochasticGradientBandit.trajectoryPrefix_condDistrib_integral_forwardSuccessor_le"
       ]
     },
     {

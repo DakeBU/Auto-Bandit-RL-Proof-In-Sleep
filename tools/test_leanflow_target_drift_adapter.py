@@ -97,7 +97,7 @@ class LeanFlowResultFreePreflightTests(unittest.TestCase):
         self.assertEqual(source["project_version"], "0.3.0")
         self.assertEqual(
             source["lock_sha256"],
-            "1239513509ee29a580c3f3f293e86dd16f77c298dbe9a99cba6aaaf93a1b0dd5",
+            "24528271319eb9778b260d4e5a39577b387bb41cc1f4d0ffc94139dae890d580",
         )
         clean_room = contract["clean_room_audit"]
         self.assertFalse(clean_room["no_web_overlay_frozen"])

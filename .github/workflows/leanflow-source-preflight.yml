@@ -1,0 +1,124 @@
+name: LeanFlow pinned-source preflight (result-free, not results)
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: leanflow-source-preflight-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pinned-source-preflight-not-results:
+    name: Pinned public source preflight (0 model calls; not results)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out ABRL without persisting credentials
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+
+      - name: Test the result-free adapter and independent validator
+        run: |
+          python3 -m unittest \
+            tools.test_leanflow_target_drift_adapter \
+            tools.test_leanflow_source_preflight -v
+
+      - name: Fetch the exact public LeanFlow source commit
+        shell: bash
+        env:
+          LEANFLOW_REPOSITORY: https://github.com/epfl-lara/LeanFlow
+          LEANFLOW_COMMIT: 72a58a5ffe3d26710e8e0a5d0f4e9bcaab3fed4d
+        run: |
+          set -euo pipefail
+          SOURCE_ROOT="${RUNNER_TEMP}/leanflow-pinned-source"
+          ARTIFACT_DIR="${RUNNER_TEMP}/leanflow-source-preflight-not-results"
+          test ! -e "${SOURCE_ROOT}"
+          mkdir -p "${SOURCE_ROOT}" "${ARTIFACT_DIR}"
+          unset GH_TOKEN GITHUB_TOKEN GIT_ASKPASS SSH_ASKPASS
+          export GIT_CONFIG_NOSYSTEM=1
+          export GIT_CONFIG_GLOBAL=/dev/null
+          export GIT_TERMINAL_PROMPT=0
+          export GCM_INTERACTIVE=never
+          export GIT_LFS_SKIP_SMUDGE=1
+          git init "${SOURCE_ROOT}"
+          git -C "${SOURCE_ROOT}" remote add origin "${LEANFLOW_REPOSITORY}"
+          git -c credential.helper= -c core.askPass= -c submodule.recurse=false \
+            -C "${SOURCE_ROOT}" fetch --no-tags --depth=1 origin "${LEANFLOW_COMMIT}"
+          test "$(git -C "${SOURCE_ROOT}" rev-parse FETCH_HEAD)" = "${LEANFLOW_COMMIT}"
+          git -c core.hooksPath=/dev/null -c core.autocrlf=false \
+            -c submodule.recurse=false \
+            -C "${SOURCE_ROOT}" checkout --detach --force "${LEANFLOW_COMMIT}"
+          test "$(git -C "${SOURCE_ROOT}" rev-parse HEAD)" = "${LEANFLOW_COMMIT}"
+          git -C "${SOURCE_ROOT}" remote remove origin
+          test -z "$(git -C "${SOURCE_ROOT}" remote)"
+
+      - name: Run the existing adapter in source-preflight mode only
+        shell: bash
+        run: |
+          set -euo pipefail
+          SOURCE_ROOT="${RUNNER_TEMP}/leanflow-pinned-source"
+          ARTIFACT_DIR="${RUNNER_TEMP}/leanflow-source-preflight-not-results"
+          python3 tools/leanflow_target_drift_adapter.py \
+            --mode result-free-preflight \
+            --contract evaluation/target-drift-v2/leanflow-real-adapter-contract.json \
+            --source-root "${SOURCE_ROOT}" \
+            --response "${ARTIFACT_DIR}/source-preflight-response.json" \
+            --trace "${ARTIFACT_DIR}/source-preflight-trace.jsonl"
+
+      - name: Independently validate response and trace as non-results
+        shell: bash
+        run: |
+          set -euo pipefail
+          ARTIFACT_DIR="${RUNNER_TEMP}/leanflow-source-preflight-not-results"
+          python3 tools/validate_leanflow_source_preflight.py \
+            --contract evaluation/target-drift-v2/leanflow-real-adapter-contract.json \
+            --response "${ARTIFACT_DIR}/source-preflight-response.json" \
+            --trace "${ARTIFACT_DIR}/source-preflight-trace.jsonl" \
+            --workflow .github/workflows/leanflow-source-preflight.yml \
+            --provenance-mode github-actions \
+            --github-sha "${GITHUB_SHA}" \
+            --github-run-id "${GITHUB_RUN_ID}" \
+            --github-run-attempt "${GITHUB_RUN_ATTEMPT}" \
+            --github-event-name "${GITHUB_EVENT_NAME}" \
+            --github-ref "${GITHUB_REF}" \
+            --github-workflow "${GITHUB_WORKFLOW}" \
+            --github-workflow-ref "${GITHUB_WORKFLOW_REF}" \
+            --github-repository "${GITHUB_REPOSITORY}" \
+            --github-server-url "${GITHUB_SERVER_URL}" \
+            --attestation "${ARTIFACT_DIR}/source-preflight-validation.json"
+
+      - name: Upload source-preflight artifact on trusted main push only
+        if: github.repository == 'DakeBU/Auto-Bandit-RL-Proof-In-Sleep' && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        id: source-preflight-upload
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: leanflow-source-preflight-not-results-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/leanflow-source-preflight-not-results
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Record trusted-main run URL and uploaded artifact digest
+        if: github.repository == 'DakeBU/Auto-Bandit-RL-Proof-In-Sleep' && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        shell: bash
+        env:
+          SOURCE_PREFLIGHT_ARTIFACT_DIGEST: ${{ steps.source-preflight-upload.outputs.artifact-digest }}
+          SOURCE_PREFLIGHT_ARTIFACT_URL: ${{ steps.source-preflight-upload.outputs.artifact-url }}
+        run: |
+          set -euo pipefail
+          [[ "${SOURCE_PREFLIGHT_ARTIFACT_DIGEST}" =~ ^[0-9a-f]{64}$ ]]
+          RUN_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          {
+            printf '### LeanFlow source preflight (not evaluation results)\n\n'
+            printf -- '- Trusted-main run: `%s`\n' "${RUN_URL}"
+            printf -- '- Uploaded artifact: `%s`\n' "${SOURCE_PREFLIGHT_ARTIFACT_URL}"
+            printf -- '- upload-artifact digest: `%s`\n' "${SOURCE_PREFLIGHT_ARTIFACT_DIGEST}"
+            printf -- '- ABRL commit: `%s` (attempt `%s`)\n' \
+              "${GITHUB_SHA}" "${GITHUB_RUN_ATTEMPT}"
+          } >> "${GITHUB_STEP_SUMMARY}"

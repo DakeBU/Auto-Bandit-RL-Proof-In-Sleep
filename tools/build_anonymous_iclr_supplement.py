@@ -67,6 +67,20 @@ PUBLIC_AGENT_OUTER_BOUNDARY_RUN_URL = (
     "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/"
     "actions/runs/32735680163"
 )
+SOURCE_PREFLIGHT_WORKFLOW = ".github/workflows/leanflow-source-preflight.yml"
+PUBLIC_SOURCE_PREFLIGHT_REPOSITORY = "DakeBU/Auto-Bandit-RL-Proof-In-Sleep"
+ANONYMOUS_SOURCE_PREFLIGHT_REPOSITORY = "anonymous/abrl-artifact"
+PUBLIC_SOURCE_PREFLIGHT_REPOSITORY_NAME = "Auto-Bandit-RL-Proof-In-Sleep"
+ANONYMOUS_SOURCE_PREFLIGHT_REPOSITORY_NAME = "abrl-artifact"
+PUBLIC_SOURCE_PREFLIGHT_WORKFLOW_SHA256 = (
+    "69cb85f9cb19135890f50bdf5e82fbc80740b0b779162f9abf178824c0961323"
+)
+SOURCE_PREFLIGHT_ANONYMIZED_FILES = {
+    SOURCE_PREFLIGHT_WORKFLOW,
+    "evaluation/target-drift-v2/README.md",
+    "tools/validate_leanflow_source_preflight.py",
+    "tools/test_leanflow_source_preflight.py",
+}
 PUBLIC_CANDIDATE_RECORD = (
     "evaluation/target-drift-v2/checker-image-candidate-32137509103.json"
 )
@@ -162,10 +176,31 @@ SGB_TWO_ARM_RATE_FILE = (
 SGB_EXPONENTIAL_AUDIT_FILE = (
     "BanditRLProof/Algorithms/StochasticGradientBanditExponentialAudit.lean"
 )
+SGB_GENERATED_EQUATION_8_FILE = (
+    "BanditRLProof/Algorithms/StochasticGradientBanditConditionalExponentialAudit.lean"
+)
+SGB_SUCCESSOR_RECURRENCE_FILE = (
+    "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRecurrence.lean"
+)
+SGB_INITIAL_RECURRENCE_FILE = (
+    "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmInitialRecurrence.lean"
+)
+SGB_MEASURABLE_RECURRENCE_FILE = (
+    "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmMeasurableRecurrence.lean"
+)
+SGB_PATH_INTEGRABILITY_FILE = (
+    "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean"
+)
 SGB_FINITE_ALGEBRA_DECLARATION_COUNT = 26
 SGB_GENERATED_HISTORY_DECLARATION_COUNT = 18
 SGB_TWO_ARM_RATE_DECLARATION_COUNT = 18
 SGB_EXPONENTIAL_AUDIT_DECLARATION_COUNT = 14
+SGB_GENERATED_EQUATION_8_DECLARATION_COUNT = 4
+SGB_SUCCESSOR_RECURRENCE_DECLARATION_COUNT = 10
+SGB_INITIAL_RECURRENCE_DECLARATION_COUNT = 3
+SGB_MEASURABLE_RECURRENCE_DECLARATION_COUNT = 25
+SGB_PATH_INTEGRABILITY_DECLARATION_COUNT = 17
+SGB_TOTAL_DECLARATION_COUNT = 135
 SGB_GENERATED_TRAJECTORY_DECLARATIONS = frozenset({
     "BanditRLProof.StochasticGradientBandit.trajectoryKernel",
     "BanditRLProof.StochasticGradientBandit.trajectoryMeasure_condDistrib_action_zero_given_environment",
@@ -191,6 +226,35 @@ SGB_EXPONENTIAL_AUDIT_DECLARATIONS = frozenset({
     "BanditRLProof.StochasticGradientBandit.sourceC_le_exp_two_mul",
     "BanditRLProof.StochasticGradientBandit.exp_mul_le_sourceEqEight",
     "BanditRLProof.StochasticGradientBandit.integral_exp_mul_le_sourceEqEight_of_ae_abs_le_one",
+})
+SGB_GENERATED_EQUATION_8_DECLARATIONS = frozenset({
+    "BanditRLProof.StochasticGradientBandit.integral_measurableEnvironmentInitialPairKernel_exp_actionReward_le_sourceEqEight_of_mean",
+    "BanditRLProof.StochasticGradientBandit.integral_historyStepKernel_exp_actionReward_le_sourceEqEight",
+    "BanditRLProof.StochasticGradientBandit.integral_historyStepKernel_exp_actionReward_le_sourceEqEight_of_mean",
+    "BanditRLProof.StochasticGradientBandit.integral_measurableEnvironmentHistoryStepKernel_exp_actionReward_le_sourceEqEight_of_mean",
+})
+SGB_INITIAL_RECURRENCE_DECLARATIONS = frozenset({
+    "BanditRLProof.StochasticGradientBandit.softmaxProbability_zeroInitialization_finTwo",
+    "BanditRLProof.StochasticGradientBandit.integral_twoArmInitialPairKernel_exp_forwardIncrement_le",
+    "BanditRLProof.StochasticGradientBandit.integral_twoArmInitialPairKernel_exp_inverseIncrement_le",
+})
+SGB_SUCCESSOR_RECURRENCE_DECLARATIONS = frozenset({
+    "BanditRLProof.StochasticGradientBandit.integral_twoArmHistoryStepKernel_exp_forwardSuccessor_le_add_success_sq",
+    "BanditRLProof.StochasticGradientBandit.integral_twoArmHistoryStepKernel_exp_inverseSuccessor_le_sub_failure_sq",
+})
+SGB_TRAJECTORY_COND_DISTRIB_RECURRENCE_DECLARATIONS = frozenset({
+    "BanditRLProof.StochasticGradientBandit.trajectoryPrefix_condDistrib_integral_forwardSuccessor_le",
+    "BanditRLProof.StochasticGradientBandit.trajectoryPrefix_condDistrib_integral_inverseSuccessor_le",
+})
+SGB_PATH_INTEGRABILITY_DECLARATIONS = frozenset({
+    "BanditRLProof.StochasticGradientBandit.integrable_twoArmForwardTrajectorySuccessorPotential",
+    "BanditRLProof.StochasticGradientBandit.integrable_twoArmInverseTrajectorySuccessorPotential",
+    "BanditRLProof.StochasticGradientBandit.twoArmForwardTrajectorySuccessor_condExp_ae_eq_integral_condDistrib",
+    "BanditRLProof.StochasticGradientBandit.twoArmInverseTrajectorySuccessor_condExp_ae_eq_integral_condDistrib",
+})
+SGB_CONDITIONAL_RECURRENCE_DECLARATIONS = frozenset({
+    "BanditRLProof.StochasticGradientBandit.twoArmForwardTrajectorySuccessor_condExp_le_recurrenceBound",
+    "BanditRLProof.StochasticGradientBandit.twoArmInverseTrajectorySuccessor_condExp_le_recurrenceBound",
 })
 CH16_COMPILED_ID = "TEXTBOOK-PART-IV-CH16-CONSISTENCY-DINF-DEPENDENCY-SLICE"
 CH16_EVENT_REGRET_ID = "TEXTBOOK-PART-IV-CH16-EVENT-REGRET-PRODUCERS"
@@ -312,6 +376,8 @@ TARGET_DRIFT_TOOLS = (
     LEANFLOW_FAKE_ADAPTER,
     "tools/leanflow_target_drift_adapter.py",
     "tools/test_leanflow_target_drift_adapter.py",
+    "tools/validate_leanflow_source_preflight.py",
+    "tools/test_leanflow_source_preflight.py",
     "tools/test_target_drift_external_comparator.py",
     "tools/validate_target_drift_suite.py",
     "tools/validate_target_drift_suite_v2.py",
@@ -369,11 +435,13 @@ TARGET_DRIFT_PROTOCOL_FILES = (
 )
 
 TARGET_DRIFT_WORKFLOW_FILES = (
+    ".github/workflows/leanflow-source-preflight.yml",
     ".github/workflows/target-drift-agent-image.yml",
     ".github/workflows/target-drift-agent-lifecycle.yml",
 )
 
 EXPLICIT_COPIES = {
+    ".gitattributes": ".gitattributes",
     "lean-toolchain": "lean-toolchain",
     "lakefile.lean": "lakefile.lean",
     "lake-manifest.json": "lake-manifest.json",
@@ -1031,12 +1099,56 @@ def anonymous_agent_lifecycle_candidate(candidate):
     }
 
 
+def anonymous_source_preflight_workflow():
+    path = REPO_ROOT / SOURCE_PREFLIGHT_WORKFLOW
+    if not path.is_file() or path.is_symlink():
+        raise ValueError("source-preflight workflow is missing or not regular")
+    public_data = canonical_text_bytes(SOURCE_PREFLIGHT_WORKFLOW, path.read_bytes())
+    if sha256_bytes(public_data) != PUBLIC_SOURCE_PREFLIGHT_WORKFLOW_SHA256:
+        raise ValueError("public source-preflight workflow SHA-256 changed")
+    public_text = public_data.decode("utf-8")
+    if PUBLIC_SOURCE_PREFLIGHT_REPOSITORY not in public_text:
+        raise ValueError("public source-preflight repository binding is missing")
+    anonymous_text = public_text.replace(
+        PUBLIC_SOURCE_PREFLIGHT_REPOSITORY,
+        ANONYMOUS_SOURCE_PREFLIGHT_REPOSITORY,
+    )
+    anonymous_text = anonymous_text.replace(
+        PUBLIC_SOURCE_PREFLIGHT_REPOSITORY_NAME,
+        ANONYMOUS_SOURCE_PREFLIGHT_REPOSITORY_NAME,
+    )
+    anonymous_data = anonymous_text.encode("utf-8")
+    return anonymous_data, sha256_bytes(anonymous_data)
+
+
 def anonymize_evaluation_bytes(rel, data, anonymous_reference):
     if not rel.endswith((".json", ".md", ".py", ".yml", ".Containerfile")):
         return data
     # Normalize before matching the guarded redaction blocks.  add_payload
     # applies the same canonicalization to every allowlisted text artifact.
     text = canonical_text_bytes(rel, data).decode("utf-8")
+    if (
+        rel in SOURCE_PREFLIGHT_ANONYMIZED_FILES
+        and rel != "evaluation/target-drift-v2/README.md"
+    ):
+        anonymous_workflow, anonymous_workflow_sha256 = (
+            anonymous_source_preflight_workflow()
+        )
+        if rel == SOURCE_PREFLIGHT_WORKFLOW:
+            text = anonymous_workflow.decode("utf-8")
+        else:
+            text = text.replace(
+                PUBLIC_SOURCE_PREFLIGHT_REPOSITORY,
+                ANONYMOUS_SOURCE_PREFLIGHT_REPOSITORY,
+            )
+            text = text.replace(
+                PUBLIC_SOURCE_PREFLIGHT_REPOSITORY_NAME,
+                ANONYMOUS_SOURCE_PREFLIGHT_REPOSITORY_NAME,
+            )
+            text = text.replace(
+                PUBLIC_SOURCE_PREFLIGHT_WORKFLOW_SHA256,
+                anonymous_workflow_sha256,
+            )
     if rel == "evaluation/target-drift-v2/README.md":
         source_block = (
             "The protocol requires every future evaluated workspace to be built from commit\n"
@@ -1113,6 +1225,25 @@ def anonymize_evaluation_bytes(rel, data, anonymous_reference):
         text = text.replace(
             "agent-outer-boundary-candidate-32735680163.json",
             "agent-outer-boundary-candidate-record.json",
+        )
+        # Rebind the new source-preflight prose only after the older public CI
+        # run links above have been matched and redacted.  Rebinding the public
+        # repository slug first would mutate those URLs and bypass their exact
+        # redaction guards.
+        anonymous_workflow, anonymous_workflow_sha256 = (
+            anonymous_source_preflight_workflow()
+        )
+        text = text.replace(
+            PUBLIC_SOURCE_PREFLIGHT_REPOSITORY,
+            ANONYMOUS_SOURCE_PREFLIGHT_REPOSITORY,
+        )
+        text = text.replace(
+            PUBLIC_SOURCE_PREFLIGHT_REPOSITORY_NAME,
+            ANONYMOUS_SOURCE_PREFLIGHT_REPOSITORY_NAME,
+        )
+        text = text.replace(
+            PUBLIC_SOURCE_PREFLIGHT_WORKFLOW_SHA256,
+            anonymous_workflow_sha256,
         )
     candidate_records = {
         PUBLIC_CANDIDATE_RECORD: (
@@ -1450,26 +1581,67 @@ def validate_sgb_count(records, index):
     exponential_audit_count = sum(
         row["file"] == SGB_EXPONENTIAL_AUDIT_FILE for row in rows.values()
     )
+    generated_equation_8_count = sum(
+        row["file"] == SGB_GENERATED_EQUATION_8_FILE for row in rows.values()
+    )
+    successor_recurrence_count = sum(
+        row["file"] == SGB_SUCCESSOR_RECURRENCE_FILE for row in rows.values()
+    )
+    initial_recurrence_count = sum(
+        row["file"] == SGB_INITIAL_RECURRENCE_FILE for row in rows.values()
+    )
+    measurable_recurrence_count = sum(
+        row["file"] == SGB_MEASURABLE_RECURRENCE_FILE for row in rows.values()
+    )
+    path_integrability_count = sum(
+        row["file"] == SGB_PATH_INTEGRABILITY_FILE for row in rows.values()
+    )
+    layer_counts = (
+        finite_count,
+        generated_history_count,
+        two_arm_rate_count,
+        exponential_audit_count,
+        generated_equation_8_count,
+        successor_recurrence_count,
+        initial_recurrence_count,
+        measurable_recurrence_count,
+        path_integrability_count,
+    )
+    expected_layer_counts = (
+        SGB_FINITE_ALGEBRA_DECLARATION_COUNT,
+        SGB_GENERATED_HISTORY_DECLARATION_COUNT,
+        SGB_TWO_ARM_RATE_DECLARATION_COUNT,
+        SGB_EXPONENTIAL_AUDIT_DECLARATION_COUNT,
+        SGB_GENERATED_EQUATION_8_DECLARATION_COUNT,
+        SGB_SUCCESSOR_RECURRENCE_DECLARATION_COUNT,
+        SGB_INITIAL_RECURRENCE_DECLARATION_COUNT,
+        SGB_MEASURABLE_RECURRENCE_DECLARATION_COUNT,
+        SGB_PATH_INTEGRABILITY_DECLARATION_COUNT,
+    )
     if (
         sgb["status"] != "partial"
         or len(declaration_list) != len(declarations)
-        or len(declarations) != 76
+        or len(declarations) != SGB_TOTAL_DECLARATION_COUNT
         or set(rows) != declarations
-        or finite_count != SGB_FINITE_ALGEBRA_DECLARATION_COUNT
-        or generated_history_count != SGB_GENERATED_HISTORY_DECLARATION_COUNT
-        or two_arm_rate_count != SGB_TWO_ARM_RATE_DECLARATION_COUNT
-        or exponential_audit_count != SGB_EXPONENTIAL_AUDIT_DECLARATION_COUNT
-        or finite_count + generated_history_count + two_arm_rate_count
-            + exponential_audit_count != len(declarations)
+        or layer_counts != expected_layer_counts
+        or sum(layer_counts) != len(declarations)
         or not SGB_GENERATED_TRAJECTORY_DECLARATIONS.issubset(declarations)
         or not SGB_CONDITIONAL_LAW_BRIDGE_DECLARATIONS.issubset(declarations)
         or not SGB_TWO_ARM_RATE_DECLARATIONS.issubset(declarations)
         or not SGB_EXPONENTIAL_AUDIT_DECLARATIONS.issubset(declarations)
+        or not SGB_GENERATED_EQUATION_8_DECLARATIONS.issubset(declarations)
+        or not SGB_INITIAL_RECURRENCE_DECLARATIONS.issubset(declarations)
+        or not SGB_SUCCESSOR_RECURRENCE_DECLARATIONS.issubset(declarations)
+        or not SGB_TRAJECTORY_COND_DISTRIB_RECURRENCE_DECLARATIONS.issubset(
+            declarations
+        )
+        or not SGB_PATH_INTEGRABILITY_DECLARATIONS.issubset(declarations)
+        or not SGB_CONDITIONAL_RECURRENCE_DECLARATIONS.issubset(declarations)
     ):
         raise ValueError(
             "stochastic-gradient-bandit audit must remain partial with exactly "
-            "26 finite-algebra, 18 generated-history, 18 two-arm-rate, and "
-            "14 exponential-audit declarations"
+            "135 declarations across the frozen 26/18/18/14/4/10/3/25/17 "
+            "evidence layers"
         )
     return {
         "generated_trajectory_compiled":
@@ -1480,6 +1652,20 @@ def validate_sgb_count(records, index):
             SGB_TWO_ARM_RATE_DECLARATIONS.issubset(declarations),
         "source_equation_8_compiled":
             SGB_EXPONENTIAL_AUDIT_DECLARATIONS.issubset(declarations),
+        "generated_equation_8_kernel_bridge_compiled":
+            SGB_GENERATED_EQUATION_8_DECLARATIONS.issubset(declarations),
+        "two_arm_initial_recurrence_compiled":
+            SGB_INITIAL_RECURRENCE_DECLARATIONS.issubset(declarations),
+        "fixed_history_successor_recurrence_compiled":
+            SGB_SUCCESSOR_RECURRENCE_DECLARATIONS.issubset(declarations),
+        "trajectory_cond_distrib_recurrence_compiled":
+            SGB_TRAJECTORY_COND_DISTRIB_RECURRENCE_DECLARATIONS.issubset(
+                declarations
+            ),
+        "path_integrability_compiled":
+            SGB_PATH_INTEGRABILITY_DECLARATIONS.issubset(declarations),
+        "conditional_expectation_one_step_recurrence_compiled":
+            SGB_CONDITIONAL_RECURRENCE_DECLARATIONS.issubset(declarations),
     }
 
 
@@ -1586,7 +1772,7 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
             "evidence_record_ids": [SGB_AUDIT_ID],
             "central_endpoint_record_id": SGB_AUDIT_ID,
             "promotion_status": "partial",
-            "compiled_declaration_count": 76,
+            "compiled_declaration_count": SGB_TOTAL_DECLARATION_COUNT,
             "declaration_count_breakdown": {
                 "finite_action_algebra": SGB_FINITE_ALGEBRA_DECLARATION_COUNT,
                 "generated_history_and_kernel_bridge":
@@ -1595,6 +1781,16 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
                     SGB_TWO_ARM_RATE_DECLARATION_COUNT,
                 "source_c_and_equation_8":
                     SGB_EXPONENTIAL_AUDIT_DECLARATION_COUNT,
+                "generated_equation_8_kernel_bridge":
+                    SGB_GENERATED_EQUATION_8_DECLARATION_COUNT,
+                "fixed_history_successor_recurrence":
+                    SGB_SUCCESSOR_RECURRENCE_DECLARATION_COUNT,
+                "two_arm_initial_recurrence":
+                    SGB_INITIAL_RECURRENCE_DECLARATION_COUNT,
+                "measurable_contract_and_cond_distrib_transport":
+                    SGB_MEASURABLE_RECURRENCE_DECLARATION_COUNT,
+                "path_integrability_and_conditional_recurrence":
+                    SGB_PATH_INTEGRABILITY_DECLARATION_COUNT,
             },
         },
     }
@@ -1791,7 +1987,7 @@ def build_claim_ledger(proof_report):
                 "artifact": "Stochastic-gradient-bandit mechanism audit",
                 "status": "partial",
                 "source_record_ids": [SGB_AUDIT_ID],
-                "boundary": "76 declarations compile four disjoint layers: 26 finite-action Algorithm-1/Equations-(3)--(7) declarations; 18 generated-history, conditional-law, and Equation-(5) kernel declarations; 18 pathwise two-arm Equation-(9)/(11) declarations; and 14 source-exact C-eta/Equation-(8) exponential-moment declarations including C-eta monotonicity. Equation (8) is not yet instantiated on the generated conditional reward kernels; both conditional recurrences, expected squared failure-mass control, every learning-rate regime, and Theorems 1--4 remain open.",
+                "boundary": "135 declarations compile the original 76-declaration algebra/history/two-arm/source-Equation-(8) audit plus generated-kernel Equation (8), zero-initial and fixed-history forward/inverse recurrence inequalities, measurable canonical-trajectory conditional-distribution transport, fixed-time path integrability, conditional-expectation representations, and one-step conditional recurrence bounds. This is a partial audit route, not Theorem 1: global tower iteration, expected squared failure-mass control, Equation-(7) regret assembly, every learning-rate regime, and Theorems 1--4 remain open. The bounded fixed-mean fiber contract is not an equivalence proof for a fixed-iid reward law, and a general prior leaves the latent environment visible in the current prefix filtration.",
             },
             {
                 "artifact": "Proof graph / curvature--noise--gap",
@@ -1838,12 +2034,22 @@ def build_claim_ledger(proof_report):
         },
         "stochastic_gradient_bandit": {
             "source_record_id": SGB_AUDIT_ID,
-            "declaration_count": 76,
+            "declaration_count": SGB_TOTAL_DECLARATION_COUNT,
             "finite_algebra_declaration_count": SGB_FINITE_ALGEBRA_DECLARATION_COUNT,
             "generated_history_declaration_count": SGB_GENERATED_HISTORY_DECLARATION_COUNT,
             "two_arm_rate_declaration_count": SGB_TWO_ARM_RATE_DECLARATION_COUNT,
             "exponential_audit_declaration_count":
                 SGB_EXPONENTIAL_AUDIT_DECLARATION_COUNT,
+            "generated_equation_8_declaration_count":
+                SGB_GENERATED_EQUATION_8_DECLARATION_COUNT,
+            "successor_recurrence_declaration_count":
+                SGB_SUCCESSOR_RECURRENCE_DECLARATION_COUNT,
+            "initial_recurrence_declaration_count":
+                SGB_INITIAL_RECURRENCE_DECLARATION_COUNT,
+            "measurable_recurrence_declaration_count":
+                SGB_MEASURABLE_RECURRENCE_DECLARATION_COUNT,
+            "path_integrability_declaration_count":
+                SGB_PATH_INTEGRABILITY_DECLARATION_COUNT,
             "generated_trajectory_compiled":
                 sgb_evidence["generated_trajectory_compiled"],
             "conditional_law_bridge_compiled":
@@ -1852,8 +2058,24 @@ def build_claim_ledger(proof_report):
                 sgb_evidence["two_arm_equation_11_compiled"],
             "source_equation_8_compiled":
                 sgb_evidence["source_equation_8_compiled"],
+            "generated_equation_8_kernel_bridge_compiled":
+                sgb_evidence["generated_equation_8_kernel_bridge_compiled"],
+            "two_arm_initial_recurrence_compiled":
+                sgb_evidence["two_arm_initial_recurrence_compiled"],
+            "fixed_history_successor_recurrence_compiled":
+                sgb_evidence["fixed_history_successor_recurrence_compiled"],
+            "trajectory_cond_distrib_recurrence_compiled":
+                sgb_evidence["trajectory_cond_distrib_recurrence_compiled"],
+            "path_integrability_compiled":
+                sgb_evidence["path_integrability_compiled"],
+            "conditional_expectation_one_step_recurrence_compiled":
+                sgb_evidence[
+                    "conditional_expectation_one_step_recurrence_compiled"
+                ],
             "uniform_reward_regularities_verified": False,
             "learning_rate_regime_verified": False,
+            "global_tower_iteration_verified": False,
+            "expected_failure_mass_verified": False,
             "paper_endpoint_verified": False,
         },
         "textbook_chapter_16": {

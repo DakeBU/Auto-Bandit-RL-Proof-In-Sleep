@@ -275,7 +275,7 @@ constants, and literal LML declaration identity remain separate.
 | Thompson sampling | compiled stationary posterior kernel, actual recursive probability matching, comparator decomposition plus explicit mean-optimality contract, clipped confidence, latent-stream support, generated Bayesian regret; broader model/toolchain ports remain open | `TXT-SLIVKINS-2019-2024`, `PPR-AGRAWAL-GOYAL-2011-TS`, LML cards `Bandits.TS.hasCondDistrib_action`, `Bandits.integral_regret_le` |
 | EXP3/adversarial | canonical generated route compiled through potential/Hedge, importance-weighted conditional moments, measurable recursive sampling, exploration bias, tuned expected regret, per-horizon best-arm realized tails, a distinct fixed-process all-positive-prefix realized-regret terminal, and an explicit sparse-loss extension; horizon-free tuned EXP3, best-arm aggregation on that one fixed process, and EXP3.P remain extensions | `TXT-BUBECK-CESABIANCHI-2012`, `TXT-LATTIMORE-SZEPESVARI-2020`, `PPR-AUER-CFS-2002-EXP3` |
 | Tsallis-INF/FTRL | canonical generated half-Tsallis route compiled through minimizer regularity, scheduled conditional action law, score alignment, expected stability/penalty, fixed-gap self-bounding, square-root schedule, and a finite-arm IID bounded reward-law logarithmic terminal; corruption, dynamic, and population-oracle restart results compile as labelled extensions, while the strict `Fin 2` refined-average obstruction and paper-sharp complete Tsallis-INF remain visible | `LOCAL-LEAF-TSALLIS-FINITE-BANDIT-MEAN-LOSS`, `LOCAL-LEAF-TSALLIS-SQRT-SCHEDULE-LOG-FIXED-GAP`, `LOCAL-LEAF-TSALLIS-SCHEDULED-FIXED-GAP-SELF-BOUNDING`, `LOCAL-LEAF-TSALLIS-SCHEDULED-EXPECTED-REGRET`, `LOCAL-LEAF-TSALLIS-SCHEDULED-ALL-RATE-EXPECTED-STABILITY`, `PPR-ZIMMERT-SELDIN-2018-TSALLIS-INF`, `PPR-MASOUDIAN-SELDIN-2021-TSALLIS-INF`, `PPR-ADAPTIVE-LR-FTRL-2024` |
-| Stochastic-gradient bandit | compiled finite-action mechanism, recursive measurable trajectory and Equation-(5) kernel bridge, pathwise two-arm Equations (9)/(11), and source-exact `C_eta`/Equation-(8) bounded-reward exponential-moment layer; generated conditional recurrences, expected squared failure-mass control, and all rate regimes remain open | `PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB`, `PAPER-AUDIT-NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT` |
+| Stochastic-gradient bandit | 135 declarations compile the finite-action mechanism, recursive measurable Equation-(5) trajectory bridge, pathwise two-arm Equations (9)/(11), standalone and generated-kernel Equation (8), initial/fixed-history recurrences, a.e. conditional-distribution transport, and fixed-horizon integrable tower-ready conditional recurrences; global tower iteration, expected squared failure-mass control, Equation-(7) assembly, and all Theorem 1--4 rate endpoints remain open | `PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB`, `PAPER-AUDIT-NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT` |
 | Linear/OFUL | compiled finite-action scalar route from Gram/determinant and confidence ellipsoid to a horizon-free all-time/all-horizon/stopping policy; horizon-indexed expectation/consistency is separate; contextual/dynamic/Hilbert extensions remain open | `TXT-LATTIMORE-SZEPESVARI-2020`, `PPR-ABBASI-YADKORI-2011-SELF-NORMALIZED`, `PPR-LI-CHU-LANGFORD-SCHAPIRE-2010-LINUCB` |
 | Pure exploration | confidence event, stopping rule, sample complexity, lower-bound change-of-measure | `TXT-LATTIMORE-SZEPESVARI-2020`, `TXT-SLIVKINS-2019-2024` |
 | BwK/resource constraints | budget stopping time, resource consumption, primal-dual comparison | `TXT-SLIVKINS-2019-2024`, `PPR-BADANIDIYURU-KLEINBERG-SLIVKINS-2013-BWK` |
@@ -390,15 +390,33 @@ Equation (11).  A fourth 14-declaration layer defines the source series
 Equation (8) both pointwise and as an integral over any almost-everywhere
 measurable reward supported on `[-1,1]`.
 
+Five further compiled layers connect that analytic inequality to the source
+process.  Four declarations instantiate Equation (8) on the generated initial
+and successor reward kernels.  Ten declarations prove the fixed-history
+forward/inverse successor recurrences, and three prove the zero-initial
+time-one recurrences.  A 25-declaration layer packages the bounded fixed-mean
+environment contract, measurable potentials and bounds, canonical two-arm
+trajectory and environment-revealed prefix filtration, and both a.e.
+conditional-distribution recurrence transports.  Finally, 17 declarations
+transport bounded reward support to finite prefixes, bound the recursive
+parameter, identify the exponential potentials, prove both fixed-horizon
+potentials integrable, identify their conditional expectations with the
+conditional-distribution integrals, and expose tower-ready forward/inverse
+conditional recurrence bounds.  The nine layers contain 135 declarations in
+the exact `26+18+18+14+4+10+3+25+17` split.
+
 This remains a partial mechanism/process audit.  Coordinate-update
 integrability and arm-reward integral equalities are explicit hypotheses of
 the kernel calculation rather than consequences of a paper-specific uniform
 regularity theorem.  That source-specific regularity
-producer for the earlier Equation-(5) hypotheses, instantiation of Equation
-(8) inside the generated conditional kernels, both conditional exponential
-recurrences, expected squared failure-mass control, the two-arm sharp
-threshold, general-`K` learning-rate scaling, and every Theorem 1--4 regret
-endpoint remain blocked.
+producer for the earlier Equation-(5) hypotheses remains separate.  The new
+bounded fixed-mean contract is not an equivalent fixed-iid-law encoding: it
+permits history-varying conditional laws with the same means and support, and
+with a general prior its prefix filtration reveals the latent environment; a
+fixed/Dirac environment recovers the fixed-instance reading.  Global tower
+iteration, expected squared failure-mass control, Equation-(7) assembly, the
+two-arm sharp threshold, general-`K` learning-rate scaling, and every Theorem
+1--4 regret endpoint remain blocked.
 The source freeze records the
 initial reserve/not-started state; the current paper card and generated task
 memory record the later partial compiled status.
