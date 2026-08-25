@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "suite_id": "ABRL-TARGET-DRIFT-V2",
+  "comparator_id": "leanflow_external",
+  "adapter_id": "leanflow-real-preflight",
+  "adapter_version": "1",
+  "status": "candidate_result_free_preflight_only",
+  "purpose": "audit_a_real_leanflow_checkout_without_leanflow_or_provider_execution_and_without_adapter_credential_or_network_client_code",
+  "existing_external_plan_status": "planned_unrun_result_free",
+  "sealed_by_existing_external_plumbing": false,
+  "source_identity": {
+    "repository_url": "https://github.com/epfl-lara/LeanFlow",
+    "repository_commit": "72a58a5ffe3d26710e8e0a5d0f4e9bcaab3fed4d",
+    "repository_tree_sha1": "5db00ff277884f8df1f0379b4f1418abcd32f31c",
+    "repository_commit_time_utc": "2026-08-11T02:39:36Z",
+    "license": "Apache-2.0",
+    "project_name": "leanflow-agent",
+    "project_version": "0.3.0",
+    "python_requires": ">=3.11",
+    "cli_entrypoint": "leanflow_cli.main:main",
+    "agent_entrypoint": "leanflow_agent:main",
+    "lock_path": "uv.lock",
+    "lock_sha256": "1239513509ee29a580c3f3f293e86dd16f77c298dbe9a99cba6aaaf93a1b0dd5",
+    "pinned_files": [
+      {
+        "path": "pyproject.toml",
+        "bytes": 14962,
+        "sha256": "6d20c1a4cc537f1401e7f9eba197b6a33345e59cc3d1d86a3faadaf22a706ec2"
+      },
+      {
+        "path": "uv.lock",
+        "bytes": 1193055,
+        "sha256": "1239513509ee29a580c3f3f293e86dd16f77c298dbe9a99cba6aaaf93a1b0dd5"
+      },
+      {
+        "path": "README.md",
+        "bytes": 12672,
+        "sha256": "83b6017011aa9e1d6deb8d3f58a24c5c5db643f70dd75cb13db7bf1f4debf035"
+      },
+      {
+        "path": "core/toolsets.py",
+        "bytes": 7300,
+        "sha256": "2d1adb419d1f51678f0273c7cea5e54944014b3442695c80afc74a6720265809"
+      },
+      {
+        "path": "leanflow_cli/workflow.py",
+        "bytes": 34773,
+        "sha256": "70ddf37857f46a0cdf00714a86f5c6ed33921353255fef6315b6ee247c391918"
+      },
+      {
+        "path": "tests/leanflow/test_workflow_swarm.py",
+        "bytes": 40775,
+        "sha256": "d99d508e92436c3072f19c13070a1bf15fcae7a039eeafe5e3280e0cbed177f4"
+      },
+      {
+        "path": "LICENSE",
+        "bytes": 11551,
+        "sha256": "c0ea44e53e808570f7968e9fea4c36116dfc5798191e0799b9d3f95d673999e2"
+      }
+    ]
+  },
+  "observed_cli_contract": {
+    "install_command": "./scripts/install-internal.sh",
+    "doctor_command": "leanflow doctor",
+    "prove_command_shape": "leanflow workflow prove <FILE> --provider <PROVIDER> --model <MODEL> --no-parallel --clean-room",
+    "project_registration_command": "leanflow project init",
+    "project_state_path": ".leanflow/workflow-state",
+    "verified_exit_code": 0,
+    "runtime_failure_exit_code": 1,
+    "unresolved_exit_code": 2,
+    "disproof_exit_code": 3,
+    "interrupt_exit_code": 130
+  },
+  "clean_room_audit": {
+    "status": "no_web_requirement_not_met_by_pinned_cli",
+    "required_boundary": "research_web_and_public_repository_search_disabled",
+    "facts": [
+      "README.md lines 104-107 state that --clean-room retains general web and paper search.",
+      "core/toolsets.py lines 151-159 include the web toolset in leanflow-prove-worker.",
+      "leanflow_cli/workflow.py lines 637-644 set solution-research denial but not repository-research denial.",
+      "tests/leanflow/test_workflow_swarm.py lines 284-285 assert that repository-research denial is absent while solution-research denial is enabled."
+    ],
+    "no_web_overlay_frozen": false,
+    "provider_only_network_containment_frozen": false,
+    "public_repository_research_denial_frozen": false,
+    "production_requirement_satisfied": false
+  },
+  "preflight_capability": {
+    "allowed_mode": "result-free-preflight",
+    "adapter_credential_read_path_present": false,
+    "adapter_network_client_path_present": false,
+    "adapter_provider_client_path_present": false,
+    "leanflow_process_allowed": false,
+    "provider_process_allowed": false,
+    "formalization_execution_allowed": false,
+    "git_local_identity_probe_allowed": true,
+    "allowed_git_subcommands": [
+      "rev-parse --verify HEAD",
+      "rev-parse --verify HEAD^{tree}"
+    ],
+    "local_git_executable_pre_frozen": false,
+    "os_network_isolation_attested": false,
+    "execution_enabled": false,
+    "production_eligible": false,
+    "result_eligible": false
+  },
+  "request_schema": {
+    "mode": "result-free-preflight",
+    "required_cli_arguments": [
+      "--contract",
+      "--source-root",
+      "--response",
+      "--trace"
+    ],
+    "unknown_cli_arguments": "rejected"
+  },
+  "response_schema": {
+    "status": "result_free_preflight_completed",
+    "result_eligible": false,
+    "adapter_provider_client_called": false,
+    "adapter_started_leanflow": false,
+    "adapter_credential_read_path_present": false,
+    "adapter_network_client_path_present": false,
+    "local_git_executable_pre_frozen": false,
+    "os_network_isolation_attested": false,
+    "formalization_outcome_reported": false,
+    "production_gate_passed": false
+  },
+  "trace_schema": {
+    "format": "UTF-8 JSON Lines",
+    "event_kinds_in_order": [
+      "preflight_started",
+      "contract_validated",
+      "local_git_identity_validated",
+      "pinned_source_files_validated",
+      "pinned_cli_policy_audited",
+      "preflight_summary"
+    ],
+    "model_or_formalization_content": "forbidden"
+  },
+  "forbidden_output_basenames": [
+    "external-comparator-results.json",
+    "leanflow-external-completion-ledger.json"
+  ],
+  "unmet_production_gates": [
+    "Freeze and disclose either an upstream no-web LeanFlow interface or a minimal audited no-web overlay.",
+    "Freeze provider-only network containment and prove that all non-provider egress fails closed.",
+    "Freeze the exact provider, model, settings, credentials boundary, prices, budgets, runtime, image, and process-tree isolation.",
+    "Implement and validate aggregation of every foreground and auxiliary model call without inventing missing usage.",
+    "Freeze the neutral checker, graders, analysis, completion ledger, and production result schema.",
+    "Pass one real-infrastructure smoke that is permanently result-ineligible before any 30-run calibration."
+  ],
+  "nonclaims": [
+    "This contract does not execute LeanFlow or a model provider.",
+    "The Python adapter contains no credential-reading path and imports or calls no network or provider client.",
+    "The preflight executes two local Git identity queries; that Git executable is observed but not pre-frozen, and its OS-level behavior is not attested.",
+    "OS-level network isolation is not attested by this preflight.",
+    "This contract does not report a Lean proof, checker result, score, cost, or comparison outcome.",
+    "Passing this preflight does not satisfy the real-infrastructure smoke or permit a result-eligible run."
+  ]
+}

@@ -1515,8 +1515,10 @@ def check_template(config_path: Path) -> None:
     rubric = load(resolve_repo_path(config["grading"]["rubric"]))
     require(rubric["no_results"] is True, "grading rubric must remain result-free")
     print(
-        "target-drift execution template valid but not ready: "
-        f"{len(missing)} machine fields plus named human/provenance choices remain UNSET"
+        "target-drift execution template "
+        f"{config['suite_id']} ({config_path.as_posix()}) valid but not ready: "
+        f"{len(missing)} unresolved placeholders across machine, human, and provenance "
+        "fields remain UNSET"
     )
 
 
