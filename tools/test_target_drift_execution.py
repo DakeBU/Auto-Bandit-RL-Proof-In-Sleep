@@ -251,6 +251,86 @@ class TargetDriftExecutionTest(unittest.TestCase):
             with self.subTest(field=field), self.assertRaises(SystemExit):
                 prepare.validate_primary_analysis_contract(changed)
 
+    def test_packed_config_rewrites_cross_platform_operator_paths_portably(self) -> None:
+        config = json.loads((
+            ROOT / "evaluation" / "target-drift-v2" / "execution-template.json"
+        ).read_text(encoding="utf-8"))
+        operator_root = r"C:\operator-private\target-drift"
+        operator_root_forward = "C:/operator-private/target-drift"
+        config["source_files_manifest"] = operator_root + r"\sources.json"
+        human = config["human_source_contract_validation"]
+        human["review_packet"] = operator_root + r"\review"
+        for path_field, _, filename in prepare.HUMAN_REVIEW_FILE_BINDINGS:
+            if path_field not in {
+                "protocol", "external_protocol", "external_trust_anchor_contract",
+            }:
+                human[path_field] = operator_root + "\\review\\" + filename
+        adapter = config["execution_adapter"]
+        adapter.update({
+            "entrypoint_path": operator_root + r"\adapter.py",
+            "runtime_executable": operator_root + r"\python.exe",
+            "runtime_executable_sha256": "1" * 64,
+            "budget_enforcement_attestation": {"log": operator_root + r"\budget.log"},
+            "filesystem_network_process_attestation": operator_root + r"\sandbox.txt",
+            "command_argv": [
+                operator_root + r"\python.exe", operator_root + r"\adapter.py",
+            ],
+        })
+        adapter["provider_runtime"].update({
+            "executable": operator_root + r"\codex.exe",
+            "executable_sha256": "2" * 64,
+            "auth_source_path": operator_root + r"\auth",
+            "fresh_codex_home_attestation": operator_root + r"\fresh-home.txt",
+            "process_environment": {"TRACE": operator_root + r"\trace"},
+            "shell_environment": {"PATH": operator_root + r"\bin"},
+        })
+        checker = config["posthoc_checker"]
+        checker.update({
+            "driver_path": operator_root + r"\check.py",
+            "inner_checker_path": operator_root + r"\inner.py",
+            "isolation_probe_runner_path": operator_root + r"\probe.py",
+            "host_launcher_path": operator_root + r"\launch.py",
+            "host_python_executable": operator_root + r"\python.exe",
+            "host_python_executable_sha256": "3" * 64,
+            "container_runtime_executable": operator_root + r"\docker.exe",
+            "container_runtime_executable_sha256": "4" * 64,
+            "checker_image_recipe": operator_root + r"\Containerfile",
+            "checker_image_sbom": operator_root + r"\sbom.json",
+            "checker_image_build_input_manifest": operator_root + r"\build.json",
+            "checker_cache_manifest_artifact": operator_root + r"\cache.json",
+            "checker_image_build_log": operator_root + r"\build.log",
+            "controller_entrypoint_source": operator_root + r"\controller.py",
+            "isolation_probe_report": operator_root + r"\probe.json",
+            "isolation_probe_artifacts_dir": operator_root + r"\probe-artifacts",
+            "sandbox_command_argv": [
+                operator_root + r"\docker.exe", operator_root_forward,
+            ],
+            "sandbox_cleanup_argv": [operator_root_forward + "/cleanup"],
+            "filesystem_network_process_attestation": operator_root + r"\isolation.txt",
+            "controller_worker_separation_attestation": {
+                "receipt": operator_root + r"\separation.json"
+            },
+        })
+        packed = prepare.sealed_config_for_pack(config)
+        packed_text = json.dumps(packed, sort_keys=True)
+        self.assertNotIn("operator-private", packed_text)
+        self.assertEqual(
+            prepare.sealed_config_for_pack(packed), packed,
+            "portable config normalization must be idempotent",
+        )
+        self.assertEqual(
+            packed["source_files_manifest"], "SEALED/source_manifest.json"
+        )
+        self.assertTrue(
+            packed["execution_adapter"]["runtime_executable"].startswith(
+                "HOST-BOUND/"
+            )
+        )
+        self.assertEqual(
+            packed["execution_adapter"]["provider_runtime"]["auth_source_path"],
+            "OPERATOR-SECRET/provider-auth-source",
+        )
+
     def test_excluded_checker_fixture_contract_is_schema_valid_but_not_production(self) -> None:
         config = json.loads(
             (ROOT / "evaluation" / "target-drift-v2" / "execution-template.json")
