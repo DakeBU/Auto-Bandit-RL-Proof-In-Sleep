@@ -15,7 +15,7 @@ import stat
 import subprocess
 import sys
 import tempfile
-from pathlib import Path, PurePosixPath
+from pathlib import Path, PurePosixPath, PureWindowsPath
 from typing import Any
 
 import launch_target_drift_checker_container as checker_launcher
@@ -257,6 +257,33 @@ def rewrite_config_strings(value: Any, replacements: dict[str, str]) -> Any:
     return value
 
 
+def absolute_parent_spellings(path_text: str) -> set[str]:
+    """Return POSIX and Windows spellings of an absolute path's parent.
+
+    Audit packs can be prepared on a different operating system from the
+    operator that supplied the frozen paths.  Native ``Path`` semantics alone
+    therefore miss, for example, a Windows drive path while running on Linux.
+    """
+    spellings: set[str] = set()
+    for path_type in (PurePosixPath, PureWindowsPath):
+        candidate = path_type(path_text)
+        if not candidate.is_absolute():
+            continue
+        parent = candidate.parent
+        if parent == path_type(candidate.anchor):
+            continue
+        spellings.add(str(parent))
+        spellings.add(parent.as_posix())
+    return spellings
+
+
+def is_cross_platform_absolute(path_text: str) -> bool:
+    return (
+        PurePosixPath(path_text).is_absolute()
+        or PureWindowsPath(path_text).is_absolute()
+    )
+
+
 def sealed_config_for_pack(config: dict[str, Any]) -> dict[str, Any]:
     """Return a portable audit config with no operator-local host paths."""
     packed = json.loads(json.dumps(config))
@@ -267,10 +294,9 @@ def sealed_config_for_pack(config: dict[str, Any]) -> dict[str, Any]:
             return
         def bind_one(source: str) -> None:
             replacements[source] = logical
-            candidate = Path(source)
-            if candidate.is_absolute() and candidate.parent != Path(candidate.anchor):
+            for parent in absolute_parent_spellings(source):
                 replacements.setdefault(
-                    str(candidate.parent), "HOST-BOUND/operator-directory"
+                    parent, "HOST-BOUND/operator-directory"
                 )
         bind_one(path_text)
         try:
@@ -380,7 +406,7 @@ def sealed_config_for_pack(config: dict[str, Any]) -> dict[str, Any]:
     packed = rewrite_config_strings(packed, replacements)
     serialized = json.dumps(packed, sort_keys=True, ensure_ascii=False)
     for source in replacements:
-        if source and source != "UNSET" and Path(source).is_absolute():
+        if source and source != "UNSET" and is_cross_platform_absolute(source):
             require(source not in serialized,
                     f"portable packed config retains operator path {source}")
     return packed

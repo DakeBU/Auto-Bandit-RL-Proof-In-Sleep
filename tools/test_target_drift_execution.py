@@ -624,6 +624,7 @@ class TargetDriftExecutionTest(unittest.TestCase):
             ROOT / "evaluation" / "target-drift-v2" / "execution-template.json"
         ).read_text(encoding="utf-8"))
         operator_root = r"C:\operator-private\target-drift"
+        operator_root_forward = "C:/operator-private/target-drift"
         config["source_files_manifest"] = operator_root + r"\sources.json"
         human = config["human_source_contract_validation"]
         human["review_packet"] = operator_root + r"\review"
@@ -667,7 +668,10 @@ class TargetDriftExecutionTest(unittest.TestCase):
             "controller_entrypoint_source": operator_root + r"\controller.py",
             "isolation_probe_report": operator_root + r"\probe.json",
             "isolation_probe_artifacts_dir": operator_root + r"\probe-artifacts",
-            "sandbox_command_argv": [operator_root + r"\docker.exe", operator_root],
+            "sandbox_command_argv": [
+                operator_root + r"\docker.exe", operator_root_forward,
+            ],
+            "sandbox_cleanup_argv": [operator_root_forward + "/cleanup"],
             "filesystem_network_process_attestation": operator_root + r"\isolation.txt",
             "controller_worker_separation_attestation": {
                 "receipt": operator_root + r"\separation.json"
