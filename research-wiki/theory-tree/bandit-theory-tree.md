@@ -275,7 +275,7 @@ constants, and literal LML declaration identity remain separate.
 | Thompson sampling | compiled stationary posterior kernel, actual recursive probability matching, comparator decomposition plus explicit mean-optimality contract, clipped confidence, latent-stream support, generated Bayesian regret; broader model/toolchain ports remain open | `TXT-SLIVKINS-2019-2024`, `PPR-AGRAWAL-GOYAL-2011-TS`, LML cards `Bandits.TS.hasCondDistrib_action`, `Bandits.integral_regret_le` |
 | EXP3/adversarial | canonical generated route compiled through potential/Hedge, importance-weighted conditional moments, measurable recursive sampling, exploration bias, tuned expected regret, per-horizon best-arm realized tails, a distinct fixed-process all-positive-prefix realized-regret terminal, and an explicit sparse-loss extension; horizon-free tuned EXP3, best-arm aggregation on that one fixed process, and EXP3.P remain extensions | `TXT-BUBECK-CESABIANCHI-2012`, `TXT-LATTIMORE-SZEPESVARI-2020`, `PPR-AUER-CFS-2002-EXP3` |
 | Tsallis-INF/FTRL | canonical generated half-Tsallis route compiled through minimizer regularity, scheduled conditional action law, score alignment, expected stability/penalty, fixed-gap self-bounding, square-root schedule, and a finite-arm IID bounded reward-law logarithmic terminal; corruption, dynamic, and population-oracle restart results compile as labelled extensions, while the strict `Fin 2` refined-average obstruction and paper-sharp complete Tsallis-INF remain visible | `LOCAL-LEAF-TSALLIS-FINITE-BANDIT-MEAN-LOSS`, `LOCAL-LEAF-TSALLIS-SQRT-SCHEDULE-LOG-FIXED-GAP`, `LOCAL-LEAF-TSALLIS-SCHEDULED-FIXED-GAP-SELF-BOUNDING`, `LOCAL-LEAF-TSALLIS-SCHEDULED-EXPECTED-REGRET`, `LOCAL-LEAF-TSALLIS-SCHEDULED-ALL-RATE-EXPECTED-STABILITY`, `PPR-ZIMMERT-SELDIN-2018-TSALLIS-INF`, `PPR-MASOUDIAN-SELDIN-2021-TSALLIS-INF`, `PPR-ADAPTIVE-LR-FTRL-2024` |
-| Stochastic-gradient bandit | 215 declarations compile twelve layers through the generated Equation-(5) tower, expected-parameter telescope, Jensen/log bound, actual sampled-action pseudo-regret bridge, Equation-(7) assembly, and exact fixed-IID/Dirac two-arm Theorem 1 with source horizon and constants; Theorems 2--4 and general-`K` regimes remain open | `PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB`, `PAPER-AUDIT-NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT` |
+| Stochastic-gradient bandit | 223 declarations comprise the frozen 215-declaration Theorem-1 stack and 8 Appendix-E/Theorem-4 source-contract leaves. The exact fixed-IID/Dirac two-arm Theorem 1 compiles with source horizon and constants; the separate gate checks the positive drift margin, audited finite survival algebra under explicit premises, and geometric phase envelope but not the generated stopped-process premises or Theorem 4. Theorems 2--4 and general-`K` regimes remain open | `PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB`, `PAPER-AUDIT-NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT` |
 | Linear/OFUL | compiled finite-action scalar route from Gram/determinant and confidence ellipsoid to a horizon-free all-time/all-horizon/stopping policy; horizon-indexed expectation/consistency is separate; contextual/dynamic/Hilbert extensions remain open | `TXT-LATTIMORE-SZEPESVARI-2020`, `PPR-ABBASI-YADKORI-2011-SELF-NORMALIZED`, `PPR-LI-CHU-LANGFORD-SCHAPIRE-2010-LINUCB` |
 | Pure exploration | confidence event, stopping rule, sample complexity, lower-bound change-of-measure | `TXT-LATTIMORE-SZEPESVARI-2020`, `TXT-SLIVKINS-2019-2024` |
 | BwK/resource constraints | budget stopping time, resource consumption, primal-dual comparison | `TXT-SLIVKINS-2019-2024`, `PPR-BADANIDIYURU-KLEINBERG-SLIVKINS-2013-BWK` |
@@ -421,9 +421,14 @@ actions actually sampled by the generated process, assembles Equation (7),
 and specializes the chain to fixed two-arm IID reward laws with a Dirac
 environment prior.  The terminal `twoArmFixedIIDDirac_theoremOne` retains
 source `T = tailHorizon + 1`, `0 < Delta < 1`, and
-`eta * sourceC eta < Delta`, with the exact source constants.  The twelve
-layers contain 215 declarations in the exact
-`26+18+18+14+4+10+3+25+19+9+37+32` split.
+`eta * sourceC eta < Delta`, with the exact source constants.  The frozen
+twelve-layer Theorem-1 stack contains 215 declarations in the exact
+`26+18+18+14+4+10+3+25+19+9+37+32` split.  A separate eight-declaration
+Appendix-E contract audit proves the positive Equation-(22) margin, audited
+finite survival-event composition under explicit positivity/range premises,
+and a finite termwise-dominated `1/rho` phase envelope, bringing
+the audit inventory to 223 declarations.  It does not construct the uniform
+buffer/survival producer, stopped process, or Theorem 4.
 
 This remains a partial paper audit, but its source Theorem 1 endpoint is now
 compiled.  The fixed-IID adapter
@@ -440,7 +445,12 @@ unconditional iteration and failure-mass sum, Equation-(5) tower, expected
 best parameter, Jensen/log finite bound, actual sampled-action bridge,
 fixed-IID plus Dirac-prior specialization, source-horizon Equation-(7), and
 Theorem 1 regret constants now compile.  The two-arm sharp threshold,
-general-`K` learning-rate scaling, and Theorems 2--4 remain blocked.
+general-`K` learning-rate scaling, and Theorems 2--4 remain blocked.  In
+particular, the Appendix-E Step-4 source-contract gate records an unresolved
+switch between `q >= c` and conditioning on `q < c`, together with a displayed
+probability direction that does not supply the lower bound consumed by Step 3;
+the local finite contract is compiled, while the stochastic producer and
+endpoint are not.
 The source freeze records the
 initial reserve/not-started state; the current paper card and generated task
 memory record the later partial compiled status.

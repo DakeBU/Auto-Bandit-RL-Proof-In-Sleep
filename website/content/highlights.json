@@ -1375,6 +1375,21 @@
       ]
     },
     {
+      "full_name": "BanditRLProof.StochasticGradientBandit.theoremFourStepFour_survivalMass_pos",
+      "chapter": "frontier",
+      "plain": "For positive p-prime and c below one half, a buffered event with mass at least p-prime and conditional joint-survival mass at least one minus twice c yields strictly positive unconditional survival mass.",
+      "math": "0<p',\\;c<\\tfrac12,\\;P(B)\\ge p',\\;P(B\\cap S)\\ge(1-2c)P(B),\\;P(B\\cap S)\\le P(S)\\;\\Longrightarrow\\;P(S)\\ge p'(1-2c)>0.",
+      "intuition": "The finite argument is ordinary total-probability bookkeeping: first enter a strict buffer with positive mass, then retain a positive fraction of that mass on the survival event.",
+      "why": "Appendix E Step 3 needs a uniform positive return-avoidance probability. Isolating the exact finite consumer keeps the unresolved event-conditioning and bound-direction mismatch visible before the later stopped-process proof.",
+      "position": "This is an Appendix-E source-contract audit leaf, not Theorem 4. The general-K generated SGB process, uniform buffered-event producer, stopped supermartingale/Doob route, and final regret bound remain open.",
+      "proof_idea": "Multiply the buffer lower bound by the nonnegative factor one minus twice c, compose with the joint-survival premise, and use event inclusion into survival mass.",
+      "lean_notes": "All quantities are finite real masses supplied explicitly. The declaration constructs no probability space, conditional probability, stopping time, or generated bandit trajectory.",
+      "dependencies": [
+        "BanditRLProof.StochasticGradientBandit.theoremFourStepFourSurvivalLowerBound_pos",
+        "BanditRLProof.StochasticGradientBandit.theoremFourStepFour_survivalMass_ge"
+      ]
+    },
+    {
       "full_name": "BanditRLProof.LowerBounds.randomRegret_ge_quarter_of_clippingDecomposition",
       "chapter": "foundations",
       "plain": "If Eq. (17.8) holds, pulling the hard arm at most half the time and clipping at most a quarter of rounds forces random regret at least gap times horizon over four.",

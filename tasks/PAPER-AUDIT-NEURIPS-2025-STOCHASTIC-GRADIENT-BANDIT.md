@@ -19,8 +19,10 @@ Stochastic Gradient really succeed for Bandits?* (NeurIPS 2025). The audit
 separates the reusable softmax/update/regret mechanism, pathwise zero-sum/odds
 structure, Equation-(8) analytic inequality, generated conditional kernels,
 two-arm recurrence interfaces, and the paper's exact two-arm Theorem 1
-endpoint.  Theorems 2--4 and the general-`K` learning-rate regimes remain
-outside the compiled boundary.
+endpoint.  A separate eight-declaration Appendix-E contract audit now checks
+the finite scalar implications needed by Theorem 4 without promoting its
+generated-process premises or endpoint.  Theorems 2--4 and the general-`K`
+learning-rate regimes remain outside the compiled endpoint boundary.
 
 ## Frozen source
 
@@ -33,7 +35,8 @@ outside the compiled boundary.
   `a3aff97fe2179c47fff61cc51453b84a082332e2a205f7fa2268cc68cba73b3d`.
 - Source windows: problem and regret on physical PDF p. 1; SGB policy and
   Equations (3)--(8) on pp. 2--4; Algorithm 1 and its gradient verification
-  on p. 22; Appendix A.2 Equations (9)--(11) on pp. 22--23.
+  on p. 22; Appendix A.2 Equations (9)--(11) on pp. 22--23; Theorem 4 and
+  Appendix E Steps 1--4 on physical PDF pp. 47--49.
 
 ## Placement
 
@@ -263,6 +266,28 @@ source right-hand side
 This closes Theorem 1 only.  It does not promote Theorems 2--4 or the whole
 paper.
 
+## Compiled Theorem-4 source-contract gate
+
+Eight declarations isolate the finite scalar obligations used by Appendix E
+without claiming the stopped-process argument:
+
+1. the printed learning-rate condition implies the strictly positive
+   Equation-(22) drift margin;
+2. when `0 < pPrime` and `c < 1/2`, a buffered event of mass at least
+   `pPrime`, combined with conditional joint-survival mass at least
+   `1 - 2*c`, yields the audited unconditional lower bound
+   `pPrime * (1 - 2*c)` and hence strictly positive survival mass; and
+3. when `0 < rho <= 1`, any finite phase-mass sequence dominated termwise by
+   `(1 - rho)^j` has total mass at most `1 / rho`.
+
+The camera-ready Step 4 alternates between `q >= c` and conditioning on
+`q < c`, and its displayed total-probability direction does not supply the
+lower bound consumed by Step 3.  The local declarations therefore record the
+minimal audited finite contract while leaving the missing stochastic
+producers explicit.  They do **not** construct the general-`K` SGB trajectory,
+the stopped supermartingale/Doob argument, a uniform buffered-event producer,
+or Theorem 4.
+
 ## Semantic boundary
 
 The finite sum over the selected arm is the exact algebra obtained after
@@ -306,6 +331,11 @@ The final 32-declaration layer closes the expected-parameter/Jensen consumer,
 fixed-IID/Dirac specialization, actual sampled-action bridge, Equation-(7)
 terminal assembly, and exact Theorem-1 bound.  Every other paper-level rate
 endpoint remains open.
+
+The separate eight-declaration Theorem-4 contract gate proves only the
+positive drift margin, audited finite event composition, and finite
+geometric phase envelope.  It is source-audit evidence for why Theorem 4 is
+still blocked, not a proof or partial promotion of that endpoint.
 
 ## Lean target
 
@@ -361,6 +391,14 @@ BanditRLProof.StochasticGradientBandit.integral_twoArmSampledPseudoRegret_eq_gen
 BanditRLProof.StochasticGradientBandit.twoArmGeneratedExpectedPseudoRegret_le_sourceTheoremOne
 BanditRLProof.StochasticGradientBandit.integral_twoArmSampledPseudoRegret_le_sourceTheoremOne
 BanditRLProof.StochasticGradientBandit.twoArmFixedIIDDirac_theoremOne
+BanditRLProof.StochasticGradientBandit.theoremFourStepOneMargin
+BanditRLProof.StochasticGradientBandit.theoremFourStepFourSurvivalLowerBound
+BanditRLProof.StochasticGradientBandit.theoremFourStepOneMargin_pos
+BanditRLProof.StochasticGradientBandit.theoremFourStepFourSurvivalLowerBound_pos
+BanditRLProof.StochasticGradientBandit.theoremFourStepFour_survivalMass_ge
+BanditRLProof.StochasticGradientBandit.theoremFourStepFour_survivalMass_pos
+BanditRLProof.StochasticGradientBandit.theoremFourFiniteGeometricPhaseMass_le_inv
+BanditRLProof.StochasticGradientBandit.theoremFourFiniteTransientMass_le_inv
 ```
 
 Target files: `BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean`,
@@ -373,7 +411,8 @@ Target files: `BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean`,
 `BanditRLProof/Algorithms/StochasticGradientBanditTwoArmMeasurableRecurrence.lean`,
 `BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean`,
 `BanditRLProof/Algorithms/StochasticGradientBanditTwoArmFixedIID.lean`, and
-`BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean`.
+`BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean`, plus
+`BanditRLProof/Algorithms/StochasticGradientBanditTheoremFourContractAudit.lean`.
 
 ## Gate
 
@@ -389,6 +428,7 @@ lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTwoArmMeasurableR
 lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean
 lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTwoArmFixedIID.lean
 lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean
+lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTheoremFourContractAudit.lean
 lake env lean Tests/StochasticGradientBanditPaperAuditCanary.lean
 lake env lean Tests/StochasticGradientBanditConditionalExponentialAuditCanary.lean
 lake env lean Tests/StochasticGradientBanditTwoArmRecurrenceCanary.lean
@@ -397,6 +437,7 @@ lake env lean Tests/StochasticGradientBanditTwoArmMeasurableRecurrenceCanary.lea
 lake env lean Tests/StochasticGradientBanditTwoArmPathIntegrabilityCanary.lean
 lake env lean Tests/StochasticGradientBanditTwoArmFixedIIDCanary.lean
 lake env lean Tests/StochasticGradientBanditTwoArmTheoremOneCanary.lean
+lake env lean Tests/StochasticGradientBanditTheoremFourContractAuditCanary.lean
 python tools/bandit.py check
 ```
 
@@ -445,10 +486,15 @@ python tools/bandit.py check
   bridge and `twoArmFixedIIDDirac_theoremOne`.
 - [x] The twelve compiled layers contain 215 named declarations in the exact
   `26+18+18+14+4+10+3+25+19+9+37+32` split.
+- [x] The separate Theorem-4 source-contract gate compiles 8 named
+  declarations: 2 definitions and 6 theorems.  Total SGB audit inventory is
+  therefore 223, while the exact Theorem-1 stack remains 215 declarations.
 - [x] Refresh the declaration indexes, proof Blueprint, website build, and
-  anonymous claim ledger to the 215-declaration boundary.
-- [x] Refresh the separate paper repository's arXiv and ICLR audit tables,
-  rebuild both PDFs, and synchronize the verified revision to Overleaf.
+  anonymous claim ledger to the 223-declaration audit boundary.
+- [x] Refresh the separate paper repository's arXiv and ICLR audit tables and
+  rebuild both PDFs on the isolated paper branch.
+- [ ] Push the verified paper revision to Overleaf main only after explicit
+  approval; local commit `1a2e934` and both round-10 PDFs are ready.
 - [x] Re-run the repository-wide Lean, harness, website, and anonymous-artifact
   gates after the evidence refresh.
 - [x] Complete an independent mathematical review of the final Theorem-1

@@ -41,6 +41,27 @@ DELAYED_LINE10_INITIALIZATION_ID = (
     "DELAYED-SAPO-LINE10-ELIMINATED-ARM-INITIALIZATION"
 )
 DELAYED_CENTRAL_ENDPOINT_ID = "NEURIPS-2025-DELAYED-BOBW-CENTRAL-ENDPOINTS"
+SGB_AUDIT_ID = "NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT-MECHANISM-AUDIT"
+SGB_THEOREM_ONE_STACK_DECLARATION_COUNT = 215
+SGB_THEOREM_FOUR_CONTRACT_AUDIT_DECLARATION_COUNT = 8
+SGB_TOTAL_DECLARATION_COUNT = (
+    SGB_THEOREM_ONE_STACK_DECLARATION_COUNT
+    + SGB_THEOREM_FOUR_CONTRACT_AUDIT_DECLARATION_COUNT
+)
+SGB_THEOREM_FOUR_CONTRACT_AUDIT_FILE = (
+    "BanditRLProof/Algorithms/"
+    "StochasticGradientBanditTheoremFourContractAudit.lean"
+)
+SGB_THEOREM_FOUR_CONTRACT_AUDIT_DECLARATIONS = frozenset({
+    "BanditRLProof.StochasticGradientBandit.theoremFourStepOneMargin",
+    "BanditRLProof.StochasticGradientBandit.theoremFourStepFourSurvivalLowerBound",
+    "BanditRLProof.StochasticGradientBandit.theoremFourStepOneMargin_pos",
+    "BanditRLProof.StochasticGradientBandit.theoremFourStepFourSurvivalLowerBound_pos",
+    "BanditRLProof.StochasticGradientBandit.theoremFourStepFour_survivalMass_ge",
+    "BanditRLProof.StochasticGradientBandit.theoremFourStepFour_survivalMass_pos",
+    "BanditRLProof.StochasticGradientBandit.theoremFourFiniteGeometricPhaseMass_le_inv",
+    "BanditRLProof.StochasticGradientBandit.theoremFourFiniteTransientMass_le_inv",
+})
 
 
 def fail(message):
@@ -303,6 +324,62 @@ def verify_claim_ledger():
     if source_audit_names != expected_source_audit_names:
         fail("delayed source-audit declaration set drift")
 
+    sgb = ledger.get("stochastic_gradient_bandit", {})
+    if sgb.get("source_record_id") != SGB_AUDIT_ID:
+        fail("SGB source record binding drift")
+    sgb_record = records.get(SGB_AUDIT_ID, {})
+    if sgb_record.get("id") != SGB_AUDIT_ID:
+        fail("SGB source record self-ID drift")
+    if sgb_record.get("status") != "partial":
+        fail("SGB source record status drift")
+    sgb_declarations = sgb_record.get("declarations")
+    if not isinstance(sgb_declarations, list):
+        fail("SGB source record has no declarations list")
+    sgb_names = set(sgb_declarations)
+    if (
+        len(sgb_declarations) != SGB_TOTAL_DECLARATION_COUNT
+        or len(sgb_names) != SGB_TOTAL_DECLARATION_COUNT
+        or sgb.get("declaration_count") != SGB_TOTAL_DECLARATION_COUNT
+    ):
+        fail("SGB source audit must contain exactly 223 unique declarations")
+    if (
+        sgb.get("theorem_one_stack_declaration_count")
+        != SGB_THEOREM_ONE_STACK_DECLARATION_COUNT
+    ):
+        fail("SGB Theorem-1 stack declaration count drift")
+    if (
+        sgb.get("theorem_four_contract_audit_declaration_count")
+        != SGB_THEOREM_FOUR_CONTRACT_AUDIT_DECLARATION_COUNT
+    ):
+        fail("SGB Theorem-4 contract-audit declaration count drift")
+    theorem_four_rows = [
+        row for row in declarations
+        if row.get("file") == SGB_THEOREM_FOUR_CONTRACT_AUDIT_FILE
+    ]
+    theorem_four_names = {row.get("full_name") for row in theorem_four_rows}
+    if (
+        not (ROOT / SGB_THEOREM_FOUR_CONTRACT_AUDIT_FILE).is_file()
+        or len(theorem_four_rows)
+        != SGB_THEOREM_FOUR_CONTRACT_AUDIT_DECLARATION_COUNT
+        or theorem_four_names
+        != SGB_THEOREM_FOUR_CONTRACT_AUDIT_DECLARATIONS
+        or not theorem_four_names.issubset(sgb_names)
+    ):
+        fail("SGB Theorem-4 contract-audit frozen declaration/file drift")
+    if (
+        len(sgb_names - theorem_four_names)
+        != SGB_THEOREM_ONE_STACK_DECLARATION_COUNT
+    ):
+        fail("SGB Theorem-1 stack derived declaration count drift")
+    if sgb.get("source_theorem_one_compiled") is not True:
+        fail("SGB Theorem-1 compiled gate drift")
+    if sgb.get("source_theorem_four_contract_audit_compiled") is not True:
+        fail("SGB Theorem-4 contract-audit compiled gate drift")
+    if sgb.get("paper_endpoint_verified") is not True:
+        fail("SGB Theorem-1 paper endpoint verification flag drift")
+    if sgb.get("theorem_four_endpoint_verified") is not False:
+        fail("SGB Theorem-4 endpoint verification flag drift")
+
     missing_names = []
     for record in records.values():
         for name in record.get("declarations", []):
@@ -416,7 +493,8 @@ def verify_theorem_audit_comparison():
             "central_endpoint_record_id":
                 "NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT-MECHANISM-AUDIT",
             "promotion_status": "partial",
-            "compiled_declaration_count": 215,
+            "compiled_declaration_count": 223,
+            "theorem_four_endpoint_verified": False,
             "declaration_count_breakdown": {
                 "finite_action_algebra": 26,
                 "generated_history_and_kernel_bridge": 18,
@@ -430,6 +508,7 @@ def verify_theorem_audit_comparison():
                 "fixed_iid_source_contract_bridge": 9,
                 "unconditional_recurrence_and_failure_mass": 37,
                 "source_theorem_one_terminal": 32,
+                "source_theorem_four_contract_audit": 8,
             },
         },
     }
