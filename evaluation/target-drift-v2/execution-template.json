@@ -206,9 +206,17 @@
     "bootstrap_seed": "UNSET",
     "bootstrap_replicates": 20000,
     "permutation_replicates": 32768,
-    "primary_estimand": "paired target-level risk difference in expert-adjudicated exact contract satisfaction: abrl minus source_aware_blueprint",
-    "primary_interval": "95% source/target-aware hierarchical bootstrap after within-target replicate aggregation",
-    "primary_success_rule": "lower endpoint above zero, every leave-one-paper-out point estimate nonnegative, and faithful-request specificity reported alongside injected-drift sensitivity",
+    "primary_estimand": "fixed-30-target equal-weight mean of paired invocation risk differences in expert-adjudicated exact contract satisfaction (abrl minus source_aware_blueprint), retaining each target's frozen 3/2 or 2/3 source-faithful/injected-drift allocation; conditional generalization is only to new independent invocations under the frozen model, runtime, and protocol",
+    "primary_pairing_key": [
+      "case_id",
+      "replicate",
+      "requirement_variant"
+    ],
+    "primary_interval_method_id": "fixed_30_target_variant_preserving_paired_invocation_bootstrap_v1",
+    "primary_pairing_interpretation": "design-matched invocations from the same target, replicate, requirement-variant, and randomized condition block; paired does not imply shared provider RNG state",
+    "primary_interval": "95% fixed-target, variant-preserving paired-invocation bootstrap: do not resample the 30 targets; within every target-by-requirement-variant cell, resample aligned ABRL/source-aware replicate differences with replacement at the original cell size",
+    "primary_success_rule": "lower endpoint of the fixed-target, variant-preserving paired-invocation bootstrap interval above zero; report faithful-request specificity and injected-drift sensitivity alongside the primary result",
+    "primary_sensitivity_analyses": "exact source-aware sign flip over three paper-source clusters plus twelve textbook targets; leave-one-paper-out point estimates; source- and stratum-specific condition means",
     "secondary_pairwise_test": "exact paired sign-flip over 15 dependence units: three paper-source clusters and twelve textbook targets",
     "secondary_multiplicity": "Benjamini-Hochberg at q=0.05 over preregistered secondary endpoints",
     "reporting": "report every run, missingness, disagreement, amendment, cost, requirement variant, and stratum; never treat replicates or same-paper probes as independent papers or targets"

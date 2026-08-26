@@ -54,14 +54,21 @@ inside the sealed pack and rejects a changed adapter or provider-client executab
 before launch.
 Future evaluated agents will receive opaque IDs and one requirement.  Primary graders will see
 neutralized final artifacts and post-hoc checker evidence, not condition or
-variant labels or condition-specific workflow traces.
+variant labels, condition-specific workflow traces, or execution cost, duration,
+token, tool-call, build-attempt, and retry metadata.  Those metrics are stored
+only in the digest-bound operator mapping and are restored to the adjudicated
+analysis ledger after blind grading.  The condition-specific workflow artifacts
+and their common compliance pass/fail manipulation check follow the same
+operator-only boundary.
 
 Each future run must also emit a hash-bound workflow-artifact record.  Compile-only
 has no condition-specific evidence file, source-aware must retain a run-local
 `blueprint.md`, and ABRL must retain a target contract, blueprint, failure
 ledger, and promotion-gate log.  The current checker verifies only the required
 files, paths, and hashes; it does not prove that the named workflow was actually
-followed.  Primary graders will see only this common artifact-presence result.
+followed.  Primary graders will not see the condition-specific files or the
+common workflow-compliance pass/fail value; the latter is restored only in the
+post-adjudication analysis ledger.
 
 Before the 450 runs, the following are mandatory:
 
@@ -94,7 +101,10 @@ primary or external model run has been performed.
 
 The grader-packet materializer and packet-order seed are frozen before model
 execution.  Packet contents and their aggregate digest are produced only after
-neutral checking and are frozen before any primary grader sees them.  The two
+neutral checking and are frozen before any primary grader sees them.  The
+operator-only mapping retains semantic labels, execution metrics, and the
+workflow-compliance manipulation check; it is digest-bound with the packets but
+is never distributed to a primary grader.  The two
 complete blind response files and an adjudicator file for every binary-label
 or structured source-field disagreement are then combined by
 `tools/assemble_target_drift_grades.py`; the target-level analysis consumes only
@@ -474,7 +484,7 @@ rubric while preserving framework-native event semantics.  Those runs are not
 part of the 450-run primary estimand, have not started, and currently support no
 numerical or superiority claim.
 The adjacent `external-comparator-plan.seal.json` content-addresses both this
-plan and the unchanged 18 August primary protocol; the independent validator
+plan and the pre-execution-amended primary protocol; the independent validator
 rejects any byte drift or prematurely created comparator-results file.
 The separate LeanFlow plumbing seal now additionally binds a deterministic
 30-ID `leanflow_external` schedule, an exact completion-ledger schema, and one

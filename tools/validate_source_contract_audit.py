@@ -288,6 +288,7 @@ def validate(root: Path = ROOT) -> None:
             "schema_version",
             "amendment_id",
             "amended_on",
+            "integrity_reseal",
             "reason",
             "timing_and_claim_boundary",
             "pre_amendment_base",
@@ -312,6 +313,27 @@ def validate(root: Path = ROOT) -> None:
     require(
         amendment.get("amendment_id") == AMENDMENT_ID,
         "amendment: amendment ID differs",
+    )
+    integrity_reseal = amendment.get("integrity_reseal", {})
+    require_exact_keys(
+        integrity_reseal,
+        {
+            "resealed_on",
+            "reason",
+            "primary_model_outcomes_observed",
+            "external_comparator_outcomes_observed",
+            "provider_calls_for_evaluation_observed",
+        },
+        "amendment.integrity_reseal",
+    )
+    require(
+        integrity_reseal.get("resealed_on") == "2026-08-27"
+        and isinstance(integrity_reseal.get("reason"), str)
+        and bool(integrity_reseal["reason"].strip())
+        and integrity_reseal.get("primary_model_outcomes_observed") is False
+        and integrity_reseal.get("external_comparator_outcomes_observed") is False
+        and integrity_reseal.get("provider_calls_for_evaluation_observed") is False,
+        "amendment: integrity reseal timing or outcome boundary differs",
     )
 
     require(

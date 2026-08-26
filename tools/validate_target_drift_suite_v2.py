@@ -159,6 +159,27 @@ def main() -> None:
         "v2 pre-execution amendment binding is missing or overstates outcomes",
     )
     require(
+        protocol.get("grading_blinding_integrity_patch_on") == "2026-08-27"
+        and protocol.get("outcomes_observed_before_grading_blinding_patch") is False,
+        "v2 grading-blinding integrity patch is missing or overstates outcomes",
+    )
+    require(
+        protocol.get("primary_analysis_integrity_patch_on") == "2026-08-27"
+        and protocol.get("outcomes_observed_before_primary_analysis_patch") is False,
+        "v2 primary-analysis integrity patch is missing or overstates outcomes",
+    )
+    require(
+        protocol.get("primary_interval_method_id")
+        == config["analysis"].get("primary_interval_method_id")
+        == "fixed_30_target_variant_preserving_paired_invocation_bootstrap_v1",
+        "v2 primary interval method differs across protocol and execution template",
+    )
+    require(
+        protocol.get("primary_success_rule")
+        == config["analysis"].get("primary_success_rule"),
+        "v2 primary success rule differs across protocol and execution template",
+    )
+    require(
         protocol.get("textbook_derived_control_count") == 10
         and protocol.get("internal_evidence_policy_control_count") == 2,
         "v2 control-stratum 10/2 origin split differs",

@@ -222,6 +222,25 @@ class TargetDriftExecutionTest(unittest.TestCase):
         self.assertEqual(variants.count("source_faithful"), 75)
         self.assertEqual(variants.count("injected_drift"), 75)
 
+    def test_primary_analysis_contract_rejects_method_rule_or_pairing_drift(self) -> None:
+        config = json.loads(
+            (ROOT / "evaluation" / "target-drift-v2" / "execution-template.json")
+            .read_text(encoding="utf-8")
+        )
+        analysis = config["analysis"]
+        prepare.validate_primary_analysis_contract(analysis)
+        for field, replacement in (
+            ("primary_interval_method_id", "legacy_hierarchical_bootstrap"),
+            ("primary_success_rule", "report the point estimate only"),
+            ("primary_pairing_key", ["case_id", "replicate"]),
+            ("bootstrap_replicates", 1000),
+            ("permutation_replicates", 1024),
+        ):
+            changed = dict(analysis)
+            changed[field] = replacement
+            with self.subTest(field=field), self.assertRaises(SystemExit):
+                prepare.validate_primary_analysis_contract(changed)
+
     def test_excluded_checker_fixture_contract_is_schema_valid_but_not_production(self) -> None:
         config = json.loads(
             (ROOT / "evaluation" / "target-drift-v2" / "execution-template.json")

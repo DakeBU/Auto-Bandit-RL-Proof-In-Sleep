@@ -15,12 +15,16 @@ from typing import Any
 
 
 CONDITIONS = ("compile_only", "source_aware_blueprint", "abrl")
-
+PRIMARY_CONDITIONS = ("source_aware_blueprint", "abrl")
+REQUIREMENT_VARIANTS = ("injected_drift", "source_faithful")
+ANALYSIS_SCHEMA_VERSION = 2
 TOOLS = Path(__file__).resolve().parent
 sys.path.insert(0, str(TOOLS))
 
 import prepare_target_drift_execution as prepare  # noqa: E402
 import build_target_drift_completion_ledger as completion  # noqa: E402
+
+PRIMARY_BOOTSTRAP_METHOD_ID = prepare.PRIMARY_ANALYSIS_METHOD_ID
 
 
 def load(path: Path) -> dict[str, Any]:
@@ -37,6 +41,11 @@ def dump(path: Path, value: Any) -> None:
 def require(condition: bool, message: str) -> None:
     if not condition:
         raise SystemExit(f"target-drift analysis failed: {message}")
+
+
+def validate_primary_analysis_config(analysis_config: dict[str, Any]) -> None:
+    """Recheck the sealed primary contract at the inferential entrypoint."""
+    prepare.validate_primary_analysis_contract(analysis_config)
 
 
 def digest_payloads(payloads: dict[str, bytes]) -> str:
@@ -99,7 +108,7 @@ def verify_grading_pack(grading_pack: Path, sealed_pack_sha256: str,
 def incomplete_analysis(ledger: dict[str, Any]) -> dict[str, Any]:
     """Return a non-inferential report; deliberately omit every numeric effect field."""
     return {
-        "schema_version": 1,
+        "schema_version": ANALYSIS_SCHEMA_VERSION,
         "suite_id": "ABRL-TARGET-DRIFT-V2",
         "analysis_status": "not_estimable_incomplete_preregistered_run_universe",
         "result_eligible": False,
@@ -170,32 +179,108 @@ def benjamini_hochberg(pvalues: dict[str, float]) -> dict[str, float]:
     return adjusted
 
 
-def hierarchical_bootstrap(
-    differences: dict[str, float],
-    metadata: dict[str, dict[str, str]],
+def paired_primary_invocations(
+    records: list[dict[str, Any]],
+) -> dict[str, dict[str, list[float]]]:
+    """Return ABRL-minus-source-aware differences for complete invocation pairs."""
+    pair_members: dict[tuple[str, Any], dict[str, dict[str, Any]]] = defaultdict(dict)
+    for record in records:
+        condition = record["condition"]
+        if condition not in PRIMARY_CONDITIONS:
+            continue
+        key = (record["case_id"], record["replicate"])
+        require(condition not in pair_members[key],
+                f"duplicate {condition} member for primary invocation pair {key}")
+        pair_members[key][condition] = record
+
+    require(len(pair_members) == 150,
+            "expected 150 target-replicate primary invocation pairs")
+    paired: dict[str, dict[str, list[float]]] = defaultdict(
+        lambda: defaultdict(list)
+    )
+    for key in sorted(pair_members, key=lambda value: (value[0], str(value[1]))):
+        members = pair_members[key]
+        require(set(members) == set(PRIMARY_CONDITIONS),
+                f"primary invocation pair {key} is missing a condition")
+        variants = {members[condition]["requirement_variant"]
+                    for condition in PRIMARY_CONDITIONS}
+        require(len(variants) == 1,
+                f"primary invocation pair {key} disagrees on requirement variant")
+        variant = next(iter(variants))
+        require(variant in REQUIREMENT_VARIANTS,
+                f"primary invocation pair {key} has an unknown requirement variant")
+        paired[key[0]][variant].append(
+            float(members["abrl"]["primary_pass"])
+            - float(members["source_aware_blueprint"]["primary_pass"])
+        )
+
+    require(len(paired) == 30, "expected thirty targets in primary invocation pairs")
+    total_variant_counts = {variant: 0 for variant in REQUIREMENT_VARIANTS}
+    for case_id, by_variant in paired.items():
+        counts = {variant: len(by_variant.get(variant, []))
+                  for variant in REQUIREMENT_VARIANTS}
+        require(sorted(counts.values()) == [2, 3],
+                f"target {case_id} must retain a 3/2 requirement-variant quota")
+        for variant, count in counts.items():
+            total_variant_counts[variant] += count
+    require(all(count == 75 for count in total_variant_counts.values()),
+            "primary invocation pairs must contain 75 observations per variant")
+    return {
+        case_id: {
+            variant: list(by_variant[variant])
+            for variant in REQUIREMENT_VARIANTS
+        }
+        for case_id, by_variant in paired.items()
+    }
+
+
+def target_paired_differences(
+    paired: dict[str, dict[str, list[float]]],
+) -> dict[str, float]:
+    return {
+        case_id: mean([
+            value
+            for variant in REQUIREMENT_VARIANTS
+            for value in by_variant[variant]
+        ])
+        for case_id, by_variant in paired.items()
+    }
+
+
+def variant_quota_patterns(
+    paired: dict[str, dict[str, list[float]]],
+) -> dict[str, int]:
+    patterns: dict[str, int] = defaultdict(int)
+    for by_variant in paired.values():
+        label = ";".join(
+            f"{variant}={len(by_variant[variant])}"
+            for variant in REQUIREMENT_VARIANTS
+        )
+        patterns[label] += 1
+    return dict(sorted(patterns.items()))
+
+
+def fixed_target_variant_preserving_paired_bootstrap(
+    paired: dict[str, dict[str, list[float]]],
     seed: int,
     replicates: int,
 ) -> list[float]:
+    """Bootstrap paired invocations without resampling the frozen 30 targets."""
+    require(replicates > 0, "bootstrap_replicates must be positive")
+    require(len(paired) == 30, "paired bootstrap requires the fixed thirty targets")
     rng = random.Random(seed)
-    paper_sources: dict[str, list[str]] = defaultdict(list)
-    textbook: list[str] = []
-    for case_id in differences:
-        if metadata[case_id]["stratum"] == "paper_derived":
-            paper_sources[metadata[case_id]["source_id"]].append(case_id)
-        else:
-            textbook.append(case_id)
-    require(len(paper_sources) == 3 and all(len(values) == 6 for values in paper_sources.values()),
-            "expected three six-target paper clusters")
-    require(len(textbook) == 12, "expected twelve textbook targets")
-    source_names = sorted(paper_sources)
-    draws = []
+    draws: list[float] = []
     for _ in range(replicates):
-        paper_values = []
-        for sampled_source in (rng.choice(source_names) for _ in source_names):
-            targets = paper_sources[sampled_source]
-            paper_values.extend(differences[rng.choice(targets)] for _ in targets)
-        textbook_values = [differences[rng.choice(textbook)] for _ in textbook]
-        draws.append((18 * mean(paper_values) + 12 * mean(textbook_values)) / 30)
+        target_draws: list[float] = []
+        for case_id in sorted(paired):
+            target_values: list[float] = []
+            for variant in REQUIREMENT_VARIANTS:
+                values = paired[case_id][variant]
+                require(len(values) in {2, 3},
+                        f"target {case_id} has an invalid {variant} quota")
+                target_values.extend(rng.choice(values) for _ in values)
+            target_draws.append(mean(target_values))
+        draws.append(mean(target_draws))
     return draws
 
 
@@ -428,6 +513,7 @@ def analyze(data: dict[str, Any], seed: int, bootstrap_replicates: int, permutat
                 "execution_metrics must be present for every run")
     require(len({record["semantic_run_id"] for record in records}) == 450,
             "semantic run identifiers must be unique")
+    paired = paired_primary_invocations(records)
     run_keys = {
         (record["case_id"], record["condition"], record["replicate"])
         for record in records
@@ -453,14 +539,19 @@ def analyze(data: dict[str, Any], seed: int, bootstrap_replicates: int, permutat
         metadata[record["case_id"]] = candidate
     require(len(metadata) == 30, "expected thirty targets")
 
+    differences = target_paired_differences(paired)
     scores = target_scores(records)
-    differences = {
+    score_differences = {
         case_id: scores[(case_id, "abrl")] - scores[(case_id, "source_aware_blueprint")]
         for case_id in metadata
     }
+    require(
+        all(abs(differences[case_id] - score_differences[case_id]) <= 1e-12
+            for case_id in differences),
+            "paired invocation and target-aggregate primary estimates disagree")
     point = mean(differences.values())
-    bootstrap = hierarchical_bootstrap(
-        differences, metadata, seed, bootstrap_replicates
+    bootstrap = fixed_target_variant_preserving_paired_bootstrap(
+        paired, seed, bootstrap_replicates
     )
     pvalue, exact_assignments = source_aware_exact_sign_flip_pvalue(differences, metadata)
     require(permutation_replicates == exact_assignments,
@@ -477,31 +568,64 @@ def analyze(data: dict[str, Any], seed: int, bootstrap_replicates: int, permutat
         ]
         leave_one_paper_out[source] = mean(kept)
 
+    source_stratified = source_stratified_condition_means(scores, metadata)
     return {
-        "schema_version": 1,
+        "schema_version": ANALYSIS_SCHEMA_VERSION,
         "suite_id": "ABRL-TARGET-DRIFT-V2",
         "run_count": len(records),
         "target_count": len(metadata),
         "primary": {
-            "estimand": "target-level mean(abrl minus source_aware_blueprint primary pass rate after within-target replicate aggregation)",
+            "estimand": (
+                "fixed-30-target equal-weight mean of paired invocation risk "
+                "differences in expert-adjudicated exact contract satisfaction "
+                "(abrl minus source_aware_blueprint), retaining each target's "
+                "frozen 3/2 or 2/3 requirement-variant allocation"
+            ),
+            "pairing_key": ["case_id", "replicate", "requirement_variant"],
+            "pairing_interpretation": (
+                "design-matched invocations from the same randomized condition "
+                "block; paired does not imply shared provider RNG state"
+            ),
+            "generalization_scope": (
+                "new independent invocations under the frozen 30 targets, "
+                "requirement-variant allocations, model, runtime, and protocol; "
+                "no target-, paper-, future-model-, or future-runtime population "
+                "generalization"
+            ),
             "point_estimate": point,
-            "hierarchical_bootstrap_95_interval": [
+            "fixed_target_variant_preserving_paired_invocation_bootstrap_95_interval": [
                 percentile(bootstrap, 0.025), percentile(bootstrap, 0.975)
             ],
-            "source_aware_exact_sign_flip_pvalue": pvalue,
+            "bootstrap_method_id": PRIMARY_BOOTSTRAP_METHOD_ID,
+            "success_rule": prepare.PRIMARY_ANALYSIS_SUCCESS_RULE,
+            "bootstrap_resampling_unit": (
+                "paired ABRL/source-aware invocation within each fixed "
+                "target-by-requirement-variant cell; targets are not resampled"
+            ),
+            "variant_quota_patterns": variant_quota_patterns(paired),
             "bootstrap_seed": seed,
             "bootstrap_replicates": bootstrap_replicates,
-            "permutation_assignments": exact_assignments,
-            "leave_one_paper_out": leave_one_paper_out,
+            "sensitivity_analyses": {
+                "source_aware_exact_sign_flip": {
+                    "pvalue": pvalue,
+                    "assignments": exact_assignments,
+                    "dependence_units": "three paper-source clusters and twelve textbook targets",
+                },
+                "leave_one_paper_out_point_estimates": leave_one_paper_out,
+                "source_stratified_condition_means": source_stratified,
+            },
         },
         "requirement_variant_rates": variant_rates(records),
-        "primary_source_stratified_condition_means": source_stratified_condition_means(
-            scores, metadata
-        ),
         "secondary_endpoints_bh_q_0_05": secondary_analyses(records, metadata),
         "grader_condition_guess_accuracy": blinding_audit(records),
         "grading_summary": data.get("grading_summary"),
-        "limitation": "Three external source papers do not support paper-population generalization; same-paper probes and within-target replicates are not treated as independent papers or targets."
+        "limitation": (
+            "The primary interval is conditional on the frozen 30-target benchmark "
+            "and does not quantify target- or paper-population sampling uncertainty. "
+            "Three external source papers do not support paper-population "
+            "generalization; same-paper probes and within-target replicates are not "
+            "treated as independent papers or targets."
+        ),
     }
 
 
@@ -533,6 +657,7 @@ def main() -> None:
     require(hashlib.sha256((pack / "execution_code" / prepare_path.name).read_bytes()).hexdigest()
             == prepare_hash, "sealed pack verifier differs from frozen hash")
     analysis_config = config["analysis"]
+    validate_primary_analysis_config(analysis_config)
     sealed_pack_sha256 = (pack / "aggregate.sha256").read_text(encoding="ascii").strip()
     completion.self_verify(pack, config)
     completion_path = args.completion_ledger.resolve()
@@ -618,7 +743,8 @@ def main() -> None:
     print(
         "target-drift analysis complete: "
         f"point={result['primary']['point_estimate']:.6f}, "
-        f"interval={result['primary']['hierarchical_bootstrap_95_interval']}"
+        "interval="
+        f"{result['primary']['fixed_target_variant_preserving_paired_invocation_bootstrap_95_interval']}"
     )
 
 

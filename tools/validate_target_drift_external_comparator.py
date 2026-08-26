@@ -179,6 +179,9 @@ def validate_provider_disabled_plumbing(plan: dict) -> None:
         "comparator_id": "leanflow_external",
         "sealed_on": "2026-08-25",
         "amended_pre_execution_on": "2026-08-26",
+        "integrity_resealed_on": "2026-08-27",
+        "provider_calls_observed_before_integrity_reseal": False,
+        "formalization_outcomes_observed_before_integrity_reseal": False,
         "status": "sealed_result_free_provider_disabled_fixture_plumbing",
         "external_comparator_plan_path": (
             "evaluation/target-drift-v2/external-comparator-plan.json"
@@ -225,6 +228,9 @@ def main() -> None:
             == "ABRL-TARGET-DRIFT-V2", "suite identity differs")
     require(plan["frozen_on"] == "2026-08-24"
             and plan["amended_pre_execution_on"] == "2026-08-26"
+            and plan["integrity_resealed_on"] == "2026-08-27"
+            and plan["primary_outcomes_observed_before_integrity_reseal"] is False
+            and plan["comparator_outcomes_observed_before_integrity_reseal"] is False
             and plan["status"] == "planned_unrun_result_free"
             and plan["purpose"]
             == "external_system_calibration_not_primary_causal_condition",
@@ -240,6 +246,9 @@ def main() -> None:
         "suite_id": "ABRL-TARGET-DRIFT-V2",
         "sealed_on": "2026-08-24",
         "amended_pre_execution_on": "2026-08-26",
+        "integrity_resealed_on": "2026-08-27",
+        "primary_outcomes_observed_before_integrity_reseal": False,
+        "comparator_outcomes_observed_before_integrity_reseal": False,
         "status": "frozen_result_free_external_comparator_plan",
         "plan_path": "evaluation/target-drift-v2/external-comparator-plan.json",
         "plan_sha256": sha256(PLAN),
