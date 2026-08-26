@@ -96,7 +96,7 @@ outside the atom-generated directions.  This is a regularity/codomain
 obligation, not a source-error claim; the global Lemmas 3.5--3.6, Assumption
 3.7, Theorem 3.8, and every regret endpoint remain outside the compiled slice.
 
-The independent stochastic-gradient-bandit audit contains 183 named
+The independent stochastic-gradient-bandit audit contains 215 named
 declarations.  Its original 76 declarations cover finite
 Algorithm-1/Equations-(3)--(7) algebra, recursive generated histories and
 Equation-(5) kernels, pathwise two-arm Equation-(9)/(11) structure, and the
@@ -113,16 +113,16 @@ fixed-time unconditional forward/inverse scalar bounds, prove finite forward
 iteration and the inverse telescope, bridge the normalized initial mixture,
 and establish the resulting generic source-indexed squared failure-mass bound
 `1/4 + Σ_{n < N} E[(1 - p_{1,n+2})^2] ≤ 1 / (2η(Δ - η C_η))`, including the
-exact source-round-1 term.  This remains a partial audit route, not Theorem 1:
-the generated-history Equation-(5) expected-parameter/tower bridge, terminal
-logarithmic/Jensen consumer, simplification to the source-explicit horizon
-bound, fixed-IID plus Dirac-prior whole-chain specialization,
-generated-trajectory Equation-(7) regret assembly, the final source constant
-endpoint, every learning-rate-dependent rate, and Theorems
-1--4 remain outside the compiled slice.  The adapter is not a converse
-equivalence proof;
-with a general prior, the current prefix filtration reveals the latent
-environment.
+exact source-round-1 term.  A final 32 declarations close the generated
+Equation-(5) expected-parameter tower, forward-potential Jensen/log bound,
+actual sampled-action pseudo-regret bridge, Equation-(7) assembly, and
+`twoArmFixedIIDDirac_theoremOne`.  This is the source Theorem 1 for bounded
+two-arm fixed-IID reward laws with exact means, `0 < Delta < 1`, `0 < eta`,
+`eta * C_eta < Delta`, and source `T = tailHorizon + 1`.  `Dirac` refers only
+to the `Unit` environment prior, not to the reward laws.  The audit remains
+partial: Theorems 2--4, their learning-rate regimes, general-`K`, and
+non-Dirac extensions remain outside the compiled slice.  The fixed-IID
+adapter is not a converse equivalence proof.
 
 ## Quick verification
 

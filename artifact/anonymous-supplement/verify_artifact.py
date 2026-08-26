@@ -416,7 +416,7 @@ def verify_theorem_audit_comparison():
             "central_endpoint_record_id":
                 "NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT-MECHANISM-AUDIT",
             "promotion_status": "partial",
-            "compiled_declaration_count": 183,
+            "compiled_declaration_count": 215,
             "declaration_count_breakdown": {
                 "finite_action_algebra": 26,
                 "generated_history_and_kernel_bridge": 18,
@@ -429,6 +429,7 @@ def verify_theorem_audit_comparison():
                 "path_integrability_and_conditional_recurrence": 19,
                 "fixed_iid_source_contract_bridge": 9,
                 "unconditional_recurrence_and_failure_mass": 37,
+                "source_theorem_one_terminal": 32,
             },
         },
     }
@@ -469,10 +470,14 @@ def verify_theorem_audit_comparison():
         if any(name not in index_names for name in evidence_names):
             fail("theorem-audit comparison references an unindexed declaration")
         if spec["role"] == "source_frozen_external_audit":
+            expected_endpoint_verified = (
+                row_id == "stochastic-gradient-bandit-source-frozen-audit"
+            )
             if (
                 row.get("source_freeze_card_id") not in freeze_cards
                 or central.get("status") != "partial"
-                or row.get("paper_endpoint_verified") is not False
+                or row.get("paper_endpoint_verified") is not
+                    expected_endpoint_verified
                 or not isinstance(row.get("blocking_obligations"), list)
                 or not row["blocking_obligations"]
             ):

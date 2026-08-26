@@ -48,11 +48,12 @@ reports zero `literature-open` cases until a scoped primary-source audit support
 such a claim; one case remains in the source-audit queue, while the 13
 formalization-open cases expose 39 stable named leaves. Two additional
 source-frozen ports—the 54-declaration succinct-lower-bound audit and the
-183-declaration stochastic-gradient-bandit audit—are displayed outside that
-comparison ledger.  The latter now includes generic unconditional recurrences,
-finite scalar iteration, and the source-initialized expected squared
-failure-mass sum bound; neither port is promoted to a compiled paper-level
-terminal.
+215-declaration stochastic-gradient-bandit audit—are displayed outside that
+comparison ledger.  The latter now contains one exact compiled paper endpoint:
+Theorem 1 for the actual sampled pseudo-regret of the source's two-arm
+fixed-IID model, specialized through a Dirac environment prior.  The SGB audit
+remains partial because Theorems 2–4 and their learning-rate regimes are still
+open; the succinct-lower-bound port also has no compiled paper-level terminal.
 
 ## 🛠️ Build locally
 

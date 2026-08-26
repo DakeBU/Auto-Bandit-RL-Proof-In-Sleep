@@ -275,7 +275,7 @@ constants, and literal LML declaration identity remain separate.
 | Thompson sampling | compiled stationary posterior kernel, actual recursive probability matching, comparator decomposition plus explicit mean-optimality contract, clipped confidence, latent-stream support, generated Bayesian regret; broader model/toolchain ports remain open | `TXT-SLIVKINS-2019-2024`, `PPR-AGRAWAL-GOYAL-2011-TS`, LML cards `Bandits.TS.hasCondDistrib_action`, `Bandits.integral_regret_le` |
 | EXP3/adversarial | canonical generated route compiled through potential/Hedge, importance-weighted conditional moments, measurable recursive sampling, exploration bias, tuned expected regret, per-horizon best-arm realized tails, a distinct fixed-process all-positive-prefix realized-regret terminal, and an explicit sparse-loss extension; horizon-free tuned EXP3, best-arm aggregation on that one fixed process, and EXP3.P remain extensions | `TXT-BUBECK-CESABIANCHI-2012`, `TXT-LATTIMORE-SZEPESVARI-2020`, `PPR-AUER-CFS-2002-EXP3` |
 | Tsallis-INF/FTRL | canonical generated half-Tsallis route compiled through minimizer regularity, scheduled conditional action law, score alignment, expected stability/penalty, fixed-gap self-bounding, square-root schedule, and a finite-arm IID bounded reward-law logarithmic terminal; corruption, dynamic, and population-oracle restart results compile as labelled extensions, while the strict `Fin 2` refined-average obstruction and paper-sharp complete Tsallis-INF remain visible | `LOCAL-LEAF-TSALLIS-FINITE-BANDIT-MEAN-LOSS`, `LOCAL-LEAF-TSALLIS-SQRT-SCHEDULE-LOG-FIXED-GAP`, `LOCAL-LEAF-TSALLIS-SCHEDULED-FIXED-GAP-SELF-BOUNDING`, `LOCAL-LEAF-TSALLIS-SCHEDULED-EXPECTED-REGRET`, `LOCAL-LEAF-TSALLIS-SCHEDULED-ALL-RATE-EXPECTED-STABILITY`, `PPR-ZIMMERT-SELDIN-2018-TSALLIS-INF`, `PPR-MASOUDIAN-SELDIN-2021-TSALLIS-INF`, `PPR-ADAPTIVE-LR-FTRL-2024` |
-| Stochastic-gradient bandit | 183 declarations compile eleven layers through generic unconditional forward/inverse recurrences, finite scalar iteration, and a source-initialized expected squared failure-mass sum bound with exact first-round contribution `1/4`; the generated-history Equation-(5)/tower best-parameter bridge, forward-potential Jensen/log consumer and explicit finite bound, fixed-IID plus Dirac-prior whole-chain specialization, source-horizon Equation-(7)/regret constant assembly, and all Theorem 1--4 endpoints remain open | `PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB`, `PAPER-AUDIT-NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT` |
+| Stochastic-gradient bandit | 215 declarations compile twelve layers through the generated Equation-(5) tower, expected-parameter telescope, Jensen/log bound, actual sampled-action pseudo-regret bridge, Equation-(7) assembly, and exact fixed-IID/Dirac two-arm Theorem 1 with source horizon and constants; Theorems 2--4 and general-`K` regimes remain open | `PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB`, `PAPER-AUDIT-NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT` |
 | Linear/OFUL | compiled finite-action scalar route from Gram/determinant and confidence ellipsoid to a horizon-free all-time/all-horizon/stopping policy; horizon-indexed expectation/consistency is separate; contextual/dynamic/Hilbert extensions remain open | `TXT-LATTIMORE-SZEPESVARI-2020`, `PPR-ABBASI-YADKORI-2011-SELF-NORMALIZED`, `PPR-LI-CHU-LANGFORD-SCHAPIRE-2010-LINUCB` |
 | Pure exploration | confidence event, stopping rule, sample complexity, lower-bound change-of-measure | `TXT-LATTIMORE-SZEPESVARI-2020`, `TXT-SLIVKINS-2019-2024` |
 | BwK/resource constraints | budget stopping time, resource consumption, primal-dual comparison | `TXT-SLIVKINS-2019-2024`, `PPR-BADANIDIYURU-KLEINBERG-SLIVKINS-2013-BWK` |
@@ -414,10 +414,19 @@ source-time-fenced forward/inverse potentials and success/failure mass,
 integrates the tower-ready conditional recurrences, performs their finite
 scalar iterations, bridges the normalized initial pair, and proves the full
 expected squared failure-mass sum bound with the exact source-round-1 term
-`1/4`.  The eleven layers contain 183 declarations in the exact
-`26+18+18+14+4+10+3+25+19+9+37` split.
+`1/4`.  A twelfth 32-declaration layer closes the generated Equation-(5)
+conditional-expectation tower and expected-parameter telescope, applies the
+forward-potential Jensen/log consumer, identifies the expected gap of the
+actions actually sampled by the generated process, assembles Equation (7),
+and specializes the chain to fixed two-arm IID reward laws with a Dirac
+environment prior.  The terminal `twoArmFixedIIDDirac_theoremOne` retains
+source `T = tailHorizon + 1`, `0 < Delta < 1`, and
+`eta * sourceC eta < Delta`, with the exact source constants.  The twelve
+layers contain 215 declarations in the exact
+`26+18+18+14+4+10+3+25+19+9+37+32` split.
 
-This remains a partial mechanism/process audit.  The fixed-IID adapter now
+This remains a partial paper audit, but its source Theorem 1 endpoint is now
+compiled.  The fixed-IID adapter
 constructs the source law and discharges the bounded-support, mean, and reward-
 measurability inputs in the fixed two-arm setting; it is a one-way producer,
 not an equivalence for every environment satisfying the bounded fixed-mean
@@ -425,14 +434,13 @@ contract.  The bounded-support wrappers now prove Equation-(5)'s
 generated-history `Integrable sourceIncrement` premise without a new moment or
 independence assumption.  The broader contract still permits history-varying conditional
 laws with the same means and support, and with a general prior its prefix
-filtration reveals the latent environment; a fixed/Dirac environment recovers
-the fixed-instance reading.  The generic unconditional iteration and
-failure-mass sum bound now compile, but the fixed-IID whole-chain theorem does
-not.  The generated-history Equation-(5)/tower identification of the expected
-best parameter, forward-potential Jensen/log consumer with an explicit finite
-bound, fixed-IID plus Dirac-prior specialization, source-horizon Equation-(7)
-and regret-constant assembly, the two-arm sharp threshold, general-`K`
-learning-rate scaling, and every Theorem 1--4 regret endpoint remain blocked.
+filtration reveals the latent environment; the terminal fixes that environment
+with a Dirac prior to recover the fixed-instance reading.  The generic
+unconditional iteration and failure-mass sum, Equation-(5) tower, expected
+best parameter, Jensen/log finite bound, actual sampled-action bridge,
+fixed-IID plus Dirac-prior specialization, source-horizon Equation-(7), and
+Theorem 1 regret constants now compile.  The two-arm sharp threshold,
+general-`K` learning-rate scaling, and Theorems 2--4 remain blocked.
 The source freeze records the
 initial reserve/not-started state; the current paper card and generated task
 memory record the later partial compiled status.

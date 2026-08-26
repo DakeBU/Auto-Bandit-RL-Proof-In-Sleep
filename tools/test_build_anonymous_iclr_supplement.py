@@ -483,11 +483,12 @@ class AnonymousSupplementTests(unittest.TestCase):
         )
         sgb_row = next(
             row for row in ledger["table_rows"]
-            if row["artifact"] == "Stochastic-gradient-bandit mechanism audit"
+            if row["artifact"] ==
+                "Stochastic-gradient-bandit Theorem-1 and mechanism audit"
         )
         self.assertEqual(sgb_row["status"], "partial")
         self.assertEqual(sgb_row["source_record_ids"], [BUILDER.SGB_AUDIT_ID])
-        self.assertEqual(ledger["stochastic_gradient_bandit"]["declaration_count"], 183)
+        self.assertEqual(ledger["stochastic_gradient_bandit"]["declaration_count"], 215)
         self.assertEqual(
             ledger["stochastic_gradient_bandit"]["finite_algebra_declaration_count"],
             26,
@@ -534,6 +535,10 @@ class AnonymousSupplementTests(unittest.TestCase):
             ],
             37,
         )
+        self.assertEqual(
+            ledger["stochastic_gradient_bandit"]["theorem_one_declaration_count"],
+            32,
+        )
         self.assertTrue(
             ledger["stochastic_gradient_bandit"]["generated_trajectory_compiled"]
         )
@@ -556,6 +561,7 @@ class AnonymousSupplementTests(unittest.TestCase):
             "fixed_iid_contract_compiled",
             "unconditional_recurrence_iteration_compiled",
             "generic_expected_failure_mass_bound_compiled",
+            "source_theorem_one_compiled",
         ):
             self.assertTrue(ledger["stochastic_gradient_bandit"][flag])
         self.assertTrue(
@@ -569,13 +575,13 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertFalse(
             ledger["stochastic_gradient_bandit"]["learning_rate_regime_verified"]
         )
-        self.assertFalse(
+        self.assertTrue(
             ledger["stochastic_gradient_bandit"]["global_tower_iteration_verified"]
         )
-        self.assertFalse(
+        self.assertTrue(
             ledger["stochastic_gradient_bandit"]["expected_failure_mass_verified"]
         )
-        self.assertFalse(ledger["stochastic_gradient_bandit"]["paper_endpoint_verified"])
+        self.assertTrue(ledger["stochastic_gradient_bandit"]["paper_endpoint_verified"])
         self.assertEqual(
             ledger["source_records"][BUILDER.SGB_AUDIT_ID]["status"],
             "partial",
@@ -621,7 +627,7 @@ class AnonymousSupplementTests(unittest.TestCase):
         succinct = rows["succinct-lower-bound-source-frozen-audit"]
         self.assertEqual(succinct["compiled_declaration_count"], 54)
         sgb = rows["stochastic-gradient-bandit-source-frozen-audit"]
-        self.assertEqual(sgb["compiled_declaration_count"], 183)
+        self.assertEqual(sgb["compiled_declaration_count"], 215)
         self.assertEqual(
             sgb["declaration_count_breakdown"],
             {
@@ -636,12 +642,15 @@ class AnonymousSupplementTests(unittest.TestCase):
                 "path_integrability_and_conditional_recurrence": 19,
                 "fixed_iid_source_contract_bridge": 9,
                 "unconditional_recurrence_and_failure_mass": 37,
+                "source_theorem_one_terminal": 32,
             },
         )
         for row in (delayed, succinct, sgb):
             self.assertEqual(row["promotion_status"], "partial")
-            self.assertFalse(row["paper_endpoint_verified"])
             self.assertTrue(row["blocking_obligations"])
+        self.assertFalse(delayed["paper_endpoint_verified"])
+        self.assertFalse(succinct["paper_endpoint_verified"])
+        self.assertTrue(sgb["paper_endpoint_verified"])
 
     def test_theorem_audit_comparison_rejects_status_and_count_drift(self):
         records = BUILDER.selected_source_records()
@@ -715,6 +724,7 @@ class AnonymousSupplementTests(unittest.TestCase):
             BUILDER.SGB_CONDITIONAL_RECURRENCE_DECLARATIONS,
             BUILDER.SGB_FIXED_IID_DECLARATIONS,
             BUILDER.SGB_UNCONDITIONAL_RECURRENCE_DECLARATIONS,
+            BUILDER.SGB_THEOREM_ONE_DECLARATIONS,
         )
         for required in required_sets:
             with self.subTest(victim_set=sorted(required)):
@@ -734,7 +744,7 @@ class AnonymousSupplementTests(unittest.TestCase):
                 row["full_name"] = replacement
                 with self.assertRaisesRegex(
                     ValueError,
-                    "183 declarations across the frozen",
+                    "215 declarations across the frozen",
                 ):
                     BUILDER.validate_sgb_count(records, index)
 

@@ -25,16 +25,16 @@
     },
     {
       "id": "neurips-2025-stochastic-gradient-bandit",
-      "title": "Stochastic-gradient bandit mechanism and trajectory",
+      "title": "Stochastic-gradient bandit mechanism and Theorem 1",
       "paper_title": "Does Stochastic Gradient really succeed for Bandits?",
       "authors": "Dorian Baudry, Emmeran Johnson, Simon Vary, Ciara Pike-Burke, and Patrick Rebeschini",
       "year": 2025,
       "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/a4e683f0ce6b91e7fbdae9d32642d88f-Abstract-Conference.html",
       "milestone_id": "NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT-MECHANISM-AUDIT",
       "lean_status": "partial",
-      "compiled_declaration_count": 183,
-      "scope": "Eleven evidence layers compile in the exact 26+18+18+14+4+10+3+25+19+9+37 split. The first ten cover finite Algorithm-1/Equations-(3)–(7) algebra; recursive-history and Equation-(5) kernels; pathwise two-arm Equation-(9)/(11); standalone and generated-kernel Equation (8); fixed-history and source-initial recurrences; measurable contract/trajectory/conditional-distribution transport; fixed-horizon path integrability with bounded-support Equation-(5) update integrability and tower-ready conditional recurrence bounds; and the one-way fixed-IID source-law adapter. The new 37-declaration layer integrates the conditional recurrences on a generic bounded fixed-mean trajectory, performs finite scalar iteration, and proves the source-initialized expected squared failure-mass sum bound with exact first-round contribution 1/4.",
-      "boundary": "This is a source-frozen partial port, not a proof of Theorems 1–4. The generic unconditional layer does not itself identify the finite expected-increment sum with the generated recursive parameter, derive the forward-potential Jensen/log terminal and its explicit finite bound, specialize the whole chain to the fixed-IID environment with a Dirac prior, or assemble source-horizon Equation (7), regret, and constants. Those consumers remain required for Theorem 1; all Theorems 2–4 learning-rate endpoints remain open.",
+      "compiled_declaration_count": 215,
+      "scope": "Twelve evidence layers compile in the exact 26+18+18+14+4+10+3+25+19+9+37+32 split. The first eleven cover Algorithm 1 and Equations (3)–(11), generated kernels, bounded-support integrability, measurable trajectory transport, generic unconditional recurrences, finite scalar iteration, and the source-initialized squared failure-mass sum. The final 32-declaration layer identifies the generated expected parameter through the Equation-(5) tower, proves the forward-potential Jensen/log bound, bridges the generated policy to actual sampled-action pseudo-regret, assembles Equation (7), and compiles the exact Theorem-1 horizon and constants for bounded two-arm fixed-IID laws with a Dirac environment prior.",
+      "boundary": "The source-frozen audit remains partial, not a proof of Theorems 2–4. The compiled Theorem-1 endpoint is restricted to the source's two-arm fixed-IID setting with actual generated sampled pseudo-regret, 0 < Delta < 1, eta > 0, eta C_eta < Delta, bounded rewards, exact arm means, and source horizon T = tailHorizon + 1. It does not establish a general-K rate, a non-Dirac environment mixture, or any learning-rate endpoint from Theorems 2–4; the other two recent-paper audits also remain partial.",
       "representative_declarations": [
         "BanditRLProof.StochasticGradientBandit.softmaxProbability_sum",
         "BanditRLProof.StochasticGradientBandit.expectedSourceIncrement_eq_gapCoordinate",
@@ -54,7 +54,10 @@
         "BanditRLProof.StochasticGradientBandit.integral_twoArmFixedIIDHistoryStepKernel_sourceIncrement_eq_gapCoordinate",
         "BanditRLProof.StochasticGradientBandit.twoArmForwardUnconditionalRecurrence",
         "BanditRLProof.StochasticGradientBandit.twoArmInverseFailureMassSqTelescope",
-        "BanditRLProof.StochasticGradientBandit.twoArmFullFailureMassSqSum_le"
+        "BanditRLProof.StochasticGradientBandit.twoArmFullFailureMassSqSum_le",
+        "BanditRLProof.StochasticGradientBandit.integral_twoArmSampledPseudoRegret_eq_generated",
+        "BanditRLProof.StochasticGradientBandit.integral_twoArmSampledPseudoRegret_le_sourceTheoremOne",
+        "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDDirac_theoremOne"
       ]
     }
   ],

@@ -18,8 +18,9 @@ Pike-Burke, and Rebeschini, *Does
 Stochastic Gradient really succeed for Bandits?* (NeurIPS 2025). The audit
 separates the reusable softmax/update/regret mechanism, pathwise zero-sum/odds
 structure, Equation-(8) analytic inequality, generated conditional kernels,
-and two-arm recurrence interfaces from the paper's still-open global
-regret assembly and learning-rate-dependent stochastic endpoints.
+two-arm recurrence interfaces, and the paper's exact two-arm Theorem 1
+endpoint.  Theorems 2--4 and the general-`K` learning-rate regimes remain
+outside the compiled boundary.
 
 ## Frozen source
 
@@ -85,11 +86,11 @@ This extension promoted `SGB-HISTORY` from `blocked` to `partial`: the
 recursive process and its Equation-(5) conditional-kernel integrals compile.
 The fixed-IID source-contract and bounded-support layers below close the fixed
 two-arm law-to-environment-contract producer and derive the generated-history
-`Integrable sourceIncrement` premise.  Global recurrence iteration and every
-rate argument remain downstream.
-It cannot promote
-`SGB-RATES`, Lemmas 2--3, or Theorems
-1--4.  The Lean process accepts a general `initialTheta`; Algorithm 1's source
+`Integrable sourceIncrement` premise.  At that stage global recurrence
+iteration and every rate argument remained downstream; the later final layer
+below now promotes only Theorem 1.  It does not promote `SGB-RATES`, Lemmas
+2--3, or Theorems 2--4.  The Lean process accepts a general `initialTheta`;
+Algorithm 1's source
 initialization is the specialization `initialTheta := fun _ => 0`.
 
 ## Active two-arm rate-structure extension
@@ -175,8 +176,8 @@ conditional recurrence bounds, and derive initial/successor
 `Integrable sourceIncrement` directly from bounded support.
 
 This closes the fixed-horizon integrability and one-step conditional-
-expectation boundary.  It does not perform the global tower iteration, sum the
-expected squared failure mass, assemble Equation (7), or prove Theorem 1.
+expectation boundary.  Those operations are not proved by this layer itself;
+the later recurrence and terminal layers provide them.
 
 ## Active fixed-IID source-contract extension
 
@@ -194,7 +195,8 @@ that every history-dependent environment satisfying the broader contract is
 fixed IID.  The final fixed-IID theorem reuses the generic bounded-support
 integrability leaf to compile Equation (5)'s successor-history gap-coordinate
 identity without a caller-supplied integrability premise.  The iterated
-conditional recurrences and every regret endpoint remain open.
+conditional recurrences and regret endpoint are supplied only by the later
+recurrence and Theorem-1 layers.
 
 ## Active bounded-support Equation-(5) integrability extension
 
@@ -230,11 +232,36 @@ moment assumption is added.
 
 This extension closes the generic unconditional one-step recurrences, finite
 iteration, inverse telescope, normalized initial bridge, and expected squared
-failure-mass sum.  It does not yet identify the generated expected parameter
-increment through Equation (5), apply the forward-potential Jensen/log
-consumer and `p^2 <= 1` simplification, specialize the whole chain to the
-fixed-IID/Dirac source model, or assemble generated expected regret through
-Equation (7).  Theorem 1 therefore remains blocked.
+failure-mass sum.  The final layer below consumes this result to close the
+remaining Theorem-1 route.
+
+## Compiled Theorem-1 endpoint
+
+Thirty-two declarations now close the exact source endpoint rather than a
+probability-schedule proxy:
+
+1. identify the generated conditional source increment with
+   `Delta * p * (1-p)` and integrate the Equation-(5) tower;
+2. telescope the expected best-arm parameter, including the exact initial
+   `Delta / 4` term;
+3. bound the forward exponential potential and apply Jensen/log with the
+   source horizon `T = tailHorizon + 1`;
+4. define finite pseudo-regret from the actions actually sampled on the
+   generated trajectory and identify its expectation through the initial and
+   successor conditional action laws;
+5. assemble Equation (7) with the compiled failure-square estimate; and
+6. specialize the whole chain to fixed armwise IID reward laws under a Dirac
+   environment prior.
+
+The terminal `twoArmFixedIIDDirac_theoremOne` retains the source assumptions
+`0 < Delta < 1`, `0 < eta`, and `eta * sourceC eta < Delta`, and proves the
+source right-hand side
+
+`log (1 + 4 * eta * Delta * T) / (2 * eta)
+  + Delta / (2 * eta * (Delta - eta * sourceC eta))`.
+
+This closes Theorem 1 only.  It does not promote Theorems 2--4 or the whole
+paper.
 
 ## Semantic boundary
 
@@ -259,12 +286,13 @@ tower-ready one-step conditional-expectation statements now feed compiled
 unconditional recurrences, finite scalar iteration, and a source-indexed
 expected squared failure-mass estimate.  The expected-parameter/Jensen bridge,
 fixed-IID/Dirac specialization, Equation-(7) generated-regret assembly, and
-learning-rate endpoints remain open.
+actual sampled-action bridge now compile in the final layer.  The remaining
+learning-rate endpoints stay open.
 
 ## Nonclaims
 
-This task does not compile Theorems 1--4, Lemmas 2--3, any logarithmic or
-polynomial regret rate, the sharp two-arm threshold, or the `K`-dependent
+This task compiles Theorem 1 but not Theorems 2--4, Lemmas 2--3 beyond any
+locally reused ingredients, the sharp two-arm threshold, or the general-`K`
 learning-rate threshold.  It does not claim the external paper is verified.
 It compiles the local finite-action mechanism, the generated process-level
 Equation-(5)/(8) bridges, the pathwise Equation-(9)/(11) two-arm structure,
@@ -274,9 +302,10 @@ conditional-expectation forms, together with the fixed-IID source-law-to-
 environment-contract bridge and bounded-support Equation-(5) integrability
 wrappers.  The generic unconditional recurrences, finite iteration, normalized
 initial mixture, and expected squared failure-mass estimate also compile.
-The expected-parameter/Jensen consumer, fixed-IID/Dirac specialization,
-Equation-(7) terminal assembly, and every paper-level rate endpoint remain
-open.
+The final 32-declaration layer closes the expected-parameter/Jensen consumer,
+fixed-IID/Dirac specialization, actual sampled-action bridge, Equation-(7)
+terminal assembly, and exact Theorem-1 bound.  Every other paper-level rate
+endpoint remains open.
 
 ## Lean target
 
@@ -324,6 +353,14 @@ BanditRLProof.StochasticGradientBandit.twoArmFixedIIDEnvironment_feedback_apply
 BanditRLProof.StochasticGradientBandit.twoArmFixedIIDReward_aestronglyMeasurable
 BanditRLProof.StochasticGradientBandit.twoArmFixedIIDEnvironment_contract
 BanditRLProof.StochasticGradientBandit.integral_twoArmFixedIIDHistoryStepKernel_sourceIncrement_eq_gapCoordinate
+BanditRLProof.StochasticGradientBandit.twoArmTrajectorySourceIncrement_condExp_ae_eq_successFailure
+BanditRLProof.StochasticGradientBandit.integral_twoArmTrajectoryParameterZero_eq_successFailureSum
+BanditRLProof.StochasticGradientBandit.twoArmGeneratedExpectedPseudoRegret_eq_parameter_add_failureSq
+BanditRLProof.StochasticGradientBandit.integral_twoArmTrajectoryParameterZero_le_source_log_bound
+BanditRLProof.StochasticGradientBandit.integral_twoArmSampledPseudoRegret_eq_generated
+BanditRLProof.StochasticGradientBandit.twoArmGeneratedExpectedPseudoRegret_le_sourceTheoremOne
+BanditRLProof.StochasticGradientBandit.integral_twoArmSampledPseudoRegret_le_sourceTheoremOne
+BanditRLProof.StochasticGradientBandit.twoArmFixedIIDDirac_theoremOne
 ```
 
 Target files: `BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean`,
@@ -335,8 +372,8 @@ Target files: `BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean`,
 `BanditRLProof/Algorithms/StochasticGradientBanditTwoArmInitialRecurrence.lean`,
 `BanditRLProof/Algorithms/StochasticGradientBanditTwoArmMeasurableRecurrence.lean`,
 `BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean`,
-and
-`BanditRLProof/Algorithms/StochasticGradientBanditTwoArmFixedIID.lean`.
+`BanditRLProof/Algorithms/StochasticGradientBanditTwoArmFixedIID.lean`, and
+`BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean`.
 
 ## Gate
 
@@ -351,6 +388,7 @@ lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTwoArmInitialRecu
 lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTwoArmMeasurableRecurrence.lean
 lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean
 lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTwoArmFixedIID.lean
+lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean
 lake env lean Tests/StochasticGradientBanditPaperAuditCanary.lean
 lake env lean Tests/StochasticGradientBanditConditionalExponentialAuditCanary.lean
 lake env lean Tests/StochasticGradientBanditTwoArmRecurrenceCanary.lean
@@ -358,6 +396,7 @@ lake env lean Tests/StochasticGradientBanditTwoArmInitialRecurrenceCanary.lean
 lake env lean Tests/StochasticGradientBanditTwoArmMeasurableRecurrenceCanary.lean
 lake env lean Tests/StochasticGradientBanditTwoArmPathIntegrabilityCanary.lean
 lake env lean Tests/StochasticGradientBanditTwoArmFixedIIDCanary.lean
+lake env lean Tests/StochasticGradientBanditTwoArmTheoremOneCanary.lean
 python tools/bandit.py check
 ```
 
@@ -401,15 +440,21 @@ python tools/bandit.py check
   declarations: 7 definitions, 21 lemmas, and 9 theorems, including the
   normalized initial bridge and resulting generic source-indexed failure-mass
   sum.
-- [x] The eleven compiled layers contain 183 named declarations in the exact
-  `26+18+18+14+4+10+3+25+19+9+37` split.
+- [x] The Theorem-1 endpoint layer compiles with 32 named declarations: 5
+  definitions and 27 theorems, including the actual sampled-action regret
+  bridge and `twoArmFixedIIDDirac_theoremOne`.
+- [x] The twelve compiled layers contain 215 named declarations in the exact
+  `26+18+18+14+4+10+3+25+19+9+37+32` split.
 - [x] Refresh the declaration indexes, proof Blueprint, website build, and
-  anonymous claim ledger to the 183-declaration boundary.
-- [x] Refresh the separate paper repository's arXiv and ICLR audit tables and
-  rebuild both PDFs; the synchronized Overleaf commit is `5bb3ff0`.
+  anonymous claim ledger to the 215-declaration boundary.
+- [ ] Refresh the separate paper repository's arXiv and ICLR audit tables,
+  rebuild both PDFs, and synchronize the verified revision to Overleaf.
 - [x] Re-run the repository-wide Lean, harness, website, and anonymous-artifact
-  gates after the evidence refresh; the anonymous archive was also extracted
-  and rebuilt independently with `lake build BanditRLProof Tests`.
+  gates after the evidence refresh.
+- [x] Complete an independent mathematical review of the final Theorem-1
+  assumptions, source-time fence, constants, sampled-action semantics, and
+  representative axiom prints; no P0/P1 issue was found and key endpoints use
+  only `propext`, `Classical.choice`, and `Quot.sound`.
 - [x] Complete an independent mathematical review of the unconditional
   recurrence/telescope signs, positivity, source-time fence, and `1 / 4`
   initial term; no P0/P1 issue was found, and the remaining P2 promotion

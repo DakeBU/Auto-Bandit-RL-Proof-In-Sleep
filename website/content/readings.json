@@ -324,8 +324,8 @@
         {
           "title": "Does Stochastic Gradient really succeed for Bandits?",
           "authors": "Dorian Baudry, Emmeran Johnson, Simon Vary, Ciara Pike-Burke, and Patrick Rebeschini",
-          "sections": "Section 1.2, Equations (3)--(7), and Appendix A.1",
-          "pages": "physical PDF pp. 2--3 and 22",
+          "sections": "Section 1.2, Algorithm 1, Theorem 1, Equations (3)--(11), and Appendix A.1",
+          "pages": "physical PDF pp. 2--4 and 22",
           "url": "https://proceedings.neurips.cc/paper_files/paper/2025/file/a4e683f0ce6b91e7fbdae9d32642d88f-Paper-Conference.pdf"
         }
       ],
@@ -357,7 +357,7 @@
           "math": "\\(R_T^{\\mathrm{SGB}}\\le \\frac{\\log(1+4\\eta\\Delta T)}{2\\eta}+\\frac{\\Delta}{2\\eta(\\Delta-\\eta C_\\eta)},\\qquad C_\\eta=2\\sum_{n=0}^{\\infty}\\frac{(2\\eta)^n}{(n+2)!}\\le e^{2\\eta},\\quad \\eta C_\\eta<\\Delta.\\)",
           "fallback": "For a two-arm bounded-reward instance, Theorem 1 gives an explicit logarithmic-in-horizon regret term plus a finite failure-regret term whenever the learning rate satisfies η Cη < Δ.",
           "plain": "The source theorem combines a forward-potential logarithmic bound with a telescoping control of squared failure probability for the same fixed-IID two-arm SGB trajectory.",
-          "relationship": "BanditRLlib compiles the source algebra, generated one-step kernels, bounded-support integrability, generic unconditional potential recurrences, finite iteration, and the source-indexed expected squared failure-mass sum including round 1 as 1/4. The generated expected-parameter Equation (5) tower bridge, forward Jensen/log consumer, fixed-IID plus Dirac whole-chain specialization, Equation (7) regret assembly, and this theorem's final constants remain blocked and uncompiled."
+          "relationship": "BanditRLlib now compiles this exact Theorem-1 endpoint for the actual sampled pseudo-regret of bounded two-arm fixed-IID laws, specialized through a Dirac environment prior. The compiled chain includes the generated Equation-(5) tower and expected-parameter telescope, forward-potential Jensen/log bound, squared failure-mass control with round 1 equal to 1/4, actual sampled-action bridge, Equation (7), and the source horizon and constants. The contract keeps 0 < Delta < 1, eta > 0, eta C_eta < Delta, exact arm means, and T = tailHorizon + 1 explicit. Theorems 2–4 and their learning-rate regimes remain open."
         }
       ]
     }
