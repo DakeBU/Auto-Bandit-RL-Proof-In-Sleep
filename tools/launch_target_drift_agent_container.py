@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Canonical Docker launcher for a result-free agent outer-boundary probe.
+"""Canonical Docker launcher for result-free agent-boundary components.
 
-This launcher deliberately has no production/model action.  It accepts one
-fixed fake auth file and one fixed fake agent input, verifies an exact local
-image digest and its trusted in-image bytes, then runs the component probe with
-a root PID-1 control plane and a capability-free uid/gid 10002 worker.
+The probe mode preserves the existing offline sandbox check.  The excluded
+execute mode follows the production-shaped PID-1/controller/adapter path but
+accepts only one sealed result-ineligible request and one fixed fake auth file.
+Neither mode can read a real credential, contact a provider, or invoke a model.
 """
 
 from __future__ import annotations
@@ -38,8 +38,18 @@ PID1 = "/usr/local/bin/abrl-agent-pid1"
 OUTER_CONTROLLER = "/usr/local/lib/abrl/target_drift_agent_outer_controller.py"
 OUTER_PROBE = "/usr/local/lib/abrl/target_drift_agent_outer_probe.py"
 MODEL_PROBE = "/usr/local/lib/abrl/target_drift_agent_model_probe.py"
+EXCLUDED_ADAPTER = "/usr/local/lib/abrl/target_drift_agent_excluded_adapter.py"
+EXCLUDED_CONTRACT = "/usr/local/share/abrl/agent-excluded-execution-contract.json"
+CANONICAL_EXCLUDED_REQUEST = (
+    ROOT / "evaluation/target-drift-v2/agent-excluded-execution-request.json"
+)
+CANONICAL_EXCLUDED_CONTRACT = (
+    ROOT / "evaluation/target-drift-v2/agent-excluded-execution-contract.json"
+)
 EXPECTED_AUTH = b"RESULT_FREE_SENTINEL_DO_NOT_USE\n"
 EXPECTED_INPUT = b"RESULT_FREE_AGENT_INPUT\n"
+PROBE_MODE = "probe"
+EXCLUDED_EXECUTE_MODE = "excluded-execute"
 MAX_OUTPUT_BYTES = 4 * 1024 * 1024
 CONTROL_EVIDENCE_NAMES = {
     "root-only-sentinel",
@@ -75,14 +85,30 @@ def plain_empty_directory(path: Path, label: str) -> Path:
     return path
 
 
-def validate_inputs(agent_input: Path, auth: Path, control: Path) -> None:
+def validate_inputs(
+    agent_input: Path, auth: Path, control: Path,
+    component_mode: str = PROBE_MODE,
+) -> None:
     require(agent_input.is_absolute() and agent_input.is_dir()
             and not agent_input.is_symlink(), "agent input must be a plain directory")
     members = list(agent_input.iterdir())
-    require(len(members) == 1 and members[0].name == "input.txt",
-            "component probe accepts exactly input.txt")
-    require(regular_file(members[0], "agent input").read_bytes()
-            == EXPECTED_INPUT, "agent input is not the frozen fake input")
+    if component_mode == PROBE_MODE:
+        require(len(members) == 1 and members[0].name == "input.txt",
+                "component probe accepts exactly input.txt")
+        require(regular_file(members[0], "agent input").read_bytes()
+                == EXPECTED_INPUT, "agent input is not the frozen fake input")
+    else:
+        require(component_mode == EXCLUDED_EXECUTE_MODE,
+                "unknown agent-boundary component mode")
+        require(len(members) == 1 and members[0].name == "request.json",
+                "excluded execute accepts exactly request.json")
+        require(
+            regular_file(members[0], "excluded request").read_bytes()
+            == regular_file(
+                CANONICAL_EXCLUDED_REQUEST.resolve(), "canonical excluded request"
+            ).read_bytes(),
+            "excluded request differs from the tracked result-ineligible fixture",
+        )
     require(regular_file(auth, "auth sentinel").name == "auth.json"
             and auth.read_bytes() == EXPECTED_AUTH,
             "component probe accepts only the frozen fake auth.json")
@@ -126,7 +152,8 @@ def validate_sbom(path: Path) -> dict[str, Any]:
             "agent image SBOM is not a result-free built candidate")
     required = {
         "controller_sha256", "outer_controller_sha256",
-        "outer_probe_sha256", "model_probe_sha256",
+        "outer_probe_sha256", "model_probe_sha256", "excluded_adapter_sha256",
+        "excluded_execution_contract_sha256", "excluded_execution_request_sha256",
     }
     require(all(re.fullmatch(r"[0-9a-f]{64}", payload.get(key, ""))
                 for key in required), "agent image SBOM omits outer-boundary bytes")
@@ -135,6 +162,9 @@ def validate_sbom(path: Path) -> dict[str, Any]:
         "outer_controller_sha256": TOOLS / "target_drift_agent_outer_controller.py",
         "outer_probe_sha256": TOOLS / "target_drift_agent_outer_probe.py",
         "model_probe_sha256": TOOLS / "target_drift_agent_model_probe.py",
+        "excluded_adapter_sha256": TOOLS / "target_drift_agent_excluded_adapter.py",
+        "excluded_execution_contract_sha256": CANONICAL_EXCLUDED_CONTRACT,
+        "excluded_execution_request_sha256": CANONICAL_EXCLUDED_REQUEST,
     }
     require(all(
         payload[key] == sha256(regular_file(source, key))
@@ -178,6 +208,8 @@ def verify_image(runtime: Path, sbom: dict[str, Any], label: str) -> None:
                 (OUTER_CONTROLLER, "outer_controller_sha256"),
                 (OUTER_PROBE, "outer_probe_sha256"),
                 (MODEL_PROBE, "model_probe_sha256"),
+                (EXCLUDED_ADAPTER, "excluded_adapter_sha256"),
+                (EXCLUDED_CONTRACT, "excluded_execution_contract_sha256"),
             ):
                 target = Path(directory) / key
                 docker_output([str(runtime), "cp", f"{created}:{source}", str(target)])
@@ -189,12 +221,19 @@ def verify_image(runtime: Path, sbom: dict[str, Any], label: str) -> None:
 
 def docker_command(
     runtime: Path, digest: str, agent_input: Path, auth: Path,
-    control: Path, label: str,
+    control: Path, label: str, component_mode: str = PROBE_MODE,
 ) -> list[str]:
-    """Return the only executable outer-boundary component command."""
+    """Return one of the two fixed provider-free component commands."""
+    require(component_mode in {PROBE_MODE, EXCLUDED_EXECUTE_MODE},
+            "unknown agent-boundary component mode")
+    controller_mode = (
+        "result_free_probe_v1" if component_mode == PROBE_MODE
+        else "result_free_excluded_execute_v1"
+    )
+    network = "bridge" if component_mode == PROBE_MODE else "none"
     return [
         str(runtime), "run", "--rm", "--pull", "never", "--read-only",
-        "--network", "bridge", "--cap-drop", "ALL",
+        "--network", network, "--cap-drop", "ALL",
         "--cap-add", "SETUID", "--cap-add", "SETGID",
         "--cap-add", "CHOWN", "--cap-add", "DAC_OVERRIDE",
         "--cap-add", "FOWNER",
@@ -204,7 +243,8 @@ def docker_command(
         "--user", "0:0", "--pids-limit", "96", "--memory", "1024m",
         "--cpus", "1", "--stop-timeout", "5", "--label",
         f"abrl.agent_outer_probe={label}", "--interactive",
-        "--env", "ABRL_OUTER_COMPONENT_MODE=result_free_probe_v1",
+        "--env", f"ABRL_OUTER_COMPONENT_MODE={controller_mode}",
+        "--env", f"ABRL_OUTER_COMPONENT_IMAGE_DIGEST={digest}",
         "--env", "HOME=/tmp", "--env", "CODEX_HOME=/codex-home",
         "--env", "PYTHONDONTWRITEBYTECODE=1",
         "--mount", f"type=bind,src={agent_input},dst=/input/agent,readonly",
@@ -245,8 +285,32 @@ def run_with_control(command: list[str], output: Path) -> None:
             "outer-boundary container log is oversized")
 
 
+def validate_process_lifecycle(
+    ready_ledger: dict[str, Any], exit_ledger: dict[str, Any],
+    controller_report: dict[str, Any],
+) -> None:
+    """Bind the PID-1 ledger to its direct controller child and clean exit."""
+    require(ready_ledger.get("controller_pid") == 1
+            and isinstance(ready_ledger.get("child_pid"), int)
+            and not isinstance(ready_ledger.get("child_pid"), bool)
+            and ready_ledger["child_pid"] > 1
+            and ready_ledger.get("pid_namespace_requirement")
+            == "controller_is_pid_1"
+            and controller_report.get("controller_pid")
+            == ready_ledger["child_pid"]
+            and controller_report.get("controller_parent_pid") == 1,
+            "PID-1 ready ledger does not bind the direct controller child")
+    require(exit_ledger.get("reason") == "child_exited"
+            and exit_ledger.get("child_return_code") == 0,
+            "PID-1 ledger does not record a clean controlled child exit")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--component-mode", choices=(PROBE_MODE, EXCLUDED_EXECUTE_MODE),
+        default=PROBE_MODE,
+    )
     parser.add_argument("--image-sbom", type=Path, required=True)
     parser.add_argument("--agent-input", type=Path, required=True)
     parser.add_argument("--auth-sentinel", type=Path, required=True)
@@ -267,7 +331,7 @@ def main() -> None:
     agent_input = Path(os.path.abspath(args.agent_input))
     auth = Path(os.path.abspath(args.auth_sentinel))
     control = Path(os.path.abspath(args.control_output))
-    validate_inputs(agent_input, auth, control)
+    validate_inputs(agent_input, auth, control, args.component_mode)
     report_path = Path(os.path.abspath(args.report))
     require(report_path.parent.is_dir() and not report_path.parent.is_symlink(),
             "report parent must be a plain existing directory")
@@ -279,7 +343,8 @@ def main() -> None:
     label = "result-free-" + uuid.uuid4().hex
     verify_image(runtime, sbom, label)
     command = docker_command(
-        runtime, sbom["container_image_digest"], agent_input, auth, control, label
+        runtime, sbom["container_image_digest"], agent_input, auth, control, label,
+        args.component_mode,
     )
     log = report_path.with_name(report_path.stem + "-container.log")
     require(not log.exists(), "container log already exists")
@@ -291,44 +356,75 @@ def main() -> None:
         control_evidence["controller-report.json"], "controller report"
     )
     controller_report = json.loads(controller_report_path.read_text(encoding="utf-8"))
-    require(controller_report.get("status")
-            == "passed_result_free_outer_boundary_component",
-            "root controller did not report a passing component probe")
+    expected_status = (
+        "passed_result_free_outer_boundary_component"
+        if args.component_mode == PROBE_MODE
+        else "passed_result_free_excluded_execute_component"
+    )
+    require(controller_report.get("status") == expected_status,
+            "root controller did not report the expected passing component")
     worker_observation = controller_report.get("worker_observation", {})
     require(controller_report.get("controller_uid") == 0
             and controller_report.get("controller_gid") == 0
             and controller_report.get("worker_uid") == 10002
             and controller_report.get("worker_gid") == 10002
-            and isinstance(worker_observation, dict)
-            and worker_observation.get("worker_uid") == 10002
-            and worker_observation.get("worker_gid") == 10002
-            and int(worker_observation.get(
-                "worker_effective_capabilities_hex", "1"
-            ), 16) == 0,
+            and (
+                args.component_mode == EXCLUDED_EXECUTE_MODE
+                or (
+                    isinstance(worker_observation, dict)
+                    and worker_observation.get("worker_uid") == 10002
+                    and worker_observation.get("worker_gid") == 10002
+                    and int(worker_observation.get(
+                        "worker_effective_capabilities_hex", "1"
+                    ), 16) == 0
+                )
+            ),
             "controller report does not bind the root-to-worker transition")
-    model_observation = worker_observation.get("model_shell", {})
-    require(isinstance(model_observation, dict)
-            and model_observation.get("trusted_auth_fd_env_absent") is True
-            and model_observation.get("trusted_auth_fd_target_absent") is True
-            and model_observation.get("outer_auth_mount_unreadable") is True
-            and model_observation.get("outer_auth_mount_read_errno")
-            in {errno.EACCES, errno.EPERM}
-            and model_observation.get("root_control_output_unreadable") is True
-            and model_observation.get("root_control_output_read_errno")
-            in {errno.EACCES, errno.EPERM}
-            and int(model_observation.get(
-                "effective_capabilities_hex", "1"
-            ), 16) == 0,
-            "nested command sandbox did not prove the auth/control boundary")
-    handoff = worker_observation.get("trusted_client_fake_auth_handoff", {})
-    require(isinstance(handoff, dict)
-            and handoff.get("bytes") == len(EXPECTED_AUTH)
-            and handoff.get("sha256")
-            == hashlib.sha256(EXPECTED_AUTH).hexdigest()
-            and handoff.get("read_only_descriptor") is True
-            and handoff.get("descriptor_closed_before_sandbox") is True
-            and handoff.get("environment_marker_removed_before_sandbox") is True,
-            "trusted worker did not prove the one-time fake-auth handoff")
+    if args.component_mode == PROBE_MODE:
+        model_observation = worker_observation.get("model_shell", {})
+        require(isinstance(model_observation, dict)
+                and model_observation.get("trusted_auth_fd_env_absent") is True
+                and model_observation.get("trusted_auth_fd_target_absent") is True
+                and model_observation.get("outer_auth_mount_unreadable") is True
+                and model_observation.get("outer_auth_mount_read_errno")
+                in {errno.EACCES, errno.EPERM}
+                and model_observation.get("root_control_output_unreadable") is True
+                and model_observation.get("root_control_output_read_errno")
+                in {errno.EACCES, errno.EPERM}
+                and int(model_observation.get(
+                    "effective_capabilities_hex", "1"
+                ), 16) == 0,
+                "nested command sandbox did not prove the auth/control boundary")
+        handoff = worker_observation.get("trusted_client_fake_auth_handoff", {})
+        require(isinstance(handoff, dict)
+                and handoff.get("bytes") == len(EXPECTED_AUTH)
+                and handoff.get("sha256")
+                == hashlib.sha256(EXPECTED_AUTH).hexdigest()
+                and handoff.get("read_only_descriptor") is True
+                and handoff.get("descriptor_closed_before_sandbox") is True
+                and handoff.get("environment_marker_removed_before_sandbox") is True,
+                "trusted worker did not prove the one-time fake-auth handoff")
+    else:
+        execution = controller_report.get("execution_evidence", {})
+        handoff = execution.get("fake_auth_handoff", {})
+        usage = execution.get("adapter_response", {}).get("usage", {})
+        require(
+            controller_report.get("execution_status_boundary")
+            == "primary_execution_not_started"
+            and controller_report.get("container_image_digest")
+            == sbom["container_image_digest"]
+            and execution.get("primary_result_eligible") is False
+            and execution.get("provider_execution_enabled") is False
+            and execution.get("provider_request_or_model_invocation_occurred") is False
+            and isinstance(usage, dict)
+            and usage.get("cost_usd") == 0
+            and usage.get("input_tokens") == 0
+            and usage.get("output_tokens") == 0
+            and isinstance(handoff, dict)
+            and handoff.get("sha256") == hashlib.sha256(EXPECTED_AUTH).hexdigest()
+            and handoff.get("descriptor_closed_before_adapter_work") is True,
+            "excluded execution evidence weakens the no-provider/result boundary",
+        )
     sentinel = controller_report.get("root_control_sentinel", {})
     require(isinstance(sentinel, dict)
             and sentinel.get("path") == "/control/root-only-sentinel"
@@ -346,14 +442,19 @@ def main() -> None:
     exit_path = regular_file(
         control_evidence["pid1-exit.json"], "PID-1 exit ledger"
     )
+    ready_ledger = json.loads(ready_path.read_text(encoding="utf-8"))
     exit_ledger = json.loads(exit_path.read_text(encoding="utf-8"))
-    require(exit_ledger.get("reason") == "child_exited"
-            and exit_ledger.get("child_return_code") == 0,
-            "PID-1 ledger does not record a clean controlled child exit")
+    validate_process_lifecycle(ready_ledger, exit_ledger, controller_report)
+    report_status = (
+        "passed_result_free_outer_launcher_component_candidate"
+        if args.component_mode == PROBE_MODE
+        else "passed_result_free_excluded_execute_launcher_component_candidate"
+    )
     report = {
         "schema_version": 1,
         "suite_id": SUITE_ID,
-        "status": "passed_result_free_outer_launcher_component_candidate",
+        "status": report_status,
+        "component_mode": args.component_mode,
         "probe_commit": args.probe_commit,
         "container_image_digest": sbom["container_image_digest"],
         "image_sbom_sha256": sha256(sbom_path),
@@ -373,9 +474,10 @@ def main() -> None:
         "container_log_sha256": sha256(log),
         "nonclaims": [
             "The mounted auth.json was a fixed fake sentinel, not a provider credential.",
-            "The one-time descriptor handoff is not the Codex provider authentication path.",
+            "The one-time descriptor handoff is component evidence, not the real provider authentication path.",
             "No provider request or model invocation occurred.",
-            "The image is local and unpublished; this is not a production seal or real smoke."
+            "The image is local and unpublished; this is not a production seal or real smoke.",
+            "The 450-run primary evaluation remains execution_not_started."
         ],
     }
     descriptor = os.open(report_path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o644)

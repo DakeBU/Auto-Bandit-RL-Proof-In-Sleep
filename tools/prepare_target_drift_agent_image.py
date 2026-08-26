@@ -41,20 +41,35 @@ CONTEXT_INPUTS = {
     "Containerfile": ROOT / "evaluation/target-drift-v2/agent-image.Containerfile",
     "target_drift_agent_pid1.py": TOOLS / "target_drift_agent_pid1.py",
     "codex_target_drift_adapter.py": TOOLS / "codex_target_drift_adapter.py",
+    "target_drift_agent_excluded_adapter.py": (
+        TOOLS / "target_drift_agent_excluded_adapter.py"
+    ),
     "target_drift_agent_outer_controller.py": (
         TOOLS / "target_drift_agent_outer_controller.py"
     ),
     "target_drift_agent_outer_probe.py": TOOLS / "target_drift_agent_outer_probe.py",
     "target_drift_agent_model_probe.py": TOOLS / "target_drift_agent_model_probe.py",
+    "agent-excluded-execution-contract.json": (
+        ROOT / "evaluation/target-drift-v2/agent-excluded-execution-contract.json"
+    ),
+    "agent-excluded-execution-request.json": (
+        ROOT / "evaluation/target-drift-v2/agent-excluded-execution-request.json"
+    ),
     "agent-image-sources.json": SOURCE_LOCK,
 }
 BUILDER_PATH = Path(__file__).resolve()
 CODEX_INSTALL_ROOT = "/opt/abrl-codex"
 CONTROLLER_PATH = "/usr/local/bin/abrl-agent-pid1"
 ADAPTER_PATH = "/usr/local/lib/abrl/codex_target_drift_adapter.py"
+EXCLUDED_ADAPTER_PATH = (
+    "/usr/local/lib/abrl/target_drift_agent_excluded_adapter.py"
+)
 OUTER_CONTROLLER_PATH = "/usr/local/lib/abrl/target_drift_agent_outer_controller.py"
 OUTER_PROBE_PATH = "/usr/local/lib/abrl/target_drift_agent_outer_probe.py"
 MODEL_PROBE_PATH = "/usr/local/lib/abrl/target_drift_agent_model_probe.py"
+EXCLUDED_CONTRACT_PATH = (
+    "/usr/local/share/abrl/agent-excluded-execution-contract.json"
+)
 CODEX_PATH = "/opt/abrl-codex/codex"
 MAX_PACKAGE_BYTES = 128 * 1024 * 1024
 
@@ -460,6 +475,38 @@ def validate_context(context: Path, *, current_provenance: bool = True) -> dict[
         == "passed_network_none_as_worker",
         "agent-image checker toolchain binding differs",
     )
+    excluded_contract_path = regular_file(
+        context / "agent-excluded-execution-contract.json",
+        "excluded-execution contract",
+    )
+    excluded_request_path = regular_file(
+        context / "agent-excluded-execution-request.json",
+        "excluded-execution request",
+    )
+    excluded_adapter_path = regular_file(
+        context / "target_drift_agent_excluded_adapter.py",
+        "excluded-execution adapter",
+    )
+    excluded_contract = load(excluded_contract_path)
+    excluded_request = load(excluded_request_path)
+    require(
+        excluded_contract.get("schema_version") == 1
+        and excluded_contract.get("suite_id") == SUITE_ID
+        and excluded_contract.get("status")
+        == "result_free_excluded_provider_component_contract"
+        and excluded_contract.get("primary_result_eligible") is False
+        and excluded_contract.get("provider_execution_enabled") is False
+        and excluded_contract.get("request", {}).get("sha256")
+        == sha256_file(excluded_request_path)
+        and excluded_contract.get("adapter", {}).get("sha256")
+        == sha256_file(excluded_adapter_path)
+        and excluded_request.get("primary_result_eligible") is False
+        and excluded_request.get("provider_runtime", {}).get(
+            "provider_execution_enabled"
+        ) is False
+        and excluded_request.get("provider_runtime", {}).get("model_call_budget") == 0,
+        "excluded-execution contract/request/adapter binding is invalid",
+    )
     files = checker_image.file_manifest(
         context, excluded={"agent-image-build-input.json"}
     )
@@ -591,11 +638,17 @@ def build_image(
         ),
         "controller": extract_image(runtime, image_digest, CONTROLLER_PATH),
         "adapter": extract_image(runtime, image_digest, ADAPTER_PATH),
+        "excluded_adapter": extract_image(
+            runtime, image_digest, EXCLUDED_ADAPTER_PATH
+        ),
         "outer_controller": extract_image(
             runtime, image_digest, OUTER_CONTROLLER_PATH
         ),
         "outer_probe": extract_image(runtime, image_digest, OUTER_PROBE_PATH),
         "model_probe": extract_image(runtime, image_digest, MODEL_PROBE_PATH),
+        "excluded_contract": extract_image(
+            runtime, image_digest, EXCLUDED_CONTRACT_PATH
+        ),
         "cache_manifest": extract_image(
             runtime, image_digest, checker_launcher.CHECKER_CACHE_MANIFEST_PATH
         ),
@@ -609,6 +662,17 @@ def build_image(
             and hashlib.sha256(extracted["adapter"]).hexdigest()
             == sha256_file(context / "codex_target_drift_adapter.py"),
             "in-image controller or adapter differs from the context")
+    excluded_contract = json.loads(extracted["excluded_contract"].decode("utf-8"))
+    require(
+        hashlib.sha256(extracted["excluded_adapter"]).hexdigest()
+        == sha256_file(context / "target_drift_agent_excluded_adapter.py")
+        == excluded_contract.get("adapter", {}).get("sha256")
+        and hashlib.sha256(extracted["excluded_contract"]).hexdigest()
+        == sha256_file(context / "agent-excluded-execution-contract.json")
+        and excluded_contract.get("request", {}).get("sha256")
+        == sha256_file(context / "agent-excluded-execution-request.json"),
+        "in-image excluded-execution contract, adapter, or request binding differs",
+    )
     require(
         hashlib.sha256(extracted["outer_controller"]).hexdigest()
         == sha256_file(context / "target_drift_agent_outer_controller.py")
@@ -681,6 +745,13 @@ def build_image(
         "bundled_rg_sha256": hashlib.sha256(extracted["rg"]).hexdigest(),
         "controller_sha256": hashlib.sha256(extracted["controller"]).hexdigest(),
         "adapter_sha256": hashlib.sha256(extracted["adapter"]).hexdigest(),
+        "excluded_adapter_sha256": hashlib.sha256(
+            extracted["excluded_adapter"]
+        ).hexdigest(),
+        "excluded_execution_contract_sha256": hashlib.sha256(
+            extracted["excluded_contract"]
+        ).hexdigest(),
+        "excluded_execution_request_sha256": excluded_contract["request"]["sha256"],
         "outer_controller_sha256": hashlib.sha256(
             extracted["outer_controller"]
         ).hexdigest(),

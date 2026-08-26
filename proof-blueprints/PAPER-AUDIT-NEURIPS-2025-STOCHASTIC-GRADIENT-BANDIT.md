@@ -1,6 +1,6 @@
 # Proof Blueprint: PAPER-AUDIT-NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT
 
-Generated: `2026-08-25T17:53:23+00:00`
+Generated: `2026-08-26T03:30:07+00:00`
 
 ## Source Task
 
@@ -25,7 +25,7 @@ Stochastic Gradient really succeed for Bandits?* (NeurIPS 2025). The audit
 separates the reusable softmax/update/regret mechanism, pathwise zero-sum/odds
 structure, Equation-(8) analytic inequality, generated conditional kernels,
 and two-arm recurrence interfaces from the paper's still-open global
-failure-mass and learning-rate-dependent stochastic arguments.
+regret assembly and learning-rate-dependent stochastic endpoints.
 
 ## Frozen source
 
@@ -87,10 +87,14 @@ The next non-overlapping target is the generated-history bridge for Equation
    conditional one-step source increment agrees with the already compiled
    finite Equation-(5) mean/gap expression.
 
-This extension promotes `SGB-HISTORY` from `blocked` to `partial`: the
-recursive process and its Equation-(5) conditional-kernel integrals now
-compile, while the source-specific reward regularity and all rate arguments
-remain downstream.  It cannot promote `SGB-RATES`, Lemmas 2--3, or Theorems
+This extension promoted `SGB-HISTORY` from `blocked` to `partial`: the
+recursive process and its Equation-(5) conditional-kernel integrals compile.
+The fixed-IID source-contract and bounded-support layers below close the fixed
+two-arm law-to-environment-contract producer and derive the generated-history
+`Integrable sourceIncrement` premise.  Global recurrence iteration and every
+rate argument remain downstream.
+It cannot promote
+`SGB-RATES`, Lemmas 2--3, or Theorems
 1--4.  The Lean process accepts a general `initialTheta`; Algorithm 1's source
 initialization is the specialization `initialTheta := fun _ => 0`.
 
@@ -143,42 +147,20 @@ Four declarations now instantiate Equation (8) on the generated initial and
 successor reward kernels under explicit bounded-support and fixed-mean
 hypotheses.  Ten further declarations compile the exact forward and inverse
 two-arm successor algebra at a fixed history, including the additive
-success/failure-square recurrence forms, while three declarations fix the
-source zero initialization and both time-one recurrence bounds.
 
-These are generated-kernel and fixed-history results.  They do not by
+<!-- 10380 characters omitted from the middle of this snapshot. -->
 
-<!-- 3734 characters omitted from the middle of this snapshot. -->
-
-BanditRLProof.StochasticGradientBandit.expectedSourceIncrement_eq_gapCoordinate
-BanditRLProof.StochasticGradientBandit.bestParameterIncrementSum_ge
-BanditRLProof.StochasticGradientBandit.sourceRegretDecomposition_le
-BanditRLProof.StochasticGradientBandit.historyParameter
-BanditRLProof.StochasticGradientBandit.trajectoryMeasure_condDistrib_action
-BanditRLProof.StochasticGradientBandit.trajectoryMeasure_condDistrib_nextPair_given_environment_prefix
-BanditRLProof.StochasticGradientBandit.integral_measurableEnvironmentHistoryStepKernel_sourceIncrement_eq_gapCoordinate
-BanditRLProof.StochasticGradientBandit.historyParameter_sum_eq_initial
-BanditRLProof.StochasticGradientBandit.twoArmParameterAt_sum_eq_zero
-BanditRLProof.StochasticGradientBandit.twoArmProbabilityAt_zero
-BanditRLProof.StochasticGradientBandit.softmaxProbability_zero_div_one
-BanditRLProof.StochasticGradientBandit.twoArmProbabilityAt_zero_div_failure_eq_exp_two_mul
-BanditRLProof.StochasticGradientBandit.twoArmProbabilityAt_exp_two_mul_failure_eq_success
-BanditRLProof.StochasticGradientBandit.sourceC
-BanditRLProof.StochasticGradientBandit.sourceC_le_exp_two_mul
-BanditRLProof.StochasticGradientBandit.exp_mul_le_sourceEqEight
-BanditRLProof.StochasticGradientBandit.integral_exp_mul_le_sourceEqEight_of_ae_abs_le_one
-BanditRLProof.StochasticGradientBandit.integral_measurableEnvironmentHistoryStepKernel_exp_actionReward_le_sourceEqEight_of_mean
-BanditRLProof.StochasticGradientBandit.integral_twoArmHistoryStepKernel_exp_forwardSuccessor_le_add_success_sq
-BanditRLProof.StochasticGradientBandit.integral_twoArmHistoryStepKernel_exp_inverseSuccessor_le_sub_failure_sq
-BanditRLProof.StochasticGradientBandit.integral_twoArmInitialPairKernel_exp_forwardIncrement_le
-BanditRLProof.StochasticGradientBandit.integral_twoArmInitialPairKernel_exp_inverseIncrement_le
-BanditRLProof.StochasticGradientBandit.TwoArmBoundedFixedMeanEnvironmentContract
-BanditRLProof.StochasticGradientBandit.trajectoryPrefix_condDistrib_integral_forwardSuccessor_le
-BanditRLProof.StochasticGradientBandit.trajectoryPrefix_condDistrib_integral_inverseSuccessor_le
-BanditRLProof.StochasticGradientBandit.integrable_twoArmForwardTrajectorySuccessorPotential
-BanditRLProof.StochasticGradientBandit.integrable_twoArmInverseTrajectorySuccessorPotential
-BanditRLProof.StochasticGradientBandit.twoArmForwardTrajectorySuccessor_condExp_le_recurrenceBound
-BanditRLProof.StochasticGradientBandit.twoArmInverseTrajectorySuccessor_condExp_le_recurrenceBound
+BanditRLProof.StochasticGradientBandit.integrable_measurableTwoArmInitialPairKernel_sourceIncrement_of_contract
+BanditRLProof.StochasticGradientBandit.integrable_measurableTwoArmHistoryStepKernel_sourceIncrement_of_contract
+BanditRLProof.StochasticGradientBandit.twoArmFixedIIDRewardKernel
+BanditRLProof.StochasticGradientBandit.twoArmFixedIIDRewardKernel_apply
+BanditRLProof.StochasticGradientBandit.twoArmFixedIIDRewardKernel_isMarkov
+BanditRLProof.StochasticGradientBandit.twoArmFixedIIDEnvironment
+BanditRLProof.StochasticGradientBandit.twoArmFixedIIDEnvironment_initialFeedback_apply
+BanditRLProof.StochasticGradientBandit.twoArmFixedIIDEnvironment_feedback_apply
+BanditRLProof.StochasticGradientBandit.twoArmFixedIIDReward_aestronglyMeasurable
+BanditRLProof.StochasticGradientBandit.twoArmFixedIIDEnvironment_contract
+BanditRLProof.StochasticGradientBandit.integral_twoArmFixedIIDHistoryStepKernel_sourceIncrement_eq_gapCoordinate
 ```
 
 Target files: `BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean`,
@@ -189,8 +171,9 @@ Target files: `BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean`,
 `BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRecurrence.lean`,
 `BanditRLProof/Algorithms/StochasticGradientBanditTwoArmInitialRecurrence.lean`,
 `BanditRLProof/Algorithms/StochasticGradientBanditTwoArmMeasurableRecurrence.lean`,
+`BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean`,
 and
-`BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean`.
+`BanditRLProof/Algorithms/StochasticGradientBanditTwoArmFixedIID.lean`.
 
 ## Gate
 
@@ -204,12 +187,14 @@ lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRecurrence.
 lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTwoArmInitialRecurrence.lean
 lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTwoArmMeasurableRecurrence.lean
 lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean
+lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTwoArmFixedIID.lean
 lake env lean Tests/StochasticGradientBanditPaperAuditCanary.lean
 lake env lean Tests/StochasticGradientBanditConditionalExponentialAuditCanary.lean
 lake env lean Tests/StochasticGradientBanditTwoArmRecurrenceCanary.lean
 lake env lean Tests/StochasticGradientBanditTwoArmInitialRecurrenceCanary.lean
 lake env lean Tests/StochasticGradientBanditTwoArmMeasurableRecurrenceCanary.lean
 lake env lean Tests/StochasticGradientBanditTwoArmPathIntegrabilityCanary.lean
+lake env lean Tests/StochasticGradientBanditTwoArmFixedIIDCanary.lean
 python tools/bandit.py check
 ```
 
@@ -236,21 +221,40 @@ python tools/bandit.py check
 - [x] The measurable contract/trajectory/filtration extension compiles with 25
   named declarations, including both a.e. conditional-distribution recurrence
   transports.
-- [x] The path-integrability extension compiles with 17 named declarations:
+- [x] The path-integrability extension compiles with 19 named declarations:
   2 initial contract wrappers, 4 reward-support transports, 2 source-increment
-  bounds, 1 history-parameter envelope, 2 potential identities, 2 fixed-horizon
+  bounds, 2 bounded-support source-increment integrability theorems, 1
+  history-parameter envelope, 2 potential identities, 2 fixed-horizon
   integrability theorems, 2 conditional-expectation/conditional-distribution
   identities, and 2 tower-ready conditional recurrence bounds.
-- [x] The nine compiled layers contain 135 named declarations in the exact
-  `26+18+18+14+4+10+3+25+17` split.
-- [ ] Refresh the declaration indexes, proof Blueprint, website build, and
-  anonymous claim ledger to the 135-declaration boundary.
-- [ ] Refresh the separate paper repository's arXiv and ICLR audit tables and
-  rebuild both PDFs.
-- [ ] Re-run the repository-wide Lean, harness, website, and anonymous-artifact
-  gates after the evidence refresh.
-- [ ] Complete an independent source/claim review of the final fixed-horizon
-  conditional-expectation layer and synchronized public claims.
+- [x] The fixed-IID source-contract extension compiles with 9 named
+  declarations: 2 definitions and 7 theorems, ending in the one-way
+  `twoArmFixedIIDEnvironment_contract` bridge and the generated-history
+  Equation-(5) gap-coordinate wrapper.
+- [x] The fixed-IID construction discharges Equation-(5)'s generated-history
+  `Integrable sourceIncrement` premise from bounded support; it adds no
+  independence, moment, positive-gap, or learning-rate-sign hypothesis.
+- [x] The unconditional-recurrence extension compiles with 37 named
+  declarations: 7 definitions, 21 lemmas, and 9 theorems, including the
+  normalized initial bridge and resulting generic source-indexed failure-mass
+  sum.
+- [x] The eleven compiled layers contain 183 named declarations in the exact
+  `26+18+18+14+4+10+3+25+19+9+37` split.
+- [x] Refresh the declaration indexes, proof Blueprint, website build, and
+  anonymous claim ledger to the 183-declaration boundary.
+- [x] Refresh the separate paper repository's arXiv and ICLR audit tables and
+  rebuild both PDFs; the synchronized Overleaf commit is `5bb3ff0`.
+- [x] Re-run the repository-wide Lean, harness, website, and anonymous-artifact
+  gates after the evidence refresh; the anonymous archive was also extracted
+  and rebuilt independently with `lake build BanditRLProof Tests`.
+- [x] Complete an independent mathematical review of the unconditional
+  recurrence/telescope signs, positivity, source-time fence, and `1 / 4`
+  initial term; no P0/P1 issue was found, and the remaining P2 promotion
+  boundary is recorded above.
+- [x] Complete an independent model-based review of the final synchronized
+  mathematical, paper, website, and artifact claims; no P0/P1 issue was found.
+  Independent human-expert target validation remains a separate open evidence
+  requirement and is not implied by this check.
 - [x] The process-level extension above is implemented and compiled.
 
 
@@ -296,8 +300,13 @@ at the initial and successor reward laws under explicit support and mean
 contracts.  The two-arm initial and fixed-history forward/inverse recurrences,
 their a.e. conditional-distribution transport, fixed-horizon path
 integrability, and tower-ready one-step conditional-expectation forms also
-compile.  Global tower iteration and the expected squared failure-mass
-argument remain downstream.
+compile.  Bounded support now also derives initial and successor
+`Integrable sourceIncrement`, and a fixed-IID wrapper compiles the one-step
+Equation-(5) gap-coordinate identity without a caller-supplied integrability
+premise.  A separate unconditional module now integrates and iterates the
+recurrences and closes the source-indexed expected squared failure-mass sum.
+The expected-parameter/Jensen bridge, fixed-IID/Dirac specialization, and
+Equation-(7) generated-regret terminal remain downstream.
 
 ## Lean mapping
 
@@ -323,33 +332,17 @@ argument remain downstream.
 | time-one recurrences | Theorem 1 initialization | `integral_twoArmInitialPairKernel_exp_forwardIncrement_le`, `integral_twoArmInitialPairKernel_exp_inverseIncrement_le` | source zero initialization and `p_1=1/2` | compiled |
 | trajectory recurrence transport | conditional recurrence step | `trajectoryPrefix_condDistrib_integral_forwardSuccessor_le`, `trajectoryPrefix_condDistrib_integral_inverseSuccessor_le` | a.e. prefixwise conditional-distribution integrals | compiled |
 | fixed-horizon conditional expectation | tower-ready recurrence step | `twoArmForwardTrajectorySuccessor_condExp_le_recurrenceBound`, `twoArmInverseTrajectorySuccessor_condExp_le_recurrenceBound` | integrable potentials and conditional expectation on the canonical trajectory | compiled |
+| bounded-support Equation-(5) integrability | initial and successor update regularity | `integrable_measurableTwoArmInitialPairKernel_sourceIncrement_of_contract`, `integrable_measurableTwoArmHistoryStepKernel_sourceIncrement_of_contract` | derives update integrability from the existing bounded-support contract | compiled |
+| fixed-IID Equation-(5) consumer | source-law successor-kernel gap identity | `integral_twoArmFixedIIDHistoryStepKernel_sourceIncrement_eq_gapCoordinate` | one-step generated-history identity; no global tower iteration | compiled |
+| unconditional recurrence and failure mass | Theorem 1 recurrence/telescope slice | `twoArmForwardUnconditionalRecurrence`, `twoArmInverseFailureMassSqTelescope`, `twoArmFullFailureMassSqSum_le` | generic bounded fixed-mean trajectory; source round 1 is the explicit `1/4` term | compiled |
 
 ## Assumption ledger
 
 | Assumption | Lean status | Source | Blocking? |
 | --- | --- | --- | --- |
-| nonempty finite action set | typeclasses | Algorithm 1 / Eq. (3) | no |
-| softmax denominator | explicit positive finite sum | Eq. (3) | no |
-| sampling mass sums to one | theorem | Eq. (3) | no |
-| reward conditional mean depends on selected arm | pointwise kernel-integral interface | Eq. (5) | no for the compiled trajectory bridge; a uniform source-assumption producer remains downstream |
-| gaps satisfy `gap k = bestMean - mean k` | explicit equality | Eq. (5) | no |
-| unique best arm and positive minimum gap | explicit hypotheses | Eq. (6) | no |
-| maximum-gap envelope | explicit hypotheses | Eqs. (2), (7) | no |
-| history measurability and conditional reward kernel | recursive policy, canonical trajectory, and pointwise kernel-integral bridge compiled | Algorithm 1 / Eq. (5) | no for the process bridge; source-specific uniform regularity remains downstream |
-| source zero initialization and `K=2` | explicit source-time specialization | Algorithm 1 / Eqs. (9)--(11) | no for the compiled pathwise structure |
-| `C_eta` and bounded-reward exponential moment | compiled standalone and on generated initial/successor kernels | Eq. (8) / Theorem 1 | no for the analytic or generated-kernel inequality |
 
-<!-- 5279 characters omitted from the middle of this snapshot. -->
+<!-- 8492 characters omitted from the middle of this snapshot. -->
 
-| path integrability and conditional expectation | pathwise reward support, recursive parameter envelope, `condexp`/`condDistrib` identity | `MLIB-CONDITIONAL-EXPECTATION`, `MLIB-MEASURE-INTEGRAL` | prove fixed-horizon exponential integrability, identify one-step condexp, then expose tower-ready bounds | do not infer the finite-horizon tower sum or failure-mass bound |
-
-## Proof DAG
-
-| Node | Interface | Dependencies | Lean declaration | Gate | Status |
-| --- | --- | --- | --- | --- | --- |
-| SGB-3 | softmax probability vector | finite exp sum | `softmaxProbability_sum` | focused Lean | compiled |
-| SGB-4 | update zero-sum | SGB-3 / generic normalized `p` | `sum_sourceIncrement` | focused Lean | compiled |
-| SGB-5A | expected increment, mean form | SGB-4 | `expectedSourceIncrement_eq_gradientCoordinate` | focused Lean | compiled |
 | SGB-5B | expected increment, gap form | SGB-5A | `expectedSourceIncrement_eq_gapCoordinate` | focused Lean | compiled |
 | SGB-6 | best-coordinate cumulative lower bound | SGB-5B | `bestParameterIncrementSum_ge` | focused Lean | compiled |
 | SGB-7 | regret decomposition | SGB-6 | `sourceRegretDecomposition_le` | focused Lean | compiled |
@@ -365,7 +358,9 @@ argument remain downstream.
 | SGB-RECURRENCE-INITIAL | source-zero time-one recurrence inequalities | SGB-EQ8-GENERATED and uniform initial law | `integral_twoArmInitialPairKernel_exp_forwardIncrement_le`, `integral_twoArmInitialPairKernel_exp_inverseIncrement_le` | focused Lean | compiled |
 | SGB-RECURRENCE-COND-DISTRIB | measurable contract, canonical trajectory, filtration, and a.e. recurrence transport | SGB-HISTORY-TRAJECTORY and SGB-RECURRENCE-SUCCESSOR | `TwoArmBoundedFixedMeanEnvironmentContract`, `trajectoryPrefix_condDistrib_integral_forwardSuccessor_le`, `trajectoryPrefix_condDistrib_integral_inverseSuccessor_le` | trajectory gate | compiled |
 | SGB-PATH-INTEGRABILITY | finite-prefix support, potential integrability, condexp/condDistrib identity, and tower-ready recurrence | SGB-RECURRENCE-COND-DISTRIB | `integrable_twoArmForwardTrajectorySuccessorPotential`, `twoArmForwardTrajectorySuccessor_condExp_le_recurrenceBound`, inverse analogues | trajectory gate | compiled |
-| SGB-THEOREM-1 | exact two-arm finite regret terminal | SGB-PATH-INTEGRABILITY plus global tower iteration, expected failure-mass control, and Equation-(7) assembly | reserved | paper endpoint | blocked |
+| SGB-EQ5-BOUNDED-SUPPORT-INTEGRABILITY | initial/successor source-increment integrability and fixed-IID Equation-(5) consumer | SGB-EQ5-COND-MEAN, SGB-PATH-INTEGRABILITY, fixed-IID source contract | `integrable_measurableTwoArmInitialPairKernel_sourceIncrement_of_contract`, `integrable_measurableTwoArmHistoryStepKernel_sourceIncrement_of_contract`, `integral_twoArmFixedIIDHistoryStepKernel_sourceIncrement_eq_gapCoordinate` | focused Lean plus canaries | compiled |
+| SGB-UNCONDITIONAL-RECURRENCE | integrated recurrences, scalar iteration, normalized initial bridge, and resulting generic source-indexed expected failure-mass sum | SGB-PATH-INTEGRABILITY | `twoArmForwardUnconditionalRecurrence`, `twoArmForwardFiniteIteration_from_source_initial`, `twoArmFullFailureMassSqSum_le` | focused Lean plus typed canary | compiled |
+| SGB-THEOREM-1 | exact two-arm finite regret terminal | SGB-UNCONDITIONAL-RECURRENCE plus expected-parameter/Jensen, fixed-IID/Dirac, and Equation-(7) consumers | reserved | paper endpoint | blocked |
 | SGB-THEOREMS-2-4 | remaining learning-rate regimes | source-specific general-`K` and sharp-rate arguments | reserved | paper endpoint | blocked |
 
 The process API permits an arbitrary `initialTheta`; the paper's Algorithm 1
@@ -382,9 +377,9 @@ is recovered by the specialization `initialTheta := fun _ => 0`.
   update integrability and arm-reward integral equalities.
 - [x] Compile the source zero-initialized Equation-(9) invariant, explicit
   two-arm source-time fence, uniform initial law, and Equation-(11) odds.
-- [ ] Package the source paper's reward assumptions as a uniform producer of
-  those hypotheses across the generated history, including the stronger
-      arm-reward regularity from which update integrability should follow.
+- [x] Package the fixed-IID source reward assumptions as a uniform producer of
+  the bounded fixed-mean contract and derive generated-history update
+  integrability from its `[-1,1]` support field.
 - [x] Compile the source-exact `C_eta` and Equation-(8) bounded-reward
   exponential-moment inequality on a generic probability measure.
 - [x] Instantiate Equation (8) on the generated initial/successor kernels and
@@ -396,9 +391,11 @@ is recovered by the specialization `initialTheta := fun _ => 0`.
 - [x] Transport reward support to finite prefixes, prove both fixed-horizon
   potentials integrable, identify condexp with the conditional-distribution
   integral, and compile tower-ready one-step recurrence bounds.
-- [ ] Iterate the recurrences globally, bound the expected squared failure
-  mass, and assemble Theorem 1's exact finite regret inequality through
-  Equation (7).
+- [x] Integrate and iterate the recurrences and prove the resulting generic
+  source-indexed expected squared failure-mass bound, including the exact
+  `1/4` initial term.
+- [ ] Compile the expected-parameter/Jensen and fixed-IID/Dirac consumers, then
+  assemble Theorem 1's exact generated-regret inequality through Equation (7).
 - [ ] Prove any logarithmic or polynomial regret regime.
 - [ ] Verify the two-arm sharp threshold or the general-`K` threshold.
 
@@ -426,22 +423,64 @@ Task id: `PAPER-AUDIT-NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT`
 | SGB-TWO-ARM-SUCCESSOR-RECURRENCE | forward/inverse fixed-history successor recurrence inequalities | compiled | 10 declarations; generated-kernel Equation (8), exact signs, and success/failure-square remainders |
 | SGB-TWO-ARM-INITIAL-RECURRENCE | uniform source initialization and both time-one recurrence inequalities | compiled | 3 declarations; zero initialization gives `p_1=1/2` |
 | SGB-MEASURABLE-RECURRENCE | measurable bounded fixed-mean contract, trajectory, filtration, and a.e. conditional-distribution transport | compiled | 25 declarations; general prior reveals latent `Env`, while a fixed/Dirac environment gives the fixed-instance reading |
-| SGB-PATH-INTEGRABILITY | finite-prefix reward support, source-parameter envelope, potential identities/integrability, condexp identities, and tower-ready recurrence bounds | compiled | 17 declarations in the exact 2+4+2+1+2+2+2+2 split; no global tower iteration is claimed |
-| SGB-THEOREM-1 | exact two-arm finite-regret endpoint | blocked | global tower iteration, expected squared failure-mass control, and Equation-(7) terminal assembly absent |
+| SGB-PATH-INTEGRABILITY | finite-prefix reward support, source-parameter envelope, potential identities/integrability, condexp identities, tower-ready recurrence bounds, and bounded-support source-increment integrability | compiled | 19 declarations in the exact 2+4+2+2+1+2+2+2+2 split; no global tower iteration is claimed |
+| SGB-FIXED-IID-SOURCE-CONTRACT | fixed two-arm probability laws to the bounded fixed-mean history-environment contract and one-step Equation-(5) consumer | compiled | 9 declarations: 2 definitions and 7 theorems; `twoArmFixedIIDEnvironment_contract` is a one-way bridge, not an equivalence |
+| SGB-EQ5-BOUNDED-SUPPORT-INTEGRABILITY | derive initial and successor pair-kernel `Integrable sourceIncrement` from the existing bounded-support contract | compiled | `abs_sourceIncrement_softmax_le_abs_reward`, finite-action comp-product support transport, and a constant-one integrability envelope; no moment or independence premise |
+| SGB-FIXED-IID-EQ5-INTEGRABILITY | discharge Equation-(5)'s `Integrable sourceIncrement` premise on the generated fixed-IID history | compiled | `integral_twoArmFixedIIDHistoryStepKernel_sourceIncrement_eq_gapCoordinate` consumes the existing probability, support, mean, and gap equalities; it remains a one-step kernel identity |
+| SGB-UNCONDITIONAL-RECURRENCE | unconditional forward/inverse recurrences, finite iteration, normalized initial bridge, and resulting generic source-indexed expected squared failure-mass sum | compiled | 37 declarations; `twoArmFullFailureMassSqSum_le` includes source round `t=1` as `1/4`; no Equation-(7) or regret endpoint is claimed |
+| SGB-THEOREM-1 | exact two-arm finite-regret endpoint | blocked | expected-parameter Equation-(5) tower bridge, forward Jensen/log and `p^2 <= 1` consumer, fixed-IID/Dirac specialization, and Equation-(7) generated-regret assembly absent |
 | SGB-THEOREMS-2-4 | logarithmic/polynomial and general-`K` learning-rate endpoints | blocked | source-specific rate arguments uncompiled |
 | SGB-CANARY | typed checks and representative axiom prints | compiled | baseline axioms only |
-| SGB-EVIDENCE-SITE | reference index, Blueprint, website source links, anonymous ledger | pending refresh | maintained sources now target 135 declarations in the `26+18+18+14+4+10+3+25+17` split; generated evidence must be rebuilt and checked |
-| SGB-REVIEW | independent source/claim review | partial | earlier two-arm/Equation-(8) layers reviewed; final path-integrability and synchronized-claim review remains required |
+| SGB-EVIDENCE-SITE | reference index, Blueprint, website source links, anonymous ledger | compiled | regenerated and checked at the exact 183-declaration `26+18+18+14+4+10+3+25+19+9+37` boundary; this evidence row does not promote Theorem 1 |
+| SGB-REVIEW | independent source/claim review | partial | independent model-based mathematical and synchronized-public-claim reviews found no P0/P1; human-expert target validation remains pending, so this row is not promoted |
 
 No obligation may be promoted because a prose theorem card exists. Only the
 focused Lean module, canary, full gate, and generated evidence may move the
 finite algebra, process, generated Equation-(8), recurrence, or path-
 integrability rows to `compiled`; the overall audit remains `partial`, and the
-Theorem-1 and Theorems-2--4 rows remain `blocked`, because global recurrence
-iteration, expected failure-mass control, Equation-(7) assembly, and every
-source learning-rate endpoint remain absent.  The bounded fixed-mean contract
-is not an equivalent fixed-iid-law encoding and does not discharge a separate
-source-assumption producer obligation.
+Theorem-1 and Theorems-2--4 rows remain `blocked`.  Global unconditional
+recurrence iteration and expected failure-mass control now compile, but the
+expected-parameter/Jensen consumer, fixed-IID/Dirac specialization,
+Equation-(7) generated-regret assembly, and every source learning-rate endpoint
+remain absent.  The fixed-IID adapter discharges
+the separate fixed two-arm source-law producer by mapping its probability,
+support, measurability, and integral-mean hypotheses into the bounded fixed-
+mean contract.  The map is one-way and does not identify the broader contract
+with fixed IID laws.  The bounded-support leaves now discharge Equation-(5)'s
+separate generated-history `Integrable sourceIncrement` premise and the
+fixed-IID consumer reuses that result.  The separate unconditional module
+closes the generic tower/failure-mass slice but no regret endpoint.
+
+## Compiled bounded-support Equation-(5) leaf
+
+The completed leaf is recorded as follows.
+
+- Source card: `PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB`.
+- Scenario: `SCN-STOCHASTIC-FINITE`.
+- Source locations: Equation (5), physical PDF p. 3; the fixed-IID bounded
+  reward model, physical PDF p. 1.
+- Local APIs: `measurable_sourceIncrement`,
+  `abs_sourceIncrement_softmax_le_abs_reward`,
+  `TwoArmBoundedFixedMeanEnvironmentContract`,
+  `measurableEnvironmentInitialPairKernel`, and
+  `measurableEnvironmentHistoryStepKernel`.
+- Mathlib route: `MLIB-MEASURE-INTEGRAL` and
+  `MLIB-PROBABILITY-KERNEL`, specifically `Measure.ae_compProd_of_ae_ae`,
+  `Integrable.of_bound`, and the finite/probability-measure constant envelope.
+- Target files:
+  `BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean`
+  and
+  `BanditRLProof/Algorithms/StochasticGradientBanditTwoArmFixedIID.lean`.
+- First leaves:
+  `integrable_measurableTwoArmInitialPairKernel_sourceIncrement_of_contract`,
+  `integrable_measurableTwoArmHistoryStepKernel_sourceIncrement_of_contract`,
+  and `integral_twoArmFixedIIDHistoryStepKernel_sourceIncrement_eq_gapCoordinate`.
+- Hidden regularity: none beyond the existing measurable Markov environment
+  and bounded-support contract. Fixed IID is a downstream specialization,
+  not an extra premise needed by the generic integrability leaves.
+- Pivot rule: if the domination proof fails, audit the pair-kernel support
+  transport or the finite-measure instance. Do not add an independence,
+  second-moment, or caller-supplied integrability assumption.
 
 
 ## Completion Gap Audit
@@ -33861,6 +33900,78 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "statement": "theorem trajectoryMeasure_condDistrib_nextPair_given_environment_prefix {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [StandardBorelSpace Action] (prior : Measure Env) [IsFiniteMeasure prior] (initialTheta : Action -> Real) (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env Action Real) (n : Nat) : condDistrib (fun sample : Env \u00d7 ((k : Nat) -> Action \u00d7 Real) => sample.2 (n + 1)) (fun sample : Env \u00d7 ((k : Nat) -> Action \u00d7 Real) => (sample.1, Preorder.frestrictLe n sample.2)) (prior \u2297\u2098 trajectoryKernel initialTheta eta environment) =\u1d50[ (prior \u2297\u2098 trajectoryKernel initialTheta eta environment).map (fun sample : Env \u00d7 ((k : Nat) -> Action \u00d7 Real) => (sample.1, Preorder.frestrictLe n sample.2))] Thompson.measurableEnvironmentHistoryStepKernel (historyAlgorithm initialTheta eta) environment n"
   },
   {
+    "kind": "def",
+    "name": "twoArmFixedIIDRewardKernel",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDRewardKernel",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmFixedIID.lean",
+    "line": 30,
+    "statement": "noncomputable def twoArmFixedIIDRewardKernel (armLaw : Fin 2 -> Measure Real) : Kernel (Unit \u00d7 Fin 2) Real"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmFixedIIDRewardKernel_apply",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDRewardKernel_apply",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmFixedIID.lean",
+    "line": 35,
+    "statement": "theorem twoArmFixedIIDRewardKernel_apply (armLaw : Fin 2 -> Measure Real) (env : Unit) (arm : Fin 2) : twoArmFixedIIDRewardKernel armLaw (env, arm) = armLaw arm"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmFixedIIDRewardKernel_isMarkov",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDRewardKernel_isMarkov",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmFixedIID.lean",
+    "line": 42,
+    "statement": "theorem twoArmFixedIIDRewardKernel_isMarkov (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) : IsMarkovKernel (twoArmFixedIIDRewardKernel armLaw)"
+  },
+  {
+    "kind": "def",
+    "name": "twoArmFixedIIDEnvironment",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDEnvironment",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmFixedIID.lean",
+    "line": 55,
+    "statement": "noncomputable def twoArmFixedIIDEnvironment (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) : Thompson.MeasurableHistoryEnvironment Unit (Fin 2) Real"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmFixedIIDEnvironment_initialFeedback_apply",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDEnvironment_initialFeedback_apply",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmFixedIID.lean",
+    "line": 65,
+    "statement": "theorem twoArmFixedIIDEnvironment_initialFeedback_apply (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (env : Unit) (arm : Fin 2) : (twoArmFixedIIDEnvironment armLaw hprob).initialFeedback (env, arm) = armLaw arm"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmFixedIIDEnvironment_feedback_apply",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDEnvironment_feedback_apply",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmFixedIID.lean",
+    "line": 74,
+    "statement": "theorem twoArmFixedIIDEnvironment_feedback_apply (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (n : Nat) (env : Unit) (history : History.FinitePairHistory (Fin 2) Real n) (arm : Fin 2) : (twoArmFixedIIDEnvironment armLaw hprob).feedback n (env, (history, arm)) = armLaw arm"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmFixedIIDReward_aestronglyMeasurable",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDReward_aestronglyMeasurable",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmFixedIID.lean",
+    "line": 85,
+    "statement": "theorem twoArmFixedIIDReward_aestronglyMeasurable (armLaw : Fin 2 -> Measure Real) (arm : Fin 2) : AEStronglyMeasurable (fun reward : Real => reward) (armLaw arm)"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmFixedIIDEnvironment_contract",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDEnvironment_contract",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmFixedIID.lean",
+    "line": 95,
+    "statement": "theorem twoArmFixedIIDEnvironment_contract (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (mean : Fin 2 -> Real) (hbound : forall arm, \u2200\u1d50 reward \u2202armLaw arm, |reward| <= 1) (hmean : forall arm, integral (armLaw arm) id = mean arm) : TwoArmBoundedFixedMeanEnvironmentContract (twoArmFixedIIDEnvironment armLaw hprob) mean"
+  },
+  {
+    "kind": "theorem",
+    "name": "integral_twoArmFixedIIDHistoryStepKernel_sourceIncrement_eq_gapCoordinate",
+    "full_name": "BanditRLProof.StochasticGradientBandit.integral_twoArmFixedIIDHistoryStepKernel_sourceIncrement_eq_gapCoordinate",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmFixedIID.lean",
+    "line": 117,
+    "statement": "theorem integral_twoArmFixedIIDHistoryStepKernel_sourceIncrement_eq_gapCoordinate (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (mean : Fin 2 -> Real) (hbound : forall arm, \u2200\u1d50 reward \u2202armLaw arm, |reward| <= 1) (hmean : forall arm, integral (armLaw arm) id = mean arm) (initialTheta : Fin 2 -> Real) (eta : Real) (n : Nat) (history : History.FinitePairHistory (Fin 2) Real n) (gap : Fin 2 -> Real) (bestMean : Real) (coordinate : Fin 2) (hgap : forall action, gap action = bestMean - mean action) : integral (Thompson.measurableEnvironmentHistoryStepKernel (historyAlgorithm initialTheta eta) (twoArmFixedIIDEnvironment armLaw hprob) n ((), history)) (fun pair : Fin 2 \u00d7 Real => sourceIncrement (softmaxProbability (historyParameter initialTheta eta n history)) pair.2 pair.1 coordinate) = softmaxProbability (historyParameter initialTheta eta n history) coordinate * (instantaneousGap (softmaxProbability (historyParameter initialTheta eta n history)) gap - gap coordinate)"
+  },
+  {
     "kind": "theorem",
     "name": "softmaxProbability_zeroInitialization_finTwo",
     "full_name": "BanditRLProof.StochasticGradientBandit.softmaxProbability_zeroInitialization_finTwo",
@@ -34150,10 +34261,26 @@ These cards are planning inspiration only.  They do not certify any theorem.
   },
   {
     "kind": "theorem",
+    "name": "integrable_measurableTwoArmInitialPairKernel_sourceIncrement_of_contract",
+    "full_name": "BanditRLProof.StochasticGradientBandit.integrable_measurableTwoArmInitialPairKernel_sourceIncrement_of_contract",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean",
+    "line": 268,
+    "statement": "theorem integrable_measurableTwoArmInitialPairKernel_sourceIncrement_of_contract {Env : Type v} [MeasurableSpace Env] (initialTheta : Fin 2 -> Real) (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (mean : Fin 2 -> Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (env : Env) (coordinate : Fin 2) : Integrable (fun pair : Fin 2 \u00d7 Real => sourceIncrement (softmaxProbability initialTheta) pair.2 pair.1 coordinate) (Thompson.measurableEnvironmentInitialPairKernel (historyAlgorithm initialTheta eta) environment env)"
+  },
+  {
+    "kind": "theorem",
+    "name": "integrable_measurableTwoArmHistoryStepKernel_sourceIncrement_of_contract",
+    "full_name": "BanditRLProof.StochasticGradientBandit.integrable_measurableTwoArmHistoryStepKernel_sourceIncrement_of_contract",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean",
+    "line": 312,
+    "statement": "theorem integrable_measurableTwoArmHistoryStepKernel_sourceIncrement_of_contract {Env : Type v} [MeasurableSpace Env] (initialTheta : Fin 2 -> Real) (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (mean : Fin 2 -> Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (n : Nat) (env : Env) (history : History.FinitePairHistory (Fin 2) Real n) (coordinate : Fin 2) : Integrable (fun pair : Fin 2 \u00d7 Real => sourceIncrement (softmaxProbability (historyParameter initialTheta eta n history)) pair.2 pair.1 coordinate) (Thompson.measurableEnvironmentHistoryStepKernel (historyAlgorithm initialTheta eta) environment n (env, history))"
+  },
+  {
+    "kind": "theorem",
     "name": "abs_historyParameter_zeroInitialization_le",
     "full_name": "BanditRLProof.StochasticGradientBandit.abs_historyParameter_zeroInitialization_le",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean",
-    "line": 264,
+    "line": 369,
     "statement": "theorem abs_historyParameter_zeroInitialization_le (eta : Real) : forall n (history : History.FinitePairHistory (Fin 2) Real n) (coordinate : Fin 2), (forall i, |(history i).2| <= 1) -> |historyParameter (fun _ : Fin 2 => 0) eta n history coordinate| <= ((n + 1 : Nat) : Real) * |eta|"
   },
   {
@@ -34161,7 +34288,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmForwardTrajectorySuccessorPotential_eq_exp_historyParameter",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmForwardTrajectorySuccessorPotential_eq_exp_historyParameter",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean",
-    "line": 351,
+    "line": 456,
     "statement": "theorem twoArmForwardTrajectorySuccessorPotential_eq_exp_historyParameter {Env : Type v} [MeasurableSpace Env] (eta : Real) (n : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) : twoArmForwardSuccessorPotential eta (twoArmEnvironmentPrefix n sample).2 (twoArmNextPair n sample) = Real.exp (2 * historyParameter (fun _ : Fin 2 => 0) eta (n + 1) (Preorder.frestrictLe (n + 1) sample.2) 0)"
   },
   {
@@ -34169,7 +34296,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmInverseTrajectorySuccessorPotential_eq_exp_historyParameter",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmInverseTrajectorySuccessorPotential_eq_exp_historyParameter",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean",
-    "line": 370,
+    "line": 475,
     "statement": "theorem twoArmInverseTrajectorySuccessorPotential_eq_exp_historyParameter {Env : Type v} [MeasurableSpace Env] (eta : Real) (n : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) : twoArmInverseSuccessorPotential eta (twoArmEnvironmentPrefix n sample).2 (twoArmNextPair n sample) = Real.exp (-2 * historyParameter (fun _ : Fin 2 => 0) eta (n + 1) (Preorder.frestrictLe (n + 1) sample.2) 0)"
   },
   {
@@ -34177,7 +34304,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "integrable_twoArmForwardTrajectorySuccessorPotential",
     "full_name": "BanditRLProof.StochasticGradientBandit.integrable_twoArmForwardTrajectorySuccessorPotential",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean",
-    "line": 393,
+    "line": 498,
     "statement": "theorem integrable_twoArmForwardTrajectorySuccessorPotential {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (mean : Fin 2 -> Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (n : Nat) : Integrable (fun sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real) => twoArmForwardSuccessorPotential eta (twoArmEnvironmentPrefix n sample).2 (twoArmNextPair n sample)) (twoArmTrajectoryMeasure prior eta environment)"
   },
   {
@@ -34185,7 +34312,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "integrable_twoArmInverseTrajectorySuccessorPotential",
     "full_name": "BanditRLProof.StochasticGradientBandit.integrable_twoArmInverseTrajectorySuccessorPotential",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean",
-    "line": 438,
+    "line": 543,
     "statement": "theorem integrable_twoArmInverseTrajectorySuccessorPotential {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (mean : Fin 2 -> Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (n : Nat) : Integrable (fun sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real) => twoArmInverseSuccessorPotential eta (twoArmEnvironmentPrefix n sample).2 (twoArmNextPair n sample)) (twoArmTrajectoryMeasure prior eta environment)"
   },
   {
@@ -34193,7 +34320,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmForwardTrajectorySuccessor_condExp_ae_eq_integral_condDistrib",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmForwardTrajectorySuccessor_condExp_ae_eq_integral_condDistrib",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean",
-    "line": 488,
+    "line": 593,
     "statement": "theorem twoArmForwardTrajectorySuccessor_condExp_ae_eq_integral_condDistrib {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (mean : Fin 2 -> Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (n : Nat) : (twoArmTrajectoryMeasure prior eta environment)[ fun sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real) => twoArmForwardSuccessorPotential eta (twoArmEnvironmentPrefix n sample).2 (twoArmNextPair n sample) | twoArmPrefixSigma (Env := Env) n] =\u1d50[ twoArmTrajectoryMeasure prior eta environment] fun sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real) => integral (condDistrib (twoArmNextPair n) (twoArmEnvironmentPrefix n) (twoArmTrajectoryMeasure prior eta environment) (twoArmEnvironmentPrefix n sample)) (twoArmForwardSuccessorPotential eta (twoArmEnvironmentPrefix n sample).2)"
   },
   {
@@ -34201,7 +34328,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmInverseTrajectorySuccessor_condExp_ae_eq_integral_condDistrib",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmInverseTrajectorySuccessor_condExp_ae_eq_integral_condDistrib",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean",
-    "line": 530,
+    "line": 635,
     "statement": "theorem twoArmInverseTrajectorySuccessor_condExp_ae_eq_integral_condDistrib {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (mean : Fin 2 -> Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (n : Nat) : (twoArmTrajectoryMeasure prior eta environment)[ fun sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real) => twoArmInverseSuccessorPotential eta (twoArmEnvironmentPrefix n sample).2 (twoArmNextPair n sample) | twoArmPrefixSigma (Env := Env) n] =\u1d50[ twoArmTrajectoryMeasure prior eta environment] fun sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real) => integral (condDistrib (twoArmNextPair n) (twoArmEnvironmentPrefix n) (twoArmTrajectoryMeasure prior eta environment) (twoArmEnvironmentPrefix n sample)) (twoArmInverseSuccessorPotential eta (twoArmEnvironmentPrefix n sample).2)"
   },
   {
@@ -34209,7 +34336,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmForwardTrajectorySuccessor_condExp_le_recurrenceBound",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmForwardTrajectorySuccessor_condExp_le_recurrenceBound",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean",
-    "line": 571,
+    "line": 676,
     "statement": "theorem twoArmForwardTrajectorySuccessor_condExp_le_recurrenceBound {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta Delta : Real) (heta : 0 <= eta) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (mean : Fin 2 -> Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean 0 - mean 1 = Delta) (n : Nat) : (twoArmTrajectoryMeasure prior eta environment)[ fun sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real) => twoArmForwardSuccessorPotential eta (twoArmEnvironmentPrefix n sample).2 (twoArmNextPair n sample) | twoArmPrefixSigma (Env := Env) n] \u2264\u1d50[ twoArmTrajectoryMeasure prior eta environment] fun sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real) => twoArmForwardRecurrenceBound eta Delta (twoArmEnvironmentPrefix n sample).2"
   },
   {
@@ -34217,7 +34344,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmInverseTrajectorySuccessor_condExp_le_recurrenceBound",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmInverseTrajectorySuccessor_condExp_le_recurrenceBound",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean",
-    "line": 601,
+    "line": 706,
     "statement": "theorem twoArmInverseTrajectorySuccessor_condExp_le_recurrenceBound {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta Delta : Real) (heta : 0 <= eta) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (mean : Fin 2 -> Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean 0 - mean 1 = Delta) (n : Nat) : (twoArmTrajectoryMeasure prior eta environment)[ fun sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real) => twoArmInverseSuccessorPotential eta (twoArmEnvironmentPrefix n sample).2 (twoArmNextPair n sample) | twoArmPrefixSigma (Env := Env) n] \u2264\u1d50[ twoArmTrajectoryMeasure prior eta environment] fun sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real) => twoArmInverseRecurrenceBound eta Delta (twoArmEnvironmentPrefix n sample).2"
   },
   {
@@ -34443,6 +34570,302 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRecurrence.lean",
     "line": 494,
     "statement": "theorem integral_twoArmHistoryStepKernel_exp_inverseSuccessor_le_sub_failure_sq (eta Delta : Real) (heta : 0 <= eta) (environment : Thompson.HistoryEnvironment (Fin 2) Real) (n : Nat) (history : History.FinitePairHistory (Fin 2) Real n) (mean : Fin 2 -> Real) (hreward : forall selected, \u2200\u1d50 reward \u2202environment.feedback n (history, selected), |reward| <= 1) (hmean : forall selected, integral (environment.feedback n (history, selected)) id = mean selected) (hgap : mean 0 - mean 1 = Delta) : integral (Thompson.historyStepKernel (historyAlgorithm (fun _ : Fin 2 => 0) eta) environment n history) (fun pair : Fin 2 \u00d7 Real => Real.exp (-2 * (historyParameter (fun _ : Fin 2 => 0) eta n history 0 + eta * sourceIncrement (softmaxProbability (historyParameter (fun _ : Fin 2 => 0) eta n history)) pair.2 pair.1 0))) <= Real.exp (-2 * historyParameter (fun _ : Fin 2 => 0) eta n history 0) - 2 * eta * (1 - softmaxProbability (historyParameter (fun _ : Fin 2 => 0) eta n history) 0) ^ 2 * (Delta - eta * sourceC eta)"
+  },
+  {
+    "kind": "def",
+    "name": "twoArmTrajectoryParameterZero",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmTrajectoryParameterZero",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 39,
+    "statement": "def twoArmTrajectoryParameterZero {Env : Type v} [MeasurableSpace Env] (eta : Real) (n : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) : Real"
+  },
+  {
+    "kind": "def",
+    "name": "twoArmForwardPotential",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmForwardPotential",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 46,
+    "statement": "def twoArmForwardPotential {Env : Type v} [MeasurableSpace Env] (eta : Real) (n : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) : Real"
+  },
+  {
+    "kind": "def",
+    "name": "twoArmInversePotential",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmInversePotential",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 52,
+    "statement": "def twoArmInversePotential {Env : Type v} [MeasurableSpace Env] (eta : Real) (n : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) : Real"
+  },
+  {
+    "kind": "def",
+    "name": "twoArmSuccessProbability",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmSuccessProbability",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 58,
+    "statement": "def twoArmSuccessProbability {Env : Type v} [MeasurableSpace Env] (eta : Real) (n : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) : Real"
+  },
+  {
+    "kind": "def",
+    "name": "twoArmFailureMass",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFailureMass",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 66,
+    "statement": "def twoArmFailureMass {Env : Type v} [MeasurableSpace Env] (eta : Real) (n : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) : Real"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurable_twoArmTrajectoryParameterZero",
+    "full_name": "BanditRLProof.StochasticGradientBandit.measurable_twoArmTrajectoryParameterZero",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 72,
+    "statement": "theorem measurable_twoArmTrajectoryParameterZero {Env : Type v} [MeasurableSpace Env] (eta : Real) (n : Nat) : Measurable (twoArmTrajectoryParameterZero (Env := Env) eta n)"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurable_twoArmForwardPotential",
+    "full_name": "BanditRLProof.StochasticGradientBandit.measurable_twoArmForwardPotential",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 78,
+    "statement": "theorem measurable_twoArmForwardPotential {Env : Type v} [MeasurableSpace Env] (eta : Real) (n : Nat) : Measurable (twoArmForwardPotential (Env := Env) eta n)"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurable_twoArmInversePotential",
+    "full_name": "BanditRLProof.StochasticGradientBandit.measurable_twoArmInversePotential",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 85,
+    "statement": "theorem measurable_twoArmInversePotential {Env : Type v} [MeasurableSpace Env] (eta : Real) (n : Nat) : Measurable (twoArmInversePotential (Env := Env) eta n)"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurable_twoArmSuccessProbability",
+    "full_name": "BanditRLProof.StochasticGradientBandit.measurable_twoArmSuccessProbability",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 92,
+    "statement": "theorem measurable_twoArmSuccessProbability {Env : Type v} [MeasurableSpace Env] (eta : Real) (n : Nat) : Measurable (twoArmSuccessProbability (Env := Env) eta n)"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurable_twoArmFailureMass",
+    "full_name": "BanditRLProof.StochasticGradientBandit.measurable_twoArmFailureMass",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 104,
+    "statement": "theorem measurable_twoArmFailureMass {Env : Type v} [MeasurableSpace Env] (eta : Real) (n : Nat) : Measurable (twoArmFailureMass (Env := Env) eta n)"
+  },
+  {
+    "kind": "theorem",
+    "name": "integrable_twoArmForwardPotential",
+    "full_name": "BanditRLProof.StochasticGradientBandit.integrable_twoArmForwardPotential",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 109,
+    "statement": "theorem integrable_twoArmForwardPotential {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (mean : Fin 2 -> Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (n : Nat) : Integrable (twoArmForwardPotential (Env := Env) eta n) (twoArmTrajectoryMeasure prior eta environment)"
+  },
+  {
+    "kind": "theorem",
+    "name": "integrable_twoArmInversePotential",
+    "full_name": "BanditRLProof.StochasticGradientBandit.integrable_twoArmInversePotential",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 139,
+    "statement": "theorem integrable_twoArmInversePotential {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (mean : Fin 2 -> Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (n : Nat) : Integrable (twoArmInversePotential (Env := Env) eta n) (twoArmTrajectoryMeasure prior eta environment)"
+  },
+  {
+    "kind": "theorem",
+    "name": "integrable_twoArmSuccessProbability_sq",
+    "full_name": "BanditRLProof.StochasticGradientBandit.integrable_twoArmSuccessProbability_sq",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 170,
+    "statement": "theorem integrable_twoArmSuccessProbability_sq {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (n : Nat) : Integrable (fun sample => twoArmSuccessProbability (Env := Env) eta n sample ^ 2) (twoArmTrajectoryMeasure prior eta environment)"
+  },
+  {
+    "kind": "theorem",
+    "name": "integrable_twoArmFailureMass_sq",
+    "full_name": "BanditRLProof.StochasticGradientBandit.integrable_twoArmFailureMass_sq",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 189,
+    "statement": "theorem integrable_twoArmFailureMass_sq {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (n : Nat) : Integrable (fun sample => twoArmFailureMass (Env := Env) eta n sample ^ 2) (twoArmTrajectoryMeasure prior eta environment)"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmForwardSuccessor_eq_nextPotential",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmForwardSuccessor_eq_nextPotential",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 209,
+    "statement": "theorem twoArmForwardSuccessor_eq_nextPotential {Env : Type v} [MeasurableSpace Env] (eta : Real) (n : Nat) : (fun sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real) => twoArmForwardSuccessorPotential eta (twoArmEnvironmentPrefix n sample).2 (twoArmNextPair n sample)) = twoArmForwardPotential (Env := Env) eta (n + 1)"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmInverseSuccessor_eq_nextPotential",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmInverseSuccessor_eq_nextPotential",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 220,
+    "statement": "theorem twoArmInverseSuccessor_eq_nextPotential {Env : Type v} [MeasurableSpace Env] (eta : Real) (n : Nat) : (fun sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real) => twoArmInverseSuccessorPotential eta (twoArmEnvironmentPrefix n sample).2 (twoArmNextPair n sample)) = twoArmInversePotential (Env := Env) eta (n + 1)"
+  },
+  {
+    "kind": "theorem",
+    "name": "integrable_twoArmForwardRecurrenceBound",
+    "full_name": "BanditRLProof.StochasticGradientBandit.integrable_twoArmForwardRecurrenceBound",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 231,
+    "statement": "theorem integrable_twoArmForwardRecurrenceBound {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta Delta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (mean : Fin 2 -> Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (n : Nat) : Integrable (fun sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real) => twoArmForwardRecurrenceBound eta Delta (twoArmEnvironmentPrefix n sample).2) (twoArmTrajectoryMeasure prior eta environment)"
+  },
+  {
+    "kind": "theorem",
+    "name": "integrable_twoArmInverseRecurrenceBound",
+    "full_name": "BanditRLProof.StochasticGradientBandit.integrable_twoArmInverseRecurrenceBound",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 254,
+    "statement": "theorem integrable_twoArmInverseRecurrenceBound {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta Delta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (mean : Fin 2 -> Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (n : Nat) : Integrable (fun sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real) => twoArmInverseRecurrenceBound eta Delta (twoArmEnvironmentPrefix n sample).2) (twoArmTrajectoryMeasure prior eta environment)"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmForwardUnconditionalRecurrence",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmForwardUnconditionalRecurrence",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 288,
+    "statement": "theorem twoArmForwardUnconditionalRecurrence {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta Delta : Real) (heta : 0 <= eta) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (mean : Fin 2 -> Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean 0 - mean 1 = Delta) (n : Nat) : integral (twoArmTrajectoryMeasure prior eta environment) (twoArmForwardPotential (Env := Env) eta (n + 1)) <= integral (twoArmTrajectoryMeasure prior eta environment) (twoArmForwardPotential (Env := Env) eta n) + 2 * integral (twoArmTrajectoryMeasure prior eta environment) (fun sample => twoArmSuccessProbability (Env := Env) eta n sample ^ 2) * (eta * Delta + eta ^ 2 * sourceC eta)"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmInverseUnconditionalRecurrence",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmInverseUnconditionalRecurrence",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 339,
+    "statement": "theorem twoArmInverseUnconditionalRecurrence {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta Delta : Real) (heta : 0 <= eta) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (mean : Fin 2 -> Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean 0 - mean 1 = Delta) (n : Nat) : integral (twoArmTrajectoryMeasure prior eta environment) (twoArmInversePotential (Env := Env) eta (n + 1)) <= integral (twoArmTrajectoryMeasure prior eta environment) (twoArmInversePotential (Env := Env) eta n) - 2 * eta * integral (twoArmTrajectoryMeasure prior eta environment) (fun sample => twoArmFailureMass (Env := Env) eta n sample ^ 2) * (Delta - eta * sourceC eta)"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmScalarForwardIterate",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmScalarForwardIterate",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 392,
+    "statement": "theorem twoArmScalarForwardIterate (value increment : Nat -> Real) (hstep : forall n, value (n + 1) <= value n + increment n) : forall horizon, value horizon <= value 0 + (Finset.range horizon).sum increment"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmScalarInverseTelescope",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmScalarInverseTelescope",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 409,
+    "statement": "theorem twoArmScalarInverseTelescope (value failure : Nat -> Real) (coefficient : Real) (hstep : forall n, value (n + 1) <= value n - coefficient * failure n) : forall horizon, coefficient * (Finset.range horizon).sum failure <= value 0 - value horizon"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmForwardFiniteIteration",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmForwardFiniteIteration",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 431,
+    "statement": "theorem twoArmForwardFiniteIteration {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta Delta : Real) (heta : 0 <= eta) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (mean : Fin 2 -> Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean 0 - mean 1 = Delta) (horizon : Nat) : integral (twoArmTrajectoryMeasure prior eta environment) (twoArmForwardPotential (Env := Env) eta horizon) <= integral (twoArmTrajectoryMeasure prior eta environment) (twoArmForwardPotential (Env := Env) eta 0) + (Finset.range horizon).sum (fun n => 2 * integral (twoArmTrajectoryMeasure prior eta environment) (fun sample => twoArmSuccessProbability (Env := Env) eta n sample ^ 2) * (eta * Delta + eta ^ 2 * sourceC eta))"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmInverseFailureMassSqTelescope",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmInverseFailureMassSqTelescope",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 460,
+    "statement": "theorem twoArmInverseFailureMassSqTelescope {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta Delta : Real) (heta : 0 <= eta) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (mean : Fin 2 -> Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean 0 - mean 1 = Delta) (horizon : Nat) : (2 * eta * (Delta - eta * sourceC eta)) * (Finset.range horizon).sum (fun n => integral (twoArmTrajectoryMeasure prior eta environment) (fun sample => twoArmFailureMass (Env := Env) eta n sample ^ 2)) <= integral (twoArmTrajectoryMeasure prior eta environment) (twoArmInversePotential (Env := Env) eta 0) - integral (twoArmTrajectoryMeasure prior eta environment) (twoArmInversePotential (Env := Env) eta horizon)"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmInverseFailureMassSqSum_le_initial_div",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmInverseFailureMassSqSum_le_initial_div",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 490,
+    "statement": "theorem twoArmInverseFailureMassSqSum_le_initial_div {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta Delta : Real) (heta : 0 < eta) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (mean : Fin 2 -> Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean 0 - mean 1 = Delta) (hmargin : eta * sourceC eta < Delta) (horizon : Nat) : (Finset.range horizon).sum (fun n => integral (twoArmTrajectoryMeasure prior eta environment) (fun sample => twoArmFailureMass (Env := Env) eta n sample ^ 2)) <= integral (twoArmTrajectoryMeasure prior eta environment) (twoArmInversePotential (Env := Env) eta 0) / (2 * eta * (Delta - eta * sourceC eta))"
+  },
+  {
+    "kind": "def",
+    "name": "twoArmInitialForwardPotential",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmInitialForwardPotential",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 522,
+    "statement": "def twoArmInitialForwardPotential (eta : Real) (pair : Fin 2 \u00d7 Real) : Real"
+  },
+  {
+    "kind": "def",
+    "name": "twoArmInitialInversePotential",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmInitialInversePotential",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 528,
+    "statement": "def twoArmInitialInversePotential (eta : Real) (pair : Fin 2 \u00d7 Real) : Real"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurable_twoArmInitialForwardPotential",
+    "full_name": "BanditRLProof.StochasticGradientBandit.measurable_twoArmInitialForwardPotential",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 534,
+    "statement": "theorem measurable_twoArmInitialForwardPotential (eta : Real) : Measurable (twoArmInitialForwardPotential eta)"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurable_twoArmInitialInversePotential",
+    "full_name": "BanditRLProof.StochasticGradientBandit.measurable_twoArmInitialInversePotential",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 548,
+    "statement": "theorem measurable_twoArmInitialInversePotential (eta : Real) : Measurable (twoArmInitialInversePotential eta)"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmForwardPotential_zero_eq_initial",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmForwardPotential_zero_eq_initial",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 562,
+    "statement": "theorem twoArmForwardPotential_zero_eq_initial {Env : Type v} [MeasurableSpace Env] (eta : Real) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) : twoArmForwardPotential eta 0 sample = twoArmInitialForwardPotential eta (sample.2 0)"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmInversePotential_zero_eq_initial",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmInversePotential_zero_eq_initial",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 584,
+    "statement": "theorem twoArmInversePotential_zero_eq_initial {Env : Type v} [MeasurableSpace Env] (eta : Real) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) : twoArmInversePotential eta 0 sample = twoArmInitialInversePotential eta (sample.2 0)"
+  },
+  {
+    "kind": "theorem",
+    "name": "integral_twoArmForwardPotential_zero_kernel_eq_initial",
+    "full_name": "BanditRLProof.StochasticGradientBandit.integral_twoArmForwardPotential_zero_kernel_eq_initial",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 606,
+    "statement": "theorem integral_twoArmForwardPotential_zero_kernel_eq_initial {Env : Type v} [MeasurableSpace Env] (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (env : Env) : integral (trajectoryKernel (fun _ : Fin 2 => 0) eta environment env) (fun trajectory => twoArmForwardPotential eta 0 (env, trajectory)) = integral (Thompson.measurableEnvironmentInitialPairKernel (historyAlgorithm (fun _ : Fin 2 => 0) eta) environment env) (twoArmInitialForwardPotential eta)"
+  },
+  {
+    "kind": "theorem",
+    "name": "integral_twoArmInversePotential_zero_kernel_eq_initial",
+    "full_name": "BanditRLProof.StochasticGradientBandit.integral_twoArmInversePotential_zero_kernel_eq_initial",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 642,
+    "statement": "theorem integral_twoArmInversePotential_zero_kernel_eq_initial {Env : Type v} [MeasurableSpace Env] (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (env : Env) : integral (trajectoryKernel (fun _ : Fin 2 => 0) eta environment env) (fun trajectory => twoArmInversePotential eta 0 (env, trajectory)) = integral (Thompson.measurableEnvironmentInitialPairKernel (historyAlgorithm (fun _ : Fin 2 => 0) eta) environment env) (twoArmInitialInversePotential eta)"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmForwardInitialUnconditionalRecurrence",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmForwardInitialUnconditionalRecurrence",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 678,
+    "statement": "theorem twoArmForwardInitialUnconditionalRecurrence {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsProbabilityMeasure prior] (eta Delta : Real) (heta : 0 <= eta) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (mean : Fin 2 -> Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean 0 - mean 1 = Delta) : integral (twoArmTrajectoryMeasure prior eta environment) (twoArmForwardPotential (Env := Env) eta 0) <= 1 + (eta * Delta + eta ^ 2 * sourceC eta) / 2"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmInverseInitialUnconditionalRecurrence",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmInverseInitialUnconditionalRecurrence",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 733,
+    "statement": "theorem twoArmInverseInitialUnconditionalRecurrence {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsProbabilityMeasure prior] (eta Delta : Real) (heta : 0 <= eta) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (mean : Fin 2 -> Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean 0 - mean 1 = Delta) : integral (twoArmTrajectoryMeasure prior eta environment) (twoArmInversePotential (Env := Env) eta 0) <= 1 - eta / 2 * (Delta - eta * sourceC eta)"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmForwardFiniteIteration_from_source_initial",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmForwardFiniteIteration_from_source_initial",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 788,
+    "statement": "theorem twoArmForwardFiniteIteration_from_source_initial {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsProbabilityMeasure prior] (eta Delta : Real) (heta : 0 <= eta) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (mean : Fin 2 -> Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean 0 - mean 1 = Delta) (tailHorizon : Nat) : integral (twoArmTrajectoryMeasure prior eta environment) (twoArmForwardPotential (Env := Env) eta tailHorizon) <= 1 + (eta * Delta + eta ^ 2 * sourceC eta) / 2 + (Finset.range tailHorizon).sum (fun n => 2 * integral (twoArmTrajectoryMeasure prior eta environment) (fun sample => twoArmSuccessProbability (Env := Env) eta n sample ^ 2) * (eta * Delta + eta ^ 2 * sourceC eta))"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmFullFailureMassSqSum_le",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFullFailureMassSqSum_le",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "line": 812,
+    "statement": "theorem twoArmFullFailureMassSqSum_le {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsProbabilityMeasure prior] (eta Delta : Real) (heta : 0 < eta) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (mean : Fin 2 -> Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean 0 - mean 1 = Delta) (hmargin : eta * sourceC eta < Delta) (tailHorizon : Nat) : (1 : Real) / 4 + (Finset.range tailHorizon).sum (fun n => integral (twoArmTrajectoryMeasure prior eta environment) (fun sample => twoArmFailureMass (Env := Env) eta n sample ^ 2)) <= 1 / (2 * eta * (Delta - eta * sourceC eta))"
   },
   {
     "kind": "structure",

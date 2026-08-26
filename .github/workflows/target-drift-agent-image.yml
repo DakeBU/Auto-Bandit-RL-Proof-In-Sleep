@@ -15,6 +15,8 @@ on:
     paths:
       - ".github/workflows/target-drift-agent-image.yml"
       - "evaluation/target-drift-v2/agent-image*"
+      - "evaluation/target-drift-v2/agent-excluded-execution-contract.json"
+      - "evaluation/target-drift-v2/agent-excluded-execution-request.json"
       - "evaluation/target-drift-v2/agent-sandbox-contract.json"
       - "evaluation/target-drift-v2/agent-codex-native.apparmor"
       - "tools/codex_target_drift_adapter.py"
@@ -28,6 +30,7 @@ on:
       - "tools/target_drift_agent_outer_controller.py"
       - "tools/target_drift_agent_outer_probe.py"
       - "tools/target_drift_agent_model_probe.py"
+      - "tools/target_drift_agent_excluded_adapter.py"
       - "tools/test_target_drift_agent_outer_boundary.py"
 
 permissions:
@@ -154,6 +157,38 @@ jobs:
         run: |
           SOURCE="${RUNNER_TEMP}/abrl-agent-outer-control"
           TARGET="${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-outer-control-evidence-copy"
+          if [[ -d "${SOURCE}" ]]; then
+            sudo cp -a "${SOURCE}" "${TARGET}"
+            sudo chown -R "$(id -u):$(id -g)" "${TARGET}"
+            chmod -R u+rwX,go+rX "${TARGET}"
+          fi
+
+      - name: Exercise the result-ineligible excluded-provider execute boundary
+        run: |
+          mkdir -p "${RUNNER_TEMP}/abrl-agent-excluded-input"
+          mkdir -p "${RUNNER_TEMP}/abrl-agent-excluded-auth"
+          mkdir -p "${RUNNER_TEMP}/abrl-agent-excluded-control"
+          cp evaluation/target-drift-v2/agent-excluded-execution-request.json \
+            "${RUNNER_TEMP}/abrl-agent-excluded-input/request.json"
+          printf 'RESULT_FREE_SENTINEL_DO_NOT_USE\n' > \
+            "${RUNNER_TEMP}/abrl-agent-excluded-auth/auth.json"
+          chmod 0444 "${RUNNER_TEMP}/abrl-agent-excluded-input/request.json"
+          chmod 0400 "${RUNNER_TEMP}/abrl-agent-excluded-auth/auth.json"
+          python3 tools/launch_target_drift_agent_container.py \
+            --component-mode excluded-execute \
+            --image-sbom "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-image-sbom.json" \
+            --agent-input "${RUNNER_TEMP}/abrl-agent-excluded-input" \
+            --auth-sentinel "${RUNNER_TEMP}/abrl-agent-excluded-auth/auth.json" \
+            --control-output "${RUNNER_TEMP}/abrl-agent-excluded-control" \
+            --apparmor-source "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-codex-native.apparmor" \
+            --report "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-excluded-execute-component.json" \
+            --probe-commit "${GITHUB_SHA}"
+
+      - name: Preserve excluded-provider raw control evidence
+        if: always()
+        run: |
+          SOURCE="${RUNNER_TEMP}/abrl-agent-excluded-control"
+          TARGET="${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-excluded-control-evidence-copy"
           if [[ -d "${SOURCE}" ]]; then
             sudo cp -a "${SOURCE}" "${TARGET}"
             sudo chown -R "$(id -u):$(id -g)" "${TARGET}"

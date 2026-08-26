@@ -952,6 +952,24 @@ h3 {
   font-size: 0.72rem;
 }
 
+.command-block {
+  max-width: 100%;
+  margin: 1rem 0;
+  padding: 0.85rem 1rem;
+  overflow-x: auto;
+  border-radius: 9px;
+  background: var(--code-bg);
+  color: var(--code-ink);
+  font: 0.78rem/1.55 var(--mono);
+  white-space: pre;
+  overscroll-behavior-inline: contain;
+}
+
+.command-block code {
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
 .contribution-steps {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1165,6 +1183,23 @@ h3 {
 .mermaid {
   min-width: 38rem;
   text-align: center;
+}
+
+.dependency-atlas {
+  display: grid;
+  gap: 1rem;
+}
+
+.dependency-diagram {
+  margin-block: 1rem;
+}
+
+.dependency-diagram .mermaid {
+  min-width: 46rem;
+}
+
+.dependency-overview .mermaid {
+  min-width: 40rem;
 }
 
 .table-wrap {
@@ -1387,13 +1422,13 @@ tbody tr:hover {
 .algorithm-panel {
   margin: 1.5rem 0;
   padding: clamp(1rem, 2.5vw, 1.5rem);
-  overflow: hidden;
+  overflow: visible;
 }
 
 .algorithm-flow {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr));
-  gap: 0;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: 0.75rem;
   max-width: none !important;
   margin: 1.2rem 0 0;
   padding: 0;
@@ -1405,14 +1440,23 @@ tbody tr:hover {
   display: grid;
   grid-template-columns: 2rem minmax(0, 1fr);
   gap: 0.7rem;
+  min-width: 0;
   min-height: 9rem;
   padding: 0.95rem;
   border: 1px solid var(--line);
+  border-radius: 9px;
   background: color-mix(in srgb, var(--accent-soft) 30%, var(--surface));
 }
 
 .algorithm-flow li + li {
-  border-left: 0;
+  border-left: 1px solid var(--line);
+}
+
+.algorithm-flow li > div,
+.algorithm-flow strong,
+.algorithm-flow p {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .algorithm-step-number {
@@ -1515,6 +1559,7 @@ tbody tr:hover {
 
 .theorem-panel {
   margin: 1.5rem 0 2.3rem;
+  scroll-margin-top: 5rem;
   overflow: clip;
 }
 
@@ -1557,6 +1602,7 @@ tbody tr:hover {
 .teaching-grid dd {
   margin: 0.25rem 0 0;
   color: var(--muted);
+  overflow-wrap: anywhere;
 }
 
 .math-statement {
@@ -2464,6 +2510,10 @@ tbody tr:hover {
     top: 3.45rem;
   }
 
+  .theorem-panel {
+    scroll-margin-top: 8rem;
+  }
+
   .sidebar-scrim {
     position: fixed;
     inset: 0;
@@ -2620,7 +2670,7 @@ tbody tr:hover {
 
   .algorithm-flow li + li {
     border-left: 1px solid var(--line);
-    border-top: 0;
+    border-top: 1px solid var(--line);
   }
 
   .source-card dl > div,

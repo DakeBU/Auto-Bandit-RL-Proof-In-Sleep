@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "suite_id": "ABRL-TARGET-DRIFT-V2",
+  "status": "result_free_excluded_provider_component_contract",
+  "execution_mode": "result_free_excluded_execute_v1",
+  "execution_status_boundary": "primary_execution_not_started",
+  "primary_result_eligible": false,
+  "provider_execution_enabled": false,
+  "credential_policy": "accept only the fixed RESULT_FREE_SENTINEL_DO_NOT_USE auth.json bytes through one read-only descriptor",
+  "network_policy": "docker network none; adapter imports no provider, network, or subprocess client",
+  "request": {
+    "tracked_path": "evaluation/target-drift-v2/agent-excluded-execution-request.json",
+    "container_path": "/agent/run/request.json",
+    "sha256": "452f543ee72a437b7ec2e13aac2d6e32ff937bb480576881f143ab403cb91ca5"
+  },
+  "adapter": {
+    "tracked_path": "tools/target_drift_agent_excluded_adapter.py",
+    "container_path": "/usr/local/lib/abrl/target_drift_agent_excluded_adapter.py",
+    "sha256": "9869487486f5f2f7a8d1b429ab7f7f79aeab5fd8552b9e54c3b43f3abd6ea8f1",
+    "adapter_id": "abrl-agent-excluded-component",
+    "adapter_version": "1",
+    "budget_attestation": "zero-provider-zero-model-zero-cost",
+    "isolation_attestation": "network-none-fixed-fake-auth-result-ineligible",
+    "argv": [
+      "/usr/bin/python3",
+      "/usr/local/lib/abrl/target_drift_agent_excluded_adapter.py",
+      "--request",
+      "/agent/run/request.json",
+      "--response",
+      "/agent/run/adapter/response.json",
+      "--trace",
+      "/agent/run/adapter/trace.jsonl",
+      "--agent-mount",
+      "/agent/run",
+      "--adapter-id",
+      "abrl-agent-excluded-component",
+      "--adapter-version",
+      "1",
+      "--model-id",
+      "excluded-provider-no-model",
+      "--immutable-model-version",
+      "excluded-provider-no-model",
+      "--image-digest",
+      "{{IMAGE_DIGEST}}",
+      "--budget-attestation",
+      "zero-provider-zero-model-zero-cost",
+      "--isolation-attestation",
+      "network-none-fixed-fake-auth-result-ineligible",
+      "--request-sha256",
+      "452f543ee72a437b7ec2e13aac2d6e32ff937bb480576881f143ab403cb91ca5"
+    ]
+  },
+  "required_output_files": [
+    "result.json",
+    "lean-diff.patch",
+    "build.log",
+    "explanation.md",
+    "workflow-compliance.json"
+  ],
+  "trace_contract": {
+    "event_count": 1,
+    "event_kind": "usage_summary",
+    "all_token_tool_build_retry_and_cost_values_zero": true
+  },
+  "process_contract": {
+    "root_controller_is_pid1_child": true,
+    "worker_uid_gid": "10002:10002",
+    "root_closes_auth_descriptor_immediately_after_spawn": true,
+    "worker_closes_auth_descriptor_before_adapter_work": true,
+    "pid1_exit_reason": "child_exited",
+    "child_return_code": 0
+  },
+  "nonclaims": [
+    "This contract exercises only a provider-disabled, result-ineligible component path.",
+    "It does not read a real credential, invoke a model, contact a provider, build Lean, or produce a formalization outcome.",
+    "It is not the preregistered one-case-by-three-condition real-infrastructure smoke and cannot enter the 450-run result set.",
+    "The primary evaluation remains execution_not_started."
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "schema_version": 3,
+  "schema_version": 4,
   "suite_id": "ABRL-TARGET-DRIFT-V2",
   "status": "result_free_agent_image_components",
   "controller": {
@@ -29,15 +29,24 @@
     "credential_boundary": "the candidate build and probes contain no provider credential and make no model call"
   },
   "result_free_outer_boundary_candidate": {
-    "launcher": "tools/launch_target_drift_agent_container.py exposes only one fixed result-free component probe; it accepts an exact local image digest through the image SBOM, the hash-observed canonical Docker runtime, the frozen AppArmor source, one fixed fake auth.json, one fixed read-only agent input, and one initially empty root-control output directory",
+    "launcher": "tools/launch_target_drift_agent_container.py exposes two fixed result-free component modes: the original offline boundary probe and one production-shaped excluded-provider execute path. Both accept an exact local image digest through the image SBOM, the hash-observed canonical Docker runtime, the frozen AppArmor source, one fixed fake auth.json, one fixed read-only input, and one initially empty root-control output directory",
     "docker_boundary": "the canonical argv uses a read-only root filesystem, the abrl-target-drift-codex AppArmor profile, no-new-privileges, a private PID namespace with abrl-agent-pid1 as PID 1, fixed CPU/memory/PID ceilings, all capabilities dropped except SETUID, SETGID, CHOWN, DAC_OVERRIDE, and FOWNER for the trusted root controller, and no Docker init shim",
-    "root_controller": "the in-image root controller accepts no caller command; it validates the read-only single-file fake auth and agent input, copies only the agent input into disposable tmpfs, opens the fake auth once as a read-only descriptor, passes that descriptor to the irreversibly dropped numeric uid/gid 10002 worker, and closes its own descriptor after child creation",
+    "root_controller": "the in-image root controller accepts no caller command; it validates the read-only single-file fake auth and agent input, copies only the agent input into disposable tmpfs, opens one read-only handoff descriptor after exact-byte validation, passes that descriptor to the irreversibly dropped numeric uid/gid 10002 worker, and closes its own descriptor after child creation",
     "model_shell_boundary": "the trusted worker must fstat and exactly consume the one-time fixed fake-auth descriptor, prove it is read-only, close it, and remove its environment marker before launching the fixed offline codex sandbox probe; the nested shell must receive EACCES or EPERM from the still-existing outer auth mount and root control output and must observe neither the broker descriptor environment marker nor an open descriptor targeting the auth mount. This component handoff is not the real Codex provider authentication path. Both the outer worker and nested shell independently read /proc/self/status and must report CapEff=0, while the nested shell has a writable tmpfs workspace, immutable original input, and denied network",
     "persistent_output": "before the worker starts, root creates a fixed 0400 sentinel in the 0700 root-control bind; the nested shell must receive EACCES or EPERM, not ENOENT, when reading that existing sentinel. On success the bind contains exactly the sentinel, two PID-1 ledgers, and root controller report, whose report binds the sentinel path/mode/uid/gid/bytes/SHA-256. On failure only, one additional bounded and fake-input-redacted worker diagnostic may be retained and can never satisfy the success evidence set",
     "evidence_status": "component candidate only: CI uses a literal fake sentinel, performs no provider request or model invocation, and neither publishes nor freezes a production image"
   },
+  "result_free_excluded_execute_candidate": {
+    "mode": "result_free_excluded_execute_v1",
+    "request_contract": "one checked-in request fixes excluded_fixture, zero provider/model/network/cost budgets, primary_result_eligible=false, and a five-file production-shaped output surface; a checked-in invocation contract binds its bytes, the excluded adapter bytes, and the exact argv",
+    "docker_boundary": "the same root PID-1 and uid/gid 10002 transition is used with Docker network none; no caller-controlled adapter command is accepted",
+    "auth_boundary": "the controller accepts only the literal fixed fake auth bytes, opens one read-only descriptor, passes it to the dropped worker, and closes the root copy immediately after spawn; the excluded adapter consumes and closes the descriptor before creating artifacts and cannot read the outer auth or root-control paths",
+    "adapter_boundary": "the excluded adapter imports no provider, network, or subprocess client; it emits one excluded_fixture attempt ledger, a one-event zero-usage trace, no Lean patch, no build, no public declaration, and a blocked component-only result",
+    "validation": "the controller independently validates request/adapter hashes, response identity, zero token/tool/build/retry/cost usage, trace order, exact output file set and hashes, fake-auth handoff, and false provider/result flags; the host launcher revalidates the controller report and clean PID-1 child exit",
+    "evidence_status": "strictly result-ineligible component evidence only; it is not the real three-condition smoke, does not alter execution_not_started, and cannot enter the 450-run ledger"
+  },
   "production_gate": [
-    "replace the fixed component-probe action with a separately reviewed execution action that gives the real adapter the same root-only control state and non-root tmpfs workspace without accepting caller-controlled container argv",
+    "replace the excluded-provider adapter with a separately reviewed real-provider execution action while preserving the now-exercised sealed request/argv, root-only control, non-root tmpfs, PID-1, trace/output, and lifecycle boundaries",
     "mount one real provider credential through the frozen single-file boundary and rerun the full final-image credential-visibility probe without recording secret bytes or a secret-derived digest",
     "freeze the exact provider/model/settings/prices/budgets and publish the final image digest plus all final-image probes",
     "pass the permanently result-ineligible one-case-by-three-condition real-infrastructure smoke before any primary run"

@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "suite_id": "ABRL-TARGET-DRIFT-V2",
+  "opaque_run_id": "result-free-agent-container-excluded-component",
+  "execution_purpose": "agent_container_excluded_provider_component",
+  "primary_result_eligible": false,
+  "replicate": 0,
+  "provider_runtime": {
+    "kind": "excluded_fixture",
+    "provider_execution_enabled": false,
+    "credential_access_allowed": false,
+    "network_access_allowed": false,
+    "model_call_budget": 0
+  },
+  "model": {
+    "model_id": "excluded-provider-no-model",
+    "immutable_version": "excluded-provider-no-model"
+  },
+  "pricing": {
+    "currency": "USD",
+    "unit": "per_million_tokens",
+    "input_tokens": 0,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 0
+  },
+  "budgets": {
+    "maximum_input_tokens": 0,
+    "maximum_output_tokens": 0,
+    "maximum_tool_calls": 0,
+    "maximum_build_attempts": 0,
+    "wall_clock_seconds": 30,
+    "maximum_model_retries": 0,
+    "maximum_cost_usd": 0
+  },
+  "retry_policy": {
+    "semantic_failure_retries": 0,
+    "infrastructure_retry_limit": 0
+  },
+  "result_contract": {
+    "agent_output_directory": "/agent/run/output",
+    "required_files": [
+      "result.json",
+      "lean-diff.patch",
+      "build.log",
+      "explanation.md",
+      "workflow-compliance.json"
+    ],
+    "optional_files": [],
+    "workflow_id": "excluded_provider_component",
+    "workflow_evidence_files": []
+  }
+}

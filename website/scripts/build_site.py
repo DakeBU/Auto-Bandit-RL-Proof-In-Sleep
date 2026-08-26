@@ -41,7 +41,7 @@ PAPER_TITLE = (
 PRIMARY_TEXTBOOK_TITLE = "Bandit Algorithms"
 PRIMARY_TEXTBOOK_AUTHORS = "Tor Lattimore and Csaba Szepesvári"
 PRIMARY_TEXTBOOK_URL = "https://tor-lattimore.com/downloads/book/book.pdf"
-ASSET_VERSION = "20260824b"
+ASSET_VERSION = "20260826c"
 SOURCE_BRANCH = "main"
 PUBLIC_BASE_URL = ""
 PUBLIC_SNAPSHOT_BASE_URL = ""
@@ -300,6 +300,28 @@ def module_docstring(text: str) -> str:
     return "\n".join(cleaned).strip()
 
 
+def markdown_prose_summary(text: str, limit: int = 620) -> str:
+    """Return the first prose paragraph of a small Lean/Markdown doc block."""
+
+    heading_fallback = ""
+    for block in re.split(r"\n\s*\n", text.strip()):
+        lines = [line.strip() for line in block.splitlines() if line.strip()]
+        if not lines:
+            continue
+        if lines[0].startswith("#"):
+            heading_fallback = re.sub(r"^#+\s*", "", lines[0]).strip()
+            lines = lines[1:]
+            if not lines:
+                continue
+        prose = " ".join(lines)
+        prose = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", prose)
+        prose = re.sub(r"`([^`]+)`", r"\1", prose)
+        prose = re.sub(r"\s+", " ", prose).strip()
+        if prose:
+            return prose[:limit].rstrip()
+    return heading_fallback[:limit].rstrip()
+
+
 def scan_module(path: Path) -> dict[str, Any]:
     text = path.read_text(encoding="utf-8")
     lines = text.splitlines()
@@ -395,12 +417,14 @@ def scan_module(path: Path) -> dict[str, Any]:
         body = "\n".join(visible_lines[start:stop])
         declaration["placeholder"] = bool(PLACEHOLDER_RE.search(body))
 
+    docstring = module_docstring(text)
     return {
         "name": module_name(path),
         "file": rel_source(path),
         "slug": module_slug(module_name(path)),
         "imports": imports,
-        "docstring": module_docstring(text),
+        "docstring": docstring,
+        "summary": markdown_prose_summary(docstring),
         "declarations": declarations,
         "placeholder_count": sum(1 for decl in declarations if decl["placeholder"]),
     }
@@ -500,11 +524,14 @@ def render_diagram(
     filename: str,
     caption: str,
     status_counts: Counter[str] | None = None,
+    extra_class: str = "",
 ) -> str:
     source = diagram_source(filename, status_counts)
     source_href = href_from(page_path, f"diagrams/{filename}")
+    classes = "diagram" + (f" {extra_class}" if extra_class else "")
     return (
-        '<figure class="diagram">'
+        f'<figure class="{html.escape(classes, quote=True)}" tabindex="0" role="region" '
+        f'aria-label="{html.escape(caption, quote=True)}">'
         f'<pre class="mermaid" aria-label="{html.escape(caption)}">{html.escape(source)}</pre>'
         f"<figcaption>{html.escape(caption)} · "
         f'<a href="{source_href}">editable Mermaid source</a></figcaption>'
@@ -1093,16 +1120,16 @@ def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[
         f'<div><strong>{html.escape(step["title"])}</strong><p>{html.escape(step["detail"])}</p></div></li>'
         for index, step in enumerate(algorithm["steps"], start=1)
     )
-    theorem = reading.get("source_theorem")
-    if theorem:
-        theorem_html = f"""
+    theorems = ([reading["source_theorem"]] if reading.get("source_theorem") else []) + reading.get("source_theorems", [])
+    if theorems:
+        theorem_html = "".join(f"""
 <article class="source-theorem-card">
   <div class="source-theorem-heading"><div><span class="panel-kicker">Source theorem · faithful restatement</span><h3>{html.escape(theorem['label'])}</h3></div><a href="{html.escape(theorem['url'], quote=True)}">Original source ↗</a></div>
   <p>{html.escape(theorem['plain'])}</p>
   {render_math_statement('Source mathematical statement', theorem['math'], theorem['fallback'])}
   <p class="source-note"><strong>BanditRLlib relationship.</strong> {html.escape(theorem['relationship'])}</p>
   <p class="copyright-note">The mathematical content is restated in this site's notation; wording is ours. See {html.escape(theorem['pages'])} in the linked source for the original statement and full assumptions.</p>
-</article>"""
+</article>""" for theorem in theorems)
     else:
         theorem_html = f"""
 <div class="callout warning source-boundary"><strong>No single source theorem.</strong> {html.escape(reading['source_boundary'])}</div>"""
@@ -1344,9 +1371,9 @@ def build_index(
   <h2>Installation</h2>
   <div class="installation-steps compact-steps">
     <article><span>01</span><h3>Install Lean</h3><p>Install Git, Python 3, and <a href="https://lean-lang.org/install/">Lean through Elan</a>. The repository pins <code>leanprover/lean4:v4.29.1</code>.</p></article>
-    <article><span>02</span><h3>Clone the repository</h3><pre><code>git clone {GITHUB_REPO}.git
+    <article><span>02</span><h3>Clone the repository</h3><pre class="command-block" tabindex="0" role="region" aria-label="Repository clone commands"><code>git clone {GITHUB_REPO}.git
 cd Auto-Bandit-RL-Proof-In-Sleep</code></pre></article>
-    <article><span>03</span><h3>Run the proof gate</h3><pre><code>lake update
+    <article><span>03</span><h3>Run the proof gate</h3><pre class="command-block" tabindex="0" role="region" aria-label="Lean proof gate commands"><code>lake update
 python3 tools/bandit.py check</code></pre></article>
   </div>
   <p><a class="button" href="{href_from(page_path, 'installation/index.html')}">Full installation guide</a></p>
@@ -1512,8 +1539,15 @@ def build_implementation_map(
 
 <section id="dependencies">
   <h2>Major theorem dependencies</h2>
-  <p>The graph shows the main teaching spine. Module pages list the exact import dependencies for every Lean source file.</p>
-  {render_diagram(page_path, 'theorem-dependencies.mmd', 'Major local declaration and theorem-family dependencies')}
+  <p>The overview names the shared core; five focused, editable diagrams preserve readable labels for each algorithm family. Module pages list the exact import dependencies for every Lean source file.</p>
+  {render_diagram(page_path, 'theorem-dependencies.mmd', 'Overview of the five theorem-dependency routes', extra_class='dependency-diagram dependency-overview')}
+  <div class="dependency-atlas">
+    {render_diagram(page_path, 'theorem-dependencies-stochastic.mmd', 'Finite stochastic bandit, ETC, and UCB dependencies', extra_class='dependency-diagram')}
+    {render_diagram(page_path, 'theorem-dependencies-oful.mmd', 'OFUL confidence, regret, and stopping dependencies', extra_class='dependency-diagram')}
+    {render_diagram(page_path, 'theorem-dependencies-thompson.mmd', 'Thompson sampling and Bayesian-regret dependencies', extra_class='dependency-diagram')}
+    {render_diagram(page_path, 'theorem-dependencies-adversarial.mmd', 'EXP3 and Tsallis-FTRL dependencies', extra_class='dependency-diagram')}
+    {render_diagram(page_path, 'theorem-dependencies-rl.mmd', 'Finite-horizon RL and UCBVI dependencies', extra_class='dependency-diagram')}
+  </div>
 </section>
 
 <section id="modules">
@@ -1840,7 +1874,7 @@ def build_module_pages(
 <section class="hero" id="module">
   <p class="eyebrow">Lean module · {html.escape(chapter['short_title'])}</p>
   <h1 class="page-title identifier-title">{breakable_identifier(module['name'])}</h1>
-  <p class="lede">{html.escape(module['docstring']) if module['docstring'] else 'Generated source map for this Lean module.'}</p>
+  <p class="lede">{html.escape(module['summary']) if module['summary'] else 'Generated source map for this Lean module.'}</p>
 </section>
 
 <section id="metadata">
@@ -2011,7 +2045,7 @@ def build_installation(output: Path, verified: bool, generated_at: str) -> None:
 
 <section id="clone">
   <h2>2. Clone the project</h2>
-  <pre><code>git clone {GITHUB_REPO}.git
+  <pre class="command-block" tabindex="0" role="region" aria-label="Repository clone and dependency commands"><code>git clone {GITHUB_REPO}.git
 cd Auto-Bandit-RL-Proof-In-Sleep
 lake update</code></pre>
   <p><code>lake update</code> fetches the pinned Mathlib dependency from <code>lakefile.lean</code>. The first run may take several minutes.</p>
@@ -2019,7 +2053,7 @@ lake update</code></pre>
 
 <section id="verify">
   <h2>3. Run the mandatory Lean gate</h2>
-  <pre><code>python3 tools/bandit.py check</code></pre>
+  <pre class="command-block" tabindex="0" role="region" aria-label="Mandatory Lean proof gate command"><code>python3 tools/bandit.py check</code></pre>
   <p>On Windows, <code>py -3 tools/bandit.py check</code> is equivalent when the Python launcher is installed. The gate runs <code>lake build</code>, builds <code>Tests</code>, and scans local Lean files for forbidden placeholders.</p>
   <p><strong>Successful result.</strong> The command exits with status 0 after both Lean build targets and repository integrity checks pass. A first build may be slow while Lake downloads and compiles pinned dependencies.</p>
   <div class="callout warning"><strong>Do not skip this step.</strong> A theorem is marked compiled on the website only after the project gate passes for the source snapshot being published.</div>
@@ -2027,7 +2061,7 @@ lake update</code></pre>
 
 <section id="website">
   <h2>4. Build and preview the literate site</h2>
-  <pre><code>python3 website/scripts/build_site.py --lean-verified
+  <pre class="command-block" tabindex="0" role="region" aria-label="Website build and local preview commands"><code>python3 website/scripts/build_site.py --lean-verified
 python3 website/scripts/check_site.py
 python3 -m http.server 8000 --directory website/_site</code></pre>
   <p>Open <code>http://localhost:8000/</code>. The static Research IDE is at <code>/ide/</code>; local Lean compilation requires the loopback-only companion server documented on that page.</p>
@@ -3178,7 +3212,7 @@ def build_lean_graph(
             "Lean module",
             module_status,
             subtitle=module["name"],
-            description=module["docstring"] or f"Generated source map for {module['file']}.",
+            description=module["summary"] or f"Generated source map for {module['file']}.",
             url=f"../modules/{module['slug']}/index.html",
             parent=chapter_ids[module["chapter"]],
             order=order,
@@ -3740,11 +3774,12 @@ def validate_readings(chapters: list[dict[str, Any]], readings: list[dict[str, A
             raise SystemExit(f"reading {reading['slug']} has a companion without a source URL")
         if not reading.get("algorithm", {}).get("steps"):
             raise SystemExit(f"reading {reading['slug']} lacks an algorithm or proof flow")
-        theorem = reading.get("source_theorem")
-        if theorem:
-            normalized = normalize_math_source(theorem.get("math", ""))
-            if normalized.count(r"\(") != normalized.count(r"\)") or normalized.count(r"\[") != normalized.count(r"\]"):
-                raise SystemExit(f"reading {reading['slug']} has unbalanced mathematical delimiters")
+        theorems = ([reading["source_theorem"]] if reading.get("source_theorem") else []) + reading.get("source_theorems", [])
+        if theorems:
+            for theorem in theorems:
+                normalized = normalize_math_source(theorem.get("math", ""))
+                if normalized.count(r"\(") != normalized.count(r"\)") or normalized.count(r"\[") != normalized.count(r"\]"):
+                    raise SystemExit(f"reading {reading['slug']} has unbalanced mathematical delimiters")
         elif not reading.get("source_boundary"):
             raise SystemExit(f"reading {reading['slug']} needs a source theorem or explicit boundary")
 
@@ -4038,7 +4073,10 @@ def main() -> int:
         "milestone_status_counts": dict(sorted(Counter(result["status"] for result in results).items())),
         "community_entry_count": 0,
         "reading_count": len(readings),
-        "source_theorem_count": sum(1 for reading in readings if reading.get("source_theorem")),
+        "source_theorem_count": sum(
+            (1 if reading.get("source_theorem") else 0) + len(reading.get("source_theorems", []))
+            for reading in readings
+        ),
         "textbook_spine_chapter_count": len(textbook_spine["chapters"]),
         "textbook_spine_status_counts": dict(
             sorted(Counter(chapter["status"] for chapter in textbook_spine["chapters"]).items())

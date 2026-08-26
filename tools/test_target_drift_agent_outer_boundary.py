@@ -4,11 +4,13 @@
 from __future__ import annotations
 
 import contextlib
+import ast
 import hashlib
 import io
 import json
 import errno
 import os
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -20,6 +22,7 @@ import prepare_target_drift_agent_image as image_builder
 import target_drift_agent_outer_controller as controller
 import target_drift_agent_model_probe as model_probe
 import target_drift_agent_outer_probe as worker_probe
+import target_drift_agent_excluded_adapter as excluded_adapter
 
 
 class AgentOuterBoundaryTest(unittest.TestCase):
@@ -33,6 +36,19 @@ class AgentOuterBoundaryTest(unittest.TestCase):
         self.assertNotIn(
             '${RUNNER_TEMP}/abrl-agent-outer-auth.json', workflow
         )
+
+    def test_workflow_exercises_excluded_execute_without_provider_secret(self) -> None:
+        workflow = (
+            launcher.ROOT / ".github" / "workflows" /
+            "target-drift-agent-image.yml"
+        ).read_text(encoding="utf-8")
+        self.assertEqual(workflow.count("--component-mode excluded-execute"), 1)
+        self.assertIn(
+            "evaluation/target-drift-v2/agent-excluded-execution-request.json",
+            workflow,
+        )
+        self.assertIn("RESULT_FREE_SENTINEL_DO_NOT_USE", workflow)
+        self.assertNotIn("secrets.", workflow)
 
     def test_canonical_command_has_fixed_root_and_worker_boundary(self) -> None:
         command = launcher.docker_command(
@@ -74,6 +90,39 @@ class AgentOuterBoundaryTest(unittest.TestCase):
         self.assertIn(launcher.PID1, command)
         self.assertIn(launcher.OUTER_CONTROLLER, command)
 
+    def test_excluded_execute_command_is_networkless_and_fixed(self) -> None:
+        digest = "sha256:" + "b" * 64
+        command = launcher.docker_command(
+            Path("/usr/bin/docker"), digest, Path("/host/input"),
+            Path("/host/auth.json"), Path("/host/control"),
+            "result-free-execute-test", launcher.EXCLUDED_EXECUTE_MODE,
+        )
+        network = command.index("--network")
+        self.assertEqual(command[network + 1], "none")
+        self.assertIn(
+            "ABRL_OUTER_COMPONENT_MODE=result_free_excluded_execute_v1", command
+        )
+        self.assertIn(f"ABRL_OUTER_COMPONENT_IMAGE_DIGEST={digest}", command)
+        self.assertNotIn(launcher.EXCLUDED_ADAPTER, command)
+        self.assertIn(launcher.PID1, command)
+        self.assertIn(launcher.OUTER_CONTROLLER, command)
+
+    def test_pid1_lifecycle_cross_binding_fails_closed(self) -> None:
+        ready = {
+            "controller_pid": 1,
+            "child_pid": 17,
+            "pid_namespace_requirement": "controller_is_pid_1",
+        }
+        exit_ledger = {"reason": "child_exited", "child_return_code": 0}
+        report = {"controller_pid": 17, "controller_parent_pid": 1}
+        launcher.validate_process_lifecycle(ready, exit_ledger, report)
+        changed = dict(report, controller_pid=18)
+        with self.assertRaises(SystemExit):
+            launcher.validate_process_lifecycle(ready, exit_ledger, changed)
+        changed_exit = dict(exit_ledger, child_return_code=125)
+        with self.assertRaises(SystemExit):
+            launcher.validate_process_lifecycle(ready, changed_exit, report)
+
     def test_launcher_accepts_only_fixed_fake_inputs(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory).resolve()
@@ -88,6 +137,28 @@ class AgentOuterBoundaryTest(unittest.TestCase):
             auth.write_text("real-or-other-secret\n", encoding="utf-8")
             with self.assertRaises(SystemExit):
                 launcher.validate_inputs(agent, auth, control)
+
+    def test_launcher_accepts_only_the_tracked_excluded_request(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            agent = root / "agent"
+            control = root / "control"
+            agent.mkdir()
+            control.mkdir()
+            request = agent / "request.json"
+            request.write_bytes(launcher.CANONICAL_EXCLUDED_REQUEST.read_bytes())
+            auth = root / "auth.json"
+            auth.write_bytes(launcher.EXPECTED_AUTH)
+            launcher.validate_inputs(
+                agent, auth, control, launcher.EXCLUDED_EXECUTE_MODE
+            )
+            payload = json.loads(request.read_text(encoding="utf-8"))
+            payload["provider_runtime"]["provider_execution_enabled"] = True
+            request.write_text(json.dumps(payload) + "\n", encoding="utf-8")
+            with self.assertRaises(SystemExit):
+                launcher.validate_inputs(
+                    agent, auth, control, launcher.EXCLUDED_EXECUTE_MODE
+                )
 
     def test_controller_copies_only_single_regular_frozen_input(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -192,6 +263,15 @@ class AgentOuterBoundaryTest(unittest.TestCase):
             "model_probe_sha256": launcher.sha256(
                 launcher.TOOLS / "target_drift_agent_model_probe.py"
             ),
+            "excluded_adapter_sha256": launcher.sha256(
+                launcher.TOOLS / "target_drift_agent_excluded_adapter.py"
+            ),
+            "excluded_execution_contract_sha256": launcher.sha256(
+                launcher.CANONICAL_EXCLUDED_CONTRACT
+            ),
+            "excluded_execution_request_sha256": launcher.sha256(
+                launcher.CANONICAL_EXCLUDED_REQUEST
+            ),
         }
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory).resolve() / "sbom.json"
@@ -291,6 +371,133 @@ class AgentOuterBoundaryTest(unittest.TestCase):
             image_builder.CONTEXT_INPUTS["target_drift_agent_model_probe.py"],
             image_builder.TOOLS / "target_drift_agent_model_probe.py",
         )
+        self.assertEqual(
+            image_builder.CONTEXT_INPUTS[
+                "target_drift_agent_excluded_adapter.py"
+            ],
+            image_builder.TOOLS / "target_drift_agent_excluded_adapter.py",
+        )
+
+    def test_excluded_adapter_has_no_provider_network_or_process_escape(self) -> None:
+        source = (launcher.TOOLS / "target_drift_agent_excluded_adapter.py").read_text(
+            encoding="utf-8"
+        )
+        tree = ast.parse(source)
+        imported = set()
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Import):
+                imported.update(alias.name.split(".")[0] for alias in node.names)
+            elif isinstance(node, ast.ImportFrom) and node.module:
+                imported.add(node.module.split(".")[0])
+        blocked_import_roots = {
+            "ftplib", "http", "requests", "socket", "ssl", "subprocess",
+            "telnetlib", "urllib", "webbrowser",
+        }
+        self.assertTrue(blocked_import_roots.isdisjoint(imported))
+        blocked_os_calls = []
+        for node in ast.walk(tree):
+            if not isinstance(node, ast.Call):
+                continue
+            function = node.func
+            if (
+                isinstance(function, ast.Attribute)
+                and isinstance(function.value, ast.Name)
+                and function.value.id == "os"
+                and (
+                    function.attr in {"popen", "system"}
+                    or function.attr.startswith("exec")
+                    or function.attr.startswith("spawn")
+                )
+            ):
+                blocked_os_calls.append(function.attr)
+        self.assertEqual(blocked_os_calls, [])
+
+    def test_excluded_contract_hashes_and_primary_status_fail_closed(self) -> None:
+        contract = controller.load_excluded_contract(
+            launcher.CANONICAL_EXCLUDED_CONTRACT,
+            launcher.TOOLS / "target_drift_agent_excluded_adapter.py",
+        )
+        self.assertEqual(
+            contract["execution_status_boundary"],
+            "primary_execution_not_started",
+        )
+        self.assertFalse(contract["primary_result_eligible"])
+        protocol = json.loads((
+            launcher.ROOT / "evaluation/target-drift-v2/protocol.json"
+        ).read_text(encoding="utf-8"))
+        self.assertTrue(protocol["execution_status"].endswith("execution_not_started"))
+        with tempfile.TemporaryDirectory() as directory:
+            changed_adapter = Path(directory) / "adapter.py"
+            changed_adapter.write_bytes(
+                (launcher.TOOLS / "target_drift_agent_excluded_adapter.py").read_bytes()
+                + b"\n# drift\n"
+            )
+            with self.assertRaises(SystemExit):
+                controller.load_excluded_contract(
+                    launcher.CANONICAL_EXCLUDED_CONTRACT, changed_adapter
+                )
+
+    def test_excluded_adapter_round_trip_is_zero_usage_and_result_ineligible(self) -> None:
+        contract = json.loads(
+            launcher.CANONICAL_EXCLUDED_CONTRACT.read_text(encoding="utf-8")
+        )
+        request_payload = launcher.CANONICAL_EXCLUDED_REQUEST.read_bytes()
+        request = json.loads(request_payload.decode("utf-8"))
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            agent = root / "agent"
+            agent.mkdir()
+            request_path = agent / "request.json"
+            request_path.write_bytes(request_payload)
+            auth = root / "auth.json"
+            auth.write_bytes(excluded_adapter.EXPECTED_AUTH)
+            descriptor = os.open(auth, os.O_RDONLY)
+            response = agent / "adapter/response.json"
+            trace = agent / "adapter/trace.jsonl"
+            argv = [
+                "target_drift_agent_excluded_adapter.py",
+                "--request", str(request_path),
+                "--response", str(response),
+                "--trace", str(trace),
+                "--agent-mount", str(agent),
+                "--adapter-id", "abrl-agent-excluded-component",
+                "--adapter-version", "1",
+                "--model-id", "excluded-provider-no-model",
+                "--immutable-model-version", "excluded-provider-no-model",
+                "--image-digest", "sha256:" + "c" * 64,
+                "--budget-attestation", "zero-provider-zero-model-zero-cost",
+                "--isolation-attestation",
+                "network-none-fixed-fake-auth-result-ineligible",
+                "--request-sha256", hashlib.sha256(request_payload).hexdigest(),
+            ]
+            stdout = io.StringIO()
+            try:
+                with mock.patch.object(sys, "argv", argv), mock.patch.object(
+                         excluded_adapter, "read_denial_errno",
+                         return_value=errno.EACCES
+                     ), mock.patch.dict(os.environ, {
+                         excluded_adapter.AUTH_FD_ENV: str(descriptor),
+                         "ABRL_OUTER_COMPONENT_MODE": excluded_adapter.EXPECTED_MODE,
+                     }, clear=False), contextlib.redirect_stdout(stdout):
+                    excluded_adapter.main()
+            finally:
+                try:
+                    os.close(descriptor)
+                except OSError:
+                    pass
+            evidence = controller.validate_excluded_execution_artifacts(
+                agent, contract, request, stdout.getvalue().encode("utf-8")
+            )
+            self.assertFalse(evidence["primary_result_eligible"])
+            self.assertFalse(evidence["provider_execution_enabled"])
+            self.assertEqual(
+                evidence["adapter_response"]["usage"]["cost_usd"], 0.0
+            )
+            trace.write_text("{}\n", encoding="utf-8")
+            with self.assertRaises(SystemExit):
+                controller.validate_excluded_execution_artifacts(
+                    agent, contract, request, stdout.getvalue().encode("utf-8")
+                )
 
 
 if __name__ == "__main__":

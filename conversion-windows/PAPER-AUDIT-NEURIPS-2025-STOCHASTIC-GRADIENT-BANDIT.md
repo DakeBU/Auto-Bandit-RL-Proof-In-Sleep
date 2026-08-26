@@ -38,8 +38,13 @@ at the initial and successor reward laws under explicit support and mean
 contracts.  The two-arm initial and fixed-history forward/inverse recurrences,
 their a.e. conditional-distribution transport, fixed-horizon path
 integrability, and tower-ready one-step conditional-expectation forms also
-compile.  Global tower iteration and the expected squared failure-mass
-argument remain downstream.
+compile.  Bounded support now also derives initial and successor
+`Integrable sourceIncrement`, and a fixed-IID wrapper compiles the one-step
+Equation-(5) gap-coordinate identity without a caller-supplied integrability
+premise.  A separate unconditional module now integrates and iterates the
+recurrences and closes the source-indexed expected squared failure-mass sum.
+The expected-parameter/Jensen bridge, fixed-IID/Dirac specialization, and
+Equation-(7) generated-regret terminal remain downstream.
 
 ## Lean mapping
 
@@ -65,6 +70,9 @@ argument remain downstream.
 | time-one recurrences | Theorem 1 initialization | `integral_twoArmInitialPairKernel_exp_forwardIncrement_le`, `integral_twoArmInitialPairKernel_exp_inverseIncrement_le` | source zero initialization and `p_1=1/2` | compiled |
 | trajectory recurrence transport | conditional recurrence step | `trajectoryPrefix_condDistrib_integral_forwardSuccessor_le`, `trajectoryPrefix_condDistrib_integral_inverseSuccessor_le` | a.e. prefixwise conditional-distribution integrals | compiled |
 | fixed-horizon conditional expectation | tower-ready recurrence step | `twoArmForwardTrajectorySuccessor_condExp_le_recurrenceBound`, `twoArmInverseTrajectorySuccessor_condExp_le_recurrenceBound` | integrable potentials and conditional expectation on the canonical trajectory | compiled |
+| bounded-support Equation-(5) integrability | initial and successor update regularity | `integrable_measurableTwoArmInitialPairKernel_sourceIncrement_of_contract`, `integrable_measurableTwoArmHistoryStepKernel_sourceIncrement_of_contract` | derives update integrability from the existing bounded-support contract | compiled |
+| fixed-IID Equation-(5) consumer | source-law successor-kernel gap identity | `integral_twoArmFixedIIDHistoryStepKernel_sourceIncrement_eq_gapCoordinate` | one-step generated-history identity; no global tower iteration | compiled |
+| unconditional recurrence and failure mass | Theorem 1 recurrence/telescope slice | `twoArmForwardUnconditionalRecurrence`, `twoArmInverseFailureMassSqTelescope`, `twoArmFullFailureMassSqSum_le` | generic bounded fixed-mean trajectory; source round 1 is the explicit `1/4` term | compiled |
 
 ## Assumption ledger
 
@@ -83,7 +91,9 @@ argument remain downstream.
 | bounded two-arm fixed-mean environment contract | explicit initial/successor fiber support and mean fields | Theorem 1 reward model | no for the compiled recurrence route; an equivalent fixed-iid-law/source-assumption producer is not claimed |
 | initial, fixed-history, and a.e. conditional-distribution recurrences | compiled | Theorem 1 proof | no for the one-step recurrence layer |
 | fixed-horizon path integrability and conditional-expectation recurrence | compiled | Theorem 1 proof | no for the one-step tower-ready layer |
-| global tower iteration and expected squared failure mass | not compiled | Theorem 1 proof | yes for Theorem 1 |
+| Equation-(5) source-increment integrability from bounded reward support | compiled direct corollary | Eq. (5) plus the source `[-1,1]` reward model | no new premise; uses the existing pair-kernel support and pointwise update bound |
+| unconditional recurrence iteration and expected squared failure mass | compiled | Theorem 1 proof | no for this generic slice |
+| expected-parameter/Jensen, fixed-IID/Dirac, and Equation-(7) generated-regret assembly | not compiled | Theorem 1 proof | yes for Theorem 1 |
 | other learning-rate thresholds | not attempted | Theorems 2--4 | yes for those paper endpoints |
 
 ## Local API and proof route
@@ -108,6 +118,8 @@ argument remain downstream.
 | two-arm one-step recurrences | Equation-(11) consumers, `sourceC_mono`, generated Equation (8) | `MLIB-EXP-LOG-INEQUALITIES`, `MLIB-ORDER-ALGEBRA` | identify the forward/inverse coefficients and isolate the success/failure-square remainder | preserve the source-time fence and signs |
 | measurable trajectory transport | canonical trajectory `condDistrib`, prefix filtration, measurable potentials | `MLIB-CONDITIONAL-EXPECTATION`, `MLIB-PROBABILITY-KERNEL` | transport the fixed-history integral inequalities to a.e. generated prefixes | do not call this a global iterated recurrence |
 | path integrability and conditional expectation | pathwise reward support, recursive parameter envelope, `condexp`/`condDistrib` identity | `MLIB-CONDITIONAL-EXPECTATION`, `MLIB-MEASURE-INTEGRAL` | prove fixed-horizon exponential integrability, identify one-step condexp, then expose tower-ready bounds | do not infer the finite-horizon tower sum or failure-mass bound |
+| Equation-(5) bounded-support integrability | pair-kernel support transport, `measurable_sourceIncrement`, `abs_sourceIncrement_softmax_le_abs_reward` | `MLIB-MEASURE-INTEGRAL`, `MLIB-PROBABILITY-KERNEL` | dominate the update by the unit reward envelope, then invoke the existing gap-coordinate kernel identity | do not add independence, a second moment, or caller-supplied integrability |
+| unconditional iteration and failure mass | tower-ready condexp bounds, `integral_condExp`, scalar telescoping, normalized initial kernel | `MLIB-CONDITIONAL-EXPECTATION`, `MLIB-MEASURE-INTEGRAL` | integrate the AE recurrences, iterate them, and cancel the source-round-one `1/4` against the initial inverse potential | do not call this Equation (7) or Theorem 1 |
 
 ## Proof DAG
 
@@ -131,7 +143,9 @@ argument remain downstream.
 | SGB-RECURRENCE-INITIAL | source-zero time-one recurrence inequalities | SGB-EQ8-GENERATED and uniform initial law | `integral_twoArmInitialPairKernel_exp_forwardIncrement_le`, `integral_twoArmInitialPairKernel_exp_inverseIncrement_le` | focused Lean | compiled |
 | SGB-RECURRENCE-COND-DISTRIB | measurable contract, canonical trajectory, filtration, and a.e. recurrence transport | SGB-HISTORY-TRAJECTORY and SGB-RECURRENCE-SUCCESSOR | `TwoArmBoundedFixedMeanEnvironmentContract`, `trajectoryPrefix_condDistrib_integral_forwardSuccessor_le`, `trajectoryPrefix_condDistrib_integral_inverseSuccessor_le` | trajectory gate | compiled |
 | SGB-PATH-INTEGRABILITY | finite-prefix support, potential integrability, condexp/condDistrib identity, and tower-ready recurrence | SGB-RECURRENCE-COND-DISTRIB | `integrable_twoArmForwardTrajectorySuccessorPotential`, `twoArmForwardTrajectorySuccessor_condExp_le_recurrenceBound`, inverse analogues | trajectory gate | compiled |
-| SGB-THEOREM-1 | exact two-arm finite regret terminal | SGB-PATH-INTEGRABILITY plus global tower iteration, expected failure-mass control, and Equation-(7) assembly | reserved | paper endpoint | blocked |
+| SGB-EQ5-BOUNDED-SUPPORT-INTEGRABILITY | initial/successor source-increment integrability and fixed-IID Equation-(5) consumer | SGB-EQ5-COND-MEAN, SGB-PATH-INTEGRABILITY, fixed-IID source contract | `integrable_measurableTwoArmInitialPairKernel_sourceIncrement_of_contract`, `integrable_measurableTwoArmHistoryStepKernel_sourceIncrement_of_contract`, `integral_twoArmFixedIIDHistoryStepKernel_sourceIncrement_eq_gapCoordinate` | focused Lean plus canaries | compiled |
+| SGB-UNCONDITIONAL-RECURRENCE | integrated recurrences, scalar iteration, normalized initial bridge, and resulting generic source-indexed expected failure-mass sum | SGB-PATH-INTEGRABILITY | `twoArmForwardUnconditionalRecurrence`, `twoArmForwardFiniteIteration_from_source_initial`, `twoArmFullFailureMassSqSum_le` | focused Lean plus typed canary | compiled |
+| SGB-THEOREM-1 | exact two-arm finite regret terminal | SGB-UNCONDITIONAL-RECURRENCE plus expected-parameter/Jensen, fixed-IID/Dirac, and Equation-(7) consumers | reserved | paper endpoint | blocked |
 | SGB-THEOREMS-2-4 | remaining learning-rate regimes | source-specific general-`K` and sharp-rate arguments | reserved | paper endpoint | blocked |
 
 The process API permits an arbitrary `initialTheta`; the paper's Algorithm 1
@@ -148,9 +162,9 @@ is recovered by the specialization `initialTheta := fun _ => 0`.
   update integrability and arm-reward integral equalities.
 - [x] Compile the source zero-initialized Equation-(9) invariant, explicit
   two-arm source-time fence, uniform initial law, and Equation-(11) odds.
-- [ ] Package the source paper's reward assumptions as a uniform producer of
-  those hypotheses across the generated history, including the stronger
-      arm-reward regularity from which update integrability should follow.
+- [x] Package the fixed-IID source reward assumptions as a uniform producer of
+  the bounded fixed-mean contract and derive generated-history update
+  integrability from its `[-1,1]` support field.
 - [x] Compile the source-exact `C_eta` and Equation-(8) bounded-reward
   exponential-moment inequality on a generic probability measure.
 - [x] Instantiate Equation (8) on the generated initial/successor kernels and
@@ -162,8 +176,10 @@ is recovered by the specialization `initialTheta := fun _ => 0`.
 - [x] Transport reward support to finite prefixes, prove both fixed-horizon
   potentials integrable, identify condexp with the conditional-distribution
   integral, and compile tower-ready one-step recurrence bounds.
-- [ ] Iterate the recurrences globally, bound the expected squared failure
-  mass, and assemble Theorem 1's exact finite regret inequality through
-  Equation (7).
+- [x] Integrate and iterate the recurrences and prove the resulting generic
+  source-indexed expected squared failure-mass bound, including the exact
+  `1/4` initial term.
+- [ ] Compile the expected-parameter/Jensen and fixed-IID/Dirac consumers, then
+  assemble Theorem 1's exact generated-regret inequality through Equation (7).
 - [ ] Prove any logarithmic or polynomial regret regime.
 - [ ] Verify the two-arm sharp threshold or the general-`K` threshold.

@@ -1,0 +1,20 @@
+flowchart TB
+  Hedge["EXP3 potential and Hedge"] --> IW["importance-weighted support<br/>and conditional moments"]
+  Traj["generated trajectory law"] --> IW
+  IW --> Expected["horizon-tuned expected regret"]
+  IW --> Window["best-arm realized tail"]
+  Concentration["martingale concentration"] --> Window
+  IW --> Predictable["predictable all-prefix event"]
+  Concentration --> Deviation["realized-deviation<br/>all-prefix event"]
+  Predictable --> EXP3All["same-process all-prefix regret"]
+  Deviation --> EXP3All
+  IW --> Sparse["sparse / variance-sensitive route"]
+  FTRL["half-Tsallis simplex minimizer"] --> Stability["one-step stability and penalty"]
+  Stability --> Generated["scheduled generated action law"]
+  Traj --> Generated
+  Generated --> Alignment["observed IW score alignment"]
+  Alignment --> AllRate["all-rate expected regret"]
+  AllRate --> SelfBound["fixed-gap self-bounding"]
+  SelfBound --> IID["bounded-IID logarithmic regret"]
+  SelfBound --> Dynamic["corruption and dynamic routes"]
+  Dynamic --> Restart["population-mean oracle restart"]

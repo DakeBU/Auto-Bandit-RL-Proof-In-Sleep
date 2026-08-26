@@ -33,6 +33,10 @@ class LinkCollector(HTMLParser):
         self.ids: set[str] = set()
         self.id_counts: Counter[str] = Counter()
         self.mermaid_count = 0
+        self.diagram_region_count = 0
+        self.accessible_diagram_region_count = 0
+        self.command_block_count = 0
+        self.accessible_command_block_count = 0
         self.mathjax_count = 0
         self.source_link_count = 0
         self.source_links: list[str] = []
@@ -122,6 +126,14 @@ class LinkCollector(HTMLParser):
                 self.nested_math_errors += 1
         if "mermaid" in classes:
             self.mermaid_count += 1
+        if "diagram" in classes:
+            self.diagram_region_count += 1
+            if values.get("tabindex") == "0" and values.get("role") == "region" and values.get("aria-label"):
+                self.accessible_diagram_region_count += 1
+        if "command-block" in classes:
+            self.command_block_count += 1
+            if tag == "pre" and values.get("tabindex") == "0" and values.get("role") == "region" and values.get("aria-label"):
+                self.accessible_command_block_count += 1
         if "site-sidebar" in classes:
             self.site_sidebar_count += 1
         if "book-nav-link" in classes:
@@ -807,6 +819,19 @@ def main() -> int:
                 f"expected {expected_spine_count}"
             )
 
+    command_block_expectations = {
+        Path("index.html"): 2,
+        Path("installation/index.html"): 3,
+    }
+    for relative, expected in command_block_expectations.items():
+        collector = pages.get((output / relative).resolve())
+        if collector and collector.command_block_count != expected:
+            errors.append(
+                f"{relative}: found {collector.command_block_count} command blocks, expected {expected}"
+            )
+        if collector and collector.accessible_command_block_count != collector.command_block_count:
+            errors.append(f"{relative}: every command block must be a labelled keyboard-scroll region")
+
     contributor_page = pages.get((output / "contributors" / "index.html").resolve())
     expected_contributors = manifest.get("contributor_count", 0)
     if contributor_page and contributor_page.contributor_card_count != expected_contributors + 1:
@@ -828,6 +853,9 @@ def main() -> int:
         title_end = module_html.find("</h1>", title_start)
         if title_start < 0 or title_end < 0 or "<wbr>" not in module_html[title_start:title_end]:
             errors.append(f"{module_page.relative_to(output)}: module title lacks identifier wrap points")
+        lede_match = re.search(r'<p class="lede">(.*?)</p>', module_html, re.DOTALL)
+        if lede_match and (lede_match.group(1).lstrip().startswith("#") or "`" in lede_match.group(1)):
+            errors.append(f"{module_page.relative_to(output)}: module lede leaks Markdown syntax")
     if len(chapter_pages) != expected_chapter_count:
         errors.append("chapter-page count does not match chapters.json")
     if len(spine_pages) != expected_spine_count:
@@ -841,6 +869,10 @@ def main() -> int:
         relative = chapter_page.relative_to(output)
         if collector.source_guide_count != 1:
             errors.append(f"{relative}: expected one textbook source guide")
+        if collector.source_theorem_card_count < 1 and collector.source_boundary_count != 1:
+            errors.append(f"{relative}: expected at least one source theorem or one explicit source boundary")
+        if collector.source_theorem_card_count and collector.source_boundary_count:
+            errors.append(f"{relative}: source theorem cards and a no-theorem boundary cannot coexist")
         if collector.algorithm_flow_count != 1:
             errors.append(f"{relative}: expected one algorithm or proof flow")
         if collector.math_statement_count != collector.math_fallback_count or collector.math_statement_count != collector.math_tex_count:
@@ -868,8 +900,8 @@ def main() -> int:
             f"source theorem cards {chapter_source_theorems} != manifest source_theorem_count "
             f"{manifest.get('source_theorem_count')}"
         )
-    if chapter_source_theorems + chapter_source_boundaries != expected_chapter_count:
-        errors.append("every chapter needs either a source theorem card or an explicit source boundary")
+    if chapter_source_boundaries > expected_chapter_count:
+        errors.append("source-boundary count exceeds the number of Book Map chapters")
     if manifest.get("reading_count") != expected_chapter_count:
         errors.append("manifest reading_count does not cover all Book Map chapters")
     for spine_page in spine_pages:
@@ -923,6 +955,8 @@ def main() -> int:
         "A Novel General Framework for Sharp Lower Bounds in Succinct Stochastic Bandits",
         "physical PDF pp. 4–5",
         "Definitions 3.1–3.3 and Lemmas 3.1–3.4",
+        "Does Stochastic Gradient really succeed for Bandits?",
+        "Theorem 1 (two-arm SGB regret upper bound)",
     ):
         if required not in frontier_source:
             errors.append(f"Frontier reading guide is missing succinct source metadata: {required}")
@@ -944,11 +978,32 @@ def main() -> int:
     source_links: list[str] = []
     for collector in pages.values():
         totals["mermaid"] += collector.mermaid_count
+        totals["diagram_regions"] += collector.diagram_region_count
+        totals["accessible_diagram_regions"] += collector.accessible_diagram_region_count
         totals["mathjax"] += collector.mathjax_count
         totals["source_links"] += collector.source_link_count
         source_links.extend(collector.source_links)
     if totals["mermaid"] < 7:
         errors.append(f"expected at least 7 rendered Mermaid blocks, found {totals['mermaid']}")
+    if totals["diagram_regions"] != totals["mermaid"]:
+        errors.append("every Mermaid block must be contained by one diagram region")
+    if totals["accessible_diagram_regions"] != totals["diagram_regions"]:
+        errors.append("every diagram must be a labelled keyboard-scroll region")
+    site_js = (output / "static" / "site.js").read_text(encoding="utf-8")
+    for required in (
+        "fitFlowchartViewBoxes",
+        'svg[aria-roledescription^="flowchart"]',
+        "labelOverflowRegions();",
+    ):
+        if required not in site_js:
+            errors.append(f"site.js is missing the maintainable flowchart-fit hook: {required}")
+    implementation_source = (output / "implementation-map" / "index.html").read_text(
+        encoding="utf-8"
+    )
+    if implementation_source.count('class="diagram dependency-diagram') != 6:
+        errors.append(
+            "Implementation Map must retain one overview and five focused dependency diagrams"
+        )
     if totals["mathjax"] != len(pages):
         errors.append(f"MathJax is not loaded on every HTML page ({totals['mathjax']} of {len(pages)})")
     if totals["source_links"] < manifest.get("declaration_count", 0):
