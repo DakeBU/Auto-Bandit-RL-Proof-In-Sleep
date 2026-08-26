@@ -401,6 +401,7 @@ def inspect_smoke_run(
         "job": operator / "job.json",
         "state": operator / "run_state.json",
         "receipt": operator / "execution-receipt.json",
+        "adapter_response": operator / "adapter" / "response.json",
         "workspace": operator / "workspace_manifest.json",
         "checker_receipt": operator / "checker" / "checker-execution-receipt.json",
         "checker_result": operator / "checker" / "checker-result.json",
@@ -414,11 +415,16 @@ def inspect_smoke_run(
     job, job_sha = bound["job"]
     state, state_sha = bound["state"]
     receipt, receipt_sha = bound["receipt"]
+    adapter_response, adapter_response_sha = bound["adapter_response"]
     checker_receipt, checker_receipt_sha = bound["checker_receipt"]
     checker_result, checker_result_sha = bound["checker_result"]
     checker_response, checker_response_sha = bound["checker_response"]
     config = load(pack / "execution_config.json")
+    require(config["execution_adapter"]["provider_runtime"]["kind"] == "codex_cli",
+            "real infrastructure smoke requires a codex_cli provider runtime")
     checker_config = config["posthoc_checker"]
+    require(checker_config["mode"] == "production",
+            "real infrastructure smoke requires the production checker")
     checker_root = operator / "checker"
     runner.file_manifest(checker_root)
     require(job.get("semantic_run_id") == planned["smoke_run_id"]
@@ -442,6 +448,17 @@ def inspect_smoke_run(
             "smoke state identity/purpose/plan binding differs")
     require(state.get("sealed_pack_sha256") == receipt.get("sealed_pack_sha256") == aggregate,
             "smoke state/receipt names a different sealed pack")
+    require(receipt.get("termination") == adapter_response.get("termination") == "completed",
+            "smoke provider run did not terminate as completed")
+    require(receipt.get("adapter_artifact_sha256", {}).get("response.json")
+            == adapter_response_sha,
+            "smoke adapter response is not bound by the execution receipt")
+    invocations = adapter_response.get("model_invocations")
+    require(isinstance(invocations, list) and bool(invocations)
+            and all(invocation.get("transport") == "codex_cli"
+                    and invocation.get("usage_observed") is True
+                    for invocation in invocations),
+            "smoke lacks a real codex_cli invocation with observed usage")
     require(receipt.get("opaque_run_id") == checker_receipt.get("opaque_run_id")
             == checker_result.get("opaque_run_id")
             == checker_response.get("opaque_run_id") == expected_opaque,

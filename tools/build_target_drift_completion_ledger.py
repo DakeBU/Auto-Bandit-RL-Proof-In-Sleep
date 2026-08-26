@@ -22,6 +22,15 @@ import run_target_drift_execution as runner  # noqa: E402
 
 
 ELIGIBLE_STATUS = "checked"
+REQUIRED_CHECKED_STATE_HASH_FIELDS = (
+    "prepared_job_sha256",
+    "workspace_manifest_sha256",
+    "execution_receipt_sha256",
+    "checker_request_sha256",
+    "checker_result_sha256",
+    "checker_execution_receipt_sha256",
+    "sandbox_response_sha256",
+)
 KNOWN_STATES = {
     "prepared_unrun",
     "terminal_operator_failure",
@@ -120,10 +129,30 @@ def self_verify(pack: Path, config: dict[str, Any]) -> None:
 
 def evidence_hashes(operator: Path, state: dict[str, Any]) -> dict[str, str]:
     status = state["status"]
+    if status == ELIGIBLE_STATUS:
+        for field in REQUIRED_CHECKED_STATE_HASH_FIELDS:
+            expected = state.get(field)
+            require(
+                isinstance(expected, str)
+                and len(expected) == 64
+                and all(character in "0123456789abcdef" for character in expected),
+                f"checked run state lacks a lowercase SHA-256 binding for {field}",
+            )
     candidates: list[tuple[str, Path, str | None]] = [
         ("run_state", operator / "run_state.json", None),
         ("job", operator / "job.json", state.get("prepared_job_sha256")),
     ]
+    if status == ELIGIBLE_STATUS:
+        checker_attempt_id = state.get("checker_attempt_id")
+        require(isinstance(checker_attempt_id, str) and checker_attempt_id,
+                "checked run state lacks a checker attempt ID")
+        candidates.extend([
+            ("workspace_manifest", operator / "workspace_manifest.json",
+             state.get("workspace_manifest_sha256")),
+            ("checker_request",
+             operator / "checker-attempts" / checker_attempt_id / "request.json",
+             state.get("checker_request_sha256")),
+        ])
     if status == "terminal_operator_failure":
         candidates.append((
             "operator_failure_receipt",
@@ -176,6 +205,7 @@ def missing_reason(status: str) -> str | None:
 
 def inspect_run(
     run_dir: Path, planned: dict[str, Any], aggregate: str,
+    config: dict[str, Any],
 ) -> dict[str, Any]:
     operator = run_dir / "operator"
     job = regular_json(operator / "job.json", "prepared job")
@@ -197,6 +227,36 @@ def inspect_run(
     )
     if status == ELIGIBLE_STATUS:
         require(eligible, "checked run is not literal production-result-eligible")
+        require(config["execution_adapter"]["provider_runtime"]["kind"] == "codex_cli",
+                "checked run is bound to a non-production provider runtime")
+        require(config["posthoc_checker"]["mode"] == "production",
+                "checked run is bound to a non-production checker")
+        require(job.get("execution_purpose") == runner.PRIMARY_EXECUTION_PURPOSE
+                and job.get("primary_result_eligible") is True,
+                "checked run job is not a primary result-eligible job")
+        receipt = regular_json(operator / "execution-receipt.json", "execution receipt")
+        response_path = operator / "adapter" / "response.json"
+        response = regular_json(response_path, "adapter response")
+        checker_receipt = regular_json(
+            operator / "checker" / "checker-execution-receipt.json",
+            "checker execution receipt",
+        )
+        require(receipt.get("termination") == response.get("termination") == "completed",
+                "checked run lacks completed provider termination")
+        require(receipt.get("adapter_artifact_sha256", {}).get("response.json")
+                == prepare.sha256_file(response_path),
+                "checked run adapter response is not bound by its execution receipt")
+        invocations = response.get("model_invocations")
+        require(isinstance(invocations, list) and bool(invocations)
+                and all(invocation.get("transport") == "codex_cli"
+                        and invocation.get("usage_observed") is True
+                        for invocation in invocations),
+                "checked run lacks a real codex_cli invocation with observed usage")
+        require(checker_receipt.get("checker_mode") == "production"
+                and checker_receipt.get("execution_purpose")
+                == runner.PRIMARY_EXECUTION_PURPOSE
+                and checker_receipt.get("result_eligible") is True,
+                "checked run checker receipt is not production-result-eligible")
     if status == "checked_fixture_nonexperimental":
         require(state.get("result_eligible") is False,
                 "fixture run must be explicitly result-ineligible")
@@ -267,7 +327,9 @@ def build_ledger(pack: Path, runs_root: Path) -> dict[str, Any]:
         semantic_id = planned["run_id"]
         if semantic_id in discovered:
             try:
-                records.append(inspect_run(discovered[semantic_id], planned, aggregate))
+                records.append(inspect_run(
+                    discovered[semantic_id], planned, aggregate, config
+                ))
             except (SystemExit, Exception) as error:
                 records.append({
                     "semantic_run_id": semantic_id,

@@ -351,13 +351,18 @@ python tools/run_target_drift_execution.py --pack FROZEN-PACK --execute RUN-DIR
 python tools/check_target_drift_run.py --pack FROZEN-PACK --run-dir RUN-DIR
 ```
 
-The schedule runner executes runs in sealed presentation order, never revisits a
-terminal state, and continues with the remaining preregistered IDs after a
-run-level failure.  It writes the completion ledger and exits nonzero when fewer
-than 450 runs are production-result-eligible:
+Before materializing the first primary run, the schedule runner replays the
+bound three-condition smoke evidence and requires all three real `codex_cli`
+provider invocations, observed usage, completed adapter termination, and
+production checker receipts.  A missing, failed, tampered, result-free, or
+differently bound smoke ledger stops the schedule before any of the 450 primary
+runs.  After that gate, the runner executes runs in sealed presentation order,
+never revisits a terminal state, and continues with the remaining preregistered
+IDs after a run-level failure.  It writes the completion ledger and exits nonzero
+when fewer than 450 runs are production-result-eligible:
 
 ```text
-python tools/run_target_drift_schedule.py --pack FROZEN-PACK --runs-root RUNS --completion-ledger COMPLETION-LEDGER.json
+python tools/run_target_drift_schedule.py --pack FROZEN-PACK --runs-root RUNS --completion-ledger COMPLETION-LEDGER.json --smoke-plan SMOKE-PLAN.json --smoke-ledger SMOKE-LEDGER.json
 ```
 
 The ledger may also be rebuilt read-only from an already attempted run root:

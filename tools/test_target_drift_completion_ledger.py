@@ -39,6 +39,10 @@ class TargetDriftCompletionLedgerTest(unittest.TestCase):
         policy_sha256 = hashlib.sha256(policy_bytes).hexdigest()
         dump(pack / "execution_config.json", {
             "suite_id": "ABRL-TARGET-DRIFT-V2",
+            "execution_adapter": {
+                "provider_runtime": {"kind": "codex_cli"},
+            },
+            "posthoc_checker": {"mode": "production"},
             "retry_policy": {
                 "missing_run_policy": completion.POLICY_ID,
             },
@@ -74,14 +78,47 @@ class TargetDriftCompletionLedgerTest(unittest.TestCase):
         for planned in planned_runs:
             opaque = completion.runner.opaque_id("run", aggregate, planned["run_id"])
             operator = runs_root / opaque / "operator"
-            dump(operator / "job.json", {
+            job_path = operator / "job.json"
+            dump(job_path, {
                 "semantic_run_id": planned["run_id"],
                 "opaque_run_id": opaque,
+                "execution_purpose": completion.runner.PRIMARY_EXECUTION_PURPOSE,
+                "primary_result_eligible": True,
             })
-            dump(operator / "execution-receipt.json", {})
-            dump(operator / "checker" / "checker-result.json", {})
-            dump(operator / "checker" / "checker-execution-receipt.json", {})
-            dump(operator / "checker" / "sandbox-response.json", {})
+            workspace_manifest_path = operator / "workspace_manifest.json"
+            dump(workspace_manifest_path, {})
+            adapter_response_path = operator / "adapter" / "response.json"
+            dump(adapter_response_path, {
+                "termination": "completed",
+                "model_invocations": [{
+                    "transport": "codex_cli",
+                    "usage_observed": True,
+                }],
+            })
+            dump(operator / "execution-receipt.json", {
+                "termination": "completed",
+                "adapter_artifact_sha256": {
+                    "response.json": completion.prepare.sha256_file(adapter_response_path),
+                },
+            })
+            execution_receipt_path = operator / "execution-receipt.json"
+            checker_result_path = operator / "checker" / "checker-result.json"
+            dump(checker_result_path, {})
+            checker_receipt_path = (
+                operator / "checker" / "checker-execution-receipt.json"
+            )
+            dump(checker_receipt_path, {
+                "checker_mode": "production",
+                "execution_purpose": completion.runner.PRIMARY_EXECUTION_PURPOSE,
+                "result_eligible": True,
+            })
+            sandbox_response_path = operator / "checker" / "sandbox-response.json"
+            dump(sandbox_response_path, {})
+            checker_attempt_id = "checker-attempt-1"
+            checker_request_path = (
+                operator / "checker-attempts" / checker_attempt_id / "request.json"
+            )
+            dump(checker_request_path, {})
             dump(operator / "run_state.json", {
                 "schema_version": 1,
                 "status": "checked",
@@ -89,6 +126,26 @@ class TargetDriftCompletionLedgerTest(unittest.TestCase):
                 "sealed_pack_sha256": aggregate,
                 "result_eligible": True,
                 "checker_mode": "production",
+                "prepared_job_sha256": completion.prepare.sha256_file(job_path),
+                "workspace_manifest_sha256": completion.prepare.sha256_file(
+                    workspace_manifest_path
+                ),
+                "execution_receipt_sha256": completion.prepare.sha256_file(
+                    execution_receipt_path
+                ),
+                "checker_attempt_id": checker_attempt_id,
+                "checker_request_sha256": completion.prepare.sha256_file(
+                    checker_request_path
+                ),
+                "checker_result_sha256": completion.prepare.sha256_file(
+                    checker_result_path
+                ),
+                "checker_execution_receipt_sha256": completion.prepare.sha256_file(
+                    checker_receipt_path
+                ),
+                "sandbox_response_sha256": completion.prepare.sha256_file(
+                    sandbox_response_path
+                ),
             })
 
     def test_empty_run_root_emits_missingness_only_and_refuses_inference(self) -> None:
@@ -137,6 +194,83 @@ class TargetDriftCompletionLedgerTest(unittest.TestCase):
                 completion.validate_ledger_against_runs(
                     pack, runs, ledger, require_complete=False,
                 )
+
+    def test_checked_state_without_observed_real_invocation_is_missing(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            pack = self.synthetic_pack(root)
+            runs = root / "runs"
+            runs.mkdir()
+            self.materialize_checked_runs(pack, runs)
+            planned = json.loads(
+                (pack / "run_manifest.json").read_text(encoding="utf-8")
+            )["runs"][0]
+            opaque = completion.runner.opaque_id("run", "a" * 64, planned["run_id"])
+            response_path = runs / opaque / "operator" / "adapter" / "response.json"
+            response = json.loads(response_path.read_text(encoding="utf-8"))
+            response["model_invocations"] = []
+            dump(response_path, response)
+            receipt_path = runs / opaque / "operator" / "execution-receipt.json"
+            receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+            receipt["adapter_artifact_sha256"]["response.json"] = (
+                completion.prepare.sha256_file(response_path)
+            )
+            dump(receipt_path, receipt)
+            state_path = runs / opaque / "operator" / "run_state.json"
+            state = json.loads(state_path.read_text(encoding="utf-8"))
+            state["execution_receipt_sha256"] = completion.prepare.sha256_file(
+                receipt_path
+            )
+            dump(state_path, state)
+            ledger = completion.build_ledger(pack, runs)
+            record = next(
+                item for item in ledger["records"]
+                if item["semantic_run_id"] == planned["run_id"]
+            )
+            self.assertEqual(record["state_status"], "integrity_failure")
+            self.assertFalse(record["result_eligible"])
+            self.assertEqual(ledger["summary"]["missing_count"], 1)
+
+    def test_checked_state_missing_expected_hash_binding_is_missing(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            pack = self.synthetic_pack(root)
+            runs = root / "runs"
+            runs.mkdir()
+            self.materialize_checked_runs(pack, runs)
+            planned = json.loads(
+                (pack / "run_manifest.json").read_text(encoding="utf-8")
+            )["runs"][0]
+            opaque = completion.runner.opaque_id("run", "a" * 64, planned["run_id"])
+            run_dir = runs / opaque
+            state_path = run_dir / "operator" / "run_state.json"
+            original_state = json.loads(state_path.read_text(encoding="utf-8"))
+            config = json.loads(
+                (pack / "execution_config.json").read_text(encoding="utf-8")
+            )
+            for field in completion.REQUIRED_CHECKED_STATE_HASH_FIELDS:
+                with self.subTest(field=field):
+                    state = dict(original_state)
+                    del state[field]
+                    dump(state_path, state)
+                    with self.assertRaises(SystemExit):
+                        completion.inspect_run(
+                            run_dir, planned, "a" * 64, config
+                        )
+
+            state = dict(original_state)
+            del state["execution_receipt_sha256"]
+            dump(state_path, state)
+
+            ledger = completion.build_ledger(pack, runs)
+            record = next(
+                item for item in ledger["records"]
+                if item["semantic_run_id"] == planned["run_id"]
+            )
+            self.assertEqual(record["state_status"], "integrity_failure")
+            self.assertFalse(record["result_eligible"])
+            self.assertEqual(record["missing_reason"], "run_evidence_unreadable_or_invalid")
+            self.assertEqual(ledger["summary"]["missing_count"], 1)
 
     def test_tampered_policy_or_summary_fails_closed(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:

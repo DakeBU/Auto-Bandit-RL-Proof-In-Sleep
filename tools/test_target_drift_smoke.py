@@ -20,6 +20,7 @@ import prepare_target_drift_execution as prepare  # noqa: E402
 import prepare_target_drift_grading as grading  # noqa: E402
 import prepare_target_drift_smoke as smoke  # noqa: E402
 import run_target_drift_execution as runner  # noqa: E402
+import run_target_drift_schedule as schedule  # noqa: E402
 import run_target_drift_smoke as smoke_runner  # noqa: E402
 
 
@@ -77,6 +78,7 @@ class TargetDriftSmokeTest(unittest.TestCase):
         checker_root.mkdir(parents=True)
 
         checker_config = {
+            "mode": "production",
             "checker_id": "neutral-checker",
             "checker_version": "1",
             "runtime_config_sha256": "r" * 64,
@@ -91,6 +93,9 @@ class TargetDriftSmokeTest(unittest.TestCase):
         }
         pack = root / "pack"
         self._write_json(pack / "execution_config.json", {
+            "execution_adapter": {
+                "provider_runtime": {"kind": "codex_cli"},
+            },
             "posthoc_checker": checker_config,
         })
         (pack / "aggregate.sha256").write_text(aggregate + "\n", encoding="ascii")
@@ -110,6 +115,14 @@ class TargetDriftSmokeTest(unittest.TestCase):
         }
         job_path = operator / "job.json"
         self._write_json(job_path, job)
+        adapter_response_path = operator / "adapter" / "response.json"
+        self._write_json(adapter_response_path, {
+            "termination": "completed",
+            "model_invocations": [{
+                "transport": "codex_cli",
+                "usage_observed": True,
+            }],
+        })
         receipt = {
             "opaque_run_id": opaque,
             "execution_purpose": runner.SMOKE_EXECUTION_PURPOSE,
@@ -119,6 +132,10 @@ class TargetDriftSmokeTest(unittest.TestCase):
             "prepared_job_sha256": prepare.sha256_file(job_path),
             "workspace_manifest_sha256": prepare.sha256_file(workspace),
             "completed_agent_manifest_sha256": completed_manifest_sha,
+            "termination": "completed",
+            "adapter_artifact_sha256": {
+                "response.json": prepare.sha256_file(adapter_response_path),
+            },
         }
         receipt_path = operator / "execution-receipt.json"
         self._write_json(receipt_path, receipt)
@@ -278,16 +295,112 @@ class TargetDriftSmokeTest(unittest.TestCase):
         status, eligible = checker.checked_state_for({
             "execution_purpose": runner.SMOKE_EXECUTION_PURPOSE,
             "primary_result_eligible": False,
-        }, "production")
+        }, "production", "codex_cli", "completed")
         self.assertEqual(status, "checked_smoke_nonexperimental")
         self.assertFalse(eligible)
         self.assertEqual(
             checker.checked_state_for({
                 "execution_purpose": runner.PRIMARY_EXECUTION_PURPOSE,
                 "primary_result_eligible": True,
-            }, "production"),
+            }, "production", "codex_cli", "completed"),
             ("checked", True),
         )
+        with self.assertRaises(checker.CheckerFailure):
+            checker.checked_state_for({
+                "execution_purpose": runner.PRIMARY_EXECUTION_PURPOSE,
+                "primary_result_eligible": True,
+            }, "production", "excluded_fixture", "completed")
+        with self.assertRaises(checker.CheckerFailure):
+            checker.checked_state_for({
+                "execution_purpose": runner.PRIMARY_EXECUTION_PURPOSE,
+                "primary_result_eligible": True,
+            }, "production", "codex_cli", "infrastructure_failure")
+
+    def test_schedule_smoke_gate_rebuilds_exact_passed_records(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            pack = root / "pack"
+            self._write_json(pack / "execution_config.json", {
+                "execution_adapter": {
+                    "provider_runtime": {"kind": "codex_cli"},
+                },
+                "posthoc_checker": {"mode": "production"},
+            })
+            plan_path = root / "smoke-plan.json"
+            ledger_path = root / "smoke-ledger.json"
+            self._write_json(plan_path, {"placeholder": True})
+            self._write_json(ledger_path, {"placeholder": True})
+            planned = [{"smoke_run_id": f"smoke-{index}"} for index in range(3)]
+            plan = {"runs": planned}
+            records = [{"smoke_run_id": item["smoke_run_id"]} for item in planned]
+            ledger = {
+                "status": "passed_result_ineligible_smoke",
+                "all_three_infrastructure_paths_passed": True,
+                "records": records,
+            }
+            with mock.patch.object(
+                smoke_runner, "validate_plan", return_value=(plan, "p" * 64)
+            ), mock.patch.object(
+                smoke_runner, "load_bound", return_value=(ledger, "l" * 64)
+            ), mock.patch.object(
+                smoke_runner, "validate_ledger", return_value=None
+            ), mock.patch.object(
+                smoke_runner, "canonical_runs_root", return_value=root / "runs"
+            ), mock.patch.object(
+                smoke_runner, "inspect_smoke_run", side_effect=records
+            ):
+                gate = schedule.validate_smoke_gate(pack, plan_path, ledger_path)
+            self.assertEqual(gate["status"], "passed_result_ineligible_smoke")
+            self.assertFalse(gate["primary_result_eligible"])
+
+    def test_schedule_smoke_gate_rejects_failed_or_rebound_evidence(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            pack = root / "pack"
+            self._write_json(pack / "execution_config.json", {
+                "execution_adapter": {
+                    "provider_runtime": {"kind": "codex_cli"},
+                },
+                "posthoc_checker": {"mode": "production"},
+            })
+            plan_path = root / "smoke-plan.json"
+            ledger_path = root / "smoke-ledger.json"
+            self._write_json(plan_path, {"placeholder": True})
+            self._write_json(ledger_path, {"placeholder": True})
+            plan = {"runs": [{"smoke_run_id": f"smoke-{index}"} for index in range(3)]}
+            failed = {
+                "status": "failed_result_ineligible_smoke",
+                "all_three_infrastructure_paths_passed": False,
+                "records": [],
+            }
+            with mock.patch.object(
+                smoke_runner, "validate_plan", return_value=(plan, "p" * 64)
+            ), mock.patch.object(
+                smoke_runner, "load_bound", return_value=(failed, "l" * 64)
+            ), mock.patch.object(smoke_runner, "validate_ledger", return_value=None):
+                with self.assertRaises(SystemExit):
+                    schedule.validate_smoke_gate(pack, plan_path, ledger_path)
+
+            records = [{"smoke_run_id": item["smoke_run_id"]} for item in plan["runs"]]
+            passed = {
+                "status": "passed_result_ineligible_smoke",
+                "all_three_infrastructure_paths_passed": True,
+                "records": records,
+            }
+            rebound = [{"smoke_run_id": "different"}] * 3
+            with mock.patch.object(
+                smoke_runner, "validate_plan", return_value=(plan, "p" * 64)
+            ), mock.patch.object(
+                smoke_runner, "load_bound", return_value=(passed, "l" * 64)
+            ), mock.patch.object(
+                smoke_runner, "validate_ledger", return_value=None
+            ), mock.patch.object(
+                smoke_runner, "canonical_runs_root", return_value=root / "runs"
+            ), mock.patch.object(
+                smoke_runner, "inspect_smoke_run", side_effect=rebound
+            ):
+                with self.assertRaises(SystemExit):
+                    schedule.validate_smoke_gate(pack, plan_path, ledger_path)
 
     def test_agent_request_cannot_distinguish_primary_from_smoke(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

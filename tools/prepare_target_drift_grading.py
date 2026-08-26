@@ -124,6 +124,26 @@ def require_primary_job(job: dict[str, Any], label: str) -> None:
             f"grading rejects non-primary or smoke run: {label}")
 
 
+def require_real_provider_completion(
+    config: dict[str, Any], receipt: dict[str, Any],
+    adapter_response: dict[str, Any], adapter_response_path: Path, label: str,
+) -> None:
+    """Re-derive real-provider eligibility at the final grading boundary."""
+    require(config["execution_adapter"]["provider_runtime"]["kind"] == "codex_cli",
+            "formal grading requires a real codex_cli provider runtime")
+    require(receipt.get("termination") == adapter_response.get("termination") == "completed",
+            f"grading rejects non-completed provider execution: {label}")
+    require(receipt.get("adapter_artifact_sha256", {}).get("response.json")
+            == prepare.sha256_file(adapter_response_path),
+            f"grading adapter response is not bound by execution receipt: {label}")
+    invocations = adapter_response.get("model_invocations")
+    require(isinstance(invocations, list) and bool(invocations)
+            and all(invocation.get("transport") == "codex_cli"
+                    and invocation.get("usage_observed") is True
+                    for invocation in invocations),
+            f"grading lacks a real codex_cli invocation with observed usage: {label}")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--pack", type=Path, required=True)
@@ -185,13 +205,14 @@ def main() -> None:
         result_path = run_dir / "agent" / "output" / "result.json"
         state_path = run_dir / "operator" / "run_state.json"
         receipt_path = run_dir / "operator" / "execution-receipt.json"
+        adapter_response_path = run_dir / "operator" / "adapter" / "response.json"
         checker_receipt_path = (
             run_dir / "operator" / "checker" / "checker-execution-receipt.json"
         )
         checker_response_path = run_dir / "operator" / "checker" / "sandbox-response.json"
         if not all(path.is_file() for path in (
             job_path, checker_path, result_path, state_path, receipt_path,
-            checker_receipt_path, checker_response_path,
+            adapter_response_path, checker_receipt_path, checker_response_path,
         )):
             continue
         job = load(job_path)
@@ -199,9 +220,13 @@ def main() -> None:
         result = load(result_path)
         state = load(state_path)
         receipt = load(receipt_path)
+        adapter_response = load(adapter_response_path)
         checker_receipt = load(checker_receipt_path)
         checker_response = load(checker_response_path)
         require_primary_job(job, run_dir.name)
+        require_real_provider_completion(
+            config, receipt, adapter_response, adapter_response_path, run_dir.name
+        )
         require(state["prepared_job_sha256"] == receipt["prepared_job_sha256"]
                 == prepare.sha256_file(job_path),
                 f"prepared-job hash mismatch for {run_dir.name}")

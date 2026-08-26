@@ -1321,6 +1321,8 @@ def validate_frozen_choices(config: dict[str, Any]) -> None:
     nonempty(adapter["filesystem_network_process_attestation"],
              "execution_adapter.filesystem_network_process_attestation", 20)
     validate_provider_runtime(adapter["provider_runtime"], require_hash=True)
+    require(adapter["provider_runtime"]["kind"] == "codex_cli",
+            "frozen primary execution requires a real codex_cli provider runtime")
     adapter_identity = (adapter["adapter_id"] + " " + adapter["adapter_version"]).lower()
     if adapter["provider_runtime"]["kind"] == "excluded_fixture":
         require(any(marker in adapter_identity for marker in ("fixture", "excluded")),
@@ -1340,8 +1342,8 @@ def validate_frozen_choices(config: dict[str, Any]) -> None:
     checker = config["posthoc_checker"]
     for field in ("checker_id", "checker_version", "runtime_id", "runtime_version"):
         nonempty(checker[field], f"posthoc_checker.{field}")
-    require(checker["mode"] in {"production", "excluded_fixture"},
-            "posthoc_checker.mode must be production or excluded_fixture")
+    require(checker["mode"] == "production",
+            "frozen primary execution requires the production post-hoc checker")
     require(re.fullmatch(r"sha256:[0-9a-f]{64}", checker["container_image_digest"])
             is not None, "checker image digest must be sha256:<64 lowercase hex>")
     require(re.fullmatch(r"[0-9a-f]{64}", checker["runtime_config_sha256"])
