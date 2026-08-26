@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-26T10:55:39+00:00",
+  "generated": "2026-08-26T19:15:20+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -3704,6 +3704,70 @@
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditExponentialAudit.lean",
       "line": 193,
       "statement": "theorem integral_exp_mul_le_sourceEqEight_of_ae_abs_le_one {Omega : Type*} [MeasurableSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (q : Real) (reward : Omega -> Real) (hrewardMeasurable : MeasureTheory.AEStronglyMeasurable reward mu) (hreward : \u2200\u1d50 omega \u2202mu, |reward omega| <= 1) : (\u222b omega, Real.exp (q * reward omega) \u2202mu) <= 1 + q * (\u222b omega, reward omega \u2202mu) + q ^ 2 / 2 * sourceC (|q| / 2)"
+    },
+    {
+      "kind": "def",
+      "name": "theoremFourStepOneMargin",
+      "full_name": "BanditRLProof.StochasticGradientBandit.theoremFourStepOneMargin",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremFourContractAudit.lean",
+      "line": 37,
+      "statement": "def theoremFourStepOneMargin (K : Nat) (eta Delta : Real) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "theoremFourStepFourSurvivalLowerBound",
+      "full_name": "BanditRLProof.StochasticGradientBandit.theoremFourStepFourSurvivalLowerBound",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremFourContractAudit.lean",
+      "line": 42,
+      "statement": "def theoremFourStepFourSurvivalLowerBound (pPrime c : Real) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "theoremFourStepOneMargin_pos",
+      "full_name": "BanditRLProof.StochasticGradientBandit.theoremFourStepOneMargin_pos",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremFourContractAudit.lean",
+      "line": 47,
+      "statement": "theorem theoremFourStepOneMargin_pos (K : Nat) (eta Delta : Real) (hmargin : eta * sourceC eta < 2 * Delta / ((K : Real) + 2)) : 0 < theoremFourStepOneMargin K eta Delta"
+    },
+    {
+      "kind": "theorem",
+      "name": "theoremFourStepFourSurvivalLowerBound_pos",
+      "full_name": "BanditRLProof.StochasticGradientBandit.theoremFourStepFourSurvivalLowerBound_pos",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremFourContractAudit.lean",
+      "line": 58,
+      "statement": "theorem theoremFourStepFourSurvivalLowerBound_pos (pPrime c : Real) (hpPrime : 0 < pPrime) (hc_half : c < 1 / 2) : 0 < theoremFourStepFourSurvivalLowerBound pPrime c"
+    },
+    {
+      "kind": "theorem",
+      "name": "theoremFourStepFour_survivalMass_ge",
+      "full_name": "BanditRLProof.StochasticGradientBandit.theoremFourStepFour_survivalMass_ge",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremFourContractAudit.lean",
+      "line": 75,
+      "statement": "theorem theoremFourStepFour_survivalMass_ge (pPrime c bufferedMass jointSurvivalMass survivalMass : Real) (hc_half : c < 1 / 2) (hbuffer : pPrime <= bufferedMass) (hconditional : (1 - 2 * c) * bufferedMass <= jointSurvivalMass) (hsubset : jointSurvivalMass <= survivalMass) : theoremFourStepFourSurvivalLowerBound pPrime c <= survivalMass"
+    },
+    {
+      "kind": "theorem",
+      "name": "theoremFourStepFour_survivalMass_pos",
+      "full_name": "BanditRLProof.StochasticGradientBandit.theoremFourStepFour_survivalMass_pos",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremFourContractAudit.lean",
+      "line": 93,
+      "statement": "theorem theoremFourStepFour_survivalMass_pos (pPrime c bufferedMass jointSurvivalMass survivalMass : Real) (hpPrime : 0 < pPrime) (hc_half : c < 1 / 2) (hbuffer : pPrime <= bufferedMass) (hconditional : (1 - 2 * c) * bufferedMass <= jointSurvivalMass) (hsubset : jointSurvivalMass <= survivalMass) : 0 < survivalMass"
+    },
+    {
+      "kind": "theorem",
+      "name": "theoremFourFiniteGeometricPhaseMass_le_inv",
+      "full_name": "BanditRLProof.StochasticGradientBandit.theoremFourFiniteGeometricPhaseMass_le_inv",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremFourContractAudit.lean",
+      "line": 109,
+      "statement": "theorem theoremFourFiniteGeometricPhaseMass_le_inv (rho : Real) (hrho_pos : 0 < rho) (hrho_le_one : rho <= 1) (phaseCount : Nat) : (Finset.range phaseCount).sum (fun phase => (1 - rho) ^ phase) <= 1 / rho"
+    },
+    {
+      "kind": "theorem",
+      "name": "theoremFourFiniteTransientMass_le_inv",
+      "full_name": "BanditRLProof.StochasticGradientBandit.theoremFourFiniteTransientMass_le_inv",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremFourContractAudit.lean",
+      "line": 124,
+      "statement": "theorem theoremFourFiniteTransientMass_le_inv (rho : Real) (hrho_pos : 0 < rho) (hrho_le_one : rho <= 1) (phaseMass : Nat -> Real) (hphase : forall phase, phaseMass phase <= (1 - rho) ^ phase) (phaseCount : Nat) : (Finset.range phaseCount).sum phaseMass <= 1 / rho"
     },
     {
       "kind": "theorem",

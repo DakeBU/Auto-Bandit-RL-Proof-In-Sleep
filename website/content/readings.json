@@ -324,8 +324,8 @@
         {
           "title": "Does Stochastic Gradient really succeed for Bandits?",
           "authors": "Dorian Baudry, Emmeran Johnson, Simon Vary, Ciara Pike-Burke, and Patrick Rebeschini",
-          "sections": "Section 1.2, Algorithm 1, Theorem 1, Equations (3)--(11), and Appendix A.1",
-          "pages": "physical PDF pp. 2--4 and 22",
+          "sections": "Section 1.2, Algorithm 1, Theorem 1, Equations (3)--(11), Appendix A.1, Theorem 4, and Appendix E Steps 1--4",
+          "pages": "physical PDF pp. 2--4, 22, and 47--49",
           "url": "https://proceedings.neurips.cc/paper_files/paper/2025/file/a4e683f0ce6b91e7fbdae9d32642d88f-Paper-Conference.pdf"
         }
       ],
@@ -357,7 +357,16 @@
           "math": "\\(R_T^{\\mathrm{SGB}}\\le \\frac{\\log(1+4\\eta\\Delta T)}{2\\eta}+\\frac{\\Delta}{2\\eta(\\Delta-\\eta C_\\eta)},\\qquad C_\\eta=2\\sum_{n=0}^{\\infty}\\frac{(2\\eta)^n}{(n+2)!}\\le e^{2\\eta},\\quad \\eta C_\\eta<\\Delta.\\)",
           "fallback": "For a two-arm bounded-reward instance, Theorem 1 gives an explicit logarithmic-in-horizon regret term plus a finite failure-regret term whenever the learning rate satisfies η Cη < Δ.",
           "plain": "The source theorem combines a forward-potential logarithmic bound with a telescoping control of squared failure probability for the same fixed-IID two-arm SGB trajectory.",
-          "relationship": "BanditRLlib now compiles this exact Theorem-1 endpoint for the actual sampled pseudo-regret of bounded two-arm fixed-IID laws, specialized through a Dirac environment prior. The compiled chain includes the generated Equation-(5) tower and expected-parameter telescope, forward-potential Jensen/log bound, squared failure-mass control with round 1 equal to 1/4, actual sampled-action bridge, Equation (7), and the source horizon and constants. The contract keeps 0 < Delta < 1, eta > 0, eta C_eta < Delta, exact arm means, and T = tailHorizon + 1 explicit. Theorems 2–4 and their learning-rate regimes remain open."
+          "relationship": "BanditRLlib compiles this exact Theorem-1 endpoint for the actual sampled pseudo-regret of bounded two-arm fixed-IID laws, specialized through a Dirac environment prior. A separate eight-declaration Appendix-E gate checks finite scalar contracts used in Theorem 4, but does not prove that theorem. The Theorem-1 contract keeps 0 < Delta < 1, eta > 0, eta C_eta < Delta, exact arm means, and T = tailHorizon + 1 explicit. Theorems 2–4 remain open."
+        },
+        {
+          "label": "Theorem 4 / Appendix E source-contract window",
+          "pages": "physical PDF pp. 47--49",
+          "url": "https://proceedings.neurips.cc/paper_files/paper/2025/file/a4e683f0ce6b91e7fbdae9d32642d88f-Paper-Conference.pdf",
+          "math": "\\[\\begin{gathered}\\eta C_\\eta < \\frac{2\\Delta}{K+2},\\\\ 2\\Delta-\\eta C_\\eta(K+2)>0,\\\\ 0<p',\\quad c<\\tfrac12,\\\\ P(B)\\ge p',\\\\ P(B\\cap S)\\ge(1-2c)P(B),\\\\ P(B\\cap S)\\le P(S),\\\\ \\Longrightarrow P(S)\\ge p'(1-2c)>0.\\end{gathered}\\]",
+          "fallback": "The printed tuning yields a positive drift margin. For positive p-prime and c below one half, explicit buffer and conditional-survival premises make the finite survival mass at least the positive quantity p-prime times one minus two c.",
+          "plain": "This is the finite contract consumed by the Appendix-E transient-phase argument, not the statement of Theorem 4 itself.",
+          "relationship": "Eight Lean declarations compile the positive margin, audited finite event composition, and finite geometric phase envelope. They expose an unresolved Step-4 conditioning/direction mismatch while leaving the general-K generated process, uniform buffer/survival producer, stopped supermartingale/Doob route, and Theorem 4 uncompiled."
         }
       ]
     }

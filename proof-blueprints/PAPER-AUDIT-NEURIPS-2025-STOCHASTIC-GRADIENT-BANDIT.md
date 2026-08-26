@@ -1,6 +1,6 @@
 # Proof Blueprint: PAPER-AUDIT-NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT
 
-Generated: `2026-08-26T11:05:39+00:00`
+Generated: `2026-08-26T19:17:28+00:00`
 
 ## Source Task
 
@@ -25,8 +25,10 @@ Stochastic Gradient really succeed for Bandits?* (NeurIPS 2025). The audit
 separates the reusable softmax/update/regret mechanism, pathwise zero-sum/odds
 structure, Equation-(8) analytic inequality, generated conditional kernels,
 two-arm recurrence interfaces, and the paper's exact two-arm Theorem 1
-endpoint.  Theorems 2--4 and the general-`K` learning-rate regimes remain
-outside the compiled boundary.
+endpoint.  A separate eight-declaration Appendix-E contract audit now checks
+the finite scalar implications needed by Theorem 4 without promoting its
+generated-process premises or endpoint.  Theorems 2--4 and the general-`K`
+learning-rate regimes remain outside the compiled endpoint boundary.
 
 ## Frozen source
 
@@ -39,7 +41,8 @@ outside the compiled boundary.
   `a3aff97fe2179c47fff61cc51453b84a082332e2a205f7fa2268cc68cba73b3d`.
 - Source windows: problem and regret on physical PDF p. 1; SGB policy and
   Equations (3)--(8) on pp. 2--4; Algorithm 1 and its gradient verification
-  on p. 22; Appendix A.2 Equations (9)--(11) on pp. 22--23.
+  on p. 22; Appendix A.2 Equations (9)--(11) on pp. 22--23; Theorem 4 and
+  Appendix E Steps 1--4 on physical PDF pp. 47--49.
 
 ## Placement
 
@@ -142,22 +145,8 @@ The generic probability-law theorem remains a distinct analytic layer; the
 generated-kernel instantiation is supplied by the next extension rather than
 being silently inferred here.
 
-## Active generated-kernel and two-arm recurrence extension
+<!-- 15789 characters omitted from the middle of this snapshot. -->
 
-Four declarations now instantiate Equation (8) on the generated initial and
-successor reward kernels under explicit bounded-support and fixed-mean
-
-<!-- 12996 characters omitted from the middle of this snapshot. -->
-
-BanditRLProof.StochasticGradientBandit.integral_twoArmSampledPseudoRegret_eq_generated
-BanditRLProof.StochasticGradientBandit.twoArmGeneratedExpectedPseudoRegret_le_sourceTheoremOne
-BanditRLProof.StochasticGradientBandit.integral_twoArmSampledPseudoRegret_le_sourceTheoremOne
-BanditRLProof.StochasticGradientBandit.twoArmFixedIIDDirac_theoremOne
-```
-
-Target files: `BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean`,
-`BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean`,
-`BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRate.lean`, and
 `BanditRLProof/Algorithms/StochasticGradientBanditExponentialAudit.lean`,
 `BanditRLProof/Algorithms/StochasticGradientBanditConditionalExponentialAudit.lean`,
 `BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRecurrence.lean`,
@@ -165,7 +154,8 @@ Target files: `BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean`,
 `BanditRLProof/Algorithms/StochasticGradientBanditTwoArmMeasurableRecurrence.lean`,
 `BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean`,
 `BanditRLProof/Algorithms/StochasticGradientBanditTwoArmFixedIID.lean`, and
-`BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean`.
+`BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean`, plus
+`BanditRLProof/Algorithms/StochasticGradientBanditTheoremFourContractAudit.lean`.
 
 ## Gate
 
@@ -181,6 +171,7 @@ lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTwoArmMeasurableR
 lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean
 lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTwoArmFixedIID.lean
 lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean
+lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTheoremFourContractAudit.lean
 lake env lean Tests/StochasticGradientBanditPaperAuditCanary.lean
 lake env lean Tests/StochasticGradientBanditConditionalExponentialAuditCanary.lean
 lake env lean Tests/StochasticGradientBanditTwoArmRecurrenceCanary.lean
@@ -189,6 +180,7 @@ lake env lean Tests/StochasticGradientBanditTwoArmMeasurableRecurrenceCanary.lea
 lake env lean Tests/StochasticGradientBanditTwoArmPathIntegrabilityCanary.lean
 lake env lean Tests/StochasticGradientBanditTwoArmFixedIIDCanary.lean
 lake env lean Tests/StochasticGradientBanditTwoArmTheoremOneCanary.lean
+lake env lean Tests/StochasticGradientBanditTheoremFourContractAuditCanary.lean
 python tools/bandit.py check
 ```
 
@@ -237,10 +229,15 @@ python tools/bandit.py check
   bridge and `twoArmFixedIIDDirac_theoremOne`.
 - [x] The twelve compiled layers contain 215 named declarations in the exact
   `26+18+18+14+4+10+3+25+19+9+37+32` split.
+- [x] The separate Theorem-4 source-contract gate compiles 8 named
+  declarations: 2 definitions and 6 theorems.  Total SGB audit inventory is
+  therefore 223, while the exact Theorem-1 stack remains 215 declarations.
 - [x] Refresh the declaration indexes, proof Blueprint, website build, and
-  anonymous claim ledger to the 215-declaration boundary.
-- [x] Refresh the separate paper repository's arXiv and ICLR audit tables,
-  rebuild both PDFs, and synchronize the verified revision to Overleaf.
+  anonymous claim ledger to the 223-declaration audit boundary.
+- [x] Refresh the separate paper repository's arXiv and ICLR audit tables and
+  rebuild both PDFs on the isolated paper branch.
+- [ ] Push the verified paper revision to Overleaf main only after explicit
+  approval; local commit `1a2e934` and both round-10 PDFs are ready.
 - [x] Re-run the repository-wide Lean, harness, website, and anonymous-artifact
   gates after the evidence refresh.
 - [x] Complete an independent mathematical review of the final Theorem-1
@@ -314,6 +311,16 @@ trajectory, with source horizon `T = tailHorizon + 1`, source constants, and
 the hypotheses `0 < Delta < 1` and `eta * C_eta < Delta` retained.  Theorems
 2--4 remain downstream.
 
+A separate Appendix-E audit compiles eight finite source-contract leaves for
+Theorem 4.  The printed learning-rate inequality yields a positive
+Equation-(22) drift margin.  Under `0 < pPrime` and `c < 1/2`, explicit buffer
+and conditional joint-survival premises yield the audited positive lower
+bound `pPrime * (1 - 2*c)`.  Under `0 < rho <= 1`, termwise domination by
+`(1-rho)^j` yields the finite geometric `1/rho` phase envelope.  These leaves
+make the missing stochastic producers checkable, but do not construct the
+general-`K` generated process, stopped supermartingale/Doob bound, uniform
+buffered event, or Theorem 4.
+
 ## Lean mapping
 
 | Source symbol | Meaning | Lean declaration | Type / role | Status |
@@ -337,15 +344,9 @@ the hypotheses `0 < Delta < 1` and `eta * C_eta < Delta` retained.  Theorems
 | forward/inverse successor recurrences | Theorem 1 proof, Appendix A.2 | `integral_twoArmHistoryStepKernel_exp_forwardSuccessor_le_add_success_sq`, `integral_twoArmHistoryStepKernel_exp_inverseSuccessor_le_sub_failure_sq` | fixed-history integral inequalities | compiled |
 | time-one recurrences | Theorem 1 initialization | `integral_twoArmInitialPairKernel_exp_forwardIncrement_le`, `integral_twoArmInitialPairKernel_exp_inverseIncrement_le` | source zero initialization and `p_1=1/2` | compiled |
 | trajectory recurrence transport | conditional recurrence step | `trajectoryPrefix_condDistrib_integral_forwardSuccessor_le`, `trajectoryPrefix_condDistrib_integral_inverseSuccessor_le` | a.e. prefixwise conditional-distribution integrals | compiled |
-| fixed-horizon conditional expectation | tower-ready recurrence step | `twoArmForwardTrajectorySuccessor_condExp_le_recurrenceBound`, `twoArmInverseTrajectorySuccessor_condExp_le_recurrenceBound` | integrable potentials and conditional expectation on the canonical trajectory | compiled |
-| bounded-support Equation-(5) integrability | initial and successor update regularity | `integrable_measurableTwoArmInitialPairKernel_sourceIncrement_of_contract`, `integrable_measurableTwoArmHistoryStepKernel_sourceIncrement_of_contract` | derives update integrability from the existing bounded-support contract | compiled |
 
-<!-- 10569 characters omitted from the middle of this snapshot. -->
+<!-- 13253 characters omitted from the middle of this snapshot. -->
 
-| SGB-6 | best-coordinate cumulative lower bound | SGB-5B | `bestParameterIncrementSum_ge` | focused Lean | compiled |
-| SGB-7 | regret decomposition | SGB-6 | `sourceRegretDecomposition_le` | focused Lean | compiled |
-| SGB-HISTORY-STATE | recursive parameter state and measurability | SGB-3--5 | `historyParameter`, `measurable_historyParameter` | focused Lean | compiled |
-| SGB-HISTORY-POLICY | initial/successor softmax Markov laws | SGB-HISTORY-STATE plus finite-action kernels | `historyAlgorithm`, `trajectoryMeasure_condDistrib_action_zero_given_environment`, `trajectoryMeasure_condDistrib_action` | focused Lean | compiled |
 | SGB-HISTORY-TRAJECTORY | generated successor action/pair conditional laws | SGB-HISTORY-POLICY plus canonical trajectory kernel | `trajectoryKernel`, `trajectoryMeasure_condDistrib_nextPair_given_environment_prefix` | focused Lean | compiled |
 | SGB-EQ5-COND-MEAN | generated conditional-kernel integral equals Equation (5) | SGB-HISTORY-TRAJECTORY plus coordinate-update integrability and arm-reward integral equalities | `integral_measurableEnvironmentHistoryStepKernel_sourceIncrement_eq_gapCoordinate` | full trajectory gate | compiled with those hypotheses explicit |
 | SGB-9 | generated pathwise zero-sum and source-time fence | SGB-3--4 and SGB-HISTORY-STATE | `historyParameter_sum_eq_initial`, `twoArmParameterAt_sum_eq_zero` | focused Lean plus indexing canary | compiled |
@@ -359,6 +360,7 @@ the hypotheses `0 < Delta < 1` and `eta * C_eta < Delta` retained.  Theorems
 | SGB-EQ5-BOUNDED-SUPPORT-INTEGRABILITY | initial/successor source-increment integrability and fixed-IID Equation-(5) consumer | SGB-EQ5-COND-MEAN, SGB-PATH-INTEGRABILITY, fixed-IID source contract | `integrable_measurableTwoArmInitialPairKernel_sourceIncrement_of_contract`, `integrable_measurableTwoArmHistoryStepKernel_sourceIncrement_of_contract`, `integral_twoArmFixedIIDHistoryStepKernel_sourceIncrement_eq_gapCoordinate` | focused Lean plus canaries | compiled |
 | SGB-UNCONDITIONAL-RECURRENCE | integrated recurrences, scalar iteration, normalized initial bridge, and resulting generic source-indexed expected failure-mass sum | SGB-PATH-INTEGRABILITY | `twoArmForwardUnconditionalRecurrence`, `twoArmForwardFiniteIteration_from_source_initial`, `twoArmFullFailureMassSqSum_le` | focused Lean plus typed canary | compiled |
 | SGB-THEOREM-1 | exact two-arm finite regret terminal | SGB-UNCONDITIONAL-RECURRENCE plus expected-parameter/Jensen, fixed-IID/Dirac, conditional sampled-action, and Equation-(7) consumers | `twoArmFixedIIDDirac_theoremOne` | focused Lean, root/Tests canary, full gate | compiled |
+| SGB-T4-SOURCE-CONTRACT | positive Equation-(22) margin, audited Step-4 finite survival composition, and finite geometric phase envelope | `sourceC`, explicit positivity/range hypotheses, and finite ordered-field/geometric algebra | `theoremFourStepOneMargin_pos`, `theoremFourStepFour_survivalMass_pos`, `theoremFourFiniteTransientMass_le_inv` | focused Lean plus typed/numeric canary | compiled with endpoint boundary |
 | SGB-THEOREMS-2-4 | remaining learning-rate regimes | source-specific general-`K` and sharp-rate arguments | reserved | paper endpoint | blocked |
 
 The process API permits an arbitrary `initialTheta`; the paper's Algorithm 1
@@ -395,6 +397,10 @@ is recovered by the specialization `initialTheta := fun _ => 0`.
 - [x] Compile the expected-parameter/Jensen and fixed-IID/Dirac consumers,
   bridge the generated law to actual sampled-action pseudo-regret, and assemble
   Theorem 1's exact source inequality through Equation (7).
+- [x] Compile the finite Appendix-E/Theorem-4 source-contract gate: positive
+  drift margin, corrected survival-event composition, and finite geometric
+  transient-phase envelope, without promoting the missing stochastic
+  producers or theorem endpoint.
 - [ ] Prove any logarithmic or polynomial regret regime.
 - [ ] Verify the two-arm sharp threshold or the general-`K` threshold.
 
@@ -428,9 +434,10 @@ Task id: `PAPER-AUDIT-NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT`
 | SGB-FIXED-IID-EQ5-INTEGRABILITY | discharge Equation-(5)'s `Integrable sourceIncrement` premise on the generated fixed-IID history | compiled | `integral_twoArmFixedIIDHistoryStepKernel_sourceIncrement_eq_gapCoordinate` consumes the existing probability, support, mean, and gap equalities; it remains a one-step kernel identity |
 | SGB-UNCONDITIONAL-RECURRENCE | unconditional forward/inverse recurrences, finite iteration, normalized initial bridge, and resulting generic source-indexed expected squared failure-mass sum | compiled | 37 declarations; `twoArmFullFailureMassSqSum_le` includes source round `t=1` as `1/4`; no Equation-(7) or regret endpoint is claimed |
 | SGB-THEOREM-1 | exact two-arm finite-regret endpoint | compiled | 32 declarations close the Equation-(5) conditional-expectation tower, expected-parameter telescope, forward Jensen/log bound, actual sampled-action regret bridge, Equation-(7) assembly, and fixed-IID/Dirac source endpoint with exact horizon and constants |
+| SGB-T4-SOURCE-CONTRACT | Appendix-E positive drift margin, audited finite survival-event composition under explicit premises, and finite geometric transient-phase envelope | compiled | 8 declarations: 2 definitions and 6 theorems; no general-`K` generated process, stopped supermartingale/Doob bound, uniform buffered-event producer, or Theorem 4 is claimed |
 | SGB-THEOREMS-2-4 | logarithmic/polynomial and general-`K` learning-rate endpoints | blocked | source-specific rate arguments uncompiled |
 | SGB-CANARY | typed checks and representative axiom prints | compiled | baseline axioms only |
-| SGB-EVIDENCE-SITE | reference index, Blueprint, website source links, anonymous ledger | compiled | regenerated artifacts record 215 declarations in the exact `26+18+18+14+4+10+3+25+19+9+37+32` split; the Lean-verified site build, site checker, artifact tests, and full repository gate pass locally, while the live Pages surface still requires post-merge verification |
+| SGB-EVIDENCE-SITE | reference index, Blueprint, website source links, anonymous ledger | compiled | local generated evidence records 223 declarations: the frozen 215-declaration Theorem-1 stack in the exact `26+18+18+14+4+10+3+25+19+9+37+32` split plus 8 Theorem-4 source-contract leaves; live Pages remains unchanged until the reviewed branch is merged and deployed |
 | SGB-REVIEW | independent source/claim review | partial | independent theorem-contract review matched assumptions, constants, sampled-action semantics, fixed-IID/Dirac meaning, and source time fence with no P0/P1; human-expert target validation remains pending, so this row is not promoted |
 
 No obligation may be promoted because a prose theorem card exists. Only the
@@ -450,6 +457,25 @@ separate generated-history `Integrable sourceIncrement` premise and the
 fixed-IID consumer reuses that result.  The separate unconditional module
   closes the generic tower/failure-mass slice, and the final theorem module
   consumes it without weakening the source target.
+
+## Compiled Theorem-4 source-contract gate
+
+- Source location: Theorem 4 and Appendix E Steps 1--4, physical PDF
+  pp. 47--49.
+- Target file:
+  `BanditRLProof/Algorithms/StochasticGradientBanditTheoremFourContractAudit.lean`.
+- Canary:
+  `Tests/StochasticGradientBanditTheoremFourContractAuditCanary.lean`.
+- Compiled scope: positive Equation-(22) drift margin; for `0 < pPrime` and
+  `c < 1/2`, the audited finite lower bound `pPrime * (1 - 2*c)` and its strict
+  positivity; and, for `0 < rho <= 1`, finite phase-mass sums bounded termwise
+  by `(1 - rho)^j` and therefore bounded in total by `1/rho`.
+- Source-contract diagnosis: Step 4 switches between the buffer directions
+  `q >= c` and `q < c`, while its displayed probability direction does not
+  provide the lower bound required by Step 3.
+- Nonclaims: the gate does not produce the uniform `c,pPrime` event from the
+  bounded equal-gap IID process, build the general-`K` generated trajectory,
+  prove a stopped supermartingale/Doob estimate, or compile Theorem 4.
 
 ## Compiled Theorem-1 endpoint
 
@@ -33777,6 +33803,70 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditExponentialAudit.lean",
     "line": 193,
     "statement": "theorem integral_exp_mul_le_sourceEqEight_of_ae_abs_le_one {Omega : Type*} [MeasurableSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (q : Real) (reward : Omega -> Real) (hrewardMeasurable : MeasureTheory.AEStronglyMeasurable reward mu) (hreward : \u2200\u1d50 omega \u2202mu, |reward omega| <= 1) : (\u222b omega, Real.exp (q * reward omega) \u2202mu) <= 1 + q * (\u222b omega, reward omega \u2202mu) + q ^ 2 / 2 * sourceC (|q| / 2)"
+  },
+  {
+    "kind": "def",
+    "name": "theoremFourStepOneMargin",
+    "full_name": "BanditRLProof.StochasticGradientBandit.theoremFourStepOneMargin",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremFourContractAudit.lean",
+    "line": 37,
+    "statement": "def theoremFourStepOneMargin (K : Nat) (eta Delta : Real) : Real"
+  },
+  {
+    "kind": "def",
+    "name": "theoremFourStepFourSurvivalLowerBound",
+    "full_name": "BanditRLProof.StochasticGradientBandit.theoremFourStepFourSurvivalLowerBound",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremFourContractAudit.lean",
+    "line": 42,
+    "statement": "def theoremFourStepFourSurvivalLowerBound (pPrime c : Real) : Real"
+  },
+  {
+    "kind": "theorem",
+    "name": "theoremFourStepOneMargin_pos",
+    "full_name": "BanditRLProof.StochasticGradientBandit.theoremFourStepOneMargin_pos",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremFourContractAudit.lean",
+    "line": 47,
+    "statement": "theorem theoremFourStepOneMargin_pos (K : Nat) (eta Delta : Real) (hmargin : eta * sourceC eta < 2 * Delta / ((K : Real) + 2)) : 0 < theoremFourStepOneMargin K eta Delta"
+  },
+  {
+    "kind": "theorem",
+    "name": "theoremFourStepFourSurvivalLowerBound_pos",
+    "full_name": "BanditRLProof.StochasticGradientBandit.theoremFourStepFourSurvivalLowerBound_pos",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremFourContractAudit.lean",
+    "line": 58,
+    "statement": "theorem theoremFourStepFourSurvivalLowerBound_pos (pPrime c : Real) (hpPrime : 0 < pPrime) (hc_half : c < 1 / 2) : 0 < theoremFourStepFourSurvivalLowerBound pPrime c"
+  },
+  {
+    "kind": "theorem",
+    "name": "theoremFourStepFour_survivalMass_ge",
+    "full_name": "BanditRLProof.StochasticGradientBandit.theoremFourStepFour_survivalMass_ge",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremFourContractAudit.lean",
+    "line": 75,
+    "statement": "theorem theoremFourStepFour_survivalMass_ge (pPrime c bufferedMass jointSurvivalMass survivalMass : Real) (hc_half : c < 1 / 2) (hbuffer : pPrime <= bufferedMass) (hconditional : (1 - 2 * c) * bufferedMass <= jointSurvivalMass) (hsubset : jointSurvivalMass <= survivalMass) : theoremFourStepFourSurvivalLowerBound pPrime c <= survivalMass"
+  },
+  {
+    "kind": "theorem",
+    "name": "theoremFourStepFour_survivalMass_pos",
+    "full_name": "BanditRLProof.StochasticGradientBandit.theoremFourStepFour_survivalMass_pos",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremFourContractAudit.lean",
+    "line": 93,
+    "statement": "theorem theoremFourStepFour_survivalMass_pos (pPrime c bufferedMass jointSurvivalMass survivalMass : Real) (hpPrime : 0 < pPrime) (hc_half : c < 1 / 2) (hbuffer : pPrime <= bufferedMass) (hconditional : (1 - 2 * c) * bufferedMass <= jointSurvivalMass) (hsubset : jointSurvivalMass <= survivalMass) : 0 < survivalMass"
+  },
+  {
+    "kind": "theorem",
+    "name": "theoremFourFiniteGeometricPhaseMass_le_inv",
+    "full_name": "BanditRLProof.StochasticGradientBandit.theoremFourFiniteGeometricPhaseMass_le_inv",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremFourContractAudit.lean",
+    "line": 109,
+    "statement": "theorem theoremFourFiniteGeometricPhaseMass_le_inv (rho : Real) (hrho_pos : 0 < rho) (hrho_le_one : rho <= 1) (phaseCount : Nat) : (Finset.range phaseCount).sum (fun phase => (1 - rho) ^ phase) <= 1 / rho"
+  },
+  {
+    "kind": "theorem",
+    "name": "theoremFourFiniteTransientMass_le_inv",
+    "full_name": "BanditRLProof.StochasticGradientBandit.theoremFourFiniteTransientMass_le_inv",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremFourContractAudit.lean",
+    "line": 124,
+    "statement": "theorem theoremFourFiniteTransientMass_le_inv (rho : Real) (hrho_pos : 0 < rho) (hrho_le_one : rho <= 1) (phaseMass : Nat -> Real) (hphase : forall phase, phaseMass phase <= (1 - rho) ^ phase) (phaseCount : Nat) : (Finset.range phaseCount).sum phaseMass <= 1 / rho"
   },
   {
     "kind": "theorem",

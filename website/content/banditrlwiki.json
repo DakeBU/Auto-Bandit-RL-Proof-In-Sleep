@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated": "2026-08-26",
+  "updated": "2026-08-27",
   "title": "BanditRLwiki",
   "scope": "A curated, assumption-indexed atlas of upper bounds, lower bounds, optimality gaps, primary sources, and local BanditRLlib evidence. It is not an exhaustive claim about all bandit or reinforcement-learning literature.",
   "active_source_audits": [
@@ -25,16 +25,16 @@
     },
     {
       "id": "neurips-2025-stochastic-gradient-bandit",
-      "title": "Stochastic-gradient bandit mechanism and Theorem 1",
+      "title": "Stochastic-gradient bandit Theorem 1 and Theorem-4 contract gate",
       "paper_title": "Does Stochastic Gradient really succeed for Bandits?",
       "authors": "Dorian Baudry, Emmeran Johnson, Simon Vary, Ciara Pike-Burke, and Patrick Rebeschini",
       "year": 2025,
       "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/a4e683f0ce6b91e7fbdae9d32642d88f-Abstract-Conference.html",
       "milestone_id": "NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT-MECHANISM-AUDIT",
       "lean_status": "partial",
-      "compiled_declaration_count": 215,
-      "scope": "Twelve evidence layers compile in the exact 26+18+18+14+4+10+3+25+19+9+37+32 split. The first eleven cover Algorithm 1 and Equations (3)–(11), generated kernels, bounded-support integrability, measurable trajectory transport, generic unconditional recurrences, finite scalar iteration, and the source-initialized squared failure-mass sum. The final 32-declaration layer identifies the generated expected parameter through the Equation-(5) tower, proves the forward-potential Jensen/log bound, bridges the generated policy to actual sampled-action pseudo-regret, assembles Equation (7), and compiles the exact Theorem-1 horizon and constants for bounded two-arm fixed-IID laws with a Dirac environment prior.",
-      "boundary": "The source-frozen audit remains partial, not a proof of Theorems 2–4. The compiled Theorem-1 endpoint is restricted to the source's two-arm fixed-IID setting with actual generated sampled pseudo-regret, 0 < Delta < 1, eta > 0, eta C_eta < Delta, bounded rewards, exact arm means, and source horizon T = tailHorizon + 1. It does not establish a general-K rate, a non-Dirac environment mixture, or any learning-rate endpoint from Theorems 2–4; the other two recent-paper audits also remain partial.",
+      "compiled_declaration_count": 223,
+      "scope": "A frozen 215-declaration, twelve-layer stack compiles the exact Theorem-1 endpoint for bounded two-arm fixed-IID laws with a Dirac environment prior. Eight separate Appendix-E/Theorem-4 source-contract leaves compile the positive drift margin, audited finite survival-event composition under explicit premises, and finite geometric transient-phase bounds.",
+      "boundary": "The source-frozen audit remains partial, not a proof of Theorems 2–4. The Theorem-4 gate does not construct the general-K generated process, uniform buffer/survival producer, stopped supermartingale/Doob route, or final regret assembly. The exact Theorem-1 endpoint remains restricted to actual sampled pseudo-regret, bounded rewards, exact means, 0 < Delta < 1, eta > 0, eta C_eta < Delta, and source T = tailHorizon + 1; non-Dirac extensions remain open.",
       "representative_declarations": [
         "BanditRLProof.StochasticGradientBandit.softmaxProbability_sum",
         "BanditRLProof.StochasticGradientBandit.expectedSourceIncrement_eq_gapCoordinate",
@@ -57,7 +57,10 @@
         "BanditRLProof.StochasticGradientBandit.twoArmFullFailureMassSqSum_le",
         "BanditRLProof.StochasticGradientBandit.integral_twoArmSampledPseudoRegret_eq_generated",
         "BanditRLProof.StochasticGradientBandit.integral_twoArmSampledPseudoRegret_le_sourceTheoremOne",
-        "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDDirac_theoremOne"
+        "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDDirac_theoremOne",
+        "BanditRLProof.StochasticGradientBandit.theoremFourStepOneMargin_pos",
+        "BanditRLProof.StochasticGradientBandit.theoremFourStepFour_survivalMass_pos",
+        "BanditRLProof.StochasticGradientBandit.theoremFourFiniteTransientMass_le_inv"
       ]
     }
   ],

@@ -147,6 +147,15 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertIn(prefix + "BanditRLProof.lean", names)
         self.assertIn(prefix + "Tests.lean", names)
         self.assertIn(prefix + "Tests/DelayedFeedbackPaperAuditCanary.lean", names)
+        self.assertIn(
+            prefix + "BanditRLProof/Algorithms/"
+            "StochasticGradientBanditTheoremFourContractAudit.lean",
+            names,
+        )
+        self.assertIn(
+            prefix + "Tests/StochasticGradientBanditTheoremFourContractAuditCanary.lean",
+            names,
+        )
         self.assertIn(prefix + "evidence/claim-ledger.json", names)
         self.assertIn(prefix + "evidence/theorem-audit-comparison.json", names)
         self.assertIn(prefix + "evidence/delayed-feedback-proof-obligations.md", names)
@@ -363,6 +372,51 @@ class AnonymousSupplementTests(unittest.TestCase):
             result.stdout + result.stderr,
         )
 
+    def test_extracted_verifier_rejects_sgb_theorem_four_endpoint_drift(self):
+        destination = self.root / "sgb-theorem-four-endpoint-drift"
+        with zipfile.ZipFile(str(self.first)) as archive:
+            archive.extractall(str(destination))
+        artifact = destination / BUILDER.ARCHIVE_ROOT
+        ledger_path = artifact / "evidence" / "claim-ledger.json"
+        ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+        ledger["stochastic_gradient_bandit"][
+            "theorem_four_endpoint_verified"
+        ] = True
+        ledger_path.write_text(
+            json.dumps(ledger, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+
+        manifest_path = artifact / "ARTIFACT_MANIFEST.json"
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        tree_digest = hashlib.sha256()
+        for entry in manifest["files"]:
+            path = artifact / entry["path"]
+            data = path.read_bytes()
+            entry["bytes"] = len(data)
+            entry["sha256"] = hashlib.sha256(data).hexdigest()
+            tree_digest.update(entry["path"].encode("utf-8") + b"\0")
+            tree_digest.update(entry["sha256"].encode("ascii") + b"\0")
+            tree_digest.update(str(entry["bytes"]).encode("ascii") + b"\n")
+        manifest["source_tree_digest"] = tree_digest.hexdigest()
+        manifest_path.write_text(
+            json.dumps(manifest, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+
+        result = subprocess.run(
+            [sys.executable, "artifact/verify_artifact.py"],
+            cwd=str(artifact),
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            encoding="utf-8",
+        )
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(
+            "SGB Theorem-4 endpoint verification flag drift",
+            result.stdout + result.stderr,
+        )
+
     def test_claim_ledger_has_conservative_counts(self):
         payload = BUILDER.build_payload(allow_missing_graph=True)
         ledger = json.loads(payload["evidence/claim-ledger.json"].decode("utf-8"))
@@ -484,11 +538,23 @@ class AnonymousSupplementTests(unittest.TestCase):
         sgb_row = next(
             row for row in ledger["table_rows"]
             if row["artifact"] ==
-                "Stochastic-gradient-bandit Theorem-1 and mechanism audit"
+                "Stochastic-gradient-bandit Theorem-1 endpoint and Theorem-4 contract audit"
         )
         self.assertEqual(sgb_row["status"], "partial")
         self.assertEqual(sgb_row["source_record_ids"], [BUILDER.SGB_AUDIT_ID])
-        self.assertEqual(ledger["stochastic_gradient_bandit"]["declaration_count"], 215)
+        self.assertEqual(ledger["stochastic_gradient_bandit"]["declaration_count"], 223)
+        self.assertEqual(
+            ledger["stochastic_gradient_bandit"][
+                "theorem_one_stack_declaration_count"
+            ],
+            215,
+        )
+        self.assertEqual(
+            ledger["stochastic_gradient_bandit"][
+                "theorem_four_contract_audit_declaration_count"
+            ],
+            8,
+        )
         self.assertEqual(
             ledger["stochastic_gradient_bandit"]["finite_algebra_declaration_count"],
             26,
@@ -562,6 +628,7 @@ class AnonymousSupplementTests(unittest.TestCase):
             "unconditional_recurrence_iteration_compiled",
             "generic_expected_failure_mass_bound_compiled",
             "source_theorem_one_compiled",
+            "source_theorem_four_contract_audit_compiled",
         ):
             self.assertTrue(ledger["stochastic_gradient_bandit"][flag])
         self.assertTrue(
@@ -582,6 +649,9 @@ class AnonymousSupplementTests(unittest.TestCase):
             ledger["stochastic_gradient_bandit"]["expected_failure_mass_verified"]
         )
         self.assertTrue(ledger["stochastic_gradient_bandit"]["paper_endpoint_verified"])
+        self.assertFalse(
+            ledger["stochastic_gradient_bandit"]["theorem_four_endpoint_verified"]
+        )
         self.assertEqual(
             ledger["source_records"][BUILDER.SGB_AUDIT_ID]["status"],
             "partial",
@@ -627,7 +697,7 @@ class AnonymousSupplementTests(unittest.TestCase):
         succinct = rows["succinct-lower-bound-source-frozen-audit"]
         self.assertEqual(succinct["compiled_declaration_count"], 54)
         sgb = rows["stochastic-gradient-bandit-source-frozen-audit"]
-        self.assertEqual(sgb["compiled_declaration_count"], 215)
+        self.assertEqual(sgb["compiled_declaration_count"], 223)
         self.assertEqual(
             sgb["declaration_count_breakdown"],
             {
@@ -643,6 +713,7 @@ class AnonymousSupplementTests(unittest.TestCase):
                 "fixed_iid_source_contract_bridge": 9,
                 "unconditional_recurrence_and_failure_mass": 37,
                 "source_theorem_one_terminal": 32,
+                "source_theorem_four_contract_audit": 8,
             },
         )
         for row in (delayed, succinct, sgb):
@@ -651,6 +722,7 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertFalse(delayed["paper_endpoint_verified"])
         self.assertFalse(succinct["paper_endpoint_verified"])
         self.assertTrue(sgb["paper_endpoint_verified"])
+        self.assertFalse(sgb["theorem_four_endpoint_verified"])
 
     def test_theorem_audit_comparison_rejects_status_and_count_drift(self):
         records = BUILDER.selected_source_records()
@@ -673,6 +745,17 @@ class AnonymousSupplementTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "compiled_declaration_count drift"):
             BUILDER.validate_theorem_audit_comparison(
                 records, index, comparison=count_drift
+            )
+
+        theorem_four_endpoint_drift = json.loads(json.dumps(source))
+        theorem_four_endpoint_drift["rows"][3][
+            "theorem_four_endpoint_verified"
+        ] = True
+        with self.assertRaisesRegex(
+            ValueError, "theorem_four_endpoint_verified drift"
+        ):
+            BUILDER.validate_theorem_audit_comparison(
+                records, index, comparison=theorem_four_endpoint_drift
             )
 
         declaration_drift_records = json.loads(json.dumps(records))
@@ -725,6 +808,7 @@ class AnonymousSupplementTests(unittest.TestCase):
             BUILDER.SGB_FIXED_IID_DECLARATIONS,
             BUILDER.SGB_UNCONDITIONAL_RECURRENCE_DECLARATIONS,
             BUILDER.SGB_THEOREM_ONE_DECLARATIONS,
+            BUILDER.SGB_THEOREM_FOUR_CONTRACT_AUDIT_DECLARATIONS,
         )
         for required in required_sets:
             with self.subTest(victim_set=sorted(required)):
@@ -744,7 +828,7 @@ class AnonymousSupplementTests(unittest.TestCase):
                 row["full_name"] = replacement
                 with self.assertRaisesRegex(
                     ValueError,
-                    "215 declarations across the frozen",
+                    "223 declarations: frozen 215-declaration",
                 ):
                     BUILDER.validate_sgb_count(records, index)
 

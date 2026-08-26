@@ -25,9 +25,10 @@ Task id: `PAPER-AUDIT-NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT`
 | SGB-FIXED-IID-EQ5-INTEGRABILITY | discharge Equation-(5)'s `Integrable sourceIncrement` premise on the generated fixed-IID history | compiled | `integral_twoArmFixedIIDHistoryStepKernel_sourceIncrement_eq_gapCoordinate` consumes the existing probability, support, mean, and gap equalities; it remains a one-step kernel identity |
 | SGB-UNCONDITIONAL-RECURRENCE | unconditional forward/inverse recurrences, finite iteration, normalized initial bridge, and resulting generic source-indexed expected squared failure-mass sum | compiled | 37 declarations; `twoArmFullFailureMassSqSum_le` includes source round `t=1` as `1/4`; no Equation-(7) or regret endpoint is claimed |
 | SGB-THEOREM-1 | exact two-arm finite-regret endpoint | compiled | 32 declarations close the Equation-(5) conditional-expectation tower, expected-parameter telescope, forward Jensen/log bound, actual sampled-action regret bridge, Equation-(7) assembly, and fixed-IID/Dirac source endpoint with exact horizon and constants |
+| SGB-T4-SOURCE-CONTRACT | Appendix-E positive drift margin, audited finite survival-event composition under explicit premises, and finite geometric transient-phase envelope | compiled | 8 declarations: 2 definitions and 6 theorems; no general-`K` generated process, stopped supermartingale/Doob bound, uniform buffered-event producer, or Theorem 4 is claimed |
 | SGB-THEOREMS-2-4 | logarithmic/polynomial and general-`K` learning-rate endpoints | blocked | source-specific rate arguments uncompiled |
 | SGB-CANARY | typed checks and representative axiom prints | compiled | baseline axioms only |
-| SGB-EVIDENCE-SITE | reference index, Blueprint, website source links, anonymous ledger | compiled | regenerated artifacts record 215 declarations in the exact `26+18+18+14+4+10+3+25+19+9+37+32` split; the Lean-verified site build, site checker, artifact tests, and full repository gate pass locally, while the live Pages surface still requires post-merge verification |
+| SGB-EVIDENCE-SITE | reference index, Blueprint, website source links, anonymous ledger | compiled | local generated evidence records 223 declarations: the frozen 215-declaration Theorem-1 stack in the exact `26+18+18+14+4+10+3+25+19+9+37+32` split plus 8 Theorem-4 source-contract leaves; live Pages remains unchanged until the reviewed branch is merged and deployed |
 | SGB-REVIEW | independent source/claim review | partial | independent theorem-contract review matched assumptions, constants, sampled-action semantics, fixed-IID/Dirac meaning, and source time fence with no P0/P1; human-expert target validation remains pending, so this row is not promoted |
 
 No obligation may be promoted because a prose theorem card exists. Only the
@@ -47,6 +48,25 @@ separate generated-history `Integrable sourceIncrement` premise and the
 fixed-IID consumer reuses that result.  The separate unconditional module
   closes the generic tower/failure-mass slice, and the final theorem module
   consumes it without weakening the source target.
+
+## Compiled Theorem-4 source-contract gate
+
+- Source location: Theorem 4 and Appendix E Steps 1--4, physical PDF
+  pp. 47--49.
+- Target file:
+  `BanditRLProof/Algorithms/StochasticGradientBanditTheoremFourContractAudit.lean`.
+- Canary:
+  `Tests/StochasticGradientBanditTheoremFourContractAuditCanary.lean`.
+- Compiled scope: positive Equation-(22) drift margin; for `0 < pPrime` and
+  `c < 1/2`, the audited finite lower bound `pPrime * (1 - 2*c)` and its strict
+  positivity; and, for `0 < rho <= 1`, finite phase-mass sums bounded termwise
+  by `(1 - rho)^j` and therefore bounded in total by `1/rho`.
+- Source-contract diagnosis: Step 4 switches between the buffer directions
+  `q >= c` and `q < c`, while its displayed probability direction does not
+  provide the lower bound required by Step 3.
+- Nonclaims: the gate does not produce the uniform `c,pPrime` event from the
+  bounded equal-gap IID process, build the general-`K` generated trajectory,
+  prove a stopped supermartingale/Doob estimate, or compile Theorem 4.
 
 ## Compiled Theorem-1 endpoint
 

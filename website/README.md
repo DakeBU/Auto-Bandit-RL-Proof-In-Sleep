@@ -48,12 +48,15 @@ reports zero `literature-open` cases until a scoped primary-source audit support
 such a claim; one case remains in the source-audit queue, while the 13
 formalization-open cases expose 39 stable named leaves. Two additional
 source-frozen ports—the 54-declaration succinct-lower-bound audit and the
-215-declaration stochastic-gradient-bandit audit—are displayed outside that
-comparison ledger.  The latter now contains one exact compiled paper endpoint:
-Theorem 1 for the actual sampled pseudo-regret of the source's two-arm
-fixed-IID model, specialized through a Dirac environment prior.  The SGB audit
-remains partial because Theorems 2–4 and their learning-rate regimes are still
-open; the succinct-lower-bound port also has no compiled paper-level terminal.
+223-declaration stochastic-gradient-bandit audit—are displayed outside that
+comparison ledger.  The latter consists of a frozen 215-declaration stack
+closing one exact paper endpoint, Theorem 1 for the actual sampled
+pseudo-regret of the source's two-arm fixed-IID model under a Dirac environment
+prior, plus eight Appendix-E/Theorem-4 finite contract leaves.  Those eight
+leaves do not prove Theorem 4; its generated-process and uniform-event
+producers remain absent.  The SGB audit therefore remains partial, with
+Theorems 2–4 open; the succinct-lower-bound port also has no compiled
+paper-level terminal.
 
 ## 🛠️ Build locally
 

@@ -52,6 +52,16 @@ trajectory, with source horizon `T = tailHorizon + 1`, source constants, and
 the hypotheses `0 < Delta < 1` and `eta * C_eta < Delta` retained.  Theorems
 2--4 remain downstream.
 
+A separate Appendix-E audit compiles eight finite source-contract leaves for
+Theorem 4.  The printed learning-rate inequality yields a positive
+Equation-(22) drift margin.  Under `0 < pPrime` and `c < 1/2`, explicit buffer
+and conditional joint-survival premises yield the audited positive lower
+bound `pPrime * (1 - 2*c)`.  Under `0 < rho <= 1`, termwise domination by
+`(1-rho)^j` yields the finite geometric `1/rho` phase envelope.  These leaves
+make the missing stochastic producers checkable, but do not construct the
+general-`K` generated process, stopped supermartingale/Doob bound, uniform
+buffered event, or Theorem 4.
+
 ## Lean mapping
 
 | Source symbol | Meaning | Lean declaration | Type / role | Status |
@@ -82,6 +92,9 @@ the hypotheses `0 < Delta < 1` and `eta * C_eta < Delta` retained.  Theorems
 | expected-parameter and forward-potential consumers | Theorem 1 Equation-(5) tower and Jensen/log route | `integral_twoArmTrajectoryParameterZero_eq_successFailureSum`, `integral_twoArmTrajectoryParameterZero_le_source_log_bound` | exact generated-trajectory telescope and finite source-horizon log bound | compiled |
 | actual sampled pseudo-regret | source `R_T^SGB` on Algorithm 1's sampled actions | `twoArmSampledPseudoRegret`, `integral_twoArmSampledPseudoRegret_eq_generated` | measurable finite action-gap sum, bridged through the generated conditional action laws | compiled |
 | source Theorem 1 | exact two-arm fixed-IID endpoint | `twoArmFixedIIDDirac_theoremOne` | Dirac environment prior; source `T = tailHorizon + 1`; exact assumptions and constants | compiled |
+| Appendix-E Equation-(22) margin | positive drift scalar under the printed learning-rate condition | `theoremFourStepOneMargin`, `theoremFourStepOneMargin_pos` | finite scalar source-contract gate | compiled |
+| Appendix-E Step-4 survival composition | audited lower bound from explicit buffer and conditional joint-survival premises | `theoremFourStepFourSurvivalLowerBound`, `theoremFourStepFour_survivalMass_ge`, `theoremFourStepFour_survivalMass_pos` | `0 < pPrime`, `c < 1/2`, and finite event-mass algebra; stochastic producer remains absent | compiled with boundary |
+| Appendix-E transient phases | termwise geometric domination gives a finite envelope | `theoremFourFiniteGeometricPhaseMass_le_inv`, `theoremFourFiniteTransientMass_le_inv` | `0 < rho <= 1` and finite phase count only; no infinite stopped-process construction | compiled with boundary |
 
 ## Assumption ledger
 
@@ -104,6 +117,7 @@ the hypotheses `0 < Delta < 1` and `eta * C_eta < Delta` retained.  Theorems
 | unconditional recurrence iteration and expected squared failure mass | compiled | Theorem 1 proof | no for this generic slice |
 | expected-parameter/Jensen, fixed-IID/Dirac, Equation-(7), and sampled-action regret assembly | compiled | Theorem 1 proof | no for Theorem 1 |
 | other learning-rate thresholds | not attempted | Theorems 2--4 | yes for those paper endpoints |
+| uniform Appendix-E buffer/survival producer | finite consumer contract compiled; generated-process premise absent | Theorem 4 / Appendix E Steps 3--4 | yes for Theorem 4 |
 
 ## Local API and proof route
 
@@ -130,6 +144,7 @@ the hypotheses `0 < Delta < 1` and `eta * C_eta < Delta` retained.  Theorems
 | Equation-(5) bounded-support integrability | pair-kernel support transport, `measurable_sourceIncrement`, `abs_sourceIncrement_softmax_le_abs_reward` | `MLIB-MEASURE-INTEGRAL`, `MLIB-PROBABILITY-KERNEL` | dominate the update by the unit reward envelope, then invoke the existing gap-coordinate kernel identity | do not add independence, a second moment, or caller-supplied integrability |
 | unconditional iteration and failure mass | tower-ready condexp bounds, `integral_condExp`, scalar telescoping, normalized initial kernel | `MLIB-CONDITIONAL-EXPECTATION`, `MLIB-MEASURE-INTEGRAL` | integrate the AE recurrences, iterate them, and cancel the source-round-one `1/4` against the initial inverse potential | do not call this Equation (7) or Theorem 1 |
 | Theorem-1 terminal | Equation-(5) tower, parameter telescope, Jensen/log, conditional action laws, and failure-mass bound | `MLIB-CONDITIONAL-EXPECTATION`, `MLIB-MEASURE-INTEGRAL`, `MLIB-EXP-LOG-INEQUALITIES` | prove the exact generated expected-parameter identity, bound the forward potential, identify actual sampled-action pseudo-regret, assemble Equation (7), then specialize the fixed-IID environment with a Dirac prior | retain source `Delta < 1`, horizon, constants, and actual sampled actions; do not promote Theorems 2--4 |
+| Theorem-4 source-contract gate | `sourceC`, ordered-field algebra, finite geometric-series bounds | `MLIB-ORDER-ALGEBRA`, `MLIB-EXP-LOG-INEQUALITIES` | isolate the positive drift margin, audited finite event multiplication under explicit premises, and uniform-survival phase envelope | retain the missing generated-process and uniform-event producers; never relabel this gate as Theorem 4 |
 
 ## Proof DAG
 
@@ -156,6 +171,7 @@ the hypotheses `0 < Delta < 1` and `eta * C_eta < Delta` retained.  Theorems
 | SGB-EQ5-BOUNDED-SUPPORT-INTEGRABILITY | initial/successor source-increment integrability and fixed-IID Equation-(5) consumer | SGB-EQ5-COND-MEAN, SGB-PATH-INTEGRABILITY, fixed-IID source contract | `integrable_measurableTwoArmInitialPairKernel_sourceIncrement_of_contract`, `integrable_measurableTwoArmHistoryStepKernel_sourceIncrement_of_contract`, `integral_twoArmFixedIIDHistoryStepKernel_sourceIncrement_eq_gapCoordinate` | focused Lean plus canaries | compiled |
 | SGB-UNCONDITIONAL-RECURRENCE | integrated recurrences, scalar iteration, normalized initial bridge, and resulting generic source-indexed expected failure-mass sum | SGB-PATH-INTEGRABILITY | `twoArmForwardUnconditionalRecurrence`, `twoArmForwardFiniteIteration_from_source_initial`, `twoArmFullFailureMassSqSum_le` | focused Lean plus typed canary | compiled |
 | SGB-THEOREM-1 | exact two-arm finite regret terminal | SGB-UNCONDITIONAL-RECURRENCE plus expected-parameter/Jensen, fixed-IID/Dirac, conditional sampled-action, and Equation-(7) consumers | `twoArmFixedIIDDirac_theoremOne` | focused Lean, root/Tests canary, full gate | compiled |
+| SGB-T4-SOURCE-CONTRACT | positive Equation-(22) margin, audited Step-4 finite survival composition, and finite geometric phase envelope | `sourceC`, explicit positivity/range hypotheses, and finite ordered-field/geometric algebra | `theoremFourStepOneMargin_pos`, `theoremFourStepFour_survivalMass_pos`, `theoremFourFiniteTransientMass_le_inv` | focused Lean plus typed/numeric canary | compiled with endpoint boundary |
 | SGB-THEOREMS-2-4 | remaining learning-rate regimes | source-specific general-`K` and sharp-rate arguments | reserved | paper endpoint | blocked |
 
 The process API permits an arbitrary `initialTheta`; the paper's Algorithm 1
@@ -192,5 +208,9 @@ is recovered by the specialization `initialTheta := fun _ => 0`.
 - [x] Compile the expected-parameter/Jensen and fixed-IID/Dirac consumers,
   bridge the generated law to actual sampled-action pseudo-regret, and assemble
   Theorem 1's exact source inequality through Equation (7).
+- [x] Compile the finite Appendix-E/Theorem-4 source-contract gate: positive
+  drift margin, corrected survival-event composition, and finite geometric
+  transient-phase envelope, without promoting the missing stochastic
+  producers or theorem endpoint.
 - [ ] Prove any logarithmic or polynomial regret regime.
 - [ ] Verify the two-arm sharp threshold or the general-`K` threshold.

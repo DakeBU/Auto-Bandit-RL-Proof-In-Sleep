@@ -212,6 +212,10 @@ SGB_THEOREM_ONE_FILE = (
     "BanditRLProof/Algorithms/"
     "StochasticGradientBanditTwoArmTheoremOne.lean"
 )
+SGB_THEOREM_FOUR_CONTRACT_AUDIT_FILE = (
+    "BanditRLProof/Algorithms/"
+    "StochasticGradientBanditTheoremFourContractAudit.lean"
+)
 SGB_FINITE_ALGEBRA_DECLARATION_COUNT = 26
 SGB_GENERATED_HISTORY_DECLARATION_COUNT = 18
 SGB_TWO_ARM_RATE_DECLARATION_COUNT = 18
@@ -224,7 +228,12 @@ SGB_PATH_INTEGRABILITY_DECLARATION_COUNT = 19
 SGB_FIXED_IID_DECLARATION_COUNT = 9
 SGB_UNCONDITIONAL_RECURRENCE_DECLARATION_COUNT = 37
 SGB_THEOREM_ONE_DECLARATION_COUNT = 32
-SGB_TOTAL_DECLARATION_COUNT = 215
+SGB_THEOREM_ONE_STACK_DECLARATION_COUNT = 215
+SGB_THEOREM_FOUR_CONTRACT_AUDIT_DECLARATION_COUNT = 8
+SGB_TOTAL_DECLARATION_COUNT = (
+    SGB_THEOREM_ONE_STACK_DECLARATION_COUNT
+    + SGB_THEOREM_FOUR_CONTRACT_AUDIT_DECLARATION_COUNT
+)
 SGB_GENERATED_TRAJECTORY_DECLARATIONS = frozenset({
     "BanditRLProof.StochasticGradientBandit.trajectoryKernel",
     "BanditRLProof.StochasticGradientBandit.trajectoryMeasure_condDistrib_action_zero_given_environment",
@@ -318,6 +327,16 @@ SGB_THEOREM_ONE_DECLARATIONS = frozenset({
     "BanditRLProof.StochasticGradientBandit.twoArmGeneratedExpectedPseudoRegret_le_sourceTheoremOne",
     "BanditRLProof.StochasticGradientBandit.integral_twoArmSampledPseudoRegret_le_sourceTheoremOne",
     "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDDirac_theoremOne",
+})
+SGB_THEOREM_FOUR_CONTRACT_AUDIT_DECLARATIONS = frozenset({
+    "BanditRLProof.StochasticGradientBandit.theoremFourStepOneMargin",
+    "BanditRLProof.StochasticGradientBandit.theoremFourStepFourSurvivalLowerBound",
+    "BanditRLProof.StochasticGradientBandit.theoremFourStepOneMargin_pos",
+    "BanditRLProof.StochasticGradientBandit.theoremFourStepFourSurvivalLowerBound_pos",
+    "BanditRLProof.StochasticGradientBandit.theoremFourStepFour_survivalMass_ge",
+    "BanditRLProof.StochasticGradientBandit.theoremFourStepFour_survivalMass_pos",
+    "BanditRLProof.StochasticGradientBandit.theoremFourFiniteGeometricPhaseMass_le_inv",
+    "BanditRLProof.StochasticGradientBandit.theoremFourFiniteTransientMass_le_inv",
 })
 CH16_COMPILED_ID = "TEXTBOOK-PART-IV-CH16-CONSISTENCY-DINF-DEPENDENCY-SLICE"
 CH16_EVENT_REGRET_ID = "TEXTBOOK-PART-IV-CH16-EVENT-REGRET-PRODUCERS"
@@ -1814,6 +1833,14 @@ def validate_sgb_count(records, index):
     theorem_one_count = sum(
         row["file"] == SGB_THEOREM_ONE_FILE for row in rows.values()
     )
+    theorem_four_contract_audit_count = sum(
+        row["file"] == SGB_THEOREM_FOUR_CONTRACT_AUDIT_FILE
+        for row in rows.values()
+    )
+    theorem_four_contract_names = {
+        row["full_name"] for row in rows.values()
+        if row["file"] == SGB_THEOREM_FOUR_CONTRACT_AUDIT_FILE
+    }
     layer_counts = (
         finite_count,
         generated_history_count,
@@ -1848,7 +1875,13 @@ def validate_sgb_count(records, index):
         or len(declarations) != SGB_TOTAL_DECLARATION_COUNT
         or set(rows) != declarations
         or layer_counts != expected_layer_counts
-        or sum(layer_counts) != len(declarations)
+        or sum(layer_counts) != SGB_THEOREM_ONE_STACK_DECLARATION_COUNT
+        or theorem_four_contract_audit_count !=
+            SGB_THEOREM_FOUR_CONTRACT_AUDIT_DECLARATION_COUNT
+        or theorem_four_contract_names !=
+            SGB_THEOREM_FOUR_CONTRACT_AUDIT_DECLARATIONS
+        or sum(layer_counts) + theorem_four_contract_audit_count !=
+            len(declarations)
         or not SGB_GENERATED_TRAJECTORY_DECLARATIONS.issubset(declarations)
         or not SGB_CONDITIONAL_LAW_BRIDGE_DECLARATIONS.issubset(declarations)
         or not SGB_TWO_ARM_RATE_DECLARATIONS.issubset(declarations)
@@ -1866,11 +1899,14 @@ def validate_sgb_count(records, index):
             declarations
         )
         or not SGB_THEOREM_ONE_DECLARATIONS.issubset(declarations)
+        or not SGB_THEOREM_FOUR_CONTRACT_AUDIT_DECLARATIONS.issubset(
+            declarations
+        )
     ):
         raise ValueError(
             "stochastic-gradient-bandit audit must remain partial with exactly "
-            "215 declarations across the frozen 26/18/18/14/4/10/3/25/19/9/37/32 "
-            "evidence layers"
+            "223 declarations: frozen 215-declaration Theorem-1 stack plus "
+            "8 Theorem-4 contract-audit leaves"
         )
     return {
         "generated_trajectory_compiled":
@@ -1903,6 +1939,9 @@ def validate_sgb_count(records, index):
             SGB_UNCONDITIONAL_RECURRENCE_DECLARATIONS.issubset(declarations),
         "source_theorem_one_compiled":
             SGB_THEOREM_ONE_DECLARATIONS.issubset(declarations),
+        "source_theorem_four_contract_audit_compiled":
+            theorem_four_contract_names ==
+            SGB_THEOREM_FOUR_CONTRACT_AUDIT_DECLARATIONS,
     }
 
 
@@ -2010,6 +2049,7 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
             "central_endpoint_record_id": SGB_AUDIT_ID,
             "promotion_status": "partial",
             "compiled_declaration_count": SGB_TOTAL_DECLARATION_COUNT,
+            "theorem_four_endpoint_verified": False,
             "declaration_count_breakdown": {
                 "finite_action_algebra": SGB_FINITE_ALGEBRA_DECLARATION_COUNT,
                 "generated_history_and_kernel_bridge":
@@ -2034,6 +2074,8 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
                     SGB_UNCONDITIONAL_RECURRENCE_DECLARATION_COUNT,
                 "source_theorem_one_terminal":
                     SGB_THEOREM_ONE_DECLARATION_COUNT,
+                "source_theorem_four_contract_audit":
+                    SGB_THEOREM_FOUR_CONTRACT_AUDIT_DECLARATION_COUNT,
             },
         },
     }
@@ -2231,10 +2273,10 @@ def build_claim_ledger(proof_report):
                 "boundary": "54 declarations compile Definitions 3.1--3.3 and Lemmas 3.1--3.4, including finite-Bessel strict representation-size minimality and uniqueness for the same vector; a global R boundedness obligation is explicit; no Lemma 3.5--3.6, Theorem 3.8, or regret endpoint.",
             },
             {
-                "artifact": "Stochastic-gradient-bandit Theorem-1 and mechanism audit",
+                "artifact": "Stochastic-gradient-bandit Theorem-1 endpoint and Theorem-4 contract audit",
                 "status": "partial",
                 "source_record_ids": [SGB_AUDIT_ID],
-                "boundary": "215 declarations compile twelve evidence layers. The final 32 declarations close the generated Equation-(5) tower, expected-parameter telescope, forward-potential Jensen/log bound, actual sampled-action pseudo-regret bridge, Equation-(7) assembly, and the exact source Theorem 1 for bounded two-arm fixed-IID laws under a Dirac environment prior with T = tailHorizon + 1 and the source constants. The audit remains partial: Theorems 2--4, every corresponding learning-rate regime, general-K, and non-Dirac extensions remain open. Dirac refers only to the Unit environment prior, not to the arm reward laws.",
+                "boundary": "223 declarations comprise the frozen 215-declaration, twelve-layer Theorem-1 stack plus 8 Appendix-E/Theorem-4 contract-audit leaves. The first stack closes the exact source Theorem 1 for bounded two-arm fixed-IID laws under a Dirac environment prior with T = tailHorizon + 1 and the source constants. The 8 separate leaves establish only a positive drift margin, finite survival-mass composition under explicit premises, and finite geometric transient-mass bounds. They do not construct the general-K generated process, stopped-supermartingale/Doob route, uniform buffer/survival producer, or Theorem 4. The audit remains partial, and Theorems 2--4 remain open. Dirac refers only to the Unit environment prior, not to the arm reward laws.",
             },
             {
                 "artifact": "Proof graph / curvature--noise--gap",
@@ -2282,6 +2324,10 @@ def build_claim_ledger(proof_report):
         "stochastic_gradient_bandit": {
             "source_record_id": SGB_AUDIT_ID,
             "declaration_count": SGB_TOTAL_DECLARATION_COUNT,
+            "theorem_one_stack_declaration_count":
+                SGB_THEOREM_ONE_STACK_DECLARATION_COUNT,
+            "theorem_four_contract_audit_declaration_count":
+                SGB_THEOREM_FOUR_CONTRACT_AUDIT_DECLARATION_COUNT,
             "finite_algebra_declaration_count": SGB_FINITE_ALGEBRA_DECLARATION_COUNT,
             "generated_history_declaration_count": SGB_GENERATED_HISTORY_DECLARATION_COUNT,
             "two_arm_rate_declaration_count": SGB_TWO_ARM_RATE_DECLARATION_COUNT,
@@ -2333,12 +2379,15 @@ def build_claim_ledger(proof_report):
                 sgb_evidence["generic_expected_failure_mass_bound_compiled"],
             "source_theorem_one_compiled":
                 sgb_evidence["source_theorem_one_compiled"],
+            "source_theorem_four_contract_audit_compiled":
+                sgb_evidence["source_theorem_four_contract_audit_compiled"],
             "coordinate_update_integrability_verified": True,
             "uniform_reward_regularities_verified": False,
             "learning_rate_regime_verified": False,
             "global_tower_iteration_verified": True,
             "expected_failure_mass_verified": True,
             "paper_endpoint_verified": True,
+            "theorem_four_endpoint_verified": False,
         },
         "textbook_chapter_16": {
             "compiled_source_record_id": CH16_COMPILED_ID,

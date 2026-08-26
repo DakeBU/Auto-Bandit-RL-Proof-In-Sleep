@@ -96,8 +96,9 @@ outside the atom-generated directions.  This is a regularity/codomain
 obligation, not a source-error claim; the global Lemmas 3.5--3.6, Assumption
 3.7, Theorem 3.8, and every regret endpoint remain outside the compiled slice.
 
-The independent stochastic-gradient-bandit audit contains 215 named
-declarations.  Its original 76 declarations cover finite
+The independent stochastic-gradient-bandit audit contains 223 named
+declarations.  Its frozen 215-declaration Theorem-1 stack begins with 76
+declarations covering finite
 Algorithm-1/Equations-(3)--(7) algebra, recursive generated histories and
 Equation-(5) kernels, pathwise two-arm Equation-(9)/(11) structure, and the
 source-exact `C_eta`/Equation-(8) exponential-moment inequality.  Seventy
@@ -124,6 +125,15 @@ partial: Theorems 2--4, their learning-rate regimes, general-`K`, and
 non-Dirac extensions remain outside the compiled slice.  The fixed-IID
 adapter is not a converse equivalence proof.
 
+The remaining eight declarations form a separate Appendix-E/Theorem-4
+source-contract gate.  They establish only the positive Equation-(22) drift
+margin, an audited finite survival-event lower bound under explicit buffer
+and conditional-survival premises, and the finite geometric transient-phase
+envelope.  They do not construct the general-`K` generated process, a stopped
+supermartingale or Doob estimate, a uniform buffer/survival producer, or
+Theorem 4.  The 223 total is therefore `215 + 8`, not a larger Theorem-4
+endpoint stack.
+
 ## Quick verification
 
 Use a short extraction path on Windows.  Network access is needed only on the
@@ -142,6 +152,7 @@ lake env lean Tests/TextbookPartIVChapter15Canary.lean
 lake env lean Tests/TextbookPartIVChapter16Canary.lean
 lake env lean Tests/TextbookPartIVChapter17Canary.lean
 lake env lean Tests/SuccinctLowerBoundPaperAuditCanary.lean
+lake env lean Tests/StochasticGradientBanditTheoremFourContractAuditCanary.lean
 lake env lean Tests/StochasticGradientBanditPaperAuditCanary.lean
 python -m unittest tools/test_proof_graph_lab.py
 python tools/validate_target_drift_external_comparator.py
