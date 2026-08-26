@@ -1,7 +1,7 @@
 {
-  "schema_version": 4,
+  "schema_version": 5,
   "suite_id": "ABRL-TARGET-DRIFT-V2",
-  "status": "result_free_agent_image_components",
+  "status": "result_free_agent_image_and_action_interface_candidates",
   "controller": {
     "entrypoint": ["python3", "/usr/local/bin/abrl-agent-pid1"],
     "pid_namespace_requirement": "controller is PID 1; --init is forbidden",
@@ -45,9 +45,24 @@
     "validation": "the controller independently validates request/adapter hashes, response identity, zero token/tool/build/retry/cost usage, trace order, exact output file set and hashes, fake-auth handoff, and false provider/result flags; the host launcher revalidates the controller report and clean PID-1 child exit",
     "evidence_status": "strictly result-ineligible component evidence only; it is not the real three-condition smoke, does not alter execution_not_started, and cannot enter the 450-run ledger"
   },
+  "result_free_production_action_fixture_candidate": {
+    "mode": "result_free_production_action_fixture_v1",
+    "request_contract": "one checked-in three-file input manifest fixes /agent/run, an offline prompt and Lean workspace, codex_cli with a hash-bound local fake executable, false provider/credential/network/result flags, model-call budget zero, and zero token/tool/build/cost budgets",
+    "adapter_path": "the numeric uid/gid 10002 driver consumes and closes the fixed fake auth descriptor, materializes one temporary auth.json in tmpfs, launches the in-image codex_target_drift_adapter.py with the contract argv, and removes the temporary auth tree before reporting",
+    "fake_provider": "the hash-bound local executable imports no network or subprocess client, accepts only the fixed Codex exec shape, writes a blocked result-ineligible fixture result, and emits deterministic zero-usage Codex JSONL; Docker network is none",
+    "validation": "the root controller independently validates the input/driver/adapter/fake-provider hashes, response identity, one fake codex_cli attempt, one-event zero-usage trace, exact adapter/output file sets, no Lean diff or build, fake-auth closure/removal, and false provider/result flags",
+    "copyback": "after validation, root copies the exact five adapter receipts and five output files to a separate host bind, writes a result-ineligible copyback receipt, and the host launcher re-hashes every copied byte against both controller evidence and receipt",
+    "evidence_status": "production-shaped interface fixture only: it traverses the built-in Codex adapter but performs no provider/model/network call, is permanently result-ineligible, does not alter execution_not_started, and cannot enter smoke, primary, grading, or analysis ledgers"
+  },
+  "production_action_interface_candidate": {
+    "contract": "agent-production-action-contract.json defines the final seal schema and exact Linux/Docker/image-SBOM/runtime/config/provider/probe/request bindings required before execution",
+    "launcher_behavior": "production-execute accepts only a structurally final seal and rejects candidate, fake, fixture, result_free, unsealed, and UNSET values; after validation it still exits before credential inspection or Docker launch because production_execution_enabled=false in tracked source",
+    "gate_status": "closed pending external Linux final-digest evidence; this is a strict contract/controller/launcher candidate, not an enabled provider action"
+  },
   "production_gate": [
-    "replace the excluded-provider adapter with a separately reviewed real-provider execution action while preserving the now-exercised sealed request/argv, root-only control, non-root tmpfs, PID-1, trace/output, and lifecycle boundaries",
+    "review and enable a real-provider execution action from the closed production-action interface while preserving the exercised sealed request/argv, root-only control, non-root tmpfs, PID-1, trace/output/copyback, and lifecycle boundaries",
     "mount one real provider credential through the frozen single-file boundary and rerun the full final-image credential-visibility probe without recording secret bytes or a secret-derived digest",
+    "enforce and attest provider-only egress for the trusted client while keeping model-spawned shells network-disabled",
     "freeze the exact provider/model/settings/prices/budgets and publish the final image digest plus all final-image probes",
     "pass the permanently result-ineligible one-case-by-three-condition real-infrastructure smoke before any primary run"
   ],

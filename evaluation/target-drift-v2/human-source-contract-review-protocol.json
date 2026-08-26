@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "audit_id": "ABRL-TARGET-DRIFT-V2-HUMAN-SOURCE-CONTRACT-REVIEW",
+  "status": "protocol_frozen_review_not_started",
+  "frozen_on": "2026-08-26",
+  "evaluation_outcomes_observed": false,
+  "scope": {
+    "challenge_manifest": "evaluation/target-drift-v1/challenges.json",
+    "challenge_manifest_sha256": "89de6b5d4be6efad32d8c43353869ec93b9e8275fdce622f11a35d78873a887a",
+    "paired_requirements": "evaluation/target-drift-v2/paired-requirements.json",
+    "paired_requirements_sha256": "4d0b3a4c8971999ca15d244b60733c55a21b48edef78849dd6bb54c64a2a5b6a",
+    "case_count": 30,
+    "source_count": 4,
+    "paper_derived_case_count": 18,
+    "textbook_or_evidence_control_case_count": 12
+  },
+  "review_design": {
+    "independent_human_reviewer_count": 2,
+    "human_adjudicator_count": 1,
+    "reviewers_blind_to_each_other_until_submission": true,
+    "reviewers_and_adjudicator_blind_to_workflow_outputs": true,
+    "source_hash_verification_required": true,
+    "all_thirty_cases_required": true,
+    "every_case_requires_a_complete_common_target_card": true,
+    "single_changed_field_rule": "The faithful and injected-drift targets share the adjudicated common target card and differ only in the named source-critical field and its paired value.",
+    "post_outcome_edits_forbidden": true,
+    "machine_verifiable_boundary": "The repository can validate schemas, frozen inputs, reviewer disagreement, and content hashes. It cannot establish that a self-attested identity is a human, is independent, or has the claimed expertise.",
+    "external_identity_and_qualification_verification_required": true
+  },
+  "common_target_card_fields": [
+    "source_result_label",
+    "source_id",
+    "source_sha256",
+    "source_locator_exact",
+    "source_faithful_contract",
+    "injected_drift_contract",
+    "expected_affected_fields",
+    "paired_changed_field",
+    "paired_source_faithful_value",
+    "paired_injected_drift_value"
+  ],
+  "review_decisions": {
+    "faithful_contract": ["match", "needs_correction", "not_auditable"],
+    "injected_drift": ["source_critical_change", "not_source_critical", "not_auditable"],
+    "source_locator": ["exact", "needs_correction", "not_auditable"]
+  },
+  "completion_gate": {
+    "machine_validated_status": "self_attested_review_bundle_complete_external_identity_qualification_verification_required",
+    "production_eligible_decisions": {
+      "faithful_contract": "match",
+      "injected_drift": "source_critical_change",
+      "source_locator": "exact"
+    },
+    "all_disagreements_must_be_computed_and_adjudicated": true,
+    "adjudicated_target_card_must_equal_frozen_benchmark_card": true,
+    "any_correction_or_not_auditable_requires_benchmark_amendment": true,
+    "external_identity_and_qualification_verification_required": true,
+    "production_execution_eligible_before_external_verification": false,
+    "review_files_and_final_cards_sha256_bound": true,
+    "benchmark_execution_must_still_be_absent": true
+  },
+  "claim_boundary": {
+    "current_human_validation_complete": false,
+    "current_benchmark_execution_complete": false,
+    "current_workflow_effectiveness_supported": false,
+    "permitted_current_description": "hash-bound self-attested source-contract review protocol; review not started; external identity and qualification verification required"
+  }
+}

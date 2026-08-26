@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "suite_id": "ABRL-TARGET-DRIFT-V2",
+  "amendment_id": "ABRL-TARGET-DRIFT-FIXED-BENCHMARK-ITT-METHOD-AMENDMENT-2026-08-26",
+  "amended_on": "2026-08-26",
+  "status": "hash_bound_pre_execution_method_amendment_results_absent",
+  "reason": "Freeze the primary claim and analysis at the actual design boundary before any evaluation outcome exists: a bundled-workflow intention-to-treat contrast on thirty fixed targets, with fresh-invocation uncertainty and no paper-population generalization.",
+  "base_git_commit_before_method_amendment": "002d7198cd2f04811f01591bc19d1bd532d0b317",
+  "timing_and_claim_boundary": {
+    "primary_model_outcomes_observed": false,
+    "external_comparator_outcomes_observed": false,
+    "provider_calls_for_evaluation_observed": false,
+    "human_expert_source_review_complete": false,
+    "amendment_is_evaluation_result": false
+  },
+  "unchanged_design": {
+    "frozen_target_count": 30,
+    "paper_derived_targets": 18,
+    "paper_source_clusters": 3,
+    "targets_per_paper_source_cluster": 6,
+    "textbook_control_targets": 12,
+    "conditions": [
+      "compile_only",
+      "source_aware_blueprint",
+      "abrl"
+    ],
+    "fresh_invocations_per_target_condition": 5,
+    "planned_run_count": 450,
+    "requirement_variant_allocation": "Within every target-condition cell, two invocations receive one hidden requirement variant and three receive the other; parity balances each variant at 75 runs per condition over all thirty targets.",
+    "complete_case_gate": "The inferential analysis runs only after all 450 preregistered semantic runs are production-result-eligible and graded. There is no replacement and no outcome imputation."
+  },
+  "superseded_analysis_language": {
+    "protocol_json_pointer": "/dependence_plan",
+    "historical_language": "source/target-aware hierarchical bootstrap after within-target replicate aggregation",
+    "replacement": "fixed-benchmark invocation bootstrap after equal-target aggregation, as defined in fixed_method.primary_interval",
+    "paired_replicate_clarification": "Replicate indices continue to pair the hidden requirement assignment across conditions, but they do not pair provider randomness and are not provider seeds."
+  },
+  "fixed_method": {
+    "primary_estimand": "Equal-target-weighted mean bundled-workflow intention-to-treat effect on primary pass over the fixed set of thirty frozen targets: ABRL minus source-aware blueprint after averaging the five assigned fresh invocations within each target-condition.",
+    "estimand_population": "The thirty frozen targets only.",
+    "treatment_boundary": "ABRL and source-aware blueprint are bundled prompt, resource, and workflow assignments. The primary contrast does not attribute an effect to an individual mechanism inside either bundle.",
+    "compile_only_role": "Compile-only remains a prespecified descriptive baseline and is not part of the primary ABRL-minus-source-aware contrast.",
+    "fresh_invocation_semantics": "The five repetitions are fresh, separately initiated provider invocations. Their independence is an analysis assumption. Replicate integers are schedule and hidden-variant labels, not provider-controlled random seeds, and they do not induce paired model randomness across conditions.",
+    "primary_point_estimate": "Compute each target-condition primary-pass mean over its five invocations, subtract source-aware blueprint from ABRL for each target, then average the thirty target differences with equal target weight.",
+    "primary_interval": "Use a two-sided 95 percent percentile bootstrap that keeps all thirty targets and each target's fixed two-versus-three requirement-variant allocation in every draw, while independently resampling observed invocations with replacement inside every target by condition by variant cell. This interval describes fresh-invocation variation conditional on the fixed benchmark; it is not a paper- or target-population interval.",
+    "leave_one_paper_out": "Report exactly three point estimates, each removing all six targets from one paper source while retaining the other twelve paper-derived targets and all twelve textbook targets.",
+    "primary_success_rule": {
+      "combination": "all gates must pass",
+      "gates": {
+        "interval_lower_above_zero": "The lower endpoint of the fixed-benchmark invocation-bootstrap interval is strictly greater than zero.",
+        "leave_one_paper_out_nonnegative": "All three leave-one-paper-out fixed-benchmark point estimates are greater than or equal to zero.",
+        "injected_drift_sensitivity_reported": "Target-weighted injected-drift sensitivity is reported for compile-only, source-aware blueprint, and ABRL.",
+        "faithful_request_specificity_reported": "Target-weighted faithful-request specificity is reported for compile-only, source-aware blueprint, and ABRL."
+      },
+      "machine_output": "The analysis emits the observed value, threshold or completeness requirement, and passed boolean for every gate, plus an overall passed or failed status.",
+      "excluded_gate": "The exact sign-flip sensitivity p-value is reported but is not an additional primary-success gate."
+    },
+    "target_weighted_rate_role": "Sensitivity, specificity, false rejection, and requirement-variant pass rates used for inferential reporting first average the applicable two or three invocations within each target-condition, then give every frozen target equal weight.",
+    "raw_run_weighted_rate_role": "Raw invocation counts, denominators, and rates are reported separately as descriptive audit summaries. They do not treat 450 invocations as independent targets, and targets contributing three rather than two observations to a variant receive more raw-run weight.",
+    "exact_sign_flip_sensitivity": "Retain the two-sided exact enumeration over fifteen dependence units: three six-target paper-source clusters and twelve individual textbook targets, for 32768 sign assignments. Exactness is conditional on sign exchangeability at those units. This is a fixed-benchmark sensitivity analysis, not evidence of 450 independent observations and not inference to a population of papers or targets.",
+    "secondary_multiplicity": "Apply Benjamini-Hochberg at q equals 0.05 to the prespecified secondary family of fifteen-unit sign-flip sensitivity p-values. Adjusted values retain the same fixed-benchmark sensitivity boundary.",
+    "analysis_random_seed": "A future frozen bootstrap pseudo-random seed controls reproducible resampling in the analysis code only; it is not a provider seed and does not make model invocations paired."
+  },
+  "nonclaims": [
+    "No result, effect estimate, interval, p-value, q-value, success decision, or model ranking is recorded by this amendment.",
+    "The thirty targets are not sampled from a defined paper, theorem, or target population.",
+    "The three external paper sources do not support paper-population generalization.",
+    "A bundled-workflow contrast is not an estimate of the isolated contribution of target contracts, blueprints, failure memory, retrieval, or promotion gates.",
+    "A passed machine success rule would not by itself establish ICLR acceptance, universal autoformalization superiority, or semantic proof novelty."
+  ],
+  "bindings": {
+    "unchanged_primary_protocol": {
+      "path": "evaluation/target-drift-v2/protocol.json",
+      "sha256": "9bcc8d7f4342ea6b49c328735eacbd1f2a6c920a93c68d20c6514dde454fd369"
+    },
+    "analysis_script_after_amendment": {
+      "path": "tools/analyze_target_drift_execution.py",
+      "sha256": "4a493120d37f1f3395f898e7f98e17762a23b71eedf97d989dcf5c944244927e"
+    },
+    "analysis_tests_after_amendment": {
+      "path": "tools/test_target_drift_analysis.py",
+      "sha256": "346a95a051d6dc6df326b1ee92e0fe0f263b7526dbedd56c08df96aef66be0b0"
+    }
+  }
+}

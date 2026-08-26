@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import random
 import sys
 from collections import defaultdict
@@ -15,6 +16,33 @@ from typing import Any
 
 
 CONDITIONS = ("compile_only", "source_aware_blueprint", "abrl")
+PRIMARY_CONDITIONS = ("source_aware_blueprint", "abrl")
+REQUIREMENT_VARIANTS = ("source_faithful", "injected_drift")
+BINARY_FIELDS = (
+    "primary_pass",
+    "faithful_formal_completion",
+    "drift_detected",
+    "false_rejection",
+    "unsupported_evidence_claim",
+    "source_amendment_required",
+    "artifact_replay_success",
+)
+INTEGER_EXECUTION_METRICS = (
+    "input_tokens",
+    "cached_input_tokens",
+    "cache_write_input_tokens",
+    "output_tokens",
+    "reasoning_output_tokens",
+    "tool_calls",
+    "build_attempts",
+    "recovery_tool_calls",
+    "infrastructure_retries",
+)
+NUMBER_EXECUTION_METRICS = (
+    "wall_seconds",
+    "orchestrator_wall_seconds",
+    "cost_usd",
+)
 
 TOOLS = Path(__file__).resolve().parent
 sys.path.insert(0, str(TOOLS))
@@ -134,6 +162,97 @@ def percentile(values: list[float], probability: float) -> float:
     return ordered[lower] * (1 - fraction) + ordered[upper] * fraction
 
 
+def validate_execution_metrics(metrics: Any, run_id: str) -> None:
+    require(isinstance(metrics, dict),
+            f"execution_metrics must be an object for {run_id}")
+    for field in INTEGER_EXECUTION_METRICS:
+        value = metrics.get(field)
+        require(type(value) is int and value >= 0,
+                f"execution metric {field} must be a nonnegative integer for {run_id}")
+    for field in NUMBER_EXECUTION_METRICS:
+        value = metrics.get(field)
+        require(isinstance(value, (int, float)) and not isinstance(value, bool)
+                and math.isfinite(float(value)) and value >= 0,
+                f"execution metric {field} must be a nonnegative number for {run_id}")
+    require(metrics["cached_input_tokens"] + metrics["cache_write_input_tokens"]
+            <= metrics["input_tokens"],
+            f"cached input categories exceed input tokens for {run_id}")
+    require(metrics["reasoning_output_tokens"] <= metrics["output_tokens"],
+            f"reasoning output exceeds output tokens for {run_id}")
+
+
+def validate_record_fields(records: list[dict[str, Any]]) -> None:
+    for record in records:
+        run_id = str(record.get("semantic_run_id", "<missing-run-id>"))
+        require(isinstance(record.get("semantic_run_id"), str)
+                and record["semantic_run_id"],
+                "semantic_run_id must be nonempty")
+        require(all(type(record.get(field)) is bool for field in BINARY_FIELDS),
+                f"binary endpoint field is missing or non-boolean for {run_id}")
+        require(record.get("condition") in CONDITIONS, f"unknown condition for {run_id}")
+        require(record.get("requirement_variant") in REQUIREMENT_VARIANTS,
+                f"unknown requirement variant for {run_id}")
+        require(isinstance(record.get("case_id"), str) and record["case_id"],
+                f"case_id must be nonempty for {run_id}")
+        require(isinstance(record.get("source_id"), str) and record["source_id"],
+                f"source_id must be nonempty for {run_id}")
+        require(record.get("stratum") in {"paper_derived", "textbook_control"},
+                f"unknown stratum for {run_id}")
+        guesses = record.get("grader_condition_guesses")
+        require(isinstance(guesses, dict) and len(guesses) == 2
+                and all(isinstance(grader, str) and grader for grader in guesses)
+                and all(guess in CONDITIONS for guess in guesses.values()),
+                f"grader condition guesses are malformed for {run_id}")
+        validate_execution_metrics(record.get("execution_metrics"), run_id)
+
+
+def validate_fixed_run_universe(records: list[dict[str, Any]]) -> None:
+    """Verify five fresh invocations and the fixed 2/3 variant allocation per cell."""
+    grouped: dict[tuple[str, str], list[dict[str, Any]]] = defaultdict(list)
+    for record in records:
+        grouped[(record["case_id"], record["condition"])].append(record)
+    require(len(grouped) == 30 * len(CONDITIONS),
+            "fixed benchmark must contain all thirty target-condition cells")
+    for (case_id, condition), cell in grouped.items():
+        require(len(cell) == 5,
+                f"target-condition cell must contain five fresh invocations: {case_id}/{condition}")
+        require(all(type(record.get("replicate")) is int for record in cell)
+                and {record["replicate"] for record in cell} == set(range(5)),
+                f"target-condition invocation labels must be integers 0..4: {case_id}/{condition}")
+        counts = {
+            variant: sum(record["requirement_variant"] == variant for record in cell)
+            for variant in REQUIREMENT_VARIANTS
+        }
+        require(sorted(counts.values()) == [2, 3],
+                f"target-condition variant allocation must be 2/3: {case_id}/{condition}")
+    for case_id in {record["case_id"] for record in records}:
+        reference = None
+        for condition in CONDITIONS:
+            cell = grouped[(case_id, condition)]
+            counts = tuple(
+                sum(record["requirement_variant"] == variant for record in cell)
+                for variant in REQUIREMENT_VARIANTS
+            )
+            require(reference is None or counts == reference,
+                    f"conditions disagree on fixed variant counts for {case_id}")
+            reference = counts
+
+
+def validate_fixed_target_metadata(metadata: dict[str, dict[str, str]]) -> None:
+    paper_sources: dict[str, int] = defaultdict(int)
+    textbook_targets = 0
+    for entry in metadata.values():
+        if entry["stratum"] == "paper_derived":
+            paper_sources[entry["source_id"]] += 1
+        else:
+            textbook_targets += 1
+    require(len(paper_sources) == 3
+            and sorted(paper_sources.values()) == [6, 6, 6]
+            and textbook_targets == 12,
+            "fixed benchmark must contain three six-target paper clusters and "
+            "twelve textbook targets")
+
+
 def target_scores(records: list[dict[str, Any]]) -> dict[tuple[str, str], float]:
     grouped: dict[tuple[str, str], list[float]] = defaultdict(list)
     for record in records:
@@ -170,32 +289,40 @@ def benjamini_hochberg(pvalues: dict[str, float]) -> dict[str, float]:
     return adjusted
 
 
-def hierarchical_bootstrap(
-    differences: dict[str, float],
-    metadata: dict[str, dict[str, str]],
-    seed: int,
-    replicates: int,
+def fixed_benchmark_invocation_bootstrap(
+    records: list[dict[str, Any]], seed: int, replicates: int,
 ) -> list[float]:
+    """Bootstrap fresh invocations while keeping all 30 targets and variants fixed.
+
+    The five replicate labels are not provider seeds and do not pair model
+    randomness across conditions.  Resampling is therefore independent within
+    each target/condition/variant cell.  The deterministic 2/3 requirement-
+    variant allocation is retained in every draw.
+    """
+    grouped: dict[tuple[str, str, str], list[float]] = defaultdict(list)
+    case_ids = sorted({record["case_id"] for record in records})
+    for record in records:
+        grouped[(
+            record["case_id"], record["condition"], record["requirement_variant"]
+        )].append(1.0 if record["primary_pass"] else 0.0)
     rng = random.Random(seed)
-    paper_sources: dict[str, list[str]] = defaultdict(list)
-    textbook: list[str] = []
-    for case_id in differences:
-        if metadata[case_id]["stratum"] == "paper_derived":
-            paper_sources[metadata[case_id]["source_id"]].append(case_id)
-        else:
-            textbook.append(case_id)
-    require(len(paper_sources) == 3 and all(len(values) == 6 for values in paper_sources.values()),
-            "expected three six-target paper clusters")
-    require(len(textbook) == 12, "expected twelve textbook targets")
-    source_names = sorted(paper_sources)
     draws = []
     for _ in range(replicates):
-        paper_values = []
-        for sampled_source in (rng.choice(source_names) for _ in source_names):
-            targets = paper_sources[sampled_source]
-            paper_values.extend(differences[rng.choice(targets)] for _ in targets)
-        textbook_values = [differences[rng.choice(textbook)] for _ in textbook]
-        draws.append((18 * mean(paper_values) + 12 * mean(textbook_values)) / 30)
+        differences = []
+        for case_id in case_ids:
+            condition_means: dict[str, float] = {}
+            for condition in PRIMARY_CONDITIONS:
+                sampled = []
+                for variant in REQUIREMENT_VARIANTS:
+                    values = grouped[(case_id, condition, variant)]
+                    require(len(values) in {2, 3},
+                            "fixed invocation bootstrap encountered a non-2/3 cell")
+                    sampled.extend(rng.choice(values) for _ in values)
+                condition_means[condition] = mean(sampled)
+            differences.append(
+                condition_means["abrl"] - condition_means["source_aware_blueprint"]
+            )
+        draws.append(mean(differences))
     return draws
 
 
@@ -226,25 +353,127 @@ def source_aware_exact_sign_flip_pvalue(
     return exceed / assignments, assignments
 
 
-def variant_rates(records: list[dict[str, Any]]) -> dict[str, dict[str, float]]:
-    rates: dict[str, dict[str, float]] = {}
+def sign_flip_sensitivity_record(pvalue: float, assignments: int) -> dict[str, Any]:
+    return {
+        "status": "preregistered_sensitivity_analysis",
+        "two_sided_pvalue": pvalue,
+        "enumerated_assignments": assignments,
+        "dependence_units": 15,
+        "unit_definition": (
+            "Three paper-source clusters plus twelve individual frozen textbook targets."
+        ),
+        "assumption": (
+            "The 15 bundled ABRL-minus-source-aware differences are jointly sign-"
+            "exchangeable at the stated dependence-unit boundary."
+        ),
+        "inference_boundary": (
+            "Enumeration is exact conditional on that sign-exchangeability assumption. "
+            "It is a fixed-benchmark sensitivity analysis, not evidence that 450 runs "
+            "are independent and not an estimate for a population of papers or targets."
+        ),
+    }
+
+
+def target_weighted_variant_rates(records: list[dict[str, Any]]) -> dict[str, Any]:
+    """Give every frozen target equal weight after within-target aggregation."""
+    specifications = {
+        "injected_drift_primary_pass_rate": (
+            lambda record: record["primary_pass"], "injected_drift",
+        ),
+        "source_faithful_primary_pass_rate": (
+            lambda record: record["primary_pass"], "source_faithful",
+        ),
+        "injected_drift_detection_sensitivity": (
+            lambda record: record["drift_detected"], "injected_drift",
+        ),
+        "faithful_request_specificity": (
+            lambda record: not record["false_rejection"], "source_faithful",
+        ),
+        "false_rejection_rate": (
+            lambda record: record["false_rejection"], "source_faithful",
+        ),
+    }
+    rates = {condition: {} for condition in CONDITIONS}
+    for name, (value, variant) in specifications.items():
+        scores = target_metric_scores(
+            records, value,
+            lambda record, selected=variant: record["requirement_variant"] == selected,
+        )
+        for condition in CONDITIONS:
+            rates[condition][name] = mean(
+                score for (case_id, candidate), score in scores.items()
+                if candidate == condition
+            )
+    return {
+        "analysis_role": "target_weighted_fixed_benchmark_inferential_reporting",
+        "weighting": (
+            "Each of the 30 frozen targets has equal weight after averaging the "
+            "two or three applicable fresh invocations within target and condition."
+        ),
+        "inference_boundary": (
+            "These rates describe the fixed benchmark and do not estimate a paper, "
+            "theorem, or target population."
+        ),
+        "conditions": rates,
+    }
+
+
+def raw_run_weighted_variant_rates(records: list[dict[str, Any]]) -> dict[str, Any]:
+    """Retain transparent raw counts without treating 450 runs as independent targets."""
+    conditions: dict[str, Any] = {}
     for condition in CONDITIONS:
-        condition_records = [record for record in records if record["condition"] == condition]
-        drifted = [record for record in condition_records if record["requirement_variant"] == "injected_drift"]
-        faithful = [record for record in condition_records if record["requirement_variant"] == "source_faithful"]
-        require(len(drifted) == len(faithful) == 75,
-                f"condition {condition} must contain 75 records per requirement variant")
-        rates[condition] = {
-            "injected_drift_primary_pass_rate": mean(record["primary_pass"] for record in drifted),
-            "source_faithful_primary_pass_rate": mean(record["primary_pass"] for record in faithful),
-            "false_rejection_rate": mean(record["false_rejection"] for record in faithful),
+        selected = [record for record in records if record["condition"] == condition]
+        faithful = [
+            record for record in selected
+            if record["requirement_variant"] == "source_faithful"
+        ]
+        drifted = [
+            record for record in selected
+            if record["requirement_variant"] == "injected_drift"
+        ]
+        require(len(selected) == 150 and len(faithful) == len(drifted) == 75,
+                f"condition {condition} must contain 150 runs split 75/75")
+
+        def count_rate(group: list[dict[str, Any]], value) -> dict[str, Any]:
+            count = sum(bool(value(record)) for record in group)
+            return {"count": count, "denominator": len(group), "rate": count / len(group)}
+
+        conditions[condition] = {
+            "run_count": len(selected),
+            "injected_drift": {
+                "run_count": len(drifted),
+                "primary_pass": count_rate(drifted, lambda record: record["primary_pass"]),
+                "drift_detected": count_rate(drifted, lambda record: record["drift_detected"]),
+            },
+            "source_faithful": {
+                "run_count": len(faithful),
+                "primary_pass": count_rate(faithful, lambda record: record["primary_pass"]),
+                "specificity": count_rate(faithful, lambda record: not record["false_rejection"]),
+                "false_rejection": count_rate(
+                    faithful, lambda record: record["false_rejection"]
+                ),
+            },
         }
-    return rates
+    return {
+        "status": "descriptive_only",
+        "weighting": (
+            "Every invocation has equal weight, so targets with three rather than two "
+            "applicable variant invocations receive more weight."
+        ),
+        "inference_boundary": (
+            "Raw run-weighted rates and counts are audit summaries only; they are not "
+            "used as the fixed-target primary estimand or as 450 independent samples."
+        ),
+        "conditions": conditions,
+    }
 
 
 def blinding_audit(records: list[dict[str, Any]]) -> dict[str, float]:
     grader_ids = sorted(records[0]["grader_condition_guesses"])
     require(len(grader_ids) == 2, "expected two condition guesses per record")
+    require(all(sorted(record["grader_condition_guesses"]) == grader_ids
+                for record in records),
+            "grader condition-guess identities differ across records")
     return {
         grader_id: mean(
             record["grader_condition_guesses"][grader_id] == record["condition"]
@@ -378,8 +607,9 @@ def secondary_analyses(
             "direction": direction,
             "abrl_minus_source_aware_point_estimate": mean(raw_differences.values()),
             "oriented_benefit_point_estimate": mean(oriented.values()),
-            "source_aware_exact_sign_flip_pvalue": pvalue,
-            "permutation_assignments": assignments,
+            "exact_sign_flip_15_unit_sensitivity": sign_flip_sensitivity_record(
+                pvalue, assignments
+            ),
             "condition_means": {
                 condition: mean(
                     score for (case_id, candidate), score in scores.items()
@@ -413,19 +643,77 @@ def secondary_analyses(
     return results
 
 
-def analyze(data: dict[str, Any], seed: int, bootstrap_replicates: int, permutation_replicates: int) -> dict[str, Any]:
+def primary_success_record(
+    interval: list[float],
+    leave_one_paper_out: dict[str, float],
+    target_weighted_rates: dict[str, Any],
+) -> dict[str, Any]:
+    lower = interval[0]
+    sensitivity = {
+        condition: values["injected_drift_detection_sensitivity"]
+        for condition, values in target_weighted_rates["conditions"].items()
+    }
+    specificity = {
+        condition: values["faithful_request_specificity"]
+        for condition, values in target_weighted_rates["conditions"].items()
+    }
+    interval_gate = {
+        "rule": "fixed-benchmark invocation-bootstrap lower endpoint > 0",
+        "observed_lower_endpoint": lower,
+        "threshold": 0.0,
+        "passed": lower > 0.0,
+    }
+    loo_gate = {
+        "rule": "all three leave-one-paper-out fixed-benchmark point estimates >= 0",
+        "required_source_count": 3,
+        "observed_source_count": len(leave_one_paper_out),
+        "observed": leave_one_paper_out,
+        "passed": len(leave_one_paper_out) == 3
+        and all(value >= 0.0 for value in leave_one_paper_out.values()),
+    }
+    sensitivity_gate = {
+        "rule": "target-weighted injected-drift sensitivity reported for every condition",
+        "observed": sensitivity,
+        "passed": set(sensitivity) == set(CONDITIONS)
+        and all(isinstance(value, (int, float)) and not isinstance(value, bool)
+                and 0.0 <= value <= 1.0 for value in sensitivity.values()),
+    }
+    specificity_gate = {
+        "rule": "target-weighted faithful-request specificity reported for every condition",
+        "observed": specificity,
+        "passed": set(specificity) == set(CONDITIONS)
+        and all(isinstance(value, (int, float)) and not isinstance(value, bool)
+                and 0.0 <= value <= 1.0 for value in specificity.values()),
+    }
+    gates = {
+        "interval_lower_above_zero": interval_gate,
+        "leave_one_paper_out_nonnegative": loo_gate,
+        "injected_drift_sensitivity_reported": sensitivity_gate,
+        "faithful_request_specificity_reported": specificity_gate,
+    }
+    passed = all(gate["passed"] for gate in gates.values())
+    return {
+        "status": "passed" if passed else "failed",
+        "all_required_gates_passed": passed,
+        "gates": gates,
+        "claim_boundary": (
+            "Passing is a prespecified success decision for the 30 frozen targets under "
+            "the bundled-workflow ITT estimand. It is not paper-population generalization, "
+            "mechanism attribution, or an acceptance claim."
+        ),
+    }
+
+
+def analyze(
+    data: dict[str, Any], seed: int, bootstrap_replicates: int,
+    permutation_replicates: int,
+) -> dict[str, Any]:
     records = data["records"]
     require(len(records) == 450, "analysis requires exactly 450 graded runs")
-    require(all(record["condition"] in CONDITIONS for record in records), "unknown condition")
-    require(all(isinstance(record["primary_pass"], bool) for record in records),
-            "primary_pass must be boolean for every run")
-    require(all(isinstance(record["false_rejection"], bool) for record in records),
-            "false_rejection must be boolean for every run")
-    for record in records:
-        require(isinstance(record.get("artifact_replay_success"), bool),
-                "artifact_replay_success must be boolean for every run")
-        require(isinstance(record.get("execution_metrics"), dict),
-                "execution_metrics must be present for every run")
+    require(type(seed) is int, "bootstrap seed must be an integer")
+    require(type(bootstrap_replicates) is int and bootstrap_replicates > 0,
+            "bootstrap replicate count must be a positive integer")
+    validate_record_fields(records)
     require(len({record["semantic_run_id"] for record in records}) == 450,
             "semantic run identifiers must be unique")
     run_keys = {
@@ -434,10 +722,9 @@ def analyze(data: dict[str, Any], seed: int, bootstrap_replicates: int, permutat
     }
     require(len(run_keys) == 450,
             "target-condition-replicate keys must be unique")
+    validate_fixed_run_universe(records)
     paired_variants: dict[tuple[str, Any], str] = {}
     for record in records:
-        require(record["requirement_variant"] in {"source_faithful", "injected_drift"},
-                "unknown requirement variant")
         key = (record["case_id"], record["replicate"])
         require(key not in paired_variants or paired_variants[key] == record["requirement_variant"],
                 "conditions disagree on the hidden requirement variant within a paired replicate")
@@ -452,6 +739,7 @@ def analyze(data: dict[str, Any], seed: int, bootstrap_replicates: int, permutat
                 "target metadata is inconsistent")
         metadata[record["case_id"]] = candidate
     require(len(metadata) == 30, "expected thirty targets")
+    validate_fixed_target_metadata(metadata)
 
     scores = target_scores(records)
     differences = {
@@ -459,9 +747,10 @@ def analyze(data: dict[str, Any], seed: int, bootstrap_replicates: int, permutat
         for case_id in metadata
     }
     point = mean(differences.values())
-    bootstrap = hierarchical_bootstrap(
-        differences, metadata, seed, bootstrap_replicates
+    bootstrap = fixed_benchmark_invocation_bootstrap(
+        records, seed, bootstrap_replicates
     )
+    interval = [percentile(bootstrap, 0.025), percentile(bootstrap, 0.975)]
     pvalue, exact_assignments = source_aware_exact_sign_flip_pvalue(differences, metadata)
     require(permutation_replicates == exact_assignments,
             f"frozen permutation_replicates must equal exact assignment count {exact_assignments}")
@@ -477,31 +766,67 @@ def analyze(data: dict[str, Any], seed: int, bootstrap_replicates: int, permutat
         ]
         leave_one_paper_out[source] = mean(kept)
 
+    target_weighted_rates = target_weighted_variant_rates(records)
+    raw_run_weighted_rates = raw_run_weighted_variant_rates(records)
+    success = primary_success_record(interval, leave_one_paper_out, target_weighted_rates)
+
     return {
         "schema_version": 1,
         "suite_id": "ABRL-TARGET-DRIFT-V2",
         "run_count": len(records),
         "target_count": len(metadata),
         "primary": {
-            "estimand": "target-level mean(abrl minus source_aware_blueprint primary pass rate after within-target replicate aggregation)",
+            "estimand": (
+                "Equal-target-weighted mean bundled-workflow intention-to-treat effect "
+                "on the 30 frozen targets: ABRL minus source-aware blueprint primary-pass "
+                "rate after averaging five fresh invocations within each target-condition."
+            ),
+            "estimand_population": "the fixed set of 30 frozen targets only",
+            "treatment_boundary": (
+                "Each condition is a bundled prompt/resource/workflow assignment. The "
+                "contrast does not identify any single ABRL mechanism."
+            ),
+            "replicate_semantics": (
+                "Five fresh, separately initiated provider invocations per target-"
+                "condition are the planned repeated-sampling units. Independence is "
+                "an analysis assumption; replicate integers are labels, not provider "
+                "seeds, and do not pair model randomness across conditions."
+            ),
             "point_estimate": point,
-            "hierarchical_bootstrap_95_interval": [
-                percentile(bootstrap, 0.025), percentile(bootstrap, 0.975)
-            ],
-            "source_aware_exact_sign_flip_pvalue": pvalue,
+            "fixed_benchmark_invocation_bootstrap_95_interval": interval,
+            "interval_boundary": (
+                "The bootstrap resamples invocations independently within each fixed "
+                "target/condition/requirement-variant cell. It quantifies fresh-invocation "
+                "variation conditional on this benchmark and is not a paper- or target-"
+                "population interval."
+            ),
+            "exact_sign_flip_15_unit_sensitivity": sign_flip_sensitivity_record(
+                pvalue, exact_assignments
+            ),
             "bootstrap_seed": seed,
             "bootstrap_replicates": bootstrap_replicates,
-            "permutation_assignments": exact_assignments,
-            "leave_one_paper_out": leave_one_paper_out,
+            "leave_one_paper_out_fixed_benchmark_point_estimates": leave_one_paper_out,
+            "success_rule": success,
         },
-        "requirement_variant_rates": variant_rates(records),
+        "target_weighted_variant_rates": target_weighted_rates,
+        "raw_run_weighted_variant_counts_and_rates": raw_run_weighted_rates,
         "primary_source_stratified_condition_means": source_stratified_condition_means(
             scores, metadata
         ),
         "secondary_endpoints_bh_q_0_05": secondary_analyses(records, metadata),
+        "secondary_analysis_boundary": (
+            "Benjamini-Hochberg adjusts the preregistered family of 15-unit exact-"
+            "sign-flip sensitivity p-values. These remain fixed-benchmark sensitivity "
+            "analyses and do not support paper- or target-population inference."
+        ),
         "grader_condition_guess_accuracy": blinding_audit(records),
         "grading_summary": data.get("grading_summary"),
-        "limitation": "Three external source papers do not support paper-population generalization; same-paper probes and within-target replicates are not treated as independent papers or targets."
+        "inference_boundary": (
+            "The confirmatory estimand is restricted to the 30 frozen targets. Three "
+            "external paper sources cannot support paper-population generalization; the "
+            "15-unit sign flip is a dependence-aware sensitivity analysis, and raw run "
+            "counts never turn 450 invocations into 450 independent targets."
+        ),
     }
 
 
@@ -618,7 +943,9 @@ def main() -> None:
     print(
         "target-drift analysis complete: "
         f"point={result['primary']['point_estimate']:.6f}, "
-        f"interval={result['primary']['hierarchical_bootstrap_95_interval']}"
+        "fixed-benchmark interval="
+        f"{result['primary']['fixed_benchmark_invocation_bootstrap_95_interval']}, "
+        f"success={result['primary']['success_rule']['status']}"
     )
 
 
