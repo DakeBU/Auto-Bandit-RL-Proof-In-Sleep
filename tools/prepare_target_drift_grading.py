@@ -22,6 +22,43 @@ import build_target_drift_completion_ledger as completion  # noqa: E402
 
 FORBIDDEN_PRIMARY_TEXT = prepare.PRIMARY_GRADING_PROVENANCE_MARKERS
 
+# Resource-use metadata, semantic run identifiers, and direct condition fields
+# can make a nominally blind packet condition-predictive.  Keep them in the
+# operator-only mapping for later analysis, never in material sent to a primary
+# grader.
+FORBIDDEN_PRIMARY_METADATA_KEYS = frozenset({
+    "condition",
+    "condition_label",
+    "execution_purpose",
+    "execution_metrics",
+    "execution_usage",
+    "input_tokens",
+    "cached_input_tokens",
+    "cache_write_input_tokens",
+    "output_tokens",
+    "reasoning_output_tokens",
+    "tool_calls",
+    "recovery_tool_calls",
+    "build_attempts",
+    "infrastructure_retries",
+    "wall_seconds",
+    "orchestrator_wall_seconds",
+    "adapter_process_wall_seconds",
+    "model_cost_usd",
+    "cost_usd",
+    "duration_seconds",
+    "elapsed_seconds",
+    "opaque_run_id",
+    "presentation_order",
+    "prompt_path",
+    "prompt_template_path",
+    "requirement_variant",
+    "run_id",
+    "semantic_run_id",
+    "workflow_condition",
+    "workflow_compliance_pass",
+})
+
 
 def load(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
@@ -84,6 +121,31 @@ def require_blind_text(value: Any, label: str) -> None:
     text = "\n".join(flattened_strings(value)).lower()
     require(not any(token in text for token in FORBIDDEN_PRIMARY_TEXT),
             f"condition-identifying text in primary {label}")
+
+
+def strip_primary_metadata(value: Any) -> Any:
+    """Remove condition-predictive resource metadata from grader-visible evidence."""
+    if isinstance(value, dict):
+        return {
+            key: strip_primary_metadata(child)
+            for key, child in value.items()
+            if key not in FORBIDDEN_PRIMARY_METADATA_KEYS
+        }
+    if isinstance(value, list):
+        return [strip_primary_metadata(child) for child in value]
+    return value
+
+
+def require_primary_metadata_blind(value: Any, label: str) -> None:
+    """Fail closed if a forbidden label, run ID, or resource key reaches a packet."""
+    if isinstance(value, dict):
+        leaked = sorted(set(value) & FORBIDDEN_PRIMARY_METADATA_KEYS)
+        require(not leaked, f"condition-predictive metadata in {label}: {leaked}")
+        for child in value.values():
+            require_primary_metadata_blind(child, label)
+    elif isinstance(value, list):
+        for child in value:
+            require_primary_metadata_blind(child, label)
 
 
 def agent_generated_blind_fields(packet: dict[str, Any]) -> dict[str, Any]:
@@ -359,15 +421,13 @@ def main() -> None:
                 "primary_grader_rationale": rationale,
                 "source_amendment": source_amendment,
                 "lean_artifacts": changed_lean,
-                "execution_metrics": checker["execution_usage"],
                 "neutral_checker": {
                     "checker_pass": checker["checker_pass"],
                     "forbidden_lean_hits": checker["forbidden_lean_hits"],
                     "unexpected_axioms": checker["unexpected_axioms"],
                     "artifact_replay_success": checker["artifact_replay_success"],
-                    "workflow_compliance_pass": checker["workflow_compliance_pass"],
-                    "neutral_build": checker["neutral_build"],
-                    "neutral_canary": checker["neutral_canary"],
+                    "neutral_build": strip_primary_metadata(checker["neutral_build"]),
+                    "neutral_canary": strip_primary_metadata(checker["neutral_canary"]),
                     "claim_consistent_with_checker": checker["claim_consistent_with_checker"],
                 },
                 "grader_response_schema": {
@@ -390,10 +450,15 @@ def main() -> None:
         require_blind_lean_artifacts(
             packet["lean_artifacts"], f"Lean artifacts for {job['opaque_run_id']}"
         )
+        require_primary_metadata_blind(
+            packet, f"primary packet for {job['opaque_run_id']}"
+        )
         collected.append({
             "semantic_run_id": job["semantic_run_id"],
             "condition": sealed["condition"],
             "requirement_variant": sealed["requirement_variant"],
+            "execution_metrics": checker["execution_usage"],
+            "workflow_compliance_pass": checker["workflow_compliance_pass"],
             "packet": packet,
         })
 
@@ -421,6 +486,8 @@ def main() -> None:
             "semantic_run_id": item["semantic_run_id"],
             "condition": item["condition"],
             "requirement_variant": item["requirement_variant"],
+            "execution_metrics": item["execution_metrics"],
+            "workflow_compliance_pass": item["workflow_compliance_pass"],
         })
 
     mapping_payload = (
@@ -447,6 +514,8 @@ def main() -> None:
         "missing_run_policy_sha256": completion_ledger["missing_run_policy_sha256"],
         "grader_prompt_sha256": config["grading"]["grader_prompt_sha256"],
         "primary_packets_exclude_condition_and_variant_labels": True,
+        "primary_packets_exclude_execution_metrics": True,
+        "primary_packets_exclude_workflow_compliance": True,
         "result_eligible": True,
         "checker_mode": "production",
         "checker_runtime_config_sha256": runtime_sha256,

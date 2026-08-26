@@ -26,6 +26,7 @@ TOOLS = Path(__file__).resolve().parent
 sys.path.insert(0, str(TOOLS))
 
 import prepare_target_drift_execution as prepare  # noqa: E402
+import prepare_target_drift_grading as grading  # noqa: E402
 import build_target_drift_completion_ledger as completion  # noqa: E402
 
 
@@ -70,6 +71,22 @@ def digest_payloads(payloads: dict[str, bytes]) -> str:
         digest.update(len(payload).to_bytes(8, "big"))
         digest.update(payload)
     return digest.hexdigest()
+
+
+def operator_execution_metrics(mapping_item: dict[str, Any]) -> dict[str, Any]:
+    """Return resource metrics from the operator-only mapping, never a grader packet."""
+    metrics = mapping_item.get("execution_metrics")
+    require(isinstance(metrics, dict) and bool(metrics),
+            f"operator mapping omits execution metrics for {mapping_item.get('grade_id')}")
+    return metrics
+
+
+def operator_workflow_compliance(mapping_item: dict[str, Any]) -> bool:
+    """Return the manipulation check retained behind the primary-grader boundary."""
+    value = mapping_item.get("workflow_compliance_pass")
+    require(isinstance(value, bool),
+            f"operator mapping omits workflow compliance for {mapping_item.get('grade_id')}")
+    return value
 
 
 def validate_grade(item: dict[str, Any], require_condition_guess: bool = True) -> None:
@@ -151,6 +168,12 @@ def main() -> None:
             "imported pack verifier differs from frozen hash")
     require(hashlib.sha256((pack / "execution_code" / prepare_path.name).read_bytes()).hexdigest()
             == prepare_hash, "sealed pack verifier differs from frozen hash")
+    grading_path = Path(grading.__file__).resolve()
+    grading_hash = config["grading"]["packet_materializer_sha256"]
+    require(hashlib.sha256(grading_path.read_bytes()).hexdigest() == grading_hash,
+            "imported grading materializer differs from frozen hash")
+    require(hashlib.sha256((pack / "execution_code" / grading_path.name).read_bytes()).hexdigest()
+            == grading_hash, "sealed grading materializer differs from frozen hash")
     require(
         config["grading"]["grader_conflict_policy"]
         == "adjudicate every disagreement on a primary or secondary binary label or the structured source-critical field list",
@@ -212,6 +235,8 @@ def main() -> None:
         json.loads(payload.decode("utf-8"))["grade_id"]: json.loads(payload.decode("utf-8"))
         for payload in packet_payloads.values()
     }
+    for grade_id, packet in packet_by_grade_id.items():
+        grading.require_primary_metadata_blind(packet, f"primary packet {grade_id}")
     require(
         set(packet_payloads)
         == {f"packets/{grade_id}.json" for grade_id in packet_grade_ids},
@@ -227,6 +252,12 @@ def main() -> None:
             "grading packet aggregate differs from manifest")
     require(packet_manifest["operator_mapping_sha256"] == hashlib.sha256(mapping_payload).hexdigest(),
             "operator mapping hash differs from manifest")
+    require(packet_manifest.get("primary_packets_exclude_condition_and_variant_labels") is True,
+            "grading manifest does not attest condition/variant-label exclusion")
+    require(packet_manifest.get("primary_packets_exclude_execution_metrics") is True,
+            "grading manifest does not attest execution-metric exclusion")
+    require(packet_manifest.get("primary_packets_exclude_workflow_compliance") is True,
+            "grading manifest does not attest workflow-compliance exclusion")
     require(
         packet_manifest["aggregate_sha256"]
         == digest_payloads({
@@ -320,7 +351,8 @@ def main() -> None:
             "adjudicated": grade_id in adjudicated,
             "artifact_replay_success": checker["artifact_replay_success"],
             "checker_pass": checker["checker_pass"],
-            "execution_metrics": packet["execution_metrics"],
+            "execution_metrics": operator_execution_metrics(mapping_item),
+            "workflow_compliance_pass": operator_workflow_compliance(mapping_item),
             "grader_condition_guesses": {
                 response_ids[0]: left["condition_guess"],
                 response_ids[1]: right["condition_guess"],

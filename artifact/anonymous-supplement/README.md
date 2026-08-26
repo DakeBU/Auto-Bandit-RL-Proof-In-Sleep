@@ -188,7 +188,8 @@ upstream revisions.  See `THIRD_PARTY_NOTICES.md`.
 ## Data, models, seeds, and hardware
 
 No training dataset or model weights are needed to check the Lean artifact.
-The controlled target-drift study is preregistered but unexecuted, so there are
+The controlled target-drift study is prospectively specified and result-free but
+unexecuted, so there are
 no experimental seeds, provider outputs, grades, or result tables to
 reproduce.  Historical proof-check timings name their local environment and
 are explicitly non-portable; the mathematical and structural checks do not

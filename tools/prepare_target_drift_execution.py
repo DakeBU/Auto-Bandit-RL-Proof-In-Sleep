@@ -24,6 +24,19 @@ import target_drift_checker_cache_manifest as checker_cache_manifest
 ROOT = Path(__file__).resolve().parents[1]
 SUITE = ROOT / "evaluation" / "target-drift-v1"
 CONDITIONS = ("compile_only", "source_aware_blueprint", "abrl")
+PRIMARY_ANALYSIS_METHOD_ID = (
+    "fixed_30_target_variant_preserving_paired_invocation_bootstrap_v1"
+)
+PRIMARY_ANALYSIS_SUCCESS_RULE = (
+    "lower endpoint of the fixed-target, variant-preserving paired-invocation "
+    "bootstrap interval above zero; report faithful-request specificity and "
+    "injected-drift sensitivity alongside the primary result"
+)
+PRIMARY_ANALYSIS_PAIRING_KEY = [
+    "case_id", "replicate", "requirement_variant",
+]
+PRIMARY_ANALYSIS_BOOTSTRAP_REPLICATES = 20000
+PRIMARY_ANALYSIS_PERMUTATION_REPLICATES = 32768
 PLACEHOLDERS = (
     "{{CASE_ID}}",
     "{{SOURCE_ID}}",
@@ -1408,6 +1421,7 @@ def validate_frozen_choices(config: dict[str, Any]) -> None:
              "grading.grader_blinding_attestation", 20)
 
     analysis = config["analysis"]
+    validate_primary_analysis_contract(analysis)
     require(isinstance(analysis["bootstrap_seed"], int)
             and not isinstance(analysis["bootstrap_seed"], bool),
             "analysis.bootstrap_seed must be an integer")
@@ -1416,6 +1430,31 @@ def validate_frozen_choices(config: dict[str, Any]) -> None:
             "analysis.bootstrap_replicates must be at least 1000")
     require(analysis["permutation_replicates"] == 32768,
             "analysis.permutation_replicates must enumerate all 15-unit sign flips")
+
+
+def validate_primary_analysis_contract(analysis: dict[str, Any]) -> None:
+    """Fail closed if a sealed pack changes the prospectively fixed primary rule."""
+    require(
+        analysis.get("primary_interval_method_id") == PRIMARY_ANALYSIS_METHOD_ID,
+        "analysis.primary_interval_method_id differs from the fixed primary method",
+    )
+    require(
+        analysis.get("primary_success_rule") == PRIMARY_ANALYSIS_SUCCESS_RULE,
+        "analysis.primary_success_rule differs from the fixed primary rule",
+    )
+    require(
+        analysis.get("primary_pairing_key") == PRIMARY_ANALYSIS_PAIRING_KEY,
+        "analysis.primary_pairing_key differs from the fixed primary pairing",
+    )
+    require(
+        analysis.get("bootstrap_replicates") == PRIMARY_ANALYSIS_BOOTSTRAP_REPLICATES,
+        "analysis.bootstrap_replicates differs from the fixed primary count",
+    )
+    require(
+        analysis.get("permutation_replicates")
+        == PRIMARY_ANALYSIS_PERMUTATION_REPLICATES,
+        "analysis.permutation_replicates differs from the fixed exact count",
+    )
 
 
 def digest_components(
