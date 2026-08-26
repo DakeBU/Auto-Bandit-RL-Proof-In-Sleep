@@ -4,21 +4,25 @@
 from __future__ import annotations
 
 import argparse
+from datetime import datetime, timedelta, timezone
 import hashlib
 import json
 import os
 import random
 import re
+import shutil
 import stat
 import subprocess
 import sys
 import tempfile
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Any
 
 import launch_target_drift_checker_container as checker_launcher
 import prepare_target_drift_checker_image as checker_image_builder
 import target_drift_checker_cache_manifest as checker_cache_manifest
+import validate_target_drift_human_contract_external_verification as external_contract_review
+import validate_target_drift_human_contract_review as human_contract_review
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -37,6 +41,16 @@ PRIMARY_ANALYSIS_PAIRING_KEY = [
 ]
 PRIMARY_ANALYSIS_BOOTSTRAP_REPLICATES = 20000
 PRIMARY_ANALYSIS_PERMUTATION_REPLICATES = 32768
+METHOD_AMENDMENT_PATH = (
+    "evaluation/target-drift-v2/"
+    "method-amendment-fixed-target-paired-bootstrap-2026-08-31.json"
+)
+METHOD_AMENDMENT_SHA256 = (
+    "5aed16ea25975786d79792ee194d87c081ec01247dbb1d314da05c8f582fdb9d"
+)
+METHOD_AMENDMENT_ID = (
+    "ABRL-TARGET-DRIFT-FIXED-TARGET-PAIRED-BOOTSTRAP-METHOD-AMENDMENT-2026-08-31"
+)
 PLACEHOLDERS = (
     "{{CASE_ID}}",
     "{{SOURCE_ID}}",
@@ -60,10 +74,135 @@ PRIMARY_GRADING_PROVENANCE_MARKERS = (
     "bounded proof transaction",
 )
 LEAN_PROVENANCE_MARKERS = PRIMARY_GRADING_PROVENANCE_MARKERS[:6]
+TRUST_ANCHOR_CONTRACT_ID = (
+    "ABRL-TARGET-DRIFT-V2-EXTERNAL-SIGNER-TRUST-ANCHOR"
+)
+TRUST_ANCHOR_PRODUCTION_STATUS = (
+    "public_pre_outcome_signer_registry_anchor_frozen"
+)
+TRUST_ANCHOR_PUBLIC_REPOSITORY_URL_POLICY = (
+    "credential-free HTTPS GitHub repository URL ending in .git; concrete "
+    "repository remains UNSET until a real anchor is preregistered"
+)
+TRUST_ANCHOR_PUBLIC_REF = "refs/heads/main"
+TRUST_ANCHOR_EXCLUDED_STATUS = "excluded_fixture_unanchored"
+TRUST_ANCHOR_EXCLUDED_PROOF = b"EXCLUDED FIXTURE - NO GIT TRUST ANCHOR\n"
+TRUST_ANCHOR_CLAIM_BOUNDARY = (
+    "Git ancestry and byte identity establish only that the signer-registry "
+    "bindings were publicly frozen before the later execution commit. They do "
+    "not prove trusted wall-clock time, human identity, qualification, "
+    "independence, or absence of conflicts; those properties still rely on the "
+    "external verifier attestation and escrow evidence."
+)
+TRUST_ANCHOR_CONTRACT_BOUNDARY = {
+    "git_history_establishes": (
+        "The named anchor bytes were already present at the named ancestor "
+        "commit and remain byte-identical."
+    ),
+    "git_history_does_not_establish": (
+        "That any key holder is human, independent, conflict-free, or qualified, "
+        "or that Git commit timestamps are trusted wall-clock timestamps."
+    ),
+    "identity_qualification_basis_after_anchor": (
+        "The independently obtained external verifier attestation and its "
+        "public/private escrow evidence, with the external-verifier key pinned "
+        "by the prior public anchor."
+    ),
+    "real_anchor_present_in_this_contract": False,
+    "production_execution_eligible": False,
+}
+TRUST_ANCHOR_REQUIRED_FIELDS = frozenset({
+    "schema_version", "contract_id", "anchor_id", "status",
+    "anchor_git_commit", "anchor_repository_path", "anchor_registered_at_utc",
+    "anchor_public_repository_url", "anchor_public_ref",
+    "anchor_public_commit_locator",
+    "review_started_before_anchor", "evaluation_outcomes_observed_before_anchor",
+    "benchmark_execution_complete_before_anchor", "role_registry_bytes_sha256",
+    "role_registry_canonical_sha256", "allowed_signers_bytes_sha256",
+    "external_verifier_principal", "external_verifier_public_key_fingerprint",
+    "public_escrow_receipt_locator", "public_escrow_receipt_sha256",
+    "claim_boundary",
+})
+HUMAN_REVIEW_SEALED_ROOT = "SEALED/human_source_contract_review"
+HUMAN_REVIEW_FILE_BINDINGS = (
+    ("protocol", "protocol_sha256", "self-review-protocol.json"),
+    ("reviewer_a", "reviewer_a_sha256", "reviewer-a.json"),
+    ("reviewer_a_signature", "reviewer_a_signature_sha256", "reviewer-a.sig"),
+    ("reviewer_b", "reviewer_b_sha256", "reviewer-b.json"),
+    ("reviewer_b_signature", "reviewer_b_signature_sha256", "reviewer-b.sig"),
+    ("adjudication", "adjudication_sha256", "adjudication.json"),
+    ("adjudication_signature", "adjudication_signature_sha256", "adjudication.sig"),
+    ("completion_attestation", "completion_attestation_sha256",
+     "self-attested-completion.json"),
+    ("external_protocol", "external_protocol_sha256",
+     "external-verification-protocol.json"),
+    ("external_trust_anchor_contract", "external_trust_anchor_contract_sha256",
+     "external-trust-anchor-contract.json"),
+    ("external_trust_anchor", "external_trust_anchor_sha256",
+     "external-trust-anchor.json"),
+    ("external_trust_anchor_git_object_proof",
+     "external_trust_anchor_git_object_proof_sha256",
+     "external-trust-anchor-git-object-proof.pack"),
+    ("role_registry", "role_registry_sha256", "role-registry.json"),
+    ("allowed_signers", "allowed_signers_sha256", "allowed_signers"),
+    ("external_receipt", "external_receipt_sha256", "external-receipt.json"),
+    ("external_receipt_signature", "external_receipt_signature_sha256",
+     "external-receipt.sig"),
+    ("external_attestation", "external_attestation_sha256",
+     "external-attestation.json"),
+)
+HUMAN_REVIEW_PACKET_FILES = (
+    "packet-manifest.json", "reviewer-template.json", "adjudication-template.json",
+)
+HUMAN_REVIEW_EXPECTED_FILES = frozenset(
+    [item[2] for item in HUMAN_REVIEW_FILE_BINDINGS] + list(HUMAN_REVIEW_PACKET_FILES)
+)
+HUMAN_REVIEW_CONFIG_FIELDS = frozenset({
+    "self_attested_prepare_script", "self_attested_prepare_script_sha256",
+    "self_attested_validator_script", "self_attested_validator_script_sha256",
+    "self_attested_validator_test", "self_attested_validator_test_sha256",
+    "execution_finalizer", "execution_finalizer_sha256",
+    "review_packet", "review_packet_manifest_sha256",
+    "external_validator_script", "external_validator_script_sha256",
+    "external_validator_test", "external_validator_test_sha256",
+    "required_self_attested_status", "required_external_status",
+    "required_external_trust_anchor_status",
+    "combined_prerequisite_status", "combined_prerequisite_satisfied",
+    "evaluation_outcomes_observed_before_validation",
+} | {
+    field
+    for path_field, hash_field, _ in HUMAN_REVIEW_FILE_BINDINGS
+    for field in (path_field, hash_field)
+})
+
+
+def reject_duplicate_keys(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+    value: dict[str, Any] = {}
+    for key, item in pairs:
+        require(key not in value, f"duplicate JSON key: {key}")
+        value[key] = item
+    return value
+
+
+def strict_json_text(text: str, label: str) -> dict[str, Any]:
+    try:
+        value = json.loads(text, object_pairs_hook=reject_duplicate_keys)
+    except json.JSONDecodeError:
+        require(False, f"{label} is not valid JSON")
+    require(isinstance(value, dict), f"{label} must contain one JSON object")
+    return value
+
+
+def strict_json_bytes(payload: bytes, label: str) -> dict[str, Any]:
+    try:
+        text = payload.decode("utf-8")
+    except UnicodeDecodeError:
+        require(False, f"{label} is not valid UTF-8")
+    return strict_json_text(text, label)
 
 
 def load(path: Path) -> dict[str, Any]:
-    return json.loads(path.read_text(encoding="utf-8"))
+    return strict_json_text(path.read_text(encoding="utf-8"), str(path))
 
 
 def dump(path: Path, value: Any) -> None:
@@ -92,11 +231,178 @@ def canonical_json_bytes(value: Any) -> bytes:
     ).encode("utf-8")
 
 
+def portable_hash_locator(label: str, digest: Any) -> str:
+    suffix = digest if isinstance(digest, str) and re.fullmatch(
+        r"[0-9a-f]{64}", digest
+    ) else "UNRESOLVED"
+    return f"HOST-BOUND/{label}/sha256/{suffix}"
+
+
+def opaque_config_binding(value: Any, label: str) -> Any:
+    if value == "UNSET":
+        return value
+    locator = f"REDACTED-OPERATOR/{label}"
+    if (isinstance(value, dict)
+            and value.get("portable_locator") == locator
+            and isinstance(value.get("canonical_sha256"), str)
+            and re.fullmatch(r"[0-9a-f]{64}", value["canonical_sha256"])):
+        return value
+    return {
+        "portable_locator": locator,
+        "canonical_sha256": sha256_bytes(canonical_json_bytes(value)),
+    }
+
+
+def rewrite_config_strings(value: Any, replacements: dict[str, str]) -> Any:
+    if isinstance(value, str):
+        rewritten = value
+        for source in sorted(replacements, key=len, reverse=True):
+            if source and source != "UNSET":
+                rewritten = rewritten.replace(source, replacements[source])
+        return rewritten
+    if isinstance(value, list):
+        return [rewrite_config_strings(item, replacements) for item in value]
+    if isinstance(value, dict):
+        return {
+            key: rewrite_config_strings(item, replacements)
+            for key, item in value.items()
+        }
+    return value
+
+
+def sealed_config_for_pack(config: dict[str, Any]) -> dict[str, Any]:
+    """Return a portable audit config with no operator-local host paths."""
+    packed = json.loads(json.dumps(config))
+    replacements: dict[str, str] = {}
+
+    def bind_path(path_text: Any, logical: str) -> None:
+        if not isinstance(path_text, str) or path_text == "UNSET":
+            return
+        def bind_one(source: str) -> None:
+            replacements[source] = logical
+            candidate = Path(source)
+            if candidate.is_absolute() and candidate.parent != Path(candidate.anchor):
+                replacements.setdefault(
+                    str(candidate.parent), "HOST-BOUND/operator-directory"
+                )
+        bind_one(path_text)
+        try:
+            bind_one(str(resolve_repo_path(path_text).resolve()))
+        except (OSError, RuntimeError):
+            pass
+
+    if "source_files_manifest" in packed:
+        bind_path(config.get("source_files_manifest"), "SEALED/source_manifest.json")
+        packed["source_files_manifest"] = "SEALED/source_manifest.json"
+
+    entry = packed.get("human_source_contract_validation")
+    if isinstance(entry, dict):
+        source_entry = config["human_source_contract_validation"]
+        bind_path(source_entry.get("review_packet"), HUMAN_REVIEW_SEALED_ROOT)
+        entry["review_packet"] = HUMAN_REVIEW_SEALED_ROOT
+        for path_field, _, filename in HUMAN_REVIEW_FILE_BINDINGS:
+            logical = f"{HUMAN_REVIEW_SEALED_ROOT}/{filename}"
+            bind_path(source_entry.get(path_field), logical)
+            entry[path_field] = logical
+
+    adapter = packed.get("execution_adapter")
+    if isinstance(adapter, dict):
+        source_adapter = config["execution_adapter"]
+        entrypoint = "SEALED/execution_code/execution_adapter_entrypoint"
+        bind_path(source_adapter.get("entrypoint_path"), entrypoint)
+        adapter["entrypoint_path"] = entrypoint
+        runtime = portable_hash_locator(
+            "execution-adapter-runtime", source_adapter.get("runtime_executable_sha256")
+        )
+        bind_path(source_adapter.get("runtime_executable"), runtime)
+        adapter["runtime_executable"] = runtime
+        provider = adapter.get("provider_runtime")
+        source_provider = source_adapter.get("provider_runtime", {})
+        if isinstance(provider, dict):
+            provider_runtime = portable_hash_locator(
+                "provider-runtime", source_provider.get("executable_sha256")
+            )
+            bind_path(source_provider.get("executable"), provider_runtime)
+            provider["executable"] = provider_runtime
+            bind_path(
+                source_provider.get("auth_source_path"),
+                "OPERATOR-SECRET/provider-auth-source",
+            )
+            provider["auth_source_path"] = "OPERATOR-SECRET/provider-auth-source"
+            for field in (
+                "fresh_codex_home_attestation", "process_environment",
+                "shell_environment",
+            ):
+                provider[field] = opaque_config_binding(
+                    source_provider.get(field), f"provider-runtime/{field}"
+                )
+        for field in (
+            "budget_enforcement_attestation", "filesystem_network_process_attestation",
+        ):
+            adapter[field] = opaque_config_binding(
+                source_adapter.get(field), f"execution-adapter/{field}"
+            )
+
+    checker = packed.get("posthoc_checker")
+    if isinstance(checker, dict):
+        source_checker = config["posthoc_checker"]
+        checker_path_bindings = {
+            "driver_path": "SEALED/execution_code/check_target_drift_run.py",
+            "inner_checker_path":
+                "SEALED/execution_code/check_target_drift_inner.py",
+            "isolation_probe_runner_path": (
+                "SEALED/execution_code/record_target_drift_checker_isolation_probe.py"
+            ),
+            "host_launcher_path": (
+                "SEALED/execution_code/launch_target_drift_checker_container.py"
+            ),
+            "host_python_executable": portable_hash_locator(
+                "checker-host-python", source_checker.get("host_python_executable_sha256")
+            ),
+            "container_runtime_executable": portable_hash_locator(
+                "checker-container-runtime",
+                source_checker.get("container_runtime_executable_sha256"),
+            ),
+            "checker_image_recipe":
+                "SEALED/checker_runtime_artifacts/checker-image.Containerfile",
+            "checker_image_sbom":
+                "SEALED/checker_runtime_artifacts/checker-image-sbom.json",
+            "checker_image_build_input_manifest":
+                "SEALED/checker_runtime_artifacts/checker-image-build-input.json",
+            "checker_cache_manifest_artifact":
+                "SEALED/checker_runtime_artifacts/checker-cache-manifest.json",
+            "checker_image_build_log":
+                "SEALED/checker_runtime_artifacts/checker-image-build.log",
+            "controller_entrypoint_source":
+                "SEALED/execution_code/check_target_drift_container_controller.py",
+            "isolation_probe_report": "SEALED/checker_isolation_probe.json",
+            "isolation_probe_artifacts_dir":
+                "SEALED/checker_isolation_probe_artifacts",
+        }
+        for field, logical in checker_path_bindings.items():
+            bind_path(source_checker.get(field), logical)
+            checker[field] = logical
+        for field in (
+            "filesystem_network_process_attestation",
+            "controller_worker_separation_attestation",
+        ):
+            checker[field] = opaque_config_binding(
+                source_checker.get(field), f"posthoc-checker/{field}"
+            )
+
+    packed = rewrite_config_strings(packed, replacements)
+    serialized = json.dumps(packed, sort_keys=True, ensure_ascii=False)
+    for source in replacements:
+        if source and source != "UNSET" and Path(source).is_absolute():
+            require(source not in serialized,
+                    f"portable packed config retains operator path {source}")
+    return packed
+
+
 def normalized_config_for_digest(config: dict[str, Any]) -> dict[str, Any]:
-    normalized = json.loads(json.dumps(config))
+    normalized = sealed_config_for_pack(config)
     normalized["execution_status"] = "frozen_ready"
     normalized["sealed_agent_view"]["aggregate_sha256"] = "UNSET"
-    normalized["source_files_manifest"] = "SEALED/source_manifest.json"
     normalized["unresolved_fields"] = []
     return normalized
 
@@ -138,6 +444,861 @@ def unset_paths(value: Any, prefix: str = "") -> list[str]:
 def resolve_repo_path(path_text: str) -> Path:
     path = Path(path_text)
     return path if path.is_absolute() else ROOT / path
+
+
+def validate_paired_replicates(config: dict[str, Any]) -> list[int]:
+    replicates = config.get("randomization", {}).get("paired_replicates")
+    require(
+        isinstance(replicates, list)
+        and all(type(item) is int for item in replicates)
+        and replicates == [0, 1, 2, 3, 4],
+        "randomization.paired_replicates must equal the ordered integer list "
+        "[0, 1, 2, 3, 4]",
+    )
+    return replicates
+
+
+def validate_method_amendment(
+    config: dict[str, Any], *, require_hashes: bool,
+    amendment_bytes: bytes | None = None,
+    protocol_bytes: bytes | None = None,
+    analysis_script_bytes: bytes | None = None,
+    analysis_test_bytes: bytes | None = None,
+) -> bytes:
+    """Bind the result-free fixed-benchmark method amendment to code and protocol."""
+    require(config.get("suite_id") == "ABRL-TARGET-DRIFT-V2",
+            "method amendment is defined only for target-drift v2")
+    path_text = config.get("method_amendment")
+    require(path_text == METHOD_AMENDMENT_PATH,
+            "method amendment path differs from the frozen pre-execution amendment")
+    path = resolve_repo_path(path_text)
+    if amendment_bytes is None:
+        require(path.is_file() and not path.is_symlink(),
+                "method amendment must be a regular unlinked file")
+        amendment_bytes = path.read_bytes()
+    expected_sha256 = config.get("method_amendment_sha256")
+    require(expected_sha256 == METHOD_AMENDMENT_SHA256,
+            "method_amendment_sha256 differs from the frozen pre-execution hash")
+    if require_hashes:
+        require(sha256_bytes(amendment_bytes) == expected_sha256,
+                "method amendment bytes differ from the frozen config hash")
+    amendment = strict_json_bytes(amendment_bytes, "method amendment")
+    require(
+        amendment.get("schema_version") == 1
+        and amendment.get("suite_id") == config["suite_id"]
+        and amendment.get("amendment_id") == METHOD_AMENDMENT_ID
+        and amendment.get("status")
+        == "hash_bound_pre_execution_method_amendment_results_absent",
+        "method amendment identity or result-free status differs",
+    )
+    timing = amendment.get("timing_and_claim_boundary", {})
+    require(
+        timing.get("primary_model_outcomes_observed") is False
+        and timing.get("external_comparator_outcomes_observed") is False
+        and timing.get("provider_calls_for_evaluation_observed") is False
+        and timing.get("human_expert_source_review_complete") is False
+        and timing.get("amendment_is_evaluation_result") is False,
+        "method amendment timing boundary overstates observed results",
+    )
+    fixed_method = amendment.get("fixed_method", {})
+    analysis = config.get("analysis", {})
+    require(
+        analysis.get("primary_estimand") == fixed_method.get("primary_estimand")
+        and analysis.get("primary_pairing_key")
+        == fixed_method.get("primary_pairing_key")
+        and analysis.get("primary_interval_method_id")
+        == fixed_method.get("primary_interval_method_id")
+        and analysis.get("primary_interval") == fixed_method.get("primary_interval")
+        and analysis.get("primary_success_rule")
+        == fixed_method.get("primary_success_rule")
+        and analysis.get("primary_sensitivity_analyses")
+        == fixed_method.get("primary_sensitivity_analyses")
+        and analysis.get("secondary_pairwise_test")
+        == fixed_method.get("secondary_pairwise_test")
+        and analysis.get("secondary_multiplicity")
+        == fixed_method.get("secondary_multiplicity")
+        ,
+        "execution analysis text differs from the fixed-benchmark amendment",
+    )
+    bindings = amendment.get("bindings", {})
+    protocol_binding = bindings.get("primary_protocol", {})
+    script_binding = bindings.get("analysis_script", {})
+    test_binding = bindings.get("analysis_tests", {})
+    require(
+        protocol_binding.get("path") == config.get("protocol")
+        and script_binding.get("path") == analysis.get("script")
+        and test_binding.get("path") == analysis.get("test_script"),
+        "method amendment protocol, analysis-script, or analysis-test path binding differs",
+    )
+    if protocol_bytes is None:
+        protocol_path = resolve_repo_path(config["protocol"])
+        require(protocol_path.is_file(), "method amendment protocol binding is missing")
+        protocol_bytes = protocol_path.read_bytes()
+    if analysis_script_bytes is None:
+        script_path = resolve_repo_path(analysis["script"])
+        require(script_path.is_file(), "method amendment analysis script is missing")
+        analysis_script_bytes = script_path.read_bytes()
+    if analysis_test_bytes is None:
+        test_path = resolve_repo_path(analysis["test_script"])
+        require(test_path.is_file(), "method amendment analysis test is missing")
+        analysis_test_bytes = test_path.read_bytes()
+    require(protocol_binding.get("sha256") == sha256_bytes(protocol_bytes),
+            "method amendment protocol-byte binding differs")
+    require(script_binding.get("sha256") == sha256_bytes(analysis_script_bytes),
+            "method amendment analysis-script-byte binding differs")
+    require(test_binding.get("sha256") == sha256_bytes(analysis_test_bytes),
+            "method amendment analysis-test-byte binding differs")
+    configured_script_hash = analysis.get("script_sha256")
+    if configured_script_hash != "UNSET":
+        require(configured_script_hash == script_binding.get("sha256"),
+                "execution config and method amendment name different analysis code")
+    require(analysis.get("test_script_sha256") == test_binding.get("sha256"),
+            "execution config and method amendment name different analysis tests")
+    return amendment_bytes
+
+
+def packed_method_amendment_bytes(
+    pack_dir: Path, config: dict[str, Any],
+    execution_code_bytes: dict[str, bytes],
+) -> bytes:
+    path = pack_dir / "method-amendment.json"
+    require(path.is_file() and not path.is_symlink(),
+            "sealed pack method amendment is missing or linked")
+    require(
+        "analyze_target_drift_execution.py" in execution_code_bytes
+        and "test_target_drift_analysis.py" in execution_code_bytes,
+        "sealed pack omits analysis code bound by the method amendment",
+    )
+    return validate_method_amendment(
+        config,
+        require_hashes=True,
+        amendment_bytes=path.read_bytes(),
+        protocol_bytes=(pack_dir / "protocol.json").read_bytes(),
+        analysis_script_bytes=execution_code_bytes[
+            "analyze_target_drift_execution.py"
+        ],
+        analysis_test_bytes=execution_code_bytes["test_target_drift_analysis.py"],
+    )
+
+
+def plain_unlinked_directory(path: Path, label: str) -> Path:
+    require(path.is_absolute() and path.exists() and not path.is_symlink(),
+            f"{label} must be an existing absolute nonlink directory")
+    info = path.lstat()
+    reparse = bool(getattr(info, "st_file_attributes", 0) & 0x400)
+    require(stat.S_ISDIR(info.st_mode) and not reparse,
+            f"{label} must be a plain directory")
+    return path
+
+
+def require_sha256(value: Any, label: str) -> str:
+    require(isinstance(value, str) and re.fullmatch(r"[0-9a-f]{64}", value) is not None,
+            f"{label} must be a lowercase SHA-256")
+    return value
+
+
+def parse_utc_seconds(value: Any, label: str) -> datetime:
+    require(isinstance(value, str) and re.fullmatch(
+        r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z", value
+    ) is not None, f"{label} must be UTC RFC3339 seconds ending in Z")
+    try:
+        return datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ").replace(
+            tzinfo=timezone.utc
+        )
+    except ValueError:
+        require(False, f"{label} is not a valid UTC timestamp")
+    raise AssertionError("unreachable")
+
+
+def validate_external_trust_anchor_contract(contract: dict[str, Any]) -> None:
+    expected_top = {
+        "schema_version", "contract_id", "status", "required_anchor_status",
+        "required_public_repository_url_policy", "required_public_ref",
+        "required_anchor_claim_boundary", "claim_boundary",
+        "required_anchor_fields", "anchor_template",
+    }
+    require(set(contract) == expected_top,
+            "external signer trust-anchor contract schema differs")
+    boundary = contract.get("claim_boundary")
+    require(
+        contract.get("schema_version") == 1
+        and contract.get("contract_id") == TRUST_ANCHOR_CONTRACT_ID
+        and contract.get("status")
+        == "contract_frozen_real_anchor_unset_production_ineligible"
+        and contract.get("required_anchor_status")
+        == TRUST_ANCHOR_PRODUCTION_STATUS
+        and contract.get("required_public_repository_url_policy")
+        == TRUST_ANCHOR_PUBLIC_REPOSITORY_URL_POLICY
+        and contract.get("required_public_ref") == TRUST_ANCHOR_PUBLIC_REF
+        and contract.get("required_anchor_claim_boundary")
+        == TRUST_ANCHOR_CLAIM_BOUNDARY
+        and boundary == TRUST_ANCHOR_CONTRACT_BOUNDARY,
+        "external signer trust-anchor contract identity or claim boundary differs",
+    )
+    require(set(contract["required_anchor_fields"]) == TRUST_ANCHOR_REQUIRED_FIELDS
+            and len(contract["required_anchor_fields"])
+            == len(TRUST_ANCHOR_REQUIRED_FIELDS),
+            "external signer trust-anchor required-field set differs")
+    template = contract.get("anchor_template")
+    require(isinstance(template, dict) and set(template) == TRUST_ANCHOR_REQUIRED_FIELDS,
+            "external signer trust-anchor template schema differs")
+    require(
+        template.get("schema_version") == 1
+        and template.get("contract_id") == TRUST_ANCHOR_CONTRACT_ID
+        and all(
+            value == "UNSET"
+            for key, value in template.items()
+            if key not in {"schema_version", "contract_id"}
+        ),
+        "external signer trust-anchor template must contain no real anchor material",
+    )
+
+
+def git_command(
+    args: list[str], *, cwd: Path, input_bytes: bytes | None = None,
+    label: str,
+) -> bytes:
+    executable = shutil.which("git")
+    require(executable is not None, "Git is required for trust-anchor validation")
+    process = subprocess.run(
+        [executable, *args], cwd=cwd, input=input_bytes,
+        stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=False,
+    )
+    require(process.returncode == 0, f"{label} failed")
+    return process.stdout
+
+
+def validate_git_object_proof(
+    proof_bytes: bytes, anchor: dict[str, Any], anchor_bytes: bytes,
+    orchestrator_commit: str,
+) -> None:
+    """Verify commit ancestry and path membership using only packed Git objects."""
+    anchor_commit = anchor["anchor_git_commit"]
+    with tempfile.TemporaryDirectory(prefix="abrl-anchor-proof-") as directory:
+        repository = Path(directory) / "proof.git"
+        git_command(["init", "--bare", "-q", str(repository)], cwd=Path(directory),
+                    label="initializing isolated trust-anchor proof repository")
+        pack_root = repository / "objects" / "pack"
+        pack_root.mkdir(parents=True, exist_ok=True)
+        pack_path = pack_root / "anchor-proof.pack"
+        pack_path.write_bytes(proof_bytes)
+        # index-pack verifies the pack checksum and every object id.  We omit
+        # unrelated commit trees intentionally and enforce the exact admissible
+        # object inventory below, so repository-wide fsck/--strict is inapplicable.
+        git_command(["index-pack", str(pack_path)], cwd=repository,
+                    label="indexing trust-anchor Git object proof")
+        index_path = pack_path.with_suffix(".idx")
+        require(index_path.is_file(), "trust-anchor Git object proof index is missing")
+        inventory_output = git_command(
+            ["verify-pack", "-v", str(index_path)], cwd=repository,
+            label="inventorying trust-anchor Git object proof",
+        ).decode("utf-8", errors="strict")
+        inventory: dict[str, str] = {}
+        for line in inventory_output.splitlines():
+            fields = line.split()
+            if (len(fields) >= 5 and re.fullmatch(r"[0-9a-f]{40}", fields[0])
+                    and fields[1] in {"commit", "tree", "blob", "tag"}):
+                require(fields[0] not in inventory,
+                        "trust-anchor Git object proof repeats an object")
+                inventory[fields[0]] = fields[1]
+        require(inventory, "trust-anchor Git object proof contains no objects")
+        require(anchor_commit in inventory and inventory[anchor_commit] == "commit",
+                "trust-anchor proof omits the anchor commit")
+        require(orchestrator_commit in inventory
+                and inventory[orchestrator_commit] == "commit",
+                "trust-anchor proof omits the execution commit")
+        require("tag" not in set(inventory.values()),
+                "trust-anchor proof must not include tag objects")
+
+        commit_parents: dict[str, list[str]] = {}
+        commit_trees: dict[str, str] = {}
+        for object_id, object_type in inventory.items():
+            if object_type != "commit":
+                continue
+            raw = git_command(["cat-file", "commit", object_id], cwd=repository,
+                              label="reading trust-anchor proof commit")
+            header = raw.split(b"\n\n", 1)[0].decode("utf-8", errors="strict")
+            parents: list[str] = []
+            tree_id = ""
+            for line in header.splitlines():
+                if line.startswith("tree "):
+                    tree_id = line[5:]
+                elif line.startswith("parent "):
+                    parents.append(line[7:])
+            require(re.fullmatch(r"[0-9a-f]{40}", tree_id) is not None,
+                    "trust-anchor proof commit has no canonical tree id")
+            require(all(re.fullmatch(r"[0-9a-f]{40}", item) for item in parents),
+                    "trust-anchor proof commit has a malformed parent id")
+            commit_parents[object_id] = parents
+            commit_trees[object_id] = tree_id
+
+        reachable: set[str] = set()
+        frontier = [orchestrator_commit]
+        while frontier:
+            current = frontier.pop()
+            if current in reachable:
+                continue
+            require(current in commit_parents,
+                    "trust-anchor proof ancestry has a missing parent commit")
+            reachable.add(current)
+            frontier.extend(commit_parents[current])
+        require(anchor_commit in reachable and anchor_commit != orchestrator_commit,
+                "trust-anchor commit must be a strict ancestor of execution commit")
+        require(
+            {item for item, kind in inventory.items() if kind == "commit"} == reachable,
+            "trust-anchor proof contains unrelated or unreachable commit objects",
+        )
+
+        repository_path = PurePosixPath(anchor["anchor_repository_path"])
+        tree_id = commit_trees[anchor_commit]
+        required_noncommit: set[str] = {tree_id}
+        parts = repository_path.parts
+        require(bool(parts), "trust-anchor repository path is empty")
+        for index, part in enumerate(parts):
+            output = git_command(
+                ["ls-tree", "-z", tree_id, "--", part], cwd=repository,
+                label="walking trust-anchor proof tree",
+            )
+            records = [item for item in output.split(b"\0") if item]
+            require(len(records) == 1,
+                    "trust-anchor proof path is absent or ambiguous")
+            metadata, name = records[0].split(b"\t", 1)
+            fields = metadata.decode("ascii").split()
+            require(name.decode("utf-8", errors="strict") == part
+                    and len(fields) == 3,
+                    "trust-anchor proof tree entry differs")
+            _, object_type, next_id = fields
+            require(re.fullmatch(r"[0-9a-f]{40}", next_id) is not None,
+                    "trust-anchor proof tree entry has a malformed object id")
+            required_noncommit.add(next_id)
+            if index < len(parts) - 1:
+                require(object_type == "tree",
+                        "trust-anchor proof path parent is not a tree")
+                tree_id = next_id
+            else:
+                require(object_type == "blob",
+                        "trust-anchor proof path target is not a blob")
+                blob = git_command(["cat-file", "blob", next_id], cwd=repository,
+                                   label="reading trust-anchor proof blob")
+                require(blob == anchor_bytes,
+                        "trust-anchor proof blob differs from packed anchor bytes")
+        actual_noncommit = {
+            item for item, kind in inventory.items() if kind != "commit"
+        }
+        require(actual_noncommit == required_noncommit,
+                "trust-anchor proof contains unrelated tree or blob objects")
+
+
+def validate_live_git_anchor(
+    anchor: dict[str, Any], anchor_bytes: bytes, orchestrator_commit: str,
+) -> None:
+    repository_path = anchor["anchor_repository_path"]
+    relative = Path(repository_path)
+    require(not relative.is_absolute()
+            and PurePosixPath(repository_path).as_posix() == repository_path
+            and all(part not in {"", ".", ".."}
+                    for part in PurePosixPath(repository_path).parts),
+            "trust-anchor repository path must be canonical repository-relative POSIX")
+    current_path = ROOT.resolve()
+    for index, part in enumerate(PurePosixPath(repository_path).parts):
+        current_path = current_path / part
+        require(current_path.exists() and not current_path.is_symlink(),
+                "tracked trust-anchor path is missing or crosses a symlink")
+        info = current_path.lstat()
+        require(not bool(getattr(info, "st_file_attributes", 0) & 0x400),
+                "tracked trust-anchor path crosses a reparse point")
+        if index < len(PurePosixPath(repository_path).parts) - 1:
+            require(stat.S_ISDIR(info.st_mode),
+                    "tracked trust-anchor parent is not a directory")
+        else:
+            require(stat.S_ISREG(info.st_mode) and info.st_nlink == 1,
+                    "tracked trust-anchor must be one unlinked regular file")
+    anchor_commit = anchor["anchor_git_commit"]
+    origin_url = git_command(["remote", "get-url", "origin"], cwd=ROOT,
+                             label="resolving public trust-anchor remote").decode(
+                                 "utf-8", errors="strict"
+                             ).strip()
+    require(origin_url == anchor["anchor_public_repository_url"],
+            "trust-anchor origin differs from the preregistered public repository")
+    remote_line = git_command(
+        ["ls-remote", "--exit-code", "origin", TRUST_ANCHOR_PUBLIC_REF], cwd=ROOT,
+        label="checking the live public trust-anchor ref",
+    ).decode("ascii", errors="strict").strip().splitlines()
+    require(len(remote_line) == 1,
+            "public trust-anchor ref lookup is absent or ambiguous")
+    remote_fields = remote_line[0].split()
+    require(len(remote_fields) == 2
+            and re.fullmatch(r"[0-9a-f]{40}", remote_fields[0]) is not None
+            and remote_fields[1] == TRUST_ANCHOR_PUBLIC_REF,
+            "public trust-anchor ref lookup is malformed")
+    public_tip = remote_fields[0]
+    git_command(["cat-file", "-e", f"{anchor_commit}^{{commit}}"], cwd=ROOT,
+                label="resolving trust-anchor commit")
+    git_command(["cat-file", "-e", f"{orchestrator_commit}^{{commit}}"], cwd=ROOT,
+                label="resolving execution commit")
+    require(anchor_commit != orchestrator_commit,
+            "trust-anchor commit must predate the execution commit")
+    git_command(["merge-base", "--is-ancestor", anchor_commit, orchestrator_commit],
+                cwd=ROOT, label="checking trust-anchor commit ancestry")
+    git_command(["cat-file", "-e", f"{public_tip}^{{commit}}"], cwd=ROOT,
+                label="resolving live public trust-anchor tip")
+    git_command(["merge-base", "--is-ancestor", anchor_commit, public_tip], cwd=ROOT,
+                label="checking anchor reachability from the live public ref")
+    git_command(["ls-files", "--error-unmatch", "--", repository_path], cwd=ROOT,
+                label="checking tracked trust-anchor path")
+    frozen_bytes = git_command(
+        ["show", f"{anchor_commit}:{repository_path}"], cwd=ROOT,
+        label="reading trust-anchor bytes at the frozen commit",
+    )
+    require(frozen_bytes == anchor_bytes,
+            "working trust-anchor bytes differ from the named frozen commit")
+    commit_seconds_text = git_command(
+        ["show", "-s", "--format=%ct", anchor_commit], cwd=ROOT,
+        label="reading trust-anchor commit timestamp",
+    ).decode("ascii").strip()
+    require(commit_seconds_text.isdigit(),
+            "trust-anchor Git commit timestamp is malformed")
+    commit_time = datetime.fromtimestamp(int(commit_seconds_text), tz=timezone.utc)
+    registered_at = parse_utc_seconds(
+        anchor["anchor_registered_at_utc"], "anchor.anchor_registered_at_utc"
+    )
+    require(commit_time <= registered_at + timedelta(minutes=5),
+            "trust-anchor Git timestamp is later than its registration record")
+
+
+def validate_external_trust_anchor(
+    *, contract_bytes: bytes, anchor_bytes: bytes, proof_bytes: bytes,
+    registry_bytes: bytes, allowed_signers_bytes_value: bytes,
+    receipt_bytes: bytes, orchestrator_commit: str,
+    source_anchor_path: str | None,
+    allow_excluded_unanchored_fixture: bool,
+) -> bool:
+    """Return True only for a prior public Git anchor; fixtures stay ineligible."""
+    contract = strict_json_bytes(contract_bytes, "external trust-anchor contract")
+    validate_external_trust_anchor_contract(contract)
+    anchor = strict_json_bytes(anchor_bytes, "external trust anchor")
+    registry = strict_json_bytes(registry_bytes, "external role registry")
+    receipt = strict_json_bytes(receipt_bytes, "external verifier receipt")
+    require(set(anchor) == TRUST_ANCHOR_REQUIRED_FIELDS,
+            "external trust-anchor schema differs")
+    require(anchor.get("schema_version") == 1
+            and anchor.get("contract_id") == TRUST_ANCHOR_CONTRACT_ID,
+            "external trust-anchor identity differs")
+    require(isinstance(anchor.get("anchor_id"), str)
+            and anchor["anchor_id"] not in {"", "UNSET"},
+            "external trust-anchor id is missing")
+    require(
+        anchor.get("review_started_before_anchor") is False
+        and anchor.get("evaluation_outcomes_observed_before_anchor") is False
+        and anchor.get("benchmark_execution_complete_before_anchor") is False,
+        "external trust anchor is not preregistered and result-free",
+    )
+    require(anchor.get("claim_boundary") == TRUST_ANCHOR_CLAIM_BOUNDARY,
+            "external trust-anchor claim boundary differs")
+    require_sha256(anchor.get("role_registry_bytes_sha256"),
+                   "anchor.role_registry_bytes_sha256")
+    require_sha256(anchor.get("role_registry_canonical_sha256"),
+                   "anchor.role_registry_canonical_sha256")
+    require_sha256(anchor.get("allowed_signers_bytes_sha256"),
+                   "anchor.allowed_signers_bytes_sha256")
+    require_sha256(anchor.get("public_escrow_receipt_sha256"),
+                   "anchor.public_escrow_receipt_sha256")
+    require(anchor["role_registry_bytes_sha256"] == sha256_bytes(registry_bytes),
+            "trust anchor does not bind exact role-registry bytes")
+    require(anchor["role_registry_canonical_sha256"]
+            == sha256_bytes(external_contract_review.canonical_bytes(registry)),
+            "trust anchor does not bind canonical role-registry bytes")
+    require(anchor["allowed_signers_bytes_sha256"]
+            == sha256_bytes(allowed_signers_bytes_value),
+            "trust anchor does not bind allowed-signers bytes")
+    signers = registry.get("signers")
+    require(isinstance(signers, list), "external role registry signers are missing")
+    verifier_entries = [
+        item for item in signers
+        if isinstance(item, dict) and item.get("slot") == "external_verifier"
+    ]
+    require(len(verifier_entries) == 1,
+            "external role registry must contain one external verifier")
+    verifier = verifier_entries[0]
+    require(
+        anchor["external_verifier_principal"] == verifier.get("principal")
+        and anchor["external_verifier_public_key_fingerprint"]
+        == verifier.get("public_key_fingerprint"),
+        "trust anchor external-verifier identity or fingerprint differs",
+    )
+    require(
+        anchor["public_escrow_receipt_locator"]
+        == receipt.get("public_escrow_reference")
+        and anchor["public_escrow_receipt_sha256"]
+        == receipt.get("public_escrow_receipt_sha256"),
+        "trust anchor public escrow locator or hash differs",
+    )
+    registered_at = parse_utc_seconds(
+        anchor["anchor_registered_at_utc"], "anchor.anchor_registered_at_utc"
+    )
+    require(anchor["anchor_registered_at_utc"] == registry.get("registered_at_utc"),
+            "trust-anchor and role-registry registration times differ")
+    verified_at = parse_utc_seconds(
+        receipt.get("verified_at_utc"), "receipt.verified_at_utc"
+    )
+    require(registered_at < verified_at,
+            "trust anchor must predate external verification")
+
+    if anchor.get("status") == TRUST_ANCHOR_EXCLUDED_STATUS:
+        require(allow_excluded_unanchored_fixture,
+                "excluded unanchored signer fixture is not production evidence")
+        require(anchor.get("anchor_git_commit") == "UNSET"
+                and anchor.get("anchor_repository_path") == "UNSET"
+                and anchor.get("anchor_public_repository_url") == "UNSET"
+                and anchor.get("anchor_public_ref") == "UNSET"
+                and anchor.get("anchor_public_commit_locator") == "UNSET"
+                and proof_bytes == TRUST_ANCHOR_EXCLUDED_PROOF,
+                "excluded trust-anchor fixture must carry no Git provenance claim")
+        return False
+
+    require(anchor.get("status") == TRUST_ANCHOR_PRODUCTION_STATUS,
+            "external signer trust anchor has no production-frozen status")
+    require(re.fullmatch(r"[0-9a-f]{40}", anchor.get("anchor_git_commit", ""))
+            is not None, "trust-anchor commit must be a lowercase full Git commit")
+    require(re.fullmatch(r"[0-9a-f]{40}", orchestrator_commit or "") is not None,
+            "execution commit must be a lowercase full Git commit")
+    public_repository = anchor.get("anchor_public_repository_url")
+    require(
+        isinstance(public_repository, str)
+        and re.fullmatch(r"https://github\.com/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+\.git",
+                         public_repository) is not None
+        and "@" not in public_repository
+        and anchor.get("anchor_public_ref") == TRUST_ANCHOR_PUBLIC_REF
+        and anchor.get("anchor_public_commit_locator")
+        == public_repository[:-4] + "/commit/" + anchor["anchor_git_commit"],
+        "trust-anchor public repository, ref, or commit locator differs",
+    )
+    require(source_anchor_path is None or source_anchor_path == anchor["anchor_repository_path"],
+            "configured trust-anchor path differs from its tracked repository path")
+    repository_path = anchor["anchor_repository_path"]
+    require(
+        isinstance(repository_path, str)
+        and repository_path == PurePosixPath(repository_path).as_posix()
+        and not PurePosixPath(repository_path).is_absolute()
+        and bool(PurePosixPath(repository_path).parts)
+        and all(part not in {"", ".", ".."}
+                for part in PurePosixPath(repository_path).parts),
+        "trust-anchor repository path must be canonical repository-relative POSIX",
+    )
+    validate_git_object_proof(proof_bytes, anchor, anchor_bytes, orchestrator_commit)
+    if source_anchor_path is not None:
+        validate_live_git_anchor(anchor, anchor_bytes, orchestrator_commit)
+    return True
+
+
+def validate_human_source_contract_config_identity(entry: dict[str, Any]) -> None:
+    require(set(entry) == HUMAN_REVIEW_CONFIG_FIELDS,
+            "human-review execution-config schema differs")
+    expected_paths = {
+        "protocol": "evaluation/target-drift-v2/human-source-contract-review-protocol.json",
+        "self_attested_prepare_script":
+            "tools/prepare_target_drift_human_contract_review.py",
+        "self_attested_validator_script":
+            "tools/validate_target_drift_human_contract_review.py",
+        "self_attested_validator_test":
+            "tools/test_target_drift_human_contract_review.py",
+        "execution_finalizer": "tools/finalize_target_drift_config.py",
+        "external_protocol": (
+            "evaluation/target-drift-v2/"
+            "human-source-contract-external-verification-protocol.json"
+        ),
+        "external_trust_anchor_contract": (
+            "evaluation/target-drift-v2/"
+            "human-source-contract-external-trust-anchor-contract.json"
+        ),
+        "external_validator_script":
+            "tools/validate_target_drift_human_contract_external_verification.py",
+        "external_validator_test":
+            "tools/test_target_drift_human_contract_external_verification.py",
+    }
+    require(all(entry.get(field) == value for field, value in expected_paths.items()),
+            "human-review public protocol or validator-code path differs")
+    require(
+        entry.get("required_self_attested_status")
+        == human_contract_review.SELF_ATTESTED_STATUS
+        and entry.get("required_external_status")
+        == external_contract_review.COMPLETED_STATUS
+        and entry.get("required_external_trust_anchor_status")
+        == "public_pre_outcome_signer_registry_anchor_frozen"
+        and entry.get("combined_prerequisite_status")
+        == "human_source_contract_prerequisite_satisfied"
+        and entry.get("evaluation_outcomes_observed_before_validation") is False,
+        "human-review combined gate identity or result-free boundary differs",
+    )
+
+
+def validate_public_human_review_protocols(entry: dict[str, Any]) -> dict[str, bytes]:
+    self_protocol_path = regular_unlinked_file(
+        resolve_repo_path(entry["protocol"]), "self-attested human-review protocol",
+        require_executable=False,
+    )
+    external_protocol_path = regular_unlinked_file(
+        resolve_repo_path(entry["external_protocol"]), "external human-review protocol",
+        require_executable=False,
+    )
+    trust_anchor_contract_path = regular_unlinked_file(
+        resolve_repo_path(entry["external_trust_anchor_contract"]),
+        "external signer trust-anchor contract", require_executable=False,
+    )
+    # These calls use duplicate-key-rejecting loaders and enforce the frozen,
+    # result-free protocol identities rather than trusting config labels.
+    human_contract_review.prepare.validate_inputs(protocol_path=self_protocol_path)
+    external_contract_review.validate_protocol(
+        external_contract_review.load(external_protocol_path)
+    )
+    validate_external_trust_anchor_contract(
+        strict_json_bytes(
+            trust_anchor_contract_path.read_bytes(),
+            "external signer trust-anchor contract",
+        )
+    )
+    return {
+        "self-review-protocol.json": self_protocol_path.read_bytes(),
+        "external-verification-protocol.json": external_protocol_path.read_bytes(),
+        "external-trust-anchor-contract.json": trust_anchor_contract_path.read_bytes(),
+    }
+
+
+def require_packed_human_paths(config: dict[str, Any]) -> None:
+    entry = config["human_source_contract_validation"]
+    require(entry.get("review_packet") == HUMAN_REVIEW_SEALED_ROOT,
+            "packed human-review packet path is not the sealed logical path")
+    for path_field, _, filename in HUMAN_REVIEW_FILE_BINDINGS:
+        require(
+            entry.get(path_field) == f"{HUMAN_REVIEW_SEALED_ROOT}/{filename}",
+            f"packed human-review path is not sealed for {path_field}",
+        )
+
+
+def validate_packed_human_source_contract_review(
+    pack_dir: Path, config: dict[str, Any], *, require_combined_record: bool = True,
+    allow_excluded_unanchored_fixture: bool = False,
+) -> dict[str, bytes]:
+    """Rebuild both review layers and the Git proof from sealed pack bytes."""
+    pack_dir = plain_unlinked_directory(
+        pack_dir.absolute(), "sealed human-review pack root"
+    )
+    entry = config.get("human_source_contract_validation")
+    require(isinstance(entry, dict),
+            "v2 config must define human_source_contract_validation")
+    validate_human_source_contract_config_identity({
+        **entry,
+        # Public-path identity is recorded by hashes in packed configs; restore
+        # only the fixed public code/protocol locators for this identity check.
+        "protocol": "evaluation/target-drift-v2/human-source-contract-review-protocol.json",
+        "external_protocol": (
+            "evaluation/target-drift-v2/"
+            "human-source-contract-external-verification-protocol.json"
+        ),
+        "external_trust_anchor_contract": (
+            "evaluation/target-drift-v2/"
+            "human-source-contract-external-trust-anchor-contract.json"
+        ),
+    })
+    require_packed_human_paths(config)
+    review_root = plain_unlinked_directory(
+        (pack_dir / "human_source_contract_review").absolute(),
+        "sealed human-review evidence root",
+    )
+    children = list(review_root.iterdir())
+    require(all(path.is_file() and not path.is_symlink() for path in children),
+            "sealed human-review evidence contains a non-file or linked child")
+    require({path.name for path in children} == HUMAN_REVIEW_EXPECTED_FILES,
+            "sealed human source-contract review file set differs")
+    paths = {
+        name: regular_unlinked_file(
+            review_root / name, f"sealed human-review {name}", require_executable=False
+        )
+        for name in HUMAN_REVIEW_EXPECTED_FILES
+    }
+    evidence = {name: path.read_bytes() for name, path in paths.items()}
+    for _, hash_field, filename in HUMAN_REVIEW_FILE_BINDINGS:
+        require(entry.get(hash_field) == sha256_bytes(evidence[filename]),
+                f"sealed human-review hash mismatch for {filename}")
+    require(
+        entry.get("review_packet_manifest_sha256")
+        == sha256_bytes(evidence["packet-manifest.json"]),
+        "sealed human-review packet-manifest hash differs",
+    )
+    challenge_path = regular_unlinked_file(
+        (pack_dir / "operator_challenges.json").absolute(),
+        "sealed operator challenges", require_executable=False,
+    )
+    paired_path = regular_unlinked_file(
+        (pack_dir / "paired_requirements.json").absolute(),
+        "sealed paired requirements", require_executable=False,
+    )
+    rebuilt_self = human_contract_review.validate(
+        review_root,
+        paths["reviewer-a.json"], paths["reviewer-b.json"],
+        paths["adjudication.json"],
+        protocol_path=paths["self-review-protocol.json"],
+        challenge_path=challenge_path, paired_path=paired_path,
+    )
+    supplied_self = human_contract_review.load(paths["self-attested-completion.json"])
+    require(supplied_self == rebuilt_self,
+            "self-attested completion differs from rebuilt packed review evidence")
+    require(
+        rebuilt_self.get("status") == entry["required_self_attested_status"]
+        and rebuilt_self.get("benchmark_amendment_required") is False
+        and rebuilt_self.get("benchmark_contract_ready_after_external_verification") is True
+        and rebuilt_self.get("machine_checked_all_case_contracts_match_frozen_benchmark")
+        is True
+        and rebuilt_self.get("external_identity_qualification_verification_required") is True
+        and rebuilt_self.get("independent_human_expert_validation_complete") is False
+        and rebuilt_self.get("production_execution_eligible") is False
+        and rebuilt_self.get("evaluation_outcomes_observed") is False
+        and rebuilt_self.get("benchmark_execution_complete") is False,
+        "self-attested review is amended, overstated, post-outcome, or otherwise ineligible",
+    )
+    rebuilt_external = external_contract_review.validate(
+        paths["external-verification-protocol.json"], review_root,
+        paths["reviewer-a.json"], paths["reviewer-a.sig"],
+        paths["reviewer-b.json"], paths["reviewer-b.sig"],
+        paths["adjudication.json"], paths["adjudication.sig"],
+        paths["self-attested-completion.json"], paths["role-registry.json"],
+        paths["allowed_signers"], paths["external-receipt.json"],
+        paths["external-receipt.sig"],
+        review_protocol_path=paths["self-review-protocol.json"],
+        challenge_path=challenge_path, paired_path=paired_path,
+    )
+    supplied_external = external_contract_review.load(paths["external-attestation.json"])
+    require(supplied_external == rebuilt_external,
+            "external attestation differs from rebuilt packed signed evidence")
+    require(
+        rebuilt_external.get("status") == entry["required_external_status"]
+        and rebuilt_external.get("cryptographically_proven_human") is False
+        and rebuilt_external.get("production_execution_eligible") is False
+        and rebuilt_external.get("production_execution_eligible_from_this_layer_alone")
+        is False
+        and rebuilt_external.get("production_trust_anchor_verified") is False
+        and rebuilt_external.get("evaluation_outcomes_observed") is False
+        and rebuilt_external.get("benchmark_execution_complete") is False,
+        "external signed attestation overstates its evidence or is post-outcome",
+    )
+    production_anchor = validate_external_trust_anchor(
+        contract_bytes=evidence["external-trust-anchor-contract.json"],
+        anchor_bytes=evidence["external-trust-anchor.json"],
+        proof_bytes=evidence["external-trust-anchor-git-object-proof.pack"],
+        registry_bytes=evidence["role-registry.json"],
+        allowed_signers_bytes_value=evidence["allowed_signers"],
+        receipt_bytes=evidence["external-receipt.json"],
+        orchestrator_commit=config.get("orchestrator_commit", ""),
+        source_anchor_path=None,
+        allow_excluded_unanchored_fixture=allow_excluded_unanchored_fixture,
+    )
+    if production_anchor and require_combined_record:
+        require(entry.get("combined_prerequisite_satisfied") is True,
+                "execution layer did not record the combined human prerequisite")
+    else:
+        require(entry.get("combined_prerequisite_satisfied") is False
+                or entry.get("combined_prerequisite_satisfied") == "UNSET",
+                "combined human prerequisite was claimed before both layers validated")
+    return evidence
+
+
+def validate_human_source_contract_review(
+    config: dict[str, Any], *, require_completion: bool,
+    require_combined_record: bool = True,
+    allow_excluded_unanchored_fixture: bool = False,
+) -> dict[str, bytes]:
+    """Validate both human-review layers and return the exact validated bytes."""
+    entry = config.get("human_source_contract_validation")
+    require(isinstance(entry, dict),
+            "v2 config must define human_source_contract_validation")
+    validate_human_source_contract_config_identity(entry)
+    public_protocols = validate_public_human_review_protocols(entry)
+    if not require_completion:
+        evidence_path_fields = ["review_packet"] + [
+            item[0] for item in HUMAN_REVIEW_FILE_BINDINGS
+            if item[0] not in {
+                "protocol", "external_protocol", "external_trust_anchor_contract",
+            }
+        ]
+        require(all(entry.get(field) == "UNSET" for field in evidence_path_fields),
+                "unrun template must not prefill human-review evidence paths")
+        require(entry.get("combined_prerequisite_satisfied") == "UNSET",
+                "unrun template must not claim the combined human prerequisite")
+        return public_protocols
+
+    if require_combined_record:
+        require(entry.get("combined_prerequisite_satisfied") is True,
+                "preseal requires the execution-layer combined human prerequisite")
+    else:
+        require(entry.get("combined_prerequisite_satisfied") is False
+                or entry.get("combined_prerequisite_satisfied") == "UNSET",
+                "combined human prerequisite was claimed before both layers validated")
+    packet = plain_unlinked_directory(
+        resolve_repo_path(entry["review_packet"]), "human-review packet"
+    )
+    source_paths: dict[str, Path] = {
+        "packet-manifest.json": packet / "packet-manifest.json",
+        "reviewer-template.json": packet / "reviewer-template.json",
+        "adjudication-template.json": packet / "adjudication-template.json",
+    }
+    for path_field, _, filename in HUMAN_REVIEW_FILE_BINDINGS:
+        source_paths[filename] = resolve_repo_path(entry[path_field])
+    evidence: dict[str, bytes] = {}
+    for name, path in source_paths.items():
+        regular = regular_unlinked_file(
+            path, f"human-review source {name}", require_executable=False
+        )
+        evidence[name] = regular.read_bytes()
+    for _, hash_field, filename in HUMAN_REVIEW_FILE_BINDINGS:
+        require(entry.get(hash_field) == sha256_bytes(evidence[filename]),
+                f"human-review source hash mismatch for {filename}")
+    require(
+        entry.get("review_packet_manifest_sha256")
+        == sha256_bytes(evidence["packet-manifest.json"]),
+        "human-review packet-manifest hash differs",
+    )
+    production_anchor = validate_external_trust_anchor(
+        contract_bytes=evidence["external-trust-anchor-contract.json"],
+        anchor_bytes=evidence["external-trust-anchor.json"],
+        proof_bytes=evidence["external-trust-anchor-git-object-proof.pack"],
+        registry_bytes=evidence["role-registry.json"],
+        allowed_signers_bytes_value=evidence["allowed_signers"],
+        receipt_bytes=evidence["external-receipt.json"],
+        orchestrator_commit=config.get("orchestrator_commit", ""),
+        source_anchor_path=entry["external_trust_anchor"],
+        allow_excluded_unanchored_fixture=allow_excluded_unanchored_fixture,
+    )
+    if require_combined_record:
+        require(production_anchor,
+                "combined human prerequisite requires a prior public Git trust anchor")
+
+    # Validate an immutable staged snapshot. The returned bytes are exactly the
+    # bytes that both validators consumed, closing the source-path TOCTOU gap.
+    with tempfile.TemporaryDirectory(prefix="abrl-human-review-snapshot-") as directory:
+        staged_pack = Path(directory)
+        staged_review = staged_pack / "human_source_contract_review"
+        staged_review.mkdir()
+        for name, payload in evidence.items():
+            (staged_review / name).write_bytes(payload)
+        challenge_path = regular_unlinked_file(
+            resolve_repo_path(config["challenge_manifest"]),
+            "human-review frozen challenge manifest", require_executable=False,
+        )
+        paired_path = regular_unlinked_file(
+            resolve_repo_path(config["paired_requirements"]),
+            "human-review frozen paired requirements", require_executable=False,
+        )
+        (staged_pack / "operator_challenges.json").write_bytes(challenge_path.read_bytes())
+        (staged_pack / "paired_requirements.json").write_bytes(paired_path.read_bytes())
+        packed_config = sealed_config_for_pack(config)
+        validated = validate_packed_human_source_contract_review(
+            staged_pack, packed_config,
+            require_combined_record=require_combined_record,
+            allow_excluded_unanchored_fixture=allow_excluded_unanchored_fixture,
+        )
+        require(validated == evidence,
+                "staged human-review evidence changed during validation")
+    return evidence
 
 
 def adapter_entrypoint_path(config: dict[str, Any]) -> Path:
@@ -1080,7 +2241,9 @@ def validate_checker_contract(config: dict[str, Any], require_hashes: bool) -> d
                 "production checker isolation probe nonce/label is malformed")
         require("host-observations.json" in artifact_payloads,
                 "production checker probe omits host observations")
-        host_observations = json.loads(artifact_payloads["host-observations.json"])
+        host_observations = strict_json_bytes(
+            artifact_payloads["host-observations.json"], "checker host observations"
+        )
         require(host_observations.get("probe_nonce") == nonce
                 and host_observations.get("checker_attempt_label") == attempt_label
                 and host_observations.get("checker_runtime_config_sha256") == runtime_sha256
@@ -1145,6 +2308,9 @@ def execution_code_paths(config: dict[str, Any]) -> dict[str, Path]:
         "analyze_target_drift_execution.py": resolve_repo_path(
             config["analysis"]["script"]
         ),
+        "test_target_drift_analysis.py": resolve_repo_path(
+            config["analysis"]["test_script"]
+        ),
         "audit_target_drift_wording.py": resolve_repo_path(
             config["wording_audit"]["script"]
         ),
@@ -1153,6 +2319,24 @@ def execution_code_paths(config: dict[str, Any]) -> dict[str, Path]:
         ),
         "run_target_drift_schedule.py": resolve_repo_path(
             config["missing_run_policy"]["schedule_runner"]
+        ),
+        "prepare_target_drift_human_contract_review.py": resolve_repo_path(
+            config["human_source_contract_validation"]["self_attested_prepare_script"]
+        ),
+        "validate_target_drift_human_contract_review.py": resolve_repo_path(
+            config["human_source_contract_validation"]["self_attested_validator_script"]
+        ),
+        "test_target_drift_human_contract_review.py": resolve_repo_path(
+            config["human_source_contract_validation"]["self_attested_validator_test"]
+        ),
+        "finalize_target_drift_config.py": resolve_repo_path(
+            config["human_source_contract_validation"]["execution_finalizer"]
+        ),
+        "validate_target_drift_human_contract_external_verification.py": resolve_repo_path(
+            config["human_source_contract_validation"]["external_validator_script"]
+        ),
+        "test_target_drift_human_contract_external_verification.py": resolve_repo_path(
+            config["human_source_contract_validation"]["external_validator_test"]
         ),
     }
     if config["grading"].get("grader_exporter") is not None:
@@ -1164,12 +2348,8 @@ def execution_code_paths(config: dict[str, Any]) -> dict[str, Path]:
     return paths
 
 
-def validate_execution_code_hashes(config: dict[str, Any], require_hashes: bool) -> None:
-    paths = execution_code_paths(config)
-    require(all(path.is_file() for path in paths.values()),
-            "one or more sealed execution-code files are missing")
-    if not require_hashes:
-        return
+def execution_code_expected_hashes(config: dict[str, Any]) -> dict[str, str]:
+    human = config["human_source_contract_validation"]
     expected = {
         "prepare_target_drift_execution.py": config["sealed_agent_view"]["materializer_sha256"],
         "run_target_drift_execution.py": config["sealed_agent_view"]["run_preparer_sha256"],
@@ -1187,6 +2367,7 @@ def validate_execution_code_hashes(config: dict[str, Any], require_hashes: bool)
         "prepare_target_drift_grading.py": config["grading"]["packet_materializer_sha256"],
         "assemble_target_drift_grades.py": config["analysis"]["grade_assembler_sha256"],
         "analyze_target_drift_execution.py": config["analysis"]["script_sha256"],
+        "test_target_drift_analysis.py": config["analysis"]["test_script_sha256"],
         "audit_target_drift_wording.py": config["wording_audit"]["script_sha256"],
         "build_target_drift_completion_ledger.py": config["missing_run_policy"][
             "completion_ledger_builder_sha256"
@@ -1194,11 +2375,60 @@ def validate_execution_code_hashes(config: dict[str, Any], require_hashes: bool)
         "run_target_drift_schedule.py": config["missing_run_policy"][
             "schedule_runner_sha256"
         ],
+        "prepare_target_drift_human_contract_review.py": human[
+            "self_attested_prepare_script_sha256"
+        ],
+        "validate_target_drift_human_contract_review.py": human[
+            "self_attested_validator_script_sha256"
+        ],
+        "test_target_drift_human_contract_review.py": human[
+            "self_attested_validator_test_sha256"
+        ],
+        "finalize_target_drift_config.py": human["execution_finalizer_sha256"],
+        "validate_target_drift_human_contract_external_verification.py": human[
+            "external_validator_script_sha256"
+        ],
+        "test_target_drift_human_contract_external_verification.py": human[
+            "external_validator_test_sha256"
+        ],
     }
-    if "execution_adapter_entrypoint" in paths:
+    if config["execution_adapter"].get("entrypoint_path") != "UNSET":
         expected["execution_adapter_entrypoint"] = config["execution_adapter"][
             "entrypoint_sha256"
         ]
+    return expected
+
+
+def validate_live_pack_verifier_trust_anchor(
+    execution_code_bytes: dict[str, bytes],
+) -> None:
+    """Require the live verifier modules to equal their pack-bound source bytes."""
+    live_paths = {
+        "prepare_target_drift_execution.py": Path(__file__).resolve(),
+        "prepare_target_drift_human_contract_review.py": Path(
+            human_contract_review.prepare.__file__
+        ).resolve(),
+        "validate_target_drift_human_contract_review.py": Path(
+            human_contract_review.__file__
+        ).resolve(),
+        "validate_target_drift_human_contract_external_verification.py": Path(
+            external_contract_review.__file__
+        ).resolve(),
+    }
+    for name, path in live_paths.items():
+        require(name in execution_code_bytes,
+                f"sealed pack omits live verifier source {name}")
+        require(execution_code_bytes[name] == path.read_bytes(),
+                f"live verifier source differs from pack-bound bytes for {name}")
+
+
+def validate_execution_code_hashes(config: dict[str, Any], require_hashes: bool) -> None:
+    paths = execution_code_paths(config)
+    require(all(path.is_file() for path in paths.values()),
+            "one or more sealed execution-code files are missing")
+    if not require_hashes:
+        return
+    expected = execution_code_expected_hashes(config)
     for name, path in paths.items():
         if name == "export_target_drift_grader_pack.py":
             # The exporter is bound directly by the sealed-pack component
@@ -1221,6 +2451,16 @@ def checker_runtime_artifact_paths(config: dict[str, Any]) -> dict[str, Path]:
             checker["checker_cache_manifest_artifact"]
         ),
         "checker-image-build.log": resolve_repo_path(checker["checker_image_build_log"]),
+    }
+
+
+def checker_runtime_artifact_names(config: dict[str, Any]) -> set[str]:
+    if config["posthoc_checker"].get("mode") != "production":
+        return set()
+    return {
+        "checker-image.Containerfile", "checker-image-sbom.json",
+        "checker-image-build-input.json", "checker-cache-manifest.json",
+        "checker-image-build.log",
     }
 
 
@@ -1311,11 +2551,7 @@ def validate_frozen_choices(config: dict[str, Any]) -> None:
             "retry_policy.missing_run_policy must use the frozen no-imputation policy")
 
     randomization = config["randomization"]
-    replicates = randomization["paired_replicates"]
-    require(isinstance(replicates, list) and len(replicates) == 5
-            and len(set(replicates)) == 5
-            and all(isinstance(item, int) and not isinstance(item, bool) for item in replicates),
-            "randomization.paired_replicates must contain five unique integers")
+    validate_paired_replicates(config)
     require(isinstance(randomization["presentation_order_seed"], int)
             and not isinstance(randomization["presentation_order_seed"], bool),
             "presentation_order_seed must be an integer")
@@ -1330,6 +2566,7 @@ def validate_frozen_choices(config: dict[str, Any]) -> None:
              "wording_audit.independent_blind_reviewer_id")
     nonempty(wording["independent_blind_review_attestation"],
              "wording_audit.independent_blind_review_attestation", 20)
+    validate_human_source_contract_review(config, require_completion=True)
 
     adapter = config["execution_adapter"]
     for field in ("adapter_id", "adapter_version"):
@@ -1442,6 +2679,7 @@ def validate_frozen_choices(config: dict[str, Any]) -> None:
             "analysis.bootstrap_replicates must be at least 1000")
     require(analysis["permutation_replicates"] == 32768,
             "analysis.permutation_replicates must enumerate all 15-unit sign flips")
+    validate_method_amendment(config, require_hashes=True)
 
 
 def validate_primary_analysis_contract(analysis: dict[str, Any]) -> None:
@@ -1476,6 +2714,7 @@ def digest_components(
     challenges_bytes: bytes,
     paired_requirements_bytes: bytes,
     protocol_bytes: bytes,
+    method_amendment_bytes: bytes,
     missing_run_policy_bytes: bytes,
     source_manifest_bytes: bytes,
     source_packet_bytes: dict[str, bytes],
@@ -1490,6 +2729,7 @@ def digest_components(
     text_only_prompt_bytes: bytes,
     prompt_bytes: dict[str, bytes],
     execution_code_bytes: dict[str, bytes],
+    human_source_review_bytes: dict[str, bytes],
 ) -> dict[str, bytes]:
     components = {
         "agent_cases.json": canonical_json_bytes(agent_cases),
@@ -1500,6 +2740,7 @@ def digest_components(
         "operator_challenges.json": challenges_bytes,
         "paired_requirements.json": paired_requirements_bytes,
         "protocol.json": protocol_bytes,
+        "method-amendment.json": method_amendment_bytes,
         "missing-run-policy.json": missing_run_policy_bytes,
         "source_manifest.json": source_manifest_bytes,
         "grading_rubric.json": rubric_bytes,
@@ -1530,6 +2771,10 @@ def digest_components(
         f"execution_code/{name}": payload
         for name, payload in execution_code_bytes.items()
     })
+    components.update({
+        f"human_source_contract_review/{name}": payload
+        for name, payload in human_source_review_bytes.items()
+    })
     return components
 
 
@@ -1544,6 +2789,8 @@ def check_template(config_path: Path) -> None:
     require(bool(missing), "template unexpectedly contains no UNSET fields")
     validate_prompt_templates(config, require_hashes=False)
     if "resource_policy" in config:
+        validate_paired_replicates(config)
+        validate_method_amendment(config, require_hashes=True)
         validate_resource_policy(config, require_hash=False)
         validate_missing_run_policy(config, require_hash=False)
         validate_paired_requirements(config)
@@ -1551,6 +2798,7 @@ def check_template(config_path: Path) -> None:
         validate_checker_contract(config, require_hashes=False)
         validate_auxiliary_prompts(config, require_hashes=False)
         validate_execution_code_hashes(config, require_hashes=False)
+        validate_human_source_contract_review(config, require_completion=False)
     else:
         require(config["suite_id"] == "ABRL-TARGET-DRIFT-V1",
                 "v2 template must define a resource policy")
@@ -1629,8 +2877,103 @@ def sanitized_case_v1(case: dict[str, Any], source: dict[str, Any]) -> dict[str,
     }
 
 
-def requirement_variant(case_index: int, seed_index: int) -> str:
-    return "injected_drift" if (case_index + seed_index) % 2 == 0 else "source_faithful"
+def requirement_variant(case_index: int, replicate_index: int) -> str:
+    return (
+        "injected_drift"
+        if (case_index + replicate_index) % 2 == 0
+        else "source_faithful"
+    )
+
+
+def validate_run_manifest_schedule(
+    config: dict[str, Any], agent_cases: dict[str, Any],
+    run_manifest: dict[str, Any],
+) -> None:
+    """Verify the exact 30 x 3 x 5 semantic run universe and variant parity."""
+    cases = agent_cases.get("cases")
+    runs = run_manifest.get("runs")
+    require(isinstance(cases, list) and len(cases) == 30,
+            "sealed agent-case manifest must contain thirty cases")
+    require(isinstance(runs, list) and len(runs) == 450,
+            "sealed run manifest must contain 450 runs")
+    case_ids = [case.get("case_id") for case in cases]
+    require(all(isinstance(case_id, str) and case_id for case_id in case_ids)
+            and len(set(case_ids)) == 30,
+            "sealed agent-case identifiers must be thirty unique nonempty strings")
+    expected_keys = {
+        (case_id, condition, replicate)
+        for case_id in case_ids
+        for condition in CONDITIONS
+        for replicate in range(5)
+    }
+    actual_keys = []
+    for run in runs:
+        require(isinstance(run, dict), "sealed run entry must be an object")
+        replicate = run.get("replicate")
+        require(type(replicate) is int,
+                "sealed run replicate must be an integer")
+        actual_keys.append((run.get("case_id"), run.get("condition"), replicate))
+    require(len(set(actual_keys)) == 450 and set(actual_keys) == expected_keys,
+            "sealed run manifest is not the exact 30 x 3 x 5 run universe")
+    orders = [run.get("presentation_order") for run in runs]
+    require(all(type(order) is int for order in orders)
+            and set(orders) == set(range(450)),
+            "sealed presentation_order must be a permutation of integers 0..449")
+    case_by_id = {case["case_id"]: case for case in cases}
+    case_index = {case_id: index for index, case_id in enumerate(case_ids)}
+    for run in runs:
+        case_id = run["case_id"]
+        condition = run["condition"]
+        replicate = run["replicate"]
+        variant = requirement_variant(case_index[case_id], replicate)
+        case = case_by_id[case_id]
+        require(
+            run.get("run_id")
+            == f"{case_id}--{condition}--replicate-{replicate}"
+            and run.get("status") == "sealed_unrun"
+            and run.get("prompt_template")
+            == config["conditions"][condition]["prompt_template"]
+            and run.get("requirement_variant") == variant
+            and run.get("proposed_requirement")
+            == case[f"{variant}_requirement"],
+            "sealed run identity, parity, requirement, prompt, or status differs",
+        )
+
+
+def validate_agent_case_projection(
+    challenges: dict[str, Any], paired_requirements: dict[str, Any],
+    source_manifest: dict[str, Any], agent_cases: dict[str, Any],
+) -> None:
+    """Bind sanitized agent cases, including order, to frozen operator inputs."""
+    challenge_cases = challenges.get("cases")
+    paired_cases = paired_requirements.get("cases")
+    sources = source_manifest.get("sources")
+    require(isinstance(challenge_cases, list) and len(challenge_cases) == 30,
+            "sealed operator challenge bank must contain thirty cases")
+    require(isinstance(paired_cases, list) and len(paired_cases) == 30,
+            "sealed paired-requirement bank must contain thirty cases")
+    require(isinstance(sources, list), "sealed source manifest sources must be a list")
+    packed_sources = {source["source_id"]: source for source in sources}
+    packed_paired = {entry["case_id"]: entry for entry in paired_cases}
+    expected_case_ids = [case["id"] for case in challenge_cases]
+    require(
+        len(packed_sources) == len(sources)
+        and set(packed_sources) == {case["source_id"] for case in challenge_cases},
+        "sealed source identifiers do not exactly cover the challenge bank",
+    )
+    require(len(packed_paired) == 30 and set(packed_paired) == set(expected_case_ids),
+            "sealed paired-requirement identifiers do not exactly cover challenges")
+    expected = [
+        sanitized_case(
+            case,
+            packed_sources[case["source_id"]],
+            packed_paired[case["id"]],
+            paired_requirements["common_template"],
+        )
+        for case in challenge_cases
+    ]
+    require(agent_cases.get("cases") == expected,
+            "sealed agent-case projection or canonical case order differs")
 
 
 def materialize(config_path: Path, output_dir: Path) -> None:
@@ -1681,7 +3024,7 @@ def materialize(config_path: Path, output_dir: Path) -> None:
         config.get("challenge_manifest", str(config_path.parent / "challenges.json"))
     )
     challenges_bytes = challenge_path.read_bytes()
-    challenges_payload = json.loads(challenges_bytes.decode("utf-8"))
+    challenges_payload = strict_json_bytes(challenges_bytes, "operator challenges")
     challenges = challenges_payload["cases"]
     paired_payload = validate_paired_requirements(config, challenges)
     paired_requirements_path = resolve_repo_path(config["paired_requirements"])
@@ -1693,15 +3036,7 @@ def materialize(config_path: Path, output_dir: Path) -> None:
                 for case in challenges),
             "source manifest hashes differ from the frozen challenge bank")
 
-    replicate_key = (
-        "paired_replicates" if "paired_replicates" in config["randomization"]
-        else "paired_seeds"
-    )
-    seeds = config["randomization"][replicate_key]
-    require(isinstance(seeds, list) and len(seeds) == 5,
-            "paired_seeds must contain exactly five entries")
-    require(len(set(seeds)) == 5, "paired seeds must be unique")
-    require(all(isinstance(seed, int) for seed in seeds), "paired seeds must be integers")
+    replicates = validate_paired_replicates(config)
 
     is_v2 = config["suite_id"] == "ABRL-TARGET-DRIFT-V2"
     if is_v2:
@@ -1722,24 +3057,30 @@ def materialize(config_path: Path, output_dir: Path) -> None:
 
     runs = []
     for case_index, case in enumerate(agent_cases):
-        for seed_index, seed in enumerate(seeds):
-            variant = requirement_variant(case_index, seed_index) if is_v2 else "injected_drift"
+        for replicate_index, replicate in enumerate(replicates):
+            variant = (
+                requirement_variant(case_index, replicate_index)
+                if is_v2 else "injected_drift"
+            )
             proposed_requirement = (
                 case[f"{variant}_requirement"] if is_v2 else case["proposed_requirement"]
             )
             block = []
             for condition in CONDITIONS:
                 block.append({
-                    "run_id": f"{case['case_id']}--{condition}--replicate-{seed}",
+                    "run_id": f"{case['case_id']}--{condition}--replicate-{replicate}",
                     "case_id": case["case_id"],
                     "condition": condition,
-                    "replicate": seed,
+                    "replicate": replicate,
                     "prompt_template": config["conditions"][condition]["prompt_template"],
                     "requirement_variant": variant,
                     "proposed_requirement": proposed_requirement,
                     "status": "sealed_unrun",
                 })
-            random.Random(config["randomization"]["presentation_order_seed"] + case_index * 31 + seed_index).shuffle(block)
+            random.Random(
+                config["randomization"]["presentation_order_seed"]
+                + case_index * 31 + replicate_index
+            ).shuffle(block)
             runs.extend(block)
     require(len(runs) == 450, "materialized run count must be 450")
     if is_v2:
@@ -1774,10 +3115,14 @@ def materialize(config_path: Path, output_dir: Path) -> None:
         ],
         "runs": runs,
     }
+    validate_run_manifest_schedule(config, agent_cases_payload, run_manifest_payload)
 
     source_manifest_path = resolve_repo_path(config["source_files_manifest"])
     protocol_path = resolve_repo_path(config["protocol"])
     require(protocol_path.is_file(), "missing v2 protocol")
+    method_amendment_path = resolve_repo_path(config["method_amendment"])
+    require(method_amendment_path.is_file() and not method_amendment_path.is_symlink(),
+            "missing or linked fixed-benchmark method amendment")
     missing_run_policy_path = resolve_repo_path(config["missing_run_policy"]["policy_path"])
     rubric_path = resolve_repo_path(config["grading"]["rubric"])
     resource_policy_path = resolve_repo_path(config["resource_policy"])
@@ -1811,6 +3156,7 @@ def materialize(config_path: Path, output_dir: Path) -> None:
         for source_id, source in sources.items()
     }
     protocol_bytes = protocol_path.read_bytes()
+    method_amendment_bytes = method_amendment_path.read_bytes()
     missing_run_policy_bytes = missing_run_policy_path.read_bytes()
     rubric_bytes = rubric_path.read_bytes()
     resource_policy_bytes = resource_policy_path.read_bytes()
@@ -1830,13 +3176,29 @@ def materialize(config_path: Path, output_dir: Path) -> None:
     execution_code_bytes = {
         name: path.read_bytes() for name, path in code_paths.items()
     }
-    components = digest_components(
+    validate_method_amendment(
         config,
+        require_hashes=True,
+        amendment_bytes=method_amendment_bytes,
+        protocol_bytes=protocol_bytes,
+        analysis_script_bytes=execution_code_bytes[
+            "analyze_target_drift_execution.py"
+        ],
+        analysis_test_bytes=execution_code_bytes["test_target_drift_analysis.py"],
+    )
+    human_source_review_bytes = validate_human_source_contract_review(
+        config, require_completion=True
+    )
+    packed_config = sealed_config_for_pack(config)
+    require_packed_human_paths(packed_config)
+    components = digest_components(
+        packed_config,
         agent_cases_payload,
         run_manifest_payload,
         challenges_bytes,
         paired_requirements_bytes,
         protocol_bytes,
+        method_amendment_bytes,
         missing_run_policy_bytes,
         source_manifest_bytes,
         source_packet_bytes,
@@ -1851,16 +3213,18 @@ def materialize(config_path: Path, output_dir: Path) -> None:
         text_only_prompt_bytes,
         prompt_bytes,
         execution_code_bytes,
+        human_source_review_bytes,
     )
     aggregate, component_manifest = aggregate_digest(components)
 
     output_dir.mkdir(parents=True)
     dump(output_dir / "agent_cases.json", agent_cases_payload)
     dump(output_dir / "run_manifest.json", run_manifest_payload)
-    dump(output_dir / "execution_config.json", config)
+    dump(output_dir / "execution_config.json", packed_config)
     (output_dir / "operator_challenges.json").write_bytes(challenges_bytes)
     (output_dir / "paired_requirements.json").write_bytes(paired_requirements_bytes)
     (output_dir / "protocol.json").write_bytes(protocol_bytes)
+    (output_dir / "method-amendment.json").write_bytes(method_amendment_bytes)
     (output_dir / "missing-run-policy.json").write_bytes(missing_run_policy_bytes)
     (output_dir / "source_manifest.json").write_bytes(source_manifest_bytes)
     source_output = output_dir / "source_packets"
@@ -1892,11 +3256,15 @@ def materialize(config_path: Path, output_dir: Path) -> None:
     code_output.mkdir()
     for name, payload in execution_code_bytes.items():
         (code_output / name).write_bytes(payload)
+    human_review_output = output_dir / "human_source_contract_review"
+    human_review_output.mkdir()
+    for name, payload in human_source_review_bytes.items():
+        (human_review_output / name).write_bytes(payload)
     dump(output_dir / "digest_manifest.json", {
         "schema_version": 1,
         "suite_id": config["suite_id"],
         "aggregate_algorithm": "sha256(length-prefixed sorted name/payload components)",
-        "config_normalization": "execution_status is frozen_ready, aggregate_sha256 is UNSET, source_files_manifest is SEALED/source_manifest.json, and unresolved_fields is empty",
+        "config_normalization": "execution_status is frozen_ready, aggregate_sha256 is UNSET, operator-local source-manifest, adapter, runtime, auth, checker, and human-review paths are rewritten to portable SEALED, HOST-BOUND, OPERATOR-SECRET, or REDACTED-OPERATOR locators, and unresolved_fields is empty",
         "components": component_manifest,
     })
     (output_dir / "aggregate.sha256").write_text(aggregate + "\n", encoding="ascii")
@@ -1912,12 +3280,14 @@ def materialize(config_path: Path, output_dir: Path) -> None:
 
 
 def verify_pack(pack_dir: Path) -> None:
-    require(pack_dir.is_dir(), "sealed pack directory is missing")
+    pack_dir = plain_unlinked_directory(pack_dir.absolute(), "sealed pack directory")
     config = load(pack_dir / "execution_config.json")
     require(config["execution_status"] in {"preseal_ready", "frozen_ready"},
             "pack execution status must be preseal_ready or frozen_ready")
+    validate_paired_replicates(config)
     agent_cases = load(pack_dir / "agent_cases.json")
     run_manifest = load(pack_dir / "run_manifest.json")
+    validate_run_manifest_schedule(config, agent_cases, run_manifest)
     prompt_bytes = {
         condition: (pack_dir / "prompt_templates" / f"{condition}.md").read_bytes()
         for condition in CONDITIONS
@@ -1927,8 +3297,17 @@ def verify_pack(pack_dir: Path) -> None:
         for path in sorted((pack_dir / "execution_code").iterdir())
         if path.is_file()
     }
-    require(set(execution_code_bytes) == set(execution_code_paths(config)),
+    require(set(execution_code_bytes) == set(execution_code_expected_hashes(config)),
             "sealed pack execution-code file set differs from frozen config")
+    expected_code_hashes = execution_code_expected_hashes(config)
+    for name, expected in expected_code_hashes.items():
+        require(name in execution_code_bytes, f"sealed pack omits execution code {name}")
+        require(expected == sha256_bytes(execution_code_bytes[name]),
+                f"sealed pack execution-code hash mismatch for {name}")
+    validate_live_pack_verifier_trust_anchor(execution_code_bytes)
+    method_amendment_bytes = packed_method_amendment_bytes(
+        pack_dir, config, execution_code_bytes
+    )
     for condition in CONDITIONS:
         require(
             config["conditions"][condition]["prompt_sha256"]
@@ -2011,7 +3390,7 @@ def verify_pack(pack_dir: Path) -> None:
         for path in sorted(packed_runtime_artifact_root.iterdir())
         if path.is_file()
     }
-    expected_runtime_artifacts = checker_runtime_artifact_paths(config)
+    expected_runtime_artifacts = checker_runtime_artifact_names(config)
     require(set(packed_runtime_artifacts) == set(expected_runtime_artifacts),
             "sealed checker runtime-artifact set differs from frozen config")
     if expected_runtime_artifacts:
@@ -2047,10 +3426,17 @@ def verify_pack(pack_dir: Path) -> None:
     require(all(case["source_sha256"] == source_hashes.get(case["source_id"])
                 for case in challenges["cases"]),
             "sealed source hashes differ from operator challenge ground truth")
+    validate_agent_case_projection(
+        challenges, paired_requirements, source_manifest, agent_cases
+    )
+    validate_run_manifest_schedule(config, agent_cases, run_manifest)
     require(len(run_manifest["runs"]) == 450,
             "sealed run manifest must contain 450 runs")
     require(all(run["status"] == "sealed_unrun" for run in run_manifest["runs"]),
             "sealed run manifest contains a non-unrun result")
+    packed_human_review = validate_packed_human_source_contract_review(
+        pack_dir, config
+    )
     components = digest_components(
         config,
         agent_cases,
@@ -2058,6 +3444,7 @@ def verify_pack(pack_dir: Path) -> None:
         (pack_dir / "operator_challenges.json").read_bytes(),
         (pack_dir / "paired_requirements.json").read_bytes(),
         (pack_dir / "protocol.json").read_bytes(),
+        method_amendment_bytes,
         (pack_dir / "missing-run-policy.json").read_bytes(),
         (pack_dir / "source_manifest.json").read_bytes(),
         source_packet_bytes,
@@ -2072,6 +3459,7 @@ def verify_pack(pack_dir: Path) -> None:
         (pack_dir / "text_only_audit_prompt.md").read_bytes(),
         prompt_bytes,
         execution_code_bytes,
+        packed_human_review,
     )
     aggregate, component_manifest = aggregate_digest(components)
     recorded_aggregate = (pack_dir / "aggregate.sha256").read_text(encoding="ascii").strip()
@@ -2085,36 +3473,6 @@ def verify_pack(pack_dir: Path) -> None:
     else:
         require(config["sealed_agent_view"]["aggregate_sha256"] == "UNSET",
             "preseal config must leave its aggregate field UNSET")
-    expected_code_hashes = {
-        "prepare_target_drift_execution.py": config["sealed_agent_view"]["materializer_sha256"],
-        "run_target_drift_execution.py": config["sealed_agent_view"]["run_preparer_sha256"],
-        "check_target_drift_run.py": config["posthoc_checker"]["driver_sha256"],
-        "check_target_drift_inner.py": config["posthoc_checker"]["inner_checker_sha256"],
-        "record_target_drift_checker_isolation_probe.py": config["posthoc_checker"][
-            "isolation_probe_runner_sha256"
-        ],
-        "launch_target_drift_checker_container.py": config["posthoc_checker"][
-            "host_launcher_sha256"
-        ],
-        "check_target_drift_container_controller.py": config["posthoc_checker"][
-            "controller_entrypoint_sha256"
-        ],
-        "prepare_target_drift_grading.py": config["grading"]["packet_materializer_sha256"],
-        "assemble_target_drift_grades.py": config["analysis"]["grade_assembler_sha256"],
-        "analyze_target_drift_execution.py": config["analysis"]["script_sha256"],
-        "audit_target_drift_wording.py": config["wording_audit"]["script_sha256"],
-        "build_target_drift_completion_ledger.py": config["missing_run_policy"][
-            "completion_ledger_builder_sha256"
-        ],
-        "run_target_drift_schedule.py": config["missing_run_policy"][
-            "schedule_runner_sha256"
-        ],
-    }
-    if config["execution_status"] == "frozen_ready":
-        for name, expected in expected_code_hashes.items():
-            require(name in execution_code_bytes, f"sealed pack omits execution code {name}")
-            require(expected == sha256_bytes(execution_code_bytes[name]),
-                    f"sealed pack execution-code hash mismatch for {name}")
     print(
         f"verified {config['execution_status']} target-drift pack: "
         f"{len(agent_cases['cases'])} cases, {len(run_manifest['runs'])} runs, sha256={aggregate}"

@@ -5,9 +5,10 @@ The controller accepts no caller-supplied command.  It copies one read-only
 agent-input tree into disposable tmpfs and brokers one read-only fake
 ``auth.json`` descriptor to a child that is irreversibly dropped to uid/gid
 10002.  The root parent closes its descriptor as soon as the child exists,
-validates either the fixed offline probe or one sealed excluded-provider adapter
-execution, and writes only root-control evidence.  Neither mode accepts a real
-credential or permits a provider/model call.
+validates the fixed offline probe, one sealed excluded-provider adapter
+execution, or one production-shaped traversal of the real Codex adapter through
+a fixed offline executable, and writes only root-control evidence.  No enabled
+mode accepts a real credential or permits a provider/model call.
 """
 
 from __future__ import annotations
@@ -30,6 +31,7 @@ AUTH_SOURCE = Path("/run/secrets/provider-auth")
 WORKSPACE = Path("/agent")
 CODEX_HOME = Path("/codex-home")
 CONTROL = Path("/control")
+ARTIFACTS = Path("/artifacts")
 WORKER_UID = 10002
 WORKER_GID = 10002
 MAX_INPUT_FILES = 64
@@ -39,6 +41,12 @@ EXCLUDED_ADAPTER = "/usr/local/lib/abrl/target_drift_agent_excluded_adapter.py"
 EXCLUDED_CONTRACT = Path(
     "/usr/local/share/abrl/agent-excluded-execution-contract.json"
 )
+ACTION_DRIVER = "/usr/local/lib/abrl/target_drift_agent_action_driver.py"
+ACTION_ADAPTER = "/usr/local/lib/abrl/codex_target_drift_adapter.py"
+ACTION_FAKE_CODEX = "/usr/local/lib/abrl/target_drift_agent_fake_codex.py"
+ACTION_CONTRACT = Path(
+    "/usr/local/share/abrl/agent-production-action-contract.json"
+)
 CONTROL_SENTINEL = CONTROL / "root-only-sentinel"
 CONTROL_SENTINEL_BYTES = b"RESULT_FREE_ROOT_CONTROL_SENTINEL\n"
 MAX_DIAGNOSTIC_BYTES = 8192
@@ -46,6 +54,7 @@ AUTH_FD_ENV = "ABRL_RESULT_FREE_AUTH_FD"
 EXPECTED_AUTH = b"RESULT_FREE_SENTINEL_DO_NOT_USE\n"
 PROBE_MODE = "result_free_probe_v1"
 EXCLUDED_EXECUTE_MODE = "result_free_excluded_execute_v1"
+PRODUCTION_FIXTURE_MODE = "result_free_production_action_fixture_v1"
 IMAGE_DIGEST_ENV = "ABRL_OUTER_COMPONENT_IMAGE_DIGEST"
 
 
@@ -185,6 +194,133 @@ def copy_excluded_request(
         "bytes": len(payload),
         "sha256": hashlib.sha256(payload).hexdigest(),
     }]
+
+
+def load_action_contract(
+    contract_path: Path = ACTION_CONTRACT,
+    driver_path: Path = Path(ACTION_DRIVER),
+    adapter_path: Path = Path(ACTION_ADAPTER),
+    fake_codex_path: Path = Path(ACTION_FAKE_CODEX),
+) -> dict[str, Any]:
+    contract = json.loads(
+        regular_single_file(contract_path, "production-action contract").read_text(
+            encoding="utf-8"
+        )
+    )
+    fixture = contract.get("fixture", {})
+    require(
+        contract.get("schema_version") == 1
+        and contract.get("suite_id") == "ABRL-TARGET-DRIFT-V2"
+        and contract.get("status")
+        == "production_action_interface_candidate_gate_closed"
+        and contract.get("execution_status_boundary")
+        == "primary_execution_not_started"
+        and contract.get("production_execution_enabled") is False
+        and contract.get("primary_result_eligible") is False
+        and contract.get("fixture_mode") == PRODUCTION_FIXTURE_MODE
+        and contract.get("production_gate", {}).get("decision") == "closed"
+        and fixture.get("permanently_result_ineligible") is True
+        and fixture.get("provider_execution_enabled") is False
+        and fixture.get("provider_request_or_model_invocation_occurred") is False,
+        "production-action contract identity or closed gate differs",
+    )
+    require(
+        fixture.get("driver", {}).get("container_path") == ACTION_DRIVER
+        and fixture.get("driver", {}).get("sha256")
+        == sha256(regular_single_file(driver_path, "production-action driver"))
+        and fixture.get("adapter", {}).get("container_path") == ACTION_ADAPTER
+        and fixture.get("adapter", {}).get("sha256")
+        == sha256(regular_single_file(adapter_path, "production-action adapter"))
+        and fixture.get("fake_provider", {}).get("container_path")
+        == ACTION_FAKE_CODEX
+        and fixture.get("fake_provider", {}).get("sha256")
+        == sha256(regular_single_file(fake_codex_path, "production-action fake provider")),
+        "production-action driver, adapter, or fake-provider binding differs",
+    )
+    argv = fixture.get("adapter_argv")
+    require(
+        isinstance(argv, list)
+        and all(isinstance(item, str) and item for item in argv)
+        and argv[:2] == ["/usr/bin/python3", ACTION_DRIVER]
+        and argv.count("{{IMAGE_DIGEST}}") == 1
+        and argv.count(fixture.get("request_sha256")) == 1,
+        "production-action fixture argv is malformed",
+    )
+    manifest = fixture.get("input_manifest")
+    require(
+        isinstance(manifest, list)
+        and fixture.get("input_directories") == ["workspace"]
+        and [item.get("path") for item in manifest]
+        == ["prompt.md", "request.json", "workspace/Fixture.lean"]
+        and all(
+            isinstance(item.get("bytes"), int) and item["bytes"] >= 0
+            and re.fullmatch(r"[0-9a-f]{64}", item.get("sha256", ""))
+            is not None
+            for item in manifest
+        ),
+        "production-action fixture manifest is malformed",
+    )
+    return contract
+
+
+def copy_action_fixture(
+    source: Path, target: Path, contract: dict[str, Any],
+) -> list[dict[str, Any]]:
+    require(source.is_dir() and not source.is_symlink(),
+            "production-action input is not a plain directory")
+    expected = contract["fixture"]["input_manifest"]
+    expected_directories = contract["fixture"]["input_directories"]
+    observed: list[dict[str, Any]] = []
+    observed_directories: list[str] = []
+    for path in sorted(source.rglob("*"), key=lambda item: item.as_posix()):
+        relative = path.relative_to(source)
+        require(".." not in relative.parts and not path.is_symlink(),
+                "production-action input contains an unsafe link or path")
+        info = path.lstat()
+        if stat.S_ISDIR(info.st_mode):
+            observed_directories.append(relative.as_posix())
+            continue
+        require(stat.S_ISREG(info.st_mode) and info.st_nlink == 1,
+                "production-action input contains a linked or special file")
+        payload = path.read_bytes()
+        observed.append({
+            "path": relative.as_posix(),
+            "bytes": len(payload),
+            "sha256": hashlib.sha256(payload).hexdigest(),
+        })
+    require(observed_directories == expected_directories and observed == expected,
+            "production-action input differs from the sealed fixture manifest")
+    target.mkdir(mode=0o700)
+    for record in observed:
+        source_file = source / record["path"]
+        destination = target / record["path"]
+        destination.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
+        with source_file.open("rb") as source_stream, destination.open("xb") as target_stream:
+            shutil.copyfileobj(source_stream, target_stream, 1024 * 1024)
+        require(destination.stat().st_size == record["bytes"]
+                and sha256(destination) == record["sha256"],
+                "production-action tmpfs copy differs")
+    request = json.loads((target / "request.json").read_text(encoding="utf-8"))
+    provider = request.get("provider_runtime", {})
+    require(
+        request.get("execution_purpose")
+        == "agent_container_production_action_fixture"
+        and request.get("primary_result_eligible") is False
+        and request.get("agent_mount") == "/agent/run"
+        and request.get("prompt_path") == "/agent/run/prompt.md"
+        and provider.get("kind") == "codex_cli"
+        and provider.get("fixture_provider") is True
+        and provider.get("provider_execution_enabled") is False
+        and provider.get("credential_access_allowed") is False
+        and provider.get("network_access_allowed") is False
+        and provider.get("model_call_budget") == 0
+        and provider.get("executable") == ACTION_FAKE_CODEX
+        and provider.get("executable_sha256")
+        == contract["fixture"]["fake_provider"]["sha256"]
+        and provider.get("auth_source_path") == "/codex-home/provider-auth",
+        "production-action request weakens the fake-provider/result boundary",
+    )
+    return observed
 
 
 def source_is_read_only(path: Path) -> bool:
@@ -538,6 +674,194 @@ def validate_excluded_execution_artifacts(
     }
 
 
+def validate_action_fixture_artifacts(
+    run_root: Path, contract: dict[str, Any], request: dict[str, Any],
+    worker_output: bytes, *, expected_uid: int | None = None,
+) -> dict[str, Any]:
+    """Validate the real-adapter/fake-provider response, trace, and copyback."""
+    require(len(worker_output) <= 1024 * 1024,
+            "production-action fixture stdout is oversized")
+    lines = worker_output.decode("utf-8", errors="strict").splitlines()
+    require(len(lines) == 1 and lines[0],
+            "production-action driver must emit one attestation JSON line")
+    attestation = json.loads(lines[0])
+    require(isinstance(attestation, dict),
+            "production-action driver attestation is not an object")
+    fixture = contract["fixture"]
+    adapter_dir = run_root / "adapter"
+    require(adapter_dir.is_dir() and not adapter_dir.is_symlink(),
+            "production-action adapter directory is absent or linked")
+    adapter_members = {path.name: path for path in adapter_dir.iterdir()}
+    require(set(adapter_members) == set(fixture["required_adapter_files"]),
+            "production-action adapter file set differs")
+    for name, path in adapter_members.items():
+        regular_single_file(path, f"production-action adapter {name}")
+        if expected_uid is not None:
+            require(path.lstat().st_uid == expected_uid,
+                    f"production-action adapter owner differs: {name}")
+    response_path = adapter_members["response.json"]
+    trace_path = adapter_members["trace.jsonl"]
+    response = load_json_artifact(response_path, "production-action response")
+    trace_lines = trace_path.read_text(encoding="utf-8").splitlines()
+    require(len(trace_lines) == 1 and trace_lines[0],
+            "production-action trace must contain only zero-usage summary")
+    trace = [json.loads(trace_lines[0])]
+    usage = response.get("usage")
+    zero_fields = {
+        "input_tokens", "cached_input_tokens", "cache_write_input_tokens",
+        "output_tokens", "reasoning_output_tokens", "tool_calls",
+        "build_attempts", "recovery_tool_calls", "infrastructure_retries",
+        "cost_usd",
+    }
+    require(
+        response.get("schema_version") == 1
+        and response.get("opaque_run_id") == request["opaque_run_id"]
+        and response.get("adapter_id") == "abrl-codex-production-action-candidate"
+        and response.get("adapter_version") == "1"
+        and response.get("model_id") == "abrl-fixed-offline-provider-fixture"
+        and response.get("immutable_model_version")
+        == "abrl-fixed-offline-provider-fixture-v1"
+        and response.get("replicate") == 0
+        and response.get("container_or_sandbox_image_digest")
+        == os.environ.get(IMAGE_DIGEST_ENV)
+        and response.get("budget_enforcement_attestation")
+        == "zero-provider-zero-model-zero-cost-fixture"
+        and response.get("filesystem_network_process_attestation")
+        == "network-none-fake-auth-production-shape-result-ineligible"
+        and response.get("termination") == "completed"
+        and isinstance(usage, dict)
+        and set(usage) == zero_fields | {"wall_seconds"}
+        and all(usage[field] == 0 for field in zero_fields)
+        and isinstance(usage["wall_seconds"], (int, float))
+        and not isinstance(usage["wall_seconds"], bool)
+        and usage["wall_seconds"] >= 0,
+        "production-action response identity or zero-usage ledger differs",
+    )
+    invocations = response.get("model_invocations")
+    require(
+        isinstance(invocations, list) and len(invocations) == 1
+        and invocations[0].get("transport") == "codex_cli"
+        and invocations[0].get("observable_id_kind") == "codex_thread"
+        and invocations[0].get("observable_id") == "offline-fixture-thread"
+        and invocations[0].get("process_exit_code") == 0
+        and invocations[0].get("usage_observed") is True,
+        "production-action fake invocation ledger is malformed",
+    )
+    require(trace == [{"sequence": 0, "kind": "usage_summary", "usage": usage}],
+            "production-action trace differs from zero-usage contract")
+    output_manifest = excluded_output_manifest(
+        run_root / "output", set(fixture["required_output_files"]),
+        expected_uid=expected_uid,
+    )
+    result = load_json_artifact(run_root / "output/result.json", "fixture result")
+    workflow = load_json_artifact(
+        run_root / "output/workflow-compliance.json", "fixture workflow record"
+    )
+    require(
+        result.get("opaque_run_id") == request["opaque_run_id"]
+        and result.get("final_status") == "blocked"
+        and result.get("public_declarations") == []
+        and workflow.get("opaque_run_id") == request["opaque_run_id"]
+        and workflow.get("workflow_id") == "production_action_fixture"
+        and workflow.get("evidence_files") == []
+        and (run_root / "output/lean-diff.patch").read_bytes() == b""
+        and b"lake build" not in (run_root / "output/build.log").read_bytes()
+        and b"lake env lean" not in (run_root / "output/build.log").read_bytes(),
+        "production-action fixture promoted a proof, build, or result",
+    )
+    handoff = attestation.get("fake_auth_handoff", {})
+    require(
+        attestation.get("status")
+        == "passed_result_free_production_action_driver_fixture"
+        and attestation.get("primary_result_eligible") is False
+        and attestation.get("provider_execution_enabled") is False
+        and attestation.get("provider_request_or_model_invocation_occurred") is False
+        and attestation.get("network_access_allowed") is False
+        and attestation.get("adapter_path") == ACTION_ADAPTER
+        and attestation.get("adapter_sha256") == fixture["adapter"]["sha256"]
+        and attestation.get("request_sha256") == fixture["request_sha256"]
+        and attestation.get("response_sha256")
+        == hashlib.sha256(response_path.read_bytes()).hexdigest()
+        and attestation.get("trace_sha256")
+        == hashlib.sha256(trace_path.read_bytes()).hexdigest()
+        and attestation.get("output_manifest") == output_manifest
+        and attestation.get("temporary_auth_removed") is True
+        and not (CODEX_HOME / "provider-auth").exists()
+        and isinstance(handoff, dict)
+        and handoff.get("bytes") == len(EXPECTED_AUTH)
+        and handoff.get("sha256") == hashlib.sha256(EXPECTED_AUTH).hexdigest()
+        and handoff.get("read_only_descriptor") is True
+        and handoff.get("descriptor_closed_before_adapter_launch") is True
+        and handoff.get("environment_marker_removed_before_adapter_launch") is True,
+        "production-action driver attestation weakens fake-auth/no-provider boundary",
+    )
+    return {
+        "adapter_response": response,
+        "adapter_trace": trace,
+        "adapter_stdout_sha256": hashlib.sha256(worker_output).hexdigest(),
+        "output_manifest": output_manifest,
+        "fake_auth_handoff": handoff,
+        "adapter_path": ACTION_ADAPTER,
+        "adapter_sha256": fixture["adapter"]["sha256"],
+        "temporary_auth_removed": True,
+        "provider_execution_enabled": False,
+        "provider_request_or_model_invocation_occurred": False,
+        "primary_result_eligible": False,
+    }
+
+
+def copyback_action_fixture(
+    run_root: Path, artifacts: Path, evidence: dict[str, Any],
+) -> dict[str, Any]:
+    require(artifacts.is_dir() and not artifacts.is_symlink()
+            and not any(artifacts.iterdir()),
+            "production-action copyback directory must be plain and empty")
+    records: list[dict[str, Any]] = []
+    for group in ("adapter", "output"):
+        source_root = run_root / group
+        require(source_root.is_dir() and not source_root.is_symlink(),
+                f"production-action {group} source is not plain")
+        for source in sorted(source_root.iterdir(), key=lambda item: item.name):
+            regular_single_file(source, f"production-action copyback {group}/{source.name}")
+            payload = source.read_bytes()
+            target = artifacts / group / source.name
+            target.parent.mkdir(parents=True, exist_ok=True, mode=0o755)
+            with target.open("xb") as stream:
+                stream.write(payload)
+                stream.flush()
+                os.fsync(stream.fileno())
+            target.chmod(0o444)
+            require(target.read_bytes() == payload,
+                    "production-action copyback changed bytes")
+            records.append({
+                "path": f"{group}/{source.name}",
+                "bytes": len(payload),
+                "sha256": hashlib.sha256(payload).hexdigest(),
+            })
+    receipt = {
+        "schema_version": 1,
+        "suite_id": "ABRL-TARGET-DRIFT-V2",
+        "status": "copied_result_free_production_action_fixture",
+        "primary_result_eligible": False,
+        "provider_execution_enabled": False,
+        "provider_request_or_model_invocation_occurred": False,
+        "source_request_sha256": hashlib.sha256(
+            (run_root / "request.json").read_bytes()
+        ).hexdigest(),
+        "copied_files": records,
+    }
+    receipt_path = artifacts / "copyback-receipt.json"
+    dump_atomic(receipt_path, receipt)
+    receipt_path.chmod(0o444)
+    require(load_json_artifact(receipt_path, "production-action copyback receipt")
+            == receipt, "production-action copyback receipt changed")
+    return {
+        "copyback_manifest": records,
+        "copyback_receipt_sha256": sha256(receipt_path),
+        "copyback_receipt_status": receipt["status"],
+    }
+
+
 def run_excluded_execute_component() -> None:
     require(os.geteuid() == 0 and os.getegid() == 0,
             "controller must start as root")
@@ -639,14 +963,136 @@ def run_excluded_execute_component() -> None:
     dump_atomic(CONTROL / "controller-report.json", report)
 
 
+def run_action_fixture_component() -> None:
+    require(os.geteuid() == 0 and os.getegid() == 0,
+            "controller must start as root")
+    require(CONTROL.is_dir() and not CONTROL.is_symlink(),
+            "root control output is not a plain directory")
+    CONTROL.chmod(0o700)
+    require(ARTIFACTS.is_dir() and not ARTIFACTS.is_symlink()
+            and not any(ARTIFACTS.iterdir()),
+            "production-action copyback output is not a fresh plain directory")
+    ARTIFACTS.chmod(0o755)
+    require(WORKSPACE.is_dir() and CODEX_HOME.is_dir(),
+            "disposable tmpfs mounts are absent")
+    contract = load_action_contract()
+    image_digest = os.environ.get(IMAGE_DIGEST_ENV, "")
+    require(re.fullmatch(r"sha256:[0-9a-f]{64}", image_digest) is not None,
+            "production-action image digest is absent or malformed")
+    auth = regular_single_file(AUTH_SOURCE, "outer auth sentinel")
+    require(auth.read_bytes() == EXPECTED_AUTH,
+            "only the frozen fake auth sentinel is accepted")
+    auth_read_only = source_is_read_only(auth)
+    input_members = list(INPUT_ROOT.rglob("*"))
+    require(all(
+        not path.is_symlink()
+        and (stat.S_ISREG(path.lstat().st_mode) or stat.S_ISDIR(path.lstat().st_mode))
+        for path in input_members
+    ), "production-action input contains a link or special file")
+    input_files = [
+        path for path in input_members if stat.S_ISREG(path.lstat().st_mode)
+    ]
+    input_read_only = bool(input_files) and all(
+        source_is_read_only(path) for path in input_files
+    )
+    require(auth_read_only and input_read_only,
+            "outer auth and production-action input must be mounted read-only")
+    with CONTROL_SENTINEL.open("xb") as stream:
+        stream.write(CONTROL_SENTINEL_BYTES)
+        stream.flush()
+        os.fsync(stream.fileno())
+    CONTROL_SENTINEL.chmod(0o400)
+    sentinel_info = CONTROL_SENTINEL.lstat()
+    require(
+        stat.S_ISREG(sentinel_info.st_mode)
+        and sentinel_info.st_uid == 0
+        and sentinel_info.st_gid == 0
+        and stat.S_IMODE(sentinel_info.st_mode) == 0o400,
+        "root control sentinel identity or mode differs",
+    )
+    run_root = WORKSPACE / "run"
+    copied_records = copy_action_fixture(INPUT_ROOT, run_root, contract)
+    for path in [WORKSPACE, *(WORKSPACE.rglob("*"))]:
+        os.chown(path, WORKER_UID, WORKER_GID)
+    command = [
+        image_digest if item == "{{IMAGE_DIGEST}}" else item
+        for item in contract["fixture"]["adapter_argv"]
+    ]
+    require("{{IMAGE_DIGEST}}" not in command,
+            "production-action argv retained an unresolved image placeholder")
+    auth_descriptor = os.open(auth, os.O_RDONLY | getattr(os, "O_CLOEXEC", 0))
+    worker_environment = {
+        "PATH": "/usr/local/bin:/usr/bin:/bin",
+        "HOME": "/tmp",
+        "CODEX_HOME": str(CODEX_HOME),
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "LANG": "C.UTF-8",
+        "ABRL_OUTER_COMPONENT_MODE": PRODUCTION_FIXTURE_MODE,
+        AUTH_FD_ENV: str(auth_descriptor),
+    }
+    outcome = run_worker_with_brokered_auth(
+        auth_descriptor, worker_environment, command=command, timeout_seconds=60,
+    )
+    if outcome.returncode != 0:
+        persist_worker_failure(CONTROL, outcome.returncode, outcome.stdout)
+    require(outcome.returncode == 0,
+            f"production-action fixture failed with exit {outcome.returncode}")
+    request = load_json_artifact(run_root / "request.json", "copied fixture request")
+    evidence = validate_action_fixture_artifacts(
+        run_root, contract, request, outcome.stdout, expected_uid=WORKER_UID,
+    )
+    copyback = copyback_action_fixture(run_root, ARTIFACTS, evidence)
+    report = {
+        "schema_version": 1,
+        "suite_id": "ABRL-TARGET-DRIFT-V2",
+        "status": "passed_result_free_production_action_fixture_component",
+        "execution_status_boundary": "primary_execution_not_started",
+        "production_execution_enabled": False,
+        "controller_pid": os.getpid(),
+        "controller_parent_pid": os.getppid(),
+        "controller_uid": os.geteuid(),
+        "controller_gid": os.getegid(),
+        "worker_uid": WORKER_UID,
+        "worker_gid": WORKER_GID,
+        "container_image_digest": image_digest,
+        "outer_auth_single_read_only_file": auth_read_only,
+        "agent_input_single_tree_read_only": input_read_only,
+        "agent_input_copy_manifest": copied_records,
+        "root_control_sentinel": {
+            "path": str(CONTROL_SENTINEL),
+            "mode": "0400",
+            "uid": sentinel_info.st_uid,
+            "gid": sentinel_info.st_gid,
+            "bytes": len(CONTROL_SENTINEL_BYTES),
+            "sha256": hashlib.sha256(CONTROL_SENTINEL_BYTES).hexdigest(),
+        },
+        "adapter_command_argv": command,
+        "adapter_command_sha256": hashlib.sha256(
+            json.dumps(command, separators=(",", ":")).encode("utf-8")
+        ).hexdigest(),
+        "execution_evidence": evidence,
+        "copyback_evidence": copyback,
+        "nonclaims": [
+            "The credential was the fixed fake sentinel; no real provider credential was read.",
+            "The fixed local fake executable emitted Codex-shaped JSONL; no provider request or model invocation occurred.",
+            "The real Codex adapter plumbing was exercised with Docker network none, but provider-only egress was not tested.",
+            "This fixture is permanently result-ineligible and cannot enter the real smoke or 450-run ledger.",
+            "The checked-in production gate remains closed."
+        ],
+    }
+    dump_atomic(CONTROL / "controller-report.json", report)
+
+
 def main() -> None:
     mode = os.environ.get("ABRL_OUTER_COMPONENT_MODE")
-    require(mode in {PROBE_MODE, EXCLUDED_EXECUTE_MODE},
+    require(mode in {PROBE_MODE, EXCLUDED_EXECUTE_MODE, PRODUCTION_FIXTURE_MODE},
             "component mode environment is absent or unknown")
     if mode == PROBE_MODE:
         run_component_probe()
-    else:
+    elif mode == EXCLUDED_EXECUTE_MODE:
         run_excluded_execute_component()
+    else:
+        run_action_fixture_component()
 
 
 if __name__ == "__main__":

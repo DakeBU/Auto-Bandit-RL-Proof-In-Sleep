@@ -20,7 +20,7 @@ import launch_target_drift_checker_container as checker_launcher  # noqa: E402
 
 
 def load(path: Path) -> dict[str, Any]:
-    return json.loads(path.read_text(encoding="utf-8"))
+    return prepare.load(path)
 
 
 def dump_new(path: Path, value: Any) -> None:
@@ -169,6 +169,21 @@ def prepare_preseal(draft_path: Path, source_manifest_path: Path, output: Path) 
     config["grading"]["grader_prompt_sha256"] = prepare.sha256_file(grader_prompt)
     wording_prompt = prepare.resolve_repo_path(config["wording_audit"]["text_only_prompt"])
     config["wording_audit"]["text_only_prompt_sha256"] = prepare.sha256_file(wording_prompt)
+    human_review = config["human_source_contract_validation"]
+    prepare.require(
+        human_review.get("external_trust_anchor") != "UNSET"
+        and human_review.get("external_trust_anchor_git_object_proof") != "UNSET",
+        "production preseal blocked: a real prior public external signer trust "
+        "anchor and its pack-only Git object proof remain UNSET",
+    )
+    review_packet = prepare.resolve_repo_path(human_review["review_packet"])
+    human_review["review_packet_manifest_sha256"] = prepare.sha256_file(
+        review_packet / "packet-manifest.json"
+    )
+    for path_field, hash_field, _ in prepare.HUMAN_REVIEW_FILE_BINDINGS:
+        human_review[hash_field] = prepare.sha256_file(
+            prepare.resolve_repo_path(human_review[path_field])
+        )
     code_hashes = {
         name: prepare.sha256_file(path)
         for name, path in prepare.execution_code_paths(config).items()
@@ -222,6 +237,9 @@ def prepare_preseal(draft_path: Path, source_manifest_path: Path, output: Path) 
     config["analysis"]["script_sha256"] = code_hashes[
         "analyze_target_drift_execution.py"
     ]
+    config["analysis"]["test_script_sha256"] = code_hashes[
+        "test_target_drift_analysis.py"
+    ]
     config["wording_audit"]["script_sha256"] = code_hashes[
         "audit_target_drift_wording.py"
     ]
@@ -230,6 +248,24 @@ def prepare_preseal(draft_path: Path, source_manifest_path: Path, output: Path) 
     ]
     config["missing_run_policy"]["schedule_runner_sha256"] = code_hashes[
         "run_target_drift_schedule.py"
+    ]
+    human_review["self_attested_prepare_script_sha256"] = code_hashes[
+        "prepare_target_drift_human_contract_review.py"
+    ]
+    human_review["self_attested_validator_script_sha256"] = code_hashes[
+        "validate_target_drift_human_contract_review.py"
+    ]
+    human_review["self_attested_validator_test_sha256"] = code_hashes[
+        "test_target_drift_human_contract_review.py"
+    ]
+    human_review["execution_finalizer_sha256"] = code_hashes[
+        "finalize_target_drift_config.py"
+    ]
+    human_review["external_validator_script_sha256"] = code_hashes[
+        "validate_target_drift_human_contract_external_verification.py"
+    ]
+    human_review["external_validator_test_sha256"] = code_hashes[
+        "test_target_drift_human_contract_external_verification.py"
     ]
     config["posthoc_checker"]["runtime_config_sha256"] = (
         prepare.checker_runtime_config_sha256(config)
@@ -240,6 +276,14 @@ def prepare_preseal(draft_path: Path, source_manifest_path: Path, output: Path) 
     config["posthoc_checker"]["isolation_probe_report_sha256"] = prepare.sha256_file(
         checker_probe
     )
+    # Derive the execution-layer prerequisite only after both lower layers have
+    # rebuilt successfully. Neither self-attestation nor the signed external
+    # attestation is production-eligible on its own.
+    human_review["combined_prerequisite_satisfied"] = "UNSET"
+    prepare.validate_human_source_contract_review(
+        config, require_completion=True, require_combined_record=False
+    )
+    human_review["combined_prerequisite_satisfied"] = True
     config["execution_status"] = "preseal_ready"
     config["sealed_agent_view"]["aggregate_sha256"] = "UNSET"
     config["unresolved_fields"] = ["sealed_agent_view.aggregate_sha256"]
@@ -252,6 +296,9 @@ def prepare_preseal(draft_path: Path, source_manifest_path: Path, output: Path) 
     prepare.validate_checker_contract(config, require_hashes=True)
     prepare.validate_auxiliary_prompts(config, require_hashes=True)
     prepare.validate_execution_code_hashes(config, require_hashes=True)
+    prepare.validate_paired_replicates(config)
+    prepare.validate_method_amendment(config, require_hashes=True)
+    prepare.validate_human_source_contract_review(config, require_completion=True)
     dump_new(output.resolve(), config)
     print(f"wrote preseal_ready execution config: {output.resolve()}")
 

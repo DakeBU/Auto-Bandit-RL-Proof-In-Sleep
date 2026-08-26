@@ -1,0 +1,217 @@
+{
+  "schema_version": 1,
+  "suite_id": "ABRL-TARGET-DRIFT-V2",
+  "status": "production_action_interface_candidate_gate_closed",
+  "execution_status_boundary": "primary_execution_not_started",
+  "production_execution_enabled": false,
+  "primary_result_eligible": false,
+  "production_mode": "production_execute_v1",
+  "fixture_mode": "result_free_production_action_fixture_v1",
+  "production_gate": {
+    "decision": "closed",
+    "required_host_platform": "linux",
+    "required_container_runtime": "docker",
+    "required_final_seal_status": "sealed_final_production_agent_action",
+    "required_final_bindings": [
+      "published final agent image digest and SBOM",
+      "final-image in-image byte probe",
+      "final-image PID-1 lifecycle probe",
+      "real single-file credential visibility probe without secret bytes or a secret-derived digest",
+      "provider-only egress enforcement and allowlist attestation",
+      "frozen execution config, provider client, model, settings, prices, and budgets",
+      "per-run sealed input manifest",
+      "permanently result-ineligible one-case-by-three-condition real-infrastructure smoke"
+    ],
+    "rejected_markers": [
+      "candidate",
+      "fake",
+      "fixture",
+      "result_free",
+      "result-free",
+      "unsealed",
+      "UNSET"
+    ],
+    "reason": "The checked-in code has no trustworthy local evidence for real credential visibility or provider-only egress on a final Linux digest. Production execution therefore fails before credential inspection or Docker launch."
+  },
+  "production_seal_schema": {
+    "schema_version": 1,
+    "required_top_level_fields": [
+      "schema_version",
+      "suite_id",
+      "status",
+      "production_execution_enabled",
+      "primary_result_eligible",
+      "orchestrator_commit",
+      "image",
+      "runtime",
+      "config",
+      "provider",
+      "probes",
+      "request"
+    ],
+    "required_nested_fields": {
+      "image": [
+        "digest",
+        "sbom_sha256",
+        "sbom_status"
+      ],
+      "runtime": [
+        "kind",
+        "executable_sha256",
+        "identity_sha256"
+      ],
+      "config": [
+        "status",
+        "sha256"
+      ],
+      "provider": [
+        "kind",
+        "fixture_provider",
+        "single_file_credential_boundary",
+        "model_shell_network_access",
+        "egress_policy"
+      ],
+      "probes": [
+        "image_probe_status",
+        "image_probe_sha256",
+        "lifecycle_probe_status",
+        "lifecycle_probe_sha256",
+        "credential_visibility_probe_status",
+        "credential_visibility_probe_sha256",
+        "provider_egress_probe_status",
+        "provider_egress_probe_sha256",
+        "real_smoke_status",
+        "real_smoke_ledger_sha256"
+      ],
+      "request": [
+        "status",
+        "manifest_sha256"
+      ]
+    },
+    "sha256_fields": [
+      "image.sbom_sha256",
+      "runtime.executable_sha256",
+      "runtime.identity_sha256",
+      "config.sha256",
+      "probes.image_probe_sha256",
+      "probes.lifecycle_probe_sha256",
+      "probes.credential_visibility_probe_sha256",
+      "probes.provider_egress_probe_sha256",
+      "probes.real_smoke_ledger_sha256",
+      "request.manifest_sha256"
+    ],
+    "digest_fields": [
+      "image.digest"
+    ],
+    "required_exact_values": {
+      "image.sbom_status": "sealed_final_production_agent_image",
+      "runtime.kind": "docker",
+      "config.status": "sealed_final_execution_config",
+      "provider.kind": "codex_cli",
+      "provider.fixture_provider": false,
+      "provider.single_file_credential_boundary": true,
+      "provider.model_shell_network_access": false,
+      "provider.egress_policy": "provider_only_allowlist_enforced",
+      "probes.image_probe_status": "passed_final_agent_image_probe",
+      "probes.lifecycle_probe_status": "passed_final_pid1_lifecycle_probe",
+      "probes.credential_visibility_probe_status": "passed_real_credential_visibility_no_secret_digest",
+      "probes.provider_egress_probe_status": "passed_provider_only_egress_probe",
+      "probes.real_smoke_status": "passed_result_ineligible_real_three_condition_smoke",
+      "request.status": "sealed_production_run_input"
+    }
+  },
+  "fixture": {
+    "permanently_result_ineligible": true,
+    "provider_execution_enabled": false,
+    "provider_request_or_model_invocation_occurred": false,
+    "network_policy": "docker network none",
+    "credential_policy": "only the literal RESULT_FREE_SENTINEL_DO_NOT_USE auth.json bytes through one read-only descriptor",
+    "tracked_input_root": "evaluation/target-drift-v2/agent-production-action-fixture",
+    "container_input_root": "/input/agent",
+    "tmpfs_agent_root": "/agent/run",
+    "input_directories": [
+      "workspace"
+    ],
+    "input_manifest": [
+      {
+        "path": "prompt.md",
+        "bytes": 276,
+        "sha256": "81654fe18127c82b8a709b5bd3b41229c64b6556fc5e194419ccf799ceac9a59"
+      },
+      {
+        "path": "request.json",
+        "bytes": 2494,
+        "sha256": "b66f585e5c3788d2d3b0e122bc19ebb0c2fc068f52480b4acf8e6ad50295719a"
+      },
+      {
+        "path": "workspace/Fixture.lean",
+        "bytes": 173,
+        "sha256": "99593640eb35d7d91e7cc986594cf2db9f9e92c57d03ca1a8bfcb015590658af"
+      }
+    ],
+    "request_sha256": "b66f585e5c3788d2d3b0e122bc19ebb0c2fc068f52480b4acf8e6ad50295719a",
+    "driver": {
+      "tracked_path": "tools/target_drift_agent_action_driver.py",
+      "container_path": "/usr/local/lib/abrl/target_drift_agent_action_driver.py",
+      "sha256": "48ec3886a9e8908b225c36bcd867ae0030fce2cc9d5927f778ba3e41b24e5149"
+    },
+    "adapter": {
+      "tracked_path": "tools/codex_target_drift_adapter.py",
+      "container_path": "/usr/local/lib/abrl/codex_target_drift_adapter.py",
+      "sha256": "0e6b0b5499525c025e7aef9c8fff4907a3afe6359e18eac1a5e53d74842d4cb0"
+    },
+    "fake_provider": {
+      "tracked_path": "tools/target_drift_agent_fake_codex.py",
+      "container_path": "/usr/local/lib/abrl/target_drift_agent_fake_codex.py",
+      "sha256": "9e6d5c9a6d0c1d387bfe5464619a2069f364c0dce1ad6d70ba691831403ae774"
+    },
+    "adapter_argv": [
+      "/usr/bin/python3",
+      "/usr/local/lib/abrl/target_drift_agent_action_driver.py",
+      "--request",
+      "/agent/run/request.json",
+      "--response",
+      "/agent/run/adapter/response.json",
+      "--trace",
+      "/agent/run/adapter/trace.jsonl",
+      "--agent-mount",
+      "/agent/run",
+      "--adapter-id",
+      "abrl-codex-production-action-candidate",
+      "--adapter-version",
+      "1",
+      "--model-id",
+      "abrl-fixed-offline-provider-fixture",
+      "--immutable-model-version",
+      "abrl-fixed-offline-provider-fixture-v1",
+      "--image-digest",
+      "{{IMAGE_DIGEST}}",
+      "--budget-attestation",
+      "zero-provider-zero-model-zero-cost-fixture",
+      "--isolation-attestation",
+      "network-none-fake-auth-production-shape-result-ineligible",
+      "--request-sha256",
+      "b66f585e5c3788d2d3b0e122bc19ebb0c2fc068f52480b4acf8e6ad50295719a"
+    ],
+    "required_output_files": [
+      "result.json",
+      "lean-diff.patch",
+      "build.log",
+      "explanation.md",
+      "workflow-compliance.json"
+    ],
+    "required_adapter_files": [
+      "provider-attempt-001.stderr.log",
+      "provider-attempt-001.stdout.jsonl",
+      "provider-events.jsonl",
+      "response.json",
+      "trace.jsonl"
+    ]
+  },
+  "nonclaims": [
+    "The executable fixture provider is fixed local Python and performs no provider request or model invocation.",
+    "A passing fixture exercises the production-shaped driver and built-in Codex adapter but is permanently result-ineligible.",
+    "The production gate remains closed; this contract does not attest real credentials, provider-only egress, a final image, or a real smoke.",
+    "No fixture artifact can enter the 450-run ledger, grading, or inferential analysis."
+  ]
+}

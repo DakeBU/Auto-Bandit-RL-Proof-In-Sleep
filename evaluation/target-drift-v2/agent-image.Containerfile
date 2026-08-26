@@ -13,10 +13,13 @@ COPY codex/package.json /opt/abrl-codex/package.json
 COPY target_drift_agent_pid1.py /usr/local/bin/abrl-agent-pid1
 COPY codex_target_drift_adapter.py /usr/local/lib/abrl/codex_target_drift_adapter.py
 COPY target_drift_agent_excluded_adapter.py /usr/local/lib/abrl/target_drift_agent_excluded_adapter.py
+COPY target_drift_agent_action_driver.py /usr/local/lib/abrl/target_drift_agent_action_driver.py
+COPY target_drift_agent_fake_codex.py /usr/local/lib/abrl/target_drift_agent_fake_codex.py
 COPY target_drift_agent_outer_controller.py /usr/local/lib/abrl/target_drift_agent_outer_controller.py
 COPY target_drift_agent_outer_probe.py /usr/local/lib/abrl/target_drift_agent_outer_probe.py
 COPY target_drift_agent_model_probe.py /usr/local/lib/abrl/target_drift_agent_model_probe.py
 COPY agent-excluded-execution-contract.json /usr/local/share/abrl/agent-excluded-execution-contract.json
+COPY agent-production-action-contract.json /usr/local/share/abrl/agent-production-action-contract.json
 
 RUN chmod 0555 /opt/abrl-codex/codex \
         /opt/abrl-codex/codex-resources/bwrap \
@@ -24,11 +27,14 @@ RUN chmod 0555 /opt/abrl-codex/codex \
         /usr/local/bin/abrl-agent-pid1 \
         /usr/local/lib/abrl/codex_target_drift_adapter.py \
         /usr/local/lib/abrl/target_drift_agent_excluded_adapter.py \
+        /usr/local/lib/abrl/target_drift_agent_action_driver.py \
+        /usr/local/lib/abrl/target_drift_agent_fake_codex.py \
         /usr/local/lib/abrl/target_drift_agent_outer_controller.py \
         /usr/local/lib/abrl/target_drift_agent_outer_probe.py \
         /usr/local/lib/abrl/target_drift_agent_model_probe.py \
     && chmod 0444 /opt/abrl-codex/package.json \
         /usr/local/share/abrl/agent-excluded-execution-contract.json \
+        /usr/local/share/abrl/agent-production-action-contract.json \
     && ln -sfn /opt/abrl-codex/codex /usr/local/bin/codex \
     && ln -sfn /opt/abrl-codex/path/rg /usr/local/bin/rg \
     && /usr/local/bin/codex --version

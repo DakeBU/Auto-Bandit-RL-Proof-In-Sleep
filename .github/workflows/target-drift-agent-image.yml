@@ -13,10 +13,13 @@ on:
         default: ghcr.io/leanprover-community/mathlib4/gitpod@sha256:3fd7d678a320db6a6a919ab909fe3dea8e7e92ff0ea5678681ae8cbc490d5e9e
   pull_request:
     paths:
+      - ".gitattributes"
       - ".github/workflows/target-drift-agent-image.yml"
       - "evaluation/target-drift-v2/agent-image*"
       - "evaluation/target-drift-v2/agent-excluded-execution-contract.json"
       - "evaluation/target-drift-v2/agent-excluded-execution-request.json"
+      - "evaluation/target-drift-v2/agent-production-action-contract.json"
+      - "evaluation/target-drift-v2/agent-production-action-fixture/**"
       - "evaluation/target-drift-v2/agent-sandbox-contract.json"
       - "evaluation/target-drift-v2/agent-codex-native.apparmor"
       - "tools/codex_target_drift_adapter.py"
@@ -31,7 +34,10 @@ on:
       - "tools/target_drift_agent_outer_probe.py"
       - "tools/target_drift_agent_model_probe.py"
       - "tools/target_drift_agent_excluded_adapter.py"
+      - "tools/target_drift_agent_action_driver.py"
+      - "tools/target_drift_agent_fake_codex.py"
       - "tools/test_target_drift_agent_outer_boundary.py"
+      - "tools/test_target_drift_agent_production_action.py"
 
 permissions:
   contents: read
@@ -64,6 +70,7 @@ jobs:
           python3 -m unittest discover -s tools -p "test_target_drift_agent_image.py"
           python3 -m unittest discover -s tools -p "test_target_drift_agent_lifecycle.py"
           python3 -m unittest discover -s tools -p "test_target_drift_agent_outer_boundary.py"
+          python3 -m unittest discover -s tools -p "test_target_drift_agent_production_action.py"
           python3 -m unittest tools.test_target_drift_runtime
 
       - name: Load the exact Codex user-namespace AppArmor profile
@@ -194,6 +201,43 @@ jobs:
             sudo chown -R "$(id -u):$(id -g)" "${TARGET}"
             chmod -R u+rwX,go+rX "${TARGET}"
           fi
+
+      - name: Traverse the real adapter with the fixed offline provider fixture
+        run: |
+          cp -a evaluation/target-drift-v2/agent-production-action-fixture \
+            "${RUNNER_TEMP}/abrl-agent-production-fixture-input"
+          mkdir -p "${RUNNER_TEMP}/abrl-agent-production-fixture-auth"
+          mkdir -p "${RUNNER_TEMP}/abrl-agent-production-fixture-control"
+          mkdir -p "${RUNNER_TEMP}/abrl-agent-production-fixture-copyback"
+          printf 'RESULT_FREE_SENTINEL_DO_NOT_USE\n' > \
+            "${RUNNER_TEMP}/abrl-agent-production-fixture-auth/auth.json"
+          find "${RUNNER_TEMP}/abrl-agent-production-fixture-input" -type f \
+            -exec chmod 0444 {} +
+          chmod 0400 \
+            "${RUNNER_TEMP}/abrl-agent-production-fixture-auth/auth.json"
+          python3 tools/launch_target_drift_agent_container.py \
+            --component-mode production-fixture \
+            --image-sbom "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-image-sbom.json" \
+            --agent-input "${RUNNER_TEMP}/abrl-agent-production-fixture-input" \
+            --auth-sentinel "${RUNNER_TEMP}/abrl-agent-production-fixture-auth/auth.json" \
+            --control-output "${RUNNER_TEMP}/abrl-agent-production-fixture-control" \
+            --artifact-output "${RUNNER_TEMP}/abrl-agent-production-fixture-copyback" \
+            --apparmor-source "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-codex-native.apparmor" \
+            --report "${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-production-action-fixture.json" \
+            --probe-commit "${GITHUB_SHA}"
+
+      - name: Preserve production-action fixture control and copyback evidence
+        if: always()
+        run: |
+          for NAME in control copyback; do
+            SOURCE="${RUNNER_TEMP}/abrl-agent-production-fixture-${NAME}"
+            TARGET="${RUNNER_TEMP}/abrl-agent-image-artifacts/agent-production-fixture-${NAME}-evidence-copy"
+            if [[ -d "${SOURCE}" ]]; then
+              sudo cp -a "${SOURCE}" "${TARGET}"
+              sudo chown -R "$(id -u):$(id -g)" "${TARGET}"
+              chmod -R u+rwX,go+rX "${TARGET}"
+            fi
+          done
 
       - name: Re-run destructive PID-1 lifecycle probe on the exact agent image
         run: |

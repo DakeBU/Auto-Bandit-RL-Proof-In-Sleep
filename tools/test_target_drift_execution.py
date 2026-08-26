@@ -78,7 +78,7 @@ class TargetDriftExecutionTest(unittest.TestCase):
     def test_v1_and_v2_readiness_reports_cannot_be_conflated(self) -> None:
         expected = {
             "target-drift-v1": ("ABRL-TARGET-DRIFT-V1", 26),
-            "target-drift-v2": ("ABRL-TARGET-DRIFT-V2", 122),
+            "target-drift-v2": ("ABRL-TARGET-DRIFT-V2", 161),
         }
         for directory, (suite_id, unresolved_count) in expected.items():
             config_path = ROOT / "evaluation" / directory / "execution-template.json"
@@ -410,6 +410,7 @@ class TargetDriftExecutionTest(unittest.TestCase):
             b"challenges",
             b"paired requirements",
             b"protocol",
+            b"method amendment",
             b"missing-run policy",
             b"sources",
             {"source.pdf": b"pdf"},
@@ -424,7 +425,9 @@ class TargetDriftExecutionTest(unittest.TestCase):
             b"text-only prompt",
             {condition: condition.encode() for condition in prepare.CONDITIONS},
             {"runner.py": b"runner"},
+            {"self-attested-completion.json": b"human review"},
         )
+        self.assertIn("method-amendment.json", components)
         baseline, _ = prepare.aggregate_digest(components)
         for name in components:
             changed = dict(components)

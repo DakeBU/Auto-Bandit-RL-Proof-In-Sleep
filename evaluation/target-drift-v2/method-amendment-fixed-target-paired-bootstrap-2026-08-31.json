@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "suite_id": "ABRL-TARGET-DRIFT-V2",
+  "amendment_id": "ABRL-TARGET-DRIFT-FIXED-TARGET-PAIRED-BOOTSTRAP-METHOD-AMENDMENT-2026-08-31",
+  "amended_on": "2026-08-31",
+  "status": "hash_bound_pre_execution_method_amendment_results_absent",
+  "reason": "Bind the primary analysis to the current fixed-thirty-target, requirement-variant-preserving paired-invocation bootstrap before any production model outcome, human grade, or workflow comparison exists.",
+  "base_git_commit_before_method_amendment": "e4ed39499d4be4a4156a3446e09ae2aa6dc946df",
+  "timing_and_claim_boundary": {
+    "primary_model_outcomes_observed": false,
+    "external_comparator_outcomes_observed": false,
+    "provider_calls_for_evaluation_observed": false,
+    "human_expert_source_review_complete": false,
+    "amendment_is_evaluation_result": false
+  },
+  "unchanged_design": {
+    "frozen_target_count": 30,
+    "paper_derived_targets": 18,
+    "paper_source_clusters": 3,
+    "textbook_control_targets": 12,
+    "conditions": [
+      "compile_only",
+      "source_aware_blueprint",
+      "abrl"
+    ],
+    "fresh_invocations_per_target_condition": 5,
+    "planned_run_count": 450,
+    "complete_case_gate": "Inferential analysis requires all 450 preregistered semantic runs to be production-result-eligible and graded; replacement and outcome imputation are forbidden."
+  },
+  "fixed_method": {
+    "primary_estimand": "fixed-30-target equal-weight mean of paired invocation risk differences in expert-adjudicated exact contract satisfaction (abrl minus source_aware_blueprint), retaining each target's frozen 3/2 or 2/3 source-faithful/injected-drift allocation; conditional generalization is only to new independent invocations under the frozen model, runtime, and protocol",
+    "primary_pairing_key": [
+      "case_id",
+      "replicate",
+      "requirement_variant"
+    ],
+    "primary_interval_method_id": "fixed_30_target_variant_preserving_paired_invocation_bootstrap_v1",
+    "primary_interval": "95% fixed-target, variant-preserving paired-invocation bootstrap: do not resample the 30 targets; within every target-by-requirement-variant cell, resample aligned ABRL/source-aware replicate differences with replacement at the original cell size",
+    "primary_success_rule": "lower endpoint of the fixed-target, variant-preserving paired-invocation bootstrap interval above zero; report faithful-request specificity and injected-drift sensitivity alongside the primary result",
+    "primary_sensitivity_analyses": "exact source-aware sign flip over three paper-source clusters plus twelve textbook targets; leave-one-paper-out point estimates; source- and stratum-specific condition means",
+    "secondary_pairwise_test": "exact paired sign-flip over 15 dependence units: three paper-source clusters and twelve textbook targets",
+    "secondary_multiplicity": "Benjamini-Hochberg at q=0.05 over preregistered secondary endpoints",
+    "generalization_boundary": "The interval is conditional on the fixed target bank, model, runtime, requirement allocation, and protocol. Replicate labels do not assert shared provider randomness, and three source papers do not support paper-population inference."
+  },
+  "nonclaims": [
+    "No result, effect estimate, interval, p-value, q-value, success decision, or model ranking is recorded by this amendment.",
+    "The thirty targets are not sampled from a defined paper, theorem, or target population.",
+    "The bundled workflow contrast does not identify the isolated effect of any one ABRL component.",
+    "A passed machine success rule would not establish universal autoformalization superiority or ICLR acceptance."
+  ],
+  "bindings": {
+    "primary_protocol": {
+      "path": "evaluation/target-drift-v2/protocol.json",
+      "sha256": "8eae85a6949778619c6c94fb62ac08153167624d625c11847fea3e0f081a2778"
+    },
+    "analysis_script": {
+      "path": "tools/analyze_target_drift_execution.py",
+      "sha256": "0d8e407714880fb2fb74a4a1ee4c616ee50a5319c345be76a59b0a1e423ae571"
+    },
+    "analysis_tests": {
+      "path": "tools/test_target_drift_analysis.py",
+      "sha256": "506654698f192df41b19b5f416a6e18c839717715218bfeca0932f549ef105c9"
+    }
+  }
+}
