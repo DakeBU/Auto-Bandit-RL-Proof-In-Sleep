@@ -993,10 +993,20 @@ def main() -> int:
     for required in (
         "fitFlowchartViewBoxes",
         'svg[aria-roledescription^="flowchart"]',
+        'flowchart: { htmlLabels: true',
         "labelOverflowRegions();",
     ):
         if required not in site_js:
             errors.append(f"site.js is missing the maintainable flowchart-fit hook: {required}")
+    learning_path = (SITE_DIR / "diagrams" / "learning-path.mmd").read_text(encoding="utf-8")
+    if re.search(r'\["[0-9]+\.', learning_path):
+        errors.append(
+            "learning-path Mermaid labels must not begin with ordered-list syntax; "
+            "use zero-padded labels with a middle dot"
+        )
+    for required in ("01 · Foundations", "10 · Frontier + contribution workflow"):
+        if required not in learning_path:
+            errors.append(f"learning-path Mermaid is missing the safe chapter label: {required}")
     implementation_source = (output / "implementation-map" / "index.html").read_text(
         encoding="utf-8"
     )

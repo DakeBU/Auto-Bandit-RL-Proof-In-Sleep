@@ -364,7 +364,7 @@
           startOnLoad: false,
           securityLevel: "strict",
           theme: "base",
-          flowchart: { htmlLabels: false, curve: "basis" },
+          flowchart: { htmlLabels: true, curve: "basis" },
           themeVariables: {
             background: styles.getPropertyValue("--surface").trim(),
             primaryColor: styles.getPropertyValue("--accent-soft").trim(),
