@@ -487,7 +487,7 @@ class AnonymousSupplementTests(unittest.TestCase):
         )
         self.assertEqual(sgb_row["status"], "partial")
         self.assertEqual(sgb_row["source_record_ids"], [BUILDER.SGB_AUDIT_ID])
-        self.assertEqual(ledger["stochastic_gradient_bandit"]["declaration_count"], 143)
+        self.assertEqual(ledger["stochastic_gradient_bandit"]["declaration_count"], 183)
         self.assertEqual(
             ledger["stochastic_gradient_bandit"]["finite_algebra_declaration_count"],
             26,
@@ -522,11 +522,17 @@ class AnonymousSupplementTests(unittest.TestCase):
         )
         self.assertEqual(
             ledger["stochastic_gradient_bandit"]["path_integrability_declaration_count"],
-            17,
+            19,
         )
         self.assertEqual(
             ledger["stochastic_gradient_bandit"]["fixed_iid_declaration_count"],
-            8,
+            9,
+        )
+        self.assertEqual(
+            ledger["stochastic_gradient_bandit"][
+                "unconditional_recurrence_declaration_count"
+            ],
+            37,
         )
         self.assertTrue(
             ledger["stochastic_gradient_bandit"]["generated_trajectory_compiled"]
@@ -548,9 +554,11 @@ class AnonymousSupplementTests(unittest.TestCase):
             "path_integrability_compiled",
             "conditional_expectation_one_step_recurrence_compiled",
             "fixed_iid_contract_compiled",
+            "unconditional_recurrence_iteration_compiled",
+            "generic_expected_failure_mass_bound_compiled",
         ):
             self.assertTrue(ledger["stochastic_gradient_bandit"][flag])
-        self.assertFalse(
+        self.assertTrue(
             ledger["stochastic_gradient_bandit"][
                 "coordinate_update_integrability_verified"
             ]
@@ -613,7 +621,7 @@ class AnonymousSupplementTests(unittest.TestCase):
         succinct = rows["succinct-lower-bound-source-frozen-audit"]
         self.assertEqual(succinct["compiled_declaration_count"], 54)
         sgb = rows["stochastic-gradient-bandit-source-frozen-audit"]
-        self.assertEqual(sgb["compiled_declaration_count"], 143)
+        self.assertEqual(sgb["compiled_declaration_count"], 183)
         self.assertEqual(
             sgb["declaration_count_breakdown"],
             {
@@ -625,8 +633,9 @@ class AnonymousSupplementTests(unittest.TestCase):
                 "fixed_history_successor_recurrence": 10,
                 "two_arm_initial_recurrence": 3,
                 "measurable_contract_and_cond_distrib_transport": 25,
-                "path_integrability_and_conditional_recurrence": 17,
-                "fixed_iid_source_contract_bridge": 8,
+                "path_integrability_and_conditional_recurrence": 19,
+                "fixed_iid_source_contract_bridge": 9,
+                "unconditional_recurrence_and_failure_mass": 37,
             },
         )
         for row in (delayed, succinct, sgb):
@@ -705,6 +714,7 @@ class AnonymousSupplementTests(unittest.TestCase):
             BUILDER.SGB_PATH_INTEGRABILITY_DECLARATIONS,
             BUILDER.SGB_CONDITIONAL_RECURRENCE_DECLARATIONS,
             BUILDER.SGB_FIXED_IID_DECLARATIONS,
+            BUILDER.SGB_UNCONDITIONAL_RECURRENCE_DECLARATIONS,
         )
         for required in required_sets:
             with self.subTest(victim_set=sorted(required)):
@@ -724,7 +734,7 @@ class AnonymousSupplementTests(unittest.TestCase):
                 row["full_name"] = replacement
                 with self.assertRaisesRegex(
                     ValueError,
-                    "143 declarations across the frozen",
+                    "183 declarations across the frozen",
                 ):
                     BUILDER.validate_sgb_count(records, index)
 

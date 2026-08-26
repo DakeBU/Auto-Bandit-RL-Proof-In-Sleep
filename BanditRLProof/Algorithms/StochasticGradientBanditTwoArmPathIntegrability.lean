@@ -259,6 +259,111 @@ theorem abs_sourceIncrement_softmax_le_abs_reward
       (softmaxProbability_nonneg theta coordinate)
       (softmaxProbability_le_one theta coordinate)
 
+/-! ## Equation-(5) update integrability from the source support contract -/
+
+/-- The bounded fixed-mean contract discharges the initial-pair
+`Integrable sourceIncrement` premise used by Equation (5).  Only the support
+field of the contract is needed: softmax updates are measurable and have
+absolute value at most the observed reward. -/
+theorem integrable_measurableTwoArmInitialPairKernel_sourceIncrement_of_contract
+    {Env : Type v} [MeasurableSpace Env]
+    (initialTheta : Fin 2 -> Real) (eta : Real)
+    (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real)
+    (mean : Fin 2 -> Real)
+    (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean)
+    (env : Env) (coordinate : Fin 2) :
+    Integrable
+      (fun pair : Fin 2 × Real =>
+        sourceIncrement (softmaxProbability initialTheta)
+          pair.2 pair.1 coordinate)
+      (Thompson.measurableEnvironmentInitialPairKernel
+        (historyAlgorithm initialTheta eta) environment env) := by
+  have hmeas : Measurable
+      (fun pair : Fin 2 × Real =>
+        sourceIncrement (softmaxProbability initialTheta)
+          pair.2 pair.1 coordinate) :=
+    measurable_sourceIncrement
+      (fun _pair : Fin 2 × Real => softmaxProbability initialTheta)
+      Prod.snd Prod.fst coordinate measurable_const measurable_snd
+        measurable_fst
+  apply Integrable.of_bound hmeas.aestronglyMeasurable 1
+  have hpPair : MeasurableSet
+      {pair : Fin 2 × Real | |pair.2| <= 1} := by
+    exact measurableSet_le measurable_snd.abs measurable_const
+  have hbound :
+      ∀ᵐ pair
+          ∂Thompson.measurableEnvironmentInitialPairKernel
+            (historyAlgorithm initialTheta eta) environment env,
+        |pair.2| <= 1 := by
+    rw [Thompson.measurableEnvironmentInitialPairKernel_apply]
+    apply Measure.ae_compProd_of_ae_ae hpPair
+    filter_upwards [] with selected
+    simpa [Thompson.MeasurableHistoryEnvironment.at,
+      Kernel.comap_apply] using
+      contract.initial_reward_bound env selected
+  filter_upwards [hbound] with pair hreward
+  rw [Real.norm_eq_abs]
+  exact (abs_sourceIncrement_softmax_le_abs_reward
+    initialTheta pair.2 pair.1 coordinate).trans hreward
+
+/-- The same contract discharges Equation-(5)'s source-increment
+integrability premise at every generated successor history.  No independence,
+gap, or learning-rate assumption is introduced. -/
+theorem integrable_measurableTwoArmHistoryStepKernel_sourceIncrement_of_contract
+    {Env : Type v} [MeasurableSpace Env]
+    (initialTheta : Fin 2 -> Real) (eta : Real)
+    (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real)
+    (mean : Fin 2 -> Real)
+    (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean)
+    (n : Nat) (env : Env)
+    (history : History.FinitePairHistory (Fin 2) Real n)
+    (coordinate : Fin 2) :
+    Integrable
+      (fun pair : Fin 2 × Real =>
+        sourceIncrement
+          (softmaxProbability
+            (historyParameter initialTheta eta n history))
+          pair.2 pair.1 coordinate)
+      (Thompson.measurableEnvironmentHistoryStepKernel
+        (historyAlgorithm initialTheta eta)
+        environment n (env, history)) := by
+  have hmeas : Measurable
+      (fun pair : Fin 2 × Real =>
+        sourceIncrement
+          (softmaxProbability
+            (historyParameter initialTheta eta n history))
+          pair.2 pair.1 coordinate) :=
+    measurable_sourceIncrement
+      (fun _pair : Fin 2 × Real =>
+        softmaxProbability
+          (historyParameter initialTheta eta n history))
+      Prod.snd Prod.fst coordinate measurable_const measurable_snd
+        measurable_fst
+  apply Integrable.of_bound hmeas.aestronglyMeasurable 1
+  have hpPair : MeasurableSet
+      {pair : Fin 2 × Real | |pair.2| <= 1} := by
+    exact measurableSet_le measurable_snd.abs measurable_const
+  have hbound :
+      ∀ᵐ pair
+          ∂Thompson.measurableEnvironmentHistoryStepKernel
+            (historyAlgorithm initialTheta eta)
+            environment n (env, history),
+        |pair.2| <= 1 := by
+    rw [Thompson.measurableEnvironmentHistoryStepKernel_apply,
+      Thompson.historyStepKernel,
+      ProbabilityTheory.Kernel.compProd_apply_eq_compProd_sectR]
+    apply Measure.ae_compProd_of_ae_ae hpPair
+    filter_upwards [] with selected
+    rw [Kernel.sectR_apply]
+    simpa [Thompson.MeasurableHistoryEnvironment.at,
+      Kernel.comap_apply] using
+      contract.successor_reward_bound n env history selected
+  filter_upwards [hbound] with pair hreward
+  rw [Real.norm_eq_abs]
+  exact (abs_sourceIncrement_softmax_le_abs_reward
+    (historyParameter initialTheta eta n history)
+    pair.2 pair.1 coordinate).trans hreward
+
 /-- On a finite history supported in `[-1,1]`, every zero-initialized
 Algorithm-1 parameter coordinate grows by at most `|eta|` per consumed pair. -/
 theorem abs_historyParameter_zeroInitialization_le

@@ -1,4 +1,4 @@
-import BanditRLProof.Algorithms.StochasticGradientBanditTwoArmMeasurableRecurrence
+import BanditRLProof.Algorithms.StochasticGradientBanditTwoArmPathIntegrability
 import BanditRLProof.Algorithms.ThompsonStationaryReward
 import BanditRLProof.Algorithms.UCBArmStreamFiniteArmRewardLaws
 
@@ -109,6 +109,49 @@ theorem twoArmFixedIIDEnvironment_contract
     simpa using hbound selected
   · intro n env history selected
     simpa using hmean selected
+
+/-- Equation (5) on every generated fixed-IID successor history, with the
+source-increment integrability premise discharged from the fixed reward-law
+support.  This remains a one-step conditional-kernel identity; it does not
+perform a global tower iteration. -/
+theorem integral_twoArmFixedIIDHistoryStepKernel_sourceIncrement_eq_gapCoordinate
+    (armLaw : Fin 2 -> Measure Real)
+    (hprob : forall arm, IsProbabilityMeasure (armLaw arm))
+    (mean : Fin 2 -> Real)
+    (hbound : forall arm, ∀ᵐ reward ∂armLaw arm, |reward| <= 1)
+    (hmean : forall arm, integral (armLaw arm) id = mean arm)
+    (initialTheta : Fin 2 -> Real) (eta : Real)
+    (n : Nat) (history : History.FinitePairHistory (Fin 2) Real n)
+    (gap : Fin 2 -> Real) (bestMean : Real) (coordinate : Fin 2)
+    (hgap : forall action, gap action = bestMean - mean action) :
+    integral
+        (Thompson.measurableEnvironmentHistoryStepKernel
+          (historyAlgorithm initialTheta eta)
+          (twoArmFixedIIDEnvironment armLaw hprob) n ((), history))
+        (fun pair : Fin 2 × Real =>
+          sourceIncrement
+            (softmaxProbability
+              (historyParameter initialTheta eta n history))
+            pair.2 pair.1 coordinate) =
+      softmaxProbability
+          (historyParameter initialTheta eta n history) coordinate *
+        (instantaneousGap
+          (softmaxProbability
+            (historyParameter initialTheta eta n history)) gap -
+          gap coordinate) := by
+  let contract :=
+    twoArmFixedIIDEnvironment_contract armLaw hprob mean hbound hmean
+  apply
+    integral_measurableEnvironmentHistoryStepKernel_sourceIncrement_eq_gapCoordinate
+      initialTheta eta (twoArmFixedIIDEnvironment armLaw hprob)
+      n () history mean gap bestMean coordinate
+  · exact
+      integrable_measurableTwoArmHistoryStepKernel_sourceIncrement_of_contract
+        initialTheta eta (twoArmFixedIIDEnvironment armLaw hprob)
+        mean contract n () history coordinate
+  · intro selected
+    simpa using hmean selected
+  · exact hgap
 
 end StochasticGradientBandit
 end BanditRLProof

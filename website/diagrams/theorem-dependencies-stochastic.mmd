@@ -1,0 +1,11 @@
+flowchart TB
+  Model["FiniteBanditModel"] --> Decomp["pseudoRegret = Σ gap × pullCount"]
+  Trace["ActionTrace / RewardTrace"] --> Decomp
+  Policy["MeasurablePolicy"] --> Traj["generated history kernels<br/>and trajectory measure"]
+  Kernel["conditional reward-kernel contracts"] --> Traj
+  Traj --> CondMGF["selected centered-reward<br/>conditional MGF"]
+  CondMGF --> Concentration["sub-Gaussian and<br/>martingale tails"]
+  Decomp --> ETC["ETC expected regret"]
+  Concentration --> ETC
+  Decomp --> UCB["UCB gap-sum and<br/>average consistency"]
+  Concentration --> UCB

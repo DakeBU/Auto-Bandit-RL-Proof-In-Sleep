@@ -96,24 +96,33 @@ outside the atom-generated directions.  This is a regularity/codomain
 obligation, not a source-error claim; the global Lemmas 3.5--3.6, Assumption
 3.7, Theorem 3.8, and every regret endpoint remain outside the compiled slice.
 
-The independent stochastic-gradient-bandit audit contains 143 named
+The independent stochastic-gradient-bandit audit contains 183 named
 declarations.  Its original 76 declarations cover finite
 Algorithm-1/Equations-(3)--(7) algebra, recursive generated histories and
 Equation-(5) kernels, pathwise two-arm Equation-(9)/(11) structure, and the
-source-exact `C_eta`/Equation-(8) exponential-moment inequality.  Sixty-seven
+source-exact `C_eta`/Equation-(8) exponential-moment inequality.  Seventy
 additional declarations instantiate Equation (8) on generated kernels, prove
 the zero-initial and fixed-history forward/inverse recurrence inequalities,
 transport them almost everywhere through the canonical trajectory, establish
 fixed-time path integrability and conditional-expectation representations, and
-derive one-step conditional recurrence bounds, and provide an eight-declaration
-one-way adapter from fixed-IID two-arm reward laws to the bounded fixed-mean
-environment contract.  This is a partial audit route, not Theorem 1: the
-generated-history Equation-(5) `Integrable sourceIncrement` bridge, global
-tower iteration, expected squared failure-mass control,
-Equation-(7) regret assembly, every learning-rate-dependent rate, and Theorems
+derive one-step conditional recurrence bounds, derive bounded-support initial
+and successor Equation-(5) update integrability, and provide a nine-declaration
+one-way fixed-IID adapter with a one-step gap-coordinate consumer.  Thirty-seven
+further declarations integrate the tower-ready conditional recurrences into
+fixed-time unconditional forward/inverse scalar bounds, prove finite forward
+iteration and the inverse telescope, bridge the normalized initial mixture,
+and establish the resulting generic source-indexed squared failure-mass bound
+`1/4 + Σ_{n < N} E[(1 - p_{1,n+2})^2] ≤ 1 / (2η(Δ - η C_η))`, including the
+exact source-round-1 term.  This remains a partial audit route, not Theorem 1:
+the generated-history Equation-(5) expected-parameter/tower bridge, terminal
+logarithmic/Jensen consumer, simplification to the source-explicit horizon
+bound, fixed-IID plus Dirac-prior whole-chain specialization,
+generated-trajectory Equation-(7) regret assembly, the final source constant
+endpoint, every learning-rate-dependent rate, and Theorems
 1--4 remain outside the compiled slice.  The adapter is not a converse
-equivalence proof; with a general prior,
-the current prefix filtration reveals the latent environment.
+equivalence proof;
+with a general prior, the current prefix filtration reveals the latent
+environment.
 
 ## Quick verification
 

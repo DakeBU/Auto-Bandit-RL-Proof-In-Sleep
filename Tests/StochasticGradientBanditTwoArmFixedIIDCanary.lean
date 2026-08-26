@@ -10,6 +10,7 @@ open MeasureTheory ProbabilityTheory
 #check BanditRLProof.StochasticGradientBandit.twoArmFixedIIDEnvironment_feedback_apply
 #check BanditRLProof.StochasticGradientBandit.twoArmFixedIIDReward_aestronglyMeasurable
 #check BanditRLProof.StochasticGradientBandit.twoArmFixedIIDEnvironment_contract
+#check BanditRLProof.StochasticGradientBandit.integral_twoArmFixedIIDHistoryStepKernel_sourceIncrement_eq_gapCoordinate
 
 example
     (armLaw : Fin 2 -> Measure Real)
@@ -24,3 +25,4 @@ example
     armLaw hprob mean hbound hmean
 
 #print axioms BanditRLProof.StochasticGradientBandit.twoArmFixedIIDEnvironment_contract
+#print axioms BanditRLProof.StochasticGradientBandit.integral_twoArmFixedIIDHistoryStepKernel_sourceIncrement_eq_gapCoordinate

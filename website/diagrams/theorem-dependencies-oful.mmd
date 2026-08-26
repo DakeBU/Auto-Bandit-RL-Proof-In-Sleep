@@ -1,0 +1,11 @@
+flowchart TB
+  GramDet["Gram matrix and<br/>rank-one determinant"] --> Ellipse["log-det and<br/>elliptical potential"]
+  Ellipse --> SelfNorm["self-normalized confidence"]
+  CondMGF["conditional reward MGF"] --> SelfNorm
+  SelfNorm --> Ridge["ridge confidence ellipsoid"]
+  Ridge --> Optimistic["measurable optimistic policy"]
+  Optimistic --> AllTime["one-policy all-time confidence"]
+  AllTime --> OFULRate["same-policy all-horizon<br/>pseudo-regret"]
+  OFULRate --> StopBounded["bounded stopping consumer"]
+  OFULRate --> StopL2["square-integrable<br/>stopping consumer"]
+  Ridge --> Expected["separate horizon-indexed<br/>expectation and consistency"]

@@ -1,82 +1,12 @@
-flowchart TB
-  Model["FiniteBanditModel"] --> Decomp["pseudoRegret = Σ gap × pullCount"]
-  Trace["ActionTrace / RewardTrace"] --> Decomp
-  Policy["MeasurablePolicy"] --> Traj["historyStepKernelFamily / trajMeasure"]
-  Kernel["Conditional reward-kernel contracts"] --> Traj
-  Traj --> CondMGF["selected centered reward conditional MGF"]
-  CondMGF --> Concentration["sub-Gaussian / martingale tails"]
-
-  Decomp --> ETC["ETC expected regret"]
-  Concentration --> ETC
-  Decomp --> UCB["UCB gap-sum + average consistency"]
-  Concentration --> UCB
-
-  GramDet["OFUL Gram + rank-one determinant"] --> Ellipse["log-det + elliptical potential"]
-  Ellipse --> SelfNorm["conditional-MGF self-normalized confidence"]
-  CondMGF --> SelfNorm
-  SelfNorm --> Ridge["ridge confidence ellipsoid"]
-  Ridge --> Optimistic["measurable optimistic policy"]
-  Optimistic --> AllTime["generated one-policy all-time confidence"]
-  AllTime --> OFULRate["same-policy all-horizon pseudo-regret"]
-  OFULRate --> StopBounded["bounded stopping consumer"]
-  OFULRate --> StopL2["square-integrable stopping consumer"]
-  Ridge --> OFULExpected["separate horizon-indexed expectation + consistency"]
-
-  Prior["prior"] --> Posterior["posterior kernel"]
-  Likelihood["likelihood kernel"] --> Posterior
-  Posterior --> Match["one-step probability matching"]
-  Match --> RecursiveTS["recursive generated TS trajectory"]
-  Traj --> RecursiveTS
-  RecursiveTS --> BayesDecomp["comparator/Bayesian decomposition"]
-  OptimalSelector["pointwise mean-optimal selector"] --> BayesDecomp
-  BayesDecomp --> Clipped["clipped confidence bridge"]
-  Clipped --> Latent["stationary latent-arm stream"]
-  Latent --> TS["generated stationary Bayesian regret"]
-
-  Hedge["EXP3 potential + Hedge"] --> IW["IW support + conditional moments"]
-  Traj --> IW
-  IW --> EXP3Expected["horizon-tuned expected regret"]
-  IW --> EXP3Window["horizon-tuned best-arm realized tail"]
-  Concentration --> EXP3Window
-  IW --> EXP3Pred["fixed-process predictable all-prefix event"]
-  Concentration --> EXP3Dev["fixed-process realized-deviation all-prefix event"]
-  EXP3Pred --> EXP3All["same-process comparator all-prefix regret"]
-  EXP3Dev --> EXP3All
-  IW --> EXP3Sparse["sparse/variance-sensitive extension"]
-
-  FTRL["half-Tsallis simplex minimizer"] --> FTRLStab["one-step stability + penalty"]
-  Traj --> TsallisGenerated["scheduled generated action law"]
-  FTRLStab --> TsallisGenerated
-  TsallisGenerated --> ScoreAlign["observed IW score alignment"]
-  ScoreAlign --> AllRate["all-rate expected stability/regret"]
-  AllRate --> SelfBound["fixed-gap self-bounding"]
-  SelfBound --> TsallisIID["bounded IID logarithmic regret"]
-  SelfBound --> Dynamic["corruption + dynamic extensions"]
-  Dynamic --> Restart["population-mean oracle restart extension"]
-
-  MDP["FiniteHorizonRL.MDP"] --> Bellman["optimal Bellman recursion"]
-  Bellman --> Occupancy["expectedRegret_eq_occupancyGapRemaining"]
-  GeneratedEpisodes["generated adaptive episode source"] --> CumState["strict-prefix aggregate counts"]
-  CumState --> AggregateP["aggregate empirical transition row"]
-  AggregateP --> RecurrentQ["previous-Q clipped UCBVI-CH planner"]
-  RecurrentQ --> GreedyPolicy["measurable finite argmax policy"]
-  CondMGF --> RLConfidence["same-law singleton + optimal-tail confidence"]
-  CumState --> RLConfidence
-  RLConfidence --> OptimismRL["all-episode Bellman optimism"]
-  RecurrentQ --> OptimismRL
-  Occupancy --> EpisodeRegret["generated episode pseudo-regret"]
-  GreedyPolicy --> EpisodeRegret
-  OptimismRL --> DecompRL["charge + Bellman-innovation decomposition"]
-  EpisodeRegret --> DecompRL
-  CumState --> CountSumRL["actual-count charge summation"]
-  CondMGF --> MartingaleRL["generated-filtration innovation tail"]
-  DecompRL --> UCBVITerminal["20/250 high-probability UCBVI-CH terminal"]
-  CountSumRL --> UCBVITerminal
-  MartingaleRL --> UCBVITerminal
-  UCBVITerminal --> UCBVIExpected["expected regret + K H delta"]
-
-  RLConfidence --> Behavior["natural-causal consistency extension"]
-  StopL2 --> Hitting["uncapped inverse-sqrt hittingAfter L2"]
-  Behavior --> Hitting
-  Hitting --> ExpectedHit["stopped value integrable; expectation ≤ threshold"]
-  UCBVITerminal -. "separate milestone" .-> BernsteinRL["Bernstein/minimax UCB-VI"]
+flowchart LR
+  Core["Shared proof core<br/>models · generated trajectories<br/>conditional reward laws"]
+  Core --> Stochastic["Finite stochastic<br/>ETC · UCB"]
+  Core --> OFUL["Linear optimism<br/>OFUL · stopping"]
+  Core --> Thompson["Bayesian route<br/>Thompson sampling"]
+  Core --> Adversarial["Adversarial route<br/>EXP3 · Tsallis-FTRL"]
+  Core --> RL["Finite-horizon RL<br/>UCBVI-CH"]
+  Stochastic --> Regret["Regret terminals"]
+  OFUL --> Regret
+  Thompson --> Regret
+  Adversarial --> Regret
+  RL --> Regret

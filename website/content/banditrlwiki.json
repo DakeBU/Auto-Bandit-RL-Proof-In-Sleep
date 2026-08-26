@@ -32,9 +32,9 @@
       "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/a4e683f0ce6b91e7fbdae9d32642d88f-Abstract-Conference.html",
       "milestone_id": "NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT-MECHANISM-AUDIT",
       "lean_status": "partial",
-      "compiled_declaration_count": 143,
-      "scope": "Ten evidence layers compile in the exact 26+18+18+14+4+10+3+25+17+8 split: finite Algorithm-1/Equations-(3)–(7) algebra; recursive-history and Equation-(5) kernels; pathwise two-arm Equation-(9)/(11); standalone C-eta/Equation (8); generated-kernel Equation (8); fixed-history successor recurrences; source-initial recurrences; measurable contract/trajectory/conditional-distribution transport; fixed-horizon path integrability with tower-ready conditional recurrence bounds; and a fixed-IID source-law adapter with two definitions and six theorems.",
-      "boundary": "This is a source-frozen partial port, not a proof of Theorems 1–4. The compiled twoArmFixedIIDEnvironment_contract is a one-way bridge from fixed two-arm probability laws with bounded support and stated means to the existing bounded fixed-mean contract; it is not an equivalence and does not prove Equation-(5)'s generated-history Integrable sourceIncrement premise. That integrability bridge, global tower iteration, expected squared failure-mass control, Equation-(7) assembly, the exact Theorem-1 endpoint, and all Theorems 2–4 learning-rate endpoints remain open.",
+      "compiled_declaration_count": 183,
+      "scope": "Eleven evidence layers compile in the exact 26+18+18+14+4+10+3+25+19+9+37 split. The first ten cover finite Algorithm-1/Equations-(3)–(7) algebra; recursive-history and Equation-(5) kernels; pathwise two-arm Equation-(9)/(11); standalone and generated-kernel Equation (8); fixed-history and source-initial recurrences; measurable contract/trajectory/conditional-distribution transport; fixed-horizon path integrability with bounded-support Equation-(5) update integrability and tower-ready conditional recurrence bounds; and the one-way fixed-IID source-law adapter. The new 37-declaration layer integrates the conditional recurrences on a generic bounded fixed-mean trajectory, performs finite scalar iteration, and proves the source-initialized expected squared failure-mass sum bound with exact first-round contribution 1/4.",
+      "boundary": "This is a source-frozen partial port, not a proof of Theorems 1–4. The generic unconditional layer does not itself identify the finite expected-increment sum with the generated recursive parameter, derive the forward-potential Jensen/log terminal and its explicit finite bound, specialize the whole chain to the fixed-IID environment with a Dirac prior, or assemble source-horizon Equation (7), regret, and constants. Those consumers remain required for Theorem 1; all Theorems 2–4 learning-rate endpoints remain open.",
       "representative_declarations": [
         "BanditRLProof.StochasticGradientBandit.softmaxProbability_sum",
         "BanditRLProof.StochasticGradientBandit.expectedSourceIncrement_eq_gapCoordinate",
@@ -49,7 +49,12 @@
         "BanditRLProof.StochasticGradientBandit.trajectoryPrefix_condDistrib_integral_forwardSuccessor_le",
         "BanditRLProof.StochasticGradientBandit.integrable_twoArmForwardTrajectorySuccessorPotential",
         "BanditRLProof.StochasticGradientBandit.twoArmForwardTrajectorySuccessor_condExp_le_recurrenceBound",
-        "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDEnvironment_contract"
+        "BanditRLProof.StochasticGradientBandit.integrable_measurableTwoArmHistoryStepKernel_sourceIncrement_of_contract",
+        "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDEnvironment_contract",
+        "BanditRLProof.StochasticGradientBandit.integral_twoArmFixedIIDHistoryStepKernel_sourceIncrement_eq_gapCoordinate",
+        "BanditRLProof.StochasticGradientBandit.twoArmForwardUnconditionalRecurrence",
+        "BanditRLProof.StochasticGradientBandit.twoArmInverseFailureMassSqTelescope",
+        "BanditRLProof.StochasticGradientBandit.twoArmFullFailureMassSqSum_le"
       ]
     }
   ],

@@ -314,6 +314,49 @@
 
   const mermaidBlocks = [...document.querySelectorAll(".mermaid")];
   if (mermaidBlocks.length) {
+    const fitFlowchartViewBoxes = () => {
+      document.querySelectorAll('svg[aria-roledescription^="flowchart"]').forEach((svg) => {
+        const viewBoxParts = (svg.getAttribute("viewBox") || "")
+          .trim()
+          .split(/\s+/)
+          .map(Number);
+        const svgRect = svg.getBoundingClientRect();
+        if (
+          viewBoxParts.length !== 4 ||
+          viewBoxParts.some((value) => !Number.isFinite(value)) ||
+          svgRect.width <= 0 ||
+          svgRect.height <= 0
+        ) return;
+
+        const [viewX, viewY, viewWidth, viewHeight] = viewBoxParts;
+        const scale = Math.min(svgRect.width / viewWidth, svgRect.height / viewHeight);
+        if (!Number.isFinite(scale) || scale <= 0) return;
+        const offsetX = svgRect.left + (svgRect.width - viewWidth * scale) / 2;
+        const offsetY = svgRect.top + (svgRect.height - viewHeight * scale) / 2;
+        const marks = [...svg.querySelectorAll(".node, path.flowchart-link")]
+          .map((mark) => mark.getBoundingClientRect())
+          .filter((rect) => rect.width > 0.5 || rect.height > 0.5);
+        if (!marks.length) return;
+
+        const toUserX = (value) => viewX + (value - offsetX) / scale;
+        const toUserY = (value) => viewY + (value - offsetY) / scale;
+        const minX = Math.min(...marks.map((rect) => toUserX(rect.left)));
+        const maxX = Math.max(...marks.map((rect) => toUserX(rect.right)));
+        const minY = Math.min(...marks.map((rect) => toUserY(rect.top)));
+        const maxY = Math.max(...marks.map((rect) => toUserY(rect.bottom)));
+        const contentWidth = maxX - minX;
+        const contentHeight = maxY - minY;
+        if (contentWidth <= 0 || contentHeight <= 0) return;
+
+        const padding = Math.max(20, Math.min(contentWidth, contentHeight) * 0.05);
+        svg.setAttribute(
+          "viewBox",
+          `${minX - padding} ${minY - padding} ${contentWidth + 2 * padding} ${contentHeight + 2 * padding}`,
+        );
+        svg.style.maxWidth = "none";
+      });
+    };
+
     import("https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs")
       .then(({ default: mermaid }) => {
         const styles = getComputedStyle(document.documentElement);
@@ -321,7 +364,7 @@
           startOnLoad: false,
           securityLevel: "strict",
           theme: "base",
-          flowchart: { htmlLabels: true, curve: "basis" },
+          flowchart: { htmlLabels: false, curve: "basis" },
           themeVariables: {
             background: styles.getPropertyValue("--surface").trim(),
             primaryColor: styles.getPropertyValue("--accent-soft").trim(),
@@ -334,6 +377,12 @@
           },
         });
         return mermaid.run({ nodes: mermaidBlocks });
+      })
+      .then(() => {
+        window.requestAnimationFrame(() => {
+          fitFlowchartViewBoxes();
+          labelOverflowRegions();
+        });
       })
       .catch((error) => {
         mermaidBlocks.forEach((block) => {

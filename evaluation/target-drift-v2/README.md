@@ -414,22 +414,43 @@ implemented; on POSIX it creates an owner-only `0700`
 the plan.  Prompt source/workspace locations are relative to the common agent
 root.  This removes operator-supplied smoke markers from the model-visible
 current working directory and prompt paths.  A final production agent sandbox
-with a reviewed real-execution action derived from the result-free-only outer
-launcher remains required before the real smoke runs.  The result-free
-agent-image workflow is designed
+with a reviewed real-provider action remains required before the real smoke
+runs.  The result-free agent-image workflow is designed
 to combine the exact provider client, offline Lean cache, adapter, and PID-1
 controller and to rerun the destructive lifecycle probe, but it supplies no
 credential and makes no model call.  The source-level outer-boundary candidate
 adds root-only control, a fake single-file credential, and a disposable
-non-root workspace, but has no real adapter execution action.  A passing
-candidate must still be extended with that fixed real execution path and
-reprobed on the published final digest before a
-controller crash can be claimed not to leave a real provider child consuming
-budget or mutating the resumable attempt.
+non-root workspace.  The adjacent excluded-provider execution component now
+exercises the same PID-1/controller boundary with the exact tracked
+`agent-excluded-execution-request.json` and hash-bound argv in
+`agent-excluded-execution-contract.json`.  It uses Docker network `none`, the
+literal fake auth sentinel, and the in-image excluded adapter; it validates a
+one-event zero-usage trace, production-shaped response and five-file output
+surface, immediate root descriptor closure, worker descriptor consumption, and
+clean PID-1 child exit.  The request fixes `primary_result_eligible=false`, all
+provider/credential/network access false, model-call budget zero, and zero
+token/tool/build/cost budgets.  The adapter imports no provider, network, or
+subprocess client and performs no Lean build.
 
-This lane is implemented and component-tested, but it has not been run with a
-real provider/agent sandbox.  No real three-condition smoke, final pack, primary
-model run, grader response, grade ledger, or analysis output exists.
+The canonical component entrypoint is:
+
+```text
+python tools/launch_target_drift_agent_container.py --component-mode excluded-execute --image-sbom AGENT-IMAGE-SBOM.json --agent-input EXACT-EXCLUDED-REQUEST-DIRECTORY --auth-sentinel FIXED-FAKE-AUTH-DIRECTORY/auth.json --control-output FRESH-ROOT-CONTROL-DIRECTORY --apparmor-source evaluation/target-drift-v2/agent-codex-native.apparmor --report FRESH-EXCLUDED-EXECUTE-REPORT.json --probe-commit FULL-GIT-COMMIT
+```
+
+The request directory must contain only `request.json`, byte-for-byte equal to
+the tracked excluded request.  The auth file must contain only the fixed
+`RESULT_FREE_SENTINEL_DO_NOT_USE` fixture bytes; any other bytes fail before
+Docker starts.  This command is component evidence only.  It cannot consume a
+real credential, cannot enter the smoke or 450-run ledger, and does not change
+`execution_not_started`.  A real-provider action must still be separately
+reviewed, frozen, credential-visibility probed, and lifecycle-probed on the
+published production digest.
+
+The provider-disabled execute path is implemented and component-tested, but it
+has not been run with a real provider/credential action and is permanently
+result-ineligible.  No real three-condition smoke, final pack, primary model
+run, grader response, grade ledger, or analysis output exists.
 
 The primary three-condition study is a controlled mechanism comparison, not a
 claim that ABRL has already been compared with a current public end-to-end
@@ -617,10 +638,13 @@ hash-sealed no-replacement/no-imputation policy and 450-ID completion ledger.
 The recovery metric observes only a
 direct `lake build` or `lake env lean` invocation at command start or after a
 frozen shell separator; command text that merely mentions a build is excluded.
-These are code-level constraints, not a passed production isolation probe. It
-does not make the current host a production agent sandbox: the exact provider
-client, remote-model attestation, agent image, visibility/network/process probes, prices,
-budgets, and three-condition smoke remain unfrozen and unrun.
+These are code-level constraints, not a passed production isolation probe. The
+excluded-provider execute path tests the sealed request/argv and
+response/trace/output/PID-1 plumbing without API use, but it does not make the
+current host a production agent sandbox: the real-provider action, exact
+provider client, remote-model attestation, credential boundary, published agent
+image, final visibility/network/process probes, prices, budgets, and
+three-condition smoke remain unfrozen and unrun.
 `tools/fake_target_drift_adapter.py` and
 `tools/fake_target_drift_cache_prelude.py`, and
 `tools/fake_target_drift_checker_sandbox.py` are deterministic fixture helpers
