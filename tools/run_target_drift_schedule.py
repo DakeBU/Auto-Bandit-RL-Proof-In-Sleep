@@ -17,6 +17,7 @@ import build_target_drift_completion_ledger as completion  # noqa: E402
 import check_target_drift_run as checker  # noqa: E402
 import prepare_target_drift_execution as prepare  # noqa: E402
 import run_target_drift_execution as runner  # noqa: E402
+import run_target_drift_smoke as smoke  # noqa: E402
 
 
 TERMINAL_STATES = {
@@ -44,6 +45,43 @@ def self_verify(pack: Path, config: dict[str, Any]) -> None:
             "invoked schedule runner differs from frozen hash")
     require(prepare.sha256_file(sealed) == expected,
             "sealed schedule runner differs from frozen hash")
+
+
+def validate_smoke_gate(
+    pack: Path, plan_path: Path, ledger_path: Path,
+) -> dict[str, Any]:
+    """Rebuild the mandatory real three-condition smoke evidence before 450 runs."""
+    config = load(pack / "execution_config.json")
+    require(config["execution_adapter"]["provider_runtime"]["kind"] == "codex_cli",
+            "primary schedule requires a real codex_cli provider runtime")
+    require(config["posthoc_checker"]["mode"] == "production",
+            "primary schedule requires the production post-hoc checker")
+    prepare.regular_unlinked_file(
+        plan_path, "target-drift smoke plan", require_executable=False
+    )
+    prepare.regular_unlinked_file(
+        ledger_path, "target-drift smoke ledger", require_executable=False
+    )
+    plan, plan_sha256 = smoke.validate_plan(pack, plan_path)
+    ledger, ledger_sha256 = smoke.load_bound(ledger_path)
+    smoke.validate_ledger(plan, plan_sha256, ledger)
+    require(ledger.get("status") == "passed_result_ineligible_smoke"
+            and ledger.get("all_three_infrastructure_paths_passed") is True,
+            "all three real infrastructure smoke paths must pass before primary runs")
+    runs_root = smoke.canonical_runs_root(plan)
+    rebuilt = [
+        smoke.inspect_smoke_run(pack, plan, plan_sha256, planned, runs_root)
+        for planned in plan["runs"]
+    ]
+    require(ledger.get("records") == rebuilt,
+            "smoke ledger differs from the bound operator/checker run evidence")
+    return {
+        "status": ledger["status"],
+        "smoke_plan_sha256": plan_sha256,
+        "smoke_ledger_sha256": ledger_sha256,
+        "all_three_infrastructure_paths_passed": True,
+        "primary_result_eligible": False,
+    }
 
 
 def advance_run(pack: Path, runs_root: Path, planned: dict[str, Any]) -> dict[str, Any]:
@@ -116,6 +154,8 @@ def main() -> None:
     parser.add_argument("--pack", type=Path, required=True)
     parser.add_argument("--runs-root", type=Path, required=True)
     parser.add_argument("--completion-ledger", type=Path, required=True)
+    parser.add_argument("--smoke-plan", type=Path, required=True)
+    parser.add_argument("--smoke-ledger", type=Path, required=True)
     args = parser.parse_args()
     pack = args.pack.resolve()
     prepare.verify_pack(pack)
@@ -125,6 +165,9 @@ def main() -> None:
     self_verify(pack, config)
     completion.self_verify(pack, config)
     completion.policy_from_pack(pack, config)
+    smoke_gate = validate_smoke_gate(
+        pack, args.smoke_plan.resolve(), args.smoke_ledger.resolve()
+    )
     events = run_schedule(pack, args.runs_root.resolve())
     ledger = completion.build_ledger(pack, args.runs_root.resolve())
     ledger["schedule_summary"] = {
@@ -132,6 +175,7 @@ def main() -> None:
         "schedule_event_count": len(events),
         "terminal_event_count": sum(event["terminal"] for event in events),
         "events_with_operator_error": sum(event["error"] is not None for event in events),
+        "prerequisite_smoke_gate": smoke_gate,
     }
     completion.validate_ledger_against_runs(
         pack, args.runs_root.resolve(), ledger, require_complete=False,

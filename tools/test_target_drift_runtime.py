@@ -1108,6 +1108,51 @@ class TargetDriftRuntimeTest(unittest.TestCase):
         with self.assertRaises(SystemExit):
             grading.require_production_checker(config, {})
 
+    def test_formal_grading_rederives_real_provider_completion(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            response_path = Path(directory) / "response.json"
+            response = {
+                "termination": "completed",
+                "model_invocations": [{
+                    "transport": "codex_cli",
+                    "usage_observed": True,
+                }],
+            }
+            response_path.write_text(json.dumps(response) + "\n", encoding="utf-8")
+            config = {
+                "execution_adapter": {
+                    "provider_runtime": {"kind": "codex_cli"},
+                },
+            }
+            receipt = {
+                "termination": "completed",
+                "adapter_artifact_sha256": {
+                    "response.json": prepare.sha256_file(response_path),
+                },
+            }
+            grading.require_real_provider_completion(
+                config, receipt, response, response_path, "RUN"
+            )
+            bad_config = {
+                "execution_adapter": {
+                    "provider_runtime": {"kind": "excluded_fixture"},
+                },
+            }
+            with self.assertRaises(SystemExit):
+                grading.require_real_provider_completion(
+                    bad_config, receipt, response, response_path, "RUN"
+                )
+            with self.assertRaises(SystemExit):
+                grading.require_real_provider_completion(
+                    config, {**receipt, "termination": "infrastructure_failure"},
+                    response, response_path, "RUN",
+                )
+            with self.assertRaises(SystemExit):
+                grading.require_real_provider_completion(
+                    config, receipt,
+                    {**response, "model_invocations": []}, response_path, "RUN",
+                )
+
     def test_patch_link_mode_is_rejected_before_replay(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             patch = Path(directory) / "link.patch"

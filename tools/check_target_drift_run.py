@@ -582,7 +582,10 @@ def record_terminal_failure(
     dump_atomic(state_path, state)
 
 
-def checked_state_for(job: dict[str, Any], checker_mode: str) -> tuple[str, bool]:
+def checked_state_for(
+    job: dict[str, Any], checker_mode: str,
+    provider_runtime_kind: str, adapter_termination: str,
+) -> tuple[str, bool]:
     """Classify a successful checker run without promoting smoke data to results."""
     purpose = job.get("execution_purpose")
     declared_eligible = job.get("primary_result_eligible")
@@ -593,6 +596,10 @@ def checked_state_for(job: dict[str, Any], checker_mode: str) -> tuple[str, bool
         require(purpose == runner.PRIMARY_EXECUTION_PURPOSE,
                 "excluded fixture is reserved for primary plumbing checks")
         return "checked_fixture_nonexperimental", False
+    require(provider_runtime_kind == "codex_cli",
+            "production-checked evidence requires a real codex_cli provider runtime")
+    require(adapter_termination == "completed",
+            "production-checked evidence requires completed provider termination")
     if purpose == runner.SMOKE_EXECUTION_PURPOSE:
         require(declared_eligible is False,
                 "smoke job cannot declare primary-result eligibility")
@@ -663,6 +670,17 @@ def preflight(pack: Path, run_dir: Path) -> dict[str, Any]:
         "budget_exhausted", "infrastructure_failure",
     }, "unknown agent final status")
     adapter_response = load(operator / "adapter" / "response.json")
+    if config["posthoc_checker"]["mode"] == "production":
+        require(config["execution_adapter"]["provider_runtime"]["kind"] == "codex_cli",
+                "production checker requires a real codex_cli provider runtime")
+        invocations = adapter_response.get("model_invocations")
+        require(isinstance(invocations, list) and bool(invocations)
+                and all(invocation.get("transport") == "codex_cli"
+                        and invocation.get("usage_observed") is True
+                        for invocation in invocations),
+                "production checker requires a real codex_cli invocation with observed usage")
+    require(adapter_response.get("termination") == "completed",
+            "neutral checking requires a completed provider run")
     termination_status = {
         "budget_exhausted": "budget_exhausted",
         "infrastructure_failure": "infrastructure_failure",
@@ -706,6 +724,7 @@ def preflight(pack: Path, run_dir: Path) -> dict[str, Any]:
         "state_path": state_path,
         "receipt": receipt,
         "receipt_path": receipt_path,
+        "adapter_response": adapter_response,
         "result": result,
         "declarations": declarations,
         "aggregate": aggregate,
@@ -987,7 +1006,9 @@ def execute(pack: Path, run_dir: Path) -> bool:
             copy_artifacts(output_path, temporary_publish, artifacts)
             shutil.copyfile(response_path, temporary_publish / "sandbox-response.json")
             checked_status, result_eligible = checked_state_for(
-                context["job"], checker["mode"]
+                context["job"], checker["mode"],
+                config["execution_adapter"]["provider_runtime"]["kind"],
+                context["adapter_response"]["termination"],
             )
             checker_receipt = {
                 "schema_version": 1,

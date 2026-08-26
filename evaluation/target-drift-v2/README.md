@@ -351,13 +351,18 @@ python tools/run_target_drift_execution.py --pack FROZEN-PACK --execute RUN-DIR
 python tools/check_target_drift_run.py --pack FROZEN-PACK --run-dir RUN-DIR
 ```
 
-The schedule runner executes runs in sealed presentation order, never revisits a
-terminal state, and continues with the remaining preregistered IDs after a
-run-level failure.  It writes the completion ledger and exits nonzero when fewer
-than 450 runs are production-result-eligible:
+Before the schedule CLI advances primary runs, it replays the
+bound three-condition smoke evidence and requires all three real `codex_cli`
+provider invocations, observed usage, completed adapter termination, and
+production checker receipts.  A missing, failed, tampered, result-free, or
+differently bound smoke ledger stops the schedule before any of the 450 primary
+runs.  After that gate, the runner executes runs in sealed presentation order,
+never revisits a terminal state, and continues with the remaining preregistered
+IDs after a run-level failure.  It writes the completion ledger and exits nonzero
+when fewer than 450 runs are production-result-eligible:
 
 ```text
-python tools/run_target_drift_schedule.py --pack FROZEN-PACK --runs-root RUNS --completion-ledger COMPLETION-LEDGER.json
+python tools/run_target_drift_schedule.py --pack FROZEN-PACK --runs-root RUNS --completion-ledger COMPLETION-LEDGER.json --smoke-plan SMOKE-PLAN.json --smoke-ledger SMOKE-LEDGER.json
 ```
 
 The ledger may also be rebuilt read-only from an already attempted run root:
@@ -388,6 +393,11 @@ credentials, budget choices, or grader identities.  The current local gate
 includes target-drift component tests covering deterministic assignment, seal hashing,
 opaque prompts, manifest/digest checks, selected fail-closed paths, a synthetic
 450-record analysis, and complete/incomplete/tampered completion-ledger cases.
+The completion ledger is an operator-trusted consistency check over frozen
+bytes and recorded artifacts, not an attestation against an operator who can
+execute modified Python before its bootstrap checks.  Ordinary source or
+sealed-copy drift fails closed; adversarial code-execution provenance requires
+an external trusted launcher or equivalent attestation.
 The deterministic fake fixture and two local
 fail-closed probes are nonexperimental and do not pass the real-infrastructure
 gate.  `tools/prepare_target_drift_smoke.py` and

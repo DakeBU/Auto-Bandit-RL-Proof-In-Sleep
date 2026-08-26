@@ -124,6 +124,26 @@ def require_primary_job(job: dict[str, Any], label: str) -> None:
             f"grading rejects non-primary or smoke run: {label}")
 
 
+def require_real_provider_completion(
+    config: dict[str, Any], receipt: dict[str, Any],
+    adapter_response: dict[str, Any], adapter_response_path: Path, label: str,
+) -> None:
+    """Re-derive real-provider eligibility at the final grading boundary."""
+    require(config["execution_adapter"]["provider_runtime"]["kind"] == "codex_cli",
+            "formal grading requires a real codex_cli provider runtime")
+    require(receipt.get("termination") == adapter_response.get("termination") == "completed",
+            f"grading rejects non-completed provider execution: {label}")
+    require(receipt.get("adapter_artifact_sha256", {}).get("response.json")
+            == prepare.sha256_file(adapter_response_path),
+            f"grading adapter response is not bound by execution receipt: {label}")
+    invocations = adapter_response.get("model_invocations")
+    require(isinstance(invocations, list) and bool(invocations)
+            and all(invocation.get("transport") == "codex_cli"
+                    and invocation.get("usage_observed") is True
+                    for invocation in invocations),
+            f"grading lacks a real codex_cli invocation with observed usage: {label}")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--pack", type=Path, required=True)
@@ -185,13 +205,14 @@ def main() -> None:
         result_path = run_dir / "agent" / "output" / "result.json"
         state_path = run_dir / "operator" / "run_state.json"
         receipt_path = run_dir / "operator" / "execution-receipt.json"
+        adapter_response_path = run_dir / "operator" / "adapter" / "response.json"
         checker_receipt_path = (
             run_dir / "operator" / "checker" / "checker-execution-receipt.json"
         )
         checker_response_path = run_dir / "operator" / "checker" / "sandbox-response.json"
         if not all(path.is_file() for path in (
             job_path, checker_path, result_path, state_path, receipt_path,
-            checker_receipt_path, checker_response_path,
+            adapter_response_path, checker_receipt_path, checker_response_path,
         )):
             continue
         job = load(job_path)
@@ -199,9 +220,22 @@ def main() -> None:
         result = load(result_path)
         state = load(state_path)
         receipt = load(receipt_path)
+        adapter_response = load(adapter_response_path)
         checker_receipt = load(checker_receipt_path)
         checker_response = load(checker_response_path)
+        require(job.get("semantic_run_id") in sealed_by_id,
+                f"run is absent from the sealed manifest: {run_dir.name}")
+        sealed = sealed_by_id[job["semantic_run_id"]]
+        aggregate = (pack / "aggregate.sha256").read_text(
+            encoding="ascii"
+        ).strip()
+        completion.validate_checked_run_evidence(
+            pack, run_dir, sealed, aggregate, config
+        )
         require_primary_job(job, run_dir.name)
+        require_real_provider_completion(
+            config, receipt, adapter_response, adapter_response_path, run_dir.name
+        )
         require(state["prepared_job_sha256"] == receipt["prepared_job_sha256"]
                 == prepare.sha256_file(job_path),
                 f"prepared-job hash mismatch for {run_dir.name}")
@@ -285,8 +319,6 @@ def main() -> None:
                 f"agent view changed after neutral checking for {run_dir.name}")
         require(checker["execution_receipt_sha256"] == prepare.sha256_file(receipt_path),
                 f"checker names a different execution receipt for {run_dir.name}")
-        sealed = sealed_by_id[job["semantic_run_id"]]
-        aggregate = (pack / "aggregate.sha256").read_text(encoding="ascii").strip()
         require(job["opaque_run_id"] == state["opaque_run_id"]
                 == receipt["opaque_run_id"] == checker["opaque_run_id"]
                 == runner.opaque_id("run", aggregate, job["semantic_run_id"]),
