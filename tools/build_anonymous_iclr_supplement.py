@@ -208,6 +208,10 @@ SGB_UNCONDITIONAL_RECURRENCE_FILE = (
     "BanditRLProof/Algorithms/"
     "StochasticGradientBanditTwoArmUnconditionalRecurrence.lean"
 )
+SGB_THEOREM_ONE_FILE = (
+    "BanditRLProof/Algorithms/"
+    "StochasticGradientBanditTwoArmTheoremOne.lean"
+)
 SGB_FINITE_ALGEBRA_DECLARATION_COUNT = 26
 SGB_GENERATED_HISTORY_DECLARATION_COUNT = 18
 SGB_TWO_ARM_RATE_DECLARATION_COUNT = 18
@@ -219,7 +223,8 @@ SGB_MEASURABLE_RECURRENCE_DECLARATION_COUNT = 25
 SGB_PATH_INTEGRABILITY_DECLARATION_COUNT = 19
 SGB_FIXED_IID_DECLARATION_COUNT = 9
 SGB_UNCONDITIONAL_RECURRENCE_DECLARATION_COUNT = 37
-SGB_TOTAL_DECLARATION_COUNT = 183
+SGB_THEOREM_ONE_DECLARATION_COUNT = 32
+SGB_TOTAL_DECLARATION_COUNT = 215
 SGB_GENERATED_TRAJECTORY_DECLARATIONS = frozenset({
     "BanditRLProof.StochasticGradientBandit.trajectoryKernel",
     "BanditRLProof.StochasticGradientBandit.trajectoryMeasure_condDistrib_action_zero_given_environment",
@@ -303,6 +308,16 @@ SGB_UNCONDITIONAL_RECURRENCE_DECLARATIONS = frozenset({
     "BanditRLProof.StochasticGradientBandit.twoArmInverseInitialUnconditionalRecurrence",
     "BanditRLProof.StochasticGradientBandit.twoArmForwardFiniteIteration_from_source_initial",
     "BanditRLProof.StochasticGradientBandit.twoArmFullFailureMassSqSum_le",
+})
+SGB_THEOREM_ONE_DECLARATIONS = frozenset({
+    "BanditRLProof.StochasticGradientBandit.twoArmTrajectorySourceIncrement_condExp_ae_eq_successFailure",
+    "BanditRLProof.StochasticGradientBandit.integral_twoArmTrajectoryParameterZero_eq_successFailureSum",
+    "BanditRLProof.StochasticGradientBandit.twoArmGeneratedExpectedPseudoRegret_eq_parameter_add_failureSq",
+    "BanditRLProof.StochasticGradientBandit.integral_twoArmTrajectoryParameterZero_le_source_log_bound",
+    "BanditRLProof.StochasticGradientBandit.integral_twoArmSampledPseudoRegret_eq_generated",
+    "BanditRLProof.StochasticGradientBandit.twoArmGeneratedExpectedPseudoRegret_le_sourceTheoremOne",
+    "BanditRLProof.StochasticGradientBandit.integral_twoArmSampledPseudoRegret_le_sourceTheoremOne",
+    "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDDirac_theoremOne",
 })
 CH16_COMPILED_ID = "TEXTBOOK-PART-IV-CH16-CONSISTENCY-DINF-DEPENDENCY-SLICE"
 CH16_EVENT_REGRET_ID = "TEXTBOOK-PART-IV-CH16-EVENT-REGRET-PRODUCERS"
@@ -1796,6 +1811,9 @@ def validate_sgb_count(records, index):
         row["file"] == SGB_UNCONDITIONAL_RECURRENCE_FILE
         for row in rows.values()
     )
+    theorem_one_count = sum(
+        row["file"] == SGB_THEOREM_ONE_FILE for row in rows.values()
+    )
     layer_counts = (
         finite_count,
         generated_history_count,
@@ -1808,6 +1826,7 @@ def validate_sgb_count(records, index):
         path_integrability_count,
         fixed_iid_count,
         unconditional_recurrence_count,
+        theorem_one_count,
     )
     expected_layer_counts = (
         SGB_FINITE_ALGEBRA_DECLARATION_COUNT,
@@ -1821,6 +1840,7 @@ def validate_sgb_count(records, index):
         SGB_PATH_INTEGRABILITY_DECLARATION_COUNT,
         SGB_FIXED_IID_DECLARATION_COUNT,
         SGB_UNCONDITIONAL_RECURRENCE_DECLARATION_COUNT,
+        SGB_THEOREM_ONE_DECLARATION_COUNT,
     )
     if (
         sgb["status"] != "partial"
@@ -1845,10 +1865,11 @@ def validate_sgb_count(records, index):
         or not SGB_UNCONDITIONAL_RECURRENCE_DECLARATIONS.issubset(
             declarations
         )
+        or not SGB_THEOREM_ONE_DECLARATIONS.issubset(declarations)
     ):
         raise ValueError(
             "stochastic-gradient-bandit audit must remain partial with exactly "
-            "183 declarations across the frozen 26/18/18/14/4/10/3/25/19/9/37 "
+            "215 declarations across the frozen 26/18/18/14/4/10/3/25/19/9/37/32 "
             "evidence layers"
         )
     return {
@@ -1880,6 +1901,8 @@ def validate_sgb_count(records, index):
             SGB_UNCONDITIONAL_RECURRENCE_DECLARATIONS.issubset(declarations),
         "generic_expected_failure_mass_bound_compiled":
             SGB_UNCONDITIONAL_RECURRENCE_DECLARATIONS.issubset(declarations),
+        "source_theorem_one_compiled":
+            SGB_THEOREM_ONE_DECLARATIONS.issubset(declarations),
     }
 
 
@@ -2009,6 +2032,8 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
                     SGB_FIXED_IID_DECLARATION_COUNT,
                 "unconditional_recurrence_and_failure_mass":
                     SGB_UNCONDITIONAL_RECURRENCE_DECLARATION_COUNT,
+                "source_theorem_one_terminal":
+                    SGB_THEOREM_ONE_DECLARATION_COUNT,
             },
         },
     }
@@ -2054,10 +2079,14 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
                 )
         central = records[spec["central_endpoint_record_id"]]
         if spec["role"] == "source_frozen_external_audit":
+            expected_endpoint_verified = (
+                row_id == "stochastic-gradient-bandit-source-frozen-audit"
+            )
             if (
                 row.get("source_freeze_card_id") not in freeze_cards
                 or central["status"] != "partial"
-                or row.get("paper_endpoint_verified") is not False
+                or row.get("paper_endpoint_verified") is not
+                    expected_endpoint_verified
                 or not isinstance(row.get("blocking_obligations"), list)
                 or not row["blocking_obligations"]
             ):
@@ -2202,10 +2231,10 @@ def build_claim_ledger(proof_report):
                 "boundary": "54 declarations compile Definitions 3.1--3.3 and Lemmas 3.1--3.4, including finite-Bessel strict representation-size minimality and uniqueness for the same vector; a global R boundedness obligation is explicit; no Lemma 3.5--3.6, Theorem 3.8, or regret endpoint.",
             },
             {
-                "artifact": "Stochastic-gradient-bandit mechanism audit",
+                "artifact": "Stochastic-gradient-bandit Theorem-1 and mechanism audit",
                 "status": "partial",
                 "source_record_ids": [SGB_AUDIT_ID],
-                "boundary": "183 declarations compile eleven evidence layers: ten algebra/history/kernel/conditional-recurrence/fixed-IID layers plus 37 declarations for generic bounded fixed-mean trajectories, covering unconditional forward/inverse recurrences, finite scalar iteration, and an expected squared failure-mass sum bound that includes the source-round-1 one-quarter term. This is a partial audit route, not Theorem 1: the generated-history Equation-(5) tower identity, the forward-potential Jensen/log consumer and explicit finite bound, fixed-IID plus Dirac-prior whole-chain specialization, source-horizon Equation-(7) regret assembly and constants, every learning-rate regime, and Theorems 1--4 remain open. The fixed-IID adapter is one-way, and a general prior leaves the latent environment visible in the current prefix filtration.",
+                "boundary": "215 declarations compile twelve evidence layers. The final 32 declarations close the generated Equation-(5) tower, expected-parameter telescope, forward-potential Jensen/log bound, actual sampled-action pseudo-regret bridge, Equation-(7) assembly, and the exact source Theorem 1 for bounded two-arm fixed-IID laws under a Dirac environment prior with T = tailHorizon + 1 and the source constants. The audit remains partial: Theorems 2--4, every corresponding learning-rate regime, general-K, and non-Dirac extensions remain open. Dirac refers only to the Unit environment prior, not to the arm reward laws.",
             },
             {
                 "artifact": "Proof graph / curvature--noise--gap",
@@ -2272,6 +2301,8 @@ def build_claim_ledger(proof_report):
                 SGB_FIXED_IID_DECLARATION_COUNT,
             "unconditional_recurrence_declaration_count":
                 SGB_UNCONDITIONAL_RECURRENCE_DECLARATION_COUNT,
+            "theorem_one_declaration_count":
+                SGB_THEOREM_ONE_DECLARATION_COUNT,
             "generated_trajectory_compiled":
                 sgb_evidence["generated_trajectory_compiled"],
             "conditional_law_bridge_compiled":
@@ -2300,12 +2331,14 @@ def build_claim_ledger(proof_report):
                 sgb_evidence["unconditional_recurrence_iteration_compiled"],
             "generic_expected_failure_mass_bound_compiled":
                 sgb_evidence["generic_expected_failure_mass_bound_compiled"],
+            "source_theorem_one_compiled":
+                sgb_evidence["source_theorem_one_compiled"],
             "coordinate_update_integrability_verified": True,
             "uniform_reward_regularities_verified": False,
             "learning_rate_regime_verified": False,
-            "global_tower_iteration_verified": False,
-            "expected_failure_mass_verified": False,
-            "paper_endpoint_verified": False,
+            "global_tower_iteration_verified": True,
+            "expected_failure_mass_verified": True,
+            "paper_endpoint_verified": True,
         },
         "textbook_chapter_16": {
             "compiled_source_record_id": CH16_COMPILED_ID,

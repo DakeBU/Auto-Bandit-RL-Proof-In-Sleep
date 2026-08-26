@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-26T03:40:28+00:00",
+  "generated": "2026-08-26T10:55:39+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -4520,6 +4520,262 @@
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRecurrence.lean",
       "line": 494,
       "statement": "theorem integral_twoArmHistoryStepKernel_exp_inverseSuccessor_le_sub_failure_sq (eta Delta : Real) (heta : 0 <= eta) (environment : Thompson.HistoryEnvironment (Fin 2) Real) (n : Nat) (history : History.FinitePairHistory (Fin 2) Real n) (mean : Fin 2 -> Real) (hreward : forall selected, \u2200\u1d50 reward \u2202environment.feedback n (history, selected), |reward| <= 1) (hmean : forall selected, integral (environment.feedback n (history, selected)) id = mean selected) (hgap : mean 0 - mean 1 = Delta) : integral (Thompson.historyStepKernel (historyAlgorithm (fun _ : Fin 2 => 0) eta) environment n history) (fun pair : Fin 2 \u00d7 Real => Real.exp (-2 * (historyParameter (fun _ : Fin 2 => 0) eta n history 0 + eta * sourceIncrement (softmaxProbability (historyParameter (fun _ : Fin 2 => 0) eta n history)) pair.2 pair.1 0))) <= Real.exp (-2 * historyParameter (fun _ : Fin 2 => 0) eta n history 0) - 2 * eta * (1 - softmaxProbability (historyParameter (fun _ : Fin 2 => 0) eta n history) 0) ^ 2 * (Delta - eta * sourceC eta)"
+    },
+    {
+      "kind": "def",
+      "name": "twoArmTrajectorySourceIncrement",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmTrajectorySourceIncrement",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean",
+      "line": 34,
+      "statement": "def twoArmTrajectorySourceIncrement {Env : Type v} [MeasurableSpace Env] (eta : Real) (n : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_twoArmTrajectorySourceIncrement",
+      "full_name": "BanditRLProof.StochasticGradientBandit.measurable_twoArmTrajectorySourceIncrement",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean",
+      "line": 44,
+      "statement": "theorem measurable_twoArmTrajectorySourceIncrement {Env : Type v} [MeasurableSpace Env] (eta : Real) (n : Nat) : Measurable (twoArmTrajectorySourceIncrement (Env := Env) eta n)"
+    },
+    {
+      "kind": "theorem",
+      "name": "integrable_twoArmTrajectorySourceIncrement",
+      "full_name": "BanditRLProof.StochasticGradientBandit.integrable_twoArmTrajectorySourceIncrement",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean",
+      "line": 65,
+      "statement": "theorem integrable_twoArmTrajectorySourceIncrement {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (mean : Fin 2 -> Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (n : Nat) : Integrable (twoArmTrajectorySourceIncrement (Env := Env) eta n) (twoArmTrajectoryMeasure prior eta environment)"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmTrajectorySourceIncrement_condExp_ae_eq_integral_condDistrib",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmTrajectorySourceIncrement_condExp_ae_eq_integral_condDistrib",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean",
+      "line": 87,
+      "statement": "theorem twoArmTrajectorySourceIncrement_condExp_ae_eq_integral_condDistrib {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (mean : Fin 2 -> Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (n : Nat) : (twoArmTrajectoryMeasure prior eta environment)[ twoArmTrajectorySourceIncrement (Env := Env) eta n | twoArmPrefixSigma (Env := Env) n] =\u1d50[ twoArmTrajectoryMeasure prior eta environment] fun sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real) => integral (condDistrib (twoArmNextPair n) (twoArmEnvironmentPrefix n) (twoArmTrajectoryMeasure prior eta environment) (twoArmEnvironmentPrefix n sample)) (fun pair : Fin 2 \u00d7 Real => sourceIncrement (softmaxProbability (historyParameter (fun _ : Fin 2 => 0) eta n (twoArmEnvironmentPrefix n sample).2)) pair.2 pair.1 0)"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmTrajectorySourceIncrement_condExp_ae_eq_successFailure",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmTrajectorySourceIncrement_condExp_ae_eq_successFailure",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean",
+      "line": 162,
+      "statement": "theorem twoArmTrajectorySourceIncrement_condExp_ae_eq_successFailure {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta Delta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (mean : Fin 2 -> Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean 0 - mean 1 = Delta) (n : Nat) : (twoArmTrajectoryMeasure prior eta environment)[ twoArmTrajectorySourceIncrement (Env := Env) eta n | twoArmPrefixSigma (Env := Env) n] =\u1d50[ twoArmTrajectoryMeasure prior eta environment] fun sample => Delta * twoArmSuccessProbability eta n sample * twoArmFailureMass eta n sample"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmTrajectoryParameterZero_succ",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmTrajectoryParameterZero_succ",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean",
+      "line": 235,
+      "statement": "theorem twoArmTrajectoryParameterZero_succ {Env : Type v} [MeasurableSpace Env] (eta : Real) (n : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) : twoArmTrajectoryParameterZero eta (n + 1) sample = twoArmTrajectoryParameterZero eta n sample + eta * twoArmTrajectorySourceIncrement eta n sample"
+    },
+    {
+      "kind": "theorem",
+      "name": "integrable_twoArmTrajectoryParameterZero",
+      "full_name": "BanditRLProof.StochasticGradientBandit.integrable_twoArmTrajectoryParameterZero",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean",
+      "line": 252,
+      "statement": "theorem integrable_twoArmTrajectoryParameterZero {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (mean : Fin 2 -> Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (n : Nat) : Integrable (twoArmTrajectoryParameterZero (Env := Env) eta n) (twoArmTrajectoryMeasure prior eta environment)"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_twoArmTrajectorySourceIncrement_eq_successFailure",
+      "full_name": "BanditRLProof.StochasticGradientBandit.integral_twoArmTrajectorySourceIncrement_eq_successFailure",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean",
+      "line": 273,
+      "statement": "theorem integral_twoArmTrajectorySourceIncrement_eq_successFailure {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta Delta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (mean : Fin 2 -> Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean 0 - mean 1 = Delta) (n : Nat) : integral (twoArmTrajectoryMeasure prior eta environment) (twoArmTrajectorySourceIncrement (Env := Env) eta n) = integral (twoArmTrajectoryMeasure prior eta environment) (fun sample => Delta * twoArmSuccessProbability eta n sample * twoArmFailureMass eta n sample)"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_twoArmTrajectoryParameterZero_succ",
+      "full_name": "BanditRLProof.StochasticGradientBandit.integral_twoArmTrajectoryParameterZero_succ",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean",
+      "line": 305,
+      "statement": "theorem integral_twoArmTrajectoryParameterZero_succ {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta Delta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (mean : Fin 2 -> Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean 0 - mean 1 = Delta) (n : Nat) : integral (twoArmTrajectoryMeasure prior eta environment) (twoArmTrajectoryParameterZero (Env := Env) eta (n + 1)) = integral (twoArmTrajectoryMeasure prior eta environment) (twoArmTrajectoryParameterZero (Env := Env) eta n) + eta * integral (twoArmTrajectoryMeasure prior eta environment) (fun sample => Delta * twoArmSuccessProbability eta n sample * twoArmFailureMass eta n sample)"
+    },
+    {
+      "kind": "def",
+      "name": "twoArmInitialSourceIncrement",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmInitialSourceIncrement",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean",
+      "line": 345,
+      "statement": "def twoArmInitialSourceIncrement (pair : Fin 2 \u00d7 Real) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_twoArmInitialSourceIncrement",
+      "full_name": "BanditRLProof.StochasticGradientBandit.measurable_twoArmInitialSourceIncrement",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean",
+      "line": 350,
+      "statement": "theorem measurable_twoArmInitialSourceIncrement : Measurable twoArmInitialSourceIncrement"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_twoArmInitialSourceIncrement_eq_quarter_gap",
+      "full_name": "BanditRLProof.StochasticGradientBandit.integral_twoArmInitialSourceIncrement_eq_quarter_gap",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean",
+      "line": 356,
+      "statement": "theorem integral_twoArmInitialSourceIncrement_eq_quarter_gap {Env : Type v} [MeasurableSpace Env] (eta Delta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (env : Env) (mean : Fin 2 -> Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean 0 - mean 1 = Delta) : integral (Thompson.measurableEnvironmentInitialPairKernel (historyAlgorithm (fun _ : Fin 2 => 0) eta) environment env) twoArmInitialSourceIncrement = Delta / 4"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_twoArmTrajectoryParameterZero_zero",
+      "full_name": "BanditRLProof.StochasticGradientBandit.integral_twoArmTrajectoryParameterZero_zero",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean",
+      "line": 396,
+      "statement": "theorem integral_twoArmTrajectoryParameterZero_zero {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsProbabilityMeasure prior] (eta Delta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (mean : Fin 2 -> Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean 0 - mean 1 = Delta) : integral (twoArmTrajectoryMeasure prior eta environment) (twoArmTrajectoryParameterZero (Env := Env) eta 0) = eta * Delta / 4"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_twoArmTrajectoryParameterZero_eq_successFailureSum",
+      "full_name": "BanditRLProof.StochasticGradientBandit.integral_twoArmTrajectoryParameterZero_eq_successFailureSum",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean",
+      "line": 486,
+      "statement": "theorem integral_twoArmTrajectoryParameterZero_eq_successFailureSum {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsProbabilityMeasure prior] (eta Delta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (mean : Fin 2 -> Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean 0 - mean 1 = Delta) (tailHorizon : Nat) : integral (twoArmTrajectoryMeasure prior eta environment) (twoArmTrajectoryParameterZero (Env := Env) eta tailHorizon) = eta * Delta * ((1 : Real) / 4 + (Finset.range tailHorizon).sum (fun n => integral (twoArmTrajectoryMeasure prior eta environment) (fun sample => twoArmSuccessProbability eta n sample * twoArmFailureMass eta n sample)))"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_twoArmSuccessFailureMass",
+      "full_name": "BanditRLProof.StochasticGradientBandit.measurable_twoArmSuccessFailureMass",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean",
+      "line": 532,
+      "statement": "theorem measurable_twoArmSuccessFailureMass {Env : Type v} [MeasurableSpace Env] (eta : Real) (n : Nat) : Measurable (fun sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real) => twoArmSuccessProbability eta n sample * twoArmFailureMass eta n sample)"
+    },
+    {
+      "kind": "theorem",
+      "name": "integrable_twoArmSuccessFailureMass",
+      "full_name": "BanditRLProof.StochasticGradientBandit.integrable_twoArmSuccessFailureMass",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean",
+      "line": 541,
+      "statement": "theorem integrable_twoArmSuccessFailureMass {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (n : Nat) : Integrable (fun sample => twoArmSuccessProbability (Env := Env) eta n sample * twoArmFailureMass eta n sample) (twoArmTrajectoryMeasure prior eta environment)"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_twoArmFailureMass_eq_successFailure_add_sq",
+      "full_name": "BanditRLProof.StochasticGradientBandit.integral_twoArmFailureMass_eq_successFailure_add_sq",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean",
+      "line": 565,
+      "statement": "theorem integral_twoArmFailureMass_eq_successFailure_add_sq {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (n : Nat) : integral (twoArmTrajectoryMeasure prior eta environment) (fun sample => twoArmFailureMass (Env := Env) eta n sample) = integral (twoArmTrajectoryMeasure prior eta environment) (fun sample => twoArmSuccessProbability eta n sample * twoArmFailureMass eta n sample) + integral (twoArmTrajectoryMeasure prior eta environment) (fun sample => twoArmFailureMass eta n sample ^ 2)"
+    },
+    {
+      "kind": "def",
+      "name": "twoArmGeneratedExpectedPseudoRegret",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmGeneratedExpectedPseudoRegret",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean",
+      "line": 597,
+      "statement": "def twoArmGeneratedExpectedPseudoRegret {Env : Type v} [MeasurableSpace Env] (prior : Measure Env) (eta Delta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (tailHorizon : Nat) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmGeneratedExpectedPseudoRegret_eq_parameter_add_failureSq",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmGeneratedExpectedPseudoRegret_eq_parameter_add_failureSq",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean",
+      "line": 607,
+      "statement": "theorem twoArmGeneratedExpectedPseudoRegret_eq_parameter_add_failureSq {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsProbabilityMeasure prior] (eta Delta : Real) (heta : 0 < eta) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (mean : Fin 2 -> Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean 0 - mean 1 = Delta) (tailHorizon : Nat) : twoArmGeneratedExpectedPseudoRegret prior eta Delta environment tailHorizon = integral (twoArmTrajectoryMeasure prior eta environment) (twoArmTrajectoryParameterZero (Env := Env) eta tailHorizon) / eta + Delta * ((1 : Real) / 4 + (Finset.range tailHorizon).sum (fun n => integral (twoArmTrajectoryMeasure prior eta environment) (fun sample => twoArmFailureMass eta n sample ^ 2)))"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_twoArmTrajectoryParameterZero_le_half_log_forwardPotential",
+      "full_name": "BanditRLProof.StochasticGradientBandit.integral_twoArmTrajectoryParameterZero_le_half_log_forwardPotential",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean",
+      "line": 646,
+      "statement": "theorem integral_twoArmTrajectoryParameterZero_le_half_log_forwardPotential {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsProbabilityMeasure prior] (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (mean : Fin 2 -> Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (tailHorizon : Nat) : integral (twoArmTrajectoryMeasure prior eta environment) (twoArmTrajectoryParameterZero (Env := Env) eta tailHorizon) <= Real.log (integral (twoArmTrajectoryMeasure prior eta environment) (twoArmForwardPotential (Env := Env) eta tailHorizon)) / 2"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_twoArmSuccessProbability_sq_le_one",
+      "full_name": "BanditRLProof.StochasticGradientBandit.integral_twoArmSuccessProbability_sq_le_one",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean",
+      "line": 694,
+      "statement": "theorem integral_twoArmSuccessProbability_sq_le_one {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsProbabilityMeasure prior] (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (n : Nat) : integral (twoArmTrajectoryMeasure prior eta environment) (fun sample => twoArmSuccessProbability (Env := Env) eta n sample ^ 2) <= 1"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_twoArmForwardPotential_le_source_bound",
+      "full_name": "BanditRLProof.StochasticGradientBandit.integral_twoArmForwardPotential_le_source_bound",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean",
+      "line": 725,
+      "statement": "theorem integral_twoArmForwardPotential_le_source_bound {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsProbabilityMeasure prior] (eta Delta : Real) (heta : 0 < eta) (hDelta : 0 < Delta) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (mean : Fin 2 -> Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean 0 - mean 1 = Delta) (hmargin : eta * sourceC eta < Delta) (tailHorizon : Nat) : integral (twoArmTrajectoryMeasure prior eta environment) (twoArmForwardPotential (Env := Env) eta tailHorizon) <= 1 + 4 * eta * Delta * ((tailHorizon + 1 : Nat) : Real)"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_twoArmTrajectoryParameterZero_le_source_log_bound",
+      "full_name": "BanditRLProof.StochasticGradientBandit.integral_twoArmTrajectoryParameterZero_le_source_log_bound",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean",
+      "line": 790,
+      "statement": "theorem integral_twoArmTrajectoryParameterZero_le_source_log_bound {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsProbabilityMeasure prior] (eta Delta : Real) (heta : 0 < eta) (hDelta : 0 < Delta) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (mean : Fin 2 -> Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean 0 - mean 1 = Delta) (hmargin : eta * sourceC eta < Delta) (tailHorizon : Nat) : integral (twoArmTrajectoryMeasure prior eta environment) (twoArmTrajectoryParameterZero (Env := Env) eta tailHorizon) <= Real.log (1 + 4 * eta * Delta * ((tailHorizon + 1 : Nat) : Real)) / 2"
+    },
+    {
+      "kind": "def",
+      "name": "twoArmActionGap",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmActionGap",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean",
+      "line": 844,
+      "statement": "def twoArmActionGap (Delta : Real) (action : Fin 2) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_twoArmActionGap",
+      "full_name": "BanditRLProof.StochasticGradientBandit.measurable_twoArmActionGap",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean",
+      "line": 847,
+      "statement": "theorem measurable_twoArmActionGap (Delta : Real) : Measurable (twoArmActionGap Delta)"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_twoArmInitialActionGap_eq_half",
+      "full_name": "BanditRLProof.StochasticGradientBandit.integral_twoArmInitialActionGap_eq_half",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean",
+      "line": 851,
+      "statement": "theorem integral_twoArmInitialActionGap_eq_half {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsProbabilityMeasure prior] (eta Delta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) : integral (twoArmTrajectoryMeasure prior eta environment) (fun sample => twoArmActionGap Delta (sample.2 0).1) = Delta / 2"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_twoArmSuccessorActionGap_eq_failureMass",
+      "full_name": "BanditRLProof.StochasticGradientBandit.integral_twoArmSuccessorActionGap_eq_failureMass",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean",
+      "line": 915,
+      "statement": "theorem integral_twoArmSuccessorActionGap_eq_failureMass {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsProbabilityMeasure prior] (eta Delta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (n : Nat) : integral (twoArmTrajectoryMeasure prior eta environment) (fun sample => twoArmActionGap Delta (sample.2 (n + 1)).1) = Delta * integral (twoArmTrajectoryMeasure prior eta environment) (fun sample => twoArmFailureMass (Env := Env) eta n sample)"
+    },
+    {
+      "kind": "def",
+      "name": "twoArmSampledPseudoRegret",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmSampledPseudoRegret",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean",
+      "line": 1007,
+      "statement": "def twoArmSampledPseudoRegret {Env : Type v} (Delta : Real) (horizon : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_twoArmSampledPseudoRegret_eq_generated",
+      "full_name": "BanditRLProof.StochasticGradientBandit.integral_twoArmSampledPseudoRegret_eq_generated",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean",
+      "line": 1013,
+      "statement": "theorem integral_twoArmSampledPseudoRegret_eq_generated {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsProbabilityMeasure prior] (eta Delta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (tailHorizon : Nat) : integral (twoArmTrajectoryMeasure prior eta environment) (twoArmSampledPseudoRegret (Env := Env) Delta (tailHorizon + 1)) = twoArmGeneratedExpectedPseudoRegret prior eta Delta environment tailHorizon"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmGeneratedExpectedPseudoRegret_le_sourceTheoremOne",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmGeneratedExpectedPseudoRegret_le_sourceTheoremOne",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean",
+      "line": 1057,
+      "statement": "theorem twoArmGeneratedExpectedPseudoRegret_le_sourceTheoremOne {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsProbabilityMeasure prior] (eta Delta : Real) (heta : 0 < eta) (hDelta : 0 < Delta) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (mean : Fin 2 -> Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean 0 - mean 1 = Delta) (hmargin : eta * sourceC eta < Delta) (tailHorizon : Nat) : twoArmGeneratedExpectedPseudoRegret prior eta Delta environment tailHorizon <= Real.log (1 + 4 * eta * Delta * ((tailHorizon + 1 : Nat) : Real)) / (2 * eta) + Delta / (2 * eta * (Delta - eta * sourceC eta))"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_twoArmSampledPseudoRegret_le_sourceTheoremOne",
+      "full_name": "BanditRLProof.StochasticGradientBandit.integral_twoArmSampledPseudoRegret_le_sourceTheoremOne",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean",
+      "line": 1106,
+      "statement": "theorem integral_twoArmSampledPseudoRegret_le_sourceTheoremOne {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsProbabilityMeasure prior] (eta Delta : Real) (heta : 0 < eta) (hDelta : 0 < Delta) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) (mean : Fin 2 -> Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean 0 - mean 1 = Delta) (hmargin : eta * sourceC eta < Delta) (tailHorizon : Nat) : integral (twoArmTrajectoryMeasure prior eta environment) (twoArmSampledPseudoRegret (Env := Env) Delta (tailHorizon + 1)) <= Real.log (1 + 4 * eta * Delta * ((tailHorizon + 1 : Nat) : Real)) / (2 * eta) + Delta / (2 * eta * (Delta - eta * sourceC eta))"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmFixedIIDDirac_theoremOne",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDDirac_theoremOne",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean",
+      "line": 1131,
+      "statement": "theorem twoArmFixedIIDDirac_theoremOne (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (mean : Fin 2 -> Real) (hbound : forall arm, \u2200\u1d50 reward \u2202armLaw arm, |reward| <= 1) (hmean : forall arm, integral (armLaw arm) id = mean arm) (eta Delta : Real) (heta : 0 < eta) (hDelta : 0 < Delta) (_hDelta_lt_one : Delta < 1) (hgap : mean 0 - mean 1 = Delta) (hmargin : eta * sourceC eta < Delta) (tailHorizon : Nat) : integral (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)) (twoArmSampledPseudoRegret (Env := Unit) Delta (tailHorizon + 1)) <= Real.log (1 + 4 * eta * Delta * ((tailHorizon + 1 : Nat) : Real)) / (2 * eta) + Delta / (2 * eta * (Delta - eta * sourceC eta))"
     },
     {
       "kind": "def",

@@ -1238,7 +1238,7 @@
       "math": "\\(\\int \\delta\\theta_k(a,r)\\,K_t(d a,d r\\mid e,h)=p_k(h)\\bigl(\\sum_a p_a(h)\\Delta_a-\\Delta_k\\bigr).\\)",
       "intuition": "The static finite sum from Equation (5) is now attached to the actual recursive policy state: the generated softmax law selects the arm, the explicit reward kernel supplies its mean, and the kernel integral performs the conditioning step.",
       "why": "This closes the main process boundary left by the first audit. It lets later rate arguments consume a generated-history Equation-(5) identity instead of assuming that a deterministic probability vector came from Algorithm 1.",
-      "position": "The recursive state, measurable initial/successor policies, canonical pair trajectory, conditional laws, and pointwise Equation-(5) kernel calculation compile. Bounded support supplies the update-integrability premise. A separate generic trajectory layer now bounds the expected squared failure-mass sum, while the generated-history best-parameter bridge, learning-rate endpoints, and Theorems 1--4 remain open.",
+      "position": "The recursive state, measurable policies, canonical trajectory, conditional laws, and pointwise Equation-(5) kernel calculation compile. Bounded support supplies update integrability. A downstream two-arm theorem layer now integrates this identity into the expected recursive best parameter and the exact Theorem-1 endpoint; Theorems 2--4 remain open.",
       "proof_idea": "Integrate the exact selected/nonselected update through the history-step comp-product kernel, rewrite each reward integral by the selected arm's explicit mean hypothesis, reduce the finite action measure to a softmax-weighted sum, and invoke the compiled gap-coordinate identity.",
       "lean_notes": "This generic theorem keeps coordinate-update integrability and arm-reward integral equalities explicit. Separate compiled contract wrappers derive the integrability premise from support in [-1,1], and the fixed-IID consumer supplies the source-law specialization.",
       "dependencies": [
@@ -1254,7 +1254,7 @@
       "math": "\\(\\int \\delta\\theta_k(a,r)\\,K_t(d a,d r\\mid h)=p_k(h)\\bigl(\\sum_a p_a(h)\\Delta_a-\\Delta_k\\bigr).\\)",
       "intuition": "The source assumes every reward lies in [-1,1]. The softmax update is no larger in absolute value than the observed reward, so no extra moment or independence assumption is needed to justify the conditional integral.",
       "why": "This removes an artificial caller-supplied regularity premise from the fixed-IID Equation-(5) route and records exactly where bounded support enters the formal proof.",
-      "position": "The fixed-IID one-step Equation-(5) interface compiles. A separate generic bounded fixed-mean trajectory layer now iterates the exponential recurrences and controls expected squared failure mass, but no theorem yet specializes that whole chain to this fixed-IID model with a Dirac prior or assembles Equation (7) and Theorem 1.",
+      "position": "The fixed-IID one-step Equation-(5) interface compiles. The exact downstream Theorem-1 layer now specializes the whole trajectory to this fixed-IID model with a Dirac prior and assembles Equation (7); Theorems 2--4 remain separate open endpoints.",
       "proof_idea": "Transport the armwise support contract through the action/reward comp-product kernel, dominate sourceIncrement by the unit reward envelope, derive Integrable sourceIncrement, and invoke the existing gap-coordinate kernel identity.",
       "lean_notes": "The theorem reuses the existing probability, bounded-support, integral-mean, and gap-coordinate hypotheses. It adds no positive-gap, learning-rate-sign, second-moment, or independence premise.",
       "dependencies": [
@@ -1317,9 +1317,9 @@
       "math": "\\(\\mathbb E[e^{2\\theta_{1,t+1}}\\mid\\mathcal F_t]\\le e^{2\\theta_{1,t}}+2p_t^2(\\eta\\Delta+\\eta^2C_\\eta)\\quad\\text{a.e.}\\)",
       "intuition": "Finite-prefix reward support bounds every recursive parameter, which makes the exponential potential integrable. Conditional-distribution uniqueness then turns the compiled kernel integral into a genuine one-step conditional expectation.",
       "why": "This closes the fixed-horizon integrability and condexp boundary needed before a tower argument can iterate the recurrence.",
-      "position": "Forward and inverse tower-ready one-step bounds compile, and a separate unconditional layer now integrates and finitely iterates them and proves the generic expected squared failure-mass sum bound. Equation-(7) generated-history assembly and Theorem 1 remain blocked.",
+      "position": "Forward and inverse tower-ready one-step bounds compile. The unconditional and Theorem-1 layers now integrate them, perform finite iteration, prove the squared failure-mass bound, and consume the forward recurrence through Jensen/log in the exact two-arm fixed-IID endpoint.",
       "proof_idea": "Transport bounded rewards to every prefix, bound the history parameter by the accumulated reward magnitudes, prove exponential integrability, identify condexp with the conditional-distribution integral, and apply the a.e. recurrence transport.",
-      "lean_notes": "This theorem is fixed-time and one-step. The downstream unconditional module performs the finite horizon sum, but the forward Jensen/log terminal and every logarithmic or polynomial regret rate remain absent.",
+      "lean_notes": "This theorem itself is fixed-time and one-step. The downstream Theorem-1 module supplies the finite-horizon Jensen/log consumer only for the exact two-arm fixed-IID/Dirac source contract; the learning-rate rates in Theorems 2--4 remain absent.",
       "dependencies": [
         "BanditRLProof.StochasticGradientBandit.integrable_twoArmForwardTrajectorySuccessorPotential",
         "BanditRLProof.StochasticGradientBandit.twoArmForwardTrajectorySuccessor_condExp_ae_eq_integral_condDistrib",
@@ -1333,7 +1333,7 @@
       "math": "\\(\\frac14+\\sum_{n=0}^{N-1}\\mathbb E[(1-p_{1,n+2})^2]\\le\\frac{1}{2\\eta(\\Delta-\\eta C_\\eta)}.\\)",
       "intuition": "The inverse odds potential loses a positive multiple of squared failure mass at every step and remains nonnegative at the terminal horizon. Zero initialization makes the source-round-1 failure exactly 1/2, so its square contributes 1/4.",
       "why": "This closes the generic unconditional recurrence and expected squared failure-mass node that was previously open after the tower-ready one-step inequalities.",
-      "position": "The theorem holds on a generic bounded fixed-mean trajectory with a probability prior. It is not yet a fixed-IID plus Dirac whole-chain theorem, Equation (7), a regret bound, or Theorem 1.",
+      "position": "This reusable declaration holds on a generic bounded fixed-mean trajectory with a probability prior. A downstream theorem now specializes it to the fixed-IID/Dirac source model and closes Equation (7) and Theorem 1; this generic declaration alone is not that endpoint.",
       "proof_idea": "Integrate the inverse conditional recurrence, telescope the finite scalar sequence, prove the coefficient 2 eta (Delta - eta C-eta) positive, use terminal exponential nonnegativity, and combine the normalized initial inverse recurrence with the exact coefficient-times-1/4 identity.",
       "lean_notes": "Lean index n has consumed trace coordinates 0 through n and represents source probability p_{1,n+2}. Finset.range N therefore covers source rounds 2 through N+1; the explicit 1/4 supplies source round 1.",
       "dependencies": [
@@ -1349,13 +1349,29 @@
       "math": "\\(R_T\\le \\frac{\\Delta_{\\max}}{\\eta\\Delta}\\,\\Theta_{1,T+1}+\\Delta_{\\max}\\sum_{t<T}(1-p_{1,t})^2.\\)",
       "intuition": "The identity 1-p = p(1-p)+(1-p)^2 separates rounds where the best coordinate can accumulate useful drift from trajectories that keep too much probability away from the best arm.",
       "why": "This is the deterministic mechanism behind Equation (7) and makes the paper's later learning-rate question visible as a separate failure-mass problem.",
-      "position": "The source-shaped finite decomposition compiles, and a separate generic trajectory theorem now bounds the squared failure-mass sum. The generated-history identification of its best-parameter term, forward Jensen/log bound, source-horizon integration, and all Theorems 1--4 remain uncompiled.",
+      "position": "The source-shaped finite decomposition compiles. The exact downstream two-arm trajectory theorem now identifies the expected best parameter, proves the forward Jensen/log and failure-mass bounds, aligns the source horizon, and closes Theorem 1. Theorems 2--4 remain uncompiled.",
       "proof_idea": "Upper-bound each instantaneous gap by DeltaMax times failure mass, lower-bound the best-coordinate increment using the minimum gap, split failure mass algebraically, and divide only after proving eta*Delta positive.",
-      "lean_notes": "Theta is represented by the finite sum of history-conditioned expected best-coordinate increments. A later trajectory theorem must identify it with the actual expected recursive parameter.",
+      "lean_notes": "Theta is represented here by a finite sum of history-conditioned expected best-coordinate increments. The compiled Theorem-1 layer separately identifies the corresponding generated expected recursive parameter and then bridges generated regret to actual sampled-action regret.",
       "dependencies": [
         "BanditRLProof.StochasticGradientBandit.bestParameterIncrementSum_ge",
         "BanditRLProof.StochasticGradientBandit.instantaneousGap_le_maxGap_mul_failureMass",
         "BanditRLProof.StochasticGradientBandit.failureMass_eq_successFailure_add_sq"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDDirac_theoremOne",
+      "chapter": "frontier",
+      "plain": "For the source's bounded two-arm fixed-IID SGB process, the expected pseudo-regret of the actual sampled actions satisfies the exact Theorem-1 logarithmic term plus its finite failure-regret term.",
+      "math": "\\(R_T^{\\mathrm{SGB}}\\le \\frac{\\log(1+4\\eta\\Delta T)}{2\\eta}+\\frac{\\Delta}{2\\eta(\\Delta-\\eta C_\\eta)}.\\)",
+      "intuition": "The generated Equation-(5) drift turns cumulative regret into one expected best-coordinate parameter plus squared failure probability. The forward exponential potential controls the parameter through Jensen and log, while the inverse potential telescopes the failure squares.",
+      "why": "This is a dependency-closed external-paper endpoint rather than a theorem-shaped algebraic leaf: it joins the generated policy, reward laws, actual sampled actions, trajectory measure, expectation, horizon convention, and source constants.",
+      "position": "This compiles Baudry et al. Theorem 1 only for two bounded fixed-IID arm laws with a Dirac environment prior. Theorems 2--4, general-K rates, and non-Dirac environment mixtures remain outside this endpoint.",
+      "proof_idea": "Prove the conditional Equation-(5) source increment on the generated history, telescope its expectation into the best parameter, decompose failure mass into success-failure plus its square, bound the forward potential and apply Jensen/log, telescope the inverse potential, identify actual sampled-action regret with generated expected regret, and specialize the environment to fixed IID laws under a Dirac prior.",
+      "lean_notes": "The assumptions retain eta > 0, 0 < Delta < 1, eta C_eta < Delta, rewards supported in [-1,1], exact arm means with mean(0)-mean(1)=Delta, and T = tailHorizon + 1. Lean arm 0 is the source's optimal arm 1; no online compilation service or unverified broader theorem is implied.",
+      "dependencies": [
+        "BanditRLProof.StochasticGradientBandit.integral_twoArmSampledPseudoRegret_le_sourceTheoremOne",
+        "BanditRLProof.StochasticGradientBandit.integral_twoArmSampledPseudoRegret_eq_generated",
+        "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDEnvironment_contract"
       ]
     },
     {

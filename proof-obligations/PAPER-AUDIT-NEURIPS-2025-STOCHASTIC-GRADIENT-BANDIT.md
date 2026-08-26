@@ -24,28 +24,52 @@ Task id: `PAPER-AUDIT-NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT`
 | SGB-EQ5-BOUNDED-SUPPORT-INTEGRABILITY | derive initial and successor pair-kernel `Integrable sourceIncrement` from the existing bounded-support contract | compiled | `abs_sourceIncrement_softmax_le_abs_reward`, finite-action comp-product support transport, and a constant-one integrability envelope; no moment or independence premise |
 | SGB-FIXED-IID-EQ5-INTEGRABILITY | discharge Equation-(5)'s `Integrable sourceIncrement` premise on the generated fixed-IID history | compiled | `integral_twoArmFixedIIDHistoryStepKernel_sourceIncrement_eq_gapCoordinate` consumes the existing probability, support, mean, and gap equalities; it remains a one-step kernel identity |
 | SGB-UNCONDITIONAL-RECURRENCE | unconditional forward/inverse recurrences, finite iteration, normalized initial bridge, and resulting generic source-indexed expected squared failure-mass sum | compiled | 37 declarations; `twoArmFullFailureMassSqSum_le` includes source round `t=1` as `1/4`; no Equation-(7) or regret endpoint is claimed |
-| SGB-THEOREM-1 | exact two-arm finite-regret endpoint | blocked | expected-parameter Equation-(5) tower bridge, forward Jensen/log and `p^2 <= 1` consumer, fixed-IID/Dirac specialization, and Equation-(7) generated-regret assembly absent |
+| SGB-THEOREM-1 | exact two-arm finite-regret endpoint | compiled | 32 declarations close the Equation-(5) conditional-expectation tower, expected-parameter telescope, forward Jensen/log bound, actual sampled-action regret bridge, Equation-(7) assembly, and fixed-IID/Dirac source endpoint with exact horizon and constants |
 | SGB-THEOREMS-2-4 | logarithmic/polynomial and general-`K` learning-rate endpoints | blocked | source-specific rate arguments uncompiled |
 | SGB-CANARY | typed checks and representative axiom prints | compiled | baseline axioms only |
-| SGB-EVIDENCE-SITE | reference index, Blueprint, website source links, anonymous ledger | compiled | regenerated and checked at the exact 183-declaration `26+18+18+14+4+10+3+25+19+9+37` boundary; this evidence row does not promote Theorem 1 |
-| SGB-REVIEW | independent source/claim review | partial | independent model-based mathematical and synchronized-public-claim reviews found no P0/P1; human-expert target validation remains pending, so this row is not promoted |
+| SGB-EVIDENCE-SITE | reference index, Blueprint, website source links, anonymous ledger | compiled | regenerated artifacts record 215 declarations in the exact `26+18+18+14+4+10+3+25+19+9+37+32` split; the Lean-verified site build, site checker, artifact tests, and full repository gate pass locally, while the live Pages surface still requires post-merge verification |
+| SGB-REVIEW | independent source/claim review | partial | independent theorem-contract review matched assumptions, constants, sampled-action semantics, fixed-IID/Dirac meaning, and source time fence with no P0/P1; human-expert target validation remains pending, so this row is not promoted |
 
 No obligation may be promoted because a prose theorem card exists. Only the
 focused Lean module, canary, full gate, and generated evidence may move the
 finite algebra, process, generated Equation-(8), recurrence, or path-
 integrability rows to `compiled`; the overall audit remains `partial`, and the
-Theorem-1 and Theorems-2--4 rows remain `blocked`.  Global unconditional
-recurrence iteration and expected failure-mass control now compile, but the
+Theorem-1 row is `compiled` while Theorems 2--4 remain `blocked`.  Global
+unconditional recurrence iteration, expected failure-mass control, the
 expected-parameter/Jensen consumer, fixed-IID/Dirac specialization,
-Equation-(7) generated-regret assembly, and every source learning-rate endpoint
-remain absent.  The fixed-IID adapter discharges
+Equation-(7) assembly, and the sampled-action endpoint now compile; the other
+source learning-rate endpoints remain absent.  The fixed-IID adapter discharges
 the separate fixed two-arm source-law producer by mapping its probability,
 support, measurability, and integral-mean hypotheses into the bounded fixed-
 mean contract.  The map is one-way and does not identify the broader contract
 with fixed IID laws.  The bounded-support leaves now discharge Equation-(5)'s
 separate generated-history `Integrable sourceIncrement` premise and the
 fixed-IID consumer reuses that result.  The separate unconditional module
-closes the generic tower/failure-mass slice but no regret endpoint.
+  closes the generic tower/failure-mass slice, and the final theorem module
+  consumes it without weakening the source target.
+
+## Compiled Theorem-1 endpoint
+
+The final layer is recorded as follows.
+
+- Source location: Theorem 1 and Appendix A.2 of the official camera-ready
+  paper.
+- Target file:
+  `BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean`.
+- Terminal declaration: `twoArmFixedIIDDirac_theoremOne`.
+- Semantic target: expected pseudo-regret of the actions actually sampled by
+  the generated two-arm Algorithm-1 trajectory, not a supplied probability
+  schedule or deterministic proxy.
+- Source fence: Lean `tailHorizon + 1` is the paper's `T`, with the uniform
+  first action included explicitly.
+- Source contract: fixed armwise IID probability laws, a.e. reward support in
+  `[-1,1]`, stated integral means, `0 < eta`, `0 < Delta < 1`, exact mean gap,
+  and `eta * sourceC eta < Delta`.
+- Exact conclusion:
+  `R_T <= log (1 + 4 * eta * Delta * T) / (2 * eta)
+    + Delta / (2 * eta * (Delta - eta * sourceC eta))`.
+- Nonclaims: this endpoint does not compile Theorems 2--4, a general-`K`
+  result, or the whole external paper.
 
 ## Compiled bounded-support Equation-(5) leaf
 
