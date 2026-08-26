@@ -1,6 +1,6 @@
 # Proof Blueprint: PAPER-AUDIT-NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT
 
-Generated: `2026-08-26T10:55:44+00:00`
+Generated: `2026-08-26T11:05:39+00:00`
 
 ## Source Task
 
@@ -239,7 +239,7 @@ python tools/bandit.py check
   `26+18+18+14+4+10+3+25+19+9+37+32` split.
 - [x] Refresh the declaration indexes, proof Blueprint, website build, and
   anonymous claim ledger to the 215-declaration boundary.
-- [ ] Refresh the separate paper repository's arXiv and ICLR audit tables,
+- [x] Refresh the separate paper repository's arXiv and ICLR audit tables,
   rebuild both PDFs, and synchronize the verified revision to Overleaf.
 - [x] Re-run the repository-wide Lean, harness, website, and anonymous-artifact
   gates after the evidence refresh.
