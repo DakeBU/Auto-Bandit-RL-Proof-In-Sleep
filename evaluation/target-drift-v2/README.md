@@ -351,7 +351,7 @@ python tools/run_target_drift_execution.py --pack FROZEN-PACK --execute RUN-DIR
 python tools/check_target_drift_run.py --pack FROZEN-PACK --run-dir RUN-DIR
 ```
 
-Before materializing the first primary run, the schedule runner replays the
+Before the schedule CLI advances primary runs, it replays the
 bound three-condition smoke evidence and requires all three real `codex_cli`
 provider invocations, observed usage, completed adapter termination, and
 production checker receipts.  A missing, failed, tampered, result-free, or
@@ -393,6 +393,11 @@ credentials, budget choices, or grader identities.  The current local gate
 includes target-drift component tests covering deterministic assignment, seal hashing,
 opaque prompts, manifest/digest checks, selected fail-closed paths, a synthetic
 450-record analysis, and complete/incomplete/tampered completion-ledger cases.
+The completion ledger is an operator-trusted consistency check over frozen
+bytes and recorded artifacts, not an attestation against an operator who can
+execute modified Python before its bootstrap checks.  Ordinary source or
+sealed-copy drift fails closed; adversarial code-execution provenance requires
+an external trusted launcher or equivalent attestation.
 The deterministic fake fixture and two local
 fail-closed probes are nonexperimental and do not pass the real-infrastructure
 gate.  `tools/prepare_target_drift_smoke.py` and

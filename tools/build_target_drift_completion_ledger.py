@@ -10,7 +10,7 @@ import os
 import stat
 import sys
 from collections import Counter
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Any
 
 
@@ -19,6 +19,7 @@ sys.path.insert(0, str(TOOLS))
 
 import prepare_target_drift_execution as prepare  # noqa: E402
 import run_target_drift_execution as runner  # noqa: E402
+import check_target_drift_run as checker  # noqa: E402
 
 
 ELIGIBLE_STATUS = "checked"
@@ -53,6 +54,11 @@ def dump_new(path: Path, value: Any) -> None:
     with path.open("x", encoding="utf-8", newline="\n") as handle:
         json.dump(value, handle, indent=2, sort_keys=True, ensure_ascii=False)
         handle.write("\n")
+
+
+def local_sha256_file(path: Path) -> str:
+    """Hash verifier dependencies without trusting an imported verifier helper."""
+    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def require(condition: bool, message: str) -> None:
@@ -121,9 +127,9 @@ def self_verify(pack: Path, config: dict[str, Any]) -> None:
     expected = config["missing_run_policy"]["completion_ledger_builder_sha256"]
     current = Path(__file__).resolve()
     sealed = pack / "execution_code" / current.name
-    require(prepare.sha256_file(current) == expected,
+    require(local_sha256_file(current) == expected,
             "invoked completion-ledger builder differs from frozen hash")
-    require(prepare.sha256_file(sealed) == expected,
+    require(local_sha256_file(sealed) == expected,
             "sealed completion-ledger builder differs from frozen hash")
 
 
@@ -192,6 +198,613 @@ def evidence_hashes(operator: Path, state: dict[str, Any]) -> dict[str, str]:
     return hashes
 
 
+def _sha256_value(value: Any, label: str) -> str:
+    require(
+        isinstance(value, str)
+        and len(value) == 64
+        and all(character in "0123456789abcdef" for character in value),
+        f"{label} is not a lowercase SHA-256 digest",
+    )
+    return value
+
+
+def _manifest_entries(value: Any, label: str) -> list[dict[str, Any]]:
+    require(isinstance(value, list), f"{label} must be a list")
+    paths: list[str] = []
+    for entry in value:
+        require(
+            isinstance(entry, dict)
+            and set(entry) == {"path", "bytes", "sha256"}
+            and isinstance(entry["path"], str)
+            and entry["path"]
+            and type(entry["bytes"]) is int
+            and entry["bytes"] >= 0,
+            f"{label} contains a malformed entry",
+        )
+        path = PurePosixPath(entry["path"])
+        require(
+            not path.is_absolute()
+            and ".." not in path.parts
+            and path.as_posix() == entry["path"],
+            f"{label} contains an unsafe path",
+        )
+        _sha256_value(entry["sha256"], f"{label} entry hash")
+        paths.append(entry["path"])
+    require(paths == sorted(paths) and len(paths) == len(set(paths)),
+            f"{label} paths must be sorted and unique")
+    return value
+
+
+def validate_checked_run_evidence(
+    pack: Path, run_dir: Path, planned: dict[str, Any], aggregate: str,
+    config: dict[str, Any],
+) -> dict[str, Any]:
+    """Re-derive the complete evidence chain for one result-eligible checked run.
+
+    This function deliberately lives in the ledger module so both ledger creation
+    and final grading use the same fail-closed semantic validation without a
+    grading/checker import cycle.
+    """
+    operator = run_dir / "operator"
+    agent = run_dir / "agent"
+    workspace = agent / "workspace"
+    output = agent / "output"
+    job_path = operator / "job.json"
+    state_path = operator / "run_state.json"
+    workspace_manifest_path = operator / "workspace_manifest.json"
+    receipt_path = operator / "execution-receipt.json"
+    adapter = operator / "adapter"
+    adapter_request_path = adapter / "request.json"
+    adapter_response_path = adapter / "response.json"
+    adapter_trace_path = adapter / "trace.jsonl"
+
+    job = regular_json(job_path, "prepared job")
+    state = regular_json(state_path, "run state")
+    workspace_manifest = regular_json(
+        workspace_manifest_path, "prepared workspace manifest"
+    )
+    receipt = regular_json(receipt_path, "execution receipt")
+    adapter_request = regular_json(adapter_request_path, "adapter request")
+    adapter_response = regular_json(adapter_response_path, "adapter response")
+
+    semantic_id = planned["run_id"]
+    opaque_id = runner.opaque_id("run", aggregate, semantic_id)
+    require(job.get("schema_version") == 1 and job.get("suite_id") == config["suite_id"],
+            "prepared job schema or suite differs")
+    require(set(job) == {
+        "schema_version", "suite_id", "opaque_run_id", "semantic_run_id",
+        "source_primary_run_id", "execution_purpose", "primary_result_eligible",
+        "smoke_plan_sha256", "condition", "replicate", "agent_mount",
+        "prompt_path", "prompt_sha256", "source_sha256", "workspace_base_commit",
+        "model", "pricing", "budgets", "retry_policy", "adapter_contract_sha256",
+        "provider_runtime", "required_adapter_attestations", "result_contract", "status",
+    }, "prepared job schema fields differ")
+    require(job.get("semantic_run_id") == semantic_id,
+            "prepared job names a different semantic run")
+    require(job.get("source_primary_run_id") == semantic_id
+            and job.get("status") == "prepared_unrun",
+            "primary job source/status provenance differs")
+    require(job.get("opaque_run_id") == state.get("opaque_run_id")
+            == receipt.get("opaque_run_id") == opaque_id,
+            "checked run opaque identity chain differs")
+    require(job.get("condition") == planned["condition"]
+            and job.get("replicate") == planned["replicate"],
+            "prepared job differs from the sealed condition/replicate")
+    require(job.get("execution_purpose") == state.get("execution_purpose")
+            == receipt.get("execution_purpose") == runner.PRIMARY_EXECUTION_PURPOSE,
+            "checked run is not a primary execution")
+    require(job.get("primary_result_eligible") is True
+            and state.get("primary_result_eligible") is True
+            and receipt.get("primary_result_eligible") is True,
+            "checked run is not primary-result-eligible")
+    require(job.get("smoke_plan_sha256") is None
+            and state.get("smoke_plan_sha256") is None
+            and receipt.get("smoke_plan_sha256") is None,
+            "checked primary run unexpectedly carries smoke provenance")
+    require(state.get("status") == ELIGIBLE_STATUS
+            and state.get("result_eligible") is True
+            and state.get("checker_mode") == "production",
+            "checked state is not production-result-eligible")
+    require(state.get("sealed_pack_sha256") == receipt.get("sealed_pack_sha256")
+            == aggregate, "checked run names a different sealed pack")
+
+    adapter_config = config["execution_adapter"]
+    checker_config = config["posthoc_checker"]
+    require(adapter_config["provider_runtime"].get("kind") == "codex_cli",
+            "checked run is not bound to the codex_cli provider")
+    require(checker_config.get("mode") == "production",
+            "checked run is not bound to the production checker")
+    for current, expected in (
+        (
+            Path(prepare.__file__).resolve(),
+            config["sealed_agent_view"]["materializer_sha256"],
+        ),
+        (
+            Path(runner.__file__).resolve(),
+            config["sealed_agent_view"]["run_preparer_sha256"],
+        ),
+        (Path(checker.__file__).resolve(), checker_config["driver_sha256"]),
+        (Path(checker.inner.__file__).resolve(), checker_config["inner_checker_sha256"]),
+    ):
+        sealed = pack / "execution_code" / current.name
+        require(current.is_file() and not current.is_symlink()
+                and local_sha256_file(current) == expected,
+                f"invoked evidence dependency differs from frozen hash: {current.name}")
+        require(sealed.is_file() and not sealed.is_symlink()
+                and local_sha256_file(sealed) == expected,
+                f"sealed evidence dependency differs from frozen hash: {current.name}")
+    require(job.get("workspace_base_commit") == config["workspace_base_commit"],
+            "prepared job base commit differs from frozen config")
+    require(job.get("agent_mount") == str(agent.resolve())
+            and job.get("prompt_path") == str((agent / "prompt.md").resolve()),
+            "prepared job agent/prompt paths differ from this run")
+    for key, expected in (
+        ("model", config["model"]),
+        ("pricing", config["pricing"]),
+        ("budgets", config["budgets_per_run"]),
+        ("retry_policy", config["retry_policy"]),
+        ("provider_runtime", adapter_config["provider_runtime"]),
+    ):
+        require(job.get(key) == expected, f"prepared job {key} differs from frozen config")
+    require(job.get("adapter_contract_sha256") == adapter_config["contract_sha256"],
+            "prepared job adapter contract differs from frozen config")
+    require(job.get("required_adapter_attestations") == [
+        "fresh model context and process",
+        "only agent_mount plus pinned read-only toolchain/dependency cache visible",
+        "general network disabled inside evaluated tools",
+        "token/tool/build/time/cost budgets enforced",
+        "complete request/response/tool/process accounting retained under operator output",
+    ], "prepared job adapter attestations differ from the runner contract")
+    require(job.get("result_contract") == {
+        "agent_output_directory": str(output.resolve()),
+        "required_files": [
+            "result.json", "lean-diff.patch", "build.log", "explanation.md",
+            "workflow-compliance.json",
+        ],
+        "optional_files": ["source-amendment.md"],
+        "workflow_id": planned["condition"],
+        "workflow_evidence_files": runner.WORKFLOW_EVIDENCE[planned["condition"]],
+        "result_required_fields": [
+            "schema_version", "opaque_run_id", "final_status",
+            "public_declarations", "primary_grader_rationale",
+        ],
+        "blind_grading_text_rule": runner.BLIND_GRADING_TEXT_RULE,
+    }, "prepared job result contract differs from the runner contract")
+
+    adapter_contract_path = pack / "adapter_contract.json"
+    adapter_contract = regular_json(adapter_contract_path, "sealed adapter contract")
+    require(prepare.sha256_file(adapter_contract_path) == adapter_config["contract_sha256"],
+            "sealed adapter contract hash differs from frozen config")
+    checker_contract_path = pack / "checker_sandbox_contract.json"
+    checker_contract = regular_json(checker_contract_path, "sealed checker contract")
+    require(prepare.sha256_file(checker_contract_path) == checker_config["contract_sha256"],
+            "sealed checker contract hash differs from frozen config")
+
+    require(set(workspace_manifest) == {
+        "schema_version", "opaque_run_id", "workspace_base_commit",
+        "condition_view", "selected_repository_paths", "files",
+    }, "prepared workspace manifest schema differs")
+    require(workspace_manifest["schema_version"] == 1
+            and workspace_manifest["opaque_run_id"] == opaque_id
+            and workspace_manifest["workspace_base_commit"] == config["workspace_base_commit"]
+            and workspace_manifest["condition_view"] == planned["condition"],
+            "prepared workspace manifest identity differs")
+    baseline_manifest = _manifest_entries(
+        workspace_manifest["files"], "prepared workspace manifest files"
+    )
+    require(state.get("prepared_job_sha256") == receipt.get("prepared_job_sha256")
+            == prepare.sha256_file(job_path), "prepared job hash chain differs")
+    require(state.get("workspace_manifest_sha256")
+            == receipt.get("workspace_manifest_sha256")
+            == prepare.sha256_file(workspace_manifest_path),
+            "workspace manifest hash chain differs")
+
+    require(receipt.get("schema_version") == 1
+            and receipt.get("status") == "executed_unchecked",
+            "execution receipt schema or status differs")
+    require(set(receipt) == {
+        "schema_version", "opaque_run_id", "execution_purpose",
+        "primary_result_eligible", "smoke_plan_sha256", "sealed_pack_sha256",
+        "prepared_agent_manifest_sha256", "prepared_job_sha256",
+        "workspace_manifest_sha256", "completed_agent_manifest_sha256",
+        "completed_agent_manifest", "protected_input_hashes",
+        "adapter_artifact_sha256", "adapter_process_exit_code",
+        "adapter_process_wall_seconds", "usage", "termination", "status",
+    }, "execution receipt schema fields differ")
+    require(receipt.get("termination") == adapter_response.get("termination") == "completed",
+            "checked run lacks completed provider termination")
+    require(type(receipt.get("adapter_process_exit_code")) is int
+            and receipt["adapter_process_exit_code"] == 0,
+            "checked run adapter process did not exit successfully")
+    require(isinstance(receipt.get("adapter_process_wall_seconds"), (int, float))
+            and not isinstance(receipt["adapter_process_wall_seconds"], bool)
+            and 0 <= receipt["adapter_process_wall_seconds"]
+            <= float(job["budgets"]["wall_clock_seconds"]) + 1,
+            "checked run adapter wall time is invalid")
+
+    require(agent.is_dir() and workspace.is_dir() and output.is_dir(),
+            "completed agent view is incomplete")
+    current_agent_manifest = runner.file_manifest(agent)
+    current_agent_manifest_sha256 = runner.manifest_sha256(current_agent_manifest)
+    require(receipt.get("completed_agent_manifest") == current_agent_manifest
+            and receipt.get("completed_agent_manifest_sha256")
+            == state.get("completed_agent_manifest_sha256")
+            == current_agent_manifest_sha256,
+            "completed agent manifest is absent, stale, or disconnected")
+    require(receipt.get("prepared_agent_manifest_sha256")
+            == state.get("prepared_agent_manifest_sha256"),
+            "prepared agent manifest hash chain differs")
+    _sha256_value(
+        receipt.get("prepared_agent_manifest_sha256"),
+        "prepared agent manifest receipt binding",
+    )
+    require(receipt.get("protected_input_hashes") == {
+        "prompt.md": prepare.sha256_file(agent / "prompt.md"),
+        "source/source.pdf": prepare.sha256_file(agent / "source" / "source.pdf"),
+    }, "execution receipt protected-input hashes differ")
+    require(job.get("prompt_sha256") == receipt["protected_input_hashes"]["prompt.md"]
+            and job.get("source_sha256")
+            == receipt["protected_input_hashes"]["source/source.pdf"],
+            "prepared job prompt/source hashes differ from completed inputs")
+
+    required_outputs = job.get("result_contract", {}).get("required_files")
+    require(isinstance(required_outputs, list) and required_outputs
+            and all(isinstance(name, str) and (output / name).is_file()
+                    for name in required_outputs),
+            "checked run omits required agent output")
+    result_path = output / "result.json"
+    result = regular_json(result_path, "agent result")
+    require(set(result) == set(job["result_contract"]["result_required_fields"]),
+            "agent result schema differs from prepared contract")
+    require(result.get("schema_version") == 1
+            and result.get("opaque_run_id") == opaque_id,
+            "agent result identity differs")
+    require(result.get("final_status") in {
+        "compiled", "partial", "source_amended", "source_rejected",
+        "library_blocked", "mathematically_blocked", "counterexample",
+        "budget_exhausted", "infrastructure_failure",
+    }, "agent result has an unknown final status")
+    declarations = result.get("public_declarations")
+    require(isinstance(declarations, list)
+            and len(declarations) == len(set(declarations))
+            and all(isinstance(name, str) and checker.inner.DECLARATION_NAME.fullmatch(name)
+                    for name in declarations),
+            "agent result has malformed public declarations")
+    require(result["final_status"] != "compiled" or bool(declarations),
+            "compiled agent result has no public declaration")
+    require(isinstance(result.get("primary_grader_rationale"), str)
+            and bool(result["primary_grader_rationale"].strip()),
+            "agent result lacks a primary-grader rationale")
+    checker.validate_workflow_artifacts(output, job)
+
+    require(adapter_request == runner.adapter_request(job, agent),
+            "adapter request differs from the prepared job/agent view")
+    expected_adapter_response_fields = set(
+        adapter_contract["response_schema"]["required"]
+    ) | {"schema_version"}
+    require(set(adapter_response) == expected_adapter_response_fields
+            and adapter_response.get("schema_version") == 1,
+            "adapter response schema differs from sealed contract")
+    expected_adapter_response = {
+        "opaque_run_id": opaque_id,
+        "adapter_id": adapter_config["adapter_id"],
+        "adapter_version": adapter_config["adapter_version"],
+        "model_id": config["model"]["model_id"],
+        "immutable_model_version": config["model"]["immutable_version"],
+        "replicate": planned["replicate"],
+        "container_or_sandbox_image_digest": adapter_config[
+            "container_or_sandbox_image_digest"
+        ],
+        "budget_enforcement_attestation": adapter_config[
+            "budget_enforcement_attestation"
+        ],
+        "filesystem_network_process_attestation": adapter_config[
+            "filesystem_network_process_attestation"
+        ],
+    }
+    for key, expected in expected_adapter_response.items():
+        require(adapter_response.get(key) == expected,
+                f"adapter response differs from frozen {key}")
+    invocations = adapter_response.get("model_invocations")
+    require(isinstance(invocations, list) and bool(invocations),
+            "checked run lacks a provider invocation")
+    require(all(
+        invocation.get("transport") == "codex_cli"
+        and invocation.get("observable_id_kind") == "codex_thread"
+        and isinstance(invocation.get("observable_id"), str)
+        and bool(invocation["observable_id"])
+        and invocation.get("process_exit_code") == 0
+        and invocation.get("usage_observed") is True
+        for invocation in invocations
+    ), "checked run lacks a successful observable codex_cli completion")
+    trace = runner.parse_trace(adapter_trace_path)
+    usage = runner.validate_usage(adapter_response, trace, job)
+    require(receipt.get("usage") == {
+        **usage,
+        "orchestrator_wall_seconds": receipt["adapter_process_wall_seconds"],
+    }, "execution receipt usage differs from the re-derived adapter trace")
+    adapter_manifest = runner.file_manifest(adapter)
+    actual_adapter_hashes = {
+        entry["path"]: entry["sha256"] for entry in adapter_manifest
+    }
+    require(receipt.get("adapter_artifact_sha256") == actual_adapter_hashes,
+            "execution receipt does not bind the exact adapter artifact set")
+    require(state.get("execution_receipt_sha256") == prepare.sha256_file(receipt_path),
+            "execution receipt hash differs from checked state")
+
+    attempt_id = state.get("checker_attempt_id")
+    require(isinstance(attempt_id, str) and attempt_id,
+            "checked state lacks a checker attempt ID")
+    expected_attempt_id = checker.checker_attempt_id(
+        aggregate, opaque_id, state["execution_receipt_sha256"],
+        checker_config["driver_sha256"], checker_config["inner_checker_sha256"],
+        checker_config["runtime_config_sha256"], 1,
+    )
+    require(attempt_id == expected_attempt_id,
+            "checker attempt ID differs from the frozen single-attempt derivation")
+    attempts_root = operator / "checker-attempts"
+    require(attempts_root.is_dir() and not attempts_root.is_symlink()
+            and [path.name for path in attempts_root.iterdir()] == [attempt_id]
+            and (attempts_root / attempt_id).is_dir()
+            and not (attempts_root / attempt_id).is_symlink(),
+            "checked run does not have exactly one deterministic checker attempt")
+    checker_request_path = operator / "checker-attempts" / attempt_id / "request.json"
+    checker_request = regular_json(checker_request_path, "checker request")
+    request_fields = set(checker_contract["request_schema"]["required"])
+    require(set(checker_request) == request_fields,
+            "checker request schema differs from sealed contract")
+    require(not (set(checker_contract["request_schema"]["forbidden_semantic_fields"])
+                 & set(checker_request)),
+            "checker request exposes forbidden semantic fields")
+    completed_workspace_manifest = runner.file_manifest(workspace)
+    expected_request = {
+        "schema_version": 1,
+        "suite_id": config["suite_id"],
+        "opaque_run_id": opaque_id,
+        "checker_attempt_id": attempt_id,
+        "checker_attempt_label": attempt_id,
+        "sealed_pack_sha256": aggregate,
+        "execution_receipt_sha256": state["execution_receipt_sha256"],
+        "completed_agent_manifest_sha256": current_agent_manifest_sha256,
+        "baseline_manifest": baseline_manifest,
+        "baseline_manifest_sha256": runner.manifest_sha256(baseline_manifest),
+        "expected_completed_workspace_manifest": completed_workspace_manifest,
+        "expected_completed_workspace_manifest_sha256": runner.manifest_sha256(
+            completed_workspace_manifest
+        ),
+        "patch_sha256": prepare.sha256_file(output / "lean-diff.patch"),
+        "result_sha256": prepare.sha256_file(result_path),
+        "public_declarations": declarations,
+        "final_status": result["final_status"],
+        "allowed_axioms": sorted(checker.inner.ALLOWED_AXIOMS),
+        "checker_id": checker_config["checker_id"],
+        "checker_version": checker_config["checker_version"],
+        "inner_checker_sha256": checker_config["inner_checker_sha256"],
+        "controller_entrypoint_sha256": checker_config["controller_entrypoint_sha256"],
+        "checker_contract_sha256": checker_config["contract_sha256"],
+        "checker_runtime_config_sha256": checker_config["runtime_config_sha256"],
+        "container_image_digest": checker_config["container_image_digest"],
+        "filesystem_network_process_attestation": checker_config[
+            "filesystem_network_process_attestation"
+        ],
+        "controller_worker_separation_attestation": checker_config[
+            "controller_worker_separation_attestation"
+        ],
+        "checker_cache_manifest_sha256": checker_config[
+            "checker_cache_manifest_sha256"
+        ],
+        "resource_limits": checker_config["budgets"],
+        "worker_command_prefix": checker_config["worker_command_prefix"],
+        "cache_prelude_argv": checker_config["cache_prelude_argv"],
+        "sandbox_mode": "production",
+        "workflow_compliance_pass": True,
+        "execution_usage": receipt["usage"],
+    }
+    require(checker_request == expected_request,
+            "checker request is not the frozen semantic request for this run")
+
+    checker_dir = operator / "checker"
+    checker_result_path = checker_dir / "checker-result.json"
+    checker_receipt_path = checker_dir / "checker-execution-receipt.json"
+    checker_response_path = checker_dir / "sandbox-response.json"
+    checker_result = regular_json(checker_result_path, "checker result")
+    checker_receipt = regular_json(checker_receipt_path, "checker execution receipt")
+    checker_response = regular_json(checker_response_path, "checker sandbox response")
+    checker.validate_checker_result(checker_result, checker_request, opaque_id, attempt_id)
+    require(checker_result.get("execution_usage") == receipt["usage"],
+            "checker result usage differs from execution receipt")
+
+    runtime_sha256 = prepare.checker_runtime_config_sha256(config)
+    require(checker_config["runtime_config_sha256"] == runtime_sha256,
+            "checker runtime digest differs from the frozen config")
+    probe_path = pack / "checker_isolation_probe.json"
+    probe = regular_json(probe_path, "sealed checker isolation probe")
+    probe_artifacts = prepare.probe_artifact_bytes(
+        pack / "checker_isolation_probe_artifacts"
+    )
+    require(prepare.probe_artifact_manifest(probe_artifacts)
+            == probe.get("artifact_manifest"),
+            "checker isolation-probe artifact bytes differ from its manifest")
+    required_probes = {
+        "network_denied", "host_sentinel_protected", "operator_ground_truth_absent",
+        "checker_outputs_not_worker_writable",
+        "patched_source_and_controller_input_read_only",
+        "mounted_inputs_and_cidfile_protected", "background_process_reaped",
+    }
+    require(probe.get("schema_version") == 1
+            and probe.get("suite_id") == config["suite_id"]
+            and probe.get("status") == "passed"
+            and probe.get("checker_id") == checker_config["checker_id"]
+            and probe.get("checker_version") == checker_config["checker_version"]
+            and probe.get("container_image_digest")
+            == checker_config["container_image_digest"]
+            and probe.get("controller_entrypoint_sha256")
+            == checker_config["controller_entrypoint_sha256"]
+            and probe.get("checker_runtime_config_sha256") == runtime_sha256
+            and probe.get("runtime_command_template_sha256")
+            == prepare.sha256_bytes(prepare.canonical_json_bytes(
+                checker_config["sandbox_command_argv"]
+            ))
+            and probe.get("probe_runner_sha256")
+            == checker_config["isolation_probe_runner_sha256"]
+            and set(probe.get("probes", {})) == required_probes
+            and all(probe["probes"][name] is True for name in required_probes),
+            "checker isolation probe is absent, failed, or runtime-disconnected")
+    probe_nonce = probe.get("probe_nonce")
+    require(isinstance(probe_nonce, str) and len(probe_nonce) == 48
+            and all(character in "0123456789abcdef" for character in probe_nonce)
+            and probe.get("checker_attempt_label") == f"ABRL-PROBE-{probe_nonce}",
+            "checker isolation probe nonce/attempt provenance differs")
+    require("host-observations.json" in probe_artifacts,
+            "checker isolation probe lacks host observations")
+    try:
+        host_observations = json.loads(
+            probe_artifacts["host-observations.json"].decode("utf-8")
+        )
+    except (UnicodeDecodeError, json.JSONDecodeError) as error:
+        raise SystemExit(
+            "target-drift completion ledger failed: malformed probe host observations"
+        ) from error
+    require(isinstance(host_observations, dict)
+            and host_observations.get("probe_nonce") == probe_nonce
+            and host_observations.get("checker_attempt_label")
+            == probe["checker_attempt_label"]
+            and host_observations.get("checker_runtime_config_sha256") == runtime_sha256
+            and host_observations.get("container_image_digest")
+            == checker_config["container_image_digest"]
+            and host_observations.get("derived_probes") == probe["probes"],
+            "checker isolation host observations differ from the passed report")
+    require(checker_config["isolation_probe_report_sha256"]
+            == prepare.sha256_file(probe_path),
+            "checker isolation-probe report hash differs from frozen config")
+
+    response_fields = set(checker_contract["response_schema"]["required"]) | {
+        "schema_version"
+    }
+    require(set(checker_response) == response_fields
+            and checker_response.get("schema_version") == 1,
+            "checker sandbox response schema differs from sealed contract")
+    expected_response = {
+        "opaque_run_id": opaque_id,
+        "checker_attempt_id": attempt_id,
+        "checker_attempt_label": attempt_id,
+        "request_sha256": prepare.sha256_file(checker_request_path),
+        "checker_id": checker_config["checker_id"],
+        "checker_version": checker_config["checker_version"],
+        "inner_checker_sha256": checker_config["inner_checker_sha256"],
+        "controller_entrypoint_sha256": checker_config["controller_entrypoint_sha256"],
+        "checker_contract_sha256": checker_config["contract_sha256"],
+        "checker_runtime_config_sha256": runtime_sha256,
+        "container_image_digest": checker_config["container_image_digest"],
+        "filesystem_network_process_attestation": checker_config[
+            "filesystem_network_process_attestation"
+        ],
+        "controller_worker_separation_attestation": checker_config[
+            "controller_worker_separation_attestation"
+        ],
+    }
+    for key, expected in expected_response.items():
+        require(checker_response.get(key) == expected,
+                f"checker sandbox response differs from frozen {key}")
+    require(checker_response.get("termination") == "completed"
+            and checker_response.get("process_exit_code") == 0,
+            "checker sandbox response is not a completed success")
+    measured_wall = checker_response.get("measured_wall_seconds")
+    require(isinstance(measured_wall, (int, float))
+            and not isinstance(measured_wall, bool)
+            and 0 <= measured_wall
+            <= float(checker_config["budgets"]["wall_clock_seconds"]) + 1,
+            "checker sandbox response wall time is invalid")
+    artifact_manifest = _manifest_entries(
+        checker_response.get("artifact_manifest"), "checker artifact manifest"
+    )
+    actual_checker_manifest = runner.file_manifest(checker_dir)
+    published_artifacts = [
+        entry for entry in actual_checker_manifest
+        if entry["path"] not in {
+            "sandbox-response.json", "checker-execution-receipt.json"
+        }
+    ]
+    require(artifact_manifest == published_artifacts,
+            "checker artifact manifest differs from the exact published artifacts")
+    checker_artifact_aggregate = checker.artifact_aggregate(artifact_manifest)
+    require(checker_response.get("artifact_aggregate_sha256")
+            == checker_artifact_aggregate,
+            "checker artifact aggregate is not re-derived from published bytes")
+    require(checker_response.get("checker_result_sha256")
+            == prepare.sha256_file(checker_result_path),
+            "checker sandbox response does not bind checker-result bytes")
+
+    require(set(checker_receipt) == {
+        "schema_version", "opaque_run_id", "checker_attempt_id",
+        "checker_request_sha256", "sandbox_response_sha256",
+        "checker_result_sha256", "checker_artifact_aggregate_sha256",
+        "checker_runtime_config_sha256", "isolation_probe_report_sha256",
+        "checker_mode", "execution_purpose", "result_eligible", "process",
+    }, "checker execution receipt schema differs")
+    process = checker_receipt.get("process")
+    require(isinstance(process, dict)
+            and process.get("exit_code") == 0
+            and process.get("timed_out") is False
+            and process.get("output_limit_exceeded") is False
+            and process.get("lifecycle_verified_absent") is True,
+            "checker execution receipt lacks a successful closed lifecycle")
+    require(checker_receipt.get("schema_version") == 1
+            and checker_receipt.get("opaque_run_id") == opaque_id
+            and checker_receipt.get("checker_attempt_id") == attempt_id
+            and checker_receipt.get("checker_mode") == "production"
+            and checker_receipt.get("execution_purpose")
+            == runner.PRIMARY_EXECUTION_PURPOSE
+            and checker_receipt.get("result_eligible") is True,
+            "checker execution receipt is not production-result-eligible")
+    require(checker_receipt.get("checker_request_sha256")
+            == state.get("checker_request_sha256")
+            == checker_response["request_sha256"]
+            == prepare.sha256_file(checker_request_path),
+            "checker request hash chain differs")
+    require(checker_receipt.get("checker_result_sha256")
+            == state.get("checker_result_sha256")
+            == checker_response["checker_result_sha256"]
+            == prepare.sha256_file(checker_result_path),
+            "checker result hash chain differs")
+    require(checker_receipt.get("checker_artifact_aggregate_sha256")
+            == state.get("checker_artifact_aggregate_sha256")
+            == checker_response["artifact_aggregate_sha256"]
+            == checker_artifact_aggregate,
+            "checker artifact aggregate chain differs")
+    require(checker_receipt.get("sandbox_response_sha256")
+            == state.get("sandbox_response_sha256")
+            == prepare.sha256_file(checker_response_path),
+            "checker sandbox-response hash chain differs")
+    require(state.get("checker_execution_receipt_sha256")
+            == prepare.sha256_file(checker_receipt_path),
+            "checker execution-receipt hash differs from checked state")
+    require(checker_receipt.get("checker_runtime_config_sha256")
+            == state.get("checker_runtime_config_sha256")
+            == checker_result.get("checker_runtime_config_sha256")
+            == runtime_sha256,
+            "checker runtime hash chain differs")
+    require(checker_receipt.get("isolation_probe_report_sha256")
+            == state.get("isolation_probe_report_sha256")
+            == checker_config["isolation_probe_report_sha256"],
+            "checker isolation-probe hash chain differs")
+
+    hashes = evidence_hashes(operator, state)
+    return {
+        "job": job,
+        "state": state,
+        "workspace_manifest": workspace_manifest,
+        "execution_receipt": receipt,
+        "adapter_response": adapter_response,
+        "agent_result": result,
+        "checker_request": checker_request,
+        "checker_result": checker_result,
+        "checker_execution_receipt": checker_receipt,
+        "checker_sandbox_response": checker_response,
+        "evidence_sha256": hashes,
+    }
+
+
 def missing_reason(status: str) -> str | None:
     return {
         "prepared_unrun": "adapter_not_completed",
@@ -205,7 +818,7 @@ def missing_reason(status: str) -> str | None:
 
 def inspect_run(
     run_dir: Path, planned: dict[str, Any], aggregate: str,
-    config: dict[str, Any],
+    config: dict[str, Any], pack: Path,
 ) -> dict[str, Any]:
     operator = run_dir / "operator"
     job = regular_json(operator / "job.json", "prepared job")
@@ -219,7 +832,6 @@ def inspect_run(
     require(state.get("schema_version") == 1, "run state schema_version must be 1")
     status = state.get("status")
     require(status in KNOWN_STATES, f"unknown run state {status!r}")
-    hashes = evidence_hashes(operator, state)
     eligible = (
         status == ELIGIBLE_STATUS
         and state.get("result_eligible") is True
@@ -227,36 +839,11 @@ def inspect_run(
     )
     if status == ELIGIBLE_STATUS:
         require(eligible, "checked run is not literal production-result-eligible")
-        require(config["execution_adapter"]["provider_runtime"]["kind"] == "codex_cli",
-                "checked run is bound to a non-production provider runtime")
-        require(config["posthoc_checker"]["mode"] == "production",
-                "checked run is bound to a non-production checker")
-        require(job.get("execution_purpose") == runner.PRIMARY_EXECUTION_PURPOSE
-                and job.get("primary_result_eligible") is True,
-                "checked run job is not a primary result-eligible job")
-        receipt = regular_json(operator / "execution-receipt.json", "execution receipt")
-        response_path = operator / "adapter" / "response.json"
-        response = regular_json(response_path, "adapter response")
-        checker_receipt = regular_json(
-            operator / "checker" / "checker-execution-receipt.json",
-            "checker execution receipt",
-        )
-        require(receipt.get("termination") == response.get("termination") == "completed",
-                "checked run lacks completed provider termination")
-        require(receipt.get("adapter_artifact_sha256", {}).get("response.json")
-                == prepare.sha256_file(response_path),
-                "checked run adapter response is not bound by its execution receipt")
-        invocations = response.get("model_invocations")
-        require(isinstance(invocations, list) and bool(invocations)
-                and all(invocation.get("transport") == "codex_cli"
-                        and invocation.get("usage_observed") is True
-                        for invocation in invocations),
-                "checked run lacks a real codex_cli invocation with observed usage")
-        require(checker_receipt.get("checker_mode") == "production"
-                and checker_receipt.get("execution_purpose")
-                == runner.PRIMARY_EXECUTION_PURPOSE
-                and checker_receipt.get("result_eligible") is True,
-                "checked run checker receipt is not production-result-eligible")
+        hashes = validate_checked_run_evidence(
+            pack, run_dir, planned, aggregate, config
+        )["evidence_sha256"]
+    else:
+        hashes = evidence_hashes(operator, state)
     if status == "checked_fixture_nonexperimental":
         require(state.get("result_eligible") is False,
                 "fixture run must be explicitly result-ineligible")
@@ -328,7 +915,7 @@ def build_ledger(pack: Path, runs_root: Path) -> dict[str, Any]:
         if semantic_id in discovered:
             try:
                 records.append(inspect_run(
-                    discovered[semantic_id], planned, aggregate, config
+                    discovered[semantic_id], planned, aggregate, config, pack
                 ))
             except (SystemExit, Exception) as error:
                 records.append({

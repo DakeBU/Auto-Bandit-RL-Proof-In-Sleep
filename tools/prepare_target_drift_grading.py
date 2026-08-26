@@ -223,6 +223,15 @@ def main() -> None:
         adapter_response = load(adapter_response_path)
         checker_receipt = load(checker_receipt_path)
         checker_response = load(checker_response_path)
+        require(job.get("semantic_run_id") in sealed_by_id,
+                f"run is absent from the sealed manifest: {run_dir.name}")
+        sealed = sealed_by_id[job["semantic_run_id"]]
+        aggregate = (pack / "aggregate.sha256").read_text(
+            encoding="ascii"
+        ).strip()
+        completion.validate_checked_run_evidence(
+            pack, run_dir, sealed, aggregate, config
+        )
         require_primary_job(job, run_dir.name)
         require_real_provider_completion(
             config, receipt, adapter_response, adapter_response_path, run_dir.name
@@ -310,8 +319,6 @@ def main() -> None:
                 f"agent view changed after neutral checking for {run_dir.name}")
         require(checker["execution_receipt_sha256"] == prepare.sha256_file(receipt_path),
                 f"checker names a different execution receipt for {run_dir.name}")
-        sealed = sealed_by_id[job["semantic_run_id"]]
-        aggregate = (pack / "aggregate.sha256").read_text(encoding="ascii").strip()
         require(job["opaque_run_id"] == state["opaque_run_id"]
                 == receipt["opaque_run_id"] == checker["opaque_run_id"]
                 == runner.opaque_id("run", aggregate, job["semantic_run_id"]),
