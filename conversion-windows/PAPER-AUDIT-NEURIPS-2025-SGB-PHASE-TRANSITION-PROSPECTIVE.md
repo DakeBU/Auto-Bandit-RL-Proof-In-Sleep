@@ -2,7 +2,7 @@
 
 Task: `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE`
 
-Status: `target-frozen; Corollary 1 compiled; Theorem 2 blocked after compiled nth-pull, latent-product/readout, and deterministic-starvation milestones`
+Status: `target-frozen; Corollary 1 compiled; Theorem 2 blocked after compiled nth-pull, latent-product/readout, deferred-decisions finite-prefix factorization, and deterministic-starvation milestones`
 
 ## Source-to-Lean fence
 
@@ -107,6 +107,34 @@ that may be assumed by the terminal.
   product and finite-pull readout are candidate compiled leaves, while the
   native trajectory-marginal adapter remains the target-faithful blocker.
 
+## Round-16 retrieval packet: deferred-decisions prefix factorization
+
+- Reused cards: `MLIB-PROBABILITY-KERNEL`,
+  `MLIB-PROBABILITY-INDEPENDENCE`, `MLIB-MEASURE-INTEGRAL`,
+  `PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB`, and
+  `SCN-STOCHASTIC-FINITE`.
+- Reused local APIs: `Measure.infinitePi_map_restrict`,
+  `KernelTrajectoryPrefix.trajMeasure_map_frestrictLe_congr`,
+  `Thompson.canonicalMeasurableEnvironmentTrajectoryKernel_apply_eq_canonical`,
+  `Thompson.map_compProd_comap_history`, and the latent next-unused-coordinate
+  environment.
+- Compiled route: restrict the latent arm stream through the inclusive endpoint
+  `n`; prove that two streams agreeing on this finite box induce the same
+  visible trajectory-prefix law; package the dependence as a Markov kernel on
+  the finite box; and push the joint latent measure forward to obtain the exact
+  stream-box/visible-prefix mixture.
+- Hidden contracts: `Finset.Iic n` is inclusive; action randomization remains
+  inside the canonical trajectory kernel; the finite box contains unused as
+  well as consumed coordinates; and a finite mixture representation alone does
+  not prove that the next unused selected coordinate is conditionally fresh.
+- Remaining native route: prove a branchwise prefix-plus-next-pair factorization
+  by removing coordinate `(realHistoryPullCount n history arm, arm)`, then use
+  conditional-law and trajectory-uniqueness APIs to identify the visible latent
+  law with the native fixed-IID law.
+- Nonclaims: no visible-marginal/native-prefix identification or full native
+  visible law, no stopped-reward IID theorem, no future-cylinder/no-return producer, and no
+  Theorem-2 terminal follows from this packet.
+
 ## Pivot rules
 
 - Do not replace the nth-pull law with an IID premise on the selected reward
@@ -114,5 +142,6 @@ that may be assumed by the terminal.
 - Do not replace actual sampled regret with a probability-schedule proxy.
 - If the asymptotic notation becomes a blocker, retain the exact finite
   Appendix-C lower bound and leave the terminal status partial.
-- A compiled Corollary 1, nth-pull bridge, or deterministic starvation
-  consumer does not change Theorem 2 from `partial` to `compiled`.
+- Compiled Corollary 1, nth-pull, latent-product/readout, finite-prefix
+  factorization, and deterministic-starvation milestones do not compile the
+  frozen Theorem 2 terminal; that terminal remains `blocked`.

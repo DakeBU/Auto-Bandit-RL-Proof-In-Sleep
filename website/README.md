@@ -50,16 +50,20 @@ reports zero `literature-open` cases until a scoped primary-source audit support
 such a claim; one case remains in the source-audit queue, while the 13
 formalization-open cases expose 39 stable named leaves. Two additional
 source-frozen ports—the 54-declaration succinct-lower-bound audit and the
-295-declaration stochastic-gradient-bandit audit—are displayed outside that
+303-declaration stochastic-gradient-bandit audit—are displayed outside that
 comparison ledger.  The latter contains a historical 223-declaration
 Theorem-1/Appendix-E stack, a 23-declaration bounded Corollary-1 companion, an
 18-declaration fixed-cutoff starvation consumer, a 24-declaration chronological
 nth-pull bridge, and a 7-declaration latent fixed-arm product/readout layer.  The
-new layer proves an unconditional finite product law for fixed-arm latent
-coordinates and almost-sure readout at every finite nth pull.  It does not prove
-the native trajectory adapter and does not make totalized or
-occurrence-conditioned stopped rewards IID.  The stopped-prefix future-cylinder,
-conditional no-return producer, ballot phase, and terminal remain blocked.  The
+latent layer proves an unconditional finite product law for fixed-arm latent
+coordinates and almost-sure readout at every finite nth pull.  An additional
+8-declaration deferred-decisions layer proves stream-prefix locality, a Markov
+visible-prefix kernel, and the exact finite stream-box/visible-prefix mixture.
+It does not identify that mixture's visible marginal with the native fixed-IID
+prefix or establish the native visible law, and it does not make totalized or
+occurrence-conditioned stopped rewards IID.  Branchwise prefix-plus-next-pair
+freshness, the visible-marginal/native-prefix identification, the stopped-prefix
+future-cylinder, conditional no-return producer, ballot phase, and terminal remain blocked.  The
 SGB audit therefore remains partial, with Theorems 2–4 open;
 the succinct-lower-bound port also has no compiled paper-level terminal.
 

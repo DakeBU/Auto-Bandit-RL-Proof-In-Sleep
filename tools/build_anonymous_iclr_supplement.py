@@ -232,6 +232,10 @@ SGB_THEOREM_TWO_LATENT_REWARD_FILE = (
     "BanditRLProof/Algorithms/"
     "StochasticGradientBanditTheoremTwoLatentReward.lean"
 )
+SGB_THEOREM_TWO_PREFIX_FACTORIZATION_FILE = (
+    "BanditRLProof/Algorithms/"
+    "StochasticGradientBanditTheoremTwoNativeTrajectory.lean"
+)
 SGB_FINITE_ALGEBRA_DECLARATION_COUNT = 26
 SGB_GENERATED_HISTORY_DECLARATION_COUNT = 18
 SGB_TWO_ARM_RATE_DECLARATION_COUNT = 18
@@ -254,12 +258,14 @@ SGB_COROLLARY_ONE_DECLARATION_COUNT = 23
 SGB_THEOREM_TWO_STARVATION_DECLARATION_COUNT = 18
 SGB_THEOREM_TWO_NTH_PULL_DECLARATION_COUNT = 24
 SGB_THEOREM_TWO_LATENT_REWARD_DECLARATION_COUNT = 7
+SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATION_COUNT = 8
 SGB_TOTAL_DECLARATION_COUNT = (
     SGB_HISTORICAL_DECLARATION_COUNT
     + SGB_COROLLARY_ONE_DECLARATION_COUNT
     + SGB_THEOREM_TWO_STARVATION_DECLARATION_COUNT
     + SGB_THEOREM_TWO_NTH_PULL_DECLARATION_COUNT
     + SGB_THEOREM_TWO_LATENT_REWARD_DECLARATION_COUNT
+    + SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATION_COUNT
 )
 SGB_GENERATED_TRAJECTORY_DECLARATIONS = frozenset({
     "BanditRLProof.StochasticGradientBandit.trajectoryKernel",
@@ -398,6 +404,16 @@ SGB_THEOREM_TWO_LATENT_REWARD_DECLARATIONS = frozenset({
     "BanditRLProof.StochasticGradientBandit.stationaryRewardKernelAt_twoArmFixedIIDRewardKernel_eq",
     "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure_map_optimalPrefix_eq_pi",
     "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullReward_eq_latentCoordinate_ae",
+})
+SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATIONS = frozenset({
+    "BanditRLProof.UCB.armStreamMeasure_map_frestrictLe_eq_pi",
+    "BanditRLProof.UCB.extendArmStreamFinitePrefix",
+    "BanditRLProof.UCB.measurable_extendArmStreamFinitePrefix",
+    "BanditRLProof.UCB.extendArmStreamFinitePrefix_apply_of_le",
+    "BanditRLProof.Thompson.latentArmStreamTrajectoryKernel_map_frestrictLe_eq_of_streamPrefix_eq",
+    "BanditRLProof.Thompson.latentArmStreamVisiblePrefixKernel",
+    "BanditRLProof.Thompson.latentArmStreamTrajectoryKernel_map_frestrictLe_eq_prefixKernel_comap",
+    "BanditRLProof.Thompson.latentArmStreamTrajectoryMeasure_map_stream_visiblePrefix_eq",
 })
 SGB_THEOREM_TWO_TERMINAL_DECLARATION = (
     "BanditRLProof.StochasticGradientBandit."
@@ -636,6 +652,8 @@ EXPLICIT_COPIES = {
         "evidence/succinct-lower-bound-proof-obligations.md",
     "proof-obligations/PAPER-AUDIT-NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT.md":
         "evidence/stochastic-gradient-bandit-proof-obligations.md",
+    "proof-obligations/PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE.md":
+        "evidence/stochastic-gradient-bandit-follow-on-proof-obligations.md",
 }
 
 EVIDENCE_JSON = {
@@ -1945,6 +1963,14 @@ def validate_sgb_count(records, index):
         row["full_name"] for row in rows.values()
         if row["file"] == SGB_THEOREM_TWO_LATENT_REWARD_FILE
     }
+    theorem_two_prefix_factorization_count = sum(
+        row["file"] == SGB_THEOREM_TWO_PREFIX_FACTORIZATION_FILE
+        for row in rows.values()
+    )
+    theorem_two_prefix_factorization_names = {
+        row["full_name"] for row in rows.values()
+        if row["file"] == SGB_THEOREM_TWO_PREFIX_FACTORIZATION_FILE
+    }
     layer_counts = (
         finite_count,
         generated_history_count,
@@ -1984,6 +2010,7 @@ def validate_sgb_count(records, index):
             + SGB_THEOREM_TWO_STARVATION_DECLARATION_COUNT
             + SGB_THEOREM_TWO_NTH_PULL_DECLARATION_COUNT
             + SGB_THEOREM_TWO_LATENT_REWARD_DECLARATION_COUNT
+            + SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATION_COUNT
         or historical_declarations & follow_on_declarations
         or len(declarations) != SGB_TOTAL_DECLARATION_COUNT
         or set(rows) != declarations
@@ -2004,8 +2031,13 @@ def validate_sgb_count(records, index):
             SGB_THEOREM_TWO_LATENT_REWARD_DECLARATION_COUNT
         or theorem_two_latent_reward_names !=
             SGB_THEOREM_TWO_LATENT_REWARD_DECLARATIONS
+        or theorem_two_prefix_factorization_count !=
+            SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATION_COUNT
+        or theorem_two_prefix_factorization_names !=
+            SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATIONS
         or corollary_one_names | theorem_two_starvation_names |
-            theorem_two_nth_pull_names | theorem_two_latent_reward_names !=
+            theorem_two_nth_pull_names | theorem_two_latent_reward_names |
+            theorem_two_prefix_factorization_names !=
             follow_on_declarations
         or not SGB_COROLLARY_ONE_REPRESENTATIVE_DECLARATIONS.issubset(
             corollary_one_names
@@ -2015,6 +2047,9 @@ def validate_sgb_count(records, index):
         )
         or not SGB_THEOREM_TWO_NTH_PULL_REPRESENTATIVE_DECLARATIONS.issubset(
             theorem_two_nth_pull_names
+        )
+        or not SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATIONS.issubset(
+            theorem_two_prefix_factorization_names
         )
         or SGB_THEOREM_TWO_TERMINAL_DECLARATION in declarations
         or not SGB_GENERATED_TRAJECTORY_DECLARATIONS.issubset(declarations)
@@ -2040,12 +2075,14 @@ def validate_sgb_count(records, index):
     ):
         raise ValueError(
             "stochastic-gradient-bandit audit must remain partial with exactly "
-            "295 declarations: historical 223 = frozen 215-declaration "
+            "303 declarations: historical 223 = frozen 215-declaration "
             "Theorem-1 stack + 8 Theorem-4 contract-audit leaves, followed by "
             "23 Corollary-1 companion declarations + 18 deterministic "
             "Theorem-2 starvation-consumer declarations + 24 chronological "
             "nth-pull declarations + 7 latent fixed-arm product/readout "
-            "declarations; the native trajectory adapter, stopped-prefix "
+            "declarations + 8 deferred-decisions prefix-factorization "
+            "declarations; prefix-plus-next-pair freshness, visible-marginal/"
+            "native-prefix identification, the full native visible law, stopped-prefix "
             "future-cylinder, conditional no-return, ballot phase, and the "
             "Theorem-2 terminal must remain blocked"
         )
@@ -2098,6 +2135,9 @@ def validate_sgb_count(records, index):
         "source_theorem_two_latent_product_readout_compiled":
             theorem_two_latent_reward_names ==
             SGB_THEOREM_TWO_LATENT_REWARD_DECLARATIONS,
+        "source_theorem_two_prefix_factorization_compiled":
+            theorem_two_prefix_factorization_names ==
+            SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATIONS,
         "source_theorem_two_endpoint_verified": False,
     }
 
@@ -2212,6 +2252,7 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
             "theorem_four_endpoint_verified": False,
             "theorem_two_nth_pull_bridge_compiled": True,
             "theorem_two_latent_product_readout_compiled": True,
+            "theorem_two_prefix_factorization_compiled": True,
             "declaration_count_breakdown": {
                 "finite_action_algebra": SGB_FINITE_ALGEBRA_DECLARATION_COUNT,
                 "generated_history_and_kernel_bridge":
@@ -2246,6 +2287,8 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
                     SGB_THEOREM_TWO_NTH_PULL_DECLARATION_COUNT,
                 "source_theorem_two_latent_reward_product_readout":
                     SGB_THEOREM_TWO_LATENT_REWARD_DECLARATION_COUNT,
+                "source_theorem_two_deferred_decisions_prefix_factorization":
+                    SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATION_COUNT,
             },
         },
     }
@@ -2308,17 +2351,26 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
             if row_id == "stochastic-gradient-bandit-source-frozen-audit" and (
                 "paper_endpoint_verified refers only to Theorem 1"
                 not in row.get("scope_boundary", "")
-                or "Conditional no-return probability >= 1/2"
+                or "conditional no-return probability >= 1/2"
                 not in row.get("scope_boundary", "")
-                or "not trajectory-marginal equality, totalized stopped-reward IID, or occurrence-conditioned IID"
+                or "exact finite stream-box/visible-prefix mixture"
+                not in row.get("scope_boundary", "")
+                or "branchwise prefix-plus-next-pair freshness"
+                not in row.get("scope_boundary", "")
+                or "mixture's visible marginal"
+                not in row.get("scope_boundary", "")
+                or "native visible law"
+                not in row.get("scope_boundary", "")
+                or "None of these results makes totalized stopped rewards or occurrence-conditioned rewards IID"
                 not in row.get("scope_boundary", "")
                 or "ballot phase"
                 not in row.get("scope_boundary", "")
                 or "asymptotic terminal remain blocked"
                 not in row.get("scope_boundary", "")
                 or not any(
-                    "latent-to-native visible trajectory-law adapter" in item
-                    and "stopped-prefix future-cylinder law" in item
+                    "native prefix law" in item
+                    and "prefix-plus-next-pair" in item
+                    and "stopped-prefix future-cylinder" in item
                     for item in row.get("blocking_obligations", [])
                 )
             ):
@@ -2467,7 +2519,7 @@ def build_claim_ledger(proof_report):
                 "artifact": "Stochastic-gradient-bandit Theorem 1, Corollary 1, and blocked Theorem-2 follow-on",
                 "status": "partial",
                 "source_record_ids": [SGB_AUDIT_ID, SGB_FOLLOW_ON_ID],
-                "boundary": "295 declarations preserve the historical 223 = 215-declaration Theorem-1 stack + 8 Appendix-E/Theorem-4 contract leaves, then add a 23-declaration compiled Corollary-1 bounded companion, an 18-declaration deterministic Appendix-C Step-1 starvation consumer, a 24-declaration chronological nth-pull bridge, and a 7-declaration latent fixed-arm product/readout layer. Corollary 1 is a direct Theorem-1 consumer for T >= 2 and eta_T = sqrt(log T / T), not independent Theorem-2 evidence. The nth-pull layer proves a zero-based WithTop stopping time, exact finite count/action identification, and measurable stopped reward and post-pull probability. The latent layer proves an unconditional finite product law for fixed-arm coordinates and almost-sure readout at every finite nth pull. It does not prove the native trajectory adapter and does not make totalized or occurrence-conditioned stopped rewards IID. These layers are not composed with the fixed-cutoff consumer; the stopped-prefix future-cylinder, conditional no-return probability >= 1/2, Rademacher/binomial ballot phase, and asymptotic terminal remain blocked. The frozen K = 2 Theorem-2 center therefore remains blocked. Theorem 4 also remains open. Dirac refers only to the Unit environment prior, not to the arm reward laws.",
+                "boundary": "303 declarations preserve the historical 223 = 215-declaration Theorem-1 stack + 8 Appendix-E/Theorem-4 contract leaves, then add a 23-declaration compiled Corollary-1 bounded companion, an 18-declaration deterministic Appendix-C Step-1 starvation consumer, a 24-declaration chronological nth-pull bridge, a 7-declaration latent fixed-arm product/readout layer, and an 8-declaration deferred-decisions prefix factorization. Corollary 1 is a direct Theorem-1 consumer for T >= 2 and eta_T = sqrt(log T / T), not independent Theorem-2 evidence. The nth-pull layer proves a zero-based WithTop stopping time, exact finite count/action identification, and measurable stopped reward and post-pull probability. The latent layer proves an unconditional finite product law for fixed-arm coordinates and almost-sure readout at every finite nth pull. The prefix layer proves stream-box product, visible-prefix kernel-law locality, a Markov visible-prefix kernel, and their exact finite mixture. It does not prove branchwise prefix-plus-next-pair freshness, the visible-marginal/native-prefix identification (identification of the mixture's visible marginal with the native prefix law), or the full native visible law. It does not make totalized or occurrence-conditioned stopped rewards IID. These layers are not composed with the fixed-cutoff consumer; the stopped-prefix future-cylinder, conditional no-return probability >= 1/2, Rademacher/binomial ballot phase, and asymptotic terminal remain blocked. The frozen K = 2 Theorem-2 center therefore remains blocked. Theorem 4 also remains open. Dirac refers only to the Unit environment prior, not to the arm reward laws.",
             },
             {
                 "artifact": "Proof graph / curvature--noise--gap",
@@ -2530,6 +2582,8 @@ def build_claim_ledger(proof_report):
                 SGB_THEOREM_TWO_NTH_PULL_DECLARATION_COUNT,
             "theorem_two_latent_reward_product_readout_declaration_count":
                 SGB_THEOREM_TWO_LATENT_REWARD_DECLARATION_COUNT,
+            "theorem_two_prefix_factorization_declaration_count":
+                SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATION_COUNT,
             "finite_algebra_declaration_count": SGB_FINITE_ALGEBRA_DECLARATION_COUNT,
             "generated_history_declaration_count": SGB_GENERATED_HISTORY_DECLARATION_COUNT,
             "two_arm_rate_declaration_count": SGB_TWO_ARM_RATE_DECLARATION_COUNT,
@@ -2597,6 +2651,10 @@ def build_claim_ledger(proof_report):
             "source_theorem_two_latent_product_readout_compiled":
                 sgb_evidence[
                     "source_theorem_two_latent_product_readout_compiled"
+                ],
+            "source_theorem_two_prefix_factorization_compiled":
+                sgb_evidence[
+                    "source_theorem_two_prefix_factorization_compiled"
                 ],
             "source_theorem_two_status": "blocked",
             "source_theorem_two_endpoint_verified":

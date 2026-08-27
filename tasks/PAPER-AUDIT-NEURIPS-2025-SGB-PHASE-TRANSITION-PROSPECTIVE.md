@@ -93,15 +93,24 @@ evidence states:
    of the coupled SGB trajectory; and every finite nth optimal-arm pull reads
    coordinate `(pullIndex, 0)` almost surely.  This is not an IID theorem for
    totalized stopped values or for values conditioned on all pulls occurring.
-3. **Blocked native half:** prove that forgetting the latent stream recovers
-   the native fixed-IID SGB trajectory law, then transport the latent phase
-   event and the source embedded-chain recurrence.  Stream-marginal equality
-   plus a.e. reward readout is not trajectory-law equality.
-4. Compile Appendix-C Step 1: if the optimal-arm probability after its `n`th
+3. **Compiled finite-prefix factorization:** the complete latent stream has
+   the exact finite stream-box product law; the generated visible prefix is
+   local to that box; and their joint finite law is the corresponding
+   stream-box/visible-prefix kernel mixture.  This is a deferred-decisions
+   factorization, not identification of the mixture's visible marginal with
+   the native fixed-IID trajectory prefix.
+4. **Blocked native half:** prove branchwise prefix-plus-next-pair freshness,
+   use it to identify the visible marginal of that finite mixture with the
+   native fixed-IID SGB prefix law, extend the identification to the required
+   native visible law by trajectory uniqueness, and transport the latent phase
+   event and source embedded-chain recurrence.  Stream-marginal equality, a.e.
+   reward readout, and joint finite-mixture factorization still do not imply
+   native trajectory-law equality.
+5. Compile Appendix-C Step 1: if the optimal-arm probability after its `n`th
    pull is at most `1/(2*T)`, the conditional probability of no further
    optimal-arm pull over the remaining horizon is at least `1/2`, yielding
    the exact starvation regret charge.
-5. Build the `S0`/`S1` phase producer: latent IID reward-block law plus its
+6. Build the `S0`/`S1` phase producer: latent IID reward-block law plus its
    native-process transport, Rademacher anti-concentration, ballot-prefix
    constraint, and the
    deterministic implication into the starvation event.
@@ -140,6 +149,10 @@ evidence that the polynomial lower-bound route is complete.
 
 ## Current verified outcome (2026-08-27)
 
+- The source-audit inventory is now 303 named declarations:
+  `223 + 23 + 18 + 24 + 7 + 8` for the historical audit, Corollary-1
+  companion, fixed-cutoff consumer, nth-pull bridge, latent product/readout,
+  and deferred-decisions finite-prefix factorization respectively.
 - `twoArmFixedIIDDirac_corollaryOne_piecewise` and
   `twoArmFixedIIDDirac_corollaryOne` compile for the generated fixed-IID
   two-arm trajectory, actual sampled pseudo-regret, `0 < Delta < 1`, source
@@ -163,13 +176,20 @@ evidence that the polynomial lower-bound route is complete.
   specializes it to the optimal arm, and proves that every finite nth pull
   reads its corresponding latent coordinate almost surely.  It also compiles
   two normalization leaves for the future native-process adapter.
-- The latent coupling's visible trajectory marginal has not yet been proved
-  equal to the native fixed-IID SGB trajectory.  Conditional no-return
-  probability `>= 1/2`, the Rademacher/ballot phase producer, asymptotic
+- A separate eight-declaration deferred-decisions layer now proves the exact
+  finite stream-box product law, that the latent generated trajectory prefix
+  depends only on that stream box, a Markov visible-prefix kernel, and the
+  exact joint finite stream-box/visible-prefix mixture law.  This compiles a
+  finite-prefix factorization; it does not identify the visible marginal of
+  that mixture with the native fixed-IID SGB prefix law.
+- The latent coupling's visible trajectory law has not yet been proved equal
+  to the native fixed-IID SGB trajectory law.  Prefix-plus-next-pair
+  factorization, conditional no-return probability `>= 1/2`, the
+  Rademacher/ballot phase producer, asymptotic
   assembly, and the frozen Theorem-2 terminal remain uncompiled.  The central
   target therefore remains blocked; the compiled latent product/readout,
-  chronological bridge, deterministic consumer, and Corollary 1 are not
-  terminal evidence for it.
+  finite-prefix factorization, chronological bridge, deterministic consumer,
+  and Corollary 1 are not terminal evidence for it.
 
 ## Gate
 
@@ -182,8 +202,10 @@ lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull
 lake env lean Tests/StochasticGradientBanditTheoremTwoNthPullCanary.lean
 lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoLatentReward.lean
 lake env lean Tests/StochasticGradientBanditTheoremTwoLatentRewardCanary.lean
+lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean
+lake env lean Tests/StochasticGradientBanditTheoremTwoNativeTrajectoryCanary.lean
 python tools/bandit.py check
 ```
 
-The three Theorem-2-specific files are source-shaped producer/consumer
+The four Theorem-2-specific modules are source-shaped producer/consumer
 milestones only; their existence does not promote the frozen terminal.

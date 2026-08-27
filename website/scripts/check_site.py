@@ -966,6 +966,13 @@ def main() -> int:
     succinct_items = [item for item in search_items if item.get("name") == succinct_declaration]
     if len(succinct_items) != 1 or succinct_items[0].get("chapter") != "Frontier":
         errors.append("succinct geometry declarations must resolve to the Frontier chapter")
+    sgb_prefix_declaration = (
+        "BanditRLProof.Thompson."
+        "latentArmStreamTrajectoryMeasure_map_stream_visiblePrefix_eq"
+    )
+    sgb_prefix_items = [item for item in search_items if item.get("name") == sgb_prefix_declaration]
+    if len(sgb_prefix_items) != 1 or sgb_prefix_items[0].get("chapter") != "Frontier":
+        errors.append("SGB deferred-decisions prefix declarations must resolve to the Frontier chapter")
     frontier_source = (output / "chapters" / "frontier" / "index.html").read_text(encoding="utf-8")
     for required in (
         "A Novel General Framework for Sharp Lower Bounds in Succinct Stochastic Bandits",

@@ -53,12 +53,14 @@ SGB_COROLLARY_ONE_DECLARATION_COUNT = 23
 SGB_THEOREM_TWO_STARVATION_DECLARATION_COUNT = 18
 SGB_THEOREM_TWO_NTH_PULL_DECLARATION_COUNT = 24
 SGB_THEOREM_TWO_LATENT_REWARD_DECLARATION_COUNT = 7
+SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATION_COUNT = 8
 SGB_TOTAL_DECLARATION_COUNT = (
     SGB_HISTORICAL_DECLARATION_COUNT
     + SGB_COROLLARY_ONE_DECLARATION_COUNT
     + SGB_THEOREM_TWO_STARVATION_DECLARATION_COUNT
     + SGB_THEOREM_TWO_NTH_PULL_DECLARATION_COUNT
     + SGB_THEOREM_TWO_LATENT_REWARD_DECLARATION_COUNT
+    + SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATION_COUNT
 )
 SGB_THEOREM_FOUR_CONTRACT_AUDIT_FILE = (
     "BanditRLProof/Algorithms/"
@@ -78,6 +80,10 @@ SGB_THEOREM_TWO_NTH_PULL_FILE = (
 SGB_THEOREM_TWO_LATENT_REWARD_FILE = (
     "BanditRLProof/Algorithms/"
     "StochasticGradientBanditTheoremTwoLatentReward.lean"
+)
+SGB_THEOREM_TWO_PREFIX_FACTORIZATION_FILE = (
+    "BanditRLProof/Algorithms/"
+    "StochasticGradientBanditTheoremTwoNativeTrajectory.lean"
 )
 SGB_THEOREM_FOUR_CONTRACT_AUDIT_DECLARATIONS = frozenset({
     "BanditRLProof.StochasticGradientBandit.theoremFourStepOneMargin",
@@ -122,6 +128,16 @@ SGB_THEOREM_TWO_LATENT_REWARD_DECLARATIONS = frozenset({
     "BanditRLProof.StochasticGradientBandit.stationaryRewardKernelAt_twoArmFixedIIDRewardKernel_eq",
     "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure_map_optimalPrefix_eq_pi",
     "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullReward_eq_latentCoordinate_ae",
+})
+SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATIONS = frozenset({
+    "BanditRLProof.UCB.armStreamMeasure_map_frestrictLe_eq_pi",
+    "BanditRLProof.UCB.extendArmStreamFinitePrefix",
+    "BanditRLProof.UCB.measurable_extendArmStreamFinitePrefix",
+    "BanditRLProof.UCB.extendArmStreamFinitePrefix_apply_of_le",
+    "BanditRLProof.Thompson.latentArmStreamTrajectoryKernel_map_frestrictLe_eq_of_streamPrefix_eq",
+    "BanditRLProof.Thompson.latentArmStreamVisiblePrefixKernel",
+    "BanditRLProof.Thompson.latentArmStreamTrajectoryKernel_map_frestrictLe_eq_prefixKernel_comap",
+    "BanditRLProof.Thompson.latentArmStreamTrajectoryMeasure_map_stream_visiblePrefix_eq",
 })
 SGB_THEOREM_TWO_TERMINAL_DECLARATION = (
     "BanditRLProof.StochasticGradientBandit."
@@ -423,18 +439,20 @@ def verify_claim_ledger():
             + SGB_THEOREM_TWO_STARVATION_DECLARATION_COUNT
             + SGB_THEOREM_TWO_NTH_PULL_DECLARATION_COUNT
             + SGB_THEOREM_TWO_LATENT_REWARD_DECLARATION_COUNT
+            + SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATION_COUNT
         or len(follow_on_names)
         != SGB_COROLLARY_ONE_DECLARATION_COUNT
             + SGB_THEOREM_TWO_STARVATION_DECLARATION_COUNT
             + SGB_THEOREM_TWO_NTH_PULL_DECLARATION_COUNT
             + SGB_THEOREM_TWO_LATENT_REWARD_DECLARATION_COUNT
+            + SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATION_COUNT
         or historical_names & follow_on_names
         or len(sgb_names) != SGB_TOTAL_DECLARATION_COUNT
         or sgb.get("declaration_count") != SGB_TOTAL_DECLARATION_COUNT
     ):
         fail(
-            "SGB source audit must contain exactly 295 unique declarations "
-            "with historical 223 and separate 23+18+24+7 follow-on"
+            "SGB source audit must contain exactly 303 unique declarations "
+            "with historical 223 and separate 23+18+24+7+8 follow-on"
         )
     if (
         sgb.get("historical_declaration_count")
@@ -498,6 +516,13 @@ def verify_claim_ledger():
     theorem_two_latent_reward_names = {
         row.get("full_name") for row in theorem_two_latent_reward_rows
     }
+    theorem_two_prefix_factorization_rows = [
+        row for row in declarations
+        if row.get("file") == SGB_THEOREM_TWO_PREFIX_FACTORIZATION_FILE
+    ]
+    theorem_two_prefix_factorization_names = {
+        row.get("full_name") for row in theorem_two_prefix_factorization_rows
+    }
     if (
         not (ROOT / SGB_COROLLARY_ONE_FILE).is_file()
         or len(corollary_one_rows) != SGB_COROLLARY_ONE_DECLARATION_COUNT
@@ -521,8 +546,14 @@ def verify_claim_ledger():
         != SGB_THEOREM_TWO_LATENT_REWARD_DECLARATION_COUNT
         or theorem_two_latent_reward_names
         != SGB_THEOREM_TWO_LATENT_REWARD_DECLARATIONS
+        or not (ROOT / SGB_THEOREM_TWO_PREFIX_FACTORIZATION_FILE).is_file()
+        or len(theorem_two_prefix_factorization_rows)
+        != SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATION_COUNT
+        or theorem_two_prefix_factorization_names
+        != SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATIONS
         or corollary_one_names | theorem_two_starvation_names |
-            theorem_two_nth_pull_names | theorem_two_latent_reward_names
+            theorem_two_nth_pull_names | theorem_two_latent_reward_names |
+            theorem_two_prefix_factorization_names
         != follow_on_names
         or SGB_THEOREM_TWO_TERMINAL_DECLARATION in sgb_names
     ):
@@ -539,6 +570,8 @@ def verify_claim_ledger():
         or sgb.get(
             "theorem_two_latent_reward_product_readout_declaration_count"
         ) != SGB_THEOREM_TWO_LATENT_REWARD_DECLARATION_COUNT
+        or sgb.get("theorem_two_prefix_factorization_declaration_count")
+        != SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATION_COUNT
     ):
         fail("SGB Corollary-1/Theorem-2 follow-on count drift")
     if sgb.get("source_theorem_one_compiled") is not True:
@@ -563,6 +596,8 @@ def verify_claim_ledger():
         or sgb.get("source_theorem_two_nth_pull_bridge_compiled") is not True
         or sgb.get("source_theorem_two_latent_product_readout_compiled")
         is not True
+        or sgb.get("source_theorem_two_prefix_factorization_compiled")
+        is not True
         or sgb.get("source_theorem_two_status") != "blocked"
         or sgb.get("source_theorem_two_endpoint_verified") is not False
     ):
@@ -573,7 +608,9 @@ def verify_claim_ledger():
         "Stochastic-gradient-bandit Theorem 1, Corollary 1, and blocked Theorem-2 follow-on"
     ]
     required_open_boundaries = (
-        "native trajectory adapter",
+        "visible-marginal/native-prefix identification",
+        "prefix-plus-next-pair freshness",
+        "full native visible law",
         "stopped-prefix future-cylinder",
         "conditional no-return probability >= 1/2",
         "Rademacher/binomial ballot phase",
@@ -706,13 +743,14 @@ def verify_theorem_audit_comparison():
             "central_endpoint_record_id":
                 "NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT-MECHANISM-AUDIT",
             "promotion_status": "partial",
-            "compiled_declaration_count": 295,
+            "compiled_declaration_count": 303,
             "theorem_one_endpoint_verified": True,
             "corollary_one_endpoint_verified": True,
             "theorem_two_endpoint_verified": False,
             "theorem_four_endpoint_verified": False,
             "theorem_two_nth_pull_bridge_compiled": True,
             "theorem_two_latent_product_readout_compiled": True,
+            "theorem_two_prefix_factorization_compiled": True,
             "declaration_count_breakdown": {
                 "finite_action_algebra": 26,
                 "generated_history_and_kernel_bridge": 18,
@@ -731,6 +769,7 @@ def verify_theorem_audit_comparison():
                 "source_theorem_two_deterministic_starvation_consumer": 18,
                 "source_theorem_two_nth_pull_bridge": 24,
                 "source_theorem_two_latent_reward_product_readout": 7,
+                "source_theorem_two_deferred_decisions_prefix_factorization": 8,
             },
         },
     }
@@ -786,17 +825,26 @@ def verify_theorem_audit_comparison():
             if row_id == "stochastic-gradient-bandit-source-frozen-audit" and (
                 "paper_endpoint_verified refers only to Theorem 1"
                 not in row.get("scope_boundary", "")
-                or "Conditional no-return probability >= 1/2"
+                or "conditional no-return probability >= 1/2"
                 not in row.get("scope_boundary", "")
-                or "not trajectory-marginal equality, totalized stopped-reward IID, or occurrence-conditioned IID"
+                or "exact finite stream-box/visible-prefix mixture"
+                not in row.get("scope_boundary", "")
+                or "branchwise prefix-plus-next-pair freshness"
+                not in row.get("scope_boundary", "")
+                or "mixture's visible marginal"
+                not in row.get("scope_boundary", "")
+                or "native visible law"
+                not in row.get("scope_boundary", "")
+                or "None of these results makes totalized stopped rewards or occurrence-conditioned rewards IID"
                 not in row.get("scope_boundary", "")
                 or "ballot phase"
                 not in row.get("scope_boundary", "")
                 or "asymptotic terminal remain blocked"
                 not in row.get("scope_boundary", "")
                 or not any(
-                    "latent-to-native visible trajectory-law adapter" in item
-                    and "stopped-prefix future-cylinder law" in item
+                    "native prefix law" in item
+                    and "prefix-plus-next-pair" in item
+                    and "stopped-prefix future-cylinder" in item
                     for item in row.get("blocking_obligations", [])
                 )
             ):
@@ -813,6 +861,7 @@ def verify_theorem_audit_comparison():
         "evidence/delayed-feedback-proof-obligations.md",
         "evidence/succinct-lower-bound-proof-obligations.md",
         "evidence/stochastic-gradient-bandit-proof-obligations.md",
+        "evidence/stochastic-gradient-bandit-follow-on-proof-obligations.md",
     ):
         if not (ROOT / rel).is_file():
             fail("missing theorem-audit proof-obligation ledger: " + rel)

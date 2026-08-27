@@ -1,6 +1,6 @@
 {
   "task": "PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE",
-  "generated": "2026-08-27T10:58:31+00:00",
+  "generated": "2026-08-27T13:27:56+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -33019,6 +33019,70 @@
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoLatentReward.lean",
       "line": 205,
       "statement": "theorem twoArmNthOptimalPullReward_eq_latentCoordinate_ae (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (pullIndex : Nat) : ∀ᵐ sample ∂twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta, ∀ t : Nat, twoArmNthOptimalPullTime (Env := Unit) pullIndex ((), sample.2) = (t : WithTop Nat) -> twoArmNthOptimalPullReward (Env := Unit) pullIndex ((), sample.2) = sample.1 pullIndex 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "armStreamMeasure_map_frestrictLe_eq_pi",
+      "full_name": "BanditRLProof.UCB.armStreamMeasure_map_frestrictLe_eq_pi",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+      "line": 35,
+      "statement": "theorem armStreamMeasure_map_frestrictLe_eq_pi {K : Nat} (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) : Measure.map (Preorder.frestrictLe n) (armStreamMeasure nu) = Measure.pi (fun _ : Finset.Iic n => Measure.infinitePi fun arm : Fin K => nu arm)"
+    },
+    {
+      "kind": "def",
+      "name": "extendArmStreamFinitePrefix",
+      "full_name": "BanditRLProof.UCB.extendArmStreamFinitePrefix",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+      "line": 46,
+      "statement": "def extendArmStreamFinitePrefix {K : Nat} (n : Nat) (streamBox : (i : Finset.Iic n) -> Fin K -> Real) : ArmRewardStream K"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_extendArmStreamFinitePrefix",
+      "full_name": "BanditRLProof.UCB.measurable_extendArmStreamFinitePrefix",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+      "line": 51,
+      "statement": "theorem measurable_extendArmStreamFinitePrefix {K : Nat} (n : Nat) : Measurable (extendArmStreamFinitePrefix (K := K) n)"
+    },
+    {
+      "kind": "theorem",
+      "name": "extendArmStreamFinitePrefix_apply_of_le",
+      "full_name": "BanditRLProof.UCB.extendArmStreamFinitePrefix_apply_of_le",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+      "line": 62,
+      "statement": "theorem extendArmStreamFinitePrefix_apply_of_le {K : Nat} (n t : Nat) (ht : t <= n) (streamBox : (i : Finset.Iic n) -> Fin K -> Real) : extendArmStreamFinitePrefix n streamBox t = streamBox ⟨t, Finset.mem_Iic.mpr ht⟩"
+    },
+    {
+      "kind": "theorem",
+      "name": "latentArmStreamTrajectoryKernel_map_frestrictLe_eq_of_streamPrefix_eq",
+      "full_name": "BanditRLProof.Thompson.latentArmStreamTrajectoryKernel_map_frestrictLe_eq_of_streamPrefix_eq",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+      "line": 76,
+      "statement": "theorem latentArmStreamTrajectoryKernel_map_frestrictLe_eq_of_streamPrefix_eq {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (stream₁ stream₂ : UCB.ArmRewardStream K) (n : Nat) (hstream : Preorder.frestrictLe n stream₁ = Preorder.frestrictLe n stream₂) : (latentArmStreamTrajectoryKernel algorithm env stream₁).map (Preorder.frestrictLe n) = (latentArmStreamTrajectoryKernel algorithm env stream₂).map (Preorder.frestrictLe n)"
+    },
+    {
+      "kind": "def",
+      "name": "latentArmStreamVisiblePrefixKernel",
+      "full_name": "BanditRLProof.Thompson.latentArmStreamVisiblePrefixKernel",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+      "line": 142,
+      "statement": "noncomputable def latentArmStreamVisiblePrefixKernel {Env : Type u} {K : Nat} [MeasurableSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (n : Nat) : Kernel ((i : Finset.Iic n) -> Fin K -> Real) (History.FinitePairHistory (Fin K) Real n)"
+    },
+    {
+      "kind": "theorem",
+      "name": "latentArmStreamTrajectoryKernel_map_frestrictLe_eq_prefixKernel_comap",
+      "full_name": "BanditRLProof.Thompson.latentArmStreamTrajectoryKernel_map_frestrictLe_eq_prefixKernel_comap",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+      "line": 166,
+      "statement": "theorem latentArmStreamTrajectoryKernel_map_frestrictLe_eq_prefixKernel_comap {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (n : Nat) : (latentArmStreamTrajectoryKernel algorithm env).map (Preorder.frestrictLe n) = (latentArmStreamVisiblePrefixKernel algorithm env n).comap (Preorder.frestrictLe n) (Preorder.measurable_frestrictLe n)"
+    },
+    {
+      "kind": "theorem",
+      "name": "latentArmStreamTrajectoryMeasure_map_stream_visiblePrefix_eq",
+      "full_name": "BanditRLProof.Thompson.latentArmStreamTrajectoryMeasure_map_stream_visiblePrefix_eq",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+      "line": 197,
+      "statement": "theorem latentArmStreamTrajectoryMeasure_map_stream_visiblePrefix_eq {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) : Measure.map (fun sample : UCB.ArmRewardStream K × ((t : Nat) -> Fin K × Real) => (Preorder.frestrictLe n sample.1, Preorder.frestrictLe n sample.2)) (latentArmStreamTrajectoryMeasure algorithm env nu) = Measure.pi (fun _ : Finset.Iic n => Measure.infinitePi fun arm : Fin K => nu arm) ⊗ₘ latentArmStreamVisiblePrefixKernel algorithm env n"
     },
     {
       "kind": "def",
@@ -93108,6 +93172,50 @@
       "time": "2026-08-27T10:58:18+00:00",
       "verifier_evidence": [
         "independent semantic and documentation review; no P0; no sorry/admit/new axioms; count and website surfaces consistent; Tests aggregate import added"
+      ]
+    },
+    {
+      "changed_files": [
+        "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+        "Tests/StochasticGradientBanditTheoremTwoNativeTrajectoryCanary.lean",
+        "BanditRLProof.lean",
+        "Tests.lean"
+      ],
+      "kind": "build",
+      "lean": "BanditRLProof.Thompson.latentArmStreamTrajectoryMeasure_map_stream_visiblePrefix_eq",
+      "notes": "Compiled an eight-declaration deferred-decisions finite-prefix factorization layer: finite stream-box product law, visible trajectory-prefix kernel-law locality, a finite-box visible-prefix Markov kernel, and the exact finite stream-box/visible-prefix mixture. It does not prove branchwise prefix-plus-next-pair freshness, identify the mixture's visible marginal with the native fixed-IID prefix, or establish the native visible law; future-cylinder/conditional no-return, ballot/asymptotic producers, and the Theorem 2 terminal remain blocked.",
+      "parent_id": "",
+      "role": "lower",
+      "route_fingerprint": "",
+      "run_id": "sgb-theorem2-prefix-factorization-round16-2026-08-27",
+      "source": "PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB",
+      "statement_hash": "",
+      "status": "compiled",
+      "task": "PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE",
+      "time": "2026-08-27T12:42:18+00:00",
+      "verifier_evidence": [
+        "focused module and canary exit 0; lake build Tests 8890 jobs; lake build 8850 jobs; baseline axioms only propext/Classical.choice/Quot.sound; site 656 pages and 17516 Lean links; repository check 348 tests OK"
+      ]
+    },
+    {
+      "changed_files": [
+        "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+        "Tests/StochasticGradientBanditTheoremTwoNativeTrajectoryCanary.lean"
+      ],
+      "kind": "review",
+      "lean": "BanditRLProof.Thompson.latentArmStreamTrajectoryMeasure_map_stream_visiblePrefix_eq",
+      "notes": "Independent review accepted the narrow eight-declaration joint finite-prefix factorization after correcting pathwise-law wording, the joint-versus-visible-marginal target type, Frontier chapter routing, and supplement coverage. Branchwise prefix-plus-next-pair freshness, visible-marginal/native-prefix identification, native visible-law equality, future-cylinder/conditional no-return, ballot/asymptotic producers, and the Theorem 2 terminal remain blocked.",
+      "parent_id": "",
+      "role": "reviewer",
+      "route_fingerprint": "",
+      "run_id": "sgb-theorem2-prefix-factorization-round16-2026-08-27",
+      "source": "local-independent-review",
+      "statement_hash": "",
+      "status": "accepted",
+      "task": "PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE",
+      "time": "2026-08-27T13:27:41+00:00",
+      "verifier_evidence": [
+        "independent read-only semantic/status/tooling review; no P0/P1/P2; focused module/canary exit 0; baseline axioms only; 303 accounting exact; anonymous supplement 23 tests OK; rebuilt site 656 pages and 17516 Lean links with all eight declarations in Frontier"
       ]
     }
   ],

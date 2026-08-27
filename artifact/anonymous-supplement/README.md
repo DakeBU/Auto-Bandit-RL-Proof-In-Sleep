@@ -104,7 +104,7 @@ outside the atom-generated directions.  This is a regularity/codomain
 obligation, not a source-error claim; the global Lemmas 3.5--3.6, Assumption
 3.7, Theorem 3.8, and every regret endpoint remain outside the compiled slice.
 
-The source-frozen stochastic-gradient-bandit audit contains 295 named
+The source-frozen stochastic-gradient-bandit audit contains 303 named
 declarations.  The historical record remains exactly 223 declarations:
 a frozen 215-declaration Theorem-1 stack plus eight separate
 Appendix-E/Theorem-4 contract leaves.  The 215-declaration stack begins with 76
@@ -171,10 +171,15 @@ They prove the finite product law for a fixed arm's latent reward coordinates,
 lift that law through the coupling's exact arm-stream marginal, identify every
 finite nth optimal-arm pull with its corresponding latent coordinate almost
 surely, and normalize the kernels needed by the next adapter.  They do not
-prove that forgetting the latent stream recovers the native fixed-IID SGB
-trajectory law, and they do not make totalized or occurrence-conditioned
-stopped rewards IID.  These layers are not yet composed with the fixed-cutoff
-starvation consumer.  The native trajectory adapter, stopped-prefix
+make totalized or occurrence-conditioned stopped rewards IID.  Eight more
+declarations compile a deferred-decisions finite-prefix factorization: the
+finite stream box has its exact product law, the generated visible prefix is
+local to that box, the visible-prefix kernel is Markov, and the joint finite
+stream-box/visible-prefix law is the exact kernel mixture.  This does not
+identify the mixture's visible marginal with the native fixed-IID prefix or
+establish the native visible law.  These layers are not yet composed with the
+fixed-cutoff starvation consumer.  Branchwise prefix-plus-next-pair freshness,
+the visible-marginal/native-prefix identification, the stopped-prefix
 future-cylinder, conditional no-return probability at least `1/2`, the
 Rademacher/binomial ballot phase, and the polynomial asymptotic terminal remain
 blocked.  The exact `K = 2` Theorem-2 center therefore remains blocked.  The
@@ -203,6 +208,7 @@ lake env lean Tests/StochasticGradientBanditCorollaryOneCanary.lean
 lake env lean Tests/StochasticGradientBanditTheoremTwoStarvationCanary.lean
 lake env lean Tests/StochasticGradientBanditTheoremTwoNthPullCanary.lean
 lake env lean Tests/StochasticGradientBanditTheoremTwoLatentRewardCanary.lean
+lake env lean Tests/StochasticGradientBanditTheoremTwoNativeTrajectoryCanary.lean
 lake env lean Tests/StochasticGradientBanditTheoremFourContractAuditCanary.lean
 lake env lean Tests/StochasticGradientBanditPaperAuditCanary.lean
 python -m unittest tools/test_proof_graph_lab.py
