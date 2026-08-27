@@ -44,21 +44,27 @@ The execution seal must cover the normalized config, balanced assignments,
 the complete operator-only challenge ground truth, the v2 protocol, exact
 prompts, paired wording, portable source manifest and all four PDF byte streams,
 grading rubric, resource policy, exact no-replacement/no-imputation policy,
-   completion-ledger builder, agent/checker/grader contracts, checker
+completion-ledger builder, agent/checker/grader contracts, checker
 isolation-probe report, the canonical Docker launcher, image recipe and verified
 SBOM, materializer/runner/host-controller/container-controller/inner-checker/
-grader/analysis code, the actual adapter entrypoint, its absolute host runtime,
+grader/grader-exporter/analysis code, the actual adapter entrypoint, its absolute host runtime,
 the separately invoked Codex CLI client executable and exact `--version` output,
 and their per-file hashes.  The runner substitutes only the entrypoint copy
 inside the sealed pack and rejects a changed adapter or provider-client executable
 before launch.
-Future evaluated agents will receive opaque IDs and one requirement.  Primary graders will see
-neutralized final artifacts and post-hoc checker evidence, not condition or
-variant labels, condition-specific workflow traces, or execution cost, duration,
-token, tool-call, build-attempt, and retry metadata.  Those metrics are stored
-only in the digest-bound operator mapping and are restored to the adjudicated
-analysis ledger after blind grading.  The condition-specific workflow artifacts
-and their common compliance pass/fail manipulation check follow the same
+Future evaluated agents will receive opaque IDs and one requirement.  Primary
+graders will receive only a physically separate, exact-positive-allowlist
+export containing normalized packets, the frozen prompt and rubric, a response
+template, and a digest manifest.  It contains no operator mapping, completion
+ledger, condition or variant labels, condition-specific workflow traces, or
+execution cost, duration, token, tool-call, build-attempt, and retry metadata.
+Those metrics are stored only in the digest-bound operator mapping and are
+restored to the adjudicated analysis ledger after blind grading.  Both grader
+responses and adjudication bind the substantive grader-input digest over the
+packets, prompt, and rubric, as well as the internal grading-pack digest.  The
+manifest separately hashes the response template and distributable-payload
+aggregate, while verification reconstructs every expected byte.  The condition-specific workflow artifacts and
+their common compliance pass/fail manipulation check follow the same
 operator-only boundary.
 
 Each future run must also emit a hash-bound workflow-artifact record.  Compile-only
@@ -84,7 +90,9 @@ Before the 450 runs, the following are mandatory:
    probes;
 6. hash-seal `complete_450_no_replacement_no_imputation_v1` and its completion-
    ledger builder, then materialize the 450-ID completion ledger;
-7. materialize blind grader packets and freeze the target-aware analysis code.
+7. atomically materialize the operator grading pack, create and verify its
+   physically separate grader-only export, and freeze the target-aware analysis
+   code.
 
 The current v2 readiness check is explicit because the preserved v1 suite has
 a different template and a different unresolved-field count:
@@ -99,23 +107,39 @@ machine, human, and provenance fields.  The unqualified command intentionally ch
 its 26-field report is not evidence that v2 is closer to execution.  No
 primary or external model run has been performed.
 
-The grader-packet materializer and packet-order seed are frozen before model
-execution.  Packet contents and their aggregate digest are produced only after
-neutral checking and are frozen before any primary grader sees them.  The
+The grader-packet materializer, grader-only exporter, and packet-order seed are
+frozen before model execution.  Packet contents and their aggregate digest are
+produced only after neutral checking.  Before export or assembly, the internal
+pack is reconstructed byte for byte from the sealed 450-run manifest, the
+current complete ledger, and every current result-eligible checked-run evidence
+chain; its deterministic shuffle, grade IDs, packets, operator mapping, and
+manifest must match.  The internal pack and the separate grader-only export are
+both validated before any primary grader sees them.  The
 operator-only mapping retains semantic labels, execution metrics, and the
 workflow-compliance manipulation check; it is digest-bound with the packets but
-is never distributed to a primary grader.  The two
-complete blind response files and an adjudicator file for every binary-label
-or structured source-field disagreement are then combined by
-`tools/assemble_target_drift_grades.py`; the target-level analysis consumes only
-that digest-bound 450-record ledger and applies Benjamini--Hochberg adjustment
-to the preregistered secondary endpoints.
+is absent from the exact export tree.  The exporter rejects extra files or
+directories, path aliases, multiply linked files, invalid packet paths,
+duplicate JSON keys, non-finite JSON values, and recursive blindness failures.
+It provides atomic visibility of a completed tree but does not claim
+power-loss durability, protect a concurrently created empty destination directory
+on POSIX, enforce administrator behavior or distribution ACLs, or prevent
+inference from proof style.  Production materialization therefore requires one
+operator-owned output parent.  The two complete blind response files and
+an adjudicator file for every binary-label or structured source-field
+disagreement are then combined by the sealed
+`tools/assemble_target_drift_grades.py`.  The ledger records the assembler,
+response, adjudication, and combined-input digests.  The target-level analyzer
+does not trust that ledger alone: it accepts the same two responses and
+adjudication, reruns the current hash-matched sealed assembler in a fresh output
+directory, and requires an exact byte match before inference.  It then applies
+Benjamini--Hochberg adjustment to the prospectively specified secondary
+endpoints.
 
 No pilot output may enter the final result set, and no challenge may be
 replaced after difficulty is observed.
 
 The missing-run policy is now executable but still result-free.  After an
-individual adapter or checker failure, the remaining preregistered runs continue;
+individual adapter or checker failure, the remaining prospectively specified runs continue;
 the failed run is never replaced and its outcome is never imputed.  The operator
 ledger covers all 450 semantic run IDs and reports missingness by terminal state,
 reason, condition, and requirement variant.  Only a literal 450/450 set of
@@ -367,7 +391,7 @@ provider invocations, observed usage, completed adapter termination, and
 production checker receipts.  A missing, failed, tampered, result-free, or
 differently bound smoke ledger stops the schedule before any of the 450 primary
 runs.  After that gate, the runner executes runs in sealed presentation order,
-never revisits a terminal state, and continues with the remaining preregistered
+never revisits a terminal state, and continues with the remaining prospectively specified
 IDs after a run-level failure.  It writes the completion ledger and exits nonzero
 when fewer than 450 runs are production-result-eligible:
 
@@ -393,9 +417,39 @@ digest-bound inferential chain run:
 
 ```text
 python tools/prepare_target_drift_grading.py --pack FROZEN-PACK --runs-root RUNS --completion-ledger COMPLETION-LEDGER.json --output GRADING-PACK
-python tools/assemble_target_drift_grades.py --pack FROZEN-PACK --grading-pack GRADING-PACK --grader-response GRADER-A.json --grader-response GRADER-B.json --adjudication ADJUDICATION.json --output GRADES.json
-python tools/analyze_target_drift_execution.py --pack FROZEN-PACK --runs-root RUNS --completion-ledger COMPLETION-LEDGER.json --grading-pack GRADING-PACK --grades GRADES.json --output ANALYSIS.json
+python tools/export_target_drift_grader_pack.py create --pack FROZEN-PACK --runs-root RUNS --grading-pack GRADING-PACK --output GRADER-ONLY
+python tools/export_target_drift_grader_pack.py verify --pack FROZEN-PACK --runs-root RUNS --grading-pack GRADING-PACK --grader-export GRADER-ONLY
+python tools/assemble_target_drift_grades.py --pack FROZEN-PACK --runs-root RUNS --grading-pack GRADING-PACK --grader-export GRADER-ONLY --grader-response GRADER-A.json --grader-response GRADER-B.json --adjudication ADJUDICATION.json --output GRADES.json
+python tools/analyze_target_drift_execution.py --pack FROZEN-PACK --runs-root RUNS --completion-ledger COMPLETION-LEDGER.json --grading-pack GRADING-PACK --grader-export GRADER-ONLY --grades GRADES.json --grader-response GRADER-A.json --grader-response GRADER-B.json --adjudication ADJUDICATION.json --output ANALYSIS.json
 ```
+
+Distribute only `GRADER-ONLY`, never `GRADING-PACK`.  Its manifest distinguishes
+export schema 1, packet schema 1, and grader-response schema 2; response schema
+1 is rejected rather than silently migrated.  Each primary grader makes
+an independent copy of `response-template.json`, preserves all three digest
+fields, replaces the assigned grader ID, and fills exactly one record per
+packet.  The adjudicator receives the verified export plus the two completed
+responses and records only conflicts.  Its file has schema version 2 and this
+shape (all placeholders must match the frozen config and export manifest):
+
+```json
+{
+  "schema_version": 2,
+  "adjudicator_id": "FROZEN_ADJUDICATOR_ID",
+  "grading_pack_sha256": "INTERNAL_GRADING_PACK_DIGEST",
+  "grader_export_sha256": "SUBSTANTIVE_GRADER_INPUT_DIGEST",
+  "grader_prompt_sha256": "FROZEN_PROMPT_DIGEST",
+  "grades": []
+}
+```
+
+`grades` must cover exactly the packet IDs whose binary labels or structured
+source-critical field lists disagree; the assembler rejects missing, extra, or
+duplicate adjudications.  `GRADING-PACK`, `GRADER-ONLY`, `GRADES.json`, and
+`ANALYSIS.json` must remain outside the sealed pack, run root, and each other;
+single-file outputs are staged, fsynced where supported, and published without
+clobbering an existing path.  The directory publication gives atomic visibility
+of a complete tree, not a claim of power-loss durability on every filesystem.
 
 These commands expose executable code paths; they do not supply a provider,
 agent image, final published production checker image,
@@ -412,7 +466,7 @@ The deterministic fake fixture and two local
 fail-closed probes are nonexperimental and do not pass the real-infrastructure
 gate.  `tools/prepare_target_drift_smoke.py` and
 `tools/run_target_drift_smoke.py` provide a separate operator-only lane for the
-preregistered one-case-by-three-condition check.  The plan binds one matched
+prospectively specified one-case-by-three-condition check.  The plan binds one matched
 case/replicate/requirement triplet and both tool hashes; the runner withholds the
 smoke purpose from the agent request and records every successful production
 checker run as `checked_smoke_nonexperimental` with

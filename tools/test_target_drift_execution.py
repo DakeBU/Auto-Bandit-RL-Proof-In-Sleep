@@ -65,6 +65,16 @@ class TargetDriftExecutionTest(unittest.TestCase):
             ROOT / "evaluation" / "target-drift-v1" / "execution-template.json"
         )
 
+    def test_v2_rubric_and_execution_adjudication_policies_match(self) -> None:
+        v2 = ROOT / "evaluation" / "target-drift-v2"
+        config = json.loads((v2 / "execution-template.json").read_text(encoding="utf-8"))
+        rubric = json.loads((v2 / "grading-rubric.json").read_text(encoding="utf-8"))
+        self.assertEqual(
+            rubric["grading_process"]["adjudication_trigger"],
+            config["grading"]["grader_conflict_policy"],
+        )
+        self.assertIn("secondary binary label", config["grading"]["grader_conflict_policy"])
+
     def test_v1_and_v2_readiness_reports_cannot_be_conflated(self) -> None:
         expected = {
             "target-drift-v1": ("ABRL-TARGET-DRIFT-V1", 26),

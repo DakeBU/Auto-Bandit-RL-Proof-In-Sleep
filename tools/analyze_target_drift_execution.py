@@ -4,10 +4,12 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
+import os
 import random
+import subprocess
 import sys
+import tempfile
 from collections import defaultdict
 from pathlib import Path
 from statistics import mean
@@ -23,6 +25,7 @@ sys.path.insert(0, str(TOOLS))
 
 import prepare_target_drift_execution as prepare  # noqa: E402
 import build_target_drift_completion_ledger as completion  # noqa: E402
+import prepare_target_drift_grading as grading  # noqa: E402
 
 PRIMARY_BOOTSTRAP_METHOD_ID = prepare.PRIMARY_ANALYSIS_METHOD_ID
 
@@ -46,63 +49,6 @@ def require(condition: bool, message: str) -> None:
 def validate_primary_analysis_config(analysis_config: dict[str, Any]) -> None:
     """Recheck the sealed primary contract at the inferential entrypoint."""
     prepare.validate_primary_analysis_contract(analysis_config)
-
-
-def digest_payloads(payloads: dict[str, bytes]) -> str:
-    digest = hashlib.sha256()
-    for name in sorted(payloads):
-        encoded = name.encode("utf-8")
-        payload = payloads[name]
-        digest.update(len(encoded).to_bytes(8, "big"))
-        digest.update(encoded)
-        digest.update(len(payload).to_bytes(8, "big"))
-        digest.update(payload)
-    return digest.hexdigest()
-
-
-def verify_grading_pack(grading_pack: Path, sealed_pack_sha256: str,
-                        grader_prompt_sha256: str,
-                        completion_ledger_sha256: str) -> dict[str, Any]:
-    manifest_path = grading_pack / "packet-manifest.json"
-    mapping_path = grading_pack / "operator-mapping.json"
-    require(manifest_path.is_file() and mapping_path.is_file(),
-            "grading pack manifest or operator mapping is missing")
-    manifest = load(manifest_path)
-    require(manifest.get("sealed_pack_sha256") == sealed_pack_sha256,
-            "grading pack names a different sealed pack")
-    require(manifest.get("grader_prompt_sha256") == grader_prompt_sha256,
-            "grading pack names a different grader prompt")
-    mapping_payload = mapping_path.read_bytes()
-    completion_path = grading_pack / "completion-ledger.json"
-    require(completion_path.is_file(), "grading-pack completion ledger is missing")
-    completion_payload = completion_path.read_bytes()
-    require(hashlib.sha256(completion_payload).hexdigest() == completion_ledger_sha256
-            == manifest.get("completion_ledger_sha256"),
-            "grading-pack completion ledger hash mismatch")
-    require(hashlib.sha256(mapping_payload).hexdigest()
-            == manifest.get("operator_mapping_sha256"),
-            "grading-pack operator mapping hash mismatch")
-    packet_hashes = manifest.get("packet_sha256")
-    require(isinstance(packet_hashes, dict) and len(packet_hashes) == manifest.get("packet_count"),
-            "grading-pack packet hash ledger is incomplete")
-    payloads: dict[str, bytes] = {}
-    for name, expected in packet_hashes.items():
-        path = grading_pack / name
-        require(path.is_file(), f"grading packet is missing: {name}")
-        payload = path.read_bytes()
-        require(hashlib.sha256(payload).hexdigest() == expected,
-                f"grading packet hash mismatch: {name}")
-        payloads[name] = payload
-    require(digest_payloads(payloads) == manifest.get("packet_aggregate_sha256"),
-            "grading packet aggregate mismatch")
-    require(digest_payloads({
-        **payloads,
-        "operator-mapping.json": mapping_payload,
-        "completion-ledger.json": completion_payload,
-    })
-            == manifest.get("aggregate_sha256"),
-            "grading-pack aggregate mismatch")
-    return manifest
 
 
 def incomplete_analysis(ledger: dict[str, Any]) -> dict[str, Any]:
@@ -635,60 +581,145 @@ def main() -> None:
     parser.add_argument("--runs-root", type=Path, required=True)
     parser.add_argument("--completion-ledger", type=Path, required=True)
     parser.add_argument("--grading-pack", type=Path)
+    parser.add_argument("--grader-export", type=Path)
     parser.add_argument("--grades", type=Path)
+    parser.add_argument("--grader-response", type=Path, action="append")
+    parser.add_argument("--adjudication", type=Path)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
-    require(not args.output.exists(), "analysis output already exists")
-    pack = args.pack.resolve()
+    output = grading.canonical_new_output(args.output, "analysis output")
+    pack = grading.canonical_existing_path(
+        args.pack, directory=True, label="sealed pack"
+    )
+    runs_root = grading.canonical_existing_path(
+        args.runs_root, directory=True, label="runs root"
+    )
+    for source_root, source_label in (
+        (pack, "sealed pack"),
+        (runs_root, "runs root"),
+    ):
+        grading.require_separate_trees(
+            output,
+            source_root,
+            left_label="analysis output",
+            right_label=source_label,
+        )
     prepare.verify_pack(pack)
     config = load(pack / "execution_config.json")
     require(config["suite_id"] == "ABRL-TARGET-DRIFT-V2", "analysis requires v2 pack")
     current = Path(__file__).resolve()
     expected_script_hash = config["analysis"]["script_sha256"]
-    require(hashlib.sha256(current.read_bytes()).hexdigest() == expected_script_hash,
+    require(grading.sha256_bytes(grading.read_plain_file(
+        current, "current analysis script"
+    )) == expected_script_hash,
             "invoked analysis script differs from frozen hash")
-    require(hashlib.sha256((pack / "execution_code" / current.name).read_bytes()).hexdigest()
-            == expected_script_hash,
+    require(grading.sha256_bytes(grading.read_plain_file(
+        pack / "execution_code" / current.name, "sealed analysis script"
+    )) == expected_script_hash,
             "sealed analysis script differs from frozen hash")
     prepare_path = Path(prepare.__file__).resolve()
     prepare_hash = config["sealed_agent_view"]["materializer_sha256"]
-    require(hashlib.sha256(prepare_path.read_bytes()).hexdigest() == prepare_hash,
+    require(grading.sha256_bytes(grading.read_plain_file(
+        prepare_path, "current pack verifier"
+    )) == prepare_hash,
             "imported pack verifier differs from frozen hash")
-    require(hashlib.sha256((pack / "execution_code" / prepare_path.name).read_bytes()).hexdigest()
-            == prepare_hash, "sealed pack verifier differs from frozen hash")
+    require(grading.sha256_bytes(grading.read_plain_file(
+        pack / "execution_code" / prepare_path.name, "sealed pack verifier"
+    )) == prepare_hash, "sealed pack verifier differs from frozen hash")
     analysis_config = config["analysis"]
     validate_primary_analysis_config(analysis_config)
     sealed_pack_sha256 = (pack / "aggregate.sha256").read_text(encoding="ascii").strip()
     completion.self_verify(pack, config)
-    completion_path = args.completion_ledger.resolve()
-    completion_ledger = load(completion_path)
-    completion.validate_ledger_against_runs(
-        pack, args.runs_root.resolve(), completion_ledger, require_complete=False,
+    completion_path = grading.canonical_existing_path(
+        args.completion_ledger, directory=False, label="completion ledger"
     )
-    completion_ledger_sha256 = prepare.sha256_file(completion_path)
+    completion_payload = grading.read_plain_file(
+        completion_path, "completion ledger"
+    )
+    completion_ledger = grading.json_from_bytes(
+        completion_payload, "completion ledger"
+    )
+    completion.validate_ledger_against_runs(
+        pack, runs_root, completion_ledger, require_complete=False,
+    )
+    completion_ledger_sha256 = grading.sha256_bytes(completion_payload)
     if not completion_ledger["primary_analysis_permitted"]:
-        require(args.grading_pack is None and args.grades is None,
-                "incomplete analysis must not receive grades or a grading pack")
+        require(
+            args.grading_pack is None
+            and args.grader_export is None
+            and args.grades is None
+            and args.grader_response is None
+            and args.adjudication is None,
+            "incomplete analysis must not receive grades or grading artifacts",
+        )
         result = incomplete_analysis(completion_ledger)
         result["sealed_pack_sha256"] = sealed_pack_sha256
         result["completion_ledger_sha256"] = completion_ledger_sha256
         result["missing_run_policy_id"] = completion_ledger["missing_run_policy_id"]
         result["missing_run_policy_sha256"] = completion_ledger["missing_run_policy_sha256"]
-        dump(args.output, result)
+        grading.write_atomic_file(
+            output, grading.canonical_json_bytes(result), "analysis output"
+        )
         print(
             "target-drift inferential analysis refused: "
             f"eligible={result['result_eligible_run_count']}/450, "
             f"missing={result['missing_run_count']}"
         )
         raise SystemExit(2)
-    require(args.grading_pack is not None and args.grades is not None,
-            "complete analysis requires --grading-pack and --grades")
-    grading_pack_manifest = verify_grading_pack(
-        args.grading_pack.resolve(), sealed_pack_sha256,
-        config["grading"]["grader_prompt_sha256"],
-        completion_ledger_sha256,
+    require(
+        args.grading_pack is not None
+        and args.grader_export is not None
+        and args.grades is not None
+        and args.grader_response is not None
+        and len(args.grader_response) == 2
+        and args.adjudication is not None,
+        "complete analysis requires --grading-pack, --grader-export, --grades, "
+        "exactly two --grader-response files, and --adjudication",
     )
-    grades = load(args.grades)
+    grading_pack = grading.canonical_existing_path(
+        args.grading_pack, directory=True, label="internal grading-pack"
+    )
+    grader_export = grading.canonical_existing_path(
+        args.grader_export, directory=True, label="grader-only export"
+    )
+    for source_root, source_label in (
+        (grading_pack, "internal grading-pack"),
+        (grader_export, "grader-only export"),
+    ):
+        grading.require_separate_trees(
+            output,
+            source_root,
+            left_label="analysis output",
+            right_label=source_label,
+        )
+    grading_path = Path(grading.__file__).resolve()
+    grading_hash = config["grading"]["packet_materializer_sha256"]
+    require(grading.sha256_bytes(grading.read_plain_file(
+        grading_path, "current grading materializer"
+    )) == grading_hash,
+            "imported grading materializer differs from frozen hash")
+    require(grading.sha256_bytes(grading.read_plain_file(
+        pack / "execution_code" / grading_path.name, "sealed grading materializer"
+    )) == grading_hash, "sealed grading materializer differs from frozen hash")
+    internal = grading.validate_internal_grading_pack_against_runs(
+        pack, runs_root, grading_pack, config,
+        expected_count=grading.PRODUCTION_PACKET_COUNT,
+    )
+    grading_pack_manifest = internal["manifest"]
+    grader_export_manifest = grading.validate_grader_export(
+        pack, runs_root, grading_pack, grader_export, config,
+        expected_count=grading.PRODUCTION_PACKET_COUNT,
+    )
+    grade_ledger_path = Path(os.path.abspath(args.grades))
+    grade_ledger_payload = grading.read_plain_file(
+        grade_ledger_path, "grade ledger"
+    )
+    grades = grading.json_from_bytes(
+        grade_ledger_payload,
+        "grade ledger",
+    )
+    require(grades.get("schema_version") == 2,
+            "grade ledger schema_version must be 2")
     runtime_sha256 = prepare.checker_runtime_config_sha256(config)
     require(config["posthoc_checker"]["mode"] == "production"
             and grading_pack_manifest.get("result_eligible") is True
@@ -711,6 +742,9 @@ def main() -> None:
     require(grades.get("grading_pack_sha256")
             == grading_pack_manifest["aggregate_sha256"],
             "grade ledger names a different grading pack")
+    require(grades.get("grader_export_sha256")
+            == grader_export_manifest["grader_export_sha256"],
+            "grade ledger names a different grader-only export")
     require(grades.get("completion_ledger_sha256") == completion_ledger_sha256
             == grading_pack_manifest.get("completion_ledger_sha256"),
             "analysis completion-ledger binding mismatch")
@@ -721,6 +755,64 @@ def main() -> None:
             == grading_pack_manifest.get("missing_run_policy_sha256")
             == completion_ledger["missing_run_policy_sha256"],
             "analysis missing-run policy binding mismatch")
+
+    assembler_path = Path(__file__).resolve().parent / "assemble_target_drift_grades.py"
+    expected_assembler_sha256 = config["analysis"]["grade_assembler_sha256"]
+    require(
+        grading.sha256_bytes(grading.read_plain_file(
+            assembler_path, "current grade assembler"
+        )) == expected_assembler_sha256,
+        "current grade assembler differs from frozen hash",
+    )
+    sealed_assembler_path = pack / "execution_code" / assembler_path.name
+    require(
+        grading.sha256_bytes(grading.read_plain_file(
+            sealed_assembler_path, "sealed grade assembler"
+        )) == expected_assembler_sha256,
+        "sealed grade assembler differs from frozen hash",
+    )
+    require(grades.get("grade_assembler_sha256") == expected_assembler_sha256,
+            "grade ledger names a different grade assembler")
+
+    rebuild_root = Path(tempfile.mkdtemp(
+        prefix=f".{output.name}.assemble-", dir=output.parent
+    ))
+    rebuilt_ledger = rebuild_root / "grades.json"
+    try:
+        completed = subprocess.run([
+            sys.executable,
+            "-B",
+            str(assembler_path),
+            "--pack",
+            str(pack),
+            "--runs-root",
+            str(runs_root),
+            "--grading-pack",
+            str(grading_pack),
+            "--grader-export",
+            str(grader_export),
+            "--grader-response",
+            str(args.grader_response[0]),
+            "--grader-response",
+            str(args.grader_response[1]),
+            "--adjudication",
+            str(args.adjudication),
+            "--output",
+            str(rebuilt_ledger),
+        ], capture_output=True, text=True, check=False)
+        require(
+            completed.returncode == 0,
+            "sealed grade-ledger reconstruction failed: "
+            + (completed.stderr.strip() or completed.stdout.strip()),
+        )
+        require(
+            grading.read_plain_file(rebuilt_ledger, "reconstructed grade ledger")
+            == grade_ledger_payload,
+            "supplied grade ledger differs from sealed-input reconstruction",
+        )
+    finally:
+        grading.cleanup_staging_tree(rebuild_root, output.parent)
+
     result = analyze(
         grades,
         analysis_config["bootstrap_seed"],
@@ -729,7 +821,8 @@ def main() -> None:
     )
     result["sealed_pack_sha256"] = sealed_pack_sha256
     result["grading_pack_sha256"] = grading_pack_manifest["aggregate_sha256"]
-    result["grade_ledger_sha256"] = prepare.sha256_file(args.grades.resolve())
+    result["grader_export_sha256"] = grader_export_manifest["grader_export_sha256"]
+    result["grade_ledger_sha256"] = grading.sha256_bytes(grade_ledger_payload)
     result["completion_ledger_sha256"] = completion_ledger_sha256
     result["missing_run_policy_id"] = completion_ledger["missing_run_policy_id"]
     result["missing_run_policy_sha256"] = completion_ledger["missing_run_policy_sha256"]
@@ -739,7 +832,9 @@ def main() -> None:
     result["isolation_probe_report_sha256"] = config["posthoc_checker"][
         "isolation_probe_report_sha256"
     ]
-    dump(args.output, result)
+    grading.write_atomic_file(
+        output, grading.canonical_json_bytes(result), "analysis output"
+    )
     print(
         "target-drift analysis complete: "
         f"point={result['primary']['point_estimate']:.6f}, "

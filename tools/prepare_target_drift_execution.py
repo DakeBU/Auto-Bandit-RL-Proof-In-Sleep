@@ -1155,6 +1155,10 @@ def execution_code_paths(config: dict[str, Any]) -> dict[str, Path]:
             config["missing_run_policy"]["schedule_runner"]
         ),
     }
+    if config["grading"].get("grader_exporter") is not None:
+        paths["export_target_drift_grader_pack.py"] = resolve_repo_path(
+            config["grading"]["grader_exporter"]
+        )
     if config["execution_adapter"].get("entrypoint_path") != "UNSET":
         paths["execution_adapter_entrypoint"] = adapter_entrypoint_path(config)
     return paths
@@ -1196,6 +1200,10 @@ def validate_execution_code_hashes(config: dict[str, Any], require_hashes: bool)
             "entrypoint_sha256"
         ]
     for name, path in paths.items():
+        if name == "export_target_drift_grader_pack.py":
+            # The exporter is bound directly by the sealed-pack component
+            # aggregate and rechecks its current bytes against the sealed copy.
+            continue
         require(expected[name] == sha256_file(path), f"execution-code hash mismatch for {name}")
 
 
@@ -1406,6 +1414,10 @@ def validate_frozen_choices(config: dict[str, Any]) -> None:
                 "excluded checker mode requires an explicit fixture identity")
 
     grading = config["grading"]
+    if config["suite_id"] == "ABRL-TARGET-DRIFT-V2":
+        require(grading.get("grader_exporter")
+                == "tools/export_target_drift_grader_pack.py",
+                "grading.grader_exporter must name the sealed positive-allowlist exporter")
     require(isinstance(grading["packet_order_seed"], int)
             and not isinstance(grading["packet_order_seed"], bool),
             "grading.packet_order_seed must be an integer")

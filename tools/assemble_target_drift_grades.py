@@ -4,8 +4,8 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
+import os
 import sys
 from pathlib import Path
 from statistics import mean
@@ -27,7 +27,6 @@ sys.path.insert(0, str(TOOLS))
 
 import prepare_target_drift_execution as prepare  # noqa: E402
 import prepare_target_drift_grading as grading  # noqa: E402
-import build_target_drift_completion_ledger as completion  # noqa: E402
 
 
 def load(path: Path) -> dict[str, Any]:
@@ -59,18 +58,6 @@ def validate_variant_fields(final: dict[str, Any], requirement_variant: str,
         require(bool(final["source_critical_fields"])
                 and set(final["source_critical_fields"]) <= canonical_fields,
                 "injected-drift affected fields must be nonempty canonical challenge fields")
-
-
-def digest_payloads(payloads: dict[str, bytes]) -> str:
-    digest = hashlib.sha256()
-    for name in sorted(payloads):
-        encoded = name.encode("utf-8")
-        payload = payloads[name]
-        digest.update(len(encoded).to_bytes(8, "big"))
-        digest.update(encoded)
-        digest.update(len(payload).to_bytes(8, "big"))
-        digest.update(payload)
-    return digest.hexdigest()
 
 
 def operator_execution_metrics(mapping_item: dict[str, Any]) -> dict[str, Any]:
@@ -111,11 +98,15 @@ def validate_grade(item: dict[str, Any], require_condition_guess: bool = True) -
 
 def by_grade_id(
     response: dict[str, Any], expected: set[str], grading_pack_sha256: str,
-    grader_prompt_sha256: str,
+    grader_export_sha256: str, grader_prompt_sha256: str,
 ) -> dict[str, dict[str, Any]]:
-    require(response.get("schema_version") == 1, "grader response schema_version must be 1")
+    require(response.get("schema_version") == grading.GRADER_RESPONSE_SCHEMA_VERSION,
+            f"grader response schema_version must be "
+            f"{grading.GRADER_RESPONSE_SCHEMA_VERSION}")
     require(response.get("grading_pack_sha256") == grading_pack_sha256,
             "grader response names a different grading-pack digest")
+    require(response.get("grader_export_sha256") == grader_export_sha256,
+            "grader response names a different grader-only export digest")
     require(response.get("grader_prompt_sha256") == grader_prompt_sha256,
             "grader response names a different frozen grader prompt")
     grades = response.get("grades")
@@ -142,38 +133,70 @@ def cohen_kappa(left: list[bool], right: list[bool]) -> float | None:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--pack", type=Path, required=True)
+    parser.add_argument("--runs-root", type=Path, required=True)
     parser.add_argument("--grading-pack", type=Path, required=True)
+    parser.add_argument("--grader-export", type=Path, required=True)
     parser.add_argument("--grader-response", type=Path, action="append", required=True)
     parser.add_argument("--adjudication", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     require(len(args.grader_response) == 2, "exactly two grader responses are required")
-    require(not args.output.exists(), "analysis-record output already exists")
-
-    pack = args.pack.resolve()
-    grading_pack = args.grading_pack.resolve()
+    output = grading.canonical_new_output(args.output, "grade-ledger output")
+    pack = grading.canonical_existing_path(
+        args.pack, directory=True, label="sealed pack"
+    )
+    runs_root = grading.canonical_existing_path(
+        args.runs_root, directory=True, label="runs root"
+    )
+    grading_pack = grading.canonical_existing_path(
+        args.grading_pack, directory=True, label="internal grading-pack"
+    )
+    grader_export = grading.canonical_existing_path(
+        args.grader_export, directory=True, label="grader-only export"
+    )
+    for source_root, source_label in (
+        (pack, "sealed pack"),
+        (runs_root, "runs root"),
+        (grading_pack, "internal grading-pack"),
+        (grader_export, "grader-only export"),
+    ):
+        grading.require_separate_trees(
+            output,
+            source_root,
+            left_label="grade-ledger output",
+            right_label=source_label,
+        )
     prepare.verify_pack(pack)
     config = load(pack / "execution_config.json")
     require(config["suite_id"] == "ABRL-TARGET-DRIFT-V2", "assembler requires v2 pack")
     current = Path(__file__).resolve()
     expected_script_hash = config["analysis"]["grade_assembler_sha256"]
-    require(hashlib.sha256(current.read_bytes()).hexdigest() == expected_script_hash,
+    require(grading.sha256_bytes(grading.read_plain_file(
+        current, "current grade assembler"
+    )) == expected_script_hash,
             "invoked grade assembler differs from frozen hash")
-    require(hashlib.sha256((pack / "execution_code" / current.name).read_bytes()).hexdigest()
-            == expected_script_hash,
+    require(grading.sha256_bytes(grading.read_plain_file(
+        pack / "execution_code" / current.name, "sealed grade assembler"
+    )) == expected_script_hash,
             "sealed grade assembler differs from frozen hash")
     prepare_path = Path(prepare.__file__).resolve()
     prepare_hash = config["sealed_agent_view"]["materializer_sha256"]
-    require(hashlib.sha256(prepare_path.read_bytes()).hexdigest() == prepare_hash,
+    require(grading.sha256_bytes(grading.read_plain_file(
+        prepare_path, "current pack verifier"
+    )) == prepare_hash,
             "imported pack verifier differs from frozen hash")
-    require(hashlib.sha256((pack / "execution_code" / prepare_path.name).read_bytes()).hexdigest()
-            == prepare_hash, "sealed pack verifier differs from frozen hash")
+    require(grading.sha256_bytes(grading.read_plain_file(
+        pack / "execution_code" / prepare_path.name, "sealed pack verifier"
+    )) == prepare_hash, "sealed pack verifier differs from frozen hash")
     grading_path = Path(grading.__file__).resolve()
     grading_hash = config["grading"]["packet_materializer_sha256"]
-    require(hashlib.sha256(grading_path.read_bytes()).hexdigest() == grading_hash,
+    require(grading.sha256_bytes(grading.read_plain_file(
+        grading_path, "current grading materializer"
+    )) == grading_hash,
             "imported grading materializer differs from frozen hash")
-    require(hashlib.sha256((pack / "execution_code" / grading_path.name).read_bytes()).hexdigest()
-            == grading_hash, "sealed grading materializer differs from frozen hash")
+    require(grading.sha256_bytes(grading.read_plain_file(
+        pack / "execution_code" / grading_path.name, "sealed grading materializer"
+    )) == grading_hash, "sealed grading materializer differs from frozen hash")
     require(
         config["grading"]["grader_conflict_policy"]
         == "adjudicate every disagreement on a primary or secondary binary label or the structured source-critical field list",
@@ -184,94 +207,34 @@ def main() -> None:
             and len(set(configured_graders)) == 2,
             "frozen primary_grader_ids must contain two unique identifiers")
 
-    packet_manifest = load(grading_pack / "packet-manifest.json")
-    require(packet_manifest["suite_id"] == config["suite_id"],
-            "grading pack suite differs from sealed execution pack")
+    internal = grading.validate_internal_grading_pack_against_runs(
+        pack, runs_root, grading_pack, config,
+        expected_count=grading.PRODUCTION_PACKET_COUNT,
+    )
+    packet_manifest = internal["manifest"]
+    mapping = internal["mapping"]
+    packet_by_grade_id = internal["packets"]
+    packet_ids = internal["packet_ids"]
+    grader_export_manifest = grading.validate_grader_export(
+        pack, runs_root, grading_pack, grader_export, config,
+        expected_count=grading.PRODUCTION_PACKET_COUNT,
+    )
+    grader_export_sha256 = grader_export_manifest["grader_export_sha256"]
     sealed_pack_sha256 = (pack / "aggregate.sha256").read_text(encoding="ascii").strip()
-    require(packet_manifest["sealed_pack_sha256"] == sealed_pack_sha256,
-            "grading pack names a different sealed execution pack")
-    require(packet_manifest["grader_prompt_sha256"] == config["grading"]["grader_prompt_sha256"],
-            "grading pack names a different frozen grader prompt")
     runtime_sha256 = prepare.checker_runtime_config_sha256(config)
-    require(config["posthoc_checker"]["mode"] == "production"
-            and packet_manifest.get("result_eligible") is True
-            and packet_manifest.get("checker_mode") == "production",
-            "grade assembly requires production-result-eligible checker records")
-    require(packet_manifest.get("checker_runtime_config_sha256") == runtime_sha256
-            == config["posthoc_checker"]["runtime_config_sha256"]
-            and packet_manifest.get("isolation_probe_report_sha256")
-            == config["posthoc_checker"]["isolation_probe_report_sha256"],
-            "grading pack checker runtime/probe binding differs from frozen config")
-    require(packet_manifest["grading_seed"] == config["grading"]["packet_order_seed"],
-            "grading packet seed differs from frozen config")
-    mapping_path = grading_pack / "operator-mapping.json"
-    mapping_payload = mapping_path.read_bytes()
-    completion_path = grading_pack / "completion-ledger.json"
-    require(completion_path.is_file(), "grading pack completion ledger is missing")
-    completion_payload = completion_path.read_bytes()
-    require(hashlib.sha256(completion_payload).hexdigest()
-            == packet_manifest.get("completion_ledger_sha256"),
-            "grading completion-ledger hash differs from manifest")
-    completion_ledger = json.loads(completion_payload.decode("utf-8"))
-    completion.self_verify(pack, config)
-    completion.validate_ledger(pack, completion_ledger, require_complete=True)
-    require(packet_manifest.get("missing_run_policy_id")
-            == completion_ledger["missing_run_policy_id"]
-            and packet_manifest.get("missing_run_policy_sha256")
-            == completion_ledger["missing_run_policy_sha256"],
-            "grading pack missing-run policy binding mismatch")
-    mapping = json.loads(mapping_payload.decode("utf-8"))["mapping"]
-    packet_payloads = {
-        f"packets/{path.name}": path.read_bytes()
-        for path in sorted((grading_pack / "packets").glob("*.json"))
-    }
-    require(len(packet_payloads) == packet_manifest["packet_count"],
-            "grading packet directory count differs from manifest")
-    packet_grade_ids = {
-        json.loads(payload.decode("utf-8"))["grade_id"]
-        for payload in packet_payloads.values()
-    }
-    packet_by_grade_id = {
-        json.loads(payload.decode("utf-8"))["grade_id"]: json.loads(payload.decode("utf-8"))
-        for payload in packet_payloads.values()
-    }
-    for grade_id, packet in packet_by_grade_id.items():
-        grading.require_primary_metadata_blind(packet, f"primary packet {grade_id}")
-    require(
-        set(packet_payloads)
-        == {f"packets/{grade_id}.json" for grade_id in packet_grade_ids},
-        "grading packet filename and embedded grade ID differ",
-    )
-    require(
-        packet_manifest["packet_sha256"]
-        == {name: hashlib.sha256(payload).hexdigest()
-            for name, payload in sorted(packet_payloads.items())},
-        "grading packet file hashes differ from manifest",
-    )
-    require(packet_manifest["packet_aggregate_sha256"] == digest_payloads(packet_payloads),
-            "grading packet aggregate differs from manifest")
-    require(packet_manifest["operator_mapping_sha256"] == hashlib.sha256(mapping_payload).hexdigest(),
-            "operator mapping hash differs from manifest")
-    require(packet_manifest.get("primary_packets_exclude_condition_and_variant_labels") is True,
-            "grading manifest does not attest condition/variant-label exclusion")
-    require(packet_manifest.get("primary_packets_exclude_execution_metrics") is True,
-            "grading manifest does not attest execution-metric exclusion")
-    require(packet_manifest.get("primary_packets_exclude_workflow_compliance") is True,
-            "grading manifest does not attest workflow-compliance exclusion")
-    require(
-        packet_manifest["aggregate_sha256"]
-        == digest_payloads({
-            **packet_payloads,
-            "operator-mapping.json": mapping_payload,
-            "completion-ledger.json": completion_payload,
-        }),
-        "combined grading-pack aggregate differs from manifest",
-    )
-    packet_ids = {item["grade_id"] for item in mapping}
     require(len(packet_ids) == packet_manifest["packet_count"] == 450,
             "grading pack must contain exactly 450 unique packets")
 
-    responses = [load(path.resolve()) for path in args.grader_response]
+    response_payloads = [
+        grading.read_plain_file(
+            Path(os.path.abspath(path)), f"grader response {index + 1}"
+        )
+        for index, path in enumerate(args.grader_response)
+    ]
+    responses = [
+        grading.json_from_bytes(payload, f"grader response {index + 1}")
+        for index, payload in enumerate(response_payloads)
+    ]
     response_ids = [response.get("grader_id") for response in responses]
     require(response_ids == configured_graders,
             "grader response order/identities differ from frozen config")
@@ -280,6 +243,7 @@ def main() -> None:
             response,
             packet_ids,
             packet_manifest["aggregate_sha256"],
+            grader_export_sha256,
             config["grading"]["grader_prompt_sha256"],
         )
         for response in responses
@@ -292,11 +256,17 @@ def main() -> None:
         or indexed[0][grade_id]["source_critical_fields"]
         != indexed[1][grade_id]["source_critical_fields"]
     }
-    adjudication = load(args.adjudication.resolve())
-    require(adjudication.get("schema_version") == 1,
-            "adjudication schema_version must be 1")
+    adjudication_payload = grading.read_plain_file(
+        Path(os.path.abspath(args.adjudication)), "adjudication"
+    )
+    adjudication = grading.json_from_bytes(adjudication_payload, "adjudication")
+    require(adjudication.get("schema_version") == grading.GRADER_RESPONSE_SCHEMA_VERSION,
+            f"adjudication schema_version must be "
+            f"{grading.GRADER_RESPONSE_SCHEMA_VERSION}")
     require(adjudication.get("grading_pack_sha256") == packet_manifest["aggregate_sha256"],
             "adjudication names a different grading-pack digest")
+    require(adjudication.get("grader_export_sha256") == grader_export_sha256,
+            "adjudication names a different grader-only export digest")
     require(adjudication.get("grader_prompt_sha256")
             == config["grading"]["grader_prompt_sha256"],
             "adjudication names a different frozen grader prompt")
@@ -366,11 +336,27 @@ def main() -> None:
 
     require(len(records) == 450, "assembled record count must be 450")
     raw_agreement = mean(a == b for a, b in zip(primary_left, primary_right))
-    dump(args.output.resolve(), {
-        "schema_version": 1,
+    grade_ledger = {
+        "schema_version": 2,
         "suite_id": config["suite_id"],
         "sealed_pack_sha256": sealed_pack_sha256,
         "grading_pack_sha256": packet_manifest["aggregate_sha256"],
+        "grader_export_sha256": grader_export_sha256,
+        "grade_assembler_sha256": expected_script_hash,
+        "grader_response_sha256": {
+            grader_id: grading.sha256_bytes(payload)
+            for grader_id, payload in zip(response_ids, response_payloads)
+        },
+        "adjudication_sha256": grading.sha256_bytes(adjudication_payload),
+        "assembly_input_sha256": grading.digest_payloads({
+            "grader-response-1.json": response_payloads[0],
+            "grader-response-2.json": response_payloads[1],
+            "adjudication.json": adjudication_payload,
+            "internal-grading-pack.sha256": (
+                packet_manifest["aggregate_sha256"] + "\n"
+            ).encode("ascii"),
+            "grader-input.sha256": (grader_export_sha256 + "\n").encode("ascii"),
+        }),
         "completion_ledger_sha256": packet_manifest["completion_ledger_sha256"],
         "missing_run_policy_id": packet_manifest["missing_run_policy_id"],
         "missing_run_policy_sha256": packet_manifest["missing_run_policy_sha256"],
@@ -388,7 +374,10 @@ def main() -> None:
             "primary_cohen_kappa": cohen_kappa(primary_left, primary_right),
         },
         "records": records,
-    })
+    }
+    grading.write_atomic_file(
+        output, grading.canonical_json_bytes(grade_ledger), "grade-ledger output"
+    )
     print(
         f"assembled 450 target-drift grades: disagreements={len(conflicts)}, "
         f"primary_raw_agreement={raw_agreement:.6f}"
