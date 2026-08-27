@@ -121,13 +121,35 @@ time-varying learning-rate policy, or verification of the external paper.
 Corollary 1 is a direct consumer of compiled Theorem 1 and must not be used as
 evidence that the polynomial lower-bound route is complete.
 
+## Current verified outcome (2026-08-27)
+
+- `twoArmFixedIIDDirac_corollaryOne_piecewise` and
+  `twoArmFixedIIDDirac_corollaryOne` compile for the generated fixed-IID
+  two-arm trajectory, actual sampled pseudo-regret, `0 < Delta < 1`, source
+  horizon `T >= 2`, and the horizon-indexed fixed rate
+  `sqrt (log T / T)`.  The latter uses the explicit absolute constant
+  `2 + 1 / log 2 + 2 * exp 2`.
+- The Theorem-2 route has one compiled deterministic Appendix-C Step-1
+  consumer.  Measurable fixed-cutoff trigger/starvation events carry the exact
+  pathwise charge `Delta * (T - n)`, and
+  `twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral`
+  instantiates `charge * P(event) <= expected sampled regret` on the canonical
+  generated fixed-IID trajectory measure.
+- The random nth-pull bridge, finite joint IID law of adaptively selected
+  arm-0 rewards, conditional no-return probability `>= 1/2`, Rademacher/ballot
+  phase producer, asymptotic assembly, and frozen Theorem-2 terminal remain
+  uncompiled.  The central target therefore remains blocked; the compiled
+  consumer and Corollary 1 are not terminal evidence for it.
+
 ## Gate
 
 ```bash
 lake env lean BanditRLProof/Algorithms/StochasticGradientBanditCorollaryOne.lean
 lake env lean Tests/StochasticGradientBanditCorollaryOneCanary.lean
+lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean
+lake env lean Tests/StochasticGradientBanditTheoremTwoStarvationCanary.lean
 python tools/bandit.py check
 ```
 
-Theorem-2-specific files and canaries are added only when their first source
-milestone exists; a planning document is not compiled evidence.
+The Theorem-2-specific file is a deterministic source-shaped milestone only;
+its existence does not promote the frozen terminal.

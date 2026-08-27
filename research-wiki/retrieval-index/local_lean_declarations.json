@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-26T19:15:20+00:00",
+  "generated": "2026-08-27T04:35:18+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -3595,6 +3595,190 @@
     },
     {
       "kind": "theorem",
+      "name": "twoArmActionGap_le_gap",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmActionGap_le_gap",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditCorollaryOne.lean",
+      "line": 36,
+      "statement": "theorem twoArmActionGap_le_gap (Delta : Real) (hDelta : 0 <= Delta) (action : Fin 2) : twoArmActionGap Delta action <= Delta"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmSampledPseudoRegret_le_gap_mul_horizon",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmSampledPseudoRegret_le_gap_mul_horizon",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditCorollaryOne.lean",
+      "line": 45,
+      "statement": "theorem twoArmSampledPseudoRegret_le_gap_mul_horizon {Env : Type v} (Delta : Real) (hDelta : 0 <= Delta) (horizon : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) : twoArmSampledPseudoRegret Delta horizon sample <= Delta * (horizon : Real)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_twoArmSampledPseudoRegret",
+      "full_name": "BanditRLProof.StochasticGradientBandit.measurable_twoArmSampledPseudoRegret",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditCorollaryOne.lean",
+      "line": 60,
+      "statement": "theorem measurable_twoArmSampledPseudoRegret {Env : Type v} [MeasurableSpace Env] (Delta : Real) (horizon : Nat) : Measurable (twoArmSampledPseudoRegret (Env := Env) Delta horizon)"
+    },
+    {
+      "kind": "theorem",
+      "name": "integrable_twoArmSampledPseudoRegret",
+      "full_name": "BanditRLProof.StochasticGradientBandit.integrable_twoArmSampledPseudoRegret",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditCorollaryOne.lean",
+      "line": 66,
+      "statement": "theorem integrable_twoArmSampledPseudoRegret {Env : Type v} [MeasurableSpace Env] (mu : Measure (Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real))) [IsFiniteMeasure mu] (Delta : Real) (horizon : Nat) : Integrable (twoArmSampledPseudoRegret (Env := Env) Delta horizon) mu"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_twoArmSampledPseudoRegret_le_gap_mul_horizon",
+      "full_name": "BanditRLProof.StochasticGradientBandit.integral_twoArmSampledPseudoRegret_le_gap_mul_horizon",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditCorollaryOne.lean",
+      "line": 92,
+      "statement": "theorem integral_twoArmSampledPseudoRegret_le_gap_mul_horizon {Env : Type v} [MeasurableSpace Env] (mu : Measure (Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real))) [IsProbabilityMeasure mu] (Delta : Real) (hDelta : 0 <= Delta) (horizon : Nat) : integral mu (twoArmSampledPseudoRegret (Env := Env) Delta horizon) <= Delta * (horizon : Real)"
+    },
+    {
+      "kind": "def",
+      "name": "corollaryOneEta",
+      "full_name": "BanditRLProof.StochasticGradientBandit.corollaryOneEta",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditCorollaryOne.lean",
+      "line": 111,
+      "statement": "noncomputable def corollaryOneEta (horizon : Nat) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "sourceTheoremOne_margin_of_two_mul_eta_sourceC_le",
+      "full_name": "BanditRLProof.StochasticGradientBandit.sourceTheoremOne_margin_of_two_mul_eta_sourceC_le",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditCorollaryOne.lean",
+      "line": 116,
+      "statement": "theorem sourceTheoremOne_margin_of_two_mul_eta_sourceC_le (eta Delta : Real) (heta : 0 < eta) (hDelta : 0 < Delta) (hsmall : 2 * eta * sourceC eta <= Delta) : eta * sourceC eta < Delta"
+    },
+    {
+      "kind": "theorem",
+      "name": "sourceTheoremOne_constant_le_inv_eta",
+      "full_name": "BanditRLProof.StochasticGradientBandit.sourceTheoremOne_constant_le_inv_eta",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditCorollaryOne.lean",
+      "line": 125,
+      "statement": "theorem sourceTheoremOne_constant_le_inv_eta (eta Delta : Real) (heta : 0 < eta) (hDelta : 0 < Delta) (hsmall : 2 * eta * sourceC eta <= Delta) : Delta / (2 * eta * (Delta - eta * sourceC eta)) <= 1 / eta"
+    },
+    {
+      "kind": "theorem",
+      "name": "corollaryOneEta_pos",
+      "full_name": "BanditRLProof.StochasticGradientBandit.corollaryOneEta_pos",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditCorollaryOne.lean",
+      "line": 139,
+      "statement": "theorem corollaryOneEta_pos (horizon : Nat) (hhorizon : 2 <= horizon) : 0 < corollaryOneEta horizon"
+    },
+    {
+      "kind": "theorem",
+      "name": "corollaryOneEta_sq",
+      "full_name": "BanditRLProof.StochasticGradientBandit.corollaryOneEta_sq",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditCorollaryOne.lean",
+      "line": 146,
+      "statement": "theorem corollaryOneEta_sq (horizon : Nat) (hhorizon : 2 <= horizon) : corollaryOneEta horizon ^ 2 = Real.log (horizon : Real) / (horizon : Real)"
+    },
+    {
+      "kind": "theorem",
+      "name": "corollaryOneEta_le_one",
+      "full_name": "BanditRLProof.StochasticGradientBandit.corollaryOneEta_le_one",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditCorollaryOne.lean",
+      "line": 158,
+      "statement": "theorem corollaryOneEta_le_one (horizon : Nat) (hhorizon : 2 <= horizon) : corollaryOneEta horizon <= 1"
+    },
+    {
+      "kind": "def",
+      "name": "corollaryOneRate",
+      "full_name": "BanditRLProof.StochasticGradientBandit.corollaryOneRate",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditCorollaryOne.lean",
+      "line": 171,
+      "statement": "noncomputable def corollaryOneRate (horizon : Nat) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "corollaryOneRate_nonneg",
+      "full_name": "BanditRLProof.StochasticGradientBandit.corollaryOneRate_nonneg",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditCorollaryOne.lean",
+      "line": 174,
+      "statement": "theorem corollaryOneRate_nonneg (horizon : Nat) : 0 <= corollaryOneRate horizon"
+    },
+    {
+      "kind": "theorem",
+      "name": "corollaryOneEta_mul_horizon_eq_rate",
+      "full_name": "BanditRLProof.StochasticGradientBandit.corollaryOneEta_mul_horizon_eq_rate",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditCorollaryOne.lean",
+      "line": 179,
+      "statement": "theorem corollaryOneEta_mul_horizon_eq_rate (horizon : Nat) (hhorizon : 2 <= horizon) : corollaryOneEta horizon * (horizon : Real) = corollaryOneRate horizon"
+    },
+    {
+      "kind": "theorem",
+      "name": "corollaryOneEta_mul_rate_eq_log",
+      "full_name": "BanditRLProof.StochasticGradientBandit.corollaryOneEta_mul_rate_eq_log",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditCorollaryOne.lean",
+      "line": 202,
+      "statement": "theorem corollaryOneEta_mul_rate_eq_log (horizon : Nat) (hhorizon : 2 <= horizon) : corollaryOneEta horizon * corollaryOneRate horizon = Real.log (horizon : Real)"
+    },
+    {
+      "kind": "theorem",
+      "name": "corollaryOne_inv_eta_le_inv_log_two_mul_rate",
+      "full_name": "BanditRLProof.StochasticGradientBandit.corollaryOne_inv_eta_le_inv_log_two_mul_rate",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditCorollaryOne.lean",
+      "line": 219,
+      "statement": "theorem corollaryOne_inv_eta_le_inv_log_two_mul_rate (horizon : Nat) (hhorizon : 2 <= horizon) : 1 / corollaryOneEta horizon <= (1 / Real.log 2) * corollaryOneRate horizon"
+    },
+    {
+      "kind": "theorem",
+      "name": "corollaryOne_log_argument_le_horizon_pow_four",
+      "full_name": "BanditRLProof.StochasticGradientBandit.corollaryOne_log_argument_le_horizon_pow_four",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditCorollaryOne.lean",
+      "line": 240,
+      "statement": "theorem corollaryOne_log_argument_le_horizon_pow_four (horizon : Nat) (hhorizon : 2 <= horizon) (Delta : Real) (hDelta : 0 < Delta) (hDelta_lt_one : Delta < 1) : 1 + 4 * corollaryOneEta horizon * Delta * (horizon : Real) <= (horizon : Real) ^ 4"
+    },
+    {
+      "kind": "theorem",
+      "name": "corollaryOne_log_term_le_two_mul_rate",
+      "full_name": "BanditRLProof.StochasticGradientBandit.corollaryOne_log_term_le_two_mul_rate",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditCorollaryOne.lean",
+      "line": 282,
+      "statement": "theorem corollaryOne_log_term_le_two_mul_rate (horizon : Nat) (hhorizon : 2 <= horizon) (Delta : Real) (hDelta : 0 < Delta) (hDelta_lt_one : Delta < 1) : Real.log (1 + 4 * corollaryOneEta horizon * Delta * (horizon : Real)) / (2 * corollaryOneEta horizon) <= 2 * corollaryOneRate horizon"
+    },
+    {
+      "kind": "theorem",
+      "name": "corollaryOne_gap_mul_horizon_le_exp_constant_mul_rate",
+      "full_name": "BanditRLProof.StochasticGradientBandit.corollaryOne_gap_mul_horizon_le_exp_constant_mul_rate",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditCorollaryOne.lean",
+      "line": 314,
+      "statement": "theorem corollaryOne_gap_mul_horizon_le_exp_constant_mul_rate (horizon : Nat) (hhorizon : 2 <= horizon) (Delta : Real) (hlarge : \u00ac 2 * corollaryOneEta horizon * sourceC (corollaryOneEta horizon) <= Delta) : Delta * (horizon : Real) <= (2 * Real.exp 2) * corollaryOneRate horizon"
+    },
+    {
+      "kind": "def",
+      "name": "corollaryOneAbsoluteConstant",
+      "full_name": "BanditRLProof.StochasticGradientBandit.corollaryOneAbsoluteConstant",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditCorollaryOne.lean",
+      "line": 350,
+      "statement": "noncomputable def corollaryOneAbsoluteConstant : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "corollaryOne_piecewise_bound",
+      "full_name": "BanditRLProof.StochasticGradientBandit.corollaryOne_piecewise_bound",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditCorollaryOne.lean",
+      "line": 353,
+      "statement": "theorem corollaryOne_piecewise_bound (horizon : Nat) (hhorizon : 2 <= horizon) (Delta : Real) (hDelta : 0 < Delta) (hDelta_lt_one : Delta < 1) : (if 2 * corollaryOneEta horizon * sourceC (corollaryOneEta horizon) <= Delta then Real.log (1 + 4 * corollaryOneEta horizon * Delta * (horizon : Real)) / (2 * corollaryOneEta horizon) + 1 / corollaryOneEta horizon else Delta * (horizon : Real)) <= corollaryOneAbsoluteConstant * corollaryOneRate horizon"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmFixedIIDDirac_corollaryOne_piecewise",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDDirac_corollaryOne_piecewise",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditCorollaryOne.lean",
+      "line": 414,
+      "statement": "theorem twoArmFixedIIDDirac_corollaryOne_piecewise (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (mean : Fin 2 -> Real) (hbound : forall arm, \u2200\u1d50 reward \u2202armLaw arm, |reward| <= 1) (hmean : forall arm, integral (armLaw arm) id = mean arm) (Delta : Real) (hDelta : 0 < Delta) (hDelta_lt_one : Delta < 1) (hgap : mean 0 - mean 1 = Delta) (tailHorizon : Nat) (horizon_ge_two : 1 <= tailHorizon) : let eta := corollaryOneEta (tailHorizon + 1) integral (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)) (twoArmSampledPseudoRegret (Env := Unit) Delta (tailHorizon + 1)) <= if 2 * eta * sourceC eta <= Delta then Real.log (1 + 4 * eta * Delta * ((tailHorizon + 1 : Nat) : Real)) / (2 * eta) + 1 / eta else Delta * ((tailHorizon + 1 : Nat) : Real)"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmFixedIIDDirac_corollaryOne",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDDirac_corollaryOne",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditCorollaryOne.lean",
+      "line": 468,
+      "statement": "theorem twoArmFixedIIDDirac_corollaryOne (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (mean : Fin 2 -> Real) (hbound : forall arm, \u2200\u1d50 reward \u2202armLaw arm, |reward| <= 1) (hmean : forall arm, integral (armLaw arm) id = mean arm) (Delta : Real) (hDelta : 0 < Delta) (hDelta_lt_one : Delta < 1) (hgap : mean 0 - mean 1 = Delta) (tailHorizon : Nat) (horizon_ge_two : 1 <= tailHorizon) : let eta := corollaryOneEta (tailHorizon + 1) integral (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)) (twoArmSampledPseudoRegret (Env := Unit) Delta (tailHorizon + 1)) <= corollaryOneAbsoluteConstant * corollaryOneRate (tailHorizon + 1)"
+    },
+    {
+      "kind": "theorem",
       "name": "two_mul_abs_pow_div_factorial_add_two_le",
       "full_name": "BanditRLProof.StochasticGradientBandit.two_mul_abs_pow_div_factorial_add_two_le",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditExponentialAudit.lean",
@@ -3768,6 +3952,150 @@
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremFourContractAudit.lean",
       "line": 124,
       "statement": "theorem theoremFourFiniteTransientMass_le_inv (rho : Real) (hrho_pos : 0 < rho) (hrho_le_one : rho <= 1) (phaseMass : Nat -> Real) (hphase : forall phase, phaseMass phase <= (1 - rho) ^ phase) (phaseCount : Nat) : (Finset.range phaseCount).sum phaseMass <= 1 / rho"
+    },
+    {
+      "kind": "def",
+      "name": "twoArmGeneratedAction",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmGeneratedAction",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
+      "line": 33,
+      "statement": "def twoArmGeneratedAction {Env : Type v} (sample : Env \u00d7 ((k : Nat) \u2192 Fin 2 \u00d7 Real)) : ActionTrace (Fin 2)"
+    },
+    {
+      "kind": "def",
+      "name": "twoArmOptimalPullCount",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCount",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
+      "line": 39,
+      "statement": "def twoArmOptimalPullCount {Env : Type v} (horizon : Nat) (sample : Env \u00d7 ((k : Nat) \u2192 Fin 2 \u00d7 Real)) : Nat"
+    },
+    {
+      "kind": "def",
+      "name": "twoArmStepOneThreshold",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmStepOneThreshold",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
+      "line": 45,
+      "statement": "def twoArmStepOneThreshold (horizon : Nat) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "twoArmStepOneTriggerEvent",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmStepOneTriggerEvent",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
+      "line": 56,
+      "statement": "def twoArmStepOneTriggerEvent {Env : Type v} [MeasurableSpace Env] (eta : Real) (cutoff n horizon : Nat) : Set (Env \u00d7 ((k : Nat) \u2192 Fin 2 \u00d7 Real))"
+    },
+    {
+      "kind": "def",
+      "name": "twoArmStepOneStarvationEvent",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmStepOneStarvationEvent",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
+      "line": 71,
+      "statement": "def twoArmStepOneStarvationEvent {Env : Type v} [MeasurableSpace Env] (eta : Real) (cutoff n horizon : Nat) : Set (Env \u00d7 ((k : Nat) \u2192 Fin 2 \u00d7 Real))"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_twoArmGeneratedAction",
+      "full_name": "BanditRLProof.StochasticGradientBandit.measurable_twoArmGeneratedAction",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
+      "line": 79,
+      "statement": "theorem measurable_twoArmGeneratedAction {Env : Type v} [MeasurableSpace Env] (t : Nat) : Measurable (fun sample : Env \u00d7 ((k : Nat) \u2192 Fin 2 \u00d7 Real) => twoArmGeneratedAction sample t)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_twoArmOptimalPullCount",
+      "full_name": "BanditRLProof.StochasticGradientBandit.measurable_twoArmOptimalPullCount",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
+      "line": 86,
+      "statement": "theorem measurable_twoArmOptimalPullCount {Env : Type v} [MeasurableSpace Env] (horizon : Nat) : Measurable (twoArmOptimalPullCount (Env := Env) horizon)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurableSet_twoArmStepOneTriggerEvent",
+      "full_name": "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmStepOneTriggerEvent",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
+      "line": 110,
+      "statement": "theorem measurableSet_twoArmStepOneTriggerEvent {Env : Type v} [MeasurableSpace Env] (eta : Real) (cutoff n horizon : Nat) : MeasurableSet (twoArmStepOneTriggerEvent (Env := Env) eta cutoff n horizon)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurableSet_twoArmStepOneStarvationEvent",
+      "full_name": "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmStepOneStarvationEvent",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
+      "line": 128,
+      "statement": "theorem measurableSet_twoArmStepOneStarvationEvent {Env : Type v} [MeasurableSpace Env] (eta : Real) (cutoff n horizon : Nat) : MeasurableSet (twoArmStepOneStarvationEvent (Env := Env) eta cutoff n horizon)"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmSampledPseudoRegret_nonneg",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmSampledPseudoRegret_nonneg",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
+      "line": 143,
+      "statement": "theorem twoArmSampledPseudoRegret_nonneg {Env : Type v} (Delta : Real) (hDelta : 0 \u2264 Delta) (horizon : Nat) (sample : Env \u00d7 ((k : Nat) \u2192 Fin 2 \u00d7 Real)) : 0 \u2264 twoArmSampledPseudoRegret Delta horizon sample"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmSampledPseudoRegret_eq_gap_mul_suboptimalPullCount",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmSampledPseudoRegret_eq_gap_mul_suboptimalPullCount",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
+      "line": 158,
+      "statement": "theorem twoArmSampledPseudoRegret_eq_gap_mul_suboptimalPullCount {Env : Type v} (Delta : Real) (horizon : Nat) (sample : Env \u00d7 ((k : Nat) \u2192 Fin 2 \u00d7 Real)) : twoArmSampledPseudoRegret Delta horizon sample = Delta * (pullCount (twoArmGeneratedAction sample) 1 horizon : Real)"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmOptimalPullCount_add_suboptimalPullCount_eq_horizon",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCount_add_suboptimalPullCount_eq_horizon",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
+      "line": 181,
+      "statement": "theorem twoArmOptimalPullCount_add_suboptimalPullCount_eq_horizon {Env : Type v} (horizon : Nat) (sample : Env \u00d7 ((k : Nat) \u2192 Fin 2 \u00d7 Real)) : twoArmOptimalPullCount horizon sample + pullCount (twoArmGeneratedAction sample) 1 horizon = horizon"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmSampledPseudoRegret_eq_gap_mul_horizon_sub_of_optimalPullCount_eq",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmSampledPseudoRegret_eq_gap_mul_horizon_sub_of_optimalPullCount_eq",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
+      "line": 191,
+      "statement": "theorem twoArmSampledPseudoRegret_eq_gap_mul_horizon_sub_of_optimalPullCount_eq {Env : Type v} (Delta : Real) (n horizon : Nat) (sample : Env \u00d7 ((k : Nat) \u2192 Fin 2 \u00d7 Real)) (hcount : twoArmOptimalPullCount horizon sample = n) : twoArmSampledPseudoRegret Delta horizon sample = Delta * ((horizon - n : Nat) : Real)"
+    },
+    {
+      "kind": "theorem",
+      "name": "mem_twoArmStepOneStarvationEvent_of_lowProbability_noFurtherOptimalPull",
+      "full_name": "BanditRLProof.StochasticGradientBandit.mem_twoArmStepOneStarvationEvent_of_lowProbability_noFurtherOptimalPull",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
+      "line": 210,
+      "statement": "theorem mem_twoArmStepOneStarvationEvent_of_lowProbability_noFurtherOptimalPull {Env : Type v} [MeasurableSpace Env] (eta : Real) (cutoff n horizon : Nat) (sample : Env \u00d7 ((k : Nat) \u2192 Fin 2 \u00d7 Real)) (hcutoff : cutoff + 1 \u2264 horizon) (hlow : twoArmSuccessProbability eta cutoff sample \u2264 twoArmStepOneThreshold horizon) (hcount : twoArmOptimalPullCount (cutoff + 1) sample = n) (hnoFurther : \u2200 t, cutoff + 1 \u2264 t \u2192 t < horizon \u2192 twoArmGeneratedAction sample t \u2260 0) : sample \u2208 twoArmStepOneStarvationEvent (Env := Env) eta cutoff n horizon"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmStepOneStarvationEvent_sampledPseudoRegret_eq",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmStepOneStarvationEvent_sampledPseudoRegret_eq",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
+      "line": 235,
+      "statement": "theorem twoArmStepOneStarvationEvent_sampledPseudoRegret_eq {Env : Type v} [MeasurableSpace Env] (eta Delta : Real) (cutoff n horizon : Nat) (sample : Env \u00d7 ((k : Nat) \u2192 Fin 2 \u00d7 Real)) (hstarve : sample \u2208 twoArmStepOneStarvationEvent (Env := Env) eta cutoff n horizon) : twoArmSampledPseudoRegret Delta horizon sample = Delta * ((horizon - n : Nat) : Real)"
+    },
+    {
+      "kind": "theorem",
+      "name": "integrable_twoArmSampledPseudoRegret_of_finiteMeasure",
+      "full_name": "BanditRLProof.StochasticGradientBandit.integrable_twoArmSampledPseudoRegret_of_finiteMeasure",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
+      "line": 248,
+      "statement": "theorem integrable_twoArmSampledPseudoRegret_of_finiteMeasure {Env : Type v} [MeasurableSpace Env] (mu : Measure (Env \u00d7 ((k : Nat) \u2192 Fin 2 \u00d7 Real))) [IsFiniteMeasure mu] (Delta : Real) (horizon : Nat) : Integrable (twoArmSampledPseudoRegret (Env := Env) Delta horizon) mu"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmStepOneStarvationEvent_charge_mul_probability_le_integral",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmStepOneStarvationEvent_charge_mul_probability_le_integral",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
+      "line": 272,
+      "statement": "theorem twoArmStepOneStarvationEvent_charge_mul_probability_le_integral {Env : Type v} [MeasurableSpace Env] (mu : Measure (Env \u00d7 ((k : Nat) \u2192 Fin 2 \u00d7 Real))) [IsFiniteMeasure mu] (eta Delta : Real) (hDelta : 0 \u2264 Delta) (cutoff n horizon : Nat) : Delta * ((horizon - n : Nat) : Real) * mu.real (twoArmStepOneStarvationEvent (Env := Env) eta cutoff n horizon) \u2264 integral mu (twoArmSampledPseudoRegret (Env := Env) Delta horizon)"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
+      "line": 327,
+      "statement": "theorem twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta Delta : Real) (hDelta : 0 <= Delta) (cutoff n horizon : Nat) : Delta * ((horizon - n : Nat) : Real) * (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)).real (twoArmStepOneStarvationEvent (Env := Unit) eta cutoff n horizon) <= integral (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)) (twoArmSampledPseudoRegret (Env := Unit) Delta horizon)"
     },
     {
       "kind": "theorem",

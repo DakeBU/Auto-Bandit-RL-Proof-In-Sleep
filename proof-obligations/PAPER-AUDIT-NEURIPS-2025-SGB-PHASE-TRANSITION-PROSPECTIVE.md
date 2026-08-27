@@ -4,16 +4,16 @@ Task id: `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE`
 
 | Obligation | Evidence target | Status | Boundary |
 | --- | --- | --- | --- |
-| `SGB-C1-TRIVIAL-REGRET` | pathwise and integral `Delta*T` upper bound | not started | actual generated sampled actions |
-| `SGB-C1-MARGIN` | `2*eta*C_eta <= Delta` implies Theorem-1 margin and `1/eta` constant | not started | scalar consumer only |
-| `SGB-C1-GAP-FREE` | exact piecewise Corollary-1 finite bound | not started | fixed IID, `T >= 2`, horizon-indexed eta |
-| `SGB-C1-RATE` | explicit absolute-constant `sqrt(T*log T)` bound | not started | implies source big-O claim |
+| `SGB-C1-TRIVIAL-REGRET` | pathwise and integral `Delta*T` upper bound | compiled | `twoArmSampledPseudoRegret_le_gap_mul_horizon`; actual sampled actions |
+| `SGB-C1-MARGIN` | `2*eta*C_eta <= Delta` implies Theorem-1 margin and `1/eta` constant | compiled | `sourceTheoremOne_margin_of_two_mul_eta_sourceC_le`; `sourceTheoremOne_constant_le_inv_eta` |
+| `SGB-C1-GAP-FREE` | exact piecewise Corollary-1 finite bound | compiled | `twoArmFixedIIDDirac_corollaryOne_piecewise`; fixed IID, `T >= 2`, horizon-indexed eta |
+| `SGB-C1-RATE` | explicit absolute-constant `sqrt(T*log T)` bound | compiled | `twoArmFixedIIDDirac_corollaryOne`; direct Theorem-1 companion |
 | `SGB-T2-NTH-PULL` | stopping-time and chronological-to-pull-index bridge | not started | no totalized missing pull |
 | `SGB-T2-SELECTED-IID` | finite joint law of rewards at adaptive arm-0 pull times | blocked | first core technical blocker |
-| `SGB-T2-STARVATION` | Appendix-C Step-1 event-to-regret lower bound | not started | generated sampled regret |
+| `SGB-T2-STARVATION` | Appendix-C Step-1 event-to-regret lower bound | partial | measurable fixed-cutoff event and generated-law `Delta*(T-n)*P(event)` consumer compile; nth-pull identification and conditional probability `>= 1/2` do not |
 | `SGB-T2-PHASE-PROBABILITY` | `S0/S1` probability via Rademacher/binomial/ballot route | blocked | exact finite constants and path event |
 | `SGB-T2-POLYLOG-OMEGA` | frozen K=2 Theorem-2 terminal | blocked | depends on all preceding producers |
-| `SGB-PHASE-CANARY` | exact imports, checks, and representative axiom prints | not started | baseline axioms only |
+| `SGB-PHASE-CANARY` | exact imports, checks, and representative axiom prints | compiled | both companion and deterministic-consumer canaries use baseline axioms only |
 
 ## Source and scenario
 

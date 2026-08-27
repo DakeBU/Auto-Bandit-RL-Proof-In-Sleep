@@ -2,7 +2,7 @@
 
 Task: `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE`
 
-Status: `target-frozen; no target-specific compiled evidence at freeze`
+Status: `target-frozen; Corollary 1 compiled; Theorem 2 blocked after a compiled deterministic starvation consumer`
 
 ## Source-to-Lean fence
 
@@ -42,6 +42,14 @@ The phase event then combines an unlucky initial block, a ballot-constrained
 recovery block, and a deterministic softmax recurrence that drives the next
 optimal-arm sampling probability below `1/(2*T)`.  Only after the finite
 probability lower bound compiles may it feed the frozen tilde-Omega endpoint.
+
+The current fixed-cutoff milestone defines measurable trigger and starvation
+events, proves the exact `Delta * (T - n)` pathwise charge, and specializes
+`charge * P(starvation) <= expected sampled regret` to the generated fixed-IID
+trajectory measure.  It does not identify the cutoff with the random nth-pull
+time and does not prove the source conditional probability lower bound
+`P(no return | trigger) >= 1/2`.  Those are producer obligations, not premises
+that may be assumed by the terminal.
 
 ## Pivot rules
 

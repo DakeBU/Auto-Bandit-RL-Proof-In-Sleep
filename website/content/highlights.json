@@ -1375,6 +1375,38 @@
       ]
     },
     {
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDDirac_corollaryOne",
+      "chapter": "frontier",
+      "plain": "For every horizon at least two, the generated zero-initialized two-arm fixed-IID SGB trajectory with learning rate sqrt(log T / T) has expected sampled pseudo-regret at most an explicit absolute constant times sqrt(T log T).",
+      "math": "\\(\\mathbb E R_T^{\\mathrm{SGB}}\\le\\left(2+\\frac1{\\log 2}+2e^2\\right)\\sqrt{T\\log T},\\qquad T\\ge2.\\)",
+      "intuition": "When the learning rate is small relative to the gap, the compiled Theorem-1 bound supplies the rate. On the complementary branch, failure of that margin makes the trivial pathwise Delta T bound no larger than the same square-root scale.",
+      "why": "This turns the source Corollary-1 asymptotic statement into a finite, constant-explicit theorem about the actual sampled actions, while keeping its dependence on the already compiled Theorem 1 visible.",
+      "position": "This is a compiled bounded companion and direct Theorem-1 consumer. It is not evidence for the polynomial-regret Theorem 2, a time-varying policy, or general K.",
+      "proof_idea": "Define one fixed eta_T for each horizon, prove positivity and the eta-times-horizon square-root identity, simplify the Theorem-1 constant on its valid branch, use the pathwise Delta T bound otherwise, and dominate both branches by one horizon-independent constant.",
+      "lean_notes": "The theorem retains T >= 2, 0 < Delta < 1, bounded fixed-IID reward laws, exact arm means, source zero initialization, and T = tailHorizon + 1. Measure.dirac () is the prior on the singleton Unit environment; it does not assert that either reward law is Dirac or Rademacher.",
+      "dependencies": [
+        "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDDirac_corollaryOne_piecewise",
+        "BanditRLProof.StochasticGradientBandit.corollaryOne_piecewise_bound",
+        "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDDirac_theoremOne"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral",
+      "chapter": "frontier",
+      "plain": "On the canonical generated fixed-IID trajectory, the exact regret charge of a measurable fixed-cutoff starvation event times its probability is no larger than expected sampled pseudo-regret.",
+      "math": "\\(\\Delta(T-n)\\,\\mathbb P(E_{c,n,T}^{\\mathrm{starve}})\\le\\mathbb E R_T^{\\mathrm{sampled}}.\\)",
+      "intuition": "If only n optimal-arm pulls occur by horizon T, every other round pulls the suboptimal arm and contributes Delta. Integrating that exact pathwise identity over the starvation event turns event probability into a regret lower bound.",
+      "why": "This isolates the deterministic consumer at Appendix-C Step 1 without hiding the still-missing probability producer behind a theorem-shaped premise.",
+      "position": "This named declaration is a compiled source-shaped consumer, not a partial closure of Theorem 2. The frozen K = 2 terminal remains blocked.",
+      "proof_idea": "Make the trigger and final-count event measurable, identify two-arm sampled regret with Delta times suboptimal pulls, prove the exact Delta(T-n) charge on the event, and compare the integral of its indicator with total expected regret.",
+      "lean_notes": "The event uses an externally fixed chronological cutoff. The module does not construct the random nth-pull stopping prefix, prove conditional no-return probability >= 1/2, establish adaptive selected-reward IID, supply the Rademacher/binomial ballot phase, or assemble the polynomial asymptotic lower bound.",
+      "dependencies": [
+        "BanditRLProof.StochasticGradientBandit.twoArmStepOneStarvationEvent_charge_mul_probability_le_integral",
+        "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmStepOneStarvationEvent",
+        "BanditRLProof.StochasticGradientBandit.twoArmStepOneStarvationEvent_sampledPseudoRegret_eq"
+      ]
+    },
+    {
       "full_name": "BanditRLProof.StochasticGradientBandit.theoremFourStepFour_survivalMass_pos",
       "chapter": "frontier",
       "plain": "For positive p-prime and c below one half, a buffered event with mass at least p-prime and conditional joint-survival mass at least one minus twice c yields strictly positive unconditional survival mass.",

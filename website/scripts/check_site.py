@@ -557,22 +557,38 @@ def main() -> int:
             errors.append(f"BanditRLwiki active source audit {audit.get('id')} must remain partial")
         if not isinstance(audit.get("compiled_declaration_count"), int) or audit.get("compiled_declaration_count", 0) <= 0:
             errors.append(f"BanditRLwiki active source audit {audit.get('id')} has an invalid declaration count")
-        milestone = milestone_by_id.get(audit.get("milestone_id"))
-        if milestone is None:
-            errors.append(f"BanditRLwiki active source audit {audit.get('id')} names a missing milestone")
+        milestone_ids = [audit.get("milestone_id")]
+        if audit.get("follow_on_milestone_id"):
+            milestone_ids.append(audit["follow_on_milestone_id"])
+        milestones = [milestone_by_id.get(milestone_id) for milestone_id in milestone_ids]
+        missing_milestones = [
+            milestone_id
+            for milestone_id, milestone in zip(milestone_ids, milestones)
+            if milestone is None
+        ]
+        if missing_milestones:
+            errors.append(
+                f"BanditRLwiki active source audit {audit.get('id')} names missing milestones "
+                f"{missing_milestones}"
+            )
         else:
-            milestone_declarations = set(milestone.get("declarations", []))
+            milestone_declarations: set[str] = set()
+            for milestone in milestones:
+                milestone_declarations.update(milestone.get("declarations", []))
+                if milestone.get("status") != audit.get("lean_status"):
+                    errors.append(
+                        f"BanditRLwiki active source audit {audit.get('id')} status drifts from "
+                        f"milestone {milestone.get('id')}"
+                    )
             if len(milestone_declarations) != audit.get("compiled_declaration_count"):
                 errors.append(
-                    f"BanditRLwiki active source audit {audit.get('id')} declaration count drifts from its milestone"
-                )
-            if milestone.get("status") != audit.get("lean_status"):
-                errors.append(
-                    f"BanditRLwiki active source audit {audit.get('id')} status drifts from its milestone"
+                    f"BanditRLwiki active source audit {audit.get('id')} declaration count drifts "
+                    "from its milestone set"
                 )
             if not set(audit.get("representative_declarations", [])).issubset(milestone_declarations):
                 errors.append(
-                    f"BanditRLwiki active source audit {audit.get('id')} cites a declaration outside its milestone"
+                    f"BanditRLwiki active source audit {audit.get('id')} cites a declaration "
+                    "outside its milestone set"
                 )
         if "not" not in audit.get("boundary", "").lower() and "remain" not in audit.get("boundary", "").lower():
             errors.append(f"BanditRLwiki active source audit {audit.get('id')} does not state its nonclaim")
@@ -957,6 +973,10 @@ def main() -> int:
         "Definitions 3.1–3.3 and Lemmas 3.1–3.4",
         "Does Stochastic Gradient really succeed for Bandits?",
         "Theorem 1 (two-arm SGB regret upper bound)",
+        "Corollary 1 (horizon-indexed two-arm SGB rate)",
+        "physical PDF p. 5",
+        "Theorem 2 (two-arm SGB phase transition)",
+        "physical PDF p. 6; Appendix C pp. 31–40",
     ):
         if required not in frontier_source:
             errors.append(f"Frontier reading guide is missing succinct source metadata: {required}")

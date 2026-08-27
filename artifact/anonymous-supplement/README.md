@@ -104,8 +104,10 @@ outside the atom-generated directions.  This is a regularity/codomain
 obligation, not a source-error claim; the global Lemmas 3.5--3.6, Assumption
 3.7, Theorem 3.8, and every regret endpoint remain outside the compiled slice.
 
-The independent stochastic-gradient-bandit audit contains 223 named
-declarations.  Its frozen 215-declaration Theorem-1 stack begins with 76
+The source-frozen stochastic-gradient-bandit audit contains 264 named
+declarations.  The historical record remains exactly 223 declarations:
+a frozen 215-declaration Theorem-1 stack plus eight separate
+Appendix-E/Theorem-4 contract leaves.  The 215-declaration stack begins with 76
 declarations covering finite
 Algorithm-1/Equations-(3)--(7) algebra, recursive generated histories and
 Equation-(5) kernels, pathwise two-arm Equation-(9)/(11) structure, and the
@@ -128,9 +130,7 @@ actual sampled-action pseudo-regret bridge, Equation-(7) assembly, and
 `twoArmFixedIIDDirac_theoremOne`.  This is the source Theorem 1 for bounded
 two-arm fixed-IID reward laws with exact means, `0 < Delta < 1`, `0 < eta`,
 `eta * C_eta < Delta`, and source `T = tailHorizon + 1`.  `Dirac` refers only
-to the `Unit` environment prior, not to the reward laws.  The audit remains
-partial: Theorems 2--4, their learning-rate regimes, general-`K`, and
-non-Dirac extensions remain outside the compiled slice.  The fixed-IID
+to the `Unit` environment prior, not to the reward laws.  The fixed-IID
 adapter is not a converse equivalence proof.
 
 The remaining eight declarations form a separate Appendix-E/Theorem-4
@@ -139,8 +139,32 @@ margin, an audited finite survival-event lower bound under explicit buffer
 and conditional-survival premises, and the finite geometric transient-phase
 envelope.  They do not construct the general-`K` generated process, a stopped
 supermartingale or Doob estimate, a uniform buffer/survival producer, or
-Theorem 4.  The 223 total is therefore `215 + 8`, not a larger Theorem-4
-endpoint stack.
+Theorem 4.  The historical 223 is therefore exactly `215 + 8`, not a larger
+Theorem-4 endpoint stack.
+
+The follow-on adds 23 declarations for the compiled bounded Corollary-1
+companion.  For source horizon `T >= 2`, `0 < Delta < 1`, and the
+horizon-indexed fixed rate `eta_T = sqrt(log T / T)`,
+`twoArmFixedIIDDirac_corollaryOne` bounds expected sampled pseudo-regret by
+the explicit absolute constant `2 + 1/log 2 + 2 * exp 2` times
+`sqrt(T log T)`.  This is a direct consumer of the already compiled Theorem 1
+and the pathwise `Delta T` branch.  It is not independent evidence for
+Theorem 2, a time-varying policy, or general `K`.  Again, `Dirac` names only
+the `Unit` environment prior; the bounded fixed-IID reward laws are not
+asserted to be Dirac or Rademacher.
+
+Another 18 declarations compile only a deterministic, source-shaped
+Appendix-C Step-1 consumer.  The named wrapper
+`twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral`
+defines a measurable fixed-cutoff starvation event, proves its exact
+`Delta * (T - n)` sampled-regret charge, and lower-bounds expected regret by
+that charge times the event probability.  The exact `K = 2` Theorem-2 center
+remains blocked: this consumer does not construct the random nth-pull
+stopping prefix, prove conditional no-return probability at least `1/2`,
+establish adaptive selected-reward IID, produce the Rademacher/binomial
+ballot phase, or assemble the polynomial asymptotic terminal.  The complete
+audit status therefore remains `partial`; Theorem 2 is `blocked`, and
+Theorems 3--4 remain uncompiled.
 
 ## Quick verification
 
@@ -160,6 +184,8 @@ lake env lean Tests/TextbookPartIVChapter15Canary.lean
 lake env lean Tests/TextbookPartIVChapter16Canary.lean
 lake env lean Tests/TextbookPartIVChapter17Canary.lean
 lake env lean Tests/SuccinctLowerBoundPaperAuditCanary.lean
+lake env lean Tests/StochasticGradientBanditCorollaryOneCanary.lean
+lake env lean Tests/StochasticGradientBanditTheoremTwoStarvationCanary.lean
 lake env lean Tests/StochasticGradientBanditTheoremFourContractAuditCanary.lean
 lake env lean Tests/StochasticGradientBanditPaperAuditCanary.lean
 python -m unittest tools/test_proof_graph_lab.py
