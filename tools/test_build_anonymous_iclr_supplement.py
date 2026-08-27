@@ -170,6 +170,9 @@ class AnonymousSupplementTests(unittest.TestCase):
             prefix + "tools/prepare_target_drift_checker_probe_config.py", names
         )
         self.assertIn(prefix + "tools/target_drift_checker_cache_manifest.py", names)
+        self.assertIn(prefix + "tools/export_target_drift_grader_pack.py", names)
+        self.assertIn(prefix + "tools/test_target_drift_grader_export.py", names)
+        self.assertIn(prefix + "tools/test_target_drift_grading.py", names)
         self.assertIn(
             prefix + "evaluation/target-drift-v2/checker-image-candidate-record.json",
             names,

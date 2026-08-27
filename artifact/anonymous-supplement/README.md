@@ -52,7 +52,15 @@ were screened.
   derivative archive.  The retained `sealed_on` date records when the
   result-free design was frozen; it is not a claim that the anonymized byte
   presentation existed unchanged on that date.  The packaged validator checks
-  this derivative hash chain directly.
+  this derivative hash chain directly.  The supplied grading chain also
+  contains a physically separate positive-allowlist exporter: primary graders
+  receive packets, the frozen prompt and rubric, a response template, and a
+  digest manifest, while the semantic operator mapping and completion ledger
+  remain outside that export.  The production path also rebinds the internal
+  pack to the current checked-run universe and rebuilds the grade ledger from
+  the original two responses plus adjudication before analysis.  This is
+  protocol/component evidence only; no
+  grader export or response is included in the result-free archive.
 
 The delayed-feedback flagship contains 197 compiled source-audit declarations:
 89 implementation-facing declarations, 19 separately counted
@@ -155,6 +163,7 @@ lake env lean Tests/SuccinctLowerBoundPaperAuditCanary.lean
 lake env lean Tests/StochasticGradientBanditTheoremFourContractAuditCanary.lean
 lake env lean Tests/StochasticGradientBanditPaperAuditCanary.lean
 python -m unittest tools/test_proof_graph_lab.py
+python -m unittest tools/test_target_drift_grader_export.py tools/test_target_drift_grading.py tools/test_target_drift_analysis.py
 python tools/validate_target_drift_external_comparator.py
 ```
 

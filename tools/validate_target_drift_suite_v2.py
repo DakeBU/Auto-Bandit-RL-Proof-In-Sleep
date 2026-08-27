@@ -143,6 +143,15 @@ def main() -> None:
             == policy["suite_id"] == missing_policy["suite_id"]
             == sources["suite_id"] == "ABRL-TARGET-DRIFT-V2",
             "suite identifiers differ")
+    require(
+        rubric.get("grading_process", {}).get("adjudication_trigger")
+        == config.get("grading", {}).get("grader_conflict_policy")
+        == (
+            "adjudicate every disagreement on a primary or secondary binary "
+            "label or the structured source-critical field list"
+        ),
+        "grader rubric and execution conflict policy differ",
+    )
     require(prepare.resolve_repo_path(config["protocol"]) == V2 / "protocol.json",
             "execution config must pin the v2 protocol path")
     require(

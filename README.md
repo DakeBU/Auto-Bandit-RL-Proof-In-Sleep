@@ -176,10 +176,18 @@ Core paths:
   agent sandbox.  The sanitized outer-controller/
   canonical-Docker-launcher/trusted-controller/restricted-worker sandbox
   contract, non-executing in-image checker/cache-manifest verification, fresh replay,
-  blind grading packets, workflow-artifact hash records, and source/target-aware
+  an atomic operator grading pack, a physically separate positive-allowlist
+  grader export, workflow-artifact hash records, and source/target-aware
   analysis with secondary multiplicity control, plus an exact 450-ID completion
   ledger that forbids replacement and imputation and suppresses every inferential
-  result whenever any preregistered run is missing.  A provenance-bound multi-stage
+  result whenever any prospectively specified run is missing.  The grader export
+  contains only normalized packets, the frozen prompt and rubric, a response
+  template, and a digest manifest; exact-tree verification excludes the internal
+  mapping, completion ledger, and execution/workflow metadata.  Before export or
+  grade assembly, the internal pack is reconstructed byte for byte from the
+  sealed run manifest and current checked-run evidence.  Before inference, the
+  analyzer reruns the hash-matched sealed assembler from the two grader responses
+  and adjudication and requires the rebuilt grade ledger to match exactly.  A provenance-bound multi-stage
   builder now exports the exact common pre-audit Git snapshot, constructs and
   byte-manifests the complete Lake cache, keeps that source out of the final
   image, and can emit an image/toolchain/cache SBOM only after the final image
@@ -201,7 +209,7 @@ Core paths:
   `evaluation/target-drift-v2/checker-image-candidate-32419343467.json`.
   That ephemeral candidate result is not a published production checker, a
   production agent sandbox, or a final experiment seal.  A frozen real provider
-  image, final published and sealed checker image, budgets, graders, final seal, the preregistered
+  image, final published and sealed checker image, budgets, graders, final seal, the prospectively specified
   one-case-by-three-condition real-infrastructure smoke, and all 450 primary
   model runs remain unstarted.  The smoke now has a separate hash-bound
   materializer/runner: it derives one matched three-condition block, hides the
@@ -262,8 +270,9 @@ Core paths:
   `evaluation/target-drift-v2/external-comparator-plan.json` independently pins
   LeanFlow as a current public end-to-end comparator and specifies a 30-run
   descriptive calibration after its own result-ineligible smoke.  It leaves the
-  original 450-run protocol bytes and causal mechanism estimand unchanged; an
-  adjacent seal binds both files by SHA-256.  The comparator calibration is
+  three-condition primary estimand and 450-run design unchanged while binding
+  the current pre-outcome, integrity-amended protocol bytes; an adjacent seal
+  binds both files by SHA-256.  The comparator calibration is
   planned and unrun, so it supports no numerical or superiority claim;
 - `website/` — literate static site, BanditRLwiki, progressive chapter → module → declaration Lean Graph, local compiler service, and integrity checker;
 - `tools/bandit.py` — deterministic harness CLI.
