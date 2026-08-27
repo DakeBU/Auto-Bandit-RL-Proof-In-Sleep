@@ -104,7 +104,7 @@ outside the atom-generated directions.  This is a regularity/codomain
 obligation, not a source-error claim; the global Lemmas 3.5--3.6, Assumption
 3.7, Theorem 3.8, and every regret endpoint remain outside the compiled slice.
 
-The source-frozen stochastic-gradient-bandit audit contains 288 named
+The source-frozen stochastic-gradient-bandit audit contains 295 named
 declarations.  The historical record remains exactly 223 declarations:
 a frozen 215-declaration Theorem-1 stack plus eight separate
 Appendix-E/Theorem-4 contract leaves.  The 215-declaration stack begins with 76
@@ -166,12 +166,20 @@ stopping time with the required ambient-measurability contract, identify the
 exact count and selected
 action under a finite-time witness, and expose measurable stopped reward and
 post-pull success-probability values at the same chronological coordinate.
-This layer is not yet composed with the fixed-cutoff starvation consumer.  It
-does not establish adaptive selected-reward IID, a future-cylinder law,
-conditional no-return probability at least `1/2`, the Rademacher/binomial
-ballot phase, or the polynomial asymptotic terminal.  The exact `K = 2`
-Theorem-2 center therefore remains blocked.  The complete audit status stays
-`partial`; Theorem 2 is `blocked`, and Theorems 3--4 remain uncompiled.
+Seven additional declarations compile a latent fixed-arm product/readout layer.
+They prove the finite product law for a fixed arm's latent reward coordinates,
+lift that law through the coupling's exact arm-stream marginal, identify every
+finite nth optimal-arm pull with its corresponding latent coordinate almost
+surely, and normalize the kernels needed by the next adapter.  They do not
+prove that forgetting the latent stream recovers the native fixed-IID SGB
+trajectory law, and they do not make totalized or occurrence-conditioned
+stopped rewards IID.  These layers are not yet composed with the fixed-cutoff
+starvation consumer.  The native trajectory adapter, stopped-prefix
+future-cylinder, conditional no-return probability at least `1/2`, the
+Rademacher/binomial ballot phase, and the polynomial asymptotic terminal remain
+blocked.  The exact `K = 2` Theorem-2 center therefore remains blocked.  The
+complete audit status stays `partial`; Theorem 2 is `blocked`, and Theorems
+3--4 remain uncompiled.
 
 ## Quick verification
 
@@ -194,6 +202,7 @@ lake env lean Tests/SuccinctLowerBoundPaperAuditCanary.lean
 lake env lean Tests/StochasticGradientBanditCorollaryOneCanary.lean
 lake env lean Tests/StochasticGradientBanditTheoremTwoStarvationCanary.lean
 lake env lean Tests/StochasticGradientBanditTheoremTwoNthPullCanary.lean
+lake env lean Tests/StochasticGradientBanditTheoremTwoLatentRewardCanary.lean
 lake env lean Tests/StochasticGradientBanditTheoremFourContractAuditCanary.lean
 lake env lean Tests/StochasticGradientBanditPaperAuditCanary.lean
 python -m unittest tools/test_proof_graph_lab.py

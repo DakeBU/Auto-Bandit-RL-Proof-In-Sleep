@@ -1145,3 +1145,34 @@ counterexample.  Do not repeatedly rewrite the proof route without that audit.
   covered. Current-action/nonpredictable gates, random or expectation-only
   envelopes, raw/latent-law corruption, paper-sharp constants, and the complete
   Tsallis-INF theorem remain outside this statement.
+
+## FIXED-ARM-LATENT-FINITE-PREFIX-PRODUCT
+
+- Proposed name: keep
+  `UCB.armStreamMeasure_map_fixedArmFinitePrefix_eq_pi` and its trajectory
+  wrapper project-local.
+- Mathematical area: infinite product measures, finite coordinate products,
+  and latent reward streams.
+- Exact statement: mapping the stationary arm-stream measure to the first `m`
+  coordinates of one fixed arm gives `Measure.pi (fun _ : Fin m => nu arm)`;
+  the same equality holds after lifting through the exact stream marginal of
+  the latent arm-stream trajectory coupling.
+- Existing APIs are sufficient:
+  `ProbabilityTheory.iIndepFun.precomp`,
+  `ProbabilityTheory.iIndepFun_iff_map_fun_eq_pi_map`,
+  `UCB.iIndepFun_armStreamMeasure_coordinate`,
+  `UCB.armStreamMeasure_map_coord`, and
+  `Thompson.identDistrib_fst_latentArmStreamTrajectoryMeasure`.
+- Regularity contracts: a Markov arm kernel; a nonzero finite arm count for the
+  trajectory lift; and only ordinary measurable-space structure on the frozen
+  environment.  No boundedness, moment, stopping-time, or action-policy premise
+  is used.
+- Current ABRL task:
+  `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE`.
+- Status: locally compiled, root imported, declaration-indexed, and externally
+  canaried.  The source-specific consumer identifies each finite nth optimal
+  pull with its corresponding latent coordinate almost surely.
+- Failure signal: this finite product law concerns latent coordinates.  It does
+  not identify the coupling's visible trajectory marginal with the native
+  fixed-IID SGB trajectory, and it does not imply that totalized stopped values
+  or values conditioned on all requested pulls occurring are IID.

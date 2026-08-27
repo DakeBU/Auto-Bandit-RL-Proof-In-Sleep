@@ -1,10 +1,10 @@
 # Memory Digest
 
-Task: `BOOKMAP-CHAPTER-9-HOEFFDING-UCBVI-CANONICAL-COMPLETION`
-Generated: `2026-08-16T07:34:24+00:00`
+Task: `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE`
+Generated: `2026-08-27T10:58:35+00:00`
 
-Recent trials: `2`
-Retrieval index: `research-wiki/retrieval-index/BOOKMAP-CHAPTER-9-HOEFFDING-UCBVI-CANONICAL-COMPLETION.json`
+Recent trials: `4`
+Retrieval index: `research-wiki/retrieval-index/PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE.json`
 
 Next agents should read the task, conversion window, proof obligations, and
 LML/Mathlib/textbook/scenario theorem-card indexes before editing Lean.

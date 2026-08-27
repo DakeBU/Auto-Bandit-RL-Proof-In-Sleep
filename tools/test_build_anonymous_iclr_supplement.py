@@ -165,6 +165,15 @@ class AnonymousSupplementTests(unittest.TestCase):
             prefix + "Tests/StochasticGradientBanditTheoremTwoNthPullCanary.lean",
             names,
         )
+        self.assertIn(
+            prefix + "BanditRLProof/Algorithms/"
+            "StochasticGradientBanditTheoremTwoLatentReward.lean",
+            names,
+        )
+        self.assertIn(
+            prefix + "Tests/StochasticGradientBanditTheoremTwoLatentRewardCanary.lean",
+            names,
+        )
         self.assertIn(prefix + "evidence/claim-ledger.json", names)
         self.assertIn(prefix + "evidence/theorem-audit-comparison.json", names)
         self.assertIn(prefix + "evidence/delayed-feedback-proof-obligations.md", names)
@@ -558,7 +567,7 @@ class AnonymousSupplementTests(unittest.TestCase):
             [BUILDER.SGB_AUDIT_ID, BUILDER.SGB_FOLLOW_ON_ID],
         )
         self.assertEqual(
-            ledger["stochastic_gradient_bandit"]["declaration_count"], 288
+            ledger["stochastic_gradient_bandit"]["declaration_count"], 295
         )
         self.assertEqual(
             ledger["stochastic_gradient_bandit"][
@@ -595,6 +604,12 @@ class AnonymousSupplementTests(unittest.TestCase):
                 "theorem_two_nth_pull_bridge_declaration_count"
             ],
             24,
+        )
+        self.assertEqual(
+            ledger["stochastic_gradient_bandit"][
+                "theorem_two_latent_reward_product_readout_declaration_count"
+            ],
+            7,
         )
         self.assertEqual(
             ledger["stochastic_gradient_bandit"]["finite_algebra_declaration_count"],
@@ -673,13 +688,16 @@ class AnonymousSupplementTests(unittest.TestCase):
             "source_corollary_one_compiled",
             "source_theorem_two_deterministic_starvation_consumer_compiled",
             "source_theorem_two_nth_pull_bridge_compiled",
+            "source_theorem_two_latent_product_readout_compiled",
         ):
             self.assertTrue(ledger["stochastic_gradient_bandit"][flag])
         for missing_bridge in (
-            "selected-reward IID",
-            "future-cylinder law",
+            "native trajectory adapter",
+            "stopped-prefix future-cylinder",
             "conditional no-return probability >= 1/2",
+            "Rademacher/binomial ballot phase",
             "asymptotic terminal",
+            "does not make totalized or occurrence-conditioned stopped rewards IID",
         ):
             self.assertIn(missing_bridge, sgb_row["boundary"])
         self.assertTrue(
@@ -772,7 +790,7 @@ class AnonymousSupplementTests(unittest.TestCase):
         succinct = rows["succinct-lower-bound-source-frozen-audit"]
         self.assertEqual(succinct["compiled_declaration_count"], 54)
         sgb = rows["stochastic-gradient-bandit-source-frozen-audit"]
-        self.assertEqual(sgb["compiled_declaration_count"], 288)
+        self.assertEqual(sgb["compiled_declaration_count"], 295)
         self.assertEqual(
             sgb["evidence_record_ids"],
             [BUILDER.SGB_AUDIT_ID, BUILDER.SGB_FOLLOW_ON_ID],
@@ -796,6 +814,7 @@ class AnonymousSupplementTests(unittest.TestCase):
                 "source_corollary_one_companion": 23,
                 "source_theorem_two_deterministic_starvation_consumer": 18,
                 "source_theorem_two_nth_pull_bridge": 24,
+                "source_theorem_two_latent_reward_product_readout": 7,
             },
         )
         for row in (delayed, succinct, sgb):
@@ -808,6 +827,8 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertTrue(sgb["corollary_one_endpoint_verified"])
         self.assertFalse(sgb["theorem_two_endpoint_verified"])
         self.assertFalse(sgb["theorem_four_endpoint_verified"])
+        self.assertTrue(sgb["theorem_two_nth_pull_bridge_compiled"])
+        self.assertTrue(sgb["theorem_two_latent_product_readout_compiled"])
 
     def test_theorem_audit_comparison_rejects_status_and_count_drift(self):
         records = BUILDER.selected_source_records()
@@ -908,6 +929,7 @@ class AnonymousSupplementTests(unittest.TestCase):
             BUILDER.SGB_COROLLARY_ONE_REPRESENTATIVE_DECLARATIONS,
             BUILDER.SGB_THEOREM_TWO_STARVATION_REPRESENTATIVE_DECLARATIONS,
             BUILDER.SGB_THEOREM_TWO_NTH_PULL_REPRESENTATIVE_DECLARATIONS,
+            BUILDER.SGB_THEOREM_TWO_LATENT_REWARD_DECLARATIONS,
         )
         for required in required_sets:
             with self.subTest(victim_set=sorted(required)):
@@ -932,7 +954,7 @@ class AnonymousSupplementTests(unittest.TestCase):
                 row["full_name"] = replacement
                 with self.assertRaisesRegex(
                     ValueError,
-                    "288 declarations: historical 223",
+                    "295 declarations: historical 223",
                 ):
                     BUILDER.validate_sgb_count(records, index)
 

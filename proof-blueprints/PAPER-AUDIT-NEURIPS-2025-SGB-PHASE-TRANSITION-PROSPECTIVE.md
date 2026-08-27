@@ -1,6 +1,6 @@
 # Proof Blueprint: PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE
 
-Generated: `2026-08-27T08:14:24+00:00`
+Generated: `2026-08-27T10:58:36+00:00`
 
 ## Source Task
 
@@ -94,16 +94,22 @@ evidence states:
    boundary, and identify every finite hit by its exact action and before/after
    pull counts.  The stopped reward and post-pull probability are measurable,
    but have source semantics only under a finite-time witness.
-2. **Blocked:** prove the finite selected-reward product/future-cylinder law and
-   connect the chronological stopped values to the source embedded-chain
-   recurrence.  Ambient stopped-value measurability is not this law, and the
-   current inclusive filtration does not make reward selection predictable.
-3. Compile Appendix-C Step 1: if the optimal-arm probability after its `n`th
+2. **Compiled latent half:** the first `m` coordinates of any fixed latent arm
+   have their finite product law; this law lifts through the stream marginal
+   of the coupled SGB trajectory; and every finite nth optimal-arm pull reads
+   coordinate `(pullIndex, 0)` almost surely.  This is not an IID theorem for
+   totalized stopped values or for values conditioned on all pulls occurring.
+3. **Blocked native half:** prove that forgetting the latent stream recovers
+   the native fixed-IID SGB trajectory law, then transport the latent phase
+   event and the source embedded-chain recurrence.  Stream-marginal equality
+   plus a.e. reward readout is not trajectory-law equality.
+4. Compile Appendix-C Step 1: if the optimal-arm probability after its `n`th
    pull is at most `1/(2*T)`, the conditional probability of no further
    optimal-arm pull over the remaining horizon is at least `1/2`, yielding
    the exact starvation regret charge.
-4. Build the `S0`/`S1` phase producer: adaptive IID reward-subsequence law,
-   Rademacher anti-concentration, ballot-prefix constraint, and the
+5. Build the `S0`/`S1` phase producer: latent IID reward-block law plus its
+   native-process transport, Rademacher anti-concentration, ballot-prefix
+   constraint, and the
    deterministic implication into the starvation event.
 
 ## First three companion leaves
@@ -117,8 +123,9 @@ evidence states:
 
 ## Hidden contracts
 
-- Theorem 2 retains adaptive selection: the nth-pull reward subsequence must
-  be proved IID under the fixed arm law, not assumed.
+- Theorem 2 retains adaptive selection: the pull-ordered reward blocks must be
+  derived from a latent product law and a native trajectory-law adapter, not
+  inserted as a selected-reward IID premise.
 - Source horizon `T`, chronological time, and optimal-arm pull count are
   distinct indices.
 - The not-yet-pulled nth-pull case remains explicit.
@@ -157,11 +164,18 @@ evidence that the polynomial lower-bound route is complete.
   finite chronological coordinate by exact before/after pull counts and the
   selected action, and makes the stopped reward and post-pull success
   probability measurable.  It assumes no selected-reward IID law.
-- The finite joint IID law of adaptively selected arm-0 rewards, conditional
-  no-return probability `>= 1/2`, Rademacher/ballot phase producer, asymptotic
-  assembly, and frozen Theorem-2 terminal remain uncompiled.  The central
-  target therefore remains blocked; the compiled bridge, deterministic
-  consumer, and Corollary 1 are not terminal evidence for it.
+- A separate seven-declaration latent-reward layer now proves the fixed-arm
+  finite product law, lifts it through the coupling's exact stream marginal,
+  specializes it to the optimal arm, and proves that every finite nth pull
+  reads its corresponding latent coordinate almost surely.  It also compiles
+  two normalization leaves for the future native-process adapter.
+- The latent coupling's visible trajectory marginal has not yet been proved
+  equal to the native fixed-IID SGB trajectory.  Conditional no-return
+  probability `>= 1/2`, the Rademacher/ballot phase producer, asymptotic
+  assembly, and the frozen Theorem-2 terminal remain uncompiled.  The central
+  target therefore remains blocked; the compiled latent product/readout,
+  chronological bridge, deterministic consumer, and Corollary 1 are not
+  terminal evidence for it.
 
 ## Gate
 
@@ -172,10 +186,12 @@ lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvat
 lake env lean Tests/StochasticGradientBanditTheoremTwoStarvationCanary.lean
 lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean
 lake env lean Tests/StochasticGradientBanditTheoremTwoNthPullCanary.lean
+lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoLatentReward.lean
+lake env lean Tests/StochasticGradientBanditTheoremTwoLatentRewardCanary.lean
 python tools/bandit.py check
 ```
 
-The two Theorem-2-specific files are source-shaped producer/consumer
+The three Theorem-2-specific files are source-shaped producer/consumer
 milestones only; their existence does not promote the frozen terminal.
 
 
@@ -185,7 +201,7 @@ milestones only; their existence does not promote the frozen terminal.
 
 Task: `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE`
 
-Status: `target-frozen; Corollary 1 compiled; Theorem 2 blocked after compiled nth-pull and deterministic-starvation milestones`
+Status: `target-frozen; Corollary 1 compiled; Theorem 2 blocked after compiled nth-pull, latent-product/readout, and deterministic-starvation milestones`
 
 ## Source-to-Lean fence
 
@@ -217,18 +233,25 @@ must be derived from these branches; it may not be inserted as an assumption.
 
 Appendix C reindexes the process by the number of pulls of the optimal arm.
 The Lean bridge must therefore define the nth-pull time on the chronological
-trajectory and prove that rewards extracted at those times have the required
-finite product law under adaptive action selection.  Existing one-step
-conditional laws are not by themselves an independence theorem.
+trajectory, expose an unconditional latent per-arm reward stream with its
+finite product law, prove that every finite nth pull reads the corresponding
+latent coordinate, and separately identify the coupling's visible trajectory
+law with the native fixed-IID SGB trajectory.  Existing one-step conditional
+laws are not by themselves an independence or trajectory-uniqueness theorem.
 
-The first half of that bridge now compiles.  `twoArmNthOptimalPullTime` uses a
+The chronological half of that bridge compiles.  `twoArmNthOptimalPullTime` uses a
 zero-based pull index and returns `WithTop Nat`; `top` is the explicit case in
 which the requested pull never occurs.  At a finite time `t`, the compiled
 specification proves exactly `pullIndex` prior optimal pulls, action `t = 0`,
 and `pullIndex + 1` inclusive pulls.  The stopped reward and post-pull success
 probability are measurable and equal the same chronological coordinate.  No
 finite product law, IID claim, or future-cylinder probability follows from
-this deterministic/stopping-time layer.
+this deterministic/stopping-time layer.  A separate compiled latent-reward
+layer proves the finite product law for fixed-arm stream coordinates, lifts it
+through the coupling's stream marginal, and identifies every finite nth-pull
+reward with coordinate `(pullIndex, 0)` almost surely.  It does not prove that
+the coupling's trajectory marginal is the native fixed-IID trajectory, and it
+does not make totalized or occurrence-conditioned stopped rewards IID.
 
 The phase event then combines an unlucky initial block, a ballot-constrained
 recovery block, and a deterministic softmax recurrence that drives the next
@@ -242,6 +265,46 @@ trajectory measure.  It does not identify the cutoff with the random nth-pull
 time and does not prove the source conditional probability lower bound
 `P(no return | trigger) >= 1/2`.  Those are producer obligations, not premises
 that may be assumed by the terminal.
+
+## Round-15 retrieval packet: latent rewards and native trajectory law
+
+- Card ids: `PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB`,
+  `SCN-STOCHASTIC-FINITE`, `MLIB-PROBABILITY-INDEPENDENCE`,
+  `MLIB-PROBABILITY-KERNEL`, `MLIB-PROBABILITY-POSTERIOR`, and
+  `MLIB-MEASURE-INTEGRAL`.
+- Search terms: `selected reward IID`, `arm stream trajectory`,
+  `future cylinder`, `condDistrib`, `latentArmStreamTrajectory`, and
+  `nthOptimalPull`.
+- Local APIs: `UCB.iIndepFun_armStreamMeasure_coordinate`,
+  `UCB.armStreamMeasure_map_coord`,
+  `Thompson.identDistrib_fst_latentArmStreamTrajectoryMeasure`,
+  `Thompson.latentArmStreamTrajectoryReward_eq_rewardFromArmStream_ae`,
+  `twoArmNthOptimalPullTime_spec`, and
+  `RewardKernel.rewardTrace_map_eq_trajMeasure_of_condDistrib`.
+- Source reading: Appendix C, physical pp. 31--32, defines the arm-1 rewards
+  in pull order, evaluates the phase-0 and phase-1 blocks as independent
+  reward blocks, and only afterwards combines them with the deterministic
+  implication into the low-probability trigger.  The source does not state a
+  stopped-value product-law lemma or justify totalization when a requested
+  pull is absent.
+- Safe intermediate route: prove the finite product law for the first `m`
+  coordinates of one latent arm stream; lift it through the exact stream
+  marginal of the latent trajectory coupling; and prove that every finite
+  nth optimal-arm pull reads coordinate `(pullIndex, 0)` almost surely.
+- Expected bridge: prove that the trajectory marginal of the stationary
+  latent-stream coupling equals the native fixed-IID canonical trajectory,
+  preferably through finite prefix/next-pair factorization followed by
+  Ionescu--Tulcea uniqueness.  This bridge is project-local and is not supplied
+  by the existing deterministic-UCB arm-stream conditional-law theorem.
+- Hidden contracts: the action at a round is selected before that round's
+  reward, `WithTop.top` remains explicit, conditional-kernel equalities are
+  only almost everywhere under their conditioning law, and occurrence of
+  `m` pulls may depend on earlier rewards.  Consequently, neither totalized
+  stopped rewards nor rewards conditioned on all `m` pulls occurring may be
+  declared IID without an additional theorem.
+- Status before the round-15 proof attempt: `project-local`; latent finite
+  product and finite-pull readout are candidate compiled leaves, while the
+  native trajectory-marginal adapter remains the target-faithful blocker.
 
 ## Pivot rules
 
@@ -267,7 +330,10 @@ Task id: `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE`
 | `SGB-C1-GAP-FREE` | exact piecewise Corollary-1 finite bound | compiled | `twoArmFixedIIDDirac_corollaryOne_piecewise`; fixed IID, `T >= 2`, horizon-indexed eta |
 | `SGB-C1-RATE` | explicit absolute-constant `sqrt(T*log T)` bound | compiled | `twoArmFixedIIDDirac_corollaryOne`; direct Theorem-1 companion |
 | `SGB-T2-NTH-PULL` | stopping-time and chronological-to-pull-index bridge | compiled | `WithTop Nat` missing-pull value; finite exact count/action specification; measurable stopped reward and post-pull probability; no IID claim |
-| `SGB-T2-SELECTED-IID` | finite joint law of rewards at adaptive arm-0 pull times | blocked | first remaining core technical blocker; chronological stopped-value measurability is not a product law |
+| `SGB-T2-LATENT-PRODUCT` | finite product law for fixed-arm latent coordinates and finite nth-pull readout | compiled | `armStreamMeasure_map_fixedArmFinitePrefix_eq_pi`; latent-coupling lift; `twoArmNthOptimalPullReward_eq_latentCoordinate_ae`; no totalized or occurrence-conditioned stopped-reward IID claim |
+| `SGB-T2-NATIVE-TRAJECTORY` | forgetting the latent stream recovers the native fixed-IID SGB trajectory law | blocked | first remaining core technical blocker; requires deferred-decisions prefix/next-pair factorization and trajectory-law uniqueness |
+| `SGB-T2-SELECTED-IID` | target-faithful transfer of the source pull-ordered reward blocks to the native phase event | partial | latent product and finite-pull coordinate readout compile; native trajectory adapter and phase-event transport do not |
+| `SGB-T2-FUTURE-CYLINDER` | conditional probability of no later optimal-arm pull after the random nth-pull prefix | blocked | one-step action kernels at fixed histories do not by themselves supply a stopped-prefix future law |
 | `SGB-T2-STARVATION` | Appendix-C Step-1 event-to-regret lower bound | partial | measurable fixed-cutoff event and generated-law `Delta*(T-n)*P(event)` consumer compile; it is not yet composed with the separately compiled nth-pull bridge, and conditional probability `>= 1/2` remains unproved |
 | `SGB-T2-PHASE-PROBABILITY` | `S0/S1` probability via Rademacher/binomial/ballot route | blocked | exact finite constants and path event |
 | `SGB-T2-POLYLOG-OMEGA` | frozen K=2 Theorem-2 terminal | blocked | depends on all preceding producers |
@@ -33811,6 +33877,62 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremFourContractAudit.lean",
     "line": 124,
     "statement": "theorem theoremFourFiniteTransientMass_le_inv (rho : Real) (hrho_pos : 0 < rho) (hrho_le_one : rho <= 1) (phaseMass : Nat -> Real) (hphase : forall phase, phaseMass phase <= (1 - rho) ^ phase) (phaseCount : Nat) : (Finset.range phaseCount).sum phaseMass <= 1 / rho"
+  },
+  {
+    "kind": "theorem",
+    "name": "armStreamMeasure_map_fixedArmFinitePrefix_eq_pi",
+    "full_name": "BanditRLProof.UCB.armStreamMeasure_map_fixedArmFinitePrefix_eq_pi",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoLatentReward.lean",
+    "line": 32,
+    "statement": "theorem armStreamMeasure_map_fixedArmFinitePrefix_eq_pi {K m : Nat} (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (arm : Fin K) : Measure.map (fun stream : ArmRewardStream K => fun i : Fin m => stream (i : Nat) arm) (armStreamMeasure nu) = Measure.pi (fun _ : Fin m => nu arm)"
+  },
+  {
+    "kind": "theorem",
+    "name": "latentArmStreamTrajectoryMeasure_map_fixedArmFinitePrefix_eq_pi",
+    "full_name": "BanditRLProof.Thompson.latentArmStreamTrajectoryMeasure_map_fixedArmFinitePrefix_eq_pi",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoLatentReward.lean",
+    "line": 81,
+    "statement": "theorem latentArmStreamTrajectoryMeasure_map_fixedArmFinitePrefix_eq_pi {Env : Type u} {K m : Nat} [MeasurableSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (arm : Fin K) : Measure.map (fun sample : UCB.ArmRewardStream K \u00d7 ((n : Nat) -> Fin K \u00d7 Real) => fun i : Fin m => sample.1 (i : Nat) arm) (latentArmStreamTrajectoryMeasure algorithm env nu) = Measure.pi (fun _ : Fin m => nu arm)"
+  },
+  {
+    "kind": "def",
+    "name": "twoArmFixedIIDLatentTrajectoryMeasure",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoLatentReward.lean",
+    "line": 127,
+    "statement": "noncomputable def twoArmFixedIIDLatentTrajectoryMeasure (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) : Measure (UCB.ArmRewardStream 2 \u00d7 ((n : Nat) -> Fin 2 \u00d7 Real))"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmTrajectoryMeasure_dirac_eq_map_trajectoryKernel",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmTrajectoryMeasure_dirac_eq_map_trajectoryKernel",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoLatentReward.lean",
+    "line": 152,
+    "statement": "theorem twoArmTrajectoryMeasure_dirac_eq_map_trajectoryKernel (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) : twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob) = Measure.map (Prod.mk ()) (trajectoryKernel (fun _ : Fin 2 => 0) eta (twoArmFixedIIDEnvironment armLaw hprob) ())"
+  },
+  {
+    "kind": "theorem",
+    "name": "stationaryRewardKernelAt_twoArmFixedIIDRewardKernel_eq",
+    "full_name": "BanditRLProof.StochasticGradientBandit.stationaryRewardKernelAt_twoArmFixedIIDRewardKernel_eq",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoLatentReward.lean",
+    "line": 168,
+    "statement": "theorem stationaryRewardKernelAt_twoArmFixedIIDRewardKernel_eq (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) : letI : IsMarkovKernel (twoArmFixedIIDRewardKernel armLaw) := twoArmFixedIIDRewardKernel_isMarkov armLaw hprob Thompson.stationaryRewardKernelAt (twoArmFixedIIDRewardKernel armLaw) () = UCB.finiteArmRealRewardKernel armLaw"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmFixedIIDLatentTrajectoryMeasure_map_optimalPrefix_eq_pi",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure_map_optimalPrefix_eq_pi",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoLatentReward.lean",
+    "line": 183,
+    "statement": "theorem twoArmFixedIIDLatentTrajectoryMeasure_map_optimalPrefix_eq_pi (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (m : Nat) : Measure.map (fun sample : UCB.ArmRewardStream 2 \u00d7 ((n : Nat) -> Fin 2 \u00d7 Real) => fun i : Fin m => sample.1 (i : Nat) 0) (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta) = Measure.pi (fun _ : Fin m => armLaw 0)"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmNthOptimalPullReward_eq_latentCoordinate_ae",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullReward_eq_latentCoordinate_ae",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoLatentReward.lean",
+    "line": 205,
+    "statement": "theorem twoArmNthOptimalPullReward_eq_latentCoordinate_ae (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (pullIndex : Nat) : \u2200\u1d50 sample \u2202twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta, \u2200 t : Nat, twoArmNthOptimalPullTime (Env := Unit) pullIndex ((), sample.2) = (t : WithTop Nat) -> twoArmNthOptimalPullReward (Env := Unit) pullIndex ((), sample.2) = sample.1 pullIndex 0"
   },
   {
     "kind": "def",
@@ -93861,6 +93983,50 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "time": "2026-08-27T08:13:21+00:00",
     "verifier_evidence": [
       "independent read-only review; focused module/canary; lake build BanditRLProof 8848 jobs; git diff --check; no sorry/admit/new axioms"
+    ]
+  },
+  {
+    "changed_files": [
+      "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoLatentReward.lean",
+      "Tests/StochasticGradientBanditTheoremTwoLatentRewardCanary.lean",
+      "BanditRLProof.lean",
+      "Tests.lean"
+    ],
+    "kind": "build",
+    "lean": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullReward_eq_latentCoordinate_ae",
+    "notes": "Compiled a seven-declaration latent fixed-arm finite-prefix product/readout layer. It proves unconditional latent product laws and finite-hit a.e. readout only; native trajectory equality, totalized or occurrence-conditioned stopped-reward IID, future-cylinder/no-return, ballot/asymptotic producers, and Theorem 2 terminal remain blocked.",
+    "parent_id": "",
+    "role": "lower",
+    "route_fingerprint": "",
+    "run_id": "sgb-theorem2-latent-reward-round15-2026-08-27",
+    "source": "PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB",
+    "statement_hash": "",
+    "status": "compiled",
+    "task": "PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE",
+    "time": "2026-08-27T10:58:17+00:00",
+    "verifier_evidence": [
+      "focused module and canary exit 0; lake build Tests 8888 jobs; baseline axioms only propext/Classical.choice/Quot.sound; anonymous supplement 23 tests OK; site 655 pages and 17497 Lean links"
+    ]
+  },
+  {
+    "changed_files": [
+      "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoLatentReward.lean",
+      "Tests/StochasticGradientBanditTheoremTwoLatentRewardCanary.lean"
+    ],
+    "kind": "review",
+    "lean": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullReward_eq_latentCoordinate_ae",
+    "notes": "Independent read-only review accepted the narrow latent product/readout layer and 295 declaration accounting. It found no claim that the native trajectory adapter, selected stopped-reward IID, future-cylinder/no-return producer, or Theorem 2 terminal compiles; those remain explicit blockers.",
+    "parent_id": "",
+    "role": "reviewer",
+    "route_fingerprint": "",
+    "run_id": "sgb-theorem2-latent-reward-round15-2026-08-27",
+    "source": "local-independent-review",
+    "statement_hash": "",
+    "status": "accepted",
+    "task": "PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE",
+    "time": "2026-08-27T10:58:18+00:00",
+    "verifier_evidence": [
+      "independent semantic and documentation review; no P0; no sorry/admit/new axioms; count and website surfaces consistent; Tests aggregate import added"
     ]
   }
 ]

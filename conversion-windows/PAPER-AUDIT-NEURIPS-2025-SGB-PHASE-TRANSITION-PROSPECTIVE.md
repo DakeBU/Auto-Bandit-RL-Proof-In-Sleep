@@ -2,7 +2,7 @@
 
 Task: `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE`
 
-Status: `target-frozen; Corollary 1 compiled; Theorem 2 blocked after compiled nth-pull and deterministic-starvation milestones`
+Status: `target-frozen; Corollary 1 compiled; Theorem 2 blocked after compiled nth-pull, latent-product/readout, and deterministic-starvation milestones`
 
 ## Source-to-Lean fence
 
@@ -34,18 +34,25 @@ must be derived from these branches; it may not be inserted as an assumption.
 
 Appendix C reindexes the process by the number of pulls of the optimal arm.
 The Lean bridge must therefore define the nth-pull time on the chronological
-trajectory and prove that rewards extracted at those times have the required
-finite product law under adaptive action selection.  Existing one-step
-conditional laws are not by themselves an independence theorem.
+trajectory, expose an unconditional latent per-arm reward stream with its
+finite product law, prove that every finite nth pull reads the corresponding
+latent coordinate, and separately identify the coupling's visible trajectory
+law with the native fixed-IID SGB trajectory.  Existing one-step conditional
+laws are not by themselves an independence or trajectory-uniqueness theorem.
 
-The first half of that bridge now compiles.  `twoArmNthOptimalPullTime` uses a
+The chronological half of that bridge compiles.  `twoArmNthOptimalPullTime` uses a
 zero-based pull index and returns `WithTop Nat`; `top` is the explicit case in
 which the requested pull never occurs.  At a finite time `t`, the compiled
 specification proves exactly `pullIndex` prior optimal pulls, action `t = 0`,
 and `pullIndex + 1` inclusive pulls.  The stopped reward and post-pull success
 probability are measurable and equal the same chronological coordinate.  No
 finite product law, IID claim, or future-cylinder probability follows from
-this deterministic/stopping-time layer.
+this deterministic/stopping-time layer.  A separate compiled latent-reward
+layer proves the finite product law for fixed-arm stream coordinates, lifts it
+through the coupling's stream marginal, and identifies every finite nth-pull
+reward with coordinate `(pullIndex, 0)` almost surely.  It does not prove that
+the coupling's trajectory marginal is the native fixed-IID trajectory, and it
+does not make totalized or occurrence-conditioned stopped rewards IID.
 
 The phase event then combines an unlucky initial block, a ballot-constrained
 recovery block, and a deterministic softmax recurrence that drives the next
@@ -59,6 +66,46 @@ trajectory measure.  It does not identify the cutoff with the random nth-pull
 time and does not prove the source conditional probability lower bound
 `P(no return | trigger) >= 1/2`.  Those are producer obligations, not premises
 that may be assumed by the terminal.
+
+## Round-15 retrieval packet: latent rewards and native trajectory law
+
+- Card ids: `PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB`,
+  `SCN-STOCHASTIC-FINITE`, `MLIB-PROBABILITY-INDEPENDENCE`,
+  `MLIB-PROBABILITY-KERNEL`, `MLIB-PROBABILITY-POSTERIOR`, and
+  `MLIB-MEASURE-INTEGRAL`.
+- Search terms: `selected reward IID`, `arm stream trajectory`,
+  `future cylinder`, `condDistrib`, `latentArmStreamTrajectory`, and
+  `nthOptimalPull`.
+- Local APIs: `UCB.iIndepFun_armStreamMeasure_coordinate`,
+  `UCB.armStreamMeasure_map_coord`,
+  `Thompson.identDistrib_fst_latentArmStreamTrajectoryMeasure`,
+  `Thompson.latentArmStreamTrajectoryReward_eq_rewardFromArmStream_ae`,
+  `twoArmNthOptimalPullTime_spec`, and
+  `RewardKernel.rewardTrace_map_eq_trajMeasure_of_condDistrib`.
+- Source reading: Appendix C, physical pp. 31--32, defines the arm-1 rewards
+  in pull order, evaluates the phase-0 and phase-1 blocks as independent
+  reward blocks, and only afterwards combines them with the deterministic
+  implication into the low-probability trigger.  The source does not state a
+  stopped-value product-law lemma or justify totalization when a requested
+  pull is absent.
+- Safe intermediate route: prove the finite product law for the first `m`
+  coordinates of one latent arm stream; lift it through the exact stream
+  marginal of the latent trajectory coupling; and prove that every finite
+  nth optimal-arm pull reads coordinate `(pullIndex, 0)` almost surely.
+- Expected bridge: prove that the trajectory marginal of the stationary
+  latent-stream coupling equals the native fixed-IID canonical trajectory,
+  preferably through finite prefix/next-pair factorization followed by
+  Ionescu--Tulcea uniqueness.  This bridge is project-local and is not supplied
+  by the existing deterministic-UCB arm-stream conditional-law theorem.
+- Hidden contracts: the action at a round is selected before that round's
+  reward, `WithTop.top` remains explicit, conditional-kernel equalities are
+  only almost everywhere under their conditioning law, and occurrence of
+  `m` pulls may depend on earlier rewards.  Consequently, neither totalized
+  stopped rewards nor rewards conditioned on all `m` pulls occurring may be
+  declared IID without an additional theorem.
+- Status before the round-15 proof attempt: `project-local`; latent finite
+  product and finite-pull readout are candidate compiled leaves, while the
+  native trajectory-marginal adapter remains the target-faithful blocker.
 
 ## Pivot rules
 

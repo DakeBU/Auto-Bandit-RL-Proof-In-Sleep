@@ -88,16 +88,22 @@ evidence states:
    boundary, and identify every finite hit by its exact action and before/after
    pull counts.  The stopped reward and post-pull probability are measurable,
    but have source semantics only under a finite-time witness.
-2. **Blocked:** prove the finite selected-reward product/future-cylinder law and
-   connect the chronological stopped values to the source embedded-chain
-   recurrence.  Ambient stopped-value measurability is not this law, and the
-   current inclusive filtration does not make reward selection predictable.
-3. Compile Appendix-C Step 1: if the optimal-arm probability after its `n`th
+2. **Compiled latent half:** the first `m` coordinates of any fixed latent arm
+   have their finite product law; this law lifts through the stream marginal
+   of the coupled SGB trajectory; and every finite nth optimal-arm pull reads
+   coordinate `(pullIndex, 0)` almost surely.  This is not an IID theorem for
+   totalized stopped values or for values conditioned on all pulls occurring.
+3. **Blocked native half:** prove that forgetting the latent stream recovers
+   the native fixed-IID SGB trajectory law, then transport the latent phase
+   event and the source embedded-chain recurrence.  Stream-marginal equality
+   plus a.e. reward readout is not trajectory-law equality.
+4. Compile Appendix-C Step 1: if the optimal-arm probability after its `n`th
    pull is at most `1/(2*T)`, the conditional probability of no further
    optimal-arm pull over the remaining horizon is at least `1/2`, yielding
    the exact starvation regret charge.
-4. Build the `S0`/`S1` phase producer: adaptive IID reward-subsequence law,
-   Rademacher anti-concentration, ballot-prefix constraint, and the
+5. Build the `S0`/`S1` phase producer: latent IID reward-block law plus its
+   native-process transport, Rademacher anti-concentration, ballot-prefix
+   constraint, and the
    deterministic implication into the starvation event.
 
 ## First three companion leaves
@@ -111,8 +117,9 @@ evidence states:
 
 ## Hidden contracts
 
-- Theorem 2 retains adaptive selection: the nth-pull reward subsequence must
-  be proved IID under the fixed arm law, not assumed.
+- Theorem 2 retains adaptive selection: the pull-ordered reward blocks must be
+  derived from a latent product law and a native trajectory-law adapter, not
+  inserted as a selected-reward IID premise.
 - Source horizon `T`, chronological time, and optimal-arm pull count are
   distinct indices.
 - The not-yet-pulled nth-pull case remains explicit.
@@ -151,11 +158,18 @@ evidence that the polynomial lower-bound route is complete.
   finite chronological coordinate by exact before/after pull counts and the
   selected action, and makes the stopped reward and post-pull success
   probability measurable.  It assumes no selected-reward IID law.
-- The finite joint IID law of adaptively selected arm-0 rewards, conditional
-  no-return probability `>= 1/2`, Rademacher/ballot phase producer, asymptotic
-  assembly, and frozen Theorem-2 terminal remain uncompiled.  The central
-  target therefore remains blocked; the compiled bridge, deterministic
-  consumer, and Corollary 1 are not terminal evidence for it.
+- A separate seven-declaration latent-reward layer now proves the fixed-arm
+  finite product law, lifts it through the coupling's exact stream marginal,
+  specializes it to the optimal arm, and proves that every finite nth pull
+  reads its corresponding latent coordinate almost surely.  It also compiles
+  two normalization leaves for the future native-process adapter.
+- The latent coupling's visible trajectory marginal has not yet been proved
+  equal to the native fixed-IID SGB trajectory.  Conditional no-return
+  probability `>= 1/2`, the Rademacher/ballot phase producer, asymptotic
+  assembly, and the frozen Theorem-2 terminal remain uncompiled.  The central
+  target therefore remains blocked; the compiled latent product/readout,
+  chronological bridge, deterministic consumer, and Corollary 1 are not
+  terminal evidence for it.
 
 ## Gate
 
@@ -166,8 +180,10 @@ lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvat
 lake env lean Tests/StochasticGradientBanditTheoremTwoStarvationCanary.lean
 lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean
 lake env lean Tests/StochasticGradientBanditTheoremTwoNthPullCanary.lean
+lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoLatentReward.lean
+lake env lean Tests/StochasticGradientBanditTheoremTwoLatentRewardCanary.lean
 python tools/bandit.py check
 ```
 
-The two Theorem-2-specific files are source-shaped producer/consumer
+The three Theorem-2-specific files are source-shaped producer/consumer
 milestones only; their existence does not promote the frozen terminal.

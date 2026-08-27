@@ -1,6 +1,6 @@
 {
   "task": "PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE",
-  "generated": "2026-08-27T08:14:17+00:00",
+  "generated": "2026-08-27T10:58:31+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -32963,6 +32963,62 @@
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremFourContractAudit.lean",
       "line": 124,
       "statement": "theorem theoremFourFiniteTransientMass_le_inv (rho : Real) (hrho_pos : 0 < rho) (hrho_le_one : rho <= 1) (phaseMass : Nat -> Real) (hphase : forall phase, phaseMass phase <= (1 - rho) ^ phase) (phaseCount : Nat) : (Finset.range phaseCount).sum phaseMass <= 1 / rho"
+    },
+    {
+      "kind": "theorem",
+      "name": "armStreamMeasure_map_fixedArmFinitePrefix_eq_pi",
+      "full_name": "BanditRLProof.UCB.armStreamMeasure_map_fixedArmFinitePrefix_eq_pi",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoLatentReward.lean",
+      "line": 32,
+      "statement": "theorem armStreamMeasure_map_fixedArmFinitePrefix_eq_pi {K m : Nat} (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (arm : Fin K) : Measure.map (fun stream : ArmRewardStream K => fun i : Fin m => stream (i : Nat) arm) (armStreamMeasure nu) = Measure.pi (fun _ : Fin m => nu arm)"
+    },
+    {
+      "kind": "theorem",
+      "name": "latentArmStreamTrajectoryMeasure_map_fixedArmFinitePrefix_eq_pi",
+      "full_name": "BanditRLProof.Thompson.latentArmStreamTrajectoryMeasure_map_fixedArmFinitePrefix_eq_pi",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoLatentReward.lean",
+      "line": 81,
+      "statement": "theorem latentArmStreamTrajectoryMeasure_map_fixedArmFinitePrefix_eq_pi {Env : Type u} {K m : Nat} [MeasurableSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (arm : Fin K) : Measure.map (fun sample : UCB.ArmRewardStream K × ((n : Nat) -> Fin K × Real) => fun i : Fin m => sample.1 (i : Nat) arm) (latentArmStreamTrajectoryMeasure algorithm env nu) = Measure.pi (fun _ : Fin m => nu arm)"
+    },
+    {
+      "kind": "def",
+      "name": "twoArmFixedIIDLatentTrajectoryMeasure",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoLatentReward.lean",
+      "line": 127,
+      "statement": "noncomputable def twoArmFixedIIDLatentTrajectoryMeasure (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) : Measure (UCB.ArmRewardStream 2 × ((n : Nat) -> Fin 2 × Real))"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmTrajectoryMeasure_dirac_eq_map_trajectoryKernel",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmTrajectoryMeasure_dirac_eq_map_trajectoryKernel",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoLatentReward.lean",
+      "line": 152,
+      "statement": "theorem twoArmTrajectoryMeasure_dirac_eq_map_trajectoryKernel (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) : twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob) = Measure.map (Prod.mk ()) (trajectoryKernel (fun _ : Fin 2 => 0) eta (twoArmFixedIIDEnvironment armLaw hprob) ())"
+    },
+    {
+      "kind": "theorem",
+      "name": "stationaryRewardKernelAt_twoArmFixedIIDRewardKernel_eq",
+      "full_name": "BanditRLProof.StochasticGradientBandit.stationaryRewardKernelAt_twoArmFixedIIDRewardKernel_eq",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoLatentReward.lean",
+      "line": 168,
+      "statement": "theorem stationaryRewardKernelAt_twoArmFixedIIDRewardKernel_eq (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) : letI : IsMarkovKernel (twoArmFixedIIDRewardKernel armLaw) := twoArmFixedIIDRewardKernel_isMarkov armLaw hprob Thompson.stationaryRewardKernelAt (twoArmFixedIIDRewardKernel armLaw) () = UCB.finiteArmRealRewardKernel armLaw"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmFixedIIDLatentTrajectoryMeasure_map_optimalPrefix_eq_pi",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure_map_optimalPrefix_eq_pi",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoLatentReward.lean",
+      "line": 183,
+      "statement": "theorem twoArmFixedIIDLatentTrajectoryMeasure_map_optimalPrefix_eq_pi (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (m : Nat) : Measure.map (fun sample : UCB.ArmRewardStream 2 × ((n : Nat) -> Fin 2 × Real) => fun i : Fin m => sample.1 (i : Nat) 0) (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta) = Measure.pi (fun _ : Fin m => armLaw 0)"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmNthOptimalPullReward_eq_latentCoordinate_ae",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullReward_eq_latentCoordinate_ae",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoLatentReward.lean",
+      "line": 205,
+      "statement": "theorem twoArmNthOptimalPullReward_eq_latentCoordinate_ae (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (pullIndex : Nat) : ∀ᵐ sample ∂twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta, ∀ t : Nat, twoArmNthOptimalPullTime (Env := Unit) pullIndex ((), sample.2) = (t : WithTop Nat) -> twoArmNthOptimalPullReward (Env := Unit) pullIndex ((), sample.2) = sample.1 pullIndex 0"
     },
     {
       "kind": "def",
@@ -93008,6 +93064,50 @@
       "time": "2026-08-27T08:13:21+00:00",
       "verifier_evidence": [
         "independent read-only review; focused module/canary; lake build BanditRLProof 8848 jobs; git diff --check; no sorry/admit/new axioms"
+      ]
+    },
+    {
+      "changed_files": [
+        "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoLatentReward.lean",
+        "Tests/StochasticGradientBanditTheoremTwoLatentRewardCanary.lean",
+        "BanditRLProof.lean",
+        "Tests.lean"
+      ],
+      "kind": "build",
+      "lean": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullReward_eq_latentCoordinate_ae",
+      "notes": "Compiled a seven-declaration latent fixed-arm finite-prefix product/readout layer. It proves unconditional latent product laws and finite-hit a.e. readout only; native trajectory equality, totalized or occurrence-conditioned stopped-reward IID, future-cylinder/no-return, ballot/asymptotic producers, and Theorem 2 terminal remain blocked.",
+      "parent_id": "",
+      "role": "lower",
+      "route_fingerprint": "",
+      "run_id": "sgb-theorem2-latent-reward-round15-2026-08-27",
+      "source": "PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB",
+      "statement_hash": "",
+      "status": "compiled",
+      "task": "PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE",
+      "time": "2026-08-27T10:58:17+00:00",
+      "verifier_evidence": [
+        "focused module and canary exit 0; lake build Tests 8888 jobs; baseline axioms only propext/Classical.choice/Quot.sound; anonymous supplement 23 tests OK; site 655 pages and 17497 Lean links"
+      ]
+    },
+    {
+      "changed_files": [
+        "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoLatentReward.lean",
+        "Tests/StochasticGradientBanditTheoremTwoLatentRewardCanary.lean"
+      ],
+      "kind": "review",
+      "lean": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullReward_eq_latentCoordinate_ae",
+      "notes": "Independent read-only review accepted the narrow latent product/readout layer and 295 declaration accounting. It found no claim that the native trajectory adapter, selected stopped-reward IID, future-cylinder/no-return producer, or Theorem 2 terminal compiles; those remain explicit blockers.",
+      "parent_id": "",
+      "role": "reviewer",
+      "route_fingerprint": "",
+      "run_id": "sgb-theorem2-latent-reward-round15-2026-08-27",
+      "source": "local-independent-review",
+      "statement_hash": "",
+      "status": "accepted",
+      "task": "PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE",
+      "time": "2026-08-27T10:58:18+00:00",
+      "verifier_evidence": [
+        "independent semantic and documentation review; no P0; no sorry/admit/new axioms; count and website surfaces consistent; Tests aggregate import added"
       ]
     }
   ],

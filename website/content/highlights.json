@@ -1399,12 +1399,28 @@
       "why": "The source proof uses an implicit pull-indexed reward chain. Making the missing-pull case, stopping boundary, and exact off-by-one convention explicit prevents a fixed chronological cutoff from being mistaken for the random n-th pull.",
       "position": "This is a compiled chronological nth-pull bridge required by the frozen Theorem-2 route. It is formalization infrastructure rather than a stopping-time theorem quoted from the source, and it does not close Appendix-C Step 1 or Theorem 2.",
       "proof_idea": "Factor the inclusive pull count through the canonical finite-prefix filtration, apply Mathlib's hitting-time construction with an explicit WithTop value, and use the one-step pull-count recurrence plus minimality of the hit to recover the selected action and exact before/after counts.",
-      "lean_notes": "The pullIndex argument is zero based. At top, Mathlib totalizes stoppedValue through untopA, so the reward and probability identification lemmas require a finite-time witness. The inclusive pair filtration contains the reward at t; it proves stopping/measurability but not the pre-reward predictable-selection or finite product law needed for adaptive selected-reward IID.",
+      "lean_notes": "The pullIndex argument is zero based. At top, Mathlib totalizes stoppedValue through untopA, so the reward and probability identification lemmas require a finite-time witness. A separate compiled latent-reward layer now supplies a fixed-arm finite product law and finite-pull coordinate readout; this inclusive stopping-time theorem alone does not supply them or identify the latent coupling with the native fixed-IID trajectory.",
       "dependencies": [
         "BanditRLProof.StochasticGradientBandit.isStoppingTime_twoArmNthOptimalPullTime",
         "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime_eq_top_iff",
         "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullReward_eq_of_time_eq",
         "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullSuccessProbability_eq_of_time_eq"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure_map_optimalPrefix_eq_pi",
+      "chapter": "frontier",
+      "plain": "For every finite length m, the first m latent rewards of the optimal arm in the coupled two-arm fixed-IID SGB construction have exactly the m-fold product of that arm's reward law.",
+      "math": "\\(\\mathcal L((Z_{i,0})_{i<m})=\\bigotimes_{i<m}\\nu_0.\\)",
+      "intuition": "The coupling gives each arm an infinite private stream of fresh rewards. Adaptive actions decide when a coordinate is consumed, but they do not change the unconditional product law of the latent coordinates themselves.",
+      "why": "Appendix C groups rewards by optimal-arm pull count. This theorem makes the independent finite reward blocks explicit before any ballot or anti-concentration calculation is attempted.",
+      "position": "This is a compiled latent-law producer, not the native selected-reward theorem or Theorem 2. A separate compiled almost-sure readout theorem says every finite nth pull consumes coordinate (n,0), while the latent-to-native visible trajectory adapter remains open.",
+      "proof_idea": "Restrict the mutually independent time-arm coordinate family to the injective finite index map i maps to (i,0), use Mathlib's equivalence between finite independence and a product pushforward, identify each coordinate marginal, and lift the result through the coupling's exact stream marginal.",
+      "lean_notes": "The theorem does not totalize missing pulls, condition on all requested pulls occurring, or assert that the visible trajectory marginal of the coupling equals the canonical Unit-environment fixed-IID SGB law. Those distinctions prevent a stopping-dependent selection event from being silently treated as independent.",
+      "dependencies": [
+        "BanditRLProof.UCB.armStreamMeasure_map_fixedArmFinitePrefix_eq_pi",
+        "BanditRLProof.Thompson.latentArmStreamTrajectoryMeasure_map_fixedArmFinitePrefix_eq_pi",
+        "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullReward_eq_latentCoordinate_ae"
       ]
     },
     {
@@ -1416,7 +1432,7 @@
       "why": "This isolates the deterministic consumer at Appendix-C Step 1 without hiding the still-missing probability producer behind a theorem-shaped premise.",
       "position": "This named declaration is a compiled source-shaped consumer, not a partial closure of Theorem 2. The frozen K = 2 terminal remains blocked.",
       "proof_idea": "Make the trigger and final-count event measurable, identify two-arm sampled regret with Delta times suboptimal pulls, prove the exact Delta(T-n) charge on the event, and compare the integral of its indicator with total expected regret.",
-      "lean_notes": "The event uses an externally fixed chronological cutoff. A separate compiled module now constructs the random nth-pull stopping prefix, but this consumer is not yet composed with it. Neither module proves conditional no-return probability >= 1/2, adaptive selected-reward IID, the Rademacher/binomial ballot phase, or the polynomial asymptotic lower bound.",
+      "lean_notes": "The event uses an externally fixed chronological cutoff. Separate compiled modules construct the random nth-pull stopping prefix and prove the latent fixed-arm product/readout layer, but the native trajectory adapter and composition with this consumer remain open. No module yet proves conditional no-return probability >= 1/2, the Rademacher/binomial ballot phase, or the polynomial asymptotic lower bound.",
       "dependencies": [
         "BanditRLProof.StochasticGradientBandit.twoArmStepOneStarvationEvent_charge_mul_probability_le_integral",
         "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmStepOneStarvationEvent",

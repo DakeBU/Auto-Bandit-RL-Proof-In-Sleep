@@ -50,14 +50,17 @@ reports zero `literature-open` cases until a scoped primary-source audit support
 such a claim; one case remains in the source-audit queue, while the 13
 formalization-open cases expose 39 stable named leaves. Two additional
 source-frozen ports—the 54-declaration succinct-lower-bound audit and the
-288-declaration stochastic-gradient-bandit audit—are displayed outside that
+295-declaration stochastic-gradient-bandit audit—are displayed outside that
 comparison ledger.  The latter contains a historical 223-declaration
 Theorem-1/Appendix-E stack, a 23-declaration bounded Corollary-1 companion, an
-18-declaration fixed-cutoff starvation consumer, and a 24-declaration
-chronological nth-pull bridge.  The bridge makes the explicit `WithTop`
-stopping/measurability and finite count/action/stopped-value boundary compile;
-it neither proves selected-reward IID nor composes the conditional no-return
-producer.  The SGB audit therefore remains partial, with Theorems 2–4 open;
+18-declaration fixed-cutoff starvation consumer, a 24-declaration chronological
+nth-pull bridge, and a 7-declaration latent fixed-arm product/readout layer.  The
+new layer proves an unconditional finite product law for fixed-arm latent
+coordinates and almost-sure readout at every finite nth pull.  It does not prove
+the native trajectory adapter and does not make totalized or
+occurrence-conditioned stopped rewards IID.  The stopped-prefix future-cylinder,
+conditional no-return producer, ballot phase, and terminal remain blocked.  The
+SGB audit therefore remains partial, with Theorems 2–4 open;
 the succinct-lower-bound port also has no compiled paper-level terminal.
 
 ## 🛠️ Build locally
