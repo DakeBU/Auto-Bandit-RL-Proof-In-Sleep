@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "task_id": "PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE",
+  "frozen_at_utc": "2026-08-27T03:57:58Z",
+  "repository_base": "117ed550319b851a5e2d741d5388799137ddcf85",
+  "source_card": "PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB",
+  "source_title": "Does Stochastic Gradient really succeed for Bandits?",
+  "source_url": "https://proceedings.neurips.cc/paper_files/paper/2025/file/a4e683f0ce6b91e7fbdae9d32642d88f-Paper-Conference.pdf",
+  "source_sha256": "a3aff97fe2179c47fff61cc51453b84a082332e2a205f7fa2268cc68cba73b3d",
+  "selection_timing": "The paper was source-locked on 2026-08-17 and Theorem 1 was already compiled. The exact K=2 Theorem 2 specialization and Corollary 1 targets below were selected and frozen on 2026-08-27 before any target-specific Lean proof file or tactic attempt. This is a prospective follow-on target freeze, not an independently held-out paper selection.",
+  "replacement_policy": "Do not replace, weaken, or relabel Theorem 2 because its adaptive reward-subsequence, ballot, or asymptotic route is difficult. Record partial or blocked outcomes. Corollary 1 is a bounded companion endpoint and must not be promoted as Theorem 2 evidence.",
+  "core_target": {
+    "source_location": [
+      "Theorem 2, physical PDF page 6",
+      "Appendix C, physical PDF pages 31--40"
+    ],
+    "scope": "Exact K=2 specialization with arm 0 distributed as Rad(Delta), arm 1 equal to dirac zero, source zero initialization, fixed eta, and regret of actions sampled by the generated SGB trajectory.",
+    "threshold": "lambdaDelta = (1/2) * log ((1 + Delta) / (1 - Delta))",
+    "target": "For 0 < Delta < 1 and eta > lambdaDelta, for every epsilon > 0 the generated sampled pseudo-regret is polylog-Omega of T^(1-(1+epsilon)*lambdaDelta/eta).",
+    "formal_tilde_omega": "There exist c > 0 and d : Nat such that eventually c * T^exponent / (log T)^d <= expected sampled pseudo-regret at horizon T.",
+    "terminal_name": "twoArmRademacherDirac_theoremTwo_polynomialRegret"
+  },
+  "bounded_companion": {
+    "source_location": "Corollary 1, physical PDF page 5",
+    "scope": "The same fixed-IID generated two-arm process, but with horizon-indexed eta_T = sqrt(log T / T).",
+    "finite_target": "Use Theorem 1 when 2*eta_T*C_eta_T <= Delta and the pathwise Delta*T bound otherwise.",
+    "rate_target": "An explicit absolute-constant upper bound implying O(sqrt(T*log T)).",
+    "terminal_name": "twoArmFixedIIDDirac_corollaryOne"
+  },
+  "nonacceptable_substitutions": [
+    "an externally supplied probability schedule",
+    "expected failure mass without sampled-action regret",
+    "a capped or changed source horizon",
+    "assuming independence of adaptively selected rewards instead of proving the nth-pull bridge",
+    "a conclusion premise that already contains the target polynomial lower bound",
+    "calling the Corollary 1 consumer a Theorem 2 closure",
+    "general-K promotion from the frozen K=2 specialization"
+  ],
+  "status_at_freeze": {
+    "theorem_2_k2": "not_started",
+    "corollary_1": "not_started",
+    "paper_audit": "partial"
+  }
+}
