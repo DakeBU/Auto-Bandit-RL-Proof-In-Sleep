@@ -224,6 +224,10 @@ SGB_THEOREM_TWO_STARVATION_FILE = (
     "BanditRLProof/Algorithms/"
     "StochasticGradientBanditTheoremTwoStarvation.lean"
 )
+SGB_THEOREM_TWO_NTH_PULL_FILE = (
+    "BanditRLProof/Algorithms/"
+    "StochasticGradientBanditTheoremTwoNthPull.lean"
+)
 SGB_FINITE_ALGEBRA_DECLARATION_COUNT = 26
 SGB_GENERATED_HISTORY_DECLARATION_COUNT = 18
 SGB_TWO_ARM_RATE_DECLARATION_COUNT = 18
@@ -244,10 +248,12 @@ SGB_HISTORICAL_DECLARATION_COUNT = (
 )
 SGB_COROLLARY_ONE_DECLARATION_COUNT = 23
 SGB_THEOREM_TWO_STARVATION_DECLARATION_COUNT = 18
+SGB_THEOREM_TWO_NTH_PULL_DECLARATION_COUNT = 24
 SGB_TOTAL_DECLARATION_COUNT = (
     SGB_HISTORICAL_DECLARATION_COUNT
     + SGB_COROLLARY_ONE_DECLARATION_COUNT
     + SGB_THEOREM_TWO_STARVATION_DECLARATION_COUNT
+    + SGB_THEOREM_TWO_NTH_PULL_DECLARATION_COUNT
 )
 SGB_GENERATED_TRAJECTORY_DECLARATIONS = frozenset({
     "BanditRLProof.StochasticGradientBandit.trajectoryKernel",
@@ -367,6 +373,16 @@ SGB_THEOREM_TWO_STARVATION_REPRESENTATIVE_DECLARATIONS = frozenset({
     "BanditRLProof.StochasticGradientBandit.twoArmStepOneStarvationEvent_sampledPseudoRegret_eq",
     "BanditRLProof.StochasticGradientBandit.twoArmStepOneStarvationEvent_charge_mul_probability_le_integral",
     "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral",
+})
+SGB_THEOREM_TWO_NTH_PULL_REPRESENTATIVE_DECLARATIONS = frozenset({
+    "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime",
+    "BanditRLProof.StochasticGradientBandit.isStoppingTime_twoArmNthOptimalPullTime",
+    "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime_eq_top_iff",
+    "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime_spec",
+    "BanditRLProof.StochasticGradientBandit.measurable_twoArmNthOptimalPullReward",
+    "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullReward_eq_of_time_eq",
+    "BanditRLProof.StochasticGradientBandit.measurable_twoArmNthOptimalPullSuccessProbability",
+    "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullSuccessProbability_eq_of_time_eq",
 })
 SGB_THEOREM_TWO_TERMINAL_DECLARATION = (
     "BanditRLProof.StochasticGradientBandit."
@@ -1898,6 +1914,14 @@ def validate_sgb_count(records, index):
         row["full_name"] for row in rows.values()
         if row["file"] == SGB_THEOREM_TWO_STARVATION_FILE
     }
+    theorem_two_nth_pull_count = sum(
+        row["file"] == SGB_THEOREM_TWO_NTH_PULL_FILE
+        for row in rows.values()
+    )
+    theorem_two_nth_pull_names = {
+        row["full_name"] for row in rows.values()
+        if row["file"] == SGB_THEOREM_TWO_NTH_PULL_FILE
+    }
     layer_counts = (
         finite_count,
         generated_history_count,
@@ -1935,6 +1959,7 @@ def validate_sgb_count(records, index):
         or len(follow_on_declarations) !=
             SGB_COROLLARY_ONE_DECLARATION_COUNT
             + SGB_THEOREM_TWO_STARVATION_DECLARATION_COUNT
+            + SGB_THEOREM_TWO_NTH_PULL_DECLARATION_COUNT
         or historical_declarations & follow_on_declarations
         or len(declarations) != SGB_TOTAL_DECLARATION_COUNT
         or set(rows) != declarations
@@ -1949,13 +1974,19 @@ def validate_sgb_count(records, index):
         or corollary_one_count != SGB_COROLLARY_ONE_DECLARATION_COUNT
         or theorem_two_starvation_count !=
             SGB_THEOREM_TWO_STARVATION_DECLARATION_COUNT
-        or corollary_one_names | theorem_two_starvation_names !=
+        or theorem_two_nth_pull_count !=
+            SGB_THEOREM_TWO_NTH_PULL_DECLARATION_COUNT
+        or corollary_one_names | theorem_two_starvation_names |
+            theorem_two_nth_pull_names !=
             follow_on_declarations
         or not SGB_COROLLARY_ONE_REPRESENTATIVE_DECLARATIONS.issubset(
             corollary_one_names
         )
         or not SGB_THEOREM_TWO_STARVATION_REPRESENTATIVE_DECLARATIONS.issubset(
             theorem_two_starvation_names
+        )
+        or not SGB_THEOREM_TWO_NTH_PULL_REPRESENTATIVE_DECLARATIONS.issubset(
+            theorem_two_nth_pull_names
         )
         or SGB_THEOREM_TWO_TERMINAL_DECLARATION in declarations
         or not SGB_GENERATED_TRAJECTORY_DECLARATIONS.issubset(declarations)
@@ -1981,11 +2012,12 @@ def validate_sgb_count(records, index):
     ):
         raise ValueError(
             "stochastic-gradient-bandit audit must remain partial with exactly "
-            "264 declarations: historical 223 = frozen 215-declaration "
+            "288 declarations: historical 223 = frozen 215-declaration "
             "Theorem-1 stack + 8 Theorem-4 contract-audit leaves, followed by "
             "23 Corollary-1 companion declarations + 18 deterministic "
-            "Theorem-2 starvation-consumer declarations; the Theorem-2 "
-            "terminal must remain blocked"
+            "Theorem-2 starvation-consumer declarations + 24 chronological "
+            "nth-pull declarations; selected-IID/future-cylinder, conditional "
+            "no-return, and the Theorem-2 terminal must remain blocked"
         )
     return {
         "generated_trajectory_compiled":
@@ -2028,6 +2060,10 @@ def validate_sgb_count(records, index):
         "source_theorem_two_deterministic_starvation_consumer_compiled":
             SGB_THEOREM_TWO_STARVATION_REPRESENTATIVE_DECLARATIONS.issubset(
                 theorem_two_starvation_names
+            ),
+        "source_theorem_two_nth_pull_bridge_compiled":
+            SGB_THEOREM_TWO_NTH_PULL_REPRESENTATIVE_DECLARATIONS.issubset(
+                theorem_two_nth_pull_names
             ),
         "source_theorem_two_endpoint_verified": False,
     }
@@ -2171,6 +2207,8 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
                     SGB_COROLLARY_ONE_DECLARATION_COUNT,
                 "source_theorem_two_deterministic_starvation_consumer":
                     SGB_THEOREM_TWO_STARVATION_DECLARATION_COUNT,
+                "source_theorem_two_nth_pull_bridge":
+                    SGB_THEOREM_TWO_NTH_PULL_DECLARATION_COUNT,
             },
         },
     }
@@ -2233,8 +2271,14 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
             if row_id == "stochastic-gradient-bandit-source-frozen-audit" and (
                 "paper_endpoint_verified refers only to Theorem 1"
                 not in row.get("scope_boundary", "")
-                or "Theorem-2 center remains blocked"
+                or "Conditional no-return probability >= 1/2"
                 not in row.get("scope_boundary", "")
+                or "asymptotic terminal remain blocked"
+                not in row.get("scope_boundary", "")
+                or not any(
+                    "selected-reward IID/future-cylinder law" in item
+                    for item in row.get("blocking_obligations", [])
+                )
             ):
                 raise ValueError(
                     "SGB theorem-audit endpoint scope must remain Theorem-1-only "
@@ -2381,7 +2425,7 @@ def build_claim_ledger(proof_report):
                 "artifact": "Stochastic-gradient-bandit Theorem 1, Corollary 1, and blocked Theorem-2 follow-on",
                 "status": "partial",
                 "source_record_ids": [SGB_AUDIT_ID, SGB_FOLLOW_ON_ID],
-                "boundary": "264 declarations preserve the historical 223 = 215-declaration Theorem-1 stack + 8 Appendix-E/Theorem-4 contract leaves, then add a 23-declaration compiled Corollary-1 bounded companion and an 18-declaration deterministic Appendix-C Step-1 starvation consumer. Corollary 1 is a direct Theorem-1 consumer for T >= 2 and eta_T = sqrt(log T / T), not independent Theorem-2 evidence. The frozen K = 2 Theorem-2 center remains blocked: the fixed-cutoff consumer does not prove the random nth-pull stopping prefix, conditional no-return probability >= 1/2, adaptive selected-reward IID, Rademacher/binomial ballot phase, or asymptotic terminal. Theorem 4 also remains open. Dirac refers only to the Unit environment prior, not to the arm reward laws.",
+                "boundary": "288 declarations preserve the historical 223 = 215-declaration Theorem-1 stack + 8 Appendix-E/Theorem-4 contract leaves, then add a 23-declaration compiled Corollary-1 bounded companion, an 18-declaration deterministic Appendix-C Step-1 starvation consumer, and a 24-declaration chronological nth-pull bridge. Corollary 1 is a direct Theorem-1 consumer for T >= 2 and eta_T = sqrt(log T / T), not independent Theorem-2 evidence. The nth-pull layer proves a zero-based WithTop stopping time, exact finite count/action identification, and measurable stopped reward and post-pull probability. It is not composed with the fixed-cutoff consumer and proves no adaptive selected-reward IID, future-cylinder law, conditional no-return probability >= 1/2, Rademacher/binomial ballot phase, or asymptotic terminal. The frozen K = 2 Theorem-2 center therefore remains blocked. Theorem 4 also remains open. Dirac refers only to the Unit environment prior, not to the arm reward laws.",
             },
             {
                 "artifact": "Proof graph / curvature--noise--gap",
@@ -2440,6 +2484,8 @@ def build_claim_ledger(proof_report):
                 SGB_COROLLARY_ONE_DECLARATION_COUNT,
             "theorem_two_deterministic_starvation_consumer_declaration_count":
                 SGB_THEOREM_TWO_STARVATION_DECLARATION_COUNT,
+            "theorem_two_nth_pull_bridge_declaration_count":
+                SGB_THEOREM_TWO_NTH_PULL_DECLARATION_COUNT,
             "finite_algebra_declaration_count": SGB_FINITE_ALGEBRA_DECLARATION_COUNT,
             "generated_history_declaration_count": SGB_GENERATED_HISTORY_DECLARATION_COUNT,
             "two_arm_rate_declaration_count": SGB_TWO_ARM_RATE_DECLARATION_COUNT,
@@ -2499,6 +2545,10 @@ def build_claim_ledger(proof_report):
             "source_theorem_two_deterministic_starvation_consumer_compiled":
                 sgb_evidence[
                     "source_theorem_two_deterministic_starvation_consumer_compiled"
+                ],
+            "source_theorem_two_nth_pull_bridge_compiled":
+                sgb_evidence[
+                    "source_theorem_two_nth_pull_bridge_compiled"
                 ],
             "source_theorem_two_status": "blocked",
             "source_theorem_two_endpoint_verified":

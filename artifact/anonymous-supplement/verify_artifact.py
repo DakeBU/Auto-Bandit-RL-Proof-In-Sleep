@@ -51,10 +51,12 @@ SGB_HISTORICAL_DECLARATION_COUNT = (
 )
 SGB_COROLLARY_ONE_DECLARATION_COUNT = 23
 SGB_THEOREM_TWO_STARVATION_DECLARATION_COUNT = 18
+SGB_THEOREM_TWO_NTH_PULL_DECLARATION_COUNT = 24
 SGB_TOTAL_DECLARATION_COUNT = (
     SGB_HISTORICAL_DECLARATION_COUNT
     + SGB_COROLLARY_ONE_DECLARATION_COUNT
     + SGB_THEOREM_TWO_STARVATION_DECLARATION_COUNT
+    + SGB_THEOREM_TWO_NTH_PULL_DECLARATION_COUNT
 )
 SGB_THEOREM_FOUR_CONTRACT_AUDIT_FILE = (
     "BanditRLProof/Algorithms/"
@@ -66,6 +68,10 @@ SGB_COROLLARY_ONE_FILE = (
 SGB_THEOREM_TWO_STARVATION_FILE = (
     "BanditRLProof/Algorithms/"
     "StochasticGradientBanditTheoremTwoStarvation.lean"
+)
+SGB_THEOREM_TWO_NTH_PULL_FILE = (
+    "BanditRLProof/Algorithms/"
+    "StochasticGradientBanditTheoremTwoNthPull.lean"
 )
 SGB_THEOREM_FOUR_CONTRACT_AUDIT_DECLARATIONS = frozenset({
     "BanditRLProof.StochasticGradientBandit.theoremFourStepOneMargin",
@@ -91,6 +97,16 @@ SGB_THEOREM_TWO_STARVATION_REPRESENTATIVE_DECLARATIONS = frozenset({
     "BanditRLProof.StochasticGradientBandit.twoArmStepOneStarvationEvent_sampledPseudoRegret_eq",
     "BanditRLProof.StochasticGradientBandit.twoArmStepOneStarvationEvent_charge_mul_probability_le_integral",
     "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral",
+})
+SGB_THEOREM_TWO_NTH_PULL_REPRESENTATIVE_DECLARATIONS = frozenset({
+    "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime",
+    "BanditRLProof.StochasticGradientBandit.isStoppingTime_twoArmNthOptimalPullTime",
+    "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime_eq_top_iff",
+    "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime_spec",
+    "BanditRLProof.StochasticGradientBandit.measurable_twoArmNthOptimalPullReward",
+    "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullReward_eq_of_time_eq",
+    "BanditRLProof.StochasticGradientBandit.measurable_twoArmNthOptimalPullSuccessProbability",
+    "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullSuccessProbability_eq_of_time_eq",
 })
 SGB_THEOREM_TWO_TERMINAL_DECLARATION = (
     "BanditRLProof.StochasticGradientBandit."
@@ -390,16 +406,18 @@ def verify_claim_ledger():
         or len(follow_on_declarations)
         != SGB_COROLLARY_ONE_DECLARATION_COUNT
             + SGB_THEOREM_TWO_STARVATION_DECLARATION_COUNT
+            + SGB_THEOREM_TWO_NTH_PULL_DECLARATION_COUNT
         or len(follow_on_names)
         != SGB_COROLLARY_ONE_DECLARATION_COUNT
             + SGB_THEOREM_TWO_STARVATION_DECLARATION_COUNT
+            + SGB_THEOREM_TWO_NTH_PULL_DECLARATION_COUNT
         or historical_names & follow_on_names
         or len(sgb_names) != SGB_TOTAL_DECLARATION_COUNT
         or sgb.get("declaration_count") != SGB_TOTAL_DECLARATION_COUNT
     ):
         fail(
-            "SGB source audit must contain exactly 264 unique declarations "
-            "with historical 223 and separate 23+18 follow-on"
+            "SGB source audit must contain exactly 288 unique declarations "
+            "with historical 223 and separate 23+18+24 follow-on"
         )
     if (
         sgb.get("historical_declaration_count")
@@ -449,6 +467,13 @@ def verify_claim_ledger():
     theorem_two_starvation_names = {
         row.get("full_name") for row in theorem_two_starvation_rows
     }
+    theorem_two_nth_pull_rows = [
+        row for row in declarations
+        if row.get("file") == SGB_THEOREM_TWO_NTH_PULL_FILE
+    ]
+    theorem_two_nth_pull_names = {
+        row.get("full_name") for row in theorem_two_nth_pull_rows
+    }
     if (
         not (ROOT / SGB_COROLLARY_ONE_FILE).is_file()
         or len(corollary_one_rows) != SGB_COROLLARY_ONE_DECLARATION_COUNT
@@ -461,7 +486,14 @@ def verify_claim_ledger():
         or not SGB_THEOREM_TWO_STARVATION_REPRESENTATIVE_DECLARATIONS.issubset(
             theorem_two_starvation_names
         )
-        or corollary_one_names | theorem_two_starvation_names
+        or not (ROOT / SGB_THEOREM_TWO_NTH_PULL_FILE).is_file()
+        or len(theorem_two_nth_pull_rows)
+        != SGB_THEOREM_TWO_NTH_PULL_DECLARATION_COUNT
+        or not SGB_THEOREM_TWO_NTH_PULL_REPRESENTATIVE_DECLARATIONS.issubset(
+            theorem_two_nth_pull_names
+        )
+        or corollary_one_names | theorem_two_starvation_names |
+            theorem_two_nth_pull_names
         != follow_on_names
         or SGB_THEOREM_TWO_TERMINAL_DECLARATION in sgb_names
     ):
@@ -473,6 +505,8 @@ def verify_claim_ledger():
             "theorem_two_deterministic_starvation_consumer_declaration_count"
         )
         != SGB_THEOREM_TWO_STARVATION_DECLARATION_COUNT
+        or sgb.get("theorem_two_nth_pull_bridge_declaration_count")
+        != SGB_THEOREM_TWO_NTH_PULL_DECLARATION_COUNT
     ):
         fail("SGB Corollary-1/Theorem-2 follow-on count drift")
     if sgb.get("source_theorem_one_compiled") is not True:
@@ -494,10 +528,31 @@ def verify_claim_ledger():
             "source_theorem_two_deterministic_starvation_consumer_compiled"
         )
         is not True
+        or sgb.get("source_theorem_two_nth_pull_bridge_compiled") is not True
         or sgb.get("source_theorem_two_status") != "blocked"
         or sgb.get("source_theorem_two_endpoint_verified") is not False
     ):
         fail("SGB Theorem-2 blocked-boundary drift")
+    sgb_table_rows = [
+        row for row in ledger.get("table_rows", [])
+        if row.get("artifact") ==
+        "Stochastic-gradient-bandit Theorem 1, Corollary 1, and blocked Theorem-2 follow-on"
+    ]
+    required_open_boundaries = (
+        "selected-reward IID",
+        "future-cylinder law",
+        "conditional no-return probability >= 1/2",
+        "asymptotic terminal",
+    )
+    if (
+        len(sgb_table_rows) != 1
+        or sgb_table_rows[0].get("status") != "partial"
+        or any(
+            item not in sgb_table_rows[0].get("boundary", "")
+            for item in required_open_boundaries
+        )
+    ):
+        fail("SGB nth-pull/open-Theorem-2 scope boundary drift")
     if sgb.get("theorem_four_endpoint_verified") is not False:
         fail("SGB Theorem-4 endpoint verification flag drift")
 
@@ -615,7 +670,7 @@ def verify_theorem_audit_comparison():
             "central_endpoint_record_id":
                 "NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT-MECHANISM-AUDIT",
             "promotion_status": "partial",
-            "compiled_declaration_count": 264,
+            "compiled_declaration_count": 288,
             "theorem_one_endpoint_verified": True,
             "corollary_one_endpoint_verified": True,
             "theorem_two_endpoint_verified": False,
@@ -636,6 +691,7 @@ def verify_theorem_audit_comparison():
                 "source_theorem_four_contract_audit": 8,
                 "source_corollary_one_companion": 23,
                 "source_theorem_two_deterministic_starvation_consumer": 18,
+                "source_theorem_two_nth_pull_bridge": 24,
             },
         },
     }
@@ -691,8 +747,14 @@ def verify_theorem_audit_comparison():
             if row_id == "stochastic-gradient-bandit-source-frozen-audit" and (
                 "paper_endpoint_verified refers only to Theorem 1"
                 not in row.get("scope_boundary", "")
-                or "Theorem-2 center remains blocked"
+                or "Conditional no-return probability >= 1/2"
                 not in row.get("scope_boundary", "")
+                or "asymptotic terminal remain blocked"
+                not in row.get("scope_boundary", "")
+                or not any(
+                    "selected-reward IID/future-cylinder law" in item
+                    for item in row.get("blocking_obligations", [])
+                )
             ):
                 fail("SGB theorem-audit endpoint scope drift")
         elif (

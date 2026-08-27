@@ -1625,7 +1625,7 @@ tbody tr:hover {
 
 .primary-textbook-banner {
   display: grid;
-  grid-template-columns: minmax(13rem, 0.9fr) minmax(16rem, 1.35fr) auto;
+  grid-template-columns: minmax(11.5rem, 0.9fr) minmax(0, 1.35fr);
   gap: 1rem 1.4rem;
   align-items: center;
   max-width: 76rem;
@@ -1676,8 +1676,10 @@ tbody tr:hover {
 }
 
 .primary-textbook-banner .button {
-  justify-self: end;
-  white-space: nowrap;
+  grid-column: 2;
+  justify-self: start;
+  max-width: 100%;
+  white-space: normal;
 }
 
 .math-tex {
@@ -2751,6 +2753,7 @@ tbody tr:hover {
   }
 
   .primary-textbook-banner .button {
+    grid-column: 1;
     justify-self: stretch;
     min-height: 2.75rem;
   }

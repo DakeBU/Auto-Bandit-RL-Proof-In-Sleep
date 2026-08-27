@@ -33,9 +33,11 @@ Within the separate Part IV spine, Chapters 13--17 expose compiled semantic,
 information-theoretic, Gaussian-KL, consistency, and tail-event dependency
 slices while keeping their source terminal theorems blocked where the adaptive
 history-law or construction bridge is absent. The website also exposes a
-source-frozen NeurIPS 2025 delayed best-of-both-worlds audit: 45 named
-accounting, causal-view, new-arrival processing, and active-allocation
-declarations compile, but the Delayed SAPO state machine, sampling kernel, and
+source-frozen NeurIPS 2025 delayed best-of-both-worlds audit: 197 named
+source-audit declarations compile across accounting, causal processing,
+allocation, elimination, event assembly, one-round action-law, trace, D.11,
+and line-10 initialization layers, but the Delayed SAPO state machine,
+generated sampling trajectory, D.4 probability producer, switching path, and
 stochastic/adversarial regret endpoints do not. A compiled dependency slice is
 never presented as a completed source theorem.
 
@@ -48,15 +50,15 @@ reports zero `literature-open` cases until a scoped primary-source audit support
 such a claim; one case remains in the source-audit queue, while the 13
 formalization-open cases expose 39 stable named leaves. Two additional
 source-frozen ports—the 54-declaration succinct-lower-bound audit and the
-223-declaration stochastic-gradient-bandit audit—are displayed outside that
-comparison ledger.  The latter consists of a frozen 215-declaration stack
-closing one exact paper endpoint, Theorem 1 for the actual sampled
-pseudo-regret of the source's two-arm fixed-IID model under a Dirac environment
-prior, plus eight Appendix-E/Theorem-4 finite contract leaves.  Those eight
-leaves do not prove Theorem 4; its generated-process and uniform-event
-producers remain absent.  The SGB audit therefore remains partial, with
-Theorems 2–4 open; the succinct-lower-bound port also has no compiled
-paper-level terminal.
+288-declaration stochastic-gradient-bandit audit—are displayed outside that
+comparison ledger.  The latter contains a historical 223-declaration
+Theorem-1/Appendix-E stack, a 23-declaration bounded Corollary-1 companion, an
+18-declaration fixed-cutoff starvation consumer, and a 24-declaration
+chronological nth-pull bridge.  The bridge makes the explicit `WithTop`
+stopping/measurability and finite count/action/stopped-value boundary compile;
+it neither proves selected-reward IID nor composes the conditional no-return
+producer.  The SGB audit therefore remains partial, with Theorems 2–4 open;
+the succinct-lower-bound port also has no compiled paper-level terminal.
 
 ## 🛠️ Build locally
 

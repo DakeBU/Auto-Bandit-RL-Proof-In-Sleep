@@ -1,6 +1,6 @@
 # Proof Blueprint: PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE
 
-Generated: `2026-08-27T04:38:40+00:00`
+Generated: `2026-08-27T08:14:24+00:00`
 
 ## Source Task
 
@@ -83,16 +83,26 @@ an explicit absolute-constant upper bound implying
 `O(sqrt(T * log T))`.  The terminal name is frozen as
 `twoArmFixedIIDDirac_corollaryOne`.
 
-## First three core leaves
+## Core route, with the original first leaf split at the compiled boundary
 
-1. Define the arm-`0` nth-pull time with an explicit not-yet-pulled value,
-   prove the stopping-time/measurability boundary, and connect chronological
-   trajectory state to the source recurrence over extracted arm-`0` rewards.
-2. Compile Appendix-C Step 1: if the optimal-arm probability after its `n`th
+The original nth-pull leaf is only partially closed.  Its chronological
+stopping/indexing half and its selected-reward-law half now have separate
+evidence states:
+
+1. **Compiled:** define the zero-based arm-`0` nth-pull time with `WithTop Nat`
+   as the explicit not-yet-pulled value, prove the stopping-time/measurability
+   boundary, and identify every finite hit by its exact action and before/after
+   pull counts.  The stopped reward and post-pull probability are measurable,
+   but have source semantics only under a finite-time witness.
+2. **Blocked:** prove the finite selected-reward product/future-cylinder law and
+   connect the chronological stopped values to the source embedded-chain
+   recurrence.  Ambient stopped-value measurability is not this law, and the
+   current inclusive filtration does not make reward selection predictable.
+3. Compile Appendix-C Step 1: if the optimal-arm probability after its `n`th
    pull is at most `1/(2*T)`, the conditional probability of no further
    optimal-arm pull over the remaining horizon is at least `1/2`, yielding
    the exact starvation regret charge.
-3. Build the `S0`/`S1` phase producer: adaptive IID reward-subsequence law,
+4. Build the `S0`/`S1` phase producer: adaptive IID reward-subsequence law,
    Rademacher anti-concentration, ballot-prefix constraint, and the
    deterministic implication into the starvation event.
 
@@ -141,11 +151,17 @@ evidence that the polynomial lower-bound route is complete.
   `twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral`
   instantiates `charge * P(event) <= expected sampled regret` on the canonical
   generated fixed-IID trajectory measure.
-- The random nth-pull bridge, finite joint IID law of adaptively selected
-  arm-0 rewards, conditional no-return probability `>= 1/2`, Rademacher/ballot
-  phase producer, asymptotic assembly, and frozen Theorem-2 terminal remain
-  uncompiled.  The central target therefore remains blocked; the compiled
-  consumer and Corollary 1 are not terminal evidence for it.
+- A separate 24-declaration producer now compiles the zero-based arm-0 nth-pull
+  time as a `WithTop Nat`, with `top` as the explicit missing-pull value.  It
+  proves the stopping-time and ambient measurability boundary, identifies the
+  finite chronological coordinate by exact before/after pull counts and the
+  selected action, and makes the stopped reward and post-pull success
+  probability measurable.  It assumes no selected-reward IID law.
+- The finite joint IID law of adaptively selected arm-0 rewards, conditional
+  no-return probability `>= 1/2`, Rademacher/ballot phase producer, asymptotic
+  assembly, and frozen Theorem-2 terminal remain uncompiled.  The central
+  target therefore remains blocked; the compiled bridge, deterministic
+  consumer, and Corollary 1 are not terminal evidence for it.
 
 ## Gate
 
@@ -154,11 +170,13 @@ lake env lean BanditRLProof/Algorithms/StochasticGradientBanditCorollaryOne.lean
 lake env lean Tests/StochasticGradientBanditCorollaryOneCanary.lean
 lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean
 lake env lean Tests/StochasticGradientBanditTheoremTwoStarvationCanary.lean
+lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean
+lake env lean Tests/StochasticGradientBanditTheoremTwoNthPullCanary.lean
 python tools/bandit.py check
 ```
 
-The Theorem-2-specific file is a deterministic source-shaped milestone only;
-its existence does not promote the frozen terminal.
+The two Theorem-2-specific files are source-shaped producer/consumer
+milestones only; their existence does not promote the frozen terminal.
 
 
 ## Conversion Window Snapshot
@@ -167,7 +185,7 @@ its existence does not promote the frozen terminal.
 
 Task: `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE`
 
-Status: `target-frozen; Corollary 1 compiled; Theorem 2 blocked after a compiled deterministic starvation consumer`
+Status: `target-frozen; Corollary 1 compiled; Theorem 2 blocked after compiled nth-pull and deterministic-starvation milestones`
 
 ## Source-to-Lean fence
 
@@ -203,12 +221,21 @@ trajectory and prove that rewards extracted at those times have the required
 finite product law under adaptive action selection.  Existing one-step
 conditional laws are not by themselves an independence theorem.
 
+The first half of that bridge now compiles.  `twoArmNthOptimalPullTime` uses a
+zero-based pull index and returns `WithTop Nat`; `top` is the explicit case in
+which the requested pull never occurs.  At a finite time `t`, the compiled
+specification proves exactly `pullIndex` prior optimal pulls, action `t = 0`,
+and `pullIndex + 1` inclusive pulls.  The stopped reward and post-pull success
+probability are measurable and equal the same chronological coordinate.  No
+finite product law, IID claim, or future-cylinder probability follows from
+this deterministic/stopping-time layer.
+
 The phase event then combines an unlucky initial block, a ballot-constrained
 recovery block, and a deterministic softmax recurrence that drives the next
 optimal-arm sampling probability below `1/(2*T)`.  Only after the finite
 probability lower bound compiles may it feed the frozen tilde-Omega endpoint.
 
-The current fixed-cutoff milestone defines measurable trigger and starvation
+The compiled fixed-cutoff milestone defines measurable trigger and starvation
 events, proves the exact `Delta * (T - n)` pathwise charge, and specializes
 `charge * P(starvation) <= expected sampled regret` to the generated fixed-IID
 trajectory measure.  It does not identify the cutoff with the random nth-pull
@@ -223,8 +250,8 @@ that may be assumed by the terminal.
 - Do not replace actual sampled regret with a probability-schedule proxy.
 - If the asymptotic notation becomes a blocker, retain the exact finite
   Appendix-C lower bound and leave the terminal status partial.
-- A compiled Corollary 1 does not change Theorem 2 from `not_started` or
-  `partial` to `compiled`.
+- A compiled Corollary 1, nth-pull bridge, or deterministic starvation
+  consumer does not change Theorem 2 from `partial` to `compiled`.
 
 
 ## Obligation Snapshot
@@ -239,12 +266,12 @@ Task id: `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE`
 | `SGB-C1-MARGIN` | `2*eta*C_eta <= Delta` implies Theorem-1 margin and `1/eta` constant | compiled | `sourceTheoremOne_margin_of_two_mul_eta_sourceC_le`; `sourceTheoremOne_constant_le_inv_eta` |
 | `SGB-C1-GAP-FREE` | exact piecewise Corollary-1 finite bound | compiled | `twoArmFixedIIDDirac_corollaryOne_piecewise`; fixed IID, `T >= 2`, horizon-indexed eta |
 | `SGB-C1-RATE` | explicit absolute-constant `sqrt(T*log T)` bound | compiled | `twoArmFixedIIDDirac_corollaryOne`; direct Theorem-1 companion |
-| `SGB-T2-NTH-PULL` | stopping-time and chronological-to-pull-index bridge | not started | no totalized missing pull |
-| `SGB-T2-SELECTED-IID` | finite joint law of rewards at adaptive arm-0 pull times | blocked | first core technical blocker |
-| `SGB-T2-STARVATION` | Appendix-C Step-1 event-to-regret lower bound | partial | measurable fixed-cutoff event and generated-law `Delta*(T-n)*P(event)` consumer compile; nth-pull identification and conditional probability `>= 1/2` do not |
+| `SGB-T2-NTH-PULL` | stopping-time and chronological-to-pull-index bridge | compiled | `WithTop Nat` missing-pull value; finite exact count/action specification; measurable stopped reward and post-pull probability; no IID claim |
+| `SGB-T2-SELECTED-IID` | finite joint law of rewards at adaptive arm-0 pull times | blocked | first remaining core technical blocker; chronological stopped-value measurability is not a product law |
+| `SGB-T2-STARVATION` | Appendix-C Step-1 event-to-regret lower bound | partial | measurable fixed-cutoff event and generated-law `Delta*(T-n)*P(event)` consumer compile; it is not yet composed with the separately compiled nth-pull bridge, and conditional probability `>= 1/2` remains unproved |
 | `SGB-T2-PHASE-PROBABILITY` | `S0/S1` probability via Rademacher/binomial/ballot route | blocked | exact finite constants and path event |
 | `SGB-T2-POLYLOG-OMEGA` | frozen K=2 Theorem-2 terminal | blocked | depends on all preceding producers |
-| `SGB-PHASE-CANARY` | exact imports, checks, and representative axiom prints | compiled | both companion and deterministic-consumer canaries use baseline axioms only |
+| `SGB-PHASE-CANARY` | exact imports, checks, and representative axiom prints | compiled | companion, deterministic-consumer, and nth-pull canaries use baseline axioms only |
 
 ## Source and scenario
 
@@ -33784,6 +33811,198 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremFourContractAudit.lean",
     "line": 124,
     "statement": "theorem theoremFourFiniteTransientMass_le_inv (rho : Real) (hrho_pos : 0 < rho) (hrho_le_one : rho <= 1) (phaseMass : Nat -> Real) (hphase : forall phase, phaseMass phase <= (1 - rho) ^ phase) (phaseCount : Nat) : (Finset.range phaseCount).sum phaseMass <= 1 / rho"
+  },
+  {
+    "kind": "def",
+    "name": "twoArmPrefixGeneratedAction",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmPrefixGeneratedAction",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
+    "line": 36,
+    "statement": "def twoArmPrefixGeneratedAction {Env : Type v} (chron : Nat) (context : Env \u00d7 History.FinitePairHistory (Fin 2) Real chron) : ActionTrace (Fin 2)"
+  },
+  {
+    "kind": "def",
+    "name": "twoArmPrefixOptimalPullCount",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmPrefixOptimalPullCount",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
+    "line": 47,
+    "statement": "def twoArmPrefixOptimalPullCount {Env : Type v} (chron : Nat) (context : Env \u00d7 History.FinitePairHistory (Fin 2) Real chron) : Nat"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurable_twoArmPrefixGeneratedAction",
+    "full_name": "BanditRLProof.StochasticGradientBandit.measurable_twoArmPrefixGeneratedAction",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
+    "line": 52,
+    "statement": "theorem measurable_twoArmPrefixGeneratedAction {Env : Type v} [MeasurableSpace Env] (chron t : Nat) : Measurable (fun context : Env \u00d7 History.FinitePairHistory (Fin 2) Real chron => twoArmPrefixGeneratedAction chron context t)"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurable_twoArmPrefixOptimalPullCount",
+    "full_name": "BanditRLProof.StochasticGradientBandit.measurable_twoArmPrefixOptimalPullCount",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
+    "line": 66,
+    "statement": "theorem measurable_twoArmPrefixOptimalPullCount {Env : Type v} [MeasurableSpace Env] (chron : Nat) : Measurable (twoArmPrefixOptimalPullCount (Env := Env) chron)"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmPrefixOptimalPullCount_environmentPrefix_eq",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmPrefixOptimalPullCount_environmentPrefix_eq",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
+    "line": 78,
+    "statement": "@[simp] theorem twoArmPrefixOptimalPullCount_environmentPrefix_eq {Env : Type v} [MeasurableSpace Env] (chron : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) : twoArmPrefixOptimalPullCount chron (twoArmEnvironmentPrefix chron sample) = twoArmOptimalPullCount (chron + 1) sample"
+  },
+  {
+    "kind": "def",
+    "name": "twoArmInclusiveOptimalPullCountProcess",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmInclusiveOptimalPullCountProcess",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
+    "line": 92,
+    "statement": "def twoArmInclusiveOptimalPullCountProcess {Env : Type v} [MeasurableSpace Env] (chron : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) : Nat"
+  },
+  {
+    "kind": "theorem",
+    "name": "adapted_twoArmInclusiveOptimalPullCountProcess",
+    "full_name": "BanditRLProof.StochasticGradientBandit.adapted_twoArmInclusiveOptimalPullCountProcess",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
+    "line": 99,
+    "statement": "theorem adapted_twoArmInclusiveOptimalPullCountProcess {Env : Type v} [MeasurableSpace Env] : Adapted (twoArmPrefixFiltration (Env := Env)) (twoArmInclusiveOptimalPullCountProcess (Env := Env))"
+  },
+  {
+    "kind": "def",
+    "name": "twoArmNthOptimalPullTime",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
+    "line": 128,
+    "statement": "def twoArmNthOptimalPullTime {Env : Type v} [MeasurableSpace Env] (pullIndex : Nat) : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real) -> WithTop Nat"
+  },
+  {
+    "kind": "theorem",
+    "name": "isStoppingTime_twoArmNthOptimalPullTime",
+    "full_name": "BanditRLProof.StochasticGradientBandit.isStoppingTime_twoArmNthOptimalPullTime",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
+    "line": 135,
+    "statement": "theorem isStoppingTime_twoArmNthOptimalPullTime {Env : Type v} [MeasurableSpace Env] (pullIndex : Nat) : IsStoppingTime (twoArmPrefixFiltration (Env := Env)) (twoArmNthOptimalPullTime (Env := Env) pullIndex)"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurable_twoArmNthOptimalPullTime",
+    "full_name": "BanditRLProof.StochasticGradientBandit.measurable_twoArmNthOptimalPullTime",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
+    "line": 143,
+    "statement": "theorem measurable_twoArmNthOptimalPullTime {Env : Type v} [MeasurableSpace Env] (pullIndex : Nat) : Measurable (twoArmNthOptimalPullTime (Env := Env) pullIndex)"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmNthOptimalPullTime_eq_top_iff",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime_eq_top_iff",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
+    "line": 150,
+    "statement": "theorem twoArmNthOptimalPullTime_eq_top_iff {Env : Type v} [MeasurableSpace Env] (pullIndex : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) : twoArmNthOptimalPullTime pullIndex sample = (\u22a4 : WithTop Nat) <-> forall chron : Nat, twoArmOptimalPullCount (chron + 1) sample \u2260 pullIndex + 1"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmNthOptimalPullTime_count_succ_eq",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime_count_succ_eq",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
+    "line": 160,
+    "statement": "theorem twoArmNthOptimalPullTime_count_succ_eq {Env : Type v} [MeasurableSpace Env] (pullIndex : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) (hfinite : twoArmNthOptimalPullTime pullIndex sample \u2260 (\u22a4 : WithTop Nat)) : twoArmOptimalPullCount ((twoArmNthOptimalPullTime pullIndex sample).untopA + 1) sample = pullIndex + 1"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmNthOptimalPullTime_count_succ_eq_of_eq",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime_count_succ_eq_of_eq",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
+    "line": 174,
+    "statement": "theorem twoArmNthOptimalPullTime_count_succ_eq_of_eq {Env : Type v} [MeasurableSpace Env] (pullIndex t : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) (htime : twoArmNthOptimalPullTime pullIndex sample = (t : WithTop Nat)) : twoArmOptimalPullCount (t + 1) sample = pullIndex + 1"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmNthOptimalPullTime_action_eq_zero",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime_action_eq_zero",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
+    "line": 188,
+    "statement": "theorem twoArmNthOptimalPullTime_action_eq_zero {Env : Type v} [MeasurableSpace Env] (pullIndex t : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) (htime : twoArmNthOptimalPullTime pullIndex sample = (t : WithTop Nat)) : twoArmGeneratedAction sample t = 0"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmNthOptimalPullTime_count_eq",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime_count_eq",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
+    "line": 217,
+    "statement": "theorem twoArmNthOptimalPullTime_count_eq {Env : Type v} [MeasurableSpace Env] (pullIndex t : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) (htime : twoArmNthOptimalPullTime pullIndex sample = (t : WithTop Nat)) : twoArmOptimalPullCount t sample = pullIndex"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmNthOptimalPullTime_spec",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime_spec",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
+    "line": 232,
+    "statement": "theorem twoArmNthOptimalPullTime_spec {Env : Type v} [MeasurableSpace Env] (pullIndex t : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) (htime : twoArmNthOptimalPullTime pullIndex sample = (t : WithTop Nat)) : twoArmOptimalPullCount t sample = pullIndex /\\ twoArmGeneratedAction sample t = 0 /\\ twoArmOptimalPullCount (t + 1) sample = pullIndex + 1"
+  },
+  {
+    "kind": "def",
+    "name": "twoArmNthOptimalPullReward",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullReward",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
+    "line": 248,
+    "statement": "def twoArmNthOptimalPullReward {Env : Type v} [MeasurableSpace Env] (pullIndex : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) : Real"
+  },
+  {
+    "kind": "theorem",
+    "name": "adapted_twoArmGeneratedReward",
+    "full_name": "BanditRLProof.StochasticGradientBandit.adapted_twoArmGeneratedReward",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
+    "line": 255,
+    "statement": "theorem adapted_twoArmGeneratedReward {Env : Type v} [MeasurableSpace Env] : Adapted (twoArmPrefixFiltration (Env := Env)) (fun (t : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) => (sample.2 t).2)"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurable_twoArmNthOptimalPullReward",
+    "full_name": "BanditRLProof.StochasticGradientBandit.measurable_twoArmNthOptimalPullReward",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
+    "line": 278,
+    "statement": "theorem measurable_twoArmNthOptimalPullReward {Env : Type v} [MeasurableSpace Env] (pullIndex : Nat) : Measurable (twoArmNthOptimalPullReward (Env := Env) pullIndex)"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmNthOptimalPullReward_eq_of_time_eq",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullReward_eq_of_time_eq",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
+    "line": 294,
+    "statement": "@[simp] theorem twoArmNthOptimalPullReward_eq_of_time_eq {Env : Type v} [MeasurableSpace Env] (pullIndex t : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) (htime : twoArmNthOptimalPullTime pullIndex sample = (t : WithTop Nat)) : twoArmNthOptimalPullReward pullIndex sample = (sample.2 t).2"
+  },
+  {
+    "kind": "def",
+    "name": "twoArmNthOptimalPullSuccessProbability",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullSuccessProbability",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
+    "line": 306,
+    "statement": "def twoArmNthOptimalPullSuccessProbability {Env : Type v} [MeasurableSpace Env] (eta : Real) (pullIndex : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) : Real"
+  },
+  {
+    "kind": "theorem",
+    "name": "adapted_twoArmSuccessProbability",
+    "full_name": "BanditRLProof.StochasticGradientBandit.adapted_twoArmSuccessProbability",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
+    "line": 313,
+    "statement": "theorem adapted_twoArmSuccessProbability {Env : Type v} [MeasurableSpace Env] (eta : Real) : Adapted (twoArmPrefixFiltration (Env := Env)) (twoArmSuccessProbability (Env := Env) eta)"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurable_twoArmNthOptimalPullSuccessProbability",
+    "full_name": "BanditRLProof.StochasticGradientBandit.measurable_twoArmNthOptimalPullSuccessProbability",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
+    "line": 338,
+    "statement": "theorem measurable_twoArmNthOptimalPullSuccessProbability {Env : Type v} [MeasurableSpace Env] (eta : Real) (pullIndex : Nat) : Measurable (twoArmNthOptimalPullSuccessProbability (Env := Env) eta pullIndex)"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmNthOptimalPullSuccessProbability_eq_of_time_eq",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullSuccessProbability_eq_of_time_eq",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
+    "line": 354,
+    "statement": "@[simp] theorem twoArmNthOptimalPullSuccessProbability_eq_of_time_eq {Env : Type v} [MeasurableSpace Env] (eta : Real) (pullIndex t : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) (htime : twoArmNthOptimalPullTime pullIndex sample = (t : WithTop Nat)) : twoArmNthOptimalPullSuccessProbability eta pullIndex sample = twoArmSuccessProbability eta t sample"
   },
   {
     "kind": "def",
@@ -93599,7 +93818,52 @@ These cards are planning inspiration only.  They do not certify any theorem.
 ## Recent Trials
 
 ```json
-[]
+[
+  {
+    "changed_files": [
+      "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
+      "Tests/StochasticGradientBanditTheoremTwoNthPullCanary.lean",
+      "BanditRLProof.lean",
+      "Tests.lean"
+    ],
+    "kind": "build",
+    "lean": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime_spec",
+    "notes": "Compiled 24-declaration zero-based WithTop nth-pull stopping/indexing producer with exact finite action/count semantics and measurable stopped reward/post-pull probability; selected-IID, future-cylinder, conditional no-return, phase, and Theorem-2 terminal remain blocked.",
+    "parent_id": "",
+    "role": "lower",
+    "route_fingerprint": "",
+    "run_id": "sgb-theorem2-nthpull-round14-2026-08-27",
+    "source": "PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB",
+    "statement_hash": "",
+    "status": "compiled",
+    "task": "PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE",
+    "time": "2026-08-27T08:13:21+00:00",
+    "verifier_evidence": [
+      "focused module and canary exit 0; baseline axioms only propext/Classical.choice/Quot.sound"
+    ]
+  },
+  {
+    "changed_files": [
+      "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
+      "Tests/StochasticGradientBanditTheoremTwoNthPullCanary.lean"
+    ],
+    "kind": "review",
+    "lean": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime_spec",
+    "notes": "Independent review accepted the narrow compiled chronological nth-pull bridge. WithTop totalization needs a finite witness for source semantics; inclusive filtration proves stopping/measurability but not predictable selection or selected-IID. Theorem 2 remains blocked.",
+    "parent_id": "",
+    "role": "reviewer",
+    "route_fingerprint": "",
+    "run_id": "sgb-theorem2-nthpull-round14-2026-08-27",
+    "source": "local-independent-review",
+    "statement_hash": "",
+    "status": "accepted",
+    "task": "PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE",
+    "time": "2026-08-27T08:13:21+00:00",
+    "verifier_evidence": [
+      "independent read-only review; focused module/canary; lake build BanditRLProof 8848 jobs; git diff --check; no sorry/admit/new axioms"
+    ]
+  }
+]
 ```
 
 ## Reviewer Gate

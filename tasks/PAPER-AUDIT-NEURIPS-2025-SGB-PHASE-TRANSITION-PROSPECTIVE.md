@@ -77,16 +77,26 @@ an explicit absolute-constant upper bound implying
 `O(sqrt(T * log T))`.  The terminal name is frozen as
 `twoArmFixedIIDDirac_corollaryOne`.
 
-## First three core leaves
+## Core route, with the original first leaf split at the compiled boundary
 
-1. Define the arm-`0` nth-pull time with an explicit not-yet-pulled value,
-   prove the stopping-time/measurability boundary, and connect chronological
-   trajectory state to the source recurrence over extracted arm-`0` rewards.
-2. Compile Appendix-C Step 1: if the optimal-arm probability after its `n`th
+The original nth-pull leaf is only partially closed.  Its chronological
+stopping/indexing half and its selected-reward-law half now have separate
+evidence states:
+
+1. **Compiled:** define the zero-based arm-`0` nth-pull time with `WithTop Nat`
+   as the explicit not-yet-pulled value, prove the stopping-time/measurability
+   boundary, and identify every finite hit by its exact action and before/after
+   pull counts.  The stopped reward and post-pull probability are measurable,
+   but have source semantics only under a finite-time witness.
+2. **Blocked:** prove the finite selected-reward product/future-cylinder law and
+   connect the chronological stopped values to the source embedded-chain
+   recurrence.  Ambient stopped-value measurability is not this law, and the
+   current inclusive filtration does not make reward selection predictable.
+3. Compile Appendix-C Step 1: if the optimal-arm probability after its `n`th
    pull is at most `1/(2*T)`, the conditional probability of no further
    optimal-arm pull over the remaining horizon is at least `1/2`, yielding
    the exact starvation regret charge.
-3. Build the `S0`/`S1` phase producer: adaptive IID reward-subsequence law,
+4. Build the `S0`/`S1` phase producer: adaptive IID reward-subsequence law,
    Rademacher anti-concentration, ballot-prefix constraint, and the
    deterministic implication into the starvation event.
 
@@ -135,11 +145,17 @@ evidence that the polynomial lower-bound route is complete.
   `twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral`
   instantiates `charge * P(event) <= expected sampled regret` on the canonical
   generated fixed-IID trajectory measure.
-- The random nth-pull bridge, finite joint IID law of adaptively selected
-  arm-0 rewards, conditional no-return probability `>= 1/2`, Rademacher/ballot
-  phase producer, asymptotic assembly, and frozen Theorem-2 terminal remain
-  uncompiled.  The central target therefore remains blocked; the compiled
-  consumer and Corollary 1 are not terminal evidence for it.
+- A separate 24-declaration producer now compiles the zero-based arm-0 nth-pull
+  time as a `WithTop Nat`, with `top` as the explicit missing-pull value.  It
+  proves the stopping-time and ambient measurability boundary, identifies the
+  finite chronological coordinate by exact before/after pull counts and the
+  selected action, and makes the stopped reward and post-pull success
+  probability measurable.  It assumes no selected-reward IID law.
+- The finite joint IID law of adaptively selected arm-0 rewards, conditional
+  no-return probability `>= 1/2`, Rademacher/ballot phase producer, asymptotic
+  assembly, and frozen Theorem-2 terminal remain uncompiled.  The central
+  target therefore remains blocked; the compiled bridge, deterministic
+  consumer, and Corollary 1 are not terminal evidence for it.
 
 ## Gate
 
@@ -148,8 +164,10 @@ lake env lean BanditRLProof/Algorithms/StochasticGradientBanditCorollaryOne.lean
 lake env lean Tests/StochasticGradientBanditCorollaryOneCanary.lean
 lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean
 lake env lean Tests/StochasticGradientBanditTheoremTwoStarvationCanary.lean
+lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean
+lake env lean Tests/StochasticGradientBanditTheoremTwoNthPullCanary.lean
 python tools/bandit.py check
 ```
 
-The Theorem-2-specific file is a deterministic source-shaped milestone only;
-its existence does not promote the frozen terminal.
+The two Theorem-2-specific files are source-shaped producer/consumer
+milestones only; their existence does not promote the frozen terminal.

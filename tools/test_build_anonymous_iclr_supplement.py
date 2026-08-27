@@ -156,6 +156,15 @@ class AnonymousSupplementTests(unittest.TestCase):
             prefix + "Tests/StochasticGradientBanditTheoremFourContractAuditCanary.lean",
             names,
         )
+        self.assertIn(
+            prefix + "BanditRLProof/Algorithms/"
+            "StochasticGradientBanditTheoremTwoNthPull.lean",
+            names,
+        )
+        self.assertIn(
+            prefix + "Tests/StochasticGradientBanditTheoremTwoNthPullCanary.lean",
+            names,
+        )
         self.assertIn(prefix + "evidence/claim-ledger.json", names)
         self.assertIn(prefix + "evidence/theorem-audit-comparison.json", names)
         self.assertIn(prefix + "evidence/delayed-feedback-proof-obligations.md", names)
@@ -549,7 +558,7 @@ class AnonymousSupplementTests(unittest.TestCase):
             [BUILDER.SGB_AUDIT_ID, BUILDER.SGB_FOLLOW_ON_ID],
         )
         self.assertEqual(
-            ledger["stochastic_gradient_bandit"]["declaration_count"], 264
+            ledger["stochastic_gradient_bandit"]["declaration_count"], 288
         )
         self.assertEqual(
             ledger["stochastic_gradient_bandit"][
@@ -580,6 +589,12 @@ class AnonymousSupplementTests(unittest.TestCase):
                 "theorem_two_deterministic_starvation_consumer_declaration_count"
             ],
             18,
+        )
+        self.assertEqual(
+            ledger["stochastic_gradient_bandit"][
+                "theorem_two_nth_pull_bridge_declaration_count"
+            ],
+            24,
         )
         self.assertEqual(
             ledger["stochastic_gradient_bandit"]["finite_algebra_declaration_count"],
@@ -657,8 +672,16 @@ class AnonymousSupplementTests(unittest.TestCase):
             "source_theorem_four_contract_audit_compiled",
             "source_corollary_one_compiled",
             "source_theorem_two_deterministic_starvation_consumer_compiled",
+            "source_theorem_two_nth_pull_bridge_compiled",
         ):
             self.assertTrue(ledger["stochastic_gradient_bandit"][flag])
+        for missing_bridge in (
+            "selected-reward IID",
+            "future-cylinder law",
+            "conditional no-return probability >= 1/2",
+            "asymptotic terminal",
+        ):
+            self.assertIn(missing_bridge, sgb_row["boundary"])
         self.assertTrue(
             ledger["stochastic_gradient_bandit"][
                 "source_corollary_one_is_direct_theorem_one_consumer"
@@ -749,7 +772,7 @@ class AnonymousSupplementTests(unittest.TestCase):
         succinct = rows["succinct-lower-bound-source-frozen-audit"]
         self.assertEqual(succinct["compiled_declaration_count"], 54)
         sgb = rows["stochastic-gradient-bandit-source-frozen-audit"]
-        self.assertEqual(sgb["compiled_declaration_count"], 264)
+        self.assertEqual(sgb["compiled_declaration_count"], 288)
         self.assertEqual(
             sgb["evidence_record_ids"],
             [BUILDER.SGB_AUDIT_ID, BUILDER.SGB_FOLLOW_ON_ID],
@@ -772,6 +795,7 @@ class AnonymousSupplementTests(unittest.TestCase):
                 "source_theorem_four_contract_audit": 8,
                 "source_corollary_one_companion": 23,
                 "source_theorem_two_deterministic_starvation_consumer": 18,
+                "source_theorem_two_nth_pull_bridge": 24,
             },
         )
         for row in (delayed, succinct, sgb):
@@ -883,6 +907,7 @@ class AnonymousSupplementTests(unittest.TestCase):
             BUILDER.SGB_THEOREM_FOUR_CONTRACT_AUDIT_DECLARATIONS,
             BUILDER.SGB_COROLLARY_ONE_REPRESENTATIVE_DECLARATIONS,
             BUILDER.SGB_THEOREM_TWO_STARVATION_REPRESENTATIVE_DECLARATIONS,
+            BUILDER.SGB_THEOREM_TWO_NTH_PULL_REPRESENTATIVE_DECLARATIONS,
         )
         for required in required_sets:
             with self.subTest(victim_set=sorted(required)):
@@ -907,7 +932,7 @@ class AnonymousSupplementTests(unittest.TestCase):
                 row["full_name"] = replacement
                 with self.assertRaisesRegex(
                     ValueError,
-                    "264 declarations: historical 223",
+                    "288 declarations: historical 223",
                 ):
                     BUILDER.validate_sgb_count(records, index)
 

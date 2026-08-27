@@ -2,7 +2,7 @@
 
 Task: `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE`
 
-Status: `target-frozen; Corollary 1 compiled; Theorem 2 blocked after a compiled deterministic starvation consumer`
+Status: `target-frozen; Corollary 1 compiled; Theorem 2 blocked after compiled nth-pull and deterministic-starvation milestones`
 
 ## Source-to-Lean fence
 
@@ -38,12 +38,21 @@ trajectory and prove that rewards extracted at those times have the required
 finite product law under adaptive action selection.  Existing one-step
 conditional laws are not by themselves an independence theorem.
 
+The first half of that bridge now compiles.  `twoArmNthOptimalPullTime` uses a
+zero-based pull index and returns `WithTop Nat`; `top` is the explicit case in
+which the requested pull never occurs.  At a finite time `t`, the compiled
+specification proves exactly `pullIndex` prior optimal pulls, action `t = 0`,
+and `pullIndex + 1` inclusive pulls.  The stopped reward and post-pull success
+probability are measurable and equal the same chronological coordinate.  No
+finite product law, IID claim, or future-cylinder probability follows from
+this deterministic/stopping-time layer.
+
 The phase event then combines an unlucky initial block, a ballot-constrained
 recovery block, and a deterministic softmax recurrence that drives the next
 optimal-arm sampling probability below `1/(2*T)`.  Only after the finite
 probability lower bound compiles may it feed the frozen tilde-Omega endpoint.
 
-The current fixed-cutoff milestone defines measurable trigger and starvation
+The compiled fixed-cutoff milestone defines measurable trigger and starvation
 events, proves the exact `Delta * (T - n)` pathwise charge, and specializes
 `charge * P(starvation) <= expected sampled regret` to the generated fixed-IID
 trajectory measure.  It does not identify the cutoff with the random nth-pull
@@ -58,5 +67,5 @@ that may be assumed by the terminal.
 - Do not replace actual sampled regret with a probability-schedule proxy.
 - If the asymptotic notation becomes a blocker, retain the exact finite
   Appendix-C lower bound and leave the terminal status partial.
-- A compiled Corollary 1 does not change Theorem 2 from `not_started` or
-  `partial` to `compiled`.
+- A compiled Corollary 1, nth-pull bridge, or deterministic starvation
+  consumer does not change Theorem 2 from `partial` to `compiled`.

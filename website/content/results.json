@@ -1808,7 +1808,7 @@
       "title": "Prospectively frozen SGB Corollary-1 and Theorem-2 follow-on",
       "chapter": "frontier",
       "status": "partial",
-      "informal": "This follow-on preserves the historical 223-declaration SGB mechanism audit and adds 41 separately indexed declarations. Twenty-three declarations compile the bounded Corollary-1 companion on the generated zero-initialized two-arm fixed-IID trajectory with a Unit Dirac environment prior: for T >= 2, 0 < Delta < 1, and the horizon-indexed fixed rate eta_T = sqrt(log T / T), twoArmFixedIIDDirac_corollaryOne bounds expected sampled pseudo-regret by the explicit absolute constant 2 + 1/log 2 + 2 exp 2 times sqrt(T log T). This is a direct consumer of the previously compiled Theorem 1, not independent phase-transition evidence. Eighteen declarations compile a deterministic Appendix-C Step-1 consumer on the generated trajectory. The named endpoint twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral defines a measurable fixed-cutoff starvation event, proves its exact Delta(T-n) sampled-regret charge, and lower-bounds expected regret by that charge times event probability. The exact K = 2 Theorem-2 terminal remains blocked.",
+      "informal": "This follow-on preserves the historical 223-declaration SGB mechanism audit and adds 65 separately indexed declarations. Twenty-three declarations compile the bounded Corollary-1 companion on the generated zero-initialized two-arm fixed-IID trajectory with a Unit Dirac environment prior: for T >= 2, 0 < Delta < 1, and the horizon-indexed fixed rate eta_T = sqrt(log T / T), twoArmFixedIIDDirac_corollaryOne bounds expected sampled pseudo-regret by the explicit absolute constant 2 + 1/log 2 + 2 exp 2 times sqrt(T log T). This is a direct consumer of the previously compiled Theorem 1, not independent phase-transition evidence. Eighteen declarations compile a deterministic Appendix-C Step-1 fixed-cutoff consumer. A separate 24-declaration infrastructure layer defines the zero-based optimal-arm nth-pull time in WithTop Nat, proves stopping-time and measurability properties, identifies finite hits with exact chronological count/action semantics, and makes the observed reward and post-pull success probability measurable at that coordinate. It proves no selected-reward IID or future-cylinder law and is not yet composed with the fixed-cutoff consumer. The exact K = 2 Theorem-2 terminal remains blocked.",
       "declarations": [
         "BanditRLProof.StochasticGradientBandit.twoArmActionGap_le_gap",
         "BanditRLProof.StochasticGradientBandit.twoArmSampledPseudoRegret_le_gap_mul_horizon",
@@ -1850,16 +1850,40 @@
         "BanditRLProof.StochasticGradientBandit.twoArmStepOneStarvationEvent_sampledPseudoRegret_eq",
         "BanditRLProof.StochasticGradientBandit.integrable_twoArmSampledPseudoRegret_of_finiteMeasure",
         "BanditRLProof.StochasticGradientBandit.twoArmStepOneStarvationEvent_charge_mul_probability_le_integral",
-        "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral"
+        "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral",
+        "BanditRLProof.StochasticGradientBandit.twoArmPrefixGeneratedAction",
+        "BanditRLProof.StochasticGradientBandit.twoArmPrefixOptimalPullCount",
+        "BanditRLProof.StochasticGradientBandit.measurable_twoArmPrefixGeneratedAction",
+        "BanditRLProof.StochasticGradientBandit.measurable_twoArmPrefixOptimalPullCount",
+        "BanditRLProof.StochasticGradientBandit.twoArmPrefixOptimalPullCount_environmentPrefix_eq",
+        "BanditRLProof.StochasticGradientBandit.twoArmInclusiveOptimalPullCountProcess",
+        "BanditRLProof.StochasticGradientBandit.adapted_twoArmInclusiveOptimalPullCountProcess",
+        "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime",
+        "BanditRLProof.StochasticGradientBandit.isStoppingTime_twoArmNthOptimalPullTime",
+        "BanditRLProof.StochasticGradientBandit.measurable_twoArmNthOptimalPullTime",
+        "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime_eq_top_iff",
+        "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime_count_succ_eq",
+        "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime_count_succ_eq_of_eq",
+        "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime_action_eq_zero",
+        "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime_count_eq",
+        "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime_spec",
+        "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullReward",
+        "BanditRLProof.StochasticGradientBandit.adapted_twoArmGeneratedReward",
+        "BanditRLProof.StochasticGradientBandit.measurable_twoArmNthOptimalPullReward",
+        "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullReward_eq_of_time_eq",
+        "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullSuccessProbability",
+        "BanditRLProof.StochasticGradientBandit.adapted_twoArmSuccessProbability",
+        "BanditRLProof.StochasticGradientBandit.measurable_twoArmNthOptimalPullSuccessProbability",
+        "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullSuccessProbability_eq_of_time_eq"
       ],
       "depends_on": [],
       "missing": [
-        "The random nth-pull stopping prefix and the bridge from chronological generated history to the optimal-arm pull-indexed process.",
-        "The adaptive selected-reward IID and future-cylinder law needed to prove conditional no-return probability at least one half.",
+        "Composition of the separately compiled nth-pull infrastructure with the fixed-cutoff starvation consumer.",
+        "The adaptive selected-reward IID and future-cylinder law needed to prove conditional no-return probability at least one half; stopped-value measurability alone is not that law.",
         "The Rademacher/binomial anti-concentration and ballot-prefix phase producer, followed by the finite-to-asymptotic polynomial-regret assembly.",
-        "The frozen terminal twoArmRademacherDirac_theoremTwo_polynomialRegret; neither Corollary 1 nor the deterministic starvation consumer is terminal evidence."
+        "The frozen terminal twoArmRademacherDirac_theoremTwo_polynomialRegret; Corollary 1, the nth-pull bridge, and the deterministic starvation consumer are not terminal evidence."
       ],
-      "evidence": "BanditRLProof/Algorithms/StochasticGradientBanditCorollaryOne.lean; BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean; Tests/StochasticGradientBanditCorollaryOneCanary.lean; Tests/StochasticGradientBanditTheoremTwoStarvationCanary.lean; tasks/PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE.md; conversion-windows/PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE.md; proof-obligations/PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE.md; research-wiki/papers/sgb-phase-transition-round13-freeze.json"
+      "evidence": "BanditRLProof/Algorithms/StochasticGradientBanditCorollaryOne.lean; BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean; BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean; Tests/StochasticGradientBanditCorollaryOneCanary.lean; Tests/StochasticGradientBanditTheoremTwoStarvationCanary.lean; Tests/StochasticGradientBanditTheoremTwoNthPullCanary.lean; tasks/PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE.md; conversion-windows/PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE.md; proof-obligations/PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE.md; research-wiki/papers/sgb-phase-transition-round13-freeze.json"
     },
     {
       "id": "TARGET-DRIFT-V2-CONTROLLED-EVALUATION",
