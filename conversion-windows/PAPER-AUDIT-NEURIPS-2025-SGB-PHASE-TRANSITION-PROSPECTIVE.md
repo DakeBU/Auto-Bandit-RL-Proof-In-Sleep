@@ -2,7 +2,7 @@
 
 Task: `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE`
 
-Status: `target-frozen; Corollary 1 compiled; Theorem 2 blocked after compiled nth-pull, latent-product/readout, deferred-decisions finite-prefix factorization, action/readout interface, count-cap scaffold, and deterministic-starvation milestones`
+Status: `target-frozen; Corollary 1 compiled; Theorem 2 blocked after compiled nth-pull, latent-product/readout, deferred-decisions finite-prefix factorization, action/readout interface, count-capped branch locality, unconditional branchwise selected-coordinate product, and deterministic-starvation milestones`
 
 ## Source-to-Lean fence
 
@@ -137,6 +137,9 @@ that may be assumed by the terminal.
 
 ## Round-17 retrieval packet: action/readout split and branch-locality scaffold
 
+This records the historical Round-17 boundary; its locality obligation is
+discharged by the Round-18 packet below.
+
 - Reused APIs: `trajectoryMixture_map_history_action_eq_compProd`,
   `indepFun_armStreamMeasure_coordinate_without`, finite/sub-Markov
   semidirect-product factorization, coordinate removal/insertion, and
@@ -146,11 +149,11 @@ that may be assumed by the terminal.
 - Compiled pathwise support: the actual successor reward equals the latent
   coordinate selected by the visible history and sampled action almost surely.
   This is support, not a conditional freshness or IID theorem.
-- Compiled consumer/scaffold: a branch kernel, finite/sub-Markov product
+- Compiled consumer/scaffold at this round: a branch kernel, finite/sub-Markov product
   consumer, count-cap set, its measurability, and the exact pull-count extension
   recurrence.  `LatentArmStreamVisiblePrefixNextActionBranchLocality` is an
-  explicit proposition required by the consumer; no theorem proves it yet.
-- Exact open producer: prove equality of fixed-stream visible-prefix laws after
+  explicit proposition required by the consumer; Round 17 did not yet prove it.
+- Round-17 open producer: prove equality of fixed-stream visible-prefix laws after
   restriction to the count cap under equality of all coordinates except the
   target.  Then restrict to the exact count/action branch, obtain freshness,
   identify the native prefix, and apply trajectory uniqueness.
@@ -158,6 +161,34 @@ that may be assumed by the terminal.
   pulls of one arm.  The prefix/action law does not consume the selected next
   coordinate, whereas the next reward does; a finite `Iic n` stream box alone
   cannot establish freshness.
+
+## Round-18 retrieval packet: count-capped branch-locality producer
+
+- Reused and extended APIs:
+  `Measure.compProd_restrict_eq_of_base_restrict_eq_of_fiber_restrict_eq`,
+  `Measure.map_compProd_restrict_eq_of_base_restrict_eq_of_fiber_restrict_eq`,
+  trajectory prefix/next-pair recurrence, the exact
+  pull-count extension identity, coordinate removal/insertion, and the existing
+  finite/sub-Markov branch-product consumer.
+- New reusable bridge: two generic declarations show that a semidirect-product
+  law restricted to a measurable safe set is determined by the restricted base
+  law and the corresponding restricted fibers, and that a measurable successor
+  map preserves this equality.
+- Compiled base/successor route: time-zero count-cap locality, the successor-cap
+  decomposition into strict-count and equal-count/avoid-arm rectangles,
+  restricted step-kernel equality, and induction over every finite prefix.
+- Compiled producer: `latentArmStreamVisiblePrefixNextActionBranchLocality`
+  discharges the uppercase locality contract, and
+  `latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod` derives
+  the exact branchwise selected-coordinate product law without a locality
+  premise.
+- Exact remaining producer: aggregate the coordinate branches and the a.e.
+  reward readout into a selected-reward freshness law, identify the resulting
+  visible marginal with the native fixed-IID prefix, and extend it to the native
+  trajectory law.  Branchwise product equality alone is not selected-reward
+  IID and does not close the stopped-prefix future/no-return route.
+- Inventory effect: 28 new indexed declarations (two generic measure bridges
+  plus 26 route-specific leaves) raise the SGB audit slice from 316 to 344.
 
 ## Pivot rules
 
@@ -167,6 +198,7 @@ that may be assumed by the terminal.
 - If the asymptotic notation becomes a blocker, retain the exact finite
   Appendix-C lower bound and leave the terminal status partial.
 - Compiled Corollary 1, nth-pull, latent-product/readout, finite-prefix
-  factorization, action/readout interface, count-cap scaffold, and
+  factorization, action/readout interface, count-cap branch-locality producer,
+  unconditional branch-product law, and
   deterministic-starvation milestones do not compile the
   frozen Theorem 2 terminal; that terminal remains `blocked`.

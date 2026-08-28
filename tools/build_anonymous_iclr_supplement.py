@@ -236,6 +236,9 @@ SGB_THEOREM_TWO_PREFIX_FACTORIZATION_FILE = (
     "BanditRLProof/Algorithms/"
     "StochasticGradientBanditTheoremTwoNativeTrajectory.lean"
 )
+SGB_THEOREM_TWO_BRANCH_LOCALITY_GENERIC_BRIDGE_FILE = (
+    "BanditRLProof/KernelIndependentExtension.lean"
+)
 SGB_FINITE_ALGEBRA_DECLARATION_COUNT = 26
 SGB_GENERATED_HISTORY_DECLARATION_COUNT = 18
 SGB_TWO_ARM_RATE_DECLARATION_COUNT = 18
@@ -260,6 +263,7 @@ SGB_THEOREM_TWO_NTH_PULL_DECLARATION_COUNT = 24
 SGB_THEOREM_TWO_LATENT_REWARD_DECLARATION_COUNT = 7
 SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATION_COUNT = 8
 SGB_THEOREM_TWO_BRANCH_LOCALITY_SCAFFOLD_DECLARATION_COUNT = 13
+SGB_THEOREM_TWO_BRANCH_LOCALITY_PRODUCER_DECLARATION_COUNT = 28
 SGB_TOTAL_DECLARATION_COUNT = (
     SGB_HISTORICAL_DECLARATION_COUNT
     + SGB_COROLLARY_ONE_DECLARATION_COUNT
@@ -268,6 +272,7 @@ SGB_TOTAL_DECLARATION_COUNT = (
     + SGB_THEOREM_TWO_LATENT_REWARD_DECLARATION_COUNT
     + SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATION_COUNT
     + SGB_THEOREM_TWO_BRANCH_LOCALITY_SCAFFOLD_DECLARATION_COUNT
+    + SGB_THEOREM_TWO_BRANCH_LOCALITY_PRODUCER_DECLARATION_COUNT
 )
 SGB_GENERATED_TRAJECTORY_DECLARATIONS = frozenset({
     "BanditRLProof.StochasticGradientBandit.trajectoryKernel",
@@ -432,9 +437,48 @@ SGB_THEOREM_TWO_ACTION_READOUT_BRANCH_LOCALITY_INTERFACE_AND_COUNT_CAP_SCAFFOLD_
     "BanditRLProof.Thompson.latentArmStreamTrajectoryMeasure_map_visiblePrefix_nextAction_eq_compProd",
     "BanditRLProof.Thompson.latentArmStreamVisibleNextReward_eq_selectedCoordinate_ae",
 })
+SGB_THEOREM_TWO_BRANCH_LOCALITY_PRODUCER_DECLARATIONS = frozenset({
+    "BanditRLProof.Thompson.latentArmStreamTrajectoryKernel_map_prefix_next_eq_compProd",
+    "BanditRLProof.Thompson.latentArmStreamFeedback_eq_of_withoutCoordinate_eq_of_selectedCoordinate_ne",
+    "BanditRLProof.Thompson.historyStepKernel_apply_eq_of_withoutCoordinate_eq_of_target_count_lt",
+    "BanditRLProof.Thompson.latentArmStreamNextActionNeSet",
+    "BanditRLProof.Thompson.latentArmStreamInitialSafeArmSet",
+    "BanditRLProof.Thompson.measurableSet_latentArmStreamNextActionNeSet",
+    "BanditRLProof.Thompson.historyStepKernel_apply_restrict_nextActionNe_eq_of_withoutCoordinate_eq",
+    "BanditRLProof.Thompson.latentArmStreamTrajectoryKernel_map_frestrictLe_zero",
+    "BanditRLProof.Thompson.singletonPairHistory_preimage_latentArmStreamPrefixCountCap_zero",
+    "BanditRLProof.Thompson.latentArmStreamPrefixCountCapLocality_zero",
+    "BanditRLProof.Thompson.latentArmStreamPrefixCountLt",
+    "BanditRLProof.Thompson.measurableSet_latentArmStreamPrefixCountLt",
+    "BanditRLProof.Thompson.latentArmStreamPrefixCountEq",
+    "BanditRLProof.Thompson.measurableSet_latentArmStreamPrefixCountEq",
+    "BanditRLProof.Thompson.mem_latentArmStreamPrefixCountCap_extendPairHistorySucc_iff",
+    "BanditRLProof.Thompson.latentArmStreamPrefixCountCap_of_extendPairHistorySucc_mem",
+    "BanditRLProof.Thompson.selectedCoordinate_ne_of_extendPairHistorySucc_mem_prefixCountCap",
+    "BanditRLProof.Thompson.latentArmStreamSuccessorCountCap_preimage",
+    "BanditRLProof.Thompson.latentArmStreamSuccessorCountCapSection",
+    "BanditRLProof.Thompson.measurableSet_latentArmStreamSuccessorCountCapSection",
+    "BanditRLProof.Thompson.historyStepKernel_apply_restrict_successorCountCap_eq_of_withoutCoordinate_eq",
+    "BanditRLProof.Thompson.latentArmStreamTrajectoryKernel_map_frestrictLe_restrict_countCap_succ",
+    "BanditRLProof.Thompson.latentArmStreamTrajectoryKernel_map_frestrictLe_restrict_countCap_eq_of_withoutCoordinate_eq",
+    "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextActionBranchLocality_of_prefixCountCapLocality",
+    "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextActionBranchLocality",
+    "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod",
+    "BanditRLProof.Measure.compProd_restrict_eq_of_base_restrict_eq_of_fiber_restrict_eq",
+    "BanditRLProof.Measure.map_compProd_restrict_eq_of_base_restrict_eq_of_fiber_restrict_eq",
+})
+SGB_THEOREM_TWO_BRANCH_LOCALITY_GENERIC_BRIDGE_DECLARATIONS = frozenset({
+    "BanditRLProof.Measure.compProd_restrict_eq_of_base_restrict_eq_of_fiber_restrict_eq",
+    "BanditRLProof.Measure.map_compProd_restrict_eq_of_base_restrict_eq_of_fiber_restrict_eq",
+})
+SGB_THEOREM_TWO_BRANCH_LOCALITY_NATIVE_DECLARATIONS = (
+    SGB_THEOREM_TWO_BRANCH_LOCALITY_PRODUCER_DECLARATIONS
+    - SGB_THEOREM_TWO_BRANCH_LOCALITY_GENERIC_BRIDGE_DECLARATIONS
+)
 SGB_THEOREM_TWO_NATIVE_TRAJECTORY_DECLARATIONS = (
     SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATIONS
     | SGB_THEOREM_TWO_ACTION_READOUT_BRANCH_LOCALITY_INTERFACE_AND_COUNT_CAP_SCAFFOLD_DECLARATIONS
+    | SGB_THEOREM_TWO_BRANCH_LOCALITY_NATIVE_DECLARATIONS
 )
 SGB_THEOREM_TWO_ACTION_FACTORIZATION_DECLARATIONS = frozenset({
     "BanditRLProof.Thompson.latentArmStreamTrajectoryMeasure_map_visiblePrefix_nextAction_eq_compProd",
@@ -445,9 +489,22 @@ SGB_THEOREM_TWO_PATHWISE_COORDINATE_SUPPORT_DECLARATIONS = frozenset({
 SGB_THEOREM_TWO_BRANCH_PRODUCT_CONSUMER_DECLARATIONS = frozenset({
     "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod_of_locality",
 })
+SGB_THEOREM_TWO_UNCONDITIONAL_BRANCH_PRODUCT_DECLARATIONS = frozenset({
+    "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod",
+})
 SGB_THEOREM_TWO_BRANCH_LOCALITY_CONTRACT_DECLARATIONS = frozenset({
     "BanditRLProof.Thompson.LatentArmStreamVisiblePrefixNextActionBranchLocality",
 })
+SGB_THEOREM_TWO_BRANCH_LOCALITY_CRITICAL_THEOREM_FILES = {
+    "BanditRLProof.Measure.compProd_restrict_eq_of_base_restrict_eq_of_fiber_restrict_eq":
+        SGB_THEOREM_TWO_BRANCH_LOCALITY_GENERIC_BRIDGE_FILE,
+    "BanditRLProof.Measure.map_compProd_restrict_eq_of_base_restrict_eq_of_fiber_restrict_eq":
+        SGB_THEOREM_TWO_BRANCH_LOCALITY_GENERIC_BRIDGE_FILE,
+    "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextActionBranchLocality":
+        SGB_THEOREM_TWO_PREFIX_FACTORIZATION_FILE,
+    "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod":
+        SGB_THEOREM_TWO_PREFIX_FACTORIZATION_FILE,
+}
 SGB_THEOREM_TWO_COUNT_CAP_SCAFFOLD_DECLARATIONS = frozenset({
     "BanditRLProof.Thompson.latentArmStreamPrefixCountCap",
     "BanditRLProof.Thompson.measurableSet_latentArmStreamPrefixCountCap",
@@ -2014,6 +2071,31 @@ def validate_sgb_count(records, index):
         if row["full_name"] in
         SGB_THEOREM_TWO_BRANCH_LOCALITY_CONTRACT_DECLARATIONS
     ]
+    theorem_two_branch_locality_producer_names = {
+        row["full_name"] for row in rows.values()
+        if row["full_name"] in
+        SGB_THEOREM_TWO_BRANCH_LOCALITY_PRODUCER_DECLARATIONS
+    }
+    theorem_two_branch_locality_critical_rows = {
+        row["full_name"]: row for row in rows.values()
+        if row["full_name"] in
+        SGB_THEOREM_TWO_BRANCH_LOCALITY_CRITICAL_THEOREM_FILES
+    }
+    theorem_two_branch_locality_critical_metadata_valid = (
+        set(theorem_two_branch_locality_critical_rows) ==
+        set(SGB_THEOREM_TWO_BRANCH_LOCALITY_CRITICAL_THEOREM_FILES)
+        and all(
+            row["kind"] == "theorem"
+            and row["file"] ==
+                SGB_THEOREM_TWO_BRANCH_LOCALITY_CRITICAL_THEOREM_FILES[name]
+            for name, row in
+            theorem_two_branch_locality_critical_rows.items()
+        )
+    )
+    if not theorem_two_branch_locality_critical_metadata_valid:
+        raise ValueError(
+            "SGB Theorem-2 branch-locality theorem metadata drift"
+        )
     layer_counts = (
         finite_count,
         generated_history_count,
@@ -2055,6 +2137,7 @@ def validate_sgb_count(records, index):
             + SGB_THEOREM_TWO_LATENT_REWARD_DECLARATION_COUNT
             + SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATION_COUNT
             + SGB_THEOREM_TWO_BRANCH_LOCALITY_SCAFFOLD_DECLARATION_COUNT
+            + SGB_THEOREM_TWO_BRANCH_LOCALITY_PRODUCER_DECLARATION_COUNT
         or historical_declarations & follow_on_declarations
         or len(declarations) != SGB_TOTAL_DECLARATION_COUNT
         or set(rows) != declarations
@@ -2078,13 +2161,17 @@ def validate_sgb_count(records, index):
         or theorem_two_native_trajectory_count !=
             SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATION_COUNT
             + SGB_THEOREM_TWO_BRANCH_LOCALITY_SCAFFOLD_DECLARATION_COUNT
+            + len(SGB_THEOREM_TWO_BRANCH_LOCALITY_NATIVE_DECLARATIONS)
         or theorem_two_native_trajectory_names !=
             SGB_THEOREM_TWO_NATIVE_TRAJECTORY_DECLARATIONS
+        or theorem_two_branch_locality_producer_names !=
+            SGB_THEOREM_TWO_BRANCH_LOCALITY_PRODUCER_DECLARATIONS
         or len(theorem_two_branch_locality_contract_rows) != 1
         or theorem_two_branch_locality_contract_rows[0]["kind"] != "def"
         or corollary_one_names | theorem_two_starvation_names |
             theorem_two_nth_pull_names | theorem_two_latent_reward_names |
-            theorem_two_native_trajectory_names !=
+            theorem_two_native_trajectory_names |
+            theorem_two_branch_locality_producer_names !=
             follow_on_declarations
         or not SGB_COROLLARY_ONE_REPRESENTATIVE_DECLARATIONS.issubset(
             corollary_one_names
@@ -2100,6 +2187,9 @@ def validate_sgb_count(records, index):
         )
         or not SGB_THEOREM_TWO_ACTION_READOUT_BRANCH_LOCALITY_INTERFACE_AND_COUNT_CAP_SCAFFOLD_DECLARATIONS.issubset(
             theorem_two_native_trajectory_names
+        )
+        or not SGB_THEOREM_TWO_BRANCH_LOCALITY_PRODUCER_DECLARATIONS.issubset(
+            declarations
         )
         or SGB_THEOREM_TWO_TERMINAL_DECLARATION in declarations
         or not SGB_GENERATED_TRAJECTORY_DECLARATIONS.issubset(declarations)
@@ -2125,16 +2215,17 @@ def validate_sgb_count(records, index):
     ):
         raise ValueError(
             "stochastic-gradient-bandit audit must remain partial with exactly "
-            "316 declarations: historical 223 = frozen 215-declaration "
+            "344 declarations: historical 223 = frozen 215-declaration "
             "Theorem-1 stack + 8 Theorem-4 contract-audit leaves, followed by "
             "23 Corollary-1 companion declarations + 18 deterministic "
             "Theorem-2 starvation-consumer declarations + 24 chronological "
             "nth-pull declarations + 7 latent fixed-arm product/readout "
             "declarations + 8 deferred-decisions prefix-factorization "
             "declarations + 13 action/readout/branch-locality interface and "
-            "count-cap scaffold declarations; the branch-locality contract "
-            "is typed but unproved, and no locality producer is compiled. "
-            "Prefix-plus-next-pair freshness, visible-marginal/"
+            "count-cap scaffold declarations + 28 count-capped branch-locality "
+            "producer declarations. The locality contract and unconditional "
+            "branchwise product law compile, but aggregate selected-reward "
+            "freshness, visible-marginal/"
             "native-prefix identification, the full native visible law, stopped-prefix "
             "future-cylinder, conditional no-return, ballot phase, and the "
             "Theorem-2 terminal must remain blocked"
@@ -2211,7 +2302,14 @@ def validate_sgb_count(records, index):
             SGB_THEOREM_TWO_COUNT_CAP_SCAFFOLD_DECLARATIONS.issubset(
                 theorem_two_native_trajectory_names
             ),
-        "source_theorem_two_branch_locality_producer_compiled": False,
+        "source_theorem_two_branch_locality_producer_compiled":
+            SGB_THEOREM_TWO_BRANCH_LOCALITY_PRODUCER_DECLARATIONS.issubset(
+                declarations
+            ) and theorem_two_branch_locality_critical_metadata_valid,
+        "source_theorem_two_unconditional_branch_product_compiled":
+            SGB_THEOREM_TWO_UNCONDITIONAL_BRANCH_PRODUCT_DECLARATIONS.issubset(
+                declarations
+            ) and theorem_two_branch_locality_critical_metadata_valid,
         "source_theorem_two_endpoint_verified": False,
     }
 
@@ -2332,7 +2430,8 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
             "theorem_two_branch_product_consumer_compiled": True,
             "theorem_two_branch_locality_contract_typed": True,
             "theorem_two_count_cap_scaffold_compiled": True,
-            "theorem_two_branch_locality_producer_compiled": False,
+            "theorem_two_branch_locality_producer_compiled": True,
+            "theorem_two_unconditional_branch_product_compiled": True,
             "declaration_count_breakdown": {
                 "finite_action_algebra": SGB_FINITE_ALGEBRA_DECLARATION_COUNT,
                 "generated_history_and_kernel_bridge":
@@ -2371,6 +2470,8 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
                     SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATION_COUNT,
                 "source_theorem_two_action_readout_branch_locality_interface_and_count_cap_scaffold":
                     SGB_THEOREM_TWO_BRANCH_LOCALITY_SCAFFOLD_DECLARATION_COUNT,
+                "source_theorem_two_branch_locality_producer":
+                    SGB_THEOREM_TWO_BRANCH_LOCALITY_PRODUCER_DECLARATION_COUNT,
             },
         },
     }
@@ -2437,7 +2538,7 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
                 not in row.get("scope_boundary", "")
                 or "exact finite stream-box/visible-prefix mixture"
                 not in row.get("scope_boundary", "")
-                or "branchwise prefix-plus-next-pair freshness"
+                or "Aggregate selected-reward freshness"
                 not in row.get("scope_boundary", "")
                 or "mixture's visible marginal"
                 not in row.get("scope_boundary", "")
@@ -2451,7 +2552,7 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
                 not in row.get("scope_boundary", "")
                 or not any(
                     "native prefix law" in item
-                    and "prefix-plus-next-pair" in item
+                    and "aggregate" in item
                     and "stopped-prefix future-cylinder" in item
                     for item in row.get("blocking_obligations", [])
                 )
@@ -2601,7 +2702,7 @@ def build_claim_ledger(proof_report):
                 "artifact": "Stochastic-gradient-bandit Theorem 1, Corollary 1, and blocked Theorem-2 follow-on",
                 "status": "partial",
                 "source_record_ids": [SGB_AUDIT_ID, SGB_FOLLOW_ON_ID],
-                "boundary": "316 declarations preserve the historical 223 = 215-declaration Theorem-1 stack + 8 Appendix-E/Theorem-4 contract leaves, then add a 23-declaration compiled Corollary-1 bounded companion, an 18-declaration deterministic Appendix-C Step-1 starvation consumer, a 24-declaration chronological nth-pull bridge, a 7-declaration latent fixed-arm product/readout layer, an 8-declaration deferred-decisions prefix factorization, and a 13-declaration action/readout/branch-locality interface and count-cap scaffold. Corollary 1 is a direct Theorem-1 consumer for T >= 2 and eta_T = sqrt(log T / T), not independent Theorem-2 evidence. The nth-pull layer proves a zero-based WithTop stopping time, exact finite count/action identification, and measurable stopped reward and post-pull probability. The latent layer proves an unconditional finite product law for fixed-arm coordinates and almost-sure readout at every finite nth pull. The prefix layer proves stream-box product, visible-prefix kernel-law locality, a Markov visible-prefix kernel, and their exact finite mixture. Round 17 additionally compiles the next-action factorization, pathwise selected-coordinate support, a branch-product consumer conditional on a typed branch-locality contract, and count-cap scaffold declarations. The branch-locality contract is typed but unproved, and no branch-locality producer is compiled; therefore these declarations do not prove branchwise prefix-plus-next-pair freshness. They also do not prove the visible-marginal/native-prefix identification (identification of the mixture's visible marginal with the native prefix law) or the full native visible law. This scaffold does not make totalized or occurrence-conditioned stopped rewards IID. These layers are not composed with the fixed-cutoff consumer; the stopped-prefix future-cylinder, conditional no-return probability >= 1/2, Rademacher/binomial ballot phase, and asymptotic terminal remain blocked. The frozen K = 2 Theorem-2 center therefore remains blocked. Theorem 4 also remains open. Dirac refers only to the Unit environment prior, not to the arm reward laws.",
+                "boundary": "344 declarations preserve the historical 223 = 215-declaration Theorem-1 stack + 8 Appendix-E/Theorem-4 contract leaves, then add a 23-declaration compiled Corollary-1 bounded companion, an 18-declaration deterministic Appendix-C Step-1 starvation consumer, a 24-declaration chronological nth-pull bridge, a 7-declaration latent fixed-arm product/readout layer, an 8-declaration deferred-decisions prefix factorization, a 13-declaration action/readout/branch-locality interface and count-cap scaffold, and a 28-declaration count-capped branch-locality producer. Corollary 1 is a direct Theorem-1 consumer for T >= 2 and eta_T = sqrt(log T / T), not independent Theorem-2 evidence. The nth-pull layer proves a zero-based WithTop stopping time, exact finite count/action identification, and measurable stopped reward and post-pull probability. The latent layer proves an unconditional finite product law for fixed-arm coordinates and almost-sure readout at every finite nth pull. The prefix layer proves stream-box product, visible-prefix kernel-law locality, a Markov visible-prefix kernel, and their exact finite mixture. Round 17 compiled next-action factorization, pathwise selected-coordinate support, a conditional branch-product consumer, and count-cap scaffold declarations. Round 18 proves the generic safe-fiber semidirect-product restriction bridge, the count-cap base and successor induction, the exact branch-locality contract, and the unconditional branchwise product law. This remains branchwise evidence, not the aggregate selected-reward freshness theorem. It does not yet prove the visible-marginal/native-prefix identification or the full native visible law. This layer does not make totalized or occurrence-conditioned stopped rewards IID. These layers are not composed with the fixed-cutoff consumer; aggregate freshness, the stopped-prefix future-cylinder, conditional no-return probability >= 1/2, Rademacher/binomial ballot phase, and asymptotic terminal remain blocked. The frozen K = 2 Theorem-2 center therefore remains blocked. Theorem 4 also remains open. Dirac refers only to the Unit environment prior, not to the arm reward laws.",
             },
             {
                 "artifact": "Proof graph / curvature--noise--gap",
@@ -2668,6 +2769,8 @@ def build_claim_ledger(proof_report):
                 SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATION_COUNT,
             "theorem_two_action_readout_branch_locality_interface_and_count_cap_scaffold_declaration_count":
                 SGB_THEOREM_TWO_BRANCH_LOCALITY_SCAFFOLD_DECLARATION_COUNT,
+            "theorem_two_branch_locality_producer_declaration_count":
+                SGB_THEOREM_TWO_BRANCH_LOCALITY_PRODUCER_DECLARATION_COUNT,
             "finite_algebra_declaration_count": SGB_FINITE_ALGEBRA_DECLARATION_COUNT,
             "generated_history_declaration_count": SGB_GENERATED_HISTORY_DECLARATION_COUNT,
             "two_arm_rate_declaration_count": SGB_TWO_ARM_RATE_DECLARATION_COUNT,
@@ -2763,6 +2866,10 @@ def build_claim_ledger(proof_report):
             "source_theorem_two_branch_locality_producer_compiled":
                 sgb_evidence[
                     "source_theorem_two_branch_locality_producer_compiled"
+                ],
+            "source_theorem_two_unconditional_branch_product_compiled":
+                sgb_evidence[
+                    "source_theorem_two_unconditional_branch_product_compiled"
                 ],
             "source_theorem_two_status": "blocked",
             "source_theorem_two_endpoint_verified":

@@ -50,9 +50,9 @@ reports zero `literature-open` cases until a scoped primary-source audit support
 such a claim; one case remains in the source-audit queue, while the 13
 formalization-open cases expose 39 stable named leaves. Two additional
 source-frozen ports—the 54-declaration succinct-lower-bound audit and the
-316-declaration stochastic-gradient-bandit audit—are displayed outside that
+344-declaration stochastic-gradient-bandit audit—are displayed outside that
 comparison ledger.  The latter has the exact audit-slice inventory
-`316 = 223 + 23 + 18 + 24 + 7 + 8 + 13`: a historical 223-declaration
+`344 = 223 + 23 + 18 + 24 + 7 + 8 + 13 + 28`: a historical 223-declaration
 Theorem-1/Appendix-E stack, a 23-declaration bounded Corollary-1 companion, an
 18-declaration fixed-cutoff starvation consumer, a 24-declaration chronological
 nth-pull bridge, and a 7-declaration latent fixed-arm product/readout layer.  The
@@ -60,14 +60,15 @@ latent layer proves an unconditional finite product law for fixed-arm latent
 coordinates and almost-sure readout at every finite nth pull.  An additional
 8-declaration deferred-decisions layer proves stream-prefix locality, a Markov
 visible-prefix kernel, and the exact finite stream-box/visible-prefix mixture.
-The newest 13-declaration action/readout and branch-locality-interface scaffold
+The 13-declaration action/readout and branch-locality-interface scaffold
 proves the next-action factorization and pathwise selected-coordinate support,
 and supplies a finite/sub-Markov branch-product consumer conditional on an
-explicit locality premise plus count-cap measurability and recurrence.  Its
-`LatentArmStreamVisiblePrefixNextActionBranchLocality` declaration is only a
-typed, unproved proposition.  It therefore does not prove branchwise prefix-
-plus-next-pair freshness, selected-reward IID, the visible-marginal/native-
-prefix identification, or the native visible law.  The stopped-prefix future-
+explicit locality premise plus count-cap measurability and recurrence.  A new
+28-declaration producer layer proves two reusable safe-fiber measure bridges,
+the count-cap restricted-law induction, that exact locality contract, and an
+unconditional target-by-target branch product.  Aggregate selected-reward
+freshness, selected-reward IID, the visible-marginal/native-prefix
+identification, and the native visible law remain unproved.  The stopped-prefix future-
 cylinder, conditional no-return producer, ballot phase, asymptotic assembly,
 and terminal remain blocked.  The SGB audit therefore remains partial, with
 Theorems 2–4 open;

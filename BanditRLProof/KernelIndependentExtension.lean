@@ -38,6 +38,106 @@ theorem compProd_restrict_prod
       (κ := Kernel.const Unit mu)
       (η := Kernel.prodMkLeft Unit kernel) hs ht).symm
 
+/-- A semidirect-product law restricted to a measurable safe set depends only
+on the base law on a measurable base safe set and on each kernel's restriction
+to the corresponding safe fiber. -/
+theorem compProd_restrict_eq_of_base_restrict_eq_of_fiber_restrict_eq
+    {A B : Type*} [MeasurableSpace A] [MeasurableSpace B]
+    {mu nu : Measure A} [SFinite mu] [SFinite nu]
+    {kernel eta : Kernel A B}
+    [IsSFiniteKernel kernel] [IsSFiniteKernel eta]
+    {baseSafe : Set A} {safe : Set (A × B)}
+    (hbaseSafe : MeasurableSet baseSafe)
+    (hsafe : MeasurableSet safe)
+    (hsafe_base : safe ⊆ baseSafe ×ˢ Set.univ)
+    (hbase : mu.restrict baseSafe = nu.restrict baseSafe)
+    (hfiber : ∀ a ∈ baseSafe,
+      (kernel a).restrict (Prod.mk a ⁻¹' safe) =
+        (eta a).restrict (Prod.mk a ⁻¹' safe)) :
+    (mu ⊗ₘ kernel).restrict safe = (nu ⊗ₘ eta).restrict safe := by
+  rw [Measure.restrict_congr_meas hsafe]
+  intro event hevent_safe hevent
+  rw [Measure.compProd_apply hevent, Measure.compProd_apply hevent]
+  have hsection_eq : ∀ a ∈ baseSafe,
+      kernel a (Prod.mk a ⁻¹' event) = eta a (Prod.mk a ⁻¹' event) := by
+    intro a ha
+    exact (Measure.restrict_congr_meas (measurable_prodMk_left hsafe)).mp
+      (hfiber a ha) (Prod.mk a ⁻¹' event)
+        (Set.preimage_mono hevent_safe) (measurable_prodMk_left hevent)
+  have hkernel_zero : ∀ a ∉ baseSafe,
+      kernel a (Prod.mk a ⁻¹' event) = 0 := by
+    intro a ha
+    have hsection : Prod.mk a ⁻¹' event = (∅ : Set B) := by
+      ext b
+      simp only [Set.mem_preimage, Set.mem_empty_iff_false, iff_false]
+      intro hab
+      exact ha (hsafe_base (hevent_safe hab)).1
+    rw [hsection]
+    exact measure_empty
+  have heta_zero : ∀ a ∉ baseSafe,
+      eta a (Prod.mk a ⁻¹' event) = 0 := by
+    intro a ha
+    have hsection : Prod.mk a ⁻¹' event = (∅ : Set B) := by
+      ext b
+      simp only [Set.mem_preimage, Set.mem_empty_iff_false, iff_false]
+      intro hab
+      exact ha (hsafe_base (hevent_safe hab)).1
+    rw [hsection]
+    exact measure_empty
+  calc
+    (∫⁻ a, kernel a (Prod.mk a ⁻¹' event) ∂mu) =
+        ∫⁻ a, baseSafe.indicator
+          (fun a => kernel a (Prod.mk a ⁻¹' event)) a ∂mu := by
+      apply lintegral_congr
+      intro a
+      by_cases ha : a ∈ baseSafe
+      · simp [ha]
+      · simp [ha, hkernel_zero a ha]
+    _ = ∫⁻ a, kernel a (Prod.mk a ⁻¹' event) ∂(mu.restrict baseSafe) :=
+      lintegral_indicator hbaseSafe _
+    _ = ∫⁻ a, kernel a (Prod.mk a ⁻¹' event) ∂(nu.restrict baseSafe) := by
+      rw [hbase]
+    _ = ∫⁻ a, eta a (Prod.mk a ⁻¹' event) ∂(nu.restrict baseSafe) := by
+      apply lintegral_congr_ae
+      exact (ae_restrict_mem hbaseSafe).mono hsection_eq
+    _ = ∫⁻ a, baseSafe.indicator
+          (fun a => eta a (Prod.mk a ⁻¹' event)) a ∂nu :=
+      (lintegral_indicator hbaseSafe _).symm
+    _ = ∫⁻ a, eta a (Prod.mk a ⁻¹' event) ∂nu := by
+      apply lintegral_congr
+      intro a
+      by_cases ha : a ∈ baseSafe
+      · simp [ha]
+      · simp [ha, heta_zero a ha]
+
+/-- Mapped form of
+`compProd_restrict_eq_of_base_restrict_eq_of_fiber_restrict_eq`: a measurable
+successor map preserves the safe-set equality. -/
+theorem map_compProd_restrict_eq_of_base_restrict_eq_of_fiber_restrict_eq
+    {A B C : Type*}
+    [MeasurableSpace A] [MeasurableSpace B] [MeasurableSpace C]
+    {mu nu : Measure A} [SFinite mu] [SFinite nu]
+    {kernel eta : Kernel A B}
+    [IsSFiniteKernel kernel] [IsSFiniteKernel eta]
+    (successor : A × B → C) (hsuccessor : Measurable successor)
+    {baseSafe : Set A} {successorSafe : Set C}
+    (hbaseSafe : MeasurableSet baseSafe)
+    (hsuccessorSafe : MeasurableSet successorSafe)
+    (hpreimage_base :
+      successor ⁻¹' successorSafe ⊆ baseSafe ×ˢ Set.univ)
+    (hbase : mu.restrict baseSafe = nu.restrict baseSafe)
+    (hfiber : ∀ a ∈ baseSafe,
+      (kernel a).restrict
+          (Prod.mk a ⁻¹' (successor ⁻¹' successorSafe)) =
+        (eta a).restrict
+          (Prod.mk a ⁻¹' (successor ⁻¹' successorSafe))) :
+    ((mu ⊗ₘ kernel).map successor).restrict successorSafe =
+      ((nu ⊗ₘ eta).map successor).restrict successorSafe := by
+  rw [Measure.restrict_map hsuccessor hsuccessorSafe,
+    Measure.restrict_map hsuccessor hsuccessorSafe,
+    compProd_restrict_eq_of_base_restrict_eq_of_fiber_restrict_eq
+      hbaseSafe (hsuccessor hsuccessorSafe) hpreimage_base hbase hfiber]
+
 end Measure
 
 /-- Pull independence on a pushforward measure back along the measurable map

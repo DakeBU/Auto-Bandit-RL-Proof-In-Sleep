@@ -104,8 +104,8 @@ outside the atom-generated directions.  This is a regularity/codomain
 obligation, not a source-error claim; the global Lemmas 3.5--3.6, Assumption
 3.7, Theorem 3.8, and every regret endpoint remain outside the compiled slice.
 
-The source-frozen stochastic-gradient-bandit audit contains 316 named
-declarations: `316 = 223 + 23 + 18 + 24 + 7 + 8 + 13`.  The historical
+The source-frozen stochastic-gradient-bandit audit contains 344 named
+declarations: `344 = 223 + 23 + 18 + 24 + 7 + 8 + 13 + 28`.  The historical
 record remains exactly 223 declarations:
 a frozen 215-declaration Theorem-1 stack plus eight separate
 Appendix-E/Theorem-4 contract leaves.  The 215-declaration stack begins with 76
@@ -190,6 +190,15 @@ measurability and successor-count scaffold.  The locality contract is a
 typed `Prop` definition, not a proof of that proposition; no theorem in this
 group produces the contract.
 
+Round 18 adds 28 declarations under the narrow label **count-capped
+branch-locality producer**.  Two generic safe-fiber measure lemmas transport
+restricted semidirect-product equality; 26 route-specific declarations prove
+the time-zero and successor count-cap steps, their all-time induction, the
+exact lowercase branch-locality producer, and the unconditional branchwise
+selected-coordinate product law.  This discharges the Round-17 locality
+premise but does not aggregate the coordinate branches and almost-sure reward
+readout into selected-reward freshness.
+
 The corresponding evidence flags are explicit:
 
 - action factorization: `true`;
@@ -197,13 +206,14 @@ The corresponding evidence flags are explicit:
 - branch product consumer: `true`;
 - branch-locality contract typed: `true`;
 - count-cap scaffold: `true`;
-- branch-locality producer: `false`;
+- branch-locality producer: `true`;
+- unconditional branch product: `true`;
 - Theorem-2 endpoint: `false`.
 
 These layers are not yet composed with the fixed-cutoff starvation consumer.
-The new consumer is conditional on the unproved locality contract and thus
-does not establish branchwise prefix-plus-next-pair freshness.  The
-visible-marginal/native-prefix identification, the stopped-prefix
+The exact target-by-target branch products compile, but aggregate
+selected-reward freshness does not.  The visible-marginal/native-prefix
+identification, selected IID, the stopped-prefix
 future-cylinder, conditional no-return probability at least `1/2`, the
 Rademacher/binomial ballot phase, and the polynomial asymptotic terminal remain
 blocked.  The exact `K = 2` Theorem-2 center therefore remains blocked.  The

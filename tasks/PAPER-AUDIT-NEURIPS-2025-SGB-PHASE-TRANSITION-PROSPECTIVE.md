@@ -102,23 +102,28 @@ evidence states:
 4. **Compiled action/readout interface:** after mixing out the latent stream,
    the next action has exactly the history policy as its conditional kernel;
    pathwise, the next observed reward equals the latent coordinate encoded by
-   the visible prefix and sampled action.  A finite/sub-Markov consumer turns
-   branch locality into a branchwise product law.  The locality contract is
-   typed, and its count-cap set, measurability, and pull-count recurrence
-   compile, but the contract has not been proved.
-5. **Blocked native half:** prove the count-capped restricted-measure induction
-   needed for branchwise prefix-plus-next-pair freshness,
-   use it to identify the visible marginal of that finite mixture with the
-   native fixed-IID SGB prefix law, extend the identification to the required
-   native visible law by trajectory uniqueness, and transport the latent phase
-   event and source embedded-chain recurrence.  Stream-marginal equality, a.e.
-   reward readout, and joint finite-mixture factorization still do not imply
-   native trajectory-law equality.
-6. Compile Appendix-C Step 1: if the optimal-arm probability after its `n`th
+   the visible prefix and sampled action.  The preceding 13-declaration layer
+   also defines the count cap and a finite/sub-Markov branch-product consumer
+   whose locality premise is kept explicit.
+5. **Compiled branch-locality producer:** two generic safe-fiber
+   semidirect-product bridges and 26 route-specific declarations prove the
+   time-zero count-cap base case, successor-cap decomposition, restricted
+   step-kernel transport, all-time count-capped prefix induction, the exact
+   `LatentArmStreamVisiblePrefixNextActionBranchLocality` contract, and the
+   resulting unconditional branchwise selected-coordinate product law.
+6. **Blocked native/selected-law half:** aggregate the exact coordinate
+   branches into selected-reward freshness, identify the visible marginal of
+   the compiled finite mixture with the native fixed-IID SGB prefix law,
+   extend the identification to the required native visible law by trajectory
+   uniqueness, and transport the latent phase event and source embedded-chain
+   recurrence.  Branchwise product laws, stream-marginal equality, a.e. reward
+   readout, and joint finite-mixture factorization still do not by themselves
+   imply aggregate selected-reward IID or native trajectory-law equality.
+7. Compile Appendix-C Step 1: if the optimal-arm probability after its `n`th
    pull is at most `1/(2*T)`, the conditional probability of no further
    optimal-arm pull over the remaining horizon is at least `1/2`, yielding
    the exact starvation regret charge.
-7. Build the `S0`/`S1` phase producer: latent IID reward-block law plus its
+8. Build the `S0`/`S1` phase producer: latent IID reward-block law plus its
    native-process transport, Rademacher anti-concentration, ballot-prefix
    constraint, and the
    deterministic implication into the starvation event.
@@ -157,13 +162,14 @@ evidence that the polynomial lower-bound route is complete.
 
 ## Current verified outcome (2026-08-28)
 
-- The source-audit inventory is now 316 named declarations:
-  `223 + 23 + 18 + 24 + 7 + 8 + 13` for the historical audit, Corollary-1
+- The source-audit inventory is now 344 named declarations:
+  `223 + 23 + 18 + 24 + 7 + 8 + 13 + 28` for the historical audit, Corollary-1
   companion, fixed-cutoff consumer, nth-pull bridge, latent product/readout,
   deferred-decisions finite-prefix factorization, and the action/readout plus
-  branch-locality interface and count-cap scaffold respectively.  The last
-  group contains a typed but unproved locality proposition and must not be read
-  as 13 proved source theorems.
+  branch-locality interface/count-cap scaffold, followed by the branch-locality
+  producer respectively.  The final 28 comprise two reusable measure bridges
+  and 26 route-specific declarations; this audit-slice count must not be read
+  as 344 source-paper theorems.
 - `twoArmFixedIIDDirac_corollaryOne_piecewise` and
   `twoArmFixedIIDDirac_corollaryOne` compile for the generated fixed-IID
   two-arm trajectory, actual sampled pseudo-regret, `0 < Delta < 1`, source
@@ -196,13 +202,17 @@ evidence that the polynomial lower-bound route is complete.
 - A separate 13-declaration interface/scaffold layer proves next-action
   factorization after mixing out the latent stream, pathwise equality of the
   next reward with the selected latent coordinate, the finite/sub-Markov
-  branch-product consumer, and the count-cap bookkeeping leaves.  Its exact
-  branch-locality proposition is only typed: the count-capped restricted-law
-  induction that would produce it remains unproved.
+  branch-product consumer, and the count-cap bookkeeping leaves.
+- A subsequent 28-declaration producer layer compiles the generic safe-fiber
+  restricted-semidirect-product transport, the count-cap base and successor
+  steps, the all-time restricted-law induction,
+  `latentArmStreamVisiblePrefixNextActionBranchLocality`, and the unconditional
+  `latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod`.  Thus the
+  uppercase locality contract is now discharged, not merely typed.
 - The latent coupling's visible trajectory law has not yet been proved equal
-  to the native fixed-IID SGB trajectory law.  Branchwise freshness,
-  native-prefix identification, conditional no-return probability `>= 1/2`, the
-  Rademacher/ballot phase producer, asymptotic
+  to the native fixed-IID SGB trajectory law.  Aggregate selected-reward
+  freshness, native-prefix identification, conditional no-return probability
+  `>= 1/2`, the Rademacher/ballot phase producer, asymptotic
   assembly, and the frozen Theorem-2 terminal remain uncompiled.  The central
   target therefore remains blocked; the compiled latent product/readout,
   finite-prefix factorization, chronological bridge, deterministic consumer,

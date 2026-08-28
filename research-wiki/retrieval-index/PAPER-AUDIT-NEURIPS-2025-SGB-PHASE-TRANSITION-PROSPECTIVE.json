@@ -1,6 +1,6 @@
 {
   "task": "PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE",
-  "generated": "2026-08-28T03:44:43+00:00",
+  "generated": "2026-08-28T06:37:20+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -33062,10 +33062,74 @@
     },
     {
       "kind": "theorem",
+      "name": "latentArmStreamTrajectoryKernel_map_prefix_next_eq_compProd",
+      "full_name": "BanditRLProof.Thompson.latentArmStreamTrajectoryKernel_map_prefix_next_eq_compProd",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+      "line": 118,
+      "statement": "theorem latentArmStreamTrajectoryKernel_map_prefix_next_eq_compProd {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (stream : UCB.ArmRewardStream K) (n : Nat) : (latentArmStreamTrajectoryKernel algorithm env stream).map (fun trajectory => (Preorder.frestrictLe n trajectory, trajectory (n + 1))) = (latentArmStreamTrajectoryKernel algorithm env stream).map (Preorder.frestrictLe n) ⊗ₘ historyStepKernel algorithm ((latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K)).at (env, stream)) n"
+    },
+    {
+      "kind": "theorem",
+      "name": "latentArmStreamFeedback_eq_of_withoutCoordinate_eq_of_selectedCoordinate_ne",
+      "full_name": "BanditRLProof.Thompson.latentArmStreamFeedback_eq_of_withoutCoordinate_eq_of_selectedCoordinate_ne",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+      "line": 142,
+      "statement": "theorem latentArmStreamFeedback_eq_of_withoutCoordinate_eq_of_selectedCoordinate_ne {Env : Type u} {K : Nat} [MeasurableSpace Env] (env : Env) (target : Nat × Fin K) (stream₁ stream₂ : UCB.ArmRewardStream K) (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) (arm : Fin K) (hwithout : UCB.armStreamWithoutCoordinate target stream₁ = UCB.armStreamWithoutCoordinate target stream₂) (hne : (ETC.realHistoryPullCount n history arm, arm) ≠ target) : ((latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K)).at (env, stream₁)).feedback n (history, arm) = ((latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K)).at (env, stream₂)).feedback n (history, arm)"
+    },
+    {
+      "kind": "theorem",
+      "name": "historyStepKernel_apply_eq_of_withoutCoordinate_eq_of_target_count_lt",
+      "full_name": "BanditRLProof.Thompson.historyStepKernel_apply_eq_of_withoutCoordinate_eq_of_target_count_lt",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+      "line": 168,
+      "statement": "theorem historyStepKernel_apply_eq_of_withoutCoordinate_eq_of_target_count_lt {Env : Type u} {K : Nat} [MeasurableSpace Env] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (target : Nat × Fin K) (stream₁ stream₂ : UCB.ArmRewardStream K) (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) (hwithout : UCB.armStreamWithoutCoordinate target stream₁ = UCB.armStreamWithoutCoordinate target stream₂) (hcount : ETC.realHistoryPullCount n history target.2 < target.1) : historyStepKernel algorithm ((latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K)).at (env, stream₁)) n history = historyStepKernel algorithm ((latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K)).at (env, stream₂)) n history"
+    },
+    {
+      "kind": "def",
+      "name": "latentArmStreamNextActionNeSet",
+      "full_name": "BanditRLProof.Thompson.latentArmStreamNextActionNeSet",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+      "line": 199,
+      "statement": "def latentArmStreamNextActionNeSet {K : Nat} (arm : Fin K) : Set (Fin K × Real)"
+    },
+    {
+      "kind": "def",
+      "name": "latentArmStreamInitialSafeArmSet",
+      "full_name": "BanditRLProof.Thompson.latentArmStreamInitialSafeArmSet",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+      "line": 205,
+      "statement": "def latentArmStreamInitialSafeArmSet {K : Nat} (target : Nat × Fin K) : Set (Fin K)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurableSet_latentArmStreamNextActionNeSet",
+      "full_name": "BanditRLProof.Thompson.measurableSet_latentArmStreamNextActionNeSet",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+      "line": 209,
+      "statement": "theorem measurableSet_latentArmStreamNextActionNeSet {K : Nat} (arm : Fin K) : MeasurableSet (latentArmStreamNextActionNeSet arm)"
+    },
+    {
+      "kind": "theorem",
+      "name": "historyStepKernel_apply_restrict_nextActionNe_eq_of_withoutCoordinate_eq",
+      "full_name": "BanditRLProof.Thompson.historyStepKernel_apply_restrict_nextActionNe_eq_of_withoutCoordinate_eq",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+      "line": 217,
+      "statement": "theorem historyStepKernel_apply_restrict_nextActionNe_eq_of_withoutCoordinate_eq {Env : Type u} {K : Nat} [MeasurableSpace Env] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (target : Nat × Fin K) (stream₁ stream₂ : UCB.ArmRewardStream K) (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) (hwithout : UCB.armStreamWithoutCoordinate target stream₁ = UCB.armStreamWithoutCoordinate target stream₂) : (historyStepKernel algorithm ((latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K)).at (env, stream₁)) n history).restrict (latentArmStreamNextActionNeSet target.2) = (historyStepKernel algorithm ((latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K)).at (env, stream₂)) n history).restrict (latentArmStreamNextActionNeSet target.2)"
+    },
+    {
+      "kind": "theorem",
+      "name": "latentArmStreamTrajectoryKernel_map_frestrictLe_zero",
+      "full_name": "BanditRLProof.Thompson.latentArmStreamTrajectoryKernel_map_frestrictLe_zero",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+      "line": 264,
+      "statement": "theorem latentArmStreamTrajectoryKernel_map_frestrictLe_zero {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (stream : UCB.ArmRewardStream K) : (latentArmStreamTrajectoryKernel algorithm env stream).map (Preorder.frestrictLe 0) = (algorithm.initialAction ⊗ₘ ((latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K)).at (env, stream)).initialFeedback).map singletonPairHistory"
+    },
+    {
+      "kind": "theorem",
       "name": "latentArmStreamTrajectoryKernel_map_frestrictLe_eq_of_streamPrefix_eq",
       "full_name": "BanditRLProof.Thompson.latentArmStreamTrajectoryKernel_map_frestrictLe_eq_of_streamPrefix_eq",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-      "line": 118,
+      "line": 318,
       "statement": "theorem latentArmStreamTrajectoryKernel_map_frestrictLe_eq_of_streamPrefix_eq {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (stream₁ stream₂ : UCB.ArmRewardStream K) (n : Nat) (hstream : Preorder.frestrictLe n stream₁ = Preorder.frestrictLe n stream₂) : (latentArmStreamTrajectoryKernel algorithm env stream₁).map (Preorder.frestrictLe n) = (latentArmStreamTrajectoryKernel algorithm env stream₂).map (Preorder.frestrictLe n)"
     },
     {
@@ -33073,7 +33137,7 @@
       "name": "latentArmStreamVisiblePrefixKernel",
       "full_name": "BanditRLProof.Thompson.latentArmStreamVisiblePrefixKernel",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-      "line": 184,
+      "line": 384,
       "statement": "noncomputable def latentArmStreamVisiblePrefixKernel {Env : Type u} {K : Nat} [MeasurableSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (n : Nat) : Kernel ((i : Finset.Iic n) -> Fin K -> Real) (History.FinitePairHistory (Fin K) Real n)"
     },
     {
@@ -33081,7 +33145,7 @@
       "name": "latentArmStreamTrajectoryKernel_map_frestrictLe_eq_prefixKernel_comap",
       "full_name": "BanditRLProof.Thompson.latentArmStreamTrajectoryKernel_map_frestrictLe_eq_prefixKernel_comap",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-      "line": 208,
+      "line": 408,
       "statement": "theorem latentArmStreamTrajectoryKernel_map_frestrictLe_eq_prefixKernel_comap {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (n : Nat) : (latentArmStreamTrajectoryKernel algorithm env).map (Preorder.frestrictLe n) = (latentArmStreamVisiblePrefixKernel algorithm env n).comap (Preorder.frestrictLe n) (Preorder.measurable_frestrictLe n)"
     },
     {
@@ -33089,7 +33153,7 @@
       "name": "latentArmStreamVisiblePrefixNextAction",
       "full_name": "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextAction",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-      "line": 237,
+      "line": 437,
       "statement": "def latentArmStreamVisiblePrefixNextAction {K : Nat} (n : Nat) : ((t : Nat) -> Fin K × Real) -> History.FinitePairHistory (Fin K) Real n × Fin K"
     },
     {
@@ -33097,7 +33161,7 @@
       "name": "measurable_latentArmStreamVisiblePrefixNextAction",
       "full_name": "BanditRLProof.Thompson.measurable_latentArmStreamVisiblePrefixNextAction",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-      "line": 244,
+      "line": 444,
       "statement": "theorem measurable_latentArmStreamVisiblePrefixNextAction {K : Nat} (n : Nat) : Measurable (latentArmStreamVisiblePrefixNextAction (K := K) n)"
     },
     {
@@ -33105,7 +33169,7 @@
       "name": "latentArmStreamVisibleNextReward",
       "full_name": "BanditRLProof.Thompson.latentArmStreamVisibleNextReward",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-      "line": 251,
+      "line": 451,
       "statement": "def latentArmStreamVisibleNextReward {K : Nat} (n : Nat) : ((t : Nat) -> Fin K × Real) -> Real"
     },
     {
@@ -33113,7 +33177,7 @@
       "name": "measurable_latentArmStreamVisibleNextReward",
       "full_name": "BanditRLProof.Thompson.measurable_latentArmStreamVisibleNextReward",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-      "line": 256,
+      "line": 456,
       "statement": "theorem measurable_latentArmStreamVisibleNextReward {K : Nat} (n : Nat) : Measurable (latentArmStreamVisibleNextReward (K := K) n)"
     },
     {
@@ -33121,7 +33185,7 @@
       "name": "latentArmStreamVisiblePrefixNextActionBranchKernel",
       "full_name": "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextActionBranchKernel",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-      "line": 263,
+      "line": 463,
       "statement": "noncomputable def latentArmStreamVisiblePrefixNextActionBranchKernel {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (n : Nat) (target : Nat × Fin K) : Kernel ({index : Nat × Fin K // index ≠ target} -> Real) (History.FinitePairHistory (Fin K) Real n × Fin K)"
     },
     {
@@ -33129,7 +33193,7 @@
       "name": "latentArmStreamPrefixCountCap",
       "full_name": "BanditRLProof.Thompson.latentArmStreamPrefixCountCap",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-      "line": 290,
+      "line": 490,
       "statement": "def latentArmStreamPrefixCountCap {K : Nat} (n : Nat) (target : Nat × Fin K) : Set (History.FinitePairHistory (Fin K) Real n)"
     },
     {
@@ -33137,39 +33201,183 @@
       "name": "measurableSet_latentArmStreamPrefixCountCap",
       "full_name": "BanditRLProof.Thompson.measurableSet_latentArmStreamPrefixCountCap",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-      "line": 296,
+      "line": 496,
       "statement": "theorem measurableSet_latentArmStreamPrefixCountCap {K : Nat} (n : Nat) (target : Nat × Fin K) : MeasurableSet (latentArmStreamPrefixCountCap n target)"
+    },
+    {
+      "kind": "theorem",
+      "name": "singletonPairHistory_preimage_latentArmStreamPrefixCountCap_zero",
+      "full_name": "BanditRLProof.Thompson.singletonPairHistory_preimage_latentArmStreamPrefixCountCap_zero",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+      "line": 505,
+      "statement": "theorem singletonPairHistory_preimage_latentArmStreamPrefixCountCap_zero {K : Nat} (target : Nat × Fin K) : (@singletonPairHistory (Fin K) Real) ⁻¹' latentArmStreamPrefixCountCap 0 target = latentArmStreamInitialSafeArmSet target ×ˢ Set.univ"
+    },
+    {
+      "kind": "theorem",
+      "name": "latentArmStreamPrefixCountCapLocality_zero",
+      "full_name": "BanditRLProof.Thompson.latentArmStreamPrefixCountCapLocality_zero",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+      "line": 525,
+      "statement": "theorem latentArmStreamPrefixCountCapLocality_zero {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (target : Nat × Fin K) (stream₁ stream₂ : UCB.ArmRewardStream K) (hwithout : UCB.armStreamWithoutCoordinate target stream₁ = UCB.armStreamWithoutCoordinate target stream₂) : ((latentArmStreamTrajectoryKernel algorithm env stream₁).map (Preorder.frestrictLe 0)).restrict (latentArmStreamPrefixCountCap 0 target) = ((latentArmStreamTrajectoryKernel algorithm env stream₂).map (Preorder.frestrictLe 0)).restrict (latentArmStreamPrefixCountCap 0 target)"
+    },
+    {
+      "kind": "def",
+      "name": "latentArmStreamPrefixCountLt",
+      "full_name": "BanditRLProof.Thompson.latentArmStreamPrefixCountLt",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+      "line": 576,
+      "statement": "def latentArmStreamPrefixCountLt {K : Nat} (n : Nat) (target : Nat × Fin K) : Set (History.FinitePairHistory (Fin K) Real n)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurableSet_latentArmStreamPrefixCountLt",
+      "full_name": "BanditRLProof.Thompson.measurableSet_latentArmStreamPrefixCountLt",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+      "line": 581,
+      "statement": "theorem measurableSet_latentArmStreamPrefixCountLt {K : Nat} (n : Nat) (target : Nat × Fin K) : MeasurableSet (latentArmStreamPrefixCountLt n target)"
+    },
+    {
+      "kind": "def",
+      "name": "latentArmStreamPrefixCountEq",
+      "full_name": "BanditRLProof.Thompson.latentArmStreamPrefixCountEq",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+      "line": 589,
+      "statement": "def latentArmStreamPrefixCountEq {K : Nat} (n : Nat) (target : Nat × Fin K) : Set (History.FinitePairHistory (Fin K) Real n)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurableSet_latentArmStreamPrefixCountEq",
+      "full_name": "BanditRLProof.Thompson.measurableSet_latentArmStreamPrefixCountEq",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+      "line": 594,
+      "statement": "theorem measurableSet_latentArmStreamPrefixCountEq {K : Nat} (n : Nat) (target : Nat × Fin K) : MeasurableSet (latentArmStreamPrefixCountEq n target)"
     },
     {
       "kind": "theorem",
       "name": "realHistoryPullCount_extendPairHistorySucc",
       "full_name": "BanditRLProof.Thompson.realHistoryPullCount_extendPairHistorySucc",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-      "line": 305,
+      "line": 603,
       "statement": "theorem realHistoryPullCount_extendPairHistorySucc {K : Nat} (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) (next : Fin K × Real) (arm : Fin K) : ETC.realHistoryPullCount (n + 1) (History.extendPairHistorySucc history next) arm = ETC.realHistoryPullCount n history arm + if next.1 = arm then 1 else 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "mem_latentArmStreamPrefixCountCap_extendPairHistorySucc_iff",
+      "full_name": "BanditRLProof.Thompson.mem_latentArmStreamPrefixCountCap_extendPairHistorySucc_iff",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+      "line": 650,
+      "statement": "theorem mem_latentArmStreamPrefixCountCap_extendPairHistorySucc_iff {K : Nat} (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) (next : Fin K × Real) (target : Nat × Fin K) : History.extendPairHistorySucc history next ∈ latentArmStreamPrefixCountCap (n + 1) target ↔ history ∈ latentArmStreamPrefixCountCap n target ∧ (ETC.realHistoryPullCount n history target.2 < target.1 ∨ next.1 ≠ target.2)"
+    },
+    {
+      "kind": "theorem",
+      "name": "latentArmStreamPrefixCountCap_of_extendPairHistorySucc_mem",
+      "full_name": "BanditRLProof.Thompson.latentArmStreamPrefixCountCap_of_extendPairHistorySucc_mem",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+      "line": 669,
+      "statement": "theorem latentArmStreamPrefixCountCap_of_extendPairHistorySucc_mem {K : Nat} (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) (next : Fin K × Real) (target : Nat × Fin K) (hcap : History.extendPairHistorySucc history next ∈ latentArmStreamPrefixCountCap (n + 1) target) : history ∈ latentArmStreamPrefixCountCap n target"
+    },
+    {
+      "kind": "theorem",
+      "name": "selectedCoordinate_ne_of_extendPairHistorySucc_mem_prefixCountCap",
+      "full_name": "BanditRLProof.Thompson.selectedCoordinate_ne_of_extendPairHistorySucc_mem_prefixCountCap",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+      "line": 682,
+      "statement": "theorem selectedCoordinate_ne_of_extendPairHistorySucc_mem_prefixCountCap {K : Nat} (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) (next : Fin K × Real) (target : Nat × Fin K) (hcap : History.extendPairHistorySucc history next ∈ latentArmStreamPrefixCountCap (n + 1) target) : (ETC.realHistoryPullCount n history next.1, next.1) ≠ target"
+    },
+    {
+      "kind": "theorem",
+      "name": "latentArmStreamSuccessorCountCap_preimage",
+      "full_name": "BanditRLProof.Thompson.latentArmStreamSuccessorCountCap_preimage",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+      "line": 702,
+      "statement": "theorem latentArmStreamSuccessorCountCap_preimage {K : Nat} (n : Nat) (target : Nat × Fin K) : (fun sample : History.FinitePairHistory (Fin K) Real n × (Fin K × Real) => History.extendPairHistorySucc sample.1 sample.2) ⁻¹' latentArmStreamPrefixCountCap (n + 1) target = (latentArmStreamPrefixCountLt n target ×ˢ Set.univ) ∪ (latentArmStreamPrefixCountEq n target ×ˢ latentArmStreamNextActionNeSet target.2)"
+    },
+    {
+      "kind": "def",
+      "name": "latentArmStreamSuccessorCountCapSection",
+      "full_name": "BanditRLProof.Thompson.latentArmStreamSuccessorCountCapSection",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+      "line": 723,
+      "statement": "def latentArmStreamSuccessorCountCapSection {K : Nat} (n : Nat) (target : Nat × Fin K) (history : History.FinitePairHistory (Fin K) Real n) : Set (Fin K × Real)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurableSet_latentArmStreamSuccessorCountCapSection",
+      "full_name": "BanditRLProof.Thompson.measurableSet_latentArmStreamSuccessorCountCapSection",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+      "line": 731,
+      "statement": "theorem measurableSet_latentArmStreamSuccessorCountCapSection {K : Nat} (n : Nat) (target : Nat × Fin K) (history : History.FinitePairHistory (Fin K) Real n) : MeasurableSet (latentArmStreamSuccessorCountCapSection n target history)"
+    },
+    {
+      "kind": "theorem",
+      "name": "historyStepKernel_apply_restrict_successorCountCap_eq_of_withoutCoordinate_eq",
+      "full_name": "BanditRLProof.Thompson.historyStepKernel_apply_restrict_successorCountCap_eq_of_withoutCoordinate_eq",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+      "line": 742,
+      "statement": "theorem historyStepKernel_apply_restrict_successorCountCap_eq_of_withoutCoordinate_eq {Env : Type u} {K : Nat} [MeasurableSpace Env] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (target : Nat × Fin K) (stream₁ stream₂ : UCB.ArmRewardStream K) (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) (hwithout : UCB.armStreamWithoutCoordinate target stream₁ = UCB.armStreamWithoutCoordinate target stream₂) (hcap : history ∈ latentArmStreamPrefixCountCap n target) : (historyStepKernel algorithm ((latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K)).at (env, stream₁)) n history).restrict (latentArmStreamSuccessorCountCapSection n target history) = (historyStepKernel algorithm ((latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K)).at (env, stream₂)) n history).restrict (latentArmStreamSuccessorCountCapSection n target history)"
+    },
+    {
+      "kind": "theorem",
+      "name": "latentArmStreamTrajectoryKernel_map_frestrictLe_restrict_countCap_succ",
+      "full_name": "BanditRLProof.Thompson.latentArmStreamTrajectoryKernel_map_frestrictLe_restrict_countCap_succ",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+      "line": 778,
+      "statement": "theorem latentArmStreamTrajectoryKernel_map_frestrictLe_restrict_countCap_succ {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (target : Nat × Fin K) (stream₁ stream₂ : UCB.ArmRewardStream K) (hwithout : UCB.armStreamWithoutCoordinate target stream₁ = UCB.armStreamWithoutCoordinate target stream₂) (n : Nat) (hprefix : ((latentArmStreamTrajectoryKernel algorithm env stream₁).map (Preorder.frestrictLe n)).restrict (latentArmStreamPrefixCountCap n target) = ((latentArmStreamTrajectoryKernel algorithm env stream₂).map (Preorder.frestrictLe n)).restrict (latentArmStreamPrefixCountCap n target)) : ((latentArmStreamTrajectoryKernel algorithm env stream₁).map (Preorder.frestrictLe (n + 1))).restrict (latentArmStreamPrefixCountCap (n + 1) target) = ((latentArmStreamTrajectoryKernel algorithm env stream₂).map (Preorder.frestrictLe (n + 1))).restrict (latentArmStreamPrefixCountCap (n + 1) target)"
+    },
+    {
+      "kind": "theorem",
+      "name": "latentArmStreamTrajectoryKernel_map_frestrictLe_restrict_countCap_eq_of_withoutCoordinate_eq",
+      "full_name": "BanditRLProof.Thompson.latentArmStreamTrajectoryKernel_map_frestrictLe_restrict_countCap_eq_of_withoutCoordinate_eq",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+      "line": 860,
+      "statement": "theorem latentArmStreamTrajectoryKernel_map_frestrictLe_restrict_countCap_eq_of_withoutCoordinate_eq {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (target : Nat × Fin K) (stream₁ stream₂ : UCB.ArmRewardStream K) (hwithout : UCB.armStreamWithoutCoordinate target stream₁ = UCB.armStreamWithoutCoordinate target stream₂) (n : Nat) : ((latentArmStreamTrajectoryKernel algorithm env stream₁).map (Preorder.frestrictLe n)).restrict (latentArmStreamPrefixCountCap n target) = ((latentArmStreamTrajectoryKernel algorithm env stream₂).map (Preorder.frestrictLe n)).restrict (latentArmStreamPrefixCountCap n target)"
     },
     {
       "kind": "def",
       "name": "LatentArmStreamVisiblePrefixNextActionBranchLocality",
       "full_name": "BanditRLProof.Thompson.LatentArmStreamVisiblePrefixNextActionBranchLocality",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-      "line": 354,
+      "line": 885,
       "statement": "def LatentArmStreamVisiblePrefixNextActionBranchLocality {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (n : Nat) : Prop"
+    },
+    {
+      "kind": "theorem",
+      "name": "latentArmStreamVisiblePrefixNextActionBranchLocality_of_prefixCountCapLocality",
+      "full_name": "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextActionBranchLocality_of_prefixCountCapLocality",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+      "line": 901,
+      "statement": "theorem latentArmStreamVisiblePrefixNextActionBranchLocality_of_prefixCountCapLocality {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (n : Nat) (hcap : ∀ (target : Nat × Fin K) (stream₁ stream₂ : UCB.ArmRewardStream K), UCB.armStreamWithoutCoordinate target stream₁ = UCB.armStreamWithoutCoordinate target stream₂ → (((latentArmStreamTrajectoryKernel algorithm env stream₁).map (Preorder.frestrictLe n)).restrict (latentArmStreamPrefixCountCap n target)) = (((latentArmStreamTrajectoryKernel algorithm env stream₂).map (Preorder.frestrictLe n)).restrict (latentArmStreamPrefixCountCap n target))) : LatentArmStreamVisiblePrefixNextActionBranchLocality algorithm env n"
+    },
+    {
+      "kind": "theorem",
+      "name": "latentArmStreamVisiblePrefixNextActionBranchLocality",
+      "full_name": "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextActionBranchLocality",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+      "line": 983,
+      "statement": "theorem latentArmStreamVisiblePrefixNextActionBranchLocality {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (n : Nat) : LatentArmStreamVisiblePrefixNextActionBranchLocality algorithm env n"
     },
     {
       "kind": "theorem",
       "name": "latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod_of_locality",
       "full_name": "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod_of_locality",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-      "line": 372,
+      "line": 1001,
       "statement": "theorem latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod_of_locality {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) (hlocal : LatentArmStreamVisiblePrefixNextActionBranchLocality algorithm env n) (target : Nat × Fin K) : let branchKernel := ((latentArmStreamTrajectoryKernel algorithm env).map (latentArmStreamVisiblePrefixNextAction n)).restrict (UCB.measurableSet_armStreamHistoryActionCoordinateBranch n target) Measure.map (fun sample : UCB.ArmRewardStream K × (History.FinitePairHistory (Fin K) Real n × Fin K) => (sample.2, UCB.armStreamCoordinate target sample.1)) (UCB.armStreamMeasure nu ⊗ₘ branchKernel) = (Measure.map Prod.snd (UCB.armStreamMeasure nu ⊗ₘ branchKernel)).prod (nu target.2)"
+    },
+    {
+      "kind": "theorem",
+      "name": "latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod",
+      "full_name": "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+      "line": 1032,
+      "statement": "theorem latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) (target : Nat × Fin K) : let branchKernel := ((latentArmStreamTrajectoryKernel algorithm env).map (latentArmStreamVisiblePrefixNextAction n)).restrict (UCB.measurableSet_armStreamHistoryActionCoordinateBranch n target) Measure.map (fun sample : UCB.ArmRewardStream K × (History.FinitePairHistory (Fin K) Real n × Fin K) => (sample.2, UCB.armStreamCoordinate target sample.1)) (UCB.armStreamMeasure nu ⊗ₘ branchKernel) = (Measure.map Prod.snd (UCB.armStreamMeasure nu ⊗ₘ branchKernel)).prod (nu target.2)"
     },
     {
       "kind": "theorem",
       "name": "latentArmStreamTrajectoryMeasure_map_visiblePrefix_nextAction_eq_compProd",
       "full_name": "BanditRLProof.Thompson.latentArmStreamTrajectoryMeasure_map_visiblePrefix_nextAction_eq_compProd",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-      "line": 404,
+      "line": 1059,
       "statement": "theorem latentArmStreamTrajectoryMeasure_map_visiblePrefix_nextAction_eq_compProd {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) : Measure.map (fun sample : UCB.ArmRewardStream K × ((t : Nat) -> Fin K × Real) => latentArmStreamVisiblePrefixNextAction n sample.2) (latentArmStreamTrajectoryMeasure algorithm env nu) = Measure.map (fun sample : UCB.ArmRewardStream K × ((t : Nat) -> Fin K × Real) => Preorder.frestrictLe n sample.2) (latentArmStreamTrajectoryMeasure algorithm env nu) ⊗ₘ algorithm.policy n"
     },
     {
@@ -33177,7 +33385,7 @@
       "name": "latentArmStreamVisibleNextReward_eq_selectedCoordinate_ae",
       "full_name": "BanditRLProof.Thompson.latentArmStreamVisibleNextReward_eq_selectedCoordinate_ae",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-      "line": 440,
+      "line": 1095,
       "statement": "theorem latentArmStreamVisibleNextReward_eq_selectedCoordinate_ae {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) : ∀ᵐ sample ∂latentArmStreamTrajectoryMeasure algorithm env nu, latentArmStreamVisibleNextReward n sample.2 = UCB.armStreamCoordinate (UCB.armStreamCoordinateOfHistoryAction n (latentArmStreamVisiblePrefixNextAction n sample.2)) sample.1"
     },
     {
@@ -33185,7 +33393,7 @@
       "name": "latentArmStreamTrajectoryMeasure_map_stream_visiblePrefix_eq",
       "full_name": "BanditRLProof.Thompson.latentArmStreamTrajectoryMeasure_map_stream_visiblePrefix_eq",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-      "line": 474,
+      "line": 1129,
       "statement": "theorem latentArmStreamTrajectoryMeasure_map_stream_visiblePrefix_eq {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) : Measure.map (fun sample : UCB.ArmRewardStream K × ((t : Nat) -> Fin K × Real) => (Preorder.frestrictLe n sample.1, Preorder.frestrictLe n sample.2)) (latentArmStreamTrajectoryMeasure algorithm env nu) = Measure.pi (fun _ : Finset.Iic n => Measure.infinitePi fun arm : Fin K => nu arm) ⊗ₘ latentArmStreamVisiblePrefixKernel algorithm env n"
     },
     {
@@ -55558,10 +55766,26 @@
     },
     {
       "kind": "theorem",
+      "name": "compProd_restrict_eq_of_base_restrict_eq_of_fiber_restrict_eq",
+      "full_name": "BanditRLProof.Measure.compProd_restrict_eq_of_base_restrict_eq_of_fiber_restrict_eq",
+      "file": "BanditRLProof/KernelIndependentExtension.lean",
+      "line": 44,
+      "statement": "theorem compProd_restrict_eq_of_base_restrict_eq_of_fiber_restrict_eq {A B : Type*} [MeasurableSpace A] [MeasurableSpace B] {mu nu : Measure A} [SFinite mu] [SFinite nu] {kernel eta : Kernel A B} [IsSFiniteKernel kernel] [IsSFiniteKernel eta] {baseSafe : Set A} {safe : Set (A × B)} (hbaseSafe : MeasurableSet baseSafe) (hsafe : MeasurableSet safe) (hsafe_base : safe ⊆ baseSafe ×ˢ Set.univ) (hbase : mu.restrict baseSafe = nu.restrict baseSafe) (hfiber : ∀ a ∈ baseSafe, (kernel a).restrict (Prod.mk a ⁻¹' safe) = (eta a).restrict (Prod.mk a ⁻¹' safe)) : (mu ⊗ₘ kernel).restrict safe = (nu ⊗ₘ eta).restrict safe"
+    },
+    {
+      "kind": "theorem",
+      "name": "map_compProd_restrict_eq_of_base_restrict_eq_of_fiber_restrict_eq",
+      "full_name": "BanditRLProof.Measure.map_compProd_restrict_eq_of_base_restrict_eq_of_fiber_restrict_eq",
+      "file": "BanditRLProof/KernelIndependentExtension.lean",
+      "line": 116,
+      "statement": "theorem map_compProd_restrict_eq_of_base_restrict_eq_of_fiber_restrict_eq {A B C : Type*} [MeasurableSpace A] [MeasurableSpace B] [MeasurableSpace C] {mu nu : Measure A} [SFinite mu] [SFinite nu] {kernel eta : Kernel A B} [IsSFiniteKernel kernel] [IsSFiniteKernel eta] (successor : A × B → C) (hsuccessor : Measurable successor) {baseSafe : Set A} {successorSafe : Set C} (hbaseSafe : MeasurableSet baseSafe) (hsuccessorSafe : MeasurableSet successorSafe) (hpreimage_base : successor ⁻¹' successorSafe ⊆ baseSafe ×ˢ Set.univ) (hbase : mu.restrict baseSafe = nu.restrict baseSafe) (hfiber : ∀ a ∈ baseSafe, (kernel a).restrict (Prod.mk a ⁻¹' (successor ⁻¹' successorSafe)) = (eta a).restrict (Prod.mk a ⁻¹' (successor ⁻¹' successorSafe))) : ((mu ⊗ₘ kernel).map successor).restrict successorSafe = ((nu ⊗ₘ eta).map successor).restrict successorSafe"
+    },
+    {
+      "kind": "theorem",
       "name": "IndepFun.comp_of_map",
       "full_name": "BanditRLProof.IndepFun.comp_of_map",
       "file": "BanditRLProof/KernelIndependentExtension.lean",
-      "line": 45,
+      "line": 145,
       "statement": "theorem IndepFun.comp_of_map {Omega Sample X Y : Type*} [MeasurableSpace Omega] [MeasurableSpace Sample] [MeasurableSpace X] [MeasurableSpace Y] {mu : Measure Omega} {z : Omega -> Sample} {x : Sample -> X} {y : Sample -> Y} (hz : Measurable z) (hx : Measurable x) (hy : Measurable y) (hindep : IndepFun x y (mu.map z)) : IndepFun (x ∘ z) (y ∘ z) mu"
     },
     {
@@ -55569,7 +55793,7 @@
       "name": "indepFun_fst_snd_compProd_comap_of_indepFun",
       "full_name": "BanditRLProof.indepFun_fst_snd_compProd_comap_of_indepFun",
       "file": "BanditRLProof/KernelIndependentExtension.lean",
-      "line": 65,
+      "line": 165,
       "statement": "theorem indepFun_fst_snd_compProd_comap_of_indepFun {Omega X Past Output : Type*} [MeasurableSpace Omega] [MeasurableSpace X] [MeasurableSpace Past] [MeasurableSpace Output] (mu : Measure Omega) [IsProbabilityMeasure mu] (x : Omega -> X) (hx : Measurable x) (past : Omega -> Past) (hpast : Measurable past) (kernel : Kernel Past Output) [IsMarkovKernel kernel] (hindep : IndepFun x past mu) : IndepFun (x ∘ Prod.fst) Prod.snd (mu ⊗ₘ kernel.comap past hpast)"
     },
     {
@@ -55577,7 +55801,7 @@
       "name": "map_snd_x_compProd_comap_eq_prod_map_of_indepFun",
       "full_name": "BanditRLProof.map_snd_x_compProd_comap_eq_prod_map_of_indepFun",
       "file": "BanditRLProof/KernelIndependentExtension.lean",
-      "line": 115,
+      "line": 215,
       "statement": "theorem map_snd_x_compProd_comap_eq_prod_map_of_indepFun {Omega X Past Output : Type*} [MeasurableSpace Omega] [MeasurableSpace X] [MeasurableSpace Past] [MeasurableSpace Output] (mu : Measure Omega) [IsProbabilityMeasure mu] (x : Omega -> X) (hx : Measurable x) (past : Omega -> Past) (hpast : Measurable past) (kernel : Kernel Past Output) [IsFiniteKernel kernel] (hindep : IndepFun x past mu) : Measure.map (fun sample : Omega × Output => (sample.2, x sample.1)) (mu ⊗ₘ kernel.comap past hpast) = (Measure.map Prod.snd (mu ⊗ₘ kernel.comap past hpast)).prod (Measure.map x mu)"
     },
     {
@@ -93387,6 +93611,55 @@
         "independent read-only semantic/status/tooling review; original stale-blueprint P2 fixed by lifecycle refresh; final no P0-P3",
         "NativeTrajectory exact 21; Round17 exact 13; BranchLocality indexed as def Prop; producer and Theorem-2 endpoint false",
         "lake build Tests 8890 jobs; repository check 348 tests; supplement 23 tests; site 656 pages"
+      ]
+    },
+    {
+      "changed_files": [
+        "BanditRLProof/KernelIndependentExtension.lean",
+        "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+        "Tests/StochasticGradientBanditTheoremTwoNativeTrajectoryCanary.lean"
+      ],
+      "kind": "build",
+      "lean": "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextActionBranchLocality",
+      "notes": "Compiled the finite count-cap induction and branchwise latent-coordinate product law. This discharges branch locality only. Aggregate selected-reward freshness, native-prefix identification, selected IID, future/no-return, ballot/asymptotic assembly, and source Theorem 2 remain blocked.",
+      "parent_id": "",
+      "role": "lower",
+      "route_fingerprint": "",
+      "run_id": "sgb-theorem2-branch-locality-round18-2026-08-28",
+      "source": "PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB",
+      "statement_hash": "",
+      "status": "compiled",
+      "task": "PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE",
+      "time": "2026-08-28T06:09:16+00:00",
+      "verifier_evidence": [
+        "targeted canary compiled; lake build completed 8850 jobs; tools/bandit.py check passed with 348 Python tests and 7 expected skips; proof graph validated with 15065 project nodes and 732537 edges; anonymous supplement independently verified"
+      ]
+    },
+    {
+      "changed_files": [
+        "BanditRLProof/KernelIndependentExtension.lean",
+        "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+        "Tests/StochasticGradientBanditTheoremTwoNativeTrajectoryCanary.lean",
+        "tools/build_anonymous_iclr_supplement.py",
+        "artifact/anonymous-supplement/verify_artifact.py",
+        "tools/test_build_anonymous_iclr_supplement.py"
+      ],
+      "kind": "review",
+      "lean": "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextActionBranchLocality",
+      "notes": "Independent review accepted the compiled count-capped branch-locality producer and unconditional branchwise product law. It did not promote aggregate selected-reward freshness, native trajectory equality, selected IID, future/no-return, phase probability, asymptotic assembly, or the frozen Theorem-2 terminal.",
+      "parent_id": "",
+      "role": "reviewer",
+      "route_fingerprint": "",
+      "run_id": "sgb-theorem2-branch-locality-round18-2026-08-28",
+      "source": "local-independent-review",
+      "statement_hash": "",
+      "status": "accepted",
+      "task": "PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE",
+      "time": "2026-08-28T06:36:49+00:00",
+      "verifier_evidence": [
+        "Independent read-only semantic, status, lifecycle, website, and tooling review found no P0/P1/P2 issues after fixes",
+        "Final tools/bandit.py check passed: 8890 Lean jobs and 350 Python tests with 7 expected skips",
+        "Anonymous artifact final3 SHA-256 877988fcd78e20ae4e4ee81a1ceb2d0ee77e440dcce43d6711e54df0399b4c84 verified twice in one fresh extraction without mutation"
       ]
     }
   ],

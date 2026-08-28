@@ -982,6 +982,15 @@ def main() -> int:
     ]
     if len(sgb_action_items) != 1 or sgb_action_items[0].get("chapter") != "Frontier":
         errors.append("SGB next-action factorization must resolve to the Frontier chapter")
+    sgb_branch_declaration = (
+        "BanditRLProof.Thompson."
+        "latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod"
+    )
+    sgb_branch_items = [
+        item for item in search_items if item.get("name") == sgb_branch_declaration
+    ]
+    if len(sgb_branch_items) != 1 or sgb_branch_items[0].get("chapter") != "Frontier":
+        errors.append("SGB unconditional branch product must resolve to the Frontier chapter")
     frontier_source = (output / "chapters" / "frontier" / "index.html").read_text(encoding="utf-8")
     for required in (
         "A Novel General Framework for Sharp Lower Bounds in Succinct Stochastic Bandits",
@@ -993,9 +1002,10 @@ def main() -> int:
         "physical PDF p. 5",
         "Theorem 2 (two-arm SGB phase transition)",
         "physical PDF p. 6; Appendix C pp. 31–40",
-        "316 = 223 + 23 + 18 + 24 + 7 + 8 + 13",
+        "344 = 223 + 23 + 18 + 24 + 7 + 8 + 13 + 28",
         "LatentArmStreamVisiblePrefixNextActionBranchLocality",
         sgb_action_declaration,
+        sgb_branch_declaration,
     ):
         if required not in frontier_source:
             errors.append(f"Frontier reading guide is missing source or status metadata: {required}")
