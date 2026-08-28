@@ -50,9 +50,9 @@ reports zero `literature-open` cases until a scoped primary-source audit support
 such a claim; one case remains in the source-audit queue, while the 13
 formalization-open cases expose 39 stable named leaves. Two additional
 source-frozen ports—the 54-declaration succinct-lower-bound audit and the
-344-declaration stochastic-gradient-bandit audit—are displayed outside that
+352-declaration stochastic-gradient-bandit audit—are displayed outside that
 comparison ledger.  The latter has the exact audit-slice inventory
-`344 = 223 + 23 + 18 + 24 + 7 + 8 + 13 + 28`: a historical 223-declaration
+`352 = 223 + 23 + 18 + 24 + 7 + 8 + 13 + 28 + 8`: a historical 223-declaration
 Theorem-1/Appendix-E stack, a 23-declaration bounded Corollary-1 companion, an
 18-declaration fixed-cutoff starvation consumer, a 24-declaration chronological
 nth-pull bridge, and a 7-declaration latent fixed-arm product/readout layer.  The
@@ -66,9 +66,12 @@ and supplies a finite/sub-Markov branch-product consumer conditional on an
 explicit locality premise plus count-cap measurability and recurrence.  A new
 28-declaration producer layer proves two reusable safe-fiber measure bridges,
 the count-cap restricted-law induction, that exact locality contract, and an
-unconditional target-by-target branch product.  Aggregate selected-reward
-freshness, selected-reward IID, the visible-marginal/native-prefix
-identification, and the native visible law remain unproved.  The stopped-prefix future-
+unconditional target-by-target branch product.  A final eight-declaration
+aggregation/readout layer sums the countable pull-count/arm branches and proves
+the exact deterministic-time next-reward joint and conditional laws on the
+latent coupling and its visible marginal.  Selected-reward IID, the
+visible-marginal/native-prefix identification, and the native visible law
+remain unproved.  The stopped-prefix future-
 cylinder, conditional no-return producer, ballot phase, asymptotic assembly,
 and terminal remain blocked.  The SGB audit therefore remains partial, with
 Theorems 2–4 open;

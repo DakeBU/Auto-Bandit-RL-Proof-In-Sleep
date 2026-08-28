@@ -58,6 +58,14 @@ namespace Thompson
 #check latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod
 #check latentArmStreamTrajectoryMeasure_map_visiblePrefix_nextAction_eq_compProd
 #check latentArmStreamVisibleNextReward_eq_selectedCoordinate_ae
+#check measurable_latentArmStreamSelectedCoordinate
+#check latentArmStreamVisiblePrefixNextAction_selectedCoordinate_branch_eq_prod
+#check latentArmStreamVisiblePrefixNextAction_selectedCoordinate_mixed_eq_compProd
+#check latentArmStreamVisiblePrefixNextAction_selectedCoordinate_eq_compProd
+#check latentArmStreamVisibleNextReward_joint_eq_compProd
+#check latentArmStreamVisibleNextReward_condDistrib_ae_eq_nu
+#check latentArmStreamVisibleTrajectoryMeasure_nextReward_joint_eq_compProd
+#check latentArmStreamVisibleTrajectoryMeasure_nextReward_condDistrib_ae_eq_nu
 #check latentArmStreamTrajectoryMeasure_map_stream_visiblePrefix_eq
 
 /-- Direct-use canary for the discharged branch-locality contract. -/
@@ -68,9 +76,9 @@ example
     LatentArmStreamVisiblePrefixNextActionBranchLocality algorithm env n := by
   exact latentArmStreamVisiblePrefixNextActionBranchLocality algorithm env n
 
-/-- The deferred-decisions layer now proves branch locality and its branchwise
-product law while leaving aggregate selected-reward freshness and native-prefix
-identification explicit. -/
+/-- The deferred-decisions layer proves branch locality, branch aggregation,
+and one-step selected-reward freshness while leaving native-prefix
+identification and selected-IID laws explicit. -/
 example
     {Env : Type} {K : Nat} [MeasurableSpace Env]
     [StandardBorelSpace Env] [NeZero K]
@@ -88,6 +96,25 @@ example
   exact latentArmStreamTrajectoryMeasure_map_stream_visiblePrefix_eq
     algorithm env nu n
 
+/-- Direct-use canary for selected-reward freshness on the observable trajectory
+marginal. -/
+example
+    {Env : Type} {K : Nat} [MeasurableSpace Env]
+    [StandardBorelSpace Env] [NeZero K]
+    (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)
+    (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) :
+    let visibleMeasure :=
+      (latentArmStreamTrajectoryMeasure algorithm env nu).map Prod.snd
+    condDistrib
+        (latentArmStreamVisibleNextReward n)
+        (latentArmStreamVisiblePrefixNextAction n)
+        visibleMeasure =ᵐ[
+      visibleMeasure.map (latentArmStreamVisiblePrefixNextAction n)]
+      UCB.armStreamSelectedRewardKernel n nu := by
+  exact
+    latentArmStreamVisibleTrajectoryMeasure_nextReward_condDistrib_ae_eq_nu
+      algorithm env nu n
+
 #print axioms UCB.armStreamMeasure_map_frestrictLe_eq_pi
 #print axioms Measure.compProd_restrict_prod
 #print axioms Measure.compProd_restrict_eq_of_base_restrict_eq_of_fiber_restrict_eq
@@ -102,6 +129,14 @@ example
 #print axioms latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod
 #print axioms latentArmStreamTrajectoryMeasure_map_visiblePrefix_nextAction_eq_compProd
 #print axioms latentArmStreamVisibleNextReward_eq_selectedCoordinate_ae
+#print axioms measurable_latentArmStreamSelectedCoordinate
+#print axioms latentArmStreamVisiblePrefixNextAction_selectedCoordinate_branch_eq_prod
+#print axioms latentArmStreamVisiblePrefixNextAction_selectedCoordinate_mixed_eq_compProd
+#print axioms latentArmStreamVisiblePrefixNextAction_selectedCoordinate_eq_compProd
+#print axioms latentArmStreamVisibleNextReward_joint_eq_compProd
+#print axioms latentArmStreamVisibleNextReward_condDistrib_ae_eq_nu
+#print axioms latentArmStreamVisibleTrajectoryMeasure_nextReward_joint_eq_compProd
+#print axioms latentArmStreamVisibleTrajectoryMeasure_nextReward_condDistrib_ae_eq_nu
 #print axioms latentArmStreamTrajectoryMeasure_map_stream_visiblePrefix_eq
 
 end Thompson

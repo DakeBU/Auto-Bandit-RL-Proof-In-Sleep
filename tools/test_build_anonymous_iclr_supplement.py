@@ -636,7 +636,7 @@ class AnonymousSupplementTests(unittest.TestCase):
             [BUILDER.SGB_AUDIT_ID, BUILDER.SGB_FOLLOW_ON_ID],
         )
         self.assertEqual(
-            ledger["stochastic_gradient_bandit"]["declaration_count"], 344
+            ledger["stochastic_gradient_bandit"]["declaration_count"], 352
         )
         self.assertEqual(
             ledger["stochastic_gradient_bandit"][
@@ -697,6 +697,12 @@ class AnonymousSupplementTests(unittest.TestCase):
                 "theorem_two_branch_locality_producer_declaration_count"
             ],
             28,
+        )
+        self.assertEqual(
+            ledger["stochastic_gradient_bandit"][
+                "theorem_two_selected_reward_freshness_declaration_count"
+            ],
+            8,
         )
         self.assertEqual(
             ledger["stochastic_gradient_bandit"]["finite_algebra_declaration_count"],
@@ -784,12 +790,15 @@ class AnonymousSupplementTests(unittest.TestCase):
             "source_theorem_two_count_cap_scaffold_compiled",
             "source_theorem_two_branch_locality_producer_compiled",
             "source_theorem_two_unconditional_branch_product_compiled",
+            "source_theorem_two_freshness_compiled",
+            "source_theorem_two_visible_marginal_freshness_compiled",
         ):
             self.assertTrue(ledger["stochastic_gradient_bandit"][flag])
         for missing_bridge in (
+            "deterministic-time one-step selected-reward freshness",
             "visible-marginal/native-prefix identification",
-            "aggregate selected-reward freshness",
             "full native visible law",
+            "stopped or pull-ordered selected IID",
             "stopped-prefix future-cylinder",
             "conditional no-return probability >= 1/2",
             "Rademacher/binomial ballot phase",
@@ -810,6 +819,11 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertFalse(
             ledger["stochastic_gradient_bandit"][
                 "source_theorem_two_endpoint_verified"
+            ]
+        )
+        self.assertFalse(
+            ledger["stochastic_gradient_bandit"][
+                "source_theorem_two_native_prefix_identification_compiled"
             ]
         )
         self.assertTrue(
@@ -893,7 +907,7 @@ class AnonymousSupplementTests(unittest.TestCase):
         succinct = rows["succinct-lower-bound-source-frozen-audit"]
         self.assertEqual(succinct["compiled_declaration_count"], 54)
         sgb = rows["stochastic-gradient-bandit-source-frozen-audit"]
-        self.assertEqual(sgb["compiled_declaration_count"], 344)
+        self.assertEqual(sgb["compiled_declaration_count"], 352)
         self.assertEqual(
             sgb["evidence_record_ids"],
             [BUILDER.SGB_AUDIT_ID, BUILDER.SGB_FOLLOW_ON_ID],
@@ -921,6 +935,7 @@ class AnonymousSupplementTests(unittest.TestCase):
                 "source_theorem_two_deferred_decisions_prefix_factorization": 8,
                 "source_theorem_two_action_readout_branch_locality_interface_and_count_cap_scaffold": 13,
                 "source_theorem_two_branch_locality_producer": 28,
+                "source_theorem_two_selected_reward_freshness_aggregation": 8,
             },
         )
         for row in (delayed, succinct, sgb):
@@ -943,6 +958,9 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertTrue(sgb["theorem_two_count_cap_scaffold_compiled"])
         self.assertTrue(sgb["theorem_two_branch_locality_producer_compiled"])
         self.assertTrue(sgb["theorem_two_unconditional_branch_product_compiled"])
+        self.assertTrue(sgb["theorem_two_freshness_compiled"])
+        self.assertTrue(sgb["theorem_two_visible_marginal_freshness_compiled"])
+        self.assertFalse(sgb["theorem_two_native_prefix_identification_compiled"])
 
     def test_theorem_audit_comparison_rejects_status_and_count_drift(self):
         records = BUILDER.selected_source_records()
@@ -1046,6 +1064,7 @@ class AnonymousSupplementTests(unittest.TestCase):
             BUILDER.SGB_THEOREM_TWO_LATENT_REWARD_DECLARATIONS,
             BUILDER.SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATIONS,
             BUILDER.SGB_THEOREM_TWO_ACTION_READOUT_BRANCH_LOCALITY_INTERFACE_AND_COUNT_CAP_SCAFFOLD_DECLARATIONS,
+            BUILDER.SGB_THEOREM_TWO_SELECTED_REWARD_FRESHNESS_DECLARATIONS,
         )
         for required in required_sets:
             with self.subTest(victim_set=sorted(required)):
@@ -1054,7 +1073,10 @@ class AnonymousSupplementTests(unittest.TestCase):
                     BUILDER.REPO_ROOT / "research-wiki" / "retrieval-index" /
                     "local_lean_declarations.json"
                 )
-                victim = next(iter(required))
+                noncritical = required - frozenset(
+                    BUILDER.SGB_THEOREM_TWO_FRESHNESS_CRITICAL_THEOREM_FILES
+                )
+                victim = sorted(noncritical or required)[0]
                 replacement = victim + "_drifted"
                 record_id = (
                     BUILDER.SGB_AUDIT_ID
@@ -1070,7 +1092,7 @@ class AnonymousSupplementTests(unittest.TestCase):
                 row["full_name"] = replacement
                 with self.assertRaisesRegex(
                     ValueError,
-                    "344 declarations: historical 223",
+                    "352 declarations: historical 223",
                 ):
                     BUILDER.validate_sgb_count(records, index)
 
@@ -1099,6 +1121,34 @@ class AnonymousSupplementTests(unittest.TestCase):
                 with self.assertRaisesRegex(
                     ValueError,
                     "branch-locality theorem metadata drift",
+                ):
+                    BUILDER.validate_sgb_count(records, index)
+
+    def test_sgb_selected_reward_freshness_critical_theorem_metadata_is_frozen(self):
+        victim = (
+            "BanditRLProof.Thompson."
+            "latentArmStreamVisibleTrajectoryMeasure_nextReward_condDistrib_ae_eq_nu"
+        )
+        mutations = (
+            ("kind-axiom", "kind", "axiom"),
+            ("kind-def", "kind", "def"),
+            ("source-file", "file", BUILDER.SGB_THEOREM_TWO_LATENT_REWARD_FILE),
+        )
+        for label, field, replacement in mutations:
+            with self.subTest(mutation=label):
+                records = json.loads(json.dumps(BUILDER.selected_source_records()))
+                index = BUILDER.load_json(
+                    BUILDER.REPO_ROOT / "research-wiki" / "retrieval-index" /
+                    "local_lean_declarations.json"
+                )
+                row = next(
+                    item for item in index["declarations"]
+                    if item["full_name"] == victim
+                )
+                row[field] = replacement
+                with self.assertRaisesRegex(
+                    ValueError,
+                    "selected-reward freshness theorem metadata drift",
                 ):
                     BUILDER.validate_sgb_count(records, index)
 

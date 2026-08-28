@@ -111,19 +111,22 @@ evidence states:
    step-kernel transport, all-time count-capped prefix induction, the exact
    `LatentArmStreamVisiblePrefixNextActionBranchLocality` contract, and the
    resulting unconditional branchwise selected-coordinate product law.
-6. **Blocked native/selected-law half:** aggregate the exact coordinate
-   branches into selected-reward freshness, identify the visible marginal of
-   the compiled finite mixture with the native fixed-IID SGB prefix law,
-   extend the identification to the required native visible law by trajectory
-   uniqueness, and transport the latent phase event and source embedded-chain
-   recurrence.  Branchwise product laws, stream-marginal equality, a.e. reward
-   readout, and joint finite-mixture factorization still do not by themselves
-   imply aggregate selected-reward IID or native trajectory-law equality.
-7. Compile Appendix-C Step 1: if the optimal-arm probability after its `n`th
+6. **Compiled one-step selected-reward freshness:** a countable partition over
+   the exact `(pull count, selected arm)` branches aggregates the branchwise
+   product laws; the a.e. selected-coordinate readout then gives the exact
+   joint and conditional next-reward laws, both on the latent coupling and on
+   its visible-trajectory marginal.
+7. **Blocked native/selected-law half:** identify the visible marginal with
+   the native fixed-IID SGB prefix law, extend that identification to the
+   required native visible law by trajectory uniqueness, and transport the
+   latent phase event and source embedded-chain recurrence.  Deterministic-time
+   one-step conditional freshness still does not by itself imply
+   pull-ordered selected-reward IID or native trajectory-law equality.
+8. Compile Appendix-C Step 1: if the optimal-arm probability after its `n`th
    pull is at most `1/(2*T)`, the conditional probability of no further
    optimal-arm pull over the remaining horizon is at least `1/2`, yielding
    the exact starvation regret charge.
-8. Build the `S0`/`S1` phase producer: latent IID reward-block law plus its
+9. Build the `S0`/`S1` phase producer: latent IID reward-block law plus its
    native-process transport, Rademacher anti-concentration, ballot-prefix
    constraint, and the
    deterministic implication into the starvation event.
@@ -162,14 +165,15 @@ evidence that the polynomial lower-bound route is complete.
 
 ## Current verified outcome (2026-08-28)
 
-- The source-audit inventory is now 344 named declarations:
-  `223 + 23 + 18 + 24 + 7 + 8 + 13 + 28` for the historical audit, Corollary-1
+- The source-audit inventory is now 352 named declarations:
+  `223 + 23 + 18 + 24 + 7 + 8 + 13 + 28 + 8` for the historical audit, Corollary-1
   companion, fixed-cutoff consumer, nth-pull bridge, latent product/readout,
   deferred-decisions finite-prefix factorization, and the action/readout plus
-  branch-locality interface/count-cap scaffold, followed by the branch-locality
-  producer respectively.  The final 28 comprise two reusable measure bridges
-  and 26 route-specific declarations; this audit-slice count must not be read
-  as 344 source-paper theorems.
+  branch-locality interface/count-cap scaffold, the branch-locality producer,
+  and the one-step freshness aggregation layer respectively.  The 28-declaration
+  layer comprises two reusable measure bridges and 26 route-specific
+  declarations; this audit-slice count must not be read as 352 source-paper
+  theorems.
 - `twoArmFixedIIDDirac_corollaryOne_piecewise` and
   `twoArmFixedIIDDirac_corollaryOne` compile for the generated fixed-IID
   two-arm trajectory, actual sampled pseudo-regret, `0 < Delta < 1`, source
@@ -209,9 +213,18 @@ evidence that the polynomial lower-bound route is complete.
   `latentArmStreamVisiblePrefixNextActionBranchLocality`, and the unconditional
   `latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod`.  Thus the
   uppercase locality contract is now discharged, not merely typed.
+- A separate eight-declaration aggregation/readout layer partitions the
+  condition law by pull-count/arm branches, sums the exact restricted product
+  laws, transports them back through the latent trajectory coupling, and
+  compiles the exact one-step selected-reward joint and conditional laws on
+  both the coupling and its visible-trajectory marginal.  The terminal
+  observable statement is
+  `latentArmStreamVisibleTrajectoryMeasure_nextReward_condDistrib_ae_eq_nu`.
+  This is deterministic-time conditional freshness given the visible history
+  and next action; it is not a pull-ordered selected-IID theorem.
 - The latent coupling's visible trajectory law has not yet been proved equal
-  to the native fixed-IID SGB trajectory law.  Aggregate selected-reward
-  freshness, native-prefix identification, conditional no-return probability
+  to the native fixed-IID SGB trajectory law.  Native-prefix identification,
+  pull-ordered selected-IID transport, conditional no-return probability
   `>= 1/2`, the Rademacher/ballot phase producer, asymptotic
   assembly, and the frozen Theorem-2 terminal remain uncompiled.  The central
   target therefore remains blocked; the compiled latent product/readout,

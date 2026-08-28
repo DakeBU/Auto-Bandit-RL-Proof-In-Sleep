@@ -1414,7 +1414,7 @@
       "math": "\\(\\mathcal L((Z_{i,0})_{i<m})=\\bigotimes_{i<m}\\nu_0.\\)",
       "intuition": "The coupling gives each arm an infinite private stream of fresh rewards. Adaptive actions decide when a coordinate is consumed, but they do not change the unconditional product law of the latent coordinates themselves.",
       "why": "Appendix C groups rewards by optimal-arm pull count. This theorem makes the independent finite reward blocks explicit before any ballot or anti-concentration calculation is attempted.",
-      "position": "This is a compiled latent-law producer, not the native selected-reward theorem or Theorem 2. Separate compiled theorems give finite nth-pull readout, finite stream-box factorization, and target-by-target branch locality. Aggregating the branch products into selected-reward freshness and identifying the mixture's visible marginal with the native prefix remain open.",
+      "position": "This is a compiled latent-law producer, not the native selected-reward theorem or Theorem 2. Separate compiled theorems give finite nth-pull readout, finite stream-box factorization, target-by-target branch locality, and deterministic-time one-step selected-reward freshness. Identifying the mixture's visible marginal with the native prefix and transporting stopped pull-ordered blocks remain open.",
       "proof_idea": "Restrict the mutually independent time-arm coordinate family to the injective finite index map i maps to (i,0), use Mathlib's equivalence between finite independence and a product pushforward, identify each coordinate marginal, and lift the result through the coupling's exact stream marginal.",
       "lean_notes": "The theorem does not totalize missing pulls, condition on all requested pulls occurring, or assert that the visible trajectory marginal of the coupling equals the canonical Unit-environment fixed-IID SGB law. Those distinctions prevent a stopping-dependent selection event from being silently treated as independent.",
       "dependencies": [
@@ -1432,7 +1432,7 @@
       "why": "This isolates the exact finite joint mixture whose visible marginal a native-trajectory adapter must identify. It prevents the stronger native law from being smuggled in through an informal coupling argument.",
       "position": "This eight-declaration finite-prefix factorization is compiled. It does not identify the mixture's visible marginal with the native fixed-IID SGB prefix, establish the native visible trajectory law, or prove Theorem 2.",
       "proof_idea": "Map the infinite arm-stream product to its inclusive finite restriction, prove equality of the canonical generated prefix laws under equal stream boxes, package that kernel-law locality as a Markov prefix kernel, and map the stream/trajectory compProd through both restrictions.",
-      "lean_notes": "The cutoff n is inclusive, so the stream box contains coordinates 0 through n for every arm. The right side is a kernel mixture, not an independence assertion between the latent box and visible prefix. Target-by-target branch products now compile, but their aggregate selected-reward law, visible-marginal/native-prefix identification, and the stopped future-cylinder law remain unproved.",
+      "lean_notes": "The cutoff n is inclusive, so the stream box contains coordinates 0 through n for every arm. The right side is a kernel mixture, not an independence assertion between the latent box and visible prefix. Target-by-target branch products and their deterministic-time one-step aggregation now compile, but visible-marginal/native-prefix identification, stopped selected-IID transport, and the future-cylinder law remain unproved.",
       "dependencies": [
         "BanditRLProof.UCB.armStreamMeasure_map_frestrictLe_eq_pi",
         "BanditRLProof.Thompson.latentArmStreamTrajectoryKernel_map_frestrictLe_eq_of_streamPrefix_eq",
@@ -1448,7 +1448,7 @@
       "why": "A native-trajectory adapter must separate next-action randomization from selected-reward freshness. Proving the action factorization first leaves the genuine deferred-decisions obligation visible instead of hiding it inside a larger kernel equality.",
       "position": "This is an unconditional compiled theorem in the 13-declaration action/readout and branch-locality-interface scaffold. It is not a selected-reward freshness theorem, native trajectory-law identification, or Theorem 2.",
       "proof_idea": "Apply the generic trajectory-mixture action-law transport to each fixed latent stream, use the canonical history algorithm's policy law at the shifted successor coordinate, and then mix the stream out.",
-      "lean_notes": "A separate compiled almost-sure theorem identifies the observed next reward with the selected latent coordinate. The count-capped restricted-measure induction now proves LatentArmStreamVisiblePrefixNextActionBranchLocality and discharges the finite/sub-Markov branch-product consumer. Aggregating those target branches into selected-reward freshness and selected IID remains open.",
+      "lean_notes": "A separate compiled almost-sure theorem identifies the observed next reward with the selected latent coordinate. The count-capped restricted-measure induction proves LatentArmStreamVisiblePrefixNextActionBranchLocality, and a later countable aggregation theorem now closes deterministic-time one-step freshness. Selected IID and native-process identification remain open.",
       "dependencies": [
         "BanditRLProof.Thompson.latentArmStreamTrajectoryMeasure",
         "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextAction",
@@ -1462,15 +1462,32 @@
       "plain": "On the branch where the next selected reward coordinate is a fixed target, the visible prefix and next action factor from that target reward coordinate with exactly the selected arm's reward law.",
       "math": "\\(\\mathcal L((H_{\\le n},A_{n+1}),Z_q;\\,Q_{n+1}=q)=\\mathcal L(H_{\\le n},A_{n+1};\\,Q_{n+1}=q)\\otimes\\nu_{q_2}.\\)",
       "intuition": "Before coordinate q is consumed, the history may reveal many other latent rewards but not q itself. Restricting to the exact next-coordinate branch therefore leaves q fresh, even though the action policy is adaptive.",
-      "why": "This is the deferred-decisions bridge that the preceding interface only stated as a contract. It exposes the remaining work cleanly: sum the disjoint coordinate branches and combine the result with pathwise reward readout.",
-      "position": "This is an unconditional compiled branchwise product law in the 28-declaration branch-locality producer layer. It is not yet the aggregate selected-reward freshness theorem, native fixed-IID trajectory identification, selected IID, or Theorem 2.",
+      "why": "This is the deferred-decisions bridge that the preceding interface only stated as a contract. The later aggregation layer consumes it by summing the disjoint coordinate branches and combining the result with pathwise reward readout.",
+      "position": "This is an unconditional compiled branchwise product law in the 28-declaration branch-locality producer layer. A separate compiled theorem now aggregates all branches into deterministic-time one-step freshness; this branch theorem is still not native fixed-IID trajectory identification, selected IID, or Theorem 2.",
       "proof_idea": "Prove fixed-stream prefix laws equal on the pull-count cap by induction. The successor step transports a restricted semidirect product through safe fibers: below the target count every action is safe, while at equality the target arm is excluded. Rebuild the omitted coordinate, restrict to the exact branch, and apply latent-coordinate independence.",
-      "lean_notes": "The branch law is finite/sub-Markov because it is restricted to one coordinate-selection event. The new generic safe-fiber compProd lemmas are reusable measure-theoretic infrastructure. A separate aggregation theorem is still required before any IID or native-process claim.",
+      "lean_notes": "The branch law is finite/sub-Markov because it is restricted to one coordinate-selection event. The generic safe-fiber compProd lemmas are reusable measure-theoretic infrastructure. Countable aggregation now proves one-step freshness, but no IID or native-process claim follows from that local conditional law.",
       "dependencies": [
         "BanditRLProof.Measure.map_compProd_restrict_eq_of_base_restrict_eq_of_fiber_restrict_eq",
         "BanditRLProof.Thompson.latentArmStreamTrajectoryKernel_map_frestrictLe_restrict_countCap_eq_of_withoutCoordinate_eq",
         "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextActionBranchLocality",
         "BanditRLProof.UCB.armStreamMeasure_map_output_coordinate_compProd_comap_without_eq_prod"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.Thompson.latentArmStreamVisibleTrajectoryMeasure_nextReward_condDistrib_ae_eq_nu",
+      "chapter": "frontier",
+      "plain": "Under the visible marginal of the latent SGB coupling, once the observed history through n and the action chosen for round n plus one are known, the next reward has exactly the stationary law of that chosen arm.",
+      "math": "\\(\\mathcal L(R_{n+1}\\mid H_{\\le n},A_{n+1})=\\nu_{A_{n+1}}\\quad\\text{a.e.}\\)",
+      "intuition": "Adaptive actions may depend on every reward seen so far, but the latent coordinate consumed next has not been exposed. Partitioning by its pull count and arm makes that freshness explicit and then recombines the branches without normalizing them.",
+      "why": "This closes the exact one-step probabilistic interface needed before comparing the latent visible process with the native fixed-IID construction. It is stronger than pathwise reward readout and weaker than a selected-reward IID sequence theorem.",
+      "position": "This is the terminal theorem of an eight-declaration compiled aggregation/readout layer. Native-prefix identification, trajectory uniqueness, stopped pull-ordered reward blocks, future/no-return, and Theorem 2 remain blocked.",
+      "proof_idea": "Prove dynamic coordinate evaluation measurable; restrict to each count/arm branch and use the fixed-coordinate product law; sum the countable branch partition on both sides; transport the joint law through the latent coupling; replace the selected coordinate by the actual reward almost everywhere; then invoke the joint-law characterization of condDistrib.",
+      "lean_notes": "The condition is the inclusive visible prefix through n paired with the action at n+1. The selected kernel is nu composed with the action projection. Branch kernels are finite/sub-Markov, and no statement here identifies the visible marginal with the native trajectory or makes rewards at multiple selected times IID.",
+      "dependencies": [
+        "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextAction_selectedCoordinate_mixed_eq_compProd",
+        "BanditRLProof.Thompson.latentArmStreamVisibleNextReward_eq_selectedCoordinate_ae",
+        "BanditRLProof.Thompson.latentArmStreamVisibleNextReward_joint_eq_compProd",
+        "BanditRLProof.UCB.armStreamSelectedRewardKernel"
       ]
     },
     {
@@ -1482,7 +1499,7 @@
       "why": "This isolates the deterministic consumer at Appendix-C Step 1 without hiding the still-missing probability producer behind a theorem-shaped premise.",
       "position": "This named declaration is a compiled source-shaped consumer, not a partial closure of Theorem 2. The frozen K = 2 terminal remains blocked.",
       "proof_idea": "Make the trigger and final-count event measurable, identify two-arm sampled regret with Delta times suboptimal pulls, prove the exact Delta(T-n) charge on the event, and compare the integral of its indicator with total expected regret.",
-      "lean_notes": "The event uses an externally fixed chronological cutoff. Separate compiled modules construct the random nth-pull stopping prefix, prove the latent fixed-arm product/readout layer, factor a finite stream-box/visible-prefix mixture, and establish target-by-target branch products. Aggregate selected-reward freshness, visible-marginal/native-prefix identification, and composition with this consumer remain open. No module yet proves conditional no-return probability >= 1/2, the Rademacher/binomial ballot phase, or the polynomial asymptotic lower bound.",
+      "lean_notes": "The event uses an externally fixed chronological cutoff. Separate compiled modules construct the random nth-pull stopping prefix, prove the latent fixed-arm product/readout layer, factor a finite stream-box/visible-prefix mixture, establish target-by-target branch products, and aggregate them into deterministic-time one-step selected-reward freshness. Visible-marginal/native-prefix identification, stopped block transport, and composition with this consumer remain open. No module yet proves conditional no-return probability >= 1/2, the Rademacher/binomial ballot phase, or the polynomial asymptotic lower bound.",
       "dependencies": [
         "BanditRLProof.StochasticGradientBandit.twoArmStepOneStarvationEvent_charge_mul_probability_le_integral",
         "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmStepOneStarvationEvent",

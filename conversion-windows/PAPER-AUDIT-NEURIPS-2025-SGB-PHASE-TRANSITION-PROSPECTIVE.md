@@ -2,7 +2,7 @@
 
 Task: `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE`
 
-Status: `target-frozen; Corollary 1 compiled; Theorem 2 blocked after compiled nth-pull, latent-product/readout, deferred-decisions finite-prefix factorization, action/readout interface, count-capped branch locality, unconditional branchwise selected-coordinate product, and deterministic-starvation milestones`
+Status: `target-frozen; Corollary 1 compiled; Theorem 2 blocked after compiled nth-pull, latent-product/readout, deferred-decisions finite-prefix factorization, action/readout interface, count-capped branch locality, one-step selected-reward freshness, and deterministic-starvation milestones`
 
 ## Source-to-Lean fence
 
@@ -164,6 +164,9 @@ discharged by the Round-18 packet below.
 
 ## Round-18 retrieval packet: count-capped branch-locality producer
 
+This records the historical Round-18 boundary; its branch-aggregation
+obligation is discharged by the Round-19 packet below.
+
 - Reused and extended APIs:
   `Measure.compProd_restrict_eq_of_base_restrict_eq_of_fiber_restrict_eq`,
   `Measure.map_compProd_restrict_eq_of_base_restrict_eq_of_fiber_restrict_eq`,
@@ -182,13 +185,55 @@ discharged by the Round-18 packet below.
   `latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod` derives
   the exact branchwise selected-coordinate product law without a locality
   premise.
-- Exact remaining producer: aggregate the coordinate branches and the a.e.
+- Round-18 remaining producer: aggregate the coordinate branches and the a.e.
   reward readout into a selected-reward freshness law, identify the resulting
   visible marginal with the native fixed-IID prefix, and extend it to the native
   trajectory law.  Branchwise product equality alone is not selected-reward
   IID and does not close the stopped-prefix future/no-return route.
 - Inventory effect: 28 new indexed declarations (two generic measure bridges
   plus 26 route-specific leaves) raise the SGB audit slice from 316 to 344.
+
+## Round-19 retrieval packet: selected-reward branch aggregation
+
+- Reused source and scenario cards:
+  `PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB` and
+  `SCN-STOCHASTIC-FINITE`; reused Mathlib cards:
+  `MLIB-PROBABILITY-KERNEL`, `MLIB-PROBABILITY-INDEPENDENCE`, and
+  `MLIB-MEASURE-INTEGRAL`.
+- Search terms: `selected reward conditional law`, `condDistrib compProd`,
+  `measure sum restrict branch`, `map restrict`, `branch partition`, and
+  `selected coordinate measurable`.
+- Reused local APIs:
+  `latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod`,
+  `latentArmStreamVisibleNextReward_eq_selectedCoordinate_ae`,
+  `UCB.measure_eq_sum_restrict_armStreamHistoryActionCoordinateBranch`,
+  `Measure.compProd_restrict_prod`, `Measure.restrict_map`,
+  `Measure.map_sum`, `Measure.compProd_sum_left`,
+  `Measure.compProd_sum_right`, `Measure.compProd_congr`,
+  `Measure.compProd_const`, `Measure.compProd_map`, and
+  `condDistrib_ae_eq_iff_measure_eq_compProd`.
+- Compiled route: prove measurable dynamic coordinate evaluation; on each
+  `(pull count, arm)` branch replace the dynamic coordinate by the fixed one;
+  sum the countable branch partition on both sides; transport the resulting
+  joint law through the latent trajectory coupling; and replace the selected
+  latent coordinate by the actual next reward almost everywhere.
+- Compiled endpoints:
+  `latentArmStreamVisibleNextReward_joint_eq_compProd`,
+  `latentArmStreamVisibleNextReward_condDistrib_ae_eq_nu`, and their
+  visible-trajectory-marginal forms, ending at
+  `latentArmStreamVisibleTrajectoryMeasure_nextReward_condDistrib_ae_eq_nu`.
+- Hidden contracts: the condition contains the visible prefix through `n`
+  and the selected action at `n + 1`; the right kernel is
+  `nu.comap Prod.snd`, so it depends on the selected arm; the branch index is
+  the countable type `Nat × Fin K`; branch kernels remain finite/sub-Markov;
+  and the a.e. readout is transported only under the exact coupling measure.
+- Nonclaims: this deterministic-time one-step conditional law is not a
+  selected-reward IID law, an nth-pull stopping-time IID law, a native
+  fixed-IID trajectory equality, a future/no-return theorem, or Theorem 2.
+- Inventory effect: eight new declarations raise the SGB audit slice from 344
+  to 352.  The next exact producer is visible-marginal/native-prefix
+  identification, followed by trajectory uniqueness and selected-block
+  transport.
 
 ## Pivot rules
 
@@ -199,6 +244,6 @@ discharged by the Round-18 packet below.
   Appendix-C lower bound and leave the terminal status partial.
 - Compiled Corollary 1, nth-pull, latent-product/readout, finite-prefix
   factorization, action/readout interface, count-cap branch-locality producer,
-  unconditional branch-product law, and
+  unconditional branch-product law, one-step selected-reward freshness, and
   deterministic-starvation milestones do not compile the
   frozen Theorem 2 terminal; that terminal remains `blocked`.

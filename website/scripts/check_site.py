@@ -991,6 +991,45 @@ def main() -> int:
     ]
     if len(sgb_branch_items) != 1 or sgb_branch_items[0].get("chapter") != "Frontier":
         errors.append("SGB unconditional branch product must resolve to the Frontier chapter")
+    sgb_freshness_declarations = (
+        "BanditRLProof.Thompson.latentArmStreamVisibleNextReward_joint_eq_compProd",
+        "BanditRLProof.Thompson.latentArmStreamVisibleNextReward_condDistrib_ae_eq_nu",
+        (
+            "BanditRLProof.Thompson."
+            "latentArmStreamVisibleTrajectoryMeasure_nextReward_joint_eq_compProd"
+        ),
+        (
+            "BanditRLProof.Thompson."
+            "latentArmStreamVisibleTrajectoryMeasure_nextReward_condDistrib_ae_eq_nu"
+        ),
+    )
+    for declaration in sgb_freshness_declarations:
+        freshness_items = [
+            item for item in search_items if item.get("name") == declaration
+        ]
+        if len(freshness_items) != 1 or freshness_items[0].get("chapter") != "Frontier":
+            errors.append(
+                "SGB deterministic-time selected-reward freshness must resolve to the "
+                f"Frontier chapter: {declaration}"
+            )
+            continue
+        freshness_target = urlsplit(freshness_items[0]["url"])
+        freshness_module_path = output / freshness_target.path
+        if not freshness_module_path.exists():
+            errors.append(f"SGB freshness declaration page is missing: {declaration}")
+            continue
+        freshness_module_source = freshness_module_path.read_text(encoding="utf-8")
+        compiled_summary = re.compile(
+            rf'<details class="declaration" id="{re.escape(freshness_target.fragment)}">'
+            r"\s*<summary>.*?"
+            r'<span class="status compiled">Compiled</span>.*?</summary>',
+            re.DOTALL,
+        )
+        if not compiled_summary.search(freshness_module_source):
+            errors.append(
+                "SGB deterministic-time selected-reward freshness is not rendered as "
+                f"compiled: {declaration}"
+            )
     frontier_source = (output / "chapters" / "frontier" / "index.html").read_text(encoding="utf-8")
     for required in (
         "A Novel General Framework for Sharp Lower Bounds in Succinct Stochastic Bandits",
@@ -1002,10 +1041,20 @@ def main() -> int:
         "physical PDF p. 5",
         "Theorem 2 (two-arm SGB phase transition)",
         "physical PDF p. 6; Appendix C pp. 31–40",
-        "344 = 223 + 23 + 18 + 24 + 7 + 8 + 13 + 28",
+        "352 = 223 + 23 + 18 + 24 + 7 + 8 + 13 + 28 + 8",
         "LatentArmStreamVisiblePrefixNextActionBranchLocality",
         sgb_action_declaration,
         sgb_branch_declaration,
+        *sgb_freshness_declarations,
+        "deterministic-time one-step selected-reward freshness is already compiled",
+        "visible marginal with the native fixed-IID SGB prefix",
+        "native visible law",
+        "Pull-ordered or stopped selected-reward IID",
+        (
+            "stopped-prefix future-cylinder law needed to prove conditional "
+            "no-return probability at least one half"
+        ),
+        "frozen terminal twoArmRademacherDirac_theoremTwo_polynomialRegret",
     ):
         if required not in frontier_source:
             errors.append(f"Frontier reading guide is missing source or status metadata: {required}")

@@ -17,11 +17,12 @@ trajectory prefix through `n` depends only on latent reward coordinates with
 pull index at most `n`.  It packages that dependence as a Markov prefix kernel
 and gives the exact finite stream-box/visible-prefix mixture law.  It also
 separates the compiled next-action factorization and pathwise selected-coordinate
-readout from the missing aggregate freshness argument.  A count-capped
-restricted-measure induction proves the exact branch-locality contract and its
-unconditional branchwise product law.  Aggregating those branches into a
-selected-reward freshness theorem, native-prefix identification, selected-IID
-laws, future/no-return control, and trajectory uniqueness remain downstream.
+readout.  A count-capped restricted-measure induction proves the exact
+branch-locality contract and its unconditional branchwise product law.  A
+countable branch partition now aggregates those laws into the exact one-step
+selected-reward joint and conditional laws, both on the coupling and on its
+visible-trajectory marginal.  Native-prefix identification, selected-IID laws,
+future/no-return control, and trajectory uniqueness remain downstream.
 Consequently, no full native trajectory-law equality, stopped-reward IID
 statement, or Theorem-2 terminal is claimed here.
 -/
@@ -1122,6 +1123,505 @@ theorem latentArmStreamVisibleNextReward_eq_selectedCoordinate_ae
       (ETC.realHistoryPullCount n (Preorder.frestrictLe n sample.2) arm) arm
   rw [hcount]
   exact htime
+
+/-- The reward coordinate selected by a visible history/action condition is a
+measurable function of the latent stream and that condition. -/
+theorem measurable_latentArmStreamSelectedCoordinate
+    {K : Nat} (n : Nat) :
+    Measurable (fun sample : UCB.ArmRewardStream K ×
+        (History.FinitePairHistory (Fin K) Real n × Fin K) =>
+      UCB.armStreamCoordinate
+        (UCB.armStreamCoordinateOfHistoryAction n sample.2) sample.1) := by
+  let eval : UCB.ArmRewardStream K × (Nat × Fin K) -> Real :=
+    fun sample => UCB.armStreamCoordinate sample.2 sample.1
+  have heval : Measurable eval := by
+    apply measurable_from_prod_countable_left
+    intro target
+    exact UCB.measurable_armStreamCoordinate target
+  exact heval.comp
+    (measurable_fst.prodMk
+      ((UCB.measurable_armStreamCoordinateOfHistoryAction n).comp
+        measurable_snd))
+
+/-- On a fixed pull-count/arm branch, the dynamically selected latent reward
+coordinate has the restricted condition marginal times the selected arm law. -/
+theorem latentArmStreamVisiblePrefixNextAction_selectedCoordinate_branch_eq_prod
+    {Env : Type u} {K : Nat} [MeasurableSpace Env]
+    [StandardBorelSpace Env] [NeZero K]
+    (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)
+    (nu : Kernel (Fin K) Real) [IsMarkovKernel nu]
+    (n : Nat) (target : Nat × Fin K) :
+    let conditionKernel :=
+      (latentArmStreamTrajectoryKernel algorithm env).map
+        (latentArmStreamVisiblePrefixNextAction n)
+    let fullMixed := UCB.armStreamMeasure nu ⊗ₘ conditionKernel
+    let branch := UCB.armStreamHistoryActionCoordinateBranch n target
+    let branchKernel := conditionKernel.restrict
+      (UCB.measurableSet_armStreamHistoryActionCoordinateBranch n target)
+    let branchMixed := UCB.armStreamMeasure nu ⊗ₘ branchKernel
+    Measure.map
+        (fun sample : UCB.ArmRewardStream K ×
+            (History.FinitePairHistory (Fin K) Real n × Fin K) =>
+          (sample.2, UCB.armStreamCoordinate
+            (UCB.armStreamCoordinateOfHistoryAction n sample.2) sample.1))
+        branchMixed =
+      ((Measure.map Prod.snd fullMixed).restrict branch).prod
+        (nu target.2) := by
+  dsimp only
+  let conditionKernel :=
+    (latentArmStreamTrajectoryKernel algorithm env).map
+      (latentArmStreamVisiblePrefixNextAction n)
+  let fullMixed := UCB.armStreamMeasure nu ⊗ₘ conditionKernel
+  let branch := UCB.armStreamHistoryActionCoordinateBranch n target
+  let branchKernel := conditionKernel.restrict
+    (UCB.measurableSet_armStreamHistoryActionCoordinateBranch n target)
+  let branchMixed := UCB.armStreamMeasure nu ⊗ₘ branchKernel
+  let selectedPair := fun sample : UCB.ArmRewardStream K ×
+      (History.FinitePairHistory (Fin K) Real n × Fin K) =>
+    (sample.2, UCB.armStreamCoordinate
+      (UCB.armStreamCoordinateOfHistoryAction n sample.2) sample.1)
+  let fixedPair := fun sample : UCB.ArmRewardStream K ×
+      (History.FinitePairHistory (Fin K) Real n × Fin K) =>
+    (sample.2, UCB.armStreamCoordinate target sample.1)
+  have hbranch : MeasurableSet branch :=
+    UCB.measurableSet_armStreamHistoryActionCoordinateBranch n target
+  have hbranchMixed :
+      fullMixed.restrict (Set.univ ×ˢ branch) = branchMixed := by
+    dsimp [fullMixed, branchMixed, branchKernel]
+    rw [Measure.compProd_restrict_prod _ _ MeasurableSet.univ hbranch,
+      Measure.restrict_univ]
+  have hpreimage :
+      Prod.snd ⁻¹' branch = (Set.univ ×ˢ branch :
+        Set (UCB.ArmRewardStream K ×
+          (History.FinitePairHistory (Fin K) Real n × Fin K))) := by
+    ext sample
+    simp
+  have hbase :
+      Measure.map Prod.snd branchMixed =
+        (Measure.map Prod.snd fullMixed).restrict branch := by
+    rw [Measure.restrict_map measurable_snd hbranch, hpreimage, hbranchMixed]
+  have hpairMap :
+      Measure.map selectedPair branchMixed =
+        Measure.map fixedPair branchMixed := by
+    rw [← hbranchMixed]
+    apply Measure.map_congr
+    filter_upwards [ae_restrict_mem (MeasurableSet.univ.prod hbranch)] with
+      sample hsample
+    have htarget :
+        UCB.armStreamCoordinateOfHistoryAction n sample.2 = target := by
+      change sample.1 ∈ Set.univ ∧
+        UCB.armStreamCoordinateOfHistoryAction n sample.2 = target at hsample
+      exact hsample.2
+    simp [selectedPair, fixedPair, htarget]
+  have hfixed :
+      Measure.map fixedPair branchMixed =
+        (Measure.map Prod.snd branchMixed).prod (nu target.2) := by
+    simpa only [fixedPair, branchMixed, branchKernel, conditionKernel] using
+      (latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod
+        algorithm env nu n target)
+  change Measure.map selectedPair branchMixed =
+    ((Measure.map Prod.snd fullMixed).restrict branch).prod (nu target.2)
+  calc
+    _ = Measure.map fixedPair branchMixed := hpairMap
+    _ = (Measure.map Prod.snd branchMixed).prod (nu target.2) := hfixed
+    _ = ((Measure.map Prod.snd fullMixed).restrict branch).prod
+          (nu target.2) := by rw [hbase]
+
+/-- Summing the countable pull-count/arm partition gives the selected-coordinate
+joint law under the mixed latent-stream/visible-condition measure. -/
+theorem latentArmStreamVisiblePrefixNextAction_selectedCoordinate_mixed_eq_compProd
+    {Env : Type u} {K : Nat} [MeasurableSpace Env]
+    [StandardBorelSpace Env] [NeZero K]
+    (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)
+    (nu : Kernel (Fin K) Real) [IsMarkovKernel nu]
+    (n : Nat) :
+    let conditionKernel :=
+      (latentArmStreamTrajectoryKernel algorithm env).map
+        (latentArmStreamVisiblePrefixNextAction n)
+    let fullMixed := UCB.armStreamMeasure nu ⊗ₘ conditionKernel
+    Measure.map
+        (fun sample : UCB.ArmRewardStream K ×
+            (History.FinitePairHistory (Fin K) Real n × Fin K) =>
+          (sample.2, UCB.armStreamCoordinate
+            (UCB.armStreamCoordinateOfHistoryAction n sample.2) sample.1))
+        fullMixed =
+      Measure.map Prod.snd fullMixed ⊗ₘ
+        UCB.armStreamSelectedRewardKernel n nu := by
+  dsimp only
+  let conditionKernel :=
+    (latentArmStreamTrajectoryKernel algorithm env).map
+      (latentArmStreamVisiblePrefixNextAction n)
+  let fullMixed := UCB.armStreamMeasure nu ⊗ₘ conditionKernel
+  let selectedPair := fun sample : UCB.ArmRewardStream K ×
+      (History.FinitePairHistory (Fin K) Real n × Fin K) =>
+    (sample.2, UCB.armStreamCoordinate
+      (UCB.armStreamCoordinateOfHistoryAction n sample.2) sample.1)
+  let conditionMeasure := Measure.map Prod.snd fullMixed
+  let selectedKernel := UCB.armStreamSelectedRewardKernel n nu
+  have hselectedPair : Measurable selectedPair :=
+    measurable_snd.prodMk (measurable_latentArmStreamSelectedCoordinate n)
+  have hkernelPartition :
+      conditionKernel = Kernel.sum fun target : Nat × Fin K =>
+        conditionKernel.restrict
+          (UCB.measurableSet_armStreamHistoryActionCoordinateBranch
+            n target) := by
+    apply Kernel.ext
+    intro stream
+    rw [Kernel.sum_apply]
+    exact UCB.measure_eq_sum_restrict_armStreamHistoryActionCoordinateBranch
+      n (conditionKernel stream)
+  have hfullPartition :
+      fullMixed = Measure.sum fun target : Nat × Fin K =>
+        UCB.armStreamMeasure nu ⊗ₘ
+          conditionKernel.restrict
+            (UCB.measurableSet_armStreamHistoryActionCoordinateBranch
+              n target) := by
+    change UCB.armStreamMeasure nu ⊗ₘ conditionKernel = _
+    calc
+      UCB.armStreamMeasure nu ⊗ₘ conditionKernel =
+          UCB.armStreamMeasure nu ⊗ₘ
+            Kernel.sum (fun target : Nat × Fin K =>
+              conditionKernel.restrict
+                (UCB.measurableSet_armStreamHistoryActionCoordinateBranch
+                  n target)) := congrArg
+                    (fun kernel => UCB.armStreamMeasure nu ⊗ₘ kernel)
+                    hkernelPartition
+      _ = Measure.sum fun target : Nat × Fin K =>
+          UCB.armStreamMeasure nu ⊗ₘ
+            conditionKernel.restrict
+              (UCB.measurableSet_armStreamHistoryActionCoordinateBranch
+                n target) := Measure.compProd_sum_right
+  have hleft :
+      Measure.map selectedPair fullMixed =
+        Measure.sum fun target : Nat × Fin K =>
+          (conditionMeasure.restrict
+            (UCB.armStreamHistoryActionCoordinateBranch n target)).prod
+              (nu target.2) := by
+    calc
+      Measure.map selectedPair fullMixed =
+          Measure.map selectedPair
+            (Measure.sum fun target : Nat × Fin K =>
+              UCB.armStreamMeasure nu ⊗ₘ
+                conditionKernel.restrict
+                  (UCB.measurableSet_armStreamHistoryActionCoordinateBranch
+                    n target)) := by rw [← hfullPartition]
+      _ = Measure.sum fun target : Nat × Fin K =>
+          Measure.map selectedPair
+            (UCB.armStreamMeasure nu ⊗ₘ
+              conditionKernel.restrict
+                (UCB.measurableSet_armStreamHistoryActionCoordinateBranch
+                  n target)) := by
+            apply Measure.map_sum
+            rw [← hfullPartition]
+            exact hselectedPair.aemeasurable
+      _ = Measure.sum fun target : Nat × Fin K =>
+          (conditionMeasure.restrict
+            (UCB.armStreamHistoryActionCoordinateBranch n target)).prod
+              (nu target.2) := by
+            congr 1
+            funext target
+            simpa only [selectedPair, conditionMeasure, fullMixed,
+              conditionKernel] using
+              (latentArmStreamVisiblePrefixNextAction_selectedCoordinate_branch_eq_prod
+                algorithm env nu n target)
+  have hconditionPartition :=
+    UCB.measure_eq_sum_restrict_armStreamHistoryActionCoordinateBranch
+      n conditionMeasure
+  have hright :
+      conditionMeasure ⊗ₘ selectedKernel =
+        Measure.sum fun target : Nat × Fin K =>
+          (conditionMeasure.restrict
+            (UCB.armStreamHistoryActionCoordinateBranch n target)).prod
+              (nu target.2) := by
+    calc
+      conditionMeasure ⊗ₘ selectedKernel =
+          (Measure.sum fun target : Nat × Fin K =>
+            conditionMeasure.restrict
+              (UCB.armStreamHistoryActionCoordinateBranch n target)) ⊗ₘ
+                selectedKernel := by rw [← hconditionPartition]
+      _ = Measure.sum fun target : Nat × Fin K =>
+          conditionMeasure.restrict
+              (UCB.armStreamHistoryActionCoordinateBranch n target) ⊗ₘ
+            selectedKernel := by rw [Measure.compProd_sum_left]
+      _ = Measure.sum fun target : Nat × Fin K =>
+          (conditionMeasure.restrict
+            (UCB.armStreamHistoryActionCoordinateBranch n target)).prod
+              (nu target.2) := by
+            congr 1
+            funext target
+            have hselected : Filter.EventuallyEq
+                (ae (conditionMeasure.restrict
+                  (UCB.armStreamHistoryActionCoordinateBranch n target)))
+                selectedKernel
+                (Kernel.const _ (nu target.2)) := by
+              filter_upwards [ae_restrict_mem
+                (UCB.measurableSet_armStreamHistoryActionCoordinateBranch
+                  n target)] with condition hcondition
+              have hsecond : condition.2 = target.2 := by
+                simpa [UCB.armStreamHistoryActionCoordinateBranch,
+                  UCB.armStreamCoordinateOfHistoryAction] using
+                    congrArg Prod.snd hcondition
+              rw [Kernel.comap_apply, Kernel.const_apply, hsecond]
+            rw [Measure.compProd_congr hselected, Measure.compProd_const]
+  change Measure.map selectedPair fullMixed =
+    conditionMeasure ⊗ₘ selectedKernel
+  exact hleft.trans hright.symm
+
+/-- Transport the selected-coordinate product law from the mixed representation
+back to the original latent-stream trajectory coupling. -/
+theorem latentArmStreamVisiblePrefixNextAction_selectedCoordinate_eq_compProd
+    {Env : Type u} {K : Nat} [MeasurableSpace Env]
+    [StandardBorelSpace Env] [NeZero K]
+    (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)
+    (nu : Kernel (Fin K) Real) [IsMarkovKernel nu]
+    (n : Nat) :
+    Measure.map
+        (fun sample : UCB.ArmRewardStream K ×
+            ((t : Nat) -> Fin K × Real) =>
+          (latentArmStreamVisiblePrefixNextAction n sample.2,
+            UCB.armStreamCoordinate
+              (UCB.armStreamCoordinateOfHistoryAction n
+                (latentArmStreamVisiblePrefixNextAction n sample.2))
+              sample.1))
+        (latentArmStreamTrajectoryMeasure algorithm env nu) =
+      Measure.map
+          (fun sample : UCB.ArmRewardStream K ×
+              ((t : Nat) -> Fin K × Real) =>
+            latentArmStreamVisiblePrefixNextAction n sample.2)
+          (latentArmStreamTrajectoryMeasure algorithm env nu) ⊗ₘ
+        UCB.armStreamSelectedRewardKernel n nu := by
+  let sourceMeasure := latentArmStreamTrajectoryMeasure algorithm env nu
+  let condition := latentArmStreamVisiblePrefixNextAction (K := K) n
+  let conditionKernel :=
+    (latentArmStreamTrajectoryKernel algorithm env).map condition
+  let fullMixed := UCB.armStreamMeasure nu ⊗ₘ conditionKernel
+  let toMixed := fun sample : UCB.ArmRewardStream K ×
+      ((t : Nat) -> Fin K × Real) => (sample.1, condition sample.2)
+  let sourceCondition := fun sample : UCB.ArmRewardStream K ×
+      ((t : Nat) -> Fin K × Real) => condition sample.2
+  let sourcePair := fun sample : UCB.ArmRewardStream K ×
+      ((t : Nat) -> Fin K × Real) =>
+    (condition sample.2, UCB.armStreamCoordinate
+      (UCB.armStreamCoordinateOfHistoryAction n (condition sample.2))
+      sample.1)
+  let mixedPair := fun sample : UCB.ArmRewardStream K ×
+      (History.FinitePairHistory (Fin K) Real n × Fin K) =>
+    (sample.2, UCB.armStreamCoordinate
+      (UCB.armStreamCoordinateOfHistoryAction n sample.2) sample.1)
+  have hcondition : Measurable condition :=
+    measurable_latentArmStreamVisiblePrefixNextAction n
+  have htoMixed : Measurable toMixed :=
+    measurable_fst.prodMk (hcondition.comp measurable_snd)
+  have hmixedPair : Measurable mixedPair :=
+    measurable_snd.prodMk (measurable_latentArmStreamSelectedCoordinate n)
+  have htoMixedMap : Measure.map toMixed sourceMeasure = fullMixed := by
+    dsimp [toMixed, sourceMeasure, fullMixed, conditionKernel]
+    rw [latentArmStreamTrajectoryMeasure]
+    simpa only [Prod.map_apply, id_eq] using
+      (Measure.compProd_map
+        (μ := UCB.armStreamMeasure nu)
+        (κ := latentArmStreamTrajectoryKernel algorithm env)
+        hcondition).symm
+  have hpairTransport :
+      Measure.map sourcePair sourceMeasure =
+        Measure.map mixedPair fullMixed := by
+    calc
+      Measure.map sourcePair sourceMeasure =
+          Measure.map mixedPair (Measure.map toMixed sourceMeasure) := by
+            rw [Measure.map_map]
+            · rfl
+            · exact hmixedPair
+            · exact htoMixed
+      _ = Measure.map mixedPair fullMixed := by rw [htoMixedMap]
+  have hconditionMarginal :
+      Measure.map Prod.snd fullMixed =
+        Measure.map sourceCondition sourceMeasure := by
+    calc
+      Measure.map Prod.snd fullMixed =
+          Measure.map Prod.snd (Measure.map toMixed sourceMeasure) := by
+            rw [htoMixedMap]
+      _ = Measure.map (Prod.snd ∘ toMixed) sourceMeasure := by
+            rw [Measure.map_map]
+            · exact measurable_snd
+            · exact htoMixed
+      _ = Measure.map sourceCondition sourceMeasure := by rfl
+  change Measure.map sourcePair sourceMeasure =
+    Measure.map sourceCondition sourceMeasure ⊗ₘ
+      UCB.armStreamSelectedRewardKernel n nu
+  calc
+    _ = Measure.map mixedPair fullMixed := hpairTransport
+    _ = Measure.map Prod.snd fullMixed ⊗ₘ
+          UCB.armStreamSelectedRewardKernel n nu := by
+        simpa only [mixedPair, fullMixed, conditionKernel, condition] using
+          (latentArmStreamVisiblePrefixNextAction_selectedCoordinate_mixed_eq_compProd
+            algorithm env nu n)
+    _ = Measure.map sourceCondition sourceMeasure ⊗ₘ
+          UCB.armStreamSelectedRewardKernel n nu := by
+        rw [hconditionMarginal]
+
+/-- Given the visible prefix through `n` and the action at `n + 1`, the actual
+next reward in the latent-stream coupling has exactly the selected arm law. -/
+theorem latentArmStreamVisibleNextReward_joint_eq_compProd
+    {Env : Type u} {K : Nat} [MeasurableSpace Env]
+    [StandardBorelSpace Env] [NeZero K]
+    (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)
+    (nu : Kernel (Fin K) Real) [IsMarkovKernel nu]
+    (n : Nat) :
+    Measure.map
+        (fun sample : UCB.ArmRewardStream K ×
+            ((t : Nat) -> Fin K × Real) =>
+          (latentArmStreamVisiblePrefixNextAction n sample.2,
+            latentArmStreamVisibleNextReward n sample.2))
+        (latentArmStreamTrajectoryMeasure algorithm env nu) =
+      Measure.map
+          (fun sample : UCB.ArmRewardStream K ×
+              ((t : Nat) -> Fin K × Real) =>
+            latentArmStreamVisiblePrefixNextAction n sample.2)
+          (latentArmStreamTrajectoryMeasure algorithm env nu) ⊗ₘ
+        UCB.armStreamSelectedRewardKernel n nu := by
+  let condition := fun sample : UCB.ArmRewardStream K ×
+      ((t : Nat) -> Fin K × Real) =>
+    latentArmStreamVisiblePrefixNextAction n sample.2
+  let reward := fun sample : UCB.ArmRewardStream K ×
+      ((t : Nat) -> Fin K × Real) =>
+    latentArmStreamVisibleNextReward n sample.2
+  let selected := fun sample : UCB.ArmRewardStream K ×
+      ((t : Nat) -> Fin K × Real) =>
+    UCB.armStreamCoordinate
+      (UCB.armStreamCoordinateOfHistoryAction n
+        (latentArmStreamVisiblePrefixNextAction n sample.2)) sample.1
+  have hreadout : reward =ᵐ[
+      latentArmStreamTrajectoryMeasure algorithm env nu] selected :=
+    latentArmStreamVisibleNextReward_eq_selectedCoordinate_ae
+      algorithm env nu n
+  have hpairs :
+      (fun sample => (condition sample, reward sample)) =ᵐ[
+          latentArmStreamTrajectoryMeasure algorithm env nu]
+        (fun sample => (condition sample, selected sample)) :=
+    Filter.EventuallyEq.prodMk Filter.EventuallyEq.rfl hreadout
+  change Measure.map (fun sample => (condition sample, reward sample))
+      (latentArmStreamTrajectoryMeasure algorithm env nu) = _
+  calc
+    _ = Measure.map (fun sample => (condition sample, selected sample))
+          (latentArmStreamTrajectoryMeasure algorithm env nu) :=
+        Measure.map_congr hpairs
+    _ = _ := by
+      simpa only [condition, selected] using
+        (latentArmStreamVisiblePrefixNextAction_selectedCoordinate_eq_compProd
+          algorithm env nu n)
+
+/-- Conditional-law form of one-step selected-reward freshness on the full
+latent-stream trajectory coupling. -/
+theorem latentArmStreamVisibleNextReward_condDistrib_ae_eq_nu
+    {Env : Type u} {K : Nat} [MeasurableSpace Env]
+    [StandardBorelSpace Env] [NeZero K]
+    (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)
+    (nu : Kernel (Fin K) Real) [IsMarkovKernel nu]
+    (n : Nat) :
+    condDistrib
+        (fun sample : UCB.ArmRewardStream K ×
+            ((t : Nat) -> Fin K × Real) =>
+          latentArmStreamVisibleNextReward n sample.2)
+        (fun sample : UCB.ArmRewardStream K ×
+            ((t : Nat) -> Fin K × Real) =>
+          latentArmStreamVisiblePrefixNextAction n sample.2)
+        (latentArmStreamTrajectoryMeasure algorithm env nu) =ᵐ[
+      (latentArmStreamTrajectoryMeasure algorithm env nu).map
+        (fun sample => latentArmStreamVisiblePrefixNextAction n sample.2)]
+      UCB.armStreamSelectedRewardKernel n nu := by
+  apply (condDistrib_ae_eq_iff_measure_eq_compProd
+    (fun sample : UCB.ArmRewardStream K ×
+        ((t : Nat) -> Fin K × Real) =>
+      latentArmStreamVisiblePrefixNextAction n sample.2)
+    ((measurable_latentArmStreamVisibleNextReward n).comp
+      measurable_snd).aemeasurable
+    (UCB.armStreamSelectedRewardKernel n nu)).mpr
+  exact latentArmStreamVisibleNextReward_joint_eq_compProd
+    algorithm env nu n
+
+/-- Observable-marginal form of the one-step selected-reward joint law.  This
+removes the latent arm stream from the theorem's source space without claiming
+that the entire visible trajectory already equals the native construction. -/
+theorem latentArmStreamVisibleTrajectoryMeasure_nextReward_joint_eq_compProd
+    {Env : Type u} {K : Nat} [MeasurableSpace Env]
+    [StandardBorelSpace Env] [NeZero K]
+    (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)
+    (nu : Kernel (Fin K) Real) [IsMarkovKernel nu]
+    (n : Nat) :
+    let visibleMeasure :=
+      (latentArmStreamTrajectoryMeasure algorithm env nu).map Prod.snd
+    Measure.map
+        (fun trajectory : (t : Nat) -> Fin K × Real =>
+          (latentArmStreamVisiblePrefixNextAction n trajectory,
+            latentArmStreamVisibleNextReward n trajectory))
+        visibleMeasure =
+      Measure.map (latentArmStreamVisiblePrefixNextAction n) visibleMeasure ⊗ₘ
+        UCB.armStreamSelectedRewardKernel n nu := by
+  dsimp only
+  let sourceMeasure := latentArmStreamTrajectoryMeasure algorithm env nu
+  let visibleMeasure := sourceMeasure.map Prod.snd
+  let condition := latentArmStreamVisiblePrefixNextAction (K := K) n
+  let reward := latentArmStreamVisibleNextReward (K := K) n
+  have htrajectory : Measurable
+      (fun trajectory : (t : Nat) -> Fin K × Real =>
+        (condition trajectory, reward trajectory)) :=
+    (measurable_latentArmStreamVisiblePrefixNextAction n).prod
+      (measurable_latentArmStreamVisibleNextReward n)
+  have hcondition : Measurable condition :=
+    measurable_latentArmStreamVisiblePrefixNextAction n
+  change Measure.map (fun trajectory => (condition trajectory, reward trajectory))
+      visibleMeasure = Measure.map condition visibleMeasure ⊗ₘ _
+  calc
+    Measure.map (fun trajectory => (condition trajectory, reward trajectory))
+        visibleMeasure =
+        Measure.map
+          (fun sample : UCB.ArmRewardStream K ×
+              ((t : Nat) -> Fin K × Real) =>
+            (condition sample.2, reward sample.2)) sourceMeasure := by
+          dsimp [visibleMeasure]
+          rw [Measure.map_map]
+          · rfl
+          · exact htrajectory
+          · exact measurable_snd
+    _ = Measure.map
+          (fun sample : UCB.ArmRewardStream K ×
+              ((t : Nat) -> Fin K × Real) => condition sample.2)
+          sourceMeasure ⊗ₘ UCB.armStreamSelectedRewardKernel n nu := by
+          simpa only [condition, reward, sourceMeasure] using
+            (latentArmStreamVisibleNextReward_joint_eq_compProd
+              algorithm env nu n)
+    _ = Measure.map condition visibleMeasure ⊗ₘ
+          UCB.armStreamSelectedRewardKernel n nu := by
+          congr 1
+          dsimp [visibleMeasure]
+          rw [Measure.map_map]
+          · rfl
+          · exact hcondition
+          · exact measurable_snd
+
+/-- Conditional-law form of one-step selected-reward freshness on the visible
+trajectory marginal. -/
+theorem latentArmStreamVisibleTrajectoryMeasure_nextReward_condDistrib_ae_eq_nu
+    {Env : Type u} {K : Nat} [MeasurableSpace Env]
+    [StandardBorelSpace Env] [NeZero K]
+    (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)
+    (nu : Kernel (Fin K) Real) [IsMarkovKernel nu]
+    (n : Nat) :
+    let visibleMeasure :=
+      (latentArmStreamTrajectoryMeasure algorithm env nu).map Prod.snd
+    condDistrib
+        (latentArmStreamVisibleNextReward n)
+        (latentArmStreamVisiblePrefixNextAction n)
+        visibleMeasure =ᵐ[
+      visibleMeasure.map (latentArmStreamVisiblePrefixNextAction n)]
+      UCB.armStreamSelectedRewardKernel n nu := by
+  dsimp only
+  apply (condDistrib_ae_eq_iff_measure_eq_compProd
+    (latentArmStreamVisiblePrefixNextAction n)
+    (measurable_latentArmStreamVisibleNextReward n).aemeasurable
+    (UCB.armStreamSelectedRewardKernel n nu)).mpr
+  exact latentArmStreamVisibleTrajectoryMeasure_nextReward_joint_eq_compProd
+    algorithm env nu n
 
 /-- Exact finite mixture law for the latent stream box and the visible SGB
 trajectory prefix.  This is the deferred-decisions representation that the

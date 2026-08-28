@@ -1,6 +1,6 @@
 # Proof Blueprint: PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE
 
-Generated: `2026-08-28T06:37:33+00:00`
+Generated: `2026-08-28T09:41:00+00:00`
 
 ## Source Task
 
@@ -117,19 +117,22 @@ evidence states:
    step-kernel transport, all-time count-capped prefix induction, the exact
    `LatentArmStreamVisiblePrefixNextActionBranchLocality` contract, and the
    resulting unconditional branchwise selected-coordinate product law.
-6. **Blocked native/selected-law half:** aggregate the exact coordinate
-   branches into selected-reward freshness, identify the visible marginal of
-   the compiled finite mixture with the native fixed-IID SGB prefix law,
-   extend the identification to the required native visible law by trajectory
-   uniqueness, and transport the latent phase event and source embedded-chain
-   recurrence.  Branchwise product laws, stream-marginal equality, a.e. reward
-   readout, and joint finite-mixture factorization still do not by themselves
-   imply aggregate selected-reward IID or native trajectory-law equality.
-7. Compile Appendix-C Step 1: if the optimal-arm probability after its `n`th
+6. **Compiled one-step selected-reward freshness:** a countable partition over
+   the exact `(pull count, selected arm)` branches aggregates the branchwise
+   product laws; the a.e. selected-coordinate readout then gives the exact
+   joint and conditional next-reward laws, both on the latent coupling and on
+   its visible-trajectory marginal.
+7. **Blocked native/selected-law half:** identify the visible marginal with
+   the native fixed-IID SGB prefix law, extend that identification to the
+   required native visible law by trajectory uniqueness, and transport the
+   latent phase event and source embedded-chain recurrence.  Deterministic-time
+   one-step conditional freshness still does not by itself imply
+   pull-ordered selected-reward IID or native trajectory-law equality.
+8. Compile Appendix-C Step 1: if the optimal-arm probability after its `n`th
    pull is at most `1/(2*T)`, the conditional probability of no further
    optimal-arm pull over the remaining horizon is at least `1/2`, yielding
    the exact starvation regret charge.
-8. Build the `S0`/`S1` phase producer: latent IID reward-block law plus its
+9. Build the `S0`/`S1` phase producer: latent IID reward-block law plus its
    native-process transport, Rademacher anti-concentration, ballot-prefix
    constraint, and the
    deterministic implication into the starvation event.
@@ -168,14 +171,15 @@ evidence that the polynomial lower-bound route is complete.
 
 ## Current verified outcome (2026-08-28)
 
-- The source-audit inventory is now 344 named declarations:
-  `223 + 23 + 18 + 24 + 7 + 8 + 13 + 28` for the historical audit, Corollary-1
+- The source-audit inventory is now 352 named declarations:
+  `223 + 23 + 18 + 24 + 7 + 8 + 13 + 28 + 8` for the historical audit, Corollary-1
   companion, fixed-cutoff consumer, nth-pull bridge, latent product/readout,
   deferred-decisions finite-prefix factorization, and the action/readout plus
-  branch-locality interface/count-cap scaffold, followed by the branch-locality
-  producer respectively.  The final 28 comprise two reusable measure bridges
-  and 26 route-specific declarations; this audit-slice count must not be read
-  as 344 source-paper theorems.
+  branch-locality interface/count-cap scaffold, the branch-locality producer,
+  and the one-step freshness aggregation layer respectively.  The 28-declaration
+  layer comprises two reusable measure bridges and 26 route-specific
+  declarations; this audit-slice count must not be read as 352 source-paper
+  theorems.
 - `twoArmFixedIIDDirac_corollaryOne_piecewise` and
   `twoArmFixedIIDDirac_corollaryOne` compile for the generated fixed-IID
   two-arm trajectory, actual sampled pseudo-regret, `0 < Delta < 1`, source
@@ -215,9 +219,18 @@ evidence that the polynomial lower-bound route is complete.
   `latentArmStreamVisiblePrefixNextActionBranchLocality`, and the unconditional
   `latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod`.  Thus the
   uppercase locality contract is now discharged, not merely typed.
+- A separate eight-declaration aggregation/readout layer partitions the
+  condition law by pull-count/arm branches, sums the exact restricted product
+  laws, transports them back through the latent trajectory coupling, and
+  compiles the exact one-step selected-reward joint and conditional laws on
+  both the coupling and its visible-trajectory marginal.  The terminal
+  observable statement is
+  `latentArmStreamVisibleTrajectoryMeasure_nextReward_condDistrib_ae_eq_nu`.
+  This is deterministic-time conditional freshness given the visible history
+  and next action; it is not a pull-ordered selected-IID theorem.
 - The latent coupling's visible trajectory law has not yet been proved equal
-  to the native fixed-IID SGB trajectory law.  Aggregate selected-reward
-  freshness, native-prefix identification, conditional no-return probability
+  to the native fixed-IID SGB trajectory law.  Native-prefix identification,
+  pull-ordered selected-IID transport, conditional no-return probability
   `>= 1/2`, the Rademacher/ballot phase producer, asymptotic
   assembly, and the frozen Theorem-2 terminal remain uncompiled.  The central
   target therefore remains blocked; the compiled latent product/readout,
@@ -250,7 +263,7 @@ milestones only; their existence does not promote the frozen terminal.
 
 Task: `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE`
 
-Status: `target-frozen; Corollary 1 compiled; Theorem 2 blocked after compiled nth-pull, latent-product/readout, deferred-decisions finite-prefix factorization, action/readout interface, count-capped branch locality, unconditional branchwise selected-coordinate product, and deterministic-starvation milestones`
+Status: `target-frozen; Corollary 1 compiled; Theorem 2 blocked after compiled nth-pull, latent-product/readout, deferred-decisions finite-prefix factorization, action/readout interface, count-capped branch locality, one-step selected-reward freshness, and deterministic-starvation milestones`
 
 ## Source-to-Lean fence
 
@@ -367,18 +380,10 @@ that may be assumed by the terminal.
   `Thompson.map_compProd_comap_history`, and the latent next-unused-coordinate
   environment.
 - Compiled route: restrict the latent arm stream through the inclusive endpoint
-  `n`; prove that two streams agreeing on this finite box induce the same
-  visible trajectory-prefix law; package the dependence as a Markov kernel on
-  the finite box; and push the joint latent measure forward to obtain the exact
-  stream-box/visible-prefix mixture.
-- Hidden contracts: `Finset.Iic n` is inclusive; action randomization remains
-  inside the canonical trajectory kernel; the finite box contains unused as
-  well as consumed coordinates; and a finite mixture representation alone does
-  not prove that the next unused selected coordinate is conditionally fresh.
-- Remaining native route: prove a branchwise prefix-plus-next-pair factorization
-  by removing coordinate `(realHistoryPullCount n history arm, arm)`, then use
-  conditional-law and trajectory-uniqueness APIs to identify the visible latent
-  law with the native fixed-IID law.
+
+<!-- 820 characters omitted from the middle of this snapshot. -->
+
+law with the native fixed-IID law.
 - Nonclaims: no visible-marginal/native-prefix identification or full native
   visible law, no stopped-reward IID theorem, no future-cylinder/no-return producer, and no
   Theorem-2 terminal follows from this packet.
@@ -412,6 +417,9 @@ discharged by the Round-18 packet below.
 
 ## Round-18 retrieval packet: count-capped branch-locality producer
 
+This records the historical Round-18 boundary; its branch-aggregation
+obligation is discharged by the Round-19 packet below.
+
 - Reused and extended APIs:
   `Measure.compProd_restrict_eq_of_base_restrict_eq_of_fiber_restrict_eq`,
   `Measure.map_compProd_restrict_eq_of_base_restrict_eq_of_fiber_restrict_eq`,
@@ -430,13 +438,55 @@ discharged by the Round-18 packet below.
   `latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod` derives
   the exact branchwise selected-coordinate product law without a locality
   premise.
-- Exact remaining producer: aggregate the coordinate branches and the a.e.
+- Round-18 remaining producer: aggregate the coordinate branches and the a.e.
   reward readout into a selected-reward freshness law, identify the resulting
   visible marginal with the native fixed-IID prefix, and extend it to the native
   trajectory law.  Branchwise product equality alone is not selected-reward
   IID and does not close the stopped-prefix future/no-return route.
 - Inventory effect: 28 new indexed declarations (two generic measure bridges
   plus 26 route-specific leaves) raise the SGB audit slice from 316 to 344.
+
+## Round-19 retrieval packet: selected-reward branch aggregation
+
+- Reused source and scenario cards:
+  `PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB` and
+  `SCN-STOCHASTIC-FINITE`; reused Mathlib cards:
+  `MLIB-PROBABILITY-KERNEL`, `MLIB-PROBABILITY-INDEPENDENCE`, and
+  `MLIB-MEASURE-INTEGRAL`.
+- Search terms: `selected reward conditional law`, `condDistrib compProd`,
+  `measure sum restrict branch`, `map restrict`, `branch partition`, and
+  `selected coordinate measurable`.
+- Reused local APIs:
+  `latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod`,
+  `latentArmStreamVisibleNextReward_eq_selectedCoordinate_ae`,
+  `UCB.measure_eq_sum_restrict_armStreamHistoryActionCoordinateBranch`,
+  `Measure.compProd_restrict_prod`, `Measure.restrict_map`,
+  `Measure.map_sum`, `Measure.compProd_sum_left`,
+  `Measure.compProd_sum_right`, `Measure.compProd_congr`,
+  `Measure.compProd_const`, `Measure.compProd_map`, and
+  `condDistrib_ae_eq_iff_measure_eq_compProd`.
+- Compiled route: prove measurable dynamic coordinate evaluation; on each
+  `(pull count, arm)` branch replace the dynamic coordinate by the fixed one;
+  sum the countable branch partition on both sides; transport the resulting
+  joint law through the latent trajectory coupling; and replace the selected
+  latent coordinate by the actual next reward almost everywhere.
+- Compiled endpoints:
+  `latentArmStreamVisibleNextReward_joint_eq_compProd`,
+  `latentArmStreamVisibleNextReward_condDistrib_ae_eq_nu`, and their
+  visible-trajectory-marginal forms, ending at
+  `latentArmStreamVisibleTrajectoryMeasure_nextReward_condDistrib_ae_eq_nu`.
+- Hidden contracts: the condition contains the visible prefix through `n`
+  and the selected action at `n + 1`; the right kernel is
+  `nu.comap Prod.snd`, so it depends on the selected arm; the branch index is
+  the countable type `Nat × Fin K`; branch kernels remain finite/sub-Markov;
+  and the a.e. readout is transported only under the exact coupling measure.
+- Nonclaims: this deterministic-time one-step conditional law is not a
+  selected-reward IID law, an nth-pull stopping-time IID law, a native
+  fixed-IID trajectory equality, a future/no-return theorem, or Theorem 2.
+- Inventory effect: eight new declarations raise the SGB audit slice from 344
+  to 352.  The next exact producer is visible-marginal/native-prefix
+  identification, followed by trajectory uniqueness and selected-block
+  transport.
 
 ## Pivot rules
 
@@ -447,7 +497,7 @@ discharged by the Round-18 packet below.
   Appendix-C lower bound and leave the terminal status partial.
 - Compiled Corollary 1, nth-pull, latent-product/readout, finite-prefix
   factorization, action/readout interface, count-cap branch-locality producer,
-  unconditional branch-product law, and
+  unconditional branch-product law, one-step selected-reward freshness, and
   deterministic-starvation milestones do not compile the
   frozen Theorem 2 terminal; that terminal remains `blocked`.
 
@@ -469,13 +519,14 @@ Task id: `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE`
 | `SGB-T2-PREFIX-MIXTURE` | finite deferred-decisions factorization of the latent stream box and generated visible prefix | compiled | exact finite stream-box product law, stream-prefix kernel-law locality, Markov visible-prefix kernel, and joint stream-box/visible-prefix mixture; no visible-marginal/native-prefix identification |
 | `SGB-T2-ACTION-READOUT` | next-action factorization and pathwise selected-coordinate support in the latent coupling | compiled | `latentArmStreamTrajectoryMeasure_map_visiblePrefix_nextAction_eq_compProd`; `latentArmStreamVisibleNextReward_eq_selectedCoordinate_ae`; neither theorem is selected-reward freshness |
 | `SGB-T2-BRANCH-LOCALITY` | branchwise factor-through-complement producer for the selected latent coordinate | compiled | two generic safe-fiber measure bridges plus the count-cap base/successor induction prove `latentArmStreamVisiblePrefixNextActionBranchLocality`; `latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod` gives the unconditional exact branchwise product law |
-| `SGB-T2-NATIVE-TRAJECTORY` | forgetting the latent stream recovers the native fixed-IID SGB trajectory law | blocked | first remaining core technical blockers are aggregation into selected-reward freshness, visible-marginal/native-prefix identification, and trajectory uniqueness; branch locality itself is compiled |
-| `SGB-T2-SELECTED-IID` | target-faithful transfer of the source pull-ordered reward blocks to the native phase event | partial | latent product/readout, finite-prefix mixture, action/readout, count-capped branch locality, and the exact branchwise coordinate product law compile; aggregate selected-reward freshness, native trajectory equality, and phase-event transport do not |
+| `SGB-T2-SELECTED-FRESHNESS` | deterministic-time next-reward conditional law given the visible prefix and selected next action | compiled | countable pull-count/arm branch aggregation plus the a.e. reward readout prove `latentArmStreamVisibleNextReward_joint_eq_compProd`, its `condDistrib` corollary, and the corresponding visible-trajectory-marginal laws; this is not selected IID |
+| `SGB-T2-NATIVE-TRAJECTORY` | forgetting the latent stream recovers the native fixed-IID SGB trajectory law | blocked | first remaining core technical blockers are visible-marginal/native-prefix identification and trajectory uniqueness; branch aggregation and one-step freshness are compiled |
+| `SGB-T2-SELECTED-IID` | target-faithful transfer of the source pull-ordered reward blocks to the native phase event | partial | latent product/readout, finite-prefix mixture, action/readout, count-capped branch locality, exact branchwise product laws, and deterministic-time one-step selected-reward freshness compile; native trajectory equality, stopped/pull-ordered block transport, and phase-event transport do not |
 | `SGB-T2-FUTURE-CYLINDER` | conditional probability of no later optimal-arm pull after the random nth-pull prefix | blocked | one-step action kernels at fixed histories do not by themselves supply a stopped-prefix future law |
 | `SGB-T2-STARVATION` | Appendix-C Step-1 event-to-regret lower bound | partial | measurable fixed-cutoff event and generated-law `Delta*(T-n)*P(event)` consumer compile; it is not yet composed with the separately compiled nth-pull bridge, and conditional probability `>= 1/2` remains unproved |
 | `SGB-T2-PHASE-PROBABILITY` | `S0/S1` probability via Rademacher/binomial/ballot route | blocked | exact finite constants and path event |
 | `SGB-T2-POLYLOG-OMEGA` | frozen K=2 Theorem-2 terminal | blocked | depends on all preceding producers |
-| `SGB-PHASE-CANARY` | exact imports, checks, and representative axiom prints | compiled | companion, deterministic-consumer, nth-pull, latent-reward, finite-prefix-mixture, safe-fiber measure bridge, count-cap induction, branch-locality producer, and unconditional branch-product canaries use baseline axioms only |
+| `SGB-PHASE-CANARY` | exact imports, checks, and representative axiom prints | compiled | companion, deterministic-consumer, nth-pull, latent-reward, finite-prefix-mixture, safe-fiber measure bridge, count-cap induction, branch-locality producer, branch aggregation, and visible-marginal conditional-freshness canaries use baseline axioms only |
 
 ## Source and scenario
 
@@ -34077,7 +34128,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "armStreamMeasure_map_frestrictLe_eq_pi",
     "full_name": "BanditRLProof.UCB.armStreamMeasure_map_frestrictLe_eq_pi",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 40,
+    "line": 41,
     "statement": "theorem armStreamMeasure_map_frestrictLe_eq_pi {K : Nat} (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) : Measure.map (Preorder.frestrictLe n) (armStreamMeasure nu) = Measure.pi (fun _ : Finset.Iic n => Measure.infinitePi fun arm : Fin K => nu arm)"
   },
   {
@@ -34085,7 +34136,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "extendArmStreamFinitePrefix",
     "full_name": "BanditRLProof.UCB.extendArmStreamFinitePrefix",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 51,
+    "line": 52,
     "statement": "def extendArmStreamFinitePrefix {K : Nat} (n : Nat) (streamBox : (i : Finset.Iic n) -> Fin K -> Real) : ArmRewardStream K"
   },
   {
@@ -34093,7 +34144,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "measurable_extendArmStreamFinitePrefix",
     "full_name": "BanditRLProof.UCB.measurable_extendArmStreamFinitePrefix",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 56,
+    "line": 57,
     "statement": "theorem measurable_extendArmStreamFinitePrefix {K : Nat} (n : Nat) : Measurable (extendArmStreamFinitePrefix (K := K) n)"
   },
   {
@@ -34101,7 +34152,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "extendArmStreamFinitePrefix_apply_of_le",
     "full_name": "BanditRLProof.UCB.extendArmStreamFinitePrefix_apply_of_le",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 67,
+    "line": 68,
     "statement": "theorem extendArmStreamFinitePrefix_apply_of_le {K : Nat} (n t : Nat) (ht : t <= n) (streamBox : (i : Finset.Iic n) -> Fin K -> Real) : extendArmStreamFinitePrefix n streamBox t = streamBox \u27e8t, Finset.mem_Iic.mpr ht\u27e9"
   },
   {
@@ -34109,7 +34160,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "armStreamMeasure_map_output_coordinate_compProd_comap_without_eq_prod",
     "full_name": "BanditRLProof.UCB.armStreamMeasure_map_output_coordinate_compProd_comap_without_eq_prod",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 78,
+    "line": 79,
     "statement": "theorem armStreamMeasure_map_output_coordinate_compProd_comap_without_eq_prod {K : Nat} {Output : Type*} [MeasurableSpace Output] (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (target : Nat \u00d7 Fin K) (kernel : Kernel ({index : Nat \u00d7 Fin K // index \u2260 target} -> Real) Output) [IsFiniteKernel kernel] : Measure.map (fun sample : ArmRewardStream K \u00d7 Output => (sample.2, armStreamCoordinate target sample.1)) (armStreamMeasure nu \u2297\u2098 kernel.comap (armStreamWithoutCoordinate target) (measurable_armStreamWithoutCoordinate target)) = (Measure.map Prod.snd (armStreamMeasure nu \u2297\u2098 kernel.comap (armStreamWithoutCoordinate target) (measurable_armStreamWithoutCoordinate target))).prod (nu target.2)"
   },
   {
@@ -34117,7 +34168,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "latentArmStreamTrajectoryKernel_map_prefix_next_eq_compProd",
     "full_name": "BanditRLProof.Thompson.latentArmStreamTrajectoryKernel_map_prefix_next_eq_compProd",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 118,
+    "line": 119,
     "statement": "theorem latentArmStreamTrajectoryKernel_map_prefix_next_eq_compProd {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (stream : UCB.ArmRewardStream K) (n : Nat) : (latentArmStreamTrajectoryKernel algorithm env stream).map (fun trajectory => (Preorder.frestrictLe n trajectory, trajectory (n + 1))) = (latentArmStreamTrajectoryKernel algorithm env stream).map (Preorder.frestrictLe n) \u2297\u2098 historyStepKernel algorithm ((latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K)).at (env, stream)) n"
   },
   {
@@ -34125,7 +34176,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "latentArmStreamFeedback_eq_of_withoutCoordinate_eq_of_selectedCoordinate_ne",
     "full_name": "BanditRLProof.Thompson.latentArmStreamFeedback_eq_of_withoutCoordinate_eq_of_selectedCoordinate_ne",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 142,
+    "line": 143,
     "statement": "theorem latentArmStreamFeedback_eq_of_withoutCoordinate_eq_of_selectedCoordinate_ne {Env : Type u} {K : Nat} [MeasurableSpace Env] (env : Env) (target : Nat \u00d7 Fin K) (stream\u2081 stream\u2082 : UCB.ArmRewardStream K) (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) (arm : Fin K) (hwithout : UCB.armStreamWithoutCoordinate target stream\u2081 = UCB.armStreamWithoutCoordinate target stream\u2082) (hne : (ETC.realHistoryPullCount n history arm, arm) \u2260 target) : ((latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K)).at (env, stream\u2081)).feedback n (history, arm) = ((latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K)).at (env, stream\u2082)).feedback n (history, arm)"
   },
   {
@@ -34133,7 +34184,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "historyStepKernel_apply_eq_of_withoutCoordinate_eq_of_target_count_lt",
     "full_name": "BanditRLProof.Thompson.historyStepKernel_apply_eq_of_withoutCoordinate_eq_of_target_count_lt",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 168,
+    "line": 169,
     "statement": "theorem historyStepKernel_apply_eq_of_withoutCoordinate_eq_of_target_count_lt {Env : Type u} {K : Nat} [MeasurableSpace Env] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (target : Nat \u00d7 Fin K) (stream\u2081 stream\u2082 : UCB.ArmRewardStream K) (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) (hwithout : UCB.armStreamWithoutCoordinate target stream\u2081 = UCB.armStreamWithoutCoordinate target stream\u2082) (hcount : ETC.realHistoryPullCount n history target.2 < target.1) : historyStepKernel algorithm ((latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K)).at (env, stream\u2081)) n history = historyStepKernel algorithm ((latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K)).at (env, stream\u2082)) n history"
   },
   {
@@ -34141,7 +34192,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "latentArmStreamNextActionNeSet",
     "full_name": "BanditRLProof.Thompson.latentArmStreamNextActionNeSet",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 199,
+    "line": 200,
     "statement": "def latentArmStreamNextActionNeSet {K : Nat} (arm : Fin K) : Set (Fin K \u00d7 Real)"
   },
   {
@@ -34149,7 +34200,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "latentArmStreamInitialSafeArmSet",
     "full_name": "BanditRLProof.Thompson.latentArmStreamInitialSafeArmSet",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 205,
+    "line": 206,
     "statement": "def latentArmStreamInitialSafeArmSet {K : Nat} (target : Nat \u00d7 Fin K) : Set (Fin K)"
   },
   {
@@ -34157,7 +34208,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "measurableSet_latentArmStreamNextActionNeSet",
     "full_name": "BanditRLProof.Thompson.measurableSet_latentArmStreamNextActionNeSet",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 209,
+    "line": 210,
     "statement": "theorem measurableSet_latentArmStreamNextActionNeSet {K : Nat} (arm : Fin K) : MeasurableSet (latentArmStreamNextActionNeSet arm)"
   },
   {
@@ -34165,7 +34216,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "historyStepKernel_apply_restrict_nextActionNe_eq_of_withoutCoordinate_eq",
     "full_name": "BanditRLProof.Thompson.historyStepKernel_apply_restrict_nextActionNe_eq_of_withoutCoordinate_eq",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 217,
+    "line": 218,
     "statement": "theorem historyStepKernel_apply_restrict_nextActionNe_eq_of_withoutCoordinate_eq {Env : Type u} {K : Nat} [MeasurableSpace Env] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (target : Nat \u00d7 Fin K) (stream\u2081 stream\u2082 : UCB.ArmRewardStream K) (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) (hwithout : UCB.armStreamWithoutCoordinate target stream\u2081 = UCB.armStreamWithoutCoordinate target stream\u2082) : (historyStepKernel algorithm ((latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K)).at (env, stream\u2081)) n history).restrict (latentArmStreamNextActionNeSet target.2) = (historyStepKernel algorithm ((latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K)).at (env, stream\u2082)) n history).restrict (latentArmStreamNextActionNeSet target.2)"
   },
   {
@@ -34173,7 +34224,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "latentArmStreamTrajectoryKernel_map_frestrictLe_zero",
     "full_name": "BanditRLProof.Thompson.latentArmStreamTrajectoryKernel_map_frestrictLe_zero",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 264,
+    "line": 265,
     "statement": "theorem latentArmStreamTrajectoryKernel_map_frestrictLe_zero {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (stream : UCB.ArmRewardStream K) : (latentArmStreamTrajectoryKernel algorithm env stream).map (Preorder.frestrictLe 0) = (algorithm.initialAction \u2297\u2098 ((latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K)).at (env, stream)).initialFeedback).map singletonPairHistory"
   },
   {
@@ -34181,7 +34232,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "latentArmStreamTrajectoryKernel_map_frestrictLe_eq_of_streamPrefix_eq",
     "full_name": "BanditRLProof.Thompson.latentArmStreamTrajectoryKernel_map_frestrictLe_eq_of_streamPrefix_eq",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 318,
+    "line": 319,
     "statement": "theorem latentArmStreamTrajectoryKernel_map_frestrictLe_eq_of_streamPrefix_eq {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (stream\u2081 stream\u2082 : UCB.ArmRewardStream K) (n : Nat) (hstream : Preorder.frestrictLe n stream\u2081 = Preorder.frestrictLe n stream\u2082) : (latentArmStreamTrajectoryKernel algorithm env stream\u2081).map (Preorder.frestrictLe n) = (latentArmStreamTrajectoryKernel algorithm env stream\u2082).map (Preorder.frestrictLe n)"
   },
   {
@@ -34189,7 +34240,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "latentArmStreamVisiblePrefixKernel",
     "full_name": "BanditRLProof.Thompson.latentArmStreamVisiblePrefixKernel",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 384,
+    "line": 385,
     "statement": "noncomputable def latentArmStreamVisiblePrefixKernel {Env : Type u} {K : Nat} [MeasurableSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (n : Nat) : Kernel ((i : Finset.Iic n) -> Fin K -> Real) (History.FinitePairHistory (Fin K) Real n)"
   },
   {
@@ -34197,7 +34248,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "latentArmStreamTrajectoryKernel_map_frestrictLe_eq_prefixKernel_comap",
     "full_name": "BanditRLProof.Thompson.latentArmStreamTrajectoryKernel_map_frestrictLe_eq_prefixKernel_comap",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 408,
+    "line": 409,
     "statement": "theorem latentArmStreamTrajectoryKernel_map_frestrictLe_eq_prefixKernel_comap {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (n : Nat) : (latentArmStreamTrajectoryKernel algorithm env).map (Preorder.frestrictLe n) = (latentArmStreamVisiblePrefixKernel algorithm env n).comap (Preorder.frestrictLe n) (Preorder.measurable_frestrictLe n)"
   },
   {
@@ -34205,7 +34256,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "latentArmStreamVisiblePrefixNextAction",
     "full_name": "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextAction",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 437,
+    "line": 438,
     "statement": "def latentArmStreamVisiblePrefixNextAction {K : Nat} (n : Nat) : ((t : Nat) -> Fin K \u00d7 Real) -> History.FinitePairHistory (Fin K) Real n \u00d7 Fin K"
   },
   {
@@ -34213,7 +34264,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "measurable_latentArmStreamVisiblePrefixNextAction",
     "full_name": "BanditRLProof.Thompson.measurable_latentArmStreamVisiblePrefixNextAction",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 444,
+    "line": 445,
     "statement": "theorem measurable_latentArmStreamVisiblePrefixNextAction {K : Nat} (n : Nat) : Measurable (latentArmStreamVisiblePrefixNextAction (K := K) n)"
   },
   {
@@ -34221,7 +34272,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "latentArmStreamVisibleNextReward",
     "full_name": "BanditRLProof.Thompson.latentArmStreamVisibleNextReward",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 451,
+    "line": 452,
     "statement": "def latentArmStreamVisibleNextReward {K : Nat} (n : Nat) : ((t : Nat) -> Fin K \u00d7 Real) -> Real"
   },
   {
@@ -34229,7 +34280,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "measurable_latentArmStreamVisibleNextReward",
     "full_name": "BanditRLProof.Thompson.measurable_latentArmStreamVisibleNextReward",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 456,
+    "line": 457,
     "statement": "theorem measurable_latentArmStreamVisibleNextReward {K : Nat} (n : Nat) : Measurable (latentArmStreamVisibleNextReward (K := K) n)"
   },
   {
@@ -34237,7 +34288,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "latentArmStreamVisiblePrefixNextActionBranchKernel",
     "full_name": "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextActionBranchKernel",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 463,
+    "line": 464,
     "statement": "noncomputable def latentArmStreamVisiblePrefixNextActionBranchKernel {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (n : Nat) (target : Nat \u00d7 Fin K) : Kernel ({index : Nat \u00d7 Fin K // index \u2260 target} -> Real) (History.FinitePairHistory (Fin K) Real n \u00d7 Fin K)"
   },
   {
@@ -34245,7 +34296,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "latentArmStreamPrefixCountCap",
     "full_name": "BanditRLProof.Thompson.latentArmStreamPrefixCountCap",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 490,
+    "line": 491,
     "statement": "def latentArmStreamPrefixCountCap {K : Nat} (n : Nat) (target : Nat \u00d7 Fin K) : Set (History.FinitePairHistory (Fin K) Real n)"
   },
   {
@@ -34253,7 +34304,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "measurableSet_latentArmStreamPrefixCountCap",
     "full_name": "BanditRLProof.Thompson.measurableSet_latentArmStreamPrefixCountCap",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 496,
+    "line": 497,
     "statement": "theorem measurableSet_latentArmStreamPrefixCountCap {K : Nat} (n : Nat) (target : Nat \u00d7 Fin K) : MeasurableSet (latentArmStreamPrefixCountCap n target)"
   },
   {
@@ -34261,7 +34312,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "singletonPairHistory_preimage_latentArmStreamPrefixCountCap_zero",
     "full_name": "BanditRLProof.Thompson.singletonPairHistory_preimage_latentArmStreamPrefixCountCap_zero",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 505,
+    "line": 506,
     "statement": "theorem singletonPairHistory_preimage_latentArmStreamPrefixCountCap_zero {K : Nat} (target : Nat \u00d7 Fin K) : (@singletonPairHistory (Fin K) Real) \u207b\u00b9' latentArmStreamPrefixCountCap 0 target = latentArmStreamInitialSafeArmSet target \u00d7\u02e2 Set.univ"
   },
   {
@@ -34269,7 +34320,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "latentArmStreamPrefixCountCapLocality_zero",
     "full_name": "BanditRLProof.Thompson.latentArmStreamPrefixCountCapLocality_zero",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 525,
+    "line": 526,
     "statement": "theorem latentArmStreamPrefixCountCapLocality_zero {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (target : Nat \u00d7 Fin K) (stream\u2081 stream\u2082 : UCB.ArmRewardStream K) (hwithout : UCB.armStreamWithoutCoordinate target stream\u2081 = UCB.armStreamWithoutCoordinate target stream\u2082) : ((latentArmStreamTrajectoryKernel algorithm env stream\u2081).map (Preorder.frestrictLe 0)).restrict (latentArmStreamPrefixCountCap 0 target) = ((latentArmStreamTrajectoryKernel algorithm env stream\u2082).map (Preorder.frestrictLe 0)).restrict (latentArmStreamPrefixCountCap 0 target)"
   },
   {
@@ -34277,7 +34328,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "latentArmStreamPrefixCountLt",
     "full_name": "BanditRLProof.Thompson.latentArmStreamPrefixCountLt",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 576,
+    "line": 577,
     "statement": "def latentArmStreamPrefixCountLt {K : Nat} (n : Nat) (target : Nat \u00d7 Fin K) : Set (History.FinitePairHistory (Fin K) Real n)"
   },
   {
@@ -34285,7 +34336,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "measurableSet_latentArmStreamPrefixCountLt",
     "full_name": "BanditRLProof.Thompson.measurableSet_latentArmStreamPrefixCountLt",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 581,
+    "line": 582,
     "statement": "theorem measurableSet_latentArmStreamPrefixCountLt {K : Nat} (n : Nat) (target : Nat \u00d7 Fin K) : MeasurableSet (latentArmStreamPrefixCountLt n target)"
   },
   {
@@ -34293,7 +34344,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "latentArmStreamPrefixCountEq",
     "full_name": "BanditRLProof.Thompson.latentArmStreamPrefixCountEq",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 589,
+    "line": 590,
     "statement": "def latentArmStreamPrefixCountEq {K : Nat} (n : Nat) (target : Nat \u00d7 Fin K) : Set (History.FinitePairHistory (Fin K) Real n)"
   },
   {
@@ -34301,7 +34352,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "measurableSet_latentArmStreamPrefixCountEq",
     "full_name": "BanditRLProof.Thompson.measurableSet_latentArmStreamPrefixCountEq",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 594,
+    "line": 595,
     "statement": "theorem measurableSet_latentArmStreamPrefixCountEq {K : Nat} (n : Nat) (target : Nat \u00d7 Fin K) : MeasurableSet (latentArmStreamPrefixCountEq n target)"
   },
   {
@@ -34309,7 +34360,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "realHistoryPullCount_extendPairHistorySucc",
     "full_name": "BanditRLProof.Thompson.realHistoryPullCount_extendPairHistorySucc",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 603,
+    "line": 604,
     "statement": "theorem realHistoryPullCount_extendPairHistorySucc {K : Nat} (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) (next : Fin K \u00d7 Real) (arm : Fin K) : ETC.realHistoryPullCount (n + 1) (History.extendPairHistorySucc history next) arm = ETC.realHistoryPullCount n history arm + if next.1 = arm then 1 else 0"
   },
   {
@@ -34317,7 +34368,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "mem_latentArmStreamPrefixCountCap_extendPairHistorySucc_iff",
     "full_name": "BanditRLProof.Thompson.mem_latentArmStreamPrefixCountCap_extendPairHistorySucc_iff",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 650,
+    "line": 651,
     "statement": "theorem mem_latentArmStreamPrefixCountCap_extendPairHistorySucc_iff {K : Nat} (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) (next : Fin K \u00d7 Real) (target : Nat \u00d7 Fin K) : History.extendPairHistorySucc history next \u2208 latentArmStreamPrefixCountCap (n + 1) target \u2194 history \u2208 latentArmStreamPrefixCountCap n target \u2227 (ETC.realHistoryPullCount n history target.2 < target.1 \u2228 next.1 \u2260 target.2)"
   },
   {
@@ -34325,7 +34376,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "latentArmStreamPrefixCountCap_of_extendPairHistorySucc_mem",
     "full_name": "BanditRLProof.Thompson.latentArmStreamPrefixCountCap_of_extendPairHistorySucc_mem",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 669,
+    "line": 670,
     "statement": "theorem latentArmStreamPrefixCountCap_of_extendPairHistorySucc_mem {K : Nat} (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) (next : Fin K \u00d7 Real) (target : Nat \u00d7 Fin K) (hcap : History.extendPairHistorySucc history next \u2208 latentArmStreamPrefixCountCap (n + 1) target) : history \u2208 latentArmStreamPrefixCountCap n target"
   },
   {
@@ -34333,7 +34384,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "selectedCoordinate_ne_of_extendPairHistorySucc_mem_prefixCountCap",
     "full_name": "BanditRLProof.Thompson.selectedCoordinate_ne_of_extendPairHistorySucc_mem_prefixCountCap",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 682,
+    "line": 683,
     "statement": "theorem selectedCoordinate_ne_of_extendPairHistorySucc_mem_prefixCountCap {K : Nat} (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) (next : Fin K \u00d7 Real) (target : Nat \u00d7 Fin K) (hcap : History.extendPairHistorySucc history next \u2208 latentArmStreamPrefixCountCap (n + 1) target) : (ETC.realHistoryPullCount n history next.1, next.1) \u2260 target"
   },
   {
@@ -34341,7 +34392,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "latentArmStreamSuccessorCountCap_preimage",
     "full_name": "BanditRLProof.Thompson.latentArmStreamSuccessorCountCap_preimage",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 702,
+    "line": 703,
     "statement": "theorem latentArmStreamSuccessorCountCap_preimage {K : Nat} (n : Nat) (target : Nat \u00d7 Fin K) : (fun sample : History.FinitePairHistory (Fin K) Real n \u00d7 (Fin K \u00d7 Real) => History.extendPairHistorySucc sample.1 sample.2) \u207b\u00b9' latentArmStreamPrefixCountCap (n + 1) target = (latentArmStreamPrefixCountLt n target \u00d7\u02e2 Set.univ) \u222a (latentArmStreamPrefixCountEq n target \u00d7\u02e2 latentArmStreamNextActionNeSet target.2)"
   },
   {
@@ -34349,7 +34400,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "latentArmStreamSuccessorCountCapSection",
     "full_name": "BanditRLProof.Thompson.latentArmStreamSuccessorCountCapSection",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 723,
+    "line": 724,
     "statement": "def latentArmStreamSuccessorCountCapSection {K : Nat} (n : Nat) (target : Nat \u00d7 Fin K) (history : History.FinitePairHistory (Fin K) Real n) : Set (Fin K \u00d7 Real)"
   },
   {
@@ -34357,7 +34408,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "measurableSet_latentArmStreamSuccessorCountCapSection",
     "full_name": "BanditRLProof.Thompson.measurableSet_latentArmStreamSuccessorCountCapSection",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 731,
+    "line": 732,
     "statement": "theorem measurableSet_latentArmStreamSuccessorCountCapSection {K : Nat} (n : Nat) (target : Nat \u00d7 Fin K) (history : History.FinitePairHistory (Fin K) Real n) : MeasurableSet (latentArmStreamSuccessorCountCapSection n target history)"
   },
   {
@@ -34365,7 +34416,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "historyStepKernel_apply_restrict_successorCountCap_eq_of_withoutCoordinate_eq",
     "full_name": "BanditRLProof.Thompson.historyStepKernel_apply_restrict_successorCountCap_eq_of_withoutCoordinate_eq",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 742,
+    "line": 743,
     "statement": "theorem historyStepKernel_apply_restrict_successorCountCap_eq_of_withoutCoordinate_eq {Env : Type u} {K : Nat} [MeasurableSpace Env] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (target : Nat \u00d7 Fin K) (stream\u2081 stream\u2082 : UCB.ArmRewardStream K) (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) (hwithout : UCB.armStreamWithoutCoordinate target stream\u2081 = UCB.armStreamWithoutCoordinate target stream\u2082) (hcap : history \u2208 latentArmStreamPrefixCountCap n target) : (historyStepKernel algorithm ((latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K)).at (env, stream\u2081)) n history).restrict (latentArmStreamSuccessorCountCapSection n target history) = (historyStepKernel algorithm ((latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K)).at (env, stream\u2082)) n history).restrict (latentArmStreamSuccessorCountCapSection n target history)"
   },
   {
@@ -34373,7 +34424,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "latentArmStreamTrajectoryKernel_map_frestrictLe_restrict_countCap_succ",
     "full_name": "BanditRLProof.Thompson.latentArmStreamTrajectoryKernel_map_frestrictLe_restrict_countCap_succ",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 778,
+    "line": 779,
     "statement": "theorem latentArmStreamTrajectoryKernel_map_frestrictLe_restrict_countCap_succ {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (target : Nat \u00d7 Fin K) (stream\u2081 stream\u2082 : UCB.ArmRewardStream K) (hwithout : UCB.armStreamWithoutCoordinate target stream\u2081 = UCB.armStreamWithoutCoordinate target stream\u2082) (n : Nat) (hprefix : ((latentArmStreamTrajectoryKernel algorithm env stream\u2081).map (Preorder.frestrictLe n)).restrict (latentArmStreamPrefixCountCap n target) = ((latentArmStreamTrajectoryKernel algorithm env stream\u2082).map (Preorder.frestrictLe n)).restrict (latentArmStreamPrefixCountCap n target)) : ((latentArmStreamTrajectoryKernel algorithm env stream\u2081).map (Preorder.frestrictLe (n + 1))).restrict (latentArmStreamPrefixCountCap (n + 1) target) = ((latentArmStreamTrajectoryKernel algorithm env stream\u2082).map (Preorder.frestrictLe (n + 1))).restrict (latentArmStreamPrefixCountCap (n + 1) target)"
   },
   {
@@ -34381,7 +34432,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "latentArmStreamTrajectoryKernel_map_frestrictLe_restrict_countCap_eq_of_withoutCoordinate_eq",
     "full_name": "BanditRLProof.Thompson.latentArmStreamTrajectoryKernel_map_frestrictLe_restrict_countCap_eq_of_withoutCoordinate_eq",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 860,
+    "line": 861,
     "statement": "theorem latentArmStreamTrajectoryKernel_map_frestrictLe_restrict_countCap_eq_of_withoutCoordinate_eq {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (target : Nat \u00d7 Fin K) (stream\u2081 stream\u2082 : UCB.ArmRewardStream K) (hwithout : UCB.armStreamWithoutCoordinate target stream\u2081 = UCB.armStreamWithoutCoordinate target stream\u2082) (n : Nat) : ((latentArmStreamTrajectoryKernel algorithm env stream\u2081).map (Preorder.frestrictLe n)).restrict (latentArmStreamPrefixCountCap n target) = ((latentArmStreamTrajectoryKernel algorithm env stream\u2082).map (Preorder.frestrictLe n)).restrict (latentArmStreamPrefixCountCap n target)"
   },
   {
@@ -34389,7 +34440,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "LatentArmStreamVisiblePrefixNextActionBranchLocality",
     "full_name": "BanditRLProof.Thompson.LatentArmStreamVisiblePrefixNextActionBranchLocality",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 885,
+    "line": 886,
     "statement": "def LatentArmStreamVisiblePrefixNextActionBranchLocality {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (n : Nat) : Prop"
   },
   {
@@ -34397,7 +34448,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "latentArmStreamVisiblePrefixNextActionBranchLocality_of_prefixCountCapLocality",
     "full_name": "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextActionBranchLocality_of_prefixCountCapLocality",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 901,
+    "line": 902,
     "statement": "theorem latentArmStreamVisiblePrefixNextActionBranchLocality_of_prefixCountCapLocality {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (n : Nat) (hcap : \u2200 (target : Nat \u00d7 Fin K) (stream\u2081 stream\u2082 : UCB.ArmRewardStream K), UCB.armStreamWithoutCoordinate target stream\u2081 = UCB.armStreamWithoutCoordinate target stream\u2082 \u2192 (((latentArmStreamTrajectoryKernel algorithm env stream\u2081).map (Preorder.frestrictLe n)).restrict (latentArmStreamPrefixCountCap n target)) = (((latentArmStreamTrajectoryKernel algorithm env stream\u2082).map (Preorder.frestrictLe n)).restrict (latentArmStreamPrefixCountCap n target))) : LatentArmStreamVisiblePrefixNextActionBranchLocality algorithm env n"
   },
   {
@@ -34405,7 +34456,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "latentArmStreamVisiblePrefixNextActionBranchLocality",
     "full_name": "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextActionBranchLocality",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 983,
+    "line": 984,
     "statement": "theorem latentArmStreamVisiblePrefixNextActionBranchLocality {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (n : Nat) : LatentArmStreamVisiblePrefixNextActionBranchLocality algorithm env n"
   },
   {
@@ -34413,7 +34464,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod_of_locality",
     "full_name": "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod_of_locality",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 1001,
+    "line": 1002,
     "statement": "theorem latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod_of_locality {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) (hlocal : LatentArmStreamVisiblePrefixNextActionBranchLocality algorithm env n) (target : Nat \u00d7 Fin K) : let branchKernel := ((latentArmStreamTrajectoryKernel algorithm env).map (latentArmStreamVisiblePrefixNextAction n)).restrict (UCB.measurableSet_armStreamHistoryActionCoordinateBranch n target) Measure.map (fun sample : UCB.ArmRewardStream K \u00d7 (History.FinitePairHistory (Fin K) Real n \u00d7 Fin K) => (sample.2, UCB.armStreamCoordinate target sample.1)) (UCB.armStreamMeasure nu \u2297\u2098 branchKernel) = (Measure.map Prod.snd (UCB.armStreamMeasure nu \u2297\u2098 branchKernel)).prod (nu target.2)"
   },
   {
@@ -34421,7 +34472,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod",
     "full_name": "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 1032,
+    "line": 1033,
     "statement": "theorem latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) (target : Nat \u00d7 Fin K) : let branchKernel := ((latentArmStreamTrajectoryKernel algorithm env).map (latentArmStreamVisiblePrefixNextAction n)).restrict (UCB.measurableSet_armStreamHistoryActionCoordinateBranch n target) Measure.map (fun sample : UCB.ArmRewardStream K \u00d7 (History.FinitePairHistory (Fin K) Real n \u00d7 Fin K) => (sample.2, UCB.armStreamCoordinate target sample.1)) (UCB.armStreamMeasure nu \u2297\u2098 branchKernel) = (Measure.map Prod.snd (UCB.armStreamMeasure nu \u2297\u2098 branchKernel)).prod (nu target.2)"
   },
   {
@@ -34429,7 +34480,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "latentArmStreamTrajectoryMeasure_map_visiblePrefix_nextAction_eq_compProd",
     "full_name": "BanditRLProof.Thompson.latentArmStreamTrajectoryMeasure_map_visiblePrefix_nextAction_eq_compProd",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 1059,
+    "line": 1060,
     "statement": "theorem latentArmStreamTrajectoryMeasure_map_visiblePrefix_nextAction_eq_compProd {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) : Measure.map (fun sample : UCB.ArmRewardStream K \u00d7 ((t : Nat) -> Fin K \u00d7 Real) => latentArmStreamVisiblePrefixNextAction n sample.2) (latentArmStreamTrajectoryMeasure algorithm env nu) = Measure.map (fun sample : UCB.ArmRewardStream K \u00d7 ((t : Nat) -> Fin K \u00d7 Real) => Preorder.frestrictLe n sample.2) (latentArmStreamTrajectoryMeasure algorithm env nu) \u2297\u2098 algorithm.policy n"
   },
   {
@@ -34437,15 +34488,79 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "latentArmStreamVisibleNextReward_eq_selectedCoordinate_ae",
     "full_name": "BanditRLProof.Thompson.latentArmStreamVisibleNextReward_eq_selectedCoordinate_ae",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 1095,
+    "line": 1096,
     "statement": "theorem latentArmStreamVisibleNextReward_eq_selectedCoordinate_ae {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) : \u2200\u1d50 sample \u2202latentArmStreamTrajectoryMeasure algorithm env nu, latentArmStreamVisibleNextReward n sample.2 = UCB.armStreamCoordinate (UCB.armStreamCoordinateOfHistoryAction n (latentArmStreamVisiblePrefixNextAction n sample.2)) sample.1"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurable_latentArmStreamSelectedCoordinate",
+    "full_name": "BanditRLProof.Thompson.measurable_latentArmStreamSelectedCoordinate",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+    "line": 1129,
+    "statement": "theorem measurable_latentArmStreamSelectedCoordinate {K : Nat} (n : Nat) : Measurable (fun sample : UCB.ArmRewardStream K \u00d7 (History.FinitePairHistory (Fin K) Real n \u00d7 Fin K) => UCB.armStreamCoordinate (UCB.armStreamCoordinateOfHistoryAction n sample.2) sample.1)"
+  },
+  {
+    "kind": "theorem",
+    "name": "latentArmStreamVisiblePrefixNextAction_selectedCoordinate_branch_eq_prod",
+    "full_name": "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextAction_selectedCoordinate_branch_eq_prod",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+    "line": 1148,
+    "statement": "theorem latentArmStreamVisiblePrefixNextAction_selectedCoordinate_branch_eq_prod {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) (target : Nat \u00d7 Fin K) : let conditionKernel := (latentArmStreamTrajectoryKernel algorithm env).map (latentArmStreamVisiblePrefixNextAction n) let fullMixed := UCB.armStreamMeasure nu \u2297\u2098 conditionKernel let branch := UCB.armStreamHistoryActionCoordinateBranch n target let branchKernel := conditionKernel.restrict (UCB.measurableSet_armStreamHistoryActionCoordinateBranch n target) let branchMixed := UCB.armStreamMeasure nu \u2297\u2098 branchKernel Measure.map (fun sample : UCB.ArmRewardStream K \u00d7 (History.FinitePairHistory (Fin K) Real n \u00d7 Fin K) => (sample.2, UCB.armStreamCoordinate (UCB.armStreamCoordinateOfHistoryAction n sample.2) sample.1)) branchMixed = ((Measure.map Prod.snd fullMixed).restrict branch).prod (nu target.2)"
+  },
+  {
+    "kind": "theorem",
+    "name": "latentArmStreamVisiblePrefixNextAction_selectedCoordinate_mixed_eq_compProd",
+    "full_name": "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextAction_selectedCoordinate_mixed_eq_compProd",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+    "line": 1232,
+    "statement": "theorem latentArmStreamVisiblePrefixNextAction_selectedCoordinate_mixed_eq_compProd {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) : let conditionKernel := (latentArmStreamTrajectoryKernel algorithm env).map (latentArmStreamVisiblePrefixNextAction n) let fullMixed := UCB.armStreamMeasure nu \u2297\u2098 conditionKernel Measure.map (fun sample : UCB.ArmRewardStream K \u00d7 (History.FinitePairHistory (Fin K) Real n \u00d7 Fin K) => (sample.2, UCB.armStreamCoordinate (UCB.armStreamCoordinateOfHistoryAction n sample.2) sample.1)) fullMixed = Measure.map Prod.snd fullMixed \u2297\u2098 UCB.armStreamSelectedRewardKernel n nu"
+  },
+  {
+    "kind": "theorem",
+    "name": "latentArmStreamVisiblePrefixNextAction_selectedCoordinate_eq_compProd",
+    "full_name": "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextAction_selectedCoordinate_eq_compProd",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+    "line": 1372,
+    "statement": "theorem latentArmStreamVisiblePrefixNextAction_selectedCoordinate_eq_compProd {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) : Measure.map (fun sample : UCB.ArmRewardStream K \u00d7 ((t : Nat) -> Fin K \u00d7 Real) => (latentArmStreamVisiblePrefixNextAction n sample.2, UCB.armStreamCoordinate (UCB.armStreamCoordinateOfHistoryAction n (latentArmStreamVisiblePrefixNextAction n sample.2)) sample.1)) (latentArmStreamTrajectoryMeasure algorithm env nu) = Measure.map (fun sample : UCB.ArmRewardStream K \u00d7 ((t : Nat) -> Fin K \u00d7 Real) => latentArmStreamVisiblePrefixNextAction n sample.2) (latentArmStreamTrajectoryMeasure algorithm env nu) \u2297\u2098 UCB.armStreamSelectedRewardKernel n nu"
+  },
+  {
+    "kind": "theorem",
+    "name": "latentArmStreamVisibleNextReward_joint_eq_compProd",
+    "full_name": "BanditRLProof.Thompson.latentArmStreamVisibleNextReward_joint_eq_compProd",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+    "line": 1464,
+    "statement": "theorem latentArmStreamVisibleNextReward_joint_eq_compProd {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) : Measure.map (fun sample : UCB.ArmRewardStream K \u00d7 ((t : Nat) -> Fin K \u00d7 Real) => (latentArmStreamVisiblePrefixNextAction n sample.2, latentArmStreamVisibleNextReward n sample.2)) (latentArmStreamTrajectoryMeasure algorithm env nu) = Measure.map (fun sample : UCB.ArmRewardStream K \u00d7 ((t : Nat) -> Fin K \u00d7 Real) => latentArmStreamVisiblePrefixNextAction n sample.2) (latentArmStreamTrajectoryMeasure algorithm env nu) \u2297\u2098 UCB.armStreamSelectedRewardKernel n nu"
+  },
+  {
+    "kind": "theorem",
+    "name": "latentArmStreamVisibleNextReward_condDistrib_ae_eq_nu",
+    "full_name": "BanditRLProof.Thompson.latentArmStreamVisibleNextReward_condDistrib_ae_eq_nu",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+    "line": 1515,
+    "statement": "theorem latentArmStreamVisibleNextReward_condDistrib_ae_eq_nu {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) : condDistrib (fun sample : UCB.ArmRewardStream K \u00d7 ((t : Nat) -> Fin K \u00d7 Real) => latentArmStreamVisibleNextReward n sample.2) (fun sample : UCB.ArmRewardStream K \u00d7 ((t : Nat) -> Fin K \u00d7 Real) => latentArmStreamVisiblePrefixNextAction n sample.2) (latentArmStreamTrajectoryMeasure algorithm env nu) =\u1d50[ (latentArmStreamTrajectoryMeasure algorithm env nu).map (fun sample => latentArmStreamVisiblePrefixNextAction n sample.2)] UCB.armStreamSelectedRewardKernel n nu"
+  },
+  {
+    "kind": "theorem",
+    "name": "latentArmStreamVisibleTrajectoryMeasure_nextReward_joint_eq_compProd",
+    "full_name": "BanditRLProof.Thompson.latentArmStreamVisibleTrajectoryMeasure_nextReward_joint_eq_compProd",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+    "line": 1545,
+    "statement": "theorem latentArmStreamVisibleTrajectoryMeasure_nextReward_joint_eq_compProd {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) : let visibleMeasure := (latentArmStreamTrajectoryMeasure algorithm env nu).map Prod.snd Measure.map (fun trajectory : (t : Nat) -> Fin K \u00d7 Real => (latentArmStreamVisiblePrefixNextAction n trajectory, latentArmStreamVisibleNextReward n trajectory)) visibleMeasure = Measure.map (latentArmStreamVisiblePrefixNextAction n) visibleMeasure \u2297\u2098 UCB.armStreamSelectedRewardKernel n nu"
+  },
+  {
+    "kind": "theorem",
+    "name": "latentArmStreamVisibleTrajectoryMeasure_nextReward_condDistrib_ae_eq_nu",
+    "full_name": "BanditRLProof.Thompson.latentArmStreamVisibleTrajectoryMeasure_nextReward_condDistrib_ae_eq_nu",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+    "line": 1604,
+    "statement": "theorem latentArmStreamVisibleTrajectoryMeasure_nextReward_condDistrib_ae_eq_nu {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) : let visibleMeasure := (latentArmStreamTrajectoryMeasure algorithm env nu).map Prod.snd condDistrib (latentArmStreamVisibleNextReward n) (latentArmStreamVisiblePrefixNextAction n) visibleMeasure =\u1d50[ visibleMeasure.map (latentArmStreamVisiblePrefixNextAction n)] UCB.armStreamSelectedRewardKernel n nu"
   },
   {
     "kind": "theorem",
     "name": "latentArmStreamTrajectoryMeasure_map_stream_visiblePrefix_eq",
     "full_name": "BanditRLProof.Thompson.latentArmStreamTrajectoryMeasure_map_stream_visiblePrefix_eq",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "line": 1129,
+    "line": 1629,
     "statement": "theorem latentArmStreamTrajectoryMeasure_map_stream_visiblePrefix_eq {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) : Measure.map (fun sample : UCB.ArmRewardStream K \u00d7 ((t : Nat) -> Fin K \u00d7 Real) => (Preorder.frestrictLe n sample.1, Preorder.frestrictLe n sample.2)) (latentArmStreamTrajectoryMeasure algorithm env nu) = Measure.pi (fun _ : Finset.Iic n => Measure.infinitePi fun arm : Fin K => nu arm) \u2297\u2098 latentArmStreamVisiblePrefixKernel algorithm env n"
   },
   {
@@ -94717,6 +94832,51 @@ These cards are planning inspiration only.  They do not certify any theorem.
       "Independent read-only semantic, status, lifecycle, website, and tooling review found no P0/P1/P2 issues after fixes",
       "Final tools/bandit.py check passed: 8890 Lean jobs and 350 Python tests with 7 expected skips",
       "Anonymous artifact final3 SHA-256 877988fcd78e20ae4e4ee81a1ceb2d0ee77e440dcce43d6711e54df0399b4c84 verified twice in one fresh extraction without mutation"
+    ]
+  },
+  {
+    "changed_files": [
+      "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+      "Tests/StochasticGradientBanditTheoremTwoNativeTrajectoryCanary.lean"
+    ],
+    "kind": "build",
+    "lean": "BanditRLProof.Thompson.latentArmStreamVisibleTrajectoryMeasure_nextReward_condDistrib_ae_eq_nu",
+    "notes": "Compiled eight selected-reward aggregation/readout declarations. For each deterministic time n, the next-reward joint law and a.e. conditional law equal the selected-arm kernel on the latent coupling and its visible marginal. Native-prefix/full native-law identification, selected or stopped IID, future/no-return, ballot/asymptotic assembly, and Theorem 2 remain blocked.",
+    "parent_id": "",
+    "role": "lower",
+    "route_fingerprint": "",
+    "run_id": "sgb-theorem2-selected-freshness-aggregation-round19-2026-08-28",
+    "source": "PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB",
+    "statement_hash": "",
+    "status": "compiled",
+    "task": "PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE",
+    "time": "2026-08-28T09:39:10+00:00",
+    "verifier_evidence": [
+      "focused source and canary exit 0; baseline axioms only propext/Classical.choice/Quot.sound",
+      "lake build 8890 jobs; repository check 351 Python tests OK with 7 expected skips",
+      "anonymous supplement 799 files built and verified twice; site 656 pages and 17621 Lean links passed"
+    ]
+  },
+  {
+    "changed_files": [
+      "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+      "Tests/StochasticGradientBanditTheoremTwoNativeTrajectoryCanary.lean"
+    ],
+    "kind": "review",
+    "lean": "BanditRLProof.Thompson.latentArmStreamVisibleTrajectoryMeasure_nextReward_condDistrib_ae_eq_nu",
+    "notes": "Independent read-only review accepted the acyclic measurable-branch-aggregation-readout proof chain, its deterministic-time indexing, sub-Markov branch handling, and baseline axioms. It did not promote the result to native-prefix or full native-trajectory equality, selected/stopped IID, future/no-return, ballot/asymptotic assembly, or Theorem 2.",
+    "parent_id": "",
+    "role": "reviewer",
+    "route_fingerprint": "",
+    "run_id": "sgb-theorem2-selected-freshness-aggregation-round19-2026-08-28",
+    "source": "local-independent-review",
+    "statement_hash": "",
+    "status": "accepted",
+    "task": "PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE",
+    "time": "2026-08-28T09:40:18+00:00",
+    "verifier_evidence": [
+      "independent semantic review found no P0/P1 Lean issue; 8/8 #check and 8/8 #print axioms",
+      "focused source/canary and lake build passed; repository integration gate passed after deterministic test fix"
     ]
   }
 ]
