@@ -50,8 +50,9 @@ reports zero `literature-open` cases until a scoped primary-source audit support
 such a claim; one case remains in the source-audit queue, while the 13
 formalization-open cases expose 39 stable named leaves. Two additional
 source-frozen ports—the 54-declaration succinct-lower-bound audit and the
-303-declaration stochastic-gradient-bandit audit—are displayed outside that
-comparison ledger.  The latter contains a historical 223-declaration
+316-declaration stochastic-gradient-bandit audit—are displayed outside that
+comparison ledger.  The latter has the exact audit-slice inventory
+`316 = 223 + 23 + 18 + 24 + 7 + 8 + 13`: a historical 223-declaration
 Theorem-1/Appendix-E stack, a 23-declaration bounded Corollary-1 companion, an
 18-declaration fixed-cutoff starvation consumer, a 24-declaration chronological
 nth-pull bridge, and a 7-declaration latent fixed-arm product/readout layer.  The
@@ -59,12 +60,17 @@ latent layer proves an unconditional finite product law for fixed-arm latent
 coordinates and almost-sure readout at every finite nth pull.  An additional
 8-declaration deferred-decisions layer proves stream-prefix locality, a Markov
 visible-prefix kernel, and the exact finite stream-box/visible-prefix mixture.
-It does not identify that mixture's visible marginal with the native fixed-IID
-prefix or establish the native visible law, and it does not make totalized or
-occurrence-conditioned stopped rewards IID.  Branchwise prefix-plus-next-pair
-freshness, the visible-marginal/native-prefix identification, the stopped-prefix
-future-cylinder, conditional no-return producer, ballot phase, and terminal remain blocked.  The
-SGB audit therefore remains partial, with Theorems 2–4 open;
+The newest 13-declaration action/readout and branch-locality-interface scaffold
+proves the next-action factorization and pathwise selected-coordinate support,
+and supplies a finite/sub-Markov branch-product consumer conditional on an
+explicit locality premise plus count-cap measurability and recurrence.  Its
+`LatentArmStreamVisiblePrefixNextActionBranchLocality` declaration is only a
+typed, unproved proposition.  It therefore does not prove branchwise prefix-
+plus-next-pair freshness, selected-reward IID, the visible-marginal/native-
+prefix identification, or the native visible law.  The stopped-prefix future-
+cylinder, conditional no-return producer, ballot phase, asymptotic assembly,
+and terminal remain blocked.  The SGB audit therefore remains partial, with
+Theorems 2–4 open;
 the succinct-lower-bound port also has no compiled paper-level terminal.
 
 ## 🛠️ Build locally

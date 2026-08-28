@@ -1440,6 +1440,23 @@
       ]
     },
     {
+      "full_name": "BanditRLProof.Thompson.latentArmStreamTrajectoryMeasure_map_visiblePrefix_nextAction_eq_compProd",
+      "chapter": "frontier",
+      "plain": "After the latent reward stream is mixed out, the joint law of the visible prefix through n and the action selected at n plus one is the visible-prefix marginal followed by the algorithm's policy kernel at n.",
+      "math": "\\(\\mathcal L(H_{\\le n},A_{n+1})=\\mathcal L(H_{\\le n})\\ltimes\\pi_n.\\)",
+      "intuition": "The latent stream changes how rewards are coupled, not how the algorithm randomizes its next action once the visible history is fixed. This theorem isolates that action half of the one-step law.",
+      "why": "A native-trajectory adapter must separate next-action randomization from selected-reward freshness. Proving the action factorization first leaves the genuine deferred-decisions obligation visible instead of hiding it inside a larger kernel equality.",
+      "position": "This is an unconditional compiled theorem in the 13-declaration action/readout and branch-locality-interface scaffold. It is not a selected-reward freshness theorem, native trajectory-law identification, or Theorem 2.",
+      "proof_idea": "Apply the generic trajectory-mixture action-law transport to each fixed latent stream, use the canonical history algorithm's policy law at the shifted successor coordinate, and then mix the stream out.",
+      "lean_notes": "A separate compiled almost-sure theorem identifies the observed next reward with the selected latent coordinate. The finite/sub-Markov branch-product consumer still assumes LatentArmStreamVisiblePrefixNextActionBranchLocality, which is only a typed, unproved proposition. Branchwise prefix-plus-next-pair freshness and selected IID therefore remain open.",
+      "dependencies": [
+        "BanditRLProof.Thompson.latentArmStreamTrajectoryMeasure",
+        "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextAction",
+        "BanditRLProof.Thompson.trajectoryMixture_map_history_action_eq_compProd",
+        "BanditRLProof.Thompson.canonicalMeasurableEnvironmentTrajectoryKernel_map_history_action_eq_compProd"
+      ]
+    },
+    {
       "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral",
       "chapter": "frontier",
       "plain": "On the canonical generated fixed-IID trajectory, the exact regret charge of a measurable fixed-cutoff starvation event times its probability is no larger than expected sampled pseudo-regret.",

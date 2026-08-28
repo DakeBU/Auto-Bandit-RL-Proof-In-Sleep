@@ -2,7 +2,7 @@
 
 Task: `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE`
 
-Status: `target-frozen; Corollary 1 compiled; Theorem 2 blocked after compiled nth-pull, latent-product/readout, deferred-decisions finite-prefix factorization, and deterministic-starvation milestones`
+Status: `target-frozen; Corollary 1 compiled; Theorem 2 blocked after compiled nth-pull, latent-product/readout, deferred-decisions finite-prefix factorization, action/readout interface, count-cap scaffold, and deterministic-starvation milestones`
 
 ## Source-to-Lean fence
 
@@ -135,6 +135,30 @@ that may be assumed by the terminal.
   visible law, no stopped-reward IID theorem, no future-cylinder/no-return producer, and no
   Theorem-2 terminal follows from this packet.
 
+## Round-17 retrieval packet: action/readout split and branch-locality scaffold
+
+- Reused APIs: `trajectoryMixture_map_history_action_eq_compProd`,
+  `indepFun_armStreamMeasure_coordinate_without`, finite/sub-Markov
+  semidirect-product factorization, coordinate removal/insertion, and
+  `ETC.realHistoryPullCount_finitePairHistoryOfTrace`.
+- Compiled action half: the latent mixture maps `(visible prefix, next action)`
+  to the visible-prefix marginal followed by `algorithm.policy n`.
+- Compiled pathwise support: the actual successor reward equals the latent
+  coordinate selected by the visible history and sampled action almost surely.
+  This is support, not a conditional freshness or IID theorem.
+- Compiled consumer/scaffold: a branch kernel, finite/sub-Markov product
+  consumer, count-cap set, its measurability, and the exact pull-count extension
+  recurrence.  `LatentArmStreamVisiblePrefixNextActionBranchLocality` is an
+  explicit proposition required by the consumer; no theorem proves it yet.
+- Exact open producer: prove equality of fixed-stream visible-prefix laws after
+  restriction to the count cap under equality of all coordinates except the
+  target.  Then restrict to the exact count/action branch, obtain freshness,
+  identify the native prefix, and apply trajectory uniqueness.
+- Off-by-one boundary: an inclusive history through `n` can contain `n + 1`
+  pulls of one arm.  The prefix/action law does not consume the selected next
+  coordinate, whereas the next reward does; a finite `Iic n` stream box alone
+  cannot establish freshness.
+
 ## Pivot rules
 
 - Do not replace the nth-pull law with an IID premise on the selected reward
@@ -143,5 +167,6 @@ that may be assumed by the terminal.
 - If the asymptotic notation becomes a blocker, retain the exact finite
   Appendix-C lower bound and leave the terminal status partial.
 - Compiled Corollary 1, nth-pull, latent-product/readout, finite-prefix
-  factorization, and deterministic-starvation milestones do not compile the
+  factorization, action/readout interface, count-cap scaffold, and
+  deterministic-starvation milestones do not compile the
   frozen Theorem 2 terminal; that terminal remains `blocked`.

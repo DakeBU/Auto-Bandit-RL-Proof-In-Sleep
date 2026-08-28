@@ -973,6 +973,15 @@ def main() -> int:
     sgb_prefix_items = [item for item in search_items if item.get("name") == sgb_prefix_declaration]
     if len(sgb_prefix_items) != 1 or sgb_prefix_items[0].get("chapter") != "Frontier":
         errors.append("SGB deferred-decisions prefix declarations must resolve to the Frontier chapter")
+    sgb_action_declaration = (
+        "BanditRLProof.Thompson."
+        "latentArmStreamTrajectoryMeasure_map_visiblePrefix_nextAction_eq_compProd"
+    )
+    sgb_action_items = [
+        item for item in search_items if item.get("name") == sgb_action_declaration
+    ]
+    if len(sgb_action_items) != 1 or sgb_action_items[0].get("chapter") != "Frontier":
+        errors.append("SGB next-action factorization must resolve to the Frontier chapter")
     frontier_source = (output / "chapters" / "frontier" / "index.html").read_text(encoding="utf-8")
     for required in (
         "A Novel General Framework for Sharp Lower Bounds in Succinct Stochastic Bandits",
@@ -984,9 +993,12 @@ def main() -> int:
         "physical PDF p. 5",
         "Theorem 2 (two-arm SGB phase transition)",
         "physical PDF p. 6; Appendix C pp. 31–40",
+        "316 = 223 + 23 + 18 + 24 + 7 + 8 + 13",
+        "LatentArmStreamVisiblePrefixNextActionBranchLocality",
+        sgb_action_declaration,
     ):
         if required not in frontier_source:
-            errors.append(f"Frontier reading guide is missing succinct source metadata: {required}")
+            errors.append(f"Frontier reading guide is missing source or status metadata: {required}")
 
     ide_data_path = output / "ide-data.json"
     ide_items = json.loads(ide_data_path.read_text(encoding="utf-8")).get("items", []) if ide_data_path.exists() else []

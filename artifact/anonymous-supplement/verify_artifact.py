@@ -54,6 +54,7 @@ SGB_THEOREM_TWO_STARVATION_DECLARATION_COUNT = 18
 SGB_THEOREM_TWO_NTH_PULL_DECLARATION_COUNT = 24
 SGB_THEOREM_TWO_LATENT_REWARD_DECLARATION_COUNT = 7
 SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATION_COUNT = 8
+SGB_THEOREM_TWO_BRANCH_LOCALITY_SCAFFOLD_DECLARATION_COUNT = 13
 SGB_TOTAL_DECLARATION_COUNT = (
     SGB_HISTORICAL_DECLARATION_COUNT
     + SGB_COROLLARY_ONE_DECLARATION_COUNT
@@ -61,6 +62,7 @@ SGB_TOTAL_DECLARATION_COUNT = (
     + SGB_THEOREM_TWO_NTH_PULL_DECLARATION_COUNT
     + SGB_THEOREM_TWO_LATENT_REWARD_DECLARATION_COUNT
     + SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATION_COUNT
+    + SGB_THEOREM_TWO_BRANCH_LOCALITY_SCAFFOLD_DECLARATION_COUNT
 )
 SGB_THEOREM_FOUR_CONTRACT_AUDIT_FILE = (
     "BanditRLProof/Algorithms/"
@@ -138,6 +140,42 @@ SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATIONS = frozenset({
     "BanditRLProof.Thompson.latentArmStreamVisiblePrefixKernel",
     "BanditRLProof.Thompson.latentArmStreamTrajectoryKernel_map_frestrictLe_eq_prefixKernel_comap",
     "BanditRLProof.Thompson.latentArmStreamTrajectoryMeasure_map_stream_visiblePrefix_eq",
+})
+SGB_THEOREM_TWO_ACTION_READOUT_BRANCH_LOCALITY_INTERFACE_AND_COUNT_CAP_SCAFFOLD_DECLARATIONS = frozenset({
+    "BanditRLProof.UCB.armStreamMeasure_map_output_coordinate_compProd_comap_without_eq_prod",
+    "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextAction",
+    "BanditRLProof.Thompson.measurable_latentArmStreamVisiblePrefixNextAction",
+    "BanditRLProof.Thompson.latentArmStreamVisibleNextReward",
+    "BanditRLProof.Thompson.measurable_latentArmStreamVisibleNextReward",
+    "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextActionBranchKernel",
+    "BanditRLProof.Thompson.latentArmStreamPrefixCountCap",
+    "BanditRLProof.Thompson.measurableSet_latentArmStreamPrefixCountCap",
+    "BanditRLProof.Thompson.realHistoryPullCount_extendPairHistorySucc",
+    "BanditRLProof.Thompson.LatentArmStreamVisiblePrefixNextActionBranchLocality",
+    "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod_of_locality",
+    "BanditRLProof.Thompson.latentArmStreamTrajectoryMeasure_map_visiblePrefix_nextAction_eq_compProd",
+    "BanditRLProof.Thompson.latentArmStreamVisibleNextReward_eq_selectedCoordinate_ae",
+})
+SGB_THEOREM_TWO_NATIVE_TRAJECTORY_DECLARATIONS = (
+    SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATIONS
+    | SGB_THEOREM_TWO_ACTION_READOUT_BRANCH_LOCALITY_INTERFACE_AND_COUNT_CAP_SCAFFOLD_DECLARATIONS
+)
+SGB_THEOREM_TWO_ACTION_FACTORIZATION_DECLARATIONS = frozenset({
+    "BanditRLProof.Thompson.latentArmStreamTrajectoryMeasure_map_visiblePrefix_nextAction_eq_compProd",
+})
+SGB_THEOREM_TWO_PATHWISE_COORDINATE_SUPPORT_DECLARATIONS = frozenset({
+    "BanditRLProof.Thompson.latentArmStreamVisibleNextReward_eq_selectedCoordinate_ae",
+})
+SGB_THEOREM_TWO_BRANCH_PRODUCT_CONSUMER_DECLARATIONS = frozenset({
+    "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod_of_locality",
+})
+SGB_THEOREM_TWO_BRANCH_LOCALITY_CONTRACT_DECLARATIONS = frozenset({
+    "BanditRLProof.Thompson.LatentArmStreamVisiblePrefixNextActionBranchLocality",
+})
+SGB_THEOREM_TWO_COUNT_CAP_SCAFFOLD_DECLARATIONS = frozenset({
+    "BanditRLProof.Thompson.latentArmStreamPrefixCountCap",
+    "BanditRLProof.Thompson.measurableSet_latentArmStreamPrefixCountCap",
+    "BanditRLProof.Thompson.realHistoryPullCount_extendPairHistorySucc",
 })
 SGB_THEOREM_TWO_TERMINAL_DECLARATION = (
     "BanditRLProof.StochasticGradientBandit."
@@ -440,19 +478,21 @@ def verify_claim_ledger():
             + SGB_THEOREM_TWO_NTH_PULL_DECLARATION_COUNT
             + SGB_THEOREM_TWO_LATENT_REWARD_DECLARATION_COUNT
             + SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATION_COUNT
+            + SGB_THEOREM_TWO_BRANCH_LOCALITY_SCAFFOLD_DECLARATION_COUNT
         or len(follow_on_names)
         != SGB_COROLLARY_ONE_DECLARATION_COUNT
             + SGB_THEOREM_TWO_STARVATION_DECLARATION_COUNT
             + SGB_THEOREM_TWO_NTH_PULL_DECLARATION_COUNT
             + SGB_THEOREM_TWO_LATENT_REWARD_DECLARATION_COUNT
             + SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATION_COUNT
+            + SGB_THEOREM_TWO_BRANCH_LOCALITY_SCAFFOLD_DECLARATION_COUNT
         or historical_names & follow_on_names
         or len(sgb_names) != SGB_TOTAL_DECLARATION_COUNT
         or sgb.get("declaration_count") != SGB_TOTAL_DECLARATION_COUNT
     ):
         fail(
-            "SGB source audit must contain exactly 303 unique declarations "
-            "with historical 223 and separate 23+18+24+7+8 follow-on"
+            "SGB source audit must contain exactly 316 unique declarations "
+            "with historical 223 and separate 23+18+24+7+8+13 follow-on"
         )
     if (
         sgb.get("historical_declaration_count")
@@ -516,13 +556,18 @@ def verify_claim_ledger():
     theorem_two_latent_reward_names = {
         row.get("full_name") for row in theorem_two_latent_reward_rows
     }
-    theorem_two_prefix_factorization_rows = [
+    theorem_two_native_trajectory_rows = [
         row for row in declarations
         if row.get("file") == SGB_THEOREM_TWO_PREFIX_FACTORIZATION_FILE
     ]
-    theorem_two_prefix_factorization_names = {
-        row.get("full_name") for row in theorem_two_prefix_factorization_rows
+    theorem_two_native_trajectory_names = {
+        row.get("full_name") for row in theorem_two_native_trajectory_rows
     }
+    theorem_two_branch_locality_contract_rows = [
+        row for row in theorem_two_native_trajectory_rows
+        if row.get("full_name") in
+        SGB_THEOREM_TWO_BRANCH_LOCALITY_CONTRACT_DECLARATIONS
+    ]
     if (
         not (ROOT / SGB_COROLLARY_ONE_FILE).is_file()
         or len(corollary_one_rows) != SGB_COROLLARY_ONE_DECLARATION_COUNT
@@ -547,13 +592,16 @@ def verify_claim_ledger():
         or theorem_two_latent_reward_names
         != SGB_THEOREM_TWO_LATENT_REWARD_DECLARATIONS
         or not (ROOT / SGB_THEOREM_TWO_PREFIX_FACTORIZATION_FILE).is_file()
-        or len(theorem_two_prefix_factorization_rows)
+        or len(theorem_two_native_trajectory_rows)
         != SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATION_COUNT
-        or theorem_two_prefix_factorization_names
-        != SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATIONS
+            + SGB_THEOREM_TWO_BRANCH_LOCALITY_SCAFFOLD_DECLARATION_COUNT
+        or theorem_two_native_trajectory_names
+        != SGB_THEOREM_TWO_NATIVE_TRAJECTORY_DECLARATIONS
+        or len(theorem_two_branch_locality_contract_rows) != 1
+        or theorem_two_branch_locality_contract_rows[0].get("kind") != "def"
         or corollary_one_names | theorem_two_starvation_names |
             theorem_two_nth_pull_names | theorem_two_latent_reward_names |
-            theorem_two_prefix_factorization_names
+            theorem_two_native_trajectory_names
         != follow_on_names
         or SGB_THEOREM_TWO_TERMINAL_DECLARATION in sgb_names
     ):
@@ -572,6 +620,9 @@ def verify_claim_ledger():
         ) != SGB_THEOREM_TWO_LATENT_REWARD_DECLARATION_COUNT
         or sgb.get("theorem_two_prefix_factorization_declaration_count")
         != SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATION_COUNT
+        or sgb.get(
+            "theorem_two_action_readout_branch_locality_interface_and_count_cap_scaffold_declaration_count"
+        ) != SGB_THEOREM_TWO_BRANCH_LOCALITY_SCAFFOLD_DECLARATION_COUNT
     ):
         fail("SGB Corollary-1/Theorem-2 follow-on count drift")
     if sgb.get("source_theorem_one_compiled") is not True:
@@ -598,6 +649,18 @@ def verify_claim_ledger():
         is not True
         or sgb.get("source_theorem_two_prefix_factorization_compiled")
         is not True
+        or sgb.get("source_theorem_two_action_factorization_compiled")
+        is not True
+        or sgb.get("source_theorem_two_pathwise_coordinate_support_compiled")
+        is not True
+        or sgb.get("source_theorem_two_branch_product_consumer_compiled")
+        is not True
+        or sgb.get("source_theorem_two_branch_locality_contract_typed")
+        is not True
+        or sgb.get("source_theorem_two_count_cap_scaffold_compiled")
+        is not True
+        or sgb.get("source_theorem_two_branch_locality_producer_compiled")
+        is not False
         or sgb.get("source_theorem_two_status") != "blocked"
         or sgb.get("source_theorem_two_endpoint_verified") is not False
     ):
@@ -616,6 +679,8 @@ def verify_claim_ledger():
         "Rademacher/binomial ballot phase",
         "asymptotic terminal",
         "does not make totalized or occurrence-conditioned stopped rewards IID",
+        "branch-locality contract is typed but unproved",
+        "no branch-locality producer is compiled",
     )
     if (
         len(sgb_table_rows) != 1
@@ -743,7 +808,7 @@ def verify_theorem_audit_comparison():
             "central_endpoint_record_id":
                 "NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT-MECHANISM-AUDIT",
             "promotion_status": "partial",
-            "compiled_declaration_count": 303,
+            "compiled_declaration_count": 316,
             "theorem_one_endpoint_verified": True,
             "corollary_one_endpoint_verified": True,
             "theorem_two_endpoint_verified": False,
@@ -751,6 +816,12 @@ def verify_theorem_audit_comparison():
             "theorem_two_nth_pull_bridge_compiled": True,
             "theorem_two_latent_product_readout_compiled": True,
             "theorem_two_prefix_factorization_compiled": True,
+            "theorem_two_action_factorization_compiled": True,
+            "theorem_two_pathwise_coordinate_support_compiled": True,
+            "theorem_two_branch_product_consumer_compiled": True,
+            "theorem_two_branch_locality_contract_typed": True,
+            "theorem_two_count_cap_scaffold_compiled": True,
+            "theorem_two_branch_locality_producer_compiled": False,
             "declaration_count_breakdown": {
                 "finite_action_algebra": 26,
                 "generated_history_and_kernel_bridge": 18,
@@ -770,6 +841,7 @@ def verify_theorem_audit_comparison():
                 "source_theorem_two_nth_pull_bridge": 24,
                 "source_theorem_two_latent_reward_product_readout": 7,
                 "source_theorem_two_deferred_decisions_prefix_factorization": 8,
+                "source_theorem_two_action_readout_branch_locality_interface_and_count_cap_scaffold": 13,
             },
         },
     }

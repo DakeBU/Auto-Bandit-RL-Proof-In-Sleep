@@ -581,7 +581,7 @@ class AnonymousSupplementTests(unittest.TestCase):
             [BUILDER.SGB_AUDIT_ID, BUILDER.SGB_FOLLOW_ON_ID],
         )
         self.assertEqual(
-            ledger["stochastic_gradient_bandit"]["declaration_count"], 303
+            ledger["stochastic_gradient_bandit"]["declaration_count"], 316
         )
         self.assertEqual(
             ledger["stochastic_gradient_bandit"][
@@ -630,6 +630,12 @@ class AnonymousSupplementTests(unittest.TestCase):
                 "theorem_two_prefix_factorization_declaration_count"
             ],
             8,
+        )
+        self.assertEqual(
+            ledger["stochastic_gradient_bandit"][
+                "theorem_two_action_readout_branch_locality_interface_and_count_cap_scaffold_declaration_count"
+            ],
+            13,
         )
         self.assertEqual(
             ledger["stochastic_gradient_bandit"]["finite_algebra_declaration_count"],
@@ -710,6 +716,11 @@ class AnonymousSupplementTests(unittest.TestCase):
             "source_theorem_two_nth_pull_bridge_compiled",
             "source_theorem_two_latent_product_readout_compiled",
             "source_theorem_two_prefix_factorization_compiled",
+            "source_theorem_two_action_factorization_compiled",
+            "source_theorem_two_pathwise_coordinate_support_compiled",
+            "source_theorem_two_branch_product_consumer_compiled",
+            "source_theorem_two_branch_locality_contract_typed",
+            "source_theorem_two_count_cap_scaffold_compiled",
         ):
             self.assertTrue(ledger["stochastic_gradient_bandit"][flag])
         for missing_bridge in (
@@ -721,6 +732,8 @@ class AnonymousSupplementTests(unittest.TestCase):
             "Rademacher/binomial ballot phase",
             "asymptotic terminal",
             "does not make totalized or occurrence-conditioned stopped rewards IID",
+            "branch-locality contract is typed but unproved",
+            "no branch-locality producer is compiled",
         ):
             self.assertIn(missing_bridge, sgb_row["boundary"])
         self.assertTrue(
@@ -735,6 +748,11 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertFalse(
             ledger["stochastic_gradient_bandit"][
                 "source_theorem_two_endpoint_verified"
+            ]
+        )
+        self.assertFalse(
+            ledger["stochastic_gradient_bandit"][
+                "source_theorem_two_branch_locality_producer_compiled"
             ]
         )
         self.assertTrue(
@@ -813,7 +831,7 @@ class AnonymousSupplementTests(unittest.TestCase):
         succinct = rows["succinct-lower-bound-source-frozen-audit"]
         self.assertEqual(succinct["compiled_declaration_count"], 54)
         sgb = rows["stochastic-gradient-bandit-source-frozen-audit"]
-        self.assertEqual(sgb["compiled_declaration_count"], 303)
+        self.assertEqual(sgb["compiled_declaration_count"], 316)
         self.assertEqual(
             sgb["evidence_record_ids"],
             [BUILDER.SGB_AUDIT_ID, BUILDER.SGB_FOLLOW_ON_ID],
@@ -839,6 +857,7 @@ class AnonymousSupplementTests(unittest.TestCase):
                 "source_theorem_two_nth_pull_bridge": 24,
                 "source_theorem_two_latent_reward_product_readout": 7,
                 "source_theorem_two_deferred_decisions_prefix_factorization": 8,
+                "source_theorem_two_action_readout_branch_locality_interface_and_count_cap_scaffold": 13,
             },
         )
         for row in (delayed, succinct, sgb):
@@ -854,6 +873,12 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertTrue(sgb["theorem_two_nth_pull_bridge_compiled"])
         self.assertTrue(sgb["theorem_two_latent_product_readout_compiled"])
         self.assertTrue(sgb["theorem_two_prefix_factorization_compiled"])
+        self.assertTrue(sgb["theorem_two_action_factorization_compiled"])
+        self.assertTrue(sgb["theorem_two_pathwise_coordinate_support_compiled"])
+        self.assertTrue(sgb["theorem_two_branch_product_consumer_compiled"])
+        self.assertTrue(sgb["theorem_two_branch_locality_contract_typed"])
+        self.assertTrue(sgb["theorem_two_count_cap_scaffold_compiled"])
+        self.assertFalse(sgb["theorem_two_branch_locality_producer_compiled"])
 
     def test_theorem_audit_comparison_rejects_status_and_count_drift(self):
         records = BUILDER.selected_source_records()
@@ -956,6 +981,7 @@ class AnonymousSupplementTests(unittest.TestCase):
             BUILDER.SGB_THEOREM_TWO_NTH_PULL_REPRESENTATIVE_DECLARATIONS,
             BUILDER.SGB_THEOREM_TWO_LATENT_REWARD_DECLARATIONS,
             BUILDER.SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATIONS,
+            BUILDER.SGB_THEOREM_TWO_ACTION_READOUT_BRANCH_LOCALITY_INTERFACE_AND_COUNT_CAP_SCAFFOLD_DECLARATIONS,
         )
         for required in required_sets:
             with self.subTest(victim_set=sorted(required)):
@@ -980,7 +1006,7 @@ class AnonymousSupplementTests(unittest.TestCase):
                 row["full_name"] = replacement
                 with self.assertRaisesRegex(
                     ValueError,
-                    "303 declarations: historical 223",
+                    "316 declarations: historical 223",
                 ):
                     BUILDER.validate_sgb_count(records, index)
 

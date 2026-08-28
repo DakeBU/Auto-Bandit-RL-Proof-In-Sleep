@@ -104,8 +104,9 @@ outside the atom-generated directions.  This is a regularity/codomain
 obligation, not a source-error claim; the global Lemmas 3.5--3.6, Assumption
 3.7, Theorem 3.8, and every regret endpoint remain outside the compiled slice.
 
-The source-frozen stochastic-gradient-bandit audit contains 303 named
-declarations.  The historical record remains exactly 223 declarations:
+The source-frozen stochastic-gradient-bandit audit contains 316 named
+declarations: `316 = 223 + 23 + 18 + 24 + 7 + 8 + 13`.  The historical
+record remains exactly 223 declarations:
 a frozen 215-declaration Theorem-1 stack plus eight separate
 Appendix-E/Theorem-4 contract leaves.  The 215-declaration stack begins with 76
 declarations covering finite
@@ -177,9 +178,32 @@ finite stream box has its exact product law, the generated visible prefix is
 local to that box, the visible-prefix kernel is Markov, and the joint finite
 stream-box/visible-prefix law is the exact kernel mixture.  This does not
 identify the mixture's visible marginal with the native fixed-IID prefix or
-establish the native visible law.  These layers are not yet composed with the
-fixed-cutoff starvation consumer.  Branchwise prefix-plus-next-pair freshness,
-the visible-marginal/native-prefix identification, the stopped-prefix
+establish the native visible law.
+
+Round 17 adds 13 declarations under the deliberately limited label
+**action/readout/branch-locality interface and count-cap scaffold**.  They
+compile the next-action factorization, pathwise selected-coordinate support,
+and a branch-product consumer whose premise is the separately typed
+`LatentArmStreamVisiblePrefixNextActionBranchLocality` contract.  They also
+typecheck the next-action/reward readout definitions and the count-cap
+measurability and successor-count scaffold.  The locality contract is a
+typed `Prop` definition, not a proof of that proposition; no theorem in this
+group produces the contract.
+
+The corresponding evidence flags are explicit:
+
+- action factorization: `true`;
+- pathwise coordinate support: `true`;
+- branch product consumer: `true`;
+- branch-locality contract typed: `true`;
+- count-cap scaffold: `true`;
+- branch-locality producer: `false`;
+- Theorem-2 endpoint: `false`.
+
+These layers are not yet composed with the fixed-cutoff starvation consumer.
+The new consumer is conditional on the unproved locality contract and thus
+does not establish branchwise prefix-plus-next-pair freshness.  The
+visible-marginal/native-prefix identification, the stopped-prefix
 future-cylinder, conditional no-return probability at least `1/2`, the
 Rademacher/binomial ballot phase, and the polynomial asymptotic terminal remain
 blocked.  The exact `K = 2` Theorem-2 center therefore remains blocked.  The

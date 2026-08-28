@@ -1,5 +1,7 @@
 import BanditRLProof.Algorithms.StochasticGradientBanditTheoremTwoLatentReward
+import BanditRLProof.Algorithms.ThompsonRecursiveSampler
 import BanditRLProof.Algorithms.ThompsonReferencePolicy
+import BanditRLProof.KernelIndependentExtension
 import BanditRLProof.KernelTrajectoryPrefix
 
 /-!
@@ -13,12 +15,15 @@ argument, not merely equality of one-coordinate marginals.
 This module proves the first process-level half of that adapter.  A visible
 trajectory prefix through `n` depends only on latent reward coordinates with
 pull index at most `n`.  It packages that dependence as a Markov prefix kernel
-and gives the exact finite stream-box/visible-prefix mixture law.  The remaining
-route is to prove branchwise prefix-plus-next-pair freshness, use it to identify
-the visible marginal of this mixture with the corresponding native fixed-IID
-trajectory-prefix law, and then apply trajectory uniqueness.  Consequently, no
-full native trajectory-law equality, stopped-reward IID statement, or Theorem-2
-terminal is claimed here.
+and gives the exact finite stream-box/visible-prefix mixture law.  It also
+separates the compiled next-action factorization and pathwise selected-coordinate
+readout from the missing freshness argument, and types the exact branch-locality
+contract together with its finite-kernel consumer and count-cap bookkeeping.
+The remaining producer is a count-capped restricted-measure induction proving
+that locality.  Branchwise freshness, native-prefix identification, and
+trajectory uniqueness remain downstream.  Consequently, no full native
+trajectory-law equality, stopped-reward IID statement, or Theorem-2 terminal is
+claimed here.
 -/
 
 namespace BanditRLProof
@@ -65,6 +70,43 @@ theorem extendArmStreamFinitePrefix_apply_of_le
     extendArmStreamFinitePrefix n streamBox t =
       streamBox ⟨t, Finset.mem_Iic.mpr ht⟩ := by
   simp [extendArmStreamFinitePrefix, ht]
+
+/-- A finite kernel driven only by the complement of one arm-stream
+coordinate leaves that coordinate's prescribed marginal independent of the
+kernel output.  The output kernel may be sub-Markov, as needed after branch
+restriction. -/
+theorem armStreamMeasure_map_output_coordinate_compProd_comap_without_eq_prod
+    {K : Nat} {Output : Type*} [MeasurableSpace Output]
+    (nu : Kernel (Fin K) Real) [IsMarkovKernel nu]
+    (target : Nat × Fin K)
+    (kernel : Kernel
+      ({index : Nat × Fin K // index ≠ target} -> Real) Output)
+    [IsFiniteKernel kernel] :
+    Measure.map
+        (fun sample : ArmRewardStream K × Output =>
+          (sample.2, armStreamCoordinate target sample.1))
+        (armStreamMeasure nu ⊗ₘ
+          kernel.comap (armStreamWithoutCoordinate target)
+            (measurable_armStreamWithoutCoordinate target)) =
+      (Measure.map Prod.snd
+          (armStreamMeasure nu ⊗ₘ
+            kernel.comap (armStreamWithoutCoordinate target)
+              (measurable_armStreamWithoutCoordinate target))).prod
+        (nu target.2) := by
+  have hfactor :=
+    map_snd_x_compProd_comap_eq_prod_map_of_indepFun
+      (armStreamMeasure nu)
+      (armStreamCoordinate target) (measurable_armStreamCoordinate target)
+      (armStreamWithoutCoordinate target)
+        (measurable_armStreamWithoutCoordinate target)
+      kernel (indepFun_armStreamMeasure_coordinate_without nu target)
+  have hcoordinate :
+      Measure.map (armStreamCoordinate target) (armStreamMeasure nu) =
+        nu target.2 := by
+    simpa [armStreamCoordinate] using
+      armStreamMeasure_map_coord nu target.1 target.2
+  rw [hcoordinate] at hfactor
+  exact hfactor
 
 end UCB
 
@@ -190,6 +232,241 @@ theorem latentArmStreamTrajectoryKernel_map_frestrictLe_eq_prefixKernel_comap
     algorithm env stream
       (UCB.extendArmStreamFinitePrefix n
         (Preorder.frestrictLe n stream)) n hprefix
+
+/-- Visible history through `n` paired with the action selected at `n + 1`. -/
+def latentArmStreamVisiblePrefixNextAction
+    {K : Nat} (n : Nat) :
+    ((t : Nat) -> Fin K × Real) ->
+      History.FinitePairHistory (Fin K) Real n × Fin K :=
+  fun trajectory =>
+    (Preorder.frestrictLe n trajectory, (trajectory (n + 1)).1)
+
+theorem measurable_latentArmStreamVisiblePrefixNextAction
+    {K : Nat} (n : Nat) :
+    Measurable (latentArmStreamVisiblePrefixNextAction (K := K) n) := by
+  exact (Preorder.measurable_frestrictLe n).prodMk
+    (measurable_fst.comp (measurable_pi_apply (n + 1)))
+
+/-- Reward observed at the shifted successor time `n + 1`. -/
+def latentArmStreamVisibleNextReward
+    {K : Nat} (n : Nat) :
+    ((t : Nat) -> Fin K × Real) -> Real :=
+  fun trajectory => (trajectory (n + 1)).2
+
+theorem measurable_latentArmStreamVisibleNextReward
+    {K : Nat} (n : Nat) :
+    Measurable (latentArmStreamVisibleNextReward (K := K) n) := by
+  exact measurable_snd.comp (measurable_pi_apply (n + 1))
+
+/-- Canonical candidate for the condition kernel on one next-coordinate
+branch, reconstructed after fixing the omitted coordinate to zero. -/
+noncomputable def latentArmStreamVisiblePrefixNextActionBranchKernel
+    {Env : Type u} {K : Nat} [MeasurableSpace Env]
+    [StandardBorelSpace Env] [NeZero K]
+    (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)
+    (n : Nat) (target : Nat × Fin K) :
+    Kernel ({index : Nat × Fin K // index ≠ target} -> Real)
+      (History.FinitePairHistory (Fin K) Real n × Fin K) :=
+  ((((latentArmStreamTrajectoryKernel algorithm env).map
+      (latentArmStreamVisiblePrefixNextAction n)).comap
+        (UCB.armStreamInsertCoordinate target 0)
+        (UCB.measurable_armStreamInsertCoordinate target 0)).restrict
+    (UCB.measurableSet_armStreamHistoryActionCoordinateBranch n target))
+
+instance instLatentArmStreamVisiblePrefixNextActionBranchKernelIsFinite
+    {Env : Type u} {K : Nat} [MeasurableSpace Env]
+    [StandardBorelSpace Env] [NeZero K]
+    (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)
+    (n : Nat) (target : Nat × Fin K) :
+    IsFiniteKernel
+      (latentArmStreamVisiblePrefixNextActionBranchKernel
+        algorithm env n target) := by
+  unfold latentArmStreamVisiblePrefixNextActionBranchKernel
+  infer_instance
+
+/-- Histories through `n` that have not consumed the designated latent
+coordinate.  The inclusive history count can equal the coordinate index: that
+coordinate is used only by the next reward from the same arm. -/
+def latentArmStreamPrefixCountCap
+    {K : Nat} (n : Nat) (target : Nat × Fin K) :
+    Set (History.FinitePairHistory (Fin K) Real n) :=
+  {history |
+    ETC.realHistoryPullCount n history target.2 <= target.1}
+
+theorem measurableSet_latentArmStreamPrefixCountCap
+    {K : Nat} (n : Nat) (target : Nat × Fin K) :
+    MeasurableSet (latentArmStreamPrefixCountCap n target) := by
+  exact measurableSet_le
+    (UCB.measurable_realHistoryPullCount n target.2) measurable_const
+
+/-- Extending an inclusive finite pair history increments exactly the count of
+the arm selected by the appended pair. -/
+@[simp]
+theorem realHistoryPullCount_extendPairHistorySucc
+    {K : Nat} (n : Nat)
+    (history : History.FinitePairHistory (Fin K) Real n)
+    (next : Fin K × Real) (arm : Fin K) :
+    ETC.realHistoryPullCount (n + 1)
+        (History.extendPairHistorySucc history next) arm =
+      ETC.realHistoryPullCount n history arm +
+        if next.1 = arm then 1 else 0 := by
+  classical
+  let action : ActionTrace (Fin K) := fun t =>
+    if h : t <= n then
+      history ⟨t, Finset.mem_Iic.mpr h⟩ |>.1
+    else next.1
+  let reward : RewardTrace Real := fun t =>
+    if h : t <= n then
+      history ⟨t, Finset.mem_Iic.mpr h⟩ |>.2
+    else next.2
+  have hprefix :
+      History.finitePairHistoryOfTrace action reward n = history := by
+    funext i
+    simp [action, reward, Finset.mem_Iic.mp i.2]
+  have hsucc :
+      History.finitePairHistoryOfTrace action reward (n + 1) =
+        History.extendPairHistorySucc history next := by
+    rw [History.finitePairHistoryOfTrace_succ, hprefix]
+    congr 1
+    simp [action, reward]
+  calc
+    ETC.realHistoryPullCount (n + 1)
+        (History.extendPairHistorySucc history next) arm =
+      ETC.realHistoryPullCount (n + 1)
+        (History.finitePairHistoryOfTrace action reward (n + 1)) arm := by
+          rw [hsucc]
+    _ = pullCount action arm ((n + 1) + 1) :=
+      ETC.realHistoryPullCount_finitePairHistoryOfTrace
+        action reward (n + 1) arm
+    _ = pullCount action arm (n + 1) +
+        if action (n + 1) = arm then 1 else 0 := by
+          rw [pullCount_succ]
+    _ = ETC.realHistoryPullCount n history arm +
+        if next.1 = arm then 1 else 0 := by
+          rw [← ETC.realHistoryPullCount_finitePairHistoryOfTrace
+            action reward n arm, hprefix]
+          simp [action]
+
+/-- Exact remaining producer contract for branchwise prefix/action locality.
+It is intentionally a proposition, not an instance or a proved theorem: the
+current module supplies its finite-kernel consumer below while leaving this
+count-capped trajectory induction explicit. -/
+def LatentArmStreamVisiblePrefixNextActionBranchLocality
+    {Env : Type u} {K : Nat} [MeasurableSpace Env]
+    [StandardBorelSpace Env] [NeZero K]
+    (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)
+    (n : Nat) : Prop :=
+  ∀ target : Nat × Fin K,
+    (((latentArmStreamTrajectoryKernel algorithm env).map
+        (latentArmStreamVisiblePrefixNextAction n)).restrict
+      (UCB.measurableSet_armStreamHistoryActionCoordinateBranch n target)) =
+    (latentArmStreamVisiblePrefixNextActionBranchKernel
+        algorithm env n target).comap
+      (UCB.armStreamWithoutCoordinate target)
+      (UCB.measurable_armStreamWithoutCoordinate target)
+
+/-- Once the branch-locality producer is available, coordinate independence
+immediately yields the exact branchwise condition/selected-coordinate product
+law.  This consumer is valid for the sub-Markov branch kernel and therefore
+does not misstate branch restriction as ordinary probability independence. -/
+theorem latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod_of_locality
+    {Env : Type u} {K : Nat} [MeasurableSpace Env]
+    [StandardBorelSpace Env] [NeZero K]
+    (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)
+    (nu : Kernel (Fin K) Real) [IsMarkovKernel nu]
+    (n : Nat)
+    (hlocal : LatentArmStreamVisiblePrefixNextActionBranchLocality
+      algorithm env n)
+    (target : Nat × Fin K) :
+    let branchKernel :=
+      ((latentArmStreamTrajectoryKernel algorithm env).map
+        (latentArmStreamVisiblePrefixNextAction n)).restrict
+          (UCB.measurableSet_armStreamHistoryActionCoordinateBranch n target)
+    Measure.map
+        (fun sample : UCB.ArmRewardStream K ×
+            (History.FinitePairHistory (Fin K) Real n × Fin K) =>
+          (sample.2, UCB.armStreamCoordinate target sample.1))
+        (UCB.armStreamMeasure nu ⊗ₘ branchKernel) =
+      (Measure.map Prod.snd
+          (UCB.armStreamMeasure nu ⊗ₘ branchKernel)).prod
+        (nu target.2) := by
+  dsimp only
+  rw [hlocal target]
+  exact
+    UCB.armStreamMeasure_map_output_coordinate_compProd_comap_without_eq_prod
+      nu target
+        (latentArmStreamVisiblePrefixNextActionBranchKernel
+          algorithm env n target)
+
+/-- After the latent reward stream is mixed out, the next action still follows
+the algorithm's history policy.  This isolates action randomization from the
+remaining selected-reward freshness obligation. -/
+theorem latentArmStreamTrajectoryMeasure_map_visiblePrefix_nextAction_eq_compProd
+    {Env : Type u} {K : Nat} [MeasurableSpace Env]
+    [StandardBorelSpace Env] [NeZero K]
+    (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)
+    (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) :
+    Measure.map
+        (fun sample : UCB.ArmRewardStream K ×
+            ((t : Nat) -> Fin K × Real) =>
+          latentArmStreamVisiblePrefixNextAction n sample.2)
+        (latentArmStreamTrajectoryMeasure algorithm env nu) =
+      Measure.map
+          (fun sample : UCB.ArmRewardStream K ×
+              ((t : Nat) -> Fin K × Real) =>
+            Preorder.frestrictLe n sample.2)
+          (latentArmStreamTrajectoryMeasure algorithm env nu) ⊗ₘ
+        algorithm.policy n := by
+  unfold latentArmStreamTrajectoryMeasure
+  apply trajectoryMixture_map_history_action_eq_compProd
+    (UCB.armStreamMeasure nu)
+    (latentArmStreamTrajectoryKernel algorithm env)
+    (Preorder.frestrictLe n) (Preorder.measurable_frestrictLe n)
+    (fun trajectory => (trajectory (n + 1)).1)
+    (measurable_fst.comp (measurable_pi_apply (n + 1)))
+    (algorithm.policy n)
+  intro stream
+  unfold latentArmStreamTrajectoryKernel
+  rw [Kernel.comap_apply]
+  exact
+    canonicalMeasurableEnvironmentTrajectoryKernel_map_history_action_eq_compProd
+      algorithm
+      (latentArmStreamMeasurableHistoryEnvironment
+        (Env := Env) (K := K)) (env, stream) n
+
+/-- On the coupling, the actual successor reward is the latent coordinate
+encoded by the visible prefix and the sampled next action.  This is pathwise
+support; conditional freshness still requires the branchwise product proof. -/
+theorem latentArmStreamVisibleNextReward_eq_selectedCoordinate_ae
+    {Env : Type u} {K : Nat} [MeasurableSpace Env]
+    [StandardBorelSpace Env] [NeZero K]
+    (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)
+    (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) :
+    ∀ᵐ sample ∂latentArmStreamTrajectoryMeasure algorithm env nu,
+      latentArmStreamVisibleNextReward n sample.2 =
+        UCB.armStreamCoordinate
+          (UCB.armStreamCoordinateOfHistoryAction n
+            (latentArmStreamVisiblePrefixNextAction n sample.2)) sample.1 := by
+  have hreward := latentArmStreamTrajectoryReward_eq_rewardFromArmStream_ae
+    algorithm env nu
+  filter_upwards [hreward] with sample hsample
+  have htime := congrFun hsample (n + 1)
+  let arm := (sample.2 (n + 1)).1
+  have hcount := ETC.realHistoryPullCount_finitePairHistoryOfTrace
+    (canonicalHistoryTrajectoryAction (Reward := Real) sample.2)
+    (canonicalHistoryTrajectoryReward (Action := Fin K) sample.2) n arm
+  change ETC.realHistoryPullCount n
+      (Preorder.frestrictLe n sample.2) arm =
+    pullCount (canonicalHistoryTrajectoryAction sample.2) arm (n + 1) at hcount
+  change (sample.2 (n + 1)).2 =
+    sample.1
+      (pullCount (canonicalHistoryTrajectoryAction sample.2) arm (n + 1)) arm
+      at htime
+  change (sample.2 (n + 1)).2 =
+    sample.1
+      (ETC.realHistoryPullCount n (Preorder.frestrictLe n sample.2) arm) arm
+  rw [hcount]
+  exact htime
 
 /-- Exact finite mixture law for the latent stream box and the visible SGB
 trajectory prefix.  This is the deferred-decisions representation that the
