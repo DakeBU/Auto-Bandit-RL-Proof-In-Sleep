@@ -1,6 +1,6 @@
 # Proof Blueprint: PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE
 
-Generated: `2026-08-28T09:41:00+00:00`
+Generated: `2026-08-29T07:27:15+00:00`
 
 ## Source Task
 
@@ -520,8 +520,9 @@ Task id: `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE`
 | `SGB-T2-ACTION-READOUT` | next-action factorization and pathwise selected-coordinate support in the latent coupling | compiled | `latentArmStreamTrajectoryMeasure_map_visiblePrefix_nextAction_eq_compProd`; `latentArmStreamVisibleNextReward_eq_selectedCoordinate_ae`; neither theorem is selected-reward freshness |
 | `SGB-T2-BRANCH-LOCALITY` | branchwise factor-through-complement producer for the selected latent coordinate | compiled | two generic safe-fiber measure bridges plus the count-cap base/successor induction prove `latentArmStreamVisiblePrefixNextActionBranchLocality`; `latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod` gives the unconditional exact branchwise product law |
 | `SGB-T2-SELECTED-FRESHNESS` | deterministic-time next-reward conditional law given the visible prefix and selected next action | compiled | countable pull-count/arm branch aggregation plus the a.e. reward readout prove `latentArmStreamVisibleNextReward_joint_eq_compProd`, its `condDistrib` corollary, and the corresponding visible-trajectory-marginal laws; this is not selected IID |
-| `SGB-T2-NATIVE-TRAJECTORY` | forgetting the latent stream recovers the native fixed-IID SGB trajectory law | blocked | first remaining core technical blockers are visible-marginal/native-prefix identification and trajectory uniqueness; branch aggregation and one-step freshness are compiled |
-| `SGB-T2-SELECTED-IID` | target-faithful transfer of the source pull-ordered reward blocks to the native phase event | partial | latent product/readout, finite-prefix mixture, action/readout, count-capped branch locality, exact branchwise product laws, and deterministic-time one-step selected-reward freshness compile; native trajectory equality, stopped/pull-ordered block transport, and phase-event transport do not |
+| `SGB-T2-NATIVE-PREFIX` | identification of the coupling's visible marginal with the native fixed-IID SGB process on every finite prefix | compiled | `latentArmStreamVisibleInitialPair_eq_compProd` gives the time-zero pair law, `latentArmStreamVisiblePrefixNextPair_eq_compProd` gives the one-step native extension, and `latentArmStreamVisibleTrajectoryMeasure_map_frestrictLe_eq_native` closes the induction against `nativeStationaryTrajectoryMeasure`; this is a finite-prefix identity, not full native-law equality, selected/stopped IID, or Theorem 2 |
+| `SGB-T2-NATIVE-TRAJECTORY` | forgetting the latent stream recovers the native fixed-IID SGB trajectory law | partial | every finite visible prefix is now identified with the native fixed-IID prefix; extending that identification to the full native visible law by Ionescu-Tulcea trajectory uniqueness remains the open producer |
+| `SGB-T2-SELECTED-IID` | target-faithful transfer of the source pull-ordered reward blocks to the native phase event | partial | latent product/readout, finite-prefix mixture, action/readout, count-capped branch locality, exact branchwise product laws, deterministic-time one-step selected-reward freshness, and finite native-prefix identification compile; full native trajectory equality, stopped/pull-ordered block transport, and phase-event transport do not |
 | `SGB-T2-FUTURE-CYLINDER` | conditional probability of no later optimal-arm pull after the random nth-pull prefix | blocked | one-step action kernels at fixed histories do not by themselves supply a stopped-prefix future law |
 | `SGB-T2-STARVATION` | Appendix-C Step-1 event-to-regret lower bound | partial | measurable fixed-cutoff event and generated-law `Delta*(T-n)*P(event)` consumer compile; it is not yet composed with the separately compiled nth-pull bridge, and conditional probability `>= 1/2` remains unproved |
 | `SGB-T2-PHASE-PROBABILITY` | `S0/S1` probability via Rademacher/binomial/ballot route | blocked | exact finite constants and path event |
@@ -34122,6 +34123,70 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoLatentReward.lean",
     "line": 205,
     "statement": "theorem twoArmNthOptimalPullReward_eq_latentCoordinate_ae (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (pullIndex : Nat) : \u2200\u1d50 sample \u2202twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta, \u2200 t : Nat, twoArmNthOptimalPullTime (Env := Unit) pullIndex ((), sample.2) = (t : WithTop Nat) -> twoArmNthOptimalPullReward (Env := Unit) pullIndex ((), sample.2) = sample.1 pullIndex 0"
+  },
+  {
+    "kind": "def",
+    "name": "stationaryRewardHistoryEnvironment",
+    "full_name": "BanditRLProof.Thompson.stationaryRewardHistoryEnvironment",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativePrefix.lean",
+    "line": 30,
+    "statement": "def stationaryRewardHistoryEnvironment {K : Nat} (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] : HistoryEnvironment (Fin K) Real where"
+  },
+  {
+    "kind": "theorem",
+    "name": "historyStepKernel_stationaryRewardHistoryEnvironment",
+    "full_name": "BanditRLProof.Thompson.historyStepKernel_stationaryRewardHistoryEnvironment",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativePrefix.lean",
+    "line": 37,
+    "statement": "theorem historyStepKernel_stationaryRewardHistoryEnvironment {K : Nat} (algorithm : HistoryAlgorithm (Fin K) Real) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) : historyStepKernel algorithm (stationaryRewardHistoryEnvironment nu) n = algorithm.policy n \u2297\u2096 UCB.armStreamSelectedRewardKernel n nu"
+  },
+  {
+    "kind": "theorem",
+    "name": "latentArmStreamVisiblePrefixNextPair_eq_compProd",
+    "full_name": "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextPair_eq_compProd",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativePrefix.lean",
+    "line": 50,
+    "statement": "theorem latentArmStreamVisiblePrefixNextPair_eq_compProd {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) : Measure.map (fun sample : UCB.ArmRewardStream K \u00d7 ((t : Nat) -> Fin K \u00d7 Real) => (Preorder.frestrictLe n sample.2, sample.2 (n + 1))) (latentArmStreamTrajectoryMeasure algorithm env nu) = Measure.map (fun sample : UCB.ArmRewardStream K \u00d7 ((t : Nat) -> Fin K \u00d7 Real) => Preorder.frestrictLe n sample.2) (latentArmStreamTrajectoryMeasure algorithm env nu) \u2297\u2098 historyStepKernel algorithm (stationaryRewardHistoryEnvironment nu) n"
+  },
+  {
+    "kind": "theorem",
+    "name": "latentArmStreamVisibleInitialPair_eq_compProd",
+    "full_name": "BanditRLProof.Thompson.latentArmStreamVisibleInitialPair_eq_compProd",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativePrefix.lean",
+    "line": 92,
+    "statement": "theorem latentArmStreamVisibleInitialPair_eq_compProd {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] : Measure.map (fun sample : UCB.ArmRewardStream K \u00d7 ((t : Nat) -> Fin K \u00d7 Real) => sample.2 0) (latentArmStreamTrajectoryMeasure algorithm env nu) = algorithm.initialAction \u2297\u2098 nu"
+  },
+  {
+    "kind": "theorem",
+    "name": "trajMeasure_map_eval_zero",
+    "full_name": "BanditRLProof.Thompson.trajMeasure_map_eval_zero",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativePrefix.lean",
+    "line": 201,
+    "statement": "theorem trajMeasure_map_eval_zero {X : Nat -> Type u} [forall n, MeasurableSpace (X n)] (mu0 : Measure (X 0)) [IsProbabilityMeasure mu0] (kappa : (n : Nat) -> Kernel ((i : Finset.Iic n) -> X i) (X (n + 1))) [forall n, IsMarkovKernel (kappa n)] : (Kernel.trajMeasure mu0 kappa).map (fun x => x 0) = mu0"
+  },
+  {
+    "kind": "theorem",
+    "name": "frestrictLe_succ_eq_extendPairHistorySucc",
+    "full_name": "BanditRLProof.Thompson.frestrictLe_succ_eq_extendPairHistorySucc",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativePrefix.lean",
+    "line": 220,
+    "statement": "theorem frestrictLe_succ_eq_extendPairHistorySucc {K : Nat} (n : Nat) (x : (t : Nat) -> Fin K \u00d7 Real) : Preorder.frestrictLe (n + 1) x = History.extendPairHistorySucc (Preorder.frestrictLe n x) (x (n + 1))"
+  },
+  {
+    "kind": "def",
+    "name": "nativeStationaryTrajectoryMeasure",
+    "full_name": "BanditRLProof.Thompson.nativeStationaryTrajectoryMeasure",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativePrefix.lean",
+    "line": 237,
+    "statement": "def nativeStationaryTrajectoryMeasure {K : Nat} (algorithm : HistoryAlgorithm (Fin K) Real) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] : Measure ((n : Nat) -> Fin K \u00d7 Real)"
+  },
+  {
+    "kind": "theorem",
+    "name": "latentArmStreamVisibleTrajectoryMeasure_map_frestrictLe_eq_native",
+    "full_name": "BanditRLProof.Thompson.latentArmStreamVisibleTrajectoryMeasure_map_frestrictLe_eq_native",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativePrefix.lean",
+    "line": 258,
+    "statement": "theorem latentArmStreamVisibleTrajectoryMeasure_map_frestrictLe_eq_native {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) : ((latentArmStreamTrajectoryMeasure algorithm env nu).map Prod.snd).map (Preorder.frestrictLe n) = (nativeStationaryTrajectoryMeasure algorithm nu).map (Preorder.frestrictLe n)"
   },
   {
     "kind": "theorem",

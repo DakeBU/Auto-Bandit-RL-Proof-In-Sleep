@@ -1,32 +1,32 @@
 {
   "schema_version": 1,
   "record_id": "frontier-0860ddea5115825e",
-  "updated_at": "2026-08-28T09:41:52+00:00",
+  "updated_at": "2026-08-29T07:25:53+00:00",
   "root_objective": "Compile the exact K=2 SGB Theorem 2 route without weakening the frozen source contract, then synchronize only verified evidence into the ICLR and arXiv papers.",
   "current_leaf": {
-    "id": "SGB-T2-NATIVE-PREFIX-IDENTIFICATION",
+    "id": "SGB-T2-NATIVE-FULL-LAW-TRANSPORT",
     "kind": "lean",
     "status": "ready",
-    "statement": "Use the compiled finite stream-box/visible-prefix factorization, next-action factorization, branch-locality product law, and deterministic-time selected-reward freshness to identify each finite visible latent prefix with the native fixed-IID SGB prefix; do not assume full trajectory equality, selected IID, future/no-return, or Theorem 2.",
-    "statement_hash": "095922dcf2ceb37231c42bb80d06df640869391416df9d97f9d11e27b319abec",
+    "statement": "Extend the compiled finite-prefix identification of the visible latent marginal with the native fixed-IID SGB process to the full native visible trajectory law by Ionescu-Tulcea uniqueness; do not assume selected/stopped-reward IID, future/no-return, ballot/asymptotic assembly, or Theorem 2.",
+    "statement_hash": "31b7ecf30e83896febf4f0e4376108eca9b90b3448634933ef62dd3d8166d79b",
     "declaration": "",
-    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
-    "source_status": "Round 19 deterministic-time one-step selected-reward joint and conditional laws compile on the latent coupling and visible marginal and are independently accepted. Native-prefix identification, full native visible law, selected/stopped IID, future/no-return, ballot/asymptotic assembly, and Theorem 2 remain open.",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativePrefix.lean",
+    "source_status": "Round 20 compiles native-prefix identification: at every finite horizon the visible marginal of the latent coupling and the native fixed-IID process induce the same prefix law. Full native visible-law equality, selected/stopped-reward IID, future/no-return, ballot/asymptotic assembly, and Theorem 2 remain open.",
     "dependencies": [
       {
         "kind": "lean",
-        "name": "BanditRLProof.Thompson.latentArmStreamVisibleTrajectoryMeasure_nextReward_joint_eq_compProd",
-        "status": "accepted"
+        "name": "BanditRLProof.Thompson.latentArmStreamVisibleTrajectoryMeasure_map_frestrictLe_eq_native",
+        "status": "compiled"
       },
       {
         "kind": "lean",
-        "name": "BanditRLProof.Thompson.latentArmStreamVisibleTrajectoryMeasure_nextReward_condDistrib_ae_eq_nu",
-        "status": "accepted"
+        "name": "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextPair_eq_compProd",
+        "status": "compiled"
       },
       {
-        "kind": "review",
-        "name": "sgb-theorem2-selected-freshness-aggregation-round19-independent-review",
-        "status": "accepted"
+        "kind": "lean",
+        "name": "BanditRLProof.Thompson.latentArmStreamVisibleInitialPair_eq_compProd",
+        "status": "compiled"
       }
     ]
   },
@@ -35,22 +35,29 @@
       {
         "id": "SGB-T2-NATIVE-PREFIX-IDENTIFICATION",
         "kind": "lean",
+        "status": "compiled",
+        "dependencies": [],
+        "dispatch_count": 1
+      },
+      {
+        "id": "SGB-T2-NATIVE-FULL-LAW-TRANSPORT",
+        "kind": "lean",
         "status": "ready",
         "dependencies": [
           {
             "kind": "lean",
-            "name": "BanditRLProof.Thompson.latentArmStreamVisibleTrajectoryMeasure_nextReward_joint_eq_compProd",
-            "status": "accepted"
+            "name": "BanditRLProof.Thompson.latentArmStreamVisibleTrajectoryMeasure_map_frestrictLe_eq_native",
+            "status": "compiled"
           },
           {
             "kind": "lean",
-            "name": "BanditRLProof.Thompson.latentArmStreamVisibleTrajectoryMeasure_nextReward_condDistrib_ae_eq_nu",
-            "status": "accepted"
+            "name": "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextPair_eq_compProd",
+            "status": "compiled"
           },
           {
-            "kind": "review",
-            "name": "sgb-theorem2-selected-freshness-aggregation-round19-independent-review",
-            "status": "accepted"
+            "kind": "lean",
+            "name": "BanditRLProof.Thompson.latentArmStreamVisibleInitialPair_eq_compProd",
+            "status": "compiled"
           }
         ],
         "dispatch_count": 0
