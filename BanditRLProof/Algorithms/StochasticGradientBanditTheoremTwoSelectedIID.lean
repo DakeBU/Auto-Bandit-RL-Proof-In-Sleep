@@ -313,6 +313,278 @@ theorem twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latent
         (twoArmNativeOptimalPullTimeRewardBlock_map_eq_latentMasked
           armLaw hprob eta m)
 
+/-! ## Appendix-C phase event with an explicit occurrence boundary -/
+
+/-- The running reward sum inside Appendix C's recovery phase.
+
+The index `k : Fin (n1 + 1)` permits every prefix length from `0` through
+`n1`.  The ambient reward block contains the unlucky phase of length `n0`
+followed by the recovery phase of length `n1`. -/
+def twoArmAppendixCPhaseOnePrefixSum (n0 n1 : Nat)
+    (rewardBlock : Fin (n0 + n1) -> Real) (k : Fin (n1 + 1)) : Real :=
+  ∑ i : Fin (k : Nat),
+    rewardBlock ⟨n0 + (i : Nat), by omega⟩
+
+theorem measurable_twoArmAppendixCPhaseOnePrefixSum
+    (n0 n1 : Nat) (k : Fin (n1 + 1)) :
+    Measurable (fun rewardBlock : Fin (n0 + n1) -> Real =>
+      twoArmAppendixCPhaseOnePrefixSum n0 n1 rewardBlock k) := by
+  refine Finset.measurable_sum Finset.univ fun i _ => ?_
+  let j : Fin (n0 + n1) := ⟨n0 + (i : Nat), by omega⟩
+  exact measurable_pi_apply j
+
+/-- The exact finite reward event used by the two phases in Appendix C.
+
+Phase `S0` consists of `n0` rewards equal to `-1`.  Phase `S1` consists only
+of `{-1, 1}` rewards, has the specified exact terminal sum, and has running
+sum at most zero at every prefix.  The later arithmetic layer will instantiate
+`phaseOneTotal` with the rounded Rademacher count selected by the source; this
+definition itself contains no probability or IID premise. -/
+def twoArmAppendixCRewardPhaseEvent (n0 n1 : Nat)
+    (phaseOneTotal : Real) : Set (Fin (n0 + n1) -> Real) :=
+  {rewardBlock |
+    (forall i : Fin n0,
+      rewardBlock (Fin.castAdd n1 i) = -1) /\
+    (forall i : Fin n1,
+      rewardBlock (Fin.natAdd n0 i) = -1 \/
+        rewardBlock (Fin.natAdd n0 i) = 1) /\
+    twoArmAppendixCPhaseOnePrefixSum n0 n1 rewardBlock (Fin.last n1) =
+      phaseOneTotal /\
+    (forall k : Fin (n1 + 1),
+      twoArmAppendixCPhaseOnePrefixSum n0 n1 rewardBlock k <= 0)}
+
+theorem measurableSet_twoArmAppendixCRewardPhaseEvent
+    (n0 n1 : Nat) (phaseOneTotal : Real) :
+    MeasurableSet
+      (twoArmAppendixCRewardPhaseEvent n0 n1 phaseOneTotal) := by
+  have hphaseZero : MeasurableSet
+      {rewardBlock : Fin (n0 + n1) -> Real |
+        forall i : Fin n0,
+          rewardBlock (Fin.castAdd n1 i) = -1} := by
+    rw [Set.setOf_forall]
+    exact MeasurableSet.iInter fun i =>
+      measurableSet_eq_fun (measurable_pi_apply (Fin.castAdd n1 i))
+        measurable_const
+  have hphaseOneSupport : MeasurableSet
+      {rewardBlock : Fin (n0 + n1) -> Real |
+        forall i : Fin n1,
+          rewardBlock (Fin.natAdd n0 i) = -1 \/
+            rewardBlock (Fin.natAdd n0 i) = 1} := by
+    rw [Set.setOf_forall]
+    refine MeasurableSet.iInter fun i => ?_
+    simpa only [Set.setOf_or] using
+      (measurableSet_eq_fun (measurable_pi_apply (Fin.natAdd n0 i))
+        measurable_const).union
+      (measurableSet_eq_fun (measurable_pi_apply (Fin.natAdd n0 i))
+        measurable_const)
+  have hphaseOneTotal : MeasurableSet
+      {rewardBlock : Fin (n0 + n1) -> Real |
+        twoArmAppendixCPhaseOnePrefixSum n0 n1 rewardBlock (Fin.last n1) =
+          phaseOneTotal} :=
+    measurableSet_eq_fun
+      (measurable_twoArmAppendixCPhaseOnePrefixSum n0 n1 (Fin.last n1))
+      measurable_const
+  have hballot : MeasurableSet
+      {rewardBlock : Fin (n0 + n1) -> Real |
+        forall k : Fin (n1 + 1),
+          twoArmAppendixCPhaseOnePrefixSum n0 n1 rewardBlock k <= 0} := by
+    rw [Set.setOf_forall]
+    exact MeasurableSet.iInter fun k =>
+      measurableSet_le
+        (measurable_twoArmAppendixCPhaseOnePrefixSum n0 n1 k)
+        measurable_const
+  simpa only [twoArmAppendixCRewardPhaseEvent, Set.setOf_and] using
+    hphaseZero.inter
+      (hphaseOneSupport.inter (hphaseOneTotal.inter hballot))
+
+/-- Every requested optimal-arm pull in a finite block has occurred.
+
+This set is kept separate from the reward pattern because occurrence depends
+on the adaptive trajectory. -/
+def twoArmAppendixCAllPullsPresent (m : Nat) :
+    Set ((i : Fin m) -> WithTop Nat × Real) :=
+  {block | forall i : Fin m, (block i).1 ≠ (⊤ : WithTop Nat)}
+
+theorem measurableSet_twoArmAppendixCAllPullsPresent (m : Nat) :
+    MeasurableSet (twoArmAppendixCAllPullsPresent m) := by
+  rw [twoArmAppendixCAllPullsPresent, Set.setOf_forall]
+  refine MeasurableSet.iInter fun i => ?_
+  have heq : MeasurableSet
+      {block : (j : Fin m) -> WithTop Nat × Real |
+        (block i).1 = (⊤ : WithTop Nat)} :=
+    measurableSet_eq_fun
+      (measurable_fst.comp (measurable_pi_apply i)) measurable_const
+  simpa only [Set.compl_setOf] using heq.compl
+
+/-- Observable Appendix-C phase event on a pull-time/reward block.
+
+It requires the full block to occur and only then reads the phase reward
+pattern. -/
+def twoArmAppendixCObservedPhaseEvent (n0 n1 : Nat)
+    (phaseOneTotal : Real) :
+    Set ((i : Fin (n0 + n1)) -> WithTop Nat × Real) :=
+  twoArmAppendixCAllPullsPresent (n0 + n1) ∩
+    (fun block i => (block i).2) ⁻¹'
+      twoArmAppendixCRewardPhaseEvent n0 n1 phaseOneTotal
+
+theorem measurableSet_twoArmAppendixCObservedPhaseEvent
+    (n0 n1 : Nat) (phaseOneTotal : Real) :
+    MeasurableSet
+      (twoArmAppendixCObservedPhaseEvent n0 n1 phaseOneTotal) := by
+  apply (measurableSet_twoArmAppendixCAllPullsPresent (n0 + n1)).inter
+  exact (measurableSet_twoArmAppendixCRewardPhaseEvent
+    n0 n1 phaseOneTotal).preimage
+      (measurable_pi_lambda _ fun i =>
+        measurable_snd.comp (measurable_pi_apply i))
+
+/-- The latent Appendix-C event without occurrence conditioning.
+
+The first conjunct still depends on the generated visible trajectory and says
+that all requested pulls occur.  The second conjunct reads the unconditional
+latent arm-`0` stream.  Keeping both in the same event avoids the invalid step
+of declaring the reward block IID after conditioning on occurrence. -/
+def twoArmAppendixCLatentPhaseEvent (n0 n1 : Nat)
+    (phaseOneTotal : Real) : Set
+      (UCB.ArmRewardStream 2 × ((t : Nat) -> Fin 2 × Real)) :=
+  (twoArmLatentMaskedOptimalPullBlock (n0 + n1)) ⁻¹'
+      twoArmAppendixCAllPullsPresent (n0 + n1) ∩
+    (fun sample : UCB.ArmRewardStream 2 ×
+        ((t : Nat) -> Fin 2 × Real) =>
+      fun i : Fin (n0 + n1) => sample.1 (i : Nat) 0) ⁻¹'
+      twoArmAppendixCRewardPhaseEvent n0 n1 phaseOneTotal
+
+theorem measurableSet_twoArmAppendixCLatentPhaseEvent
+    (n0 n1 : Nat) (phaseOneTotal : Real) :
+    MeasurableSet
+      (twoArmAppendixCLatentPhaseEvent n0 n1 phaseOneTotal) := by
+  apply ((measurableSet_twoArmAppendixCAllPullsPresent
+    (n0 + n1)).preimage
+      (measurable_twoArmLatentMaskedOptimalPullBlock (n0 + n1))).inter
+  exact (measurableSet_twoArmAppendixCRewardPhaseEvent
+    n0 n1 phaseOneTotal).preimage
+      (measurable_pi_lambda _ fun i =>
+        (measurable_pi_apply 0).comp
+          ((measurable_pi_apply (i : Nat)).comp measurable_fst))
+
+/-- On the all-pulls-present boundary, the masked block reads exactly the
+latent arm-`0` prefix. -/
+theorem twoArmLatentMaskedOptimalPullBlock_preimage_appendixCObservedPhaseEvent
+    (n0 n1 : Nat) (phaseOneTotal : Real) :
+    (twoArmLatentMaskedOptimalPullBlock (n0 + n1)) ⁻¹'
+        twoArmAppendixCObservedPhaseEvent n0 n1 phaseOneTotal =
+      twoArmAppendixCLatentPhaseEvent n0 n1 phaseOneTotal := by
+  ext sample
+  constructor
+  · rintro ⟨hpresent, hphase⟩
+    refine ⟨hpresent, ?_⟩
+    have hpresent' : forall i : Fin (n0 + n1),
+        (twoArmLatentMaskedOptimalPullBlock (n0 + n1) sample i).1 ≠
+          (⊤ : WithTop Nat) := by
+      simpa only [twoArmAppendixCAllPullsPresent,
+        Set.mem_setOf_eq] using hpresent
+    have hreadout :
+        (fun i : Fin (n0 + n1) =>
+          (twoArmLatentMaskedOptimalPullBlock (n0 + n1) sample i).2) =
+        (fun i : Fin (n0 + n1) => sample.1 (i : Nat) 0) := by
+      funext i
+      have htime :
+          twoArmNthOptimalPullTime (Env := Unit) (i : Nat) ((), sample.2) ≠
+            (⊤ : WithTop Nat) := by
+        simpa [twoArmLatentMaskedOptimalPullBlock] using hpresent' i
+      simp [twoArmLatentMaskedOptimalPullBlock, htime]
+    change (fun i : Fin (n0 + n1) => sample.1 (i : Nat) 0) ∈
+      twoArmAppendixCRewardPhaseEvent n0 n1 phaseOneTotal
+    change (fun i : Fin (n0 + n1) =>
+      (twoArmLatentMaskedOptimalPullBlock (n0 + n1) sample i).2) ∈
+        twoArmAppendixCRewardPhaseEvent n0 n1 phaseOneTotal at hphase
+    rw [← hreadout]
+    exact hphase
+  · rintro ⟨hpresent, hphase⟩
+    refine ⟨hpresent, ?_⟩
+    have hpresent' : forall i : Fin (n0 + n1),
+        (twoArmLatentMaskedOptimalPullBlock (n0 + n1) sample i).1 ≠
+          (⊤ : WithTop Nat) := by
+      simpa only [twoArmAppendixCAllPullsPresent,
+        Set.mem_setOf_eq] using hpresent
+    have hreadout :
+        (fun i : Fin (n0 + n1) =>
+          (twoArmLatentMaskedOptimalPullBlock (n0 + n1) sample i).2) =
+        (fun i : Fin (n0 + n1) => sample.1 (i : Nat) 0) := by
+      funext i
+      have htime :
+          twoArmNthOptimalPullTime (Env := Unit) (i : Nat) ((), sample.2) ≠
+            (⊤ : WithTop Nat) := by
+        simpa [twoArmLatentMaskedOptimalPullBlock] using hpresent' i
+      simp [twoArmLatentMaskedOptimalPullBlock, htime]
+    change (fun i : Fin (n0 + n1) =>
+      (twoArmLatentMaskedOptimalPullBlock (n0 + n1) sample i).2) ∈
+        twoArmAppendixCRewardPhaseEvent n0 n1 phaseOneTotal
+    change (fun i : Fin (n0 + n1) => sample.1 (i : Nat) 0) ∈
+      twoArmAppendixCRewardPhaseEvent n0 n1 phaseOneTotal at hphase
+    rw [hreadout]
+    exact hphase
+
+/-- Source-shaped generated-process event corresponding to the finite
+Appendix-C pull-ordered phase. -/
+def twoArmAppendixCGeneratedPhaseEvent (n0 n1 : Nat)
+    (phaseOneTotal : Real) :
+    Set (Unit × ((t : Nat) -> Fin 2 × Real)) :=
+  (twoArmOptimalPullTimeRewardBlock (Env := Unit) (n0 + n1)) ⁻¹'
+    twoArmAppendixCObservedPhaseEvent n0 n1 phaseOneTotal
+
+theorem measurableSet_twoArmAppendixCGeneratedPhaseEvent
+    (n0 n1 : Nat) (phaseOneTotal : Real) :
+    MeasurableSet
+      (twoArmAppendixCGeneratedPhaseEvent n0 n1 phaseOneTotal) :=
+  (measurableSet_twoArmAppendixCObservedPhaseEvent
+    n0 n1 phaseOneTotal).preimage
+      (measurable_twoArmOptimalPullTimeRewardBlock
+        (Env := Unit) (n0 + n1))
+
+/-- Exact transport of the finite Appendix-C phase event to the source-shaped
+generated SGB trajectory.
+
+The right side is an intersection of the latent reward pattern with the
+adaptive all-pulls-present event.  This theorem does not assert a product law,
+selected IID, a probability lower bound, future no-return, or Theorem 2. -/
+theorem twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent
+    (armLaw : Fin 2 -> Measure Real)
+    (hprob : forall arm, IsProbabilityMeasure (armLaw arm))
+    (eta : Real) (n0 n1 : Nat) (phaseOneTotal : Real) :
+    (twoArmTrajectoryMeasure (Measure.dirac ()) eta
+        (twoArmFixedIIDEnvironment armLaw hprob))
+        (twoArmAppendixCGeneratedPhaseEvent n0 n1 phaseOneTotal) =
+      (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta)
+        (twoArmAppendixCLatentPhaseEvent n0 n1 phaseOneTotal) := by
+  let sourceMeasure := twoArmTrajectoryMeasure (Measure.dirac ()) eta
+    (twoArmFixedIIDEnvironment armLaw hprob)
+  let coupling := twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta
+  let observable :=
+    twoArmOptimalPullTimeRewardBlock (Env := Unit) (n0 + n1)
+  let masked := twoArmLatentMaskedOptimalPullBlock (n0 + n1)
+  let event := twoArmAppendixCObservedPhaseEvent n0 n1 phaseOneTotal
+  have hobservable : Measurable observable :=
+    measurable_twoArmOptimalPullTimeRewardBlock
+      (Env := Unit) (n0 + n1)
+  have hmasked : Measurable masked :=
+    measurable_twoArmLatentMaskedOptimalPullBlock (n0 + n1)
+  have hevent : MeasurableSet event :=
+    measurableSet_twoArmAppendixCObservedPhaseEvent
+      n0 n1 phaseOneTotal
+  calc
+    sourceMeasure
+        (twoArmAppendixCGeneratedPhaseEvent n0 n1 phaseOneTotal) =
+        Measure.map observable sourceMeasure event := by
+      rw [Measure.map_apply hobservable hevent]
+      rfl
+    _ = Measure.map masked coupling event := by
+      rw [twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked]
+    _ = coupling (masked ⁻¹' event) :=
+      Measure.map_apply hmasked hevent
+    _ = coupling
+        (twoArmAppendixCLatentPhaseEvent n0 n1 phaseOneTotal) := by
+      rw [twoArmLatentMaskedOptimalPullBlock_preimage_appendixCObservedPhaseEvent]
+
 end StochasticGradientBandit
 end
 end BanditRLProof

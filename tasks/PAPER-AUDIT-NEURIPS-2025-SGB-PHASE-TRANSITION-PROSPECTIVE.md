@@ -125,14 +125,15 @@ evidence states:
    the native stationary process and the source-shaped generated trajectory.
    The mask retains the stopped-value fallback at `top`; the right-hand side is
    therefore not promoted to a product or selected-IID law.
-9. **Blocked phase-event transport:** define the exact Appendix-C latent phase
-   event together with the all-pulls-present boundary, and transport the event
-   to the source generated process without conditioning away the adaptive
-   occurrence dependence.
-10. Compile Appendix-C Step 1: if the optimal-arm probability after its `n`th
+9. **Compiled phase-event transport:** define the exact finite Appendix-C
+   `S0/S1` reward event, keep the all-pulls-present boundary as an explicit
+   intersection in latent space, and transport its probability to the source
+   generated process without conditioning away adaptive occurrence dependence.
+10. **Blocked future/no-return producer:** if the optimal-arm probability after its `n`th
    pull is at most `1/(2*T)`, the conditional probability of no further
    optimal-arm pull over the remaining horizon is at least `1/2`, yielding
-   the exact starvation regret charge.
+   the exact starvation regret charge.  The fixed-cutoff deterministic consumer
+   already compiles; the stopped-prefix probability producer does not.
 11. Build the `S0`/`S1` phase producer: latent IID reward-block law plus its
    native-process transport, Rademacher anti-concentration, ballot-prefix
    constraint, and the
@@ -246,7 +247,16 @@ evidence that the polynomial lower-bound route is complete.
   `twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked`.
   The mask deliberately preserves the fallback value when a requested pull is
   absent, so this is not a product-law or selected-IID theorem.
-- Phase-event transport, a pull-ordered selected-IID theorem, conditional no-return probability
+- Fourteen further declarations define the exact finite Appendix-C reward
+  pattern: `S0` is an `n0`-long block of `-1` rewards, while `S1` is supported
+  on `{-1,1}`, has an explicit exact terminal sum, and has nonpositive running
+  sums at every prefix.  Separate measurable sets record all requested pulls,
+  the observed block event, and the latent reward event intersected with that
+  adaptive occurrence boundary.  The source-facing terminal
+  `twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent`
+  transports exact event probability without conditioning the latent prefix.
+- A pull-ordered selected-IID theorem, the missing-pull/all-present probability
+  dichotomy, conditional no-return probability
   `>= 1/2`, the Rademacher/ballot phase producer, asymptotic
   assembly, and the frozen Theorem-2 terminal remain uncompiled.  The central
   target therefore remains blocked; the compiled latent product/readout,
