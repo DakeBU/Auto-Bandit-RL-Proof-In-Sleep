@@ -90,6 +90,9 @@ class TargetDriftAgentImageTest(unittest.TestCase):
         self.assertIn("FROM ${CHECKER_BASE_IMAGE}", recipe)
         self.assertIn("/opt/abrl-codex/codex", recipe)
         self.assertIn("codex_target_drift_adapter.py", recipe)
+        self.assertIn("target_drift_agent_action_driver.py", recipe)
+        self.assertIn("target_drift_agent_fake_codex.py", recipe)
+        self.assertIn("agent-production-action-contract.json", recipe)
         self.assertIn(
             'ENTRYPOINT ["python3", "/usr/local/bin/abrl-agent-pid1"]', recipe
         )
@@ -281,6 +284,8 @@ class TargetDriftAgentImageTest(unittest.TestCase):
             "prepare_target_drift_agent_image.py build-image",
             "record_target_drift_agent_image_probe.py",
             "record_target_drift_agent_lifecycle_probe.py",
+            "--component-mode production-fixture",
+            "agent-production-action-fixture",
             "agent-image-isolation-probe.json",
             "agent-lifecycle-probe.json",
             "--checker-build-input",

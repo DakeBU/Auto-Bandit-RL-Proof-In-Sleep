@@ -254,6 +254,9 @@ class AgentOuterBoundaryTest(unittest.TestCase):
             "controller_sha256": launcher.sha256(
                 launcher.TOOLS / "target_drift_agent_pid1.py"
             ),
+            "adapter_sha256": launcher.sha256(
+                launcher.TOOLS / "codex_target_drift_adapter.py"
+            ),
             "outer_controller_sha256": launcher.sha256(
                 launcher.TOOLS / "target_drift_agent_outer_controller.py"
             ),
@@ -271,6 +274,18 @@ class AgentOuterBoundaryTest(unittest.TestCase):
             ),
             "excluded_execution_request_sha256": launcher.sha256(
                 launcher.CANONICAL_EXCLUDED_REQUEST
+            ),
+            "production_action_driver_sha256": launcher.sha256(
+                launcher.TOOLS / "target_drift_agent_action_driver.py"
+            ),
+            "production_action_fake_provider_sha256": launcher.sha256(
+                launcher.TOOLS / "target_drift_agent_fake_codex.py"
+            ),
+            "production_action_contract_sha256": launcher.sha256(
+                launcher.CANONICAL_ACTION_CONTRACT
+            ),
+            "production_action_fixture_request_sha256": launcher.sha256(
+                launcher.CANONICAL_ACTION_FIXTURE / "request.json"
             ),
         }
         with tempfile.TemporaryDirectory() as directory:
@@ -376,6 +391,19 @@ class AgentOuterBoundaryTest(unittest.TestCase):
                 "target_drift_agent_excluded_adapter.py"
             ],
             image_builder.TOOLS / "target_drift_agent_excluded_adapter.py",
+        )
+        self.assertEqual(
+            image_builder.CONTEXT_INPUTS["target_drift_agent_action_driver.py"],
+            image_builder.TOOLS / "target_drift_agent_action_driver.py",
+        )
+        self.assertEqual(
+            image_builder.CONTEXT_INPUTS["target_drift_agent_fake_codex.py"],
+            image_builder.TOOLS / "target_drift_agent_fake_codex.py",
+        )
+        self.assertEqual(
+            image_builder.CONTEXT_INPUTS["agent-production-action-contract.json"],
+            image_builder.ROOT
+            / "evaluation/target-drift-v2/agent-production-action-contract.json",
         )
 
     def test_excluded_adapter_has_no_provider_network_or_process_escape(self) -> None:

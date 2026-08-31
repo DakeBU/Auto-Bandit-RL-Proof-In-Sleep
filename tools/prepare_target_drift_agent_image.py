@@ -44,6 +44,12 @@ CONTEXT_INPUTS = {
     "target_drift_agent_excluded_adapter.py": (
         TOOLS / "target_drift_agent_excluded_adapter.py"
     ),
+    "target_drift_agent_action_driver.py": (
+        TOOLS / "target_drift_agent_action_driver.py"
+    ),
+    "target_drift_agent_fake_codex.py": (
+        TOOLS / "target_drift_agent_fake_codex.py"
+    ),
     "target_drift_agent_outer_controller.py": (
         TOOLS / "target_drift_agent_outer_controller.py"
     ),
@@ -55,6 +61,19 @@ CONTEXT_INPUTS = {
     "agent-excluded-execution-request.json": (
         ROOT / "evaluation/target-drift-v2/agent-excluded-execution-request.json"
     ),
+    "agent-production-action-contract.json": (
+        ROOT / "evaluation/target-drift-v2/agent-production-action-contract.json"
+    ),
+    "agent-production-action-fixture-request.json": (
+        ROOT / "evaluation/target-drift-v2/agent-production-action-fixture/request.json"
+    ),
+    "agent-production-action-fixture-prompt.md": (
+        ROOT / "evaluation/target-drift-v2/agent-production-action-fixture/prompt.md"
+    ),
+    "agent-production-action-fixture-workspace-Fixture.lean": (
+        ROOT
+        / "evaluation/target-drift-v2/agent-production-action-fixture/workspace/Fixture.lean"
+    ),
     "agent-image-sources.json": SOURCE_LOCK,
 }
 BUILDER_PATH = Path(__file__).resolve()
@@ -64,11 +83,16 @@ ADAPTER_PATH = "/usr/local/lib/abrl/codex_target_drift_adapter.py"
 EXCLUDED_ADAPTER_PATH = (
     "/usr/local/lib/abrl/target_drift_agent_excluded_adapter.py"
 )
+ACTION_DRIVER_PATH = "/usr/local/lib/abrl/target_drift_agent_action_driver.py"
+FAKE_CODEX_PATH = "/usr/local/lib/abrl/target_drift_agent_fake_codex.py"
 OUTER_CONTROLLER_PATH = "/usr/local/lib/abrl/target_drift_agent_outer_controller.py"
 OUTER_PROBE_PATH = "/usr/local/lib/abrl/target_drift_agent_outer_probe.py"
 MODEL_PROBE_PATH = "/usr/local/lib/abrl/target_drift_agent_model_probe.py"
 EXCLUDED_CONTRACT_PATH = (
     "/usr/local/share/abrl/agent-excluded-execution-contract.json"
+)
+ACTION_CONTRACT_PATH = (
+    "/usr/local/share/abrl/agent-production-action-contract.json"
 )
 CODEX_PATH = "/opt/abrl-codex/codex"
 MAX_PACKAGE_BYTES = 128 * 1024 * 1024
@@ -507,6 +531,89 @@ def validate_context(context: Path, *, current_provenance: bool = True) -> dict[
         and excluded_request.get("provider_runtime", {}).get("model_call_budget") == 0,
         "excluded-execution contract/request/adapter binding is invalid",
     )
+    action_contract_path = regular_file(
+        context / "agent-production-action-contract.json",
+        "production-action contract",
+    )
+    action_request_path = regular_file(
+        context / "agent-production-action-fixture-request.json",
+        "production-action fixture request",
+    )
+    action_driver_path = regular_file(
+        context / "target_drift_agent_action_driver.py",
+        "production-action fixture driver",
+    )
+    fake_codex_path = regular_file(
+        context / "target_drift_agent_fake_codex.py",
+        "production-action fake provider",
+    )
+    action_contract = load(action_contract_path)
+    fixture = action_contract.get("fixture", {})
+    fixture_manifest_paths = {
+        item.get("path"): item for item in fixture.get("input_manifest", [])
+        if isinstance(item, dict)
+    }
+    flattened_fixture_paths = {
+        "request.json": context / "agent-production-action-fixture-request.json",
+        "prompt.md": context / "agent-production-action-fixture-prompt.md",
+        "workspace/Fixture.lean": (
+            context / "agent-production-action-fixture-workspace-Fixture.lean"
+        ),
+    }
+    require(
+        action_contract.get("schema_version") == 1
+        and action_contract.get("suite_id") == SUITE_ID
+        and action_contract.get("status")
+        == "production_action_interface_candidate_gate_closed"
+        and action_contract.get("execution_status_boundary")
+        == "primary_execution_not_started"
+        and action_contract.get("production_execution_enabled") is False
+        and action_contract.get("primary_result_eligible") is False
+        and fixture.get("permanently_result_ineligible") is True
+        and fixture.get("provider_execution_enabled") is False
+        and fixture.get("provider_request_or_model_invocation_occurred") is False
+        and fixture.get("request_sha256") == sha256_file(action_request_path)
+        and fixture.get("driver", {}).get("sha256")
+        == sha256_file(action_driver_path)
+        and fixture.get("adapter", {}).get("sha256")
+        == sha256_file(context / "codex_target_drift_adapter.py")
+        and fixture.get("fake_provider", {}).get("sha256")
+        == sha256_file(fake_codex_path)
+        and fixture.get("input_directories") == ["workspace"]
+        and len(fixture.get("input_manifest", []))
+        == len(fixture_manifest_paths) == 3
+        and set(fixture_manifest_paths) == set(flattened_fixture_paths)
+        and all(
+            fixture_manifest_paths[name].get("bytes") == path.stat().st_size
+            and fixture_manifest_paths[name].get("sha256") == sha256_file(path)
+            for name, path in flattened_fixture_paths.items()
+        ),
+        "production-action candidate contract or fixture binding is invalid",
+    )
+    action_request = load(action_request_path)
+    require(
+        action_request.get("execution_purpose")
+        == "agent_container_production_action_fixture"
+        and action_request.get("primary_result_eligible") is False
+        and action_request.get("provider_runtime", {}).get("kind") == "codex_cli"
+        and action_request.get("provider_runtime", {}).get("fixture_provider") is True
+        and action_request.get("provider_runtime", {}).get(
+            "provider_execution_enabled"
+        ) is False
+        and action_request.get("provider_runtime", {}).get(
+            "credential_access_allowed"
+        ) is False
+        and action_request.get("provider_runtime", {}).get("network_access_allowed")
+        is False
+        and action_request.get("provider_runtime", {}).get("model_call_budget") == 0
+        and action_request.get("provider_runtime", {}).get("executable")
+        == FAKE_CODEX_PATH
+        and action_request.get("provider_runtime", {}).get("executable_sha256")
+        == sha256_file(fake_codex_path)
+        and action_request.get("provider_runtime", {}).get("auth_source_path")
+        == "/codex-home/provider-auth",
+        "production-action request weakens the fixed no-provider boundary",
+    )
     files = checker_image.file_manifest(
         context, excluded={"agent-image-build-input.json"}
     )
@@ -641,6 +748,10 @@ def build_image(
         "excluded_adapter": extract_image(
             runtime, image_digest, EXCLUDED_ADAPTER_PATH
         ),
+        "action_driver": extract_image(
+            runtime, image_digest, ACTION_DRIVER_PATH
+        ),
+        "fake_codex": extract_image(runtime, image_digest, FAKE_CODEX_PATH),
         "outer_controller": extract_image(
             runtime, image_digest, OUTER_CONTROLLER_PATH
         ),
@@ -648,6 +759,9 @@ def build_image(
         "model_probe": extract_image(runtime, image_digest, MODEL_PROBE_PATH),
         "excluded_contract": extract_image(
             runtime, image_digest, EXCLUDED_CONTRACT_PATH
+        ),
+        "action_contract": extract_image(
+            runtime, image_digest, ACTION_CONTRACT_PATH
         ),
         "cache_manifest": extract_image(
             runtime, image_digest, checker_launcher.CHECKER_CACHE_MANIFEST_PATH
@@ -672,6 +786,24 @@ def build_image(
         and excluded_contract.get("request", {}).get("sha256")
         == sha256_file(context / "agent-excluded-execution-request.json"),
         "in-image excluded-execution contract, adapter, or request binding differs",
+    )
+    action_contract = json.loads(extracted["action_contract"].decode("utf-8"))
+    action_fixture = action_contract.get("fixture", {})
+    require(
+        hashlib.sha256(extracted["action_driver"]).hexdigest()
+        == sha256_file(context / "target_drift_agent_action_driver.py")
+        == action_fixture.get("driver", {}).get("sha256")
+        and hashlib.sha256(extracted["fake_codex"]).hexdigest()
+        == sha256_file(context / "target_drift_agent_fake_codex.py")
+        == action_fixture.get("fake_provider", {}).get("sha256")
+        and hashlib.sha256(extracted["adapter"]).hexdigest()
+        == action_fixture.get("adapter", {}).get("sha256")
+        and hashlib.sha256(extracted["action_contract"]).hexdigest()
+        == sha256_file(context / "agent-production-action-contract.json")
+        and action_fixture.get("request_sha256")
+        == sha256_file(context / "agent-production-action-fixture-request.json")
+        and action_contract.get("production_execution_enabled") is False,
+        "in-image production-action candidate contract or fixture binding differs",
     )
     require(
         hashlib.sha256(extracted["outer_controller"]).hexdigest()
@@ -752,6 +884,18 @@ def build_image(
             extracted["excluded_contract"]
         ).hexdigest(),
         "excluded_execution_request_sha256": excluded_contract["request"]["sha256"],
+        "production_action_driver_sha256": hashlib.sha256(
+            extracted["action_driver"]
+        ).hexdigest(),
+        "production_action_fake_provider_sha256": hashlib.sha256(
+            extracted["fake_codex"]
+        ).hexdigest(),
+        "production_action_contract_sha256": hashlib.sha256(
+            extracted["action_contract"]
+        ).hexdigest(),
+        "production_action_fixture_request_sha256": action_fixture[
+            "request_sha256"
+        ],
         "outer_controller_sha256": hashlib.sha256(
             extracted["outer_controller"]
         ).hexdigest(),

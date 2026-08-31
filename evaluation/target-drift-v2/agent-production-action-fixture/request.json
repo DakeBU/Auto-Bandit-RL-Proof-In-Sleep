@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "suite_id": "ABRL-TARGET-DRIFT-V2",
+  "opaque_run_id": "result-free-production-action-fixture",
+  "execution_purpose": "agent_container_production_action_fixture",
+  "primary_result_eligible": false,
+  "replicate": 0,
+  "agent_mount": "/agent/run",
+  "prompt_path": "/agent/run/prompt.md",
+  "model": {
+    "model_id": "abrl-fixed-offline-provider-fixture",
+    "immutable_version": "abrl-fixed-offline-provider-fixture-v1",
+    "reasoning_effort": "low",
+    "service_tier": "priority"
+  },
+  "pricing": {
+    "currency": "USD",
+    "unit": "per_million_tokens",
+    "input_tokens": 0,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 0
+  },
+  "budgets": {
+    "maximum_input_tokens": 0,
+    "maximum_output_tokens": 0,
+    "maximum_tool_calls": 0,
+    "maximum_build_attempts": 0,
+    "wall_clock_seconds": 30,
+    "maximum_model_retries": 0,
+    "maximum_cost_usd": 0
+  },
+  "retry_policy": {
+    "semantic_failure_retries": 0,
+    "infrastructure_retry_limit": 0,
+    "infrastructure_failure_definition": "codex_cli_nonzero_exit_or_missing_thread_or_missing_terminal_usage_or_runtime_error_or_forbidden_tool_or_ambiguous_build_accounting"
+  },
+  "result_contract": {
+    "agent_output_directory": "/agent/run/output",
+    "required_files": [
+      "result.json",
+      "lean-diff.patch",
+      "build.log",
+      "explanation.md",
+      "workflow-compliance.json"
+    ],
+    "optional_files": [],
+    "result_required_fields": [
+      "schema_version",
+      "opaque_run_id",
+      "final_status",
+      "public_declarations",
+      "primary_grader_rationale"
+    ],
+    "workflow_id": "production_action_fixture",
+    "workflow_evidence_files": [],
+    "blind_grading_text_rule": "This fixed fixture is permanently result-ineligible and must never be graded."
+  },
+  "provider_runtime": {
+    "kind": "codex_cli",
+    "fixture_provider": true,
+    "provider_execution_enabled": false,
+    "credential_access_allowed": false,
+    "network_access_allowed": false,
+    "model_call_budget": 0,
+    "executable": "/usr/local/lib/abrl/target_drift_agent_fake_codex.py",
+    "executable_sha256": "9e6d5c9a6d0c1d387bfe5464619a2069f364c0dce1ad6d70ba691831403ae774",
+    "auth_source_path": "/codex-home/provider-auth",
+    "process_environment": {
+      "LANG": "C.UTF-8",
+      "PATH": "/usr/local/bin:/usr/bin:/bin"
+    },
+    "shell_environment": {
+      "LANG": "C.UTF-8",
+      "PATH": "/usr/local/bin:/usr/bin:/bin"
+    }
+  }
+}

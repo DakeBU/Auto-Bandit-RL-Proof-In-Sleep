@@ -206,6 +206,32 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertIn(prefix + "tools/test_target_drift_grader_export.py", names)
         self.assertIn(prefix + "tools/test_target_drift_grading.py", names)
         self.assertIn(
+            prefix
+            + "evaluation/target-drift-v2/"
+            "human-source-contract-external-verification-protocol.json",
+            names,
+        )
+        self.assertIn(
+            prefix
+            + "evaluation/target-drift-v2/"
+            "human-source-contract-external-trust-anchor-contract.json",
+            names,
+        )
+        self.assertIn(
+            prefix + "tools/validate_target_drift_human_contract_external_verification.py",
+            names,
+        )
+        self.assertIn(
+            prefix + "tools/test_target_drift_human_contract_external_verification.py",
+            names,
+        )
+        self.assertIn(
+            prefix
+            + "evaluation/target-drift-v2/"
+            "method-amendment-fixed-target-paired-bootstrap-2026-08-31.json",
+            names,
+        )
+        self.assertIn(
             prefix + "evaluation/target-drift-v2/checker-image-candidate-record.json",
             names,
         )
@@ -257,6 +283,17 @@ class AnonymousSupplementTests(unittest.TestCase):
         )
         self.assertFalse(any("website/_site" in name for name in names))
         self.assertFalse(any("contributors.json" in name for name in names))
+        private_human_review_names = {
+            "role-registry.json", "allowed_signers", "external-receipt.json",
+            "external-attestation.json", "reviewer-a.sig", "reviewer-b.sig",
+            "adjudication.sig", "external-receipt.sig",
+            "external-trust-anchor.json",
+            "external-trust-anchor-git-object-proof.pack",
+        }
+        self.assertFalse(any(
+            name.rsplit("/", 1)[-1] in private_human_review_names for name in names
+        ))
+        self.assertFalse(any("/human_source_contract_review/" in name for name in names))
         self.assertFalse(any(name.endswith(".pdf") for name in names))
         self.assertFalse(any(".git/" in name for name in names))
 
