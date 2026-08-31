@@ -1145,3 +1145,65 @@ counterexample.  Do not repeatedly rewrite the proof route without that audit.
   covered. Current-action/nonpredictable gates, random or expectation-only
   envelopes, raw/latent-law corruption, paper-sharp constants, and the complete
   Tsallis-INF theorem remain outside this statement.
+
+## FIXED-ARM-LATENT-FINITE-PREFIX-PRODUCT
+
+- Proposed name: keep
+  `UCB.armStreamMeasure_map_fixedArmFinitePrefix_eq_pi` and its trajectory
+  wrapper project-local.
+- Mathematical area: infinite product measures, finite coordinate products,
+  and latent reward streams.
+- Exact statement: mapping the stationary arm-stream measure to the first `m`
+  coordinates of one fixed arm gives `Measure.pi (fun _ : Fin m => nu arm)`;
+  the same equality holds after lifting through the exact stream marginal of
+  the latent arm-stream trajectory coupling.
+- Existing APIs are sufficient:
+  `ProbabilityTheory.iIndepFun.precomp`,
+  `ProbabilityTheory.iIndepFun_iff_map_fun_eq_pi_map`,
+  `UCB.iIndepFun_armStreamMeasure_coordinate`,
+  `UCB.armStreamMeasure_map_coord`, and
+  `Thompson.identDistrib_fst_latentArmStreamTrajectoryMeasure`.
+- Regularity contracts: a Markov arm kernel; a nonzero finite arm count for the
+  trajectory lift; and only ordinary measurable-space structure on the frozen
+  environment.  No boundedness, moment, stopping-time, or action-policy premise
+  is used.
+- Current ABRL task:
+  `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE`.
+- Status: locally compiled, root imported, declaration-indexed, and externally
+  canaried.  The source-specific consumer identifies each finite nth optimal
+  pull with its corresponding latent coordinate almost surely.
+- Failure signal: this finite product law concerns latent coordinates.  It does
+  not identify the coupling's visible trajectory marginal with the native
+  fixed-IID SGB trajectory, and it does not imply that totalized stopped values
+  or values conditioned on all requested pulls occurring are IID.
+
+## COUNTABLE-BRANCH-SELECTED-REWARD-FRESHNESS
+
+- Proposed names: keep the SGB branch aggregation and selected-reward
+  conditional laws project-local; no new upstream Mathlib candidate is needed.
+- Mathematical area: countable measurable partitions, restricted measures,
+  semidirect products, measure-valued kernels, and regular conditional laws.
+- Exact statement: under the latent arm-stream trajectory coupling, the joint
+  law of the visible history through `n`, the selected action at `n+1`, and the
+  actual reward at `n+1` factors as the visible history/action marginal followed
+  by `nu` at that selected arm.  The same statement holds after projecting to
+  the visible-trajectory marginal.
+- Existing APIs are sufficient: the compiled branchwise complement-coordinate
+  product law, `Measure.compProd_restrict_prod`, `Measure.restrict_map`,
+  `Measure.map_sum`, `Measure.compProd_sum_left`,
+  `Measure.compProd_sum_right`, `Measure.compProd_congr`,
+  `Measure.compProd_const`, `Measure.compProd_map`, and
+  `condDistrib_ae_eq_iff_measure_eq_compProd`.
+- Regularity contracts: a Standard Borel frozen environment, a nonzero finite
+  arm count, and a Markov arm kernel.  The countable branch type is
+  `Nat × Fin K`; restricted branch kernels are finite/sub-Markov and are not
+  normalized probability kernels.
+- Current ABRL task:
+  `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE`.
+- Status: locally compiled and canaried.  The main endpoints are
+  `latentArmStreamVisibleNextReward_joint_eq_compProd` and
+  `latentArmStreamVisibleTrajectoryMeasure_nextReward_condDistrib_ae_eq_nu`.
+- Failure signal: deterministic-time one-step conditional freshness does not
+  identify the visible marginal with the native fixed-IID trajectory, prove a
+  stopped or pull-ordered selected-IID law, or establish a future/no-return
+  cylinder probability.

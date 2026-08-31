@@ -104,8 +104,11 @@ outside the atom-generated directions.  This is a regularity/codomain
 obligation, not a source-error claim; the global Lemmas 3.5--3.6, Assumption
 3.7, Theorem 3.8, and every regret endpoint remain outside the compiled slice.
 
-The independent stochastic-gradient-bandit audit contains 223 named
-declarations.  Its frozen 215-declaration Theorem-1 stack begins with 76
+The source-frozen stochastic-gradient-bandit audit contains 352 named
+declarations: `352 = 223 + 23 + 18 + 24 + 7 + 8 + 13 + 28 + 8`.  The historical
+record remains exactly 223 declarations:
+a frozen 215-declaration Theorem-1 stack plus eight separate
+Appendix-E/Theorem-4 contract leaves.  The 215-declaration stack begins with 76
 declarations covering finite
 Algorithm-1/Equations-(3)--(7) algebra, recursive generated histories and
 Equation-(5) kernels, pathwise two-arm Equation-(9)/(11) structure, and the
@@ -128,9 +131,7 @@ actual sampled-action pseudo-regret bridge, Equation-(7) assembly, and
 `twoArmFixedIIDDirac_theoremOne`.  This is the source Theorem 1 for bounded
 two-arm fixed-IID reward laws with exact means, `0 < Delta < 1`, `0 < eta`,
 `eta * C_eta < Delta`, and source `T = tailHorizon + 1`.  `Dirac` refers only
-to the `Unit` environment prior, not to the reward laws.  The audit remains
-partial: Theorems 2--4, their learning-rate regimes, general-`K`, and
-non-Dirac extensions remain outside the compiled slice.  The fixed-IID
+to the `Unit` environment prior, not to the reward laws.  The fixed-IID
 adapter is not a converse equivalence proof.
 
 The remaining eight declarations form a separate Appendix-E/Theorem-4
@@ -139,8 +140,95 @@ margin, an audited finite survival-event lower bound under explicit buffer
 and conditional-survival premises, and the finite geometric transient-phase
 envelope.  They do not construct the general-`K` generated process, a stopped
 supermartingale or Doob estimate, a uniform buffer/survival producer, or
-Theorem 4.  The 223 total is therefore `215 + 8`, not a larger Theorem-4
-endpoint stack.
+Theorem 4.  The historical 223 is therefore exactly `215 + 8`, not a larger
+Theorem-4 endpoint stack.
+
+The follow-on adds 23 declarations for the compiled bounded Corollary-1
+companion.  For source horizon `T >= 2`, `0 < Delta < 1`, and the
+horizon-indexed fixed rate `eta_T = sqrt(log T / T)`,
+`twoArmFixedIIDDirac_corollaryOne` bounds expected sampled pseudo-regret by
+the explicit absolute constant `2 + 1/log 2 + 2 * exp 2` times
+`sqrt(T log T)`.  This is a direct consumer of the already compiled Theorem 1
+and the pathwise `Delta T` branch.  It is not independent evidence for
+Theorem 2, a time-varying policy, or general `K`.  Again, `Dirac` names only
+the `Unit` environment prior; the bounded fixed-IID reward laws are not
+asserted to be Dirac or Rademacher.
+
+Another 18 declarations compile only a deterministic, source-shaped
+Appendix-C Step-1 consumer.  The named wrapper
+`twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral`
+defines a measurable fixed-cutoff starvation event, proves its exact
+`Delta * (T - n)` sampled-regret charge, and lower-bounds expected regret by
+that charge times the event probability.
+
+A further 24 declarations compile the chronological nth-pull infrastructure.
+They define a zero-based `WithTop Nat` nth-optimal-pull time, prove that it is a
+stopping time with the required ambient-measurability contract, identify the
+exact count and selected
+action under a finite-time witness, and expose measurable stopped reward and
+post-pull success-probability values at the same chronological coordinate.
+Seven additional declarations compile a latent fixed-arm product/readout layer.
+They prove the finite product law for a fixed arm's latent reward coordinates,
+lift that law through the coupling's exact arm-stream marginal, identify every
+finite nth optimal-arm pull with its corresponding latent coordinate almost
+surely, and normalize the kernels needed by the next adapter.  They do not
+make totalized or occurrence-conditioned stopped rewards IID.  Eight more
+declarations compile a deferred-decisions finite-prefix factorization: the
+finite stream box has its exact product law, the generated visible prefix is
+local to that box, the visible-prefix kernel is Markov, and the joint finite
+stream-box/visible-prefix law is the exact kernel mixture.  This does not
+identify the mixture's visible marginal with the native fixed-IID prefix or
+establish the native visible law.
+
+Round 17 adds 13 declarations under the deliberately limited label
+**action/readout/branch-locality interface and count-cap scaffold**.  They
+compile the next-action factorization, pathwise selected-coordinate support,
+and a branch-product consumer whose premise is the separately typed
+`LatentArmStreamVisiblePrefixNextActionBranchLocality` contract.  They also
+typecheck the next-action/reward readout definitions and the count-cap
+measurability and successor-count scaffold.  The locality contract is a
+typed `Prop` definition, not a proof of that proposition; no theorem in this
+group produces the contract.
+
+Round 18 adds 28 declarations under the narrow label **count-capped
+branch-locality producer**.  Two generic safe-fiber measure lemmas transport
+restricted semidirect-product equality; 26 route-specific declarations prove
+the time-zero and successor count-cap steps, their all-time induction, the
+exact lowercase branch-locality producer, and the unconditional branchwise
+selected-coordinate product law.  This discharges the Round-17 locality
+premise.
+
+Round 19 adds eight declarations under the narrow label **deterministic-time
+selected-reward freshness aggregation**.  They prove dynamic selected-coordinate
+measurability, lift each fixed branch product to the common condition marginal,
+sum the countable pull-count/arm partition, transport the law through the
+latent coupling, consume the almost-sure actual-reward readout, and expose the
+exact joint and `condDistrib` laws on both the coupling and its visible
+trajectory marginal.  This is one-step freshness given the visible prefix and
+selected next action, not a stopped or pull-ordered selected-IID theorem.
+
+The corresponding evidence flags are explicit:
+
+- action factorization: `true`;
+- pathwise coordinate support: `true`;
+- branch product consumer: `true`;
+- branch-locality contract typed: `true`;
+- count-cap scaffold: `true`;
+- branch-locality producer: `true`;
+- unconditional branch product: `true`;
+- deterministic-time selected-reward freshness: `true`;
+- visible-marginal/native-prefix identification: `false`;
+- Theorem-2 endpoint: `false`.
+
+These layers are not yet composed with the fixed-cutoff starvation consumer.
+The exact target-by-target branch products and deterministic-time one-step
+selected-reward freshness compile.  The visible-marginal/native-prefix
+identification, stopped or pull-ordered selected IID, the stopped-prefix
+future-cylinder, conditional no-return probability at least `1/2`, the
+Rademacher/binomial ballot phase, and the polynomial asymptotic terminal remain
+blocked.  The exact `K = 2` Theorem-2 center therefore remains blocked.  The
+complete audit status stays `partial`; Theorem 2 is `blocked`, and Theorems
+3--4 remain uncompiled.
 
 ## Quick verification
 
@@ -160,6 +248,11 @@ lake env lean Tests/TextbookPartIVChapter15Canary.lean
 lake env lean Tests/TextbookPartIVChapter16Canary.lean
 lake env lean Tests/TextbookPartIVChapter17Canary.lean
 lake env lean Tests/SuccinctLowerBoundPaperAuditCanary.lean
+lake env lean Tests/StochasticGradientBanditCorollaryOneCanary.lean
+lake env lean Tests/StochasticGradientBanditTheoremTwoStarvationCanary.lean
+lake env lean Tests/StochasticGradientBanditTheoremTwoNthPullCanary.lean
+lake env lean Tests/StochasticGradientBanditTheoremTwoLatentRewardCanary.lean
+lake env lean Tests/StochasticGradientBanditTheoremTwoNativeTrajectoryCanary.lean
 lake env lean Tests/StochasticGradientBanditTheoremFourContractAuditCanary.lean
 lake env lean Tests/StochasticGradientBanditPaperAuditCanary.lean
 python -m unittest tools/test_proof_graph_lab.py

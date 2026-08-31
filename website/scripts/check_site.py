@@ -557,22 +557,38 @@ def main() -> int:
             errors.append(f"BanditRLwiki active source audit {audit.get('id')} must remain partial")
         if not isinstance(audit.get("compiled_declaration_count"), int) or audit.get("compiled_declaration_count", 0) <= 0:
             errors.append(f"BanditRLwiki active source audit {audit.get('id')} has an invalid declaration count")
-        milestone = milestone_by_id.get(audit.get("milestone_id"))
-        if milestone is None:
-            errors.append(f"BanditRLwiki active source audit {audit.get('id')} names a missing milestone")
+        milestone_ids = [audit.get("milestone_id")]
+        if audit.get("follow_on_milestone_id"):
+            milestone_ids.append(audit["follow_on_milestone_id"])
+        milestones = [milestone_by_id.get(milestone_id) for milestone_id in milestone_ids]
+        missing_milestones = [
+            milestone_id
+            for milestone_id, milestone in zip(milestone_ids, milestones)
+            if milestone is None
+        ]
+        if missing_milestones:
+            errors.append(
+                f"BanditRLwiki active source audit {audit.get('id')} names missing milestones "
+                f"{missing_milestones}"
+            )
         else:
-            milestone_declarations = set(milestone.get("declarations", []))
+            milestone_declarations: set[str] = set()
+            for milestone in milestones:
+                milestone_declarations.update(milestone.get("declarations", []))
+                if milestone.get("status") != audit.get("lean_status"):
+                    errors.append(
+                        f"BanditRLwiki active source audit {audit.get('id')} status drifts from "
+                        f"milestone {milestone.get('id')}"
+                    )
             if len(milestone_declarations) != audit.get("compiled_declaration_count"):
                 errors.append(
-                    f"BanditRLwiki active source audit {audit.get('id')} declaration count drifts from its milestone"
-                )
-            if milestone.get("status") != audit.get("lean_status"):
-                errors.append(
-                    f"BanditRLwiki active source audit {audit.get('id')} status drifts from its milestone"
+                    f"BanditRLwiki active source audit {audit.get('id')} declaration count drifts "
+                    "from its milestone set"
                 )
             if not set(audit.get("representative_declarations", [])).issubset(milestone_declarations):
                 errors.append(
-                    f"BanditRLwiki active source audit {audit.get('id')} cites a declaration outside its milestone"
+                    f"BanditRLwiki active source audit {audit.get('id')} cites a declaration "
+                    "outside its milestone set"
                 )
         if "not" not in audit.get("boundary", "").lower() and "remain" not in audit.get("boundary", "").lower():
             errors.append(f"BanditRLwiki active source audit {audit.get('id')} does not state its nonclaim")
@@ -950,6 +966,70 @@ def main() -> int:
     succinct_items = [item for item in search_items if item.get("name") == succinct_declaration]
     if len(succinct_items) != 1 or succinct_items[0].get("chapter") != "Frontier":
         errors.append("succinct geometry declarations must resolve to the Frontier chapter")
+    sgb_prefix_declaration = (
+        "BanditRLProof.Thompson."
+        "latentArmStreamTrajectoryMeasure_map_stream_visiblePrefix_eq"
+    )
+    sgb_prefix_items = [item for item in search_items if item.get("name") == sgb_prefix_declaration]
+    if len(sgb_prefix_items) != 1 or sgb_prefix_items[0].get("chapter") != "Frontier":
+        errors.append("SGB deferred-decisions prefix declarations must resolve to the Frontier chapter")
+    sgb_action_declaration = (
+        "BanditRLProof.Thompson."
+        "latentArmStreamTrajectoryMeasure_map_visiblePrefix_nextAction_eq_compProd"
+    )
+    sgb_action_items = [
+        item for item in search_items if item.get("name") == sgb_action_declaration
+    ]
+    if len(sgb_action_items) != 1 or sgb_action_items[0].get("chapter") != "Frontier":
+        errors.append("SGB next-action factorization must resolve to the Frontier chapter")
+    sgb_branch_declaration = (
+        "BanditRLProof.Thompson."
+        "latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod"
+    )
+    sgb_branch_items = [
+        item for item in search_items if item.get("name") == sgb_branch_declaration
+    ]
+    if len(sgb_branch_items) != 1 or sgb_branch_items[0].get("chapter") != "Frontier":
+        errors.append("SGB unconditional branch product must resolve to the Frontier chapter")
+    sgb_freshness_declarations = (
+        "BanditRLProof.Thompson.latentArmStreamVisibleNextReward_joint_eq_compProd",
+        "BanditRLProof.Thompson.latentArmStreamVisibleNextReward_condDistrib_ae_eq_nu",
+        (
+            "BanditRLProof.Thompson."
+            "latentArmStreamVisibleTrajectoryMeasure_nextReward_joint_eq_compProd"
+        ),
+        (
+            "BanditRLProof.Thompson."
+            "latentArmStreamVisibleTrajectoryMeasure_nextReward_condDistrib_ae_eq_nu"
+        ),
+    )
+    for declaration in sgb_freshness_declarations:
+        freshness_items = [
+            item for item in search_items if item.get("name") == declaration
+        ]
+        if len(freshness_items) != 1 or freshness_items[0].get("chapter") != "Frontier":
+            errors.append(
+                "SGB deterministic-time selected-reward freshness must resolve to the "
+                f"Frontier chapter: {declaration}"
+            )
+            continue
+        freshness_target = urlsplit(freshness_items[0]["url"])
+        freshness_module_path = output / freshness_target.path
+        if not freshness_module_path.exists():
+            errors.append(f"SGB freshness declaration page is missing: {declaration}")
+            continue
+        freshness_module_source = freshness_module_path.read_text(encoding="utf-8")
+        compiled_summary = re.compile(
+            rf'<details class="declaration" id="{re.escape(freshness_target.fragment)}">'
+            r"\s*<summary>.*?"
+            r'<span class="status compiled">Compiled</span>.*?</summary>',
+            re.DOTALL,
+        )
+        if not compiled_summary.search(freshness_module_source):
+            errors.append(
+                "SGB deterministic-time selected-reward freshness is not rendered as "
+                f"compiled: {declaration}"
+            )
     frontier_source = (output / "chapters" / "frontier" / "index.html").read_text(encoding="utf-8")
     for required in (
         "A Novel General Framework for Sharp Lower Bounds in Succinct Stochastic Bandits",
@@ -957,9 +1037,27 @@ def main() -> int:
         "Definitions 3.1–3.3 and Lemmas 3.1–3.4",
         "Does Stochastic Gradient really succeed for Bandits?",
         "Theorem 1 (two-arm SGB regret upper bound)",
+        "Corollary 1 (horizon-indexed two-arm SGB rate)",
+        "physical PDF p. 5",
+        "Theorem 2 (two-arm SGB phase transition)",
+        "physical PDF p. 6; Appendix C pp. 31–40",
+        "352 = 223 + 23 + 18 + 24 + 7 + 8 + 13 + 28 + 8",
+        "LatentArmStreamVisiblePrefixNextActionBranchLocality",
+        sgb_action_declaration,
+        sgb_branch_declaration,
+        *sgb_freshness_declarations,
+        "deterministic-time one-step selected-reward freshness is already compiled",
+        "visible marginal with the native fixed-IID SGB prefix",
+        "native visible law",
+        "Pull-ordered or stopped selected-reward IID",
+        (
+            "stopped-prefix future-cylinder law needed to prove conditional "
+            "no-return probability at least one half"
+        ),
+        "frozen terminal twoArmRademacherDirac_theoremTwo_polynomialRegret",
     ):
         if required not in frontier_source:
-            errors.append(f"Frontier reading guide is missing succinct source metadata: {required}")
+            errors.append(f"Frontier reading guide is missing source or status metadata: {required}")
 
     ide_data_path = output / "ide-data.json"
     ide_items = json.loads(ide_data_path.read_text(encoding="utf-8")).get("items", []) if ide_data_path.exists() else []

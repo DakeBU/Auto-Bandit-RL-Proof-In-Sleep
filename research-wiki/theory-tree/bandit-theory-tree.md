@@ -275,7 +275,7 @@ constants, and literal LML declaration identity remain separate.
 | Thompson sampling | compiled stationary posterior kernel, actual recursive probability matching, comparator decomposition plus explicit mean-optimality contract, clipped confidence, latent-stream support, generated Bayesian regret; broader model/toolchain ports remain open | `TXT-SLIVKINS-2019-2024`, `PPR-AGRAWAL-GOYAL-2011-TS`, LML cards `Bandits.TS.hasCondDistrib_action`, `Bandits.integral_regret_le` |
 | EXP3/adversarial | canonical generated route compiled through potential/Hedge, importance-weighted conditional moments, measurable recursive sampling, exploration bias, tuned expected regret, per-horizon best-arm realized tails, a distinct fixed-process all-positive-prefix realized-regret terminal, and an explicit sparse-loss extension; horizon-free tuned EXP3, best-arm aggregation on that one fixed process, and EXP3.P remain extensions | `TXT-BUBECK-CESABIANCHI-2012`, `TXT-LATTIMORE-SZEPESVARI-2020`, `PPR-AUER-CFS-2002-EXP3` |
 | Tsallis-INF/FTRL | canonical generated half-Tsallis route compiled through minimizer regularity, scheduled conditional action law, score alignment, expected stability/penalty, fixed-gap self-bounding, square-root schedule, and a finite-arm IID bounded reward-law logarithmic terminal; corruption, dynamic, and population-oracle restart results compile as labelled extensions, while the strict `Fin 2` refined-average obstruction and paper-sharp complete Tsallis-INF remain visible | `LOCAL-LEAF-TSALLIS-FINITE-BANDIT-MEAN-LOSS`, `LOCAL-LEAF-TSALLIS-SQRT-SCHEDULE-LOG-FIXED-GAP`, `LOCAL-LEAF-TSALLIS-SCHEDULED-FIXED-GAP-SELF-BOUNDING`, `LOCAL-LEAF-TSALLIS-SCHEDULED-EXPECTED-REGRET`, `LOCAL-LEAF-TSALLIS-SCHEDULED-ALL-RATE-EXPECTED-STABILITY`, `PPR-ZIMMERT-SELDIN-2018-TSALLIS-INF`, `PPR-MASOUDIAN-SELDIN-2021-TSALLIS-INF`, `PPR-ADAPTIVE-LR-FTRL-2024` |
-| Stochastic-gradient bandit | 223 declarations comprise the frozen 215-declaration Theorem-1 stack and 8 Appendix-E/Theorem-4 source-contract leaves. The exact fixed-IID/Dirac two-arm Theorem 1 compiles with source horizon and constants; the separate gate checks the positive drift margin, audited finite survival algebra under explicit premises, and geometric phase envelope but not the generated stopped-process premises or Theorem 4. Theorems 2--4 and general-`K` regimes remain open | `PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB`, `PAPER-AUDIT-NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT` |
+| Stochastic-gradient bandit | 352 audit-slice declarations comprise the historical 223-declaration Theorem-1/Appendix-E audit, a 23-declaration bounded Corollary-1 companion, an 18-declaration fixed-cutoff starvation consumer, a 24-declaration chronological nth-pull bridge, a seven-declaration latent reward product/readout layer, an eight-declaration deferred-decisions finite-prefix factorization, a 13-declaration action/readout plus branch-locality-interface scaffold, a 28-declaration count-capped branch-locality producer, and an eight-declaration selected-reward aggregation/readout layer. The exact fixed-IID/Dirac two-arm Theorem 1 and its direct bounded companion compile. The newest layer aggregates the countable pull-count/arm branches into exact deterministic-time next-reward joint and conditional laws on the coupling and its visible marginal. Selected IID, the native visible law, future/no-return, ballot, asymptotic assembly, and Theorem 2 remain blocked. Theorems 3--4 and general-`K` regimes remain open | `PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB`, `PAPER-AUDIT-NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT`, `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE` |
 | Linear/OFUL | compiled finite-action scalar route from Gram/determinant and confidence ellipsoid to a horizon-free all-time/all-horizon/stopping policy; horizon-indexed expectation/consistency is separate; contextual/dynamic/Hilbert extensions remain open | `TXT-LATTIMORE-SZEPESVARI-2020`, `PPR-ABBASI-YADKORI-2011-SELF-NORMALIZED`, `PPR-LI-CHU-LANGFORD-SCHAPIRE-2010-LINUCB` |
 | Pure exploration | confidence event, stopping rule, sample complexity, lower-bound change-of-measure | `TXT-LATTIMORE-SZEPESVARI-2020`, `TXT-SLIVKINS-2019-2024` |
 | BwK/resource constraints | budget stopping time, resource consumption, primal-dual comparison | `TXT-SLIVKINS-2019-2024`, `PPR-BADANIDIYURU-KLEINBERG-SLIVKINS-2013-BWK` |
@@ -454,6 +454,45 @@ endpoint are not.
 The source freeze records the
 initial reserve/not-started state; the current paper card and generated task
 memory record the later partial compiled status.
+
+A prospectively frozen follow-on now adds 129 declarations in eight deliberately
+separate layers.  Twenty-three compile the horizon-indexed Corollary-1 bounded
+companion as a direct Theorem-1 consumer.  Eighteen compile the deterministic
+fixed-cutoff Appendix-C starvation charge.  Twenty-four define the zero-based
+optimal-arm nth-pull time as a `WithTop Nat`, prove its stopping-time and
+measurability boundary, identify every finite hit with exact before/action/after
+pull semantics, and make the stopped reward and post-pull probability
+measurable at that coordinate.  This third layer is formalization
+infrastructure required by Appendix C; the source does not state a separate
+stopping-time lemma.  Seven further declarations prove the fixed-arm latent
+finite product law, lift it through the coupling's stream marginal, identify
+every finite nth-pull reward with its latent coordinate almost surely, and
+normalize the two kernels needed by the next adapter.  Eight further
+declarations prove the exact finite stream-box product law, locality of the
+generated visible prefix to that box, a Markov visible-prefix kernel, and the
+exact joint finite stream-box/visible-prefix mixture.  A final 13-declaration
+action/readout and branch-locality-interface scaffold proves the mixed latent-
+trajectory next-action factorization, identifies the actual next reward with
+the selected latent coordinate almost surely, and supplies a finite/sub-Markov
+branch-product consumer conditional on locality.  It also defines the exact
+count-cap set and proves its measurability and successor-count recurrence.
+A seventh 28-declaration layer contributes two generic safe-fiber
+semidirect-product restriction bridges and 26 route-specific declarations.  It
+proves the count-cap base/successor induction, discharges
+`LatentArmStreamVisiblePrefixNextActionBranchLocality`, and supplies the
+unconditional exact branchwise selected-coordinate product law.  These layers
+are followed by an eighth eight-declaration layer that sums the countable
+pull-count/arm branch partition, transports the result through the latent
+coupling, consumes the a.e. actual-reward readout, and proves exact one-step
+selected-reward joint and conditional laws on both the coupling and its visible
+trajectory marginal.  These layers are not yet composed with the fixed-cutoff
+consumer.  They do not identify the visible marginal with the native fixed-IID
+prefix, establish the native visible law, or make selected stopped rewards IID.
+The selected-IID law, visible-marginal/native-prefix identification,
+stopped-prefix future-cylinder
+probability, conditional no-return lower bound, Rademacher/ballot phase, and
+the polynomial-regret terminal remain open.  The frozen `K = 2` Theorem 2
+therefore remains blocked.
 
 The machine-readable route atlas is `lean-route-roadmap.json`.  It is the
 handoff contract between upper planning agents and lower Lean agents: each

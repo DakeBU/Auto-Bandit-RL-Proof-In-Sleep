@@ -1,9 +1,9 @@
 # Memory Digest
 
 Task: `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE`
-Generated: `2026-08-27T10:58:35+00:00`
+Generated: `2026-08-28T03:44:48+00:00`
 
-Recent trials: `4`
+Recent trials: `8`
 Retrieval index: `research-wiki/retrieval-index/PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE.json`
 
 Next agents should read the task, conversion window, proof obligations, and

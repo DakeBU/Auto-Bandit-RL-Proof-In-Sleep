@@ -43472,6 +43472,8 @@ example {Env : Type u} [MeasurableSpace Env]
 #check Tsallis.integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_le_sqrtSchedule_log_independentMeanGap
 #check IndepFun.comp_of_map
 #check indepFun_fst_snd_compProd_comap_of_indepFun
+#check map_snd_x_compProd_comap_eq_prod_map_of_indepFun
+#check Measure.compProd_restrict_prod
 #check KernelTrajectoryPrefix.partialTraj_zero_congr
 #check KernelTrajectoryPrefix.trajMeasure_map_frestrictLe_congr
 #check Tsallis.iidLossStatePredictableLossVector

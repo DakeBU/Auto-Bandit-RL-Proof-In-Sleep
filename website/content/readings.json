@@ -324,8 +324,8 @@
         {
           "title": "Does Stochastic Gradient really succeed for Bandits?",
           "authors": "Dorian Baudry, Emmeran Johnson, Simon Vary, Ciara Pike-Burke, and Patrick Rebeschini",
-          "sections": "Section 1.2, Algorithm 1, Theorem 1, Equations (3)--(11), Appendix A.1, Theorem 4, and Appendix E Steps 1--4",
-          "pages": "physical PDF pp. 2--4, 22, and 47--49",
+          "sections": "Section 1.2, Algorithm 1, Theorem 1, Corollary 1, Theorem 2, Equations (3)--(11), Appendix A.1, Appendix C, Theorem 4, and Appendix E Steps 1--4",
+          "pages": "physical PDF pp. 2–6, 22, 31–40, and 47–49",
           "url": "https://proceedings.neurips.cc/paper_files/paper/2025/file/a4e683f0ce6b91e7fbdae9d32642d88f-Paper-Conference.pdf"
         }
       ],
@@ -357,7 +357,25 @@
           "math": "\\(R_T^{\\mathrm{SGB}}\\le \\frac{\\log(1+4\\eta\\Delta T)}{2\\eta}+\\frac{\\Delta}{2\\eta(\\Delta-\\eta C_\\eta)},\\qquad C_\\eta=2\\sum_{n=0}^{\\infty}\\frac{(2\\eta)^n}{(n+2)!}\\le e^{2\\eta},\\quad \\eta C_\\eta<\\Delta.\\)",
           "fallback": "For a two-arm bounded-reward instance, Theorem 1 gives an explicit logarithmic-in-horizon regret term plus a finite failure-regret term whenever the learning rate satisfies η Cη < Δ.",
           "plain": "The source theorem combines a forward-potential logarithmic bound with a telescoping control of squared failure probability for the same fixed-IID two-arm SGB trajectory.",
-          "relationship": "BanditRLlib compiles this exact Theorem-1 endpoint for the actual sampled pseudo-regret of bounded two-arm fixed-IID laws, specialized through a Dirac environment prior. A separate eight-declaration Appendix-E gate checks finite scalar contracts used in Theorem 4, but does not prove that theorem. The Theorem-1 contract keeps 0 < Delta < 1, eta > 0, eta C_eta < Delta, exact arm means, and T = tailHorizon + 1 explicit. Theorems 2–4 remain open."
+          "relationship": "BanditRLlib compiles this exact Theorem-1 endpoint for the actual sampled pseudo-regret of bounded two-arm fixed-IID laws, specialized through a Unit Dirac environment prior. A separate eight-declaration Appendix-E gate checks finite scalar contracts used in Theorem 4, but does not prove that theorem. The Theorem-1 contract keeps 0 < Delta < 1, eta > 0, eta C_eta < Delta, exact arm means, and T = tailHorizon + 1 explicit. A later 23-declaration Corollary-1 companion compiles as a direct consumer; it is not evidence for Theorem 2."
+        },
+        {
+          "label": "Corollary 1 (horizon-indexed two-arm SGB rate)",
+          "pages": "physical PDF p. 5",
+          "url": "https://proceedings.neurips.cc/paper_files/paper/2025/file/a4e683f0ce6b91e7fbdae9d32642d88f-Paper-Conference.pdf",
+          "math": "\\(\\eta_T=\\sqrt{\\log T/T}\\quad\\Longrightarrow\\quad R_T^{\\mathrm{SGB}}=O(\\sqrt{T\\log T}).\\)",
+          "fallback": "For every source horizon T, choose one fixed learning rate equal to the square root of log T divided by T; the resulting two-arm regret is at most a constant times the square root of T log T.",
+          "plain": "Corollary 1 balances the already proved small-learning-rate Theorem-1 branch against the pathwise Delta-times-T bound. It describes a horizon-indexed family of fixed-rate policies, not one policy whose rate changes during a run.",
+          "relationship": "Twenty-three new declarations compile an explicit finite companion on the generated zero-initialized two-arm fixed-IID trajectory with a Unit Dirac environment prior. For T >= 2 and 0 < Delta < 1, twoArmFixedIIDDirac_corollaryOne bounds expected sampled pseudo-regret by (2 + 1/log 2 + 2 exp 2) sqrt(T log T). The arm reward laws remain bounded fixed-IID laws; the Dirac measure is the prior on the singleton environment, not a claim that rewards are Dirac or Rademacher. This is a direct Theorem-1 consumer and is not independent Theorem-2 evidence."
+        },
+        {
+          "label": "Theorem 2 (two-arm SGB phase transition)",
+          "pages": "physical PDF p. 6; Appendix C pp. 31–40",
+          "url": "https://proceedings.neurips.cc/paper_files/paper/2025/file/a4e683f0ce6b91e7fbdae9d32642d88f-Paper-Conference.pdf",
+          "math": "\\(\\lambda_\\Delta=\\tfrac12\\log\\!\\frac{1+\\Delta}{1-\\Delta},\\quad \\eta>\\lambda_\\Delta\\quad\\Longrightarrow\\quad R_T^{\\mathrm{SGB}}=\\widetilde{\\Omega}\\!\\left(T^{1-(1+\\varepsilon)\\lambda_\\Delta/\\eta}\\right)\\ \\text{for every }\\varepsilon>0.\\)",
+          "fallback": "Above the two-arm critical learning rate, Theorem 2 gives a polynomial-in-horizon regret lower bound up to logarithmic factors, with the exponent reduced by an arbitrary positive epsilon.",
+          "plain": "Appendix C reindexes the generated process by optimal-arm pull count, constructs a low-probability phase for that arm, and turns a no-return event into a long starvation interval and polynomial regret.",
+          "relationship": "The exact K = 2 target remains blocked. Eighteen declarations compile a deterministic source-shaped fixed-cutoff consumer: twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral proves the exact Delta(T-n) sampled-regret charge and its probability-weighted expectation lower bound. A 24-declaration formalization-infrastructure layer defines the zero-based optimal-arm nth-pull time in WithTop Nat, proves stopping-time/measurability and exact finite count/action semantics, and identifies measurable stopped reward and post-pull probability values. Seven declarations prove the fixed-arm finite latent-prefix product law and finite nth-pull coordinate readout. Eight deferred-decisions declarations prove the finite stream-box product law, visible-prefix kernel-law locality, a Markov visible-prefix kernel, and the exact joint finite stream-box/visible-prefix mixture. A 13-declaration interface scaffold proves mixed-coupling next-action factorization and pathwise selected-coordinate support and states the branch-locality contract. A 28-declaration producer proves safe-fiber restricted semidirect-product transport, the count-cap base/successor induction, that exact branch-locality contract, and an unconditional finite/sub-Markov branchwise product law. A final eight-declaration layer aggregates the countable pull-count/arm branches, transports them through the coupling, consumes the actual-reward readout, and proves exact deterministic-time next-reward joint and conditional laws on both the coupling and its visible marginal. The mixture's visible marginal is still not identified with the native fixed-IID prefix. Stopped or pull-ordered selected-reward IID, the native visible law, and composition with the fixed-cutoff consumer remain unproved. Neither totalized nor occurrence-conditioned stopped rewards are claimed IID. The stopped-prefix future-cylinder law, conditional no-return probability at least one half, the Rademacher/binomial ballot phase, asymptotic assembly, and the frozen Theorem-2 terminal remain uncompiled."
         },
         {
           "label": "Theorem 4 / Appendix E source-contract window",
