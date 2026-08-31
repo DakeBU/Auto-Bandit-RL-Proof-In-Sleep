@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-31T16:59:29+00:00",
+  "generated": "2026-08-31T19:46:21+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -4712,6 +4712,70 @@
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
       "line": 354,
       "statement": "@[simp] theorem twoArmNthOptimalPullSuccessProbability_eq_of_time_eq {Env : Type v} [MeasurableSpace Env] (eta : Real) (pullIndex t : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) (htime : twoArmNthOptimalPullTime pullIndex sample = (t : WithTop Nat)) : twoArmNthOptimalPullSuccessProbability eta pullIndex sample = twoArmSuccessProbability eta t sample"
+    },
+    {
+      "kind": "def",
+      "name": "twoArmOptimalPullTimeRewardBlock",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullTimeRewardBlock",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 50,
+      "statement": "def twoArmOptimalPullTimeRewardBlock {Env : Type u} [MeasurableSpace Env] (m : Nat) : Env \u00d7 ((t : Nat) -> Fin 2 \u00d7 Real) -> ((i : Fin m) -> WithTop Nat \u00d7 Real)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_twoArmOptimalPullTimeRewardBlock",
+      "full_name": "BanditRLProof.StochasticGradientBandit.measurable_twoArmOptimalPullTimeRewardBlock",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 58,
+      "statement": "theorem measurable_twoArmOptimalPullTimeRewardBlock {Env : Type u} [MeasurableSpace Env] (m : Nat) : Measurable (twoArmOptimalPullTimeRewardBlock (Env := Env) m)"
+    },
+    {
+      "kind": "def",
+      "name": "twoArmLatentMaskedOptimalPullBlock",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmLatentMaskedOptimalPullBlock",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 69,
+      "statement": "def twoArmLatentMaskedOptimalPullBlock (m : Nat) : UCB.ArmRewardStream 2 \u00d7 ((t : Nat) -> Fin 2 \u00d7 Real) -> ((i : Fin m) -> WithTop Nat \u00d7 Real)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_twoArmLatentMaskedOptimalPullBlock",
+      "full_name": "BanditRLProof.StochasticGradientBandit.measurable_twoArmLatentMaskedOptimalPullBlock",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 84,
+      "statement": "theorem measurable_twoArmLatentMaskedOptimalPullBlock (m : Nat) : Measurable (twoArmLatentMaskedOptimalPullBlock m)"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmOptimalPullTimeRewardBlock_eq_latentMasked_ae",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullTimeRewardBlock_eq_latentMasked_ae",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 116,
+      "statement": "theorem twoArmOptimalPullTimeRewardBlock_eq_latentMasked_ae (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (m : Nat) : (fun sample : UCB.ArmRewardStream 2 \u00d7 ((t : Nat) -> Fin 2 \u00d7 Real) => twoArmOptimalPullTimeRewardBlock (Env := Unit) m ((), sample.2)) =\u1d50[ twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta] twoArmLatentMaskedOptimalPullBlock m"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmNativeOptimalPullTimeRewardBlock_map_eq_latentMasked",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmNativeOptimalPullTimeRewardBlock_map_eq_latentMasked",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 163,
+      "statement": "theorem twoArmNativeOptimalPullTimeRewardBlock_map_eq_latentMasked (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (m : Nat) : letI : IsMarkovKernel (UCB.finiteArmRealRewardKernel armLaw) := UCB.finiteArmRealRewardKernel_isMarkov armLaw hprob Measure.map (fun trajectory : (t : Nat) -> Fin 2 \u00d7 Real => twoArmOptimalPullTimeRewardBlock (Env := Unit) m ((), trajectory)) (Thompson.nativeStationaryTrajectoryMeasure (historyAlgorithm (fun _ : Fin 2 => 0) eta) (UCB.finiteArmRealRewardKernel armLaw)) = Measure.map (twoArmLatentMaskedOptimalPullBlock m) (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta)"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmFixedIIDTrajectoryMeasure_map_snd_eq_nativeStationary",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_map_snd_eq_nativeStationary",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 212,
+      "statement": "theorem twoArmFixedIIDTrajectoryMeasure_map_snd_eq_nativeStationary (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) : letI : IsMarkovKernel (UCB.finiteArmRealRewardKernel armLaw) := UCB.finiteArmRealRewardKernel_isMarkov armLaw hprob (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)).map Prod.snd = Thompson.nativeStationaryTrajectoryMeasure (historyAlgorithm (fun _ : Fin 2 => 0) eta) (UCB.finiteArmRealRewardKernel armLaw)"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 275,
+      "statement": "theorem twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (m : Nat) : Measure.map (twoArmOptimalPullTimeRewardBlock (Env := Unit) m) (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)) = Measure.map (twoArmLatentMaskedOptimalPullBlock m) (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta)"
     },
     {
       "kind": "def",

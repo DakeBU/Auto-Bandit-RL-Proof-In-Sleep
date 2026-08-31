@@ -1,6 +1,6 @@
 # Proof Blueprint: PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE
 
-Generated: `2026-08-31T16:59:24+00:00`
+Generated: `2026-08-31T20:56:17+00:00`
 
 ## Source Task
 
@@ -125,15 +125,21 @@ evidence states:
 7. **Compiled native-law half:** identify the visible marginal with the native
    fixed-IID SGB prefix law and extend those identities to the complete native
    visible law by projective-limit uniqueness.
-8. **Blocked selected-law half:** transport the latent phase event and source
-   embedded-chain recurrence.  Deterministic-time one-step conditional
-   freshness plus full visible-law equality still does not by itself imply a
-   pull-ordered or stopped selected-reward IID theorem.
-9. Compile Appendix-C Step 1: if the optimal-arm probability after its `n`th
+8. **Compiled missing-pull-aware block transport:** the first `m` observable
+   optimal-arm pull records, including each `WithTop Nat` pull time, have
+   exactly the law of the corresponding masked latent-coupling block on both
+   the native stationary process and the source-shaped generated trajectory.
+   The mask retains the stopped-value fallback at `top`; the right-hand side is
+   therefore not promoted to a product or selected-IID law.
+9. **Blocked phase-event transport:** define the exact Appendix-C latent phase
+   event together with the all-pulls-present boundary, and transport the event
+   to the source generated process without conditioning away the adaptive
+   occurrence dependence.
+10. Compile Appendix-C Step 1: if the optimal-arm probability after its `n`th
    pull is at most `1/(2*T)`, the conditional probability of no further
    optimal-arm pull over the remaining horizon is at least `1/2`, yielding
    the exact starvation regret charge.
-10. Build the `S0`/`S1` phase producer: latent IID reward-block law plus its
+11. Build the `S0`/`S1` phase producer: latent IID reward-block law plus its
    native-process transport, Rademacher anti-concentration, ballot-prefix
    constraint, and the
    deterministic implication into the starvation event.
@@ -143,37 +149,10 @@ evidence states:
 1. Prove the pathwise and integral bound
    `twoArmSampledPseudoRegret Delta T <= Delta * T`.
 2. Show that `2 * eta * sourceC eta <= Delta` implies the Theorem-1 margin
-   and simplifies its constant term to at most `1 / eta`.
-3. Prove positivity and scalar logarithm/square-root bounds for `eta_T`, then
-   assemble the explicit finite and asymptotic Corollary-1 endpoints.
 
-## Hidden contracts
+<!-- 1377 characters omitted from the middle of this snapshot. -->
 
-- Theorem 2 retains adaptive selection: the pull-ordered reward blocks must be
-  derived from a latent product law and a native trajectory-law adapter, not
-  inserted as a selected-reward IID premise.
-
-<!-- 147 characters omitted from the middle of this snapshot. -->
-
-- Phase events and stopped values must be measurable.
-- Integer ceilings, log domains, parity/path constraints, and eventually-large
-  horizon conditions remain explicit.
-- The tilde-Omega constants may depend on `eta`, `Delta`, and `epsilon`, but
-  not on `T`.
-- Corollary 1 uses a horizon-indexed family of fixed-rate policies.  It is not
-  a single time-varying policy and is not Proposition 4.
-
-## Nonclaims
-
-This task does not claim general-`K` Theorem 2, Theorem 3, Theorem 4, a
-time-varying learning-rate policy, or verification of the external paper.
-Corollary 1 is a direct consumer of compiled Theorem 1 and must not be used as
-evidence that the polynomial lower-bound route is complete.
-
-## Current verified outcome (2026-09-01)
-
-- The source-audit inventory is now 352 named declarations:
-  `223 + 23 + 18 + 24 + 7 + 8 + 13 + 28 + 8` for the historical audit, Corollary-1
+`223 + 23 + 18 + 24 + 7 + 8 + 13 + 28 + 8` for the historical audit, Corollary-1
   companion, fixed-cutoff consumer, nth-pull bridge, latent product/readout,
   deferred-decisions finite-prefix factorization, and the action/readout plus
   branch-locality interface/count-cap scaffold, the branch-locality producer,
@@ -238,7 +217,15 @@ evidence that the polynomial lower-bound route is complete.
   visible/native probability measures.  The focused module and canary compile,
   and the new theorem uses only the baseline axioms `propext`,
   `Classical.choice`, and `Quot.sound`.
-- Pull-ordered selected-IID transport, conditional no-return probability
+- A separate eight-declaration selected-block module now defines a finite
+  pull-time/reward block with explicit `WithTop Nat` missing-pull coordinates,
+  proves its measurability, identifies it almost surely with a masked latent
+  block, and transports its exact law to both the native stationary process and
+  the source-shaped generated trajectory.  The terminal declaration is
+  `twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked`.
+  The mask deliberately preserves the fallback value when a requested pull is
+  absent, so this is not a product-law or selected-IID theorem.
+- Phase-event transport, a pull-ordered selected-IID theorem, conditional no-return probability
   `>= 1/2`, the Rademacher/ballot phase producer, asymptotic
   assembly, and the frozen Theorem-2 terminal remain uncompiled.  The central
   target therefore remains blocked; the compiled latent product/readout,
@@ -260,6 +247,8 @@ lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeT
 lake env lean Tests/StochasticGradientBanditTheoremTwoNativeTrajectoryCanary.lean
 lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativePrefix.lean
 lake env lean Tests/StochasticGradientBanditTheoremTwoNativePrefixCanary.lean
+lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean
+lake env lean Tests/StochasticGradientBanditTheoremTwoSelectedIIDCanary.lean
 python tools/bandit.py check
 ```
 
@@ -273,7 +262,7 @@ milestones only; their existence does not promote the frozen terminal.
 
 Task: `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE`
 
-Status: `target-frozen; Corollary 1 compiled; Theorem 2 blocked after compiled nth-pull, latent-product/readout, deferred-decisions finite-prefix factorization, action/readout interface, count-capped branch locality, one-step selected-reward freshness, native-prefix identification, full native visible-law equality, and deterministic-starvation milestones`
+Status: `target-frozen; Corollary 1 compiled; Theorem 2 blocked after compiled nth-pull, latent-product/readout, deferred-decisions finite-prefix factorization, action/readout interface, count-capped branch locality, one-step selected-reward freshness, native-prefix identification, full native visible-law equality, missing-pull-aware selected-block transport, and deterministic-starvation milestones`
 
 ## Source-to-Lean fence
 
@@ -387,37 +376,10 @@ that may be assumed by the terminal.
 - Reused local APIs: `Measure.infinitePi_map_restrict`,
   `KernelTrajectoryPrefix.trajMeasure_map_frestrictLe_congr`,
   `Thompson.canonicalMeasurableEnvironmentTrajectoryKernel_apply_eq_canonical`,
-  `Thompson.map_compProd_comap_history`, and the latent next-unused-coordinate
-  environment.
 
-<!-- 2752 characters omitted from the middle of this snapshot. -->
+<!-- 4282 characters omitted from the middle of this snapshot. -->
 
-coordinate, whereas the next reward does; a finite `Iic n` stream box alone
-  cannot establish freshness.
-
-## Round-18 retrieval packet: count-capped branch-locality producer
-
-This records the historical Round-18 boundary; its branch-aggregation
-obligation is discharged by the Round-19 packet below.
-
-- Reused and extended APIs:
-  `Measure.compProd_restrict_eq_of_base_restrict_eq_of_fiber_restrict_eq`,
-  `Measure.map_compProd_restrict_eq_of_base_restrict_eq_of_fiber_restrict_eq`,
-  trajectory prefix/next-pair recurrence, the exact
-  pull-count extension identity, coordinate removal/insertion, and the existing
-  finite/sub-Markov branch-product consumer.
-- New reusable bridge: two generic declarations show that a semidirect-product
-  law restricted to a measurable safe set is determined by the restricted base
-  law and the corresponding restricted fibers, and that a measurable successor
-  map preserves this equality.
-- Compiled base/successor route: time-zero count-cap locality, the successor-cap
-  decomposition into strict-count and equal-count/avoid-arm rectangles,
-  restricted step-kernel equality, and induction over every finite prefix.
-- Compiled producer: `latentArmStreamVisiblePrefixNextActionBranchLocality`
-  discharges the uppercase locality contract, and
-  `latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod` derives
-  the exact branchwise selected-coordinate product law without a locality
-  premise.
+premise.
 - Round-18 remaining producer: aggregate the coordinate branches and the a.e.
   reward readout into a selected-reward freshness law, identify the resulting
   visible marginal with the native fixed-IID prefix, and extend it to the native
@@ -499,6 +461,30 @@ obligation is discharged by the Round-19 packet below.
   lemma, source assumption, selected-IID premise, random-time future law, or
   theorem-endpoint promotion was introduced.
 
+## Round-23 retrieval packet: missing-pull-aware selected-block transport
+
+- Reused compiled endpoints:
+  `twoArmNthOptimalPullReward_eq_latentCoordinate_ae`,
+  `twoArmFixedIIDLatentTrajectoryMeasure_map_optimalPrefix_eq_pi`, and
+  `latentArmStreamVisibleTrajectoryMeasure_eq_native`.
+- Compiled observable: `twoArmOptimalPullTimeRewardBlock m` records, for every
+  `i : Fin m`, both the `WithTop Nat` time of the `i`th optimal-arm pull and
+  the stopped reward readout.
+- Compiled comparison law: `twoArmLatentMaskedOptimalPullBlock m` replaces the
+  reward by latent arm-`0` coordinate `i` only when the pull time is finite; at
+  `top` it retains the stopped-value fallback.  The source and native generated
+  block laws equal the pushforward of this masked coupling.
+- Endpoint:
+  `twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked`.
+  Its statement fence preserves the probability-law and finite-block
+  assumptions, and its canary reports only the baseline axioms `propext`,
+  `Classical.choice`, and `Quot.sound`.
+- Boundary: the separately compiled unmasked latent prefix has a product law,
+  but this masked selected block is not claimed product-distributed or IID.
+  The next producer must formulate the exact Appendix-C phase event together
+  with the all-pulls-present occurrence boundary; it may not condition away
+  dependence created by adaptive selection.
+
 ## Pivot rules
 
 - Do not replace the nth-pull law with an IID premise on the selected reward
@@ -509,7 +495,8 @@ obligation is discharged by the Round-19 packet below.
 - Compiled Corollary 1, nth-pull, latent-product/readout, finite-prefix
   factorization, action/readout interface, count-cap branch-locality producer,
   unconditional branch-product law, one-step selected-reward freshness,
-  native-prefix identification, full native visible-law equality, and
+  native-prefix identification, full native visible-law equality,
+  missing-pull-aware selected-block transport, and
   deterministic-starvation milestones do not compile the
   frozen Theorem 2 terminal; that terminal remains `blocked`.
 
@@ -534,12 +521,13 @@ Task id: `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE`
 | `SGB-T2-SELECTED-FRESHNESS` | deterministic-time next-reward conditional law given the visible prefix and selected next action | compiled | countable pull-count/arm branch aggregation plus the a.e. reward readout prove `latentArmStreamVisibleNextReward_joint_eq_compProd`, its `condDistrib` corollary, and the corresponding visible-trajectory-marginal laws; this is not selected IID |
 | `SGB-T2-NATIVE-PREFIX` | identification of the coupling's visible marginal with the native fixed-IID SGB process on every finite prefix | compiled | `latentArmStreamVisibleInitialPair_eq_compProd` gives the time-zero pair law, `latentArmStreamVisiblePrefixNextPair_eq_compProd` gives the one-step native extension, and `latentArmStreamVisibleTrajectoryMeasure_map_frestrictLe_eq_native` closes the induction against `nativeStationaryTrajectoryMeasure`; this is a finite-prefix identity, not full native-law equality, selected/stopped IID, or Theorem 2 |
 | `SGB-T2-NATIVE-TRAJECTORY` | forgetting the latent stream recovers the native fixed-IID SGB trajectory law | compiled | `latentArmStreamVisibleTrajectoryMeasure_eq_native` promotes equality of every inclusive finite prefix through `MeasureTheory.IsProjectiveLimit.unique`; this is full visible-law equality, not selected/stopped IID, a random-time future law, or Theorem 2 |
-| `SGB-T2-SELECTED-IID` | target-faithful transfer of the source pull-ordered reward blocks to the native phase event | partial | latent product/readout, finite-prefix mixture, action/readout, count-capped branch locality, exact branchwise product laws, deterministic-time one-step selected-reward freshness, finite native-prefix identification, and full native visible-law equality compile; stopped/pull-ordered block transport and phase-event transport do not |
+| `SGB-T2-SELECTED-BLOCK-TRANSPORT` | missing-pull-aware finite pull-time/reward block law on the native and source generated processes | compiled | `twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked` transports the observable block to a masked latent-coupling law while retaining `WithTop Nat` and the fallback at missing pulls; this is not a product or selected-IID law |
+| `SGB-T2-SELECTED-IID` | target-faithful transfer of the source pull-ordered reward blocks to the native phase event | partial | latent product/readout, finite-prefix mixture, action/readout, branch locality, one-step freshness, full native-law equality, and the missing-pull-aware masked block transport compile; the all-pulls-present phase-event transport and any valid product/IID consequence remain open |
 | `SGB-T2-FUTURE-CYLINDER` | conditional probability of no later optimal-arm pull after the random nth-pull prefix | blocked | one-step action kernels at fixed histories do not by themselves supply a stopped-prefix future law |
 | `SGB-T2-STARVATION` | Appendix-C Step-1 event-to-regret lower bound | partial | measurable fixed-cutoff event and generated-law `Delta*(T-n)*P(event)` consumer compile; it is not yet composed with the separately compiled nth-pull bridge, and conditional probability `>= 1/2` remains unproved |
 | `SGB-T2-PHASE-PROBABILITY` | `S0/S1` probability via Rademacher/binomial/ballot route | blocked | exact finite constants and path event |
 | `SGB-T2-POLYLOG-OMEGA` | frozen K=2 Theorem-2 terminal | blocked | depends on all preceding producers |
-| `SGB-PHASE-CANARY` | exact imports, checks, and representative axiom prints | compiled | companion, deterministic-consumer, nth-pull, latent-reward, finite-prefix-mixture, safe-fiber measure bridge, count-cap induction, branch-locality producer, branch aggregation, and visible-marginal conditional-freshness canaries use baseline axioms only |
+| `SGB-PHASE-CANARY` | exact imports, checks, and representative axiom prints | compiled | companion, deterministic-consumer, nth-pull, latent-reward, finite-prefix-mixture, safe-fiber measure bridge, count-cap induction, branch-locality, freshness, native-law, and selected-block canaries use baseline axioms only |
 
 ## Source and scenario
 
@@ -34839,6 +34827,70 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
     "line": 354,
     "statement": "@[simp] theorem twoArmNthOptimalPullSuccessProbability_eq_of_time_eq {Env : Type v} [MeasurableSpace Env] (eta : Real) (pullIndex t : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) (htime : twoArmNthOptimalPullTime pullIndex sample = (t : WithTop Nat)) : twoArmNthOptimalPullSuccessProbability eta pullIndex sample = twoArmSuccessProbability eta t sample"
+  },
+  {
+    "kind": "def",
+    "name": "twoArmOptimalPullTimeRewardBlock",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullTimeRewardBlock",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+    "line": 50,
+    "statement": "def twoArmOptimalPullTimeRewardBlock {Env : Type u} [MeasurableSpace Env] (m : Nat) : Env \u00d7 ((t : Nat) -> Fin 2 \u00d7 Real) -> ((i : Fin m) -> WithTop Nat \u00d7 Real)"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurable_twoArmOptimalPullTimeRewardBlock",
+    "full_name": "BanditRLProof.StochasticGradientBandit.measurable_twoArmOptimalPullTimeRewardBlock",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+    "line": 58,
+    "statement": "theorem measurable_twoArmOptimalPullTimeRewardBlock {Env : Type u} [MeasurableSpace Env] (m : Nat) : Measurable (twoArmOptimalPullTimeRewardBlock (Env := Env) m)"
+  },
+  {
+    "kind": "def",
+    "name": "twoArmLatentMaskedOptimalPullBlock",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmLatentMaskedOptimalPullBlock",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+    "line": 69,
+    "statement": "def twoArmLatentMaskedOptimalPullBlock (m : Nat) : UCB.ArmRewardStream 2 \u00d7 ((t : Nat) -> Fin 2 \u00d7 Real) -> ((i : Fin m) -> WithTop Nat \u00d7 Real)"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurable_twoArmLatentMaskedOptimalPullBlock",
+    "full_name": "BanditRLProof.StochasticGradientBandit.measurable_twoArmLatentMaskedOptimalPullBlock",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+    "line": 84,
+    "statement": "theorem measurable_twoArmLatentMaskedOptimalPullBlock (m : Nat) : Measurable (twoArmLatentMaskedOptimalPullBlock m)"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmOptimalPullTimeRewardBlock_eq_latentMasked_ae",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullTimeRewardBlock_eq_latentMasked_ae",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+    "line": 116,
+    "statement": "theorem twoArmOptimalPullTimeRewardBlock_eq_latentMasked_ae (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (m : Nat) : (fun sample : UCB.ArmRewardStream 2 \u00d7 ((t : Nat) -> Fin 2 \u00d7 Real) => twoArmOptimalPullTimeRewardBlock (Env := Unit) m ((), sample.2)) =\u1d50[ twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta] twoArmLatentMaskedOptimalPullBlock m"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmNativeOptimalPullTimeRewardBlock_map_eq_latentMasked",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmNativeOptimalPullTimeRewardBlock_map_eq_latentMasked",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+    "line": 163,
+    "statement": "theorem twoArmNativeOptimalPullTimeRewardBlock_map_eq_latentMasked (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (m : Nat) : letI : IsMarkovKernel (UCB.finiteArmRealRewardKernel armLaw) := UCB.finiteArmRealRewardKernel_isMarkov armLaw hprob Measure.map (fun trajectory : (t : Nat) -> Fin 2 \u00d7 Real => twoArmOptimalPullTimeRewardBlock (Env := Unit) m ((), trajectory)) (Thompson.nativeStationaryTrajectoryMeasure (historyAlgorithm (fun _ : Fin 2 => 0) eta) (UCB.finiteArmRealRewardKernel armLaw)) = Measure.map (twoArmLatentMaskedOptimalPullBlock m) (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta)"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmFixedIIDTrajectoryMeasure_map_snd_eq_nativeStationary",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_map_snd_eq_nativeStationary",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+    "line": 212,
+    "statement": "theorem twoArmFixedIIDTrajectoryMeasure_map_snd_eq_nativeStationary (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) : letI : IsMarkovKernel (UCB.finiteArmRealRewardKernel armLaw) := UCB.finiteArmRealRewardKernel_isMarkov armLaw hprob (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)).map Prod.snd = Thompson.nativeStationaryTrajectoryMeasure (historyAlgorithm (fun _ : Fin 2 => 0) eta) (UCB.finiteArmRealRewardKernel armLaw)"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+    "line": 275,
+    "statement": "theorem twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (m : Nat) : Measure.map (twoArmOptimalPullTimeRewardBlock (Env := Unit) m) (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)) = Measure.map (twoArmLatentMaskedOptimalPullBlock m) (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta)"
   },
   {
     "kind": "def",
@@ -94962,6 +95014,29 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "verifier_evidence": [
       "independent semantic review found no P0/P1 Lean issue; 8/8 #check and 8/8 #print axioms",
       "focused source/canary and lake build passed; repository integration gate passed after deterministic test fix"
+    ]
+  },
+  {
+    "changed_files": [
+      "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "Tests/StochasticGradientBanditTheoremTwoSelectedIIDCanary.lean",
+      "BanditRLProof.lean",
+      "Tests.lean"
+    ],
+    "kind": "build",
+    "lean": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked",
+    "notes": "Compiled an eight-public-declaration missing-pull-aware finite selected-block transport. The native and source-shaped generated pull-time/reward block law equals a masked latent-coupling law. This is not a product/IID theorem; phase-event transport, future/no-return, ballot/asymptotic assembly, and Theorem 2 remain open.",
+    "parent_id": "",
+    "role": "lower",
+    "route_fingerprint": "",
+    "run_id": "sgb-theorem2-selected-block-transport-round23-2026-09-01",
+    "source": "PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB",
+    "statement_hash": "3cd95a6380a8a418610fb91e0dd4e3be4afc43be4a1a1bfea25ba8516e566634",
+    "status": "compiled",
+    "task": "PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE",
+    "time": "2026-08-31T19:57:57+00:00",
+    "verifier_evidence": [
+      "focused source and canary build passed; statement fence safe-verify true; endpoint axiom print contains only propext/Classical.choice/Quot.sound"
     ]
   }
 ]

@@ -1507,6 +1507,22 @@
       ]
     },
     {
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked",
+      "chapter": "frontier",
+      "plain": "On the source-shaped generated two-arm SGB process, every finite block of optimal-arm pull times and observed rewards has exactly the law of a missing-pull-aware block on the latent coupling.",
+      "math": "\\(\\mathcal L((\\tau_i,Y_{\\tau_i})_{i<m})=\\mathcal L((\\tau_i,\\widetilde Y_i^{\\mathrm{mask}})_{i<m}).\\)",
+      "intuition": "When the ith optimal-arm pull occurs, its reward is the ith coordinate of the pre-sampled optimal-arm stream. If that pull never occurs, the theorem keeps the missing time and the stopped fallback visible instead of silently inventing an IID observation.",
+      "why": "This is the first source-facing finite selected-block transport after complete visible/native law equality. It exposes the exact dependence boundary that the Appendix-C phase event must respect.",
+      "position": "This eight-declaration module is compiled. Its right-hand side is a masked coupling law, not the unmasked product law and not a selected-IID theorem. Phase-event transport, future/no-return, ballot/asymptotic assembly, and Theorem 2 remain open.",
+      "proof_idea": "Package each pull time with its stopped reward, use the almost-sure nth-pull latent-coordinate readout at every finite block coordinate, transport the block through complete visible/native trajectory-law equality, and normalize the Unit-environment source trajectory to the native stationary process.",
+      "lean_notes": "The `WithTop Nat` time coordinate keeps missing pulls explicit. The canary checks all eight public declarations and prints only the baseline axioms propext, Classical.choice, and Quot.sound for the transport endpoints.",
+      "dependencies": [
+        "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullReward_eq_latentCoordinate_ae",
+        "BanditRLProof.Thompson.latentArmStreamVisibleTrajectoryMeasure_eq_native",
+        "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure_map_optimalPrefix_eq_pi"
+      ]
+    },
+    {
       "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral",
       "chapter": "frontier",
       "plain": "On the canonical generated fixed-IID trajectory, the exact regret charge of a measurable fixed-cutoff starvation event times its probability is no larger than expected sampled pseudo-regret.",
@@ -1515,7 +1531,7 @@
       "why": "This isolates the deterministic consumer at Appendix-C Step 1 without hiding the still-missing probability producer behind a theorem-shaped premise.",
       "position": "This named declaration is a compiled source-shaped consumer, not a partial closure of Theorem 2. The frozen K = 2 terminal remains blocked.",
       "proof_idea": "Make the trigger and final-count event measurable, identify two-arm sampled regret with Delta times suboptimal pulls, prove the exact Delta(T-n) charge on the event, and compare the integral of its indicator with total expected regret.",
-      "lean_notes": "The event uses an externally fixed chronological cutoff. Separate compiled modules construct the random nth-pull stopping prefix, prove the latent fixed-arm product/readout layer, factor a finite stream-box/visible-prefix mixture, establish target-by-target branch products, aggregate them into deterministic-time one-step selected-reward freshness, and prove complete visible/native trajectory-law equality. Stopped block transport and composition with this consumer remain open. No module yet proves conditional no-return probability >= 1/2, the Rademacher/binomial ballot phase, or the polynomial asymptotic lower bound.",
+      "lean_notes": "The event uses an externally fixed chronological cutoff. Separate compiled modules construct the random nth-pull stopping prefix, prove the latent fixed-arm product/readout layer, establish deterministic-time freshness and complete visible/native trajectory-law equality, and transport finite pull-time/reward blocks to a missing-pull-aware masked latent law. Exact phase-event composition with this consumer remains open. No module yet proves conditional no-return probability >= 1/2, the Rademacher/binomial ballot phase, or the polynomial asymptotic lower bound.",
       "dependencies": [
         "BanditRLProof.StochasticGradientBandit.twoArmStepOneStarvationEvent_charge_mul_probability_le_integral",
         "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmStepOneStarvationEvent",

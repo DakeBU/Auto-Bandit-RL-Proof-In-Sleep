@@ -817,11 +817,15 @@ def verify_claim_ledger():
             "source_theorem_two_native_prefix_identification_compiled"
         ) is not False
         or sgb.get("separate_compiled_native_law_declaration_count") != 10
+        or sgb.get("separate_compiled_selected_block_declaration_count") != 8
         or sgb.get(
             "separate_module_theorem_two_native_prefix_identification_compiled"
         ) is not True
         or sgb.get(
             "separate_module_theorem_two_native_trajectory_compiled"
+        ) is not True
+        or sgb.get(
+            "separate_module_theorem_two_selected_block_transport_compiled"
         ) is not True
         or sgb.get("source_theorem_two_status") != "blocked"
         or sgb.get("source_theorem_two_endpoint_verified") is not False
@@ -835,16 +839,17 @@ def verify_claim_ledger():
     required_scope_boundaries = (
         "deterministic-time one-step selected-reward freshness",
         "separate ten-declaration native-law module",
-        "complete visible/native trajectory measures",
+        "complete visible/native trajectory-law identity",
+        "separate eight-declaration selected-block module",
+        "missing-pull-aware masked latent law",
         "stopped or pull-ordered selected IID",
+        "all-pulls-present phase event",
         "stopped-prefix future-cylinder",
         "conditional no-return probability >= 1/2",
         "Rademacher/binomial ballot phase",
         "asymptotic terminal",
         "does not make totalized or occurrence-conditioned stopped rewards IID",
-        "unconditional branchwise product law",
-        "not composed with the fixed-cutoff consumer",
-        "Theorem-2 center therefore remains blocked",
+        "frozen K = 2 Theorem-2 endpoint remain blocked",
     )
     if (
         len(sgb_table_rows) != 1
@@ -989,6 +994,13 @@ def verify_theorem_audit_comparison():
             "theorem_two_unconditional_branch_product_compiled": True,
             "theorem_two_freshness_compiled": True,
             "theorem_two_visible_marginal_freshness_compiled": True,
+            "separate_compiled_native_law_declaration_count": 10,
+            "separate_compiled_selected_block_declaration_count": 8,
+            "separate_module_theorem_two_native_prefix_identification_compiled":
+                True,
+            "separate_module_theorem_two_native_trajectory_compiled": True,
+            "separate_module_theorem_two_selected_block_transport_compiled":
+                True,
             "theorem_two_native_prefix_identification_compiled": False,
             "declaration_count_breakdown": {
                 "finite_action_algebra": 26,
@@ -1051,6 +1063,28 @@ def verify_theorem_audit_comparison():
             fail("theorem-audit comparison declaration overlap drift for " + row_id)
         if any(name not in index_names for name in evidence_names):
             fail("theorem-audit comparison references an unindexed declaration")
+        if row_id == "stochastic-gradient-bandit-source-frozen-audit":
+            selected_block_file = (
+                "BanditRLProof/Algorithms/"
+                "StochasticGradientBanditTheoremTwoSelectedIID.lean"
+            )
+            selected_block_names = {
+                item.get("full_name")
+                for item in index.get("declarations", [])
+                if item.get("file") == selected_block_file
+            }
+            expected_selected_block_names = {
+                "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullTimeRewardBlock",
+                "BanditRLProof.StochasticGradientBandit.measurable_twoArmOptimalPullTimeRewardBlock",
+                "BanditRLProof.StochasticGradientBandit.twoArmLatentMaskedOptimalPullBlock",
+                "BanditRLProof.StochasticGradientBandit.measurable_twoArmLatentMaskedOptimalPullBlock",
+                "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullTimeRewardBlock_eq_latentMasked_ae",
+                "BanditRLProof.StochasticGradientBandit.twoArmNativeOptimalPullTimeRewardBlock_map_eq_latentMasked",
+                "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_map_snd_eq_nativeStationary",
+                "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked",
+            }
+            if selected_block_names != expected_selected_block_names:
+                fail("separate SGB selected-block declaration inventory drift")
         if spec["role"] == "source_frozen_external_audit":
             expected_endpoint_verified = (
                 row_id == "stochastic-gradient-bandit-source-frozen-audit"
@@ -1073,20 +1107,25 @@ def verify_theorem_audit_comparison():
                 not in row.get("scope_boundary", "")
                 or "deterministic-time one-step freshness"
                 not in row.get("scope_boundary", "")
-                or "A separate ten-declaration module now proves every native-prefix identity"
+                or "A separate ten-declaration module proves every native-prefix identity"
                 not in row.get("scope_boundary", "")
                 or "equality of the complete visible/native trajectory measures by projective-limit uniqueness"
                 not in row.get("scope_boundary", "")
-                or "None of these results makes totalized stopped rewards or occurrence-conditioned rewards IID"
+                or "A further eight-declaration module transports the exact finite observable pull-time/reward block to a masked latent law"
+                not in row.get("scope_boundary", "")
+                or "neither supplies a product law nor makes totalized or occurrence-conditioned rewards IID"
+                not in row.get("scope_boundary", "")
+                or "Phase-event transport"
                 not in row.get("scope_boundary", "")
                 or "ballot phase"
                 not in row.get("scope_boundary", "")
                 or "asymptotic terminal remain blocked"
                 not in row.get("scope_boundary", "")
                 or not any(
-                    "full visible/native trajectory-law equality" in item
-                    and "stopped or pull-ordered selected IID" in item
+                    "all-pulls-present Appendix-C phase event" in item
                     and "stopped-prefix future-cylinder" in item
+                    and "ballot phase" in item
+                    and "asymptotic assembly" in item
                     for item in row.get("blocking_obligations", [])
                 )
             ):

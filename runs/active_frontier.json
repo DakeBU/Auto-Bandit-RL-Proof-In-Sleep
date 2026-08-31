@@ -1,31 +1,31 @@
 {
   "schema_version": 1,
-  "record_id": "frontier-4bf0698c3e7449bd",
-  "updated_at": "2026-08-31T16:53:50+00:00",
+  "record_id": "frontier-48e5afca1f74e7be",
+  "updated_at": "2026-08-31T19:58:24+00:00",
   "root_objective": "Compile the exact K=2 SGB Theorem 2 route without weakening the frozen source contract, then synchronize only verified evidence into the ICLR and arXiv papers.",
   "current_leaf": {
-    "id": "SGB-T2-SELECTED-BLOCK-TRANSPORT",
+    "id": "SGB-T2-PHASE-EVENT-TRANSPORT",
     "kind": "lean",
     "status": "ready",
-    "statement": "Transport the finite latent fixed-arm reward-block product and finite nth-pull readout across the compiled full visible/native trajectory-law equality into a target-faithful finite pull-ordered reward-block law on the native process; keep the WithTop missing-pull boundary explicit and do not assume totalized stopped IID, future/no-return, ballot/asymptotic assembly, or Theorem 2.",
-    "statement_hash": "bdd41f6706edc4f5f61f38e38deb879b3f45c3a61cb2604f0638c66baa3ccfaf",
+    "statement": "Define the exact finite Appendix-C optimal-arm latent phase event together with an explicit all-pulls-present occurrence boundary, transport that event to the source-shaped generated two-arm trajectory through the compiled masked selected-block law, and do not infer product/IID after occurrence conditioning or assume future/no-return, ballot/asymptotic assembly, or Theorem 2.",
+    "statement_hash": "81c22b3cd590d378bc38f3d6225a166c2fc156fda576d3f033e73ddaf81a4855",
     "declaration": "",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
-    "source_status": "Round 21 compiles equality of the full visible latent marginal and native fixed-IID SGB trajectory measure. Finite pull-ordered selected-reward block transport, stopped IID, random-time future/no-return, ballot/asymptotic assembly, and Theorem 2 remain open.",
+    "source_status": "Round 23 compiles the exact finite pull-time/reward block law as a missing-pull-aware masked latent-coupling pushforward on both native and source-shaped generated trajectories. The unmasked latent prefix product law is separate; occurrence-conditioned selected IID, the Appendix-C phase event, future/no-return, ballot/asymptotic assembly, and Theorem 2 remain open.",
     "dependencies": [
       {
         "kind": "lean",
-        "name": "BanditRLProof.Thompson.latentArmStreamVisibleTrajectoryMeasure_eq_native",
+        "name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked",
+        "status": "compiled"
+      },
+      {
+        "kind": "lean",
+        "name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure_map_optimalPrefix_eq_pi",
         "status": "compiled"
       },
       {
         "kind": "lean",
         "name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullReward_eq_latentCoordinate_ae",
-        "status": "compiled"
-      },
-      {
-        "kind": "lean",
-        "name": "BanditRLProof.UCB.armStreamMeasure_map_fixedArmFinitePrefix_eq_pi",
         "status": "compiled"
       }
     ]
@@ -33,23 +33,23 @@
   "dag": {
     "nodes": [
       {
-        "id": "SGB-T2-SELECTED-BLOCK-TRANSPORT",
+        "id": "SGB-T2-PHASE-EVENT-TRANSPORT",
         "kind": "lean",
         "status": "ready",
         "dependencies": [
           {
             "kind": "lean",
-            "name": "BanditRLProof.Thompson.latentArmStreamVisibleTrajectoryMeasure_eq_native",
+            "name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked",
+            "status": "compiled"
+          },
+          {
+            "kind": "lean",
+            "name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure_map_optimalPrefix_eq_pi",
             "status": "compiled"
           },
           {
             "kind": "lean",
             "name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullReward_eq_latentCoordinate_ae",
-            "status": "compiled"
-          },
-          {
-            "kind": "lean",
-            "name": "BanditRLProof.UCB.armStreamMeasure_map_fixedArmFinitePrefix_eq_pi",
             "status": "compiled"
           }
         ],
@@ -58,28 +58,28 @@
     ]
   },
   "last_accepted_verifier": {
-    "trial_index": 335,
-    "time": "2026-08-28T09:40:18+00:00",
+    "trial_index": 336,
+    "time": "2026-08-31T19:57:57+00:00",
     "task": "PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE",
-    "role": "reviewer",
-    "kind": "review",
-    "status": "accepted",
-    "lean": "BanditRLProof.Thompson.latentArmStreamVisibleTrajectoryMeasure_nextReward_condDistrib_ae_eq_nu",
-    "notes": "Independent read-only review accepted the acyclic measurable-branch-aggregation-readout proof chain, its deterministic-time indexing, sub-Markov branch handling, and baseline axioms. It did not promote the result to native-prefix or full native-trajectory equality, selected/stopped IID, future/no-return, ballot/asymptotic assembly, or Theorem 2.",
-    "run_id": "sgb-theorem2-selected-freshness-aggregation-round19-2026-08-28"
+    "role": "lower",
+    "kind": "build",
+    "status": "compiled",
+    "lean": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked",
+    "notes": "Compiled an eight-public-declaration missing-pull-aware finite selected-block transport. The native and source-shaped generated pull-time/reward block law equals a masked latent-coupling law. This is not a product/IID theorem; phase-event transport, future/no-return, ballot/asymptotic assembly, and Theorem 2 remain open.",
+    "run_id": "sgb-theorem2-selected-block-transport-round23-2026-09-01"
   },
   "memory_policy": {
     "recent_role_relevant_limit": 5,
     "explicit_verified_lemma_ids": [
-      "mem-93eea77c93da9dce"
+      "mem-126613788b69addd"
     ],
     "whole_history_default": false
   },
   "shadow_gate": {
     "status": "passed",
-    "analyzed_trial_rows": 336,
+    "analyzed_trial_rows": 337,
     "mismatches": [],
-    "replay_transitions": 3
+    "replay_transitions": 4
   },
   "mutation_policy": {
     "canonical_path_queue": true,

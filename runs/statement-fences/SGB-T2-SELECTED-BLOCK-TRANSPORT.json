@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked",
+  "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+  "statement": "theorem twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (m : Nat) : Measure.map (twoArmOptimalPullTimeRewardBlock (Env := Unit) m) (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)) = Measure.map (twoArmLatentMaskedOptimalPullBlock m) (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta)",
+  "statement_hash": "3cd95a6380a8a418610fb91e0dd4e3be4afc43be4a1a1bfea25ba8516e566634",
+  "source_assumptions": [
+    "(hprob : forall arm, IsProbabilityMeasure (armLaw arm))",
+    "(eta : Real) (m : Nat)"
+  ],
+  "created_at": "2026-08-31T19:46:15+00:00"
+}

@@ -240,6 +240,10 @@ SGB_THEOREM_TWO_NATIVE_LAW_FILE = (
     "BanditRLProof/Algorithms/"
     "StochasticGradientBanditTheoremTwoNativePrefix.lean"
 )
+SGB_THEOREM_TWO_SELECTED_BLOCK_FILE = (
+    "BanditRLProof/Algorithms/"
+    "StochasticGradientBanditTheoremTwoSelectedIID.lean"
+)
 SGB_THEOREM_TWO_BRANCH_LOCALITY_GENERIC_BRIDGE_FILE = (
     "BanditRLProof/KernelIndependentExtension.lean"
 )
@@ -280,6 +284,17 @@ SGB_THEOREM_TWO_NATIVE_LAW_INDEXED_DECLARATIONS = frozenset({
     "BanditRLProof.Thompson.nativeStationaryTrajectoryMeasure",
     "BanditRLProof.Thompson.latentArmStreamVisibleTrajectoryMeasure_map_frestrictLe_eq_native",
     "BanditRLProof.Thompson.latentArmStreamVisibleTrajectoryMeasure_eq_native",
+})
+SGB_THEOREM_TWO_SELECTED_BLOCK_SOURCE_DECLARATION_COUNT = 8
+SGB_THEOREM_TWO_SELECTED_BLOCK_INDEXED_DECLARATIONS = frozenset({
+    "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullTimeRewardBlock",
+    "BanditRLProof.StochasticGradientBandit.measurable_twoArmOptimalPullTimeRewardBlock",
+    "BanditRLProof.StochasticGradientBandit.twoArmLatentMaskedOptimalPullBlock",
+    "BanditRLProof.StochasticGradientBandit.measurable_twoArmLatentMaskedOptimalPullBlock",
+    "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullTimeRewardBlock_eq_latentMasked_ae",
+    "BanditRLProof.StochasticGradientBandit.twoArmNativeOptimalPullTimeRewardBlock_map_eq_latentMasked",
+    "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_map_snd_eq_nativeStationary",
+    "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked",
 })
 SGB_TOTAL_DECLARATION_COUNT = (
     SGB_HISTORICAL_DECLARATION_COUNT
@@ -2534,9 +2549,13 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
             "theorem_two_visible_marginal_freshness_compiled": True,
             "separate_compiled_native_law_declaration_count":
                 SGB_THEOREM_TWO_NATIVE_LAW_SOURCE_DECLARATION_COUNT,
+            "separate_compiled_selected_block_declaration_count":
+                SGB_THEOREM_TWO_SELECTED_BLOCK_SOURCE_DECLARATION_COUNT,
             "separate_module_theorem_two_native_prefix_identification_compiled":
                 True,
             "separate_module_theorem_two_native_trajectory_compiled": True,
+            "separate_module_theorem_two_selected_block_transport_compiled":
+                True,
             "theorem_two_native_prefix_identification_compiled": False,
             "declaration_count_breakdown": {
                 "finite_action_algebra": SGB_FINITE_ALGEBRA_DECLARATION_COUNT,
@@ -2644,6 +2663,27 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
                 raise ValueError(
                     "separate SGB native-law module declaration drift"
                 )
+            selected_block_names = {
+                index_row["full_name"]
+                for index_row in index.get("declarations", [])
+                if index_row.get("file") == SGB_THEOREM_TWO_SELECTED_BLOCK_FILE
+            }
+            selected_block_source = read_regular(
+                SGB_THEOREM_TWO_SELECTED_BLOCK_FILE
+            ).decode("utf-8")
+            selected_block_source_count = len(re.findall(
+                r"(?m)^(?:def|theorem|instance)\s+",
+                selected_block_source,
+            ))
+            if (
+                selected_block_names !=
+                    SGB_THEOREM_TWO_SELECTED_BLOCK_INDEXED_DECLARATIONS
+                or selected_block_source_count !=
+                    SGB_THEOREM_TWO_SELECTED_BLOCK_SOURCE_DECLARATION_COUNT
+            ):
+                raise ValueError(
+                    "separate SGB selected-block module declaration drift"
+                )
         central = records[spec["central_endpoint_record_id"]]
         if spec["role"] == "source_frozen_external_audit":
             expected_endpoint_verified = (
@@ -2669,20 +2709,25 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
                 not in row.get("scope_boundary", "")
                 or "deterministic-time one-step freshness"
                 not in row.get("scope_boundary", "")
-                or "A separate ten-declaration module now proves every native-prefix identity"
+                or "A separate ten-declaration module proves every native-prefix identity"
                 not in row.get("scope_boundary", "")
                 or "equality of the complete visible/native trajectory measures by projective-limit uniqueness"
                 not in row.get("scope_boundary", "")
-                or "None of these results makes totalized stopped rewards or occurrence-conditioned rewards IID"
+                or "A further eight-declaration module transports the exact finite observable pull-time/reward block to a masked latent law"
+                not in row.get("scope_boundary", "")
+                or "neither supplies a product law nor makes totalized or occurrence-conditioned rewards IID"
+                not in row.get("scope_boundary", "")
+                or "Phase-event transport"
                 not in row.get("scope_boundary", "")
                 or "ballot phase"
                 not in row.get("scope_boundary", "")
                 or "asymptotic terminal remain blocked"
                 not in row.get("scope_boundary", "")
                 or not any(
-                    "full visible/native trajectory-law equality" in item
-                    and "stopped or pull-ordered selected IID" in item
+                    "all-pulls-present Appendix-C phase event" in item
                     and "stopped-prefix future-cylinder" in item
+                    and "ballot phase" in item
+                    and "asymptotic assembly" in item
                     for item in row.get("blocking_obligations", [])
                 )
             ):
@@ -2835,7 +2880,13 @@ def build_claim_ledger(proof_report):
                 "artifact": "Stochastic-gradient-bandit Theorem 1, Corollary 1, and blocked Theorem-2 follow-on",
                 "status": "partial",
                 "source_record_ids": [SGB_AUDIT_ID, SGB_FOLLOW_ON_ID],
-                "boundary": "352 declarations preserve the historical 223 = 215-declaration Theorem-1 stack + 8 Appendix-E/Theorem-4 contract leaves, then add a 23-declaration compiled Corollary-1 bounded companion, an 18-declaration deterministic Appendix-C Step-1 starvation consumer, a 24-declaration chronological nth-pull bridge, a 7-declaration latent fixed-arm product/readout layer, an 8-declaration deferred-decisions prefix factorization, a 13-declaration action/readout/branch-locality interface and count-cap scaffold, a 28-declaration count-capped branch-locality producer, and an 8-declaration selected-reward aggregation/readout layer. Corollary 1 is a direct Theorem-1 consumer for T >= 2 and eta_T = sqrt(log T / T), not independent Theorem-2 evidence. The nth-pull layer proves a zero-based WithTop stopping time, exact finite count/action identification, and measurable stopped reward and post-pull probability. The latent layer proves an unconditional finite product law for fixed-arm coordinates and almost-sure readout at every finite nth pull. The prefix layer proves stream-box product, visible-prefix kernel-law locality, a Markov visible-prefix kernel, and their exact finite mixture. Round 17 compiled next-action factorization, pathwise selected-coordinate support, a conditional branch-product consumer, and count-cap scaffold declarations. Round 18 proves the generic safe-fiber semidirect-product restriction bridge, the count-cap base and successor induction, the exact branch-locality contract, and the unconditional branchwise product law. Round 19 sums the countable pull-count/arm branches, transports the result through the coupling, consumes the a.e. reward readout, and proves deterministic-time one-step selected-reward freshness on both the coupling and its visible marginal. A separate ten-declaration native-law module now proves every native-prefix identity and equality of the complete visible/native trajectory measures by projective-limit uniqueness; it remains outside the frozen 352-declaration audit ledger. This layer does not make totalized or occurrence-conditioned stopped rewards IID. These layers are not composed with the fixed-cutoff consumer; stopped or pull-ordered selected IID, the stopped-prefix future-cylinder, conditional no-return probability >= 1/2, Rademacher/binomial ballot phase, and asymptotic terminal remain blocked. The frozen K = 2 Theorem-2 center therefore remains blocked. Theorem 4 also remains open. Dirac refers only to the Unit environment prior, not to the arm reward laws.",
+                "boundary": (
+                    "352 declarations preserve the frozen counted audit slice through deterministic-time one-step selected-reward freshness. "
+                    "A separate ten-declaration native-law module proves the complete visible/native trajectory-law identity, and a separate eight-declaration selected-block module transports every finite pull-time/reward block to an exact missing-pull-aware masked latent law on both native and source-shaped generated trajectories. "
+                    "The mask retains the stopped fallback when a pull is absent; it therefore does not make totalized or occurrence-conditioned stopped rewards IID, and it is not a stopped or pull-ordered selected IID theorem. "
+                    "The all-pulls-present phase event, stopped-prefix future-cylinder, conditional no-return probability >= 1/2, Rademacher/binomial ballot phase, asymptotic terminal, and the frozen K = 2 Theorem-2 endpoint remain blocked. "
+                    "Theorem 4 also remains open. Dirac refers only to the Unit environment prior, not to the arm reward laws."
+                ),
             },
             {
                 "artifact": "Proof graph / curvature--noise--gap",
@@ -3020,6 +3071,10 @@ def build_claim_ledger(proof_report):
                 sgb_comparison[
                     "separate_compiled_native_law_declaration_count"
                 ],
+            "separate_compiled_selected_block_declaration_count":
+                sgb_comparison[
+                    "separate_compiled_selected_block_declaration_count"
+                ],
             "separate_module_theorem_two_native_prefix_identification_compiled":
                 sgb_comparison[
                     "separate_module_theorem_two_native_prefix_identification_compiled"
@@ -3027,6 +3082,10 @@ def build_claim_ledger(proof_report):
             "separate_module_theorem_two_native_trajectory_compiled":
                 sgb_comparison[
                     "separate_module_theorem_two_native_trajectory_compiled"
+                ],
+            "separate_module_theorem_two_selected_block_transport_compiled":
+                sgb_comparison[
+                    "separate_module_theorem_two_selected_block_transport_compiled"
                 ],
             "source_theorem_two_status": "blocked",
             "source_theorem_two_endpoint_verified":
