@@ -834,14 +834,16 @@ class AnonymousSupplementTests(unittest.TestCase):
         for missing_bridge in (
             "deterministic-time one-step selected-reward freshness",
             "separate ten-declaration native-law module",
-            "complete visible/native trajectory measures",
+            "complete visible/native trajectory-law identity",
+            "separate eight-declaration selected-block module",
+            "missing-pull-aware masked latent law",
             "stopped or pull-ordered selected IID",
+            "all-pulls-present phase event",
             "stopped-prefix future-cylinder",
             "conditional no-return probability >= 1/2",
             "Rademacher/binomial ballot phase",
             "asymptotic terminal",
             "does not make totalized or occurrence-conditioned stopped rewards IID",
-            "unconditional branchwise product law",
         ):
             self.assertIn(missing_bridge, sgb_row["boundary"])
         self.assertTrue(
@@ -869,6 +871,12 @@ class AnonymousSupplementTests(unittest.TestCase):
             ],
             10,
         )
+        self.assertEqual(
+            ledger["stochastic_gradient_bandit"][
+                "separate_compiled_selected_block_declaration_count"
+            ],
+            8,
+        )
         self.assertTrue(
             ledger["stochastic_gradient_bandit"][
                 "separate_module_theorem_two_native_prefix_identification_compiled"
@@ -877,6 +885,11 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertTrue(
             ledger["stochastic_gradient_bandit"][
                 "separate_module_theorem_two_native_trajectory_compiled"
+            ]
+        )
+        self.assertTrue(
+            ledger["stochastic_gradient_bandit"][
+                "separate_module_theorem_two_selected_block_transport_compiled"
             ]
         )
         self.assertTrue(
@@ -1013,7 +1026,26 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertTrue(sgb["theorem_two_unconditional_branch_product_compiled"])
         self.assertTrue(sgb["theorem_two_freshness_compiled"])
         self.assertTrue(sgb["theorem_two_visible_marginal_freshness_compiled"])
+        self.assertEqual(
+            sgb["separate_compiled_selected_block_declaration_count"], 8
+        )
+        self.assertTrue(
+            sgb["separate_module_theorem_two_selected_block_transport_compiled"]
+        )
         self.assertFalse(sgb["theorem_two_native_prefix_identification_compiled"])
+
+        selected_block_names = {
+            row["full_name"]
+            for row in BUILDER.load_json(
+                BUILDER.REPO_ROOT / "research-wiki" / "retrieval-index" /
+                "local_lean_declarations.json"
+            )["declarations"]
+            if row.get("file") == BUILDER.SGB_THEOREM_TWO_SELECTED_BLOCK_FILE
+        }
+        self.assertEqual(
+            selected_block_names,
+            BUILDER.SGB_THEOREM_TWO_SELECTED_BLOCK_INDEXED_DECLARATIONS,
+        )
 
     def test_theorem_audit_comparison_rejects_status_and_count_drift(self):
         records = BUILDER.selected_source_records()
@@ -1058,6 +1090,18 @@ class AnonymousSupplementTests(unittest.TestCase):
         ):
             BUILDER.validate_theorem_audit_comparison(
                 records, index, comparison=theorem_two_endpoint_drift
+            )
+
+        selected_block_count_drift = json.loads(json.dumps(source))
+        selected_block_count_drift["rows"][3][
+            "separate_compiled_selected_block_declaration_count"
+        ] = 9
+        with self.assertRaisesRegex(
+            ValueError,
+            "separate_compiled_selected_block_declaration_count drift",
+        ):
+            BUILDER.validate_theorem_audit_comparison(
+                records, index, comparison=selected_block_count_drift
             )
 
         declaration_drift_records = json.loads(json.dumps(records))

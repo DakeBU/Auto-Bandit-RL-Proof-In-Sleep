@@ -2,7 +2,7 @@
 
 Task: `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE`
 
-Status: `target-frozen; Corollary 1 compiled; Theorem 2 blocked after compiled nth-pull, latent-product/readout, deferred-decisions finite-prefix factorization, action/readout interface, count-capped branch locality, one-step selected-reward freshness, native-prefix identification, full native visible-law equality, and deterministic-starvation milestones`
+Status: `target-frozen; Corollary 1 compiled; Theorem 2 blocked after compiled nth-pull, latent-product/readout, deferred-decisions finite-prefix factorization, action/readout interface, count-capped branch locality, one-step selected-reward freshness, native-prefix identification, full native visible-law equality, missing-pull-aware selected-block transport, and deterministic-starvation milestones`
 
 ## Source-to-Lean fence
 
@@ -266,6 +266,30 @@ obligation is discharged by the Round-19 packet below.
   lemma, source assumption, selected-IID premise, random-time future law, or
   theorem-endpoint promotion was introduced.
 
+## Round-23 retrieval packet: missing-pull-aware selected-block transport
+
+- Reused compiled endpoints:
+  `twoArmNthOptimalPullReward_eq_latentCoordinate_ae`,
+  `twoArmFixedIIDLatentTrajectoryMeasure_map_optimalPrefix_eq_pi`, and
+  `latentArmStreamVisibleTrajectoryMeasure_eq_native`.
+- Compiled observable: `twoArmOptimalPullTimeRewardBlock m` records, for every
+  `i : Fin m`, both the `WithTop Nat` time of the `i`th optimal-arm pull and
+  the stopped reward readout.
+- Compiled comparison law: `twoArmLatentMaskedOptimalPullBlock m` replaces the
+  reward by latent arm-`0` coordinate `i` only when the pull time is finite; at
+  `top` it retains the stopped-value fallback.  The source and native generated
+  block laws equal the pushforward of this masked coupling.
+- Endpoint:
+  `twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked`.
+  Its statement fence preserves the probability-law and finite-block
+  assumptions, and its canary reports only the baseline axioms `propext`,
+  `Classical.choice`, and `Quot.sound`.
+- Boundary: the separately compiled unmasked latent prefix has a product law,
+  but this masked selected block is not claimed product-distributed or IID.
+  The next producer must formulate the exact Appendix-C phase event together
+  with the all-pulls-present occurrence boundary; it may not condition away
+  dependence created by adaptive selection.
+
 ## Pivot rules
 
 - Do not replace the nth-pull law with an IID premise on the selected reward
@@ -276,6 +300,7 @@ obligation is discharged by the Round-19 packet below.
 - Compiled Corollary 1, nth-pull, latent-product/readout, finite-prefix
   factorization, action/readout interface, count-cap branch-locality producer,
   unconditional branch-product law, one-step selected-reward freshness,
-  native-prefix identification, full native visible-law equality, and
+  native-prefix identification, full native visible-law equality,
+  missing-pull-aware selected-block transport, and
   deterministic-starvation milestones do not compile the
   frozen Theorem 2 terminal; that terminal remains `blocked`.

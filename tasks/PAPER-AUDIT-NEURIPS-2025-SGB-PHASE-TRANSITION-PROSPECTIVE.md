@@ -119,15 +119,21 @@ evidence states:
 7. **Compiled native-law half:** identify the visible marginal with the native
    fixed-IID SGB prefix law and extend those identities to the complete native
    visible law by projective-limit uniqueness.
-8. **Blocked selected-law half:** transport the latent phase event and source
-   embedded-chain recurrence.  Deterministic-time one-step conditional
-   freshness plus full visible-law equality still does not by itself imply a
-   pull-ordered or stopped selected-reward IID theorem.
-9. Compile Appendix-C Step 1: if the optimal-arm probability after its `n`th
+8. **Compiled missing-pull-aware block transport:** the first `m` observable
+   optimal-arm pull records, including each `WithTop Nat` pull time, have
+   exactly the law of the corresponding masked latent-coupling block on both
+   the native stationary process and the source-shaped generated trajectory.
+   The mask retains the stopped-value fallback at `top`; the right-hand side is
+   therefore not promoted to a product or selected-IID law.
+9. **Blocked phase-event transport:** define the exact Appendix-C latent phase
+   event together with the all-pulls-present boundary, and transport the event
+   to the source generated process without conditioning away the adaptive
+   occurrence dependence.
+10. Compile Appendix-C Step 1: if the optimal-arm probability after its `n`th
    pull is at most `1/(2*T)`, the conditional probability of no further
    optimal-arm pull over the remaining horizon is at least `1/2`, yielding
    the exact starvation regret charge.
-10. Build the `S0`/`S1` phase producer: latent IID reward-block law plus its
+11. Build the `S0`/`S1` phase producer: latent IID reward-block law plus its
    native-process transport, Rademacher anti-concentration, ballot-prefix
    constraint, and the
    deterministic implication into the starvation event.
@@ -232,7 +238,15 @@ evidence that the polynomial lower-bound route is complete.
   visible/native probability measures.  The focused module and canary compile,
   and the new theorem uses only the baseline axioms `propext`,
   `Classical.choice`, and `Quot.sound`.
-- Pull-ordered selected-IID transport, conditional no-return probability
+- A separate eight-declaration selected-block module now defines a finite
+  pull-time/reward block with explicit `WithTop Nat` missing-pull coordinates,
+  proves its measurability, identifies it almost surely with a masked latent
+  block, and transports its exact law to both the native stationary process and
+  the source-shaped generated trajectory.  The terminal declaration is
+  `twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked`.
+  The mask deliberately preserves the fallback value when a requested pull is
+  absent, so this is not a product-law or selected-IID theorem.
+- Phase-event transport, a pull-ordered selected-IID theorem, conditional no-return probability
   `>= 1/2`, the Rademacher/ballot phase producer, asymptotic
   assembly, and the frozen Theorem-2 terminal remain uncompiled.  The central
   target therefore remains blocked; the compiled latent product/readout,
@@ -254,6 +268,8 @@ lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeT
 lake env lean Tests/StochasticGradientBanditTheoremTwoNativeTrajectoryCanary.lean
 lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativePrefix.lean
 lake env lean Tests/StochasticGradientBanditTheoremTwoNativePrefixCanary.lean
+lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean
+lake env lean Tests/StochasticGradientBanditTheoremTwoSelectedIIDCanary.lean
 python tools/bandit.py check
 ```
 
