@@ -176,9 +176,9 @@ make totalized or occurrence-conditioned stopped rewards IID.  Eight more
 declarations compile a deferred-decisions finite-prefix factorization: the
 finite stream box has its exact product law, the generated visible prefix is
 local to that box, the visible-prefix kernel is Markov, and the joint finite
-stream-box/visible-prefix law is the exact kernel mixture.  This does not
-identify the mixture's visible marginal with the native fixed-IID prefix or
-establish the native visible law.
+stream-box/visible-prefix law is the exact kernel mixture.  At that round, this
+did not yet identify the mixture's visible marginal with the native fixed-IID
+prefix or establish the native visible law.
 
 Round 17 adds 13 declarations under the deliberately limited label
 **action/readout/branch-locality interface and count-cap scaffold**.  They
@@ -207,6 +207,13 @@ exact joint and `condDistrib` laws on both the coupling and its visible
 trajectory marginal.  This is one-step freshness given the visible prefix and
 selected next action, not a stopped or pull-ordered selected-IID theorem.
 
+A later, separate ten-declaration native-law module defines the stationary
+native process, proves equality of every inclusive finite visible prefix, and
+then proves equality of the complete visible/native trajectory measures by
+projective-limit uniqueness.  This module is compiled and indexed, but remains
+outside the frozen 352-declaration source-audit ledger.  It still does not prove
+that stopped or pull-ordered selected rewards are IID.
+
 The corresponding evidence flags are explicit:
 
 - action factorization: `true`;
@@ -217,18 +224,20 @@ The corresponding evidence flags are explicit:
 - branch-locality producer: `true`;
 - unconditional branch product: `true`;
 - deterministic-time selected-reward freshness: `true`;
-- visible-marginal/native-prefix identification: `false`;
+- frozen-ledger native-prefix identification compatibility field: `false`;
+- separate-module native-prefix identification: `true`;
+- separate-module full visible/native trajectory law: `true`;
 - Theorem-2 endpoint: `false`.
 
 These layers are not yet composed with the fixed-cutoff starvation consumer.
-The exact target-by-target branch products and deterministic-time one-step
-selected-reward freshness compile.  The visible-marginal/native-prefix
-identification, stopped or pull-ordered selected IID, the stopped-prefix
-future-cylinder, conditional no-return probability at least `1/2`, the
-Rademacher/binomial ballot phase, and the polynomial asymptotic terminal remain
-blocked.  The exact `K = 2` Theorem-2 center therefore remains blocked.  The
-complete audit status stays `partial`; Theorem 2 is `blocked`, and Theorems
-3--4 remain uncompiled.
+The exact target-by-target branch products, deterministic-time one-step
+selected-reward freshness, all native-prefix identities, and the complete
+visible/native trajectory law compile.  Stopped or pull-ordered selected IID,
+the stopped-prefix future-cylinder, conditional no-return probability at least
+`1/2`, the Rademacher/binomial ballot phase, and the polynomial asymptotic
+terminal remain blocked.  The exact `K = 2` Theorem-2 center therefore remains
+blocked.  The complete audit status stays `partial`; Theorem 2 is `blocked`,
+and Theorems 3--4 remain uncompiled.
 
 ## Quick verification
 

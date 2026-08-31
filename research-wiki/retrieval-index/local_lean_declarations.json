@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-29T07:27:02+00:00",
+  "generated": "2026-08-31T16:59:29+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -4014,7 +4014,7 @@
       "name": "stationaryRewardHistoryEnvironment",
       "full_name": "BanditRLProof.Thompson.stationaryRewardHistoryEnvironment",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativePrefix.lean",
-      "line": 30,
+      "line": 31,
       "statement": "def stationaryRewardHistoryEnvironment {K : Nat} (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] : HistoryEnvironment (Fin K) Real where"
     },
     {
@@ -4022,7 +4022,7 @@
       "name": "historyStepKernel_stationaryRewardHistoryEnvironment",
       "full_name": "BanditRLProof.Thompson.historyStepKernel_stationaryRewardHistoryEnvironment",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativePrefix.lean",
-      "line": 37,
+      "line": 38,
       "statement": "theorem historyStepKernel_stationaryRewardHistoryEnvironment {K : Nat} (algorithm : HistoryAlgorithm (Fin K) Real) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) : historyStepKernel algorithm (stationaryRewardHistoryEnvironment nu) n = algorithm.policy n \u2297\u2096 UCB.armStreamSelectedRewardKernel n nu"
     },
     {
@@ -4030,7 +4030,7 @@
       "name": "latentArmStreamVisiblePrefixNextPair_eq_compProd",
       "full_name": "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextPair_eq_compProd",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativePrefix.lean",
-      "line": 50,
+      "line": 51,
       "statement": "theorem latentArmStreamVisiblePrefixNextPair_eq_compProd {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) : Measure.map (fun sample : UCB.ArmRewardStream K \u00d7 ((t : Nat) -> Fin K \u00d7 Real) => (Preorder.frestrictLe n sample.2, sample.2 (n + 1))) (latentArmStreamTrajectoryMeasure algorithm env nu) = Measure.map (fun sample : UCB.ArmRewardStream K \u00d7 ((t : Nat) -> Fin K \u00d7 Real) => Preorder.frestrictLe n sample.2) (latentArmStreamTrajectoryMeasure algorithm env nu) \u2297\u2098 historyStepKernel algorithm (stationaryRewardHistoryEnvironment nu) n"
     },
     {
@@ -4038,7 +4038,7 @@
       "name": "latentArmStreamVisibleInitialPair_eq_compProd",
       "full_name": "BanditRLProof.Thompson.latentArmStreamVisibleInitialPair_eq_compProd",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativePrefix.lean",
-      "line": 92,
+      "line": 93,
       "statement": "theorem latentArmStreamVisibleInitialPair_eq_compProd {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] : Measure.map (fun sample : UCB.ArmRewardStream K \u00d7 ((t : Nat) -> Fin K \u00d7 Real) => sample.2 0) (latentArmStreamTrajectoryMeasure algorithm env nu) = algorithm.initialAction \u2297\u2098 nu"
     },
     {
@@ -4046,7 +4046,7 @@
       "name": "trajMeasure_map_eval_zero",
       "full_name": "BanditRLProof.Thompson.trajMeasure_map_eval_zero",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativePrefix.lean",
-      "line": 201,
+      "line": 202,
       "statement": "theorem trajMeasure_map_eval_zero {X : Nat -> Type u} [forall n, MeasurableSpace (X n)] (mu0 : Measure (X 0)) [IsProbabilityMeasure mu0] (kappa : (n : Nat) -> Kernel ((i : Finset.Iic n) -> X i) (X (n + 1))) [forall n, IsMarkovKernel (kappa n)] : (Kernel.trajMeasure mu0 kappa).map (fun x => x 0) = mu0"
     },
     {
@@ -4054,7 +4054,7 @@
       "name": "frestrictLe_succ_eq_extendPairHistorySucc",
       "full_name": "BanditRLProof.Thompson.frestrictLe_succ_eq_extendPairHistorySucc",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativePrefix.lean",
-      "line": 220,
+      "line": 221,
       "statement": "theorem frestrictLe_succ_eq_extendPairHistorySucc {K : Nat} (n : Nat) (x : (t : Nat) -> Fin K \u00d7 Real) : Preorder.frestrictLe (n + 1) x = History.extendPairHistorySucc (Preorder.frestrictLe n x) (x (n + 1))"
     },
     {
@@ -4062,7 +4062,7 @@
       "name": "nativeStationaryTrajectoryMeasure",
       "full_name": "BanditRLProof.Thompson.nativeStationaryTrajectoryMeasure",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativePrefix.lean",
-      "line": 237,
+      "line": 238,
       "statement": "def nativeStationaryTrajectoryMeasure {K : Nat} (algorithm : HistoryAlgorithm (Fin K) Real) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] : Measure ((n : Nat) -> Fin K \u00d7 Real)"
     },
     {
@@ -4070,8 +4070,16 @@
       "name": "latentArmStreamVisibleTrajectoryMeasure_map_frestrictLe_eq_native",
       "full_name": "BanditRLProof.Thompson.latentArmStreamVisibleTrajectoryMeasure_map_frestrictLe_eq_native",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativePrefix.lean",
-      "line": 258,
+      "line": 259,
       "statement": "theorem latentArmStreamVisibleTrajectoryMeasure_map_frestrictLe_eq_native {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) : ((latentArmStreamTrajectoryMeasure algorithm env nu).map Prod.snd).map (Preorder.frestrictLe n) = (nativeStationaryTrajectoryMeasure algorithm nu).map (Preorder.frestrictLe n)"
+    },
+    {
+      "kind": "theorem",
+      "name": "latentArmStreamVisibleTrajectoryMeasure_eq_native",
+      "full_name": "BanditRLProof.Thompson.latentArmStreamVisibleTrajectoryMeasure_eq_native",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativePrefix.lean",
+      "line": 356,
+      "statement": "theorem latentArmStreamVisibleTrajectoryMeasure_eq_native {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] : (latentArmStreamTrajectoryMeasure algorithm env nu).map Prod.snd = nativeStationaryTrajectoryMeasure algorithm nu"
     },
     {
       "kind": "theorem",

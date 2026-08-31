@@ -16,6 +16,7 @@ namespace Thompson
 #check nativeStationaryTrajectoryMeasure
 #check instNativeStationaryTrajectoryMeasureIsProbability
 #check latentArmStreamVisibleTrajectoryMeasure_map_frestrictLe_eq_native
+#check latentArmStreamVisibleTrajectoryMeasure_eq_native
 
 #print axioms historyStepKernel_stationaryRewardHistoryEnvironment
 #print axioms latentArmStreamVisiblePrefixNextPair_eq_compProd
@@ -23,6 +24,7 @@ namespace Thompson
 #print axioms trajMeasure_map_eval_zero
 #print axioms frestrictLe_succ_eq_extendPairHistorySucc
 #print axioms latentArmStreamVisibleTrajectoryMeasure_map_frestrictLe_eq_native
+#print axioms latentArmStreamVisibleTrajectoryMeasure_eq_native
 
 end Thompson
 end BanditRLProof

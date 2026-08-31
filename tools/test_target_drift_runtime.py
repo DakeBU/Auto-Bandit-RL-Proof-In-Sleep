@@ -283,7 +283,7 @@ class TargetDriftRuntimeTest(unittest.TestCase):
             self.skipTest("requires the authoring checkout Git object database")
         # ABRL contains intentionally descriptive Lean filenames.  Keep the
         # Windows build-context root short enough for non-long-path-aware tools.
-        temporary_parent = TOOLS.parent.parent if os.name == "nt" else None
+        temporary_parent = Path(tempfile.gettempdir()) if os.name == "nt" else None
         with tempfile.TemporaryDirectory(dir=temporary_parent) as directory:
             output = Path(directory) / "checker-context"
             commit = "d43bfeee56fb0c1c35cf5af9fc1a7fdc3e0c37b9"

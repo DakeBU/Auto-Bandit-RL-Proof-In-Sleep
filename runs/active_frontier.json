@@ -1,31 +1,31 @@
 {
   "schema_version": 1,
-  "record_id": "frontier-0860ddea5115825e",
-  "updated_at": "2026-08-29T07:25:53+00:00",
+  "record_id": "frontier-4bf0698c3e7449bd",
+  "updated_at": "2026-08-31T16:53:50+00:00",
   "root_objective": "Compile the exact K=2 SGB Theorem 2 route without weakening the frozen source contract, then synchronize only verified evidence into the ICLR and arXiv papers.",
   "current_leaf": {
-    "id": "SGB-T2-NATIVE-FULL-LAW-TRANSPORT",
+    "id": "SGB-T2-SELECTED-BLOCK-TRANSPORT",
     "kind": "lean",
     "status": "ready",
-    "statement": "Extend the compiled finite-prefix identification of the visible latent marginal with the native fixed-IID SGB process to the full native visible trajectory law by Ionescu-Tulcea uniqueness; do not assume selected/stopped-reward IID, future/no-return, ballot/asymptotic assembly, or Theorem 2.",
-    "statement_hash": "31b7ecf30e83896febf4f0e4376108eca9b90b3448634933ef62dd3d8166d79b",
+    "statement": "Transport the finite latent fixed-arm reward-block product and finite nth-pull readout across the compiled full visible/native trajectory-law equality into a target-faithful finite pull-ordered reward-block law on the native process; keep the WithTop missing-pull boundary explicit and do not assume totalized stopped IID, future/no-return, ballot/asymptotic assembly, or Theorem 2.",
+    "statement_hash": "bdd41f6706edc4f5f61f38e38deb879b3f45c3a61cb2604f0638c66baa3ccfaf",
     "declaration": "",
-    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativePrefix.lean",
-    "source_status": "Round 20 compiles native-prefix identification: at every finite horizon the visible marginal of the latent coupling and the native fixed-IID process induce the same prefix law. Full native visible-law equality, selected/stopped-reward IID, future/no-return, ballot/asymptotic assembly, and Theorem 2 remain open.",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+    "source_status": "Round 21 compiles equality of the full visible latent marginal and native fixed-IID SGB trajectory measure. Finite pull-ordered selected-reward block transport, stopped IID, random-time future/no-return, ballot/asymptotic assembly, and Theorem 2 remain open.",
     "dependencies": [
       {
         "kind": "lean",
-        "name": "BanditRLProof.Thompson.latentArmStreamVisibleTrajectoryMeasure_map_frestrictLe_eq_native",
+        "name": "BanditRLProof.Thompson.latentArmStreamVisibleTrajectoryMeasure_eq_native",
         "status": "compiled"
       },
       {
         "kind": "lean",
-        "name": "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextPair_eq_compProd",
+        "name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullReward_eq_latentCoordinate_ae",
         "status": "compiled"
       },
       {
         "kind": "lean",
-        "name": "BanditRLProof.Thompson.latentArmStreamVisibleInitialPair_eq_compProd",
+        "name": "BanditRLProof.UCB.armStreamMeasure_map_fixedArmFinitePrefix_eq_pi",
         "status": "compiled"
       }
     ]
@@ -33,30 +33,23 @@
   "dag": {
     "nodes": [
       {
-        "id": "SGB-T2-NATIVE-PREFIX-IDENTIFICATION",
-        "kind": "lean",
-        "status": "compiled",
-        "dependencies": [],
-        "dispatch_count": 1
-      },
-      {
-        "id": "SGB-T2-NATIVE-FULL-LAW-TRANSPORT",
+        "id": "SGB-T2-SELECTED-BLOCK-TRANSPORT",
         "kind": "lean",
         "status": "ready",
         "dependencies": [
           {
             "kind": "lean",
-            "name": "BanditRLProof.Thompson.latentArmStreamVisibleTrajectoryMeasure_map_frestrictLe_eq_native",
+            "name": "BanditRLProof.Thompson.latentArmStreamVisibleTrajectoryMeasure_eq_native",
             "status": "compiled"
           },
           {
             "kind": "lean",
-            "name": "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextPair_eq_compProd",
+            "name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullReward_eq_latentCoordinate_ae",
             "status": "compiled"
           },
           {
             "kind": "lean",
-            "name": "BanditRLProof.Thompson.latentArmStreamVisibleInitialPair_eq_compProd",
+            "name": "BanditRLProof.UCB.armStreamMeasure_map_fixedArmFinitePrefix_eq_pi",
             "status": "compiled"
           }
         ],
@@ -78,7 +71,7 @@
   "memory_policy": {
     "recent_role_relevant_limit": 5,
     "explicit_verified_lemma_ids": [
-      "mem-dbfe2ba25d53db64"
+      "mem-93eea77c93da9dce"
     ],
     "whole_history_default": false
   },

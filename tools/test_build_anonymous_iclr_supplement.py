@@ -833,8 +833,8 @@ class AnonymousSupplementTests(unittest.TestCase):
             self.assertTrue(ledger["stochastic_gradient_bandit"][flag])
         for missing_bridge in (
             "deterministic-time one-step selected-reward freshness",
-            "visible-marginal/native-prefix identification",
-            "full native visible law",
+            "separate ten-declaration native-law module",
+            "complete visible/native trajectory measures",
             "stopped or pull-ordered selected IID",
             "stopped-prefix future-cylinder",
             "conditional no-return probability >= 1/2",
@@ -861,6 +861,22 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertFalse(
             ledger["stochastic_gradient_bandit"][
                 "source_theorem_two_native_prefix_identification_compiled"
+            ]
+        )
+        self.assertEqual(
+            ledger["stochastic_gradient_bandit"][
+                "separate_compiled_native_law_declaration_count"
+            ],
+            10,
+        )
+        self.assertTrue(
+            ledger["stochastic_gradient_bandit"][
+                "separate_module_theorem_two_native_prefix_identification_compiled"
+            ]
+        )
+        self.assertTrue(
+            ledger["stochastic_gradient_bandit"][
+                "separate_module_theorem_two_native_trajectory_compiled"
             ]
         )
         self.assertTrue(

@@ -2,7 +2,7 @@
 
 Task: `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE`
 
-Status: `target-frozen; Corollary 1 compiled; Theorem 2 blocked after compiled nth-pull, latent-product/readout, deferred-decisions finite-prefix factorization, action/readout interface, count-capped branch locality, one-step selected-reward freshness, and deterministic-starvation milestones`
+Status: `target-frozen; Corollary 1 compiled; Theorem 2 blocked after compiled nth-pull, latent-product/readout, deferred-decisions finite-prefix factorization, action/readout interface, count-capped branch locality, one-step selected-reward freshness, native-prefix identification, full native visible-law equality, and deterministic-starvation milestones`
 
 ## Source-to-Lean fence
 
@@ -235,6 +235,37 @@ obligation is discharged by the Round-19 packet below.
   identification, followed by trajectory uniqueness and selected-block
   transport.
 
+## Round-21 retrieval packet: finite-prefix uniqueness to full native law
+
+- Source and scenario cards:
+  `PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB` and
+  `SCN-STOCHASTIC-FINITE`; Mathlib route:
+  `MLIB-PROBABILITY-KERNEL` together with
+  `Mathlib.Probability.Process.FiniteDimensionalLaws`.
+- Search terms tried: `frestrictLe`, `trajectory uniqueness`, `Ionescu`,
+  `IsProjectiveLimit.unique`, and `map_frestrictLe`.
+- Reused compiled local declaration:
+  `latentArmStreamVisibleTrajectoryMeasure_map_frestrictLe_eq_native`.
+  Reused proof pattern:
+  `RewardKernel.rewardTrace_map_eq_trajMeasure_of_condDistrib`.
+- Intended project-local bridge: use the native law's arbitrary finite
+  restrictions as one projective family; derive every arbitrary finite
+  restriction of the visible latent marginal from the compiled `Iic n`
+  prefix equality by selecting coordinates inside `Iic (I.sup id)`; then use
+  `MeasureTheory.IsProjectiveLimit.unique` to identify the two complete
+  probability measures.
+- Hidden regularity contracts: both complete laws are probability measures;
+  every coordinate restriction and finite-coordinate selector is measurable;
+  the target is equality of the two complete visible trajectory measures,
+  not selected/stopped reward IID or any random-time future law.
+- Compiled outcome: `latentArmStreamVisibleTrajectoryMeasure_eq_native`
+  derives equality of the complete visible/native trajectory measures from
+  the previously compiled `Iic n` prefix identities.  Its canary reports only
+  the baseline axioms `propext`, `Classical.choice`, and `Quot.sound`.
+- Status after the focused gate: `compiled project-local`.  No new Mathlib
+  lemma, source assumption, selected-IID premise, random-time future law, or
+  theorem-endpoint promotion was introduced.
+
 ## Pivot rules
 
 - Do not replace the nth-pull law with an IID premise on the selected reward
@@ -244,6 +275,7 @@ obligation is discharged by the Round-19 packet below.
   Appendix-C lower bound and leave the terminal status partial.
 - Compiled Corollary 1, nth-pull, latent-product/readout, finite-prefix
   factorization, action/readout interface, count-cap branch-locality producer,
-  unconditional branch-product law, one-step selected-reward freshness, and
+  unconditional branch-product law, one-step selected-reward freshness,
+  native-prefix identification, full native visible-law equality, and
   deterministic-starvation milestones do not compile the
   frozen Theorem 2 terminal; that terminal remains `blocked`.
