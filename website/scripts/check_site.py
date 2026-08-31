@@ -1073,8 +1073,8 @@ def main() -> int:
         sgb_action_declaration,
         sgb_branch_declaration,
         *sgb_freshness_declarations,
-        "finite native-prefix identification are already compiled",
-        "Full native visible trajectory-law transport",
+        "identifies every inclusive finite prefix",
+        "proves equality of the complete visible/native trajectory measures",
         "Pull-ordered or stopped selected-reward IID",
         (
             "stopped-prefix future-cylinder law needed to prove conditional "

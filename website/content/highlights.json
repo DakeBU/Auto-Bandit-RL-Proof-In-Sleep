@@ -1430,9 +1430,9 @@
       "math": "\\(\\mathcal L(Z_{\\le n},H_{\\le n})=\\left(\\bigotimes_{t\\le n}\\bigotimes_a\\nu_a\\right)\\ltimes K_n^{\\mathrm{vis}}.\\)",
       "intuition": "The algorithm can adapt its actions to rewards already revealed, but its visible history through round n cannot depend on latent reward coordinates after n. The proof makes that deferred-decisions boundary explicit without pretending that actions are deterministic or independent.",
       "why": "This isolates the exact finite joint mixture whose visible marginal a native-trajectory adapter must identify. It prevents the stronger native law from being smuggled in through an informal coupling argument.",
-      "position": "This eight-declaration finite-prefix factorization is compiled. This layer alone does not identify the mixture's visible marginal with the native fixed-IID SGB prefix, but a downstream nine-declaration module now proves that identification at every finite horizon. Full native visible trajectory-law equality and Theorem 2 remain unproved.",
+      "position": "This eight-declaration finite-prefix factorization is compiled. A downstream ten-declaration native-law module now identifies every finite prefix and promotes those identities to equality of the complete visible/native trajectory measures. Theorem 2 remains unproved.",
       "proof_idea": "Map the infinite arm-stream product to its inclusive finite restriction, prove equality of the canonical generated prefix laws under equal stream boxes, package that kernel-law locality as a Markov prefix kernel, and map the stream/trajectory compProd through both restrictions.",
-      "lean_notes": "The cutoff n is inclusive, so the stream box contains coordinates 0 through n for every arm. The right side is a kernel mixture, not an independence assertion between the latent box and visible prefix. Target-by-target branch products, deterministic-time one-step aggregation, and downstream visible-marginal/native-prefix identification now compile. Full trajectory-law transport, stopped selected-IID transport, and the future-cylinder law remain unproved.",
+      "lean_notes": "The cutoff n is inclusive, so the stream box contains coordinates 0 through n for every arm. The right side is a kernel mixture, not an independence assertion between the latent box and visible prefix. Target-by-target branch products, deterministic-time one-step aggregation, finite native-prefix identification, and full visible/native trajectory-law transport now compile. Stopped selected-IID transport and the future-cylinder law remain unproved.",
       "dependencies": [
         "BanditRLProof.UCB.armStreamMeasure_map_frestrictLe_eq_pi",
         "BanditRLProof.Thompson.latentArmStreamTrajectoryKernel_map_frestrictLe_eq_of_streamPrefix_eq",
@@ -1480,7 +1480,7 @@
       "math": "\\(\\mathcal L(R_{n+1}\\mid H_{\\le n},A_{n+1})=\\nu_{A_{n+1}}\\quad\\text{a.e.}\\)",
       "intuition": "Adaptive actions may depend on every reward seen so far, but the latent coordinate consumed next has not been exposed. Partitioning by its pull count and arm makes that freshness explicit and then recombines the branches without normalizing them.",
       "why": "This closes the exact one-step probabilistic interface needed before comparing the latent visible process with the native fixed-IID construction. It is stronger than pathwise reward readout and weaker than a selected-reward IID sequence theorem.",
-      "position": "This is the terminal theorem of an eight-declaration compiled aggregation/readout layer. A downstream nine-declaration module now closes native-prefix identification at every finite horizon. Full trajectory uniqueness, stopped pull-ordered reward blocks, future/no-return, and Theorem 2 remain blocked.",
+      "position": "This is the terminal theorem of an eight-declaration compiled aggregation/readout layer. A downstream ten-declaration module now closes native-prefix identification and complete visible/native trajectory-law equality. Stopped pull-ordered reward blocks, future/no-return, and Theorem 2 remain blocked.",
       "proof_idea": "Prove dynamic coordinate evaluation measurable; restrict to each count/arm branch and use the fixed-coordinate product law; sum the countable branch partition on both sides; transport the joint law through the latent coupling; replace the selected coordinate by the actual reward almost everywhere; then invoke the joint-law characterization of condDistrib.",
       "lean_notes": "The condition is the inclusive visible prefix through n paired with the action at n+1. The selected kernel is nu composed with the action projection. Branch kernels are finite/sub-Markov, and no statement here identifies the visible marginal with the native trajectory or makes rewards at multiple selected times IID.",
       "dependencies": [
@@ -1488,6 +1488,22 @@
         "BanditRLProof.Thompson.latentArmStreamVisibleNextReward_eq_selectedCoordinate_ae",
         "BanditRLProof.Thompson.latentArmStreamVisibleNextReward_joint_eq_compProd",
         "BanditRLProof.UCB.armStreamSelectedRewardKernel"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.Thompson.latentArmStreamVisibleTrajectoryMeasure_eq_native",
+      "chapter": "frontier",
+      "plain": "Forgetting the latent reward stream from the coupled SGB construction gives exactly the same complete visible trajectory law as the native fixed-IID SGB process.",
+      "math": "\\(\\mathcal L(H^{\\mathrm{latent\\;visible}})=\\mathcal L(H^{\\mathrm{native}}).\\)",
+      "intuition": "The latent construction pre-samples all arm rewards, while the native process samples only the selected arm. Once every finite observed prefix has the same law, no measurable event of the infinite visible trajectory can distinguish the two processes.",
+      "why": "This closes the process-law transport needed before source Appendix-C reward blocks can be moved from the latent coupling to the native algorithm. It removes a genuine trajectory-semantics blocker without assuming adaptive selected rewards are IID.",
+      "position": "This project-local theorem is compiled in a separate ten-declaration native-law module. It proves complete visible/native measure equality, not stopped or pull-ordered selected-reward IID, a random-time future law, or Theorem 2.",
+      "proof_idea": "Use the compiled equality of every inclusive prefix. For an arbitrary finite coordinate set, select it from a containing prefix, push both prefix laws through that selector, and then apply Mathlib's projective-limit uniqueness theorem to the resulting common family of finite-dimensional laws.",
+      "lean_notes": "The canary reports only propext, Classical.choice, and Quot.sound. Full-law equality does not justify conditioning on occurrence of random pull times or totalizing missing pulls; those remain separate obligations.",
+      "dependencies": [
+        "BanditRLProof.Thompson.latentArmStreamVisibleTrajectoryMeasure_map_frestrictLe_eq_native",
+        "BanditRLProof.Thompson.nativeStationaryTrajectoryMeasure",
+        "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextPair_eq_compProd"
       ]
     },
     {
@@ -1499,7 +1515,7 @@
       "why": "This isolates the deterministic consumer at Appendix-C Step 1 without hiding the still-missing probability producer behind a theorem-shaped premise.",
       "position": "This named declaration is a compiled source-shaped consumer, not a partial closure of Theorem 2. The frozen K = 2 terminal remains blocked.",
       "proof_idea": "Make the trigger and final-count event measurable, identify two-arm sampled regret with Delta times suboptimal pulls, prove the exact Delta(T-n) charge on the event, and compare the integral of its indicator with total expected regret.",
-      "lean_notes": "The event uses an externally fixed chronological cutoff. Separate compiled modules construct the random nth-pull stopping prefix, prove the latent fixed-arm product/readout layer, factor a finite stream-box/visible-prefix mixture, establish target-by-target branch products, aggregate them into deterministic-time one-step selected-reward freshness, and identify every finite visible prefix with the native process. Full native trajectory-law transport, stopped block transport, and composition with this consumer remain open. No module yet proves conditional no-return probability >= 1/2, the Rademacher/binomial ballot phase, or the polynomial asymptotic lower bound.",
+      "lean_notes": "The event uses an externally fixed chronological cutoff. Separate compiled modules construct the random nth-pull stopping prefix, prove the latent fixed-arm product/readout layer, factor a finite stream-box/visible-prefix mixture, establish target-by-target branch products, aggregate them into deterministic-time one-step selected-reward freshness, and prove complete visible/native trajectory-law equality. Stopped block transport and composition with this consumer remain open. No module yet proves conditional no-return probability >= 1/2, the Rademacher/binomial ballot phase, or the polynomial asymptotic lower bound.",
       "dependencies": [
         "BanditRLProof.StochasticGradientBandit.twoArmStepOneStarvationEvent_charge_mul_probability_le_integral",
         "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmStepOneStarvationEvent",

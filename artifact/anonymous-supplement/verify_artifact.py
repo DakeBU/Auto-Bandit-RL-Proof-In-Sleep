@@ -816,6 +816,13 @@ def verify_claim_ledger():
         or sgb.get(
             "source_theorem_two_native_prefix_identification_compiled"
         ) is not False
+        or sgb.get("separate_compiled_native_law_declaration_count") != 10
+        or sgb.get(
+            "separate_module_theorem_two_native_prefix_identification_compiled"
+        ) is not True
+        or sgb.get(
+            "separate_module_theorem_two_native_trajectory_compiled"
+        ) is not True
         or sgb.get("source_theorem_two_status") != "blocked"
         or sgb.get("source_theorem_two_endpoint_verified") is not False
     ):
@@ -827,8 +834,8 @@ def verify_claim_ledger():
     ]
     required_scope_boundaries = (
         "deterministic-time one-step selected-reward freshness",
-        "visible-marginal/native-prefix identification",
-        "full native visible law",
+        "separate ten-declaration native-law module",
+        "complete visible/native trajectory measures",
         "stopped or pull-ordered selected IID",
         "stopped-prefix future-cylinder",
         "conditional no-return probability >= 1/2",
@@ -1062,13 +1069,13 @@ def verify_theorem_audit_comparison():
                 not in row.get("scope_boundary", "")
                 or "conditional no-return probability >= 1/2"
                 not in row.get("scope_boundary", "")
-                or "exact finite stream-box/visible-prefix mixture"
+                or "a finite stream-box/visible-prefix mixture"
                 not in row.get("scope_boundary", "")
-                or "deterministic-time next-reward joint and conditional laws"
+                or "deterministic-time one-step freshness"
                 not in row.get("scope_boundary", "")
-                or "do not identify that marginal with the native prefix"
+                or "A separate ten-declaration module now proves every native-prefix identity"
                 not in row.get("scope_boundary", "")
-                or "native visible law"
+                or "equality of the complete visible/native trajectory measures by projective-limit uniqueness"
                 not in row.get("scope_boundary", "")
                 or "None of these results makes totalized stopped rewards or occurrence-conditioned rewards IID"
                 not in row.get("scope_boundary", "")
@@ -1077,8 +1084,8 @@ def verify_theorem_audit_comparison():
                 or "asymptotic terminal remain blocked"
                 not in row.get("scope_boundary", "")
                 or not any(
-                    "native prefix law" in item
-                    and "deterministic-time selected-reward freshness" in item
+                    "full visible/native trajectory-law equality" in item
+                    and "stopped or pull-ordered selected IID" in item
                     and "stopped-prefix future-cylinder" in item
                     for item in row.get("blocking_obligations", [])
                 )

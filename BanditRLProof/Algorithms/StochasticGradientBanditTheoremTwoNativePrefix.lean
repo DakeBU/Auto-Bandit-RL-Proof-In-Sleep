@@ -10,10 +10,11 @@ one-step selected-reward laws describe the coupling; this module states the
 native process against which those laws must be compared.
 
 It records the stationary reward environment whose feedback kernel is the
-selected-arm law, and identifies its history step kernel with the composition
-of the algorithm policy and that law.  No native-prefix identification,
-full-process equality, selected/stopped IID law, future/no-return statement,
-or Theorem-2 endpoint is claimed here.
+selected-arm law, identifies its history step kernel with the composition of
+the algorithm policy and that law, proves equality of every finite visible
+prefix, and promotes those prefix identities to equality of the complete
+visible trajectory measures.  No selected/stopped IID law,
+future/no-return statement, or Theorem-2 endpoint is claimed here.
 -/
 
 namespace BanditRLProof
@@ -343,6 +344,68 @@ theorem latentArmStreamVisibleTrajectoryMeasure_map_frestrictLe_eq_native
         ← Measure.map_map History.measurable_extendPairHistorySucc hmeasPair,
         ← Measure.map_map History.measurable_extendPairHistorySucc hmeasPair,
         hjoint]
+
+/-- **Full native visible-law identification.**  Forgetting the latent reward
+stream from the arm-stream coupling gives exactly the native stationary
+fixed-i.i.d. SGB trajectory law.
+
+The proof promotes the compiled equality of every inclusive finite prefix to
+an equality of complete trajectory measures by projective-limit uniqueness.
+It does not assert that totalized stopped rewards are i.i.d., identify a
+random-time future cylinder, or prove the source Theorem 2 endpoint. -/
+theorem latentArmStreamVisibleTrajectoryMeasure_eq_native
+    {Env : Type u} {K : Nat} [MeasurableSpace Env]
+    [StandardBorelSpace Env] [NeZero K]
+    (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)
+    (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] :
+    (latentArmStreamTrajectoryMeasure algorithm env nu).map Prod.snd =
+      nativeStationaryTrajectoryMeasure algorithm nu := by
+  let visibleLaw : Measure ((n : Nat) -> Fin K × Real) :=
+    (latentArmStreamTrajectoryMeasure algorithm env nu).map Prod.snd
+  let nativeLaw : Measure ((n : Nat) -> Fin K × Real) :=
+    nativeStationaryTrajectoryMeasure algorithm nu
+  let finiteLaw := fun I : Finset Nat => Measure.map I.restrict nativeLaw
+  have hnative : MeasureTheory.IsProjectiveLimit nativeLaw finiteLaw := by
+    intro I
+    rfl
+  have hvisible : MeasureTheory.IsProjectiveLimit visibleLaw finiteLaw := by
+    intro I
+    let n := I.sup id
+    have hi_le : forall i : I, i.1 <= n := by
+      intro i
+      simpa [n] using (Finset.le_sup (f := id) i.2)
+    let select :
+        History.FinitePairHistory (Fin K) Real n ->
+          ((i : I) -> Fin K × Real) :=
+      fun history i =>
+        history ⟨i.1, Finset.mem_Iic.mpr (hi_le i)⟩
+    have hselect : Measurable select := by
+      exact measurable_pi_lambda _ (fun i => measurable_pi_apply
+        (⟨i.1, Finset.mem_Iic.mpr (hi_le i)⟩ : Finset.Iic n))
+    have hprefixMeasurable :
+        Measurable
+          (Preorder.frestrictLe n :
+            ((t : Nat) -> Fin K × Real) ->
+              History.FinitePairHistory (Fin K) Real n) :=
+      Preorder.measurable_frestrictLe n
+    have hprefix : visibleLaw.map (Preorder.frestrictLe n) =
+        nativeLaw.map (Preorder.frestrictLe n) := by
+      simpa [visibleLaw, nativeLaw] using
+        latentArmStreamVisibleTrajectoryMeasure_map_frestrictLe_eq_native
+          algorithm env nu n
+    have hfinite := congrArg (Measure.map select) hprefix
+    rw [Measure.map_map hselect hprefixMeasurable,
+      Measure.map_map hselect hprefixMeasurable] at hfinite
+    have hselectPrefix :
+        select ∘
+            (Preorder.frestrictLe n :
+              ((t : Nat) -> Fin K × Real) ->
+                History.FinitePairHistory (Fin K) Real n) =
+          I.restrict := by
+      funext trajectory i
+      rfl
+    simpa [finiteLaw, hselectPrefix] using hfinite
+  simpa [visibleLaw, nativeLaw] using hvisible.unique hnative
 
 end Thompson
 end

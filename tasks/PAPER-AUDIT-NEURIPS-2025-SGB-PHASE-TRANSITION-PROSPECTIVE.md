@@ -116,17 +116,18 @@ evidence states:
    product laws; the a.e. selected-coordinate readout then gives the exact
    joint and conditional next-reward laws, both on the latent coupling and on
    its visible-trajectory marginal.
-7. **Blocked native/selected-law half:** identify the visible marginal with
-   the native fixed-IID SGB prefix law, extend that identification to the
-   required native visible law by trajectory uniqueness, and transport the
-   latent phase event and source embedded-chain recurrence.  Deterministic-time
-   one-step conditional freshness still does not by itself imply
-   pull-ordered selected-reward IID or native trajectory-law equality.
-8. Compile Appendix-C Step 1: if the optimal-arm probability after its `n`th
+7. **Compiled native-law half:** identify the visible marginal with the native
+   fixed-IID SGB prefix law and extend those identities to the complete native
+   visible law by projective-limit uniqueness.
+8. **Blocked selected-law half:** transport the latent phase event and source
+   embedded-chain recurrence.  Deterministic-time one-step conditional
+   freshness plus full visible-law equality still does not by itself imply a
+   pull-ordered or stopped selected-reward IID theorem.
+9. Compile Appendix-C Step 1: if the optimal-arm probability after its `n`th
    pull is at most `1/(2*T)`, the conditional probability of no further
    optimal-arm pull over the remaining horizon is at least `1/2`, yielding
    the exact starvation regret charge.
-9. Build the `S0`/`S1` phase producer: latent IID reward-block law plus its
+10. Build the `S0`/`S1` phase producer: latent IID reward-block law plus its
    native-process transport, Rademacher anti-concentration, ballot-prefix
    constraint, and the
    deterministic implication into the starvation event.
@@ -163,7 +164,7 @@ time-varying learning-rate policy, or verification of the external paper.
 Corollary 1 is a direct consumer of compiled Theorem 1 and must not be used as
 evidence that the polynomial lower-bound route is complete.
 
-## Current verified outcome (2026-08-28)
+## Current verified outcome (2026-09-01)
 
 - The source-audit inventory is now 352 named declarations:
   `223 + 23 + 18 + 24 + 7 + 8 + 13 + 28 + 8` for the historical audit, Corollary-1
@@ -222,14 +223,21 @@ evidence that the polynomial lower-bound route is complete.
   `latentArmStreamVisibleTrajectoryMeasure_nextReward_condDistrib_ae_eq_nu`.
   This is deterministic-time conditional freshness given the visible history
   and next action; it is not a pull-ordered selected-IID theorem.
-- The latent coupling's visible trajectory law has not yet been proved equal
-  to the native fixed-IID SGB trajectory law.  Native-prefix identification,
-  pull-ordered selected-IID transport, conditional no-return probability
+- A separate ten-declaration native-law module is compiled and indexed outside
+  the counted 352-declaration audit ledger.  Its finite-prefix induction ends
+  at `latentArmStreamVisibleTrajectoryMeasure_map_frestrictLe_eq_native`; the
+  new `latentArmStreamVisibleTrajectoryMeasure_eq_native` then selects every
+  arbitrary finite coordinate set inside an inclusive prefix and applies
+  `MeasureTheory.IsProjectiveLimit.unique` to prove equality of the complete
+  visible/native probability measures.  The focused module and canary compile,
+  and the new theorem uses only the baseline axioms `propext`,
+  `Classical.choice`, and `Quot.sound`.
+- Pull-ordered selected-IID transport, conditional no-return probability
   `>= 1/2`, the Rademacher/ballot phase producer, asymptotic
   assembly, and the frozen Theorem-2 terminal remain uncompiled.  The central
   target therefore remains blocked; the compiled latent product/readout,
-  finite-prefix factorization, chronological bridge, deterministic consumer,
-  and Corollary 1 are not terminal evidence for it.
+  finite-prefix factorization, chronological bridge, full native-law transport,
+  deterministic consumer, and Corollary 1 are not terminal evidence for it.
 
 ## Gate
 
@@ -244,6 +252,8 @@ lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoLatentR
 lake env lean Tests/StochasticGradientBanditTheoremTwoLatentRewardCanary.lean
 lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean
 lake env lean Tests/StochasticGradientBanditTheoremTwoNativeTrajectoryCanary.lean
+lake env lean BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativePrefix.lean
+lake env lean Tests/StochasticGradientBanditTheoremTwoNativePrefixCanary.lean
 python tools/bandit.py check
 ```
 

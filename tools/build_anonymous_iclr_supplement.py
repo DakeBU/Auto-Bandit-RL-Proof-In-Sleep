@@ -236,6 +236,10 @@ SGB_THEOREM_TWO_PREFIX_FACTORIZATION_FILE = (
     "BanditRLProof/Algorithms/"
     "StochasticGradientBanditTheoremTwoNativeTrajectory.lean"
 )
+SGB_THEOREM_TWO_NATIVE_LAW_FILE = (
+    "BanditRLProof/Algorithms/"
+    "StochasticGradientBanditTheoremTwoNativePrefix.lean"
+)
 SGB_THEOREM_TWO_BRANCH_LOCALITY_GENERIC_BRIDGE_FILE = (
     "BanditRLProof/KernelIndependentExtension.lean"
 )
@@ -265,6 +269,18 @@ SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATION_COUNT = 8
 SGB_THEOREM_TWO_BRANCH_LOCALITY_SCAFFOLD_DECLARATION_COUNT = 13
 SGB_THEOREM_TWO_BRANCH_LOCALITY_PRODUCER_DECLARATION_COUNT = 28
 SGB_THEOREM_TWO_SELECTED_REWARD_FRESHNESS_DECLARATION_COUNT = 8
+SGB_THEOREM_TWO_NATIVE_LAW_SOURCE_DECLARATION_COUNT = 10
+SGB_THEOREM_TWO_NATIVE_LAW_INDEXED_DECLARATIONS = frozenset({
+    "BanditRLProof.Thompson.stationaryRewardHistoryEnvironment",
+    "BanditRLProof.Thompson.historyStepKernel_stationaryRewardHistoryEnvironment",
+    "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextPair_eq_compProd",
+    "BanditRLProof.Thompson.latentArmStreamVisibleInitialPair_eq_compProd",
+    "BanditRLProof.Thompson.trajMeasure_map_eval_zero",
+    "BanditRLProof.Thompson.frestrictLe_succ_eq_extendPairHistorySucc",
+    "BanditRLProof.Thompson.nativeStationaryTrajectoryMeasure",
+    "BanditRLProof.Thompson.latentArmStreamVisibleTrajectoryMeasure_map_frestrictLe_eq_native",
+    "BanditRLProof.Thompson.latentArmStreamVisibleTrajectoryMeasure_eq_native",
+})
 SGB_TOTAL_DECLARATION_COUNT = (
     SGB_HISTORICAL_DECLARATION_COUNT
     + SGB_COROLLARY_ONE_DECLARATION_COUNT
@@ -2297,10 +2313,11 @@ def validate_sgb_count(records, index):
             "producer declarations + 8 selected-reward freshness aggregation "
             "declarations. The locality contract, unconditional branchwise "
             "product law, and deterministic-time one-step selected-reward "
-            "freshness compile, but visible-marginal/native-prefix "
-            "identification, the full native visible law, stopped-prefix "
-            "future-cylinder, conditional no-return, ballot phase, and the "
-            "Theorem-2 terminal must remain blocked"
+            "freshness compile in the frozen ledger. A separate ten-declaration "
+            "module compiles native-prefix identification and the full "
+            "visible/native trajectory law; stopped or pull-ordered selected "
+            "IID, the stopped-prefix future-cylinder, conditional no-return, "
+            "ballot phase, and the Theorem-2 terminal must remain blocked"
         )
     return {
         "generated_trajectory_compiled":
@@ -2515,6 +2532,11 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
             "theorem_two_unconditional_branch_product_compiled": True,
             "theorem_two_freshness_compiled": True,
             "theorem_two_visible_marginal_freshness_compiled": True,
+            "separate_compiled_native_law_declaration_count":
+                SGB_THEOREM_TWO_NATIVE_LAW_SOURCE_DECLARATION_COUNT,
+            "separate_module_theorem_two_native_prefix_identification_compiled":
+                True,
+            "separate_module_theorem_two_native_trajectory_compiled": True,
             "theorem_two_native_prefix_identification_compiled": False,
             "declaration_count_breakdown": {
                 "finite_action_algebra": SGB_FINITE_ALGEBRA_DECLARATION_COUNT,
@@ -2601,6 +2623,27 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
                     "delayed theorem-audit declarations must equal the exact "
                     "non-generic DelayedFeedback declaration set"
                 )
+        if row_id == "stochastic-gradient-bandit-source-frozen-audit":
+            native_law_names = {
+                index_row["full_name"]
+                for index_row in index.get("declarations", [])
+                if index_row.get("file") == SGB_THEOREM_TWO_NATIVE_LAW_FILE
+            }
+            native_law_source = read_regular(
+                SGB_THEOREM_TWO_NATIVE_LAW_FILE
+            ).decode("utf-8")
+            native_law_source_count = len(re.findall(
+                r"(?m)^(?:def|theorem|instance)\s+",
+                native_law_source,
+            ))
+            if (
+                native_law_names != SGB_THEOREM_TWO_NATIVE_LAW_INDEXED_DECLARATIONS
+                or native_law_source_count !=
+                    SGB_THEOREM_TWO_NATIVE_LAW_SOURCE_DECLARATION_COUNT
+            ):
+                raise ValueError(
+                    "separate SGB native-law module declaration drift"
+                )
         central = records[spec["central_endpoint_record_id"]]
         if spec["role"] == "source_frozen_external_audit":
             expected_endpoint_verified = (
@@ -2622,13 +2665,13 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
                 not in row.get("scope_boundary", "")
                 or "conditional no-return probability >= 1/2"
                 not in row.get("scope_boundary", "")
-                or "exact finite stream-box/visible-prefix mixture"
+                or "a finite stream-box/visible-prefix mixture"
                 not in row.get("scope_boundary", "")
-                or "deterministic-time next-reward joint and conditional laws"
+                or "deterministic-time one-step freshness"
                 not in row.get("scope_boundary", "")
-                or "do not identify that marginal with the native prefix"
+                or "A separate ten-declaration module now proves every native-prefix identity"
                 not in row.get("scope_boundary", "")
-                or "native visible law"
+                or "equality of the complete visible/native trajectory measures by projective-limit uniqueness"
                 not in row.get("scope_boundary", "")
                 or "None of these results makes totalized stopped rewards or occurrence-conditioned rewards IID"
                 not in row.get("scope_boundary", "")
@@ -2637,8 +2680,8 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
                 or "asymptotic terminal remain blocked"
                 not in row.get("scope_boundary", "")
                 or not any(
-                    "native prefix law" in item
-                    and "deterministic-time selected-reward freshness" in item
+                    "full visible/native trajectory-law equality" in item
+                    and "stopped or pull-ordered selected IID" in item
                     and "stopped-prefix future-cylinder" in item
                     for item in row.get("blocking_obligations", [])
                 )
@@ -2703,6 +2746,10 @@ def build_claim_ledger(proof_report):
     validate_succinct_count(records)
     sgb_evidence = validate_sgb_count(records, index)
     theorem_audit_comparison = validate_theorem_audit_comparison(records, index)
+    sgb_comparison = next(
+        row for row in theorem_audit_comparison["rows"]
+        if row["id"] == "stochastic-gradient-bandit-source-frozen-audit"
+    )
     ch16_evidence = validate_ch16_boundary(records)
     index_names = {row["full_name"] for row in index["declarations"]}
     delayed_directory_rows = [
@@ -2788,7 +2835,7 @@ def build_claim_ledger(proof_report):
                 "artifact": "Stochastic-gradient-bandit Theorem 1, Corollary 1, and blocked Theorem-2 follow-on",
                 "status": "partial",
                 "source_record_ids": [SGB_AUDIT_ID, SGB_FOLLOW_ON_ID],
-                "boundary": "352 declarations preserve the historical 223 = 215-declaration Theorem-1 stack + 8 Appendix-E/Theorem-4 contract leaves, then add a 23-declaration compiled Corollary-1 bounded companion, an 18-declaration deterministic Appendix-C Step-1 starvation consumer, a 24-declaration chronological nth-pull bridge, a 7-declaration latent fixed-arm product/readout layer, an 8-declaration deferred-decisions prefix factorization, a 13-declaration action/readout/branch-locality interface and count-cap scaffold, a 28-declaration count-capped branch-locality producer, and an 8-declaration selected-reward aggregation/readout layer. Corollary 1 is a direct Theorem-1 consumer for T >= 2 and eta_T = sqrt(log T / T), not independent Theorem-2 evidence. The nth-pull layer proves a zero-based WithTop stopping time, exact finite count/action identification, and measurable stopped reward and post-pull probability. The latent layer proves an unconditional finite product law for fixed-arm coordinates and almost-sure readout at every finite nth pull. The prefix layer proves stream-box product, visible-prefix kernel-law locality, a Markov visible-prefix kernel, and their exact finite mixture. Round 17 compiled next-action factorization, pathwise selected-coordinate support, a conditional branch-product consumer, and count-cap scaffold declarations. Round 18 proves the generic safe-fiber semidirect-product restriction bridge, the count-cap base and successor induction, the exact branch-locality contract, and the unconditional branchwise product law. Round 19 sums the countable pull-count/arm branches, transports the result through the coupling, consumes the a.e. reward readout, and proves deterministic-time one-step selected-reward freshness on both the coupling and its visible marginal. The visible-marginal/native-prefix identification and full native visible law remain blocked. This layer does not make totalized or occurrence-conditioned stopped rewards IID. These layers are not composed with the fixed-cutoff consumer; stopped or pull-ordered selected IID, the stopped-prefix future-cylinder, conditional no-return probability >= 1/2, Rademacher/binomial ballot phase, and asymptotic terminal remain blocked. The frozen K = 2 Theorem-2 center therefore remains blocked. Theorem 4 also remains open. Dirac refers only to the Unit environment prior, not to the arm reward laws.",
+                "boundary": "352 declarations preserve the historical 223 = 215-declaration Theorem-1 stack + 8 Appendix-E/Theorem-4 contract leaves, then add a 23-declaration compiled Corollary-1 bounded companion, an 18-declaration deterministic Appendix-C Step-1 starvation consumer, a 24-declaration chronological nth-pull bridge, a 7-declaration latent fixed-arm product/readout layer, an 8-declaration deferred-decisions prefix factorization, a 13-declaration action/readout/branch-locality interface and count-cap scaffold, a 28-declaration count-capped branch-locality producer, and an 8-declaration selected-reward aggregation/readout layer. Corollary 1 is a direct Theorem-1 consumer for T >= 2 and eta_T = sqrt(log T / T), not independent Theorem-2 evidence. The nth-pull layer proves a zero-based WithTop stopping time, exact finite count/action identification, and measurable stopped reward and post-pull probability. The latent layer proves an unconditional finite product law for fixed-arm coordinates and almost-sure readout at every finite nth pull. The prefix layer proves stream-box product, visible-prefix kernel-law locality, a Markov visible-prefix kernel, and their exact finite mixture. Round 17 compiled next-action factorization, pathwise selected-coordinate support, a conditional branch-product consumer, and count-cap scaffold declarations. Round 18 proves the generic safe-fiber semidirect-product restriction bridge, the count-cap base and successor induction, the exact branch-locality contract, and the unconditional branchwise product law. Round 19 sums the countable pull-count/arm branches, transports the result through the coupling, consumes the a.e. reward readout, and proves deterministic-time one-step selected-reward freshness on both the coupling and its visible marginal. A separate ten-declaration native-law module now proves every native-prefix identity and equality of the complete visible/native trajectory measures by projective-limit uniqueness; it remains outside the frozen 352-declaration audit ledger. This layer does not make totalized or occurrence-conditioned stopped rewards IID. These layers are not composed with the fixed-cutoff consumer; stopped or pull-ordered selected IID, the stopped-prefix future-cylinder, conditional no-return probability >= 1/2, Rademacher/binomial ballot phase, and asymptotic terminal remain blocked. The frozen K = 2 Theorem-2 center therefore remains blocked. Theorem 4 also remains open. Dirac refers only to the Unit environment prior, not to the arm reward laws.",
             },
             {
                 "artifact": "Proof graph / curvature--noise--gap",
@@ -2968,6 +3015,18 @@ def build_claim_ledger(proof_report):
             "source_theorem_two_native_prefix_identification_compiled":
                 sgb_evidence[
                     "source_theorem_two_native_prefix_identification_compiled"
+                ],
+            "separate_compiled_native_law_declaration_count":
+                sgb_comparison[
+                    "separate_compiled_native_law_declaration_count"
+                ],
+            "separate_module_theorem_two_native_prefix_identification_compiled":
+                sgb_comparison[
+                    "separate_module_theorem_two_native_prefix_identification_compiled"
+                ],
+            "separate_module_theorem_two_native_trajectory_compiled":
+                sgb_comparison[
+                    "separate_module_theorem_two_native_trajectory_compiled"
                 ],
             "source_theorem_two_status": "blocked",
             "source_theorem_two_endpoint_verified":
