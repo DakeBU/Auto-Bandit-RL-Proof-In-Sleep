@@ -1030,6 +1030,33 @@ def main() -> int:
                 "SGB deterministic-time selected-reward freshness is not rendered as "
                 f"compiled: {declaration}"
             )
+    sgb_native_prefix_declaration = (
+        "BanditRLProof.Thompson."
+        "latentArmStreamVisibleTrajectoryMeasure_map_frestrictLe_eq_native"
+    )
+    sgb_native_prefix_items = [
+        item for item in search_items if item.get("name") == sgb_native_prefix_declaration
+    ]
+    if (
+        len(sgb_native_prefix_items) != 1
+        or sgb_native_prefix_items[0].get("chapter") != "Frontier"
+    ):
+        errors.append("SGB native-prefix identification must resolve to the Frontier chapter")
+    else:
+        native_prefix_target = urlsplit(sgb_native_prefix_items[0]["url"])
+        native_prefix_module_path = output / native_prefix_target.path
+        if not native_prefix_module_path.exists():
+            errors.append("SGB native-prefix declaration page is missing")
+        else:
+            native_prefix_module_source = native_prefix_module_path.read_text(encoding="utf-8")
+            compiled_summary = re.compile(
+                rf'<details class="declaration" id="{re.escape(native_prefix_target.fragment)}">'
+                r"\s*<summary>.*?"
+                r'<span class="status compiled">Compiled</span>.*?</summary>',
+                re.DOTALL,
+            )
+            if not compiled_summary.search(native_prefix_module_source):
+                errors.append("SGB native-prefix identification is not rendered as compiled")
     frontier_source = (output / "chapters" / "frontier" / "index.html").read_text(encoding="utf-8")
     for required in (
         "A Novel General Framework for Sharp Lower Bounds in Succinct Stochastic Bandits",
@@ -1046,9 +1073,8 @@ def main() -> int:
         sgb_action_declaration,
         sgb_branch_declaration,
         *sgb_freshness_declarations,
-        "deterministic-time one-step selected-reward freshness is already compiled",
-        "visible marginal with the native fixed-IID SGB prefix",
-        "native visible law",
+        "finite native-prefix identification are already compiled",
+        "Full native visible trajectory-law transport",
         "Pull-ordered or stopped selected-reward IID",
         (
             "stopped-prefix future-cylinder law needed to prove conditional "
