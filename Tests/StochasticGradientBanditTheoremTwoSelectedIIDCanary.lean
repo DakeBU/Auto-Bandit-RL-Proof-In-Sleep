@@ -14,6 +14,20 @@ open scoped ProbabilityTheory
 #check twoArmNativeOptimalPullTimeRewardBlock_map_eq_latentMasked
 #check twoArmFixedIIDTrajectoryMeasure_map_snd_eq_nativeStationary
 #check twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked
+#check twoArmAppendixCPhaseOnePrefixSum
+#check measurable_twoArmAppendixCPhaseOnePrefixSum
+#check twoArmAppendixCRewardPhaseEvent
+#check measurableSet_twoArmAppendixCRewardPhaseEvent
+#check twoArmAppendixCAllPullsPresent
+#check measurableSet_twoArmAppendixCAllPullsPresent
+#check twoArmAppendixCObservedPhaseEvent
+#check measurableSet_twoArmAppendixCObservedPhaseEvent
+#check twoArmAppendixCLatentPhaseEvent
+#check measurableSet_twoArmAppendixCLatentPhaseEvent
+#check twoArmLatentMaskedOptimalPullBlock_preimage_appendixCObservedPhaseEvent
+#check twoArmAppendixCGeneratedPhaseEvent
+#check measurableSet_twoArmAppendixCGeneratedPhaseEvent
+#check twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent
 
 /-- The source-facing theorem retains the missing-pull time coordinate and
 does not replace its masked right-hand side by the unmasked product law. -/
@@ -34,6 +48,7 @@ example
 #print axioms twoArmNativeOptimalPullTimeRewardBlock_map_eq_latentMasked
 #print axioms twoArmFixedIIDTrajectoryMeasure_map_snd_eq_nativeStationary
 #print axioms twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked
+#print axioms twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent
 
 end StochasticGradientBandit
 end BanditRLProof

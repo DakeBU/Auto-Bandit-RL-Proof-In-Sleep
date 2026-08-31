@@ -2,7 +2,7 @@
 
 Task: `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE`
 
-Status: `target-frozen; Corollary 1 compiled; Theorem 2 blocked after compiled nth-pull, latent-product/readout, deferred-decisions finite-prefix factorization, action/readout interface, count-capped branch locality, one-step selected-reward freshness, native-prefix identification, full native visible-law equality, missing-pull-aware selected-block transport, and deterministic-starvation milestones`
+Status: `target-frozen; Corollary 1 compiled; Theorem 2 blocked after compiled nth-pull, latent-product/readout, deferred-decisions finite-prefix factorization, action/readout interface, count-capped branch locality, one-step selected-reward freshness, native-prefix identification, full native visible-law equality, missing-pull-aware selected-block transport, exact phase-event transport, and deterministic-starvation milestones`
 
 ## Source-to-Lean fence
 
@@ -290,6 +290,31 @@ obligation is discharged by the Round-19 packet below.
   with the all-pulls-present occurrence boundary; it may not condition away
   dependence created by adaptive selection.
 
+## Round-24 retrieval packet: exact phase event and occurrence boundary
+
+- Source window: Appendix C, physical PDF pp. 31--34.  `S0` is the first
+  `n0` optimal-arm rewards all equal to `-1`; `S1` contains only `{-1,1}`
+  rewards, has the source-selected exact terminal sum, and keeps the number of
+  `+1` rewards no larger than the number of `-1` rewards at every recovery
+  prefix, equivalently every recovery prefix sum is nonpositive.
+- Fourteen new public declarations extend the selected-block module from eight
+  to 22 declarations.  They define the recovery prefix sum, the exact finite
+  reward event, the all-pulls-present event, observed/generated events, and a
+  latent event that is explicitly the intersection of the pure latent reward
+  pattern with adaptive occurrence.
+- Compiled terminal:
+  `twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent`.
+  It transports event probability through the Round-23 masked block law.
+- Statement fence:
+  `runs/statement-fences/SGB-T2-PHASE-EVENT-TRANSPORT.json`, hash
+  `abcb66250f7cac25a5ab0506fc6101e2be986637e102f5ca072f7e89394ff67d`.
+- Boundary: the theorem does not discard the occurrence intersection and hence
+  does not derive a product law, occurrence-conditioned IID, a phase
+  probability lower bound, future/no-return, ballot/asymptotic assembly, or
+  Theorem 2.  The next exact producer is a missing-pull/all-present dichotomy
+  that lets the pure latent phase probability feed either an already-starved
+  path or the transported observed phase.
+
 ## Pivot rules
 
 - Do not replace the nth-pull law with an IID premise on the selected reward
@@ -301,6 +326,6 @@ obligation is discharged by the Round-19 packet below.
   factorization, action/readout interface, count-cap branch-locality producer,
   unconditional branch-product law, one-step selected-reward freshness,
   native-prefix identification, full native visible-law equality,
-  missing-pull-aware selected-block transport, and
+  missing-pull-aware selected-block transport, exact phase-event transport, and
   deterministic-starvation milestones do not compile the
   frozen Theorem 2 terminal; that terminal remains `blocked`.

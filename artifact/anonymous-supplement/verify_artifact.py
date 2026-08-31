@@ -818,6 +818,7 @@ def verify_claim_ledger():
         ) is not False
         or sgb.get("separate_compiled_native_law_declaration_count") != 10
         or sgb.get("separate_compiled_selected_block_declaration_count") != 8
+        or sgb.get("separate_compiled_phase_event_declaration_count") != 14
         or sgb.get(
             "separate_module_theorem_two_native_prefix_identification_compiled"
         ) is not True
@@ -826,6 +827,9 @@ def verify_claim_ledger():
         ) is not True
         or sgb.get(
             "separate_module_theorem_two_selected_block_transport_compiled"
+        ) is not True
+        or sgb.get(
+            "separate_module_theorem_two_phase_event_transport_compiled"
         ) is not True
         or sgb.get("source_theorem_two_status") != "blocked"
         or sgb.get("source_theorem_two_endpoint_verified") is not False
@@ -840,15 +844,16 @@ def verify_claim_ledger():
         "deterministic-time one-step selected-reward freshness",
         "separate ten-declaration native-law module",
         "complete visible/native trajectory-law identity",
-        "separate eight-declaration selected-block module",
+        "eight declarations transport every finite pull-time/reward block",
+        "fourteen declarations transport the exact finite Appendix-C S0/S1 event",
         "missing-pull-aware masked latent law",
         "stopped or pull-ordered selected IID",
-        "all-pulls-present phase event",
+        "missing-pull/all-present probability dichotomy",
         "stopped-prefix future-cylinder",
         "conditional no-return probability >= 1/2",
-        "Rademacher/binomial ballot phase",
+        "Rademacher/binomial ballot probability",
         "asymptotic terminal",
-        "does not make totalized or occurrence-conditioned stopped rewards IID",
+        "do not make totalized or occurrence-conditioned stopped rewards IID",
         "frozen K = 2 Theorem-2 endpoint remain blocked",
     )
     if (
@@ -996,11 +1001,13 @@ def verify_theorem_audit_comparison():
             "theorem_two_visible_marginal_freshness_compiled": True,
             "separate_compiled_native_law_declaration_count": 10,
             "separate_compiled_selected_block_declaration_count": 8,
+            "separate_compiled_phase_event_declaration_count": 14,
             "separate_module_theorem_two_native_prefix_identification_compiled":
                 True,
             "separate_module_theorem_two_native_trajectory_compiled": True,
             "separate_module_theorem_two_selected_block_transport_compiled":
                 True,
+            "separate_module_theorem_two_phase_event_transport_compiled": True,
             "theorem_two_native_prefix_identification_compiled": False,
             "declaration_count_breakdown": {
                 "finite_action_algebra": 26,
@@ -1082,6 +1089,20 @@ def verify_theorem_audit_comparison():
                 "BanditRLProof.StochasticGradientBandit.twoArmNativeOptimalPullTimeRewardBlock_map_eq_latentMasked",
                 "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_map_snd_eq_nativeStationary",
                 "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked",
+                "BanditRLProof.StochasticGradientBandit.twoArmAppendixCPhaseOnePrefixSum",
+                "BanditRLProof.StochasticGradientBandit.measurable_twoArmAppendixCPhaseOnePrefixSum",
+                "BanditRLProof.StochasticGradientBandit.twoArmAppendixCRewardPhaseEvent",
+                "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmAppendixCRewardPhaseEvent",
+                "BanditRLProof.StochasticGradientBandit.twoArmAppendixCAllPullsPresent",
+                "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmAppendixCAllPullsPresent",
+                "BanditRLProof.StochasticGradientBandit.twoArmAppendixCObservedPhaseEvent",
+                "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmAppendixCObservedPhaseEvent",
+                "BanditRLProof.StochasticGradientBandit.twoArmAppendixCLatentPhaseEvent",
+                "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmAppendixCLatentPhaseEvent",
+                "BanditRLProof.StochasticGradientBandit.twoArmLatentMaskedOptimalPullBlock_preimage_appendixCObservedPhaseEvent",
+                "BanditRLProof.StochasticGradientBandit.twoArmAppendixCGeneratedPhaseEvent",
+                "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmAppendixCGeneratedPhaseEvent",
+                "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent",
             }
             if selected_block_names != expected_selected_block_names:
                 fail("separate SGB selected-block declaration inventory drift")
@@ -1111,20 +1132,22 @@ def verify_theorem_audit_comparison():
                 not in row.get("scope_boundary", "")
                 or "equality of the complete visible/native trajectory measures by projective-limit uniqueness"
                 not in row.get("scope_boundary", "")
-                or "A further eight-declaration module transports the exact finite observable pull-time/reward block to a masked latent law"
+                or "eight declarations transport the exact finite observable pull-time/reward block to a masked latent law"
                 not in row.get("scope_boundary", "")
-                or "neither supplies a product law nor makes totalized or occurrence-conditioned rewards IID"
+                or "fourteen more declarations define the exact finite Appendix-C S0/S1 event"
                 not in row.get("scope_boundary", "")
-                or "Phase-event transport"
+                or "neither supply a product law nor make totalized or occurrence-conditioned rewards IID"
                 not in row.get("scope_boundary", "")
-                or "ballot phase"
+                or "missing-pull/all-present probability dichotomy"
+                not in row.get("scope_boundary", "")
+                or "ballot probability"
                 not in row.get("scope_boundary", "")
                 or "asymptotic terminal remain blocked"
                 not in row.get("scope_boundary", "")
                 or not any(
-                    "all-pulls-present Appendix-C phase event" in item
+                    "compiled exact all-pulls-present Appendix-C phase-event transport" in item
                     and "stopped-prefix future-cylinder" in item
-                    and "ballot phase" in item
+                    and "ballot probability" in item
                     and "asymptotic assembly" in item
                     for item in row.get("blocking_obligations", [])
                 )

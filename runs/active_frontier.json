@@ -1,21 +1,21 @@
 {
   "schema_version": 1,
-  "record_id": "frontier-48e5afca1f74e7be",
-  "updated_at": "2026-08-31T19:58:24+00:00",
+  "record_id": "frontier-3b6256f25861148c",
+  "updated_at": "2026-08-31T22:57:36+00:00",
   "root_objective": "Compile the exact K=2 SGB Theorem 2 route without weakening the frozen source contract, then synchronize only verified evidence into the ICLR and arXiv papers.",
   "current_leaf": {
-    "id": "SGB-T2-PHASE-EVENT-TRANSPORT",
+    "id": "SGB-T2-PHASE-DICHOTOMY",
     "kind": "lean",
     "status": "ready",
-    "statement": "Define the exact finite Appendix-C optimal-arm latent phase event together with an explicit all-pulls-present occurrence boundary, transport that event to the source-shaped generated two-arm trajectory through the compiled masked selected-block law, and do not infer product/IID after occurrence conditioning or assume future/no-return, ballot/asymptotic assembly, or Theorem 2.",
-    "statement_hash": "81c22b3cd590d378bc38f3d6225a166c2fc156fda576d3f033e73ddaf81a4855",
+    "statement": "Use the compiled pure latent S0/S1 reward pattern and occurrence-intersected phase-event transport to prove the finite missing-pull/all-present dichotomy: either one requested optimal-arm pull is absent and the trajectory exposes a starvation branch, or every requested pull occurs and the observed Appendix-C phase event holds. Do not infer occurrence-conditioned IID or assume the future/no-return, ballot probability, asymptotic assembly, or Theorem 2.",
+    "statement_hash": "282ba5a89d29760d32e39552deeb8e80c26270f8398944543700bc4ac6af710f",
     "declaration": "",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
-    "source_status": "Round 23 compiles the exact finite pull-time/reward block law as a missing-pull-aware masked latent-coupling pushforward on both native and source-shaped generated trajectories. The unmasked latent prefix product law is separate; occurrence-conditioned selected IID, the Appendix-C phase event, future/no-return, ballot/asymptotic assembly, and Theorem 2 remain open.",
+    "source_status": "Round 24 compiles the exact finite Appendix-C S0/S1 reward event, all-pulls-present measurable boundary, and exact source-generated to occurrence-intersected latent event probability transport. A probability-producing missing/all-present dichotomy, composition with the fixed-cutoff starvation consumer, stopped-prefix future/no-return law, Rademacher/binomial ballot probability, asymptotic assembly, and Theorem 2 remain open.",
     "dependencies": [
       {
         "kind": "lean",
-        "name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked",
+        "name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent",
         "status": "compiled"
       },
       {
@@ -25,7 +25,7 @@
       },
       {
         "kind": "lean",
-        "name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullReward_eq_latentCoordinate_ae",
+        "name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral",
         "status": "compiled"
       }
     ]
@@ -33,13 +33,13 @@
   "dag": {
     "nodes": [
       {
-        "id": "SGB-T2-PHASE-EVENT-TRANSPORT",
+        "id": "SGB-T2-PHASE-DICHOTOMY",
         "kind": "lean",
         "status": "ready",
         "dependencies": [
           {
             "kind": "lean",
-            "name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked",
+            "name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent",
             "status": "compiled"
           },
           {
@@ -49,7 +49,7 @@
           },
           {
             "kind": "lean",
-            "name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullReward_eq_latentCoordinate_ae",
+            "name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral",
             "status": "compiled"
           }
         ],
@@ -58,28 +58,28 @@
     ]
   },
   "last_accepted_verifier": {
-    "trial_index": 336,
-    "time": "2026-08-31T19:57:57+00:00",
+    "trial_index": 337,
+    "time": "2026-08-31T22:57:24+00:00",
     "task": "PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE",
     "role": "lower",
     "kind": "build",
     "status": "compiled",
-    "lean": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked",
-    "notes": "Compiled an eight-public-declaration missing-pull-aware finite selected-block transport. The native and source-shaped generated pull-time/reward block law equals a masked latent-coupling law. This is not a product/IID theorem; phase-event transport, future/no-return, ballot/asymptotic assembly, and Theorem 2 remain open.",
-    "run_id": "sgb-theorem2-selected-block-transport-round23-2026-09-01"
+    "lean": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent",
+    "notes": "Compiled fourteen public declarations for the exact finite Appendix-C S0/S1 reward event, the measurable all-pulls-present occurrence boundary, and exact source-generated to occurrence-intersected latent event probability transport. This is not a product/selected-IID law, probability lower bound, future/no-return theorem, ballot/asymptotic assembly, or Theorem 2.",
+    "run_id": "sgb-theorem2-phase-event-transport-round24-2026-09-01"
   },
   "memory_policy": {
     "recent_role_relevant_limit": 5,
     "explicit_verified_lemma_ids": [
-      "mem-126613788b69addd"
+      "mem-ff85e5d96599111c"
     ],
     "whole_history_default": false
   },
   "shadow_gate": {
     "status": "passed",
-    "analyzed_trial_rows": 337,
+    "analyzed_trial_rows": 338,
     "mismatches": [],
-    "replay_transitions": 4
+    "replay_transitions": 0
   },
   "mutation_policy": {
     "canonical_path_queue": true,
