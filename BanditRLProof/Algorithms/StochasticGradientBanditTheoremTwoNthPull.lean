@@ -156,6 +156,36 @@ theorem twoArmNthOptimalPullTime_eq_top_iff
   simp [twoArmNthOptimalPullTime, hittingAfter_eq_top_iff,
     twoArmInclusiveOptimalPullCountProcess]
 
+/-- A missing zero-based requested pull keeps every finite-horizon count below
+the corresponding positive count level. -/
+theorem twoArmOptimalPullCount_lt_succ_of_nthOptimalPullTime_eq_top
+    {Env : Type v} [MeasurableSpace Env] (pullIndex horizon : Nat)
+    (sample : Env × ((k : Nat) -> Fin 2 × Real))
+    (htop : twoArmNthOptimalPullTime pullIndex sample = (⊤ : WithTop Nat)) :
+    twoArmOptimalPullCount horizon sample < pullIndex + 1 := by
+  have hnever : ∀ chron,
+      pullCount (twoArmGeneratedAction sample) 0 (chron + 1) ≠
+        pullIndex + 1 := by
+    intro chron
+    simpa [twoArmOptimalPullCount] using
+      ((twoArmNthOptimalPullTime_eq_top_iff pullIndex sample).mp htop chron)
+  simpa [twoArmOptimalPullCount] using
+    (pullCount_lt_of_forall_succ_ne
+      (twoArmGeneratedAction sample) (0 : Fin 2) horizon
+      (pullIndex + 1) (Nat.succ_pos pullIndex) hnever)
+
+/-- If one of the first `m` requested optimal-arm pulls is missing, every
+finite-horizon optimal-arm count is strictly below `m`. -/
+theorem twoArmOptimalPullCount_lt_of_fin_nthOptimalPullTime_eq_top
+    {Env : Type v} [MeasurableSpace Env] (m horizon : Nat) (i : Fin m)
+    (sample : Env × ((k : Nat) -> Fin 2 × Real))
+    (htop : twoArmNthOptimalPullTime (i : Nat) sample = (⊤ : WithTop Nat)) :
+    twoArmOptimalPullCount horizon sample < m := by
+  exact lt_of_lt_of_le
+    (twoArmOptimalPullCount_lt_succ_of_nthOptimalPullTime_eq_top
+      (i : Nat) horizon sample htop)
+    (Nat.succ_le_of_lt i.isLt)
+
 /-- At every finite nth-pull time, the inclusive count hits its target. -/
 theorem twoArmNthOptimalPullTime_count_succ_eq
     {Env : Type v} [MeasurableSpace Env] (pullIndex : Nat)

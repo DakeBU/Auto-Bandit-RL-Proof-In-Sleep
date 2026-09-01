@@ -12,6 +12,8 @@ open MeasureTheory ProbabilityTheory
 #check isStoppingTime_twoArmNthOptimalPullTime
 #check measurable_twoArmNthOptimalPullTime
 #check twoArmNthOptimalPullTime_eq_top_iff
+#check twoArmOptimalPullCount_lt_succ_of_nthOptimalPullTime_eq_top
+#check twoArmOptimalPullCount_lt_of_fin_nthOptimalPullTime_eq_top
 #check twoArmNthOptimalPullTime_spec
 #check twoArmNthOptimalPullReward
 #check measurable_twoArmNthOptimalPullReward
@@ -73,6 +75,7 @@ example
         eta pullIndex t sample htime⟩
 
 #print axioms twoArmNthOptimalPullTime_spec
+#print axioms twoArmOptimalPullCount_lt_of_fin_nthOptimalPullTime_eq_top
 #print axioms measurable_twoArmNthOptimalPullReward
 #print axioms measurable_twoArmNthOptimalPullSuccessProbability
 

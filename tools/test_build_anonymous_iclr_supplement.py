@@ -673,7 +673,7 @@ class AnonymousSupplementTests(unittest.TestCase):
             [BUILDER.SGB_AUDIT_ID, BUILDER.SGB_FOLLOW_ON_ID],
         )
         self.assertEqual(
-            ledger["stochastic_gradient_bandit"]["declaration_count"], 352
+            ledger["stochastic_gradient_bandit"]["declaration_count"], 360
         )
         self.assertEqual(
             ledger["stochastic_gradient_bandit"][
@@ -703,13 +703,13 @@ class AnonymousSupplementTests(unittest.TestCase):
             ledger["stochastic_gradient_bandit"][
                 "theorem_two_deterministic_starvation_consumer_declaration_count"
             ],
-            18,
+            24,
         )
         self.assertEqual(
             ledger["stochastic_gradient_bandit"][
                 "theorem_two_nth_pull_bridge_declaration_count"
             ],
-            24,
+            26,
         )
         self.assertEqual(
             ledger["stochastic_gradient_bandit"][
@@ -840,7 +840,8 @@ class AnonymousSupplementTests(unittest.TestCase):
             "ten declarations split the pure latent phase probability",
             "missing-pull-aware masked latent law",
             "stopped or pull-ordered selected IID",
-            "missing branch is not yet connected to fixed-cutoff starvation",
+            "one declaration maps the missing-pull branch",
+            "terminal-count-below event is not yet connected to a fixed-cutoff starvation trigger",
             "stopped-prefix future-cylinder",
             "conditional no-return probability >= 1/2",
             "Rademacher/binomial ballot probability",
@@ -891,6 +892,12 @@ class AnonymousSupplementTests(unittest.TestCase):
             ],
             10,
         )
+        self.assertEqual(
+            ledger["stochastic_gradient_bandit"][
+                "separate_compiled_missing_pull_terminal_count_declaration_count"
+            ],
+            1,
+        )
         self.assertTrue(
             ledger["stochastic_gradient_bandit"][
                 "separate_module_theorem_two_native_prefix_identification_compiled"
@@ -914,6 +921,11 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertTrue(
             ledger["stochastic_gradient_bandit"][
                 "separate_module_theorem_two_phase_dichotomy_compiled"
+            ]
+        )
+        self.assertTrue(
+            ledger["stochastic_gradient_bandit"][
+                "separate_module_theorem_two_missing_pull_terminal_count_compiled"
             ]
         )
         self.assertTrue(
@@ -997,7 +1009,7 @@ class AnonymousSupplementTests(unittest.TestCase):
         succinct = rows["succinct-lower-bound-source-frozen-audit"]
         self.assertEqual(succinct["compiled_declaration_count"], 54)
         sgb = rows["stochastic-gradient-bandit-source-frozen-audit"]
-        self.assertEqual(sgb["compiled_declaration_count"], 352)
+        self.assertEqual(sgb["compiled_declaration_count"], 360)
         self.assertEqual(
             sgb["evidence_record_ids"],
             [BUILDER.SGB_AUDIT_ID, BUILDER.SGB_FOLLOW_ON_ID],
@@ -1019,8 +1031,8 @@ class AnonymousSupplementTests(unittest.TestCase):
                 "source_theorem_one_terminal": 32,
                 "source_theorem_four_contract_audit": 8,
                 "source_corollary_one_companion": 23,
-                "source_theorem_two_deterministic_starvation_consumer": 18,
-                "source_theorem_two_nth_pull_bridge": 24,
+                "source_theorem_two_deterministic_starvation_consumer": 24,
+                "source_theorem_two_nth_pull_bridge": 26,
                 "source_theorem_two_latent_reward_product_readout": 7,
                 "source_theorem_two_deferred_decisions_prefix_factorization": 8,
                 "source_theorem_two_action_readout_branch_locality_interface_and_count_cap_scaffold": 13,
@@ -1059,6 +1071,12 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertEqual(
             sgb["separate_compiled_phase_dichotomy_declaration_count"], 10
         )
+        self.assertEqual(
+            sgb[
+                "separate_compiled_missing_pull_terminal_count_declaration_count"
+            ],
+            1,
+        )
         self.assertTrue(
             sgb["separate_module_theorem_two_selected_block_transport_compiled"]
         )
@@ -1067,6 +1085,11 @@ class AnonymousSupplementTests(unittest.TestCase):
         )
         self.assertTrue(
             sgb["separate_module_theorem_two_phase_dichotomy_compiled"]
+        )
+        self.assertTrue(
+            sgb[
+                "separate_module_theorem_two_missing_pull_terminal_count_compiled"
+            ]
         )
         self.assertFalse(sgb["theorem_two_native_prefix_identification_compiled"])
 
@@ -1082,7 +1105,8 @@ class AnonymousSupplementTests(unittest.TestCase):
             selected_block_names,
             BUILDER.SGB_THEOREM_TWO_SELECTED_BLOCK_INDEXED_DECLARATIONS |
             BUILDER.SGB_THEOREM_TWO_PHASE_EVENT_INDEXED_DECLARATIONS |
-            BUILDER.SGB_THEOREM_TWO_PHASE_DICHOTOMY_INDEXED_DECLARATIONS,
+            BUILDER.SGB_THEOREM_TWO_PHASE_DICHOTOMY_INDEXED_DECLARATIONS |
+            BUILDER.SGB_THEOREM_TWO_MISSING_PULL_TERMINAL_COUNT_INDEXED_DECLARATIONS,
         )
 
     def test_theorem_audit_comparison_rejects_status_and_count_drift(self):
@@ -1164,6 +1188,18 @@ class AnonymousSupplementTests(unittest.TestCase):
         ):
             BUILDER.validate_theorem_audit_comparison(
                 records, index, comparison=phase_dichotomy_count_drift
+            )
+
+        terminal_count_bridge_drift = json.loads(json.dumps(source))
+        terminal_count_bridge_drift["rows"][3][
+            "separate_compiled_missing_pull_terminal_count_declaration_count"
+        ] = 2
+        with self.assertRaisesRegex(
+            ValueError,
+            "separate_compiled_missing_pull_terminal_count_declaration_count drift",
+        ):
+            BUILDER.validate_theorem_audit_comparison(
+                records, index, comparison=terminal_count_bridge_drift
             )
 
         declaration_drift_records = json.loads(json.dumps(records))
@@ -1251,7 +1287,7 @@ class AnonymousSupplementTests(unittest.TestCase):
                 row["full_name"] = replacement
                 with self.assertRaisesRegex(
                     ValueError,
-                    "352 declarations: historical 223",
+                    "360 declarations: historical 223",
                 ):
                     BUILDER.validate_sgb_count(records, index)
 

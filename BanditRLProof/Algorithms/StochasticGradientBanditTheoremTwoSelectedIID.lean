@@ -649,6 +649,27 @@ theorem mem_twoArmAppendixCMissingPullLatentPhaseEvent_iff
     twoArmLatentMaskedOptimalPullBlock,
     and_comm]
 
+/-- Every missing-pull Appendix-C phase lies in the finite-horizon
+below-threshold count event, at every chosen finite horizon.  This is the
+deterministic missing-pull-to-starvation bridge; it asserts neither the source
+trigger inequality nor a probability lower bound. -/
+theorem twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow
+    (n0 n1 : Nat) (phaseOneTotal : Real) (horizon : Nat) :
+    twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal ⊆
+      (fun sample : UCB.ArmRewardStream 2 ×
+          ((t : Nat) -> Fin 2 × Real) => ((), sample.2)) ⁻¹'
+        twoArmOptimalPullCountBelowEvent
+          (Env := Unit) (n0 + n1) horizon := by
+  intro sample hmissing
+  rcases
+      (mem_twoArmAppendixCMissingPullLatentPhaseEvent_iff
+        n0 n1 phaseOneTotal sample).mp hmissing with
+    ⟨_hreward, i, htop⟩
+  change twoArmOptimalPullCount horizon ((), sample.2) < n0 + n1
+  exact
+    twoArmOptimalPullCount_lt_of_fin_nthOptimalPullTime_eq_top
+      (n0 + n1) horizon i ((), sample.2) htop
+
 /-- The unconditional latent reward event is exactly the union of the
 all-present phase and the missing-pull phase. -/
 theorem twoArmAppendixCPureLatentRewardEvent_eq_union_phase_missing

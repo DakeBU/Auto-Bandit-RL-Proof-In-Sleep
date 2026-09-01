@@ -1625,13 +1625,29 @@
       "math": "\\(\\mathbb P(E^{\\mathrm{pure}})=\\mathbb P(E^{\\mathrm{generated}})+\\mathbb P(E^{\\mathrm{missing}}).\\)",
       "intuition": "Every latent reward block with the required S0/S1 pattern falls into exactly one of two cases: all requested optimal-arm pulls occur, or at least one requested pull time is top. The first case is already transported to the generated process; the second stays explicit.",
       "why": "This closes the finite missing-pull/all-present probability decomposition without conditioning on occurrence or pretending that adaptive stopped rewards are IID.",
-      "position": "This terminal closes a ten-declaration compiled dichotomy layer. It does not identify the missing branch with fixed-cutoff starvation, prove a positive phase probability, construct the future/no-return law, close the ballot estimate, or prove Theorem 2.",
+      "position": "This terminal closes a ten-declaration compiled dichotomy layer. A downstream deterministic theorem now maps the missing branch into a terminal-count-below event, but it does not provide the source fixed-cutoff trigger, an expected-regret inequality, a positive phase probability, the future/no-return law, the ballot estimate, or Theorem 2.",
       "proof_idea": "Define the pure and missing latent events, prove the pure event is the disjoint union of the occurrence-intersected event and the missing event, evaluate the pure event under the finite arm-zero product law, and substitute the compiled source phase-event transport.",
       "lean_notes": "Missing-pull membership exposes a concrete coordinate whose nth-pull time is `WithTop.top`. The terminal canary reports only propext, Classical.choice, and Quot.sound.",
       "dependencies": [
         "BanditRLProof.StochasticGradientBandit.twoArmAppendixCPureLatentRewardEvent_eq_union_phase_missing",
         "BanditRLProof.StochasticGradientBandit.disjoint_twoArmAppendixCLatentPhaseEvent_missing",
         "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow",
+      "chapter": "frontier",
+      "plain": "If one of the requested optimal-arm pulls in the finite Appendix-C block never occurs, then at every finite horizon the optimal arm has been pulled fewer times than the requested block length.",
+      "math": "\\(E_m^{\\mathrm{missing}}\\subseteq\\{\\omega:N_0(T,\\omega)<m\\}\\quad\\text{for every finite }T.\\)",
+      "intuition": "A missing ith pull is represented by the actual value `WithTop.top`. If the count had already reached i+1 by any finite horizon, the compiled nth-pull specification would produce a finite occurrence time, contradicting that value.",
+      "why": "This turns the previously isolated missing-pull probability branch into a concrete measurable low-count event, so the next proof leaf can charge its probability against expected regret without inventing a stopped reward or an IID premise.",
+      "position": "This is a compiled deterministic interface, not the source fixed-cutoff trigger and not a positive probability bound. The missing-mass expected-regret consumer, future/no-return law, ballot estimate, asymptotic assembly, and Theorem 2 remain open.",
+      "proof_idea": "Use the top-time characterization to exclude the requested successor count at every horizon, strengthen the bound for a `Fin m` witness, and map missing-event membership into the measurable below-m terminal-count event.",
+      "lean_notes": "The theorem keeps `WithTop.top` as the explicit no-occurrence value. Its canary reports only propext, Classical.choice, and Quot.sound. It proves neither selected-reward IID nor any lower bound on the missing branch's probability.",
+      "dependencies": [
+        "BanditRLProof.StochasticGradientBandit.mem_twoArmAppendixCMissingPullLatentPhaseEvent_iff",
+        "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCount_lt_of_fin_nthOptimalPullTime_eq_top",
+        "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCountBelowEvent"
       ]
     },
     {
@@ -1643,7 +1659,7 @@
       "why": "This isolates the deterministic consumer at Appendix-C Step 1 without hiding the still-missing probability producer behind a theorem-shaped premise.",
       "position": "This named declaration is a compiled source-shaped consumer, not a partial closure of Theorem 2. The frozen K = 2 terminal remains blocked.",
       "proof_idea": "Make the trigger and final-count event measurable, identify two-arm sampled regret with Delta times suboptimal pulls, prove the exact Delta(T-n) charge on the event, and compare the integral of its indicator with total expected regret.",
-      "lean_notes": "The event uses an externally fixed chronological cutoff. Separate compiled modules construct the random nth-pull stopping prefix, prove the latent fixed-arm product/readout layer, establish deterministic-time freshness and complete visible/native trajectory-law equality, transport finite pull-time/reward blocks and the exact finite S0/S1 phase event, and split its pure probability into all-present and missing-pull branches. Connecting the missing branch to this fixed-cutoff consumer remains open. No module yet proves conditional no-return probability >= 1/2, the Rademacher/binomial ballot probability, or the polynomial asymptotic lower bound.",
+      "lean_notes": "The event uses an externally fixed chronological cutoff. Separate compiled modules construct the random nth-pull stopping prefix, prove the latent fixed-arm product/readout layer, establish deterministic-time freshness and complete visible/native trajectory-law equality, transport finite pull-time/reward blocks and the exact finite S0/S1 phase event, split its pure probability into all-present and missing-pull branches, and map a missing requested pull into a measurable finite-horizon terminal-count-below event. The missing mass still lacks its expected-regret consumer, and the terminal-count event does not supply the source fixed-cutoff trigger. No module yet proves conditional no-return probability >= 1/2, the Rademacher/binomial ballot probability, or the polynomial asymptotic lower bound.",
       "dependencies": [
         "BanditRLProof.StochasticGradientBandit.twoArmStepOneStarvationEvent_charge_mul_probability_le_integral",
         "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmStepOneStarvationEvent",

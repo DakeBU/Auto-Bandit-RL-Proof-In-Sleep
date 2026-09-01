@@ -104,8 +104,8 @@ outside the atom-generated directions.  This is a regularity/codomain
 obligation, not a source-error claim; the global Lemmas 3.5--3.6, Assumption
 3.7, Theorem 3.8, and every regret endpoint remain outside the compiled slice.
 
-The source-frozen stochastic-gradient-bandit audit contains 352 named
-declarations: `352 = 223 + 23 + 18 + 24 + 7 + 8 + 13 + 28 + 8`.  The historical
+The source-frozen stochastic-gradient-bandit audit contains 360 named
+declarations: `360 = 223 + 23 + 24 + 26 + 7 + 8 + 13 + 28 + 8`.  The historical
 record remains exactly 223 declarations:
 a frozen 215-declaration Theorem-1 stack plus eight separate
 Appendix-E/Theorem-4 contract leaves.  The 215-declaration stack begins with 76
@@ -154,19 +154,25 @@ Theorem 2, a time-varying policy, or general `K`.  Again, `Dirac` names only
 the `Unit` environment prior; the bounded fixed-IID reward laws are not
 asserted to be Dirac or Rademacher.
 
-Another 18 declarations compile only a deterministic, source-shaped
-Appendix-C Step-1 consumer.  The named wrapper
+Another 24 declarations compile deterministic, source-shaped Appendix-C
+consumers.  The named wrapper
 `twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral`
 defines a measurable fixed-cutoff starvation event, proves its exact
 `Delta * (T - n)` sampled-regret charge, and lower-bounds expected regret by
-that charge times the event probability.
+that charge times the event probability.  Six further declarations define
+measurable exact and below-threshold terminal-count events, express the latter
+as a finite union of count fibers, and prove the exact sampled-regret charge on
+each terminal-count fiber.
 
-A further 24 declarations compile the chronological nth-pull infrastructure.
+A further 26 declarations compile the chronological nth-pull infrastructure.
 They define a zero-based `WithTop Nat` nth-optimal-pull time, prove that it is a
 stopping time with the required ambient-measurability contract, identify the
 exact count and selected
 action under a finite-time witness, and expose measurable stopped reward and
 post-pull success-probability values at the same chronological coordinate.
+The final two declarations prove that an actual `WithTop.top` requested pull
+forces every finite-horizon optimal-arm count below the requested index, and
+strengthen this to the requested finite block size.
 Seven additional declarations compile a latent fixed-arm product/readout layer.
 They prove the finite product law for a fixed arm's latent reward coordinates,
 lift that law through the coupling's exact arm-stream marginal, identify every
@@ -211,7 +217,7 @@ A later, separate ten-declaration native-law module defines the stationary
 native process, proves equality of every inclusive finite visible prefix, and
 then proves equality of the complete visible/native trajectory measures by
 projective-limit uniqueness.  This module is compiled and indexed, but remains
-outside the frozen 352-declaration source-audit ledger.  It still does not prove
+outside the frozen 360-declaration source-audit ledger.  It still does not prove
 that stopped or pull-ordered selected rewards are IID.
 
 The corresponding evidence flags are explicit:
@@ -229,10 +235,15 @@ The corresponding evidence flags are explicit:
 - separate-module full visible/native trajectory law: `true`;
 - Theorem-2 endpoint: `false`.
 
-These layers are not yet composed with the fixed-cutoff starvation consumer.
-The exact target-by-target branch products, deterministic-time one-step
-selected-reward freshness, all native-prefix identities, and the complete
-visible/native trajectory law compile.  Stopped or pull-ordered selected IID,
+The selected-block module now also compiles the exact finite Appendix-C phase
+event, its disjoint all-present/missing-pull probability split, and the theorem
+`twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow`.  Thus a
+missing requested pull is connected to a measurable low-count event at every
+finite horizon, but the missing mass is not yet consumed by an expected-regret
+inequality and does not supply the source fixed-cutoff trigger.  The exact
+target-by-target branch products, deterministic-time one-step selected-reward
+freshness, all native-prefix identities, and the complete visible/native
+trajectory law compile.  Stopped or pull-ordered selected IID,
 the stopped-prefix future-cylinder, conditional no-return probability at least
 `1/2`, the Rademacher/binomial ballot phase, and the polynomial asymptotic
 terminal remain blocked.  The exact `K = 2` Theorem-2 center therefore remains

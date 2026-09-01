@@ -1,6 +1,6 @@
 # Proof Blueprint: PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE
 
-Generated: `2026-09-01T02:49:14+00:00`
+Generated: `2026-09-01T22:10:32+00:00`
 
 ## Source Task
 
@@ -144,15 +144,9 @@ evidence states:
    pull is at most `1/(2*T)`, the conditional probability of no further
    optimal-arm pull over the remaining horizon is at least `1/2`, yielding
 
-<!-- 3138 characters omitted from the middle of this snapshot. -->
+<!-- 3571 characters omitted from the middle of this snapshot. -->
 
-instantiates `charge * P(event) <= expected sampled regret` on the canonical
-  generated fixed-IID trajectory measure.
-- A separate 24-declaration producer now compiles the zero-based arm-0 nth-pull
-  time as a `WithTop Nat`, with `top` as the explicit missing-pull value.  It
-  proves the stopping-time and ambient measurability boundary, identifies the
-  finite chronological coordinate by exact before/after pull counts and the
-  selected action, and makes the stopped reward and post-pull success
+selected action, and makes the stopped reward and post-pull success
   probability measurable.  It assumes no selected-reward IID law.
 - A separate seven-declaration latent-reward layer now proves the fixed-arm
   finite product law, lifts it through the coupling's exact stream marginal,
@@ -216,7 +210,13 @@ instantiates `charge * P(event) <= expected sampled regret` on the canonical
   exact probability identity: the source-generated all-present phase plus the
   latent missing-pull phase equals the pure product event.  It does not yet
   turn the missing branch into the fixed-cutoff starvation event.
-- A pull-ordered selected-IID theorem, the missing-branch-to-starvation bridge,
+- The deterministic missing-pull bridge now compiles: a requested optimal-arm
+  pull time equal to `WithTop.top` forces every finite-horizon optimal-arm count
+  below the requested block size.  The below-count event is measurable and is
+  the finite union of exact terminal-count fibers; each fiber carries the
+  existing exact sampled-pseudo-regret charge.  This is a terminal-count
+  interface, not the source trigger or a positive probability result.
+- A pull-ordered selected-IID theorem, the fixed-cutoff trigger/consumer bridge,
   conditional no-return probability
   `>= 1/2`, the Rademacher/ballot phase producer, asymptotic
   assembly, and the frozen Theorem-2 terminal remain uncompiled.  The central
@@ -369,28 +369,9 @@ that may be assumed by the terminal.
   `KernelTrajectoryPrefix.trajMeasure_map_frestrictLe_congr`,
   `Thompson.canonicalMeasurableEnvironmentTrajectoryKernel_apply_eq_canonical`,
 
-<!-- 8186 characters omitted from the middle of this snapshot. -->
+<!-- 9298 characters omitted from the middle of this snapshot. -->
 
-`MeasureTheory.IsProjectiveLimit.unique` to identify the two complete
-  probability measures.
-- Hidden regularity contracts: both complete laws are probability measures;
-  every coordinate restriction and finite-coordinate selector is measurable;
-  the target is equality of the two complete visible trajectory measures,
-  not selected/stopped reward IID or any random-time future law.
-- Compiled outcome: `latentArmStreamVisibleTrajectoryMeasure_eq_native`
-  derives equality of the complete visible/native trajectory measures from
-  the previously compiled `Iic n` prefix identities.  Its canary reports only
-  the baseline axioms `propext`, `Classical.choice`, and `Quot.sound`.
-- Status after the focused gate: `compiled project-local`.  No new Mathlib
-  lemma, source assumption, selected-IID premise, random-time future law, or
-  theorem-endpoint promotion was introduced.
-
-## Round-23 retrieval packet: missing-pull-aware selected-block transport
-
-- Reused compiled endpoints:
-  `twoArmNthOptimalPullReward_eq_latentCoordinate_ae`,
-  `twoArmFixedIIDLatentTrajectoryMeasure_map_optimalPrefix_eq_pi`, and
-  `latentArmStreamVisibleTrajectoryMeasure_eq_native`.
+`latentArmStreamVisibleTrajectoryMeasure_eq_native`.
 - Compiled observable: `twoArmOptimalPullTimeRewardBlock m` records, for every
   `i : Fin m`, both the `WithTop Nat` time of the `i`th optimal-arm pull and
   the stopped reward readout.
@@ -464,10 +445,29 @@ that may be assumed by the terminal.
   concentration theorem is introduced; the product-law leaf and finite
   measure-union theorem already compile locally.
 - Hidden contracts: all events remain measurable; the split is unconditional;
-  the missing branch is not yet identified with a fixed-cutoff starvation
+  the missing branch is not yet identified with the source fixed-cutoff trigger
   event; the all-present branch is not occurrence-conditioned IID; no positive
   lower bound, future/no-return law, ballot result, asymptotic assembly, or
   Theorem 2 follows from this leaf alone.
+
+## Round-26 conversion window: missing pull to terminal count
+
+- Frozen statement: if `twoArmNthOptimalPullTime i sample = WithTop.top`, then
+  `twoArmOptimalPullCount horizon sample < i + 1` at every finite `horizon`.
+  For `i : Fin m`, the result strengthens to count `< m`; membership in the
+  Appendix-C missing-pull latent event therefore maps into the measurable
+  below-`m` terminal-count event.
+- Source semantics retained: `WithTop.top` remains the explicit no-occurrence
+  value; the conclusion is uniform over finite horizons and does not replace a
+  missing pull with a default reward or finite stopping time.
+- Local route: `pullCount_succ_le_succ` plus
+  `twoArmNthOptimalPullTime_eq_top_iff` gives the pathwise count inequality;
+  exact terminal-count fibers form a finite `Fin m` union and reuse the
+  compiled exact sampled-pseudo-regret identity.
+- Boundary: this window does not supply the source trigger inequality, a
+  stopped-prefix future/no-return law, occurrence-conditioned IID, a lower
+  bound on either branch probability, a ballot estimate, asymptotic assembly,
+  or Theorem 2.
 
 ## Pivot rules
 
@@ -507,13 +507,14 @@ Task id: `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE`
 | `SGB-T2-NATIVE-TRAJECTORY` | forgetting the latent stream recovers the native fixed-IID SGB trajectory law | compiled | `latentArmStreamVisibleTrajectoryMeasure_eq_native` promotes equality of every inclusive finite prefix through `MeasureTheory.IsProjectiveLimit.unique`; this is full visible-law equality, not selected/stopped IID, a random-time future law, or Theorem 2 |
 | `SGB-T2-SELECTED-BLOCK-TRANSPORT` | missing-pull-aware finite pull-time/reward block law on the native and source generated processes | compiled | `twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked` transports the observable block to a masked latent-coupling law while retaining `WithTop Nat` and the fallback at missing pulls; this is not a product or selected-IID law |
 | `SGB-T2-PHASE-EVENT-TRANSPORT` | exact finite Appendix-C `S0/S1` reward event with an explicit all-pulls-present boundary | compiled | fourteen new declarations define the unlucky `-1` block, exact terminal recovery sum, all nonpositive recovery prefixes, measurable occurrence/observed/latent events, and `twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent`; the latent event retains its intersection with adaptive pull occurrence, so no product/IID claim follows |
-| `SGB-T2-PHASE-DICHOTOMY` | exact probability split between the all-present observed phase and an explicit missing-pull phase | compiled | ten declarations prove a measurable disjoint union and `twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing`; membership exposes an actual `WithTop.top` coordinate, but the missing branch is not yet identified with the fixed-cutoff starvation event |
+| `SGB-T2-PHASE-DICHOTOMY` | exact probability split between the all-present observed phase and an explicit missing-pull phase | compiled | ten declarations prove a measurable disjoint union and `twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing`; membership exposes an actual `WithTop.top` coordinate |
+| `SGB-T2-MISSING-PULL-TERMINAL-COUNT` | missing requested pull implies every finite-horizon optimal-arm count is below the requested block size | compiled | `twoArmOptimalPullCount_lt_of_fin_nthOptimalPullTime_eq_top` and `twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow`; measurable terminal-count fibers carry exact sampled pseudo-regret, but no fixed-cutoff trigger or probability lower bound follows |
 | `SGB-T2-SELECTED-IID` | target-faithful transfer of the source pull-ordered reward blocks to the native phase event | partial | latent product/readout, finite-prefix mixture, action/readout, branch locality, one-step freshness, full native-law equality, the masked block law, exact phase-event transport, and the probability dichotomy compile; no occurrence-conditioned IID theorem is claimed, and the remaining route proceeds branchwise |
 | `SGB-T2-FUTURE-CYLINDER` | conditional probability of no later optimal-arm pull after the random nth-pull prefix | blocked | one-step action kernels at fixed histories do not by themselves supply a stopped-prefix future law |
-| `SGB-T2-STARVATION` | Appendix-C Step-1 event-to-regret lower bound | partial | measurable fixed-cutoff event and generated-law `Delta*(T-n)*P(event)` consumer compile; the new missing-pull branch still needs a bridge to fixed-cutoff starvation, and conditional probability `>= 1/2` remains unproved |
+| `SGB-T2-STARVATION` | Appendix-C Step-1 event-to-regret lower bound | partial | measurable fixed-cutoff and terminal-count events plus their exact-regret consumers compile; the terminal-count-below event still needs a fixed-cutoff trigger/consumer bridge, and conditional probability `>= 1/2` remains unproved |
 | `SGB-T2-PHASE-PROBABILITY` | `S0/S1` probability via Rademacher/binomial/ballot route | partial | the exact measurable path event and exact missing/all-present probability split compile; the rounded Rademacher terminal count, pure product-law probability, and ballot lower bound remain open |
 | `SGB-T2-POLYLOG-OMEGA` | frozen K=2 Theorem-2 terminal | blocked | depends on all preceding producers |
-| `SGB-PHASE-CANARY` | exact imports, checks, and representative axiom prints | compiled | companion, deterministic-consumer, nth-pull, latent-reward, finite-prefix-mixture, safe-fiber measure bridge, count-cap induction, branch-locality, freshness, native-law, selected-block, phase-event, and dichotomy canaries use baseline axioms only |
+| `SGB-PHASE-CANARY` | exact imports, checks, and representative axiom prints | compiled | companion, deterministic-consumer, terminal-count, nth-pull, latent-reward, finite-prefix-mixture, safe-fiber measure bridge, count-cap induction, branch-locality, freshness, native-law, selected-block, phase-event, and dichotomy canaries use baseline axioms only |
 
 ## Source and scenario
 
@@ -524,6 +525,34 @@ Task id: `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE`
 - Mathlib routes: probability kernels and conditional laws, stopping times,
   infinite products, binomial PMFs, finite sums, logarithm/exponential/square
   root order algebra, and Stirling bounds.
+
+## Round-26 route record: missing pull to finite-horizon count
+
+- Active leaf: `SGB-T2-MISSING-PULL-STARVATION-BRIDGE`.
+- Exact target: if `twoArmNthOptimalPullTime i sample = top`, then every
+  finite-horizon optimal-arm pull count is `< i+1`; for `i : Fin m`, it is
+  therefore `< m`.  A missing Appendix-C phase is then contained in the
+  measurable union of exact terminal-count events indexed by `Fin m`.
+- Reused local APIs: `pullCount_succ_le_succ`,
+  `twoArmNthOptimalPullTime_eq_top_iff`,
+  `mem_twoArmAppendixCMissingPullLatentPhaseEvent_iff`, and
+  `twoArmSampledPseudoRegret_eq_gap_mul_horizon_sub_of_optimalPullCount_eq`.
+- Import route: the dependency-light count lemma belongs in
+  `LeafLemmas.lean`; the generic measurable count partition belongs in the
+  starvation module; the stopped-time specialization belongs in the nth-pull
+  module; and only the final missing-phase subset theorem belongs in the
+  selected-block/phase module.  This ordering avoids an import cycle.
+- Proof route: induct on the horizon, use that `pullCount` grows by at most one,
+  and exclude equality with the requested successor count.  Express the
+  `< m` event as a finite indexed union of exact-count fibers so that the
+  existing exact-regret consumer can be applied one terminal count at a time.
+- Classification: project-local deterministic interface.  Searches of typed
+  memory, the local declaration index, and Mathlib theorem cards found no
+  existing exact bridge; no new external dependency or source assumption is
+  introduced.
+- Nonclaims: no trigger inequality, probability lower bound, selected IID,
+  future/no-return law, ballot bound, asymptotic assembly, or Theorem 2 follows
+  from this leaf.
 
 ## Failure policy
 
@@ -842,6 +871,14 @@ ABRL has two target workflows:
 This design keeps proof weapons as planning inspiration while keeping compiled
 Lean and imported theorem cards as the only reusable proof material.
 
+The execution architecture is itself evidence-gated. The established
+hierarchical route and the experimental master–worker route can be run on the
+same frozen target and compared with `harness-compare`. The comparison gives
+priority to reviewer-validated mathematical progress, not worker count or
+command success; GPT receives the deterministic report and structured logs as
+an interpretation packet. Until at least two matched experiments exist, the
+current default is retained and `adaptive` only selects the next arm to sample.
+
 The deterministic lifecycle implementation is documented in
 `docs/lifecycle_and_proof_frontier_hardening.md`. Its
 `runs/active_frontier.json` record is authoritative for the current leaf,
@@ -1003,6 +1040,11 @@ The harness encodes the following proof-engineering lessons:
 - Treat persistent failure as mathematical signal.
 - Promote hidden regularity into reusable theorem contracts.
 - Do not frequently change the proof route without a recorded reason.
+- Every ordinary worker must deliver one substantive result: a compiled leaf,
+  reusable retrieval, statement repair, or precise route-eliminating blocker.
+- Parallel workers must own disjoint files; the master plans and synthesizes but
+  does not silently repair their proofs or relabel their evidence.
+- Measure the master bottleneck through critical-path time and context volume.
 
 Reviewer should reject any cycle that violates these rules even if the text
 looks plausible.
@@ -34712,10 +34754,26 @@ These cards are planning inspiration only.  They do not certify any theorem.
   },
   {
     "kind": "theorem",
+    "name": "twoArmOptimalPullCount_lt_succ_of_nthOptimalPullTime_eq_top",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCount_lt_succ_of_nthOptimalPullTime_eq_top",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
+    "line": 161,
+    "statement": "theorem twoArmOptimalPullCount_lt_succ_of_nthOptimalPullTime_eq_top {Env : Type v} [MeasurableSpace Env] (pullIndex horizon : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) (htop : twoArmNthOptimalPullTime pullIndex sample = (\u22a4 : WithTop Nat)) : twoArmOptimalPullCount horizon sample < pullIndex + 1"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmOptimalPullCount_lt_of_fin_nthOptimalPullTime_eq_top",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCount_lt_of_fin_nthOptimalPullTime_eq_top",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
+    "line": 179,
+    "statement": "theorem twoArmOptimalPullCount_lt_of_fin_nthOptimalPullTime_eq_top {Env : Type v} [MeasurableSpace Env] (m horizon : Nat) (i : Fin m) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) (htop : twoArmNthOptimalPullTime (i : Nat) sample = (\u22a4 : WithTop Nat)) : twoArmOptimalPullCount horizon sample < m"
+  },
+  {
+    "kind": "theorem",
     "name": "twoArmNthOptimalPullTime_count_succ_eq",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime_count_succ_eq",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
-    "line": 160,
+    "line": 190,
     "statement": "theorem twoArmNthOptimalPullTime_count_succ_eq {Env : Type v} [MeasurableSpace Env] (pullIndex : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) (hfinite : twoArmNthOptimalPullTime pullIndex sample \u2260 (\u22a4 : WithTop Nat)) : twoArmOptimalPullCount ((twoArmNthOptimalPullTime pullIndex sample).untopA + 1) sample = pullIndex + 1"
   },
   {
@@ -34723,7 +34781,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmNthOptimalPullTime_count_succ_eq_of_eq",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime_count_succ_eq_of_eq",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
-    "line": 174,
+    "line": 204,
     "statement": "theorem twoArmNthOptimalPullTime_count_succ_eq_of_eq {Env : Type v} [MeasurableSpace Env] (pullIndex t : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) (htime : twoArmNthOptimalPullTime pullIndex sample = (t : WithTop Nat)) : twoArmOptimalPullCount (t + 1) sample = pullIndex + 1"
   },
   {
@@ -34731,7 +34789,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmNthOptimalPullTime_action_eq_zero",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime_action_eq_zero",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
-    "line": 188,
+    "line": 218,
     "statement": "theorem twoArmNthOptimalPullTime_action_eq_zero {Env : Type v} [MeasurableSpace Env] (pullIndex t : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) (htime : twoArmNthOptimalPullTime pullIndex sample = (t : WithTop Nat)) : twoArmGeneratedAction sample t = 0"
   },
   {
@@ -34739,7 +34797,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmNthOptimalPullTime_count_eq",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime_count_eq",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
-    "line": 217,
+    "line": 247,
     "statement": "theorem twoArmNthOptimalPullTime_count_eq {Env : Type v} [MeasurableSpace Env] (pullIndex t : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) (htime : twoArmNthOptimalPullTime pullIndex sample = (t : WithTop Nat)) : twoArmOptimalPullCount t sample = pullIndex"
   },
   {
@@ -34747,7 +34805,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmNthOptimalPullTime_spec",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime_spec",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
-    "line": 232,
+    "line": 262,
     "statement": "theorem twoArmNthOptimalPullTime_spec {Env : Type v} [MeasurableSpace Env] (pullIndex t : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) (htime : twoArmNthOptimalPullTime pullIndex sample = (t : WithTop Nat)) : twoArmOptimalPullCount t sample = pullIndex /\\ twoArmGeneratedAction sample t = 0 /\\ twoArmOptimalPullCount (t + 1) sample = pullIndex + 1"
   },
   {
@@ -34755,7 +34813,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmNthOptimalPullReward",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullReward",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
-    "line": 248,
+    "line": 278,
     "statement": "def twoArmNthOptimalPullReward {Env : Type v} [MeasurableSpace Env] (pullIndex : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) : Real"
   },
   {
@@ -34763,7 +34821,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "adapted_twoArmGeneratedReward",
     "full_name": "BanditRLProof.StochasticGradientBandit.adapted_twoArmGeneratedReward",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
-    "line": 255,
+    "line": 285,
     "statement": "theorem adapted_twoArmGeneratedReward {Env : Type v} [MeasurableSpace Env] : Adapted (twoArmPrefixFiltration (Env := Env)) (fun (t : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) => (sample.2 t).2)"
   },
   {
@@ -34771,7 +34829,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "measurable_twoArmNthOptimalPullReward",
     "full_name": "BanditRLProof.StochasticGradientBandit.measurable_twoArmNthOptimalPullReward",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
-    "line": 278,
+    "line": 308,
     "statement": "theorem measurable_twoArmNthOptimalPullReward {Env : Type v} [MeasurableSpace Env] (pullIndex : Nat) : Measurable (twoArmNthOptimalPullReward (Env := Env) pullIndex)"
   },
   {
@@ -34779,7 +34837,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmNthOptimalPullReward_eq_of_time_eq",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullReward_eq_of_time_eq",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
-    "line": 294,
+    "line": 324,
     "statement": "@[simp] theorem twoArmNthOptimalPullReward_eq_of_time_eq {Env : Type v} [MeasurableSpace Env] (pullIndex t : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) (htime : twoArmNthOptimalPullTime pullIndex sample = (t : WithTop Nat)) : twoArmNthOptimalPullReward pullIndex sample = (sample.2 t).2"
   },
   {
@@ -34787,7 +34845,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmNthOptimalPullSuccessProbability",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullSuccessProbability",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
-    "line": 306,
+    "line": 336,
     "statement": "def twoArmNthOptimalPullSuccessProbability {Env : Type v} [MeasurableSpace Env] (eta : Real) (pullIndex : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) : Real"
   },
   {
@@ -34795,7 +34853,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "adapted_twoArmSuccessProbability",
     "full_name": "BanditRLProof.StochasticGradientBandit.adapted_twoArmSuccessProbability",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
-    "line": 313,
+    "line": 343,
     "statement": "theorem adapted_twoArmSuccessProbability {Env : Type v} [MeasurableSpace Env] (eta : Real) : Adapted (twoArmPrefixFiltration (Env := Env)) (twoArmSuccessProbability (Env := Env) eta)"
   },
   {
@@ -34803,7 +34861,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "measurable_twoArmNthOptimalPullSuccessProbability",
     "full_name": "BanditRLProof.StochasticGradientBandit.measurable_twoArmNthOptimalPullSuccessProbability",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
-    "line": 338,
+    "line": 368,
     "statement": "theorem measurable_twoArmNthOptimalPullSuccessProbability {Env : Type v} [MeasurableSpace Env] (eta : Real) (pullIndex : Nat) : Measurable (twoArmNthOptimalPullSuccessProbability (Env := Env) eta pullIndex)"
   },
   {
@@ -34811,7 +34869,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmNthOptimalPullSuccessProbability_eq_of_time_eq",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullSuccessProbability_eq_of_time_eq",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
-    "line": 354,
+    "line": 384,
     "statement": "@[simp] theorem twoArmNthOptimalPullSuccessProbability_eq_of_time_eq {Env : Type v} [MeasurableSpace Env] (eta : Real) (pullIndex t : Nat) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) (htime : twoArmNthOptimalPullTime pullIndex sample = (t : WithTop Nat)) : twoArmNthOptimalPullSuccessProbability eta pullIndex sample = twoArmSuccessProbability eta t sample"
   },
   {
@@ -35032,10 +35090,18 @@ These cards are planning inspiration only.  They do not certify any theorem.
   },
   {
     "kind": "theorem",
+    "name": "twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+    "line": 656,
+    "statement": "theorem twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow (n0 n1 : Nat) (phaseOneTotal : Real) (horizon : Nat) : twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal \u2286 (fun sample : UCB.ArmRewardStream 2 \u00d7 ((t : Nat) -> Fin 2 \u00d7 Real) => ((), sample.2)) \u207b\u00b9' twoArmOptimalPullCountBelowEvent (Env := Unit) (n0 + n1) horizon"
+  },
+  {
+    "kind": "theorem",
     "name": "twoArmAppendixCPureLatentRewardEvent_eq_union_phase_missing",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCPureLatentRewardEvent_eq_union_phase_missing",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
-    "line": 654,
+    "line": 675,
     "statement": "theorem twoArmAppendixCPureLatentRewardEvent_eq_union_phase_missing (n0 n1 : Nat) (phaseOneTotal : Real) : twoArmAppendixCPureLatentRewardEvent n0 n1 phaseOneTotal = twoArmAppendixCLatentPhaseEvent n0 n1 phaseOneTotal \u222a twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal"
   },
   {
@@ -35043,7 +35109,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "disjoint_twoArmAppendixCLatentPhaseEvent_missing",
     "full_name": "BanditRLProof.StochasticGradientBandit.disjoint_twoArmAppendixCLatentPhaseEvent_missing",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
-    "line": 671,
+    "line": 692,
     "statement": "theorem disjoint_twoArmAppendixCLatentPhaseEvent_missing (n0 n1 : Nat) (phaseOneTotal : Real) : Disjoint (twoArmAppendixCLatentPhaseEvent n0 n1 phaseOneTotal) (twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal)"
   },
   {
@@ -35051,7 +35117,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_pi",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_pi",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
-    "line": 683,
+    "line": 704,
     "statement": "theorem twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_pi (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (n0 n1 : Nat) (phaseOneTotal : Real) : (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta) (twoArmAppendixCPureLatentRewardEvent n0 n1 phaseOneTotal) = (Measure.pi (fun _ : Fin (n0 + n1) => armLaw 0) : Measure (Fin (n0 + n1) -> Real)) (twoArmAppendixCRewardPhaseEvent n0 n1 phaseOneTotal)"
   },
   {
@@ -35059,7 +35125,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_phase_add_missing",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_phase_add_missing",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
-    "line": 718,
+    "line": 739,
     "statement": "theorem twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_phase_add_missing (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (n0 n1 : Nat) (phaseOneTotal : Real) : (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta) (twoArmAppendixCPureLatentRewardEvent n0 n1 phaseOneTotal) = (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta) (twoArmAppendixCLatentPhaseEvent n0 n1 phaseOneTotal) + (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta) (twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal)"
   },
   {
@@ -35067,7 +35133,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
-    "line": 744,
+    "line": 765,
     "statement": "theorem twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (n0 n1 : Nat) (phaseOneTotal : Real) : (Measure.pi (fun _ : Fin (n0 + n1) => armLaw 0) : Measure (Fin (n0 + n1) -> Real)) (twoArmAppendixCRewardPhaseEvent n0 n1 phaseOneTotal) = (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)) (twoArmAppendixCGeneratedPhaseEvent n0 n1 phaseOneTotal) + (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta) (twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal)"
   },
   {
@@ -35127,11 +35193,51 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "statement": "theorem measurable_twoArmOptimalPullCount {Env : Type v} [MeasurableSpace Env] (horizon : Nat) : Measurable (twoArmOptimalPullCount (Env := Env) horizon)"
   },
   {
+    "kind": "def",
+    "name": "twoArmTerminalOptimalPullCountEvent",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmTerminalOptimalPullCountEvent",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
+    "line": 111,
+    "statement": "def twoArmTerminalOptimalPullCountEvent {Env : Type v} [MeasurableSpace Env] (n horizon : Nat) : Set (Env \u00d7 ((k : Nat) \u2192 Fin 2 \u00d7 Real))"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurableSet_twoArmTerminalOptimalPullCountEvent",
+    "full_name": "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmTerminalOptimalPullCountEvent",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
+    "line": 116,
+    "statement": "theorem measurableSet_twoArmTerminalOptimalPullCountEvent {Env : Type v} [MeasurableSpace Env] (n horizon : Nat) : MeasurableSet (twoArmTerminalOptimalPullCountEvent (Env := Env) n horizon)"
+  },
+  {
+    "kind": "def",
+    "name": "twoArmOptimalPullCountBelowEvent",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCountBelowEvent",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
+    "line": 124,
+    "statement": "def twoArmOptimalPullCountBelowEvent {Env : Type v} [MeasurableSpace Env] (m horizon : Nat) : Set (Env \u00d7 ((k : Nat) \u2192 Fin 2 \u00d7 Real))"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurableSet_twoArmOptimalPullCountBelowEvent",
+    "full_name": "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmOptimalPullCountBelowEvent",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
+    "line": 129,
+    "statement": "theorem measurableSet_twoArmOptimalPullCountBelowEvent {Env : Type v} [MeasurableSpace Env] (m horizon : Nat) : MeasurableSet (twoArmOptimalPullCountBelowEvent (Env := Env) m horizon)"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmOptimalPullCountBelowEvent_eq_iUnion_terminalCount",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCountBelowEvent_eq_iUnion_terminalCount",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
+    "line": 138,
+    "statement": "theorem twoArmOptimalPullCountBelowEvent_eq_iUnion_terminalCount {Env : Type v} [MeasurableSpace Env] (m horizon : Nat) : twoArmOptimalPullCountBelowEvent (Env := Env) m horizon = \u22c3 n : Fin m, twoArmTerminalOptimalPullCountEvent (Env := Env) (n : Nat) horizon"
+  },
+  {
     "kind": "theorem",
     "name": "measurableSet_twoArmStepOneTriggerEvent",
     "full_name": "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmStepOneTriggerEvent",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
-    "line": 110,
+    "line": 157,
     "statement": "theorem measurableSet_twoArmStepOneTriggerEvent {Env : Type v} [MeasurableSpace Env] (eta : Real) (cutoff n horizon : Nat) : MeasurableSet (twoArmStepOneTriggerEvent (Env := Env) eta cutoff n horizon)"
   },
   {
@@ -35139,7 +35245,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "measurableSet_twoArmStepOneStarvationEvent",
     "full_name": "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmStepOneStarvationEvent",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
-    "line": 128,
+    "line": 175,
     "statement": "theorem measurableSet_twoArmStepOneStarvationEvent {Env : Type v} [MeasurableSpace Env] (eta : Real) (cutoff n horizon : Nat) : MeasurableSet (twoArmStepOneStarvationEvent (Env := Env) eta cutoff n horizon)"
   },
   {
@@ -35147,7 +35253,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmSampledPseudoRegret_nonneg",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmSampledPseudoRegret_nonneg",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
-    "line": 143,
+    "line": 190,
     "statement": "theorem twoArmSampledPseudoRegret_nonneg {Env : Type v} (Delta : Real) (hDelta : 0 \u2264 Delta) (horizon : Nat) (sample : Env \u00d7 ((k : Nat) \u2192 Fin 2 \u00d7 Real)) : 0 \u2264 twoArmSampledPseudoRegret Delta horizon sample"
   },
   {
@@ -35155,7 +35261,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmSampledPseudoRegret_eq_gap_mul_suboptimalPullCount",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmSampledPseudoRegret_eq_gap_mul_suboptimalPullCount",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
-    "line": 158,
+    "line": 205,
     "statement": "theorem twoArmSampledPseudoRegret_eq_gap_mul_suboptimalPullCount {Env : Type v} (Delta : Real) (horizon : Nat) (sample : Env \u00d7 ((k : Nat) \u2192 Fin 2 \u00d7 Real)) : twoArmSampledPseudoRegret Delta horizon sample = Delta * (pullCount (twoArmGeneratedAction sample) 1 horizon : Real)"
   },
   {
@@ -35163,7 +35269,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmOptimalPullCount_add_suboptimalPullCount_eq_horizon",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCount_add_suboptimalPullCount_eq_horizon",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
-    "line": 181,
+    "line": 228,
     "statement": "theorem twoArmOptimalPullCount_add_suboptimalPullCount_eq_horizon {Env : Type v} (horizon : Nat) (sample : Env \u00d7 ((k : Nat) \u2192 Fin 2 \u00d7 Real)) : twoArmOptimalPullCount horizon sample + pullCount (twoArmGeneratedAction sample) 1 horizon = horizon"
   },
   {
@@ -35171,15 +35277,23 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmSampledPseudoRegret_eq_gap_mul_horizon_sub_of_optimalPullCount_eq",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmSampledPseudoRegret_eq_gap_mul_horizon_sub_of_optimalPullCount_eq",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
-    "line": 191,
+    "line": 238,
     "statement": "theorem twoArmSampledPseudoRegret_eq_gap_mul_horizon_sub_of_optimalPullCount_eq {Env : Type v} (Delta : Real) (n horizon : Nat) (sample : Env \u00d7 ((k : Nat) \u2192 Fin 2 \u00d7 Real)) (hcount : twoArmOptimalPullCount horizon sample = n) : twoArmSampledPseudoRegret Delta horizon sample = Delta * ((horizon - n : Nat) : Real)"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmTerminalOptimalPullCountEvent_sampledPseudoRegret_eq",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmTerminalOptimalPullCountEvent_sampledPseudoRegret_eq",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
+    "line": 254,
+    "statement": "theorem twoArmTerminalOptimalPullCountEvent_sampledPseudoRegret_eq {Env : Type v} [MeasurableSpace Env] (Delta : Real) (n horizon : Nat) (sample : Env \u00d7 ((k : Nat) \u2192 Fin 2 \u00d7 Real)) (hcount : sample \u2208 twoArmTerminalOptimalPullCountEvent (Env := Env) n horizon) : twoArmSampledPseudoRegret Delta horizon sample = Delta * ((horizon - n : Nat) : Real)"
   },
   {
     "kind": "theorem",
     "name": "mem_twoArmStepOneStarvationEvent_of_lowProbability_noFurtherOptimalPull",
     "full_name": "BanditRLProof.StochasticGradientBandit.mem_twoArmStepOneStarvationEvent_of_lowProbability_noFurtherOptimalPull",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
-    "line": 210,
+    "line": 271,
     "statement": "theorem mem_twoArmStepOneStarvationEvent_of_lowProbability_noFurtherOptimalPull {Env : Type v} [MeasurableSpace Env] (eta : Real) (cutoff n horizon : Nat) (sample : Env \u00d7 ((k : Nat) \u2192 Fin 2 \u00d7 Real)) (hcutoff : cutoff + 1 \u2264 horizon) (hlow : twoArmSuccessProbability eta cutoff sample \u2264 twoArmStepOneThreshold horizon) (hcount : twoArmOptimalPullCount (cutoff + 1) sample = n) (hnoFurther : \u2200 t, cutoff + 1 \u2264 t \u2192 t < horizon \u2192 twoArmGeneratedAction sample t \u2260 0) : sample \u2208 twoArmStepOneStarvationEvent (Env := Env) eta cutoff n horizon"
   },
   {
@@ -35187,7 +35301,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmStepOneStarvationEvent_sampledPseudoRegret_eq",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmStepOneStarvationEvent_sampledPseudoRegret_eq",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
-    "line": 235,
+    "line": 296,
     "statement": "theorem twoArmStepOneStarvationEvent_sampledPseudoRegret_eq {Env : Type v} [MeasurableSpace Env] (eta Delta : Real) (cutoff n horizon : Nat) (sample : Env \u00d7 ((k : Nat) \u2192 Fin 2 \u00d7 Real)) (hstarve : sample \u2208 twoArmStepOneStarvationEvent (Env := Env) eta cutoff n horizon) : twoArmSampledPseudoRegret Delta horizon sample = Delta * ((horizon - n : Nat) : Real)"
   },
   {
@@ -35195,7 +35309,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "integrable_twoArmSampledPseudoRegret_of_finiteMeasure",
     "full_name": "BanditRLProof.StochasticGradientBandit.integrable_twoArmSampledPseudoRegret_of_finiteMeasure",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
-    "line": 248,
+    "line": 309,
     "statement": "theorem integrable_twoArmSampledPseudoRegret_of_finiteMeasure {Env : Type v} [MeasurableSpace Env] (mu : Measure (Env \u00d7 ((k : Nat) \u2192 Fin 2 \u00d7 Real))) [IsFiniteMeasure mu] (Delta : Real) (horizon : Nat) : Integrable (twoArmSampledPseudoRegret (Env := Env) Delta horizon) mu"
   },
   {
@@ -35203,7 +35317,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmStepOneStarvationEvent_charge_mul_probability_le_integral",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmStepOneStarvationEvent_charge_mul_probability_le_integral",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
-    "line": 272,
+    "line": 333,
     "statement": "theorem twoArmStepOneStarvationEvent_charge_mul_probability_le_integral {Env : Type v} [MeasurableSpace Env] (mu : Measure (Env \u00d7 ((k : Nat) \u2192 Fin 2 \u00d7 Real))) [IsFiniteMeasure mu] (eta Delta : Real) (hDelta : 0 \u2264 Delta) (cutoff n horizon : Nat) : Delta * ((horizon - n : Nat) : Real) * mu.real (twoArmStepOneStarvationEvent (Env := Env) eta cutoff n horizon) \u2264 integral mu (twoArmSampledPseudoRegret (Env := Env) Delta horizon)"
   },
   {
@@ -35211,7 +35325,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
-    "line": 327,
+    "line": 388,
     "statement": "theorem twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta Delta : Real) (hDelta : 0 <= Delta) (cutoff n horizon : Nat) : Delta * ((horizon - n : Nat) : Real) * (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)).real (twoArmStepOneStarvationEvent (Env := Unit) eta cutoff n horizon) <= integral (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)) (twoArmSampledPseudoRegret (Env := Unit) Delta horizon)"
   },
   {
@@ -57344,10 +57458,18 @@ These cards are planning inspiration only.  They do not certify any theorem.
   },
   {
     "kind": "theorem",
+    "name": "pullCount_lt_of_forall_succ_ne",
+    "full_name": "BanditRLProof.pullCount_lt_of_forall_succ_ne",
+    "file": "BanditRLProof/LeafLemmas.lean",
+    "line": 43,
+    "statement": "theorem pullCount_lt_of_forall_succ_ne (target : Nat) (htarget : 0 < target) (hnever : \u2200 chron, pullCount action a (chron + 1) \u2260 target) : pullCount action a t < target"
+  },
+  {
+    "kind": "theorem",
     "name": "pullCount_mono",
     "full_name": "BanditRLProof.pullCount_mono",
     "file": "BanditRLProof/LeafLemmas.lean",
-    "line": 40,
+    "line": 55,
     "statement": "theorem pullCount_mono {s t : Nat} (h : s \u2264 t) : pullCount action a s \u2264 pullCount action a t"
   },
   {
@@ -57355,7 +57477,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "pullCount_le_time",
     "full_name": "BanditRLProof.pullCount_le_time",
     "file": "BanditRLProof/LeafLemmas.lean",
-    "line": 46,
+    "line": 61,
     "statement": "theorem pullCount_le_time : pullCount action a t \u2264 t"
   },
   {
@@ -57363,7 +57485,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "pullCount_add_le",
     "full_name": "BanditRLProof.pullCount_add_le",
     "file": "BanditRLProof/LeafLemmas.lean",
-    "line": 58,
+    "line": 73,
     "statement": "theorem pullCount_add_le (n : Nat) : pullCount action a (t + n) \u2264 pullCount action a t + n"
   },
   {
@@ -57371,7 +57493,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "pullCount_le_add",
     "full_name": "BanditRLProof.pullCount_le_add",
     "file": "BanditRLProof/LeafLemmas.lean",
-    "line": 67,
+    "line": 82,
     "statement": "theorem pullCount_le_add : pullCount action a t \u2264 pullCount action a (t + n)"
   },
   {
@@ -57379,7 +57501,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "pullCount_eq_zero_of_forall_ne",
     "full_name": "BanditRLProof.pullCount_eq_zero_of_forall_ne",
     "file": "BanditRLProof/LeafLemmas.lean",
-    "line": 71,
+    "line": 86,
     "statement": "theorem pullCount_eq_zero_of_forall_ne (h : \u2200 s, s < t \u2192 action s \u2260 a) : pullCount action a t = 0"
   },
   {
@@ -57387,7 +57509,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "pullCount_eq_time_of_forall_eq",
     "full_name": "BanditRLProof.pullCount_eq_time_of_forall_eq",
     "file": "BanditRLProof/LeafLemmas.lean",
-    "line": 80,
+    "line": 95,
     "statement": "theorem pullCount_eq_time_of_forall_eq (h : \u2200 s, s < t \u2192 action s = a) : pullCount action a t = t"
   },
   {
@@ -57395,7 +57517,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "pullCount_pos_of_eq_before",
     "full_name": "BanditRLProof.pullCount_pos_of_eq_before",
     "file": "BanditRLProof/LeafLemmas.lean",
-    "line": 89,
+    "line": 104,
     "statement": "theorem pullCount_pos_of_eq_before {s t : Nat} (hst : s < t) (h : action s = a) : 0 < pullCount action a t"
   },
   {
@@ -57403,7 +57525,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "pullCount_eq_of_forall_lt",
     "full_name": "BanditRLProof.pullCount_eq_of_forall_lt",
     "file": "BanditRLProof/LeafLemmas.lean",
-    "line": 108,
+    "line": 123,
     "statement": "theorem pullCount_eq_of_forall_lt (action action' : ActionTrace Action) (a : Action) : forall t : Nat, (forall s : Nat, s < t -> action s = action' s) -> pullCount action a t = pullCount action' a t"
   },
   {
@@ -57411,7 +57533,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "pullCount_const_self",
     "full_name": "BanditRLProof.pullCount_const_self",
     "file": "BanditRLProof/LeafLemmas.lean",
-    "line": 124,
+    "line": 139,
     "statement": "@[simp] theorem pullCount_const_self (a : Action) (t : Nat) : pullCount (fun _ => a) a t = t"
   },
   {
@@ -57419,7 +57541,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "pullCount_const_of_ne",
     "full_name": "BanditRLProof.pullCount_const_of_ne",
     "file": "BanditRLProof/LeafLemmas.lean",
-    "line": 130,
+    "line": 145,
     "statement": "theorem pullCount_const_of_ne (b : Action) (h : b \u2260 a) (t : Nat) : pullCount (fun _ => b) a t = 0"
   },
   {
@@ -57427,7 +57549,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "pullCount_add_eq_of_forall_ne_between",
     "full_name": "BanditRLProof.pullCount_add_eq_of_forall_ne_between",
     "file": "BanditRLProof/LeafLemmas.lean",
-    "line": 136,
+    "line": 151,
     "statement": "theorem pullCount_add_eq_of_forall_ne_between (n : Nat) (h : \u2200 s, t \u2264 s \u2192 s < t + n \u2192 action s \u2260 a) : pullCount action a (t + n) = pullCount action a t"
   },
   {
@@ -57435,7 +57557,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "pullCount_add_eq_add_of_forall_eq_between",
     "full_name": "BanditRLProof.pullCount_add_eq_add_of_forall_eq_between",
     "file": "BanditRLProof/LeafLemmas.lean",
-    "line": 148,
+    "line": 163,
     "statement": "theorem pullCount_add_eq_add_of_forall_eq_between (n : Nat) (h : \u2200 s, t \u2264 s \u2192 s < t + n \u2192 action s = a) : pullCount action a (t + n) = pullCount action a t + n"
   },
   {
@@ -57443,7 +57565,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "pullCount_eq_list_filter_length",
     "full_name": "BanditRLProof.pullCount_eq_list_filter_length",
     "file": "BanditRLProof/LeafLemmas.lean",
-    "line": 168,
+    "line": 183,
     "statement": "theorem pullCount_eq_list_filter_length : pullCount action a t = ((List.range t).filter (fun s : Nat => decide (action s = a))).length"
   },
   {
@@ -57451,7 +57573,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "sumRewards_succ_of_eq",
     "full_name": "BanditRLProof.sumRewards_succ_of_eq",
     "file": "BanditRLProof/LeafLemmas.lean",
-    "line": 189,
+    "line": 204,
     "statement": "theorem sumRewards_succ_of_eq (h : action t = a) : sumRewards action reward a (t + 1) = sumRewards action reward a t + reward t"
   },
   {
@@ -57459,7 +57581,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "sumRewards_succ_of_ne",
     "full_name": "BanditRLProof.sumRewards_succ_of_ne",
     "file": "BanditRLProof/LeafLemmas.lean",
-    "line": 194,
+    "line": 209,
     "statement": "theorem sumRewards_succ_of_ne (hzero : \u2200 x : Reward, x + 0 = x) (h : action t \u2260 a) : sumRewards action reward a (t + 1) = sumRewards action reward a t"
   },
   {
@@ -57467,7 +57589,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "sumRewards_eq_zero_of_forall_ne",
     "full_name": "BanditRLProof.sumRewards_eq_zero_of_forall_ne",
     "file": "BanditRLProof/LeafLemmas.lean",
-    "line": 200,
+    "line": 215,
     "statement": "theorem sumRewards_eq_zero_of_forall_ne (hzero : \u2200 x : Reward, x + 0 = x) (h : \u2200 s, s < t \u2192 action s \u2260 a) : sumRewards action reward a t = 0"
   },
   {
@@ -57475,7 +57597,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "sumRewards_const_of_ne",
     "full_name": "BanditRLProof.sumRewards_const_of_ne",
     "file": "BanditRLProof/LeafLemmas.lean",
-    "line": 209,
+    "line": 224,
     "statement": "theorem sumRewards_const_of_ne (hzero : \u2200 x : Reward, x + 0 = x) (b : Action) (h : b \u2260 a) (t : Nat) : sumRewards (fun _ => b) reward a t = 0"
   },
   {
@@ -57483,7 +57605,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "sumRewards_add_eq_of_forall_ne_between",
     "full_name": "BanditRLProof.sumRewards_add_eq_of_forall_ne_between",
     "file": "BanditRLProof/LeafLemmas.lean",
-    "line": 217,
+    "line": 232,
     "statement": "theorem sumRewards_add_eq_of_forall_ne_between (hzero : \u2200 x : Reward, x + 0 = x) (n : Nat) (h : \u2200 s, t \u2264 s \u2192 s < t + n \u2192 action s \u2260 a) : sumRewards action reward a (t + n) = sumRewards action reward a t"
   },
   {
@@ -57491,7 +57613,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "sumRewards_eq_list_range_foldl",
     "full_name": "BanditRLProof.sumRewards_eq_list_range_foldl",
     "file": "BanditRLProof/LeafLemmas.lean",
-    "line": 235,
+    "line": 250,
     "statement": "theorem sumRewards_eq_list_range_foldl : sumRewards action reward a t = (List.range t).foldl (fun acc s => acc + if action s = a then reward s else 0) 0"
   },
   {
@@ -57499,7 +57621,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "sumRewards_eq_list_range_filter_foldl",
     "full_name": "BanditRLProof.sumRewards_eq_list_range_filter_foldl",
     "file": "BanditRLProof/LeafLemmas.lean",
-    "line": 253,
+    "line": 268,
     "statement": "theorem sumRewards_eq_list_range_filter_foldl (hzero : \u2200 x : Reward, x + 0 = x) : sumRewards action reward a t = ((List.range t).filter (fun s : Nat => decide (action s = a))).foldl (fun acc s => acc + reward s) 0"
   },
   {
@@ -57507,7 +57629,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "bestMean_eq_mean_bestArm",
     "full_name": "BanditRLProof.FiniteBanditModel.bestMean_eq_mean_bestArm",
     "file": "BanditRLProof/LeafLemmas.lean",
-    "line": 272,
+    "line": 287,
     "statement": "@[simp] theorem bestMean_eq_mean_bestArm (model : FiniteBanditModel K) : model.bestMean = model.mean model.bestArm"
   },
   {
@@ -57515,7 +57637,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "gap_of_ne_bestArm",
     "full_name": "BanditRLProof.FiniteBanditModel.gap_of_ne_bestArm",
     "file": "BanditRLProof/LeafLemmas.lean",
-    "line": 275,
+    "line": 290,
     "statement": "theorem gap_of_ne_bestArm (model : FiniteBanditModel K) (arm : Fin K) (h : arm \u2260 model.bestArm) : model.gap arm = model.bestMean - model.mean arm"
   },
   {
@@ -57523,7 +57645,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "pseudoRegret_one",
     "full_name": "BanditRLProof.pseudoRegret_one",
     "file": "BanditRLProof/LeafLemmas.lean",
-    "line": 286,
+    "line": 301,
     "statement": "@[simp] theorem pseudoRegret_one : pseudoRegret model action 1 = model.gap (action 0)"
   },
   {
@@ -57531,7 +57653,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "pseudoRegret_succ_of_bestArm",
     "full_name": "BanditRLProof.pseudoRegret_succ_of_bestArm",
     "file": "BanditRLProof/LeafLemmas.lean",
-    "line": 291,
+    "line": 306,
     "statement": "theorem pseudoRegret_succ_of_bestArm (h : action t = model.bestArm) : pseudoRegret model action (t + 1) = pseudoRegret model action t"
   },
   {
@@ -57539,7 +57661,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "pseudoRegret_succ_of_gap_zero",
     "full_name": "BanditRLProof.pseudoRegret_succ_of_gap_zero",
     "file": "BanditRLProof/LeafLemmas.lean",
-    "line": 296,
+    "line": 311,
     "statement": "theorem pseudoRegret_succ_of_gap_zero (h : model.gap (action t) = 0) : pseudoRegret model action (t + 1) = pseudoRegret model action t"
   },
   {
@@ -57547,7 +57669,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "pseudoRegret_eq_zero_of_forall_bestArm",
     "full_name": "BanditRLProof.pseudoRegret_eq_zero_of_forall_bestArm",
     "file": "BanditRLProof/LeafLemmas.lean",
-    "line": 301,
+    "line": 316,
     "statement": "theorem pseudoRegret_eq_zero_of_forall_bestArm (h : \u2200 s, s < t \u2192 action s = model.bestArm) : pseudoRegret model action t = 0"
   },
   {
@@ -57555,7 +57677,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "pseudoRegret_eq_zero_of_forall_gap_zero",
     "full_name": "BanditRLProof.pseudoRegret_eq_zero_of_forall_gap_zero",
     "file": "BanditRLProof/LeafLemmas.lean",
-    "line": 310,
+    "line": 325,
     "statement": "theorem pseudoRegret_eq_zero_of_forall_gap_zero (h : \u2200 s, s < t \u2192 model.gap (action s) = 0) : pseudoRegret model action t = 0"
   },
   {
@@ -57563,7 +57685,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "pseudoRegret_const_bestArm",
     "full_name": "BanditRLProof.pseudoRegret_const_bestArm",
     "file": "BanditRLProof/LeafLemmas.lean",
-    "line": 319,
+    "line": 334,
     "statement": "@[simp] theorem pseudoRegret_const_bestArm : pseudoRegret model (fun _ => model.bestArm) t = 0"
   },
   {
@@ -57571,7 +57693,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "pseudoRegret_const_of_gap_zero",
     "full_name": "BanditRLProof.pseudoRegret_const_of_gap_zero",
     "file": "BanditRLProof/LeafLemmas.lean",
-    "line": 325,
+    "line": 340,
     "statement": "theorem pseudoRegret_const_of_gap_zero (arm : Fin K) (h : model.gap arm = 0) : pseudoRegret model (fun _ => arm) t = 0"
   },
   {
@@ -57579,7 +57701,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "pseudoRegret_add_eq_of_forall_bestArm_between",
     "full_name": "BanditRLProof.pseudoRegret_add_eq_of_forall_bestArm_between",
     "file": "BanditRLProof/LeafLemmas.lean",
-    "line": 331,
+    "line": 346,
     "statement": "theorem pseudoRegret_add_eq_of_forall_bestArm_between (n : Nat) (h : \u2200 s, t \u2264 s \u2192 s < t + n \u2192 action s = model.bestArm) : pseudoRegret model action (t + n) = pseudoRegret model action t"
   },
   {
@@ -57587,7 +57709,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "pseudoRegret_add_eq_of_forall_gap_zero_between",
     "full_name": "BanditRLProof.pseudoRegret_add_eq_of_forall_gap_zero_between",
     "file": "BanditRLProof/LeafLemmas.lean",
-    "line": 343,
+    "line": 358,
     "statement": "theorem pseudoRegret_add_eq_of_forall_gap_zero_between (n : Nat) (h : \u2200 s, t \u2264 s \u2192 s < t + n \u2192 model.gap (action s) = 0) : pseudoRegret model action (t + n) = pseudoRegret model action t"
   },
   {
@@ -57595,7 +57717,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "pseudoRegret_eq_list_range_foldl",
     "full_name": "BanditRLProof.pseudoRegret_eq_list_range_foldl",
     "file": "BanditRLProof/LeafLemmas.lean",
-    "line": 361,
+    "line": 376,
     "statement": "theorem pseudoRegret_eq_list_range_foldl : pseudoRegret model action t = (List.range t).foldl (fun acc s => acc + model.gap (action s)) 0"
   },
   {

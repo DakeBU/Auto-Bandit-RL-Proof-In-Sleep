@@ -37,6 +37,21 @@ theorem pullCount_succ_le_succ :
   rw [pullCount_succ]
   by_cases h : action t = a <;> simp [h]
 
+/-- If a positive count level is never hit at a successor time, every finite
+pull count stays strictly below that level.  The proof uses only that
+`pullCount` starts at zero and grows by at most one per round. -/
+theorem pullCount_lt_of_forall_succ_ne
+    (target : Nat) (htarget : 0 < target)
+    (hnever : ∀ chron, pullCount action a (chron + 1) ≠ target) :
+    pullCount action a t < target := by
+  induction t with
+  | zero => simpa using htarget
+  | succ t ih =>
+      have hle : pullCount action a (t + 1) ≤ target :=
+        Nat.le_trans (pullCount_succ_le_succ action a t)
+          (Nat.succ_le_iff.mpr ih)
+      exact Nat.lt_of_le_of_ne hle (hnever t)
+
 theorem pullCount_mono {s t : Nat} (h : s ≤ t) :
     pullCount action a s ≤ pullCount action a t := by
   induction h with

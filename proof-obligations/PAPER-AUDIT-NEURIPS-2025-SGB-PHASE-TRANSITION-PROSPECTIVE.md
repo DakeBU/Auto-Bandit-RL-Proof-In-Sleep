@@ -18,13 +18,14 @@ Task id: `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE`
 | `SGB-T2-NATIVE-TRAJECTORY` | forgetting the latent stream recovers the native fixed-IID SGB trajectory law | compiled | `latentArmStreamVisibleTrajectoryMeasure_eq_native` promotes equality of every inclusive finite prefix through `MeasureTheory.IsProjectiveLimit.unique`; this is full visible-law equality, not selected/stopped IID, a random-time future law, or Theorem 2 |
 | `SGB-T2-SELECTED-BLOCK-TRANSPORT` | missing-pull-aware finite pull-time/reward block law on the native and source generated processes | compiled | `twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked` transports the observable block to a masked latent-coupling law while retaining `WithTop Nat` and the fallback at missing pulls; this is not a product or selected-IID law |
 | `SGB-T2-PHASE-EVENT-TRANSPORT` | exact finite Appendix-C `S0/S1` reward event with an explicit all-pulls-present boundary | compiled | fourteen new declarations define the unlucky `-1` block, exact terminal recovery sum, all nonpositive recovery prefixes, measurable occurrence/observed/latent events, and `twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent`; the latent event retains its intersection with adaptive pull occurrence, so no product/IID claim follows |
-| `SGB-T2-PHASE-DICHOTOMY` | exact probability split between the all-present observed phase and an explicit missing-pull phase | compiled | ten declarations prove a measurable disjoint union and `twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing`; membership exposes an actual `WithTop.top` coordinate, but the missing branch is not yet identified with the fixed-cutoff starvation event |
+| `SGB-T2-PHASE-DICHOTOMY` | exact probability split between the all-present observed phase and an explicit missing-pull phase | compiled | ten declarations prove a measurable disjoint union and `twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing`; membership exposes an actual `WithTop.top` coordinate |
+| `SGB-T2-MISSING-PULL-TERMINAL-COUNT` | missing requested pull implies every finite-horizon optimal-arm count is below the requested block size | compiled | `twoArmOptimalPullCount_lt_of_fin_nthOptimalPullTime_eq_top` and `twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow`; measurable terminal-count fibers carry exact sampled pseudo-regret, but no fixed-cutoff trigger or probability lower bound follows |
 | `SGB-T2-SELECTED-IID` | target-faithful transfer of the source pull-ordered reward blocks to the native phase event | partial | latent product/readout, finite-prefix mixture, action/readout, branch locality, one-step freshness, full native-law equality, the masked block law, exact phase-event transport, and the probability dichotomy compile; no occurrence-conditioned IID theorem is claimed, and the remaining route proceeds branchwise |
 | `SGB-T2-FUTURE-CYLINDER` | conditional probability of no later optimal-arm pull after the random nth-pull prefix | blocked | one-step action kernels at fixed histories do not by themselves supply a stopped-prefix future law |
-| `SGB-T2-STARVATION` | Appendix-C Step-1 event-to-regret lower bound | partial | measurable fixed-cutoff event and generated-law `Delta*(T-n)*P(event)` consumer compile; the new missing-pull branch still needs a bridge to fixed-cutoff starvation, and conditional probability `>= 1/2` remains unproved |
+| `SGB-T2-STARVATION` | Appendix-C Step-1 event-to-regret lower bound | partial | measurable fixed-cutoff and terminal-count events plus their exact-regret consumers compile; the terminal-count-below event still needs a fixed-cutoff trigger/consumer bridge, and conditional probability `>= 1/2` remains unproved |
 | `SGB-T2-PHASE-PROBABILITY` | `S0/S1` probability via Rademacher/binomial/ballot route | partial | the exact measurable path event and exact missing/all-present probability split compile; the rounded Rademacher terminal count, pure product-law probability, and ballot lower bound remain open |
 | `SGB-T2-POLYLOG-OMEGA` | frozen K=2 Theorem-2 terminal | blocked | depends on all preceding producers |
-| `SGB-PHASE-CANARY` | exact imports, checks, and representative axiom prints | compiled | companion, deterministic-consumer, nth-pull, latent-reward, finite-prefix-mixture, safe-fiber measure bridge, count-cap induction, branch-locality, freshness, native-law, selected-block, phase-event, and dichotomy canaries use baseline axioms only |
+| `SGB-PHASE-CANARY` | exact imports, checks, and representative axiom prints | compiled | companion, deterministic-consumer, terminal-count, nth-pull, latent-reward, finite-prefix-mixture, safe-fiber measure bridge, count-cap induction, branch-locality, freshness, native-law, selected-block, phase-event, and dichotomy canaries use baseline axioms only |
 
 ## Source and scenario
 
@@ -35,6 +36,34 @@ Task id: `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE`
 - Mathlib routes: probability kernels and conditional laws, stopping times,
   infinite products, binomial PMFs, finite sums, logarithm/exponential/square
   root order algebra, and Stirling bounds.
+
+## Round-26 route record: missing pull to finite-horizon count
+
+- Active leaf: `SGB-T2-MISSING-PULL-STARVATION-BRIDGE`.
+- Exact target: if `twoArmNthOptimalPullTime i sample = top`, then every
+  finite-horizon optimal-arm pull count is `< i+1`; for `i : Fin m`, it is
+  therefore `< m`.  A missing Appendix-C phase is then contained in the
+  measurable union of exact terminal-count events indexed by `Fin m`.
+- Reused local APIs: `pullCount_succ_le_succ`,
+  `twoArmNthOptimalPullTime_eq_top_iff`,
+  `mem_twoArmAppendixCMissingPullLatentPhaseEvent_iff`, and
+  `twoArmSampledPseudoRegret_eq_gap_mul_horizon_sub_of_optimalPullCount_eq`.
+- Import route: the dependency-light count lemma belongs in
+  `LeafLemmas.lean`; the generic measurable count partition belongs in the
+  starvation module; the stopped-time specialization belongs in the nth-pull
+  module; and only the final missing-phase subset theorem belongs in the
+  selected-block/phase module.  This ordering avoids an import cycle.
+- Proof route: induct on the horizon, use that `pullCount` grows by at most one,
+  and exclude equality with the requested successor count.  Express the
+  `< m` event as a finite indexed union of exact-count fibers so that the
+  existing exact-regret consumer can be applied one terminal count at a time.
+- Classification: project-local deterministic interface.  Searches of typed
+  memory, the local declaration index, and Mathlib theorem cards found no
+  existing exact bridge; no new external dependency or source assumption is
+  introduced.
+- Nonclaims: no trigger inequality, probability lower bound, selected IID,
+  future/no-return law, ballot bound, asymptotic assembly, or Theorem 2 follows
+  from this leaf.
 
 ## Failure policy
 

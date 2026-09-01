@@ -1,6 +1,6 @@
 {
   "task": "PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE",
-  "generated": "2026-08-31T16:49:30+00:00",
+  "generated": "2026-09-01T22:17:58+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -33622,10 +33622,26 @@
     },
     {
       "kind": "theorem",
+      "name": "twoArmOptimalPullCount_lt_succ_of_nthOptimalPullTime_eq_top",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCount_lt_succ_of_nthOptimalPullTime_eq_top",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
+      "line": 161,
+      "statement": "theorem twoArmOptimalPullCount_lt_succ_of_nthOptimalPullTime_eq_top {Env : Type v} [MeasurableSpace Env] (pullIndex horizon : Nat) (sample : Env × ((k : Nat) -> Fin 2 × Real)) (htop : twoArmNthOptimalPullTime pullIndex sample = (⊤ : WithTop Nat)) : twoArmOptimalPullCount horizon sample < pullIndex + 1"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmOptimalPullCount_lt_of_fin_nthOptimalPullTime_eq_top",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCount_lt_of_fin_nthOptimalPullTime_eq_top",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
+      "line": 179,
+      "statement": "theorem twoArmOptimalPullCount_lt_of_fin_nthOptimalPullTime_eq_top {Env : Type v} [MeasurableSpace Env] (m horizon : Nat) (i : Fin m) (sample : Env × ((k : Nat) -> Fin 2 × Real)) (htop : twoArmNthOptimalPullTime (i : Nat) sample = (⊤ : WithTop Nat)) : twoArmOptimalPullCount horizon sample < m"
+    },
+    {
+      "kind": "theorem",
       "name": "twoArmNthOptimalPullTime_count_succ_eq",
       "full_name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime_count_succ_eq",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
-      "line": 160,
+      "line": 190,
       "statement": "theorem twoArmNthOptimalPullTime_count_succ_eq {Env : Type v} [MeasurableSpace Env] (pullIndex : Nat) (sample : Env × ((k : Nat) -> Fin 2 × Real)) (hfinite : twoArmNthOptimalPullTime pullIndex sample ≠ (⊤ : WithTop Nat)) : twoArmOptimalPullCount ((twoArmNthOptimalPullTime pullIndex sample).untopA + 1) sample = pullIndex + 1"
     },
     {
@@ -33633,7 +33649,7 @@
       "name": "twoArmNthOptimalPullTime_count_succ_eq_of_eq",
       "full_name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime_count_succ_eq_of_eq",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
-      "line": 174,
+      "line": 204,
       "statement": "theorem twoArmNthOptimalPullTime_count_succ_eq_of_eq {Env : Type v} [MeasurableSpace Env] (pullIndex t : Nat) (sample : Env × ((k : Nat) -> Fin 2 × Real)) (htime : twoArmNthOptimalPullTime pullIndex sample = (t : WithTop Nat)) : twoArmOptimalPullCount (t + 1) sample = pullIndex + 1"
     },
     {
@@ -33641,7 +33657,7 @@
       "name": "twoArmNthOptimalPullTime_action_eq_zero",
       "full_name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime_action_eq_zero",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
-      "line": 188,
+      "line": 218,
       "statement": "theorem twoArmNthOptimalPullTime_action_eq_zero {Env : Type v} [MeasurableSpace Env] (pullIndex t : Nat) (sample : Env × ((k : Nat) -> Fin 2 × Real)) (htime : twoArmNthOptimalPullTime pullIndex sample = (t : WithTop Nat)) : twoArmGeneratedAction sample t = 0"
     },
     {
@@ -33649,7 +33665,7 @@
       "name": "twoArmNthOptimalPullTime_count_eq",
       "full_name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime_count_eq",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
-      "line": 217,
+      "line": 247,
       "statement": "theorem twoArmNthOptimalPullTime_count_eq {Env : Type v} [MeasurableSpace Env] (pullIndex t : Nat) (sample : Env × ((k : Nat) -> Fin 2 × Real)) (htime : twoArmNthOptimalPullTime pullIndex sample = (t : WithTop Nat)) : twoArmOptimalPullCount t sample = pullIndex"
     },
     {
@@ -33657,7 +33673,7 @@
       "name": "twoArmNthOptimalPullTime_spec",
       "full_name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime_spec",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
-      "line": 232,
+      "line": 262,
       "statement": "theorem twoArmNthOptimalPullTime_spec {Env : Type v} [MeasurableSpace Env] (pullIndex t : Nat) (sample : Env × ((k : Nat) -> Fin 2 × Real)) (htime : twoArmNthOptimalPullTime pullIndex sample = (t : WithTop Nat)) : twoArmOptimalPullCount t sample = pullIndex /\\ twoArmGeneratedAction sample t = 0 /\\ twoArmOptimalPullCount (t + 1) sample = pullIndex + 1"
     },
     {
@@ -33665,7 +33681,7 @@
       "name": "twoArmNthOptimalPullReward",
       "full_name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullReward",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
-      "line": 248,
+      "line": 278,
       "statement": "def twoArmNthOptimalPullReward {Env : Type v} [MeasurableSpace Env] (pullIndex : Nat) (sample : Env × ((k : Nat) -> Fin 2 × Real)) : Real"
     },
     {
@@ -33673,7 +33689,7 @@
       "name": "adapted_twoArmGeneratedReward",
       "full_name": "BanditRLProof.StochasticGradientBandit.adapted_twoArmGeneratedReward",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
-      "line": 255,
+      "line": 285,
       "statement": "theorem adapted_twoArmGeneratedReward {Env : Type v} [MeasurableSpace Env] : Adapted (twoArmPrefixFiltration (Env := Env)) (fun (t : Nat) (sample : Env × ((k : Nat) -> Fin 2 × Real)) => (sample.2 t).2)"
     },
     {
@@ -33681,7 +33697,7 @@
       "name": "measurable_twoArmNthOptimalPullReward",
       "full_name": "BanditRLProof.StochasticGradientBandit.measurable_twoArmNthOptimalPullReward",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
-      "line": 278,
+      "line": 308,
       "statement": "theorem measurable_twoArmNthOptimalPullReward {Env : Type v} [MeasurableSpace Env] (pullIndex : Nat) : Measurable (twoArmNthOptimalPullReward (Env := Env) pullIndex)"
     },
     {
@@ -33689,7 +33705,7 @@
       "name": "twoArmNthOptimalPullReward_eq_of_time_eq",
       "full_name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullReward_eq_of_time_eq",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
-      "line": 294,
+      "line": 324,
       "statement": "@[simp] theorem twoArmNthOptimalPullReward_eq_of_time_eq {Env : Type v} [MeasurableSpace Env] (pullIndex t : Nat) (sample : Env × ((k : Nat) -> Fin 2 × Real)) (htime : twoArmNthOptimalPullTime pullIndex sample = (t : WithTop Nat)) : twoArmNthOptimalPullReward pullIndex sample = (sample.2 t).2"
     },
     {
@@ -33697,7 +33713,7 @@
       "name": "twoArmNthOptimalPullSuccessProbability",
       "full_name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullSuccessProbability",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
-      "line": 306,
+      "line": 336,
       "statement": "def twoArmNthOptimalPullSuccessProbability {Env : Type v} [MeasurableSpace Env] (eta : Real) (pullIndex : Nat) (sample : Env × ((k : Nat) -> Fin 2 × Real)) : Real"
     },
     {
@@ -33705,7 +33721,7 @@
       "name": "adapted_twoArmSuccessProbability",
       "full_name": "BanditRLProof.StochasticGradientBandit.adapted_twoArmSuccessProbability",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
-      "line": 313,
+      "line": 343,
       "statement": "theorem adapted_twoArmSuccessProbability {Env : Type v} [MeasurableSpace Env] (eta : Real) : Adapted (twoArmPrefixFiltration (Env := Env)) (twoArmSuccessProbability (Env := Env) eta)"
     },
     {
@@ -33713,7 +33729,7 @@
       "name": "measurable_twoArmNthOptimalPullSuccessProbability",
       "full_name": "BanditRLProof.StochasticGradientBandit.measurable_twoArmNthOptimalPullSuccessProbability",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
-      "line": 338,
+      "line": 368,
       "statement": "theorem measurable_twoArmNthOptimalPullSuccessProbability {Env : Type v} [MeasurableSpace Env] (eta : Real) (pullIndex : Nat) : Measurable (twoArmNthOptimalPullSuccessProbability (Env := Env) eta pullIndex)"
     },
     {
@@ -33721,8 +33737,272 @@
       "name": "twoArmNthOptimalPullSuccessProbability_eq_of_time_eq",
       "full_name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullSuccessProbability_eq_of_time_eq",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
-      "line": 354,
+      "line": 384,
       "statement": "@[simp] theorem twoArmNthOptimalPullSuccessProbability_eq_of_time_eq {Env : Type v} [MeasurableSpace Env] (eta : Real) (pullIndex t : Nat) (sample : Env × ((k : Nat) -> Fin 2 × Real)) (htime : twoArmNthOptimalPullTime pullIndex sample = (t : WithTop Nat)) : twoArmNthOptimalPullSuccessProbability eta pullIndex sample = twoArmSuccessProbability eta t sample"
+    },
+    {
+      "kind": "def",
+      "name": "twoArmOptimalPullTimeRewardBlock",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullTimeRewardBlock",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 50,
+      "statement": "def twoArmOptimalPullTimeRewardBlock {Env : Type u} [MeasurableSpace Env] (m : Nat) : Env × ((t : Nat) -> Fin 2 × Real) -> ((i : Fin m) -> WithTop Nat × Real)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_twoArmOptimalPullTimeRewardBlock",
+      "full_name": "BanditRLProof.StochasticGradientBandit.measurable_twoArmOptimalPullTimeRewardBlock",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 58,
+      "statement": "theorem measurable_twoArmOptimalPullTimeRewardBlock {Env : Type u} [MeasurableSpace Env] (m : Nat) : Measurable (twoArmOptimalPullTimeRewardBlock (Env := Env) m)"
+    },
+    {
+      "kind": "def",
+      "name": "twoArmLatentMaskedOptimalPullBlock",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmLatentMaskedOptimalPullBlock",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 69,
+      "statement": "def twoArmLatentMaskedOptimalPullBlock (m : Nat) : UCB.ArmRewardStream 2 × ((t : Nat) -> Fin 2 × Real) -> ((i : Fin m) -> WithTop Nat × Real)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_twoArmLatentMaskedOptimalPullBlock",
+      "full_name": "BanditRLProof.StochasticGradientBandit.measurable_twoArmLatentMaskedOptimalPullBlock",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 84,
+      "statement": "theorem measurable_twoArmLatentMaskedOptimalPullBlock (m : Nat) : Measurable (twoArmLatentMaskedOptimalPullBlock m)"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmOptimalPullTimeRewardBlock_eq_latentMasked_ae",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullTimeRewardBlock_eq_latentMasked_ae",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 116,
+      "statement": "theorem twoArmOptimalPullTimeRewardBlock_eq_latentMasked_ae (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (m : Nat) : (fun sample : UCB.ArmRewardStream 2 × ((t : Nat) -> Fin 2 × Real) => twoArmOptimalPullTimeRewardBlock (Env := Unit) m ((), sample.2)) =ᵐ[ twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta] twoArmLatentMaskedOptimalPullBlock m"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmNativeOptimalPullTimeRewardBlock_map_eq_latentMasked",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmNativeOptimalPullTimeRewardBlock_map_eq_latentMasked",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 163,
+      "statement": "theorem twoArmNativeOptimalPullTimeRewardBlock_map_eq_latentMasked (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (m : Nat) : letI : IsMarkovKernel (UCB.finiteArmRealRewardKernel armLaw) := UCB.finiteArmRealRewardKernel_isMarkov armLaw hprob Measure.map (fun trajectory : (t : Nat) -> Fin 2 × Real => twoArmOptimalPullTimeRewardBlock (Env := Unit) m ((), trajectory)) (Thompson.nativeStationaryTrajectoryMeasure (historyAlgorithm (fun _ : Fin 2 => 0) eta) (UCB.finiteArmRealRewardKernel armLaw)) = Measure.map (twoArmLatentMaskedOptimalPullBlock m) (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta)"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmFixedIIDTrajectoryMeasure_map_snd_eq_nativeStationary",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_map_snd_eq_nativeStationary",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 212,
+      "statement": "theorem twoArmFixedIIDTrajectoryMeasure_map_snd_eq_nativeStationary (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) : letI : IsMarkovKernel (UCB.finiteArmRealRewardKernel armLaw) := UCB.finiteArmRealRewardKernel_isMarkov armLaw hprob (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)).map Prod.snd = Thompson.nativeStationaryTrajectoryMeasure (historyAlgorithm (fun _ : Fin 2 => 0) eta) (UCB.finiteArmRealRewardKernel armLaw)"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 275,
+      "statement": "theorem twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (m : Nat) : Measure.map (twoArmOptimalPullTimeRewardBlock (Env := Unit) m) (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)) = Measure.map (twoArmLatentMaskedOptimalPullBlock m) (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta)"
+    },
+    {
+      "kind": "def",
+      "name": "twoArmAppendixCPhaseOnePrefixSum",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCPhaseOnePrefixSum",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 323,
+      "statement": "def twoArmAppendixCPhaseOnePrefixSum (n0 n1 : Nat) (rewardBlock : Fin (n0 + n1) -> Real) (k : Fin (n1 + 1)) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_twoArmAppendixCPhaseOnePrefixSum",
+      "full_name": "BanditRLProof.StochasticGradientBandit.measurable_twoArmAppendixCPhaseOnePrefixSum",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 328,
+      "statement": "theorem measurable_twoArmAppendixCPhaseOnePrefixSum (n0 n1 : Nat) (k : Fin (n1 + 1)) : Measurable (fun rewardBlock : Fin (n0 + n1) -> Real => twoArmAppendixCPhaseOnePrefixSum n0 n1 rewardBlock k)"
+    },
+    {
+      "kind": "def",
+      "name": "twoArmAppendixCRewardPhaseEvent",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCRewardPhaseEvent",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 343,
+      "statement": "def twoArmAppendixCRewardPhaseEvent (n0 n1 : Nat) (phaseOneTotal : Real) : Set (Fin (n0 + n1) -> Real)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurableSet_twoArmAppendixCRewardPhaseEvent",
+      "full_name": "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmAppendixCRewardPhaseEvent",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 356,
+      "statement": "theorem measurableSet_twoArmAppendixCRewardPhaseEvent (n0 n1 : Nat) (phaseOneTotal : Real) : MeasurableSet (twoArmAppendixCRewardPhaseEvent n0 n1 phaseOneTotal)"
+    },
+    {
+      "kind": "def",
+      "name": "twoArmAppendixCAllPullsPresent",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCAllPullsPresent",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 404,
+      "statement": "def twoArmAppendixCAllPullsPresent (m : Nat) : Set ((i : Fin m) -> WithTop Nat × Real)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurableSet_twoArmAppendixCAllPullsPresent",
+      "full_name": "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmAppendixCAllPullsPresent",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 408,
+      "statement": "theorem measurableSet_twoArmAppendixCAllPullsPresent (m : Nat) : MeasurableSet (twoArmAppendixCAllPullsPresent m)"
+    },
+    {
+      "kind": "def",
+      "name": "twoArmAppendixCObservedPhaseEvent",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCObservedPhaseEvent",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 423,
+      "statement": "def twoArmAppendixCObservedPhaseEvent (n0 n1 : Nat) (phaseOneTotal : Real) : Set ((i : Fin (n0 + n1)) -> WithTop Nat × Real)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurableSet_twoArmAppendixCObservedPhaseEvent",
+      "full_name": "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmAppendixCObservedPhaseEvent",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 430,
+      "statement": "theorem measurableSet_twoArmAppendixCObservedPhaseEvent (n0 n1 : Nat) (phaseOneTotal : Real) : MeasurableSet (twoArmAppendixCObservedPhaseEvent n0 n1 phaseOneTotal)"
+    },
+    {
+      "kind": "def",
+      "name": "twoArmAppendixCLatentPhaseEvent",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCLatentPhaseEvent",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 446,
+      "statement": "def twoArmAppendixCLatentPhaseEvent (n0 n1 : Nat) (phaseOneTotal : Real) : Set (UCB.ArmRewardStream 2 × ((t : Nat) -> Fin 2 × Real))"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurableSet_twoArmAppendixCLatentPhaseEvent",
+      "full_name": "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmAppendixCLatentPhaseEvent",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 456,
+      "statement": "theorem measurableSet_twoArmAppendixCLatentPhaseEvent (n0 n1 : Nat) (phaseOneTotal : Real) : MeasurableSet (twoArmAppendixCLatentPhaseEvent n0 n1 phaseOneTotal)"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmLatentMaskedOptimalPullBlock_preimage_appendixCObservedPhaseEvent",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmLatentMaskedOptimalPullBlock_preimage_appendixCObservedPhaseEvent",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 471,
+      "statement": "theorem twoArmLatentMaskedOptimalPullBlock_preimage_appendixCObservedPhaseEvent (n0 n1 : Nat) (phaseOneTotal : Real) : (twoArmLatentMaskedOptimalPullBlock (n0 + n1)) ⁻¹' twoArmAppendixCObservedPhaseEvent n0 n1 phaseOneTotal = twoArmAppendixCLatentPhaseEvent n0 n1 phaseOneTotal"
+    },
+    {
+      "kind": "def",
+      "name": "twoArmAppendixCGeneratedPhaseEvent",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCGeneratedPhaseEvent",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 529,
+      "statement": "def twoArmAppendixCGeneratedPhaseEvent (n0 n1 : Nat) (phaseOneTotal : Real) : Set (Unit × ((t : Nat) -> Fin 2 × Real))"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurableSet_twoArmAppendixCGeneratedPhaseEvent",
+      "full_name": "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmAppendixCGeneratedPhaseEvent",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 535,
+      "statement": "theorem measurableSet_twoArmAppendixCGeneratedPhaseEvent (n0 n1 : Nat) (phaseOneTotal : Real) : MeasurableSet (twoArmAppendixCGeneratedPhaseEvent n0 n1 phaseOneTotal)"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 550,
+      "statement": "theorem twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (n0 n1 : Nat) (phaseOneTotal : Real) : (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)) (twoArmAppendixCGeneratedPhaseEvent n0 n1 phaseOneTotal) = (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta) (twoArmAppendixCLatentPhaseEvent n0 n1 phaseOneTotal)"
+    },
+    {
+      "kind": "def",
+      "name": "twoArmAppendixCPureLatentRewardEvent",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCPureLatentRewardEvent",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 592,
+      "statement": "def twoArmAppendixCPureLatentRewardEvent (n0 n1 : Nat) (phaseOneTotal : Real) : Set (UCB.ArmRewardStream 2 × ((t : Nat) -> Fin 2 × Real))"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurableSet_twoArmAppendixCPureLatentRewardEvent",
+      "full_name": "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmAppendixCPureLatentRewardEvent",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 600,
+      "statement": "theorem measurableSet_twoArmAppendixCPureLatentRewardEvent (n0 n1 : Nat) (phaseOneTotal : Real) : MeasurableSet (twoArmAppendixCPureLatentRewardEvent n0 n1 phaseOneTotal)"
+    },
+    {
+      "kind": "def",
+      "name": "twoArmAppendixCMissingPullLatentPhaseEvent",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCMissingPullLatentPhaseEvent",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 614,
+      "statement": "def twoArmAppendixCMissingPullLatentPhaseEvent (n0 n1 : Nat) (phaseOneTotal : Real) : Set (UCB.ArmRewardStream 2 × ((t : Nat) -> Fin 2 × Real))"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurableSet_twoArmAppendixCMissingPullLatentPhaseEvent",
+      "full_name": "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmAppendixCMissingPullLatentPhaseEvent",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 621,
+      "statement": "theorem measurableSet_twoArmAppendixCMissingPullLatentPhaseEvent (n0 n1 : Nat) (phaseOneTotal : Real) : MeasurableSet (twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal)"
+    },
+    {
+      "kind": "theorem",
+      "name": "mem_twoArmAppendixCMissingPullLatentPhaseEvent_iff",
+      "full_name": "BanditRLProof.StochasticGradientBandit.mem_twoArmAppendixCMissingPullLatentPhaseEvent_iff",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 635,
+      "statement": "theorem mem_twoArmAppendixCMissingPullLatentPhaseEvent_iff (n0 n1 : Nat) (phaseOneTotal : Real) (sample : UCB.ArmRewardStream 2 × ((t : Nat) -> Fin 2 × Real)) : sample ∈ twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal ↔ (fun i : Fin (n0 + n1) => sample.1 (i : Nat) 0) ∈ twoArmAppendixCRewardPhaseEvent n0 n1 phaseOneTotal ∧ ∃ i : Fin (n0 + n1), twoArmNthOptimalPullTime (Env := Unit) (i : Nat) ((), sample.2) = (⊤ : WithTop Nat)"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 656,
+      "statement": "theorem twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow (n0 n1 : Nat) (phaseOneTotal : Real) (horizon : Nat) : twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal ⊆ (fun sample : UCB.ArmRewardStream 2 × ((t : Nat) -> Fin 2 × Real) => ((), sample.2)) ⁻¹' twoArmOptimalPullCountBelowEvent (Env := Unit) (n0 + n1) horizon"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmAppendixCPureLatentRewardEvent_eq_union_phase_missing",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCPureLatentRewardEvent_eq_union_phase_missing",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 675,
+      "statement": "theorem twoArmAppendixCPureLatentRewardEvent_eq_union_phase_missing (n0 n1 : Nat) (phaseOneTotal : Real) : twoArmAppendixCPureLatentRewardEvent n0 n1 phaseOneTotal = twoArmAppendixCLatentPhaseEvent n0 n1 phaseOneTotal ∪ twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal"
+    },
+    {
+      "kind": "theorem",
+      "name": "disjoint_twoArmAppendixCLatentPhaseEvent_missing",
+      "full_name": "BanditRLProof.StochasticGradientBandit.disjoint_twoArmAppendixCLatentPhaseEvent_missing",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 692,
+      "statement": "theorem disjoint_twoArmAppendixCLatentPhaseEvent_missing (n0 n1 : Nat) (phaseOneTotal : Real) : Disjoint (twoArmAppendixCLatentPhaseEvent n0 n1 phaseOneTotal) (twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal)"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_pi",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_pi",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 704,
+      "statement": "theorem twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_pi (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (n0 n1 : Nat) (phaseOneTotal : Real) : (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta) (twoArmAppendixCPureLatentRewardEvent n0 n1 phaseOneTotal) = (Measure.pi (fun _ : Fin (n0 + n1) => armLaw 0) : Measure (Fin (n0 + n1) -> Real)) (twoArmAppendixCRewardPhaseEvent n0 n1 phaseOneTotal)"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_phase_add_missing",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_phase_add_missing",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 739,
+      "statement": "theorem twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_phase_add_missing (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (n0 n1 : Nat) (phaseOneTotal : Real) : (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta) (twoArmAppendixCPureLatentRewardEvent n0 n1 phaseOneTotal) = (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta) (twoArmAppendixCLatentPhaseEvent n0 n1 phaseOneTotal) + (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta) (twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal)"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 765,
+      "statement": "theorem twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (n0 n1 : Nat) (phaseOneTotal : Real) : (Measure.pi (fun _ : Fin (n0 + n1) => armLaw 0) : Measure (Fin (n0 + n1) -> Real)) (twoArmAppendixCRewardPhaseEvent n0 n1 phaseOneTotal) = (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)) (twoArmAppendixCGeneratedPhaseEvent n0 n1 phaseOneTotal) + (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta) (twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal)"
     },
     {
       "kind": "def",
@@ -33781,11 +34061,51 @@
       "statement": "theorem measurable_twoArmOptimalPullCount {Env : Type v} [MeasurableSpace Env] (horizon : Nat) : Measurable (twoArmOptimalPullCount (Env := Env) horizon)"
     },
     {
+      "kind": "def",
+      "name": "twoArmTerminalOptimalPullCountEvent",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmTerminalOptimalPullCountEvent",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
+      "line": 111,
+      "statement": "def twoArmTerminalOptimalPullCountEvent {Env : Type v} [MeasurableSpace Env] (n horizon : Nat) : Set (Env × ((k : Nat) → Fin 2 × Real))"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurableSet_twoArmTerminalOptimalPullCountEvent",
+      "full_name": "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmTerminalOptimalPullCountEvent",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
+      "line": 116,
+      "statement": "theorem measurableSet_twoArmTerminalOptimalPullCountEvent {Env : Type v} [MeasurableSpace Env] (n horizon : Nat) : MeasurableSet (twoArmTerminalOptimalPullCountEvent (Env := Env) n horizon)"
+    },
+    {
+      "kind": "def",
+      "name": "twoArmOptimalPullCountBelowEvent",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCountBelowEvent",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
+      "line": 124,
+      "statement": "def twoArmOptimalPullCountBelowEvent {Env : Type v} [MeasurableSpace Env] (m horizon : Nat) : Set (Env × ((k : Nat) → Fin 2 × Real))"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurableSet_twoArmOptimalPullCountBelowEvent",
+      "full_name": "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmOptimalPullCountBelowEvent",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
+      "line": 129,
+      "statement": "theorem measurableSet_twoArmOptimalPullCountBelowEvent {Env : Type v} [MeasurableSpace Env] (m horizon : Nat) : MeasurableSet (twoArmOptimalPullCountBelowEvent (Env := Env) m horizon)"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmOptimalPullCountBelowEvent_eq_iUnion_terminalCount",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCountBelowEvent_eq_iUnion_terminalCount",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
+      "line": 138,
+      "statement": "theorem twoArmOptimalPullCountBelowEvent_eq_iUnion_terminalCount {Env : Type v} [MeasurableSpace Env] (m horizon : Nat) : twoArmOptimalPullCountBelowEvent (Env := Env) m horizon = ⋃ n : Fin m, twoArmTerminalOptimalPullCountEvent (Env := Env) (n : Nat) horizon"
+    },
+    {
       "kind": "theorem",
       "name": "measurableSet_twoArmStepOneTriggerEvent",
       "full_name": "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmStepOneTriggerEvent",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
-      "line": 110,
+      "line": 157,
       "statement": "theorem measurableSet_twoArmStepOneTriggerEvent {Env : Type v} [MeasurableSpace Env] (eta : Real) (cutoff n horizon : Nat) : MeasurableSet (twoArmStepOneTriggerEvent (Env := Env) eta cutoff n horizon)"
     },
     {
@@ -33793,7 +34113,7 @@
       "name": "measurableSet_twoArmStepOneStarvationEvent",
       "full_name": "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmStepOneStarvationEvent",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
-      "line": 128,
+      "line": 175,
       "statement": "theorem measurableSet_twoArmStepOneStarvationEvent {Env : Type v} [MeasurableSpace Env] (eta : Real) (cutoff n horizon : Nat) : MeasurableSet (twoArmStepOneStarvationEvent (Env := Env) eta cutoff n horizon)"
     },
     {
@@ -33801,7 +34121,7 @@
       "name": "twoArmSampledPseudoRegret_nonneg",
       "full_name": "BanditRLProof.StochasticGradientBandit.twoArmSampledPseudoRegret_nonneg",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
-      "line": 143,
+      "line": 190,
       "statement": "theorem twoArmSampledPseudoRegret_nonneg {Env : Type v} (Delta : Real) (hDelta : 0 ≤ Delta) (horizon : Nat) (sample : Env × ((k : Nat) → Fin 2 × Real)) : 0 ≤ twoArmSampledPseudoRegret Delta horizon sample"
     },
     {
@@ -33809,7 +34129,7 @@
       "name": "twoArmSampledPseudoRegret_eq_gap_mul_suboptimalPullCount",
       "full_name": "BanditRLProof.StochasticGradientBandit.twoArmSampledPseudoRegret_eq_gap_mul_suboptimalPullCount",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
-      "line": 158,
+      "line": 205,
       "statement": "theorem twoArmSampledPseudoRegret_eq_gap_mul_suboptimalPullCount {Env : Type v} (Delta : Real) (horizon : Nat) (sample : Env × ((k : Nat) → Fin 2 × Real)) : twoArmSampledPseudoRegret Delta horizon sample = Delta * (pullCount (twoArmGeneratedAction sample) 1 horizon : Real)"
     },
     {
@@ -33817,7 +34137,7 @@
       "name": "twoArmOptimalPullCount_add_suboptimalPullCount_eq_horizon",
       "full_name": "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCount_add_suboptimalPullCount_eq_horizon",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
-      "line": 181,
+      "line": 228,
       "statement": "theorem twoArmOptimalPullCount_add_suboptimalPullCount_eq_horizon {Env : Type v} (horizon : Nat) (sample : Env × ((k : Nat) → Fin 2 × Real)) : twoArmOptimalPullCount horizon sample + pullCount (twoArmGeneratedAction sample) 1 horizon = horizon"
     },
     {
@@ -33825,15 +34145,23 @@
       "name": "twoArmSampledPseudoRegret_eq_gap_mul_horizon_sub_of_optimalPullCount_eq",
       "full_name": "BanditRLProof.StochasticGradientBandit.twoArmSampledPseudoRegret_eq_gap_mul_horizon_sub_of_optimalPullCount_eq",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
-      "line": 191,
+      "line": 238,
       "statement": "theorem twoArmSampledPseudoRegret_eq_gap_mul_horizon_sub_of_optimalPullCount_eq {Env : Type v} (Delta : Real) (n horizon : Nat) (sample : Env × ((k : Nat) → Fin 2 × Real)) (hcount : twoArmOptimalPullCount horizon sample = n) : twoArmSampledPseudoRegret Delta horizon sample = Delta * ((horizon - n : Nat) : Real)"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmTerminalOptimalPullCountEvent_sampledPseudoRegret_eq",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmTerminalOptimalPullCountEvent_sampledPseudoRegret_eq",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
+      "line": 254,
+      "statement": "theorem twoArmTerminalOptimalPullCountEvent_sampledPseudoRegret_eq {Env : Type v} [MeasurableSpace Env] (Delta : Real) (n horizon : Nat) (sample : Env × ((k : Nat) → Fin 2 × Real)) (hcount : sample ∈ twoArmTerminalOptimalPullCountEvent (Env := Env) n horizon) : twoArmSampledPseudoRegret Delta horizon sample = Delta * ((horizon - n : Nat) : Real)"
     },
     {
       "kind": "theorem",
       "name": "mem_twoArmStepOneStarvationEvent_of_lowProbability_noFurtherOptimalPull",
       "full_name": "BanditRLProof.StochasticGradientBandit.mem_twoArmStepOneStarvationEvent_of_lowProbability_noFurtherOptimalPull",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
-      "line": 210,
+      "line": 271,
       "statement": "theorem mem_twoArmStepOneStarvationEvent_of_lowProbability_noFurtherOptimalPull {Env : Type v} [MeasurableSpace Env] (eta : Real) (cutoff n horizon : Nat) (sample : Env × ((k : Nat) → Fin 2 × Real)) (hcutoff : cutoff + 1 ≤ horizon) (hlow : twoArmSuccessProbability eta cutoff sample ≤ twoArmStepOneThreshold horizon) (hcount : twoArmOptimalPullCount (cutoff + 1) sample = n) (hnoFurther : ∀ t, cutoff + 1 ≤ t → t < horizon → twoArmGeneratedAction sample t ≠ 0) : sample ∈ twoArmStepOneStarvationEvent (Env := Env) eta cutoff n horizon"
     },
     {
@@ -33841,7 +34169,7 @@
       "name": "twoArmStepOneStarvationEvent_sampledPseudoRegret_eq",
       "full_name": "BanditRLProof.StochasticGradientBandit.twoArmStepOneStarvationEvent_sampledPseudoRegret_eq",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
-      "line": 235,
+      "line": 296,
       "statement": "theorem twoArmStepOneStarvationEvent_sampledPseudoRegret_eq {Env : Type v} [MeasurableSpace Env] (eta Delta : Real) (cutoff n horizon : Nat) (sample : Env × ((k : Nat) → Fin 2 × Real)) (hstarve : sample ∈ twoArmStepOneStarvationEvent (Env := Env) eta cutoff n horizon) : twoArmSampledPseudoRegret Delta horizon sample = Delta * ((horizon - n : Nat) : Real)"
     },
     {
@@ -33849,7 +34177,7 @@
       "name": "integrable_twoArmSampledPseudoRegret_of_finiteMeasure",
       "full_name": "BanditRLProof.StochasticGradientBandit.integrable_twoArmSampledPseudoRegret_of_finiteMeasure",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
-      "line": 248,
+      "line": 309,
       "statement": "theorem integrable_twoArmSampledPseudoRegret_of_finiteMeasure {Env : Type v} [MeasurableSpace Env] (mu : Measure (Env × ((k : Nat) → Fin 2 × Real))) [IsFiniteMeasure mu] (Delta : Real) (horizon : Nat) : Integrable (twoArmSampledPseudoRegret (Env := Env) Delta horizon) mu"
     },
     {
@@ -33857,7 +34185,7 @@
       "name": "twoArmStepOneStarvationEvent_charge_mul_probability_le_integral",
       "full_name": "BanditRLProof.StochasticGradientBandit.twoArmStepOneStarvationEvent_charge_mul_probability_le_integral",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
-      "line": 272,
+      "line": 333,
       "statement": "theorem twoArmStepOneStarvationEvent_charge_mul_probability_le_integral {Env : Type v} [MeasurableSpace Env] (mu : Measure (Env × ((k : Nat) → Fin 2 × Real))) [IsFiniteMeasure mu] (eta Delta : Real) (hDelta : 0 ≤ Delta) (cutoff n horizon : Nat) : Delta * ((horizon - n : Nat) : Real) * mu.real (twoArmStepOneStarvationEvent (Env := Env) eta cutoff n horizon) ≤ integral mu (twoArmSampledPseudoRegret (Env := Env) Delta horizon)"
     },
     {
@@ -33865,7 +34193,7 @@
       "name": "twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral",
       "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
-      "line": 327,
+      "line": 388,
       "statement": "theorem twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta Delta : Real) (hDelta : 0 <= Delta) (cutoff n horizon : Nat) : Delta * ((horizon - n : Nat) : Real) * (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)).real (twoArmStepOneStarvationEvent (Env := Unit) eta cutoff n horizon) <= integral (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)) (twoArmSampledPseudoRegret (Env := Unit) Delta horizon)"
     },
     {
@@ -55998,10 +56326,18 @@
     },
     {
       "kind": "theorem",
+      "name": "pullCount_lt_of_forall_succ_ne",
+      "full_name": "BanditRLProof.pullCount_lt_of_forall_succ_ne",
+      "file": "BanditRLProof/LeafLemmas.lean",
+      "line": 43,
+      "statement": "theorem pullCount_lt_of_forall_succ_ne (target : Nat) (htarget : 0 < target) (hnever : ∀ chron, pullCount action a (chron + 1) ≠ target) : pullCount action a t < target"
+    },
+    {
+      "kind": "theorem",
       "name": "pullCount_mono",
       "full_name": "BanditRLProof.pullCount_mono",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 40,
+      "line": 55,
       "statement": "theorem pullCount_mono {s t : Nat} (h : s ≤ t) : pullCount action a s ≤ pullCount action a t"
     },
     {
@@ -56009,7 +56345,7 @@
       "name": "pullCount_le_time",
       "full_name": "BanditRLProof.pullCount_le_time",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 46,
+      "line": 61,
       "statement": "theorem pullCount_le_time : pullCount action a t ≤ t"
     },
     {
@@ -56017,7 +56353,7 @@
       "name": "pullCount_add_le",
       "full_name": "BanditRLProof.pullCount_add_le",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 58,
+      "line": 73,
       "statement": "theorem pullCount_add_le (n : Nat) : pullCount action a (t + n) ≤ pullCount action a t + n"
     },
     {
@@ -56025,7 +56361,7 @@
       "name": "pullCount_le_add",
       "full_name": "BanditRLProof.pullCount_le_add",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 67,
+      "line": 82,
       "statement": "theorem pullCount_le_add : pullCount action a t ≤ pullCount action a (t + n)"
     },
     {
@@ -56033,7 +56369,7 @@
       "name": "pullCount_eq_zero_of_forall_ne",
       "full_name": "BanditRLProof.pullCount_eq_zero_of_forall_ne",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 71,
+      "line": 86,
       "statement": "theorem pullCount_eq_zero_of_forall_ne (h : ∀ s, s < t → action s ≠ a) : pullCount action a t = 0"
     },
     {
@@ -56041,7 +56377,7 @@
       "name": "pullCount_eq_time_of_forall_eq",
       "full_name": "BanditRLProof.pullCount_eq_time_of_forall_eq",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 80,
+      "line": 95,
       "statement": "theorem pullCount_eq_time_of_forall_eq (h : ∀ s, s < t → action s = a) : pullCount action a t = t"
     },
     {
@@ -56049,7 +56385,7 @@
       "name": "pullCount_pos_of_eq_before",
       "full_name": "BanditRLProof.pullCount_pos_of_eq_before",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 89,
+      "line": 104,
       "statement": "theorem pullCount_pos_of_eq_before {s t : Nat} (hst : s < t) (h : action s = a) : 0 < pullCount action a t"
     },
     {
@@ -56057,7 +56393,7 @@
       "name": "pullCount_eq_of_forall_lt",
       "full_name": "BanditRLProof.pullCount_eq_of_forall_lt",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 108,
+      "line": 123,
       "statement": "theorem pullCount_eq_of_forall_lt (action action' : ActionTrace Action) (a : Action) : forall t : Nat, (forall s : Nat, s < t -> action s = action' s) -> pullCount action a t = pullCount action' a t"
     },
     {
@@ -56065,7 +56401,7 @@
       "name": "pullCount_const_self",
       "full_name": "BanditRLProof.pullCount_const_self",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 124,
+      "line": 139,
       "statement": "@[simp] theorem pullCount_const_self (a : Action) (t : Nat) : pullCount (fun _ => a) a t = t"
     },
     {
@@ -56073,7 +56409,7 @@
       "name": "pullCount_const_of_ne",
       "full_name": "BanditRLProof.pullCount_const_of_ne",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 130,
+      "line": 145,
       "statement": "theorem pullCount_const_of_ne (b : Action) (h : b ≠ a) (t : Nat) : pullCount (fun _ => b) a t = 0"
     },
     {
@@ -56081,7 +56417,7 @@
       "name": "pullCount_add_eq_of_forall_ne_between",
       "full_name": "BanditRLProof.pullCount_add_eq_of_forall_ne_between",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 136,
+      "line": 151,
       "statement": "theorem pullCount_add_eq_of_forall_ne_between (n : Nat) (h : ∀ s, t ≤ s → s < t + n → action s ≠ a) : pullCount action a (t + n) = pullCount action a t"
     },
     {
@@ -56089,7 +56425,7 @@
       "name": "pullCount_add_eq_add_of_forall_eq_between",
       "full_name": "BanditRLProof.pullCount_add_eq_add_of_forall_eq_between",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 148,
+      "line": 163,
       "statement": "theorem pullCount_add_eq_add_of_forall_eq_between (n : Nat) (h : ∀ s, t ≤ s → s < t + n → action s = a) : pullCount action a (t + n) = pullCount action a t + n"
     },
     {
@@ -56097,7 +56433,7 @@
       "name": "pullCount_eq_list_filter_length",
       "full_name": "BanditRLProof.pullCount_eq_list_filter_length",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 168,
+      "line": 183,
       "statement": "theorem pullCount_eq_list_filter_length : pullCount action a t = ((List.range t).filter (fun s : Nat => decide (action s = a))).length"
     },
     {
@@ -56105,7 +56441,7 @@
       "name": "sumRewards_succ_of_eq",
       "full_name": "BanditRLProof.sumRewards_succ_of_eq",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 189,
+      "line": 204,
       "statement": "theorem sumRewards_succ_of_eq (h : action t = a) : sumRewards action reward a (t + 1) = sumRewards action reward a t + reward t"
     },
     {
@@ -56113,7 +56449,7 @@
       "name": "sumRewards_succ_of_ne",
       "full_name": "BanditRLProof.sumRewards_succ_of_ne",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 194,
+      "line": 209,
       "statement": "theorem sumRewards_succ_of_ne (hzero : ∀ x : Reward, x + 0 = x) (h : action t ≠ a) : sumRewards action reward a (t + 1) = sumRewards action reward a t"
     },
     {
@@ -56121,7 +56457,7 @@
       "name": "sumRewards_eq_zero_of_forall_ne",
       "full_name": "BanditRLProof.sumRewards_eq_zero_of_forall_ne",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 200,
+      "line": 215,
       "statement": "theorem sumRewards_eq_zero_of_forall_ne (hzero : ∀ x : Reward, x + 0 = x) (h : ∀ s, s < t → action s ≠ a) : sumRewards action reward a t = 0"
     },
     {
@@ -56129,7 +56465,7 @@
       "name": "sumRewards_const_of_ne",
       "full_name": "BanditRLProof.sumRewards_const_of_ne",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 209,
+      "line": 224,
       "statement": "theorem sumRewards_const_of_ne (hzero : ∀ x : Reward, x + 0 = x) (b : Action) (h : b ≠ a) (t : Nat) : sumRewards (fun _ => b) reward a t = 0"
     },
     {
@@ -56137,7 +56473,7 @@
       "name": "sumRewards_add_eq_of_forall_ne_between",
       "full_name": "BanditRLProof.sumRewards_add_eq_of_forall_ne_between",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 217,
+      "line": 232,
       "statement": "theorem sumRewards_add_eq_of_forall_ne_between (hzero : ∀ x : Reward, x + 0 = x) (n : Nat) (h : ∀ s, t ≤ s → s < t + n → action s ≠ a) : sumRewards action reward a (t + n) = sumRewards action reward a t"
     },
     {
@@ -56145,7 +56481,7 @@
       "name": "sumRewards_eq_list_range_foldl",
       "full_name": "BanditRLProof.sumRewards_eq_list_range_foldl",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 235,
+      "line": 250,
       "statement": "theorem sumRewards_eq_list_range_foldl : sumRewards action reward a t = (List.range t).foldl (fun acc s => acc + if action s = a then reward s else 0) 0"
     },
     {
@@ -56153,7 +56489,7 @@
       "name": "sumRewards_eq_list_range_filter_foldl",
       "full_name": "BanditRLProof.sumRewards_eq_list_range_filter_foldl",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 253,
+      "line": 268,
       "statement": "theorem sumRewards_eq_list_range_filter_foldl (hzero : ∀ x : Reward, x + 0 = x) : sumRewards action reward a t = ((List.range t).filter (fun s : Nat => decide (action s = a))).foldl (fun acc s => acc + reward s) 0"
     },
     {
@@ -56161,7 +56497,7 @@
       "name": "bestMean_eq_mean_bestArm",
       "full_name": "BanditRLProof.FiniteBanditModel.bestMean_eq_mean_bestArm",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 272,
+      "line": 287,
       "statement": "@[simp] theorem bestMean_eq_mean_bestArm (model : FiniteBanditModel K) : model.bestMean = model.mean model.bestArm"
     },
     {
@@ -56169,7 +56505,7 @@
       "name": "gap_of_ne_bestArm",
       "full_name": "BanditRLProof.FiniteBanditModel.gap_of_ne_bestArm",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 275,
+      "line": 290,
       "statement": "theorem gap_of_ne_bestArm (model : FiniteBanditModel K) (arm : Fin K) (h : arm ≠ model.bestArm) : model.gap arm = model.bestMean - model.mean arm"
     },
     {
@@ -56177,7 +56513,7 @@
       "name": "pseudoRegret_one",
       "full_name": "BanditRLProof.pseudoRegret_one",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 286,
+      "line": 301,
       "statement": "@[simp] theorem pseudoRegret_one : pseudoRegret model action 1 = model.gap (action 0)"
     },
     {
@@ -56185,7 +56521,7 @@
       "name": "pseudoRegret_succ_of_bestArm",
       "full_name": "BanditRLProof.pseudoRegret_succ_of_bestArm",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 291,
+      "line": 306,
       "statement": "theorem pseudoRegret_succ_of_bestArm (h : action t = model.bestArm) : pseudoRegret model action (t + 1) = pseudoRegret model action t"
     },
     {
@@ -56193,7 +56529,7 @@
       "name": "pseudoRegret_succ_of_gap_zero",
       "full_name": "BanditRLProof.pseudoRegret_succ_of_gap_zero",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 296,
+      "line": 311,
       "statement": "theorem pseudoRegret_succ_of_gap_zero (h : model.gap (action t) = 0) : pseudoRegret model action (t + 1) = pseudoRegret model action t"
     },
     {
@@ -56201,7 +56537,7 @@
       "name": "pseudoRegret_eq_zero_of_forall_bestArm",
       "full_name": "BanditRLProof.pseudoRegret_eq_zero_of_forall_bestArm",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 301,
+      "line": 316,
       "statement": "theorem pseudoRegret_eq_zero_of_forall_bestArm (h : ∀ s, s < t → action s = model.bestArm) : pseudoRegret model action t = 0"
     },
     {
@@ -56209,7 +56545,7 @@
       "name": "pseudoRegret_eq_zero_of_forall_gap_zero",
       "full_name": "BanditRLProof.pseudoRegret_eq_zero_of_forall_gap_zero",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 310,
+      "line": 325,
       "statement": "theorem pseudoRegret_eq_zero_of_forall_gap_zero (h : ∀ s, s < t → model.gap (action s) = 0) : pseudoRegret model action t = 0"
     },
     {
@@ -56217,7 +56553,7 @@
       "name": "pseudoRegret_const_bestArm",
       "full_name": "BanditRLProof.pseudoRegret_const_bestArm",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 319,
+      "line": 334,
       "statement": "@[simp] theorem pseudoRegret_const_bestArm : pseudoRegret model (fun _ => model.bestArm) t = 0"
     },
     {
@@ -56225,7 +56561,7 @@
       "name": "pseudoRegret_const_of_gap_zero",
       "full_name": "BanditRLProof.pseudoRegret_const_of_gap_zero",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 325,
+      "line": 340,
       "statement": "theorem pseudoRegret_const_of_gap_zero (arm : Fin K) (h : model.gap arm = 0) : pseudoRegret model (fun _ => arm) t = 0"
     },
     {
@@ -56233,7 +56569,7 @@
       "name": "pseudoRegret_add_eq_of_forall_bestArm_between",
       "full_name": "BanditRLProof.pseudoRegret_add_eq_of_forall_bestArm_between",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 331,
+      "line": 346,
       "statement": "theorem pseudoRegret_add_eq_of_forall_bestArm_between (n : Nat) (h : ∀ s, t ≤ s → s < t + n → action s = model.bestArm) : pseudoRegret model action (t + n) = pseudoRegret model action t"
     },
     {
@@ -56241,7 +56577,7 @@
       "name": "pseudoRegret_add_eq_of_forall_gap_zero_between",
       "full_name": "BanditRLProof.pseudoRegret_add_eq_of_forall_gap_zero_between",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 343,
+      "line": 358,
       "statement": "theorem pseudoRegret_add_eq_of_forall_gap_zero_between (n : Nat) (h : ∀ s, t ≤ s → s < t + n → model.gap (action s) = 0) : pseudoRegret model action (t + n) = pseudoRegret model action t"
     },
     {
@@ -56249,7 +56585,7 @@
       "name": "pseudoRegret_eq_list_range_foldl",
       "full_name": "BanditRLProof.pseudoRegret_eq_list_range_foldl",
       "file": "BanditRLProof/LeafLemmas.lean",
-      "line": 361,
+      "line": 376,
       "statement": "theorem pseudoRegret_eq_list_range_foldl : pseudoRegret model action t = (List.range t).foldl (fun acc s => acc + model.gap (action s)) 0"
     },
     {
@@ -93842,6 +94178,137 @@
         "independent semantic review found no P0/P1 Lean issue; 8/8 #check and 8/8 #print axioms",
         "focused source/canary and lake build passed; repository integration gate passed after deterministic test fix"
       ]
+    },
+    {
+      "changed_files": [
+        "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+        "Tests/StochasticGradientBanditTheoremTwoSelectedIIDCanary.lean",
+        "BanditRLProof.lean",
+        "Tests.lean"
+      ],
+      "kind": "build",
+      "lean": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked",
+      "notes": "Compiled an eight-public-declaration missing-pull-aware finite selected-block transport. The native and source-shaped generated pull-time/reward block law equals a masked latent-coupling law. This is not a product/IID theorem; phase-event transport, future/no-return, ballot/asymptotic assembly, and Theorem 2 remain open.",
+      "parent_id": "",
+      "role": "lower",
+      "route_fingerprint": "",
+      "run_id": "sgb-theorem2-selected-block-transport-round23-2026-09-01",
+      "source": "PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB",
+      "statement_hash": "3cd95a6380a8a418610fb91e0dd4e3be4afc43be4a1a1bfea25ba8516e566634",
+      "status": "compiled",
+      "task": "PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE",
+      "time": "2026-08-31T19:57:57+00:00",
+      "verifier_evidence": [
+        "focused source and canary build passed; statement fence safe-verify true; endpoint axiom print contains only propext/Classical.choice/Quot.sound"
+      ]
+    },
+    {
+      "changed_files": [
+        "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+        "Tests/StochasticGradientBanditTheoremTwoSelectedIIDCanary.lean"
+      ],
+      "kind": "build",
+      "lean": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent",
+      "notes": "Compiled fourteen public declarations for the exact finite Appendix-C S0/S1 reward event, the measurable all-pulls-present occurrence boundary, and exact source-generated to occurrence-intersected latent event probability transport. This is not a product/selected-IID law, probability lower bound, future/no-return theorem, ballot/asymptotic assembly, or Theorem 2.",
+      "parent_id": "",
+      "role": "lower",
+      "route_fingerprint": "",
+      "run_id": "sgb-theorem2-phase-event-transport-round24-2026-09-01",
+      "source": "PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB",
+      "statement_hash": "abcb66250f7cac25a5ab0506fc6101e2be986637e102f5ca072f7e89394ff67d",
+      "status": "compiled",
+      "task": "PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE",
+      "time": "2026-08-31T22:57:24+00:00",
+      "verifier_evidence": [
+        "focused Lean module and typed canary passed; endpoint axioms only propext/Classical.choice/Quot.sound",
+        "statement fence safe-verify true; refreshed declaration index records all 22 module declarations",
+        "anonymous supplement inventory and tamper tests passed (26 tests)"
+      ]
+    },
+    {
+      "changed_files": [
+        "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+        "Tests/StochasticGradientBanditTheoremTwoSelectedIIDCanary.lean"
+      ],
+      "kind": "build",
+      "lean": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing",
+      "notes": "Compiled ten public declarations for an exact measurable disjoint decomposition of the pure Appendix-C reward phase into the generated all-pulls-present event and an explicit missing-pull event. The terminal is an equality of probabilities, not a selected-IID theorem or positive lower bound; the missing branch is not yet connected to fixed-cutoff starvation, and future/no-return, ballot/asymptotic assembly, and Theorem 2 remain open.",
+      "parent_id": "",
+      "role": "lower",
+      "route_fingerprint": "",
+      "run_id": "sgb-theorem2-phase-dichotomy-round25-2026-09-01",
+      "source": "PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB",
+      "statement_hash": "6f08f7b60aa32ffb5b38c2b33e3815fd3e606f7f7b6688b15d75d04b865d1e63",
+      "status": "compiled",
+      "task": "PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE",
+      "time": "2026-09-01T01:19:05+00:00",
+      "verifier_evidence": [
+        "focused Lean module and typed canary passed; endpoint axioms only propext/Classical.choice/Quot.sound",
+        "statement fence safe-verify true; refreshed declaration index records all 32 module declarations",
+        "full repository gate passed: 8852 library jobs, 8894 test jobs, 381 Python tests with 7 skipped; website check passed"
+      ]
+    },
+    {
+      "attempt_id": "",
+      "changed_files": [
+        "BanditRLProof/LeafLemmas.lean",
+        "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
+        "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
+        "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+        "Tests/StochasticGradientBanditTheoremTwoStarvationCanary.lean",
+        "Tests/StochasticGradientBanditTheoremTwoNthPullCanary.lean",
+        "Tests/StochasticGradientBanditTheoremTwoSelectedIIDCanary.lean"
+      ],
+      "dag_depth": 0,
+      "dag_nodes": 0,
+      "elapsed_seconds": 0.0,
+      "error_signature": "",
+      "experiment_id": "",
+      "harness": "",
+      "input_tokens": 0,
+      "kind": "build",
+      "lean": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow",
+      "lean_check_seconds": 0.0,
+      "new_declarations": [
+        "BanditRLProof.pullCount_lt_of_forall_succ_ne",
+        "BanditRLProof.StochasticGradientBandit.twoArmTerminalOptimalPullCountEvent",
+        "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmTerminalOptimalPullCountEvent",
+        "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCountBelowEvent",
+        "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmOptimalPullCountBelowEvent",
+        "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCountBelowEvent_eq_iUnion_terminalCount",
+        "BanditRLProof.StochasticGradientBandit.twoArmTerminalOptimalPullCountEvent_sampledPseudoRegret_eq",
+        "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCount_lt_succ_of_nthOptimalPullTime_eq_top",
+        "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCount_lt_of_fin_nthOptimalPullTime_eq_top",
+        "BanditRLProof.StochasticGradientBandit.twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow"
+      ],
+      "notes": "Compiled the deterministic missing-pull-to-terminal-count bridge. WithTop.top for one requested optimal-arm pull implies every finite-horizon optimal-arm count is below the requested block size; the measurable below-count event is the finite union of exact count fibers, each with the exact sampled-pseudo-regret identity. No source trigger, probability lower bound, selected IID, future/no-return, ballot/asymptotic, or Theorem 2 is claimed.",
+      "obligations_after": 0,
+      "obligations_before": 1,
+      "output_tokens": 0,
+      "parent_id": "",
+      "progress_class": "compiled-leaf",
+      "prompt_chars": 0,
+      "reused_declarations": [
+        "BanditRLProof.pullCount_succ_le_succ",
+        "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime_eq_top_iff",
+        "BanditRLProof.StochasticGradientBandit.mem_twoArmAppendixCMissingPullLatentPhaseEvent_iff",
+        "BanditRLProof.StochasticGradientBandit.twoArmSampledPseudoRegret_eq_gap_mul_horizon_sub_of_optimalPullCount_eq"
+      ],
+      "reviewer_validated": false,
+      "role": "lower",
+      "route_fingerprint": "",
+      "run_id": "sgb-theorem2-missing-pull-terminal-count-round26-2026-09-02",
+      "source": "PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB",
+      "statement_hash": "105fa4f7cf174346ac479f4c917d02c6416a5d6e19df62266de349e3b717acde",
+      "status": "compiled",
+      "target_fingerprint": "",
+      "task": "PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE",
+      "time": "2026-09-01T22:15:27+00:00",
+      "verifier_evidence": [
+        "focused source/canary gate passed 3645 jobs; full repository gate passed 8894 jobs and 387 Python tests with 7 skipped",
+        "SafeVerify passed at statement hash 105fa4f7cf174346ac479f4c917d02c6416a5d6e19df62266de349e3b717acde; audited endpoints use only propext, Classical.choice, and Quot.sound"
+      ],
+      "worker_id": ""
     }
   ],
   "open_memory_files": [
