@@ -12,6 +12,14 @@ The build:
 - preserves that Book Map while adding a separate, ordered Part IV lower-bound
   Textbook Spine from `content/textbook_spine.json`;
 - adds reviewed teaching notes from `content/highlights.json`;
+- gives every Book Map source theorem a five-field model/assumption/parameter/
+  regret/guarantee contract and links directly to the cited PDF page;
+- keeps each chapter's default teaching route to two to four named declarations
+  while retaining the full compiled inventory in a collapsed extension section;
+- provides native wrap/scroll and copy controls for exact Lean statements, with
+  a readable no-JavaScript fallback;
+- loads the exhaustive declaration catalogue through a compact versioned data
+  schema instead of repeating full source and module URLs per declaration;
 - keeps compiled, partial, stated, planned, and blocked routes distinct through
   `content/results.json`;
 - renders maintainable Mermaid architecture, dependency, progress, learning,

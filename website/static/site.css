@@ -2363,6 +2363,51 @@ tbody tr:hover {
   overflow-wrap: normal;
 }
 
+.lean-code.wrap-lines {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.lean-code.scroll-lines {
+  white-space: pre;
+  overflow-wrap: normal;
+}
+
+.code-toolbar {
+  display: flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.38rem 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--code-ink) 18%, transparent);
+  border-bottom: 0;
+  border-radius: 9px 9px 0 0;
+  background: color-mix(in srgb, var(--code-bg) 92%, var(--surface));
+}
+
+.code-tool {
+  min-height: 2.75rem;
+  padding: 0.28rem 0.58rem;
+  border: 1px solid color-mix(in srgb, var(--code-ink) 28%, transparent);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--code-ink);
+  font: 700 0.72rem/1 var(--sans);
+  cursor: pointer;
+}
+
+.code-tool:hover,
+.code-tool:focus-visible {
+  border-color: #79d6ff;
+  color: #79d6ff;
+}
+
+.code-tool-status {
+  margin-left: auto;
+  color: color-mix(in srgb, var(--code-ink) 72%, transparent);
+  font-size: 0.7rem;
+}
+
 .lean-code .kw {
   color: #79d6ff;
   font-weight: 700;
@@ -2386,6 +2431,12 @@ tbody tr:hover {
 .exact-lean .lean-code {
   margin: 0;
   border-radius: 0 0 8px 8px;
+}
+
+.exact-lean .code-toolbar {
+  border-inline: 0;
+  border-top: 0;
+  border-radius: 0;
 }
 
 .module-meta {
@@ -3652,6 +3703,21 @@ tbody tr:hover {
     min-height: 2.75rem;
   }
 
+  .hero-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hero-actions .button.primary,
+  .hero-actions .button:only-child {
+    grid-column: 1 / -1;
+  }
+
+  .hero-actions .button:not(.primary) {
+    padding-inline: 0.65rem;
+    font-size: 0.82rem;
+  }
+
   .primary-textbook-banner {
     grid-template-columns: 1fr;
     gap: 0.8rem;
@@ -3674,6 +3740,16 @@ tbody tr:hover {
   .lean-code {
     white-space: pre-wrap;
     overflow-wrap: anywhere;
+  }
+
+  .lean-code.scroll-lines {
+    white-space: pre;
+    overflow-wrap: normal;
+  }
+
+  .code-toolbar {
+    position: sticky;
+    left: 0;
   }
 
   .contribution-steps li:nth-child(n) {
@@ -5032,6 +5108,25 @@ tbody tr:hover {
 
   .wiki-filter-status button {
     flex: 1;
+  }
+}
+
+@media (max-width: 760px) {
+  .hero-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hero-actions .button.primary,
+  .hero-actions .button:only-child,
+  .hero-actions > span {
+    grid-column: 1 / -1;
+  }
+
+  .hero-actions .button:not(.primary) {
+    width: 100%;
+    padding-inline: 0.65rem;
+    font-size: 0.82rem;
   }
 }
 

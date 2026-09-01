@@ -42,10 +42,10 @@ PAPER_TITLE = (
 PRIMARY_TEXTBOOK_TITLE = "Bandit Algorithms"
 PRIMARY_TEXTBOOK_AUTHORS = "Tor Lattimore and Csaba Szepesvári"
 PRIMARY_TEXTBOOK_URL = "https://tor-lattimore.com/downloads/book/book.pdf"
-ASSET_VERSION = "20260901g"
+ASSET_VERSION = "20260901j"
 CATALOG_PAGE_SIZE = 100
 MILESTONE_PAGE_SIZE = 20
-TEACHING_PREVIEW_COUNT = 6
+TEACHING_PREVIEW_COUNT = 4
 SOURCE_BRANCH = "main"
 PUBLIC_BASE_URL = ""
 PUBLIC_SNAPSHOT_BASE_URL = ""
@@ -499,6 +499,15 @@ def public_page_url(page_path: str) -> str:
     return f"{PUBLIC_SITE_URL}/{page_path}"
 
 
+def paged_source_url(source: dict[str, Any]) -> str:
+    """Link directly to the first cited PDF page when the source records one."""
+    url = str(source["url"])
+    pdf_page = source.get("pdf_page")
+    if not isinstance(pdf_page, int) or pdf_page < 1:
+        return url
+    return f"{url.split('#', 1)[0]}#page={pdf_page}"
+
+
 def status_badge(status: str) -> str:
     label = STATUS_LABELS.get(status, status.replace("-", " ").title())
     return f'<span class="status {html.escape(status)}">{html.escape(label)}</span>'
@@ -929,6 +938,8 @@ def validate_textbook_spine(
     for chapter in chapters:
         if chapter.get("status") not in STATUS_LABELS:
             raise ValueError(f"unknown textbook spine status: {chapter.get('status')}")
+        if not isinstance(chapter.get("pdf_page"), int) or chapter["pdf_page"] < 1:
+            raise ValueError(f"textbook chapter {chapter.get('number')} lacks a valid PDF page")
         if chapter.get("core_status") and chapter.get("core_status") not in STATUS_LABELS:
             raise ValueError(f"unknown textbook spine core status: {chapter.get('core_status')}")
         for section in chapter.get("section_coverage", []):
@@ -1088,7 +1099,7 @@ def build_textbook_spine(
                 )
             theorem_html = f"""
 <article class="source-theorem-card spine-theorem-card">
-  <div class="source-theorem-heading"><div><span class="panel-kicker">Source theorem · faithful restatement</span><h3>{html.escape(source_theorem['label'])}</h3></div>{status_badge(effective_evidence_status(source_theorem['status'], verified))}</div>
+  <div class="source-theorem-heading"><div><span class="panel-kicker">Source theorem · faithful restatement</span><h3>{html.escape(source_theorem['label'])}</h3></div><a href="{html.escape(paged_source_url({'url': source['official_url'], 'pdf_page': chapter['pdf_page']}), quote=True)}">Original chapter ↗</a>{status_badge(effective_evidence_status(source_theorem['status'], verified))}</div>
   <p>{html.escape(source_theorem['plain'])}</p>
   {render_math_statement(source_theorem['label'], source_theorem['math'], source_theorem['fallback'])}
   {quantifier_html}
@@ -1164,7 +1175,7 @@ def build_textbook_spine(
   {chapter_source_html}
   {sections}
   {section_coverage_html}
-  <p><a class="button compact" href="{html.escape(source['official_url'], quote=True)}">Open the formal PDF <span aria-hidden="true">↗</span></a></p>
+  <p><a class="button compact" href="{html.escape(paged_source_url({'url': source['official_url'], 'pdf_page': chapter['pdf_page']}), quote=True)}">Open Chapter {chapter['number']} at PDF p. {chapter['pdf_page']} <span aria-hidden="true">↗</span></a></p>
 </section>
 
 <section id="goals"><h2>Learning goals</h2>{goals}</section>
@@ -1223,7 +1234,7 @@ def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[
   <h3>{html.escape(source['title'])}</h3>
   <p>{html.escape(source['authors'])}</p>
   <dl><div><dt>Location</dt><dd>{html.escape(source['sections'])}</dd></div><div><dt>Pages</dt><dd>{html.escape(source['pages'])}</dd></div></dl>
-  <a class="button compact" href="{html.escape(source['url'], quote=True)}">Open the source <span aria-hidden="true">↗</span></a>
+  <a class="button compact" href="{html.escape(paged_source_url(source), quote=True)}">Open at the cited pages <span aria-hidden="true">↗</span></a>
 </article>"""
 
     sources = source_card(primary, f"Primary spine · {primary['edition']}")
@@ -1276,7 +1287,7 @@ def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[
                 )
             theorem_cards.append(f"""
 <article class="source-theorem-card">
-  <div class="source-theorem-heading"><div><span class="panel-kicker">Source theorem · faithful restatement</span><h3>{html.escape(theorem['label'])}</h3></div><a href="{html.escape(theorem['url'], quote=True)}">Original source ↗</a></div>
+  <div class="source-theorem-heading"><div><span class="panel-kicker">Source theorem · faithful restatement</span><h3>{html.escape(theorem['label'])}</h3></div><a href="{html.escape(paged_source_url(theorem), quote=True)}">Original at {html.escape(theorem['pages'])} ↗</a></div>
   <p>{html.escape(theorem['plain'])}</p>
   {contract_html}
   {render_math_statement('Source mathematical statement', theorem['math'], theorem['fallback'])}
@@ -1420,7 +1431,7 @@ def render_highlight(
     return f"""
 <article class="theorem-panel{' source-match-panel' if match_badge else ''}" id="{declaration['anchor']}-teaching">
   <div class="theorem-header">
-    <div class="declaration-heading"><span class="panel-kicker">Lean declaration</span>{match_badge}<h3>{html.escape(declaration['full_name'])}</h3></div>
+    <div class="declaration-heading"><span class="panel-kicker">Lean declaration</span>{match_badge}<h3>{breakable_identifier(declaration['full_name'])}</h3></div>
     {status_badge(status)}
   </div>
   <div class="theorem-body">
@@ -1978,21 +1989,18 @@ def build_catalog(
         declaration_module_url = module_href(page_path, {"slug": decl["module_slug"]})
         declaration_source_url = source_url(decl["file"], decl["line"])
         catalog_items.append(
-            {
-                "name": decl["full_name"],
-                "kind": decl["kind"],
-                "kind_label": KIND_LABELS.get(decl["kind"], decl["kind"]),
-                "module": decl["module"],
-                "module_url": declaration_module_url,
-                "chapter": decl["chapter"],
-                "chapter_title": decl["chapter_title"],
-                "status": status,
-                "status_label": STATUS_LABELS[status],
-                "url": declaration_url,
-                "source_url": declaration_source_url,
-                "source_label": f"{decl['file']}:{decl['line']}",
-                "search": search_text,
-            }
+            [
+                decl["full_name"],
+                decl["kind"],
+                decl["module"],
+                decl["module_slug"],
+                decl["chapter"],
+                decl["chapter_title"],
+                status,
+                decl["file"],
+                decl["line"],
+                decl["anchor"],
+            ]
         )
         if len(rows) >= CATALOG_PAGE_SIZE:
             continue
@@ -2010,7 +2018,17 @@ def build_catalog(
     write_text_lf(
         output / "catalog-data.json",
         json.dumps(
-            {"page_size": CATALOG_PAGE_SIZE, "items": catalog_items},
+            {
+                "schema_version": 2,
+                "page_size": CATALOG_PAGE_SIZE,
+                "source_base": f"{GITHUB_REPO}/blob/{SOURCE_BRANCH}/",
+                "kind_labels": {kind: KIND_LABELS.get(kind, kind) for kind in kinds},
+                "status_labels": {
+                    status: STATUS_LABELS[status]
+                    for status in ("compiled", "stated", "source")
+                },
+                "items": catalog_items,
+            },
             ensure_ascii=False,
             separators=(",", ":"),
         ),
@@ -2112,15 +2130,15 @@ def build_chapters(
             highlights_by_chapter[chapter["slug"]],
             key=lambda item: int(item.get("teaching_order", 10_000)),
         )
-        if len(chapter_highlights) > TEACHING_PREVIEW_COUNT:
-            featured_highlights = [item for item in chapter_highlights if item.get("featured") is True]
-            if not featured_highlights or len(featured_highlights) > TEACHING_PREVIEW_COUNT:
-                raise SystemExit(
-                    f"chapter {chapter['slug']} needs between one and {TEACHING_PREVIEW_COUNT} "
-                    "explicit featured highlights before extended notes can be collapsed"
-                )
-        else:
-            featured_highlights = chapter_highlights
+        route_names = reading.get("teaching_route", [])
+        highlights_by_name = {item["full_name"]: item for item in chapter_highlights}
+        missing_route_names = [name for name in route_names if name not in highlights_by_name]
+        if missing_route_names:
+            raise SystemExit(
+                f"chapter {chapter['slug']} teaching route references unknown highlights: "
+                + ", ".join(missing_route_names)
+            )
+        featured_highlights = [highlights_by_name[name] for name in route_names]
         visible_highlights = [
             item for item in featured_highlights if item.get("source_match") != "extension"
         ]
@@ -4306,16 +4324,39 @@ def validate_readings(chapters: list[dict[str, Any]], readings: list[dict[str, A
             )
         )
     for reading in readings:
-        if not reading.get("primary", {}).get("url"):
+        teaching_route = reading.get("teaching_route", [])
+        if (
+            not isinstance(teaching_route, list)
+            or not 1 <= len(teaching_route) <= TEACHING_PREVIEW_COUNT
+            or len(teaching_route) != len(set(teaching_route))
+            or any(not isinstance(name, str) or not name.strip() for name in teaching_route)
+        ):
+            raise SystemExit(
+                f"reading {reading['slug']} needs one to {TEACHING_PREVIEW_COUNT} unique teaching-route declarations"
+            )
+        primary = reading.get("primary", {})
+        if not primary.get("url"):
             raise SystemExit(f"reading {reading['slug']} lacks a primary source URL")
+        if not isinstance(primary.get("pdf_page"), int) or primary["pdf_page"] < 1:
+            raise SystemExit(f"reading {reading['slug']} lacks a valid primary PDF page")
         companions = ([reading["companion"]] if reading.get("companion") else []) + reading.get("companions", [])
         if any(not source.get("url") for source in companions):
             raise SystemExit(f"reading {reading['slug']} has a companion without a source URL")
+        if any(not isinstance(source.get("pdf_page"), int) or source["pdf_page"] < 1 for source in companions):
+            raise SystemExit(f"reading {reading['slug']} has a companion without a valid PDF page")
         if not reading.get("algorithm", {}).get("steps"):
             raise SystemExit(f"reading {reading['slug']} lacks an algorithm or proof flow")
         theorems = ([reading["source_theorem"]] if reading.get("source_theorem") else []) + reading.get("source_theorems", [])
         if theorems:
             for theorem in theorems:
+                if not isinstance(theorem.get("pdf_page"), int) or theorem["pdf_page"] < 1:
+                    raise SystemExit(f"reading {reading['slug']} has a theorem without a valid PDF page")
+                contract = theorem.get("contract", {})
+                required_contract = {"model", "assumptions", "parameters", "regret", "guarantee"}
+                if set(contract) != required_contract or any(not str(contract[key]).strip() for key in required_contract):
+                    raise SystemExit(
+                        f"reading {reading['slug']} theorem {theorem.get('label')} lacks the complete source contract"
+                    )
                 normalized = normalize_math_source(theorem.get("math", ""))
                 if normalized.count(r"\(") != normalized.count(r"\)") or normalized.count(r"\[") != normalized.count(r"\]"):
                     raise SystemExit(f"reading {reading['slug']} has unbalanced mathematical delimiters")

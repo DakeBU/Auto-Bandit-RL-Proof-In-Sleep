@@ -385,6 +385,9 @@ def check_current_evidence_surfaces(
         ".comparison-decision",
         ".status.prototype",
         ".declaration-content .lean-code",
+        ".code-toolbar",
+        ".lean-code.wrap-lines",
+        ".lean-code.scroll-lines",
     ):
         if required not in site_css:
             errors.append(f"site.css is missing evidence/overflow support: {required}")
@@ -960,6 +963,16 @@ def main() -> int:
     if reading_slugs != chapter_slugs:
         errors.append("readings.json must contain exactly one crosswalk for every Book Map chapter")
     for reading in readings_source:
+        teaching_route = reading.get("teaching_route")
+        if (
+            not isinstance(teaching_route, list)
+            or not 1 <= len(teaching_route) <= 4
+            or any(not isinstance(name, str) or not name.strip() for name in teaching_route)
+            or len(teaching_route) != len(set(teaching_route))
+        ):
+            errors.append(
+                f"readings.json: {reading.get('slug')} needs one to four unique teaching-route declarations"
+            )
         notation = reading.get("notation")
         if not isinstance(notation, list) or len(notation) != 3:
             errors.append(
@@ -1085,12 +1098,23 @@ def main() -> int:
         errors.append("textbook-spine chapter-page count does not match textbook_spine.json")
     chapter_source_theorems = 0
     chapter_source_boundaries = 0
+    readings_by_slug = {reading.get("slug"): reading for reading in readings_source}
     for chapter_page in chapter_pages:
         collector = pages.get(chapter_page.resolve())
         if collector is None:
             continue
         relative = chapter_page.relative_to(output)
         page_source = chapter_page.read_text(encoding="utf-8")
+        chapter_slug = chapter_page.parent.name
+        teaching_route = readings_by_slug.get(chapter_slug, {}).get("teaching_route", [])
+        visible_source = page_source.split(
+            '<details class="inventory-disclosure teaching-disclosure">', 1
+        )[0]
+        visible_panel_count = visible_source.count('<article class="theorem-panel')
+        if visible_panel_count != len(teaching_route):
+            errors.append(
+                f"{relative}: visible theorem panels {visible_panel_count} != teaching route {len(teaching_route)}"
+            )
         if page_source.count('class="chapter-pager"') != 1:
             errors.append(f"{relative}: expected one Book Map sequence pager")
         if collector.chapter_compass_count != 1:
@@ -1103,6 +1127,12 @@ def main() -> int:
             errors.append(f"{relative}: expected at least one source theorem or one explicit source boundary")
         if collector.source_theorem_card_count and collector.source_boundary_count:
             errors.append(f"{relative}: source theorem cards and a no-theorem boundary cannot coexist")
+        if page_source.count('class="source-theorem-contract"') != collector.source_theorem_card_count:
+            errors.append(f"{relative}: every source theorem needs one complete source contract")
+        if page_source.count("Original at ") != collector.source_theorem_card_count:
+            errors.append(f"{relative}: every source theorem needs one page-specific original-source link")
+        if page_source.count("#page=") < collector.source_theorem_card_count + 1:
+            errors.append(f"{relative}: source guide links are not page-specific")
         if collector.algorithm_flow_count != 1:
             errors.append(f"{relative}: expected one algorithm or proof flow")
         if collector.math_statement_count != collector.math_fallback_count or collector.math_statement_count != collector.math_tex_count:
@@ -1184,6 +1214,8 @@ def main() -> int:
             errors.append(f"{relative}: expected one Part IV sequence pager")
         if collector.algorithm_flow_count != 1:
             errors.append(f"{relative}: expected one maintainable proof or algorithm flow")
+        if "Open Chapter " not in page_source or "#page=" not in page_source:
+            errors.append(f"{relative}: Part IV source map lacks a page-specific textbook link")
         if collector.math_statement_count < 1:
             errors.append(f"{relative}: expected at least one mathematical statement")
         if collector.math_statement_count != collector.math_fallback_count or collector.math_statement_count != collector.math_tex_count:
@@ -1228,22 +1260,19 @@ def main() -> int:
             errors.append(f"catalog-data.json: invalid JSON: {error}")
     catalog_items = catalog_data.get("items", []) if isinstance(catalog_data, dict) else []
     catalog_page_size = catalog_data.get("page_size") if isinstance(catalog_data, dict) else None
+    if catalog_data.get("schema_version") != 2:
+        errors.append("catalog-data.json: schema_version must be 2")
     if catalog_page_size != 100:
         errors.append("catalog-data.json: page_size must remain 100")
     if len(catalog_items) != manifest.get("declaration_count"):
         errors.append(
             f"catalog-data count {len(catalog_items)} != declaration_count {manifest.get('declaration_count')}"
         )
-    required_catalog_fields = {
-        "name", "kind", "kind_label", "module", "module_url", "chapter",
-        "chapter_title", "status", "status_label", "url", "source_url",
-        "source_label", "search",
-    }
     for item in catalog_items:
-        if not isinstance(item, dict) or not required_catalog_fields.issubset(item):
-            errors.append("catalog-data.json: declaration item is missing required fields")
+        if not isinstance(item, list) or len(item) != 10:
+            errors.append("catalog-data.json: compact declaration row must have 10 fields")
             break
-    catalog_names = [item.get("name") for item in catalog_items if isinstance(item, dict)]
+    catalog_names = [item[0] for item in catalog_items if isinstance(item, list) and len(item) == 10]
     if len(catalog_names) != len(set(catalog_names)):
         errors.append("catalog-data.json: declaration names must be unique")
     search_urls_by_name = {
@@ -1251,17 +1280,20 @@ def main() -> int:
     }
     catalog_page_path = output / "declarations" / "index.html"
     for item in catalog_items:
-        if not isinstance(item, dict):
+        if not isinstance(item, list) or len(item) != 10:
             continue
-        catalog_split = urlsplit(str(item.get("url", "")))
-        search_split = urlsplit(str(search_urls_by_name.get(item.get("name"), "")))
+        name, _kind, _module, module_slug, _chapter, _chapter_title, _status, _file, _line, anchor = item
+        catalog_split = urlsplit(f"../modules/{module_slug}/index.html#{anchor}")
+        search_split = urlsplit(str(search_urls_by_name.get(name, "")))
         catalog_target = (catalog_page_path.parent / catalog_split.path).resolve()
         search_target = (output / search_split.path).resolve()
         if catalog_target != search_target or catalog_split.fragment != search_split.fragment:
             errors.append(
-                f"catalog-data.json: declaration URL disagrees with search-index for {item.get('name')}"
+                f"catalog-data.json: declaration URL disagrees with search-index for {name}"
             )
             break
+    if catalog_data_path.exists() and catalog_data_path.stat().st_size > 6_000_000:
+        errors.append("catalog-data.json: compact payload exceeds the 6 MB performance budget")
     if catalog_page_path.exists():
         catalog_page_source = catalog_page_path.read_text(encoding="utf-8")
         initial_catalog_rows = catalog_page_source.count("data-catalog-row")
@@ -1474,9 +1506,21 @@ def main() -> int:
         "data-catalog-more",
         "data-catalog-body",
         'class="status ${escapeHtml(item.status)}"',
+        "payload.kind_labels",
+        "payload.source_base",
     ):
         if required not in site_js:
             errors.append(f"site.js is missing progressive catalog support: {required}")
+    for required in (
+        "enhanceLeanCodeBlocks",
+        "data-code-wrap",
+        "data-code-copy",
+        "navigator.clipboard.writeText",
+        'classList.toggle("wrap-lines"',
+        'classList.toggle("scroll-lines"',
+    ):
+        if required not in site_js:
+            errors.append(f"site.js is missing Lean code display controls: {required}")
     for required in (
         "milestone-data.json",
         "milestoneLoadPromise",

@@ -381,7 +381,29 @@
           return response.json();
         })
         .then((payload) => {
-          catalogItems = Array.isArray(payload.items) ? payload.items : [];
+          const kindLabels = payload.kind_labels || {};
+          const statusLabels = payload.status_labels || {};
+          const sourceBase = payload.source_base || "";
+          catalogItems = Array.isArray(payload.items)
+            ? payload.items.map((row) => {
+                const [name, kind, module, moduleSlug, chapter, chapterTitle, status, file, line, anchor] = row;
+                return {
+                  name,
+                  kind,
+                  kind_label: kindLabels[kind] || kind,
+                  module,
+                  module_url: `../modules/${moduleSlug}/index.html`,
+                  chapter,
+                  chapter_title: chapterTitle,
+                  status,
+                  status_label: statusLabels[status] || status,
+                  url: `../modules/${moduleSlug}/index.html#${anchor}`,
+                  source_url: `${sourceBase}${file}#L${line}`,
+                  source_label: `${file}:${line}`,
+                  search: `${name} ${kind} ${module} ${file} ${chapterTitle}`.toLowerCase(),
+                };
+              })
+            : [];
           catalogPageSize = Number.isInteger(payload.page_size) ? payload.page_size : 100;
         })
         .finally(() => catalog.setAttribute("aria-busy", "false"));
@@ -572,6 +594,61 @@
   window.addEventListener("resize", labelOverflowRegions);
   [300, 1200, 3200].forEach((delay) => window.setTimeout(labelOverflowRegions, delay));
   window.MathJax?.startup?.promise?.then(labelOverflowRegions);
+
+  const enhanceLeanCodeBlocks = () => {
+    document.querySelectorAll("pre.lean-code").forEach((block, index) => {
+      if (block.dataset.codeEnhanced === "true") return;
+      block.dataset.codeEnhanced = "true";
+      const toolbar = document.createElement("div");
+      toolbar.className = "code-toolbar";
+      toolbar.setAttribute("role", "group");
+      toolbar.setAttribute("aria-label", "Lean statement display options");
+      toolbar.innerHTML =
+        '<button type="button" class="code-tool" data-code-wrap aria-pressed="false">Wrap lines</button>' +
+        '<button type="button" class="code-tool" data-code-copy>Copy statement</button>' +
+        `<span class="code-tool-status" data-code-status aria-live="polite" id="code-status-${index}"></span>`;
+      block.before(toolbar);
+
+      const wrapButton = toolbar.querySelector("[data-code-wrap]");
+      const copyButton = toolbar.querySelector("[data-code-copy]");
+      const status = toolbar.querySelector("[data-code-status]");
+      const syncWrapButton = () => {
+        const wrapped = getComputedStyle(block).whiteSpace !== "pre";
+        wrapButton?.setAttribute("aria-pressed", String(wrapped));
+        if (wrapButton) wrapButton.textContent = wrapped ? "Use horizontal scroll" : "Wrap lines";
+      };
+      syncWrapButton();
+
+      wrapButton?.addEventListener("click", () => {
+        const wrapped = getComputedStyle(block).whiteSpace !== "pre";
+        block.classList.toggle("wrap-lines", !wrapped);
+        block.classList.toggle("scroll-lines", wrapped);
+        syncWrapButton();
+        labelOverflowRegions();
+      });
+      copyButton?.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(block.innerText);
+          if (status) status.textContent = "Copied";
+        } catch (_error) {
+          if (status) status.textContent = "Copy unavailable; select the statement instead.";
+        }
+        window.setTimeout(() => {
+          if (status) status.textContent = "";
+        }, 2400);
+      });
+    });
+  };
+  enhanceLeanCodeBlocks();
+  window.addEventListener("resize", () => {
+    document.querySelectorAll("pre.lean-code:not(.wrap-lines):not(.scroll-lines)").forEach((block) => {
+      const button = block.previousElementSibling?.querySelector?.("[data-code-wrap]");
+      if (!button) return;
+      const wrapped = getComputedStyle(block).whiteSpace !== "pre";
+      button.setAttribute("aria-pressed", String(wrapped));
+      button.textContent = wrapped ? "Use horizontal scroll" : "Wrap lines";
+    });
+  });
 
   const mermaidBlocks = [...document.querySelectorAll(".mermaid")];
   if (mermaidBlocks.length) {

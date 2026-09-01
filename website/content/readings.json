@@ -3,12 +3,18 @@
   "readings": [
     {
       "slug": "foundations",
+      "teaching_route": [
+        "BanditRLProof.FiniteBanditModel",
+        "BanditRLProof.pullCount",
+        "BanditRLProof.pseudoRegret_eq_finset_sum_gap_mul_pullCount"
+      ],
       "primary": {
         "title": "Bandit Algorithms",
         "authors": "Tor Lattimore and Csaba Szepesvári",
         "edition": "free online edition",
         "sections": "Ch. 1 and Ch. 4, especially §4.5",
         "pages": "online pp. 8–16 and 56–69; regret decomposition pp. 62–63",
+        "pdf_page": 17,
         "url": "https://tor-lattimore.com/downloads/book/book.pdf"
       },
       "companion": {
@@ -16,6 +22,7 @@
         "authors": "Tor Lattimore and Csaba Szepesvári",
         "sections": "§14.2, Theorems 14.1–14.2, Exercise 14.10, §15.1 Lemma 15.1, §15.2 Theorem 15.2, §16.1 Definition 16.1 and Theorem 16.2, §16.2 Lemma 16.3 and Theorem 16.4, §17.1 Theorem 17.1 and Corollaries 17.2–17.3, and §17.2 Theorem 17.4 and Claims 17.5–17.7",
         "pages": "CUP §14.2 starts p. 162, §14.5 starts p. 167, §15.1–15.2 span pp. 170–173, §16.1–16.2 span pp. 177–180, and §17.1–17.2 span pp. 186–190; author-online pp. 188–191, 195–196, 198–201, 207–210, and 216–220; physical PDF pp. 197–200, 204–205, 207–210, 216–219, and 225–229",
+        "pdf_page": 197,
         "url": "https://tor-lattimore.com/downloads/book/book.pdf"
       },
       "notation": [
@@ -36,21 +43,36 @@
       "source_theorem": {
         "label": "Lemma 4.5 (regret decomposition)",
         "pages": "online pp. 62–63",
+        "pdf_page": 71,
         "url": "https://tor-lattimore.com/downloads/book/book.pdf",
         "math": "R_n=\\sum_{a=1}^{k}\\Delta_a\\,\\mathbb E[T_a(n)].",
         "fallback": "Expected regret is the sum, over arms, of each gap times that arm's expected pull count.",
         "plain": "The standard stochastic-bandit decomposition converts control of suboptimal pull counts into expected regret.",
-        "relationship": "BanditRLlib first proves the pathwise finite-trace identity. Algorithm chapters then integrate that bookkeeping identity under their own generated trajectory laws."
+        "relationship": "BanditRLlib first proves the pathwise finite-trace identity. Algorithm chapters then integrate that bookkeeping identity under their own generated trajectory laws.",
+        "contract": {
+          "model": "Any stochastic bandit environment with a finite or countable action set, together with any policy and horizon n.",
+          "assumptions": "Arm means, action gaps, regret, and expected pull counts are defined; no concentration or algorithm-specific assumption is used.",
+          "parameters": "Horizon n, action gaps Δ_a, and pull counts T_a(n).",
+          "regret": "The textbook frequentist expected regret R_n.",
+          "guarantee": "An exact identity: regret equals the sum over actions of gap times expected pull count."
+        }
       }
     },
     {
       "slug": "probability",
+      "teaching_route": [
+        "BanditRLProof.Policy.MeasurablePolicy",
+        "BanditRLProof.ConditionalExpectationReward.historyStepKernelFamily_centeredReward_succ_hasCondSubgaussianMGF_trajMeasure",
+        "BanditRLProof.Concentration.measure_iUnion_iUnion_fintype_le_delta_of_geometricConfidenceShare",
+        "BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_successorArmEmpiricalMean_simultaneous_fintype_geometricAllTime_abs_tail_ennreal_delta_trajMeasure"
+      ],
       "primary": {
         "title": "Bandit Algorithms",
         "authors": "Tor Lattimore and Csaba Szepesvári",
         "edition": "free online edition",
         "sections": "Ch. 2, Ch. 3, and Ch. 5",
         "pages": "online pp. 18–42, 46–54, and 74–81",
+        "pdf_page": 27,
         "url": "https://tor-lattimore.com/downloads/book/book.pdf"
       },
       "notation": [
@@ -71,21 +93,34 @@
       "source_theorem": {
         "label": "Corollary 5.5 (sub-Gaussian tail)",
         "pages": "online pp. 77–78",
+        "pdf_page": 86,
         "url": "https://tor-lattimore.com/downloads/book/book.pdf",
         "math": "\\Pr(X\\ge\\varepsilon)\\le\\exp\\!\\left(-\\frac{\\varepsilon^2}{2\\sigma^2}\\right)\\quad\\text{for a zero-mean }\\sigma^2\\text{-sub-Gaussian }X.",
         "fallback": "A centered sub-Gaussian variable has an exponentially small upper-tail probability.",
         "plain": "The fixed-index tail estimate is the mathematical atom from which finite and all-time confidence schedules are assembled.",
-        "relationship": "The local library adds measure, kernel, filtration, conditional-law, finite-index, and countable-all-time adapters needed by generated bandit trajectories."
+        "relationship": "The local library adds measure, kernel, filtration, conditional-law, finite-index, and countable-all-time adapters needed by generated bandit trajectories.",
+        "contract": {
+          "model": "A real-valued random variable X on a probability space.",
+          "assumptions": "X is centered and σ-sub-Gaussian in the moment-generating-function sense; the deviation ε is nonnegative.",
+          "parameters": "Sub-Gaussian scale σ and deviation threshold ε.",
+          "regret": "Not a regret theorem; this is a one-sided concentration primitive consumed by later regret proofs.",
+          "guarantee": "The upper-tail probability is at most exp(-ε²/(2σ²))."
+        }
       }
     },
     {
       "slug": "etc",
+      "teaching_route": [
+        "BanditRLProof.ETC.argmaxCommitOracle_encode_le_of_score_le",
+        "BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal"
+      ],
       "primary": {
         "title": "Bandit Algorithms",
         "authors": "Tor Lattimore and Csaba Szepesvári",
         "edition": "free online edition",
         "sections": "Ch. 6",
         "pages": "online pp. 91–96",
+        "pdf_page": 100,
         "url": "https://tor-lattimore.com/downloads/book/book.pdf"
       },
       "notation": [
@@ -106,21 +141,34 @@
       "source_theorem": {
         "label": "Theorem 6.1 (ETC regret bound)",
         "pages": "online pp. 92–93",
+        "pdf_page": 101,
         "url": "https://tor-lattimore.com/downloads/book/book.pdf",
         "math": "R_n\\le m\\sum_i\\Delta_i+(n-mk)\\sum_i\\Delta_i\\exp\\!\\left(-\\frac{m\\Delta_i^2}{4}\\right).",
         "fallback": "ETC regret is bounded by the exploration cost plus the remaining horizon times exponentially small wrong-commit probabilities.",
         "plain": "The theorem exposes the central ETC tradeoff: more exploration costs regret now but reduces the probability of committing to a wrong arm.",
-        "relationship": "The local canonical route constructs a measurable generated ETC law and states explicit tie semantics before deriving bounded and sub-Gaussian expected-regret endpoints."
+        "relationship": "The local canonical route constructs a measurable generated ETC law and states explicit tie semantics before deriving bounded and sub-Gaussian expected-regret endpoints.",
+        "contract": {
+          "model": "A finite k-armed stochastic bandit whose centered arm rewards are 1-sub-Gaussian.",
+          "assumptions": "The exploration length satisfies 1 ≤ m ≤ n/k; each arm is explored m times and empirical-mean ties are broken by a fixed rule.",
+          "parameters": "Horizon n, arm count k, exploration count m, and gaps Δ_i.",
+          "regret": "Expected frequentist regret R_n of Explore-Then-Commit.",
+          "guarantee": "Exploration cost plus the remaining horizon weighted by exponentially small wrong-commit probabilities."
+        }
       }
     },
     {
       "slug": "ucb",
+      "teaching_route": [
+        "BanditRLProof.UCB.integral_real_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_le_textbookGapSum_finiteArmSubgaussianLaws_without_proxy_positivity",
+        "BanditRLProof.UCB.selectedPolicySuccessorFiniteArmSubgaussianExpectedAveragePseudoRegret_tendsto_zero"
+      ],
       "primary": {
         "title": "Bandit Algorithms",
         "authors": "Tor Lattimore and Csaba Szepesvári",
         "edition": "free online edition",
         "sections": "Ch. 7; KL-UCB extension in Ch. 10",
         "pages": "online pp. 102–111; KL-UCB pp. 133–141",
+        "pdf_page": 111,
         "url": "https://tor-lattimore.com/downloads/book/book.pdf"
       },
       "notation": [
@@ -142,6 +190,7 @@
       "source_theorem": {
         "label": "Theorem 7.2 (finite-time UCB regret)",
         "pages": "online p. 108",
+        "pdf_page": 117,
         "url": "https://tor-lattimore.com/downloads/book/book.pdf",
         "math": "R_n\\le 8\\sqrt{nk\\log n}+3\\sum_{i=1}^{k}\\Delta_i.",
         "fallback": "The textbook UCB policy has a finite-time regret bound with a leading square-root term in horizon, arm count, and log horizon.",
@@ -158,12 +207,19 @@
     },
     {
       "slug": "oful",
+      "teaching_route": [
+        "BanditRLProof.OFUL.sum_range_min_prefix_update_le_two_trace_average_log",
+        "BanditRLProof.OFUL.measure_finiteHorizonRidgeEstimate_error_matrixNorm_gt_confidenceRadius_le",
+        "BanditRLProof.OFUL.finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm",
+        "BanditRLProof.OFUL.telescopingCanonicalStandardHighProbabilityPseudoRegret_nonneg_and_allHorizon_tail_le_explicitBound_of_linearSubgaussianEnvironment_of_featureBound_le_regularization"
+      ],
       "primary": {
         "title": "Bandit Algorithms",
         "authors": "Tor Lattimore and Csaba Szepesvári",
         "edition": "free online edition",
         "sections": "Ch. 19–20; stopping times in §3.3",
         "pages": "online pp. 238–262; stopping-time basics pp. 50–54",
+        "pdf_page": 247,
         "url": "https://tor-lattimore.com/downloads/book/book.pdf"
       },
       "companion": {
@@ -171,6 +227,7 @@
         "authors": "Yasin Abbasi-Yadkori, Dávid Pál, and Csaba Szepesvári",
         "sections": "OFUL algorithm and Theorem 3",
         "pages": "paper pp. 3–5",
+        "pdf_page": 3,
         "url": "https://proceedings.neurips.cc/paper/2011/file/e1d5be1c7f2f456670de3d53c7b54f4a-Paper.pdf"
       },
       "notation": [
@@ -192,21 +249,36 @@
       "source_theorem": {
         "label": "Abbasi-Yadkori–Pál–Szepesvári, Theorem 3",
         "pages": "paper pp. 4–5",
+        "pdf_page": 5,
         "url": "https://proceedings.neurips.cc/paper/2011/file/e1d5be1c7f2f456670de3d53c7b54f4a-Paper.pdf",
         "math": "R_n=\\widetilde O\\!\\left(d\\sqrt n\\right)\\quad\\text{under the theorem's bounded-feature and sub-Gaussian assumptions}.",
         "fallback": "OFUL achieves dimension times square-root-horizon regret, up to logarithmic factors, under the paper's stated assumptions.",
         "plain": "The paper combines a self-normalized confidence ellipsoid with optimism and an elliptical-potential argument.",
-        "relationship": "The local finite-action scalar route compiles the confidence, optimistic policy, all-time, expected-consistency, and stopping-time interfaces under its own explicit contracts; consult the exact Lean statements for the narrower model."
+        "relationship": "The local finite-action scalar route compiles the confidence, optimistic policy, all-time, expected-consistency, and stopping-time interfaces under its own explicit contracts; consult the exact Lean statements for the narrower model.",
+        "contract": {
+          "model": "A d-dimensional stochastic linear bandit with round-dependent feasible action sets and linear conditional mean rewards.",
+          "assumptions": "The paper's preceding bounded-parameter, bounded-feature, conditionally sub-Gaussian noise, and regularization conditions hold; Theorem 3 also assumes every feasible mean reward lies in [-1,1].",
+          "parameters": "Dimension d, horizon n, feature and parameter bounds, noise scale, regularization λ, and confidence δ.",
+          "regret": "High-probability cumulative pseudo-regret of the OFUL policy.",
+          "guarantee": "An explicit confidence-dependent bound of order d√n up to logarithmic factors."
+        }
       }
     },
     {
       "slug": "thompson",
+      "teaching_route": [
+        "BanditRLProof.PosteriorKernel.canonicalPosterior_kernel_ae_eq_condDistrib_of_pair_map_eq",
+        "BanditRLProof.Thompson.uniformReferenceThompsonAlgorithm_trajectory_condDistrib_action_ae_eq_bestAction",
+        "BanditRLProof.Thompson.integral_trajectoryBayesMeanRegret_eq_add_clippedUCB",
+        "BanditRLProof.Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryBayesMeanRegret_le"
+      ],
       "primary": {
         "title": "Bandit Algorithms",
         "authors": "Tor Lattimore and Csaba Szepesvári",
         "edition": "free online edition",
         "sections": "Ch. 34 and Ch. 36",
         "pages": "online pp. 421–436 and 460–475",
+        "pdf_page": 430,
         "url": "https://tor-lattimore.com/downloads/book/book.pdf"
       },
       "notation": [
@@ -227,21 +299,36 @@
       "source_theorem": {
         "label": "Theorem 36.1 (Bayesian regret of Thompson sampling)",
         "pages": "online Ch. 36, pp. 460–475",
+        "pdf_page": 470,
         "url": "https://tor-lattimore.com/downloads/book/book.pdf",
         "math": "BR_n\\le C\\sqrt{kn\\log n}\\quad\\text{for the theorem's Bayesian finite-armed model and universal }C.",
         "fallback": "In the stated Bayesian finite-armed setting, Thompson sampling has square-root-horizon Bayesian regret up to a logarithmic factor.",
         "plain": "Probability matching turns posterior uncertainty about the best arm into an exploration policy.",
-        "relationship": "BanditRLlib constructs a canonical posterior/kernel and generated stationary latent-arm-stream process. Its compiled terminal has explicit bounded-reward and variance terms and is not a blanket frequentist guarantee for all Thompson variants."
+        "relationship": "BanditRLlib constructs a canonical posterior/kernel and generated stationary latent-arm-stream process. Its compiled terminal has explicit bounded-reward and variance terms and is not a blanket frequentist guarantee for all Thompson variants.",
+        "contract": {
+          "model": "A k-armed Bayesian bandit environment with prior Q and arm laws indexed by the latent environment.",
+          "assumptions": "For every environment and arm, the centered reward law is 1-sub-Gaussian and its mean lies in [0,1]; optimal-arm ties use the algorithm's fixed rule.",
+          "parameters": "Prior Q, arm count k, and horizon n.",
+          "regret": "Bayesian regret BR_n, averaged over the prior, observations, and policy randomization.",
+          "guarantee": "BR_n is at most C√(kn log n) for a universal constant C."
+        }
       }
     },
     {
       "slug": "exp3",
+      "teaching_route": [
+        "BanditRLProof.Exp3.hedge_regret_le_log_card_div_add_eta_mul_mixedSquaredLoss_of_nonneg",
+        "BanditRLProof.Exp3.sampledPredictable_expectedRegret_le_four_mul_sqrt",
+        "BanditRLProof.Exp3.sampledPredictable_allHorizonBernsteinSquareBestArmRealizedRegret_tail",
+        "BanditRLProof.Exp3.measure_sampledRealizedRegretGeometricAllTimeFailureSet_le"
+      ],
       "primary": {
         "title": "Bandit Algorithms",
         "authors": "Tor Lattimore and Csaba Szepesvári",
         "edition": "free online edition",
         "sections": "Ch. 11–12",
         "pages": "online pp. 148–172",
+        "pdf_page": 157,
         "url": "https://tor-lattimore.com/downloads/book/book.pdf"
       },
       "notation": [
@@ -263,21 +350,34 @@
       "source_theorem": {
         "label": "Theorem 11.2 (EXP3 expected regret)",
         "pages": "online p. 156",
+        "pdf_page": 165,
         "url": "https://tor-lattimore.com/downloads/book/book.pdf",
         "math": "\\eta=\\sqrt{\\frac{2\\log k}{nk}}\\quad\\Longrightarrow\\quad R_n\\le\\sqrt{2nk\\log k}.",
         "fallback": "With the textbook learning rate, EXP3 has expected adversarial regret at most the square root of two times horizon, arm count, and log arm count.",
         "plain": "Importance weighting makes the bandit observation unbiased, while exponential weights controls the resulting estimated-loss regret.",
-        "relationship": "The local generated predictable process uses its own tuning constants and also compiles separate fixed-horizon, all-time, realized-regret, and sparse-loss extensions."
+        "relationship": "The local generated predictable process uses its own tuning constants and also compiles separate fixed-horizon, all-time, realized-regret, and sparse-loss extensions.",
+        "contract": {
+          "model": "An adversarial k-armed bandit with a fixed reward table x in [0,1]^(n×k).",
+          "assumptions": "The policy is the textbook EXP3 construction and compares with the best fixed arm in hindsight.",
+          "parameters": "Horizon n, arm count k, and learning rate η = √(2 log k/(nk)).",
+          "regret": "Expected adversarial pseudo-regret R_n against the best fixed arm.",
+          "guarantee": "R_n ≤ √(2nk log k)."
+        }
       }
     },
     {
       "slug": "tsallis",
+      "teaching_route": [
+        "BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_le_allRateBound",
+        "BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisFiniteArmIIDRewardLawRegret_le_log"
+      ],
       "primary": {
         "title": "Bandit Algorithms",
         "authors": "Tor Lattimore and Csaba Szepesvári",
         "edition": "free online edition",
         "sections": "Ch. 28 (FTRL and mirror-descent foundation)",
         "pages": "online pp. 327–344",
+        "pdf_page": 336,
         "url": "https://tor-lattimore.com/downloads/book/book.pdf"
       },
       "companion": {
@@ -285,6 +385,7 @@
         "authors": "Julian Zimmert and Yevgeny Seldin",
         "sections": "Algorithm 1 and Theorem 1",
         "pages": "paper pp. 7–13",
+        "pdf_page": 7,
         "url": "https://jmlr.csail.mit.edu/papers/volume22/19-753/19-753.pdf"
       },
       "notation": [
@@ -305,21 +406,36 @@
       "source_theorem": {
         "label": "Zimmert–Seldin, Theorem 1 (adversarial regime)",
         "pages": "paper p. 9",
+        "pdf_page": 9,
         "url": "https://jmlr.csail.mit.edu/papers/volume22/19-753/19-753.pdf",
         "math": "Reg_T\\le4\\sqrt{KT}+1\\quad\\text{(importance weighting)},\\qquad Reg_T\\le2\\sqrt{KT}+10K\\log T+16\\quad\\text{(reduced variance)}.",
         "fallback": "The source theorem gives explicit adversarial square-root regret bounds for importance-weighted and reduced-variance Tsallis-INF variants.",
         "plain": "The half-Tsallis regularizer is designed to retain adversarial robustness while adapting sharply to stochastic self-bounding structure.",
-        "relationship": "BanditRLlib proves a scheduled half-Tsallis route and several IID, corrupted, drifting, and oracle-restart consumers. These are source-aligned local theorems, not a claim that every sharp paper regime has been reproduced verbatim."
+        "relationship": "BanditRLlib proves a scheduled half-Tsallis route and several IID, corrupted, drifting, and oracle-restart consumers. These are source-aligned local theorems, not a claim that every sharp paper regime has been reproduced verbatim.",
+        "contract": {
+          "model": "Any adversarial K-armed bandit problem in the paper's loss-based protocol.",
+          "assumptions": "Tsallis-INF uses α = 1/2, symmetric regularization, and either the importance-weighted or reduced-variance estimator specified in the paper.",
+          "parameters": "Horizon T, arm count K, and schedule η_t = 2/√t for IW or 4/√t for RV.",
+          "regret": "Adversarial pseudo-regret Reg_T.",
+          "guarantee": "The IW route gives 4√(KT)+1; the RV route gives 2√(KT)+10K log T+16."
+        }
       }
     },
     {
       "slug": "finite-horizon-rl",
+      "teaching_route": [
+        "BanditRLProof.FiniteHorizonRL.MDP",
+        "BanditRLProof.FiniteHorizonRL.MarkovPolicy.expectedRegret_eq_occupancyGapRemaining",
+        "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.AdaptiveEpisodeBatchSource.recurrentQTableOfTrajectory_dominatesOptimal",
+        "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_trajectoryMeasure_cumulativeEpisodePseudoRegret_gt_canonicalRegretBound_le"
+      ],
       "primary": {
         "title": "Bandit Algorithms",
         "authors": "Tor Lattimore and Csaba Szepesvári",
         "edition": "free online edition",
         "sections": "Ch. 38",
         "pages": "online pp. 512–538",
+        "pdf_page": 521,
         "url": "https://tor-lattimore.com/downloads/book/book.pdf"
       },
       "companion": {
@@ -327,6 +443,7 @@
         "authors": "Mohammad Gheshlaghi Azar, Ian Osband, and Rémi Munos",
         "sections": "Algorithms 1–2 and Theorem 1 (UCBVI-CH)",
         "pages": "paper pp. 3–4",
+        "pdf_page": 3,
         "url": "https://proceedings.mlr.press/v70/azar17a/azar17a.pdf"
       },
       "notation": [
@@ -348,21 +465,36 @@
       "source_theorem": {
         "label": "Azar–Osband–Munos, Theorem 1 (UCBVI-CH)",
         "pages": "paper p. 4",
+        "pdf_page": 4,
         "url": "https://proceedings.mlr.press/v70/azar17a/azar17a.pdf",
         "math": "Regret(K)\\le20H^{3/2}L\\sqrt{SAK}+250H^2S^2AL^2,\\qquad L=\\log\\!\\left(\\frac{5HSAT}{\\delta}\\right),",
         "fallback": "With high probability, UCBVI-CH regret is bounded by a 20-times square-root leading term plus the explicit 250-times lower-order term.",
         "plain": "The UCBVI-CH analysis couples empirical-transition concentration, backward optimism, cumulative bonuses, and a martingale innovation term.",
-        "relationship": "The compiled local endpoint is deliberately narrow: finite horizon, known deterministic rewards, the same recurrent generated process, strict-prefix counts, policy-value pseudo-regret, the frozen 20/250 high-probability bound, and an expected consumer with an additional KHδ failure term."
+        "relationship": "The compiled local endpoint is deliberately narrow: finite horizon, known deterministic rewards, the same recurrent generated process, strict-prefix counts, policy-value pseudo-regret, the frozen 20/250 high-probability bound, and an expected consumer with an additional KHδ failure term.",
+        "contract": {
+          "model": "An episodic finite MDP with S states, A actions, horizon H, K episodes, and total time T = KH.",
+          "assumptions": "State and action sets are finite; rewards are known, deterministic, and in [0,1]; transitions are stationary and unknown; the paper's MDP regularity assumption holds.",
+          "parameters": "S, A, H, K, confidence δ, and L = log(5HSAT/δ).",
+          "regret": "Cumulative policy-value regret across the first K episodes.",
+          "guarantee": "With probability at least 1-δ, regret is bounded by the displayed 20/250 UCBVI-CH expression."
+        }
       }
     },
     {
       "slug": "frontier",
+      "teaching_route": [
+        "BanditRLProof.HarnessTask",
+        "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.succinctSize_ge_strictSize",
+        "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDDirac_theoremOne",
+        "BanditRLProof.StochasticGradientBandit.theoremFourStepFour_survivalMass_pos"
+      ],
       "primary": {
         "title": "Bandit Algorithms",
         "authors": "Tor Lattimore and Csaba Szepesvári",
         "edition": "free online edition",
         "sections": "Parts VII–VIII as a background index",
         "pages": "online pp. 358–538",
+        "pdf_page": 367,
         "url": "https://tor-lattimore.com/downloads/book/book.pdf"
       },
       "companion": {
@@ -370,6 +502,7 @@
         "authors": "Guo Zeng and Jean Honorio",
         "sections": "Section 3.1; Theorem 3.8 context in Section 3.2",
         "pages": "physical PDF pp. 4–5 and 11–12",
+        "pdf_page": 4,
         "url": "https://proceedings.neurips.cc/paper_files/paper/2025/file/26407588dfb08e48c459c074ab6adb7d-Paper-Conference.pdf"
       },
       "companions": [
@@ -378,6 +511,7 @@
           "authors": "Dorian Baudry, Emmeran Johnson, Simon Vary, Ciara Pike-Burke, and Patrick Rebeschini",
           "sections": "Section 1.2, Algorithm 1, Theorem 1, Corollary 1, Theorem 2, Equations (3)--(11), Appendix A.1, Appendix C, Theorem 4, and Appendix E Steps 1--4",
           "pages": "physical PDF pp. 2–6, 22, 31–40, and 47–49",
+          "pdf_page": 2,
           "url": "https://proceedings.neurips.cc/paper_files/paper/2025/file/a4e683f0ce6b91e7fbdae9d32642d88f-Paper-Conference.pdf"
         }
       ],
@@ -400,48 +534,88 @@
       "source_theorem": {
         "label": "Definitions 3.1–3.3 and Lemmas 3.1–3.4 (succinct-support geometry)",
         "pages": "physical PDF pp. 4–5",
+        "pdf_page": 4,
         "url": "https://proceedings.neurips.cc/paper_files/paper/2025/file/26407588dfb08e48c459c074ab6adb7d-Paper-Conference.pdf",
         "math": "\\(Q(\\sum_i a_i E_i)=\\max_i |a_i|,\\qquad R(\\sum_i a_i E_i)=\\sum_i |a_i|,\\qquad X\\text{ s-succinct and strictly z-succinct}\\Rightarrow z\\le s.\\)",
         "fallback": "On a succinct support, Q is the largest absolute coefficient and R is the sum of the absolute coefficients. For the same vector, a strict succinct representation uses no more atoms than any succinct representation.",
         "plain": "The source defines its atom set, succinct-support correlation contract, Q/R pair, and finite succinct representations. Its first four lemmas identify the coefficient norms and prove strict representation-size minimality and uniqueness for a fixed vector.",
-        "relationship": "BanditRLlib compiles 54 declarations for Definitions 3.1–3.3 and Lemmas 3.1–3.4, including a finite-Bessel proof of strict representation-size minimality for the same vector, and separately diagnoses a global R boundedness obligation. The global Lemmas 3.5–3.6, Assumption 3.7, Theorem 3.8, and every regret endpoint remain outside the compiled slice."
+        "relationship": "BanditRLlib compiles 54 declarations for Definitions 3.1–3.3 and Lemmas 3.1–3.4, including a finite-Bessel proof of strict representation-size minimality for the same vector, and separately diagnoses a global R boundedness obligation. The global Lemmas 3.5–3.6, Assumption 3.7, Theorem 3.8, and every regret endpoint remain outside the compiled slice.",
+        "contract": {
+          "model": "A finite atom system and vectors admitting the source's succinct or strictly succinct finite representations.",
+          "assumptions": "The representation, correlation, normalization, and strict-separation conditions in Definitions 3.1–3.3 hold for the compared vector.",
+          "parameters": "Atoms E_i, coefficients a_i, succinct size s, and strict succinct size z.",
+          "regret": "Not a regret terminal; this is the geometric support layer used by the later lower-bound argument.",
+          "guarantee": "Q and R reduce to coefficient max and l1 norms on the stated support, and strict representation size satisfies z ≤ s."
+        }
       },
       "source_theorems": [
         {
           "label": "Theorem 1 (two-arm SGB regret upper bound)",
           "pages": "physical PDF pp. 3–4",
+          "pdf_page": 3,
           "url": "https://proceedings.neurips.cc/paper_files/paper/2025/file/a4e683f0ce6b91e7fbdae9d32642d88f-Paper-Conference.pdf",
           "math": "\\(R_T^{\\mathrm{SGB}}\\le \\frac{\\log(1+4\\eta\\Delta T)}{2\\eta}+\\frac{\\Delta}{2\\eta(\\Delta-\\eta C_\\eta)},\\qquad C_\\eta=2\\sum_{n=0}^{\\infty}\\frac{(2\\eta)^n}{(n+2)!}\\le e^{2\\eta},\\quad \\eta C_\\eta<\\Delta.\\)",
           "fallback": "For a two-arm bounded-reward instance, Theorem 1 gives an explicit logarithmic-in-horizon regret term plus a finite failure-regret term whenever the learning rate satisfies η Cη < Δ.",
           "plain": "The source theorem combines a forward-potential logarithmic bound with a telescoping control of squared failure probability for the same fixed-IID two-arm SGB trajectory.",
-          "relationship": "BanditRLlib compiles this exact Theorem-1 endpoint for the actual sampled pseudo-regret of bounded two-arm fixed-IID laws, specialized through a Unit Dirac environment prior. A separate eight-declaration Appendix-E gate checks finite scalar contracts used in Theorem 4, but does not prove that theorem. The Theorem-1 contract keeps 0 < Delta < 1, eta > 0, eta C_eta < Delta, exact arm means, and T = tailHorizon + 1 explicit. A later 23-declaration Corollary-1 companion compiles as a direct consumer; it is not evidence for Theorem 2."
+          "relationship": "BanditRLlib compiles this exact Theorem-1 endpoint for the actual sampled pseudo-regret of bounded two-arm fixed-IID laws, specialized through a Unit Dirac environment prior. A separate eight-declaration Appendix-E gate checks finite scalar contracts used in Theorem 4, but does not prove that theorem. The Theorem-1 contract keeps 0 < Delta < 1, eta > 0, eta C_eta < Delta, exact arm means, and T = tailHorizon + 1 explicit. A later 23-declaration Corollary-1 companion compiles as a direct consumer; it is not evidence for Theorem 2.",
+          "contract": {
+            "model": "The source's zero-initialized, constant-learning-rate stochastic-gradient bandit on a bounded fixed-IID two-arm instance.",
+            "assumptions": "The gap satisfies 0 < Δ < 1, η > 0, and ηC_η < Δ; the two reward laws have the source's fixed means and bounded support.",
+            "parameters": "Horizon T, gap Δ, learning rate η, and the analytic constant C_η.",
+            "regret": "Expected pseudo-regret of the actual sampled SGB actions.",
+            "guarantee": "The explicit logarithmic term plus finite failure-regret term displayed above."
+          }
         },
         {
           "label": "Corollary 1 (horizon-indexed two-arm SGB rate)",
           "pages": "physical PDF p. 5",
+          "pdf_page": 5,
           "url": "https://proceedings.neurips.cc/paper_files/paper/2025/file/a4e683f0ce6b91e7fbdae9d32642d88f-Paper-Conference.pdf",
           "math": "\\(\\eta_T=\\sqrt{\\log T/T}\\quad\\Longrightarrow\\quad R_T^{\\mathrm{SGB}}=O(\\sqrt{T\\log T}).\\)",
           "fallback": "For every source horizon T, choose one fixed learning rate equal to the square root of log T divided by T; the resulting two-arm regret is at most a constant times the square root of T log T.",
           "plain": "Corollary 1 balances the already proved small-learning-rate Theorem-1 branch against the pathwise Delta-times-T bound. It describes a horizon-indexed family of fixed-rate policies, not one policy whose rate changes during a run.",
-          "relationship": "Twenty-three new declarations compile an explicit finite companion on the generated zero-initialized two-arm fixed-IID trajectory with a Unit Dirac environment prior. For T >= 2 and 0 < Delta < 1, twoArmFixedIIDDirac_corollaryOne bounds expected sampled pseudo-regret by (2 + 1/log 2 + 2 exp 2) sqrt(T log T). The arm reward laws remain bounded fixed-IID laws; the Dirac measure is the prior on the singleton environment, not a claim that rewards are Dirac or Rademacher. This is a direct Theorem-1 consumer and is not independent Theorem-2 evidence."
+          "relationship": "Twenty-three new declarations compile an explicit finite companion on the generated zero-initialized two-arm fixed-IID trajectory with a Unit Dirac environment prior. For T >= 2 and 0 < Delta < 1, twoArmFixedIIDDirac_corollaryOne bounds expected sampled pseudo-regret by (2 + 1/log 2 + 2 exp 2) sqrt(T log T). The arm reward laws remain bounded fixed-IID laws; the Dirac measure is the prior on the singleton environment, not a claim that rewards are Dirac or Rademacher. This is a direct Theorem-1 consumer and is not independent Theorem-2 evidence.",
+          "contract": {
+            "model": "The same bounded fixed-IID two-arm SGB family as Theorem 1, indexed by the target horizon.",
+            "assumptions": "Use the Theorem-1 instance assumptions and choose one constant learning rate η_T for each horizon T.",
+            "parameters": "Horizon T and η_T = √(log T/T).",
+            "regret": "Expected sampled-action pseudo-regret for the horizon-indexed policy family.",
+            "guarantee": "Regret is O(√(T log T)); this is not one anytime policy with a changing within-run rate."
+          }
         },
         {
           "label": "Theorem 2 (two-arm SGB phase transition)",
           "pages": "physical PDF p. 6; Appendix C pp. 31–40",
+          "pdf_page": 6,
           "url": "https://proceedings.neurips.cc/paper_files/paper/2025/file/a4e683f0ce6b91e7fbdae9d32642d88f-Paper-Conference.pdf",
           "math": "\\(\\lambda_\\Delta=\\tfrac12\\log\\!\\frac{1+\\Delta}{1-\\Delta},\\quad \\eta>\\lambda_\\Delta\\quad\\Longrightarrow\\quad R_T^{\\mathrm{SGB}}=\\widetilde{\\Omega}\\!\\left(T^{1-(1+\\varepsilon)\\lambda_\\Delta/\\eta}\\right)\\ \\text{for every }\\varepsilon>0.\\)",
           "fallback": "Above the two-arm critical learning rate, Theorem 2 gives a polynomial-in-horizon regret lower bound up to logarithmic factors, with the exponent reduced by an arbitrary positive epsilon.",
           "plain": "Appendix C reindexes the generated process by optimal-arm pull count, constructs a low-probability phase for that arm, and turns a no-return event into a long starvation interval and polynomial regret.",
-          "relationship": "The exact K = 2 target remains blocked. Eighteen declarations compile a deterministic source-shaped fixed-cutoff consumer; separate compiled layers provide chronological nth-pull semantics, latent fixed-arm products and readout, deferred-decisions prefix factorization, action/readout interfaces, count-capped branch locality, and exact deterministic-time next-reward freshness. A ten-declaration module identifies every inclusive finite prefix and proves equality of the complete visible/native trajectory measures. The selected-block module has eight declarations for missing-pull-aware block transport, fourteen for the exact finite Appendix-C `S0/S1` event, and ten for an exact disjoint probability split between the generated all-present phase and an explicit missing-pull phase. This is not a product or selected-IID theorem. Pull-ordered or stopped selected-reward IID remains uncompiled. The missing branch still needs a bridge to the fixed-cutoff consumer; the stopped-prefix future-cylinder law needed to prove conditional no-return probability at least one half, Rademacher/binomial ballot probability, asymptotic assembly, and the frozen Theorem-2 terminal remain uncompiled."
+          "relationship": "The exact K = 2 target remains blocked. Eighteen declarations compile a deterministic source-shaped fixed-cutoff consumer; separate compiled layers provide chronological nth-pull semantics, latent fixed-arm products and readout, deferred-decisions prefix factorization, action/readout interfaces, count-capped branch locality, and exact deterministic-time next-reward freshness. A ten-declaration module identifies every inclusive finite prefix and proves equality of the complete visible/native trajectory measures. The selected-block module has eight declarations for missing-pull-aware block transport, fourteen for the exact finite Appendix-C `S0/S1` event, and ten for an exact disjoint probability split between the generated all-present phase and an explicit missing-pull phase. This is not a product or selected-IID theorem. Pull-ordered or stopped selected-reward IID remains uncompiled. The missing branch still needs a bridge to the fixed-cutoff consumer; the stopped-prefix future-cylinder law needed to prove conditional no-return probability at least one half, Rademacher/binomial ballot probability, asymptotic assembly, and the frozen Theorem-2 terminal remain uncompiled.",
+          "contract": {
+            "model": "The source's zero-initialized constant-rate SGB on its specified fixed-IID two-arm phase-transition instance.",
+            "assumptions": "The gap satisfies 0 < Δ < 1, η exceeds λ_Δ, and ε is any positive slack in the asymptotic exponent.",
+            "parameters": "Horizon T, gap Δ, rate η, threshold λ_Δ, and ε > 0.",
+            "regret": "Expected pseudo-regret of the sampled SGB trajectory.",
+            "guarantee": "A polynomial lower bound up to logarithmic factors with exponent 1-(1+ε)λ_Δ/η."
+          }
         },
         {
           "label": "Theorem 4 / Appendix E source-contract window",
           "pages": "physical PDF pp. 47--49",
+          "pdf_page": 47,
           "url": "https://proceedings.neurips.cc/paper_files/paper/2025/file/a4e683f0ce6b91e7fbdae9d32642d88f-Paper-Conference.pdf",
           "math": "\\[\\begin{gathered}\\eta C_\\eta < \\frac{2\\Delta}{K+2},\\\\ 2\\Delta-\\eta C_\\eta(K+2)>0,\\\\ 0<p',\\quad c<\\tfrac12,\\\\ P(B)\\ge p',\\\\ P(B\\cap S)\\ge(1-2c)P(B),\\\\ P(B\\cap S)\\le P(S),\\\\ \\Longrightarrow P(S)\\ge p'(1-2c)>0.\\end{gathered}\\]",
           "fallback": "The printed tuning yields a positive drift margin. For positive p-prime and c below one half, explicit buffer and conditional-survival premises make the finite survival mass at least the positive quantity p-prime times one minus two c.",
           "plain": "This is the finite contract consumed by the Appendix-E transient-phase argument, not the statement of Theorem 4 itself.",
-          "relationship": "Eight Lean declarations compile the positive margin, audited finite event composition, and finite geometric phase envelope. They expose an unresolved Step-4 conditioning/direction mismatch while leaving the general-K generated process, uniform buffer/survival producer, stopped supermartingale/Doob route, and Theorem 4 uncompiled."
+          "relationship": "Eight Lean declarations compile the positive margin, audited finite event composition, and finite geometric phase envelope. They expose an unresolved Step-4 conditioning/direction mismatch while leaving the general-K generated process, uniform buffer/survival producer, stopped supermartingale/Doob route, and Theorem 4 uncompiled.",
+          "contract": {
+            "model": "Finite buffer and survival events inside the source's general-K Appendix-E transient-phase route.",
+            "assumptions": "The displayed positive drift, buffer-mass, survival, and event-inclusion inequalities hold with 0 < p' and c < 1/2.",
+            "parameters": "Arm count K, gap Δ, learning rate η, C_η, buffer mass p', and loss fraction c.",
+            "regret": "Not the Theorem-4 regret terminal; this is a finite event-probability contract used by that proof.",
+            "guarantee": "The survival event has positive mass at least p'(1-2c)."
+          }
         }
       ]
     }
