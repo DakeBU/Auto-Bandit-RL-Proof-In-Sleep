@@ -714,6 +714,214 @@ h3 {
   font-size: 1.03rem;
 }
 
+.current-snapshot {
+  padding: clamp(2rem, 5vw, 4rem) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.snapshot-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+}
+
+.snapshot-heading :is(h2, p) {
+  margin-bottom: 0;
+}
+
+.snapshot-commit {
+  flex: 0 0 auto;
+  padding: 0.42rem 0.68rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.evidence-snapshot-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin: 1.35rem 0 0;
+}
+
+.snapshot-card {
+  display: flex;
+  min-width: 0;
+  min-height: 18rem;
+  flex-direction: column;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--accent);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.snapshot-card:nth-child(2) {
+  border-top-color: var(--success);
+}
+
+.snapshot-card:nth-child(3) {
+  border-top-color: var(--planned);
+}
+
+.snapshot-card:nth-child(4) {
+  border-top-color: var(--warning);
+}
+
+.snapshot-card-top {
+  display: flex;
+  min-height: 2rem;
+  align-items: start;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+
+.snapshot-value {
+  display: block;
+  margin-top: 1rem;
+  color: var(--accent-strong);
+  font-family: var(--serif);
+  font-size: clamp(2.2rem, 4vw, 3.35rem);
+  line-height: 0.95;
+}
+
+.snapshot-title {
+  display: block;
+  margin-top: 1rem;
+  color: var(--accent-strong);
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  line-height: 1.15;
+}
+
+.snapshot-unit {
+  margin-top: 0.35rem;
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 750;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+.snapshot-card p {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.snapshot-card > a {
+  margin-top: auto;
+  font-size: 0.86rem;
+  font-weight: 750;
+}
+
+.comparison-decision {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 1.25rem 0 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.comparison-decision > div {
+  min-width: 0;
+  padding: 0.9rem 1rem;
+}
+
+.comparison-decision > div + div {
+  border-left: 1px solid var(--line);
+}
+
+.comparison-decision strong {
+  display: block;
+  margin-top: 0.25rem;
+  overflow-wrap: anywhere;
+  color: var(--accent-strong);
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  line-height: 1.25;
+}
+
+.comparison-table table {
+  min-width: 48rem;
+}
+
+.comparison-table th:first-child {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+}
+
+[data-milestone-row] {
+  scroll-margin-top: 8rem;
+}
+
+.homepage-details {
+  margin: 1.6rem 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--surface) 82%, var(--bg));
+}
+
+.homepage-details > summary {
+  display: grid;
+  min-height: 4.2rem;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 0.35rem 1rem;
+  padding: 0.85rem 1rem;
+  color: var(--accent-strong);
+  cursor: pointer;
+  list-style: none;
+}
+
+.homepage-details > summary::-webkit-details-marker {
+  display: none;
+}
+
+.homepage-details > summary::after {
+  content: "+";
+  grid-column: 3;
+  grid-row: 1;
+  font-family: var(--mono);
+  font-size: 1.25rem;
+  font-weight: 750;
+}
+
+.homepage-details[open] > summary::after {
+  content: "−";
+}
+
+.homepage-details > summary span {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 750;
+}
+
+.homepage-details > summary small {
+  grid-column: 2;
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+
+.homepage-details[open] > summary {
+  border-bottom: 1px solid var(--line);
+}
+
+.homepage-details-content {
+  padding: 0 1rem 1rem;
+}
+
+.homepage-details-content > section:last-child {
+  border-bottom: 0;
+}
+
 .stats-grid,
 .chapter-grid,
 .card-grid {
@@ -1200,6 +1408,11 @@ h3 {
 .status.integrated {
   background: var(--accent-soft);
   color: var(--accent-strong);
+}
+
+.status.prototype {
+  background: var(--planned-bg);
+  color: var(--planned);
 }
 
 .level-label,
@@ -1844,6 +2057,42 @@ tbody tr:hover {
   font-size: 0.86rem;
 }
 
+.source-theorem-contract {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 1rem 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--success-bg) 42%, var(--surface));
+}
+
+.source-theorem-contract > div {
+  min-width: 0;
+  padding: 0.75rem 0.85rem;
+}
+
+.source-theorem-contract > div:nth-child(even) {
+  border-left: 1px solid var(--line);
+}
+
+.source-theorem-contract > div:nth-child(n + 3) {
+  border-top: 1px solid var(--line);
+}
+
+.source-theorem-contract dt {
+  color: var(--success);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+.source-theorem-contract dd {
+  margin: 0.3rem 0 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
 .source-note {
   padding: 0.8rem 1rem;
   border-left: 4px solid var(--success);
@@ -1929,6 +2178,27 @@ tbody tr:hover {
 
 .declaration-heading {
   min-width: 0;
+}
+
+.source-match {
+  display: inline-flex;
+  margin: 0.35rem 0 0.5rem;
+  padding: 0.18rem 0.48rem;
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  font-family: var(--sans);
+  font-size: 0.69rem;
+  font-weight: 750;
+}
+
+.source-match.closest-source {
+  background: var(--success-bg);
+  color: var(--success);
+}
+
+.source-match-panel:has(.source-match.closest-source) {
+  border-color: color-mix(in srgb, var(--success) 46%, var(--line));
 }
 
 .theorem-body {
@@ -2143,10 +2413,13 @@ tbody tr:hover {
 
 .declaration-list {
   display: grid;
+  min-width: 0;
   gap: 0.65rem;
 }
 
 .declaration {
+  min-width: 0;
+  max-width: 100%;
   scroll-margin-top: 7rem;
   border: 1px solid var(--line);
   border-radius: 9px;
@@ -2172,7 +2445,15 @@ tbody tr:hover {
 }
 
 .declaration-content {
+  min-width: 0;
+  max-width: 100%;
   padding: 0.85rem;
+}
+
+.declaration-content .exact-lean,
+.declaration-content .lean-code {
+  min-width: 0;
+  max-width: 100%;
 }
 
 .kind {
@@ -2857,6 +3138,14 @@ tbody tr:hover {
 }
 
 @media (max-width: 1240px) {
+  .evidence-snapshot-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .snapshot-card {
+    min-height: 15rem;
+  }
+
   .contribution-steps {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2875,6 +3164,19 @@ tbody tr:hover {
 }
 
 @media (max-width: 1080px) {
+  .comparison-decision {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .comparison-decision > div:nth-child(3) {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .comparison-decision > div:nth-child(4) {
+    border-top: 1px solid var(--line);
+  }
+
   .ide-grid,
   .ide-output-grid,
   .formalization-result-grid,
@@ -2992,6 +3294,44 @@ tbody tr:hover {
 }
 
 @media (max-width: 760px) {
+  .snapshot-heading {
+    display: grid;
+    align-items: start;
+  }
+
+  .snapshot-commit {
+    justify-self: start;
+  }
+
+  .evidence-snapshot-grid,
+  .comparison-decision {
+    grid-template-columns: 1fr;
+  }
+
+  .snapshot-card {
+    min-height: 0;
+  }
+
+  .comparison-decision > div + div,
+  .comparison-decision > div:nth-child(3) {
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
+
+  .homepage-details > summary {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .homepage-details > summary small {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .homepage-details > summary::after {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+
   .site-header {
     position: static;
   }
@@ -3193,6 +3533,18 @@ tbody tr:hover {
 
   .source-theorem-heading {
     display: grid;
+  }
+
+  .source-theorem-contract {
+    grid-template-columns: 1fr;
+  }
+
+  .source-theorem-contract > div:nth-child(even) {
+    border-left: 0;
+  }
+
+  .source-theorem-contract > div + div {
+    border-top: 1px solid var(--line);
   }
 
   .lean-correspondence-table table {

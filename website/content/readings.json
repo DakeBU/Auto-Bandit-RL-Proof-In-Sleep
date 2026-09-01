@@ -146,7 +146,14 @@
         "math": "R_n\\le 8\\sqrt{nk\\log n}+3\\sum_{i=1}^{k}\\Delta_i.",
         "fallback": "The textbook UCB policy has a finite-time regret bound with a leading square-root term in horizon, arm count, and log horizon.",
         "plain": "Confidence validity implies a suboptimal arm can be selected only while its sample count is small enough to keep its bonus competitive.",
-        "relationship": "BanditRLlib's ordinary-UCB route uses an explicit generated trajectory and confidence schedule. Its exact hypotheses, constants, gap-sum form, and Tδ failure term are therefore not presented as a line-for-line formalization of Theorem 7.2; KL-UCB remains a separate extension."
+        "relationship": "BanditRLlib's ordinary-UCB route uses an explicit generated trajectory and confidence schedule. Its exact hypotheses, constants, gap-sum form, and Tδ failure term are therefore not presented as a line-for-line formalization of Theorem 7.2; KL-UCB remains a separate extension.",
+        "contract": {
+          "model": "A finite stochastic k-armed bandit in the textbook's 1-sub-Gaussian environment class.",
+          "assumptions": "Each arm has a fixed mean and 1-sub-Gaussian noise; the chapter's canonical independent reward-table model supplies the samples used by the proof.",
+          "parameters": "Algorithm 3, UCB(δ), at horizon n with δ = 1/n²; an unpulled arm has infinite index, otherwise the index is its empirical mean plus √(2 log(1/δ) / count).",
+          "regret": "The textbook expected regret Rₙ over n rounds.",
+          "guarantee": "A worst-case finite-time upper bound 8√(nk log n) plus three times the sum of arm gaps."
+        }
       }
     },
     {

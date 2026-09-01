@@ -107,6 +107,8 @@
     {
       "full_name": "BanditRLProof.UCB.lintegral_ofReal_pseudoRegret_selectedPolicySuccessorTelescoping_le_trajMeasure",
       "chapter": "ucb",
+      "teaching_order": 20,
+      "source_match": "extension",
       "plain": "A single horizon-free telescoping-scheduled UCB policy has one all-time confidence event on one generated trajectory measure, simultaneous positive-gap pull-count bounds for all finite horizons, and an explicit finite-time expected pseudo-regret bound.",
       "math": "\\mu(G^c)\\le\\delta,\\quad G\\Rightarrow\\forall T,a:\\ N_a(T)\\le B_a(T),\\quad \\mathbb E R_T\\le\\sum_a\\Delta_a(B_a(T)+T\\delta).",
       "intuition": "The policy chooses its round-t bonus from the summable telescoping share assigned to that round, so asking for a later terminal horizon never reconstructs or changes the past policy.",
@@ -123,6 +125,8 @@
     {
       "full_name": "BanditRLProof.KLUCB.lintegral_ofReal_pseudoRegret_generatedKLUCBBounded_le_trajMeasure",
       "chapter": "ucb",
+      "teaching_order": 40,
+      "source_match": "extension",
       "plain": "A horizon-free generated policy uses the actual Bernoulli-KL confidence-set supremum, aligns it with its own reward history, and has a conservative finite-time expected pseudo-regret bound on the same canonical trajectory measure.",
       "math": "\\mu(G_{\\mathrm{KL}}^c)\\le\\delta,\\quad G_{\\mathrm{KL}}\\Rightarrow\\forall T,a:\\ N_a(T)\\le B_a^{\\mathrm{KL}}(T),\\quad \\mathbb E R_T\\le\\sum_a\\Delta_a(B_a^{\\mathrm{KL}}(T)+T\\delta).",
       "intuition": "The optimal mean is feasible in its KL confidence set on the all-time good event. The selected arm has maximal KL index, so a positive-gap arm can keep winning only while its telescoping radius and count remain below an explicit threshold.",
@@ -208,6 +212,8 @@
     {
       "full_name": "BanditRLProof.UCB.integral_real_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_le_textbookGapSum_finiteArmSubgaussianLaws_without_proxy_positivity",
       "chapter": "ucb",
+      "teaching_order": 10,
+      "source_match": "closest-source",
       "plain": "The generated finite-arm UCB policy has a textbook-shaped expected pseudo-regret gap-sum bound for sub-Gaussian arm laws, including zero variance proxies.",
       "math": "\\(\\mathbb E\\bar R_T\\le\\sum_{a:\\Delta_a>0}\\Delta_a\\bigl(B_a(T)+T\\delta_a\\bigr),\\quad B_a(T)\\asymp v_a\\log(T/\\delta_a)/\\Delta_a^2.\\)",
       "intuition": "A suboptimal arm can be chosen many times only while it has too few samples or while a confidence event fails.",
@@ -222,6 +228,8 @@
     {
       "full_name": "BanditRLProof.UCB.selectedPolicySuccessorFiniteArmSubgaussianExpectedAveragePseudoRegret_tendsto_zero",
       "chapter": "ucb",
+      "teaching_order": 30,
+      "source_match": "consumer",
       "plain": "For the canonical finite-arm sub-Gaussian horizon-indexed UCB family, expected pseudo-regret divided by the horizon converges to zero.",
       "math": "\\mathbb E[\\bar R_T]/(T+1)\\to0.",
       "intuition": "Choosing the confidence budget as a function of the terminal horizon turns the finite-time confidence/count/regret theorem into a logarithmic envelope, which vanishes after normalization.",
