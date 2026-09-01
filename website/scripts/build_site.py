@@ -41,7 +41,7 @@ PAPER_TITLE = (
 PRIMARY_TEXTBOOK_TITLE = "Bandit Algorithms"
 PRIMARY_TEXTBOOK_AUTHORS = "Tor Lattimore and Csaba Szepesvári"
 PRIMARY_TEXTBOOK_URL = "https://tor-lattimore.com/downloads/book/book.pdf"
-ASSET_VERSION = "20260901c"
+ASSET_VERSION = "20260901e"
 CATALOG_PAGE_SIZE = 100
 TEACHING_PREVIEW_COUNT = 6
 SOURCE_BRANCH = "main"
@@ -641,9 +641,10 @@ def layout(
     def nav_group(key: str, label: str, links: str, active: bool = False) -> str:
         active_class = " active" if active else ""
         active_data = "true" if active else "false"
+        open_attribute = " open" if active else ""
         return (
             f'<details class="nav-group{active_class}" data-nav-group="{html.escape(key)}" '
-            f'data-nav-group-active="{active_data}" open>'
+            f'data-nav-group-active="{active_data}"{open_attribute}>'
             f'<summary class="nav-group-title"><span>{html.escape(label)}</span>'
             '<span class="nav-group-chevron" aria-hidden="true">⌄</span></summary>'
             f'<div class="nav-group-links">{links}</div></details>'
@@ -741,8 +742,8 @@ def layout(
       </a>
     </div>
     <div class="search-shell sidebar-search">
-      <label class="nav-group-title" for="global-search">Search the Lean library</label>
-      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
       <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
     </div>
     <nav class="sidebar-nav" aria-label="Primary">
@@ -1202,6 +1203,20 @@ def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[
     for companion_source in companions:
         sources += source_card(companion_source, "Algorithm-specific companion")
 
+    notation_items = "".join(
+        '<div><dt><code>'
+        + html.escape(item["term"])
+        + '</code></dt><dd>'
+        + html.escape(item["meaning"])
+        + '</dd></div>'
+        for item in reading["notation"]
+    )
+    notation_html = f"""
+  <aside class="notation-primer" id="notation" aria-labelledby="notation-title">
+    <div><span class="panel-kicker">Reader checkpoint</span><h3 id="notation-title">Notation you will meet</h3></div>
+    <dl>{notation_items}</dl>
+  </aside>"""
+
     algorithm = reading["algorithm"]
     steps = "".join(
         f'<li><span class="algorithm-step-number" aria-hidden="true">{index:02d}</span>'
@@ -1228,8 +1243,9 @@ def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[
   <h2>Read the mathematics before the Lean interface</h2>
   <p class="section-intro">The Book Map is a curated formalization curriculum anchored in <em>Bandit Algorithms</em>, not a chapter-for-chapter reproduction of one book. Page numbers below use its free online edition; companion papers cover algorithm-specific results.</p>
   <div class="source-grid source-grid-{len(companions) + 1}">{sources}</div>
-  <div class="algorithm-panel">
-    <div><span class="panel-kicker">{html.escape(algorithm['kind'])}</span><h3>{html.escape(algorithm['title'])}</h3></div>
+  {notation_html}
+  <div class="algorithm-panel" id="algorithm">
+    <div><span class="panel-kicker">{html.escape(algorithm['kind'])} · ordered flow</span><h3>{html.escape(algorithm['title'])}</h3><p class="algorithm-intro">Read top to bottom: each step supplies the state or proof fact used by the next one.</p></div>
     <ol class="algorithm-flow">{steps}</ol>
   </div>
   {theorem_html}
@@ -1966,7 +1982,7 @@ def build_chapters(
         )
         body = f"""
 <section class="hero" id="chapter">
-  <p class="eyebrow">Teaching chapter · canonical scope {status_badge(chapter['status'])}</p>
+  <p class="eyebrow">Teaching chapter {chapter_index + 1:02d} of {len(chapters):02d} · canonical scope {status_badge(chapter['status'])}</p>
   <h1 class="page-title">{html.escape(chapter['title'])}</h1>
   <p class="lede">{html.escape(chapter['summary'])}</p>
 </section>
@@ -2012,7 +2028,9 @@ def build_chapters(
         toc = [
             ("chapter", "Chapter"),
             ("orientation", "Orientation"),
-            ("source-guide", "Source & algorithm"),
+            ("source-guide", "Sources"),
+            ("notation", "Notation"),
+            ("algorithm", "Algorithm flow"),
             ("teaching-notes", "Lean teaching notes"),
         ]
         if completion_contract:
