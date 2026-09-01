@@ -313,6 +313,19 @@ SGB_THEOREM_TWO_PHASE_EVENT_INDEXED_DECLARATIONS = frozenset({
     "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmAppendixCGeneratedPhaseEvent",
     "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent",
 })
+SGB_THEOREM_TWO_PHASE_DICHOTOMY_SOURCE_DECLARATION_COUNT = 10
+SGB_THEOREM_TWO_PHASE_DICHOTOMY_INDEXED_DECLARATIONS = frozenset({
+    "BanditRLProof.StochasticGradientBandit.twoArmAppendixCPureLatentRewardEvent",
+    "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmAppendixCPureLatentRewardEvent",
+    "BanditRLProof.StochasticGradientBandit.twoArmAppendixCMissingPullLatentPhaseEvent",
+    "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmAppendixCMissingPullLatentPhaseEvent",
+    "BanditRLProof.StochasticGradientBandit.mem_twoArmAppendixCMissingPullLatentPhaseEvent_iff",
+    "BanditRLProof.StochasticGradientBandit.twoArmAppendixCPureLatentRewardEvent_eq_union_phase_missing",
+    "BanditRLProof.StochasticGradientBandit.disjoint_twoArmAppendixCLatentPhaseEvent_missing",
+    "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_pi",
+    "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_phase_add_missing",
+    "BanditRLProof.StochasticGradientBandit.twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing",
+})
 SGB_TOTAL_DECLARATION_COUNT = (
     SGB_HISTORICAL_DECLARATION_COUNT
     + SGB_COROLLARY_ONE_DECLARATION_COUNT
@@ -2570,12 +2583,15 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
                 SGB_THEOREM_TWO_SELECTED_BLOCK_SOURCE_DECLARATION_COUNT,
             "separate_compiled_phase_event_declaration_count":
                 SGB_THEOREM_TWO_PHASE_EVENT_SOURCE_DECLARATION_COUNT,
+            "separate_compiled_phase_dichotomy_declaration_count":
+                SGB_THEOREM_TWO_PHASE_DICHOTOMY_SOURCE_DECLARATION_COUNT,
             "separate_module_theorem_two_native_prefix_identification_compiled":
                 True,
             "separate_module_theorem_two_native_trajectory_compiled": True,
             "separate_module_theorem_two_selected_block_transport_compiled":
                 True,
             "separate_module_theorem_two_phase_event_transport_compiled": True,
+            "separate_module_theorem_two_phase_dichotomy_compiled": True,
             "theorem_two_native_prefix_identification_compiled": False,
             "declaration_count_breakdown": {
                 "finite_action_algebra": SGB_FINITE_ALGEBRA_DECLARATION_COUNT,
@@ -2698,10 +2714,12 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
             if (
                 selected_block_names !=
                     (SGB_THEOREM_TWO_SELECTED_BLOCK_INDEXED_DECLARATIONS |
-                     SGB_THEOREM_TWO_PHASE_EVENT_INDEXED_DECLARATIONS)
+                     SGB_THEOREM_TWO_PHASE_EVENT_INDEXED_DECLARATIONS |
+                     SGB_THEOREM_TWO_PHASE_DICHOTOMY_INDEXED_DECLARATIONS)
                 or selected_block_source_count !=
                     (SGB_THEOREM_TWO_SELECTED_BLOCK_SOURCE_DECLARATION_COUNT +
-                     SGB_THEOREM_TWO_PHASE_EVENT_SOURCE_DECLARATION_COUNT)
+                     SGB_THEOREM_TWO_PHASE_EVENT_SOURCE_DECLARATION_COUNT +
+                     SGB_THEOREM_TWO_PHASE_DICHOTOMY_SOURCE_DECLARATION_COUNT)
             ):
                 raise ValueError(
                     "separate SGB selected-block module declaration drift"
@@ -2739,16 +2757,18 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
                 not in row.get("scope_boundary", "")
                 or "fourteen more declarations define the exact finite Appendix-C S0/S1 event"
                 not in row.get("scope_boundary", "")
+                or "ten more declarations split its pure latent probability"
+                not in row.get("scope_boundary", "")
                 or "neither supply a product law nor make totalized or occurrence-conditioned rewards IID"
                 not in row.get("scope_boundary", "")
-                or "missing-pull/all-present probability dichotomy"
+                or "missing branch is not yet connected to fixed-cutoff starvation"
                 not in row.get("scope_boundary", "")
                 or "ballot probability"
                 not in row.get("scope_boundary", "")
                 or "asymptotic terminal remain blocked"
                 not in row.get("scope_boundary", "")
                 or not any(
-                    "compiled exact all-pulls-present Appendix-C phase-event transport" in item
+                    "compiled exact missing-pull/all-present probability split" in item
                     and "stopped-prefix future-cylinder" in item
                     and "ballot probability" in item
                     and "asymptotic assembly" in item
@@ -2906,9 +2926,9 @@ def build_claim_ledger(proof_report):
                 "source_record_ids": [SGB_AUDIT_ID, SGB_FOLLOW_ON_ID],
                 "boundary": (
                     "352 declarations preserve the frozen counted audit slice through deterministic-time one-step selected-reward freshness. "
-                    "A separate ten-declaration native-law module proves the complete visible/native trajectory-law identity. In the selected-block module, eight declarations transport every finite pull-time/reward block to an exact missing-pull-aware masked latent law on both native and source-shaped generated trajectories, and fourteen declarations transport the exact finite Appendix-C S0/S1 event while retaining the adaptive all-pulls-present intersection. "
+                    "A separate ten-declaration native-law module proves the complete visible/native trajectory-law identity. In the selected-block module, eight declarations transport every finite pull-time/reward block to an exact missing-pull-aware masked latent law on both native and source-shaped generated trajectories, fourteen declarations transport the exact finite Appendix-C S0/S1 event while retaining the adaptive all-pulls-present intersection, and ten declarations split the pure latent phase probability exactly into the generated all-present event plus an explicit missing-pull event. "
                     "The mask and occurrence-intersected event do not make totalized or occurrence-conditioned stopped rewards IID, and neither is a stopped or pull-ordered selected IID theorem. "
-                    "The missing-pull/all-present probability dichotomy, stopped-prefix future-cylinder, conditional no-return probability >= 1/2, Rademacher/binomial ballot probability, asymptotic terminal, and the frozen K = 2 Theorem-2 endpoint remain blocked. "
+                    "The missing branch is not yet connected to fixed-cutoff starvation; the stopped-prefix future-cylinder, conditional no-return probability >= 1/2, Rademacher/binomial ballot probability lower bound, asymptotic terminal, and the frozen K = 2 Theorem-2 endpoint remain blocked. "
                     "Theorem 4 also remains open. Dirac refers only to the Unit environment prior, not to the arm reward laws."
                 ),
             },
@@ -3103,6 +3123,10 @@ def build_claim_ledger(proof_report):
                 sgb_comparison[
                     "separate_compiled_phase_event_declaration_count"
                 ],
+            "separate_compiled_phase_dichotomy_declaration_count":
+                sgb_comparison[
+                    "separate_compiled_phase_dichotomy_declaration_count"
+                ],
             "separate_module_theorem_two_native_prefix_identification_compiled":
                 sgb_comparison[
                     "separate_module_theorem_two_native_prefix_identification_compiled"
@@ -3118,6 +3142,10 @@ def build_claim_ledger(proof_report):
             "separate_module_theorem_two_phase_event_transport_compiled":
                 sgb_comparison[
                     "separate_module_theorem_two_phase_event_transport_compiled"
+                ],
+            "separate_module_theorem_two_phase_dichotomy_compiled":
+                sgb_comparison[
+                    "separate_module_theorem_two_phase_dichotomy_compiled"
                 ],
             "source_theorem_two_status": "blocked",
             "source_theorem_two_endpoint_verified":

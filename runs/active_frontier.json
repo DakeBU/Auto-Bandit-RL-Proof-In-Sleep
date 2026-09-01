@@ -1,26 +1,26 @@
 {
   "schema_version": 1,
-  "record_id": "frontier-3b6256f25861148c",
-  "updated_at": "2026-08-31T22:57:36+00:00",
+  "record_id": "frontier-35d46ad6ba38e30a",
+  "updated_at": "2026-09-01T01:20:28+00:00",
   "root_objective": "Compile the exact K=2 SGB Theorem 2 route without weakening the frozen source contract, then synchronize only verified evidence into the ICLR and arXiv papers.",
   "current_leaf": {
-    "id": "SGB-T2-PHASE-DICHOTOMY",
+    "id": "SGB-T2-MISSING-PULL-STARVATION-BRIDGE",
     "kind": "lean",
     "status": "ready",
-    "statement": "Use the compiled pure latent S0/S1 reward pattern and occurrence-intersected phase-event transport to prove the finite missing-pull/all-present dichotomy: either one requested optimal-arm pull is absent and the trajectory exposes a starvation branch, or every requested pull occurs and the observed Appendix-C phase event holds. Do not infer occurrence-conditioned IID or assume the future/no-return, ballot probability, asymptotic assembly, or Theorem 2.",
-    "statement_hash": "282ba5a89d29760d32e39552deeb8e80c26270f8398944543700bc4ac6af710f",
+    "statement": "Use the compiled explicit missing-pull phase to prove only the valid finite-horizon count consequence: if one of the first m requested optimal-arm pull times is top, then every finite-horizon optimal-arm pull count is below m. Package the resulting terminal-count partition for the existing regret consumer without assuming the trigger inequality, future/no-return probability, selected IID, ballot bound, asymptotic assembly, or Theorem 2.",
+    "statement_hash": "a81790e1ad8b3341d6762a89abb1da3b4173f054147547e510f69a66e99baced",
     "declaration": "",
-    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
-    "source_status": "Round 24 compiles the exact finite Appendix-C S0/S1 reward event, all-pulls-present measurable boundary, and exact source-generated to occurrence-intersected latent event probability transport. A probability-producing missing/all-present dichotomy, composition with the fixed-cutoff starvation consumer, stopped-prefix future/no-return law, Rademacher/binomial ballot probability, asymptotic assembly, and Theorem 2 remain open.",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
+    "source_status": "Round 25 compiles the exact identity pure Appendix-C phase probability = generated all-present phase probability + explicit missing-pull phase probability. The missing event exposes a WithTop.top requested pull, but no theorem yet connects that branch to the fixed-cutoff count/starvation consumer; future/no-return, Rademacher/binomial ballot probability, asymptotic assembly, and Theorem 2 remain open.",
     "dependencies": [
       {
         "kind": "lean",
-        "name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent",
+        "name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing",
         "status": "compiled"
       },
       {
         "kind": "lean",
-        "name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure_map_optimalPrefix_eq_pi",
+        "name": "BanditRLProof.StochasticGradientBandit.mem_twoArmAppendixCMissingPullLatentPhaseEvent_iff",
         "status": "compiled"
       },
       {
@@ -33,18 +33,18 @@
   "dag": {
     "nodes": [
       {
-        "id": "SGB-T2-PHASE-DICHOTOMY",
+        "id": "SGB-T2-MISSING-PULL-STARVATION-BRIDGE",
         "kind": "lean",
         "status": "ready",
         "dependencies": [
           {
             "kind": "lean",
-            "name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent",
+            "name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing",
             "status": "compiled"
           },
           {
             "kind": "lean",
-            "name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure_map_optimalPrefix_eq_pi",
+            "name": "BanditRLProof.StochasticGradientBandit.mem_twoArmAppendixCMissingPullLatentPhaseEvent_iff",
             "status": "compiled"
           },
           {
@@ -58,26 +58,26 @@
     ]
   },
   "last_accepted_verifier": {
-    "trial_index": 337,
-    "time": "2026-08-31T22:57:24+00:00",
+    "trial_index": 338,
+    "time": "2026-09-01T01:19:05+00:00",
     "task": "PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE",
     "role": "lower",
     "kind": "build",
     "status": "compiled",
-    "lean": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent",
-    "notes": "Compiled fourteen public declarations for the exact finite Appendix-C S0/S1 reward event, the measurable all-pulls-present occurrence boundary, and exact source-generated to occurrence-intersected latent event probability transport. This is not a product/selected-IID law, probability lower bound, future/no-return theorem, ballot/asymptotic assembly, or Theorem 2.",
-    "run_id": "sgb-theorem2-phase-event-transport-round24-2026-09-01"
+    "lean": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing",
+    "notes": "Compiled ten public declarations for an exact measurable disjoint decomposition of the pure Appendix-C reward phase into the generated all-pulls-present event and an explicit missing-pull event. The terminal is an equality of probabilities, not a selected-IID theorem or positive lower bound; the missing branch is not yet connected to fixed-cutoff starvation, and future/no-return, ballot/asymptotic assembly, and Theorem 2 remain open.",
+    "run_id": "sgb-theorem2-phase-dichotomy-round25-2026-09-01"
   },
   "memory_policy": {
     "recent_role_relevant_limit": 5,
     "explicit_verified_lemma_ids": [
-      "mem-ff85e5d96599111c"
+      "mem-5fec20c2c574ec14"
     ],
     "whole_history_default": false
   },
   "shadow_gate": {
     "status": "passed",
-    "analyzed_trial_rows": 338,
+    "analyzed_trial_rows": 339,
     "mismatches": [],
     "replay_transitions": 0
   },

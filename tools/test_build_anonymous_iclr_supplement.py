@@ -837,9 +837,10 @@ class AnonymousSupplementTests(unittest.TestCase):
             "complete visible/native trajectory-law identity",
             "eight declarations transport every finite pull-time/reward block",
             "fourteen declarations transport the exact finite Appendix-C S0/S1 event",
+            "ten declarations split the pure latent phase probability",
             "missing-pull-aware masked latent law",
             "stopped or pull-ordered selected IID",
-            "missing-pull/all-present probability dichotomy",
+            "missing branch is not yet connected to fixed-cutoff starvation",
             "stopped-prefix future-cylinder",
             "conditional no-return probability >= 1/2",
             "Rademacher/binomial ballot probability",
@@ -884,6 +885,12 @@ class AnonymousSupplementTests(unittest.TestCase):
             ],
             14,
         )
+        self.assertEqual(
+            ledger["stochastic_gradient_bandit"][
+                "separate_compiled_phase_dichotomy_declaration_count"
+            ],
+            10,
+        )
         self.assertTrue(
             ledger["stochastic_gradient_bandit"][
                 "separate_module_theorem_two_native_prefix_identification_compiled"
@@ -902,6 +909,11 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertTrue(
             ledger["stochastic_gradient_bandit"][
                 "separate_module_theorem_two_phase_event_transport_compiled"
+            ]
+        )
+        self.assertTrue(
+            ledger["stochastic_gradient_bandit"][
+                "separate_module_theorem_two_phase_dichotomy_compiled"
             ]
         )
         self.assertTrue(
@@ -1044,11 +1056,17 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertEqual(
             sgb["separate_compiled_phase_event_declaration_count"], 14
         )
+        self.assertEqual(
+            sgb["separate_compiled_phase_dichotomy_declaration_count"], 10
+        )
         self.assertTrue(
             sgb["separate_module_theorem_two_selected_block_transport_compiled"]
         )
         self.assertTrue(
             sgb["separate_module_theorem_two_phase_event_transport_compiled"]
+        )
+        self.assertTrue(
+            sgb["separate_module_theorem_two_phase_dichotomy_compiled"]
         )
         self.assertFalse(sgb["theorem_two_native_prefix_identification_compiled"])
 
@@ -1063,7 +1081,8 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertEqual(
             selected_block_names,
             BUILDER.SGB_THEOREM_TWO_SELECTED_BLOCK_INDEXED_DECLARATIONS |
-            BUILDER.SGB_THEOREM_TWO_PHASE_EVENT_INDEXED_DECLARATIONS,
+            BUILDER.SGB_THEOREM_TWO_PHASE_EVENT_INDEXED_DECLARATIONS |
+            BUILDER.SGB_THEOREM_TWO_PHASE_DICHOTOMY_INDEXED_DECLARATIONS,
         )
 
     def test_theorem_audit_comparison_rejects_status_and_count_drift(self):
@@ -1133,6 +1152,18 @@ class AnonymousSupplementTests(unittest.TestCase):
         ):
             BUILDER.validate_theorem_audit_comparison(
                 records, index, comparison=phase_event_count_drift
+            )
+
+        phase_dichotomy_count_drift = json.loads(json.dumps(source))
+        phase_dichotomy_count_drift["rows"][3][
+            "separate_compiled_phase_dichotomy_declaration_count"
+        ] = 11
+        with self.assertRaisesRegex(
+            ValueError,
+            "separate_compiled_phase_dichotomy_declaration_count drift",
+        ):
+            BUILDER.validate_theorem_audit_comparison(
+                records, index, comparison=phase_dichotomy_count_drift
             )
 
         declaration_drift_records = json.loads(json.dumps(records))

@@ -315,6 +315,41 @@ obligation is discharged by the Round-19 packet below.
   that lets the pure latent phase probability feed either an already-starved
   path or the transported observed phase.
 
+## Round-25 retrieval packet: missing-pull/all-present probability split
+
+- Active leaf: `SGB-T2-PHASE-DICHOTOMY`; status `in progress` until the focused
+  module, typed canary, statement fence, and repository gates all pass.
+- Source window: Appendix C, physical PDF pp. 31--34.  The finite latent
+  `S0/S1` reward pattern is evaluated under the unconditional arm-0 product
+  law.  Adaptive occurrence is then split explicitly: either all requested
+  optimal-arm pulls occur and the observed phase is available, or at least one
+  requested pull is absent.  This split is prior to, and does not prove, the
+  stopped-prefix future/no-return or ballot lower bounds.
+- Random object: the first `n0+n1` coordinates of the latent arm-0 reward
+  stream under `twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta`.
+- Exact event: `twoArmAppendixCRewardPhaseEvent n0 n1 phaseOneTotal`; its pure
+  latent preimage is partitioned by the measurable occurrence event
+  `(twoArmLatentMaskedOptimalPullBlock (n0+n1)) ⁻¹'
+  twoArmAppendixCAllPullsPresent (n0+n1)` and its complement.
+- Local APIs: `twoArmFixedIIDLatentTrajectoryMeasure_map_optimalPrefix_eq_pi`,
+  `twoArmAppendixCLatentPhaseEvent`,
+  `twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent`,
+  `Measure.map_apply`, `measure_union`, and `Set.disjoint_left`.
+- Intended proof route: define measurable pure-latent and missing-pull phase
+  events; prove the missing event is exactly the pure reward pattern together
+  with an existential `WithTop.top` pull time; prove the pure event is the
+  disjoint union of the existing all-present latent phase and the missing
+  branch; transfer the pure-event probability through the compiled finite
+  product law; finally substitute the compiled generated-event transport.
+- Classification: project-local event interface.  No new Mathlib candidate or
+  concentration theorem is introduced; the product-law leaf and finite
+  measure-union theorem already compile locally.
+- Hidden contracts: all events remain measurable; the split is unconditional;
+  the missing branch is not yet identified with a fixed-cutoff starvation
+  event; the all-present branch is not occurrence-conditioned IID; no positive
+  lower bound, future/no-return law, ballot result, asymptotic assembly, or
+  Theorem 2 follows from this leaf alone.
+
 ## Pivot rules
 
 - Do not replace the nth-pull law with an IID premise on the selected reward

@@ -1512,8 +1512,8 @@
       "plain": "On the source-shaped generated two-arm SGB process, every finite block of optimal-arm pull times and observed rewards has exactly the law of a missing-pull-aware block on the latent coupling.",
       "math": "\\(\\mathcal L((\\tau_i,Y_{\\tau_i})_{i<m})=\\mathcal L((\\tau_i,\\widetilde Y_i^{\\mathrm{mask}})_{i<m}).\\)",
       "intuition": "When the ith optimal-arm pull occurs, its reward is the ith coordinate of the pre-sampled optimal-arm stream. If that pull never occurs, the theorem keeps the missing time and the stopped fallback visible instead of silently inventing an IID observation.",
-      "why": "This is the first source-facing finite selected-block transport after complete visible/native law equality. Its explicit dependence boundary is now consumed by a separate fourteen-declaration Appendix-C phase-event layer.",
-      "position": "The first eight declarations in this compiled selected-block module establish the masked coupling law; fourteen downstream declarations now transport the exact finite phase event. Neither result is the unmasked product law or a selected-IID theorem. Future/no-return, ballot probability, asymptotic assembly, and Theorem 2 remain open.",
+      "why": "This is the first source-facing finite selected-block transport after complete visible/native law equality. Its explicit dependence boundary is consumed by the downstream Appendix-C phase-event and probability-split layers.",
+      "position": "The first eight declarations in this compiled selected-block module establish the masked coupling law; fourteen downstream declarations transport the exact finite phase event and ten more split its pure probability into all-present and missing-pull branches. None is an unmasked product or selected-IID theorem. Future/no-return, ballot probability, asymptotic assembly, and Theorem 2 remain open.",
       "proof_idea": "Package each pull time with its stopped reward, use the almost-sure nth-pull latent-coordinate readout at every finite block coordinate, transport the block through complete visible/native trajectory-law equality, and normalize the Unit-environment source trajectory to the native stationary process.",
       "lean_notes": "The `WithTop Nat` time coordinate keeps missing pulls explicit. The canary checks the eight block-transport declarations plus the fourteen phase-event declarations and prints only the baseline axioms propext, Classical.choice, and Quot.sound for the transport endpoints.",
       "dependencies": [
@@ -1529,13 +1529,29 @@
       "math": "\\(\\mathbb P_{\\mathrm{src}}(E^{\\mathrm{phase}}_{n_0,n_1,s})=\\mathbb P_{\\mathrm{latent}}(E^{\\mathrm{rewards}}_{n_0,n_1,s}\\cap E^{\\mathrm{occur}}_{n_0+n_1}).\\)",
       "intuition": "S0 requires an initial block of minus-one rewards. S1 restricts rewards to plus or minus one, fixes the terminal sum, and keeps every running prefix sum nonpositive. The all-pulls-present event stays visible because it depends on the adaptive trajectory.",
       "why": "This is the first exact transport of the paper's finite Appendix-C phase event. It advances the source proof while avoiding the invalid shortcut of treating adaptively selected rewards as IID after conditioning on occurrence.",
-      "position": "This terminal closes a fourteen-declaration compiled phase-event layer. It proves no product or selected-IID law, probability lower bound, future/no-return statement, ballot asymptotic, or Theorem 2.",
+      "position": "This terminal closes a fourteen-declaration compiled phase-event layer. A downstream ten-declaration layer now gives its exact missing/all-present probability split, but no selected-IID law, positive lower bound, future/no-return statement, ballot asymptotic, or Theorem 2.",
       "proof_idea": "Define measurable reward, occurrence, observed, latent, and generated events; prove that the masked readout equals the latent arm-zero prefix on the all-pulls-present boundary; then apply the compiled source-to-masked-block pushforward equality.",
       "lean_notes": "The exact S1 terminal sum is an explicit `phaseOneTotal` parameter for a later rounded-Rademacher layer. The canary reports only propext, Classical.choice, and Quot.sound for this terminal.",
       "dependencies": [
         "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked",
         "BanditRLProof.StochasticGradientBandit.twoArmLatentMaskedOptimalPullBlock_preimage_appendixCObservedPhaseEvent",
         "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmAppendixCObservedPhaseEvent"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing",
+      "chapter": "frontier",
+      "plain": "The pure latent Appendix-C reward-pattern probability is exactly the sum of the generated all-pulls-present phase probability and an explicit missing-pull phase probability.",
+      "math": "\\(\\mathbb P(E^{\\mathrm{pure}})=\\mathbb P(E^{\\mathrm{generated}})+\\mathbb P(E^{\\mathrm{missing}}).\\)",
+      "intuition": "Every latent reward block with the required S0/S1 pattern falls into exactly one of two cases: all requested optimal-arm pulls occur, or at least one requested pull time is top. The first case is already transported to the generated process; the second stays explicit.",
+      "why": "This closes the finite missing-pull/all-present probability decomposition without conditioning on occurrence or pretending that adaptive stopped rewards are IID.",
+      "position": "This terminal closes a ten-declaration compiled dichotomy layer. It does not identify the missing branch with fixed-cutoff starvation, prove a positive phase probability, construct the future/no-return law, close the ballot estimate, or prove Theorem 2.",
+      "proof_idea": "Define the pure and missing latent events, prove the pure event is the disjoint union of the occurrence-intersected event and the missing event, evaluate the pure event under the finite arm-zero product law, and substitute the compiled source phase-event transport.",
+      "lean_notes": "Missing-pull membership exposes a concrete coordinate whose nth-pull time is `WithTop.top`. The terminal canary reports only propext, Classical.choice, and Quot.sound.",
+      "dependencies": [
+        "BanditRLProof.StochasticGradientBandit.twoArmAppendixCPureLatentRewardEvent_eq_union_phase_missing",
+        "BanditRLProof.StochasticGradientBandit.disjoint_twoArmAppendixCLatentPhaseEvent_missing",
+        "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent"
       ]
     },
     {
@@ -1547,7 +1563,7 @@
       "why": "This isolates the deterministic consumer at Appendix-C Step 1 without hiding the still-missing probability producer behind a theorem-shaped premise.",
       "position": "This named declaration is a compiled source-shaped consumer, not a partial closure of Theorem 2. The frozen K = 2 terminal remains blocked.",
       "proof_idea": "Make the trigger and final-count event measurable, identify two-arm sampled regret with Delta times suboptimal pulls, prove the exact Delta(T-n) charge on the event, and compare the integral of its indicator with total expected regret.",
-      "lean_notes": "The event uses an externally fixed chronological cutoff. Separate compiled modules construct the random nth-pull stopping prefix, prove the latent fixed-arm product/readout layer, establish deterministic-time freshness and complete visible/native trajectory-law equality, transport finite pull-time/reward blocks to a missing-pull-aware masked latent law, and transport the exact finite S0/S1 phase event while retaining occurrence. The missing-pull/all-present dichotomy and composition with this consumer remain open. No module yet proves conditional no-return probability >= 1/2, the Rademacher/binomial ballot probability, or the polynomial asymptotic lower bound.",
+      "lean_notes": "The event uses an externally fixed chronological cutoff. Separate compiled modules construct the random nth-pull stopping prefix, prove the latent fixed-arm product/readout layer, establish deterministic-time freshness and complete visible/native trajectory-law equality, transport finite pull-time/reward blocks and the exact finite S0/S1 phase event, and split its pure probability into all-present and missing-pull branches. Connecting the missing branch to this fixed-cutoff consumer remains open. No module yet proves conditional no-return probability >= 1/2, the Rademacher/binomial ballot probability, or the polynomial asymptotic lower bound.",
       "dependencies": [
         "BanditRLProof.StochasticGradientBandit.twoArmStepOneStarvationEvent_charge_mul_probability_le_integral",
         "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmStepOneStarvationEvent",

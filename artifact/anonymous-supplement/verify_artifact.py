@@ -819,6 +819,7 @@ def verify_claim_ledger():
         or sgb.get("separate_compiled_native_law_declaration_count") != 10
         or sgb.get("separate_compiled_selected_block_declaration_count") != 8
         or sgb.get("separate_compiled_phase_event_declaration_count") != 14
+        or sgb.get("separate_compiled_phase_dichotomy_declaration_count") != 10
         or sgb.get(
             "separate_module_theorem_two_native_prefix_identification_compiled"
         ) is not True
@@ -830,6 +831,9 @@ def verify_claim_ledger():
         ) is not True
         or sgb.get(
             "separate_module_theorem_two_phase_event_transport_compiled"
+        ) is not True
+        or sgb.get(
+            "separate_module_theorem_two_phase_dichotomy_compiled"
         ) is not True
         or sgb.get("source_theorem_two_status") != "blocked"
         or sgb.get("source_theorem_two_endpoint_verified") is not False
@@ -846,9 +850,10 @@ def verify_claim_ledger():
         "complete visible/native trajectory-law identity",
         "eight declarations transport every finite pull-time/reward block",
         "fourteen declarations transport the exact finite Appendix-C S0/S1 event",
+        "ten declarations split the pure latent phase probability",
         "missing-pull-aware masked latent law",
         "stopped or pull-ordered selected IID",
-        "missing-pull/all-present probability dichotomy",
+        "missing branch is not yet connected to fixed-cutoff starvation",
         "stopped-prefix future-cylinder",
         "conditional no-return probability >= 1/2",
         "Rademacher/binomial ballot probability",
@@ -1002,12 +1007,14 @@ def verify_theorem_audit_comparison():
             "separate_compiled_native_law_declaration_count": 10,
             "separate_compiled_selected_block_declaration_count": 8,
             "separate_compiled_phase_event_declaration_count": 14,
+            "separate_compiled_phase_dichotomy_declaration_count": 10,
             "separate_module_theorem_two_native_prefix_identification_compiled":
                 True,
             "separate_module_theorem_two_native_trajectory_compiled": True,
             "separate_module_theorem_two_selected_block_transport_compiled":
                 True,
             "separate_module_theorem_two_phase_event_transport_compiled": True,
+            "separate_module_theorem_two_phase_dichotomy_compiled": True,
             "theorem_two_native_prefix_identification_compiled": False,
             "declaration_count_breakdown": {
                 "finite_action_algebra": 26,
@@ -1103,6 +1110,16 @@ def verify_theorem_audit_comparison():
                 "BanditRLProof.StochasticGradientBandit.twoArmAppendixCGeneratedPhaseEvent",
                 "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmAppendixCGeneratedPhaseEvent",
                 "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent",
+                "BanditRLProof.StochasticGradientBandit.twoArmAppendixCPureLatentRewardEvent",
+                "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmAppendixCPureLatentRewardEvent",
+                "BanditRLProof.StochasticGradientBandit.twoArmAppendixCMissingPullLatentPhaseEvent",
+                "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmAppendixCMissingPullLatentPhaseEvent",
+                "BanditRLProof.StochasticGradientBandit.mem_twoArmAppendixCMissingPullLatentPhaseEvent_iff",
+                "BanditRLProof.StochasticGradientBandit.twoArmAppendixCPureLatentRewardEvent_eq_union_phase_missing",
+                "BanditRLProof.StochasticGradientBandit.disjoint_twoArmAppendixCLatentPhaseEvent_missing",
+                "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_pi",
+                "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_phase_add_missing",
+                "BanditRLProof.StochasticGradientBandit.twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing",
             }
             if selected_block_names != expected_selected_block_names:
                 fail("separate SGB selected-block declaration inventory drift")
@@ -1136,16 +1153,18 @@ def verify_theorem_audit_comparison():
                 not in row.get("scope_boundary", "")
                 or "fourteen more declarations define the exact finite Appendix-C S0/S1 event"
                 not in row.get("scope_boundary", "")
+                or "ten more declarations split its pure latent probability"
+                not in row.get("scope_boundary", "")
                 or "neither supply a product law nor make totalized or occurrence-conditioned rewards IID"
                 not in row.get("scope_boundary", "")
-                or "missing-pull/all-present probability dichotomy"
+                or "missing branch is not yet connected to fixed-cutoff starvation"
                 not in row.get("scope_boundary", "")
                 or "ballot probability"
                 not in row.get("scope_boundary", "")
                 or "asymptotic terminal remain blocked"
                 not in row.get("scope_boundary", "")
                 or not any(
-                    "compiled exact all-pulls-present Appendix-C phase-event transport" in item
+                    "compiled exact missing-pull/all-present probability split" in item
                     and "stopped-prefix future-cylinder" in item
                     and "ballot probability" in item
                     and "asymptotic assembly" in item
