@@ -2381,14 +2381,36 @@ tbody tr:hover {
 }
 
 .theorem-header h3 {
-  margin: 0;
-  font-family: var(--mono);
-  font-size: 1rem;
-  overflow-wrap: anywhere;
+  margin: 0.32rem 0 0;
+  max-width: 48rem;
+  font-family: var(--serif);
+  font-size: clamp(1.08rem, 1.4vw, 1.3rem);
+  line-height: 1.22;
 }
 
 .declaration-heading {
   min-width: 0;
+}
+
+.declaration-name {
+  display: grid;
+  gap: 0.18rem;
+  margin: 0.55rem 0 0;
+  color: var(--muted);
+  font-family: var(--sans);
+  font-size: 0.76rem;
+}
+
+.declaration-name > span {
+  font-weight: 750;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+}
+
+.declaration-name code {
+  color: var(--ink);
+  font-size: 0.78rem;
+  overflow-wrap: anywhere;
 }
 
 .source-match {

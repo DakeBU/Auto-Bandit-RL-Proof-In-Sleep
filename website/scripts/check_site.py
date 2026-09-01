@@ -1203,6 +1203,7 @@ def main() -> int:
             errors.append("chapters/ucb/index.html: closest textbook UCB route must precede extensions")
 
     milestone_path = output / "implementation-map" / "milestone-data.json"
+    module_data_path = output / "implementation-map" / "module-data.json"
     implementation_path = output / "implementation-map" / "index.html"
     if milestone_path.exists() and implementation_path.exists():
         milestone_payload = json.loads(milestone_path.read_text(encoding="utf-8"))
@@ -1219,6 +1220,21 @@ def main() -> int:
                 errors.append(f"Implementation Map lacks progressive milestone support: {required}")
     else:
         errors.append("Implementation Map progressive milestone ledger is missing")
+    if module_data_path.exists() and implementation_path.exists():
+        module_payload = json.loads(module_data_path.read_text(encoding="utf-8"))
+        module_items = module_payload.get("items", [])
+        if len(module_items) != manifest.get("module_count"):
+            errors.append("module-data.json count does not match manifest module_count")
+        implementation_source = implementation_path.read_text(encoding="utf-8")
+        initial_module_rows = implementation_source.count("data-module-row")
+        module_page_size = module_payload.get("page_size")
+        if initial_module_rows != min(module_page_size, len(module_items)):
+            errors.append("Implementation Map initial module DOM does not match its page size")
+        for required in ("data-module-more", "module-data.json"):
+            if required not in implementation_source:
+                errors.append(f"Implementation Map lacks progressive module support: {required}")
+    else:
+        errors.append("Implementation Map progressive module inventory is missing")
     if chapter_source_theorems != manifest.get("source_theorem_count"):
         errors.append(
             f"source theorem cards {chapter_source_theorems} != manifest source_theorem_count "
@@ -1555,6 +1571,14 @@ def main() -> int:
     ):
         if required not in site_js:
             errors.append(f"site.js is missing progressive milestone support: {required}")
+    for required in (
+        "module-data.json",
+        "moduleLoadPromise",
+        "data-module-more",
+        "revealModuleFragment",
+    ):
+        if required not in site_js:
+            errors.append(f"site.js is missing progressive module support: {required}")
     for required in (
         "bringTargetIntoView",
         "collapsedTocHeight",

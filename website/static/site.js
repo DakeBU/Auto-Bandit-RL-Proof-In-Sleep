@@ -470,35 +470,6 @@
     if (moreButton) moreButton.hidden = false;
   }
 
-  const installTableFilter = ({ listSelector, rowSelector, querySelector, countSelector, statusSelector, chapterSelector, noun }) => {
-    const list = document.querySelector(listSelector);
-    if (!list) return;
-    const rows = [...list.querySelectorAll(rowSelector)];
-    const queryInput = document.querySelector(querySelector);
-    const statusInput = statusSelector ? document.querySelector(statusSelector) : null;
-    const chapterInput = chapterSelector ? document.querySelector(chapterSelector) : null;
-    const count = document.querySelector(countSelector);
-    const filter = () => {
-      const terms = (queryInput?.value || "").trim().toLowerCase().split(/\s+/).filter(Boolean);
-      const status = statusInput?.value || "";
-      const chapter = chapterInput?.value || "";
-      let visible = 0;
-      rows.forEach((row) => {
-        const show = terms.every((term) => (row.dataset.search || "").includes(term)) &&
-          (!status || row.dataset.status === status) &&
-          (!chapter || row.dataset.chapter === chapter);
-        row.hidden = !show;
-        if (show) visible += 1;
-      });
-      if (count) count.textContent = `${visible.toLocaleString()} matching ${noun}`;
-    };
-    [queryInput, statusInput, chapterInput].forEach((control) => {
-      control?.addEventListener("input", filter);
-      control?.addEventListener("change", filter);
-    });
-    filter();
-  };
-
   const milestoneList = document.querySelector("[data-milestone-list]");
   if (milestoneList) {
     const milestoneBody = milestoneList.querySelector("[data-milestone-body]");
@@ -586,13 +557,85 @@
     revealMilestoneFragment();
     window.addEventListener("hashchange", revealMilestoneFragment);
   }
-  installTableFilter({
-    listSelector: "[data-module-list]",
-    rowSelector: "[data-module-row]",
-    querySelector: "[data-module-query]",
-    countSelector: "[data-module-count]",
-    noun: "modules",
-  });
+  const moduleList = document.querySelector("[data-module-list]");
+  if (moduleList) {
+    const moduleBody = moduleList.querySelector("[data-module-body]");
+    const moduleQuery = document.querySelector("[data-module-query]");
+    const moduleCount = document.querySelector("[data-module-count]");
+    const moduleMore = document.querySelector("[data-module-more]");
+    const modulePageSize = Number(moduleList.dataset.modulePageSize || 30);
+    const moduleTotal = Number(moduleList.dataset.moduleTotal || 0);
+    let moduleVisibleLimit = modulePageSize;
+    let moduleItems = null;
+    let moduleLoadPromise = null;
+
+    const loadModules = () => {
+      if (moduleItems) return Promise.resolve(moduleItems);
+      if (!moduleLoadPromise) {
+        const dataUrl = new URL("module-data.json", window.location.href);
+        moduleLoadPromise = fetch(dataUrl)
+          .then((response) => {
+            if (!response.ok) throw new Error(`Module inventory request failed: ${response.status}`);
+            return response.json();
+          })
+          .then((payload) => {
+            moduleItems = Array.isArray(payload.items) ? payload.items : [];
+            return moduleItems;
+          });
+      }
+      return moduleLoadPromise;
+    };
+
+    const renderModules = () => {
+      if (!moduleItems || !moduleBody) return;
+      const terms = (moduleQuery?.value || "").trim().toLowerCase().split(/\s+/).filter(Boolean);
+      const filtered = moduleItems.filter((item) =>
+        terms.every((term) => (item.search || "").includes(term))
+      );
+      const visible = filtered.slice(0, moduleVisibleLimit);
+      moduleBody.innerHTML = visible.map((item) => item.html).join("");
+      if (moduleCount) {
+        moduleCount.textContent = filtered.length > visible.length
+          ? `Showing ${visible.length.toLocaleString()} of ${filtered.length.toLocaleString()} matching modules.`
+          : `${filtered.length.toLocaleString()} matching modules.`;
+      }
+      if (moduleMore) {
+        const remaining = Math.max(0, filtered.length - visible.length);
+        moduleMore.hidden = remaining === 0;
+        moduleMore.textContent = `Show ${Math.min(modulePageSize, remaining).toLocaleString()} more modules`;
+      }
+    };
+
+    const resetAndRenderModules = () => {
+      moduleVisibleLimit = modulePageSize;
+      loadModules().then(renderModules).catch(() => {
+        if (moduleCount) moduleCount.textContent = "Full module inventory could not load; showing the initial modules.";
+        if (moduleMore) moduleMore.hidden = true;
+      });
+    };
+    moduleQuery?.addEventListener("input", resetAndRenderModules);
+    moduleMore?.addEventListener("click", () => {
+      moduleVisibleLimit += modulePageSize;
+      loadModules().then(renderModules).catch(() => {
+        if (moduleMore) moduleMore.hidden = true;
+      });
+    });
+    if (moduleMore && moduleTotal > modulePageSize) moduleMore.hidden = false;
+
+    const revealModuleFragment = () => {
+      const fragmentId = window.location.hash ? decodeURIComponent(window.location.hash.slice(1)) : "";
+      if (!fragmentId.startsWith("module-") || document.getElementById(fragmentId)) return;
+      loadModules().then((items) => {
+        const targetIndex = items.findIndex((item) => item.id === fragmentId);
+        if (targetIndex < 0) return;
+        moduleVisibleLimit = targetIndex + 1;
+        renderModules();
+        openDeclarationTarget();
+      }).catch(() => {});
+    };
+    revealModuleFragment();
+    window.addEventListener("hashchange", revealModuleFragment);
+  }
 
   const revealRenderedMath = (markFallback = false) => {
     document.querySelectorAll("[data-math-statement]").forEach((statement) => {
