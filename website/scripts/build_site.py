@@ -28,6 +28,7 @@ STATIC_DIR = SITE_DIR / "static"
 PUBLIC_REPO_DIR = SITE_DIR / "public-repo"
 COMMUNITY_DIR = SITE_DIR / "community"
 DEFAULT_OUTPUT = SITE_DIR / "_site"
+HARNESS_COMPARISON_PATH = ROOT / "runs" / "harness-comparison" / "latest.json"
 
 GITHUB_REPO = "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep"
 PUBLIC_SITE_REPO = GITHUB_REPO
@@ -41,8 +42,9 @@ PAPER_TITLE = (
 PRIMARY_TEXTBOOK_TITLE = "Bandit Algorithms"
 PRIMARY_TEXTBOOK_AUTHORS = "Tor Lattimore and Csaba Szepesvári"
 PRIMARY_TEXTBOOK_URL = "https://tor-lattimore.com/downloads/book/book.pdf"
-ASSET_VERSION = "20260901e"
+ASSET_VERSION = "20260901g"
 CATALOG_PAGE_SIZE = 100
+MILESTONE_PAGE_SIZE = 20
 TEACHING_PREVIEW_COUNT = 6
 SOURCE_BRANCH = "main"
 PUBLIC_BASE_URL = ""
@@ -488,6 +490,15 @@ def href_from(page_path: str, target: str) -> str:
     return f"{result}{fragment}"
 
 
+def public_page_url(page_path: str) -> str:
+    """Return the canonical public URL for one generated HTML page."""
+    if page_path == "index.html":
+        return f"{PUBLIC_SITE_URL}/"
+    if page_path.endswith("/index.html"):
+        return f"{PUBLIC_SITE_URL}/{page_path[:-10]}"
+    return f"{PUBLIC_SITE_URL}/{page_path}"
+
+
 def status_badge(status: str) -> str:
     label = STATUS_LABELS.get(status, status.replace("-", " ").title())
     return f'<span class="status {html.escape(status)}">{html.escape(label)}</span>'
@@ -715,6 +726,12 @@ def layout(
         for script in extra_scripts
     )
     page_shell_class = "page-shell wide-page" if wide else "page-shell"
+    canonical_url = public_page_url(page_path)
+    social_title = f"{title} · BanditRLlib"
+    social_description = (
+        "Verified bandit and reinforcement-learning theory in Lean, with "
+        "source-mapped teaching chapters, exact declarations, and explicit proof boundaries."
+    )
     return f"""<!doctype html>
 <html lang="en" data-theme="blueprint">
 <head>
@@ -722,7 +739,17 @@ def layout(
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
   <meta name="citation_title" content="{html.escape(PAPER_TITLE)}">
-  <title>{html.escape(title)} · BanditRLlib</title>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="{html.escape(social_title, quote=True)}">
+  <meta property="og:description" content="{html.escape(social_description, quote=True)}">
+  <meta property="og:url" content="{html.escape(canonical_url, quote=True)}">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{html.escape(social_title, quote=True)}">
+  <meta name="twitter:description" content="{html.escape(social_description, quote=True)}">
+  <link rel="canonical" href="{html.escape(canonical_url, quote=True)}">
+  <meta name="theme-color" content="#176b70">
+  <title>{html.escape(social_title)}</title>
   <link rel="icon" href="{root}/static/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="{root}/static/site.css?v={ASSET_VERSION}">
   {mathjax}
@@ -1225,14 +1252,38 @@ def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[
     )
     theorems = ([reading["source_theorem"]] if reading.get("source_theorem") else []) + reading.get("source_theorems", [])
     if theorems:
-        theorem_html = "".join(f"""
+        theorem_cards = []
+        for theorem in theorems:
+            contract = theorem.get("contract", {})
+            contract_html = ""
+            if contract:
+                contract_order = (
+                    ("Model", "model"),
+                    ("Assumptions", "assumptions"),
+                    ("Algorithm parameters", "parameters"),
+                    ("Regret notion", "regret"),
+                    ("Guarantee", "guarantee"),
+                )
+                contract_items = "".join(
+                    f'<div><dt>{html.escape(label)}</dt><dd>{html.escape(str(contract[key]))}</dd></div>'
+                    for label, key in contract_order
+                    if contract.get(key)
+                )
+                contract_html = (
+                    '<dl class="source-theorem-contract" aria-label="Source theorem contract">'
+                    + contract_items
+                    + '</dl>'
+                )
+            theorem_cards.append(f"""
 <article class="source-theorem-card">
   <div class="source-theorem-heading"><div><span class="panel-kicker">Source theorem · faithful restatement</span><h3>{html.escape(theorem['label'])}</h3></div><a href="{html.escape(theorem['url'], quote=True)}">Original source ↗</a></div>
   <p>{html.escape(theorem['plain'])}</p>
+  {contract_html}
   {render_math_statement('Source mathematical statement', theorem['math'], theorem['fallback'])}
   <p class="source-note"><strong>BanditRLlib relationship.</strong> {html.escape(theorem['relationship'])}</p>
   <p class="copyright-note">The mathematical content is restated in this site's notation; wording is ours. See {html.escape(theorem['pages'])} in the linked source for the original statement and full assumptions.</p>
-</article>""" for theorem in theorems)
+</article>""")
+        theorem_html = "".join(theorem_cards)
     else:
         theorem_html = f"""
 <div class="callout warning source-boundary"><strong>No single source theorem.</strong> {html.escape(reading['source_boundary'])}</div>"""
@@ -1355,10 +1406,21 @@ def render_highlight(
     for dependency in highlight.get("dependencies", []):
         dependency_links.append(f"<code>{html.escape(dependency)}</code>")
     dependencies = ", ".join(dependency_links) if dependency_links else "No direct teaching dependency recorded."
+    match_kind = highlight.get("source_match", "")
+    match_labels = {
+        "closest-source": "Closest local match to the source theorem",
+        "extension": "Compiled extension",
+        "consumer": "Downstream consumer",
+    }
+    match_badge = (
+        f'<span class="source-match {html.escape(match_kind)}">{html.escape(match_labels[match_kind])}</span>'
+        if match_kind in match_labels
+        else ""
+    )
     return f"""
-<article class="theorem-panel" id="{declaration['anchor']}-teaching">
+<article class="theorem-panel{' source-match-panel' if match_badge else ''}" id="{declaration['anchor']}-teaching">
   <div class="theorem-header">
-    <div class="declaration-heading"><span class="panel-kicker">Lean declaration</span><h3>{html.escape(declaration['full_name'])}</h3></div>
+    <div class="declaration-heading"><span class="panel-kicker">Lean declaration</span>{match_badge}<h3>{html.escape(declaration['full_name'])}</h3></div>
     {status_badge(status)}
   </div>
   <div class="theorem-body">
@@ -1399,6 +1461,114 @@ def render_primary_textbook_banner() -> str:
 """
 
 
+def load_harness_comparison() -> dict[str, Any]:
+    """Load the deterministic harness-comparison ledger used by the CLI."""
+    if not HARNESS_COMPARISON_PATH.exists():
+        raise SystemExit(
+            "missing runs/harness-comparison/latest.json; run "
+            "`python3 tools/bandit.py harness-compare` before building the site"
+        )
+    payload = load_json(HARNESS_COMPARISON_PATH)
+    required = {
+        "schema_version",
+        "matched_experiments",
+        "minimum_matched_experiments",
+        "matched_evidence",
+        "decision",
+    }
+    missing = sorted(required - set(payload))
+    if missing:
+        raise SystemExit(
+            "runs/harness-comparison/latest.json is missing required fields: "
+            + ", ".join(missing)
+        )
+    if set(payload.get("matched_evidence", {})) != {"hierarchical", "master-worker"}:
+        raise SystemExit(
+            "runs/harness-comparison/latest.json must report hierarchical and master-worker arms"
+        )
+    return payload
+
+
+def render_current_snapshot(
+    page_path: str,
+    modules: list[dict[str, Any]],
+    declarations: list[dict[str, Any]],
+    chapters: list[dict[str, Any]],
+    results: list[dict[str, Any]],
+    verified: bool,
+) -> str:
+    """Render a compact, evidence-derived answer to 'what changed?' on the landing page."""
+    comparison = load_harness_comparison()
+    matched_count = len(comparison["matched_experiments"])
+    minimum_count = int(comparison["minimum_matched_experiments"])
+    decision = comparison["decision"]
+    decision_status = str(decision.get("status", "unrecorded")).replace("-", " ")
+    next_harness = str(decision.get("next_experiment_harness", "unrecorded"))
+    source_theorem_count = sum(
+        int(bool(reading.get("source_theorem"))) + len(reading.get("source_theorems", []))
+        for reading in SITE_READINGS.values()
+    )
+    frontier = next(
+        (
+            result
+            for result in results
+            if result.get("id") == "NEURIPS-2025-SGB-PHASE-TRANSITION-FOLLOWON"
+        ),
+        None,
+    )
+    if frontier is None:
+        raise SystemExit("results.json is missing the current SGB Theorem-2 frontier")
+    first_missing = str(frontier.get("missing", ["No open bridge recorded."])[0])
+    frontier_href = href_from(
+        page_path,
+        f"implementation-map/index.html#{slugify(frontier['id'])}",
+    )
+    placeholder_count = sum(1 for declaration in declarations if declaration["placeholder"])
+    proof_count = sum(
+        1 for declaration in declarations if declaration["kind"] in {"theorem", "lemma"}
+    )
+    verification_badge = status_badge("compiled" if verified and not placeholder_count else "source")
+    snapshot_href = f"{GITHUB_REPO}/tree/{SOURCE_BRANCH}"
+    return f"""
+<section class="current-snapshot" id="current-snapshot" aria-labelledby="current-snapshot-title">
+  <div class="snapshot-heading">
+    <div><p class="eyebrow">Current evidence snapshot</p><h2 id="current-snapshot-title">What is available now—and what is still open</h2></div>
+    <a class="snapshot-commit" href="{snapshot_href}">Source <code>{html.escape(SOURCE_BRANCH[:12])}</code> ↗</a>
+  </div>
+  <p class="section-intro">These cards are generated from the Lean index, teaching crosswalks, implementation ledger, and harness-comparison log. They are not hand-entered completion percentages.</p>
+  <div class="evidence-snapshot-grid">
+    <article class="snapshot-card">
+      <div class="snapshot-card-top"><span class="level-label">Lean snapshot</span>{verification_badge}</div>
+      <strong class="snapshot-value">{len(declarations):,}</strong>
+      <span class="snapshot-unit">indexed declarations</span>
+      <p>{len(modules):,} modules · {proof_count:,} theorems and lemmas · {placeholder_count:,} declarations with <code>sorry</code> or <code>admit</code>.</p>
+      <a href="{href_from(page_path, 'declarations/index.html')}">Search exact declarations →</a>
+    </article>
+    <article class="snapshot-card">
+      <div class="snapshot-card-top"><span class="level-label">Teaching layer</span><span class="status integrated">Source mapped</span></div>
+      <strong class="snapshot-value">{len(chapters)}</strong>
+      <span class="snapshot-unit">Book Map chapters</span>
+      <p>{source_theorem_count} source-theorem restatements and {len(SITE_TEXTBOOK_SPINE.get('chapters', []))} Part-IV chapter pages connect algorithms, page references, mathematics, and Lean.</p>
+      <a href="{href_from(page_path, 'learning/index.html')}">Follow a reading route →</a>
+    </article>
+    <article class="snapshot-card">
+      <div class="snapshot-card-top"><span class="level-label">Harness comparison</span>{status_badge('prototype')}</div>
+      <strong class="snapshot-value">{matched_count}/{minimum_count}</strong>
+      <span class="snapshot-unit">matched experiments</span>
+      <p>Decision: {html.escape(decision_status)}. The default is retained; the next evidence-gathering arm is <code>{html.escape(next_harness)}</code>.</p>
+      <a href="{href_from(page_path, 'workflow/index.html#comparison-evidence')}">Inspect the comparison ledger →</a>
+    </article>
+    <article class="snapshot-card">
+      <div class="snapshot-card-top"><span class="level-label">Active theorem frontier</span>{status_badge(frontier['status'])}</div>
+      <strong class="snapshot-title">SGB Theorem-2 follow-on</strong>
+      <p><strong>First named open bridge.</strong> {html.escape(first_missing)}</p>
+      <a href="{frontier_href}">Open evidence and remaining gaps →</a>
+    </article>
+  </div>
+</section>
+"""
+
+
 def build_index(
     output: Path,
     modules: list[dict[str, Any]],
@@ -1418,6 +1588,14 @@ def build_index(
     textbook_spine_map = render_textbook_spine_map(page_path, SITE_TEXTBOOK_SPINE, verified)
     contributor_cards = render_contributor_cards(page_path, authors, include_invitation=False)
     primary_textbook = render_primary_textbook_banner()
+    current_snapshot = render_current_snapshot(
+        page_path,
+        modules,
+        declarations,
+        chapters,
+        results,
+        verified,
+    )
     wiki_cases = SITE_BANDITRLWIKI.get("cases", [])
     wiki_families = SITE_BANDITRLWIKI.get("families", [])
     wiki_source_pending = sum(
@@ -1428,16 +1606,17 @@ def build_index(
   <p class="eyebrow">Verified bandit and reinforcement-learning theory in Lean</p>
   <h1>BanditRLlib</h1>
   <p class="lede">Learn bandit and reinforcement-learning theory beside its compiled Lean interfaces, search exact declarations, and contribute one reviewable lemma at a time.</p>
-  {primary_textbook}
-  <p class="paper-title"><strong>Paper.</strong> {html.escape(PAPER_TITLE)}</p>
   <div class="hero-actions">
     <a class="button primary" href="{href_from(page_path, 'learning/index.html')}">Start the Book Map</a>
-    <a class="button" href="{href_from(page_path, 'banditrlwiki/index.html')}">Compare Minimax Frontiers</a>
-    <a class="button" href="{href_from(page_path, 'declarations/index.html')}">Search Exact Declarations</a>
+    <a class="button" href="{href_from(page_path, 'declarations/index.html')}">Search Declarations</a>
     <a class="button" href="{href_from(page_path, 'community/index.html')}">Contribute a Lemma</a>
   </div>
-  <p class="hero-secondary-links"><a href="{GITHUB_REPO}">GitHub repository ↗</a><span aria-hidden="true">·</span><a href="{href_from(page_path, 'ide/index.html')}">Local experimental formalization workspace</a></p>
+  {primary_textbook}
+  <p class="paper-title"><strong>Paper.</strong> {html.escape(PAPER_TITLE)}</p>
+  <p class="hero-secondary-links"><a href="{GITHUB_REPO}">GitHub repository ↗</a><span aria-hidden="true">·</span><a href="{href_from(page_path, 'banditrlwiki/index.html')}">Compare minimax frontiers</a><span aria-hidden="true">·</span><a href="{href_from(page_path, 'ide/index.html')}">Local experimental workspace</a></p>
 </section>
+
+{current_snapshot}
 
 <section id="two-systems">
   <p class="eyebrow">Powered by two connected systems</p>
@@ -1473,6 +1652,9 @@ def build_index(
   </div>
 </section>
 
+<details class="homepage-details">
+  <summary><span>Project scope and completion boundaries</span><small>Live inventory · project purpose</small></summary>
+  <div class="homepage-details-content">
 <section id="live-inventory">
   <h2>Live source inventory</h2>
   <p>The numbers below are generated from the current internal <code>BanditRLProof/</code> namespace at build time. <strong>BanditRLlib</strong> is the public library name; the mature namespace is intentionally unchanged.</p>
@@ -1491,6 +1673,8 @@ def build_index(
   <p>The current tree is no longer only a finite-bandit foundation. It contains concrete ETC, ordinary UCB, a conservative bounded generated KL-UCB route, stationary Thompson, EXP3, and Tsallis endpoints; an OFUL chain reaching self-normalized confidence and one horizon-free policy with all-time, all-horizon, and stopping consumers, plus a separately labeled horizon-indexed expected-consistency family; and a finite-horizon RL development that now reaches a canonical known-reward Hoeffding UCBVI-CH high-probability cumulative episode pseudo-regret theorem and its failure-aware expected consumer on one generated adaptive process. Natural-causal consistency and stopping-time RL remain independent compiled extensions. Bernstein/minimax and stochastic-reward UCBVI, sharp KL-Chernoff and asymptotically optimal KL-UCB refinements, full BwK, preference, federated, and several modern routes remain partial, planned, or blocked at named interfaces.</p>
   <div class="callout"><strong>Identity boundary.</strong> ABRL is the proving system and research project. BanditRLlib is the verified Lean library, website, formalization workspace, and contribution interface produced by that system.</div>
 </section>
+  </div>
+</details>
 
 <section id="banditrlwiki">
   <p class="eyebrow">Upper bounds · lower bounds · local Lean evidence</p>
@@ -1498,7 +1682,7 @@ def build_index(
   <p>The research atlas currently indexes {len(wiki_cases)} theorem-comparison cases across {len(wiki_families)} assumption families. Each case fixes its reward model, feedback, horizon, regret notion, and salient parameters before comparing rates. Published optimality, theorem-level source audit, and local Lean compilation are three independent ledgers.</p>
   <div class="two-system-grid">
     <article class="info-card"><span class="level-label">Literature map</span><h3>Find the best compatible upper and lower theorem</h3><p>Open a setting, inspect the precise comparison signature, follow primary-paper links, and see every remaining logarithmic, constant, parameter, or model-class mismatch.</p><a href="{href_from(page_path, 'banditrlwiki/index.html')}">Open BanditRLwiki →</a></article>
-    <article class="info-card"><span class="level-label">Frontier leaves</span><h3>Separate open mathematics from open formalization</h3><p>{wiki_source_pending} cases remain in the source-audit queue. The Frontier never turns a missing reference into a literature-open claim, and every Lean blocker names the exact missing bridge.</p><a href="{href_from(page_path, 'banditrlwiki/frontier/index.html')}">Inspect frontier leaves →</a></article>
+    <article class="info-card"><span class="level-label">Frontier leaves</span><h3>Separate open mathematics from open formalization</h3><p>{wiki_source_pending} {'case remains' if wiki_source_pending == 1 else 'cases remain'} in the source-audit queue. The Frontier never turns a missing reference into a literature-open claim, and every Lean blocker names the exact missing bridge.</p><a href="{href_from(page_path, 'banditrlwiki/frontier/index.html')}">Inspect frontier leaves →</a></article>
   </div>
 </section>
 
@@ -1509,6 +1693,9 @@ def build_index(
   {book_map}
 </section>
 
+<details class="homepage-details">
+  <summary><span>More project paths</span><small>Part IV spine · contributors · installation</small></summary>
+  <div class="homepage-details-content">
 <section id="textbook-spine">
   <p class="eyebrow">Chapter-by-chapter source spine</p>
   <h2>Part IV: Lower Bounds</h2>
@@ -1537,6 +1724,8 @@ python3 tools/bandit.py check</code></pre></article>
   </div>
   <p><a class="button" href="{href_from(page_path, 'installation/index.html')}">Full installation guide</a></p>
 </section>
+  </div>
+</details>
 
 <section id="how-to-contribute">
   <p class="eyebrow">A reviewable path into the library</p>
@@ -1550,6 +1739,9 @@ python3 tools/bandit.py check</code></pre></article>
   <div class="hero-actions"><a class="button primary" href="{href_from(page_path, 'community/index.html')}">Read how to contribute</a><a class="button" href="{GITHUB_REPO}/issues/new?template=lemma-proposal.yml">Propose a lemma</a></div>
 </section>
 
+<details class="homepage-details">
+  <summary><span>Research details and local tools</span><small>Progress · reading routes · Live Formalization</small></summary>
+  <div class="homepage-details-content">
 <section id="progress">
   <h2>Progress without invented percentages</h2>
   <p>This chart counts the explicit milestones in the website's implementation map. It does not estimate what percentage of all bandit or RL mathematics has been formalized.</p>
@@ -1569,10 +1761,13 @@ python3 tools/bandit.py check</code></pre></article>
   <div class="callout warning"><strong>Static-site boundary.</strong> GitHub Pages does not compile Lean or send source to a hosted proving service. Compilation and provider-backed formalization require the explicitly started loopback-only local companion server.</div>
   <div class="hero-actions"><a class="button primary" href="{href_from(page_path, 'ide/index.html')}">Open Live Formalization</a><a class="button" href="{href_from(page_path, 'community/index.html#machine-contract')}">Inspect the contribution contract</a></div>
 </section>
+  </div>
+</details>
 """
     toc = [
         ("overview", "Overview"),
         ("primary-textbook", "Primary textbook"),
+        ("current-snapshot", "Current evidence"),
         ("two-systems", "ABRL + BanditRLlib"),
         ("three-roles", "Three ways to use BanditRLlib"),
         ("live-inventory", "Live inventory"),
@@ -1605,6 +1800,7 @@ def build_implementation_map(
 ) -> None:
     page_path = "implementation-map/index.html"
     result_rows = []
+    result_items = []
     for result in results:
         declaration_links = []
         for name in result["declarations"]:
@@ -1637,15 +1833,31 @@ def build_implementation_map(
             f"{result['id']} {result['title']} {result['informal']} {chapter['short_title']}".lower(),
             quote=True,
         )
-        result_rows.append(
-            f"""
+        row_html = f"""
 <tr id="{slugify(result['id'])}" data-milestone-row data-search="{search}" data-status="{html.escape(result['status'])}" data-chapter="{html.escape(result['chapter'])}">
   <td><a href="#{slugify(result['id'])}">{html.escape(result['title'])}</a><br><code>{html.escape(result['id'])}</code></td>
   <td>{chapter_cell}</td>
   <td>{status_badge(result['status'])}</td>
   <td class="milestone-evidence"><p>{html.escape(result['informal'])}</p><details><summary>Lean evidence and boundary</summary><dl><div><dt>Declarations</dt><dd>{"<br>".join(declaration_links) if declaration_links else "No local declaration yet"}</dd></div><div><dt>Depends on</dt><dd>{dependencies}</dd></div><div><dt>Remaining gap</dt><dd>{missing}</dd></div></dl></details></td>
 </tr>"""
+        result_rows.append(row_html)
+        result_items.append(
+            {
+                "id": slugify(result["id"]),
+                "search": f"{result['id']} {result['title']} {result['informal']} {chapter['short_title']}".lower(),
+                "status": result["status"],
+                "chapter": result["chapter"],
+                "html": row_html,
+            }
         )
+    write_text_lf(
+        output / "implementation-map" / "milestone-data.json",
+        json.dumps(
+            {"page_size": MILESTONE_PAGE_SIZE, "items": result_items},
+            ensure_ascii=False,
+            separators=(",", ":"),
+        ),
+    )
     module_rows = []
     for module in modules:
         chapter = chapter_by_slug[module["chapter"]]
@@ -1688,13 +1900,15 @@ def build_implementation_map(
     <div class="filter-field"><label for="milestone-status">Status</label><select id="milestone-status" data-milestone-status><option value="">All statuses</option>{''.join(f'<option value="{status}">{STATUS_LABELS.get(status, status.title())}</option>' for status in ('compiled', 'partial', 'planned', 'blocked', 'stated'))}</select></div>
     <div class="filter-field"><label for="milestone-chapter">Chapter</label><select id="milestone-chapter" data-milestone-chapter><option value="">All chapters</option>{''.join(f'<option value="{chapter["slug"]}">{html.escape(chapter["short_title"])}</option>' for chapter in chapter_by_slug.values())}</select></div>
   </div>
-  <p class="result-count" data-milestone-count></p>
-  <div class="table-wrap" data-milestone-list tabindex="0" role="region" aria-label="Mathematical milestones">
+  <p class="result-count" data-milestone-count aria-live="polite">Showing the first {min(MILESTONE_PAGE_SIZE, len(result_rows))} of {len(result_rows)} milestones.</p>
+  <div class="table-wrap" data-milestone-list data-milestone-total="{len(result_rows)}" data-milestone-page-size="{MILESTONE_PAGE_SIZE}" tabindex="0" role="region" aria-label="Mathematical milestones">
     <table>
       <thead><tr><th>Result</th><th>Chapter</th><th>Status</th><th>Meaning and evidence</th></tr></thead>
-      <tbody>{''.join(result_rows)}</tbody>
+      <tbody data-milestone-body>{''.join(result_rows[:MILESTONE_PAGE_SIZE])}</tbody>
     </table>
   </div>
+  <div class="catalog-actions"><button class="button compact" type="button" data-milestone-more hidden>Show {min(MILESTONE_PAGE_SIZE, max(0, len(result_rows) - MILESTONE_PAGE_SIZE))} more milestones</button></div>
+  <noscript><p class="callout warning"><strong>JavaScript is off.</strong> The first {min(MILESTONE_PAGE_SIZE, len(result_rows))} milestones are shown here. Open the <a href="milestone-data.json">complete generated milestone ledger</a> for all {len(result_rows)} records.</p></noscript>
 </section>
 
 <section id="dependencies">
@@ -1894,7 +2108,10 @@ def build_chapters(
   </div></details>
 </section>
 """
-        chapter_highlights = highlights_by_chapter[chapter["slug"]]
+        chapter_highlights = sorted(
+            highlights_by_chapter[chapter["slug"]],
+            key=lambda item: int(item.get("teaching_order", 10_000)),
+        )
         if len(chapter_highlights) > TEACHING_PREVIEW_COUNT:
             featured_highlights = [item for item in chapter_highlights if item.get("featured") is True]
             if not featured_highlights or len(featured_highlights) > TEACHING_PREVIEW_COUNT:
@@ -1904,12 +2121,15 @@ def build_chapters(
                 )
         else:
             featured_highlights = chapter_highlights
+        visible_highlights = [
+            item for item in featured_highlights if item.get("source_match") != "extension"
+        ]
         extended_highlights = [
-            item for item in chapter_highlights if item not in featured_highlights
+            item for item in chapter_highlights if item not in visible_highlights
         ]
         teaching = "".join(
             render_highlight(page_path, item, decl_by_name[item["full_name"]], verified)
-            for item in featured_highlights
+            for item in visible_highlights
         )
         teaching_scope = ""
         if extended_highlights:
@@ -3865,8 +4085,70 @@ python tools/proof_graph_lab.py benchmark --graph proof-graph.json --config rese
     )
 
 
+def render_harness_comparison_ledger(page_path: str, comparison: dict[str, Any]) -> str:
+    matched = comparison["matched_evidence"]
+    rows = []
+    for harness in ("hierarchical", "master-worker"):
+        arm = matched[harness]
+        rows.append(
+            "<tr>"
+            f"<th scope=\"row\">{html.escape(harness)}</th>"
+            f"<td>{int(arm.get('runs', 0))}</td>"
+            f"<td>{int(arm.get('attempts', 0))}</td>"
+            f"<td>{int(arm.get('reviewed_attempts', 0))}</td>"
+            f"<td>{int(arm.get('substantive_attempts', 0))}</td>"
+            f"<td>{html.escape(str(arm.get('substantive_score', 0)))}</td>"
+            f"<td>{html.escape(str(arm.get('critical_path_seconds', 0.0)))}</td>"
+            "</tr>"
+        )
+    decision = comparison["decision"]
+    matched_count = len(comparison["matched_experiments"])
+    minimum_count = int(comparison["minimum_matched_experiments"])
+    status = str(decision.get("status", "unrecorded")).replace("-", " ")
+    recommended = str(decision.get("recommended_default", "unrecorded"))
+    next_harness = str(decision.get("next_experiment_harness", "unrecorded"))
+    reason = str(decision.get("reason", "No deterministic reason recorded."))
+    source_href = source_url("runs/harness-comparison/latest.json")
+    prompt_href = source_url("runs/harness-comparison/latest.prompt.md")
+    method_href = source_url("docs/harness_self_comparison.md")
+    return f"""
+<section id="comparison-evidence">
+  <p class="eyebrow">Generated from structured run logs</p>
+  <div class="snapshot-heading"><div><h2>Current harness-comparison evidence</h2><p class="section-intro">The table reports only matched, reviewer-classified attempts on the same frozen target. Historical activity without the comparison contract is excluded.</p></div>{status_badge('prototype')}</div>
+  <div class="comparison-decision" role="status" aria-label="Current harness comparison decision">
+    <div><span class="level-label">Decision status</span><strong>{html.escape(status.title())}</strong></div>
+    <div><span class="level-label">Matched evidence</span><strong>{matched_count} of {minimum_count} required</strong></div>
+    <div><span class="level-label">Recommended default</span><strong>{html.escape(recommended)}</strong></div>
+    <div><span class="level-label">Next matched arm</span><strong>{html.escape(next_harness)}</strong></div>
+  </div>
+  <div class="table-wrap comparison-table" tabindex="0" role="region" aria-label="Matched hierarchical and master-worker evidence">
+    <table>
+      <thead><tr><th>Harness</th><th>Runs</th><th>Attempts</th><th>Reviewed</th><th>Substantive</th><th>Score</th><th>Critical seconds</th></tr></thead>
+      <tbody>{''.join(rows)}</tbody>
+    </table>
+  </div>
+  <div class="callout warning"><strong>Why no winner is shown.</strong> {html.escape(reason)} GPT receives this deterministic report and a bounded review packet; it may interpret bottlenecks and propose the next matched experiment, but it cannot promote unreviewed output or override this evidence boundary.</div>
+  <div class="source-links"><a href="{source_href}">Open the deterministic JSON</a><a href="{prompt_href}">Open the GPT review packet</a><a href="{method_href}">Read the comparison method</a></div>
+</section>
+"""
+
+
 def build_workflow(output: Path, verified: bool, generated_at: str) -> None:
     page_path = "workflow/index.html"
+    comparison = load_harness_comparison()
+    comparison_ledger = render_harness_comparison_ledger(page_path, comparison)
+    decision = comparison["decision"]
+    decision_status = str(decision.get("status", "unrecorded"))
+    if decision_status == "insufficient-evidence":
+        current_decision = (
+            "The structured log ledger does not yet justify declaring either harness "
+            "universally better, so the hierarchical loop remains the default."
+        )
+    else:
+        current_decision = (
+            "The deterministic matched-evidence ledger currently recommends "
+            f"{decision.get('recommended_default', 'no recorded default')}."
+        )
     body = f"""
 <section class="hero" id="workflow">
   <p class="eyebrow">From theorem target to compiled certificate</p>
@@ -3889,9 +4171,11 @@ def build_workflow(output: Path, verified: bool, generated_at: str) -> None:
   <p class="eyebrow">Adaptive orchestration, one evidence standard</p>
   <h2>Compare proof routes by mathematical progress</h2>
   <p>The scheduler can run the established hierarchical director–planner–worker loop or a bounded master–worker trial in which several workers explore independent proof routes. Both receive the same frozen target, budget, source packet, and deterministic gates.</p>
-  <p><strong>Current decision.</strong> Existing matched logs do not yet justify declaring either harness universally better, so the hierarchical loop remains the default. The master–worker route is experimental and is enabled only when parallel alternatives are genuinely independent. A trial wins only by delivering a stronger checked certificate, a smaller named blocker, or a reusable lemma—not by producing more messages or attempts.</p>
+  <p><strong>Current decision.</strong> {html.escape(current_decision)} The master–worker route is experimental and is enabled only when parallel alternatives are genuinely independent. A trial wins only by delivering a stronger checked certificate, a smaller named blocker, or a reusable lemma—not by producing more messages or attempts.</p>
   {render_diagram(page_path, 'automation-workflow.mmd', 'Evidence-aware scheduler comparing a hierarchical loop and a bounded master-worker trial before a common Lean and reviewer gate')}
 </section>
+
+{comparison_ledger}
 
 <section id="commands">
   <h2>Reproducible gates</h2>
@@ -3916,7 +4200,7 @@ python3 website/scripts/ide_server.py</code></pre>
   </ul>
 </section>
 """
-    toc = [("workflow", "Workflow"), ("contract", "Contract"), ("roles", "Roles"), ("commands", "Gates"), ("failure-policy", "Failure policy")]
+    toc = [("workflow", "Workflow"), ("contract", "Contract"), ("roles", "Roles"), ("comparison-evidence", "Comparison evidence"), ("commands", "Gates"), ("failure-policy", "Failure policy")]
     write_page(
         output,
         page_path,

@@ -19,6 +19,12 @@ The build:
 - generates an interactive Lean Graph over all current modules and declarations,
   with progressive chapter/module/declaration expansion, search, status-aware
   branch inspection, and reviewed prerequisite/consumer edges;
+- generates a landing-page evidence snapshot from the Lean index, teaching
+  crosswalks, implementation ledger, and harness-comparison log instead of
+  hand-entered completion percentages;
+- renders the latest deterministic hierarchical-versus-master-worker comparison
+  on the Workflow page while refusing to display a winner before the matched
+  evidence threshold is met;
 - generates BanditRLwiki from `content/banditrlwiki.json`: an
   assumption-indexed upper/lower-bound atlas with primary-paper theorem links,
   independent literature/source-audit/Lean status, stable case pages, a paper
@@ -50,32 +56,20 @@ reports zero `literature-open` cases until a scoped primary-source audit support
 such a claim; one case remains in the source-audit queue, while the 13
 formalization-open cases expose 39 stable named leaves. Two additional
 source-frozen ports—the 54-declaration succinct-lower-bound audit and the
-352-declaration stochastic-gradient-bandit audit—are displayed outside that
-comparison ledger.  The latter has the exact audit-slice inventory
-`352 = 223 + 23 + 18 + 24 + 7 + 8 + 13 + 28 + 8`: a historical 223-declaration
-Theorem-1/Appendix-E stack, a 23-declaration bounded Corollary-1 companion, an
-18-declaration fixed-cutoff starvation consumer, a 24-declaration chronological
-nth-pull bridge, and a 7-declaration latent fixed-arm product/readout layer.  The
-latent layer proves an unconditional finite product law for fixed-arm latent
-coordinates and almost-sure readout at every finite nth pull.  An additional
-8-declaration deferred-decisions layer proves stream-prefix locality, a Markov
-visible-prefix kernel, and the exact finite stream-box/visible-prefix mixture.
-The 13-declaration action/readout and branch-locality-interface scaffold
-proves the next-action factorization and pathwise selected-coordinate support,
-and supplies a finite/sub-Markov branch-product consumer conditional on an
-explicit locality premise plus count-cap measurability and recurrence.  A new
-28-declaration producer layer proves two reusable safe-fiber measure bridges,
-the count-cap restricted-law induction, that exact locality contract, and an
-unconditional target-by-target branch product.  A final eight-declaration
-aggregation/readout layer sums the countable pull-count/arm branches and proves
-the exact deterministic-time next-reward joint and conditional laws on the
-latent coupling and its visible marginal.  Selected-reward IID, the
-visible-marginal/native-prefix identification, and the native visible law
-remain unproved.  The stopped-prefix future-
-cylinder, conditional no-return producer, ballot phase, asymptotic assembly,
-and terminal remain blocked.  The SGB audit therefore remains partial, with
-Theorems 2–4 open;
-the succinct-lower-bound port also has no compiled paper-level terminal.
+stochastic-gradient-bandit audit—are displayed outside that comparison ledger.
+The latter retains the exact counted 352-declaration audit-slice inventory
+`352 = 223 + 23 + 18 + 24 + 7 + 8 + 13 + 28 + 8` through deterministic-time
+selected-reward freshness.  A separate ten-declaration module now proves
+equality of the complete visible/native trajectory measures.  The selected-
+block module adds 32 declarations: eight for missing-pull-aware block transport,
+fourteen for the exact finite Appendix-C `S0/S1` event, and ten for the disjoint
+all-present/missing-pull probability split.  These compiled layers are not a
+selected-IID theorem.  The missing branch still needs a bridge to the
+fixed-cutoff starvation consumer; the stopped-prefix future-cylinder law,
+conditional no-return probability, Rademacher/ballot phase, asymptotic assembly,
+and frozen Theorem-2 terminal remain open.  The SGB audit therefore remains
+partial, with Theorems 2–4 open; the succinct-lower-bound port also has no
+compiled paper-level terminal.
 
 ## 🛠️ Build locally
 

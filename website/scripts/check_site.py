@@ -24,6 +24,7 @@ EXPECTED_AUTHORS = ["Dake Bu", "Ji Cheng", "Bo Xue", "Atsushi Nitanda", "Hau-San
 PRIMARY_TEXTBOOK_TITLE = "Bandit Algorithms"
 PRIMARY_TEXTBOOK_URL = "https://tor-lattimore.com/downloads/book/book.pdf"
 GITHUB_REPO = "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep"
+PUBLIC_SITE_URL = "https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep"
 
 
 class LinkCollector(HTMLParser):
@@ -75,6 +76,11 @@ class LinkCollector(HTMLParser):
         self.wiki_lean_badge_count = 0
         self.frontier_case_count = 0
         self.frontier_named_leaf_count = 0
+        self.snapshot_card_count = 0
+        self.canonical_urls: list[str] = []
+        self.og_urls: list[str] = []
+        self.og_titles: list[str] = []
+        self.twitter_titles: list[str] = []
         self.nested_math_errors = 0
         self.math_tex_sources: list[str] = []
         self._stack: list[tuple[str, set[str]]] = []
@@ -136,6 +142,16 @@ class LinkCollector(HTMLParser):
             self.frontier_case_count += 1
         if "frontier-named-leaf" in classes and "data-frontier-leaf" in values:
             self.frontier_named_leaf_count += 1
+        if "snapshot-card" in classes:
+            self.snapshot_card_count += 1
+        if tag == "link" and values.get("rel") == "canonical":
+            self.canonical_urls.append(values.get("href", ""))
+        if tag == "meta" and values.get("property") == "og:url":
+            self.og_urls.append(values.get("content", ""))
+        if tag == "meta" and values.get("property") == "og:title":
+            self.og_titles.append(values.get("content", ""))
+        if tag == "meta" and values.get("name") == "twitter:title":
+            self.twitter_titles.append(values.get("content", ""))
         if any("math-statement" in parent_classes for _parent_tag, parent_classes in self._stack):
             if "teaching-grid" in classes or "lean-code" in classes:
                 self.nested_math_errors += 1
@@ -174,7 +190,7 @@ class LinkCollector(HTMLParser):
                 self.links.append((attr, values[attr]))
         if "cdn.jsdelivr.net/npm/mathjax" in values.get("src", ""):
             self.mathjax_count += 1
-        if (
+        if tag == "a" and (
             ("/blob/" in values.get("href", "") and "/BanditRLProof" in values.get("href", ""))
             or "/source-access/" in values.get("href", "")
         ):
@@ -211,6 +227,11 @@ def is_external(value: str) -> bool:
 def check_internal_links(output: Path, pages: dict[Path, LinkCollector]) -> list[str]:
     errors: list[str] = []
     output_resolved = output.resolve()
+    milestone_ids: set[str] = set()
+    milestone_data_path = output / "implementation-map" / "milestone-data.json"
+    if milestone_data_path.exists():
+        milestone_payload = json.loads(milestone_data_path.read_text(encoding="utf-8"))
+        milestone_ids = {str(item.get("id", "")) for item in milestone_payload.get("items", [])}
     for page, collector in pages.items():
         for attr, value in collector.links:
             if is_external(value):
@@ -237,7 +258,14 @@ def check_internal_links(output: Path, pages: dict[Path, LinkCollector]) -> list
                 target_collector = pages.get(target.resolve())
                 if target_collector is None:
                     errors.append(f"{page.relative_to(output)}: unparsed HTML target {value}")
-                elif unquote(split.fragment) not in target_collector.ids:
+                elif (
+                    unquote(split.fragment) not in target_collector.ids
+                    and not (
+                        target.resolve()
+                        == (output / "implementation-map" / "index.html").resolve()
+                        and unquote(split.fragment) in milestone_ids
+                    )
+                ):
                     errors.append(
                         f"{page.relative_to(output)}: missing anchor #{split.fragment} in {target.relative_to(output)}"
                     )
@@ -257,6 +285,117 @@ def check_markdown_links(path: Path) -> list[str]:
         target = (path.parent / value).resolve()
         if not target.exists():
             errors.append(f"{path.relative_to(ROOT)}: missing Markdown target {match.group(1)}")
+    return errors
+
+
+def check_readme_presentation() -> list[str]:
+    """Keep the compact, decorated README entry points requested for the project."""
+    errors: list[str] = []
+    text = (ROOT / "README.md").read_text(encoding="utf-8")
+    for line in text.splitlines():
+        match = re.match(r"^(#{1,6})\s+(.+)$", line)
+        if match and not re.match(r"[^\x00-\x7F]", match.group(2)):
+            errors.append(f"README heading lacks a decorative item: {line}")
+    collapsed_sections = {
+        "## 🌐 BanditRLlib website": "Website features and local build",
+        "## 🧪 Live Formalization": "Local experimental workspace and status boundaries",
+        "## 🚀 Quick start": "Installation, checks, commands, and repository map",
+    }
+    for heading, summary in collapsed_sections.items():
+        pattern = re.escape(heading) + r"\s+<details>\s+<summary>" + re.escape(summary) + r"</summary>"
+        if re.search(pattern, text) is None:
+            errors.append(f"README section is not compactly collapsed: {heading}")
+    return errors
+
+
+def expected_canonical_url(output: Path, page: Path) -> str:
+    relative = page.relative_to(output).as_posix()
+    if relative == "index.html":
+        return f"{PUBLIC_SITE_URL}/"
+    if relative.endswith("/index.html"):
+        return f"{PUBLIC_SITE_URL}/{relative[:-10]}"
+    return f"{PUBLIC_SITE_URL}/{relative}"
+
+
+def check_page_metadata(output: Path, pages: dict[Path, LinkCollector]) -> list[str]:
+    errors: list[str] = []
+    for page, collector in pages.items():
+        expected = expected_canonical_url(output, page)
+        if collector.canonical_urls != [expected]:
+            errors.append(
+                f"{page.relative_to(output)}: canonical URL must be exactly {expected}"
+            )
+        if collector.og_urls != [expected]:
+            errors.append(f"{page.relative_to(output)}: og:url must match its canonical URL")
+        if len(collector.og_titles) != 1 or len(collector.twitter_titles) != 1:
+            errors.append(f"{page.relative_to(output)}: social title metadata is incomplete")
+        elif collector.og_titles != collector.twitter_titles:
+            errors.append(f"{page.relative_to(output)}: Open Graph and Twitter titles disagree")
+    return errors
+
+
+def check_current_evidence_surfaces(
+    output: Path,
+    pages: dict[Path, LinkCollector],
+) -> list[str]:
+    """Verify that public progress surfaces remain generated from current ledgers."""
+    errors: list[str] = []
+    comparison_path = ROOT / "runs" / "harness-comparison" / "latest.json"
+    if not comparison_path.exists():
+        return ["missing runs/harness-comparison/latest.json"]
+    comparison = json.loads(comparison_path.read_text(encoding="utf-8"))
+    decision = comparison.get("decision", {})
+    matched_count = len(comparison.get("matched_experiments", []))
+    minimum_count = comparison.get("minimum_matched_experiments")
+
+    index_path = (output / "index.html").resolve()
+    index_source = index_path.read_text(encoding="utf-8") if index_path.exists() else ""
+    index_collector = pages.get(index_path)
+    if index_collector is None or index_collector.snapshot_card_count != 4:
+        errors.append("homepage must contain exactly four generated current-evidence cards")
+    for required in (
+        "Current evidence snapshot",
+        f"{matched_count}/{minimum_count}",
+        str(decision.get("next_experiment_harness", "")),
+        "SGB Theorem-2 follow-on",
+    ):
+        if required not in index_source:
+            errors.append(f"homepage current-evidence snapshot is missing {required!r}")
+
+    workflow_path = output / "workflow" / "index.html"
+    workflow_source = workflow_path.read_text(encoding="utf-8") if workflow_path.exists() else ""
+    for required in (
+        'id="comparison-evidence"',
+        str(decision.get("status", "")).replace("-", " ").title(),
+        f"{matched_count} of {minimum_count} required",
+        str(decision.get("recommended_default", "")),
+        str(decision.get("next_experiment_harness", "")),
+        "hierarchical",
+        "master-worker",
+        "latest.json",
+        "latest.prompt.md",
+        "harness_self_comparison.md",
+    ):
+        if required not in workflow_source:
+            errors.append(f"workflow comparison ledger is missing {required!r}")
+
+    site_css = (output / "static" / "site.css").read_text(encoding="utf-8")
+    for required in (
+        ".current-snapshot",
+        ".comparison-decision",
+        ".status.prototype",
+        ".declaration-content .lean-code",
+    ):
+        if required not in site_css:
+            errors.append(f"site.css is missing evidence/overflow support: {required}")
+
+    website_readme = (SITE_DIR / "README.md").read_text(encoding="utf-8")
+    for stale in (
+        "visible-marginal/native-prefix identification",
+        "native visible law\nremain unproved",
+    ):
+        if stale in website_readme:
+            errors.append(f"website README retains stale SGB boundary: {stale}")
     return errors
 
 
@@ -422,13 +561,16 @@ def main() -> int:
 
     pages = parse_pages(output)
     errors.extend(check_internal_links(output, pages))
+    errors.extend(check_page_metadata(output, pages))
     errors.extend(check_markdown_links(ROOT / "README.md"))
     errors.extend(check_markdown_links(SITE_DIR / "README.md"))
+    errors.extend(check_readme_presentation())
     errors.extend(check_diagram_sources())
     errors.extend(check_workflow())
     errors.extend(check_ide_server())
     errors.extend(check_community_contract(output, manifest))
     errors.extend(check_branding_and_formalizer(output, manifest))
+    errors.extend(check_current_evidence_surfaces(output, pages))
 
     expected_pages = {
         output / "index.html",
@@ -985,6 +1127,44 @@ def main() -> int:
                 errors.append(f"{relative}: mathematical source lacks explicit delimiters")
         chapter_source_theorems += collector.source_theorem_card_count
         chapter_source_boundaries += collector.source_boundary_count
+
+    ucb_page = output / "chapters" / "ucb" / "index.html"
+    if ucb_page.exists():
+        ucb_source = ucb_page.read_text(encoding="utf-8")
+        for required in (
+            "Source theorem contract",
+            "Algorithm parameters",
+            "Regret notion",
+            "Closest local match to the source theorem",
+            "Compiled extension",
+        ):
+            if required not in ucb_source:
+                errors.append(f"chapters/ucb/index.html: missing source-to-Lean guide {required!r}")
+        closest_name = (
+            "integral_real_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_"
+            "le_textbookGapSum_finiteArmSubgaussianLaws_without_proxy_positivity"
+        )
+        anytime_name = "lintegral_ofReal_pseudoRegret_selectedPolicySuccessorTelescoping_le_trajMeasure"
+        if ucb_source.find(closest_name) > ucb_source.find(anytime_name):
+            errors.append("chapters/ucb/index.html: closest textbook UCB route must precede extensions")
+
+    milestone_path = output / "implementation-map" / "milestone-data.json"
+    implementation_path = output / "implementation-map" / "index.html"
+    if milestone_path.exists() and implementation_path.exists():
+        milestone_payload = json.loads(milestone_path.read_text(encoding="utf-8"))
+        milestone_items = milestone_payload.get("items", [])
+        if len(milestone_items) != manifest.get("milestone_count"):
+            errors.append("milestone-data.json count does not match manifest milestone_count")
+        implementation_source = implementation_path.read_text(encoding="utf-8")
+        initial_rows = implementation_source.count("data-milestone-row")
+        page_size = milestone_payload.get("page_size")
+        if initial_rows != min(page_size, len(milestone_items)):
+            errors.append("Implementation Map initial milestone DOM does not match its page size")
+        for required in ("data-milestone-more", "milestone-data.json"):
+            if required not in implementation_source:
+                errors.append(f"Implementation Map lacks progressive milestone support: {required}")
+    else:
+        errors.append("Implementation Map progressive milestone ledger is missing")
     if chapter_source_theorems != manifest.get("source_theorem_count"):
         errors.append(
             f"source theorem cards {chapter_source_theorems} != manifest source_theorem_count "
@@ -1298,16 +1478,25 @@ def main() -> int:
         if required not in site_js:
             errors.append(f"site.js is missing progressive catalog support: {required}")
     for required in (
+        "milestone-data.json",
+        "milestoneLoadPromise",
+        "data-milestone-more",
+        "revealMilestoneFragment",
+    ):
+        if required not in site_js:
+            errors.append(f"site.js is missing progressive milestone support: {required}")
+    for required in (
         "bringTargetIntoView",
         "window.MathJax?.startup?.promise?.then(bringTargetIntoView)",
         "regionOverflows || mathTargetOverflows",
+        "focus({ preventScroll: true })",
     ):
         if required not in site_js:
             errors.append(f"site.js is missing stabilized mobile deep-link or overflow support: {required}")
     if "status-badge status-" in site_js:
         errors.append("site.js uses a status class that disagrees with the generated status badge contract")
     workflow_source = (output / "workflow" / "index.html").read_text(encoding="utf-8")
-    for required in ("master–worker", "do not yet justify", "harness-compare"):
+    for required in ("master–worker", "does not yet justify", "harness-compare"):
         if required not in workflow_source:
             errors.append(f"workflow page is missing adaptive-harness boundary {required!r}")
     learning_path = (SITE_DIR / "diagrams" / "learning-path.mmd").read_text(encoding="utf-8")

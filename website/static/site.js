@@ -130,6 +130,7 @@
   syncNavGroups();
   sidebarMedia.addEventListener?.("change", syncNavGroups);
 
+  const focusedFragments = new Set();
   const openDeclarationTarget = () => {
     if (!window.location.hash) return;
     const expectedHash = window.location.hash;
@@ -142,8 +143,28 @@
       disclosure.open = true;
       disclosure = disclosure.parentElement?.closest("details");
     }
+    const focusTarget = target instanceof HTMLDetailsElement
+      ? target.querySelector(":scope > summary")
+      : target.matches("h1, h2, h3, h4, h5, h6, summary, a, button, input, select, textarea")
+        ? target
+        : target.querySelector("h1, h2, h3, h4, h5, h6, summary") || target;
+    const focusFragmentTarget = () => {
+      if (!(focusTarget instanceof HTMLElement)) return;
+      if (target.contains(document.activeElement)) return;
+      if (
+        focusedFragments.has(expectedHash)
+        && document.activeElement !== document.body
+        && document.activeElement !== document.documentElement
+      ) return;
+      if (!focusTarget.matches("summary, a, button, input, select, textarea, [tabindex]")) {
+        focusTarget.tabIndex = -1;
+      }
+      focusTarget.focus({ preventScroll: true });
+      focusedFragments.add(expectedHash);
+    };
     const bringTargetIntoView = () => {
       if (window.location.hash !== expectedHash) return;
+      focusFragmentTarget();
       const rect = target.getBoundingClientRect();
       const headerClearance = 96;
       const alreadyVisible = rect.top >= headerClearance && rect.top <= window.innerHeight * 0.55;
@@ -418,15 +439,93 @@
     filter();
   };
 
-  installTableFilter({
-    listSelector: "[data-milestone-list]",
-    rowSelector: "[data-milestone-row]",
-    querySelector: "[data-milestone-query]",
-    countSelector: "[data-milestone-count]",
-    statusSelector: "[data-milestone-status]",
-    chapterSelector: "[data-milestone-chapter]",
-    noun: "milestones",
-  });
+  const milestoneList = document.querySelector("[data-milestone-list]");
+  if (milestoneList) {
+    const milestoneBody = milestoneList.querySelector("[data-milestone-body]");
+    const milestoneQuery = document.querySelector("[data-milestone-query]");
+    const milestoneStatus = document.querySelector("[data-milestone-status]");
+    const milestoneChapter = document.querySelector("[data-milestone-chapter]");
+    const milestoneCount = document.querySelector("[data-milestone-count]");
+    const milestoneMore = document.querySelector("[data-milestone-more]");
+    const milestonePageSize = Number(milestoneList.dataset.milestonePageSize || 20);
+    const milestoneTotal = Number(milestoneList.dataset.milestoneTotal || 0);
+    let milestoneVisibleLimit = milestonePageSize;
+    let milestoneItems = null;
+    let milestoneLoadPromise = null;
+
+    const loadMilestones = () => {
+      if (milestoneItems) return Promise.resolve(milestoneItems);
+      if (!milestoneLoadPromise) {
+        const dataUrl = new URL("milestone-data.json", window.location.href);
+        milestoneLoadPromise = fetch(dataUrl)
+          .then((response) => {
+            if (!response.ok) throw new Error(`Milestone ledger request failed: ${response.status}`);
+            return response.json();
+          })
+          .then((payload) => {
+            milestoneItems = Array.isArray(payload.items) ? payload.items : [];
+            return milestoneItems;
+          });
+      }
+      return milestoneLoadPromise;
+    };
+
+    const renderMilestones = () => {
+      if (!milestoneItems || !milestoneBody) return;
+      const terms = (milestoneQuery?.value || "").trim().toLowerCase().split(/\s+/).filter(Boolean);
+      const status = milestoneStatus?.value || "";
+      const chapter = milestoneChapter?.value || "";
+      const filtered = milestoneItems.filter((item) =>
+        terms.every((term) => (item.search || "").includes(term))
+        && (!status || item.status === status)
+        && (!chapter || item.chapter === chapter)
+      );
+      const visible = filtered.slice(0, milestoneVisibleLimit);
+      milestoneBody.innerHTML = visible.map((item) => item.html).join("");
+      if (milestoneCount) {
+        milestoneCount.textContent = filtered.length > visible.length
+          ? `Showing ${visible.length.toLocaleString()} of ${filtered.length.toLocaleString()} matching milestones.`
+          : `${filtered.length.toLocaleString()} matching milestones.`;
+      }
+      if (milestoneMore) {
+        const remaining = Math.max(0, filtered.length - visible.length);
+        milestoneMore.hidden = remaining === 0;
+        milestoneMore.textContent = `Show ${Math.min(milestonePageSize, remaining).toLocaleString()} more milestones`;
+      }
+    };
+
+    const resetAndRenderMilestones = () => {
+      milestoneVisibleLimit = milestonePageSize;
+      loadMilestones().then(renderMilestones).catch(() => {
+        if (milestoneCount) milestoneCount.textContent = "Full milestone ledger could not load; showing the initial milestones.";
+        if (milestoneMore) milestoneMore.hidden = true;
+      });
+    };
+    [milestoneQuery, milestoneStatus, milestoneChapter].forEach((control) => {
+      control?.addEventListener("input", resetAndRenderMilestones);
+      control?.addEventListener("change", resetAndRenderMilestones);
+    });
+    milestoneMore?.addEventListener("click", () => {
+      milestoneVisibleLimit += milestonePageSize;
+      loadMilestones().then(renderMilestones).catch(() => {
+        if (milestoneMore) milestoneMore.hidden = true;
+      });
+    });
+    if (milestoneMore && milestoneTotal > milestonePageSize) milestoneMore.hidden = false;
+
+    const revealMilestoneFragment = () => {
+      const fragmentId = window.location.hash ? decodeURIComponent(window.location.hash.slice(1)) : "";
+      if (!fragmentId || document.getElementById(fragmentId)) return;
+      loadMilestones().then((items) => {
+        if (!items.some((item) => item.id === fragmentId)) return;
+        milestoneVisibleLimit = items.length;
+        renderMilestones();
+        openDeclarationTarget();
+      }).catch(() => {});
+    };
+    revealMilestoneFragment();
+    window.addEventListener("hashchange", revealMilestoneFragment);
+  }
   installTableFilter({
     listSelector: "[data-module-list]",
     rowSelector: "[data-module-row]",
