@@ -75,20 +75,21 @@ reports zero `literature-open` cases until a scoped primary-source audit support
 such a claim; one case remains in the source-audit queue, while the 13
 formalization-open cases expose 39 stable named leaves. Two additional
 source-frozen ports—the 54-declaration succinct-lower-bound audit and the
-stochastic-gradient-bandit audit—are displayed outside that comparison ledger.
-The latter retains the exact counted 352-declaration audit-slice inventory
-`352 = 223 + 23 + 18 + 24 + 7 + 8 + 13 + 28 + 8` through deterministic-time
-selected-reward freshness.  A separate ten-declaration module now proves
-equality of the complete visible/native trajectory measures.  The selected-
-block module adds 32 declarations: eight for missing-pull-aware block transport,
-fourteen for the exact finite Appendix-C `S0/S1` event, and ten for the disjoint
-all-present/missing-pull probability split.  These compiled layers are not a
-selected-IID theorem.  The missing branch still needs a bridge to the
-fixed-cutoff starvation consumer; the stopped-prefix future-cylinder law,
-conditional no-return probability, Rademacher/ballot phase, asymptotic assembly,
-and frozen Theorem-2 terminal remain open.  The SGB audit therefore remains
-partial, with Theorems 2–4 open; the succinct-lower-bound port also has no
-compiled paper-level terminal.
+360-declaration stochastic-gradient-bandit audit—are displayed outside that
+comparison ledger.  The exact counted inventory
+`360 = 223 + 23 + 24 + 26 + 7 + 8 + 13 + 28 + 8` now includes deterministic
+terminal-count consumers and nth-pull-to-count bridges.  A separate
+ten-declaration module proves equality of the complete visible/native trajectory
+measures.  The selected-block module now has 33 declarations: eight for
+missing-pull-aware block transport, fourteen for the exact finite Appendix-C
+`S0/S1` event, ten for the disjoint all-present/missing-pull probability split,
+and one mapping the missing branch into a measurable terminal-count-below event.
+These compiled layers are not a selected-IID theorem.  The missing mass still
+needs an expected-regret consumer and does not provide the source fixed-cutoff
+trigger; the stopped-prefix future-cylinder law, conditional no-return
+probability, Rademacher/ballot phase, asymptotic assembly, and frozen Theorem-2
+terminal remain open.  The SGB audit therefore remains partial, with Theorems
+2–4 open; the succinct-lower-bound port also has no compiled paper-level terminal.
 
 ## 🛠️ Build locally
 

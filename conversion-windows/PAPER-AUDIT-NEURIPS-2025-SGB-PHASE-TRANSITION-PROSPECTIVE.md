@@ -345,10 +345,29 @@ obligation is discharged by the Round-19 packet below.
   concentration theorem is introduced; the product-law leaf and finite
   measure-union theorem already compile locally.
 - Hidden contracts: all events remain measurable; the split is unconditional;
-  the missing branch is not yet identified with a fixed-cutoff starvation
+  the missing branch is not yet identified with the source fixed-cutoff trigger
   event; the all-present branch is not occurrence-conditioned IID; no positive
   lower bound, future/no-return law, ballot result, asymptotic assembly, or
   Theorem 2 follows from this leaf alone.
+
+## Round-26 conversion window: missing pull to terminal count
+
+- Frozen statement: if `twoArmNthOptimalPullTime i sample = WithTop.top`, then
+  `twoArmOptimalPullCount horizon sample < i + 1` at every finite `horizon`.
+  For `i : Fin m`, the result strengthens to count `< m`; membership in the
+  Appendix-C missing-pull latent event therefore maps into the measurable
+  below-`m` terminal-count event.
+- Source semantics retained: `WithTop.top` remains the explicit no-occurrence
+  value; the conclusion is uniform over finite horizons and does not replace a
+  missing pull with a default reward or finite stopping time.
+- Local route: `pullCount_succ_le_succ` plus
+  `twoArmNthOptimalPullTime_eq_top_iff` gives the pathwise count inequality;
+  exact terminal-count fibers form a finite `Fin m` union and reuse the
+  compiled exact sampled-pseudo-regret identity.
+- Boundary: this window does not supply the source trigger inequality, a
+  stopped-prefix future/no-return law, occurrence-conditioned IID, a lower
+  bound on either branch probability, a ballot estimate, asymptotic assembly,
+  or Theorem 2.
 
 ## Pivot rules
 

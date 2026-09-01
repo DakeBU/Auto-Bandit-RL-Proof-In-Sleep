@@ -1515,13 +1515,15 @@ def main() -> int:
         "physical PDF p. 5",
         "Theorem 2 (two-arm SGB phase transition)",
         "physical PDF p. 6; Appendix C pp. 31–40",
-        "352 = 223 + 23 + 18 + 24 + 7 + 8 + 13 + 28 + 8",
+        "360 = 223 + 23 + 24 + 26 + 7 + 8 + 13 + 28 + 8",
         "LatentArmStreamVisiblePrefixNextActionBranchLocality",
         sgb_action_declaration,
         sgb_branch_declaration,
         *sgb_freshness_declarations,
         "identifies every inclusive finite prefix",
         "proves equality of the complete visible/native trajectory measures",
+        "twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow",
+        "terminal-count-below event still needs an expected-regret consumer",
         "Pull-ordered or stopped selected-reward IID",
         (
             "stopped-prefix future-cylinder law needed to prove conditional "

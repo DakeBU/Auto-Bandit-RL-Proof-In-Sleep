@@ -107,6 +107,53 @@ theorem measurable_twoArmOptimalPullCount
         Measurable.ite hzero measurable_const measurable_const
       simpa [twoArmOptimalPullCount, pullCount_succ] using ih.add hincrement
 
+/-- The exact terminal optimal-arm count fiber at a finite horizon. -/
+def twoArmTerminalOptimalPullCountEvent
+    {Env : Type v} [MeasurableSpace Env] (n horizon : Nat) :
+    Set (Env × ((k : Nat) → Fin 2 × Real)) :=
+  {sample | twoArmOptimalPullCount horizon sample = n}
+
+theorem measurableSet_twoArmTerminalOptimalPullCountEvent
+    {Env : Type v} [MeasurableSpace Env] (n horizon : Nat) :
+    MeasurableSet
+      (twoArmTerminalOptimalPullCountEvent (Env := Env) n horizon) :=
+  (measurableSet_singleton n).preimage
+    (measurable_twoArmOptimalPullCount (Env := Env) horizon)
+
+/-- The finite-horizon event that fewer than `m` optimal-arm pulls occurred. -/
+def twoArmOptimalPullCountBelowEvent
+    {Env : Type v} [MeasurableSpace Env] (m horizon : Nat) :
+    Set (Env × ((k : Nat) → Fin 2 × Real)) :=
+  {sample | twoArmOptimalPullCount horizon sample < m}
+
+theorem measurableSet_twoArmOptimalPullCountBelowEvent
+    {Env : Type v} [MeasurableSpace Env] (m horizon : Nat) :
+    MeasurableSet
+      (twoArmOptimalPullCountBelowEvent (Env := Env) m horizon) :=
+  measurableSet_Iio.preimage
+    (measurable_twoArmOptimalPullCount (Env := Env) horizon)
+
+/-- The below-threshold count event is the finite disjoint-by-value partition
+into its exact terminal-count fibers. -/
+theorem twoArmOptimalPullCountBelowEvent_eq_iUnion_terminalCount
+    {Env : Type v} [MeasurableSpace Env] (m horizon : Nat) :
+    twoArmOptimalPullCountBelowEvent (Env := Env) m horizon =
+      ⋃ n : Fin m,
+        twoArmTerminalOptimalPullCountEvent (Env := Env) (n : Nat) horizon := by
+  ext sample
+  constructor
+  · intro hbelow
+    change twoArmOptimalPullCount horizon sample < m at hbelow
+    let n : Fin m := ⟨twoArmOptimalPullCount horizon sample, hbelow⟩
+    refine Set.mem_iUnion.2 ⟨n, ?_⟩
+    change twoArmOptimalPullCount horizon sample = (n : Nat)
+    rfl
+  · intro hunion
+    rcases Set.mem_iUnion.1 hunion with ⟨n, hn⟩
+    change twoArmOptimalPullCount horizon sample = (n : Nat) at hn
+    change twoArmOptimalPullCount horizon sample < m
+    simpa [hn] using n.isLt
+
 theorem measurableSet_twoArmStepOneTriggerEvent
     {Env : Type v} [MeasurableSpace Env]
     (eta : Real) (cutoff n horizon : Nat) :
@@ -201,6 +248,20 @@ theorem twoArmSampledPseudoRegret_eq_gap_mul_horizon_sub_of_optimalPullCount_eq
       pullCount (twoArmGeneratedAction sample) 1 horizon = horizon - n := by
     omega
   rw [hsuboptimal]
+
+/-- On one terminal-count fiber, sampled pseudo-regret has the exact charge
+used by the Appendix-C starvation consumer. -/
+theorem twoArmTerminalOptimalPullCountEvent_sampledPseudoRegret_eq
+    {Env : Type v} [MeasurableSpace Env]
+    (Delta : Real) (n horizon : Nat)
+    (sample : Env × ((k : Nat) → Fin 2 × Real))
+    (hcount : sample ∈
+      twoArmTerminalOptimalPullCountEvent (Env := Env) n horizon) :
+    twoArmSampledPseudoRegret Delta horizon sample =
+      Delta * ((horizon - n : Nat) : Real) := by
+  exact
+    twoArmSampledPseudoRegret_eq_gap_mul_horizon_sub_of_optimalPullCount_eq
+      Delta n horizon sample hcount
 
 /--
 The explicit chronological no-return premise constructs membership in the

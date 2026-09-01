@@ -267,7 +267,13 @@ evidence that the polynomial lower-bound route is complete.
   exact probability identity: the source-generated all-present phase plus the
   latent missing-pull phase equals the pure product event.  It does not yet
   turn the missing branch into the fixed-cutoff starvation event.
-- A pull-ordered selected-IID theorem, the missing-branch-to-starvation bridge,
+- The deterministic missing-pull bridge now compiles: a requested optimal-arm
+  pull time equal to `WithTop.top` forces every finite-horizon optimal-arm count
+  below the requested block size.  The below-count event is measurable and is
+  the finite union of exact terminal-count fibers; each fiber carries the
+  existing exact sampled-pseudo-regret charge.  This is a terminal-count
+  interface, not the source trigger or a positive probability result.
+- A pull-ordered selected-IID theorem, the fixed-cutoff trigger/consumer bridge,
   conditional no-return probability
   `>= 1/2`, the Rademacher/ballot phase producer, asymptotic
   assembly, and the frozen Theorem-2 terminal remain uncompiled.  The central

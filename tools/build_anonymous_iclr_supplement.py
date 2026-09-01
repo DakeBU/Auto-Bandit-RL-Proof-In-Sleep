@@ -266,8 +266,8 @@ SGB_HISTORICAL_DECLARATION_COUNT = (
     + SGB_THEOREM_FOUR_CONTRACT_AUDIT_DECLARATION_COUNT
 )
 SGB_COROLLARY_ONE_DECLARATION_COUNT = 23
-SGB_THEOREM_TWO_STARVATION_DECLARATION_COUNT = 18
-SGB_THEOREM_TWO_NTH_PULL_DECLARATION_COUNT = 24
+SGB_THEOREM_TWO_STARVATION_DECLARATION_COUNT = 24
+SGB_THEOREM_TWO_NTH_PULL_DECLARATION_COUNT = 26
 SGB_THEOREM_TWO_LATENT_REWARD_DECLARATION_COUNT = 7
 SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATION_COUNT = 8
 SGB_THEOREM_TWO_BRANCH_LOCALITY_SCAFFOLD_DECLARATION_COUNT = 13
@@ -325,6 +325,10 @@ SGB_THEOREM_TWO_PHASE_DICHOTOMY_INDEXED_DECLARATIONS = frozenset({
     "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_pi",
     "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_phase_add_missing",
     "BanditRLProof.StochasticGradientBandit.twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing",
+})
+SGB_THEOREM_TWO_MISSING_PULL_TERMINAL_COUNT_SOURCE_DECLARATION_COUNT = 1
+SGB_THEOREM_TWO_MISSING_PULL_TERMINAL_COUNT_INDEXED_DECLARATIONS = frozenset({
+    "BanditRLProof.StochasticGradientBandit.twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow",
 })
 SGB_TOTAL_DECLARATION_COUNT = (
     SGB_HISTORICAL_DECLARATION_COUNT
@@ -455,11 +459,16 @@ SGB_THEOREM_TWO_STARVATION_REPRESENTATIVE_DECLARATIONS = frozenset({
     "BanditRLProof.StochasticGradientBandit.twoArmStepOneStarvationEvent_sampledPseudoRegret_eq",
     "BanditRLProof.StochasticGradientBandit.twoArmStepOneStarvationEvent_charge_mul_probability_le_integral",
     "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral",
+    "BanditRLProof.StochasticGradientBandit.twoArmTerminalOptimalPullCountEvent",
+    "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCountBelowEvent_eq_iUnion_terminalCount",
+    "BanditRLProof.StochasticGradientBandit.twoArmTerminalOptimalPullCountEvent_sampledPseudoRegret_eq",
 })
 SGB_THEOREM_TWO_NTH_PULL_REPRESENTATIVE_DECLARATIONS = frozenset({
     "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime",
     "BanditRLProof.StochasticGradientBandit.isStoppingTime_twoArmNthOptimalPullTime",
     "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime_eq_top_iff",
+    "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCount_lt_succ_of_nthOptimalPullTime_eq_top",
+    "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCount_lt_of_fin_nthOptimalPullTime_eq_top",
     "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime_spec",
     "BanditRLProof.StochasticGradientBandit.measurable_twoArmNthOptimalPullReward",
     "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullReward_eq_of_time_eq",
@@ -2347,10 +2356,10 @@ def validate_sgb_count(records, index):
     ):
         raise ValueError(
             "stochastic-gradient-bandit audit must remain partial with exactly "
-            "352 declarations: historical 223 = frozen 215-declaration "
+            "360 declarations: historical 223 = frozen 215-declaration "
             "Theorem-1 stack + 8 Theorem-4 contract-audit leaves, followed by "
-            "23 Corollary-1 companion declarations + 18 deterministic "
-            "Theorem-2 starvation-consumer declarations + 24 chronological "
+            "23 Corollary-1 companion declarations + 24 deterministic "
+            "Theorem-2 starvation/terminal-count declarations + 26 chronological "
             "nth-pull declarations + 7 latent fixed-arm product/readout "
             "declarations + 8 deferred-decisions prefix-factorization "
             "declarations + 13 action/readout/branch-locality interface and "
@@ -2585,6 +2594,8 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
                 SGB_THEOREM_TWO_PHASE_EVENT_SOURCE_DECLARATION_COUNT,
             "separate_compiled_phase_dichotomy_declaration_count":
                 SGB_THEOREM_TWO_PHASE_DICHOTOMY_SOURCE_DECLARATION_COUNT,
+            "separate_compiled_missing_pull_terminal_count_declaration_count":
+                SGB_THEOREM_TWO_MISSING_PULL_TERMINAL_COUNT_SOURCE_DECLARATION_COUNT,
             "separate_module_theorem_two_native_prefix_identification_compiled":
                 True,
             "separate_module_theorem_two_native_trajectory_compiled": True,
@@ -2592,6 +2603,8 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
                 True,
             "separate_module_theorem_two_phase_event_transport_compiled": True,
             "separate_module_theorem_two_phase_dichotomy_compiled": True,
+            "separate_module_theorem_two_missing_pull_terminal_count_compiled":
+                True,
             "theorem_two_native_prefix_identification_compiled": False,
             "declaration_count_breakdown": {
                 "finite_action_algebra": SGB_FINITE_ALGEBRA_DECLARATION_COUNT,
@@ -2715,11 +2728,13 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
                 selected_block_names !=
                     (SGB_THEOREM_TWO_SELECTED_BLOCK_INDEXED_DECLARATIONS |
                      SGB_THEOREM_TWO_PHASE_EVENT_INDEXED_DECLARATIONS |
-                     SGB_THEOREM_TWO_PHASE_DICHOTOMY_INDEXED_DECLARATIONS)
+                     SGB_THEOREM_TWO_PHASE_DICHOTOMY_INDEXED_DECLARATIONS |
+                     SGB_THEOREM_TWO_MISSING_PULL_TERMINAL_COUNT_INDEXED_DECLARATIONS)
                 or selected_block_source_count !=
                     (SGB_THEOREM_TWO_SELECTED_BLOCK_SOURCE_DECLARATION_COUNT +
                      SGB_THEOREM_TWO_PHASE_EVENT_SOURCE_DECLARATION_COUNT +
-                     SGB_THEOREM_TWO_PHASE_DICHOTOMY_SOURCE_DECLARATION_COUNT)
+                     SGB_THEOREM_TWO_PHASE_DICHOTOMY_SOURCE_DECLARATION_COUNT +
+                     SGB_THEOREM_TWO_MISSING_PULL_TERMINAL_COUNT_SOURCE_DECLARATION_COUNT)
             ):
                 raise ValueError(
                     "separate SGB selected-block module declaration drift"
@@ -2759,9 +2774,11 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
                 not in row.get("scope_boundary", "")
                 or "ten more declarations split its pure latent probability"
                 not in row.get("scope_boundary", "")
+                or "one declaration proves that the missing-pull branch lies inside"
+                not in row.get("scope_boundary", "")
                 or "neither supply a product law nor make totalized or occurrence-conditioned rewards IID"
                 not in row.get("scope_boundary", "")
-                or "missing branch is not yet connected to fixed-cutoff starvation"
+                or "terminal-count-below event is not yet connected to a fixed-cutoff starvation trigger"
                 not in row.get("scope_boundary", "")
                 or "ballot probability"
                 not in row.get("scope_boundary", "")
@@ -2925,10 +2942,10 @@ def build_claim_ledger(proof_report):
                 "status": "partial",
                 "source_record_ids": [SGB_AUDIT_ID, SGB_FOLLOW_ON_ID],
                 "boundary": (
-                    "352 declarations preserve the frozen counted audit slice through deterministic-time one-step selected-reward freshness. "
-                    "A separate ten-declaration native-law module proves the complete visible/native trajectory-law identity. In the selected-block module, eight declarations transport every finite pull-time/reward block to an exact missing-pull-aware masked latent law on both native and source-shaped generated trajectories, fourteen declarations transport the exact finite Appendix-C S0/S1 event while retaining the adaptive all-pulls-present intersection, and ten declarations split the pure latent phase probability exactly into the generated all-present event plus an explicit missing-pull event. "
+                    "360 declarations preserve the frozen counted audit slice through deterministic-time one-step selected-reward freshness, terminal-count events, and nth-pull-to-count bridges. "
+                    "A separate ten-declaration native-law module proves the complete visible/native trajectory-law identity. In the selected-block module, eight declarations transport every finite pull-time/reward block to an exact missing-pull-aware masked latent law on both native and source-shaped generated trajectories, fourteen declarations transport the exact finite Appendix-C S0/S1 event while retaining the adaptive all-pulls-present intersection, ten declarations split the pure latent phase probability exactly into the generated all-present event plus an explicit missing-pull event, and one declaration maps the missing-pull branch into a measurable finite-horizon terminal-count-below event. "
                     "The mask and occurrence-intersected event do not make totalized or occurrence-conditioned stopped rewards IID, and neither is a stopped or pull-ordered selected IID theorem. "
-                    "The missing branch is not yet connected to fixed-cutoff starvation; the stopped-prefix future-cylinder, conditional no-return probability >= 1/2, Rademacher/binomial ballot probability lower bound, asymptotic terminal, and the frozen K = 2 Theorem-2 endpoint remain blocked. "
+                    "The terminal-count-below event is not yet connected to a fixed-cutoff starvation trigger; the stopped-prefix future-cylinder, conditional no-return probability >= 1/2, Rademacher/binomial ballot probability lower bound, asymptotic terminal, and the frozen K = 2 Theorem-2 endpoint remain blocked. "
                     "Theorem 4 also remains open. Dirac refers only to the Unit environment prior, not to the arm reward laws."
                 ),
             },
@@ -3127,6 +3144,10 @@ def build_claim_ledger(proof_report):
                 sgb_comparison[
                     "separate_compiled_phase_dichotomy_declaration_count"
                 ],
+            "separate_compiled_missing_pull_terminal_count_declaration_count":
+                sgb_comparison[
+                    "separate_compiled_missing_pull_terminal_count_declaration_count"
+                ],
             "separate_module_theorem_two_native_prefix_identification_compiled":
                 sgb_comparison[
                     "separate_module_theorem_two_native_prefix_identification_compiled"
@@ -3146,6 +3167,10 @@ def build_claim_ledger(proof_report):
             "separate_module_theorem_two_phase_dichotomy_compiled":
                 sgb_comparison[
                     "separate_module_theorem_two_phase_dichotomy_compiled"
+                ],
+            "separate_module_theorem_two_missing_pull_terminal_count_compiled":
+                sgb_comparison[
+                    "separate_module_theorem_two_missing_pull_terminal_count_compiled"
                 ],
             "source_theorem_two_status": "blocked",
             "source_theorem_two_endpoint_verified":
