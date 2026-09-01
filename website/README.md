@@ -14,6 +14,9 @@ The build:
 - adds reviewed teaching notes from `content/highlights.json`;
 - gives every Book Map source theorem a five-field model/assumption/parameter/
   regret/guarantee contract and links directly to the cited PDF page;
+- keeps a prominent textbook-coverage ledger: ten source-mapped teaching routes,
+  nine compiled canonical cores, three compiled Part-IV source terminals, and no
+  claim that the whole textbook is complete;
 - keeps each chapter's default teaching route to two to four named declarations
   while retaining the full compiled inventory in a collapsed extension section;
 - provides native wrap/scroll and copy controls for exact Lean statements, with
@@ -31,8 +34,9 @@ The build:
   crosswalks, implementation ledger, and harness-comparison log instead of
   hand-entered completion percentages;
 - renders the latest deterministic hierarchical-versus-master-worker comparison
-  on the Workflow page while refusing to display a winner before the matched
-  evidence threshold is met;
+  as an evidence pipeline, candidate hybrid operating pattern, and next matched
+  experiment on the Workflow page while refusing to display a winner before the
+  matched evidence threshold is met;
 - generates BanditRLwiki from `content/banditrlwiki.json`: an
   assumption-indexed upper/lower-bound atlas with primary-paper theorem links,
   independent literature/source-audit/Lean status, stable case pages, a paper

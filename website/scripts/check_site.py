@@ -1045,6 +1045,16 @@ def main() -> int:
         page_source = (output / relative).read_text(encoding="utf-8")
         if PRIMARY_TEXTBOOK_TITLE not in page_source or PRIMARY_TEXTBOOK_URL not in page_source:
             errors.append(f"{relative}: primary textbook title or free-edition link is missing")
+        coverage_expectations = (
+            'class="textbook-coverage"',
+            "10 source-mapped routes",
+            "9 canonical cores compiled",
+            "3 of 5 named terminals compile",
+            "Not claimed complete",
+        )
+        for expectation in coverage_expectations:
+            if expectation not in page_source:
+                errors.append(f"{relative}: textbook coverage ledger is missing {expectation!r}")
         if collector and collector.spine_chapter_card_count != expected_spine_count:
             errors.append(
                 f"{relative}: textbook spine has {collector.spine_chapter_card_count} chapter cards, "
@@ -1115,8 +1125,12 @@ def main() -> int:
             errors.append(
                 f"{relative}: visible theorem panels {visible_panel_count} != teaching route {len(teaching_route)}"
             )
-        if page_source.count('class="chapter-pager"') != 1:
-            errors.append(f"{relative}: expected one Book Map sequence pager")
+        if page_source.count('class="chapter-pager chapter-pager-primary"') != 1:
+            errors.append(f"{relative}: expected one primary Book Map sequence pager")
+        if page_source.count('class="chapter-pager chapter-pager-secondary"') != 1:
+            errors.append(f"{relative}: expected one secondary Book Map sequence pager")
+        if page_source.count('class="chapter-ledger-disclosure"') != 1:
+            errors.append(f"{relative}: expected one progressive chapter status ledger")
         if collector.chapter_compass_count != 1:
             errors.append(f"{relative}: expected one source-and-Lean chapter compass")
         if collector.source_guide_count != 1:
@@ -1145,8 +1159,18 @@ def main() -> int:
             errors.append(f"{relative}: a mathematical statement swallowed teaching or Lean content")
         if collector.theorem_panel_count != collector.teaching_grid_count:
             errors.append(f"{relative}: theorem panel/teaching-grid structure mismatch")
+        if page_source.count('class="technical-reading"') != collector.theorem_panel_count:
+            errors.append(f"{relative}: every theorem panel needs one progressive technical disclosure")
         if collector.lean_code_count < collector.theorem_panel_count:
             errors.append(f"{relative}: theorem panel is missing an exact Lean statement")
+        source_theorem_count = int(bool(readings_by_slug.get(chapter_slug, {}).get("source_theorem"))) + len(
+            readings_by_slug.get(chapter_slug, {}).get("source_theorems", [])
+        )
+        if source_theorem_count > 1:
+            if page_source.count('class="source-theorem-disclosure"') != source_theorem_count:
+                errors.append(f"{relative}: multi-route source theorem disclosures are incomplete")
+            if page_source.count('class="source-route-intro"') != 1:
+                errors.append(f"{relative}: multi-route source guide lacks its compact orientation")
         for source in collector.math_tex_sources:
             if not source.strip():
                 errors.append(f"{relative}: empty MathJax source")
@@ -1491,6 +1515,8 @@ def main() -> int:
     for required in (
         "data-toc-toggle",
         "setTocOpen",
+        "syncTocCurrent",
+        'setAttribute("aria-current", "location")',
         "math-fallback-active",
         "data-nav-group",
         "abrl-nav-groups-v2",
@@ -1531,6 +1557,7 @@ def main() -> int:
             errors.append(f"site.js is missing progressive milestone support: {required}")
     for required in (
         "bringTargetIntoView",
+        "collapsedTocHeight",
         "window.MathJax?.startup?.promise?.then(bringTargetIntoView)",
         "regionOverflows || mathTargetOverflows",
         "focus({ preventScroll: true })",

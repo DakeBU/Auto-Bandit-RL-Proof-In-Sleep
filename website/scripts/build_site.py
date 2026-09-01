@@ -42,7 +42,7 @@ PAPER_TITLE = (
 PRIMARY_TEXTBOOK_TITLE = "Bandit Algorithms"
 PRIMARY_TEXTBOOK_AUTHORS = "Tor Lattimore and Csaba Szepesvári"
 PRIMARY_TEXTBOOK_URL = "https://tor-lattimore.com/downloads/book/book.pdf"
-ASSET_VERSION = "20260901j"
+ASSET_VERSION = "20260902f"
 CATALOG_PAGE_SIZE = 100
 MILESTONE_PAGE_SIZE = 20
 TEACHING_PREVIEW_COUNT = 4
@@ -1285,7 +1285,7 @@ def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[
                     + contract_items
                     + '</dl>'
                 )
-            theorem_cards.append(f"""
+            theorem_card = f"""
 <article class="source-theorem-card">
   <div class="source-theorem-heading"><div><span class="panel-kicker">Source theorem · faithful restatement</span><h3>{html.escape(theorem['label'])}</h3></div><a href="{html.escape(paged_source_url(theorem), quote=True)}">Original at {html.escape(theorem['pages'])} ↗</a></div>
   <p>{html.escape(theorem['plain'])}</p>
@@ -1293,8 +1293,25 @@ def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[
   {render_math_statement('Source mathematical statement', theorem['math'], theorem['fallback'])}
   <p class="source-note"><strong>BanditRLlib relationship.</strong> {html.escape(theorem['relationship'])}</p>
   <p class="copyright-note">The mathematical content is restated in this site's notation; wording is ours. See {html.escape(theorem['pages'])} in the linked source for the original statement and full assumptions.</p>
-</article>""")
-        theorem_html = "".join(theorem_cards)
+</article>"""
+            if len(theorems) > 1:
+                theorem_cards.append(f"""
+<details class="source-theorem-disclosure">
+  <summary><span><span class="panel-kicker">Source route</span><strong>{html.escape(theorem['label'])}</strong></span><span>{html.escape(theorem['pages'])} <span aria-hidden="true">＋</span></span></summary>
+  {theorem_card}
+</details>""")
+            else:
+                theorem_cards.append(theorem_card)
+        if len(theorems) > 1:
+            theorem_html = (
+                f'<div class="source-route-intro"><strong>{len(theorems)} distinct theory routes, one frontier.</strong>'
+                '<span>Open the source theorem you want to compare; the other routes stay compact.</span></div>'
+                '<div class="source-theorem-route-list">'
+                + "".join(theorem_cards)
+                + '</div>'
+            )
+        else:
+            theorem_html = "".join(theorem_cards)
     else:
         theorem_html = f"""
 <div class="callout warning source-boundary"><strong>No single source theorem.</strong> {html.escape(reading['source_boundary'])}</div>"""
@@ -1340,6 +1357,9 @@ def render_sequence_pager(
     landing_path: str,
     previous: tuple[str, str] | None,
     next_item: tuple[str, str] | None,
+    nav_id: str = "continue-reading",
+    modifier: str = "",
+    kicker: str = "Continue reading",
 ) -> str:
     """Render a compact, keyboard-friendly previous/index/next reading route."""
 
@@ -1357,9 +1377,10 @@ def render_sequence_pager(
             f'<strong>{html.escape(title)}</strong></a>'
         )
 
+    class_name = "chapter-pager" + (f" {modifier}" if modifier else "")
     return f"""
-<nav class="chapter-pager" id="continue-reading" aria-label="{html.escape(sequence_label)} reading sequence">
-  <div class="chapter-pager-heading"><span class="eyebrow">Continue reading</span><strong>{html.escape(sequence_label)}</strong></div>
+<nav class="{class_name}" id="{html.escape(nav_id, quote=True)}" aria-label="{html.escape(sequence_label)} reading sequence">
+  <div class="chapter-pager-heading"><span class="eyebrow">{html.escape(kicker)}</span><strong>{html.escape(sequence_label)}</strong></div>
   <div class="chapter-pager-links">
     {adjacent_link(previous, 'previous')}
     <a class="chapter-pager-index" href="{href_from(page_path, landing_path)}"><span>All chapters</span><strong>{index + 1} of {total}</strong></a>
@@ -1441,10 +1462,15 @@ def render_highlight(
       <div><dt>Intuition</dt><dd>{html.escape(highlight['intuition'])}</dd></div>
       <div><dt>Why it is needed</dt><dd>{html.escape(highlight['why'])}</dd></div>
       <div><dt>Place in the proof</dt><dd>{html.escape(highlight['position'])}</dd></div>
-      <div><dt>Proof idea</dt><dd>{html.escape(highlight['proof_idea'])}</dd></div>
-      <div><dt>Lean reading notes</dt><dd>{html.escape(highlight['lean_notes'])}</dd></div>
-      <div><dt>Teaching dependencies</dt><dd>{dependencies}</dd></div>
     </dl>
+    <details class="technical-reading">
+      <summary>Proof and Lean reading notes</summary>
+      <dl class="technical-teaching-grid">
+        <div><dt>Proof idea</dt><dd>{html.escape(highlight['proof_idea'])}</dd></div>
+        <div><dt>Lean reading notes</dt><dd>{html.escape(highlight['lean_notes'])}</dd></div>
+        <div><dt>Teaching dependencies</dt><dd>{dependencies}</dd></div>
+      </dl>
+    </details>
     <details class="exact-lean">
       <summary>Exact Lean statement</summary>
       <pre class="lean-code" tabindex="0" role="region" aria-label="Exact Lean statement"><code>{highlight_lean(declaration['statement'])}</code></pre>
@@ -1459,6 +1485,12 @@ def render_highlight(
 
 
 def render_primary_textbook_banner() -> str:
+    chapter_statuses = Counter(chapter["status"] for chapter in SITE_CHAPTERS)
+    spine_chapters = SITE_TEXTBOOK_SPINE.get("chapters", [])
+    spine_terminals = Counter(
+        chapter.get("source_theorem", {}).get("status", "unrecorded")
+        for chapter in spine_chapters
+    )
     return f"""
 <aside class="primary-textbook-banner" id="primary-textbook" aria-labelledby="primary-textbook-title">
   <div class="primary-textbook-identity">
@@ -1468,6 +1500,11 @@ def render_primary_textbook_banner() -> str:
   </div>
   <p>The ten-chapter Book Map uses this book as its main mathematical spine. Original papers supplement OFUL, Tsallis-INF, UCBVI, and other source-specific results.</p>
   <a class="button compact" href="{PRIMARY_TEXTBOOK_URL}">Open the free textbook <span aria-hidden="true">↗</span></a>
+  <dl class="textbook-coverage" aria-label="Current textbook coverage">
+    <div><dt>Book Map</dt><dd><strong>{len(SITE_CHAPTERS)} source-mapped routes</strong><span>{chapter_statuses.get('compiled', 0)} canonical cores compiled · {chapter_statuses.get('planned', 0)} planned</span></dd></div>
+    <div><dt>Part IV spine</dt><dd><strong>{spine_terminals.get('compiled', 0)} of {len(spine_chapters)} named terminals compile</strong><span>Chapters 13–17 remain partial as whole chapters</span></dd></div>
+    <div><dt>Whole textbook</dt><dd><strong>Not claimed complete</strong><span>Coverage is theorem- and route-specific, with exact gaps on every page</span></dd></div>
+  </dl>
 </aside>
 """
 
@@ -2167,8 +2204,10 @@ def build_chapters(
             )
         if not teaching:
             teaching = '<p class="empty">No extended teaching note is registered for this chapter yet; the full module catalog remains available below.</p>'
+        chapter_results = results_by_chapter[chapter["slug"]]
+        chapter_result_statuses = Counter(result["status"] for result in chapter_results)
         result_rows = []
-        for result in results_by_chapter[chapter["slug"]]:
+        for result in chapter_results:
             links = [
                 f'<a href="{declaration_href(page_path, decl_by_name[name])}"><code>{html.escape(name)}</code></a>'
                 for name in result["declarations"]
@@ -2203,8 +2242,8 @@ def build_chapters(
         )
         previous_chapter = chapters[chapter_index - 1] if chapter_index else None
         next_chapter = chapters[chapter_index + 1] if chapter_index + 1 < len(chapters) else None
-        chapter_pager = render_sequence_pager(
-            page_path,
+        pager_arguments = dict(
+            page_path=page_path,
             sequence_label="BanditRLlib Book Map",
             index=chapter_index,
             total=len(chapters),
@@ -2217,6 +2256,16 @@ def build_chapters(
                 f"chapters/{next_chapter['slug']}/index.html",
                 next_chapter["title"],
             ) if next_chapter else None,
+        )
+        primary_chapter_pager = render_sequence_pager(
+            **pager_arguments,
+            modifier="chapter-pager-primary",
+        )
+        secondary_chapter_pager = render_sequence_pager(
+            **pager_arguments,
+            nav_id="continue-reading-again",
+            modifier="chapter-pager-secondary",
+            kicker="Next stop",
         )
         body = f"""
 <section class="hero" id="chapter">
@@ -2243,12 +2292,14 @@ def build_chapters(
   {teaching}
 </section>
 
+{primary_chapter_pager}
+
 {completion_contract}
 
 <section id="milestones">
   <h2>Chapter implementation status</h2>
-  <p class="section-intro">Each row shows three representative declarations. Open the disclosure for the complete, source-linked list.</p>
-  <div class="table-wrap chapter-milestone-table" tabindex="0" role="region" aria-label="Chapter implementation milestones"><table><thead><tr><th>Milestone</th><th>Status</th><th>Lean declaration</th><th>Remaining gap</th></tr></thead><tbody>{''.join(result_rows)}</tbody></table></div>
+  <p class="section-intro">The compact summary keeps the reading route visible. Open it for source-linked declarations and exact remaining gaps.</p>
+  <details class="chapter-ledger-disclosure"><summary><span>Open {len(chapter_results)} implementation records</span><span>{chapter_result_statuses.get('compiled', 0)} compiled · {chapter_result_statuses.get('partial', 0)} partial · {chapter_result_statuses.get('blocked', 0)} blocked · {chapter_result_statuses.get('planned', 0)} planned</span></summary><div class="table-wrap chapter-milestone-table" tabindex="0" role="region" aria-label="Chapter implementation milestones"><table><thead><tr><th>Milestone</th><th>Status</th><th>Lean declaration</th><th>Remaining gap</th></tr></thead><tbody>{''.join(result_rows)}</tbody></table></div></details>
 </section>
 
 <section id="open-gaps">
@@ -2261,7 +2312,7 @@ def build_chapters(
   <details class="inventory-disclosure"><summary>Open the complete module list ({len(modules_by_chapter[chapter['slug']]):,} modules)</summary><div class="table-wrap" tabindex="0" role="region" aria-label="Lean modules in this chapter"><table><thead><tr><th>Module</th><th>Declarations</th><th>Project imports</th><th>Status</th></tr></thead><tbody>{module_rows}</tbody></table></div></details>
 </section>
 
-{chapter_pager}
+{secondary_chapter_pager}
 """
         toc = [
             ("chapter", "Chapter"),
@@ -4129,6 +4180,9 @@ def render_harness_comparison_ledger(page_path: str, comparison: dict[str, Any])
     source_href = source_url("runs/harness-comparison/latest.json")
     prompt_href = source_url("runs/harness-comparison/latest.prompt.md")
     method_href = source_url("docs/harness_self_comparison.md")
+    evidence_ready = matched_count >= minimum_count
+    review_state = "Ready for interpretation" if evidence_ready else "Awaiting matched evidence"
+    promotion_state = "Measured decision" if decision.get("status") == "measured" else "Default retained"
     return f"""
 <section id="comparison-evidence">
   <p class="eyebrow">Generated from structured run logs</p>
@@ -4139,13 +4193,26 @@ def render_harness_comparison_ledger(page_path: str, comparison: dict[str, Any])
     <div><span class="level-label">Recommended default</span><strong>{html.escape(recommended)}</strong></div>
     <div><span class="level-label">Next matched arm</span><strong>{html.escape(next_harness)}</strong></div>
   </div>
+  <div class="harness-evidence-pipeline" aria-label="Harness evidence and decision pipeline">
+    <article><span class="pipeline-step">01</span><div><span class="level-label">Deterministic matcher</span><strong>Active</strong><p>Keep only equal-target, equal-budget trials with reviewer-classified outcomes and verifier evidence.</p></div></article>
+    <article><span class="pipeline-step">02</span><div><span class="level-label">Bounded GPT review</span><strong>{html.escape(review_state)}</strong><p>The review packet can explain bottlenecks, duplication, and context cost; it cannot relabel an attempt or invent a winner.</p></div></article>
+    <article><span class="pipeline-step">03</span><div><span class="level-label">Promotion gate</span><strong>{html.escape(promotion_state)}</strong><p>A default changes only after enough matched experiments and the same independent Lean-and-target review.</p></div></article>
+  </div>
   <div class="table-wrap comparison-table" tabindex="0" role="region" aria-label="Matched hierarchical and master-worker evidence">
     <table>
       <thead><tr><th>Harness</th><th>Runs</th><th>Attempts</th><th>Reviewed</th><th>Substantive</th><th>Score</th><th>Critical seconds</th></tr></thead>
       <tbody>{''.join(rows)}</tbody>
     </table>
   </div>
-  <div class="callout warning"><strong>Why no winner is shown.</strong> {html.escape(reason)} GPT receives this deterministic report and a bounded review packet; it may interpret bottlenecks and propose the next matched experiment, but it cannot promote unreviewed output or override this evidence boundary.</div>
+  <div class="callout warning"><strong>Why no winner is shown.</strong> {html.escape(reason)} When executed, the bounded GPT-review stage receives this deterministic report and may interpret bottlenecks or propose the next matched experiment, but it cannot promote unreviewed output or override this evidence boundary.</div>
+  <aside class="next-experiment-contract" aria-labelledby="next-experiment-title">
+    <div><span class="level-label">Next valid comparison</span><h3 id="next-experiment-title">One target, two execution arms, one acceptance rule</h3></div>
+    <ol>
+      <li>Freeze one theorem statement, target fingerprint, source packet, route budget, and stopping rule.</li>
+      <li>Run the hierarchical and master–worker arms in isolated worktrees with disjoint ownership.</li>
+      <li>Compare reviewer-validated obligations closed, reusable declarations, critical path, context cost, and failure diagnosis.</li>
+    </ol>
+  </aside>
   <div class="source-links"><a href="{source_href}">Open the deterministic JSON</a><a href="{prompt_href}">Open the GPT review packet</a><a href="{method_href}">Read the comparison method</a></div>
 </section>
 """
@@ -4187,9 +4254,15 @@ def build_workflow(output: Path, verified: bool, generated_at: str) -> None:
 
 <section id="roles">
   <p class="eyebrow">Adaptive orchestration, one evidence standard</p>
-  <h2>Compare proof routes by mathematical progress</h2>
+  <h2>A hybrid candidate—not a measured winner</h2>
   <p>The scheduler can run the established hierarchical director–planner–worker loop or a bounded master–worker trial in which several workers explore independent proof routes. Both receive the same frozen target, budget, source packet, and deterministic gates.</p>
   <p><strong>Current decision.</strong> {html.escape(current_decision)} The master–worker route is experimental and is enabled only when parallel alternatives are genuinely independent. A trial wins only by delivering a stronger checked certificate, a smaller named blocker, or a reusable lemma—not by producing more messages or attempts.</p>
+  <div class="harness-operating-grid">
+    <article><span class="level-label">Target governor</span><h3>Hierarchy owns the theorem</h3><p>One authority freezes the statement, assumptions, source interpretation, proof frontier, and acceptance contract.</p></article>
+    <article><span class="level-label">Bounded exploration</span><h3>Workers own disjoint proof leaves</h3><p>Parallelism starts only after routes have distinct fingerprints, explicit deliverables, and non-overlapping files.</p></article>
+    <article><span class="level-label">Independent synthesis</span><h3>Reviewer owns promotion</h3><p>The master may summarize results, but it cannot repair evidence labels or bypass Lean and target-fidelity review.</p></article>
+  </div>
+  <div class="callout"><strong>Design hypothesis.</strong> Hierarchical control is most useful for target fidelity and ambiguous interfaces; bounded parallel workers are most useful after the proof DAG exposes independent mathematical leaves. This hypothesis is what the matched experiment must test.</div>
   {render_diagram(page_path, 'automation-workflow.mmd', 'Evidence-aware scheduler comparing a hierarchical loop and a bounded master-worker trial before a common Lean and reviewer gate')}
 </section>
 
@@ -4218,7 +4291,7 @@ python3 website/scripts/ide_server.py</code></pre>
   </ul>
 </section>
 """
-    toc = [("workflow", "Workflow"), ("contract", "Contract"), ("roles", "Roles"), ("comparison-evidence", "Comparison evidence"), ("commands", "Gates"), ("failure-policy", "Failure policy")]
+    toc = [("workflow", "Workflow"), ("contract", "Contract"), ("roles", "Candidate architecture"), ("comparison-evidence", "Comparison evidence"), ("commands", "Gates"), ("failure-policy", "Failure policy")]
     write_page(
         output,
         page_path,

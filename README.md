@@ -22,13 +22,11 @@ This repository has two connected contributions:
 
 ## 📰 News
 
-- **2026-09 — Harness self-comparison.** ABRL now logs matched hierarchical and master–worker trials, draws their attempt graph, and asks GPT to interpret only reviewer-validated mathematical progress; existing logs are insufficient to declare a winner.
-- **2026-09 — SGB Appendix-C probability split.** The finite latent phase/missing-pull decomposition compiles, while the starvation, future/no-return, ballot, asymptotic, and Theorem-2 bridges remain open.
-- **2026-08 — Textbook formalization.** The ten-chapter Book Map and the Part-IV Chapters 13–17 spine expose compiled, partial, blocked, and planned results separately.
+- **2026-09 — Harness self-comparison.** ABRL now logs matched hierarchical and master–worker trials, draws their attempt graph, and can ask GPT to interpret only reviewer-validated mathematical progress; existing logs are insufficient to declare a winner.
+- **2026-09 — Textbook and theorem ports.** The ten-chapter Book Map, Part-IV Chapters 13–17 spine, and source-frozen paper audits expose compiled endpoints and named open bridges without relabeling partial work as complete.
 - **2026-08 — Lean graph.** BanditRLwiki now maps settings, declarations, dependencies, proof routes, and explicit frontier leaves.
 - **2026-08 — Live workspace.** The local experimental formalization adapter retrieves current declarations, checks candidates, and exports review packets without claiming a public online prover.
 - **2026-08 — BanditRLlib.** The public Lean library and Blueprint-style teaching/community website were established from accepted ABRL work.
-- **2026-08 — Canonical publication line.** This repository's `main` branch and GitHub Pages workflow are the single maintained public source.
 
 <details>
 <summary>Detailed milestone archive</summary>

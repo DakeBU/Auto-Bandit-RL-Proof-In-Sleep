@@ -1,11 +1,13 @@
 flowchart TB
-    Target["Frozen theorem target<br/>assumptions + source packet + budget"] --> Scheduler{"Evidence-aware scheduler"}
-    Scheduler -->|default| H["Hierarchical route<br/>director → planner → Lean worker"]
-    Scheduler -. "bounded parallel trial" .-> P["Master–worker route<br/>independent workers + master synthesis"]
-    H --> Review["Common reviewer<br/>target fidelity + evidence audit"]
-    P --> Review
+    Target["Frozen theorem target<br/>assumptions + source packet + budget"] --> Governor["Hierarchical target governor<br/>owns statement + proof frontier"]
+    Governor --> Split{"Are the next proof leaves<br/>mathematically independent?"}
+    Split -->|no or unclear| H["Single routed worker<br/>diagnose one interface"]
+    Split -. "yes, in matched trials" .-> P["Bounded parallel worker pool<br/>disjoint routes + disjoint files"]
+    H --> Synthesis["Evidence-only synthesis<br/>certificate · blocker · reuse · cost"]
+    P --> Synthesis
+    Synthesis --> Review["Independent reviewer<br/>target fidelity + evidence audit"]
     Review --> Gate{"Deterministic gate<br/>focused compile + repository check"}
     Gate -->|accepted| Library["BanditRLlib declaration<br/>and synchronized explanation"]
     Gate -->|diagnostic| Log["Matched trial log<br/>certificate · blocker · reuse · cost"]
-    Log --> Scheduler
+    Log --> Governor
     Library --> Memory["Reviewer-gated retrieval memory"]
