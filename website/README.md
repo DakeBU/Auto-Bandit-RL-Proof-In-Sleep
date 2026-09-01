@@ -14,6 +14,8 @@ The build:
 - adds reviewed teaching notes from `content/highlights.json`;
 - gives every Book Map source theorem a five-field model/assumption/parameter/
   regret/guarantee contract and links directly to the cited PDF page;
+- gives UCB readers a source-to-Lean proof bridge from confidence validity to
+  suboptimal selection, pull-count control, and the final gap-sum bound;
 - keeps a prominent textbook-coverage ledger: ten source-mapped teaching routes,
   nine compiled canonical cores, three compiled Part-IV source terminals, and no
   claim that the whole textbook is complete;
@@ -32,7 +34,9 @@ The build:
   installation, formalization, and contribution diagrams;
 - generates an interactive Lean Graph over all current modules and declarations,
   with progressive chapter/module/declaration expansion, search, status-aware
-  branch inspection, and reviewed prerequisite/consumer edges;
+  branch inspection, and reviewed prerequisite/consumer edges; its lightweight
+  overview loads first, while the full searchable graph is deferred until the
+  reader searches, changes view, or opens a branch;
 - generates a landing-page evidence snapshot from the Lean index, teaching
   crosswalks, implementation ledger, and harness-comparison log instead of
   hand-entered completion percentages;

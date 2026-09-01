@@ -624,8 +624,9 @@ def main() -> int:
 
     lean_graph_path = output / "lean-graph" / "index.html"
     lean_graph_data_path = output / "lean-graph" / "graph.json"
+    lean_graph_overview_path = output / "lean-graph" / "overview.json"
     lean_graph_script_path = output / "static" / "lean-graph.js"
-    for required_path in (lean_graph_data_path, lean_graph_script_path):
+    for required_path in (lean_graph_data_path, lean_graph_overview_path, lean_graph_script_path):
         if not required_path.exists():
             errors.append(f"missing Lean Graph artifact: {required_path.relative_to(output)}")
     if lean_graph_path.exists():
@@ -635,10 +636,38 @@ def main() -> int:
             "progressive disclosure",
             "not a kernel trace",
             "Whole-chapter status and individual compiled declarations remain separate",
+            "Choose a readable branch first",
+            "Open interactive canvas",
+            "JavaScript is optional for reading",
             "Auto-Sampling-Theory-In-Sleep/lean-foundations.html",
         ):
             if required_text not in lean_graph_html:
                 errors.append(f"lean-graph/index.html: missing graph boundary {required_text!r}")
+        if 'data-graph-overview-source="overview.json"' not in lean_graph_html:
+            errors.append("lean-graph/index.html: missing the lightweight overview graph source")
+    if lean_graph_overview_path.exists():
+        try:
+            lean_graph_overview = json.loads(lean_graph_overview_path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as error:
+            errors.append(f"lean-graph/overview.json: invalid JSON: {error}")
+            lean_graph_overview = {}
+        overview_nodes = lean_graph_overview.get("nodes", [])
+        overview_ids = {node.get("id") for node in overview_nodes if isinstance(node, dict)}
+        expected_overview_ids = {
+            "library:banditrl",
+            "group:book-map",
+            "group:textbook-spine",
+            "group:milestones",
+            "group:proof-laboratory",
+        }
+        if overview_ids != expected_overview_ids:
+            errors.append("lean-graph/overview.json: expected exactly the five initial overview nodes")
+        if lean_graph_overview_path.stat().st_size >= 500_000:
+            errors.append("lean-graph/overview.json: initial graph payload must remain below 500 KB")
+        for edge in lean_graph_overview.get("edges", []):
+            if edge.get("source") not in overview_ids or edge.get("target") not in overview_ids:
+                errors.append("lean-graph/overview.json: edge references a deferred node")
+                break
     if lean_graph_data_path.exists():
         try:
             lean_graph = json.loads(lean_graph_data_path.read_text(encoding="utf-8"))
@@ -997,7 +1026,7 @@ def main() -> int:
         page_source = page.read_text(encoding="utf-8")
         if 'rel="icon"' not in page_source:
             errors.append(f"{page.relative_to(output)}: missing favicon link")
-        for mojibake in ("�", "Ã", "Â", "â€", "ï»¿"):
+        for mojibake in ("�", "Ã", "Â", "â€", "ï»¿", "ᵓ"):
             if mojibake in page_source:
                 errors.append(f"{page.relative_to(output)}: contains likely mojibake marker {mojibake!r}")
         if collector.nav_group_count != 7:
@@ -1043,8 +1072,14 @@ def main() -> int:
                 f"found {collector.primary_textbook_banner_count}"
             )
         page_source = (output / relative).read_text(encoding="utf-8")
-        if PRIMARY_TEXTBOOK_TITLE not in page_source or PRIMARY_TEXTBOOK_URL not in page_source:
-            errors.append(f"{relative}: primary textbook title or free-edition link is missing")
+        textbook_metadata = (
+            PRIMARY_TEXTBOOK_TITLE,
+            PRIMARY_TEXTBOOK_URL,
+            "Cambridge University Press, 2020",
+            "10.1017/9781108571401",
+        )
+        if any(item not in page_source for item in textbook_metadata):
+            errors.append(f"{relative}: primary textbook identity, edition, DOI, or free-edition link is missing")
         coverage_expectations = (
             'class="textbook-coverage"',
             "10 source-mapped routes",
@@ -1191,9 +1226,15 @@ def main() -> int:
             "Regret notion",
             "Closest local match to the source theorem",
             "Compiled extension",
+            "Why an optimistic choice becomes a regret bound",
+            "Reading boundary",
         ):
             if required not in ucb_source:
                 errors.append(f"chapters/ucb/index.html: missing source-to-Lean guide {required!r}")
+        if ucb_source.count('class="proof-bridge-step"') != 4:
+            errors.append("chapters/ucb/index.html: expected four source-to-Lean proof-bridge steps")
+        if 'href="#proof-bridge"' not in ucb_source:
+            errors.append("chapters/ucb/index.html: proof bridge is missing from the page table of contents")
         closest_name = (
             "integral_real_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_"
             "le_textbookGapSum_finiteArmSubgaussianLaws_without_proxy_positivity"

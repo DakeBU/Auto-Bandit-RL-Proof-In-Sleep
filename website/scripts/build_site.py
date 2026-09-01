@@ -1262,6 +1262,26 @@ def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[
         f'<div><strong>{html.escape(step["title"])}</strong><p>{html.escape(step["detail"])}</p></div></li>'
         for index, step in enumerate(algorithm["steps"], start=1)
     )
+    proof_bridge = reading.get("proof_bridge")
+    proof_bridge_html = ""
+    if proof_bridge:
+        proof_steps = "".join(
+            '<li class="proof-bridge-step">'
+            f'<span class="proof-bridge-number" aria-hidden="true">{index:02d}</span>'
+            '<div class="proof-bridge-copy">'
+            f'<strong>{html.escape(step["title"])}</strong>'
+            f'<p>{html.escape(step["detail"])}</p>'
+            '</div>'
+            f'{render_math_statement(f"Step {index} equation", step["math"], step["fallback"])}'
+            '</li>'
+            for index, step in enumerate(proof_bridge["steps"], start=1)
+        )
+        proof_bridge_html = f"""
+  <aside class="proof-bridge" id="proof-bridge" aria-labelledby="proof-bridge-title">
+    <div class="proof-bridge-heading"><span class="panel-kicker">Proof bridge · source to Lean</span><h3 id="proof-bridge-title">{html.escape(proof_bridge['title'])}</h3><p>{html.escape(proof_bridge['summary'])}</p></div>
+    <ol class="proof-bridge-flow">{proof_steps}</ol>
+    <p class="proof-bridge-boundary"><strong>Reading boundary.</strong> {html.escape(proof_bridge['boundary'])}</p>
+  </aside>"""
     theorems = ([reading["source_theorem"]] if reading.get("source_theorem") else []) + reading.get("source_theorems", [])
     if theorems:
         theorem_cards = []
@@ -1328,6 +1348,7 @@ def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[
     <div><span class="panel-kicker">{html.escape(algorithm['kind'])} · ordered flow</span><h3>{html.escape(algorithm['title'])}</h3><p class="algorithm-intro">Read top to bottom: each step supplies the state or proof fact used by the next one.</p></div>
     <ol class="algorithm-flow">{steps}</ol>
   </div>
+  {proof_bridge_html}
   {theorem_html}
 </section>"""
 
@@ -1503,6 +1524,7 @@ def render_highlight(
 
 def render_primary_textbook_banner() -> str:
     chapter_statuses = Counter(chapter["status"] for chapter in SITE_CHAPTERS)
+    source = SITE_TEXTBOOK_SPINE["canonical_source"]
     spine_chapters = SITE_TEXTBOOK_SPINE.get("chapters", [])
     spine_terminals = Counter(
         chapter.get("source_theorem", {}).get("status", "unrecorded")
@@ -1513,7 +1535,7 @@ def render_primary_textbook_banner() -> str:
   <div class="primary-textbook-identity">
     <span class="primary-textbook-label">Current primary textbook</span>
     <strong class="primary-textbook-title" id="primary-textbook-title"><cite>{html.escape(PRIMARY_TEXTBOOK_TITLE)}</cite></strong>
-    <span class="primary-textbook-authors">{html.escape(PRIMARY_TEXTBOOK_AUTHORS)} · free online edition</span>
+    <span class="primary-textbook-authors">{html.escape(PRIMARY_TEXTBOOK_AUTHORS)} · <a href="{html.escape(source['publisher_url'], quote=True)}">{html.escape(source['publisher'])}, {source['year']}</a> · <a href="{html.escape(source['doi_url'], quote=True)}">DOI {html.escape(source['doi'])}</a></span>
   </div>
   <p>The ten-chapter Book Map uses this book as its main mathematical spine. Original papers supplement OFUL, Tsallis-INF, UCBVI, and other source-specific results.</p>
   <a class="button compact" href="{PRIMARY_TEXTBOOK_URL}">Open the free textbook <span aria-hidden="true">↗</span></a>
@@ -2365,8 +2387,10 @@ def build_chapters(
             ("source-guide", "Sources"),
             ("notation", "Notation"),
             ("algorithm", "Algorithm flow"),
-            ("teaching-notes", "Lean teaching notes"),
         ]
+        if reading.get("proof_bridge"):
+            toc.append(("proof-bridge", "Why the proof works"))
+        toc.append(("teaching-notes", "Lean teaching notes"))
         if completion_contract:
             toc.append(("completion-contract", "Maintainer contract"))
         toc.extend([
@@ -3963,6 +3987,21 @@ def build_lean_graph(
         graph_dir / "graph.json",
         json.dumps(payload, ensure_ascii=False, separators=(",", ":")),
     )
+    overview_ids = set(payload["views"]["overview"])
+    overview_payload = {
+        **{key: value for key, value in payload.items() if key not in {"views", "nodes", "edges"}},
+        "views": {"overview": payload["views"]["overview"]},
+        "nodes": [node for node in payload["nodes"] if node["id"] in overview_ids],
+        "edges": [
+            edge
+            for edge in payload["edges"]
+            if edge["source"] in overview_ids and edge["target"] in overview_ids
+        ],
+    }
+    write_text_lf(
+        graph_dir / "overview.json",
+        json.dumps(overview_payload, ensure_ascii=False, separators=(",", ":")),
+    )
 
     body = f"""
 <section class="hero lean-graph-hero" id="lean-graph">
@@ -3979,7 +4018,7 @@ def build_lean_graph(
 </section>
 
 <section id="explorer">
-  <div class="lean-graph-app" data-lean-graph data-graph-source="graph.json">
+  <div class="lean-graph-app" data-lean-graph data-graph-overview-source="overview.json" data-graph-source="graph.json">
     <header class="lean-graph-toolbar">
       <div class="lean-graph-views" role="group" aria-label="Lean Graph view">
         <button type="button" data-graph-view="overview" aria-pressed="true">Overview</button>
@@ -4001,7 +4040,19 @@ def build_lean_graph(
         <span data-graph-count aria-live="polite">Loading graph…</span>
       </div>
     </header>
-    <div class="lean-graph-stage">
+    <div class="lean-graph-mobile-start">
+      <span class="panel-kicker">Mobile starting view</span>
+      <h2>Choose a readable branch first</h2>
+      <p>The interactive canvas is available on demand; these direct routes keep the first mobile view readable and leave vertical scrolling uninterrupted.</p>
+      <div class="lean-graph-mobile-links">
+        <a href="../learning/index.html"><strong>Book Map</strong><span>Ten teaching chapters</span></a>
+        <a href="../textbook-spine/index.html"><strong>Part IV</strong><span>Source-faithful lower bounds</span></a>
+        <a href="../implementation-map/index.html"><strong>Milestones</strong><span>Compiled and open routes</span></a>
+        <a href="../declarations/index.html"><strong>Declarations</strong><span>Search the exact Lean index</span></a>
+      </div>
+      <button type="button" class="button" data-graph-mobile-open aria-expanded="false" aria-controls="lean-graph-stage">Open interactive canvas</button>
+    </div>
+    <div class="lean-graph-stage" id="lean-graph-stage">
       <div class="lean-graph-canvas" data-graph-canvas tabindex="0" aria-label="Interactive Lean graph canvas. Drag to pan and use the mouse wheel to zoom.">
         <svg data-graph-svg role="img" aria-label="Interactive BanditRLlib Lean graph"></svg>
         <p class="lean-graph-empty" data-graph-empty hidden>No matching branch is visible.</p>
@@ -4011,6 +4062,7 @@ def build_lean_graph(
         <div class="lean-graph-placeholder"><span>Branch inspector</span><h2>Select a node</h2><p>Status, exact source links, branch children, immediate prerequisites, and consumers will appear here.</p></div>
       </aside>
     </div>
+    <noscript><div class="callout"><strong>JavaScript is optional for reading.</strong> Use the <a href="../learning/index.html">Book Map</a>, <a href="../textbook-spine/index.html">Part IV spine</a>, <a href="../implementation-map/index.html">Implementation Map</a>, or <a href="../declarations/index.html">declaration catalogue</a> when the interactive graph is unavailable.</div></noscript>
   </div>
 </section>
 
@@ -4464,6 +4516,24 @@ def validate_readings(chapters: list[dict[str, Any]], readings: list[dict[str, A
             raise SystemExit(f"reading {reading['slug']} has a companion without a valid PDF page")
         if not reading.get("algorithm", {}).get("steps"):
             raise SystemExit(f"reading {reading['slug']} lacks an algorithm or proof flow")
+        proof_bridge = reading.get("proof_bridge")
+        if proof_bridge:
+            bridge_steps = proof_bridge.get("steps", [])
+            if (
+                not str(proof_bridge.get("title", "")).strip()
+                or not str(proof_bridge.get("summary", "")).strip()
+                or not str(proof_bridge.get("boundary", "")).strip()
+                or not isinstance(bridge_steps, list)
+                or not 3 <= len(bridge_steps) <= 5
+            ):
+                raise SystemExit(f"reading {reading['slug']} has an incomplete proof bridge")
+            for step in bridge_steps:
+                required = ("title", "detail", "math", "fallback")
+                if any(not str(step.get(key, "")).strip() for key in required):
+                    raise SystemExit(f"reading {reading['slug']} has an incomplete proof-bridge step")
+                normalized = normalize_math_source(step["math"])
+                if normalized.count(r"\(") != normalized.count(r"\)") or normalized.count(r"\[") != normalized.count(r"\]"):
+                    raise SystemExit(f"reading {reading['slug']} proof bridge has unbalanced mathematical delimiters")
         theorems = ([reading["source_theorem"]] if reading.get("source_theorem") else []) + reading.get("source_theorems", [])
         if theorems:
             for theorem in theorems:
