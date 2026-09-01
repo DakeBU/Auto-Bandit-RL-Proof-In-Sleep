@@ -858,6 +858,89 @@ h3 {
   font-size: 0.82rem;
 }
 
+.harness-evidence-pipeline,
+.harness-operating-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin: 1.1rem 0;
+}
+
+.harness-evidence-pipeline article,
+.harness-operating-grid article {
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.harness-evidence-pipeline article {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.75rem;
+}
+
+.pipeline-step {
+  display: grid;
+  width: 2.1rem;
+  height: 2.1rem;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.harness-evidence-pipeline strong,
+.harness-operating-grid h3 {
+  display: block;
+  margin: 0.25rem 0 0;
+  color: var(--accent-strong);
+  font-family: var(--serif);
+}
+
+.harness-evidence-pipeline p,
+.harness-operating-grid p {
+  margin: 0.55rem 0 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.harness-operating-grid h3 {
+  font-size: 1.08rem;
+}
+
+.next-experiment-contract {
+  display: grid;
+  grid-template-columns: minmax(13rem, 0.7fr) minmax(0, 1.3fr);
+  gap: 1rem 1.5rem;
+  align-items: start;
+  margin: 1.1rem 0;
+  padding: 1.1rem;
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--accent);
+  border-radius: var(--radius);
+  background: linear-gradient(110deg, var(--accent-soft), var(--surface) 58%);
+}
+
+.next-experiment-contract h3 {
+  margin: 0.25rem 0 0;
+  font-size: 1.2rem;
+}
+
+.next-experiment-contract ol {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.next-experiment-contract li + li {
+  margin-top: 0.45rem;
+}
+
 [data-milestone-row] {
   scroll-margin-top: 8rem;
 }
@@ -1757,6 +1840,18 @@ tbody tr:hover {
   scroll-margin-top: 5rem;
 }
 
+.chapter-pager-primary {
+  margin-top: clamp(2rem, 4vw, 3.4rem);
+  padding: 1rem;
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--line));
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--accent-soft) 34%, var(--surface));
+}
+
+.chapter-pager-secondary {
+  margin-top: clamp(3rem, 7vw, 5.5rem);
+}
+
 .chapter-pager-heading {
   display: flex;
   gap: 0.8rem;
@@ -2041,6 +2136,78 @@ tbody tr:hover {
   border-top: 4px solid var(--success);
 }
 
+.source-route-intro {
+  display: flex;
+  gap: 0.45rem 1rem;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 1.5rem 0 0.75rem;
+  color: var(--muted);
+}
+
+.source-route-intro strong {
+  color: var(--ink);
+}
+
+.source-theorem-route-list {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.source-theorem-disclosure {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  overflow: clip;
+}
+
+.source-theorem-disclosure > summary {
+  display: flex;
+  gap: 1rem;
+  min-height: 3.75rem;
+  padding: 0.85rem 1rem;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  list-style: none;
+}
+
+.source-theorem-disclosure > summary::-webkit-details-marker {
+  display: none;
+}
+
+.source-theorem-disclosure > summary > span:first-child {
+  display: grid;
+  gap: 0.22rem;
+  min-width: 0;
+}
+
+.source-theorem-disclosure > summary > span:last-child {
+  flex: 0 0 auto;
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 750;
+}
+
+.source-theorem-disclosure > summary:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: -3px;
+}
+
+.source-theorem-disclosure[open] > summary {
+  border-bottom: 1px solid var(--line);
+  background: var(--accent-soft);
+}
+
+.source-theorem-disclosure > .source-theorem-card {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
 .source-theorem-heading {
   display: flex;
   gap: 1rem;
@@ -2106,6 +2273,50 @@ tbody tr:hover {
 
 .source-boundary {
   max-width: none;
+}
+
+.chapter-ledger-disclosure {
+  margin: 1rem 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  overflow: clip;
+}
+
+.chapter-ledger-disclosure > summary {
+  display: flex;
+  gap: 0.5rem 1rem;
+  min-height: 3.75rem;
+  padding: 0.85rem 1rem;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--accent-strong);
+  cursor: pointer;
+  font-weight: 750;
+}
+
+.chapter-ledger-disclosure > summary > span:last-child {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.73rem;
+  font-weight: 700;
+}
+
+.chapter-ledger-disclosure > summary:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: -3px;
+}
+
+.chapter-ledger-disclosure[open] > summary {
+  border-bottom: 1px solid var(--line);
+  background: var(--accent-soft);
+}
+
+.chapter-ledger-disclosure > .table-wrap {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
 }
 
 .inventory-disclosure,
@@ -2205,13 +2416,15 @@ tbody tr:hover {
   padding: 1rem 1.2rem 1.35rem;
 }
 
-.teaching-grid {
+.teaching-grid,
+.technical-teaching-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.75rem;
 }
 
-.teaching-grid > div {
+.teaching-grid > div,
+.technical-teaching-grid > div {
   min-width: 0;
   padding: 0.85rem 0.9rem;
   border: 1px solid color-mix(in srgb, var(--line) 72%, transparent);
@@ -2219,15 +2432,42 @@ tbody tr:hover {
   background: color-mix(in srgb, var(--surface) 76%, var(--accent-soft));
 }
 
-.teaching-grid dt {
+.teaching-grid dt,
+.technical-teaching-grid dt {
   color: var(--accent-strong);
   font-weight: 750;
 }
 
-.teaching-grid dd {
+.teaching-grid dd,
+.technical-teaching-grid dd {
   margin: 0.25rem 0 0;
   color: var(--muted);
   overflow-wrap: anywhere;
+}
+
+.technical-reading {
+  margin: 0.85rem 0 1rem;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--surface) 88%, var(--accent-soft));
+}
+
+.technical-reading > summary {
+  min-height: 2.85rem;
+  padding: 0.7rem 0.9rem;
+  color: var(--accent-strong);
+  cursor: pointer;
+  font-weight: 750;
+}
+
+.technical-reading > summary:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: -3px;
+}
+
+.technical-teaching-grid {
+  margin: 0;
+  padding: 0 0.8rem 0.8rem;
 }
 
 .math-statement {
@@ -2315,6 +2555,50 @@ tbody tr:hover {
   justify-self: start;
   max-width: 100%;
   white-space: normal;
+}
+
+.textbook-coverage {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0.15rem 0 0;
+  border-top: 1px solid color-mix(in srgb, var(--line) 72%, transparent);
+}
+
+.textbook-coverage > div {
+  min-width: 0;
+  padding: 0.9rem 0.9rem 0.15rem 0;
+}
+
+.textbook-coverage > div + div {
+  padding-left: 0.9rem;
+  border-left: 1px solid color-mix(in srgb, var(--line) 72%, transparent);
+}
+
+.textbook-coverage dt {
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.textbook-coverage dd {
+  display: grid;
+  gap: 0.2rem;
+  margin: 0.28rem 0 0;
+}
+
+.textbook-coverage dd strong {
+  color: var(--accent-strong);
+  font-family: var(--serif);
+  line-height: 1.25;
+}
+
+.textbook-coverage dd span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.4;
 }
 
 .math-tex {
@@ -3108,14 +3392,16 @@ tbody tr:hover {
   overflow: auto;
 }
 
-@media (max-width: 1480px) {
+@media (max-width: 1320px) {
   .page-shell:not(.wide-page) {
     grid-template-columns: minmax(0, 1fr);
     max-width: 72rem;
   }
 
   .side-nav {
-    position: static;
+    position: sticky;
+    top: 3.4rem;
+    z-index: 16;
     grid-row: 1;
     max-height: none;
     display: block;
@@ -3124,6 +3410,8 @@ tbody tr:hover {
     overflow: hidden;
     border: 1px solid var(--line);
     border-radius: var(--radius);
+    background: color-mix(in srgb, var(--bg) 94%, var(--surface));
+    box-shadow: 0 10px 26px color-mix(in srgb, var(--ink) 6%, transparent);
   }
 
   .side-nav-label {
@@ -3215,6 +3503,11 @@ tbody tr:hover {
 }
 
 @media (max-width: 1080px) {
+  .teaching-grid,
+  .technical-teaching-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .comparison-decision {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -3237,6 +3530,22 @@ tbody tr:hover {
 
   .role-grid,
   .contract-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .harness-evidence-pipeline,
+  .harness-operating-grid,
+  .textbook-coverage {
+    grid-template-columns: 1fr;
+  }
+
+  .textbook-coverage > div + div {
+    padding-left: 0;
+    border-top: 1px solid color-mix(in srgb, var(--line) 72%, transparent);
+    border-left: 0;
+  }
+
+  .next-experiment-contract {
     grid-template-columns: 1fr;
   }
 }
@@ -3294,6 +3603,10 @@ tbody tr:hover {
 
   .site-content .verification-strip {
     top: 3.45rem;
+  }
+
+  .side-nav {
+    top: 6.15rem;
   }
 
   .theorem-panel {
@@ -3492,8 +3805,15 @@ tbody tr:hover {
   }
 
   .chapter-compass,
-  .teaching-grid {
+  .teaching-grid,
+  .technical-teaching-grid {
     grid-template-columns: 1fr;
+  }
+
+  .source-route-intro,
+  .source-theorem-disclosure > summary,
+  .chapter-ledger-disclosure > summary {
+    display: grid;
   }
 
   .chapter-compass a {

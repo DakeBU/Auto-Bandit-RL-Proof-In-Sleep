@@ -165,10 +165,30 @@
     const bringTargetIntoView = () => {
       if (window.location.hash !== expectedHash) return;
       focusFragmentTarget();
+      const visibleHeight = (selector) => {
+        const element = document.querySelector(selector);
+        if (!(element instanceof HTMLElement)) return 0;
+        const style = window.getComputedStyle(element);
+        if (style.display === "none" || style.visibility === "hidden") return 0;
+        return element.getBoundingClientRect().height;
+      };
+      const collapsedToc = document.querySelector("[data-toc-toggle]");
+      const collapsedTocHeight = collapsedToc instanceof HTMLElement
+        && window.getComputedStyle(collapsedToc).display !== "none"
+          ? collapsedToc.getBoundingClientRect().height
+          : 0;
+      const headerClearance = Math.max(
+        96,
+        visibleHeight(".mobile-bar") + visibleHeight(".verification-strip") + collapsedTocHeight + 14,
+      );
       const rect = target.getBoundingClientRect();
-      const headerClearance = 96;
       const alreadyVisible = rect.top >= headerClearance && rect.top <= window.innerHeight * 0.55;
-      if (!alreadyVisible) target.scrollIntoView({ block: "start" });
+      if (!alreadyVisible) {
+        const priorInlineScrollBehavior = document.documentElement.style.scrollBehavior;
+        document.documentElement.style.scrollBehavior = "auto";
+        window.scrollTo(0, Math.max(0, window.scrollY + rect.top - headerClearance));
+        document.documentElement.style.scrollBehavior = priorInlineScrollBehavior;
+      }
     };
     window.requestAnimationFrame(() => window.requestAnimationFrame(bringTargetIntoView));
     [180, 700, 1800, 3600].forEach((delay) => window.setTimeout(bringTargetIntoView, delay));
@@ -204,22 +224,40 @@
   const tocTargets = tocLinks
     .map((link) => ({ link, target: document.getElementById(decodeURIComponent(link.hash.slice(1))) }))
     .filter((item) => item.target);
-  if (tocTargets.length && "IntersectionObserver" in window) {
-    const tocObserver = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((left, right) => left.boundingClientRect.top - right.boundingClientRect.top)[0];
-        if (!visible) return;
-        tocLinks.forEach((link) => link.removeAttribute("aria-current"));
-        const currentLink = tocTargets.find((item) => item.target === visible.target)?.link;
-        currentLink?.setAttribute("aria-current", "location");
-        if (tocCurrent && currentLink) tocCurrent.textContent = currentLink.textContent;
-      },
-      { rootMargin: "-15% 0px -70% 0px", threshold: 0 },
-    );
-    tocTargets.forEach((item) => tocObserver.observe(item.target));
-  }
+  let tocSyncQueued = false;
+  const syncTocCurrent = () => {
+    tocSyncQueued = false;
+    if (!tocTargets.length) return;
+    const collapsedToc = document.querySelector("[data-toc-toggle]");
+    const collapsedTocBottom = collapsedToc instanceof HTMLElement
+      && window.getComputedStyle(collapsedToc).display !== "none"
+        ? collapsedToc.getBoundingClientRect().bottom
+        : 0;
+    const activationLine = collapsedTocBottom > 0
+      ? collapsedTocBottom + 18
+      : Math.max(116, window.innerHeight * 0.18);
+    let current = tocTargets[0];
+    tocTargets.forEach((item) => {
+      if (item.target.getBoundingClientRect().top <= activationLine) current = item;
+    });
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) {
+      current = tocTargets[tocTargets.length - 1];
+    }
+    tocLinks.forEach((link) => link.removeAttribute("aria-current"));
+    current.link.setAttribute("aria-current", "location");
+    if (tocCurrent) tocCurrent.textContent = current.link.textContent;
+  };
+  const queueTocSync = () => {
+    if (tocSyncQueued) return;
+    tocSyncQueued = true;
+    window.requestAnimationFrame(syncTocCurrent);
+  };
+  window.addEventListener("scroll", queueTocSync, { passive: true });
+  window.addEventListener("resize", queueTocSync);
+  queueTocSync();
+  window.setTimeout(queueTocSync, 220);
+  document.fonts?.ready.then(queueTocSync);
+  window.MathJax?.startup?.promise?.then(queueTocSync);
 
   const root = document.body.dataset.siteRoot || ".";
   const globalSearch = document.querySelector("[data-global-search]");
