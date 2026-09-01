@@ -18,11 +18,14 @@ The build:
   nine compiled canonical cores, three compiled Part-IV source terminals, and no
   claim that the whole textbook is complete;
 - keeps each chapter's default teaching route to two to four named declarations
-  while retaining the full compiled inventory in a collapsed extension section;
+  with human-readable mathematical headings while retaining exact searchable
+  Lean names and the full compiled inventory in a collapsed extension section;
 - provides native wrap/scroll and copy controls for exact Lean statements, with
   a readable no-JavaScript fallback;
 - loads the exhaustive declaration catalogue through a compact versioned data
   schema instead of repeating full source and module URLs per declaration;
+- progressively loads the complete Implementation Map module inventory from a
+  generated JSON ledger while preserving an initial no-JavaScript table;
 - keeps compiled, partial, stated, planned, and blocked routes distinct through
   `content/results.json`;
 - renders maintainable Mermaid architecture, dependency, progress, learning,

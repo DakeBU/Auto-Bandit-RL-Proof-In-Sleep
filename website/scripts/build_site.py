@@ -42,9 +42,10 @@ PAPER_TITLE = (
 PRIMARY_TEXTBOOK_TITLE = "Bandit Algorithms"
 PRIMARY_TEXTBOOK_AUTHORS = "Tor Lattimore and Csaba Szepesvári"
 PRIMARY_TEXTBOOK_URL = "https://tor-lattimore.com/downloads/book/book.pdf"
-ASSET_VERSION = "20260902f"
+ASSET_VERSION = "20260902g"
 CATALOG_PAGE_SIZE = 100
 MILESTONE_PAGE_SIZE = 20
+MODULE_PAGE_SIZE = 30
 TEACHING_PREVIEW_COUNT = 4
 SOURCE_BRANCH = "main"
 PUBLIC_BASE_URL = ""
@@ -1425,6 +1426,19 @@ def render_contributor_cards(
     return '<div class="contributor-grid">' + "".join(cards) + "</div>"
 
 
+def teaching_card_title(highlight: dict[str, Any]) -> str:
+    """Return a compact mathematical heading while keeping the full Lean name separate."""
+    explicit = str(highlight.get("title", "")).strip()
+    if explicit:
+        return explicit
+    plain = re.sub(r"\s+", " ", str(highlight.get("plain", "")).strip())
+    first_sentence = re.split(r"(?<=[.!?])\s", plain, maxsplit=1)[0].rstrip(".")
+    if len(first_sentence) <= 76:
+        return first_sentence
+    clipped = first_sentence[:76].rsplit(" ", 1)[0].rstrip(" ,:;")
+    return f"{clipped}…"
+
+
 def render_highlight(
     page_path: str,
     highlight: dict[str, Any],
@@ -1449,10 +1463,13 @@ def render_highlight(
         if match_kind in match_labels
         else ""
     )
+    teaching_title = teaching_card_title(highlight)
+    title_id = f"{declaration['anchor']}-teaching-title"
+    name_id = f"{declaration['anchor']}-teaching-name"
     return f"""
-<article class="theorem-panel{' source-match-panel' if match_badge else ''}" id="{declaration['anchor']}-teaching">
+<article class="theorem-panel{' source-match-panel' if match_badge else ''}" id="{declaration['anchor']}-teaching" aria-labelledby="{title_id} {name_id}">
   <div class="theorem-header">
-    <div class="declaration-heading"><span class="panel-kicker">Lean declaration</span>{match_badge}<h3>{breakable_identifier(declaration['full_name'])}</h3></div>
+    <div class="declaration-heading"><span class="panel-kicker">Mathematics ↔ Lean</span>{match_badge}<h3 id="{title_id}">{html.escape(teaching_title)}</h3><p class="declaration-name" id="{name_id}"><span>Lean declaration</span><code>{breakable_identifier(declaration['full_name'])}</code></p></div>
     {status_badge(status)}
   </div>
   <div class="theorem-body">
@@ -1907,12 +1924,13 @@ def build_implementation_map(
         ),
     )
     module_rows = []
+    module_items = []
     for module in modules:
         chapter = chapter_by_slug[module["chapter"]]
         module_status = "stated" if module["placeholder_count"] else ("compiled" if verified else "source")
-        module_rows.append(
-            f"""
-<tr data-module-row data-search="{html.escape(f'{module["name"]} {chapter["short_title"]} {module["file"]}'.lower(), quote=True)}" data-chapter="{html.escape(module['chapter'])}">
+        module_search = f'{module["name"]} {chapter["short_title"]} {module["file"]}'.lower()
+        module_row = f"""
+<tr id="module-{html.escape(module['slug'], quote=True)}" data-module-row data-module-id="module-{html.escape(module['slug'], quote=True)}" data-search="{html.escape(module_search, quote=True)}" data-chapter="{html.escape(module['chapter'])}">
   <td><a href="{module_href(page_path, module)}"><code>{html.escape(module['name'])}</code></a></td>
   <td><a href="{href_from(page_path, f"chapters/{chapter['slug']}/index.html")}">{html.escape(chapter['short_title'])}</a></td>
   <td>{len(module['declarations']):,}</td>
@@ -1920,7 +1938,24 @@ def build_implementation_map(
   <td>{status_badge(module_status)}</td>
   <td><a href="{source_url(module['file'])}">{html.escape(module['file'])}</a></td>
 </tr>"""
+        module_rows.append(module_row)
+        module_items.append(
+            {
+                "id": f"module-{module['slug']}",
+                "name": module["name"],
+                "search": module_search,
+                "chapter": module["chapter"],
+                "html": module_row,
+            }
         )
+    write_text_lf(
+        output / "implementation-map" / "module-data.json",
+        json.dumps(
+            {"page_size": MODULE_PAGE_SIZE, "items": module_items},
+            ensure_ascii=False,
+            separators=(",", ":"),
+        ),
+    )
     body = f"""
 <section class="hero" id="map">
   <p class="eyebrow">Mathematics ↔ prose ↔ Lean</p>
@@ -1974,16 +2009,18 @@ def build_implementation_map(
 
 <section id="modules">
   <h2>Complete module inventory</h2>
-  <p>Every project module is assigned to a teaching chapter. This exhaustive inventory is collapsed by default so that the mathematical milestones remain the primary reading surface.</p>
+  <p>Every project module is assigned to a teaching chapter. The first page is included in the HTML; search and “show more” progressively load the complete generated inventory, keeping the mathematical milestones fast and primary.</p>
   <details class="inventory-disclosure"><summary>Open the complete generated module inventory ({len(modules):,} modules)</summary>
   <div class="filter-bar"><div class="filter-field grow"><label for="module-query">Filter modules</label><input id="module-query" data-module-query type="search" placeholder="Module, chapter, or source path"></div></div>
-  <p class="result-count" data-module-count></p>
-  <div class="table-wrap" data-module-list tabindex="0" role="region" aria-label="Complete Lean module inventory">
+  <p class="result-count" data-module-count aria-live="polite">Showing the first {min(MODULE_PAGE_SIZE, len(module_rows))} of {len(module_rows)} modules.</p>
+  <div class="table-wrap" data-module-list data-module-total="{len(module_rows)}" data-module-page-size="{MODULE_PAGE_SIZE}" tabindex="0" role="region" aria-label="Complete Lean module inventory">
     <table>
       <thead><tr><th>Lean module</th><th>Teaching chapter</th><th>Declarations</th><th>Project imports</th><th>Build status</th><th>Source</th></tr></thead>
-      <tbody>{''.join(module_rows)}</tbody>
+      <tbody data-module-body>{''.join(module_rows[:MODULE_PAGE_SIZE])}</tbody>
     </table>
   </div>
+  <div class="catalog-actions"><button class="button compact" type="button" data-module-more hidden>Show {min(MODULE_PAGE_SIZE, max(0, len(module_rows) - MODULE_PAGE_SIZE))} more modules</button></div>
+  <noscript><p class="callout warning"><strong>JavaScript is off.</strong> The first {min(MODULE_PAGE_SIZE, len(module_rows))} modules are shown here. Open the <a href="module-data.json">complete generated module inventory</a> for all {len(module_rows)} records.</p></noscript>
   </details>
 </section>
 """
@@ -2176,6 +2213,14 @@ def build_chapters(
                 + ", ".join(missing_route_names)
             )
         featured_highlights = [highlights_by_name[name] for name in route_names]
+        missing_teaching_titles = [
+            item["full_name"] for item in featured_highlights if not item.get("title")
+        ]
+        if missing_teaching_titles:
+            raise SystemExit(
+                f"chapter {chapter['slug']} teaching route lacks human-readable titles: "
+                + ", ".join(missing_teaching_titles)
+            )
         visible_highlights = [
             item for item in featured_highlights if item.get("source_match") != "extension"
         ]
